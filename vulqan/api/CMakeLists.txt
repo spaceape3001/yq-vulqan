@@ -4,7 +4,10 @@
 ##
 ################################################################################
 
-project(yqvulqan)
+# project(yqvulqan)
+
+include(${YOUR_QUILL_EXTERNAL}/stb.cmake)
+
 
 find_package(GLFW3 REQUIRED)
 
@@ -18,12 +21,11 @@ if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
 endif()
 
 
-add_library(${PROJECT_NAME} SHARED 
+add_library(yqvulqan SHARED 
     ${test_source}
     
     ./YqEngineConfig.cpp
     
-    ./stb.cpp
     ./vma.cpp
     
     ./asset/asset.cpp
@@ -57,7 +59,7 @@ add_library(${PROJECT_NAME} SHARED
     ./imgui/misc/freetype/imgui_freetype.cpp
 
 )
-target_compile_definitions(${PROJECT_NAME} 
+target_compile_definitions(yqvulqan 
     PUBLIC
         GLFW_INCLUDE_VULKAN=1
     PRIVATE 
@@ -65,16 +67,15 @@ target_compile_definitions(${PROJECT_NAME}
         VK_ENABLE_BETA_EXTENSIONS=1
         IMGUI_USE_WCHAR32=1 
 )
-target_link_libraries(${PROJECT_NAME} 
+target_link_libraries(yqvulqan 
     PUBLIC  
         yqtoolbox
-        stb 
         vma 
         ${FREETYPE_LIBRARIES}
         ${Vulkan_LIBRARIES} 
         ${GLFW3_LIBRARY}
 )
-target_include_directories(${PROJECT_NAME} 
+target_include_directories(yqvulqan 
     PUBLIC 
         ${CMAKE_CURRENT_LIST_DIR}
         ${CMAKE_CURRENT_LIST_DIR}/imgui        
@@ -82,6 +83,6 @@ target_include_directories(${PROJECT_NAME}
         ${FREETYPE_INCLUDE_DIRS}
 )
 
-LinkTest(${PROJECT_NAME})
+LinkTest(yqvulqan)
 
 

@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "YqEngineConfig.hpp"
+
+namespace yq {
+    namespace build {
+        //! The share path to the one inside the build directory;
+        const char*     data_directory()
+        {
+            return YQ_DATA_DIR;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <glm/glm.hpp>
+
+namespace yq {
+    namespace engine {
+        struct PushData {
+            glm::mat4       transform;
+            double          time        = 0;
+        };
+    }
+}

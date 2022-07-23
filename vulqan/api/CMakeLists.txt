@@ -7,6 +7,7 @@
 # project(yqvulqan)
 
 include(${YOUR_QUILL_EXTERNAL}/stb.cmake)
+include(${YOUR_QUILL_EXTERNAL}/vma.cmake)
 
 
 find_package(GLFW3 REQUIRED)
@@ -25,8 +26,6 @@ add_library(yqvulqan SHARED
     ${test_source}
     
     ./YqEngineConfig.cpp
-    
-    ./vma.cpp
     
     ./asset/asset.cpp
     ./engine/engine.cpp
@@ -71,6 +70,7 @@ target_link_libraries(yqvulqan
     PUBLIC  
         yqtoolbox
         vma 
+        stb
         ${FREETYPE_LIBRARIES}
         ${Vulkan_LIBRARIES} 
         ${GLFW3_LIBRARY}

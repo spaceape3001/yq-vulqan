@@ -6,9 +6,21 @@
 
 #pragma once
 
+
+
+#include <math/Vector2.hpp>
 #include <math/preamble.hpp>
 #include <math/MKS.hpp>
 #include <math/SCALED.hpp>
+
+
+#define IM_VEC2_CLASS_EXTRA                                                                 \
+        constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \
+        constexpr operator yq::Vector2D() const { return { x, y }; }                        \
+        constexpr ImVec2(const yq::Vector2F& v) : x(v.x), y(v.y) {}                         \
+        constexpr operator yq::Vector2F() const { return { x, y }; }
+
+#include <imgui.h>
 
 /*
     This header file is covered by GPL-v3 (unless otherwise noted) and is used to 

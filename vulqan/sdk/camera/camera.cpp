@@ -34,7 +34,7 @@
 #include <math/TetrahedronData.hpp>
 #include <math/Triangle2.hpp>
 #include <math/Triangle3.hpp>
-#include <imgui.h>
+#include <MyImGui.hpp>
 #include <chrono>
 
 using namespace ImGui;

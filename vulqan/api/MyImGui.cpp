@@ -4,8 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "imgui.h"
-#include "imgui_user.h"
+#include "MyImGui.hpp"
 
 thread_local ImGuiContext* MyImGuiTLS   = nullptr;
 

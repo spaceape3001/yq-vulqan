@@ -7,6 +7,8 @@
 #pragma once
 
 #include "Widget.hpp"
+#include <basic/TextUtils.hpp>
+#include <atomic>
 
 YQ_OBJECT_IMPLEMENT(yq::engine::Widget)
 
@@ -20,6 +22,9 @@ namespace yq {
 
         Widget::Widget()
         {
+            static std::atomic<uint64_t>    s_next{1};
+            m_widgetId  = "__widget__";
+            m_widgetId += to_string_view((uint64_t) ++s_next);
         }
         
         Widget::~Widget()

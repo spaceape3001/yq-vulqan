@@ -23,8 +23,7 @@ namespace yq {
         
         /*! \brief Root something that's drawwable on ImGui
         
-            By default, it autosizes itself per ImGui's rules.  
-            (We'll adjust later if necessary)
+            It follows ImGui's rules, this is something that is "drawable" and needs some amount of state information.
         */
         class Widget : public MetaObject {    
             YQ_OBJECT_INFO(WidgetInfo)
@@ -32,6 +31,8 @@ namespace yq {
         public:
         
             virtual void    draw(/*UiData&*/);
+            
+            const char*     imgui_id() const { return m_widgetId.c_str(); }
             
         protected:
             friend class Viewer;
@@ -42,6 +43,10 @@ namespace yq {
             Viewer*                     m_viewer    = nullptr;
             Widget*                     m_parent    = nullptr;
             std::vector<Ref<Widget>>    m_children;
+        
+        private:
+            // generated dull widget-identifier
+            std::string                 m_widgetId;
         };
 
         template <typename C>

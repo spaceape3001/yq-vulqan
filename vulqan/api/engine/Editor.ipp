@@ -23,13 +23,14 @@ namespace yq {
         {
         }
 
-        void    Editor::draw(engine::UiData&ui) 
+        void    Editor::draw(/*engine::UiData&ui*/ ) 
         {
-            if(ImGui::BeginMainMenuBar()){
-                draw_menubar();
-                ImGui::EndMainMenuBar();
-            }
-            draw_content();
+            //if(ImGui::BeginMainMenuBar()){
+                //draw_menubar();
+                //ImGui::EndMainMenuBar();
+            //}
+            //draw_content();
+            Widget::draw();
         }
     }
 }

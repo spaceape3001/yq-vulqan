@@ -31,7 +31,7 @@ namespace yq {
             YQ_OBJECT_DECLARE(Widget, MetaObject)
         public:
         
-            virtual void    draw(UiData&);
+            virtual void    draw(/*UiData&*/);
             
         protected:
             friend class Viewer;

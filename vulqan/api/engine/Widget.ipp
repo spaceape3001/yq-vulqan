@@ -22,9 +22,6 @@ namespace yq {
 
         Widget::Widget()
         {
-            static std::atomic<uint64_t>    s_next{1};
-            m_widgetId  = "__widget__";
-            m_widgetId += to_string_view((uint64_t) ++s_next);
         }
         
         Widget::~Widget()

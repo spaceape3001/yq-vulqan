@@ -32,8 +32,6 @@ namespace yq {
         
             virtual void    draw(/*UiData&*/);
             
-            const char*     imgui_id() const { return m_widgetId.c_str(); }
-            
         protected:
             friend class Viewer;
             
@@ -43,10 +41,6 @@ namespace yq {
             Viewer*                     m_viewer    = nullptr;
             Widget*                     m_parent    = nullptr;
             std::vector<Ref<Widget>>    m_children;
-        
-        private:
-            // generated dull widget-identifier
-            std::string                 m_widgetId;
         };
 
         template <typename C>

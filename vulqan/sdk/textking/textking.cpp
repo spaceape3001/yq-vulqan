@@ -14,6 +14,7 @@
 #include <basic/meta/ObjectInfoWriter.hpp>
 #include <engine/Application.hpp>
 #include <engine/Viewer.hpp>
+#include <engine/Widget.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 #include <MyImGui.hpp>
 #include <iostream>
@@ -21,13 +22,15 @@
 #include <ImGuiFileDialog.h>
 #include <basic/FileUtils.hpp>
 #include <basic/TextUtils.hpp>
+#include <widget/TextEdit.hpp>
 
 using namespace yq;
 using namespace yq::engine;
 
-class Editor : public RefCount, public TextEditor {
+class GTEditor : public engine::Widget, public TextEditor {
+    YQ_OBJECT_DECLARE(GTEditor, engine::Widget)
 public:
-    Editor(const std::filesystem::path& fpath=std::filesystem::path())
+    GTEditor(const std::filesystem::path& fpath=std::filesystem::path())
     {
         if(!fpath.empty()){
             SetText(file_string(fpath));
@@ -40,14 +43,28 @@ public:
         
     }
     
-    void        render();
+    void    draw() override;
     
 private:
     std::filesystem::path   m_path;
     std::string             m_textid;
 };
 
-void Editor::render()
+class N2Editor : public engine::Widget {
+    YQ_OBJECT_DECLARE(N2Editor, engine::Widget)
+public:
+
+    N2Editor(const std::filesystem::path& fpath=std::filesystem::path())
+    {
+        m_edit  = new widget::TextEdit;
+    }
+    
+    void    draw() override;
+    
+    Ref<widget::TextEdit>       m_edit;
+};
+
+void GTEditor::draw()
 {
     using namespace ImGui;
     auto cpos   = GetCursorPosition();
@@ -59,6 +76,22 @@ void Editor::render()
 			GetLanguageDefinition().mName.c_str(), m_path.c_str());
     TextEditor::Render("TextEditor");
     End();
+}
+
+void    N2Editor::draw() 
+{
+    using namespace ImGui;
+    //auto cpos   = GetCursorPosition();
+    PushID((int) id());
+    Begin("N2Editor", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
+    SetWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
+    //Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, GetTotalLines(),
+			//IsOverwrite() ? "Ovr" : "Ins",
+			//CanUndo() ? "*" : " ",
+			//GetLanguageDefinition().mName.c_str(), m_path.c_str());
+    m_edit -> draw();
+    End();
+    PopID();
 }
 
 class TextKing : public Viewer {
@@ -89,7 +122,10 @@ public:
         if(BeginMainMenuBar()){
             if(BeginMenu("File")){
                 if(MenuItem("New")){
-                    install(new Editor);
+                    install(new GTEditor);
+                }
+                if(MenuItem("NewB")){
+                    install(new N2Editor);
                 }
                 if(MenuItem("Open")){
                     //file_mode       = OPEN;
@@ -130,7 +166,7 @@ public:
         }
         
         for(auto& e : m_editors)
-            e->render();
+            e->draw();
             
         switch(file_mode){
         case OPEN:
@@ -150,17 +186,24 @@ public:
         }
     }
     
-    void                        install(Editor* editor)
+    void                        install(GTEditor* editor)
     {
         m_editors.push_back(editor);
         m_active                = editor;
     }
+
+    void                        install(N2Editor* editor)
+    {
+        m_editors.push_back(editor);
+    }
     
-    std::vector<Ref<Editor>>    m_editors;
-    Editor*                     m_active;
+    std::vector<Ref<engine::Widget>>    m_editors;
+    GTEditor*                           m_active = nullptr;
 };
 
 YQ_OBJECT_IMPLEMENT(TextKing)
+YQ_OBJECT_IMPLEMENT(GTEditor)
+YQ_OBJECT_IMPLEMENT(N2Editor)
 
 int main(int argc, char* argv[])
 {

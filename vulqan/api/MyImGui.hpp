@@ -6,19 +6,25 @@
 
 #pragma once
 
-
-
 #include <math/Vector2.hpp>
+#include <math/Vector4.hpp>
 #include <math/preamble.hpp>
 #include <math/MKS.hpp>
 #include <math/SCALED.hpp>
-
+#include <math/RGBA.hpp>
+#include <math/RGB.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \
         constexpr operator yq::Vector2D() const { return { x, y }; }                        \
         constexpr ImVec2(const yq::Vector2F& v) : x(v.x), y(v.y) {}                         \
         constexpr operator yq::Vector2F() const { return { x, y }; }
+
+#define IM_VEC4_CLASS_EXTRA                                                                                         \
+        constexpr ImVec4(const yq::Vector4D& v) : x((float) v.x), y((float) v.y), z((float) v.z), w((float) v.w) {} \
+        constexpr operator yq::Vector4D() const { return { x, y, z, w }; }                                          \
+        constexpr ImVec4(const yq::Vector4F& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}                                 \
+        constexpr operator yq::Vector4F() const { return { x, y, z, w }; }
 
 #include <imgui.h>
 
@@ -83,6 +89,11 @@ namespace ImGui {
     bool    InputDouble4(const char* label, yq::Vector4<yq::MKS<double,DIM>>* v, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
     {
         return InputDouble4(label, (double*) v, format, flags);
+    }
+    
+    inline constexpr ImU32 Color(const yq::RGB3U8& clr)
+    {
+        return IM_COL32(clr.red, clr.green, clr.blue, 255);
     }
 
 }

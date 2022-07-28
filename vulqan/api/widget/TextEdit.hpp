@@ -6,8 +6,12 @@
 
 #pragma once
 
+#include <basic/Signal.hpp>
 #include <engine/Widget.hpp>
 #include <functional>
+#include <math/RGBA.hpp>
+#include <array>
+#include <span>
 
 namespace yq {
     class Stream;
@@ -40,35 +44,52 @@ namespace yq {
                 HARD
             };
         
-            using UndoSink  = std::function<void(engine::Undo*)>;
-        
-            TextEdit();
-            ~TextEdit();
+            static constexpr const unsigned int NPAL = 256;
           
             struct Coord;
             struct Glyph;
             struct Line;
-          
-            void            clear_text();
-            void            reset_config();
-          
-            void            set_text(std::string_view);
-            void            stream_text(Stream&);
-            std::string     build_text() const;
+            struct Style {
+                uint32_t    fore    = 0;
+                uint32_t    back    = 0;
+            };
+            using Palette   = std::array<Style, NPAL>;
 
-            char32_t        character(const Coord&) const;
+            TextEdit();
+            ~TextEdit();
+
+            Signal<engine::Undo*>   undo;
+
+            //! Builds the text
+            std::string         build_text() const;
+
+            //! Gets the specified character
+            char32_t            character(const Coord&) const;
+
+            //! Number of characters
+            uint64_t            character_count() const;
+
+            //! Clears the text
+            void                clear_text();
             
-            void            set_undo_sink(UndoSink);
+            //! Resets the configuration
+            void                reset_config();
             
-            void            draw() override;
+            //! Sets the text
+            void                set_text(std::string_view);
             
-            uint64_t        chararacter_count() const;
+            //! Streams the contents out
+            void                stream_text(Stream&) const;
+            
+            void                draw() override;
+            
+            void                set_palette(std::span<const Style>);
+            uint32_t            line_count() const;
+            uint32_t            line_characters_count(uint32_t) const;
           
         private:
-        
             std::vector<Line>       m_lines;
-            
-            struct {
+            struct Config {
                 TabMode             tabMode     = TabMode::TAB;
                 uint16_t            tabCount    = 4;                // zero disables tabs
                 WrapMode            wrapMode    = WrapMode::NONE;
@@ -76,9 +97,7 @@ namespace yq {
                 uint16_t            vertLine    = 0;                // zero disable
                 bool                lineNumbers = false;            // show line numbers (if enabled)
             }                       m_config;
-
-            UndoSink                m_undo;
-
+            Palette                 m_palette;
         };
         
         /*! Text edit coordinate
@@ -94,7 +113,7 @@ namespace yq {
         
         struct TextEdit::Glyph {
             char32_t    character;
-            uint16_t    palette     = 0;
+            uint8_t     palette     = 0;
             bool        selected    = false;
         };
         

@@ -16,13 +16,63 @@ YQ_OBJECT_IMPLEMENT(yq::widget::TextEdit)
 
 namespace yq {
     namespace widget {
+
+        const TextEdit::Palette&   TextEdit::dark_palette()
+        {
+            static const Palette p = { { {
+                { IM_COL32( 0x7f, 0x7f, 0x7f, 0xff )}, // Default
+                { IM_COL32( 0x10, 0x10, 0x10, 0xff )}, // Background
+                { IM_COL32( 0xe0, 0xe0, 0xe0, 0xff )}, // Caret
+                { IM_COL32( 0x20, 0x60, 0xa0, 0x80 )}, // Selection
+                { IM_COL32( 0x00, 0x70, 0x70, 0xff )}, // Line number
+                { IM_COL32( 0x56, 0x9c, 0xd6, 0xff )}, // Keyword	
+                { IM_COL32( 0x00, 0xff, 0x00, 0xff )}, // Number
+                { IM_COL32( 0xe0, 0x70, 0x70, 0xff )}, // String
+                { IM_COL32( 0xe0, 0xa0, 0x70, 0xff )}, // Char literal
+                { IM_COL32( 0xff, 0xff, 0xff, 0xff )}, // Punctuation
+                { IM_COL32( 0x80, 0x80, 0x40, 0xff )}, // Preprocessor
+                { IM_COL32( 0xaa, 0xaa, 0xaa, 0xff )}, // Identifier
+                { IM_COL32( 0x4d, 0xc6, 0x9b, 0xff )}, // Known identifier
+                { IM_COL32( 0xa0, 0x40, 0xc0, 0xff )}, // Preproc identifier
+                { IM_COL32( 0x20, 0x60, 0x20, 0xff )}, // Comment (single line)
+                { IM_COL32( 0x20, 0x60, 0x40, 0xff )}, // Comment (multi line)
+                { IM_COL32( 0xff, 0x20, 0x00, 0x80 )}, // ErrorMarker
+                { IM_COL32( 0x00, 0x80, 0xf0, 0x40 )}, // Breakpoint
+                { IM_COL32( 0x00, 0x00, 0x00, 0x40 )}, // Current line fill
+                { IM_COL32( 0x80, 0x80, 0x80, 0x40 )}, // Current line fill (inactive)
+                { IM_COL32( 0xa0, 0xa0, 0xa0, 0x40 )}  // Current line edge
+            } } };
+            return p;
+        }
+        
+        //const TextEdit::Palette&   TextEdit::light_palette()
+        //{
+            //static const Palette p = { { {
+                
+            //} } };
+            //return p;
+        //}
+        
+        //const TextEdit::Palette&   TextEdit::retro_blue_palette()
+        //{
+            //static const Palette p = { { {
+                
+            //} } };
+            //return p;
+        //}
+
+        //  ...........................................................................................................
+
         TextEdit::TextEdit()
         {
+            m_palette   = dark_palette();
         }
         
         TextEdit::~TextEdit()
         {
         }
+
+        //  ...........................................................................................................
 
         std::string         TextEdit::build_text() const
         {
@@ -58,23 +108,6 @@ namespace yq {
             m_lines.clear();
         }
         
-        
-        
-
-        void    TextEdit::draw() 
-        {
-            auto drawList = ImGui::GetWindowDrawList();
-            ImU32 red  = ImGui::GetColorU32(ImVec4(1., 0., 0., 1.));
-            ImVec2  vstart  = ImGui::GetWindowContentRegionMin();
-            ImVec2  vend    = ImGui::GetWindowContentRegionMax();
-            drawList->AddRectFilled(vstart, vend, red);
-        }
-
-        uint32_t            TextEdit::line_count() const
-        {
-            return m_lines.size();
-        }
-        
         uint32_t            TextEdit::line_characters_count(uint32_t l) const
         {
             if(l >= m_lines.size())
@@ -84,17 +117,17 @@ namespace yq {
 
         void                TextEdit::reset_config()
         {
-            m_config        = Config();
+            m_config        = ConfigData();
         }
 
-        void                TextEdit::set_palette(std::span<const Style> pal)
+        void                TextEdit::set_palette(const Palette& pal)
         {
-            unsigned int  sz  = std::min((unsigned int) pal.size(), NPAL);
-            unsigned int  i;
-            for(i = 0; i<sz; ++i)
-                m_palette[i]    = pal[i];
-            for(; i<NPAL; ++i)
-                m_palette[i]    = Style();
+            m_palette       = pal;
+        }
+
+        void                TextEdit::set_tab_count(uint8_t s)
+        {
+            m_config.tabCount   = std::min(s, MAX_TAB);
         }
         
         void                TextEdit::set_text(std::string_view sv)
@@ -122,6 +155,21 @@ namespace yq {
                 s << '\n';
             }
         }
+
+        void                TextEdit::set_tab_mode(TabMode tm)
+        {
+            m_config.tabMode    = tm;
+        }
         
+        //  ...........................................................................................................
+        
+        void    TextEdit::draw() 
+        {
+            auto drawList = ImGui::GetWindowDrawList();
+            ImU32 red  = ImGui::GetColorU32(ImVec4(1., 0., 0., 1.));
+            ImVec2  vstart  = ImGui::GetWindowContentRegionMin();
+            ImVec2  vend    = ImGui::GetWindowContentRegionMax();
+            drawList->AddRectFilled(vstart, vend, red);
+        }
     }
 }

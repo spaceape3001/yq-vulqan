@@ -74,6 +74,42 @@ namespace yq {
 
         //  ...........................................................................................................
 
+        void    TextEdit::Line::add(std::string_view sv)
+        {
+            iter_utf8(sv, [&](char32_t ch){
+                if(ch == '\n')
+                    return;
+                if(ch == '\r') // return to sender, you filthy animal!
+                    return;
+                glyphs.push_back(Glyph{ch});
+            });
+        }
+
+        void            TextEdit::Line::stream(Stream&s) const
+        {
+            for(const Glyph& g : glyphs)
+                s << g.character;
+        }
+        
+        std::string     TextEdit::Line::text() const
+        {
+            std::string     ret;
+            ret.reserve(glyphs.size() << 1 );
+            ::yq::stream::Text  txt(ret);
+            stream(txt);
+            return ret;      
+        }
+
+        std::u32string  TextEdit::Line::utf32() const
+        {
+            std::u32string  ret;
+            ret.resize(glyphs.size());
+            for(size_t n=0;n<glyphs.size();++n)
+                ret[n] = glyphs[n].character;
+            return ret;
+        }
+
+        //  ...........................................................................................................
         std::string         TextEdit::build_text() const
         {
             std::string         ret;
@@ -108,6 +144,11 @@ namespace yq {
             m_lines.clear();
         }
         
+        uint32_t            TextEdit::color(Style s) const
+        {
+            return m_palette.entries[(unsigned) s].color;
+        }
+
         uint32_t            TextEdit::line_characters_count(uint32_t l) const
         {
             if(l >= m_lines.size())
@@ -115,9 +156,25 @@ namespace yq {
             return m_lines[l].glyphs.size();
         }
 
-        void                TextEdit::reset_config()
+        std::string         TextEdit::line_text(uint32_t li) const
         {
-            m_config        = ConfigData();
+            if(li < m_lines.size())
+                return m_lines[li].text();
+            return std::string();
+        }
+
+        void                TextEdit::reset_settings()
+        {
+            m_settings      = Settings();
+        }
+
+        void                TextEdit::set_line_text(uint32_t li, std::string_view txt)
+        {
+            if(li < m_lines.size()){
+                auto& l = m_lines[li];
+                l.glyphs.clear();
+                l.add(txt);
+            }
         }
 
         void                TextEdit::set_palette(const Palette& pal)
@@ -127,24 +184,37 @@ namespace yq {
 
         void                TextEdit::set_tab_count(uint8_t s)
         {
-            m_config.tabCount   = std::min(s, MAX_TAB);
+            m_settings.tabCount = std::min(s, MAX_TAB);
         }
         
         void                TextEdit::set_text(std::string_view sv)
         {
             m_lines.clear();
-            m_lines.push_back(Line());
             if(!sv.empty()){
-                iter_utf8(sv, [&](char32_t ch){
-                    if(ch == '\n'){
-                        m_lines.push_back(Line());
-                        return ;
-                    }
-                
-                    m_lines.back().glyphs.push_back(Glyph{ch});
+                vsplit(sv, '\n', [&](std::string_view sv){
+                    Line        l;
+                    l.add(sv);
+                    m_lines.push_back(l);
                 });
-                m_lines.push_back(Line());
             }
+            m_lines.push_back(Line());
+        }
+
+        void                TextEdit::set_text_lines(std::span<std::string_view> lines)
+        {
+            m_lines.clear();
+            for(std::string_view sv : lines){
+                Line    l;
+                l.add(sv);
+                m_lines.push_back(l);
+            }
+            m_lines.push_back(Line());
+        }
+
+        void                TextEdit::stream_line(Stream&s, uint32_t li) const
+        {
+            if(li < m_lines.size())
+                m_lines[li].stream(s);
         }
         
         void                TextEdit::stream_text(Stream&s) const
@@ -158,18 +228,72 @@ namespace yq {
 
         void                TextEdit::set_tab_mode(TabMode tm)
         {
-            m_config.tabMode    = tm;
+            m_settings.tabMode    = tm;
         }
         
         //  ...........................................................................................................
         
         void    TextEdit::draw() 
         {
+            using namespace ImGui;
+            m_withinRender  = true;
+            
+            PushID(this);
+            PushStyleColor(ImGuiCol_ChildBg, ColorConvertU32ToFloat4(color(Style::Background)));
+            PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 0.0f));
+            if(m_imguiChild){
+                ImGuiWindowFlags    flags   = ImGuiWindowFlags_AlwaysVerticalScrollbar | ImGuiWindowFlags_NoMove;
+                if(m_settings.wrapMode != WrapMode::SOFT)
+                    flags |= ImGuiWindowFlags_HorizontalScrollbar;
+                BeginChild(m_title.c_str(), m_size, m_border, flags);
+            }
+            
+            if(m_handleKeyboard)
+                handle_keyboard();
+            if(m_handleMouse)
+                handle_mouse();
+
+            render_content();
+            
+            if(m_imguiChild){
+                EndChild();
+            }
+            PopStyleVar();
+            PopStyleColor();
+            PopID();
+            
+            m_withinRender  = false;
+        }
+
+        void    TextEdit::handle_keyboard()
+        {
+        }
+        
+        void    TextEdit::handle_mouse()
+        {
+        }
+
+        void    TextEdit::render_content()
+        {
             auto drawList = ImGui::GetWindowDrawList();
             ImU32 red  = ImGui::GetColorU32(ImVec4(1., 0., 0., 1.));
             ImVec2  vstart  = ImGui::GetWindowContentRegionMin();
             ImVec2  vend    = ImGui::GetWindowContentRegionMax();
             drawList->AddRectFilled(vstart, vend, red);
+        }
+
+
+        void    TextEdit::colorize()
+        {
+        }
+
+        void    TextEdit::reset_colors()
+        {
+            for(Line& l : m_lines)
+                for(Glyph& g : l.glyphs)
+            {
+                g.style = 0;
+            }
         }
     }
 }

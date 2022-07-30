@@ -8,10 +8,12 @@
 
 #include <basic/Signal.hpp>
 #include <engine/Widget.hpp>
+#include <math/Vector2.hpp>
 #include <functional>
 #include <math/RGBA.hpp>
 #include <array>
 #include <span>
+#include <deque>
 
 namespace yq {
     class Stream;
@@ -66,11 +68,17 @@ namespace yq {
 
             struct Glyph {
                 char32_t    character;
-                uint8_t     palette     = 0;
+                uint8_t     style     = 0;
             };
             
             struct Line {
                 std::vector<Glyph>  glyphs;
+                uint8_t             lines = 0;
+                
+                void            add(std::string_view);
+                void            stream(Stream&) const;
+                std::string     text() const;
+                std::u32string  utf32() const;
             };
             
             //  common styles
@@ -125,6 +133,8 @@ namespace yq {
 
             //! Number of glyphs (not bytes) including new-lines
             uint64_t            character_count() const;
+            
+            uint32_t            color(Style) const;
 
             //! Clears the text
             void                clear_text();
@@ -134,14 +144,20 @@ namespace yq {
 
             //! Number of characters (glyphs) on line
             uint32_t            line_characters_count(uint32_t) const;
+            
+            std::string         line_text(uint32_t) const;
 
             bool                overwrite() const { return m_overwrite; }
 
             bool                readonly() const { return m_readonly; }
 
             //! Resets the configuration
-            void                reset_config();
+            void                reset_settings();
             
+            //! Sets an EXISTING line
+            //! \note newlines will be dropped!
+            void                set_line_text(uint32_t, std::string_view);
+
             //! Sets the color palette
             void                set_palette(const Palette&);
             
@@ -156,34 +172,78 @@ namespace yq {
             //! Sets the text
             void                set_text(std::string_view);
             
+            //! Sets the text as series of lines
+            void                set_text_lines(std::span<std::string_view>);
+            
+            //! Streams the specified line out (no new-line)
+            void                stream_line(Stream&, uint32_t) const;
+            
             //! Streams the contents out
             void                stream_text(Stream&) const;
             
+            //  Draws the widget
             void                draw() override;
+            
+            void                undo();
+            void                redo();
           
         private:
         
-            struct ConfigData {
-                TabMode             tabMode         = TabMode::TAB;
-                uint8_t             tabCount        = 4;                // zero disables tabs
-                WrapMode            wrapMode        = WrapMode::NONE;
-                bool                keepWords       = true;             // will keep workds
-                uint16_t            vertLine        = 0;                // zero disable
-                bool                lineNumbers     = false;            // show line numbers (if enabled)
-                bool                showWitespace   = false;
-                float               lineSpacing     = 1.f;
+            struct Settings {
+                TabMode             tabMode             = TabMode::TAB;
+                uint8_t             tabCount            = 4;                // zero disables tabs
+                WrapMode            wrapMode            = WrapMode::NONE;
+                bool                keepWords           = true;             // will keep workds
+                uint16_t            vertLine            = 0;                // zero disable
+                bool                lineNumbers         = false;            // show line numbers (if enabled)
+                bool                showWitespace       = false;
+                float               lineSpacing         = 1.f;
+                bool                syntaxHighlighting  = false;
+                uint32_t            undoLimit           = UINT32_MAX;
             };
             
-            struct SelectionData {
-                Coord               start = {}, end = {};
-                SelectionMode       mode = {};
+            struct State {
+                Coord           sstart = {}, send = {};
+                Coord           caret = {};
+                SelectionMode   smode = {};
             };
+            
+            struct Action {
+                std::string     text;
+                Coord           start, end;
+                State           state;
+            };
+            
+            struct Undo {
+                Action      before, after;
+            };
+            
             
             Palette                 m_palette;
             std::vector<Line>       m_lines;
-            ConfigData              m_config;
-            bool                    m_readonly  = false;
-            bool                    m_overwrite = false;
+            Settings                m_settings;
+            State                   m_state;
+            std::deque<Undo>        m_undo;
+            std::string             m_title             = "Untitled";
+            Vector2F                m_size              = {};
+            bool                    m_readonly          = false;
+            bool                    m_overwrite         = false;
+            bool                    m_handleKeyboard    = true;
+            bool                    m_handleMouse       = true;
+            bool                    m_handleShortcuts   = true;
+            bool                    m_imguiChild        = true;
+            bool                    m_border            = false;
+            bool                    m_withinRender      = false;
+            
+            //! Renders the content
+            void        render_content();
+            
+            void        handle_keyboard();
+            void        handle_mouse();
+            void        colorize();
+            void        reset_colors();
+            void        apply_add(const Action&);
+            void        apply_remove(const Action&);
         };
         
     }

@@ -93,6 +93,7 @@ void    N2Editor::draw()
     using namespace ImGui;
     //auto cpos   = GetCursorPosition();
     PushID((int) id());
+    PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 0.0f));
     Begin("N2Editor", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
     SetWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
     //Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, GetTotalLines(),
@@ -101,6 +102,7 @@ void    N2Editor::draw()
 			//GetLanguageDefinition().mName.c_str(), m_path.c_str());
     m_edit -> draw();
     End();
+    PopStyleVar();
     PopID();
 }
 

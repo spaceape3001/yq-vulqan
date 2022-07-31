@@ -8,6 +8,7 @@
 
 #include <basic/Signal.hpp>
 #include <engine/Widget.hpp>
+#include <math/AxBox2.hpp>
 #include <math/Vector2.hpp>
 #include <functional>
 #include <math/RGBA.hpp>
@@ -35,18 +36,20 @@ namespace yq {
             YQ_OBJECT_DECLARE(TextEdit, engine::Widget)
         public:
         
-            static constexpr const uint8_t  MAX_TAB = 32;
+            static constexpr const uint8_t  MAX_TAB         = 32;
+            static constexpr const float    MIN_SCALE       = 0.1f;
+            static constexpr const float    MIN_SPACING     = 0.1f;
         
             enum class TabMode : uint8_t {
                 TAB     = 0,
                 SPACES
             };
             
-            enum class WrapMode : uint8_t {
-                NONE = 0,
-                SOFT,
-                HARD
-            };
+            //enum class WrapMode : uint8_t {
+                //NONE = 0,
+                //SOFT,
+                //HARD
+            //};
             
             enum class SelectionMode : uint8_t {
                 NORMAL = 0,
@@ -112,7 +115,8 @@ namespace yq {
             };
             
             struct Palette {
-                std::array<PaletteEntry, 256>   entries;
+                static constexpr const size_t   N   = 256;
+                std::array<PaletteEntry, N>     entries;
             };
 
 
@@ -122,8 +126,8 @@ namespace yq {
 
             TextEdit();
             ~TextEdit();
-
             
+            float               bottom_margin() const { return m_margins.hi.y; }
 
             //! Builds the text
             std::string         build_text() const;
@@ -139,11 +143,17 @@ namespace yq {
             //! Clears the text
             void                clear_text();
             
+            bool                imgui_child() const { return m_imguiChild; }
+            
+            float               left_margin() const { return m_margins.lo.x; }
+            
             //! Number of lines
             uint32_t            line_count() const { return m_lines.size(); }
 
             //! Number of characters (glyphs) on line
             uint32_t            line_characters_count(uint32_t) const;
+            
+            float               line_spacing() const { return m_settings.lineSpacing; }
             
             std::string         line_text(uint32_t) const;
 
@@ -154,6 +164,14 @@ namespace yq {
             //! Resets the configuration
             void                reset_settings();
             
+            float               right_margin() const { return m_margins.hi.x; }
+
+            float               scale() const { return m_scale; }
+            
+            void                set_imgui_child(bool);
+            
+            void                set_line_spacing(float);
+            
             //! Sets an EXISTING line
             //! \note newlines will be dropped!
             void                set_line_text(uint32_t, std::string_view);
@@ -162,6 +180,8 @@ namespace yq {
             void                set_palette(const Palette&);
             
             void                set_readonly(bool);
+            
+            void                set_scale(float);
 
             //! Sets the number of spaces per tab
             void                set_tab_count(uint8_t);
@@ -181,6 +201,8 @@ namespace yq {
             //! Streams the contents out
             void                stream_text(Stream&) const;
             
+            float               top_margin() const { return m_margins.lo.y; }
+
             //  Draws the widget
             void                draw() override;
             
@@ -192,11 +214,12 @@ namespace yq {
             struct Settings {
                 TabMode             tabMode             = TabMode::TAB;
                 uint8_t             tabCount            = 4;                // zero disables tabs
-                WrapMode            wrapMode            = WrapMode::NONE;
-                bool                keepWords           = true;             // will keep workds
-                uint16_t            vertLine            = 0;                // zero disable
-                bool                lineNumbers         = false;            // show line numbers (if enabled)
-                bool                showWitespace       = false;
+                uint32_t            hardWrap            = UINT32_MAX;
+                bool                softWrap            = false;
+                bool                keepWords           = true;             // will keep words together
+                uint16_t            vertLine            = 40;               // zero will disable
+                bool                lineNumbers         = true;             // show line numbers (if enabled)
+                bool                showWhitespace      = false;
                 float               lineSpacing         = 1.f;
                 bool                syntaxHighlighting  = false;
                 uint32_t            undoLimit           = UINT32_MAX;
@@ -218,14 +241,22 @@ namespace yq {
                 Action      before, after;
             };
             
+            struct CoordSpan {
+                uint32_t    line    = 0;
+                uint32_t    start   = 0;
+                uint32_t    end     = UINT32_MAX;
+            };
             
-            Palette                 m_palette;
+            
+            Palette                 m_palette0, m_palette;
             std::vector<Line>       m_lines;
             Settings                m_settings;
             State                   m_state;
             std::deque<Undo>        m_undo;
             std::string             m_title             = "Untitled";
             Vector2F                m_size              = {};
+            float                   m_scale             = 1.0f;
+            AxBox2F                 m_margins           = { { 10.f, 10.f }, { 10.f, 10.f }};
             bool                    m_readonly          = false;
             bool                    m_overwrite         = false;
             bool                    m_handleKeyboard    = true;
@@ -234,6 +265,9 @@ namespace yq {
             bool                    m_imguiChild        = true;
             bool                    m_border            = false;
             bool                    m_withinRender      = false;
+            bool                    m_needsHScroll      = false;
+            bool                    m_needsVScroll      = false;
+            bool                    m_scrollToTop       = false;
             
             //! Renders the content
             void        render_content();
@@ -244,6 +278,8 @@ namespace yq {
             void        reset_colors();
             void        apply_add(const Action&);
             void        apply_remove(const Action&);
+            
+            void        bake_palette(float a=1.f);
         };
         
     }

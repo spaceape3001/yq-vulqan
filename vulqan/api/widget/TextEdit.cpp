@@ -11,11 +11,59 @@
 #include <basic/IterUtf8.hpp>
 #include <basic/TextUtils.hpp>
 #include <basic/stream/Text.hpp>
+#include <math/vector_math.hpp>
+
+    //  for debugging
+#include <asset/Colors.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::widget::TextEdit)
 
 namespace yq {
     namespace widget {
+        
+        namespace {
+            uint8_t digits(uint64_t n)
+            {
+                if(n<10ULL)
+                    return 1;
+                if(n<100ULL)
+                    return 2;
+                if(n<1'000ULL)
+                    return 3;
+                if(n<10'000ULL)
+                    return 4;
+                if(n<100'000ULL)
+                    return 5;
+                if(n<1'000'000ULL)
+                    return 6;
+                if(n<10'000'000ULL)
+                    return 7;
+                if(n<100'000'000ULL)
+                    return 8;
+                if(n<1'000'000'000ULL)
+                    return 9;
+                if(n<10'000'000'000ULL)
+                    return 10;
+                if(n<100'000'000'000ULL)
+                    return 11;
+                if(n<1'000'000'000'000ULL)
+                    return 12;
+                if(n<10'000'000'000'000ULL)
+                    return 13;
+                if(n<100'000'000'000'000ULL)
+                    return 14;
+                if(n<1'000'000'000'000'000ULL)
+                    return 15;
+                if(n<10'000'000'000'000'000ULL)
+                    return 16;
+                if(n<100'000'000'000'000'000ULL)
+                    return 17;
+                if(n<1'000'000'000'000'000'000ULL)
+                    return 18;
+                return 19;
+            }
+        }
+
 
         const TextEdit::Palette&   TextEdit::dark_palette()
         {
@@ -65,7 +113,7 @@ namespace yq {
 
         TextEdit::TextEdit()
         {
-            m_palette   = dark_palette();
+            set_palette(dark_palette());
         }
         
         TextEdit::~TextEdit()
@@ -149,6 +197,11 @@ namespace yq {
             return m_palette.entries[(unsigned) s].color;
         }
 
+        void                TextEdit::set_imgui_child(bool f)
+        {
+            m_imguiChild    = f;
+        }
+
         uint32_t            TextEdit::line_characters_count(uint32_t l) const
         {
             if(l >= m_lines.size())
@@ -168,6 +221,16 @@ namespace yq {
             m_settings      = Settings();
         }
 
+        void                TextEdit::set_scale(float f)
+        {   
+            m_scale         = std::max(MIN_SCALE, f);
+        }
+
+        void                TextEdit::set_line_spacing(float f)
+        {
+            m_settings.lineSpacing  = std::max(MIN_SPACING, f);
+        }
+
         void                TextEdit::set_line_text(uint32_t li, std::string_view txt)
         {
             if(li < m_lines.size()){
@@ -179,7 +242,7 @@ namespace yq {
 
         void                TextEdit::set_palette(const Palette& pal)
         {
-            m_palette       = pal;
+            m_palette0      = pal;
         }
 
         void                TextEdit::set_tab_count(uint8_t s)
@@ -233,6 +296,15 @@ namespace yq {
         
         //  ...........................................................................................................
         
+        void                TextEdit::bake_palette(float f)
+        {
+            for(size_t n=0;n<Palette::N;++n){
+                auto color = ImGui::ColorConvertU32ToFloat4(m_palette0.entries[n].color);
+                color.w *= f;
+                m_palette.entries[n].color    = ImGui::ColorConvertFloat4ToU32(color);
+            }
+        }
+        
         void    TextEdit::draw() 
         {
             using namespace ImGui;
@@ -242,9 +314,11 @@ namespace yq {
             PushStyleColor(ImGuiCol_ChildBg, ColorConvertU32ToFloat4(color(Style::Background)));
             PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 0.0f));
             if(m_imguiChild){
-                ImGuiWindowFlags    flags   = ImGuiWindowFlags_AlwaysVerticalScrollbar | ImGuiWindowFlags_NoMove;
-                if(m_settings.wrapMode != WrapMode::SOFT)
-                    flags |= ImGuiWindowFlags_HorizontalScrollbar;
+                ImGuiWindowFlags    flags   = ImGuiWindowFlags_NoMove;
+                if(!m_settings.softWrap)
+                    flags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
+                if(m_needsVScroll)
+                    flags |= ImGuiWindowFlags_AlwaysVerticalScrollbar;
                 BeginChild(m_title.c_str(), m_size, m_border, flags);
             }
             
@@ -275,11 +349,68 @@ namespace yq {
 
         void    TextEdit::render_content()
         {
-            auto drawList = ImGui::GetWindowDrawList();
-            ImU32 red  = ImGui::GetColorU32(ImVec4(1., 0., 0., 1.));
-            ImVec2  vstart  = ImGui::GetWindowContentRegionMin();
-            ImVec2  vend    = ImGui::GetWindowContentRegionMax();
-            drawList->AddRectFilled(vstart, vend, red);
+            using namespace ImGui;
+            ImFont*         font        = GetFont();
+            
+            float           fontSize    = m_scale * GetFontSize();
+            Vector2F        textSize    = font->CalcTextSizeA(fontSize, FLT_MAX, -1.0f, "#", nullptr, nullptr);
+            textSize.y     *= m_settings.lineSpacing;
+            bake_palette(GetStyle().Alpha);
+            
+            if(m_scrollToTop){
+                m_scrollToTop   = false;
+                ImGui::SetScrollY(0.f);
+            }
+
+            auto drawList           = ImGui::GetWindowDrawList();
+            Vector2F  ul  = ImGui::GetWindowContentRegionMin();
+            Vector2F  lr  = ImGui::GetWindowContentRegionMax();
+            Vector2F    cpos    = ImGui::GetCursorScreenPos();
+            
+            ul += cpos;
+            lr += cpos;
+            
+            Vector2F  mid   = 0.5f*(ul+lr);
+            
+            
+            
+            drawList->AddRectFilled(ul, mid, Color(color::AirForceBlue));
+            drawList->AddRectFilled({mid.x, ul.y}, { lr.x, mid.y },  Color(color::BubbleGum));
+            drawList->AddRectFilled({ul.x, mid.y}, { mid.x, lr.y }, Color(color::ElectricViolet));
+            drawList->AddRectFilled(mid, lr, Color(color::Emerald));
+            
+            
+            
+            #if 0
+            
+            
+            auto contentSize        = ImGui::GetWindowContentRegionMax();
+            
+            
+            float           viewLeft    = contentSize.left + left_margin();
+            float           textLeft    = viewLeft;
+            
+            float           lineNumberWidth = 0;
+            
+            if(m_settings.lineNumbers){
+                char    buffer[64];
+                sprintf(buffer, " %ld ", (long int) m_lines.size());
+                textLeft += font->CalcTextSizeA(fontSize, FLT_MAX, -1.0f, buffer, nullptr, nullptr).x;
+            }
+            
+            float           textRight   = contentSize.y - right_margin();
+            float           textTop     = top_margin();
+            float           textBottom  = contentSize.y - bottom_margin();
+            
+            
+            
+            
+            // Color
+            drawList->AddRectFilled( {0, 0}, {textLeft, textTop}, Color( color::AirForceBlue ));
+            drawList->AddRectFilled( {0, textBottom}, {textLeft, contentSize.y}, Color(color::BubbleGum));
+            drawList->AddRectFilled( {textRight, 0}, {contentSize.x, textTop }, Color(color::ElectricViolet));
+            drawList->AddRectFilled( {textRight,textBottom}, {contentSize.x, contentSize.y}, Color(color::Emerald));
+            #endif
         }
 
 

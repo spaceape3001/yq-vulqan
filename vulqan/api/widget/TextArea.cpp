@@ -4,19 +4,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "TextEdit.hpp"
+#include "TextArea.hpp"
 #include <MyImGui.hpp>
 #include <basic/Stream.hpp>
 #include <basic/StreamOps.hpp>
 #include <basic/IterUtf8.hpp>
 #include <basic/TextUtils.hpp>
 #include <basic/stream/Text.hpp>
+#include <math/AxBox2.hpp>
 #include <math/vector_math.hpp>
+#include <math/shape_math.hpp>
 
     //  for debugging
 #include <asset/Colors.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::widget::TextEdit)
+YQ_OBJECT_IMPLEMENT(yq::widget::TextArea)
 
 namespace yq {
     namespace widget {
@@ -65,7 +67,7 @@ namespace yq {
         }
 
 
-        const TextEdit::Palette&   TextEdit::dark_palette()
+        const TextArea::Palette&   TextArea::dark_palette()
         {
             static const Palette p = { { {
                 { IM_COL32( 0x7f, 0x7f, 0x7f, 0xff )}, // Default
@@ -93,7 +95,7 @@ namespace yq {
             return p;
         }
         
-        //const TextEdit::Palette&   TextEdit::light_palette()
+        //const TextArea::Palette&   TextArea::light_palette()
         //{
             //static const Palette p = { { {
                 
@@ -101,7 +103,7 @@ namespace yq {
             //return p;
         //}
         
-        //const TextEdit::Palette&   TextEdit::retro_blue_palette()
+        //const TextArea::Palette&   TextArea::retro_blue_palette()
         //{
             //static const Palette p = { { {
                 
@@ -111,18 +113,18 @@ namespace yq {
 
         //  ...........................................................................................................
 
-        TextEdit::TextEdit()
+        TextArea::TextArea()
         {
             set_palette(dark_palette());
         }
         
-        TextEdit::~TextEdit()
+        TextArea::~TextArea()
         {
         }
 
         //  ...........................................................................................................
 
-        void    TextEdit::Line::add(std::string_view sv)
+        void    TextArea::Line::add(std::string_view sv)
         {
             iter_utf8(sv, [&](char32_t ch){
                 if(ch == '\n')
@@ -133,13 +135,13 @@ namespace yq {
             });
         }
 
-        void            TextEdit::Line::stream(Stream&s) const
+        void            TextArea::Line::stream(Stream&s) const
         {
             for(const Glyph& g : glyphs)
                 s << g.character;
         }
         
-        std::string     TextEdit::Line::text() const
+        std::string     TextArea::Line::text() const
         {
             std::string     ret;
             ret.reserve(glyphs.size() << 1 );
@@ -148,7 +150,7 @@ namespace yq {
             return ret;      
         }
 
-        std::u32string  TextEdit::Line::utf32() const
+        std::u32string  TextArea::Line::utf32() const
         {
             std::u32string  ret;
             ret.resize(glyphs.size());
@@ -158,7 +160,7 @@ namespace yq {
         }
 
         //  ...........................................................................................................
-        std::string         TextEdit::build_text() const
+        std::string         TextArea::build_text() const
         {
             std::string         ret;
             ret.reserve(character_count());
@@ -169,7 +171,7 @@ namespace yq {
             return ret;
         }
 
-        char32_t            TextEdit::character(const Coord& c) const
+        char32_t            TextArea::character(const Coord& c) const
         {
             if(c.line >= m_lines.size())
                 return 0;
@@ -179,7 +181,7 @@ namespace yq {
             return l.glyphs[c.column].character;
         }
 
-        uint64_t            TextEdit::character_count() const
+        uint64_t            TextArea::character_count() const
         {
             uint64_t    ret = m_lines.size();
             for(auto& l : m_lines)
@@ -187,51 +189,51 @@ namespace yq {
             return ret;
         }
 
-        void                TextEdit::clear_text()
+        void                TextArea::clear_text()
         {
             m_lines.clear();
         }
         
-        uint32_t            TextEdit::color(Style s) const
+        uint32_t            TextArea::color(Style s) const
         {
             return m_palette.entries[(unsigned) s].color;
         }
 
-        void                TextEdit::set_imgui_child(bool f)
+        void                TextArea::set_imgui_child(bool f)
         {
             m_imguiChild    = f;
         }
 
-        uint32_t            TextEdit::line_characters_count(uint32_t l) const
+        uint32_t            TextArea::line_characters_count(uint32_t l) const
         {
             if(l >= m_lines.size())
                 return 0;
             return m_lines[l].glyphs.size();
         }
 
-        std::string         TextEdit::line_text(uint32_t li) const
+        std::string         TextArea::line_text(uint32_t li) const
         {
             if(li < m_lines.size())
                 return m_lines[li].text();
             return std::string();
         }
 
-        void                TextEdit::reset_settings()
+        void                TextArea::reset_settings()
         {
             m_settings      = Settings();
         }
 
-        void                TextEdit::set_scale(float f)
+        void                TextArea::set_scale(float f)
         {   
             m_scale         = std::max(MIN_SCALE, f);
         }
 
-        void                TextEdit::set_line_spacing(float f)
+        void                TextArea::set_line_spacing(float f)
         {
             m_settings.lineSpacing  = std::max(MIN_SPACING, f);
         }
 
-        void                TextEdit::set_line_text(uint32_t li, std::string_view txt)
+        void                TextArea::set_line_text(uint32_t li, std::string_view txt)
         {
             if(li < m_lines.size()){
                 auto& l = m_lines[li];
@@ -240,17 +242,17 @@ namespace yq {
             }
         }
 
-        void                TextEdit::set_palette(const Palette& pal)
+        void                TextArea::set_palette(const Palette& pal)
         {
             m_palette0      = pal;
         }
 
-        void                TextEdit::set_tab_count(uint8_t s)
+        void                TextArea::set_tab_count(uint8_t s)
         {
             m_settings.tabCount = std::min(s, MAX_TAB);
         }
         
-        void                TextEdit::set_text(std::string_view sv)
+        void                TextArea::set_text(std::string_view sv)
         {
             m_lines.clear();
             if(!sv.empty()){
@@ -263,7 +265,7 @@ namespace yq {
             m_lines.push_back(Line());
         }
 
-        void                TextEdit::set_text_lines(std::span<std::string_view> lines)
+        void                TextArea::set_text_lines(std::span<std::string_view> lines)
         {
             m_lines.clear();
             for(std::string_view sv : lines){
@@ -274,13 +276,13 @@ namespace yq {
             m_lines.push_back(Line());
         }
 
-        void                TextEdit::stream_line(Stream&s, uint32_t li) const
+        void                TextArea::stream_line(Stream&s, uint32_t li) const
         {
             if(li < m_lines.size())
                 m_lines[li].stream(s);
         }
         
-        void                TextEdit::stream_text(Stream&s) const
+        void                TextArea::stream_text(Stream&s) const
         {
             for(auto& l : m_lines){
                 for(auto& g : l.glyphs)
@@ -289,14 +291,14 @@ namespace yq {
             }
         }
 
-        void                TextEdit::set_tab_mode(TabMode tm)
+        void                TextArea::set_tab_mode(TabMode tm)
         {
             m_settings.tabMode    = tm;
         }
         
         //  ...........................................................................................................
         
-        void                TextEdit::bake_palette(float f)
+        void                TextArea::bake_palette(float f)
         {
             for(size_t n=0;n<Palette::N;++n){
                 auto color = ImGui::ColorConvertU32ToFloat4(m_palette0.entries[n].color);
@@ -305,7 +307,7 @@ namespace yq {
             }
         }
         
-        void    TextEdit::draw() 
+        void    TextArea::draw() 
         {
             using namespace ImGui;
             m_withinRender  = true;
@@ -317,7 +319,7 @@ namespace yq {
                 ImGuiWindowFlags    flags   = ImGuiWindowFlags_NoMove;
                 if(!m_settings.softWrap)
                     flags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
-                if(m_needsVScroll)
+                //if(m_needsVScroll)
                     flags |= ImGuiWindowFlags_AlwaysVerticalScrollbar;
                 BeginChild(m_title.c_str(), m_size, m_border, flags);
             }
@@ -339,15 +341,15 @@ namespace yq {
             m_withinRender  = false;
         }
 
-        void    TextEdit::handle_keyboard()
+        void    TextArea::handle_keyboard()
         {
         }
         
-        void    TextEdit::handle_mouse()
+        void    TextArea::handle_mouse()
         {
         }
 
-        void    TextEdit::render_content()
+        void    TextArea::render_content()
         {
             using namespace ImGui;
             ImFont*         font        = GetFont();
@@ -362,22 +364,20 @@ namespace yq {
                 ImGui::SetScrollY(0.f);
             }
 
-            auto drawList           = ImGui::GetWindowDrawList();
-            Vector2F  ul  = ImGui::GetWindowContentRegionMin();
-            Vector2F  lr  = ImGui::GetWindowContentRegionMax();
+            ImDrawList* drawList           = ImGui::GetWindowDrawList();
+            
             Vector2F    cpos    = ImGui::GetCursorScreenPos();
-            
-            ul += cpos;
-            lr += cpos;
-            
-            Vector2F  mid   = 0.5f*(ul+lr);
-            
+            AxBox2F     bounds  = { cpos + (Vector2F) GetWindowContentRegionMin(), cpos + (Vector2F) GetWindowContentRegionMax() };
+            bounds.lo          += m_margins.lo;
+            bounds.hi          -= m_margins.hi;
+            Vector2F    mid     = center(bounds);
             
             
-            drawList->AddRectFilled(ul, mid, Color(color::AirForceBlue));
-            drawList->AddRectFilled({mid.x, ul.y}, { lr.x, mid.y },  Color(color::BubbleGum));
-            drawList->AddRectFilled({ul.x, mid.y}, { mid.x, lr.y }, Color(color::ElectricViolet));
-            drawList->AddRectFilled(mid, lr, Color(color::Emerald));
+            
+            drawList->AddRectFilled(bounds.lo, mid, Color(color::AirForceBlue));
+            drawList->AddRectFilled({mid.x, bounds.lo.y}, { bounds.hi.x, mid.y },  Color(color::BubbleGum));
+            drawList->AddRectFilled({bounds.lo.x, mid.y}, { mid.x, bounds.hi.y }, Color(color::ElectricViolet));
+            drawList->AddRectFilled(mid, bounds.hi, Color(color::Emerald));
             
             
             
@@ -414,11 +414,11 @@ namespace yq {
         }
 
 
-        void    TextEdit::colorize()
+        void    TextArea::colorize()
         {
         }
 
-        void    TextEdit::reset_colors()
+        void    TextArea::reset_colors()
         {
             for(Line& l : m_lines)
                 for(Glyph& g : l.glyphs)

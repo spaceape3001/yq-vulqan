@@ -47,7 +47,7 @@ add_library(yqvulqan SHARED
 #    ./engine/vulqan/VqObjectFrame.cpp
     ./engine/vulqan/VqPipeline.cpp
     
-    ./widget/TextEdit.cpp
+    ./widget/TextArea.cpp
 
 
 )

@@ -32,8 +32,8 @@ namespace yq {
             This is loosely based on https://github.com/BalazsJako/ImGuiColorTextEdit, but needed too much cleanup 
             to do anything except rewrite it.
         */
-        class TextEdit : public engine::Widget {
-            YQ_OBJECT_DECLARE(TextEdit, engine::Widget)
+        class TextArea : public engine::Widget {
+            YQ_OBJECT_DECLARE(TextArea, engine::Widget)
         public:
         
             static constexpr const uint8_t  MAX_TAB         = 32;
@@ -124,8 +124,8 @@ namespace yq {
             //static const Palette&   light_palette();
             //static const Palette&   retro_blue_palette();
 
-            TextEdit();
-            ~TextEdit();
+            TextArea();
+            ~TextArea();
             
             float               bottom_margin() const { return m_margins.hi.y; }
 
@@ -256,7 +256,7 @@ namespace yq {
             std::string             m_title             = "Untitled";
             Vector2F                m_size              = {};
             float                   m_scale             = 1.0f;
-            AxBox2F                 m_margins           = { { 10.f, 10.f }, { 10.f, 10.f }};
+            AxBox2F                 m_margins           = {}; // { { 1.f, 1.f }, { 1.f, 1.f }};
             bool                    m_readonly          = false;
             bool                    m_overwrite         = false;
             bool                    m_handleKeyboard    = true;

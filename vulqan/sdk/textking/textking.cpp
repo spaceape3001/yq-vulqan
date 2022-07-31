@@ -22,7 +22,7 @@
 #include <ImGuiFileDialog.h>
 #include <basic/FileUtils.hpp>
 #include <basic/TextUtils.hpp>
-#include <widget/TextEdit.hpp>
+#include <widget/TextArea.hpp>
 
 using namespace yq;
 using namespace yq::engine;
@@ -118,13 +118,13 @@ public:
 
     N2Editor(const std::filesystem::path& fpath=std::filesystem::path())
     {
-        m_edit  = new widget::TextEdit;
+        m_edit  = new widget::TextArea;
         m_edit -> set_text(szSpeech);
     }
     
     void    draw() override;
     
-    Ref<widget::TextEdit>       m_edit;
+    Ref<widget::TextArea>       m_edit;
 };
 
 void GTEditor::draw()
@@ -147,6 +147,7 @@ void    N2Editor::draw()
     //auto cpos   = GetCursorPosition();
     PushID((int) id());
     PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 0.0f));
+    PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
     Begin("N2Editor", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
     SetWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
     //Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, GetTotalLines(),
@@ -155,6 +156,7 @@ void    N2Editor::draw()
 			//GetLanguageDefinition().mName.c_str(), m_path.c_str());
     m_edit -> draw();
     End();
+    PopStyleVar();
     PopStyleVar();
     PopID();
 }

@@ -120,6 +120,7 @@ public:
     {
         m_edit  = new widget::TextArea;
         m_edit -> set_text(szSpeech);
+yInfo() << "Line count is " << m_edit -> line_count();        
     }
     
     void    draw() override;

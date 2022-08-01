@@ -11,6 +11,7 @@
 #include <basic/IterUtf8.hpp>
 #include <basic/TextUtils.hpp>
 #include <basic/stream/Text.hpp>
+#include <basic/Logging.hpp>
 #include <math/AxBox2.hpp>
 #include <math/vector_math.hpp>
 #include <math/shape_math.hpp>
@@ -75,6 +76,9 @@ namespace yq {
                 { IM_COL32( 0xe0, 0xe0, 0xe0, 0xff )}, // Caret
                 { IM_COL32( 0x20, 0x60, 0xa0, 0x80 )}, // Selection
                 { IM_COL32( 0x00, 0x70, 0x70, 0xff )}, // Line number
+                { IM_COL32( 0x20, 0x20, 0x20, 0xFF )}, // Line Number Fill
+                { IM_COL32( 0xa0, 0xa0, 0xa0, 0xFF )}, // Vert Edge 
+                { IM_COL32( 0x20, 0x20, 0x20, 0xFF )}, // Vert Edge Fill
                 { IM_COL32( 0x56, 0x9c, 0xd6, 0xff )}, // Keyword	
                 { IM_COL32( 0x00, 0xff, 0x00, 0xff )}, // Number
                 { IM_COL32( 0xe0, 0x70, 0x70, 0xff )}, // String
@@ -348,69 +352,133 @@ namespace yq {
         void    TextArea::handle_mouse()
         {
         }
-
-        void    TextArea::render_content()
+        
+        template <typename T> 
+        struct TextArea::Frame {
+            T       left, right, top, bottom;
+        };
+        
+        template <typename T> 
+        log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&log, const TextArea::Frame<T>&f)
         {
-            using namespace ImGui;
-            ImFont*         font        = GetFont();
-            
-            float           fontSize    = m_scale * GetFontSize();
-            Vector2F        textSize    = font->CalcTextSizeA(fontSize, FLT_MAX, -1.0f, "#", nullptr, nullptr);
-            textSize.y     *= m_settings.lineSpacing;
-            bake_palette(GetStyle().Alpha);
-            
+            return log << "[(" << f.left << "," << f.top << ")>>(" << f.right << "," << f.bottom << ")]";
+        }
+        
+        struct TextArea::Layout {
+            Frame<float>    full, text, line;
+            Vector2F        element;
+            float           fontSize;
+            ImFont*         font;
+            float           textLine, vertLine;
+            float           textWidth, textHeight;
+            uint32_t        charWidth, charHeight;
+            float           scrollX, scrollY;
+            Frame<uint32_t> chars;       // ignores wrapping
+        };
+
+        void    TextArea::compute_layout(Layout&lay)
+        {
+            lay.font        = ImGui::GetFont();
+            lay.fontSize    = m_scale * ImGui::GetFontSize();
+            lay.element     = lay.font->CalcTextSizeA(lay.fontSize, FLT_MAX, -1.0f, "#", nullptr, nullptr);
+            lay.element.y  *= m_settings.lineSpacing;
+
             if(m_scrollToTop){
                 m_scrollToTop   = false;
                 ImGui::SetScrollY(0.f);
             }
 
-            ImDrawList* drawList           = ImGui::GetWindowDrawList();
-            
             Vector2F    cpos    = ImGui::GetCursorScreenPos();
-            AxBox2F     bounds  = { cpos + (Vector2F) GetWindowContentRegionMin(), cpos + (Vector2F) GetWindowContentRegionMax() };
-            bounds.lo          += m_margins.lo;
-            bounds.hi          -= m_margins.hi;
-            Vector2F    mid     = center(bounds);
+            Vector2F    ul  = cpos + (Vector2F) ImGui::GetWindowContentRegionMin();
+            Vector2F    lr  = cpos + (Vector2F) ImGui::GetWindowContentRegionMax();
             
+            lay.full.left   = ul.x;
+            lay.full.right  = lr.x;
+            lay.full.bottom = lr.y;
+            lay.full.top    = ul.y;
             
+            lay.text.top    = ul.y + m_margins.lo.y;
+            lay.text.right  = lr.x - m_margins.hi.x;
+            lay.text.bottom = lr.y - m_margins.hi.y;
             
-            drawList->AddRectFilled(bounds.lo, mid, Color(color::AirForceBlue));
-            drawList->AddRectFilled({mid.x, bounds.lo.y}, { bounds.hi.x, mid.y },  Color(color::BubbleGum));
-            drawList->AddRectFilled({bounds.lo.x, mid.y}, { mid.x, bounds.hi.y }, Color(color::ElectricViolet));
-            drawList->AddRectFilled(mid, bounds.hi, Color(color::Emerald));
-            
-            
-            
-            #if 0
-            
-            
-            auto contentSize        = ImGui::GetWindowContentRegionMax();
-            
-            
-            float           viewLeft    = contentSize.left + left_margin();
-            float           textLeft    = viewLeft;
-            
-            float           lineNumberWidth = 0;
+            lay.line.top    = lay.text.top;
+            lay.line.bottom = lay.text.bottom;
+            lay.line.left   = ul.x + m_margins.lo.x;
+            lay.textLine    = lay.line.left;
             
             if(m_settings.lineNumbers){
                 char    buffer[64];
-                sprintf(buffer, " %ld ", (long int) m_lines.size());
-                textLeft += font->CalcTextSizeA(fontSize, FLT_MAX, -1.0f, buffer, nullptr, nullptr).x;
+                sprintf(buffer, "#%ld#", (long int) (m_lines.size()+1));
+                float width  = lay.font->CalcTextSizeA(lay.fontSize, FLT_MAX, -1.0f, buffer, nullptr, nullptr).x;
+                
+                yInfo() << "Size of '" << buffer << "' is " << width;
+                
+                lay.textLine += width;
             }
             
-            float           textRight   = contentSize.y - right_margin();
-            float           textTop     = top_margin();
-            float           textBottom  = contentSize.y - bottom_margin();
+            lay.line.right  = lay.textLine;
+            lay.text.left   = lay.textLine;
             
+            lay.textWidth       = lay.text.right - lay.text.left;
+            lay.textHeight      = lay.text.bottom - lay.text.top;
             
+            lay.charWidth       = (uint32_t)(floor(lay.textWidth / lay.element.x) + 0.1f);
+            lay.charHeight      = (uint32_t)(floor(lay.textHeight / lay.element.y) + 0.1f);
             
+            lay.scrollX         = ImGui::GetScrollX();
+            lay.scrollY         = ImGui::GetScrollY();
             
-            // Color
-            drawList->AddRectFilled( {0, 0}, {textLeft, textTop}, Color( color::AirForceBlue ));
-            drawList->AddRectFilled( {0, textBottom}, {textLeft, contentSize.y}, Color(color::BubbleGum));
-            drawList->AddRectFilled( {textRight, 0}, {contentSize.x, textTop }, Color(color::ElectricViolet));
-            drawList->AddRectFilled( {textRight,textBottom}, {contentSize.x, contentSize.y}, Color(color::Emerald));
-            #endif
+            lay.chars.top       = (uint32_t)(floor(lay.scrollY / lay.element.y) + 0.1f);
+            lay.chars.left      = (uint32_t)(floor(lay.scrollX / lay.element.x) + 0.1f);
+            lay.chars.bottom    = (uint32_t)(ceil((lay.scrollY+lay.textHeight) / lay.element.y) + 0.1f);
+            lay.chars.right     = (uint32_t)(ceil((lay.scrollX+lay.textWidth) / lay.element.x) + 0.1f);
+        }
+        
+
+        void    TextArea::render_content()
+        {
+            Layout          lay{};
+            compute_layout(lay);
+
+            bake_palette(ImGui::GetStyle().Alpha);
+            ImDrawList* drawList    = ImGui::GetWindowDrawList();
+            
+            char    buffer[64];
+            int     lnumdig = digits(m_lines.size()+1);
+
+            auto renderNumber = [&](float y0, uint32_t number) {
+                snprintf(buffer, sizeof(buffer), " %ld ", (long int) number);
+                int n   = strlen(buffer);
+                float x  = lay.line.left; //  + lay.element.x * (lnumdig-n);
+                drawList -> AddText( { x, y0 }, color(Style::LineNumber), buffer);
+            };
+
+            auto renderLine = [&](const CoordSpan& cs, float y0){
+                //  TODO.....
+            };
+            
+            if(m_settings.lineNumbers){
+                drawList->AddRectFilled( { lay.line.left, lay.line.top}, { lay.line.right, lay.line.bottom }, color(Style::LineNumberFill));
+            }
+
+            if(m_settings.vertLine && (lay.chars.left < m_settings.vertLine) && (m_settings.vertLine <= lay.chars.right)){
+                float   x   = lay.text.left + (m_settings.vertLine - lay.chars.left) * lay.element.x;
+                drawList->AddRectFilled( {  x, lay.text.top}, {lay.text.right, lay.text.bottom}, color(Style::VertEdgeFill));
+                drawList->AddLine( { x, lay.text.top}, {x, lay.text.bottom}, color(Style::VertEdge ));
+            }
+            
+            //  We'll drive this stupidly at first
+            for(uint32_t n=lay.chars.top; n<=lay.chars.bottom; ++n){
+                float   y0  = lay.text.top + (n-lay.chars.top) * lay.element.y;
+                if(m_settings.lineNumbers){
+                    renderNumber(y0, n+1);
+                }
+                renderLine(CoordSpan{n, lay.chars.left, lay.chars.right}, y0);
+            }
+
+            
+            drawList->AddRect( { lay.text.left, lay.text.top}, { lay.text.right, lay.text.bottom }, ImGui::Color(color::Fern) );
+            
         }
 
 

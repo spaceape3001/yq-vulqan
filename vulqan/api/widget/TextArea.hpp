@@ -91,6 +91,9 @@ namespace yq {
                 Caret,
                 Selection,
                 LineNumber,
+                LineNumberFill,
+                VertEdge,
+                VertEdgeFill,
                 Keyword,
                 Number,
                 String,
@@ -208,6 +211,8 @@ namespace yq {
             
             void                undo();
             void                redo();
+
+            template <typename T> struct Frame;
           
         private:
         
@@ -217,7 +222,7 @@ namespace yq {
                 uint32_t            hardWrap            = UINT32_MAX;
                 bool                softWrap            = false;
                 bool                keepWords           = true;             // will keep words together
-                uint16_t            vertLine            = 40;               // zero will disable
+                uint16_t            vertLine            = 80;               // zero will disable
                 bool                lineNumbers         = true;             // show line numbers (if enabled)
                 bool                showWhitespace      = false;
                 float               lineSpacing         = 1.f;
@@ -280,6 +285,10 @@ namespace yq {
             void        apply_remove(const Action&);
             
             void        bake_palette(float a=1.f);
+            
+            struct Layout;
+            
+            void        compute_layout(Layout&);
         };
         
     }

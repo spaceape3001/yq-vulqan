@@ -13,7 +13,7 @@
 #include <basic/stream/Text.hpp>
 #include <basic/Logging.hpp>
 #include <math/AxBox2.hpp>
-#include <math/vector_math.hpp>
+
 #include <math/shape_math.hpp>
 
     //  for debugging
@@ -130,12 +130,16 @@ namespace yq {
 
         void    TextArea::Line::add(std::string_view sv)
         {
-            iter_utf8(sv, [&](char32_t ch){
+            iter_utf8(sv, [&](const char* z, int n, char32_t ch){
                 if(ch == '\n')
                     return;
                 if(ch == '\r') // return to sender, you filthy animal!
                     return;
-                glyphs.push_back(Glyph{ch});
+                Glyph   g;
+                g.character = ch;
+                strncpy(g.text, z, n);
+                g.text[sizeof(g.text)-1] = '\0';
+                glyphs.push_back(g);
             });
         }
 
@@ -411,7 +415,7 @@ namespace yq {
                 sprintf(buffer, "#%ld#", (long int) (m_lines.size()+1));
                 float width  = lay.font->CalcTextSizeA(lay.fontSize, FLT_MAX, -1.0f, buffer, nullptr, nullptr).x;
                 
-                yInfo() << "Size of '" << buffer << "' is " << width;
+                //yInfo() << "Size of '" << buffer << "' is " << width;
                 
                 lay.textLine += width;
             }
@@ -447,13 +451,26 @@ namespace yq {
             int     lnumdig = digits(m_lines.size()+1);
 
             auto renderNumber = [&](float y0, uint32_t number) {
-                snprintf(buffer, sizeof(buffer), " %ld ", (long int) number);
-                int n   = strlen(buffer);
-                float x  = lay.line.left; //  + lay.element.x * (lnumdig-n);
-                drawList -> AddText( { x, y0 }, color(Style::LineNumber), buffer);
+                snprintf(buffer, sizeof(buffer), " %*ld ", (int) lnumdig, (long int) number);
+                drawList -> AddText( { lay.line.left, y0 }, color(Style::LineNumber), buffer);
             };
 
             auto renderLine = [&](const CoordSpan& cs, float y0){
+            
+                if(cs.line >= m_lines.size())
+                    return ;
+                    
+                const Line&   l   = m_lines[cs.line];
+                for(uint32_t n=cs.start;n<=cs.end;++n){
+                    
+                    if(n >= l.glyphs.size())
+                        continue;
+                    const Glyph& g  = l.glyphs[n];
+                
+                    float   x   = lay.text.left + (n-cs.start) * lay.element.x;
+                 //   drawList->AddText( {x, y0}, m_palette.entries[g.
+                }
+            
                 //  TODO.....
             };
             

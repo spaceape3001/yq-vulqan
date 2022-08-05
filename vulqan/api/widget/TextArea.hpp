@@ -58,32 +58,6 @@ namespace yq {
                 VERTICAL
             };
         
-            /*! Text edit coordinate
-                
-                Anything BEYOND 4 billion is out of scope for this widget.  (Even 16-bit is kinda debatable)
-            */
-            struct Coord {
-                uint32_t    line    = 0;
-                uint32_t    column  = 0;
-
-                constexpr auto operator<=>(const Coord&) const noexcept = default;
-            };
-
-            struct Glyph {
-                char32_t    character;
-                uint8_t     style     = 0;
-            };
-            
-            struct Line {
-                std::vector<Glyph>  glyphs;
-                uint8_t             lines = 0;
-                
-                void            add(std::string_view);
-                void            stream(Stream&) const;
-                std::string     text() const;
-                std::u32string  utf32() const;
-            };
-            
             //  common styles
             enum class Style : uint8_t {
                 Default     = 0,
@@ -121,6 +95,35 @@ namespace yq {
                 static constexpr const size_t   N   = 256;
                 std::array<PaletteEntry, N>     entries;
             };
+
+            /*! Text edit coordinate
+                
+                Anything BEYOND 4 billion is out of scope for this widget.  (Even 16-bit is kinda debatable)
+            */
+            struct Coord {
+                uint32_t    line    = 0;
+                uint32_t    column  = 0;
+
+                constexpr auto operator<=>(const Coord&) const noexcept = default;
+            };
+
+            struct Glyph {
+                char        text[8];
+                char32_t    character;
+                uint8_t     style       = 0;
+                //uint8_t     background  = 0;
+            };
+            
+            struct Line {
+                std::vector<Glyph>  glyphs;
+                uint8_t             lines = 0;
+                
+                void            add(std::string_view);
+                void            stream(Stream&) const;
+                std::string     text() const;
+                std::u32string  utf32() const;
+            };
+            
 
 
             static const Palette&   dark_palette();

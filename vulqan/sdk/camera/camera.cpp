@@ -27,7 +27,6 @@
 #include <math/RGB.hpp>
 #include <math/Vector2.hpp>
 #include <math/shape_math.hpp>
-#include <math/vector_math.hpp>
 #include <math/Units.hpp>
 #include <math/trig.hpp>
 #include <math/QuadrilateralData.hpp>

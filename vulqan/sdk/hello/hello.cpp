@@ -36,7 +36,7 @@
 #include <engine/vulqan/VqPipeline.hpp>
 #include <math/RGB.hpp>
 #include <math/Vector2.hpp>
-#include <math/shape_math.hpp>
+#include <math/shape_utils.hpp>
 #include <math/Triangle2.hpp>
 #include <math/Triangle3.hpp>
 #include <iostream>

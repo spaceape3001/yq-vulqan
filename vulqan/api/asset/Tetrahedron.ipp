@@ -8,7 +8,7 @@
 
 #include "Tetrahedron.hpp"
 #include <math/TetrahedronData.hpp>
-#include <math/shape_math.hpp>
+#include <math/shape_utils.hpp>
 #include <engine/render/RenderWriter.hpp>
 #include <engine/Shader.hpp>
 #include <basic/preamble.hpp>

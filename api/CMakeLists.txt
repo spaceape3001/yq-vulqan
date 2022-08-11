@@ -6,11 +6,6 @@
 
 # project(yqvulqan)
 
-include(${YOUR_QUILL_EXTERNAL}/stb.cmake)
-include(${YOUR_QUILL_EXTERNAL}/vma.cmake)
-include(${YOUR_QUILL_EXTERNAL}/imgui.cmake)
-
-
 find_package(GLFW3 REQUIRED)
 
 set(VULKAN_DIR $ENV{VULKAN_SDK})

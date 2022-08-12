@@ -15,4 +15,5 @@ add_subdirectory(api)
 add_subdirectory(test)
 add_subdirectory(tool)
 add_subdirectory(sdk)
+add_subdirectory(plugin)
 

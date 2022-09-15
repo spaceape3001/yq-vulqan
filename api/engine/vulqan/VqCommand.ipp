@@ -24,7 +24,7 @@ namespace yq {
                 }
                 
                 if(cmd.push_mask)
-                    vkCmdPushConstants(buffer, layout, cmd.push_mask, 0, cmd.push.count(), cmd.push.data());
+                    vkCmdPushConstants(buffer, layout, cmd.push_mask, 0, cmd.push.size(), cmd.push.data());
                 
                 if(cmd.vbo){
                     const auto& v = *(cmd.vbo);

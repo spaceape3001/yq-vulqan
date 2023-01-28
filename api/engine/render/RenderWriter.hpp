@@ -389,19 +389,19 @@ namespace yq {
         private:
         
             template <typename T>
-            void        index(IndexBufferObjectInfo* buffer, DataActivity::enum_t act, uint32_t loc)
+            void        index(IndexBufferObjectInfo* buffer, DataActivity::enum_t act, uint32_t)
             {
                 buffer -> set_data_activity(act);
                 buffer -> set_index_type(index_type<T>());
             }
 
             template <typename T>
-            void        uniform(UniformBufferObjectInfo* buffer, DataActivity::enum_t act, uint32_t loc)
+            void        uniform(UniformBufferObjectInfo*, DataActivity::enum_t, uint32_t)
             {
             }
             
             template <typename V>
-            PipelineBuilder::VBO<V> vertex(VertexBufferObjectInfo* buffer, DataActivity::enum_t act, uint32_t loc)
+            PipelineBuilder::VBO<V> vertex(VertexBufferObjectInfo* buffer, DataActivity::enum_t act, uint32_t)
             {
                 buffer -> set_data_activity(act);
                 return PipelineBuilder::VBO<V>(this, 

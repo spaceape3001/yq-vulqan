@@ -43,11 +43,11 @@ namespace yq {
             VkDebugReportFlagsEXT                       flags,
             VkDebugReportObjectTypeEXT                  objectType,
             uint64_t                                    object,
-            size_t                                      location,
-            int32_t                                     messageCode,
+            [[maybe_unused]] size_t                     location,
+            [[maybe_unused]] int32_t                    messageCode,
             const char*                                 pLayerPrefix,
             const char*                                 pMessage,
-            void*                                       pUserData
+            [[maybe_unused]] void*                      pUserData
         )
         {
             log4cpp::CategoryStream         yell    = (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) ? vqError : ((flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) ? vqWarning : vqInfo);

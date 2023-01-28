@@ -11,6 +11,11 @@
 namespace yq {
     namespace engine {
         Undo::~Undo() = default;
+
+        bool Undo::combine(Undo*) 
+        { 
+            return false; 
+        }
     }
 }
 

@@ -8,6 +8,7 @@
 
 #include "Quadrilateral.hpp"
 #include <math/QuadrilateralData.hpp>
+#include <math/Vector3.hxx>
 #include <math/shape_utils.hpp>
 #include <engine/render/RenderWriter.hpp>
 #include <engine/Shader.hpp>

@@ -16,9 +16,9 @@ namespace yq {
             virtual void redo() {}
             
             //! Allows undos to combine (ie, text and more text)
-            virtual bool combine(Undo* next) { return false; }
+            virtual bool combine(Undo* next);
             
-            const std::string&  label() const { return m_label; }
+            std::string_view   label() const { return m_label; }
             
             virtual ~Undo();
             

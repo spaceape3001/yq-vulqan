@@ -85,11 +85,11 @@ namespace yq {
             }
         }
         
-        void  Viewer::callback_drop(GLFWwindow* window, int count, const char** paths)
+        void  Viewer::callback_drop([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int count, [[maybe_unused]] const char** paths)
         {
         }
         
-        void  Viewer::callback_framebuffer_size(GLFWwindow* window, int width, int height)
+        void  Viewer::callback_framebuffer_size(GLFWwindow* window, [[maybe_unused]] int width, [[maybe_unused]] int height)
         {
             Viewer    *v  = (Viewer*) glfwGetWindowUserPointer(window);
             if(v){
@@ -100,7 +100,7 @@ namespace yq {
             yInfo() << "Frame size changed!";
         }
         
-        void  Viewer::callback_joystick(int jid, int event)
+        void  Viewer::callback_joystick([[maybe_unused]] int jid, [[maybe_unused]] int event)
         {
             yInfo() << "Joystick callback";
         }
@@ -127,7 +127,7 @@ namespace yq {
             yInfo() << "Scroll Wheel button!";
         }
 
-        void  Viewer::callback_window_close(GLFWwindow* window)
+        void  Viewer::callback_window_close(GLFWwindow*)
         {
             yInfo() << "Window close requested";
         }
@@ -138,32 +138,32 @@ namespace yq {
             yInfo() << "Window focus changed!";
         }
         
-        void  Viewer::callback_window_iconify(GLFWwindow* window, int iconified)
+        void  Viewer::callback_window_iconify(GLFWwindow*, int)
         {
             yInfo() << "Viewer iconified";
         }
         
-        void  Viewer::callback_window_maximize(GLFWwindow* window, int maximized)
+        void  Viewer::callback_window_maximize(GLFWwindow*, int)
         {
             yInfo() << "Viewer maximized";
         }
         
-        void  Viewer::callback_window_position(GLFWwindow* window, int xpos, int ypos)
+        void  Viewer::callback_window_position(GLFWwindow*, int, int)
         {
             yInfo() << "Viewer moved!";
         }
         
-        void  Viewer::callback_window_refresh(GLFWwindow* window)
+        void  Viewer::callback_window_refresh(GLFWwindow*)
         {
             yInfo() << "Viewer refresh!"; // (ignoring)
         }
         
-        void  Viewer::callback_window_scale(GLFWwindow* window, float xscale, float yscale)
+        void  Viewer::callback_window_scale(GLFWwindow*, float, float)
         {
             yInfo() << "Viewer rescaled!";
         }
         
-        void  Viewer::callback_window_size(GLFWwindow* window, int x, int y)
+        void  Viewer::callback_window_size(GLFWwindow* window, int, int)
         {
             Viewer    *v  = (Viewer*) glfwGetWindowUserPointer(window);
             if(v){
@@ -315,7 +315,7 @@ namespace yq {
             return true;
         }
 
-        void    Viewer::draw_vulqan(VkCommandBuffer cmdbuf)
+        void    Viewer::draw_vulqan(VkCommandBuffer)
         {
         }
 

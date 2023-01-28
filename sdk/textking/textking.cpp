@@ -116,7 +116,7 @@ class N2Editor : public engine::Widget {
     YQ_OBJECT_DECLARE(N2Editor, engine::Widget)
 public:
 
-    N2Editor(const std::filesystem::path& fpath=std::filesystem::path())
+    N2Editor([[maybe_unused]] const std::filesystem::path& fpath=std::filesystem::path())
     {
         m_edit  = new widget::TextArea;
         m_edit -> set_text(szSpeech);

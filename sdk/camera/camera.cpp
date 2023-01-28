@@ -33,6 +33,7 @@
 #include <math/TetrahedronData.hpp>
 #include <math/Triangle2.hpp>
 #include <math/Triangle3.hpp>
+#include <math/Vector3.hxx>
 #include <MyImGui.hpp>
 #include <chrono>
 

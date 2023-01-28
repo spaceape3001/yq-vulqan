@@ -13,6 +13,7 @@
 #include <basic/stream/Text.hpp>
 #include <basic/Logging.hpp>
 #include <math/AxBox2.hpp>
+#include <math/Vector2.hxx>
 
 #include <math/shape_utils.hpp>
 

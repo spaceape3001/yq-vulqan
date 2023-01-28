@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <math/Tensor44.hxx>
 #include "NullCamera.ipp"
 #include "Quadrilateral.ipp"
 #include "SpaceCamera.ipp"
@@ -11,3 +12,4 @@
 #include "TargetCamera.ipp"
 #include "Tetrahedron.ipp"
 #include "Triangle.ipp"
+

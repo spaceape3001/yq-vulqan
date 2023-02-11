@@ -22,7 +22,7 @@ namespace yq {
             DataActivity    freq;
         };
         
-        class VqPipeline : trait::not_copyable, trait::not_moveable {
+        class VqPipeline : not_copyable, not_moveable {
         public:
         
             VqPipeline(Visualizer&, const PipelineConfig&);

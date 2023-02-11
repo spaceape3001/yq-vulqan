@@ -15,7 +15,7 @@ namespace yq {
     namespace engine {
         struct Visualizer;
         
-        class VqBuffer : trait::not_copyable {
+        class VqBuffer : not_copyable {
         public:
         
         

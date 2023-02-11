@@ -44,7 +44,7 @@ namespace yq {
         
             Most all engine components will query the cache for the data, if not present, loads it.  (Compiling first, if necessary)
         */
-        class AssetCache : public Object, trait::not_copyable, trait::not_moveable {
+        class AssetCache : public Object, not_copyable, not_moveable {
             YQ_OBJECT_INFO(AssetCacheInfo)
             YQ_OBJECT_DECLARE(AssetCache, Object)
         public:

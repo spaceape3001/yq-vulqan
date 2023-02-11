@@ -45,7 +45,7 @@ namespace yq {
             This encapsulates the GLFW & Vulkan into a single window, requires
             a Vulkan instance.
         */
-        class Viewer : public Object, public RefCount, trait::not_copyable, trait::not_moveable {
+        class Viewer : public Object, public RefCount, not_copyable, not_moveable {
             YQ_OBJECT_INFO(WindowInfo)
             YQ_OBJECT_DECLARE(Viewer, Object)
         public:

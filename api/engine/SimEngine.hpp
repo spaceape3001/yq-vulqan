@@ -13,7 +13,7 @@
 
 namespace yq {
     namespace engine {
-        class SimEngine : public Object, trait::not_copyable, trait::not_moveable {
+        class SimEngine : public Object, not_copyable, not_moveable {
             YQ_OBJECT_DECLARE(SimEngine, Object)
         public:
             SimEngine();

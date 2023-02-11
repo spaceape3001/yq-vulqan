@@ -9,6 +9,7 @@
 #include <basic/DelayInit.hpp>
 #include <basic/meta/Init.hpp>
 #include <atomic>
+#include <math/Quaternion3.hxx>
 #include <math/Tensor44.hxx>
 
 namespace yq {

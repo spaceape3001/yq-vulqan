@@ -61,7 +61,7 @@ namespace yq {
 
 
         template <typename V>
-        class PipelineBuilder::VBO : public VBOConfig, trait::not_copyable {
+        class PipelineBuilder::VBO : public VBOConfig, not_copyable {
         public:
         
             VBO(PipelineBuilder* cfg, std::function<void(uint32_t)> info={}) : m_builder(cfg), m_info(info)

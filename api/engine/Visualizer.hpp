@@ -49,7 +49,7 @@ namespace yq {
         using ViShaderCPtr  = Ref<const ViShader>;
 
 
-        struct ViBuffer : trait::not_copyable, trait::not_moveable {
+        struct ViBuffer : not_copyable, not_moveable {
             std::unique_ptr<VqBuffer>   vq;
             uint64_t                    rev = 0;
             
@@ -57,7 +57,7 @@ namespace yq {
             ~ViBuffer();
         };
 
-        struct ViBufferMap : trait::not_copyable, trait::not_moveable {
+        struct ViBufferMap : not_copyable, not_moveable {
             std::map<uint64_t, ViBuffer*>    buffers;
             std::pair<ViBuffer*,bool>    buffer(uint64_t i)
             {

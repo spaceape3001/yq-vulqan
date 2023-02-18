@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <math/Quaternion3.hxx>
+#include <math/Size2.hxx>
 #include <math/Tensor44.hxx>
 #include "NullCamera.ipp"
 #include "Quadrilateral.ipp"

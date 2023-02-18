@@ -13,7 +13,7 @@
 namespace yq {
     namespace engine {
         VqVidMode::VqVidMode(const GLFWvidmode&g) : 
-            size({g.width, g.height}), 
+            size(g.width, g.height), 
             bits({ g.redBits, g.greenBits, g.blueBits}), 
             refresh_rate(g.refreshRate)
         {

@@ -41,7 +41,7 @@
 #include <engine/vulqan/VqStructs.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 
-#include <math/Size2.hpp>
+#include <math/Size2.hxx>
 #include <math/Vector2.hpp>
 
 #include <algorithm>

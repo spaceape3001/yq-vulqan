@@ -6,8 +6,8 @@
 
 #include "Application.hpp"
 #include "Viewer.hpp"
-#include <engine/vulqan/VqLogging.hpp>
-#include <engine/vulqan/VqStructs.hpp>
+#include <vulqan/VqLogging.hpp>
+#include <vulqan/VqStructs.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 
 #include <basic/Logging.hpp>
@@ -150,6 +150,8 @@ namespace yq {
 
         bool        Application::init_vulkan()
         {
+            using namespace vulqan;
+
             init_glfw();
             if(m_vulkan)
                 return true;

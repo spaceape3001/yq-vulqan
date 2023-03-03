@@ -24,4 +24,5 @@ namespace yq {
         )
     }
 }
+
 YQ_TYPE_DECLARE(yq::engine::ImageType)

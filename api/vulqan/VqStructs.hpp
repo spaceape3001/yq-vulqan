@@ -12,7 +12,7 @@
 #include <vulkan/vulkan_core.h>
 
 namespace yq {
-    namespace engine {
+    namespace vulqan {
         struct VqAccelerationStructureBuildGeometryInfoKHR : public VkAccelerationStructureBuildGeometryInfoKHR {
             VqAccelerationStructureBuildGeometryInfoKHR() : VkAccelerationStructureBuildGeometryInfoKHR{} 
             {

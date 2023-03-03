@@ -8,6 +8,7 @@
 #include <basic/CollectionUtils.hpp>
 #include <engine/Application.hpp>
 #include <GLFW/glfw3.h>
+#include <vulqan/errors.hpp>
 
 namespace yq {
     namespace engine {
@@ -91,15 +92,15 @@ namespace yq {
         }
 
 
-        Result<uint32_t>                vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&queues)
+        Expect<uint32_t>                vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&queues)
         {
             for(uint32_t i=0;i<queues.size();++i)
                 if(queues[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
-                    return { i, true };
-            return {};
+                    return i;
+            return errors::no_queue_found();
         }
 
-        Result<uint32_t>                vqFindFirstPresentQueue(VkPhysicalDevice dev, VkSurfaceKHR srf)
+        Expect<uint32_t>                vqFindFirstPresentQueue(VkPhysicalDevice dev, VkSurfaceKHR srf)
         {
             uint32_t        count = 0;
             vkGetPhysicalDeviceQueueFamilyProperties(dev,&count,nullptr);
@@ -107,9 +108,9 @@ namespace yq {
                 VkBool32 presentSupport = false;
                 vkGetPhysicalDeviceSurfaceSupportKHR(dev, i, srf, &presentSupport);
                 if(presentSupport)
-                    return { i, true };
+                    return i;
             }
-            return {};
+            return errors::no_queue_found();
         }
 
         VqQueueFamilyIndices                 vqFindQueueFamilies(VkPhysicalDevice dev, VkSurfaceKHR srf)

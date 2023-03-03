@@ -8,7 +8,7 @@
 
 #include <engine/render/Render3D.hpp>
 #include <array>
-#include <math/ColorVertexData.hpp>
+#include <data/ColorVertexData.hpp>
 
 namespace yq {
     namespace asset {

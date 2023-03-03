@@ -9,12 +9,14 @@
 #include "VqBuffer.hpp"
 #include "VqException.hpp"
 #include <engine/Visualizer.hpp>
-#include "VqStructs.hpp"
+#include <vulqan/VqStructs.hpp>
 
 namespace yq {
     namespace engine {
         VqBuffer::VqBuffer(Visualizer&viz, VkBufferUsageFlags uf, const void* data, size_t sz) 
         {
+            using namespace vulqan;
+            
             assert(data);
             assert(sz);
             

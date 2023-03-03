@@ -36,12 +36,13 @@
 
 #include <engine/vulqan/VqBuffer.hpp>
 #include <engine/vulqan/VqException.hpp>
-#include <engine/vulqan/VqLogging.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
-#include <engine/vulqan/VqStructs.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 
-#include <math/Size2.hxx>
+#include <vulqan/VqStructs.hpp>
+#include <vulqan/VqLogging.hpp>
+
+#include <math/Size2.hpp>
 #include <math/Vector2.hpp>
 
 #include <algorithm>
@@ -53,8 +54,12 @@
 #include <backends/imgui_impl_vulkan.h>
 #include <backends/imgui_impl_glfw.h>
 
+#include <math/Size2.hxx>
+
 YQ_OBJECT_IMPLEMENT(yq::engine::Viewer)
 
+
+using namespace yq::vulqan;
 
 namespace yq {
     namespace engine {

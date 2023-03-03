@@ -6,9 +6,9 @@
 
 #include "VqException.hpp"
 #include <engine/Visualizer.hpp>
-#include "VqLogging.hpp"
+#include <vulqan/VqLogging.hpp>
 #include "VqPipeline.hpp"
-#include "VqStructs.hpp"
+#include <vulqan/VqStructs.hpp>
 
 #include <basic/Logging.hpp>
 #include <engine/Viewer.hpp>
@@ -17,6 +17,8 @@
 #include <engine/render/StdPushConstant.hpp>
 #include <math/Size2.hpp>
 #include <math/Rectangle2.hpp>
+
+using namespace yq::vulqan;
 
 namespace yq {
     namespace engine {

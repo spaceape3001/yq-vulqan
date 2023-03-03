@@ -6,10 +6,14 @@
 
 #pragma once
 
+#include <basic/preamble.hpp>
+#include <vulqan/preamble.hpp>
+#include <vulqan/VqStructs.hpp>
+
 #include <basic/Result.hpp>
 #include <vulkan/vulkan_core.h>
-#include <engine/vulqan/VqStructs.hpp>
 
+#include <expected>
 #include <optional>
 #include <set>
 #include <string>
@@ -46,8 +50,8 @@ namespace yq {
         std::set<std::string>                   vqNameSet(const std::vector<VkLayerProperties>&);
         VkQueueFlags                            vqOrFlags(const std::vector<VkQueueFamilyProperties>&);
 
-        Result<uint32_t>                        vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&);
-        Result<uint32_t>                        vqFindFirstPresentQueue(VkPhysicalDevice, VkSurfaceKHR);
+        Expect<uint32_t>                        vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&);
+        Expect<uint32_t>                        vqFindFirstPresentQueue(VkPhysicalDevice, VkSurfaceKHR);
         
         
 

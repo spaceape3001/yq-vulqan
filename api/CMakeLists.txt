@@ -7,6 +7,7 @@
 # project(yqvulqan)
 
 find_package(GLFW3 REQUIRED)
+find_package(glm REQUIRED)
 
 set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
@@ -19,6 +20,8 @@ endif()
 
 add_library(yqvulqan SHARED 
     ${test_source}
+    
+    vulqan/vulqan.cpp
     
     ./MyImGui.cpp
     
@@ -40,7 +43,7 @@ add_library(yqvulqan SHARED
        
 #    ./engine/vulqan/VqObject.cpp
 #    ./engine/vulqan/VqObjectFrame.cpp
-    ./engine/vulqan/VqPipeline.cpp
+     ./engine/vulqan/VqPipeline.cpp
     
     ./widget/TextArea.cpp
 
@@ -49,6 +52,7 @@ add_library(yqvulqan SHARED
 target_compile_definitions(yqvulqan 
     PUBLIC
         GLFW_INCLUDE_VULKAN=1
+        YQ_USE_GLM=1
     PRIVATE 
         "-DYQ_DATA_DIR=\"${CMAKE_CURRENT_LIST_DIR}/data\"" 
         VK_ENABLE_BETA_EXTENSIONS=1
@@ -66,6 +70,7 @@ target_link_libraries(yqvulqan
 target_include_directories(yqvulqan 
     PUBLIC 
         ${CMAKE_CURRENT_LIST_DIR}
+        ${glm_INCLUDE_DIR}
 )
 
 LinkTest(yqvulqan)

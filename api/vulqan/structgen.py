@@ -68,7 +68,7 @@ with open('VqStructs.hpp', 'w') as f:
 #include <vulkan/vulkan_core.h>
 
 namespace yq {
-    namespace engine {""")
+    namespace vulqan {""")
 
 
     for s in structs:

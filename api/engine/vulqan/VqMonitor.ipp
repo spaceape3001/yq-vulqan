@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "VqMonitor.hpp"
-#include <math/Vector2.hpp>
-#include <math/Rectangle2.hpp>
-#include <math/Size2.hpp>
+#include <math/vector/Vector2.hpp>
+#include <math/shape/Rectangle2.hpp>
+#include <math/shape/Size2.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq {

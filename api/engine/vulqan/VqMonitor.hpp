@@ -9,8 +9,8 @@
 #include <vector>
 #include <string>
 #include <math/preamble.hpp>
-#include <math/RGB.hpp>
-#include <math/Size2.hpp>
+#include <math/color/RGB.hpp>
+#include <math/shape/Size2.hpp>
 
 struct GLFWmonitor;
 struct GLFWvidmode;

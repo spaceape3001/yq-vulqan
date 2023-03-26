@@ -7,7 +7,7 @@
 #pragma once
 
 #include <engine/Asset.hpp>
-#include <math/Size3.hpp>
+#include <math/shape/Size3.hpp>
 
 namespace yq {
     namespace engine {

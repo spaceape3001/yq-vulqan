@@ -9,7 +9,7 @@
     as we play around with the camera.
 */
 
-#include <asset/Colors.hpp>
+#include <math/color/Colors.hpp>
 #include <asset/NullCamera.hpp>
 #include <asset/SpaceCamera.hpp>
 #include <asset/TargetCamera.hpp>
@@ -24,17 +24,17 @@
 #include <engine/Perspective.hpp>
 #include <engine/Viewer.hpp>
 
-#include <math/RGB.hpp>
-#include <math/Vector2.hpp>
-#include <math/shape_utils.hpp>
-#include <math/Units.hpp>
+#include <math/color/RGB.hpp>
+#include <math/vector/Vector2.hpp>
+#include <math/shape/shape_utils.hpp>
+#include <math/units.hpp>
 #include <math/trig.hpp>
-#include <math/QuadrilateralData.hpp>
-#include <math/TetrahedronData.hpp>
-#include <math/Triangle2.hpp>
-#include <math/Triangle3.hpp>
-#include <math/Quaternion3.hxx>
-#include <math/Vector3.hxx>
+#include <math/shape/QuadrilateralData.hpp>
+#include <math/shape/TetrahedronData.hpp>
+#include <math/shape/Triangle2.hpp>
+#include <math/shape/Triangle3.hpp>
+#include <math/vector/Quaternion3.hxx>
+#include <math/vector/Vector3.hxx>
 #include <MyImGui.hpp>
 #include <chrono>
 

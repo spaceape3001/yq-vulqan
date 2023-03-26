@@ -14,7 +14,7 @@
 #include <engine/render/PipelineConfig.hpp>
 #include <engine/render/Rendered.hpp>
 #include <math/SimpleSpace.hpp>
-#include <math/AxBox3.hpp>
+#include <math/shape/AxBox3.hpp>
 
 namespace yq {
     namespace engine {

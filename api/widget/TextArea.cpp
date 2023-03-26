@@ -12,13 +12,13 @@
 #include <basic/TextUtils.hpp>
 #include <basic/stream/Text.hpp>
 #include <basic/Logging.hpp>
-#include <math/AxBox2.hpp>
-#include <math/Vector2.hxx>
+#include <math/shape/AxBox2.hpp>
+#include <math/vector/Vector2.hxx>
 
-#include <math/shape_utils.hpp>
+#include <math/shape/shape_utils.hpp>
 
     //  for debugging
-#include <asset/Colors.hpp>
+#include <math/color/Colors.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::widget::TextArea)
 

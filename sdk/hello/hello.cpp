@@ -15,7 +15,6 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
-#include <asset/Colors.hpp>
 #include <asset/NullCamera.hpp>
 #include <asset/Triangle.hpp>
 #include <basic/DelayInit.hpp>
@@ -34,12 +33,13 @@
 #include <engine/vulqan/VqCommand.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
-#include <math/RGB.hpp>
-#include <math/Vector2.hpp>
-#include <math/Vector3.hxx>
-#include <math/shape_utils.hpp>
-#include <math/Triangle2.hpp>
-#include <math/Triangle3.hpp>
+#include <math/color/Colors.hpp>
+#include <math/color/RGB.hpp>
+#include <math/vector/Vector2.hpp>
+#include <math/vector/Vector3.hxx>
+#include <math/shape/shape_utils.hpp>
+#include <math/shape/Triangle2.hpp>
+#include <math/shape/Triangle3.hpp>
 #include <iostream>
 #include <chrono>
 #include <glm/glm.hpp>  // temporary

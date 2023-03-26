@@ -7,7 +7,7 @@
 #pragma once
 
 #include <engine/render/Rendered.hpp>
-#include <math/RGB.hpp>
+#include <math/color/RGB.hpp>
 
 namespace yq {
     namespace engine {

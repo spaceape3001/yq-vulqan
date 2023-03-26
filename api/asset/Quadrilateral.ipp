@@ -7,9 +7,9 @@
 #pragma once
 
 #include "Quadrilateral.hpp"
-#include <math/QuadrilateralData.hpp>
-#include <math/Vector3.hxx>
-#include <math/shape_utils.hpp>
+#include <math/shape/QuadrilateralData.hpp>
+#include <math/vector/Vector3.hxx>
+#include <math/shape/shape_utils.hpp>
 #include <engine/render/RenderWriter.hpp>
 #include <engine/Shader.hpp>
 #include <basic/preamble.hpp>

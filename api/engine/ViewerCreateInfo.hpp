@@ -8,9 +8,9 @@
 
 #include "Widget.hpp"
 #include <math/preamble.hpp>
-#include <math/RGBA.hpp>
-#include <math/Size2.hpp>
-#include <math/Vector2.hpp>
+#include <math/color/RGBA.hpp>
+#include <math/shape/Size2.hpp>
+#include <math/vector/Vector2.hpp>
 #include <engine/preamble.hpp>
 #include <engine/vulqan/VqMonitor.hpp>
 #include <vulkan/vulkan_core.h>

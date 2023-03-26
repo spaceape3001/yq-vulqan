@@ -6,11 +6,11 @@
 
 #include "PipelineUtils.hpp"
 #include <math/glm_types.hpp>
-#include <math/RGBA.hpp>
-#include <math/Vector1.hpp>
-#include <math/Vector2.hpp>
-#include <math/Vector3.hpp>
-#include <math/Vector4.hpp>
+#include <math/color/RGBA.hpp>
+#include <math/vector/Vector1.hpp>
+#include <math/vector/Vector2.hpp>
+#include <math/vector/Vector3.hpp>
+#include <math/vector/Vector4.hpp>
 #include <unordered_map>
 #include <basic/meta/TypeInfo.hpp>
 

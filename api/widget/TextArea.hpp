@@ -8,10 +8,10 @@
 
 #include <basic/Signal.hpp>
 #include <engine/Widget.hpp>
-#include <math/AxBox2.hpp>
-#include <math/Vector2.hpp>
+#include <math/shape/AxBox2.hpp>
+#include <math/vector/Vector2.hpp>
 #include <functional>
-#include <math/RGBA.hpp>
+#include <math/color/RGBA.hpp>
 #include <array>
 #include <span>
 #include <deque>

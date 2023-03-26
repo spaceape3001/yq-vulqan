@@ -8,8 +8,8 @@
 
 //  This contains some vertex helpers
 
-#include <math/RGB.hpp>
-#include <math/Vector2.hpp>
+#include <math/color/RGB.hpp>
+#include <math/vector/Vector2.hpp>
 
 namespace yq {
     struct ColorVertexData;

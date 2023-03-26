@@ -6,13 +6,11 @@
 
 #pragma once
 
-#include <math/Vector2.hpp>
-#include <math/Vector4.hpp>
-#include <math/preamble.hpp>
-#include <math/MKS.hpp>
-#include <math/SCALED.hpp>
-#include <math/RGBA.hpp>
-#include <math/RGB.hpp>
+#include <math/vector/Vector2.hpp>
+#include <math/vector/Vector4.hpp>
+#include <math/units.hpp>
+#include <math/color/RGBA.hpp>
+#include <math/color/RGB.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \

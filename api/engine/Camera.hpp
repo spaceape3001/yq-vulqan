@@ -8,7 +8,7 @@
 
 #include <basic/MetaObject.hpp>
 #include <engine/preamble.hpp>
-#include <math/Size2.hpp>
+#include <math/shape/Size2.hpp>
 
 #include <glm/glm.hpp>
 

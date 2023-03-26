@@ -15,8 +15,8 @@
 #include <engine/render/PipelineConfig.hpp>
 #include <engine/render/Pipeline.hpp>
 #include <engine/render/StdPushConstant.hpp>
-#include <math/Size2.hpp>
-#include <math/Rectangle2.hpp>
+#include <math/shape/Size2.hpp>
+#include <math/shape/Rectangle2.hpp>
 
 using namespace yq::vulqan;
 

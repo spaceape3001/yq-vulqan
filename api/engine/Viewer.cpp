@@ -42,8 +42,8 @@
 #include <vulqan/VqStructs.hpp>
 #include <vulqan/VqLogging.hpp>
 
-#include <math/Size2.hpp>
-#include <math/Vector2.hpp>
+#include <math/shape/Size2.hpp>
+#include <math/vector/Vector2.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -54,7 +54,7 @@
 #include <backends/imgui_impl_vulkan.h>
 #include <backends/imgui_impl_glfw.h>
 
-#include <math/Size2.hxx>
+#include <math/shape/Size2.hxx>
 
 YQ_OBJECT_IMPLEMENT(yq::engine::Viewer)
 

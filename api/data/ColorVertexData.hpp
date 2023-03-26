@@ -11,8 +11,8 @@
 #include <glm/glm.hpp>
 #include "ColorVertex2D.hpp"
 #include "ColorVertex3D.hpp"
-#include <math/Vector3.hpp>
-#include <math/RGBA.hpp>
+#include <math/vector/Vector3.hpp>
+#include <math/color/RGBA.hpp>
 
 namespace yq {
     struct ColorVertexData {

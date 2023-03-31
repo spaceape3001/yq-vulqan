@@ -11,3 +11,6 @@
 
 #include "VqStructs.hpp"
 #include "VqLogging.ipp"
+#include "Visualizer.ipp"
+#include "Viewer.ipp"
+

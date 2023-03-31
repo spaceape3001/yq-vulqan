@@ -6,9 +6,9 @@
 
 #include "VqException.hpp"
 #include <engine/Visualizer.hpp>
-#include <vulqan/VqLogging.hpp>
+#include <tachyon/VqLogging.hpp>
 #include "VqPipeline.hpp"
-#include <vulqan/VqStructs.hpp>
+#include <tachyon/VqStructs.hpp>
 
 #include <basic/Logging.hpp>
 #include <engine/Viewer.hpp>
@@ -18,7 +18,8 @@
 #include <math/shape/Size2.hpp>
 #include <math/shape/Rectangle2.hpp>
 
-using namespace yq::vulqan;
+//using namespace yq::vulqan;
+using namespace yq::tachyon;
 
 namespace yq {
     namespace engine {

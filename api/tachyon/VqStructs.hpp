@@ -12,7 +12,7 @@
 #include <vulkan/vulkan_core.h>
 
 namespace yq {
-    namespace vulqan {
+    namespace tachyon {
         struct VqAccelerationStructureBuildGeometryInfoKHR : public VkAccelerationStructureBuildGeometryInfoKHR {
             VqAccelerationStructureBuildGeometryInfoKHR() : VkAccelerationStructureBuildGeometryInfoKHR{} 
             {
@@ -24,6 +24,13 @@ namespace yq {
             VqAccelerationStructureBuildSizesInfoKHR() : VkAccelerationStructureBuildSizesInfoKHR{} 
             {
                 sType   = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR;
+            }
+        };
+
+        struct VqAccelerationStructureCaptureDescriptorDataInfoEXT : public VkAccelerationStructureCaptureDescriptorDataInfoEXT {
+            VqAccelerationStructureCaptureDescriptorDataInfoEXT() : VkAccelerationStructureCaptureDescriptorDataInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
             }
         };
 
@@ -101,6 +108,13 @@ namespace yq {
             VqAccelerationStructureMotionInfoNV() : VkAccelerationStructureMotionInfoNV{} 
             {
                 sType   = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_MOTION_INFO_NV;
+            }
+        };
+
+        struct VqAccelerationStructureTrianglesOpacityMicromapEXT : public VkAccelerationStructureTrianglesOpacityMicromapEXT {
+            VqAccelerationStructureTrianglesOpacityMicromapEXT() : VkAccelerationStructureTrianglesOpacityMicromapEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT;
             }
         };
 
@@ -216,10 +230,24 @@ namespace yq {
             }
         };
 
+        struct VqBindVideoSessionMemoryInfoKHR : public VkBindVideoSessionMemoryInfoKHR {
+            VqBindVideoSessionMemoryInfoKHR() : VkBindVideoSessionMemoryInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_BIND_VIDEO_SESSION_MEMORY_INFO_KHR;
+            }
+        };
+
         struct VqBlitImageInfo2 : public VkBlitImageInfo2 {
             VqBlitImageInfo2() : VkBlitImageInfo2{} 
             {
                 sType   = VK_STRUCTURE_TYPE_BLIT_IMAGE_INFO_2;
+            }
+        };
+
+        struct VqBufferCaptureDescriptorDataInfoEXT : public VkBufferCaptureDescriptorDataInfoEXT {
+            VqBufferCaptureDescriptorDataInfoEXT() : VkBufferCaptureDescriptorDataInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
             }
         };
 
@@ -461,6 +489,27 @@ namespace yq {
             }
         };
 
+        struct VqCopyMemoryToMicromapInfoEXT : public VkCopyMemoryToMicromapInfoEXT {
+            VqCopyMemoryToMicromapInfoEXT() : VkCopyMemoryToMicromapInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_COPY_MEMORY_TO_MICROMAP_INFO_EXT;
+            }
+        };
+
+        struct VqCopyMicromapInfoEXT : public VkCopyMicromapInfoEXT {
+            VqCopyMicromapInfoEXT() : VkCopyMicromapInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_COPY_MICROMAP_INFO_EXT;
+            }
+        };
+
+        struct VqCopyMicromapToMemoryInfoEXT : public VkCopyMicromapToMemoryInfoEXT {
+            VqCopyMicromapToMemoryInfoEXT() : VkCopyMicromapToMemoryInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_COPY_MICROMAP_TO_MEMORY_INFO_EXT;
+            }
+        };
+
         struct VqDebugMarkerMarkerInfoEXT : public VkDebugMarkerMarkerInfoEXT {
             VqDebugMarkerMarkerInfoEXT() : VkDebugMarkerMarkerInfoEXT{} 
             {
@@ -552,6 +601,34 @@ namespace yq {
             }
         };
 
+        struct VqDescriptorAddressInfoEXT : public VkDescriptorAddressInfoEXT {
+            VqDescriptorAddressInfoEXT() : VkDescriptorAddressInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_DESCRIPTOR_ADDRESS_INFO_EXT;
+            }
+        };
+
+        struct VqDescriptorBufferBindingInfoEXT : public VkDescriptorBufferBindingInfoEXT {
+            VqDescriptorBufferBindingInfoEXT() : VkDescriptorBufferBindingInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
+            }
+        };
+
+        struct VqDescriptorBufferBindingPushDescriptorBufferHandleEXT : public VkDescriptorBufferBindingPushDescriptorBufferHandleEXT {
+            VqDescriptorBufferBindingPushDescriptorBufferHandleEXT() : VkDescriptorBufferBindingPushDescriptorBufferHandleEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT;
+            }
+        };
+
+        struct VqDescriptorGetInfoEXT : public VkDescriptorGetInfoEXT {
+            VqDescriptorGetInfoEXT() : VkDescriptorGetInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_DESCRIPTOR_GET_INFO_EXT;
+            }
+        };
+
         struct VqDescriptorPoolCreateInfo : public VkDescriptorPoolCreateInfo {
             VqDescriptorPoolCreateInfo() : VkDescriptorPoolCreateInfo{} 
             {
@@ -615,6 +692,13 @@ namespace yq {
             }
         };
 
+        struct VqDeviceAddressBindingCallbackDataEXT : public VkDeviceAddressBindingCallbackDataEXT {
+            VqDeviceAddressBindingCallbackDataEXT() : VkDeviceAddressBindingCallbackDataEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT;
+            }
+        };
+
         struct VqDeviceBufferMemoryRequirements : public VkDeviceBufferMemoryRequirements {
             VqDeviceBufferMemoryRequirements() : VkDeviceBufferMemoryRequirements{} 
             {
@@ -647,6 +731,20 @@ namespace yq {
             VqDeviceEventInfoEXT() : VkDeviceEventInfoEXT{} 
             {
                 sType   = VK_STRUCTURE_TYPE_DEVICE_EVENT_INFO_EXT;
+            }
+        };
+
+        struct VqDeviceFaultCountsEXT : public VkDeviceFaultCountsEXT {
+            VqDeviceFaultCountsEXT() : VkDeviceFaultCountsEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_DEVICE_FAULT_COUNTS_EXT;
+            }
+        };
+
+        struct VqDeviceFaultInfoEXT : public VkDeviceFaultInfoEXT {
+            VqDeviceFaultInfoEXT() : VkDeviceFaultInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_DEVICE_FAULT_INFO_EXT;
             }
         };
 
@@ -1070,6 +1168,27 @@ namespace yq {
             }
         };
 
+        struct VqImageCaptureDescriptorDataInfoEXT : public VkImageCaptureDescriptorDataInfoEXT {
+            VqImageCaptureDescriptorDataInfoEXT() : VkImageCaptureDescriptorDataInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+            }
+        };
+
+        struct VqImageCompressionControlEXT : public VkImageCompressionControlEXT {
+            VqImageCompressionControlEXT() : VkImageCompressionControlEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT;
+            }
+        };
+
+        struct VqImageCompressionPropertiesEXT : public VkImageCompressionPropertiesEXT {
+            VqImageCompressionPropertiesEXT() : VkImageCompressionPropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT;
+            }
+        };
+
         struct VqImageCopy2 : public VkImageCopy2 {
             VqImageCopy2() : VkImageCopy2{} 
             {
@@ -1168,10 +1287,24 @@ namespace yq {
             }
         };
 
+        struct VqImageSubresource2EXT : public VkImageSubresource2EXT {
+            VqImageSubresource2EXT() : VkImageSubresource2EXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_IMAGE_SUBRESOURCE_2_EXT;
+            }
+        };
+
         struct VqImageSwapchainCreateInfoKHR : public VkImageSwapchainCreateInfoKHR {
             VqImageSwapchainCreateInfoKHR() : VkImageSwapchainCreateInfoKHR{} 
             {
                 sType   = VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR;
+            }
+        };
+
+        struct VqImageViewCaptureDescriptorDataInfoEXT : public VkImageViewCaptureDescriptorDataInfoEXT {
+            VqImageViewCaptureDescriptorDataInfoEXT() : VkImageViewCaptureDescriptorDataInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
             }
         };
 
@@ -1186,6 +1319,13 @@ namespace yq {
             VqImageViewMinLodCreateInfoEXT() : VkImageViewMinLodCreateInfoEXT{} 
             {
                 sType   = VK_STRUCTURE_TYPE_IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT;
+            }
+        };
+
+        struct VqImageViewSampleWeightCreateInfoQCOM : public VkImageViewSampleWeightCreateInfoQCOM {
+            VqImageViewSampleWeightCreateInfoQCOM() : VkImageViewSampleWeightCreateInfoQCOM{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM;
             }
         };
 
@@ -1343,10 +1483,94 @@ namespace yq {
             }
         };
 
+        struct VqMicromapBuildInfoEXT : public VkMicromapBuildInfoEXT {
+            VqMicromapBuildInfoEXT() : VkMicromapBuildInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_MICROMAP_BUILD_INFO_EXT;
+            }
+        };
+
+        struct VqMicromapBuildSizesInfoEXT : public VkMicromapBuildSizesInfoEXT {
+            VqMicromapBuildSizesInfoEXT() : VkMicromapBuildSizesInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_MICROMAP_BUILD_SIZES_INFO_EXT;
+            }
+        };
+
+        struct VqMicromapCreateInfoEXT : public VkMicromapCreateInfoEXT {
+            VqMicromapCreateInfoEXT() : VkMicromapCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_MICROMAP_CREATE_INFO_EXT;
+            }
+        };
+
+        struct VqMicromapVersionInfoEXT : public VkMicromapVersionInfoEXT {
+            VqMicromapVersionInfoEXT() : VkMicromapVersionInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_MICROMAP_VERSION_INFO_EXT;
+            }
+        };
+
         struct VqMultisamplePropertiesEXT : public VkMultisamplePropertiesEXT {
             VqMultisamplePropertiesEXT() : VkMultisamplePropertiesEXT{} 
             {
                 sType   = VK_STRUCTURE_TYPE_MULTISAMPLE_PROPERTIES_EXT;
+            }
+        };
+
+        struct VqMultisampledRenderToSingleSampledInfoEXT : public VkMultisampledRenderToSingleSampledInfoEXT {
+            VqMultisampledRenderToSingleSampledInfoEXT() : VkMultisampledRenderToSingleSampledInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
+            }
+        };
+
+        struct VqMutableDescriptorTypeCreateInfoEXT : public VkMutableDescriptorTypeCreateInfoEXT {
+            VqMutableDescriptorTypeCreateInfoEXT() : VkMutableDescriptorTypeCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT;
+            }
+        };
+
+        struct VqOpaqueCaptureDescriptorDataCreateInfoEXT : public VkOpaqueCaptureDescriptorDataCreateInfoEXT {
+            VqOpaqueCaptureDescriptorDataCreateInfoEXT() : VkOpaqueCaptureDescriptorDataCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT;
+            }
+        };
+
+        struct VqOpticalFlowExecuteInfoNV : public VkOpticalFlowExecuteInfoNV {
+            VqOpticalFlowExecuteInfoNV() : VkOpticalFlowExecuteInfoNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_OPTICAL_FLOW_EXECUTE_INFO_NV;
+            }
+        };
+
+        struct VqOpticalFlowImageFormatInfoNV : public VkOpticalFlowImageFormatInfoNV {
+            VqOpticalFlowImageFormatInfoNV() : VkOpticalFlowImageFormatInfoNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV;
+            }
+        };
+
+        struct VqOpticalFlowImageFormatPropertiesNV : public VkOpticalFlowImageFormatPropertiesNV {
+            VqOpticalFlowImageFormatPropertiesNV() : VkOpticalFlowImageFormatPropertiesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV;
+            }
+        };
+
+        struct VqOpticalFlowSessionCreateInfoNV : public VkOpticalFlowSessionCreateInfoNV {
+            VqOpticalFlowSessionCreateInfoNV() : VkOpticalFlowSessionCreateInfoNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_OPTICAL_FLOW_SESSION_CREATE_INFO_NV;
+            }
+        };
+
+        struct VqOpticalFlowSessionCreatePrivateDataInfoNV : public VkOpticalFlowSessionCreatePrivateDataInfoNV {
+            VqOpticalFlowSessionCreatePrivateDataInfoNV() : VkOpticalFlowSessionCreatePrivateDataInfoNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV;
             }
         };
 
@@ -1389,6 +1613,20 @@ namespace yq {
             VqPhysicalDeviceAccelerationStructurePropertiesKHR() : VkPhysicalDeviceAccelerationStructurePropertiesKHR{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR;
+            }
+        };
+
+        struct VqPhysicalDeviceAddressBindingReportFeaturesEXT : public VkPhysicalDeviceAddressBindingReportFeaturesEXT {
+            VqPhysicalDeviceAddressBindingReportFeaturesEXT() : VkPhysicalDeviceAddressBindingReportFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ADDRESS_BINDING_REPORT_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT : public VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT {
+            VqPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT() : VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT;
             }
         };
 
@@ -1469,6 +1707,20 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceCopyMemoryIndirectFeaturesNV : public VkPhysicalDeviceCopyMemoryIndirectFeaturesNV {
+            VqPhysicalDeviceCopyMemoryIndirectFeaturesNV() : VkPhysicalDeviceCopyMemoryIndirectFeaturesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV;
+            }
+        };
+
+        struct VqPhysicalDeviceCopyMemoryIndirectPropertiesNV : public VkPhysicalDeviceCopyMemoryIndirectPropertiesNV {
+            VqPhysicalDeviceCopyMemoryIndirectPropertiesNV() : VkPhysicalDeviceCopyMemoryIndirectPropertiesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV;
+            }
+        };
+
         struct VqPhysicalDeviceCornerSampledImageFeaturesNV : public VkPhysicalDeviceCornerSampledImageFeaturesNV {
             VqPhysicalDeviceCornerSampledImageFeaturesNV() : VkPhysicalDeviceCornerSampledImageFeaturesNV{} 
             {
@@ -1504,6 +1756,13 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceDepthClampZeroOneFeaturesEXT : public VkPhysicalDeviceDepthClampZeroOneFeaturesEXT {
+            VqPhysicalDeviceDepthClampZeroOneFeaturesEXT() : VkPhysicalDeviceDepthClampZeroOneFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceDepthClipControlFeaturesEXT : public VkPhysicalDeviceDepthClipControlFeaturesEXT {
             VqPhysicalDeviceDepthClipControlFeaturesEXT() : VkPhysicalDeviceDepthClipControlFeaturesEXT{} 
             {
@@ -1522,6 +1781,27 @@ namespace yq {
             VqPhysicalDeviceDepthStencilResolveProperties() : VkPhysicalDeviceDepthStencilResolveProperties{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES;
+            }
+        };
+
+        struct VqPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT : public VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT {
+            VqPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT() : VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceDescriptorBufferFeaturesEXT : public VkPhysicalDeviceDescriptorBufferFeaturesEXT {
+            VqPhysicalDeviceDescriptorBufferFeaturesEXT() : VkPhysicalDeviceDescriptorBufferFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceDescriptorBufferPropertiesEXT : public VkPhysicalDeviceDescriptorBufferPropertiesEXT {
+            VqPhysicalDeviceDescriptorBufferPropertiesEXT() : VkPhysicalDeviceDescriptorBufferPropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT;
             }
         };
 
@@ -1609,6 +1889,20 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceExtendedDynamicState3FeaturesEXT : public VkPhysicalDeviceExtendedDynamicState3FeaturesEXT {
+            VqPhysicalDeviceExtendedDynamicState3FeaturesEXT() : VkPhysicalDeviceExtendedDynamicState3FeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceExtendedDynamicState3PropertiesEXT : public VkPhysicalDeviceExtendedDynamicState3PropertiesEXT {
+            VqPhysicalDeviceExtendedDynamicState3PropertiesEXT() : VkPhysicalDeviceExtendedDynamicState3PropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceExtendedDynamicStateFeaturesEXT : public VkPhysicalDeviceExtendedDynamicStateFeaturesEXT {
             VqPhysicalDeviceExtendedDynamicStateFeaturesEXT() : VkPhysicalDeviceExtendedDynamicStateFeaturesEXT{} 
             {
@@ -1648,6 +1942,13 @@ namespace yq {
             VqPhysicalDeviceExternalSemaphoreInfo() : VkPhysicalDeviceExternalSemaphoreInfo{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO;
+            }
+        };
+
+        struct VqPhysicalDeviceFaultFeaturesEXT : public VkPhysicalDeviceFaultFeaturesEXT {
+            VqPhysicalDeviceFaultFeaturesEXT() : VkPhysicalDeviceFaultFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FAULT_FEATURES_EXT;
             }
         };
 
@@ -1707,10 +2008,17 @@ namespace yq {
             }
         };
 
-        struct VqPhysicalDeviceFragmentShaderBarycentricFeaturesNV : public VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV {
-            VqPhysicalDeviceFragmentShaderBarycentricFeaturesNV() : VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV{} 
+        struct VqPhysicalDeviceFragmentShaderBarycentricFeaturesKHR : public VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR {
+            VqPhysicalDeviceFragmentShaderBarycentricFeaturesKHR() : VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR{} 
             {
-                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV;
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR;
+            }
+        };
+
+        struct VqPhysicalDeviceFragmentShaderBarycentricPropertiesKHR : public VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR {
+            VqPhysicalDeviceFragmentShaderBarycentricPropertiesKHR() : VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_PROPERTIES_KHR;
             }
         };
 
@@ -1791,6 +2099,20 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceImageCompressionControlFeaturesEXT : public VkPhysicalDeviceImageCompressionControlFeaturesEXT {
+            VqPhysicalDeviceImageCompressionControlFeaturesEXT() : VkPhysicalDeviceImageCompressionControlFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT : public VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT {
+            VqPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT() : VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceImageDrmFormatModifierInfoEXT : public VkPhysicalDeviceImageDrmFormatModifierInfoEXT {
             VqPhysicalDeviceImageDrmFormatModifierInfoEXT() : VkPhysicalDeviceImageDrmFormatModifierInfoEXT{} 
             {
@@ -1802,6 +2124,20 @@ namespace yq {
             VqPhysicalDeviceImageFormatInfo2() : VkPhysicalDeviceImageFormatInfo2{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
+            }
+        };
+
+        struct VqPhysicalDeviceImageProcessingFeaturesQCOM : public VkPhysicalDeviceImageProcessingFeaturesQCOM {
+            VqPhysicalDeviceImageProcessingFeaturesQCOM() : VkPhysicalDeviceImageProcessingFeaturesQCOM{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM;
+            }
+        };
+
+        struct VqPhysicalDeviceImageProcessingPropertiesQCOM : public VkPhysicalDeviceImageProcessingPropertiesQCOM {
+            VqPhysicalDeviceImageProcessingPropertiesQCOM() : VkPhysicalDeviceImageProcessingPropertiesQCOM{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM;
             }
         };
 
@@ -1861,6 +2197,13 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceLegacyDitheringFeaturesEXT : public VkPhysicalDeviceLegacyDitheringFeaturesEXT {
+            VqPhysicalDeviceLegacyDitheringFeaturesEXT() : VkPhysicalDeviceLegacyDitheringFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceLineRasterizationFeaturesEXT : public VkPhysicalDeviceLineRasterizationFeaturesEXT {
             VqPhysicalDeviceLineRasterizationFeaturesEXT() : VkPhysicalDeviceLineRasterizationFeaturesEXT{} 
             {
@@ -1910,6 +2253,20 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceMemoryDecompressionFeaturesNV : public VkPhysicalDeviceMemoryDecompressionFeaturesNV {
+            VqPhysicalDeviceMemoryDecompressionFeaturesNV() : VkPhysicalDeviceMemoryDecompressionFeaturesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV;
+            }
+        };
+
+        struct VqPhysicalDeviceMemoryDecompressionPropertiesNV : public VkPhysicalDeviceMemoryDecompressionPropertiesNV {
+            VqPhysicalDeviceMemoryDecompressionPropertiesNV() : VkPhysicalDeviceMemoryDecompressionPropertiesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV;
+            }
+        };
+
         struct VqPhysicalDeviceMemoryPriorityFeaturesEXT : public VkPhysicalDeviceMemoryPriorityFeaturesEXT {
             VqPhysicalDeviceMemoryPriorityFeaturesEXT() : VkPhysicalDeviceMemoryPriorityFeaturesEXT{} 
             {
@@ -1924,10 +2281,24 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceMeshShaderFeaturesEXT : public VkPhysicalDeviceMeshShaderFeaturesEXT {
+            VqPhysicalDeviceMeshShaderFeaturesEXT() : VkPhysicalDeviceMeshShaderFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceMeshShaderFeaturesNV : public VkPhysicalDeviceMeshShaderFeaturesNV {
             VqPhysicalDeviceMeshShaderFeaturesNV() : VkPhysicalDeviceMeshShaderFeaturesNV{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV;
+            }
+        };
+
+        struct VqPhysicalDeviceMeshShaderPropertiesEXT : public VkPhysicalDeviceMeshShaderPropertiesEXT {
+            VqPhysicalDeviceMeshShaderPropertiesEXT() : VkPhysicalDeviceMeshShaderPropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT;
             }
         };
 
@@ -1952,6 +2323,13 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT : public VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT {
+            VqPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT() : VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceMultiviewFeatures : public VkPhysicalDeviceMultiviewFeatures {
             VqPhysicalDeviceMultiviewFeatures() : VkPhysicalDeviceMultiviewFeatures{} 
             {
@@ -1959,10 +2337,59 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM : public VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM {
+            VqPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM() : VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM;
+            }
+        };
+
         struct VqPhysicalDeviceMultiviewProperties : public VkPhysicalDeviceMultiviewProperties {
             VqPhysicalDeviceMultiviewProperties() : VkPhysicalDeviceMultiviewProperties{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
+            }
+        };
+
+        struct VqPhysicalDeviceMutableDescriptorTypeFeaturesEXT : public VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT {
+            VqPhysicalDeviceMutableDescriptorTypeFeaturesEXT() : VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceNonSeamlessCubeMapFeaturesEXT : public VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT {
+            VqPhysicalDeviceNonSeamlessCubeMapFeaturesEXT() : VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceOpacityMicromapFeaturesEXT : public VkPhysicalDeviceOpacityMicromapFeaturesEXT {
+            VqPhysicalDeviceOpacityMicromapFeaturesEXT() : VkPhysicalDeviceOpacityMicromapFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceOpacityMicromapPropertiesEXT : public VkPhysicalDeviceOpacityMicromapPropertiesEXT {
+            VqPhysicalDeviceOpacityMicromapPropertiesEXT() : VkPhysicalDeviceOpacityMicromapPropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceOpticalFlowFeaturesNV : public VkPhysicalDeviceOpticalFlowFeaturesNV {
+            VqPhysicalDeviceOpticalFlowFeaturesNV() : VkPhysicalDeviceOpticalFlowFeaturesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV;
+            }
+        };
+
+        struct VqPhysicalDeviceOpticalFlowPropertiesNV : public VkPhysicalDeviceOpticalFlowPropertiesNV {
+            VqPhysicalDeviceOpticalFlowPropertiesNV() : VkPhysicalDeviceOpticalFlowPropertiesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV;
             }
         };
 
@@ -2001,10 +2428,45 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDevicePipelinePropertiesFeaturesEXT : public VkPhysicalDevicePipelinePropertiesFeaturesEXT {
+            VqPhysicalDevicePipelinePropertiesFeaturesEXT() : VkPhysicalDevicePipelinePropertiesFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDevicePipelineProtectedAccessFeaturesEXT : public VkPhysicalDevicePipelineProtectedAccessFeaturesEXT {
+            VqPhysicalDevicePipelineProtectedAccessFeaturesEXT() : VkPhysicalDevicePipelineProtectedAccessFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDevicePipelineRobustnessFeaturesEXT : public VkPhysicalDevicePipelineRobustnessFeaturesEXT {
+            VqPhysicalDevicePipelineRobustnessFeaturesEXT() : VkPhysicalDevicePipelineRobustnessFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDevicePipelineRobustnessPropertiesEXT : public VkPhysicalDevicePipelineRobustnessPropertiesEXT {
+            VqPhysicalDevicePipelineRobustnessPropertiesEXT() : VkPhysicalDevicePipelineRobustnessPropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT;
+            }
+        };
+
         struct VqPhysicalDevicePointClippingProperties : public VkPhysicalDevicePointClippingProperties {
             VqPhysicalDevicePointClippingProperties() : VkPhysicalDevicePointClippingProperties{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES;
+            }
+        };
+
+        struct VqPhysicalDevicePresentBarrierFeaturesNV : public VkPhysicalDevicePresentBarrierFeaturesNV {
+            VqPhysicalDevicePresentBarrierFeaturesNV() : VkPhysicalDevicePresentBarrierFeaturesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV;
             }
         };
 
@@ -2085,10 +2547,38 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT : public VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT {
+            VqPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT() : VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceRayQueryFeaturesKHR : public VkPhysicalDeviceRayQueryFeaturesKHR {
             VqPhysicalDeviceRayQueryFeaturesKHR() : VkPhysicalDeviceRayQueryFeaturesKHR{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR;
+            }
+        };
+
+        struct VqPhysicalDeviceRayTracingInvocationReorderFeaturesNV : public VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV {
+            VqPhysicalDeviceRayTracingInvocationReorderFeaturesNV() : VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV;
+            }
+        };
+
+        struct VqPhysicalDeviceRayTracingInvocationReorderPropertiesNV : public VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV {
+            VqPhysicalDeviceRayTracingInvocationReorderPropertiesNV() : VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
+            }
+        };
+
+        struct VqPhysicalDeviceRayTracingMaintenance1FeaturesKHR : public VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR {
+            VqPhysicalDeviceRayTracingMaintenance1FeaturesKHR() : VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR;
             }
         };
 
@@ -2253,6 +2743,20 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceShaderModuleIdentifierFeaturesEXT : public VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT {
+            VqPhysicalDeviceShaderModuleIdentifierFeaturesEXT() : VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceShaderModuleIdentifierPropertiesEXT : public VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT {
+            VqPhysicalDeviceShaderModuleIdentifierPropertiesEXT() : VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceShaderSubgroupExtendedTypesFeatures : public VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures {
             VqPhysicalDeviceShaderSubgroupExtendedTypesFeatures() : VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures{} 
             {
@@ -2316,10 +2820,24 @@ namespace yq {
             }
         };
 
+        struct VqPhysicalDeviceSubpassMergeFeedbackFeaturesEXT : public VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT {
+            VqPhysicalDeviceSubpassMergeFeedbackFeaturesEXT() : VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT;
+            }
+        };
+
         struct VqPhysicalDeviceSurfaceInfo2KHR : public VkPhysicalDeviceSurfaceInfo2KHR {
             VqPhysicalDeviceSurfaceInfo2KHR() : VkPhysicalDeviceSurfaceInfo2KHR{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SURFACE_INFO_2_KHR;
+            }
+        };
+
+        struct VqPhysicalDeviceSwapchainMaintenance1FeaturesEXT : public VkPhysicalDeviceSwapchainMaintenance1FeaturesEXT {
+            VqPhysicalDeviceSwapchainMaintenance1FeaturesEXT() : VkPhysicalDeviceSwapchainMaintenance1FeaturesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT;
             }
         };
 
@@ -2341,6 +2859,13 @@ namespace yq {
             VqPhysicalDeviceTexelBufferAlignmentProperties() : VkPhysicalDeviceTexelBufferAlignmentProperties{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES;
+            }
+        };
+
+        struct VqPhysicalDeviceTilePropertiesFeaturesQCOM : public VkPhysicalDeviceTilePropertiesFeaturesQCOM {
+            VqPhysicalDeviceTilePropertiesFeaturesQCOM() : VkPhysicalDeviceTilePropertiesFeaturesQCOM{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM;
             }
         };
 
@@ -2411,6 +2936,13 @@ namespace yq {
             VqPhysicalDeviceVertexInputDynamicStateFeaturesEXT() : VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT;
+            }
+        };
+
+        struct VqPhysicalDeviceVideoFormatInfoKHR : public VkPhysicalDeviceVideoFormatInfoKHR {
+            VqPhysicalDeviceVideoFormatInfoKHR() : VkPhysicalDeviceVideoFormatInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR;
             }
         };
 
@@ -2645,6 +3177,13 @@ namespace yq {
             }
         };
 
+        struct VqPipelinePropertiesIdentifierEXT : public VkPipelinePropertiesIdentifierEXT {
+            VqPipelinePropertiesIdentifierEXT() : VkPipelinePropertiesIdentifierEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PIPELINE_PROPERTIES_IDENTIFIER_EXT;
+            }
+        };
+
         struct VqPipelineRasterizationConservativeStateCreateInfoEXT : public VkPipelineRasterizationConservativeStateCreateInfoEXT {
             VqPipelineRasterizationConservativeStateCreateInfoEXT() : VkPipelineRasterizationConservativeStateCreateInfoEXT{} 
             {
@@ -2701,6 +3240,13 @@ namespace yq {
             }
         };
 
+        struct VqPipelineRobustnessCreateInfoEXT : public VkPipelineRobustnessCreateInfoEXT {
+            VqPipelineRobustnessCreateInfoEXT() : VkPipelineRobustnessCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PIPELINE_ROBUSTNESS_CREATE_INFO_EXT;
+            }
+        };
+
         struct VqPipelineSampleLocationsStateCreateInfoEXT : public VkPipelineSampleLocationsStateCreateInfoEXT {
             VqPipelineSampleLocationsStateCreateInfoEXT() : VkPipelineSampleLocationsStateCreateInfoEXT{} 
             {
@@ -2712,6 +3258,13 @@ namespace yq {
             VqPipelineShaderStageCreateInfo() : VkPipelineShaderStageCreateInfo{} 
             {
                 sType   = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+            }
+        };
+
+        struct VqPipelineShaderStageModuleIdentifierCreateInfoEXT : public VkPipelineShaderStageModuleIdentifierCreateInfoEXT {
+            VqPipelineShaderStageModuleIdentifierCreateInfoEXT() : VkPipelineShaderStageModuleIdentifierCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT;
             }
         };
 
@@ -2876,6 +3429,20 @@ namespace yq {
             }
         };
 
+        struct VqQueueFamilyQueryResultStatusPropertiesKHR : public VkQueueFamilyQueryResultStatusPropertiesKHR {
+            VqQueueFamilyQueryResultStatusPropertiesKHR() : VkQueueFamilyQueryResultStatusPropertiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR;
+            }
+        };
+
+        struct VqQueueFamilyVideoPropertiesKHR : public VkQueueFamilyVideoPropertiesKHR {
+            VqQueueFamilyVideoPropertiesKHR() : VkQueueFamilyVideoPropertiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_QUEUE_FAMILY_VIDEO_PROPERTIES_KHR;
+            }
+        };
+
         struct VqRayTracingPipelineCreateInfoKHR : public VkRayTracingPipelineCreateInfoKHR {
             VqRayTracingPipelineCreateInfoKHR() : VkRayTracingPipelineCreateInfoKHR{} 
             {
@@ -2911,6 +3478,13 @@ namespace yq {
             }
         };
 
+        struct VqReleaseSwapchainImagesInfoEXT : public VkReleaseSwapchainImagesInfoEXT {
+            VqReleaseSwapchainImagesInfoEXT() : VkReleaseSwapchainImagesInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_RELEASE_SWAPCHAIN_IMAGES_INFO_EXT;
+            }
+        };
+
         struct VqRenderPassAttachmentBeginInfo : public VkRenderPassAttachmentBeginInfo {
             VqRenderPassAttachmentBeginInfo() : VkRenderPassAttachmentBeginInfo{} 
             {
@@ -2939,6 +3513,20 @@ namespace yq {
             }
         };
 
+        struct VqRenderPassCreationControlEXT : public VkRenderPassCreationControlEXT {
+            VqRenderPassCreationControlEXT() : VkRenderPassCreationControlEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_RENDER_PASS_CREATION_CONTROL_EXT;
+            }
+        };
+
+        struct VqRenderPassCreationFeedbackCreateInfoEXT : public VkRenderPassCreationFeedbackCreateInfoEXT {
+            VqRenderPassCreationFeedbackCreateInfoEXT() : VkRenderPassCreationFeedbackCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT;
+            }
+        };
+
         struct VqRenderPassFragmentDensityMapCreateInfoEXT : public VkRenderPassFragmentDensityMapCreateInfoEXT {
             VqRenderPassFragmentDensityMapCreateInfoEXT() : VkRenderPassFragmentDensityMapCreateInfoEXT{} 
             {
@@ -2964,6 +3552,13 @@ namespace yq {
             VqRenderPassSampleLocationsBeginInfoEXT() : VkRenderPassSampleLocationsBeginInfoEXT{} 
             {
                 sType   = VK_STRUCTURE_TYPE_RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT;
+            }
+        };
+
+        struct VqRenderPassSubpassFeedbackCreateInfoEXT : public VkRenderPassSubpassFeedbackCreateInfoEXT {
+            VqRenderPassSubpassFeedbackCreateInfoEXT() : VkRenderPassSubpassFeedbackCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT;
             }
         };
 
@@ -3020,6 +3615,13 @@ namespace yq {
             VqSamplerBorderColorComponentMappingCreateInfoEXT() : VkSamplerBorderColorComponentMappingCreateInfoEXT{} 
             {
                 sType   = VK_STRUCTURE_TYPE_SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT;
+            }
+        };
+
+        struct VqSamplerCaptureDescriptorDataInfoEXT : public VkSamplerCaptureDescriptorDataInfoEXT {
+            VqSamplerCaptureDescriptorDataInfoEXT() : VkSamplerCaptureDescriptorDataInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
             }
         };
 
@@ -3114,6 +3716,13 @@ namespace yq {
             }
         };
 
+        struct VqShaderModuleIdentifierEXT : public VkShaderModuleIdentifierEXT {
+            VqShaderModuleIdentifierEXT() : VkShaderModuleIdentifierEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SHADER_MODULE_IDENTIFIER_EXT;
+            }
+        };
+
         struct VqShaderModuleValidationCacheCreateInfoEXT : public VkShaderModuleValidationCacheCreateInfoEXT {
             VqShaderModuleValidationCacheCreateInfoEXT() : VkShaderModuleValidationCacheCreateInfoEXT{} 
             {
@@ -3198,6 +3807,20 @@ namespace yq {
             }
         };
 
+        struct VqSubpassResolvePerformanceQueryEXT : public VkSubpassResolvePerformanceQueryEXT {
+            VqSubpassResolvePerformanceQueryEXT() : VkSubpassResolvePerformanceQueryEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT;
+            }
+        };
+
+        struct VqSubresourceLayout2EXT : public VkSubresourceLayout2EXT {
+            VqSubresourceLayout2EXT() : VkSubresourceLayout2EXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SUBRESOURCE_LAYOUT_2_EXT;
+            }
+        };
+
         struct VqSurfaceCapabilities2EXT : public VkSurfaceCapabilities2EXT {
             VqSurfaceCapabilities2EXT() : VkSurfaceCapabilities2EXT{} 
             {
@@ -3212,10 +3835,38 @@ namespace yq {
             }
         };
 
+        struct VqSurfaceCapabilitiesPresentBarrierNV : public VkSurfaceCapabilitiesPresentBarrierNV {
+            VqSurfaceCapabilitiesPresentBarrierNV() : VkSurfaceCapabilitiesPresentBarrierNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_PRESENT_BARRIER_NV;
+            }
+        };
+
         struct VqSurfaceFormat2KHR : public VkSurfaceFormat2KHR {
             VqSurfaceFormat2KHR() : VkSurfaceFormat2KHR{} 
             {
                 sType   = VK_STRUCTURE_TYPE_SURFACE_FORMAT_2_KHR;
+            }
+        };
+
+        struct VqSurfacePresentModeCompatibilityEXT : public VkSurfacePresentModeCompatibilityEXT {
+            VqSurfacePresentModeCompatibilityEXT() : VkSurfacePresentModeCompatibilityEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SURFACE_PRESENT_MODE_COMPATIBILITY_EXT;
+            }
+        };
+
+        struct VqSurfacePresentModeEXT : public VkSurfacePresentModeEXT {
+            VqSurfacePresentModeEXT() : VkSurfacePresentModeEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SURFACE_PRESENT_MODE_EXT;
+            }
+        };
+
+        struct VqSurfacePresentScalingCapabilitiesEXT : public VkSurfacePresentScalingCapabilitiesEXT {
+            VqSurfacePresentScalingCapabilitiesEXT() : VkSurfacePresentScalingCapabilitiesEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SURFACE_PRESENT_SCALING_CAPABILITIES_EXT;
             }
         };
 
@@ -3237,6 +3888,48 @@ namespace yq {
             VqSwapchainCreateInfoKHR() : VkSwapchainCreateInfoKHR{} 
             {
                 sType   = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+            }
+        };
+
+        struct VqSwapchainPresentBarrierCreateInfoNV : public VkSwapchainPresentBarrierCreateInfoNV {
+            VqSwapchainPresentBarrierCreateInfoNV() : VkSwapchainPresentBarrierCreateInfoNV{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV;
+            }
+        };
+
+        struct VqSwapchainPresentFenceInfoEXT : public VkSwapchainPresentFenceInfoEXT {
+            VqSwapchainPresentFenceInfoEXT() : VkSwapchainPresentFenceInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SWAPCHAIN_PRESENT_FENCE_INFO_EXT;
+            }
+        };
+
+        struct VqSwapchainPresentModeInfoEXT : public VkSwapchainPresentModeInfoEXT {
+            VqSwapchainPresentModeInfoEXT() : VkSwapchainPresentModeInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SWAPCHAIN_PRESENT_MODE_INFO_EXT;
+            }
+        };
+
+        struct VqSwapchainPresentModesCreateInfoEXT : public VkSwapchainPresentModesCreateInfoEXT {
+            VqSwapchainPresentModesCreateInfoEXT() : VkSwapchainPresentModesCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT;
+            }
+        };
+
+        struct VqSwapchainPresentScalingCreateInfoEXT : public VkSwapchainPresentScalingCreateInfoEXT {
+            VqSwapchainPresentScalingCreateInfoEXT() : VkSwapchainPresentScalingCreateInfoEXT{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT;
+            }
+        };
+
+        struct VqTilePropertiesQCOM : public VkTilePropertiesQCOM {
+            VqTilePropertiesQCOM() : VkTilePropertiesQCOM{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_TILE_PROPERTIES_QCOM;
             }
         };
 
@@ -3279,6 +3972,202 @@ namespace yq {
             VqVertexInputBindingDescription2EXT() : VkVertexInputBindingDescription2EXT{} 
             {
                 sType   = VK_STRUCTURE_TYPE_VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT;
+            }
+        };
+
+        struct VqVideoBeginCodingInfoKHR : public VkVideoBeginCodingInfoKHR {
+            VqVideoBeginCodingInfoKHR() : VkVideoBeginCodingInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_BEGIN_CODING_INFO_KHR;
+            }
+        };
+
+        struct VqVideoCapabilitiesKHR : public VkVideoCapabilitiesKHR {
+            VqVideoCapabilitiesKHR() : VkVideoCapabilitiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_CAPABILITIES_KHR;
+            }
+        };
+
+        struct VqVideoCodingControlInfoKHR : public VkVideoCodingControlInfoKHR {
+            VqVideoCodingControlInfoKHR() : VkVideoCodingControlInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_CODING_CONTROL_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeCapabilitiesKHR : public VkVideoDecodeCapabilitiesKHR {
+            VqVideoDecodeCapabilitiesKHR() : VkVideoDecodeCapabilitiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_CAPABILITIES_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH264CapabilitiesKHR : public VkVideoDecodeH264CapabilitiesKHR {
+            VqVideoDecodeH264CapabilitiesKHR() : VkVideoDecodeH264CapabilitiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_CAPABILITIES_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH264DpbSlotInfoKHR : public VkVideoDecodeH264DpbSlotInfoKHR {
+            VqVideoDecodeH264DpbSlotInfoKHR() : VkVideoDecodeH264DpbSlotInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH264PictureInfoKHR : public VkVideoDecodeH264PictureInfoKHR {
+            VqVideoDecodeH264PictureInfoKHR() : VkVideoDecodeH264PictureInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_PICTURE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH264ProfileInfoKHR : public VkVideoDecodeH264ProfileInfoKHR {
+            VqVideoDecodeH264ProfileInfoKHR() : VkVideoDecodeH264ProfileInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_PROFILE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH264SessionParametersAddInfoKHR : public VkVideoDecodeH264SessionParametersAddInfoKHR {
+            VqVideoDecodeH264SessionParametersAddInfoKHR() : VkVideoDecodeH264SessionParametersAddInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH264SessionParametersCreateInfoKHR : public VkVideoDecodeH264SessionParametersCreateInfoKHR {
+            VqVideoDecodeH264SessionParametersCreateInfoKHR() : VkVideoDecodeH264SessionParametersCreateInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH265CapabilitiesKHR : public VkVideoDecodeH265CapabilitiesKHR {
+            VqVideoDecodeH265CapabilitiesKHR() : VkVideoDecodeH265CapabilitiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_CAPABILITIES_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH265DpbSlotInfoKHR : public VkVideoDecodeH265DpbSlotInfoKHR {
+            VqVideoDecodeH265DpbSlotInfoKHR() : VkVideoDecodeH265DpbSlotInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH265PictureInfoKHR : public VkVideoDecodeH265PictureInfoKHR {
+            VqVideoDecodeH265PictureInfoKHR() : VkVideoDecodeH265PictureInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_PICTURE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH265ProfileInfoKHR : public VkVideoDecodeH265ProfileInfoKHR {
+            VqVideoDecodeH265ProfileInfoKHR() : VkVideoDecodeH265ProfileInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_PROFILE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH265SessionParametersAddInfoKHR : public VkVideoDecodeH265SessionParametersAddInfoKHR {
+            VqVideoDecodeH265SessionParametersAddInfoKHR() : VkVideoDecodeH265SessionParametersAddInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeH265SessionParametersCreateInfoKHR : public VkVideoDecodeH265SessionParametersCreateInfoKHR {
+            VqVideoDecodeH265SessionParametersCreateInfoKHR() : VkVideoDecodeH265SessionParametersCreateInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeInfoKHR : public VkVideoDecodeInfoKHR {
+            VqVideoDecodeInfoKHR() : VkVideoDecodeInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoDecodeUsageInfoKHR : public VkVideoDecodeUsageInfoKHR {
+            VqVideoDecodeUsageInfoKHR() : VkVideoDecodeUsageInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_DECODE_USAGE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoEndCodingInfoKHR : public VkVideoEndCodingInfoKHR {
+            VqVideoEndCodingInfoKHR() : VkVideoEndCodingInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_END_CODING_INFO_KHR;
+            }
+        };
+
+        struct VqVideoFormatPropertiesKHR : public VkVideoFormatPropertiesKHR {
+            VqVideoFormatPropertiesKHR() : VkVideoFormatPropertiesKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_FORMAT_PROPERTIES_KHR;
+            }
+        };
+
+        struct VqVideoPictureResourceInfoKHR : public VkVideoPictureResourceInfoKHR {
+            VqVideoPictureResourceInfoKHR() : VkVideoPictureResourceInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_PICTURE_RESOURCE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoProfileInfoKHR : public VkVideoProfileInfoKHR {
+            VqVideoProfileInfoKHR() : VkVideoProfileInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_PROFILE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoProfileListInfoKHR : public VkVideoProfileListInfoKHR {
+            VqVideoProfileListInfoKHR() : VkVideoProfileListInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_PROFILE_LIST_INFO_KHR;
+            }
+        };
+
+        struct VqVideoReferenceSlotInfoKHR : public VkVideoReferenceSlotInfoKHR {
+            VqVideoReferenceSlotInfoKHR() : VkVideoReferenceSlotInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_REFERENCE_SLOT_INFO_KHR;
+            }
+        };
+
+        struct VqVideoSessionCreateInfoKHR : public VkVideoSessionCreateInfoKHR {
+            VqVideoSessionCreateInfoKHR() : VkVideoSessionCreateInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_SESSION_CREATE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoSessionMemoryRequirementsKHR : public VkVideoSessionMemoryRequirementsKHR {
+            VqVideoSessionMemoryRequirementsKHR() : VkVideoSessionMemoryRequirementsKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR;
+            }
+        };
+
+        struct VqVideoSessionParametersCreateInfoKHR : public VkVideoSessionParametersCreateInfoKHR {
+            VqVideoSessionParametersCreateInfoKHR() : VkVideoSessionParametersCreateInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR;
+            }
+        };
+
+        struct VqVideoSessionParametersUpdateInfoKHR : public VkVideoSessionParametersUpdateInfoKHR {
+            VqVideoSessionParametersUpdateInfoKHR() : VkVideoSessionParametersUpdateInfoKHR{} 
+            {
+                sType   = VK_STRUCTURE_TYPE_VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR;
             }
         };
 

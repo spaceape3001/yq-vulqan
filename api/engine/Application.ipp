@@ -6,8 +6,8 @@
 
 #include "Application.hpp"
 #include "Viewer.hpp"
-#include <vulqan/VqLogging.hpp>
-#include <vulqan/VqStructs.hpp>
+#include <tachyon/VqLogging.hpp>
+#include <tachyon/VqStructs.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 
 #include <basic/Logging.hpp>
@@ -16,6 +16,8 @@
 #include <tbb/spin_mutex.h>
 
 #include <GLFW/glfw3.h>
+
+using namespace yq::tachyon;
 
 namespace yq {
     namespace engine {

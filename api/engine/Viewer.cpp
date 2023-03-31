@@ -39,8 +39,8 @@
 #include <engine/vulqan/VqPipeline.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 
-#include <vulqan/VqStructs.hpp>
-#include <vulqan/VqLogging.hpp>
+#include <tachyon/VqStructs.hpp>
+#include <tachyon/VqLogging.hpp>
 
 #include <math/shape/Size2.hpp>
 #include <math/vector/Vector2.hpp>
@@ -60,6 +60,7 @@ YQ_OBJECT_IMPLEMENT(yq::engine::Viewer)
 
 
 using namespace yq::vulqan;
+using namespace yq::tachyon;
 
 namespace yq {
     namespace engine {

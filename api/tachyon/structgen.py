@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 ################################################################################
 ##
 ##  YOUR QUILL
@@ -68,7 +70,7 @@ with open('VqStructs.hpp', 'w') as f:
 #include <vulkan/vulkan_core.h>
 
 namespace yq {
-    namespace vulqan {""")
+    namespace tachyon {""")
 
 
     for s in structs:

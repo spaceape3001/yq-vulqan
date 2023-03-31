@@ -21,7 +21,7 @@ endif()
 add_library(yqvulqan SHARED 
     ${test_source}
     
-    vulqan/vulqan.cpp
+    ./tachyon/vulqan.cpp
     
     ./MyImGui.cpp
     
@@ -45,7 +45,7 @@ add_library(yqvulqan SHARED
 #    ./engine/vulqan/VqObjectFrame.cpp
      ./engine/vulqan/VqPipeline.cpp
     
-    ./widget/TextArea.cpp
+     ./widget/TextArea.cpp
 
 
 )

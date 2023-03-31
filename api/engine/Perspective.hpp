@@ -11,6 +11,7 @@
 #include <math/shape/Rectangle2.hpp>
 #include <math/color/RGB.hpp>
 #include <optional>
+#include <tachyon/enum/Tristate.hpp>
 
 namespace yq {
     namespace engine {
@@ -19,7 +20,7 @@ namespace yq {
             CameraCPtr                  camera;
             std::optional<RGB3F>        background;
             std::optional<Rectangle2D>  screen;
-            Tristate                    wireframe   = Tristate::NO;
+            tachyon::Tristate           wireframe   = tachyon::Tristate::NO;
         };
     }
 }

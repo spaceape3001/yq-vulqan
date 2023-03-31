@@ -10,13 +10,11 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
-        YQ_ENUM(PolygonMode, , 
-            Fill = 0,
-            Line = 1,
-            Point = 2,
-            FillRectangleNV = 1000153000
+    namespace tachyon {
+        YQ_ENUM(SamplerMipmapMode, ,
+            Nearest = 0,
+            Linear = 1
         )
     }
 }
-YQ_TYPE_DECLARE(yq::engine::PolygonMode)
+YQ_TYPE_DECLARE(yq::tachyon::SamplerMipmapMode)

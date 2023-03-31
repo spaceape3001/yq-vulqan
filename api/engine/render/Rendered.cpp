@@ -61,7 +61,7 @@ namespace yq {
             return metaInfo().primary();
         }
 
-        void              Rendered::set_wireframe(Tristate v)
+        void              Rendered::set_wireframe(tachyon::Tristate v)
         {
             m_wireframe = v;
         }

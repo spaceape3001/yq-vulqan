@@ -9,6 +9,7 @@
 #include <basic/trait/not_copyable.hpp>
 #include <basic/trait/not_moveable.hpp>
 #include <vulkan/vulkan_core.h>
+#include <tachyon/enum/DataActivity.hpp>
 
 namespace yq {
     namespace engine {
@@ -19,7 +20,7 @@ namespace yq {
 
 
         struct VqVBO {  // temporarily here....
-            DataActivity    freq;
+            tachyon::DataActivity    freq;
         };
         
         class VqPipeline : not_copyable, not_moveable {

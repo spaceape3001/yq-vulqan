@@ -17,6 +17,7 @@
 #include <math/vector/Vector2.hpp>
 #include <math/units.hpp>
 #include <vulkan/vulkan_core.h>
+#include <tachyon/enum/PresentMode.hpp>
 
 #include <functional>
 #include <optional>
@@ -151,9 +152,9 @@ namespace yq {
                 //! Current window position
             Vector2I            position() const;
             
-            PresentMode         present_mode() const;
+            tachyon::PresentMode         present_mode() const;
             
-            const std::set<PresentMode>&     present_modes_available() const;
+            const std::set<tachyon::PresentMode>&     present_modes_available() const;
             
             VkQueue             present_queue(uint32_t i=0) const;
             uint32_t            present_queue_count() const;
@@ -173,7 +174,7 @@ namespace yq {
                 //! Sets the window position
             void                set_position(int x, int y);
             
-            void                set_present_mode(PresentMode);
+            void                set_present_mode(tachyon::PresentMode);
 
                 //! Sets window size
             void                set_size(const Size2I&);
@@ -206,7 +207,7 @@ namespace yq {
             VkFormat            surface_format() const;
             
             bool                supports(VkFormat) const;
-            bool                supports(PresentMode) const;
+            bool                supports(tachyon::PresentMode) const;
             
             VkRect2D            swap_def_scissor() const;
             

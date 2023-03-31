@@ -10,19 +10,13 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
-        YQ_ENUM(ImageType, ,
-            D1 = 0,
-            D2 = 1,
-            D3 = 2,
-            D4 = 3,
-
-            Is1D = D1,
-            Is2D = D2,
-            Is3D = D3,
-            Is4D = D4
+    namespace tachyon {
+        YQ_ENUM(PolygonMode, , 
+            Fill = 0,
+            Line = 1,
+            Point = 2,
+            FillRectangleNV = 1000153000
         )
     }
 }
-
-YQ_TYPE_DECLARE(yq::engine::ImageType)
+YQ_TYPE_DECLARE(yq::tachyon::PolygonMode)

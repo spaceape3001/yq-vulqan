@@ -768,12 +768,12 @@ namespace yq {
             return ret;
         }
 
-        PresentMode  Viewer::present_mode() const
+        tachyon::PresentMode  Viewer::present_mode() const
         {
             return m_viz->m_presentMode;
         }
 
-        const std::set<PresentMode>&     Viewer::present_modes_available() const
+        const std::set<tachyon::PresentMode>&     Viewer::present_modes_available() const
         {
             return m_viz->m_presentModes;
         }

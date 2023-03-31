@@ -40,6 +40,7 @@
 #include <math/shape/shape_utils.hpp>
 #include <math/shape/Triangle2.hpp>
 #include <math/shape/Triangle3.hpp>
+#include <tachyon/enum/FrontFace.hpp>
 #include <iostream>
 #include <chrono>
 #include <glm/glm.hpp>  // temporary
@@ -48,6 +49,7 @@
 using namespace yq;
 using namespace yq::asset;
 using namespace yq::engine;
+using namespace yq::tachyon;
 
 struct Vertex {
     glm::vec2   position;
@@ -84,9 +86,9 @@ struct HelloTriangle : public engine::Rendered {
     
     std::unique_ptr<VqPipeline> m_pipeline;
     VqBuffer                    m_vbo;
-    Viewer*                     m_window                = nullptr;
+    engine::Viewer*             m_window                = nullptr;
     
-    HelloTriangle(Viewer*w) : m_window(w)
+    HelloTriangle(engine::Viewer*w) : m_window(w)
     {
         ShaderCPtr   vert = Shader::load("examples/hello3.vert");
         ShaderCPtr   frag = Shader::load("examples/hello.frag");
@@ -155,7 +157,7 @@ struct HelloWin : public engine::Viewer {
     Scene                   scene;
     Perspective             view;
 
-    HelloWin(const ViewerCreateInfo& wci) : Viewer(wci)
+    HelloWin(const ViewerCreateInfo& wci) : engine::Viewer(wci)
     {
         start   = std::chrono::steady_clock::now();
         triangle = new HelloTriangle(this);

@@ -10,13 +10,11 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
-        YQ_ENUM(IndexType, ,
-            none    = 1000165000,
-            uint16  = 0,
-            uint32  = 1,
-            uint8   = 1000265000
+    namespace tachyon {
+        YQ_ENUM(SubpassContents, ,
+            Inline = 0,
+            SecondaryCommandBuffers = 1
         )
     }
 }
-YQ_TYPE_DECLARE(yq::engine::IndexType)
+YQ_TYPE_DECLARE(yq::tachyon::SubpassContents)

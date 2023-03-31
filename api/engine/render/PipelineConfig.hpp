@@ -10,11 +10,18 @@
 #include <vector>
 #include <engine/preamble.hpp>
 
+#include <tachyon/enum/CullMode.hpp>
+#include <tachyon/enum/DataFormat.hpp>
+#include <tachyon/enum/FrontFace.hpp>
+#include <tachyon/enum/PolygonMode.hpp>
+#include <tachyon/enum/Topology.hpp>
+#include <tachyon/enum/VertexInputRate.hpp>
+
 namespace yq {
     namespace engine {
 
         struct VBOAttr {
-            DataFormat      format;
+            tachyon::DataFormat      format;
             uint32_t        location    = UINT32_MAX;
             uint32_t        offset      = 0;
         };
@@ -23,7 +30,7 @@ namespace yq {
             std::vector<VBOAttr>    attrs;
             uint32_t                stride      = 0;
             uint32_t                shaders     = 0;    //  shader mask
-            VertexInputRate         inputRate;
+            tachyon::VertexInputRate         inputRate;
         };
         
         struct UBOConfig {
@@ -41,10 +48,10 @@ namespace yq {
             std::vector<ShaderSpec>     shaders;
             std::vector<VBOConfig>      vbos;
             std::vector<UBOConfig>      ubos;
-            Topology                    topology    = Topology::TriangleList;
-            PolygonMode                 polymode    = PolygonMode::Fill;
-            FrontFace                   front       = FrontFace::CounterClockwise;
-            CullMode                    culling     = CullMode::Back;
+            tachyon::Topology                    topology    = tachyon::Topology::TriangleList;
+            tachyon::PolygonMode                 polymode    = tachyon::PolygonMode::Fill;
+            tachyon::FrontFace                   front       = tachyon::FrontFace::CounterClockwise;
+            tachyon::CullMode                    culling     = tachyon::CullMode::Back;
             PushConfig                  push        = {};
             
             PipelineConfig();

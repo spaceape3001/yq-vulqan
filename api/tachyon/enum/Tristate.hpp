@@ -10,11 +10,13 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
-        YQ_ENUM(FrontFace, , 
-            CounterClockwise    = 0,
-            Clockwise = 1
-        )
+    namespace tachyon {
+        YQ_ENUM(Tristate, ,
+            INHERIT     = 1,
+            NO          = 0,
+            YES         = 2,
+            MAYBE       = INHERIT
+        );
     }
 }
-YQ_TYPE_DECLARE(yq::engine::FrontFace)
+YQ_TYPE_DECLARE(yq::tachyon::Tristate)

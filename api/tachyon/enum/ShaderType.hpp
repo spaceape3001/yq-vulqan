@@ -10,7 +10,7 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         YQ_ENUM(ShaderType, ,
             UNKNOWN,
             VERT,
@@ -25,5 +25,5 @@ namespace yq {
     }
 }
 
-YQ_TYPE_DECLARE(yq::engine::ShaderType)
-YQ_TYPE_DECLARE(yq::engine::ShaderTypeFlags)
+YQ_TYPE_DECLARE(yq::tachyon::ShaderType)
+YQ_TYPE_DECLARE(yq::tachyon::ShaderTypeFlags)

@@ -31,12 +31,12 @@ namespace yq {
         {
         }
 
-        void    PipelineBuilder::culling(CullMode v)
+        void    PipelineBuilder::culling(tachyon::CullMode v)
         {
             m_config->culling    = v;
         }
         
-        void    PipelineBuilder::front(FrontFace v)
+        void    PipelineBuilder::front(tachyon::FrontFace v)
         {
             m_config->front = v;
         }
@@ -65,7 +65,7 @@ namespace yq {
             return loc;
         }
         
-        void    PipelineBuilder::polygons(PolygonMode v)
+        void    PipelineBuilder::polygons(tachyon::PolygonMode v)
         {
             m_config->polymode   = v;
         }
@@ -96,7 +96,7 @@ namespace yq {
         }
         
             
-        void    PipelineBuilder::topology(Topology v)
+        void    PipelineBuilder::topology(tachyon::Topology v)
         {
             m_config->topology = v;
         }

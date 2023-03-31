@@ -19,6 +19,7 @@
 #include <basic/Mutable.hpp>
 #include <math/glm_types.hpp>
 #include <variant>
+#include <tachyon/enum/DataActivity.hpp>
 
 namespace yq {
     namespace engine {
@@ -184,7 +185,7 @@ namespace yq {
             template <typename G>
             auto        shared_uniform(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return uniform<G>(DataActivity::COMMON, n, loc, sl);
+                return uniform<G>(tachyon::DataActivity::COMMON, n, loc, sl);
             }
             
             /*! \brief Creates an uniform buffer whose data is STATIC (unchanging) for a specific instance of the rendered object
@@ -192,7 +193,7 @@ namespace yq {
             template <typename G>
             auto        static_uniform(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return uniform<G>(DataActivity::STATIC, n, loc, sl);
+                return uniform<G>(tachyon::DataActivity::STATIC, n, loc, sl);
             }
 
             /*! \brief Creates an uniform buffer whose data is expected to change from time to time
@@ -200,7 +201,7 @@ namespace yq {
             template <typename G>
             auto        dynamic_uniform(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return uniform<G>(DataActivity::DYNAMIC, n, loc, sl);
+                return uniform<G>(tachyon::DataActivity::DYNAMIC, n, loc, sl);
             }
 
             /*! \brief Creates an uniform buffer whose data is expected to change with every render!
@@ -208,7 +209,7 @@ namespace yq {
             template <typename G>
             auto        refresh_uniform(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return uniform<G>(DataActivity::REFRESH, n, loc, sl);
+                return uniform<G>(tachyon::DataActivity::REFRESH, n, loc, sl);
             }
 
             /*! \brief Creates an vertex buffer whose data is SHARED with ALL instances of the pipeline 
@@ -216,7 +217,7 @@ namespace yq {
             template <typename G>
             auto        shared_vertex(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<G>(DataActivity::COMMON, n, loc, sl);
+                return vertex<G>(tachyon::DataActivity::COMMON, n, loc, sl);
             }
 
             /*! \brief Creates an vertex buffer whose data is STATIC (unchanging) for a specific instance of the rendered object
@@ -224,7 +225,7 @@ namespace yq {
             template <typename G>
             auto        static_vertex(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<G>(DataActivity::STATIC, n, loc, sl);
+                return vertex<G>(tachyon::DataActivity::STATIC, n, loc, sl);
             }
 
             /*! \brief Creates an vertex buffer whose data is expected to change from time to time
@@ -232,7 +233,7 @@ namespace yq {
             template <typename G>
             auto        dynamic_vertex(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<G>(DataActivity::DYNAMIC, n, loc, sl);
+                return vertex<G>(tachyon::DataActivity::DYNAMIC, n, loc, sl);
             }
 
             /*! \brief Creates an vertex buffer whose data is expected to change with every render!
@@ -240,7 +241,7 @@ namespace yq {
             template <typename G>
             auto        refresh_vertex(std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<G>(DataActivity::REFRESH, n, loc, sl);
+                return vertex<G>(tachyon::DataActivity::REFRESH, n, loc, sl);
             }
 #endif
 
@@ -249,69 +250,69 @@ namespace yq {
             template <typename T, size_t N>
             void        common_index(const T (&p)[N], std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new XBA_CArray<IndexBufferObjectInfo, T, N>(p, n, m_myPipeline, sl), DataActivity::COMMON, loc);
+                index<T>(new XBA_CArray<IndexBufferObjectInfo, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::COMMON, loc);
             }
 
 
             template <typename T, size_t N>
             void        static_index(std::array<T,N> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_StdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                index<T>(new MBA_StdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
 
             template <typename T, typename A>
             void        static_index(std::vector<T,A> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_StdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                index<T>(new MBA_StdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
             
             template <typename T, size_t N>
             void        static_index(Mutable<std::array<T,N>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_MutableStdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                index<T>(new MBA_MutableStdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
 
             template <typename T, typename A>
             void        static_index(Mutable<std::vector<T,A>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_MutableStdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                index<T>(new MBA_MutableStdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
 
 
             template <typename T, size_t N>
             void        dynamic_index(Mutable<std::array<T,N>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_MutableStdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::DYNAMIC, loc);
+                index<T>(new MBA_MutableStdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::DYNAMIC, loc);
             }
 
             template <typename T, typename A>
             void        dynamic_index(Mutable<std::vector<T,A>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_MutableStdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::DYNAMIC, loc);
+                index<T>(new MBA_MutableStdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::DYNAMIC, loc);
             }
 
             template <typename T, size_t N>
             void        refresh_index(std::array<T,N> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_StdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                index<T>(new MBA_StdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
 
             template <typename T, typename A>
             void        refresh_index(std::vector<T,A> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_StdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                index<T>(new MBA_StdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
             
             template <typename T, size_t N>
             void        refresh_index(Mutable<std::array<T,N>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_MutableStdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                index<T>(new MBA_MutableStdArray<IndexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
 
             template <typename T, typename A>
             void        refresh_index(Mutable<std::vector<T,A>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                index<T>(new MBA_MutableStdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                index<T>(new MBA_MutableStdVector<IndexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
 
 
@@ -320,68 +321,68 @@ namespace yq {
             template <typename T, size_t N>
             PipelineBuilder::VBO<T>        common_vertex(const T (&p)[N], std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new XBA_CArray<VertexBufferObjectInfo, T, N>(p, n, m_myPipeline, sl), DataActivity::COMMON, loc);
+                return vertex<T>(new XBA_CArray<VertexBufferObjectInfo, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::COMMON, loc);
             }
 
             template <typename T, size_t N>
             PipelineBuilder::VBO<T>        static_vertex(std::array<T,N> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_StdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                return vertex<T>(new MBA_StdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
 
             template <typename T, typename A>
             PipelineBuilder::VBO<T>        static_vertex(std::vector<T,A> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_StdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                return vertex<T>(new MBA_StdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
             
             template <typename T, size_t N>
             PipelineBuilder::VBO<T>        static_vertex(Mutable<std::array<T,N>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_MutableStdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                return vertex<T>(new MBA_MutableStdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
 
             template <typename T, typename A>
             PipelineBuilder::VBO<T>        static_vertex(Mutable<std::vector<T,A>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_MutableStdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::STATIC, loc);
+                return vertex<T>(new MBA_MutableStdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::STATIC, loc);
             }
 
             template <typename T, size_t N>
             PipelineBuilder::VBO<T>        dynamic_vertex(Mutable<std::array<T,N>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_MutableStdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::DYNAMIC, loc);
+                return vertex<T>(new MBA_MutableStdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::DYNAMIC, loc);
             }
 
             template <typename T, typename A>
             PipelineBuilder::VBO<T>        dynamic_vertex(Mutable<std::vector<T,A>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_MutableStdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::DYNAMIC, loc);
+                return vertex<T>(new MBA_MutableStdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::DYNAMIC, loc);
             }
 
             template <typename T, size_t N>
             PipelineBuilder::VBO<T>        refresh_vertex(std::array<T,N> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_StdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                return vertex<T>(new MBA_StdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
 
             template <typename T, typename A>
             PipelineBuilder::VBO<T>        refresh_vertex(std::vector<T,A> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_StdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                return vertex<T>(new MBA_StdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
 
 
             template <typename T, size_t N>
             PipelineBuilder::VBO<T>        refresh_vertex(Mutable<std::array<T,N>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_MutableStdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                return vertex<T>(new MBA_MutableStdArray<VertexBufferObjectInfo, C, T, N>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
 
             template <typename T, typename A>
             PipelineBuilder::VBO<T>        refresh_vertex(Mutable<std::vector<T,A>> C::*p, std::string_view n, uint32_t loc=UINT32_MAX, const std::source_location&sl = std::source_location::current())
             {
-                return vertex<T>(new MBA_MutableStdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), DataActivity::REFRESH, loc);
+                return vertex<T>(new MBA_MutableStdVector<VertexBufferObjectInfo, C, T, A>(p, n, m_myPipeline, sl), tachyon::DataActivity::REFRESH, loc);
             }
 
             //  --------------------------------------------------------------
@@ -389,19 +390,19 @@ namespace yq {
         private:
         
             template <typename T>
-            void        index(IndexBufferObjectInfo* buffer, DataActivity::enum_t act, uint32_t)
+            void        index(IndexBufferObjectInfo* buffer, tachyon::DataActivity::enum_t act, uint32_t)
             {
                 buffer -> set_data_activity(act);
                 buffer -> set_index_type(index_type<T>());
             }
 
             template <typename T>
-            void        uniform(UniformBufferObjectInfo*, DataActivity::enum_t, uint32_t)
+            void        uniform(UniformBufferObjectInfo*, tachyon::DataActivity::enum_t, uint32_t)
             {
             }
             
             template <typename V>
-            PipelineBuilder::VBO<V> vertex(VertexBufferObjectInfo* buffer, DataActivity::enum_t act, uint32_t)
+            PipelineBuilder::VBO<V> vertex(VertexBufferObjectInfo* buffer, tachyon::DataActivity::enum_t act, uint32_t)
             {
                 buffer -> set_data_activity(act);
                 return PipelineBuilder::VBO<V>(this, 

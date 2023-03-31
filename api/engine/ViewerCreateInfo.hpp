@@ -13,6 +13,7 @@
 #include <math/vector/Vector2.hpp>
 #include <engine/preamble.hpp>
 #include <tachyon/Monitor.hpp>
+#include <tachyon/enum/PresentMode.hpp>
 #include <vulkan/vulkan_core.h>
 #include <optional>
 #include <variant>
@@ -30,7 +31,7 @@ namespace yq {
             std::optional<Vector2I>     position;
                 //!  Set to get full screen, windowed otherwise
             tachyon::Monitor            monitor;
-            PresentMode                 pmode   = PresentMode::Fifo;
+            tachyon::PresentMode        pmode   = tachyon::PresentMode::Fifo;
             
             
                 //!  This is the background color

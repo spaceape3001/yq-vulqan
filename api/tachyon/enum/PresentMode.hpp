@@ -10,14 +10,15 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
-        YQ_ENUM(SamplerAddressMode, ,
-            Repeat  = 0,
-            MirroredRepeat = 1,
-            ClampToEdge = 2,
-            ClampToBorder = 3,
-            MirrorClampToEdge = 4
+    namespace tachyon {
+        YQ_ENUM(PresentMode, ,
+            Immediate = 0,
+            Mailbox = 1,
+            Fifo = 2,
+            FifoRelaxed = 3,
+            SharedDeemand = 1000111000,
+            SharedContinuous = 1000111001
         )
     }
 }
-YQ_TYPE_DECLARE(yq::engine::SamplerAddressMode)
+YQ_TYPE_DECLARE(yq::tachyon::PresentMode)

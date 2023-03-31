@@ -11,7 +11,7 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         YQ_ENUM(ColorComponent, , 
             Red     = 0,
             Green   = 1,
@@ -23,5 +23,5 @@ namespace yq {
     }
 }
 
-YQ_TYPE_DECLARE(yq::engine::ColorComponent)
-YQ_TYPE_DECLARE(yq::engine::ColorComponentFlags)
+YQ_TYPE_DECLARE(yq::tachyon::ColorComponent)
+YQ_TYPE_DECLARE(yq::tachyon::ColorComponentFlags)

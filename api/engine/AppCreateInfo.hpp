@@ -10,6 +10,7 @@
 #include <engine/preamble.hpp>
 #include <string>
 #include <vector>
+#include <tachyon/enum/Required.hpp>
 
 struct VkInstance_T;
 
@@ -18,7 +19,7 @@ namespace yq {
 
         struct NameRequired {
             const char*     name    = nullptr;
-            Required        req     = Required::NO;
+            tachyon::Required        req     = tachyon::Required::NO;
         };
 
 
@@ -36,7 +37,7 @@ namespace yq {
             uint32_t                     vulkan_api      = 0;
             
             //! Add KHRONOS validation layer
-            Required                     validation      = YQ_DBGREL( Required::YES, Required::NO);
+            tachyon::Required            validation      = YQ_DBGREL( tachyon::Required::YES, tachyon::Required::NO);
             
             //! Desired extensions (taking optional & yes)
             std::vector<NameRequired>    extensions;

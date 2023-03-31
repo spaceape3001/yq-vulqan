@@ -10,7 +10,7 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         YQ_ENUM(DescriptorType, , 
             Sampler = 0,
             CombinedImageSampler = 1,
@@ -32,4 +32,4 @@ namespace yq {
     }
 }
 
-YQ_TYPE_DECLARE(yq::engine::DescriptorType)
+YQ_TYPE_DECLARE(yq::tachyon::DescriptorType)

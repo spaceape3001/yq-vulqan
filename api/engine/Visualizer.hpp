@@ -12,6 +12,7 @@
 #include <engine/preamble.hpp>
 #include <engine/ViewerCreateInfo.hpp>
 #include <tachyon/Monitor.hpp>
+#include <tachyon/enum/PresentMode.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
 #include <math/preamble.hpp>
 
@@ -164,7 +165,7 @@ namespace yq {
             VkPhysicalDeviceProperties          m_deviceInfo;
             VkPhysicalDeviceMemoryProperties    m_memoryInfo;
             VkSurfaceKHR                        m_surface               = nullptr;
-            std::set<PresentMode>               m_presentModes;
+            std::set<tachyon::PresentMode>      m_presentModes;
             std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
             VkFormat                            m_surfaceFormat;
             VkColorSpaceKHR                     m_surfaceColorSpace;
@@ -176,7 +177,7 @@ namespace yq {
             VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
             std::unique_ptr<ViThread>           m_thread;
             VkRenderPass                        m_renderPass            = nullptr;
-            PresentMode                         m_presentMode;
+            tachyon::PresentMode                m_presentMode;
             std::atomic<bool>                   m_rebuildSwap           = { false };
             Guarded<VkClearValue>               m_clearValue;
             uint64_t                            m_tick                  = 0;

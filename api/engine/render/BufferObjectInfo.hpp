@@ -8,6 +8,7 @@
 
 #include <basic/meta/Meta.hpp>
 #include <engine/preamble.hpp>
+#include <tachyon/enum/DataActivity.hpp>
 
 namespace yq {
     namespace engine {
@@ -30,12 +31,12 @@ namespace yq {
             
             //const TypeInfo*     data_type() const { return m_type; }
             //const DataFormat    data_format() const { return m_format; }
-            const DataActivity  data_activity() const { return m_activity; }
+            const tachyon::DataActivity  data_activity() const { return m_activity; }
             
             //! Location or binding that's in the shader
             uint32_t            location() const { return m_location; }
             
-            void    set_data_activity(DataActivity);
+            void    set_data_activity(tachyon::DataActivity);
             //void    set_data_format(DataFormat);
             //void    set_data_type(const TypeInfo*);
             void    set_location(uint32_t);
@@ -45,7 +46,7 @@ namespace yq {
             
             //const TypeInfo* m_type          = nullptr;
             //DataFormat      m_format;
-            DataActivity    m_activity;
+            tachyon::DataActivity    m_activity;
             uint32_t        m_location      = UINT32_MAX;
         };
     }

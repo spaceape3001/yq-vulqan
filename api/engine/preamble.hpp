@@ -14,34 +14,7 @@
 #include <string>
 #include <variant>
 
-#include <engine/enum/BorderColor.hpp>
-#include <engine/enum/ColorComponent.hpp>
-#include <engine/enum/ComponentSwizzle.hpp>
-#include <engine/enum/CullMode.hpp>
-#include <engine/enum/DataActivity.hpp>
-#include <engine/enum/DataFormat.hpp>
-#include <engine/enum/DescriptorType.hpp>
-#include <engine/enum/FilterType.hpp>
-#include <engine/enum/FrontFace.hpp>
-#include <engine/enum/ImageLayout.hpp>
-#include <engine/enum/ImageTiling.hpp>
-#include <engine/enum/ImageType.hpp>
-#include <engine/enum/IndexType.hpp>
-#include <engine/enum/LogicOp.hpp>
-#include <engine/enum/MipmapMode.hpp>
-#include <engine/enum/PolygonMode.hpp>
-#include <engine/enum/PresentMode.hpp>
 #include <engine/enum/PushConfigType.hpp>
-#include <engine/enum/Required.hpp>
-#include <engine/enum/SamplerAddressMode.hpp>
-#include <engine/enum/SamplerMipmapMode.hpp>
-#include <engine/enum/ShaderType.hpp>
-#include <engine/enum/StencilOp.hpp>
-#include <engine/enum/SubpassContents.hpp>
-#include <engine/enum/SystemAllocationScope.hpp>
-#include <engine/enum/Topology.hpp>
-#include <engine/enum/Tristate.hpp>
-#include <engine/enum/VertexInputRate.hpp>
 
 namespace yq {
     namespace engine {

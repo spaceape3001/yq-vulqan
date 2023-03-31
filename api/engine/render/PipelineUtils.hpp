@@ -9,6 +9,7 @@
 #include <basic/meta/InfoBinder.hpp>
 #include <engine/preamble.hpp>
 #include <span>
+#include <tachyon/enum/IndexType.hpp>
 
 namespace yq {
     
@@ -16,15 +17,15 @@ namespace yq {
         struct DataFormatData {
             unsigned int        type_id     = 0;    //!< Meta type ID
             unsigned int        bindings    = 1;    //!< Number of bindings to be used
-            DataFormat          format;             //!< Data format
-            IndexType           index;
+            tachyon::DataFormat format;             //!< Data format
+            tachyon::IndexType  index;
         };
         
         std::span<const DataFormatData>   data_format_data();
 
-        DataFormat      data_format(const TypeInfo&);
+        tachyon::DataFormat      data_format(const TypeInfo&);
         template <typename T>
-        DataFormat      data_format()
+        tachyon::DataFormat      data_format()
         {
             return data_format(meta<T>());
         }
@@ -45,10 +46,10 @@ namespace yq {
             return data_binding(meta<T>());
         }
         
-        IndexType       index_type(const TypeInfo&);
+        tachyon::IndexType       index_type(const TypeInfo&);
         
         template <typename T>
-        IndexType       index_type()
+        tachyon::IndexType       index_type()
         {
             return index_type(meta<T>());
         }

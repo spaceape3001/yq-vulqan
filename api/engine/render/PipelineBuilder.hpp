@@ -25,10 +25,10 @@ namespace yq {
             
             void        shader(ShaderSpec);
             void        shaders(std::initializer_list<ShaderSpec>);
-            void        topology(Topology);
-            void        polygons(PolygonMode);
-            void        front(FrontFace);
-            void        culling(CullMode);
+            void        topology(tachyon::Topology);
+            void        polygons(tachyon::PolygonMode);
+            void        front(tachyon::FrontFace);
+            void        culling(tachyon::CullMode);
 
             template <typename T>
             void        push()
@@ -104,7 +104,7 @@ namespace yq {
                 m_builder -> m_config->vbos.push_back(*this);
             }
 
-            VBO&     rate(VertexInputRate vr)
+            VBO&     rate(tachyon::VertexInputRate vr)
             {
                 inputRate   = vr;
                 return *this;
@@ -120,7 +120,7 @@ namespace yq {
             
             template  <typename M>
             requires (!is_type_v<M>)
-            VBO& attribute(M V::*member, DataFormat fmt)
+            VBO& attribute(M V::*member, tachyon::DataFormat fmt)
             {
                 attr_impl(fmt, (uint32_t) member_offset(member), min_binding<M>());
                 return *this;
@@ -139,13 +139,13 @@ namespace yq {
                 attr_impl(data_format<A>(), offset, min_binding<A>());
             }
             
-            void    attr_impl(DataFormat df, uint32_t offset, uint32_t bindReq)
+            void    attr_impl(tachyon::DataFormat df, uint32_t offset, uint32_t bindReq)
             {
                 if(!m_builder)
                     return ;
                     
-                assert((df != DataFormat()) && "Bad data format!");
-                if(df == DataFormat())
+                assert((df != tachyon::DataFormat()) && "Bad data format!");
+                if(df == tachyon::DataFormat())
                     return ;
                     
                 VBOAttr     a;

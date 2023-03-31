@@ -10,7 +10,7 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         YQ_ENUM(StencilOp, ,
             Keep = 0,
             Zero = 1,
@@ -23,5 +23,5 @@ namespace yq {
         )
     }
 }
-YQ_TYPE_DECLARE(yq::engine::StencilOp)
+YQ_TYPE_DECLARE(yq::tachyon::StencilOp)
 

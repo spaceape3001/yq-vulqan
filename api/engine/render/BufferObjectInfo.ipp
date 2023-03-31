@@ -20,7 +20,7 @@ namespace yq {
         }
 
             
-        void    BufferObjectInfo::set_data_activity(DataActivity v)
+        void    BufferObjectInfo::set_data_activity(tachyon::DataActivity v)
         {
             m_activity  = v;
         }
@@ -50,7 +50,7 @@ namespace yq {
             }
         }
 
-        void    IndexBufferObjectInfo::set_index_type(IndexType it)
+        void    IndexBufferObjectInfo::set_index_type(tachyon::IndexType it)
         {
             m_type = it;
         }

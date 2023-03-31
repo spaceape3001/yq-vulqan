@@ -10,13 +10,12 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
-        YQ_ENUM(Tristate, ,
-            INHERIT     = 1,
-            NO          = 0,
-            YES         = 2,
-            MAYBE       = INHERIT
-        );
+    namespace tachyon {
+        YQ_ENUM(ImageTiling, ,
+            Optimal = 0,
+            Linear = 1,
+            DRMFormat = 1000158000
+        )
     }
 }
-YQ_TYPE_DECLARE(yq::engine::Tristate)
+YQ_TYPE_DECLARE(yq::tachyon::ImageTiling)

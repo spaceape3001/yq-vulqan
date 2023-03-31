@@ -9,6 +9,7 @@
 #include <basic/meta/Meta.hpp>
 #include "BufferObjectInfo.hpp"
 #include <engine/preamble.hpp>
+#include <tachyon/enum/IndexType.hpp>
 
 namespace yq {
     namespace engine {
@@ -16,13 +17,13 @@ namespace yq {
         public:
             class Writer;
             
-            IndexType       index_type() const { return m_type; }
-            void            set_index_type(IndexType);
+            tachyon::IndexType       index_type() const { return m_type; }
+            void            set_index_type(tachyon::IndexType);
             
         protected:
             IndexBufferObjectInfo(std::string_view, Pipeline*, const std::source_location&);
             
-            IndexType       m_type = IndexType::none;
+            tachyon::IndexType       m_type = tachyon::IndexType::none;
         };
     }
 }

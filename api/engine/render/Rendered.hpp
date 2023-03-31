@@ -10,6 +10,7 @@
 #include <basic/Revision.hpp>
 #include <engine/preamble.hpp>
 #include <engine/render/PipelineConfig.hpp>
+#include <tachyon/enum/Tristate.hpp>
 
 namespace yq {
     namespace engine {
@@ -52,8 +53,8 @@ namespace yq {
             const Pipeline*   pipeline() const;
             bool                is_culled() const { return m_culled; }
             
-            Tristate            wireframe() const { return m_wireframe; }
-            void                set_wireframe(Tristate);
+            tachyon::Tristate            wireframe() const { return m_wireframe; }
+            void                set_wireframe(tachyon::Tristate);
             
             RenderDraw          draw() const { return m_draw; }
 
@@ -65,7 +66,7 @@ namespace yq {
             // NULL defaults to primary pipeline
             const Pipeline*     m_pipeline      = nullptr;
             
-            Tristate        m_wireframe;
+            tachyon::Tristate        m_wireframe;
             bool            m_culled    = false;
             RenderDraw      m_draw;
         };

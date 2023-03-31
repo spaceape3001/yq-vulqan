@@ -99,7 +99,7 @@ namespace yq {
                 return ret;
             }
             
-            ResultCC    validate_shader(const ByteArray&input, const std::filesystem::path& source, ShaderType type)
+            ResultCC    validate_shader(const ByteArray&input, const std::filesystem::path& source, tachyon::ShaderType type)
             {
                 static const std::filesystem::path  glslv   = glsl_validator_executable();
                 int                                 ecode   = -1;
@@ -182,12 +182,12 @@ namespace yq {
             return dirs;
         }
 
-        ShaderCPtr    Shader::do_load(const std::filesystem::path&file, ShaderType st, unsigned int options)
+        ShaderCPtr    Shader::do_load(const std::filesystem::path&file, tachyon::ShaderType st, unsigned int options)
         {
-            if(st == ShaderType()){
+            if(st == tachyon::ShaderType()){
                 std::string             sspec   = file.string();
                 bool                    ok  = false;
-                st  = ShaderType(file_extension(sspec), &ok);
+                st  = tachyon::ShaderType(file_extension(sspec), &ok);
                 if(!ok){
                     yError() << "Unable to deduce shader type from: " << file;
                     return ShaderCPtr();
@@ -238,12 +238,12 @@ namespace yq {
                 return ShaderCPtr();
             }
             
-            return do_load(fspec, ShaderType(), true);
+            return do_load(fspec, tachyon::ShaderType(), true);
         }
 
-        ShaderCPtr      Shader::load(const ByteArray& glsl, ShaderType st)
+        ShaderCPtr      Shader::load(const ByteArray& glsl, tachyon::ShaderType st)
         {
-            if(st == ShaderType()){
+            if(st == tachyon::ShaderType()){
                 yError() << "Cannot load shader as the type is unknown.";
                 return ShaderCPtr();
             }
@@ -264,10 +264,10 @@ namespace yq {
 
         ResultCC    Shader::validate(const std::filesystem::path& source)
         {
-            return validate_shader(ByteArray(), source, ShaderType());
+            return validate_shader(ByteArray(), source, tachyon::ShaderType());
         }
 
-        ResultCC    Shader::validate(const ByteArray& data, ShaderType st)
+        ResultCC    Shader::validate(const ByteArray& data, tachyon::ShaderType st)
         {
             return validate_shader(data, std::filesystem::path(), st);
         }
@@ -278,14 +278,14 @@ namespace yq {
         {
         }
         
-        Shader::Shader(const ByteArray&raw, ShaderType st) : m_payload(raw), m_type(st)
+        Shader::Shader(const ByteArray&raw, tachyon::ShaderType st) : m_payload(raw), m_type(st)
         {
-            assert(m_type != ShaderType());
+            assert(m_type != tachyon::ShaderType());
         }
         
-        Shader::Shader(ByteArray&&raw, ShaderType st) : m_payload(std::move(raw)), m_type(st)
+        Shader::Shader(ByteArray&&raw, tachyon::ShaderType st) : m_payload(std::move(raw)), m_type(st)
         {
-            assert(m_type != ShaderType());
+            assert(m_type != tachyon::ShaderType());
         }
         
         Shader::~Shader()
@@ -339,7 +339,7 @@ namespace yq {
 
         Ref<const Asset>    ShaderCache::load_binary(const std::filesystem::path& fp) const
         {
-            return Shader::do_load(fp, ShaderType(), false);
+            return Shader::do_load(fp, tachyon::ShaderType(), false);
         }
         
 

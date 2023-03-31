@@ -10,7 +10,7 @@
 #include <basic/meta/InfoBinder.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         YQ_ENUM(DataActivity, , 
             //! Make zero expectations, ie, gets ignored
             UNSURE  = 0,
@@ -30,4 +30,4 @@ namespace yq {
     }
 }
 
-YQ_TYPE_DECLARE(yq::engine::DataActivity)
+YQ_TYPE_DECLARE(yq::tachyon::DataActivity)

@@ -9,6 +9,7 @@
 #include <engine/Asset.hpp>
 #include <engine/preamble.hpp>
 #include <basic/ByteArray.hpp>
+#include <tachyon/enum/ShaderType.hpp>
 
 namespace yq {
     namespace engine {
@@ -74,7 +75,7 @@ namespace yq {
             
                 This compiles and loads the shaders (bypassing the cache).
             */
-            static ShaderCPtr      load(const ByteArray& glsl, ShaderType);
+            static ShaderCPtr      load(const ByteArray& glsl, tachyon::ShaderType);
             
             /*! \brief Searches for a shader
             
@@ -100,13 +101,13 @@ namespace yq {
 
                 \param[in] glslData     This is the GLSL shader data.
             */
-            static ResultCC         validate(const ByteArray& glslData, ShaderType);
+            static ResultCC         validate(const ByteArray& glslData, tachyon::ShaderType);
 
         
                 //  ---------------------------------------------------------------
         
-            Shader(const ByteArray&, ShaderType);
-            Shader(ByteArray&&, ShaderType);
+            Shader(const ByteArray&, tachyon::ShaderType);
+            Shader(ByteArray&&, tachyon::ShaderType);
             virtual ~Shader();
 
             /*! \brief Filename
@@ -122,7 +123,7 @@ namespace yq {
             virtual size_t                  data_size() const override;
             virtual bool                    save_binary(const std::filesystem::path&) const override;
         
-            ShaderType                      shader_type() const { return m_type; }
+            tachyon::ShaderType             shader_type() const { return m_type; }
         
         
         private:
@@ -131,7 +132,7 @@ namespace yq {
             Shader();
             
             //! Raw load (from absolute file)
-            static ShaderCPtr      do_load(const std::filesystem::path&, ShaderType st, unsigned int options);
+            static ShaderCPtr      do_load(const std::filesystem::path&, tachyon::ShaderType st, unsigned int options);
 
             enum {
                 //! Compiles the shader
@@ -142,7 +143,7 @@ namespace yq {
             };
 
             ByteArray               m_payload;
-            ShaderType              m_type;
+            tachyon::ShaderType         m_type;
             std::filesystem::path   m_file;
             SizeTimestamp           m_szt;
         };

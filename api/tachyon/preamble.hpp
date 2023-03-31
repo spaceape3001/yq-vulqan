@@ -6,6 +6,8 @@
 
 #pragma once
 
+struct GLFWmonitor;
+struct GLFWvidmode;
 struct GLFWwindow;
 
 namespace yq {
@@ -14,8 +16,13 @@ namespace yq {
     namespace vulqan {
     }
     
+    namespace engine {
+        class Viewer;
+    }
+    
     namespace tachyon {
-        struct Visualizer;
+        struct VideoMode;
+        class Visualizer;
         class Viewer;
     }
 }

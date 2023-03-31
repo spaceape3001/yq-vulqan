@@ -11,7 +11,7 @@
 
 #include <engine/preamble.hpp>
 #include <engine/ViewerCreateInfo.hpp>
-#include <engine/vulqan/VqMonitor.hpp>
+#include <tachyon/Monitor.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
 #include <math/preamble.hpp>
 

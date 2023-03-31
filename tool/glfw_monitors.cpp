@@ -7,19 +7,21 @@
 #include <math/shape/Rectangle2.hpp>
 #include <math/vector/Vector2.hpp>
 #include <engine/Application.hpp>
-#include <engine/vulqan/VqMonitor.hpp>
+#include <tachyon/Monitor.hpp>
+#include <tachyon/detail/VideoMode.hpp>
 #include <iostream>
 
 using std::cout;
 using namespace yq;
 using namespace yq::engine;
+using namespace yq::tachyon;
 
 int main(int argc, char* argv[])
 {
     Application   app(argc, argv);
     app.init_glfw();
-    std::vector<VqMonitor>  monitors    = VqMonitor::enumerate();
-    VqMonitor               primary     = VqMonitor::primary();
+    std::vector<Monitor>  monitors    = Monitor::enumerate();
+    Monitor               primary     = Monitor::primary();
     
     cout << monitors.size() << "Monitors\n";
     size_t      N   = monitors.size();

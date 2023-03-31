@@ -27,7 +27,6 @@
 #include "vulqan/VqCommand.ipp"
 #include "vulqan/VqEnums.ipp"
 #include "vulqan/VqJoystick.ipp"
-#include "vulqan/VqMonitor.ipp"
 #include "vulqan/VqUtils.ipp"
 
 

@@ -9,6 +9,9 @@
     are our C++ adapters for it.
 */
 
+#include "Monitor.ipp"
+#include "detail/VideoMode.ipp"
+
 #include "VqStructs.hpp"
 #include "VqLogging.ipp"
 #include "Visualizer.ipp"

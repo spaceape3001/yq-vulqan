@@ -747,11 +747,11 @@ namespace yq {
                 glfwMaximizeWindow(m_viz->m_window);
         }
 
-        VqMonitor   Viewer::monitor() const
+        tachyon::Monitor   Viewer::monitor() const
         {
             if(m_viz->m_window)
-                return VqMonitor(glfwGetWindowMonitor(m_viz->m_window));
-            return VqMonitor();
+                return Monitor(glfwGetWindowMonitor(m_viz->m_window));
+            return Monitor();
         }
 
         VkPhysicalDevice    Viewer::physical() const 

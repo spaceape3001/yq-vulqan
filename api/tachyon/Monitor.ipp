@@ -4,47 +4,38 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VqMonitor.hpp"
-#include <math/vector/Vector2.hpp>
+#include "Monitor.hpp"
+#include <tachyon/detail/VideoMode.hpp>
+#include <tachyon/Monitor.hpp>
 #include <math/shape/Rectangle2.hpp>
-#include <math/shape/Size2.hpp>
+#include <math/vector/Vector2.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq {
-    namespace engine {
-        VqVidMode::VqVidMode(const GLFWvidmode&g) : 
-            size(g.width, g.height), 
-            bits({ g.redBits, g.greenBits, g.blueBits}), 
-            refresh_rate(g.refreshRate)
+    namespace tachyon {
+
+        std::vector<Monitor>   Monitor::enumerate()
         {
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
-
-
-        std::vector<VqMonitor>   VqMonitor::enumerate()
-        {
-            std::vector<VqMonitor>  ret;
+            std::vector<Monitor>  ret;
             int                     count = 0;
             GLFWmonitor**   them    = glfwGetMonitors(&count);
             if(them && (count>0)){
                 ret.reserve(count);
                 for(int i=0;i<count;++i)
-                    ret.push_back(VqMonitor(them[i]));
+                    ret.push_back(Monitor(them[i]));
             }
             return ret;
         }
         
-        VqMonitor                VqMonitor::primary()
+        Monitor                Monitor::primary()
         {
-            return VqMonitor( glfwGetPrimaryMonitor() );
+            return Monitor( glfwGetPrimaryMonitor() );
         }
 
 
         ////////////////////////////////////////////////////////////////////////////////
 
-        std::string         VqMonitor::name() const
+        std::string         Monitor::name() const
         {
             if(!m_monitor)
                 return std::string();
@@ -54,7 +45,7 @@ namespace yq {
             return std::string(z);
         }
         
-        Size2I              VqMonitor::phys_size_mm() const
+        Size2I              Monitor::phys_size_mm() const
         {
             if(!m_monitor)
                 return {};
@@ -63,7 +54,7 @@ namespace yq {
             return ret;
         }
         
-        Vector2I            VqMonitor::position() const
+        Vector2I            Monitor::position() const
         {
             if(!m_monitor)
                 return {};
@@ -72,7 +63,7 @@ namespace yq {
             return ret;
         }
 
-        Vector2F            VqMonitor::scale() const
+        Vector2F            Monitor::scale() const
         {
             if(!m_monitor)
                 return {};
@@ -82,7 +73,7 @@ namespace yq {
         }
         
         
-        VqVidMode  VqMonitor::video_mode_current() const
+        VideoMode  Monitor::video_mode_current() const
         {
             if(!m_monitor)
                 return {};
@@ -92,9 +83,9 @@ namespace yq {
             return *vm;
         }
 
-        std::vector<VqVidMode> VqMonitor::video_modes_available() const
+        std::vector<VideoMode> Monitor::video_modes_available() const
         {
-            std::vector<VqVidMode> ret;
+            std::vector<VideoMode> ret;
             if(m_monitor){
                 int     count   = 0;
                 const GLFWvidmode*  vms = glfwGetVideoModes(m_monitor, &count);
@@ -107,7 +98,7 @@ namespace yq {
             return ret;
         }
 
-        Rectangle2I         VqMonitor::work_area() const
+        Rectangle2I         Monitor::work_area() const
         {
             if(!m_monitor)
                 return {};

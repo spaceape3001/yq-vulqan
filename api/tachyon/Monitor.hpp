@@ -9,34 +9,21 @@
 #include <vector>
 #include <string>
 #include <math/preamble.hpp>
-#include <math/color/RGB.hpp>
-#include <math/shape/Size2.hpp>
-
-struct GLFWmonitor;
-struct GLFWvidmode;
+#include <tachyon/preamble.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
 
-        struct VqVidMode {
-            Size2I      size            = {};
-            RGB3I       bits            = {};
-            int         refresh_rate    = 0;
-            VqVidMode(){}
-            VqVidMode(const GLFWvidmode&);
-            constexpr bool    operator==(const VqVidMode&) const noexcept = default;
-        };
         
-        class Viewer;
 
-        class VqMonitor {
+        class Monitor {
         public:
-            static std::vector<VqMonitor>   enumerate();
+            static std::vector<Monitor>   enumerate();
             
             //! Returns the primary monitor
-            static VqMonitor                primary();
+            static Monitor                primary();
 
-            VqMonitor(){}
+            constexpr Monitor() noexcept = default;
             
             //! Underlying GLFW Monitor pointer
             GLFWmonitor*            monitor() const { return m_monitor; }
@@ -54,10 +41,10 @@ namespace yq {
             Vector2F                scale() const;
             
             //! Current video mode
-            VqVidMode               video_mode_current() const;
+            VideoMode               video_mode_current() const;
             
             //! All video modes
-            std::vector<VqVidMode>  video_modes_available() const;
+            std::vector<VideoMode>  video_modes_available() const;
         
             /*! Monitor's "Work area"
             
@@ -66,12 +53,14 @@ namespace yq {
             Rectangle2I             work_area() const;
             
             constexpr operator bool () const noexcept { return m_monitor != nullptr; }
-            constexpr bool    operator==(const VqMonitor&) const noexcept = default;
+            constexpr bool    operator==(const Monitor&) const noexcept = default;
         
         private:
             friend class Viewer;
+            friend class engine::Viewer;
+            
             GLFWmonitor *m_monitor = nullptr;
-            VqMonitor(GLFWmonitor *m) : m_monitor(m) {}
+            constexpr Monitor(GLFWmonitor *m) noexcept : m_monitor(m) {}
         };
 
     }

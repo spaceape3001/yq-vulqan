@@ -12,7 +12,7 @@
 #include <math/shape/Size2.hpp>
 #include <math/vector/Vector2.hpp>
 #include <engine/preamble.hpp>
-#include <engine/vulqan/VqMonitor.hpp>
+#include <tachyon/Monitor.hpp>
 #include <vulkan/vulkan_core.h>
 #include <optional>
 #include <variant>
@@ -29,7 +29,7 @@ namespace yq {
             Size2I                      size     = { 1920, 1080 };
             std::optional<Vector2I>     position;
                 //!  Set to get full screen, windowed otherwise
-            VqMonitor                   monitor;
+            tachyon::Monitor            monitor;
             PresentMode                 pmode   = PresentMode::Fifo;
             
             

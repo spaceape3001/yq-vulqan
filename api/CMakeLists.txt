@@ -4,7 +4,7 @@
 ##
 ################################################################################
 
-# project(yqvulqan)
+project(tachyon)
 
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
@@ -18,10 +18,10 @@ if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
 endif()
 
 
-add_library(yqvulqan SHARED 
+add_library(${PROJECT_NAME} SHARED 
     ${test_source}
     
-    ./tachyon/vulqan.cpp
+    ./tachyon/tachyon.cpp
     
     ./MyImGui.cpp
     
@@ -49,7 +49,7 @@ add_library(yqvulqan SHARED
 
 
 )
-target_compile_definitions(yqvulqan 
+target_compile_definitions(${PROJECT_NAME} 
     PUBLIC
         GLFW_INCLUDE_VULKAN=1
         YQ_USE_GLM=1
@@ -58,7 +58,7 @@ target_compile_definitions(yqvulqan
         VK_ENABLE_BETA_EXTENSIONS=1
         IMGUI_USE_WCHAR32=1 
 )
-target_link_libraries(yqvulqan 
+target_link_libraries(${PROJECT_NAME} 
     PUBLIC  
         yqtoolbox
         vma 
@@ -67,12 +67,12 @@ target_link_libraries(yqvulqan
         ${Vulkan_LIBRARIES} 
         ${GLFW3_LIBRARY}
 )
-target_include_directories(yqvulqan 
+target_include_directories(${PROJECT_NAME} 
     PUBLIC 
         ${CMAKE_CURRENT_LIST_DIR}
         ${glm_INCLUDE_DIR}
 )
 
-LinkTest(yqvulqan)
+LinkTest(${PROJECT_NAME})
 
 

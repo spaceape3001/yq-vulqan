@@ -144,7 +144,7 @@ namespace yq {
             void                maximize();
 
                 //! Monitor (if fullscreen)
-            VqMonitor           monitor() const;
+            tachyon::Monitor           monitor() const;
 
             VkPhysicalDevice    physical() const;
 

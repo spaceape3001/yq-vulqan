@@ -26,7 +26,6 @@
 #include "vulqan/VqBuffer.ipp"
 #include "vulqan/VqCommand.ipp"
 #include "vulqan/VqEnums.ipp"
-#include "vulqan/VqJoystick.ipp"
 #include "vulqan/VqUtils.ipp"
 
 

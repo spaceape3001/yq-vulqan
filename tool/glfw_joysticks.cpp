@@ -6,12 +6,13 @@
 
 #include <basic/TextUtils.hpp>
 #include <engine/Application.hpp>
-#include <engine/vulqan/VqJoystick.hpp>
+#include <tachyon/host/Joystick.hpp>
 #include <iostream>
 
 using std::cout;
 using namespace yq;
 using namespace yq::engine;
+using namespace yq::tachyon;
 
 
 int main(int argc, char* argv[])
@@ -19,11 +20,11 @@ int main(int argc, char* argv[])
     Application   app(argc, argv);
     app.init_glfw();
     
-    std::vector<VqJoystick> joysticks   = VqJoystick::joysticks();
+    std::vector<Joystick> joysticks   = Joystick::joysticks();
     
     std::cout << "Found " << joysticks.size() << " joystick(s)\n\n";
     
-    for(VqJoystick j : joysticks){
+    for(Joystick j : joysticks){
         std::cout << "Joystick #" << (int) j.id << " (" << j.name() << " or GUID=" << j.guid() << ")";
         if( j.is_gamepad())
             std::cout << " GAMEPAD!";

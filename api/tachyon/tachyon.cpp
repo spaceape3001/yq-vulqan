@@ -9,6 +9,7 @@
     are our C++ adapters for it.
 */
 
+#include "host/Joystick.ipp"
 #include "host/Monitor.ipp"
 #include "host/VideoMode.ipp"
 

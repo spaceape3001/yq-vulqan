@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-//#pragma once
+#pragma once
 
-#include "VqJoystick.hpp"
+#include <tachyon/host/Joystick.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq {
-    namespace engine {
-        std::vector<VqJoystick>  VqJoystick::gamepads()
+    namespace tachyon {
+        std::vector<Joystick>  Joystick::gamepads()
         {
-            std::vector<VqJoystick>     ret;
+            std::vector<Joystick>     ret;
             
             for(int jid = GLFW_JOYSTICK_1; jid<=GLFW_JOYSTICK_LAST; ++jid){
                 if(glfwJoystickIsGamepad(jid) == GLFW_TRUE)
@@ -23,9 +23,9 @@ namespace yq {
             return ret;
         }
         
-        std::vector<VqJoystick>  VqJoystick::joysticks()
+        std::vector<Joystick>  Joystick::joysticks()
         {
-            std::vector<VqJoystick>     ret;
+            std::vector<Joystick>     ret;
 
             for(int jid = GLFW_JOYSTICK_1; jid<=GLFW_JOYSTICK_LAST; ++jid){
                 if(glfwJoystickPresent(jid) == GLFW_TRUE)
@@ -37,7 +37,7 @@ namespace yq {
         
         //  ------------------------------------------------------------------------------------------------------------
         
-        std::span<const float>  VqJoystick::axes() const
+        std::span<const float>  Joystick::axes() const
         {
             int             count= 0;
             const float*    z   = glfwGetJoystickAxes(id, &count);
@@ -46,7 +46,7 @@ namespace yq {
             return std::span<const float>(z, count);
         }
         
-        unsigned int  VqJoystick::axes_count() const
+        unsigned int  Joystick::axes_count() const
         {
             int  count= 0;
             if(glfwGetJoystickAxes(id, &count))
@@ -54,7 +54,7 @@ namespace yq {
             return 0;
         }
     
-        unsigned int  VqJoystick::button_count() const
+        unsigned int  Joystick::button_count() const
         {
             int  count= 0;
             if(glfwGetJoystickButtons(id, &count))
@@ -62,7 +62,7 @@ namespace yq {
             return 0;
         }
 
-        std::span<const unsigned char>  VqJoystick::buttons() const
+        std::span<const unsigned char>  Joystick::buttons() const
         {
             int   count= 0;
             const unsigned char*    z   = glfwGetJoystickButtons(id, &count);
@@ -71,7 +71,7 @@ namespace yq {
             return std::span<const unsigned char>(z, count);
         }
         
-        std::string_view  VqJoystick::guid() const
+        std::string_view  Joystick::guid() const
         {
             const char* z   = glfwGetJoystickGUID(id);
             if(!z)
@@ -79,7 +79,7 @@ namespace yq {
             return std::string_view(z);
         }
 
-        std::span<const unsigned char>  VqJoystick::hats() const
+        std::span<const unsigned char>  Joystick::hats() const
         {
             int             count= 0;
             const unsigned char*    z   = glfwGetJoystickHats(id, &count);
@@ -88,17 +88,17 @@ namespace yq {
             return std::span<const unsigned char>(z, count);
         }
         
-        bool  VqJoystick::is_gamepad() const
+        bool  Joystick::is_gamepad() const
         {
             return glfwJoystickIsGamepad(id);
         }
         
-        bool  VqJoystick::is_present() const
+        bool  Joystick::is_present() const
         {
             return glfwJoystickPresent(id);
         }
 
-        std::string_view  VqJoystick::name() const
+        std::string_view  Joystick::name() const
         {
             const char* z   = glfwGetJoystickName(id);
             if(!z)
@@ -107,12 +107,12 @@ namespace yq {
         }
         
 
-        void  VqJoystick::set_user_data(void* pointer)
+        void  Joystick::set_user_data(void* pointer)
         {
             glfwSetJoystickUserPointer(id, pointer);
         }
         
-        void*  VqJoystick::user_data() const
+        void*  Joystick::user_data() const
         {
             return glfwGetJoystickUserPointer(id);
         }

@@ -12,18 +12,18 @@
 #include <vector>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
 
         /*! \brief Convience wrapper around GLFW Joysticks
         */
-        struct VqJoystick {
+        struct Joystick {
             const uint8_t  id = 0;
           
             //! Vector of all gamepads
-            static std::vector<VqJoystick>      gamepads();
+            static std::vector<Joystick>      gamepads();
             
             //! Vector of all joysticks
-            static std::vector<VqJoystick>      joysticks();
+            static std::vector<Joystick>      joysticks();
             
             //! State of the joystick/gamepad axes
             std::span<const float>          axes() const;

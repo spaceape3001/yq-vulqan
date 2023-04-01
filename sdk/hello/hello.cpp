@@ -31,7 +31,6 @@
 #include <engine/render/RenderWriter.hpp>
 #include <engine/vulqan/VqBuffer.hpp>
 #include <engine/vulqan/VqCommand.hpp>
-#include <engine/vulqan/VqUtils.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
 #include <math/color/Colors.hpp>
 #include <math/color/RGB.hpp>
@@ -41,6 +40,7 @@
 #include <math/shape/Triangle2.hpp>
 #include <math/shape/Triangle3.hpp>
 #include <tachyon/enum/FrontFace.hpp>
+#include <tachyon/gpu/VqUtils.hpp>
 #include <iostream>
 #include <chrono>
 #include <glm/glm.hpp>  // temporary

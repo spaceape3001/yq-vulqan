@@ -14,7 +14,6 @@
 #include <basic/meta/ObjectInfoWriter.hpp>
 #include <engine/Application.hpp>
 #include <engine/Viewer.hpp>
-#include <engine/vulqan/VqUtils.hpp>
 #include <MyImGui.hpp>
 #include <iostream>
 

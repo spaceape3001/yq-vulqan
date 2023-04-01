@@ -37,14 +37,3 @@
 #define vqInfo              yInfo("vq")
 #define vqNotice            yNotice("vq")
 #define vqWarning           yWarning("vq")
-
-#define vulkanAlert         yAlert("vulkan")
-#define vulkanCritical      yCritical("vulkan")
-#define vulkanDebug         yDebug("vulkan")
-#define vulkanError         yError("vulkan")
-#define vulkanEmergency     yEmergency("vulkan")
-#define vulkanFatal         yFatal("vulkan")
-#define vulkanInfo          yInfo("vulkan")
-#define vulkanNotice        yNotice("vulkan")
-#define vulkanWarning       yWarning("vulkan")
-

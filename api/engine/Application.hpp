@@ -10,8 +10,8 @@
 #include <basic/DbgRel.hpp>
 #include <engine/preamble.hpp>
 #include <tachyon/AppCreateInfo.hpp>
-#include <vulkan/vulkan_core.h>
 #include <tachyon/host/AppGLFW.hpp>
+#include <tachyon/gpu/VqApp.hpp>
 #include <set>
 #include <vector>
 
@@ -26,24 +26,12 @@ namespace yq {
         /*! \brief Engine/Vulkan application
         
         */
-        class Application : public BasicApp, public tachyon::AppGLFW {
+        class Application : public BasicApp, public AppGLFW, public VqApp {
         public:
         
             //! Global application, if any
             static Application*       app() { return s_app; }
             
-            //! Name of this engine
-            static std::string_view             engine_name();
-            
-            //! Version of this engine
-            static uint32_t                     engine_version();
-
-            /*! \brief Vulkan instance
-            
-                If necessary, this will initialize the vulkan *IFF* the app exists and vulkan's not already been
-                initialized.
-            */
-            static VkInstance    vulkan();
         
             /*! \brief Constructor
             
@@ -68,52 +56,16 @@ namespace yq {
             */
             void    run_window(Viewer*win, double timeout=0.);
             
-            /*! \brief Initializes the GLFW
-            
-                This initializes the GLFW.  
-                
-                \note calling instance() or init_vulkan() will automatically initialize GLFW.
-            */
-            //void    init_glfw();
-            
-            /*! \brief Initializes vulkan instance
-            
-                \note calling instance() will automatically call this, if necessary.
-            */
-            bool    init_vulkan();
-            
-            const std::vector<const char*>&     extensions() const { return m_extensions; }
-            const std::vector<const char*>&     layers() const { return m_layers; }
-            
-            const AppCreateInfo&                app_info() const { return m_appInfo; }
-            
-            VkInstance                          instance() const { return m_vulkan; }
-            
             
         private:
             friend class Viewer;
             
             static Application*                 s_app;
-            static VkInstance                   s_vulkan;
-
-            AppCreateInfo                       m_appInfo;
-            VkInstance                          m_vulkan        = nullptr;
-            //std::vector<VkLayerProperties>      m_allLayerProps;
-            //std::vector<VkExtensionProperties>  m_allExtensionProps;
-            //std::set<std::string>               m_allLayerNames;
-            //std::set<std::string>               m_allExtensionNames;
-            std::vector<const char*>            m_extensions;
-            std::vector<const char*>            m_layers;
-            VkDebugReportCallbackEXT            m_debug         = nullptr;
-            //bool                                m_glfw        = false;
-            
-            bool        add_layer(const char*);
-            bool        add_extension(const char*);
-            
             
             bool        init();
             void        kill();
             
+            virtual bool    vk_init() override;
         };
 
     }

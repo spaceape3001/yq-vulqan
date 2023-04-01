@@ -9,8 +9,6 @@
 #include <basic/preamble.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
-
-#include <basic/Result.hpp>
 #include <vulkan/vulkan_core.h>
 
 #include <expected>
@@ -25,7 +23,7 @@
 */
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         std::vector<VkExtensionProperties>              vqEnumerateDeviceExtensionProperties(VkPhysicalDevice, const char* layerName=nullptr);
         std::vector<VkLayerProperties>                  vqEnumerateDeviceLayerProperties(VkPhysicalDevice);
         std::vector<VkExtensionProperties>              vqEnumerateInstanceExtensionProperties(const char* layerName=nullptr);
@@ -52,8 +50,6 @@ namespace yq {
 
         Expect<uint32_t>                        vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&);
         Expect<uint32_t>                        vqFindFirstPresentQueue(VkPhysicalDevice, VkSurfaceKHR);
-        
-        
 
         struct VqQueueFamilyIndices {
             std::optional<uint32_t> graphics;
@@ -64,12 +60,5 @@ namespace yq {
         };
 
         VqQueueFamilyIndices                    vqFindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR);
-
-
-        std::string_view                        to_string(VkColorSpaceKHR);
-        std::string_view                        to_string(VkDebugReportObjectTypeEXT);
-        std::string_view                        to_string(VkDynamicState);
-        std::string_view                        to_string(VkFormat);
-        std::string_view                        to_string(VkPhysicalDeviceType);
     }
 }

@@ -4,12 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <engine/vulqan/VqUtils.hpp>
+#include <tachyon/gpu/VqUtils.hpp>
 #include <engine/Application.hpp>
 #include <iostream>
 
 using namespace yq;
 using namespace yq::engine;
+using namespace yq::tachyon;
 
 int main(int argc, char* argv[])
 {

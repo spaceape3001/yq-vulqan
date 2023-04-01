@@ -4,11 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VqUtils.hpp"
+#pragma once
+
+#include <tachyon/gpu/VqEnums.hpp>
 #include <basic/Enum.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
+    
+            //  TODO: Fold these into tachyon/enum
+    
         YQ_ENUM(VqColorSpaceKHR, , 
             SRGB_NONLINEAR_KHR = 0,
             DISPLAY_P3_NONLINEAR_EXT = 1000104001,

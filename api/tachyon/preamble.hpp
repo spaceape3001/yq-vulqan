@@ -14,6 +14,9 @@ struct GLFWwindow;
 
 namespace yq {
 
+    namespace asset {
+    }
+
     //! Namespace for our vulkan code... deliberately mispelled with a "Q"
     namespace vulqan {
     }
@@ -23,10 +26,24 @@ namespace yq {
     }
     
     namespace tachyon {
-        class Monitor;
-        struct VideoMode;
-        class Visualizer;
-        class Viewer;
+        class   AppGLFW;
+        struct  Joystick;
+        class   Monitor;
+        struct  VideoMode;
+        class   Visualizer;
+        class   Viewer;
+        class   VqApp;
+        struct  VqAppCreateInfo;
+        
+        using   AppCreateInfo  = VqAppCreateInfo;
+    }
+    
+        // here for compatibility
+    namespace engine {
+        using tachyon::AppGLFW;
+        using tachyon::AppCreateInfo;
+        using tachyon::Monitor;
+        using tachyon::VqApp;
     }
 }
 

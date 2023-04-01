@@ -15,7 +15,6 @@
 #include <engine/Application.hpp>
 #include <engine/Viewer.hpp>
 #include <engine/Widget.hpp>
-#include <engine/vulqan/VqUtils.hpp>
 #include <MyImGui.hpp>
 #include <iostream>
 #include <TextEditor.h>

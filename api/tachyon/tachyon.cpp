@@ -9,14 +9,19 @@
     are our C++ adapters for it.
 */
 
+
+#include "gpu/VqApp.ipp"
+
+#include "gpu/VqEnums.ipp"
+#include "gpu/VqLogging.ipp"
+#include "gpu/VqStructs.hpp"
+#include "gpu/VqUtils.ipp"
+#include "gpu/Visualizer.ipp"
+
 #include "host/AppGLFW.ipp"
 #include "host/Joystick.ipp"
 #include "host/Monitor.ipp"
 #include "host/VideoMode.ipp"
-
-#include "gpu/VqStructs.hpp"
-#include "gpu/VqLogging.ipp"
-#include "gpu/Visualizer.ipp"
 
 #include "Viewer.ipp"
 

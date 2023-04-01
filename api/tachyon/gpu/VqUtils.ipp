@@ -4,14 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VqUtils.hpp"
-#include <basic/CollectionUtils.hpp>
-#include <engine/Application.hpp>
-#include <GLFW/glfw3.h>
 #include <tachyon/errors.hpp>
+#include <tachyon/gpu/VqUtils.hpp>
+#include <tachyon/gpu/VqApp.hpp>
+
+#include <basic/CollectionUtils.hpp>
+#include <GLFW/glfw3.h>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         std::vector<VkExtensionProperties>   vqEnumerateDeviceExtensionProperties(VkPhysicalDevice device, const char* layerName)
         {
             uint32_t                        count  = 0;
@@ -55,7 +56,7 @@ namespace yq {
         std::vector<VkPhysicalDeviceGroupProperties>    vqEnumeratePhysicalDeviceGroups(VkInstance inst)
         {
             if(!inst)
-                inst    = Application::vulkan();
+                inst    = VqApp::vulkan();
             uint32_t    count   = 0;
             vkEnumeratePhysicalDeviceGroups(inst, &count, nullptr);
             std::vector<VkPhysicalDeviceGroupProperties>    ret(count);
@@ -69,7 +70,7 @@ namespace yq {
         std::vector<VkPhysicalDeviceGroupProperties>    vqEnumeratePhysicalDeviceGroupsKHR(VkInstance inst)
         {  
             if(!inst)
-                inst    = Application::vulkan();
+                inst    = VqApp::vulkan();
             uint32_t    count   = 0;
             vkEnumeratePhysicalDeviceGroupsKHR(inst, &count, nullptr);
             std::vector<VkPhysicalDeviceGroupProperties>    ret(count);
@@ -82,7 +83,7 @@ namespace yq {
         std::vector<VkPhysicalDevice>        vqEnumeratePhysicalDevices(VkInstance inst)
         {
             if(!inst)
-                inst    = Application::vulkan();
+                inst    = VqApp::vulkan();
             uint32_t    count   = 0;
             vkEnumeratePhysicalDevices(inst, &count, nullptr);
             std::vector<VkPhysicalDevice>    ret(count);
@@ -142,7 +143,7 @@ namespace yq {
         VkPhysicalDevice                     vqFirstDevice(VkInstance inst)
         {
             if(!inst)
-                inst    = Application::vulkan();
+                inst    = VqApp::vulkan();
             for(VkPhysicalDevice v : vqEnumeratePhysicalDevices(inst)){
                 if(v)
                     return v;

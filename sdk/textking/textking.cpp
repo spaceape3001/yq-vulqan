@@ -9,7 +9,7 @@
 */
 
 #include <basic/Logging.hpp>
-#include <basic/PluginLoader.hpp>
+#include <io/PluginLoader.hpp>
 #include <basic/meta/Meta.hpp>
 #include <basic/meta/ObjectInfoWriter.hpp>
 #include <engine/Application.hpp>
@@ -19,7 +19,7 @@
 #include <iostream>
 #include <TextEditor.h>
 #include <ImGuiFileDialog.h>
-#include <basic/FileUtils.hpp>
+#include <io/FileUtils.hpp>
 #include <basic/TextUtils.hpp>
 #include <widget/TextArea.hpp>
 

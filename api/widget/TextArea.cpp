@@ -6,11 +6,11 @@
 
 #include "TextArea.hpp"
 #include <MyImGui.hpp>
-#include <basic/Stream.hpp>
-#include <basic/StreamOps.hpp>
+#include <io/Stream.hpp>
+#include <io/StreamOps.hpp>
 #include <basic/IterUtf8.hpp>
 #include <basic/TextUtils.hpp>
-#include <basic/stream/Text.hpp>
+#include <io/stream/Text.hpp>
 #include <basic/Logging.hpp>
 #include <math/shape/AxBox2.hpp>
 #include <math/vector/Vector2.hxx>

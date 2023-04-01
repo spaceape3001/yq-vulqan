@@ -19,7 +19,7 @@
 #include <asset/Triangle.hpp>
 #include <basic/DelayInit.hpp>
 #include <basic/Logging.hpp>
-#include <basic/PluginLoader.hpp>
+#include <io/PluginLoader.hpp>
 #include <basic/meta/Meta.hpp>
 #include <engine/Application.hpp>
 #include <engine/Scene.hpp>

@@ -22,10 +22,6 @@ namespace yq {
         static constexpr const size_t   MAX_FRAMES_IN_FLIGHT    = 2;
         static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = 1024;
 
-        class Asset;
-        class AssetInfo;
-        class AssetLoader;
-        
         class Camera;
         using CameraPtr     = Ref<Camera>;
         using CameraCPtr    = Ref<const Camera>;
@@ -34,8 +30,6 @@ namespace yq {
         
         class Manipulator;
         using ManipulatorPtr    = Ref<Manipulator>;
-        
-        struct ResultCC;
         
         class Shader;
         using ShaderCPtr        = Ref<const Shader>;

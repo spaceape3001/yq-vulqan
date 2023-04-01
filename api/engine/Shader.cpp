@@ -12,11 +12,13 @@
 #include <basic/Logging.hpp>
 #include <basic/TextUtils.hpp>
 #include <basic/meta/Init.hpp>
+#include <basic/errors.hpp>
+#include <tachyon/errors.hpp>
 
 #include <YqEngineConfig.hpp>
 
-#include <engine/AssetCache.hpp>
-#include <engine/ResultCC.hpp>
+#include <tachyon/AssetCache.hpp>
+#include <tachyon/ResultCC.hpp>
 
 #include <atomic>
 
@@ -92,9 +94,10 @@ namespace yq {
                 
                 ResultCC    ret;
                 ret.payload  = pd.execute(input, nullptr, &ecode);
-                ret.good    = ecode == 0;
-                if(!ret.good)
-                    std::swap(ret.payload, ret.errors);
+                if(ecode != 0)
+                    ret.ec  = errors::shader_compile_failure();
+                if(ret.ec)
+                    std::swap(ret.payload, ret.error);
                 
                 return ret;
             }
@@ -127,8 +130,9 @@ namespace yq {
                 }
 
                 ResultCC    ret;
-                ret.payload = pd.execute(input, &ret.errors, &ecode);
-                ret.good    = ecode == 0;
+                ret.payload = pd.execute(input, &ret.error, &ecode);
+                if(ecode != 0)
+                    ret.ec  = errors::shader_compile_failure();
                 return ret;
             }
         }
@@ -197,8 +201,8 @@ namespace yq {
             ByteArray   data;
             if(options & CC_SHADER){
                 ResultCC    cc  = compile_shader(ByteArray(), file, std::filesystem::path(), static_cast<bool>(options & LOG_COMMAND));
-                if(!cc.good){
-                    yError() << "Unable to compile the shader: " << file << "\n" << cc.errors.as_view();
+                if(cc.ec){
+                    yError() << "Unable to compile the shader: " << file << "\n" << cc.error.as_view();
                     return ShaderCPtr();
                 }
                 
@@ -249,8 +253,8 @@ namespace yq {
             }
             
             ResultCC    cc  = compile_shader(glsl, std::filesystem::path(), std::filesystem::path());
-            if(!cc.good){
-                yError() << "Unable to compile the shader:\n" << cc.errors.as_view();
+            if(cc.ec){
+                yError() << "Unable to compile the shader:\n" << cc.error.as_view();
                 return ShaderCPtr();
             }
             

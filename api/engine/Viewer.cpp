@@ -1217,13 +1217,11 @@ namespace yq {
 
         void Visualizer::_ctor(const ViewerCreateInfo& vci)
         {
-            Application*   app    = Application::app();
+            VqApp*      app = VqApp::vk_app();
             if(!app)
-                throw VqException("Unintialized or no application present!");
-
-            app -> init_vulkan();
-
-            m_instance    = app->instance();
+                throw VqException("No application has been declared!");
+        
+            m_instance    = VqApp::vulkan();
             if(!m_instance)
                 throw VqException("Vulkan has not been initialized!");
 

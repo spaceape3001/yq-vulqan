@@ -16,5 +16,6 @@ namespace yq {
         using unavailable_layer         = error_db::entry<"Unavailable layer requested">;
         using unavailable_extension     = error_db::entry<"Unavailable extension requested">;
         using unavailable_validation    = error_db::entry<"Validataion layer is unavailable">;
+        using shader_compile_failure    = error_db::entry<"Shader failed to compile">;
     }
 }

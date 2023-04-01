@@ -10,14 +10,14 @@
 #include <basic/DelayInit.hpp>
 #include <basic/DirUtils.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::engine::Asset)
-YQ_OBJECT_IMPLEMENT(yq::engine::AssetCache)
-YQ_OBJECT_IMPLEMENT(yq::engine::AssetCompiler)
-YQ_OBJECT_IMPLEMENT(yq::engine::AssetLoader)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Asset)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AssetCache)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AssetCompiler)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AssetLoader)
 
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         namespace {
             path_vector_t               make_resource_search_path()
             {

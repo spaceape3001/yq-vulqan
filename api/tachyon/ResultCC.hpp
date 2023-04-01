@@ -7,21 +7,26 @@
 #pragma once
 
 #include <basic/ByteArray.hpp>
+#include <system_error>
 
 namespace yq {
 
-    namespace engine {
+    namespace tachyon {
         //! Used for compiler results
         struct ResultCC {
         
             //! Output (if not into file)
-            ByteArray   payload;
+            ByteArray       payload;
+            
+            #ifdef error
+            #undef error
+            #endif
             
             //! Errors
-            ByteArray   errors;
+            ByteArray       error;
             
             //! Success?
-            bool        good    = false;
+            std::error_code ec;
         };
     }
 }

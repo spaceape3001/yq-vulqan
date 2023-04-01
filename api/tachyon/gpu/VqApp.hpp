@@ -29,6 +29,8 @@ namespace yq {
             //! Gets the instance (if any)
             static VkInstance           vulkan();
 
+            static VqApp*               vk_app() { return s_app; }
+
             VqApp(BasicApp&, const AppCreateInfo& aci=AppCreateInfo());
             ~VqApp();
             

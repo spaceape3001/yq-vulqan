@@ -11,15 +11,7 @@
 #include <tbb/spin_rw_mutex.h>
 
 namespace yq {
-    namespace engine {
-        class Asset;
-        class AssetCompiler;
-        class AssetCompilerInfo;
-        class AssetInfo;
-        class AssetLoader;
-        class AssetLoaderInfo;
-        
-        class AssetCache;
+    namespace tachyon {
         
         
         class AssetCacheInfo : public ObjectInfo {
@@ -44,7 +36,7 @@ namespace yq {
         
             Most all engine components will query the cache for the data, if not present, loads it.  (Compiling first, if necessary)
         */
-        class AssetCache : public Object, not_copyable, not_moveable {
+        class AssetCache : public Object {
             YQ_OBJECT_INFO(AssetCacheInfo)
             YQ_OBJECT_DECLARE(AssetCache, Object)
         public:
@@ -64,6 +56,12 @@ namespace yq {
             virtual Ref<const Asset>  load_binary(const std::filesystem::path&) const = 0;
             
         private:
+            
+            AssetCache(const AssetCache&) = delete;
+            AssetCache(AssetCache&&) = delete;
+            AssetCache& operator=(const AssetCache&) = delete;
+            AssetCache& operator=(AssetCache&&) = delete;
+        
             std::vector<const AssetInfo*>       m_assetInfos;
             std::vector<const AssetLoader*>     m_assetLoaders;
             std::vector<const AssetCompiler*>   m_assetCompilers;

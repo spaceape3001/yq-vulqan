@@ -12,16 +12,12 @@
 #include <basic/SizeTimestamp.hpp>
 #include <basic/UniqueID.hpp>
 
-#include <engine/preamble.hpp>
+#include <tachyon/preamble.hpp>
 
 #include <filesystem>
 
 namespace yq {
-    namespace engine {
-        class Asset;
-        class AssetInfo;
-        class AssetLoader;
-        class AssetCache;
+    namespace tachyon {
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VqException.hpp"
+#include <tachyon/gpu/VqException.hpp>
 #include <engine/Visualizer.hpp>
 #include <tachyon/gpu/VqLogging.hpp>
 #include "VqPipeline.hpp"

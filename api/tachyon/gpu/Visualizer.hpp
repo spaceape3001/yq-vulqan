@@ -7,13 +7,14 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <basic/UniqueID.hpp>
+
 #include <vulkan/vulkan_core.h>
 #include <set>
 #include <vector>
 
 namespace yq {
     namespace tachyon {
+    
     
         /*! \brief the Physical vulkan device adapter
             
@@ -23,7 +24,25 @@ namespace yq {
         *//*
             Note, if this needs to be shared, we'll make it ref-counted.
         */
-        class Visualizer : public UniqueID {
+        class Visualizer  {
+        protected:
+            Visualizer();
+            ~Visualizer();
+        
+            std::error_code             init_visualizer(const ViewerCreateInfo&, GLFWwindow*);
+            void                        kill_visualizer();
+        
+        private:
+        
+            Visualizer(const Visualizer&) = delete;
+            Visualizer(Visualizer&&) = delete;
+            Visualizer& operator=(const Visualizer&) = delete;
+            Visualizer& operator=(Visualizer&&) = delete;
+        
+        
+            GLFWwindow*         m_window    = nullptr;
+            bool                m_init      = false;
+        
 
 #if 0            
             //! Vulkan instance (from vulkan)

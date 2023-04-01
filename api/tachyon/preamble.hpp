@@ -35,7 +35,8 @@ namespace yq {
         class   Viewer;
         struct  ViewerCreateInfo;
         class   VqApp;
-        
+        class   VqException;
+        class   Window;
     }
     
         // here for compatibility
@@ -43,8 +44,10 @@ namespace yq {
         using tachyon::AppGLFW;
         using tachyon::AppCreateInfo;
         using tachyon::Monitor;
-        using tachyon::VqApp;
         using tachyon::ViewerCreateInfo;
+        using tachyon::VqApp;
+        using tachyon::VqException;
+        using tachyon::Window;
     }
 }
 

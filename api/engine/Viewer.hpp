@@ -17,6 +17,7 @@
 #include <vulkan/vulkan_core.h>
 #include <tachyon/enum/PresentMode.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/host/Window.hpp>
 
 #include <functional>
 #include <optional>
@@ -45,7 +46,7 @@ namespace yq {
             This encapsulates the GLFW & Vulkan into a single window, requires
             a Vulkan instance.
         */
-        class Viewer : public Object, public RefCount, not_copyable, not_moveable {
+        class Viewer : public Object, public RefCount, public Window {
             YQ_OBJECT_INFO(WindowInfo)
             YQ_OBJECT_DECLARE(Viewer, Object)
         public:
@@ -62,14 +63,8 @@ namespace yq {
             ~Viewer();
             
 
-                //! Calls user's attention to window
-            void                attention();
-            
             RGBA4F              clear_color() const;
 
-                //! Closes (politely) this window....
-            void                close();
-            
             
             VkCommandBuffer     command_buffer() const;
             
@@ -85,9 +80,6 @@ namespace yq {
             
             VkDevice            device() const;
 
-                //! Brings window to front & input focus
-            void                focus();
-            
             uint64_t            frame_number() const { return m_frameNumber; }
             
 
@@ -104,34 +96,7 @@ namespace yq {
             uint32_t            graphic_queue_count() const;
             uint32_t            graphic_queue_family() const;
 
-                //! Height of the window
-            int                 height() const;
             
-                //! Hide the window
-            void                hide();
-
-                //! Iconifies (minimizes) window
-            void                iconify();
-
-            
-                //! TRUE if the window has standard decorations (close/buttons/frame)
-            bool                is_decorated() const;
-                //! TRUE if the window has input focus
-            bool                is_focused() const;
-                //! TRUE if window is floating (ie always-on-top)
-            bool                is_floating() const;
-                //! TRUE if the window is fullscreen
-            bool                is_fullscreen() const;
-                //! TRUE if the mouse cursor is hovering directly above us
-            bool                is_hovered() const;
-                //! TRUE if the window is iconified
-            bool                is_iconified() const;
-                //! TRUE if the window is maximized
-            bool                is_maximized() const;
-                //! TRUE if the window is resizable
-            bool                is_resizable() const;
-                //! TRUE if the window is visible
-            bool                is_visible() const;
             
                 //! Our device (logical)
             VkDevice            logical() const;
@@ -140,16 +105,9 @@ namespace yq {
             uint32_t            max_push_constants_size() const;
             uint32_t            max_viewports() const;
             
-                //! Maximizes widnow
-            void                maximize();
-
-                //! Monitor (if fullscreen)
-            tachyon::Monitor           monitor() const;
 
             VkPhysicalDevice    physical() const;
 
-                //! Current window position
-            Vector2I            position() const;
             
             tachyon::PresentMode         present_mode() const;
             
@@ -161,40 +119,16 @@ namespace yq {
 
             VkRenderPass        render_pass() const;
             
-                //! Restores the window to non-fullscreen/iconify
-            void                restore();
 
                 //! Sets the background color
             void                set_clear_color(const RGBA4F&);
 
-                //! Sets the window position
-            void                set_position(const Vector2I&);
-
-                //! Sets the window position
-            void                set_position(int x, int y);
             
             void                set_present_mode(tachyon::PresentMode);
 
-                //! Sets window size
-            void                set_size(const Size2I&);
 
-                //! Sets window size
-            void                set_size(int w, int h);
             
-                //! Sets the window title
-            void                set_title(const char*);
 
-                //! Sets the window title
-            void                set_title(const std::string&);
-
-                //! TRUE if user wants window to close
-            bool                should_close() const;
-            
-                //! Show the window
-            void                show();
-
-                //! Viewer size
-            Size2I              size() const;
             
             //const VkExtent2D&   swap_extent() const { return m_swapExtent; }
             
@@ -218,8 +152,6 @@ namespace yq {
             uint32_t            swap_width() const;
             
             uint32_t            swap_height() const;
-            
-            const std::string&  title() const { return m_title; }
 
             VkQueue             video_decode_queue(uint32_t i=0) const;
             uint32_t            video_decode_queue_count() const;
@@ -231,11 +163,9 @@ namespace yq {
 
             
             
-                //! Width of the window
-            int                 width() const;
 
                 //! GLFW window handle
-            GLFWwindow*         window() const;
+            //GLFWwindow*         window() const;
             
             //  This is the "DRAW" pass, do it all, whatever the result is
             bool                draw();
@@ -260,9 +190,8 @@ namespace yq {
             
         private:
         
-            GLFWwindow*                     m_window    = nullptr;
+            //GLFWwindow*                     m_window    = nullptr;
             std::unique_ptr<Visualizer>     m_viz;
-            std::string                     m_title;
             uint64_t                        m_frameNumber   = 0;
             unit::Second                    m_drawTime      = {};
             ImGuiContext*                   m_imgui         = nullptr;
@@ -289,6 +218,11 @@ namespace yq {
             static void callback_window_refresh(GLFWwindow* window);
             static void callback_window_scale(GLFWwindow* window, float xscale, float yscale);
             static void callback_window_size(GLFWwindow*, int, int);
+            
+            Viewer(const Viewer&) = delete;
+            Viewer(Viewer&&) = delete;
+            Viewer& operator=(const Viewer&) = delete;
+            Viewer& operator=(Viewer&&) = delete;
         };
         
     }

@@ -9,21 +9,20 @@
     are our C++ adapters for it.
 */
 
+#include "host/Window.ipp"
+
+#include "gpu/Visualizer.ipp"
 
 #include "gpu/VqApp.ipp"
-
 #include "gpu/VqEnums.ipp"
 #include "gpu/VqLogging.ipp"
 #include "gpu/VqStructs.hpp"
 #include "gpu/VqUtils.ipp"
-#include "gpu/Visualizer.ipp"
 
 #include "host/AppGLFW.ipp"
 #include "host/Joystick.ipp"
 #include "host/Monitor.ipp"
 #include "host/VideoMode.ipp"
-
-#include "Viewer.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>
@@ -55,6 +54,7 @@
 #include <tachyon/enum/VertexInputRate.hpp>
 
 #include <basic/meta/Init.hpp>
+#include <math/shape/Size2.hxx>
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::BorderColor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ColorComponent)

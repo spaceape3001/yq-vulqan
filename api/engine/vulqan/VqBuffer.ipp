@@ -7,8 +7,8 @@
 #pragma once
 
 #include "VqBuffer.hpp"
-#include "VqException.hpp"
 #include <engine/Visualizer.hpp>
+#include <tachyon/gpu/VqException.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
 
 namespace yq {

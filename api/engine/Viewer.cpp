@@ -35,12 +35,12 @@
 #include <engine/render/VertexBufferObjectInfo.hpp>
 
 #include <engine/vulqan/VqBuffer.hpp>
-#include <engine/vulqan/VqException.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
 
 
-#include <tachyon/gpu/VqStructs.hpp>
+#include <tachyon/gpu/VqException.hpp>
 #include <tachyon/gpu/VqLogging.hpp>
+#include <tachyon/gpu/VqStructs.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 
 #include <math/shape/Size2.hpp>
@@ -193,39 +193,26 @@ namespace yq {
             try {
                 Application::vulkan();
                 
-                glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-                glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
-                glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
-                glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
+                init_window(vci);
                 
-                int wx  = std::max(1,vci.size.width());
-                int wy  = std::max(1,vci.size.height());
-
-                m_window = glfwCreateWindow(wx, wy, vci.title, vci.monitor.monitor(), nullptr);
-                if(!m_window)
-                    throw VqException("Unable to create GLFW m_window");
-                
-                //  Register pointer & callbacks
-                glfwSetWindowUserPointer(m_window, this);
-                
-                glfwSetCharCallback(m_window, callback_character);
-                glfwSetCursorEnterCallback(m_window, callback_cursor_enter);
-                glfwSetCursorPosCallback(m_window, callback_cursor_position);
-                glfwSetDropCallback(m_window, callback_drop);
-                glfwSetFramebufferSizeCallback(m_window, callback_framebuffer_size);
-                glfwSetKeyCallback(m_window, callback_key);
+                glfwSetCharCallback(window(), callback_character);
+                glfwSetCursorEnterCallback(window(), callback_cursor_enter);
+                glfwSetCursorPosCallback(window(), callback_cursor_position);
+                glfwSetDropCallback(window(), callback_drop);
+                glfwSetFramebufferSizeCallback(window(), callback_framebuffer_size);
+                glfwSetKeyCallback(window(), callback_key);
                 [[maybe_unused]] static auto fn2 = glfwSetJoystickCallback( callback_joystick );
                 [[maybe_unused]] static auto fn1 = glfwSetMonitorCallback( callback_monitor);
-                glfwSetMouseButtonCallback(m_window, callback_mouse_button);
-                glfwSetScrollCallback(m_window, callback_scroll);
-                glfwSetWindowCloseCallback(m_window, callback_window_close);
-                glfwSetWindowContentScaleCallback(m_window, callback_window_scale);
-                glfwSetWindowFocusCallback(m_window, callback_window_focus);
-                glfwSetWindowIconifyCallback(m_window, callback_window_iconify);
-                glfwSetWindowMaximizeCallback(m_window, callback_window_maximize);
-                glfwSetWindowPosCallback(m_window, callback_window_position);
-                glfwSetWindowRefreshCallback(m_window, callback_window_refresh);
-                glfwSetWindowSizeCallback(m_window, callback_window_size);
+                glfwSetMouseButtonCallback(window(), callback_mouse_button);
+                glfwSetScrollCallback(window(), callback_scroll);
+                glfwSetWindowCloseCallback(window(), callback_window_close);
+                glfwSetWindowContentScaleCallback(window(), callback_window_scale);
+                glfwSetWindowFocusCallback(window(), callback_window_focus);
+                glfwSetWindowIconifyCallback(window(), callback_window_iconify);
+                glfwSetWindowMaximizeCallback(window(), callback_window_maximize);
+                glfwSetWindowPosCallback(window(), callback_window_position);
+                glfwSetWindowRefreshCallback(window(), callback_window_refresh);
+                glfwSetWindowSizeCallback(window(), callback_window_size);
 
                 m_viz   = std::make_unique<Visualizer>(vci,this);
                 
@@ -244,7 +231,7 @@ namespace yq {
                     vii.DescriptorPool  = m_viz->m_thread->descriptors;
                     
                     ImGui::SetCurrentContext(m_imgui);
-                    ImGui_ImplGlfw_InitForVulkan(m_window, false);
+                    ImGui_ImplGlfw_InitForVulkan(window(), false);
                     ImGui_ImplVulkan_Init(&vii, m_viz->m_renderPass);
                     
                     //  Uploading fonts....
@@ -269,7 +256,6 @@ namespace yq {
 
 
                 set_clear_color(vci.clear);
-                m_title     = vci.title;
                 yNotice() << "Using (" << to_string(gpu_type()) << "): " << gpu_name();
             }
             catch(VqException& ex){
@@ -295,10 +281,7 @@ namespace yq {
                 m_imgui     = nullptr;
             }
             m_viz           = nullptr;
-            if(m_window){
-                glfwDestroyWindow(m_window);
-                m_window    = nullptr;
-            }
+            kill_window();
         }
 
 
@@ -546,12 +529,6 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
 
 
-        void Viewer::attention()
-        {
-            if(m_viz->m_window)
-                glfwRequestWindowAttention(m_viz->m_window);
-        }
-
         RGBA4F Viewer::clear_color() const
         {
             VkClearValue    cv  = m_viz->m_clearValue;
@@ -559,12 +536,6 @@ namespace yq {
                 cv.color.float32[0], cv.color.float32[1], 
                 cv.color.float32[2], cv.color.float32[3] 
             };
-        }
-
-        void Viewer::close()
-        {
-            if(m_viz->m_window)
-                glfwSetWindowShouldClose(m_viz->m_window, GLFW_TRUE);
         }
 
 
@@ -603,12 +574,6 @@ namespace yq {
             return m_viz->m_device; 
         }
 
-        void Viewer::focus()
-        {
-            if(m_viz && m_viz->m_window)
-                glfwFocusWindow(m_viz->m_window);
-        }
-
         std::string_view    Viewer::gpu_name() const
         {
             return std::string_view(m_viz->m_deviceInfo.deviceName, strnlen(m_viz->m_deviceInfo.deviceName, VK_MAX_PHYSICAL_DEVICE_NAME_SIZE));
@@ -636,90 +601,6 @@ namespace yq {
         }
 
 
-        int  Viewer::height() const
-        {
-            if(!m_viz->m_window)
-                return 0;
-        
-            int ret;
-            glfwGetWindowSize(m_viz->m_window, nullptr, &ret);
-            return ret;
-        }
-
-        void Viewer::hide()
-        {
-            if(m_viz->m_window)
-                glfwHideWindow(m_viz->m_window);
-        }
-
-        void Viewer::iconify()
-        {
-            if(m_viz->m_window)
-                glfwIconifyWindow(m_viz->m_window);
-        }
-
-        bool        Viewer::is_decorated() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_DECORATED) != 0;
-        }
-        
-        bool        Viewer::is_focused() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_FOCUSED ) != 0;
-        }
-        
-        bool        Viewer::is_floating() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_FLOATING) != 0;
-        }
-        
-        bool        Viewer::is_fullscreen() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowMonitor(m_viz->m_window) != nullptr;
-        }
-        
-        bool        Viewer::is_hovered() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_HOVERED) != 0;
-        }
-        
-        bool        Viewer::is_iconified() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_ICONIFIED) != 0;
-        }
-
-        bool        Viewer::is_maximized() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_MAXIMIZED) != 0;
-        }
-        
-        bool        Viewer::is_resizable() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_RESIZABLE) != 0;
-        }
-        
-        bool        Viewer::is_visible() const
-        {
-            if(!m_viz->m_window)
-                return false;
-            return glfwGetWindowAttrib(m_viz->m_window, GLFW_VISIBLE) != 0;
-        }
         
         VkDevice    Viewer::logical() const 
         { 
@@ -742,32 +623,14 @@ namespace yq {
             return m_viz->m_deviceInfo.limits.maxViewports; 
         }
 
-        void        Viewer::maximize()
-        {
-            if(m_viz->m_window)
-                glfwMaximizeWindow(m_viz->m_window);
-        }
 
-        tachyon::Monitor   Viewer::monitor() const
-        {
-            if(m_viz->m_window)
-                return Monitor(glfwGetWindowMonitor(m_viz->m_window));
-            return Monitor();
-        }
 
         VkPhysicalDevice    Viewer::physical() const 
         { 
             return m_viz->m_physical; 
         }
 
-        Vector2I    Viewer::position() const
-        {
-            if(!m_viz->m_window)
-                return {};
-            Vector2I   ret;
-            glfwGetWindowPos(m_viz->m_window, &ret.x, &ret.y);
-            return ret;
-        }
+
 
         tachyon::PresentMode  Viewer::present_mode() const
         {
@@ -799,20 +662,10 @@ namespace yq {
             return m_viz->m_renderPass;
         }
 
-        void        Viewer::restore()
-        {
-            if(m_viz->m_window)
-                glfwRestoreWindow(m_viz->m_window);
-        }
 
         void        Viewer::set_clear_color(const RGBA4F&i)
         {
             m_viz->m_clearValue = VkClearValue{{{ i.red, i.green, i.blue, i.alpha }}};
-        }
-
-        void        Viewer::set_position(const Vector2I& pos)
-        {
-            set_position(pos.x, pos.y);
         }
 
         void        Viewer::set_present_mode(PresentMode pm)
@@ -822,60 +675,7 @@ namespace yq {
                 m_viz->m_rebuildSwap    = true;
             }
         }
-        
-        void        Viewer::set_position(int x, int y)
-        {
-            if(m_viz->m_window){
-                glfwSetWindowPos(m_viz->m_window, x, y);
-            }
-        }
 
-        void        Viewer::set_size(const Size2I& sz)
-        {
-            set_size(sz.x, sz.y);
-        }
-
-        void        Viewer::set_size(int w, int h)
-        {
-            if(m_viz->m_window){
-                glfwSetWindowSize(m_viz->m_window, std::max(1, w), std::max(1, h));
-            }
-        }
-
-        void        Viewer::set_title(const char*z)
-        {
-            if(m_viz->m_window && z){
-                glfwSetWindowTitle(m_viz->m_window, z);
-                m_title = z;
-            }
-        }
-
-        void        Viewer::set_title(const std::string&z)
-        {
-            set_title(z.c_str());
-        }
-
-        bool        Viewer::should_close() const
-        {
-            if(!m_viz->m_window) 
-                return true;
-            return glfwWindowShouldClose(m_viz->m_window);
-        }
-
-        void        Viewer::show()
-        {
-            if(m_viz->m_window)
-                glfwShowWindow(m_viz->m_window);
-        }
-
-        Size2I      Viewer::size() const
-        {
-            if(!m_viz->m_window)
-                return {};
-            Size2I  ret;
-            glfwGetWindowSize(m_viz->m_window, &ret.x, &ret.y);
-            return ret;
-        }
 
         bool                Viewer::supports(VkFormat fmt) const
         {
@@ -965,20 +765,6 @@ namespace yq {
             return m_viz->m_videoEncode.family;
         }
 
-        int  Viewer::width() const
-        {
-            if(!m_viz->m_window)
-                return 0;
-        
-            int ret;
-            glfwGetWindowSize(m_viz->m_window, &ret, nullptr);
-            return ret;
-        }
-        
-        GLFWwindow*         Viewer::window() const 
-        { 
-            return m_viz->m_window; 
-        }
         
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
@@ -1380,13 +1166,18 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
         
 
-        Visualizer::Visualizer(const ViewerCreateInfo& vci, Viewer *w) 
+        Visualizer::Visualizer(const ViewerCreateInfo& vci, Viewer *w)
         {
             m_viewer        = w;
-            m_window        = w->m_window;
-            
+            m_window        = w->window();
             try {
+                init_visualizer(vci, m_window);
                 _ctor(vci);
+            }
+            catch(std::error_code ec)
+            {
+                _dtor();
+                throw;
             }
             catch(VqException& ex)
             {
@@ -1437,7 +1228,6 @@ namespace yq {
                 throw VqException("Vulkan has not been initialized!");
 
 
-
             //  ================================
             //  SELECT GPU (ie, physical device)
 
@@ -1455,7 +1245,7 @@ namespace yq {
             //  ================================
             //  GLFW "SURFACE"
 
-            if(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface) != VK_SUCCESS)
+            if(glfwCreateWindowSurface(m_instance, m_viewer->window(), nullptr, &m_surface) != VK_SUCCESS)
                 throw VqException("Unable to create window surface!");
                 
             for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(m_physical, m_surface))
@@ -1755,7 +1545,6 @@ namespace yq {
                 m_surface               = nullptr;
             }
             m_physical                  = nullptr;
-            m_window                    = nullptr;
             m_viewer                    = nullptr;
         }
 

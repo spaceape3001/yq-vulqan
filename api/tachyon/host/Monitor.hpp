@@ -53,8 +53,7 @@ namespace yq {
             constexpr bool    operator==(const Monitor&) const noexcept = default;
         
         private:
-            friend class Viewer;
-            friend class engine::Viewer;
+            friend class Window;
             
             GLFWmonitor *m_monitor = nullptr;
             constexpr Monitor(GLFWmonitor *m) noexcept : m_monitor(m) {}

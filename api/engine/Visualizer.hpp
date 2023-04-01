@@ -13,6 +13,7 @@
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/enum/PresentMode.hpp>
+#include <tachyon/gpu/Visualizer.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
 #include <math/preamble.hpp>
 
@@ -155,7 +156,7 @@ namespace yq {
             
             \note Eventually this will merge into viewer itself
         */
-        struct Visualizer : public UniqueID {
+        struct Visualizer : public tachyon::Visualizer {
             alignas(64) ViMap<ViShaderCPtr>     m_shaders;
         
             Viewer*                             m_viewer                = nullptr;

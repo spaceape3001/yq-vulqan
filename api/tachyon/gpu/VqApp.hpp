@@ -64,6 +64,11 @@ namespace yq {
 
                 //  Forces a general init
             virtual bool    vk_init();
+            
+            VqApp(const VqApp&) = delete;
+            VqApp(VqApp&&) = delete;
+            VqApp& operator=(const VqApp&) = delete;
+            VqApp& operator=(VqApp&&) = delete;
         };
     }
     

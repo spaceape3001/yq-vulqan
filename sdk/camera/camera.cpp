@@ -244,7 +244,7 @@ struct CameraWin : public engine::Viewer {
                 Checkbox("Control", &show_control);
                 Separator();
                 if(MenuItem("Exit"))
-                    close();
+                    cmd_close();
                 EndMenu();
             }
             if(BeginMenu("Shape")){

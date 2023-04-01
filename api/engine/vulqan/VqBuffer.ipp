@@ -9,7 +9,7 @@
 #include "VqBuffer.hpp"
 #include "VqException.hpp"
 #include <engine/Visualizer.hpp>
-#include <tachyon/VqStructs.hpp>
+#include <tachyon/gpu/VqStructs.hpp>
 
 namespace yq {
     namespace engine {

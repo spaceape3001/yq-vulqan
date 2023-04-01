@@ -6,9 +6,9 @@
 
 #include "VqException.hpp"
 #include <engine/Visualizer.hpp>
-#include <tachyon/VqLogging.hpp>
+#include <tachyon/gpu/VqLogging.hpp>
 #include "VqPipeline.hpp"
-#include <tachyon/VqStructs.hpp>
+#include <tachyon/gpu/VqStructs.hpp>
 
 #include <basic/Logging.hpp>
 #include <engine/Viewer.hpp>

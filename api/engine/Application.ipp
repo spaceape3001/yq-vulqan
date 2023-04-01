@@ -6,8 +6,8 @@
 
 #include "Application.hpp"
 #include "Viewer.hpp"
-#include <tachyon/VqLogging.hpp>
-#include <tachyon/VqStructs.hpp>
+#include <tachyon/gpu/VqLogging.hpp>
+#include <tachyon/gpu/VqStructs.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 
 #include <basic/Logging.hpp>

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/detail/VideoMode.hpp>
+#include <tachyon/host/VideoMode.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq {

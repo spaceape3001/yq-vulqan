@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <basic/Logging.hpp>
+
 struct GLFWmonitor;
 struct GLFWvidmode;
 struct GLFWwindow;
@@ -21,8 +23,10 @@ namespace yq {
     }
     
     namespace tachyon {
+        class Monitor;
         struct VideoMode;
         class Visualizer;
         class Viewer;
     }
 }
+

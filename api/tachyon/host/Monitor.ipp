@@ -4,9 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Monitor.hpp"
-#include <tachyon/detail/VideoMode.hpp>
-#include <tachyon/Monitor.hpp>
+#include <tachyon/host/VideoMode.hpp>
+#include <tachyon/host/Monitor.hpp>
 #include <math/shape/Rectangle2.hpp>
 #include <math/vector/Vector2.hpp>
 #include <GLFW/glfw3.h>

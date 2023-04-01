@@ -13,9 +13,6 @@
 
 namespace yq {
     namespace tachyon {
-
-        
-
         class Monitor {
         public:
             static std::vector<Monitor>   enumerate();

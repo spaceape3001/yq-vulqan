@@ -23,7 +23,7 @@ namespace yq {
         *//*
             Note, if this needs to be shared, we'll make it ref-counted.
         */
-        struct Visualizer : public UniqueID {
+        class Visualizer : public UniqueID {
 
 #if 0            
             //! Vulkan instance (from vulkan)

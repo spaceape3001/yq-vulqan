@@ -4,8 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VqLogging.hpp"
-#include <basic/Logging.hpp>
+#include <tachyon/gpu/VqLogging.hpp>
 
 namespace yq {
 }

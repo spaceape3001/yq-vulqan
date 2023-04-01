@@ -8,7 +8,7 @@
 
 #include <basic/preamble.hpp>
 #include <tachyon/preamble.hpp>
-#include <tachyon/VqStructs.hpp>
+#include <tachyon/gpu/VqStructs.hpp>
 
 #include <basic/Result.hpp>
 #include <vulkan/vulkan_core.h>

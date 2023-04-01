@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/Visualizer.hpp>
+#include <tachyon/gpu/Visualizer.hpp>
 
 
 namespace yq {  

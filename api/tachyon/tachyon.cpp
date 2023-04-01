@@ -9,12 +9,13 @@
     are our C++ adapters for it.
 */
 
-#include "Monitor.ipp"
-#include "detail/VideoMode.ipp"
+#include "host/Monitor.ipp"
+#include "host/VideoMode.ipp"
 
-#include "VqStructs.hpp"
-#include "VqLogging.ipp"
-#include "Visualizer.ipp"
+#include "gpu/VqStructs.hpp"
+#include "gpu/VqLogging.ipp"
+#include "gpu/Visualizer.ipp"
+
 #include "Viewer.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>

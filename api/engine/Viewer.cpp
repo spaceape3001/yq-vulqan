@@ -39,8 +39,8 @@
 #include <engine/vulqan/VqPipeline.hpp>
 #include <engine/vulqan/VqUtils.hpp>
 
-#include <tachyon/VqStructs.hpp>
-#include <tachyon/VqLogging.hpp>
+#include <tachyon/gpu/VqStructs.hpp>
+#include <tachyon/gpu/VqLogging.hpp>
 
 #include <math/shape/Size2.hpp>
 #include <math/vector/Vector2.hpp>

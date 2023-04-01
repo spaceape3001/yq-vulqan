@@ -10,7 +10,7 @@
 #include <basic/Guarded.hpp>
 
 #include <engine/preamble.hpp>
-#include <engine/ViewerCreateInfo.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/enum/PresentMode.hpp>
 #include <engine/vulqan/VqPipeline.hpp>

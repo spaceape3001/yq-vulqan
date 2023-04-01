@@ -6,21 +6,19 @@
 
 #pragma once
 
-#include "Widget.hpp"
-#include <math/preamble.hpp>
 #include <math/color/RGBA.hpp>
 #include <math/shape/Size2.hpp>
 #include <math/vector/Vector2.hpp>
-#include <engine/preamble.hpp>
+
+#include <tachyon/preamble.hpp>
 #include <tachyon/enum/PresentMode.hpp>
 #include <tachyon/host/Monitor.hpp>
 #include <vulkan/vulkan_core.h>
-#include <optional>
 #include <variant>
 #include <vector>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         using VqQueueSpec = std::variant<std::monostate, bool, uint32_t, std::vector<float>>;
 
         struct ViewerCreateInfo {
@@ -30,8 +28,8 @@ namespace yq {
             Size2I                      size     = { 1920, 1080 };
             std::optional<Vector2I>     position;
                 //!  Set to get full screen, windowed otherwise
-            tachyon::Monitor            monitor;
-            tachyon::PresentMode        pmode   = tachyon::PresentMode::Fifo;
+            Monitor                     monitor;
+            PresentMode                 pmode   = PresentMode::Fifo;
             
             
                 //!  This is the background color

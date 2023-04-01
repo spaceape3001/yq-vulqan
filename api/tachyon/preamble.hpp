@@ -26,16 +26,16 @@ namespace yq {
     }
     
     namespace tachyon {
+        struct  AppCreateInfo;
         class   AppGLFW;
         struct  Joystick;
         class   Monitor;
         struct  VideoMode;
         class   Visualizer;
         class   Viewer;
+        struct  ViewerCreateInfo;
         class   VqApp;
-        struct  VqAppCreateInfo;
         
-        using   AppCreateInfo  = VqAppCreateInfo;
     }
     
         // here for compatibility
@@ -44,6 +44,7 @@ namespace yq {
         using tachyon::AppCreateInfo;
         using tachyon::Monitor;
         using tachyon::VqApp;
+        using tachyon::ViewerCreateInfo;
     }
 }
 

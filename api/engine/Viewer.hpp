@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include "ViewerCreateInfo.hpp"
-
 #include <basic/Object.hpp>
 #include <basic/Ref.hpp>
 #include <basic/trait/not_copyable.hpp>
@@ -18,6 +16,7 @@
 #include <math/units.hpp>
 #include <vulkan/vulkan_core.h>
 #include <tachyon/enum/PresentMode.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 
 #include <functional>
 #include <optional>

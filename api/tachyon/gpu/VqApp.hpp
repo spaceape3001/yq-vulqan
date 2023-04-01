@@ -8,7 +8,7 @@
 
 #include <basic/trait/not_copyable.hpp>
 #include <basic/trait/not_moveable.hpp>
-#include <tachyon/gpu/VqAppCreateInfo.hpp>
+#include <tachyon/AppCreateInfo.hpp>
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
@@ -29,7 +29,7 @@ namespace yq {
             //! Gets the instance (if any)
             static VkInstance           vulkan();
 
-            VqApp(BasicApp&, const VqAppCreateInfo& aci=VqAppCreateInfo());
+            VqApp(BasicApp&, const AppCreateInfo& aci=AppCreateInfo());
             ~VqApp();
             
             /*! \brief Initializes vulkan instance
@@ -41,7 +41,7 @@ namespace yq {
             const std::vector<const char*>&     extensions() const { return m_extensions; }
             const std::vector<const char*>&     layers() const { return m_layers; }
             
-            const VqAppCreateInfo&              app_info() const { return m_appInfo; }
+            const AppCreateInfo&                app_info() const { return m_appInfo; }
             
             VkInstance                          instance() const { return m_vulkan; }
 
@@ -49,7 +49,7 @@ namespace yq {
             void        kill_vulkan();
             
         private:
-            VqAppCreateInfo                     m_appInfo;
+            AppCreateInfo                       m_appInfo;
             VkInstance                          m_vulkan        = nullptr;
             std::vector<const char*>            m_extensions;
             std::vector<const char*>            m_layers;

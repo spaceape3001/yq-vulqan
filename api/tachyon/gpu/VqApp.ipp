@@ -93,7 +93,7 @@ namespace yq {
 
         //  ------------------------------------------------
 
-        VqApp::VqApp(BasicApp& bapp, const VqAppCreateInfo& aci) : m_appInfo(aci)
+        VqApp::VqApp(BasicApp& bapp, const AppCreateInfo& aci) : m_appInfo(aci)
         {
             if(m_appInfo.app_name.empty())
                m_appInfo.app_name = bapp.app_name();

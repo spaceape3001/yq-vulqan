@@ -7,24 +7,22 @@
 #pragma once
 
 #include <basic/DbgRel.hpp>
-#include <engine/preamble.hpp>
+#include <tachyon/preamble.hpp>
 #include <string>
 #include <vector>
 #include <tachyon/enum/Required.hpp>
 
-struct VkInstance_T;
-
 namespace yq {
-    namespace engine {
+    namespace tachyon {
 
-        struct NameRequired {
+        struct VqNameRequired {
             const char*     name    = nullptr;
-            tachyon::Required        req     = tachyon::Required::NO;
+            Required        req     = Required::NO;
         };
 
 
         //! Info for initialization
-        struct AppCreateInfo {
+        struct VqAppCreateInfo {
         
             //! Application name
             std::string                  app_name;
@@ -32,20 +30,19 @@ namespace yq {
             //! Application version number
             uint32_t                     app_version     = 0;
             
-            
             //! Vulkan API version (zero will default to latest)
             uint32_t                     vulkan_api      = 0;
             
             //! Add KHRONOS validation layer
-            tachyon::Required            validation      = YQ_DBGREL( tachyon::Required::YES, tachyon::Required::NO);
+            Required                    validation      = YQ_DBGREL( Required::YES, Required::NO);
             
             //! Desired extensions (taking optional & yes)
-            std::vector<NameRequired>    extensions;
+            std::vector<VqNameRequired> extensions;
             
             //! Desired layers (taking optional & yes)
-            std::vector<NameRequired>    layers;
+            std::vector<VqNameRequired> layers;
             
-            AppCreateInfo(){}
+            VqAppCreateInfo(){}
         };
     }
 }

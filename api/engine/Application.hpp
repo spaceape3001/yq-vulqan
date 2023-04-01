@@ -9,7 +9,7 @@
 #include <basic/BasicApp.hpp>
 #include <basic/DbgRel.hpp>
 #include <engine/preamble.hpp>
-#include <engine/AppCreateInfo.hpp>
+#include <tachyon/AppCreateInfo.hpp>
 #include <vulkan/vulkan_core.h>
 #include <tachyon/host/AppGLFW.hpp>
 #include <set>

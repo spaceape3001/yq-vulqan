@@ -28,18 +28,6 @@ namespace yq {
         Application*    Application::s_app    = nullptr;
         VkInstance      Application::s_vulkan  = nullptr;
 
-        static void    glfwLogging(int ec, const char* why)
-        {
-            static const auto  prior = glfwSetErrorCallback(glfwLogging);
-            if(ec){
-                if(!why)
-                    why = "Unknown error";
-                vqWarning << "GLFW error (" << ec << "): " << why;
-            }
-            if(prior)
-                prior(ec, why);
-        }
-
         
         VkBool32 vqDebuggingCallback(
             VkDebugReportFlagsEXT                       flags,
@@ -140,15 +128,15 @@ namespace yq {
             return init_vulkan();
         }
             
-        void    Application::init_glfw()
-        {
-            if(!m_glfw){
-                glfwLogging(0,nullptr);
-                glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
-                glfwInit();
-                m_glfw  = true;
-            }
-        }
+        //void    Application::init_glfw()
+        //{
+            //if(!m_glfw){
+                //glfwLogging(0,nullptr);
+                //glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
+                //glfwInit();
+                //m_glfw  = true;
+            //}
+        //}
 
         bool        Application::init_vulkan()
         {
@@ -269,10 +257,7 @@ namespace yq {
                 m_vulkan  = nullptr;
             }
             
-            if(m_glfw){
-                glfwTerminate();
-                m_glfw  = false;
-            }
+            kill_glfw();
         }
 
         void    Application::run_window(Viewer* win, double amt)

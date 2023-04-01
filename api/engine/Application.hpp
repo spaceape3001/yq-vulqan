@@ -11,6 +11,7 @@
 #include <engine/preamble.hpp>
 #include <engine/AppCreateInfo.hpp>
 #include <vulkan/vulkan_core.h>
+#include <tachyon/host/AppGLFW.hpp>
 #include <set>
 #include <vector>
 
@@ -25,7 +26,7 @@ namespace yq {
         /*! \brief Engine/Vulkan application
         
         */
-        class Application : public BasicApp {
+        class Application : public BasicApp, public tachyon::AppGLFW {
         public:
         
             //! Global application, if any
@@ -73,7 +74,7 @@ namespace yq {
                 
                 \note calling instance() or init_vulkan() will automatically initialize GLFW.
             */
-            void    init_glfw();
+            //void    init_glfw();
             
             /*! \brief Initializes vulkan instance
             
@@ -104,7 +105,7 @@ namespace yq {
             std::vector<const char*>            m_extensions;
             std::vector<const char*>            m_layers;
             VkDebugReportCallbackEXT            m_debug         = nullptr;
-            bool                                m_glfw        = false;
+            //bool                                m_glfw        = false;
             
             bool        add_layer(const char*);
             bool        add_extension(const char*);

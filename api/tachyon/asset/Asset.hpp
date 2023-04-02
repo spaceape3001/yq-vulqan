@@ -42,7 +42,7 @@ namespace yq {
             An asset (here) is something that can be loaded by the engine, and used in some predefined fashion.  
             (ie, texture, shader, sounds, etc)  Which is why the asset-library also exists, predefined cameras & shapes
         */
-        class Asset : public Object, public UniqueID {
+        class Asset : public Object, public UniqueID, public RefCount {
             YQ_OBJECT_INFO(AssetInfo)
             YQ_OBJECT_DECLARE(Asset, Object)
         public:

@@ -23,21 +23,26 @@ namespace yq {
             WARNING... this thing will LEAK if things are reloaded as the asset won't delete
         */
         class AssetCache {
+        public:
+        
+                //  sweeps away old ones
+            //void        prune();
+        
         protected:
-            const Asset*    _find(const std::filesystem::path&) const;
-            const Asset*    _find(uint64_t) const;
+            Ref<const Asset>    _find(const std::filesystem::path&) const;
+            Ref<const Asset>    _find(uint64_t) const;
             
             //! Returns the other one if there's a collision on insert
-            const Asset*       _insert(const Asset*);
+            void                _insert(const Asset*);
             
             AssetCache();
             ~AssetCache();
             
         private:
 
-            mutable tbb::spin_rw_mutex                      m_mutex;
-            std::unordered_map<uint64_t, const Asset*>      m_byId;
-            std::map<std::filesystem::path, const Asset*>   m_byPath;
+            mutable tbb::spin_rw_mutex                          m_mutex;
+            std::unordered_map<uint64_t, Ref<const Asset>>      m_byId;
+            std::map<std::filesystem::path, uint64_t>           m_byPath;
             
             AssetCache(const AssetCache&) = delete;
             AssetCache(AssetCache&&) = delete;

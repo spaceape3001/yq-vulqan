@@ -26,9 +26,9 @@ namespace yq {
 
             //! Finds with a search
 
-            const Asset*    _load(const std::filesystem::path&);
-            const Asset*    _pload(std::string_view);
-            const Asset*    _pfind(std::string_view) const;
+            Ref<const Asset>    _load(const std::filesystem::path&);
+            Ref<const Asset>    _pload(std::string_view);
+            Ref<const Asset>    _pfind(std::string_view) const;
         
             struct Loader;
             template <typename> struct TypedLoader;
@@ -76,37 +76,37 @@ namespace yq {
         
             using LoadFunction = typename AssetFactory::TypedLoader<A>::Function;
         
-            const A*        get(uint64_t i) const
+            Ref<const A>    get(uint64_t i) const
             {
-                return static_cast<const A*>(_find(i));
+                return static_cast<const A*>(_find(i).ptr());
             }
         
-            const A*        getx(const std::filesystem::path&p) const
+            Ref<const A>    getx(const std::filesystem::path&p) const
             {
-                return static_cast<const A*>(_find(p));
+                return static_cast<const A*>(_find(p).ptr());
             }
             
-            const A*        get(std::string_view p) const
+            Ref<const A>    get(std::string_view p) const
             {
-                return static_cast<const A*>(_pfind(p));
+                return static_cast<const A*>(_pfind(p).ptr());
             }
             
-            void            insert(const A*a)
+            void            insert(Ref<const A> a)
             {
                 if(a)
-                    _insert(a);
+                    _insert(a.ptr());
             }
 
             //! Loads exact path (no resolution)
-            const A*        loadx(const std::filesystem::path&p)
+            Ref<const A>    loadx(const std::filesystem::path&p)
             {
-                return static_cast<const A*>(_load(p));
+                return static_cast<const A*>(_load(p).ptr());
             }
             
             //! Loads by resolving
-            const A*        load(std::string_view p)
+            Ref<const A>    load(std::string_view p)
             {
-                return static_cast<const A*>(_pload(p));
+                return static_cast<const A*>(_pload(p).ptr());
             }
             
             /*! \brief Adds a loader to the factory

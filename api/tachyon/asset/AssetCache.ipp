@@ -12,16 +12,19 @@
 namespace yq {
     namespace tachyon {
 
-        const Asset*    AssetCache::_find(const std::filesystem::path&p) const
+        Ref<const Asset> AssetCache::_find(const std::filesystem::path&p) const
         {
             tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
             auto j = m_byPath.find(p);
-            if(j != m_byPath.end())
-                return j->second;
-            return nullptr;
+            if(j == m_byPath.end())
+                return {};
+            auto k = m_byId.find(j->second);
+            if(k == m_byId.end())
+                return {};
+            return k->second;
         }
         
-        const Asset*    AssetCache::_find(uint64_t i) const
+        Ref<const Asset>    AssetCache::_find(uint64_t i) const
         {
             tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
             auto j = m_byId.find(i);
@@ -30,19 +33,28 @@ namespace yq {
             return nullptr;
         }
         
-        const Asset*    AssetCache::_insert(const Asset* a)
+        void    AssetCache::_insert(const Asset* a)
         {
             if(!a)
-                return nullptr;
+                return;
                 
             tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, true);
             auto [i,f]  = m_byId.try_emplace(a->id(),a);
             if(!f)
-                return i->second;
+                return;
+
             if(!a->filepath().empty())
-                m_byPath[a->filepath()] = a;    // clobber
-            return nullptr;
+                m_byPath[a->filepath()] = a->id();    // clobber
         }
+
+    #if 0
+        void        AssetCache::prune()
+        {
+            std::vector<Ref<const Asset>>  bye;
+            
+            //  TODO....
+        }
+    #endif
         
         
         AssetCache::AssetCache()

@@ -24,9 +24,9 @@ namespace yq {
         {
         }
 
-        const Asset*    AssetFactory::_load(const std::filesystem::path& fp)
+        Ref<const Asset>    AssetFactory::_load(const std::filesystem::path& fp)
         {
-            const Asset*    ret = _find(fp);
+            Ref<const Asset>  ret = _find(fp);
             if(ret)
                 return ret;
                 
@@ -40,7 +40,7 @@ namespace yq {
                 return nullptr;
             x   = x.substr(1);
             
-            Asset*  loaded  = nullptr;
+            Ref<Asset>  loaded  = nullptr;
 
             for(const Loader* l : m_loaders){
                 if(!l->extensions.contains(x))
@@ -61,16 +61,11 @@ namespace yq {
                 return nullptr;
                 
             loaded -> m_filepath   = fp;
-                
-            const Asset*    prev    = _insert(loaded);
-            if(prev){
-                delete loaded;
-                return prev;
-            } else
-                return loaded;
+            _insert(loaded.ptr());
+            return loaded;
         }
         
-        const Asset*    AssetFactory::_pload(std::string_view pp)
+        Ref<const Asset>    AssetFactory::_pload(std::string_view pp)
         {
             std::filesystem::path   fp   = Asset::resolver().resolve(pp);
             if(fp.empty()){
@@ -80,7 +75,7 @@ namespace yq {
             return _load(fp);
         }
         
-        const Asset*    AssetFactory::_pfind(std::string_view pp) const
+        Ref<const Asset>    AssetFactory::_pfind(std::string_view pp) const
         {
             std::filesystem::path   fp   = Asset::resolver().resolve(pp);
             if(fp.empty())

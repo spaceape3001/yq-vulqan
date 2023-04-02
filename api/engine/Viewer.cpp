@@ -1160,16 +1160,6 @@ namespace yq {
 
             
 
-            //  ================================
-            //  ALLOCATOR
-
-            VmaAllocatorCreateInfo      allocatorCreateInfo{};
-            allocatorCreateInfo.instance                        = m_instance;
-            allocatorCreateInfo.physicalDevice                  = m_physical;
-            allocatorCreateInfo.device                          = m_device;
-            allocatorCreateInfo.vulkanApiVersion                = m_app->app_info().vulkan_api;
-            allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) vci.chunk_size;
-            vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
 
             //  ================================
             //  DESCRIPTOR & COMMAND POOL
@@ -1273,10 +1263,6 @@ namespace yq {
             
             m_thread                    = {};
             
-            if(m_allocator){
-                vmaDestroyAllocator(m_allocator);
-                m_allocator = nullptr;
-            }
             
             {
                 tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, true);

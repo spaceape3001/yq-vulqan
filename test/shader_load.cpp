@@ -12,21 +12,23 @@
 namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
+using namespace yq::tachyon;
 
 ut::suite tests = []{
     "resolving"_test = []{
-        const auto&     resolver    = tachyon::Asset::resolver();
+        const auto&     resolver    = Asset::resolver();
         
         std::filesystem::path   pp  = resolver.partial("hello.frag");
         expect(false == pp.empty());
         
-        std::filesystem::path   rp  = resolver.resolve("shaders/examples/hello.frag");
+        std::filesystem::path   rp  = resolver.resolve("sdk/hello/hello.frag");
         expect(false == rp.empty());
     };
     
     "loading"_test = []{
-        const tachyon::Shader*   s   = tachyon::Shader::load("shaders/examples/hello.frag");
+        const Shader*   s   = Shader::load("sdk/hello/hello.frag");
         expect(nullptr != s);
+        expect(s->shader_type() == ShaderType::FRAG);
     };
 };
 

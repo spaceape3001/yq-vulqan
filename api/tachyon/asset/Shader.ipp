@@ -20,7 +20,7 @@ namespace yq {
             return s_ret;
         }
 
-        const Shader*    Shader::load(std::string_view pp)
+        Ref<const Shader>    Shader::load(std::string_view pp)
         {
             return cache().load(pp);
         }

@@ -154,7 +154,6 @@ namespace yq {
             alignas(64) ViMap<ViShaderCPtr>     m_shaders;
         
             Viewer*                             m_viewer                = nullptr;
-            VmaAllocator                        m_allocator             = nullptr;
             uint32_t                            m_descriptorCount       = 0;
             VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
             std::unique_ptr<ViThread>           m_thread;

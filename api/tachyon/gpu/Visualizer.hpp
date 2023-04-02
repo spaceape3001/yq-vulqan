@@ -17,6 +17,7 @@
 #include <string_view>
 #include <vector>
 
+#include <vk_mem_alloc.h>
 #include <vulkan/vulkan_core.h>
 
 namespace yq {
@@ -36,6 +37,7 @@ namespace yq {
         
             //  since this is "stolen", demoted
             GLFWwindow*                     _window() const { return m_window; }
+            VmaAllocator                    allocator() const { return m_allocator; }
             VkDevice                        device() const { return m_device; }
             VkDevice                        logical() const { return m_device; }
             VkInstance                      instance() const { return m_instance; }
@@ -116,6 +118,7 @@ namespace yq {
             Visualizer& operator=(Visualizer&&) = delete;
         
         
+            VmaAllocator                        m_allocator             = nullptr;
             VqApp*                              m_app                   = nullptr;
             Guarded<VkClearValue>               m_clearValue;
             ViQueues                            m_compute;

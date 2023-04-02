@@ -12,6 +12,7 @@
 #include <math/color/RGBA.hpp>
 #include <tachyon/errors.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 
@@ -260,6 +261,14 @@ namespace yq {
         
         void                        Visualizer::_dtor()
         {
+            //  At *this* point, we don't need the mutex... we're dying anyways
+            for(auto& psh : m_shaders.hash)
+                vkDestroyShaderModule(m_device, psh.second.shader, nullptr);
+            for(auto& psh : m_shaders.loose)
+                vkDestroyShaderModule(m_device, psh.shader, nullptr);
+            m_shaders.clear();
+            
+        
             if(m_allocator){
                 vmaDestroyAllocator(m_allocator);
                 m_allocator = nullptr;
@@ -480,6 +489,75 @@ namespace yq {
 
         ////////////////////////////////////////////////////////////////////////////////
         //  SETTERS/MANIPULATORS
+
+        ViShader    Visualizer::shader(uint64_t i) const
+        {
+            tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
+            auto j = m_shaders.hash.find(i);
+            if(j != m_shaders.hash.end())
+                return j->second;
+            return ViShader();
+        }
+        
+        Expect<ViShader>    Visualizer::shader_create(Ref<const Shader> sh)
+        {
+            if(!sh)
+                return errors::null_pointer();
+                
+            {
+                tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
+                auto j = m_shaders.hash.find(sh->id());
+                if(j != m_shaders.hash.end())
+                    return j->second;
+            }
+            
+            if(sh->shader_type() == ShaderType::UNKNOWN)
+                return errors::shader_needs_type();
+
+            ViShader        p, ret;
+            switch(sh->shader_type()){
+            case ShaderType::VERT:
+                p.mask = VK_SHADER_STAGE_VERTEX_BIT;
+                break;
+            case ShaderType::TESC:
+                p.mask = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+                break;
+            case ShaderType::TESE:
+                p.mask = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
+                break;
+            case ShaderType::FRAG:
+                p.mask = VK_SHADER_STAGE_FRAGMENT_BIT;
+                break;
+            case ShaderType::GEOM:
+                p.mask = VK_SHADER_STAGE_GEOMETRY_BIT;
+                break;
+            case ShaderType::COMP:
+                p.mask = VK_SHADER_STAGE_COMPUTE_BIT;
+                break;
+            default:
+                return errors::shader_needs_type();
+            }
+                
+            const ByteArray&    code    = sh->payload();
+            VqShaderModuleCreateInfo createInfo;
+            createInfo.codeSize = code.size();
+            createInfo.pCode    = reinterpret_cast<const uint32_t*>(code.data());
+            if (vkCreateShaderModule(m_device, &createInfo, nullptr, &p.shader) != VK_SUCCESS) 
+                return errors::shader_creation_failure();
+            
+            {
+                tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, true);
+                auto [ j, f]    = m_shaders.hash.emplace(sh->id(), p);
+                if(f) [[likely]]
+                    return p;
+
+                //  collision
+                ret = j->second;
+            }
+            
+            vkDestroyShaderModule(m_device, p.shader, nullptr);
+            return ret;
+        }
 
         void        Visualizer::set_clear_color(const RGBA4F&i)
         {

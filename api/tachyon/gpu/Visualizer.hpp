@@ -13,16 +13,43 @@
 #include <tachyon/gpu/ViQueues.hpp>
 
 #include <atomic>
+#include <map>
 #include <set>
 #include <string_view>
+#include <unordered_map>
 #include <vector>
 
 #include <vk_mem_alloc.h>
 #include <vulkan/vulkan_core.h>
+#include <tbb/spin_rw_mutex.h>
 
 namespace yq {
     namespace tachyon {
     
+        struct ViShader {
+            VkShaderModule          shader  = nullptr;
+            VkShaderStageFlagBits   mask    = {};
+        };
+        
+        template <typename T>
+        struct ViHashPlus {
+            std::unordered_map<uint64_t, T>     hash;
+            std::vector<T>                      loose;  // others that aren't in the hash
+            mutable tbb::spin_rw_mutex          mutex;
+            
+            void    clear()
+            {
+                hash.clear();
+                loose.clear();
+            }
+        };
+    
+        //template <typename T>
+        //struct ViMap {
+            //std::map<uint64_t, T>       map;
+            //mutable tbb::spin_rw_mutex  mutex;
+            
+        //};
     
         /*! \brief the Physical vulkan device adapter
             
@@ -80,6 +107,9 @@ namespace yq {
             void                            set_clear_color(const RGBA4F&);
             void                            set_present_mode(PresentMode);
 
+            ViShader                        shader(uint64_t) const;
+            Expect<ViShader>                shader_create(Ref<const Shader>);
+
             VkSurfaceKHR                    surface() const { return m_surface; }
 
             VkSurfaceCapabilitiesKHR        surface_capabilities() const;
@@ -132,6 +162,7 @@ namespace yq {
             ViQueues                            m_present;
             PresentMode                         m_presentMode;
             std::set<PresentMode>               m_presentModes;
+            ViHashPlus<ViShader>                m_shaders;
             VkSurfaceKHR                        m_surface               = nullptr;
             std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
             VkFormat                            m_surfaceFormat;

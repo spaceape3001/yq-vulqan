@@ -4,11 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "VqPipeline.hpp"
+
 #include <tachyon/gpu/VqException.hpp>
 #include <engine/Visualizer.hpp>
 #include <tachyon/gpu/VqLogging.hpp>
-#include "VqPipeline.hpp"
 #include <tachyon/gpu/VqStructs.hpp>
+#include <tachyon/asset/Shader.hpp>
 
 #include <basic/Logging.hpp>
 #include <engine/Viewer.hpp>
@@ -23,6 +25,17 @@ using namespace yq::tachyon;
 
 namespace yq {
     namespace engine {
+    
+        Ref<const Shader>       shader_for(const ShaderSpec& ss)
+        {
+            if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
+                return *ptr;
+            } else if(const std::string* ptr = std::get_if<std::string>(&ss)){
+                return Shader::load(*ptr); 
+            } else 
+                return nullptr;
+        }
+    
         VqPipeline::VqPipeline(Visualizer& viz, const PipelineConfig& cfg)
         {
             m_device    = viz.device();
@@ -31,17 +44,21 @@ namespace yq {
                 std::vector<VkPipelineShaderStageCreateInfo>    stages;
                 m_shaderMask        = 0;
                 for(auto& s : cfg.shaders){
-                    ViShaderCPtr    vs  = viz.shader(s);
-                    if(!vs)
+                    Ref<const Shader>   sh  = shader_for(s);
+                    if(!sh)
                         continue;
-                        
+                    
+                    auto  xvs  = viz.shader_create(sh);
+                    if(!xvs)
+                        continue;
+                    
                     VqPipelineShaderStageCreateInfo stage;
-                    stage.stage     = vs->mask;
+                    stage.stage     = xvs->mask;
                     stage.pName     = "main";
-                    stage.module    = vs->shader;
+                    stage.module    = xvs->shader;
                     stages.push_back(stage);
 
-                    m_shaderMask |= vs->mask;
+                    m_shaderMask |= xvs->mask;
                 }
                 
                 VqPipelineVertexInputStateCreateInfo    vertexInfo;

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <basic/preamble.hpp>
 #include <basic/Logging.hpp>
 #include <variant>
 
@@ -40,7 +41,7 @@ namespace yq {
         class Shader;
         class Texture;
 
-        using ShaderSpec        = std::variant<std::monostate, std::string, const Shader*>;
+        using ShaderSpec        = std::variant<std::monostate, std::string, Ref<const Shader>>;
 
         struct  Joystick;
         class   Monitor;

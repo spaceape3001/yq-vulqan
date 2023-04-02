@@ -40,20 +40,6 @@ namespace yq {
         
         using tachyon::ViQueues;
         
-        
-        struct ViShader : public RefCount {
-            VkDevice                device  = nullptr;
-            VkShaderModule          shader  = nullptr;
-            mutable ViTick          tick    = 0;
-            VkShaderStageFlagBits   mask    = {};
-            
-            ViShader();
-            ~ViShader();
-        };
-        
-        using ViShaderCPtr  = Ref<const ViShader>;
-
-
         struct ViBuffer : not_copyable, not_moveable {
             std::unique_ptr<VqBuffer>   vq;
             uint64_t                    rev = 0;
@@ -151,7 +137,6 @@ namespace yq {
             \note Eventually this will merge into viewer itself
         */
         struct Visualizer : public tachyon::Visualizer {
-            alignas(64) ViMap<ViShaderCPtr>     m_shaders;
         
             Viewer*                             m_viewer                = nullptr;
             uint32_t                            m_descriptorCount       = 0;
@@ -162,12 +147,6 @@ namespace yq {
             uint64_t                            m_tick                  = 0;
             ViFrame*                            m_frames[MAX_FRAMES_IN_FLIGHT]  = {};
             ViSwapchain*                        m_swapchain             = nullptr;
-            
-            
-            ViShaderCPtr                        shader(const ShaderSpec&);
-            ViShaderCPtr                        shader(uint64_t) const;
-            size_t                              shader_count() const;
-            void                                shader_purge(uint64_t);
             
             
             //std::thread         builder;

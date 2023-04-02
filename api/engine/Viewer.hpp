@@ -29,17 +29,16 @@ struct ImGuiContext;
 namespace yq {
     namespace engine {
         struct PipelineConfig;
-        class VqWindow;
+        class Scene;
+        class Perspective;
+        
         struct Visualizer;
-        class VqAllocator;
-        struct Scene;
-        struct Perspective;
-        
-        
+
+#if 0
         struct WindowInfo : public ObjectInfo {
             WindowInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
         };
-        
+#endif
         
         /*! \brief A basic window
         
@@ -47,7 +46,7 @@ namespace yq {
             a Vulkan instance.
         */
         class Viewer : public Object, public RefCount, public Window {
-            YQ_OBJECT_INFO(WindowInfo)
+            //YQ_OBJECT_INFO(WindowInfo)
             YQ_OBJECT_DECLARE(Viewer, Object)
         public:
         
@@ -174,7 +173,7 @@ namespace yq {
         protected:
         
             friend struct Visualizer;
-            friend class VqWindow;
+            //friend class VqWindow;
         
             //VkPipeline                  m_lastPipeline  = nullptr;
             virtual void        window_resized(){}

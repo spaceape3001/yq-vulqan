@@ -108,6 +108,12 @@ namespace yq {
             void                            set_present_mode(PresentMode);
 
             ViShader                        shader(uint64_t) const;
+            
+            /*! \brief Creates a shader
+            
+                This creates the shader
+            
+            */
             Expect<ViShader>                shader_create(Ref<const Shader>);
 
             VkSurfaceKHR                    surface() const { return m_surface; }
@@ -141,6 +147,9 @@ namespace yq {
         
             std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
             void                        _dtor();
+        
+            Expect<ViShader>            _create(const Shader&);
+            void                        _destroy(ViShader&);
         
             Visualizer(const Visualizer&) = delete;
             Visualizer(Visualizer&&) = delete;

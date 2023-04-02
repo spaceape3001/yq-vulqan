@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PipelineConfig.hpp"
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/Shader.hpp>
 
 namespace yq {
     namespace engine {

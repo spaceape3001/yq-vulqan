@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/asset/GLSLShader.hpp>
+#include <tachyon/io/GLSLShader.hpp>
 
 #include <basic/errors.hpp>
 #include <basic/DelayInit.hpp>
@@ -14,8 +14,8 @@
 #include <io/Execute.hpp>
 #include <io/FileUtils.hpp>
 #include <tachyon/errors.hpp>
-#include <tachyon/asset/AssetFactory.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/Shader.hpp>
 
 namespace yq {
     namespace tachyon {

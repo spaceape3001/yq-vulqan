@@ -11,12 +11,11 @@
 
 #include "gpu/Visualizer.ipp"
 
-#include "asset/Asset.ipp"
-#include "asset/AssetCache.ipp"
-#include "asset/AssetFactory.ipp"
-#include "asset/GLSLShader.ipp"
-#include "asset/Shader.ipp"
-#include "asset/Texture.ipp"
+#include "Asset.ipp"
+#include "AssetCache.ipp"
+#include "AssetFactory.ipp"
+#include "Shader.ipp"
+#include "Texture.ipp"
 
 #include "gpu/ViQueues.ipp"
 #include "gpu/VqApp.ipp"
@@ -30,6 +29,8 @@
 #include "host/Monitor.ipp"
 #include "host/VideoMode.ipp"
 #include "host/Window.ipp"
+
+#include "io/GLSLShader.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>

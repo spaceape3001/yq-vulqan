@@ -9,7 +9,7 @@
 
 #include <basic/meta/Init.hpp>
 #include <basic/meta/TypeInfo.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/Shader.hpp>
 
 
 namespace yq {

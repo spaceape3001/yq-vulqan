@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/TachyonLog.hpp>
-#include <tachyon/asset/Asset.hpp>
-#include <tachyon/asset/AssetFactory.hpp>
+#include <tachyon/Asset.hpp>
+#include <tachyon/AssetFactory.hpp>
 #include <io/FileResolver.hpp>
 #include <io/FileUtils.hpp>
 

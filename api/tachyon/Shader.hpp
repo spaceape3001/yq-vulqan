@@ -7,7 +7,7 @@
 #pragma once
 
 #include <basic/ByteArray.hpp>
-#include <tachyon/asset/Asset.hpp>
+#include <tachyon/Asset.hpp>
 #include <tachyon/enum/ShaderType.hpp>
 
 namespace yq {

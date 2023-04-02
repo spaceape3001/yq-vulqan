@@ -10,7 +10,7 @@
 #include <engine/Visualizer.hpp>
 #include <tachyon/gpu/VqLogging.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/Shader.hpp>
 
 #include <basic/Logging.hpp>
 #include <engine/Viewer.hpp>

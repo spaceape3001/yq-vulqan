@@ -12,7 +12,7 @@
 #include <math/color/RGBA.hpp>
 #include <tachyon/errors.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 

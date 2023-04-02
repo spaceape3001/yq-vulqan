@@ -5,9 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
 #include <tachyon/preamble.hpp>
-#include <tachyon/asset/Asset.hpp>
-#include <tachyon/asset/AssetCache.hpp>
+#include <tachyon/Asset.hpp>
+#include <tachyon/AssetCache.hpp>
 #include <basic/Object.hpp>
 #include <functional>
 

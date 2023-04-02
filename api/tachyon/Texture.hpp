@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/asset/Asset.hpp>
+#include <tachyon/Asset.hpp>
 #include <math/shape/Size3.hpp>
 
 namespace yq {

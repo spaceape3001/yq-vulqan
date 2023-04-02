@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/asset/Texture.hpp>
-#include <tachyon/asset/AssetFactory.hpp>
-#include <tachyon/asset/AssetInfoWriter.hpp>
+#include <tachyon/Texture.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/AssetInfoWriter.hpp>
 
 namespace yq {
     namespace tachyon {

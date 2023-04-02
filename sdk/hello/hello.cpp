@@ -23,7 +23,7 @@
 #include <basic/meta/Meta.hpp>
 #include <engine/Application.hpp>
 #include <engine/Scene.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <engine/Perspective.hpp>
 #include <engine/Viewer.hpp>
 #include <engine/render/PipelineBuilder.hpp>

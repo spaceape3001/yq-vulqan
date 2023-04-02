@@ -22,7 +22,7 @@
 #include <basic/TextUtils.hpp>
 #include <basic/meta/ObjectInfoWriter.hpp>
 
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/Shader.hpp>
 
 #include <engine/render/IndexBufferObjectInfo.hpp>
 #include <engine/render/Pipeline.hpp>

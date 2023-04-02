@@ -25,7 +25,7 @@ namespace yq {
     namespace engine {
         VqPipeline::VqPipeline(Visualizer& viz, const PipelineConfig& cfg)
         {
-            m_device    = viz.m_device;
+            m_device    = viz.device();
             try {
             
                 std::vector<VkPipelineShaderStageCreateInfo>    stages;
@@ -84,7 +84,7 @@ namespace yq {
                     VqDescriptorSetLayoutCreateInfo layoutInfo;
                     layoutInfo.bindingCount = ubos.size();
                     layoutInfo.pBindings    = ubos.data();
-                    if(vkCreateDescriptorSetLayout(viz.m_device, &layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
+                    if(vkCreateDescriptorSetLayout(m_device, &layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
                         throw VqException("Unable to create a descriptor set layout.");
                 }
                     
@@ -186,7 +186,7 @@ namespace yq {
                 }
 
 
-                if (vkCreatePipelineLayout(viz.m_device, &pipelineLayoutInfo, nullptr, &m_layout) != VK_SUCCESS) 
+                if (vkCreatePipelineLayout(m_device, &pipelineLayoutInfo, nullptr, &m_layout) != VK_SUCCESS) 
                     throw VqException("Failed to create pipeline layout!");
 
                 VqGraphicsPipelineCreateInfo pipelineInfo;
@@ -210,7 +210,7 @@ namespace yq {
                 
                 if(cfg.polymode == PolygonMode::Fill)
                     pipelineInfo.flags  = VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT;
-                if (vkCreateGraphicsPipelines(viz.m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_pipeline) != VK_SUCCESS) 
+                if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_pipeline) != VK_SUCCESS) 
                     throw VqException("Failed to create graphics pipeline!");
                 
                     // if it's a fill polygon (typical), create a derivative wireframe pipeline
@@ -220,7 +220,7 @@ namespace yq {
                     pipelineInfo.basePipelineIndex  = -1;
                     rasterizer.polygonMode  = VK_POLYGON_MODE_LINE;
                     
-                    if (vkCreateGraphicsPipelines(viz.m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_wireframe) != VK_SUCCESS)
+                    if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_wireframe) != VK_SUCCESS)
                         throw VqException("Failed to create wireframe pipeline!");
                 }
             }

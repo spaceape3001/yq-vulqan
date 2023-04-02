@@ -100,7 +100,7 @@ namespace yq {
         {
             Viewer    *v  = (Viewer*) glfwGetWindowUserPointer(window);
             if(v){
-                v -> m_viz -> m_rebuildSwap    = true;
+                v -> m_viz -> trigger_rebuild();
                 if(v) [[likely]]
                     v->window_resized();
             }
@@ -174,7 +174,7 @@ namespace yq {
         {
             Viewer    *v  = (Viewer*) glfwGetWindowUserPointer(window);
             if(v){
-                v -> m_viz -> m_rebuildSwap    = true;
+                v -> m_viz -> trigger_rebuild();
                 if(v) [[likely]]
                     v->window_resized();
             }
@@ -221,11 +221,11 @@ namespace yq {
 
                     ImGui_ImplVulkan_InitInfo vii{};
                     
-                    vii.Instance        = Application::vulkan();
-                    vii.PhysicalDevice  = m_viz->m_physical;
-                    vii.Device          = m_viz->m_device;
-                    vii.Queue           = m_viz->m_graphic[0];
-                    vii.QueueFamily     = m_viz->m_graphic.family;
+                    vii.Instance        = m_viz->instance();
+                    vii.PhysicalDevice  = m_viz->physical();
+                    vii.Device          = m_viz->device();
+                    vii.Queue           = m_viz->graphic_queue(0);
+                    vii.QueueFamily     = m_viz->graphic_queue_family();
                     vii.MinImageCount   = m_viz->m_swapchain->minImageCount;
                     vii.ImageCount      = m_viz->m_swapchain->imageCount;
                     vii.DescriptorPool  = m_viz->m_thread->descriptors;
@@ -238,7 +238,7 @@ namespace yq {
                     
                     VkCommandBuffer cbuffer = m_viz->m_frames[0]->commandBuffer;
 
-                    vkResetCommandPool(m_viz->m_device, m_viz->m_thread->graphic, 0);
+                    vkResetCommandPool(m_viz->device(), m_viz->m_thread->graphic, 0);
                     VqCommandBufferBeginInfo begin_info;
                     begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
                     vkBeginCommandBuffer(cbuffer, &begin_info);
@@ -249,8 +249,8 @@ namespace yq {
                     end_info.commandBufferCount = 1;
                     end_info.pCommandBuffers = &cbuffer;
                     vkEndCommandBuffer(cbuffer);
-                    vkQueueSubmit(m_viz->m_graphic[0], 1, &end_info, VK_NULL_HANDLE);
-                    vkDeviceWaitIdle(m_viz->m_device);
+                    vkQueueSubmit(m_viz->graphic_queue(0), 1, &end_info, VK_NULL_HANDLE);
+                    vkDeviceWaitIdle(m_viz->device());
                     ImGui_ImplVulkan_DestroyFontUploadObjects();
                 }
 
@@ -531,13 +531,8 @@ namespace yq {
 
         RGBA4F Viewer::clear_color() const
         {
-            VkClearValue    cv  = m_viz->m_clearValue;
-            return { 
-                cv.color.float32[0], cv.color.float32[1], 
-                cv.color.float32[2], cv.color.float32[3] 
-            };
+            return m_viz -> clear_color();
         }
-
 
         VkCommandBuffer  Viewer::command_buffer() const
         {
@@ -551,17 +546,17 @@ namespace yq {
         
         VkQueue  Viewer::compute_queue(uint32_t i) const
         {
-            return m_viz->m_compute[i];
+            return m_viz->compute_queue(i);
         }
         
         uint32_t  Viewer::compute_queue_count() const
         {
-            return (uint32_t) m_viz->m_compute.queues.size();
+            return m_viz->compute_queue_count();
         }
         
         uint32_t  Viewer::compute_queue_family() const
         {
-            return m_viz->m_compute.family;
+            return m_viz->compute_queue_family();
         }
 
         VkDescriptorPool    Viewer::descriptor_pool() const 
@@ -571,90 +566,84 @@ namespace yq {
         
         VkDevice  Viewer::device() const 
         { 
-            return m_viz->m_device; 
+            return m_viz->device(); 
         }
 
         std::string_view    Viewer::gpu_name() const
         {
-            return std::string_view(m_viz->m_deviceInfo.deviceName, strnlen(m_viz->m_deviceInfo.deviceName, VK_MAX_PHYSICAL_DEVICE_NAME_SIZE));
+            return m_viz -> gpu_name();
         }
 
         VkPhysicalDeviceType    Viewer::gpu_type() const
         {
-            return m_viz->m_deviceInfo.deviceType;
+            return m_viz -> gpu_type();
         }
 
         
         VkQueue     Viewer::graphic_queue(uint32_t i) const
         {
-            return m_viz->m_graphic[i];
+            return m_viz->graphic_queue(i);
         }
         
         uint32_t    Viewer::graphic_queue_count() const
         {
-            return (uint32_t) m_viz->m_graphic.queues.size();
+            return m_viz->graphic_queue_count();
         }
         
         uint32_t    Viewer::graphic_queue_family() const
         {
-            return m_viz->m_graphic.family;
+            return m_viz->graphic_queue_family();
         }
-
-
         
         VkDevice    Viewer::logical() const 
         { 
-            return m_viz->m_device; 
+            return m_viz->device(); 
         }
 
 
         uint32_t    Viewer::max_memory_allocation_count() const  
         { 
-            return m_viz->m_deviceInfo.limits.maxMemoryAllocationCount; 
+            return m_viz->max_memory_allocation_count(); 
         }
         
         uint32_t    Viewer::max_push_constants_size() const 
         { 
-            return m_viz->m_deviceInfo.limits.maxPushConstantsSize; 
+            return m_viz->max_push_constants_size(); 
         }
         
         uint32_t    Viewer::max_viewports() const 
         { 
-            return m_viz->m_deviceInfo.limits.maxViewports; 
+            return m_viz->max_viewports(); 
         }
-
-
 
         VkPhysicalDevice    Viewer::physical() const 
         { 
-            return m_viz->m_physical; 
+            return m_viz->physical(); 
         }
-
-
 
         tachyon::PresentMode  Viewer::present_mode() const
         {
-            return m_viz->m_presentMode;
+            return m_viz->present_mode();
         }
 
         const std::set<tachyon::PresentMode>&     Viewer::present_modes_available() const
         {
-            return m_viz->m_presentModes;
+            return m_viz->present_modes_available();
         }
 
         VkQueue      Viewer::present_queue(uint32_t i) const
         {
-            return m_viz->m_present[i];
+            return m_viz->present_queue(i);
         }
         
         uint32_t     Viewer::present_queue_count() const
         {
-            return (uint32_t) m_viz->m_present.queues.size();
+            return m_viz->present_queue_count();
         }
         
         uint32_t     Viewer::present_queue_family() const
         {
-            return m_viz->m_present.family;
+            return m_viz->present_queue_family();
         }
 
         VkRenderPass Viewer::render_pass() const
@@ -665,44 +654,38 @@ namespace yq {
 
         void        Viewer::set_clear_color(const RGBA4F&i)
         {
-            m_viz->m_clearValue = VkClearValue{{{ i.red, i.green, i.blue, i.alpha }}};
+            m_viz->set_clear_color(i);
         }
 
         void        Viewer::set_present_mode(PresentMode pm)
         {
-            if(m_viz->m_presentModes.contains(pm) && (pm != m_viz->m_presentMode)){
-                m_viz->m_presentMode    = pm;
-                m_viz->m_rebuildSwap    = true;
-            }
+            m_viz -> set_present_mode(pm);
         }
 
 
         bool                Viewer::supports(VkFormat fmt) const
         {
-            for(auto& f : m_viz->m_surfaceFormats)
-                if(fmt == f.format)
-                    return true;
-            return false;
+            return m_viz -> supports_surface(fmt);
         }
         
         bool                Viewer::supports(PresentMode pm) const
         {
-            return m_viz->m_presentModes.contains(pm);
+            return m_viz->supports_present(pm);
         }
 
         VkSurfaceKHR        Viewer::surface() const 
         { 
-            return m_viz->m_surface; 
+            return m_viz->surface(); 
         }
 
         VkFormat            Viewer::surface_format() const
         {
-            return m_viz->m_surfaceFormat;
+            return m_viz->surface_format();
         }
 
         VkColorSpaceKHR  Viewer::surface_color_space() const 
         { 
-            return m_viz->m_surfaceColorSpace; 
+            return m_viz->surface_color_space(); 
         }
 
         VkRect2D    Viewer::swap_def_scissor() const
@@ -737,32 +720,32 @@ namespace yq {
         
         VkQueue   Viewer::video_decode_queue(uint32_t i) const
         {
-            return m_viz->m_videoDecode[i];
+            return m_viz->video_decode_queue(i);
         }
         
         uint32_t  Viewer::video_decode_queue_count() const
         {
-            return (uint32_t) m_viz->m_videoDecode.queues.size();
+            return m_viz->video_decode_queue_count();
         }
         
         uint32_t  Viewer::video_decode_queue_family() const
         {
-            return m_viz->m_videoDecode.family;
+            return m_viz->video_decode_queue_family();
         }
 
         VkQueue   Viewer::video_encode_queue(uint32_t i) const
         {
-            return m_viz->m_videoEncode[i];
+            return m_viz->video_encode_queue(i);
         }
         
         uint32_t  Viewer::video_encode_queue_count() const
         {
-            return (uint32_t) m_viz->m_videoEncode.queues.size();
+            return m_viz->video_encode_queue_count();
         }
 
         uint32_t  Viewer::video_encode_queue_family() const
         {
-            return m_viz->m_videoEncode.family;
+            return m_viz->video_encode_queue_family();
         }
 
         
@@ -802,18 +785,18 @@ namespace yq {
                 allocInfo.commandPool           = viz->m_thread->graphic;
                 allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
                 allocInfo.commandBufferCount    = 1;
-                if (vkAllocateCommandBuffers(viz->m_device, &allocInfo, &commandBuffer) != VK_SUCCESS) 
+                if (vkAllocateCommandBuffers(viz->device(), &allocInfo, &commandBuffer) != VK_SUCCESS) 
                     throw VqException("Failed to allocate command buffers!");
 
                 VqFenceCreateInfo   fci;
                 fci.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-                if(vkCreateFence(viz->m_device, &fci, nullptr,  &fence) != VK_SUCCESS)
+                if(vkCreateFence(viz->device(), &fci, nullptr,  &fence) != VK_SUCCESS)
                     throw VqException("Unable to create fence!");
 
                 VqSemaphoreCreateInfo   info;
-                if(vkCreateSemaphore(viz->m_device, &info, nullptr, &imageAvailable) != VK_SUCCESS)
+                if(vkCreateSemaphore(viz->device(), &info, nullptr, &imageAvailable) != VK_SUCCESS)
                     throw VqException("Unable to create semaphore!");
-                if(vkCreateSemaphore(viz->m_device, &info, nullptr, &renderFinished) != VK_SUCCESS)
+                if(vkCreateSemaphore(viz->device(), &info, nullptr, &renderFinished) != VK_SUCCESS)
                     throw VqException("Unable to create semaphore!");
             } 
             catch(VqException& ex)
@@ -832,22 +815,22 @@ namespace yq {
         {
             if(viz){
                 if(commandBuffer && viz->m_thread->graphic){
-                    vkFreeCommandBuffers(viz->m_device, viz->m_thread->graphic, 1, &commandBuffer);
+                    vkFreeCommandBuffers(viz->device(), viz->m_thread->graphic, 1, &commandBuffer);
                     commandBuffer   = nullptr;
                 }
                 
                 if(imageAvailable){
-                    vkDestroySemaphore(viz->m_device, imageAvailable, nullptr);
+                    vkDestroySemaphore(viz->device(), imageAvailable, nullptr);
                     imageAvailable  = nullptr;
                 }
                 
                 if(renderFinished){
-                    vkDestroySemaphore(viz->m_device, renderFinished, nullptr);
+                    vkDestroySemaphore(viz->device(), renderFinished, nullptr);
                     renderFinished  = nullptr;
                 }
                 
                 if(fence){
-                    vkDestroyFence(viz->m_device, fence, nullptr);
+                    vkDestroyFence(viz->device(), fence, nullptr);
                     fence   = nullptr;
                 }
                 
@@ -877,26 +860,6 @@ namespace yq {
 
         ////////////////////////////////////////////////////////////////////////////////
 
-        void    ViQueues::set(VkDevice dev, uint32_t cnt)
-        {
-            queues.clear();
-            queues.resize(cnt, nullptr);
-            for(uint32_t i=0;i<cnt;++i)
-                vkGetDeviceQueue(dev, family, i, &queues[i]);
-        }
-        
-        ViQueues::~ViQueues()
-        {
-            queues.clear();
-        }
-
-        VkQueue ViQueues::operator[](uint32_t i) const
-        {
-            if(i<queues.size()) [[likely]]
-                return queues[i];
-            return nullptr;
-        }
-
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
@@ -920,13 +883,13 @@ namespace yq {
         ViSwapchain::ViSwapchain(Visualizer* viz_) : viz(viz_)
         {
             try {
-                if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(viz->m_physical, viz->m_surface, &capabilities) != VK_SUCCESS)
+                if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(viz->physical(), viz->surface(), &capabilities) != VK_SUCCESS)
                     throw VqException("Unable to get surface capabilities");
                 if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
                     extents = capabilities.currentExtent;
                 } else {
                     int w, h;
-                    glfwGetFramebufferSize(viz->m_window, &w, &h);
+                    glfwGetFramebufferSize(viz->_window(), &w, &h);
                     extents = {};
                     extents.width       = std::clamp((uint32_t) w, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
                     extents.height      = std::clamp((uint32_t) h, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
@@ -934,7 +897,7 @@ namespace yq {
 
                 #if 0
                 int w, h;
-                glfwGetFramebufferSize(viz.m_window, &w, &h);
+                glfwGetFramebufferSize(viz._window(), &w, &h);
                 vqInfo << "init dymamic stuff\n"<<
                 "Frame itself is [" << w << 'x' << h << "] vs\n" <<
                 "Image extents is " << ds.extents << '\n' <<
@@ -953,16 +916,16 @@ namespace yq {
                 }
 
                 VqSwapchainCreateInfoKHR    swapInfo;
-                swapInfo.surface          = viz->m_surface;
+                swapInfo.surface          = viz->surface();
                 swapInfo.minImageCount    = imageCount;
-                swapInfo.imageFormat      = viz->m_surfaceFormat;
-                swapInfo.imageColorSpace  = viz->m_surfaceColorSpace;
+                swapInfo.imageFormat      = viz->surface_format();
+                swapInfo.imageColorSpace  = viz->surface_color_space();
                 swapInfo.imageExtent      = extents;
                 swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
                 swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
                 
-                uint32_t queueFamilyIndices[] = {viz->m_graphic.family, viz->m_present.family};
-                if (viz->m_graphic.family != viz->m_present.family) {
+                uint32_t queueFamilyIndices[] = {viz->graphic_queue_family(), viz->present_queue_family()};
+                if (viz->graphic_queue_family() != viz->present_queue_family()) {
                     swapInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
                     swapInfo.queueFamilyIndexCount = 2;
                     swapInfo.pQueueFamilyIndices = queueFamilyIndices;
@@ -973,7 +936,7 @@ namespace yq {
                 }        
                 swapInfo.preTransform     = capabilities.currentTransform;
                 swapInfo.compositeAlpha   = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-                swapInfo.presentMode      = (VkPresentModeKHR) viz->m_presentMode.value();
+                swapInfo.presentMode      = (VkPresentModeKHR) viz->present_mode().value();
                 swapInfo.clipped          = VK_TRUE;
                 
                     // TEMPORARY UNTIL WE GET THE NEW ONE
@@ -983,20 +946,20 @@ namespace yq {
                     swapInfo.oldSwapchain = nullptr;
                 }
                     
-                if (vkCreateSwapchainKHR(viz->m_device, &swapInfo, nullptr, &swapchain) != VK_SUCCESS)
+                if (vkCreateSwapchainKHR(viz->device(), &swapInfo, nullptr, &swapchain) != VK_SUCCESS)
                     throw VqException("Failed to create the SWAP chain!");
 
-                if(vkGetSwapchainImagesKHR(viz->m_device, swapchain, &imageCount, nullptr) != VK_SUCCESS)
+                if(vkGetSwapchainImagesKHR(viz->device(), swapchain, &imageCount, nullptr) != VK_SUCCESS)
                     throw VqException("Unable to get image count.");
                 images.resize(imageCount, nullptr);
-                if(vkGetSwapchainImagesKHR(viz->m_device, swapchain, &imageCount, images.data()) != VK_SUCCESS)
+                if(vkGetSwapchainImagesKHR(viz->device(), swapchain, &imageCount, images.data()) != VK_SUCCESS)
                     throw VqException("Unable to get images!");
                                 
                 imageViews.resize(imageCount, nullptr);
 
                 VqImageViewCreateInfo       imageViewInfo;
                 imageViewInfo.viewType     = VK_IMAGE_VIEW_TYPE_2D;
-                imageViewInfo.format       = viz->m_surfaceFormat;
+                imageViewInfo.format       = viz->surface_format();
                 imageViewInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
                 imageViewInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
                 imageViewInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
@@ -1009,7 +972,7 @@ namespace yq {
                 
                 for(size_t i=0; i<imageCount; ++i){
                     imageViewInfo.image        = images[i];
-                    if(vkCreateImageView(viz->m_device, &imageViewInfo, nullptr, &imageViews[i]) != VK_SUCCESS) 
+                    if(vkCreateImageView(viz->device(), &imageViewInfo, nullptr, &imageViews[i]) != VK_SUCCESS) 
                         throw VqException("Failed to create one of the Swap Image Viewers!");
                 }                
                 
@@ -1024,7 +987,7 @@ namespace yq {
 
                 for(size_t i=0;i<imageCount;++i){
                     frameBufferInfo.pAttachments = &imageViews[i];
-                    if (vkCreateFramebuffer(viz->m_device, &frameBufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS) 
+                    if (vkCreateFramebuffer(viz->device(), &frameBufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS) 
                         throw VqException("Failed to create framebuffer!");
                 }
             }
@@ -1044,15 +1007,15 @@ namespace yq {
             if(viz){
                 for(size_t i=0;i<imageCount;++i){
                     if((i < frameBuffers.size()) && frameBuffers[i])
-                        vkDestroyFramebuffer(viz->m_device, frameBuffers[i], nullptr);
+                        vkDestroyFramebuffer(viz->device(), frameBuffers[i], nullptr);
                     if((i < imageViews.size()) && imageViews[i])
-                        vkDestroyImageView(viz->m_device, imageViews[i], nullptr);
+                        vkDestroyImageView(viz->device(), imageViews[i], nullptr);
                 }
                 frameBuffers.clear();
                 imageViews.clear();
                 images.clear();
                 if(swapchain){
-                    vkDestroySwapchainKHR(viz->m_device, swapchain, nullptr);
+                    vkDestroySwapchainKHR(viz->device(), swapchain, nullptr);
                     swapchain  = nullptr;
                 }
                 viz = nullptr;
@@ -1114,20 +1077,20 @@ namespace yq {
                 descriptorPoolInfo.maxSets       = viz->m_descriptorCount * descriptorPoolSizes.size();
                 descriptorPoolInfo.poolSizeCount = (uint32_t) descriptorPoolSizes.size();
                 descriptorPoolInfo.pPoolSizes    = descriptorPoolSizes.data();
-                if(vkCreateDescriptorPool(viz->m_device, &descriptorPoolInfo, nullptr, &descriptors) != VK_SUCCESS)
+                if(vkCreateDescriptorPool(viz->device(), &descriptorPoolInfo, nullptr, &descriptors) != VK_SUCCESS)
                     throw VqException("Unable to allocate the descriptor pool!");
 
                 VqCommandPoolCreateInfo poolInfo;
                 poolInfo.flags              = viz->m_cmdPoolCreateFlags;
                 
-                if(viz->m_graphic.valid()){
-                    poolInfo.queueFamilyIndex   = viz->m_graphic.family;
-                    if (vkCreateCommandPool(viz->m_device, &poolInfo, nullptr, &graphic) != VK_SUCCESS) 
+                if(viz->graphic_queue_valid()){
+                    poolInfo.queueFamilyIndex   = viz->graphic_queue_family();
+                    if (vkCreateCommandPool(viz->device(), &poolInfo, nullptr, &graphic) != VK_SUCCESS) 
                         throw VqException("Failed to create a graphic command pool!");
                 }
-                if(viz->m_compute.valid()){
-                    poolInfo.queueFamilyIndex   = viz->m_compute.family;
-                    if (vkCreateCommandPool(viz->m_device, &poolInfo, nullptr, &compute) != VK_SUCCESS) 
+                if(viz->compute_queue_valid()){
+                    poolInfo.queueFamilyIndex   = viz->compute_queue_family();
+                    if (vkCreateCommandPool(viz->device(), &poolInfo, nullptr, &compute) != VK_SUCCESS) 
                         throw VqException("Failed to create a compute command pool!");
                 }
             }
@@ -1147,15 +1110,15 @@ namespace yq {
         {
             if(viz){
                 if(descriptors){
-                    vkDestroyDescriptorPool(viz->m_device, descriptors, nullptr);
+                    vkDestroyDescriptorPool(viz->device(), descriptors, nullptr);
                     descriptors = nullptr;
                 }
                 if(graphic){
-                    vkDestroyCommandPool(viz->m_device, graphic, nullptr);
+                    vkDestroyCommandPool(viz->device(), graphic, nullptr);
                     graphic = nullptr;
                 }
                 if(compute){
-                    vkDestroyCommandPool(viz->m_device, compute, nullptr);
+                    vkDestroyCommandPool(viz->device(), compute, nullptr);
                     compute = nullptr;
                 }
                 viz  = nullptr;
@@ -1169,9 +1132,8 @@ namespace yq {
         Visualizer::Visualizer(const ViewerCreateInfo& vci, Viewer *w)
         {
             m_viewer        = w;
-            m_window        = w->window();
             try {
-                init_visualizer(vci, m_window);
+                init_visualizer(vci, w->window());
                 _ctor(vci);
             }
             catch(std::error_code ec)
@@ -1191,219 +1153,12 @@ namespace yq {
             _dtor();
         }
 
-        namespace {
-            std::vector<float>      make_weights(const VqQueueSpec& qs, uint32_t mincnt=0)
-            { 
-                if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs)){
-                    if((!p->empty()) && (p->size() >= (size_t) mincnt))
-                        return *p;
-                }
-                uint32_t    cnt = mincnt;
-                if(const uint32_t* p = std::get_if<uint32_t>(&qs))
-                    cnt = std::max(cnt, *p);
-                if(const bool* p = std::get_if<bool>(&qs)){
-                    if(*p)
-                        cnt = std::max<uint32_t>(cnt, 1);
-                }
-                if(cnt){
-                    std::vector<float> ret;
-                    ret.resize(cnt, 1.);
-                    return ret;
-                }
-                return std::vector<float>();
-            }
-        }
 
 
         void Visualizer::_ctor(const ViewerCreateInfo& vci)
         {
-            VqApp*      app = VqApp::vk_app();
-            if(!app)
-                throw VqException("No application has been declared!");
-        
-            m_instance    = VqApp::vulkan();
-            if(!m_instance)
-                throw VqException("Vulkan has not been initialized!");
 
-
-            //  ================================
-            //  SELECT GPU (ie, physical device)
-
-            m_physical                    = vci.device;
-            if(!m_physical){
-                m_physical  = vqFirstDevice();
-                if(!m_physical)
-                    throw VqException("Cannot create m_window without any devices!");
-            }
             
-            vkGetPhysicalDeviceProperties(m_physical, &m_deviceInfo);
-            vkGetPhysicalDeviceMemoryProperties(m_physical, &m_memoryInfo);
-
-
-            //  ================================
-            //  GLFW "SURFACE"
-
-            if(glfwCreateWindowSurface(m_instance, m_viewer->window(), nullptr, &m_surface) != VK_SUCCESS)
-                throw VqException("Unable to create window surface!");
-                
-            for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(m_physical, m_surface))
-                m_presentModes.insert((PresentMode::enum_t) pm);
-            m_surfaceFormats        = vqGetPhysicalDeviceSurfaceFormatsKHR(m_physical, m_surface);
-            
-            // right now, cheating on format & color space
-            m_surfaceFormat         = VK_FORMAT_B8G8R8A8_SRGB;
-            m_surfaceColorSpace     = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
-
-            //  ================================
-            //  LOGICAL DEVICE CREATION
-            //
-            //  Buckle up, this is a long one
-
-                // list extensions, augmenting with swap chain
-                
-            std::vector<const char*>    devExtensions = vci.extensions;
-            devExtensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-
-                //  Query the GPU for valid queue families
-            auto queueInfos         = vqFindQueueFamilies(m_physical, m_surface);
-            
-                //  And we need to create them... so request
-            std::vector<VkDeviceQueueCreateInfo> qci;
-            
-                //  graphic is required....
-            std::vector<float>  graphicWeights  = make_weights(vci.graphic, 1);
-            if(!queueInfos.graphics.has_value()){
-                throw VqException("No graphic queue capability!");
-            } else {
-                m_graphic.family        = queueInfos.graphics.value();
-                VqDeviceQueueCreateInfo info;
-                info.queueFamilyIndex   = m_graphic.family;
-                info.queueCount         = (uint32_t) graphicWeights.size();
-                info.pQueuePriorities   = graphicWeights.data();
-                qci.push_back(info);
-            }
-            
-                //  present is required....
-            std::vector<float>  presentWeights  = make_weights(vci.present, 1);
-            if(!queueInfos.present.has_value()){
-                throw VqException("No graphic queue capability!");
-            } else {
-                m_present.family        = queueInfos.present.value();
-                VqDeviceQueueCreateInfo info;
-                info.queueFamilyIndex   = m_present.family;
-                info.queueCount         = (uint32_t) presentWeights.size();
-                info.pQueuePriorities   = presentWeights.data();
-                qci.push_back(info);
-            }
-            
-                //  Determine if compute is requested, create the request
-            std::vector<float>  computeWeights  = make_weights(vci.compute, 0);
-            if(!computeWeights.empty()){
-                if(!queueInfos.compute.has_value()){
-                    throw VqException("No compute queue capability!");
-                } else {
-                    m_compute.family        = queueInfos.compute.value();
-                    VqDeviceQueueCreateInfo info;
-                    info.queueFamilyIndex   = m_compute.family;
-                    info.queueCount         = (uint32_t) computeWeights.size();
-                    info.pQueuePriorities   = computeWeights.data();
-                    qci.push_back(info);
-                }
-            }
-
-                //  Determine if video decoding is requested, create the request
-            std::vector<float>  videoDecWeights = make_weights(vci.video_decode, 0);
-            if(!videoDecWeights.empty()){
-                if(!queueInfos.videoDecode.has_value()){
-                    throw VqException("No video decode queue capability!");
-                } else {
-                    m_videoDecode.family    = queueInfos.videoDecode.value();
-                    VqDeviceQueueCreateInfo info;
-                    info.queueFamilyIndex   = m_videoDecode.family;
-                    info.queueCount         = (uint32_t) videoDecWeights.size();
-                    info.pQueuePriorities   = videoDecWeights.data();
-                    qci.push_back(info);
-                }
-            }
-            
-                //  Determine if video encoding is requested, create the request
-            std::vector<float>  videoEncWeights = make_weights(vci.video_encode, 0);
-            if(!videoEncWeights.empty()){
-                if(!queueInfos.videoEncode.has_value()){
-                    throw VqException("No video encode queue capability!");
-                } else {
-                    m_videoEncode.family    = queueInfos.videoEncode.value();
-                    VqDeviceQueueCreateInfo info;
-                    info.queueFamilyIndex   = m_videoEncode.family;
-                    info.queueCount         = (uint32_t) videoEncWeights.size();
-                    info.pQueuePriorities   = videoEncWeights.data();
-                    qci.push_back(info);
-                }
-            }
-            
-            std::sort(qci.begin(), qci.end(), [](const VkDeviceQueueCreateInfo& a, const VkDeviceQueueCreateInfo& b) -> bool {
-                return a.queueFamilyIndex < b.queueFamilyIndex;
-            });
-            
-            for(size_t i=0;i<qci.size()-1;++i){
-                VkDeviceQueueCreateInfo&    prev  = qci[i];
-                VkDeviceQueueCreateInfo&    next  = qci[i+1];
-                if(prev.queueFamilyIndex != next.queueFamilyIndex)
-                    continue;
-                
-                //  carry the request forward
-                if(next.queueCount < prev.queueCount){
-                    //  steal the pointer
-                    next.queueCount         = prev.queueCount;
-                    next.pQueuePriorities   = prev.pQueuePriorities;
-                }
-                prev.queueFamilyIndex   = UINT32_MAX;
-            }
-            
-            auto qitr = std::remove_if(qci.begin(), qci.end(), [](const VkDeviceQueueCreateInfo& a) -> bool {
-                return a.queueFamilyIndex == UINT32_MAX;
-            });
-            if(qitr != qci.end())
-                qci.erase(qitr, qci.end());
-                    
-            //  And with that, we have the queues all lined up, ready to be created.
-
-            VkPhysicalDeviceFeatures    gpu_features{};
-            if(vci.fill_non_solid)
-                gpu_features.fillModeNonSolid    = VK_TRUE;
-
-            VqDeviceCreateInfo          deviceCreateInfo;
-            deviceCreateInfo.pQueueCreateInfos        = qci.data();
-            deviceCreateInfo.queueCreateInfoCount     = (uint32_t) qci.size();
-            deviceCreateInfo.pEnabledFeatures         = &gpu_features;
-            
-            const auto& layers = app->layers();
-            
-            deviceCreateInfo.enabledLayerCount          = (uint32_t) layers.size();
-            if(deviceCreateInfo.enabledLayerCount)
-                deviceCreateInfo.ppEnabledLayerNames    = layers.data();
-        
-            deviceCreateInfo.enabledExtensionCount      = (uint32_t) devExtensions.size();
-            deviceCreateInfo.ppEnabledExtensionNames    = devExtensions.data();
-            
-            VqPhysicalDeviceVulkan12Features            v12features;
-            v12features.bufferDeviceAddress = true;
-            deviceCreateInfo.pNext          = &v12features;
-            
-            if(vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device) != VK_SUCCESS)
-                throw VqException("Unable to create logical device!");
-            
-            //  ================================
-            //  GETTING THE QUEUES
-
-            m_graphic.set(m_device, graphicWeights.size());
-            m_present.set(m_device, presentWeights.size());
-            if(m_compute.family != UINT32_MAX)
-                m_compute.set(m_device, computeWeights.size());
-            if(m_videoEncode.family != UINT32_MAX)
-                m_videoEncode.set(m_device, videoEncWeights.size());
-            if(m_videoDecode.family != UINT32_MAX)
-                m_videoDecode.set(m_device, videoDecWeights.size());
 
             //  ================================
             //  ALLOCATOR
@@ -1412,7 +1167,7 @@ namespace yq {
             allocatorCreateInfo.instance                        = m_instance;
             allocatorCreateInfo.physicalDevice                  = m_physical;
             allocatorCreateInfo.device                          = m_device;
-            allocatorCreateInfo.vulkanApiVersion                = app->app_info().vulkan_api;
+            allocatorCreateInfo.vulkanApiVersion                = m_app->app_info().vulkan_api;
             allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) vci.chunk_size;
             vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
 
@@ -1528,21 +1283,8 @@ namespace yq {
                 m_shaders.map.clear();
             }
             
-            if(m_device){
-                vkDestroyDevice(m_device, nullptr);
-                m_device                = nullptr;
-            }
-            m_graphic                   = {};
-            m_present                   = {};
-            m_compute                   = {};
-            m_videoEncode               = {};
-            m_videoDecode               = {};
+            kill_visualizer();
             
-            if(m_surface){
-                vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
-                m_surface               = nullptr;
-            }
-            m_physical                  = nullptr;
             m_viewer                    = nullptr;
         }
 
@@ -1837,22 +1579,8 @@ namespace yq {
         //  ----------------------------------------------------------------------------
         //  ----------------------------------------------------------------------------
 
-        VkSurfaceCapabilitiesKHR    Visualizer::surface_capabilities() const
-        {
-            VkSurfaceCapabilitiesKHR    ret;
-            if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physical, m_surface, &ret) != VK_SUCCESS)
-                throw VqException("Unable to get surface capabilities");
-            return ret;
-        }
 
 
-        VkColorSpaceKHR Visualizer::surface_color_space(VkFormat fmt) const
-        {
-            for(auto& f : m_surfaceFormats)
-                if(fmt == f.format)
-                    return f.colorSpace;
-            return VK_COLOR_SPACE_MAX_ENUM_KHR;
-        }
         
         YQ_INVOKE(
             writer<Viewer>();

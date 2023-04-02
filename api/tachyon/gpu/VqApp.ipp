@@ -255,7 +255,8 @@ namespace yq {
 
                 if(m_debug){
                     auto vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(m_vulkan, "vkDestroyDebugReportCallbackEXT");
-                    vkDestroyDebugReportCallbackEXT(m_vulkan, m_debug, nullptr);
+                    if(vkDestroyDebugReportCallbackEXT)
+                        vkDestroyDebugReportCallbackEXT(m_vulkan, m_debug, nullptr);
                 }
             
                 if(m_vulkan){

@@ -29,8 +29,11 @@ namespace yq {
             const Asset*    ret = _find(fp);
             if(ret)
                 return ret;
-            if(!std::filesystem::exists(fp))
+                
+            if(!std::filesystem::exists(fp)){
+                tachyonWarning << "File does not exist (" << fp << ")";
                 return nullptr;
+            }
 
             std::string    x  = fp.extension().string();
             if(x.empty())       // no extension... abort
@@ -70,8 +73,10 @@ namespace yq {
         const Asset*    AssetFactory::_pload(std::string_view pp)
         {
             std::filesystem::path   fp   = Asset::resolver().resolve(pp);
-            if(fp.empty())
+            if(fp.empty()){
+                tachyonWarning << "Unable to resolve to file: " << pp;
                 return nullptr;
+            }
             return _load(fp);
         }
         

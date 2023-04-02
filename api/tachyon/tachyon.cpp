@@ -9,17 +9,16 @@
     are our C++ adapters for it.
 */
 
-
-#include "asset/Shader.ipp"
+#include "gpu/Visualizer.ipp"
 
 #include "asset/Asset.ipp"
 #include "asset/AssetCache.ipp"
 #include "asset/AssetFactory.ipp"
 #include "asset/GLSLShader.ipp"
+#include "asset/Shader.ipp"
 #include "asset/Texture.ipp"
 
-#include "gpu/Visualizer.ipp"
-
+#include "gpu/ViQueues.ipp"
 #include "gpu/VqApp.ipp"
 #include "gpu/VqEnums.ipp"
 #include "gpu/VqLogging.ipp"

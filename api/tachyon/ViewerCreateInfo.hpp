@@ -19,7 +19,7 @@
 
 namespace yq {
     namespace tachyon {
-        using VqQueueSpec = std::variant<std::monostate, bool, uint32_t, std::vector<float>>;
+        using ViQueueSpec = std::variant<std::monostate, bool, uint32_t, std::vector<float>>;
 
         struct ViewerCreateInfo {
             VkPhysicalDevice            device   = nullptr;
@@ -51,20 +51,20 @@ namespace yq {
             bool                        fill_non_solid  = true;
                 
                 //!  Set to alter graphic queue capability
-            VqQueueSpec                 graphic;
+            ViQueueSpec                 graphic;
 
                 //!  Set to alter present queue capability
-            VqQueueSpec                 present;
+            ViQueueSpec                 present;
 
 
                 //!  Set to enable compute queue capability
-            VqQueueSpec                 compute;
+            ViQueueSpec                 compute;
             
                 //!  Set to enable video-decode queue capability
-            VqQueueSpec                 video_decode;
+            ViQueueSpec                 video_decode;
             
                 //!  Set to enable video-encode queue capability
-            VqQueueSpec                 video_encode;
+            ViQueueSpec                 video_encode;
 
                 //!     Set to get descriptors allocated
             uint32_t                    descriptors = 0;

@@ -126,9 +126,6 @@ namespace yq {
             
             void                set_present_mode(tachyon::PresentMode);
 
-
-            
-
             
             //const VkExtent2D&   swap_extent() const { return m_swapExtent; }
             
@@ -190,7 +187,6 @@ namespace yq {
             
         private:
         
-            //GLFWwindow*                     m_window    = nullptr;
             std::unique_ptr<Visualizer>     m_viz;
             uint64_t                        m_frameNumber   = 0;
             unit::Second                    m_drawTime      = {};

@@ -14,6 +14,7 @@
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/enum/PresentMode.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
+#include <tachyon/gpu/ViQueues.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
 #include <math/preamble.hpp>
 
@@ -36,6 +37,8 @@ namespace yq {
         struct VqObject;
         
         using ViTick    = std::atomic<uint64_t>;
+        
+        using tachyon::ViQueues;
         
         
         struct ViShader : public RefCount {
@@ -88,15 +91,6 @@ namespace yq {
             ~ViObject();
         };
         
-        struct ViQueues {
-            std::vector<VkQueue>    queues;
-            uint32_t                family   = UINT32_MAX;
-            
-            void    set(VkDevice, uint32_t cnt);
-            ~ViQueues();
-            VkQueue operator[](uint32_t i) const;
-            bool valid() const { return family != UINT32_MAX; }
-        };
         
             // eventually multithread...
         struct ViThread {
@@ -160,27 +154,12 @@ namespace yq {
             alignas(64) ViMap<ViShaderCPtr>     m_shaders;
         
             Viewer*                             m_viewer                = nullptr;
-            GLFWwindow*                         m_window                = nullptr;
-            VkInstance                          m_instance              = nullptr;
-            VkPhysicalDevice                    m_physical              = nullptr;
-            VkPhysicalDeviceProperties          m_deviceInfo;
-            VkPhysicalDeviceMemoryProperties    m_memoryInfo;
-            VkSurfaceKHR                        m_surface               = nullptr;
-            std::set<tachyon::PresentMode>      m_presentModes;
-            std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
-            VkFormat                            m_surfaceFormat;
-            VkColorSpaceKHR                     m_surfaceColorSpace;
-            std::vector<const char*>            m_extensions;
-            VkDevice                            m_device                = nullptr;
-            ViQueues                            m_graphic, m_present, m_compute, m_videoEncode, m_videoDecode;
             VmaAllocator                        m_allocator             = nullptr;
             uint32_t                            m_descriptorCount       = 0;
             VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
             std::unique_ptr<ViThread>           m_thread;
             VkRenderPass                        m_renderPass            = nullptr;
-            tachyon::PresentMode                m_presentMode;
-            std::atomic<bool>                   m_rebuildSwap           = { false };
-            Guarded<VkClearValue>               m_clearValue;
+            
             uint64_t                            m_tick                  = 0;
             ViFrame*                            m_frames[MAX_FRAMES_IN_FLIGHT]  = {};
             ViSwapchain*                        m_swapchain             = nullptr;
@@ -211,9 +190,7 @@ namespace yq {
             void                _dtor();
 
 
-            VkSurfaceCapabilitiesKHR    surface_capabilities() const;
 
-            VkColorSpaceKHR             surface_color_space(VkFormat) const;
 
             bool                        graphic_draw();
             bool                        graphic_record(VkCommandBuffer, uint32_t); // may have extents (later)

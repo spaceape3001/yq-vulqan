@@ -21,7 +21,7 @@ namespace yq {
             assert(sz);
             
             m_size      = sz;
-            m_device    = viz.m_device;
+            m_device    = viz.device();
             m_allocator = viz.m_allocator;
             
             VqBufferCreateInfo  bufferInfo;

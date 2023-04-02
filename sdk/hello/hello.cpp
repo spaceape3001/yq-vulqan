@@ -90,8 +90,8 @@ struct HelloTriangle : public engine::Rendered {
     
     HelloTriangle(engine::Viewer*w) : m_window(w)
     {
-        const Shader*   vert = Shader::load("examples/hello3.vert");
-        const Shader*   frag = Shader::load("examples/hello.frag");
+        const Shader*   vert = Shader::load("shaders/examples/hello3.vert");
+        const Shader*   frag = Shader::load("shaders/examples/hello.frag");
         if(!vert)
             throw std::runtime_error("No vertex shader");
         if(!frag)

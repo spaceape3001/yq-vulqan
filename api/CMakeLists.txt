@@ -50,7 +50,7 @@ target_compile_definitions(${PROJECT_NAME}
         GLFW_INCLUDE_VULKAN=1
         YQ_USE_GLM=1
     PRIVATE 
-        "-DYQ_DATA_DIR=\"${CMAKE_CURRENT_LIST_DIR}/data\"" 
+        "-DYQ_DATA_DIR=\"${YQ_TACHYON_DATA_DIR}\"" 
         VK_ENABLE_BETA_EXTENSIONS=1
         IMGUI_USE_WCHAR32=1 
 )

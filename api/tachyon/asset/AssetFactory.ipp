@@ -31,12 +31,12 @@ namespace yq {
                 return ret;
                 
             if(!std::filesystem::exists(fp)){
-                tachyonWarning << "File does not exist (" << fp << ")";
+                tachyonInfo << "File does not exist (" << fp << ")";
                 return nullptr;
             }
 
             std::string    x  = fp.extension().string();
-            if(x.empty())       // no extension... abort
+            if(x.empty())      // no extension... abort
                 return nullptr;
             x   = x.substr(1);
             

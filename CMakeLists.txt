@@ -12,6 +12,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 include(configure.cmake)
 
+set(YQ_TACHYON_DATA_DIR "${CMAKE_CURRENT_LIST_DIR}/data" )
+
 add_subdirectory(3rd)
 add_subdirectory(api)
 add_subdirectory(test)

@@ -10,7 +10,7 @@
 #include <math/shape/TetrahedronData.hpp>
 #include <math/shape/shape_utils.hpp>
 #include <engine/render/RenderWriter.hpp>
-#include <engine/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <basic/preamble.hpp>
 
 namespace yq {

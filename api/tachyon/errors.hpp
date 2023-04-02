@@ -10,6 +10,7 @@
 
 namespace yq {
     namespace errors {
+        using bad_extension             = error_db::entry<"Bad file extension">;
         using glfw_window_create        = error_db::entry<"Unable to create GLFW window">;
         using no_application            = error_db::entry<"No application available.">;
         using no_queue_found            = error_db::entry<"No Suitable Queue Found">;

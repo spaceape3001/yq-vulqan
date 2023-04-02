@@ -39,7 +39,8 @@ namespace yq {
             auto [i,f]  = m_byId.try_emplace(a->id(),a);
             if(!f)
                 return i->second;
-            m_byPath[a->filepath()] = a;    // clober
+            if(!a->filepath().empty())
+                m_byPath[a->filepath()] = a;    // clobber
             return nullptr;
         }
         

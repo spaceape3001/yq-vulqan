@@ -54,6 +54,10 @@ namespace yq {
         Asset::Asset()
         {
         }
+
+        Asset::Asset(const std::filesystem::path&p) : m_filepath(p)
+        {
+        }
         
         Asset::~Asset()
         {
@@ -61,8 +65,14 @@ namespace yq {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        YQ_INVOKE(
-            [[maybe_unused]] auto res = writer<Asset>();
-        )
+        namespace {
+            void    reg_asset()
+            {
+                [[maybe_unused]] auto res = writer<Asset>();
+            }
+            
+            YQ_INVOKE(reg_asset();)
+        }
+
     }
 }

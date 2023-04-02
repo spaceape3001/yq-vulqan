@@ -90,6 +90,12 @@ namespace yq {
             {
                 return static_cast<const A*>(_pfind(p));
             }
+            
+            void            insert(const A*a)
+            {
+                if(a)
+                    _insert(a);
+            }
 
             //! Loads exact path (no resolution)
             const A*        loadx(const std::filesystem::path&p)
@@ -107,7 +113,7 @@ namespace yq {
             
                 WARNING this is NOT thread-safe.  Do not call outside of startup-initialization!
             */
-            void            add_loader(LoadFunction fn, std::initializer_list<std::string_view> exts, const std::source_location& sl=std::source_location::current())
+            void            add_loader(std::initializer_list<std::string_view> exts, LoadFunction fn, const std::source_location& sl=std::source_location::current())
             {
                 m_loaders.push_back(new TypedLoader<A>(fn, exts, sl));
             }

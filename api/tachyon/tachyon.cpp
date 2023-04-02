@@ -9,11 +9,14 @@
     are our C++ adapters for it.
 */
 
-#include "asset/AssetFactory.ipp"
+
+#include "asset/Shader.ipp"
 
 #include "asset/Asset.ipp"
 #include "asset/AssetCache.ipp"
-
+#include "asset/AssetFactory.ipp"
+#include "asset/GLSLShader.ipp"
+#include "asset/Texture.ipp"
 
 #include "gpu/Visualizer.ipp"
 

@@ -13,7 +13,6 @@
 #include "Application.hpp"
 #include "Perspective.hpp"
 #include "Scene.hpp"
-#include "Shader.hpp"
 #include "Viewer.hpp"
 #include "Visualizer.hpp"
 
@@ -23,6 +22,7 @@
 #include <basic/TextUtils.hpp>
 #include <basic/meta/ObjectInfoWriter.hpp>
 
+#include <tachyon/asset/Shader.hpp>
 
 #include <engine/render/IndexBufferObjectInfo.hpp>
 #include <engine/render/Pipeline.hpp>
@@ -1697,11 +1697,11 @@ namespace yq {
                 //  ================================
                 //  Resolve the request
             
-                ShaderCPtr       sh;
-                if(const ShaderCPtr* ptr = std::get_if<ShaderCPtr>(&ss)){
+                const Shader*       sh;
+                if(const Shader * const * ptr = std::get_if<const Shader*>(&ss)){
                     sh  = *ptr;
                 } else if(const std::string* ptr = std::get_if<std::string>(&ss)){
-                    sh  = Shader::get(*ptr); 
+                    sh  = Shader::load(*ptr); 
                 } 
                 if(!sh)
                     return nullptr;

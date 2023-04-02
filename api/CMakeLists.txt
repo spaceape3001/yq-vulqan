@@ -31,9 +31,6 @@ add_library(${PROJECT_NAME} SHARED
     ./engine/engine.cpp
     ./engine/Viewer.cpp
 
-    ./engine/Shader.cpp
-    ./engine/Texture.cpp
-    
     ./engine/render/Pipeline.cpp
     ./engine/render/Rendered.cpp
     ./engine/render/Render3D.cpp

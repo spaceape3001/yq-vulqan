@@ -14,6 +14,7 @@
 #include <string>
 #include <variant>
 
+#include <tachyon/preamble.hpp>
 #include <engine/enum/PushConfigType.hpp>
 
 namespace yq {
@@ -31,16 +32,9 @@ namespace yq {
         class Manipulator;
         using ManipulatorPtr    = Ref<Manipulator>;
         
-        class Shader;
-        using ShaderCPtr        = Ref<const Shader>;
-        using ShaderSpec        = std::variant<std::monostate, std::string, ShaderCPtr>;
-        
         class Taskable;
         class TaskableInfo;
 
-        class Texture;
-        using TexturePtr    = Ref<const Texture>;
-        
         class Viewer;
         class Visualizer;
     }

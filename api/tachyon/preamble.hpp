@@ -7,6 +7,7 @@
 #pragma once
 
 #include <basic/Logging.hpp>
+#include <variant>
 
 struct GLFWmonitor;
 struct GLFWvidmode;
@@ -36,6 +37,11 @@ namespace yq {
         template <typename> class TypedAssetFactory;
         template <typename> class TypedAssetLoader;
 
+        class Shader;
+        class Texture;
+
+        using ShaderSpec        = std::variant<std::monostate, std::string, const Shader*>;
+
         struct  Joystick;
         class   Monitor;
         struct  ResultCC;
@@ -61,6 +67,8 @@ namespace yq {
         using tachyon::VqApp;
         using tachyon::VqException;
         using tachyon::Window;
+        using tachyon::Shader;
+        using tachyon::ShaderSpec;
     }
 }
 

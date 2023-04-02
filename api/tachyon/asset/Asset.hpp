@@ -78,6 +78,7 @@ namespace yq {
             friend class AssetFactory;
             
             Asset();
+            Asset(const std::filesystem::path&);
             virtual ~Asset();
         private:
             std::filesystem::path           m_filepath;

@@ -10,10 +10,8 @@
 #include <basic/DelayInit.hpp>
 #include <io/DirUtils.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Asset)
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AssetCache)
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AssetCompiler)
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AssetLoader)
 
 
 namespace yq {
@@ -33,17 +31,13 @@ namespace yq {
             }
 
         }
-
+        
+        //  If done, binary Cache will be SQLite based....
+        
         
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        AssetInfo::AssetInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
-            MetaObjectInfo(zName, base, sl)
-        {
-            set_option(ASSET);
-        }
-        
         
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -98,13 +92,6 @@ namespace yq {
 
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        Asset::Asset()
-        {
-        }
-        
-        Asset::~Asset()
-        {
-        }
         
         YQ_INVOKE(
             [[maybe_unused]] auto res = writer<Asset>();

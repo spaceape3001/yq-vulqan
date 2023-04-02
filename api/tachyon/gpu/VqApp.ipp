@@ -221,12 +221,12 @@ namespace yq {
             if(vkCreateInstance(&createInfo, nullptr, &m_vulkan) != VK_SUCCESS){
                 vqCritical << "Unable to create vulkan instance!";
                 m_vulkan   = nullptr;
-                return errors::no_vulkan();
+                return errors::vulkan_create_failure();
             }
             
             if(m_vulkan == nullptr){
                 vqCritical << "Vulkan instance is NULL!";
-                return errors::no_vulkan();
+                return errors::vulkan_create_failure();
             } 
             
             vqInfo << "Vulkan instance created.";

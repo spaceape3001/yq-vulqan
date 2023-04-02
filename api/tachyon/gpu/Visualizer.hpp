@@ -31,8 +31,14 @@ namespace yq {
         
             std::error_code             init_visualizer(const ViewerCreateInfo&, GLFWwindow*);
             void                        kill_visualizer();
+            
+            
+            GLFWwindow*         _window() const { return m_window; }
         
         private:
+        
+            std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
+            void                        _dtor();
         
             Visualizer(const Visualizer&) = delete;
             Visualizer(Visualizer&&) = delete;
@@ -41,6 +47,11 @@ namespace yq {
         
         
             GLFWwindow*         m_window    = nullptr;
+            VkInstance          m_vulkan    = nullptr;
+            VqApp*              m_app       = nullptr;
+            
+            
+            
             bool                m_init      = false;
         
 

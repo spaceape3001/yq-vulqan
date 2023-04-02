@@ -22,7 +22,6 @@ add_library(${PROJECT_NAME} SHARED
     ${test_source}
     
     ./tachyon/tachyon.cpp
-    ./tachyon/Asset.cpp
     
     ./MyImGui.cpp
     

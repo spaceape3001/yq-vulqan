@@ -30,11 +30,11 @@ namespace yq {
         class   AppGLFW;
         class   Asset;
         class   AssetCache;
-        class   AssetCompiler;
-        class   AssetCompilerInfo;
         class   AssetInfo;
-        class   AssetLoader;
-        class   AssetLoaderInfo;
+        class   AssetFactory;
+
+        template <typename> class TypedAssetFactory;
+        template <typename> class TypedAssetLoader;
 
         struct  Joystick;
         class   Monitor;
@@ -54,11 +54,7 @@ namespace yq {
         using tachyon::AppCreateInfo;
         using tachyon::Asset;
         using tachyon::AssetCache;
-        using tachyon::AssetCompiler;
-        using tachyon::AssetCompilerInfo;
         using tachyon::AssetInfo;
-        using tachyon::AssetLoader;
-        using tachyon::AssetLoaderInfo;
         using tachyon::Monitor;
         using tachyon::ResultCC;
         using tachyon::ViewerCreateInfo;

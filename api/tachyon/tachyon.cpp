@@ -9,7 +9,11 @@
     are our C++ adapters for it.
 */
 
-#include "host/Window.ipp"
+#include "asset/AssetFactory.ipp"
+
+#include "asset/Asset.ipp"
+#include "asset/AssetCache.ipp"
+
 
 #include "gpu/Visualizer.ipp"
 
@@ -23,6 +27,7 @@
 #include "host/Joystick.ipp"
 #include "host/Monitor.ipp"
 #include "host/VideoMode.ipp"
+#include "host/Window.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>

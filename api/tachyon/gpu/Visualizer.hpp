@@ -316,15 +316,7 @@ namespace yq {
             GLFWwindow*                         m_window                = nullptr;
             
             std::atomic<bool>                   m_rebuildSwap           = { false };
-            bool                                m_init      = false;
-            //std::atomic_flag    m_rebuildSwapchain; //  needed for every resize
-        
-
-#if 0            
-            std::vector<const char*>            m_extensions;
-            VkDevice                            m_device                = nullptr;
-#endif
-            
+            bool                                m_init                  = false;
         };
     
     }

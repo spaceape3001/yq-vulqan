@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <engine/Camera.hpp>
+#include <tachyon/Camera.hpp>
 #include <basic/Mutable.hpp>
 #include <math/SimpleSpace.hpp>
 #include <math/units.hpp>
 
 namespace yq {
     namespace asset {
-        class TargetCamera : public engine::Camera {
-            YQ_OBJECT_DECLARE(TargetCamera, engine::Camera)
+        class TargetCamera : public Camera {
+            YQ_OBJECT_DECLARE(TargetCamera, Camera)
         public:
         
-            glm::dmat4  world2screen(const engine::CameraParams&) const override;
+            glm::dmat4  world2screen(const Params&) const override;
             TargetCamera();
             ~TargetCamera();
 
@@ -39,12 +39,12 @@ namespace yq {
             glm::dmat4              view_matrix() const;
 
         private:
-            Mutable<Vector3D>       m_position;
-            Mutable<Vector3D>       m_target;
-            Mutable<Vector3D>       m_up;
-            Mutable<Degree>         m_fov;
-            Mutable<double>         m_near;
-            Mutable<double>         m_far;
+            Vector3D       m_position;
+            Vector3D       m_target;
+            Vector3D       m_up;
+            Degree         m_fov;
+            double         m_near;
+            double         m_far;
         };
     }
 }

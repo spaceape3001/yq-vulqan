@@ -6,34 +6,28 @@
 
 #pragma once
 
-#include <basic/MetaObject.hpp>
-#include <engine/preamble.hpp>
+#include <tachyon/preamble.hpp>
+#include <basic/Object.hpp>
+#include <basic/Ref.hpp>
+#include <basic/UniqueID.hpp>
 #include <math/shape/Size2.hpp>
-
 #include <glm/glm.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
 
         class Camera;
         
-        class CameraInfo : public MetaObjectInfo {
+        class CameraInfo : public ObjectInfo {
         public:
             template <typename C> struct Writer;
 
             static const std::vector<const CameraInfo*>&    all();
             
-            CameraInfo(std::string_view, MetaObjectInfo&, const std::source_location& sl = std::source_location::current());
+            CameraInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
         private:
             struct Repo;
             static Repo& repo();
-        };
-
-        struct CameraProxy;
-
-
-        struct CameraParams {
-            Size2D          screen{};
         };
 
 
@@ -42,16 +36,18 @@ namespace yq {
             If you want it to show up on the viewport, it needs to be renderable, and thus derived
             from this thing.
         */
-        class Camera : public MetaObject {
+        class Camera : public Object, public UniqueID, public RefCount {
             YQ_OBJECT_INFO(CameraInfo);
-            YQ_OBJECT_DECLARE(Camera, MetaObject)
+            YQ_OBJECT_DECLARE(Camera, Object)
         public:    
         
-            //! Returns the transform to go world -> screen space
-            virtual glm::dmat4  world2screen(const CameraParams&) const = 0;
+            struct Params;
         
-            CameraProxy         proxy(const CameraParams&) const;
-            const std::string&  name() const { return m_name; }
+            //! Returns the transform to go world -> screen space
+            virtual glm::dmat4  world2screen(const Params&) const = 0;
+        
+            std::string_view    name() const { return m_name; }
+            const std::string&  get_name() const { return m_name; }
             void                set_name(const std::string&);
 
         protected:
@@ -61,18 +57,9 @@ namespace yq {
         private:
             std::string         m_name;
         };
-        
-        template <typename C>
-        class CameraInfo::Writer : public MetaObjectInfo::Writer<C> {
-        public:
-            Writer(CameraInfo* cameraInfo) : MetaObjectInfo::Writer<C>(cameraInfo)
-            {
-            }
-            
-            Writer(CameraInfo& cameraInfo) : Writer(&cameraInfo)
-            {
-            }
-        };
 
+        struct Camera::Params {
+            Size2D          screen{};
+        };
     }
 }

@@ -12,12 +12,12 @@
 namespace yq {
     namespace asset {
         TargetCamera::TargetCamera() : 
-            m_position({0., 0., -10.}, this),
-            m_target({0., 0., 0.}, this),
-            m_up({0., 1., 0.}, this),
-            m_fov(70_deg, this),
-            m_near(0.1, this),
-            m_far(20., this)
+            m_position({0., 0., -10.}),
+            m_target({0., 0., 0.}),
+            m_up({0., 1., 0.}),
+            m_fov(70_deg),
+            m_near(0.1),
+            m_far(20.)
         {
         }
         
@@ -28,9 +28,9 @@ namespace yq {
         glm::dmat4  TargetCamera::projection_matrix(const Size2D&sz) const
         {
             glm::dmat4 ret =  glm::perspective(
-                                    (double) glm::radians(m_fov.get().value), 
+                                    (double) glm::radians(m_fov.value), 
                                     (double) sz.width() / (double) sz.height(),
-                                    m_near.get(), m_far.get()
+                                    m_near, m_far
             );
             ret[1][1] *= -1;
             return ret;
@@ -69,10 +69,10 @@ namespace yq {
 
         glm::dmat4  TargetCamera::view_matrix() const
         {
-            return glm::lookAt((glm::dvec3) m_position.get(), (glm::dvec3) m_target.get(), (glm::dvec3) m_up.get());
+            return glm::lookAt((glm::dvec3) m_position, (glm::dvec3) m_target, (glm::dvec3) m_up);
         }
 
-        glm::dmat4  TargetCamera::world2screen(const engine::CameraParams&p) const
+        glm::dmat4  TargetCamera::world2screen(const Params&p) const
         {
             return projection_matrix(p.screen) * view_matrix();
         }

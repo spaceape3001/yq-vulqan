@@ -9,13 +9,14 @@
     are our C++ adapters for it.
 */
 
-#include "Buffer.ipp"
+#include "Camera.ipp"
 
 #include "gpu/Visualizer.ipp"
 
 #include "Asset.ipp"
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
+#include "Buffer.ipp"
 
 #include "gfx/GLSLShader.ipp"
 #include "gfx/Pipeline.ipp"

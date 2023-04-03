@@ -12,10 +12,9 @@
 namespace yq {
     namespace asset {
         SpaceCamera::SpaceCamera() : 
-            m_space(this),
-            m_fov(70_deg, this),
-            m_near(0.1, this),
-            m_far(10., this)
+            m_fov(70_deg),
+            m_near(0.1),
+            m_far(10.)
         {
         }
         
@@ -26,9 +25,9 @@ namespace yq {
         glm::dmat4  SpaceCamera::projection_matrix(const Size2D&sz) const
         {
             glm::dmat4 ret =  glm::perspective(
-                                    (double) glm::radians(m_fov.get().value), 
+                                    (double) glm::radians(m_fov.value), 
                                     (double) sz.width() / (double) sz.height(),
-                                    m_near.get(), m_far.get()
+                                    m_near, m_far
             );
             ret[1][1] *= -1;
             return ret;
@@ -46,17 +45,17 @@ namespace yq {
         
         void        SpaceCamera::set_orientation(const Quaternion3D&v)
         {
-            m_space.edit().orientation = v;
+            m_space.orientation = v;
         }
         
         void        SpaceCamera::set_position(const Vector3D&v)
         {
-            m_space.edit().position    = v;
+            m_space.position    = v;
         }
         
         void        SpaceCamera::set_scale(const Vector3D&v)
         {
-            m_space.edit().scale       = v;
+            m_space.scale       = v;
         }
         
         void        SpaceCamera::set_fov(Degree v)
@@ -66,10 +65,10 @@ namespace yq {
 
         glm::dmat4  SpaceCamera::view_matrix() const
         {
-            return m_space->parent2local();
+            return m_space.parent2local();
         }
 
-        glm::dmat4  SpaceCamera::world2screen(const engine::CameraParams&p) const
+        glm::dmat4  SpaceCamera::world2screen(const Params&p) const
         {
             return projection_matrix(p.screen) * view_matrix();
         }

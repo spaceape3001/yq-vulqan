@@ -35,7 +35,8 @@ namespace yq {
         class   AssetInfo;
         class   AssetFactory;
         class   Buffer;
-
+        class   Camera;
+        struct  CameraParams;
 
         class Shader;
         class Texture;
@@ -74,15 +75,21 @@ namespace yq {
         using tachyon::Asset;
         using tachyon::AssetCache;
         using tachyon::AssetInfo;
+        using tachyon::Camera;
         using tachyon::Monitor;
         using tachyon::PipelineBuilder;
         using tachyon::PipelineConfig;
+        using tachyon::Shader;
+        using tachyon::ShaderSpec;
         using tachyon::ViewerCreateInfo;
         using tachyon::VqApp;
         using tachyon::VqException;
         using tachyon::Window;
-        using tachyon::Shader;
-        using tachyon::ShaderSpec;
     }
+    
+    using tachyon::Camera;
+    using tachyon::Pipeline;
+    using tachyon::Texture;
+    using tachyon::Shader;
 }
 

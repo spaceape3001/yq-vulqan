@@ -22,6 +22,7 @@
 #include <basic/TextUtils.hpp>
 #include <basic/meta/ObjectInfoWriter.hpp>
 
+#include <tachyon/Camera.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 #include <engine/render/IndexBufferObjectInfo.hpp>
@@ -318,7 +319,7 @@ namespace yq {
                 return ;
             }
     
-            CameraParams        cparams;
+            Camera::Params      cparams;
             cparams.screen      = (Size2D) size();
             glm::dmat4          cam_matrix = pr.camera->world2screen(cparams);
             

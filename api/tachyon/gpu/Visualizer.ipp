@@ -1200,6 +1200,11 @@ namespace yq {
             return true;
         }
 
+        void        Visualizer::set_draw_function(DrawFunction fn)
+        {
+            m_draw      = fn;
+        }
+
         ViShader    Visualizer::shader(uint64_t i) const
         {
             tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
@@ -1258,6 +1263,108 @@ namespace yq {
         void        Visualizer::trigger_rebuild()
         {
             m_rebuildSwap       = true;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        //  RENDERING
+
+        std::error_code     Visualizer::_record(VkCommandBuffer cmd, uint32_t imageIndex, DrawFunction use)
+        {
+            VqCommandBufferBeginInfo beginInfo;
+            beginInfo.flags = 0; // Optional
+            beginInfo.pInheritanceInfo = nullptr; // Optional
+
+            if (vkBeginCommandBuffer(cmd, &beginInfo) != VK_SUCCESS)
+                return create_error<"Failed to begin recording command buffer">();
+
+            VqRenderPassBeginInfo renderPassInfo;
+            renderPassInfo.renderPass = m_renderPass;
+            renderPassInfo.framebuffer = m_swapchain.frameBuffers[imageIndex];
+            renderPassInfo.renderArea.offset = {0, 0};
+            renderPassInfo.renderArea.extent = m_swapchain.extents;
+
+            renderPassInfo.clearValueCount = 1;
+            VkClearValue                cv  = m_clearValue;
+            renderPassInfo.pClearValues = &cv;
+            vkCmdBeginRenderPass(cmd, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+            std::error_code     ret;
+            try {
+                if(use){
+                    use(cmd);
+                } else if(m_draw){
+                    m_draw(cmd);
+                } else
+                    ret = create_error<"No draw function in visualizer">();
+            }
+            catch(std::error_code ec) {
+                ret = ec;
+            }
+                
+            vkCmdEndRenderPass(cmd);
+            if (vkEndCommandBuffer(cmd) != VK_SUCCESS)
+                return create_error<"Failed to record command buffer">();
+            return ret;
+        }
+
+        std::error_code     Visualizer::draw(DrawFunction use)
+        {
+            ViFrame&    f   = current_frame();
+            vkWaitForFences(m_device, 1, &f.fence, VK_TRUE, UINT64_MAX);
+
+            uint32_t imageIndex = 0;
+            VkResult res    = vkAcquireNextImageKHR(m_device, m_swapchain.swapchain, UINT64_MAX, f.imageAvailable, VK_NULL_HANDLE, &imageIndex);
+            bool    force   = false;
+            switch(res){
+            case VK_SUCCESS:
+                break;
+            case VK_SUBOPTIMAL_KHR:
+            case VK_ERROR_OUT_OF_DATE_KHR:
+                force       = true;
+                break;
+            default:
+                return create_error<"Unable to acquire next image">();
+            }
+            
+            if(rebuild(force))
+                return std::error_code();
+
+            vkResetFences(m_device, 1, &f.fence);
+            vkResetCommandBuffer(f.commandBuffer, 0);
+            
+            std::error_code ec = _record(f.commandBuffer, imageIndex, use);
+            if(ec)
+                return ec;
+            
+            VqSubmitInfo submitInfo;
+
+            VkSemaphore waitSemaphores[] = { f.imageAvailable };
+            VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+            submitInfo.waitSemaphoreCount = 1;
+            submitInfo.pWaitSemaphores      = waitSemaphores;
+            submitInfo.pWaitDstStageMask    = waitStages;
+            submitInfo.commandBufferCount   = 1;
+            submitInfo.pCommandBuffers      = &f.commandBuffer;
+
+            VkSemaphore signalSemaphores[]  = {f.renderFinished};
+            submitInfo.signalSemaphoreCount = 1;
+            submitInfo.pSignalSemaphores    = signalSemaphores;
+
+            if (vkQueueSubmit(m_graphic[0], 1, &submitInfo, f.fence) != VK_SUCCESS) 
+                return create_error<"Failed to submit draw command buffer">();
+                
+            VqPresentInfoKHR presentInfo;
+
+            presentInfo.waitSemaphoreCount = 1;
+            presentInfo.pWaitSemaphores = signalSemaphores;
+            presentInfo.swapchainCount = 1;
+            presentInfo.pSwapchains = &m_swapchain.swapchain;
+            presentInfo.pImageIndices = &imageIndex;
+            presentInfo.pResults = nullptr; // Optional
+            vkQueuePresentKHR(m_present[0], &presentInfo);
+            
+            ++m_tick;
+            return std::error_code();
         }
 
     }

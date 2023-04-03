@@ -848,99 +848,12 @@ namespace yq {
 
         bool  Visualizer::graphic_draw()
         {
-            ViFrame&    f   = current_frame();
-            vkWaitForFences(m_device, 1, &f.fence, VK_TRUE, UINT64_MAX);
-
-            uint32_t imageIndex = 0;
-            VkResult res    = vkAcquireNextImageKHR(m_device, m_swapchain.swapchain, UINT64_MAX, f.imageAvailable, VK_NULL_HANDLE, &imageIndex);
-            bool    force   = false;
-            switch(res){
-            case VK_SUCCESS:
-                break;
-            case VK_SUBOPTIMAL_KHR:
-            case VK_ERROR_OUT_OF_DATE_KHR:
-                force       = true;
-                break;
-            default:
-                vqError << "Unable to acquire next image!";
-                return false;
-            }
-            
-            if(rebuild(force))
-                return true;
-
-            vkResetFences(m_device, 1, &f.fence);
-            vkResetCommandBuffer(f.commandBuffer, 0);
-            
-            if(!graphic_record(f.commandBuffer, imageIndex))
-                return false;
-            
-            VqSubmitInfo submitInfo;
-
-            VkSemaphore waitSemaphores[] = { f.imageAvailable };
-            VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
-            submitInfo.waitSemaphoreCount = 1;
-            submitInfo.pWaitSemaphores      = waitSemaphores;
-            submitInfo.pWaitDstStageMask    = waitStages;
-            submitInfo.commandBufferCount   = 1;
-            submitInfo.pCommandBuffers      = &f.commandBuffer;
-
-            VkSemaphore signalSemaphores[]  = {f.renderFinished};
-            submitInfo.signalSemaphoreCount = 1;
-            submitInfo.pSignalSemaphores    = signalSemaphores;
-
-            if (vkQueueSubmit(m_graphic[0], 1, &submitInfo, f.fence) != VK_SUCCESS) {
-                vqError << "Failed to submit draw command buffer!";
-                return false;
-            }
-                
-            VqPresentInfoKHR presentInfo;
-
-            presentInfo.waitSemaphoreCount = 1;
-            presentInfo.pWaitSemaphores = signalSemaphores;
-            presentInfo.swapchainCount = 1;
-            presentInfo.pSwapchains = &m_swapchain.swapchain;
-            presentInfo.pImageIndices = &imageIndex;
-            presentInfo.pResults = nullptr; // Optional
-            vkQueuePresentKHR(m_present[0], &presentInfo);
-            
-            ++m_tick;
-            return true;
-        }
-        
-        bool  Visualizer::graphic_record(VkCommandBuffer cmd, uint32_t imgIndex)
-        {
-            VqCommandBufferBeginInfo beginInfo;
-            beginInfo.flags = 0; // Optional
-            beginInfo.pInheritanceInfo = nullptr; // Optional
-
-            if (vkBeginCommandBuffer(cmd, &beginInfo) != VK_SUCCESS) {
-                vqError << "Failed to begin recording command buffer!";
-                return false;
-            }
-
-            VqRenderPassBeginInfo renderPassInfo;
-            renderPassInfo.renderPass = m_renderPass;
-            renderPassInfo.framebuffer = m_swapchain.frameBuffers[imgIndex];
-            renderPassInfo.renderArea.offset = {0, 0};
-            renderPassInfo.renderArea.extent = m_swapchain.extents;
-
-            renderPassInfo.clearValueCount = 1;
-            VkClearValue                cv  = m_clearValue;
-            renderPassInfo.pClearValues = &cv;
-            vkCmdBeginRenderPass(cmd, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-        
-            m_viewer->draw_vulqan(cmd);
-            if(m_viewer->m_imgui)
-                ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), cmd, nullptr);
-
-            vkCmdEndRenderPass(cmd);
-
-            if (vkEndCommandBuffer(cmd) != VK_SUCCESS) {
-                vqError << "Failed to record command buffer!";
-                return false;
-            }
-            return true;
+            std::error_code ec = draw([this](VkCommandBuffer cmd){
+                m_viewer->draw_vulqan(cmd);
+                if(m_viewer->m_imgui)
+                    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), cmd, nullptr);
+            });
+            return !ec;
         }
 
         void  Visualizer::run()

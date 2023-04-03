@@ -13,6 +13,7 @@
 #include <tachyon/gpu/ViQueues.hpp>
 
 #include <atomic>
+#include <functional>
 #include <map>
 #include <set>
 #include <string_view>
@@ -100,6 +101,9 @@ namespace yq {
         */
         class Visualizer  {
         public:
+            
+            using DrawFunction              = std::function<void(VkCommandBuffer)>;
+        
         
             //  since this is "stolen", demoted
             GLFWwindow*                     _window() const { return m_window; }
@@ -123,6 +127,10 @@ namespace yq {
             const ViFrame&                  current_frame() const;
             
             VkDescriptorPool                descriptor_pool() const;
+
+            std::error_code                 draw(DrawFunction use={});
+
+            uint64_t                        frame_number() const { return m_tick; }
 
                 //! Returns the name of the GPU/physical device
             std::string_view                gpu_name() const;
@@ -163,6 +171,9 @@ namespace yq {
             
                 //! Sets the background color
             void                            set_clear_color(const RGBA4F&);
+            
+            void                            set_draw_function(DrawFunction);
+            
             void                            set_present_mode(PresentMode);
 
             ViShader                        shader(uint64_t) const;
@@ -228,6 +239,8 @@ namespace yq {
             std::error_code             _create(ViThread&);
             void                        _destroy(ViThread&);
             
+            std::error_code             _record(VkCommandBuffer, uint32_t, DrawFunction use={}); // may have extents (later)
+            
         
             Visualizer(const Visualizer&) = delete;
             Visualizer(Visualizer&&) = delete;
@@ -243,6 +256,7 @@ namespace yq {
             uint32_t                            m_descriptorCount       = 0;
             VkDevice                            m_device                = nullptr;
             VkPhysicalDeviceProperties          m_deviceInfo;
+            DrawFunction                        m_draw                  = {};
             //std::vector<const char*>            m_extensions;
             ViFrame                             m_frames[MAX_FRAMES_IN_FLIGHT];
             ViQueues                            m_graphic;

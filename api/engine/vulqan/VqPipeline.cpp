@@ -26,16 +26,6 @@ using namespace yq::tachyon;
 namespace yq {
     namespace engine {
     
-        Ref<const Shader>       shader_for(const ShaderSpec& ss)
-        {
-            if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
-                return *ptr;
-            } else if(const std::string* ptr = std::get_if<std::string>(&ss)){
-                return Shader::load(*ptr); 
-            } else 
-                return nullptr;
-        }
-    
         VqPipeline::VqPipeline(Visualizer& viz, const PipelineConfig& cfg)
         {
             m_device    = viz.device();
@@ -44,7 +34,7 @@ namespace yq {
                 std::vector<VkPipelineShaderStageCreateInfo>    stages;
                 m_shaderMask        = 0;
                 for(auto& s : cfg.shaders){
-                    Ref<const Shader>   sh  = shader_for(s);
+                    Ref<const Shader>   sh  = Shader::decode(s);
                     if(!sh)
                         continue;
                     
@@ -116,9 +106,9 @@ namespace yq {
                 inputAssembly.topology                  = (VkPrimitiveTopology) cfg.topology.value();
                 inputAssembly.primitiveRestartEnable    = VK_FALSE;
                 
-                VkViewport viewport = viz.m_swapchain->def_viewport();
+                VkViewport viewport = viz.swapchain_def_viewport();
 
-                VkRect2D scissor = viz.m_swapchain->def_scissor();
+                VkRect2D scissor = viz.swapchain_def_scissor();
                 
                 VqPipelineViewportStateCreateInfo   viewportState{};
                 viewportState.viewportCount = 1;
@@ -220,7 +210,7 @@ namespace yq {
                 pipelineInfo.pColorBlendState = &colorBlending;
                 pipelineInfo.pDynamicState = nullptr; // Optional   
                 pipelineInfo.layout = m_layout;
-                pipelineInfo.renderPass = viz.m_renderPass;
+                pipelineInfo.renderPass = viz.render_pass();
                 pipelineInfo.subpass = 0;             
                 pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optional
                 pipelineInfo.basePipelineIndex = -1; // Optional        

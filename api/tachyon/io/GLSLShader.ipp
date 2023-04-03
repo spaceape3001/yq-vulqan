@@ -8,16 +8,21 @@
 
 #include <tachyon/io/GLSLShader.hpp>
 
-#include <basic/errors.hpp>
+#include <basic/ErrorDB.hpp>
 #include <basic/DelayInit.hpp>
 #include <basic/TextUtils.hpp>
 #include <io/Execute.hpp>
 #include <io/FileUtils.hpp>
-#include <tachyon/errors.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/Shader.hpp>
 
 namespace yq {
+
+    namespace errors {
+       using shader_compile_failure    = error_db::entry<"Shader failed to compile">;
+       using shader_validate_failure   = error_db::entry<"Shader failed to validate">;
+     }
+    
     namespace tachyon {
         namespace glsl {
             namespace {
@@ -89,11 +94,11 @@ namespace yq {
                     pd.args.push_back(ifile->string());
                     capture = pd.execute(ByteArray(), nullptr, &ecode);
                 } else {
-                    return { ByteArray(), errors::bad_argument() };
+                    return { ByteArray(), create_error<"Bad input source to GLSL shader compile">() };
                 }
 
                 if(ecode != 0)
-                    return { capture, errors::shader_compile_failure() };
+                    return { capture, create_error<"Shader failed to compile">() };
                 return { capture, std::error_code() };
             }
             
@@ -120,6 +125,8 @@ namespace yq {
                 ByteArray   capture;
 
                 if(input){
+                    if(type == ShaderType())
+                        return { ByteArray(), create_error<"Bad shader type passed to GLSL validation">() };
                     pd.args.push_back("--stdin");
                     pd.args.push_back("-S");
                     pd.args.push_back(to_lower(type.key()));
@@ -127,10 +134,12 @@ namespace yq {
                 } else if(ifile){
                     pd.args.push_back(ifile->string());
                     pd.execute(ByteArray(), &capture, &ecode);
+                } else {
+                    return { ByteArray(), create_error<"Bad input source to GLSL shader validate">() };
                 }
 
                 if(ecode != 0)
-                    return { capture, errors::shader_compile_failure() };
+                    return { capture, errors::shader_validate_failure() };
                 return { capture, std::error_code() };
             }
 
@@ -149,7 +158,7 @@ namespace yq {
                         {
                             ShaderType  st  = shader_type(pth);
                             if(st == ShaderType())
-                                throw (std::error_code) errors::bad_extension();
+                                throw create_error<"Bad file extension for a GLSL shader">();
                             auto [b,ec] = compile(pth);
                             if(ec)
                                 throw ec;

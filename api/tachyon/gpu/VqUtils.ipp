@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/errors.hpp>
+#include <basic/ErrorDB.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 
@@ -98,7 +98,7 @@ namespace yq {
             for(uint32_t i=0;i<queues.size();++i)
                 if(queues[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
                     return i;
-            return errors::no_queue_found();
+            return unexpected<"No queue found">();
         }
 
         Expect<uint32_t>                vqFindFirstPresentQueue(VkPhysicalDevice dev, VkSurfaceKHR srf)
@@ -111,7 +111,7 @@ namespace yq {
                 if(presentSupport)
                     return i;
             }
-            return errors::no_queue_found();
+            return unexpected<"No queue found">();
         }
 
         VqQueueFamilyIndices                 vqFindQueueFamilies(VkPhysicalDevice dev, VkSurfaceKHR srf)

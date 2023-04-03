@@ -9,10 +9,9 @@
 #include <tachyon/gpu/VqApp.hpp>
 #include <tachyon/gpu/VqEnums.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/errors.hpp>
 #include <tachyon/TachyonLog.hpp>
 #include <basic/BasicApp.hpp>
-#include <basic/errors.hpp>
+#include <basic/ErrorDB.hpp>
 #include <basic/ThreadId.hpp>
 #include <tbb/spin_mutex.h>
 
@@ -29,6 +28,10 @@
 
 
 namespace yq {
+    namespace errors {
+        using vulkan_create_failure     = error_db::entry<"Unable to create vulkan instance">;
+    }
+
     namespace tachyon {
         namespace {
             static constexpr const uint32_t kEngineVersion      = YQ_MAKE_VERSION(0, 0, 2);
@@ -114,7 +117,7 @@ namespace yq {
                 return errors::null_pointer();
             static const auto availableLayers     = vqNameSet(vqEnumerateInstanceLayerProperties());
             if(!availableLayers.contains(z))
-                return errors::unavailable_layer();
+                return create_error<"Unavailable layer requested">();
             m_layers.push_back(z);
             return std::error_code();
         }
@@ -126,7 +129,7 @@ namespace yq {
 
             static const auto availableExtensions = vqNameSet(vqEnumerateInstanceExtensionProperties());
             if(!availableExtensions.contains(z))
-                return errors::unavailable_extension();
+                return create_error<"Unavailable extension requested">();
             
             m_extensions.push_back(z);
             return std::error_code();
@@ -152,7 +155,7 @@ namespace yq {
                     auto stream    = (m_appInfo.validation == Required::YES) ? vqCritical : vqError;
                     stream << "Unable to find validation layers!";
                     if(m_appInfo.validation == Required::YES)
-                        return errors::unavailable_validation();
+                        return create_error<"Validation layer is unavailable">();
                 } else
                     want_debug  = true;
             }
@@ -224,6 +227,7 @@ namespace yq {
                 return errors::vulkan_create_failure();
             }
             
+            assert(m_vulkan != nullptr);
             if(m_vulkan == nullptr){
                 vqCritical << "Vulkan instance is NULL!";
                 return errors::vulkan_create_failure();

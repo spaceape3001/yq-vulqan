@@ -9,8 +9,7 @@
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/host/Window.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/errors.hpp>
-#include <basic/errors.hpp>
+#include <basic/ErrorDB.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq {
@@ -60,7 +59,7 @@ namespace yq {
             m_title     = vci.title;
             m_window    = glfwCreateWindow(wx, wy, m_title.c_str(), vci.monitor.monitor(), nullptr);
             if(!m_window)
-                return errors::glfw_window_create();
+                return create_error<"Unable to create GLFW window">();
 
             glfwSetWindowUserPointer(m_window, this);
             m_init      = true;

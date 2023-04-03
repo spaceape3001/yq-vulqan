@@ -21,6 +21,8 @@ namespace yq {
             static TypedAssetFactory<Shader>&  cache();
             
             static Ref<const Shader>    load(std::string_view);
+            static Ref<const Shader>    decode(const ShaderSpec&);
+
             
             const ByteArray&    payload() const { return m_payload; }
             ShaderType          shader_type() const { return m_type; }

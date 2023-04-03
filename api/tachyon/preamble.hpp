@@ -55,10 +55,19 @@ namespace yq {
         class   VqApp;
         class   VqException;
         class   Window;
+
+        static constexpr const size_t   MAX_PUSH                = 256;
+        static constexpr const size_t   MAX_FRAMES_IN_FLIGHT    = 2;
+        static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = 1024;
     }
     
         // here for compatibility
     namespace engine {
+        static constexpr const size_t   MAX_PUSH                = tachyon::MAX_PUSH;
+        static constexpr const size_t   MAX_FRAMES_IN_FLIGHT    = tachyon::MAX_FRAMES_IN_FLIGHT;
+        static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = tachyon::MIN_DESCRIPTOR_COUNT;
+
+
         using tachyon::AppGLFW;
         using tachyon::AppCreateInfo;
         using tachyon::Asset;

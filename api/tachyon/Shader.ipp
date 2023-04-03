@@ -20,6 +20,16 @@ namespace yq {
             return s_ret;
         }
 
+        Ref<const Shader>    Shader::decode(const ShaderSpec&ss)
+        {
+            if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
+                return *ptr;
+            } else if(const std::string* ptr = std::get_if<std::string>(&ss)){
+                return load(*ptr); 
+            } else 
+                return nullptr;
+        }
+
         Ref<const Shader>    Shader::load(std::string_view pp)
         {
             return cache().load(pp);

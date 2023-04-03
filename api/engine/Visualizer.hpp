@@ -78,57 +78,6 @@ namespace yq {
         };
         
         
-            // eventually multithread...
-        struct ViThread {
-            Visualizer*         viz                 = nullptr;
-            VkDescriptorPool    descriptors         = nullptr;
-            VkCommandPool       graphic             = nullptr;
-            VkCommandPool       compute             = nullptr;
-            
-            ViThread(Visualizer*);
-            ~ViThread();
-            void    dtor();
-        };
-        
-            //  and so we can be more efficient in rendering
-        struct ViFrame {
-            Visualizer*             viz             = nullptr;
-            VkCommandBuffer         commandBuffer   = nullptr;
-            VkSemaphore             imageAvailable  = nullptr;
-            VkSemaphore             renderFinished  = nullptr;
-            VkFence                 fence           = nullptr;
-            
-            ViFrame(Visualizer*);
-            ~ViFrame();
-            void    dtor();
-        };
-        
-        struct ViSwapchain {
-            Visualizer*                 viz             = nullptr;
-            VkSwapchainKHR              swapchain       = nullptr;
-            VkExtent2D                  extents         = {};
-            uint32_t                    minImageCount   = 0;
-            uint32_t                    imageCount      = 0;
-            std::vector<VkImage>        images;
-            std::vector<VkImageView>    imageViews;
-            std::vector<VkFramebuffer>  frameBuffers;
-            VkSurfaceCapabilitiesKHR    capabilities;
-
-            ViSwapchain(Visualizer*);
-            ~ViSwapchain();
-            void        dtor();
-            VkRect2D    def_scissor() const;
-            VkViewport  def_viewport() const;
-            uint32_t    width() const;
-            uint32_t    height() const;
-        };
-        
-        template <typename T>
-        struct ViMap {
-            std::map<uint64_t, T>           map;
-            mutable tbb::spin_rw_mutex      mutex;
-        };
-        
 
         /*! \brief Visualizer is the private data for the viewer
                 
@@ -139,14 +88,7 @@ namespace yq {
         struct Visualizer : public tachyon::Visualizer {
         
             Viewer*                             m_viewer                = nullptr;
-            uint32_t                            m_descriptorCount       = 0;
-            VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-            std::unique_ptr<ViThread>           m_thread;
-            VkRenderPass                        m_renderPass            = nullptr;
             
-            uint64_t                            m_tick                  = 0;
-            ViFrame*                            m_frames[MAX_FRAMES_IN_FLIGHT]  = {};
-            ViSwapchain*                        m_swapchain             = nullptr;
             
             
             //std::thread         builder;
@@ -167,17 +109,8 @@ namespace yq {
             void                _ctor(const ViewerCreateInfo&);
             void                _dtor();
 
-
-
-
-            bool                        graphic_draw();
-            bool                        graphic_record(VkCommandBuffer, uint32_t); // may have extents (later)
-
-
-            const ViFrame&              frame() const { return *(m_frames[m_tick%MAX_FRAMES_IN_FLIGHT]); }
-            ViFrame&                    frame() { return *(m_frames[m_tick%MAX_FRAMES_IN_FLIGHT]); }
-            
-            bool                        check_rebuild(bool force=false);
+            bool    graphic_draw();
+            bool    graphic_record(VkCommandBuffer, uint32_t); // may have extents (later)
             
         };
     }

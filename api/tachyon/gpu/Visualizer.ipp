@@ -1246,7 +1246,7 @@ namespace yq {
                 return s_null;
       
             auto [j,f]  = m_buffers.try_emplace(v->id(), s_null);
-            if(!f)
+            if(f)
                 _create(j->second, v->usage(), v->data(), v->bytes());
             return j->second;
         }
@@ -1258,7 +1258,7 @@ namespace yq {
                 return s_null;
                 
             auto [j,f]  = m_shaders.try_emplace(v->id(), s_null);
-            if(!f)
+            if(f)
                 _create(j->second, *v);
             return j->second;
         }
@@ -1269,7 +1269,7 @@ namespace yq {
             if(!v)
                 return s_null;
             auto [j,f]  = m_pipelines.try_emplace(v->id(), s_null);
-            if(!f)
+            if(f)
                 _create(j->second, v->config());
             return j->second;
         }

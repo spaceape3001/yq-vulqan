@@ -110,8 +110,6 @@ namespace yq {
             void                _dtor();
 
             bool    graphic_draw();
-            bool    graphic_record(VkCommandBuffer, uint32_t); // may have extents (later)
-            
         };
     }
 }

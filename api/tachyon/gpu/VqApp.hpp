@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <basic/trait/not_copyable.hpp>
-#include <basic/trait/not_moveable.hpp>
 #include <tachyon/AppCreateInfo.hpp>
 
 #include <system_error>

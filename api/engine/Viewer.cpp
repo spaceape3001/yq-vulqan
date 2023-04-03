@@ -22,15 +22,15 @@
 #include <basic/TextUtils.hpp>
 #include <basic/meta/ObjectInfoWriter.hpp>
 
-#include <tachyon/Shader.hpp>
+#include <tachyon/gfx/Shader.hpp>
 
 #include <engine/render/IndexBufferObjectInfo.hpp>
 #include <engine/render/Pipeline.hpp>
-#include <tachyon/render/PipelineConfig.hpp>
+#include <tachyon/gfx/PipelineConfig.hpp>
 #include <engine/render/PushBufferObjectInfo.hpp>
 #include <engine/render/Rendered.hpp>
 #include <engine/render/Render3D.hpp>
-#include <tachyon/render/PushData.hpp>
+#include <tachyon/gfx/PushData.hpp>
 #include <engine/render/UniformBufferObjectInfo.hpp>
 #include <engine/render/VertexBufferObjectInfo.hpp>
 

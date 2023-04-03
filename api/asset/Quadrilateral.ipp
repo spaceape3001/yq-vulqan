@@ -11,7 +11,7 @@
 #include <math/vector/Vector3.hxx>
 #include <math/shape/shape_utils.hpp>
 #include <engine/render/RenderWriter.hpp>
-#include <tachyon/Shader.hpp>
+#include <tachyon/gfx/Shader.hpp>
 #include <basic/preamble.hpp>
 
 namespace yq {

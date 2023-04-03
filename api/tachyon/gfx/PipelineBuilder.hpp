@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/render/PipelineConfig.hpp>
-#include <tachyon/render/PipelineUtils.hpp>
+#include <tachyon/gfx/PipelineConfig.hpp>
+#include <tachyon/gfx/PipelineUtils.hpp>
 #include <basic/trait/not_copyable.hpp>
 #include <basic/trait/not_moveable.hpp>
 #include <set>

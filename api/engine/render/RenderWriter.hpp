@@ -11,9 +11,9 @@
 #include <engine/render/Render3D.hpp>
 #include <engine/render/Rendered.hpp>
 #include <engine/render/Pipeline.hpp>
-#include <tachyon/render/PipelineBuilder.hpp>
-#include <tachyon/render/PipelineConfig.hpp>
-#include <tachyon/render/PipelineUtils.hpp>
+#include <tachyon/gfx/PipelineBuilder.hpp>
+#include <tachyon/gfx/PipelineConfig.hpp>
+#include <tachyon/gfx/PipelineUtils.hpp>
 #include <engine/render/UniformBufferObjectInfo.hpp>
 #include <engine/render/VertexBufferObjectInfo.hpp>
 #include <basic/Mutable.hpp>

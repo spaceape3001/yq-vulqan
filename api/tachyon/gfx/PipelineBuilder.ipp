@@ -6,9 +6,9 @@
 
 #include <basic/meta/Init.hpp>
 #include <basic/meta/TypeInfo.hpp>
-#include <tachyon/Shader.hpp>
-#include <tachyon/render/PushData.hpp>
-#include <tachyon/render/PipelineBuilder.hpp>
+#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/gfx/PushData.hpp>
+#include <tachyon/gfx/PipelineBuilder.hpp>
 
 
 namespace yq {

@@ -4,12 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/render/PipelineConfig.hpp>
-#include <tachyon/Shader.hpp>
+#pragma once
+
+#include <tachyon/gfx/Buffer.hpp>
 
 namespace yq {
     namespace tachyon {
-        PipelineConfig::PipelineConfig() = default;
-        PipelineConfig::~PipelineConfig() = default;
     }
 }

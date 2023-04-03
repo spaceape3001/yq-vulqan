@@ -27,6 +27,12 @@
 namespace yq {
     namespace tachyon {
     
+        struct ViBuffer {
+            VkBuffer                buffer      = nullptr;
+            VmaAllocation           allocation  = nullptr;
+            size_t                  size        = 0;
+        };
+    
         struct ViShader {
             VkShaderModule          shader  = nullptr;
             VkShaderStageFlagBits   mask    = {};
@@ -44,7 +50,7 @@ namespace yq {
         struct ViHashPlus {
             std::unordered_map<uint64_t, T>     hash;
             std::vector<T>                      loose;  // others that aren't in the hash
-            mutable tbb::spin_rw_mutex          mutex;
+            //mutable tbb::spin_rw_mutex          mutex;
             
             void    clear()
             {
@@ -98,6 +104,7 @@ namespace yq {
             per viewer/logical vulkan device.
         *//*
             Note, if this needs to be shared, we'll make it ref-counted.
+            Also, thread-safety is to be done *outside* this class (performance)
         */
         class Visualizer  {
         public:
@@ -213,6 +220,9 @@ namespace yq {
             uint32_t                        video_encode_queue_family() const;
             bool                            video_encode_queue_valid() const;
 
+            // used if no draw function is provided
+            virtual void                    draw_vulkan(VkCommandBuffer){}
+
         protected:
             Visualizer();
             ~Visualizer();
@@ -224,17 +234,20 @@ namespace yq {
             std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
             void                        _dtor();
         
-            std::error_code             _create(ViShader&, const Shader&);
-            void                        _destroy(ViShader&);
+            std::error_code             _create(ViBuffer&, VkBufferUsageFlags, const void*, size_t);
+            void                        _destroy(ViBuffer&);
         
+            std::error_code             _create(ViFrame&);
+            void                        _destroy(ViFrame&);
+
             std::error_code             _create(ViPipeline&, const PipelineConfig&);
             void                        _destroy(ViPipeline&);
+
+            std::error_code             _create(ViShader&, const Shader&);
+            void                        _destroy(ViShader&);
             
             std::error_code             _create(ViSwapchain&);
             void                        _destroy(ViSwapchain&);
-            
-            std::error_code             _create(ViFrame&);
-            void                        _destroy(ViFrame&);
             
             std::error_code             _create(ViThread&);
             void                        _destroy(ViThread&);
@@ -250,6 +263,7 @@ namespace yq {
         
             VmaAllocator                        m_allocator             = nullptr;
             VqApp*                              m_app                   = nullptr;
+            ViHashPlus<ViBuffer>                m_buffers;
             Guarded<VkClearValue>               m_clearValue;
             VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
             ViQueues                            m_compute;

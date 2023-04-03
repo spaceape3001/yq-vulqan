@@ -8,7 +8,7 @@
 
 #include <basic/meta/Meta.hpp>
 #include <engine/preamble.hpp>
-#include <tachyon/render/PipelineConfig.hpp>
+#include <tachyon/gfx/PipelineConfig.hpp>
 
 namespace yq {
     template <size_t> class BasicBuffer;

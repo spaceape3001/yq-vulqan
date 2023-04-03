@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include <tachyon/gfx/PipelineConfig.hpp>
+#include <tachyon/gfx/Shader.hpp>
+
+namespace yq {
+    namespace tachyon {
+        PipelineConfig::PipelineConfig() = default;
+        PipelineConfig::~PipelineConfig() = default;
+    }
+}

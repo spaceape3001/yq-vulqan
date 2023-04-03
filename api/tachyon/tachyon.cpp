@@ -9,17 +9,20 @@
     are our C++ adapters for it.
 */
 
-#include "render/PipelineUtils.ipp"
-#include "render/PipelineBuilder.ipp"
-#include "render/PipelineConfig.ipp"
+#include "gfx/Buffer.ipp"
+#include "gfx/PipelineUtils.ipp"
+#include "gfx/PipelineBuilder.ipp"
+#include "gfx/PipelineConfig.ipp"
 
 #include "gpu/Visualizer.ipp"
 
 #include "Asset.ipp"
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
-#include "Shader.ipp"
-#include "Texture.ipp"
+
+#include "gfx/GLSLShader.ipp"
+#include "gfx/Shader.ipp"
+#include "gfx/Texture.ipp"
 
 #include "gpu/ViQueues.ipp"
 #include "gpu/VqApp.ipp"
@@ -34,7 +37,6 @@
 #include "host/VideoMode.ipp"
 #include "host/Window.ipp"
 
-#include "io/GLSLShader.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>

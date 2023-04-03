@@ -12,7 +12,8 @@
 #include <math/color/RGBA.hpp>
 //#include <tachyon/errors.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/Shader.hpp>
+#include <tachyon/gfx/Buffer.hpp>
+#include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 
@@ -374,8 +375,12 @@ namespace yq {
                 _destroy(psh);
             m_shaders.clear();
             
-        
             if(m_allocator){
+                for(auto& b : m_buffers.hash)
+                    _destroy(b.second);
+                for(auto& b : m_buffers.loose)
+                    _destroy(b);
+                m_buffers.clear();
                 vmaDestroyAllocator(m_allocator);
                 m_allocator = nullptr;
             }
@@ -428,6 +433,34 @@ namespace yq {
 
         ////////////////////////////////////////////////////////////////////////////////
         //  SUB CREATE/DESTROY
+
+        std::error_code             Visualizer::_create(ViBuffer&p, VkBufferUsageFlags uf, const void*data, size_t sz)
+        {
+            VqBufferCreateInfo  bufferInfo;
+            bufferInfo.size         = p.size = sz;
+            bufferInfo.usage        = uf;
+            
+            VmaAllocationCreateInfo vmaallocInfo = {};
+            vmaallocInfo.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
+            VmaAllocationInfo   vai;
+            if(vmaCreateBuffer(m_allocator, &bufferInfo, &vmaallocInfo, &p.buffer, &p.allocation, &vai) != VK_SUCCESS)
+                return create_error<"Cannot allocate buffer!">();
+            
+            void* dst = nullptr;
+            vmaMapMemory(m_allocator, p.allocation, &dst);
+            memcpy(dst, data, sz);
+            vmaUnmapMemory(m_allocator, p.allocation);            
+            return std::error_code();
+        }
+        
+        void                        Visualizer::_destroy(ViBuffer&p)
+        {
+            if(p.allocation){
+                vmaDestroyBuffer(m_allocator, p.buffer, p.allocation);
+                p.allocation = nullptr;
+                p.buffer = nullptr;
+            }
+        }
 
         std::error_code             Visualizer::_create(ViFrame&p)
         {
@@ -483,11 +516,9 @@ namespace yq {
         }
 
 
-        #if 0
         std::error_code          Visualizer::_create(ViPipeline&p, const PipelineConfig&cfg)
         {
             try {
-
                 std::vector<VkPipelineShaderStageCreateInfo>    stages;
                 p.shaders           = 0;
                 for(auto& s : cfg.shaders){
@@ -542,14 +573,14 @@ namespace yq {
                         if(u.stage)
                             a.stageFlags    = u.stage;
                         else
-                            a.stageFlags    = m_shaderMask;
+                            a.stageFlags    = p.shaders;
                         ubos.push_back(a);
                     }
                     
                     VqDescriptorSetLayoutCreateInfo layoutInfo;
                     layoutInfo.bindingCount = ubos.size();
                     layoutInfo.pBindings    = ubos.data();
-                    if(vkCreateDescriptorSetLayout(m_device, &layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
+                    if(vkCreateDescriptorSetLayout(m_device, &layoutInfo, nullptr, &p.descriptors) != VK_SUCCESS)
                         throw create_error<"Unable to create a descriptor set layout">();
                 }
                     
@@ -562,9 +593,9 @@ namespace yq {
                 inputAssembly.topology                  = (VkPrimitiveTopology) cfg.topology.value();
                 inputAssembly.primitiveRestartEnable    = VK_FALSE;
                 
-                VkViewport viewport = viz.m_swapchain->def_viewport();
+                VkViewport viewport = m_swapchain.def_viewport();
 
-                VkRect2D scissor = viz.m_swapchain->def_scissor();
+                VkRect2D scissor = m_swapchain.def_scissor();
                 
                 VqPipelineViewportStateCreateInfo   viewportState{};
                 viewportState.viewportCount = 1;
@@ -612,14 +643,13 @@ namespace yq {
                 colorBlending.blendConstants[2] = 0.0f; // Optional
                 colorBlending.blendConstants[3] = 0.0f; // Optional
                 
-
                 VkPushConstantRange push{};
                 if(cfg.push.type != PushConfigType::None){
                     push.offset     = 0;
                     switch(cfg.push.type){
                     case PushConfigType::Full:
                     case PushConfigType::View:
-                        push.size   = sizeof(tachyon::StdPushData);
+                        push.size   = sizeof(StdPushData);
                         break;
                     case PushConfigType::Custom:
                         push.size   = cfg.push.size;
@@ -636,58 +666,57 @@ namespace yq {
                     if(cfg.push.shaders)
                         push.stageFlags = cfg.push.shaders;
                     else
-                        push.stageFlags = m_shaderMask;
+                        push.stageFlags = p.shaders;
                     pipelineLayoutInfo.pushConstantRangeCount = 1;
                     pipelineLayoutInfo.pPushConstantRanges = &push;
                 } else {
                     pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
                     pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
                 }
-                if(m_descriptorSetLayout){
+                if(p.descriptors){
                     pipelineLayoutInfo.setLayoutCount   = 1;
-                    pipelineLayoutInfo.pSetLayouts      = &m_descriptorSetLayout;
+                    pipelineLayoutInfo.pSetLayouts      = &p.descriptors;
                 }
 
-
-                if (vkCreatePipelineLayout(m_device, &pipelineLayoutInfo, nullptr, &m_layout) != VK_SUCCESS) 
-                    throw VqException("Failed to create pipeline layout!");
+                if (vkCreatePipelineLayout(m_device, &pipelineLayoutInfo, nullptr, &p.layout) != VK_SUCCESS) 
+                    throw create_error<"Failed to create pipeline layout">();
 
                 VqGraphicsPipelineCreateInfo pipelineInfo;
                 pipelineInfo.stageCount     = stages.size();
                 if(pipelineInfo.stageCount)
                    pipelineInfo.pStages     = stages.data();
                 
-                pipelineInfo.pVertexInputState = &vertexInfo;
-                pipelineInfo.pInputAssemblyState = &inputAssembly;
-                pipelineInfo.pViewportState = &viewportState;
-                pipelineInfo.pRasterizationState = &rasterizer;
-                pipelineInfo.pMultisampleState = &multisampling;
-                pipelineInfo.pDepthStencilState = nullptr; // Optional
-                pipelineInfo.pColorBlendState = &colorBlending;
-                pipelineInfo.pDynamicState = nullptr; // Optional   
-                pipelineInfo.layout = m_layout;
-                pipelineInfo.renderPass = viz.m_renderPass;
-                pipelineInfo.subpass = 0;             
-                pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optional
-                pipelineInfo.basePipelineIndex = -1; // Optional        
+                pipelineInfo.pVertexInputState      = &vertexInfo;
+                pipelineInfo.pInputAssemblyState    = &inputAssembly;
+                pipelineInfo.pViewportState         = &viewportState;
+                pipelineInfo.pRasterizationState    = &rasterizer;
+                pipelineInfo.pMultisampleState      = &multisampling;
+                pipelineInfo.pDepthStencilState     = nullptr; // Optional
+                pipelineInfo.pColorBlendState       = &colorBlending;
+                pipelineInfo.pDynamicState          = nullptr; // Optional   
+                pipelineInfo.layout                 = p.layout;
+                pipelineInfo.renderPass             = m_renderPass;
+                pipelineInfo.subpass                = 0;             
+                pipelineInfo.basePipelineHandle     = VK_NULL_HANDLE; // Optional
+                pipelineInfo.basePipelineIndex      = -1; // Optional        
                 
                 if(cfg.polymode == PolygonMode::Fill)
                     pipelineInfo.flags  = VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT;
-                if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_pipeline) != VK_SUCCESS) 
-                    throw VqException("Failed to create graphics pipeline!");
+                if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &p.pipeline) != VK_SUCCESS) 
+                    throw create_error<"Failed to create graphics pipeline!">();
                 
                     // if it's a fill polygon (typical), create a derivative wireframe pipeline
                 if(cfg.polymode == PolygonMode::Fill){
                     pipelineInfo.flags  = VK_PIPELINE_CREATE_DERIVATIVE_BIT;
-                    pipelineInfo.basePipelineHandle = m_pipeline;
+                    pipelineInfo.basePipelineHandle = p.pipeline;
                     pipelineInfo.basePipelineIndex  = -1;
                     rasterizer.polygonMode  = VK_POLYGON_MODE_LINE;
                     
-                    if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_wireframe) != VK_SUCCESS)
-                        throw VqException("Failed to create wireframe pipeline!");
+                    if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &p.wireframe) != VK_SUCCESS)
+                        throw create_error<"Failed to create wireframe pipeline!">();
                 }
 
-                return p;
+                return std::error_code();
             }
             catch(std::error_code ec)
             {
@@ -696,7 +725,6 @@ namespace yq {
             }
                 
         }
-        #endif
         
         void                        Visualizer::_destroy(ViPipeline&p)
         {
@@ -1207,7 +1235,7 @@ namespace yq {
 
         ViShader    Visualizer::shader(uint64_t i) const
         {
-            tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
+            //tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
             auto j = m_shaders.hash.find(i);
             if(j != m_shaders.hash.end())
                 return j->second;
@@ -1220,7 +1248,7 @@ namespace yq {
                 return errors::null_pointer();
                 
             {
-                tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
+                //tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
                 auto j = m_shaders.hash.find(sh->id());
                 if(j != m_shaders.hash.end())
                     return j->second;
@@ -1234,7 +1262,7 @@ namespace yq {
             ViShader    ret;
             
             {
-                tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, true);
+                //tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, true);
                 auto [ j, f]    = m_shaders.hash.emplace(sh->id(), p);
                 if(f) [[likely]]
                     return p;
@@ -1295,7 +1323,7 @@ namespace yq {
                 } else if(m_draw){
                     m_draw(cmd);
                 } else
-                    ret = create_error<"No draw function in visualizer">();
+                    draw_vulkan(cmd);
             }
             catch(std::error_code ec) {
                 ret = ec;

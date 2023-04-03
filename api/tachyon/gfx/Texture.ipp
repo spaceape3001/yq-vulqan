@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/Texture.hpp>
+#include <tachyon/gfx/Texture.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/AssetInfoWriter.hpp>
 

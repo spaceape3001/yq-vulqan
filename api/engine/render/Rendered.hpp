@@ -9,7 +9,7 @@
 #include <basic/MetaObject.hpp>
 #include <basic/Revision.hpp>
 #include <engine/preamble.hpp>
-#include <tachyon/render/PipelineConfig.hpp>
+#include <tachyon/gfx/PipelineConfig.hpp>
 #include <tachyon/enum/Tristate.hpp>
 
 namespace yq {

@@ -34,9 +34,8 @@ namespace yq {
         class   AssetCache;
         class   AssetInfo;
         class   AssetFactory;
+        class   Buffer;
 
-        template <typename> class TypedAssetFactory;
-        template <typename> class TypedAssetLoader;
 
         class Shader;
         class Texture;
@@ -59,6 +58,8 @@ namespace yq {
         static constexpr const size_t   MAX_PUSH                = 256;
         static constexpr const size_t   MAX_FRAMES_IN_FLIGHT    = 2;
         static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = 1024;
+
+        template <typename> class TypedAssetFactory;
     }
     
         // here for compatibility

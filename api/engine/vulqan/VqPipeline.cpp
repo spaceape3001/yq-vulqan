@@ -10,13 +10,13 @@
 #include <engine/Visualizer.hpp>
 #include <tachyon/gpu/VqLogging.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
-#include <tachyon/Shader.hpp>
+#include <tachyon/gfx/Shader.hpp>
 
 #include <basic/Logging.hpp>
 #include <engine/Viewer.hpp>
-#include <tachyon/render/PipelineConfig.hpp>
+#include <tachyon/gfx/PipelineConfig.hpp>
 #include <engine/render/Pipeline.hpp>
-#include <tachyon/render/PushData.hpp>
+#include <tachyon/gfx/PushData.hpp>
 #include <math/shape/Size2.hpp>
 #include <math/shape/Rectangle2.hpp>
 

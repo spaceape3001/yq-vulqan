@@ -9,6 +9,10 @@
     are our C++ adapters for it.
 */
 
+#include "render/PipelineUtils.ipp"
+#include "render/PipelineBuilder.ipp"
+#include "render/PipelineConfig.ipp"
+
 #include "gpu/Visualizer.ipp"
 
 #include "Asset.ipp"

@@ -26,11 +26,11 @@
 
 #include <engine/render/IndexBufferObjectInfo.hpp>
 #include <engine/render/Pipeline.hpp>
-#include <engine/render/PipelineConfig.hpp>
+#include <tachyon/render/PipelineConfig.hpp>
 #include <engine/render/PushBufferObjectInfo.hpp>
 #include <engine/render/Rendered.hpp>
 #include <engine/render/Render3D.hpp>
-#include <engine/render/StdPushConstant.hpp>
+#include <tachyon/render/PushData.hpp>
 #include <engine/render/UniformBufferObjectInfo.hpp>
 #include <engine/render/VertexBufferObjectInfo.hpp>
 
@@ -323,7 +323,7 @@ namespace yq {
             glm::dmat4          cam_matrix = pr.camera->world2screen(cparams);
             
             VkPipeline          prev_pipeline   = nullptr;
-            StdPushConstant     stdPush;
+            tachyon::StdPushData     stdPush;
             
             for(const Rendered* r : scene.things){
                 const Pipeline* pipe    = r->pipeline();
@@ -361,17 +361,17 @@ namespace yq {
                 //      PUSH THE CONSTANTS
 
                 switch(pipe->push_type()){
-                case PushConfigType::Full:
+                case tachyon::PushConfigType::Full:
                     if(r3){
                         stdPush.matrix  = cam_matrix * r3->model2world();
                         vkCmdPushConstants(buf, vklay, shader_mask, 0, sizeof(stdPush), &stdPush );
                     }
                     break;
-                case PushConfigType::View:
+                case tachyon::PushConfigType::View:
                     stdPush.matrix  = cam_matrix;
                     vkCmdPushConstants(buf, vklay, shader_mask, 0, sizeof(stdPush), &stdPush );
                     break;
-                case PushConfigType::Custom:
+                case tachyon::PushConfigType::Custom:
                     {
                         const PushBufferObjectInfo* pbo = pipe->push_buffer();
                         if(pbo){
@@ -381,7 +381,7 @@ namespace yq {
                         }
                     }
                     break;
-                case PushConfigType::None:
+                case tachyon::PushConfigType::None:
                 default:
                     // no push constant desired... which is fine.
                     break;

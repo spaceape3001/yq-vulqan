@@ -32,7 +32,7 @@ namespace yq {
             
             p.common_index(kIndices, "index"sv);
             
-            p.push(yq::engine::PushConfigType::Full);
+            p.push(yq::tachyon::PushConfigType::Full);
         }
 
         Tetrahedron::Tetrahedron(const TetrahedronData<ColorVertex3D>&tri)

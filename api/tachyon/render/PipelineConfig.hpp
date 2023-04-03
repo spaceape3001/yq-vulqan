@@ -14,14 +14,14 @@
 #include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/FrontFace.hpp>
 #include <tachyon/enum/PolygonMode.hpp>
+#include <tachyon/enum/PushConfigType.hpp>
 #include <tachyon/enum/Topology.hpp>
 #include <tachyon/enum/VertexInputRate.hpp>
 
 namespace yq {
-    namespace engine {
-
+    namespace tachyon {
         struct VBOAttr {
-            tachyon::DataFormat      format;
+            DataFormat      format;
             uint32_t        location    = UINT32_MAX;
             uint32_t        offset      = 0;
         };
@@ -30,14 +30,14 @@ namespace yq {
             std::vector<VBOAttr>    attrs;
             uint32_t                stride      = 0;
             uint32_t                shaders     = 0;    //  shader mask
-            tachyon::VertexInputRate         inputRate;
+            VertexInputRate         inputRate;
         };
         
         struct UBOConfig {
             uint32_t            count   = 1;
             uint32_t            stage   = 0;
         };
-        
+
         struct PushConfig {
             size_t          size    = 0;
             PushConfigType  type    = PushConfigType::None;
@@ -48,10 +48,10 @@ namespace yq {
             std::vector<ShaderSpec>     shaders;
             std::vector<VBOConfig>      vbos;
             std::vector<UBOConfig>      ubos;
-            tachyon::Topology                    topology    = tachyon::Topology::TriangleList;
-            tachyon::PolygonMode                 polymode    = tachyon::PolygonMode::Fill;
-            tachyon::FrontFace                   front       = tachyon::FrontFace::CounterClockwise;
-            tachyon::CullMode                    culling     = tachyon::CullMode::Back;
+            Topology                    topology    = Topology::TriangleList;
+            PolygonMode                 polymode    = PolygonMode::Fill;
+            FrontFace                   front       = FrontFace::CounterClockwise;
+            CullMode                    culling     = CullMode::Back;
             PushConfig                  push        = {};
             
             PipelineConfig();

@@ -6,10 +6,15 @@
 
 #pragma once
 
-#include <glm/glm.hpp>
+#include <cstdint>
 
 namespace yq {
-    struct StdPushConstant {
-        glm::mat4       matrix; // either full or render... depending on enumeration
-    };
+    namespace tachyon {
+        enum PushConfigType : uint8_t {
+            None        = 0,
+            Full,
+            View,
+            Custom
+        };
+    }
 }

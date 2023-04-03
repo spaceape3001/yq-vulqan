@@ -33,7 +33,7 @@ namespace yq {
             
             p.common_index(kIndices, "index"sv);
             
-            p.push(yq::engine::PushConfigType::Full);
+            p.push(yq::tachyon::PushConfigType::Full);
         }
 
         Quadrilateral::Quadrilateral(const QuadrilateralData<ColorVertex2D>&tri)

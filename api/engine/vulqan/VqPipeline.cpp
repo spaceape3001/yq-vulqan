@@ -14,9 +14,9 @@
 
 #include <basic/Logging.hpp>
 #include <engine/Viewer.hpp>
-#include <engine/render/PipelineConfig.hpp>
+#include <tachyon/render/PipelineConfig.hpp>
 #include <engine/render/Pipeline.hpp>
-#include <engine/render/StdPushConstant.hpp>
+#include <tachyon/render/PushData.hpp>
 #include <math/shape/Size2.hpp>
 #include <math/shape/Rectangle2.hpp>
 
@@ -173,7 +173,7 @@ namespace yq {
                     switch(cfg.push.type){
                     case PushConfigType::Full:
                     case PushConfigType::View:
-                        push.size   = sizeof(StdPushConstant);
+                        push.size   = sizeof(tachyon::StdPushData);
                         break;
                     case PushConfigType::Custom:
                         push.size   = cfg.push.size;

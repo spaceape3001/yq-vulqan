@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PipelineConfig.hpp"
+#include <tachyon/render/PipelineConfig.hpp>
 #include <tachyon/Shader.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         PipelineConfig::PipelineConfig() = default;
         PipelineConfig::~PipelineConfig() = default;
     }

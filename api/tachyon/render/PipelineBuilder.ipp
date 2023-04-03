@@ -4,16 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PipelineBuilder.hpp"
-#include "StdPushConstant.hpp"
-
 #include <basic/meta/Init.hpp>
 #include <basic/meta/TypeInfo.hpp>
 #include <tachyon/Shader.hpp>
+#include <tachyon/render/PushData.hpp>
+#include <tachyon/render/PipelineBuilder.hpp>
 
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
 
         PipelineBuilder::~PipelineBuilder() = default;
 
@@ -31,12 +30,12 @@ namespace yq {
         {
         }
 
-        void    PipelineBuilder::culling(tachyon::CullMode v)
+        void    PipelineBuilder::culling(CullMode v)
         {
             m_config->culling    = v;
         }
         
-        void    PipelineBuilder::front(tachyon::FrontFace v)
+        void    PipelineBuilder::front(FrontFace v)
         {
             m_config->front = v;
         }
@@ -65,7 +64,7 @@ namespace yq {
             return loc;
         }
         
-        void    PipelineBuilder::polygons(tachyon::PolygonMode v)
+        void    PipelineBuilder::polygons(PolygonMode v)
         {
             m_config->polymode   = v;
         }
@@ -77,7 +76,7 @@ namespace yq {
             case PushConfigType::Full:
             case PushConfigType::View:
                 m_config->push.type  = v;
-                m_config->push.size  = sizeof(StdPushConstant);
+                m_config->push.size  = sizeof(StdPushData);
                 break;
             default:
                 break;
@@ -96,7 +95,7 @@ namespace yq {
         }
         
             
-        void    PipelineBuilder::topology(tachyon::Topology v)
+        void    PipelineBuilder::topology(Topology v)
         {
             m_config->topology = v;
         }

@@ -45,7 +45,9 @@ namespace yq {
 
         struct  Joystick;
         class   Monitor;
-        struct  ResultCC;
+        class   Pipeline;
+        class   PipelineBuilder;
+        struct  PipelineConfig;
         struct  VideoMode;
         class   Visualizer;
         class   Viewer;
@@ -63,7 +65,8 @@ namespace yq {
         using tachyon::AssetCache;
         using tachyon::AssetInfo;
         using tachyon::Monitor;
-        using tachyon::ResultCC;
+        using tachyon::PipelineBuilder;
+        using tachyon::PipelineConfig;
         using tachyon::ViewerCreateInfo;
         using tachyon::VqApp;
         using tachyon::VqException;

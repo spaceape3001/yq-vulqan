@@ -7,25 +7,26 @@
 #pragma once
 
 #include <basic/meta/InfoBinder.hpp>
-#include <engine/preamble.hpp>
-#include <span>
+#include <tachyon/preamble.hpp>
+#include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/IndexType.hpp>
+#include <span>
 
 namespace yq {
     
-    namespace engine {
+    namespace tachyon {
         struct DataFormatData {
             unsigned int        type_id     = 0;    //!< Meta type ID
             unsigned int        bindings    = 1;    //!< Number of bindings to be used
-            tachyon::DataFormat format;             //!< Data format
-            tachyon::IndexType  index;
+            DataFormat          format;             //!< Data format
+            IndexType           index;
         };
         
         std::span<const DataFormatData>   data_format_data();
 
-        tachyon::DataFormat      data_format(const TypeInfo&);
+        DataFormat      data_format(const TypeInfo&);
         template <typename T>
-        tachyon::DataFormat      data_format()
+        DataFormat      data_format()
         {
             return data_format(meta<T>());
         }
@@ -46,14 +47,12 @@ namespace yq {
             return data_binding(meta<T>());
         }
         
-        tachyon::IndexType       index_type(const TypeInfo&);
+        IndexType       index_type(const TypeInfo&);
         
         template <typename T>
-        tachyon::IndexType       index_type()
+        IndexType       index_type()
         {
             return index_type(meta<T>());
         }
-        
-        
     }
 }

@@ -8,7 +8,7 @@
 
 #include <basic/meta/Meta.hpp>
 #include <engine/preamble.hpp>
-#include <engine/render/PipelineConfig.hpp>
+#include <tachyon/render/PipelineConfig.hpp>
 
 namespace yq {
     template <size_t> class BasicBuffer;
@@ -47,8 +47,8 @@ namespace yq {
         
             const RenderedInfo*     rendered() const { return m_rendered; }
             
-            bool                    has_push() const { return m_config.push.type != PushConfigType::None; }
-            PushConfigType          push_type() const { return m_config.push.type; }
+            bool                    has_push() const { return m_config.push.type != tachyon::PushConfigType::None; }
+            tachyon::PushConfigType          push_type() const { return m_config.push.type; }
             //virtual void            get_push(const Rendered*, BasicBuffer<MAX_PUSH>&) const {}
             
             const PipelineConfig&   config() const { return m_config; }

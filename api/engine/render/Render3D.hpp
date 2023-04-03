@@ -11,7 +11,7 @@
 #include <basic/Mutable.hpp>
 #include <basic/Ref.hpp>
 #include <basic/meta/ObjectInfo.hpp>
-#include <engine/render/PipelineConfig.hpp>
+#include <tachyon/render/PipelineConfig.hpp>
 #include <engine/render/Rendered.hpp>
 #include <math/SimpleSpace.hpp>
 #include <math/shape/AxBox3.hpp>

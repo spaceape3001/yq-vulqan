@@ -28,7 +28,7 @@ namespace yq {
                 .attribute(&ColorVertexData::color)
             ;
             
-            p.push(yq::engine::PushConfigType::Full);
+            p.push(yq::tachyon::PushConfigType::Full);
         }
 
         Triangle::Triangle(const TriangleData<ColorVertex2D>&tri)

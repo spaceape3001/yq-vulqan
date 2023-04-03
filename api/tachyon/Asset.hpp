@@ -40,7 +40,13 @@ namespace yq {
         /*! \brief An asset of the graphics engine
         
             An asset (here) is something that can be loaded by the engine, and used in some predefined fashion.  
-            (ie, texture, shader, sounds, etc)  Which is why the asset-library also exists, predefined cameras & shapes
+            (ie, texture, shader, sounds, etc)  
+            
+            \note Some overlap with  the asset-library also exists, predefined cameras & shapes -- TBD
+            
+            \note Once an asset has been sent to the rest of the system, it's presumed to be READ-ONLY.  
+                Any further modifications shall require a clone and modifications of THAT
+            
         */
         class Asset : public Object, public UniqueID, public RefCount {
             YQ_OBJECT_INFO(AssetInfo)

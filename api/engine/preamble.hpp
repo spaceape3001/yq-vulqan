@@ -15,7 +15,6 @@
 #include <variant>
 
 #include <tachyon/preamble.hpp>
-#include <engine/enum/PushConfigType.hpp>
 
 namespace yq {
     namespace engine {

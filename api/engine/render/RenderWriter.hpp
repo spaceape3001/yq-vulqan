@@ -11,9 +11,9 @@
 #include <engine/render/Render3D.hpp>
 #include <engine/render/Rendered.hpp>
 #include <engine/render/Pipeline.hpp>
-#include <engine/render/PipelineBuilder.hpp>
-#include <engine/render/PipelineConfig.hpp>
-#include <engine/render/PipelineUtils.hpp>
+#include <tachyon/render/PipelineBuilder.hpp>
+#include <tachyon/render/PipelineConfig.hpp>
+#include <tachyon/render/PipelineUtils.hpp>
 #include <engine/render/UniformBufferObjectInfo.hpp>
 #include <engine/render/VertexBufferObjectInfo.hpp>
 #include <basic/Mutable.hpp>
@@ -393,7 +393,7 @@ namespace yq {
             void        index(IndexBufferObjectInfo* buffer, tachyon::DataActivity::enum_t act, uint32_t)
             {
                 buffer -> set_data_activity(act);
-                buffer -> set_index_type(index_type<T>());
+                buffer -> set_index_type(tachyon::index_type<T>());
             }
 
             template <typename T>

@@ -10,10 +10,10 @@
 #include <basic/trait/not_moveable.hpp>
 #include <vulkan/vulkan_core.h>
 #include <tachyon/enum/DataActivity.hpp>
+#include <tachyon/preamble.hpp>
 
 namespace yq {
     namespace engine {
-        struct PipelineConfig;
         struct Visualizer;
         class Pipeline;
         class VqBuffer;

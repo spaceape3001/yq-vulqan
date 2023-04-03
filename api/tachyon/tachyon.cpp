@@ -10,9 +10,6 @@
 */
 
 #include "Buffer.ipp"
-#include "gfx/PipelineUtils.ipp"
-#include "gfx/PipelineBuilder.ipp"
-#include "gfx/PipelineConfig.ipp"
 
 #include "gpu/Visualizer.ipp"
 
@@ -21,6 +18,10 @@
 #include "AssetFactory.ipp"
 
 #include "gfx/GLSLShader.ipp"
+#include "gfx/Pipeline.ipp"
+#include "gfx/PipelineUtils.ipp"
+#include "gfx/PipelineBuilder.ipp"
+#include "gfx/PipelineConfig.ipp"
 #include "gfx/Shader.ipp"
 #include "gfx/Texture.ipp"
 

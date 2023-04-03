@@ -13,6 +13,7 @@
 //#include <tachyon/errors.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/Buffer.hpp>
+#include <tachyon/gfx/PushData.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
@@ -1268,9 +1269,8 @@ namespace yq {
             if(!v)
                 return s_null;
             auto [j,f]  = m_pipelines.try_emplace(v->id(), s_null);
-            
-            //  TODO
-            
+            if(!f)
+                _create(j->second, v->config());
             return j->second;
         }
 

@@ -39,7 +39,7 @@ namespace yq {
                         continue;
                     
                     const auto&  xvs  = viz.create(sh);
-                    if(xvs.shader)
+                    if(!xvs.shader)
                         continue;
                     
                     VqPipelineShaderStageCreateInfo stage;

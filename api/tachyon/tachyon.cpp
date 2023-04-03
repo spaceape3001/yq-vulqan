@@ -9,7 +9,7 @@
     are our C++ adapters for it.
 */
 
-#include "gfx/Buffer.ipp"
+#include "Buffer.ipp"
 #include "gfx/PipelineUtils.ipp"
 #include "gfx/PipelineBuilder.ipp"
 #include "gfx/PipelineConfig.ipp"

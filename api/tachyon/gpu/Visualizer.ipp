@@ -12,7 +12,8 @@
 #include <math/color/RGBA.hpp>
 //#include <tachyon/errors.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/gfx/Buffer.hpp>
+#include <tachyon/Buffer.hpp>
+#include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
@@ -368,18 +369,18 @@ namespace yq {
             
             _destroy(m_thread);
         
+            for(auto& p : m_pipelines)
+                _destroy(p.second);
+            m_pipelines.clear();
+        
             //  At *this* point, we don't need the mutex... we're dying anyways
-            for(auto& psh : m_shaders.hash)
+            for(auto& psh : m_shaders)
                 _destroy(psh.second);
-            for(auto& psh : m_shaders.loose)
-                _destroy(psh);
             m_shaders.clear();
             
             if(m_allocator){
-                for(auto& b : m_buffers.hash)
+                for(auto& b : m_buffers)
                     _destroy(b.second);
-                for(auto& b : m_buffers.loose)
-                    _destroy(b);
                 m_buffers.clear();
                 vmaDestroyAllocator(m_allocator);
                 m_allocator = nullptr;
@@ -526,17 +527,17 @@ namespace yq {
                     if(!sh)
                         continue;
                     
-                    auto  xvs       = shader_create(sh);
-                    if(!xvs)
+                    const auto&  xvs       = create(sh);
+                    if(!xvs.shader)
                         continue;
                     
                     VqPipelineShaderStageCreateInfo stage;
-                    stage.stage     = xvs->mask;
+                    stage.stage     = xvs.mask;
                     stage.pName     = "main";
-                    stage.module    = xvs->shader;
+                    stage.module    = xvs.shader;
                     stages.push_back(stage);
 
-                    p.shaders |= xvs->mask;
+                    p.shaders      |= xvs.mask;
                 }
             
                 VqPipelineVertexInputStateCreateInfo    vertexInfo;
@@ -982,6 +983,15 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
         //  GETTERS/INFORMATION
 
+        const ViBuffer& Visualizer::buffer(uint64_t i) const
+        {
+            static const ViBuffer s_null;
+            auto j = m_buffers.find(i);
+            if(j != m_buffers.end())
+                return j->second;
+            return s_null;
+        }
+
         RGBA4F Visualizer::clear_color() const
         {
             VkClearValue    cv  = m_clearValue;
@@ -1083,6 +1093,15 @@ namespace yq {
             return m_deviceInfo.limits.maxViewports; 
         }
 
+        const ViPipeline& Visualizer::pipeline(uint64_t i) const
+        {
+            static const ViPipeline s_null;
+            auto j = m_pipelines.find(i);
+            if(j != m_pipelines.end())
+                return j->second;
+            return s_null;
+        }
+
         VkQueue      Visualizer::present_queue(uint32_t i) const
         {
             return m_present[i];
@@ -1106,6 +1125,15 @@ namespace yq {
         VkRenderPass Visualizer::render_pass() const
         {
             return m_renderPass;
+        }
+
+        const ViShader& Visualizer::shader(uint64_t i) const
+        {
+            static const ViShader   s_null;
+            auto j=m_shaders.find(i);
+            if(j != m_shaders.end())
+                return j->second;
+            return s_null;
         }
 
         bool        Visualizer::supports_surface(VkFormat fmt) const
@@ -1210,6 +1238,42 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
         //  SETTERS/MANIPULATORS
 
+        const ViBuffer&    Visualizer::create(Ref<const Buffer> v)
+        {
+            static const ViBuffer s_null;
+            if(!v)
+                return s_null;
+      
+            auto [j,f]  = m_buffers.try_emplace(v->id(), s_null);
+            if(!f)
+                _create(j->second, v->usage(), v->data(), v->bytes());
+            return j->second;
+        }
+        
+        const ViShader&    Visualizer::create(Ref<const Shader> v)
+        {
+            static const ViShader    s_null;
+            if(!v)
+                return s_null;
+                
+            auto [j,f]  = m_shaders.try_emplace(v->id(), s_null);
+            if(!f)
+                _create(j->second, *v);
+            return j->second;
+        }
+        
+        const ViPipeline&  Visualizer::create(Ref<const Pipeline> v)
+        {
+            static ViPipeline   s_null;
+            if(!v)
+                return s_null;
+            auto [j,f]  = m_pipelines.try_emplace(v->id(), s_null);
+            
+            //  TODO
+            
+            return j->second;
+        }
+
         bool        Visualizer::rebuild(bool force)
         {
             if(force){
@@ -1232,49 +1296,7 @@ namespace yq {
         {
             m_draw      = fn;
         }
-
-        ViShader    Visualizer::shader(uint64_t i) const
-        {
-            //tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
-            auto j = m_shaders.hash.find(i);
-            if(j != m_shaders.hash.end())
-                return j->second;
-            return ViShader();
-        }
         
-        Expect<ViShader>    Visualizer::shader_create(Ref<const Shader> sh)
-        {
-            if(!sh)
-                return errors::null_pointer();
-                
-            {
-                //tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, false);
-                auto j = m_shaders.hash.find(sh->id());
-                if(j != m_shaders.hash.end())
-                    return j->second;
-            }
-            
-            ViShader    p;
-            std::error_code ec = _create(p, *sh);
-            if(ec)
-                return unexpected(ec);
-            
-            ViShader    ret;
-            
-            {
-                //tbb::spin_rw_mutex::scoped_lock _lock(m_shaders.mutex, true);
-                auto [ j, f]    = m_shaders.hash.emplace(sh->id(), p);
-                if(f) [[likely]]
-                    return p;
-
-                //  collision
-                ret = j->second;
-            }
-
-            _destroy(p);
-            return ret;
-        }
-
         void        Visualizer::set_clear_color(const RGBA4F&i)
         {
             m_clearValue = VkClearValue{{{ i.red, i.green, i.blue, i.alpha }}};

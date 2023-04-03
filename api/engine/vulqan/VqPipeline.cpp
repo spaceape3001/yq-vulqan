@@ -38,17 +38,17 @@ namespace yq {
                     if(!sh)
                         continue;
                     
-                    auto  xvs  = viz.shader_create(sh);
-                    if(!xvs)
+                    const auto&  xvs  = viz.create(sh);
+                    if(xvs.shader)
                         continue;
                     
                     VqPipelineShaderStageCreateInfo stage;
-                    stage.stage     = xvs->mask;
+                    stage.stage     = xvs.mask;
                     stage.pName     = "main";
-                    stage.module    = xvs->shader;
+                    stage.module    = xvs.shader;
                     stages.push_back(stage);
 
-                    m_shaderMask |= xvs->mask;
+                    m_shaderMask |= xvs.mask;
                 }
                 
                 VqPipelineVertexInputStateCreateInfo    vertexInfo;

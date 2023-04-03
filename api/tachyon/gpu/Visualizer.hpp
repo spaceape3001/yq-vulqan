@@ -47,6 +47,10 @@ namespace yq {
         };
     
         template <typename T>
+        using ViHash    = std::unordered_map<uint64_t, T>;
+
+        #if 0
+        template <typename T>
         struct ViHashPlus {
             std::unordered_map<uint64_t, T>     hash;
             std::vector<T>                      loose;  // others that aren't in the hash
@@ -58,6 +62,7 @@ namespace yq {
                 loose.clear();
             }
         };
+        #endif
         
         struct ViSwapchain {
             VkSwapchainKHR              swapchain       = nullptr;
@@ -119,7 +124,11 @@ namespace yq {
             VkDevice                        logical() const { return m_device; }
             VkInstance                      instance() const { return m_instance; }
             VkPhysicalDevice                physical() const { return m_physical; }
-        
+
+            //! Finds the buffer
+            //! \note Reference is only good to the next create()
+            const ViBuffer&                 buffer(uint64_t) const;
+
             RGBA4F                          clear_color() const;
 
             VkCommandBuffer                 command_buffer() const;
@@ -129,6 +138,18 @@ namespace yq {
             uint32_t                        compute_queue_count() const;
             uint32_t                        compute_queue_family() const;
             bool                            compute_queue_valid() const;
+
+            //! Creates the buffer
+            //! \note Reference is only good to the next create()
+            const ViBuffer&                 create(Ref<const Buffer>);
+
+            //! Creates the shader
+            //! \note Reference is only good to the next create()
+            const ViShader&                 create(Ref<const Shader>);
+
+            //! Creates the pipeline
+            //! \note Reference is only good to the next create()
+            const ViPipeline&               create(Ref<const Pipeline>);
 
             ViFrame&                        current_frame();
             const ViFrame&                  current_frame() const;
@@ -153,6 +174,10 @@ namespace yq {
             uint32_t                        max_memory_allocation_count() const;
             uint32_t                        max_push_constants_size() const;
             uint32_t                        max_viewports() const;
+            
+            //! Finds the pipeline
+            //! \note the Reference is only good to the next create()
+            const ViPipeline&               pipeline(uint64_t) const;
             
             PresentMode                     present_mode() const { return m_presentMode; }
             
@@ -183,14 +208,10 @@ namespace yq {
             
             void                            set_present_mode(PresentMode);
 
-            ViShader                        shader(uint64_t) const;
+            //! Finds the shader
+            //! \note Reference is only good until the next create
+            const ViShader&                 shader(uint64_t) const;
             
-            /*! \brief Creates a shader
-            
-                This creates the shader
-            
-            */
-            Expect<ViShader>                shader_create(Ref<const Shader>);
 
             VkSurfaceKHR                    surface() const { return m_surface; }
 
@@ -263,7 +284,7 @@ namespace yq {
         
             VmaAllocator                        m_allocator             = nullptr;
             VqApp*                              m_app                   = nullptr;
-            ViHashPlus<ViBuffer>                m_buffers;
+            ViHash<ViBuffer>                    m_buffers;
             Guarded<VkClearValue>               m_clearValue;
             VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
             ViQueues                            m_compute;
@@ -277,12 +298,12 @@ namespace yq {
             VkInstance                          m_instance              = nullptr;
             VkPhysicalDeviceMemoryProperties    m_memoryInfo;
             VkPhysicalDevice                    m_physical              = nullptr;
-            ViHashPlus<ViPipeline>              m_pipelines;
+            ViHash<ViPipeline>                  m_pipelines;
             ViQueues                            m_present;
             PresentMode                         m_presentMode;
             std::set<PresentMode>               m_presentModes;
             VkRenderPass                        m_renderPass            = nullptr;
-            ViHashPlus<ViShader>                m_shaders;
+            ViHash<ViShader>                    m_shaders;
             VkSurfaceKHR                        m_surface               = nullptr;
             std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
             VkFormat                            m_surfaceFormat;

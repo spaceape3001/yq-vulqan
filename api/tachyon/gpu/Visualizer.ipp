@@ -436,11 +436,11 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
         //  SUB CREATE/DESTROY
 
-        std::error_code             Visualizer::_create(ViBuffer&p, VkBufferUsageFlags uf, const void*data, size_t sz)
+        std::error_code             Visualizer::_create(ViBuffer&p, const Buffer&v)
         {
             VqBufferCreateInfo  bufferInfo;
-            bufferInfo.size         = p.size = sz;
-            bufferInfo.usage        = uf;
+            bufferInfo.size         = p.size = v.bytes();
+            bufferInfo.usage        = (VkBufferViewCreateFlags) (v.usage().value() & VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM);
             
             VmaAllocationCreateInfo vmaallocInfo = {};
             vmaallocInfo.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
@@ -450,7 +450,7 @@ namespace yq {
             
             void* dst = nullptr;
             vmaMapMemory(m_allocator, p.allocation, &dst);
-            memcpy(dst, data, sz);
+            memcpy(dst, v.data(), p.size);
             vmaUnmapMemory(m_allocator, p.allocation);            
             return std::error_code();
         }
@@ -1247,7 +1247,7 @@ namespace yq {
       
             auto [j,f]  = m_buffers.try_emplace(v->id(), s_null);
             if(f)
-                _create(j->second, v->usage(), v->data(), v->bytes());
+                _create(j->second, *v);
             return j->second;
         }
         

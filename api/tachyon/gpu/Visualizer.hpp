@@ -255,7 +255,7 @@ namespace yq {
             std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
             void                        _dtor();
         
-            std::error_code             _create(ViBuffer&, VkBufferUsageFlags, const void*, size_t);
+            std::error_code             _create(ViBuffer&, const Buffer&);
             void                        _destroy(ViBuffer&);
         
             std::error_code             _create(ViFrame&);

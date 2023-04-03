@@ -15,7 +15,7 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
-#include <asset/NullCamera.hpp>
+#include <tachyon/camera/Null.hpp>
 #include <asset/Triangle.hpp>
 #include <basic/DelayInit.hpp>
 #include <basic/Logging.hpp>
@@ -164,7 +164,7 @@ struct HelloWin : public engine::Viewer {
         tri2        = new yq::asset::Triangle(TriData);
         tri2->set_position({0.,0.,0.1});
         scene.things.push_back(tri2);
-        view.camera = new NullCamera;
+        view.camera = new camera::Null;
     }
     
     ~HelloWin()

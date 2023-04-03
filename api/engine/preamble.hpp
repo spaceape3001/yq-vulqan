@@ -19,7 +19,6 @@
 namespace yq {
     namespace engine {
 
-        class Camera;
         using CameraPtr     = Ref<Camera>;
         using CameraCPtr    = Ref<const Camera>;
         

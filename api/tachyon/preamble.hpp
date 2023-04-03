@@ -72,14 +72,12 @@ namespace yq {
 
         using tachyon::AppGLFW;
         using tachyon::AppCreateInfo;
-        using tachyon::Asset;
-        using tachyon::AssetCache;
-        using tachyon::AssetInfo;
-        using tachyon::Camera;
+        //using tachyon::Asset;
+        //using tachyon::AssetCache;
+        //using tachyon::AssetInfo;
         using tachyon::Monitor;
         using tachyon::PipelineBuilder;
         using tachyon::PipelineConfig;
-        using tachyon::Shader;
         using tachyon::ShaderSpec;
         using tachyon::ViewerCreateInfo;
         using tachyon::VqApp;

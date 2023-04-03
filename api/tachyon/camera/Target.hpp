@@ -7,39 +7,40 @@
 #pragma once
 
 #include <tachyon/Camera.hpp>
-#include <basic/Mutable.hpp>
 #include <math/SimpleSpace.hpp>
 #include <math/units.hpp>
 
 namespace yq {
-    namespace asset {
-        class SpaceCamera : public Camera {
-            YQ_OBJECT_DECLARE(SpaceCamera, Camera)
+    namespace camera {
+        class Target : public Camera {
+            YQ_OBJECT_DECLARE(Target, Camera)
         public:
         
             glm::dmat4  world2screen(const Params&) const override;
-            SpaceCamera();
-            ~SpaceCamera();
+            Target();
+            ~Target();
 
             double                  far() const { return m_far; }
             Degree                  fov() const { return m_fov; }
             double                  near() const { return m_near; }
-            const Quaternion3D&     orientation() const { return m_space.orientation; }
-            const Vector3D&         position() const { return m_space.position; }
+            const Vector3D&         position() const { return m_position; }
+            const Vector3D&         target() const { return m_target; }
+            const Vector3D&         up() const { return m_up; }
 
             glm::dmat4              projection_matrix(const Size2D&) const;
-            const Vector3D&         scale() const { return m_space.scale; }
 
             void                    set_far(double);
             void                    set_near(double);
-            void                    set_orientation(const Quaternion3D&);
             void                    set_position(const Vector3D&);
-            void                    set_scale(const Vector3D&);
             void                    set_fov(Degree);
+            void                    set_target(const Vector3D&);
+            void                    set_up(const Vector3D&);
             glm::dmat4              view_matrix() const;
 
         private:
-            SimpleSpace    m_space;
+            Vector3D       m_position;
+            Vector3D       m_target;
+            Vector3D       m_up;
             Degree         m_fov;
             double         m_near;
             double         m_far;

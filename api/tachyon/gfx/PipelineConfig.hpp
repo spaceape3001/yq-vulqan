@@ -13,6 +13,7 @@
 #include <tachyon/enum/CullMode.hpp>
 #include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/FrontFace.hpp>
+#include <tachyon/enum/PipelineBinding.hpp>
 #include <tachyon/enum/PolygonMode.hpp>
 #include <tachyon/enum/PushConfigType.hpp>
 #include <tachyon/enum/Topology.hpp>
@@ -53,6 +54,7 @@ namespace yq {
             FrontFace                   front       = FrontFace::CounterClockwise;
             CullMode                    culling     = CullMode::Back;
             PushConfig                  push        = {};
+            PipelineBinding             binding     = PipelineBinding::Graphics;
             
             PipelineConfig();
             ~PipelineConfig();

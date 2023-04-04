@@ -43,6 +43,7 @@ namespace yq {
             VkPipeline              wireframe   = nullptr;
             VkDescriptorSetLayout   descriptors = nullptr;
             uint32_t                shaders     = 0;
+            VkPipelineBindPoint     binding     = VK_PIPELINE_BIND_POINT_GRAPHICS;
         };
     
         struct ViQueues {

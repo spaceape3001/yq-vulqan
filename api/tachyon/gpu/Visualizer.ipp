@@ -736,6 +736,8 @@ namespace yq {
                     if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &p.wireframe) != VK_SUCCESS)
                         throw create_error<"Failed to create wireframe pipeline!">();
                 }
+                
+                p.binding       = (VkPipelineBindPoint) cfg.binding.value();
 
                 return std::error_code();
             }

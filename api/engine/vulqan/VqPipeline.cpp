@@ -38,7 +38,7 @@ namespace yq {
                     if(!sh)
                         continue;
                     
-                    const auto&  xvs  = viz.create(sh);
+                    const auto&  xvs  = viz.create(*sh);
                     if(!xvs.shader)
                         continue;
                     

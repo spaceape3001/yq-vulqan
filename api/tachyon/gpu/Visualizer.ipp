@@ -547,7 +547,7 @@ namespace yq {
                     if(!sh)
                         continue;
                     
-                    const auto&  xvs       = create(sh);
+                    const auto&  xvs       = create(*sh);
                     if(!xvs.shader)
                         continue;
                     
@@ -1260,38 +1260,27 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
         //  SETTERS/MANIPULATORS
 
-        const ViBuffer&    Visualizer::create(Ref<const Buffer> v)
+        const ViBuffer&    Visualizer::create(const Buffer& v)
         {
-            static const ViBuffer s_null;
-            if(!v)
-                return s_null;
-      
-            auto [j,f]  = m_buffers.try_emplace(v->id(), s_null);
+            auto [j,f]  = m_buffers.try_emplace(v.id(), ViBuffer());
             if(f)
-                _create(j->second, *v);
+                _create(j->second, v);
             return j->second;
         }
         
-        const ViShader&    Visualizer::create(Ref<const Shader> v)
+        const ViShader&    Visualizer::create(const Shader& v)
         {
-            static const ViShader    s_null;
-            if(!v)
-                return s_null;
-                
-            auto [j,f]  = m_shaders.try_emplace(v->id(), s_null);
+            auto [j,f]  = m_shaders.try_emplace(v.id(), ViShader());
             if(f)
-                _create(j->second, *v);
+                _create(j->second, v);
             return j->second;
         }
         
-        const ViPipeline&  Visualizer::create(Ref<const Pipeline> v)
+        const ViPipeline&  Visualizer::create(const Pipeline& v)
         {
-            static ViPipeline   s_null;
-            if(!v)
-                return s_null;
-            auto [j,f]  = m_pipelines.try_emplace(v->id(), s_null);
+            auto [j,f]  = m_pipelines.try_emplace(v.id(), ViPipeline());
             if(f)
-                _create(j->second, v->config());
+                _create(j->second, v.config());
             return j->second;
         }
 

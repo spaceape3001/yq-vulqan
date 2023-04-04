@@ -151,15 +151,15 @@ namespace yq {
 
             //! Creates the buffer
             //! \note Reference is only good to the next create()
-            const ViBuffer&                 create(Ref<const Buffer>);
+            const ViBuffer&                 create(const Buffer&);
 
             //! Creates the shader
             //! \note Reference is only good to the next create()
-            const ViShader&                 create(Ref<const Shader>);
+            const ViShader&                 create(const Shader&);
 
             //! Creates the pipeline
             //! \note Reference is only good to the next create()
-            const ViPipeline&               create(Ref<const Pipeline>);
+            const ViPipeline&               create(const Pipeline&);
 
             ViFrame&                        current_frame();
             const ViFrame&                  current_frame() const;

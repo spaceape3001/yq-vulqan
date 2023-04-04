@@ -10,8 +10,8 @@
 
 #include <basic/Logging.hpp>
 #include <io/PluginLoader.hpp>
-#include <basic/meta/Meta.hpp>
-#include <basic/meta/ObjectInfoWriter.hpp>
+#include <meta/Meta.hpp>
+#include <meta/ObjectInfoWriter.hpp>
 #include <engine/Application.hpp>
 #include <engine/Viewer.hpp>
 #include <tachyon/ui/Widget.hpp>

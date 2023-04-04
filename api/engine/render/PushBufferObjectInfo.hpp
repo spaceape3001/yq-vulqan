@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <basic/meta/Meta.hpp>
+#include <meta/Meta.hpp>
 #include "BufferObjectInfo.hpp"
 
 namespace yq {

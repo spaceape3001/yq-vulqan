@@ -20,7 +20,7 @@
 #include <basic/Logging.hpp>
 #include <basic/Safety.hpp>
 #include <basic/TextUtils.hpp>
-#include <basic/meta/ObjectInfoWriter.hpp>
+#include <meta/ObjectInfoWriter.hpp>
 
 #include <tachyon/Camera.hpp>
 #include <tachyon/gfx/Shader.hpp>

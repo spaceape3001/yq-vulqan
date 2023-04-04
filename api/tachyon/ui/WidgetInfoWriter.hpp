@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/ui/Widget.hpp>
-#include <basic/meta/ObjectInfo.hpp>
+#include <meta/ObjectInfo.hpp>
 
 namespace yq {
     namespace tachyon {

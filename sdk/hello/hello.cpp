@@ -20,7 +20,7 @@
 #include <basic/DelayInit.hpp>
 #include <basic/Logging.hpp>
 #include <io/PluginLoader.hpp>
-#include <basic/meta/Meta.hpp>
+#include <meta/Meta.hpp>
 #include <engine/Application.hpp>
 #include <engine/Scene.hpp>
 #include <tachyon/gfx/Shader.hpp>

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/Camera.hpp>
-#include <basic/meta/ObjectInfoWriter.hpp>
+#include <meta/ObjectInfoWriter.hpp>
 
 namespace yq {
     namespace tachyon {

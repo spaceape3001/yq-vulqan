@@ -12,7 +12,7 @@
 #include <math/vector/Vector3.hpp>
 #include <math/vector/Vector4.hpp>
 #include <unordered_map>
-#include <basic/meta/TypeInfo.hpp>
+#include <meta/TypeInfo.hpp>
 
 
 namespace yq {

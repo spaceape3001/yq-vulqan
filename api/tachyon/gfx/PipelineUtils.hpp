@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <basic/meta/InfoBinder.hpp>
+#include <meta/InfoBinder.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/IndexType.hpp>

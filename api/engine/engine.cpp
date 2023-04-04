@@ -14,7 +14,7 @@
 
 #include "render/BufferObjectInfo.ipp"
 
-#include <basic/meta/Init.hpp>
+#include <meta/Init.hpp>
 
 
 #include "vulqan/VqBuffer.ipp"

@@ -7,7 +7,7 @@
 #include "Render3D.hpp"
 #include "RenderWriter.hpp"
 #include <basic/DelayInit.hpp>
-#include <basic/meta/Init.hpp>
+#include <meta/Init.hpp>
 #include <atomic>
 #include <math/vector/Quaternion3.hxx>
 #include <math/vector/Tensor44.hxx>

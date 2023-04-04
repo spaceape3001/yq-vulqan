@@ -10,7 +10,7 @@
 #include <basic/Object.hpp>
 #include <basic/Mutable.hpp>
 #include <basic/Ref.hpp>
-#include <basic/meta/ObjectInfo.hpp>
+#include <meta/ObjectInfo.hpp>
 #include <tachyon/gfx/PipelineConfig.hpp>
 #include <engine/render/Rendered.hpp>
 #include <math/SimpleSpace.hpp>

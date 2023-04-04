@@ -77,7 +77,7 @@
 #include <tachyon/enum/Tristate.hpp>
 #include <tachyon/enum/VertexInputRate.hpp>
 
-#include <basic/meta/Init.hpp>
+#include <meta/Init.hpp>
 #include <math/shape/Size2.hxx>
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::BorderColor)

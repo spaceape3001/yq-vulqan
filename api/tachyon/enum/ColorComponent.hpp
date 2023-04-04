@@ -8,7 +8,7 @@
 
 #include <basic/Enum.hpp>
 #include <basic/Flag.hpp>
-#include <basic/meta/InfoBinder.hpp>
+#include <meta/InfoBinder.hpp>
 
 namespace yq {
     namespace tachyon {

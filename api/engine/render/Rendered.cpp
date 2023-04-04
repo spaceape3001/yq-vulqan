@@ -7,7 +7,7 @@
 #include "Rendered.hpp"
 #include "RenderWriter.hpp"
 #include <basic/DelayInit.hpp>
-#include <basic/meta/Init.hpp>
+#include <meta/Init.hpp>
 #include <atomic>
 
 namespace yq {

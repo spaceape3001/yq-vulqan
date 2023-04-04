@@ -10,7 +10,7 @@
 #include <basic/Enum.hpp>
 #include <basic/Flag.hpp>
 #include <basic/Ref.hpp>
-#include <basic/meta/InfoBinder.hpp>
+#include <meta/InfoBinder.hpp>
 #include <string>
 #include <variant>
 

@@ -110,6 +110,7 @@ namespace yq {
             
         //};
     
+    
         /*! \brief the Physical vulkan device adapter
             
             This is about transferreing resources to/from the device, 
@@ -122,7 +123,7 @@ namespace yq {
         class Visualizer  {
         public:
             
-            using DrawFunction              = std::function<void(VkCommandBuffer)>;
+            using DrawFunction              = std::function<void(VqRecord&)>;
         
         
             //  since this is "stolen", demoted
@@ -250,7 +251,7 @@ namespace yq {
             bool                            video_encode_queue_valid() const;
 
             // used if no draw function is provided
-            virtual void                    draw_vulkan(VkCommandBuffer){}
+            virtual void                    record(VqRecord&){}
 
         protected:
             Visualizer();

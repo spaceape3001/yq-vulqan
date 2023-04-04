@@ -17,6 +17,7 @@
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
+#include <tachyon/gpu/VqRecord.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 
 #include <GLFW/glfw3.h>
@@ -1358,12 +1359,13 @@ namespace yq {
 
             std::error_code     ret;
             try {
+                VqRecord        rec(*this, cmd);
                 if(use){
-                    use(cmd);
+                    use(rec);
                 } else if(m_draw){
-                    m_draw(cmd);
+                    m_draw(rec);
                 } else
-                    draw_vulkan(cmd);
+                    record(rec);
             }
             catch(std::error_code ec) {
                 ret = ec;

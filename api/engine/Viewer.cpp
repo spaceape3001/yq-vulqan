@@ -41,6 +41,7 @@
 
 #include <tachyon/gpu/VqException.hpp>
 #include <tachyon/gpu/VqLogging.hpp>
+#include <tachyon/gpu/VqRecord.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 
@@ -849,10 +850,10 @@ namespace yq {
 
         bool  Visualizer::graphic_draw()
         {
-            std::error_code ec = draw([this](VkCommandBuffer cmd){
-                m_viewer->draw_vulqan(cmd);
+            std::error_code ec = draw([this](VqRecord& rec){
+                m_viewer->draw_vulqan(rec.command());
                 if(m_viewer->m_imgui)
-                    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), cmd, nullptr);
+                    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), rec.command(), nullptr);
             });
             return !ec;
         }

@@ -54,6 +54,7 @@ namespace yq {
         struct  ViewerCreateInfo;
         class   VqApp;
         class   VqException;
+        class   VqRecord;
         class   Window;
 
         static constexpr const size_t   MAX_PUSH                = 256;

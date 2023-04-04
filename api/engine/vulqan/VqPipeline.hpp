@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <basic/trait/not_copyable.hpp>
-#include <basic/trait/not_moveable.hpp>
+#include <trait/not_copyable.hpp>
+#include <trait/not_moveable.hpp>
 #include <vulkan/vulkan_core.h>
 #include <tachyon/enum/DataActivity.hpp>
 #include <tachyon/preamble.hpp>

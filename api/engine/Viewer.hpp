@@ -8,8 +8,8 @@
 
 #include <basic/Object.hpp>
 #include <basic/Ref.hpp>
-#include <basic/trait/not_copyable.hpp>
-#include <basic/trait/not_moveable.hpp>
+#include <trait/not_copyable.hpp>
+#include <trait/not_moveable.hpp>
 #include <math/preamble.hpp>
 #include <math/shape/Size2.hpp>
 #include <math/vector/Vector2.hpp>

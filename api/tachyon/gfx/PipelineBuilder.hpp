@@ -8,8 +8,8 @@
 
 #include <tachyon/gfx/PipelineConfig.hpp>
 #include <tachyon/gfx/PipelineUtils.hpp>
-#include <basic/trait/not_copyable.hpp>
-#include <basic/trait/not_moveable.hpp>
+#include <trait/not_copyable.hpp>
+#include <trait/not_moveable.hpp>
 #include <set>
 #include <span>
 #include <cassert>

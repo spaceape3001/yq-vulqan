@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <basic/trait/always_false.hpp>
+#include <trait/always_false.hpp>
 #include <engine/render/IndexBufferObjectInfo.hpp>
 #include <engine/render/Render3D.hpp>
 #include <engine/render/Rendered.hpp>

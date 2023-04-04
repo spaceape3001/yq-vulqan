@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <basic/trait/not_copyable.hpp>
-#include <basic/trait/not_moveable.hpp>
+#include <trait/not_copyable.hpp>
+#include <trait/not_moveable.hpp>
 
 namespace yq {
     namespace tachyon {

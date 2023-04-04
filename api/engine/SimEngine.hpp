@@ -7,8 +7,8 @@
 #pragma once
 
 #include <basic/Object.hpp>
-#include <basic/trait/not_copyable.hpp>
-#include <basic/trait/not_moveable.hpp>
+#include <trait/not_copyable.hpp>
+#include <trait/not_moveable.hpp>
 #include "Taskable.hpp"
 
 namespace yq {

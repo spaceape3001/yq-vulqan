@@ -43,8 +43,11 @@
 #include "host/VideoMode.ipp"
 #include "host/Window.ipp"
 
-#include "ui/Editor.ipp"
 #include "ui/Widget.ipp"
+#include "ui/Widget2.ipp"
+#include "ui/Widget3.ipp"
+
+#include "ui/Editor.ipp"
 
 
 #include <tachyon/enum/BorderColor.hpp>

@@ -8,7 +8,6 @@
 
 #include <tachyon/ui/Widget.hpp>
 #include <basic/TextUtils.hpp>
-#include <atomic>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 
@@ -27,15 +26,25 @@ namespace yq {
         
         Widget::~Widget()
         {
+            #if 0
             for(Widget* w : m_children)
                 delete w;
             m_children.clear();
+            #endif
         }
 
-        void    Widget::draw(/*UiData& uid*/)
+#if 0
+        void    Widget::imgui_(UiData& u)
         {
-            for(auto& w : m_children)
-                w->draw(/*uid*/);
+            for(Widget* w : m_children)
+                w->draw_imgui(u);
         }
+        
+        void    Widget::vulkan_(UiData&u, VqRecord&r)
+        {
+            for(Widget* w : m_children)
+                w->draw_vulkan(u);
+        }
+#endif
     }
 }

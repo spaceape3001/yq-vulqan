@@ -10,6 +10,7 @@
 #include <io/StreamOps.hpp>
 #include <basic/IterUtf8.hpp>
 #include <basic/TextUtils.hpp>
+#include <basic/DelayInit.hpp>
 #include <io/stream/Text.hpp>
 #include <basic/Logging.hpp>
 #include <math/shape/AxBox2.hpp>
@@ -316,7 +317,7 @@ namespace yq {
             }
         }
         
-        void    TextArea::draw() 
+        void    TextArea::imgui_(UiData&) 
         {
             using namespace ImGui;
             m_withinRender  = true;
@@ -512,5 +513,15 @@ namespace yq {
                 g.style = 0;
             }
         }
+        
+        void    reg_textarea()
+        {
+            auto w = writer<TextArea>();
+            w.imgui();
+        }
+        
+        YQ_INVOKE(reg_textarea();)
     }
 }
+
+

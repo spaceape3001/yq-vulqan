@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <basic/UniqueID.hpp>
+#include <tachyon/ui/ImGui.hpp>
+
+namespace yq {
+    namespace tachyon {
+        class ImGuiWidget : public UniqueID {
+        public:
+        
+            
+        };
+    }
+}

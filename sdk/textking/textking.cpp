@@ -89,8 +89,8 @@ already in the field! Why stand we here idle? What is it that gentlemen wish? Wh
 peace so sweet, as to be purchased at the price of chains and slavery? Forbid it, Almighty God! I know not what course\n\
 others may take; but as for me, give me liberty or give me death!";
 
-class GTEditor : public Widget, public TextEditor {
-    YQ_OBJECT_DECLARE(GTEditor, Widget)
+class GTEditor : public Widget2, public TextEditor {
+    YQ_OBJECT_DECLARE(GTEditor, Widget2)
 public:
     GTEditor(const std::filesystem::path& fpath=std::filesystem::path())
     {
@@ -105,15 +105,15 @@ public:
         
     }
     
-    void    draw() override;
+    void    imgui_(UiData&) override;
     
 private:
     std::filesystem::path   m_path;
     std::string             m_textid;
 };
 
-class N2Editor : public Widget {
-    YQ_OBJECT_DECLARE(N2Editor, Widget)
+class N2Editor : public Widget2 {
+    YQ_OBJECT_DECLARE(N2Editor, Widget2)
 public:
 
     N2Editor([[maybe_unused]] const std::filesystem::path& fpath=std::filesystem::path())
@@ -123,12 +123,12 @@ public:
 yInfo() << "Line count is " << m_edit -> line_count();        
     }
     
-    void    draw() override;
+    void    imgui_(UiData&) override;
     
     widget::TextArea*       m_edit = nullptr;
 };
 
-void GTEditor::draw()
+void GTEditor::imgui_(UiData&)
 {
     using namespace ImGui;
     auto cpos   = GetCursorPosition();
@@ -142,7 +142,7 @@ void GTEditor::draw()
     End();
 }
 
-void    N2Editor::draw() 
+void    N2Editor::imgui_(UiData&u) 
 {
     using namespace ImGui;
     //auto cpos   = GetCursorPosition();
@@ -155,7 +155,7 @@ void    N2Editor::draw()
 			//IsOverwrite() ? "Ovr" : "Ins",
 			//CanUndo() ? "*" : " ",
 			//GetLanguageDefinition().mName.c_str(), m_path.c_str());
-    m_edit -> draw();
+    m_edit -> imgui_(u);
     End();
     PopStyleVar();
     PopStyleVar();
@@ -178,6 +178,7 @@ public:
     
     void   draw_imgui() override 
     {
+        Widget2::UiData u;
         enum FileMode   {
             NONE    = 0,
             OPEN,
@@ -237,7 +238,7 @@ public:
         }
         
         for(auto& e : m_editors)
-            e->draw();
+            e->imgui_(u);
             
         switch(file_mode){
         case OPEN:
@@ -268,7 +269,7 @@ public:
         m_editors.push_back(editor);
     }
     
-    std::vector<Widget*>    m_editors;
+    std::vector<Widget2*>   m_editors;
     GTEditor*               m_active = nullptr;
 };
 

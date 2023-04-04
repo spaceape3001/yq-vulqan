@@ -28,8 +28,6 @@ namespace yq {
         private:
             Visualizer&             m_viz;
             VkCommandBuffer         m_command;
-            VkPipeline              m_pipeline    = nullptr;
-            VkPipelineLayout        m_layout      = nullptr;
         };
 
     }

@@ -44,6 +44,9 @@
 #include "host/VideoMode.ipp"
 #include "host/Window.ipp"
 
+#include "ui/Editor.ipp"
+#include "ui/Widget.ipp"
+
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>

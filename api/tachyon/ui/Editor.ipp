@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Editor.hpp"
-#include <MyImGui.hpp>
+#include <tachyon/ui/Editor.hpp>
+#include <tachyon/ui/MyImGui.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::engine::Editor)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Editor)
 
 namespace yq {
-    namespace engine {
-        EditorInfo::EditorInfo(std::string_view n, engine::WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
+    namespace tachyon {
+        EditorInfo::EditorInfo(std::string_view n, WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
         {
         }
 

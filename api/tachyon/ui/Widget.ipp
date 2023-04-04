@@ -6,26 +6,29 @@
 
 #pragma once
 
-#include "Widget.hpp"
+#include <tachyon/ui/Widget.hpp>
 #include <basic/TextUtils.hpp>
 #include <atomic>
 
-YQ_OBJECT_IMPLEMENT(yq::engine::Widget)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq {
-    namespace engine {
-        WidgetInfo::WidgetInfo(std::string_view zName, const MetaObjectInfo& base, const std::source_location& sl) :
-            MetaObjectInfo(zName, base, sl)
+    namespace tachyon {
+        WidgetInfo::WidgetInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
+            ObjectInfo(zName, base, sl)
         {
             set_option(WIDGET);
         }
 
         Widget::Widget()
         {
+            m_windowID      = std::string(fmt_hex(id()));
         }
         
         Widget::~Widget()
         {
+            for(Widget* w : m_children)
+                delete w;
             m_children.clear();
         }
 

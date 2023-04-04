@@ -50,7 +50,7 @@ namespace yq {
         struct  PipelineConfig;
         struct  VideoMode;
         class   Visualizer;
-        class   Viewer;
+        //class   Viewer;
         struct  ViewerCreateInfo;
         class   VqApp;
         class   VqException;

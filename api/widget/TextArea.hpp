@@ -7,7 +7,7 @@
 #pragma once
 
 #include <basic/Signal.hpp>
-#include <engine/Widget.hpp>
+#include <tachyon/ui/Widget.hpp>
 #include <math/shape/AxBox2.hpp>
 #include <math/vector/Vector2.hpp>
 #include <functional>
@@ -32,8 +32,8 @@ namespace yq {
             This is loosely based on https://github.com/BalazsJako/ImGuiColorTextEdit, but needed too much cleanup 
             to do anything except rewrite it.
         */
-        class TextArea : public engine::Widget {
-            YQ_OBJECT_DECLARE(TextArea, engine::Widget)
+        class TextArea : public tachyon::Widget {
+            YQ_OBJECT_DECLARE(TextArea, tachyon::Widget)
         public:
         
             static constexpr const uint8_t  MAX_TAB         = 32;

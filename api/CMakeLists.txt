@@ -23,7 +23,7 @@ add_library(${PROJECT_NAME} SHARED
     
     ./tachyon/tachyon.cpp
     
-    ./MyImGui.cpp
+    ./tachyon/ui/MyImGui.cpp
     
     ./YqEngineConfig.cpp
     

@@ -14,7 +14,6 @@
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/enum/PresentMode.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
-#include <tachyon/gpu/ViQueues.hpp>
 #include <engine/vulqan/VqPipeline.hpp>
 #include <math/preamble.hpp>
 

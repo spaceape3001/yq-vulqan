@@ -31,7 +31,6 @@
 #include "gfx/Shader.ipp"
 #include "gfx/Texture.ipp"
 
-#include "gpu/ViQueues.ipp"
 #include "gpu/VqApp.ipp"
 #include "gpu/VqEnums.ipp"
 #include "gpu/VqLogging.ipp"

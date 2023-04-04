@@ -10,7 +10,6 @@
 
 #include <basic/Guarded.hpp>
 #include <math/preamble.hpp>
-#include <tachyon/gpu/ViQueues.hpp>
 
 #include <atomic>
 #include <functional>
@@ -46,6 +45,15 @@ namespace yq {
             uint32_t                shaders     = 0;
         };
     
+        struct ViQueues {
+            std::vector<VkQueue>    queues;
+            uint32_t                family   = UINT32_MAX;
+            
+            void    set(VkDevice, uint32_t cnt);
+            VkQueue operator[](uint32_t i) const;
+            bool valid() const { return family != UINT32_MAX; }
+        };
+
         template <typename T>
         using ViHash    = std::unordered_map<uint64_t, T>;
 

@@ -25,6 +25,24 @@ namespace yq {
 
     namespace tachyon {
 
+        void    ViQueues::set(VkDevice dev, uint32_t cnt)
+        {
+            queues.clear();
+            queues.resize(cnt, nullptr);
+            for(uint32_t i=0;i<cnt;++i)
+                vkGetDeviceQueue(dev, family, i, &queues[i]);
+        }
+        
+        VkQueue ViQueues::operator[](uint32_t i) const
+        {
+            if(i<queues.size()) [[likely]]
+                return queues[i];
+            return nullptr;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
         VkRect2D  ViSwapchain::def_scissor() const
         {
             VkRect2D    ret{};

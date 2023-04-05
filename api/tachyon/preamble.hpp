@@ -50,11 +50,14 @@ namespace yq {
         struct  PipelineConfig;
         struct  VideoMode;
         class   Visualizer;
-        //class   Viewer;
+        class   Viewer;
         struct  ViewerCreateInfo;
         class   VqApp;
         class   VqException;
         class   VqRecord;
+        class   Widget;
+        class   Widget2;
+        class   Widget3;
         class   Window;
 
         static constexpr const size_t   MAX_PUSH                = 256;

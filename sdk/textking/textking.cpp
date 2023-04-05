@@ -162,10 +162,10 @@ void    N2Editor::imgui_(UiData&u)
     PopID();
 }
 
-class TextKing : public Viewer {
-    YQ_OBJECT_DECLARE(TextKing, Viewer)
+class TextKing : public engine::Viewer {
+    YQ_OBJECT_DECLARE(TextKing, engine::Viewer)
 public:
-    TextKing(const ViewerCreateInfo & wci=ViewerCreateInfo ()) : Viewer(wci)
+    TextKing(const ViewerCreateInfo & wci=ViewerCreateInfo ()) : engine::Viewer(wci)
     {
     }
     

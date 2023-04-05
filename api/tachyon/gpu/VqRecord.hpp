@@ -18,16 +18,14 @@ namespace yq {
         class VqRecord {
         public:
         
-            VkCommandBuffer         command() { return m_command; }
+            VkCommandBuffer         command() { return m_cmd; }
             Visualizer&             visualizer() { return m_viz; }
             
-            VqRecord(Visualizer&viz, VkCommandBuffer cmd) : m_viz(viz), m_command(cmd) {}
+            VqRecord(Visualizer&viz, VkCommandBuffer cmd) : m_viz(viz), m_cmd(cmd) {}
             
-            void    pipeline(VkPipeline, VkPipelineLayout, PipelineBinding binding=PipelineBinding::Graphics);
-
         private:
             Visualizer&             m_viz;
-            VkCommandBuffer         m_command;
+            VkCommandBuffer         m_cmd;
         };
 
     }

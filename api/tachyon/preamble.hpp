@@ -30,6 +30,7 @@ namespace yq {
     namespace tachyon {
         struct  AppCreateInfo;
         class   AppGLFW;
+        class   Application;
         class   Asset;
         class   AssetCache;
         class   AssetInfo;
@@ -48,6 +49,7 @@ namespace yq {
         class   Pipeline;
         class   PipelineBuilder;
         struct  PipelineConfig;
+        struct  UiContext;
         struct  VideoMode;
         class   Visualizer;
         class   Viewer;

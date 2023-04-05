@@ -41,15 +41,6 @@ namespace yq {
             YQ_OBJECT_INFO(WidgetInfo)
             YQ_OBJECT_DECLARE(Widget, Object)
         public:
-        
-
-            #if 0
-            // override to render on imgui
-            virtual void    imgui_(UiData&) = 0;
-            
-            // override to render on vulkan
-            virtual void    vulkan_(UiData&, VqRecord&) = 0;
-            #endif
             
             virtual ~Widget();
             

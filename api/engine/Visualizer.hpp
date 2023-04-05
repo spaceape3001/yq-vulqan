@@ -88,8 +88,6 @@ namespace yq {
         
             Viewer*                             m_viewer                = nullptr;
             
-            
-            
             //std::thread         builder;
             //uint64_t            pad[8];
             //std::atomic<bool>   terminating                 = false;
@@ -100,15 +98,11 @@ namespace yq {
             std::pair<ViPipeline*,bool>     pipeline(uint64_t i);
             std::pair<ViObject*,bool>       object(uint64_t i);
             
-            void    run();
-            
             
             Visualizer(const ViewerCreateInfo&, Viewer*);
             ~Visualizer();
             void                _ctor(const ViewerCreateInfo&);
             void                _dtor();
-
-            bool    graphic_draw();
         };
     }
 }

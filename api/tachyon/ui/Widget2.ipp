@@ -28,16 +28,16 @@ namespace yq {
             m_children.clear();
         }
 
-        void    Widget2::imgui_(UiData& u)
+        void    Widget2::imgui_(UiContext& u)
         {
             for(Widget2* w : m_children)
                 w->imgui_(u);
         }
         
-        void    Widget2::vulkan_(UiData&u, VqRecord&r)
+        void    Widget2::vulkan_(UiContext&u)
         {
             for(Widget2* w : m_children)
-                w->vulkan_(u, r);
+                w->vulkan_(u);
         }
     }
 }

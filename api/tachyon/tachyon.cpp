@@ -9,6 +9,8 @@
     are our C++ adapters for it.
 */
 
+#include "Application.ipp"
+#include "Viewer.ipp"
 
 #include "camera/Null.ipp"
 #include "camera/Space.ipp"

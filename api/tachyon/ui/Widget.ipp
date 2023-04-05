@@ -32,19 +32,5 @@ namespace yq {
             m_children.clear();
             #endif
         }
-
-#if 0
-        void    Widget::imgui_(UiData& u)
-        {
-            for(Widget* w : m_children)
-                w->draw_imgui(u);
-        }
-        
-        void    Widget::vulkan_(UiData&u, VqRecord&r)
-        {
-            for(Widget* w : m_children)
-                w->draw_vulkan(u);
-        }
-#endif
     }
 }

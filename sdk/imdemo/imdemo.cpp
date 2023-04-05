@@ -31,7 +31,7 @@ public:
     {
     }
     
-    void   draw_imgui() override 
+    void   draw_imgui(tachyon::UiContext&) override 
     {
         ImGui::ShowDemoWindow();
     }
@@ -41,7 +41,7 @@ YQ_OBJECT_IMPLEMENT(DemoWindow)
 
 int main(int argc, char* argv[])
 {
-    AppCreateInfo        vi;
+    engine::AppCreateInfo        vi;
     vi.app_name     = "im_demo";
 
     Application app(argc, argv, vi);

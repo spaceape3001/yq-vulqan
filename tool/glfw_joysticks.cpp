@@ -5,13 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <basic/TextUtils.hpp>
-#include <engine/Application.hpp>
+#include <tachyon/Application.hpp>
 #include <tachyon/host/Joystick.hpp>
 #include <iostream>
 
 using std::cout;
 using namespace yq;
-using namespace yq::engine;
 using namespace yq::tachyon;
 
 

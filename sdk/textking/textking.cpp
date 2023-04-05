@@ -14,7 +14,7 @@
 #include <meta/ObjectInfoWriter.hpp>
 #include <engine/Application.hpp>
 #include <engine/Viewer.hpp>
-#include <tachyon/ui/Widget.hpp>
+#include <tachyon/ui/Widget2.hpp>
 #include <tachyon/ui/MyImGui.hpp>
 #include <iostream>
 #include <TextEditor.h>
@@ -105,7 +105,7 @@ public:
         
     }
     
-    void    imgui_(UiData&) override;
+    void    imgui_(UiContext&) override;
     
 private:
     std::filesystem::path   m_path;
@@ -123,12 +123,12 @@ public:
 yInfo() << "Line count is " << m_edit -> line_count();        
     }
     
-    void    imgui_(UiData&) override;
+    void    imgui_(UiContext&) override;
     
     widget::TextArea*       m_edit = nullptr;
 };
 
-void GTEditor::imgui_(UiData&)
+void GTEditor::imgui_(UiContext&)
 {
     using namespace ImGui;
     auto cpos   = GetCursorPosition();
@@ -142,7 +142,7 @@ void GTEditor::imgui_(UiData&)
     End();
 }
 
-void    N2Editor::imgui_(UiData&u) 
+void    N2Editor::imgui_(UiContext&u) 
 {
     using namespace ImGui;
     //auto cpos   = GetCursorPosition();
@@ -176,9 +176,8 @@ public:
         m_editors.clear();
     }
     
-    void   draw_imgui() override 
+    void   draw_imgui(tachyon::UiContext&u) override 
     {
-        Widget2::UiData u;
         enum FileMode   {
             NONE    = 0,
             OPEN,
@@ -282,7 +281,7 @@ int main(int argc, char* argv[])
     AppCreateInfo        vi;
     vi.app_name     = "im_demo";
 
-    Application app(argc, argv, vi);
+    engine::Application app(argc, argv, vi);
     load_plugin_dir("plugin");
     app.finalize();
     

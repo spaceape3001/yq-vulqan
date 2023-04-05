@@ -189,7 +189,7 @@ int main(int argc, char* argv[])
 {
     AppCreateInfo        vi;
     
-    Application app(argc, argv, vi);
+    engine::Application app(argc, argv, vi);
     //load_plugin_dir("plugin");
     app.finalize();
     

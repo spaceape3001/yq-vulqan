@@ -34,11 +34,11 @@ namespace yq {
         
             virtual bool    load(EditorSpec) = 0;
             
-            virtual void    menubar_(UiData&){}
-            virtual void    content_(UiData&){}
-            virtual void    imgui_(UiData&) override;
+            virtual void    menubar_(UiContext&){}
+            virtual void    content_(UiContext&){}
+            virtual void    imgui_(UiContext&) override;
             
-            //virtual void    draw(/*engine::UiData&*/) override;
+            //virtual void    draw(/*engine::UiContext&*/) override;
             
             const std::filesystem::path&    file() const { return m_file; }
             

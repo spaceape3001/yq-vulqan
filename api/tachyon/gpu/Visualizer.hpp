@@ -10,6 +10,7 @@
 
 #include <basic/Guarded.hpp>
 #include <math/preamble.hpp>
+#include <tachyon/enum/PresentMode.hpp>
 
 #include <atomic>
 #include <functional>
@@ -124,7 +125,7 @@ namespace yq {
         class Visualizer  {
         public:
             
-            using DrawFunction              = std::function<void(VqRecord&)>;
+            using DrawFunction              = std::function<void(UiContext&)>;
         
         
             //  since this is "stolen", demoted
@@ -166,7 +167,11 @@ namespace yq {
             
             VkDescriptorPool                descriptor_pool() const;
 
-            std::error_code                 draw(DrawFunction use={});
+            /*! \brief "Draws" 
+            
+                \note Nothing stops recursion... DON'T
+            */
+            std::error_code                 draw(UiContext&, DrawFunction use={});
             
             void                            erase(const Buffer&);
 
@@ -216,8 +221,6 @@ namespace yq {
                 //! Sets the background color
             void                            set_clear_color(const RGBA4F&);
             
-            void                            set_draw_function(DrawFunction);
-            
             void                            set_present_mode(PresentMode);
 
             //! Finds the shader
@@ -254,7 +257,7 @@ namespace yq {
             bool                            video_encode_queue_valid() const;
 
             // used if no draw function is provided
-            virtual void                    record(VqRecord&){}
+            virtual void                    record(UiContext&){}
 
         protected:
             Visualizer();
@@ -285,7 +288,7 @@ namespace yq {
             std::error_code             _create(ViThread&);
             void                        _destroy(ViThread&);
             
-            std::error_code             _record(VkCommandBuffer, uint32_t, DrawFunction use={}); // may have extents (later)
+            std::error_code             _record(UiContext&, uint32_t, DrawFunction use={}); // may have extents (later)
             
         
             Visualizer(const Visualizer&) = delete;
@@ -303,7 +306,6 @@ namespace yq {
             uint32_t                            m_descriptorCount       = 0;
             VkDevice                            m_device                = nullptr;
             VkPhysicalDeviceProperties          m_deviceInfo;
-            DrawFunction                        m_draw                  = {};
             //std::vector<const char*>            m_extensions;
             ViFrame                             m_frames[MAX_FRAMES_IN_FLIGHT];
             ViQueues                            m_graphic;

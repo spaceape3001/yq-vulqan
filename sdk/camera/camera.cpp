@@ -215,7 +215,7 @@ struct CameraWin : public engine::Viewer {
         //Window::draw_vulqan(cmdbuf);
     }
     
-    void    draw_imgui() override
+    void    draw_imgui(tachyon::UiContext&) override
     {
         if(BeginMainMenuBar()){
             if(BeginMenu("Camera")){
@@ -325,7 +325,7 @@ int main(int argc, char* argv[])
 {
     AppCreateInfo        vi;
     
-    Application app(argc, argv, vi);
+    engine::Application app(argc, argv, vi);
     //load_plugin_dir("plugin");
     app.finalize();
     

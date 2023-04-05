@@ -41,9 +41,9 @@
 
 #include <tachyon/gpu/VqException.hpp>
 #include <tachyon/gpu/VqLogging.hpp>
-#include <tachyon/gpu/VqRecord.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
+#include <tachyon/ui/UiContext.hpp>
 
 #include <math/shape/Size2.hpp>
 #include <math/vector/Vector2.hpp>
@@ -295,15 +295,21 @@ namespace yq {
         {
             ++m_frameNumber;
             auto start = std::chrono::high_resolution_clock::now();
+            UiContext   u(*m_viz);
             if(m_imgui){
+                u.imgui_enabled = true;
                 ImGui::SetCurrentContext(m_imgui);
                 ImGui_ImplVulkan_NewFrame();
                 ImGui_ImplGlfw_NewFrame();
                 ImGui::NewFrame();
-                draw_imgui();
+                draw_imgui(u);
                 ImGui::Render();
             }
-            m_viz->graphic_draw();
+            m_viz->draw(u, [&](UiContext&u){
+                draw_vulqan(u.cmd);
+                if(m_imgui)
+                    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.cmd, nullptr);
+            });
             auto end   = std::chrono::high_resolution_clock::now();
             m_drawTime          = Second((end-start).count());
             return true;
@@ -847,25 +853,6 @@ namespace yq {
         }
 
         using tachyon::ViFrame;
-
-        bool  Visualizer::graphic_draw()
-        {
-            std::error_code ec = draw([this](VqRecord& rec){
-                m_viewer->draw_vulqan(rec.command());
-                if(m_viewer->m_imgui)
-                    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), rec.command(), nullptr);
-            });
-            return !ec;
-        }
-
-        void  Visualizer::run()
-        {
-            //using namespace std::chrono_literals;
-            //while(!terminating){
-                //std::this_thread::sleep_for(1ms);
-            //}
-        }
-
 
         std::pair<ViPipeline*,bool>    Visualizer::pipeline(uint64_t i)
         {

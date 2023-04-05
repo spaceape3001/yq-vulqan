@@ -6,14 +6,13 @@
 
 #include <math/shape/Rectangle2.hpp>
 #include <math/vector/Vector2.hpp>
-#include <engine/Application.hpp>
+#include <tachyon/Application.hpp>
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/host/VideoMode.hpp>
 #include <iostream>
 
 using std::cout;
 using namespace yq;
-using namespace yq::engine;
 using namespace yq::tachyon;
 
 int main(int argc, char* argv[])

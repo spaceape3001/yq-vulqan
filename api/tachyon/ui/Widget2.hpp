@@ -10,7 +10,7 @@
 
 namespace yq {
     namespace tachyon {
-        struct UiData;
+        struct UiContext;
     
         class Widget2Info : public WidgetInfo {
         public:
@@ -27,16 +27,13 @@ namespace yq {
             YQ_OBJECT_DECLARE(Widget2, Widget)
         public:
 
-            struct UiData {};       // contents TBD
-        
-            virtual void    imgui_(UiData&);
-            virtual void    vulkan_(UiData&, VqRecord&);
+            virtual void    imgui_(UiContext&);
+            virtual void    vulkan_(UiContext&);
             
             virtual ~Widget2();
-            
-        protected:
             Widget2();
 
+        protected:
             Widget2*                m_parent    = nullptr;
             std::vector<Widget2*>   m_children;
         };

@@ -17,7 +17,6 @@
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
-#include <tachyon/gpu/VqRecord.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 
 #include <GLFW/glfw3.h>
@@ -1311,11 +1310,6 @@ namespace yq {
             return true;
         }
 
-        void        Visualizer::set_draw_function(DrawFunction fn)
-        {
-            m_draw      = fn;
-        }
-        
         void        Visualizer::set_clear_color(const RGBA4F&i)
         {
             m_clearValue = VkClearValue{{{ i.red, i.green, i.blue, i.alpha }}};
@@ -1337,13 +1331,13 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
         //  RENDERING
 
-        std::error_code     Visualizer::_record(VkCommandBuffer cmd, uint32_t imageIndex, DrawFunction use)
+        std::error_code     Visualizer::_record(UiContext& u, uint32_t imageIndex, DrawFunction use)
         {
             VqCommandBufferBeginInfo beginInfo;
             beginInfo.flags = 0; // Optional
             beginInfo.pInheritanceInfo = nullptr; // Optional
 
-            if (vkBeginCommandBuffer(cmd, &beginInfo) != VK_SUCCESS)
+            if (vkBeginCommandBuffer(u.cmd, &beginInfo) != VK_SUCCESS)
                 return create_error<"Failed to begin recording command buffer">();
 
             VqRenderPassBeginInfo renderPassInfo;
@@ -1355,29 +1349,26 @@ namespace yq {
             renderPassInfo.clearValueCount = 1;
             VkClearValue                cv  = m_clearValue;
             renderPassInfo.pClearValues = &cv;
-            vkCmdBeginRenderPass(cmd, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+            vkCmdBeginRenderPass(u.cmd, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
             std::error_code     ret;
             try {
-                VqRecord        rec(*this, cmd);
                 if(use){
-                    use(rec);
-                } else if(m_draw){
-                    m_draw(rec);
+                    use(u);
                 } else
-                    record(rec);
+                    record(u);
             }
             catch(std::error_code ec) {
                 ret = ec;
             }
                 
-            vkCmdEndRenderPass(cmd);
-            if (vkEndCommandBuffer(cmd) != VK_SUCCESS)
+            vkCmdEndRenderPass(u.cmd);
+            if (vkEndCommandBuffer(u.cmd) != VK_SUCCESS)
                 return create_error<"Failed to record command buffer">();
             return ret;
         }
 
-        std::error_code     Visualizer::draw(DrawFunction use)
+        std::error_code     Visualizer::draw(UiContext& u, DrawFunction use)
         {
             ViFrame&    f   = current_frame();
             vkWaitForFences(m_device, 1, &f.fence, VK_TRUE, UINT64_MAX);
@@ -1402,7 +1393,10 @@ namespace yq {
             vkResetFences(m_device, 1, &f.fence);
             vkResetCommandBuffer(f.commandBuffer, 0);
             
-            std::error_code ec = _record(f.commandBuffer, imageIndex, use);
+            VkCommandBuffer old = u.cmd;
+            u.cmd   = f.commandBuffer;
+            std::error_code ec = _record(u, imageIndex, use);
+            u.cmd   = old;
             if(ec)
                 return ec;
             

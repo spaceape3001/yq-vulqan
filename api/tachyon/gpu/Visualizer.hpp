@@ -167,6 +167,8 @@ namespace yq {
             VkDescriptorPool                descriptor_pool() const;
 
             std::error_code                 draw(DrawFunction use={});
+            
+            void                            erase(const Buffer&);
 
             uint64_t                        frame_number() const { return m_tick; }
 

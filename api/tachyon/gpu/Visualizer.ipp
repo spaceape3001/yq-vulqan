@@ -1284,6 +1284,15 @@ namespace yq {
             return j->second;
         }
 
+        void        Visualizer::erase(const Buffer& v)
+        {
+            auto j = m_buffers.find(v.id());
+            if(j != m_buffers.end()){
+                _destroy(j->second);
+                m_buffers.erase(j);
+            }
+        }
+
         bool        Visualizer::rebuild(bool force)
         {
             if(force){

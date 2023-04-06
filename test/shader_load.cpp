@@ -28,7 +28,7 @@ ut::suite tests = []{
     "loading"_test = []{
         const Shader*   s   = Shader::load("sdk/hello/hello.frag");
         expect(nullptr != s);
-        expect(s->shader_type() == ShaderType::FRAG);
+        expect(s->type == ShaderType::FRAG);
     };
 };
 

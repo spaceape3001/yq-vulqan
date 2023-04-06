@@ -37,11 +37,11 @@ namespace yq {
 
         ////////////////////////////////////////////////////////////////////////////////
 
-        Shader::Shader(const ByteArray&b, ShaderType st) : Asset(), m_payload(b), m_type(st)
+        Shader::Shader(const ByteArray&b, ShaderType st) : Asset(), payload(b), type(st)
         {
         }
         
-        Shader::Shader(ByteArray&& b, ShaderType st) : Asset(), m_payload(std::move(b)), m_type(st)
+        Shader::Shader(ByteArray&& b, ShaderType st) : Asset(), payload(std::move(b)), type(st)
         {
         }
     
@@ -51,7 +51,7 @@ namespace yq {
 
         size_t      Shader::data_size() const 
         {
-            return m_payload.size();
+            return payload.size();
         }
 
         ////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +61,7 @@ namespace yq {
             {
                 auto ti = writer<Shader>();
                 ti.description("Shader Asset");
+                ti.property("Type", &Shader::type);
             }
 
             YQ_INVOKE(reg_shader();)

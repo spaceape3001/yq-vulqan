@@ -765,7 +765,7 @@ namespace yq {
         std::error_code            Visualizer::_create(ViShader& p, const Shader&sh)
         {
             p.mask  = VkShaderStageFlagBits{};
-            switch(sh.shader_type()){
+            switch(sh.type){
             case ShaderType::VERT:
                 p.mask = VK_SHADER_STAGE_VERTEX_BIT;
                 break;
@@ -788,10 +788,9 @@ namespace yq {
                 return create_error<"Shader needs a valid/supported type!">();
             }
                 
-            const ByteArray&    code    = sh.payload();
             VqShaderModuleCreateInfo createInfo;
-            createInfo.codeSize = code.size();
-            createInfo.pCode    = reinterpret_cast<const uint32_t*>(code.data());
+            createInfo.codeSize = sh.payload.size();
+            createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
             if (vkCreateShaderModule(m_device, &createInfo, nullptr, &p.shader) != VK_SUCCESS) 
                 return create_error<"Shader creation failed">();
             return std::error_code();

@@ -36,6 +36,8 @@ namespace yq {
 
         Viewer::Viewer(const ViewerCreateInfo&vci, Widget2*w) : Viewer()
         {
+            Application::vulkan();
+        
             std::error_code ec = initialize(vci, w);
             if(ec){
                 tachyonCritical << "Unable to initialize the viewer ... " << ec.message();
@@ -56,7 +58,7 @@ namespace yq {
             ec  = init_visualizer(vci, window());
             if(ec)
                 return ec;
-
+             
             if(vci.imgui){
                 m_imgui = ImGui::CreateContext();
 
@@ -95,8 +97,7 @@ namespace yq {
                 ImGui_ImplVulkan_DestroyFontUploadObjects();
             }
 
-            //  Event callbacks
-
+            install_hooks();
             m_widget    = w;
             return std::error_code();
         }
@@ -106,6 +107,14 @@ namespace yq {
             if(m_widget)
                 delete m_widget;
             m_widget    = nullptr;
+            if(m_imgui){
+                ImGui::SetCurrentContext(m_imgui);
+                ImGui_ImplVulkan_Shutdown();
+                ImGui_ImplGlfw_Shutdown();
+                ImGui::DestroyContext(m_imgui);
+                ImGui::SetCurrentContext(nullptr);
+                m_imgui     = nullptr;
+            }
             kill_visualizer();
             Window::kill_window();
         }
@@ -146,5 +155,14 @@ namespace yq {
                 ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command(), nullptr);
         }
 
+        void    Viewer::window_framebuffer_resized(const Size2I&)
+        {
+            trigger_rebuild();
+        }
+        
+        void    Viewer::window_resized(const Size2I&)
+        {
+            trigger_rebuild();
+        }
     }
 }

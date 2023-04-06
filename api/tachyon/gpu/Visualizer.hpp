@@ -322,10 +322,11 @@ namespace yq {
             uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
             ViQueues                            m_videoDecode;
             ViQueues                            m_videoEncode;
-            GLFWwindow*                         m_window                = nullptr;
-            
             std::atomic<bool>                   m_rebuildSwap           = { false };
             bool                                m_init                  = false;
+            
+        private:
+            GLFWwindow*                         m_window                = nullptr;
         };
     
     }

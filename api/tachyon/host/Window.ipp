@@ -6,29 +6,272 @@
 
 #pragma once
 
+#include <tachyon/host/Joystick.hpp>
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/host/Window.hpp>
+#include <tachyon/host/WindowEvents.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/TachyonLog.hpp>
 #include <basic/ErrorDB.hpp>
 #include <GLFW/glfw3.h>
+#include <tachyon/ui/MyImGui.hpp>
+#include <backends/imgui_impl_vulkan.h>
+#include <backends/imgui_impl_glfw.h>
+
 
 namespace yq {
     namespace tachyon {
+
+        int                 Window::g_count = 0;
+        Window::Events*     Window::g_events = nullptr;
+        bool                Window::g_imgui = false;
         
         bool Window::rawMouseMotionSupported()
         {
             return glfwRawMouseMotionSupported() == GLFW_TRUE;
         }
 
+        void Window::set_events(Events* i)
+        {
+            if(g_events) 
+                delete g_events;
+            g_events     = i;
+        }
+
+        void Window::poll_events()
+        {
+            glfwPollEvents();
+        }
+
         //  ------------------------------------------------
+
+        void Window::callback_character(GLFWwindow* window, unsigned int codepoint)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_CharCallback(window, codepoint);
+                
+            Window*w    = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w->character(codepoint);
+        }
+        
+        void Window::callback_cursor_enter(GLFWwindow* window, int entered)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_CursorEnterCallback(window, entered);
+                
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w){
+
+                switch(entered){
+                case GLFW_TRUE:
+                    w->mouse_entered();
+                    break;
+                case GLFW_FALSE:
+                    w -> mouse_left();
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_cursor_position(GLFWwindow* window, double xpos, double ypos)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
+                
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w){
+                w->m_cursor    = Vector2D(xpos, ypos);
+                w->mouse_moved(w->m_cursor);
+            }
+        }
+        
+        void Window::callback_drop(GLFWwindow* window, int count, const char** paths)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w->user_dropped( std::span<const char*>(paths, count));
+        }
+        
+        void Window::callback_framebuffer_size(GLFWwindow* window, int width, int height)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w -> window_framebuffer_resized(Size2I(width, height));
+        }
+
+        void Window::callback_joystick(int jid, int event)
+        {
+            if(g_events){
+                switch(event){
+                case GLFW_CONNECTED:
+                    g_events -> connected(Joystick(jid));
+                    break;
+                case GLFW_DISCONNECTED:
+                    g_events -> disconnected(Joystick(jid));
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_key(GLFWwindow* window, int key, int scancode, int action, int mods)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
+                
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w){
+                switch(action){
+                case GLFW_PRESS:
+                    w->key_pressed(key, scancode, ModifierKeys((uint8_t) mods));
+                    break;
+                case GLFW_RELEASE:
+                    w->key_released(key, scancode, ModifierKeys((uint8_t) mods));
+                    break;
+                case GLFW_REPEAT:
+                    w->key_repeat(key, scancode, ModifierKeys((uint8_t) mods));
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_monitor(GLFWmonitor* mon, int event)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_MonitorCallback(mon, event);
+            if(g_events){
+                switch(event){
+                case GLFW_CONNECTED:
+                    g_events -> connected(Monitor(mon));
+                    break;
+                case GLFW_DISCONNECTED:
+                    g_events -> disconnected(Monitor(mon));
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_mouse_button(GLFWwindow* window, int button, int action, int mods)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+            
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w){
+                switch(action){
+                case GLFW_PRESS:
+                    w->mouse_pressed(button, w->m_cursor, ModifierKeys((uint8_t) mods));
+                    break;
+                case GLFW_RELEASE:
+                    w->mouse_released(button, w->m_cursor, ModifierKeys((uint8_t) mods));
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_scroll(GLFWwindow* window, double xoffset, double yoffset)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
+
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w -> scroll_wheel(Vector2D(xoffset, yoffset));
+        }
+        
+        void Window::callback_window_close(GLFWwindow* window)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w) {
+                w->window_close_requested();
+            } else {
+                glfwSetWindowShouldClose(window, GLFW_TRUE);
+            }
+        }
+        
+        void Window::callback_window_focus(GLFWwindow* window, int focused)
+        {
+            if(g_imgui)
+                ImGui_ImplGlfw_WindowFocusCallback(window, focused);
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w){
+                switch(focused){
+                case GLFW_TRUE:
+                    w -> window_focused();
+                    break;
+                case GLFW_FALSE:
+                    w -> window_unfocused();
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_window_iconify(GLFWwindow* window, int iconified)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w){
+                switch(iconified){
+                case GLFW_TRUE:
+                    w -> window_iconified();
+                    break;
+                case GLFW_FALSE:
+                    w -> window_restored();
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_window_maximize(GLFWwindow* window, int maximized)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w){
+                switch(maximized){
+                case GLFW_TRUE:
+                    w -> window_maximized();
+                    break;
+                case GLFW_FALSE:
+                    w -> window_restored();
+                    break;
+                }
+            }
+        }
+        
+        void Window::callback_window_position(GLFWwindow* window, int xpos, int ypos)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w->window_moved(Vector2I(xpos, ypos));
+        }
+        
+        void Window::callback_window_refresh(GLFWwindow* window)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w->window_refresh_requested();
+        }
+        
+        void Window::callback_window_scale(GLFWwindow* window, float xscale, float yscale)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w->window_scaled(Vector2F(xscale, yscale));
+        }
+        
+        void Window::callback_window_size(GLFWwindow* window, int width, int height)
+        {
+            Window* w   = (Window*) glfwGetWindowUserPointer(window);
+            if(w)
+                w->window_resized(Size2I(width, height));
+        }
 
         //  ------------------------------------------------
 
         Window::Window()
         {
+            ++g_count;
         }
         
-        Window::Window(const ViewerCreateInfo&vci)
+        Window::Window(const ViewerCreateInfo&vci)  : Window()
         {
             std::error_code ec = init_window(vci);
             if(ec)
@@ -37,6 +280,7 @@ namespace yq {
 
         Window::~Window()
         {
+            --g_count;
             kill_window();
         }
                 
@@ -58,14 +302,50 @@ namespace yq {
 
             m_title     = vci.title;
             m_window    = glfwCreateWindow(wx, wy, m_title.c_str(), vci.monitor.monitor(), nullptr);
-            if(!m_window)
+            if(!m_window){
+                const char* description = nullptr;
+                glfwGetError(&description);
+                if(description)
+                    tachyonCritical << "GLFW Unable to create window.  " << description;
                 return create_error<"Unable to create GLFW window">();
+            }
+            
+            if(vci.imgui)
+                g_imgui = true;
 
-            glfwSetWindowUserPointer(m_window, this);
             m_init      = true;
             return std::error_code();
         }
         
+        void            Window::install_hooks()
+        {
+            static bool s_init     = false;
+            if(!s_init){
+                glfwSetJoystickCallback( callback_joystick );
+                glfwSetMonitorCallback( callback_monitor );
+                s_init  = true;
+            }
+
+            glfwSetWindowUserPointer(m_window, this);
+
+            glfwSetCharCallback(m_window, callback_character);
+            glfwSetCursorEnterCallback(m_window, callback_cursor_enter);
+            glfwSetCursorPosCallback(m_window, callback_cursor_position);
+            glfwSetDropCallback(m_window, callback_drop);
+            glfwSetFramebufferSizeCallback(m_window, callback_framebuffer_size);
+            glfwSetKeyCallback(m_window, callback_key);
+            glfwSetMouseButtonCallback(m_window, callback_mouse_button);
+            glfwSetScrollCallback(m_window, callback_scroll);
+            glfwSetWindowCloseCallback(m_window, callback_window_close);
+            glfwSetWindowContentScaleCallback(m_window, callback_window_scale);
+            glfwSetWindowFocusCallback(m_window, callback_window_focus);
+            glfwSetWindowIconifyCallback(m_window, callback_window_iconify);
+            glfwSetWindowMaximizeCallback(m_window, callback_window_maximize);
+            glfwSetWindowPosCallback(m_window, callback_window_position);
+            glfwSetWindowRefreshCallback(m_window, callback_window_refresh);
+            glfwSetWindowSizeCallback(m_window, callback_window_size);
+        }
+
         void            Window::kill_window()
         {
             if(!m_init)
@@ -128,6 +408,10 @@ namespace yq {
                 glfwShowWindow(m_window);
         }
 
+        void        Window::window_close_requested()
+        {
+            cmd_close();
+        }
         
         void        Window::set_position(int x, int y)
         {
@@ -252,13 +536,13 @@ namespace yq {
             glfwGetWindowPos(m_window, &ret.x, &ret.y);
             return ret;
         }
+        
         bool        Window::should_close() const
         {
             if(!m_window) 
                 return true;
             return glfwWindowShouldClose(m_window);
         }
-
 
         Size2I      Window::size() const
         {

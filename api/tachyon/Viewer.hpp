@@ -8,6 +8,7 @@
 
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/host/Window.hpp>
+#include <basic/Flags.hpp>
 
 struct ImGuiContext;
 
@@ -19,6 +20,8 @@ namespace yq {
         
         class Viewer : public Window, public Visualizer {
         public:
+
+        
         
             /*! \brief Creates the viewer
             */
@@ -47,6 +50,10 @@ namespace yq {
             //! Current frame number
             uint64_t            frame_number() const { return tick(); }
             
+        protected:
+            virtual void        window_framebuffer_resized(const Size2I&) override;
+            virtual void        window_resized(const Size2I&) override;
+            
         private:
             void                record(ViContext&) override;
 
@@ -56,7 +63,6 @@ namespace yq {
             
             virtual void        kill_window() { kill(); }
             void                kill();
-            
         };
     }
 }

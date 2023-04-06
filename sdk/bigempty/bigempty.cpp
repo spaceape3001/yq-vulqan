@@ -15,8 +15,10 @@ int main(int argc, char* argv[])
     vci.clear        = { 0.0, 0.2, 0.5, 1. };
     vci.resizable    = true;
     vci.imgui        = true;
+    vci.size         = { 1920, 1080 };
 
     Viewer* v       = new Viewer(vci, new Widget2);
     app.run(v);
+    delete v;
     return 0;
 }

@@ -20,7 +20,8 @@ namespace yq {
             CapsLock,
             NumLock
         )
-        using ModifierKeys  = Flag<ModifierKey>;
+        using ModifierKeys  = Flag<ModifierKey,uint8_t>;
     }
 }
-YQ_TYPE_DECLARE(yq::tachyon::LogicOp)
+YQ_TYPE_DECLARE(yq::tachyon::ModifierKey)
+YQ_TYPE_DECLARE(yq::tachyon::ModifierKeys)

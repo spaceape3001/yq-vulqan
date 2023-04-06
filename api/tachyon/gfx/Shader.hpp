@@ -22,21 +22,17 @@ namespace yq {
             
             static Ref<const Shader>    load(std::string_view);
             static Ref<const Shader>    decode(const ShaderSpec&);
-
             
-            const ByteArray&    payload() const { return m_payload; }
-            ShaderType          shader_type() const { return m_type; }
             virtual size_t      data_size() const override;
-            
             
             Shader(const ByteArray&, ShaderType);
             Shader(ByteArray&&, ShaderType);
+
+            ByteArray   payload;
+            ShaderType  type;
         
         private:
             virtual ~Shader();
-
-            ByteArray               m_payload;
-            tachyon::ShaderType     m_type;
         };
    }
 }

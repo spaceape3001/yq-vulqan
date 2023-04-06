@@ -295,7 +295,7 @@ namespace yq {
         {
             ++m_frameNumber;
             auto start = std::chrono::high_resolution_clock::now();
-            UiContext   u(*m_viz);
+            UiContext   u;
             if(m_imgui){
                 u.imgui_enabled = true;
                 ImGui::SetCurrentContext(m_imgui);

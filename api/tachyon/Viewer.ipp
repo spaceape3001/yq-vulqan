@@ -106,13 +106,16 @@ namespace yq {
             Window::kill_window();
         }
 
+        std::error_code     Viewer::draw()
+        {
+            UiContext   u;
+            return draw(u);
+        }
 
-        std::error_code     Viewer::draw(Object* custom)
+        std::error_code     Viewer::draw(UiContext& u)
         {
             auto start = std::chrono::high_resolution_clock::now();
-            UiContext     u(*this);
             u.frame         = ++m_frameNumber;
-            u.custom        = custom;
             if(m_widget && m_imgui){
                 u.imgui_enabled = true;
                 ImGui::SetCurrentContext(m_imgui);

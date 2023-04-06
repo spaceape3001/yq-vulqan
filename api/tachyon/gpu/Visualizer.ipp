@@ -18,6 +18,7 @@
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
+#include <basic/AutoReset.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -1393,10 +1394,13 @@ namespace yq {
             vkResetFences(m_device, 1, &f.fence);
             vkResetCommandBuffer(f.commandBuffer, 0);
             
-            VkCommandBuffer old = u.cmd;
-            u.cmd   = f.commandBuffer;
-            std::error_code ec = _record(u, imageIndex, use);
-            u.cmd   = old;
+            std::error_code ec;
+            
+            {
+                auto r1 = auto_reset(u.cmd, f.commandBuffer);
+                auto r2 = auto_reset(u.viz, this);
+                ec = _record(u, imageIndex, use);
+            }
             if(ec)
                 return ec;
             

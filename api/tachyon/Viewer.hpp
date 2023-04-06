@@ -38,7 +38,8 @@ namespace yq {
             std::error_code     initialize(const ViewerCreateInfo&vci, Widget2*);
             
             //! Runs the draw sequence
-            std::error_code     draw(Object* custom=nullptr);
+            std::error_code     draw(UiContext&);
+            std::error_code     draw();
             
             //! Time (in seconds) of last draw call
             double              draw_time() const { return m_drawTime; }

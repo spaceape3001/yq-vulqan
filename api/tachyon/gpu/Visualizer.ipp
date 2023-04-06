@@ -368,8 +368,9 @@ namespace yq {
                 if(ec)
                     return ec;
             }
-                
-
+            
+            set_clear_color(vci.clear);
+            
             ec  = _create(m_swapchain);
             if(ec)
                 return ec;

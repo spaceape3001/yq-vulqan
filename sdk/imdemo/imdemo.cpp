@@ -8,40 +8,19 @@
     Simple "demo" utilitiy
 */
 
-#include <basic/Logging.hpp>
 #include <io/PluginLoader.hpp>
-#include <meta/Meta.hpp>
-#include <meta/ObjectInfoWriter.hpp>
-#include <engine/Application.hpp>
-#include <engine/Viewer.hpp>
-#include <tachyon/ui/MyImGui.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/widget/ImGuiDemo.hpp>
 #include <iostream>
 
 using namespace yq;
-using namespace yq::engine;
-
-class DemoWindow : public Viewer {
-    YQ_OBJECT_DECLARE(DemoWindow, Viewer)
-public:
-    DemoWindow(const ViewerCreateInfo & wci=ViewerCreateInfo ()) : Viewer(wci)
-    {
-    }
-    
-    ~DemoWindow()
-    {
-    }
-    
-    void   draw_imgui(tachyon::ViContext&) override 
-    {
-        ImGui::ShowDemoWindow();
-    }
-};
-
-YQ_OBJECT_IMPLEMENT(DemoWindow)
+using namespace yq::tachyon;
 
 int main(int argc, char* argv[])
 {
-    engine::AppCreateInfo        vi;
+    AppCreateInfo        vi;
     vi.app_name     = "im_demo";
 
     Application app(argc, argv, vi);
@@ -54,8 +33,8 @@ int main(int argc, char* argv[])
     wi.resizable    = true;
     wi.imgui        = true;
     //wi.pmode        = VK_PRESENT_MODE_IMMEDIATE_KHR;  // <-< Set this if you want to see how fast your CPU & GPU can go!  (Metrics under Tools menu.)
-    Ref<DemoWindow>   window  = new DemoWindow(wi);
     
-    app.run_window(window.ptr(), 0.0);
+    Ref<Viewer>     v   = new Viewer(wi, new widget::ImGuiDemo);
+    app.run(v.ptr(), { 0.0 });
     return 0;
 }

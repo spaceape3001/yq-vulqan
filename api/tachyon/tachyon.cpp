@@ -54,6 +54,7 @@
 
 #include "ui/Editor.ipp"
 
+#include "widget/ImGuiDemo.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>

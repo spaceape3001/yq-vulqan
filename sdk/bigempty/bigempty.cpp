@@ -17,8 +17,7 @@ int main(int argc, char* argv[])
     vci.imgui        = true;
     vci.size         = { 1920, 1080 };
 
-    Viewer* v       = new Viewer(vci, new Widget2);
-    app.run(v);
-    delete v;
+    Ref<Viewer> v  = new Viewer(vci, new Widget2);
+    app.run(v.ptr());
     return 0;
 }

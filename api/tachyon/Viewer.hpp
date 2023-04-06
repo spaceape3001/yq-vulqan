@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <basic/Ref.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/host/Window.hpp>
 #include <basic/Flags.hpp>
@@ -18,7 +19,7 @@ namespace yq {
     namespace tachyon {
         class Widget2;
         
-        class Viewer : public Window, public Visualizer {
+        class Viewer : public Window, public Visualizer, public RefCount {
         public:
 
         

@@ -10,6 +10,7 @@
 
 #include <basic/Guarded.hpp>
 #include <math/preamble.hpp>
+#include <tachyon/gpu/ViPipeline.hpp>
 #include <tachyon/enum/PresentMode.hpp>
 
 #include <atomic>
@@ -38,14 +39,6 @@ namespace yq {
             VkShaderStageFlagBits   mask    = {};
         };
         
-        struct ViPipeline {
-            VkPipelineLayout        layout      = nullptr;
-            VkPipeline              pipeline    = nullptr;
-            VkPipeline              wireframe   = nullptr;
-            VkDescriptorSetLayout   descriptors = nullptr;
-            uint32_t                shaders     = 0;
-            VkPipelineBindPoint     binding     = VK_PIPELINE_BIND_POINT_GRAPHICS;
-        };
     
         struct ViQueues {
             std::vector<VkQueue>    queues;
@@ -125,7 +118,7 @@ namespace yq {
         class Visualizer  {
         public:
             
-            using DrawFunction              = std::function<void(UiContext&)>;
+            using DrawFunction              = std::function<void(ViContext&)>;
         
         
             //  since this is "stolen", demoted
@@ -171,7 +164,7 @@ namespace yq {
             
                 \note Nothing stops recursion... DON'T
             */
-            std::error_code                 draw(UiContext&, DrawFunction use={});
+            std::error_code                 draw(ViContext&, DrawFunction use={});
             
             void                            erase(const Buffer&);
 
@@ -245,6 +238,8 @@ namespace yq {
             uint32_t                        swapchain_image_count() const;
             uint32_t                        swapchain_min_image_count() const;
             uint32_t                        swapchain_width() const;
+            
+            uint64_t                        tick() const { return m_tick; }
 
             VkQueue                         video_decode_queue(uint32_t i=0) const;
             uint32_t                        video_decode_queue_count() const;
@@ -257,7 +252,7 @@ namespace yq {
             bool                            video_encode_queue_valid() const;
 
             // used if no draw function is provided
-            virtual void                    record(UiContext&){}
+            virtual void                    record(ViContext&){}
 
         protected:
             Visualizer();
@@ -288,7 +283,7 @@ namespace yq {
             std::error_code             _create(ViThread&);
             void                        _destroy(ViThread&);
             
-            std::error_code             _record(UiContext&, uint32_t, DrawFunction use={}); // may have extents (later)
+            std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
             
         
             Visualizer(const Visualizer&) = delete;

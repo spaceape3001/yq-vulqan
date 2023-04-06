@@ -15,7 +15,8 @@ struct GLFWvidmode;
 struct GLFWwindow;
 
 namespace yq {
-
+    template <size_t N> class BasicBuffer;
+    
     namespace asset {
     }
 
@@ -28,6 +29,10 @@ namespace yq {
     }
     
     namespace tachyon {
+        static constexpr const size_t   MAX_PUSH                = 256;
+        static constexpr const size_t   MAX_FRAMES_IN_FLIGHT    = 2;
+        static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = 1024;
+
         struct  AppCreateInfo;
         class   AppGLFW;
         class   Application;
@@ -38,18 +43,14 @@ namespace yq {
         class   Buffer;
         class   Camera;
         struct  CameraParams;
-
-        class Shader;
-        class Texture;
-
-        using ShaderSpec        = std::variant<std::monostate, std::string, Ref<const Shader>>;
-
         struct  Joystick;
         class   Monitor;
         class   Pipeline;
         class   PipelineBuilder;
         struct  PipelineConfig;
-        struct  UiContext;
+        class   Shader;
+        class   Texture;
+        struct  ViContext;
         struct  VideoMode;
         class   Visualizer;
         class   Viewer;
@@ -62,11 +63,10 @@ namespace yq {
         class   Widget3;
         class   Window;
 
-        static constexpr const size_t   MAX_PUSH                = 256;
-        static constexpr const size_t   MAX_FRAMES_IN_FLIGHT    = 2;
-        static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = 1024;
-
         template <typename> class TypedAssetFactory;
+        
+        using PushBuffer    = BasicBuffer<MAX_PUSH>;
+        using ShaderSpec    = std::variant<std::monostate, std::string, Ref<const Shader>>;
     }
     
         // here for compatibility

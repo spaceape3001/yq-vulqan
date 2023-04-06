@@ -105,7 +105,7 @@ public:
         
     }
     
-    void    imgui_(UiContext&) override;
+    void    imgui_(ViContext&) override;
     
 private:
     std::filesystem::path   m_path;
@@ -123,12 +123,12 @@ public:
 yInfo() << "Line count is " << m_edit -> line_count();        
     }
     
-    void    imgui_(UiContext&) override;
+    void    imgui_(ViContext&) override;
     
     widget::TextArea*       m_edit = nullptr;
 };
 
-void GTEditor::imgui_(UiContext&)
+void GTEditor::imgui_(ViContext&)
 {
     using namespace ImGui;
     auto cpos   = GetCursorPosition();
@@ -142,7 +142,7 @@ void GTEditor::imgui_(UiContext&)
     End();
 }
 
-void    N2Editor::imgui_(UiContext&u) 
+void    N2Editor::imgui_(ViContext&u) 
 {
     using namespace ImGui;
     //auto cpos   = GetCursorPosition();
@@ -176,7 +176,7 @@ public:
         m_editors.clear();
     }
     
-    void   draw_imgui(tachyon::UiContext&u) override 
+    void   draw_imgui(tachyon::ViContext&u) override 
     {
         enum FileMode   {
             NONE    = 0,

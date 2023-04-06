@@ -10,7 +10,7 @@
 
 namespace yq {
     namespace tachyon {
-        struct UiContext;
+        struct ViContext;
     
         class Widget2Info : public WidgetInfo {
         public:
@@ -27,8 +27,8 @@ namespace yq {
             YQ_OBJECT_DECLARE(Widget2, Widget)
         public:
 
-            virtual void    imgui_(UiContext&);
-            virtual void    vulkan_(UiContext&);
+            virtual void    imgui_(ViContext&);
+            virtual void    vulkan_(ViContext&);
             
             virtual ~Widget2();
             Widget2();

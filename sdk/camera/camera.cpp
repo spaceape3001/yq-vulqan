@@ -215,7 +215,7 @@ struct CameraWin : public engine::Viewer {
         //Window::draw_vulqan(cmdbuf);
     }
     
-    void    draw_imgui(tachyon::UiContext&) override
+    void    draw_imgui(tachyon::ViContext&) override
     {
         if(BeginMainMenuBar()){
             if(BeginMenu("Camera")){

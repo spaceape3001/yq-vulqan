@@ -7,6 +7,7 @@
 #pragma once
 
 #include <tachyon/gfx/Pipeline.hpp>
+#include <basic/DelayInit.hpp>
 
 namespace yq {
     namespace tachyon {
@@ -25,6 +26,11 @@ namespace yq {
         
         Pipeline::~Pipeline()
         {
+        }
+
+        void    Pipeline::set_name(std::string_view sv)
+        {
+            m_name  = std::string(sv);
         }
     }
 }

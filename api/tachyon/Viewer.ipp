@@ -6,14 +6,16 @@
 
 #pragma once
 
+#include <tachyon/TachyonLog.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
 #include <tachyon/ui/Widget2.hpp>
-#include <tachyon/ui/UiContext.hpp>
+#include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/ui/MyImGui.hpp>
 
+#include <basic/AutoReset.hpp>
 #include <basic/ErrorDB.hpp>
 #include <basic/errors.hpp>
 
@@ -35,8 +37,10 @@ namespace yq {
         Viewer::Viewer(const ViewerCreateInfo&vci, Widget2*w) : Viewer()
         {
             std::error_code ec = initialize(vci, w);
-            if(ec)
+            if(ec){
+                tachyonCritical << "Unable to initialize the viewer ... " << ec.message();
                 throw ec;
+            }
         }
 
         std::error_code     Viewer::initialize(const ViewerCreateInfo&vci, Widget2* w)
@@ -108,16 +112,16 @@ namespace yq {
 
         std::error_code     Viewer::draw()
         {
-            UiContext   u;
+            ViContext   u;
             return draw(u);
         }
 
-        std::error_code     Viewer::draw(UiContext& u)
+        std::error_code     Viewer::draw(ViContext& u)
         {
             auto start = std::chrono::high_resolution_clock::now();
-            u.frame         = ++m_frameNumber;
+            u.m_frameNumber = tick();
             if(m_widget && m_imgui){
-                u.imgui_enabled = true;
+                auto r = auto_reset(u.m_imgui, true);
                 ImGui::SetCurrentContext(m_imgui);
                 ImGui_ImplVulkan_NewFrame();
                 ImGui_ImplGlfw_NewFrame();
@@ -129,15 +133,17 @@ namespace yq {
             std::error_code ec = Visualizer::draw(u);
             auto end   = std::chrono::high_resolution_clock::now();
             m_drawTime          = (end-start).count();
+            if(ec != std::error_code())
+                tachyonWarning << "Viewer::draw() failed ... " << ec.message();
             return ec;
         }
 
-        void    Viewer::record(UiContext&u)
+        void    Viewer::record(ViContext&u)
         {
             if(m_widget)
                 m_widget -> vulkan_(u);
             if(m_imgui)
-                ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.cmd, nullptr);
+                ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command(), nullptr);
         }
 
     }

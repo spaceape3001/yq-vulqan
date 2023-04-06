@@ -180,7 +180,7 @@ namespace yq {
             virtual void        viewport_changed(){}
             
             //  called if ImGUI is enabled
-            virtual void        draw_imgui(tachyon::UiContext&){}
+            virtual void        draw_imgui(tachyon::ViContext&){}
             virtual void        draw_vulqan(VkCommandBuffer);
             
             

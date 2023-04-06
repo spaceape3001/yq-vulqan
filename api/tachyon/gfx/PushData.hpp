@@ -10,7 +10,7 @@
 
 namespace yq {
     namespace tachyon {
-    
+
         //! Render Push Data
         struct StdPushData {
             glm::mat4       matrix; // either full or render... depending on enumeration

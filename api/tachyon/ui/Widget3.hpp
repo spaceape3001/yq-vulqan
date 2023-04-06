@@ -21,13 +21,13 @@ namespace yq {
             YQ_OBJECT_DECLARE(Widget3, Widget)
         public:
 
-            struct UiContext {};       // contents TBD
+            struct ViContext {};       // contents TBD
         
             Widget3();
             virtual ~Widget3();
             
-            virtual void    imgui_(UiContext&);
-            virtual void    vulkan_(UiContext&);
+            virtual void    imgui_(ViContext&);
+            virtual void    vulkan_(ViContext&);
 
         protected:
             Widget3*                m_parent = nullptr;

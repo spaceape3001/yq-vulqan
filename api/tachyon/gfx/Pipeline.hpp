@@ -25,12 +25,20 @@ namespace yq {
             Pipeline(const PipelineConfig&);
             Pipeline(PipelineConfig&&);
             
+            std::string_view    name() const { return m_name; }
+            void                set_name(std::string_view);
+            
+            bool                is_object() const { return m_object != nullptr; }
+            const ObjectInfo*   object() const { return m_object; }
+            
         protected:
             Pipeline();
             virtual ~Pipeline();
         
         private:
             PipelineConfig      m_config;
+            std::string         m_name;
+            const ObjectInfo*   m_object        = nullptr;
         };
     }
 }

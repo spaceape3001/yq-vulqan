@@ -43,7 +43,7 @@
 #include <tachyon/gpu/VqLogging.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/ui/UiContext.hpp>
+#include <tachyon/gpu/ViContext.hpp>
 
 #include <math/shape/Size2.hpp>
 #include <math/vector/Vector2.hpp>
@@ -295,9 +295,9 @@ namespace yq {
         {
             ++m_frameNumber;
             auto start = std::chrono::high_resolution_clock::now();
-            UiContext   u;
+            ViContext   u;
             if(m_imgui){
-                u.imgui_enabled = true;
+                u.m_imgui = true;
                 ImGui::SetCurrentContext(m_imgui);
                 ImGui_ImplVulkan_NewFrame();
                 ImGui_ImplGlfw_NewFrame();
@@ -305,10 +305,10 @@ namespace yq {
                 draw_imgui(u);
                 ImGui::Render();
             }
-            m_viz->draw(u, [&](UiContext&u){
-                draw_vulqan(u.cmd);
+            m_viz->draw(u, [&](ViContext&u){
+                draw_vulqan(u.command());
                 if(m_imgui)
-                    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.cmd, nullptr);
+                    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command(), nullptr);
             });
             auto end   = std::chrono::high_resolution_clock::now();
             m_drawTime          = Second((end-start).count());

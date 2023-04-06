@@ -23,7 +23,7 @@ namespace yq {
         {
         }
         
-        void    Editor::imgui_(UiContext&u)
+        void    Editor::imgui_(ViContext&u)
         {
             if(metaInfo().menu_bar()){
                 if(ImGui::BeginMainMenuBar()){

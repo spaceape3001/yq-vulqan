@@ -29,13 +29,13 @@ namespace yq {
             m_children.clear();
         }
 
-        void    Widget3::imgui_(UiContext& u)
+        void    Widget3::imgui_(ViContext& u)
         {
             for(Widget3* w : m_children)
                 w->imgui_(u);
         }
         
-        void    Widget3::vulkan_(UiContext& u)
+        void    Widget3::vulkan_(ViContext& u)
         {
             for(Widget3* w : m_children)
                 w->vulkan_(u);

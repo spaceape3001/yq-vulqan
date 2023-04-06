@@ -9,6 +9,8 @@
     are our C++ adapters for it.
 */
 
+//#include "gfx/Pipeline2.ipp"
+
 #include "Application.ipp"
 #include "Viewer.ipp"
 
@@ -33,6 +35,7 @@
 #include "gfx/Shader.ipp"
 #include "gfx/Texture.ipp"
 
+#include "gpu/ViContext.ipp"
 #include "gpu/VqApp.ipp"
 #include "gpu/VqEnums.ipp"
 #include "gpu/VqLogging.ipp"

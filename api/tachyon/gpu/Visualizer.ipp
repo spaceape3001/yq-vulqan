@@ -18,6 +18,8 @@
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
+#include <tachyon/gpu/ViContext.hpp>
+#include <tachyon/gpu/ViPipeline.hpp>
 #include <basic/AutoReset.hpp>
 
 #include <GLFW/glfw3.h>
@@ -1331,13 +1333,14 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////
         //  RENDERING
 
-        std::error_code     Visualizer::_record(UiContext& u, uint32_t imageIndex, DrawFunction use)
+        std::error_code     Visualizer::_record(ViContext& u, uint32_t imageIndex, DrawFunction use)
         {
+        
             VqCommandBufferBeginInfo beginInfo;
             beginInfo.flags = 0; // Optional
             beginInfo.pInheritanceInfo = nullptr; // Optional
 
-            if (vkBeginCommandBuffer(u.cmd, &beginInfo) != VK_SUCCESS)
+            if (vkBeginCommandBuffer(u.command(), &beginInfo) != VK_SUCCESS)
                 return create_error<"Failed to begin recording command buffer">();
 
             VqRenderPassBeginInfo renderPassInfo;
@@ -1349,7 +1352,7 @@ namespace yq {
             renderPassInfo.clearValueCount = 1;
             VkClearValue                cv  = m_clearValue;
             renderPassInfo.pClearValues = &cv;
-            vkCmdBeginRenderPass(u.cmd, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+            vkCmdBeginRenderPass(u.command(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
             std::error_code     ret;
             try {
@@ -1362,15 +1365,18 @@ namespace yq {
                 ret = ec;
             }
                 
-            vkCmdEndRenderPass(u.cmd);
-            if (vkEndCommandBuffer(u.cmd) != VK_SUCCESS)
+            vkCmdEndRenderPass(u.command());
+            if (vkEndCommandBuffer(u.command()) != VK_SUCCESS)
                 return create_error<"Failed to record command buffer">();
             return ret;
         }
 
-        std::error_code     Visualizer::draw(UiContext& u, DrawFunction use)
+        std::error_code     Visualizer::draw(ViContext& u, DrawFunction use)
         {
+            auto    r1 = auto_reset(u.m_viz, this);
             ViFrame&    f   = current_frame();
+            auto    r2  = auto_reset(u.m_command, f.commandBuffer);
+            
             vkWaitForFences(m_device, 1, &f.fence, VK_TRUE, UINT64_MAX);
 
             uint32_t imageIndex = 0;
@@ -1391,15 +1397,9 @@ namespace yq {
                 return std::error_code();
 
             vkResetFences(m_device, 1, &f.fence);
-            vkResetCommandBuffer(f.commandBuffer, 0);
+            vkResetCommandBuffer(u.command(), 0);
             
-            std::error_code ec;
-            
-            {
-                auto r1 = auto_reset(u.cmd, f.commandBuffer);
-                auto r2 = auto_reset(u.viz, this);
-                ec = _record(u, imageIndex, use);
-            }
+            std::error_code ec = _record(u, imageIndex, use);
             if(ec)
                 return ec;
             

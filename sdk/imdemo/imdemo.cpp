@@ -31,7 +31,7 @@ public:
     {
     }
     
-    void   draw_imgui(tachyon::UiContext&) override 
+    void   draw_imgui(tachyon::ViContext&) override 
     {
         ImGui::ShowDemoWindow();
     }

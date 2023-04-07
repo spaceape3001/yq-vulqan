@@ -129,6 +129,9 @@ namespace yq {
 
         std::error_code     Viewer::draw(ViContext& u)
         {
+            if(m_paused || m_zeroSize)
+                return std::error_code();
+                
             auto start = std::chrono::high_resolution_clock::now();
             u.m_frameNumber = tick();
             if(m_widget && m_imgui){
@@ -157,18 +160,25 @@ namespace yq {
                 ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command(), nullptr);
         }
 
-        void    Viewer::window_framebuffer_resized(const Size2I&)
+        void    Viewer::window_framebuffer_resized(const Size2I&s)
         {
+            m_zeroSize  = zero_framebuffer();
             trigger_rebuild();
         }
 
-        void    Viewer::window_moved(const Vector2I&) 
+        void    Viewer::set_render_paused(bool v)
         {
+            m_paused    = v;
         }
         
-        void    Viewer::window_resized(const Size2I&)
+        void    Viewer::cmd_pause()
         {
-            trigger_rebuild();
+            set_render_paused(true);
+        }
+        
+        void    Viewer::cmd_unpause()
+        {
+            set_render_paused(false);
         }
     }
 }

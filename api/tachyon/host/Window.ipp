@@ -450,6 +450,13 @@ namespace yq {
         //  ------------------------------------------------
         //  GETTER/INFORMATION
 
+        Size2I  Window::framebuffer_size() const
+        {
+            int width = 0, height = 0;
+            glfwGetFramebufferSize(m_window, &width, &height);
+            return Size2I(width, height);
+        }
+        
         int  Window::height() const
         {
             if(!m_window)
@@ -563,6 +570,12 @@ namespace yq {
             int ret;
             glfwGetWindowSize(m_window, &ret, nullptr);
             return ret;
+        }
+
+        bool Window::zero_framebuffer() const
+        {
+            Size2I sz  = framebuffer_size();
+            return (sz.x <= 0) || (sz.y <= 0);
         }
     }
 }

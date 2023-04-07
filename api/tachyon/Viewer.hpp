@@ -51,10 +51,14 @@ namespace yq {
             //! Current frame number
             uint64_t            frame_number() const { return tick(); }
             
+            bool                render_paused() const { return m_paused; }
+            void                set_render_paused(bool);
+            
+            void                cmd_pause();
+            void                cmd_unpause();
+            
         protected:
             virtual void        window_framebuffer_resized(const Size2I&) override;
-            virtual void        window_resized(const Size2I&) override;
-            virtual void        window_moved(const Vector2I&) override;
             
         private:
             void                record(ViContext&) override;
@@ -62,6 +66,8 @@ namespace yq {
             Widget2*            m_widget        = nullptr;
             ImGuiContext*       m_imgui         = nullptr;
             double              m_drawTime      = 0;
+            bool                m_paused        = false;
+            bool                m_zeroSize      = false;
             
             virtual void        kill_window() { kill(); }
             void                kill();

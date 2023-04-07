@@ -43,6 +43,8 @@ namespace yq {
                 // returns the last recorded cursor position
             Vector2D            cursor() const { return m_cursor; }
 
+            Size2I              framebuffer_size() const;
+
                 //! Height of the window
             int                 height() const;
 
@@ -123,6 +125,8 @@ namespace yq {
             
                 //! Sets the window title
             void        set_title(std::string_view);
+
+            bool                    zero_framebuffer() const;
 
         protected:
         

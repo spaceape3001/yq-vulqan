@@ -131,10 +131,15 @@ namespace yq {
         protected:
         
             void                install_hooks();
+            
         
             //  NOTE... initializing w/o starting GLFW is bad mojo!
             std::error_code     init_window(const ViewerCreateInfo&);
             virtual void        kill_window();
+
+                /*
+                    USER EVENT CALLBACKS.....
+                */
 
             //! User entered a character
             virtual void        character(unsigned int) {}

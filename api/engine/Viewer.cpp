@@ -75,121 +75,17 @@ namespace yq {
         #endif
 
         ////////////////////////////////////////////////////////////////////////////////
-
-        void  Viewer::callback_character(GLFWwindow* window, unsigned int codepoint)
-        {
-            ImGui_ImplGlfw_CharCallback(window, codepoint);
-        }
-        
-        void  Viewer::callback_cursor_enter(GLFWwindow* window, int entered)
-        {
-            ImGui_ImplGlfw_CursorEnterCallback(window, entered);
-        }
-        
-        void  Viewer::callback_cursor_position(GLFWwindow* window, double xpos, double ypos)
-        {
-            ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
-            
-            Viewer* v   = (Viewer*) glfwGetWindowUserPointer(window);
-            if(v){
-                v->m_cursorPos  = { xpos, ypos };
-            }
-        }
-        
-        void  Viewer::callback_drop([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int count, [[maybe_unused]] const char** paths)
-        {
-        }
-        
-        void  Viewer::callback_framebuffer_size(GLFWwindow* window, [[maybe_unused]] int width, [[maybe_unused]] int height)
-        {
-            Viewer    *v  = (Viewer*) glfwGetWindowUserPointer(window);
-            if(v){
-                v -> m_viz -> trigger_rebuild();
-                if(v) [[likely]]
-                    v->window_resized();
-            }
-            yInfo() << "Frame size changed!";
-        }
-        
-        void  Viewer::callback_joystick([[maybe_unused]] int jid, [[maybe_unused]] int event)
-        {
-            yInfo() << "Joystick callback";
-        }
-        
-        void  Viewer::callback_key(GLFWwindow* window, int key, int scancode, int action, int mods)
-        {
-            ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
-        }
-        
-        void  Viewer::callback_monitor(GLFWmonitor* monitor, int event)
-        {
-            ImGui_ImplGlfw_MonitorCallback(monitor, event);
-        }
-        
-        void  Viewer::callback_mouse_button(GLFWwindow* window, int button, int action, int mods)
-        {
-            ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
-            yInfo() << "Mouse button!";
-        }
-        
-        void  Viewer::callback_scroll(GLFWwindow* window, double xoffset, double yoffset)
-        {
-            ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
-            yInfo() << "Scroll Wheel button!";
-        }
-
-        void  Viewer::callback_window_close(GLFWwindow*)
-        {
-            yInfo() << "Window close requested";
-        }
-        
-        void  Viewer::callback_window_focus(GLFWwindow* window, int focused)
-        {
-            ImGui_ImplGlfw_WindowFocusCallback(window, focused);
-            yInfo() << "Window focus changed!";
-        }
-        
-        void  Viewer::callback_window_iconify(GLFWwindow*, int)
-        {
-            yInfo() << "Viewer iconified";
-        }
-        
-        void  Viewer::callback_window_maximize(GLFWwindow*, int)
-        {
-            yInfo() << "Viewer maximized";
-        }
-        
-        void  Viewer::callback_window_position(GLFWwindow*, int, int)
-        {
-            yInfo() << "Viewer moved!";
-        }
-        
-        void  Viewer::callback_window_refresh(GLFWwindow*)
-        {
-            yInfo() << "Viewer refresh!"; // (ignoring)
-        }
-        
-        void  Viewer::callback_window_scale(GLFWwindow*, float, float)
-        {
-            yInfo() << "Viewer rescaled!";
-        }
-        
-        void  Viewer::callback_window_size(GLFWwindow* window, int, int)
-        {
-            Viewer    *v  = (Viewer*) glfwGetWindowUserPointer(window);
-            if(v){
-                v -> m_viz -> trigger_rebuild();
-                if(v) [[likely]]
-                    v->window_resized();
-            }
-            yInfo() << "Viewer resized!";
-        }
         
         void Viewer::poll_events()
         {
             glfwPollEvents();
         }
 
+        void        Viewer::window_framebuffer_resized(const Size2I&)
+        {
+            m_viz -> trigger_rebuild();
+        }
+        
         //  ----------------------------------------------------------------------------
 
         Viewer::Viewer(const ViewerCreateInfo&vci)
@@ -198,25 +94,6 @@ namespace yq {
                 Application::vulkan();
                 
                 init_window(vci);
-                
-                glfwSetCharCallback(window(), callback_character);
-                glfwSetCursorEnterCallback(window(), callback_cursor_enter);
-                glfwSetCursorPosCallback(window(), callback_cursor_position);
-                glfwSetDropCallback(window(), callback_drop);
-                glfwSetFramebufferSizeCallback(window(), callback_framebuffer_size);
-                glfwSetKeyCallback(window(), callback_key);
-                [[maybe_unused]] static auto fn2 = glfwSetJoystickCallback( callback_joystick );
-                [[maybe_unused]] static auto fn1 = glfwSetMonitorCallback( callback_monitor);
-                glfwSetMouseButtonCallback(window(), callback_mouse_button);
-                glfwSetScrollCallback(window(), callback_scroll);
-                glfwSetWindowCloseCallback(window(), callback_window_close);
-                glfwSetWindowContentScaleCallback(window(), callback_window_scale);
-                glfwSetWindowFocusCallback(window(), callback_window_focus);
-                glfwSetWindowIconifyCallback(window(), callback_window_iconify);
-                glfwSetWindowMaximizeCallback(window(), callback_window_maximize);
-                glfwSetWindowPosCallback(window(), callback_window_position);
-                glfwSetWindowRefreshCallback(window(), callback_window_refresh);
-                glfwSetWindowSizeCallback(window(), callback_window_size);
 
                 m_viz   = std::make_unique<Visualizer>(vci,this);
                 
@@ -260,6 +137,7 @@ namespace yq {
 
 
                 set_clear_color(vci.clear);
+                install_hooks();
                 yNotice() << "Using (" << to_string(gpu_type()) << "): " << gpu_name();
             }
             catch(VqException& ex){

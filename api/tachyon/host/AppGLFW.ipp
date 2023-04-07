@@ -7,6 +7,7 @@
 #pragma once
 
 #include <basic/Logging.hpp>
+#include <tachyon/TachyonLog.hpp>
 #include <tachyon/host/AppGLFW.hpp>
 #include <GLFW/glfw3.h>
 
@@ -42,6 +43,7 @@ namespace yq {
         void    AppGLFW::init_glfw()
         {
             if(!m_init){
+tachyonInfo << "AppGLFW::init_glfw()";
                 glfwLogging(0,nullptr);
                 glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
                 glfwInit();
@@ -52,6 +54,7 @@ namespace yq {
         void    AppGLFW::kill_glfw()
         {
             if(m_init){
+tachyonInfo << "AppGLFW::kill_glfw()";
                 glfwTerminate();
                 m_init  = false;
             }

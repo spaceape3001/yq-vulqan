@@ -54,6 +54,7 @@ namespace yq {
         protected:
             virtual void        window_framebuffer_resized(const Size2I&) override;
             virtual void        window_resized(const Size2I&) override;
+            virtual void        window_moved(const Vector2I&) override;
             
         private:
             void                record(ViContext&) override;

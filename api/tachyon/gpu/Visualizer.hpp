@@ -198,14 +198,6 @@ namespace yq {
             uint32_t                        present_queue_family() const;
             bool                            present_queue_valid() const;
             
-            /*! Rebuilds the swapchain
-            
-                This will rebuild the swapchain, if the flag has been set or forced.
-            
-                \param[in] force    Forces a rebuild
-                \return TRUE if rebuild occured
-            */
-            bool                            rebuild(bool force=false);
 
             VkRenderPass                    render_pass() const;
 
@@ -285,6 +277,7 @@ namespace yq {
             
             std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
             
+            
         
             Visualizer(const Visualizer&) = delete;
             Visualizer(Visualizer&&) = delete;
@@ -323,10 +316,19 @@ namespace yq {
             ViQueues                            m_videoDecode;
             ViQueues                            m_videoEncode;
             std::atomic<bool>                   m_rebuildSwap           = { false };
-            bool                                m_init                  = false;
             
         private:
+            bool                                m_init                  = false;
             GLFWwindow*                         m_window                = nullptr;
+
+            /*! Rebuilds the swapchain
+            
+                This will rebuild the swapchain, if the flag has been set or forced.
+            
+                \param[in] force    Forces a rebuild
+                \return TRUE if rebuild occured
+            */
+            void                        _rebuild();
         };
     
     }

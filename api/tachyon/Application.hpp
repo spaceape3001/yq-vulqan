@@ -48,6 +48,8 @@ namespace yq {
             */
             void    run(Viewer*win, Second timeout={0.});
             
+            static void initialize();
+            
             
         private:
             friend class Viewer;

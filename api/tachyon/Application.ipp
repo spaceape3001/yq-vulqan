@@ -14,6 +14,11 @@ namespace yq {
     namespace tachyon {
         Application*    Application::s_app    = nullptr;
 
+        void Application::initialize()
+        {
+            if(s_app)
+                s_app -> init();
+        }
 
         //  ////////////////////////////////////////////////////////////////////////
 

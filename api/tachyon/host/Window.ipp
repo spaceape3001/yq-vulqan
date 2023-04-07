@@ -13,6 +13,7 @@
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/TachyonLog.hpp>
 #include <basic/ErrorDB.hpp>
+#include <basic/TextUtils.hpp>
 #include <GLFW/glfw3.h>
 #include <tachyon/ui/MyImGui.hpp>
 #include <backends/imgui_impl_vulkan.h>
@@ -49,7 +50,7 @@ namespace yq {
         {
             if(g_imgui)
                 ImGui_ImplGlfw_CharCallback(window, codepoint);
-                
+
             Window*w    = (Window*) glfwGetWindowUserPointer(window);
             if(w)
                 w->character(codepoint);
@@ -95,6 +96,7 @@ namespace yq {
         
         void Window::callback_framebuffer_size(GLFWwindow* window, int width, int height)
         {
+
             Window* w   = (Window*) glfwGetWindowUserPointer(window);
             if(w)
                 w -> window_framebuffer_resized(Size2I(width, height));
@@ -118,7 +120,7 @@ namespace yq {
         {
             if(g_imgui)
                 ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
-                
+
             Window* w   = (Window*) glfwGetWindowUserPointer(window);
             if(w){
                 switch(action){
@@ -155,7 +157,7 @@ namespace yq {
         {
             if(g_imgui)
                 ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
-            
+
             Window* w   = (Window*) glfwGetWindowUserPointer(window);
             if(w){
                 switch(action){

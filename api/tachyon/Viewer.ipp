@@ -36,7 +36,6 @@ namespace yq {
 
         Viewer::Viewer(const ViewerCreateInfo&vci, Widget2*w) : Viewer()
         {
-            Application::vulkan();
         
             std::error_code ec = initialize(vci, w);
             if(ec){
@@ -49,9 +48,12 @@ namespace yq {
         {
             if(m_widget)
                 return std::error_code();
-        
+
             if(!w)
                 return errors::null_pointer();
+        
+            Application::initialize();
+
             std::error_code ec = init_window(vci);
             if(ec)
                 return ec;
@@ -143,7 +145,7 @@ namespace yq {
             auto end   = std::chrono::high_resolution_clock::now();
             m_drawTime          = (end-start).count();
             if(ec != std::error_code())
-                tachyonWarning << "Viewer::draw() failed ... " << ec.message();
+                tachyonCritical << "Viewer::draw() failed ... " << ec.message();
             return ec;
         }
 
@@ -158,6 +160,10 @@ namespace yq {
         void    Viewer::window_framebuffer_resized(const Size2I&)
         {
             trigger_rebuild();
+        }
+
+        void    Viewer::window_moved(const Vector2I&) 
+        {
         }
         
         void    Viewer::window_resized(const Size2I&)

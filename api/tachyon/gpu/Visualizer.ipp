@@ -1295,24 +1295,6 @@ namespace yq {
             }
         }
 
-        bool        Visualizer::rebuild(bool force)
-        {
-            if(force){
-                m_rebuildSwap   = false;
-            } else {
-                force       = m_rebuildSwap.exchange(false);
-                if(!force)
-                    return false;
-            }
-            
-            vkDeviceWaitIdle(m_device);
-            ViSwapchain newChain;
-            _create(newChain);
-            std::swap(newChain, m_swapchain);
-            _destroy(newChain);
-            return true;
-        }
-
         void        Visualizer::set_clear_color(const RGBA4F&i)
         {
             m_clearValue = VkClearValue{{{ i.red, i.green, i.blue, i.alpha }}};
@@ -1333,6 +1315,15 @@ namespace yq {
 
         ////////////////////////////////////////////////////////////////////////////////
         //  RENDERING
+
+        void                Visualizer::_rebuild()
+        {
+            vkDeviceWaitIdle(m_device);
+            ViSwapchain newChain;
+            _create(newChain);
+            std::swap(newChain, m_swapchain);
+            _destroy(newChain);
+        }
 
         std::error_code     Visualizer::_record(ViContext& u, uint32_t imageIndex, DrawFunction use)
         {
@@ -1374,29 +1365,50 @@ namespace yq {
 
         std::error_code     Visualizer::draw(ViContext& u, DrawFunction use)
         {
+            static constexpr const uint64_t     kMaxWait = 100'000'000ULL;
+        
             auto    r1 = auto_reset(u.m_viz, this);
             ViFrame&    f   = current_frame();
             auto    r2  = auto_reset(u.m_command, f.commandBuffer);
             
-            vkWaitForFences(m_device, 1, &f.fence, VK_TRUE, UINT64_MAX);
+            VkResult        res = VK_SUCCESS;
+            
+            res = vkWaitForFences(m_device, 1, &f.fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
+            if(res == VK_TIMEOUT)
+                return create_error<"Fence timeout">();
+
+            bool    rebuildFlag = m_rebuildSwap.exchange(false);
+            if(rebuildFlag){
+                _rebuild();
+                return std::error_code();
+            }
 
             uint32_t imageIndex = 0;
-            VkResult res    = vkAcquireNextImageKHR(m_device, m_swapchain.swapchain, UINT64_MAX, f.imageAvailable, VK_NULL_HANDLE, &imageIndex);
-            bool    force   = false;
+            res    = vkAcquireNextImageKHR(m_device, m_swapchain.swapchain, kMaxWait, f.imageAvailable, VK_NULL_HANDLE, &imageIndex);
+            
             switch(res){
+            case VK_TIMEOUT:
+                return create_error<"Acquire image timeout">();
+            case VK_ERROR_OUT_OF_DATE_KHR:
+            case VK_SUBOPTIMAL_KHR:
+                _rebuild();
+                return std::error_code();
             case VK_SUCCESS:
                 break;
-            case VK_SUBOPTIMAL_KHR:
-            case VK_ERROR_OUT_OF_DATE_KHR:
-                force       = true;
-                break;
+            case VK_ERROR_OUT_OF_HOST_MEMORY:
+                return create_error<"Out of host memory">();
+            case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+                return create_error<"Out of device memory">();
+            case VK_ERROR_DEVICE_LOST:
+                return create_error<"Device lost">();
+            case VK_ERROR_SURFACE_LOST_KHR:
+                return create_error<"Surface lost">();
+            case VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT:
+                return create_error<"Full screen exclusive mode lost">();
             default:
-                return create_error<"Unable to acquire next image">();
+                return create_error<"Unexpected error">();
             }
             
-            if(rebuild(force))
-                return std::error_code();
-
             vkResetFences(m_device, 1, &f.fence);
             vkResetCommandBuffer(u.command(), 0);
             

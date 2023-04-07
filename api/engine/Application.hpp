@@ -6,12 +6,8 @@
 
 #pragma once
 
-#include <basic/BasicApp.hpp>
-#include <basic/DbgRel.hpp>
-#include <engine/preamble.hpp>
+#include <tachyon/Application.hpp>
 #include <tachyon/AppCreateInfo.hpp>
-#include <tachyon/host/AppGLFW.hpp>
-#include <tachyon/gpu/VqApp.hpp>
 #include <set>
 #include <vector>
 
@@ -26,12 +22,9 @@ namespace yq {
         /*! \brief Engine/Vulkan application
         
         */
-        class Application : public BasicApp, public AppGLFW, public VqApp {
+        class Application : public tachyon::Application {
         public:
         
-            //! Global application, if any
-            static Application*       app() { return s_app; }
-            
         
             /*! \brief Constructor
             
@@ -55,17 +48,6 @@ namespace yq {
                                         is the max stall duration.
             */
             void    run_window(Viewer*win, double timeout=0.);
-            
-            
-        private:
-            friend class Viewer;
-            
-            static Application*                 s_app;
-            
-            bool        init();
-            void        kill();
-            
-            virtual bool    vk_init() override;
         };
 
     }

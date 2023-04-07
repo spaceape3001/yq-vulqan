@@ -15,7 +15,7 @@ namespace yq {
     namespace engine {
         VqBuffer::VqBuffer(Visualizer&viz, VkBufferUsageFlags uf, const void* data, size_t sz) 
         {
-            using namespace vulqan;
+            using namespace yq::tachyon;
             
             assert(data);
             assert(sz);

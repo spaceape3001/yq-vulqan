@@ -1,7 +1,7 @@
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/ui/Widget2.hpp>
+#include <tachyon/ui/Widget.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     vci.imgui        = true;
     vci.size         = { 1920, 1080 };
 
-    Ref<Viewer> v  = new Viewer(vci, new Widget2);
+    Ref<Viewer> v  = new Viewer(vci, new Widget);
     app.run(v.ptr());
     return 0;
 }

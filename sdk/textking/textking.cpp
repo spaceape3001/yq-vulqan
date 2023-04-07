@@ -14,7 +14,7 @@
 #include <meta/ObjectInfoWriter.hpp>
 #include <engine/Application.hpp>
 #include <engine/Viewer.hpp>
-#include <tachyon/ui/Widget2.hpp>
+#include <tachyon/ui/Widget.hpp>
 #include <tachyon/ui/MyImGui.hpp>
 #include <iostream>
 #include <TextEditor.h>
@@ -89,8 +89,8 @@ already in the field! Why stand we here idle? What is it that gentlemen wish? Wh
 peace so sweet, as to be purchased at the price of chains and slavery? Forbid it, Almighty God! I know not what course\n\
 others may take; but as for me, give me liberty or give me death!";
 
-class GTEditor : public Widget2, public TextEditor {
-    YQ_OBJECT_DECLARE(GTEditor, Widget2)
+class GTEditor : public Widget, public TextEditor {
+    YQ_OBJECT_DECLARE(GTEditor, Widget)
 public:
     GTEditor(const std::filesystem::path& fpath=std::filesystem::path())
     {
@@ -112,8 +112,8 @@ private:
     std::string             m_textid;
 };
 
-class N2Editor : public Widget2 {
-    YQ_OBJECT_DECLARE(N2Editor, Widget2)
+class N2Editor : public Widget {
+    YQ_OBJECT_DECLARE(N2Editor, Widget)
 public:
 
     N2Editor([[maybe_unused]] const std::filesystem::path& fpath=std::filesystem::path())
@@ -268,7 +268,7 @@ public:
         m_editors.push_back(editor);
     }
     
-    std::vector<Widget2*>   m_editors;
+    std::vector<Widget*>    m_editors;
     GTEditor*               m_active = nullptr;
 };
 

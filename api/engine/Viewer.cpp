@@ -421,20 +421,6 @@ namespace yq {
             return m_viz->command_pool();
         }
         
-        VkQueue  Viewer::compute_queue(uint32_t i) const
-        {
-            return m_viz->compute_queue(i);
-        }
-        
-        uint32_t  Viewer::compute_queue_count() const
-        {
-            return m_viz->compute_queue_count();
-        }
-        
-        uint32_t  Viewer::compute_queue_family() const
-        {
-            return m_viz->compute_queue_family();
-        }
 
         VkDescriptorPool    Viewer::descriptor_pool() const 
         { 
@@ -456,22 +442,7 @@ namespace yq {
             return m_viz -> gpu_type();
         }
 
-        
-        VkQueue     Viewer::graphic_queue(uint32_t i) const
-        {
-            return m_viz->graphic_queue(i);
-        }
-        
-        uint32_t    Viewer::graphic_queue_count() const
-        {
-            return m_viz->graphic_queue_count();
-        }
-        
-        uint32_t    Viewer::graphic_queue_family() const
-        {
-            return m_viz->graphic_queue_family();
-        }
-        
+    
         VkDevice    Viewer::logical() const 
         { 
             return m_viz->device(); 
@@ -506,21 +477,6 @@ namespace yq {
         const std::set<tachyon::PresentMode>&     Viewer::present_modes_available() const
         {
             return m_viz->present_modes_available();
-        }
-
-        VkQueue      Viewer::present_queue(uint32_t i) const
-        {
-            return m_viz->present_queue(i);
-        }
-        
-        uint32_t     Viewer::present_queue_count() const
-        {
-            return m_viz->present_queue_count();
-        }
-        
-        uint32_t     Viewer::present_queue_family() const
-        {
-            return m_viz->present_queue_family();
         }
 
         VkRenderPass Viewer::render_pass() const
@@ -595,35 +551,6 @@ namespace yq {
             return m_viz->swapchain_width();
         }
         
-        VkQueue   Viewer::video_decode_queue(uint32_t i) const
-        {
-            return m_viz->video_decode_queue(i);
-        }
-        
-        uint32_t  Viewer::video_decode_queue_count() const
-        {
-            return m_viz->video_decode_queue_count();
-        }
-        
-        uint32_t  Viewer::video_decode_queue_family() const
-        {
-            return m_viz->video_decode_queue_family();
-        }
-
-        VkQueue   Viewer::video_encode_queue(uint32_t i) const
-        {
-            return m_viz->video_encode_queue(i);
-        }
-        
-        uint32_t  Viewer::video_encode_queue_count() const
-        {
-            return m_viz->video_encode_queue_count();
-        }
-
-        uint32_t  Viewer::video_encode_queue_family() const
-        {
-            return m_viz->video_encode_queue_family();
-        }
 
         
         ////////////////////////////////////////////////////////////////////////////////

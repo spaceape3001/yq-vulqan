@@ -49,8 +49,6 @@
 #include "host/Window.ipp"
 
 #include "ui/Widget.ipp"
-#include "ui/Widget2.ipp"
-#include "ui/Widget3.ipp"
 
 #include "ui/Editor.ipp"
 

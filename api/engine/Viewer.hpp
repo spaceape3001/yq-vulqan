@@ -28,17 +28,11 @@ struct ImGuiContext;
 
 namespace yq {
     namespace engine {
-        struct PipelineConfig;
         class Scene;
         class Perspective;
         
         struct Visualizer;
 
-#if 0
-        struct WindowInfo : public ObjectInfo {
-            WindowInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
-        };
-#endif
         
         /*! \brief A basic window
         
@@ -64,9 +58,6 @@ namespace yq {
             
             VkCommandPool       command_pool() const;
 
-            VkQueue             compute_queue(uint32_t i=0) const;
-            uint32_t            compute_queue_count() const;
-            uint32_t            compute_queue_family() const;
             
             const Vector2D&     cursor_pos() const { return m_cursorPos; }
             
@@ -86,11 +77,7 @@ namespace yq {
                 //! Returns the type of the GPU/physical device
             VkPhysicalDeviceType    gpu_type() const;
             
-            VkQueue             graphic_queue(uint32_t i=0) const;
-            uint32_t            graphic_queue_count() const;
-            uint32_t            graphic_queue_family() const;
 
-            
             
                 //! Our device (logical)
             VkDevice            logical() const;
@@ -107,9 +94,6 @@ namespace yq {
             
             const std::set<tachyon::PresentMode>&     present_modes_available() const;
             
-            VkQueue             present_queue(uint32_t i=0) const;
-            uint32_t            present_queue_count() const;
-            uint32_t            present_queue_family() const;
 
             VkRenderPass        render_pass() const;
             
@@ -143,15 +127,6 @@ namespace yq {
             uint32_t            swap_width() const;
             
             uint32_t            swap_height() const;
-
-            VkQueue             video_decode_queue(uint32_t i=0) const;
-            uint32_t            video_decode_queue_count() const;
-            uint32_t            video_decode_queue_family() const;
-
-            VkQueue             video_encode_queue(uint32_t i=0) const;
-            uint32_t            video_encode_queue_count() const;
-            uint32_t            video_encode_queue_family() const;
-
             
             
 

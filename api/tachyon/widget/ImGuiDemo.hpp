@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <tachyon/ui/Widget2.hpp>
+#include <tachyon/ui/Widget.hpp>
 
 namespace yq {
     namespace tachyon {
         namespace widget {
-            class ImGuiDemo : public Widget2 {
-                YQ_OBJECT_DECLARE(ImGuiDemo, Widget2)
+            class ImGuiDemo : public Widget {
+                YQ_OBJECT_DECLARE(ImGuiDemo, Widget)
             public:
             
                 ImGuiDemo();

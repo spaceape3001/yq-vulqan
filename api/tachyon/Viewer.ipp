@@ -11,7 +11,7 @@
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
-#include <tachyon/ui/Widget2.hpp>
+#include <tachyon/ui/Widget.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/ui/MyImGui.hpp>
 
@@ -34,7 +34,7 @@ namespace yq {
             kill();
         }
 
-        Viewer::Viewer(const ViewerCreateInfo&vci, Widget2*w) : Viewer()
+        Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : Viewer()
         {
         
             std::error_code ec = initialize(vci, w);
@@ -44,7 +44,7 @@ namespace yq {
             }
         }
 
-        std::error_code     Viewer::initialize(const ViewerCreateInfo&vci, Widget2* w)
+        std::error_code     Viewer::initialize(const ViewerCreateInfo&vci, Widget* w)
         {
             if(m_widget)
                 return std::error_code();

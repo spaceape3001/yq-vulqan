@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <tachyon/ui/Widget2.hpp>
+#include <tachyon/ui/Widget.hpp>
 #include <variant>
 #include <filesystem>
 
 namespace yq {
     namespace tachyon {
-        class EditorInfo : public Widget2Info {
+        class EditorInfo : public WidgetInfo {
         public:
             
             template <typename C>  struct Writer;
             
-            EditorInfo(std::string_view, Widget2Info&, const std::source_location& sl = std::source_location::current());
+            EditorInfo(std::string_view, WidgetInfo&, const std::source_location& sl = std::source_location::current());
         
             bool        menu_bar() const { return m_menuBar; }
         
@@ -27,9 +27,9 @@ namespace yq {
         
         using EditorSpec    = std::variant<std::monostate, uint64_t, std::filesystem::path, std::string>;
         
-        class Editor : public Widget2 {
+        class Editor : public Widget {
             YQ_OBJECT_INFO(EditorInfo)
-            YQ_OBJECT_DECLARE(Editor, Widget2)
+            YQ_OBJECT_DECLARE(Editor, Widget)
         public:
         
             virtual bool    load(EditorSpec) = 0;
@@ -52,10 +52,10 @@ namespace yq {
         };
 
         template <typename C>
-        class EditorInfo::Writer : public Widget2Info::Writer<C> {
+        class EditorInfo::Writer : public WidgetInfo::Writer<C> {
         public:
         
-            Writer(EditorInfo* editorInfo) : Widget2Info::Writer<C>(editorInfo)
+            Writer(EditorInfo* editorInfo) : WidgetInfo::Writer<C>(editorInfo)
             {
             }
             

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Editor)
 
 namespace yq {
     namespace tachyon {
-        EditorInfo::EditorInfo(std::string_view n, Widget2Info& base, const std::source_location& sl) : Widget2Info(n, base, sl)
+        EditorInfo::EditorInfo(std::string_view n, WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
         {
         }
 
@@ -31,7 +31,7 @@ namespace yq {
                     ImGui::EndMainMenuBar();
                 }
             }
-            Widget2::imgui_(u);
+            Widget::imgui_(u);
             content_(u);
         }
     }

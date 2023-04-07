@@ -59,8 +59,6 @@ namespace yq {
         class   VqException;
         class   VqRecord;
         class   Widget;
-        class   Widget2;
-        class   Widget3;
         class   Window;
 
         template <typename> class TypedAssetFactory;

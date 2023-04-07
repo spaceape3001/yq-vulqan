@@ -17,7 +17,7 @@ namespace yq {
     class Object;
     
     namespace tachyon {
-        class Widget2;
+        class Widget;
         
         class Viewer : public Window, public Visualizer, public RefCount {
         public:
@@ -33,13 +33,13 @@ namespace yq {
             
                 \note This one throws a std::error_code if problems occur
             */
-            Viewer(const ViewerCreateInfo&vci, Widget2*);
+            Viewer(const ViewerCreateInfo&vci, Widget*);
             
             /*! \brief Initializes the viewer
                 
                 Initializes the viewer to render specified top-level widget
             */
-            std::error_code     initialize(const ViewerCreateInfo&vci, Widget2*);
+            std::error_code     initialize(const ViewerCreateInfo&vci, Widget*);
             
             //! Runs the draw sequence
             std::error_code     draw(ViContext&);
@@ -63,7 +63,7 @@ namespace yq {
         private:
             void                record(ViContext&) override;
 
-            Widget2*            m_widget        = nullptr;
+            Widget*             m_widget        = nullptr;
             ImGuiContext*       m_imgui         = nullptr;
             double              m_drawTime      = 0;
             bool                m_paused        = false;

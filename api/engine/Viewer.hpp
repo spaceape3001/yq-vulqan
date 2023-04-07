@@ -49,11 +49,6 @@ namespace yq {
             //YQ_OBJECT_INFO(WindowInfo)
             YQ_OBJECT_DECLARE(Viewer, Object)
         public:
-        
-            static constexpr const uint32_t kMinimumDescriptors = 1000;
-            
-                //! Polls for events (does not loiter)
-            static void poll_events();
 
 
                 // Creates a window bound to the specified vulkan instance

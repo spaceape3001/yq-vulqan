@@ -67,20 +67,9 @@ using namespace yq::tachyon;
 
 namespace yq {
     namespace engine {
-        #if 0
-        WindowInfo::WindowInfo(std::string_view kname, ObjectInfo& base, const std::source_location& sl) :
-            ObjectInfo(kname, base, sl)
-        {
-        }
-        #endif
 
         ////////////////////////////////////////////////////////////////////////////////
         
-        void Viewer::poll_events()
-        {
-            glfwPollEvents();
-        }
-
         void        Viewer::window_framebuffer_resized(const Size2I&)
         {
             m_viz -> trigger_rebuild();

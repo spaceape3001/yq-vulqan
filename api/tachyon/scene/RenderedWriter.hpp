@@ -14,9 +14,9 @@ namespace yq {
     namespace tachyon {
         
         template <typename C>
-        class RenderedInfo::Writer : public ObjectInfo::Writer<C> {
+        class RenderedInfo::Writer : public MetaObjectInfo::Writer<C> {
         public:
-            Writer(RenderedInfo* renderInfo) : ObjectInfo::Writer<C>(renderInfo), RenderedInfo(renderInfo)
+            Writer(RenderedInfo* renderInfo) : MetaObjectInfo::Writer<C>(renderInfo), m_meta(renderInfo)
             {
             }
             
@@ -46,8 +46,8 @@ namespace yq {
             {
                 auto    b   = Pipeline::build<C>(r);
                 b.set_auto_gen([m=m_meta](PipelineCPtr p){
-                    if(m_meta){
-                        m_meta->m_pipelines[p->role()] = p;
+                    if(m){
+                        m->m_pipelines[p->role()] = p;
                     }
                 });
                 return b;

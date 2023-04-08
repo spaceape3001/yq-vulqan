@@ -4,18 +4,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Render3D.hpp"
-#include "RenderWriter.hpp"
+#pragma once
+
+#include <tachyon/scene/Render3D.hpp>
+#include <tachyon/scene/Render3DWriter.hpp>
 #include <basic/DelayInit.hpp>
-#include <meta/Init.hpp>
-#include <atomic>
 #include <math/vector/Quaternion3.hxx>
 #include <math/vector/Tensor44.hxx>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
 
-        Render3DInfo::Render3DInfo(std::string_view name, ObjectInfo& base, const std::source_location& sl) : 
+        Render3DInfo::Render3DInfo(std::string_view name, RenderedInfo& base, const std::source_location& sl) : 
             RenderedInfo(name, base, sl)
         {
             set_option(RENDER3D);
@@ -86,14 +86,17 @@ namespace yq {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        YQ_INVOKE(
-            auto robj   = writer<Render3D>();
-            robj.property("pos", &Render3D::position).setter(&Render3D::set_position);
-            robj.property("scale", &Render3D::scale).setter(&Render3D::set_scale);
-            robj.property("ori", &Render3D::orientation).setter(&Render3D::set_orientation);
-            robj.property("bounds", &Render3D::bounds).setter(&Render3D::set_bounds);
-        )
+        void    reg_render_3d()
+        {
+            auto w   = writer<Render3D>();
+            w.property("pos", &Render3D::position).setter(&Render3D::set_position);
+            w.property("scale", &Render3D::scale).setter(&Render3D::set_scale);
+            w.property("ori", &Render3D::orientation).setter(&Render3D::set_orientation);
+            w.property("bounds", &Render3D::bounds).setter(&Render3D::set_bounds);
+        }
+        
+        YQ_INVOKE(reg_render_3d();)
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::engine::Render3D)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Render3D)

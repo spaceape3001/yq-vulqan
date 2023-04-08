@@ -30,16 +30,6 @@ add_library(${PROJECT_NAME} SHARED
     ./asset/asset.cpp
     ./engine/engine.cpp
     ./engine/Viewer.cpp
-
-    ./engine/render/Pipeline.cpp
-    ./engine/render/Rendered.cpp
-    ./engine/render/Render3D.cpp
-
-#    ./engine/vulqan/VqCommandFrame.cpp
-       
-#    ./engine/vulqan/VqObject.cpp
-#    ./engine/vulqan/VqObjectFrame.cpp
-     ./engine/vulqan/VqPipeline.cpp
     
      ./widget/TextArea.cpp
 

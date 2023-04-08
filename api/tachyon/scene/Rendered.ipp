@@ -7,13 +7,14 @@
 #pragma once
 
 #include <tachyon/scene/Rendered.hpp>
+#include <tachyon/scene/RenderedWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)
 
 namespace yq {
     namespace tachyon {
-        RenderedInfo::RenderedInfo(std::string_view name, ObjectInfo& base, const std::source_location& sl) : 
-            ObjectInfo(name, base, sl)
+        RenderedInfo::RenderedInfo(std::string_view name, MetaObjectInfo& base, const std::source_location& sl) : 
+            MetaObjectInfo(name, base, sl)
         {
             set_option(RENDERED);
         }

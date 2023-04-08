@@ -12,13 +12,5 @@
 #include "Tool.ipp"
 #include "Undo.ipp"
 
-#include "render/BufferObjectInfo.ipp"
-
 #include <meta/Init.hpp>
-
-
-#include "vulqan/VqBuffer.ipp"
-#include "vulqan/VqCommand.ipp"
-
-
 

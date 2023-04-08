@@ -7,9 +7,8 @@
 #pragma once
 
 #include <basic/Flags.hpp>
-#include <basic/Object.hpp>
-#include <basic/UniqueID.hpp>
-#include <basic/Ref.hpp>
+#include <basic/MetaObject.hpp>
+#include <basic/Mutable.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/Tristate.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
@@ -24,11 +23,11 @@ namespace yq {
         
         using RenderedFlags = Flags<RenderedBit, uint8_t>; 
 
-        class RenderedInfo : public ObjectInfo {
+        class RenderedInfo : public MetaObjectInfo {
         public:
             template <typename C> struct Writer;
             
-            RenderedInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+            RenderedInfo(std::string_view, MetaObjectInfo&, const std::source_location& sl = std::source_location::current());
 
             bool            is_2d() const
             {
@@ -53,9 +52,9 @@ namespace yq {
             RenderedFlags   m_flags;
         };
         
-        class Rendered : public Object, public UniqueID, public RefCount {
+        class Rendered : public MetaObject {
             YQ_OBJECT_INFO(RenderedInfo)
-            YQ_OBJECT_DECLARE(Rendered, Object)
+            YQ_OBJECT_DECLARE(Rendered, MetaObject)
         public:
         
             Rendered();
@@ -77,16 +76,16 @@ namespace yq {
             
         protected:
             //! Pipeline override
-            PipelineCPtr            m_pipeline; 
+            PipelineCPtr    m_pipeline; 
             
             //! Draw command
-            Draw                    m_draw; 
+            Draw            m_draw; 
 
             //! Wireframe mode
-            Tristate                m_wireframe  = Tristate::INHERIT;
+            Tristate        m_wireframe;
             
             //! Culling flag
-            bool                    m_culled    = false;
+            bool            m_culled    = false;
             
         };
         

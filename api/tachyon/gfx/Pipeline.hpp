@@ -20,6 +20,10 @@ namespace yq {
         class Pipeline : public UniqueID, public RefCount {
         public:
             
+            class Builder;
+            template <typename> class Typed;
+            template <typename> class VBOMaker;
+            
             /*! \brief Creates a pipeline
             
                 \tparam C   type being created for

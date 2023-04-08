@@ -8,6 +8,7 @@
 
 #include <tachyon/Buffer.hpp>
 #include <vector>
+#include <span>
 
 namespace yq {
     namespace tachyon {
@@ -19,8 +20,8 @@ namespace yq {
         template <typename T>
         class BufferArray : public Buffer {
         public:
-            
-            BufferArray(BufferUsageFlags buf, const std::vector<T>& cp) : Buffer(buf), m_data(cp) 
+
+            BufferArray(BufferUsageFlags buf, std::span<const T> cp) : Buffer(buf), m_data(cp.begin(), cp.end()) 
             {
                 push();
             }
@@ -45,7 +46,7 @@ namespace yq {
         };
         
         template <typename T>
-        Ref<const Buffer>   buffer_array(BufferUsageFlags buf, const std::vector<T>& cp)
+        Ref<const Buffer>   buffer_array(BufferUsageFlags buf, std::span<const T> cp)
         {
             return new BufferArray<T>(buf, cp);
         }

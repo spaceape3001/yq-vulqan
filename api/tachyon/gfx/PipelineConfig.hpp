@@ -15,6 +15,7 @@
 #include <tachyon/enum/DataActivity.hpp>
 #include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/FrontFace.hpp>
+#include <tachyon/enum/IndexType.hpp>
 #include <tachyon/enum/PipelineBinding.hpp>
 #include <tachyon/enum/PolygonMode.hpp>
 #include <tachyon/enum/PushConfigType.hpp>
@@ -60,6 +61,13 @@ namespace yq {
             
             //! Expected update activity for this vertex buffer
             DataActivity            activity    = {};
+        };
+        
+        struct IBOConfig {
+            IndexType               type        = IndexType::none;
+
+            //! Fetch handler to get the buffer from a suitable object
+            FetchBuffer             fetch       = {};
         };
         
         /*! \brief Configuration for a uniform buffer
@@ -119,6 +127,9 @@ namespace yq {
             
             //! Vertex buffers for the pipeline
             std::vector<VBOConfig>      vbos;
+
+            //! Index buffers for the pipeline
+            std::vector<IBOConfig>      ibos;
             
             //! Uniform buffers for the pipeline
             std::vector<UBOConfig>      ubos;

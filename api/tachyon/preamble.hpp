@@ -46,7 +46,8 @@ namespace yq {
         struct  Joystick;
         class   Monitor;
         class   Pipeline;
-        class   PipelineBuilder;
+        class   LegacyPipelineBuilder;
+        using   PipelineBuilder = LegacyPipelineBuilder;
         struct  PipelineConfig;
         class   Shader;
         class   Texture;

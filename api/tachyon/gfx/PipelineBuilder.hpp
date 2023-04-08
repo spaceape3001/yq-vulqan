@@ -80,6 +80,15 @@ namespace yq {
 
             PipelineConfig&     config() { return m_build; }
             
+            template <typename V>
+            static IBOConfig    ibo(DataActivity da)
+            {
+                IBOConfig       cfg;
+                cfg.type        = index_type<V>();
+                cfg.activity    = da;
+                cfg.stride      = sizeof(V);
+                return cfg;
+            }
             
 
         protected:
@@ -148,6 +157,7 @@ namespace yq {
                 attr_impl(fmt, (uint32_t) member_offset(member), min_binding<M>());
                 return *this;
             }
+            
         
         private:
             friend class Builder;
@@ -231,44 +241,43 @@ namespace yq {
             template <typename V>
             void    index(IBO<V>& p, DataActivity da)
             {
-                IBOConfig       cfg;
-                cfg.type        = index_type<V>();
+                IBOConfig       cfg = ibo<V>(da);
                 cfg.fetch       = [&p](const void*) -> BufferCPtr {
                     return p.buffer;
                 };
-                cfg.activity    = da;
+                cfg.revision    = [&p](const void*) -> uint64_t {
+                    return p.buffer ? p.buffer -> id() : 0ULL;
+                };
                 m_build.ibos.push_back(cfg);
             }
 
             template <typename V>
             void    index(IB1<V>& p, DataActivity da)
             {
-                IBOConfig       cfg;
-                cfg.type        = index_type<V>();
+                IBOConfig       cfg = ibo<V>(da);
                 cfg.fetch       = [&p](const void*) -> BufferCPtr {
                     return p.buffer;
                 };
-                cfg.activity    = da;
+                cfg.revision    = [&p](const void*) -> uint64_t {
+                    return p.buffer ? p.buffer -> id() : 0ULL;
+                };
                 m_build.ibos.push_back(cfg);
             }
 
             template <typename V, size_t N>
             void index(const V(&p)[N], DataActivity da)
             {
-                IBOConfig       cfg;
-                cfg.type    = index_type<V>();
+                IBOConfig       cfg = ibo<V>(da);
                 cfg.fetch   = [p](const void*) -> BufferCPtr {
                     return buffer_span(BufferUsage::Index, std::span<const V>(p, N));
                 };
-                cfg.activity    = da;
                 m_build.ibos.push_back(cfg);
             }
 
             template <typename V, size_t N>
             void    index(std::array<V,N> C::*p, DataActivity da, bool copy_it)
             {
-                IBOConfig   cfg;
-                cfg.type    = index_type<V>();
+                IBOConfig       cfg = ibo<V>(da);
                 if(copy_it){
                     cfg.fetch   = [p](const void* v) -> BufferCPtr {
                         const C* c = (const C*) v;
@@ -280,15 +289,13 @@ namespace yq {
                         return buffer_span(BufferUsage::Index, span(v->*c));
                     };
                 }
-                cfg.activity    = da;
                 m_build.ibos.push_back(cfg);
             }
 
             template <typename V>
             void    index(std::vector<V> C::*p, DataActivity da, bool copy_it)
             {
-                IBOConfig   cfg;
-                cfg.type    = index_type<V>();
+                IBOConfig       cfg = ibo<V>(da);
                 if(copy_it){
                     cfg.fetch   = [p](const void* v) -> BufferCPtr {
                         const C* c = (const C*) v;
@@ -300,15 +307,13 @@ namespace yq {
                         return buffer_span(BufferUsage::Index, (v->*c));
                     };
                 }
-                cfg.activity    = da;
                 m_build.ibos.push_back(cfg);
             }
             
             template <typename V>
             void    index(Mutable<std::vector<V>> C::*p, DataActivity da)
             {
-                IBOConfig cfg;
-                cfg.type    = index_type<V>();
+                IBOConfig       cfg = ibo<V>(da);
                 cfg.fetch   = [p](const void* v) -> BufferCPtr {
                     const C* c = (const C*) v;
                     const Mutable<std::vector<V>>& m    = *(c->*p);
@@ -319,15 +324,13 @@ namespace yq {
                     const Mutable<std::vector<V>>& m    = *(c->*p);
                     return m.revision();
                 };
-                cfg.activity    = da;
                 m_build.ibos.push_back(cfg);
             }
 
             template <typename V, size_t N>
             void    index(Mutable<std::array<V,N>> C::*p, DataActivity da)
             {
-                IBOConfig cfg;
-                cfg.type    = index_type<V>();
+                IBOConfig       cfg = ibo<V>(da);
                 cfg.fetch   = [p](const void* v) -> BufferCPtr {
                     const C* c = (const C*) v;
                     const Mutable<std::array<V,N>>& m    = *(c->*p);
@@ -338,7 +341,6 @@ namespace yq {
                     const Mutable<std::array<V,N>>& m    = *(c->*p);
                     return m.revision();
                 };
-                cfg.activity    = da;
                 m_build.ibos.push_back(cfg);
             }
             
@@ -347,7 +349,7 @@ namespace yq {
                 //  VERTEX CREATORS
             
             template <typename V, size_t N>
-            VBOMaker<V> Vertex(const V(&p)[N], DataActivity da)
+            VBOMaker<V> vertex(const V(&p)[N], DataActivity da)
             {
                 auto vm = vbo<V>();
                 vm.fetch   = [p](const void*) -> BufferCPtr {
@@ -364,6 +366,9 @@ namespace yq {
                 vm.fetch    = [&p](const void*) -> BufferCPtr {
                     return p.buffer;
                 };
+                vm.revision    = [&p](const void*) -> uint64_t {
+                    return p.buffer ? p.buffer -> id() : 0ULL;
+                };
                 vm.activity     = da;
                 return vm;
             }
@@ -374,6 +379,9 @@ namespace yq {
                 auto vm    = vbo<V>();
                 vm.fetch    = [&p](const void*) -> BufferCPtr {
                     return p.buffer;
+                };
+                vm.revision    = [&p](const void*) -> uint64_t {
+                    return p.buffer ? p.buffer -> id() : 0ULL;
                 };
                 vm.activity     = da;
                 return vm;
@@ -388,6 +396,11 @@ namespace yq {
                     const C* c = (const C*) v;
                     return (c->*p).buffer;
                 };
+                vm.revision    = [&p](const void*v) -> uint64_t {
+                    const C* c = (const C*) v;
+                    const auto &b = (c->*p).buffer;
+                    return b ? b->id() : 0ULL;
+                };
                 return vm;
             }
             
@@ -399,6 +412,11 @@ namespace yq {
                 vm.fetch        = [p](const void*v) -> BufferCPtr {
                     const C* c = (const C*) v;
                     return (c->*p).buffer;
+                };
+                vm.revision    = [&p](const void*v) -> uint64_t {
+                    const C* c = (const C*) v;
+                    const auto &b = (c->*p).buffer;
+                    return b ? b->id() : 0ULL;
                 };
                 return vm;
             }
@@ -526,6 +544,12 @@ namespace yq {
                 return vertex(p, DataActivity::COMMON);
             }
             
+            template <typename V, size_t N>
+            VBOMaker<V> common_vertex(const V (&p)[N])
+            {
+                return vertex(p, DataActivity::COMMON);
+            }
+
             template <typename V, size_t N>
             VBOMaker<V> common_vertex(std::array<V, N> &p)
             {

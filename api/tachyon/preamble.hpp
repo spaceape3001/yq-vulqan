@@ -69,6 +69,8 @@ namespace yq {
         using TextureCPtr   = Ref<const Texture>;
         using ShaderCPtr    = Ref<const Shader>;
         using PipelineCPtr  = Ref<const Pipeline>;
+        using RenderedPtr   = Ref<Rendered>;
+        using RenderedCPtr  = Ref<const Rendered>;
 
         using PushBuffer    = BasicBuffer<MAX_PUSH>;
         using ShaderSpec    = std::variant<std::monostate, std::string, ShaderCPtr>;

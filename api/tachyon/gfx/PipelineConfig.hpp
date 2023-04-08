@@ -47,35 +47,35 @@ namespace yq {
             uint32_t                offset      = 0;
         };
 
-        /*! \brief Configuration for a Vertex Buffer
-        */
-        struct VBOConfig {
-            //! VBO attributes
-            std::vector<VBOAttr>    attrs;
-            
+        struct ABOConfig {
             //! Fetch handler to get the buffer from a suitable object
             FetchBuffer             fetch       = {};
             
-            //! Size of each element in the vertex buffer
+            FetchRevision           revision    = {};
+
+            //! Size of each element in the buffer
             uint32_t                stride      = 0;
+
+            //! Expected update activity for this vertex buffer
+            DataActivity            activity    = {};
+        };
+
+        /*! \brief Configuration for a Vertex Buffer
+        */
+        struct VBOConfig : public ABOConfig {
+        
+            //! VBO attributes
+            std::vector<VBOAttr>    attrs;
             
             //! Shader mask that this is available for (0 implies ALL shaders)
             uint32_t                shaders     = 0;
             
             VertexInputRate         inputRate;
             
-            //! Expected update activity for this vertex buffer
-            DataActivity            activity    = {};
         };
         
-        struct IBOConfig {
+        struct IBOConfig : public ABOConfig {
             IndexType               type        = IndexType::none;
-
-            //! Fetch handler to get the buffer from a suitable object
-            FetchBuffer             fetch       = {};
-            FetchRevision           revision    = {};
-
-            DataActivity            activity    = {};
         };
         
         /*! \brief Configuration for a uniform buffer

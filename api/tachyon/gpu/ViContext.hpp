@@ -34,6 +34,9 @@ namespace yq {
             bool                imgui() const { return m_imgui; }
             const glm::mat4&    world2eye() const { return m_world2eye; }
             
+            Viewer*             viewer() const { return m_viewer; }
+            Window*             window() const { return m_window; }
+            
             ViContext();
             ~ViContext();
             
@@ -47,6 +50,8 @@ namespace yq {
             
             //  If modified, restore before return
             Visualizer*         m_viz           = nullptr;  // yep, back to pointer
+            Viewer*             m_viewer        = nullptr;
+            Window*             m_window        = nullptr;
             VkCommandBuffer     m_command       = nullptr;
             ViPipeline          m_pipeline;
             glm::mat4           m_world2eye;

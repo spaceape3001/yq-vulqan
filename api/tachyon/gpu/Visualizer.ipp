@@ -741,6 +741,24 @@ namespace yq {
                 }
                 
                 p.binding       = (VkPipelineBindPoint) cfg.binding.value();
+                
+                
+                if(!cfg.vbos.empty()){
+                    for(auto& vb : cfg.vbos){
+                        ViBO        bo;
+                        bo.update(*this, vb, nullptr);
+                        p.vbos.push_back(bo);
+                    }
+                }
+                
+                if(!cfg.ibos.empty()){
+                    for(auto & ib : cfg.ibos){
+                        ViBO        bo;
+                        bo.update(*this, ib, nullptr);
+                        p.ibos.push_back(bo);
+                    }
+                }
+                
 
                 return std::error_code();
             }

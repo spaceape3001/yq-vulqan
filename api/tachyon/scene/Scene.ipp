@@ -6,15 +6,20 @@
 
 #pragma once
 
-#include <glm/glm.hpp>
+#include <tachyon/scene/Scene.hpp>
+#include <meta/ObjectInfoWriter.hpp>
 
 namespace yq {
     namespace tachyon {
-
-        //! Standard Push Data
-        struct StdPushData {
-            glm::mat4       matrix; // either view or render... depending on enumeration
-            float           time        = 0;
-        };
+        Scene::Scene()
+        {
+        }
+        
+        Scene::~Scene()
+        {
+        }
     }
 }
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Scene);
+

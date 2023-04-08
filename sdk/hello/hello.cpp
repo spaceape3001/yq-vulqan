@@ -15,23 +15,27 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
-#include <tachyon/camera/NullCamera.hpp>
 #include <asset/Triangle.hpp>
 #include <basic/DelayInit.hpp>
 #include <basic/Logging.hpp>
+
 #include <io/PluginLoader.hpp>
+
 #include <meta/Meta.hpp>
-#include <engine/Application.hpp>
-#include <engine/Scene.hpp>
+
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/camera/NullCamera.hpp>
+#include <tachyon/enum/FrontFace.hpp>
+#include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gfx/Shader.hpp>
-#include <engine/Perspective.hpp>
-#include <engine/Viewer.hpp>
 #include <tachyon/gfx/PipelineBuilder.hpp>
-#include <engine/render/Render3D.hpp>
-#include <engine/render/RenderWriter.hpp>
-#include <engine/vulqan/VqBuffer.hpp>
-#include <engine/vulqan/VqCommand.hpp>
-#include <engine/vulqan/VqPipeline.hpp>
+#include <tachyon/scene/Scene.hpp>
+#include <tachyon/scene/Scene3D.hpp>
+#include <tachyon/scene/Render3D.hpp>
+#include <tachyon/scene/Render3DWriter.hpp>
+
 #include <math/color/Colors.hpp>
 #include <math/color/RGB.hpp>
 #include <math/vector/Vector2.hpp>
@@ -39,8 +43,6 @@
 #include <math/shape/shape_utils.hpp>
 #include <math/shape/Triangle2.hpp>
 #include <math/shape/Triangle3.hpp>
-#include <tachyon/enum/FrontFace.hpp>
-#include <tachyon/gpu/VqUtils.hpp>
 #include <iostream>
 #include <chrono>
 #include <glm/glm.hpp>  // temporary
@@ -48,7 +50,6 @@
 
 using namespace yq;
 using namespace yq::asset;
-using namespace yq::engine;
 using namespace yq::tachyon;
 
 struct Vertex {
@@ -74,8 +75,8 @@ const auto  TriData   = TriangleData<ColorVertex2D>{
 
 using timepoint_t   = std::chrono::time_point<std::chrono::steady_clock>;
 
-struct HelloTriangle : public engine::Rendered {
-    YQ_OBJECT_DECLARE(HelloTriangle, engine::Rendered)
+struct HelloTriangle : public Rendered {
+    YQ_OBJECT_DECLARE(HelloTriangle, Rendered)
     
     struct MyUBO {
         glm::mat4   model;
@@ -84,60 +85,39 @@ struct HelloTriangle : public engine::Rendered {
         glm::vec4   dope;
     };
     
-    std::unique_ptr<VqPipeline> m_pipeline;
-    VqBuffer                    m_vbo;
-    engine::Viewer*             m_window                = nullptr;
     
-    HelloTriangle(engine::Viewer*w) : m_window(w)
+    Warp                        warp;
+    
+    static void initInfo()
     {
-        const Shader*   vert = Shader::load("sdk/hello/hello3.vert");
-        const Shader*   frag = Shader::load("sdk/hello/hello.frag");
-        if(!vert)
-            throw std::runtime_error("No vertex shader");
-        if(!frag)
-            throw std::runtime_error("No fragment shader");
-            
-
-        PipelineConfig      cfg;
-        PipelineBuilder      build(cfg);
-        build.shaders({ vert, frag });
-        build.front(FrontFace::Clockwise);
-        build.push<Warp>();
-        
-        build.vbo<Vertex>()
-            .attribute<glm::vec2>(&Vertex::position)
-            .attribute<glm::vec3>(&Vertex::color)
-        ;
-        build.ubo();
-        
-        m_pipeline    = std::make_unique<VqPipeline>(*w, cfg);
-        
-        m_vbo   = VqBuffer(*w, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, vertices);
+        auto w = writer<HelloTriangle>();
+        {
+            auto p = w.pipeline();
+            p.shaders({ "sdk/hello/hello3.vert", "sdk/hello/hello.frag" });
+            p.front(FrontFace::Clockwise);
+            p.push<Warp>(&HelloTriangle::warp);
+            p.common_vertex(vertices)
+                .attribute<glm::vec2>(&Vertex::position)
+                .attribute<glm::vec3>(&Vertex::color)
+            ;
+            //p.ubo();
+        }
+    }
+    
+    HelloTriangle() 
+    {
     }
     
     ~HelloTriangle()
     {
-        m_pipeline  = {};
-        m_vbo       = {};
     }
     
-    void    render(VkCommandBuffer cmdbuf, double time)
+    void    update(double time)
     {
         uint32_t    sec = (int) time;
         bool        w = (sec & 1) != 0;
-        Warp    warp { (float)( 1.0 + 0.5*sin(time)) };
-
-        VkBuffer vertexBuffers[] = {m_vbo};
-        VkDeviceSize offsets[] = {0};
-    
-        VqCommand       cmd;
-        cmd.pipeline    = w ? m_pipeline->wireframe() : m_pipeline->pipeline();
-        cmd.layout      = m_pipeline->layout();
-        cmd.push        = warp; // VqCommand::Push{ &warp, sizeof(warp), m_pipeline.shader_mask() };
-        cmd.push_mask   = m_pipeline->shader_mask();
-        cmd.vbo         = VqCommand::VBO{ vertexBuffers, offsets, 1 };
-        cmd.draw        = VqCommand::Draw{ 3 };
-        record_draw(cmdbuf, cmd);
+        warp.amt = (float)( 1.0 + 0.5*sin(time));
+        set_wireframe( w ? Tristate::YES : Tristate::NO );
     }
 };
 
@@ -148,49 +128,52 @@ YQ_INVOKE(
 YQ_OBJECT_IMPLEMENT(HelloTriangle)
 
 
-struct HelloWin : public engine::Viewer {
-    YQ_OBJECT_DECLARE(HelloWin, engine::Viewer)
+struct HelloScene : public Scene3D {
+    YQ_OBJECT_DECLARE(HelloScene, Scene3D)
     
-    timepoint_t             start;
     Ref<HelloTriangle>      triangle;
     Ref<Triangle>           tri2;
-    Scene                   scene;
-    Perspective             view;
+    Ref<Camera>             camera;
+    Ref<Scene>              scene;
+    timepoint_t             start;
 
-    HelloWin(const ViewerCreateInfo& wci) : engine::Viewer(wci)
+    HelloScene()
     {
         start   = std::chrono::steady_clock::now();
-        triangle = new HelloTriangle(this);
-        tri2        = new yq::asset::Triangle(TriData);
+        scene       = new Scene;
+        camera      = new NullCamera;
+        set_camera(camera);
+        set_scene(scene);
+        triangle = new HelloTriangle;
+        tri2        = new Triangle(TriData);
         tri2->set_position({0.,0.,0.1});
-        scene.things.push_back(tri2);
-        view.camera = new NullCamera;
+        scene->things.push_back(triangle);
+        scene->things.push_back(tri2);
     }
     
-    ~HelloWin()
-    {
-        triangle    = nullptr;
-    }
-    
-    void        draw_vulqan(VkCommandBuffer cmdbuf)
+    void    vulkan_(ViContext& v)
     {
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
         tri2->set_heading( Degree(diff.count()) );
-        triangle->render(cmdbuf, diff.count());
-        render(cmdbuf, scene, view);
+        triangle->update(diff.count());
+        Scene3D::vulkan_(v);
     }
 };
 
-YQ_OBJECT_IMPLEMENT(HelloWin)
+
+YQ_OBJECT_IMPLEMENT(HelloScene)
 
 
 int main(int argc, char* argv[])
 {
     AppCreateInfo        vi;
     
-    engine::Application app(argc, argv, vi);
+    Application app(argc, argv, vi);
     //load_plugin_dir("plugin");
+    
+    HelloTriangle::initInfo();
+    
     app.finalize();
     
     ViewerCreateInfo      wi;
@@ -199,11 +182,8 @@ int main(int argc, char* argv[])
     wi.size         = { 1920, 1080 };
     wi.clear        = { 0.f, 0.1f, 0.2f, 1.f };
 
-    Ref<HelloWin>   win = new HelloWin(wi);
-    if(!win->good())
-        return -1;
-    
-    app.run_window(win.ptr());
+    Ref<Viewer> v = new Viewer(wi, new HelloScene);
+    app.run(v.ptr());
     
     std::cout << "Hello World!\n";
     return 0;

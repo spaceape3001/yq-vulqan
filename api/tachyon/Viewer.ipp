@@ -133,7 +133,9 @@ namespace yq {
                 return std::error_code();
                 
             auto start = std::chrono::high_resolution_clock::now();
-            u.m_frameNumber = tick();
+            auto r1 = auto_reset(u.m_frameNumber, tick());
+            auto r2 = auto_reset(u.m_viewer, this);
+            auto r3 = auto_reset(u.m_window, static_cast<Window*>(this));
             if(m_widget && m_imgui){
                 auto r = auto_reset(u.m_imgui, true);
                 ImGui::SetCurrentContext(m_imgui);

@@ -7,10 +7,13 @@
 #pragma once
 
 #include <vulkan/vulkan_core.h>
+#include <tachyon/gpu/ViBO.hpp>
 
 namespace yq {
     namespace tachyon {
         struct ViPipeline {
+            std::vector<ViBO>       vbos;
+            std::vector<ViBO>       ibos;
             VkPipelineLayout        layout      = nullptr;
             VkPipeline              pipeline    = nullptr;
             VkPipeline              wireframe   = nullptr;

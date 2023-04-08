@@ -11,7 +11,8 @@
 
 //#include "gfx/Pipeline2.ipp"
 
-#include "scene/Render3D.ipp"
+#include "gpu/ViBO.ipp"
+#include "scene/Scene3D.ipp"
 
 #include "Application.ipp"
 #include "Viewer.ipp"
@@ -51,7 +52,9 @@
 #include "host/VideoMode.ipp"
 #include "host/Window.ipp"
 
+#include "scene/Render3D.ipp"
 #include "scene/Rendered.ipp"
+#include "scene/Scene.ipp"
 
 #include "ui/Widget.ipp"
 

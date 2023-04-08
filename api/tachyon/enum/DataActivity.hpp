@@ -19,12 +19,16 @@ namespace yq {
             COMMON,         // <- expect data to be transferred to GPU memory
             
             //! Data is fixed to this instance of the class, but wont change after creation
-            STATIC,         // <- expect data to be transferred to GPU memory
+            FIXED,         // <- expect data to be transferred to GPU memory
+            
+            STATIC = FIXED,
             
             //! Data may (occsaionally) change with time
+            //! Revision management recommended
             DYNAMIC,
             
             //! Data is expected to ALWAYS change with time
+            //! Revision management might be useful for things not changing every tick.
             REFRESH
         )
     }

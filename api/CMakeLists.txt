@@ -28,8 +28,6 @@ add_library(${PROJECT_NAME} SHARED
     ./YqEngineConfig.cpp
     
     ./asset/asset.cpp
-    ./engine/engine.cpp
-    ./engine/Viewer.cpp
     
      ./widget/TextArea.cpp
 

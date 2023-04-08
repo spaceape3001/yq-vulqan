@@ -9,7 +9,7 @@
 #include <math/vector/Tensor44.hxx>
 
 #include "Quadrilateral.ipp"
-#include "SpaceManipulator.ipp"
+//#include "SpaceManipulator.ipp"
 #include "Tetrahedron.ipp"
 #include "Triangle.ipp"
 

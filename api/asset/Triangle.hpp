@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <engine/render/Render3D.hpp>
+#include <tachyon/scene/Render3D.hpp>
 #include <array>
 #include <data/ColorVertexData.hpp>
 
 namespace yq {
-    namespace asset {
-        class Triangle : public engine::Render3D {
-            YQ_OBJECT_DECLARE(Triangle, engine::Render3D)
+    namespace tachyon {
+        class Triangle : public Render3D {
+            YQ_OBJECT_DECLARE(Triangle, Render3D)
         public:
         
             Triangle(const TriangleData<ColorVertex2D>&);

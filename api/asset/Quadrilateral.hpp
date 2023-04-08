@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include <engine/render/Render3D.hpp>
+#include <tachyon/scene/Render3D.hpp>
 #include <array>
 #include <data/ColorVertexData.hpp>
 
 namespace yq {
-    namespace asset {
+    namespace tachyon {
     
         /*! \brief A quadrilateral, taking in four points */
-        class Quadrilateral : public engine::Render3D {
-            YQ_OBJECT_DECLARE(Quadrilateral, engine::Render3D)
+        class Quadrilateral : public Render3D {
+            YQ_OBJECT_DECLARE(Quadrilateral, Render3D)
         public:
         
             Quadrilateral(const QuadrilateralData<ColorVertex2D>&);
@@ -24,8 +24,7 @@ namespace yq {
             static void initInfo();
             
         private:
-            std::array<ColorVertexData,4>   m_vertex;
-//            std::array<uint16_t,6>          m_index;
+            std::array<ColorVertexData,4>        m_vertex;
         };
     }
 }

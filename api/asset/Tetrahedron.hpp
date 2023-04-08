@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <engine/render/Render3D.hpp>
+#include <tachyon/scene/Render3D.hpp>
 #include <array>
 #include <data/ColorVertexData.hpp>
 
 namespace yq {
-    namespace asset {
-        class Tetrahedron : public engine::Render3D {
-            YQ_OBJECT_DECLARE(Tetrahedron, engine::Render3D)
+    namespace tachyon {
+        class Tetrahedron : public Render3D {
+            YQ_OBJECT_DECLARE(Tetrahedron, Render3D)
         public:
         
             Tetrahedron(const TetrahedronData<ColorVertex3D>&);

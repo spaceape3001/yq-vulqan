@@ -9,26 +9,29 @@
 #include "Triangle.hpp"
 #include <math/shape/TriangleData.hpp>
 #include <math/shape/shape_utils.hpp>
-#include <engine/render/RenderWriter.hpp>
+#include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <basic/preamble.hpp>
 
 namespace yq {
-    namespace asset {
+    namespace tachyon {
         void Triangle::initInfo()
         {
             auto w = writer<Triangle>();
-            auto p = w.pipeline();
             
-            p.shader("assets/colored.vert");
-            p.shader("assets/colored.frag");
+            {
+                auto p = w.pipeline();
+                
+                p.shader("assets/colored.vert");
+                p.shader("assets/colored.frag");
 
-            p.static_vertex(&Triangle::m_vertex, "vertex"sv)
-                .attribute(&ColorVertexData::position)
-                .attribute(&ColorVertexData::color)
-            ;
-            
-            p.push(yq::tachyon::PushConfigType::Full);
+                p.fixed_vertex(&Triangle::m_vertex)
+                    .attribute(&ColorVertexData::position)
+                    .attribute(&ColorVertexData::color)
+                ;
+                
+                p.push_full();
+            }
         }
 
         Triangle::Triangle(const TriangleData<ColorVertex2D>&tri)
@@ -48,4 +51,4 @@ namespace yq {
         );
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::asset::Triangle)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Triangle)

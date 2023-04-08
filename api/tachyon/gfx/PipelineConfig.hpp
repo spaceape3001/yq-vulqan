@@ -27,9 +27,14 @@ namespace yq {
 
         //! Gets a buffer from an object
         using FetchBuffer       = std::function<BufferCPtr(const void*)>;
-        
+
         //! Gets a texture from an object
         using FetchTexture      = std::function<TextureCPtr(const void*)>;
+
+        //! Revision handler
+        //! Revision is for those time-altering buffers/textures that don't 
+        //! use the buffer system
+        using FetchRevision     = std::function<uint64_t(const void*)>;
         
         //! Gets the push data from an object
         using FetchPush         = std::function<void(const void*, PushBuffer&)>;
@@ -68,6 +73,9 @@ namespace yq {
 
             //! Fetch handler to get the buffer from a suitable object
             FetchBuffer             fetch       = {};
+            FetchRevision           revision    = {};
+
+            DataActivity            activity    = {};
         };
         
         /*! \brief Configuration for a uniform buffer
@@ -76,6 +84,7 @@ namespace yq {
         
             //! Fetch for a uniform buffer object
             FetchBuffer             fetch       = {};
+            FetchRevision           revision    = {};
             
             uint32_t                count       = 1;
             uint32_t                stage       = 0;
@@ -90,6 +99,7 @@ namespace yq {
         struct PushConfig {
             //! Fetch for a push constant
             FetchPush               fetch       = {};
+            FetchRevision           revision    = {};
             
             //! Size of the push constant data
             size_t                  size        = 0;
@@ -105,13 +115,14 @@ namespace yq {
         */
         struct TexConfig {
             //! Fetches the texture from the object
-            FetchTexture            fetch   = {};
+            FetchTexture            fetch       = {};
+            FetchRevision           revision    = {};
             
             //! Binding point for the texture
-            uint32_t                binding = 0;
+            uint32_t                binding     = 0;
             
             //! Expected update activity for this texture
-            DataActivity            activity = {};
+            DataActivity            activity    = {};
         };
         
         struct PipelineConfig {

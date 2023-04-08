@@ -10,30 +10,32 @@
 #include <math/shape/QuadrilateralData.hpp>
 #include <math/vector/Vector3.hxx>
 #include <math/shape/shape_utils.hpp>
-#include <engine/render/RenderWriter.hpp>
+#include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <basic/preamble.hpp>
 
 namespace yq {
-    namespace asset {
+    namespace tachyon {
         void Quadrilateral::initInfo()
         {
             static const uint16_t   kIndices[] = { 0, 1, 2, 2, 3, 0 };
         
             auto w = writer<Quadrilateral>();
-            auto p = w.pipeline();
             
-            p.shader("assets/colored.vert");
-            p.shader("assets/colored.frag");
+            {
+                auto p = w.pipeline();
+                
+                p.shader("assets/colored.vert");
+                p.shader("assets/colored.frag");
 
-            p.static_vertex(&Quadrilateral::m_vertex, "vertex"sv)
-                .attribute(&ColorVertexData::position)
-                .attribute(&ColorVertexData::color)
-            ;
-            
-            p.common_index(kIndices, "index"sv);
-            
-            p.push(yq::tachyon::PushConfigType::Full);
+                p.fixed_vertex(&Quadrilateral::m_vertex)
+                    .attribute(&ColorVertexData::position)
+                    .attribute(&ColorVertexData::color)
+                ;
+                
+                p.common_index(kIndices);
+                p.push_full();
+            }
         }
 
         Quadrilateral::Quadrilateral(const QuadrilateralData<ColorVertex2D>&tri)
@@ -53,4 +55,4 @@ namespace yq {
         );
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::asset::Quadrilateral)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Quadrilateral)

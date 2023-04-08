@@ -19,26 +19,24 @@ namespace yq {
         */
         class Pipeline : public UniqueID, public RefCount {
         public:
-        
-            const PipelineConfig&   config() const { return m_config; }
+            
+            /*! \brief Creates a pipeline
+            
+                \tparam C   type being created for
+            */
+            template <typename C=void>
+            static auto build(std::string_view name=std::string_view());   
+            
+            const PipelineConfig&       config() const { return m_config; }
             
             Pipeline(const PipelineConfig&);
             Pipeline(PipelineConfig&&);
             
-            std::string_view    name() const { return m_name; }
-            void                set_name(std::string_view);
+            std::string_view            name() const { return m_config.name; }
             
-            bool                is_object() const { return m_object != nullptr; }
-            const ObjectInfo*   object() const { return m_object; }
-            
-        protected:
-            Pipeline();
-            virtual ~Pipeline();
-        
         private:
-            PipelineConfig      m_config;
-            std::string         m_name;
-            const ObjectInfo*   m_object        = nullptr;
+            PipelineConfig              m_config;
+            ~Pipeline();
         };
     }
 }

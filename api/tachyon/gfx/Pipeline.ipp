@@ -20,17 +20,8 @@ namespace yq {
         {
         }
         
-        Pipeline::Pipeline()
-        {
-        }
-        
         Pipeline::~Pipeline()
         {
-        }
-
-        void    Pipeline::set_name(std::string_view sv)
-        {
-            m_name  = std::string(sv);
         }
     }
 }

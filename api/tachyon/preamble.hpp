@@ -63,8 +63,14 @@ namespace yq {
 
         template <typename> class TypedAssetFactory;
         
+        using BufferCPtr    = Ref<const Buffer>;
+        using TextureCPtr   = Ref<const Texture>;
+        using ShaderCPtr    = Ref<const Shader>;
+        using PipelineCPtr  = Ref<const Pipeline>;
+
         using PushBuffer    = BasicBuffer<MAX_PUSH>;
-        using ShaderSpec    = std::variant<std::monostate, std::string, Ref<const Shader>>;
+        using ShaderSpec    = std::variant<std::monostate, std::string, ShaderCPtr>;
+
     }
     
         // here for compatibility
@@ -74,17 +80,12 @@ namespace yq {
         static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = tachyon::MIN_DESCRIPTOR_COUNT;
 
 
-        using tachyon::AppGLFW;
         using tachyon::AppCreateInfo;
-        //using tachyon::Asset;
-        //using tachyon::AssetCache;
-        //using tachyon::AssetInfo;
-        using tachyon::Monitor;
+        //using tachyon::Monitor;
         using tachyon::PipelineBuilder;
         using tachyon::PipelineConfig;
         using tachyon::ShaderSpec;
         using tachyon::ViewerCreateInfo;
-        using tachyon::VqApp;
         using tachyon::VqException;
         using tachyon::Window;
     }

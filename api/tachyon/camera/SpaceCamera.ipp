@@ -4,28 +4,28 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Target.hpp"
+#include "SpaceCamera.hpp"
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_projection.hpp>
+#include <math/vector/Tensor44.hxx>
+#include <math/vector/Vector3.hxx>
+
 
 namespace yq {
-    namespace camera {
-        Target::Target() : 
-            m_position({0., 0., -10.}),
-            m_target({0., 0., 0.}),
-            m_up({0., 1., 0.}),
+    namespace tachyon {
+        SpaceCamera::SpaceCamera() : 
             m_fov(70_deg),
             m_near(0.1),
-            m_far(20.)
+            m_far(10.)
         {
         }
         
-        Target::~Target()
+        SpaceCamera::~SpaceCamera()
         {
         }
         
-        glm::dmat4  Target::projection_matrix(const Size2D&sz) const
+        glm::dmat4  SpaceCamera::projection_matrix(const Size2D&sz) const
         {
             glm::dmat4 ret =  glm::perspective(
                                     (double) glm::radians(m_fov.value), 
@@ -36,46 +36,45 @@ namespace yq {
             return ret;
         }
 
-        void        Target::set_far(double v)
+        void        SpaceCamera::set_far(double v)
         {
             m_far   = v;
         }
         
-        void        Target::set_near(double v)
+        void        SpaceCamera::set_near(double v)
         {
             m_near  = v;
         }
         
-        
-        void        Target::set_position(const Vector3D&v)
+        void        SpaceCamera::set_orientation(const Quaternion3D&v)
         {
-            m_position    = v;
+            m_space.orientation = v;
         }
         
-        void        Target::set_fov(Degree v)
+        void        SpaceCamera::set_position(const Vector3D&v)
+        {
+            m_space.position    = v;
+        }
+        
+        void        SpaceCamera::set_scale(const Vector3D&v)
+        {
+            m_space.scale       = v;
+        }
+        
+        void        SpaceCamera::set_fov(Degree v)
         {
             m_fov = v;
         }
 
-        void        Target::set_target(const Vector3D&v)
+        glm::dmat4  SpaceCamera::view_matrix() const
         {
-            m_target    = v;
-        }
-        
-        void        Target::set_up(const Vector3D& v)
-        {
-            m_up        = v;
+            return m_space.parent2local();
         }
 
-        glm::dmat4  Target::view_matrix() const
-        {
-            return glm::lookAt((glm::dvec3) m_position, (glm::dvec3) m_target, (glm::dvec3) m_up);
-        }
-
-        glm::dmat4  Target::world2screen(const Params&p) const
+        glm::dmat4  SpaceCamera::world2screen(const Params&p) const
         {
             return projection_matrix(p.screen) * view_matrix();
         }
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::camera::Target)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SpaceCamera)

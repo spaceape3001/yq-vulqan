@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Null.hpp"
+#include "NullCamera.hpp"
 
 namespace yq {
-    namespace camera {
-        glm::dmat4  Null::world2screen(const Params&) const 
+    namespace tachyon {
+        glm::dmat4  NullCamera::world2screen(const Params&) const 
         {
             return {
                 1.,  0.,  0.,  0.,
@@ -18,13 +18,13 @@ namespace yq {
             };
         }
         
-        Null::Null()
+        NullCamera::NullCamera()
         {
         }
         
-        Null::~Null()
+        NullCamera::~NullCamera()
         {
         }
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::camera::Null)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::NullCamera)

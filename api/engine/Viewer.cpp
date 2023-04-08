@@ -22,7 +22,7 @@
 #include <basic/TextUtils.hpp>
 #include <meta/ObjectInfoWriter.hpp>
 
-#include <tachyon/Camera.hpp>
+#include <tachyon/camera/Camera.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 #include <engine/render/IndexBufferObjectInfo.hpp>

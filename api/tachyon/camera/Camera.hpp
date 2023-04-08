@@ -12,6 +12,7 @@
 #include <basic/UniqueID.hpp>
 #include <math/shape/Size2.hpp>
 #include <glm/glm.hpp>
+#include <meta/ObjectInfoWriter.hpp>
 
 namespace yq {
     namespace tachyon {
@@ -61,5 +62,18 @@ namespace yq {
         struct Camera::Params {
             Size2D          screen{};
         };
+
+        template <typename C>
+        class CameraInfo::Writer : public ObjectInfo::Writer<C> {
+        public:
+            Writer(CameraInfo* cameraInfo) : ObjectInfo::Writer<C>(cameraInfo)
+            {
+            }
+            
+            Writer(CameraInfo& cameraInfo) : Writer(&cameraInfo)
+            {
+            }
+        };
+
     }
 }

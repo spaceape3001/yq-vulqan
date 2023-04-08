@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/Camera.hpp>
+#include <tachyon/camera/Camera.hpp>
 #include <math/SimpleSpace.hpp>
 #include <math/units.hpp>
 
 namespace yq {
-    namespace camera {
-        class Space : public Camera {
-            YQ_OBJECT_DECLARE(Space, Camera)
+    namespace tachyon {
+        class SpaceCamera : public Camera {
+            YQ_OBJECT_DECLARE(SpaceCamera, Camera)
         public:
         
             glm::dmat4  world2screen(const Params&) const override;
-            Space();
-            ~Space();
+            SpaceCamera();
+            ~SpaceCamera();
 
             double                  far() const { return m_far; }
             Degree                  fov() const { return m_fov; }

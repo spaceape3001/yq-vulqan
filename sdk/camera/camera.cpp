@@ -10,9 +10,9 @@
 */
 
 #include <math/color/Colors.hpp>
-#include <tachyon/camera/Null.hpp>
-#include <tachyon/camera/Space.hpp>
-#include <tachyon/camera/Target.hpp>
+#include <tachyon/camera/NullCamera.hpp>
+#include <tachyon/camera/SpaceCamera.hpp>
+#include <tachyon/camera/TargetCamera.hpp>
 #include <asset/Tetrahedron.hpp>
 #include <asset/Triangle.hpp>
 #include <asset/Quadrilateral.hpp>
@@ -108,7 +108,7 @@ struct CameraWin : public engine::Viewer {
     Map<std::string,Ref<Camera>,IgCase> cameras;
 
     timepoint_t             start;
-    Ref<camera::Space>      cam;
+    Ref<SpaceCamera>      cam;
     Scene                   scene;
     Perspective             view;
     bool                    show_camera = true;
@@ -147,11 +147,11 @@ struct CameraWin : public engine::Viewer {
             }
         );
         
-        Camera*     c   = add_camera(&meta<camera::Space>());
+        Camera*     c   = add_camera(&meta<SpaceCamera>());
         
         view.camera = c;
         
-        cam     = static_cast<camera::Space*>(c);
+        cam     = static_cast<SpaceCamera*>(c);
         cam->set_position({-10, 0, -5.});
         cam->set_orientation(hpr((Radian) 0._deg, (Radian) 45._deg, (Radian) 0._deg));
         cam->set_near(.1);

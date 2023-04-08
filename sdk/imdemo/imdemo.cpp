@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     wi.imgui        = true;
     //wi.pmode        = VK_PRESENT_MODE_IMMEDIATE_KHR;  // <-< Set this if you want to see how fast your CPU & GPU can go!  (Metrics under Tools menu.)
     
-    Ref<Viewer>     v   = new Viewer(wi, new widget::ImGuiDemo);
+    Ref<Viewer>     v   = new Viewer(wi, new ImGuiDemo);
     app.run(v.ptr(), { 0.0 });
     return 0;
 }

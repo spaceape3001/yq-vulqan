@@ -15,9 +15,6 @@
 #include "Application.ipp"
 #include "Viewer.ipp"
 
-#include "camera/Null.ipp"
-#include "camera/Space.ipp"
-#include "camera/Target.ipp"
 
 #include "gpu/Visualizer.ipp"
 
@@ -26,7 +23,11 @@
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
 #include "Buffer.ipp"
-#include "Camera.ipp"
+
+#include "camera/Camera.ipp"
+#include "camera/NullCamera.ipp"
+#include "camera/SpaceCamera.ipp"
+#include "camera/TargetCamera.ipp"
 
 #include "gfx/GLSLShader.ipp"
 #include "gfx/Pipeline.ipp"

@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/Camera.hpp>
+#include <tachyon/camera/Camera.hpp>
 #include <math/SimpleSpace.hpp>
 #include <math/units.hpp>
 
 namespace yq {
-    namespace camera {
-        class Target : public Camera {
-            YQ_OBJECT_DECLARE(Target, Camera)
+    namespace tachyon {
+        class TargetCamera : public Camera {
+            YQ_OBJECT_DECLARE(TargetCamera, Camera)
         public:
         
             glm::dmat4  world2screen(const Params&) const override;
-            Target();
-            ~Target();
+            TargetCamera();
+            ~TargetCamera();
 
             double                  far() const { return m_far; }
             Degree                  fov() const { return m_fov; }

@@ -115,10 +115,6 @@ namespace yq {
         };
         
         struct PipelineConfig {
-        
-            //! Name for this pipeline (useful for multiple pipelines on an object)
-            std::string                 name;
-            
             //! Object that's being bound (optional)
             const CompoundInfo*         object      = nullptr;
             
@@ -155,6 +151,9 @@ namespace yq {
             //! Type of pipeline binding
             PipelineBinding             binding     = PipelineBinding::Graphics;
             
+            //! Object/Pipeline tracking role
+            uint16_t                    role        = 0;
+
             PipelineConfig();
             ~PipelineConfig();
         };

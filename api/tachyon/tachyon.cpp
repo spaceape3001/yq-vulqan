@@ -11,6 +11,7 @@
 
 //#include "gfx/Pipeline2.ipp"
 
+#include "scene/Rendered.ipp"
 
 #include "Application.ipp"
 #include "Viewer.ipp"

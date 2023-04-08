@@ -20,6 +20,8 @@ namespace yq {
         class Pipeline : public UniqueID, public RefCount {
         public:
             
+            using role_t    = decltype(PipelineConfig::role);
+            
             class Builder;
             template <typename> class Typed;
             template <typename> class VBOMaker;
@@ -29,14 +31,14 @@ namespace yq {
                 \tparam C   type being created for
             */
             template <typename C=void>
-            static auto build(std::string_view name=std::string_view());   
+            static auto build(role_t role={});   
             
             const PipelineConfig&       config() const { return m_config; }
             
             Pipeline(const PipelineConfig&);
             Pipeline(PipelineConfig&&);
             
-            std::string_view            name() const { return m_config.name; }
+            role_t  role() const { return m_config.role; }
             
         private:
             PipelineConfig              m_config;

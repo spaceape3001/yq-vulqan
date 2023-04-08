@@ -14,14 +14,36 @@
 namespace yq {
     namespace tachyon {
 
-        Pipeline::Builder::Builder(std::string_view name)
+        Pipeline::Builder::Builder(role_t role)
         {
-            if(!name.empty())
-                m_build.name   = std::string(name);
+            m_build.role    = role;
         }
         
         Pipeline::Builder::~Builder()
         {
+            if(m_autoGen){
+                m_autoGen(create());
+                m_autoGen   = {};
+            }
+        }
+
+        Pipeline::Builder::Builder(Builder&& mv)
+        {
+            m_build         = std::move(mv.m_build);
+            m_locations     = std::move(mv.m_locations);
+            m_autoGen       = mv.m_autoGen;
+            mv.m_autoGen    = {};
+        }
+        
+        Pipeline::Builder& Pipeline::Builder::operator=(Builder&& mv)
+        {
+            if(this != &mv){
+                m_build         = std::move(mv.m_build);
+                m_locations     = std::move(mv.m_locations);
+                m_autoGen       = mv.m_autoGen;
+                mv.m_autoGen    = {};
+            }
+            return *this;
         }
 
         PipelineCPtr        Pipeline::Builder::create() const
@@ -98,6 +120,11 @@ namespace yq {
             push(PushConfigType::View);
         }
         
+        void        Pipeline::Builder::set_auto_gen(AutoGen ag)
+        {
+            m_autoGen   = ag;
+        }
+
         void        Pipeline::Builder::shader(ShaderSpec ss)
         {
             ShaderCPtr      s   = Shader::decode(ss);

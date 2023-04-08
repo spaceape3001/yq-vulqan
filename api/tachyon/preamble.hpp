@@ -50,6 +50,7 @@ namespace yq {
         using   PipelineBuilder = LegacyPipelineBuilder;
         struct  PipelineConfig;
         class   Shader;
+        class   Rendered;
         class   Texture;
         struct  ViContext;
         struct  VideoMode;

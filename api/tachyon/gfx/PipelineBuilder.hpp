@@ -27,6 +27,7 @@ namespace yq {
         class Pipeline::Builder {
         public:
         
+            using   AutoGen     = std::function<void(PipelineCPtr)>;
         
             //! Creates a new pipeline
             PipelineCPtr        create() const;
@@ -55,6 +56,8 @@ namespace yq {
                 //! Equivalent to push(PushConfigType::View)
             void        push_view();
 
+            void        set_auto_gen(AutoGen);
+            
             void        ubo(size_t cnt=1);
 
             template <typename V>
@@ -62,8 +65,11 @@ namespace yq {
 
         /// other stuff
 
-            Builder(std::string_view name = std::string_view());
+            Builder(role_t role={});
             ~Builder();
+            
+            Builder(Builder&&);
+            Builder& operator=(Builder&&);
 
             PipelineConfig&     config() { return m_build; }
             
@@ -80,6 +86,9 @@ namespace yq {
 
         private:
             std::set<uint32_t>  m_locations;
+            AutoGen             m_autoGen = {};
+            Builder(const Builder&) = delete;
+            Builder&    operator=(const Builder&) = delete;
         };
         
         
@@ -220,7 +229,7 @@ namespace yq {
                 };
             }
                 
-            Typed(std::string_view name=std::string_view()) : Builder(name) 
+            Typed(role_t role={}) : Builder(role) 
             {
                 if constexpr ( is_type_v<C>){
                     m_build.object = &meta<C>();
@@ -229,6 +238,10 @@ namespace yq {
                     m_build.object = &meta<C>();
                 }
             }
+            
+            
+            Typed(const Typed&) = default;
+            Typed(Typed&&) = default;
 
 
                 /*
@@ -403,13 +416,13 @@ namespace yq {
         };
 
         template <typename C>
-        auto Pipeline::build(std::string_view name)
+        auto Pipeline::build(role_t r)
         {
             if constexpr (std::is_same_v<C,void>)
-                return Builder(name);
+                return Builder(r);
             if constexpr (!std::is_same_v<C,void>){
                 static_assert(std::is_class_v<C>, "Must either build to void or a class/structure!");
-                return Typed<C>(name);
+                return Typed<C>(r);
             }
         }
     

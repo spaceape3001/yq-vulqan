@@ -12,8 +12,9 @@
 #include <io/PluginLoader.hpp>
 #include <meta/Meta.hpp>
 #include <meta/ObjectInfoWriter.hpp>
-#include <engine/Application.hpp>
-#include <engine/Viewer.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/ui/Widget.hpp>
 #include <tachyon/ui/MyImGui.hpp>
 #include <iostream>
@@ -24,7 +25,6 @@
 #include <widget/TextArea.hpp>
 
 using namespace yq;
-using namespace yq::engine;
 using namespace yq::tachyon;
 
 const char* szSpeech = 
@@ -162,10 +162,10 @@ void    N2Editor::imgui_(ViContext&u)
     PopID();
 }
 
-class TextKing : public engine::Viewer {
-    YQ_OBJECT_DECLARE(TextKing, engine::Viewer)
+class TextKing : public Widget {
+    YQ_OBJECT_DECLARE(TextKing, Widget)
 public:
-    TextKing(const ViewerCreateInfo & wci=ViewerCreateInfo ()) : engine::Viewer(wci)
+    TextKing() 
     {
     }
     
@@ -176,7 +176,7 @@ public:
         m_editors.clear();
     }
     
-    void   draw_imgui(tachyon::ViContext&u) override 
+    void   imgui_(ViContext&u) override 
     {
         enum FileMode   {
             NONE    = 0,
@@ -232,6 +232,7 @@ public:
                 Separator();
                 if(MenuItem("Select All")){
                 }
+                EndMenu();
             }
             ImGui::EndMainMenuBar();
         }
@@ -257,13 +258,13 @@ public:
         }
     }
     
-    void                        install(GTEditor* editor)
+    void    install(GTEditor* editor)
     {
         m_editors.push_back(editor);
         m_active                = editor;
     }
 
-    void                        install(N2Editor* editor)
+    void    install(N2Editor* editor)
     {
         m_editors.push_back(editor);
     }
@@ -281,7 +282,7 @@ int main(int argc, char* argv[])
     AppCreateInfo        vi;
     vi.app_name     = "im_demo";
 
-    engine::Application app(argc, argv, vi);
+    Application app(argc, argv, vi);
     load_plugin_dir("plugin");
     app.finalize();
     
@@ -291,8 +292,8 @@ int main(int argc, char* argv[])
     wi.resizable    = true;
     wi.imgui        = true;
     //wi.pmode        = VK_PRESENT_MODE_IMMEDIATE_KHR;  // <-< Set this if you want to see how fast your CPU & GPU can go!  (Metrics under Tools menu.)
-    Ref<TextKing>   window  = new TextKing(wi);
+    Ref<Viewer>   window  = new Viewer(wi, new TextKing);
     
-    app.run_window(window.ptr(), 0.0);
+    app.run(window.ptr(), {0.0} );
     return 0;
 }

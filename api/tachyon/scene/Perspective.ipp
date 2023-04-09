@@ -5,21 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
-#include <tachyon/scene/Scene.hpp>
-#include <meta/ObjectInfoWriter.hpp>
+#include <tachyon/scene/Perspective.hpp>
+#include <tachyon/camera/NullCamera.hpp>
 
 namespace yq {
     namespace tachyon {
-        Scene::Scene()
+        Perspective::Perspective()
         {
+            camera = new NullCamera;
         }
         
-        Scene::~Scene()
+        Perspective::~Perspective()
         {
         }
     }
 }
-
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Scene);
-

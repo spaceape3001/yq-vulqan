@@ -12,6 +12,7 @@
 #include <math/preamble.hpp>
 #include <tachyon/gpu/ViPipeline.hpp>
 #include <tachyon/enum/PresentMode.hpp>
+#include <tachyon/enum/Tristate.hpp>
 
 #include <atomic>
 #include <functional>
@@ -48,24 +49,6 @@ namespace yq {
             VkQueue operator[](uint32_t i) const;
             bool valid() const { return family != UINT32_MAX; }
         };
-
-        template <typename T>
-        using ViHash    = std::unordered_map<uint64_t, T>;
-
-        #if 0
-        template <typename T>
-        struct ViHashPlus {
-            std::unordered_map<uint64_t, T>     hash;
-            std::vector<T>                      loose;  // others that aren't in the hash
-            //mutable tbb::spin_rw_mutex          mutex;
-            
-            void    clear()
-            {
-                hash.clear();
-                loose.clear();
-            }
-        };
-        #endif
         
         struct ViSwapchain {
             VkSwapchainKHR              swapchain       = nullptr;
@@ -155,6 +138,8 @@ namespace yq {
             //! \note Reference is only good to the next create()
             const ViPipeline&               create(const Pipeline&);
 
+            const ViThing&                  create(const Rendered&, const Pipeline&);
+
             ViFrame&                        current_frame();
             const ViFrame&                  current_frame() const;
             
@@ -166,6 +151,14 @@ namespace yq {
             */
             std::error_code                 draw(ViContext&, DrawFunction use={});
             
+            void                            draw_scene(ViContext&, const Scene&, const Perspective&);
+            
+            //! Draw a specific item, matrix assumed correct
+            void                            draw_object(ViContext&, const Rendered&, Tristate wireframe=Tristate::INHERIT);
+
+            //! Draw a specific item, matrix assumed correct, with given pipeline
+            void                            draw_object(ViContext&, const Rendered&, const Pipeline&, Tristate wireframe=Tristate::INHERIT);
+
             void                            erase(const Buffer&);
 
             uint64_t                        frame_number() const { return m_tick; }
@@ -198,6 +191,7 @@ namespace yq {
             uint32_t                        present_queue_family() const;
             bool                            present_queue_valid() const;
             
+
 
             VkRenderPass                    render_pass() const;
 
@@ -277,6 +271,7 @@ namespace yq {
             
             std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
             
+            void                        _draw(ViContext&, const Rendered&, const Pipeline&, Tristate);
             
         
             Visualizer(const Visualizer&) = delete;
@@ -284,10 +279,16 @@ namespace yq {
             Visualizer& operator=(const Visualizer&) = delete;
             Visualizer& operator=(Visualizer&&) = delete;
         
+            using DKey  = std::pair<uint64_t, uint64_t>;
+            using ThingMap      = std::map<DKey,ViThing*>;
+            using PipelineMap   = std::unordered_map<uint64_t, ViPipeline>;
+            using ShaderMap     = std::unordered_map<uint64_t, ViShader>;
+            using BufferMap     = std::unordered_map<uint64_t, ViBuffer>;
+        
         
             VmaAllocator                        m_allocator             = nullptr;
             VqApp*                              m_app                   = nullptr;
-            ViHash<ViBuffer>                    m_buffers;
+            BufferMap                           m_buffers;
             Guarded<VkClearValue>               m_clearValue;
             VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
             ViQueues                            m_compute;
@@ -300,18 +301,21 @@ namespace yq {
             VkInstance                          m_instance              = nullptr;
             VkPhysicalDeviceMemoryProperties    m_memoryInfo;
             VkPhysicalDevice                    m_physical              = nullptr;
-            ViHash<ViPipeline>                  m_pipelines;
+            PipelineMap                         m_pipelines;
             ViQueues                            m_present;
             PresentMode                         m_presentMode;
             std::set<PresentMode>               m_presentModes;
             VkRenderPass                        m_renderPass            = nullptr;
-            ViHash<ViShader>                    m_shaders;
+            ShaderMap                           m_shaders;
             VkSurfaceKHR                        m_surface               = nullptr;
             std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
             VkFormat                            m_surfaceFormat;
             VkColorSpaceKHR                     m_surfaceColorSpace;
             ViSwapchain                         m_swapchain;
+                // eventually this will get smarter....
+            ThingMap                            m_things;
             ViThread                            m_thread;
+            
             uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
             ViQueues                            m_videoDecode;
             ViQueues                            m_videoEncode;

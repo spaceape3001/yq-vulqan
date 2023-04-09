@@ -18,10 +18,6 @@
 
 namespace yq {
     namespace engine {
-
-        using CameraPtr     = Ref<Camera>;
-        using CameraCPtr    = Ref<const Camera>;
-        
         class Event;
         
         class Manipulator;

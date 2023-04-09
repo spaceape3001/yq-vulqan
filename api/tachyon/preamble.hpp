@@ -47,8 +47,10 @@ namespace yq {
         class   Monitor;
         class   Pipeline;
         class   LegacyPipelineBuilder;
+        struct  Perspective;
         using   PipelineBuilder = LegacyPipelineBuilder;
         struct  PipelineConfig;
+        struct  Scene;
         class   Shader;
         class   Rendered;
         class   Texture;
@@ -57,6 +59,8 @@ namespace yq {
         class   Visualizer;
         class   Viewer;
         struct  ViewerCreateInfo;
+        struct  ViPipeline;
+        struct  ViThing;
         class   VqApp;
         class   VqException;
         class   VqRecord;
@@ -66,6 +70,7 @@ namespace yq {
         template <typename> class TypedAssetFactory;
         
         using BufferCPtr    = Ref<const Buffer>;
+        using CameraCPtr    = Ref<const Camera>;
         using TextureCPtr   = Ref<const Texture>;
         using ShaderCPtr    = Ref<const Shader>;
         using PipelineCPtr  = Ref<const Pipeline>;

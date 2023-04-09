@@ -27,7 +27,7 @@ namespace yq {
             const Vector3D&         target() const { return m_target; }
             const Vector3D&         up() const { return m_up; }
 
-            glm::dmat4              projection_matrix(const Size2D&) const;
+            glm::dmat4              projection_matrix(const Rectangle2D&) const;
 
             void                    set_far(double);
             void                    set_near(double);

@@ -14,13 +14,18 @@
 #include <tachyon/enum/Tristate.hpp>
 
 namespace yq {
-    namespace engine {
+    namespace tachyon {
         struct Perspective {
             // Only the camera shall be required
             CameraCPtr                  camera;
             std::optional<RGB3F>        background;
             std::optional<Rectangle2D>  screen;
-            tachyon::Tristate           wireframe   = tachyon::Tristate::NO;
+            Tristate                    wireframe   = Tristate::INHERIT;
+            
+            Perspective();
+            Perspective(const CameraCPtr& c) : camera(c) {}
+
+            ~Perspective();
         };
     }
 }

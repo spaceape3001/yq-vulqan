@@ -26,7 +26,7 @@ namespace yq {
             const Quaternion3D&     orientation() const { return m_space.orientation; }
             const Vector3D&         position() const { return m_space.position; }
 
-            glm::dmat4              projection_matrix(const Size2D&) const;
+            glm::dmat4              projection_matrix(const Rectangle2D&) const;
             const Vector3D&         scale() const { return m_space.scale; }
 
             void                    set_far(double);

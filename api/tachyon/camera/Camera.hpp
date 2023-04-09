@@ -10,7 +10,7 @@
 #include <basic/Object.hpp>
 #include <basic/Ref.hpp>
 #include <basic/UniqueID.hpp>
-#include <math/shape/Size2.hpp>
+#include <math/shape/Rectangle2.hpp>
 #include <glm/glm.hpp>
 #include <meta/ObjectInfoWriter.hpp>
 
@@ -60,7 +60,7 @@ namespace yq {
         };
 
         struct Camera::Params {
-            Size2D          screen{};
+            Rectangle2D     screen;
         };
 
         template <typename C>

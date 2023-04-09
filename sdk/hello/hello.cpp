@@ -26,15 +26,13 @@
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/camera/NullCamera.hpp>
 #include <tachyon/enum/FrontFace.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gfx/PipelineBuilder.hpp>
-#include <tachyon/scene/Scene.hpp>
-#include <tachyon/scene/Scene3D.hpp>
 #include <tachyon/scene/Render3D.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
+#include <tachyon/widget/Scene3D.hpp>
 
 #include <math/color/Colors.hpp>
 #include <math/color/RGB.hpp>
@@ -133,22 +131,17 @@ struct HelloScene : public Scene3D {
     
     Ref<HelloTriangle>      triangle;
     Ref<Triangle>           tri2;
-    Ref<Camera>             camera;
-    Ref<Scene>              scene;
     timepoint_t             start;
 
     HelloScene()
     {
-        start   = std::chrono::steady_clock::now();
-        scene       = new Scene;
-        camera      = new NullCamera;
-        set_camera(camera);
-        set_scene(scene);
-        triangle = new HelloTriangle;
+        start       = std::chrono::steady_clock::now();
+        triangle    = new HelloTriangle;
         tri2        = new Triangle(TriData);
         tri2->set_position({0.,0.,0.1});
-        scene->things.push_back(triangle);
-        scene->things.push_back(tri2);
+        
+        add_thing(tri2);
+        add_thing(triangle);
     }
     
     void    vulkan_(ViContext& v)

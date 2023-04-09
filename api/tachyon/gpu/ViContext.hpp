@@ -30,9 +30,10 @@ namespace yq {
             Visualizer*         viz() const { return m_viz; }
             VkCommandBuffer     command() const { return m_command; }
             uint64_t            frame_number() const { return m_frameNumber; }
-            const ViPipeline&   pipeline() const { return m_pipeline; }
+            VkPipeline          pipeline() const { return m_pipeline; }
+            VkPipelineLayout    layout() const { return m_layout; }
             bool                imgui() const { return m_imgui; }
-            const glm::mat4&    world2eye() const { return m_world2eye; }
+            const glm::dmat4&   world2eye() const { return m_world2eye; }
             
             Viewer*             viewer() const { return m_viewer; }
             Window*             window() const { return m_window; }
@@ -53,9 +54,11 @@ namespace yq {
             Viewer*             m_viewer        = nullptr;
             Window*             m_window        = nullptr;
             VkCommandBuffer     m_command       = nullptr;
-            ViPipeline          m_pipeline;
-            glm::mat4           m_world2eye;
+            VkPipeline          m_pipeline      = nullptr;  // last pipeline set
+            VkPipelineLayout    m_layout        = nullptr;  // last layout set
+            glm::dmat4          m_world2eye;
             uint64_t            m_frameNumber   = 0;
+            float               m_utime         = 0.;
             bool                m_imgui         = false;
         };
     }

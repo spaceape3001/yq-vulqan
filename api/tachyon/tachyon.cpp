@@ -9,22 +9,14 @@
     are our C++ adapters for it.
 */
 
-//#include "gfx/Pipeline2.ipp"
 
-#include "gpu/ViBO.ipp"
-#include "scene/Scene3D.ipp"
 
 #include "Application.ipp"
-#include "Viewer.ipp"
-
-
-#include "gpu/Visualizer.ipp"
-
-
 #include "Asset.ipp"
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
 #include "Buffer.ipp"
+#include "Viewer.ipp"
 
 #include "camera/Camera.ipp"
 #include "camera/NullCamera.ipp"
@@ -39,7 +31,10 @@
 #include "gfx/Shader.ipp"
 #include "gfx/Texture.ipp"
 
+#include "gpu/Visualizer.ipp"
 #include "gpu/ViContext.ipp"
+#include "gpu/ViBO.ipp"
+#include "gpu/ViThing.ipp"
 #include "gpu/VqApp.ipp"
 #include "gpu/VqEnums.ipp"
 #include "gpu/VqLogging.ipp"
@@ -52,15 +47,15 @@
 #include "host/VideoMode.ipp"
 #include "host/Window.ipp"
 
+#include "scene/Perspective.ipp"
 #include "scene/Render3D.ipp"
 #include "scene/Rendered.ipp"
-#include "scene/Scene.ipp"
-
-#include "ui/Widget.ipp"
 
 #include "ui/Editor.ipp"
+#include "ui/Widget.ipp"
 
 #include "widget/ImGuiDemo.ipp"
+#include "widget/Scene3D.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>
@@ -93,7 +88,12 @@
 #include <tachyon/enum/VertexInputRate.hpp>
 
 #include <meta/Init.hpp>
+
 #include <math/shape/Size2.hxx>
+#include <math/shape/Rectangle2.hxx>
+#include <math/vector/Tensor44.hxx>
+#include <math/vector/Vector3.hxx>
+
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::BorderColor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ColorComponent)

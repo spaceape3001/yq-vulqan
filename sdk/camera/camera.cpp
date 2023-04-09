@@ -21,7 +21,7 @@
 #include <basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/scene/Scene.hpp>
-#include <tachyon/scene/Scene3D.hpp>
+#include <tachyon/widget/Scene3D.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 
@@ -109,7 +109,6 @@ struct CameraScene3D : public Scene3D {
 
     timepoint_t             start;
     Ref<SpaceCamera>        cam;
-    Ref<Scene>              scene;
     bool                    show_camera = true;
     bool                    slave_clock = true;
     bool                    show_control    = true;
@@ -151,9 +150,6 @@ struct CameraScene3D : public Scene3D {
             }
         );
         
-        scene       = new Scene;
-        set_scene(scene);
-        
         Camera*     c   = add_camera(&meta<SpaceCamera>());
         
         set_camera(c);
@@ -166,37 +162,37 @@ struct CameraScene3D : public Scene3D {
         
         Ref<Triangle>   tri = new Triangle(TriData);
         tri->set_scaling(0.5);
-        scene->things.push_back(tri);
+        add_thing(tri);
         
         Ref<Tetrahedron>    dir     = new Tetrahedron(NorthData);
         dir->set_position({0., 5., 0. });
-        scene->things.push_back(dir);
+        add_thing(dir);
 
         dir     = new Tetrahedron(SouthData);
         dir->set_position({0., -5., 0. });
-        scene->things.push_back(dir);
+        add_thing(dir);
             
         dir     = new Tetrahedron(EastData);
         dir->set_position({5., 0., 0. });
-        scene->things.push_back(dir);
+        add_thing(dir);
 
         dir     = new Tetrahedron(WestData);
         dir->set_position({-5., 0., 0. });
-        scene->things.push_back(dir);
+        add_thing(dir);
         
         dir     = new Tetrahedron(TopData);
         dir->set_position({0., 0., 5. });
-        scene->things.push_back(dir);
+        add_thing(dir);
         
         dir     = new Tetrahedron(BottomData);
         dir->set_position({0., 0., -5. });
-        scene->things.push_back(dir);
+        add_thing(dir);
             
         Ref<Quadrilateral> quad = new Quadrilateral(QuadData);
         quad->set_scaling(0.5);
         quad->set_heading( (Radian) 45._deg );
         quad->set_position({ 0.5, 0.5, 0. });
-        scene->things.push_back(quad);
+        add_thing(quad);
     }
 
     void        vulkan_(ViContext& ctx) override
@@ -241,7 +237,7 @@ struct CameraScene3D : public Scene3D {
                 
                 if(BeginMenu("Switch")){
                     for(auto& ci : cameras){
-                        if(RadioButton(ci.first.c_str(), ci.second.ptr() == camera().ptr())){
+                        if(RadioButton(ci.first.c_str(), ci.second.ptr() == perspective.camera.ptr())){
                             set_camera(ci.second.ptr());
                         }
                     }

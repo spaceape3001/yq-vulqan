@@ -6,26 +6,31 @@
 
 #pragma once
 
-#include <tachyon/gpu/VqApp.hpp>
-
-#include <basic/ErrorDB.hpp>
-#include <math/color/RGBA.hpp>
-//#include <tachyon/errors.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/Buffer.hpp>
-#include <tachyon/gfx/PushData.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
-#include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
-#include <tachyon/gpu/VqUtils.hpp>
+
+#include <basic/AutoReset.hpp>
+#include <basic/BasicBuffer.hpp>
+#include <basic/ErrorDB.hpp>
+
+#include <math/color/RGBA.hpp>
+
+#include <tachyon/Buffer.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/gfx/Pipeline.hpp>
+#include <tachyon/gfx/PushData.hpp>
+#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/gpu/ViThing.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/ViPipeline.hpp>
-#include <basic/AutoReset.hpp>
+#include <tachyon/gpu/VqApp.hpp>
+#include <tachyon/gpu/VqUtils.hpp>
+#include <tachyon/scene/Perspective.hpp>
+#include <tachyon/scene/Render3D.hpp>
+#include <tachyon/scene/Scene.hpp>
 
 #include <GLFW/glfw3.h>
 
 namespace yq {
-
     namespace tachyon {
 
         void    ViQueues::set(VkDevice dev, uint32_t cnt)
@@ -758,7 +763,9 @@ namespace yq {
                         p.ibos.push_back(bo);
                     }
                 }
-                
+                    
+                p.cfg           = cfg;
+
 
                 return std::error_code();
             }
@@ -1299,9 +1306,24 @@ namespace yq {
         const ViPipeline&  Visualizer::create(const Pipeline& v)
         {
             auto [j,f]  = m_pipelines.try_emplace(v.id(), ViPipeline());
-            if(f)
+            if(f){
                 _create(j->second, v.config());
+                j->second.id    = v.id();
+            }
             return j->second;
+        }
+
+        const ViThing&      Visualizer::create(const Rendered& r, const Pipeline&p)
+        {
+            auto& vp    = create(p);
+            DKey    k   = DKey(r.id(), p.id());
+            auto[j,f]   = m_things.try_emplace(k, nullptr);
+            if(f){
+                j->second   = new ViThing(*this, vp, &r);
+            } else {
+                j->second->update(*this, vp, &r);
+            }
+            return *(j->second);
         }
 
         void        Visualizer::erase(const Buffer& v)
@@ -1465,5 +1487,152 @@ namespace yq {
             return std::error_code();
         }
 
+        void    Visualizer::_draw(ViContext&u, const Rendered&r, const Pipeline&p, Tristate w)
+        {
+            const auto&         cfg     = p.config();
+            if(cfg.binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
+                return ;
+                
+            // TODO ... reduce this down to a single pipeline lookup.... (as the next one is implicit)
+            
+            const ViPipeline&   pipe    = create(p);
+            const ViThing&      thing   = create(r, p);
+
+                //  =================================================
+                //      SET THE PIPELINE
+            Tristate        wireframe   = (w == Tristate::INHERIT) ? r.wireframe() : w;
+            VkPipeline      vkpipe      = (wireframe == Tristate::YES) ? pipe.wireframe : pipe.pipeline;
+            if(vkpipe && (vkpipe != u.m_pipeline)){
+                vkCmdBindPipeline(u.command(), VK_PIPELINE_BIND_POINT_GRAPHICS, vkpipe);
+                u.m_pipeline    = vkpipe;
+                u.m_layout      = pipe.layout;
+            }
+
+                //  =================================================
+                //      PUSH THE CONSTANTS
+
+            const Render3D* r3  = dynamic_cast<const Render3D*>(&r);
+            StdPushData push;
+            push.time   = u.m_utime;
+            
+            switch(cfg.push.type){
+            case PushConfigType::Full:
+                if(r3){
+                    push.matrix  = u.m_world2eye * r3->model2world();
+                    vkCmdPushConstants(u.command(), pipe.layout, pipe.shaders, 0, sizeof(push), &push );
+                    break;
+                }
+                [[fallthrough]];
+            case PushConfigType::View:
+                push.matrix  = u.m_world2eye;
+                vkCmdPushConstants(u.command(), pipe.layout, pipe.shaders, 0, sizeof(push), &push );
+                break;
+            case PushConfigType::Custom:
+                if(cfg.push.fetch){
+                    PushBuffer      bd;
+                    cfg.push.fetch(&r, bd);
+                    vkCmdPushConstants(u.command(), pipe.layout, pipe.shaders, 0, bd.size(), bd.data());
+                    break;
+                }
+                [[fallthrough]];
+            case PushConfigType::None:
+            default:
+                // no push constant desired... which is fine.
+                break;
+            }
+            
+            //  =================================================
+            //      UNIFORM BUFFERS
+            
+                // TODO
+            
+            //  =================================================
+            //      TEXTURES
+
+                // TODO
+
+            //  =================================================
+            //      VERTEX BUFFERS
+
+            uint32_t    vmax    = 0;
+            uint32_t    VN      = cfg.vbos.size();
+            if(VN){
+                for(uint32_t i=0;i<VN;++i){
+                    VkDeviceSize    zero{};
+                    vmax    = std::max(vmax, thing.vbos[i].count);
+                    vkCmdBindVertexBuffers(u.command(), i,  1, &thing.vbos[i].buffer, &zero);
+                }
+            }
+            
+            //  =================================================
+            //      INDEX BUFFERS & DRAWING
+
+            uint32_t    VI      = cfg.ibos.size();
+            if(VI){
+                for(uint32_t i=0;i<VI;++i){
+                    vkCmdBindIndexBuffer(u.command(), thing.ibos[i].buffer, 0, (VkIndexType)(cfg.ibos[i].type.value()));
+                    vkCmdDrawIndexed(u.command(), thing.ibos[i].count, 1, 0, 0, 0);  // possible point of speedup in future
+                }
+            } else {
+                vkCmdDraw(u.command(), vmax, 1, 0, 0);
+            }
+        }
+
+        void    Visualizer::draw_object(ViContext&u, const Rendered&r, Tristate w)
+        {
+            PipelineCPtr    pipe    = r.pipeline();
+            if(!pipe)
+                return ;
+
+            _draw(u, r, *pipe, w);
+        }
+
+        void    Visualizer::draw_object(ViContext&u, const Rendered&r, const Pipeline& p, Tristate w)
+        {
+            #if 0
+                // SMARTER (later, if it becomes an issue)
+            const CompoundInfo*     info    = p.config().object;
+            if(info){
+                if(info->is_type()){
+                    
+                } else if(info->is_object()){
+                }
+            
+                const RenderedInfo& ri  = r.metaInfo();
+                if((&ri != info) && !ri->is_base(*info))
+                    return ;
+            }
+            #endif
+            
+            _draw(u,r,p,w);
+        }
+
+        void    Visualizer::draw_scene(ViContext& u, const Scene&sc, const Perspective& p)
+        {
+            if(u.m_viz != this) //  fast reject
+                return ;
+            if(!p.camera)
+                return ;
+                
+            auto r1 = auto_reset(u.m_utime, sc.utime);
+            
+            Camera::Params      cparams;
+            if(p.screen){
+                cparams.screen = *p.screen;
+            } else {
+                int         w, h;
+                glfwGetFramebufferSize(m_window, &w, &h);
+                cparams.screen  = Size2D((double) w, (double) h);
+            }
+            
+            auto r2 = auto_reset(u.m_world2eye, p.camera->world2screen(cparams));
+            
+            for(auto& r : sc.things){
+                if(!r)
+                    continue;
+                draw_object(u, *r, p.wireframe);
+            }
+        }
+        
     }
 }

@@ -8,8 +8,9 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_projection.hpp>
-#include <math/vector/Tensor44.hxx>
-#include <math/vector/Vector3.hxx>
+#include <math/shape/Rectangle2.hpp>
+#include <math/vector/Tensor44.hpp>
+#include <math/vector/Vector3.hpp>
 
 
 namespace yq {
@@ -25,8 +26,9 @@ namespace yq {
         {
         }
         
-        glm::dmat4  SpaceCamera::projection_matrix(const Size2D&sz) const
+        glm::dmat4  SpaceCamera::projection_matrix(const Rectangle2D&sz) const
         {
+            //  ignore the translation (for now)
             glm::dmat4 ret =  glm::perspective(
                                     (double) glm::radians(m_fov.value), 
                                     (double) sz.width() / (double) sz.height(),

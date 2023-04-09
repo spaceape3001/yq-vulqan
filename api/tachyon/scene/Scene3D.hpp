@@ -26,6 +26,8 @@ namespace yq {
             void    set_scene(Ref<Scene>);
             void    set_wireframe(Tristate);
             
+            Ref<Camera> camera() const { return m_camera; }
+            
             Tristate wireframe() const { return m_wireframe; }
 
         private:

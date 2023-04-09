@@ -19,10 +19,11 @@
 
 #include <basic/DelayInit.hpp>
 #include <basic/TextUtils.hpp>
-#include <engine/Application.hpp>
-#include <engine/Scene.hpp>
-#include <engine/Perspective.hpp>
-#include <engine/Viewer.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/scene/Scene.hpp>
+#include <tachyon/scene/Scene3D.hpp>
+#include <tachyon/Viewer.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 
 #include <math/color/RGB.hpp>
 #include <math/vector/Vector2.hpp>
@@ -42,7 +43,6 @@ using namespace ImGui;
 using namespace yq;
 using namespace yq::asset;
 using namespace yq::tachyon;
-using namespace yq::engine;
 
 const auto  NorthData = TetrahedronData<ColorVertex3D>{
     {{  0.,  1.,  0. }, color::White },
@@ -101,19 +101,23 @@ const auto QuadData = QuadrilateralData<ColorVertex2D> {
     { {-0.5, -1.0}, color::Red }
 };
 
-struct CameraWin : public engine::Viewer {
-    YQ_OBJECT_DECLARE(CameraWin, engine::Viewer)
+struct CameraScene3D : public Scene3D {
+    YQ_OBJECT_DECLARE(CameraScene3D, Scene3D)
 
     std::vector<const CameraInfo*>      cam_infos;
     Map<std::string,Ref<Camera>,IgCase> cameras;
 
     timepoint_t             start;
-    Ref<SpaceCamera>      cam;
-    Scene                   scene;
-    Perspective             view;
+    Ref<SpaceCamera>        cam;
+    Ref<Scene>              scene;
     bool                    show_camera = true;
     bool                    slave_clock = true;
     bool                    show_control    = true;
+    
+    static void    initInfo()
+    {
+    }
+    
 
     Camera*     add_camera(const CameraInfo* ci)
     {
@@ -130,7 +134,7 @@ struct CameraWin : public engine::Viewer {
         return c;
     }
 
-    CameraWin(const ViewerCreateInfo& wci) : Viewer(wci)
+    CameraScene3D() 
     {
         start   = std::chrono::steady_clock::now();
         
@@ -147,9 +151,12 @@ struct CameraWin : public engine::Viewer {
             }
         );
         
+        scene       = new Scene;
+        set_scene(scene);
+        
         Camera*     c   = add_camera(&meta<SpaceCamera>());
         
-        view.camera = c;
+        set_camera(c);
         
         cam     = static_cast<SpaceCamera*>(c);
         cam->set_position({-10, 0, -5.});
@@ -159,40 +166,40 @@ struct CameraWin : public engine::Viewer {
         
         Ref<Triangle>   tri = new Triangle(TriData);
         tri->set_scaling(0.5);
-        scene.things.push_back(tri);
+        scene->things.push_back(tri);
         
         Ref<Tetrahedron>    dir     = new Tetrahedron(NorthData);
         dir->set_position({0., 5., 0. });
-        scene.things.push_back(dir);
+        scene->things.push_back(dir);
 
         dir     = new Tetrahedron(SouthData);
         dir->set_position({0., -5., 0. });
-        scene.things.push_back(dir);
+        scene->things.push_back(dir);
             
         dir     = new Tetrahedron(EastData);
         dir->set_position({5., 0., 0. });
-        scene.things.push_back(dir);
+        scene->things.push_back(dir);
 
         dir     = new Tetrahedron(WestData);
         dir->set_position({-5., 0., 0. });
-        scene.things.push_back(dir);
+        scene->things.push_back(dir);
         
         dir     = new Tetrahedron(TopData);
         dir->set_position({0., 0., 5. });
-        scene.things.push_back(dir);
+        scene->things.push_back(dir);
         
         dir     = new Tetrahedron(BottomData);
         dir->set_position({0., 0., -5. });
-        scene.things.push_back(dir);
+        scene->things.push_back(dir);
             
         Ref<Quadrilateral> quad = new Quadrilateral(QuadData);
         quad->set_scaling(0.5);
         quad->set_heading( (Radian) 45._deg );
         quad->set_position({ 0.5, 0.5, 0. });
-        scene.things.push_back(quad);
+        scene->things.push_back(quad);
     }
 
-    void        draw_vulqan(VkCommandBuffer cmdbuf) override
+    void        vulkan_(ViContext& ctx) override
     {
         
         #if 0
@@ -211,11 +218,10 @@ struct CameraWin : public engine::Viewer {
         }
         #endif
 
-        render(cmdbuf, scene, view);
-        //Window::draw_vulqan(cmdbuf);
+        Scene3D::vulkan_(ctx);
     }
     
-    void    draw_imgui(tachyon::ViContext&) override
+    void    imgui_(ViContext&) override
     {
         if(BeginMainMenuBar()){
             if(BeginMenu("Camera")){
@@ -225,7 +231,7 @@ struct CameraWin : public engine::Viewer {
                         if(MenuItem(txt.c_str())){
                             Camera*c    = add_camera(ci);
                             if(c){
-                                view.camera = c;
+                                set_camera(c);
                             }
                         }
                     }
@@ -235,17 +241,19 @@ struct CameraWin : public engine::Viewer {
                 
                 if(BeginMenu("Switch")){
                     for(auto& ci : cameras){
-                        if(RadioButton(ci.first.c_str(), ci.second.ptr() == view.camera.ptr())){
-                            view.camera = ci.second.ptr();
+                        if(RadioButton(ci.first.c_str(), ci.second.ptr() == camera().ptr())){
+                            set_camera(ci.second.ptr());
                         }
                     }
                 
                     EndMenu();
                 }
                 Checkbox("Control", &show_control);
+                #if 0
                 Separator();
                 if(MenuItem("Exit"))
                     cmd_close();
+                #endif
                 EndMenu();
             }
             if(BeginMenu("Shape")){
@@ -319,13 +327,16 @@ struct CameraWin : public engine::Viewer {
     
 };
 
-YQ_OBJECT_IMPLEMENT(CameraWin)
+YQ_OBJECT_IMPLEMENT(CameraScene3D)
 
 int main(int argc, char* argv[])
 {
     AppCreateInfo        vi;
     
-    engine::Application app(argc, argv, vi);
+    Application app(argc, argv, vi);
+    
+    CameraScene3D::initInfo();
+    
     //load_plugin_dir("plugin");
     app.finalize();
     
@@ -336,11 +347,13 @@ int main(int argc, char* argv[])
     wi.clear        = { 0.1f, 0.1f, 0.2f, 1.f };
     wi.imgui        = true;
 
-    Ref<CameraWin>   win = new CameraWin(wi);
-    if(!win->good())
-        return -1;
+    Ref<Viewer>     win = new Viewer(wi, new CameraScene3D);
+
+    //Ref<CameraWin>   win = new CameraWin(wi);
+    //if(!win->good())
+        //return -1;
     
-    app.run_window(win.ptr());
+    app.run(win.ptr());
     return 0;
 }
 

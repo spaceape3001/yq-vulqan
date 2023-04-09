@@ -30,10 +30,7 @@ namespace yq {
             Visualizer*         viz() const { return m_viz; }
             VkCommandBuffer     command() const { return m_command; }
             uint64_t            frame_number() const { return m_frameNumber; }
-            VkPipeline          pipeline() const { return m_pipeline; }
-            VkPipelineLayout    layout() const { return m_layout; }
             bool                imgui() const { return m_imgui; }
-            const glm::dmat4&   world2eye() const { return m_world2eye; }
             
             Viewer*             viewer() const { return m_viewer; }
             Window*             window() const { return m_window; }

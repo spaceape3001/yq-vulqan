@@ -325,6 +325,8 @@ namespace yq {
             bool                                m_init                  = false;
             GLFWwindow*                         m_window                = nullptr;
 
+            struct Execution;
+
             /*! Rebuilds the swapchain
             
                 This will rebuild the swapchain, if the flag has been set or forced.

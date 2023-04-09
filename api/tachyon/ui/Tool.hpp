@@ -8,14 +8,14 @@
 
 #include <basic/MetaObject.hpp>
 
-
-
 namespace yq {
-    namespace engine {
-        class ToolInfo : public MetaObjectInfo {
+    namespace tachyon {
+        class ToolInfo : public ObjectInfo {
         public:
             template <class> class Writer;
             ToolInfo(std::string_view, MetaObjectInfo&, const std::source_location& sl = std::source_location::current());
+        
+            //  const WidgetInfo*   widget() const;
         };
         
         
@@ -23,7 +23,7 @@ namespace yq {
         
             The manipulator is about controlling the camera/viewer with user input.
         */
-        class Tool : public MetaObject {
+        class Tool : public Object {
             YQ_OBJECT_INFO(ToolInfo)
             YQ_OBJECT_DECLARE(Tool, MetaObject)
         public:

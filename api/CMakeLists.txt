@@ -22,17 +22,11 @@ add_library(${PROJECT_NAME} SHARED
     ${test_source}
     
     ./tachyon/tachyon.cpp
-    
     ./tachyon/ui/MyImGui.cpp
-    
     ./YqEngineConfig.cpp
-    
-    ./asset/asset.cpp
-    
-     ./widget/TextArea.cpp
-
-
+    ./widget/TextArea.cpp
 )
+
 target_compile_definitions(${PROJECT_NAME} 
     PUBLIC
         GLFW_INCLUDE_VULKAN=1

@@ -13,9 +13,9 @@
 #include <tachyon/camera/NullCamera.hpp>
 #include <tachyon/camera/SpaceCamera.hpp>
 #include <tachyon/camera/TargetCamera.hpp>
-#include <asset/Tetrahedron.hpp>
-#include <asset/Triangle.hpp>
-#include <asset/Quadrilateral.hpp>
+#include <tachyon/asset/Tetrahedron.hpp>
+#include <tachyon/asset/Triangle.hpp>
+#include <tachyon/asset/Quadrilateral.hpp>
 
 #include <basic/DelayInit.hpp>
 #include <basic/TextUtils.hpp>

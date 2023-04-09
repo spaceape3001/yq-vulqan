@@ -18,6 +18,7 @@ namespace yq {
         */
         struct Scene {
             std::vector<RenderedPtr>    things;
+            std::optional<RGB3F>        background;
             // eventually things like lights, background/layers/materials/etc will go here
             float                       utime   = 0.; // for the push constant
         };

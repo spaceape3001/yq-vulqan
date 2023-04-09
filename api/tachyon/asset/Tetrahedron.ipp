@@ -6,9 +6,8 @@
 
 #pragma once
 
-#include "Quadrilateral.hpp"
-#include <math/shape/QuadrilateralData.hpp>
-#include <math/vector/Vector3.hxx>
+#include <tachyon/asset/Tetrahedron.hpp>
+#include <math/shape/TetrahedronData.hpp>
 #include <math/shape/shape_utils.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
@@ -16,19 +15,18 @@
 
 namespace yq {
     namespace tachyon {
-        void Quadrilateral::initInfo()
+        void Tetrahedron::initInfo()
         {
-            static const uint16_t   kIndices[] = { 0, 1, 2, 2, 3, 0 };
+            static const uint16_t   kIndices[] = { 1, 2, 3, 0, 3, 2, 0, 1, 3, 0, 2, 1 };
         
-            auto w = writer<Quadrilateral>();
-            
+            auto w = writer<Tetrahedron>();
             {
                 auto p = w.pipeline();
                 
                 p.shader("assets/colored.vert");
                 p.shader("assets/colored.frag");
 
-                p.fixed_vertex(&Quadrilateral::m_vertex)
+                p.fixed_vertex(&Tetrahedron::m_vertex)
                     .attribute(&ColorVertexData::position)
                     .attribute(&ColorVertexData::color)
                 ;
@@ -38,7 +36,7 @@ namespace yq {
             }
         }
 
-        Quadrilateral::Quadrilateral(const QuadrilateralData<ColorVertex2D>&tri)
+        Tetrahedron::Tetrahedron(const TetrahedronData<ColorVertex3D>&tri)
         {
             m_vertex[0] = tri.a;
             m_vertex[1] = tri.b;
@@ -46,13 +44,13 @@ namespace yq {
             m_vertex[3] = tri.d;
         }
         
-        Quadrilateral::~Quadrilateral()
+        Tetrahedron::~Tetrahedron()
         {
         }
         
         YQ_INVOKE(
-            Quadrilateral::initInfo();
+            Tetrahedron::initInfo();
         );
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Quadrilateral)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Tetrahedron)

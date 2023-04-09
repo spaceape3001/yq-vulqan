@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include "Triangle.hpp"
-#include <math/shape/TriangleData.hpp>
+#include <tachyon/asset/Quadrilateral.hpp>
+#include <math/shape/QuadrilateralData.hpp>
+#include <math/vector/Vector3.hxx>
 #include <math/shape/shape_utils.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
@@ -15,9 +16,11 @@
 
 namespace yq {
     namespace tachyon {
-        void Triangle::initInfo()
+        void Quadrilateral::initInfo()
         {
-            auto w = writer<Triangle>();
+            static const uint16_t   kIndices[] = { 0, 1, 2, 2, 3, 0 };
+        
+            auto w = writer<Quadrilateral>();
             
             {
                 auto p = w.pipeline();
@@ -25,30 +28,31 @@ namespace yq {
                 p.shader("assets/colored.vert");
                 p.shader("assets/colored.frag");
 
-                p.fixed_vertex(&Triangle::m_vertex)
+                p.fixed_vertex(&Quadrilateral::m_vertex)
                     .attribute(&ColorVertexData::position)
                     .attribute(&ColorVertexData::color)
                 ;
                 
+                p.common_index(kIndices);
                 p.push_full();
             }
         }
 
-        Triangle::Triangle(const TriangleData<ColorVertex2D>&tri)
+        Quadrilateral::Quadrilateral(const QuadrilateralData<ColorVertex2D>&tri)
         {
             m_vertex[0] = tri.a;
             m_vertex[1] = tri.b;
             m_vertex[2] = tri.c;
-            m_draw.vertex_count  = 3;
+            m_vertex[3] = tri.d;
         }
         
-        Triangle::~Triangle()
+        Quadrilateral::~Quadrilateral()
         {
         }
         
         YQ_INVOKE(
-            Triangle::initInfo();
+            Quadrilateral::initInfo();
         );
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Triangle)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Quadrilateral)

@@ -8,7 +8,7 @@
 
 #include <tachyon/scene/Render3D.hpp>
 #include <array>
-#include <data/ColorVertexData.hpp>
+#include <tachyon/data/ColorVertexData.hpp>
 
 namespace yq {
     namespace tachyon {

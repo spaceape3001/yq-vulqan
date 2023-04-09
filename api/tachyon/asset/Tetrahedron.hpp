@@ -8,23 +8,22 @@
 
 #include <tachyon/scene/Render3D.hpp>
 #include <array>
-#include <data/ColorVertexData.hpp>
+#include <tachyon/data/ColorVertexData.hpp>
 
 namespace yq {
     namespace tachyon {
-    
-        /*! \brief A quadrilateral, taking in four points */
-        class Quadrilateral : public Render3D {
-            YQ_OBJECT_DECLARE(Quadrilateral, Render3D)
+        class Tetrahedron : public Render3D {
+            YQ_OBJECT_DECLARE(Tetrahedron, Render3D)
         public:
         
-            Quadrilateral(const QuadrilateralData<ColorVertex2D>&);
-            ~Quadrilateral();
+            Tetrahedron(const TetrahedronData<ColorVertex3D>&);
+            ~Tetrahedron();
             
             static void initInfo();
             
         private:
-            std::array<ColorVertexData,4>        m_vertex;
+            std::array<ColorVertexData,4>   m_vertex;
+//            std::array<uint16_t,6>          m_index;
         };
     }
 }

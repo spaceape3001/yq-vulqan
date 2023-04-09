@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include "Tool.hpp"
+#include <tachyon/ui/Tool.hpp>
 #include <basic/DelayInit.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::engine::Tool)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Tool)
 
 namespace yq {
     namespace engine {

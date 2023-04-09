@@ -18,6 +18,10 @@
 #include "Buffer.ipp"
 #include "Viewer.ipp"
 
+#include "asset/Quadrilateral.ipp"
+#include "asset/Tetrahedron.ipp"
+#include "asset/Triangle.ipp"
+
 #include "camera/Camera.ipp"
 #include "camera/NullCamera.ipp"
 #include "camera/SpaceCamera.ipp"

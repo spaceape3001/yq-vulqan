@@ -127,6 +127,8 @@ namespace yq {
 
         void        Pipeline::Builder::shader(ShaderSpec ss)
         {
+            m_build.shaders.push_back(ss);
+            #if 0
             ShaderCPtr      s   = Shader::decode(ss);
             if(!s){
                 if(const std::string*sp = std::get_if<std::string>(&ss)){
@@ -137,6 +139,7 @@ namespace yq {
             }
 
             m_build.shaders.push_back(s);
+            #endif
         }
         
         void        Pipeline::Builder::shaders(std::initializer_list<ShaderSpec> sss)

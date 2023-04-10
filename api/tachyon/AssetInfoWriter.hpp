@@ -9,18 +9,16 @@
 #include <tachyon/Asset.hpp>
 #include <meta/ObjectInfoWriter.hpp>
 
-namespace yq {
-    namespace tachyon {
-        template <typename C>
-        class AssetInfo::Writer : public ObjectInfo::Writer<C> {
-        public:
-            Writer(AssetInfo* assetInfo) : ObjectInfo::Writer<C>(assetInfo)
-            {
-            }
-            
-            Writer(AssetInfo& assetInfo) : Writer(&assetInfo)
-            {
-            }
-        };
-    }
+namespace yq::tachyon {
+    template <typename C>
+    class AssetInfo::Writer : public ObjectInfo::Writer<C> {
+    public:
+        Writer(AssetInfo* assetInfo) : ObjectInfo::Writer<C>(assetInfo)
+        {
+        }
+        
+        Writer(AssetInfo& assetInfo) : Writer(&assetInfo)
+        {
+        }
+    };
 }

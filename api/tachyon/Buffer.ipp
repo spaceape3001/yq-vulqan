@@ -11,14 +11,12 @@
 #include <tachyon/BufferCopy.hpp>
 #include <tachyon/BufferSpan.hpp>
 
-namespace yq {
-    namespace tachyon {
-        Buffer::Buffer(BufferUsageFlags buf) : m_usage(buf)
-        {
-        }
-        
-        Buffer::~Buffer()
-        {
-        }
+namespace yq::tachyon {
+    Buffer::Buffer(BufferUsageFlags buf) : m_usage(buf)
+    {
+    }
+    
+    Buffer::~Buffer()
+    {
     }
 }

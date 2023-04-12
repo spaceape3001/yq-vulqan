@@ -8,14 +8,11 @@
 
 #include <cstdint>
 
-namespace yq {
-    namespace tachyon {
-        enum class Required : uint8_t {
-            NO = 0,
-            OPTIONAL,
-            YES
-        };
-
-    }
+namespace yq::tachyon {
+    enum class Required : uint8_t {
+        NO = 0,
+        OPTIONAL,
+        YES
+    };
 }
 

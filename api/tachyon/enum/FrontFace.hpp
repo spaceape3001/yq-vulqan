@@ -9,12 +9,10 @@
 #include <basic/Enum.hpp>
 #include <meta/InfoBinder.hpp>
 
-namespace yq {
-    namespace tachyon {
-        YQ_ENUM(FrontFace, , 
-            CounterClockwise    = 0,
-            Clockwise = 1
-        )
-    }
+namespace yq::tachyon {
+    YQ_ENUM(FrontFace, , 
+        CounterClockwise    = 0,
+        Clockwise = 1
+    )
 }
 YQ_TYPE_DECLARE(yq::tachyon::FrontFace)

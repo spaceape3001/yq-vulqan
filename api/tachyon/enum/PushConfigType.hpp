@@ -8,13 +8,11 @@
 
 #include <cstdint>
 
-namespace yq {
-    namespace tachyon {
-        enum PushConfigType : uint8_t {
-            None        = 0,
-            Full,
-            View,
-            Custom
-        };
-    }
+namespace yq::tachyon {
+    enum PushConfigType : uint8_t {
+        None        = 0,
+        Full,
+        View,
+        Custom
+    };
 }

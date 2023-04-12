@@ -9,20 +9,18 @@
 #include <basic/Enum.hpp>
 #include <meta/InfoBinder.hpp>
 
-namespace yq {
-    namespace tachyon {
-        YQ_ENUM(ShaderType, ,
-            UNKNOWN,
-            VERT,
-            TESE,
-            TESC,
-            FRAG,
-            GEOM,
-            COMP
-        )
-        
-        using ShaderTypeFlags   = Flag<ShaderType>;
-    }
+namespace yq::tachyon {
+    YQ_ENUM(ShaderType, ,
+        UNKNOWN,
+        VERT,
+        TESE,
+        TESC,
+        FRAG,
+        GEOM,
+        COMP
+    )
+    
+    using ShaderTypeFlags   = Flag<ShaderType>;
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::ShaderType)

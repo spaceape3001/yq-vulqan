@@ -13,20 +13,16 @@
 #include <filesystem>
 #include <variant>
 
-namespace yq {
-    namespace tachyon {
-        namespace glsl {
-        
-            const std::filesystem::path&            compiler();
-            const std::filesystem::path&            validator();
-            
-            using Source    = std::variant<ByteArray, std::filesystem::path>;
-        
-            std::pair<ByteArray,std::error_code>    compile(const Source&);
-            std::pair<ByteArray,std::error_code>    validate(const Source&, ShaderType st=ShaderType());
-            
-            ShaderType                              shader_type(const std::filesystem::path&);
-            
-        }
-    }
+namespace yq::tachyon::glsl {
+
+    const std::filesystem::path&            compiler();
+    const std::filesystem::path&            validator();
+    
+    using Source    = std::variant<ByteArray, std::filesystem::path>;
+
+    std::pair<ByteArray,std::error_code>    compile(const Source&);
+    std::pair<ByteArray,std::error_code>    validate(const Source&, ShaderType st=ShaderType());
+    
+    ShaderType                              shader_type(const std::filesystem::path&);
+    
 }

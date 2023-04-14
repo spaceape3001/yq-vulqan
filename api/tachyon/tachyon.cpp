@@ -74,6 +74,7 @@
 #include <tachyon/enum/ImageTiling.hpp>
 #include <tachyon/enum/ImageType.hpp>
 #include <tachyon/enum/IndexType.hpp>
+#include <tachyon/enum/KeyCode.hpp>
 #include <tachyon/enum/LogicOp.hpp>
 #include <tachyon/enum/MipmapMode.hpp>
 #include <tachyon/enum/PipelineBinding.hpp>
@@ -113,6 +114,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ImageLayout)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageTiling)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
+YQ_TYPE_IMPLEMENT(yq::tachyon::KeyCode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MipmapMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)

@@ -13,42 +13,41 @@
 #include <tachyon/gfx/Shader.hpp>
 #include <basic/preamble.hpp>
 
-namespace yq {
-    namespace tachyon {
-        void Triangle::initInfo()
+namespace yq::tachyon {
+    void Triangle::initInfo()
+    {
+        auto w = writer<Triangle>();
+        
         {
-            auto w = writer<Triangle>();
+            auto p = w.pipeline();
             
-            {
-                auto p = w.pipeline();
-                
-                p.shader("assets/colored.vert");
-                p.shader("assets/colored.frag");
+            p.shader("assets/colored.vert");
+            p.shader("assets/colored.frag");
 
-                p.fixed_vertex(&Triangle::m_vertex)
-                    .attribute(&ColorVertexData::position)
-                    .attribute(&ColorVertexData::color)
-                ;
-                
-                p.push_full();
-            }
+            p.fixed_vertex(&Triangle::m_vertex)
+                .attribute(&ColorVertexData::position)
+                .attribute(&ColorVertexData::color)
+            ;
+            
+            p.push_full();
         }
-
-        Triangle::Triangle(const TriangleData<ColorVertex2D>&tri)
-        {
-            m_vertex[0] = tri.a;
-            m_vertex[1] = tri.b;
-            m_vertex[2] = tri.c;
-            m_draw.vertex_count  = 3;
-        }
-        
-        Triangle::~Triangle()
-        {
-        }
-        
-        YQ_INVOKE(
-            Triangle::initInfo();
-        );
     }
+
+    Triangle::Triangle(const TriangleData<ColorVertex2D>&tri)
+    {
+        m_vertex[0] = tri.a;
+        m_vertex[1] = tri.b;
+        m_vertex[2] = tri.c;
+        m_draw.vertex_count  = 3;
+    }
+    
+    Triangle::~Triangle()
+    {
+    }
+    
+    YQ_INVOKE(
+        Triangle::initInfo();
+    );
 }
+
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Triangle)

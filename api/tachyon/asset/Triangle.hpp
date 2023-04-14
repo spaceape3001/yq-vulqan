@@ -10,21 +10,18 @@
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
 
-namespace yq {
-    namespace tachyon {
-        class Triangle : public Render3D {
-            YQ_OBJECT_DECLARE(Triangle, Render3D)
-        public:
+namespace yq::tachyon {
+    class Triangle : public Render3D {
+        YQ_OBJECT_DECLARE(Triangle, Render3D)
+    public:
+    
+        Triangle(const TriangleData<ColorVertex2D>&);
+        ~Triangle();
         
-            Triangle(const TriangleData<ColorVertex2D>&);
-            ~Triangle();
-            
-            static void initInfo();
-            
-        private:
+        static void initInfo();
         
-            std::array<ColorVertexData,3>        m_vertex;
-        };
-    }
+    private:
+    
+        std::array<ColorVertexData,3>        m_vertex;
+    };
 }
-

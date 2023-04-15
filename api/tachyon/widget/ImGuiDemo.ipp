@@ -9,29 +9,27 @@
 #include <tachyon/widget/ImGuiDemo.hpp>
 #include <tachyon/ui/MyImGui.hpp>
 
-namespace yq {
-    namespace tachyon {
-        ImGuiDemo::ImGuiDemo()
+namespace yq::tachyon {
+    ImGuiDemo::ImGuiDemo()
+    {
+    }
+    
+    ImGuiDemo::~ImGuiDemo()
+    {
+    }
+    
+    void    ImGuiDemo::imgui_(ViContext&) 
+    {
+        ImGui::ShowDemoWindow();
+    }
+    
+    namespace {
+        void reg_imgui_demo()
         {
+            auto w = writer<ImGuiDemo>();
+            w.imgui();
         }
-        
-        ImGuiDemo::~ImGuiDemo()
-        {
-        }
-        
-        void    ImGuiDemo::imgui_(ViContext&) 
-        {
-            ImGui::ShowDemoWindow();
-        }
-        
-        namespace {
-            void reg_imgui_demo()
-            {
-                auto w = writer<ImGuiDemo>();
-                w.imgui();
-            }
-            YQ_INVOKE(reg_imgui_demo();)
-        }
+        YQ_INVOKE(reg_imgui_demo();)
     }
 }
 

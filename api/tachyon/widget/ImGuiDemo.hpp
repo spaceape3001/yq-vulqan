@@ -8,16 +8,14 @@
 
 #include <tachyon/ui/Widget.hpp>
 
-namespace yq {
-    namespace tachyon {
-        class ImGuiDemo : public Widget {
-            YQ_OBJECT_DECLARE(ImGuiDemo, Widget)
-        public:
-        
-            ImGuiDemo();
-            ~ImGuiDemo();
-        
-            virtual void    imgui_(ViContext&) override;
-        };
-    }
+namespace yq::tachyon {
+    class ImGuiDemo : public Widget {
+        YQ_OBJECT_DECLARE(ImGuiDemo, Widget)
+    public:
+    
+        ImGuiDemo();
+        ~ImGuiDemo();
+    
+        virtual void    imgui_(ViContext&) override;
+    };
 }

@@ -59,7 +59,10 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Task, Object)
     public:
     
-        virtual TaskExecutionControl  tick() = 0;
+        class API;
+        class Engine;
+    
+        virtual TaskExecutionControl  tick(API&) = 0;
         
         Task();
         

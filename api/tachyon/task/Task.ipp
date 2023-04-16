@@ -7,6 +7,8 @@
 #pragma once
 
 #include <tachyon/task/Task.hpp>
+#include <tachyon/task/TaskAPI.hpp>
+#include <tachyon/task/TaskEngine.hpp>
 #include <basic/DelayInit.hpp>
 
 namespace yq::tachyon {
@@ -34,6 +36,35 @@ namespace yq::tachyon {
     {
     }
     
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  TASK API
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  TASK ENGINE
+
+    void    Task::Engine::step()
+    {
+        API api;
+        for(Task* t : m_tasks)
+            t->tick(api);
+    }
+    
+    void    Task::Engine::add(Task*tt)
+    {
+        if(tt){
+            m_tasks.push_back(tt);
+        }
+    }
+    
+    Task::Engine::Engine()
+    {
+    }
+    
+    Task::Engine::~Engine()
+    {
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     YQ_INVOKE( Task::initInfo(); )

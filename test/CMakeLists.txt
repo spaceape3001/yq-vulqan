@@ -11,4 +11,5 @@ macro(tachyon_test name)
 endmacro()
 
 tachyon_test(shader_load)
+tachyon_test(task_engine)
 

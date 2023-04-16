@@ -19,7 +19,7 @@ struct CounterTask : public Task {
     int&        count;
     CounterTask(int& c) : count(c) {}
 
-    TaskExecutionControl  tick(API&)  override
+    EC  tick(API&)  override
     {
         ++count;
         return true;

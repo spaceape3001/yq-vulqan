@@ -27,6 +27,8 @@
 #include "camera/SpaceCamera.ipp"
 #include "camera/TargetCamera.ipp"
 
+#include "enum/KeyCode.ipp"
+
 #include "gfx/GLSLShader.ipp"
 #include "gfx/Pipeline.ipp"
 #include "gfx/PipelineUtils.ipp"

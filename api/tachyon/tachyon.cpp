@@ -10,7 +10,6 @@
 */
 
 
-
 #include "Application.ipp"
 #include "Asset.ipp"
 #include "AssetCache.ipp"
@@ -56,6 +55,8 @@
 #include "scene/Perspective.ipp"
 #include "scene/Render3D.ipp"
 #include "scene/Rendered.ipp"
+
+#include "task/Task.ipp"
 
 #include "ui/Editor.ipp"
 #include "ui/Widget.ipp"

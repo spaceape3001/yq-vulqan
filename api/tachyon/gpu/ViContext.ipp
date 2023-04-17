@@ -8,12 +8,10 @@
 
 #include <tachyon/gpu/ViContext.hpp>
 
-namespace yq {
-    namespace tachyon {
+namespace yq::tachyon {
 
-        ViContext::ViContext() = default;
-        ViContext::~ViContext() = default;
-        //void    pipeline(const ViPipeline&);
-        //void    pipeline(const Pipeline&);
-    }
+    ViContext::ViContext() = default;
+    ViContext::~ViContext() = default;
+    //void    pipeline(const ViPipeline&);
+    //void    pipeline(const Pipeline&);
 }

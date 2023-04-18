@@ -15,7 +15,6 @@ using namespace yq;
 using namespace yq::tachyon;
 
 struct CounterTask : public Task {
-    YQ_OBJECT_DECLARE(CounterTask, Task);
     int&        count;
     CounterTask(int& c) : count(c) {}
 
@@ -26,7 +25,6 @@ struct CounterTask : public Task {
     }
 };
 
-YQ_OBJECT_IMPLEMENT(CounterTask);
 
 suite tests = []{
     "Simple Step"_test = []{
@@ -43,7 +41,6 @@ suite tests = []{
 int main()
 {
     log_to_std_output();
-    Meta::init();
     return ut::cfg<>.run();
 }
 

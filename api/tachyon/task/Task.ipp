@@ -11,6 +11,7 @@
 #include <tachyon/task/TaskAPI.hpp>
 #include <tachyon/task/TaskEngine.hpp>
 #include <basic/DelayInit.hpp>
+#include <atomic>
 
 namespace yq::errors {
     using task_expired       = error_db::entry<"Task has expired">;
@@ -18,23 +19,10 @@ namespace yq::errors {
 
 namespace yq::tachyon {
 
-   TaskInfo::TaskInfo(std::string_view name, ObjectInfo&base, const std::source_location& sl) :
-        ObjectInfo(name, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    void Task::initInfo()
-    {
-        auto w = writer<Task>();
-        w.abstract();
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     Task::Task() 
     {
+        static std::atomic<uint64_t>    sNext(0);
+        m_taskId        = ++sNext;
     }
     
     Task::~Task()
@@ -129,10 +117,6 @@ namespace yq::tachyon {
     }
     
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    YQ_INVOKE( Task::initInfo(); )
 }
 
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Task)

@@ -15,28 +15,22 @@
 
 namespace yq::tachyon {
 
-    class TaskInfo : public ObjectInfo {
-    public:
-    
-        template <typename C> struct Writer;
-    
-        TaskInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
-
-    };
-    
 
     /*! \brief Something that's a task, with a tick or execute
     */
-    class Task : public Object, public UniqueID {
-        YQ_OBJECT_INFO(TaskInfo)
-        YQ_OBJECT_DECLARE(Task, Object)
+    class Task  {
     public:
     
         struct Skip { unsigned count = 0; };
         
+        uint64_t        task_id() const { return m_taskId; }
+        
     
         class API;
         class Engine;
+
+        template <typename T>
+        class Fixer;
 
         /*! \brief Task Execution Control
         
@@ -64,14 +58,14 @@ namespace yq::tachyon {
         //! Ticks this task has already done
         //! \note First tick will be ZERO here
         uint64_t        ticks() const { return m_ticks; }
-    
-        static void initInfo();
+        
     
     protected:
         virtual ~Task();
     private:
         Engine*                 m_engine    = nullptr;
         uint64_t                m_ticks     = 0ULL;
+        uint64_t                m_taskId;
 
         //! Modes, which will *ONLY* be re-evaulated after a tick
         enum class Mode : uint8_t {
@@ -109,7 +103,7 @@ namespace yq::tachyon {
             unit::Second    time    = {};
         };
 
-        TPoint      m_last, m_current, m_next;
+        TPoint      m_last, m_next;
         
         //  TaskEngine controls & statistics go here.....
         
@@ -117,18 +111,18 @@ namespace yq::tachyon {
         bool        set_control(const ExecutionControl&);
     };
 
-    template <typename C>
-    class TaskInfo::Writer : public ObjectInfo::Writer<C> {
+    /*! \brief Creates a task with another object
+    
+        Assuming the other thing has something called "task()", then it'll be used
+    */
+    template <typename TT>
+    class Task::Fixer : public Task, public TT {
     public:
-        Writer(TaskInfo* ti) : ObjectInfo::Writer<C>(ti) 
-        {
-        }
+    
         
-        Writer(TaskInfo& ti) : Writer(&ti)
-        {
-        }
+    
+    
     };
-
 
 }
 

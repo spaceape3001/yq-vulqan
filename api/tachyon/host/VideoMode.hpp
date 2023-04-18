@@ -10,15 +10,13 @@
 #include <math/color/RGB.hpp>
 #include <math/shape/Size2.hpp>
 
-namespace yq {
-    namespace tachyon {
-        struct VideoMode {
-            Size2I      size            = {};
-            RGB3I       bits            = {};
-            int         refresh_rate    = 0;
-            VideoMode(){}
-            VideoMode(const GLFWvidmode&);
-            constexpr bool    operator==(const VideoMode&) const noexcept = default;
-        };
-    }
+namespace yq::tachyon {
+    struct VideoMode {
+        Size2I      size            = {};
+        RGB3I       bits            = {};
+        int         refresh_rate    = 0;
+        VideoMode(){}
+        VideoMode(const GLFWvidmode&);
+        constexpr bool    operator==(const VideoMode&) const noexcept = default;
+    };
 }

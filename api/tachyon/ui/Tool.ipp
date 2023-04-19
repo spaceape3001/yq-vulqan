@@ -11,26 +11,23 @@
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Tool)
 
-namespace yq {
-    namespace engine {
-        
-        ToolInfo::ToolInfo(std::string_view name, MetaObjectInfo& base, const std::source_location& sl) :
-            MetaObjectInfo(name, base, sl)
-        {
-        }
-        
-        Tool::Tool()
-        {
-        }
-        
-        Tool::~Tool()
-        {
-        }
-        
-        
-        YQ_INVOKE(
-            [[maybe_unused]] auto manip = writer<Tool>();
-        )
-    
+namespace yq::tachyon {
+    ToolInfo::ToolInfo(std::string_view name, MetaObjectInfo& base, const std::source_location& sl) :
+        MetaObjectInfo(name, base, sl)
+    {
     }
+    
+    Tool::Tool()
+    {
+    }
+    
+    Tool::~Tool()
+    {
+    }
+    
+    
+    YQ_INVOKE(
+        [[maybe_unused]] auto manip = writer<Tool>();
+    )
+
 }

@@ -8,14 +8,11 @@
 
 #include <tachyon/ui/Undo.hpp>
 
-namespace yq {
-    namespace tachyon {
-        Undo::~Undo() = default;
+namespace yq::tachyon {
+    Undo::~Undo() = default;
 
-        bool Undo::combine(Undo*) 
-        { 
-            return false; 
-        }
+    bool Undo::combine(Undo*) 
+    { 
+        return false; 
     }
 }
-

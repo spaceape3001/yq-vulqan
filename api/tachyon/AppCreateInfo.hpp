@@ -40,6 +40,9 @@ namespace yq::tachyon {
         //! Desired layers (taking optional & yes)
         std::vector<NameRequired>   layers;
         
+        //! Extra strict validation!
+        bool                        want_best_practices = true;
+        
         AppCreateInfo() = default;
     };
 }

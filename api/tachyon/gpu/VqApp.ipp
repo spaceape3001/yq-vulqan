@@ -220,6 +220,15 @@ namespace yq::tachyon {
         if(createInfo.enabledExtensionCount)
             createInfo.ppEnabledExtensionNames  = m_extensions.data();
             
+        //  IF in debug, adding in best-practices
+        VkValidationFeatureEnableEXT enables[] = {VK_VALIDATION_FEATURE_ENABLE_BEST_PRACTICES_EXT};
+        VqValidationFeaturesEXT features;
+        features.enabledValidationFeatureCount  = 1;
+        features.pEnabledValidationFeatures     = enables;
+        
+        if(m_appInfo.want_best_practices)
+            createInfo.pNext  = &features;
+            
         if(vkCreateInstance(&createInfo, nullptr, &m_vulkan) != VK_SUCCESS){
             vqCritical << "Unable to create vulkan instance!";
             m_vulkan   = nullptr;

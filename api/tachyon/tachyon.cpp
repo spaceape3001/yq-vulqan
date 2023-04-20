@@ -9,6 +9,8 @@
     are our C++ adapters for it.
 */
 
+#include "widget/Stacked.ipp"
+
 #include "task/Task.ipp"
 
 

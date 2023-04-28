@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <tachyon/host/ImGuiAdapter.hpp>
 #include <tachyon/host/Joystick.hpp>
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/host/Window.hpp>
@@ -16,8 +17,6 @@
 #include <basic/TextUtils.hpp>
 #include <GLFW/glfw3.h>
 #include <tachyon/ui/MyImGui.hpp>
-#include <backends/imgui_impl_vulkan.h>
-#include <backends/imgui_impl_glfw.h>
 
 
 namespace yq::tachyon {

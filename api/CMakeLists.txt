@@ -22,6 +22,7 @@ add_library(${PROJECT_NAME} SHARED
     ${test_source}
     
     ./tachyon/tachyon.cpp
+    ./tachyon/host/ImGuiAdapter.cpp
     ./tachyon/ui/MyImGui.cpp
     ./YqEngineConfig.cpp
     ./widget/TextArea.cpp

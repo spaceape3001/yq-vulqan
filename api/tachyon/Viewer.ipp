@@ -19,8 +19,7 @@
 #include <basic/ErrorDB.hpp>
 #include <basic/errors.hpp>
 
-#include <backends/imgui_impl_vulkan.h>
-#include <backends/imgui_impl_glfw.h>
+#include <tachyon/host/ImGuiAdapter.hpp>
 
 namespace yq::tachyon {
 

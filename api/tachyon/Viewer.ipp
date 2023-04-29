@@ -13,13 +13,14 @@
 #include <tachyon/gpu/VqStructs.hpp>
 #include <tachyon/ui/Widget.hpp>
 #include <tachyon/gpu/ViContext.hpp>
-#include <tachyon/ui/MyImGui.hpp>
+#include <tachyon/imgui/MyImGui.hpp>
 
 #include <basic/AutoReset.hpp>
 #include <basic/ErrorDB.hpp>
 #include <basic/errors.hpp>
 
-#include <tachyon/host/ImGuiAdapter.hpp>
+#include <tachyon/imgui/ImGuiGLFW.hpp>
+#include <tachyon/imgui/ImGuiVulkan.hpp>
 
 namespace yq::tachyon {
 

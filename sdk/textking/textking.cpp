@@ -16,7 +16,7 @@
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/ui/Widget.hpp>
-#include <tachyon/ui/MyImGui.hpp>
+#include <tachyon/imgui/MyImGui.hpp>
 #include <iostream>
 #include <TextEditor.h>
 #include <ImGuiFileDialog.h>

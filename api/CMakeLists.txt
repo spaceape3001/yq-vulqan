@@ -6,6 +6,8 @@
 
 project(tachyon)
 
+add_subdirectory(3rd)
+
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
 
@@ -20,10 +22,11 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED 
     ${test_source}
-    
+
     ./tachyon/tachyon.cpp
-    ./tachyon/host/ImGuiAdapter.cpp
-    ./tachyon/ui/MyImGui.cpp
+    ./tachyon/imgui/ImGuiGLFW.cpp
+    ./tachyon/imgui/ImGuiVulkan.cpp
+    ./tachyon/imgui/MyImGui.cpp
     ./YqEngineConfig.cpp
     ./widget/TextArea.cpp
 )
@@ -35,23 +38,26 @@ target_compile_definitions(${PROJECT_NAME}
     PRIVATE 
         "-DYQ_DATA_DIR=\"${YQ_TACHYON_DATA_DIR}\"" 
         VK_ENABLE_BETA_EXTENSIONS=1
-        IMGUI_USE_WCHAR32=1 
+        DONT_DEFINE_AGAIN__STB_IMAGE_IMPLEMENTATION=1
+        DONT_DEFINE_AGAIN__STB_IMAGE_RESIZE_IMPLEMENTATION=1
 )
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC  
         yqtoolbox
         vma 
         stb
-        imgui
         ${Vulkan_LIBRARIES} 
         ${GLFW3_LIBRARY}
+        gui3rd
 )
 target_include_directories(${PROJECT_NAME} 
     PUBLIC 
         ${CMAKE_CURRENT_LIST_DIR}
         ${glm_INCLUDE_DIR}
+
 )
 
 LinkTest(${PROJECT_NAME})
+
 
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/ui/Editor.hpp>
-#include <tachyon/ui/MyImGui.hpp>
+#include <tachyon/imgui/MyImGui.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Editor)
 

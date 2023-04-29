@@ -6,17 +6,18 @@
 
 #pragma once
 
-#include <tachyon/host/ImGuiAdapter.hpp>
 #include <tachyon/host/Joystick.hpp>
 #include <tachyon/host/Monitor.hpp>
 #include <tachyon/host/Window.hpp>
 #include <tachyon/host/WindowEvents.hpp>
+#include <tachyon/imgui/ImGuiGLFW.hpp>
+#include <tachyon/imgui/ImGuiVulkan.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/TachyonLog.hpp>
 #include <basic/ErrorDB.hpp>
 #include <basic/TextUtils.hpp>
 #include <GLFW/glfw3.h>
-#include <tachyon/ui/MyImGui.hpp>
+#include <tachyon/imgui/MyImGui.hpp>
 
 
 namespace yq::tachyon {

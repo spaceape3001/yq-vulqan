@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/widget/ImGuiDemo.hpp>
-#include <tachyon/ui/MyImGui.hpp>
+#include <tachyon/imgui/MyImGui.hpp>
 
 namespace yq::tachyon {
     ImGuiDemo::ImGuiDemo()

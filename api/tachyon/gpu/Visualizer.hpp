@@ -289,10 +289,11 @@ namespace yq::tachyon {
         VqApp*                              m_app                   = nullptr;
         BufferMap                           m_buffers;
         Guarded<VkClearValue>               m_clearValue;
-        VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+        VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
         ViQueues                            m_compute;
         uint32_t                            m_descriptorCount       = 0;
         VkDevice                            m_device                = nullptr;
+        VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
         //std::vector<const char*>            m_extensions;
         ViFrame                             m_frames[MAX_FRAMES_IN_FLIGHT];

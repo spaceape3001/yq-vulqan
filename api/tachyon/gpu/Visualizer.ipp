@@ -86,6 +86,7 @@ namespace yq::tachyon {
 
     Visualizer::Visualizer() 
     {
+        m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
     }
     
     Visualizer::~Visualizer()
@@ -142,6 +143,7 @@ namespace yq::tachyon {
                 return create_error<"No GPU/Physical device provided or detected">();
         }
         
+        vkGetPhysicalDeviceFeatures(m_physical, &m_deviceFeatures);
         vkGetPhysicalDeviceProperties(m_physical, &m_deviceInfo);
         vkGetPhysicalDeviceMemoryProperties(m_physical, &m_memoryInfo);
        

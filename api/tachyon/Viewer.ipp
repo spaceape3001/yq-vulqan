@@ -170,6 +170,15 @@ namespace yq::tachyon {
     {
         m_paused    = v;
     }
+
+    void    Viewer::set_widget(Widget*w, bool fDestroyOld)
+    {
+        if(!w)
+            return ;
+        std::swap(w, m_widget);
+        if(fDestroyOld)
+            delete w;
+    }
     
     void    Viewer::cmd_pause()
     {

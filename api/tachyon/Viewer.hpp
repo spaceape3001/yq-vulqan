@@ -58,6 +58,9 @@ namespace yq::tachyon {
         void                cmd_pause();
         void                cmd_unpause();
         
+        
+        void                set_widget(Widget*, bool fDestroyOld=true);
+        
     protected:
         virtual void        window_framebuffer_resized(const Size2I&) override;
         

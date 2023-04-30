@@ -60,7 +60,7 @@ struct Entity : public Task {
     double          health              = 0;
 
 
-    EC  tick(API&api) override
+    EC  tick(TaskAPI&api) override
     {
         //  do update....
         

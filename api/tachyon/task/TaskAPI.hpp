@@ -11,7 +11,7 @@
 namespace yq {}
 
 namespace yq::tachyon {
-    class Task::API {
+    class TaskAPI {
         //  TODO... but access the task API via this
     
     };

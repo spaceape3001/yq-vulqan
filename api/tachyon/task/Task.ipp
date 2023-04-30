@@ -29,38 +29,38 @@ namespace yq::tachyon {
     {
     }
 
-    bool    Task::set_control(const ExecutionControl& ec)
+    bool    Task::set_control(const TaskExecutionControl& ec)
     {
         if(std::get_if<always_t>(&ec)){
-            m_control.mode      = Mode::Always;
+            m_control.mode      = TaskMode::Always;
             return true;
         }
         
         if(std::get_if<once_t>(&ec)){
-            m_control.mode      = Mode::Once;
+            m_control.mode      = TaskMode::Once;
             return true;
         }
         
         if(auto pFreq = std::get_if<unit::Hertz>(&ec)){
-            m_control.mode      = Mode::Frequency;
+            m_control.mode      = TaskMode::Frequency;
             m_control.spec      = pFreq->value;
             return true;
         }
         
         if(auto pInterval = std::get_if<unit::Second>(&ec)){
-            m_control.mode      = Mode::Interval;
+            m_control.mode      = TaskMode::Interval;
             m_control.spec      = pInterval->value;
             return true;
         }
         
         if(auto pUint = std::get_if<unsigned>(&ec)){
-            m_control.mode      = Mode::Ticks;
+            m_control.mode      = TaskMode::Ticks;
             m_control.ticks     = *pUint;
             return true;
         }
         
-        if(auto pskip = std::get_if<Skip>(&ec)){
-            m_control.mode      = Mode::Every;
+        if(auto pskip = std::get_if<TaskSkip>(&ec)){
+            m_control.mode      = TaskMode::Every;
             m_control.ticks     = pskip -> count;
             return true;
         }
@@ -75,18 +75,18 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  TASK ENGINE
 
-    Task::Engine::Engine()
+    TaskEngine::TaskEngine()
     {
     }
     
-    Task::Engine::~Engine()
+    TaskEngine::~TaskEngine()
     {
         for(Task* tt : m_tasks)
             delete tt;
         m_tasks.clear();
     }
 
-    bool    Task::Engine::add(Task*tt, ExecutionControl ec)
+    bool    TaskEngine::add(Task*tt, TaskExecutionControl ec)
     {
         if(!tt)
             return false;
@@ -98,20 +98,23 @@ namespace yq::tachyon {
         return true;
     }
         
-    bool    Task::Engine::add(Task* tt, skip_t, unsigned int iv)
+    bool    TaskEngine::add(Task* tt, skip_t, unsigned int iv)
     {
-        return add(tt, Skip{iv});
+        return add(tt, TaskSkip{iv});
     }
     
-    void    Task::Engine::execute(Task*tt, API& api)
+    void    TaskEngine::execute(Task*tt, TaskAPI& api)
     {
         tt->tick(api);
         ++(tt->m_ticks);
     }
 
-    void    Task::Engine::step()
+    void    TaskEngine::step()
     {
-        API api;
+        TaskAPI api;
+        
+            // todo... fill in the task API
+        
         for(Task* t : m_tasks)
             execute(t, api);
     }

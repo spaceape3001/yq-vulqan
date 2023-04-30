@@ -11,7 +11,7 @@
 #include <thread>
 
 namespace yq::tachyon {
-    class Task::Engine {
+    class TaskEngine {
     public:
     
             //! Executes a full step of tasks
@@ -19,20 +19,20 @@ namespace yq::tachyon {
         void                step();
 
             //! Adds a task that'll run as specified
-        bool                add(Task*, ExecutionControl ec=ALWAYS);
+        bool                add(Task*, TaskExecutionControl ec=ALWAYS);
 
             //! Adds a task that'll run at specified interval
         bool                add(Task*, skip_t, unsigned int iv=2);
         
-        Engine();
-        ~Engine();
+        TaskEngine();
+        ~TaskEngine();
     
     private:
         std::vector<Task*>      m_tasks;
 //        std::vector<Task*>      m_deletes;
         //std::thread             m_taskThread;
         //bool                    m_quit;
-        void                    execute(Task*, API&);
+        void                    execute(Task*, TaskAPI&);
     };
 };
 

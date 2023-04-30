@@ -18,7 +18,7 @@ struct CounterTask : public Task {
     int&        count;
     CounterTask(int& c) : count(c) {}
 
-    EC  tick(API&)  override
+    EC  tick(TaskAPI&)  override
     {
         ++count;
         return true;
@@ -29,7 +29,7 @@ struct CounterTask : public Task {
 suite tests = []{
     "Simple Step"_test = []{
         int         c   = 0;
-        Task::Engine        te;
+        TaskEngine        te;
         te.add(new CounterTask(c));
         te.step();
         expect(1 == c);

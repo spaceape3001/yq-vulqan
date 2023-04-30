@@ -112,7 +112,12 @@ namespace yq::tachyon {
     void    TaskEngine::step()
     {
         TaskAPI api;
+        step(api);
         
+    }
+
+    void    TaskEngine::step(TaskAPI&api)
+    {
             // todo... fill in the task API
         
         for(Task* t : m_tasks)

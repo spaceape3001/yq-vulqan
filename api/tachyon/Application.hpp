@@ -18,6 +18,8 @@
 
 namespace yq::tachyon {
 
+    class   TaskEngine;
+
     /*! \brief Engine/Vulkan application
     
     */
@@ -51,6 +53,8 @@ namespace yq::tachyon {
         
         static void initialize();
         
+        TaskEngine*     task_engine() const { return m_taskEngine.get(); }
+        
         
     private:
         friend class Viewer;
@@ -63,6 +67,7 @@ namespace yq::tachyon {
         virtual bool        vk_init() override;
         
         std::shared_ptr<AppCreateInfo>      m_appInfo;
+        std::unique_ptr<TaskEngine>         m_taskEngine;
     };
 
 }

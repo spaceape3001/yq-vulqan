@@ -8,6 +8,7 @@
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
+#include <tachyon/task/TaskEngine.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
@@ -45,6 +46,8 @@ namespace yq::tachyon {
 
     std::error_code    Application::init()
     { 
+        if(m_appInfo->want_tasking)
+            m_taskEngine    = std::make_unique<TaskEngine>();
         init_glfw();
         return init_vulkan();
     }
@@ -68,6 +71,9 @@ namespace yq::tachyon {
             } else { 
                 glfwWaitEventsTimeout(amt.value);
             }
+            if(m_taskEngine)            // eventually be smarter about this... multithreading
+                m_taskEngine -> step();
+            
             win->draw();
         }
         

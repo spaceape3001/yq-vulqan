@@ -44,6 +44,9 @@ namespace yq::tachyon {
         //! Extra strict validation!
         bool                        want_best_practices = true;
         
+        //! Want the task-engine
+        bool                        want_tasking        = false;
+        
         AppCreateInfo() = default;
     };
 }

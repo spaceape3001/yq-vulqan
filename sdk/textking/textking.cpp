@@ -279,10 +279,10 @@ YQ_OBJECT_IMPLEMENT(N2Editor)
 
 int main(int argc, char* argv[])
 {
-    AppCreateInfo        vi;
-    vi.app_name     = "im_demo";
+    AppCreateInfo        aci;
+    aci.app_name     = "textking";
 
-    Application app(argc, argv, vi);
+    Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
     

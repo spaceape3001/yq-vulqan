@@ -179,8 +179,9 @@ YQ_OBJECT_IMPLEMENT(PlayPane)
 
 int main(int argc, char* argv[])
 {
-    AppCreateInfo        vi;
-    Application app(argc, argv, vi);
+    AppCreateInfo        aci;
+    aci.want_tasking        = true;
+    Application app(argc, argv, aci);
     
         // do any init infos....
         

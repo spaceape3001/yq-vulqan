@@ -327,9 +327,9 @@ YQ_OBJECT_IMPLEMENT(CameraScene3D)
 
 int main(int argc, char* argv[])
 {
-    AppCreateInfo        vi;
+    AppCreateInfo        aci;
     
-    Application app(argc, argv, vi);
+    Application app(argc, argv, aci);
     
     CameraScene3D::initInfo();
     

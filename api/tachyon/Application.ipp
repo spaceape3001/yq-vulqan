@@ -130,8 +130,6 @@ namespace yq::tachyon {
                 v->draw();
                 if(v->should_close() || !v->m_delete.empty()){
                     vkDeviceWaitIdle(v->device());
-                    for(Widget* w : v->m_delete)
-                        delete w;
                     v->purge_deleted();
                     if(v->should_close()){
                         delete v;

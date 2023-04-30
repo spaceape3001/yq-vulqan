@@ -8,6 +8,7 @@
 
 #include <basic/DbgRel.hpp>
 #include <tachyon/preamble.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 #include <string>
 #include <vector>
 #include <tachyon/enum/Required.hpp>
@@ -22,6 +23,9 @@ namespace yq::tachyon {
 
     //! Info for initialization
     struct AppCreateInfo {
+    
+            //! Used for app-created viewers
+        ViewerCreateInfo            view;
     
         //! Application name
         std::string                 app_name;
@@ -46,6 +50,9 @@ namespace yq::tachyon {
         
         //! Want the task-engine
         bool                        want_tasking        = false;
+        
+        //! Set to enable running w/o viewers
+        bool                        run_without_viewers = false;
         
         AppCreateInfo() = default;
     };

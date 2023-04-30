@@ -11,7 +11,6 @@
 #include <io/PluginLoader.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/widget/ImGuiDemo.hpp>
 #include <iostream>
 
@@ -22,19 +21,17 @@ int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
     aci.app_name     = "im_demo";
+    aci.view.title        = "ImGUI Demo!";
+    aci.view.clear        = { 0.0, 0.2, 0.5, 1. };
+    aci.view.resizable    = true;
+    aci.view.imgui        = true;
+    //aci.view.pmode        = VK_PRESENT_MODE_IMMEDIATE_KHR;  // <-< Set this if you want to see how fast your CPU & GPU can go!  (Metrics under Tools menu.)
+    
 
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    
-    ViewerCreateInfo      wi;
-    wi.title        = "ImGUI Demo!";
-    wi.clear        = { 0.0, 0.2, 0.5, 1. };
-    wi.resizable    = true;
-    wi.imgui        = true;
-    //wi.pmode        = VK_PRESENT_MODE_IMMEDIATE_KHR;  // <-< Set this if you want to see how fast your CPU & GPU can go!  (Metrics under Tools menu.)
-    
-    Ref<Viewer>     v   = new Viewer(wi, new ImGuiDemo);
-    app.run(v.ptr(), { 0.0 });
+    app.add_viewer(new ImGuiDemo);
+    app.run();
     return 0;
 }

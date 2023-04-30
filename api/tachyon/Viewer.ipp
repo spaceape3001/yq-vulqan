@@ -105,6 +105,9 @@ namespace yq::tachyon {
 
     void                Viewer::kill()
     {
+        Application*    s   = Application::app();
+        if(s)
+            s->_remove(this);
         if(m_widget)
             delete m_widget;
         m_widget    = nullptr;

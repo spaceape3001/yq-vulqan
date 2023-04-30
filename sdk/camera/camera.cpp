@@ -328,6 +328,11 @@ YQ_OBJECT_IMPLEMENT(CameraScene3D)
 int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
+    aci.view.title        = "Cameras!";
+    aci.view.resizable    = false;
+    aci.view.size         = { 1920, 1080 };
+    aci.view.clear        = { 0.1f, 0.1f, 0.2f, 1.f };
+    aci.view.imgui        = true;
     
     Application app(argc, argv, aci);
     
@@ -335,21 +340,8 @@ int main(int argc, char* argv[])
     
     //load_plugin_dir("plugin");
     app.finalize();
-    
-    ViewerCreateInfo      wi;
-    wi.title        = "Cameras!";
-    wi.resizable    = false;
-    wi.size         = { 1920, 1080 };
-    wi.clear        = { 0.1f, 0.1f, 0.2f, 1.f };
-    wi.imgui        = true;
-
-    Ref<Viewer>     win = new Viewer(wi, new CameraScene3D);
-
-    //Ref<CameraWin>   win = new CameraWin(wi);
-    //if(!win->good())
-        //return -1;
-    
-    app.run(win.ptr());
+    app.add_viewer(new CameraScene3D);
+    app.run();
     return 0;
 }
 

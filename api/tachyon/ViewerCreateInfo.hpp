@@ -24,7 +24,7 @@ namespace yq::tachyon {
     struct ViewerCreateInfo {
         VkPhysicalDevice            device   = nullptr;
     
-        const char*                 title    = "(untitled)";
+        std::string                 title    = "(untitled)";
         Size2I                      size     = { 1920, 1080 };
         std::optional<Vector2I>     position;
             //!  Set to get full screen, windowed otherwise

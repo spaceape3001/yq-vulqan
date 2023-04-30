@@ -15,6 +15,7 @@
 #include <memory>
 #include <set>
 #include <vector>
+#include <atomic>
 
 namespace yq::tachyon {
 
@@ -55,6 +56,22 @@ namespace yq::tachyon {
         
         TaskEngine*     task_engine() const { return m_taskEngine.get(); }
         
+        //! Creates a viewer with widget
+        Viewer*         add_viewer(Widget*);
+        //! Creates a viewer with title/widget
+        Viewer*         add_viewer(std::string_view, Widget*);
+        //! Creates a viewer with viewer
+        Viewer*         add_viewer(Viewer*);
+        
+        bool            contains(const Viewer*) const;
+        
+        /*! \brief Exec loop for a bunch of windows
+
+            \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
+                                    is the max stall duration.
+        */
+        void            run(Second timeout={0.});
+        
         
     private:
         friend class Viewer;
@@ -66,8 +83,18 @@ namespace yq::tachyon {
         
         virtual bool        vk_init() override;
         
+        Viewer*     _add(Viewer*);
+        
+        //using ExecFN    = std::function<void()>;
+        
+        //  this is being called by viewer, deletion unnecessary
+        void    _remove(Viewer*);
+        
+        
         std::shared_ptr<AppCreateInfo>      m_appInfo;
         std::unique_ptr<TaskEngine>         m_taskEngine;
+        std::vector<Viewer*>                m_viewers;
+        std::atomic<bool>                   m_quit;
     };
 
 }

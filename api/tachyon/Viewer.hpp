@@ -20,7 +20,7 @@ namespace yq {
 namespace yq::tachyon {
     class Widget;
     
-    class Viewer : public Window, public Visualizer, public RefCount {
+    class Viewer : public Window, public Visualizer {
     public:
 
     
@@ -28,7 +28,7 @@ namespace yq::tachyon {
         /*! \brief Creates the viewer
         */
         Viewer();
-        ~Viewer();
+        virtual ~Viewer();
         
         /*! \brief Creates & initializes viewer 
         

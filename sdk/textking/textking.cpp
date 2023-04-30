@@ -280,20 +280,17 @@ YQ_OBJECT_IMPLEMENT(N2Editor)
 int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
-    aci.app_name     = "textking";
+    aci.app_name            = "textking";
+    aci.view.title          = "TextKING!";
+    aci.view.clear          = { 0.0, 0.2, 0.5, 1. };
+    aci.view.resizable      = true;
+    aci.view.imgui          = true;
+    //aci.view.pmode        = VK_PRESENT_MODE_IMMEDIATE_KHR;  // <-< Set this if you want to see how fast your CPU & GPU can go!  (Metrics under Tools menu.)
 
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    
-    ViewerCreateInfo      wi;
-    wi.title        = "TextKING!";
-    wi.clear        = { 0.0, 0.2, 0.5, 1. };
-    wi.resizable    = true;
-    wi.imgui        = true;
-    //wi.pmode        = VK_PRESENT_MODE_IMMEDIATE_KHR;  // <-< Set this if you want to see how fast your CPU & GPU can go!  (Metrics under Tools menu.)
-    Ref<Viewer>   window  = new Viewer(wi, new TextKing);
-    
-    app.run(window.ptr(), {0.0} );
+    app.add_viewer(new TextKing);
+    app.run();
     return 0;
 }

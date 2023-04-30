@@ -160,24 +160,19 @@ YQ_OBJECT_IMPLEMENT(HelloScene)
 
 int main(int argc, char* argv[])
 {
-    AppCreateInfo        vi;
+    AppCreateInfo        aci;
+    aci.view.title        = "Hello WORLD!";
+    aci.view.resizable    = true;
+    aci.view.size         = { 1920, 1080 };
+    aci.view.clear        = { 0.f, 0.1f, 0.2f, 1.f };
     
-    Application app(argc, argv, vi);
+    Application app(argc, argv, aci);
     //load_plugin_dir("plugin");
     
     HelloTriangle::initInfo();
     
     app.finalize();
-    
-    ViewerCreateInfo      wi;
-    wi.title        = "Hello WORLD!";
-    wi.resizable    = true;
-    wi.size         = { 1920, 1080 };
-    wi.clear        = { 0.f, 0.1f, 0.2f, 1.f };
-
-    Ref<Viewer> v = new Viewer(wi, new HelloScene);
-    app.run(v.ptr());
-    
-    std::cout << "Hello World!\n";
+    app.add_viewer(new HelloScene);
+    app.run();
     return 0;
 }

@@ -156,8 +156,8 @@ public:
 
     MainWin()
     {
-        add_child(new PlayPane);
         add_child(new MenuPane);
+        add_child(new PlayPane);
     }
     
     void        do_menu()
@@ -181,23 +181,19 @@ int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
     aci.want_tasking        = true;
+    aci.view.title          = "Asteroids";
+    aci.view.resizable      = false;
+    aci.view.size           = { 1920, 1080 };
+    aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };
+    aci.view.imgui          = false;
+    
+    
     Application app(argc, argv, aci);
     
         // do any init infos....
         
     app.finalize();
-    
-    MainWin*        mw  = new MainWin;
-    mw -> do_menu();
-
-    ViewerCreateInfo      wi;
-    wi.title        = "Asteroids";
-    wi.resizable    = false;
-    wi.size         = { 1920, 1080 };
-    wi.clear        = { 0.0f, 0.0f, 0.0f, 1.f };
-    wi.imgui        = false;
-
-    Ref<Viewer>     win = new Viewer(wi, mw);
-    app.run(win.ptr());
+    app.add_viewer(new MainWin);
+    app.run();
     return 0;
 }

@@ -13,6 +13,8 @@
 #include <meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
+    class Viewer;
+
     enum class WidgetBit {
         Vulkan  = 0,
         ImGui,
@@ -101,9 +103,20 @@ namespace yq::tachyon {
             \param p    Supposed parent in question
         */
         bool    has_parentage(const Widget* p) const;
+        
+        Widget*         parent()  { return m_parent; }
+        const Widget*   parent() const { return m_parent; }
+
+        Widget*         root();
+        const Widget*   root() const;
+        
+        Viewer*         viewer();
+        const Viewer*   viewer() const ;
 
     protected:
-        Widget*                 m_parent = nullptr;
+        friend class Viewer;
+        Viewer*                 m_viewer    = nullptr;
+        Widget*                 m_parent    = nullptr;
         std::vector<Widget*>    m_children;
         std::string             m_windowID;
     };

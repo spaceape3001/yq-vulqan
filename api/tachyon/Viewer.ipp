@@ -100,6 +100,7 @@ namespace yq::tachyon {
 
         install_hooks();
         m_widget    = w;
+        w->m_viewer = this;
         return std::error_code();
     }
 
@@ -108,8 +109,10 @@ namespace yq::tachyon {
         Application*    s   = Application::app();
         if(s)
             s->_remove(this);
-        if(m_widget)
+        if(m_widget){
+            m_widget->m_viewer  = nullptr;
             delete m_widget;
+        }
         m_widget    = nullptr;
         if(m_imgui){
             ImGui::SetCurrentContext(m_imgui);
@@ -179,6 +182,12 @@ namespace yq::tachyon {
     {
         if(!w)
             return ;
+        if(w == m_widget)
+            return ;
+        
+        m_widget -> m_viewer    = nullptr;
+        w->m_viewer             = this;
+            
         std::swap(w, m_widget);
         if(fDestroyOld)
             delete w;

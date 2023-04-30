@@ -60,6 +60,19 @@ namespace yq::tachyon {
         return false;
     }
 
+    Widget*         Widget::root()
+    {
+        Widget* w   = this;
+        while(w->m_parent)
+            w   = w->m_parent;
+        return w;
+    }
+    
+    const Widget*   Widget::root() const
+    {
+        return const_cast<Widget*>(this) -> root();
+    }
+
     bool    Widget::set_parent(Widget* p)
     {
         if(p == m_parent)   // already the parent
@@ -76,4 +89,18 @@ namespace yq::tachyon {
             m_parent->m_children.push_back(this);
         return true;
    }
+
+    Viewer*         Widget::viewer()
+    {
+        Widget* w   = root();
+        if(w)
+            return w->m_viewer;
+        return nullptr;
+    }
+    
+    const Viewer*   Widget::viewer() const 
+    {
+        return const_cast<Widget*>(this)->viewer();
+    }
+
 }

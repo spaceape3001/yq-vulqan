@@ -21,11 +21,18 @@ namespace yq::tachyon {
 
     //  ////////////////////////////////////////////////////////////////////////
 
-    Application::Application(int argc, char *argv[], const AppCreateInfo& ci) : 
-        BasicApp(argc, argv), VqApp(*this, ci)
+    Application::Application(int argc, char* argv[], std::shared_ptr<AppCreateInfo> aci) : 
+        BasicApp(argc, argv), VqApp(*this, aci), m_appInfo(aci)
     {
+        assert(m_appInfo && "AppCreateInfo is not optional, it must be supplied.");
         if(!s_app)
             s_app   = this;
+    }
+    
+
+    Application::Application(int argc, char *argv[], const AppCreateInfo& aci) : 
+        Application(argc, argv, std::make_shared<AppCreateInfo>(aci))
+    {
     }
     
     Application::~Application()

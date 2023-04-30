@@ -12,6 +12,7 @@
 #include <tachyon/host/AppGLFW.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <math/units.hpp>
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -34,6 +35,7 @@ namespace yq::tachyon {
             \param[in]  aci     Initialization paraemters for this application
         */
         Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
+        Application(int argc, char* argv[], std::shared_ptr<AppCreateInfo>);
         ~Application();
         
         /*!  Simple exec loop for a single window.
@@ -59,6 +61,8 @@ namespace yq::tachyon {
         void                kill();
         
         virtual bool        vk_init() override;
+        
+        std::shared_ptr<AppCreateInfo>      m_appInfo;
     };
 
 }

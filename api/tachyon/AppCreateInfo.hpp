@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <tachyon/enum/Required.hpp>
+#include <memory>
 
 namespace yq::tachyon {
     struct NameRequired {

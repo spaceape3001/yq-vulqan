@@ -10,6 +10,7 @@
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
+#include <memory>
 
 namespace yq {
     class BasicApp;
@@ -31,6 +32,7 @@ namespace yq::tachyon {
         static VqApp*               vk_app() { return s_app; }
 
         VqApp(BasicApp&, const AppCreateInfo& aci=AppCreateInfo());
+        VqApp(BasicApp&, std::shared_ptr<AppCreateInfo>);
         ~VqApp();
         
         /*! \brief Initializes vulkan instance
@@ -42,7 +44,7 @@ namespace yq::tachyon {
         const std::vector<const char*>&     extensions() const { return m_extensions; }
         const std::vector<const char*>&     layers() const { return m_layers; }
         
-        const AppCreateInfo&                app_info() const { return m_appInfo; }
+        const AppCreateInfo&                app_info() const { return *m_appInfo; }
         
         VkInstance                          instance() const { return m_vulkan; }
 
@@ -50,7 +52,7 @@ namespace yq::tachyon {
         void        kill_vulkan();
         
     private:
-        AppCreateInfo                       m_appInfo;
+        std::shared_ptr<AppCreateInfo>      m_appInfo;
         VkInstance                          m_vulkan        = nullptr;
         std::vector<const char*>            m_extensions;
         std::vector<const char*>            m_layers;

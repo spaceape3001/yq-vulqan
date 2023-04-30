@@ -95,14 +95,19 @@ namespace yq::tachyon {
 
     //  ------------------------------------------------
 
-    VqApp::VqApp(BasicApp& bapp, const AppCreateInfo& aci) : m_appInfo(aci)
+    VqApp::VqApp(BasicApp& bapp, std::shared_ptr<AppCreateInfo>aci) : m_appInfo(aci)
     {
-        if(m_appInfo.app_name.empty())
-           m_appInfo.app_name = bapp.app_name();
-        if(!m_appInfo.vulkan_api)
-            m_appInfo.vulkan_api  = VK_API_VERSION_1_2;
+        assert(m_appInfo && "AppCreateInfo is not optional, it must be supplied.");
+        if(m_appInfo->app_name.empty())
+           m_appInfo->app_name = bapp.app_name();
+        if(!m_appInfo->vulkan_api)
+            m_appInfo->vulkan_api  = VK_API_VERSION_1_2;
         if((!thread::id()) && !s_app)
             s_app   = this;
+    }
+    
+    VqApp::VqApp(BasicApp& bapp, const AppCreateInfo& aci) : VqApp(bapp, std::make_shared<AppCreateInfo>(aci))
+    {
     }
     
     VqApp::~VqApp()
@@ -148,12 +153,12 @@ namespace yq::tachyon {
         /*
             Start by scanning the extensions for validation
         */
-        if(m_appInfo.validation != Required::NO){
+        if(m_appInfo->validation != Required::NO){
             ec  = add_layer(kValidationLayer);
             if(ec){
-                auto stream    = (m_appInfo.validation == Required::YES) ? vqCritical : vqError;
+                auto stream    = (m_appInfo->validation == Required::YES) ? vqCritical : vqError;
                 stream << "Unable to find validation layers!";
-                if(m_appInfo.validation == Required::YES)
+                if(m_appInfo->validation == Required::YES)
                     return create_error<"Validation layer is unavailable">();
             } else
                 want_debug  = true;
@@ -165,7 +170,7 @@ namespace yq::tachyon {
             m_extensions.push_back("VK_EXT_debug_report");
         }
         
-        for(auto& x : m_appInfo.layers){
+        for(auto& x : m_appInfo->layers){
             if(!x.name)
                 continue;
             ec  = add_layer(x.name);
@@ -182,7 +187,7 @@ namespace yq::tachyon {
             }
         }
 
-        for(auto& x : m_appInfo.extensions){
+        for(auto& x : m_appInfo->extensions){
             if(!x.name)
                 continue;
             ec = add_extension(x.name);
@@ -204,11 +209,11 @@ namespace yq::tachyon {
             */
         
         VqApplicationInfo       lai;
-        lai.pApplicationName    = m_appInfo.app_name.c_str();
-        lai.applicationVersion  = m_appInfo.app_version;
+        lai.pApplicationName    = m_appInfo->app_name.c_str();
+        lai.applicationVersion  = m_appInfo->app_version;
         lai.pEngineName         = szEngineName;
         lai.engineVersion       = kEngineVersion;
-        lai.apiVersion          = m_appInfo.vulkan_api;
+        lai.apiVersion          = m_appInfo->vulkan_api;
         
         VqInstanceCreateInfo    createInfo;
         createInfo.pApplicationInfo             = &lai;
@@ -225,7 +230,7 @@ namespace yq::tachyon {
         VqValidationFeaturesEXT features;
         createInfo.pNext  = &features;
         
-        if(m_appInfo.want_best_practices && want_debug){
+        if(m_appInfo->want_best_practices && want_debug){
             features.enabledValidationFeatureCount  = 1;
             features.pEnabledValidationFeatures     = enables;
         }

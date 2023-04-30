@@ -21,6 +21,7 @@ namespace yq::tachyon {
     class Widget;
     
     class Viewer : public Window, public Visualizer {
+        friend class Application;
     public:
 
     
@@ -67,11 +68,14 @@ namespace yq::tachyon {
     private:
         void                record(ViContext&) override;
 
-        Widget*             m_widget        = nullptr;
-        ImGuiContext*       m_imgui         = nullptr;
-        double              m_drawTime      = 0;
-        bool                m_paused        = false;
-        bool                m_zeroSize      = false;
+        Widget*                 m_widget        = nullptr;
+        ImGuiContext*           m_imgui         = nullptr;
+        double                  m_drawTime      = 0;
+        bool                    m_paused        = false;
+        bool                    m_zeroSize      = false;
+        std::vector<Widget*>    m_delete;
+        
+        void                purge_deleted();
         
         virtual void        kill_window() { kill(); }
         void                kill();

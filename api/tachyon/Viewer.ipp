@@ -109,6 +109,7 @@ namespace yq::tachyon {
         Application*    s   = Application::app();
         if(s)
             s->_remove(this);
+        purge_deleted();
         if(m_widget){
             m_widget->m_viewer  = nullptr;
             delete m_widget;
@@ -159,6 +160,15 @@ namespace yq::tachyon {
         return ec;
     }
 
+    void     Viewer::purge_deleted()
+    {
+        if(!m_delete.empty()){
+            for(Widget* w : m_delete)
+                delete w;
+            m_delete.clear();
+        }
+    }
+
     void    Viewer::record(ViContext&u)
     {
         if(m_widget)
@@ -190,7 +200,7 @@ namespace yq::tachyon {
             
         std::swap(w, m_widget);
         if(fDestroyOld)
-            delete w;
+            m_delete.push_back(w);
     }
     
     void    Viewer::cmd_pause()

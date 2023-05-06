@@ -9,10 +9,9 @@
     are our C++ adapters for it.
 */
 
-#include "widget/Stacked.ipp"
 
-#include "task/Task.ipp"
-
+#include "core/Memory.ipp"
+#include "gfx/STBTexture.ipp"
 
 #include "Application.ipp"
 #include "Asset.ipp"
@@ -60,11 +59,14 @@
 #include "scene/Render3D.ipp"
 #include "scene/Rendered.ipp"
 
+#include "task/Task.ipp"
+
 #include "ui/Editor.ipp"
 #include "ui/Widget.ipp"
 
 #include "widget/ImGuiDemo.ipp"
 #include "widget/Scene3D.ipp"
+#include "widget/Stacked.ipp"
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/ColorComponent.hpp>

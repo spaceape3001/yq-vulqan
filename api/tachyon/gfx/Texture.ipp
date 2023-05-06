@@ -7,6 +7,7 @@
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/AssetInfoWriter.hpp>
+#include <tachyon/Buffer.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Texture>&  Texture::cache()
@@ -26,6 +27,15 @@ namespace yq::tachyon {
     {
     }
     
+    Texture::Texture(const ImageInfo& ii, Memory&& mem) : m_info(ii), m_memory(std::move(mem))
+    {
+    }
+
+    size_t      Texture::data_size() const  
+    {
+        return m_memory.size();
+    }
+
     Texture::~Texture()
     {
     }

@@ -71,6 +71,11 @@ namespace yq::tachyon {
         VkCommandPool       graphic             = nullptr;
         VkCommandPool       compute             = nullptr;
     };
+    
+    struct ViTexture : public ViBuffer {
+        VkImage             image       = nullptr;
+        VkImageView         view        = nullptr;
+    };
 
         //  and so we can be more efficient in rendering
     struct ViFrame {
@@ -262,9 +267,13 @@ namespace yq::tachyon {
         std::error_code             _create(ViShader&, const Shader&);
         void                        _destroy(ViShader&);
         
+        
         std::error_code             _create(ViSwapchain&);
         void                        _destroy(ViSwapchain&);
         
+        std::error_code             _create(ViTexture&, const Texture&);
+        void                        _destroy(ViTexture&);
+
         std::error_code             _create(ViThread&);
         void                        _destroy(ViThread&);
         
@@ -283,6 +292,7 @@ namespace yq::tachyon {
         using PipelineMap   = std::unordered_map<uint64_t, ViPipeline>;
         using ShaderMap     = std::unordered_map<uint64_t, ViShader>;
         using BufferMap     = std::unordered_map<uint64_t, ViBuffer>;
+        using TextureMap    = std::unordered_map<uint64_t, ViTexture>;
     
     
         VmaAllocator                        m_allocator             = nullptr;
@@ -312,6 +322,8 @@ namespace yq::tachyon {
         VkFormat                            m_surfaceFormat;
         VkColorSpaceKHR                     m_surfaceColorSpace;
         ViSwapchain                         m_swapchain;
+        
+        TextureMap                          m_textures;
             // eventually this will get smarter....
         ThingMap                            m_things;
         ViThread                            m_thread;

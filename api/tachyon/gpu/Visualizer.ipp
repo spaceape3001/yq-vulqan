@@ -963,6 +963,15 @@ namespace yq::tachyon {
         }
     }
 
+    std::error_code             Visualizer::_create(ViTexture&p, const Texture&tex)
+    {
+        return std::error_code();
+    }
+    
+    void                        Visualizer::_destroy(ViTexture&p)
+    {
+        _destroy((ViBuffer&) p);
+    }
         
     std::error_code             Visualizer::_create(ViThread&p)
     {

@@ -23,17 +23,13 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Texture::Texture()
-    {
-    }
-    
-    Texture::Texture(const ImageInfo& ii, Memory&& mem) : m_info(ii), m_memory(std::move(mem))
+    Texture::Texture(const ImageInfo& ii, Memory&& mem) : info(ii), memory(std::move(mem))
     {
     }
 
     size_t      Texture::data_size() const  
     {
-        return m_memory.size();
+        return memory.size();
     }
 
     Texture::~Texture()

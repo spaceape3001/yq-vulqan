@@ -26,18 +26,14 @@ namespace yq::tachyon {
         static TypedAssetFactory<Texture>&  cache();
         static const Texture*       load(std::string_view);
     
-        const ImageInfo&    info() const { return m_info; }
-        const Memory&       memory() const { return m_memory; }
-   
-        Texture();
+        ImageInfo           info;
+        Memory              memory;
+    
         Texture(const ImageInfo&, Memory&&);
 
         virtual size_t              data_size() const  override;
 
     private:
         ~Texture();
-
-        ImageInfo   m_info;
-        Memory      m_memory;
     };
 }

@@ -36,11 +36,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Shader::Shader(const ByteArray&b, ShaderType st) : Asset(), payload(b), type(st)
-    {
-    }
-    
-    Shader::Shader(ByteArray&& b, ShaderType st) : Asset(), payload(std::move(b)), type(st)
+    Shader::Shader(ShaderType st, Memory&& mem) : Asset(), payload(std::move(mem)), type(st)
     {
     }
 

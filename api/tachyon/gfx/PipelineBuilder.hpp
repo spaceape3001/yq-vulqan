@@ -8,6 +8,7 @@
 
 #include <basic/BasicBuffer.hpp>
 #include <basic/Mutable.hpp>
+#include <basic/keywords.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/PipelineConfig.hpp>
 #include <tachyon/gfx/PipelineUtils.hpp>
@@ -23,11 +24,6 @@
 #include <type_traits>
 
 namespace yq::tachyon {
-
-    struct span_t {};
-    struct copy_t {};
-    static constexpr const span_t   SPAN;
-    static constexpr const copy_t   COPY;
 
     
     class Pipeline::Builder {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <basic/ByteArray.hpp>
+#include <tachyon/core/Memory.hpp>
 #include <tachyon/core/Asset.hpp>
 #include <tachyon/enum/ShaderType.hpp>
 
@@ -24,10 +24,9 @@ namespace yq::tachyon {
         
         virtual size_t      data_size() const override;
         
-        Shader(const ByteArray&, ShaderType);
-        Shader(ByteArray&&, ShaderType);
+        Shader(ShaderType, Memory&&);
 
-        ByteArray   payload;
+        Memory      payload;
         ShaderType  type;
     
     private:

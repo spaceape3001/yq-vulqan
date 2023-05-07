@@ -159,7 +159,7 @@ namespace yq::tachyon::glsl {
                     auto [b,ec] = compile(pth);
                     if(ec)
                         throw ec;
-                    return new Shader(b, st);
+                    return new Shader(st, Memory(COPY, b.data(), b.size()));
                 }
             );
         }

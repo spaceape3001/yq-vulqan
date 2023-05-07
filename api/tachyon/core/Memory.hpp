@@ -133,10 +133,10 @@ namespace yq::tachyon {
         if(!p || !n)
             return ;
             
-        const T*    ndata   = new T[n];
+        T*    ndata   = new T[n];
         std::copy(p, p+n, ndata);
         set(ndata, n * sizeof(T), [](const void* p2, size_t sz) {
-            delete ((const T*) p2) [ (sz / sizeof(T)) ];
+            delete[] ((const T*) p2);
         });
     }
 

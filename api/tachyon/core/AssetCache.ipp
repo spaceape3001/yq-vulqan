@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/AssetCache.hpp>
-#include <tachyon/Asset.hpp>
+#include <tachyon/core/AssetCache.hpp>
+#include <tachyon/core/Asset.hpp>
 
 namespace yq::tachyon {
 

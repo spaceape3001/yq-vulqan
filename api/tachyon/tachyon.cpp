@@ -14,9 +14,6 @@
 #include "gfx/STBTexture.ipp"
 
 #include "Application.ipp"
-#include "Asset.ipp"
-#include "AssetCache.ipp"
-#include "AssetFactory.ipp"
 #include "Buffer.ipp"
 #include "Viewer.ipp"
 
@@ -28,6 +25,10 @@
 #include "camera/NullCamera.ipp"
 #include "camera/SpaceCamera.ipp"
 #include "camera/TargetCamera.ipp"
+
+#include "core/Asset.ipp"
+#include "core/AssetCache.ipp"
+#include "core/AssetFactory.ipp"
 
 #include "enum/KeyCode.ipp"
 

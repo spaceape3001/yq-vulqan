@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/AssetFactory.hpp>
+#include <tachyon/core/AssetFactory.hpp>
 #include <tachyon/gfx/Texture.hpp>
 
 #include <basic/DelayInit.hpp>

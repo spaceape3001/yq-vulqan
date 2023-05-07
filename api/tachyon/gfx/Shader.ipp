@@ -8,8 +8,8 @@
 
 #include <tachyon/TachyonLog.hpp>
 #include <tachyon/gfx/Shader.hpp>
-#include <tachyon/AssetFactory.hpp>
-#include <tachyon/AssetInfoWriter.hpp>
+#include <tachyon/core/AssetFactory.hpp>
+#include <tachyon/core/AssetInfoWriter.hpp>
 #include <basic/DelayInit.hpp>
 
 namespace yq::tachyon {

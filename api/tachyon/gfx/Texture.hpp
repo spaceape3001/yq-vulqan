@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/Asset.hpp>
+#include <tachyon/core/Asset.hpp>
 #include <tachyon/core/Memory.hpp>
 #include <tachyon/gfx/ImageInfo.hpp>
 

@@ -72,9 +72,18 @@ namespace yq::tachyon {
         VkCommandPool       compute             = nullptr;
     };
     
-    struct ViTexture : public ViBuffer {
-        VkImage             image       = nullptr;
-        VkImageView         view        = nullptr;
+    struct ViTexture  {
+        VmaAllocation           allocation  = nullptr;
+        size_t                  size        = 0;
+        VkImage                 image       = nullptr;
+        VkImageView             view        = nullptr;
+        VkSampler               sampler     = nullptr;
+    };
+    
+    struct ViUpload {
+        VkFence                 fence           = nullptr;
+        VkCommandPool           pool            = nullptr;
+        VkCommandBuffer         commandBuffer   = nullptr;
     };
 
         //  and so we can be more efficient in rendering
@@ -244,6 +253,10 @@ namespace yq::tachyon {
         // used if no draw function is provided
         virtual void                    record(ViContext&){}
 
+        using CommandFunction   = std::function<void(VkCommandBuffer)>;
+
+        void                            upload(CommandFunction&&);
+
     protected:
         Visualizer();
         ~Visualizer();
@@ -276,6 +289,9 @@ namespace yq::tachyon {
 
         std::error_code             _create(ViThread&);
         void                        _destroy(ViThread&);
+        
+        std::error_code             _create(ViUpload&, uint32_t q=UINT32_MAX);
+        void                        _destroy(ViUpload&);
         
         std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
         
@@ -329,6 +345,7 @@ namespace yq::tachyon {
         ViThread                            m_thread;
         
         uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
+        ViUpload                            m_upload;
         ViQueues                            m_videoDecode;
         ViQueues                            m_videoEncode;
         std::atomic<bool>                   m_rebuildSwap           = { false };

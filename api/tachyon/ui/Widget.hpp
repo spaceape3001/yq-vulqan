@@ -119,6 +119,9 @@ namespace yq::tachyon {
         Widget*                 m_parent    = nullptr;
         std::vector<Widget*>    m_children;
         std::string             m_windowID;
+        
+        virtual void            child_added(Widget*){}
+        virtual void            child_removed(Widget*){}
     };
 
     template <typename C>

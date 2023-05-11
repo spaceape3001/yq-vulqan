@@ -82,11 +82,15 @@ namespace yq::tachyon {
         if(p && p->has_parentage(this))      // no loops please
             return false;
             
-        if(m_parent)
+        if(m_parent){
+            m_parent->child_removed(this);
             std::erase(m_parent->m_children, this);
+        }
         m_parent    = p;
-        if(m_parent)
+        if(m_parent){
             m_parent->m_children.push_back(this);
+            m_parent->child_added(this);
+        }
         return true;
    }
 

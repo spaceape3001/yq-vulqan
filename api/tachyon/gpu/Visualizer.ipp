@@ -6,6 +6,18 @@
 
 #pragma once
 
+/*
+    Note, development of any engine in vulkan requires examples/guides.  
+        
+        1.  https://vulkan-tutorial.com
+        2.  https://vkguide.dev
+        3.  https://www.saschawillems.de
+        
+    While this is an independent creation, my own intepretation of the Vulkan,
+    there may be similarities to the above.
+*/
+
+
 #include <tachyon/gpu/Visualizer.hpp>
 
 #include <basic/AutoReset.hpp>
@@ -332,6 +344,13 @@ namespace yq::tachyon {
         if(ec)
             return ec;
 
+
+        //  ================================
+        //  UPLOAD
+        ec  = _create(m_upload);
+        if(ec)
+            return ec;
+
         //  ================================
         //  RENDER PASS
 
@@ -380,6 +399,9 @@ namespace yq::tachyon {
         ec  = _create(m_swapchain);
         if(ec)
             return ec;
+            
+        
+            
         return std::error_code();
     }
     
@@ -396,6 +418,7 @@ namespace yq::tachyon {
         if(m_renderPass)
             vkDestroyRenderPass(m_device, m_renderPass, nullptr);
         
+        _destroy(m_upload);
         _destroy(m_thread);
     
         for(auto& p : m_pipelines)
@@ -970,7 +993,6 @@ namespace yq::tachyon {
     
     void                        Visualizer::_destroy(ViTexture&p)
     {
-        _destroy((ViBuffer&) p);
     }
         
     std::error_code             Visualizer::_create(ViThread&p)
@@ -1036,6 +1058,57 @@ namespace yq::tachyon {
         if(p.compute){
             vkDestroyCommandPool(m_device, p.compute, nullptr);
             p.compute = nullptr;
+        }
+    }
+
+    std::error_code             Visualizer::_create(ViUpload&p, uint32_t q)
+    {
+        try {
+            if(q == UINT32_MAX)
+                q   = graphic_queue_family();
+            if(q == UINT32_MAX)
+                return create_error<"No valid queue">();
+                
+            VqCommandPoolCreateInfo poolInfo;
+            poolInfo.queueFamilyIndex   = q;
+            if (vkCreateCommandPool(m_device, &poolInfo, nullptr, &p.pool) != VK_SUCCESS) 
+                throw create_error<"Failed to create an upload command pool">();
+                
+            VqCommandBufferAllocateInfo allocInfo;
+            allocInfo.commandPool           = p.pool;
+            allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+            allocInfo.commandBufferCount    = 1;
+            if (vkAllocateCommandBuffers(m_device, &allocInfo, &p.commandBuffer) != VK_SUCCESS) 
+                throw create_error<"Failed to allocate command buffers">();
+                
+            VqFenceCreateInfo   fci;
+            if(vkCreateFence(m_device, &fci, nullptr,  &p.fence) != VK_SUCCESS)
+                throw create_error<"Unable to create fence">();
+
+            return std::error_code();
+        }
+        catch(std::error_code ec)
+        {
+            _destroy(p);
+            return ec;
+        }
+    }
+    
+    void                        Visualizer::_destroy(ViUpload&p)
+    {
+        if(p.fence){
+            vkDestroyFence(m_device, p.fence, nullptr);
+            p.fence   = nullptr;
+        }
+
+        if(p.commandBuffer && p.pool){
+            vkFreeCommandBuffers(m_device, p.pool, 1, &p.commandBuffer);
+            p.commandBuffer    = nullptr;
+        }
+
+        if(p.pool){
+            vkDestroyCommandPool(m_device, p.pool, nullptr);
+            p.pool      = nullptr;
         }
     }
 
@@ -1642,6 +1715,10 @@ namespace yq::tachyon {
                 continue;
             draw_object(u, *r, p.wireframe);
         }
+    }
+
+    void    Visualizer::upload(CommandFunction&&fn)
+    {
     }
     
 }

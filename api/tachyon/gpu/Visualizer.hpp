@@ -28,6 +28,8 @@
 
 namespace yq::tachyon {
 
+    class Memory;
+
     struct ViBuffer {
         VkBuffer                buffer      = nullptr;
         VmaAllocation           allocation  = nullptr;
@@ -39,6 +41,11 @@ namespace yq::tachyon {
         VkShaderStageFlagBits   mask    = {};
     };
     
+    
+    struct ViImage {
+        VmaAllocation           allocation  = nullptr;
+        VkImage                 image       = nullptr;
+    };
 
     struct ViQueues {
         std::vector<VkQueue>    queues;
@@ -84,6 +91,7 @@ namespace yq::tachyon {
         VkFence                 fence           = nullptr;
         VkCommandPool           pool            = nullptr;
         VkCommandBuffer         commandBuffer   = nullptr;
+        VkQueue                 queue           = nullptr;
     };
 
         //  and so we can be more efficient in rendering
@@ -113,6 +121,15 @@ namespace yq::tachyon {
     */
     class Visualizer  {
     public:
+        
+        enum class Queue : uint8_t {
+            Graphic,
+            Present,
+            Compute,
+            VideoEnable,
+            VideoDisable,
+            COUNT
+        };
         
         using DrawFunction              = std::function<void(ViContext&)>;
     
@@ -152,6 +169,9 @@ namespace yq::tachyon {
         const ViPipeline&               create(const Pipeline&);
 
         const ViThing&                  create(const Rendered&, const Pipeline&);
+        
+        const ViTexture&                create(const Texture&);
+        
 
         ViFrame&                        current_frame();
         const ViFrame&                  current_frame() const;
@@ -238,6 +258,8 @@ namespace yq::tachyon {
         uint32_t                        swapchain_min_image_count() const;
         uint32_t                        swapchain_width() const;
         
+        const ViTexture&                texture(uint64_t) const;
+        
         uint64_t                        tick() const { return m_tick; }
 
         VkQueue                         video_decode_queue(uint32_t i=0) const;
@@ -255,7 +277,7 @@ namespace yq::tachyon {
 
         using CommandFunction   = std::function<void(VkCommandBuffer)>;
 
-        void                            upload(CommandFunction&&);
+        std::error_code                 upload(CommandFunction&&);
 
     protected:
         Visualizer();
@@ -267,6 +289,9 @@ namespace yq::tachyon {
     
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
+    
+        std::error_code             _allocate(ViBuffer&, size_t, VkBufferUsageFlags, VmaMemoryUsage);
+        std::error_code             _allocate(ViBuffer&, const Memory&, VkBufferUsageFlags, VmaMemoryUsage);
     
         std::error_code             _create(ViBuffer&, const Buffer&);
         void                        _destroy(ViBuffer&);
@@ -290,7 +315,7 @@ namespace yq::tachyon {
         std::error_code             _create(ViThread&);
         void                        _destroy(ViThread&);
         
-        std::error_code             _create(ViUpload&, uint32_t q=UINT32_MAX);
+        std::error_code             _create(ViUpload&, const ViQueues&);
         void                        _destroy(ViUpload&);
         
         std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
@@ -309,6 +334,8 @@ namespace yq::tachyon {
         using ShaderMap     = std::unordered_map<uint64_t, ViShader>;
         using BufferMap     = std::unordered_map<uint64_t, ViBuffer>;
         using TextureMap    = std::unordered_map<uint64_t, ViTexture>;
+    
+        mutable tbb::spin_rw_mutex          m_mutex;
     
     
         VmaAllocator                        m_allocator             = nullptr;
@@ -331,6 +358,7 @@ namespace yq::tachyon {
         ViQueues                            m_present;
         PresentMode                         m_presentMode;
         std::set<PresentMode>               m_presentModes;
+        //ViQueues                            m_queues[Queue::COUNT];
         VkRenderPass                        m_renderPass            = nullptr;
         ShaderMap                           m_shaders;
         VkSurfaceKHR                        m_surface               = nullptr;
@@ -345,7 +373,7 @@ namespace yq::tachyon {
         ViThread                            m_thread;
         
         uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
-        ViUpload                            m_upload;
+        ViUpload                            m_upload; // [Queue::COUNT];
         ViQueues                            m_videoDecode;
         ViQueues                            m_videoEncode;
         std::atomic<bool>                   m_rebuildSwap           = { false };

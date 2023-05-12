@@ -23,6 +23,7 @@
 #include <basic/AutoReset.hpp>
 #include <basic/BasicBuffer.hpp>
 #include <basic/ErrorDB.hpp>
+#include <basic/errors.hpp>
 
 #include <math/color/RGBA.hpp>
 
@@ -290,6 +291,7 @@ namespace yq::tachyon {
         VkPhysicalDeviceFeatures    gpu_features{};
         if(vci.fill_non_solid)
             gpu_features.fillModeNonSolid    = VK_TRUE;
+        gpu_features.samplerAnisotropy          = VK_TRUE;
 
         VqDeviceCreateInfo          deviceCreateInfo;
         deviceCreateInfo.pQueueCreateInfos        = qci.data();
@@ -347,7 +349,7 @@ namespace yq::tachyon {
 
         //  ================================
         //  UPLOAD
-        ec  = _create(m_upload);
+        ec  = _create(m_upload, m_graphic);
         if(ec)
             return ec;
 
@@ -487,23 +489,40 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     //  SUB CREATE/DESTROY
 
-    std::error_code             Visualizer::_create(ViBuffer&p, const Buffer&v)
+    std::error_code             Visualizer::_allocate(ViBuffer&p, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
     {
+        if(!cb)
+            return create_error<"Skipping zero sized buffer">();
+        
         VqBufferCreateInfo  bufferInfo;
-        bufferInfo.size         = p.size = v.bytes();
-        bufferInfo.usage        = (VkBufferViewCreateFlags) (v.usage().value() & VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM);
+        bufferInfo.size         = p.size = cb;
+        bufferInfo.usage        = buf & VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM;
         
         VmaAllocationCreateInfo vmaallocInfo = {};
-        vmaallocInfo.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
+        vmaallocInfo.usage = vmu;
         VmaAllocationInfo   vai;
         if(vmaCreateBuffer(m_allocator, &bufferInfo, &vmaallocInfo, &p.buffer, &p.allocation, &vai) != VK_SUCCESS)
             return create_error<"Cannot allocate buffer!">();
+        return std::error_code();
+    }
+    
+    std::error_code             Visualizer::_allocate(ViBuffer&p, const Memory& v, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
+    {
+        std::error_code     ec  = _allocate(p, v.size(), buf, vmu);
+        if(ec)
+            return ec;
         
         void* dst = nullptr;
         vmaMapMemory(m_allocator, p.allocation, &dst);
         memcpy(dst, v.data(), p.size);
         vmaUnmapMemory(m_allocator, p.allocation);            
         return std::error_code();
+    }
+    
+    
+    std::error_code             Visualizer::_create(ViBuffer&p, const Buffer&v)
+    {
+        return _allocate(p, Memory(v.data(), v.bytes()), (VkBufferUsageFlags) v.usage(), VMA_MEMORY_USAGE_CPU_TO_GPU);
     }
     
     void                        Visualizer::_destroy(ViBuffer&p)
@@ -988,11 +1007,129 @@ namespace yq::tachyon {
 
     std::error_code             Visualizer::_create(ViTexture&p, const Texture&tex)
     {
-        return std::error_code();
+        ViBuffer        b;
+        std::error_code ec  = _allocate(b, tex.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VMA_MEMORY_USAGE_CPU_ONLY);
+        if(ec)
+            return ec;
+            
+        VqImageCreateInfo   imgInfo;
+        imgInfo.imageType       = (VkImageType) tex.info.type.value();
+        imgInfo.extent.width    = (uint32_t) tex.info.size.x;
+        imgInfo.extent.height   = (uint32_t) tex.info.size.y;
+        imgInfo.extent.depth    = (uint32_t) tex.info.size.z;
+        imgInfo.mipLevels       = tex.info.mipLevels;
+        imgInfo.arrayLayers     = tex.info.arrayLayers;
+        imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
+        imgInfo.format          = (VkFormat) tex.info.format.value();
+        imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+        imgInfo.tiling          = (VkImageTiling) tex.info.tiling.value();
+        imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
+
+        
+        p.size                  = tex.memory.size();
+        VmaAllocationCreateInfo diai  = {};
+        diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
+        
+        vmaCreateImage(m_allocator, &imgInfo, &diai, &p.image, &p.allocation, nullptr);
+        
+        upload([&](VkCommandBuffer cmd){
+            VkImageSubresourceRange range;
+            range.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
+            range.baseMipLevel = 0;
+            range.levelCount = 1;
+            range.baseArrayLayer = 0;
+            range.layerCount = 1;
+            
+            VqImageMemoryBarrier imb;
+            imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
+            imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb.image               = p.image;
+            imb.subresourceRange    = range;
+            imb.srcAccessMask       = 0;
+            imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
+            
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+
+            VkBufferImageCopy creg = {};
+            creg.bufferOffset = 0;
+            creg.bufferRowLength = 0;
+            creg.bufferImageHeight = 0;
+
+            creg.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            creg.imageSubresource.mipLevel = 0;
+            creg.imageSubresource.baseArrayLayer = 0;
+            creg.imageSubresource.layerCount = 1;
+            creg.imageExtent = imgInfo.extent;
+
+            //copy the buffer into the image
+            vkCmdCopyBufferToImage(cmd, b.buffer, p.image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
+
+            VkImageMemoryBarrier imb2 = imb;
+
+            imb2.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb2.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+            imb2.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+            imb2.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+            //barrier the image into the shader readable layout
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
+        });
+        
+        _destroy(b);
+        
+        VqImageViewCreateInfo   ivci;
+        ivci.flags      = 
+        ivci.format     = imgInfo.format;
+        ivci.image      = p.image;
+        ivci.viewType   = (VkImageViewType) imgInfo.imageType;
+        ivci.subresourceRange.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
+        ivci.subresourceRange.baseMipLevel  = 0;
+        ivci.subresourceRange.levelCount    = 1;
+        ivci.subresourceRange.baseArrayLayer = 0;
+        ivci.subresourceRange.layerCount    = 1;
+        
+        vkCreateImageView(m_device, &ivci, nullptr, &p.view);
+        
+        VqSamplerCreateInfo sci;
+        sci.magFilter               = VK_FILTER_LINEAR;
+        sci.minFilter               = VK_FILTER_LINEAR;
+        sci.addressModeU            = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
+        sci.addressModeV            = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
+        sci.addressModeW            = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
+        sci.anisotropyEnable        = VK_TRUE;
+        sci.maxAnisotropy           = m_deviceInfo.limits.maxSamplerAnisotropy;
+        sci.borderColor             = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+        sci.unnormalizedCoordinates = VK_FALSE;
+        sci.compareEnable           = VK_FALSE;
+        sci.compareOp               = VK_COMPARE_OP_ALWAYS;
+        sci.mipmapMode              = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+        sci.mipLodBias              = 0.f;
+        sci.minLod                  = 0.f;
+        sci.maxLod                  = 0.f;
+        
+        vkCreateSampler(m_device, &sci, nullptr, &p.sampler);
+        
+        
+        return errors::todo();
     }
     
     void                        Visualizer::_destroy(ViTexture&p)
     {
+        if(p.sampler){
+            vkDestroySampler(m_device, p.sampler, nullptr);
+            p.sampler   = nullptr;
+        }
+        
+        if(p.view){
+            vkDestroyImageView(m_device, p.view, nullptr);
+            p.view = nullptr;
+        }
+
+        if(p.image){
+            vmaDestroyImage(m_allocator, p.image, p.allocation);
+            p.image = nullptr;
+        }
     }
         
     std::error_code             Visualizer::_create(ViThread&p)
@@ -1061,16 +1198,15 @@ namespace yq::tachyon {
         }
     }
 
-    std::error_code             Visualizer::_create(ViUpload&p, uint32_t q)
+    std::error_code             Visualizer::_create(ViUpload&p, const ViQueues&q)
     {
         try {
-            if(q == UINT32_MAX)
-                q   = graphic_queue_family();
-            if(q == UINT32_MAX)
-                return create_error<"No valid queue">();
-                
+            if(q.queues.empty())
+                throw create_error<"Queues has no queues">();
+        
+            p.queue                     =   q.queues[0];
             VqCommandPoolCreateInfo poolInfo;
-            poolInfo.queueFamilyIndex   = q;
+            poolInfo.queueFamilyIndex   =   q.family;
             if (vkCreateCommandPool(m_device, &poolInfo, nullptr, &p.pool) != VK_SUCCESS) 
                 throw create_error<"Failed to create an upload command pool">();
                 
@@ -1326,6 +1462,17 @@ namespace yq::tachyon {
     {
         return m_swapchain.width();
     }
+
+    const ViTexture& Visualizer::texture(uint64_t i) const
+    {
+        static ViTexture s_null;
+
+        auto j = m_textures.find(i);
+        if(j != m_textures.end())
+            return j->second;
+        
+        return s_null;
+    }
             
     VkQueue   Visualizer::video_decode_queue(uint32_t i) const
     {
@@ -1407,6 +1554,14 @@ namespace yq::tachyon {
             j->second->update(*this, vp, &r);
         }
         return *(j->second);
+    }
+
+    const ViTexture&       Visualizer::create(const Texture& t)
+    {
+        auto [j,f]  = m_textures.try_emplace(t.id(), ViTexture());
+        if(f)
+            _create(j->second, t);
+        return j->second;
     }
 
     void        Visualizer::erase(const Buffer& v)
@@ -1717,8 +1872,32 @@ namespace yq::tachyon {
         }
     }
 
-    void    Visualizer::upload(CommandFunction&&fn)
+    std::error_code    Visualizer::upload(CommandFunction&&fn)
     {
+        if(!fn)
+            return create_error<"Bad function">();
+        if(!m_upload.commandBuffer)
+            return create_error<"Upload capability is uninitialized">();
+    
+        VqCommandBufferBeginInfo beginInfo;
+        beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT; // Optional
+        if(vkBeginCommandBuffer(m_upload.commandBuffer, &beginInfo) != VK_SUCCESS)
+            return create_error<"Unable to begin the command buffer">();
+        fn(m_upload.commandBuffer);
+        if(vkEndCommandBuffer(m_upload.commandBuffer) != VK_SUCCESS)
+            return create_error<"Unable to end the command buffer">();
+            
+        VqSubmitInfo    subinfo;
+        subinfo.pCommandBuffers = &m_upload.commandBuffer;
+        subinfo.commandBufferCount  = 1;
+        if(vkQueueSubmit(m_upload.queue, 1, &subinfo, m_upload.fence) != VK_SUCCESS)
+            return create_error<"Unable to submit the task to the queue">();
+        
+        
+        vkWaitForFences(m_device, 1, &m_upload.fence, true, 999'999'999ULL);
+        vkResetFences(m_device, 1, &m_upload.fence);
+        vkResetCommandPool(m_device, m_upload.pool, 0);
+        return std::error_code();
     }
     
 }

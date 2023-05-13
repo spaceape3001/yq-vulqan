@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
 
 /*
     Note, development of any engine in vulkan requires examples/guides.  
@@ -17,7 +16,7 @@
     there may be similarities to the above.
 */
 
-
+#include <tachyon/ImageViewInfo.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 
 #include <basic/AutoReset.hpp>
@@ -45,6 +44,41 @@
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
+
+    namespace errors {
+        using namespace yq::errors;
+        using INSUFFICIENT_GPU_MEMORY   = error_db::entry<"Insufficient GPU memory for requested operation">;
+    }
+    
+    namespace {
+    
+        VkImageViewCreateInfo   translate(const ImageViewInfo& ivi)
+        {
+            VqImageViewCreateInfo   ret;
+            ret.flags                           = (VkImageViewCreateFlags) ivi.flags.value();
+            ret.viewType                        = (VkImageViewType) ivi.type.value();
+            ret.format                          = (VkFormat) ivi.format.value();
+            ret.components.r                    = (VkComponentSwizzle) ivi.swizzle.red.value();
+            ret.components.g                    = (VkComponentSwizzle) ivi.swizzle.green.value();
+            ret.components.b                    = (VkComponentSwizzle) ivi.swizzle.blue.value();
+            ret.components.a                    = (VkComponentSwizzle) ivi.swizzle.alpha.value();
+            ret.subresourceRange.aspectMask     = (VkImageAspectFlags) ivi.aspect.value();
+            ret.subresourceRange.baseMipLevel   = ivi.baseMipLevel;
+            ret.subresourceRange.levelCount     = ivi.levelCount;
+            ret.subresourceRange.baseArrayLayer = ivi.baseArrayLayer;
+            ret.subresourceRange.layerCount     = ivi.layerCount;
+            return ret;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ViContext::ViContext() = default;
+    ViContext::~ViContext() = default;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
 
     void    ViQueues::set(VkDevice dev, uint32_t cnt)
     {
@@ -107,6 +141,9 @@ namespace yq::tachyon {
     {
         kill_visualizer();
     }
+    
+    #define LOCK        tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
+    #define WLOCK       tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, true);
     
     namespace {
         std::vector<float>      make_weights(const ViQueueSpec& qs, uint32_t mincnt=0)
@@ -503,7 +540,7 @@ namespace yq::tachyon {
         vmaallocInfo.usage = vmu;
         VmaAllocationInfo   vai;
         if(vmaCreateBuffer(m_allocator, &bufferInfo, &vmaallocInfo, &p.buffer, &p.allocation, &vai) != VK_SUCCESS)
-            return create_error<"Cannot allocate buffer!">();
+            return errors::INSUFFICIENT_GPU_MEMORY();
         return std::error_code();
     }
     
@@ -523,12 +560,12 @@ namespace yq::tachyon {
     
     std::error_code             Visualizer::_create(ViBuffer&p, const Buffer&v)
     {
-        return _allocate(p, Memory(SET, v.data(), v.bytes()), (VkBufferUsageFlags) v.usage(), VMA_MEMORY_USAGE_CPU_TO_GPU);
+        return _allocate(p, Memory(SET, v.data(), v.bytes()), (VkBufferUsageFlags) v.usage().value(), VMA_MEMORY_USAGE_CPU_TO_GPU);
     }
     
     void                        Visualizer::_destroy(ViBuffer&p)
     {
-        if(p.allocation){
+        if(p.allocation && p.buffer){
             vmaDestroyBuffer(m_allocator, p.buffer, p.allocation);
             p.allocation = nullptr;
             p.buffer = nullptr;
@@ -588,6 +625,94 @@ namespace yq::tachyon {
         
     }
 
+    std::error_code             Visualizer::_create(ViImage&p, const Image&img)
+    {
+        ViBuffer        local;
+        
+        std::error_code ec  = _allocate(local, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VMA_MEMORY_USAGE_CPU_ONLY);
+        if(ec)
+            return ec;
+        
+        try {
+            VqImageCreateInfo   imgInfo;
+            imgInfo.imageType       = (VkImageType) img.info.type.value();
+            imgInfo.extent.width    = (uint32_t) img.info.size.x;
+            imgInfo.extent.height   = (uint32_t) img.info.size.y;
+            imgInfo.extent.depth    = (uint32_t) img.info.size.z;
+            imgInfo.mipLevels       = img.info.mipLevels;
+            imgInfo.arrayLayers     = img.info.arrayLayers;
+            imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
+            imgInfo.format          = (VkFormat) img.info.format.value();
+            imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+            imgInfo.tiling          = (VkImageTiling) img.info.tiling.value();
+            imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
+           
+            VmaAllocationCreateInfo diai  = {};
+            diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
+            
+            if(vmaCreateImage(m_allocator, &imgInfo, &diai, &p.image, &p.allocation, nullptr) != VK_SUCCESS)
+                return (std::error_code) errors::INSUFFICIENT_GPU_MEMORY();
+                
+            ec = upload([&](VkCommandBuffer cmd){
+                VkImageSubresourceRange range;
+                range.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
+                range.baseMipLevel = 0;
+                range.levelCount = 1;
+                range.baseArrayLayer = 0;
+                range.layerCount = 1;
+                
+                VqImageMemoryBarrier imb;
+                imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
+                imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+                imb.image               = p.image;
+                imb.subresourceRange    = range;
+                imb.srcAccessMask       = 0;
+                imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
+                
+                vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+
+                VkBufferImageCopy creg = {};
+                creg.bufferOffset = 0;
+                creg.bufferRowLength = 0;
+                creg.bufferImageHeight = 0;
+
+                creg.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+                creg.imageSubresource.mipLevel = 0;
+                creg.imageSubresource.baseArrayLayer = 0;
+                creg.imageSubresource.layerCount = 1;
+                creg.imageExtent = imgInfo.extent;
+
+                //copy the buffer into the image
+                vkCmdCopyBufferToImage(cmd, local.buffer, p.image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
+
+                VkImageMemoryBarrier imb2 = imb;
+
+                imb2.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+                imb2.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+                imb2.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+                imb2.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+                //barrier the image into the shader readable layout
+                vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
+            });
+        }
+        catch(std::error_code ec2)
+        {
+            ec  = ec2;
+        }
+        _destroy(local);
+        return ec;
+    }
+    
+    void                        Visualizer::_destroy(ViImage&p)
+    {
+        if(p.image && p.allocation){
+            vmaDestroyImage(m_allocator, p.image, p.allocation);
+            p.image         = nullptr;
+            p.allocation    = nullptr;
+        }
+    }
 
     std::error_code          Visualizer::_create(ViPipeline&p, const PipelineConfig&cfg)
     {
@@ -599,17 +724,19 @@ namespace yq::tachyon {
                 if(!sh)
                     continue;
                 
-                const auto&  xvs       = create(*sh);
-                if(!xvs.shader)
+                Expect<ViShader>    xvs = create(*sh);
+                if(!xvs)
                     continue;
                 
+                const ViShader&     ssh = *xvs;
+                
                 VqPipelineShaderStageCreateInfo stage;
-                stage.stage     = xvs.mask;
+                stage.stage     = ssh.mask;
                 stage.pName     = "main";
-                stage.module    = xvs.shader;
+                stage.module    = ssh.shader;
                 stages.push_back(stage);
 
-                p.shaders      |= xvs.mask;
+                p.shaders      |= ssh.mask;
             }
         
             VqPipelineVertexInputStateCreateInfo    vertexInfo;
@@ -948,18 +1075,8 @@ namespace yq::tachyon {
                             
             p.imageViews.resize(p.imageCount, nullptr);
 
-            VqImageViewCreateInfo       imageViewInfo;
-            imageViewInfo.viewType     = VK_IMAGE_VIEW_TYPE_2D;
+            VkImageViewCreateInfo       imageViewInfo = translate(ImageViewInfo());
             imageViewInfo.format       = m_surfaceFormat;
-            imageViewInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-            imageViewInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-            imageViewInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-            imageViewInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-            imageViewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            imageViewInfo.subresourceRange.baseMipLevel = 0;
-            imageViewInfo.subresourceRange.levelCount = 1;
-            imageViewInfo.subresourceRange.baseArrayLayer = 0;
-            imageViewInfo.subresourceRange.layerCount = 1;
             
             for(size_t i=0; i<p.imageCount; ++i){
                 imageViewInfo.image        = p.images[i];
@@ -1008,87 +1125,18 @@ namespace yq::tachyon {
 
     std::error_code             Visualizer::_create(ViTexture&p, const Texture&tex)
     {
-        ViBuffer        b;
-        std::error_code ec  = _allocate(b, tex.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VMA_MEMORY_USAGE_CPU_ONLY);
+        ViImage     img;
+        std::error_code ec  = _create(img, tex);
         if(ec)
             return ec;
             
-        VqImageCreateInfo   imgInfo;
-        imgInfo.imageType       = (VkImageType) tex.info.type.value();
-        imgInfo.extent.width    = (uint32_t) tex.info.size.x;
-        imgInfo.extent.height   = (uint32_t) tex.info.size.y;
-        imgInfo.extent.depth    = (uint32_t) tex.info.size.z;
-        imgInfo.mipLevels       = tex.info.mipLevels;
-        imgInfo.arrayLayers     = tex.info.arrayLayers;
-        imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
-        imgInfo.format          = (VkFormat) tex.info.format.value();
-        imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-        imgInfo.tiling          = (VkImageTiling) tex.info.tiling.value();
-        imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
-
+        p.allocation        = img.allocation;
+        p.image             = img.image;
+        p.size              = tex.memory.bytes();
         
-        p.size                  = tex.memory.bytes();
-        VmaAllocationCreateInfo diai  = {};
-        diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
-        
-        vmaCreateImage(m_allocator, &imgInfo, &diai, &p.image, &p.allocation, nullptr);
-        
-        upload([&](VkCommandBuffer cmd){
-            VkImageSubresourceRange range;
-            range.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
-            range.baseMipLevel = 0;
-            range.levelCount = 1;
-            range.baseArrayLayer = 0;
-            range.layerCount = 1;
-            
-            VqImageMemoryBarrier imb;
-            imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
-            imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb.image               = p.image;
-            imb.subresourceRange    = range;
-            imb.srcAccessMask       = 0;
-            imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
-            
-            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
-
-            VkBufferImageCopy creg = {};
-            creg.bufferOffset = 0;
-            creg.bufferRowLength = 0;
-            creg.bufferImageHeight = 0;
-
-            creg.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            creg.imageSubresource.mipLevel = 0;
-            creg.imageSubresource.baseArrayLayer = 0;
-            creg.imageSubresource.layerCount = 1;
-            creg.imageExtent = imgInfo.extent;
-
-            //copy the buffer into the image
-            vkCmdCopyBufferToImage(cmd, b.buffer, p.image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
-
-            VkImageMemoryBarrier imb2 = imb;
-
-            imb2.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb2.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-
-            imb2.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-            imb2.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-
-            //barrier the image into the shader readable layout
-            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
-        });
-        
-        _destroy(b);
-        
-        VqImageViewCreateInfo   ivci;
-        ivci.flags      = 
-        ivci.format     = imgInfo.format;
+        VkImageViewCreateInfo   ivci = translate(ImageViewInfo());
+        ivci.format     = (VkFormat) tex.info.format.value();
         ivci.image      = p.image;
-        ivci.viewType   = (VkImageViewType) imgInfo.imageType;
-        ivci.subresourceRange.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
-        ivci.subresourceRange.baseMipLevel  = 0;
-        ivci.subresourceRange.levelCount    = 1;
-        ivci.subresourceRange.baseArrayLayer = 0;
-        ivci.subresourceRange.layerCount    = 1;
         
         vkCreateImageView(m_device, &ivci, nullptr, &p.view);
         
@@ -1347,6 +1395,18 @@ namespace yq::tachyon {
         return m_graphic.valid();
     }
 
+    Expect<ViImage> Visualizer::image(uint64_t i) const
+    {
+        {
+            LOCK
+            auto j = m_images.find(i);
+            if(j != m_images.end())
+                return j->second;
+        }
+        
+        return unexpected<"Unable to find specified image">();
+    }
+
     uint32_t    Visualizer::max_memory_allocation_count() const  
     { 
         return m_deviceInfo.limits.maxMemoryAllocationCount; 
@@ -1396,13 +1456,16 @@ namespace yq::tachyon {
         return m_renderPass;
     }
 
-    const ViShader& Visualizer::shader(uint64_t i) const
+    Expect<ViShader> Visualizer::shader(uint64_t i) const
     {
-        static const ViShader   s_null;
-        auto j=m_shaders.find(i);
-        if(j != m_shaders.end())
-            return j->second;
-        return s_null;
+        {
+            LOCK
+            auto j=m_shaders.find(i);
+            if(j != m_shaders.end())
+                return j->second;
+        }
+        
+        return unexpected<"Unable to find the specified shader">();
     }
 
     bool        Visualizer::supports_surface(VkFormat fmt) const
@@ -1526,12 +1589,54 @@ namespace yq::tachyon {
         return j->second;
     }
     
-    const ViShader&    Visualizer::create(const Shader& v)
+    Expect<ViImage>     Visualizer::create_(const Image&v)
     {
-        auto [j,f]  = m_shaders.try_emplace(v.id(), ViShader());
-        if(f)
-            _create(j->second, v);
-        return j->second;
+        {
+            LOCK
+            auto j = m_images.find(v.id());
+            if(j != m_images.end())
+                return j->second;
+        }
+        
+        ViImage     p, ret;
+        auto ec = _create(p, v);
+        if(ec)
+            return unexpected(ec);
+        
+        {
+            WLOCK
+            auto [j,f]  = m_images.try_emplace(v.id(), p);
+            if(f)
+                std::swap(p, ret);
+        }
+        
+        _destroy(p);
+        return ret;
+    }
+
+    Expect<ViShader>    Visualizer::create(const Shader& v)
+    {
+        {
+            LOCK
+            auto j = m_shaders.find(v.id());
+            if(j != m_shaders.end())
+                return j->second;
+        }
+        
+        ViShader    p, ret;
+        auto ec = _create(p, v);
+        if(ec)
+            return unexpected(ec);
+        
+        {
+            WLOCK
+            auto [j,f]  = m_shaders.try_emplace(v.id(), p);
+            if(f)
+                std::swap(p, ret);
+        }
+        
+        _destroy(p);
+        return ret;
     }
     
     const ViPipeline&  Visualizer::create(const Pipeline& v)
@@ -1875,6 +1980,7 @@ namespace yq::tachyon {
 
     std::error_code    Visualizer::upload(CommandFunction&&fn)
     {
+        std::error_code     ec;
         if(!fn)
             return create_error<"Bad function">();
         if(!m_upload.commandBuffer)
@@ -1884,7 +1990,14 @@ namespace yq::tachyon {
         beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT; // Optional
         if(vkBeginCommandBuffer(m_upload.commandBuffer, &beginInfo) != VK_SUCCESS)
             return create_error<"Unable to begin the command buffer">();
-        fn(m_upload.commandBuffer);
+            
+        try {
+            fn(m_upload.commandBuffer);
+        }
+        catch(std::error_code ec2) {
+            ec      = ec2;
+        }
+        
         if(vkEndCommandBuffer(m_upload.commandBuffer) != VK_SUCCESS)
             return create_error<"Unable to end the command buffer">();
             
@@ -1898,7 +2011,7 @@ namespace yq::tachyon {
         vkWaitForFences(m_device, 1, &m_upload.fence, true, 999'999'999ULL);
         vkResetFences(m_device, 1, &m_upload.fence);
         vkResetCommandPool(m_device, m_upload.pool, 0);
-        return std::error_code();
+        return ec;
     }
     
 }

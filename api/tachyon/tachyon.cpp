@@ -48,8 +48,6 @@
 #include "gfx/PipelineConfig.ipp"
 #include "gfx/STBImage.ipp"
 
-#include "gpu/Visualizer.ipp"
-#include "gpu/ViContext.ipp"
 #include "gpu/ViBO.ipp"
 #include "gpu/ViThing.ipp"
 #include "gpu/VqApp.ipp"
@@ -78,9 +76,12 @@
 #include <tachyon/enum/DescriptorType.hpp>
 #include <tachyon/enum/FilterType.hpp>
 #include <tachyon/enum/FrontFace.hpp>
+#include <tachyon/enum/ImageAspect.hpp>
+#include <tachyon/enum/ImageViewCreate.hpp>
 #include <tachyon/enum/ImageLayout.hpp>
 #include <tachyon/enum/ImageTiling.hpp>
 #include <tachyon/enum/ImageType.hpp>
+#include <tachyon/enum/ImageViewType.hpp>
 #include <tachyon/enum/IndexType.hpp>
 #include <tachyon/enum/KeyCode.hpp>
 #include <tachyon/enum/LogicOp.hpp>
@@ -121,6 +122,8 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::FrontFace)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageLayout)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageTiling)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageType)
+YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreate)
+YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::KeyCode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)

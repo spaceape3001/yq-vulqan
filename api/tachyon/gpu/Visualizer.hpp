@@ -28,6 +28,7 @@
 
 namespace yq::tachyon {
 
+    class BufferObject;
     class Memory;
 
     struct ViBuffer {
@@ -41,7 +42,7 @@ namespace yq::tachyon {
         VkShaderStageFlagBits   mask    = {};
     };
     
-    
+    //!  Represents an image (likely from file) that has been pushed to the GPU
     struct ViImage {
         VmaAllocation           allocation  = nullptr;
         VkImage                 image       = nullptr;
@@ -161,8 +162,9 @@ namespace yq::tachyon {
         const ViBuffer&                 create(const Buffer&);
 
         //! Creates the shader
-        //! \note Reference is only good to the next create()
-        const ViShader&                 create(const Shader&);
+        Expect<ViShader>                create(const Shader&);
+
+        Expect<ViImage>                 create_(const Image&);  // temporary name until texture's altered
 
         //! Creates the pipeline
         //! \note Reference is only good to the next create()
@@ -207,6 +209,8 @@ namespace yq::tachyon {
         uint32_t                        graphic_queue_family() const;
         bool                            graphic_queue_valid() const;
 
+        Expect<ViImage>                 image(uint64_t) const;
+
         uint32_t                        max_memory_allocation_count() const;
         uint32_t                        max_push_constants_size() const;
         uint32_t                        max_viewports() const;
@@ -236,8 +240,7 @@ namespace yq::tachyon {
         void                            set_present_mode(PresentMode);
 
         //! Finds the shader
-        //! \note Reference is only good until the next create
-        const ViShader&                 shader(uint64_t) const;
+        Expect<ViShader>                shader(uint64_t) const;
         
 
         VkSurfaceKHR                    surface() const { return m_surface; }
@@ -290,14 +293,23 @@ namespace yq::tachyon {
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
     
+        //! Allocates w/o copying
         std::error_code             _allocate(ViBuffer&, size_t, VkBufferUsageFlags, VmaMemoryUsage);
+        
+        //! Allocates WITH copying
         std::error_code             _allocate(ViBuffer&, const Memory&, VkBufferUsageFlags, VmaMemoryUsage);
     
+        
+    
+        std::error_code             _create(ViBuffer&, const BufferObject&);
         std::error_code             _create(ViBuffer&, const Buffer&);
         void                        _destroy(ViBuffer&);
     
         std::error_code             _create(ViFrame&);
         void                        _destroy(ViFrame&);
+
+        std::error_code             _create(ViImage&, const Image&);
+        void                        _destroy(ViImage&);
 
         std::error_code             _create(ViPipeline&, const PipelineConfig&);
         void                        _destroy(ViPipeline&);
@@ -334,6 +346,7 @@ namespace yq::tachyon {
         using ShaderMap     = std::unordered_map<uint64_t, ViShader>;
         using BufferMap     = std::unordered_map<uint64_t, ViBuffer>;
         using TextureMap    = std::unordered_map<uint64_t, ViTexture>;
+        using ImageMap      = std::unordered_map<uint64_t, ViImage>;
     
         mutable tbb::spin_rw_mutex          m_mutex;
     
@@ -352,6 +365,7 @@ namespace yq::tachyon {
         ViFrame                             m_frames[MAX_FRAMES_IN_FLIGHT];
         ViQueues                            m_graphic;
         VkInstance                          m_instance              = nullptr;
+        ImageMap                            m_images;
         VkPhysicalDeviceMemoryProperties    m_memoryInfo;
         VkPhysicalDevice                    m_physical              = nullptr;
         PipelineMap                         m_pipelines;

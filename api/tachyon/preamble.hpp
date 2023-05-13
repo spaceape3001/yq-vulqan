@@ -43,6 +43,7 @@ namespace yq {
         class   AssetInfo;
         class   AssetFactory;
         class   Buffer;
+        class   BufferObject;
         class   Camera;
         struct  CameraParams;
         class   Image;

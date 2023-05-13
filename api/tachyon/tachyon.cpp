@@ -27,6 +27,7 @@
 #include "TaskEngine.ipp"
 #include "VideoMode.ipp"
 #include "Viewer.ipp"
+#include "Widget.ipp"
 #include "Window.ipp"
 
 #include "asset/Quadrilateral.ipp"
@@ -63,7 +64,6 @@
 
 
 #include "ui/Editor.ipp"
-#include "ui/Widget.ipp"
 
 #include "widget/ImGuiDemo.ipp"
 #include "widget/Scene3D.ipp"

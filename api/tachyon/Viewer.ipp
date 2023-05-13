@@ -11,7 +11,7 @@
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
-#include <tachyon/ui/Widget.hpp>
+#include <tachyon/Widget.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/imgui/MyImGui.hpp>
 

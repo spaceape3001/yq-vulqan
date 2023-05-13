@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/Widget.hpp>
+#include <tachyon/Widget.hpp>
 #include <tachyon/scene/Perspective.hpp>
 #include <tachyon/scene/Scene.hpp>
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/Widget.hpp>
+#include <tachyon/Widget.hpp>
 #include <basic/TextUtils.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)

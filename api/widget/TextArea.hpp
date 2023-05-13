@@ -7,7 +7,7 @@
 #pragma once
 
 #include <basic/Signal.hpp>
-#include <tachyon/ui/Widget.hpp>
+#include <tachyon/Widget.hpp>
 #include <math/shape/AxBox2.hpp>
 #include <math/vector/Vector2.hpp>
 #include <functional>

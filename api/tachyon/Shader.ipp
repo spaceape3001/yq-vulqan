@@ -7,9 +7,9 @@
 #pragma once
 
 #include <tachyon/TachyonLog.hpp>
-#include <tachyon/gfx/Shader.hpp>
-#include <tachyon/core/AssetFactory.hpp>
-#include <tachyon/core/AssetInfoWriter.hpp>
+#include <tachyon/Shader.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/AssetInfoWriter.hpp>
 #include <basic/DelayInit.hpp>
 
 namespace yq::tachyon {

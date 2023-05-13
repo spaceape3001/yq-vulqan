@@ -6,7 +6,7 @@
 
 #include <boost/ut.hpp>
 #include <io/FileResolver.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <basic/Logging.hpp>
 
 namespace ut = boost::ut;

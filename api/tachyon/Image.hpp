@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/core/Asset.hpp>
-#include <tachyon/core/Memory.hpp>
-#include <tachyon/gfx/ImageInfo.hpp>
+#include <tachyon/Asset.hpp>
+#include <tachyon/Memory.hpp>
+#include <tachyon/ImageInfo.hpp>
 
 namespace yq::tachyon {
     class Buffer;

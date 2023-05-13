@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <tachyon/core/Asset.hpp>
-#include <tachyon/core/AssetCache.hpp>
+#include <tachyon/Asset.hpp>
+#include <tachyon/AssetCache.hpp>
 #include <basic/Object.hpp>
 #include <functional>
 

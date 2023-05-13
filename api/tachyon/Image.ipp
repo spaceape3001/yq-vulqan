@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/gfx/Image.hpp>
-#include <tachyon/core/AssetFactory.hpp>
-#include <tachyon/core/AssetInfoWriter.hpp>
+#include <tachyon/Image.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/AssetInfoWriter.hpp>
 #include <tachyon/Buffer.hpp>
 
 namespace yq::tachyon {

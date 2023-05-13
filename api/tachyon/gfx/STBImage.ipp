@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/core/AssetFactory.hpp>
-#include <tachyon/gfx/Image.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/Image.hpp>
 
 #include <basic/DelayInit.hpp>
 #include <basic/ErrorDB.hpp>

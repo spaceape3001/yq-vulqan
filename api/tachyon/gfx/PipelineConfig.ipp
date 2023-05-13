@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/gfx/PipelineConfig.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/Shader.hpp>
 
 namespace yq::tachyon {
     PipelineConfig::PipelineConfig() = default;

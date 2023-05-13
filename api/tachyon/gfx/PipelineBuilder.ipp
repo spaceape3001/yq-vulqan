@@ -6,7 +6,7 @@
 
 #include <meta/Init.hpp>
 #include <meta/TypeInfo.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <tachyon/gfx/PushData.hpp>
 #include <tachyon/gfx/PipelineBuilder.hpp>
 

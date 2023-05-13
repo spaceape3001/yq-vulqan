@@ -10,7 +10,7 @@
 #include <math/shape/TetrahedronData.hpp>
 #include <math/shape/shape_utils.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <basic/preamble.hpp>
 
 namespace yq::tachyon {

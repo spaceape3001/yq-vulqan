@@ -29,10 +29,10 @@
 
 #include <tachyon/Buffer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/gfx/Image.hpp>
+#include <tachyon/Image.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/PushData.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <tachyon/gpu/ViThing.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/ViPipeline.hpp>

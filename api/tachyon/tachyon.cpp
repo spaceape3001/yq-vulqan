@@ -9,11 +9,16 @@
     are our C++ adapters for it.
 */
 
+#include "Buffer.ipp"
 
-#include "core/Memory.ipp"
 
 #include "Application.ipp"
-#include "Buffer.ipp"
+#include "Asset.ipp"
+#include "AssetCache.ipp"
+#include "AssetFactory.ipp"
+#include "Image.ipp"
+#include "Memory.ipp"
+#include "Shader.ipp"
 #include "Viewer.ipp"
 
 #include "asset/Quadrilateral.ipp"
@@ -25,19 +30,14 @@
 #include "camera/SpaceCamera.ipp"
 #include "camera/TargetCamera.ipp"
 
-#include "core/Asset.ipp"
-#include "core/AssetCache.ipp"
-#include "core/AssetFactory.ipp"
 
 #include "enum/KeyCode.ipp"
 
 #include "gfx/GLSLShader.ipp"
-#include "gfx/Image.ipp"
 #include "gfx/Pipeline.ipp"
 #include "gfx/PipelineUtils.ipp"
 #include "gfx/PipelineBuilder.ipp"
 #include "gfx/PipelineConfig.ipp"
-#include "gfx/Shader.ipp"
 #include "gfx/STBImage.ipp"
 
 #include "gpu/Visualizer.ipp"

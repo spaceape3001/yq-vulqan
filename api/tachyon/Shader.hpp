@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/core/Memory.hpp>
-#include <tachyon/core/Asset.hpp>
+#include <tachyon/Memory.hpp>
+#include <tachyon/Asset.hpp>
 #include <tachyon/enum/ShaderType.hpp>
 
 namespace yq::tachyon {

@@ -13,8 +13,8 @@
 #include <basic/TextUtils.hpp>
 #include <io/Execute.hpp>
 #include <io/FileUtils.hpp>
-#include <tachyon/core/AssetFactory.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/Shader.hpp>
 
 namespace yq::errors {
    using shader_compile_failure    = error_db::entry<"Shader failed to compile">;

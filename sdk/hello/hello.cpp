@@ -28,7 +28,7 @@
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/enum/FrontFace.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <tachyon/gfx/PipelineBuilder.hpp>
 #include <tachyon/scene/Render3D.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>

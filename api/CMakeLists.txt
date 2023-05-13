@@ -24,9 +24,9 @@ add_library(${PROJECT_NAME} SHARED
     ${test_source}
 
     ./tachyon/tachyon.cpp
-    ./tachyon/imgui/ImGuiGLFW.cpp
-    ./tachyon/imgui/ImGuiVulkan.cpp
-    ./tachyon/imgui/MyImGui.cpp
+    ./tachyon/ImGuiGLFW.cpp
+    ./tachyon/ImGuiVulkan.cpp
+    ./tachyon/MyImGui.cpp
     ./tachyon/gpu/Visualizer.cpp
     ./YqEngineConfig.cpp
     ./widget/TextArea.cpp

@@ -10,14 +10,14 @@
 #include <tachyon/Monitor.hpp>
 #include <tachyon/Window.hpp>
 #include <tachyon/WindowEvents.hpp>
-#include <tachyon/imgui/ImGuiGLFW.hpp>
-#include <tachyon/imgui/ImGuiVulkan.hpp>
+#include <tachyon/ImGuiGLFW.hpp>
+#include <tachyon/ImGuiVulkan.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/TachyonLog.hpp>
 #include <basic/ErrorDB.hpp>
 #include <basic/TextUtils.hpp>
 #include <GLFW/glfw3.h>
-#include <tachyon/imgui/MyImGui.hpp>
+#include <tachyon/MyImGui.hpp>
 
 
 namespace yq::tachyon {

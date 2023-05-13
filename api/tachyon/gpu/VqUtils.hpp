@@ -10,6 +10,7 @@
 #include <tachyon/preamble.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
 #include <vulkan/vulkan_core.h>
+#include <math/preamble.hpp>
 
 #include <expected>
 #include <optional>
@@ -59,4 +60,14 @@ namespace yq::tachyon {
     };
 
     VqQueueFamilyIndices                    vqFindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR);
+
+    //! Creates vulkan create info from our specification
+    VkImageViewCreateInfo   vqCreateInfo(const ImageViewInfo&);
+    VkSamplerCreateInfo     vqCreateInfo(const SamplerInfo&);
+    
+    //! Converts our color into vulkan clear value
+    VkClearValue            vqClearValue(const RGBA4F&);
+    
+    //! Extracts vulkan clear value into our color
+    RGBA4F                  vqExtractRGBA4F(const VkClearValue&);
 }

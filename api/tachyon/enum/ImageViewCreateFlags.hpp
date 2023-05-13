@@ -11,7 +11,7 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(ImageViewCreate, ,
+    YQ_ENUM(ImageViewCreateFlag, ,
         // Fragment Density Map dynamic
         FDM_Dynamic     = 0,
         // Fragment Density Map deferred
@@ -20,8 +20,8 @@ namespace yq::tachyon {
         DBC_Replay      = 2
     )
     
-    using ImageViewCreateFlags  = Flag<ImageViewCreate>;
+    using ImageViewCreateFlags  = Flag<ImageViewCreateFlag>;
 }
 
-YQ_TYPE_DECLARE(yq::tachyon::ImageViewCreate)
+YQ_TYPE_DECLARE(yq::tachyon::ImageViewCreateFlag)
 YQ_TYPE_DECLARE(yq::tachyon::ImageViewCreateFlags)

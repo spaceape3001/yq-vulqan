@@ -75,15 +75,12 @@ namespace yq::tachyon {
     
         // eventually multithread...
     struct ViThread {
-        VkDescriptorPool    descriptors         = nullptr;
-        VkCommandPool       graphic             = nullptr;
-        VkCommandPool       compute             = nullptr;
+        VkDescriptorPool        descriptors         = nullptr;
+        VkCommandPool           graphic             = nullptr;
+        VkCommandPool           compute             = nullptr;
     };
     
     struct ViTexture  {
-        VmaAllocation           allocation  = nullptr;
-        size_t                  size        = 0;
-        VkImage                 image       = nullptr;
         VkImageView             view        = nullptr;
         VkSampler               sampler     = nullptr;
     };
@@ -164,7 +161,7 @@ namespace yq::tachyon {
         //! Creates the shader
         Expect<ViShader>                create(const Shader&);
 
-        Expect<ViImage>                 create_(const Image&);  // temporary name until texture's altered
+        Expect<ViImage>                 create(const Image&);  // temporary name until texture's altered
 
         //! Creates the pipeline
         //! \note Reference is only good to the next create()
@@ -172,7 +169,7 @@ namespace yq::tachyon {
 
         const ViThing&                  create(const Rendered&, const Pipeline&);
         
-        const ViTexture&                create(const Texture&);
+        Expect<ViTexture>               create(const Texture&);
         
 
         ViFrame&                        current_frame();
@@ -261,7 +258,7 @@ namespace yq::tachyon {
         uint32_t                        swapchain_min_image_count() const;
         uint32_t                        swapchain_width() const;
         
-        const ViTexture&                texture(uint64_t) const;
+        Expect<ViTexture>               texture(uint64_t) const;
         
         uint64_t                        tick() const { return m_tick; }
 
@@ -321,7 +318,7 @@ namespace yq::tachyon {
         std::error_code             _create(ViSwapchain&);
         void                        _destroy(ViSwapchain&);
         
-        std::error_code             _create(ViTexture&, const Texture&);
+        std::error_code             _create(ViTexture&, const ViImage&, const Texture&);
         void                        _destroy(ViTexture&);
 
         std::error_code             _create(ViThread&);
@@ -354,7 +351,7 @@ namespace yq::tachyon {
         VmaAllocator                        m_allocator             = nullptr;
         VqApp*                              m_app                   = nullptr;
         BufferMap                           m_buffers;
-        Guarded<VkClearValue>               m_clearValue;
+        VkClearValue                        m_clearValue;
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
         ViQueues                            m_compute;
         uint32_t                            m_descriptorCount       = 0;

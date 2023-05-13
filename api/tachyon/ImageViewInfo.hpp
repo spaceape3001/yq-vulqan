@@ -9,7 +9,7 @@
 #include <tachyon/enum/ComponentSwizzle.hpp>
 #include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/ImageAspect.hpp>
-#include <tachyon/enum/ImageViewCreate.hpp>
+#include <tachyon/enum/ImageViewCreateFlags.hpp>
 #include <tachyon/enum/ImageViewType.hpp>
 #include <math/color/RGBA.hpp>
 

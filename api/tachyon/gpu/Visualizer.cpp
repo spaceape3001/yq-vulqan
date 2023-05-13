@@ -29,6 +29,8 @@
 #include <tachyon/Buffer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/Image.hpp>
+#include <tachyon/Texture.hpp>
+
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/PushData.hpp>
 #include <tachyon/Shader.hpp>
@@ -50,27 +52,6 @@ namespace yq::tachyon {
         using INSUFFICIENT_GPU_MEMORY   = error_db::entry<"Insufficient GPU memory for requested operation">;
     }
     
-    namespace {
-    
-        VkImageViewCreateInfo   translate(const ImageViewInfo& ivi)
-        {
-            VqImageViewCreateInfo   ret;
-            ret.flags                           = (VkImageViewCreateFlags) ivi.flags.value();
-            ret.viewType                        = (VkImageViewType) ivi.type.value();
-            ret.format                          = (VkFormat) ivi.format.value();
-            ret.components.r                    = (VkComponentSwizzle) ivi.swizzle.red.value();
-            ret.components.g                    = (VkComponentSwizzle) ivi.swizzle.green.value();
-            ret.components.b                    = (VkComponentSwizzle) ivi.swizzle.blue.value();
-            ret.components.a                    = (VkComponentSwizzle) ivi.swizzle.alpha.value();
-            ret.subresourceRange.aspectMask     = (VkImageAspectFlags) ivi.aspect.value();
-            ret.subresourceRange.baseMipLevel   = ivi.baseMipLevel;
-            ret.subresourceRange.levelCount     = ivi.levelCount;
-            ret.subresourceRange.baseArrayLayer = ivi.baseArrayLayer;
-            ret.subresourceRange.layerCount     = ivi.layerCount;
-            return ret;
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -468,6 +449,11 @@ namespace yq::tachyon {
             }
         }
         m_pipelines.clear();
+        
+        for(auto& tex : m_textures)
+            _destroy(tex.second);
+        for(auto& img : m_images)
+            _destroy(img.second);
     
         //  At *this* point, we don't need the mutex... we're dying anyways
         for(auto& psh : m_shaders)
@@ -1079,7 +1065,7 @@ namespace yq::tachyon {
                             
             p.imageViews.resize(p.imageCount, nullptr);
 
-            VkImageViewCreateInfo       imageViewInfo = translate(ImageViewInfo());
+            VkImageViewCreateInfo       imageViewInfo = vqCreateInfo(ImageViewInfo());
             imageViewInfo.format       = m_surfaceFormat;
             
             for(size_t i=0; i<p.imageCount; ++i){
@@ -1127,44 +1113,32 @@ namespace yq::tachyon {
         }
     }
 
-    std::error_code             Visualizer::_create(ViTexture&p, const Texture&tex)
+    std::error_code             Visualizer::_create(ViTexture&p, const ViImage& img, const Texture&tex)
     {
-        ViImage     img;
-        std::error_code ec  = _create(img, tex);
-        if(ec)
-            return ec;
+        std::error_code ec;
+    
+        try {
+            VkImageViewCreateInfo   ivci = vqCreateInfo(tex.view);
+            ivci.format     = (VkFormat) tex.image->info.format.value();
+            ivci.image      = img.image;
             
-        p.allocation        = img.allocation;
-        p.image             = img.image;
-        p.size              = tex.memory.bytes();
+            if(vkCreateImageView(m_device, &ivci, nullptr, &p.view) != VK_SUCCESS)
+                throw create_error<"Unable to create image view">();
+            
+            VkSamplerCreateInfo sci = vqCreateInfo(tex.sampler);
+            sci.anisotropyEnable        = VK_TRUE;
+            sci.maxAnisotropy           = m_deviceInfo.limits.maxSamplerAnisotropy;
+            
+            if(vkCreateSampler(m_device, &sci, nullptr, &p.sampler) != VK_SUCCESS)
+                throw create_error<"Unable to create sampler">();
+            return std::error_code();
+        } 
+        catch(std::error_code ec2){
+            ec  = ec2;
+        }
         
-        VkImageViewCreateInfo   ivci = translate(ImageViewInfo());
-        ivci.format     = (VkFormat) tex.info.format.value();
-        ivci.image      = p.image;
-        
-        vkCreateImageView(m_device, &ivci, nullptr, &p.view);
-        
-        VqSamplerCreateInfo sci;
-        sci.magFilter               = VK_FILTER_LINEAR;
-        sci.minFilter               = VK_FILTER_LINEAR;
-        sci.addressModeU            = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
-        sci.addressModeV            = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
-        sci.addressModeW            = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
-        sci.anisotropyEnable        = VK_TRUE;
-        sci.maxAnisotropy           = m_deviceInfo.limits.maxSamplerAnisotropy;
-        sci.borderColor             = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-        sci.unnormalizedCoordinates = VK_FALSE;
-        sci.compareEnable           = VK_FALSE;
-        sci.compareOp               = VK_COMPARE_OP_ALWAYS;
-        sci.mipmapMode              = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-        sci.mipLodBias              = 0.f;
-        sci.minLod                  = 0.f;
-        sci.maxLod                  = 0.f;
-        
-        vkCreateSampler(m_device, &sci, nullptr, &p.sampler);
-        
-        
-        return errors::todo();
+        _destroy(p);
+        return ec;
     }
     
     void                        Visualizer::_destroy(ViTexture&p)
@@ -1177,11 +1151,6 @@ namespace yq::tachyon {
         if(p.view){
             vkDestroyImageView(m_device, p.view, nullptr);
             p.view = nullptr;
-        }
-
-        if(p.image){
-            vmaDestroyImage(m_allocator, p.image, p.allocation);
-            p.image = nullptr;
         }
     }
         
@@ -1315,11 +1284,12 @@ namespace yq::tachyon {
 
     RGBA4F Visualizer::clear_color() const
     {
-        VkClearValue    cv  = m_clearValue;
-        return { 
-            cv.color.float32[0], cv.color.float32[1], 
-            cv.color.float32[2], cv.color.float32[3] 
-        };
+        VkClearValue    cv;
+        {
+            LOCK
+            cv = m_clearValue;
+        }
+        return vqExtractRGBA4F(cv);
     }
 
     VkCommandBuffer Visualizer::command_buffer() const
@@ -1535,15 +1505,16 @@ namespace yq::tachyon {
         return m_swapchain.width();
     }
 
-    const ViTexture& Visualizer::texture(uint64_t i) const
+    Expect<ViTexture> Visualizer::texture(uint64_t i) const
     {
-        static ViTexture s_null;
-
-        auto j = m_textures.find(i);
-        if(j != m_textures.end())
-            return j->second;
+        {
+            LOCK
+            auto j = m_textures.find(i);
+            if(j != m_textures.end())
+                return j->second;
+        }
         
-        return s_null;
+        return unexpected<"Unable to find requested texture">();
     }
             
     VkQueue   Visualizer::video_decode_queue(uint32_t i) const
@@ -1597,7 +1568,7 @@ namespace yq::tachyon {
         return j->second;
     }
     
-    Expect<ViImage>     Visualizer::create_(const Image&v)
+    Expect<ViImage>     Visualizer::create(const Image&v)
     {
         {
             LOCK
@@ -1695,12 +1666,39 @@ namespace yq::tachyon {
         return *(j->second);
     }
 
-    const ViTexture&       Visualizer::create(const Texture& t)
+    Expect<ViTexture>       Visualizer::create(const Texture& t)
     {
-        auto [j,f]  = m_textures.try_emplace(t.id(), ViTexture());
-        if(f)
-            _create(j->second, t);
-        return j->second;
+        {
+            LOCK
+            auto j = m_textures.find(t.id());
+            if(j != m_textures.end())
+                return j->second;
+        }
+        
+        if(!t.image)
+            return unexpected<"No image, no texture">();
+        
+        Expect<ViImage> img = create(*(t.image));
+        if(!img)
+            return unexpected(img.error());
+        
+        ViTexture   p, ret;
+        
+        std::error_code ec  = _create(p, *img, t);
+        if(ec)
+            return unexpected(ec);
+            
+        {
+            WLOCK
+            auto [j,f]  = m_textures.try_emplace(t.id(), p);
+            if(f){
+                std::swap(p, ret);
+            } else
+                ret     = j->second;
+        }
+        
+        _destroy(p);
+        return ret;
     }
 
     void        Visualizer::erase(const Buffer& v)
@@ -1713,8 +1711,11 @@ namespace yq::tachyon {
     }
 
     void        Visualizer::set_clear_color(const RGBA4F&i)
-    {
-        m_clearValue = VkClearValue{{{ i.red, i.green, i.blue, i.alpha }}};
+    {   
+        VkClearValue    cc  = vqClearValue(i);
+
+        WLOCK
+        m_clearValue    = cc;
     }
 
     void        Visualizer::set_present_mode(PresentMode pm)

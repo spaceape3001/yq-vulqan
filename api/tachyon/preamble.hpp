@@ -47,6 +47,8 @@ namespace yq {
         class   Camera;
         struct  CameraParams;
         class   Image;
+        struct  ImageInfo;
+        struct  ImageViewInfo;
         struct  Joystick;
         class   Monitor;
         class   Pipeline;
@@ -55,8 +57,10 @@ namespace yq {
         using   PipelineBuilder = LegacyPipelineBuilder;
         struct  PipelineConfig;
         struct  Scene;
+        struct  SamplerInfo;
         class   Shader;
         class   Rendered;
+        struct  Texture;
         struct  ViContext;
         struct  VideoMode;
         class   Visualizer;
@@ -70,8 +74,6 @@ namespace yq {
         class   Widget;
         class   Window;
 
-        // about to rename... (temporary)
-        using   Texture = Image;
 
         template <typename> class TypedAssetFactory;
         

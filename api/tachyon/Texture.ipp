@@ -6,16 +6,14 @@
 
 #pragma once
 
-#include <basic/Enum.hpp>
-#include <meta/InfoBinder.hpp>
+#include <tachyon/Texture.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(FilterType, , 
-        Nearest = 0,
-        Linear = 1,
-        Cubic = 1000015000
-    )
+    Texture::Texture(Ref<const Image> img, const ImageViewInfo& ivi, const SamplerInfo& si) : image(img), view(ivi), sampler(si)
+    {
+    }
+    
+    Texture::~Texture()
+    {
+    }
 }
-
-YQ_TYPE_DECLARE(yq::tachyon::FilterType)
-

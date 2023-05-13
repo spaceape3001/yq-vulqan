@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <basic/ErrorDB.hpp>
+#include <tachyon/ImageViewInfo.hpp>
+#include <tachyon/SamplerInfo.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 
@@ -219,6 +221,59 @@ namespace yq::tachyon {
         for(const auto& q : queues)
             ret |= q.queueFlags;
         return ret;
+    }
+
+    VkImageViewCreateInfo   vqCreateInfo(const ImageViewInfo& in)
+    {
+        VqImageViewCreateInfo   ret;
+        ret.flags                           = (VkImageViewCreateFlags) in.flags.value();
+        ret.viewType                        = (VkImageViewType) in.type.value();
+        ret.format                          = (VkFormat) in.format.value();
+        ret.components.r                    = (VkComponentSwizzle) in.swizzle.red.value();
+        ret.components.g                    = (VkComponentSwizzle) in.swizzle.green.value();
+        ret.components.b                    = (VkComponentSwizzle) in.swizzle.blue.value();
+        ret.components.a                    = (VkComponentSwizzle) in.swizzle.alpha.value();
+        ret.subresourceRange.aspectMask     = (VkImageAspectFlags) in.aspect.value();
+        ret.subresourceRange.baseMipLevel   = in.baseMipLevel;
+        ret.subresourceRange.levelCount     = in.levelCount;
+        ret.subresourceRange.baseArrayLayer = in.baseArrayLayer;
+        ret.subresourceRange.layerCount     = in.layerCount;
+        return ret;
+    }
+
+    VkSamplerCreateInfo     vqCreateInfo(const SamplerInfo& in)
+    {
+        VqSamplerCreateInfo     ret;
+        ret.flags                   = (VkSamplerCreateFlags) in.flags.value();
+        ret.magFilter               = (VkFilter) in.magFilter.value();
+        ret.minFilter               = (VkFilter) in.minFilter.value();
+        ret.mipmapMode              = (VkSamplerMipmapMode) in.mipmapMode.value();
+        ret.addressModeU            = (VkSamplerAddressMode) in.addressMode.u.value();
+        ret.addressModeV            = (VkSamplerAddressMode) in.addressMode.v.value();
+        ret.addressModeW            = (VkSamplerAddressMode) in.addressMode.w.value();
+        ret.mipLodBias              = in.mipLodBias;
+        ret.anisotropyEnable        = in.anisotropyEnable ? VK_TRUE : VK_FALSE;
+        ret.maxAnisotropy           = in.maxAnisotropy;
+        ret.compareEnable           = in.compareEnable ? VK_TRUE : VK_FALSE;
+        ret.compareOp               = (VkCompareOp) in.compareOp.value();
+        ret.minLod                  = in.minLod;
+        ret.maxLod                  = in.maxLod;
+        ret.borderColor             = (VkBorderColor) in.borderColor.value();
+        ret.unnormalizedCoordinates = in.unnormalizedCoordinates ? VK_TRUE : VK_FALSE;
+        return ret;
+    }
+    
+    VkClearValue            vqClearValue(const RGBA4F& in)
+    {
+        return VkClearValue{{{ in.red, in.green, in.blue, in.alpha }}};
+    }
+    
+    RGBA4F                   vqExtractRGBA4F(const VkClearValue& in)
+    {
+        return RGBA4F( 
+            in.color.float32[0], in.color.float32[1], 
+            in.color.float32[2], in.color.float32[3] 
+        );
     }
 
 }

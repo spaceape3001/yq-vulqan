@@ -26,8 +26,8 @@ namespace yq::tachyon {
         
         Shader(ShaderType, Memory&&);
 
-        Memory      payload;
-        ShaderType  type;
+        const Memory      payload;
+        const ShaderType  type;
     
     private:
         virtual ~Shader();

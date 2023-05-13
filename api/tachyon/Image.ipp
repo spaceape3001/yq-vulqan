@@ -23,7 +23,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Image::Image(const ImageInfo& ii, Memory&& mem) : info(ii), memory(std::move(mem))
+    Image::Image(const ImageInfo& ii, Memory&& mem) : Asset(), memory(std::move(mem)), info(ii)
     {
     }
 

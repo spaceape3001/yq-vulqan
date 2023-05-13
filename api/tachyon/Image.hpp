@@ -26,8 +26,8 @@ namespace yq::tachyon {
         static TypedAssetFactory<Image>&    cache();
         static const Image*                 load(std::string_view);
     
-        ImageInfo   info;
-        Memory      memory;
+        const Memory      memory;
+        const ImageInfo   info;
     
         Image(const ImageInfo&, Memory&&);
 

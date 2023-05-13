@@ -9,13 +9,14 @@
     are our C++ adapters for it.
 */
 
-#include "Buffer.ipp"
+#include "BufferObject.ipp"
 
 
 #include "Application.ipp"
 #include "Asset.ipp"
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
+#include "Buffer.ipp"
 #include "Image.ipp"
 #include "Memory.ipp"
 #include "Shader.ipp"

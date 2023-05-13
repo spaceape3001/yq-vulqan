@@ -508,7 +508,7 @@ namespace yq::tachyon {
     
     std::error_code             Visualizer::_allocate(ViBuffer&p, const Memory& v, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
     {
-        std::error_code     ec  = _allocate(p, v.size(), buf, vmu);
+        std::error_code     ec  = _allocate(p, v.bytes(), buf, vmu);
         if(ec)
             return ec;
         
@@ -522,7 +522,7 @@ namespace yq::tachyon {
     
     std::error_code             Visualizer::_create(ViBuffer&p, const Buffer&v)
     {
-        return _allocate(p, Memory(v.data(), v.bytes()), (VkBufferUsageFlags) v.usage(), VMA_MEMORY_USAGE_CPU_TO_GPU);
+        return _allocate(p, Memory(SET, v.data(), v.bytes()), (VkBufferUsageFlags) v.usage(), VMA_MEMORY_USAGE_CPU_TO_GPU);
     }
     
     void                        Visualizer::_destroy(ViBuffer&p)
@@ -860,7 +860,7 @@ namespace yq::tachyon {
         }
             
         VqShaderModuleCreateInfo createInfo;
-        createInfo.codeSize = sh.payload.size();
+        createInfo.codeSize = sh.payload.bytes();
         createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
         if (vkCreateShaderModule(m_device, &createInfo, nullptr, &p.shader) != VK_SUCCESS) 
             return create_error<"Shader creation failed">();
@@ -1026,7 +1026,7 @@ namespace yq::tachyon {
         imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
 
         
-        p.size                  = tex.memory.size();
+        p.size                  = tex.memory.bytes();
         VmaAllocationCreateInfo diai  = {};
         diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
         

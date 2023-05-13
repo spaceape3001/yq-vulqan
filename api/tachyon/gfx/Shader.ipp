@@ -46,7 +46,7 @@ namespace yq::tachyon {
 
     size_t      Shader::data_size() const 
     {
-        return payload.size();
+        return payload.bytes();
     }
 
     ////////////////////////////////////////////////////////////////////////////////

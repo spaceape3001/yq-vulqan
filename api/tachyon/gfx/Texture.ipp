@@ -29,7 +29,7 @@ namespace yq::tachyon {
 
     size_t      Texture::data_size() const  
     {
-        return memory.size();
+        return memory.bytes();
     }
 
     Texture::~Texture()

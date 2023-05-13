@@ -34,7 +34,7 @@ namespace yq::tachyon::stb {
                     info.size.y     = h;
                     size_t          imgsize = info.size.x * info.size.y * 4;
                         
-                    return new Texture(info, Memory(pixels, imgsize, [](const void* data, size_t){
+                    return new Texture(info, Memory(SET, pixels, imgsize, 4, [](const void* data, size_t){
                         stbi_image_free((void*) data);
                     }));
                 }

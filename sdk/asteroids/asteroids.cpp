@@ -8,7 +8,7 @@
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/ui/Widget.hpp>
-#include <tachyon/task/Task.hpp>
+#include <tachyon/Task.hpp>
 #include <tachyon/widget/Stacked.hpp>
 #include <math/units.hpp>
 #include <math/vector/Vector3.hpp>

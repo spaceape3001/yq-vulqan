@@ -9,8 +9,6 @@
     are our C++ adapters for it.
 */
 
-
-
 #include "Application.ipp"
 #include "Asset.ipp"
 #include "AssetCache.ipp"
@@ -21,6 +19,8 @@
 #include "Image.ipp"
 #include "Memory.ipp"
 #include "Shader.ipp"
+#include "Task.ipp"
+#include "TaskEngine.ipp"
 #include "Viewer.ipp"
 
 #include "asset/Quadrilateral.ipp"
@@ -61,7 +61,6 @@
 #include "scene/Render3D.ipp"
 #include "scene/Rendered.ipp"
 
-#include "task/Task.ipp"
 
 #include "ui/Editor.ipp"
 #include "ui/Widget.ipp"

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/task/Task.hpp>
+#include <tachyon/Task.hpp>
 
 #include <thread>
 #include <functional>

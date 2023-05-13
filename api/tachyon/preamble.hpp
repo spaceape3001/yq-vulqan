@@ -45,6 +45,7 @@ namespace yq {
         class   Buffer;
         class   Camera;
         struct  CameraParams;
+        class   Image;
         struct  Joystick;
         class   Monitor;
         class   Pipeline;
@@ -55,7 +56,6 @@ namespace yq {
         struct  Scene;
         class   Shader;
         class   Rendered;
-        class   Texture;
         struct  ViContext;
         struct  VideoMode;
         class   Visualizer;
@@ -68,6 +68,9 @@ namespace yq {
         class   VqRecord;
         class   Widget;
         class   Window;
+
+        // about to rename... (temporary)
+        using   Texture = Image;
 
         template <typename> class TypedAssetFactory;
         

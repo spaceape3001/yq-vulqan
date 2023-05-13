@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/core/AssetFactory.hpp>
-#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/gfx/Image.hpp>
 
 #include <basic/DelayInit.hpp>
 #include <basic/ErrorDB.hpp>
@@ -20,9 +20,9 @@ namespace yq::tachyon::stb {
     namespace {
         void    reg_stbtexloader()
         {
-            Texture::cache().add_loader(
+            Image::cache().add_loader(
                 { "bmp", "gif", "jpg", "jpeg", "hdr", "png", "tga" },
-                [](const std::filesystem::path&pth) -> Texture* 
+                [](const std::filesystem::path&pth) -> Image* 
                 {
                     std::string     file    = pth.string();
                     ImageInfo       info;
@@ -34,7 +34,7 @@ namespace yq::tachyon::stb {
                     info.size.y     = h;
                     size_t          imgsize = info.size.x * info.size.y * 4;
                         
-                    return new Texture(info, Memory(SET, pixels, imgsize, 4, [](const void* data, size_t){
+                    return new Image(info, Memory(SET, pixels, imgsize, 4, [](const void* data, size_t){
                         stbi_image_free((void*) data);
                     }));
                 }

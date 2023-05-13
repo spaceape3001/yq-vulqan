@@ -29,6 +29,7 @@
 
 #include <tachyon/Buffer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/gfx/Image.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/PushData.hpp>
 #include <tachyon/gfx/Shader.hpp>

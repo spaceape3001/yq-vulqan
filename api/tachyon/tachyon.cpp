@@ -11,7 +11,6 @@
 
 
 #include "core/Memory.ipp"
-#include "gfx/STBTexture.ipp"
 
 #include "Application.ipp"
 #include "Buffer.ipp"
@@ -33,12 +32,13 @@
 #include "enum/KeyCode.ipp"
 
 #include "gfx/GLSLShader.ipp"
+#include "gfx/Image.ipp"
 #include "gfx/Pipeline.ipp"
 #include "gfx/PipelineUtils.ipp"
 #include "gfx/PipelineBuilder.ipp"
 #include "gfx/PipelineConfig.ipp"
 #include "gfx/Shader.ipp"
-#include "gfx/Texture.ipp"
+#include "gfx/STBImage.ipp"
 
 #include "gpu/Visualizer.ipp"
 #include "gpu/ViContext.ipp"

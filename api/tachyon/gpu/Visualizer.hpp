@@ -342,7 +342,7 @@ namespace yq::tachyon {
     
         using DKey  = std::pair<uint64_t, uint64_t>;
         using ThingMap      = std::map<DKey,ViThing*>;
-        using PipelineMap   = std::unordered_map<uint64_t, ViPipeline>;
+        using PipelineMap   = std::unordered_map<uint64_t, ViPipeline*>;
         using ShaderMap     = std::unordered_map<uint64_t, ViShader>;
         using BufferMap     = std::unordered_map<uint64_t, ViBuffer>;
         using TextureMap    = std::unordered_map<uint64_t, ViTexture>;

@@ -461,8 +461,12 @@ namespace yq::tachyon {
         _destroy(m_upload);
         _destroy(m_thread);
     
-        for(auto& p : m_pipelines)
-            _destroy(p.second);
+        for(auto& p : m_pipelines){
+            if(p.second){
+                _destroy(*(p.second));
+                delete p.second;
+            }
+        }
         m_pipelines.clear();
     
         //  At *this* point, we don't need the mutex... we're dying anyways
@@ -1425,9 +1429,13 @@ namespace yq::tachyon {
     const ViPipeline& Visualizer::pipeline(uint64_t i) const
     {
         static const ViPipeline s_null;
-        auto j = m_pipelines.find(i);
-        if(j != m_pipelines.end())
-            return j->second;
+        
+        {
+            LOCK
+            auto j = m_pipelines.find(i);
+            if(j != m_pipelines.end())
+                return *(j->second);
+        }
         return s_null;
     }
 
@@ -1606,8 +1614,10 @@ namespace yq::tachyon {
         {
             WLOCK
             auto [j,f]  = m_images.try_emplace(v.id(), p);
-            if(f)
+            if(f){
                 std::swap(p, ret);
+            } else
+                ret     = j->second;
         }
         
         _destroy(p);
@@ -1631,8 +1641,11 @@ namespace yq::tachyon {
         {
             WLOCK
             auto [j,f]  = m_shaders.try_emplace(v.id(), p);
-            if(f)
+            if(f){
                 std::swap(p, ret);
+            } else {
+                ret = j->second;
+            }
         }
         
         _destroy(p);
@@ -1641,12 +1654,32 @@ namespace yq::tachyon {
     
     const ViPipeline&  Visualizer::create(const Pipeline& v)
     {
-        auto [j,f]  = m_pipelines.try_emplace(v.id(), ViPipeline());
-        if(f){
-            _create(j->second, v.config());
-            j->second.id    = v.id();
+        {
+            LOCK
+            auto j = m_pipelines.find(v.id());
+            if(j != m_pipelines.end())
+                return *(j->second);
         }
-        return j->second;
+        
+        ViPipeline* p   = new ViPipeline;
+        _create(*p, v.config());
+        ViPipeline* ret = nullptr;
+        
+        {
+            WLOCK
+            auto [j,f]  = m_pipelines.try_emplace(v.id(), p);
+            if(f){
+                std::swap(p, ret);
+            } else
+                ret     = j->second;
+        }
+        
+        if(p){
+            _destroy(*p);
+            delete p;
+        }
+        
+        return *ret;
     }
 
     const ViThing&      Visualizer::create(const Rendered& r, const Pipeline&p)

@@ -9,7 +9,6 @@
     are our C++ adapters for it.
 */
 
-#include "BufferObject.ipp"
 
 
 #include "Application.ipp"
@@ -17,6 +16,8 @@
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
 #include "Buffer.ipp"
+#include "BufferObject.ipp"
+#include "Camera.ipp"
 #include "Image.ipp"
 #include "Memory.ipp"
 #include "Shader.ipp"
@@ -26,7 +27,6 @@
 #include "asset/Tetrahedron.ipp"
 #include "asset/Triangle.ipp"
 
-#include "camera/Camera.ipp"
 #include "camera/NullCamera.ipp"
 #include "camera/SpaceCamera.ipp"
 #include "camera/TargetCamera.ipp"

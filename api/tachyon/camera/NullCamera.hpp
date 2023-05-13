@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/camera/Camera.hpp>
+#include <tachyon/Camera.hpp>
 
 namespace yq::tachyon {
     class NullCamera : public Camera {

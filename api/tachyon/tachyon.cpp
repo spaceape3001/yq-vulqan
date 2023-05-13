@@ -9,6 +9,8 @@
     are our C++ adapters for it.
 */
 
+
+#include "AppGLFW.ipp"
 #include "Application.ipp"
 #include "Asset.ipp"
 #include "AssetCache.ipp"
@@ -17,11 +19,15 @@
 #include "BufferObject.ipp"
 #include "Camera.ipp"
 #include "Image.ipp"
+#include "Joystick.ipp"
 #include "Memory.ipp"
+#include "Monitor.ipp"
 #include "Shader.ipp"
 #include "Task.ipp"
 #include "TaskEngine.ipp"
+#include "VideoMode.ipp"
 #include "Viewer.ipp"
+#include "Window.ipp"
 
 #include "asset/Quadrilateral.ipp"
 #include "asset/Tetrahedron.ipp"
@@ -50,12 +56,6 @@
 #include "gpu/VqLogging.ipp"
 #include "gpu/VqStructs.hpp"
 #include "gpu/VqUtils.ipp"
-
-#include "host/AppGLFW.ipp"
-#include "host/Joystick.ipp"
-#include "host/Monitor.ipp"
-#include "host/VideoMode.ipp"
-#include "host/Window.ipp"
 
 #include "scene/Perspective.ipp"
 #include "scene/Render3D.ipp"

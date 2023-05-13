@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/host/Joystick.hpp>
-#include <tachyon/host/Monitor.hpp>
-#include <tachyon/host/Window.hpp>
-#include <tachyon/host/WindowEvents.hpp>
+#include <tachyon/Joystick.hpp>
+#include <tachyon/Monitor.hpp>
+#include <tachyon/Window.hpp>
+#include <tachyon/WindowEvents.hpp>
 #include <tachyon/imgui/ImGuiGLFW.hpp>
 #include <tachyon/imgui/ImGuiVulkan.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>

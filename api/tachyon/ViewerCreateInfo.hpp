@@ -13,7 +13,7 @@
 #include <tachyon/preamble.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/enum/PresentMode.hpp>
-#include <tachyon/host/Monitor.hpp>
+#include <tachyon/Monitor.hpp>
 #include <vulkan/vulkan_core.h>
 #include <variant>
 #include <vector>

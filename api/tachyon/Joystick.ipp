@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/host/Joystick.hpp>
+#include <tachyon/Joystick.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

@@ -9,7 +9,7 @@
 #include <basic/BasicApp.hpp>
 #include <basic/DbgRel.hpp>
 #include <tachyon/AppCreateInfo.hpp>
-#include <tachyon/host/AppGLFW.hpp>
+#include <tachyon/AppGLFW.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <math/units.hpp>
 #include <memory>

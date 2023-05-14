@@ -7,8 +7,8 @@
 #include <math/shape/Rectangle2.hpp>
 #include <math/vector/Vector2.hpp>
 #include <tachyon/Application.hpp>
-#include <tachyon/Monitor.hpp>
-#include <tachyon/VideoMode.hpp>
+#include <tachyon/host/Monitor.hpp>
+#include <tachyon/host/VideoMode.hpp>
 #include <iostream>
 
 using std::cout;

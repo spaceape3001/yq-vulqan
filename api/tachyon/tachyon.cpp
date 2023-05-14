@@ -10,43 +10,24 @@
 */
 
 
-#include "AppGLFW.ipp"
 #include "Application.ipp"
-#include "Asset.ipp"
-#include "AssetCache.ipp"
-#include "AssetFactory.ipp"
 #include "Buffer.ipp"
-#include "BufferObject.ipp"
-#include "Camera.ipp"
-#include "Image.ipp"
-#include "Joystick.ipp"
-#include "Memory.ipp"
-#include "Monitor.ipp"
-#include "Shader.ipp"
-#include "Task.ipp"
-#include "TaskEngine.ipp"
-#include "VideoMode.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"
-#include "Window.ipp"
 
+#include "asset/NullCamera.ipp"
 #include "asset/Quadrilateral.ipp"
+#include "asset/SpaceCamera.ipp"
+#include "asset/TargetCamera.ipp"
 #include "asset/Tetrahedron.ipp"
 #include "asset/Triangle.ipp"
 
-#include "camera/NullCamera.ipp"
-#include "camera/SpaceCamera.ipp"
-#include "camera/TargetCamera.ipp"
-
+#include "core/Asset.ipp"
+#include "core/AssetCache.ipp"
+#include "core/AssetFactory.ipp"
+#include "core/Memory.ipp"
 
 #include "enum/KeyCode.ipp"
-
-#include "gfx/GLSLShader.ipp"
-#include "gfx/Pipeline.ipp"
-#include "gfx/PipelineUtils.ipp"
-#include "gfx/PipelineBuilder.ipp"
-#include "gfx/PipelineConfig.ipp"
-#include "gfx/STBImage.ipp"
 
 #include "gpu/ViBO.ipp"
 #include "gpu/ViThing.ipp"
@@ -56,10 +37,31 @@
 #include "gpu/VqStructs.hpp"
 #include "gpu/VqUtils.ipp"
 
+
+#include "host/AppGLFW.ipp"
+#include "host/Joystick.ipp"
+#include "host/Monitor.ipp"
+#include "host/VideoMode.ipp"
+#include "host/Window.ipp"
+
+#include "task/Task.ipp"
+#include "task/TaskEngine.ipp"
+
+#include "viz/BufferObject.ipp"
+#include "viz/Image.ipp"
+#include "viz/Shader.ipp"
+
+#include "scene/Camera.ipp"
 #include "scene/Perspective.ipp"
 #include "scene/Render3D.ipp"
 #include "scene/Rendered.ipp"
 
+#include "viz/GLSLShader.ipp"
+#include "viz/Pipeline.ipp"
+#include "viz/PipelineUtils.ipp"
+#include "viz/PipelineBuilder.ipp"
+#include "viz/PipelineConfig.ipp"
+#include "viz/STBImage.ipp"
 
 #include "ui/Editor.ipp"
 

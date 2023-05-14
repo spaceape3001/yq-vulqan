@@ -10,9 +10,9 @@
 */
 
 #include <math/color/Colors.hpp>
-#include <tachyon/camera/NullCamera.hpp>
-#include <tachyon/camera/SpaceCamera.hpp>
-#include <tachyon/camera/TargetCamera.hpp>
+#include <tachyon/asset/NullCamera.hpp>
+#include <tachyon/asset/SpaceCamera.hpp>
+#include <tachyon/asset/TargetCamera.hpp>
 #include <tachyon/asset/Tetrahedron.hpp>
 #include <tachyon/asset/Triangle.hpp>
 #include <tachyon/asset/Quadrilateral.hpp>
@@ -36,7 +36,7 @@
 #include <math/shape/Triangle3.hpp>
 #include <math/vector/Quaternion3.hxx>
 #include <math/vector/Vector3.hxx>
-#include <tachyon/MyImGui.hpp>
+#include <tachyon/imgui/MyImGui.hpp>
 #include <chrono>
 
 using namespace ImGui;

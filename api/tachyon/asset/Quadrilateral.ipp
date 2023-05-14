@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <tachyon/asset/Quadrilateral.hpp>
+#include "Quadrilateral.hpp"
 #include <math/shape/QuadrilateralData.hpp>
 #include <math/vector/Vector3.hxx>
 #include <math/shape/shape_utils.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
-#include <tachyon/Shader.hpp>
+#include <tachyon/viz/Shader.hpp>
 #include <basic/preamble.hpp>
 
 namespace yq::tachyon {

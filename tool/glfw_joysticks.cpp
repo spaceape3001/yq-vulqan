@@ -6,7 +6,7 @@
 
 #include <basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
-#include <tachyon/Joystick.hpp>
+#include <tachyon/host/Joystick.hpp>
 #include <iostream>
 
 using std::cout;

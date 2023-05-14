@@ -16,8 +16,7 @@
     there may be similarities to the above.
 */
 
-#include <tachyon/ImageViewInfo.hpp>
-#include <tachyon/gpu/Visualizer.hpp>
+#include "Visualizer.hpp"
 
 #include <basic/AutoReset.hpp>
 #include <basic/BasicBuffer.hpp>
@@ -28,12 +27,6 @@
 
 #include <tachyon/Buffer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/Image.hpp>
-#include <tachyon/Texture.hpp>
-
-#include <tachyon/gfx/Pipeline.hpp>
-#include <tachyon/gfx/PushData.hpp>
-#include <tachyon/Shader.hpp>
 #include <tachyon/gpu/ViThing.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/ViPipeline.hpp>
@@ -42,6 +35,13 @@
 #include <tachyon/scene/Perspective.hpp>
 #include <tachyon/scene/Render3D.hpp>
 #include <tachyon/scene/Scene.hpp>
+
+#include <tachyon/viz/Image.hpp>
+#include <tachyon/viz/ImageViewInfo.hpp>
+#include <tachyon/viz/Pipeline.hpp>
+#include <tachyon/viz/PushData.hpp>
+#include <tachyon/viz/Shader.hpp>
+#include <tachyon/viz/Texture.hpp>
 
 #include <GLFW/glfw3.h>
 

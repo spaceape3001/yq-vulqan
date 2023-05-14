@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/scene/Rendered.hpp>
-#include <tachyon/gfx/PipelineBuilder.hpp>
+#include <tachyon/viz/PipelineBuilder.hpp>
 #include <meta/ObjectInfoWriter.hpp>
 
 namespace yq {

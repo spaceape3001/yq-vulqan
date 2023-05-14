@@ -6,7 +6,7 @@
 
 #pragma once
 #include <tachyon/scene/Perspective.hpp>
-#include <tachyon/camera/NullCamera.hpp>
+#include <tachyon/asset/NullCamera.hpp>
 
 namespace yq {
     namespace tachyon {

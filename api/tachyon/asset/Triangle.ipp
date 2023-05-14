@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <tachyon/asset/Triangle.hpp>
+#include "Triangle.hpp"
 #include <math/shape/TriangleData.hpp>
 #include <math/shape/shape_utils.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
-#include <tachyon/Shader.hpp>
+#include <tachyon/viz/Shader.hpp>
 #include <basic/preamble.hpp>
 
 namespace yq::tachyon {

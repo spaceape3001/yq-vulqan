@@ -8,7 +8,7 @@
 
 #include <vulkan/vulkan_core.h>
 #include <tachyon/gpu/ViBO.hpp>
-#include <tachyon/gfx/PipelineConfig.hpp>
+#include <tachyon/viz/PipelineConfig.hpp>
 
 namespace yq::tachyon {
     struct ViPipeline {

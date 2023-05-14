@@ -32,8 +32,6 @@ namespace yq::tachyon {
             
             p.push_full();
         }
-        
-        yInfo() << "" <<  w.meta().pipeline()->config();
     }
 
     Triangle::Triangle(const TriangleData<ColorVertex2D>&tri)

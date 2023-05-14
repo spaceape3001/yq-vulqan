@@ -41,7 +41,7 @@ namespace yq::tachyon {
         const ViBuffer& vb    = viz.create(*c);
         if(vb.buffer){
             buffer  = vb.buffer;
-            count   = c->count();
+            count   = c->memory.count();
         }
     }
 }

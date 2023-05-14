@@ -1361,6 +1361,26 @@ suite tests = []{
         expect(0 != memcmp(data.data(), fib.data(), fib.bytes()));
     };
     
+    "move ref"_test = []{
+        Memory      pi(REF, kDigitsPi);
+        Memory      pi2 = std::move(pi);
+        
+        expect(sizeof(kDigitsPi) == pi2.bytes());
+        expect(kDigitsPi == pi2.data());
+        expect(0 == memcmp(pi2.data(), kDigitsPi, sizeof(kDigitsPi)));
+        expect(0 == pi.bytes());
+        expect(nullptr == pi.data());
+    };
+
+    "move copy"_test = []{
+        Memory      pi(COPY, kDigitsPi);
+        Memory      pi2 = std::move(pi);
+        
+        expect(sizeof(kDigitsPi) == pi2.bytes());
+        expect(0 == memcmp(pi2.data(), kDigitsPi, sizeof(kDigitsPi)));
+        expect(0 == pi.bytes());
+        expect(nullptr == pi.data());
+    };
 };
 
 int main()

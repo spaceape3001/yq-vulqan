@@ -15,12 +15,12 @@
 #include "Viewer.ipp"
 #include "Widget.ipp"
 
-#include "asset/NullCamera.ipp"
-#include "asset/Quadrilateral.ipp"
-#include "asset/SpaceCamera.ipp"
-#include "asset/TargetCamera.ipp"
-#include "asset/Tetrahedron.ipp"
-#include "asset/Triangle.ipp"
+#include "asset/camera/NullCamera.ipp"
+#include "asset/camera/SpaceCamera.ipp"
+#include "asset/camera/TargetCamera.ipp"
+#include "asset/render/Quadrilateral.ipp"
+#include "asset/render/Tetrahedron.ipp"
+#include "asset/render/Triangle.ipp"
 
 #include "core/Asset.ipp"
 #include "core/AssetCache.ipp"

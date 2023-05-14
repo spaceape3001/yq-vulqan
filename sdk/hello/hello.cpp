@@ -15,7 +15,7 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
-#include <tachyon/asset/Triangle.hpp>
+#include <tachyon/asset/render/Triangle.hpp>
 #include <basic/DelayInit.hpp>
 #include <basic/Logging.hpp>
 

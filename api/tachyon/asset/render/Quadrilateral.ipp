@@ -17,7 +17,7 @@
 namespace yq::tachyon {
     void Quadrilateral::initInfo()
     {
-        static const uint16_t   kIndices[] = { 0, 1, 2, 2, 3, 0 };
+        static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
     
         auto w = writer<Quadrilateral>();
         
@@ -27,22 +27,19 @@ namespace yq::tachyon {
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");
 
-            p.fixed_vertex(&Quadrilateral::m_vertex)
+            p.vertex(&Quadrilateral::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;
             
-            p.common_index(kIndices);
+            p.index(kIndices, DataActivity::COMMON);
             p.push_full();
         }
     }
 
-    Quadrilateral::Quadrilateral(const QuadrilateralData<ColorVertex2D>&tri)
+    Quadrilateral::Quadrilateral(const QuadrilateralData<ColorVertex2D>&quad)
     {
-        m_vertex[0] = tri.a;
-        m_vertex[1] = tri.b;
-        m_vertex[2] = tri.c;
-        m_vertex[3] = tri.d;
+        m_vertex = { quad.a, quad.b, quad.c, quad.d};
     }
     
     Quadrilateral::~Quadrilateral()

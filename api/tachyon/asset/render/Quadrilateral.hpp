@@ -7,6 +7,7 @@
 #pragma once
 
 #include <tachyon/scene/Render3D.hpp>
+#include <tachyon/viz/VBO.hpp>
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
 
@@ -23,6 +24,6 @@ namespace yq::tachyon {
         static void initInfo();
         
     private:
-        std::array<ColorVertexData,4>        m_vertex;
+        VB1<ColorVertexData>    m_vertex;
     };
 }

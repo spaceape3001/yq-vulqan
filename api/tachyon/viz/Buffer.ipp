@@ -6,17 +6,15 @@
 
 #pragma once
 
-#include <tachyon/Buffer.hpp>
-#include <tachyon/BufferArray.hpp>
-#include <tachyon/BufferCopy.hpp>
-#include <tachyon/BufferSpan.hpp>
+#include <tachyon/viz/Buffer.hpp>
 
 namespace yq::tachyon {
-    Buffer::Buffer(BufferUsageFlags buf) : m_usage(buf)
+    Buffer::Buffer(BufferUsageFlags buf, Memory&& mem) : memory(std::move(mem)), usage(buf)
     {
     }
     
     Buffer::~Buffer()
     {
     }
+    
 }

@@ -21,6 +21,7 @@ namespace yq::tachyon {
         
         static Ref<const Shader>    load(std::string_view);
         static Ref<const Shader>    decode(const ShaderSpec&);
+        static std::string_view     name(const ShaderSpec&);
         
         virtual size_t      data_size() const override;
         

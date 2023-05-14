@@ -8,6 +8,7 @@
 
 #include <basic/UniqueID.hpp>
 #include <basic/Ref.hpp>
+#include <tachyon/core/Memory.hpp>
 #include <tachyon/enum/BufferUsage.hpp>
 #include <span>
 
@@ -23,19 +24,15 @@ namespace yq::tachyon {
     class Buffer : public UniqueID, public RefCount {
     public:
     
-        const void*         data() const { return m_pointer; }
-        size_t              bytes() const { return m_size; }
-        BufferUsageFlags    usage() const { return m_usage; }
+        const Memory            memory;
+        const BufferUsageFlags  usage;
         
-    protected:
-        Buffer(BufferUsageFlags);
-        virtual ~Buffer();
-    
-        const void*             m_pointer;
-        size_t                  m_size;
-        BufferUsageFlags        m_usage;
+        Buffer(BufferUsageFlags, Memory&&);
 
     private:
+        ~Buffer();
+
+        //  No copying/moving
         Buffer(const Buffer&) = delete;
         Buffer(Buffer&&) = delete;
         Buffer& operator=(Buffer&&) = delete;

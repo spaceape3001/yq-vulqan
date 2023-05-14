@@ -9,6 +9,7 @@
 #include <tachyon/scene/Render3D.hpp>
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
+#include <tachyon/viz/VBO.hpp>
 
 namespace yq::tachyon {
     class Tetrahedron : public Render3D {
@@ -21,7 +22,6 @@ namespace yq::tachyon {
         static void initInfo();
         
     private:
-        std::array<ColorVertexData,4>   m_vertex;
-//            std::array<uint16_t,6>          m_index;
+        VB1<ColorVertexData>   m_vertex;
     };
 }

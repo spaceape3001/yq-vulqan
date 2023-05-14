@@ -23,12 +23,25 @@ endif()
 add_library(${PROJECT_NAME} SHARED 
     ${test_source}
 
+    ./YqEngineConfig.cpp
+
     ./tachyon/tachyon.cpp
+    ./tachyon/asset/camera/camera.cpp
+    ./tachyon/asset/render/render.cpp
+    ./tachyon/core/core.cpp
+    ./tachyon/enum/enum.cpp
+    ./tachyon/gpu/gpu.cpp
+    ./tachyon/host/host.cpp
     ./tachyon/imgui/ImGuiGLFW.cpp
     ./tachyon/imgui/ImGuiVulkan.cpp
     ./tachyon/imgui/MyImGui.cpp
     ./tachyon/gpu/Visualizer.cpp
-    ./YqEngineConfig.cpp
+    ./tachyon/scene/scene.cpp
+    ./tachyon/task/task.cpp
+    ./tachyon/ui/ui.cpp
+    ./tachyon/viz/viz.cpp
+    ./tachyon/widget/widget.cpp
+    
     ./widget/TextArea.cpp
 )
 

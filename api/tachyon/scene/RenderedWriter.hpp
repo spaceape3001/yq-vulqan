@@ -52,6 +52,8 @@ namespace yq {
                 });
                 return b;
             }
+            
+            const RenderedInfo& meta() const { return *m_meta; }
 
         private:
             RenderedInfo*       m_meta  = nullptr;

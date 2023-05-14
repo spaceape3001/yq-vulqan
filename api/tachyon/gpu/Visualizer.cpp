@@ -25,7 +25,6 @@
 
 #include <math/color/RGBA.hpp>
 
-#include <tachyon/Buffer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViThing.hpp>
 #include <tachyon/gpu/ViContext.hpp>
@@ -36,6 +35,7 @@
 #include <tachyon/scene/Render3D.hpp>
 #include <tachyon/scene/Scene.hpp>
 
+#include <tachyon/viz/Buffer.hpp>
 #include <tachyon/viz/Image.hpp>
 #include <tachyon/viz/ImageViewInfo.hpp>
 #include <tachyon/viz/Pipeline.hpp>
@@ -523,7 +523,7 @@ namespace yq::tachyon {
             return create_error<"Skipping zero sized buffer">();
         
         VqBufferCreateInfo  bufferInfo;
-        bufferInfo.size         = p.size = cb;
+        bufferInfo.size         = cb;
         bufferInfo.usage        = buf & VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM;
         
         VmaAllocationCreateInfo vmaallocInfo = {};
@@ -542,7 +542,7 @@ namespace yq::tachyon {
         
         void* dst = nullptr;
         vmaMapMemory(m_allocator, p.allocation, &dst);
-        memcpy(dst, v.data(), p.size);
+        memcpy(dst, v.data(), v.bytes());
         vmaUnmapMemory(m_allocator, p.allocation);            
         return std::error_code();
     }
@@ -550,7 +550,7 @@ namespace yq::tachyon {
     
     std::error_code             Visualizer::_create(ViBuffer&p, const Buffer&v)
     {
-        return _allocate(p, Memory(SET, v.data(), v.bytes()), (VkBufferUsageFlags) v.usage().value(), VMA_MEMORY_USAGE_CPU_TO_GPU);
+        return _allocate(p, v.memory, (VkBufferUsageFlags) v.usage.value(), VMA_MEMORY_USAGE_CPU_TO_GPU);
     }
     
     void                        Visualizer::_destroy(ViBuffer&p)

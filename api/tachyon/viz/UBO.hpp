@@ -7,9 +7,11 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <tachyon/BufferCopy.hpp>
+#include <tachyon/viz/BufferObject.hpp>
 
 namespace yq::tachyon {
+
+
     
     /*! Uniform buffer object
     
@@ -17,28 +19,44 @@ namespace yq::tachyon {
         it lives elsewhere.
     */
     template <typename T>
-    struct UBO {
-        BufferCPtr      buffer;
-    
+    struct UBO : public UniformBuffer {
         UBO(){}
         ~UBO(){}
-    
-        UBO&    operator=(const T& value)
+        
+        // Only create by UBO
+        struct RefProxy {
+            UBO*        ubo;
+            UBO&    operator, (const T& value)
+            {
+                ubo->UniformBuffer::update(Memory(REF1, value));
+                return *ubo;
+            }
+            UBO&    operator, (const T* value)
+            {
+                ubo->UniformBuffer::update(Memory(REF1, *value));
+                return *ubo;
+            }
+            UBO&    operator, (T&& value) = delete;
+        };
+        
+        // Only create by UBO
+        struct CopyProxy {
+            UBO*    ubo;
+            UBO&    operator, (const T& value)
+            {
+                ubo->UniformBuffer::update(Memory(COPY1, value));
+                return *ubo;
+            }
+        };
+        
+        RefProxy    operator=(ref_t)
         {
-            buffer  = buffer_copy(BufferUsage::Uniform, value);
-            return *this;
+            return { this };
         }
 
-        UBO&    operator=(T&& value)
+        CopyProxy    operator=(copy_t)
         {
-            buffer  = buffer_copy(BufferUsage::Uniform, std::move(value));
-            return *this;
-        }
-        
-        UBO&    operator=(const UBO& b)
-        {
-            buffer  = b.buffer;
-            return *this;
+            return { this };
         }
     };
 
@@ -48,11 +66,24 @@ namespace yq::tachyon {
         Call "update" after modification.  (note, a copy in will trigger the update)
     */
     template <typename T>
-    struct UB1 {
-        BufferCPtr      buffer;
+    struct UB1 : public UniformBuffer {
         T               data        = {};
         
         UB1(){}
+        ~UB1(){}
+        
+        void        update()
+        {
+            UniformBuffer::update(Memory(COPY1, data));
+        }
+        
+        UB1& operator=(const UB1&) = default;
+        UB1& operator=(const UBO<T>&cp)
+        {
+            data    = {};
+            UniformBuffer::buffer   = cp.UniformBuffer::buffer;
+            return *this;
+        }
         
         UB1& operator=(const T& data_)
         {
@@ -67,29 +98,5 @@ namespace yq::tachyon {
             update();
             return *this;
         }
-        
-        UB1& operator=(const UBO<T>& b)
-        {
-            data    = {};
-            buffer  = b.buffer;
-            return *this;
-        }
-
-        //! Clobbers the buffer, uses the other buffer until modified
-        UB1& operator=(const UB1<T>& b)
-        {
-            data    = b.data;
-            buffer  = b.buffer;
-            return *this;
-        }
-
-        operator UBO<T>() const { return { buffer }; }
-
-        void    update()
-        {
-            buffer  = buffer_copy(BufferUsage::Uniform, data);
-        }
     };
-
-
 }

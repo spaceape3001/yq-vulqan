@@ -88,13 +88,15 @@ struct HelloTriangle : public Rendered {
     
     static void initInfo()
     {
+        static VBO<Vertex>  verts(vertices);
+    
         auto w = writer<HelloTriangle>();
         {
             auto p = w.pipeline();
             p.shaders({ "sdk/hello/hello3.vert", "sdk/hello/hello.frag" });
             p.front(FrontFace::Clockwise);
             p.push<Warp>(&HelloTriangle::warp);
-            p.common_vertex(vertices)
+            p.vertex(verts, DataActivity::COMMON)
                 .attribute<glm::vec2>(&Vertex::position)
                 .attribute<glm::vec3>(&Vertex::color)
             ;

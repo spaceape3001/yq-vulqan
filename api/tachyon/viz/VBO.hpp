@@ -7,53 +7,78 @@
 #pragma once
 
 #include <basic/preamble.hpp>
+#include <basic/keywords.hpp>
 #include <tachyon/preamble.hpp>
-#include <tachyon/BufferArray.hpp>
-#include <tachyon/BufferSpan.hpp>
+#include <tachyon/viz/BufferObject.hpp>
 
 namespace yq::tachyon {
     
-    /*! \brief Array based buffer object
-        
-        Used for vertex & index, this is the common buffer object
-    */
-    template <typename T, BufferUsage::enum_t buf>
-    struct ABO {
-        BufferCPtr        buffer;
-        
+    
+    template <typename T, BufferUsage::enum_t BUF>
+    struct ABO : public BufferObject<BUF> {
         ABO(){}
         ~ABO(){}
         
-        ABO& operator=(std::span<const T> data)
+        template <size_t N>
+        ABO( const T(&ptr)[N] )
         {
-            buffer  = buffer_span(buf, data);
-            return *this;
+            BufferObject<BUF>::update(Memory(REF, ptr));
         }
         
-        ABO& operator=(std::initializer_list<T> data)
-        {
-            buffer  = buffer_array(buf, span(data));
-            return *this;
-        }
+        template <typename K>
+        struct Proxy {
+            ABO *abo;
+            ABO& operator, (std::span<const T> values)
+            {
+                abo->BufferObject<BUF>::update(Memory(K(), values));
+                return *abo;
+            }
+            
+            template <size_t N>
+            ABO& operator, (const T (&ptr)[N])
+            {
+                abo->BufferObject<BUF>::update(Memory(K(), ptr));
+                return *abo;
+            }
+        };
 
-        ABO& operator=(std::vector<T>&& data)
+        Proxy<copy_t>   operator=(copy_t)
         {
-            buffer  = buffer_array(buf, std::move(data));
-            return *this;
+            return { this };
         }
         
-        ABO& operator=(const ABO& b)
+        Proxy<ref_t>   operator=(ref_t)
         {
-            buffer  = b.buffer;
+            return { this };
+        }
+        
+        ABO&        operator=(std::initializer_list<const T> data)
+        {
+            BufferObject<BUF>::update(Memory(COPY, span(data)));
             return *this;
         }
     };
-
-    //! Buffer object with local data
-    template <typename T, BufferUsage::enum_t buf>
-    struct AB1 {
-        BufferCPtr          buffer;
+    
+    /*! Vertex buffer with storage
+    */
+    template <typename T, BufferUsage::enum_t BUF>
+    struct AB1 : public BufferObject<BUF> {
         std::vector<T>      data;
+        
+        AB1(){}
+        AB1(std::initializer_list<const T> data_) : data(data_.begin(), data_.end())
+        {
+            update();
+        }
+        
+        AB1&    operator=(const AB1&) = default;
+        
+        AB1&    operator=(const ABO<T,BUF>& cp)
+        {
+            data.clear();
+            update();
+            return *this;
+        }
         
         AB1&   operator=(std::span<const T> data_)
         {
@@ -76,31 +101,12 @@ namespace yq::tachyon {
             return *this;
         }
         
-        AB1&    operator=(const AB1& cp)
-        {
-            data    = cp.data;
-            buffer  = cp.buffer;
-            return *this;
-        }
-        
-        AB1&    operator=(const ABO<T,buf>& b)
-        {
-            data    = {};
-            buffer  = b.buffer;
-            return *this;
-        }
-        
-        operator ABO<T,buf>() const
-        {
-            return { buffer };
-        }
-        
         void    update()
         {
-            buffer  = buffer_array(buf, data);
+            BufferObject<BUF>::update(Memory(COPY,span(data)));
         }
     };
-
+    
     //! Vertex buffer object
     template <typename T>  using VBO   = ABO<T,BufferUsage::Vertex>;
     

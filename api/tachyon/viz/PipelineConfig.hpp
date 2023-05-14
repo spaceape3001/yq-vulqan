@@ -41,22 +41,28 @@ namespace yq::tachyon {
     /*! \brief Configuration for an attribute of a vertex buffer
     */
     struct VBOAttr {
-        DataFormat              format;
+        const TypeInfo*         type        = nullptr;
         uint32_t                location    = UINT32_MAX;
         uint32_t                offset      = 0;
+        DataFormat              format;
     };
+    
 
-    struct ABOConfig {
+    struct BaseBOConfig {
         //! Fetch handler to get the buffer from a suitable object
         FetchBuffer             fetch       = {};
         
         FetchRevision           revision    = {};
 
-        //! Size of each element in the buffer
-        uint32_t                stride      = 0;
-
         //! Expected update activity for this vertex buffer
         DataActivity            activity    = {};
+    };
+    
+
+    struct ABOConfig : public BaseBOConfig {
+
+        //! Size of each element in the buffer
+        uint32_t                stride      = 0;
     };
 
     /*! \brief Configuration for a Vertex Buffer
@@ -70,27 +76,21 @@ namespace yq::tachyon {
         uint32_t                shaders     = 0;
         
         VertexInputRate         inputRate;
-        
     };
+
     
     struct IBOConfig : public ABOConfig {
         IndexType               type        = IndexType::none;
     };
     
+
     /*! \brief Configuration for a uniform buffer
     */
-    struct UBOConfig {
+    struct UBOConfig  : public BaseBOConfig {
     
-        //! Fetch for a uniform buffer object
-        FetchBuffer             fetch       = {};
-        FetchRevision           revision    = {};
-        
         uint32_t                count       = 1;
         uint32_t                stage       = 0;
         uint32_t                size        = 0;
-
-        //! Expected update activity for this uniform buffer
-        DataActivity            activity    = {};
     };
 
     /*! \brief Configuration for the push operation
@@ -167,4 +167,7 @@ namespace yq::tachyon {
         PipelineConfig();
         ~PipelineConfig();
     };
+    
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const PipelineConfig&);
+    
 }

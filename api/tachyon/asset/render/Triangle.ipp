@@ -12,6 +12,7 @@
 #include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/viz/Shader.hpp>
 #include <basic/preamble.hpp>
+#include <basic/Logging.hpp>
 
 namespace yq::tachyon {
     void Triangle::initInfo()
@@ -24,20 +25,20 @@ namespace yq::tachyon {
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");
 
-            p.fixed_vertex(&Triangle::m_vertex)
+            p.vertex(&Triangle::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;
             
             p.push_full();
         }
+        
+        yInfo() << "" <<  w.meta().pipeline()->config();
     }
 
     Triangle::Triangle(const TriangleData<ColorVertex2D>&tri)
     {
-        m_vertex[0] = tri.a;
-        m_vertex[1] = tri.b;
-        m_vertex[2] = tri.c;
+        m_vertex    = { tri.a, tri.b, tri.c};
         m_draw.vertex_count  = 3;
     }
     

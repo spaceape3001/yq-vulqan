@@ -9,6 +9,7 @@
 #include <tachyon/scene/Render3D.hpp>
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
+#include <tachyon/viz/VBO.hpp>
 
 namespace yq::tachyon {
     class Triangle : public Render3D {
@@ -21,7 +22,6 @@ namespace yq::tachyon {
         static void initInfo();
         
     private:
-    
-        std::array<ColorVertexData,3>        m_vertex;
+        VB1<ColorVertexData>    m_vertex;
     };
 }

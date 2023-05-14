@@ -10,6 +10,7 @@ macro(tachyon_test name)
     add_test(NAME ${name} COMMAND test_${name} ${ARGN})
 endmacro()
 
+tachyon_test(memory)
 tachyon_test(shader_load)
 tachyon_test(task_engine)
 

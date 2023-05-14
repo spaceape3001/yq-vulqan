@@ -63,7 +63,7 @@ namespace yq::tachyon {
         void        ubo(size_t cnt=1);
 
         template <typename V>
-        VBOMaker<V> vbo();
+        VBOMaker<V> vbo(DataActivity da=DataActivity::UNSURE);
 
     /// other stuff
 
@@ -76,7 +76,7 @@ namespace yq::tachyon {
         PipelineConfig&     config() { return m_build; }
         
         template <typename V>
-        static IBOConfig    ibo(DataActivity da)
+        static IBOConfig    ibo_(DataActivity da)
         {
             IBOConfig       cfg;
             cfg.type        = index_type<V>();
@@ -85,6 +85,15 @@ namespace yq::tachyon {
             return cfg;
         }
         
+        template <typename V>
+        static UBOConfig    ubo_(uint32_t cnt, DataActivity da)
+        {
+            UBOConfig       cfg;
+            cfg.activity    = da;
+            cfg.size        = sizeof(V);
+            cfg.count       = cnt;
+            return cfg;
+        }
 
     protected:
         friend class Pipeline;
@@ -157,9 +166,10 @@ namespace yq::tachyon {
     private:
         friend class Builder;
     
-        VBOMaker(Builder* b) : m_builder(b)
+        VBOMaker(Builder* b, DataActivity da) : m_builder(b)
         {
-            stride  = sizeof(V);
+            stride      = sizeof(V);
+            activity    = da;
         }
         
 
@@ -169,10 +179,10 @@ namespace yq::tachyon {
         requires is_type_v<A>
         void    typed_attribute(uint32_t offset)
         {
-            attr_impl(data_format<A>(), offset, min_binding<A>());
+            attr_impl(data_format<A>(), offset, min_binding<A>(), &meta<A>());
         }
         
-        void    attr_impl(DataFormat df, uint32_t offset, uint32_t bindReq)
+        void    attr_impl(DataFormat df, uint32_t offset, uint32_t bindReq, const TypeInfo* ti=nullptr)
         {
             if(!m_builder)
                 return ;
@@ -185,14 +195,15 @@ namespace yq::tachyon {
             a.location  = m_builder->location_filter(UINT32_MAX, bindReq);
             a.offset    = offset;
             a.format    = df;
+            a.type      = ti;
             attrs.push_back(a);
         }
     };
     
     template <typename V>
-    Pipeline::VBOMaker<V> Pipeline::Builder::vbo()
+    Pipeline::VBOMaker<V> Pipeline::Builder::vbo(DataActivity da)
     {
-        return VBOMaker<V>(this);
+        return VBOMaker<V>(this, da);
     }
 
     template <typename C>
@@ -226,485 +237,172 @@ namespace yq::tachyon {
             }
         }
         
+        #define YQ_PIPELINE_COMMON_HANDLER                          \
+            cfg.fetch       = [&p](const void*) -> BufferCPtr {     \
+                return p.buffer;                                    \
+            };                                                      \
+            cfg.revision    = [&p](const void*) -> uint64_t {       \
+                return p.buffer ? p.buffer -> id() : 0ULL;          \
+            };
+
+        #define YQ_PIPELINE_MEMBER_HANDLER                          \
+            cfg.fetch       = [p](const void*v) -> BufferCPtr {     \
+                const C* c = (const C*) v;                          \
+                return (c->*p).buffer;                              \
+            };                                                      \
+            cfg.revision    = [p](const void*v) -> uint64_t {       \
+                const C* c = (const C*) v;                          \
+                auto& b = (c->*p).buffer;                           \
+                return b ? b->id() : 0ULL;                          \
+            };
+        
+        
         
         Typed(const Typed&) = default;
         Typed(Typed&&) = default;
 
 
-        //  ------------------ general getters --------------------
+        /*
+            =======================================================
+            INDEX BUFFERS
+            =======================================================
+        */
 
         template <typename V>
-        void    index(IBO<V>& p, DataActivity da)
+        void    index(IBO<V>& p, DataActivity da=DataActivity::REFRESH)
         {
-            IBOConfig       cfg = ibo<V>(da);
-            cfg.fetch       = [&p](const void*) -> BufferCPtr {
-                return p.buffer;
-            };
-            cfg.revision    = [&p](const void*) -> uint64_t {
-                return p.buffer ? p.buffer -> id() : 0ULL;
-            };
-            m_build.ibos.push_back(cfg);
-        }
-
-        template <typename V>
-        void    index(IB1<V>& p, DataActivity da)
-        {
-            IBOConfig       cfg = ibo<V>(da);
-            cfg.fetch       = [&p](const void*) -> BufferCPtr {
-                return p.buffer;
-            };
-            cfg.revision    = [&p](const void*) -> uint64_t {
-                return p.buffer ? p.buffer -> id() : 0ULL;
-            };
-            m_build.ibos.push_back(cfg);
-        }
-
-        template <typename V, size_t N>
-        void index(const V(&p)[N], DataActivity da)
-        {
-            IBOConfig       cfg = ibo<V>(da);
-            cfg.fetch   = [p](const void*) -> BufferCPtr {
-                return buffer_span(BufferUsage::Index, std::span<const V>(p, N));
-            };
-            m_build.ibos.push_back(cfg);
-        }
-
-        template <typename V, size_t N>
-        void    index(std::array<V,N> C::*p, DataActivity da, bool copy_it)
-        {
-            IBOConfig       cfg = ibo<V>(da);
-            if(copy_it){
-                cfg.fetch   = [p](const void* v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_array(BufferUsage::Index, span(v->*c));
-                };
-            } else {
-                cfg.fetch   = [p](const void* v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_span(BufferUsage::Index, span(v->*c));
-                };
-            }
-            m_build.ibos.push_back(cfg);
-        }
-
-        template <typename V>
-        void    index(std::vector<V> C::*p, DataActivity da, bool copy_it)
-        {
-            IBOConfig       cfg = ibo<V>(da);
-            if(copy_it){
-                cfg.fetch   = [p](const void* v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_array(BufferUsage::Index, (v->*c));
-                };
-            } else {
-                cfg.fetch   = [p](const void* v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_span(BufferUsage::Index, (v->*c));
-                };
-            }
+            IBOConfig       cfg = ibo_<V>(da);
+            YQ_PIPELINE_COMMON_HANDLER
             m_build.ibos.push_back(cfg);
         }
         
         template <typename V>
-        void    index(Mutable<std::vector<V>> C::*p, DataActivity da)
+        void    index(IB1<V>& p, DataActivity da=DataActivity::REFRESH)
         {
-            IBOConfig       cfg = ibo<V>(da);
-            cfg.fetch   = [p](const void* v) -> BufferCPtr {
-                const C* c = (const C*) v;
-                const Mutable<std::vector<V>>& m    = *(c->*p);
-                return buffer_array(BufferUsage::Index, m.get());
-            };
-            cfg.revision    = [p](const void* v) -> uint64_t {
-                const C* c = (const C*) v;
-                const Mutable<std::vector<V>>& m    = *(c->*p);
-                return m.revision();
-            };
+            IBOConfig       cfg = ibo_<V>(da);
+            YQ_PIPELINE_COMMON_HANDLER
             m_build.ibos.push_back(cfg);
         }
 
-        template <typename V, size_t N>
-        void    index(Mutable<std::array<V,N>> C::*p, DataActivity da)
+        template <typename V>
+        void    index(IBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
         {
-            IBOConfig       cfg = ibo<V>(da);
-            cfg.fetch   = [p](const void* v) -> BufferCPtr {
-                const C* c = (const C*) v;
-                const Mutable<std::array<V,N>>& m    = *(c->*p);
-                return buffer_array(BufferUsage::Index, span(m.get()));
-            };
-            cfg.revision    = [p](const void* v) -> uint64_t {
-                const C* c = (const C*) v;
-                const Mutable<std::array<V,N>>& m    = *(c->*p);
-                return m.revision();
-            };
+            IBOConfig       cfg = ibo_<V>(da);
+            YQ_PIPELINE_MEMBER_HANDLER
             m_build.ibos.push_back(cfg);
         }
         
-            //  ------- UNIFORMS GO HERE
-        
-            //  VERTEX CREATORS
-        
-        template <typename V, size_t N>
-        VBOMaker<V> vertex(const V(&p)[N], DataActivity da)
+        template <typename V>
+        void    index(IB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
         {
-            auto vm = vbo<V>();
-            vm.fetch   = [p](const void*) -> BufferCPtr {
-                return buffer_span(BufferUsage::Vertex, std::span<const V>(p, N));
-            };
-            vm.activity    = da;
-            return vm;
+            IBOConfig       cfg = ibo_<V>(da);
+            YQ_PIPELINE_MEMBER_HANDLER
+            m_build.ibos.push_back(cfg);
+        }
+
+        /*
+            =======================================================
+            UNIFORM BUFFERS
+            =======================================================
+        */
+        
+        template <typename V>
+        void    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
+        {
+            UBOConfig       cfg = ubo_<V>(cnt, da);
+            YQ_PIPELINE_COMMON_HANDLER
+            m_build.ubos.push_back(cfg);
         }
         
         template <typename V>
-        VBOMaker<V> vertex(VBO<V>& p, DataActivity da)
+        void    uniform(UB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
         {
-            auto vm    = vbo<V>();
-            vm.fetch    = [&p](const void*) -> BufferCPtr {
-                return p.buffer;
-            };
-            vm.revision    = [&p](const void*) -> uint64_t {
-                return p.buffer ? p.buffer -> id() : 0ULL;
-            };
-            vm.activity     = da;
-            return vm;
+            UBOConfig       cfg = ubo_<V>(cnt, da);
+            YQ_PIPELINE_COMMON_HANDLER
+            m_build.ubos.push_back(cfg);
         }
 
         template <typename V>
-        VBOMaker<V> vertex(VB1<V>& p, DataActivity da)
+        void    uniform(UBO<V>& p, DataActivity da=DataActivity::REFRESH)
         {
-            auto vm    = vbo<V>();
-            vm.fetch    = [&p](const void*) -> BufferCPtr {
-                return p.buffer;
-            };
-            vm.revision    = [&p](const void*) -> uint64_t {
-                return p.buffer ? p.buffer -> id() : 0ULL;
-            };
-            vm.activity     = da;
-            return vm;
-        }
-
-        template <typename V>
-        VBOMaker<V> vertex(VBO<V> C::*p, DataActivity da)
-        {
-            auto vm    = vbo<V>();
-            vm.activity     = da;
-            vm.fetch        = [p](const void*v) -> BufferCPtr {
-                const C* c = (const C*) v;
-                return (c->*p).buffer;
-            };
-            vm.revision    = [&p](const void*v) -> uint64_t {
-                const C* c = (const C*) v;
-                const auto &b = (c->*p).buffer;
-                return b ? b->id() : 0ULL;
-            };
-            return vm;
+            uniform(p, 1, da);
         }
         
         template <typename V>
-        VBOMaker<V> vertex(VB1<V> C::*p, DataActivity da)
+        void    uniform(UB1<V>& p, DataActivity da=DataActivity::REFRESH)
         {
-            auto vm    = vbo<V>();
-            vm.activity     = da;
-            vm.fetch        = [p](const void*v) -> BufferCPtr {
-                const C* c = (const C*) v;
-                return (c->*p).buffer;
-            };
-            vm.revision    = [&p](const void*v) -> uint64_t {
-                const C* c = (const C*) v;
-                const auto &b = (c->*p).buffer;
-                return b ? b->id() : 0ULL;
-            };
-            return vm;
+            uniform(p, 1, da);
         }
-
-        template <typename V>
-        VBOMaker<V> vertex(Mutable<std::vector<V>> C::*p, DataActivity da)
-        {
-            auto vm = vbo<V>();
-            vm.activity     = da;
-            vm.fetch   = [p](const void* v) -> BufferCPtr {
-                const C* c = (const C*) v;
-                const Mutable<std::vector<V>>& m    = *(c->*p);
-                return buffer_array(BufferUsage::Vertex, m.get());
-            };
-            vm.revision    = [p](const void* v) -> uint64_t {
-                const C* c = (const C*) v;
-                const Mutable<std::vector<V>>& m    = (c->*p);
-                return m.revision();
-            };
-            return vm;
-        }
-
-        template <typename V, size_t N>
-        VBOMaker<V> vertex(Mutable<std::array<V,N>> C::*p, DataActivity da)
-        {
-            auto vm = vbo<V>();
-            vm.activity     = da;
-            vm.fetch   = [p](const void* v) -> BufferCPtr {
-                const C* c = (const C*) v;
-                const Mutable<std::array<V,N>>& m    = *(c->*p);
-                return buffer_array(BufferUsage::Vertex, span(m.get()));
-            };
-            vm.revision    = [p](const void* v) -> uint64_t {
-                const C* c = (const C*) v;
-                const Mutable<std::array<V,N>>& m    = (c->*p);
-                return m.revision();
-            };
-            return vm;
-        }
-
-        template <typename V, size_t N>
-        VBOMaker<V> vertex(std::array<V,N> C::*p, DataActivity da, bool copy_it)
-        {
-            auto vm = vbo<V>();
-            vm.activity     = da;
-            if(copy_it){
-                vm.fetch    = [p](const void*v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_array(BufferUsage::Vertex, span(c->*p));
-                };
-            } else {
-                vm.fetch    = [p](const void*v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_span(BufferUsage::Vertex, span(c->*p));
-                };
-            }
-            return vm;
-        }
-
-        template <typename V>
-        VBOMaker<V> vertex(std::vector<V> C::*p, DataActivity da, bool copy_it)
-        {
-            auto vm = vbo<V>();
-            vm.activity = da;
-            if(copy_it){
-                vm.fetch    = [p](const void*v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_array(BufferUsage::Vertex, (c->*p));
-                };
-            } else {
-                vm.fetch    = [p](const void*v) -> BufferCPtr {
-                    const C* c = (const C*) v;
-                    return buffer_span(BufferUsage::Vertex, (c->*p));
-                };
-            }
-            return vm;
-        }
-
-            /*
-                -------------------------------------------------------
-                Common data is that which is *SHARED* between instances. 
-                For instance, standard vertices to a box.
-            */
+        
         
         template <typename V>
-        void common_index(IBO<V>& p)
+        void    uniform(UBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
         {
-            index(p, DataActivity::COMMON);
+            UBOConfig       cfg = ubo_<V>(cnt, da);
+            YQ_PIPELINE_MEMBER_HANDLER
+            m_build.ubos.push_back(cfg);
         }
         
         template <typename V>
-        void common_index(IB1<V>& p)
+        void    uniform(UB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
         {
-            index(p, DataActivity::COMMON);
-        }
-        
-        template <typename V, size_t N>
-        void common_index(const V(&p)[N])
-        {
-            index(p, DataActivity::COMMON);
-        }
-        
-        #if 0
-        template <typename V>
-        void common_uniform(UBO<V>& p)
-        {
-        }
-        
-        template <typename V>
-        void common_uniform(UB1<V>& p)
-        {
-        }
-        #endif
-
-
-        template <typename V>
-        VBOMaker<V> common_vertex(VBO<V> &p)
-        {
-            return vertex(p, DataActivity::COMMON);
-        }
-        
-        template <typename V>
-        VBOMaker<V> common_vertex(VB1<V> &p)
-        {
-            return vertex(p, DataActivity::COMMON);
-        }
-        
-        template <typename V, size_t N>
-        VBOMaker<V> common_vertex(const V (&p)[N])
-        {
-            return vertex(p, DataActivity::COMMON);
-        }
-
-        template <typename V, size_t N>
-        VBOMaker<V> common_vertex(std::array<V, N> &p)
-        {
-            return vertex(p, DataActivity::COMMON);
-        }
-        
-        template <typename V>
-        VBOMaker<V> common_vertex(std::vector<V>& p)
-        {
-            return vertex(p, DataActivity::COMMON);
-        }
-
-            /*
-                -------------------------------------------------------
-                Fixed data is specialized to the instance, but isn't going
-                to change (ie static mesh for a boulder)
-            */
-            
-        template <typename V, size_t N>
-        void    fixed_index(std::array<V,N> C::*p)
-        {
-            index(p, DataActivity::FIXED);
+            UBOConfig       cfg = ubo_<V>(cnt, da);
+            YQ_PIPELINE_MEMBER_HANDLER
+            m_build.ubos.push_back(cfg);
         }
 
         template <typename V>
-        void    fixed_index(std::vector<V> C::*p)
+        void    uniform(UBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
         {
-            index(p, DataActivity::FIXED);
+            uniform(p, 1, da);
+        }
+        
+        template <typename V>
+        void    uniform(UB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        {
+            uniform(p, 1, da);
+        }
+
+        /*
+            =======================================================
+            VERTEX BUFFERS
+            =======================================================
+        */
+
+        template <typename V>
+        VBOMaker<V> vertex(VBO<V>& p, DataActivity da=DataActivity::REFRESH)
+        {
+            auto cfg    = vbo<V>(da);
+            YQ_PIPELINE_COMMON_HANDLER
+            return cfg;
+        }
+        
+        template <typename V>
+        VBOMaker<V> vertex(VB1<V>& p, DataActivity da=DataActivity::REFRESH)
+        {
+            auto cfg    = vbo<V>(da);
+            YQ_PIPELINE_COMMON_HANDLER
+            return cfg;
         }
 
         template <typename V>
-        VBOMaker<V> fixed_vertex(VBO<V> C::*p)
+        VBOMaker<V> vertex(VBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
         {
-            return vertex(p, DataActivity::FIXED);
+            auto cfg    = vbo<V>(da);
+            YQ_PIPELINE_MEMBER_HANDLER
+            return cfg;
         }
         
         template <typename V>
-        VBOMaker<V> fixed_vertex(VB1<V> C::*p)
+        VBOMaker<V> vertex(VB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
         {
-            return vertex(p, DataActivity::FIXED);
+            auto cfg    = vbo<V>(da);
+            YQ_PIPELINE_MEMBER_HANDLER
+            return cfg;
         }
         
-        template <typename V, size_t N>
-        VBOMaker<V> fixed_vertex(std::array<V,N> C::*p)
-        {
-            return vertex(p, DataActivity::FIXED, false);
-        }
-
-        template <typename V>
-        VBOMaker<V> fixed_vertex(std::vector<V> C::*p)
-        {
-            return vertex(p, DataActivity::FIXED, false);
-        }
-
-        template <typename V, size_t N>
-        VBOMaker<V> fixed_vertex(Mutable<std::array<V, N>> C::*p)
-        {
-            return vertex(p, DataActivity::FIXED);
-        }
-        
-        template <typename V>
-        VBOMaker<V> fixed_vertex(Mutable<std::vector<V>> C::*p)
-        {
-            return vertex(p, DataActivity::FIXED);
-        }
-            /*
-                -------------------------------------------------------
-                Dynamic data is data that may change throughout the 
-                lifetime of the object, but on an infrequent basis
-            */
-
-        template <typename V>
-        VBOMaker<V> dynamic_vertex(VBO<V> C::*p)
-        {
-            return vertex(p, DataActivity::DYNAMIC);
-        }
-        
-        template <typename V>
-        VBOMaker<V> dynamic_vertex(VB1<V> C::*p)
-        {
-            return vertex(p, DataActivity::DYNAMIC);
-        }
-
-        template <typename V, size_t N>
-        VBOMaker<V> dynamic_vertex(Mutable<std::array<V, N>> C::*p)
-        {
-            return vertex(p, DataActivity::DYNAMIC);
-        }
-        
-        template <typename V>
-        VBOMaker<V> dynamic_vertex(Mutable<std::vector<V>> C::*p)
-        {
-            return vertex(p, DataActivity::DYNAMIC);
-        }
-
-            /*
-                -------------------------------------------------------
-                Frequent data is data that's expected to be changed more
-                or less at frame rate.
-            */
-        
-        template <typename V>
-        void highfreq_index(IBO<V> C::*p)
-        {
-            index(p, DataActivity::REFRESH);
-        }
-        
-        template <typename V>
-        void highfreq_index(IB1<V> C::*p)
-        {
-            index(p, DataActivity::REFRESH);
-        }
-        
-        template <typename V>
-        void highfreq_index(UBO<V> C::*p)
-        {
-            index(p, DataActivity::REFRESH);
-        }
-        
-        template <typename V>
-        void highfreq_index(UB1<V> C::*p)
-        {
-            index(p, DataActivity::REFRESH);
-        }
-
-        template <typename V>
-        VBOMaker<V> highfreq_vertex(VBO<V> C::*p)
-        {
-            return vertex(p, DataActivity::REFRESH);
-        }
-        
-        template <typename V>
-        VBOMaker<V> highfreq_vertex(VB1<V> C::*p)
-        {
-            return vertex(p, DataActivity::REFRESH);
-        }
-
-        template <typename V, size_t N>
-        VBOMaker<V> highfreq_vertex(std::array<V,N> C::*p)
-        {
-            return vertex(p, DataActivity::REFRESH, true);
-        }
-
-        template <typename V>
-        VBOMaker<V> highfreq_vertex(std::vector<V> C::*p)
-        {
-            return vertex(p, DataActivity::REFRESH, true);
-        }
-
-        template <typename V, size_t N>
-        VBOMaker<V> highfreq_vertex(Mutable<std::array<V, N>> C::*p)
-        {
-            return vertex(p, DataActivity::REFRESH);
-        }
-        
-        template <typename V>
-        VBOMaker<V> highfreq_vertex(Mutable<std::vector<V>> C::*p)
-        {
-            return vertex(p, DataActivity::REFRESH);
-        }
+        #undef YQ_PIPELINE_COMMON_HANDLER
+        #undef YQ_PIPELINE_MEMBER_HANDLER
     };
 
     template <typename C>
@@ -722,6 +420,7 @@ namespace yq::tachyon {
 //  LEGACY BELOW
 ////////////////////////////////////////////////////////////////////////////////
 
+#if 0
     class LegacyPipelineBuilder {
     public:
     
@@ -866,4 +565,5 @@ namespace yq::tachyon {
     {
         return VBO<V>(this);
     }
+#endif
 }

@@ -11,6 +11,7 @@
 #include <tachyon/core/AssetFactory.hpp>
 #include <tachyon/core/AssetInfoWriter.hpp>
 #include <basic/DelayInit.hpp>
+#include <basic/TextUtils.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Shader>&  Shader::cache()
@@ -32,6 +33,21 @@ namespace yq::tachyon {
     Ref<const Shader>    Shader::load(std::string_view pp)
     {
         return cache().load(pp);
+    }
+
+    std::string_view     Shader::name(const ShaderSpec&ss)
+    {
+        if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
+            if(!*ptr)
+                return "(null)";
+            auto& fp = (*ptr) -> filepath();
+            if(fp.empty())
+                return to_string_view((*ptr) -> id());
+            return fp.c_str();
+        } else if(const std::string* ptr = std::get_if<std::string>(&ss)){
+            return *ptr; 
+        } else 
+            return "(nameless)";
     }
 
     ////////////////////////////////////////////////////////////////////////////////

@@ -6,37 +6,33 @@
 
 #pragma once
 
-#include <basic/UniqueID.hpp>
-#include <basic/Ref.hpp>
-#include <tachyon/core/Memory.hpp>
-#include <tachyon/enum/BufferUsage.hpp>
-#include <span>
+#include <tachyon/preamble.hpp>
+#include <tachyon/viz/Buffer.hpp>
 
 namespace yq::tachyon {
-    
-    /*! \brief Basic buffer (object)
-    
-        This is a basic data buffer
-    
-        \note Once released, a buffer is to remain read-only.  
-            Any/all changes should request a NEW unique ID.
-    */
-    class BufferObject : public UniqueID, public RefCount {
-    public:
-    
-        const Memory            memory;
-        const BufferUsageFlags  usage;
+
+    template <BufferUsage::enum_t buf>
+    struct BufferObject {
+        BufferCPtr      buffer;
         
-        BufferObject(BufferUsageFlags, Memory&&);
-
-    private:
-        ~BufferObject();
-
-        //  No copying/moving
-        BufferObject(const BufferObject&) = delete;
-        BufferObject(BufferObject&&) = delete;
-        BufferObject& operator=(BufferObject&&) = delete;
-        BufferObject& operator=(const BufferObject&) = delete;
+        void    update(Memory&&mem)
+        {
+            buffer      = new Buffer(buf, std::move(mem));
+        }
+        
+        BufferObject& operator=(const BufferObject& obj)
+        {
+            buffer      = obj.buffer;
+            return *this;
+        }
+        
+        
+    protected:
+        BufferObject(){}
+        ~BufferObject(){}
     };
 
+    using VertexBuffer  = BufferObject<BufferUsage::Vertex>;
+    using IndexBuffer   = BufferObject<BufferUsage::Index>;
+    using UniformBuffer = BufferObject<BufferUsage::Uniform>;
 }

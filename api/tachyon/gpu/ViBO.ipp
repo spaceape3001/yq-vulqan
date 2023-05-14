@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/Buffer.hpp>
+#include <tachyon/viz/Buffer.hpp>
 #include <tachyon/gpu/ViBO.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/viz/PipelineConfig.hpp>
@@ -33,13 +33,15 @@ namespace yq::tachyon {
         } while(false);
         
         BufferCPtr      c   = cfg.fetch(p);
-        if(!c)      //  shouldn't really happen....
+        if(!c){     //  shouldn't really happen....
+            yWarning() << "EMPTY BUFFER DETECTED!";
             return ;
+        }
         
         const ViBuffer& vb    = viz.create(*c);
         if(vb.buffer){
             buffer  = vb.buffer;
-            count   = vb.size / cfg.stride;
+            count   = c->count();
         }
     }
 }

@@ -155,7 +155,7 @@ namespace yq::tachyon {
 ////////////////////////////////////////////////////////////////////////////////
 //  LEGACY BELOW
 ////////////////////////////////////////////////////////////////////////////////
-
+#if 0
     LegacyPipelineBuilder::~LegacyPipelineBuilder() = default;
 
     LegacyPipelineBuilder::LegacyPipelineBuilder(PipelineConfig*cfg) : m_config(cfg)
@@ -248,4 +248,5 @@ namespace yq::tachyon {
         u.count = cnt;
         m_config->ubos.push_back(u);
     }
+#endif
 }

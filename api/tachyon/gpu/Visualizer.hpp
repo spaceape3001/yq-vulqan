@@ -28,13 +28,11 @@
 
 namespace yq::tachyon {
 
-    class BufferObject;
     class Memory;
 
     struct ViBuffer {
         VkBuffer                buffer      = nullptr;
         VmaAllocation           allocation  = nullptr;
-        size_t                  size        = 0;
     };
 
     struct ViShader {
@@ -297,8 +295,6 @@ namespace yq::tachyon {
         std::error_code             _allocate(ViBuffer&, const Memory&, VkBufferUsageFlags, VmaMemoryUsage);
     
         
-    
-        std::error_code             _create(ViBuffer&, const BufferObject&);
         std::error_code             _create(ViBuffer&, const Buffer&);
         void                        _destroy(ViBuffer&);
     

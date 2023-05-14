@@ -43,7 +43,6 @@ namespace yq {
         class   AssetInfo;
         class   AssetFactory;
         class   Buffer;
-        class   BufferObject;
         class   Camera;
         struct  CameraParams;
         class   Image;
@@ -52,9 +51,9 @@ namespace yq {
         struct  Joystick;
         class   Monitor;
         class   Pipeline;
-        class   LegacyPipelineBuilder;
+        //class   LegacyPipelineBuilder;
         struct  Perspective;
-        using   PipelineBuilder = LegacyPipelineBuilder;
+        //using   PipelineBuilder = LegacyPipelineBuilder;
         struct  PipelineConfig;
         struct  Scene;
         struct  SamplerInfo;
@@ -90,6 +89,7 @@ namespace yq {
 
     }
     
+    #if 0
         // here for compatibility
     namespace engine {
         static constexpr const size_t   MAX_PUSH                = tachyon::MAX_PUSH;
@@ -106,10 +106,11 @@ namespace yq {
         using tachyon::VqException;
         using tachyon::Window;
     }
+    #endif
     
     using tachyon::Camera;
-    using tachyon::Pipeline;
     using tachyon::Texture;
     using tachyon::Shader;
+    using tachyon::Widget;
 }
 

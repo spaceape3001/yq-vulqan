@@ -12,6 +12,12 @@
 #include <meta/TypeInfo.hpp>
 
 namespace yq::tachyon {
+
+    struct ref1_t {};
+    static constexpr const ref1_t REF1;
+    struct copy1_t {};
+    static constexpr const copy1_t COPY1;
+
     /*! \brief Simple memory container
     
         Data can be allocated within here, or simply be a pointer 
@@ -129,7 +135,7 @@ namespace yq::tachyon {
                 \param[in] data     Data to import
             */
             template <typename T>
-            void    copy(const T& data);
+            void    copy1(const T& data);
         
 
             //  ----
@@ -176,6 +182,9 @@ namespace yq::tachyon {
             template <typename T, size_t N>
             void    ref(const T (&ptr)[N]);
 
+            template <typename T, size_t N>
+            void    ref(T (&ptr)[N]);
+            
             /*! \brief Sets a REFERENCE to the data
 
                 This routine creates a REFERENCE to the data in the argument,
@@ -184,11 +193,11 @@ namespace yq::tachyon {
                 \param[in] data     Data to REFERENCE
             */
             template <typename T>
-            void    ref(const T& data);
+            void    ref1(const T& data);
 
             // NO MOVE FOR REF (THIS IS IMPORTANT)
             template <typename T>
-            void    ref(T&&) = delete;
+            void    ref1(T&&) = delete;
 
             //  ----
             //  SET
@@ -284,27 +293,94 @@ namespace yq::tachyon {
         //! Default constructor, zeros everything
         Memory();
         
+        
+        //  Gah... compiler's having issues with argument forwarding, 
+        //  therefore we have to list these *ALL* :(
 
         //! Constructs by data copy
-        template <typename ... Args>
-        Memory(copy_t, Args...args) : Memory()
-        {
-            copy(args...);
-        }
 
-        //! Constructs by reference
-        template <typename ... Args>
-        Memory(ref_t, Args...args) : Memory()
+        template <typename T>
+        Memory(copy_t, const T* pData, size_t count) : Memory()
         {
-            ref(args...);
+            copy(pData, count);
         }
         
-        //! Constructs by set
-        template <typename ... Args>
-        Memory(set_t, Args...args) : Memory()
+        template <typename T, typename A>
+        Memory(copy_t, const std::vector<T, A>& data)
         {
-            set(args...);
+            copy(data.data(), data.size());
         }
+
+        template <typename T>
+        Memory(copy_t, std::span<const T> data) : Memory()
+        {
+            copy(data);
+        }
+
+        template <typename T, size_t N>
+        Memory(copy_t, const T (&ptr)[N]) : Memory()
+        {
+            copy<T,N>(ptr);
+        }
+
+        template <typename T>
+        Memory(copy1_t, const T& data) : Memory()
+        {
+            copy1(data);
+        }
+
+
+        template <typename T>
+        Memory(ref_t, const T* pData, size_t count) : Memory()
+        {
+            ref(pData, count);
+        }
+
+        template <typename T, typename A>
+        Memory(ref_t, const std::vector<T, A>& data)
+        {
+            ref(data.data(), data.size());
+        }
+
+        template <typename T>
+        Memory(ref_t, std::span<const T> data) : Memory()
+        {
+            ref(data);
+        }
+
+        template <typename T, size_t N>
+        Memory(ref_t, const T (&ptr)[N]) : Memory()
+        {
+            ref<T,N>(ptr);
+        }
+
+        template <typename T, size_t N>
+        Memory(ref_t, T (&ptr)[N]) : Memory()
+        {
+            ref<T,N>(ptr);
+        }
+
+        template <typename T>
+        Memory(ref1_t, const T& data) : Memory()
+        {
+            ref1(data);
+        }
+
+        template <typename T>
+        Memory(ref1_t, T&&) = delete;
+
+        Memory(set_t, const void* pData, size_t byteCount); 
+
+        Memory(set_t, const void* pData, size_t byteCount, size_t stride); 
+
+        Memory(set_t, const void* pData, size_t byteCount, const TypeInfo& type); 
+
+        Memory(set_t, const void* pData, size_t byteCount, Free&& free); 
+
+        Memory(set_t, const void* pData, size_t byteCount, size_t stride, Free&& free); 
+
+        Memory(set_t, const void* pData, size_t byteCount, const TypeInfo& type, Free&&free); 
+
 
         //! Move constructor
         Memory(Memory&& mv);
@@ -315,6 +391,9 @@ namespace yq::tachyon {
         //! Destructor
         ~Memory();
         
+        //  -------------------
+        //  -------------------
+
     private:
     
         Free            m_free;         // 32
@@ -352,7 +431,7 @@ namespace yq::tachyon {
     template <typename T>
     void    Memory::copy(const T*p, size_t n)
     {
-        static_assert(std::is_trivially_copyable_v<T>, "Can only set with trivial types!");
+        //static_assert(std::is_trivial_v<T>, "Can only set with trivial types!");
         if(!p || !n)
             return ;
             
@@ -377,9 +456,9 @@ namespace yq::tachyon {
     
 
     template <typename T>
-    void    Memory::copy(const T&v)
+    void    Memory::copy1(const T&v)
     {
-        static_assert(std::is_trivially_copyable_v<T>, "Can only set with trivial types!");
+        //static_assert(std::is_trivially_copyable_v<T>, "Can only set with trivial types!");
         _set( new T(v), sizeof(T), metaPtr<T>(), sizeof(T), [](const void*p, size_t){
             delete ((const T*) p);
         });
@@ -388,7 +467,7 @@ namespace yq::tachyon {
     template <typename T>
     void    Memory::ref(const T* p, size_t cnt)
     {
-        static_assert(std::is_trivially_copyable_v<T>, "Can only set with trivial types!");
+        //static_assert(std::is_trivially_copyable_v<T>, "Can only set with trivial types!");
         _set(p, cnt*sizeof(T), metaPtr<T>(), sizeof(T), {});
     }
 
@@ -404,10 +483,16 @@ namespace yq::tachyon {
         ref(ptr, N);
     }
 
-    template <typename T>
-    void    Memory::ref(const T& p)
+    template <typename T, size_t N>
+    void    Memory::ref(T (&ptr)[N])
     {
-        static_assert(std::is_trivially_copyable_v<T>, "Can only set with trivial types!");
+        ref(ptr, N);
+    }
+
+    template <typename T>
+    void    Memory::ref1(const T& p)
+    {
+        //static_assert(std::is_trivially_copyable_v<T>, "Can only set with trivial types!");
         _set(&p, sizeof(T), metaPtr<T>(), sizeof(T), {});
     }
 

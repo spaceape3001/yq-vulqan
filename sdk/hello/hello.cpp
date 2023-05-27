@@ -77,14 +77,16 @@ struct HelloTriangle : public Rendered {
     YQ_OBJECT_DECLARE(HelloTriangle, Rendered)
     
     struct MyUBO {
-        glm::mat4   model;
-        glm::mat4   view;
-        glm::mat4   proj;
+        //glm::mat4   model;
+        //glm::mat4   view;
+        //glm::mat4   proj;
         glm::vec4   dope;
     };
     
+    UB1<MyUBO>      ubo;
     
-    Warp                        warp;
+    
+    Warp            warp;
     
     static void initInfo()
     {
@@ -93,19 +95,21 @@ struct HelloTriangle : public Rendered {
         auto w = writer<HelloTriangle>();
         {
             auto p = w.pipeline();
-            p.shaders({ "sdk/hello/hello3.vert", "sdk/hello/hello.frag" });
+            p.shaders({ "sdk/hello/hello3.vert", "sdk/hello/hello2.frag" });
             p.front(FrontFace::Clockwise);
             p.push<Warp>(&HelloTriangle::warp);
             p.vertex(verts, DataActivity::COMMON)
                 .attribute<glm::vec2>(&Vertex::position)
                 .attribute<glm::vec3>(&Vertex::color)
             ;
+            p.uniform(&HelloTriangle::ubo, DataActivity::DYNAMIC);
             //p.ubo();
         }
     }
     
     HelloTriangle() 
     {
+        ubo = { { 1.0, 1.0, 1.0, 1.0 } };
     }
     
     ~HelloTriangle()

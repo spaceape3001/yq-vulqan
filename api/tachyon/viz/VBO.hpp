@@ -14,8 +14,14 @@
 namespace yq::tachyon {
     
     
+    /*! Array-based buffer without storage
+    
+    
+    */
     template <typename T, BufferUsage::enum_t BUF>
     struct ABO : public BufferObject<BUF> {
+        static_assert(std::is_trivial_v<T>, "T should be trivial");
+    
         ABO(){}
         ~ABO(){}
         
@@ -59,10 +65,12 @@ namespace yq::tachyon {
         }
     };
     
-    /*! Vertex buffer with storage
+    /*! Array-based buffer with storage
     */
     template <typename T, BufferUsage::enum_t BUF>
     struct AB1 : public BufferObject<BUF> {
+        static_assert(std::is_trivial_v<T>, "T should be trivial");
+
         std::vector<T>      data;
         
         AB1(){}

@@ -15,6 +15,7 @@ namespace yq::tachyon {
         PipelineConfig          cfg;
         std::vector<ViBO>       vbos;
         std::vector<ViBO>       ibos;
+        std::vector<ViBO>       ubos;
         VkPipelineLayout        layout      = nullptr;
         VkPipeline              pipeline    = nullptr;
         VkPipeline              wireframe   = nullptr;

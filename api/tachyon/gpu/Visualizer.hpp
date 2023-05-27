@@ -28,6 +28,18 @@
 
 namespace yq::tachyon {
 
+    struct ViBuffer;
+    struct ViShader;
+    struct ViImage;
+    struct ViQueues;
+    struct ViRender;
+    struct ViSwapchain;
+    struct ViPipeline;
+    struct ViFrame;
+    struct ViTexture;
+    
+
+
     class Memory;
 
     struct ViBuffer {
@@ -117,6 +129,8 @@ namespace yq::tachyon {
     */
     class Visualizer  {
     public:
+    
+    
         
         enum class Queue : uint8_t {
             Graphic,

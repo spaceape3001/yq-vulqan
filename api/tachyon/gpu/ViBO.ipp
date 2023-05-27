@@ -12,7 +12,7 @@
 #include <tachyon/viz/PipelineConfig.hpp>
 
 namespace yq::tachyon {
-    void    ViBO::update(Visualizer&viz, const ABOConfig&cfg, const void* p)
+    void    ViBO::update(Visualizer&viz, const BaseBOConfig&cfg, const void* p)
     {
         do {
             if(!cfg.fetch)

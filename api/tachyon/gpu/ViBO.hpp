@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     struct ABOConfig;
+    struct BaseBOConfig;
 
     struct ViBO {
         VkBuffer        buffer  = nullptr;
@@ -18,6 +19,6 @@ namespace yq::tachyon {
         uint32_t        count   = 0;
         uint32_t        offset  = 0;
         
-        void    update(Visualizer&, const ABOConfig&, const void*);
+        void    update(Visualizer&, const BaseBOConfig&, const void*);
     };
 }

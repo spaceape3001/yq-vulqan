@@ -63,7 +63,7 @@ namespace yq::tachyon {
         void        ubo(size_t cnt=1);
 
         template <typename V>
-        VBOMaker<V> vbo(DataActivity da=DataActivity::UNSURE);
+        VBOMaker<V> vbo(DataActivity da=DataActivity::UNSURE, uint32_t stages=0);
 
     /// other stuff
 
@@ -86,12 +86,13 @@ namespace yq::tachyon {
         }
         
         template <typename V>
-        static UBOConfig    ubo_(uint32_t cnt, DataActivity da)
+        static UBOConfig    ubo_(uint32_t cnt, DataActivity da, uint32_t stages=0)
         {
             UBOConfig       cfg;
             cfg.activity    = da;
             cfg.size        = sizeof(V);
             cfg.count       = cnt;
+            cfg.shaders     = stages;
             return cfg;
         }
 
@@ -166,10 +167,11 @@ namespace yq::tachyon {
     private:
         friend class Builder;
     
-        VBOMaker(Builder* b, DataActivity da) : m_builder(b)
+        VBOMaker(Builder* b, DataActivity da, uint32_t stages) : m_builder(b)
         {
             stride      = sizeof(V);
             activity    = da;
+            shaders     = stages;
         }
         
 
@@ -201,9 +203,9 @@ namespace yq::tachyon {
     };
     
     template <typename V>
-    Pipeline::VBOMaker<V> Pipeline::Builder::vbo(DataActivity da)
+    Pipeline::VBOMaker<V> Pipeline::Builder::vbo(DataActivity da, uint32_t stages)
     {
-        return VBOMaker<V>(this, da);
+        return VBOMaker<V>(this, da, stages);
     }
 
     template <typename C>
@@ -307,60 +309,60 @@ namespace yq::tachyon {
         */
         
         template <typename V>
-        void    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            UBOConfig       cfg = ubo_<V>(cnt, da);
+            UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
             m_build.ubos.push_back(cfg);
         }
         
         template <typename V>
-        void    uniform(UB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            UBOConfig       cfg = ubo_<V>(cnt, da);
+            UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
             m_build.ubos.push_back(cfg);
         }
 
         template <typename V>
-        void    uniform(UBO<V>& p, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da);
+            uniform(p, 1, da, stages);
         }
         
         template <typename V>
-        void    uniform(UB1<V>& p, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da);
+            uniform(p, 1, da, stages);
         }
         
         
         template <typename V>
-        void    uniform(UBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            UBOConfig       cfg = ubo_<V>(cnt, da);
+            UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
             m_build.ubos.push_back(cfg);
         }
         
         template <typename V>
-        void    uniform(UB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            UBOConfig       cfg = ubo_<V>(cnt, da);
+            UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
             m_build.ubos.push_back(cfg);
         }
 
         template <typename V>
-        void    uniform(UBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da);
+            uniform(p, 1, da, stages);
         }
         
         template <typename V>
-        void    uniform(UB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        void    uniform(UB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da);
+            uniform(p, 1, da, stages);
         }
 
         /*
@@ -370,33 +372,33 @@ namespace yq::tachyon {
         */
 
         template <typename V>
-        VBOMaker<V> vertex(VBO<V>& p, DataActivity da=DataActivity::REFRESH)
+        VBOMaker<V> vertex(VBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            auto cfg    = vbo<V>(da);
+            auto cfg    = vbo<V>(da, stages);
             YQ_PIPELINE_COMMON_HANDLER
             return cfg;
         }
         
         template <typename V>
-        VBOMaker<V> vertex(VB1<V>& p, DataActivity da=DataActivity::REFRESH)
+        VBOMaker<V> vertex(VB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            auto cfg    = vbo<V>(da);
+            auto cfg    = vbo<V>(da, stages);
             YQ_PIPELINE_COMMON_HANDLER
             return cfg;
         }
 
         template <typename V>
-        VBOMaker<V> vertex(VBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        VBOMaker<V> vertex(VBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            auto cfg    = vbo<V>(da);
+            auto cfg    = vbo<V>(da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
             return cfg;
         }
         
         template <typename V>
-        VBOMaker<V> vertex(VB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        VBOMaker<V> vertex(VB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            auto cfg    = vbo<V>(da);
+            auto cfg    = vbo<V>(da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
             return cfg;
         }

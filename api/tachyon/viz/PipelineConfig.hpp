@@ -89,7 +89,7 @@ namespace yq::tachyon {
     struct UBOConfig  : public BaseBOConfig {
     
         uint32_t                count       = 1;
-        uint32_t                stage       = 0;
+        uint32_t                shaders     = 0;
         uint32_t                size        = 0;
     };
 

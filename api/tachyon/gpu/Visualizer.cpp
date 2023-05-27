@@ -730,6 +730,7 @@ namespace yq::tachyon {
             }
         
             VqPipelineVertexInputStateCreateInfo    vertexInfo;
+            VqPipelineLayoutCreateInfo              pipelineLayoutInfo;
             
             std::vector<VkVertexInputAttributeDescription>  attrs;
             std::vector<VkVertexInputBindingDescription>    vbos;
@@ -754,15 +755,16 @@ namespace yq::tachyon {
             }
 
             if(!cfg.ubos.empty()){
+yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";            
                 for(uint32_t    i   = 0;i<cfg.ubos.size();++i){
                     auto& u = cfg.ubos[i];
                     VkDescriptorSetLayoutBinding a;
                     a.binding           = i;
                     a.descriptorCount   = u.count;
                     a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-                    if(u.stage)
-                        a.stageFlags    = u.stage;
-                    else
+                    if(u.shaders){
+                        a.stageFlags    = u.shaders;
+                    } else
                         a.stageFlags    = p.shaders;
                     ubos.push_back(a);
                 }
@@ -772,6 +774,8 @@ namespace yq::tachyon {
                 layoutInfo.pBindings    = ubos.data();
                 if(vkCreateDescriptorSetLayout(m_device, &layoutInfo, nullptr, &p.descriptors) != VK_SUCCESS)
                     throw create_error<"Unable to create a descriptor set layout">();
+                pipelineLayoutInfo.setLayoutCount   = 1;
+                pipelineLayoutInfo.pSetLayouts      = &p.descriptors;
             }
                 
             vertexInfo.vertexBindingDescriptionCount    = (uint32_t) vbos.size();
@@ -849,7 +853,6 @@ namespace yq::tachyon {
                 }
             }
             
-            VqPipelineLayoutCreateInfo pipelineLayoutInfo{};
             pipelineLayoutInfo.setLayoutCount = 0; // Optional
             pipelineLayoutInfo.pSetLayouts = nullptr; // Optional
             if(push.size != 0){
@@ -922,6 +925,14 @@ namespace yq::tachyon {
                     ViBO        bo;
                     bo.update(*this, ib, nullptr);
                     p.ibos.push_back(bo);
+                }
+            }
+
+            if(!cfg.ubos.empty()){
+                for(auto & ub : cfg.ubos){
+                    ViBO        bo;
+                    bo.update(*this, ub, nullptr);
+                    p.ubos.push_back(bo);
                 }
             }
                 

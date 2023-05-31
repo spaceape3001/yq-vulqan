@@ -11,6 +11,11 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+    /*! \brief Buffer usage flag
+    
+        These are translated over to vulkan, meant to be an easier 
+        way than dealing with the overly LONG vulkan codes.
+    */
     YQ_ENUM(BufferUsage, , 
         TransferSource                          = 0,
         TransferDestination                     = 1,

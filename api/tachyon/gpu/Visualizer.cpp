@@ -16,6 +16,7 @@
     there may be similarities to the above.
 */
 
+#include "Visualizer.hxx"
 #include "Visualizer.hpp"
 
 #include <basic/AutoReset.hpp>
@@ -26,9 +27,7 @@
 #include <math/color/RGBA.hpp>
 
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/gpu/ViThing.hpp>
 #include <tachyon/gpu/ViContext.hpp>
-#include <tachyon/gpu/ViPipeline.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/scene/Perspective.hpp>
@@ -54,11 +53,52 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
+    
+    //  ViBO
+    void    ViBO::update(Visualizer&viz, const BaseBOConfig&cfg, const void* p)
+    {
+        do {
+            if(!cfg.fetch)
+                return ;
+            if(p ? (cfg.activity == DataActivity::COMMON) : (cfg.activity != DataActivity::COMMON))
+                return;
+            if(!buffer)                                 // LOAD
+                break;
+            if(cfg.activity != DataActivity::DYNAMIC)   // LOAD
+                break;
+            if(!cfg.revision)
+                return ;
+            
+            uint64_t    n   = cfg.revision(p);
+            if(n == rev)
+                return ;
+            rev    = n;
+        } while(false);
+        
+        BufferCPtr      c   = cfg.fetch(p);
+        if(!c){     //  shouldn't really happen....
+            yWarning() << "EMPTY BUFFER DETECTED!";
+            return ;
+        }
+        
+        const ViBuffer& vb    = viz.create(*c);
+        if(vb.buffer){
+            buffer  = vb.buffer;
+            count   = c->memory.count();
+        }
+    }
+
+    
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //  ViContext
+    ////////////////////////////////////////////////////////////////////////////////
 
     ViContext::ViContext() = default;
     ViContext::~ViContext() = default;
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  ViQueues
     ////////////////////////////////////////////////////////////////////////////////
 
     void    ViQueues::set(VkDevice dev, uint32_t cnt)
@@ -77,6 +117,7 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  ViSwapchain
     ////////////////////////////////////////////////////////////////////////////////
 
     VkRect2D  ViSwapchain::def_scissor() const
@@ -109,8 +150,73 @@ namespace yq::tachyon {
         return extents.height; 
     }
 
+    ////////////////////////////////////////////////////////////////////////////////
+    //  ViRendered
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+    ViRendered::ViRendered(Visualizer& viz, const ViPipeline& vp, const Rendered* object)
+    {
+        size_t i;
+        size_t  ds = 0;
+
+        auto& vc    = vp.cfg.vbos;
+        if(!vc.empty()){
+            vbos.resize(vc.size());
+            for(i=0;i<vbos.size();++i){
+                vbos[i] = vp.vbos[i];
+                vbos[i].update(viz, vc[i], object);
+            }
+        }
+            
+        auto& ic    = vp.cfg.ibos;
+        if(!ic.empty()){
+            ibos.resize(ic.size());
+            for(i=0;i<ibos.size();++i){
+                ibos[i] = vp.ibos[i];
+                ibos[i].update(viz, ic[i], object);
+            }
+        }
+        
+        auto& uc    = vp.cfg.ubos;
+        if(!uc.empty()){
+            ubos.resize(uc.size());
+            for(i=0;i<ubos.size();++i){
+                ubos[i] = vp.ubos[i];
+                ubos[i].update(viz, uc[i], object);
+            }
+            
+            ds += uc.size();
+        }
+        
+        if(ds){
+            std::vector<VkDescriptorSetLayout>      layouts(MAX_FRAMES_IN_FLIGHT, vp.descriptors);
+            VqDescriptorSetAllocateInfo allocInfo;
+            allocInfo.descriptorPool    = viz.descriptor_pool();
+            allocInfo.descriptorSetCount    = MAX_FRAMES_IN_FLIGHT * ds;
+            allocInfo.pSetLayouts       = layouts.data();
+            descriptors.resize(MAX_FRAMES_IN_FLIGHT*ds);
+            if(vkAllocateDescriptorSets(viz.device(), &allocInfo, descriptors.data()) != VK_SUCCESS){
+                yInfo() << "Unable to allocate descriptor sets!";
+            }
+        }
+        
+    }
+    
+    void    ViRendered::update(Visualizer& viz, const ViPipeline& vp, const Rendered* object)
+    {
+        size_t i;
+        auto& vc    = vp.cfg.vbos;
+        for(i=0;i<vbos.size();++i)
+            vbos[i].update(viz, vc[i], object);
+            
+        auto& ic    = vp.cfg.ibos;
+        for(i=0;i<ibos.size();++i)
+            ibos[i].update(viz, ic[i], object);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
 
     Visualizer::Visualizer() 

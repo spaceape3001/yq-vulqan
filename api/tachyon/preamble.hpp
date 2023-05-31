@@ -65,13 +65,15 @@ namespace yq {
         class   Visualizer;
         class   Viewer;
         struct  ViewerCreateInfo;
-        struct  ViPipeline;
-        struct  ViThing;
+        //struct  ViPipeline;
+        struct  ViRendered;
         class   VqApp;
         class   VqException;
         class   VqRecord;
         class   Widget;
         class   Window;
+        
+        using ViThing = ViRendered;
 
 
         template <typename> class TypedAssetFactory;

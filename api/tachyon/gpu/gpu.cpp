@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "ViBO.ipp"
-#include "ViThing.ipp"
+//#include "ViBO.ipp"
+//#include "ViThing.ipp"
 #include "VqApp.ipp"
 #include "VqEnums.ipp"
 #include "VqLogging.ipp"

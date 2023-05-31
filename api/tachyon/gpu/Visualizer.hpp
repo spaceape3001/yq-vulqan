@@ -10,7 +10,6 @@
 
 #include <basic/Guarded.hpp>
 #include <math/preamble.hpp>
-#include <tachyon/gpu/ViPipeline.hpp>
 #include <tachyon/enum/PresentMode.hpp>
 #include <tachyon/enum/Tristate.hpp>
 
@@ -116,6 +115,7 @@ namespace yq::tachyon {
         //mutable tbb::spin_rw_mutex  mutex;
         
     //};
+    
 
 
     /*! \brief the Physical vulkan device adapter

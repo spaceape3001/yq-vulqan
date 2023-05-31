@@ -6,7 +6,7 @@
 
 #pragma once
 #include <tachyon/preamble.hpp>
-#include <tachyon/gpu/ViPipeline.hpp>
+//#include <tachyon/gpu/ViPipeline.hpp>
 #include <vulkan/vulkan_core.h>
 #include <glm/glm.hpp>
 
@@ -23,7 +23,7 @@ namespace yq::tachyon {
     class ViContext {
     public:
         
-        using DrawFunction  = std::function<void(ViContext&)>;
+        //using DrawFunction  = std::function<void(ViContext&)>;
     
     
         Visualizer*         viz() const { return m_viz; }
@@ -37,8 +37,8 @@ namespace yq::tachyon {
         ViContext();
         ~ViContext();
         
-        void    pipeline(const ViPipeline&);
-        void    pipeline(const Pipeline&);
+//        void    pipeline(const ViPipeline&);
+  //      void    pipeline(const Pipeline&);
     
     private:
         friend class Visualizer;

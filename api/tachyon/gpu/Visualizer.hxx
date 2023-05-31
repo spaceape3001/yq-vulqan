@@ -51,6 +51,16 @@ namespace yq::tachyon {
         ViRendered(Visualizer& viz, const ViPipeline&, const Rendered* object);
         void    update(Visualizer& viz, const ViPipeline&, const Rendered* object);
     };
+
+    //! Shader storage
+    //! \note the Client is expected to manually call create & destroy
+    struct ViShader {
+        VkShaderModule          shader  = nullptr;
+        VkShaderStageFlagBits   mask    = {};
+        
+        std::error_code     create(VkDevice, const Shader&);
+        void                destroy(VkDevice);
+    };
 }
 
 

@@ -117,6 +117,54 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  ViShader
+    ////////////////////////////////////////////////////////////////////////////////
+
+    std::error_code     ViShader::create(VkDevice dev, const Shader& sh)
+    {
+        mask  = VkShaderStageFlagBits{};
+        switch(sh.type){
+        case ShaderType::VERT:
+            mask    = VK_SHADER_STAGE_VERTEX_BIT;
+            break;
+        case ShaderType::TESC:
+            mask    = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+            break;
+        case ShaderType::TESE:
+            mask    = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
+            break;
+        case ShaderType::FRAG:
+            mask    = VK_SHADER_STAGE_FRAGMENT_BIT;
+            break;
+        case ShaderType::GEOM:
+            mask    = VK_SHADER_STAGE_GEOMETRY_BIT;
+            break;
+        case ShaderType::COMP:
+            mask    = VK_SHADER_STAGE_COMPUTE_BIT;
+            break;
+        default:
+            return create_error<"Shader needs a valid/supported type!">();
+        }
+            
+        VqShaderModuleCreateInfo createInfo;
+        createInfo.codeSize = sh.payload.bytes();
+        createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
+        if (vkCreateShaderModule(dev, &createInfo, nullptr, &shader) != VK_SUCCESS) {
+            shader  = nullptr;
+            return create_error<"Shader creation failed">();
+        }
+        return std::error_code();
+    }
+    
+    void                ViShader::destroy(VkDevice dev)
+    {
+        if(shader){
+            vkDestroyShaderModule(dev, shader, nullptr);
+            shader  = nullptr;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
     //  ViSwapchain
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -563,7 +611,7 @@ namespace yq::tachyon {
     
         //  At *this* point, we don't need the mutex... we're dying anyways
         for(auto& psh : m_shaders)
-            _destroy(psh.second);
+            psh.second.destroy(m_device);
         m_shaders.clear();
         
         if(m_allocator){
@@ -1065,47 +1113,6 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             vkDestroyPipeline(m_device, p.pipeline, nullptr);
         if(p.layout)
             vkDestroyPipelineLayout(m_device, p.layout, nullptr);
-    }
-    
-    
-    std::error_code            Visualizer::_create(ViShader& p, const Shader&sh)
-    {
-        p.mask  = VkShaderStageFlagBits{};
-        switch(sh.type){
-        case ShaderType::VERT:
-            p.mask = VK_SHADER_STAGE_VERTEX_BIT;
-            break;
-        case ShaderType::TESC:
-            p.mask = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-            break;
-        case ShaderType::TESE:
-            p.mask = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
-            break;
-        case ShaderType::FRAG:
-            p.mask = VK_SHADER_STAGE_FRAGMENT_BIT;
-            break;
-        case ShaderType::GEOM:
-            p.mask = VK_SHADER_STAGE_GEOMETRY_BIT;
-            break;
-        case ShaderType::COMP:
-            p.mask = VK_SHADER_STAGE_COMPUTE_BIT;
-            break;
-        default:
-            return create_error<"Shader needs a valid/supported type!">();
-        }
-            
-        VqShaderModuleCreateInfo createInfo;
-        createInfo.codeSize = sh.payload.bytes();
-        createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
-        if (vkCreateShaderModule(m_device, &createInfo, nullptr, &p.shader) != VK_SUCCESS) 
-            return create_error<"Shader creation failed">();
-        return std::error_code();
-    }
-    
-    void                        Visualizer::_destroy(ViShader&sh)
-    {
-        if(sh.shader)
-            vkDestroyShaderModule(m_device, sh.shader, nullptr);
     }
 
 
@@ -1712,33 +1719,6 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         return ret;
     }
 
-    Expect<ViShader>    Visualizer::create(const Shader& v)
-    {
-        {
-            LOCK
-            auto j = m_shaders.find(v.id());
-            if(j != m_shaders.end())
-                return j->second;
-        }
-        
-        ViShader    p, ret;
-        auto ec = _create(p, v);
-        if(ec)
-            return unexpected(ec);
-        
-        {
-            WLOCK
-            auto [j,f]  = m_shaders.try_emplace(v.id(), p);
-            if(f){
-                std::swap(p, ret);
-            } else {
-                ret = j->second;
-            }
-        }
-        
-        _destroy(p);
-        return ret;
-    }
     
     const ViPipeline&  Visualizer::create(const Pipeline& v)
     {
@@ -1781,6 +1761,35 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             j->second->update(*this, vp, &r);
         }
         return *(j->second);
+    }
+
+    Expect<ViShader>    Visualizer::create(const Shader& v)
+    {
+        {
+            LOCK
+            auto j = m_shaders.find(v.id());
+            if(j != m_shaders.end())
+                return j->second;
+        }
+        
+        ViShader    p, ret;
+        auto ec = p.create(m_device, v);
+        if(ec)
+            return unexpected(ec);
+        
+        {
+            WLOCK
+            auto [j,f]  = m_shaders.try_emplace(v.id(), p);
+            if(f){
+                std::swap(p, ret);
+            } else {
+                ret = j->second;
+            }
+        }
+        
+        if(p.shader)
+            p.destroy(m_device);
+        return ret;
     }
 
     Expect<ViTexture>       Visualizer::create(const Texture& t)

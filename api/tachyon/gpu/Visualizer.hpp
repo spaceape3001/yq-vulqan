@@ -46,10 +46,6 @@ namespace yq::tachyon {
         VmaAllocation           allocation  = nullptr;
     };
 
-    struct ViShader {
-        VkShaderModule          shader  = nullptr;
-        VkShaderStageFlagBits   mask    = {};
-    };
     
     //!  Represents an image (likely from file) that has been pushed to the GPU
     struct ViImage {
@@ -170,7 +166,13 @@ namespace yq::tachyon {
         //! \note Reference is only good to the next create()
         const ViBuffer&                 create(const Buffer&);
 
-        //! Creates the shader
+        /*! Creates the shader
+        
+            This imports the shader onto the GPU device.  
+            
+            \note Once imported, this shader cannot be removed and will persist 
+            to the end of the visualizer's lifespan.
+        */
         Expect<ViShader>                create(const Shader&);
 
         Expect<ViImage>                 create(const Image&);  // temporary name until texture's altered
@@ -321,9 +323,6 @@ namespace yq::tachyon {
         std::error_code             _create(ViPipeline&, const PipelineConfig&);
         void                        _destroy(ViPipeline&);
 
-        std::error_code             _create(ViShader&, const Shader&);
-        void                        _destroy(ViShader&);
-        
         
         std::error_code             _create(ViSwapchain&);
         void                        _destroy(ViSwapchain&);

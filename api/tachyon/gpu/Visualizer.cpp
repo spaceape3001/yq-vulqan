@@ -81,14 +81,63 @@ namespace yq::tachyon {
             return ;
         }
         
-        const ViBuffer& vb    = viz.create(*c);
-        if(vb.buffer){
-            buffer  = vb.buffer;
-            count   = c->memory.count();
+        Expect<ViBuffer> xvb    = viz.create(*c);
+        if(xvb){
+            const ViBuffer& vb  = *xvb;
+            if(vb.buffer){
+                buffer  = vb.buffer;
+                count   = c->memory.count();
+            }
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////
+    //  ViBuffer
+    ////////////////////////////////////////////////////////////////////////////////
+
+    std::error_code     ViBuffer::allocate(Visualizer&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
+    {
+        if(!cb)
+            return create_error<"Skipping zero sized buffer">();
+        
+        VqBufferCreateInfo  bufferInfo;
+        bufferInfo.size         = cb;
+        bufferInfo.usage        = buf & VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM;
+        
+        VmaAllocationCreateInfo vmaallocInfo = {};
+        vmaallocInfo.usage = vmu;
+        VmaAllocationInfo   vai;
+        if(vmaCreateBuffer(viz.allocator(), &bufferInfo, &vmaallocInfo, &buffer, &allocation, &vai) != VK_SUCCESS)
+            return errors::INSUFFICIENT_GPU_MEMORY();
+        return std::error_code();
+    }
     
+    std::error_code     ViBuffer::create(Visualizer&viz, const Memory& v, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
+    {
+        std::error_code     ec  = allocate(viz, v.bytes(), buf, vmu);
+        if(ec)
+            return ec;
+        
+        void* dst = nullptr;
+        vmaMapMemory(viz.allocator(), allocation, &dst);
+        memcpy(dst, v.data(), v.bytes());
+        vmaUnmapMemory(viz.allocator(), allocation);
+        return std::error_code();
+    }
+    
+    std::error_code     ViBuffer::create(Visualizer&viz, const Buffer& v)
+    {
+        return create(viz, v.memory, (VkBufferUsageFlags) v.usage.value(), VMA_MEMORY_USAGE_CPU_TO_GPU);
+    }
+    
+    void                ViBuffer::destroy(Visualizer&viz)
+    {
+        if(allocation && buffer){
+            vmaDestroyBuffer(viz.allocator(), buffer, allocation);
+            allocation = nullptr;
+            buffer = nullptr;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViContext
@@ -96,6 +145,19 @@ namespace yq::tachyon {
 
     ViContext::ViContext() = default;
     ViContext::~ViContext() = default;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //  ViImage
+    ////////////////////////////////////////////////////////////////////////////////
+
+    std::error_code     ViImage::create(Visualizer&viz, const Image&)
+    {
+        return create_error<"TODO">();
+    }
+    
+    void                ViImage::destroy(Visualizer&viz)
+    {
+    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViQueues
@@ -616,7 +678,7 @@ namespace yq::tachyon {
         
         if(m_allocator){
             for(auto& b : m_buffers)
-                _destroy(b.second);
+                b.second.destroy(*this);
             m_buffers.clear();
             vmaDestroyAllocator(m_allocator);
             m_allocator = nullptr;
@@ -670,51 +732,6 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
     //  SUB CREATE/DESTROY
-
-    std::error_code             Visualizer::_allocate(ViBuffer&p, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
-    {
-        if(!cb)
-            return create_error<"Skipping zero sized buffer">();
-        
-        VqBufferCreateInfo  bufferInfo;
-        bufferInfo.size         = cb;
-        bufferInfo.usage        = buf & VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM;
-        
-        VmaAllocationCreateInfo vmaallocInfo = {};
-        vmaallocInfo.usage = vmu;
-        VmaAllocationInfo   vai;
-        if(vmaCreateBuffer(m_allocator, &bufferInfo, &vmaallocInfo, &p.buffer, &p.allocation, &vai) != VK_SUCCESS)
-            return errors::INSUFFICIENT_GPU_MEMORY();
-        return std::error_code();
-    }
-    
-    std::error_code             Visualizer::_allocate(ViBuffer&p, const Memory& v, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
-    {
-        std::error_code     ec  = _allocate(p, v.bytes(), buf, vmu);
-        if(ec)
-            return ec;
-        
-        void* dst = nullptr;
-        vmaMapMemory(m_allocator, p.allocation, &dst);
-        memcpy(dst, v.data(), v.bytes());
-        vmaUnmapMemory(m_allocator, p.allocation);            
-        return std::error_code();
-    }
-    
-    
-    std::error_code             Visualizer::_create(ViBuffer&p, const Buffer&v)
-    {
-        return _allocate(p, v.memory, (VkBufferUsageFlags) v.usage.value(), VMA_MEMORY_USAGE_CPU_TO_GPU);
-    }
-    
-    void                        Visualizer::_destroy(ViBuffer&p)
-    {
-        if(p.allocation && p.buffer){
-            vmaDestroyBuffer(m_allocator, p.buffer, p.allocation);
-            p.allocation = nullptr;
-            p.buffer = nullptr;
-        }
-    }
 
     std::error_code             Visualizer::_create(ViFrame&p)
     {
@@ -773,7 +790,7 @@ namespace yq::tachyon {
     {
         ViBuffer        local;
         
-        std::error_code ec  = _allocate(local, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VMA_MEMORY_USAGE_CPU_ONLY);
+        std::error_code ec  = local.create(*this, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VMA_MEMORY_USAGE_CPU_ONLY);
         if(ec)
             return ec;
         
@@ -845,7 +862,7 @@ namespace yq::tachyon {
         {
             ec  = ec2;
         }
-        _destroy(local);
+        local.destroy(*this);
         return ec;
     }
     
@@ -1397,13 +1414,16 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
     ////////////////////////////////////////////////////////////////////////////////
     //  GETTERS/INFORMATION
 
-    const ViBuffer& Visualizer::buffer(uint64_t i) const
+    Expect<ViBuffer> Visualizer::buffer(uint64_t i) const
     {
-        static const ViBuffer s_null;
-        auto j = m_buffers.find(i);
-        if(j != m_buffers.end())
-            return j->second;
-        return s_null;
+        {
+            LOCK
+            auto j = m_buffers.find(i);
+            if(j != m_buffers.end())
+                return j->second;
+        }
+        
+        return unexpected<"Unable to located specified buffer">();
     }
 
     RGBA4F Visualizer::clear_color() const
@@ -1684,12 +1704,32 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
     ////////////////////////////////////////////////////////////////////////////////
     //  SETTERS/MANIPULATORS
 
-    const ViBuffer&    Visualizer::create(const Buffer& v)
+    Expect<ViBuffer>    Visualizer::create(const Buffer& v)
     {
-        auto [j,f]  = m_buffers.try_emplace(v.id(), ViBuffer());
-        if(f)
-            _create(j->second, v);
-        return j->second;
+        {
+            LOCK
+            auto j = m_buffers.find(v.id());
+            if(j != m_buffers.end())
+                return j->second;
+        }
+        
+        ViBuffer p, ret;
+        auto ec = p.create(*this, v);
+        if(ec)
+            return unexpected(ec);
+        
+        {
+            WLOCK
+            auto [j,f]  = m_buffers.try_emplace(v.id(), p);
+            if(f){
+                std::swap(p, ret);
+            } else
+                ret = j->second;
+        }
+        
+        if(p.buffer)
+            p.destroy(*this);
+        return ret;
     }
     
     Expect<ViImage>     Visualizer::create(const Image&v)
@@ -1829,11 +1869,19 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
 
     void        Visualizer::erase(const Buffer& v)
     {
-        auto j = m_buffers.find(v.id());
-        if(j != m_buffers.end()){
-            _destroy(j->second);
-            m_buffers.erase(j);
+        ViBuffer    vb;
+        
+        {
+            WLOCK
+            auto j = m_buffers.find(v.id());
+            if(j != m_buffers.end()){
+                vb      = j->second;
+                m_buffers.erase(j);
+            }
         }
+        
+        if(vb.buffer)
+            vb.destroy(*this);
     }
 
     void        Visualizer::set_clear_color(const RGBA4F&i)

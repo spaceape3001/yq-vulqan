@@ -41,17 +41,6 @@ namespace yq::tachyon {
 
     class Memory;
 
-    struct ViBuffer {
-        VkBuffer                buffer      = nullptr;
-        VmaAllocation           allocation  = nullptr;
-    };
-
-    
-    //!  Represents an image (likely from file) that has been pushed to the GPU
-    struct ViImage {
-        VmaAllocation           allocation  = nullptr;
-        VkImage                 image       = nullptr;
-    };
 
     struct ViQueues {
         std::vector<VkQueue>    queues;
@@ -149,8 +138,7 @@ namespace yq::tachyon {
         VkPhysicalDevice                physical() const { return m_physical; }
 
         //! Finds the buffer
-        //! \note Reference is only good to the next create()
-        const ViBuffer&                 buffer(uint64_t) const;
+        Expect<ViBuffer>                buffer(uint64_t) const;
 
         RGBA4F                          clear_color() const;
 
@@ -163,8 +151,7 @@ namespace yq::tachyon {
         bool                            compute_queue_valid() const;
 
         //! Creates the buffer
-        //! \note Reference is only good to the next create()
-        const ViBuffer&                 create(const Buffer&);
+        Expect<ViBuffer>                create(const Buffer&);
 
         /*! Creates the shader
         
@@ -304,15 +291,15 @@ namespace yq::tachyon {
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
     
-        //! Allocates w/o copying
-        std::error_code             _allocate(ViBuffer&, size_t, VkBufferUsageFlags, VmaMemoryUsage);
+        ////! Allocates w/o copying
+        //std::error_code             _allocate(ViBuffer&, size_t, VkBufferUsageFlags, VmaMemoryUsage);
         
-        //! Allocates WITH copying
-        std::error_code             _allocate(ViBuffer&, const Memory&, VkBufferUsageFlags, VmaMemoryUsage);
+        ////! Allocates WITH copying
+        //std::error_code             _allocate(ViBuffer&, const Memory&, VkBufferUsageFlags, VmaMemoryUsage);
     
         
-        std::error_code             _create(ViBuffer&, const Buffer&);
-        void                        _destroy(ViBuffer&);
+        //std::error_code             _create(ViBuffer&, const Buffer&);
+        //void                        _destroy(ViBuffer&);
     
         std::error_code             _create(ViFrame&);
         void                        _destroy(ViFrame&);

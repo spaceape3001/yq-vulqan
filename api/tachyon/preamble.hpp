@@ -49,6 +49,7 @@ namespace yq {
         struct  ImageInfo;
         struct  ImageViewInfo;
         struct  Joystick;
+        class   Memory;
         class   Monitor;
         class   Pipeline;
         //class   LegacyPipelineBuilder;

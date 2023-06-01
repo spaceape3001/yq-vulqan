@@ -10,8 +10,11 @@
 #include <vulkan/vulkan_core.h>
 #include <tachyon/viz/PipelineConfig.hpp>
 #include <vector>
+#include <vk_mem_alloc.h>
 
 namespace yq::tachyon {
+    class Visualizer;
+    
     struct ABOConfig;
     struct BaseBOConfig;
 
@@ -22,6 +25,25 @@ namespace yq::tachyon {
         uint32_t        offset  = 0;
         
         void    update(Visualizer&, const BaseBOConfig&, const void*);
+    };
+
+    struct ViBuffer {
+        VkBuffer                buffer      = nullptr;
+        VmaAllocation           allocation  = nullptr;
+        
+        std::error_code     allocate(Visualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu);
+        std::error_code     create(Visualizer&, const Memory& v, VkBufferUsageFlags buf, VmaMemoryUsage vmu);
+        std::error_code     create(Visualizer&, const Buffer& v);
+        void                destroy(Visualizer&);
+    };
+
+    //!  Represents an image (likely from file) that has been pushed to the GPU
+    struct ViImage {
+        VmaAllocation           allocation  = nullptr;
+        VkImage                 image       = nullptr;
+
+        std::error_code         create(Visualizer&, const Image&);
+        void                    destroy(Visualizer&);
     };
 
     struct ViPipeline {
@@ -47,6 +69,12 @@ namespace yq::tachyon {
         std::vector<ViBO>               ubos;
         
         std::vector<VkDescriptorSet>    descriptors;        // to MAX_FRAMES_IN_FLIGHT * ibos * ubos needed...
+        uint64_t                        pipe    = 0ULL;
+        
+        std::error_code     create(Visualizer&, const ViPipeline&, const Rendered& object);
+        std::error_code     update(Visualizer&, const ViPipeline&, const Rendered& object);
+        std::error_code     destroy(Visualizer&);
+        
         
         ViRendered(Visualizer& viz, const ViPipeline&, const Rendered* object);
         void    update(Visualizer& viz, const ViPipeline&, const Rendered* object);

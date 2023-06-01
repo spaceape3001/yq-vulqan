@@ -10,6 +10,10 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+    /*! \brief Index type
+    
+        Data type code for the index buffer object 
+    */
     YQ_ENUM(IndexType, ,
         none    = 1000165000,
         uint16  = 0,

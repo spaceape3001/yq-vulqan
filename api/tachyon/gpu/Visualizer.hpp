@@ -291,21 +291,8 @@ namespace yq::tachyon {
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
     
-        ////! Allocates w/o copying
-        //std::error_code             _allocate(ViBuffer&, size_t, VkBufferUsageFlags, VmaMemoryUsage);
-        
-        ////! Allocates WITH copying
-        //std::error_code             _allocate(ViBuffer&, const Memory&, VkBufferUsageFlags, VmaMemoryUsage);
-    
-        
-        //std::error_code             _create(ViBuffer&, const Buffer&);
-        //void                        _destroy(ViBuffer&);
-    
         std::error_code             _create(ViFrame&);
         void                        _destroy(ViFrame&);
-
-        std::error_code             _create(ViImage&, const Image&);
-        void                        _destroy(ViImage&);
 
         std::error_code             _create(ViPipeline&, const PipelineConfig&);
         void                        _destroy(ViPipeline&);

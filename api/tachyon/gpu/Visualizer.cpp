@@ -228,7 +228,7 @@ namespace yq::tachyon {
             LOCK
             auto eq = m_rendereds.equal_range(obj.id());
             for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->pipe.id == pipe.id())
+                if(i->second->m_pipe.id == pipe.id())
                     return i->second;
             }
         }
@@ -244,7 +244,7 @@ namespace yq::tachyon {
             WLOCK
             auto eq = m_rendereds.equal_range(obj.id());
             for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->pipe.id == pipe.id()){
+                if(i->second->m_pipe.id == pipe.id()){
                     ret = i->second;
                     break;
                 }
@@ -266,7 +266,7 @@ namespace yq::tachyon {
             LOCK
             auto eq = m_rendereds.equal_range(ren.id());
             for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->pipe.id == pipe.id())
+                if(i->second->m_pipe.id == pipe.id())
                     return i->second;
             }
         }
@@ -389,7 +389,7 @@ namespace yq::tachyon {
     //  ViRendered
     ////////////////////////////////////////////////////////////////////////////////
 
-    ViRendered::ViRendered(Visualizer&_viz, const ViPipeline& _pipe, const Rendered& _obj) : viz(_viz), pipe(_pipe), object(_obj)
+    ViRendered::ViRendered(Visualizer&_viz, const ViPipeline& _pipe, const Rendered& _obj) : m_viz(_viz), m_pipe(_pipe), m_object(_obj)
     {
         _ctor();
     }
@@ -403,43 +403,43 @@ namespace yq::tachyon {
     {
         size_t i;
         size_t  ds = 0;
-        auto& vc    = pipe.cfg.vbos;
+        auto& vc    = m_pipe.cfg.vbos;
         if(!vc.empty()){
-            vbos.resize(vc.size());
-            for(i=0;i<vbos.size();++i){
-                vbos[i] = pipe.vbos[i];
-                vbos[i].update(viz, vc[i], &object);
+            m_vbos.resize(vc.size());
+            for(i=0;i<m_vbos.size();++i){
+                m_vbos[i] = m_pipe.vbos[i];
+                m_vbos[i].update(m_viz, vc[i], &m_object);
             }
         }
             
-        auto& ic    = pipe.cfg.ibos;
+        auto& ic    = m_pipe.cfg.ibos;
         if(!ic.empty()){
-            ibos.resize(ic.size());
-            for(i=0;i<ibos.size();++i){
-                ibos[i] = pipe.ibos[i];
-                ibos[i].update(viz, ic[i], &object);
+            m_ibos.resize(ic.size());
+            for(i=0;i<m_ibos.size();++i){
+                m_ibos[i] = m_pipe.ibos[i];
+                m_ibos[i].update(m_viz, ic[i], &m_object);
             }
         }
         
-        auto& uc    = pipe.cfg.ubos;
+        auto& uc    = m_pipe.cfg.ubos;
         if(!uc.empty()){
-            ubos.resize(uc.size());
-            for(i=0;i<ubos.size();++i){
-                ubos[i] = pipe.ubos[i];
-                ubos[i].update(viz, uc[i], &object);
+            m_ubos.resize(uc.size());
+            for(i=0;i<m_ubos.size();++i){
+                m_ubos[i] = m_pipe.ubos[i];
+                m_ubos[i].update(m_viz, uc[i], &m_object);
             }
             
             ds += uc.size();
         }
         
         if(ds){
-            std::vector<VkDescriptorSetLayout>      layouts(MAX_FRAMES_IN_FLIGHT, pipe.descriptors);
+            std::vector<VkDescriptorSetLayout>      layouts(MAX_FRAMES_IN_FLIGHT, m_pipe.descriptors);
             VqDescriptorSetAllocateInfo allocInfo;
-            allocInfo.descriptorPool    = viz.descriptor_pool();
+            allocInfo.descriptorPool        = m_viz.descriptor_pool();
             allocInfo.descriptorSetCount    = ds;
-            allocInfo.pSetLayouts       = layouts.data();
-            descriptors.resize(ds);
-            if(vkAllocateDescriptorSets(viz.device(), &allocInfo, descriptors.data()) != VK_SUCCESS){
+            allocInfo.pSetLayouts           = layouts.data();
+            m_descriptors.resize(ds);
+            if(vkAllocateDescriptorSets(m_viz.device(), &allocInfo, m_descriptors.data()) != VK_SUCCESS){
                 yInfo() << "Unable to allocate descriptor sets!";
             }
         }
@@ -453,13 +453,96 @@ namespace yq::tachyon {
     void                ViRendered::update(ViContext& u)
     {
         size_t i;
-        auto& vc    = pipe.cfg.vbos;
-        for(i=0;i<vbos.size();++i)
-            vbos[i].update(viz, vc[i], &object);
+        auto& vc    = m_pipe.cfg.vbos;
+        for(i=0;i<m_vbos.size();++i)
+            m_vbos[i].update(m_viz, vc[i], &m_object);
             
-        auto& ic    = pipe.cfg.ibos;
-        for(i=0;i<ibos.size();++i)
-            ibos[i].update(viz, ic[i], &object);
+        auto& ic    = m_pipe.cfg.ibos;
+        for(i=0;i<m_ibos.size();++i)
+            m_ibos[i].update(m_viz, ic[i], &m_object);
+
+        const Render3D* r3      = (m_pipe.cfg.push.type == PushConfigType::Full) ? dynamic_cast<const Render3D*>(&m_object) : nullptr;
+        StdPushData*    push    = (r3 || (m_pipe.cfg.push.type == PushConfigType::View)) ? m_push.create_single<StdPushData>() : nullptr;
+        if(push)
+            push->time       = u.utime();
+            
+        switch(m_pipe.cfg.push.type){
+        case PushConfigType::Full:
+            if(r3){
+                push->matrix    = u.world2eye() * r3->model2world();
+                break;
+            }
+            [[fallthrough]];
+        case PushConfigType::View:
+            push->matrix = u.world2eye();
+            break;
+        case PushConfigType::Custom:
+            if(m_pipe.cfg.push.fetch)
+                m_pipe.cfg.push.fetch(&m_object, m_push);
+            break;
+        case PushConfigType::None:
+        default:
+            break;
+        }
+    }
+
+    void                ViRendered::record(ViContext&u)
+    {
+        const auto&         cfg     = m_pipe.cfg;
+        if(cfg.binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
+            return ;
+
+            //  =================================================
+            //      SET THE PIPELINE
+        Tristate        wireframe   = (u.wireframe() == Tristate::INHERIT) ? m_object.wireframe() : u.wireframe();
+        VkPipeline      vkpipe      = (wireframe == Tristate::YES) ? m_pipe.wireframe : m_pipe.pipeline;
+        if(vkpipe && (vkpipe != u.m_pipeline)){
+            vkCmdBindPipeline(u.command(), VK_PIPELINE_BIND_POINT_GRAPHICS, vkpipe);
+            u.m_pipeline    = vkpipe;
+            u.m_layout      = m_pipe.layout;
+        }
+
+            //  =================================================
+            //      PUSH THE CONSTANTS
+
+        if(!m_push.empty())
+            vkCmdPushConstants(u.command(), m_pipe.layout, m_pipe.shaders, 0, m_push.size(), m_push.data() );
+        
+        //  =================================================
+        //      UNIFORM BUFFERS
+        
+            // TODO
+        
+        //  =================================================
+        //      TEXTURES
+
+            // TODO
+
+        //  =================================================
+        //      VERTEX BUFFERS
+
+        uint32_t    vmax    = 0;
+        uint32_t    VN      = cfg.vbos.size();
+        if(VN){
+            for(uint32_t i=0;i<VN;++i){
+                VkDeviceSize    zero{};
+                vmax    = std::max(vmax, m_vbos[i].count);
+                vkCmdBindVertexBuffers(u.command(), i,  1, &m_vbos[i].buffer, &zero);
+            }
+        }
+        
+        //  =================================================
+        //      INDEX BUFFERS & DRAWING
+
+        uint32_t    VI      = cfg.ibos.size();
+        if(VI){
+            for(uint32_t i=0;i<VI;++i){
+                vkCmdBindIndexBuffer(u.command(), m_ibos[i].buffer, 0, (VkIndexType)(cfg.ibos[i].type.value()));
+                vkCmdDrawIndexed(u.command(), m_ibos[i].count, 1, 0, 0, 0);  // possible point of speedup in future
+            }
+        } else {
+            vkCmdDraw(u.command(), vmax, 1, 0, 0);
+        }
     }
     
 
@@ -2134,18 +2217,20 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         const auto&         cfg     = p.config();
         if(cfg.binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
             return ;
+        
+        u.m_wireframe       = w;
             
         // TODO ... reduce this down to a single pipeline lookup.... (as the next one is implicit)
         
         //  FOR NOW....
-        ViFrame&            f   = current_frame();
-        
-        ViRendered*         thing   = f.create(r, p);
+        ViRendered*         thing   = current_frame().create(r, p);
         if(!thing)
             return;
             
-        const ViPipeline&   pipe    = thing->pipe;
         thing -> update(u);
+        thing -> record(u);
+        
+        #if 0
 
             //  =================================================
             //      SET THE PIPELINE
@@ -2225,6 +2310,7 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         } else {
             vkCmdDraw(u.command(), vmax, 1, 0, 0);
         }
+        #endif
     }
 
     void    Visualizer::draw_object(ViContext&u, const Rendered&r, Tristate w)

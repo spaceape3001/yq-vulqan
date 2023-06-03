@@ -10,8 +10,10 @@
 #include <vulkan/vulkan_core.h>
 #include <glm/glm.hpp>
 
-namespace yq::engine { class Viewer; }
+//namespace yq::engine { class Viewer; }
 namespace yq::tachyon {
+
+    struct ViRendered;
 
     /*! \brief Mutable set of parameters that'll pass through
     
@@ -34,16 +36,21 @@ namespace yq::tachyon {
         Viewer*             viewer() const { return m_viewer; }
         Window*             window() const { return m_window; }
         
+        Tristate            wireframe() const { return m_wireframe; }
+        const glm::dmat4&   world2eye() const { return m_world2eye; }
+        double              utime() const { return m_utime; }
+        
         ViContext();
         ~ViContext();
         
 //        void    pipeline(const ViPipeline&);
   //      void    pipeline(const Pipeline&);
     
-    private:
-        friend class Visualizer;
-        friend class Viewer;
-        friend class engine::Viewer;    // temporary until we nuke that side
+    //private:
+        //friend class Visualizer;
+        //friend class Viewer;
+        //friend struct ViRendered;
+//        friend class engine::Viewer;    // temporary until we nuke that side
         
         //  If modified, restore before return
         Visualizer*         m_viz           = nullptr;  // yep, back to pointer
@@ -54,7 +61,8 @@ namespace yq::tachyon {
         VkPipelineLayout    m_layout        = nullptr;  // last layout set
         glm::dmat4          m_world2eye;
         uint64_t            m_frameNumber   = 0;
-        float               m_utime         = 0.;
+        double              m_utime         = 0.;
         bool                m_imgui         = false;
+        Tristate            m_wireframe     = Tristate::INHERIT;
     };
 }

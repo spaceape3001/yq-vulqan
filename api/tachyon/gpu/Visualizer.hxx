@@ -76,6 +76,7 @@ namespace yq::tachyon {
     };
 
     struct ViPipeline {
+        //Visualizer&             viz;
         PipelineConfig          cfg;
         std::vector<ViBO>       vbos;
         std::vector<ViBO>       ibos;
@@ -93,16 +94,16 @@ namespace yq::tachyon {
         //  This is the mirror to the rendered object
         //  (it'll take over the ViThing)
     struct ViRendered {
-        Visualizer&                     viz;
-        const ViPipeline&               pipe;
-        const Rendered&                 object;
+        Visualizer&                     m_viz;
+        const ViPipeline&               m_pipe;
+        const Rendered&                 m_object;
 
-        std::vector<ViBO>               vbos;
-        std::vector<ViBO>               ibos;
-        std::vector<ViBO>               ubos;
-        std::vector<VkDescriptorSet>    descriptors;        // sized to ubos + textures
+        std::vector<ViBO>               m_vbos;
+        std::vector<ViBO>               m_ibos;
+        std::vector<ViBO>               m_ubos;
+        std::vector<VkDescriptorSet>    m_descriptors;        // sized to ubos + textures
         
-        BasicBuffer<MAX_PUSH>           push;
+        PushBuffer                      m_push;
         
         ViRendered(Visualizer&, const ViPipeline&, const Rendered&);
         ~ViRendered();
@@ -110,7 +111,8 @@ namespace yq::tachyon {
         std::error_code     _ctor();
         void                _dtor();
 
-        void    update(ViContext&);
+        void                update(ViContext&);
+        void                record(ViContext&u);
     };
 
     //! Shader storage

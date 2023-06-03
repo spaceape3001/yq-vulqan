@@ -14,6 +14,7 @@
 namespace yq::tachyon {
 
     struct ViRendered;
+    struct ViFrame;
 
     /*! \brief Mutable set of parameters that'll pass through
     
@@ -22,12 +23,7 @@ namespace yq::tachyon {
         We're making this structure so consumers can optionally extend with their own 
         custom data
     */
-    class ViContext {
-    public:
-        
-        //using DrawFunction  = std::function<void(ViContext&)>;
-    
-    
+    struct ViContext {
         Visualizer*         viz() const { return m_viz; }
         VkCommandBuffer     command() const { return m_command; }
         uint64_t            frame_number() const { return m_frameNumber; }
@@ -43,19 +39,12 @@ namespace yq::tachyon {
         ViContext();
         ~ViContext();
         
-//        void    pipeline(const ViPipeline&);
-  //      void    pipeline(const Pipeline&);
-    
-    //private:
-        //friend class Visualizer;
-        //friend class Viewer;
-        //friend struct ViRendered;
-//        friend class engine::Viewer;    // temporary until we nuke that side
         
         //  If modified, restore before return
-        Visualizer*         m_viz           = nullptr;  // yep, back to pointer
+        Visualizer*         m_viz           = nullptr; 
         Viewer*             m_viewer        = nullptr;
         Window*             m_window        = nullptr;
+        ViFrame*            m_frame         = nullptr;
         VkCommandBuffer     m_command       = nullptr;
         VkPipeline          m_pipeline      = nullptr;  // last pipeline set
         VkPipelineLayout    m_layout        = nullptr;  // last layout set

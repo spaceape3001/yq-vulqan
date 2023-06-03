@@ -31,7 +31,8 @@ namespace yq::tachyon {
         uint32_t        count   = 0;
         uint32_t        offset  = 0;
         
-        void    update(Visualizer&, const BaseBOConfig&, const void*);
+        //  returns TRUE if changed
+        bool    update(Visualizer&, const BaseBOConfig&, const void*);
     };
 
     struct ViBuffer {
@@ -90,6 +91,8 @@ namespace yq::tachyon {
         uint64_t                id          = 0ULL;
     };
 
+    struct ViTO {
+    };
 
         //  This is the mirror to the rendered object
         //  (it'll take over the ViThing)
@@ -101,6 +104,7 @@ namespace yq::tachyon {
         std::vector<ViBO>               m_vbos;
         std::vector<ViBO>               m_ibos;
         std::vector<ViBO>               m_ubos;
+        std::vector<ViTO>               m_texs;
         std::vector<VkDescriptorSet>    m_descriptors;        // sized to ubos + textures
         
         PushBuffer                      m_push;
@@ -113,6 +117,9 @@ namespace yq::tachyon {
 
         void                update(ViContext&);
         void                record(ViContext&u);
+        
+        void    _ubo(size_t);
+        void    _tex(size_t);
     };
 
     //! Shader storage

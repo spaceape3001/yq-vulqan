@@ -72,6 +72,9 @@ namespace yq::tachyon {
             //!  Amount to allocate in "chunks" on the GPU (Zero implies default...currently 256MiB)
         size_t                      chunk_size  = 0;
         
+            //!  Number of frames in flight
+        size_t                      frames_in_flight    = 2;
+        
             //! Device extensions
         std::vector<const char*>    extensions;
         

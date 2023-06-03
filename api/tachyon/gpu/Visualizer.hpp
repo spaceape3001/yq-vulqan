@@ -199,6 +199,8 @@ namespace yq::tachyon {
         const ViFrame&                  frame(int32_t) const;
 
         uint64_t                        frame_number() const { return m_tick; }
+        
+        size_t                          frames_in_flight() const { return m_frames.size(); }
 
             //! Returns the name of the GPU/physical device
         std::string_view                gpu_name() const;
@@ -335,7 +337,7 @@ namespace yq::tachyon {
         using BufferMap     = std::unordered_map<uint64_t, ViBuffer>;
         using TextureMap    = std::unordered_map<uint64_t, ViTexture>;
         using ImageMap      = std::unordered_map<uint64_t, ViImage>;
-        using FrameArray    = std::array<ViFrame*,MAX_FRAMES_IN_FLIGHT>;
+        using FrameArray    = std::vector<std::unique_ptr<ViFrame>>;
 
         using CleanupFunction               = std::function<void()>;
         using CleanupVector                 = std::vector<CleanupFunction>;

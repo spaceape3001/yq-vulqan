@@ -120,6 +120,8 @@ namespace yq::tachyon {
         std::vector<Widget*>    m_children;
         std::string             m_windowID;
         
+        virtual void            prerecord(ViContext&);
+
         virtual void            child_added(Widget*){}
         virtual void            child_removed(Widget*){}
     };

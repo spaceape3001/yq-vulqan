@@ -27,6 +27,8 @@ namespace yq::tachyon {
     //! Gets a buffer from an object
     using FetchBuffer       = std::function<BufferCPtr(const void*)>;
 
+    //using FetchMemory       = const Memory& 
+
     //! Gets a texture from an object
     using FetchTexture      = std::function<TextureCPtr(const void*)>;
 
@@ -117,11 +119,9 @@ namespace yq::tachyon {
         FetchTexture            fetch       = {};
         FetchRevision           revision    = {};
         
-        //! Binding point for the texture
-        uint32_t                binding     = 0;
-        
         //! Expected update activity for this texture
         DataActivity            activity    = {};
+        uint32_t                shaders     = 0;            // shader mask (0 implies shaders)
     };
     
     struct PipelineConfig {

@@ -19,7 +19,6 @@ namespace yq::tachyon {
     {
     }
     
-    
     void    Scene3D::vulkan_(ViContext& u)
     {
         if(u.viz())
@@ -36,6 +35,13 @@ namespace yq::tachyon {
     {
         if(c)
             perspective.camera  = c;
+    }
+
+    void    Scene3D::prerecord(ViContext& u) 
+    {
+        if(u.viz())
+            u.viz()->update(u, scene);
+        Widget::prerecord(u);
     }
 }
 

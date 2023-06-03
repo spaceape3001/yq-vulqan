@@ -64,6 +64,8 @@ namespace yq::tachyon {
         
     protected:
         virtual void        window_framebuffer_resized(const Size2I&) override;
+
+        virtual void        prerecord(ViContext&) override;
         
     private:
         void                record(ViContext&) override;

@@ -60,6 +60,12 @@ namespace yq::tachyon {
         return false;
     }
 
+    void            Widget::prerecord(ViContext& u)
+    {
+        for(Widget* w : m_children)
+            w->prerecord(u);
+    }
+
     Widget*         Widget::root()
     {
         Widget* w   = this;

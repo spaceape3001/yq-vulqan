@@ -14,6 +14,7 @@
 #include <tachyon/viz/PipelineUtils.hpp>
 #include <tachyon/viz/UBO.hpp>
 #include <tachyon/viz/VBO.hpp>
+#include <tachyon/viz/Texture.hpp>
 #include <math/glm_types.hpp>
 #include <trait/not_copyable.hpp>
 #include <trait/not_moveable.hpp>
@@ -92,6 +93,14 @@ namespace yq::tachyon {
             cfg.activity    = da;
             cfg.size        = sizeof(V);
             cfg.count       = cnt;
+            cfg.shaders     = stages;
+            return cfg;
+        }
+        
+        static TexConfig    tex_(DataActivity da, uint32_t stages=0)
+        {   
+            TexConfig       cfg;
+            cfg.activity    = da;
             cfg.shaders     = stages;
             return cfg;
         }
@@ -405,6 +414,52 @@ namespace yq::tachyon {
         
         #undef YQ_PIPELINE_COMMON_HANDLER
         #undef YQ_PIPELINE_MEMBER_HANDLER
+
+        /*
+            =======================================================
+            TEXTURES
+            =======================================================
+        */
+
+
+        #define YQ_PIPELINE_MEMBER_HANDLER                          \
+            cfg.fetch       = [p](const void*v) -> BufferCPtr {     \
+                const C* c = (const C*) v;                          \
+                return (c->*p).buffer;                              \
+            };                                                      \
+            cfg.revision    = [p](const void*v) -> uint64_t {       \
+                const C* c = (const C*) v;                          \
+                auto& b = (c->*p).buffer;                           \
+                return b ? b->id() : 0ULL;                          \
+            };
+        
+
+        void    texture(Ref<const Texture> &p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            TexConfig   cfg = tex_(da, stages);
+            cfg.fetch       = [&p](const void*) -> TextureCPtr {
+                return p;
+            };
+            cfg.revision    = [&p](const void*) -> uint64_t {
+                return p ? p->id() : 0ULL;
+            };
+            m_build.texs.push_back(cfg);
+        }
+
+        void    texture(Ref<const Texture> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            TexConfig   cfg = tex_(da, stages);
+            cfg.fetch       = [p](const void*v) -> TextureCPtr {
+                const C* c = (const C*) v;
+                return (c->*p);
+            };
+            cfg.revision    = [p](const void*v) -> uint64_t {
+                const C*c   = (const C*) v;
+                const Ref<const Texture>&   t   = (c->*p);
+                return t ? t->id() : 0ULL;
+            };
+            m_build.texs.push_back(cfg);
+        }
     };
 
     template <typename C>

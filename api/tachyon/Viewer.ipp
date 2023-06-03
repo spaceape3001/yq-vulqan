@@ -160,6 +160,13 @@ namespace yq::tachyon {
         return ec;
     }
 
+    void     Viewer::prerecord(ViContext&u)
+    {
+        if(m_widget)
+            m_widget -> prerecord(u);
+    }
+
+
     void     Viewer::purge_deleted()
     {
         if(!m_delete.empty()){

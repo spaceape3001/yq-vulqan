@@ -28,6 +28,8 @@
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/enum/FrontFace.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
+#include <tachyon/viz/Image.hpp>
+#include <tachyon/viz/Texture.hpp>
 #include <tachyon/viz/Shader.hpp>
 #include <tachyon/viz/PipelineBuilder.hpp>
 #include <tachyon/scene/Render3D.hpp>
@@ -71,6 +73,19 @@ const auto  TriData   = TriangleData<ColorVertex2D>{
     { {-0.5, 0.5}, color::Orange }
 };
 
+struct Vertex2 {
+    glm::vec2   position;
+    glm::vec2   uv;
+};
+
+const Vertex2 vertices2[] = {
+    {{0.25, 0.25}, {0., 0.}},
+    {{0.25, 0.75}, {0., 1.}},
+    {{0.75, 0.25}, {1., 0.}},
+    {{0.75, 0.75}, {1., 1.}}
+};
+
+
 using timepoint_t   = std::chrono::time_point<std::chrono::steady_clock>;
 
 struct HelloTriangle : public Rendered {
@@ -80,13 +95,13 @@ struct HelloTriangle : public Rendered {
         //glm::mat4   model;
         //glm::mat4   view;
         //glm::mat4   proj;
-        glm::vec4   dope;
+        glm::vec4       dope;
     };
     
-    UB1<MyUBO>      ubo;
+    UB1<MyUBO>          ubo;
     
     
-    Warp            warp;
+    Warp                warp;
     
     static void initInfo()
     {
@@ -103,13 +118,14 @@ struct HelloTriangle : public Rendered {
                 .attribute<glm::vec3>(&Vertex::color)
             ;
             p.uniform(&HelloTriangle::ubo, DataActivity::DYNAMIC);
+            //p.texture("sdk/hello/flowers-512.png");
             //p.ubo();
         }
     }
     
     HelloTriangle() 
     {
-        ubo = { { 1.0, 1.0, 1.0, 1.0 } };
+        ubo     = { { 1.0, 1.0, 1.0, 1.0 } };
     }
     
     ~HelloTriangle()
@@ -122,21 +138,52 @@ struct HelloTriangle : public Rendered {
         bool        w = (sec & 1) != 0;
         warp.amt = (float)( 1.0 + 0.5*sin(time));
         set_wireframe( w ? Tristate::YES : Tristate::NO );
+        ubo = { { 1.0+sin(time), 1.0+sin(2*time), 1.0+sin(3*time), 1.0 } };
     }
 };
 
-YQ_INVOKE(
-    [[maybe_unused]] auto ht   = writer<HelloTriangle>();
-)
 
 YQ_OBJECT_IMPLEMENT(HelloTriangle)
 
+struct HelloQuad : public Rendered {
+    YQ_OBJECT_DECLARE(HelloQuad, Rendered)
+
+    Ref<const Texture>  tex;
+
+    static void initInfo()
+    {
+        static VBO<Vertex2>  verts(vertices2);
+        //static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
+
+        auto w = writer<HelloQuad>();
+        {
+            auto p = w.pipeline();
+            p.shaders({ "sdk/hello/quad.vert", "sdk/hello/quad.frag" });
+            p.vertex(verts, DataActivity::COMMON)
+                .attribute<glm::vec2>(&Vertex2::position)
+                .attribute<glm::vec2>(&Vertex2::uv)
+            ;
+            p.topology(Topology::TriangleStrip);
+            p.front(FrontFace::CounterClockwise);
+            p.texture(&HelloQuad::tex, DataActivity::FIXED);
+        }
+    }
+    
+    HelloQuad()
+    {
+        Ref<const Image>    img = Image::load("sdk/hello/flowers-512.png");
+        tex     = new Texture(img, ImageViewInfo(), SamplerInfo());
+    }
+};
+
+YQ_OBJECT_IMPLEMENT(HelloQuad)
 
 struct HelloScene : public Scene3D {
     YQ_OBJECT_DECLARE(HelloScene, Scene3D)
     
     Ref<HelloTriangle>      triangle;
     Ref<Triangle>           tri2;
+    Ref<HelloQuad>          quad;
     timepoint_t             start;
 
     HelloScene()
@@ -145,9 +192,11 @@ struct HelloScene : public Scene3D {
         triangle    = new HelloTriangle;
         tri2        = new Triangle(TriData);
         tri2->set_position({0.,0.,0.1});
+        quad        = new HelloQuad;
         
         add_thing(tri2);
         add_thing(triangle);
+        add_thing(quad);
     }
     
     void    vulkan_(ViContext& v)
@@ -166,6 +215,9 @@ YQ_OBJECT_IMPLEMENT(HelloScene)
 
 int main(int argc, char* argv[])
 {
+    writer<HelloTriangle>();
+    writer<HelloQuad>();
+
     AppCreateInfo        aci;
     aci.view.title        = "Hello WORLD!";
     aci.view.resizable    = true;
@@ -176,6 +228,7 @@ int main(int argc, char* argv[])
     //load_plugin_dir("plugin");
     
     HelloTriangle::initInfo();
+    HelloQuad::initInfo();
     
     app.finalize();
     app.add_viewer(new HelloScene);

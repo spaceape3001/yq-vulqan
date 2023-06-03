@@ -38,7 +38,6 @@ namespace yq::tachyon {
     struct ViTexture;
     
 
-
     class Memory;
 
 
@@ -74,10 +73,6 @@ namespace yq::tachyon {
         VkCommandPool           compute             = nullptr;
     };
     
-    struct ViTexture  {
-        VkImageView             view        = nullptr;
-        VkSampler               sampler     = nullptr;
-    };
     
     struct ViUpload {
         VkFence                 fence           = nullptr;
@@ -107,8 +102,6 @@ namespace yq::tachyon {
     */
     class Visualizer  {
     public:
-    
-    
         
         enum class Queue : uint8_t {
             Graphic,
@@ -292,9 +285,13 @@ namespace yq::tachyon {
 
         std::error_code                 upload(CommandFunction&&);
         
+        void                            update(ViContext&, const Scene&);
+
     protected:
         Visualizer();
         ~Visualizer();
+
+        virtual void                    prerecord(ViContext&){}
     
         std::error_code             init_visualizer(const ViewerCreateInfo&, GLFWwindow*);
         void                        kill_visualizer();

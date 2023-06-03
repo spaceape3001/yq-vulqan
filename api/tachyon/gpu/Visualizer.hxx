@@ -25,6 +25,8 @@ namespace yq::tachyon {
     
     using ViRenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
 
+    struct ViTO;
+
     struct ViBO {
         VkBuffer        buffer  = nullptr;
         uint64_t        rev     = 0;
@@ -55,6 +57,7 @@ namespace yq::tachyon {
         VkSemaphore                 m_imageAvailable  = nullptr;
         VkSemaphore                 m_renderFinished  = nullptr;
         VkFence                     m_fence           = nullptr;
+        const uint32_t              m_id;
         
         ViFrame(Visualizer&);
         ~ViFrame();
@@ -82,6 +85,7 @@ namespace yq::tachyon {
         std::vector<ViBO>       vbos;
         std::vector<ViBO>       ibos;
         std::vector<ViBO>       ubos;
+        std::vector<ViTO>       texs;
         VkPipelineLayout        layout      = nullptr;
         VkPipeline              pipeline    = nullptr;
         VkPipeline              wireframe   = nullptr;
@@ -92,6 +96,12 @@ namespace yq::tachyon {
     };
 
     struct ViTO {
+        VkImageView             view        = nullptr;
+        VkSampler               sampler     = nullptr;
+        uint64_t                rev         = 0ULL;
+
+        //  returns TRUE if changed
+        bool    update(Visualizer&, const TexConfig&, const void*);
     };
 
         //  This is the mirror to the rendered object
@@ -100,6 +110,14 @@ namespace yq::tachyon {
         Visualizer&                     m_viz;
         const ViPipeline&               m_pipe;
         const Rendered&                 m_object;
+        
+        /*
+        struct ubo_t {
+            VkBuffer                    buffer      = nullptr;
+            VmaAllocation               allocation  = nullptr;
+            const void*                 pointer     = nullptr;
+        };
+        */
 
         std::vector<ViBO>               m_vbos;
         std::vector<ViBO>               m_ibos;
@@ -116,6 +134,7 @@ namespace yq::tachyon {
         void                _dtor();
 
         void                update(ViContext&);
+        void                descriptors(ViContext&);
         void                record(ViContext&u);
         
         void    _ubo(size_t);
@@ -130,6 +149,11 @@ namespace yq::tachyon {
         
         std::error_code     create(VkDevice, const Shader&);
         void                destroy(VkDevice);
+    };
+
+    struct ViTexture  {
+        VkImageView             view        = nullptr;
+        VkSampler               sampler     = nullptr;
     };
 }
 

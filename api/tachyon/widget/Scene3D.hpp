@@ -22,6 +22,8 @@ namespace yq::tachyon {
         virtual ~Scene3D();
     
         virtual void    vulkan_(ViContext&) override;
+
+        virtual void    prerecord(ViContext&) override;
         
         void    add_thing(RenderedPtr);
         void    set_camera(CameraCPtr);

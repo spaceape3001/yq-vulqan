@@ -57,7 +57,6 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
     
-    //  ViBO
     bool    ViBO::update(Visualizer&viz, const BaseBOConfig&cfg, const void* p)
     {
         do {
@@ -90,6 +89,45 @@ namespace yq::tachyon {
             if(vb.buffer){
                 buffer  = vb.buffer;
                 count   = c->memory.count();
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    bool    ViTO::update(Visualizer&viz, const TexConfig&cfg, const void*p)
+    {
+        do {
+            if(!cfg.fetch)
+                return false;
+            if(p ? (cfg.activity == DataActivity::COMMON) : (cfg.activity != DataActivity::COMMON))
+                return false;
+            if(!view || !sampler)                                 // LOAD
+                break;
+            if(cfg.activity != DataActivity::DYNAMIC)   // LOAD
+                break;
+            if(!cfg.revision)
+                return false;
+            
+            uint64_t    n   = cfg.revision(p);
+            if(n == rev)
+                return false;
+            rev    = n;
+        } while(false);
+        
+        TextureCPtr      c   = cfg.fetch(p);
+        if(!c){     //  shouldn't really happen....
+            yWarning() << "EMPTY TEXTURE DETECTED!";
+            return false;
+        }
+        
+        Expect<ViTexture> xvb    = viz.create(*c);
+        if(xvb){
+            const ViTexture& vb  = *xvb;
+            if(vb.view && vb.sampler){
+                view    = vb.view;
+                sampler = vb.sampler;
                 return true;
             }
         }
@@ -156,7 +194,15 @@ namespace yq::tachyon {
     //  ViFrame
     ////////////////////////////////////////////////////////////////////////////////
 
-    ViFrame::ViFrame(Visualizer&viz) : m_viz(viz)
+    namespace {
+        uint32_t    nextFrameId()
+        {
+            static std::atomic<uint32_t>    s_ret{0};
+            return ++s_ret;
+        }
+    }
+
+    ViFrame::ViFrame(Visualizer&viz) : m_viz(viz), m_id(nextFrameId())
     {
     }
     
@@ -235,7 +281,7 @@ namespace yq::tachyon {
                     return i->second;
             }
         }
-        
+
         const ViPipeline*   vp   = m_viz.create(pipe);
         if(!vp)
             return nullptr;
@@ -427,11 +473,25 @@ namespace yq::tachyon {
         auto& uc    = m_pipe.cfg.ubos;
         if(!uc.empty()){
             m_ubos.resize(uc.size());
-            for(i=0;i<m_ubos.size();++i)
+            for(i=0;i<m_ubos.size();++i){
                 m_ubos[i] = m_pipe.ubos[i];
+                m_ubos[i].update(m_viz, uc[i], &m_object);
+            }
             
             ds += uc.size();
         }
+        
+        auto& tc    = m_pipe.cfg.texs;
+        if(!tc.empty()){
+            m_texs.resize(tc.size());
+            for(i=0;i<m_texs.size();++i){
+                m_texs[i] = m_pipe.texs[i];
+                m_texs[i].update(m_viz, tc[i], &m_object);
+            }
+            
+            ds += tc.size();
+        }
+        
         
         if(ds){
             std::vector<VkDescriptorSetLayout>      layouts(ds, m_pipe.descriptors);    // TODO efficiency is to push this into ViPipeline
@@ -439,13 +499,15 @@ namespace yq::tachyon {
             allocInfo.descriptorPool        = m_viz.descriptor_pool();
             allocInfo.descriptorSetCount    = ds;
             allocInfo.pSetLayouts           = &m_pipe.descriptors;
-            m_descriptors.resize(ds);
+            m_descriptors.resize(ds, nullptr);
             if(vkAllocateDescriptorSets(m_viz.device(), &allocInfo, m_descriptors.data()) != VK_SUCCESS){
                 yInfo() << "Unable to allocate descriptor sets!";
             }
             
             for(i=0;i<m_ubos.size();++i)
                 _ubo(i);
+            for(i=0;i<m_texs.size();++i)
+                _tex(i);
         }
         return std::error_code();
     }
@@ -456,16 +518,10 @@ namespace yq::tachyon {
 
     void    ViRendered::_ubo(size_t i)
     {
-        if(i>=m_ubos.size())
-            return ;
-        
-        if(!m_ubos[i].update(m_viz, m_pipe.cfg.ubos[i], &m_object))
-            return ;
-            
         VkDescriptorBufferInfo  bufferInfo;
-        bufferInfo.buffer   = m_ubos[i].buffer;
-        bufferInfo.offset   = 0;
-        bufferInfo.range    = VK_WHOLE_SIZE;
+        bufferInfo.buffer                   = m_ubos[i].buffer;
+        bufferInfo.offset                   = 0;
+        bufferInfo.range                    = VK_WHOLE_SIZE;
 
         VqWriteDescriptorSet    descriptorWrite;
         descriptorWrite.dstSet              = m_descriptors[i];
@@ -474,15 +530,45 @@ namespace yq::tachyon {
         descriptorWrite.descriptorType      = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
         descriptorWrite.descriptorCount     = 1;
         descriptorWrite.pBufferInfo         = &bufferInfo;
-        descriptorWrite.pImageInfo          = nullptr;
-        descriptorWrite.pTexelBufferView    = nullptr;
+        
         vkUpdateDescriptorSets(m_viz.device(), 1, &descriptorWrite, 0, nullptr);
+    }
+
+    void    ViRendered::_tex(size_t i)
+    {
+        VkDescriptorImageInfo   imageInfo{};
+        imageInfo.imageLayout   = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+        imageInfo.imageView     = m_texs[i].view;
+        imageInfo.sampler       = m_texs[i].sampler;
+    
+        VqWriteDescriptorSet    descriptorWrite;
+        descriptorWrite.dstSet              = m_descriptors[i+m_ubos.size()];
+        descriptorWrite.dstBinding          = i;
+        descriptorWrite.dstArrayElement     = 0;
+        descriptorWrite.descriptorType      = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+        descriptorWrite.descriptorCount     = 1;
+        descriptorWrite.pImageInfo          = &imageInfo;
+        
+        vkUpdateDescriptorSets(m_viz.device(), 1, &descriptorWrite, 0, nullptr);
+    }
+
+    void                ViRendered::descriptors(ViContext& u)
+    {
+        size_t i;
+        for(i=0;i<m_ubos.size();++i){
+            m_ubos[i].update(m_viz, m_pipe.cfg.ubos[i], &m_object);
+            _ubo(i);
+        }
+        for(i=0;i<m_texs.size();++i){
+            m_texs[i].update(m_viz, m_pipe.cfg.texs[i], &m_object);
+            _tex(i);
+        }
     }
  
     void                ViRendered::update(ViContext& u)
     {
         size_t i;
-        
+
         auto& vc    = m_pipe.cfg.vbos;
         for(i=0;i<m_vbos.size();++i)
             m_vbos[i].update(m_viz, vc[i], &m_object);
@@ -491,8 +577,6 @@ namespace yq::tachyon {
         for(i=0;i<m_ibos.size();++i)
             m_ibos[i].update(m_viz, ic[i], &m_object);
 
-        for(i=0;i<m_ubos.size();++i)
-            _ubo(i);
 
         const Render3D* r3      = (m_pipe.cfg.push.type == PushConfigType::Full) ? dynamic_cast<const Render3D*>(&m_object) : nullptr;
         StdPushData*    push    = (r3 || (m_pipe.cfg.push.type == PushConfigType::View)) ? m_push.create_single<StdPushData>() : nullptr;
@@ -510,8 +594,10 @@ namespace yq::tachyon {
             push->matrix = u.world2eye();
             break;
         case PushConfigType::Custom:
-            if(m_pipe.cfg.push.fetch)
+            if(m_pipe.cfg.push.fetch){
+                m_push.clear();
                 m_pipe.cfg.push.fetch(&m_object, m_push);
+            }
             break;
         case PushConfigType::None:
         default:
@@ -538,11 +624,13 @@ namespace yq::tachyon {
             //  =================================================
             //      PUSH THE CONSTANTS
 
-        if(!m_push.empty())
+        if(!m_push.empty()){
             vkCmdPushConstants(u.command(), m_pipe.layout, m_pipe.shaders, 0, m_push.size(), m_push.data() );
+        }
         
-        if(!m_descriptors.empty())
+        if(!m_descriptors.empty()){
             vkCmdBindDescriptorSets(u.command(), VK_PIPELINE_BIND_POINT_GRAPHICS, u.m_layout, 0, m_descriptors.size(), m_descriptors.data(), 0, nullptr);
+        }
         
         //  =================================================
         //      UNIFORM BUFFERS
@@ -1100,7 +1188,7 @@ namespace yq::tachyon {
             
             std::vector<VkVertexInputAttributeDescription>  attrs;
             std::vector<VkVertexInputBindingDescription>    vbos;
-            std::vector<VkDescriptorSetLayoutBinding>       ubos;
+            std::vector<VkDescriptorSetLayoutBinding>       desc;
             
             for(uint32_t i=0;i<cfg.vbos.size();++i){
                 auto& v = cfg.vbos[i];
@@ -1120,24 +1208,40 @@ namespace yq::tachyon {
                 }
             }
 
-            if(!cfg.ubos.empty()){
-yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";            
+            size_t  ds2 = cfg.ubos.size() + cfg.texs.size();
+
+            if(ds2){
                 for(uint32_t    i   = 0;i<cfg.ubos.size();++i){
                     auto& u = cfg.ubos[i];
-                    VkDescriptorSetLayoutBinding a;
+                    VkDescriptorSetLayoutBinding a{};
                     a.binding           = i;
-                    a.descriptorCount   = u.count;
+                    a.descriptorCount   = 1;
                     a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
                     if(u.shaders){
                         a.stageFlags    = u.shaders;
                     } else
                         a.stageFlags    = p.shaders;
-                    ubos.push_back(a);
+                    desc.push_back(a);
+                }
+                
+                uint32_t        tbase   = cfg.ubos.size();
+                
+                for(uint32_t  i=0;i<cfg.texs.size();++i){
+                    auto& u = cfg.texs[i];
+                    VkDescriptorSetLayoutBinding a{};
+                    a.binding           = i+tbase;
+                    a.descriptorCount   = 1;
+                    a.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+                    if(u.shaders){
+                        a.stageFlags    = u.shaders;
+                    } else
+                        a.stageFlags    = p.shaders;
+                    desc.push_back(a);
                 }
                 
                 VqDescriptorSetLayoutCreateInfo layoutInfo;
-                layoutInfo.bindingCount = ubos.size();
-                layoutInfo.pBindings    = ubos.data();
+                layoutInfo.bindingCount = desc.size();
+                layoutInfo.pBindings    = desc.data();
                 if(vkCreateDescriptorSetLayout(m_device, &layoutInfo, nullptr, &p.descriptors) != VK_SUCCESS)
                     throw create_error<"Unable to create a descriptor set layout">();
                 pipelineLayoutInfo.setLayoutCount   = 1;
@@ -1301,9 +1405,16 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
                     p.ubos.push_back(bo);
                 }
             }
+            
+            if(!cfg.texs.empty()){
+                for(auto& tb : cfg.texs){
+                    ViTO        to;
+                    to.update(*this, tb, nullptr);
+                    p.texs.push_back(to);
+                }
+            }
                 
             p.cfg           = cfg;
-
 
             return std::error_code();
         }
@@ -1511,7 +1622,8 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             size_t  cntDPS  = sizeof(descriptorPoolSizes)/sizeof(VkDescriptorPoolSize);
             
             VqDescriptorPoolCreateInfo descriptorPoolInfo;
-            descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+            //descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT | VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
+            descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
             descriptorPoolInfo.maxSets       = m_descriptorCount * cntDPS;
             descriptorPoolInfo.poolSizeCount = (uint32_t) cntDPS;
             descriptorPoolInfo.pPoolSizes    = descriptorPoolSizes;
@@ -1986,6 +2098,7 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         }
         
         ViPipeline* p   = new ViPipeline;
+        p->id           = v.id();
         _create(*p, v.config());
         ViPipeline* ret = nullptr;
         
@@ -2122,7 +2235,6 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
 
     std::error_code     Visualizer::_record(ViContext& u, uint32_t imageIndex, DrawFunction use)
     {
-    
         VqCommandBufferBeginInfo beginInfo;
         beginInfo.flags = 0; // Optional
         beginInfo.pInheritanceInfo = nullptr; // Optional
@@ -2162,10 +2274,12 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
     {
         static constexpr const uint64_t     kMaxWait = 100'000'000ULL;
     
+    
         auto    r1 = auto_reset(u.m_viz, this);
         ViFrame&    f   = current_frame();
         auto    r2  = auto_reset(u.m_command, f.m_commandBuffer);
-        
+        auto    r3  = auto_reset(u.m_frame, &f);
+
         VkResult        res = VK_SUCCESS;
         
         res = vkWaitForFences(m_device, 1, &f.m_fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
@@ -2204,9 +2318,12 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             return create_error<"Unexpected error">();
         }
         
+        prerecord(u);
+
         vkResetFences(m_device, 1, &f.m_fence);
         vkResetCommandBuffer(u.command(), 0);
         
+    
         std::error_code ec = _record(u, imageIndex, use);
         if(ec)
             return ec;
@@ -2256,7 +2373,6 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         ViRendered*         thing   = current_frame().create(r, p);
         if(!thing)
             return;
-            
         thing -> update(u);
         thing -> record(u);
     }
@@ -2314,6 +2430,21 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             if(!r)
                 continue;
             draw_object(u, *r, p.wireframe);
+        }
+    }
+
+    void               Visualizer::update(ViContext&u, const Scene&sc)
+    {
+        if(u.m_frame){
+            for(auto& r : sc.things){
+                const Pipeline*pipe    = r->pipeline();
+                if(!pipe)
+                    continue;
+                ViRendered* rr  = u.m_frame -> create(*r, *pipe);
+                if(!rr)
+                    continue;
+                rr -> descriptors(u);
+            }
         }
     }
 

@@ -86,13 +86,6 @@ namespace yq::tachyon {
         VkQueue                 queue           = nullptr;
     };
 
-        //  and so we can be more efficient in rendering
-    struct ViFrame {
-        VkCommandBuffer         commandBuffer   = nullptr;
-        VkSemaphore             imageAvailable  = nullptr;
-        VkSemaphore             renderFinished  = nullptr;
-        VkFence                 fence           = nullptr;
-    };
     
     //template <typename T>
     //struct ViMap {
@@ -166,15 +159,18 @@ namespace yq::tachyon {
 
         //! Creates the pipeline
         //! \note Reference is only good to the next create()
-        const ViPipeline&               create(const Pipeline&);
-
-        const ViThing&                  create(const Rendered&, const Pipeline&);
+        const ViPipeline*               create(const Pipeline&);
         
         Expect<ViTexture>               create(const Texture&);
         
-
+        //! Gets the current frame
+        //! \note will return INVALID reference if construction failed!
         ViFrame&                        current_frame();
+
+        //! Gets the current frame
+        //! \note will return INVALID reference if construction failed!
         const ViFrame&                  current_frame() const;
+
         
         VkDescriptorPool                descriptor_pool() const;
 
@@ -193,6 +189,14 @@ namespace yq::tachyon {
         void                            draw_object(ViContext&, const Rendered&, const Pipeline&, Tristate wireframe=Tristate::INHERIT);
 
         void                            erase(const Buffer&);
+
+        //! Gets the frame relative to current
+        //! \note will return INVALID reference if construction failed!
+        ViFrame&                        frame(int32_t);
+
+        //! Gets the frame relative to current
+        //! \note will return INVALID reference if construction failed!
+        const ViFrame&                  frame(int32_t) const;
 
         uint64_t                        frame_number() const { return m_tick; }
 
@@ -213,9 +217,17 @@ namespace yq::tachyon {
         uint32_t                        max_push_constants_size() const;
         uint32_t                        max_viewports() const;
         
+        //! Gets the next frame
+        //! \note will return INVALID reference if construction failed!
+        ViFrame&                        next_frame();
+
+        //! Gets the next frame
+        //! \note will return INVALID reference if construction failed!
+        const ViFrame&                  next_frame() const;
+        
         //! Finds the pipeline
-        //! \note the Reference is only good to the next create()
-        const ViPipeline&               pipeline(uint64_t) const;
+        //! \note do NOT hold onto the reference!
+        const ViPipeline*               pipeline(uint64_t) const;
         
         PresentMode                     present_mode() const { return m_presentMode; }
         
@@ -226,8 +238,6 @@ namespace yq::tachyon {
         uint32_t                        present_queue_family() const;
         bool                            present_queue_valid() const;
         
-
-
         VkRenderPass                    render_pass() const;
 
         void                            trigger_rebuild();
@@ -279,7 +289,7 @@ namespace yq::tachyon {
         using CommandFunction   = std::function<void(VkCommandBuffer)>;
 
         std::error_code                 upload(CommandFunction&&);
-
+        
     protected:
         Visualizer();
         ~Visualizer();
@@ -291,9 +301,6 @@ namespace yq::tachyon {
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
     
-        std::error_code             _create(ViFrame&);
-        void                        _destroy(ViFrame&);
-
         std::error_code             _create(ViPipeline&, const PipelineConfig&);
         void                        _destroy(ViPipeline&);
 
@@ -314,26 +321,32 @@ namespace yq::tachyon {
         
         void                        _draw(ViContext&, const Rendered&, const Pipeline&, Tristate);
         
+        
     
         Visualizer(const Visualizer&) = delete;
         Visualizer(Visualizer&&) = delete;
         Visualizer& operator=(const Visualizer&) = delete;
         Visualizer& operator=(Visualizer&&) = delete;
     
-        using DKey  = std::pair<uint64_t, uint64_t>;
-        using ThingMap      = std::map<DKey,ViThing*>;
+        //using DKey  = std::pair<uint64_t, uint64_t>;
+        using RenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
         using PipelineMap   = std::unordered_map<uint64_t, ViPipeline*>;
         using ShaderMap     = std::unordered_map<uint64_t, ViShader>;
         using BufferMap     = std::unordered_map<uint64_t, ViBuffer>;
         using TextureMap    = std::unordered_map<uint64_t, ViTexture>;
         using ImageMap      = std::unordered_map<uint64_t, ViImage>;
+        using FrameArray    = std::array<ViFrame*,MAX_FRAMES_IN_FLIGHT>;
+
+        using CleanupFunction               = std::function<void()>;
+        using CleanupVector                 = std::vector<CleanupFunction>;
+        using CleanupMap                    = std::unordered_map<uint64_t, CleanupVector*>;
     
         mutable tbb::spin_rw_mutex          m_mutex;
-    
     
         VmaAllocator                        m_allocator             = nullptr;
         VqApp*                              m_app                   = nullptr;
         BufferMap                           m_buffers;
+        CleanupVector                       m_cleanup;                  // keep it one until performance bottlenecks
         VkClearValue                        m_clearValue;
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
         ViQueues                            m_compute;
@@ -342,7 +355,7 @@ namespace yq::tachyon {
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
         //std::vector<const char*>            m_extensions;
-        ViFrame                             m_frames[MAX_FRAMES_IN_FLIGHT];
+        FrameArray                          m_frames;
         ViQueues                            m_graphic;
         VkInstance                          m_instance              = nullptr;
         ImageMap                            m_images;
@@ -363,7 +376,6 @@ namespace yq::tachyon {
         
         TextureMap                          m_textures;
             // eventually this will get smarter....
-        ThingMap                            m_things;
         ViThread                            m_thread;
         
         uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
@@ -372,6 +384,7 @@ namespace yq::tachyon {
         ViQueues                            m_videoEncode;
         std::atomic<bool>                   m_rebuildSwap           = { false };
         
+
     private:
         bool                                m_init                  = false;
         GLFWwindow*                         m_window                = nullptr;

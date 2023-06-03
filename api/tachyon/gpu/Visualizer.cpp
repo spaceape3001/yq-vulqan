@@ -44,6 +44,9 @@
 
 #include <GLFW/glfw3.h>
 
+#define LOCK        tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
+#define WLOCK       tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, true);
+
 namespace yq::tachyon {
 
     namespace errors {
@@ -145,6 +148,130 @@ namespace yq::tachyon {
 
     ViContext::ViContext() = default;
     ViContext::~ViContext() = default;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //  ViFrame
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ViFrame::ViFrame(Visualizer&viz) : m_viz(viz)
+    {
+    }
+    
+    ViFrame::~ViFrame()
+    {
+        _dtor();
+    }
+
+    std::error_code     ViFrame::_ctor()
+    {
+        try {
+            m_commandPool       = m_viz.command_pool();
+            VqCommandBufferAllocateInfo allocInfo;
+            allocInfo.commandPool           = m_commandPool;
+            allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+            allocInfo.commandBufferCount    = 1;
+            if (vkAllocateCommandBuffers(m_viz.device(), &allocInfo, &m_commandBuffer) != VK_SUCCESS) 
+                throw create_error<"Failed to allocate command buffers">();
+
+            VqFenceCreateInfo   fci;
+            fci.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+            if(vkCreateFence(m_viz.device(), &fci, nullptr,  &m_fence) != VK_SUCCESS)
+                throw create_error<"Unable to create fence">();
+
+            VqSemaphoreCreateInfo   info;
+            if(vkCreateSemaphore(m_viz.device(), &info, nullptr, &m_imageAvailable) != VK_SUCCESS)
+                throw create_error<"Unable to create semaphore!">();
+            if(vkCreateSemaphore(m_viz.device(), &info, nullptr, &m_renderFinished) != VK_SUCCESS)
+                throw create_error<"Unable to create semaphore!">();
+            return std::error_code();
+        }
+        catch(std::error_code ec)
+        {
+            _dtor();
+            return ec;
+        }
+    }
+    
+    void                ViFrame::_dtor()
+    {
+        for(auto& i : m_rendereds){
+            if(i.second)
+                delete i.second;
+        }
+        m_rendereds.clear();
+
+        if(m_commandBuffer && m_commandPool){
+            vkFreeCommandBuffers(m_viz.device(), m_commandPool, 1, &m_commandBuffer);
+            m_commandBuffer   = nullptr;
+        }
+        
+        if(m_imageAvailable){
+            vkDestroySemaphore(m_viz.device(), m_imageAvailable, nullptr);
+            m_imageAvailable  = nullptr;
+        }
+        
+        if(m_renderFinished){
+            vkDestroySemaphore(m_viz.device(), m_renderFinished, nullptr);
+            m_renderFinished  = nullptr;
+        }
+        
+        if(m_fence){
+            vkDestroyFence(m_viz.device(), m_fence, nullptr);
+            m_fence   = nullptr;
+        }
+    }
+    
+    
+    ViRendered*         ViFrame::create(const Rendered&obj, const Pipeline& pipe)
+    {
+        {
+            LOCK
+            auto eq = m_rendereds.equal_range(obj.id());
+            for(auto i = eq.first; i != eq.second; ++i){
+                if(i->second->pipe.id == pipe.id())
+                    return i->second;
+            }
+        }
+        
+        const ViPipeline*   vp   = m_viz.create(pipe);
+        if(!vp)
+            return nullptr;
+        
+        ViRendered* p   = new ViRendered(m_viz, *vp, obj);
+        ViRendered* ret = nullptr;
+        
+        {
+            WLOCK
+            auto eq = m_rendereds.equal_range(obj.id());
+            for(auto i = eq.first; i != eq.second; ++i){
+                if(i->second->pipe.id == pipe.id()){
+                    ret = i->second;
+                    break;
+                }
+            }
+            
+            if(!ret){
+                m_rendereds.insert({ obj.id(), p });
+                return p;
+            }
+        }
+        
+        delete p;
+        return ret;
+    }
+    
+    const ViRendered*   ViFrame::lookup(const Rendered&ren, const Pipeline& pipe) const
+    {
+        {
+            LOCK
+            auto eq = m_rendereds.equal_range(ren.id());
+            for(auto i = eq.first; i != eq.second; ++i){
+                if(i->second->pipe.id == pipe.id())
+                    return i->second;
+            }
+        }
+        return nullptr;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViImage
@@ -259,6 +386,84 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  ViRendered
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ViRendered::ViRendered(Visualizer&_viz, const ViPipeline& _pipe, const Rendered& _obj) : viz(_viz), pipe(_pipe), object(_obj)
+    {
+        _ctor();
+    }
+    
+    ViRendered::~ViRendered()
+    {
+        _dtor();
+    }
+
+    std::error_code     ViRendered::_ctor()
+    {
+        size_t i;
+        size_t  ds = 0;
+        auto& vc    = pipe.cfg.vbos;
+        if(!vc.empty()){
+            vbos.resize(vc.size());
+            for(i=0;i<vbos.size();++i){
+                vbos[i] = pipe.vbos[i];
+                vbos[i].update(viz, vc[i], &object);
+            }
+        }
+            
+        auto& ic    = pipe.cfg.ibos;
+        if(!ic.empty()){
+            ibos.resize(ic.size());
+            for(i=0;i<ibos.size();++i){
+                ibos[i] = pipe.ibos[i];
+                ibos[i].update(viz, ic[i], &object);
+            }
+        }
+        
+        auto& uc    = pipe.cfg.ubos;
+        if(!uc.empty()){
+            ubos.resize(uc.size());
+            for(i=0;i<ubos.size();++i){
+                ubos[i] = pipe.ubos[i];
+                ubos[i].update(viz, uc[i], &object);
+            }
+            
+            ds += uc.size();
+        }
+        
+        if(ds){
+            std::vector<VkDescriptorSetLayout>      layouts(MAX_FRAMES_IN_FLIGHT, pipe.descriptors);
+            VqDescriptorSetAllocateInfo allocInfo;
+            allocInfo.descriptorPool    = viz.descriptor_pool();
+            allocInfo.descriptorSetCount    = ds;
+            allocInfo.pSetLayouts       = layouts.data();
+            descriptors.resize(ds);
+            if(vkAllocateDescriptorSets(viz.device(), &allocInfo, descriptors.data()) != VK_SUCCESS){
+                yInfo() << "Unable to allocate descriptor sets!";
+            }
+        }
+        return std::error_code();
+    }
+    
+    void                ViRendered::_dtor()
+    {
+    }
+    
+    void                ViRendered::update(ViContext& u)
+    {
+        size_t i;
+        auto& vc    = pipe.cfg.vbos;
+        for(i=0;i<vbos.size();++i)
+            vbos[i].update(viz, vc[i], &object);
+            
+        auto& ic    = pipe.cfg.ibos;
+        for(i=0;i<ibos.size();++i)
+            ibos[i].update(viz, ic[i], &object);
+    }
+    
+
+    ////////////////////////////////////////////////////////////////////////////////
     //  ViShader
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -341,77 +546,13 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    //  ViRendered
-    ////////////////////////////////////////////////////////////////////////////////
-
-
-    ViRendered::ViRendered(Visualizer& viz, const ViPipeline& vp, const Rendered* object)
-    {
-        size_t i;
-        size_t  ds = 0;
-
-        auto& vc    = vp.cfg.vbos;
-        if(!vc.empty()){
-            vbos.resize(vc.size());
-            for(i=0;i<vbos.size();++i){
-                vbos[i] = vp.vbos[i];
-                vbos[i].update(viz, vc[i], object);
-            }
-        }
-            
-        auto& ic    = vp.cfg.ibos;
-        if(!ic.empty()){
-            ibos.resize(ic.size());
-            for(i=0;i<ibos.size();++i){
-                ibos[i] = vp.ibos[i];
-                ibos[i].update(viz, ic[i], object);
-            }
-        }
-        
-        auto& uc    = vp.cfg.ubos;
-        if(!uc.empty()){
-            ubos.resize(uc.size());
-            for(i=0;i<ubos.size();++i){
-                ubos[i] = vp.ubos[i];
-                ubos[i].update(viz, uc[i], object);
-            }
-            
-            ds += uc.size();
-        }
-        
-        if(ds){
-            std::vector<VkDescriptorSetLayout>      layouts(MAX_FRAMES_IN_FLIGHT, vp.descriptors);
-            VqDescriptorSetAllocateInfo allocInfo;
-            allocInfo.descriptorPool    = viz.descriptor_pool();
-            allocInfo.descriptorSetCount    = MAX_FRAMES_IN_FLIGHT * ds;
-            allocInfo.pSetLayouts       = layouts.data();
-            descriptors.resize(MAX_FRAMES_IN_FLIGHT*ds);
-            if(vkAllocateDescriptorSets(viz.device(), &allocInfo, descriptors.data()) != VK_SUCCESS){
-                yInfo() << "Unable to allocate descriptor sets!";
-            }
-        }
-        
-    }
-    
-    void    ViRendered::update(Visualizer& viz, const ViPipeline& vp, const Rendered* object)
-    {
-        size_t i;
-        auto& vc    = vp.cfg.vbos;
-        for(i=0;i<vbos.size();++i)
-            vbos[i].update(viz, vc[i], object);
-            
-        auto& ic    = vp.cfg.ibos;
-        for(i=0;i<ibos.size();++i)
-            ibos[i].update(viz, ic[i], object);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
 
     Visualizer::Visualizer() 
     {
         m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
+        m_frames.fill(nullptr);
     }
     
     Visualizer::~Visualizer()
@@ -419,8 +560,6 @@ namespace yq::tachyon {
         kill_visualizer();
     }
     
-    #define LOCK        tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
-    #define WLOCK       tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, true);
     
     namespace {
         std::vector<float>      make_weights(const ViQueueSpec& qs, uint32_t mincnt=0)
@@ -706,7 +845,8 @@ namespace yq::tachyon {
         m_presentMode               = m_presentModes.contains(vci.pmode) ? vci.pmode : PresentMode{ PresentMode::Fifo };
 
         for(auto& f : m_frames){
-            ec = _create(f);
+            f   = new ViFrame(*this);
+            ec  = f->_ctor();
             if(ec)
                 return ec;
         }
@@ -729,8 +869,11 @@ namespace yq::tachyon {
             m_swapchain.swapchain   = nullptr;
         }
     
-        for(auto& f : m_frames)
-            _destroy(f);
+        for(auto& f : m_frames){
+            if(f)
+                delete f;
+            f       = nullptr;
+        }
     
         if(m_renderPass)
             vkDestroyRenderPass(m_device, m_renderPass, nullptr);
@@ -813,60 +956,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
     //  SUB CREATE/DESTROY
-
-    std::error_code             Visualizer::_create(ViFrame&p)
-    {
-        try {
-            VqCommandBufferAllocateInfo allocInfo;
-            allocInfo.commandPool           = m_thread.graphic;
-            allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-            allocInfo.commandBufferCount    = 1;
-            if (vkAllocateCommandBuffers(m_device, &allocInfo, &p.commandBuffer) != VK_SUCCESS) 
-                throw create_error<"Failed to allocate command buffers">();
-
-            VqFenceCreateInfo   fci;
-            fci.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-            if(vkCreateFence(m_device, &fci, nullptr,  &p.fence) != VK_SUCCESS)
-                throw create_error<"Unable to create fence">();
-
-            VqSemaphoreCreateInfo   info;
-            if(vkCreateSemaphore(m_device, &info, nullptr, &p.imageAvailable) != VK_SUCCESS)
-                throw create_error<"Unable to create semaphore!">();
-            if(vkCreateSemaphore(m_device, &info, nullptr, &p.renderFinished) != VK_SUCCESS)
-                throw create_error<"Unable to create semaphore!">();
-            return std::error_code();
-        }
-        catch(std::error_code ec)
-        {
-            _destroy(p);
-            return ec;
-        }
-    }
     
-    void                        Visualizer::_destroy(ViFrame&p)
-    {
-        if(p.commandBuffer && m_thread.graphic){
-            vkFreeCommandBuffers(m_device, m_thread.graphic, 1, &p.commandBuffer);
-            p.commandBuffer   = nullptr;
-        }
-        
-        if(p.imageAvailable){
-            vkDestroySemaphore(m_device, p.imageAvailable, nullptr);
-            p.imageAvailable  = nullptr;
-        }
-        
-        if(p.renderFinished){
-            vkDestroySemaphore(m_device, p.renderFinished, nullptr);
-            p.renderFinished  = nullptr;
-        }
-        
-        if(p.fence){
-            vkDestroyFence(m_device, p.fence, nullptr);
-            p.fence   = nullptr;
-        }
-        
-    }
-
     std::error_code          Visualizer::_create(ViPipeline&p, const PipelineConfig&cfg)
     {
         try {
@@ -1430,7 +1520,7 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
 
     VkCommandBuffer Visualizer::command_buffer() const
     {
-        return current_frame().commandBuffer;
+        return current_frame().m_commandBuffer;
     }
 
     VkCommandPool   Visualizer::command_pool() const
@@ -1460,12 +1550,12 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
 
     ViFrame&            Visualizer::current_frame()
     {
-        return m_frames[m_tick % MAX_FRAMES_IN_FLIGHT];
+        return *(m_frames[m_tick % MAX_FRAMES_IN_FLIGHT]);
     }
     
     const ViFrame&      Visualizer::current_frame() const
     {
-        return m_frames[m_tick % MAX_FRAMES_IN_FLIGHT];
+        return const_cast<Visualizer*>(this)->current_frame();
     }
 
     VkDescriptorPool    Visualizer::descriptor_pool() const
@@ -1473,6 +1563,17 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         return m_thread.descriptors;
     }
     
+    ViFrame&            Visualizer::frame(int32_t i)
+    {
+        uint64_t    tick    = (uint64_t)((int64_t) m_tick + i);
+        return *(m_frames[tick % MAX_FRAMES_IN_FLIGHT ]);
+    }
+    
+    const ViFrame&      Visualizer::frame(int32_t i) const
+    {
+        return const_cast<Visualizer*>(this)->frame(i);
+    }
+
 
     std::string_view    Visualizer::gpu_name() const
     {
@@ -1532,17 +1633,25 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         return m_deviceInfo.limits.maxViewports; 
     }
 
-    const ViPipeline& Visualizer::pipeline(uint64_t i) const
+    ViFrame&            Visualizer::next_frame()
     {
-        static const ViPipeline s_null;
-        
+        return *(m_frames[(m_tick+1) % MAX_FRAMES_IN_FLIGHT]);
+    }
+    
+    const ViFrame&      Visualizer::next_frame() const
+    {
+        return const_cast<Visualizer*>(this)->next_frame();
+    }
+
+    const ViPipeline* Visualizer::pipeline(uint64_t i) const
+    {
         {
             LOCK
             auto j = m_pipelines.find(i);
             if(j != m_pipelines.end())
-                return *(j->second);
+                return (j->second);
         }
-        return s_null;
+        return nullptr;
     }
 
     VkQueue      Visualizer::present_queue(uint32_t i) const
@@ -1569,6 +1678,7 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
     {
         return m_renderPass;
     }
+
 
     Expect<ViShader> Visualizer::shader(uint64_t i) const
     {
@@ -1753,13 +1863,13 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
     }
 
     
-    const ViPipeline&  Visualizer::create(const Pipeline& v)
+    const ViPipeline*  Visualizer::create(const Pipeline& v)
     {
         {
             LOCK
             auto j = m_pipelines.find(v.id());
             if(j != m_pipelines.end())
-                return *(j->second);
+                return j->second;
         }
         
         ViPipeline* p   = new ViPipeline;
@@ -1780,20 +1890,7 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             delete p;
         }
         
-        return *ret;
-    }
-
-    const ViThing&      Visualizer::create(const Rendered& r, const Pipeline&p)
-    {
-        auto& vp    = create(p);
-        DKey    k   = DKey(r.id(), p.id());
-        auto[j,f]   = m_things.try_emplace(k, nullptr);
-        if(f){
-            j->second   = new ViThing(*this, vp, &r);
-        } else {
-            j->second->update(*this, vp, &r);
-        }
-        return *(j->second);
+        return ret;
     }
 
     Expect<ViShader>    Visualizer::create(const Shader& v)
@@ -1954,11 +2051,11 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
     
         auto    r1 = auto_reset(u.m_viz, this);
         ViFrame&    f   = current_frame();
-        auto    r2  = auto_reset(u.m_command, f.commandBuffer);
+        auto    r2  = auto_reset(u.m_command, f.m_commandBuffer);
         
         VkResult        res = VK_SUCCESS;
         
-        res = vkWaitForFences(m_device, 1, &f.fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
+        res = vkWaitForFences(m_device, 1, &f.m_fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
         if(res == VK_TIMEOUT)
             return create_error<"Fence timeout">();
 
@@ -1969,7 +2066,7 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         }
 
         uint32_t imageIndex = 0;
-        res    = vkAcquireNextImageKHR(m_device, m_swapchain.swapchain, kMaxWait, f.imageAvailable, VK_NULL_HANDLE, &imageIndex);
+        res    = vkAcquireNextImageKHR(m_device, m_swapchain.swapchain, kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &imageIndex);
         
         switch(res){
         case VK_TIMEOUT:
@@ -1994,7 +2091,7 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             return create_error<"Unexpected error">();
         }
         
-        vkResetFences(m_device, 1, &f.fence);
+        vkResetFences(m_device, 1, &f.m_fence);
         vkResetCommandBuffer(u.command(), 0);
         
         std::error_code ec = _record(u, imageIndex, use);
@@ -2003,19 +2100,19 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         
         VqSubmitInfo submitInfo;
 
-        VkSemaphore waitSemaphores[] = { f.imageAvailable };
+        VkSemaphore waitSemaphores[] = { f.m_imageAvailable };
         VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
         submitInfo.waitSemaphoreCount = 1;
         submitInfo.pWaitSemaphores      = waitSemaphores;
         submitInfo.pWaitDstStageMask    = waitStages;
         submitInfo.commandBufferCount   = 1;
-        submitInfo.pCommandBuffers      = &f.commandBuffer;
+        submitInfo.pCommandBuffers      = &f.m_commandBuffer;
 
-        VkSemaphore signalSemaphores[]  = {f.renderFinished};
+        VkSemaphore signalSemaphores[]  = {f.m_renderFinished};
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores    = signalSemaphores;
 
-        if (vkQueueSubmit(m_graphic[0], 1, &submitInfo, f.fence) != VK_SUCCESS) 
+        if (vkQueueSubmit(m_graphic[0], 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
             return create_error<"Failed to submit draw command buffer">();
             
         VqPresentInfoKHR presentInfo;
@@ -2040,8 +2137,15 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
             
         // TODO ... reduce this down to a single pipeline lookup.... (as the next one is implicit)
         
-        const ViPipeline&   pipe    = create(p);
-        const ViThing&      thing   = create(r, p);
+        //  FOR NOW....
+        ViFrame&            f   = current_frame();
+        
+        ViRendered*         thing   = f.create(r, p);
+        if(!thing)
+            return;
+            
+        const ViPipeline&   pipe    = thing->pipe;
+        thing -> update(u);
 
             //  =================================================
             //      SET THE PIPELINE
@@ -2104,8 +2208,8 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         if(VN){
             for(uint32_t i=0;i<VN;++i){
                 VkDeviceSize    zero{};
-                vmax    = std::max(vmax, thing.vbos[i].count);
-                vkCmdBindVertexBuffers(u.command(), i,  1, &thing.vbos[i].buffer, &zero);
+                vmax    = std::max(vmax, thing->vbos[i].count);
+                vkCmdBindVertexBuffers(u.command(), i,  1, &thing->vbos[i].buffer, &zero);
             }
         }
         
@@ -2115,8 +2219,8 @@ yInfo() << "Creating pipeline with " << cfg.ubos.size() << " UBOs declared";
         uint32_t    VI      = cfg.ibos.size();
         if(VI){
             for(uint32_t i=0;i<VI;++i){
-                vkCmdBindIndexBuffer(u.command(), thing.ibos[i].buffer, 0, (VkIndexType)(cfg.ibos[i].type.value()));
-                vkCmdDrawIndexed(u.command(), thing.ibos[i].count, 1, 0, 0, 0);  // possible point of speedup in future
+                vkCmdBindIndexBuffer(u.command(), thing->ibos[i].buffer, 0, (VkIndexType)(cfg.ibos[i].type.value()));
+                vkCmdDrawIndexed(u.command(), thing->ibos[i].count, 1, 0, 0, 0);  // possible point of speedup in future
             }
         } else {
             vkCmdDraw(u.command(), vmax, 1, 0, 0);

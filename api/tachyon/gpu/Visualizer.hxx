@@ -148,6 +148,17 @@ namespace yq::tachyon {
         void    _tex(size_t);
     };
 
+    struct ViRenderPass {
+        Visualizer&         m_viz;
+        VkRenderPass        m_renderPass    = nullptr;
+        
+        ViRenderPass(Visualizer&);
+        ~ViRenderPass();
+        
+        void    _ctor();
+        void    _dtor();
+    };
+
     //! Shader storage
     //! \note the Client is expected to manually call create & destroy
     struct ViShader {
@@ -156,6 +167,30 @@ namespace yq::tachyon {
         
         std::error_code     create(VkDevice, const Shader&);
         void                destroy(VkDevice);
+    };
+
+    struct ViSwapchain {
+        Visualizer&                 m_viz;
+        VkSwapchainKHR              m_swapchain       = nullptr;
+        VkExtent2D                  m_extents         = {};
+        uint32_t                    m_minImageCount   = 0;
+        uint32_t                    m_imageCount      = 0;
+        std::vector<VkImage>        m_images;
+        std::vector<VkImageView>    m_imageViews;
+        std::vector<VkFramebuffer>  m_frameBuffers;
+        VkSurfaceCapabilitiesKHR    m_capabilities;
+        
+        
+        ViSwapchain(Visualizer&, const ViRenderPass&, const ViSwapchain*old=nullptr);
+        ~ViSwapchain();
+        void        _ctor(const ViRenderPass&, const ViSwapchain* old);
+        void        _dtor();
+        
+        
+        VkRect2D    def_scissor() const;
+        VkViewport  def_viewport() const;
+        uint32_t    width() const;
+        uint32_t    height() const;
     };
 
     struct ViTexture  {

@@ -32,6 +32,7 @@ namespace yq::tachyon {
     struct ViImage;
     struct ViQueues;
     struct ViRender;
+    struct ViRenderPass;
     struct ViSwapchain;
     struct ViPipeline;
     struct ViFrame;
@@ -50,21 +51,6 @@ namespace yq::tachyon {
         bool valid() const { return family != UINT32_MAX; }
     };
     
-    struct ViSwapchain {
-        VkSwapchainKHR              swapchain       = nullptr;
-        VkExtent2D                  extents         = {};
-        uint32_t                    minImageCount   = 0;
-        uint32_t                    imageCount      = 0;
-        std::vector<VkImage>        images;
-        std::vector<VkImageView>    imageViews;
-        std::vector<VkFramebuffer>  frameBuffers;
-        VkSurfaceCapabilitiesKHR    capabilities;
-        
-        VkRect2D    def_scissor() const;
-        VkViewport  def_viewport() const;
-        uint32_t    width() const;
-        uint32_t    height() const;
-    };
     
         // eventually multithread...
     struct ViThread {
@@ -300,10 +286,6 @@ namespace yq::tachyon {
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
 
-        
-        std::error_code             _create(ViSwapchain&);
-        void                        _destroy(ViSwapchain&);
-        
         std::error_code             _create(ViTexture&, const ViImage&, const Texture&);
         void                        _destroy(ViTexture&);
 
@@ -362,13 +344,13 @@ namespace yq::tachyon {
         PresentMode                         m_presentMode;
         std::set<PresentMode>               m_presentModes;
         //ViQueues                            m_queues[Queue::COUNT];
-        VkRenderPass                        m_renderPass            = nullptr;
+        std::unique_ptr<ViRenderPass>       m_renderPass;
         ShaderMap                           m_shaders;
         VkSurfaceKHR                        m_surface               = nullptr;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
         VkFormat                            m_surfaceFormat;
         VkColorSpaceKHR                     m_surfaceColorSpace;
-        ViSwapchain                         m_swapchain;
+        std::unique_ptr<ViSwapchain>        m_swapchain;
         
         TextureMap                          m_textures;
             // eventually this will get smarter....

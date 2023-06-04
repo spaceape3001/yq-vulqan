@@ -967,6 +967,69 @@ namespace yq::tachyon {
         }
     }
     
+    ////////////////////////////////////////////////////////////////////////////////
+    //  ViRenderPass
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ViRenderPass::ViRenderPass(Visualizer&viz) : m_viz(viz)
+    {
+        try {
+            _ctor();
+        }
+        catch(std::error_code ec)
+        {
+            _dtor();
+            throw;
+        }
+    }
+    
+    ViRenderPass::~ViRenderPass()
+    {
+        _dtor();
+    }
+
+    void    ViRenderPass::_ctor()
+    {
+        if(m_renderPass)
+            throw create_error<"Render pass already initialized">();
+    
+        VkAttachmentDescription colorAttachment{};
+        colorAttachment.format          = m_viz.surface_format();
+        colorAttachment.samples         = VK_SAMPLE_COUNT_1_BIT;
+        colorAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
+        colorAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_STORE;        
+        colorAttachment.stencilLoadOp   = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+        colorAttachment.stencilStoreOp  = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+        colorAttachment.initialLayout   = VK_IMAGE_LAYOUT_UNDEFINED;
+        colorAttachment.finalLayout     = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+        
+        VkAttachmentReference colorAttachmentRef{};
+        colorAttachmentRef.attachment = 0;
+        colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+        VkSubpassDescription subpass{};
+        subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;        
+
+        subpass.colorAttachmentCount = 1;
+        subpass.pColorAttachments = &colorAttachmentRef;
+        
+        VqRenderPassCreateInfo renderPassInfo;
+        renderPassInfo.attachmentCount = 1;
+        renderPassInfo.pAttachments = &colorAttachment;
+        renderPassInfo.subpassCount = 1;
+        renderPassInfo.pSubpasses = &subpass;
+
+        if (vkCreateRenderPass(m_viz.device(), &renderPassInfo, nullptr, &m_renderPass) != VK_SUCCESS) 
+            throw create_error<"Unable to create the render pass">();
+    }
+    
+    void    ViRenderPass::_dtor()
+    {
+        if(m_renderPass){
+            vkDestroyRenderPass(m_viz.device(), m_renderPass, nullptr);
+            m_renderPass    = nullptr;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViShader
@@ -1020,11 +1083,146 @@ namespace yq::tachyon {
     //  ViSwapchain
     ////////////////////////////////////////////////////////////////////////////////
 
+    ViSwapchain::ViSwapchain(Visualizer&viz, const ViRenderPass&rp, const ViSwapchain*old) : m_viz(viz)
+    {
+        try {
+            _ctor(rp, old);
+        }
+        catch(std::error_code ec)
+        {
+            _dtor();
+            throw;
+        }
+    }
+    
+    ViSwapchain::~ViSwapchain()
+    {
+        _dtor();
+    }
+    
+    void    ViSwapchain::_ctor(const ViRenderPass& rp, const ViSwapchain* old)
+    {
+        if(m_swapchain)
+            throw create_error<"Swapchain is already initialized">();
+    
+        if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_viz.physical(), m_viz.surface(), &m_capabilities) != VK_SUCCESS)
+            throw create_error<"Unable to get surface capabilities">();
+        if (m_capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
+            m_extents = m_capabilities.currentExtent;
+        } else {
+            int w, h;
+            glfwGetFramebufferSize(m_viz._window(), &w, &h);
+            m_extents = {};
+            m_extents.width  = std::clamp((uint32_t) w, m_capabilities.minImageExtent.width, m_capabilities.maxImageExtent.width);
+            m_extents.height = std::clamp((uint32_t) h, m_capabilities.minImageExtent.height, m_capabilities.maxImageExtent.height);
+        }
+
+        #if 0
+        int w, h;
+        glfwGetFramebufferSize(viz._window(), &w, &h);
+        vqInfo << "init dymamic stuff\n"<<
+        "Frame itself is [" << w << 'x' << h << "] vs\n" <<
+        "Image extents is " << ds.extents << '\n' <<
+        "Cur is " << capabilities.currentExtent << '\n' <<
+        "Min is " << capabilities.minImageExtent << '\n' <<
+        "Max is " << capabilities.maxImageExtent
+        ;
+        #endif
+
+        m_minImageCount             = m_capabilities.minImageCount;
+        if(m_minImageCount < 2)
+            m_minImageCount   = 2;
+        m_imageCount                  = m_minImageCount + 1;
+        if (m_capabilities.maxImageCount > 0 && m_imageCount > m_capabilities.maxImageCount) {
+            m_imageCount = m_capabilities.maxImageCount;
+        }
+
+        VqSwapchainCreateInfoKHR    swapInfo;
+        swapInfo.surface          = m_viz.surface();
+        swapInfo.minImageCount    = m_imageCount;
+        swapInfo.imageFormat      = m_viz.surface_format();
+        swapInfo.imageColorSpace  = m_viz.surface_color_space();
+        swapInfo.imageExtent      = m_extents;
+        swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
+        swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+        
+        uint32_t queueFamilyIndices[] = {m_viz.graphic_queue_family(), m_viz.present_queue_family()};
+        if (m_viz.graphic_queue_family() != m_viz.present_queue_family()) {
+            swapInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+            swapInfo.queueFamilyIndexCount = 2;
+            swapInfo.pQueueFamilyIndices = queueFamilyIndices;
+        } else {
+            swapInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+            swapInfo.queueFamilyIndexCount = 0; // Optional
+            swapInfo.pQueueFamilyIndices = nullptr; // Optional
+        }        
+        swapInfo.preTransform     = m_capabilities.currentTransform;
+        swapInfo.compositeAlpha   = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+        swapInfo.presentMode      = (VkPresentModeKHR) m_viz.present_mode().value();
+        swapInfo.clipped          = VK_TRUE;
+        
+        if(old)
+            swapInfo.oldSwapchain   = old -> m_swapchain;
+            
+        if (vkCreateSwapchainKHR(m_viz.device(), &swapInfo, nullptr, &m_swapchain) != VK_SUCCESS)
+            throw create_error<"Failed to create the swapchain">();
+
+        if(vkGetSwapchainImagesKHR(m_viz.device(), m_swapchain, &m_imageCount, nullptr) != VK_SUCCESS)
+            throw create_error<"Unable to get swapchain image count">();
+        
+        m_images.resize(m_imageCount, nullptr);
+        if(vkGetSwapchainImagesKHR(m_viz.device(), m_swapchain, &m_imageCount, m_images.data()) != VK_SUCCESS)
+            throw create_error<"Unable to get swapchain images">();
+                        
+        m_imageViews.resize(m_imageCount, nullptr);
+
+        VkImageViewCreateInfo       imageViewInfo = vqCreateInfo(ImageViewInfo());
+        imageViewInfo.format       = m_viz.surface_format();
+        
+        for(size_t i=0; i<m_imageCount; ++i){
+            imageViewInfo.image        = m_images[i];
+            if(vkCreateImageView(m_viz.device(), &imageViewInfo, nullptr, &m_imageViews[i]) != VK_SUCCESS) 
+                throw create_error<"Unable to create a swapchain image viewer">();
+        }                
+        
+        m_frameBuffers.resize(m_imageCount, nullptr);
+
+        VqFramebufferCreateInfo   frameBufferInfo;
+        frameBufferInfo.renderPass       = rp.m_renderPass;
+        frameBufferInfo.attachmentCount  = 1;
+        frameBufferInfo.width            = m_extents.width;
+        frameBufferInfo.height           = m_extents.height;
+        frameBufferInfo.layers           = 1;
+
+        for(size_t i=0;i<m_imageCount;++i){
+            frameBufferInfo.pAttachments = &m_imageViews[i];
+            if (vkCreateFramebuffer(m_viz.device(), &frameBufferInfo, nullptr, &m_frameBuffers[i]) != VK_SUCCESS) 
+                throw create_error<"Failed to create a swapchain framebuffer">();
+        }
+    }
+    
+    void            ViSwapchain::_dtor()
+    {
+        for(size_t i=0;i<m_imageCount;++i){
+            if((i < m_frameBuffers.size()) && m_frameBuffers[i])
+                vkDestroyFramebuffer(m_viz.device(), m_frameBuffers[i], nullptr);
+            if((i < m_imageViews.size()) && m_imageViews[i])
+                vkDestroyImageView(m_viz.device(), m_imageViews[i], nullptr);
+        }
+        m_frameBuffers.clear();
+        m_imageViews.clear();
+        m_images.clear();
+        if(m_swapchain){
+            vkDestroySwapchainKHR(m_viz.device(), m_swapchain, nullptr);
+            m_swapchain  = nullptr;
+        }
+    }
+
     VkRect2D  ViSwapchain::def_scissor() const
     {
         VkRect2D    ret{};
         ret.offset  = { 0, 0 };
-        ret.extent  = extents;
+        ret.extent  = m_extents;
         return ret;
     }
     
@@ -1033,8 +1231,8 @@ namespace yq::tachyon {
         VkViewport  ret{};
         ret.x = 0.0f;
         ret.y = 0.0f;
-        ret.width = (float) extents.width;
-        ret.height = (float) extents.height;
+        ret.width = (float) m_extents.width;
+        ret.height = (float) m_extents.height;
         ret.minDepth = 0.0f;
         ret.maxDepth = 1.0f;
         return ret;
@@ -1042,12 +1240,12 @@ namespace yq::tachyon {
     
     uint32_t  ViSwapchain::width() const 
     { 
-        return extents.width; 
+        return m_extents.width; 
     }
     
     uint32_t  ViSwapchain::height() const 
     { 
-        return extents.height; 
+        return m_extents.height; 
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -1314,34 +1512,7 @@ namespace yq::tachyon {
         //  ================================
         //  RENDER PASS
 
-        VkAttachmentDescription colorAttachment{};
-        colorAttachment.format          = m_surfaceFormat;
-        colorAttachment.samples         = VK_SAMPLE_COUNT_1_BIT;
-        colorAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
-        colorAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_STORE;        
-        colorAttachment.stencilLoadOp   = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-        colorAttachment.stencilStoreOp  = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        colorAttachment.initialLayout   = VK_IMAGE_LAYOUT_UNDEFINED;
-        colorAttachment.finalLayout     = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-        
-        VkAttachmentReference colorAttachmentRef{};
-        colorAttachmentRef.attachment = 0;
-        colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-        VkSubpassDescription subpass{};
-        subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;        
-
-        subpass.colorAttachmentCount = 1;
-        subpass.pColorAttachments = &colorAttachmentRef;
-        
-        VqRenderPassCreateInfo renderPassInfo;
-        renderPassInfo.attachmentCount = 1;
-        renderPassInfo.pAttachments = &colorAttachment;
-        renderPassInfo.subpassCount = 1;
-        renderPassInfo.pSubpasses = &subpass;
-
-        if (vkCreateRenderPass(m_device, &renderPassInfo, nullptr, &m_renderPass) != VK_SUCCESS) 
-            return create_error<"Unable to create the render pass">();
+        m_renderPass                = std::make_unique<ViRenderPass>(*this);
 
         //  ================================
         //  PRESENT MODE
@@ -1358,25 +1529,18 @@ namespace yq::tachyon {
         
         set_clear_color(vci.clear);
 
-        ec  = _create(m_swapchain);
-        if(ec)
-            return ec;
+        m_swapchain = std::make_unique<ViSwapchain>(*this, *m_renderPass);
             
         return std::error_code();
     }
     
     void                        Visualizer::_dtor()
     {
-        if(m_swapchain.swapchain){
-            _destroy(m_swapchain);
-            m_swapchain.swapchain   = nullptr;
-        }
-    
+        m_swapchain     = {};
         m_frames.clear();
-    
-        if(m_renderPass)
-            vkDestroyRenderPass(m_device, m_renderPass, nullptr);
         
+        m_renderPass    = {};
+
         _destroy(m_upload);
         _destroy(m_thread);
     
@@ -1454,127 +1618,6 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     //  SUB CREATE/DESTROY
     
-    std::error_code             Visualizer::_create(ViSwapchain&p)
-    {
-        try {
-            if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physical, m_surface, &p.capabilities) != VK_SUCCESS)
-                return create_error<"Unable to get surface capabilities">();
-            if (p.capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
-                p.extents = p.capabilities.currentExtent;
-            } else {
-                int w, h;
-                glfwGetFramebufferSize(m_window, &w, &h);
-                p.extents = {};
-                p.extents.width  = std::clamp((uint32_t) w, p.capabilities.minImageExtent.width, p.capabilities.maxImageExtent.width);
-                p.extents.height = std::clamp((uint32_t) h, p.capabilities.minImageExtent.height, p.capabilities.maxImageExtent.height);
-            }
-
-            #if 0
-            int w, h;
-            glfwGetFramebufferSize(viz._window(), &w, &h);
-            vqInfo << "init dymamic stuff\n"<<
-            "Frame itself is [" << w << 'x' << h << "] vs\n" <<
-            "Image extents is " << ds.extents << '\n' <<
-            "Cur is " << capabilities.currentExtent << '\n' <<
-            "Min is " << capabilities.minImageExtent << '\n' <<
-            "Max is " << capabilities.maxImageExtent
-            ;
-            #endif
-
-            p.minImageCount             = p.capabilities.minImageCount;
-            if(p.minImageCount < 2)
-                p.minImageCount   = 2;
-            p.imageCount                  = p.minImageCount + 1;
-            if (p.capabilities.maxImageCount > 0 && p.imageCount > p.capabilities.maxImageCount) {
-                p.imageCount = p.capabilities.maxImageCount;
-            }
-
-            VqSwapchainCreateInfoKHR    swapInfo;
-            swapInfo.surface          = m_surface;
-            swapInfo.minImageCount    = p.imageCount;
-            swapInfo.imageFormat      = m_surfaceFormat;
-            swapInfo.imageColorSpace  = m_surfaceColorSpace;
-            swapInfo.imageExtent      = p.extents;
-            swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
-            swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-            
-            uint32_t queueFamilyIndices[] = {m_graphic.family, m_present.family};
-            if (m_graphic.family != m_present.family) {
-                swapInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-                swapInfo.queueFamilyIndexCount = 2;
-                swapInfo.pQueueFamilyIndices = queueFamilyIndices;
-            } else {
-                swapInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
-                swapInfo.queueFamilyIndexCount = 0; // Optional
-                swapInfo.pQueueFamilyIndices = nullptr; // Optional
-            }        
-            swapInfo.preTransform     = p.capabilities.currentTransform;
-            swapInfo.compositeAlpha   = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-            swapInfo.presentMode      = (VkPresentModeKHR) m_presentMode.value();
-            swapInfo.clipped          = VK_TRUE;
-            
-            swapInfo.oldSwapchain   = m_swapchain.swapchain;
-                
-            if (vkCreateSwapchainKHR(m_device, &swapInfo, nullptr, &p.swapchain) != VK_SUCCESS)
-                throw create_error<"Failed to create the swapchain">();
-
-            if(vkGetSwapchainImagesKHR(m_device, p.swapchain, &p.imageCount, nullptr) != VK_SUCCESS)
-                throw create_error<"Unable to get swapchain image count">();
-            
-            p.images.resize(p.imageCount, nullptr);
-            if(vkGetSwapchainImagesKHR(m_device, p.swapchain, &p.imageCount, p.images.data()) != VK_SUCCESS)
-                throw create_error<"Unable to get swapchain images">();
-                            
-            p.imageViews.resize(p.imageCount, nullptr);
-
-            VkImageViewCreateInfo       imageViewInfo = vqCreateInfo(ImageViewInfo());
-            imageViewInfo.format       = m_surfaceFormat;
-            
-            for(size_t i=0; i<p.imageCount; ++i){
-                imageViewInfo.image        = p.images[i];
-                if(vkCreateImageView(m_device, &imageViewInfo, nullptr, &p.imageViews[i]) != VK_SUCCESS) 
-                    throw create_error<"Unable to create a swapchain image viewer">();
-            }                
-            
-            p.frameBuffers.resize(p.imageCount, nullptr);
-
-            VqFramebufferCreateInfo   frameBufferInfo;
-            frameBufferInfo.renderPass       = m_renderPass;
-            frameBufferInfo.attachmentCount  = 1;
-            frameBufferInfo.width            = p.extents.width;
-            frameBufferInfo.height           = p.extents.height;
-            frameBufferInfo.layers           = 1;
-
-            for(size_t i=0;i<p.imageCount;++i){
-                frameBufferInfo.pAttachments = &p.imageViews[i];
-                if (vkCreateFramebuffer(m_device, &frameBufferInfo, nullptr, &p.frameBuffers[i]) != VK_SUCCESS) 
-                    throw create_error<"Failed to create a swapchain framebuffer">();
-            }
-            return std::error_code();
-        }
-        catch(std::error_code ec){
-            _destroy(p);
-            return ec;
-        }
-    }
-    
-    void                        Visualizer::_destroy(ViSwapchain&p)
-    {
-        for(size_t i=0;i<p.imageCount;++i){
-            if((i < p.frameBuffers.size()) && p.frameBuffers[i])
-                vkDestroyFramebuffer(m_device, p.frameBuffers[i], nullptr);
-            if((i < p.imageViews.size()) && p.imageViews[i])
-                vkDestroyImageView(m_device, p.imageViews[i], nullptr);
-        }
-        p.frameBuffers.clear();
-        p.imageViews.clear();
-        p.images.clear();
-        if(p.swapchain){
-            vkDestroySwapchainKHR(m_device, p.swapchain, nullptr);
-            p.swapchain  = nullptr;
-        }
-    }
-
     std::error_code             Visualizer::_create(ViTexture&p, const ViImage& img, const Texture&tex)
     {
         std::error_code ec;
@@ -1916,7 +1959,7 @@ namespace yq::tachyon {
     
     VkRenderPass Visualizer::render_pass() const
     {
-        return m_renderPass;
+        return m_renderPass -> m_renderPass;
     }
 
 
@@ -1963,32 +2006,32 @@ namespace yq::tachyon {
 
     VkRect2D    Visualizer::swapchain_def_scissor() const
     {
-        return m_swapchain.def_scissor();
+        return m_swapchain->def_scissor();
     }
     
     VkViewport  Visualizer::swapchain_def_viewport() const
     {
-        return m_swapchain.def_viewport();
+        return m_swapchain->def_viewport();
     }
 
     uint32_t    Visualizer::swapchain_image_count() const
     {
-        return m_swapchain.imageCount;
+        return m_swapchain->m_imageCount;
     }
 
     uint32_t    Visualizer::swapchain_height() const
     {
-        return m_swapchain.height();
+        return m_swapchain->height();
     }
 
     uint32_t    Visualizer::swapchain_min_image_count() const
     {
-        return m_swapchain.minImageCount;
+        return m_swapchain->m_minImageCount;
     }
 
     uint32_t    Visualizer::swapchain_width() const
     {
-        return m_swapchain.width();
+        return m_swapchain->width();
     }
 
     Expect<ViTexture> Visualizer::texture(uint64_t i) const
@@ -2239,10 +2282,7 @@ namespace yq::tachyon {
     void                Visualizer::_rebuild()
     {
         vkDeviceWaitIdle(m_device);
-        ViSwapchain newChain;
-        _create(newChain);
-        std::swap(newChain, m_swapchain);
-        _destroy(newChain);
+        m_swapchain     = std::make_unique<ViSwapchain>(*this, *m_renderPass, m_swapchain.get());
     }
 
     std::error_code     Visualizer::_record(ViContext& u, uint32_t imageIndex, DrawFunction use)
@@ -2255,10 +2295,10 @@ namespace yq::tachyon {
             return create_error<"Failed to begin recording command buffer">();
 
         VqRenderPassBeginInfo renderPassInfo;
-        renderPassInfo.renderPass = m_renderPass;
-        renderPassInfo.framebuffer = m_swapchain.frameBuffers[imageIndex];
+        renderPassInfo.renderPass = m_renderPass -> m_renderPass;
+        renderPassInfo.framebuffer = m_swapchain->m_frameBuffers[imageIndex];
         renderPassInfo.renderArea.offset = {0, 0};
-        renderPassInfo.renderArea.extent = m_swapchain.extents;
+        renderPassInfo.renderArea.extent = m_swapchain->m_extents;
 
         renderPassInfo.clearValueCount = 1;
         VkClearValue                cv  = m_clearValue;
@@ -2305,7 +2345,7 @@ namespace yq::tachyon {
         }
 
         uint32_t imageIndex = 0;
-        res    = vkAcquireNextImageKHR(m_device, m_swapchain.swapchain, kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &imageIndex);
+        res    = vkAcquireNextImageKHR(m_device, m_swapchain->m_swapchain, kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &imageIndex);
         
         switch(res){
         case VK_TIMEOUT:
@@ -2362,7 +2402,7 @@ namespace yq::tachyon {
         presentInfo.waitSemaphoreCount = 1;
         presentInfo.pWaitSemaphores = signalSemaphores;
         presentInfo.swapchainCount = 1;
-        presentInfo.pSwapchains = &m_swapchain.swapchain;
+        presentInfo.pSwapchains = &m_swapchain->m_swapchain;
         presentInfo.pImageIndices = &imageIndex;
         presentInfo.pResults = nullptr; // Optional
         vkQueuePresentKHR(m_present[0], &presentInfo);

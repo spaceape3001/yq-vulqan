@@ -63,8 +63,8 @@ namespace yq::tachyon {
         ViFrame(Visualizer&);
         ~ViFrame();
         
-        std::error_code     _ctor();
-        void                _dtor();
+        void    _ctor();
+        void    _dtor();
         
         ViRendered*         create(const Rendered&, const Pipeline&);
         const ViRendered*   lookup(const Rendered&, const Pipeline&) const;
@@ -197,6 +197,21 @@ namespace yq::tachyon {
     struct ViTexture  {
         VkImageView             view        = nullptr;
         VkSampler               sampler     = nullptr;
+    };
+
+        // eventually multithread...
+    struct ViThread {
+        Visualizer&             m_viz;
+        VkDescriptorPool        m_descriptors         = nullptr;
+        VkCommandPool           m_graphic             = nullptr;
+        VkCommandPool           m_compute             = nullptr;
+        
+        ViThread(Visualizer&);
+        ~ViThread();
+        
+        void    _ctor();
+        void    _dtor();
+        
     };
 
     struct ViUpload {

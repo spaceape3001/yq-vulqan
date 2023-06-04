@@ -204,6 +204,14 @@ namespace yq::tachyon {
 
     ViFrame::ViFrame(Visualizer&viz) : m_viz(viz), m_id(nextFrameId())
     {
+        try {
+            _ctor();
+        }
+        catch(std::error_code ec)
+        {
+            _dtor();
+            throw;
+        }
     }
     
     ViFrame::~ViFrame()
@@ -211,34 +219,29 @@ namespace yq::tachyon {
         _dtor();
     }
 
-    std::error_code     ViFrame::_ctor()
+    void    ViFrame::_ctor()
     {
-        try {
-            m_commandPool       = m_viz.command_pool();
-            VqCommandBufferAllocateInfo allocInfo;
-            allocInfo.commandPool           = m_commandPool;
-            allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-            allocInfo.commandBufferCount    = 1;
-            if (vkAllocateCommandBuffers(m_viz.device(), &allocInfo, &m_commandBuffer) != VK_SUCCESS) 
-                throw create_error<"Failed to allocate command buffers">();
+        if(m_renderFinished)
+            throw create_error<"Frame already initialized">();
+            
+        m_commandPool                   = m_viz.command_pool();
+        VqCommandBufferAllocateInfo allocInfo;
+        allocInfo.commandPool           = m_commandPool;
+        allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+        allocInfo.commandBufferCount    = 1;
+        if (vkAllocateCommandBuffers(m_viz.device(), &allocInfo, &m_commandBuffer) != VK_SUCCESS) 
+            throw create_error<"Failed to allocate command buffers">();
 
-            VqFenceCreateInfo   fci;
-            fci.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-            if(vkCreateFence(m_viz.device(), &fci, nullptr,  &m_fence) != VK_SUCCESS)
-                throw create_error<"Unable to create fence">();
+        VqFenceCreateInfo   fci;
+        fci.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+        if(vkCreateFence(m_viz.device(), &fci, nullptr,  &m_fence) != VK_SUCCESS)
+            throw create_error<"Unable to create fence">();
 
-            VqSemaphoreCreateInfo   info;
-            if(vkCreateSemaphore(m_viz.device(), &info, nullptr, &m_imageAvailable) != VK_SUCCESS)
-                throw create_error<"Unable to create semaphore!">();
-            if(vkCreateSemaphore(m_viz.device(), &info, nullptr, &m_renderFinished) != VK_SUCCESS)
-                throw create_error<"Unable to create semaphore!">();
-            return std::error_code();
-        }
-        catch(std::error_code ec)
-        {
-            _dtor();
-            return ec;
-        }
+        VqSemaphoreCreateInfo   info;
+        if(vkCreateSemaphore(m_viz.device(), &info, nullptr, &m_imageAvailable) != VK_SUCCESS)
+            throw create_error<"Unable to create semaphore!">();
+        if(vkCreateSemaphore(m_viz.device(), &info, nullptr, &m_renderFinished) != VK_SUCCESS)
+            throw create_error<"Unable to create semaphore!">();
     }
     
     void                ViFrame::_dtor()
@@ -1249,6 +1252,88 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  ViThread
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    ViThread::ViThread(Visualizer&viz) : m_viz(viz)
+    {
+        try {
+            _ctor();
+        }
+        catch(std::error_code ec)
+        {
+            _dtor();
+            throw;
+        }
+    }
+    
+    ViThread::~ViThread()
+    {
+        _dtor();
+    }
+    
+    void    ViThread::_ctor()
+    {
+        uint32_t      dcount  = m_viz.descriptor_count();
+        VkDescriptorPoolSize descriptorPoolSizes[] =
+        {
+            { VK_DESCRIPTOR_TYPE_SAMPLER, dcount },
+            { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, dcount },
+            { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, dcount },
+            { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, dcount },
+            { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, dcount },
+            { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, dcount },
+            { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, dcount },
+            { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, dcount },
+            { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, dcount },
+            { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, dcount },
+            { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, dcount }
+        };
+        
+        size_t  cntDPS  = sizeof(descriptorPoolSizes)/sizeof(VkDescriptorPoolSize);
+        
+        VqDescriptorPoolCreateInfo descriptorPoolInfo;
+        //descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT | VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
+        descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
+        descriptorPoolInfo.maxSets       = dcount * cntDPS;
+        descriptorPoolInfo.poolSizeCount = (uint32_t) cntDPS;
+        descriptorPoolInfo.pPoolSizes    = descriptorPoolSizes;
+        if(vkCreateDescriptorPool(m_viz.device(), &descriptorPoolInfo, nullptr, &m_descriptors) != VK_SUCCESS)
+            throw create_error<"Unable to allocate the descriptor pool">();
+
+        VqCommandPoolCreateInfo poolInfo;
+        poolInfo.flags                  = m_viz.command_pool_create_flags();
+        
+        if(m_viz.graphic_queue_valid()){
+            poolInfo.queueFamilyIndex   = m_viz.graphic_queue_family();
+            if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_graphic) != VK_SUCCESS) 
+                throw create_error<"Failed to create a graphic command pool">();
+        }
+        if(m_viz.compute_queue_valid()){
+            poolInfo.queueFamilyIndex   = m_viz.compute_queue_family();
+            if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_compute) != VK_SUCCESS) 
+                throw create_error<"Failed to create a compute command pool">();
+        }
+    }
+    
+    void    ViThread::_dtor()
+    {
+        if(m_descriptors){
+            vkDestroyDescriptorPool(m_viz.device(), m_descriptors, nullptr);
+            m_descriptors = nullptr;
+        }
+        if(m_graphic){
+            vkDestroyCommandPool(m_viz.device(), m_graphic, nullptr);
+            m_graphic = nullptr;
+        }
+        if(m_compute){
+            vkDestroyCommandPool(m_viz.device(), m_compute, nullptr);
+            m_compute = nullptr;
+        }
+    }
+    
+
+    ////////////////////////////////////////////////////////////////////////////////
     //  ViUpload
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -1564,9 +1649,7 @@ namespace yq::tachyon {
 
         m_descriptorCount   = std::max(MIN_DESCRIPTOR_COUNT, vci.descriptors);
 
-        ec = _create(m_thread);
-        if(ec)
-            return ec;
+        m_thread            = std::make_unique<ViThread>(*this);
 
 
         //  ================================
@@ -1583,14 +1666,12 @@ namespace yq::tachyon {
 
         m_presentMode               = m_presentModes.contains(vci.pmode) ? vci.pmode : PresentMode{ PresentMode::Fifo };
 
-        m_frames.resize(vci.frames_in_flight);
-        for(auto& f : m_frames){
-            f   = std::make_unique<ViFrame>(*this);
-            ec  = f->_ctor();
-            if(ec)
-                return ec;
-        }
         
+
+        m_frames.reserve(vci.frames_in_flight);
+        for(size_t i=0;i<vci.frames_in_flight;++i)
+            m_frames.push_back(std::make_unique<ViFrame>(*this));
+
         set_clear_color(vci.clear);
 
         m_swapchain = std::make_unique<ViSwapchain>(*this, *m_renderPass);
@@ -1606,7 +1687,7 @@ namespace yq::tachyon {
         m_renderPass    = {};
 
         m_upload        = {};
-        _destroy(m_thread);
+        m_thread        = {};
     
         for(auto& p : m_pipelines){
             if(p.second)
@@ -1723,72 +1804,6 @@ namespace yq::tachyon {
         }
     }
         
-    std::error_code             Visualizer::_create(ViThread&p)
-    {
-        try {
-            VkDescriptorPoolSize descriptorPoolSizes[] =
-            {
-                { VK_DESCRIPTOR_TYPE_SAMPLER, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, m_descriptorCount },
-                { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, m_descriptorCount }
-            };
-            
-            size_t  cntDPS  = sizeof(descriptorPoolSizes)/sizeof(VkDescriptorPoolSize);
-            
-            VqDescriptorPoolCreateInfo descriptorPoolInfo;
-            //descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT | VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
-            descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
-            descriptorPoolInfo.maxSets       = m_descriptorCount * cntDPS;
-            descriptorPoolInfo.poolSizeCount = (uint32_t) cntDPS;
-            descriptorPoolInfo.pPoolSizes    = descriptorPoolSizes;
-            if(vkCreateDescriptorPool(m_device, &descriptorPoolInfo, nullptr, &p.descriptors) != VK_SUCCESS)
-                throw create_error<"Unable to allocate the descriptor pool">();
-
-            VqCommandPoolCreateInfo poolInfo;
-            poolInfo.flags                  = m_cmdPoolCreateFlags;
-            
-            if(m_graphic.valid()){
-                poolInfo.queueFamilyIndex   = m_graphic.family;
-                if (vkCreateCommandPool(m_device, &poolInfo, nullptr, &p.graphic) != VK_SUCCESS) 
-                    throw create_error<"Failed to create a graphic command pool">();
-            }
-            if(m_compute.valid()){
-                poolInfo.queueFamilyIndex   = m_compute.family;
-                if (vkCreateCommandPool(m_device, &poolInfo, nullptr, &p.compute) != VK_SUCCESS) 
-                    throw create_error<"Failed to create a compute command pool">();
-            }
-            return std::error_code();
-        }
-        catch(std::error_code ec)
-        {
-            _destroy(p);
-            return ec;
-        }
-    }
-    
-    void                        Visualizer::_destroy(ViThread&p)
-    {
-        if(p.descriptors){
-            vkDestroyDescriptorPool(m_device, p.descriptors, nullptr);
-            p.descriptors = nullptr;
-        }
-        if(p.graphic){
-            vkDestroyCommandPool(m_device, p.graphic, nullptr);
-            p.graphic = nullptr;
-        }
-        if(p.compute){
-            vkDestroyCommandPool(m_device, p.compute, nullptr);
-            p.compute = nullptr;
-        }
-    }
 
 
 
@@ -1824,7 +1839,7 @@ namespace yq::tachyon {
 
     VkCommandPool   Visualizer::command_pool() const
     {
-        return m_thread.graphic;
+        return m_thread->m_graphic;
     }
 
     VkQueue  Visualizer::compute_queue(uint32_t i) const
@@ -1859,7 +1874,7 @@ namespace yq::tachyon {
 
     VkDescriptorPool    Visualizer::descriptor_pool() const
     {
-        return m_thread.descriptors;
+        return m_thread->m_descriptors;
     }
     
     ViFrame&            Visualizer::frame(int32_t i)

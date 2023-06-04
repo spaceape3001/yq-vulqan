@@ -37,6 +37,7 @@ namespace yq::tachyon {
     struct ViPipeline;
     struct ViFrame;
     struct ViTexture;
+    struct ViThread;
     struct ViUpload;
 
     class Memory;
@@ -61,12 +62,6 @@ namespace yq::tachyon {
     };
     
     
-        // eventually multithread...
-    struct ViThread {
-        VkDescriptorPool        descriptors         = nullptr;
-        VkCommandPool           graphic             = nullptr;
-        VkCommandPool           compute             = nullptr;
-    };
     
     
 
@@ -111,6 +106,8 @@ namespace yq::tachyon {
 
         VkCommandBuffer                 command_buffer() const;
         VkCommandPool                   command_pool() const;
+        
+        VkCommandPoolCreateFlags        command_pool_create_flags() const { return m_cmdPoolCreateFlags; }
 
         VkQueue                         compute_queue(uint32_t i=0) const;
         uint32_t                        compute_queue_count() const;
@@ -145,7 +142,7 @@ namespace yq::tachyon {
         //! \note will return INVALID reference if construction failed!
         const ViFrame&                  current_frame() const;
 
-        
+        uint32_t                        descriptor_count() const { return m_descriptorCount; }
         VkDescriptorPool                descriptor_pool() const;
 
         /*! \brief "Draws" 
@@ -284,9 +281,6 @@ namespace yq::tachyon {
         std::error_code             _create(ViTexture&, const ViImage&, const Texture&);
         void                        _destroy(ViTexture&);
 
-        std::error_code             _create(ViThread&);
-        void                        _destroy(ViThread&);
-        
         std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
         
         void                        _draw(ViContext&, const Rendered&, const Pipeline&, Tristate);
@@ -346,7 +340,7 @@ namespace yq::tachyon {
         
         TextureMap                          m_textures;
             // eventually this will get smarter....
-        ViThread                            m_thread;
+        std::unique_ptr<ViThread>           m_thread;
         
         uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
         std::unique_ptr<ViUpload>           m_upload; // [Queue::COUNT];

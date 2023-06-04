@@ -37,10 +37,19 @@ namespace yq::tachyon {
     struct ViPipeline;
     struct ViFrame;
     struct ViTexture;
-    
+    struct ViUpload;
 
     class Memory;
 
+    enum class QueueType : uint8_t {
+        Graphic = 0,
+        Present,
+        Compute,
+        VideoEnable,
+        VideoDisable,
+        
+        COUNT
+    };
 
     struct ViQueues {
         std::vector<VkQueue>    queues;
@@ -60,12 +69,6 @@ namespace yq::tachyon {
     };
     
     
-    struct ViUpload {
-        VkFence                 fence           = nullptr;
-        VkCommandPool           pool            = nullptr;
-        VkCommandBuffer         commandBuffer   = nullptr;
-        VkQueue                 queue           = nullptr;
-    };
 
     
     //template <typename T>
@@ -89,14 +92,6 @@ namespace yq::tachyon {
     class Visualizer  {
     public:
         
-        enum class Queue : uint8_t {
-            Graphic,
-            Present,
-            Compute,
-            VideoEnable,
-            VideoDisable,
-            COUNT
-        };
         
         using DrawFunction              = std::function<void(ViContext&)>;
     
@@ -292,9 +287,6 @@ namespace yq::tachyon {
         std::error_code             _create(ViThread&);
         void                        _destroy(ViThread&);
         
-        std::error_code             _create(ViUpload&, const ViQueues&);
-        void                        _destroy(ViUpload&);
-        
         std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
         
         void                        _draw(ViContext&, const Rendered&, const Pipeline&, Tristate);
@@ -357,7 +349,7 @@ namespace yq::tachyon {
         ViThread                            m_thread;
         
         uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
-        ViUpload                            m_upload; // [Queue::COUNT];
+        std::unique_ptr<ViUpload>           m_upload; // [Queue::COUNT];
         ViQueues                            m_videoDecode;
         ViQueues                            m_videoEncode;
         std::atomic<bool>                   m_rebuildSwap           = { false };

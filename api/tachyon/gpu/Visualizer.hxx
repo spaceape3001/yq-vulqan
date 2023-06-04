@@ -21,6 +21,7 @@ namespace yq::tachyon {
     struct ABOConfig;
     struct BaseBOConfig;
     
+    struct ViQueues;
     struct ViRendered;
     
     using ViRenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
@@ -196,6 +197,20 @@ namespace yq::tachyon {
     struct ViTexture  {
         VkImageView             view        = nullptr;
         VkSampler               sampler     = nullptr;
+    };
+
+    struct ViUpload {
+        Visualizer&             m_viz;
+        VkFence                 m_fence           = nullptr;
+        VkCommandPool           m_pool            = nullptr;
+        VkCommandBuffer         m_commandBuffer   = nullptr;
+        VkQueue                 m_queue           = nullptr;
+        
+        ViUpload(Visualizer&, const ViQueues&);
+        ~ViUpload();
+        
+        void    _ctor(const ViQueues&);
+        void    _dtor();
     };
 }
 

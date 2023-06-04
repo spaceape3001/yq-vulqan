@@ -1249,6 +1249,72 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  ViUpload
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ViUpload::ViUpload(Visualizer&viz, const ViQueues&qu) : m_viz(viz)
+    {
+        try {
+            _ctor(qu);
+        }
+        catch(std::error_code ec)
+        {
+            _dtor();
+            throw;
+        }
+    }
+    
+    ViUpload::~ViUpload()
+    {
+        _dtor();
+    }
+    
+    void    ViUpload::_ctor(const ViQueues&qu)
+    {
+        if(m_fence)
+            throw create_error<"Upload already initialized">();
+            
+        if(qu.queues.empty())
+            throw create_error<"Queues has no queues">();
+    
+        m_queue                         = qu.queues[0];
+        VqCommandPoolCreateInfo poolInfo;
+        poolInfo.queueFamilyIndex       = qu.family;
+        if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_pool) != VK_SUCCESS) 
+            throw create_error<"Failed to create an upload command pool">();
+            
+        VqCommandBufferAllocateInfo allocInfo;
+        allocInfo.commandPool           = m_pool;
+        allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+        allocInfo.commandBufferCount    = 1;
+        if (vkAllocateCommandBuffers(m_viz.device(), &allocInfo, &m_commandBuffer) != VK_SUCCESS) 
+            throw create_error<"Failed to allocate command buffers">();
+            
+        VqFenceCreateInfo   fci;
+        if(vkCreateFence(m_viz.device(), &fci, nullptr,  &m_fence) != VK_SUCCESS)
+            throw create_error<"Unable to create fence">();
+    }
+    
+    void    ViUpload::_dtor()
+    {
+        if(m_fence){
+            vkDestroyFence(m_viz.device(), m_fence, nullptr);
+            m_fence   = nullptr;
+        }
+
+        if(m_commandBuffer && m_pool){
+            vkFreeCommandBuffers(m_viz.device(), m_pool, 1, &m_commandBuffer);
+            m_commandBuffer    = nullptr;
+        }
+
+        if(m_pool){
+            vkDestroyCommandPool(m_viz.device(), m_pool, nullptr);
+            m_pool      = nullptr;
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -1505,14 +1571,12 @@ namespace yq::tachyon {
 
         //  ================================
         //  UPLOAD
-        ec  = _create(m_upload, m_graphic);
-        if(ec)
-            return ec;
+        m_upload            = std::make_unique<ViUpload>(*this, m_graphic);
 
         //  ================================
         //  RENDER PASS
 
-        m_renderPass                = std::make_unique<ViRenderPass>(*this);
+        m_renderPass        = std::make_unique<ViRenderPass>(*this);
 
         //  ================================
         //  PRESENT MODE
@@ -1541,7 +1605,7 @@ namespace yq::tachyon {
         
         m_renderPass    = {};
 
-        _destroy(m_upload);
+        m_upload        = {};
         _destroy(m_thread);
     
         for(auto& p : m_pipelines){
@@ -1726,55 +1790,7 @@ namespace yq::tachyon {
         }
     }
 
-    std::error_code             Visualizer::_create(ViUpload&p, const ViQueues&q)
-    {
-        try {
-            if(q.queues.empty())
-                throw create_error<"Queues has no queues">();
-        
-            p.queue                     =   q.queues[0];
-            VqCommandPoolCreateInfo poolInfo;
-            poolInfo.queueFamilyIndex   =   q.family;
-            if (vkCreateCommandPool(m_device, &poolInfo, nullptr, &p.pool) != VK_SUCCESS) 
-                throw create_error<"Failed to create an upload command pool">();
-                
-            VqCommandBufferAllocateInfo allocInfo;
-            allocInfo.commandPool           = p.pool;
-            allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-            allocInfo.commandBufferCount    = 1;
-            if (vkAllocateCommandBuffers(m_device, &allocInfo, &p.commandBuffer) != VK_SUCCESS) 
-                throw create_error<"Failed to allocate command buffers">();
-                
-            VqFenceCreateInfo   fci;
-            if(vkCreateFence(m_device, &fci, nullptr,  &p.fence) != VK_SUCCESS)
-                throw create_error<"Unable to create fence">();
 
-            return std::error_code();
-        }
-        catch(std::error_code ec)
-        {
-            _destroy(p);
-            return ec;
-        }
-    }
-    
-    void                        Visualizer::_destroy(ViUpload&p)
-    {
-        if(p.fence){
-            vkDestroyFence(m_device, p.fence, nullptr);
-            p.fence   = nullptr;
-        }
-
-        if(p.commandBuffer && p.pool){
-            vkFreeCommandBuffers(m_device, p.pool, 1, &p.commandBuffer);
-            p.commandBuffer    = nullptr;
-        }
-
-        if(p.pool){
-            vkDestroyCommandPool(m_device, p.pool, nullptr);
-            p.pool      = nullptr;
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  GETTERS/INFORMATION
@@ -2505,34 +2521,34 @@ namespace yq::tachyon {
         std::error_code     ec;
         if(!fn)
             return create_error<"Bad function">();
-        if(!m_upload.commandBuffer)
+        if(!m_upload->m_commandBuffer)
             return create_error<"Upload capability is uninitialized">();
     
         VqCommandBufferBeginInfo beginInfo;
         beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT; // Optional
-        if(vkBeginCommandBuffer(m_upload.commandBuffer, &beginInfo) != VK_SUCCESS)
+        if(vkBeginCommandBuffer(m_upload->m_commandBuffer, &beginInfo) != VK_SUCCESS)
             return create_error<"Unable to begin the command buffer">();
             
         try {
-            fn(m_upload.commandBuffer);
+            fn(m_upload->m_commandBuffer);
         }
         catch(std::error_code ec2) {
             ec      = ec2;
         }
         
-        if(vkEndCommandBuffer(m_upload.commandBuffer) != VK_SUCCESS)
+        if(vkEndCommandBuffer(m_upload->m_commandBuffer) != VK_SUCCESS)
             return create_error<"Unable to end the command buffer">();
             
         VqSubmitInfo    subinfo;
-        subinfo.pCommandBuffers = &m_upload.commandBuffer;
+        subinfo.pCommandBuffers = &m_upload->m_commandBuffer;
         subinfo.commandBufferCount  = 1;
-        if(vkQueueSubmit(m_upload.queue, 1, &subinfo, m_upload.fence) != VK_SUCCESS)
+        if(vkQueueSubmit(m_upload->m_queue, 1, &subinfo, m_upload->m_fence) != VK_SUCCESS)
             return create_error<"Unable to submit the task to the queue">();
         
         
-        vkWaitForFences(m_device, 1, &m_upload.fence, true, 999'999'999ULL);
-        vkResetFences(m_device, 1, &m_upload.fence);
-        vkResetCommandPool(m_device, m_upload.pool, 0);
+        vkWaitForFences(m_device, 1, &m_upload->m_fence, true, 999'999'999ULL);
+        vkResetFences(m_device, 1, &m_upload->m_fence);
+        vkResetCommandPool(m_device, m_upload->m_pool, 0);
         return ec;
     }
     

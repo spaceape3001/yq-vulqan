@@ -277,7 +277,7 @@ namespace yq::tachyon {
             LOCK
             auto eq = m_rendereds.equal_range(obj.id());
             for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->m_pipe.id == pipe.id())
+                if(i->second->m_pipe.m_id == pipe.id())
                     return i->second;
             }
         }
@@ -293,7 +293,7 @@ namespace yq::tachyon {
             WLOCK
             auto eq = m_rendereds.equal_range(obj.id());
             for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->m_pipe.id == pipe.id()){
+                if(i->second->m_pipe.m_id == pipe.id()){
                     ret = i->second;
                     break;
                 }
@@ -315,7 +315,7 @@ namespace yq::tachyon {
             LOCK
             auto eq = m_rendereds.equal_range(ren.id());
             for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->m_pipe.id == pipe.id())
+                if(i->second->m_pipe.m_id == pipe.id())
                     return i->second;
             }
         }
@@ -435,6 +435,304 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
+    //  ViPipeline
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ViPipeline::ViPipeline(Visualizer&viz, const Pipeline&p) : m_viz(viz), m_id(p.id()), m_cfg(p.config())
+    {
+    }
+    
+    ViPipeline::~ViPipeline()
+    {
+        _dtor();
+    }
+    
+    std::error_code         ViPipeline::_ctor()
+    {
+        try {
+            std::vector<VkPipelineShaderStageCreateInfo>    stages;
+            m_shaders           = 0;
+            for(auto& s : m_cfg.shaders){
+                Ref<const Shader>   sh  = Shader::decode(s);
+                if(!sh)
+                    continue;
+                
+                Expect<ViShader>    xvs = m_viz.create(*sh);
+                if(!xvs)
+                    continue;
+                
+                const ViShader&     ssh = *xvs;
+                
+                VqPipelineShaderStageCreateInfo stage;
+                stage.stage     = ssh.mask;
+                stage.pName     = "main";
+                stage.module    = ssh.shader;
+                stages.push_back(stage);
+
+                m_shaders      |= ssh.mask;
+            }
+        
+            VqPipelineVertexInputStateCreateInfo    vertexInfo;
+            VqPipelineLayoutCreateInfo              pipelineLayoutInfo;
+            
+            std::vector<VkVertexInputAttributeDescription>  attrs;
+            std::vector<VkVertexInputBindingDescription>    vbos;
+            std::vector<VkDescriptorSetLayoutBinding>       desc;
+            
+            for(uint32_t i=0;i<m_cfg.vbos.size();++i){
+                auto& v = m_cfg.vbos[i];
+                VkVertexInputBindingDescription b;
+                b.binding   = i;
+                b.stride    = v.stride;
+                b.inputRate = (VkVertexInputRate) v.inputRate.value();
+                vbos.push_back(b);
+                
+                for(auto& va : v.attrs){
+                    VkVertexInputAttributeDescription   a;
+                    a.binding       = i;
+                    a.location      = va.location;
+                    a.offset        = va.offset;
+                    a.format        = (VkFormat) va.format.value();
+                    attrs.push_back(a);
+                }
+            }
+
+            size_t  ds2 = m_cfg.ubos.size() + m_cfg.texs.size();
+
+            if(ds2){
+                for(uint32_t    i   = 0;i<m_cfg.ubos.size();++i){
+                    auto& u = m_cfg.ubos[i];
+                    VkDescriptorSetLayoutBinding a{};
+                    a.binding           = i;
+                    a.descriptorCount   = 1;
+                    a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+                    if(u.shaders){
+                        a.stageFlags    = u.shaders;
+                    } else
+                        a.stageFlags    = m_shaders;
+                    desc.push_back(a);
+                }
+                
+                uint32_t        tbase   = m_cfg.ubos.size();
+                
+                for(uint32_t  i=0;i<m_cfg.texs.size();++i){
+                    auto& u = m_cfg.texs[i];
+                    VkDescriptorSetLayoutBinding a{};
+                    a.binding           = i+tbase;
+                    a.descriptorCount   = 1;
+                    a.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+                    if(u.shaders){
+                        a.stageFlags    = u.shaders;
+                    } else
+                        a.stageFlags    = m_shaders;
+                    desc.push_back(a);
+                }
+                
+                VqDescriptorSetLayoutCreateInfo layoutInfo;
+                layoutInfo.bindingCount = desc.size();
+                layoutInfo.pBindings    = desc.data();
+                if(vkCreateDescriptorSetLayout(m_viz.device(), &layoutInfo, nullptr, &m_descriptors) != VK_SUCCESS)
+                    throw create_error<"Unable to create a descriptor set layout">();
+                pipelineLayoutInfo.setLayoutCount   = 1;
+                pipelineLayoutInfo.pSetLayouts      = &m_descriptors;
+            }
+                
+            vertexInfo.vertexBindingDescriptionCount    = (uint32_t) vbos.size();
+            vertexInfo.pVertexBindingDescriptions       = vbos.data();
+            vertexInfo.vertexAttributeDescriptionCount  = (uint32_t) attrs.size();
+            vertexInfo.pVertexAttributeDescriptions     = attrs.data();
+            
+            VqPipelineInputAssemblyStateCreateInfo  inputAssembly;
+            inputAssembly.topology                  = (VkPrimitiveTopology) m_cfg.topology.value();
+            inputAssembly.primitiveRestartEnable    = VK_FALSE;
+            
+            VkViewport viewport = m_viz.swapchain_def_viewport();
+
+            VkRect2D scissor = m_viz.swapchain_def_scissor();
+            
+            VqPipelineViewportStateCreateInfo   viewportState{};
+            viewportState.viewportCount = 1;
+            viewportState.pViewports = &viewport;
+            viewportState.scissorCount = 1;
+            viewportState.pScissors = &scissor;
+            
+            VqPipelineRasterizationStateCreateInfo  rasterizer;
+            rasterizer.depthClampEnable = VK_FALSE;
+            rasterizer.rasterizerDiscardEnable = VK_FALSE;
+            rasterizer.polygonMode = (VkPolygonMode) m_cfg.polymode.value();
+            rasterizer.lineWidth = 1.0f;
+            rasterizer.cullMode = (VkCullModeFlags) m_cfg.culling.value();
+            rasterizer.frontFace = (VkFrontFace) m_cfg.front.value();
+            rasterizer.depthBiasEnable = VK_FALSE;
+            rasterizer.depthBiasConstantFactor = 0.0f; // Optional
+            rasterizer.depthBiasClamp = 0.0f; // Optional
+            rasterizer.depthBiasSlopeFactor = 0.0f; // Optional
+
+            VqPipelineMultisampleStateCreateInfo multisampling;
+            multisampling.sampleShadingEnable = VK_FALSE;
+            multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+            multisampling.minSampleShading = 1.0f; // Optional
+            multisampling.pSampleMask = nullptr; // Optional
+            multisampling.alphaToCoverageEnable = VK_FALSE; // Optional
+            multisampling.alphaToOneEnable = VK_FALSE; // Optional
+
+            VkPipelineColorBlendAttachmentState colorBlendAttachment{};
+            colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+            colorBlendAttachment.blendEnable = VK_FALSE;
+            colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE; // Optional
+            colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO; // Optional
+            colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD; // Optional
+            colorBlendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE; // Optional
+            colorBlendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO; // Optional
+            colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD; // Optional
+            
+            VqPipelineColorBlendStateCreateInfo colorBlending;
+            colorBlending.logicOpEnable = VK_FALSE;
+            colorBlending.logicOp = VK_LOGIC_OP_COPY; // Optional
+            colorBlending.attachmentCount = 1;
+            colorBlending.pAttachments = &colorBlendAttachment;
+            colorBlending.blendConstants[0] = 0.0f; // Optional
+            colorBlending.blendConstants[1] = 0.0f; // Optional
+            colorBlending.blendConstants[2] = 0.0f; // Optional
+            colorBlending.blendConstants[3] = 0.0f; // Optional
+            
+            VkPushConstantRange push{};
+            if(m_cfg.push.type != PushConfigType::None){
+                push.offset     = 0;
+                switch(m_cfg.push.type){
+                case PushConfigType::Full:
+                case PushConfigType::View:
+                    push.size   = sizeof(StdPushData);
+                    break;
+                case PushConfigType::Custom:
+                    push.size   = m_cfg.push.size;
+                    break;
+                default:
+                    break;
+                }
+            }
+            
+            pipelineLayoutInfo.setLayoutCount = 0; // Optional
+            pipelineLayoutInfo.pSetLayouts = nullptr; // Optional
+            if(push.size != 0){
+                if(m_cfg.push.shaders)
+                    push.stageFlags = m_cfg.push.shaders;
+                else
+                    push.stageFlags = m_shaders;
+                pipelineLayoutInfo.pushConstantRangeCount = 1;
+                pipelineLayoutInfo.pPushConstantRanges = &push;
+            } else {
+                pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
+                pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
+            }
+            if(m_descriptors){
+                pipelineLayoutInfo.setLayoutCount   = 1;
+                pipelineLayoutInfo.pSetLayouts      = &m_descriptors;
+            }
+
+            if (vkCreatePipelineLayout(m_viz.device(), &pipelineLayoutInfo, nullptr, &m_layout) != VK_SUCCESS) 
+                throw create_error<"Failed to create pipeline layout">();
+
+            VqGraphicsPipelineCreateInfo pipelineInfo;
+            pipelineInfo.stageCount     = stages.size();
+            if(pipelineInfo.stageCount)
+               pipelineInfo.pStages     = stages.data();
+            
+            pipelineInfo.pVertexInputState      = &vertexInfo;
+            pipelineInfo.pInputAssemblyState    = &inputAssembly;
+            pipelineInfo.pViewportState         = &viewportState;
+            pipelineInfo.pRasterizationState    = &rasterizer;
+            pipelineInfo.pMultisampleState      = &multisampling;
+            pipelineInfo.pDepthStencilState     = nullptr; // Optional
+            pipelineInfo.pColorBlendState       = &colorBlending;
+            pipelineInfo.pDynamicState          = nullptr; // Optional   
+            pipelineInfo.layout                 = m_layout;
+            pipelineInfo.renderPass             = m_viz.render_pass();
+            pipelineInfo.subpass                = 0;             
+            pipelineInfo.basePipelineHandle     = VK_NULL_HANDLE; // Optional
+            pipelineInfo.basePipelineIndex      = -1; // Optional        
+            
+            if(m_cfg.polymode == PolygonMode::Fill)
+                pipelineInfo.flags  = VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT;
+            if (vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_pipeline) != VK_SUCCESS) 
+                throw create_error<"Failed to create graphics pipeline!">();
+            
+                // if it's a fill polygon (typical), create a derivative wireframe pipeline
+            if(m_cfg.polymode == PolygonMode::Fill){
+                pipelineInfo.flags  = VK_PIPELINE_CREATE_DERIVATIVE_BIT;
+                pipelineInfo.basePipelineHandle = m_pipeline;
+                pipelineInfo.basePipelineIndex  = -1;
+                rasterizer.polygonMode  = VK_POLYGON_MODE_LINE;
+                
+                if (vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_wireframe) != VK_SUCCESS)
+                    throw create_error<"Failed to create wireframe pipeline!">();
+            }
+            
+            m_binding       = (VkPipelineBindPoint) m_cfg.binding.value();
+            
+            
+            if(!m_cfg.vbos.empty()){
+                for(auto& vb : m_cfg.vbos){
+                    ViBO        bo;
+                    bo.update(m_viz, vb, nullptr);
+                    m_vbos.push_back(bo);
+                }
+            }
+            
+            if(!m_cfg.ibos.empty()){
+                for(auto & ib : m_cfg.ibos){
+                    ViBO        bo;
+                    bo.update(m_viz, ib, nullptr);
+                    m_ibos.push_back(bo);
+                }
+            }
+
+            if(!m_cfg.ubos.empty()){
+                for(auto & ub : m_cfg.ubos){
+                    ViBO        bo;
+                    bo.update(m_viz, ub, nullptr);
+                    m_ubos.push_back(bo);
+                }
+            }
+            
+            if(!m_cfg.texs.empty()){
+                for(auto& tb : m_cfg.texs){
+                    ViTO        to;
+                    to.update(m_viz, tb, nullptr);
+                    m_texs.push_back(to);
+                }
+            }
+                
+            return std::error_code();
+        }
+        catch(std::error_code ec)
+        {
+            _dtor();
+            return ec;
+        }
+    }
+    
+    void                    ViPipeline::_dtor()
+    {
+        if(m_descriptors){
+            vkDestroyDescriptorSetLayout(m_viz.device(), m_descriptors, nullptr);
+            m_descriptors   = nullptr;
+        }
+        if(m_wireframe){
+            vkDestroyPipeline(m_viz.device(), m_wireframe, nullptr);
+            m_wireframe = nullptr;
+        }
+        if(m_pipeline){
+            vkDestroyPipeline(m_viz.device(), m_pipeline, nullptr);
+            m_pipeline  = nullptr;
+        }
+        if(m_layout){
+            vkDestroyPipelineLayout(m_viz.device(), m_layout, nullptr);
+            m_layout    = nullptr;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
     //  ViRendered
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -452,40 +750,40 @@ namespace yq::tachyon {
     {
         size_t i;
         size_t  ds = 0;
-        auto& vc    = m_pipe.cfg.vbos;
+        auto& vc    = m_pipe.m_cfg.vbos;
         if(!vc.empty()){
             m_vbos.resize(vc.size());
             for(i=0;i<m_vbos.size();++i){
-                m_vbos[i] = m_pipe.vbos[i];
+                m_vbos[i] = m_pipe.m_vbos[i];
                 m_vbos[i].update(m_viz, vc[i], &m_object);
             }
         }
             
-        auto& ic    = m_pipe.cfg.ibos;
+        auto& ic    = m_pipe.m_cfg.ibos;
         if(!ic.empty()){
             m_ibos.resize(ic.size());
             for(i=0;i<m_ibos.size();++i){
-                m_ibos[i] = m_pipe.ibos[i];
+                m_ibos[i] = m_pipe.m_ibos[i];
                 m_ibos[i].update(m_viz, ic[i], &m_object);
             }
         }
         
-        auto& uc    = m_pipe.cfg.ubos;
+        auto& uc    = m_pipe.m_cfg.ubos;
         if(!uc.empty()){
             m_ubos.resize(uc.size());
             for(i=0;i<m_ubos.size();++i){
-                m_ubos[i] = m_pipe.ubos[i];
+                m_ubos[i] = m_pipe.m_ubos[i];
                 m_ubos[i].update(m_viz, uc[i], &m_object);
             }
             
             ds += uc.size();
         }
         
-        auto& tc    = m_pipe.cfg.texs;
+        auto& tc    = m_pipe.m_cfg.texs;
         if(!tc.empty()){
             m_texs.resize(tc.size());
             for(i=0;i<m_texs.size();++i){
-                m_texs[i] = m_pipe.texs[i];
+                m_texs[i] = m_pipe.m_texs[i];
                 m_texs[i].update(m_viz, tc[i], &m_object);
             }
             
@@ -494,11 +792,11 @@ namespace yq::tachyon {
         
         
         if(ds){
-            std::vector<VkDescriptorSetLayout>      layouts(ds, m_pipe.descriptors);    // TODO efficiency is to push this into ViPipeline
+            std::vector<VkDescriptorSetLayout>      layouts(ds, m_pipe.m_descriptors);    // TODO efficiency is to push this into ViPipeline
             VqDescriptorSetAllocateInfo allocInfo;
             allocInfo.descriptorPool        = m_viz.descriptor_pool();
             allocInfo.descriptorSetCount    = ds;
-            allocInfo.pSetLayouts           = &m_pipe.descriptors;
+            allocInfo.pSetLayouts           = &m_pipe.m_descriptors;
             m_descriptors.resize(ds, nullptr);
             if(vkAllocateDescriptorSets(m_viz.device(), &allocInfo, m_descriptors.data()) != VK_SUCCESS){
                 yInfo() << "Unable to allocate descriptor sets!";
@@ -556,11 +854,11 @@ namespace yq::tachyon {
     {
         size_t i;
         for(i=0;i<m_ubos.size();++i){
-            m_ubos[i].update(m_viz, m_pipe.cfg.ubos[i], &m_object);
+            m_ubos[i].update(m_viz, m_pipe.m_cfg.ubos[i], &m_object);
             _ubo(i);
         }
         for(i=0;i<m_texs.size();++i){
-            m_texs[i].update(m_viz, m_pipe.cfg.texs[i], &m_object);
+            m_texs[i].update(m_viz, m_pipe.m_cfg.texs[i], &m_object);
             _tex(i);
         }
     }
@@ -569,21 +867,21 @@ namespace yq::tachyon {
     {
         size_t i;
 
-        auto& vc    = m_pipe.cfg.vbos;
+        auto& vc    = m_pipe.m_cfg.vbos;
         for(i=0;i<m_vbos.size();++i)
             m_vbos[i].update(m_viz, vc[i], &m_object);
             
-        auto& ic    = m_pipe.cfg.ibos;
+        auto& ic    = m_pipe.m_cfg.ibos;
         for(i=0;i<m_ibos.size();++i)
             m_ibos[i].update(m_viz, ic[i], &m_object);
 
 
-        const Render3D* r3      = (m_pipe.cfg.push.type == PushConfigType::Full) ? dynamic_cast<const Render3D*>(&m_object) : nullptr;
-        StdPushData*    push    = (r3 || (m_pipe.cfg.push.type == PushConfigType::View)) ? m_push.create_single<StdPushData>() : nullptr;
+        const Render3D* r3      = (m_pipe.m_cfg.push.type == PushConfigType::Full) ? dynamic_cast<const Render3D*>(&m_object) : nullptr;
+        StdPushData*    push    = (r3 || (m_pipe.m_cfg.push.type == PushConfigType::View)) ? m_push.create_single<StdPushData>() : nullptr;
         if(push)
             push->time       = u.utime();
             
-        switch(m_pipe.cfg.push.type){
+        switch(m_pipe.m_cfg.push.type){
         case PushConfigType::Full:
             if(r3){
                 push->matrix    = u.world2eye() * r3->model2world();
@@ -594,9 +892,9 @@ namespace yq::tachyon {
             push->matrix = u.world2eye();
             break;
         case PushConfigType::Custom:
-            if(m_pipe.cfg.push.fetch){
+            if(m_pipe.m_cfg.push.fetch){
                 m_push.clear();
-                m_pipe.cfg.push.fetch(&m_object, m_push);
+                m_pipe.m_cfg.push.fetch(&m_object, m_push);
             }
             break;
         case PushConfigType::None:
@@ -607,25 +905,25 @@ namespace yq::tachyon {
 
     void                ViRendered::record(ViContext&u)
     {
-        const auto&         cfg     = m_pipe.cfg;
+        const auto&         cfg     = m_pipe.m_cfg;
         if(cfg.binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
             return ;
 
             //  =================================================
             //      SET THE PIPELINE
         Tristate        wireframe   = (u.wireframe() == Tristate::INHERIT) ? m_object.wireframe() : u.wireframe();
-        VkPipeline      vkpipe      = (wireframe == Tristate::YES) ? m_pipe.wireframe : m_pipe.pipeline;
+        VkPipeline      vkpipe      = (wireframe == Tristate::YES) ? m_pipe.m_wireframe : m_pipe.m_pipeline;
         if(vkpipe && (vkpipe != u.m_pipeline)){
             vkCmdBindPipeline(u.command(), VK_PIPELINE_BIND_POINT_GRAPHICS, vkpipe);
             u.m_pipeline    = vkpipe;
-            u.m_layout      = m_pipe.layout;
+            u.m_layout      = m_pipe.m_layout;
         }
 
             //  =================================================
             //      PUSH THE CONSTANTS
 
         if(!m_push.empty()){
-            vkCmdPushConstants(u.command(), m_pipe.layout, m_pipe.shaders, 0, m_push.size(), m_push.data() );
+            vkCmdPushConstants(u.command(), m_pipe.m_layout, m_pipe.m_shaders, 0, m_push.size(), m_push.data() );
         }
         
         if(!m_descriptors.empty()){
@@ -1083,10 +1381,8 @@ namespace yq::tachyon {
         _destroy(m_thread);
     
         for(auto& p : m_pipelines){
-            if(p.second){
-                _destroy(*(p.second));
+            if(p.second)
                 delete p.second;
-            }
         }
         m_pipelines.clear();
         
@@ -1158,287 +1454,6 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     //  SUB CREATE/DESTROY
     
-    std::error_code          Visualizer::_create(ViPipeline&p, const PipelineConfig&cfg)
-    {
-        try {
-            std::vector<VkPipelineShaderStageCreateInfo>    stages;
-            p.shaders           = 0;
-            for(auto& s : cfg.shaders){
-                Ref<const Shader>   sh  = Shader::decode(s);
-                if(!sh)
-                    continue;
-                
-                Expect<ViShader>    xvs = create(*sh);
-                if(!xvs)
-                    continue;
-                
-                const ViShader&     ssh = *xvs;
-                
-                VqPipelineShaderStageCreateInfo stage;
-                stage.stage     = ssh.mask;
-                stage.pName     = "main";
-                stage.module    = ssh.shader;
-                stages.push_back(stage);
-
-                p.shaders      |= ssh.mask;
-            }
-        
-            VqPipelineVertexInputStateCreateInfo    vertexInfo;
-            VqPipelineLayoutCreateInfo              pipelineLayoutInfo;
-            
-            std::vector<VkVertexInputAttributeDescription>  attrs;
-            std::vector<VkVertexInputBindingDescription>    vbos;
-            std::vector<VkDescriptorSetLayoutBinding>       desc;
-            
-            for(uint32_t i=0;i<cfg.vbos.size();++i){
-                auto& v = cfg.vbos[i];
-                VkVertexInputBindingDescription b;
-                b.binding   = i;
-                b.stride    = v.stride;
-                b.inputRate = (VkVertexInputRate) v.inputRate.value();
-                vbos.push_back(b);
-                
-                for(auto& va : v.attrs){
-                    VkVertexInputAttributeDescription   a;
-                    a.binding       = i;
-                    a.location      = va.location;
-                    a.offset        = va.offset;
-                    a.format        = (VkFormat) va.format.value();
-                    attrs.push_back(a);
-                }
-            }
-
-            size_t  ds2 = cfg.ubos.size() + cfg.texs.size();
-
-            if(ds2){
-                for(uint32_t    i   = 0;i<cfg.ubos.size();++i){
-                    auto& u = cfg.ubos[i];
-                    VkDescriptorSetLayoutBinding a{};
-                    a.binding           = i;
-                    a.descriptorCount   = 1;
-                    a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-                    if(u.shaders){
-                        a.stageFlags    = u.shaders;
-                    } else
-                        a.stageFlags    = p.shaders;
-                    desc.push_back(a);
-                }
-                
-                uint32_t        tbase   = cfg.ubos.size();
-                
-                for(uint32_t  i=0;i<cfg.texs.size();++i){
-                    auto& u = cfg.texs[i];
-                    VkDescriptorSetLayoutBinding a{};
-                    a.binding           = i+tbase;
-                    a.descriptorCount   = 1;
-                    a.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-                    if(u.shaders){
-                        a.stageFlags    = u.shaders;
-                    } else
-                        a.stageFlags    = p.shaders;
-                    desc.push_back(a);
-                }
-                
-                VqDescriptorSetLayoutCreateInfo layoutInfo;
-                layoutInfo.bindingCount = desc.size();
-                layoutInfo.pBindings    = desc.data();
-                if(vkCreateDescriptorSetLayout(m_device, &layoutInfo, nullptr, &p.descriptors) != VK_SUCCESS)
-                    throw create_error<"Unable to create a descriptor set layout">();
-                pipelineLayoutInfo.setLayoutCount   = 1;
-                pipelineLayoutInfo.pSetLayouts      = &p.descriptors;
-            }
-                
-            vertexInfo.vertexBindingDescriptionCount    = (uint32_t) vbos.size();
-            vertexInfo.pVertexBindingDescriptions       = vbos.data();
-            vertexInfo.vertexAttributeDescriptionCount  = (uint32_t) attrs.size();
-            vertexInfo.pVertexAttributeDescriptions     = attrs.data();
-            
-            VqPipelineInputAssemblyStateCreateInfo  inputAssembly;
-            inputAssembly.topology                  = (VkPrimitiveTopology) cfg.topology.value();
-            inputAssembly.primitiveRestartEnable    = VK_FALSE;
-            
-            VkViewport viewport = m_swapchain.def_viewport();
-
-            VkRect2D scissor = m_swapchain.def_scissor();
-            
-            VqPipelineViewportStateCreateInfo   viewportState{};
-            viewportState.viewportCount = 1;
-            viewportState.pViewports = &viewport;
-            viewportState.scissorCount = 1;
-            viewportState.pScissors = &scissor;
-            
-            VqPipelineRasterizationStateCreateInfo  rasterizer;
-            rasterizer.depthClampEnable = VK_FALSE;
-            rasterizer.rasterizerDiscardEnable = VK_FALSE;
-            rasterizer.polygonMode = (VkPolygonMode) cfg.polymode.value();
-            rasterizer.lineWidth = 1.0f;
-            rasterizer.cullMode = (VkCullModeFlags) cfg.culling.value();
-            rasterizer.frontFace = (VkFrontFace) cfg.front.value();
-            rasterizer.depthBiasEnable = VK_FALSE;
-            rasterizer.depthBiasConstantFactor = 0.0f; // Optional
-            rasterizer.depthBiasClamp = 0.0f; // Optional
-            rasterizer.depthBiasSlopeFactor = 0.0f; // Optional
-
-            VqPipelineMultisampleStateCreateInfo multisampling;
-            multisampling.sampleShadingEnable = VK_FALSE;
-            multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
-            multisampling.minSampleShading = 1.0f; // Optional
-            multisampling.pSampleMask = nullptr; // Optional
-            multisampling.alphaToCoverageEnable = VK_FALSE; // Optional
-            multisampling.alphaToOneEnable = VK_FALSE; // Optional
-
-            VkPipelineColorBlendAttachmentState colorBlendAttachment{};
-            colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-            colorBlendAttachment.blendEnable = VK_FALSE;
-            colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE; // Optional
-            colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO; // Optional
-            colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD; // Optional
-            colorBlendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE; // Optional
-            colorBlendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO; // Optional
-            colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD; // Optional
-            
-            VqPipelineColorBlendStateCreateInfo colorBlending;
-            colorBlending.logicOpEnable = VK_FALSE;
-            colorBlending.logicOp = VK_LOGIC_OP_COPY; // Optional
-            colorBlending.attachmentCount = 1;
-            colorBlending.pAttachments = &colorBlendAttachment;
-            colorBlending.blendConstants[0] = 0.0f; // Optional
-            colorBlending.blendConstants[1] = 0.0f; // Optional
-            colorBlending.blendConstants[2] = 0.0f; // Optional
-            colorBlending.blendConstants[3] = 0.0f; // Optional
-            
-            VkPushConstantRange push{};
-            if(cfg.push.type != PushConfigType::None){
-                push.offset     = 0;
-                switch(cfg.push.type){
-                case PushConfigType::Full:
-                case PushConfigType::View:
-                    push.size   = sizeof(StdPushData);
-                    break;
-                case PushConfigType::Custom:
-                    push.size   = cfg.push.size;
-                    break;
-                default:
-                    break;
-                }
-            }
-            
-            pipelineLayoutInfo.setLayoutCount = 0; // Optional
-            pipelineLayoutInfo.pSetLayouts = nullptr; // Optional
-            if(push.size != 0){
-                if(cfg.push.shaders)
-                    push.stageFlags = cfg.push.shaders;
-                else
-                    push.stageFlags = p.shaders;
-                pipelineLayoutInfo.pushConstantRangeCount = 1;
-                pipelineLayoutInfo.pPushConstantRanges = &push;
-            } else {
-                pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
-                pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
-            }
-            if(p.descriptors){
-                pipelineLayoutInfo.setLayoutCount   = 1;
-                pipelineLayoutInfo.pSetLayouts      = &p.descriptors;
-            }
-
-            if (vkCreatePipelineLayout(m_device, &pipelineLayoutInfo, nullptr, &p.layout) != VK_SUCCESS) 
-                throw create_error<"Failed to create pipeline layout">();
-
-            VqGraphicsPipelineCreateInfo pipelineInfo;
-            pipelineInfo.stageCount     = stages.size();
-            if(pipelineInfo.stageCount)
-               pipelineInfo.pStages     = stages.data();
-            
-            pipelineInfo.pVertexInputState      = &vertexInfo;
-            pipelineInfo.pInputAssemblyState    = &inputAssembly;
-            pipelineInfo.pViewportState         = &viewportState;
-            pipelineInfo.pRasterizationState    = &rasterizer;
-            pipelineInfo.pMultisampleState      = &multisampling;
-            pipelineInfo.pDepthStencilState     = nullptr; // Optional
-            pipelineInfo.pColorBlendState       = &colorBlending;
-            pipelineInfo.pDynamicState          = nullptr; // Optional   
-            pipelineInfo.layout                 = p.layout;
-            pipelineInfo.renderPass             = m_renderPass;
-            pipelineInfo.subpass                = 0;             
-            pipelineInfo.basePipelineHandle     = VK_NULL_HANDLE; // Optional
-            pipelineInfo.basePipelineIndex      = -1; // Optional        
-            
-            if(cfg.polymode == PolygonMode::Fill)
-                pipelineInfo.flags  = VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT;
-            if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &p.pipeline) != VK_SUCCESS) 
-                throw create_error<"Failed to create graphics pipeline!">();
-            
-                // if it's a fill polygon (typical), create a derivative wireframe pipeline
-            if(cfg.polymode == PolygonMode::Fill){
-                pipelineInfo.flags  = VK_PIPELINE_CREATE_DERIVATIVE_BIT;
-                pipelineInfo.basePipelineHandle = p.pipeline;
-                pipelineInfo.basePipelineIndex  = -1;
-                rasterizer.polygonMode  = VK_POLYGON_MODE_LINE;
-                
-                if (vkCreateGraphicsPipelines(m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &p.wireframe) != VK_SUCCESS)
-                    throw create_error<"Failed to create wireframe pipeline!">();
-            }
-            
-            p.binding       = (VkPipelineBindPoint) cfg.binding.value();
-            
-            
-            if(!cfg.vbos.empty()){
-                for(auto& vb : cfg.vbos){
-                    ViBO        bo;
-                    bo.update(*this, vb, nullptr);
-                    p.vbos.push_back(bo);
-                }
-            }
-            
-            if(!cfg.ibos.empty()){
-                for(auto & ib : cfg.ibos){
-                    ViBO        bo;
-                    bo.update(*this, ib, nullptr);
-                    p.ibos.push_back(bo);
-                }
-            }
-
-            if(!cfg.ubos.empty()){
-                for(auto & ub : cfg.ubos){
-                    ViBO        bo;
-                    bo.update(*this, ub, nullptr);
-                    p.ubos.push_back(bo);
-                }
-            }
-            
-            if(!cfg.texs.empty()){
-                for(auto& tb : cfg.texs){
-                    ViTO        to;
-                    to.update(*this, tb, nullptr);
-                    p.texs.push_back(to);
-                }
-            }
-                
-            p.cfg           = cfg;
-
-            return std::error_code();
-        }
-        catch(std::error_code ec)
-        {
-            _destroy(p);
-            return ec;
-        }
-            
-    }
-    
-    void                        Visualizer::_destroy(ViPipeline&p)
-    {
-        if(p.descriptors)
-            vkDestroyDescriptorSetLayout(m_device, p.descriptors, nullptr);
-        if(p.wireframe)
-            vkDestroyPipeline(m_device, p.wireframe, nullptr);
-        if(p.pipeline)
-            vkDestroyPipeline(m_device, p.pipeline, nullptr);
-        if(p.layout)
-            vkDestroyPipelineLayout(m_device, p.layout, nullptr);
-    }
-
-
     std::error_code             Visualizer::_create(ViSwapchain&p)
     {
         try {
@@ -2097,9 +2112,8 @@ namespace yq::tachyon {
                 return j->second;
         }
         
-        ViPipeline* p   = new ViPipeline;
-        p->id           = v.id();
-        _create(*p, v.config());
+        ViPipeline* p   = new ViPipeline(*this, v);
+        p -> _ctor();
         ViPipeline* ret = nullptr;
         
         {
@@ -2111,10 +2125,8 @@ namespace yq::tachyon {
                 ret     = j->second;
         }
         
-        if(p){
-            _destroy(*p);
+        if(p)
             delete p;
-        }
         
         return ret;
     }

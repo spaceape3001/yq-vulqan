@@ -80,19 +80,26 @@ namespace yq::tachyon {
     };
 
     struct ViPipeline {
-        //Visualizer&             viz;
-        PipelineConfig          cfg;
-        std::vector<ViBO>       vbos;
-        std::vector<ViBO>       ibos;
-        std::vector<ViBO>       ubos;
-        std::vector<ViTO>       texs;
-        VkPipelineLayout        layout      = nullptr;
-        VkPipeline              pipeline    = nullptr;
-        VkPipeline              wireframe   = nullptr;
-        VkDescriptorSetLayout   descriptors = nullptr;
-        uint32_t                shaders     = 0;
-        VkPipelineBindPoint     binding     = VK_PIPELINE_BIND_POINT_GRAPHICS;
-        uint64_t                id          = 0ULL;
+        Visualizer&             m_viz;
+        const uint64_t          m_id;
+        const PipelineConfig    m_cfg;
+        
+        std::vector<ViBO>       m_vbos;
+        std::vector<ViBO>       m_ibos;
+        std::vector<ViBO>       m_ubos;
+        std::vector<ViTO>       m_texs;
+        VkPipelineLayout        m_layout      = nullptr;
+        VkPipeline              m_pipeline    = nullptr;
+        VkPipeline              m_wireframe   = nullptr;
+        VkDescriptorSetLayout   m_descriptors = nullptr;
+        uint32_t                m_shaders     = 0;
+        VkPipelineBindPoint     m_binding     = VK_PIPELINE_BIND_POINT_GRAPHICS;
+        
+        ViPipeline(Visualizer&, const Pipeline&);
+        ~ViPipeline();
+        
+        std::error_code         _ctor();
+        void                    _dtor();
     };
 
     struct ViTO {

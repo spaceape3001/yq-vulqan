@@ -299,9 +299,6 @@ namespace yq::tachyon {
     
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
-    
-        std::error_code             _create(ViPipeline&, const PipelineConfig&);
-        void                        _destroy(ViPipeline&);
 
         
         std::error_code             _create(ViSwapchain&);

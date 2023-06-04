@@ -19,7 +19,6 @@
 #include <vector>
 
 namespace yq::tachyon {
-    using ViQueueSpec = std::variant<std::monostate, bool, uint32_t, std::vector<float>>;
 
     struct ViewerCreateInfo {
         VkPhysicalDevice            device   = nullptr;

@@ -53,7 +53,7 @@ namespace yq::tachyon {
         using namespace yq::errors;
         using INSUFFICIENT_GPU_MEMORY   = error_db::entry<"Insufficient GPU memory for requested operation">;
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
     
@@ -418,24 +418,6 @@ namespace yq::tachyon {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViQueues
-    ////////////////////////////////////////////////////////////////////////////////
-
-    void    ViQueues::set(VkDevice dev, uint32_t cnt)
-    {
-        queues.clear();
-        queues.resize(cnt, nullptr);
-        for(uint32_t i=0;i<cnt;++i)
-            vkGetDeviceQueue(dev, family, i, &queues[i]);
-    }
-    
-    VkQueue ViQueues::operator[](uint32_t i) const
-    {
-        if(i<queues.size()) [[likely]]
-            return queues[i];
-        return nullptr;
-    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViPipeline
@@ -733,6 +715,143 @@ namespace yq::tachyon {
             vkDestroyPipelineLayout(m_viz.device(), m_layout, nullptr);
             m_layout    = nullptr;
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //  ViQueues
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    namespace {
+        size_t          count(const ViQueueSpec& qs)
+        {
+            if( std::get_if<std::monostate>(&qs) != nullptr)
+                return 0;
+            if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
+                return p->size();
+            if(const uint32_t* p = std::get_if<uint32_t>(&qs))  
+                return *p;
+            if(const bool* p = std::get_if<bool>(&qs))
+                return *p ? 1 : 0;
+            return 0;
+        }
+
+        bool            is_empty(const ViQueueSpec& qs)
+        {
+            if( std::get_if<std::monostate>(&qs) != nullptr)
+                return true;
+            if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
+                return p->empty();
+            if(const uint32_t* p = std::get_if<uint32_t>(&qs))
+                return *p == 0;
+            if(const bool* p = std::get_if<bool>(&qs))
+                return !*p;
+            return true;
+        }
+
+        const ViQueueSpec&   biggest(const ViewerCreateInfo& vci, Flags<QueueType> which)
+        {
+            size_t  g       = 0;
+            size_t  c       = 0;
+            size_t  p       = 0;
+            size_t  ve      = 0;
+            size_t  vd      = 0;
+            size_t  mx     = 0;
+            
+            if(which.is_set(QueueType::Graphic)){
+                mx  = g   = std::max((size_t) 1,count(vci.graphic));
+            }
+            if(which.is_set(QueueType::Present)){
+                p   = std::max((size_t) 1,count(vci.present));
+                mx  = std::max(p,mx);
+            };
+            if(which.is_set(QueueType::Compute)){
+                c   = count(vci.compute);
+                mx  = std::max(c,mx);
+            }
+            if(which.is_set(QueueType::VideoEncode)){
+                ve  = count(vci.video_encode);
+                mx  = std::max(ve,mx);
+            }
+            if(which.is_set(QueueType::VideoDecode)){
+                vd  = count(vci.video_decode);
+                mx  = std::max(vd,mx);
+            }
+            
+            if(g==mx)
+                return vci.graphic;
+            if(p==mx)
+                return vci.present;
+            if(c==mx)
+                return vci.compute;
+            if(vd==mx)
+                return vci.video_decode;
+            if(ve==mx)
+                return vci.video_encode;
+            throw create_error<"No queues remaining">();
+        }
+    }
+
+    ViQueues::ViQueues(Visualizer&viz, const ViewerCreateInfo& vci, uint32_t fi, const VkQueueFamilyProperties&prop, Flags<QueueType> left) :
+        m_viz(viz), m_family(fi)
+    {
+        m_availableQueueCount           = prop.queueCount;
+        m_timestampValidBits            = prop.timestampValidBits;
+        m_minImageTransferGranularity   = prop.minImageTransferGranularity;
+        m_vkFlags                       = prop.queueFlags;
+
+        if(left.is_set(QueueType::Graphic) && (m_vkFlags & VK_QUEUE_GRAPHICS_BIT))
+            m_type.set(QueueType::Graphic);
+        if(left.is_set(QueueType::Compute) && (m_vkFlags & VK_QUEUE_COMPUTE_BIT))
+            m_type.set(QueueType::Compute);
+        if(left.is_set(QueueType::VideoEncode) && (m_vkFlags & VK_QUEUE_VIDEO_ENCODE_BIT_KHR))
+            m_type.set(QueueType::VideoEncode);
+        if(left.is_set(QueueType::VideoDecode) && (m_vkFlags & VK_QUEUE_VIDEO_DECODE_BIT_KHR))
+            m_type.set(QueueType::VideoDecode);
+        if(left.is_set(QueueType::Present)){
+            VkBool32 presentSupport = false;
+            vkGetPhysicalDeviceSurfaceSupportKHR(viz.physical(), fi, viz.surface(), &presentSupport);
+            if(presentSupport)
+                m_type.set(QueueType::Present);
+        }
+        
+        const ViQueueSpec&  spec    = biggest(vci, m_type);
+        if(const std::vector<float>*p = std::get_if<std::vector<float>>(&spec)){
+            if(!p->empty())
+                m_weights   = *p;
+        }
+        if(const uint32_t* p = std::get_if<uint32_t>(&spec))
+            m_weights.resize(*p, 1.);
+        if(m_weights.empty())
+            m_weights.push_back(1.);
+        m_queues.resize(m_weights.size(), nullptr);
+    }
+    
+    ViQueues::~ViQueues()
+    {
+    }
+    
+    VkDeviceQueueCreateInfo ViQueues::info()
+    {
+        VqDeviceQueueCreateInfo  ret;
+        ret.queueFamilyIndex   = m_family;
+        ret.queueCount         = (uint32_t) m_weights.size();
+        ret.pQueuePriorities   = m_weights.data();
+        return ret;
+    }
+
+    void        ViQueues::init()
+    {
+        if(m_queues.size() != m_weights.size())
+            throw create_error<"Queues size does not match weight sizes">();
+        for(uint32_t i=0;i<m_queues.size();++i)
+            vkGetDeviceQueue(m_viz.device(), m_family, i, &m_queues[i]);
+    }
+    
+    VkQueue     ViQueues::queue(uint32_t i) const
+    {
+        if(i<m_queues.size()) [[likely]]
+            return m_queues[i];
+        return nullptr;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -1359,12 +1478,12 @@ namespace yq::tachyon {
         if(m_fence)
             throw create_error<"Upload already initialized">();
             
-        if(qu.queues.empty())
+        if(qu.m_queues.empty())
             throw create_error<"Queues has no queues">();
     
-        m_queue                         = qu.queues[0];
+        m_queue                         = qu.queue(0);
         VqCommandPoolCreateInfo poolInfo;
-        poolInfo.queueFamilyIndex       = qu.family;
+        poolInfo.queueFamilyIndex       = qu.m_family;
         if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_pool) != VK_SUCCESS) 
             throw create_error<"Failed to create an upload command pool">();
             
@@ -1414,28 +1533,6 @@ namespace yq::tachyon {
     }
     
     
-    namespace {
-        std::vector<float>      make_weights(const ViQueueSpec& qs, uint32_t mincnt=0)
-        { 
-            if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs)){
-                if((!p->empty()) && (p->size() >= (size_t) mincnt))
-                    return *p;
-            }
-            uint32_t    cnt = mincnt;
-            if(const uint32_t* p = std::get_if<uint32_t>(&qs))
-                cnt = std::max(cnt, *p);
-            if(const bool* p = std::get_if<bool>(&qs)){
-                if(*p)
-                    cnt = std::max<uint32_t>(cnt, 1);
-            }
-            if(cnt){
-                std::vector<float> ret;
-                ret.resize(cnt, 1.);
-                return ret;
-            }
-            return std::vector<float>();
-        }
-    }
 
     std::error_code             Visualizer::_ctor(const ViewerCreateInfo&vci, GLFWwindow*w)
     {
@@ -1491,107 +1588,62 @@ namespace yq::tachyon {
         std::vector<const char*>    devExtensions = vci.extensions;
         devExtensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
-            //  Query the GPU for valid queue families
-        auto queueInfos         = vqFindQueueFamilies(m_physical, m_surface);
-        
             //  And we need to create them... so request
         std::vector<VkDeviceQueueCreateInfo> qci;
         
-            //  graphic is required....
-        std::vector<float>  graphicWeights  = make_weights(vci.graphic, 1);
-        if(!queueInfos.graphics.has_value()){
-            return create_error<"No graphic queue capability">();
-        } else {
-            m_graphic.family        = queueInfos.graphics.value();
-            VqDeviceQueueCreateInfo info;
-            info.queueFamilyIndex   = m_graphic.family;
-            info.queueCount         = (uint32_t) graphicWeights.size();
-            info.pQueuePriorities   = graphicWeights.data();
-            qci.push_back(info);
-        }
-        
-            //  present is required....
-        std::vector<float>  presentWeights  = make_weights(vci.present, 1);
-        if(!queueInfos.present.has_value()){
-            return create_error<"No present queue capability">();
-        } else {
-            m_present.family        = queueInfos.present.value();
-            VqDeviceQueueCreateInfo info;
-            info.queueFamilyIndex   = m_present.family;
-            info.queueCount         = (uint32_t) presentWeights.size();
-            info.pQueuePriorities   = presentWeights.data();
-            qci.push_back(info);
-        }
-        
-            //  Determine if compute is requested, create the request
-        std::vector<float>  computeWeights  = make_weights(vci.compute, 0);
-        if(!computeWeights.empty()){
-            if(!queueInfos.compute.has_value()){
-                return create_error<"No compute queue capability">();
-            } else {
-                m_compute.family        = queueInfos.compute.value();
-                VqDeviceQueueCreateInfo info;
-                info.queueFamilyIndex   = m_compute.family;
-                info.queueCount         = (uint32_t) computeWeights.size();
-                info.pQueuePriorities   = computeWeights.data();
-                qci.push_back(info);
-            }
-        }
+        Flags<QueueType>        wantQueue({QueueType::Graphic, QueueType::Present});
+        Flags<QueueType>        hasQueue{};
 
-            //  Determine if video decoding is requested, create the request
-        std::vector<float>  videoDecWeights = make_weights(vci.video_decode, 0);
-        if(!videoDecWeights.empty()){
-            if(!queueInfos.videoDecode.has_value()){
-                return create_error<"No video decode queue capability">();
-            } else {
-                m_videoDecode.family    = queueInfos.videoDecode.value();
-                VqDeviceQueueCreateInfo info;
-                info.queueFamilyIndex   = m_videoDecode.family;
-                info.queueCount         = (uint32_t) videoDecWeights.size();
-                info.pQueuePriorities   = videoDecWeights.data();
-                qci.push_back(info);
+        if(!is_empty(vci.compute)){
+        yInfo() << " Want compute queue with " << count(vci.compute) << " queues";
+            wantQueue.set(QueueType::Compute);
+        }
+        if(!is_empty(vci.video_decode))
+            wantQueue.set(QueueType::VideoDecode);
+        if(!is_empty(vci.video_encode))
+            wantQueue.set(QueueType::VideoEncode);
+        
+        std::vector<VkQueueFamilyProperties> qfp = vqGetPhysicalDeviceQueueFamilyProperties(m_physical);
+        for(uint32_t i=0;i<qfp.size();++i){
+            if(wantQueue == hasQueue)
+                break;
+            Ref<ViQueues>   r   = new ViQueues(*this, vci, i, qfp[i], wantQueue & ~hasQueue );
+            hasQueue |= r->m_type;
+            if(r->m_type.is_set(QueueType::Graphic)){
+            yInfo() << "Discovered graphics queue " << i;
+                m_graphic       = r.ptr();
             }
+            if(r->m_type.is_set(QueueType::Compute)){
+            yInfo() << "Discovered compute queue " << i;
+                m_compute       = r.ptr();
+            }
+            if(r->m_type.is_set(QueueType::VideoEncode)){
+            yInfo() << "Discovered video encode queue " << i;
+                m_videoEncode   = r.ptr();
+            }
+            if(r->m_type.is_set(QueueType::VideoDecode)){
+            yInfo() << "Discovered video decode queue " << i;
+                m_videoDecode   = r.ptr();
+            }
+            if(r->m_type.is_set(QueueType::Present)){
+            yInfo() << "Discovered present queue " << i;
+                m_present       = r.ptr();
+            }
+            qci.push_back(r->info());
+            m_queues.push_back(r);
         }
         
-            //  Determine if video encoding is requested, create the request
-        std::vector<float>  videoEncWeights = make_weights(vci.video_encode, 0);
-        if(!videoEncWeights.empty()){
-            if(!queueInfos.videoEncode.has_value()){
-                return create_error<"No video encode queue capability">();
-            } else {
-                m_videoEncode.family    = queueInfos.videoEncode.value();
-                VqDeviceQueueCreateInfo info;
-                info.queueFamilyIndex   = m_videoEncode.family;
-                info.queueCount         = (uint32_t) videoEncWeights.size();
-                info.pQueuePriorities   = videoEncWeights.data();
-                qci.push_back(info);
-            }
-        }
+        if(!m_graphic)
+            return create_error<"Missing graphic queue">();
+        if(!m_present)
+            return create_error<"Missing present queue">();
+        if(wantQueue.is_set(QueueType::Compute) && !m_compute)
+            return create_error<"Missing compute queue">();
+        if(wantQueue.is_set(QueueType::VideoEncode) && !m_videoEncode)
+            return create_error<"Missing video encode queue">();
+        if(wantQueue.is_set(QueueType::VideoDecode) && !m_videoDecode)
+            return create_error<"Missing video decode queue">();
         
-        std::sort(qci.begin(), qci.end(), [](const VkDeviceQueueCreateInfo& a, const VkDeviceQueueCreateInfo& b) -> bool {
-            return a.queueFamilyIndex < b.queueFamilyIndex;
-        });
-        
-        for(size_t i=0;i<qci.size()-1;++i){
-            VkDeviceQueueCreateInfo&    prev  = qci[i];
-            VkDeviceQueueCreateInfo&    next  = qci[i+1];
-            if(prev.queueFamilyIndex != next.queueFamilyIndex)
-                continue;
-            
-            //  carry the request forward
-            if(next.queueCount < prev.queueCount){
-                //  steal the pointer
-                next.queueCount         = prev.queueCount;
-                next.pQueuePriorities   = prev.pQueuePriorities;
-            }
-            prev.queueFamilyIndex   = UINT32_MAX;
-        }
-        
-        auto qitr = std::remove_if(qci.begin(), qci.end(), [](const VkDeviceQueueCreateInfo& a) -> bool {
-            return a.queueFamilyIndex == UINT32_MAX;
-        });
-        if(qitr != qci.end())
-            qci.erase(qitr, qci.end());
                 
         //  And with that, we have the queues all lined up, ready to be created.
 
@@ -1624,14 +1676,8 @@ namespace yq::tachyon {
         //  ================================
         //  GETTING THE QUEUES
 
-        m_graphic.set(m_device, graphicWeights.size());
-        m_present.set(m_device, presentWeights.size());
-        if(m_compute.family != UINT32_MAX)
-            m_compute.set(m_device, computeWeights.size());
-        if(m_videoEncode.family != UINT32_MAX)
-            m_videoEncode.set(m_device, videoEncWeights.size());
-        if(m_videoDecode.family != UINT32_MAX)
-            m_videoDecode.set(m_device, videoDecWeights.size());
+        for(auto& r : m_queues)
+            r->init();
 
         //  ================================
         //  ALLOCATOR
@@ -1654,7 +1700,7 @@ namespace yq::tachyon {
 
         //  ================================
         //  UPLOAD
-        m_upload            = std::make_unique<ViUpload>(*this, m_graphic);
+        m_upload            = std::make_unique<ViUpload>(*this, *m_graphic);
 
         //  ================================
         //  RENDER PASS
@@ -1666,7 +1712,6 @@ namespace yq::tachyon {
 
         m_presentMode               = m_presentModes.contains(vci.pmode) ? vci.pmode : PresentMode{ PresentMode::Fifo };
 
-        
 
         m_frames.reserve(vci.frames_in_flight);
         for(size_t i=0;i<vci.frames_in_flight;++i)
@@ -1719,11 +1764,12 @@ namespace yq::tachyon {
             vkDestroyDevice(m_device, nullptr);
             m_device                = nullptr;
         }
-        m_graphic                   = {};
-        m_present                   = {};
-        m_compute                   = {};
-        m_videoEncode               = {};
-        m_videoDecode               = {};
+        m_graphic                   = nullptr;
+        m_present                   = nullptr;
+        m_compute                   = nullptr;
+        m_videoEncode               = nullptr;
+        m_videoDecode               = nullptr;
+        m_queues.clear();
 
         if(m_surface){
             vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
@@ -1844,22 +1890,22 @@ namespace yq::tachyon {
 
     VkQueue  Visualizer::compute_queue(uint32_t i) const
     {
-        return m_compute[i];
+        return m_compute ? m_compute->queue(i) : nullptr;
     }
     
     uint32_t  Visualizer::compute_queue_count() const
     {
-        return (uint32_t) m_compute.queues.size();
+        return m_compute ? (uint32_t) m_compute->m_queues.size() : 0;
     }
     
     uint32_t  Visualizer::compute_queue_family() const
     {
-        return m_compute.family;
+        return m_compute ? m_compute->m_family : UINT32_MAX;
     }
 
     bool    Visualizer::compute_queue_valid() const
     {
-        return m_compute.valid();
+        return m_compute != nullptr;
     }
 
     ViFrame&            Visualizer::current_frame()
@@ -1902,22 +1948,22 @@ namespace yq::tachyon {
 
     VkQueue     Visualizer::graphic_queue(uint32_t i) const
     {
-        return m_graphic[i];
+        return m_graphic ? m_graphic->queue(i) : nullptr;
     }
     
     uint32_t    Visualizer::graphic_queue_count() const
     {
-        return (uint32_t) m_graphic.queues.size();
+        return m_graphic ? (uint32_t) m_graphic->m_queues.size() : 0;
     }
     
     uint32_t    Visualizer::graphic_queue_family() const
     {
-        return m_graphic.family;
+        return m_graphic ? m_graphic->m_family : UINT32_MAX;
     }
     
     bool        Visualizer::graphic_queue_valid() const
     {
-        return m_graphic.valid();
+        return m_graphic != nullptr;
     }
 
     Expect<ViImage> Visualizer::image(uint64_t i) const
@@ -1970,22 +2016,22 @@ namespace yq::tachyon {
 
     VkQueue      Visualizer::present_queue(uint32_t i) const
     {
-        return m_present[i];
+        return m_present ? m_present->queue(i) : nullptr;
     }
     
     uint32_t     Visualizer::present_queue_count() const
     {
-        return (uint32_t) m_present.queues.size();
+        return m_present ? (uint32_t) m_present->m_queues.size() : 0;
     }
     
     uint32_t     Visualizer::present_queue_family() const
     {
-        return m_present.family;
+        return m_present ? m_present->m_family : UINT32_MAX;
     }
 
     bool        Visualizer::present_queue_valid() const
     {
-        return m_present.valid();
+        return m_present != nullptr;
     }
     
     VkRenderPass Visualizer::render_pass() const
@@ -2079,42 +2125,42 @@ namespace yq::tachyon {
             
     VkQueue   Visualizer::video_decode_queue(uint32_t i) const
     {
-        return m_videoDecode[i];
+        return m_videoDecode ? m_videoDecode->queue(i) : nullptr;
     }
     
     uint32_t  Visualizer::video_decode_queue_count() const
     {
-        return (uint32_t) m_videoDecode.queues.size();
+        return m_videoDecode ? (uint32_t) m_videoDecode->m_queues.size() : 0;
     }
     
     uint32_t  Visualizer::video_decode_queue_family() const
     {
-        return m_videoDecode.family;
+        return m_videoDecode ? m_videoDecode->m_family : UINT32_MAX;
     }
 
     bool        Visualizer::video_decode_queue_valid() const
     {
-        return m_videoDecode.valid();
+        return m_videoDecode != nullptr;
     }
 
     VkQueue   Visualizer::video_encode_queue(uint32_t i) const
     {
-        return m_videoEncode[i];
+        return m_videoEncode ? m_videoEncode->queue(i) : nullptr;
     }
     
     uint32_t  Visualizer::video_encode_queue_count() const
     {
-        return (uint32_t) m_videoEncode.queues.size();
+        return m_videoEncode ? (uint32_t) m_videoEncode->m_queues.size() : 0;
     }
 
     uint32_t  Visualizer::video_encode_queue_family() const
     {
-        return m_videoEncode.family;
+        return m_videoEncode ? m_videoEncode->m_family : UINT32_MAX;
     }
 
     bool        Visualizer::video_encode_queue_valid() const
     {
-        return m_videoEncode.valid();
+        return m_videoEncode != nullptr;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -2425,7 +2471,7 @@ namespace yq::tachyon {
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores    = signalSemaphores;
 
-        if (vkQueueSubmit(m_graphic[0], 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
+        if (vkQueueSubmit(m_graphic->queue(0), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
             return create_error<"Failed to submit draw command buffer">();
             
         VqPresentInfoKHR presentInfo;
@@ -2436,7 +2482,7 @@ namespace yq::tachyon {
         presentInfo.pSwapchains = &m_swapchain->m_swapchain;
         presentInfo.pImageIndices = &imageIndex;
         presentInfo.pResults = nullptr; // Optional
-        vkQueuePresentKHR(m_present[0], &presentInfo);
+        vkQueuePresentKHR(m_present->queue(0), &presentInfo);
         
         ++m_tick;
         return std::error_code();

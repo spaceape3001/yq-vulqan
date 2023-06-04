@@ -90,6 +90,7 @@ namespace yq {
         using PushBuffer    = BasicBuffer<MAX_PUSH>;
         using ShaderSpec    = std::variant<std::monostate, std::string, ShaderCPtr>;
 
+        using ViQueueSpec   = std::variant<std::monostate, bool, uint32_t, std::vector<float>>;
     }
     
     #if 0

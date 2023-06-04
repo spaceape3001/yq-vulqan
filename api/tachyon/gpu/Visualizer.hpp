@@ -42,26 +42,6 @@ namespace yq::tachyon {
 
     class Memory;
 
-    enum class QueueType : uint8_t {
-        Graphic = 0,
-        Present,
-        Compute,
-        VideoEnable,
-        VideoDisable,
-        
-        COUNT
-    };
-
-    struct ViQueues {
-        std::vector<VkQueue>    queues;
-        uint32_t                family   = UINT32_MAX;
-        
-        void    set(VkDevice, uint32_t cnt);
-        VkQueue operator[](uint32_t i) const;
-        bool valid() const { return family != UINT32_MAX; }
-    };
-    
-    
     
     
 
@@ -313,23 +293,23 @@ namespace yq::tachyon {
         CleanupVector                       m_cleanup;                  // keep it one until performance bottlenecks
         VkClearValue                        m_clearValue;
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
-        ViQueues                            m_compute;
+        ViQueues*                           m_compute               = nullptr;
         uint32_t                            m_descriptorCount       = 0;
         VkDevice                            m_device                = nullptr;
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
         //std::vector<const char*>            m_extensions;
         FrameArray                          m_frames;
-        ViQueues                            m_graphic;
+        ViQueues*                           m_graphic               = nullptr;
         VkInstance                          m_instance              = nullptr;
         ImageMap                            m_images;
         VkPhysicalDeviceMemoryProperties    m_memoryInfo;
         VkPhysicalDevice                    m_physical              = nullptr;
         PipelineMap                         m_pipelines;
-        ViQueues                            m_present;
+        ViQueues*                           m_present               = nullptr;
         PresentMode                         m_presentMode;
         std::set<PresentMode>               m_presentModes;
-        //ViQueues                            m_queues[Queue::COUNT];
+        std::vector<Ref<ViQueues>>          m_queues;
         std::unique_ptr<ViRenderPass>       m_renderPass;
         ShaderMap                           m_shaders;
         VkSurfaceKHR                        m_surface               = nullptr;
@@ -344,8 +324,8 @@ namespace yq::tachyon {
         
         uint64_t                            m_tick      = 0ULL;     // Always monotomically incrementing
         std::unique_ptr<ViUpload>           m_upload; // [Queue::COUNT];
-        ViQueues                            m_videoDecode;
-        ViQueues                            m_videoEncode;
+        ViQueues*                           m_videoDecode           = nullptr;
+        ViQueues*                           m_videoEncode           = nullptr;
         std::atomic<bool>                   m_rebuildSwap           = { false };
         
 

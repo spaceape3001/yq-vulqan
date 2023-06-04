@@ -8,6 +8,9 @@
 
 #include <tachyon/preamble.hpp>
 #include <basic/BasicBuffer.hpp>
+#include <basic/Flags.hpp>
+#include <basic/Ref.hpp>
+
 #include <vulkan/vulkan_core.h>
 #include <tachyon/viz/PipelineConfig.hpp>
 #include <vector>
@@ -102,6 +105,36 @@ namespace yq::tachyon {
         std::error_code         _ctor();
         void                    _dtor();
     };
+
+    enum class QueueType : uint8_t {
+        Graphic = 0,
+        Present,
+        Compute,
+        VideoEncode,
+        VideoDecode
+    };
+
+    struct ViQueues : public RefCount {
+        Visualizer&             m_viz;
+        uint32_t                m_family;
+        Flags<QueueType>        m_type = {};
+        std::vector<VkQueue>    m_queues;
+        std::vector<float>      m_weights;
+        VkExtent3D              m_minImageTransferGranularity;  //!< Min granularity for image transfers
+        uint32_t                m_availableQueueCount;          //!< Available Queue count (from spec)
+        uint32_t                m_timestampValidBits;           //!< valid bits for timestamps
+        VkQueueFlags            m_vkFlags;                      //!< Flags from vulkan 
+        
+        ViQueues(Visualizer&, const ViewerCreateInfo&, uint32_t, const VkQueueFamilyProperties&, Flags<QueueType> left);
+        ~ViQueues();
+        
+        VkDeviceQueueCreateInfo info();
+        void                    init();
+        
+        VkQueue queue(uint32_t i) const;
+    };
+    
+    
 
     struct ViTO {
         VkImageView             view        = nullptr;

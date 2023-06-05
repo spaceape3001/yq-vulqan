@@ -10,6 +10,13 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+
+    /*! \brief Data Activity
+    
+        This enumeration is the expected activity of something on the pipeline.  
+        This can lead to better optimizations.
+    */
+
     YQ_ENUM(DataActivity, , 
         //! Make zero expectations, ie, gets ignored
         UNSURE  = 0,

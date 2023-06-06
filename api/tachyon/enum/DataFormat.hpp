@@ -10,6 +10,12 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+
+    /*! \brief Data Format
+    
+        This is the expected data format.  These come from vulkan, 
+        with the names shortened.
+    */
     YQ_ENUM(DataFormat, , 
         UNDEFINED = 0,
         R4G4_UNORM_PACK8 = 1,

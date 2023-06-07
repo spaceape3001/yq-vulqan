@@ -10,6 +10,11 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+    /*! \brief Type of descriptor
+    
+        Descriptors are needed to get data to the GPU for some of the pipeline.
+        This type corresponds to vulkan codes, but for our info structures
+    */
     YQ_ENUM(DescriptorType, , 
         Sampler = 0,
         CombinedImageSampler = 1,

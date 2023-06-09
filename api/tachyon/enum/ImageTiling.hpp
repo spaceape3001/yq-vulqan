@@ -10,6 +10,8 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+    /*! \brief Image tiling for vulkan
+    */
     YQ_ENUM(ImageTiling, ,
         Optimal = 0,
         Linear = 1,

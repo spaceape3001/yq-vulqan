@@ -10,6 +10,11 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+
+    /*! \brief Image type
+    
+        This is the type of the image for vulkan.  One...two...three dimensions.
+    */
     YQ_ENUM(ImageType, ,
         D1 = 0,
         D2 = 1,

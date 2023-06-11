@@ -11,6 +11,8 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+
+    //! Flags for creating image views
     YQ_ENUM(ImageViewCreateFlag, ,
         // Fragment Density Map dynamic
         FDM_Dynamic     = 0,

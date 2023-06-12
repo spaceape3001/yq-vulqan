@@ -10,6 +10,10 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+    /*! \brief Logical operation
+    
+        Logical operation, as submitted to vulkan.
+    */
     YQ_ENUM(LogicOp, , 
         Clear           = 0,
         And             = 1,

@@ -10,6 +10,8 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+    /*! \brief Mipmap mode
+    */
     YQ_ENUM(MipmapMode, , 
         Nearest = 0,
         Linear = 1

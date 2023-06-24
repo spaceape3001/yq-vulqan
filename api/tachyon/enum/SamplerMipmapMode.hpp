@@ -10,8 +10,13 @@
 #include <meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
+
+    /*! \brief Sampler Mipmap Mode
+    */
     YQ_ENUM(SamplerMipmapMode, ,
+        //! Nearest value
         Nearest = 0,
+        //! Linear interpolation
         Linear = 1
     )
 }

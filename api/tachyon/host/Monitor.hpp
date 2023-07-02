@@ -12,13 +12,21 @@
 #include <tachyon/preamble.hpp>
 
 namespace yq::tachyon {
+    /*! \brief Wrapper for a monitor in GLFW 
+    
+        This is a simple wrapper to make it easier to interface with GLFW monitors w/o 
+        the includes.
+    */
     class Monitor {
     public:
+    
+        //! Enuemrate all the current monitors
         static std::vector<Monitor>   enumerate();
         
         //! Returns the primary monitor
         static Monitor                primary();
 
+        //! Default constructor
         constexpr Monitor() noexcept = default;
         
         //! Underlying GLFW Monitor pointer
@@ -48,7 +56,10 @@ namespace yq::tachyon {
         */
         Rectangle2I             work_area() const;
         
+        //! Tests for validity
         constexpr operator bool () const noexcept { return m_monitor != nullptr; }
+        
+        //! Tests for equality
         constexpr bool    operator==(const Monitor&) const noexcept = default;
     
     private:

@@ -32,7 +32,7 @@ namespace yq::tachyon {
     CameraInfo::CameraInfo(std::string_view name, ObjectInfo& base, const std::source_location& sl) : 
         ObjectInfo(name, base, sl)
     {
-        set_option(CAMERA);
+        set(Flag::CAMERA);
         repo().all.push_back(this);
     }
 

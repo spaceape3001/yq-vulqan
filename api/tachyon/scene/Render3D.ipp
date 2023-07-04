@@ -18,7 +18,7 @@ namespace yq {
         Render3DInfo::Render3DInfo(std::string_view name, RenderedInfo& base, const std::source_location& sl) : 
             RenderedInfo(name, base, sl)
         {
-            set_option(RENDER3D);
+            set(Flag::RENDER3D);
         }
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

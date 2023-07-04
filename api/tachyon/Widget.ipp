@@ -15,7 +15,7 @@ namespace yq::tachyon {
     WidgetInfo::WidgetInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
-        set_option(WIDGET);
+        set(Flag::WIDGET);
     }
 
     Widget::Widget()

@@ -37,7 +37,7 @@ namespace yq::tachyon {
     AssetInfo::AssetInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
-        set_option(ASSET);
+        set(Flag::ASSET);
     }
     
 

@@ -16,7 +16,7 @@ namespace yq {
         RenderedInfo::RenderedInfo(std::string_view name, MetaObjectInfo& base, const std::source_location& sl) : 
             MetaObjectInfo(name, base, sl)
         {
-            set_option(RENDERED);
+            set(Flag::RENDERED);
         }
 
         PipelineCPtr    RenderedInfo::pipeline(Pipeline::role_t r) const

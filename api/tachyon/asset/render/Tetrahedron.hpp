@@ -12,13 +12,23 @@
 #include <tachyon/viz/VBO.hpp>
 
 namespace yq::tachyon {
+
+    /*! \brief Tetrahedron
+    
+        This can render as a tetrahedron in the scene 
+        with the specified color/vertex corners.
+    */
     class Tetrahedron : public Render3D {
         YQ_OBJECT_DECLARE(Tetrahedron, Render3D)
     public:
-    
+
+        //! Constructor taking in the data
         Tetrahedron(const TetrahedronData<ColorVertex3D>&);
+        
+        //! Destructor
         ~Tetrahedron();
         
+        //! Internal use, initializes the tetrahedron meta information
         static void initInfo();
         
     private:

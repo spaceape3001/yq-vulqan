@@ -15,6 +15,11 @@
 
 namespace yq {
     namespace tachyon {
+    
+        /*! \brief A perspective, a view
+        
+            This is meant to capture the basics to a perspective, camera required.
+        */
         struct Perspective {
             // Only the camera shall be required
             CameraCPtr                  camera;

@@ -13,6 +13,8 @@
 namespace yq {
     namespace tachyon {
             
+        /*! \brief Information for the render3D object
+        */
         class Render3DInfo : public RenderedInfo {
         public:
             template <typename C> struct Writer;
@@ -34,23 +36,51 @@ namespace yq {
             glm::dmat4                      model2world() const;
             
             //Render3D*                       parent() { return m_parent; }
+            
+            //! Parent of this render object
             const Render3D*                 parent() const { return m_parent; }
             
+            //! Position of the render object
             const Vector3D&                 position() const { return m_space->position; }
+            
+            //! Scale of the render object
             const Vector3D&                 scale() const { return m_space->scale; }
+            
+            //! Orientation of the render object
             const Quaternion3D&             orientation() const { return m_space->orientation; }
+            
+            //! Bounds of the render object
             const AxBox3D&                  bounds() const { return m_bounds; }
+            
+            //! Space of the render object
             const SimpleSpace&              space() const { return m_space; }
             
+            //! Set the position of the render object
             void                            set_position(const Vector3D&);
+            
+            //! Set the scale of the render object
             void                            set_scale(const Vector3D&);
+            
+            //! Convienent single-setting set of scale 
+            //! 
+            //! Equivalent to Vector3D(ALL, v)
             void                            set_scaling(double);
+            
+            //! Set the orientation of the render object
             void                            set_orientation(const Quaternion3D&);
+            
+            //! Sets the heading of the object (equivlent to creating a quaternion and setting)
             void                            set_heading(Radian hdg);
+            //! Sets the heading, pitch, roll of the object (equivlent to creating a quaternion and setting)
             void                            set_hpr(Radian hdg, Radian pitch, Radian roll);
+            
+            //! Sets the bounds of the render object
             void                            set_bounds(const AxBox3D&);
+            
+            //! Sets the space of the render object
             void                            set_space(const SimpleSpace&);
             
+            //! Generic clone routine, to be implemented by the derived object
             virtual Ref<Render3D>           clone() const { return {}; }
             
             /*! \brief Sets the parent of this widget

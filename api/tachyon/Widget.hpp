@@ -15,48 +15,10 @@
 namespace yq::tachyon {
     class Viewer;
 
-    enum class WidgetBit {
-        Vulkan  = 0,
-        ImGui,
-        D2,
-        D3, // Its a graphics thing so likely?
-        D4  // haven't a clue on doing 4D (spatial) "widgets"
-    };
-    
-    using WidgetFlags   = Flags<WidgetBit>;
-
     class WidgetInfo : public ObjectInfo {
     public:
         template <typename C> class Writer;
         WidgetInfo(std::string_view, const ObjectInfo&, const std::source_location& sl = std::source_location::current());
-    
-        bool            is_vulkan() const
-        {
-            return m_flags.is_set(WidgetBit::Vulkan);
-        }
-        
-        bool            is_imgui() const 
-        { 
-            return m_flags.is_set(WidgetBit::ImGui); 
-        }
-        
-        bool            is_2d() const
-        {
-            return m_flags.is_set(WidgetBit::D2);
-        }
-    
-        bool            is_3d() const
-        {
-            return m_flags.is_set(WidgetBit::D3);
-        }
-
-        bool            is_4d() const
-        {
-            return m_flags.is_set(WidgetBit::D4);
-        }
-
-    private:
-        WidgetFlags   m_flags;
     };
     
     /*! \brief Root something that's drawwable & interactable
@@ -139,34 +101,14 @@ namespace yq::tachyon {
 
         void    imgui()
         {
-            if(m_meta)
-                m_meta->m_flags |= WidgetBit::ImGui;
+            Meta::Writer::options({Flag::IMGUI});
         }
         
         void    vulkan()
         {
-            if(m_meta)
-                m_meta->m_flags |= WidgetBit::Vulkan;
+            Meta::Writer::options({Flag::VULKAN});
         }
         
-        void    _2d()
-        {
-            if(m_meta)
-                m_meta->m_flags |= WidgetBit::D2;
-        }
-        
-        void    _3d()
-        {
-            if(m_meta)
-                m_meta->m_flags |= WidgetBit::D3;
-        }
-
-        void    _4d()
-        {
-            if(m_meta)
-                m_meta->m_flags |= WidgetBit::D4;
-        }
-
     private:
         WidgetInfo* m_meta;
     };

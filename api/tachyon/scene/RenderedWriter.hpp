@@ -23,24 +23,6 @@ namespace yq {
             Writer(RenderedInfo& renderInfo) : Writer(&renderInfo)
             {
             }
-
-            void    _2d()
-            {
-                if(m_meta)
-                    m_meta->m_flags |= RenderedBit::D2;
-            }
-            
-            void    _3d()
-            {
-                if(m_meta)
-                    m_meta->m_flags |= RenderedBit::D3;
-            }
-
-            void    _4d()
-            {
-                if(m_meta)
-                    m_meta->m_flags |= RenderedBit::D4;
-            }
             
             auto    pipeline(Pipeline::role_t r={}) 
             {

@@ -13,6 +13,8 @@
 namespace yq {
     namespace tachyon {
         
+        /*! \brief Writer of information for rendered information
+        */
         template <typename C>
         class RenderedInfo::Writer : public MetaObjectInfo::Writer<C> {
         public:
@@ -24,6 +26,11 @@ namespace yq {
             {
             }
             
+            /*! \brief Creates and returns a new pipeline builder
+            
+                This creates a new pipeline for the given meta, 
+                returning the builder (moved out)
+            */
             auto    pipeline(Pipeline::role_t r={}) 
             {
                 auto    b   = Pipeline::build<C>(r);
@@ -35,6 +42,7 @@ namespace yq {
                 return b;
             }
             
+            //! Returns a reference to the given meta (warning, may seg fault if it's NULL)
             const RenderedInfo& meta() const { return *m_meta; }
 
         private:

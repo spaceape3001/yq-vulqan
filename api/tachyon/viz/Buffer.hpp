@@ -24,9 +24,13 @@ namespace yq::tachyon {
     class Buffer : public UniqueID, public RefCount {
     public:
     
+        //! Buffer memeory
         const Memory            memory;
+        
+        //! Buffer usage flags
         const BufferUsageFlags  usage;
         
+        //! Constructor for a buffer
         Buffer(BufferUsageFlags, Memory&&);
 
     private:

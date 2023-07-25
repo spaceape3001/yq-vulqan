@@ -15,8 +15,6 @@ namespace yq::tachyon {
     
     
     /*! Array-based buffer without storage
-    
-    
     */
     template <typename T, BufferUsage::enum_t BUF>
     struct ABO : public BufferObject<BUF> {
@@ -25,21 +23,26 @@ namespace yq::tachyon {
         ABO(){}
         ~ABO(){}
         
+        //! Created buffer from static data
         template <size_t N>
         ABO( const T(&ptr)[N] )
         {
             BufferObject<BUF>::update(Memory(REF, ptr));
         }
         
+        //! Proxy for span & data
         template <typename K>
         struct Proxy {
             ABO *abo;
+            
+            //! Assigns by span
             ABO& operator, (std::span<const T> values)
             {
                 abo->BufferObject<BUF>::update(Memory(K(), values));
                 return *abo;
             }
             
+            //! Assigns by reference
             template <size_t N>
             ABO& operator, (const T (&ptr)[N])
             {
@@ -48,16 +51,19 @@ namespace yq::tachyon {
             }
         };
 
+        //! Used for assigning by copy
         Proxy<copy_t>   operator=(copy_t)
         {
             return { this };
         }
         
+        //! Used by assigning by reference
         Proxy<ref_t>   operator=(ref_t)
         {
             return { this };
         }
         
+        //! Used for assigning by initializer list
         ABO&        operator=(std::initializer_list<const T> data)
         {
             BufferObject<BUF>::update(Memory(COPY, span(data)));
@@ -74,20 +80,26 @@ namespace yq::tachyon {
         std::vector<T>      data;
         
         AB1(){}
+        
+        //! Creates by initialier list
         AB1(std::initializer_list<const T> data_) : data(data_.begin(), data_.end())
         {
             update();
         }
         
+        //! Default copy operator
         AB1&    operator=(const AB1&) = default;
         
+        //! Copy from ABO (note, data will not be filled)
         AB1&    operator=(const ABO<T,BUF>& cp)
         {
             data.clear();
-            update();
+            BufferObject<BUF>::buffer = cp.buffer;
+            //update();
             return *this;
         }
         
+        //! Copy from span into data and buffer
         AB1&   operator=(std::span<const T> data_)
         {
             data    = std::vector<T>(data_.begin(), data_.end());
@@ -95,6 +107,7 @@ namespace yq::tachyon {
             return *this;
         }
         
+        //! Copy from initializer list into data and buffer
         AB1&   operator=(std::initializer_list<const T> data_)
         {
             data    = std::vector<T>(data_.begin(), data_.end());
@@ -102,6 +115,7 @@ namespace yq::tachyon {
             return *this;
         }
 
+        //! Moves data into buffer
         AB1&   operator=(std::vector<T>&& data_)
         {
             data    = std::move(data_);
@@ -109,6 +123,7 @@ namespace yq::tachyon {
             return *this;
         }
         
+        //! Updates the buffer memory
         void    update()
         {
             BufferObject<BUF>::update(Memory(COPY,span(data)));

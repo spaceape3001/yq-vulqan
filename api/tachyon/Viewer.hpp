@@ -20,6 +20,12 @@ namespace yq {
 namespace yq::tachyon {
     class Widget;
     
+    /*! \brief Vulkan Window
+    
+        This is a vulkan window, called the viewer, that binds the 
+        GLFW Window and the Vulkan Device.  It will hold ONE widget
+        and one widget only, this is the root widget for the viewer.
+    */
     class Viewer : public Window, public Visualizer {
         friend class Application;
     public:
@@ -29,6 +35,8 @@ namespace yq::tachyon {
         /*! \brief Creates the viewer
         */
         Viewer();
+        
+        //! Destructor
         virtual ~Viewer();
         
         /*! \brief Creates & initializes viewer 
@@ -45,6 +53,8 @@ namespace yq::tachyon {
         
         //! Runs the draw sequence
         std::error_code     draw(ViContext&);
+        
+        //! Runs the draw sequence (uses a default context and calls the other)
         std::error_code     draw();
         
         //! Time (in seconds) of last draw call
@@ -53,18 +63,26 @@ namespace yq::tachyon {
         //! Current frame number
         uint64_t            frame_number() const { return tick(); }
         
+        //! TRUE if rendering is paused
         bool                render_paused() const { return m_paused; }
+        
+        //! Set the rendering paused flag
         void                set_render_paused(bool);
         
+        //! Pause the rendering
         void                cmd_pause();
+        
+        //! Unpause the rendering
         void                cmd_unpause();
         
-        
+        //! Set the widget
         void                set_widget(Widget*, bool fDestroyOld=true);
         
     protected:
         virtual void        window_framebuffer_resized(const Size2I&) override;
 
+        //! Hint to do anything needed before the next render frame is actually rendered
+        //! So do the uniform buffer & texture descriptor sets here.
         virtual void        prerecord(ViContext&) override;
         
     private:

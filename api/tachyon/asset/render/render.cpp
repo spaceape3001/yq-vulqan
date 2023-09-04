@@ -4,6 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "ImageQuad2.ipp"
 #include "Quadrilateral.ipp"
 #include "Tetrahedron.ipp"
 #include "Triangle.ipp"
+
+#include <math/vector/Vector2.hxx>
+#include <math/shape/AxBox2.hxx>
+

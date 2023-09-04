@@ -4,8 +4,9 @@ layout(location = 1) in vec2 aUV;
 layout(location = 2) in vec4 aColor;
 
 layout(push_constant) uniform uPushConstant {
-    vec2 uScale;
-    vec2 uTranslate;
+    vec2  uScale;
+    vec2  uTranslate;
+    float z;
 } pc;
 
 out gl_PerVertex {
@@ -21,5 +22,5 @@ void main()
 {
     Out.Color = aColor;
     Out.UV = aUV;
-    gl_Position = vec4(aPos * pc.uScale + pc.uTranslate, 0, 1);
+    gl_Position = vec4(aPos * pc.uScale + pc.uTranslate, pc.z, 1);
 }

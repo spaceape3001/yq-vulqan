@@ -141,6 +141,11 @@ namespace yq::tachyon {
 
         void                            erase(const Buffer&);
 
+        Expect<VkFormat>                find_depth_format() const;
+
+        Expect<VkFormat>                find_supported_format(std::span<const VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
+        Expect<VkFormat>                find_supported_format(std::initializer_list<VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
+
         //! Gets the frame relative to current
         //! \note will return INVALID reference if construction failed!
         ViFrame&                        frame(int32_t);

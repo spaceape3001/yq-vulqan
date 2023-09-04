@@ -1792,7 +1792,7 @@ namespace yq::tachyon {
             _dtor();
             return ec;
         }
-        
+         
         m_init      = true;
         return std::error_code();
 
@@ -1815,7 +1815,7 @@ namespace yq::tachyon {
     
         try {
             VkImageViewCreateInfo   ivci = vqCreateInfo(tex.view);
-            ivci.format     = (VkFormat) tex.image->info.format.value();
+            ivci.format     = (VkFormat) tex.image->info.format.value(); 
             ivci.image      = img.image;
             
             if(vkCreateImageView(m_device, &ivci, nullptr, &p.view) != VK_SUCCESS)
@@ -1922,6 +1922,44 @@ namespace yq::tachyon {
     {
         return m_thread->m_descriptors;
     }
+
+    Expect<VkFormat>    Visualizer::find_depth_format() const
+    {
+        return find_supported_format(
+            {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT}, 
+            VK_IMAGE_TILING_OPTIMAL,
+            VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
+        );
+    }
+
+    Expect<VkFormat>    Visualizer::find_supported_format(std::initializer_list<VkFormat> candidates, VkImageTiling tiling, VkFormatFeatureFlags features) const
+    {
+        return find_supported_format(span(candidates), tiling, features);
+    }
+    
+    Expect<VkFormat>    Visualizer::find_supported_format(std::span<const VkFormat> candidates, VkImageTiling tiling, VkFormatFeatureFlags features) const
+    {
+        for(VkFormat format : candidates){
+            VkFormatProperties props;
+            vkGetPhysicalDeviceFormatProperties(m_physical, format, &props);
+            
+            switch(tiling){
+            case VK_IMAGE_TILING_LINEAR:
+                if((props.linearTilingFeatures & features) == features)
+                    return format;
+                break;
+            case VK_IMAGE_TILING_OPTIMAL:
+                if((props.optimalTilingFeatures & features) == features)
+                    return format;
+                break;
+            default:
+                break;
+            }            
+        }
+        
+        return unexpected<"Failed to find supported format">();
+    }
+
     
     ViFrame&            Visualizer::frame(int32_t i)
     {

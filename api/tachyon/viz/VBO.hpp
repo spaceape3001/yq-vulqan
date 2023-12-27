@@ -7,7 +7,6 @@
 #pragma once
 
 #include <basic/preamble.hpp>
-#include <basic/keywords.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/viz/BufferObject.hpp>
 

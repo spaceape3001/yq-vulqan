@@ -8,7 +8,7 @@
 
 #include <basic/BasicBuffer.hpp>
 #include <basic/Mutable.hpp>
-#include <basic/keywords.hpp>
+#include <keywords.hpp>
 #include <tachyon/viz/Pipeline.hpp>
 #include <tachyon/viz/PipelineConfig.hpp>
 #include <tachyon/viz/PipelineUtils.hpp>

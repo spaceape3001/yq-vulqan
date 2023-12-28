@@ -8,9 +8,9 @@
 
 #include <tachyon/scene/Render3D.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
-#include <basic/DelayInit.hpp>
-#include <math/vector/Quaternion3.hxx>
-#include <math/vector/Tensor44.hxx>
+#include <0/basic/DelayInit.hpp>
+#include <0/math/vector/Quaternion3.hxx>
+#include <0/math/vector/Tensor44.hxx>
 
 namespace yq {
     namespace tachyon {

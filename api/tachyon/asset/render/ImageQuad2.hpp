@@ -10,7 +10,7 @@
 #include <tachyon/viz/VBO.hpp>
 #include <array>
 #include <tachyon/viz/Texture.hpp>
-#include <math/vector/Vector2.hpp>
+#include <0/math/vector/Vector2.hpp>
 #include <glm/glm.hpp>
 
 namespace yq::tachyon {

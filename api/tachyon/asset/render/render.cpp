@@ -9,6 +9,6 @@
 #include "Tetrahedron.ipp"
 #include "Triangle.ipp"
 
-#include <math/vector/Vector2.hxx>
-#include <math/shape/AxBox2.hxx>
+#include <0/math/vector/Vector2.hxx>
+#include <0/math/shape/AxBox2.hxx>
 

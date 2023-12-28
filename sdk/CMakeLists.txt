@@ -4,4 +4,5 @@ add_subdirectory(imdemo)
 add_subdirectory(camera)
 add_subdirectory(textking)
 add_subdirectory(asteroids)
+add_subdirectory(composite)
 

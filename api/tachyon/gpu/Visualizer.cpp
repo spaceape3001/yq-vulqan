@@ -19,12 +19,12 @@
 #include "Visualizer.hxx"
 #include "Visualizer.hpp"
 
-#include <basic/AutoReset.hpp>
-#include <basic/BasicBuffer.hpp>
-#include <basic/ErrorDB.hpp>
-#include <basic/errors.hpp>
+#include <0/basic/AutoReset.hpp>
+#include <0/basic/BasicBuffer.hpp>
+#include <0/basic/ErrorDB.hpp>
+#include <0/basic/errors.hpp>
 
-#include <math/color/RGBA.hpp>
+#include <0/math/color/RGBA.hpp>
 
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>

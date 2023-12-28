@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/gpu/VqEnums.hpp>
-#include <basic/Enum.hpp>
+#include <0/basic/Enum.hpp>
 
 namespace yq::tachyon {
 

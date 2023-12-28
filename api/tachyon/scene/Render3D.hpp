@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/scene/Rendered.hpp>
-#include <math/SimpleSpace.hpp>
-#include <math/shape/AxBox3.hpp>
+#include <0/math/SimpleSpace.hpp>
+#include <0/math/shape/AxBox3.hpp>
 
 namespace yq {
     namespace tachyon {

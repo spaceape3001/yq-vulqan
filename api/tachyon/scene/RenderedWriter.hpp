@@ -8,7 +8,7 @@
 
 #include <tachyon/scene/Rendered.hpp>
 #include <tachyon/viz/PipelineBuilder.hpp>
-#include <meta/ObjectInfoWriter.hpp>
+#include <0/meta/ObjectInfoWriter.hpp>
 
 namespace yq {
     namespace tachyon {

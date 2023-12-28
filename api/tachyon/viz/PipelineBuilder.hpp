@@ -6,18 +6,19 @@
 
 #pragma once
 
-#include <basic/BasicBuffer.hpp>
-#include <basic/Mutable.hpp>
-#include <keywords.hpp>
+#include <0/keywords.hpp>
+#include <0/basic/BasicBuffer.hpp>
+#include <0/basic/Mutable.hpp>
+#include <0/math/glm_types.hpp>
+#include <0/trait/not_copyable.hpp>
+#include <0/trait/not_moveable.hpp>
+
 #include <tachyon/viz/Pipeline.hpp>
 #include <tachyon/viz/PipelineConfig.hpp>
 #include <tachyon/viz/PipelineUtils.hpp>
 #include <tachyon/viz/UBO.hpp>
 #include <tachyon/viz/VBO.hpp>
 #include <tachyon/viz/Texture.hpp>
-#include <math/glm_types.hpp>
-#include <trait/not_copyable.hpp>
-#include <trait/not_moveable.hpp>
 #include <set>
 #include <span>
 #include <cassert>

@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <basic/Signal.hpp>
+#include <0/basic/Signal.hpp>
 #include <tachyon/Widget.hpp>
-#include <math/shape/AxBox2.hpp>
-#include <math/vector/Vector2.hpp>
+#include <0/math/shape/AxBox2.hpp>
+#include <0/math/vector/Vector2.hpp>
 #include <functional>
-#include <math/color/RGBA.hpp>
+#include <0/math/color/RGBA.hpp>
 #include <array>
 #include <span>
 #include <deque>

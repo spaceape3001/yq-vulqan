@@ -8,8 +8,8 @@
 
 //  This contains some vertex helpers
 
-#include <math/color/RGB.hpp>
-#include <math/vector/Vector2.hpp>
+#include <0/math/color/RGB.hpp>
+#include <0/math/vector/Vector2.hpp>
 
 namespace yq::tachyon {
     struct ColorVertexData;

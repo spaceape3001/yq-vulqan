@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <math/UVW.hpp>
+#include <0/math/UVW.hpp>
 
 #include <tachyon/enum/BorderColor.hpp>
 #include <tachyon/enum/CompareOp.hpp>

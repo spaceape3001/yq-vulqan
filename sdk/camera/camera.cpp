@@ -9,7 +9,7 @@
     as we play around with the camera.
 */
 
-#include <math/color/Colors.hpp>
+#include <0/math/color/Colors.hpp>
 #include <tachyon/asset/camera/NullCamera.hpp>
 #include <tachyon/asset/camera/SpaceCamera.hpp>
 #include <tachyon/asset/camera/TargetCamera.hpp>
@@ -17,25 +17,25 @@
 #include <tachyon/asset/render/Triangle.hpp>
 #include <tachyon/asset/render/Quadrilateral.hpp>
 
-#include <basic/DelayInit.hpp>
-#include <basic/TextUtils.hpp>
+#include <0/basic/DelayInit.hpp>
+#include <0/basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/scene/Scene.hpp>
 #include <tachyon/widget/Scene3D.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 
-#include <math/color/RGB.hpp>
-#include <math/vector/Vector2.hpp>
-#include <math/shape/shape_utils.hpp>
-#include <math/units.hpp>
-#include <math/trig.hpp>
-#include <math/shape/QuadrilateralData.hpp>
-#include <math/shape/TetrahedronData.hpp>
-#include <math/shape/Triangle2.hpp>
-#include <math/shape/Triangle3.hpp>
-#include <math/vector/Quaternion3.hxx>
-#include <math/vector/Vector3.hxx>
+#include <0/math/color/RGB.hpp>
+#include <0/math/vector/Vector2.hpp>
+#include <0/math/shape/shape_utils.hpp>
+#include <0/math/units.hpp>
+#include <0/math/trig.hpp>
+#include <0/math/shape/QuadrilateralData.hpp>
+#include <0/math/shape/TetrahedronData.hpp>
+#include <0/math/shape/Triangle2.hpp>
+#include <0/math/shape/Triangle3.hpp>
+#include <0/math/vector/Quaternion3.hxx>
+#include <0/math/vector/Vector3.hxx>
 #include <tachyon/imgui/MyImGui.hpp>
 #include <chrono>
 
@@ -121,8 +121,10 @@ struct CameraScene3D : public Scene3D {
     Camera*     add_camera(const CameraInfo* ci)
     {
         Ref<Camera> c   = static_cast<Camera*>(ci->create());
-        if(!c)
+        if(!c){
+            yError() << "Unable to create camera of type " << ci->name();
             return nullptr;
+        }
         
         std::string     base(ci->name_stem());
         std::string     candidate   = base;
@@ -150,7 +152,10 @@ struct CameraScene3D : public Scene3D {
             }
         );
         
+        new SpaceCamera;
+        
         Camera*     c   = add_camera(&meta<SpaceCamera>());
+        assert(c);
         
         set_camera(c);
         

@@ -16,12 +16,12 @@
 //  Also it's about me developing the API in the first place .... :)
 
 #include <tachyon/asset/render/Triangle.hpp>
-#include <basic/DelayInit.hpp>
-#include <basic/Logging.hpp>
+#include <0/basic/DelayInit.hpp>
+#include <0/basic/Logging.hpp>
 
-#include <io/PluginLoader.hpp>
+#include <0/io/PluginLoader.hpp>
 
-#include <meta/Meta.hpp>
+#include <0/meta/Meta.hpp>
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
@@ -36,13 +36,13 @@
 #include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/widget/Scene3D.hpp>
 
-#include <math/color/Colors.hpp>
-#include <math/color/RGB.hpp>
-#include <math/vector/Vector2.hpp>
-#include <math/vector/Vector3.hxx>
-#include <math/shape/shape_utils.hpp>
-#include <math/shape/Triangle2.hpp>
-#include <math/shape/Triangle3.hpp>
+#include <0/math/color/Colors.hpp>
+#include <0/math/color/RGB.hpp>
+#include <0/math/vector/Vector2.hpp>
+#include <0/math/vector/Vector3.hxx>
+#include <0/math/shape/shape_utils.hpp>
+#include <0/math/shape/Triangle2.hpp>
+#include <0/math/shape/Triangle3.hpp>
 #include <iostream>
 #include <chrono>
 #include <glm/glm.hpp>  // temporary

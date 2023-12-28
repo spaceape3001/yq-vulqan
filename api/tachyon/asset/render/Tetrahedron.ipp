@@ -7,11 +7,11 @@
 #pragma once
 
 #include "Tetrahedron.hpp"
-#include <math/shape/TetrahedronData.hpp>
-#include <math/shape/shape_utils.hpp>
+#include <0/math/shape/TetrahedronData.hpp>
+#include <0/math/shape/shape_utils.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/viz/Shader.hpp>
-#include <basic/preamble.hpp>
+#include <0/basic/preamble.hpp>
 
 namespace yq::tachyon {
     void Tetrahedron::initInfo()

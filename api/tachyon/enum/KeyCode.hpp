@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <basic/Enum.hpp>
-#include <meta/InfoBinder.hpp>
+#include <0/basic/Enum.hpp>
+#include <0/meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
 
@@ -145,6 +145,9 @@ namespace yq::tachyon {
     KeyCode     keycode(int, KeyCodex);
     KeyCode     keycode_glfw(int);
     KeyCode     keycode_imgui(int);
+    
+    //  Direct conversion, GLFW to IMGUI
+    int         glfw_to_imgui(int);
     
     // TRUE if the key is an axis with a variable input
     bool        is_analog(KeyCode);

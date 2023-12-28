@@ -4,13 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <basic/ErrorDB.hpp>
+#include <0/basic/ErrorDB.hpp>
 #include <tachyon/viz/ImageViewInfo.hpp>
 #include <tachyon/viz/SamplerInfo.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 
-#include <basic/CollectionUtils.hpp>
+#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
@@ -188,6 +188,8 @@ namespace yq::tachyon {
         const char**    them    = glfwGetRequiredInstanceExtensions(&cnt);
         return std::vector<const char*>(them, them+cnt);
     }
+
+    bool                                    vqHasStencilComponent(VkFormat);
 
     std::string                             vqName(VkPhysicalDevice dev)
     {

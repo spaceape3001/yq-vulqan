@@ -7,12 +7,12 @@
 #pragma once
 
 #include "Triangle.hpp"
-#include <math/shape/TriangleData.hpp>
-#include <math/shape/shape_utils.hpp>
+#include <0/math/shape/TriangleData.hpp>
+#include <0/math/shape/shape_utils.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>
 #include <tachyon/viz/Shader.hpp>
-#include <basic/preamble.hpp>
-#include <basic/Logging.hpp>
+#include <0/basic/preamble.hpp>
+#include <0/basic/Logging.hpp>
 
 namespace yq::tachyon {
     void Triangle::initInfo()

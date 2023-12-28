@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <basic/preamble.hpp>
+#include <0/basic/preamble.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
 #include <vulkan/vulkan_core.h>
-#include <math/preamble.hpp>
+#include <0/math/preamble.hpp>
 
 #include <expected>
 #include <optional>
@@ -41,6 +41,8 @@ namespace yq::tachyon {
     std::vector<VkSurfaceFormatKHR>         vqGetPhysicalDeviceSurfaceFormatsKHR(VkPhysicalDevice, VkSurfaceKHR);
     std::vector<VkPresentModeKHR>           vqGetPhysicalDeviceSurfacePresentModesKHR(VkPhysicalDevice, VkSurfaceKHR);
     std::vector<const char*>                vqGlfwRequiredExtensions();
+
+    bool                                    vqHasStencilComponent(VkFormat);
 
     std::string                             vqName(VkPhysicalDevice);
 

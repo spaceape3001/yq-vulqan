@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <math/color/RGBA.hpp>
-#include <math/shape/Size2.hpp>
-#include <math/vector/Vector2.hpp>
+#include <0/math/color/RGBA.hpp>
+#include <0/math/shape/Size2.hpp>
+#include <0/math/vector/Vector2.hpp>
 
 #include <tachyon/preamble.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>

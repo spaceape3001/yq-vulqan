@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <basic/Enum.hpp>
-#include <meta/InfoBinder.hpp>
+#include <0/basic/Enum.hpp>
+#include <0/meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
     /*! \brief Mipmap mode

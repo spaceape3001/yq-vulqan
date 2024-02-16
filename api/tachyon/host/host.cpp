@@ -5,8 +5,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AppGLFW.ipp"
-#include "Joystick.ipp"
-#include "Monitor.ipp"
 #include "VideoMode.ipp"
-#include "Window.ipp"
 #include <0/math/shape/Size2.hxx>

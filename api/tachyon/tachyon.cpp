@@ -16,12 +16,18 @@
 #include "Buffer.ipp"
 #include "Camera.ipp"
 #include "Image.ipp"
+#include "Joystick.ipp"
 #include "Memory.ipp"
+#include "Monitor.ipp"
 #include "Shader.ipp"
 #include "Texture.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"
+#include "Window.ipp"
 
 #include "driver/GLSLShader.ipp"
 #include "driver/STBImage.ipp"
+
+#include <0/math/shape/Size2.hxx>
+
 

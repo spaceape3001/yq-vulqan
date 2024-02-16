@@ -11,9 +11,8 @@
 #include <0/math/vector/Vector2.hpp>
 
 #include <tachyon/preamble.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/Monitor.hpp>
 #include <tachyon/enum/PresentMode.hpp>
-#include <tachyon/host/Monitor.hpp>
 #include <vulkan/vulkan_core.h>
 #include <variant>
 #include <vector>

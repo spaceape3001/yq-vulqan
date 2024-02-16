@@ -6,14 +6,17 @@
 
 #pragma once
 
-#include <tachyon/host/Joystick.hpp>
-#include <tachyon/host/Monitor.hpp>
-#include <tachyon/host/Window.hpp>
+#include <tachyon/Joystick.hpp>
+#include <tachyon/Monitor.hpp>
+#include <tachyon/TachyonLog.hpp>
+#include <tachyon/Window.hpp>
+
 #include <tachyon/host/WindowEvents.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/TachyonLog.hpp>
+
 #include <0/basic/ErrorDB.hpp>
 #include <0/basic/TextUtils.hpp>
+
 #include <GLFW/glfw3.h>
 #include <tachyon/MyImGui.hpp>
 #include <backends/imgui_impl_glfw.h>

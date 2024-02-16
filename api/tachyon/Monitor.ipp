@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/host/VideoMode.hpp>
-#include <tachyon/host/Monitor.hpp>
+#include <tachyon/Monitor.hpp>
 #include <0/math/shape/Rectangle2.hpp>
 #include <0/math/vector/Vector2.hpp>
 #include <GLFW/glfw3.h>

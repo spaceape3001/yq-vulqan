@@ -15,7 +15,7 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
-#include <tachyon/asset/Triangle.hpp>
+#include <tachyon/rendered/Triangle.hpp>
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/Logging.hpp>
 
@@ -34,7 +34,7 @@
 #include <tachyon/viz/PipelineBuilder.hpp>
 #include <tachyon/Render3D.hpp>
 #include <tachyon/Render3DWriter.hpp>
-#include <tachyon/Scene3DWidget.hpp>
+#include <tachyon/widget/Scene3DWidget.hpp>
 
 #include <0/math/color/Colors.hpp>
 #include <0/math/color/RGB.hpp>

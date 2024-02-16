@@ -17,16 +17,13 @@
 #include "Buffer.ipp"
 #include "Camera.ipp"
 #include "Image.ipp"
-#include "ImGuiDemoWidget.ipp"
 #include "Joystick.ipp"
 #include "Memory.ipp"
 #include "Monitor.ipp"
 #include "Perspective.ipp"
 #include "Render3D.ipp"
 #include "Rendered.ipp"
-#include "Scene3DWidget.ipp"
 #include "Shader.ipp"
-#include "StackedWidget.ipp"
 #include "Texture.ipp"
 #include "Undo.ipp"
 #include "VideoMode.ipp"
@@ -34,10 +31,28 @@
 #include "Widget.ipp"
 #include "Window.ipp"
 
+#include "camera/NullCamera.ipp"
+#include "camera/SpaceCamera.ipp"
+#include "camera/TargetCamera.ipp"
 
 #include "driver/GLSLShader.ipp"
 #include "driver/STBImage.ipp"
 
+#include "rendered/ImageQuad2.ipp"
+#include "rendered/Quadrilateral.ipp"
+#include "rendered/Tetrahedron.ipp"
+#include "rendered/Triangle.ipp"
+
+#include "widget/ImGuiDemoWidget.ipp"
+#include "widget/Scene3DWidget.ipp"
+#include "widget/StackedWidget.ipp"
+
+
+#include <0/math/shape/AxBox2.hxx>
+#include <0/math/shape/Rectangle2.hxx>
 #include <0/math/shape/Size2.hxx>
+#include <0/math/vector/Tensor44.hxx>
+#include <0/math/vector/Vector2.hxx>
+#include <0/math/vector/Vector3.hxx>
 
 

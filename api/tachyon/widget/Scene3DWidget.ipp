@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/Scene3DWidget.hpp>
+#include "Scene3DWidget.hpp"
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 

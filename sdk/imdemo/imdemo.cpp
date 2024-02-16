@@ -11,7 +11,7 @@
 #include <0/io/PluginLoader.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/ImGuiDemoWidget.hpp>
+#include <tachyon/widget/ImGuiDemoWidget.hpp>
 #include <iostream>
 
 using namespace yq;

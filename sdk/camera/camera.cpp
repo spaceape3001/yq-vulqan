@@ -10,20 +10,22 @@
 */
 
 #include <0/math/color/Colors.hpp>
-#include <tachyon/asset/NullCamera.hpp>
-#include <tachyon/asset/Quadrilateral.hpp>
-#include <tachyon/asset/SpaceCamera.hpp>
-#include <tachyon/asset/TargetCamera.hpp>
-#include <tachyon/asset/Tetrahedron.hpp>
-#include <tachyon/asset/Triangle.hpp>
+
+#include <tachyon/camera/NullCamera.hpp>
+#include <tachyon/camera/SpaceCamera.hpp>
+#include <tachyon/camera/TargetCamera.hpp>
+
+#include <tachyon/rendered/Quadrilateral.hpp>
+#include <tachyon/rendered/Tetrahedron.hpp>
+#include <tachyon/rendered/Triangle.hpp>
 
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Scene.hpp>
-#include <tachyon/Scene3DWidget.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/widget/Scene3DWidget.hpp>
 
 #include <0/math/color/RGB.hpp>
 #include <0/math/vector/Vector2.hpp>

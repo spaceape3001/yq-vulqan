@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/Perspective.hpp>
-#include <tachyon/asset/NullCamera.hpp>
+#include <tachyon/camera/NullCamera.hpp>
 
 namespace yq::tachyon {
     Perspective::Perspective()

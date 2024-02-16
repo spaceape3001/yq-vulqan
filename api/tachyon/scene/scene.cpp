@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Camera.ipp"
 #include "Perspective.ipp"
 #include "Render3D.ipp"
 #include "Rendered.ipp"

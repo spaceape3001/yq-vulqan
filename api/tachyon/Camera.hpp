@@ -32,6 +32,8 @@ namespace yq::tachyon {
         //! Standard constructor for the camera information
         CameraInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
     private:
+    
+        // This *may* go into toolbox... some common "dynamic creation kit"
         struct Repo;
         static Repo& repo();
     };

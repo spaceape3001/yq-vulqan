@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/scene/Camera.hpp>
+#include <tachyon/Camera.hpp>
 #include <0/math/SimpleSpace.hpp>
 #include <0/math/units.hpp>
 

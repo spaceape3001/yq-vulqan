@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/scene/Camera.hpp>
+#include <tachyon/Camera.hpp>
 
 namespace yq::tachyon {
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <engine/preamble.hpp>
-#include <tachyon/scene/Camera.hpp>
+#include <tachyon/Camera.hpp>
 #include <0/math/shape/Rectangle2.hpp>
 #include <0/math/color/RGB.hpp>
 #include <optional>

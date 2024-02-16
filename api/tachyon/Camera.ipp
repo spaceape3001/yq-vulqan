@@ -6,7 +6,7 @@
 
 //#pragma once
 
-#include "Camera.hpp"
+#include <tachyon/Camera.hpp>
 #include <0/basic/DelayInit.hpp>
 
 namespace yq::tachyon {

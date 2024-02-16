@@ -14,6 +14,7 @@
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
 #include "Buffer.ipp"
+#include "Camera.ipp"
 #include "Image.ipp"
 #include "Memory.ipp"
 #include "Shader.ipp"

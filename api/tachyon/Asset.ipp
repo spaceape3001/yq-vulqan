@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/core/Asset.hpp>
-#include <tachyon/core/AssetInfoWriter.hpp>
+#include <tachyon/Asset.hpp>
+#include <tachyon/AssetInfoWriter.hpp>
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/io/FileResolver.hpp>

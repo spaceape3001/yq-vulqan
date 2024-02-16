@@ -8,8 +8,8 @@
 
 #include "Shader.hpp"
 #include <tachyon/TachyonLog.hpp>
-#include <tachyon/core/AssetFactory.hpp>
-#include <tachyon/core/AssetInfoWriter.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/AssetInfoWriter.hpp>
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
 

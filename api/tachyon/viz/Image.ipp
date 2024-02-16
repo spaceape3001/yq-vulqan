@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Image.hpp"
-#include <tachyon/core/AssetFactory.hpp>
-#include <tachyon/core/AssetInfoWriter.hpp>
+#include <tachyon/AssetFactory.hpp>
+#include <tachyon/AssetInfoWriter.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Image>&  Image::cache()

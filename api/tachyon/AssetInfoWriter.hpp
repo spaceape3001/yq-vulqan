@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/core/Asset.hpp>
+#include <tachyon/Asset.hpp>
 #include <0/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {

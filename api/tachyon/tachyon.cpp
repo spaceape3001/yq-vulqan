@@ -10,6 +10,9 @@
 */
 
 #include "Application.ipp"
+#include "Asset.ipp"
+#include "AssetCache.ipp"
+#include "AssetFactory.ipp"
 #include "Memory.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"

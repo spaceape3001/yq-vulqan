@@ -13,7 +13,7 @@
 #include <0/basic/TextUtils.hpp>
 #include <0/io/Execute.hpp>
 #include <0/io/FileUtils.hpp>
-#include <tachyon/core/AssetFactory.hpp>
+#include <tachyon/AssetFactory.hpp>
 #include <tachyon/viz/Shader.hpp>
 
 namespace yq::errors {

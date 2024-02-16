@@ -28,7 +28,7 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/tachyon.cpp
     ./tachyon/asset/camera/camera.cpp
     ./tachyon/asset/render/render.cpp
-    ./tachyon/core/core.cpp
+    #./tachyon/core/core.cpp
     ./tachyon/enum/enum.cpp
     ./tachyon/gpu/gpu.cpp
     ./tachyon/host/host.cpp

@@ -36,7 +36,7 @@
 #include <0/math/shape/Triangle3.hpp>
 #include <0/math/vector/Quaternion3.hxx>
 #include <0/math/vector/Vector3.hxx>
-#include <tachyon/imgui/MyImGui.hpp>
+#include <tachyon/MyImGui.hpp>
 #include <chrono>
 
 using namespace ImGui;

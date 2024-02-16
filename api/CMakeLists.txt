@@ -28,13 +28,10 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/tachyon.cpp
     ./tachyon/asset/asset.cpp
     ./tachyon/asset/render/render.cpp
-    #./tachyon/core/core.cpp
     ./tachyon/enum/enum.cpp
     ./tachyon/gpu/gpu.cpp
     ./tachyon/host/host.cpp
-    #./tachyon/imgui/ImGuiGLFW.cpp
-    #./tachyon/imgui/ImGuiVulkan.cpp
-    ./tachyon/imgui/MyImGui.cpp
+    ./tachyon/MyImGui.cpp
     ./tachyon/gpu/Visualizer.cpp
     ./tachyon/scene/scene.cpp
     ./tachyon/task/task.cpp

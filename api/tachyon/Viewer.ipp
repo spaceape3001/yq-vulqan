@@ -13,7 +13,7 @@
 #include <tachyon/gpu/VqStructs.hpp>
 #include <tachyon/Widget.hpp>
 #include <tachyon/gpu/ViContext.hpp>
-#include <tachyon/imgui/MyImGui.hpp>
+#include <tachyon/MyImGui.hpp>
 
 #include <0/basic/AutoReset.hpp>
 #include <0/basic/ErrorDB.hpp>

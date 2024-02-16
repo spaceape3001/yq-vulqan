@@ -10,9 +10,9 @@
 */
 
 #include <0/math/color/Colors.hpp>
-#include <tachyon/asset/camera/NullCamera.hpp>
-#include <tachyon/asset/camera/SpaceCamera.hpp>
-#include <tachyon/asset/camera/TargetCamera.hpp>
+#include <tachyon/asset/NullCamera.hpp>
+#include <tachyon/asset/SpaceCamera.hpp>
+#include <tachyon/asset/TargetCamera.hpp>
 #include <tachyon/asset/render/Tetrahedron.hpp>
 #include <tachyon/asset/render/Triangle.hpp>
 #include <tachyon/asset/render/Quadrilateral.hpp>

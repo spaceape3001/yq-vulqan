@@ -26,7 +26,7 @@ add_library(${PROJECT_NAME} SHARED
     ./YqEngineConfig.cpp
 
     ./tachyon/tachyon.cpp
-    ./tachyon/asset/camera/camera.cpp
+    ./tachyon/asset/asset.cpp
     ./tachyon/asset/render/render.cpp
     #./tachyon/core/core.cpp
     ./tachyon/enum/enum.cpp

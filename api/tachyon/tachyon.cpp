@@ -13,6 +13,7 @@
 #include "Asset.ipp"
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
+#include "Buffer.ipp"
 #include "Memory.ipp"
 #include "Shader.ipp"
 #include "Viewer.ipp"

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/viz/Buffer.hpp>
+#include <tachyon/Buffer.hpp>
 
 namespace yq::tachyon {
     Buffer::Buffer(BufferUsageFlags buf, Memory&& mem) : memory(std::move(mem)), usage(buf)

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/viz/Buffer.hpp>
+#include <tachyon/Buffer.hpp>
 #include <tachyon/gpu/ViBO.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/viz/PipelineConfig.hpp>

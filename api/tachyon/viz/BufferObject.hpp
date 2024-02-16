@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <tachyon/viz/Buffer.hpp>
+#include <tachyon/Buffer.hpp>
 
 namespace yq::tachyon {
 

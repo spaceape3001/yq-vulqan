@@ -11,11 +11,11 @@
 
 #include <0/math/color/Colors.hpp>
 #include <tachyon/asset/NullCamera.hpp>
+#include <tachyon/asset/Quadrilateral.hpp>
 #include <tachyon/asset/SpaceCamera.hpp>
 #include <tachyon/asset/TargetCamera.hpp>
-#include <tachyon/asset/render/Tetrahedron.hpp>
-#include <tachyon/asset/render/Triangle.hpp>
-#include <tachyon/asset/render/Quadrilateral.hpp>
+#include <tachyon/asset/Tetrahedron.hpp>
+#include <tachyon/asset/Triangle.hpp>
 
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>

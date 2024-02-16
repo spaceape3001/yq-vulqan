@@ -27,7 +27,6 @@ add_library(${PROJECT_NAME} SHARED
 
     ./tachyon/tachyon.cpp
     ./tachyon/asset/asset.cpp
-    ./tachyon/asset/render/render.cpp
     ./tachyon/enum/enum.cpp
     ./tachyon/gpu/gpu.cpp
     ./tachyon/MyImGui.cpp

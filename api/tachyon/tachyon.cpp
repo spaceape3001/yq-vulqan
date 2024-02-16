@@ -9,6 +9,7 @@
     are our C++ adapters for it.
 */
 
+#include "AppGLFW.ipp"
 #include "Application.ipp"
 #include "Asset.ipp"
 #include "AssetCache.ipp"
@@ -21,6 +22,7 @@
 #include "Monitor.ipp"
 #include "Shader.ipp"
 #include "Texture.ipp"
+#include "VideoMode.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"
 #include "Window.ipp"

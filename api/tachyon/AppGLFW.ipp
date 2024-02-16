@@ -8,7 +8,7 @@
 
 #include <0/basic/Logging.hpp>
 #include <tachyon/TachyonLog.hpp>
-#include <tachyon/host/AppGLFW.hpp>
+#include <tachyon/AppGLFW.hpp>
 #include <GLFW/glfw3.h>
 
 #define glfwWarning         yWarning("glfw")

@@ -8,7 +8,7 @@
 #include <0/math/vector/Vector2.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Monitor.hpp>
-#include <tachyon/host/VideoMode.hpp>
+#include <tachyon/VideoMode.hpp>
 #include <iostream>
 
 using std::cout;

@@ -30,7 +30,6 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/asset/render/render.cpp
     ./tachyon/enum/enum.cpp
     ./tachyon/gpu/gpu.cpp
-    ./tachyon/host/host.cpp
     ./tachyon/MyImGui.cpp
     ./tachyon/gpu/Visualizer.cpp
     ./tachyon/scene/scene.cpp

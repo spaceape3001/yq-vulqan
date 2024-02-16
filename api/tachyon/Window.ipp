@@ -9,10 +9,9 @@
 #include <tachyon/Joystick.hpp>
 #include <tachyon/Monitor.hpp>
 #include <tachyon/TachyonLog.hpp>
-#include <tachyon/Window.hpp>
-
-#include <tachyon/host/WindowEvents.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/Window.hpp>
+#include <tachyon/WindowEvents.hpp>
 
 #include <0/basic/ErrorDB.hpp>
 #include <0/basic/TextUtils.hpp>

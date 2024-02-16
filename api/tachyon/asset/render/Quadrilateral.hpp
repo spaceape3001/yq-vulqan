@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <tachyon/VBO.hpp>
 #include <tachyon/scene/Render3D.hpp>
-#include <tachyon/viz/VBO.hpp>
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
 

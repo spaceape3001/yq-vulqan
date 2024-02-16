@@ -8,7 +8,7 @@
 
 #include <0/basic/preamble.hpp>
 #include <tachyon/preamble.hpp>
-#include <tachyon/viz/BufferObject.hpp>
+#include <tachyon/BufferObject.hpp>
 
 namespace yq::tachyon {
     

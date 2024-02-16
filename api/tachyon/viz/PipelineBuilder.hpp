@@ -14,11 +14,11 @@
 #include <0/trait/not_moveable.hpp>
 
 #include <tachyon/Texture.hpp>
+#include <tachyon/UBO.hpp>
+#include <tachyon/VBO.hpp>
 #include <tachyon/viz/Pipeline.hpp>
 #include <tachyon/viz/PipelineConfig.hpp>
 #include <tachyon/viz/PipelineUtils.hpp>
-#include <tachyon/viz/UBO.hpp>
-#include <tachyon/viz/VBO.hpp>
 #include <set>
 #include <span>
 #include <cassert>

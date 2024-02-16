@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <tachyon/scene/Render3D.hpp>
-#include <tachyon/viz/VBO.hpp>
-#include <array>
+#include <tachyon/VBO.hpp>
 #include <tachyon/Texture.hpp>
+#include <tachyon/scene/Render3D.hpp>
 #include <0/math/vector/Vector2.hpp>
 #include <glm/glm.hpp>
+#include <array>
 
 namespace yq::tachyon {
 

@@ -9,7 +9,7 @@
 #include <tachyon/scene/Render3D.hpp>
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
-#include <tachyon/viz/VBO.hpp>
+#include <tachyon/VBO.hpp>
 
 namespace yq::tachyon {
 

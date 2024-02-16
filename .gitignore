@@ -64,3 +64,5 @@ build/*
 */*~
 *~
 
+data/sdk/composite
+sdk/composite

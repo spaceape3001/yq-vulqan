@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/core/Memory.hpp>
+#include <tachyon/Memory.hpp>
 #include <tachyon/core/Asset.hpp>
 #include <tachyon/enum/ShaderType.hpp>
 

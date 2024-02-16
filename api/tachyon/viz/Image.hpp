@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/core/Asset.hpp>
-#include <tachyon/core/Memory.hpp>
+#include <tachyon/Memory.hpp>
 #include <tachyon/viz/ImageInfo.hpp>
 
 namespace yq::tachyon {

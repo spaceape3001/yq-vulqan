@@ -10,5 +10,6 @@
 */
 
 #include "Application.ipp"
+#include "Memory.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"

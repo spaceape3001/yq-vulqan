@@ -8,7 +8,7 @@
 
 #include <tachyon/Joystick.hpp>
 #include <tachyon/Monitor.hpp>
-#include <tachyon/TachyonLog.hpp>
+#include <tachyon/Logging.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/Window.hpp>
 #include <tachyon/WindowEvents.hpp>

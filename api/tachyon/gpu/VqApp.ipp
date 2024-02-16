@@ -9,7 +9,7 @@
 #include <tachyon/gpu/VqApp.hpp>
 #include <tachyon/gpu/VqEnums.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/TachyonLog.hpp>
+#include <tachyon/Logging.hpp>
 #include <0/basic/BasicApp.hpp>
 #include <0/basic/ErrorDB.hpp>
 #include <0/basic/ThreadId.hpp>

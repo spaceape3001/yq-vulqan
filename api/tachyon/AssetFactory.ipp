@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/TachyonLog.hpp>
+#include <tachyon/Logging.hpp>
 #include <tachyon/Asset.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <0/io/FileResolver.hpp>

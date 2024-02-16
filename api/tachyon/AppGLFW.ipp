@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <0/basic/Logging.hpp>
-#include <tachyon/TachyonLog.hpp>
+#include <tachyon/Logging.hpp>
 #include <tachyon/AppGLFW.hpp>
 #include <GLFW/glfw3.h>
 

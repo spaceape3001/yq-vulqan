@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "Shader.hpp"
-#include <tachyon/TachyonLog.hpp>
+#include <tachyon/Shader.hpp>
+#include <tachyon/Logging.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/AssetInfoWriter.hpp>
 #include <0/basic/DelayInit.hpp>

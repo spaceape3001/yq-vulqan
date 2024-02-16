@@ -34,7 +34,6 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/task/task.cpp
     ./tachyon/ui/ui.cpp
     ./tachyon/viz/viz.cpp
-    ./tachyon/widget/widget.cpp
     
     ./widget/TextArea.cpp
 )

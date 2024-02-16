@@ -21,7 +21,7 @@
 #include <0/basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Scene.hpp>
-#include <tachyon/widget/Scene3D.hpp>
+#include <tachyon/Scene3DWidget.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 
@@ -101,8 +101,8 @@ const auto QuadData = QuadrilateralData<ColorVertex2D> {
     { {-0.5, -1.0}, color::Red }
 };
 
-struct CameraScene3D : public Scene3D {
-    YQ_OBJECT_DECLARE(CameraScene3D, Scene3D)
+struct CameraScene3DWidget : public Scene3DWidget {
+    YQ_OBJECT_DECLARE(CameraScene3DWidget, Scene3DWidget)
 
     std::vector<const CameraInfo*>      cam_infos;
     Map<std::string,Ref<Camera>,IgCase> cameras;
@@ -135,7 +135,7 @@ struct CameraScene3D : public Scene3D {
         return c;
     }
 
-    CameraScene3D() 
+    CameraScene3DWidget() 
     {
         start   = std::chrono::steady_clock::now();
         
@@ -219,7 +219,7 @@ struct CameraScene3D : public Scene3D {
         }
         #endif
 
-        Scene3D::vulkan_(ctx);
+        Scene3DWidget::vulkan_(ctx);
     }
     
     void    imgui_(ViContext&) override
@@ -328,7 +328,7 @@ struct CameraScene3D : public Scene3D {
     
 };
 
-YQ_OBJECT_IMPLEMENT(CameraScene3D)
+YQ_OBJECT_IMPLEMENT(CameraScene3DWidget)
 
 int main(int argc, char* argv[])
 {
@@ -341,11 +341,11 @@ int main(int argc, char* argv[])
     
     Application app(argc, argv, aci);
     
-    CameraScene3D::initInfo();
+    CameraScene3DWidget::initInfo();
     
     //load_plugin_dir("plugin");
     app.finalize();
-    app.add_viewer(new CameraScene3D);
+    app.add_viewer(new CameraScene3DWidget);
     app.run();
     return 0;
 }

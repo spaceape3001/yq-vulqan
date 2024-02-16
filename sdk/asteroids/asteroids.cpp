@@ -9,7 +9,7 @@
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/Widget.hpp>
 #include <tachyon/task/Task.hpp>
-#include <tachyon/widget/Stacked.hpp>
+#include <tachyon/StackedWidget.hpp>
 #include <0/math/units.hpp>
 #include <0/math/vector/Vector3.hpp>
 #include <0/math/vector/Quaternion3.hpp>
@@ -150,8 +150,8 @@ public:
 };
 
 
-class MainWin : public Stacked {
-    YQ_OBJECT_DECLARE(MainWin, Stacked)
+class MainWin : public StackedWidget {
+    YQ_OBJECT_DECLARE(MainWin, StackedWidget)
 public:
 
     MainWin()

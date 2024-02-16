@@ -10,12 +10,12 @@
 
 namespace yq::tachyon {
 
-    /*! \brief Stacked Widget
+    /*! \brief StackedWidget Widget
     
         This is a selector of widgets, will show/render the Nth child widget.
     */
-    class Stacked : public Widget {
-        YQ_OBJECT_DECLARE(Stacked, Widget)
+    class StackedWidget : public Widget {
+        YQ_OBJECT_DECLARE(StackedWidget, Widget)
     public:
 
         //! Active widget
@@ -37,10 +37,10 @@ namespace yq::tachyon {
         virtual void    vulkan_(ViContext&) override;
 
         //! Default constructor
-        Stacked();
+        StackedWidget();
         
         //! Default destructor
-        ~Stacked();
+        ~StackedWidget();
     
     private:
         size_t          m_active    = 0;

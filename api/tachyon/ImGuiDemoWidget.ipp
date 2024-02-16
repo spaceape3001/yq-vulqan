@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/widget/ImGuiDemo.hpp>
+#include <tachyon/ImGuiDemoWidget.hpp>
 #include <tachyon/MyImGui.hpp>
 
 namespace yq::tachyon {
-    ImGuiDemo::ImGuiDemo()
+    ImGuiDemoWidget::ImGuiDemoWidget()
     {
     }
     
-    ImGuiDemo::~ImGuiDemo()
+    ImGuiDemoWidget::~ImGuiDemoWidget()
     {
     }
     
-    void    ImGuiDemo::imgui_(ViContext&) 
+    void    ImGuiDemoWidget::imgui_(ViContext&) 
     {
         ImGui::ShowDemoWindow();
     }
@@ -26,11 +26,11 @@ namespace yq::tachyon {
     namespace {
         void reg_imgui_demo()
         {
-            auto w = writer<ImGuiDemo>();
+            auto w = writer<ImGuiDemoWidget>();
             w.imgui();
         }
         YQ_INVOKE(reg_imgui_demo();)
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ImGuiDemo)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ImGuiDemoWidget)

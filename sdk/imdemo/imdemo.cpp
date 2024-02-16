@@ -11,7 +11,7 @@
 #include <0/io/PluginLoader.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/widget/ImGuiDemo.hpp>
+#include <tachyon/ImGuiDemoWidget.hpp>
 #include <iostream>
 
 using namespace yq;
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    app.add_viewer(new ImGuiDemo);
+    app.add_viewer(new ImGuiDemoWidget);
     app.run();
     return 0;
 }

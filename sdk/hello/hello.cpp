@@ -34,7 +34,7 @@
 #include <tachyon/viz/PipelineBuilder.hpp>
 #include <tachyon/Render3D.hpp>
 #include <tachyon/Render3DWriter.hpp>
-#include <tachyon/widget/Scene3D.hpp>
+#include <tachyon/Scene3DWidget.hpp>
 
 #include <0/math/color/Colors.hpp>
 #include <0/math/color/RGB.hpp>
@@ -178,8 +178,8 @@ struct HelloQuad : public Rendered {
 
 YQ_OBJECT_IMPLEMENT(HelloQuad)
 
-struct HelloScene : public Scene3D {
-    YQ_OBJECT_DECLARE(HelloScene, Scene3D)
+struct HelloScene : public Scene3DWidget {
+    YQ_OBJECT_DECLARE(HelloScene, Scene3DWidget)
     
     Ref<HelloTriangle>      triangle;
     Ref<Triangle>           tri2;
@@ -205,7 +205,7 @@ struct HelloScene : public Scene3D {
         std::chrono::duration<double>  diff    = start - n;
         tri2->set_heading( Degree(diff.count()) );
         triangle->update(diff.count());
-        Scene3D::vulkan_(v);
+        Scene3DWidget::vulkan_(v);
     }
 };
 

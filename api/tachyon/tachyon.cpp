@@ -14,10 +14,12 @@
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
 #include "Buffer.ipp"
+#include "Image.ipp"
 #include "Memory.ipp"
 #include "Shader.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"
 
 #include "driver/GLSLShader.ipp"
+#include "driver/STBImage.ipp"
 

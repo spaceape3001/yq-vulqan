@@ -8,9 +8,9 @@
 
 #include "ImageQuad2.hpp"
 #include <glm/glm.hpp>
-#include <tachyon/scene/Render3DWriter.hpp>
-#include <tachyon/viz/Image.hpp>
+#include <tachyon/Image.hpp>
 #include <tachyon/Shader.hpp>
+#include <tachyon/scene/Render3DWriter.hpp>
 #include <0/math/shape/AxBox2.hpp>
 
 namespace yq::tachyon {

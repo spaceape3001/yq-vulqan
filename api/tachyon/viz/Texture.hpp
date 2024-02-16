@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/viz/Image.hpp>
+#include <tachyon/Image.hpp>
 #include <tachyon/viz/ImageViewInfo.hpp>
 #include <tachyon/viz/SamplerInfo.hpp>
 

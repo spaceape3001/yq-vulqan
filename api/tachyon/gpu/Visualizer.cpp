@@ -34,9 +34,9 @@
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/scene/Perspective.hpp>
-#include <tachyon/scene/Render3D.hpp>
-#include <tachyon/scene/Scene.hpp>
+#include <tachyon/Perspective.hpp>
+#include <tachyon/Render3D.hpp>
+#include <tachyon/Scene.hpp>
 
 #include <tachyon/viz/ImageViewInfo.hpp>
 #include <tachyon/viz/Pipeline.hpp>

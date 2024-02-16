@@ -32,8 +32,8 @@
 #include <tachyon/enum/FrontFace.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/viz/PipelineBuilder.hpp>
-#include <tachyon/scene/Render3D.hpp>
-#include <tachyon/scene/Render3DWriter.hpp>
+#include <tachyon/Render3D.hpp>
+#include <tachyon/Render3DWriter.hpp>
 #include <tachyon/widget/Scene3D.hpp>
 
 #include <0/math/color/Colors.hpp>

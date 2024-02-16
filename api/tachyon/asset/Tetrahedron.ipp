@@ -9,7 +9,7 @@
 #include "Tetrahedron.hpp"
 #include <0/math/shape/TetrahedronData.hpp>
 #include <0/math/shape/shape_utils.hpp>
-#include <tachyon/scene/Render3DWriter.hpp>
+#include <tachyon/Render3DWriter.hpp>
 #include <tachyon/Shader.hpp>
 #include <0/basic/preamble.hpp>
 

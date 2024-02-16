@@ -10,7 +10,7 @@
 #include <0/math/shape/QuadrilateralData.hpp>
 #include <0/math/vector/Vector3.hxx>
 #include <0/math/shape/shape_utils.hpp>
-#include <tachyon/scene/Render3DWriter.hpp>
+#include <tachyon/Render3DWriter.hpp>
 #include <tachyon/Shader.hpp>
 #include <0/basic/preamble.hpp>
 

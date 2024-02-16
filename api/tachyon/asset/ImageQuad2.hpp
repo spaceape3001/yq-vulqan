@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/VBO.hpp>
+#include <tachyon/Render3D.hpp>
 #include <tachyon/Texture.hpp>
-#include <tachyon/scene/Render3D.hpp>
+#include <tachyon/VBO.hpp>
 #include <0/math/vector/Vector2.hpp>
 #include <glm/glm.hpp>
 #include <array>

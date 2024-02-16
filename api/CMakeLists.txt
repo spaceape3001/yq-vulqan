@@ -31,7 +31,6 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/gpu/gpu.cpp
     ./tachyon/MyImGui.cpp
     ./tachyon/gpu/Visualizer.cpp
-    ./tachyon/scene/scene.cpp
     ./tachyon/task/task.cpp
     ./tachyon/ui/ui.cpp
     ./tachyon/viz/viz.cpp

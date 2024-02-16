@@ -20,7 +20,7 @@
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
-#include <tachyon/scene/Scene.hpp>
+#include <tachyon/Scene.hpp>
 #include <tachyon/widget/Scene3D.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>

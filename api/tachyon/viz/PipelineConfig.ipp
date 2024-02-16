@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PipelineConfig.hpp"
-#include <tachyon/viz/Shader.hpp>
+#include <tachyon/Shader.hpp>
 #include <0/basic/Logging.hpp>
 #include <0/meta/TypeInfo.hpp>
 

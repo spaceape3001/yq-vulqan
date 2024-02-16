@@ -14,7 +14,7 @@
 #include <0/io/Execute.hpp>
 #include <0/io/FileUtils.hpp>
 #include <tachyon/AssetFactory.hpp>
-#include <tachyon/viz/Shader.hpp>
+#include <tachyon/Shader.hpp>
 
 namespace yq::errors {
    using shader_compile_failure    = error_db::entry<"Shader failed to compile">;

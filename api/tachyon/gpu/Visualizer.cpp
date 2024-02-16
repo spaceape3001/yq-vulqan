@@ -26,6 +26,7 @@
 
 #include <0/math/color/RGBA.hpp>
 
+#include <tachyon/Shader.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/VqApp.hpp>
@@ -39,7 +40,6 @@
 #include <tachyon/viz/ImageViewInfo.hpp>
 #include <tachyon/viz/Pipeline.hpp>
 #include <tachyon/viz/PushData.hpp>
-#include <tachyon/viz/Shader.hpp>
 #include <tachyon/viz/Texture.hpp>
 
 #include <GLFW/glfw3.h>

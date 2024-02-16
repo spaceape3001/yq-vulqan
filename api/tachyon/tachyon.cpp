@@ -14,5 +14,9 @@
 #include "AssetCache.ipp"
 #include "AssetFactory.ipp"
 #include "Memory.ipp"
+#include "Shader.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"
+
+#include "driver/GLSLShader.ipp"
+

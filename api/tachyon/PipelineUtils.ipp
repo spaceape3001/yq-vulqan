@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/viz/PipelineUtils.hpp>
+#include <tachyon/PipelineUtils.hpp>
 #include <0/math/glm_types.hpp>
 #include <0/math/color/RGBA.hpp>
 #include <0/math/vector/Vector1.hpp>

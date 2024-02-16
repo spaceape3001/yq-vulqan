@@ -12,7 +12,7 @@
 #include <0/basic/Ref.hpp>
 
 #include <vulkan/vulkan_core.h>
-#include <tachyon/viz/PipelineConfig.hpp>
+#include <tachyon/PipelineConfig.hpp>
 #include <vector>
 #include <vk_mem_alloc.h>
 #include <unordered_map>

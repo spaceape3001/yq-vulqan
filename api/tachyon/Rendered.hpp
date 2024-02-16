@@ -11,7 +11,7 @@
 #include <0/basic/Mutable.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/Tristate.hpp>
-#include <tachyon/viz/Pipeline.hpp>
+#include <tachyon/Pipeline.hpp>
 
 namespace yq::tachyon {
 

@@ -38,9 +38,9 @@
 #include <tachyon/Render3D.hpp>
 #include <tachyon/Scene.hpp>
 
-#include <tachyon/viz/ImageViewInfo.hpp>
-#include <tachyon/viz/Pipeline.hpp>
-#include <tachyon/viz/PushData.hpp>
+#include <tachyon/ImageViewInfo.hpp>
+#include <tachyon/Pipeline.hpp>
+#include <tachyon/PushData.hpp>
 
 #include <GLFW/glfw3.h>
 

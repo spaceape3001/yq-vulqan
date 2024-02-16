@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/basic/ErrorDB.hpp>
-#include <tachyon/viz/ImageViewInfo.hpp>
-#include <tachyon/viz/SamplerInfo.hpp>
+#include <tachyon/ImageViewInfo.hpp>
+#include <tachyon/SamplerInfo.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 

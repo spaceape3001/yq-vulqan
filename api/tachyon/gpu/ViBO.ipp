@@ -9,7 +9,7 @@
 #include <tachyon/Buffer.hpp>
 #include <tachyon/gpu/ViBO.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
-#include <tachyon/viz/PipelineConfig.hpp>
+#include <tachyon/PipelineConfig.hpp>
 
 namespace yq::tachyon {
     void    ViBO::update(Visualizer&viz, const BaseBOConfig&cfg, const void* p)

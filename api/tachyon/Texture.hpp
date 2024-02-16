@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/Image.hpp>
-#include <tachyon/viz/ImageViewInfo.hpp>
-#include <tachyon/viz/SamplerInfo.hpp>
+#include <tachyon/ImageViewInfo.hpp>
+#include <tachyon/SamplerInfo.hpp>
 
 namespace yq::tachyon {
 

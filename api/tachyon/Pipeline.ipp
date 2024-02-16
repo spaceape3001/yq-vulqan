@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <tachyon/viz/Pipeline.hpp>
-#include <0/basic/DelayInit.hpp>
+#include <tachyon/Pipeline.hpp>
 
 namespace yq::tachyon {
 

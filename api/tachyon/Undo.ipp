@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/Undo.hpp>
+#include <tachyon/Undo.hpp>
 
 namespace yq::tachyon {
     Undo::~Undo() = default;

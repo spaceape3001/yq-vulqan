@@ -22,6 +22,7 @@
 #include "Monitor.ipp"
 #include "Shader.ipp"
 #include "Texture.ipp"
+#include "Undo.ipp"
 #include "VideoMode.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"

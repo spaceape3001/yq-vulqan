@@ -13,12 +13,12 @@
 #include <0/trait/not_copyable.hpp>
 #include <0/trait/not_moveable.hpp>
 
+#include <tachyon/Texture.hpp>
 #include <tachyon/viz/Pipeline.hpp>
 #include <tachyon/viz/PipelineConfig.hpp>
 #include <tachyon/viz/PipelineUtils.hpp>
 #include <tachyon/viz/UBO.hpp>
 #include <tachyon/viz/VBO.hpp>
-#include <tachyon/viz/Texture.hpp>
 #include <set>
 #include <span>
 #include <cassert>

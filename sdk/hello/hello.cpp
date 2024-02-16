@@ -26,11 +26,11 @@
 #include <tachyon/Application.hpp>
 #include <tachyon/Image.hpp>
 #include <tachyon/Shader.hpp>
+#include <tachyon/Texture.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/enum/FrontFace.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/viz/Texture.hpp>
 #include <tachyon/viz/PipelineBuilder.hpp>
 #include <tachyon/scene/Render3D.hpp>
 #include <tachyon/scene/Render3DWriter.hpp>

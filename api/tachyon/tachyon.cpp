@@ -17,6 +17,7 @@
 #include "Image.ipp"
 #include "Memory.ipp"
 #include "Shader.ipp"
+#include "Texture.ipp"
 #include "Viewer.ipp"
 #include "Widget.ipp"
 

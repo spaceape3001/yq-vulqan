@@ -29,6 +29,7 @@
 #include <tachyon/Buffer.hpp>
 #include <tachyon/Image.hpp>
 #include <tachyon/Shader.hpp>
+#include <tachyon/Texture.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/VqApp.hpp>
@@ -40,7 +41,6 @@
 #include <tachyon/viz/ImageViewInfo.hpp>
 #include <tachyon/viz/Pipeline.hpp>
 #include <tachyon/viz/PushData.hpp>
-#include <tachyon/viz/Texture.hpp>
 
 #include <GLFW/glfw3.h>
 

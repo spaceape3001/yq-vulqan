@@ -9,7 +9,7 @@
 #include <tachyon/scene/Render3D.hpp>
 #include <tachyon/viz/VBO.hpp>
 #include <array>
-#include <tachyon/viz/Texture.hpp>
+#include <tachyon/Texture.hpp>
 #include <0/math/vector/Vector2.hpp>
 #include <glm/glm.hpp>
 

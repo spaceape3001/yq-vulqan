@@ -120,7 +120,7 @@ struct CameraScene3D : public Scene3D {
 
     Camera*     add_camera(const CameraInfo* ci)
     {
-        Ref<Camera> c   = static_cast<Camera*>(ci->create());
+        Ref<Camera> c   = new SpaceCamera; //static_cast<Camera*>(ci->create());
         if(!c){
             yError() << "Unable to create camera of type " << ci->name();
             return nullptr;

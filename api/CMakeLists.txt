@@ -32,8 +32,8 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/enum/enum.cpp
     ./tachyon/gpu/gpu.cpp
     ./tachyon/host/host.cpp
-    ./tachyon/imgui/ImGuiGLFW.cpp
-    ./tachyon/imgui/ImGuiVulkan.cpp
+    #./tachyon/imgui/ImGuiGLFW.cpp
+    #./tachyon/imgui/ImGuiVulkan.cpp
     ./tachyon/imgui/MyImGui.cpp
     ./tachyon/gpu/Visualizer.cpp
     ./tachyon/scene/scene.cpp
@@ -63,6 +63,7 @@ target_link_libraries(${PROJECT_NAME}
         ${Vulkan_LIBRARIES} 
         ${GLFW3_LIBRARY}
         gui3rd
+        imgui
 )
 target_include_directories(${PROJECT_NAME} 
     PUBLIC 

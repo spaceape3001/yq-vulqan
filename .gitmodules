@@ -4,3 +4,7 @@
 [submodule "3rd/vma"]
 	path = 3rd/vma
 	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
+[submodule "3rd/imgui"]
+	path = 3rd/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = remote/v1.90.3

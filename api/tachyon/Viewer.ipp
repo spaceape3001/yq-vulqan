@@ -19,8 +19,8 @@
 #include <0/basic/ErrorDB.hpp>
 #include <0/basic/errors.hpp>
 
-#include <tachyon/imgui/ImGuiGLFW.hpp>
-#include <tachyon/imgui/ImGuiVulkan.hpp>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_vulkan.h>
 
 namespace yq::tachyon {
 
@@ -73,10 +73,11 @@ namespace yq::tachyon {
             vii.MinImageCount   = swapchain_min_image_count();
             vii.ImageCount      = swapchain_image_count();
             vii.DescriptorPool  = descriptor_pool();
+            vii.RenderPass      = render_pass();
             
             ImGui::SetCurrentContext(m_imgui);
             ImGui_ImplGlfw_InitForVulkan(window(), false);
-            ImGui_ImplVulkan_Init(&vii, render_pass());
+            ImGui_ImplVulkan_Init(&vii);
             
             //  Uploading fonts....
             
@@ -87,7 +88,7 @@ namespace yq::tachyon {
             begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
             vkBeginCommandBuffer(cbuffer, &begin_info);
 
-            ImGui_ImplVulkan_CreateFontsTexture(cbuffer);
+            ImGui_ImplVulkan_CreateFontsTexture();
 
             VqSubmitInfo end_info;
             end_info.commandBufferCount = 1;
@@ -95,7 +96,7 @@ namespace yq::tachyon {
             vkEndCommandBuffer(cbuffer);
             vkQueueSubmit(graphic_queue(0), 1, &end_info, VK_NULL_HANDLE);
             vkDeviceWaitIdle(device());
-            ImGui_ImplVulkan_DestroyFontUploadObjects();
+            ImGui_ImplVulkan_DestroyFontsTexture();
         }
 
         install_hooks();

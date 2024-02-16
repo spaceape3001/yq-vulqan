@@ -4,42 +4,31 @@
 ##
 ################################################################################
 
-project(gui3rd)
+project(imgui)
 
 find_package(GLFW3 REQUIRED)
-find_package(glm REQUIRED)
 find_package(Freetype REQUIRED)
-
 set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
-
-if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
-    set(test_source ./test.cpp)
-endif()
-
 add_library(${PROJECT_NAME} SHARED
-    #imgui/imgui.cpp
-    #imgui/imgui.h
-    #imgui/imgui_demo.cpp
-    #imgui/imgui_draw.cpp
-    #imgui/imgui_tables.cpp
-    #imgui/imgui_widgets.cpp
-    #imgui/cpp/imgui_stdlib.cpp
-    #imgui/freetype/imgui_freetype.cpp
-#        ${widgets_dir}/dear_widgets.cpp
-    ImGuiColorTextEdit/TextEditor.cpp
-    ImGuiFileDialog/ImGuiFileDialog.cpp
+    imgui/imgui.cpp
+    imgui/imgui.h
+    imgui/imgui_demo.cpp
+    imgui/imgui_draw.cpp
+    imgui/imgui_tables.cpp
+    imgui/imgui_widgets.cpp
+    imgui/backends/imgui_impl_glfw.cpp
+    imgui/backends/imgui_impl_vulkan.cpp
+    imgui/misc/cpp/imgui_stdlib.cpp
+    imgui/misc/freetype/imgui_freetype.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC 
-        #${CMAKE_CURRENT_LIST_DIR}/imgui
-        ${CMAKE_CURRENT_LIST_DIR}/ImGuiColorTextEdit
-        ${CMAKE_CURRENT_LIST_DIR}/ImGuiFileDialog
+        ${CMAKE_CURRENT_LIST_DIR}/imgui
     PRIVATE
         ${FREETYPE_INCLUDE_DIRS}
-
 )
 
 target_compile_definitions(${PROJECT_NAME}
@@ -56,15 +45,17 @@ target_compile_definitions(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC  
-        imgui
         stb
         ${FREETYPE_LIBRARIES}
+    PRIVATE
+        vma 
+        ${Vulkan_LIBRARIES} 
+        ${GLFW3_LIBRARY}
 )
+
 target_compile_options(${PROJECT_NAME}  PRIVATE 
     -w
 )
 
 
-
 LinkTest(${PROJECT_NAME})
-

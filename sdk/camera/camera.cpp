@@ -43,7 +43,6 @@
 
 using namespace ImGui;
 using namespace yq;
-using namespace yq::asset;
 using namespace yq::tachyon;
 
 const auto  NorthData = TetrahedronData<ColorVertex3D>{

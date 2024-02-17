@@ -49,7 +49,6 @@
 #include <math.h>
 
 using namespace yq;
-using namespace yq::asset;
 using namespace yq::tachyon;
 
 struct Vertex {

@@ -28,7 +28,7 @@ namespace yq::tachyon {
     
         auto    make_data_map()
         {
-            std::unordered_map<unsigned int, DataFormat>    ret;
+            std::unordered_map<Meta::id_t, DataFormat>    ret;
             for(const DataFormatData& d : data_format_data())
                 ret[d.type_id]  = d.format;
             return ret;
@@ -36,7 +36,7 @@ namespace yq::tachyon {
 
         auto    make_binding_map()
         {
-            std::unordered_map<unsigned int, unsigned int>  ret;
+            std::unordered_map<Meta::id_t, unsigned int>  ret;
             for(const DataFormatData& d : data_format_data())
                 ret[d.type_id]  = d.bindings;
             return ret;
@@ -44,7 +44,7 @@ namespace yq::tachyon {
         
         auto    make_index_type_map()
         {
-            std::unordered_map<unsigned int, IndexType>     ret;
+            std::unordered_map<Meta::id_t, IndexType>     ret;
             for(const DataFormatData& d : data_format_data())
                 ret[d.type_id]  = d.index;
             return ret;

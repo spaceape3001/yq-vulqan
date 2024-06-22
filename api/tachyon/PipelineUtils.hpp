@@ -14,7 +14,7 @@
 
 namespace yq::tachyon {
     struct DataFormatData {
-        unsigned int        type_id     = 0;    //!< Meta type ID
+        Meta::id_t          type_id     = 0;    //!< Meta type ID
         unsigned int        bindings    = 1;    //!< Number of bindings to be used
         DataFormat          format;             //!< Data format
         IndexType           index;

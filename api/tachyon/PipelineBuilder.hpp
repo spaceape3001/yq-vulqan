@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <0/keywords.hpp>
+#include <yq/config/keywords.hpp>
 #include <0/basic/BasicBuffer.hpp>
 #include <0/basic/Mutable.hpp>
 #include <0/math/glm_types.hpp>
-#include <0/trait/not_copyable.hpp>
-#include <0/trait/not_moveable.hpp>
+#include <yq/trait/not_copyable.hpp>
+#include <yq/trait/not_moveable.hpp>
 
 #include <tachyon/Pipeline.hpp>
 #include <tachyon/PipelineConfig.hpp>

@@ -7,7 +7,6 @@
 #pragma once
 
 #include <0/basic/BasicApp.hpp>
-#include <0/basic/DbgRel.hpp>
 #include <tachyon/AppCreateInfo.hpp>
 #include <tachyon/AppGLFW.hpp>
 #include <tachyon/gpu/VqApp.hpp>

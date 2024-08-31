@@ -8,10 +8,10 @@
 
 #include <tachyon/preamble.hpp>
 #include <0/basic/Object.hpp>
-#include <0/basic/Ref.hpp>
-#include <0/basic/UniqueID.hpp>
+#include <yq/basic/Ref.hpp>
+#include <yq/basic/UniqueID.hpp>
 #include <0/math/shape/Rectangle2.hpp>
-#include <glm/glm.hpp>
+#include <yq/math/glm.hpp>
 #include <0/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {

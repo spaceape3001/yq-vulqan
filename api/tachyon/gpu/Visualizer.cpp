@@ -19,10 +19,10 @@
 #include "Visualizer.hxx"
 #include "Visualizer.hpp"
 
-#include <0/basic/AutoReset.hpp>
+#include <yq/basic/AutoReset.hpp>
 #include <0/basic/BasicBuffer.hpp>
-#include <0/basic/ErrorDB.hpp>
-#include <0/basic/errors.hpp>
+#include <yq/basic/ErrorDB.hpp>
+#include <yq/basic/errors.hpp>
 
 #include <0/math/color/RGBA.hpp>
 

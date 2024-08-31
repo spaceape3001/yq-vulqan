@@ -8,8 +8,8 @@
 
 #include "GLSLShader.hpp"
 
-#include <0/basic/ErrorDB.hpp>
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/ErrorDB.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/io/Execute.hpp>
 #include <0/io/FileUtils.hpp>

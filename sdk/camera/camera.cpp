@@ -19,7 +19,7 @@
 #include <tachyon/rendered/Tetrahedron.hpp>
 #include <tachyon/rendered/Triangle.hpp>
 
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Scene.hpp>

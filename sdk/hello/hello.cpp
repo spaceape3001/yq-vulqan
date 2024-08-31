@@ -16,7 +16,7 @@
 //  Also it's about me developing the API in the first place .... :)
 
 #include <tachyon/rendered/Triangle.hpp>
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/basic/Logging.hpp>
 
 #include <0/io/PluginLoader.hpp>
@@ -45,7 +45,7 @@
 #include <0/math/shape/Triangle3.hpp>
 #include <iostream>
 #include <chrono>
-#include <glm/glm.hpp>  // temporary
+#include <yq/math/glm.hpp>  // temporary
 #include <math.h>
 
 using namespace yq;

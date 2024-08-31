@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <glm/glm.hpp>
+#include <yq/config/glm.hpp>
 
 namespace yq::tachyon {
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/Signal.hpp>
+#include <yq/basic/Signal.hpp>
 #include <tachyon/Widget.hpp>
 #include <0/math/shape/AxBox2.hpp>
 #include <0/math/vector/Vector2.hpp>

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <0/basic/Flags.hpp>
+#include <yq/basic/Flags.hpp>
 #include <0/basic/MetaObject.hpp>
-#include <0/basic/Mutable.hpp>
+#include <yq/basic/Mutable.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/Tristate.hpp>
 #include <tachyon/Pipeline.hpp>

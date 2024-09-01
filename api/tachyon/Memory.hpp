@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq/config/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <0/meta/TypeInfo.hpp>
 
 #include <span>

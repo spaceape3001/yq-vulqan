@@ -6,12 +6,12 @@
 
 #include "TextArea.hpp"
 #include <tachyon/MyImGui.hpp>
-#include <0/io/Stream.hpp>
+#include <yq/io/Stream.hpp>
 #include <0/io/StreamOps.hpp>
-#include <yq/basic/IterUtf8.hpp>
+#include <yq/text/IterUtf8.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <yq/basic/DelayInit.hpp>
-#include <0/io/stream/Text.hpp>
+#include <yq/io/stream/Text.hpp>
 #include <0/basic/Logging.hpp>
 #include <0/math/shape/AxBox2.hpp>
 #include <0/math/vector/Vector2.hxx>

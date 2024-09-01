@@ -9,6 +9,7 @@
 #include <0/basic/preamble.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/BufferObject.hpp>
+#include <yq/container/vector_utils.hpp>
 
 namespace yq::tachyon {
     

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/config/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <0/basic/Object.hpp>
 #include <yq/basic/UniqueID.hpp>
 #include <0/math/units.hpp>

@@ -6,10 +6,11 @@
 
 #pragma once
 
-#include <yq/config/keywords.hpp>
-#include <0/basic/BasicBuffer.hpp>
+#include <yq/keywords.hpp>
+#include <yq/container/BasicBuffer.hpp>
 #include <yq/basic/Mutable.hpp>
-#include <0/math/glm_types.hpp>
+#include <yq/math/glm_types.hpp>
+#include <yq/trait/member_offset.hpp>
 #include <yq/trait/not_copyable.hpp>
 #include <yq/trait/not_moveable.hpp>
 

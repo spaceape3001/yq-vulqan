@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
-#include <0/basic/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/ShaderType.hpp>
 #include <filesystem>

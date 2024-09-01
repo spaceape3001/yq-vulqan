@@ -17,7 +17,7 @@
 
 #include <yq/basic/AutoReset.hpp>
 #include <yq/basic/ErrorDB.hpp>
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_vulkan.h>

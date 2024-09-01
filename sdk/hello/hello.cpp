@@ -17,7 +17,7 @@
 
 #include <tachyon/rendered/Triangle.hpp>
 #include <yq/basic/DelayInit.hpp>
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 
 #include <0/io/PluginLoader.hpp>
 

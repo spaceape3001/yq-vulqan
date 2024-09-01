@@ -8,7 +8,7 @@
     Simple "demo" utilitiy
 */
 
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 #include <0/io/PluginLoader.hpp>
 #include <0/meta/Meta.hpp>
 #include <0/meta/ObjectInfoWriter.hpp>

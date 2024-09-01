@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/basic/DbgRel.hpp>
+#include <yq/macro/debugrel.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <string>

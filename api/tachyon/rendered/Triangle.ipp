@@ -12,7 +12,7 @@
 #include <tachyon/Render3DWriter.hpp>
 #include <tachyon/Shader.hpp>
 #include <0/basic/preamble.hpp>
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 
 namespace yq::tachyon {
     void Triangle::initInfo()

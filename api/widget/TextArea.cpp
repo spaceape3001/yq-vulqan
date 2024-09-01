@@ -12,7 +12,7 @@
 #include <0/basic/TextUtils.hpp>
 #include <yq/basic/DelayInit.hpp>
 #include <yq/io/stream/Text.hpp>
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 #include <0/math/shape/AxBox2.hpp>
 #include <0/math/vector/Vector2.hxx>
 

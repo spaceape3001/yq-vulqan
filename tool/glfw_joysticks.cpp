@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <0/basic/TextUtils.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Joystick.hpp>
 #include <iostream>

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/Widget.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/format.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 

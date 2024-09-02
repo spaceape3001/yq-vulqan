@@ -10,9 +10,9 @@
 
 #include <yq/basic/ErrorDB.hpp>
 #include <yq/basic/DelayInit.hpp>
-//#include <0/basic/TextUtils.hpp>
 #include <yq/io/Execute.hpp>
 #include <0/io/FileUtils.hpp>
+#include <yq/text/chars.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/Shader.hpp>
 

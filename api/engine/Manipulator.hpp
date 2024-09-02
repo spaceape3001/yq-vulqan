@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/MetaObject.hpp>
+#include <yq/basic/MetaObject.hpp>
 
 namespace yq::engine {
     class ManipulatorInfo : public MetaObjectInfo {

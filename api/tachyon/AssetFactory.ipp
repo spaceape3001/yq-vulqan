@@ -9,7 +9,7 @@
 #include <tachyon/Logging.hpp>
 #include <tachyon/Asset.hpp>
 #include <tachyon/AssetFactory.hpp>
-#include <0/io/FileResolver.hpp>
+#include <yq/io/FileResolver.hpp>
 #include <0/io/FileUtils.hpp>
 
 namespace yq::tachyon {

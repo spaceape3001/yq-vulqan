@@ -19,7 +19,7 @@
 #include <yq/basic/DelayInit.hpp>
 #include <yq/basic/Logging.hpp>
 
-#include <0/io/PluginLoader.hpp>
+#include <yq/io/PluginLoader.hpp>
 
 #include <0/meta/Meta.hpp>
 

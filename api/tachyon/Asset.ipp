@@ -10,7 +10,7 @@
 #include <tachyon/AssetInfoWriter.hpp>
 #include <yq/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
-#include <0/io/FileResolver.hpp>
+#include <yq/io/FileResolver.hpp>
 #include <YqEngineConfig.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Asset)

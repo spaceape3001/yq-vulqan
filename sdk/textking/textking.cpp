@@ -9,7 +9,7 @@
 */
 
 #include <yq/basic/Logging.hpp>
-#include <0/io/PluginLoader.hpp>
+#include <yq/io/PluginLoader.hpp>
 #include <0/meta/Meta.hpp>
 #include <0/meta/ObjectInfoWriter.hpp>
 #include <tachyon/Application.hpp>
@@ -21,7 +21,8 @@
 #include <TextEditor.h>
 #include <ImGuiFileDialog.h>
 #include <0/io/FileUtils.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/format.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <widget/TextArea.hpp>
 
 using namespace yq;

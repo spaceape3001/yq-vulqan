@@ -7,9 +7,9 @@
 #include "TextArea.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <yq/io/Stream.hpp>
-#include <0/io/StreamOps.hpp>
+#include <yq/io/StreamOps.hpp>
 #include <yq/text/IterUtf8.hpp>
-#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <yq/basic/DelayInit.hpp>
 #include <yq/io/stream/Text.hpp>
 #include <yq/basic/Logging.hpp>

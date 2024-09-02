@@ -21,7 +21,7 @@
 
 #include <yq/io/PluginLoader.hpp>
 
-#include <0/meta/Meta.hpp>
+#include <yq/meta/Meta.hpp>
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Image.hpp>

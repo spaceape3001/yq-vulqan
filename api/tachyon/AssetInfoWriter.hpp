@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/Asset.hpp>
-#include <0/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

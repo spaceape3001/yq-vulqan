@@ -7,10 +7,10 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <0/basic/Object.hpp>
+#include <yq/basic/Object.hpp>
 #include <yq/basic/UniqueID.hpp>
 #include <0/math/units.hpp>
-#include <0/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
 
 #include <variant>
 

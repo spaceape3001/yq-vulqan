@@ -7,12 +7,12 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <0/basic/Object.hpp>
+#include <yq/basic/Object.hpp>
 #include <yq/basic/Ref.hpp>
 #include <yq/basic/UniqueID.hpp>
 #include <0/math/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
-#include <0/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
 

@@ -10,8 +10,8 @@
 
 #include <yq/basic/Logging.hpp>
 #include <yq/io/PluginLoader.hpp>
-#include <0/meta/Meta.hpp>
-#include <0/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/Meta.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>

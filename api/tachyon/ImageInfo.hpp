@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/math/shape/Size4.hpp>
+#include <yq-toolbox/shape/Size4.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/ImageType.hpp>

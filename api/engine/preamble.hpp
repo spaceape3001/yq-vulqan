@@ -7,10 +7,10 @@
 #pragma once
 
 #include <sys/types.h>
-#include <yq/basic/Enum.hpp>
-#include <yq/basic/Flag.hpp>
-#include <yq/basic/Ref.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq-toolbox/basic/Enum.hpp>
+#include <yq-toolbox/basic/Flag.hpp>
+#include <yq-toolbox/basic/Ref.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
 #include <string>
 #include <variant>
 

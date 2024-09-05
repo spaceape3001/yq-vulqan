@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/PipelineUtils.hpp>
-#include <yq/math/glm_types.hpp>
-#include <0/math/color/RGBA.hpp>
-#include <0/math/vector/Vector1.hpp>
-#include <0/math/vector/Vector2.hpp>
-#include <0/math/vector/Vector3.hpp>
-#include <0/math/vector/Vector4.hpp>
+#include <yq-toolbox/math/glm_types.hpp>
+#include <yq-toolbox/color/RGBA.hpp>
+#include <yq-toolbox/vector/Vector1.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq-toolbox/vector/Vector4.hpp>
 #include <unordered_map>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq-toolbox/meta/TypeInfo.hpp>
 
 
 namespace yq::tachyon {

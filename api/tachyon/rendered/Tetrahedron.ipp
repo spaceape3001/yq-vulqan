@@ -7,8 +7,8 @@
 #pragma once
 
 #include "Tetrahedron.hpp"
-#include <0/math/shape/TetrahedronData.hpp>
-#include <0/math/shape/shape_utils.hpp>
+#include <yq-toolbox/shape/TetrahedronData.hpp>
+#include <yq-toolbox/shape/shape_utils.hpp>
 #include <tachyon/Render3DWriter.hpp>
 #include <tachyon/Shader.hpp>
 #include <0/basic/preamble.hpp>

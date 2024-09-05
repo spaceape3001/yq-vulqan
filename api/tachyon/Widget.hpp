@@ -7,10 +7,10 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <yq/basic/Object.hpp>
-#include <yq/basic/UniqueID.hpp>
-#include <yq/basic/Flags.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq-toolbox/basic/Object.hpp>
+#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq-toolbox/basic/Flags.hpp>
+#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
     class Viewer;

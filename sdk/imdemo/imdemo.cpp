@@ -8,7 +8,7 @@
     Simple "demo" utilitiy
 */
 
-#include <yq/io/PluginLoader.hpp>
+#include <yq-toolbox/io/PluginLoader.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/widget/ImGuiDemoWidget.hpp>

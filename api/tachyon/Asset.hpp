@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/basic/Object.hpp>
-#include <yq/basic/UniqueID.hpp>
-#include <yq/basic/Ref.hpp>
-#include <yq/container/Set.hpp>
-#include <yq/basic/SizeTimestamp.hpp>
+#include <yq-toolbox/basic/Object.hpp>
+#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq-toolbox/basic/Ref.hpp>
+#include <yq-toolbox/container/Set.hpp>
+#include <yq-toolbox/basic/SizeTimestamp.hpp>
 
 #include <tachyon/preamble.hpp>
 

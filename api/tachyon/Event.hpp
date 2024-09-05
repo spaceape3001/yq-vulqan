@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/basic/Object.hpp>
+#include <yq-toolbox/basic/Object.hpp>
 #include <tachyon/preamble.hpp>
 
 namespace yq::tachyon {

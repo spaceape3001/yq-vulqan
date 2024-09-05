@@ -9,8 +9,8 @@
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/ModifierKey.hpp>
 #include <0/math/preamble.hpp>
-#include <0/math/shape/Size2.hpp>
-#include <0/math/vector/Vector2.hpp>
+#include <yq-toolbox/shape/Size2.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
 #include <system_error>
 
 namespace yq::tachyon {

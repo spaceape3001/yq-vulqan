@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/basic/Flags.hpp>
+#include <yq-toolbox/basic/Flags.hpp>
 
 namespace yq::tachyon {
     /*! \brief Renderer

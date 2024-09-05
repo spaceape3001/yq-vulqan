@@ -8,7 +8,7 @@
 
 #include <tachyon/Rendered.hpp>
 #include <0/math/SimpleSpace.hpp>
-#include <0/math/shape/AxBox3.hpp>
+#include <yq-toolbox/shape/AxBox3.hpp>
 
 namespace yq::tachyon {
         

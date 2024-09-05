@@ -52,11 +52,11 @@
 #include "widget/StackedWidget.ipp"
 
 
-#include <0/math/shape/AxBox2.hxx>
-#include <0/math/shape/Rectangle2.hxx>
-#include <0/math/shape/Size2.hxx>
-#include <0/math/vector/Tensor44.hxx>
-#include <0/math/vector/Vector2.hxx>
-#include <0/math/vector/Vector3.hxx>
+#include <yq-toolbox/shape/AxBox2.hxx>
+#include <yq-toolbox/shape/Rectangle2.hxx>
+#include <yq-toolbox/shape/Size2.hxx>
+#include <yq-toolbox/vector/Tensor44.hxx>
+#include <yq-toolbox/vector/Vector2.hxx>
+#include <yq-toolbox/vector/Vector3.hxx>
 
 

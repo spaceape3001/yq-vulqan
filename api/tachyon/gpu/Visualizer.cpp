@@ -19,13 +19,13 @@
 #include "Visualizer.hxx"
 #include "Visualizer.hpp"
 
-#include <yq/errors.hpp>
-#include <yq/basic/AutoReset.hpp>
-#include <yq/basic/ErrorDB.hpp>
-#include <yq/container/BasicBuffer.hpp>
-#include <yq/container/initlist_utils.hpp>
+#include <yq-toolbox/errors.hpp>
+#include <yq-toolbox/basic/AutoReset.hpp>
+#include <yq-toolbox/basic/ErrorDB.hpp>
+#include <yq-toolbox/container/BasicBuffer.hpp>
+#include <yq-toolbox/container/initlist_utils.hpp>
 
-#include <0/math/color/RGBA.hpp>
+#include <yq-toolbox/color/RGBA.hpp>
 
 #include <tachyon/Buffer.hpp>
 #include <tachyon/Image.hpp>

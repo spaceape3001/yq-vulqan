@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/basic/Ref.hpp>
-#include <yq/basic/UniqueID.hpp>
+#include <yq-toolbox/basic/Ref.hpp>
+#include <yq-toolbox/basic/UniqueID.hpp>
 #include <tachyon/PipelineConfig.hpp>
 
 namespace yq::tachyon {

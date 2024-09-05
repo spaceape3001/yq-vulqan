@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/meta/Init.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq-toolbox/meta/Init.hpp>
+#include <yq-toolbox/meta/TypeInfo.hpp>
 #include <tachyon/Shader.hpp>
 #include <tachyon/PushData.hpp>
 #include <tachyon/PipelineBuilder.hpp>

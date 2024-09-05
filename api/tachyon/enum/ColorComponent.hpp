@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/basic/Enum.hpp>
-#include <yq/basic/Flag.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq-toolbox/basic/Enum.hpp>
+#include <yq-toolbox/basic/Flag.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
     /*! \brief Color Component

@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/keywords.hpp>
-#include <yq/basic/Object.hpp>
-#include <yq/basic/UniqueID.hpp>
-#include <0/math/units.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/basic/Object.hpp>
+#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq-toolbox/units.hpp>
+#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
 
 #include <variant>
 

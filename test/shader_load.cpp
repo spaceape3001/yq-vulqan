@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/io/FileResolver.hpp>
+#include <yq-toolbox/io/FileResolver.hpp>
 #include <tachyon/Shader.hpp>
-#include <yq/basic/Logging.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

@@ -8,8 +8,8 @@
 
 #include <engine/preamble.hpp>
 #include <tachyon/Camera.hpp>
-#include <0/math/shape/Rectangle2.hpp>
-#include <0/math/color/RGB.hpp>
+#include <yq-toolbox/shape/Rectangle2.hpp>
+#include <yq-toolbox/color/RGB.hpp>
 #include <optional>
 #include <tachyon/enum/Tristate.hpp>
 

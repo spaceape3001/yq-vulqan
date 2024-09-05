@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/basic/Ref.hpp>
+#include <yq-toolbox/basic/Ref.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/Window.hpp>
-#include <yq/basic/Flags.hpp>
+#include <yq-toolbox/basic/Flags.hpp>
 
 struct ImGuiContext;
 

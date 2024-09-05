@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/keywords.hpp>
-#include <yq/basic/128-bit.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/basic/128-bit.hpp>
+#include <yq-toolbox/meta/TypeInfo.hpp>
 
 #include <span>
 #include <functional>

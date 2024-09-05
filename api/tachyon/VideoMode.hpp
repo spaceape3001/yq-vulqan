@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <0/math/color/RGB.hpp>
-#include <0/math/shape/Size2.hpp>
+#include <yq-toolbox/color/RGB.hpp>
+#include <yq-toolbox/shape/Size2.hpp>
 
 namespace yq::tachyon {
     /*! \brief Video mode information

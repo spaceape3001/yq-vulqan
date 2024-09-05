@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
-#include <yq/basic/Logging.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
 #include <variant>
 
 struct GLFWmonitor;

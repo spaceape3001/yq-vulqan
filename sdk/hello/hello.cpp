@@ -16,12 +16,12 @@
 //  Also it's about me developing the API in the first place .... :)
 
 #include <tachyon/rendered/Triangle.hpp>
-#include <yq/basic/DelayInit.hpp>
-#include <yq/basic/Logging.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
 
-#include <yq/io/PluginLoader.hpp>
+#include <yq-toolbox/io/PluginLoader.hpp>
 
-#include <yq/meta/Meta.hpp>
+#include <yq-toolbox/meta/Meta.hpp>
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Image.hpp>
@@ -36,16 +36,16 @@
 #include <tachyon/Render3DWriter.hpp>
 #include <tachyon/widget/Scene3DWidget.hpp>
 
-#include <0/math/color/Colors.hpp>
-#include <0/math/color/RGB.hpp>
-#include <0/math/vector/Vector2.hpp>
-#include <0/math/vector/Vector3.hxx>
-#include <0/math/shape/shape_utils.hpp>
-#include <0/math/shape/Triangle2.hpp>
-#include <0/math/shape/Triangle3.hpp>
+#include <yq-toolbox/color/Colors.hpp>
+#include <yq-toolbox/color/RGB.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq-toolbox/shape/shape_utils.hpp>
+#include <yq-toolbox/shape/Triangle2.hpp>
+#include <yq-toolbox/shape/Triangle3.hpp>
 #include <iostream>
 #include <chrono>
-#include <yq/math/glm.hpp>  // temporary
+#include <yq-toolbox/math/glm.hpp>  // temporary
 #include <math.h>
 
 using namespace yq;

@@ -7,9 +7,9 @@
 #pragma once
 
 #include "Quadrilateral.hpp"
-#include <0/math/shape/QuadrilateralData.hpp>
-#include <0/math/vector/Vector3.hxx>
-#include <0/math/shape/shape_utils.hpp>
+#include <yq-toolbox/shape/QuadrilateralData.hpp>
+#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq-toolbox/shape/shape_utils.hpp>
 #include <tachyon/Render3DWriter.hpp>
 #include <tachyon/Shader.hpp>
 #include <0/basic/preamble.hpp>

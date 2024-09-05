@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/basic/Logging.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
 #include <tachyon/Memory.hpp>
 #include <cstdlib>
 

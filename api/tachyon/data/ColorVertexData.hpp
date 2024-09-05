@@ -11,8 +11,8 @@
 #include <glm/glm.hpp>
 #include <tachyon/data/ColorVertex2D.hpp>
 #include <tachyon/data/ColorVertex3D.hpp>
-#include <0/math/vector/Vector3.hpp>
-#include <0/math/color/RGBA.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq-toolbox/color/RGBA.hpp>
 
 namespace yq::tachyon {
     struct ColorVertexData {

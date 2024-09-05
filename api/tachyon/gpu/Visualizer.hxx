@@ -7,9 +7,9 @@
 #pragma once
 
 #include <tachyon/preamble.hpp>
-#include <yq/container/BasicBuffer.hpp>
-#include <yq/basic/Flags.hpp>
-#include <yq/basic/Ref.hpp>
+#include <yq-toolbox/container/BasicBuffer.hpp>
+#include <yq-toolbox/basic/Flags.hpp>
+#include <yq-toolbox/basic/Ref.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <tachyon/PipelineConfig.hpp>

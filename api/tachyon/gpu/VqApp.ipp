@@ -10,9 +10,9 @@
 #include <tachyon/gpu/VqEnums.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/Logging.hpp>
-#include <yq/basic/BasicApp.hpp>
-#include <yq/basic/ErrorDB.hpp>
-#include <yq/basic/ThreadId.hpp>
+#include <yq-toolbox/basic/BasicApp.hpp>
+#include <yq-toolbox/basic/ErrorDB.hpp>
+#include <yq-toolbox/basic/ThreadId.hpp>
 #include <tbb/spin_mutex.h>
 
 

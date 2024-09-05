@@ -8,11 +8,11 @@
 
 #include "GLSLShader.hpp"
 
-#include <yq/basic/ErrorDB.hpp>
-#include <yq/basic/DelayInit.hpp>
-#include <yq/io/Execute.hpp>
-#include <yq/io/FileUtils.hpp>
-#include <yq/text/chars.hpp>
+#include <yq-toolbox/basic/ErrorDB.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/io/Execute.hpp>
+#include <yq-toolbox/io/FileUtils.hpp>
+#include <yq-toolbox/text/chars.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/Shader.hpp>
 

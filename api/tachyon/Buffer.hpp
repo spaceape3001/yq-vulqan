@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/basic/UniqueID.hpp>
-#include <yq/basic/Ref.hpp>
+#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq-toolbox/basic/Ref.hpp>
 #include <tachyon/Memory.hpp>
 #include <tachyon/enum/BufferUsage.hpp>
 #include <span>

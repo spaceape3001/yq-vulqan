@@ -13,7 +13,7 @@
 #include <tachyon/Window.hpp>
 #include <tachyon/WindowEvents.hpp>
 
-#include <yq/basic/ErrorDB.hpp>
+#include <yq-toolbox/basic/ErrorDB.hpp>
 
 
 #include <GLFW/glfw3.h>

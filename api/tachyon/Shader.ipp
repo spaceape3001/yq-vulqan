@@ -10,8 +10,8 @@
 #include <tachyon/Logging.hpp>
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/AssetInfoWriter.hpp>
-#include <yq/basic/DelayInit.hpp>
-#include <yq/text/format.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/text/format.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Shader>&  Shader::cache()

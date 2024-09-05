@@ -6,21 +6,21 @@
 
 #include "TextArea.hpp"
 #include <tachyon/MyImGui.hpp>
-#include <yq/io/Stream.hpp>
-#include <yq/io/StreamOps.hpp>
-#include <yq/text/IterUtf8.hpp>
-#include <yq/text/vsplit.hpp>
+#include <yq-toolbox/io/Stream.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/text/IterUtf8.hpp>
+#include <yq-toolbox/text/vsplit.hpp>
 //
-#include <yq/basic/DelayInit.hpp>
-#include <yq/io/stream/Text.hpp>
-#include <yq/basic/Logging.hpp>
-#include <0/math/shape/AxBox2.hpp>
-#include <0/math/vector/Vector2.hxx>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/io/stream/Text.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
+#include <yq-toolbox/shape/AxBox2.hpp>
+#include <yq-toolbox/vector/Vector2.hxx>
 
-#include <0/math/shape/shape_utils.hpp>
+#include <yq-toolbox/shape/shape_utils.hpp>
 
     //  for debugging
-#include <0/math/color/Colors.hpp>
+#include <yq-toolbox/color/Colors.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::widget::TextArea)
 

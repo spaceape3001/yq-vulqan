@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/basic/ErrorDB.hpp>
+#include <yq-toolbox/basic/ErrorDB.hpp>
 #include <tachyon/ImageViewInfo.hpp>
 #include <tachyon/SamplerInfo.hpp>
 #include <tachyon/gpu/VqUtils.hpp>

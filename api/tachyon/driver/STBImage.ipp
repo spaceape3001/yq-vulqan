@@ -9,8 +9,8 @@
 #include <tachyon/AssetFactory.hpp>
 #include <tachyon/Image.hpp>
 
-#include <yq/basic/DelayInit.hpp>
-#include <yq/basic/ErrorDB.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/basic/ErrorDB.hpp>
 
 #include <stb_image.h>
 

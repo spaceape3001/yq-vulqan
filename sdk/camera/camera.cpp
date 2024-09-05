@@ -9,7 +9,7 @@
     as we play around with the camera.
 */
 
-#include <0/math/color/Colors.hpp>
+#include <yq-toolbox/color/Colors.hpp>
 
 #include <tachyon/camera/NullCamera.hpp>
 #include <tachyon/camera/SpaceCamera.hpp>
@@ -19,8 +19,8 @@
 #include <tachyon/rendered/Tetrahedron.hpp>
 #include <tachyon/rendered/Triangle.hpp>
 
-#include <yq/basic/DelayInit.hpp>
-#include <yq/text/match.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/text/match.hpp>
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Scene.hpp>
@@ -28,17 +28,17 @@
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/widget/Scene3DWidget.hpp>
 
-#include <0/math/color/RGB.hpp>
-#include <0/math/vector/Vector2.hpp>
-#include <0/math/shape/shape_utils.hpp>
-#include <0/math/units.hpp>
-#include <0/math/trig.hpp>
-#include <0/math/shape/QuadrilateralData.hpp>
-#include <0/math/shape/TetrahedronData.hpp>
-#include <0/math/shape/Triangle2.hpp>
-#include <0/math/shape/Triangle3.hpp>
-#include <0/math/vector/Quaternion3.hxx>
-#include <0/math/vector/Vector3.hxx>
+#include <yq-toolbox/color/RGB.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq-toolbox/shape/shape_utils.hpp>
+#include <yq-toolbox/units.hpp>
+#include <yq-toolbox/math/trigonometry.hpp>
+#include <yq-toolbox/shape/QuadrilateralData.hpp>
+#include <yq-toolbox/shape/TetrahedronData.hpp>
+#include <yq-toolbox/shape/Triangle2.hpp>
+#include <yq-toolbox/shape/Triangle3.hpp>
+#include <yq-toolbox/vector/Quaternion3.hxx>
+#include <yq-toolbox/vector/Vector3.hxx>
 #include <tachyon/MyImGui.hpp>
 #include <chrono>
 

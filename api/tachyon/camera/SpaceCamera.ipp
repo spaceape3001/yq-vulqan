@@ -8,9 +8,9 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_projection.hpp>
-#include <0/math/shape/Rectangle2.hpp>
-#include <0/math/vector/Tensor44.hpp>
-#include <0/math/vector/Vector3.hpp>
+#include <yq-toolbox/shape/Rectangle2.hpp>
+#include <yq-toolbox/vector/Tensor44.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
 
 
 namespace yq::tachyon {

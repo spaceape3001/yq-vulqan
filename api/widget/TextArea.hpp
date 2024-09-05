@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/basic/Signal.hpp>
+#include <yq-toolbox/basic/Signal.hpp>
 #include <tachyon/Widget.hpp>
-#include <0/math/shape/AxBox2.hpp>
-#include <0/math/vector/Vector2.hpp>
+#include <yq-toolbox/shape/AxBox2.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
 #include <functional>
-#include <0/math/color/RGBA.hpp>
+#include <yq-toolbox/color/RGBA.hpp>
 #include <array>
 #include <span>
 #include <deque>

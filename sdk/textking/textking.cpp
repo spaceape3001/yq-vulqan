@@ -8,10 +8,10 @@
     Simple "demo" utilitiy
 */
 
-#include <yq/basic/Logging.hpp>
-#include <yq/io/PluginLoader.hpp>
-#include <yq/meta/Meta.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
+#include <yq-toolbox/io/PluginLoader.hpp>
+#include <yq-toolbox/meta/Meta.hpp>
+#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
@@ -20,8 +20,8 @@
 #include <iostream>
 #include <TextEditor.h>
 #include <ImGuiFileDialog.h>
-#include <yq/io/FileUtils.hpp>
-#include <yq/text/format.hpp>
+#include <yq-toolbox/io/FileUtils.hpp>
+#include <yq-toolbox/text/format.hpp>
 //
 #include <widget/TextArea.hpp>
 

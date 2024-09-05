@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/InfoBinder.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
 #include <tachyon/preamble.hpp>
 #include <tachyon/enum/DataFormat.hpp>
 #include <tachyon/enum/IndexType.hpp>

@@ -11,6 +11,10 @@
 #include <tachyon/data/ColorVertexData.hpp>
 #include <tachyon/VBO.hpp>
 
+namespace yq {
+    template <typename> struct TetrahedronData;
+}
+
 namespace yq::tachyon {
 
     /*! \brief Tetrahedron

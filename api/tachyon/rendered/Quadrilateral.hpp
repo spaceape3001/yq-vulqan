@@ -11,6 +11,10 @@
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
 
+namespace yq {
+    template <typename> struct QuadrilateralData;
+}
+
 namespace yq::tachyon {
 
     /*! \brief A quadrilateral, taking in four points */

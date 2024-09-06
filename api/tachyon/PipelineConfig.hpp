@@ -22,6 +22,10 @@
 #include <tachyon/enum/Topology.hpp>
 #include <tachyon/enum/VertexInputRate.hpp>
 
+namespace yq {
+    class CompoundInfo;
+}
+
 namespace yq::tachyon {
 
     //! Gets a buffer from an object

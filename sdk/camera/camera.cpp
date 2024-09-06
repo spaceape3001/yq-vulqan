@@ -37,6 +37,7 @@
 #include <yq-toolbox/shape/TetrahedronData.hpp>
 #include <yq-toolbox/shape/Triangle2.hpp>
 #include <yq-toolbox/shape/Triangle3.hpp>
+#include <yq-toolbox/shape/TriangleData.hpp>
 #include <yq-toolbox/vector/Quaternion3.hxx>
 #include <yq-toolbox/vector/Vector3.hxx>
 #include <tachyon/MyImGui.hpp>

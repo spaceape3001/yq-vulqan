@@ -7,8 +7,9 @@
 #pragma once
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/container/BasicBuffer.hpp>
 #include <yq-toolbox/basic/Mutable.hpp>
+#include <yq-toolbox/basic/steal.hpp>
+#include <yq-toolbox/container/BasicBuffer.hpp>
 #include <yq-toolbox/math/glm_types.hpp>
 #include <yq-toolbox/trait/member_offset.hpp>
 #include <yq-toolbox/trait/not_copyable.hpp>

@@ -8,8 +8,9 @@
 
 #include <vector>
 #include <string>
-#include <0/math/preamble.hpp>
+
 #include <tachyon/preamble.hpp>
+#include <yq-toolbox/typedef/rectangle2.hpp>
 
 namespace yq::tachyon {
     /*! \brief Wrapper for a monitor in GLFW 

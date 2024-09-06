@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/Camera.hpp>
-#include <0/math/SimpleSpace.hpp>
+#include <yq-toolbox/math/SimpleSpace.hpp>
 #include <yq-toolbox/units.hpp>
 
 namespace yq::tachyon {

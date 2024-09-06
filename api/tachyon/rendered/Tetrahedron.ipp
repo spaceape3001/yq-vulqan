@@ -11,7 +11,7 @@
 #include <yq-toolbox/shape/shape_utils.hpp>
 #include <tachyon/Render3DWriter.hpp>
 #include <tachyon/Shader.hpp>
-#include <0/basic/preamble.hpp>
+
 
 namespace yq::tachyon {
     void Tetrahedron::initInfo()

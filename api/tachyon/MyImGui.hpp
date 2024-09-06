@@ -6,11 +6,14 @@
 
 #pragma once
 
-#include <yq-toolbox/vector/Vector2.hpp>
-#include <yq-toolbox/vector/Vector4.hpp>
-#include <yq-toolbox/units.hpp>
 #include <yq-toolbox/color/RGBA.hpp>
 #include <yq-toolbox/color/RGB.hpp>
+#include <yq-toolbox/typedef/quaternion3.hpp>
+#include <yq-toolbox/units.hpp>
+#include <yq-toolbox/vector/Vector1.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq-toolbox/vector/Vector4.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/preamble.hpp>
+
 #include <yq-toolbox/basic/Logging.hpp>
 #include <variant>
 
@@ -16,6 +16,7 @@ struct GLFWwindow;
 
 namespace yq {
     template <size_t N> class BasicBuffer;
+    template <typename> class Ref;
 }
 
     //namespace asset {

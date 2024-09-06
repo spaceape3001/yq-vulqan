@@ -9,6 +9,7 @@
 #include <tachyon/SamplerInfo.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gpu/VqApp.hpp>
+#include <yq-toolbox/color/RGBA.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>

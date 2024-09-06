@@ -8,11 +8,18 @@ project(tachyon)
 
 add_subdirectory(3rd)
 
+set(VULQAN_API_DIR ${CMAKE_CURRENT_LIST_DIR})
+set(VULQAN_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
+add_subdirectory(yq-vulqan)
+
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
 
 set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
+
+
 
 
 if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)

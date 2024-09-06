@@ -43,6 +43,7 @@
 #include <yq-toolbox/shape/shape_utils.hpp>
 #include <yq-toolbox/shape/Triangle2.hpp>
 #include <yq-toolbox/shape/Triangle3.hpp>
+#include <yq-toolbox/shape/TriangleData.hpp>
 #include <iostream>
 #include <chrono>
 #include <yq-toolbox/math/glm.hpp>  // temporary

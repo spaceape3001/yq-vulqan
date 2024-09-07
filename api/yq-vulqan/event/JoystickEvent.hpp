@@ -6,38 +6,44 @@
 
 #pragma once
 
-#include <yq-vulqan/event/InputEvent.hpp>
+#include <yq-vulqan/event/Event.hpp>
+#include <yq-vulqan/glfw/Joystick.hpp>
 
 namespace yq::tachyon {
-    class JoystickEventInfo : public InputEventInfo {
+    class JoystickEventInfo : public EventInfo {
     public:
         template <typename C> class Writer;
 
-        JoystickEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
+        JoystickEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
 
-    class JoystickEvent : public InputEvent {
+    class JoystickEvent : public Event {
         YQ_OBJECT_INFO(JoystickEventInfo)
-        YQ_OBJECT_DECLARE(JoystickEvent, InputEvent)
+        YQ_OBJECT_DECLARE(JoystickEvent, Event)
     public:
     
         //  EVENT TODO
     
-        JoystickEvent();
+        JoystickEvent(Joystick);
         virtual ~JoystickEvent();
+        
+        const Joystick& joystick() const { return m_joystick; }
+        
+    private:
+        const Joystick  m_joystick;
     };
 
     /*! \brief Writer of event information
     */
     template <typename C>
-    class JoystickEventInfo::Writer : public InputEventInfo::Writer<C> {
+    class JoystickEventInfo::Writer : public EventInfo::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(JoystickEventInfo* joystickInputInfo) : InputEventInfo::Writer<C>(joystickInputInfo), m_meta(joystickInputInfo)
+        Writer(JoystickEventInfo* joystickInputInfo) : EventInfo::Writer<C>(joystickInputInfo), m_meta(joystickInputInfo)
         {
         }
         

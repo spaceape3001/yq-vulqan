@@ -6,22 +6,22 @@
 
 #pragma once
 
-#include <yq-vulqan/event/InputEvent.hpp>
+#include <yq-vulqan/event/Event.hpp>
 
 namespace yq::tachyon {
-    class MouseEventInfo : public InputEventInfo {
+    class MouseEventInfo : public EventInfo {
     public:
         template <typename C> class Writer;
 
-        MouseEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
+        MouseEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
 
-    class MouseEvent : public InputEvent {
+    class MouseEvent : public Event {
         YQ_OBJECT_INFO(MouseEventInfo)
-        YQ_OBJECT_DECLARE(MouseEvent, InputEvent)
+        YQ_OBJECT_DECLARE(MouseEvent, Event)
     public:
     
         //  EVENT TODO
@@ -33,11 +33,11 @@ namespace yq::tachyon {
     /*! \brief Writer of event information
     */
     template <typename C>
-    class MouseEventInfo::Writer : public InputEventInfo::Writer<C> {
+    class MouseEventInfo::Writer : public EventInfo::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(MouseEventInfo* mouseInputInfo) : InputEventInfo::Writer<C>(mouseInputInfo), m_meta(mouseInputInfo)
+        Writer(MouseEventInfo* mouseInputInfo) : EventInfo::Writer<C>(mouseInputInfo), m_meta(mouseInputInfo)
         {
         }
         

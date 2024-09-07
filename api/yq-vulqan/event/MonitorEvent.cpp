@@ -4,15 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "InputEvent.hpp"
+#include "MonitorEvent.hpp"
 
 #include <yq-toolbox/basic/DelayInit.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::InputEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorEvent)
 
 namespace yq::tachyon {
     
-    InputEventInfo::InputEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
+    MonitorEventInfo::MonitorEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
         EventInfo(zName, base, sl)
     {
         set(Flag::COMMAND);
@@ -20,23 +20,23 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    InputEvent::InputEvent()
+    MonitorEvent::MonitorEvent(Monitor m) : m_monitor(m)
     {
     }
     
-    InputEvent::~InputEvent()
+    MonitorEvent::~MonitorEvent()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_input_event()
+    static void reg_monitor_event()
     {
         {
-            auto w = writer<InputEvent>();
-            w.description("InputEvent base class");
+            auto w = writer<MonitorEvent>();
+            w.description("Monitor event base class");
         }
     }
     
-    YQ_INVOKE(reg_input_event();)
+    YQ_INVOKE(reg_monitor_event();)
 }

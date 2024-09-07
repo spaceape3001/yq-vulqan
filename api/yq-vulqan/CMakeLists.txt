@@ -61,12 +61,12 @@ add_library(${PROJECT_NAME} SHARED
     
     event/Event.hpp
     event/Event.cpp
-    event/InputEvent.hpp
-    event/InputEvent.cpp
     event/KeyboardEvent.hpp
     event/KeyboardEvent.cpp
     event/JoystickEvent.hpp
     event/JoystickEvent.cpp
+    event/MonitorEvent.hpp
+    event/MonitorEvent.cpp
     event/MouseEvent.hpp
     event/MouseEvent.cpp
     event/WidgetEvent.hpp

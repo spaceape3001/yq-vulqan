@@ -12,15 +12,15 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickEvent)
 
 namespace yq::tachyon {
     
-    JoystickEventInfo::JoystickEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
-        InputEventInfo(zName, base, sl)
+    JoystickEventInfo::JoystickEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
+        EventInfo(zName, base, sl)
     {
         set(Flag::COMMAND);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    JoystickEvent::JoystickEvent()
+    JoystickEvent::JoystickEvent(Joystick j) : m_joystick(j)
     {
     }
     
@@ -30,13 +30,13 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_joystick_input()
+    static void reg_joystick_event()
     {
         {
             auto w = writer<JoystickEvent>();
-            w.description("Joystick input event base class");
+            w.description("Joystick event base class");
         }
     }
     
-    YQ_INVOKE(reg_joystick_input();)
+    YQ_INVOKE(reg_joystick_event();)
 }

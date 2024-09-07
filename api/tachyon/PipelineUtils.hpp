@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <tachyon/preamble.hpp>
+//#include <tachyon/preamble.hpp>
 #include <yq-vulqan/image/DataFormat.hpp>
-#include <tachyon/enum/IndexType.hpp>
+#include <yq-vulqan/pipeline/IndexType.hpp>
 #include <span>
 
 namespace yq::tachyon {

@@ -34,7 +34,6 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/enum/enum.cpp
     ./tachyon/gpu/gpu.cpp
     ./tachyon/gpu/Visualizer.cpp
-    ./tachyon/task/task.cpp
     ./tachyon/ui/ui.cpp
     
     ./widget/TextArea.cpp

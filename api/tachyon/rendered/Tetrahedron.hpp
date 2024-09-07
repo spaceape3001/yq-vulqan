@@ -9,7 +9,7 @@
 #include <tachyon/Render3D.hpp>
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
-#include <tachyon/VBO.hpp>
+#include <yq-vulqan/pipeline/VBO.hpp>
 
 namespace yq {
     template <typename> struct TetrahedronData;

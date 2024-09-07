@@ -7,7 +7,6 @@
 #pragma once
 
 
-#include <tachyon/preamble.hpp>
 #include <yq-toolbox/container/ByteArray.hpp>
 #include <yq-vulqan/shader/ShaderType.hpp>
 #include <yq-toolbox/typedef/filesystem_path.hpp>

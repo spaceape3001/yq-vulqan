@@ -16,11 +16,8 @@
 #include "PipelineConfig.ipp"
 #include "Render3D.ipp"
 #include "Rendered.ipp"
-#include "Texture.ipp"
 #include "Viewer.ipp"
 #include "Window.ipp"
-
-#include "driver/GLSLShader.ipp"
 
 #include "rendered/ImageQuad2.ipp"
 #include "rendered/Quadrilateral.ipp"

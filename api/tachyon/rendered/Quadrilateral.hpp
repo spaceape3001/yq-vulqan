@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/Render3D.hpp>
-#include <tachyon/VBO.hpp>
+#include <yq-vulqan/pipeline/VBO.hpp>
 #include <array>
 #include <tachyon/data/ColorVertexData.hpp>
 

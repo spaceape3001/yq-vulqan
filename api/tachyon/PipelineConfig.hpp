@@ -11,16 +11,16 @@
 #include <tachyon/preamble.hpp>
 #include <functional>
 
-#include <tachyon/enum/CullMode.hpp>
-#include <tachyon/enum/DataActivity.hpp>
 #include <yq-vulqan/image/DataFormat.hpp>
-#include <tachyon/enum/FrontFace.hpp>
-#include <tachyon/enum/IndexType.hpp>
-#include <tachyon/enum/PipelineBinding.hpp>
-#include <tachyon/enum/PolygonMode.hpp>
-#include <tachyon/enum/PushConfigType.hpp>
-#include <tachyon/enum/Topology.hpp>
-#include <tachyon/enum/VertexInputRate.hpp>
+#include <yq-vulqan/pipeline/CullMode.hpp>
+#include <yq-vulqan/pipeline/DataActivity.hpp>
+#include <yq-vulqan/pipeline/FrontFace.hpp>
+#include <yq-vulqan/pipeline/IndexType.hpp>
+#include <yq-vulqan/pipeline/PipelineBinding.hpp>
+#include <yq-vulqan/pipeline/PolygonMode.hpp>
+#include <yq-vulqan/pipeline/PushConfigType.hpp>
+#include <yq-vulqan/pipeline/Topology.hpp>
+#include <yq-vulqan/pipeline/VertexInputRate.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
 

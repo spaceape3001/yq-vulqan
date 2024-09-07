@@ -15,12 +15,13 @@
 #include <yq-toolbox/trait/not_copyable.hpp>
 #include <yq-toolbox/trait/not_moveable.hpp>
 
+#include <yq-vulqan/texture/Texture.hpp>
+#include <yq-vulqan/pipeline/UBO.hpp>
+#include <yq-vulqan/pipeline/VBO.hpp>
+
 #include <tachyon/Pipeline.hpp>
 #include <tachyon/PipelineConfig.hpp>
 #include <tachyon/PipelineUtils.hpp>
-#include <tachyon/Texture.hpp>
-#include <tachyon/UBO.hpp>
-#include <tachyon/VBO.hpp>
 #include <set>
 #include <span>
 #include <cassert>

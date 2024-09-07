@@ -26,10 +26,10 @@
 #include <tachyon/Application.hpp>
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
-#include <tachyon/Texture.hpp>
+#include <yq-vulqan/texture/Texture.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/enum/FrontFace.hpp>
+#include <yq-vulqan/pipeline/FrontFace.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/PipelineBuilder.hpp>
 #include <tachyon/Render3D.hpp>

@@ -39,8 +39,6 @@ add_library(${PROJECT_NAME} SHARED
     config/build.hpp
     config/build.cpp
     
-    driver/STBImage.cpp
-    
     glfw/AppGLFW.hpp
     glfw/AppGLFW.cpp
     glfw/Joystick.hpp
@@ -65,6 +63,7 @@ add_library(${PROJECT_NAME} SHARED
     image/ImageTiling.cpp
     image/ImageType.hpp
     image/ImageType.cpp
+    image/STBImage.cpp
     
     image_view/ImageViewCreateFlags.hpp
     image_view/ImageViewCreateFlags.cpp
@@ -90,6 +89,27 @@ add_library(${PROJECT_NAME} SHARED
     memory/SystemAllocationScope.hpp
     memory/SystemAllocationScope.cpp
     
+    pipeline/CullMode.hpp
+    pipeline/CullMode.cpp
+    pipeline/DataActivity.hpp
+    pipeline/DataActivity.cpp
+    pipeline/FrontFace.hpp
+    pipeline/FrontFace.cpp
+    pipeline/IndexType.hpp
+    pipeline/IndexType.cpp
+    pipeline/PipelineBinding.hpp
+    pipeline/PipelineBinding.cpp
+    pipeline/PolygonMode.hpp
+    pipeline/PolygonMode.cpp
+    pipeline/PushConfigType.hpp
+    pipeline/PushData.hpp
+    pipeline/Topology.hpp
+    pipeline/Topology.cpp
+    pipeline/UBO.hpp
+    pipeline/VBO.hpp
+    pipeline/VertexInputRate.hpp
+    pipeline/VertexInputRate.cpp
+    
     sampler/BorderColor.hpp
     sampler/BorderColor.cpp
     sampler/SamplerAddressMode.hpp
@@ -105,9 +125,20 @@ add_library(${PROJECT_NAME} SHARED
     scene/Perspective.hpp
     scene/Perspective.cpp
 
+    shader/GLSLShader.hpp
+    shader/GLSLShader.cpp
     shader/Shader.hpp
     shader/ShaderType.hpp
     shader/ShaderType.cpp
+    
+    task/Task.hpp
+    task/Task.cpp
+    task/TaskAPI.hpp
+    task/TaskEngine.hpp
+    task/TaskEngine.cpp
+    
+    texture/Texture.hpp
+    texture/Texture.cpp
     
     undo/Undo.hpp
     undo/Undo.cpp

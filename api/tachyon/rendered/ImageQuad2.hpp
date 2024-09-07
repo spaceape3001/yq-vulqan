@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/Render3D.hpp>
-#include <tachyon/Texture.hpp>
-#include <tachyon/VBO.hpp>
+#include <yq-vulqan/texture/Texture.hpp>
+#include <yq-vulqan/pipeline/VBO.hpp>
 #include <yq-toolbox/typedef/axbox2.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 #include <glm/glm.hpp>

@@ -30,7 +30,7 @@
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/asset/ImageAsset.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
-#include <tachyon/Texture.hpp>
+#include <yq-vulqan/texture/Texture.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/VqApp.hpp>
@@ -41,7 +41,7 @@
 
 #include <yq-vulqan/image_view/ImageViewInfo.hpp>
 #include <tachyon/Pipeline.hpp>
-#include <tachyon/PushData.hpp>
+#include <yq-vulqan/pipeline/PushData.hpp>
 
 #include <GLFW/glfw3.h>
 

@@ -4,5 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Task.ipp"
-#include "TaskEngine.ipp"
+#include "IndexType.hpp"
+#include <yq-toolbox/meta/Init.hpp>
+
+YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)

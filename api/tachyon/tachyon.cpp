@@ -10,15 +10,10 @@
 */
 
 #include "Application.ipp"
-#include "Render3D.ipp"
-#include "Rendered.ipp"
+//#include "Render3D.ipp"
+//#include "Rendered.ipp"
 #include "Viewer.ipp"
 #include "Window.ipp"
-
-#include "rendered/ImageQuad2.ipp"
-#include "rendered/Quadrilateral.ipp"
-#include "rendered/Tetrahedron.ipp"
-#include "rendered/Triangle.ipp"
 
 #include "widget/Scene3DWidget.ipp"
 

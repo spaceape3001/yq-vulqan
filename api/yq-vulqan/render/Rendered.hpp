@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <yq-vulqan/typedef/rendered.hpp>
+
 #include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/MetaObject.hpp>
 #include <yq-toolbox/basic/Mutable.hpp>

@@ -15,35 +15,34 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
-#include <tachyon/rendered/Triangle.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/basic/Logging.hpp>
-
-#include <yq-toolbox/io/PluginLoader.hpp>
-
-#include <yq-toolbox/meta/Meta.hpp>
-
-#include <tachyon/Application.hpp>
-#include <yq-vulqan/image/Image.hpp>
-#include <yq-vulqan/shader/Shader.hpp>
-#include <yq-vulqan/texture/Texture.hpp>
-#include <tachyon/Viewer.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
-#include <yq-vulqan/pipeline/FrontFace.hpp>
-#include <tachyon/gpu/VqUtils.hpp>
-#include <yq-vulqan/pipeline/PipelineBuilder.hpp>
-#include <tachyon/Render3D.hpp>
-#include <tachyon/Render3DWriter.hpp>
-#include <tachyon/widget/Scene3DWidget.hpp>
-
 #include <yq-toolbox/color/Colors.hpp>
 #include <yq-toolbox/color/RGB.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq-toolbox/io/PluginLoader.hpp>
+#include <yq-toolbox/meta/Meta.hpp>
 #include <yq-toolbox/shape/shape_utils.hpp>
 #include <yq-toolbox/shape/Triangle2.hpp>
 #include <yq-toolbox/shape/Triangle3.hpp>
 #include <yq-toolbox/shape/TriangleData.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq-toolbox/vector/Vector3.hxx>
+
+#include <yq-vulqan/2D/Triangle.hpp>
+#include <yq-vulqan/image/Image.hpp>
+#include <yq-vulqan/pipeline/FrontFace.hpp>
+#include <yq-vulqan/pipeline/PipelineBuilder.hpp>
+#include <yq-vulqan/render/Render3D.hpp>
+#include <yq-vulqan/render/Render3DWriter.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
+#include <yq-vulqan/texture/Texture.hpp>
+
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
+#include <tachyon/gpu/VqUtils.hpp>
+#include <tachyon/widget/Scene3DWidget.hpp>
+
 #include <iostream>
 #include <chrono>
 #include <yq-toolbox/math/glm.hpp>  // temporary

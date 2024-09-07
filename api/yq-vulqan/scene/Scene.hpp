@@ -7,13 +7,12 @@
 #pragma once
 
 
-#include <tachyon/preamble.hpp>
-#include <tachyon/Rendered.hpp>
+#include <yq-vulqan/render/Rendered.hpp>
 
 namespace yq::tachyon {
     /*! \brief Frame of things to be rendered
     
-        This will include lighting (eventually) & rendred objects.
+        This will include lighting (eventually) & rendered objects.
     */
     struct Scene {
         std::vector<RenderedPtr>    things;

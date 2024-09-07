@@ -6,10 +6,11 @@
 
 #pragma once
 
-#include <tachyon/Render3D.hpp>
-#include <array>
-#include <tachyon/data/ColorVertexData.hpp>
+#include <yq-vulqan/data/ColorVertexData.hpp>
 #include <yq-vulqan/pipeline/VBO.hpp>
+#include <yq-vulqan/render/Render3D.hpp>
+
+#include <array>
 
 namespace yq {
     template <typename> struct TetrahedronData;

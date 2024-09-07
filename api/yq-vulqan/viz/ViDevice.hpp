@@ -7,9 +7,10 @@
 #pragma once
 
 #include <yq-toolbox/basic/Flags.hpp>
-#include <tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
 #include <vk_mem_alloc.h>
+
+struct GLFWwindow;
 
 namespace yq::tachyon {
     struct ViDevice {

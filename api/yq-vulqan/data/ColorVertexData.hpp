@@ -8,11 +8,11 @@
 
 //  This contains some vertex helpers
 
-#include <glm/glm.hpp>
-#include <tachyon/data/ColorVertex2D.hpp>
-#include <tachyon/data/ColorVertex3D.hpp>
+#include <yq-toolbox/math/glm.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>
 #include <yq-toolbox/color/RGBA.hpp>
+#include <yq-vulqan/data/ColorVertex2D.hpp>
+#include <yq-vulqan/data/ColorVertex3D.hpp>
 
 namespace yq::tachyon {
     struct ColorVertexData {

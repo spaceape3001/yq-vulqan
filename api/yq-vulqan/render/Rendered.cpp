@@ -4,10 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <tachyon/Rendered.hpp>
-#include <tachyon/RenderedWriter.hpp>
+#include "Rendered.hpp"
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-vulqan/render/RenderedWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)
 
@@ -47,4 +46,12 @@ namespace yq::tachyon {
     {
         m_wireframe = v;
     }
+    
+    static void reg_rendered()
+    {
+        auto w = writer<Rendered>();
+        w.description("Render object base");
+    }
+    
+    YQ_INVOKE(reg_rendered();)
 }

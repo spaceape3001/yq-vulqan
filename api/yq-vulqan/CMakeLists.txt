@@ -11,6 +11,16 @@ add_library(${PROJECT_NAME} SHARED
     errors.hpp
     logging.hpp
     
+    2D/ImageQuad2.hpp
+    2D/ImageQuad2.cpp
+    2D/Quadrilateral.hpp
+    2D/Quadrilateral.cpp
+    2D/Triangle.hpp
+    2D/Triangle.cpp
+    
+    3D/Tetrahedron.hpp
+    3D/Tetrahedron.cpp
+
     asset/Asset.hpp
     asset/Asset.cpp
     asset/AssetCache.hpp
@@ -41,6 +51,10 @@ add_library(${PROJECT_NAME} SHARED
     
     config/build.hpp
     config/build.cpp
+    
+    data/ColorVertex2D.hpp
+    data/ColorVertex3D.hpp
+    data/ColorVertexData.hpp
     
     editor/Editor.hpp
     editor/Editor.cpp
@@ -144,6 +158,17 @@ add_library(${PROJECT_NAME} SHARED
     pipeline/VBO.hpp
     pipeline/VertexInputRate.hpp
     pipeline/VertexInputRate.cpp
+    
+
+    render/Render2D.hpp
+    render/Render2D.cpp
+    render/Render2DWriter.hpp
+    render/Render3D.hpp
+    render/Render3D.cpp
+    render/Render3DWriter.hpp
+    render/Rendered.hpp
+    render/Rendered.cpp
+    render/RenderedWriter.hpp
     
     sampler/BorderColor.hpp
     sampler/BorderColor.cpp

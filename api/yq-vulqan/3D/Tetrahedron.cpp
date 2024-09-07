@@ -12,6 +12,8 @@
 #include <yq-vulqan/render/Render3DWriter.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 
+#include <yq-toolbox/vector/Vector3.hxx>
+
 namespace yq::tachyon {
     void Tetrahedron::initInfo()
     {

@@ -44,15 +44,6 @@ namespace yq::tachyon {
         bool    update(Visualizer&, const BaseBOConfig&, const void*);
     };
 
-    struct ViBuffer {
-        VkBuffer                buffer      = nullptr;
-        VmaAllocation           allocation  = nullptr;
-        
-        std::error_code     allocate(Visualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu);
-        std::error_code     create(Visualizer&, const Memory& v, VkBufferUsageFlags buf, VmaMemoryUsage vmu);
-        std::error_code     create(Visualizer&, const Buffer& v);
-        void                destroy(Visualizer&);
-    };
 
         //  and so we can be more efficient in rendering
     struct ViFrame {
@@ -196,15 +187,6 @@ namespace yq::tachyon {
         void    _dtor();
     };
 
-    //! Shader storage
-    //! \note the Client is expected to manually call create & destroy
-    struct ViShader {
-        VkShaderModule          shader  = nullptr;
-        VkShaderStageFlagBits   mask    = {};
-        
-        std::error_code     create(VkDevice, const Shader&);
-        void                destroy(VkDevice);
-    };
 
     struct ViSwapchain {
         Visualizer&                 m_viz;

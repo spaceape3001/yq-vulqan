@@ -16,6 +16,7 @@
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/image.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
+#include <yq-vulqan/viz/ViVisualizer.hpp>
 
 #include <atomic>
 #include <functional>
@@ -251,6 +252,8 @@ namespace yq::tachyon {
         std::error_code                 upload(CommandFunction&&);
         
         void                            update(ViContext&, const Scene&);
+        
+        operator ViVisualizer& () { return m_dedicated; }
 
     protected:
         Visualizer();
@@ -293,8 +296,10 @@ namespace yq::tachyon {
         using CleanupMap                    = std::unordered_map<uint64_t, CleanupVector*>;
     
         mutable tbb::spin_rw_mutex          m_mutex;
+        
+        ViVisualizer                        m_dedicated;
     
-        VmaAllocator                        m_allocator             = nullptr;
+        VmaAllocator                       &m_allocator             = m_dedicated.allocator;
         VqApp*                              m_app                   = nullptr;
         BufferMap                           m_buffers;
         CleanupVector                       m_cleanup;                  // keep it one until performance bottlenecks
@@ -302,16 +307,16 @@ namespace yq::tachyon {
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
         ViQueues*                           m_compute               = nullptr;
         uint32_t                            m_descriptorCount       = 0;
-        VkDevice                            m_device                = nullptr;
+        VkDevice                           &m_device                = m_dedicated.device;
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
         //std::vector<const char*>            m_extensions;
         FrameArray                          m_frames;
         ViQueues*                           m_graphic               = nullptr;
-        VkInstance                          m_instance              = nullptr;
+        VkInstance                         &m_instance              = m_dedicated.instance;
         ImageMap                            m_images;
         VkPhysicalDeviceMemoryProperties    m_memoryInfo;
-        VkPhysicalDevice                    m_physical              = nullptr;
+        VkPhysicalDevice                   &m_physical              = m_dedicated.gpu;
         PipelineMap                         m_pipelines;
         ViQueues*                           m_present               = nullptr;
         PresentMode                         m_presentMode;
@@ -319,7 +324,7 @@ namespace yq::tachyon {
         std::vector<Ref<ViQueues>>          m_queues;
         std::unique_ptr<ViRenderPass>       m_renderPass;
         ShaderMap                           m_shaders;
-        VkSurfaceKHR                        m_surface               = nullptr;
+        VkSurfaceKHR                       &m_surface               = m_dedicated.surface;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
         VkFormat                            m_surfaceFormat;
         VkColorSpaceKHR                     m_surfaceColorSpace;
@@ -338,7 +343,7 @@ namespace yq::tachyon {
 
     private:
         bool                                m_init                  = false;
-        GLFWwindow*                         m_window                = nullptr;
+        GLFWwindow*&                        m_window                = m_dedicated.window;
 
         struct Execution;
 

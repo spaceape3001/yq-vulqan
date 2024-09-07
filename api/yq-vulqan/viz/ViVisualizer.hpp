@@ -13,7 +13,7 @@
 struct GLFWwindow;
 
 namespace yq::tachyon {
-    struct ViDevice {
+    struct ViVisualizer {
         //enum class F : uint8_t {
         //};
     

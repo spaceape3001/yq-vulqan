@@ -213,6 +213,12 @@ add_library(${PROJECT_NAME} SHARED
     v/VqLogging.cpp
     v/VqStructs.hpp
     
+    viz/ViBuffer.hpp
+    viz/ViBuffer.cpp
+    viz/ViShader.hpp
+    viz/ViShader.cpp
+    viz/ViVisualizer.hpp
+    
     widget/ImGuiDemoWidget.hpp
     widget/ImGuiDemoWidget.cpp
     widget/StackedWidget.hpp

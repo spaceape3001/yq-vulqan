@@ -27,6 +27,7 @@
 
 #include <yq-toolbox/color/RGBA.hpp>
 
+#include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/asset/ImageAsset.hpp>
 #include <yq-vulqan/image_view/ImageViewInfo.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
@@ -37,6 +38,8 @@
 #include <yq-vulqan/scene/Scene.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
+#include <yq-vulqan/viz/ViBuffer.hpp>
+#include <yq-vulqan/viz/ViShader.hpp>
 
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>
@@ -50,11 +53,6 @@
 #define WLOCK       tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, true);
 
 namespace yq::tachyon {
-
-    namespace errors {
-        using namespace yq::errors;
-        using INSUFFICIENT_GPU_MEMORY   = error_db::entry<"Insufficient GPU memory for requested operation">;
-    }
 
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -135,54 +133,6 @@ namespace yq::tachyon {
         }
         
         return false;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViBuffer
-    ////////////////////////////////////////////////////////////////////////////////
-
-    std::error_code     ViBuffer::allocate(Visualizer&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
-    {
-        if(!cb)
-            return create_error<"Skipping zero sized buffer">();
-        
-        VqBufferCreateInfo  bufferInfo;
-        bufferInfo.size         = cb;
-        bufferInfo.usage        = buf & VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM;
-        
-        VmaAllocationCreateInfo vmaallocInfo = {};
-        vmaallocInfo.usage = vmu;
-        VmaAllocationInfo   vai;
-        if(vmaCreateBuffer(viz.allocator(), &bufferInfo, &vmaallocInfo, &buffer, &allocation, &vai) != VK_SUCCESS)
-            return errors::INSUFFICIENT_GPU_MEMORY();
-        return std::error_code();
-    }
-    
-    std::error_code     ViBuffer::create(Visualizer&viz, const Memory& v, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
-    {
-        std::error_code     ec  = allocate(viz, v.bytes(), buf, vmu);
-        if(ec)
-            return ec;
-        
-        void* dst = nullptr;
-        vmaMapMemory(viz.allocator(), allocation, &dst);
-        memcpy(dst, v.data(), v.bytes());
-        vmaUnmapMemory(viz.allocator(), allocation);
-        return std::error_code();
-    }
-    
-    std::error_code     ViBuffer::create(Visualizer&viz, const Buffer& v)
-    {
-        return create(viz, v.memory, (VkBufferUsageFlags) v.usage.value(), VMA_MEMORY_USAGE_CPU_TO_GPU);
-    }
-    
-    void                ViBuffer::destroy(Visualizer&viz)
-    {
-        if(allocation && buffer){
-            vmaDestroyBuffer(viz.allocator(), buffer, allocation);
-            allocation = nullptr;
-            buffer = nullptr;
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -1155,53 +1105,6 @@ namespace yq::tachyon {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViShader
-    ////////////////////////////////////////////////////////////////////////////////
-
-    std::error_code     ViShader::create(VkDevice dev, const Shader& sh)
-    {
-        mask  = VkShaderStageFlagBits{};
-        switch(sh.type){
-        case ShaderType::VERT:
-            mask    = VK_SHADER_STAGE_VERTEX_BIT;
-            break;
-        case ShaderType::TESC:
-            mask    = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-            break;
-        case ShaderType::TESE:
-            mask    = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
-            break;
-        case ShaderType::FRAG:
-            mask    = VK_SHADER_STAGE_FRAGMENT_BIT;
-            break;
-        case ShaderType::GEOM:
-            mask    = VK_SHADER_STAGE_GEOMETRY_BIT;
-            break;
-        case ShaderType::COMP:
-            mask    = VK_SHADER_STAGE_COMPUTE_BIT;
-            break;
-        default:
-            return create_error<"Shader needs a valid/supported type!">();
-        }
-            
-        VqShaderModuleCreateInfo createInfo;
-        createInfo.codeSize = sh.payload.bytes();
-        createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
-        if (vkCreateShaderModule(dev, &createInfo, nullptr, &shader) != VK_SUCCESS) {
-            shader  = nullptr;
-            return create_error<"Shader creation failed">();
-        }
-        return std::error_code();
-    }
-    
-    void                ViShader::destroy(VkDevice dev)
-    {
-        if(shader){
-            vkDestroyShaderModule(dev, shader, nullptr);
-            shader  = nullptr;
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViSwapchain

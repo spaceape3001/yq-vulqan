@@ -35,8 +35,6 @@ add_library(${PROJECT_NAME} SHARED
     ./tachyon/gpu/gpu.cpp
     ./tachyon/gpu/Visualizer.cpp
     ./tachyon/ui/ui.cpp
-    
-    ./widget/TextArea.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

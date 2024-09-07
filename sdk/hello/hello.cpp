@@ -31,7 +31,7 @@
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <yq-vulqan/pipeline/FrontFace.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/PipelineBuilder.hpp>
+#include <yq-vulqan/pipeline/PipelineBuilder.hpp>
 #include <tachyon/Render3D.hpp>
 #include <tachyon/Render3DWriter.hpp>
 #include <tachyon/widget/Scene3DWidget.hpp>

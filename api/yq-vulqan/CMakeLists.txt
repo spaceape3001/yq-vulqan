@@ -97,8 +97,16 @@ add_library(${PROJECT_NAME} SHARED
     pipeline/FrontFace.cpp
     pipeline/IndexType.hpp
     pipeline/IndexType.cpp
+    pipeline/Pipeline.hpp
+    pipeline/Pipeline.cpp
     pipeline/PipelineBinding.hpp
     pipeline/PipelineBinding.cpp
+    pipeline/PipelineBuilder.hpp
+    pipeline/PipelineBuilder.cpp
+    pipeline/PipelineConfig.hpp
+    pipeline/PipelineConfig.cpp
+    pipeline/PipelineUtils.hpp
+    pipeline/PipelineUtils.cpp
     pipeline/PolygonMode.hpp
     pipeline/PolygonMode.cpp
     pipeline/PushConfigType.hpp
@@ -143,10 +151,19 @@ add_library(${PROJECT_NAME} SHARED
     undo/Undo.hpp
     undo/Undo.cpp
     
+    v/VqEnums.hpp
+    v/VqEnums.cpp
+    v/VqException.hpp
+    v/VqLogging.hpp
+    v/VqLogging.cpp
+    v/VqStructs.hpp
+    
     widget/ImGuiDemoWidget.hpp
     widget/ImGuiDemoWidget.cpp
     widget/StackedWidget.hpp
     widget/StackedWidget.cpp
+    widget/TextArea.hpp
+    widget/TextArea.cpp
     widget/Widget.hpp
     widget/Widget.cpp
 )

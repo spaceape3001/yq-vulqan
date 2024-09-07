@@ -4,9 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <tachyon/Pipeline.hpp>
+#include "Pipeline.hpp"
+#include <yq-vulqan/asset/ShaderAsset.hpp>
 
 namespace yq::tachyon {
 

@@ -23,7 +23,7 @@
 #include <yq-toolbox/io/FileUtils.hpp>
 #include <yq-toolbox/text/format.hpp>
 //
-#include <widget/TextArea.hpp>
+#include <yq-vulqan/widget/TextArea.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;

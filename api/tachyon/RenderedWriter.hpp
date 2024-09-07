@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/Rendered.hpp>
-#include <tachyon/PipelineBuilder.hpp>
+#include <yq-vulqan/pipeline/PipelineBuilder.hpp>
 #include <yq-toolbox/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {

@@ -9,9 +9,9 @@
 #include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/MetaObject.hpp>
 #include <yq-toolbox/basic/Mutable.hpp>
-#include <tachyon/preamble.hpp>
+//#include <tachyon/preamble.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
-#include <tachyon/Pipeline.hpp>
+#include <yq-vulqan/pipeline/Pipeline.hpp>
 
 namespace yq::tachyon {
 

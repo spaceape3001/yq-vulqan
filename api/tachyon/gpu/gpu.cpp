@@ -8,9 +8,9 @@
 //#include "ViBO.ipp"
 //#include "ViThing.ipp"
 #include "VqApp.ipp"
-#include "VqEnums.ipp"
-#include "VqLogging.ipp"
-#include "VqStructs.hpp"
+//#include "VqEnums.ipp"
+//#include "VqLogging.ipp"
+//#include "VqStructs.hpp"
 #include "VqUtils.ipp"
 
 

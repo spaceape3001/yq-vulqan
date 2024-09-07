@@ -10,10 +10,6 @@
 */
 
 #include "Application.ipp"
-#include "Pipeline.ipp"
-#include "PipelineUtils.ipp"
-#include "PipelineBuilder.ipp"
-#include "PipelineConfig.ipp"
 #include "Render3D.ipp"
 #include "Rendered.ipp"
 #include "Viewer.ipp"

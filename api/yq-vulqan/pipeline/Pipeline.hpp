@@ -8,7 +8,7 @@
 
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/basic/UniqueID.hpp>
-#include <tachyon/PipelineConfig.hpp>
+#include <yq-vulqan/pipeline/PipelineConfig.hpp>
 
 namespace yq::tachyon {
     /*! \brief Pipeline configuration

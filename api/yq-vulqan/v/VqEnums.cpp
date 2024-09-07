@@ -4,9 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <tachyon/gpu/VqEnums.hpp>
+#include "VqEnums.hpp"
 #include <yq-toolbox/basic/Enum.hpp>
 
 namespace yq::tachyon {

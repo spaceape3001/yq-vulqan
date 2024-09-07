@@ -40,7 +40,7 @@
 #include <tachyon/Scene.hpp>
 
 #include <yq-vulqan/image_view/ImageViewInfo.hpp>
-#include <tachyon/Pipeline.hpp>
+#include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>
 
 #include <GLFW/glfw3.h>

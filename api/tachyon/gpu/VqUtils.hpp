@@ -8,7 +8,7 @@
 
 
 #include <tachyon/preamble.hpp>
-#include <tachyon/gpu/VqStructs.hpp>
+#include <yq-vulqan/v/VqStructs.hpp>
 #include <vulkan/vulkan_core.h>
 #include <yq-toolbox/typedef/rgba.hpp>
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/gpu/VqApp.hpp>
-#include <tachyon/gpu/VqEnums.hpp>
+#include <yq-vulqan/v/VqEnums.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-toolbox/basic/BasicApp.hpp>

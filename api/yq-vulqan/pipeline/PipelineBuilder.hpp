@@ -19,9 +19,9 @@
 #include <yq-vulqan/pipeline/UBO.hpp>
 #include <yq-vulqan/pipeline/VBO.hpp>
 
-#include <tachyon/Pipeline.hpp>
-#include <tachyon/PipelineConfig.hpp>
-#include <tachyon/PipelineUtils.hpp>
+#include <yq-vulqan/pipeline/Pipeline.hpp>
+#include <yq-vulqan/pipeline/PipelineConfig.hpp>
+#include <yq-vulqan/pipeline/PipelineUtils.hpp>
 #include <set>
 #include <span>
 #include <cassert>

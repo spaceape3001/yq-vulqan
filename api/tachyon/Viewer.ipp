@@ -10,7 +10,7 @@
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/gpu/VqStructs.hpp>
+#include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <yq-vulqan/imgui/MyImGui.hpp>

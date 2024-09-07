@@ -8,7 +8,7 @@
 
 
 #include <tachyon/preamble.hpp>
-#include <tachyon/BufferObject.hpp>
+#include <yq-vulqan/memory/BufferObject.hpp>
 #include <yq-toolbox/container/vector_utils.hpp>
 
 namespace yq::tachyon {

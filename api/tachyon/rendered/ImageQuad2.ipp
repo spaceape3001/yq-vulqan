@@ -8,8 +8,8 @@
 
 #include "ImageQuad2.hpp"
 #include <glm/glm.hpp>
-#include <tachyon/Image.hpp>
-#include <tachyon/Shader.hpp>
+#include <yq-vulqan/asset/ImageAsset.hpp>
+#include <yq-vulqan/asset/ShaderAsset.hpp>
 #include <tachyon/Render3DWriter.hpp>
 #include <yq-toolbox/shape/AxBox2.hpp>
 

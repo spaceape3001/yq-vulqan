@@ -8,7 +8,7 @@
 
 #include <yq-toolbox/basic/BasicApp.hpp>
 #include <tachyon/AppCreateInfo.hpp>
-#include <tachyon/AppGLFW.hpp>
+#include <yq-vulqan/glfw/AppGLFW.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <yq-toolbox/units.hpp>
 #include <memory>

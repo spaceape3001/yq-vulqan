@@ -11,9 +11,9 @@
 
 #include <yq-toolbox/color/Colors.hpp>
 
-#include <tachyon/camera/NullCamera.hpp>
-#include <tachyon/camera/SpaceCamera.hpp>
-#include <tachyon/camera/TargetCamera.hpp>
+#include <yq-vulqan/camera/NullCamera.hpp>
+#include <yq-vulqan/camera/SpaceCamera.hpp>
+#include <yq-vulqan/camera/TargetCamera.hpp>
 
 #include <tachyon/rendered/Quadrilateral.hpp>
 #include <tachyon/rendered/Tetrahedron.hpp>

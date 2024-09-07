@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/Logging.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
 #include <vulkan/vulkan_core.h>
 
 log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const VkExtent2D&);

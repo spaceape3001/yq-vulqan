@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/Joystick.hpp>
-#include <tachyon/Monitor.hpp>
-#include <tachyon/Logging.hpp>
+#include <yq-vulqan/glfw/Joystick.hpp>
+#include <yq-vulqan/glfw/Monitor.hpp>
+#include <yq-vulqan/logging.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/Window.hpp>
 #include <tachyon/WindowEvents.hpp>

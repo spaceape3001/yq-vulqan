@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/Application.hpp>
-#include <tachyon/Joystick.hpp>
+#include <yq-vulqan/glfw/Joystick.hpp>
 #include <iostream>
 
 using std::cout;

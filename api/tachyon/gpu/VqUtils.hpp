@@ -25,6 +25,9 @@
 */
 
 namespace yq::tachyon {
+    struct ImageViewInfo;
+    struct SamplerInfo;
+    
     std::vector<VkExtensionProperties>              vqEnumerateDeviceExtensionProperties(VkPhysicalDevice, const char* layerName=nullptr);
     std::vector<VkLayerProperties>                  vqEnumerateDeviceLayerProperties(VkPhysicalDevice);
     std::vector<VkExtensionProperties>              vqEnumerateInstanceExtensionProperties(const char* layerName=nullptr);

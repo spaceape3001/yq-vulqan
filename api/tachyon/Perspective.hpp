@@ -6,12 +6,13 @@
 
 #pragma once
 
-#include <engine/preamble.hpp>
-#include <tachyon/Camera.hpp>
+//#include <engine/preamble.hpp>
 #include <yq-toolbox/shape/Rectangle2.hpp>
 #include <yq-toolbox/color/RGB.hpp>
+#include <yq-vulqan/basic/Tristate.hpp>
+#include <yq-vulqan/camera/Camera.hpp>
+#include <yq-vulqan/typedef/camera.hpp>
 #include <optional>
-#include <tachyon/enum/Tristate.hpp>
 
 namespace yq::tachyon {
 

@@ -12,7 +12,10 @@
 #include <yq-toolbox/typedef/rgba.hpp>
 
 #include <tachyon/enum/PresentMode.hpp>
-#include <tachyon/enum/Tristate.hpp>
+#include <yq-vulqan/basic/Tristate.hpp>
+#include <yq-vulqan/typedef/buffer.hpp>
+#include <yq-vulqan/typedef/image.hpp>
+#include <yq-vulqan/typedef/shader.hpp>
 
 #include <atomic>
 #include <functional>
@@ -42,8 +45,6 @@ namespace yq::tachyon {
     struct ViUpload;
 
     class Memory;
-
-    
     
 
     

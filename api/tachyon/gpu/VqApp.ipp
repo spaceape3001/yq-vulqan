@@ -9,13 +9,12 @@
 #include <tachyon/gpu/VqApp.hpp>
 #include <tachyon/gpu/VqEnums.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/Logging.hpp>
+#include <yq-vulqan/logging.hpp>
 #include <yq-toolbox/basic/BasicApp.hpp>
 #include <yq-toolbox/basic/ErrorDB.hpp>
 #include <yq-toolbox/basic/ThreadId.hpp>
 #include <yq-toolbox/macro/make_version.hpp>
 #include <tbb/spin_mutex.h>
-
 
 #define vulkanAlert         yAlert("vulkan")
 #define vulkanCritical      yCritical("vulkan")

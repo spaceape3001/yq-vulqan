@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include <yq-vulqan/memory/SystemAllocationScope.hpp>
+
+#include <yq-toolbox/meta/Init.hpp>
+
+YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScope)
+YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScopeFlags)
+

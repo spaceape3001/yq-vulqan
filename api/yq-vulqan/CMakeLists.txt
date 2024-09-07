@@ -9,9 +9,102 @@ find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
     errors.hpp
+    logging.hpp
+    
+    asset/Asset.hpp
+    asset/Asset.cpp
+    asset/AssetCache.hpp
+    asset/AssetCache.cpp
+    asset/AssetFactory.hpp
+    asset/AssetFactory.cpp
+    asset/AssetInfoWriter.hpp
+    asset/ImageAsset.hpp
+    asset/ImageAsset.cpp
+    asset/ShaderAsset.hpp
+    asset/ShaderAsset.cpp
+    
+    basic/Required.hpp
+    basic/Tristate.hpp
+    basic/Tristate.cpp
+    
+    camera/Camera.hpp
+    camera/Camera.cpp
+    camera/NullCamera.hpp
+    camera/NullCamera.cpp
+    camera/SpaceCamera.hpp
+    camera/SpaceCamera.cpp
+    camera/TargetCamera.hpp
+    camera/TargetCamera.cpp
     
     config/build.hpp
     config/build.cpp
+    
+    driver/STBImage.cpp
+    
+    glfw/AppGLFW.hpp
+    glfw/AppGLFW.cpp
+    glfw/Joystick.hpp
+    glfw/Joystick.cpp
+    glfw/Logging.hpp
+    glfw/Monitor.hpp
+    glfw/Monitor.cpp
+    glfw/VideoMode.hpp
+    glfw/VideoMode.cpp
+    
+    image/ComponentSwizzle.hpp
+    image/ComponentSwizzle.cpp
+    image/DataFormat.hpp
+    image/DataFormat.cpp
+    image/Image.hpp
+    image/ImageAspect.hpp
+    image/ImageAspect.cpp
+    image/ImageInfo.hpp
+    image/ImageLayout.hpp
+    image/ImageLayout.cpp
+    image/ImageTiling.hpp
+    image/ImageTiling.cpp
+    image/ImageType.hpp
+    image/ImageType.cpp
+    
+    image_view/ImageViewCreateFlags.hpp
+    image_view/ImageViewCreateFlags.cpp
+    image_view/ImageViewInfo.hpp
+    image_view/ImageViewType.hpp
+    image_view/ImageViewType.cpp
+    
+    logic/CompareOp.hpp
+    logic/CompareOp.cpp
+    logic/LogicOp.hpp
+    logic/LogicOp.cpp
+    
+    memory/Buffer.hpp
+    memory/Buffer.cpp
+    memory/BufferObject.hpp
+    memory/BufferUsage.hpp
+    memory/BufferUsage.cpp
+    memory/Memory.hpp
+    memory/Memory.cpp
+    memory/SystemAllocationScope.hpp
+    memory/SystemAllocationScope.cpp
+    
+    sampler/BorderColor.hpp
+    sampler/BorderColor.cpp
+    sampler/SamplerAddressMode.hpp
+    sampler/SamplerAddressMode.cpp
+    sampler/SamplerCreateFlags.hpp
+    sampler/SamplerCreateFlags.cpp
+    sampler/SamplerFilter.hpp
+    sampler/SamplerFilter.cpp
+    sampler/SamplerInfo.hpp
+    sampler/SamplerMipmapMode.hpp
+    sampler/SamplerMipmapMode.cpp
+    
+    shader/Shader.hpp
+    shader/ShaderType.hpp
+    shader/ShaderType.cpp
+    
+    undo/Undo.hpp
+    undo/Undo.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

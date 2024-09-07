@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/Window.hpp>
-#include <tachyon/Joystick.hpp>
-#include <tachyon/Monitor.hpp>
+#include <yq-vulqan/glfw/Joystick.hpp>
+#include <yq-vulqan/glfw/Monitor.hpp>
 
 namespace yq::tachyon {
     // callback for non-window specific events

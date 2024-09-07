@@ -7,10 +7,10 @@
 #pragma once
 
 
-#include <yq-toolbox/container/ByteArray.hpp>
 #include <tachyon/preamble.hpp>
-#include <tachyon/enum/ShaderType.hpp>
-#include <filesystem>
+#include <yq-toolbox/container/ByteArray.hpp>
+#include <yq-vulqan/shader/ShaderType.hpp>
+#include <yq-toolbox/typedef/filesystem_path.hpp>
 #include <variant>
 
 namespace yq::tachyon::glsl {

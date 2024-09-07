@@ -10,7 +10,7 @@
 #include <yq-toolbox/basic/MetaObject.hpp>
 #include <yq-toolbox/basic/Mutable.hpp>
 #include <tachyon/preamble.hpp>
-#include <tachyon/enum/Tristate.hpp>
+#include <yq-vulqan/basic/Tristate.hpp>
 #include <tachyon/Pipeline.hpp>
 
 namespace yq::tachyon {

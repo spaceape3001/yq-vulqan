@@ -24,8 +24,8 @@
 #include <yq-toolbox/meta/Meta.hpp>
 
 #include <tachyon/Application.hpp>
-#include <tachyon/Image.hpp>
-#include <tachyon/Shader.hpp>
+#include <yq-vulqan/image/Image.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 #include <tachyon/Texture.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>

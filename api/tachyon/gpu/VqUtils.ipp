@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq-toolbox/basic/ErrorDB.hpp>
-#include <tachyon/ImageViewInfo.hpp>
-#include <tachyon/SamplerInfo.hpp>
+#include <yq-vulqan/image_view/ImageViewInfo.hpp>
+#include <yq-vulqan/sampler/SamplerInfo.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <yq-toolbox/color/RGBA.hpp>

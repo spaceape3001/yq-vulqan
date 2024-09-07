@@ -27,9 +27,9 @@
 
 #include <yq-toolbox/color/RGBA.hpp>
 
-#include <tachyon/Buffer.hpp>
-#include <tachyon/Image.hpp>
-#include <tachyon/Shader.hpp>
+#include <yq-vulqan/memory/Buffer.hpp>
+#include <yq-vulqan/asset/ImageAsset.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 #include <tachyon/Texture.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>
@@ -39,7 +39,7 @@
 #include <tachyon/Render3D.hpp>
 #include <tachyon/Scene.hpp>
 
-#include <tachyon/ImageViewInfo.hpp>
+#include <yq-vulqan/image_view/ImageViewInfo.hpp>
 #include <tachyon/Pipeline.hpp>
 #include <tachyon/PushData.hpp>
 

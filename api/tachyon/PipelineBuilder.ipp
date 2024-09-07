@@ -6,7 +6,7 @@
 
 #include <yq-toolbox/meta/Init.hpp>
 #include <yq-toolbox/meta/TypeInfo.hpp>
-#include <tachyon/Shader.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 #include <tachyon/PushData.hpp>
 #include <tachyon/PipelineBuilder.hpp>
 

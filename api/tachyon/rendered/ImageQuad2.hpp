@@ -9,6 +9,7 @@
 #include <tachyon/Render3D.hpp>
 #include <tachyon/Texture.hpp>
 #include <tachyon/VBO.hpp>
+#include <yq-toolbox/typedef/axbox2.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 #include <glm/glm.hpp>
 #include <array>

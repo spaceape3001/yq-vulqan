@@ -8,7 +8,7 @@
 
 #include "Triangle.hpp"
 #include <tachyon/Render3DWriter.hpp>
-#include <tachyon/Shader.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 
 #include <yq-toolbox/basic/Logging.hpp>
 #include <yq-toolbox/shape/TriangleData.hpp>

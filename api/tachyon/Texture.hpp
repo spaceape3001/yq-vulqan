@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/Image.hpp>
-#include <tachyon/ImageViewInfo.hpp>
-#include <tachyon/SamplerInfo.hpp>
+#include <yq-vulqan/image/Image.hpp>
+#include <yq-vulqan/image_view/ImageViewInfo.hpp>
+#include <yq-vulqan/sampler/SamplerInfo.hpp>
 
 namespace yq::tachyon {
 
@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
     
         //! Image
-        const Ref<const Image>      image;
+        const Ref<const ImageAsset> image;
         
         //! View information
         const ImageViewInfo         view;
@@ -26,7 +26,7 @@ namespace yq::tachyon {
         const SamplerInfo           sampler;
         
         //! Default constructor
-        Texture(Ref<const Image>, const ImageViewInfo&, const SamplerInfo&);
+        Texture(Ref<const ImageAsset>, const ImageViewInfo&, const SamplerInfo&);
         
     private:
         ~Texture();

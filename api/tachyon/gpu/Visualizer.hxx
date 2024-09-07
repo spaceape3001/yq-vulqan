@@ -6,11 +6,14 @@
 
 #pragma once
 
-#include <tachyon/preamble.hpp>
 #include <yq-toolbox/container/BasicBuffer.hpp>
 #include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/Ref.hpp>
+#include <yq-vulqan/image/Image.hpp>
+#include <yq-vulqan/memory/Memory.hpp>
 
+
+#include <tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
 #include <tachyon/PipelineConfig.hpp>
 #include <vector>

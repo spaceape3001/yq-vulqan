@@ -11,7 +11,7 @@
 #include <yq-toolbox/vector/Vector3.hxx>
 #include <yq-toolbox/shape/shape_utils.hpp>
 #include <tachyon/Render3DWriter.hpp>
-#include <tachyon/Shader.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 #include <yq-toolbox/shape/QuadrilateralData.hpp>
 
 

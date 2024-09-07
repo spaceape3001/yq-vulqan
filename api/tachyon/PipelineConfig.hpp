@@ -13,7 +13,7 @@
 
 #include <tachyon/enum/CullMode.hpp>
 #include <tachyon/enum/DataActivity.hpp>
-#include <tachyon/enum/DataFormat.hpp>
+#include <yq-vulqan/image/DataFormat.hpp>
 #include <tachyon/enum/FrontFace.hpp>
 #include <tachyon/enum/IndexType.hpp>
 #include <tachyon/enum/PipelineBinding.hpp>
@@ -21,6 +21,8 @@
 #include <tachyon/enum/PushConfigType.hpp>
 #include <tachyon/enum/Topology.hpp>
 #include <tachyon/enum/VertexInputRate.hpp>
+#include <yq-vulqan/typedef/buffer.hpp>
+#include <yq-vulqan/typedef/shader.hpp>
 
 namespace yq {
     class CompoundInfo;

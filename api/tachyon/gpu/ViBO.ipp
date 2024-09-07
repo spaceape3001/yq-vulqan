@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/Buffer.hpp>
+#include <yq-vulqan/memory/Buffer.hpp>
 #include <tachyon/gpu/ViBO.hpp>
 #include <tachyon/gpu/Visualizer.hpp>
 #include <tachyon/PipelineConfig.hpp>

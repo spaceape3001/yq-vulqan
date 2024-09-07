@@ -6,7 +6,7 @@
 
 #include <boost/ut.hpp>
 #include <yq-toolbox/basic/Logging.hpp>
-#include <tachyon/Memory.hpp>
+#include <yq-vulqan/memory/Memory.hpp>
 #include <cstdlib>
 
 namespace ut = boost::ut;

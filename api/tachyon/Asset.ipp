@@ -12,7 +12,7 @@
 //
 #include <yq-toolbox/io/FileResolver.hpp>
 #include <yq-toolbox/text/vsplit.hpp>
-#include <YqEngineConfig.hpp>
+#include <yq-vulqan/config/build.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Asset)
 

@@ -30,8 +30,6 @@ endif()
 add_library(${PROJECT_NAME} SHARED 
     ${test_source}
 
-    ./YqEngineConfig.cpp
-
     ./tachyon/tachyon.cpp
     ./tachyon/enum/enum.cpp
     ./tachyon/gpu/gpu.cpp
@@ -62,13 +60,14 @@ target_link_libraries(${PROJECT_NAME}
         ${GLFW3_LIBRARY}
         gui3rd
         imgui
+        yqvulqan
 )
 
 target_include_directories(${PROJECT_NAME} 
     PUBLIC 
         ${CMAKE_CURRENT_LIST_DIR}
         ${glm_INCLUDE_DIR}
-
+        yqvulqan
 )
 
 LinkTest(${PROJECT_NAME})

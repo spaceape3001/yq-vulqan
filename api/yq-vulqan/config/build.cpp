@@ -4,14 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include "build.hpp"
 
-namespace yq {
-
-    namespace build {
-
-        //! The share path to the one inside the build directory;
-        const char*     data_directory();
-    
+namespace yq::build {
+    //! The share path to the one inside the build directory;
+    const char*     data_directory()
+    {
+        return YQ_DATA_DIR;
     }
 }

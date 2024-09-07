@@ -8,8 +8,10 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
-    stub.cpp
     errors.hpp
+    
+    config/build.hpp
+    config/build.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

@@ -4,9 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "StackedWidget.hpp"
+#include <yq-toolbox/basic/DelayInit.hpp>
 
 namespace yq::tachyon {
     Widget*         StackedWidget::active() 
@@ -44,5 +43,17 @@ namespace yq::tachyon {
 
     StackedWidget::StackedWidget() = default;
     StackedWidget::~StackedWidget() = default;
+    
+    static void reg_stacked_widget()
+    {
+        {
+            auto w = writer<StackedWidget>();
+            w.description("Stacked, as in one widget at a time");
+        }
+    }
+    
+    YQ_INVOKE(reg_stacked_widget();)
 }
+
+
 YQ_OBJECT_IMPLEMENT(yq::tachyon::StackedWidget)

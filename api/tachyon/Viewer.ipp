@@ -11,9 +11,9 @@
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/VqStructs.hpp>
-#include <tachyon/Widget.hpp>
+#include <yq-vulqan/widget/Widget.hpp>
 #include <tachyon/gpu/ViContext.hpp>
-#include <tachyon/MyImGui.hpp>
+#include <yq-vulqan/imgui/MyImGui.hpp>
 
 #include <yq-toolbox/basic/AutoReset.hpp>
 #include <yq-toolbox/basic/ErrorDB.hpp>

@@ -11,7 +11,7 @@
 #include <yq-toolbox/io/PluginLoader.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/widget/ImGuiDemoWidget.hpp>
+#include <yq-vulqan/widget/ImGuiDemoWidget.hpp>
 #include <iostream>
 
 using namespace yq;

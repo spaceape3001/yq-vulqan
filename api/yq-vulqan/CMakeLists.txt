@@ -72,6 +72,9 @@ add_library(${PROJECT_NAME} SHARED
     image_view/ImageViewType.hpp
     image_view/ImageViewType.cpp
     
+    imgui/MyImGui.hpp
+    imgui/MyImGui.cpp
+    
     logic/CompareOp.hpp
     logic/CompareOp.cpp
     logic/LogicOp.hpp
@@ -99,12 +102,22 @@ add_library(${PROJECT_NAME} SHARED
     sampler/SamplerMipmapMode.hpp
     sampler/SamplerMipmapMode.cpp
     
+    scene/Perspective.hpp
+    scene/Perspective.cpp
+
     shader/Shader.hpp
     shader/ShaderType.hpp
     shader/ShaderType.cpp
     
     undo/Undo.hpp
     undo/Undo.cpp
+    
+    widget/ImGuiDemoWidget.hpp
+    widget/ImGuiDemoWidget.cpp
+    widget/StackedWidget.hpp
+    widget/StackedWidget.cpp
+    widget/Widget.hpp
+    widget/Widget.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

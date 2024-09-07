@@ -4,9 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include "Perspective.hpp"
 
-#include <tachyon/Perspective.hpp>
 #include <yq-vulqan/camera/NullCamera.hpp>
 
 namespace yq::tachyon {

@@ -35,7 +35,7 @@
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/Perspective.hpp>
+#include <yq-vulqan/scene/Perspective.hpp>
 #include <tachyon/Render3D.hpp>
 #include <tachyon/Scene.hpp>
 

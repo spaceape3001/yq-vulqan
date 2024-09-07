@@ -15,8 +15,8 @@
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
 #include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/Widget.hpp>
-#include <tachyon/MyImGui.hpp>
+#include <yq-vulqan/widget/Widget.hpp>
+#include <yq-vulqan/imgui/MyImGui.hpp>
 #include <iostream>
 #include <TextEditor.h>
 #include <ImGuiFileDialog.h>

@@ -4,9 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <tachyon/Widget.hpp>
+#include "Widget.hpp"
+#include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/text/format.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
@@ -112,5 +111,15 @@ namespace yq::tachyon {
     {
         return const_cast<Widget*>(this)->viewer();
     }
-
+    
+    static void reg_widget()
+    {
+        {
+            auto w = writer<Widget>();
+            w.description("Widget base class");
+        }
+    }
+    
+    YQ_INVOKE(reg_widget();)
 }
+

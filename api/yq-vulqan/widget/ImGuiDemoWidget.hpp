@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/Widget.hpp>
+#include <yq-vulqan/widget/Widget.hpp>
 
 namespace yq::tachyon {
     //! ImGuiDemoWidget widget

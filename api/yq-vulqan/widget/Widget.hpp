@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <tachyon/preamble.hpp>
 #include <yq-toolbox/basic/Object.hpp>
 #include <yq-toolbox/basic/UniqueID.hpp>
 #include <yq-toolbox/basic/Flags.hpp>
@@ -14,6 +13,7 @@
 
 namespace yq::tachyon {
     class Viewer;
+    struct ViContext;
 
     class WidgetInfo : public ObjectInfo {
     public:

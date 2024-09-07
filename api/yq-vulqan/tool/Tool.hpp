@@ -6,13 +6,14 @@
 
 #pragma once
 
-#include <0/basic/MetaObject.hpp>
+#include <yq-toolbox/basic/Object.hpp>
+#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
     class ToolInfo : public ObjectInfo {
     public:
         template <class> class Writer;
-        ToolInfo(std::string_view, MetaObjectInfo&, const std::source_location& sl = std::source_location::current());
+        ToolInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
     
         //  const WidgetInfo*   widget() const;
     };
@@ -24,7 +25,7 @@ namespace yq::tachyon {
     */
     class Tool : public Object {
         YQ_OBJECT_INFO(ToolInfo)
-        YQ_OBJECT_DECLARE(Tool, MetaObject)
+        YQ_OBJECT_DECLARE(Tool, Object)
     public:
         
         //  Tool TODO
@@ -35,9 +36,9 @@ namespace yq::tachyon {
     };
     
     template <typename C>
-    class ToolInfo::Writer : public MetaObjectInfo::Writer<C> {
+    class ToolInfo::Writer : public ObjectInfo::Writer<C> {
     public:
-        Writer(ToolInfo* manipInfo) : MetaObjectInfo::Writer<C>(manipInfo)
+        Writer(ToolInfo* manipInfo) : ObjectInfo::Writer<C>(manipInfo)
         {
         }
         

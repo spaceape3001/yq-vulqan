@@ -36,8 +36,29 @@ add_library(${PROJECT_NAME} SHARED
     camera/TargetCamera.hpp
     camera/TargetCamera.cpp
     
+    command/Command.hpp
+    command/Command.cpp
+    
     config/build.hpp
     config/build.cpp
+    
+    editor/Editor.hpp
+    editor/Editor.cpp
+    
+    event/Event.hpp
+    event/Event.cpp
+    event/InputEvent.hpp
+    event/InputEvent.cpp
+    event/KeyboardEvent.hpp
+    event/KeyboardEvent.cpp
+    event/JoystickEvent.hpp
+    event/JoystickEvent.cpp
+    event/MouseEvent.hpp
+    event/MouseEvent.cpp
+    event/WidgetEvent.hpp
+    event/WidgetEvent.cpp
+    event/WindowEvent.hpp
+    event/WindowEvent.cpp
     
     glfw/AppGLFW.hpp
     glfw/AppGLFW.cpp
@@ -74,10 +95,16 @@ add_library(${PROJECT_NAME} SHARED
     imgui/MyImGui.hpp
     imgui/MyImGui.cpp
     
+    input/KeyCode.hpp
+    input/KeyCode.cpp
+    
     logic/CompareOp.hpp
     logic/CompareOp.cpp
     logic/LogicOp.hpp
     logic/LogicOp.cpp
+    
+    manipulator/Manipulator.hpp
+    manipulator/Manipulator.cpp
     
     memory/Buffer.hpp
     memory/Buffer.cpp
@@ -148,6 +175,9 @@ add_library(${PROJECT_NAME} SHARED
     texture/Texture.hpp
     texture/Texture.cpp
     
+    tool/Tool.hpp
+    tool/Tool.cpp
+    
     undo/Undo.hpp
     undo/Undo.cpp
     
@@ -166,6 +196,7 @@ add_library(${PROJECT_NAME} SHARED
     widget/TextArea.cpp
     widget/Widget.hpp
     widget/Widget.cpp
+    
 )
 
 target_compile_definitions(${PROJECT_NAME} 

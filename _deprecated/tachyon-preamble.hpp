@@ -64,7 +64,6 @@ namespace yq::tachyon {
     using TextureCPtr   = Ref<const Texture>;
     using PipelineCPtr  = Ref<const Pipeline>;
 
-    using PushBuffer    = BasicBuffer<MAX_PUSH>;
 }
     
     #if 0

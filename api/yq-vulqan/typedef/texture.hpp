@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include "Event.hpp"
-
 namespace yq {
-    namespace engine {
-        Command::~Command() = default;
-        Event::~Event() = default;
-        Input::~Input() = default;
-    }
+    template <typename> class Ref;
+}
+
+namespace yq::tachyon {
+    class Texture;
+    using TexturePtr     = Ref<Texture>;
+    using TextureCPtr    = Ref<const Texture>;
 }

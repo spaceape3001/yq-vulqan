@@ -27,7 +27,10 @@ namespace yq::tachyon {
     struct ABOConfig;
     struct BaseBOConfig;
     
+    class Rendered;
+    class Pipeline;
     struct ViRendered;
+    struct ViContext;
     
     class ViQueueManager;
     

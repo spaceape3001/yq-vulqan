@@ -14,6 +14,7 @@ add_library(${PROJECT_NAME} SHARED
    
     3D/Tetrahedron.cpp
 
+    app/Application.cpp
     asset/asset.cpp
     
     basic/Tristate.cpp
@@ -93,7 +94,7 @@ add_library(${PROJECT_NAME} SHARED
     v/VqUtils.cpp
     
     viewer/PresentMode.cpp
-    viewer/ViewerCreateInfo.hpp
+    viewer/Viewer.cpp
     
     viz/ViBufferObject.cpp
     viz/ViCleanupManager.cpp
@@ -140,6 +141,7 @@ PUBLIC
     imgui 
     stb 
     vma
+    gui3rd
 )
 
 LinkTest(${PROJECT_NAME})

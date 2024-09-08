@@ -8,7 +8,6 @@
 
 #include <optional>
 #include <vector>
-#include <tachyon/preamble.hpp>
 #include <functional>
 
 #include <yq-vulqan/image/DataFormat.hpp>
@@ -22,7 +21,9 @@
 #include <yq-vulqan/pipeline/Topology.hpp>
 #include <yq-vulqan/pipeline/VertexInputRate.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
+#include <yq-vulqan/typedef/push.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
+#include <yq-vulqan/typedef/texture.hpp>
 
 namespace yq {
     class CompoundInfo;

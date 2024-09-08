@@ -9,6 +9,7 @@
 //#include <tachyon/gpu/ViPipeline.hpp>
 #include <vulkan/vulkan_core.h>
 #include <yq-toolbox/math/glm.hpp>
+#include <yq-vulqan/basic/Tristate.hpp>
 
 //namespace yq::engine { class Viewer; }
 namespace yq::tachyon {
@@ -16,6 +17,8 @@ namespace yq::tachyon {
     struct ViRendered;
     struct ViFrame;
     class Visualizer;
+    class Viewer;
+    class Window;
 
     /*! \brief Mutable set of parameters that'll pass through
     

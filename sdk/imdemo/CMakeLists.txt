@@ -1,3 +1,3 @@
 add_executable(imdemo imdemo.cpp)
-target_link_libraries(imdemo tachyon)
+target_link_libraries(imdemo yqvulqan)
 

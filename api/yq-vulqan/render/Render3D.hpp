@@ -90,7 +90,7 @@ namespace yq::tachyon {
             \param[in] p    Proposed parent (can be null)
             \return TRUE if the change was taken
         */
-        bool                            set_parent(Widget* p);
+        //bool                            set_parent(Widget* p);
         
         /*! \brief Adds the child to this widget
         
@@ -100,7 +100,7 @@ namespace yq::tachyon {
             \param[in] ch   Child to add
             \return TRUE if the change was taken
         */
-        bool                            add_child(Widget* ch);
+        //bool                            add_child(Widget* ch);
         
         /*! \brief Tests for parentage
         
@@ -109,7 +109,7 @@ namespace yq::tachyon {
         
             \param p    Supposed parent in question
         */
-        bool                            has_parentage(const Widget* p) const;
+        //bool                            has_parentage(const Widget* p) const;
 
     protected:
         

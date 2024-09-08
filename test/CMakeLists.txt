@@ -4,13 +4,13 @@
 ##
 ################################################################################
 
-macro(tachyon_test name)
+macro(vulqan_test name)
     add_executable(test_${name} ${name}.cpp)
-    target_link_libraries(test_${name} PRIVATE tachyon BoostUT)
+    target_link_libraries(test_${name} PRIVATE yqvulqan BoostUT)
     add_test(NAME ${name} COMMAND test_${name} ${ARGN})
 endmacro()
 
-tachyon_test(memory)
-tachyon_test(shader_load)
-tachyon_test(task_engine)
+vulqan_test(memory)
+vulqan_test(shader_load)
+vulqan_test(task_engine)
 

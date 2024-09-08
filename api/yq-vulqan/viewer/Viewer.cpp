@@ -4,11 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include "Viewer.hpp"
 
 #include <yq-vulqan/logging.hpp>
-#include <tachyon/Application.hpp>
-#include <tachyon/Viewer.hpp>
+#include <yq-vulqan/app/Application.hpp>
 #include <yq-vulqan/imgui/MyImGui.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViContext.hpp>

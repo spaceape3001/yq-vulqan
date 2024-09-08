@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViBufferObject.hpp"
+
+#include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
@@ -34,7 +36,7 @@ namespace yq::tachyon {
         
         BufferCPtr      c   = cfg.fetch(p);
         if(!c){     //  shouldn't really happen....
-            yWarning() << "EMPTY BUFFER DETECTED!";
+            vqWarning << "EMPTY BUFFER DETECTED!";
             return false;
         }
         

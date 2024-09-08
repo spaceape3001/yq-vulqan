@@ -14,8 +14,11 @@
 #include <system_error>
 
 struct GLFWwindow;
+struct GLFWmonitor;
 
 namespace yq::tachyon {
+    class Monitor;
+    
     class Window {
     public:
     

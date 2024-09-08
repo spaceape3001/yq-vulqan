@@ -9,7 +9,7 @@
 #include <yq-toolbox/shape/AxBox2.hpp>
 
 #include <yq-vulqan/asset/ImageAsset.hpp>
-#include <yq-vulqan/asset/ShaderAsset.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/render/Render3DWriter.hpp>
 
 #include <yq-toolbox/shape/AxBox2.hxx>

@@ -30,8 +30,6 @@ add_library(${PROJECT_NAME} SHARED
     asset/AssetInfoWriter.hpp
     asset/ImageAsset.hpp
     asset/ImageAsset.cpp
-    asset/ShaderAsset.hpp
-    asset/ShaderAsset.cpp
     
     basic/Required.hpp
     basic/Tristate.hpp
@@ -188,6 +186,7 @@ add_library(${PROJECT_NAME} SHARED
     shader/GLSLShader.hpp
     shader/GLSLShader.cpp
     shader/Shader.hpp
+    shader/Shader.cpp
     shader/ShaderType.hpp
     shader/ShaderType.cpp
     

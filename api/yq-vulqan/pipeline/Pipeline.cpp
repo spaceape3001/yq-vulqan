@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Pipeline.hpp"
-#include <yq-vulqan/asset/ShaderAsset.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 
 namespace yq::tachyon {
 

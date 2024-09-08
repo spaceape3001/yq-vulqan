@@ -12,7 +12,7 @@
 #include <yq-toolbox/io/FileUtils.hpp>
 #include <yq-toolbox/text/chars.hpp>
 #include <yq-vulqan/asset/AssetFactory.hpp>
-#include <yq-vulqan/asset/ShaderAsset.hpp>
+#include <yq-vulqan/shader/Shader.hpp>
 
 namespace yq::errors {
    using shader_compile_failure    = error_db::entry<"Shader failed to compile">;

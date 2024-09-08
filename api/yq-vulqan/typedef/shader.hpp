@@ -14,14 +14,11 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class ShaderAsset;
-    //! Temporary hack
-    using Shader = ShaderAsset;
+    class Shader;
     
-    using ShaderAssetPtr    = Ref<ShaderAsset>;
-    using ShaderAssetCPtr   = Ref<const ShaderAsset>;
+    using ShaderPtr         = Ref<Shader>;
     using ShaderCPtr        = Ref<const Shader>;
 
-    using ShaderSpec        = std::variant<std::monostate, std::string, ShaderAssetCPtr>;
+    using ShaderSpec        = std::variant<std::monostate, std::string, ShaderCPtr>;
 
 }

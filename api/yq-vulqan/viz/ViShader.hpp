@@ -11,7 +11,7 @@
 #include <yq-vulqan/typedef/shader.hpp>
 
 namespace yq::tachyon {
-    class ShaderAsset;
+    class Shader;
     
     //! Shader storage
     //! \note the Client is expected to manually call create & destroy

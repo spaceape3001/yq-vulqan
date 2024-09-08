@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ShaderAsset.hpp"
+#include "Shader.hpp"
 
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/asset/AssetFactory.hpp>
@@ -13,15 +13,15 @@
 #include <yq-toolbox/text/format.hpp>
 
 namespace yq::tachyon {
-    TypedAssetFactory<ShaderAsset>&  ShaderAsset::cache()
+    TypedAssetFactory<Shader>&  Shader::cache()
     {
-        static TypedAssetFactory<ShaderAsset>   s_ret;
+        static TypedAssetFactory<Shader>   s_ret;
         return s_ret;
     }
 
-    Ref<const ShaderAsset>    ShaderAsset::decode(const ShaderSpec&ss)
+    Ref<const Shader>    Shader::decode(const ShaderSpec&ss)
     {
-        if(Ref<const ShaderAsset> const * ptr = std::get_if<Ref<const ShaderAsset>>(&ss)){
+        if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
             return *ptr;
         } else if(const std::string* ptr = std::get_if<std::string>(&ss)){
             return load(*ptr); 
@@ -29,14 +29,14 @@ namespace yq::tachyon {
             return nullptr;
     }
 
-    Ref<const ShaderAsset>    ShaderAsset::load(std::string_view pp)
+    Ref<const Shader>    Shader::load(std::string_view pp)
     {
         return cache().load(pp);
     }
 
-    std::string_view     ShaderAsset::name(const ShaderSpec&ss)
+    std::string_view     Shader::name(const ShaderSpec&ss)
     {
-        if(Ref<const ShaderAsset> const * ptr = std::get_if<Ref<const ShaderAsset>>(&ss)){
+        if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
             if(!*ptr)
                 return "(null)";
             auto& fp = (*ptr) -> filepath();
@@ -51,15 +51,15 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ShaderAsset::ShaderAsset(ShaderType st, Memory&& mem) : Asset(), payload(std::move(mem)), type(st)
+    Shader::Shader(ShaderType st, Memory&& mem) : Asset(), payload(std::move(mem)), type(st)
     {
     }
 
-    ShaderAsset::~ShaderAsset()
+    Shader::~Shader()
     {
     }
 
-    size_t      ShaderAsset::data_size() const 
+    size_t      Shader::data_size() const 
     {
         return payload.bytes();
     }
@@ -68,12 +68,12 @@ namespace yq::tachyon {
 
     void    reg_shader_asset()
     {
-        auto ti = writer<ShaderAsset>();
-        ti.description("ShaderAsset Asset");
-        ti.property("Type", &ShaderAsset::type);
+        auto ti = writer<Shader>();
+        ti.description("Shader Asset");
+        ti.property("Type", &Shader::type);
     }
 
     YQ_INVOKE(reg_shader_asset();)
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ShaderAsset)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Shader)

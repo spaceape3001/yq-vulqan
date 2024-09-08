@@ -9,7 +9,7 @@
 #include <yq-vulqan/logging.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
+#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 #include <tachyon/gpu/ViContext.hpp>

@@ -65,12 +65,8 @@ namespace yq::tachyon {
     
     using TextureCPtr   = Ref<const Texture>;
     using PipelineCPtr  = Ref<const Pipeline>;
-    using RenderedPtr   = Ref<Rendered>;
-    using RenderedCPtr  = Ref<const Rendered>;
 
     using PushBuffer    = BasicBuffer<MAX_PUSH>;
-
-    using ViQueueSpec   = std::variant<std::monostate, bool, uint32_t, std::vector<float>>;
 }
     
     #if 0

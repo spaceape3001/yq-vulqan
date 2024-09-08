@@ -6,7 +6,7 @@
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
+#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 
 using namespace yq;

@@ -11,7 +11,7 @@
 #include <yq-toolbox/basic/Guarded.hpp>
 #include <yq-toolbox/typedef/rgba.hpp>
 
-#include <tachyon/enum/PresentMode.hpp>
+#include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/image.hpp>

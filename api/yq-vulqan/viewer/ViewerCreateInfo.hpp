@@ -10,9 +10,10 @@
 #include <yq-toolbox/shape/Size2.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 
-#include <tachyon/preamble.hpp>
 #include <yq-vulqan/glfw/Monitor.hpp>
-#include <tachyon/enum/PresentMode.hpp>
+#include <yq-vulqan/typedef/queue_spec.hpp>
+#include <yq-vulqan/viewer/PresentMode.hpp>
+
 #include <vulkan/vulkan_core.h>
 #include <variant>
 #include <vector>
@@ -49,20 +50,19 @@ namespace yq::tachyon {
         bool                        fill_non_solid  = true;
             
             //!  Set to alter graphic queue capability
-        ViQueueSpec                 graphic;
+        QueueSpec                   graphic;
 
             //!  Set to alter present queue capability
-        ViQueueSpec                 present;
-
+        QueueSpec                   present;
 
             //!  Set to enable compute queue capability
-        ViQueueSpec                 compute;
+        QueueSpec                   compute;
         
             //!  Set to enable video-decode queue capability
-        ViQueueSpec                 video_decode;
+        QueueSpec                   video_decode;
         
             //!  Set to enable video-encode queue capability
-        ViQueueSpec                 video_encode;
+        QueueSpec                   video_encode;
 
             //!     Set to get descriptors allocated
         uint32_t                    descriptors = 0;

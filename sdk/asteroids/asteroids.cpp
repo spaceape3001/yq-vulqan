@@ -9,12 +9,12 @@
 #include <yq-toolbox/vector/Quaternion3.hpp>
 
 #include <yq-vulqan/task/Task.hpp>
+#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 #include <yq-vulqan/widget/StackedWidget.hpp>
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
 
 #include <iostream>
 

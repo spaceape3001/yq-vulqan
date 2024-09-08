@@ -12,7 +12,7 @@
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
-
+#include <yq-vulqan/viz/ViQueueType.hpp>
 
 #include <tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
@@ -93,18 +93,11 @@ namespace yq::tachyon {
         void                    _dtor();
     };
 
-    enum class QueueType : uint8_t {
-        Graphic = 0,
-        Present,
-        Compute,
-        VideoEncode,
-        VideoDecode
-    };
 
     struct ViQueues : public RefCount {
         Visualizer&             m_viz;
         uint32_t                m_family;
-        Flags<QueueType>        m_type = {};
+        ViQueueTypeFlags        m_type = {};
         std::vector<VkQueue>    m_queues;
         std::vector<float>      m_weights;
         VkExtent3D              m_minImageTransferGranularity;  //!< Min granularity for image transfers
@@ -112,7 +105,7 @@ namespace yq::tachyon {
         uint32_t                m_timestampValidBits;           //!< valid bits for timestamps
         VkQueueFlags            m_vkFlags;                      //!< Flags from vulkan 
         
-        ViQueues(Visualizer&, const ViewerCreateInfo&, uint32_t, const VkQueueFamilyProperties&, Flags<QueueType> left);
+        ViQueues(Visualizer&, const ViewerCreateInfo&, uint32_t, const VkQueueFamilyProperties&, ViQueueTypeFlags left);
         ~ViQueues();
         
         VkDeviceQueueCreateInfo info();

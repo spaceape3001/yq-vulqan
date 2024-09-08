@@ -6,10 +6,11 @@
 
 #pragma once
 
+#include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/glfw/Joystick.hpp>
 #include <yq-vulqan/glfw/Monitor.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
+#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
+
 #include <tachyon/Window.hpp>
 #include <tachyon/WindowEvents.hpp>
 

@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <yq-vulqan/typedef/pipeline.hpp>
+
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/basic/UniqueID.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>

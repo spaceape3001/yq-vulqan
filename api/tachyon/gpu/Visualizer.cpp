@@ -38,13 +38,13 @@
 #include <yq-vulqan/scene/Scene.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
+#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViBufferObject.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
 
-#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>
 #include <tachyon/gpu/VqApp.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
@@ -640,7 +640,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     
     namespace {
-        size_t          count(const ViQueueSpec& qs)
+        size_t          count(const QueueSpec& qs)
         {
             if( std::get_if<std::monostate>(&qs) != nullptr)
                 return 0;
@@ -653,7 +653,7 @@ namespace yq::tachyon {
             return 0;
         }
 
-        bool            is_empty(const ViQueueSpec& qs)
+        bool            is_empty(const QueueSpec& qs)
         {
             if( std::get_if<std::monostate>(&qs) != nullptr)
                 return true;
@@ -666,7 +666,7 @@ namespace yq::tachyon {
             return true;
         }
 
-        const ViQueueSpec&   biggest(const ViewerCreateInfo& vci, Flags<QueueType> which)
+        const QueueSpec&   biggest(const ViewerCreateInfo& vci, Flags<ViQueueType> which)
         {
             size_t  g       = 0;
             size_t  c       = 0;
@@ -675,22 +675,22 @@ namespace yq::tachyon {
             size_t  vd      = 0;
             size_t  mx     = 0;
             
-            if(which.is_set(QueueType::Graphic)){
+            if(which.is_set(ViQueueType::Graphic)){
                 mx  = g   = std::max((size_t) 1,count(vci.graphic));
             }
-            if(which.is_set(QueueType::Present)){
+            if(which.is_set(ViQueueType::Present)){
                 p   = std::max((size_t) 1,count(vci.present));
                 mx  = std::max(p,mx);
             };
-            if(which.is_set(QueueType::Compute)){
+            if(which.is_set(ViQueueType::Compute)){
                 c   = count(vci.compute);
                 mx  = std::max(c,mx);
             }
-            if(which.is_set(QueueType::VideoEncode)){
+            if(which.is_set(ViQueueType::VideoEncode)){
                 ve  = count(vci.video_encode);
                 mx  = std::max(ve,mx);
             }
-            if(which.is_set(QueueType::VideoDecode)){
+            if(which.is_set(ViQueueType::VideoDecode)){
                 vd  = count(vci.video_decode);
                 mx  = std::max(vd,mx);
             }
@@ -709,7 +709,7 @@ namespace yq::tachyon {
         }
     }
 
-    ViQueues::ViQueues(Visualizer&viz, const ViewerCreateInfo& vci, uint32_t fi, const VkQueueFamilyProperties&prop, Flags<QueueType> left) :
+    ViQueues::ViQueues(Visualizer&viz, const ViewerCreateInfo& vci, uint32_t fi, const VkQueueFamilyProperties&prop, Flags<ViQueueType> left) :
         m_viz(viz), m_family(fi)
     {
         m_availableQueueCount           = prop.queueCount;
@@ -717,22 +717,22 @@ namespace yq::tachyon {
         m_minImageTransferGranularity   = prop.minImageTransferGranularity;
         m_vkFlags                       = prop.queueFlags;
 
-        if(left.is_set(QueueType::Graphic) && (m_vkFlags & VK_QUEUE_GRAPHICS_BIT))
-            m_type.set(QueueType::Graphic);
-        if(left.is_set(QueueType::Compute) && (m_vkFlags & VK_QUEUE_COMPUTE_BIT))
-            m_type.set(QueueType::Compute);
-        if(left.is_set(QueueType::VideoEncode) && (m_vkFlags & VK_QUEUE_VIDEO_ENCODE_BIT_KHR))
-            m_type.set(QueueType::VideoEncode);
-        if(left.is_set(QueueType::VideoDecode) && (m_vkFlags & VK_QUEUE_VIDEO_DECODE_BIT_KHR))
-            m_type.set(QueueType::VideoDecode);
-        if(left.is_set(QueueType::Present)){
+        if(left.is_set(ViQueueType::Graphic) && (m_vkFlags & VK_QUEUE_GRAPHICS_BIT))
+            m_type.set(ViQueueType::Graphic);
+        if(left.is_set(ViQueueType::Compute) && (m_vkFlags & VK_QUEUE_COMPUTE_BIT))
+            m_type.set(ViQueueType::Compute);
+        if(left.is_set(ViQueueType::VideoEncode) && (m_vkFlags & VK_QUEUE_VIDEO_ENCODE_BIT_KHR))
+            m_type.set(ViQueueType::VideoEncode);
+        if(left.is_set(ViQueueType::VideoDecode) && (m_vkFlags & VK_QUEUE_VIDEO_DECODE_BIT_KHR))
+            m_type.set(ViQueueType::VideoDecode);
+        if(left.is_set(ViQueueType::Present)){
             VkBool32 presentSupport = false;
             vkGetPhysicalDeviceSurfaceSupportKHR(viz.physical(), fi, viz.surface(), &presentSupport);
             if(presentSupport)
-                m_type.set(QueueType::Present);
+                m_type.set(ViQueueType::Present);
         }
         
-        const ViQueueSpec&  spec    = biggest(vci, m_type);
+        const QueueSpec&  spec    = biggest(vci, m_type);
         if(const std::vector<float>*p = std::get_if<std::vector<float>>(&spec)){
             if(!p->empty())
                 m_weights   = *p;
@@ -1462,17 +1462,17 @@ namespace yq::tachyon {
             //  And we need to create them... so request
         std::vector<VkDeviceQueueCreateInfo> qci;
         
-        Flags<QueueType>        wantQueue({QueueType::Graphic, QueueType::Present});
-        Flags<QueueType>        hasQueue{};
+        Flags<ViQueueType>        wantQueue({ViQueueType::Graphic, ViQueueType::Present});
+        Flags<ViQueueType>        hasQueue{};
 
         if(!is_empty(vci.compute)){
         yInfo() << " Want compute queue with " << count(vci.compute) << " queues";
-            wantQueue.set(QueueType::Compute);
+            wantQueue.set(ViQueueType::Compute);
         }
         if(!is_empty(vci.video_decode))
-            wantQueue.set(QueueType::VideoDecode);
+            wantQueue.set(ViQueueType::VideoDecode);
         if(!is_empty(vci.video_encode))
-            wantQueue.set(QueueType::VideoEncode);
+            wantQueue.set(ViQueueType::VideoEncode);
         
         std::vector<VkQueueFamilyProperties> qfp = vqGetPhysicalDeviceQueueFamilyProperties(m_physical);
         for(uint32_t i=0;i<qfp.size();++i){
@@ -1480,23 +1480,23 @@ namespace yq::tachyon {
                 break;
             Ref<ViQueues>   r   = new ViQueues(*this, vci, i, qfp[i], wantQueue & ~hasQueue );
             hasQueue |= r->m_type;
-            if(r->m_type.is_set(QueueType::Graphic)){
+            if(r->m_type.is_set(ViQueueType::Graphic)){
             yInfo() << "Discovered graphics queue " << i;
                 m_graphic       = r.ptr();
             }
-            if(r->m_type.is_set(QueueType::Compute)){
+            if(r->m_type.is_set(ViQueueType::Compute)){
             yInfo() << "Discovered compute queue " << i;
                 m_compute       = r.ptr();
             }
-            if(r->m_type.is_set(QueueType::VideoEncode)){
+            if(r->m_type.is_set(ViQueueType::VideoEncode)){
             yInfo() << "Discovered video encode queue " << i;
                 m_videoEncode   = r.ptr();
             }
-            if(r->m_type.is_set(QueueType::VideoDecode)){
+            if(r->m_type.is_set(ViQueueType::VideoDecode)){
             yInfo() << "Discovered video decode queue " << i;
                 m_videoDecode   = r.ptr();
             }
-            if(r->m_type.is_set(QueueType::Present)){
+            if(r->m_type.is_set(ViQueueType::Present)){
             yInfo() << "Discovered present queue " << i;
                 m_present       = r.ptr();
             }
@@ -1508,11 +1508,11 @@ namespace yq::tachyon {
             return create_error<"Missing graphic queue">();
         if(!m_present)
             return create_error<"Missing present queue">();
-        if(wantQueue.is_set(QueueType::Compute) && !m_compute)
+        if(wantQueue.is_set(ViQueueType::Compute) && !m_compute)
             return create_error<"Missing compute queue">();
-        if(wantQueue.is_set(QueueType::VideoEncode) && !m_videoEncode)
+        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncode)
             return create_error<"Missing video encode queue">();
-        if(wantQueue.is_set(QueueType::VideoDecode) && !m_videoDecode)
+        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecode)
             return create_error<"Missing video decode queue">();
         
                 

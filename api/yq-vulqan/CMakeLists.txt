@@ -108,6 +108,8 @@ add_library(${PROJECT_NAME} SHARED
     
     input/KeyCode.hpp
     input/KeyCode.cpp
+    input/ModifierKey.hpp
+    input/ModifierKey.cpp
     
     logic/CompareOp.hpp
     logic/CompareOp.cpp
@@ -210,6 +212,10 @@ add_library(${PROJECT_NAME} SHARED
     v/VqLogging.hpp
     v/VqLogging.cpp
     v/VqStructs.hpp
+    
+    viewer/PresentMode.hpp
+    viewer/PresentMode.cpp
+    viewer/ViewerCreateInfo.hpp
     
     viz/ViBuffer.hpp
     viz/ViBuffer.cpp

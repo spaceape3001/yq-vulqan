@@ -36,10 +36,10 @@
 #include <yq-vulqan/render/Render3DWriter.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
+#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/VqUtils.hpp>
 #include <tachyon/widget/Scene3DWidget.hpp>
 

@@ -6,12 +6,14 @@
 
 #pragma once
 
-#include <tachyon/preamble.hpp>
+//#include <tachyon/preamble.hpp>
 
 #include <yq-toolbox/shape/Size2.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 #include <yq-vulqan/input/ModifierKey.hpp>
 #include <system_error>
+
+struct GLFWwindow;
 
 namespace yq::tachyon {
     class Window {

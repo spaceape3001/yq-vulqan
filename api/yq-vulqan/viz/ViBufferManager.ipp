@@ -22,12 +22,10 @@ namespace yq::tachyon {
 
     void                ViBufferManager::cleanup()
     {
-        for(auto& b : m_buffers)
-            b.second.destroy(m_viz);
         m_buffers.clear();
     }
 
-    Expect<ViBuffer>    ViBufferManager::create(const Buffer&buf)
+    ViBufferCPtr    ViBufferManager::create(const Buffer&buf)
     {
         {
             mutex_t::scoped_lock _lock(m_mutex, false);
@@ -36,10 +34,11 @@ namespace yq::tachyon {
                 return j->second;
         }
 
-        ViBuffer p, ret;
-        auto ec = p.create(m_viz, buf);
-        if(ec)
-            return unexpected(ec);
+        ViBufferCPtr    ret, p;
+        
+        p       = new ViBuffer(m_viz, buf);
+        if(!p->valid())
+            return {};
         
         {
             mutex_t::scoped_lock _lock(m_mutex, true);
@@ -50,8 +49,6 @@ namespace yq::tachyon {
                 ret = j->second;
         }
 
-        if(p.buffer)
-            p.destroy(m_viz);
         return ret;
     }
 
@@ -62,7 +59,7 @@ namespace yq::tachyon {
     
     void                ViBufferManager::erase(uint64_t i)
     {
-        ViBuffer    vb;
+        ViBufferCPtr    vb;
         {
             mutex_t::scoped_lock _lock(m_mutex, true);
             auto j  = m_buffers.find(i);
@@ -71,12 +68,9 @@ namespace yq::tachyon {
                 m_buffers.erase(j);
             }
         }
-        
-        if(vb.buffer)
-            vb.destroy(m_viz);
     }
     
-    Expect<ViBuffer>    ViBufferManager::get(uint64_t i) const
+    ViBufferCPtr    ViBufferManager::get(uint64_t i) const
     {
         {
             mutex_t::scoped_lock _lock(m_mutex, false);
@@ -85,7 +79,7 @@ namespace yq::tachyon {
                 return j->second;
         }
 
-        return unexpected<"Unable to located specified buffer">();
+        return {};
     }
     
     bool                ViBufferManager::has(uint64_t i) const

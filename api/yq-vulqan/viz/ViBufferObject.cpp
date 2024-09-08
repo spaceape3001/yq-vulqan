@@ -38,14 +38,11 @@ namespace yq::tachyon {
             return false;
         }
         
-        Expect<ViBuffer> xvb    = viz.buffer_create(*c);
-        if(xvb){
-            const ViBuffer& vb  = *xvb;
-            if(vb.buffer){
-                buffer  = vb.buffer;
-                count   = c->memory.count();
-                return true;
-            }
+        ViBufferCPtr     xvb    = viz.buffer_create(*c);
+        if(xvb && xvb->valid()){
+            buffer  = xvb -> buffer();
+            count   = c->memory.count();
+            return true;
         }
         
         return false;

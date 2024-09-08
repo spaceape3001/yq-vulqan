@@ -10,19 +10,14 @@
 */
 
 #include "Application.ipp"
-//#include "Render3D.ipp"
-//#include "Rendered.ipp"
 #include "Viewer.ipp"
-#include "Window.ipp"
-
-#include "widget/Scene3DWidget.ipp"
 
 
-#include <yq-toolbox/shape/AxBox2.hxx>
-#include <yq-toolbox/shape/Rectangle2.hxx>
-#include <yq-toolbox/shape/Size2.hxx>
-#include <yq-toolbox/tensor/Tensor44.hxx>
-#include <yq-toolbox/vector/Vector2.hxx>
-#include <yq-toolbox/vector/Vector3.hxx>
+//#include <yq-toolbox/shape/AxBox2.hxx>
+//#include <yq-toolbox/shape/Rectangle2.hxx>
+//#include <yq-toolbox/shape/Size2.hxx>
+//#include <yq-toolbox/tensor/Tensor44.hxx>
+//#include <yq-toolbox/vector/Vector2.hxx>
+//#include <yq-toolbox/vector/Vector3.hxx>
 
 

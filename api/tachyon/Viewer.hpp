@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq-toolbox/basic/Ref.hpp>
-#include <tachyon/gpu/Visualizer.hpp>
-#include <tachyon/Window.hpp>
+#include <yq-vulqan/viz/Visualizer.hpp>
+#include <yq-vulqan/window/Window.hpp>
 #include <yq-toolbox/basic/Flags.hpp>
 
 struct ImGuiContext;

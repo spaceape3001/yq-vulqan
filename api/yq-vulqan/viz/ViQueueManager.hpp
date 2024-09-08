@@ -31,6 +31,8 @@ namespace yq::tachyon {
         VkDeviceQueueCreateInfo info();
         VkQueue                 queue(uint32_t i) const;
         
+        bool                    can_transfer() const;
+        
         
         ViQueueTypeFlags        types() const;
 

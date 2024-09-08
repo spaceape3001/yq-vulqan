@@ -11,6 +11,9 @@
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/typedef/expected.hpp>
 #include <yq-toolbox/typedef/rgba.hpp>
+
+#include <yq-vulqan/typedef/buffer.hpp>
+#include <yq-vulqan/typedef/shader.hpp>
 #include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/viz/ViCleanupManager.hpp>
 
@@ -28,16 +31,10 @@
 struct GLFWwindow;
 
 namespace yq::tachyon {
-    class Buffer;
     class Shader;
     
     struct ViewerCreateInfo;
     
-    struct ViBuffer;
-    struct ViShader;
-    
-    class ViBufferManager;
-    class ViShaderManager;
     class ViQueueManager;
     
     using ViShaderManagerUPtr           = std::unique_ptr<ViShaderManager>;
@@ -67,8 +64,8 @@ namespace yq::tachyon {
         VmaAllocator                    allocator() const { return m_allocator; }
 
         //! Finds the buffer
-        Expect<ViBuffer>                buffer(uint64_t) const;
-        Expect<ViBuffer>                buffer_create(const Buffer&);
+        ViBufferCPtr                    buffer(uint64_t) const;
+        ViBufferCPtr                    buffer_create(const Buffer&);
         void                            buffer_erase(uint64_t);
         void                            buffer_erase(const Buffer&);
 
@@ -128,7 +125,7 @@ namespace yq::tachyon {
         void                            set_clear_color(const RGBA4F&);
 
         //! Finds the shader
-        Expect<ViShader>                shader(uint64_t) const;
+        ViShaderCPtr                    shader(uint64_t) const;
 
         /*! Creates the shader
         
@@ -137,7 +134,7 @@ namespace yq::tachyon {
             \note Once imported, this shader cannot be removed and will persist 
             to the end of the visualizer's lifespan.
         */
-        Expect<ViShader>                shader_create(const Shader&);
+        ViShaderCPtr                    shader_create(const Shader&);
 
         //! Current shader manager (null if not initialized)
         ViShaderManager*                shader_manager() const;

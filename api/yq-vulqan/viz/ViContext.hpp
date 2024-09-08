@@ -5,16 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <tachyon/preamble.hpp>
+//#include <tachyon/preamble.hpp>
 //#include <tachyon/gpu/ViPipeline.hpp>
 #include <vulkan/vulkan_core.h>
-#include <glm/glm.hpp>
+#include <yq-toolbox/math/glm.hpp>
 
 //namespace yq::engine { class Viewer; }
 namespace yq::tachyon {
 
     struct ViRendered;
     struct ViFrame;
+    class Visualizer;
 
     /*! \brief Mutable set of parameters that'll pass through
     

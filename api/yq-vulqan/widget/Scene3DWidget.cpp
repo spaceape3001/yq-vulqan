@@ -4,11 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "Scene3DWidget.hpp"
-#include <tachyon/gpu/ViContext.hpp>
-#include <tachyon/gpu/Visualizer.hpp>
+#include <yq-vulqan/viz/ViContext.hpp>
+#include <yq-vulqan/viz/Visualizer.hpp>
 
 namespace yq::tachyon {
     Scene3DWidget::Scene3DWidget()

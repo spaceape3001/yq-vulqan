@@ -15,10 +15,15 @@ namespace yq {
 
 namespace yq::tachyon {
     class Shader;
+    class ViShader;
     
     using ShaderPtr         = Ref<Shader>;
     using ShaderCPtr        = Ref<const Shader>;
 
     using ShaderSpec        = std::variant<std::monostate, std::string, ShaderCPtr>;
 
+    using ViShaderPtr       = Ref<ViShader>;
+    using ViShaderCPtr      = Ref<const ViShader>;
+
+    class ViShaderManager;
 }

@@ -14,26 +14,26 @@
 #include <vulkan/vulkan_core.h>
 
 namespace yq::tachyon {
-    struct ViShader;
-    
+    class ViVisualizer;
+
     class ViShaderManager {
     public:
     
-        ViShaderManager(VkDevice);
+        ViShaderManager(ViVisualizer&);
         ~ViShaderManager();
         
-        Expect<ViShader>    create(const Shader&);
-        Expect<ViShader>    get(uint64_t) const;
-        bool                has(uint64_t) const;
+        ViShaderCPtr    create(const Shader&);
+        ViShaderCPtr    get(uint64_t) const;
+        bool            has(uint64_t) const;
         
-        void                cleanup();
+        void            cleanup();
         
     private:
-        using map_t     = std::unordered_map<uint64_t, ViShader>;
+        using map_t     = std::unordered_map<uint64_t, ViShaderCPtr>;
         using mutex_t   = tbb::spin_rw_mutex;
         
+        ViVisualizer&       m_viz;
         map_t               m_shaders;
         mutable mutex_t     m_mutex;
-        VkDevice const      m_device;
     };
 }

@@ -12,7 +12,7 @@
 #include <unordered_map>
 
 namespace yq::tachyon {
-    struct ViBuffer;
+    class ViBuffer;
     struct ViVisualizer;
     
     class ViBufferManager {
@@ -21,16 +21,16 @@ namespace yq::tachyon {
         ViBufferManager(ViVisualizer&);
         ~ViBufferManager();
     
-        void                cleanup();
-        Expect<ViBuffer>    create(const Buffer&);
-        void                erase(const Buffer&);
-        void                erase(uint64_t);
-        Expect<ViBuffer>    get(uint64_t) const;
-        bool                has(uint64_t) const;
+        void            cleanup();
+        ViBufferCPtr    create(const Buffer&);
+        void            erase(const Buffer&);
+        void            erase(uint64_t);
+        ViBufferCPtr    get(uint64_t) const;
+        bool            has(uint64_t) const;
 
     private:
     
-        using map_t     = std::unordered_map<uint64_t, ViBuffer>;
+        using map_t     = std::unordered_map<uint64_t, ViBufferCPtr>;
         using mutex_t   = tbb::spin_rw_mutex;
         
         map_t               m_buffers;

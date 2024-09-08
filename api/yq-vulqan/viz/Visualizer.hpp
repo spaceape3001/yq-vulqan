@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/preamble.hpp>
+//#include <tachyon/preamble.hpp>
 
 #include <yq-toolbox/basic/Guarded.hpp>
 
@@ -31,10 +31,7 @@
 
 namespace yq::tachyon {
 
-    struct ViBuffer;
-    struct ViShader;
     struct ViImage;
-    struct ViQueues;
     struct ViRendered;
     struct ViRenderPass;
     struct ViSwapchain;
@@ -44,11 +41,15 @@ namespace yq::tachyon {
     struct ViThread;
     struct ViUpload;
     
-    class ViBufferManager;
-    class ViShaderManager;
-
-    class Memory;
+    struct ViContext;
     
+    class Memory;
+    class Rendered;
+    class Pipeline;
+    class Texture;
+    class Scene;
+    
+    struct Perspective;
 
     class Visualizer : public ViVisualizer  {
     public:

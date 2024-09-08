@@ -15,7 +15,6 @@
 #include <yq-vulqan/viz/ViBufferObjectVector.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>
 
-#include <tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
 #include <vector>
 #include <vk_mem_alloc.h>

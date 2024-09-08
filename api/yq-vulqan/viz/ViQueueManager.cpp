@@ -132,14 +132,10 @@ namespace yq::tachyon {
     ViQueueManager::~ViQueueManager()
     {
     }
-    
-    VkDeviceQueueCreateInfo ViQueueManager::info()
+
+    bool      ViQueueManager::can_transfer() const
     {
-        VqDeviceQueueCreateInfo  ret;
-        ret.queueFamilyIndex   = m_family;
-        ret.queueCount         = (uint32_t) m_weights.size();
-        ret.pQueuePriorities   = m_weights.data();
-        return ret;
+        return static_cast<bool>(m_vkFlags & VK_QUEUE_TRANSFER_BIT);
     }
 
     uint32_t  ViQueueManager::count() const 
@@ -156,7 +152,16 @@ namespace yq::tachyon {
     { 
         return m_family; 
     }
-        
+    
+    VkDeviceQueueCreateInfo ViQueueManager::info()
+    {
+        VqDeviceQueueCreateInfo  ret;
+        ret.queueFamilyIndex   = m_family;
+        ret.queueCount         = (uint32_t) m_weights.size();
+        ret.pQueuePriorities   = m_weights.data();
+        return ret;
+    }
+
     void      ViQueueManager::init()
     {
         if(m_queues.size() != m_weights.size())

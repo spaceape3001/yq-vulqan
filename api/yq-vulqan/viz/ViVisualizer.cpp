@@ -15,6 +15,7 @@
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
+#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqApp.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
@@ -42,15 +43,15 @@ namespace yq::tachyon {
     {
         m_app       = VqApp::vk_app();
         if(!m_app)
-            return create_error<"No application available">();
+            return errors::NO_APPLICATION_AVAILABLE();
 
         m_window    = w;
         if(!w)
-            return create_error<"No window provided">();
+            return errors::NO_WINDOW_PROVIDED();
             
         m_instance    = m_app -> vulkan();
         if(!m_instance)
-            return create_error<"Vulkan unavailable">();
+            return errors::VULKAN_UNAVAILABLE();
         return {};
     }
     
@@ -67,7 +68,7 @@ namespace yq::tachyon {
         if(!m_physical){
             m_physical  = vqFirstDevice();
             if(!m_physical)
-                return create_error<"No GPU/Physical device provided or detected">();
+                return errors::NO_PHYSICAL_DEVICE();
         }
 
         vkGetPhysicalDeviceFeatures(m_physical, &m_deviceFeatures);
@@ -86,7 +87,7 @@ namespace yq::tachyon {
     {
         //  passing in the create info in case we get smarter
         if(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface) != VK_SUCCESS)
-            return create_error<"No window surface available">();
+            return errors::NO_WINDOW_SURFACE();
             
         for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(m_physical, m_surface))
             m_presentModes.insert((PresentMode::enum_t) pm);
@@ -157,17 +158,17 @@ namespace yq::tachyon {
         }
         
         if(!m_graphics)
-            return create_error<"Missing graphic queue">();
+            return errors::NO_GRAPHICS_QUEUE();
         if(!m_present)
-            return create_error<"Missing present queue">();
+            return errors::NO_PRESENT_QUEUE();
         if(wantQueue.is_set(ViQueueType::Compute) && !m_compute)
-            return create_error<"Missing compute queue">();
+            return errors::NO_COMPUTE_QUEUE();
         if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEnc)
-            return create_error<"Missing video encode queue">();
+            return errors::NO_VIDEO_ENCODE_QUEUE();
         if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDec)
-            return create_error<"Missing video decode queue">();
+            return errors::NO_VIDEO_DECODE_QUEUE();
         if(wantQueue.is_set(ViQueueType::Transfer) && !m_transfer)
-            return create_error<"Missing transfer queue">();
+            return errors::NO_TRANSFER_QUEUE();
         return {};
     }
     
@@ -207,8 +208,11 @@ namespace yq::tachyon {
         v12features.bufferDeviceAddress = true;
         deviceCreateInfo.pNext          = &v12features;
         
-        if(vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device) != VK_SUCCESS)
-            return create_error<"Unable to create vulkan (logical) device">();
+        VkResult        res = vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device);
+        if(res != VK_SUCCESS){
+            vqError << "Unable to create vulkan (logical) device with result code: " << to_string_view((VqResult) res);
+            return errors::CANT_CREATE_VULKAN_DEVICE();
+        }
         return {};
     }
     
@@ -242,7 +246,7 @@ namespace yq::tachyon {
     
     std::error_code     ViVisualizer::_6_manager_init()
     {
-        m_shaders           = std::make_unique<ViShaderManager>(m_device);
+        m_shaders           = std::make_unique<ViShaderManager>(*this);
         m_buffers           = std::make_unique<ViBufferManager>(*this);
         return {};
     }
@@ -256,17 +260,17 @@ namespace yq::tachyon {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    Expect<ViBuffer> ViVisualizer::buffer(uint64_t i) const
+    ViBufferCPtr ViVisualizer::buffer(uint64_t i) const
     {
         if(!m_buffers)
-            return errors::NO_BUFFER_MANAGER();
+            return {};
         return m_buffers->get(i);
     }
 
-    Expect<ViBuffer>  ViVisualizer::buffer_create(const Buffer& buf)
+    ViBufferCPtr  ViVisualizer::buffer_create(const Buffer& buf)
     {
         if(!m_buffers)
-            return errors::NO_BUFFER_MANAGER();
+            return {};
         return m_buffers->create(buf);
     }
     
@@ -353,7 +357,7 @@ namespace yq::tachyon {
             }            
         }
         
-        return unexpected<"Failed to find supported format">();
+        return errors::UNSUPPORTED_FORMAT();
     }
 
     std::string_view    ViVisualizer::gpu_name() const
@@ -437,17 +441,17 @@ namespace yq::tachyon {
         m_clearValue    = vqClearValue(i);
     }
 
-    Expect<ViShader> ViVisualizer::shader(uint64_t i) const
+    ViShaderCPtr ViVisualizer::shader(uint64_t i) const
     {
         if(!m_shaders)
-            return errors::NO_SHADER_MANAGER();
+            return {};
         return m_shaders -> get(i);
     }
 
-    Expect<ViShader>  ViVisualizer::shader_create(const Shader&sh)
+    ViShaderCPtr    ViVisualizer::shader_create(const Shader&sh)
     {
         if(!m_shaders)
-            return errors::NO_SHADER_MANAGER();
+            return {};
         return m_shaders->create(sh);
     }
 

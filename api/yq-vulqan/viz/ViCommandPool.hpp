@@ -21,9 +21,16 @@ namespace yq::tachyon {
         
         std::error_code init(ViVisualizer&, uint32_t queueFamilyIndex, VqCommandPoolCreateFlags={});
         std::error_code init(ViVisualizer&, const VkCommandPoolCreateInfo&);
-        void            kill(ViVisualizer&);
+        void            kill();
+        std::error_code reset(VqCommandPoolResetFlags={});
+        bool            consistent() const;
+        bool            valid() const;
+        
+        operator VkCommandPool() const { return m_pool; }
+        
         
     private:
-        VkCommandPool       m_pool;
+        ViVisualizer*       m_viz  = nullptr;
+        VkCommandPool       m_pool = nullptr;
     };
 }

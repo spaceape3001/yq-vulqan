@@ -8,6 +8,7 @@
 
 
 #include <yq-toolbox/basic/Logging.hpp>
+#include <yq-vulqan/config/vulqan.hpp>
 #include <variant>
 
 struct GLFWmonitor;
@@ -31,9 +32,6 @@ namespace yq {
     //}
 
 namespace yq::tachyon {
-    static constexpr const size_t   MAX_PUSH                = 256;
-    //static constexpr const size_t   MAX_FRAMES_IN_FLIGHT    = 2;
-    static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = 1024;
     
     //namespace imgui {}
 

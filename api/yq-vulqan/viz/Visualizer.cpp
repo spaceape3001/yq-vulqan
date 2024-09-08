@@ -24,7 +24,6 @@
 #include <yq-toolbox/basic/ErrorDB.hpp>
 #include <yq-toolbox/container/BasicBuffer.hpp>
 #include <yq-toolbox/container/initlist_utils.hpp>
-
 #include <yq-toolbox/color/RGBA.hpp>
 
 #include <yq-vulqan/errors.hpp>
@@ -44,11 +43,11 @@
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViBufferObject.hpp>
+#include <yq-vulqan/viz/ViContext.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
 
-#include <tachyon/gpu/ViContext.hpp>
 
 
 #include <GLFW/glfw3.h>
@@ -250,11 +249,11 @@ namespace yq::tachyon {
 
     std::error_code     ViImage::create(Visualizer&viz, const Image&img)
     {
-        ViBuffer        local;
-        
-        std::error_code ec  = local.create(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VMA_MEMORY_USAGE_CPU_ONLY);
-        if(ec)
-            return ec;
+        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
+        if(!local->valid())
+            return errors::INSUFFICIENT_GPU_MEMORY();
+
+        std::error_code ec;
         
         try {
             VqImageCreateInfo   imgInfo;
@@ -306,7 +305,7 @@ namespace yq::tachyon {
                 creg.imageExtent = imgInfo.extent;
 
                 //copy the buffer into the image
-                vkCmdCopyBufferToImage(cmd, local.buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
+                vkCmdCopyBufferToImage(cmd, local->buffer(), image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
 
                 VkImageMemoryBarrier imb2 = imb;
 
@@ -324,7 +323,6 @@ namespace yq::tachyon {
         {
             ec  = ec2;
         }
-        local.destroy(viz);
         return ec;
     }
     
@@ -361,19 +359,19 @@ namespace yq::tachyon {
                 if(!sh)
                     continue;
                 
-                Expect<ViShader>    xvs = m_viz.shader_create(*sh);
+                ViShaderCPtr    xvs = m_viz.shader_create(*sh);
                 if(!xvs)
                     continue;
-                
-                const ViShader&     ssh = *xvs;
+                if(!xvs->valid())
+                    continue;
                 
                 VqPipelineShaderStageCreateInfo stage;
-                stage.stage     = ssh.mask;
+                stage.stage     = xvs->mask();
                 stage.pName     = "main";
-                stage.module    = ssh.shader;
+                stage.module    = xvs->shader_module();
                 stages.push_back(stage);
 
-                m_shaders      |= ssh.mask;
+                m_shaders      |= xvs->mask();
             }
         
             VqPipelineVertexInputStateCreateInfo    vertexInfo;

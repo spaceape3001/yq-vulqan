@@ -39,7 +39,9 @@
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
+#include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
+#include <yq-vulqan/viz/ViShaderManager.hpp>
 
 #include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/gpu/ViContext.hpp>
@@ -1602,6 +1604,9 @@ namespace yq::tachyon {
 
         m_thread            = std::make_unique<ViThread>(*this);
 
+        m_shaders           = std::make_unique<ViShaderManager>(m_device);
+        m_buffers           = std::make_unique<ViBufferManager>(*this);
+
 
         //  ================================
         //  UPLOAD
@@ -1652,14 +1657,10 @@ namespace yq::tachyon {
         m_images.clear();
     
         //  At *this* point, we don't need the mutex... we're dying anyways
-        for(auto& psh : m_shaders)
-            psh.second.destroy(m_device);
-        m_shaders.clear();
+        m_shaders       = {};
+        m_buffers       = {};
         
         if(m_allocator){
-            for(auto& b : m_buffers)
-                b.second.destroy(*this);
-            m_buffers.clear();
             vmaDestroyAllocator(m_allocator);
             m_allocator = nullptr;
         }
@@ -1763,14 +1764,9 @@ namespace yq::tachyon {
 
     Expect<ViBuffer> Visualizer::buffer(uint64_t i) const
     {
-        {
-            LOCK
-            auto j = m_buffers.find(i);
-            if(j != m_buffers.end())
-                return j->second;
-        }
-        
-        return unexpected<"Unable to located specified buffer">();
+        if(!m_buffers)
+            return errors::NO_BUFFER_MANAGER();
+        return m_buffers->get(i);
     }
 
     RGBA4F Visualizer::clear_color() const
@@ -1985,14 +1981,9 @@ namespace yq::tachyon {
 
     Expect<ViShader> Visualizer::shader(uint64_t i) const
     {
-        {
-            LOCK
-            auto j=m_shaders.find(i);
-            if(j != m_shaders.end())
-                return j->second;
-        }
-        
-        return unexpected<"Unable to find the specified shader">();
+        if(!m_shaders)
+            return errors::NO_SHADER_MANAGER();
+        return m_shaders -> get(i);
     }
 
     bool        Visualizer::supports_surface(VkFormat fmt) const
@@ -2111,30 +2102,9 @@ namespace yq::tachyon {
 
     Expect<ViBuffer>    Visualizer::create(const Buffer& v)
     {
-        {
-            LOCK
-            auto j = m_buffers.find(v.id());
-            if(j != m_buffers.end())
-                return j->second;
-        }
-        
-        ViBuffer p, ret;
-        auto ec = p.create(*this, v);
-        if(ec)
-            return unexpected(ec);
-        
-        {
-            WLOCK
-            auto [j,f]  = m_buffers.try_emplace(v.id(), p);
-            if(f){
-                std::swap(p, ret);
-            } else
-                ret = j->second;
-        }
-        
-        if(p.buffer)
-            p.destroy(*this);
-        return ret;
+        if(!m_buffers)
+            return errors::NO_BUFFER_MANAGER();
+        return m_buffers->create(v);
     }
     
     Expect<ViImage>     Visualizer::create(const Image&v)
@@ -2196,31 +2166,9 @@ namespace yq::tachyon {
 
     Expect<ViShader>    Visualizer::create(const Shader& v)
     {
-        {
-            LOCK
-            auto j = m_shaders.find(v.id());
-            if(j != m_shaders.end())
-                return j->second;
-        }
-        
-        ViShader    p, ret;
-        auto ec = p.create(m_device, v);
-        if(ec)
-            return unexpected(ec);
-        
-        {
-            WLOCK
-            auto [j,f]  = m_shaders.try_emplace(v.id(), p);
-            if(f){
-                std::swap(p, ret);
-            } else {
-                ret = j->second;
-            }
-        }
-        
-        if(p.shader)
-            p.destroy(m_device);
-        return ret;
+        if(!m_shaders)
+            return errors::NO_SHADER_MANAGER();
+        return m_shaders->create(v);
     }
 
     Expect<ViTexture>       Visualizer::create(const Texture& t)
@@ -2260,19 +2208,9 @@ namespace yq::tachyon {
 
     void        Visualizer::erase(const Buffer& v)
     {
-        ViBuffer    vb;
-        
-        {
-            WLOCK
-            auto j = m_buffers.find(v.id());
-            if(j != m_buffers.end()){
-                vb      = j->second;
-                m_buffers.erase(j);
-            }
+        if(m_buffers){
+            m_buffers -> erase(v);
         }
-        
-        if(vb.buffer)
-            vb.destroy(*this);
     }
 
     void        Visualizer::set_clear_color(const RGBA4F&i)

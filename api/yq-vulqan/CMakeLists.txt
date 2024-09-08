@@ -215,8 +215,12 @@ add_library(${PROJECT_NAME} SHARED
     
     viz/ViBuffer.hpp
     viz/ViBuffer.cpp
+    viz/ViBufferManager.hpp
+    viz/ViBufferManager.cpp
     viz/ViShader.hpp
     viz/ViShader.cpp
+    viz/ViShaderManager.hpp
+    viz/ViShaderManager.cpp
     viz/ViVisualizer.hpp
     
     widget/ImGuiDemoWidget.hpp

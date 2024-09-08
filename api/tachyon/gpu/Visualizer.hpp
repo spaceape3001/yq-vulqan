@@ -44,6 +44,9 @@ namespace yq::tachyon {
     struct ViTexture;
     struct ViThread;
     struct ViUpload;
+    
+    class ViBufferManager;
+    class ViShaderManager;
 
     class Memory;
     
@@ -301,7 +304,7 @@ namespace yq::tachyon {
     
         VmaAllocator                       &m_allocator             = m_dedicated.allocator;
         VqApp*                              m_app                   = nullptr;
-        BufferMap                           m_buffers;
+        std::unique_ptr<ViBufferManager>    m_buffers;
         CleanupVector                       m_cleanup;                  // keep it one until performance bottlenecks
         VkClearValue                        m_clearValue;
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
@@ -323,7 +326,7 @@ namespace yq::tachyon {
         std::set<PresentMode>               m_presentModes;
         std::vector<Ref<ViQueues>>          m_queues;
         std::unique_ptr<ViRenderPass>       m_renderPass;
-        ShaderMap                           m_shaders;
+        std::unique_ptr<ViShaderManager>    m_shaders;
         VkSurfaceKHR                       &m_surface               = m_dedicated.surface;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
         VkFormat                            m_surfaceFormat;

@@ -4,35 +4,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ImageAsset.hpp"
+#include "Image.hpp"
 
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>
 
 namespace yq::tachyon {
-    TypedAssetFactory<ImageAsset>&  ImageAsset::cache()
+    TypedAssetFactory<Image>&  Image::cache()
     {
-        static TypedAssetFactory<ImageAsset>   s_ret;
+        static TypedAssetFactory<Image>   s_ret;
         return s_ret;
     }
 
-    const ImageAsset*       ImageAsset::load(std::string_view pp)
+    const Image*       Image::load(std::string_view pp)
     {
         return cache().load(pp);
     }
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ImageAsset::ImageAsset(const ImageInfo& ii, Memory&& mem) : Asset(), memory(std::move(mem)), info(ii)
+    Image::Image(const ImageInfo& ii, Memory&& mem) : Asset(), memory(std::move(mem)), info(ii)
     {
     }
 
-    size_t      ImageAsset::data_size() const  
+    size_t      Image::data_size() const  
     {
         return memory.bytes();
     }
 
-    ImageAsset::~ImageAsset()
+    Image::~Image()
     {
     }
 
@@ -40,12 +40,12 @@ namespace yq::tachyon {
     
     static void    reg_image_asset()
     {
-        auto ti = writer<ImageAsset>();
+        auto ti = writer<Image>();
         ti.description("Image Asset");
     }
 
     YQ_INVOKE(reg_image_asset();)
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ImageAsset)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Image)
 

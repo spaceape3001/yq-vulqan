@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
     
         //! Image
-        const Ref<const ImageAsset> image;
+        const ImageCPtr             image;
         
         //! View information
         const ImageViewInfo         view;
@@ -26,7 +26,7 @@ namespace yq::tachyon {
         const SamplerInfo           sampler;
         
         //! Default constructor
-        Texture(Ref<const ImageAsset>, const ImageViewInfo&, const SamplerInfo&);
+        Texture(ImageCPtr, const ImageViewInfo&, const SamplerInfo&);
         
     private:
         ~Texture();

@@ -28,7 +28,7 @@
 #include <yq-toolbox/color/RGBA.hpp>
 
 #include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/asset/ImageAsset.hpp>
+#include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/image_view/ImageViewInfo.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>

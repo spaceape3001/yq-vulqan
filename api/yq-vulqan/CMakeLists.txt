@@ -28,8 +28,6 @@ add_library(${PROJECT_NAME} SHARED
     asset/AssetFactory.hpp
     asset/AssetFactory.cpp
     asset/AssetInfoWriter.hpp
-    asset/ImageAsset.hpp
-    asset/ImageAsset.cpp
     
     basic/Required.hpp
     basic/Tristate.hpp
@@ -87,6 +85,7 @@ add_library(${PROJECT_NAME} SHARED
     image/DataFormat.hpp
     image/DataFormat.cpp
     image/Image.hpp
+    image/Image.cpp
     image/ImageAspect.hpp
     image/ImageAspect.cpp
     image/ImageInfo.hpp

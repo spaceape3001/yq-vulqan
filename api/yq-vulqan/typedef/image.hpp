@@ -11,10 +11,8 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class ImageAsset;
-    //! Temporary hack
-    using Image = ImageAsset;
+    class Image;
     
-    using ImageAssetPtr = Ref<ImageAsset>;
-    using ImageAssetCPtr = Ref<const ImageAsset>;
+    using ImagePtr = Ref<Image>;
+    using ImageCPtr = Ref<const Image>;
 }

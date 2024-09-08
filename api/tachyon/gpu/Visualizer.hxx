@@ -31,18 +31,11 @@ namespace yq::tachyon {
     struct ViRendered;
     
     using ViRenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
+    
+    struct ViBufferObject;
+    using ViBO = ViBufferObject;
 
     struct ViTO;
-
-    struct ViBO {
-        VkBuffer        buffer  = nullptr;
-        uint64_t        rev     = 0;
-        uint32_t        count   = 0;
-        uint32_t        offset  = 0;
-        
-        //  returns TRUE if changed
-        bool    update(Visualizer&, const BaseBOConfig&, const void*);
-    };
 
 
         //  and so we can be more efficient in rendering

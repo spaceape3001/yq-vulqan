@@ -40,6 +40,7 @@
 #include <yq-vulqan/texture/Texture.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViBufferManager.hpp>
+#include <yq-vulqan/viz/ViBufferObject.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
 
@@ -59,44 +60,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
     
-    bool    ViBO::update(Visualizer&viz, const BaseBOConfig&cfg, const void* p)
-    {
-        do {
-            if(!cfg.fetch)
-                return false;
-            if(p ? (cfg.activity == DataActivity::COMMON) : (cfg.activity != DataActivity::COMMON))
-                return false;
-            if(!buffer)                                 // LOAD
-                break;
-            if(cfg.activity != DataActivity::DYNAMIC)   // LOAD
-                break;
-            if(!cfg.revision)
-                return false;
-            
-            uint64_t    n   = cfg.revision(p);
-            if(n == rev)
-                return false;
-            rev    = n;
-        } while(false);
-        
-        BufferCPtr      c   = cfg.fetch(p);
-        if(!c){     //  shouldn't really happen....
-            yWarning() << "EMPTY BUFFER DETECTED!";
-            return false;
-        }
-        
-        Expect<ViBuffer> xvb    = viz.create(*c);
-        if(xvb){
-            const ViBuffer& vb  = *xvb;
-            if(vb.buffer){
-                buffer  = vb.buffer;
-                count   = c->memory.count();
-                return true;
-            }
-        }
-        
-        return false;
-    }
+
 
     bool    ViTO::update(Visualizer&viz, const TexConfig&cfg, const void*p)
     {
@@ -613,7 +577,7 @@ namespace yq::tachyon {
             if(!m_cfg.vbos.empty()){
                 for(auto& vb : m_cfg.vbos){
                     ViBO        bo;
-                    bo.update(m_viz, vb, nullptr);
+                    bo.update(*(m_viz.m_buffers), vb, nullptr);
                     m_vbos.push_back(bo);
                 }
             }
@@ -621,7 +585,7 @@ namespace yq::tachyon {
             if(!m_cfg.ibos.empty()){
                 for(auto & ib : m_cfg.ibos){
                     ViBO        bo;
-                    bo.update(m_viz, ib, nullptr);
+                    bo.update(*(m_viz.m_buffers), ib, nullptr);
                     m_ibos.push_back(bo);
                 }
             }
@@ -629,7 +593,7 @@ namespace yq::tachyon {
             if(!m_cfg.ubos.empty()){
                 for(auto & ub : m_cfg.ubos){
                     ViBO        bo;
-                    bo.update(m_viz, ub, nullptr);
+                    bo.update(*(m_viz.m_buffers), ub, nullptr);
                     m_ubos.push_back(bo);
                 }
             }
@@ -831,7 +795,7 @@ namespace yq::tachyon {
             m_vbos.resize(vc.size());
             for(i=0;i<m_vbos.size();++i){
                 m_vbos[i] = m_pipe.m_vbos[i];
-                m_vbos[i].update(m_viz, vc[i], &m_object);
+                m_vbos[i].update(*(m_viz.m_buffers), vc[i], &m_object);
             }
         }
             
@@ -840,7 +804,7 @@ namespace yq::tachyon {
             m_ibos.resize(ic.size());
             for(i=0;i<m_ibos.size();++i){
                 m_ibos[i] = m_pipe.m_ibos[i];
-                m_ibos[i].update(m_viz, ic[i], &m_object);
+                m_ibos[i].update(*(m_viz.m_buffers), ic[i], &m_object);
             }
         }
         
@@ -849,7 +813,7 @@ namespace yq::tachyon {
             m_ubos.resize(uc.size());
             for(i=0;i<m_ubos.size();++i){
                 m_ubos[i] = m_pipe.m_ubos[i];
-                m_ubos[i].update(m_viz, uc[i], &m_object);
+                m_ubos[i].update(*(m_viz.m_buffers), uc[i], &m_object);
             }
             
             ds += uc.size();
@@ -930,7 +894,7 @@ namespace yq::tachyon {
     {
         size_t i;
         for(i=0;i<m_ubos.size();++i){
-            m_ubos[i].update(m_viz, m_pipe.m_cfg.ubos[i], &m_object);
+            m_ubos[i].update(*(m_viz.m_buffers), m_pipe.m_cfg.ubos[i], &m_object);
             _ubo(i);
         }
         for(i=0;i<m_texs.size();++i){
@@ -945,11 +909,11 @@ namespace yq::tachyon {
 
         auto& vc    = m_pipe.m_cfg.vbos;
         for(i=0;i<m_vbos.size();++i)
-            m_vbos[i].update(m_viz, vc[i], &m_object);
+            m_vbos[i].update(*(m_viz.m_buffers), vc[i], &m_object);
             
         auto& ic    = m_pipe.m_cfg.ibos;
         for(i=0;i<m_ibos.size();++i)
-            m_ibos[i].update(m_viz, ic[i], &m_object);
+            m_ibos[i].update(*(m_viz.m_buffers), ic[i], &m_object);
 
 
         const Render3D* r3      = (m_pipe.m_cfg.push.type == PushConfigType::Full) ? dynamic_cast<const Render3D*>(&m_object) : nullptr;

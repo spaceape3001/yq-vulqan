@@ -36,7 +36,7 @@ namespace yq::tachyon {
     struct ViShader;
     struct ViImage;
     struct ViQueues;
-    struct ViRender;
+    struct ViRendered;
     struct ViRenderPass;
     struct ViSwapchain;
     struct ViPipeline;
@@ -259,6 +259,9 @@ namespace yq::tachyon {
         operator ViVisualizer& () { return m_dedicated; }
 
     protected:
+        friend struct ViPipeline;
+        friend struct ViRendered;
+    
         Visualizer();
         ~Visualizer();
 

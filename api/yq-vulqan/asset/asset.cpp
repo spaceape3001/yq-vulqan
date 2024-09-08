@@ -4,5 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViCommandPool.hpp"
+// Auto-generated file
 
+#include "Asset.ipp"
+#include "AssetCache.ipp"
+#include "AssetFactory.ipp"

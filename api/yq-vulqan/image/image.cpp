@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// Auto-generated file
+
+#include "ComponentSwizzle.ipp"
+#include "DataFormat.ipp"
+#include "Image.ipp"
+#include "ImageAspect.ipp"
+#include "ImageLayout.ipp"
+#include "ImageTiling.ipp"
+#include "ImageType.ipp"

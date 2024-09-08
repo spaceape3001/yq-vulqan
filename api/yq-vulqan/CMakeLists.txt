@@ -8,9 +8,6 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
-    errors.hpp
-    logging.hpp
-    
     2D/ImageQuad2.hpp
     2D/ImageQuad2.cpp
     2D/Quadrilateral.hpp
@@ -23,13 +20,7 @@ add_library(${PROJECT_NAME} SHARED
 
     app/AppCreateInfo.hpp
 
-    asset/Asset.hpp
-    asset/Asset.cpp
-    asset/AssetCache.hpp
-    asset/AssetCache.cpp
-    asset/AssetFactory.hpp
-    asset/AssetFactory.cpp
-    asset/AssetInfoWriter.hpp
+    asset/asset.cpp
     
     basic/Required.hpp
     basic/Tristate.hpp
@@ -82,21 +73,7 @@ add_library(${PROJECT_NAME} SHARED
     glfw/VideoMode.hpp
     glfw/VideoMode.cpp
     
-    image/ComponentSwizzle.hpp
-    image/ComponentSwizzle.cpp
-    image/DataFormat.hpp
-    image/DataFormat.cpp
-    image/Image.hpp
-    image/Image.cpp
-    image/ImageAspect.hpp
-    image/ImageAspect.cpp
-    image/ImageInfo.hpp
-    image/ImageLayout.hpp
-    image/ImageLayout.cpp
-    image/ImageTiling.hpp
-    image/ImageTiling.cpp
-    image/ImageType.hpp
-    image/ImageType.cpp
+    image/image.cpp
     image/STBImage.cpp
     
     image_view/ImageViewCreateFlags.hpp
@@ -121,45 +98,8 @@ add_library(${PROJECT_NAME} SHARED
     manipulator/Manipulator.hpp
     manipulator/Manipulator.cpp
     
-    memory/Buffer.hpp
-    memory/Buffer.cpp
-    memory/BufferObject.hpp
-    memory/BufferUsage.hpp
-    memory/BufferUsage.cpp
-    memory/Memory.hpp
-    memory/Memory.cpp
-    memory/SystemAllocationScope.hpp
-    memory/SystemAllocationScope.cpp
-    
-    pipeline/CullMode.hpp
-    pipeline/CullMode.cpp
-    pipeline/DataActivity.hpp
-    pipeline/DataActivity.cpp
-    pipeline/FrontFace.hpp
-    pipeline/FrontFace.cpp
-    pipeline/IndexType.hpp
-    pipeline/IndexType.cpp
-    pipeline/Pipeline.hpp
-    pipeline/Pipeline.cpp
-    pipeline/PipelineBinding.hpp
-    pipeline/PipelineBinding.cpp
-    pipeline/PipelineBuilder.hpp
-    pipeline/PipelineBuilder.cpp
-    pipeline/PipelineConfig.hpp
-    pipeline/PipelineConfig.cpp
-    pipeline/PipelineUtils.hpp
-    pipeline/PipelineUtils.cpp
-    pipeline/PolygonMode.hpp
-    pipeline/PolygonMode.cpp
-    pipeline/PushConfigType.hpp
-    pipeline/PushData.hpp
-    pipeline/Topology.hpp
-    pipeline/Topology.cpp
-    pipeline/UBO.hpp
-    pipeline/VBO.hpp
-    pipeline/VertexInputRate.hpp
-    pipeline/VertexInputRate.cpp
-    
+    memory/memory.cpp
+    pipeline/pipeline.cpp
 
     render/Render2D.hpp
     render/Render2D.cpp
@@ -193,11 +133,7 @@ add_library(${PROJECT_NAME} SHARED
     shader/ShaderType.hpp
     shader/ShaderType.cpp
     
-    task/Task.hpp
-    task/Task.cpp
-    task/TaskAPI.hpp
-    task/TaskEngine.hpp
-    task/TaskEngine.cpp
+    task/task.cpp
     
     texture/Texture.hpp
     texture/Texture.cpp
@@ -233,6 +169,8 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViBufferObject.cpp
     viz/ViCleanupManager.hpp
     viz/ViCleanupManager.cpp
+    viz/ViCommandPool.hpp
+    viz/ViCommandPool.cpp
     viz/ViQueueManager.hpp
     viz/ViQueueManager.cpp
     viz/ViShader.hpp

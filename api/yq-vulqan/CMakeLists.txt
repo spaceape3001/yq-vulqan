@@ -210,6 +210,8 @@ add_library(${PROJECT_NAME} SHARED
     
     v/VqApp.hpp
     v/VqApp.cpp
+    v/VqEnumerations.hpp
+    v/VqEnumerations.cpp
     v/VqEnums.hpp
     v/VqEnums.cpp
     v/VqException.hpp

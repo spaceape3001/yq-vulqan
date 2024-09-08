@@ -12,9 +12,8 @@ import os, sys
 
 DONT    = ['KHR', 'NV', 'EXT', 'QCOM', 'MSFT', 'LUNARG', 'AMD', 'INTEL' ]
 
-
-OPT_STRUCTS = False
-OPT_ENUMS   = True
+OPT_STRUCTS = None # 'VqStructs'
+OPT_ENUMS   = None # 'VqEnumerations'
 
 def underscoredToCapitalizedBits(this):
     c   = []
@@ -52,25 +51,46 @@ def stripStrip(this):
     return this
 
 class Enum:
+    KEYS = []
     def __init__(self, name):
-        self.name   = name
+        self.name   = name.replace('KHR','').replace('QCOM','').replace('NV','')
         self.sname  = stripStrip(name)
         self.map    = dict()
         self.args   = []
         self.isflag = self.sname.endswith('FlagBits')
+        
         caps = toCapitalizedBits(self.sname)
         if self.isflag:
+            self.root    = toCapitalizedString(caps[1:-2])
             self.lead   = '_'.join(caps[0:-2]) + '_'
+            self.cxx    = self.root + 'Bit'
+            self.flag   = self.root + 'Flags'
+            self.base   = 'uint8_t'
         else:
             self.lead   = '_'.join(caps) + '_'
-        self.cxx    = toCapitalizedString(caps[1:])
+            self.root   = toCapitalizedString(caps[1:])
+            self.cxx    = self.root
+            self.flag   = None
+            self.base   = 'int32_t'
+            
+        self.map['cxx']     = self.cxx
+        self.map['flag']    = self.flag
+        self.map['lead']    = self.lead
+        self.map['base']    = self.base
+        self.keys           = []
+        self.values         = []
+        self.dupe           = self.cxx in Enum.KEYS
+        Enum.KEYS.append(self.cxx)
 
     def filter(self, sv):
         if sv.startswith(self.lead):
             sv  = sv[len(self.lead):]
         #return sv
         bits = underscoredToCapitalizedBits(sv);
-        return ''.join(bits)
+        ret = ''.join(bits).replace('KHR','').replace('QCOM','').replace('NV','').replace('EXT','').removeprefix('Vk')
+        if self.isflag:
+            ret = ret.removesuffix('Bit').removesuffix('FlagSet')
+        return ret
 
     def add(self, line):
         b   = l.split('=')
@@ -80,12 +100,30 @@ class Enum:
         if 'MAX_ENUM' in k:
             return
         k   = self.filter(k)
-
+        if k[0].isdigit():
+            k   = '_' + k
+        if k in self.keys:
+            return
+        if self.isflag and (k == 'None'):
+            return
+        
+        ev  = dict()
+        ev['key']   = k
         v   = b[1].strip()
         if v.endswith(','):
             v   = v[:-1]
-        v   = self.filter(v)
-        self.args.append([k,v])
+        if self.isflag and v.startswith('0x'):
+            v = str(int(v,16).bit_length())
+        else:
+            v = self.filter(v)
+        ev['value'] = v
+
+        ev['dupe']  = v in self.values
+
+        self.keys.append(k)
+        self.values.append(k)
+        self.values.append(v)
+        self.args.append(ev)
         
 class Struct:
     def __init__(self, name):
@@ -116,7 +154,7 @@ with open('/usr/include/vulkan/vulkan_core.h') as f:
             if b[2] != 'VkStructureType':
                 enums.append(Enum(b[2]))
                 mode    = Vulkan.mEnum
-                print("enumeration %s detected (%s)" % (enums[-1].name, enums[-1].lead))
+                #print("enumeration %s detected (%s)" % (enums[-1].name, enums[-1].lead))
         if l[0] == '}':
             mode    = Vulkan.mNone
         if (mode == Vulkan.mEnum) and ('=' in l):
@@ -140,13 +178,16 @@ for e in stypes:
     
 def skey(s):
     return s['vk']
+def ekey(e):
+    return e.sname
 
 structs.sort(key=skey)
+enums.sort(key=ekey)
 
 written = []
 
-if OPT_STRUCTS:
-    with open('VqStructs.hpp', 'w') as f:
+if OPT_STRUCTS is not None:
+    with open('%s.hpp' % OPT_STRUCTS, 'w') as f:
         f.write("""////////////////////////////////////////////////////////////////////////////////
 //
 //  YOUR QUILL
@@ -180,34 +221,106 @@ namespace yq::tachyon {""")
 }
 """)
 
+if OPT_ENUMS is not None:
+    with open('%s.hpp' % OPT_ENUMS, 'w') as f:
+        written = []
+        f.write("""////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
 
-with open('VqEnumerations.hpp', 'w') as f:
-    f.write("""/// ENUMERATIONS
-//  WARNING.... file not yet trusted....
 #pragma once
 
+//  WARNING!  WARNING!  WARNNG!  WARNING!
+//  This header file is AUTO-GENERATED, changes will be CLOBBERED
+
+#include <string_view>
+#include <yq-toolbox/basic/Flags.hpp>
+
 namespace yq::tachyon {""")
-    for e in enums:
-        args    = dict()
-        args['cxx'] = e.cxx
+        for e in enums:
+        
+            if e.dupe:
+                continue
     
-        f.write("""
-    YQ_ENUM(Vq%(cxx)s, ,
-""" % args)
+            f.write("""
+    enum class Vq%(cxx)s : %(base)s {
+""" % e.map)
 
-        i   = 0
+            i   = 0
 
-        for kv in e.args:
-            if i != 0:
-                f.write(',\n')
-            else:
-                i   = 1
-            f.write("        %s = %s" % (kv[0],kv[1]))
+            for kv in e.args:
+                if i != 0:
+                    f.write(',\n')
+                else:
+                    i   = 1
+                f.write("        %(key)s = %(value)s" % kv)
             
-        f.write("""
-    )
-""" % args)
+            f.write("""
+    };
+""" % e.map)
 
-    f.write("""
+        f.write('\n')
+        
+        for e in enums:
+            if e.isflag:
+                f.write("""
+    using Vq%(flag)s = Flags<Vq%(cxx)s>;""" % e.map)
+
+        f.write('\n')
+
+        for e in enums:
+            if e.dupe:
+                continue
+
+            f.write("""
+    std::string_view    to_string_view(Vq%(cxx)s);""" % e.map)
+        f.write("""
 }
 """)
+
+    with open('%s.cpp' % OPT_ENUMS, 'w') as f:
+        f.write("""////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+//  WARNING!  WARNING!  WARNNG!  WARNING!
+//  This header file is AUTO-GENERATED, changes will be CLOBBERED
+
+#include "VqEnumerations.hpp"
+
+namespace yq::tachyon {
+
+    static const std::string_view szUnknown   = "(unknown)";
+""");
+
+        for e in enums:
+            if e.dupe:
+                continue
+    
+            f.write("""
+    std::string_view    to_string_view(Vq%(cxx)s v)
+    {
+        switch(v){""" % e.map)
+
+            for kv in e.args:
+                if kv['dupe']:
+                    continue
+                f.write("""
+        case Vq%(cxx)s::%(key)s:
+            return "%(key)s";""" % (e.map | kv));
+        
+            f.write("""
+        default:
+            return szUnknown;
+        }
+    }
+""")        
+
+
+        f.write("""
+}
+""");

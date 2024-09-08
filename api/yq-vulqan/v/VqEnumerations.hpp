@@ -1,112 +1,438 @@
-/// ENUMERATIONS
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
+//  WARNING!  WARNING!  WARNNG!  WARNING!
+//  This header file is AUTO-GENERATED, changes will be CLOBBERED
+
+#include <string_view>
+#include <yq-toolbox/basic/Flags.hpp>
+
 namespace yq::tachyon {
-    YQ_ENUM(VkResult, ,
-        VkSuccess = 0,
-        VkNotReady = 1,
-        VkTimeout = 2,
-        VkEventSet = 3,
-        VkEventReset = 4,
-        VkIncomplete = 5,
-        VkErrorOutOfHostMemory = -1,
-        VkErrorOutOfDeviceMemory = -2,
-        VkErrorInitializationFailed = -3,
-        VkErrorDeviceLost = -4,
-        VkErrorMemoryMapFailed = -5,
-        VkErrorLayerNotPresent = -6,
-        VkErrorExtensionNotPresent = -7,
-        VkErrorFeatureNotPresent = -8,
-        VkErrorIncompatibleDriver = -9,
-        VkErrorTooManyObjects = -10,
-        VkErrorFormatNotSupported = -11,
-        VkErrorFragmentedPool = -12,
-        VkErrorUnknown = -13,
-        VkErrorOutOfPoolMemory = -1000069000,
-        VkErrorInvalidExternalHandle = -1000072003,
-        VkErrorFragmentation = -1000161000,
-        VkErrorInvalidOpaqueCaptureAddress = -1000257000,
-        VkPipelineCompileRequired = 1000297000,
-        VkErrorSurfaceLostKHR = -1000000000,
-        VkErrorNativeWindowInUseKHR = -1000000001,
-        VkSuboptimalKHR = 1000001003,
-        VkErrorOutOfDateKHR = -1000001004,
-        VkErrorIncompatibleDisplayKHR = -1000003001,
-        VkErrorValidationFailedEXT = -1000011001,
-        VkErrorInvalidShaderNV = -1000012000,
-        VkErrorImageUsageNotSupportedKHR = -1000023000,
-        VkErrorVideoPictureLayoutNotSupportedKHR = -1000023001,
-        VkErrorVideoProfileOperationNotSupportedKHR = -1000023002,
-        VkErrorVideoProfileFormatNotSupportedKHR = -1000023003,
-        VkErrorVideoProfileCodecNotSupportedKHR = -1000023004,
-        VkErrorVideoStdVersionNotSupportedKHR = -1000023005,
-        VkErrorInvalidDrmFormatModifierPlaneLayoutEXT = -1000158000,
-        VkErrorNotPermittedKHR = -1000174001,
-        VkErrorFullScreenExclusiveModeLostEXT = -1000255000,
-        VkThreadIdleKHR = 1000268000,
-        VkThreadDoneKHR = 1000268001,
-        VkOperationDeferredKHR = 1000268002,
-        VkOperationNotDeferredKHR = 1000268003,
-        VkErrorInvalidVideoStdParametersKHR = -1000299000,
-        VkErrorCompressionExhaustedEXT = -1000338000,
-        VkIncompatibleShaderBinaryEXT = 1000482000,
-        VkErrorOutOfPoolMemoryKHR = VkErrorOutOfPoolMemory,
-        VkErrorInvalidExternalHandleKHR = VkErrorInvalidExternalHandle,
-        VkErrorFragmentationEXT = VkErrorFragmentation,
-        VkErrorNotPermittedEXT = VkErrorNotPermittedKHR,
-        VkErrorInvalidDeviceAddressEXT = VkErrorInvalidOpaqueCaptureAddress,
-        VkErrorInvalidOpaqueCaptureAddressKHR = VkErrorInvalidOpaqueCaptureAddress,
-        VkPipelineCompileRequiredEXT = VkPipelineCompileRequired,
-        VkErrorPipelineCompileRequiredEXT = VkPipelineCompileRequired,
-        VkErrorIncompatibleShaderBinaryEXT = VkIncompatibleShaderBinaryEXT
-    )
+    enum class VqAccelerationStructureBuildType : int32_t {
+        Host = 0,
+        Device = 1,
+        HostOrDevice = 2
+    };
 
-    YQ_ENUM(VkPipelineCacheHeaderVersion, ,
-        One = 1
-    )
+    enum class VqAccelerationStructureCompatibility : int32_t {
+        Compatible = 0,
+        Incompatible = 1
+    };
 
-    YQ_ENUM(VkImageLayout, ,
-        Undefined = 0,
-        General = 1,
-        ColorAttachmentOptimal = 2,
-        DepthStencilAttachmentOptimal = 3,
-        DepthStencilReadOnlyOptimal = 4,
-        ShaderReadOnlyOptimal = 5,
-        TransferSrcOptimal = 6,
-        TransferDstOptimal = 7,
-        Preinitialized = 8,
-        DepthReadOnlyStencilAttachmentOptimal = 1000117000,
-        DepthAttachmentStencilReadOnlyOptimal = 1000117001,
-        DepthAttachmentOptimal = 1000241000,
-        DepthReadOnlyOptimal = 1000241001,
-        StencilAttachmentOptimal = 1000241002,
-        StencilReadOnlyOptimal = 1000241003,
-        ReadOnlyOptimal = 1000314000,
-        AttachmentOptimal = 1000314001,
-        PresentSrcKHR = 1000001002,
-        VideoDecodeDstKHR = 1000024000,
-        VideoDecodeSrcKHR = 1000024001,
-        VideoDecodeDpbKHR = 1000024002,
-        SharedPresentKHR = 1000111000,
-        FragmentDensityMapOptimalEXT = 1000218000,
-        FragmentShadingRateAttachmentOptimalKHR = 1000164003,
-        RenderingLocalReadKHR = 1000232000,
-        VideoEncodeDstKHR = 1000299000,
-        VideoEncodeSrcKHR = 1000299001,
-        VideoEncodeDpbKHR = 1000299002,
-        AttachmentFeedbackLoopOptimalEXT = 1000339000,
-        DepthReadOnlyStencilAttachmentOptimalKHR = DepthReadOnlyStencilAttachmentOptimal,
-        DepthAttachmentStencilReadOnlyOptimalKHR = DepthAttachmentStencilReadOnlyOptimal,
-        ShadingRateOptimalNV = FragmentShadingRateAttachmentOptimalKHR,
-        DepthAttachmentOptimalKHR = DepthAttachmentOptimal,
-        DepthReadOnlyOptimalKHR = DepthReadOnlyOptimal,
-        StencilAttachmentOptimalKHR = StencilAttachmentOptimal,
-        StencilReadOnlyOptimalKHR = StencilReadOnlyOptimal,
-        ReadOnlyOptimalKHR = ReadOnlyOptimal,
-        AttachmentOptimalKHR = AttachmentOptimal
-    )
+    enum class VqAccelerationStructureCreateBit : uint8_t {
+        DeviceAddressCaptureReplay = 1,
+        DescriptorBufferCaptureReplay = 4,
+        Motion = 3
+    };
 
-    YQ_ENUM(VkObjectType, ,
+    enum class VqAccelerationStructureMemoryRequirementsType : int32_t {
+        Object = 0,
+        BuildScratch = 1,
+        UpdateScratch = 2
+    };
+
+    enum class VqAccelerationStructureMotionInstanceType : int32_t {
+        Static = 0,
+        MatrixMotion = 1,
+        SrtMotion = 2
+    };
+
+    enum class VqAccelerationStructureType : int32_t {
+        TopLevel = 0,
+        BottomLevel = 1,
+        Generic = 2
+    };
+
+    enum class VqAccessBit : uint8_t {
+        IndirectCommandRead = 1,
+        IndexRead = 2,
+        VertexAttributeRead = 3,
+        UniformRead = 4,
+        InputAttachmentRead = 5,
+        ShaderRead = 6,
+        ShaderWrite = 7,
+        ColorAttachmentRead = 8,
+        ColorAttachmentWrite = 9,
+        DepthStencilAttachmentRead = 10,
+        DepthStencilAttachmentWrite = 11,
+        TransferRead = 12,
+        TransferWrite = 13,
+        HostRead = 14,
+        HostWrite = 15,
+        MemoryRead = 16,
+        MemoryWrite = 17,
+        TransformFeedbackWrite = 26,
+        TransformFeedbackCounterRead = 27,
+        TransformFeedbackCounterWrite = 28,
+        ConditionalRenderingRead = 21,
+        ColorAttachmentReadNoncoherent = 20,
+        AccelerationStructureRead = 22,
+        AccelerationStructureWrite = 23,
+        FragmentDensityMapRead = 25,
+        FragmentShadingRateAttachmentRead = 24,
+        CommandPreprocessRead = 18,
+        CommandPreprocessWrite = 19,
+        ShadingRateImageRead = FragmentShadingRateAttachmentRead
+    };
+
+    enum class VqAcquireProfilingLockBit : uint8_t {
+
+    };
+
+    enum class VqAttachmentDescriptionBit : uint8_t {
+        MayAlias = 1
+    };
+
+    enum class VqAttachmentLoadOp : int32_t {
+        Load = 0,
+        Clear = 1,
+        DontCare = 2,
+        None = 1000400000
+    };
+
+    enum class VqAttachmentStoreOp : int32_t {
+        Store = 0,
+        DontCare = 1,
+        None = 1000301000
+    };
+
+    enum class VqBlendFactor : int32_t {
+        Zero = 0,
+        One = 1,
+        SrcColor = 2,
+        OneMinusSrcColor = 3,
+        DstColor = 4,
+        OneMinusDstColor = 5,
+        SrcAlpha = 6,
+        OneMinusSrcAlpha = 7,
+        DstAlpha = 8,
+        OneMinusDstAlpha = 9,
+        ConstantColor = 10,
+        OneMinusConstantColor = 11,
+        ConstantAlpha = 12,
+        OneMinusConstantAlpha = 13,
+        SrcAlphaSaturate = 14,
+        Src1Color = 15,
+        OneMinusSrc1Color = 16,
+        Src1Alpha = 17,
+        OneMinusSrc1Alpha = 18
+    };
+
+    enum class VqBlendOp : int32_t {
+        Add = 0,
+        Subtract = 1,
+        ReverseSubtract = 2,
+        Min = 3,
+        Max = 4,
+        Zero = 1000148000,
+        Src = 1000148001,
+        Dst = 1000148002,
+        SrcOver = 1000148003,
+        DstOver = 1000148004,
+        SrcIn = 1000148005,
+        DstIn = 1000148006,
+        SrcOut = 1000148007,
+        DstOut = 1000148008,
+        SrcAtop = 1000148009,
+        DstAtop = 1000148010,
+        Xor = 1000148011,
+        Multiply = 1000148012,
+        Screen = 1000148013,
+        Overlay = 1000148014,
+        Darken = 1000148015,
+        Lighten = 1000148016,
+        Colordodge = 1000148017,
+        Colorburn = 1000148018,
+        Hardlight = 1000148019,
+        Softlight = 1000148020,
+        Difference = 1000148021,
+        Exclusion = 1000148022,
+        Invert = 1000148023,
+        InvertRgb = 1000148024,
+        Lineardodge = 1000148025,
+        Linearburn = 1000148026,
+        Vividlight = 1000148027,
+        Linearlight = 1000148028,
+        Pinlight = 1000148029,
+        Hardmix = 1000148030,
+        HslHue = 1000148031,
+        HslSaturation = 1000148032,
+        HslColor = 1000148033,
+        HslLuminosity = 1000148034,
+        Plus = 1000148035,
+        PlusClamped = 1000148036,
+        PlusClampedAlpha = 1000148037,
+        PlusDarker = 1000148038,
+        Minus = 1000148039,
+        MinusClamped = 1000148040,
+        Contrast = 1000148041,
+        InvertOvg = 1000148042,
+        Red = 1000148043,
+        Green = 1000148044,
+        Blue = 1000148045
+    };
+
+    enum class VqBlendOverlap : int32_t {
+        Uncorrelated = 0,
+        Disjoint = 1,
+        Conjoint = 2
+    };
+
+    enum class VqBlockMatchWindowCompareMode : int32_t {
+        Min = 0,
+        Max = 1
+    };
+
+    enum class VqBorderColor : int32_t {
+        FloatTransparentBlack = 0,
+        IntTransparentBlack = 1,
+        FloatOpaqueBlack = 2,
+        IntOpaqueBlack = 3,
+        FloatOpaqueWhite = 4,
+        IntOpaqueWhite = 5,
+        FloatCustom = 1000287003,
+        IntCustom = 1000287004
+    };
+
+    enum class VqBufferCreateBit : uint8_t {
+        SparseBinding = 1,
+        SparseResidency = 2,
+        SparseAliased = 3,
+        Protected = 4,
+        DeviceAddressCaptureReplay = 5,
+        DescriptorBufferCaptureReplay = 6,
+        VideoProfileIndependent = 7
+    };
+
+    enum class VqBufferUsageBit : uint8_t {
+        TransferSrc = 1,
+        TransferDst = 2,
+        UniformTexelBuffer = 3,
+        StorageTexelBuffer = 4,
+        UniformBuffer = 5,
+        StorageBuffer = 6,
+        IndexBuffer = 7,
+        VertexBuffer = 8,
+        IndirectBuffer = 9,
+        ShaderDeviceAddress = 18,
+        VideoDecodeSrc = 14,
+        VideoDecodeDst = 15,
+        TransformFeedbackBuffer = 12,
+        TransformFeedbackCounterBuffer = 13,
+        ConditionalRendering = 10,
+        ExecutionGraphScratchBitAmdx = 26,
+        AccelerationStructureBuildInputReadOnly = 20,
+        AccelerationStructureStorage = 21,
+        ShaderBindingTable = 11,
+        VideoEncodeDst = 16,
+        VideoEncodeSrc = 17,
+        SamplerDescriptorBuffer = 22,
+        ResourceDescriptorBuffer = 23,
+        PushDescriptorsDescriptorBuffer = 27,
+        MicromapBuildInputReadOnly = 24,
+        MicromapStorage = 25,
+        RayTracing = ShaderBindingTable
+    };
+
+    enum class VqBuildAccelerationStructureBit : uint8_t {
+        AllowUpdate = 1,
+        AllowCompaction = 2,
+        PreferFastTrace = 3,
+        PreferFastBuild = 4,
+        LowMemory = 5,
+        Motion = 6,
+        AllowOpacityMicromapUpdate = 7,
+        AllowDisableOpacityMicromaps = 8,
+        AllowOpacityMicromapDataUpdate = 9,
+        AllowDisplacementMicromapUpdate = 10,
+        AllowDataAccess = 12
+    };
+
+    enum class VqBuildAccelerationStructureMode : int32_t {
+        Build = 0,
+        Update = 1
+    };
+
+    enum class VqBuildMicromapBit : uint8_t {
+        PreferFastTrace = 1,
+        PreferFastBuild = 2,
+        AllowCompaction = 3
+    };
+
+    enum class VqBuildMicromapMode : int32_t {
+        Build = 0
+    };
+
+    enum class VqChromaLocation : int32_t {
+        CositedEven = 0,
+        Midpoint = 1
+    };
+
+    enum class VqCoarseSampleOrderType : int32_t {
+        Default = 0,
+        Custom = 1,
+        PixelMajor = 2,
+        SampleMajor = 3
+    };
+
+    enum class VqColorComponentBit : uint8_t {
+        R = 1,
+        G = 2,
+        B = 3,
+        A = 4
+    };
+
+    enum class VqColorSpace : int32_t {
+        SrgbNonlinear = 0,
+        DisplayP3Nonlinear = 1000104001,
+        ExtendedSrgbLinear = 1000104002,
+        DisplayP3Linear = 1000104003,
+        DciP3Nonlinear = 1000104004,
+        Bt709Linear = 1000104005,
+        Bt709Nonlinear = 1000104006,
+        Bt2020Linear = 1000104007,
+        Hdr10St2084 = 1000104008,
+        Dolbyvision = 1000104009,
+        Hdr10Hlg = 1000104010,
+        AdobergbLinear = 1000104011,
+        AdobergbNonlinear = 1000104012,
+        PassThrough = 1000104013,
+        ExtendedSrgbNonlinear = 1000104014,
+        DisplayNativeAMD = 1000213000,
+        ColorspaceSrgbNonlinear = SrgbNonlinear,
+        DciP3Linear = DisplayP3Linear
+    };
+
+    enum class VqCommandBufferLevel : int32_t {
+        Primary = 0,
+        Secondary = 1
+    };
+
+    enum class VqCommandBufferResetBit : uint8_t {
+        ReleaseResources = 1
+    };
+
+    enum class VqCommandBufferUsageBit : uint8_t {
+        OneTimeSubmit = 1,
+        RenderPassContinue = 2,
+        SimultaneousUse = 3
+    };
+
+    enum class VqCommandPoolCreateBit : uint8_t {
+        Transient = 1,
+        ResetCommandBuffer = 2,
+        Protected = 3
+    };
+
+    enum class VqCommandPoolResetBit : uint8_t {
+        ReleaseResources = 1
+    };
+
+    enum class VqCompareOp : int32_t {
+        Never = 0,
+        Less = 1,
+        Equal = 2,
+        LessOrEqual = 3,
+        Greater = 4,
+        NotEqual = 5,
+        GreaterOrEqual = 6,
+        Always = 7
+    };
+
+    enum class VqComponentSwizzle : int32_t {
+        Identity = 0,
+        Zero = 1,
+        One = 2,
+        R = 3,
+        G = 4,
+        B = 5,
+        A = 6
+    };
+
+    enum class VqComponentType : int32_t {
+        Float16 = 0,
+        Float32 = 1,
+        Float64 = 2,
+        Sint8 = 3,
+        Sint16 = 4,
+        Sint32 = 5,
+        Sint64 = 6,
+        Uint8 = 7,
+        Uint16 = 8,
+        Uint32 = 9,
+        Uint64 = 10
+    };
+
+    enum class VqCompositeAlphaBit : uint8_t {
+        Opaque = 1,
+        PreMultiplied = 2,
+        PostMultiplied = 3,
+        Inherit = 4
+    };
+
+    enum class VqConditionalRenderingBit : uint8_t {
+        Inverted = 1
+    };
+
+    enum class VqConservativeRasterizationMode : int32_t {
+        Disabled = 0,
+        Overestimate = 1,
+        Underestimate = 2
+    };
+
+    enum class VqCopyAccelerationStructureMode : int32_t {
+        Clone = 0,
+        Compact = 1,
+        Serialize = 2,
+        Deserialize = 3
+    };
+
+    enum class VqCopyMicromapMode : int32_t {
+        Clone = 0,
+        Serialize = 1,
+        Deserialize = 2,
+        Compact = 3
+    };
+
+    enum class VqCoverageModulationMode : int32_t {
+        None = 0,
+        Rgb = 1,
+        Alpha = 2,
+        Rgba = 3
+    };
+
+    enum class VqCoverageReductionMode : int32_t {
+        Merge = 0,
+        Truncate = 1
+    };
+
+    enum class VqCubicFilterWeights : int32_t {
+        CatmullRom = 0,
+        ZeroTangentCardinal = 1,
+        BSpline = 2,
+        MitchellNetravali = 3
+    };
+
+    enum class VqCullModeBit : uint8_t {
+        Front = 1,
+        Back = 2,
+        FrontAndBack = 2
+    };
+
+    enum class VqDebugReportBit : uint8_t {
+        Information = 1,
+        Warning = 2,
+        PerformanceWarning = 3,
+        Error = 4,
+        Debug = 5
+    };
+
+    enum class VqDebugReportObjectType : int32_t {
         Unknown = 0,
         Instance = 1,
         PhysicalDevice = 2,
@@ -133,60 +459,357 @@ namespace yq::tachyon {
         DescriptorSet = 23,
         Framebuffer = 24,
         CommandPool = 25,
+        Surface = 26,
+        Swapchain = 27,
+        DebugReportCallback = 28,
+        Display = 29,
+        DisplayMode = 30,
+        ValidationCache = 33,
         SamplerYcbcrConversion = 1000156000,
         DescriptorUpdateTemplate = 1000085000,
-        PrivateDataSlot = 1000295000,
-        SurfaceKHR = 1000000000,
-        SwapchainKHR = 1000001000,
-        DisplayKHR = 1000002000,
-        DisplayModeKHR = 1000002001,
-        DebugReportCallbackEXT = 1000011000,
-        VideoSessionKHR = 1000023000,
-        VideoSessionParametersKHR = 1000023001,
         CuModuleNvx = 1000029000,
         CuFunctionNvx = 1000029001,
-        DebugUtilsMessengerEXT = 1000128000,
-        AccelerationStructureKHR = 1000150000,
-        ValidationCacheEXT = 1000160000,
-        AccelerationStructureNV = 1000165000,
-        PerformanceConfigurationINTEL = 1000210000,
-        DeferredOperationKHR = 1000268000,
-        IndirectCommandsLayoutNV = 1000277000,
-        CudaModuleNV = 1000307000,
-        CudaFunctionNV = 1000307001,
+        AccelerationStructure = 1000150000,
+        CudaModule = 1000307000,
+        CudaFunction = 1000307001,
         BufferCollectionFuchsia = 1000366000,
-        MicromapEXT = 1000396000,
-        OpticalFlowSessionNV = 1000464000,
-        ShaderEXT = 1000482000,
-        DescriptorUpdateTemplateKHR = DescriptorUpdateTemplate,
-        SamplerYcbcrConversionKHR = SamplerYcbcrConversion,
-        PrivateDataSlotEXT = PrivateDataSlot
-    )
+        DebugReport = DebugReportCallback
+    };
 
-    YQ_ENUM(VkVendorId, ,
-        Khronos = 0x10000,
-        Viv = 0x10001,
-        Vsi = 0x10002,
-        Kazan = 0x10003,
-        Codeplay = 0x10004,
-        Mesa = 0x10005,
-        Pocl = 0x10006,
-        Mobileye = 0x10007
-    )
+    enum class VqDebugUtilsMessageSeverityBit : uint8_t {
+        Verbose = 1,
+        Info = 5,
+        Warning = 9,
+        Error = 13
+    };
 
-    YQ_ENUM(VkSystemAllocationScope, ,
-        Command = 0,
-        Object = 1,
-        Cache = 2,
-        Device = 3,
-        Instance = 4
-    )
+    enum class VqDebugUtilsMessageTypeBit : uint8_t {
+        General = 1,
+        Validation = 2,
+        Performance = 3,
+        DeviceAddressBinding = 4
+    };
 
-    YQ_ENUM(VkInternalAllocationType, ,
-        Executable = 0
-    )
+    enum class VqDependencyBit : uint8_t {
+        ByRegion = 1,
+        DeviceGroup = 3,
+        ViewLocal = 2,
+        FeedbackLoop = 4
+    };
 
-    YQ_ENUM(VkFormat, ,
+    enum class VqDepthBiasRepresentation : int32_t {
+        LeastRepresentableValueFormat = 0,
+        LeastRepresentableValueForceUnorm = 1,
+        Float = 2
+    };
+
+    enum class VqDescriptorBindingBit : uint8_t {
+        UpdateAfterBind = 1,
+        UpdateUnusedWhilePending = 2,
+        PartiallyBound = 3,
+        VariableDescriptorCount = 4
+    };
+
+    enum class VqDescriptorPoolCreateBit : uint8_t {
+        FreeDescriptorSet = 1,
+        UpdateAfterBind = 2,
+        HostOnly = 3,
+        AllowOverallocationSets = 4,
+        AllowOverallocationPools = 5,
+        HostOnlyBitValve = HostOnly
+    };
+
+    enum class VqDescriptorSetLayoutCreateBit : uint8_t {
+        UpdateAfterBindPool = 2,
+        PushDescriptor = 1,
+        DescriptorBuffer = 5,
+        EmbeddedImmutableSamplers = 6,
+        IndirectBindable = 8,
+        HostOnlyPool = 3,
+        PerStage = 7,
+        HostOnlyPoolBitValve = HostOnlyPool
+    };
+
+    enum class VqDescriptorType : int32_t {
+        Sampler = 0,
+        CombinedImageSampler = 1,
+        SampledImage = 2,
+        StorageImage = 3,
+        UniformTexelBuffer = 4,
+        StorageTexelBuffer = 5,
+        UniformBuffer = 6,
+        StorageBuffer = 7,
+        UniformBufferDynamic = 8,
+        StorageBufferDynamic = 9,
+        InputAttachment = 10,
+        InlineUniformBlock = 1000138000,
+        AccelerationStructure = 1000150000,
+        SampleWeightImage = 1000440000,
+        BlockMatchImage = 1000440001,
+        Mutable = 1000351000,
+        MutableValve = Mutable
+    };
+
+    enum class VqDescriptorUpdateTemplateType : int32_t {
+        DescriptorSet = 0,
+        PushDescriptors = 1
+    };
+
+    enum class VqDeviceAddressBindingBit : uint8_t {
+        InternalObject = 1
+    };
+
+    enum class VqDeviceAddressBindingType : int32_t {
+        Bind = 0,
+        Unbind = 1
+    };
+
+    enum class VqDeviceDiagnosticsConfigBit : uint8_t {
+        EnableShaderDebugInfo = 1,
+        EnableResourceTracking = 2,
+        EnableAutomaticCheckpoints = 3,
+        EnableShaderErrorReporting = 4
+    };
+
+    enum class VqDeviceEventType : int32_t {
+        DisplayHotplug = 0
+    };
+
+    enum class VqDeviceFaultAddressType : int32_t {
+        None = 0,
+        ReadInvalid = 1,
+        WriteInvalid = 2,
+        ExecuteInvalid = 3,
+        InstructionPointerUnknown = 4,
+        InstructionPointerInvalid = 5,
+        InstructionPointerFault = 6
+    };
+
+    enum class VqDeviceFaultVendorBinaryHeaderVersion : int32_t {
+        One = 1
+    };
+
+    enum class VqDeviceGroupPresentModeBit : uint8_t {
+        Local = 1,
+        Remote = 2,
+        Sum = 3,
+        LocalMultiDevice = 4
+    };
+
+    enum class VqDeviceMemoryReportEventType : int32_t {
+        Allocate = 0,
+        Free = 1,
+        Import = 2,
+        Unimport = 3,
+        AllocationFailed = 4
+    };
+
+    enum class VqDeviceQueueCreateBit : uint8_t {
+        Protected = 1
+    };
+
+    enum class VqDirectDriverLoadingMode : int32_t {
+        ExclusiveLUNARG = 0,
+        InclusiveLUNARG = 1
+    };
+
+    enum class VqDiscardRectangleMode : int32_t {
+        Inclusive = 0,
+        Exclusive = 1
+    };
+
+    enum class VqDisplayEventType : int32_t {
+        FirstPixelOut = 0
+    };
+
+    enum class VqDisplayPlaneAlphaBit : uint8_t {
+        Opaque = 1,
+        Global = 2,
+        PerPixel = 3,
+        PerPixelPremultiplied = 4
+    };
+
+    enum class VqDisplayPowerState : int32_t {
+        Off = 0,
+        Suspend = 1,
+        On = 2
+    };
+
+    enum class VqDriverId : int32_t {
+        AMDProprietary = 1,
+        AMDOpenSource = 2,
+        MesaRadv = 3,
+        NvidiaProprietary = 4,
+        INTELProprietaryWindows = 5,
+        INTELOpenSourceMesa = 6,
+        ImaginationProprietary = 7,
+        QualcommProprietary = 8,
+        ArmProprietary = 9,
+        GoogleSwiftshader = 10,
+        GgpProprietary = 11,
+        BroadcomProprietary = 12,
+        MesaLlvmpipe = 13,
+        Moltenvk = 14,
+        CoreaviProprietary = 15,
+        JuiceProprietary = 16,
+        VerisiliconProprietary = 17,
+        MesaTurnip = 18,
+        MesaV3dv = 19,
+        MesaPanvk = 20,
+        SamsungProprietary = 21,
+        MesaVenus = 22,
+        MesaDozen = 23,
+        MesaNvk = 24,
+        ImaginationOpenSourceMesa = 25,
+        MesaHoneykrisp = 26,
+        Reserved27 = 27
+    };
+
+    enum class VqDynamicState : int32_t {
+        Viewport = 0,
+        Scissor = 1,
+        LineWidth = 2,
+        DepthBias = 3,
+        BlendConstants = 4,
+        DepthBounds = 5,
+        StencilCompareMask = 6,
+        StencilWriteMask = 7,
+        StencilReference = 8,
+        CullMode = 1000267000,
+        FrontFace = 1000267001,
+        PrimitiveTopology = 1000267002,
+        ViewportWithCount = 1000267003,
+        ScissorWithCount = 1000267004,
+        VertexInputBindingStride = 1000267005,
+        DepthTestEnable = 1000267006,
+        DepthWriteEnable = 1000267007,
+        DepthCompareOp = 1000267008,
+        DepthBoundsTestEnable = 1000267009,
+        StencilTestEnable = 1000267010,
+        StencilOp = 1000267011,
+        RasterizerDiscardEnable = 1000377001,
+        DepthBiasEnable = 1000377002,
+        PrimitiveRestartEnable = 1000377004,
+        ViewportWScaling = 1000087000,
+        DiscardRectangle = 1000099000,
+        DiscardRectangleEnable = 1000099001,
+        DiscardRectangleMode = 1000099002,
+        SampleLocations = 1000143000,
+        RayTracingPipelineStackSize = 1000347000,
+        ViewportShadingRatePalette = 1000164004,
+        ViewportCoarseSampleOrder = 1000164006,
+        ExclusiveScissorEnable = 1000205000,
+        ExclusiveScissor = 1000205001,
+        FragmentShadingRate = 1000226000,
+        VertexInput = 1000352000,
+        PatchControlPoints = 1000377000,
+        LogicOp = 1000377003,
+        ColorWriteEnable = 1000381000,
+        DepthClampEnable = 1000455003,
+        PolygonMode = 1000455004,
+        RasterizationSamples = 1000455005,
+        SampleMask = 1000455006,
+        AlphaToCoverageEnable = 1000455007,
+        AlphaToOneEnable = 1000455008,
+        LogicOpEnable = 1000455009,
+        ColorBlendEnable = 1000455010,
+        ColorBlendEquation = 1000455011,
+        ColorWriteMask = 1000455012,
+        TessellationDomainOrigin = 1000455002,
+        RasterizationStream = 1000455013,
+        ConservativeRasterizationMode = 1000455014,
+        ExtraPrimitiveOverestimationSize = 1000455015,
+        DepthClipEnable = 1000455016,
+        SampleLocationsEnable = 1000455017,
+        ColorBlendAdvanced = 1000455018,
+        ProvokingVertexMode = 1000455019,
+        LineRasterizationMode = 1000455020,
+        LineStippleEnable = 1000455021,
+        DepthClipNegativeOneToOne = 1000455022,
+        ViewportWScalingEnable = 1000455023,
+        ViewportSwizzle = 1000455024,
+        CoverageToColorEnable = 1000455025,
+        CoverageToColorLocation = 1000455026,
+        CoverageModulationMode = 1000455027,
+        CoverageModulationTableEnable = 1000455028,
+        CoverageModulationTable = 1000455029,
+        ShadingRateImageEnable = 1000455030,
+        RepresentativeFragmentTestEnable = 1000455031,
+        CoverageReductionMode = 1000455032,
+        AttachmentFeedbackLoopEnable = 1000524000,
+        LineStipple = 1000259000
+    };
+
+    enum class VqEventCreateBit : uint8_t {
+        DeviceOnly = 1
+    };
+
+    enum class VqExternalFenceFeatureBit : uint8_t {
+        Exportable = 1,
+        Importable = 2
+    };
+
+    enum class VqExternalFenceHandleTypeBit : uint8_t {
+        OpaqueFd = 1,
+        OpaqueWin32 = 2,
+        OpaqueWin32Kmt = 3,
+        SyncFd = 4
+    };
+
+    enum class VqExternalMemoryFeatureBit : uint8_t {
+        DedicatedOnly = 1,
+        Exportable = 2,
+        Importable = 3
+    };
+
+    enum class VqExternalMemoryHandleTypeBit : uint8_t {
+        OpaqueFd = 1,
+        OpaqueWin32 = 2,
+        OpaqueWin32Kmt = 3,
+        D3d11Texture = 4,
+        D3d11TextureKmt = 5,
+        D3d12Heap = 6,
+        D3d12Resource = 7,
+        DmaBuf = 10,
+        AndroidHardwareBufferBitAndroid = 11,
+        HostAllocation = 8,
+        HostMappedForeignMemory = 9,
+        ZirconVmoBitFuchsia = 12,
+        RdmaAddress = 13,
+        ScreenBufferBitQnx = 15
+    };
+
+    enum class VqExternalSemaphoreFeatureBit : uint8_t {
+        Exportable = 1,
+        Importable = 2
+    };
+
+    enum class VqExternalSemaphoreHandleTypeBit : uint8_t {
+        OpaqueFd = 1,
+        OpaqueWin32 = 2,
+        OpaqueWin32Kmt = 3,
+        D3d12Fence = 4,
+        SyncFd = 5,
+        ZirconEventBitFuchsia = 8,
+        D3d11Fence = D3d12Fence
+    };
+
+    enum class VqFenceCreateBit : uint8_t {
+        Signaled = 1
+    };
+
+    enum class VqFenceImportBit : uint8_t {
+        Temporary = 1
+    };
+
+    enum class VqFilter : int32_t {
+        Nearest = 0,
+        Linear = 1,
+        Cubic = 1000015000,
+        CubicImg = Cubic
+    };
+
+    enum class VqFormat : int32_t {
         Undefined = 0,
         R4g4UnormPack8 = 1,
         R4g4b4a4UnormPack16 = 2,
@@ -434,352 +1057,356 @@ namespace yq::tachyon {
         Pvrtc14bppSrgbBlockImg = 1000054005,
         Pvrtc22bppSrgbBlockImg = 1000054006,
         Pvrtc24bppSrgbBlockImg = 1000054007,
-        R16g16Sfixed5NV = 1000464000,
-        A1b5g5r5UnormPack16KHR = 1000470000,
-        A8UnormKHR = 1000470001,
-        Astc4x4SfloatBlockEXT = Astc4x4SfloatBlock,
-        Astc5x4SfloatBlockEXT = Astc5x4SfloatBlock,
-        Astc5x5SfloatBlockEXT = Astc5x5SfloatBlock,
-        Astc6x5SfloatBlockEXT = Astc6x5SfloatBlock,
-        Astc6x6SfloatBlockEXT = Astc6x6SfloatBlock,
-        Astc8x5SfloatBlockEXT = Astc8x5SfloatBlock,
-        Astc8x6SfloatBlockEXT = Astc8x6SfloatBlock,
-        Astc8x8SfloatBlockEXT = Astc8x8SfloatBlock,
-        Astc10x5SfloatBlockEXT = Astc10x5SfloatBlock,
-        Astc10x6SfloatBlockEXT = Astc10x6SfloatBlock,
-        Astc10x8SfloatBlockEXT = Astc10x8SfloatBlock,
-        Astc10x10SfloatBlockEXT = Astc10x10SfloatBlock,
-        Astc12x10SfloatBlockEXT = Astc12x10SfloatBlock,
-        Astc12x12SfloatBlockEXT = Astc12x12SfloatBlock,
-        G8b8g8r8422UnormKHR = G8b8g8r8422Unorm,
-        B8g8r8g8422UnormKHR = B8g8r8g8422Unorm,
-        G8B8R83plane420UnormKHR = G8B8R83plane420Unorm,
-        G8B8r82plane420UnormKHR = G8B8r82plane420Unorm,
-        G8B8R83plane422UnormKHR = G8B8R83plane422Unorm,
-        G8B8r82plane422UnormKHR = G8B8r82plane422Unorm,
-        G8B8R83plane444UnormKHR = G8B8R83plane444Unorm,
-        R10x6UnormPack16KHR = R10x6UnormPack16,
-        R10x6g10x6Unorm2pack16KHR = R10x6g10x6Unorm2pack16,
-        R10x6g10x6b10x6a10x6Unorm4pack16KHR = R10x6g10x6b10x6a10x6Unorm4pack16,
-        G10x6b10x6g10x6r10x6422Unorm4pack16KHR = G10x6b10x6g10x6r10x6422Unorm4pack16,
-        B10x6g10x6r10x6g10x6422Unorm4pack16KHR = B10x6g10x6r10x6g10x6422Unorm4pack16,
-        G10x6B10x6R10x63plane420Unorm3pack16KHR = G10x6B10x6R10x63plane420Unorm3pack16,
-        G10x6B10x6r10x62plane420Unorm3pack16KHR = G10x6B10x6r10x62plane420Unorm3pack16,
-        G10x6B10x6R10x63plane422Unorm3pack16KHR = G10x6B10x6R10x63plane422Unorm3pack16,
-        G10x6B10x6r10x62plane422Unorm3pack16KHR = G10x6B10x6r10x62plane422Unorm3pack16,
-        G10x6B10x6R10x63plane444Unorm3pack16KHR = G10x6B10x6R10x63plane444Unorm3pack16,
-        R12x4UnormPack16KHR = R12x4UnormPack16,
-        R12x4g12x4Unorm2pack16KHR = R12x4g12x4Unorm2pack16,
-        R12x4g12x4b12x4a12x4Unorm4pack16KHR = R12x4g12x4b12x4a12x4Unorm4pack16,
-        G12x4b12x4g12x4r12x4422Unorm4pack16KHR = G12x4b12x4g12x4r12x4422Unorm4pack16,
-        B12x4g12x4r12x4g12x4422Unorm4pack16KHR = B12x4g12x4r12x4g12x4422Unorm4pack16,
-        G12x4B12x4R12x43plane420Unorm3pack16KHR = G12x4B12x4R12x43plane420Unorm3pack16,
-        G12x4B12x4r12x42plane420Unorm3pack16KHR = G12x4B12x4r12x42plane420Unorm3pack16,
-        G12x4B12x4R12x43plane422Unorm3pack16KHR = G12x4B12x4R12x43plane422Unorm3pack16,
-        G12x4B12x4r12x42plane422Unorm3pack16KHR = G12x4B12x4r12x42plane422Unorm3pack16,
-        G12x4B12x4R12x43plane444Unorm3pack16KHR = G12x4B12x4R12x43plane444Unorm3pack16,
-        G16b16g16r16422UnormKHR = G16b16g16r16422Unorm,
-        B16g16r16g16422UnormKHR = B16g16r16g16422Unorm,
-        G16B16R163plane420UnormKHR = G16B16R163plane420Unorm,
-        G16B16r162plane420UnormKHR = G16B16r162plane420Unorm,
-        G16B16R163plane422UnormKHR = G16B16R163plane422Unorm,
-        G16B16r162plane422UnormKHR = G16B16r162plane422Unorm,
-        G16B16R163plane444UnormKHR = G16B16R163plane444Unorm,
-        G8B8r82plane444UnormEXT = G8B8r82plane444Unorm,
-        G10x6B10x6r10x62plane444Unorm3pack16EXT = G10x6B10x6r10x62plane444Unorm3pack16,
-        G12x4B12x4r12x42plane444Unorm3pack16EXT = G12x4B12x4r12x42plane444Unorm3pack16,
-        G16B16r162plane444UnormEXT = G16B16r162plane444Unorm,
-        A4r4g4b4UnormPack16EXT = A4r4g4b4UnormPack16,
-        A4b4g4r4UnormPack16EXT = A4b4g4r4UnormPack16,
-        R16g16S105NV = R16g16Sfixed5NV
-    )
+        R16g16Sfixed5 = 1000464000,
+        A1b5g5r5UnormPack16 = 1000470000,
+        A8Unorm = 1000470001,
+        R16g16S105 = R16g16Sfixed5
+    };
 
-    YQ_ENUM(VkImageTiling, ,
-        Optimal = 0,
-        Linear = 1,
-        DrmFormatModifierEXT = 1000158000
-    )
+    enum class VqFormatFeatureBit : uint8_t {
+        SampledImage = 1,
+        StorageImage = 2,
+        StorageImageAtomic = 3,
+        UniformTexelBuffer = 4,
+        StorageTexelBuffer = 5,
+        StorageTexelBufferAtomic = 6,
+        VertexBuffer = 7,
+        ColorAttachment = 8,
+        ColorAttachmentBlend = 9,
+        DepthStencilAttachment = 10,
+        BlitSrc = 11,
+        BlitDst = 12,
+        SampledImageFilterLinear = 13,
+        TransferSrc = 15,
+        TransferDst = 16,
+        MidpointChromaSamples = 18,
+        SampledImageYcbcrConversionLinearFilter = 19,
+        SampledImageYcbcrConversionSeparateReconstructionFilter = 20,
+        SampledImageYcbcrConversionChromaReconstructionExplicit = 21,
+        SampledImageYcbcrConversionChromaReconstructionExplicitForceable = 22,
+        Disjoint = 23,
+        CositedChromaSamples = 24,
+        SampledImageFilterMinmax = 17,
+        VideoDecodeOutput = 26,
+        VideoDecodeDpb = 27,
+        AccelerationStructureVertexBuffer = 30,
+        SampledImageFilterCubic = 14,
+        FragmentDensityMap = 25,
+        FragmentShadingRateAttachment = 31,
+        VideoEncodeInput = 28,
+        VideoEncodeDpb = 29,
+        SampledImageFilterCubicBitImg = SampledImageFilterCubic
+    };
 
-    YQ_ENUM(VkImageType, ,
-        1d = 0,
-        2d = 1,
-        3d = 2
-    )
+    enum class VqFragmentShadingRate : int32_t {
+        _1InvocationPerPixel = 0,
+        _1InvocationPer1x2Pixels = 1,
+        _1InvocationPer2x1Pixels = 4,
+        _1InvocationPer2x2Pixels = 5,
+        _1InvocationPer2x4Pixels = 6,
+        _1InvocationPer4x2Pixels = 9,
+        _1InvocationPer4x4Pixels = 10,
+        _2InvocationsPerPixel = 11,
+        _4InvocationsPerPixel = 12,
+        _8InvocationsPerPixel = 13,
+        _16InvocationsPerPixel = 14,
+        NoInvocations = 15
+    };
 
-    YQ_ENUM(VkPhysicalDeviceType, ,
-        Other = 0,
-        IntegratedGpu = 1,
-        DiscreteGpu = 2,
-        VirtualGpu = 3,
-        Cpu = 4
-    )
+    enum class VqFragmentShadingRateCombinerOp : int32_t {
+        Keep = 0,
+        Replace = 1,
+        Min = 2,
+        Max = 3,
+        Mul = 4
+    };
 
-    YQ_ENUM(VkQueryType, ,
-        Occlusion = 0,
-        PipelineStatistics = 1,
-        Timestamp = 2,
-        ResultStatusOnlyKHR = 1000023000,
-        TransformFeedbackStreamEXT = 1000028004,
-        PerformanceQueryKHR = 1000116000,
-        AccelerationStructureCompactedSizeKHR = 1000150000,
-        AccelerationStructureSerializationSizeKHR = 1000150001,
-        AccelerationStructureCompactedSizeNV = 1000165000,
-        PerformanceQueryINTEL = 1000210000,
-        VideoEncodeFeedbackKHR = 1000299000,
-        MeshPrimitivesGeneratedEXT = 1000328000,
-        PrimitivesGeneratedEXT = 1000382000,
-        AccelerationStructureSerializationBottomLevelPointersKHR = 1000386000,
-        AccelerationStructureSizeKHR = 1000386001,
-        MicromapSerializationSizeEXT = 1000396000,
-        MicromapCompactedSizeEXT = 1000396001
-    )
+    enum class VqFragmentShadingRateType : int32_t {
+        FragmentSize = 0,
+        Enums = 1
+    };
 
-    YQ_ENUM(VkSharingMode, ,
-        Exclusive = 0,
-        Concurrent = 1
-    )
+    enum class VqFrameBoundaryBit : uint8_t {
+        FrameEnd = 1
+    };
 
-    YQ_ENUM(VkComponentSwizzle, ,
-        Identity = 0,
-        Zero = 1,
-        One = 2,
-        R = 3,
-        G = 4,
-        B = 5,
-        A = 6
-    )
+    enum class VqFramebufferCreateBit : uint8_t {
+        Imageless = 1
+    };
 
-    YQ_ENUM(VkImageViewType, ,
-        1d = 0,
-        2d = 1,
-        3d = 2,
-        Cube = 3,
-        1dArray = 4,
-        2dArray = 5,
-        CubeArray = 6
-    )
-
-    YQ_ENUM(VkBlendFactor, ,
-        Zero = 0,
-        One = 1,
-        SrcColor = 2,
-        OneMinusSrcColor = 3,
-        DstColor = 4,
-        OneMinusDstColor = 5,
-        SrcAlpha = 6,
-        OneMinusSrcAlpha = 7,
-        DstAlpha = 8,
-        OneMinusDstAlpha = 9,
-        ConstantColor = 10,
-        OneMinusConstantColor = 11,
-        ConstantAlpha = 12,
-        OneMinusConstantAlpha = 13,
-        SrcAlphaSaturate = 14,
-        Src1Color = 15,
-        OneMinusSrc1Color = 16,
-        Src1Alpha = 17,
-        OneMinusSrc1Alpha = 18
-    )
-
-    YQ_ENUM(VkBlendOp, ,
-        Add = 0,
-        Subtract = 1,
-        ReverseSubtract = 2,
-        Min = 3,
-        Max = 4,
-        ZeroEXT = 1000148000,
-        SrcEXT = 1000148001,
-        DstEXT = 1000148002,
-        SrcOverEXT = 1000148003,
-        DstOverEXT = 1000148004,
-        SrcInEXT = 1000148005,
-        DstInEXT = 1000148006,
-        SrcOutEXT = 1000148007,
-        DstOutEXT = 1000148008,
-        SrcAtopEXT = 1000148009,
-        DstAtopEXT = 1000148010,
-        XorEXT = 1000148011,
-        MultiplyEXT = 1000148012,
-        ScreenEXT = 1000148013,
-        OverlayEXT = 1000148014,
-        DarkenEXT = 1000148015,
-        LightenEXT = 1000148016,
-        ColordodgeEXT = 1000148017,
-        ColorburnEXT = 1000148018,
-        HardlightEXT = 1000148019,
-        SoftlightEXT = 1000148020,
-        DifferenceEXT = 1000148021,
-        ExclusionEXT = 1000148022,
-        InvertEXT = 1000148023,
-        InvertRgbEXT = 1000148024,
-        LineardodgeEXT = 1000148025,
-        LinearburnEXT = 1000148026,
-        VividlightEXT = 1000148027,
-        LinearlightEXT = 1000148028,
-        PinlightEXT = 1000148029,
-        HardmixEXT = 1000148030,
-        HslHueEXT = 1000148031,
-        HslSaturationEXT = 1000148032,
-        HslColorEXT = 1000148033,
-        HslLuminosityEXT = 1000148034,
-        PlusEXT = 1000148035,
-        PlusClampedEXT = 1000148036,
-        PlusClampedAlphaEXT = 1000148037,
-        PlusDarkerEXT = 1000148038,
-        MinusEXT = 1000148039,
-        MinusClampedEXT = 1000148040,
-        ContrastEXT = 1000148041,
-        InvertOvgEXT = 1000148042,
-        RedEXT = 1000148043,
-        GreenEXT = 1000148044,
-        BlueEXT = 1000148045
-    )
-
-    YQ_ENUM(VkCompareOp, ,
-        Never = 0,
-        Less = 1,
-        Equal = 2,
-        LessOrEqual = 3,
-        Greater = 4,
-        NotEqual = 5,
-        GreaterOrEqual = 6,
-        Always = 7
-    )
-
-    YQ_ENUM(VkDynamicState, ,
-        Viewport = 0,
-        Scissor = 1,
-        LineWidth = 2,
-        DepthBias = 3,
-        BlendConstants = 4,
-        DepthBounds = 5,
-        StencilCompareMask = 6,
-        StencilWriteMask = 7,
-        StencilReference = 8,
-        CullMode = 1000267000,
-        FrontFace = 1000267001,
-        PrimitiveTopology = 1000267002,
-        ViewportWithCount = 1000267003,
-        ScissorWithCount = 1000267004,
-        VertexInputBindingStride = 1000267005,
-        DepthTestEnable = 1000267006,
-        DepthWriteEnable = 1000267007,
-        DepthCompareOp = 1000267008,
-        DepthBoundsTestEnable = 1000267009,
-        StencilTestEnable = 1000267010,
-        StencilOp = 1000267011,
-        RasterizerDiscardEnable = 1000377001,
-        DepthBiasEnable = 1000377002,
-        PrimitiveRestartEnable = 1000377004,
-        ViewportWScalingNV = 1000087000,
-        DiscardRectangleEXT = 1000099000,
-        DiscardRectangleEnableEXT = 1000099001,
-        DiscardRectangleModeEXT = 1000099002,
-        SampleLocationsEXT = 1000143000,
-        RayTracingPipelineStackSizeKHR = 1000347000,
-        ViewportShadingRatePaletteNV = 1000164004,
-        ViewportCoarseSampleOrderNV = 1000164006,
-        ExclusiveScissorEnableNV = 1000205000,
-        ExclusiveScissorNV = 1000205001,
-        FragmentShadingRateKHR = 1000226000,
-        VertexInputEXT = 1000352000,
-        PatchControlPointsEXT = 1000377000,
-        LogicOpEXT = 1000377003,
-        ColorWriteEnableEXT = 1000381000,
-        DepthClampEnableEXT = 1000455003,
-        PolygonModeEXT = 1000455004,
-        RasterizationSamplesEXT = 1000455005,
-        SampleMaskEXT = 1000455006,
-        AlphaToCoverageEnableEXT = 1000455007,
-        AlphaToOneEnableEXT = 1000455008,
-        LogicOpEnableEXT = 1000455009,
-        ColorBlendEnableEXT = 1000455010,
-        ColorBlendEquationEXT = 1000455011,
-        ColorWriteMaskEXT = 1000455012,
-        TessellationDomainOriginEXT = 1000455002,
-        RasterizationStreamEXT = 1000455013,
-        ConservativeRasterizationModeEXT = 1000455014,
-        ExtraPrimitiveOverestimationSizeEXT = 1000455015,
-        DepthClipEnableEXT = 1000455016,
-        SampleLocationsEnableEXT = 1000455017,
-        ColorBlendAdvancedEXT = 1000455018,
-        ProvokingVertexModeEXT = 1000455019,
-        LineRasterizationModeEXT = 1000455020,
-        LineStippleEnableEXT = 1000455021,
-        DepthClipNegativeOneToOneEXT = 1000455022,
-        ViewportWScalingEnableNV = 1000455023,
-        ViewportSwizzleNV = 1000455024,
-        CoverageToColorEnableNV = 1000455025,
-        CoverageToColorLocationNV = 1000455026,
-        CoverageModulationModeNV = 1000455027,
-        CoverageModulationTableEnableNV = 1000455028,
-        CoverageModulationTableNV = 1000455029,
-        ShadingRateImageEnableNV = 1000455030,
-        RepresentativeFragmentTestEnableNV = 1000455031,
-        CoverageReductionModeNV = 1000455032,
-        AttachmentFeedbackLoopEnableEXT = 1000524000,
-        LineStippleKHR = 1000259000,
-        LineStippleEXT = LineStippleKHR,
-        CullModeEXT = CullMode,
-        FrontFaceEXT = FrontFace,
-        PrimitiveTopologyEXT = PrimitiveTopology,
-        ViewportWithCountEXT = ViewportWithCount,
-        ScissorWithCountEXT = ScissorWithCount,
-        VertexInputBindingStrideEXT = VertexInputBindingStride,
-        DepthTestEnableEXT = DepthTestEnable,
-        DepthWriteEnableEXT = DepthWriteEnable,
-        DepthCompareOpEXT = DepthCompareOp,
-        DepthBoundsTestEnableEXT = DepthBoundsTestEnable,
-        StencilTestEnableEXT = StencilTestEnable,
-        StencilOpEXT = StencilOp,
-        RasterizerDiscardEnableEXT = RasterizerDiscardEnable,
-        DepthBiasEnableEXT = DepthBiasEnable,
-        PrimitiveRestartEnableEXT = PrimitiveRestartEnable
-    )
-
-    YQ_ENUM(VkFrontFace, ,
+    enum class VqFrontFace : int32_t {
         CounterClockwise = 0,
         Clockwise = 1
-    )
+    };
 
-    YQ_ENUM(VkVertexInputRate, ,
-        Vertex = 0,
-        Instance = 1
-    )
+    enum class VqGeometryBit : uint8_t {
+        Opaque = 1,
+        NoDuplicateAnyHitInvocation = 2
+    };
 
-    YQ_ENUM(VkPrimitiveTopology, ,
-        PointList = 0,
-        LineList = 1,
-        LineStrip = 2,
-        TriangleList = 3,
-        TriangleStrip = 4,
-        TriangleFan = 5,
-        LineListWithAdjacency = 6,
-        LineStripWithAdjacency = 7,
-        TriangleListWithAdjacency = 8,
-        TriangleStripWithAdjacency = 9,
-        PatchList = 10
-    )
+    enum class VqGeometryInstanceBit : uint8_t {
+        TriangleFacingCullDisable = 1,
+        TriangleFlipFacing = 2,
+        ForceOpaque = 3,
+        ForceNoOpaque = 4,
+        ForceOpacityMicromap2State = 5,
+        DisableOpacityMicromaps = 6,
+        TriangleFrontCounterclockwise = TriangleFlipFacing,
+        TriangleCullDisable = TriangleFacingCullDisable
+    };
 
-    YQ_ENUM(VkPolygonMode, ,
-        Fill = 0,
-        Line = 1,
-        Point = 2,
-        FillRectangleNV = 1000153000
-    )
+    enum class VqGeometryType : int32_t {
+        Triangles = 0,
+        Aabbs = 1,
+        Instances = 2
+    };
 
-    YQ_ENUM(VkStencilOp, ,
-        Keep = 0,
-        Zero = 1,
-        Replace = 2,
-        IncrementAndClamp = 3,
-        DecrementAndClamp = 4,
-        Invert = 5,
-        IncrementAndWrap = 6,
-        DecrementAndWrap = 7
-    )
+    enum class VqGraphicsPipelineLibraryBit : uint8_t {
+        VertexInputInterface = 1,
+        PreRasterizationShaders = 2,
+        FragmentShader = 3,
+        FragmentOutputInterface = 4
+    };
 
-    YQ_ENUM(VkLogicOp, ,
+    enum class VqHostImageCopyBit : uint8_t {
+        Memcpy = 1
+    };
+
+    enum class VqImageAspectBit : uint8_t {
+        Color = 1,
+        Depth = 2,
+        Stencil = 3,
+        Metadata = 4,
+        Plane0 = 5,
+        Plane1 = 6,
+        Plane2 = 7,
+        MemoryPlane0 = 8,
+        MemoryPlane1 = 9,
+        MemoryPlane2 = 10,
+        MemoryPlane3 = 11
+    };
+
+    enum class VqImageCompressionFixedRateBit : uint8_t {
+        _1bpc = 1,
+        _2bpc = 2,
+        _3bpc = 3,
+        _4bpc = 4,
+        _5bpc = 5,
+        _6bpc = 6,
+        _7bpc = 7,
+        _8bpc = 8,
+        _9bpc = 9,
+        _10bpc = 10,
+        _11bpc = 11,
+        _12bpc = 12,
+        _13bpc = 13,
+        _14bpc = 14,
+        _15bpc = 15,
+        _16bpc = 16,
+        _17bpc = 17,
+        _18bpc = 18,
+        _19bpc = 19,
+        _20bpc = 20,
+        _21bpc = 21,
+        _22bpc = 22,
+        _23bpc = 23,
+        _24bpc = 24
+    };
+
+    enum class VqImageCompressionBit : uint8_t {
+        Default = 0,
+        FixedRateDefault = 1,
+        FixedRateExplicit = 2,
+        Disabled = 3
+    };
+
+    enum class VqImageCreateBit : uint8_t {
+        SparseBinding = 1,
+        SparseResidency = 2,
+        SparseAliased = 3,
+        MutableFormat = 4,
+        CubeCompatible = 5,
+        Alias = 11,
+        SplitInstanceBindRegions = 7,
+        _2dArrayCompatible = 6,
+        BlockTexelViewCompatible = 8,
+        ExtendedUsage = 9,
+        Protected = 12,
+        Disjoint = 10,
+        CornerSampled = 14,
+        SampleLocationsCompatibleDepth = 13,
+        Subsampled = 15,
+        DescriptorBufferCaptureReplay = 17,
+        MultisampledRenderToSingleSampled = 19,
+        _2dViewCompatible = 18,
+        FragmentDensityMapOffset = 16,
+        VideoProfileIndependent = 21
+    };
+
+    enum class VqImageLayout : int32_t {
+        Undefined = 0,
+        General = 1,
+        ColorAttachmentOptimal = 2,
+        DepthStencilAttachmentOptimal = 3,
+        DepthStencilReadOnlyOptimal = 4,
+        ShaderReadOnlyOptimal = 5,
+        TransferSrcOptimal = 6,
+        TransferDstOptimal = 7,
+        Preinitialized = 8,
+        DepthReadOnlyStencilAttachmentOptimal = 1000117000,
+        DepthAttachmentStencilReadOnlyOptimal = 1000117001,
+        DepthAttachmentOptimal = 1000241000,
+        DepthReadOnlyOptimal = 1000241001,
+        StencilAttachmentOptimal = 1000241002,
+        StencilReadOnlyOptimal = 1000241003,
+        ReadOnlyOptimal = 1000314000,
+        AttachmentOptimal = 1000314001,
+        PresentSrc = 1000001002,
+        VideoDecodeDst = 1000024000,
+        VideoDecodeSrc = 1000024001,
+        VideoDecodeDpb = 1000024002,
+        SharedPresent = 1000111000,
+        FragmentDensityMapOptimal = 1000218000,
+        FragmentShadingRateAttachmentOptimal = 1000164003,
+        RenderingLocalRead = 1000232000,
+        VideoEncodeDst = 1000299000,
+        VideoEncodeSrc = 1000299001,
+        VideoEncodeDpb = 1000299002,
+        AttachmentFeedbackLoopOptimal = 1000339000,
+        ShadingRateOptimal = FragmentShadingRateAttachmentOptimal
+    };
+
+    enum class VqImageTiling : int32_t {
+        Optimal = 0,
+        Linear = 1,
+        DrmFormatModifier = 1000158000
+    };
+
+    enum class VqImageType : int32_t {
+        _1d = 0,
+        _2d = 1,
+        _3d = 2
+    };
+
+    enum class VqImageUsageBit : uint8_t {
+        TransferSrc = 1,
+        TransferDst = 2,
+        Sampled = 3,
+        Storage = 4,
+        ColorAttachment = 5,
+        DepthStencilAttachment = 6,
+        TransientAttachment = 7,
+        InputAttachment = 8,
+        VideoDecodeDst = 11,
+        VideoDecodeSrc = 12,
+        VideoDecodeDpb = 13,
+        FragmentDensityMap = 10,
+        FragmentShadingRateAttachment = 9,
+        HostTransfer = 23,
+        VideoEncodeDst = 14,
+        VideoEncodeSrc = 15,
+        VideoEncodeDpb = 16,
+        AttachmentFeedbackLoop = 20,
+        InvocationMaskBitHuawei = 19,
+        SampleWeight = 21,
+        SampleBlockMatch = 22,
+        ShadingRateImage = FragmentShadingRateAttachment
+    };
+
+    enum class VqImageViewCreateBit : uint8_t {
+        FragmentDensityMapDynamic = 1,
+        DescriptorBufferCaptureReplay = 3,
+        FragmentDensityMapDeferred = 2
+    };
+
+    enum class VqImageViewType : int32_t {
+        _1d = 0,
+        _2d = 1,
+        _3d = 2,
+        Cube = 3,
+        _1dArray = 4,
+        _2dArray = 5,
+        CubeArray = 6
+    };
+
+    enum class VqIndexType : int32_t {
+        Uint16 = 0,
+        Uint32 = 1,
+        None = 1000165000,
+        Uint8 = 1000265000
+    };
+
+    enum class VqIndirectCommandsLayoutUsageBit : uint8_t {
+        ExplicitPreprocess = 1,
+        IndexedSequences = 2,
+        UnorderedSequences = 3
+    };
+
+    enum class VqIndirectCommandsTokenType : int32_t {
+        ShaderGroup = 0,
+        StateFlags = 1,
+        IndexBuffer = 2,
+        VertexBuffer = 3,
+        PushConstant = 4,
+        DrawIndexed = 5,
+        Draw = 6,
+        DrawTasks = 7,
+        DrawMeshTasks = 1000328000,
+        Pipeline = 1000428003,
+        Dispatch = 1000428004
+    };
+
+    enum class VqIndirectStateBit : uint8_t {
+        FlagFrontface = 1
+    };
+
+    enum class VqInstanceCreateBit : uint8_t {
+        EnumeratePortability = 1
+    };
+
+    enum class VqInternalAllocationType : int32_t {
+        Executable = 0
+    };
+
+    enum class VqLatencyMarker : int32_t {
+        SimulationStart = 0,
+        SimulationEnd = 1,
+        RendersubmitStart = 2,
+        RendersubmitEnd = 3,
+        PresentStart = 4,
+        PresentEnd = 5,
+        InputSample = 6,
+        TriggerFlash = 7,
+        OutOfBandRendersubmitStart = 8,
+        OutOfBandRendersubmitEnd = 9,
+        OutOfBandPresentStart = 10,
+        OutOfBandPresentEnd = 11
+    };
+
+    enum class VqLayerSettingType : int32_t {
+        Bool32 = 0,
+        Int32 = 1,
+        Int64 = 2,
+        Uint32 = 3,
+        Uint64 = 4,
+        Float32 = 5,
+        Float64 = 6,
+        String = 7
+    };
+
+    enum class VqLayeredDriverUnderlyingApi : int32_t {
+        NoneMSFT = 0,
+        D3d12MSFT = 1
+    };
+
+    enum class VqLineRasterizationMode : int32_t {
+        Default = 0,
+        Rectangular = 1,
+        Bresenham = 2,
+        RectangularSmooth = 3
+    };
+
+    enum class VqLogicOp : int32_t {
         Clear = 0,
         And = 1,
         AndReverse = 2,
@@ -796,2082 +1423,1522 @@ namespace yq::tachyon {
         OrInverted = 13,
         Nand = 14,
         Set = 15
-    )
-
-    YQ_ENUM(VkBorderColor, ,
-        FloatTransparentBlack = 0,
-        IntTransparentBlack = 1,
-        FloatOpaqueBlack = 2,
-        IntOpaqueBlack = 3,
-        FloatOpaqueWhite = 4,
-        IntOpaqueWhite = 5,
-        FloatCustomEXT = 1000287003,
-        IntCustomEXT = 1000287004
-    )
-
-    YQ_ENUM(VkFilter, ,
-        Nearest = 0,
-        Linear = 1,
-        CubicEXT = 1000015000,
-        CubicImg = CubicEXT
-    )
-
-    YQ_ENUM(VkSamplerAddressMode, ,
-        Repeat = 0,
-        MirroredRepeat = 1,
-        ClampToEdge = 2,
-        ClampToBorder = 3,
-        MirrorClampToEdge = 4,
-        MirrorClampToEdgeKHR = MirrorClampToEdge
-    )
-
-    YQ_ENUM(VkSamplerMipmapMode, ,
-        Nearest = 0,
-        Linear = 1
-    )
-
-    YQ_ENUM(VkDescriptorType, ,
-        Sampler = 0,
-        CombinedImageSampler = 1,
-        SampledImage = 2,
-        StorageImage = 3,
-        UniformTexelBuffer = 4,
-        StorageTexelBuffer = 5,
-        UniformBuffer = 6,
-        StorageBuffer = 7,
-        UniformBufferDynamic = 8,
-        StorageBufferDynamic = 9,
-        InputAttachment = 10,
-        InlineUniformBlock = 1000138000,
-        AccelerationStructureKHR = 1000150000,
-        AccelerationStructureNV = 1000165000,
-        SampleWeightImageQCOM = 1000440000,
-        BlockMatchImageQCOM = 1000440001,
-        MutableEXT = 1000351000,
-        InlineUniformBlockEXT = InlineUniformBlock,
-        MutableValve = MutableEXT
-    )
-
-    YQ_ENUM(VkAttachmentLoadOp, ,
-        Load = 0,
-        Clear = 1,
-        DontCare = 2,
-        NoneKHR = 1000400000,
-        NoneEXT = NoneKHR
-    )
-
-    YQ_ENUM(VkAttachmentStoreOp, ,
-        Store = 0,
-        DontCare = 1,
-        None = 1000301000,
-        NoneKHR = None,
-        NoneQCOM = None,
-        NoneEXT = None
-    )
-
-    YQ_ENUM(VkPipelineBindPoint, ,
-        Graphics = 0,
-        Compute = 1,
-        ExecutionGraphAmdx = 1000134000,
-        RayTracingKHR = 1000165000,
-        SubpassShadingHuawei = 1000369003,
-        RayTracingNV = RayTracingKHR
-    )
-
-    YQ_ENUM(VkCommandBufferLevel, ,
-        Primary = 0,
-        Secondary = 1
-    )
-
-    YQ_ENUM(VkIndexType, ,
-        Uint16 = 0,
-        Uint32 = 1,
-        NoneKHR = 1000165000,
-        Uint8KHR = 1000265000,
-        NoneNV = NoneKHR,
-        Uint8EXT = Uint8KHR
-    )
-
-    YQ_ENUM(VkSubpassContents, ,
-        Inline = 0,
-        SecondaryCommandBuffers = 1,
-        InlineAndSecondaryCommandBuffersKHR = 1000451000,
-        InlineAndSecondaryCommandBuffersEXT = InlineAndSecondaryCommandBuffersKHR
-    )
-
-    YQ_ENUM(VkAccessFlagBits, ,
-        IndirectCommandReadBit = 0x00000001,
-        IndexReadBit = 0x00000002,
-        VertexAttributeReadBit = 0x00000004,
-        UniformReadBit = 0x00000008,
-        InputAttachmentReadBit = 0x00000010,
-        ShaderReadBit = 0x00000020,
-        ShaderWriteBit = 0x00000040,
-        ColorAttachmentReadBit = 0x00000080,
-        ColorAttachmentWriteBit = 0x00000100,
-        DepthStencilAttachmentReadBit = 0x00000200,
-        DepthStencilAttachmentWriteBit = 0x00000400,
-        TransferReadBit = 0x00000800,
-        TransferWriteBit = 0x00001000,
-        HostReadBit = 0x00002000,
-        HostWriteBit = 0x00004000,
-        MemoryReadBit = 0x00008000,
-        MemoryWriteBit = 0x00010000,
-        None = 0,
-        TransformFeedbackWriteBitEXT = 0x02000000,
-        TransformFeedbackCounterReadBitEXT = 0x04000000,
-        TransformFeedbackCounterWriteBitEXT = 0x08000000,
-        ConditionalRenderingReadBitEXT = 0x00100000,
-        ColorAttachmentReadNoncoherentBitEXT = 0x00080000,
-        AccelerationStructureReadBitKHR = 0x00200000,
-        AccelerationStructureWriteBitKHR = 0x00400000,
-        FragmentDensityMapReadBitEXT = 0x01000000,
-        FragmentShadingRateAttachmentReadBitKHR = 0x00800000,
-        CommandPreprocessReadBitNV = 0x00020000,
-        CommandPreprocessWriteBitNV = 0x00040000,
-        ShadingRateImageReadBitNV = FragmentShadingRateAttachmentReadBitKHR,
-        AccelerationStructureReadBitNV = AccelerationStructureReadBitKHR,
-        AccelerationStructureWriteBitNV = AccelerationStructureWriteBitKHR,
-        NoneKHR = None
-    )
-
-    YQ_ENUM(VkImageAspectFlagBits, ,
-        ColorBit = 0x00000001,
-        DepthBit = 0x00000002,
-        StencilBit = 0x00000004,
-        MetadataBit = 0x00000008,
-        Plane0Bit = 0x00000010,
-        Plane1Bit = 0x00000020,
-        Plane2Bit = 0x00000040,
-        None = 0,
-        MemoryPlane0BitEXT = 0x00000080,
-        MemoryPlane1BitEXT = 0x00000100,
-        MemoryPlane2BitEXT = 0x00000200,
-        MemoryPlane3BitEXT = 0x00000400,
-        Plane0BitKHR = Plane0Bit,
-        Plane1BitKHR = Plane1Bit,
-        Plane2BitKHR = Plane2Bit,
-        NoneKHR = None
-    )
-
-    YQ_ENUM(VkFormatFeatureFlagBits, ,
-        SampledImageBit = 0x00000001,
-        StorageImageBit = 0x00000002,
-        StorageImageAtomicBit = 0x00000004,
-        UniformTexelBufferBit = 0x00000008,
-        StorageTexelBufferBit = 0x00000010,
-        StorageTexelBufferAtomicBit = 0x00000020,
-        VertexBufferBit = 0x00000040,
-        ColorAttachmentBit = 0x00000080,
-        ColorAttachmentBlendBit = 0x00000100,
-        DepthStencilAttachmentBit = 0x00000200,
-        BlitSrcBit = 0x00000400,
-        BlitDstBit = 0x00000800,
-        SampledImageFilterLinearBit = 0x00001000,
-        TransferSrcBit = 0x00004000,
-        TransferDstBit = 0x00008000,
-        MidpointChromaSamplesBit = 0x00020000,
-        SampledImageYcbcrConversionLinearFilterBit = 0x00040000,
-        SampledImageYcbcrConversionSeparateReconstructionFilterBit = 0x00080000,
-        SampledImageYcbcrConversionChromaReconstructionExplicitBit = 0x00100000,
-        SampledImageYcbcrConversionChromaReconstructionExplicitForceableBit = 0x00200000,
-        DisjointBit = 0x00400000,
-        CositedChromaSamplesBit = 0x00800000,
-        SampledImageFilterMinmaxBit = 0x00010000,
-        VideoDecodeOutputBitKHR = 0x02000000,
-        VideoDecodeDpbBitKHR = 0x04000000,
-        AccelerationStructureVertexBufferBitKHR = 0x20000000,
-        SampledImageFilterCubicBitEXT = 0x00002000,
-        FragmentDensityMapBitEXT = 0x01000000,
-        FragmentShadingRateAttachmentBitKHR = 0x40000000,
-        VideoEncodeInputBitKHR = 0x08000000,
-        VideoEncodeDpbBitKHR = 0x10000000,
-        SampledImageFilterCubicBitImg = SampledImageFilterCubicBitEXT,
-        TransferSrcBitKHR = TransferSrcBit,
-        TransferDstBitKHR = TransferDstBit,
-        SampledImageFilterMinmaxBitEXT = SampledImageFilterMinmaxBit,
-        MidpointChromaSamplesBitKHR = MidpointChromaSamplesBit,
-        SampledImageYcbcrConversionLinearFilterBitKHR = SampledImageYcbcrConversionLinearFilterBit,
-        SampledImageYcbcrConversionSeparateReconstructionFilterBitKHR = SampledImageYcbcrConversionSeparateReconstructionFilterBit,
-        SampledImageYcbcrConversionChromaReconstructionExplicitBitKHR = SampledImageYcbcrConversionChromaReconstructionExplicitBit,
-        SampledImageYcbcrConversionChromaReconstructionExplicitForceableBitKHR = SampledImageYcbcrConversionChromaReconstructionExplicitForceableBit,
-        DisjointBitKHR = DisjointBit,
-        CositedChromaSamplesBitKHR = CositedChromaSamplesBit
-    )
-
-    YQ_ENUM(VkImageCreateFlagBits, ,
-        SparseBindingBit = 0x00000001,
-        SparseResidencyBit = 0x00000002,
-        SparseAliasedBit = 0x00000004,
-        MutableFormatBit = 0x00000008,
-        CubeCompatibleBit = 0x00000010,
-        AliasBit = 0x00000400,
-        SplitInstanceBindRegionsBit = 0x00000040,
-        2dArrayCompatibleBit = 0x00000020,
-        BlockTexelViewCompatibleBit = 0x00000080,
-        ExtendedUsageBit = 0x00000100,
-        ProtectedBit = 0x00000800,
-        DisjointBit = 0x00000200,
-        CornerSampledBitNV = 0x00002000,
-        SampleLocationsCompatibleDepthBitEXT = 0x00001000,
-        SubsampledBitEXT = 0x00004000,
-        DescriptorBufferCaptureReplayBitEXT = 0x00010000,
-        MultisampledRenderToSingleSampledBitEXT = 0x00040000,
-        2dViewCompatibleBitEXT = 0x00020000,
-        FragmentDensityMapOffsetBitQCOM = 0x00008000,
-        VideoProfileIndependentBitKHR = 0x00100000,
-        SplitInstanceBindRegionsBitKHR = SplitInstanceBindRegionsBit,
-        2dArrayCompatibleBitKHR = 2dArrayCompatibleBit,
-        BlockTexelViewCompatibleBitKHR = BlockTexelViewCompatibleBit,
-        ExtendedUsageBitKHR = ExtendedUsageBit,
-        DisjointBitKHR = DisjointBit,
-        AliasBitKHR = AliasBit
-    )
-
-    YQ_ENUM(VkSampleCountFlagBits, ,
-        1Bit = 0x00000001,
-        2Bit = 0x00000002,
-        4Bit = 0x00000004,
-        8Bit = 0x00000008,
-        16Bit = 0x00000010,
-        32Bit = 0x00000020,
-        64Bit = 0x00000040
-    )
-
-    YQ_ENUM(VkImageUsageFlagBits, ,
-        TransferSrcBit = 0x00000001,
-        TransferDstBit = 0x00000002,
-        SampledBit = 0x00000004,
-        StorageBit = 0x00000008,
-        ColorAttachmentBit = 0x00000010,
-        DepthStencilAttachmentBit = 0x00000020,
-        TransientAttachmentBit = 0x00000040,
-        InputAttachmentBit = 0x00000080,
-        VideoDecodeDstBitKHR = 0x00000400,
-        VideoDecodeSrcBitKHR = 0x00000800,
-        VideoDecodeDpbBitKHR = 0x00001000,
-        FragmentDensityMapBitEXT = 0x00000200,
-        FragmentShadingRateAttachmentBitKHR = 0x00000100,
-        HostTransferBitEXT = 0x00400000,
-        VideoEncodeDstBitKHR = 0x00002000,
-        VideoEncodeSrcBitKHR = 0x00004000,
-        VideoEncodeDpbBitKHR = 0x00008000,
-        AttachmentFeedbackLoopBitEXT = 0x00080000,
-        InvocationMaskBitHuawei = 0x00040000,
-        SampleWeightBitQCOM = 0x00100000,
-        SampleBlockMatchBitQCOM = 0x00200000,
-        ShadingRateImageBitNV = FragmentShadingRateAttachmentBitKHR
-    )
-
-    YQ_ENUM(VkInstanceCreateFlagBits, ,
-        EnumeratePortabilityBitKHR = 0x00000001
-    )
-
-    YQ_ENUM(VkMemoryHeapFlagBits, ,
-        DeviceLocalBit = 0x00000001,
-        MultiInstanceBit = 0x00000002,
-        MultiInstanceBitKHR = MultiInstanceBit
-    )
-
-    YQ_ENUM(VkMemoryPropertyFlagBits, ,
-        DeviceLocalBit = 0x00000001,
-        HostVisibleBit = 0x00000002,
-        HostCoherentBit = 0x00000004,
-        HostCachedBit = 0x00000008,
-        LazilyAllocatedBit = 0x00000010,
-        ProtectedBit = 0x00000020,
-        DeviceCoherentBitAMD = 0x00000040,
-        DeviceUncachedBitAMD = 0x00000080,
-        RdmaCapableBitNV = 0x00000100
-    )
-
-    YQ_ENUM(VkQueueFlagBits, ,
-        GraphicsBit = 0x00000001,
-        ComputeBit = 0x00000002,
-        TransferBit = 0x00000004,
-        SparseBindingBit = 0x00000008,
-        ProtectedBit = 0x00000010,
-        VideoDecodeBitKHR = 0x00000020,
-        VideoEncodeBitKHR = 0x00000040,
-        OpticalFlowBitNV = 0x00000100
-    )
-
-    YQ_ENUM(VkDeviceQueueCreateFlagBits, ,
-        ProtectedBit = 0x00000001
-    )
-
-    YQ_ENUM(VkPipelineStageFlagBits, ,
-        TopOfPipeBit = 0x00000001,
-        DrawIndirectBit = 0x00000002,
-        VertexInputBit = 0x00000004,
-        VertexShaderBit = 0x00000008,
-        TessellationControlShaderBit = 0x00000010,
-        TessellationEvaluationShaderBit = 0x00000020,
-        GeometryShaderBit = 0x00000040,
-        FragmentShaderBit = 0x00000080,
-        EarlyFragmentTestsBit = 0x00000100,
-        LateFragmentTestsBit = 0x00000200,
-        ColorAttachmentOutputBit = 0x00000400,
-        ComputeShaderBit = 0x00000800,
-        TransferBit = 0x00001000,
-        BottomOfPipeBit = 0x00002000,
-        HostBit = 0x00004000,
-        AllGraphicsBit = 0x00008000,
-        AllCommandsBit = 0x00010000,
-        None = 0,
-        TransformFeedbackBitEXT = 0x01000000,
-        ConditionalRenderingBitEXT = 0x00040000,
-        AccelerationStructureBuildBitKHR = 0x02000000,
-        RayTracingShaderBitKHR = 0x00200000,
-        FragmentDensityProcessBitEXT = 0x00800000,
-        FragmentShadingRateAttachmentBitKHR = 0x00400000,
-        CommandPreprocessBitNV = 0x00020000,
-        TaskShaderBitEXT = 0x00080000,
-        MeshShaderBitEXT = 0x00100000,
-        ShadingRateImageBitNV = FragmentShadingRateAttachmentBitKHR,
-        RayTracingShaderBitNV = RayTracingShaderBitKHR,
-        AccelerationStructureBuildBitNV = AccelerationStructureBuildBitKHR,
-        TaskShaderBitNV = TaskShaderBitEXT,
-        MeshShaderBitNV = MeshShaderBitEXT,
-        NoneKHR = None
-    )
-
-    YQ_ENUM(VkMemoryMapFlagBits, ,
-        PlacedBitEXT = 0x00000001
-    )
-
-    YQ_ENUM(VkSparseMemoryBindFlagBits, ,
-        MetadataBit = 0x00000001
-    )
-
-    YQ_ENUM(VkSparseImageFormatFlagBits, ,
-        SingleMiptailBit = 0x00000001,
-        AlignedMipSizeBit = 0x00000002,
-        NonstandardBlockSizeBit = 0x00000004
-    )
-
-    YQ_ENUM(VkFenceCreateFlagBits, ,
-        SignaledBit = 0x00000001
-    )
-
-    YQ_ENUM(VkEventCreateFlagBits, ,
-        DeviceOnlyBit = 0x00000001,
-        DeviceOnlyBitKHR = DeviceOnlyBit
-    )
-
-    YQ_ENUM(VkQueryPipelineStatisticFlagBits, ,
-        InputAssemblyVerticesBit = 0x00000001,
-        InputAssemblyPrimitivesBit = 0x00000002,
-        VertexShaderInvocationsBit = 0x00000004,
-        GeometryShaderInvocationsBit = 0x00000008,
-        GeometryShaderPrimitivesBit = 0x00000010,
-        ClippingInvocationsBit = 0x00000020,
-        ClippingPrimitivesBit = 0x00000040,
-        FragmentShaderInvocationsBit = 0x00000080,
-        TessellationControlShaderPatchesBit = 0x00000100,
-        TessellationEvaluationShaderInvocationsBit = 0x00000200,
-        ComputeShaderInvocationsBit = 0x00000400,
-        TaskShaderInvocationsBitEXT = 0x00000800,
-        MeshShaderInvocationsBitEXT = 0x00001000,
-        ClusterCullingShaderInvocationsBitHuawei = 0x00002000
-    )
-
-    YQ_ENUM(VkQueryResultFlagBits, ,
-        64Bit = 0x00000001,
-        WaitBit = 0x00000002,
-        WithAvailabilityBit = 0x00000004,
-        PartialBit = 0x00000008,
-        WithStatusBitKHR = 0x00000010
-    )
-
-    YQ_ENUM(VkBufferCreateFlagBits, ,
-        SparseBindingBit = 0x00000001,
-        SparseResidencyBit = 0x00000002,
-        SparseAliasedBit = 0x00000004,
-        ProtectedBit = 0x00000008,
-        DeviceAddressCaptureReplayBit = 0x00000010,
-        DescriptorBufferCaptureReplayBitEXT = 0x00000020,
-        VideoProfileIndependentBitKHR = 0x00000040,
-        DeviceAddressCaptureReplayBitEXT = DeviceAddressCaptureReplayBit,
-        DeviceAddressCaptureReplayBitKHR = DeviceAddressCaptureReplayBit
-    )
-
-    YQ_ENUM(VkBufferUsageFlagBits, ,
-        TransferSrcBit = 0x00000001,
-        TransferDstBit = 0x00000002,
-        UniformTexelBufferBit = 0x00000004,
-        StorageTexelBufferBit = 0x00000008,
-        UniformBufferBit = 0x00000010,
-        StorageBufferBit = 0x00000020,
-        IndexBufferBit = 0x00000040,
-        VertexBufferBit = 0x00000080,
-        IndirectBufferBit = 0x00000100,
-        ShaderDeviceAddressBit = 0x00020000,
-        VideoDecodeSrcBitKHR = 0x00002000,
-        VideoDecodeDstBitKHR = 0x00004000,
-        TransformFeedbackBufferBitEXT = 0x00000800,
-        TransformFeedbackCounterBufferBitEXT = 0x00001000,
-        ConditionalRenderingBitEXT = 0x00000200,
-        ExecutionGraphScratchBitAmdx = 0x02000000,
-        AccelerationStructureBuildInputReadOnlyBitKHR = 0x00080000,
-        AccelerationStructureStorageBitKHR = 0x00100000,
-        ShaderBindingTableBitKHR = 0x00000400,
-        VideoEncodeDstBitKHR = 0x00008000,
-        VideoEncodeSrcBitKHR = 0x00010000,
-        SamplerDescriptorBufferBitEXT = 0x00200000,
-        ResourceDescriptorBufferBitEXT = 0x00400000,
-        PushDescriptorsDescriptorBufferBitEXT = 0x04000000,
-        MicromapBuildInputReadOnlyBitEXT = 0x00800000,
-        MicromapStorageBitEXT = 0x01000000,
-        RayTracingBitNV = ShaderBindingTableBitKHR,
-        ShaderDeviceAddressBitEXT = ShaderDeviceAddressBit,
-        ShaderDeviceAddressBitKHR = ShaderDeviceAddressBit
-    )
-
-    YQ_ENUM(VkImageViewCreateFlagBits, ,
-        FragmentDensityMapDynamicBitEXT = 0x00000001,
-        DescriptorBufferCaptureReplayBitEXT = 0x00000004,
-        FragmentDensityMapDeferredBitEXT = 0x00000002
-    )
-
-    YQ_ENUM(VkPipelineCacheCreateFlagBits, ,
-        ExternallySynchronizedBit = 0x00000001,
-        ExternallySynchronizedBitEXT = ExternallySynchronizedBit
-    )
-
-    YQ_ENUM(VkColorComponentFlagBits, ,
-        RBit = 0x00000001,
-        GBit = 0x00000002,
-        BBit = 0x00000004,
-        ABit = 0x00000008
-    )
-
-    YQ_ENUM(VkPipelineCreateFlagBits, ,
-        DisableOptimizationBit = 0x00000001,
-        AllowDerivativesBit = 0x00000002,
-        DerivativeBit = 0x00000004,
-        ViewIndexFromDeviceIndexBit = 0x00000008,
-        DispatchBaseBit = 0x00000010,
-        FailOnPipelineCompileRequiredBit = 0x00000100,
-        EarlyReturnOnFailureBit = 0x00000200,
-        RenderingFragmentShadingRateAttachmentBitKHR = 0x00200000,
-        RenderingFragmentDensityMapAttachmentBitEXT = 0x00400000,
-        RayTracingNoNullAnyHitShadersBitKHR = 0x00004000,
-        RayTracingNoNullClosestHitShadersBitKHR = 0x00008000,
-        RayTracingNoNullMissShadersBitKHR = 0x00010000,
-        RayTracingNoNullIntersectionShadersBitKHR = 0x00020000,
-        RayTracingSkipTrianglesBitKHR = 0x00001000,
-        RayTracingSkipAabbsBitKHR = 0x00002000,
-        RayTracingShaderGroupHandleCaptureReplayBitKHR = 0x00080000,
-        DeferCompileBitNV = 0x00000020,
-        CaptureStatisticsBitKHR = 0x00000040,
-        CaptureInternalRepresentationsBitKHR = 0x00000080,
-        IndirectBindableBitNV = 0x00040000,
-        LibraryBitKHR = 0x00000800,
-        DescriptorBufferBitEXT = 0x20000000,
-        RetainLinkTimeOptimizationInfoBitEXT = 0x00800000,
-        LinkTimeOptimizationBitEXT = 0x00000400,
-        RayTracingAllowMotionBitNV = 0x00100000,
-        ColorAttachmentFeedbackLoopBitEXT = 0x02000000,
-        DepthStencilAttachmentFeedbackLoopBitEXT = 0x04000000,
-        RayTracingOpacityMicromapBitEXT = 0x01000000,
-        RayTracingDisplacementMicromapBitNV = 0x10000000,
-        NoProtectedAccessBitEXT = 0x08000000,
-        ProtectedAccessOnlyBitEXT = 0x40000000,
-        DispatchBase = DispatchBaseBit,
-        VkPipelineRasterizationStateCreateFragmentShadingRateAttachmentBitKHR = RenderingFragmentShadingRateAttachmentBitKHR,
-        VkPipelineRasterizationStateCreateFragmentDensityMapAttachmentBitEXT = RenderingFragmentDensityMapAttachmentBitEXT,
-        ViewIndexFromDeviceIndexBitKHR = ViewIndexFromDeviceIndexBit,
-        DispatchBaseKHR = DispatchBase,
-        FailOnPipelineCompileRequiredBitEXT = FailOnPipelineCompileRequiredBit,
-        EarlyReturnOnFailureBitEXT = EarlyReturnOnFailureBit
-    )
-
-    YQ_ENUM(VkPipelineShaderStageCreateFlagBits, ,
-        AllowVaryingSubgroupSizeBit = 0x00000001,
-        RequireFullSubgroupsBit = 0x00000002,
-        AllowVaryingSubgroupSizeBitEXT = AllowVaryingSubgroupSizeBit,
-        RequireFullSubgroupsBitEXT = RequireFullSubgroupsBit
-    )
-
-    YQ_ENUM(VkShaderStageFlagBits, ,
-        VertexBit = 0x00000001,
-        TessellationControlBit = 0x00000002,
-        TessellationEvaluationBit = 0x00000004,
-        GeometryBit = 0x00000008,
-        FragmentBit = 0x00000010,
-        ComputeBit = 0x00000020,
-        AllGraphics = 0x0000001f,
-        All = 0x7fffffff,
-        RaygenBitKHR = 0x00000100,
-        AnyHitBitKHR = 0x00000200,
-        ClosestHitBitKHR = 0x00000400,
-        MissBitKHR = 0x00000800,
-        IntersectionBitKHR = 0x00001000,
-        CallableBitKHR = 0x00002000,
-        TaskBitEXT = 0x00000040,
-        MeshBitEXT = 0x00000080,
-        SubpassShadingBitHuawei = 0x00004000,
-        ClusterCullingBitHuawei = 0x00080000,
-        RaygenBitNV = RaygenBitKHR,
-        AnyHitBitNV = AnyHitBitKHR,
-        ClosestHitBitNV = ClosestHitBitKHR,
-        MissBitNV = MissBitKHR,
-        IntersectionBitNV = IntersectionBitKHR,
-        CallableBitNV = CallableBitKHR,
-        TaskBitNV = TaskBitEXT,
-        MeshBitNV = MeshBitEXT
-    )
-
-    YQ_ENUM(VkCullModeFlagBits, ,
-        None = 0,
-        FrontBit = 0x00000001,
-        BackBit = 0x00000002,
-        FrontAndBack = 0x00000003
-    )
-
-    YQ_ENUM(VkPipelineDepthStencilStateCreateFlagBits, ,
-        RasterizationOrderAttachmentDepthAccessBitEXT = 0x00000001,
-        RasterizationOrderAttachmentStencilAccessBitEXT = 0x00000002,
-        RasterizationOrderAttachmentDepthAccessBitArm = RasterizationOrderAttachmentDepthAccessBitEXT,
-        RasterizationOrderAttachmentStencilAccessBitArm = RasterizationOrderAttachmentStencilAccessBitEXT
-    )
-
-    YQ_ENUM(VkPipelineColorBlendStateCreateFlagBits, ,
-        RasterizationOrderAttachmentAccessBitEXT = 0x00000001,
-        RasterizationOrderAttachmentAccessBitArm = RasterizationOrderAttachmentAccessBitEXT
-    )
-
-    YQ_ENUM(VkPipelineLayoutCreateFlagBits, ,
-        IndependentSetsBitEXT = 0x00000002
-    )
-
-    YQ_ENUM(VkSamplerCreateFlagBits, ,
-        SubsampledBitEXT = 0x00000001,
-        SubsampledCoarseReconstructionBitEXT = 0x00000002,
-        DescriptorBufferCaptureReplayBitEXT = 0x00000008,
-        NonSeamlessCubeMapBitEXT = 0x00000004,
-        ImageProcessingBitQCOM = 0x00000010
-    )
-
-    YQ_ENUM(VkDescriptorPoolCreateFlagBits, ,
-        FreeDescriptorSetBit = 0x00000001,
-        UpdateAfterBindBit = 0x00000002,
-        HostOnlyBitEXT = 0x00000004,
-        AllowOverallocationSetsBitNV = 0x00000008,
-        AllowOverallocationPoolsBitNV = 0x00000010,
-        UpdateAfterBindBitEXT = UpdateAfterBindBit,
-        HostOnlyBitValve = HostOnlyBitEXT
-    )
-
-    YQ_ENUM(VkDescriptorSetLayoutCreateFlagBits, ,
-        UpdateAfterBindPoolBit = 0x00000002,
-        PushDescriptorBitKHR = 0x00000001,
-        DescriptorBufferBitEXT = 0x00000010,
-        EmbeddedImmutableSamplersBitEXT = 0x00000020,
-        IndirectBindableBitNV = 0x00000080,
-        HostOnlyPoolBitEXT = 0x00000004,
-        PerStageBitNV = 0x00000040,
-        UpdateAfterBindPoolBitEXT = UpdateAfterBindPoolBit,
-        HostOnlyPoolBitValve = HostOnlyPoolBitEXT
-    )
-
-    YQ_ENUM(VkAttachmentDescriptionFlagBits, ,
-        MayAliasBit = 0x00000001
-    )
-
-    YQ_ENUM(VkDependencyFlagBits, ,
-        ByRegionBit = 0x00000001,
-        DeviceGroupBit = 0x00000004,
-        ViewLocalBit = 0x00000002,
-        FeedbackLoopBitEXT = 0x00000008,
-        ViewLocalBitKHR = ViewLocalBit,
-        DeviceGroupBitKHR = DeviceGroupBit
-    )
-
-    YQ_ENUM(VkFramebufferCreateFlagBits, ,
-        ImagelessBit = 0x00000001,
-        ImagelessBitKHR = ImagelessBit
-    )
-
-    YQ_ENUM(VkRenderPassCreateFlagBits, ,
-        TransformBitQCOM = 0x00000002
-    )
-
-    YQ_ENUM(VkSubpassDescriptionFlagBits, ,
-        PerViewAttributesBitNvx = 0x00000001,
-        PerViewPositionXOnlyBitNvx = 0x00000002,
-        FragmentRegionBitQCOM = 0x00000004,
-        ShaderResolveBitQCOM = 0x00000008,
-        RasterizationOrderAttachmentColorAccessBitEXT = 0x00000010,
-        RasterizationOrderAttachmentDepthAccessBitEXT = 0x00000020,
-        RasterizationOrderAttachmentStencilAccessBitEXT = 0x00000040,
-        EnableLegacyDitheringBitEXT = 0x00000080,
-        RasterizationOrderAttachmentColorAccessBitArm = RasterizationOrderAttachmentColorAccessBitEXT,
-        RasterizationOrderAttachmentDepthAccessBitArm = RasterizationOrderAttachmentDepthAccessBitEXT,
-        RasterizationOrderAttachmentStencilAccessBitArm = RasterizationOrderAttachmentStencilAccessBitEXT
-    )
-
-    YQ_ENUM(VkCommandPoolCreateFlagBits, ,
-        TransientBit = 0x00000001,
-        ResetCommandBufferBit = 0x00000002,
-        ProtectedBit = 0x00000004
-    )
-
-    YQ_ENUM(VkCommandPoolResetFlagBits, ,
-        ReleaseResourcesBit = 0x00000001
-    )
-
-    YQ_ENUM(VkCommandBufferUsageFlagBits, ,
-        OneTimeSubmitBit = 0x00000001,
-        RenderPassContinueBit = 0x00000002,
-        SimultaneousUseBit = 0x00000004
-    )
-
-    YQ_ENUM(VkQueryControlFlagBits, ,
-        PreciseBit = 0x00000001
-    )
-
-    YQ_ENUM(VkCommandBufferResetFlagBits, ,
-        ReleaseResourcesBit = 0x00000001
-    )
-
-    YQ_ENUM(VkStencilFaceFlagBits, ,
-        FrontBit = 0x00000001,
-        BackBit = 0x00000002,
-        FrontAndBack = 0x00000003,
-        VkStencilFrontAndBack = FrontAndBack
-    )
-
-    YQ_ENUM(VkPointClippingBehavior, ,
-        AllClipPlanes = 0,
-        UserClipPlanesOnly = 1,
-        AllClipPlanesKHR = AllClipPlanes,
-        UserClipPlanesOnlyKHR = UserClipPlanesOnly
-    )
-
-    YQ_ENUM(VkTessellationDomainOrigin, ,
-        UpperLeft = 0,
-        LowerLeft = 1,
-        UpperLeftKHR = UpperLeft,
-        LowerLeftKHR = LowerLeft
-    )
-
-    YQ_ENUM(VkSamplerYcbcrModelConversion, ,
-        RgbIdentity = 0,
-        YcbcrIdentity = 1,
-        Ycbcr709 = 2,
-        Ycbcr601 = 3,
-        Ycbcr2020 = 4,
-        RgbIdentityKHR = RgbIdentity,
-        YcbcrIdentityKHR = YcbcrIdentity,
-        Ycbcr709KHR = Ycbcr709,
-        Ycbcr601KHR = Ycbcr601,
-        Ycbcr2020KHR = Ycbcr2020
-    )
-
-    YQ_ENUM(VkSamplerYcbcrRange, ,
-        ItuFull = 0,
-        ItuNarrow = 1,
-        ItuFullKHR = ItuFull,
-        ItuNarrowKHR = ItuNarrow
-    )
-
-    YQ_ENUM(VkChromaLocation, ,
-        CositedEven = 0,
-        Midpoint = 1,
-        CositedEvenKHR = CositedEven,
-        MidpointKHR = Midpoint
-    )
-
-    YQ_ENUM(VkDescriptorUpdateTemplateType, ,
-        DescriptorSet = 0,
-        PushDescriptorsKHR = 1,
-        DescriptorSetKHR = DescriptorSet
-    )
-
-    YQ_ENUM(VkSubgroupFeatureFlagBits, ,
-        BasicBit = 0x00000001,
-        VoteBit = 0x00000002,
-        ArithmeticBit = 0x00000004,
-        BallotBit = 0x00000008,
-        ShuffleBit = 0x00000010,
-        ShuffleRelativeBit = 0x00000020,
-        ClusteredBit = 0x00000040,
-        QuadBit = 0x00000080,
-        PartitionedBitNV = 0x00000100,
-        RotateBitKHR = 0x00000200,
-        RotateClusteredBitKHR = 0x00000400
-    )
-
-    YQ_ENUM(VkPeerMemoryFeatureFlagBits, ,
-        CopySrcBit = 0x00000001,
-        CopyDstBit = 0x00000002,
-        GenericSrcBit = 0x00000004,
-        GenericDstBit = 0x00000008,
-        CopySrcBitKHR = CopySrcBit,
-        CopyDstBitKHR = CopyDstBit,
-        GenericSrcBitKHR = GenericSrcBit,
-        GenericDstBitKHR = GenericDstBit
-    )
-
-    YQ_ENUM(VkMemoryAllocateFlagBits, ,
-        DeviceMaskBit = 0x00000001,
-        DeviceAddressBit = 0x00000002,
-        DeviceAddressCaptureReplayBit = 0x00000004,
-        DeviceMaskBitKHR = DeviceMaskBit,
-        DeviceAddressBitKHR = DeviceAddressBit,
-        DeviceAddressCaptureReplayBitKHR = DeviceAddressCaptureReplayBit
-    )
-
-    YQ_ENUM(VkExternalMemoryHandleTypeFlagBits, ,
-        OpaqueFdBit = 0x00000001,
-        OpaqueWin32Bit = 0x00000002,
-        OpaqueWin32KmtBit = 0x00000004,
-        D3d11TextureBit = 0x00000008,
-        D3d11TextureKmtBit = 0x00000010,
-        D3d12HeapBit = 0x00000020,
-        D3d12ResourceBit = 0x00000040,
-        DmaBufBitEXT = 0x00000200,
-        AndroidHardwareBufferBitAndroid = 0x00000400,
-        HostAllocationBitEXT = 0x00000080,
-        HostMappedForeignMemoryBitEXT = 0x00000100,
-        ZirconVmoBitFuchsia = 0x00000800,
-        RdmaAddressBitNV = 0x00001000,
-        ScreenBufferBitQnx = 0x00004000,
-        OpaqueFdBitKHR = OpaqueFdBit,
-        OpaqueWin32BitKHR = OpaqueWin32Bit,
-        OpaqueWin32KmtBitKHR = OpaqueWin32KmtBit,
-        D3d11TextureBitKHR = D3d11TextureBit,
-        D3d11TextureKmtBitKHR = D3d11TextureKmtBit,
-        D3d12HeapBitKHR = D3d12HeapBit,
-        D3d12ResourceBitKHR = D3d12ResourceBit
-    )
-
-    YQ_ENUM(VkExternalMemoryFeatureFlagBits, ,
-        DedicatedOnlyBit = 0x00000001,
-        ExportableBit = 0x00000002,
-        ImportableBit = 0x00000004,
-        DedicatedOnlyBitKHR = DedicatedOnlyBit,
-        ExportableBitKHR = ExportableBit,
-        ImportableBitKHR = ImportableBit
-    )
-
-    YQ_ENUM(VkExternalFenceHandleTypeFlagBits, ,
-        OpaqueFdBit = 0x00000001,
-        OpaqueWin32Bit = 0x00000002,
-        OpaqueWin32KmtBit = 0x00000004,
-        SyncFdBit = 0x00000008,
-        OpaqueFdBitKHR = OpaqueFdBit,
-        OpaqueWin32BitKHR = OpaqueWin32Bit,
-        OpaqueWin32KmtBitKHR = OpaqueWin32KmtBit,
-        SyncFdBitKHR = SyncFdBit
-    )
-
-    YQ_ENUM(VkExternalFenceFeatureFlagBits, ,
-        ExportableBit = 0x00000001,
-        ImportableBit = 0x00000002,
-        ExportableBitKHR = ExportableBit,
-        ImportableBitKHR = ImportableBit
-    )
-
-    YQ_ENUM(VkFenceImportFlagBits, ,
-        TemporaryBit = 0x00000001,
-        TemporaryBitKHR = TemporaryBit
-    )
-
-    YQ_ENUM(VkSemaphoreImportFlagBits, ,
-        TemporaryBit = 0x00000001,
-        TemporaryBitKHR = TemporaryBit
-    )
-
-    YQ_ENUM(VkExternalSemaphoreHandleTypeFlagBits, ,
-        OpaqueFdBit = 0x00000001,
-        OpaqueWin32Bit = 0x00000002,
-        OpaqueWin32KmtBit = 0x00000004,
-        D3d12FenceBit = 0x00000008,
-        SyncFdBit = 0x00000010,
-        ZirconEventBitFuchsia = 0x00000080,
-        D3d11FenceBit = D3d12FenceBit,
-        OpaqueFdBitKHR = OpaqueFdBit,
-        OpaqueWin32BitKHR = OpaqueWin32Bit,
-        OpaqueWin32KmtBitKHR = OpaqueWin32KmtBit,
-        D3d12FenceBitKHR = D3d12FenceBit,
-        SyncFdBitKHR = SyncFdBit
-    )
-
-    YQ_ENUM(VkExternalSemaphoreFeatureFlagBits, ,
-        ExportableBit = 0x00000001,
-        ImportableBit = 0x00000002,
-        ExportableBitKHR = ExportableBit,
-        ImportableBitKHR = ImportableBit
-    )
-
-    YQ_ENUM(VkDriverId, ,
-        AMDProprietary = 1,
-        AMDOpenSource = 2,
-        MesaRadv = 3,
-        NvidiaProprietary = 4,
-        INTELProprietaryWindows = 5,
-        INTELOpenSourceMesa = 6,
-        ImaginationProprietary = 7,
-        QualcommProprietary = 8,
-        ArmProprietary = 9,
-        GoogleSwiftshader = 10,
-        GgpProprietary = 11,
-        BroadcomProprietary = 12,
-        MesaLlvmpipe = 13,
-        Moltenvk = 14,
-        CoreaviProprietary = 15,
-        JuiceProprietary = 16,
-        VerisiliconProprietary = 17,
-        MesaTurnip = 18,
-        MesaV3dv = 19,
-        MesaPanvk = 20,
-        SamsungProprietary = 21,
-        MesaVenus = 22,
-        MesaDozen = 23,
-        MesaNvk = 24,
-        ImaginationOpenSourceMesa = 25,
-        MesaHoneykrisp = 26,
-        Reserved27 = 27,
-        AMDProprietaryKHR = AMDProprietary,
-        AMDOpenSourceKHR = AMDOpenSource,
-        MesaRadvKHR = MesaRadv,
-        NvidiaProprietaryKHR = NvidiaProprietary,
-        INTELProprietaryWindowsKHR = INTELProprietaryWindows,
-        INTELOpenSourceMesaKHR = INTELOpenSourceMesa,
-        ImaginationProprietaryKHR = ImaginationProprietary,
-        QualcommProprietaryKHR = QualcommProprietary,
-        ArmProprietaryKHR = ArmProprietary,
-        GoogleSwiftshaderKHR = GoogleSwiftshader,
-        GgpProprietaryKHR = GgpProprietary,
-        BroadcomProprietaryKHR = BroadcomProprietary
-    )
-
-    YQ_ENUM(VkShaderFloatControlsIndependence, ,
-        32BitOnly = 0,
-        All = 1,
-        None = 2,
-        32BitOnlyKHR = 32BitOnly,
-        AllKHR = All,
-        NoneKHR = None
-    )
-
-    YQ_ENUM(VkSamplerReductionMode, ,
-        WeightedAverage = 0,
-        Min = 1,
-        Max = 2,
-        WeightedAverageRangeclampQCOM = 1000521000,
-        WeightedAverageEXT = WeightedAverage,
-        MinEXT = Min,
-        MaxEXT = Max
-    )
-
-    YQ_ENUM(VkSemaphoreType, ,
-        Binary = 0,
-        Timeline = 1,
-        BinaryKHR = Binary,
-        TimelineKHR = Timeline
-    )
-
-    YQ_ENUM(VkResolveModeFlagBits, ,
-        None = 0,
-        SampleZeroBit = 0x00000001,
-        AverageBit = 0x00000002,
-        MinBit = 0x00000004,
-        MaxBit = 0x00000008,
-        ExternalFormatDownsampleAndroid = 0x00000010,
-        NoneKHR = None,
-        SampleZeroBitKHR = SampleZeroBit,
-        AverageBitKHR = AverageBit,
-        MinBitKHR = MinBit,
-        MaxBitKHR = MaxBit
-    )
-
-    YQ_ENUM(VkDescriptorBindingFlagBits, ,
-        UpdateAfterBindBit = 0x00000001,
-        UpdateUnusedWhilePendingBit = 0x00000002,
-        PartiallyBoundBit = 0x00000004,
-        VariableDescriptorCountBit = 0x00000008,
-        UpdateAfterBindBitEXT = UpdateAfterBindBit,
-        UpdateUnusedWhilePendingBitEXT = UpdateUnusedWhilePendingBit,
-        PartiallyBoundBitEXT = PartiallyBoundBit,
-        VariableDescriptorCountBitEXT = VariableDescriptorCountBit
-    )
-
-    YQ_ENUM(VkSemaphoreWaitFlagBits, ,
-        AnyBit = 0x00000001,
-        AnyBitKHR = AnyBit
-    )
-
-    YQ_ENUM(VkPipelineCreationFeedbackFlagBits, ,
-        ValidBit = 0x00000001,
-        ApplicationPipelineCacheHitBit = 0x00000002,
-        BasePipelineAccelerationBit = 0x00000004,
-        ValidBitEXT = ValidBit,
-        ApplicationPipelineCacheHitBitEXT = ApplicationPipelineCacheHitBit,
-        BasePipelineAccelerationBitEXT = BasePipelineAccelerationBit
-    )
-
-    YQ_ENUM(VkToolPurposeFlagBits, ,
-        ValidationBit = 0x00000001,
-        ProfilingBit = 0x00000002,
-        TracingBit = 0x00000004,
-        AdditionalFeaturesBit = 0x00000008,
-        ModifyingFeaturesBit = 0x00000010,
-        DebugReportingBitEXT = 0x00000020,
-        DebugMarkersBitEXT = 0x00000040,
-        ValidationBitEXT = ValidationBit,
-        ProfilingBitEXT = ProfilingBit,
-        TracingBitEXT = TracingBit,
-        AdditionalFeaturesBitEXT = AdditionalFeaturesBit,
-        ModifyingFeaturesBitEXT = ModifyingFeaturesBit
-    )
-
-    YQ_ENUM(VkSubmitFlagBits, ,
-        ProtectedBit = 0x00000001,
-        ProtectedBitKHR = ProtectedBit
-    )
-
-    YQ_ENUM(VkRenderingFlagBits, ,
-        ContentsSecondaryCommandBuffersBit = 0x00000001,
-        SuspendingBit = 0x00000002,
-        ResumingBit = 0x00000004,
-        EnableLegacyDitheringBitEXT = 0x00000008,
-        ContentsInlineBitKHR = 0x00000010,
-        ContentsSecondaryCommandBuffersBitKHR = ContentsSecondaryCommandBuffersBit,
-        SuspendingBitKHR = SuspendingBit,
-        ResumingBitKHR = ResumingBit,
-        ContentsInlineBitEXT = ContentsInlineBitKHR
-    )
-
-    YQ_ENUM(VkPresentMode, ,
-        ImmediateKHR = 0,
-        MailboxKHR = 1,
-        FifoKHR = 2,
-        FifoRelaxedKHR = 3,
-        SharedDemandRefreshKHR = 1000111000,
-        SharedContinuousRefreshKHR = 1000111001
-    )
-
-    YQ_ENUM(VkColorSpace, ,
-        SrgbNonlinearKHR = 0,
-        DisplayP3NonlinearEXT = 1000104001,
-        ExtendedSrgbLinearEXT = 1000104002,
-        DisplayP3LinearEXT = 1000104003,
-        DciP3NonlinearEXT = 1000104004,
-        Bt709LinearEXT = 1000104005,
-        Bt709NonlinearEXT = 1000104006,
-        Bt2020LinearEXT = 1000104007,
-        Hdr10St2084EXT = 1000104008,
-        DolbyvisionEXT = 1000104009,
-        Hdr10HlgEXT = 1000104010,
-        AdobergbLinearEXT = 1000104011,
-        AdobergbNonlinearEXT = 1000104012,
-        PassThroughEXT = 1000104013,
-        ExtendedSrgbNonlinearEXT = 1000104014,
-        DisplayNativeAMD = 1000213000,
-        VkColorspaceSrgbNonlinearKHR = SrgbNonlinearKHR,
-        DciP3LinearEXT = DisplayP3LinearEXT
-    )
-
-    YQ_ENUM(VkSurfaceTransformFlagBits, ,
-        IdentityBitKHR = 0x00000001,
-        Rotate90BitKHR = 0x00000002,
-        Rotate180BitKHR = 0x00000004,
-        Rotate270BitKHR = 0x00000008,
-        HorizontalMirrorBitKHR = 0x00000010,
-        HorizontalMirrorRotate90BitKHR = 0x00000020,
-        HorizontalMirrorRotate180BitKHR = 0x00000040,
-        HorizontalMirrorRotate270BitKHR = 0x00000080,
-        InheritBitKHR = 0x00000100
-    )
-
-    YQ_ENUM(VkCompositeAlphaFlagBits, ,
-        OpaqueBitKHR = 0x00000001,
-        PreMultipliedBitKHR = 0x00000002,
-        PostMultipliedBitKHR = 0x00000004,
-        InheritBitKHR = 0x00000008
-    )
-
-    YQ_ENUM(VkSwapchainCreateFlagBits, ,
-        SplitInstanceBindRegionsBitKHR = 0x00000001,
-        ProtectedBitKHR = 0x00000002,
-        MutableFormatBitKHR = 0x00000004,
-        DeferredMemoryAllocationBitEXT = 0x00000008
-    )
-
-    YQ_ENUM(VkDeviceGroupPresentModeFlagBits, ,
-        LocalBitKHR = 0x00000001,
-        RemoteBitKHR = 0x00000002,
-        SumBitKHR = 0x00000004,
-        LocalMultiDeviceBitKHR = 0x00000008
-    )
-
-    YQ_ENUM(VkDisplayPlaneAlphaFlagBits, ,
-        OpaqueBitKHR = 0x00000001,
-        GlobalBitKHR = 0x00000002,
-        PerPixelBitKHR = 0x00000004,
-        PerPixelPremultipliedBitKHR = 0x00000008
-    )
-
-    YQ_ENUM(VkQueryResultStatus, ,
-        ErrorKHR = -1,
-        NotReadyKHR = 0,
-        CompleteKHR = 1,
-        InsufficientBitstreamBufferRangeKHR = -1000299000
-    )
-
-    YQ_ENUM(VkVideoCodecOperationFlagBits, ,
-        NoneKHR = 0,
-        EncodeH264BitKHR = 0x00010000,
-        EncodeH265BitKHR = 0x00020000,
-        DecodeH264BitKHR = 0x00000001,
-        DecodeH265BitKHR = 0x00000002,
-        DecodeAv1BitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkVideoChromaSubsamplingFlagBits, ,
-        InvalidKHR = 0,
-        MonochromeBitKHR = 0x00000001,
-        420BitKHR = 0x00000002,
-        422BitKHR = 0x00000004,
-        444BitKHR = 0x00000008
-    )
-
-    YQ_ENUM(VkVideoComponentBitDepthFlagBits, ,
-        InvalidKHR = 0,
-        8BitKHR = 0x00000001,
-        10BitKHR = 0x00000004,
-        12BitKHR = 0x00000010
-    )
-
-    YQ_ENUM(VkVideoCapabilityFlagBits, ,
-        ProtectedContentBitKHR = 0x00000001,
-        SeparateReferenceImagesBitKHR = 0x00000002
-    )
-
-    YQ_ENUM(VkVideoSessionCreateFlagBits, ,
-        ProtectedContentBitKHR = 0x00000001,
-        AllowEncodeParameterOptimizationsBitKHR = 0x00000002,
-        InlineQueriesBitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkVideoCodingControlFlagBits, ,
-        ResetBitKHR = 0x00000001,
-        EncodeRateControlBitKHR = 0x00000002,
-        EncodeQualityLevelBitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkVideoDecodeCapabilityFlagBits, ,
-        DpbAndOutputCoincideBitKHR = 0x00000001,
-        DpbAndOutputDistinctBitKHR = 0x00000002
-    )
-
-    YQ_ENUM(VkVideoDecodeUsageFlagBits, ,
-        DefaultKHR = 0,
-        TranscodingBitKHR = 0x00000001,
-        OfflineBitKHR = 0x00000002,
-        StreamingBitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkVideoEncodeH264CapabilityFlagBits, ,
-        HrdComplianceBitKHR = 0x00000001,
-        PredictionWeightTableGeneratedBitKHR = 0x00000002,
-        RowUnalignedSliceBitKHR = 0x00000004,
-        DifferentSliceTypeBitKHR = 0x00000008,
-        BFrameInL0ListBitKHR = 0x00000010,
-        BFrameInL1ListBitKHR = 0x00000020,
-        PerPictureTypeMinMaxQpBitKHR = 0x00000040,
-        PerSliceConstantQpBitKHR = 0x00000080,
-        GeneratePrefixNaluBitKHR = 0x00000100
-    )
-
-    YQ_ENUM(VkVideoEncodeH264StdFlagBits, ,
-        SeparateColorPlaneFlagSetBitKHR = 0x00000001,
-        QpprimeYZeroTransformBypassFlagSetBitKHR = 0x00000002,
-        ScalingMatrixPresentFlagSetBitKHR = 0x00000004,
-        ChromaQpIndexOffsetBitKHR = 0x00000008,
-        SecondChromaQpIndexOffsetBitKHR = 0x00000010,
-        PicInitQpMinus26BitKHR = 0x00000020,
-        WeightedPredFlagSetBitKHR = 0x00000040,
-        WeightedBipredIdcExplicitBitKHR = 0x00000080,
-        WeightedBipredIdcImplicitBitKHR = 0x00000100,
-        Transform8x8ModeFlagSetBitKHR = 0x00000200,
-        DirectSpatialMvPredFlagUnsetBitKHR = 0x00000400,
-        EntropyCodingModeFlagUnsetBitKHR = 0x00000800,
-        EntropyCodingModeFlagSetBitKHR = 0x00001000,
-        Direct8x8InferenceFlagUnsetBitKHR = 0x00002000,
-        ConstrainedIntraPredFlagSetBitKHR = 0x00004000,
-        DeblockingFilterDisabledBitKHR = 0x00008000,
-        DeblockingFilterEnabledBitKHR = 0x00010000,
-        DeblockingFilterPartialBitKHR = 0x00020000,
-        SliceQpDeltaBitKHR = 0x00080000,
-        DifferentSliceQpDeltaBitKHR = 0x00100000
-    )
-
-    YQ_ENUM(VkVideoEncodeH264RateControlFlagBits, ,
-        AttemptHrdComplianceBitKHR = 0x00000001,
-        RegularGopBitKHR = 0x00000002,
-        ReferencePatternFlatBitKHR = 0x00000004,
-        ReferencePatternDyadicBitKHR = 0x00000008,
-        TemporalLayerPatternDyadicBitKHR = 0x00000010
-    )
-
-    YQ_ENUM(VkVideoEncodeH265CapabilityFlagBits, ,
-        HrdComplianceBitKHR = 0x00000001,
-        PredictionWeightTableGeneratedBitKHR = 0x00000002,
-        RowUnalignedSliceSegmentBitKHR = 0x00000004,
-        DifferentSliceSegmentTypeBitKHR = 0x00000008,
-        BFrameInL0ListBitKHR = 0x00000010,
-        BFrameInL1ListBitKHR = 0x00000020,
-        PerPictureTypeMinMaxQpBitKHR = 0x00000040,
-        PerSliceSegmentConstantQpBitKHR = 0x00000080,
-        MultipleTilesPerSliceSegmentBitKHR = 0x00000100,
-        MultipleSliceSegmentsPerTileBitKHR = 0x00000200
-    )
-
-    YQ_ENUM(VkVideoEncodeH265StdFlagBits, ,
-        SeparateColorPlaneFlagSetBitKHR = 0x00000001,
-        SampleAdaptiveOffsetEnabledFlagSetBitKHR = 0x00000002,
-        ScalingListDataPresentFlagSetBitKHR = 0x00000004,
-        PcmEnabledFlagSetBitKHR = 0x00000008,
-        SpsTemporalMvpEnabledFlagSetBitKHR = 0x00000010,
-        InitQpMinus26BitKHR = 0x00000020,
-        WeightedPredFlagSetBitKHR = 0x00000040,
-        WeightedBipredFlagSetBitKHR = 0x00000080,
-        Log2ParallelMergeLevelMinus2BitKHR = 0x00000100,
-        SignDataHidingEnabledFlagSetBitKHR = 0x00000200,
-        TransformSkipEnabledFlagSetBitKHR = 0x00000400,
-        TransformSkipEnabledFlagUnsetBitKHR = 0x00000800,
-        PpsSliceChromaQpOffsetsPresentFlagSetBitKHR = 0x00001000,
-        TransquantBypassEnabledFlagSetBitKHR = 0x00002000,
-        ConstrainedIntraPredFlagSetBitKHR = 0x00004000,
-        EntropyCodingSyncEnabledFlagSetBitKHR = 0x00008000,
-        DeblockingFilterOverrideEnabledFlagSetBitKHR = 0x00010000,
-        DependentSliceSegmentsEnabledFlagSetBitKHR = 0x00020000,
-        DependentSliceSegmentFlagSetBitKHR = 0x00040000,
-        SliceQpDeltaBitKHR = 0x00080000,
-        DifferentSliceQpDeltaBitKHR = 0x00100000
-    )
-
-    YQ_ENUM(VkVideoEncodeH265CtbSizeFlagBits, ,
-        16BitKHR = 0x00000001,
-        32BitKHR = 0x00000002,
-        64BitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkVideoEncodeH265TransformBlockSizeFlagBits, ,
-        4BitKHR = 0x00000001,
-        8BitKHR = 0x00000002,
-        16BitKHR = 0x00000004,
-        32BitKHR = 0x00000008
-    )
-
-    YQ_ENUM(VkVideoEncodeH265RateControlFlagBits, ,
-        AttemptHrdComplianceBitKHR = 0x00000001,
-        RegularGopBitKHR = 0x00000002,
-        ReferencePatternFlatBitKHR = 0x00000004,
-        ReferencePatternDyadicBitKHR = 0x00000008,
-        TemporalSubLayerPatternDyadicBitKHR = 0x00000010
-    )
-
-    YQ_ENUM(VkVideoDecodeH264PictureLayoutFlagBits, ,
-        ProgressiveKHR = 0,
-        InterlacedInterleavedLinesBitKHR = 0x00000001,
-        InterlacedSeparatePlanesBitKHR = 0x00000002
-    )
-
-    YQ_ENUM(VkPerformanceCounterUnit, ,
-        GenericKHR = 0,
-        PercentageKHR = 1,
-        NanosecondsKHR = 2,
-        BytesKHR = 3,
-        BytesPerSecondKHR = 4,
-        KelvinKHR = 5,
-        WattsKHR = 6,
-        VoltsKHR = 7,
-        AmpsKHR = 8,
-        HertzKHR = 9,
-        CyclesKHR = 10
-    )
-
-    YQ_ENUM(VkPerformanceCounterScope, ,
-        CommandBufferKHR = 0,
-        RenderPassKHR = 1,
-        CommandKHR = 2,
-        VkQueryScopeCommandBufferKHR = CommandBufferKHR,
-        VkQueryScopeRenderPassKHR = RenderPassKHR,
-        VkQueryScopeCommandKHR = CommandKHR
-    )
-
-    YQ_ENUM(VkPerformanceCounterStorage, ,
-        Int32KHR = 0,
-        Int64KHR = 1,
-        Uint32KHR = 2,
-        Uint64KHR = 3,
-        Float32KHR = 4,
-        Float64KHR = 5
-    )
-
-    YQ_ENUM(VkPerformanceCounterDescriptionFlagBits, ,
-        PerformanceImpactingBitKHR = 0x00000001,
-        ConcurrentlyImpactedBitKHR = 0x00000002,
-        PerformanceImpactingKHR = PerformanceImpactingBitKHR,
-        ConcurrentlyImpactedKHR = ConcurrentlyImpactedBitKHR
-    )
-
-    YQ_ENUM(VkAcquireProfilingLockFlagBits, ,
-
-    )
-
-    YQ_ENUM(VkQueueGlobalPriority, ,
-        LowKHR = 128,
-        MediumKHR = 256,
-        HighKHR = 512,
-        RealtimeKHR = 1024,
-        LowEXT = LowKHR,
-        MediumEXT = MediumKHR,
-        HighEXT = HighKHR,
-        RealtimeEXT = RealtimeKHR
-    )
-
-    YQ_ENUM(VkFragmentShadingRateCombinerOp, ,
-        KeepKHR = 0,
-        ReplaceKHR = 1,
-        MinKHR = 2,
-        MaxKHR = 3,
-        MulKHR = 4
-    )
-
-    YQ_ENUM(VkPipelineExecutableStatisticFormat, ,
-        Bool32KHR = 0,
-        Int64KHR = 1,
-        Uint64KHR = 2,
-        Float64KHR = 3
-    )
-
-    YQ_ENUM(VkMemoryUnmapFlagBits, ,
-        ReserveBitEXT = 0x00000001
-    )
-
-    YQ_ENUM(VkVideoEncodeTuningMode, ,
-        DefaultKHR = 0,
-        HighQualityKHR = 1,
-        LowLatencyKHR = 2,
-        UltraLowLatencyKHR = 3,
-        LosslessKHR = 4
-    )
-
-    YQ_ENUM(VkVideoEncodeFlagBits, ,
-
-    )
-
-    YQ_ENUM(VkVideoEncodeCapabilityFlagBits, ,
-        PrecedingExternallyEncodedBytesBitKHR = 0x00000001,
-        InsufficientBitstreamBufferRangeDetectionBitKHR = 0x00000002
-    )
-
-    YQ_ENUM(VkVideoEncodeRateControlModeFlagBits, ,
-        DefaultKHR = 0,
-        DisabledBitKHR = 0x00000001,
-        CbrBitKHR = 0x00000002,
-        VbrBitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkVideoEncodeFeedbackFlagBits, ,
-        BitstreamBufferOffsetBitKHR = 0x00000001,
-        BitstreamBytesWrittenBitKHR = 0x00000002,
-        BitstreamHasOverridesBitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkVideoEncodeUsageFlagBits, ,
-        DefaultKHR = 0,
-        TranscodingBitKHR = 0x00000001,
-        StreamingBitKHR = 0x00000002,
-        RecordingBitKHR = 0x00000004,
-        ConferencingBitKHR = 0x00000008
-    )
-
-    YQ_ENUM(VkVideoEncodeContentFlagBits, ,
-        DefaultKHR = 0,
-        CameraBitKHR = 0x00000001,
-        DesktopBitKHR = 0x00000002,
-        RenderedBitKHR = 0x00000004
-    )
-
-    YQ_ENUM(VkComponentType, ,
-        Float16KHR = 0,
-        Float32KHR = 1,
-        Float64KHR = 2,
-        Sint8KHR = 3,
-        Sint16KHR = 4,
-        Sint32KHR = 5,
-        Sint64KHR = 6,
-        Uint8KHR = 7,
-        Uint16KHR = 8,
-        Uint32KHR = 9,
-        Uint64KHR = 10,
-        Float16NV = Float16KHR,
-        Float32NV = Float32KHR,
-        Float64NV = Float64KHR,
-        Sint8NV = Sint8KHR,
-        Sint16NV = Sint16KHR,
-        Sint32NV = Sint32KHR,
-        Sint64NV = Sint64KHR,
-        Uint8NV = Uint8KHR,
-        Uint16NV = Uint16KHR,
-        Uint32NV = Uint32KHR,
-        Uint64NV = Uint64KHR
-    )
-
-    YQ_ENUM(VkScope, ,
-        DeviceKHR = 1,
-        WorkgroupKHR = 2,
-        SubgroupKHR = 3,
-        QueueFamilyKHR = 5,
-        DeviceNV = DeviceKHR,
-        WorkgroupNV = WorkgroupKHR,
-        SubgroupNV = SubgroupKHR,
-        QueueFamilyNV = QueueFamilyKHR
-    )
-
-    YQ_ENUM(VkLineRasterizationMode, ,
-        DefaultKHR = 0,
-        RectangularKHR = 1,
-        BresenhamKHR = 2,
-        RectangularSmoothKHR = 3,
-        DefaultEXT = DefaultKHR,
-        RectangularEXT = RectangularKHR,
-        BresenhamEXT = BresenhamKHR,
-        RectangularSmoothEXT = RectangularSmoothKHR
-    )
-
-    YQ_ENUM(VkTimeDomain, ,
-        DeviceKHR = 0,
-        ClockMonotonicKHR = 1,
-        ClockMonotonicRawKHR = 2,
-        QueryPerformanceCounterKHR = 3,
-        DeviceEXT = DeviceKHR,
-        ClockMonotonicEXT = ClockMonotonicKHR,
-        ClockMonotonicRawEXT = ClockMonotonicRawKHR,
-        QueryPerformanceCounterEXT = QueryPerformanceCounterKHR
-    )
-
-    YQ_ENUM(VkPhysicalDeviceLayeredApi, ,
-        VulkanKHR = 0,
-        D3d12KHR = 1,
-        MetalKHR = 2,
-        OpenglKHR = 3,
-        OpenglesKHR = 4
-    )
-
-    YQ_ENUM(VkDebugReportObjectType, ,
-        UnknownEXT = 0,
-        InstanceEXT = 1,
-        PhysicalDeviceEXT = 2,
-        DeviceEXT = 3,
-        QueueEXT = 4,
-        SemaphoreEXT = 5,
-        CommandBufferEXT = 6,
-        FenceEXT = 7,
-        DeviceMemoryEXT = 8,
-        BufferEXT = 9,
-        ImageEXT = 10,
-        EventEXT = 11,
-        QueryPoolEXT = 12,
-        BufferViewEXT = 13,
-        ImageViewEXT = 14,
-        ShaderModuleEXT = 15,
-        PipelineCacheEXT = 16,
-        PipelineLayoutEXT = 17,
-        RenderPassEXT = 18,
-        PipelineEXT = 19,
-        DescriptorSetLayoutEXT = 20,
-        SamplerEXT = 21,
-        DescriptorPoolEXT = 22,
-        DescriptorSetEXT = 23,
-        FramebufferEXT = 24,
-        CommandPoolEXT = 25,
-        SurfaceKHREXT = 26,
-        SwapchainKHREXT = 27,
-        DebugReportCallbackEXTEXT = 28,
-        DisplayKHREXT = 29,
-        DisplayModeKHREXT = 30,
-        ValidationCacheEXTEXT = 33,
-        SamplerYcbcrConversionEXT = 1000156000,
-        DescriptorUpdateTemplateEXT = 1000085000,
-        CuModuleNvxEXT = 1000029000,
-        CuFunctionNvxEXT = 1000029001,
-        AccelerationStructureKHREXT = 1000150000,
-        AccelerationStructureNVEXT = 1000165000,
-        CudaModuleNVEXT = 1000307000,
-        CudaFunctionNVEXT = 1000307001,
-        BufferCollectionFuchsiaEXT = 1000366000,
-        DebugReportEXT = DebugReportCallbackEXTEXT,
-        ValidationCacheEXT = ValidationCacheEXTEXT,
-        DescriptorUpdateTemplateKHREXT = DescriptorUpdateTemplateEXT,
-        SamplerYcbcrConversionKHREXT = SamplerYcbcrConversionEXT
-    )
-
-    YQ_ENUM(VkDebugReportFlagBits, ,
-        InformationBitEXT = 0x00000001,
-        WarningBitEXT = 0x00000002,
-        PerformanceWarningBitEXT = 0x00000004,
-        ErrorBitEXT = 0x00000008,
-        DebugBitEXT = 0x00000010
-    )
-
-    YQ_ENUM(VkRasterizationOrder, ,
-        StrictAMD = 0,
-        RelaxedAMD = 1
-    )
-
-    YQ_ENUM(VkShaderInfoType, ,
-        StatisticsAMD = 0,
-        BinaryAMD = 1,
-        DisassemblyAMD = 2
-    )
-
-    YQ_ENUM(VkExternalMemoryHandleTypeFlagBits, ,
-        OpaqueWin32BitNV = 0x00000001,
-        OpaqueWin32KmtBitNV = 0x00000002,
-        D3d11ImageBitNV = 0x00000004,
-        D3d11ImageKmtBitNV = 0x00000008
-    )
-
-    YQ_ENUM(VkExternalMemoryFeatureFlagBits, ,
-        DedicatedOnlyBitNV = 0x00000001,
-        ExportableBitNV = 0x00000002,
-        ImportableBitNV = 0x00000004
-    )
-
-    YQ_ENUM(VkValidationCheck, ,
-        AllEXT = 0,
-        ShadersEXT = 1
-    )
-
-    YQ_ENUM(VkPipelineRobustnessBufferBehavior, ,
-        DeviceDefaultEXT = 0,
-        DisabledEXT = 1,
-        RobustBufferAccessEXT = 2,
-        RobustBufferAccess2EXT = 3
-    )
-
-    YQ_ENUM(VkPipelineRobustnessImageBehavior, ,
-        DeviceDefaultEXT = 0,
-        DisabledEXT = 1,
-        RobustImageAccessEXT = 2,
-        RobustImageAccess2EXT = 3
-    )
-
-    YQ_ENUM(VkConditionalRenderingFlagBits, ,
-        InvertedBitEXT = 0x00000001
-    )
-
-    YQ_ENUM(VkSurfaceCounterFlagBits, ,
-        VblankBitEXT = 0x00000001,
-        VblankEXT = VblankBitEXT
-    )
-
-    YQ_ENUM(VkDisplayPowerState, ,
-        OffEXT = 0,
-        SuspendEXT = 1,
-        OnEXT = 2
-    )
-
-    YQ_ENUM(VkDeviceEventType, ,
-        DisplayHotplugEXT = 0
-    )
-
-    YQ_ENUM(VkDisplayEventType, ,
-        FirstPixelOutEXT = 0
-    )
-
-    YQ_ENUM(VkViewportCoordinateSwizzle, ,
-        PositiveXNV = 0,
-        NegativeXNV = 1,
-        PositiveYNV = 2,
-        NegativeYNV = 3,
-        PositiveZNV = 4,
-        NegativeZNV = 5,
-        PositiveWNV = 6,
-        NegativeWNV = 7
-    )
-
-    YQ_ENUM(VkDiscardRectangleMode, ,
-        InclusiveEXT = 0,
-        ExclusiveEXT = 1
-    )
-
-    YQ_ENUM(VkConservativeRasterizationMode, ,
-        DisabledEXT = 0,
-        OverestimateEXT = 1,
-        UnderestimateEXT = 2
-    )
-
-    YQ_ENUM(VkDebugUtilsMessageSeverityFlagBits, ,
-        VerboseBitEXT = 0x00000001,
-        InfoBitEXT = 0x00000010,
-        WarningBitEXT = 0x00000100,
-        ErrorBitEXT = 0x00001000
-    )
-
-    YQ_ENUM(VkDebugUtilsMessageTypeFlagBits, ,
-        GeneralBitEXT = 0x00000001,
-        ValidationBitEXT = 0x00000002,
-        PerformanceBitEXT = 0x00000004,
-        DeviceAddressBindingBitEXT = 0x00000008
-    )
-
-    YQ_ENUM(VkBlendOverlap, ,
-        UncorrelatedEXT = 0,
-        DisjointEXT = 1,
-        ConjointEXT = 2
-    )
-
-    YQ_ENUM(VkCoverageModulationMode, ,
-        NoneNV = 0,
-        RgbNV = 1,
-        AlphaNV = 2,
-        RgbaNV = 3
-    )
-
-    YQ_ENUM(VkValidationCacheHeaderVersion, ,
-        OneEXT = 1
-    )
-
-    YQ_ENUM(VkShadingRatePaletteEntry, ,
-        NoInvocationsNV = 0,
-        16InvocationsPerPixelNV = 1,
-        8InvocationsPerPixelNV = 2,
-        4InvocationsPerPixelNV = 3,
-        2InvocationsPerPixelNV = 4,
-        1InvocationPerPixelNV = 5,
-        1InvocationPer2x1PixelsNV = 6,
-        1InvocationPer1x2PixelsNV = 7,
-        1InvocationPer2x2PixelsNV = 8,
-        1InvocationPer4x2PixelsNV = 9,
-        1InvocationPer2x4PixelsNV = 10,
-        1InvocationPer4x4PixelsNV = 11
-    )
-
-    YQ_ENUM(VkCoarseSampleOrderType, ,
-        DefaultNV = 0,
-        CustomNV = 1,
-        PixelMajorNV = 2,
-        SampleMajorNV = 3
-    )
-
-    YQ_ENUM(VkRayTracingShaderGroupType, ,
-        GeneralKHR = 0,
-        TrianglesHitGroupKHR = 1,
-        ProceduralHitGroupKHR = 2,
-        GeneralNV = GeneralKHR,
-        TrianglesHitGroupNV = TrianglesHitGroupKHR,
-        ProceduralHitGroupNV = ProceduralHitGroupKHR
-    )
-
-    YQ_ENUM(VkGeometryType, ,
-        TrianglesKHR = 0,
-        AabbsKHR = 1,
-        InstancesKHR = 2,
-        TrianglesNV = TrianglesKHR,
-        AabbsNV = AabbsKHR
-    )
-
-    YQ_ENUM(VkAccelerationStructureType, ,
-        TopLevelKHR = 0,
-        BottomLevelKHR = 1,
-        GenericKHR = 2,
-        TopLevelNV = TopLevelKHR,
-        BottomLevelNV = BottomLevelKHR
-    )
-
-    YQ_ENUM(VkCopyAccelerationStructureMode, ,
-        CloneKHR = 0,
-        CompactKHR = 1,
-        SerializeKHR = 2,
-        DeserializeKHR = 3,
-        CloneNV = CloneKHR,
-        CompactNV = CompactKHR
-    )
-
-    YQ_ENUM(VkAccelerationStructureMemoryRequirementsType, ,
-        ObjectNV = 0,
-        BuildScratchNV = 1,
-        UpdateScratchNV = 2
-    )
-
-    YQ_ENUM(VkGeometryFlagBits, ,
-        OpaqueBitKHR = 0x00000001,
-        NoDuplicateAnyHitInvocationBitKHR = 0x00000002,
-        OpaqueBitNV = OpaqueBitKHR,
-        NoDuplicateAnyHitInvocationBitNV = NoDuplicateAnyHitInvocationBitKHR
-    )
-
-    YQ_ENUM(VkGeometryInstanceFlagBits, ,
-        TriangleFacingCullDisableBitKHR = 0x00000001,
-        TriangleFlipFacingBitKHR = 0x00000002,
-        ForceOpaqueBitKHR = 0x00000004,
-        ForceNoOpaqueBitKHR = 0x00000008,
-        ForceOpacityMicromap2StateEXT = 0x00000010,
-        DisableOpacityMicromapsEXT = 0x00000020,
-        TriangleFrontCounterclockwiseBitKHR = TriangleFlipFacingBitKHR,
-        TriangleCullDisableBitNV = TriangleFacingCullDisableBitKHR,
-        TriangleFrontCounterclockwiseBitNV = TriangleFrontCounterclockwiseBitKHR,
-        ForceOpaqueBitNV = ForceOpaqueBitKHR,
-        ForceNoOpaqueBitNV = ForceNoOpaqueBitKHR
-    )
-
-    YQ_ENUM(VkBuildAccelerationStructureFlagBits, ,
-        AllowUpdateBitKHR = 0x00000001,
-        AllowCompactionBitKHR = 0x00000002,
-        PreferFastTraceBitKHR = 0x00000004,
-        PreferFastBuildBitKHR = 0x00000008,
-        LowMemoryBitKHR = 0x00000010,
-        MotionBitNV = 0x00000020,
-        AllowOpacityMicromapUpdateEXT = 0x00000040,
-        AllowDisableOpacityMicromapsEXT = 0x00000080,
-        AllowOpacityMicromapDataUpdateEXT = 0x00000100,
-        AllowDisplacementMicromapUpdateNV = 0x00000200,
-        AllowDataAccessKHR = 0x00000800,
-        AllowUpdateBitNV = AllowUpdateBitKHR,
-        AllowCompactionBitNV = AllowCompactionBitKHR,
-        PreferFastTraceBitNV = PreferFastTraceBitKHR,
-        PreferFastBuildBitNV = PreferFastBuildBitKHR,
-        LowMemoryBitNV = LowMemoryBitKHR
-    )
-
-    YQ_ENUM(VkPipelineCompilerControlFlagBits, ,
-
-    )
-
-    YQ_ENUM(VkMemoryOverallocationBehavior, ,
+    };
+
+    enum class VqMemoryAllocateBit : uint8_t {
+        DeviceMask = 1,
+        DeviceAddress = 2,
+        DeviceAddressCaptureReplay = 3
+    };
+
+    enum class VqMemoryHeapBit : uint8_t {
+        DeviceLocal = 1,
+        MultiInstance = 2
+    };
+
+    enum class VqMemoryMapBit : uint8_t {
+        Placed = 1
+    };
+
+    enum class VqMemoryOverallocationBehavior : int32_t {
         DefaultAMD = 0,
         AllowedAMD = 1,
         DisallowedAMD = 2
-    )
+    };
 
-    YQ_ENUM(VkPerformanceConfigurationType, ,
+    enum class VqMemoryPropertyBit : uint8_t {
+        DeviceLocal = 1,
+        HostVisible = 2,
+        HostCoherent = 3,
+        HostCached = 4,
+        LazilyAllocated = 5,
+        Protected = 6,
+        DeviceCoherentBitAMD = 7,
+        DeviceUncachedBitAMD = 8,
+        RdmaCapable = 9
+    };
+
+    enum class VqMemoryUnmapBit : uint8_t {
+        Reserve = 1
+    };
+
+    enum class VqMicromapCreateBit : uint8_t {
+        DeviceAddressCaptureReplay = 1
+    };
+
+    enum class VqMicromapType : int32_t {
+        OpacityMicromap = 0,
+        DisplacementMicromap = 1000397000
+    };
+
+    enum class VqObjectType : int32_t {
+        Unknown = 0,
+        Instance = 1,
+        PhysicalDevice = 2,
+        Device = 3,
+        Queue = 4,
+        Semaphore = 5,
+        CommandBuffer = 6,
+        Fence = 7,
+        DeviceMemory = 8,
+        Buffer = 9,
+        Image = 10,
+        Event = 11,
+        QueryPool = 12,
+        BufferView = 13,
+        ImageView = 14,
+        ShaderModule = 15,
+        PipelineCache = 16,
+        PipelineLayout = 17,
+        RenderPass = 18,
+        Pipeline = 19,
+        DescriptorSetLayout = 20,
+        Sampler = 21,
+        DescriptorPool = 22,
+        DescriptorSet = 23,
+        Framebuffer = 24,
+        CommandPool = 25,
+        SamplerYcbcrConversion = 1000156000,
+        DescriptorUpdateTemplate = 1000085000,
+        PrivateDataSlot = 1000295000,
+        Surface = 1000000000,
+        Swapchain = 1000001000,
+        Display = 1000002000,
+        DisplayMode = 1000002001,
+        DebugReportCallback = 1000011000,
+        VideoSession = 1000023000,
+        VideoSessionParameters = 1000023001,
+        CuModuleNvx = 1000029000,
+        CuFunctionNvx = 1000029001,
+        DebugUtilsMessenger = 1000128000,
+        AccelerationStructure = 1000150000,
+        ValidationCache = 1000160000,
+        PerformanceConfigurationINTEL = 1000210000,
+        DeferredOperation = 1000268000,
+        IndirectCommandsLayout = 1000277000,
+        CudaModule = 1000307000,
+        CudaFunction = 1000307001,
+        BufferCollectionFuchsia = 1000366000,
+        Micromap = 1000396000,
+        OpticalFlowSession = 1000464000,
+        Shader = 1000482000
+    };
+
+    enum class VqOpacityMicromapFormat : int32_t {
+        _2State = 1,
+        _4State = 2
+    };
+
+    enum class VqOpacityMicromapSpecialIndex : int32_t {
+        FullyTransparent = -1,
+        FullyOpaque = -2,
+        FullyUnknownTransparent = -3,
+        FullyUnknownOpaque = -4
+    };
+
+    enum class VqOpticalFlowExecuteBit : uint8_t {
+        DisableTemporalHints = 1
+    };
+
+    enum class VqOpticalFlowGridSizeBit : uint8_t {
+        Unknown = 0,
+        _1x1 = 1,
+        _2x2 = 2,
+        _4x4 = 3,
+        _8x8 = 4
+    };
+
+    enum class VqOpticalFlowPerformanceLevel : int32_t {
+        Unknown = 0,
+        Slow = 1,
+        Medium = 2,
+        Fast = 3
+    };
+
+    enum class VqOpticalFlowSessionBindingPoint : int32_t {
+        Unknown = 0,
+        Input = 1,
+        Reference = 2,
+        Hint = 3,
+        FlowVector = 4,
+        BackwardFlowVector = 5,
+        Cost = 6,
+        BackwardCost = 7,
+        GlobalFlow = 8
+    };
+
+    enum class VqOpticalFlowSessionCreateBit : uint8_t {
+        EnableHint = 1,
+        EnableCost = 2,
+        EnableGlobalFlow = 3,
+        AllowRegions = 4,
+        BothDirections = 5
+    };
+
+    enum class VqOpticalFlowUsageBit : uint8_t {
+        Unknown = 0,
+        Input = 1,
+        Output = 2,
+        Hint = 3,
+        Cost = 4,
+        GlobalFlow = 5
+    };
+
+    enum class VqOutOfBandQueueType : int32_t {
+        Render = 0,
+        Present = 1
+    };
+
+    enum class VqPeerMemoryFeatureBit : uint8_t {
+        CopySrc = 1,
+        CopyDst = 2,
+        GenericSrc = 3,
+        GenericDst = 4
+    };
+
+    enum class VqPerformanceConfigurationType : int32_t {
         CommandQueueMetricsDiscoveryActivatedINTEL = 0
-    )
+    };
 
-    YQ_ENUM(VkQueryPoolSamplingMode, ,
-        ManualINTEL = 0
-    )
+    enum class VqPerformanceCounterDescriptionBit : uint8_t {
+        PerformanceImpacting = 1,
+        ConcurrentlyImpacted = 2
+    };
 
-    YQ_ENUM(VkPerformanceOverrideType, ,
+    enum class VqPerformanceCounterScope : int32_t {
+        CommandBuffer = 0,
+        RenderPass = 1,
+        Command = 2,
+        QueryScopeCommandBuffer = CommandBuffer,
+        QueryScopeRenderPass = RenderPass,
+        QueryScopeCommand = Command
+    };
+
+    enum class VqPerformanceCounterStorage : int32_t {
+        Int32 = 0,
+        Int64 = 1,
+        Uint32 = 2,
+        Uint64 = 3,
+        Float32 = 4,
+        Float64 = 5
+    };
+
+    enum class VqPerformanceCounterUnit : int32_t {
+        Generic = 0,
+        Percentage = 1,
+        Nanoseconds = 2,
+        Bytes = 3,
+        BytesPerSecond = 4,
+        Kelvin = 5,
+        Watts = 6,
+        Volts = 7,
+        Amps = 8,
+        Hertz = 9,
+        Cycles = 10
+    };
+
+    enum class VqPerformanceOverrideType : int32_t {
         NullHardwareINTEL = 0,
         FlushGpuCachesINTEL = 1
-    )
+    };
 
-    YQ_ENUM(VkPerformanceParameterType, ,
+    enum class VqPerformanceParameterType : int32_t {
         HwCountersSupportedINTEL = 0,
         StreamMarkerValidBitsINTEL = 1
-    )
+    };
 
-    YQ_ENUM(VkPerformanceValueType, ,
+    enum class VqPerformanceValueType : int32_t {
         Uint32INTEL = 0,
         Uint64INTEL = 1,
         FloatINTEL = 2,
         BoolINTEL = 3,
         StringINTEL = 4
-    )
+    };
 
-    YQ_ENUM(VkShaderCorePropertiesFlagBits, ,
+    enum class VqPhysicalDeviceLayeredApi : int32_t {
+        Vulkan = 0,
+        D3d12 = 1,
+        Metal = 2,
+        Opengl = 3,
+        Opengles = 4
+    };
 
-    )
+    enum class VqPhysicalDeviceType : int32_t {
+        Other = 0,
+        IntegratedGpu = 1,
+        DiscreteGpu = 2,
+        VirtualGpu = 3,
+        Cpu = 4
+    };
 
-    YQ_ENUM(VkValidationFeatureEnable, ,
-        GpuAssistedEXT = 0,
-        GpuAssistedReserveBindingSlotEXT = 1,
-        BestPracticesEXT = 2,
-        DebugPrintfEXT = 3,
-        SynchronizationValidationEXT = 4
-    )
+    enum class VqPipelineBindPoint : int32_t {
+        Graphics = 0,
+        Compute = 1,
+        ExecutionGraphAmdx = 1000134000,
+        RayTracing = 1000165000,
+        SubpassShadingHuawei = 1000369003
+    };
 
-    YQ_ENUM(VkValidationFeatureDisable, ,
-        AllEXT = 0,
-        ShadersEXT = 1,
-        ThreadSafetyEXT = 2,
-        ApiParametersEXT = 3,
-        ObjectLifetimesEXT = 4,
-        CoreChecksEXT = 5,
-        UniqueHandlesEXT = 6,
-        ShaderValidationCacheEXT = 7
-    )
+    enum class VqPipelineCacheCreateBit : uint8_t {
+        ExternallySynchronized = 1
+    };
 
-    YQ_ENUM(VkCoverageReductionMode, ,
-        MergeNV = 0,
-        TruncateNV = 1
-    )
+    enum class VqPipelineCacheHeaderVersion : int32_t {
+        One = 1
+    };
 
-    YQ_ENUM(VkProvokingVertexMode, ,
-        FirstVertexEXT = 0,
-        LastVertexEXT = 1
-    )
+    enum class VqPipelineColorBlendStateCreateBit : uint8_t {
+        RasterizationOrderAttachmentAccess = 1,
+        RasterizationOrderAttachmentAccessBitArm = RasterizationOrderAttachmentAccess
+    };
 
-    YQ_ENUM(VkHostImageCopyFlagBits, ,
-        MemcpyEXT = 0x00000001
-    )
+    enum class VqPipelineCompilerControlBit : uint8_t {
 
-    YQ_ENUM(VkPresentScalingFlagBits, ,
-        OneToOneBitEXT = 0x00000001,
-        AspectRatioStretchBitEXT = 0x00000002,
-        StretchBitEXT = 0x00000004
-    )
+    };
 
-    YQ_ENUM(VkPresentGravityFlagBits, ,
-        MinBitEXT = 0x00000001,
-        MaxBitEXT = 0x00000002,
-        CenteredBitEXT = 0x00000004
-    )
+    enum class VqPipelineCreateBit : uint8_t {
+        DisableOptimization = 1,
+        AllowDerivatives = 2,
+        Derivative = 3,
+        ViewIndexFromDeviceIndex = 4,
+        DispatchBase = 5,
+        FailOnPipelineCompileRequired = 9,
+        EarlyReturnOnFailure = 10,
+        RenderingFragmentShadingRateAttachment = 22,
+        RenderingFragmentDensityMapAttachment = 23,
+        RayTracingNoNullAnyHitShaders = 15,
+        RayTracingNoNullClosestHitShaders = 16,
+        RayTracingNoNullMissShaders = 17,
+        RayTracingNoNullIntersectionShaders = 18,
+        RayTracingSkipTriangles = 13,
+        RayTracingSkipAabbs = 14,
+        RayTracingShaderGroupHandleCaptureReplay = 20,
+        DeferCompile = 6,
+        CaptureStatistics = 7,
+        CaptureInternalRepresentations = 8,
+        IndirectBindable = 19,
+        Library = 12,
+        DescriptorBuffer = 30,
+        RetainLinkTimeOptimizationInfo = 24,
+        LinkTimeOptimization = 11,
+        RayTracingAllowMotion = 21,
+        ColorAttachmentFeedbackLoop = 26,
+        DepthStencilAttachmentFeedbackLoop = 27,
+        RayTracingOpacityMicromap = 25,
+        RayTracingDisplacementMicromap = 29,
+        NoProtectedAccess = 28,
+        ProtectedAccessOnly = 31,
+        PipelineRasterizationStateCreateFragmentShadingRateAttachment = RenderingFragmentShadingRateAttachment,
+        PipelineRasterizationStateCreateFragmentDensityMapAttachment = RenderingFragmentDensityMapAttachment
+    };
 
-    YQ_ENUM(VkIndirectCommandsTokenType, ,
-        ShaderGroupNV = 0,
-        StateFlagsNV = 1,
-        IndexBufferNV = 2,
-        VertexBufferNV = 3,
-        PushConstantNV = 4,
-        DrawIndexedNV = 5,
-        DrawNV = 6,
-        DrawTasksNV = 7,
-        DrawMeshTasksNV = 1000328000,
-        PipelineNV = 1000428003,
-        DispatchNV = 1000428004
-    )
+    enum class VqPipelineCreationFeedbackBit : uint8_t {
+        Valid = 1,
+        ApplicationPipelineCacheHit = 2,
+        BasePipelineAcceleration = 3
+    };
 
-    YQ_ENUM(VkIndirectStateFlagBits, ,
-        FlagFrontfaceBitNV = 0x00000001
-    )
+    enum class VqPipelineDepthStencilStateCreateBit : uint8_t {
+        RasterizationOrderAttachmentDepthAccess = 1,
+        RasterizationOrderAttachmentStencilAccess = 2,
+        RasterizationOrderAttachmentDepthAccessBitArm = RasterizationOrderAttachmentDepthAccess,
+        RasterizationOrderAttachmentStencilAccessBitArm = RasterizationOrderAttachmentStencilAccess
+    };
 
-    YQ_ENUM(VkIndirectCommandsLayoutUsageFlagBits, ,
-        ExplicitPreprocessBitNV = 0x00000001,
-        IndexedSequencesBitNV = 0x00000002,
-        UnorderedSequencesBitNV = 0x00000004
-    )
+    enum class VqPipelineExecutableStatisticFormat : int32_t {
+        Bool32 = 0,
+        Int64 = 1,
+        Uint64 = 2,
+        Float64 = 3
+    };
 
-    YQ_ENUM(VkDepthBiasRepresentation, ,
-        LeastRepresentableValueFormatEXT = 0,
-        LeastRepresentableValueForceUnormEXT = 1,
-        FloatEXT = 2
-    )
+    enum class VqPipelineLayoutCreateBit : uint8_t {
+        IndependentSets = 2
+    };
 
-    YQ_ENUM(VkDeviceMemoryReportEventType, ,
-        AllocateEXT = 0,
-        FreeEXT = 1,
-        ImportEXT = 2,
-        UnimportEXT = 3,
-        AllocationFailedEXT = 4
-    )
+    enum class VqPipelineRobustnessBufferBehavior : int32_t {
+        DeviceDefault = 0,
+        Disabled = 1,
+        RobustBufferAccess = 2,
+        RobustBufferAccess2 = 3
+    };
 
-    YQ_ENUM(VkDeviceDiagnosticsConfigFlagBits, ,
-        EnableShaderDebugInfoBitNV = 0x00000001,
-        EnableResourceTrackingBitNV = 0x00000002,
-        EnableAutomaticCheckpointsBitNV = 0x00000004,
-        EnableShaderErrorReportingBitNV = 0x00000008
-    )
+    enum class VqPipelineRobustnessImageBehavior : int32_t {
+        DeviceDefault = 0,
+        Disabled = 1,
+        RobustImageAccess = 2,
+        RobustImageAccess2 = 3
+    };
 
-    YQ_ENUM(VkGraphicsPipelineLibraryFlagBits, ,
-        VertexInputInterfaceBitEXT = 0x00000001,
-        PreRasterizationShadersBitEXT = 0x00000002,
-        FragmentShaderBitEXT = 0x00000004,
-        FragmentOutputInterfaceBitEXT = 0x00000008
-    )
+    enum class VqPipelineShaderStageCreateBit : uint8_t {
+        AllowVaryingSubgroupSize = 1,
+        RequireFullSubgroups = 2
+    };
 
-    YQ_ENUM(VkFragmentShadingRateType, ,
-        FragmentSizeNV = 0,
-        EnumsNV = 1
-    )
+    enum class VqPipelineStageBit : uint8_t {
+        TopOfPipe = 1,
+        DrawIndirect = 2,
+        VertexInput = 3,
+        VertexShader = 4,
+        TessellationControlShader = 5,
+        TessellationEvaluationShader = 6,
+        GeometryShader = 7,
+        FragmentShader = 8,
+        EarlyFragmentTests = 9,
+        LateFragmentTests = 10,
+        ColorAttachmentOutput = 11,
+        ComputeShader = 12,
+        Transfer = 13,
+        BottomOfPipe = 14,
+        Host = 15,
+        AllGraphics = 16,
+        AllCommands = 17,
+        TransformFeedback = 25,
+        ConditionalRendering = 19,
+        AccelerationStructureBuild = 26,
+        RayTracingShader = 22,
+        FragmentDensityProcess = 24,
+        FragmentShadingRateAttachment = 23,
+        CommandPreprocess = 18,
+        TaskShader = 20,
+        MeshShader = 21,
+        ShadingRateImage = FragmentShadingRateAttachment
+    };
 
-    YQ_ENUM(VkFragmentShadingRate, ,
-        1InvocationPerPixelNV = 0,
-        1InvocationPer1x2PixelsNV = 1,
-        1InvocationPer2x1PixelsNV = 4,
-        1InvocationPer2x2PixelsNV = 5,
-        1InvocationPer2x4PixelsNV = 6,
-        1InvocationPer4x2PixelsNV = 9,
-        1InvocationPer4x4PixelsNV = 10,
-        2InvocationsPerPixelNV = 11,
-        4InvocationsPerPixelNV = 12,
-        8InvocationsPerPixelNV = 13,
-        16InvocationsPerPixelNV = 14,
-        NoInvocationsNV = 15
-    )
+    enum class VqPointClippingBehavior : int32_t {
+        AllClipPlanes = 0,
+        UserClipPlanesOnly = 1
+    };
 
-    YQ_ENUM(VkAccelerationStructureMotionInstanceType, ,
-        StaticNV = 0,
-        MatrixMotionNV = 1,
-        SrtMotionNV = 2
-    )
+    enum class VqPolygonMode : int32_t {
+        Fill = 0,
+        Line = 1,
+        Point = 2,
+        FillRectangle = 1000153000
+    };
 
-    YQ_ENUM(VkImageCompressionFlagBits, ,
-        DefaultEXT = 0,
-        FixedRateDefaultEXT = 0x00000001,
-        FixedRateExplicitEXT = 0x00000002,
-        DisabledEXT = 0x00000004
-    )
+    enum class VqPresentGravityBit : uint8_t {
+        Min = 1,
+        Max = 2,
+        Centered = 3
+    };
 
-    YQ_ENUM(VkImageCompressionFixedRateFlagBits, ,
-        NoneEXT = 0,
-        1bpcBitEXT = 0x00000001,
-        2bpcBitEXT = 0x00000002,
-        3bpcBitEXT = 0x00000004,
-        4bpcBitEXT = 0x00000008,
-        5bpcBitEXT = 0x00000010,
-        6bpcBitEXT = 0x00000020,
-        7bpcBitEXT = 0x00000040,
-        8bpcBitEXT = 0x00000080,
-        9bpcBitEXT = 0x00000100,
-        10bpcBitEXT = 0x00000200,
-        11bpcBitEXT = 0x00000400,
-        12bpcBitEXT = 0x00000800,
-        13bpcBitEXT = 0x00001000,
-        14bpcBitEXT = 0x00002000,
-        15bpcBitEXT = 0x00004000,
-        16bpcBitEXT = 0x00008000,
-        17bpcBitEXT = 0x00010000,
-        18bpcBitEXT = 0x00020000,
-        19bpcBitEXT = 0x00040000,
-        20bpcBitEXT = 0x00080000,
-        21bpcBitEXT = 0x00100000,
-        22bpcBitEXT = 0x00200000,
-        23bpcBitEXT = 0x00400000,
-        24bpcBitEXT = 0x00800000
-    )
+    enum class VqPresentMode : int32_t {
+        Immediate = 0,
+        Mailbox = 1,
+        Fifo = 2,
+        FifoRelaxed = 3,
+        SharedDemandRefresh = 1000111000,
+        SharedContinuousRefresh = 1000111001
+    };
 
-    YQ_ENUM(VkDeviceFaultAddressType, ,
-        NoneEXT = 0,
-        ReadInvalidEXT = 1,
-        WriteInvalidEXT = 2,
-        ExecuteInvalidEXT = 3,
-        InstructionPointerUnknownEXT = 4,
-        InstructionPointerInvalidEXT = 5,
-        InstructionPointerFaultEXT = 6
-    )
+    enum class VqPresentScalingBit : uint8_t {
+        OneToOne = 1,
+        AspectRatioStretch = 2,
+        Stretch = 3
+    };
 
-    YQ_ENUM(VkDeviceFaultVendorBinaryHeaderVersion, ,
-        OneEXT = 1
-    )
+    enum class VqPrimitiveTopology : int32_t {
+        PointList = 0,
+        LineList = 1,
+        LineStrip = 2,
+        TriangleList = 3,
+        TriangleStrip = 4,
+        TriangleFan = 5,
+        LineListWithAdjacency = 6,
+        LineStripWithAdjacency = 7,
+        TriangleListWithAdjacency = 8,
+        TriangleStripWithAdjacency = 9,
+        PatchList = 10
+    };
 
-    YQ_ENUM(VkDeviceAddressBindingType, ,
-        BindEXT = 0,
-        UnbindEXT = 1
-    )
+    enum class VqProvokingVertexMode : int32_t {
+        FirstVertex = 0,
+        LastVertex = 1
+    };
 
-    YQ_ENUM(VkDeviceAddressBindingFlagBits, ,
-        InternalObjectBitEXT = 0x00000001
-    )
+    enum class VqQueryControlBit : uint8_t {
+        Precise = 1
+    };
 
-    YQ_ENUM(VkFrameBoundaryFlagBits, ,
-        FrameEndBitEXT = 0x00000001
-    )
+    enum class VqQueryPipelineStatisticBit : uint8_t {
+        InputAssemblyVertices = 1,
+        InputAssemblyPrimitives = 2,
+        VertexShaderInvocations = 3,
+        GeometryShaderInvocations = 4,
+        GeometryShaderPrimitives = 5,
+        ClippingInvocations = 6,
+        ClippingPrimitives = 7,
+        FragmentShaderInvocations = 8,
+        TessellationControlShaderPatches = 9,
+        TessellationEvaluationShaderInvocations = 10,
+        ComputeShaderInvocations = 11,
+        TaskShaderInvocations = 12,
+        MeshShaderInvocations = 13,
+        ClusterCullingShaderInvocationsBitHuawei = 14
+    };
 
-    YQ_ENUM(VkMicromapType, ,
-        OpacityMicromapEXT = 0,
-        DisplacementMicromapNV = 1000397000
-    )
+    enum class VqQueryPoolSamplingMode : int32_t {
+        ManualINTEL = 0
+    };
 
-    YQ_ENUM(VkBuildMicromapMode, ,
-        BuildEXT = 0
-    )
+    enum class VqQueryResultBit : uint8_t {
+        _64 = 1,
+        Wait = 2,
+        WithAvailability = 3,
+        Partial = 4,
+        WithStatus = 5
+    };
 
-    YQ_ENUM(VkCopyMicromapMode, ,
-        CloneEXT = 0,
-        SerializeEXT = 1,
-        DeserializeEXT = 2,
-        CompactEXT = 3
-    )
+    enum class VqQueryResultStatus : int32_t {
+        Error = -1,
+        NotReady = 0,
+        Complete = 1,
+        InsufficientBitstreamBufferRange = -1000299000
+    };
 
-    YQ_ENUM(VkOpacityMicromapFormat, ,
-        2StateEXT = 1,
-        4StateEXT = 2
-    )
+    enum class VqQueryType : int32_t {
+        Occlusion = 0,
+        PipelineStatistics = 1,
+        Timestamp = 2,
+        ResultStatusOnly = 1000023000,
+        TransformFeedbackStream = 1000028004,
+        PerformanceQuery = 1000116000,
+        AccelerationStructureCompactedSize = 1000150000,
+        AccelerationStructureSerializationSize = 1000150001,
+        PerformanceQueryINTEL = 1000210000,
+        VideoEncodeFeedback = 1000299000,
+        MeshPrimitivesGenerated = 1000328000,
+        PrimitivesGenerated = 1000382000,
+        AccelerationStructureSerializationBottomLevelPointers = 1000386000,
+        AccelerationStructureSize = 1000386001,
+        MicromapSerializationSize = 1000396000,
+        MicromapCompactedSize = 1000396001
+    };
 
-    YQ_ENUM(VkOpacityMicromapSpecialIndex, ,
-        FullyTransparentEXT = -1,
-        FullyOpaqueEXT = -2,
-        FullyUnknownTransparentEXT = -3,
-        FullyUnknownOpaqueEXT = -4
-    )
+    enum class VqQueueBit : uint8_t {
+        Graphics = 1,
+        Compute = 2,
+        Transfer = 3,
+        SparseBinding = 4,
+        Protected = 5,
+        VideoDecode = 6,
+        VideoEncode = 7,
+        OpticalFlow = 9
+    };
 
-    YQ_ENUM(VkAccelerationStructureCompatibility, ,
-        CompatibleKHR = 0,
-        IncompatibleKHR = 1
-    )
+    enum class VqQueueGlobalPriority : int32_t {
+        Low = 128,
+        Medium = 256,
+        High = 512,
+        Realtime = 1024
+    };
 
-    YQ_ENUM(VkAccelerationStructureBuildType, ,
-        HostKHR = 0,
-        DeviceKHR = 1,
-        HostOrDeviceKHR = 2
-    )
+    enum class VqRasterizationOrder : int32_t {
+        StrictAMD = 0,
+        RelaxedAMD = 1
+    };
 
-    YQ_ENUM(VkBuildMicromapFlagBits, ,
-        PreferFastTraceBitEXT = 0x00000001,
-        PreferFastBuildBitEXT = 0x00000002,
-        AllowCompactionBitEXT = 0x00000004
-    )
+    enum class VqRayTracingInvocationReorderMode : int32_t {
+        None = 0,
+        Reorder = 1
+    };
 
-    YQ_ENUM(VkMicromapCreateFlagBits, ,
-        DeviceAddressCaptureReplayBitEXT = 0x00000001
-    )
+    enum class VqRayTracingShaderGroupType : int32_t {
+        General = 0,
+        TrianglesHitGroup = 1,
+        ProceduralHitGroup = 2
+    };
 
-    YQ_ENUM(VkSubpassMergeStatus, ,
-        MergedEXT = 0,
-        DisallowedEXT = 1,
-        NotMergedSideEffectsEXT = 2,
-        NotMergedSamplesMismatchEXT = 3,
-        NotMergedViewsMismatchEXT = 4,
-        NotMergedAliasingEXT = 5,
-        NotMergedDependenciesEXT = 6,
-        NotMergedIncompatibleInputAttachmentEXT = 7,
-        NotMergedTooManyAttachmentsEXT = 8,
-        NotMergedInsufficientStorageEXT = 9,
-        NotMergedDepthStencilCountEXT = 10,
-        NotMergedResolveAttachmentReuseEXT = 11,
-        NotMergedSingleSubpassEXT = 12,
-        NotMergedUnspecifiedEXT = 13
-    )
+    enum class VqRenderPassCreateBit : uint8_t {
+        Transform = 2
+    };
 
-    YQ_ENUM(VkDirectDriverLoadingMode, ,
-        ExclusiveLUNARG = 0,
-        InclusiveLUNARG = 1
-    )
+    enum class VqRenderingBit : uint8_t {
+        ContentsSecondaryCommandBuffers = 1,
+        Suspending = 2,
+        Resuming = 3,
+        EnableLegacyDithering = 4,
+        ContentsInline = 5
+    };
 
-    YQ_ENUM(VkOpticalFlowPerformanceLevel, ,
-        UnknownNV = 0,
-        SlowNV = 1,
-        MediumNV = 2,
-        FastNV = 3
-    )
+    enum class VqResolveModeBit : uint8_t {
+        SampleZero = 1,
+        Average = 2,
+        Min = 3,
+        Max = 4,
+        ExternalFormatDownsampleAndroid = 5
+    };
 
-    YQ_ENUM(VkOpticalFlowSessionBindingPoint, ,
-        UnknownNV = 0,
-        InputNV = 1,
-        ReferenceNV = 2,
-        HintNV = 3,
-        FlowVectorNV = 4,
-        BackwardFlowVectorNV = 5,
-        CostNV = 6,
-        BackwardCostNV = 7,
-        GlobalFlowNV = 8
-    )
+    enum class VqResult : int32_t {
+        Success = 0,
+        NotReady = 1,
+        Timeout = 2,
+        EventSet = 3,
+        EventReset = 4,
+        Incomplete = 5,
+        ErrorOutOfHostMemory = -1,
+        ErrorOutOfDeviceMemory = -2,
+        ErrorInitializationFailed = -3,
+        ErrorDeviceLost = -4,
+        ErrorMemoryMapFailed = -5,
+        ErrorLayerNotPresent = -6,
+        ErrorExtensionNotPresent = -7,
+        ErrorFeatureNotPresent = -8,
+        ErrorIncompatibleDriver = -9,
+        ErrorTooManyObjects = -10,
+        ErrorFormatNotSupported = -11,
+        ErrorFragmentedPool = -12,
+        ErrorUnknown = -13,
+        ErrorOutOfPoolMemory = -1000069000,
+        ErrorInvalidExternalHandle = -1000072003,
+        ErrorFragmentation = -1000161000,
+        ErrorInvalidOpaqueCaptureAddress = -1000257000,
+        PipelineCompileRequired = 1000297000,
+        ErrorSurfaceLost = -1000000000,
+        ErrorNativeWindowInUse = -1000000001,
+        Suboptimal = 1000001003,
+        ErrorOutOfDate = -1000001004,
+        ErrorIncompatibleDisplay = -1000003001,
+        ErrorValidationFailed = -1000011001,
+        ErrorInvalidShader = -1000012000,
+        ErrorImageUsageNotSupported = -1000023000,
+        ErrorVideoPictureLayoutNotSupported = -1000023001,
+        ErrorVideoProfileOperationNotSupported = -1000023002,
+        ErrorVideoProfileFormatNotSupported = -1000023003,
+        ErrorVideoProfileCodecNotSupported = -1000023004,
+        ErrorVideoStdVersionNotSupported = -1000023005,
+        ErrorInvalidDrmFormatModifierPlaneLayout = -1000158000,
+        ErrorNotPermitted = -1000174001,
+        ErrorFullScreenExclusiveModeLost = -1000255000,
+        ThreadIdle = 1000268000,
+        ThreadDone = 1000268001,
+        OperationDeferred = 1000268002,
+        OperationNotDeferred = 1000268003,
+        ErrorInvalidVideoStdParameters = -1000299000,
+        ErrorCompressionExhausted = -1000338000,
+        IncompatibleShaderBinary = 1000482000,
+        ErrorInvalidDeviceAddress = ErrorInvalidOpaqueCaptureAddress,
+        ErrorPipelineCompileRequired = PipelineCompileRequired,
+        ErrorIncompatibleShaderBinary = IncompatibleShaderBinary
+    };
 
-    YQ_ENUM(VkOpticalFlowGridSizeFlagBits, ,
-        UnknownNV = 0,
-        1x1BitNV = 0x00000001,
-        2x2BitNV = 0x00000002,
-        4x4BitNV = 0x00000004,
-        8x8BitNV = 0x00000008
-    )
+    enum class VqSampleCountBit : uint8_t {
+        _1 = 1,
+        _2 = 2,
+        _4 = 3,
+        _8 = 4,
+        _16 = 5,
+        _32 = 6,
+        _64 = 7
+    };
 
-    YQ_ENUM(VkOpticalFlowUsageFlagBits, ,
-        UnknownNV = 0,
-        InputBitNV = 0x00000001,
-        OutputBitNV = 0x00000002,
-        HintBitNV = 0x00000004,
-        CostBitNV = 0x00000008,
-        GlobalFlowBitNV = 0x00000010
-    )
+    enum class VqSamplerAddressMode : int32_t {
+        Repeat = 0,
+        MirroredRepeat = 1,
+        ClampToEdge = 2,
+        ClampToBorder = 3,
+        MirrorClampToEdge = 4
+    };
 
-    YQ_ENUM(VkOpticalFlowSessionCreateFlagBits, ,
-        EnableHintBitNV = 0x00000001,
-        EnableCostBitNV = 0x00000002,
-        EnableGlobalFlowBitNV = 0x00000004,
-        AllowRegionsBitNV = 0x00000008,
-        BothDirectionsBitNV = 0x00000010
-    )
+    enum class VqSamplerCreateBit : uint8_t {
+        Subsampled = 1,
+        SubsampledCoarseReconstruction = 2,
+        DescriptorBufferCaptureReplay = 4,
+        NonSeamlessCubeMap = 3,
+        ImageProcessing = 5
+    };
 
-    YQ_ENUM(VkOpticalFlowExecuteFlagBits, ,
-        DisableTemporalHintsBitNV = 0x00000001
-    )
+    enum class VqSamplerMipmapMode : int32_t {
+        Nearest = 0,
+        Linear = 1
+    };
 
-    YQ_ENUM(VkShaderCodeType, ,
-        BinaryEXT = 0,
-        SpirvEXT = 1
-    )
+    enum class VqSamplerReductionMode : int32_t {
+        WeightedAverage = 0,
+        Min = 1,
+        Max = 2,
+        WeightedAverageRangeclamp = 1000521000
+    };
 
-    YQ_ENUM(VkShaderCreateFlagBits, ,
-        LinkStageBitEXT = 0x00000001,
-        AllowVaryingSubgroupSizeBitEXT = 0x00000002,
-        RequireFullSubgroupsBitEXT = 0x00000004,
-        NoTaskShaderBitEXT = 0x00000008,
-        DispatchBaseBitEXT = 0x00000010,
-        FragmentShadingRateAttachmentBitEXT = 0x00000020,
-        FragmentDensityMapAttachmentBitEXT = 0x00000040
-    )
+    enum class VqSamplerYcbcrModelConversion : int32_t {
+        RgbIdentity = 0,
+        YcbcrIdentity = 1,
+        Ycbcr709 = 2,
+        Ycbcr601 = 3,
+        Ycbcr2020 = 4
+    };
 
-    YQ_ENUM(VkRayTracingInvocationReorderMode, ,
-        NoneNV = 0,
-        ReorderNV = 1
-    )
+    enum class VqSamplerYcbcrRange : int32_t {
+        ItuFull = 0,
+        ItuNarrow = 1
+    };
 
-    YQ_ENUM(VkLayerSettingType, ,
-        Bool32EXT = 0,
-        Int32EXT = 1,
-        Int64EXT = 2,
-        Uint32EXT = 3,
-        Uint64EXT = 4,
-        Float32EXT = 5,
-        Float64EXT = 6,
-        StringEXT = 7
-    )
+    enum class VqScope : int32_t {
+        Device = 1,
+        Workgroup = 2,
+        Subgroup = 3,
+        QueueFamily = 5
+    };
 
-    YQ_ENUM(VkLatencyMarker, ,
-        SimulationStartNV = 0,
-        SimulationEndNV = 1,
-        RendersubmitStartNV = 2,
-        RendersubmitEndNV = 3,
-        PresentStartNV = 4,
-        PresentEndNV = 5,
-        InputSampleNV = 6,
-        TriggerFlashNV = 7,
-        OutOfBandRendersubmitStartNV = 8,
-        OutOfBandRendersubmitEndNV = 9,
-        OutOfBandPresentStartNV = 10,
-        OutOfBandPresentEndNV = 11
-    )
+    enum class VqSemaphoreImportBit : uint8_t {
+        Temporary = 1
+    };
 
-    YQ_ENUM(VkOutOfBandQueueType, ,
-        RenderNV = 0,
-        PresentNV = 1
-    )
+    enum class VqSemaphoreType : int32_t {
+        Binary = 0,
+        Timeline = 1
+    };
 
-    YQ_ENUM(VkBlockMatchWindowCompareMode, ,
-        MinQCOM = 0,
-        MaxQCOM = 1
-    )
+    enum class VqSemaphoreWaitBit : uint8_t {
+        Any = 1
+    };
 
-    YQ_ENUM(VkCubicFilterWeights, ,
-        CatmullRomQCOM = 0,
-        ZeroTangentCardinalQCOM = 1,
-        BSplineQCOM = 2,
-        MitchellNetravaliQCOM = 3
-    )
+    enum class VqShaderCodeType : int32_t {
+        Binary = 0,
+        Spirv = 1
+    };
 
-    YQ_ENUM(VkLayeredDriverUnderlyingApi, ,
-        NoneMSFT = 0,
-        D3d12MSFT = 1
-    )
+    enum class VqShaderCorePropertiesBit : uint8_t {
 
-    YQ_ENUM(VkBuildAccelerationStructureMode, ,
-        BuildKHR = 0,
-        UpdateKHR = 1
-    )
+    };
 
-    YQ_ENUM(VkAccelerationStructureCreateFlagBits, ,
-        DeviceAddressCaptureReplayBitKHR = 0x00000001,
-        DescriptorBufferCaptureReplayBitEXT = 0x00000008,
-        MotionBitNV = 0x00000004
-    )
+    enum class VqShaderCreateBit : uint8_t {
+        LinkStage = 1,
+        AllowVaryingSubgroupSize = 2,
+        RequireFullSubgroups = 3,
+        NoTaskShader = 4,
+        DispatchBase = 5,
+        FragmentShadingRateAttachment = 6,
+        FragmentDensityMapAttachment = 7
+    };
 
-    YQ_ENUM(VkShaderGroupShader, ,
-        GeneralKHR = 0,
-        ClosestHitKHR = 1,
-        AnyHitKHR = 2,
-        IntersectionKHR = 3
-    )
+    enum class VqShaderFloatControlsIndependence : int32_t {
+        _32BitOnly = 0,
+        All = 1,
+        None = 2
+    };
 
+    enum class VqShaderGroupShader : int32_t {
+        General = 0,
+        ClosestHit = 1,
+        AnyHit = 2,
+        Intersection = 3
+    };
+
+    enum class VqShaderInfoType : int32_t {
+        StatisticsAMD = 0,
+        BinaryAMD = 1,
+        DisassemblyAMD = 2
+    };
+
+    enum class VqShaderStageBit : uint8_t {
+        Vertex = 1,
+        TessellationControl = 2,
+        TessellationEvaluation = 3,
+        Geometry = 4,
+        Fragment = 5,
+        Compute = 6,
+        AllGraphics = 5,
+        All = 31,
+        Raygen = 9,
+        AnyHit = 10,
+        ClosestHit = 11,
+        Miss = 12,
+        Intersection = 13,
+        Callable = 14,
+        Task = 7,
+        Mesh = 8,
+        SubpassShadingBitHuawei = 15,
+        ClusterCullingBitHuawei = 20
+    };
+
+    enum class VqShadingRatePaletteEntry : int32_t {
+        NoInvocations = 0,
+        _16InvocationsPerPixel = 1,
+        _8InvocationsPerPixel = 2,
+        _4InvocationsPerPixel = 3,
+        _2InvocationsPerPixel = 4,
+        _1InvocationPerPixel = 5,
+        _1InvocationPer2x1Pixels = 6,
+        _1InvocationPer1x2Pixels = 7,
+        _1InvocationPer2x2Pixels = 8,
+        _1InvocationPer4x2Pixels = 9,
+        _1InvocationPer2x4Pixels = 10,
+        _1InvocationPer4x4Pixels = 11
+    };
+
+    enum class VqSharingMode : int32_t {
+        Exclusive = 0,
+        Concurrent = 1
+    };
+
+    enum class VqSparseImageFormatBit : uint8_t {
+        SingleMiptail = 1,
+        AlignedMipSize = 2,
+        NonstandardBlockSize = 3
+    };
+
+    enum class VqSparseMemoryBindBit : uint8_t {
+        Metadata = 1
+    };
+
+    enum class VqStencilFaceBit : uint8_t {
+        Front = 1,
+        Back = 2,
+        FrontAndBack = 2,
+        StencilFrontAndBack = FrontAndBack
+    };
+
+    enum class VqStencilOp : int32_t {
+        Keep = 0,
+        Zero = 1,
+        Replace = 2,
+        IncrementAndClamp = 3,
+        DecrementAndClamp = 4,
+        Invert = 5,
+        IncrementAndWrap = 6,
+        DecrementAndWrap = 7
+    };
+
+    enum class VqSubgroupFeatureBit : uint8_t {
+        Basic = 1,
+        Vote = 2,
+        Arithmetic = 3,
+        Ballot = 4,
+        Shuffle = 5,
+        ShuffleRelative = 6,
+        Clustered = 7,
+        Quad = 8,
+        Partitioned = 9,
+        Rotate = 10,
+        RotateClustered = 11
+    };
+
+    enum class VqSubmitBit : uint8_t {
+        Protected = 1
+    };
+
+    enum class VqSubpassContents : int32_t {
+        Inline = 0,
+        SecondaryCommandBuffers = 1,
+        InlineAndSecondaryCommandBuffers = 1000451000
+    };
+
+    enum class VqSubpassDescriptionBit : uint8_t {
+        PerViewAttributesBitNvx = 1,
+        PerViewPositionXOnlyBitNvx = 2,
+        FragmentRegion = 3,
+        ShaderResolve = 4,
+        RasterizationOrderAttachmentColorAccess = 5,
+        RasterizationOrderAttachmentDepthAccess = 6,
+        RasterizationOrderAttachmentStencilAccess = 7,
+        EnableLegacyDithering = 8,
+        RasterizationOrderAttachmentColorAccessBitArm = RasterizationOrderAttachmentColorAccess,
+        RasterizationOrderAttachmentDepthAccessBitArm = RasterizationOrderAttachmentDepthAccess,
+        RasterizationOrderAttachmentStencilAccessBitArm = RasterizationOrderAttachmentStencilAccess
+    };
+
+    enum class VqSubpassMergeStatus : int32_t {
+        Merged = 0,
+        Disallowed = 1,
+        NotMergedSideEffects = 2,
+        NotMergedSamplesMismatch = 3,
+        NotMergedViewsMismatch = 4,
+        NotMergedAliasing = 5,
+        NotMergedDependencies = 6,
+        NotMergedIncompatibleInputAttachment = 7,
+        NotMergedTooManyAttachments = 8,
+        NotMergedInsufficientStorage = 9,
+        NotMergedDepthStencilCount = 10,
+        NotMergedResolveAttachmentReuse = 11,
+        NotMergedSingleSubpass = 12,
+        NotMergedUnspecified = 13
+    };
+
+    enum class VqSurfaceCounterBit : uint8_t {
+        Vblank = 1
+    };
+
+    enum class VqSurfaceTransformBit : uint8_t {
+        Identity = 1,
+        Rotate90 = 2,
+        Rotate180 = 3,
+        Rotate270 = 4,
+        HorizontalMirror = 5,
+        HorizontalMirrorRotate90 = 6,
+        HorizontalMirrorRotate180 = 7,
+        HorizontalMirrorRotate270 = 8,
+        Inherit = 9
+    };
+
+    enum class VqSwapchainCreateBit : uint8_t {
+        SplitInstanceBindRegions = 1,
+        Protected = 2,
+        MutableFormat = 3,
+        DeferredMemoryAllocation = 4
+    };
+
+    enum class VqSystemAllocationScope : int32_t {
+        Command = 0,
+        Object = 1,
+        Cache = 2,
+        Device = 3,
+        Instance = 4
+    };
+
+    enum class VqTessellationDomainOrigin : int32_t {
+        UpperLeft = 0,
+        LowerLeft = 1
+    };
+
+    enum class VqTimeDomain : int32_t {
+        Device = 0,
+        ClockMonotonic = 1,
+        ClockMonotonicRaw = 2,
+        QueryPerformanceCounter = 3
+    };
+
+    enum class VqToolPurposeBit : uint8_t {
+        Validation = 1,
+        Profiling = 2,
+        Tracing = 3,
+        AdditionalFeatures = 4,
+        ModifyingFeatures = 5,
+        DebugReporting = 6,
+        DebugMarkers = 7
+    };
+
+    enum class VqValidationCacheHeaderVersion : int32_t {
+        One = 1
+    };
+
+    enum class VqValidationCheck : int32_t {
+        All = 0,
+        Shaders = 1
+    };
+
+    enum class VqValidationFeatureDisable : int32_t {
+        All = 0,
+        Shaders = 1,
+        ThreadSafety = 2,
+        ApiParameters = 3,
+        ObjectLifetimes = 4,
+        CoreChecks = 5,
+        UniqueHandles = 6,
+        ShaderValidationCache = 7
+    };
+
+    enum class VqValidationFeatureEnable : int32_t {
+        GpuAssisted = 0,
+        GpuAssistedReserveBindingSlot = 1,
+        BestPractices = 2,
+        DebugPrintf = 3,
+        SynchronizationValidation = 4
+    };
+
+    enum class VqVendorId : int32_t {
+        Khronos = 0x10000,
+        Viv = 0x10001,
+        Vsi = 0x10002,
+        Kazan = 0x10003,
+        Codeplay = 0x10004,
+        Mesa = 0x10005,
+        Pocl = 0x10006,
+        Mobileye = 0x10007
+    };
+
+    enum class VqVertexInputRate : int32_t {
+        Vertex = 0,
+        Instance = 1
+    };
+
+    enum class VqVideoCapabilityBit : uint8_t {
+        ProtectedContent = 1,
+        SeparateReferenceImages = 2
+    };
+
+    enum class VqVideoChromaSubsamplingBit : uint8_t {
+        Invalid = 0,
+        Monochrome = 1,
+        _420 = 2,
+        _422 = 3,
+        _444 = 4
+    };
+
+    enum class VqVideoCodecOperationBit : uint8_t {
+        EncodeH264 = 17,
+        EncodeH265 = 18,
+        DecodeH264 = 1,
+        DecodeH265 = 2,
+        DecodeAv1 = 3
+    };
+
+    enum class VqVideoCodingControlBit : uint8_t {
+        Reset = 1,
+        EncodeRateControl = 2,
+        EncodeQualityLevel = 3
+    };
+
+    enum class VqVideoComponentBitDepthBit : uint8_t {
+        Invalid = 0,
+        _8 = 1,
+        _10 = 3,
+        _12 = 5
+    };
+
+    enum class VqVideoDecodeCapabilityBit : uint8_t {
+        DpbAndOutputCoincide = 1,
+        DpbAndOutputDistinct = 2
+    };
+
+    enum class VqVideoDecodeH264PictureLayoutBit : uint8_t {
+        Progressive = 0,
+        InterlacedInterleavedLines = 1,
+        InterlacedSeparatePlanes = 2
+    };
+
+    enum class VqVideoDecodeUsageBit : uint8_t {
+        Default = 0,
+        Transcoding = 1,
+        Offline = 2,
+        Streaming = 3
+    };
+
+    enum class VqVideoEncodeCapabilityBit : uint8_t {
+        PrecedingExternallyEncodedBytes = 1,
+        InsufficientBitstreamBufferRangeDetection = 2
+    };
+
+    enum class VqVideoEncodeContentBit : uint8_t {
+        Default = 0,
+        Camera = 1,
+        Desktop = 2,
+        Rendered = 3
+    };
+
+    enum class VqVideoEncodeFeedbackBit : uint8_t {
+        BitstreamBufferOffset = 1,
+        BitstreamBytesWritten = 2,
+        BitstreamHasOverrides = 3
+    };
+
+    enum class VqVideoEncodeBit : uint8_t {
+
+    };
+
+    enum class VqVideoEncodeH264CapabilityBit : uint8_t {
+        HrdCompliance = 1,
+        PredictionWeightTableGenerated = 2,
+        RowUnalignedSlice = 3,
+        DifferentSliceType = 4,
+        BFrameInL0List = 5,
+        BFrameInL1List = 6,
+        PerPictureTypeMinMaxQp = 7,
+        PerSliceConstantQp = 8,
+        GeneratePrefixNalu = 9
+    };
+
+    enum class VqVideoEncodeH264RateControlBit : uint8_t {
+        AttemptHrdCompliance = 1,
+        RegularGop = 2,
+        ReferencePatternFlat = 3,
+        ReferencePatternDyadic = 4,
+        TemporalLayerPatternDyadic = 5
+    };
+
+    enum class VqVideoEncodeH264StdBit : uint8_t {
+        SeparateColorPlane = 1,
+        QpprimeYZeroTransformBypass = 2,
+        ScalingMatrixPresent = 3,
+        ChromaQpIndexOffset = 4,
+        SecondChromaQpIndexOffset = 5,
+        PicInitQpMinus26 = 6,
+        WeightedPred = 7,
+        WeightedBipredIdcExplicit = 8,
+        WeightedBipredIdcImplicit = 9,
+        Transform8x8Mode = 10,
+        DirectSpatialMvPredFlagUnset = 11,
+        EntropyCodingModeFlagUnset = 12,
+        EntropyCodingMode = 13,
+        Direct8x8InferenceFlagUnset = 14,
+        ConstrainedIntraPred = 15,
+        DeblockingFilterDisabled = 16,
+        DeblockingFilterEnabled = 17,
+        DeblockingFilterPartial = 18,
+        SliceQpDelta = 20,
+        DifferentSliceQpDelta = 21
+    };
+
+    enum class VqVideoEncodeH265CapabilityBit : uint8_t {
+        HrdCompliance = 1,
+        PredictionWeightTableGenerated = 2,
+        RowUnalignedSliceSegment = 3,
+        DifferentSliceSegmentType = 4,
+        BFrameInL0List = 5,
+        BFrameInL1List = 6,
+        PerPictureTypeMinMaxQp = 7,
+        PerSliceSegmentConstantQp = 8,
+        MultipleTilesPerSliceSegment = 9,
+        MultipleSliceSegmentsPerTile = 10
+    };
+
+    enum class VqVideoEncodeH265CtbSizeBit : uint8_t {
+        _16 = 1,
+        _32 = 2,
+        _64 = 3
+    };
+
+    enum class VqVideoEncodeH265RateControlBit : uint8_t {
+        AttemptHrdCompliance = 1,
+        RegularGop = 2,
+        ReferencePatternFlat = 3,
+        ReferencePatternDyadic = 4,
+        TemporalSubLayerPatternDyadic = 5
+    };
+
+    enum class VqVideoEncodeH265StdBit : uint8_t {
+        SeparateColorPlane = 1,
+        SampleAdaptiveOffsetEnabled = 2,
+        ScalingListDataPresent = 3,
+        PcmEnabled = 4,
+        SpsTemporalMvpEnabled = 5,
+        InitQpMinus26 = 6,
+        WeightedPred = 7,
+        WeightedBipred = 8,
+        Log2ParallelMergeLevelMinus2 = 9,
+        SignDataHidingEnabled = 10,
+        TransformSkipEnabled = 11,
+        TransformSkipEnabledFlagUnset = 12,
+        PpsSliceChromaQpOffsetsPresent = 13,
+        TransquantBypassEnabled = 14,
+        ConstrainedIntraPred = 15,
+        EntropyCodingSyncEnabled = 16,
+        DeblockingFilterOverrideEnabled = 17,
+        DependentSliceSegmentsEnabled = 18,
+        DependentSliceSegment = 19,
+        SliceQpDelta = 20,
+        DifferentSliceQpDelta = 21
+    };
+
+    enum class VqVideoEncodeH265TransformBlockSizeBit : uint8_t {
+        _4 = 1,
+        _8 = 2,
+        _16 = 3,
+        _32 = 4
+    };
+
+    enum class VqVideoEncodeRateControlModeBit : uint8_t {
+        Default = 0,
+        Disabled = 1,
+        Cbr = 2,
+        Vbr = 3
+    };
+
+    enum class VqVideoEncodeTuningMode : int32_t {
+        Default = 0,
+        HighQuality = 1,
+        LowLatency = 2,
+        UltraLowLatency = 3,
+        Lossless = 4
+    };
+
+    enum class VqVideoEncodeUsageBit : uint8_t {
+        Default = 0,
+        Transcoding = 1,
+        Streaming = 2,
+        Recording = 3,
+        Conferencing = 4
+    };
+
+    enum class VqVideoSessionCreateBit : uint8_t {
+        ProtectedContent = 1,
+        AllowEncodeParameterOptimizations = 2,
+        InlineQueries = 3
+    };
+
+    enum class VqViewportCoordinateSwizzle : int32_t {
+        PositiveX = 0,
+        NegativeX = 1,
+        PositiveY = 2,
+        NegativeY = 3,
+        PositiveZ = 4,
+        NegativeZ = 5,
+        PositiveW = 6,
+        NegativeW = 7
+    };
+
+
+    using VqAccelerationStructureCreateFlags = Flags<VqAccelerationStructureCreateBit>;
+    using VqAccessFlags = Flags<VqAccessBit>;
+    using VqAcquireProfilingLockFlags = Flags<VqAcquireProfilingLockBit>;
+    using VqAttachmentDescriptionFlags = Flags<VqAttachmentDescriptionBit>;
+    using VqBufferCreateFlags = Flags<VqBufferCreateBit>;
+    using VqBufferUsageFlags = Flags<VqBufferUsageBit>;
+    using VqBuildAccelerationStructureFlags = Flags<VqBuildAccelerationStructureBit>;
+    using VqBuildMicromapFlags = Flags<VqBuildMicromapBit>;
+    using VqColorComponentFlags = Flags<VqColorComponentBit>;
+    using VqCommandBufferResetFlags = Flags<VqCommandBufferResetBit>;
+    using VqCommandBufferUsageFlags = Flags<VqCommandBufferUsageBit>;
+    using VqCommandPoolCreateFlags = Flags<VqCommandPoolCreateBit>;
+    using VqCommandPoolResetFlags = Flags<VqCommandPoolResetBit>;
+    using VqCompositeAlphaFlags = Flags<VqCompositeAlphaBit>;
+    using VqConditionalRenderingFlags = Flags<VqConditionalRenderingBit>;
+    using VqCullModeFlags = Flags<VqCullModeBit>;
+    using VqDebugReportFlags = Flags<VqDebugReportBit>;
+    using VqDebugUtilsMessageSeverityFlags = Flags<VqDebugUtilsMessageSeverityBit>;
+    using VqDebugUtilsMessageTypeFlags = Flags<VqDebugUtilsMessageTypeBit>;
+    using VqDependencyFlags = Flags<VqDependencyBit>;
+    using VqDescriptorBindingFlags = Flags<VqDescriptorBindingBit>;
+    using VqDescriptorPoolCreateFlags = Flags<VqDescriptorPoolCreateBit>;
+    using VqDescriptorSetLayoutCreateFlags = Flags<VqDescriptorSetLayoutCreateBit>;
+    using VqDeviceAddressBindingFlags = Flags<VqDeviceAddressBindingBit>;
+    using VqDeviceDiagnosticsConfigFlags = Flags<VqDeviceDiagnosticsConfigBit>;
+    using VqDeviceGroupPresentModeFlags = Flags<VqDeviceGroupPresentModeBit>;
+    using VqDeviceQueueCreateFlags = Flags<VqDeviceQueueCreateBit>;
+    using VqDisplayPlaneAlphaFlags = Flags<VqDisplayPlaneAlphaBit>;
+    using VqEventCreateFlags = Flags<VqEventCreateBit>;
+    using VqExternalFenceFeatureFlags = Flags<VqExternalFenceFeatureBit>;
+    using VqExternalFenceHandleTypeFlags = Flags<VqExternalFenceHandleTypeBit>;
+    using VqExternalMemoryFeatureFlags = Flags<VqExternalMemoryFeatureBit>;
+    using VqExternalMemoryFeatureFlags = Flags<VqExternalMemoryFeatureBit>;
+    using VqExternalMemoryHandleTypeFlags = Flags<VqExternalMemoryHandleTypeBit>;
+    using VqExternalMemoryHandleTypeFlags = Flags<VqExternalMemoryHandleTypeBit>;
+    using VqExternalSemaphoreFeatureFlags = Flags<VqExternalSemaphoreFeatureBit>;
+    using VqExternalSemaphoreHandleTypeFlags = Flags<VqExternalSemaphoreHandleTypeBit>;
+    using VqFenceCreateFlags = Flags<VqFenceCreateBit>;
+    using VqFenceImportFlags = Flags<VqFenceImportBit>;
+    using VqFormatFeatureFlags = Flags<VqFormatFeatureBit>;
+    using VqFrameBoundaryFlags = Flags<VqFrameBoundaryBit>;
+    using VqFramebufferCreateFlags = Flags<VqFramebufferCreateBit>;
+    using VqGeometryFlags = Flags<VqGeometryBit>;
+    using VqGeometryInstanceFlags = Flags<VqGeometryInstanceBit>;
+    using VqGraphicsPipelineLibraryFlags = Flags<VqGraphicsPipelineLibraryBit>;
+    using VqHostImageCopyFlags = Flags<VqHostImageCopyBit>;
+    using VqImageAspectFlags = Flags<VqImageAspectBit>;
+    using VqImageCompressionFixedRateFlags = Flags<VqImageCompressionFixedRateBit>;
+    using VqImageCompressionFlags = Flags<VqImageCompressionBit>;
+    using VqImageCreateFlags = Flags<VqImageCreateBit>;
+    using VqImageUsageFlags = Flags<VqImageUsageBit>;
+    using VqImageViewCreateFlags = Flags<VqImageViewCreateBit>;
+    using VqIndirectCommandsLayoutUsageFlags = Flags<VqIndirectCommandsLayoutUsageBit>;
+    using VqIndirectStateFlags = Flags<VqIndirectStateBit>;
+    using VqInstanceCreateFlags = Flags<VqInstanceCreateBit>;
+    using VqMemoryAllocateFlags = Flags<VqMemoryAllocateBit>;
+    using VqMemoryHeapFlags = Flags<VqMemoryHeapBit>;
+    using VqMemoryMapFlags = Flags<VqMemoryMapBit>;
+    using VqMemoryPropertyFlags = Flags<VqMemoryPropertyBit>;
+    using VqMemoryUnmapFlags = Flags<VqMemoryUnmapBit>;
+    using VqMicromapCreateFlags = Flags<VqMicromapCreateBit>;
+    using VqOpticalFlowExecuteFlags = Flags<VqOpticalFlowExecuteBit>;
+    using VqOpticalFlowGridSizeFlags = Flags<VqOpticalFlowGridSizeBit>;
+    using VqOpticalFlowSessionCreateFlags = Flags<VqOpticalFlowSessionCreateBit>;
+    using VqOpticalFlowUsageFlags = Flags<VqOpticalFlowUsageBit>;
+    using VqPeerMemoryFeatureFlags = Flags<VqPeerMemoryFeatureBit>;
+    using VqPerformanceCounterDescriptionFlags = Flags<VqPerformanceCounterDescriptionBit>;
+    using VqPipelineCacheCreateFlags = Flags<VqPipelineCacheCreateBit>;
+    using VqPipelineColorBlendStateCreateFlags = Flags<VqPipelineColorBlendStateCreateBit>;
+    using VqPipelineCompilerControlFlags = Flags<VqPipelineCompilerControlBit>;
+    using VqPipelineCreateFlags = Flags<VqPipelineCreateBit>;
+    using VqPipelineCreationFeedbackFlags = Flags<VqPipelineCreationFeedbackBit>;
+    using VqPipelineDepthStencilStateCreateFlags = Flags<VqPipelineDepthStencilStateCreateBit>;
+    using VqPipelineLayoutCreateFlags = Flags<VqPipelineLayoutCreateBit>;
+    using VqPipelineShaderStageCreateFlags = Flags<VqPipelineShaderStageCreateBit>;
+    using VqPipelineStageFlags = Flags<VqPipelineStageBit>;
+    using VqPresentGravityFlags = Flags<VqPresentGravityBit>;
+    using VqPresentScalingFlags = Flags<VqPresentScalingBit>;
+    using VqQueryControlFlags = Flags<VqQueryControlBit>;
+    using VqQueryPipelineStatisticFlags = Flags<VqQueryPipelineStatisticBit>;
+    using VqQueryResultFlags = Flags<VqQueryResultBit>;
+    using VqQueueFlags = Flags<VqQueueBit>;
+    using VqRenderPassCreateFlags = Flags<VqRenderPassCreateBit>;
+    using VqRenderingFlags = Flags<VqRenderingBit>;
+    using VqResolveModeFlags = Flags<VqResolveModeBit>;
+    using VqSampleCountFlags = Flags<VqSampleCountBit>;
+    using VqSamplerCreateFlags = Flags<VqSamplerCreateBit>;
+    using VqSemaphoreImportFlags = Flags<VqSemaphoreImportBit>;
+    using VqSemaphoreWaitFlags = Flags<VqSemaphoreWaitBit>;
+    using VqShaderCorePropertiesFlags = Flags<VqShaderCorePropertiesBit>;
+    using VqShaderCreateFlags = Flags<VqShaderCreateBit>;
+    using VqShaderStageFlags = Flags<VqShaderStageBit>;
+    using VqSparseImageFormatFlags = Flags<VqSparseImageFormatBit>;
+    using VqSparseMemoryBindFlags = Flags<VqSparseMemoryBindBit>;
+    using VqStencilFaceFlags = Flags<VqStencilFaceBit>;
+    using VqSubgroupFeatureFlags = Flags<VqSubgroupFeatureBit>;
+    using VqSubmitFlags = Flags<VqSubmitBit>;
+    using VqSubpassDescriptionFlags = Flags<VqSubpassDescriptionBit>;
+    using VqSurfaceCounterFlags = Flags<VqSurfaceCounterBit>;
+    using VqSurfaceTransformFlags = Flags<VqSurfaceTransformBit>;
+    using VqSwapchainCreateFlags = Flags<VqSwapchainCreateBit>;
+    using VqToolPurposeFlags = Flags<VqToolPurposeBit>;
+    using VqVideoCapabilityFlags = Flags<VqVideoCapabilityBit>;
+    using VqVideoChromaSubsamplingFlags = Flags<VqVideoChromaSubsamplingBit>;
+    using VqVideoCodecOperationFlags = Flags<VqVideoCodecOperationBit>;
+    using VqVideoCodingControlFlags = Flags<VqVideoCodingControlBit>;
+    using VqVideoComponentBitDepthFlags = Flags<VqVideoComponentBitDepthBit>;
+    using VqVideoDecodeCapabilityFlags = Flags<VqVideoDecodeCapabilityBit>;
+    using VqVideoDecodeH264PictureLayoutFlags = Flags<VqVideoDecodeH264PictureLayoutBit>;
+    using VqVideoDecodeUsageFlags = Flags<VqVideoDecodeUsageBit>;
+    using VqVideoEncodeCapabilityFlags = Flags<VqVideoEncodeCapabilityBit>;
+    using VqVideoEncodeContentFlags = Flags<VqVideoEncodeContentBit>;
+    using VqVideoEncodeFeedbackFlags = Flags<VqVideoEncodeFeedbackBit>;
+    using VqVideoEncodeFlags = Flags<VqVideoEncodeBit>;
+    using VqVideoEncodeH264CapabilityFlags = Flags<VqVideoEncodeH264CapabilityBit>;
+    using VqVideoEncodeH264RateControlFlags = Flags<VqVideoEncodeH264RateControlBit>;
+    using VqVideoEncodeH264StdFlags = Flags<VqVideoEncodeH264StdBit>;
+    using VqVideoEncodeH265CapabilityFlags = Flags<VqVideoEncodeH265CapabilityBit>;
+    using VqVideoEncodeH265CtbSizeFlags = Flags<VqVideoEncodeH265CtbSizeBit>;
+    using VqVideoEncodeH265RateControlFlags = Flags<VqVideoEncodeH265RateControlBit>;
+    using VqVideoEncodeH265StdFlags = Flags<VqVideoEncodeH265StdBit>;
+    using VqVideoEncodeH265TransformBlockSizeFlags = Flags<VqVideoEncodeH265TransformBlockSizeBit>;
+    using VqVideoEncodeRateControlModeFlags = Flags<VqVideoEncodeRateControlModeBit>;
+    using VqVideoEncodeUsageFlags = Flags<VqVideoEncodeUsageBit>;
+    using VqVideoSessionCreateFlags = Flags<VqVideoSessionCreateBit>;
+
+    std::string_view    to_string_view(VqAccelerationStructureBuildType);
+    std::string_view    to_string_view(VqAccelerationStructureCompatibility);
+    std::string_view    to_string_view(VqAccelerationStructureCreateBit);
+    std::string_view    to_string_view(VqAccelerationStructureMemoryRequirementsType);
+    std::string_view    to_string_view(VqAccelerationStructureMotionInstanceType);
+    std::string_view    to_string_view(VqAccelerationStructureType);
+    std::string_view    to_string_view(VqAccessBit);
+    std::string_view    to_string_view(VqAcquireProfilingLockBit);
+    std::string_view    to_string_view(VqAttachmentDescriptionBit);
+    std::string_view    to_string_view(VqAttachmentLoadOp);
+    std::string_view    to_string_view(VqAttachmentStoreOp);
+    std::string_view    to_string_view(VqBlendFactor);
+    std::string_view    to_string_view(VqBlendOp);
+    std::string_view    to_string_view(VqBlendOverlap);
+    std::string_view    to_string_view(VqBlockMatchWindowCompareMode);
+    std::string_view    to_string_view(VqBorderColor);
+    std::string_view    to_string_view(VqBufferCreateBit);
+    std::string_view    to_string_view(VqBufferUsageBit);
+    std::string_view    to_string_view(VqBuildAccelerationStructureBit);
+    std::string_view    to_string_view(VqBuildAccelerationStructureMode);
+    std::string_view    to_string_view(VqBuildMicromapBit);
+    std::string_view    to_string_view(VqBuildMicromapMode);
+    std::string_view    to_string_view(VqChromaLocation);
+    std::string_view    to_string_view(VqCoarseSampleOrderType);
+    std::string_view    to_string_view(VqColorComponentBit);
+    std::string_view    to_string_view(VqColorSpace);
+    std::string_view    to_string_view(VqCommandBufferLevel);
+    std::string_view    to_string_view(VqCommandBufferResetBit);
+    std::string_view    to_string_view(VqCommandBufferUsageBit);
+    std::string_view    to_string_view(VqCommandPoolCreateBit);
+    std::string_view    to_string_view(VqCommandPoolResetBit);
+    std::string_view    to_string_view(VqCompareOp);
+    std::string_view    to_string_view(VqComponentSwizzle);
+    std::string_view    to_string_view(VqComponentType);
+    std::string_view    to_string_view(VqCompositeAlphaBit);
+    std::string_view    to_string_view(VqConditionalRenderingBit);
+    std::string_view    to_string_view(VqConservativeRasterizationMode);
+    std::string_view    to_string_view(VqCopyAccelerationStructureMode);
+    std::string_view    to_string_view(VqCopyMicromapMode);
+    std::string_view    to_string_view(VqCoverageModulationMode);
+    std::string_view    to_string_view(VqCoverageReductionMode);
+    std::string_view    to_string_view(VqCubicFilterWeights);
+    std::string_view    to_string_view(VqCullModeBit);
+    std::string_view    to_string_view(VqDebugReportBit);
+    std::string_view    to_string_view(VqDebugReportObjectType);
+    std::string_view    to_string_view(VqDebugUtilsMessageSeverityBit);
+    std::string_view    to_string_view(VqDebugUtilsMessageTypeBit);
+    std::string_view    to_string_view(VqDependencyBit);
+    std::string_view    to_string_view(VqDepthBiasRepresentation);
+    std::string_view    to_string_view(VqDescriptorBindingBit);
+    std::string_view    to_string_view(VqDescriptorPoolCreateBit);
+    std::string_view    to_string_view(VqDescriptorSetLayoutCreateBit);
+    std::string_view    to_string_view(VqDescriptorType);
+    std::string_view    to_string_view(VqDescriptorUpdateTemplateType);
+    std::string_view    to_string_view(VqDeviceAddressBindingBit);
+    std::string_view    to_string_view(VqDeviceAddressBindingType);
+    std::string_view    to_string_view(VqDeviceDiagnosticsConfigBit);
+    std::string_view    to_string_view(VqDeviceEventType);
+    std::string_view    to_string_view(VqDeviceFaultAddressType);
+    std::string_view    to_string_view(VqDeviceFaultVendorBinaryHeaderVersion);
+    std::string_view    to_string_view(VqDeviceGroupPresentModeBit);
+    std::string_view    to_string_view(VqDeviceMemoryReportEventType);
+    std::string_view    to_string_view(VqDeviceQueueCreateBit);
+    std::string_view    to_string_view(VqDirectDriverLoadingMode);
+    std::string_view    to_string_view(VqDiscardRectangleMode);
+    std::string_view    to_string_view(VqDisplayEventType);
+    std::string_view    to_string_view(VqDisplayPlaneAlphaBit);
+    std::string_view    to_string_view(VqDisplayPowerState);
+    std::string_view    to_string_view(VqDriverId);
+    std::string_view    to_string_view(VqDynamicState);
+    std::string_view    to_string_view(VqEventCreateBit);
+    std::string_view    to_string_view(VqExternalFenceFeatureBit);
+    std::string_view    to_string_view(VqExternalFenceHandleTypeBit);
+    std::string_view    to_string_view(VqExternalMemoryFeatureBit);
+    std::string_view    to_string_view(VqExternalMemoryHandleTypeBit);
+    std::string_view    to_string_view(VqExternalSemaphoreFeatureBit);
+    std::string_view    to_string_view(VqExternalSemaphoreHandleTypeBit);
+    std::string_view    to_string_view(VqFenceCreateBit);
+    std::string_view    to_string_view(VqFenceImportBit);
+    std::string_view    to_string_view(VqFilter);
+    std::string_view    to_string_view(VqFormat);
+    std::string_view    to_string_view(VqFormatFeatureBit);
+    std::string_view    to_string_view(VqFragmentShadingRate);
+    std::string_view    to_string_view(VqFragmentShadingRateCombinerOp);
+    std::string_view    to_string_view(VqFragmentShadingRateType);
+    std::string_view    to_string_view(VqFrameBoundaryBit);
+    std::string_view    to_string_view(VqFramebufferCreateBit);
+    std::string_view    to_string_view(VqFrontFace);
+    std::string_view    to_string_view(VqGeometryBit);
+    std::string_view    to_string_view(VqGeometryInstanceBit);
+    std::string_view    to_string_view(VqGeometryType);
+    std::string_view    to_string_view(VqGraphicsPipelineLibraryBit);
+    std::string_view    to_string_view(VqHostImageCopyBit);
+    std::string_view    to_string_view(VqImageAspectBit);
+    std::string_view    to_string_view(VqImageCompressionFixedRateBit);
+    std::string_view    to_string_view(VqImageCompressionBit);
+    std::string_view    to_string_view(VqImageCreateBit);
+    std::string_view    to_string_view(VqImageLayout);
+    std::string_view    to_string_view(VqImageTiling);
+    std::string_view    to_string_view(VqImageType);
+    std::string_view    to_string_view(VqImageUsageBit);
+    std::string_view    to_string_view(VqImageViewCreateBit);
+    std::string_view    to_string_view(VqImageViewType);
+    std::string_view    to_string_view(VqIndexType);
+    std::string_view    to_string_view(VqIndirectCommandsLayoutUsageBit);
+    std::string_view    to_string_view(VqIndirectCommandsTokenType);
+    std::string_view    to_string_view(VqIndirectStateBit);
+    std::string_view    to_string_view(VqInstanceCreateBit);
+    std::string_view    to_string_view(VqInternalAllocationType);
+    std::string_view    to_string_view(VqLatencyMarker);
+    std::string_view    to_string_view(VqLayerSettingType);
+    std::string_view    to_string_view(VqLayeredDriverUnderlyingApi);
+    std::string_view    to_string_view(VqLineRasterizationMode);
+    std::string_view    to_string_view(VqLogicOp);
+    std::string_view    to_string_view(VqMemoryAllocateBit);
+    std::string_view    to_string_view(VqMemoryHeapBit);
+    std::string_view    to_string_view(VqMemoryMapBit);
+    std::string_view    to_string_view(VqMemoryOverallocationBehavior);
+    std::string_view    to_string_view(VqMemoryPropertyBit);
+    std::string_view    to_string_view(VqMemoryUnmapBit);
+    std::string_view    to_string_view(VqMicromapCreateBit);
+    std::string_view    to_string_view(VqMicromapType);
+    std::string_view    to_string_view(VqObjectType);
+    std::string_view    to_string_view(VqOpacityMicromapFormat);
+    std::string_view    to_string_view(VqOpacityMicromapSpecialIndex);
+    std::string_view    to_string_view(VqOpticalFlowExecuteBit);
+    std::string_view    to_string_view(VqOpticalFlowGridSizeBit);
+    std::string_view    to_string_view(VqOpticalFlowPerformanceLevel);
+    std::string_view    to_string_view(VqOpticalFlowSessionBindingPoint);
+    std::string_view    to_string_view(VqOpticalFlowSessionCreateBit);
+    std::string_view    to_string_view(VqOpticalFlowUsageBit);
+    std::string_view    to_string_view(VqOutOfBandQueueType);
+    std::string_view    to_string_view(VqPeerMemoryFeatureBit);
+    std::string_view    to_string_view(VqPerformanceConfigurationType);
+    std::string_view    to_string_view(VqPerformanceCounterDescriptionBit);
+    std::string_view    to_string_view(VqPerformanceCounterScope);
+    std::string_view    to_string_view(VqPerformanceCounterStorage);
+    std::string_view    to_string_view(VqPerformanceCounterUnit);
+    std::string_view    to_string_view(VqPerformanceOverrideType);
+    std::string_view    to_string_view(VqPerformanceParameterType);
+    std::string_view    to_string_view(VqPerformanceValueType);
+    std::string_view    to_string_view(VqPhysicalDeviceLayeredApi);
+    std::string_view    to_string_view(VqPhysicalDeviceType);
+    std::string_view    to_string_view(VqPipelineBindPoint);
+    std::string_view    to_string_view(VqPipelineCacheCreateBit);
+    std::string_view    to_string_view(VqPipelineCacheHeaderVersion);
+    std::string_view    to_string_view(VqPipelineColorBlendStateCreateBit);
+    std::string_view    to_string_view(VqPipelineCompilerControlBit);
+    std::string_view    to_string_view(VqPipelineCreateBit);
+    std::string_view    to_string_view(VqPipelineCreationFeedbackBit);
+    std::string_view    to_string_view(VqPipelineDepthStencilStateCreateBit);
+    std::string_view    to_string_view(VqPipelineExecutableStatisticFormat);
+    std::string_view    to_string_view(VqPipelineLayoutCreateBit);
+    std::string_view    to_string_view(VqPipelineRobustnessBufferBehavior);
+    std::string_view    to_string_view(VqPipelineRobustnessImageBehavior);
+    std::string_view    to_string_view(VqPipelineShaderStageCreateBit);
+    std::string_view    to_string_view(VqPipelineStageBit);
+    std::string_view    to_string_view(VqPointClippingBehavior);
+    std::string_view    to_string_view(VqPolygonMode);
+    std::string_view    to_string_view(VqPresentGravityBit);
+    std::string_view    to_string_view(VqPresentMode);
+    std::string_view    to_string_view(VqPresentScalingBit);
+    std::string_view    to_string_view(VqPrimitiveTopology);
+    std::string_view    to_string_view(VqProvokingVertexMode);
+    std::string_view    to_string_view(VqQueryControlBit);
+    std::string_view    to_string_view(VqQueryPipelineStatisticBit);
+    std::string_view    to_string_view(VqQueryPoolSamplingMode);
+    std::string_view    to_string_view(VqQueryResultBit);
+    std::string_view    to_string_view(VqQueryResultStatus);
+    std::string_view    to_string_view(VqQueryType);
+    std::string_view    to_string_view(VqQueueBit);
+    std::string_view    to_string_view(VqQueueGlobalPriority);
+    std::string_view    to_string_view(VqRasterizationOrder);
+    std::string_view    to_string_view(VqRayTracingInvocationReorderMode);
+    std::string_view    to_string_view(VqRayTracingShaderGroupType);
+    std::string_view    to_string_view(VqRenderPassCreateBit);
+    std::string_view    to_string_view(VqRenderingBit);
+    std::string_view    to_string_view(VqResolveModeBit);
+    std::string_view    to_string_view(VqResult);
+    std::string_view    to_string_view(VqSampleCountBit);
+    std::string_view    to_string_view(VqSamplerAddressMode);
+    std::string_view    to_string_view(VqSamplerCreateBit);
+    std::string_view    to_string_view(VqSamplerMipmapMode);
+    std::string_view    to_string_view(VqSamplerReductionMode);
+    std::string_view    to_string_view(VqSamplerYcbcrModelConversion);
+    std::string_view    to_string_view(VqSamplerYcbcrRange);
+    std::string_view    to_string_view(VqScope);
+    std::string_view    to_string_view(VqSemaphoreImportBit);
+    std::string_view    to_string_view(VqSemaphoreType);
+    std::string_view    to_string_view(VqSemaphoreWaitBit);
+    std::string_view    to_string_view(VqShaderCodeType);
+    std::string_view    to_string_view(VqShaderCorePropertiesBit);
+    std::string_view    to_string_view(VqShaderCreateBit);
+    std::string_view    to_string_view(VqShaderFloatControlsIndependence);
+    std::string_view    to_string_view(VqShaderGroupShader);
+    std::string_view    to_string_view(VqShaderInfoType);
+    std::string_view    to_string_view(VqShaderStageBit);
+    std::string_view    to_string_view(VqShadingRatePaletteEntry);
+    std::string_view    to_string_view(VqSharingMode);
+    std::string_view    to_string_view(VqSparseImageFormatBit);
+    std::string_view    to_string_view(VqSparseMemoryBindBit);
+    std::string_view    to_string_view(VqStencilFaceBit);
+    std::string_view    to_string_view(VqStencilOp);
+    std::string_view    to_string_view(VqSubgroupFeatureBit);
+    std::string_view    to_string_view(VqSubmitBit);
+    std::string_view    to_string_view(VqSubpassContents);
+    std::string_view    to_string_view(VqSubpassDescriptionBit);
+    std::string_view    to_string_view(VqSubpassMergeStatus);
+    std::string_view    to_string_view(VqSurfaceCounterBit);
+    std::string_view    to_string_view(VqSurfaceTransformBit);
+    std::string_view    to_string_view(VqSwapchainCreateBit);
+    std::string_view    to_string_view(VqSystemAllocationScope);
+    std::string_view    to_string_view(VqTessellationDomainOrigin);
+    std::string_view    to_string_view(VqTimeDomain);
+    std::string_view    to_string_view(VqToolPurposeBit);
+    std::string_view    to_string_view(VqValidationCacheHeaderVersion);
+    std::string_view    to_string_view(VqValidationCheck);
+    std::string_view    to_string_view(VqValidationFeatureDisable);
+    std::string_view    to_string_view(VqValidationFeatureEnable);
+    std::string_view    to_string_view(VqVendorId);
+    std::string_view    to_string_view(VqVertexInputRate);
+    std::string_view    to_string_view(VqVideoCapabilityBit);
+    std::string_view    to_string_view(VqVideoChromaSubsamplingBit);
+    std::string_view    to_string_view(VqVideoCodecOperationBit);
+    std::string_view    to_string_view(VqVideoCodingControlBit);
+    std::string_view    to_string_view(VqVideoComponentBitDepthBit);
+    std::string_view    to_string_view(VqVideoDecodeCapabilityBit);
+    std::string_view    to_string_view(VqVideoDecodeH264PictureLayoutBit);
+    std::string_view    to_string_view(VqVideoDecodeUsageBit);
+    std::string_view    to_string_view(VqVideoEncodeCapabilityBit);
+    std::string_view    to_string_view(VqVideoEncodeContentBit);
+    std::string_view    to_string_view(VqVideoEncodeFeedbackBit);
+    std::string_view    to_string_view(VqVideoEncodeBit);
+    std::string_view    to_string_view(VqVideoEncodeH264CapabilityBit);
+    std::string_view    to_string_view(VqVideoEncodeH264RateControlBit);
+    std::string_view    to_string_view(VqVideoEncodeH264StdBit);
+    std::string_view    to_string_view(VqVideoEncodeH265CapabilityBit);
+    std::string_view    to_string_view(VqVideoEncodeH265CtbSizeBit);
+    std::string_view    to_string_view(VqVideoEncodeH265RateControlBit);
+    std::string_view    to_string_view(VqVideoEncodeH265StdBit);
+    std::string_view    to_string_view(VqVideoEncodeH265TransformBlockSizeBit);
+    std::string_view    to_string_view(VqVideoEncodeRateControlModeBit);
+    std::string_view    to_string_view(VqVideoEncodeTuningMode);
+    std::string_view    to_string_view(VqVideoEncodeUsageBit);
+    std::string_view    to_string_view(VqVideoSessionCreateBit);
+    std::string_view    to_string_view(VqViewportCoordinateSwizzle);
 }

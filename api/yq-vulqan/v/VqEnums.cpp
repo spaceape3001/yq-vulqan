@@ -30,7 +30,7 @@ namespace yq::tachyon {
         DISPLAY_NATIVE_AMD = 1000213000
     )
 
-    std::string_view to_string(VkColorSpaceKHR v)
+    std::string_view to_string_view(VkColorSpaceKHR v)
     {
         int n   = (int) v;
         if(VqColorSpaceKHR::has_value(n))
@@ -80,7 +80,7 @@ namespace yq::tachyon {
         BUFFER_COLLECTION_FUCHSIA_EXT = 1000366000,
     )
     
-    std::string_view                        to_string(VkDebugReportObjectTypeEXT v)
+    std::string_view                        to_string_view(VkDebugReportObjectTypeEXT v)
     {
         int n   = (int) v;
         if(VqDebugReportObjectType::has_value(n))
@@ -128,7 +128,7 @@ namespace yq::tachyon {
         COLOR_WRITE_ENABLE_EXT = 1000381000
     )
     
-    std::string_view                        to_string(VkDynamicState v)
+    std::string_view                        to_string_view(VkDynamicState v)
     {
         int n   = (int) v;
         if(VqDynamicState::has_value(n))
@@ -388,7 +388,7 @@ namespace yq::tachyon {
         PVRTC2_4BPP_SRGB_BLOCK_IMG = 1000054007
     )
 
-    std::string_view to_string(VkFormat fmt)
+    std::string_view to_string_view(VkFormat fmt)
     {
         int n   = (int) fmt;
         if(VqFormat::has_value(n))
@@ -404,7 +404,7 @@ namespace yq::tachyon {
         CPU     = 4
     )
 
-    std::string_view                        to_string(VkPhysicalDeviceType v)
+    std::string_view                        to_string_view(VkPhysicalDeviceType v)
     {
         int n   = (int) v;
         if(VqPhysicalDeviceType::has_value(n))

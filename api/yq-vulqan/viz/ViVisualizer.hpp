@@ -221,17 +221,35 @@ namespace yq::tachyon {
 
         //Flags<F>            m_flags           = {};
         
+        //! Transitory data needed during initialization
+        struct InitData {
+            const ViewerCreateInfo&                 viewer;
+            std::vector<VkDeviceQueueCreateInfo>    queues;
+            std::vector<const char*>                extensions;
+            
+            InitData(const ViewerCreateInfo& v) : viewer(v) {}
+        };
+        
         std::error_code     _0_app_window_initialize(GLFWwindow*);
         void                _0_app_window_kill();
         
-        std::error_code     _1_gpu_select_initialize(const ViewerCreateInfo&);
+        std::error_code     _1_gpu_select_initialize(InitData&);
         void                _1_gpu_select_kill();
         
-        std::error_code     _2_surface_initialize(const ViewerCreateInfo&);
+        std::error_code     _2_surface_initialize(InitData&);
         void                _2_surface_kill();
         
-        std::error_code     _3_queues_create(std::vector<VkDeviceQueueCreateInfo>&, const ViewerCreateInfo&);
+        std::error_code     _3_queues_create(InitData&);
         void                _3_queues_fetch();   // post device creation
         void                _3_queues_kill();
+        
+        std::error_code     _4_device_init(InitData&);
+        void                _4_device_kill();
+        
+        std::error_code     _5_allocator_init(InitData& iData);
+        void                _5_allocator_kill();
+        
+        std::error_code     _6_manager_init();
+        void                _6_manager_kill();
     };
 }

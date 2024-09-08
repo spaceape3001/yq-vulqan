@@ -1274,73 +1274,49 @@ namespace yq::tachyon {
     {
         std::error_code ec;
     
+        InitData   iData(vci);
+    
         ec  = _0_app_window_initialize(w);
         if(ec != std::error_code())
             return ec;
         
-        ec  = _1_gpu_select_initialize(vci);
+        ec  = _1_gpu_select_initialize(iData);
         if(ec != std::error_code())
             return ec;
 
-        ec = _2_surface_initialize(vci);
+        ec = _2_surface_initialize(iData);
         if(ec != std::error_code())
             return ec;
        
-
-        //  ================================
-        //  LOGICAL DEVICE CREATION
-        //
-        //  Buckle up, this is a long one
-
-            // list extensions, augmenting with swap chain
-            
-        std::vector<const char*>    devExtensions = vci.extensions;
-        devExtensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+        iData.extensions    = vci.extensions;
+        iData.extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
             //  And we need to create them... so request
-        std::vector<VkDeviceQueueCreateInfo> qci;
-        
-        ec = _3_queues_create(qci, vci);
+        ec = _3_queues_create(iData);
         if(ec != std::error_code())
             return ec;
                 
-        //  And with that, we have the queues all lined up, ready to be created.
+        ec = _4_device_init(iData);
+        if(ec != std::error_code())
+            return ec;
 
-        VkPhysicalDeviceFeatures    gpu_features{};
-        if(vci.fill_non_solid)
-            gpu_features.fillModeNonSolid    = VK_TRUE;
-        gpu_features.samplerAnisotropy          = VK_TRUE;
+        _3_queues_fetch();
 
-        VqDeviceCreateInfo          deviceCreateInfo;
-        deviceCreateInfo.pQueueCreateInfos        = qci.data();
-        deviceCreateInfo.queueCreateInfoCount     = (uint32_t) qci.size();
-        deviceCreateInfo.pEnabledFeatures         = &gpu_features;
-        
-        deviceCreateInfo.enabledExtensionCount      = (uint32_t) devExtensions.size();
-        deviceCreateInfo.ppEnabledExtensionNames    = devExtensions.data();
-        
-        VqPhysicalDeviceVulkan12Features            v12features;
-        v12features.bufferDeviceAddress = true;
-        deviceCreateInfo.pNext          = &v12features;
-        
-        if(vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device) != VK_SUCCESS)
-            return create_error<"Unable to create vulkan (logical) device">();
+        ec = _5_allocator_init(iData);
+        if(ec != std::error_code())
+            return ec;
+
+        ec  = _6_manager_init();
+        if(ec != std::error_code())
+            return ec;
 
         //  ================================
         //  GETTING THE QUEUES
 
-        _3_queues_fetch();
 
         //  ================================
         //  ALLOCATOR
 
-        VmaAllocatorCreateInfo      allocatorCreateInfo{};
-        allocatorCreateInfo.instance                        = m_instance;
-        allocatorCreateInfo.physicalDevice                  = m_physical;
-        allocatorCreateInfo.device                          = m_device;
-        allocatorCreateInfo.vulkanApiVersion                = m_app->app_info().vulkan_api;
-        allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) vci.chunk_size;
-        vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
 
         //  ================================
         //  DESCRIPTOR COUNTS
@@ -1349,8 +1325,6 @@ namespace yq::tachyon {
 
         m_thread            = std::make_unique<ViThread>(*this);
 
-        m_shaders           = std::make_unique<ViShaderManager>(m_device);
-        m_buffers           = std::make_unique<ViBufferManager>(*this);
 
 
         //  ================================
@@ -1401,21 +1375,11 @@ namespace yq::tachyon {
             img.second.destroy(*this);
         m_images.clear();
     
-        //  At *this* point, we don't need the mutex... we're dying anyways
-        m_shaders       = {};
-        m_buffers       = {};
-        
-        if(m_allocator){
-            vmaDestroyAllocator(m_allocator);
-            m_allocator = nullptr;
-        }
-    
-        //  Generally in reverse order of above
-        if(m_device){
-            vkDestroyDevice(m_device, nullptr);
-            m_device                = nullptr;
-        }
+        //  Generally in reverse order of initialization
 
+        _6_manager_kill();
+        _5_allocator_kill();
+        _4_device_kill();
         _3_queues_kill();
         _2_surface_kill();
         _1_gpu_select_kill();

@@ -61,9 +61,9 @@ namespace yq::tachyon {
         m_app           = nullptr;
     }
 
-    std::error_code  ViVisualizer::_1_gpu_select_initialize(const ViewerCreateInfo&vci)
+    std::error_code  ViVisualizer::_1_gpu_select_initialize(InitData& iData)
     {
-        m_physical                    = vci.device;
+        m_physical                    = iData.viewer.device;
         if(!m_physical){
             m_physical  = vqFirstDevice();
             if(!m_physical)
@@ -82,7 +82,7 @@ namespace yq::tachyon {
         m_physical  = nullptr;
     }
 
-    std::error_code  ViVisualizer::_2_surface_initialize(const ViewerCreateInfo&)
+    std::error_code  ViVisualizer::_2_surface_initialize(InitData& iData)
     {
         //  passing in the create info in case we get smarter
         if(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface) != VK_SUCCESS)
@@ -106,25 +106,27 @@ namespace yq::tachyon {
         }
     }
 
-    std::error_code  ViVisualizer::_3_queues_create(std::vector<VkDeviceQueueCreateInfo>&qci, const ViewerCreateInfo&vci)
+    std::error_code  ViVisualizer::_3_queues_create(InitData& iData)
     {
         ViQueueTypeFlags    wantQueue({ViQueueType::Graphic, ViQueueType::Present});
         ViQueueTypeFlags    hasQueue{};
 
-        if(!is_empty(vci.compute)){
-            vqInfo << " Want compute queue with " << count(vci.compute) << " queues";
+        if(!is_empty(iData.viewer.compute)){
+            vqInfo << " Want compute queue with " << count(iData.viewer.compute) << " queues";
             wantQueue.set(ViQueueType::Compute);
         }
-        if(!is_empty(vci.video_decode))
+        if(!is_empty(iData.viewer.video_decode))
             wantQueue.set(ViQueueType::VideoDecode);
-        if(!is_empty(vci.video_encode))
+        if(!is_empty(iData.viewer.video_encode))
             wantQueue.set(ViQueueType::VideoEncode);
+        if(!is_empty(iData.viewer.transfer))
+            wantQueue.set(ViQueueType::Transfer);
         
         std::vector<VkQueueFamilyProperties> qfp = vqGetPhysicalDeviceQueueFamilyProperties(m_physical);
         for(uint32_t i=0;i<qfp.size();++i){
             if(wantQueue == hasQueue)
                 break;
-            ViQueueManagerPtr   r   = new ViQueueManager(*this, vci, i, qfp[i], wantQueue & ~hasQueue );
+            ViQueueManagerPtr   r   = new ViQueueManager(*this, iData.viewer, i, qfp[i], wantQueue & ~hasQueue );
             hasQueue |= r->types();
             if(r->types().is_set(ViQueueType::Graphic)){
                 vqInfo << "Discovered graphics queue " << i;
@@ -150,7 +152,7 @@ namespace yq::tachyon {
                 vqInfo << "Discovered transfer queue " << i;
                 m_transfer      = r.ptr();
             }
-            qci.push_back(r->info());
+            iData.queues.push_back(r->info());
             m_queues.push_back(r);
         }
         
@@ -185,6 +187,72 @@ namespace yq::tachyon {
         m_videoDec  = nullptr;
         m_queues.clear();
     }
+
+    std::error_code     ViVisualizer::_4_device_init(InitData& iData)
+    {
+        VkPhysicalDeviceFeatures    gpu_features{};
+        if(iData.viewer.fill_non_solid)
+            gpu_features.fillModeNonSolid       = VK_TRUE;
+        gpu_features.samplerAnisotropy          = VK_TRUE;
+
+        VqDeviceCreateInfo          deviceCreateInfo;
+        deviceCreateInfo.pQueueCreateInfos        = iData.queues.data();
+        deviceCreateInfo.queueCreateInfoCount     = (uint32_t) iData.queues.size();
+        deviceCreateInfo.pEnabledFeatures         = &gpu_features;
+        
+        deviceCreateInfo.enabledExtensionCount      = (uint32_t) iData.extensions.size();
+        deviceCreateInfo.ppEnabledExtensionNames    = iData.extensions.data();
+        
+        VqPhysicalDeviceVulkan12Features            v12features;
+        v12features.bufferDeviceAddress = true;
+        deviceCreateInfo.pNext          = &v12features;
+        
+        if(vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device) != VK_SUCCESS)
+            return create_error<"Unable to create vulkan (logical) device">();
+        return {};
+    }
+    
+    void                ViVisualizer::_4_device_kill()
+    {
+        if(m_device){
+            vkDestroyDevice(m_device, nullptr);
+            m_device                = nullptr;
+        }
+    }
+    
+    std::error_code     ViVisualizer::_5_allocator_init(InitData& iData)
+    {
+        VmaAllocatorCreateInfo      allocatorCreateInfo{};
+        allocatorCreateInfo.instance                        = m_instance;
+        allocatorCreateInfo.physicalDevice                  = m_physical;
+        allocatorCreateInfo.device                          = m_device;
+        allocatorCreateInfo.vulkanApiVersion                = m_app->app_info().vulkan_api;
+        allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) iData.viewer.chunk_size;
+        vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
+        return {};
+    }
+    
+    void                ViVisualizer::_5_allocator_kill()
+    {
+        if(m_allocator){
+            vmaDestroyAllocator(m_allocator);
+            m_allocator = nullptr;
+        }
+    }
+    
+    std::error_code     ViVisualizer::_6_manager_init()
+    {
+        m_shaders           = std::make_unique<ViShaderManager>(m_device);
+        m_buffers           = std::make_unique<ViBufferManager>(*this);
+        return {};
+    }
+    
+    void                ViVisualizer::_6_manager_kill()
+    {
+        m_shaders       = {};
+        m_buffers       = {};
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////
 

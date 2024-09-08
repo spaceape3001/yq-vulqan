@@ -4,12 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "VqUtils.hpp"
+
 #include <yq-toolbox/basic/ErrorDB.hpp>
+#include <yq-toolbox/color/RGBA.hpp>
 #include <yq-vulqan/image_view/ImageViewInfo.hpp>
 #include <yq-vulqan/sampler/SamplerInfo.hpp>
-#include <tachyon/gpu/VqUtils.hpp>
-#include <tachyon/gpu/VqApp.hpp>
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq-vulqan/v/VqApp.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>
@@ -95,7 +96,7 @@ namespace yq::tachyon {
     }
 
 
-    Expect<uint32_t>                vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&queues)
+    uint32_x                vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&queues)
     {
         for(uint32_t i=0;i<queues.size();++i)
             if(queues[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
@@ -103,7 +104,7 @@ namespace yq::tachyon {
         return unexpected<"No queue found">();
     }
 
-    Expect<uint32_t>                vqFindFirstPresentQueue(VkPhysicalDevice dev, VkSurfaceKHR srf)
+    uint32_x                vqFindFirstPresentQueue(VkPhysicalDevice dev, VkSurfaceKHR srf)
     {
         uint32_t        count = 0;
         vkGetPhysicalDeviceQueueFamilyProperties(dev,&count,nullptr);

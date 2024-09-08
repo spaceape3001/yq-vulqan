@@ -58,6 +58,9 @@ namespace yq::tachyon {
             //!  Set to enable compute queue capability
         QueueSpec                   compute;
         
+            //!  Set to enable transfer (DMA) queue capability
+        QueueSpec                   transfer;
+
             //!  Set to enable video-decode queue capability
         QueueSpec                   video_decode;
         

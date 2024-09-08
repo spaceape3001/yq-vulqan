@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq-toolbox/basic/BasicApp.hpp>
-#include <tachyon/AppCreateInfo.hpp>
+#include <yq-vulqan/app/AppCreateInfo.hpp>
 #include <yq-vulqan/glfw/AppGLFW.hpp>
-#include <tachyon/gpu/VqApp.hpp>
+#include <yq-vulqan/v/VqApp.hpp>
 #include <yq-toolbox/units.hpp>
 #include <memory>
 #include <set>
@@ -18,7 +18,9 @@
 
 namespace yq::tachyon {
 
-    class   TaskEngine;
+    class TaskEngine;
+    class Viewer;
+    class Widget;
 
     /*! \brief Engine/Vulkan application
     

@@ -7,12 +7,11 @@
 #pragma once
 
 #include <yq-toolbox/macro/debugrel.hpp>
-#include <tachyon/preamble.hpp>
+#include <yq-vulqan/basic/Required.hpp>
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
+
 #include <string>
 #include <vector>
-#include <yq-vulqan/basic/Required.hpp>
-#include <memory>
 
 namespace yq::tachyon {
     struct NameRequired {

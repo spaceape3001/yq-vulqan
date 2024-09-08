@@ -39,15 +39,16 @@
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
+#include <yq-vulqan/v/VqApp.hpp>
+#include <yq-vulqan/v/VqUtils.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViBufferObject.hpp>
+#include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
 
 #include <tachyon/gpu/ViContext.hpp>
-#include <tachyon/gpu/VqApp.hpp>
-#include <tachyon/gpu/VqUtils.hpp>
 
 
 #include <GLFW/glfw3.h>
@@ -360,7 +361,7 @@ namespace yq::tachyon {
                 if(!sh)
                     continue;
                 
-                Expect<ViShader>    xvs = m_viz.create(*sh);
+                Expect<ViShader>    xvs = m_viz.shader_create(*sh);
                 if(!xvs)
                     continue;
                 
@@ -576,24 +577,24 @@ namespace yq::tachyon {
             
             if(!m_cfg.vbos.empty()){
                 for(auto& vb : m_cfg.vbos){
-                    ViBO        bo;
-                    bo.update(*(m_viz.m_buffers), vb, nullptr);
+                    ViBufferObject        bo;
+                    bo.update(m_viz, vb, nullptr);
                     m_vbos.push_back(bo);
                 }
             }
             
             if(!m_cfg.ibos.empty()){
                 for(auto & ib : m_cfg.ibos){
-                    ViBO        bo;
-                    bo.update(*(m_viz.m_buffers), ib, nullptr);
+                    ViBufferObject        bo;
+                    bo.update(m_viz, ib, nullptr);
                     m_ibos.push_back(bo);
                 }
             }
 
             if(!m_cfg.ubos.empty()){
                 for(auto & ub : m_cfg.ubos){
-                    ViBO        bo;
-                    bo.update(*(m_viz.m_buffers), ub, nullptr);
+                    ViBufferObject        bo;
+                    bo.update(m_viz, ub, nullptr);
                     m_ubos.push_back(bo);
                 }
             }
@@ -635,142 +636,6 @@ namespace yq::tachyon {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViQueues
-    ////////////////////////////////////////////////////////////////////////////////
-    
-    namespace {
-        size_t          count(const QueueSpec& qs)
-        {
-            if( std::get_if<std::monostate>(&qs) != nullptr)
-                return 0;
-            if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
-                return p->size();
-            if(const uint32_t* p = std::get_if<uint32_t>(&qs))  
-                return *p;
-            if(const bool* p = std::get_if<bool>(&qs))
-                return *p ? 1 : 0;
-            return 0;
-        }
-
-        bool            is_empty(const QueueSpec& qs)
-        {
-            if( std::get_if<std::monostate>(&qs) != nullptr)
-                return true;
-            if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
-                return p->empty();
-            if(const uint32_t* p = std::get_if<uint32_t>(&qs))
-                return *p == 0;
-            if(const bool* p = std::get_if<bool>(&qs))
-                return !*p;
-            return true;
-        }
-
-        const QueueSpec&   biggest(const ViewerCreateInfo& vci, Flags<ViQueueType> which)
-        {
-            size_t  g       = 0;
-            size_t  c       = 0;
-            size_t  p       = 0;
-            size_t  ve      = 0;
-            size_t  vd      = 0;
-            size_t  mx     = 0;
-            
-            if(which.is_set(ViQueueType::Graphic)){
-                mx  = g   = std::max((size_t) 1,count(vci.graphic));
-            }
-            if(which.is_set(ViQueueType::Present)){
-                p   = std::max((size_t) 1,count(vci.present));
-                mx  = std::max(p,mx);
-            };
-            if(which.is_set(ViQueueType::Compute)){
-                c   = count(vci.compute);
-                mx  = std::max(c,mx);
-            }
-            if(which.is_set(ViQueueType::VideoEncode)){
-                ve  = count(vci.video_encode);
-                mx  = std::max(ve,mx);
-            }
-            if(which.is_set(ViQueueType::VideoDecode)){
-                vd  = count(vci.video_decode);
-                mx  = std::max(vd,mx);
-            }
-            
-            if(g==mx)
-                return vci.graphic;
-            if(p==mx)
-                return vci.present;
-            if(c==mx)
-                return vci.compute;
-            if(vd==mx)
-                return vci.video_decode;
-            if(ve==mx)
-                return vci.video_encode;
-            throw create_error<"No queues remaining">();
-        }
-    }
-
-    ViQueues::ViQueues(Visualizer&viz, const ViewerCreateInfo& vci, uint32_t fi, const VkQueueFamilyProperties&prop, Flags<ViQueueType> left) :
-        m_viz(viz), m_family(fi)
-    {
-        m_availableQueueCount           = prop.queueCount;
-        m_timestampValidBits            = prop.timestampValidBits;
-        m_minImageTransferGranularity   = prop.minImageTransferGranularity;
-        m_vkFlags                       = prop.queueFlags;
-
-        if(left.is_set(ViQueueType::Graphic) && (m_vkFlags & VK_QUEUE_GRAPHICS_BIT))
-            m_type.set(ViQueueType::Graphic);
-        if(left.is_set(ViQueueType::Compute) && (m_vkFlags & VK_QUEUE_COMPUTE_BIT))
-            m_type.set(ViQueueType::Compute);
-        if(left.is_set(ViQueueType::VideoEncode) && (m_vkFlags & VK_QUEUE_VIDEO_ENCODE_BIT_KHR))
-            m_type.set(ViQueueType::VideoEncode);
-        if(left.is_set(ViQueueType::VideoDecode) && (m_vkFlags & VK_QUEUE_VIDEO_DECODE_BIT_KHR))
-            m_type.set(ViQueueType::VideoDecode);
-        if(left.is_set(ViQueueType::Present)){
-            VkBool32 presentSupport = false;
-            vkGetPhysicalDeviceSurfaceSupportKHR(viz.physical(), fi, viz.surface(), &presentSupport);
-            if(presentSupport)
-                m_type.set(ViQueueType::Present);
-        }
-        
-        const QueueSpec&  spec    = biggest(vci, m_type);
-        if(const std::vector<float>*p = std::get_if<std::vector<float>>(&spec)){
-            if(!p->empty())
-                m_weights   = *p;
-        }
-        if(const uint32_t* p = std::get_if<uint32_t>(&spec))
-            m_weights.resize(*p, 1.);
-        if(m_weights.empty())
-            m_weights.push_back(1.);
-        m_queues.resize(m_weights.size(), nullptr);
-    }
-    
-    ViQueues::~ViQueues()
-    {
-    }
-    
-    VkDeviceQueueCreateInfo ViQueues::info()
-    {
-        VqDeviceQueueCreateInfo  ret;
-        ret.queueFamilyIndex   = m_family;
-        ret.queueCount         = (uint32_t) m_weights.size();
-        ret.pQueuePriorities   = m_weights.data();
-        return ret;
-    }
-
-    void        ViQueues::init()
-    {
-        if(m_queues.size() != m_weights.size())
-            throw create_error<"Queues size does not match weight sizes">();
-        for(uint32_t i=0;i<m_queues.size();++i)
-            vkGetDeviceQueue(m_viz.device(), m_family, i, &m_queues[i]);
-    }
-    
-    VkQueue     ViQueues::queue(uint32_t i) const
-    {
-        if(i<m_queues.size()) [[likely]]
-            return m_queues[i];
-        return nullptr;
-    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViRendered
@@ -795,7 +660,7 @@ namespace yq::tachyon {
             m_vbos.resize(vc.size());
             for(i=0;i<m_vbos.size();++i){
                 m_vbos[i] = m_pipe.m_vbos[i];
-                m_vbos[i].update(*(m_viz.m_buffers), vc[i], &m_object);
+                m_vbos[i].update(m_viz, vc[i], &m_object);
             }
         }
             
@@ -804,7 +669,7 @@ namespace yq::tachyon {
             m_ibos.resize(ic.size());
             for(i=0;i<m_ibos.size();++i){
                 m_ibos[i] = m_pipe.m_ibos[i];
-                m_ibos[i].update(*(m_viz.m_buffers), ic[i], &m_object);
+                m_ibos[i].update(m_viz, ic[i], &m_object);
             }
         }
         
@@ -813,7 +678,7 @@ namespace yq::tachyon {
             m_ubos.resize(uc.size());
             for(i=0;i<m_ubos.size();++i){
                 m_ubos[i] = m_pipe.m_ubos[i];
-                m_ubos[i].update(*(m_viz.m_buffers), uc[i], &m_object);
+                m_ubos[i].update(m_viz, uc[i], &m_object);
             }
             
             ds += uc.size();
@@ -894,7 +759,7 @@ namespace yq::tachyon {
     {
         size_t i;
         for(i=0;i<m_ubos.size();++i){
-            m_ubos[i].update(*(m_viz.m_buffers), m_pipe.m_cfg.ubos[i], &m_object);
+            m_ubos[i].update(m_viz, m_pipe.m_cfg.ubos[i], &m_object);
             _ubo(i);
         }
         for(i=0;i<m_texs.size();++i){
@@ -909,11 +774,11 @@ namespace yq::tachyon {
 
         auto& vc    = m_pipe.m_cfg.vbos;
         for(i=0;i<m_vbos.size();++i)
-            m_vbos[i].update(*(m_viz.m_buffers), vc[i], &m_object);
+            m_vbos[i].update(m_viz, vc[i], &m_object);
             
         auto& ic    = m_pipe.m_cfg.ibos;
         for(i=0;i<m_ibos.size();++i)
-            m_ibos[i].update(*(m_viz.m_buffers), ic[i], &m_object);
+            m_ibos[i].update(m_viz, ic[i], &m_object);
 
 
         const Render3D* r3      = (m_pipe.m_cfg.push.type == PushConfigType::Full) ? dynamic_cast<const Render3D*>(&m_object) : nullptr;
@@ -1296,7 +1161,7 @@ namespace yq::tachyon {
         
         if(m_viz.graphic_queue_valid()){
             poolInfo.queueFamilyIndex   = m_viz.graphic_queue_family();
-            if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_graphic) != VK_SUCCESS) 
+            if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_graphics) != VK_SUCCESS) 
                 throw create_error<"Failed to create a graphic command pool">();
         }
         if(m_viz.compute_queue_valid()){
@@ -1312,9 +1177,9 @@ namespace yq::tachyon {
             vkDestroyDescriptorPool(m_viz.device(), m_descriptors, nullptr);
             m_descriptors = nullptr;
         }
-        if(m_graphic){
-            vkDestroyCommandPool(m_viz.device(), m_graphic, nullptr);
-            m_graphic = nullptr;
+        if(m_graphics){
+            vkDestroyCommandPool(m_viz.device(), m_graphics, nullptr);
+            m_graphics = nullptr;
         }
         if(m_compute){
             vkDestroyCommandPool(m_viz.device(), m_compute, nullptr);
@@ -1327,7 +1192,7 @@ namespace yq::tachyon {
     //  ViUpload
     ////////////////////////////////////////////////////////////////////////////////
 
-    ViUpload::ViUpload(Visualizer&viz, const ViQueues&qu) : m_viz(viz)
+    ViUpload::ViUpload(Visualizer&viz, const ViQueueManager&qu) : m_viz(viz)
     {
         try {
             _ctor(qu);
@@ -1344,17 +1209,17 @@ namespace yq::tachyon {
         _dtor();
     }
     
-    void    ViUpload::_ctor(const ViQueues&qu)
+    void    ViUpload::_ctor(const ViQueueManager&qu)
     {
         if(m_fence)
             throw create_error<"Upload already initialized">();
             
-        if(qu.m_queues.empty())
-            throw create_error<"Queues has no queues">();
+        if(qu.empty())
+            throw create_error<"QueueManager has no queues">();
     
         m_queue                         = qu.queue(0);
         VqCommandPoolCreateInfo poolInfo;
-        poolInfo.queueFamilyIndex       = qu.m_family;
+        poolInfo.queueFamilyIndex       = qu.family();
         if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_pool) != VK_SUCCESS) 
             throw create_error<"Failed to create an upload command pool">();
             
@@ -1409,45 +1274,18 @@ namespace yq::tachyon {
     {
         std::error_code ec;
     
-        m_app       = VqApp::vk_app();
-        if(!m_app)
-            return create_error<"No application available">();
-
-        m_window    = w;
-        if(!w)
-            return create_error<"No window provided">();
-            
-        m_instance    = m_app -> vulkan();
-        if(!m_instance)
-            return create_error<"Vulkan unavailable">();
-
-        //  ================================
-        //  SELECT GPU (ie, physical device)
-
-        m_physical                    = vci.device;
-        if(!m_physical){
-            m_physical  = vqFirstDevice();
-            if(!m_physical)
-                return create_error<"No GPU/Physical device provided or detected">();
-        }
+        ec  = _0_app_window_initialize(w);
+        if(ec != std::error_code())
+            return ec;
         
-        vkGetPhysicalDeviceFeatures(m_physical, &m_deviceFeatures);
-        vkGetPhysicalDeviceProperties(m_physical, &m_deviceInfo);
-        vkGetPhysicalDeviceMemoryProperties(m_physical, &m_memoryInfo);
+        ec  = _1_gpu_select_initialize(vci);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = _2_surface_initialize(vci);
+        if(ec != std::error_code())
+            return ec;
        
-        //  ================================
-        //  GLFW "SURFACE"
-
-        if(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface) != VK_SUCCESS)
-            return create_error<"No window surface available">();
-            
-        for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(m_physical, m_surface))
-            m_presentModes.insert((PresentMode::enum_t) pm);
-        m_surfaceFormats        = vqGetPhysicalDeviceSurfaceFormatsKHR(m_physical, m_surface);
-        
-        // right now, cheating on format & color space
-        m_surfaceFormat         = VK_FORMAT_B8G8R8A8_SRGB;
-        m_surfaceColorSpace     = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
 
         //  ================================
         //  LOGICAL DEVICE CREATION
@@ -1462,59 +1300,9 @@ namespace yq::tachyon {
             //  And we need to create them... so request
         std::vector<VkDeviceQueueCreateInfo> qci;
         
-        Flags<ViQueueType>        wantQueue({ViQueueType::Graphic, ViQueueType::Present});
-        Flags<ViQueueType>        hasQueue{};
-
-        if(!is_empty(vci.compute)){
-        yInfo() << " Want compute queue with " << count(vci.compute) << " queues";
-            wantQueue.set(ViQueueType::Compute);
-        }
-        if(!is_empty(vci.video_decode))
-            wantQueue.set(ViQueueType::VideoDecode);
-        if(!is_empty(vci.video_encode))
-            wantQueue.set(ViQueueType::VideoEncode);
-        
-        std::vector<VkQueueFamilyProperties> qfp = vqGetPhysicalDeviceQueueFamilyProperties(m_physical);
-        for(uint32_t i=0;i<qfp.size();++i){
-            if(wantQueue == hasQueue)
-                break;
-            Ref<ViQueues>   r   = new ViQueues(*this, vci, i, qfp[i], wantQueue & ~hasQueue );
-            hasQueue |= r->m_type;
-            if(r->m_type.is_set(ViQueueType::Graphic)){
-            yInfo() << "Discovered graphics queue " << i;
-                m_graphic       = r.ptr();
-            }
-            if(r->m_type.is_set(ViQueueType::Compute)){
-            yInfo() << "Discovered compute queue " << i;
-                m_compute       = r.ptr();
-            }
-            if(r->m_type.is_set(ViQueueType::VideoEncode)){
-            yInfo() << "Discovered video encode queue " << i;
-                m_videoEncode   = r.ptr();
-            }
-            if(r->m_type.is_set(ViQueueType::VideoDecode)){
-            yInfo() << "Discovered video decode queue " << i;
-                m_videoDecode   = r.ptr();
-            }
-            if(r->m_type.is_set(ViQueueType::Present)){
-            yInfo() << "Discovered present queue " << i;
-                m_present       = r.ptr();
-            }
-            qci.push_back(r->info());
-            m_queues.push_back(r);
-        }
-        
-        if(!m_graphic)
-            return create_error<"Missing graphic queue">();
-        if(!m_present)
-            return create_error<"Missing present queue">();
-        if(wantQueue.is_set(ViQueueType::Compute) && !m_compute)
-            return create_error<"Missing compute queue">();
-        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncode)
-            return create_error<"Missing video encode queue">();
-        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecode)
-            return create_error<"Missing video decode queue">();
-        
+        ec = _3_queues_create(qci, vci);
+        if(ec != std::error_code())
+            return ec;
                 
         //  And with that, we have the queues all lined up, ready to be created.
 
@@ -1528,12 +1316,6 @@ namespace yq::tachyon {
         deviceCreateInfo.queueCreateInfoCount     = (uint32_t) qci.size();
         deviceCreateInfo.pEnabledFeatures         = &gpu_features;
         
-        const auto& layers = m_app->layers();
-        
-        deviceCreateInfo.enabledLayerCount          = (uint32_t) layers.size();
-        if(deviceCreateInfo.enabledLayerCount)
-            deviceCreateInfo.ppEnabledLayerNames    = layers.data();
-    
         deviceCreateInfo.enabledExtensionCount      = (uint32_t) devExtensions.size();
         deviceCreateInfo.ppEnabledExtensionNames    = devExtensions.data();
         
@@ -1547,8 +1329,7 @@ namespace yq::tachyon {
         //  ================================
         //  GETTING THE QUEUES
 
-        for(auto& r : m_queues)
-            r->init();
+        _3_queues_fetch();
 
         //  ================================
         //  ALLOCATOR
@@ -1574,7 +1355,7 @@ namespace yq::tachyon {
 
         //  ================================
         //  UPLOAD
-        m_upload            = std::make_unique<ViUpload>(*this, *m_graphic);
+        m_upload            = std::make_unique<ViUpload>(*this, *m_graphics);
 
         //  ================================
         //  RENDER PASS
@@ -1634,22 +1415,11 @@ namespace yq::tachyon {
             vkDestroyDevice(m_device, nullptr);
             m_device                = nullptr;
         }
-        m_graphic                   = nullptr;
-        m_present                   = nullptr;
-        m_compute                   = nullptr;
-        m_videoEncode               = nullptr;
-        m_videoDecode               = nullptr;
-        m_queues.clear();
 
-        if(m_surface){
-            vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
-            m_surface               = nullptr;
-        }
-
-        m_physical      = nullptr;
-        m_instance      = nullptr;
-        m_window        = nullptr;
-        m_app           = nullptr;
+        _3_queues_kill();
+        _2_surface_kill();
+        _1_gpu_select_kill();
+        _0_app_window_kill();
     }
 
     std::error_code             Visualizer::init_visualizer(const ViewerCreateInfo& vci, GLFWwindow* w)
@@ -1726,22 +1496,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     //  GETTERS/INFORMATION
 
-    Expect<ViBuffer> Visualizer::buffer(uint64_t i) const
-    {
-        if(!m_buffers)
-            return errors::NO_BUFFER_MANAGER();
-        return m_buffers->get(i);
-    }
 
-    RGBA4F Visualizer::clear_color() const
-    {
-        VkClearValue    cv;
-        {
-            LOCK
-            cv = m_clearValue;
-        }
-        return vqExtractRGBA4F(cv);
-    }
 
     VkCommandBuffer Visualizer::command_buffer() const
     {
@@ -1750,28 +1505,9 @@ namespace yq::tachyon {
 
     VkCommandPool   Visualizer::command_pool() const
     {
-        return m_thread->m_graphic;
+        return m_thread->m_graphics;
     }
 
-    VkQueue  Visualizer::compute_queue(uint32_t i) const
-    {
-        return m_compute ? m_compute->queue(i) : nullptr;
-    }
-    
-    uint32_t  Visualizer::compute_queue_count() const
-    {
-        return m_compute ? (uint32_t) m_compute->m_queues.size() : 0;
-    }
-    
-    uint32_t  Visualizer::compute_queue_family() const
-    {
-        return m_compute ? m_compute->m_family : UINT32_MAX;
-    }
-
-    bool    Visualizer::compute_queue_valid() const
-    {
-        return m_compute != nullptr;
-    }
 
     ViFrame&            Visualizer::current_frame()
     {
@@ -1788,43 +1524,6 @@ namespace yq::tachyon {
         return m_thread->m_descriptors;
     }
 
-    Expect<VkFormat>    Visualizer::find_depth_format() const
-    {
-        return find_supported_format(
-            {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT}, 
-            VK_IMAGE_TILING_OPTIMAL,
-            VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
-        );
-    }
-
-    Expect<VkFormat>    Visualizer::find_supported_format(std::initializer_list<VkFormat> candidates, VkImageTiling tiling, VkFormatFeatureFlags features) const
-    {
-        return find_supported_format(span(candidates), tiling, features);
-    }
-    
-    Expect<VkFormat>    Visualizer::find_supported_format(std::span<const VkFormat> candidates, VkImageTiling tiling, VkFormatFeatureFlags features) const
-    {
-        for(VkFormat format : candidates){
-            VkFormatProperties props;
-            vkGetPhysicalDeviceFormatProperties(m_physical, format, &props);
-            
-            switch(tiling){
-            case VK_IMAGE_TILING_LINEAR:
-                if((props.linearTilingFeatures & features) == features)
-                    return format;
-                break;
-            case VK_IMAGE_TILING_OPTIMAL:
-                if((props.optimalTilingFeatures & features) == features)
-                    return format;
-                break;
-            default:
-                break;
-            }            
-        }
-        
-        return unexpected<"Failed to find supported format">();
-    }
-
     
     ViFrame&            Visualizer::frame(int32_t i)
     {
@@ -1838,37 +1537,6 @@ namespace yq::tachyon {
     }
 
 
-    std::string_view    Visualizer::gpu_name() const
-    {
-        return std::string_view(m_deviceInfo.deviceName, strnlen(m_deviceInfo.deviceName, VK_MAX_PHYSICAL_DEVICE_NAME_SIZE));
-    }
-
-    VkPhysicalDeviceType    Visualizer::gpu_type() const
-    {
-        return m_deviceInfo.deviceType;
-    }
-
-
-    VkQueue     Visualizer::graphic_queue(uint32_t i) const
-    {
-        return m_graphic ? m_graphic->queue(i) : nullptr;
-    }
-    
-    uint32_t    Visualizer::graphic_queue_count() const
-    {
-        return m_graphic ? (uint32_t) m_graphic->m_queues.size() : 0;
-    }
-    
-    uint32_t    Visualizer::graphic_queue_family() const
-    {
-        return m_graphic ? m_graphic->m_family : UINT32_MAX;
-    }
-    
-    bool        Visualizer::graphic_queue_valid() const
-    {
-        return m_graphic != nullptr;
-    }
-
     Expect<ViImage> Visualizer::image(uint64_t i) const
     {
         {
@@ -1881,20 +1549,6 @@ namespace yq::tachyon {
         return unexpected<"Unable to find specified image">();
     }
 
-    uint32_t    Visualizer::max_memory_allocation_count() const  
-    { 
-        return m_deviceInfo.limits.maxMemoryAllocationCount; 
-    }
-    
-    uint32_t    Visualizer::max_push_constants_size() const 
-    { 
-        return m_deviceInfo.limits.maxPushConstantsSize; 
-    }
-    
-    uint32_t    Visualizer::max_viewports() const 
-    { 
-        return m_deviceInfo.limits.maxViewports; 
-    }
 
     ViFrame&            Visualizer::next_frame()
     {
@@ -1917,67 +1571,12 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    VkQueue      Visualizer::present_queue(uint32_t i) const
-    {
-        return m_present ? m_present->queue(i) : nullptr;
-    }
-    
-    uint32_t     Visualizer::present_queue_count() const
-    {
-        return m_present ? (uint32_t) m_present->m_queues.size() : 0;
-    }
-    
-    uint32_t     Visualizer::present_queue_family() const
-    {
-        return m_present ? m_present->m_family : UINT32_MAX;
-    }
 
-    bool        Visualizer::present_queue_valid() const
-    {
-        return m_present != nullptr;
-    }
-    
     VkRenderPass Visualizer::render_pass() const
     {
         return m_renderPass -> m_renderPass;
     }
 
-
-    Expect<ViShader> Visualizer::shader(uint64_t i) const
-    {
-        if(!m_shaders)
-            return errors::NO_SHADER_MANAGER();
-        return m_shaders -> get(i);
-    }
-
-    bool        Visualizer::supports_surface(VkFormat fmt) const
-    {
-        for(auto f : m_surfaceFormats)
-            if(fmt == f.format)
-                return true;
-        return false;
-    }
-    
-    bool        Visualizer::supports_present(PresentMode pm) const
-    {
-        return m_presentModes.contains(pm);
-    }
-
-    Expect<VkSurfaceCapabilitiesKHR>    Visualizer::surface_capabilities() const
-    {
-        VkSurfaceCapabilitiesKHR    ret;
-        if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physical, m_surface, &ret) != VK_SUCCESS)
-            return unexpected<"Unable to get surface capabilities">();
-        return ret;
-    }
-
-    VkColorSpaceKHR Visualizer::surface_color_space(VkFormat fmt) const
-    {
-        for(auto& f : m_surfaceFormats)
-            if(fmt == f.format)
-                return f.colorSpace;
-        return VK_COLOR_SPACE_MAX_ENUM_KHR;
-    }
 
     VkRect2D    Visualizer::swapchain_def_scissor() const
     {
@@ -2021,55 +1620,8 @@ namespace yq::tachyon {
         return unexpected<"Unable to find requested texture">();
     }
             
-    VkQueue   Visualizer::video_decode_queue(uint32_t i) const
-    {
-        return m_videoDecode ? m_videoDecode->queue(i) : nullptr;
-    }
-    
-    uint32_t  Visualizer::video_decode_queue_count() const
-    {
-        return m_videoDecode ? (uint32_t) m_videoDecode->m_queues.size() : 0;
-    }
-    
-    uint32_t  Visualizer::video_decode_queue_family() const
-    {
-        return m_videoDecode ? m_videoDecode->m_family : UINT32_MAX;
-    }
-
-    bool        Visualizer::video_decode_queue_valid() const
-    {
-        return m_videoDecode != nullptr;
-    }
-
-    VkQueue   Visualizer::video_encode_queue(uint32_t i) const
-    {
-        return m_videoEncode ? m_videoEncode->queue(i) : nullptr;
-    }
-    
-    uint32_t  Visualizer::video_encode_queue_count() const
-    {
-        return m_videoEncode ? (uint32_t) m_videoEncode->m_queues.size() : 0;
-    }
-
-    uint32_t  Visualizer::video_encode_queue_family() const
-    {
-        return m_videoEncode ? m_videoEncode->m_family : UINT32_MAX;
-    }
-
-    bool        Visualizer::video_encode_queue_valid() const
-    {
-        return m_videoEncode != nullptr;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////
     //  SETTERS/MANIPULATORS
-
-    Expect<ViBuffer>    Visualizer::create(const Buffer& v)
-    {
-        if(!m_buffers)
-            return errors::NO_BUFFER_MANAGER();
-        return m_buffers->create(v);
-    }
     
     Expect<ViImage>     Visualizer::create(const Image&v)
     {
@@ -2128,13 +1680,6 @@ namespace yq::tachyon {
         return ret;
     }
 
-    Expect<ViShader>    Visualizer::create(const Shader& v)
-    {
-        if(!m_shaders)
-            return errors::NO_SHADER_MANAGER();
-        return m_shaders->create(v);
-    }
-
     Expect<ViTexture>       Visualizer::create(const Texture& t)
     {
         {
@@ -2170,20 +1715,6 @@ namespace yq::tachyon {
         return ret;
     }
 
-    void        Visualizer::erase(const Buffer& v)
-    {
-        if(m_buffers){
-            m_buffers -> erase(v);
-        }
-    }
-
-    void        Visualizer::set_clear_color(const RGBA4F&i)
-    {   
-        VkClearValue    cc  = vqClearValue(i);
-
-        WLOCK
-        m_clearValue    = cc;
-    }
 
     void        Visualizer::set_present_mode(PresentMode pm)
     {
@@ -2316,7 +1847,7 @@ namespace yq::tachyon {
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores    = signalSemaphores;
 
-        if (vkQueueSubmit(m_graphic->queue(0), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
+        if (vkQueueSubmit(m_graphics->queue(0), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
             return create_error<"Failed to submit draw command buffer">();
             
         VqPresentInfoKHR presentInfo;

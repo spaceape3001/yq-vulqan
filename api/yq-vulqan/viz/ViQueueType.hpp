@@ -10,11 +10,13 @@
 
 namespace yq::tachyon {
     enum class ViQueueType : uint8_t {
-        Graphic = 0,
+        Auto,       //!< Not a real queue, simply means to auto-select
+        Graphic,
         Present,
         Compute,
         VideoEncode,
-        VideoDecode
+        VideoDecode,
+        Transfer
     };
 
     using ViQueueTypeFlags  = Flags<ViQueueType>;

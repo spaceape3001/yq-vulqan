@@ -12,6 +12,7 @@
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
+#include <yq-vulqan/viz/ViBufferObjectVector.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>
 
 #include <tachyon/preamble.hpp>
@@ -27,8 +28,9 @@ namespace yq::tachyon {
     struct ABOConfig;
     struct BaseBOConfig;
     
-    struct ViQueues;
     struct ViRendered;
+    
+    class ViQueueManager;
     
     using ViRenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
     
@@ -75,9 +77,9 @@ namespace yq::tachyon {
         const uint64_t          m_id;
         const PipelineConfig    m_cfg;
         
-        std::vector<ViBO>       m_vbos;
-        std::vector<ViBO>       m_ibos;
-        std::vector<ViBO>       m_ubos;
+        ViBufferObjectVector    m_vbos;
+        ViBufferObjectVector    m_ibos;
+        ViBufferObjectVector    m_ubos;
         std::vector<ViTO>       m_texs;
         VkPipelineLayout        m_layout      = nullptr;
         VkPipeline              m_pipeline    = nullptr;
@@ -93,28 +95,6 @@ namespace yq::tachyon {
         void                    _dtor();
     };
 
-
-    struct ViQueues : public RefCount {
-        Visualizer&             m_viz;
-        uint32_t                m_family;
-        ViQueueTypeFlags        m_type = {};
-        std::vector<VkQueue>    m_queues;
-        std::vector<float>      m_weights;
-        VkExtent3D              m_minImageTransferGranularity;  //!< Min granularity for image transfers
-        uint32_t                m_availableQueueCount;          //!< Available Queue count (from spec)
-        uint32_t                m_timestampValidBits;           //!< valid bits for timestamps
-        VkQueueFlags            m_vkFlags;                      //!< Flags from vulkan 
-        
-        ViQueues(Visualizer&, const ViewerCreateInfo&, uint32_t, const VkQueueFamilyProperties&, ViQueueTypeFlags left);
-        ~ViQueues();
-        
-        VkDeviceQueueCreateInfo info();
-        void                    init();
-        
-        VkQueue queue(uint32_t i) const;
-    };
-    
-    
 
     struct ViTO {
         VkImageView             view        = nullptr;
@@ -140,9 +120,9 @@ namespace yq::tachyon {
         };
         */
 
-        std::vector<ViBO>               m_vbos;
-        std::vector<ViBO>               m_ibos;
-        std::vector<ViBO>               m_ubos;
+        ViBufferObjectVector            m_vbos;
+        ViBufferObjectVector            m_ibos;
+        ViBufferObjectVector            m_ubos;
         std::vector<ViTO>               m_texs;
         std::vector<VkDescriptorSet>    m_descriptors;        // sized to ubos + textures
         
@@ -207,7 +187,7 @@ namespace yq::tachyon {
     struct ViThread {
         Visualizer&             m_viz;
         VkDescriptorPool        m_descriptors         = nullptr;
-        VkCommandPool           m_graphic             = nullptr;
+        VkCommandPool           m_graphics            = nullptr;
         VkCommandPool           m_compute             = nullptr;
         
         ViThread(Visualizer&);
@@ -225,10 +205,10 @@ namespace yq::tachyon {
         VkCommandBuffer         m_commandBuffer   = nullptr;
         VkQueue                 m_queue           = nullptr;
         
-        ViUpload(Visualizer&, const ViQueues&);
+        ViUpload(Visualizer&, const ViQueueManager&);
         ~ViUpload();
         
-        void    _ctor(const ViQueues&);
+        void    _ctor(const ViQueueManager&);
         void    _dtor();
     };
 }

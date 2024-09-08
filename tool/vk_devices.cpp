@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/gpu/VqUtils.hpp>
+#include <yq-vulqan/v/VqUtils.hpp>
 #include <tachyon/Application.hpp>
 #include <iostream>
 

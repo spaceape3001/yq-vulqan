@@ -9,7 +9,6 @@
 #include <yq-toolbox/vector/Quaternion3.hpp>
 
 #include <yq-vulqan/task/Task.hpp>
-#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 #include <yq-vulqan/widget/StackedWidget.hpp>
 

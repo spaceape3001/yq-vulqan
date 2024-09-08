@@ -9,7 +9,7 @@
 #include <vulkan/vulkan_core.h>
 
 namespace yq::tachyon {
-    class ViBufferManager;
+    class ViVisualizer;
     struct BaseBOConfig;
     
     struct ViBufferObject {
@@ -19,6 +19,6 @@ namespace yq::tachyon {
         uint32_t        offset  = 0;
         
         //  returns TRUE if changed
-        bool    update(ViBufferManager&, const BaseBOConfig&, const void*);
+        bool    update(ViVisualizer&, const BaseBOConfig&, const void*);
     };
 }

@@ -7,13 +7,12 @@
 #pragma once
 
 
-#include <tachyon/preamble.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
 #include <vulkan/vulkan_core.h>
+#include <yq-vulqan/v/VqStructs.hpp>
+#include <yq-toolbox/typedef/expected.hpp>
 #include <yq-toolbox/typedef/rgba.hpp>
 
 
-#include <expected>
 #include <optional>
 #include <set>
 #include <string>
@@ -54,8 +53,8 @@ namespace yq::tachyon {
     std::set<std::string>                   vqNameSet(const std::vector<VkLayerProperties>&);
     VkQueueFlags                            vqOrFlags(const std::vector<VkQueueFamilyProperties>&);
 
-    Expect<uint32_t>                        vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&);
-    Expect<uint32_t>                        vqFindFirstPresentQueue(VkPhysicalDevice, VkSurfaceKHR);
+    uint32_x                                vqFindFirstGraphicsQueue(const std::vector<VkQueueFamilyProperties>&);
+    uint32_x                                vqFindFirstPresentQueue(VkPhysicalDevice, VkSurfaceKHR);
 
     struct VqQueueFamilyIndices {
         std::optional<uint32_t> graphics;

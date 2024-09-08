@@ -32,7 +32,6 @@ add_library(${PROJECT_NAME} SHARED
 
     ./tachyon/tachyon.cpp
     ./tachyon/enum/enum.cpp
-    ./tachyon/gpu/gpu.cpp
     ./tachyon/gpu/Visualizer.cpp
 )
 

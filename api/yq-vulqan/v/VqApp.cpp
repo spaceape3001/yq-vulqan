@@ -4,12 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <tachyon/gpu/VqApp.hpp>
-#include <yq-vulqan/v/VqEnums.hpp>
-#include <tachyon/gpu/VqUtils.hpp>
+#include "VqApp.hpp"
 #include <yq-vulqan/logging.hpp>
+#include <yq-vulqan/v/VqEnums.hpp>
+#include <yq-vulqan/v/VqUtils.hpp>
 #include <yq-toolbox/basic/BasicApp.hpp>
 #include <yq-toolbox/basic/ErrorDB.hpp>
 #include <yq-toolbox/basic/ThreadId.hpp>

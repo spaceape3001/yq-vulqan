@@ -4,13 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
 
-//#include "ViBO.ipp"
-//#include "ViThing.ipp"
-#include "VqApp.ipp"
-//#include "VqEnums.ipp"
-//#include "VqLogging.ipp"
-//#include "VqStructs.hpp"
-#include "VqUtils.ipp"
+#include <yq-vulqan/viz/ViBufferObject.hpp>
+#include <vector>
 
-
+namespace yq::tachyon {
+    using ViBufferObjectVector = std::vector<ViBufferObject>;
+}

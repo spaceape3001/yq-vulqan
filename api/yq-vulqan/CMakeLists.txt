@@ -21,6 +21,8 @@ add_library(${PROJECT_NAME} SHARED
     3D/Tetrahedron.hpp
     3D/Tetrahedron.cpp
 
+    app/AppCreateInfo.hpp
+
     asset/Asset.hpp
     asset/Asset.cpp
     asset/AssetCache.hpp
@@ -206,12 +208,16 @@ add_library(${PROJECT_NAME} SHARED
     undo/Undo.hpp
     undo/Undo.cpp
     
+    v/VqApp.hpp
+    v/VqApp.cpp
     v/VqEnums.hpp
     v/VqEnums.cpp
     v/VqException.hpp
     v/VqLogging.hpp
     v/VqLogging.cpp
     v/VqStructs.hpp
+    v/VqUtils.hpp
+    v/VqUtils.cpp
     
     viewer/PresentMode.hpp
     viewer/PresentMode.cpp
@@ -223,10 +229,15 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViBufferManager.cpp
     viz/ViBufferObject.hpp
     viz/ViBufferObject.cpp
+    viz/ViCleanupManager.hpp
+    viz/ViCleanupManager.cpp
+    viz/ViQueueManager.hpp
+    viz/ViQueueManager.cpp
     viz/ViShader.hpp
     viz/ViShader.cpp
     viz/ViShaderManager.hpp
     viz/ViShaderManager.cpp
+    viz/ViVisualizer.cpp
     viz/ViVisualizer.hpp
     
     widget/ImGuiDemoWidget.hpp

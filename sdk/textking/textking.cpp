@@ -16,7 +16,6 @@
 #include <yq-toolbox/text/format.hpp>
 
 #include <yq-vulqan/imgui/MyImGui.hpp>
-#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/widget/TextArea.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 

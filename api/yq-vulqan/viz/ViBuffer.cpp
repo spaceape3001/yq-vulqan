@@ -25,7 +25,7 @@ namespace yq::tachyon {
         VmaAllocationCreateInfo vmaallocInfo = {};
         vmaallocInfo.usage = vmu;
         VmaAllocationInfo   vai;
-        if(vmaCreateBuffer(viz.allocator, &bufferInfo, &vmaallocInfo, &buffer, &allocation, &vai) != VK_SUCCESS)
+        if(vmaCreateBuffer(viz.allocator(), &bufferInfo, &vmaallocInfo, &buffer, &allocation, &vai) != VK_SUCCESS)
             return errors::INSUFFICIENT_GPU_MEMORY();
         return std::error_code();
     }
@@ -37,9 +37,9 @@ namespace yq::tachyon {
             return ec;
         
         void* dst = nullptr;
-        vmaMapMemory(viz.allocator, allocation, &dst);
+        vmaMapMemory(viz.allocator(), allocation, &dst);
         memcpy(dst, v.data(), v.bytes());
-        vmaUnmapMemory(viz.allocator, allocation);
+        vmaUnmapMemory(viz.allocator(), allocation);
         return std::error_code();
     }
     
@@ -51,7 +51,7 @@ namespace yq::tachyon {
     void                ViBuffer::destroy(ViVisualizer&viz)
     {
         if(allocation && buffer){
-            vmaDestroyBuffer(viz.allocator, buffer, allocation);
+            vmaDestroyBuffer(viz.allocator(), buffer, allocation);
             allocation = nullptr;
             buffer = nullptr;
         }

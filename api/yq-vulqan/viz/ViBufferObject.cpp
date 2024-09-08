@@ -9,9 +9,10 @@
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViBufferManager.hpp>
+#include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
-    bool    ViBufferObject::update(ViBufferManager& vbm, const BaseBOConfig&cfg, const void* p)
+    bool    ViBufferObject::update(ViVisualizer& viz, const BaseBOConfig&cfg, const void* p)
     {
         do {
             if(!cfg.fetch)
@@ -37,7 +38,7 @@ namespace yq::tachyon {
             return false;
         }
         
-        Expect<ViBuffer> xvb    = vbm.create(*c);
+        Expect<ViBuffer> xvb    = viz.buffer_create(*c);
         if(xvb){
             const ViBuffer& vb  = *xvb;
             if(vb.buffer){

@@ -4,9 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <tachyon/AppCreateInfo.hpp>
+#include <yq-vulqan/app/AppCreateInfo.hpp>
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
@@ -75,6 +73,3 @@ namespace yq::tachyon {
     };
 }
     
-namespace yq::engine {
-    using tachyon::VqApp;
-}

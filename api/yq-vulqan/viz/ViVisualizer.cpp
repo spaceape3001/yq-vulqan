@@ -114,10 +114,8 @@ namespace yq::tachyon {
         ViQueueTypeFlags    wantQueue({ViQueueType::Graphic, ViQueueType::Present});
         ViQueueTypeFlags    hasQueue{};
 
-        if(!is_empty(iData.viewer.compute)){
-            vqInfo << " Want compute queue with " << count(iData.viewer.compute) << " queues";
+        if(!is_empty(iData.viewer.compute))
             wantQueue.set(ViQueueType::Compute);
-        }
         if(!is_empty(iData.viewer.video_decode))
             wantQueue.set(ViQueueType::VideoDecode);
         if(!is_empty(iData.viewer.video_encode))
@@ -163,13 +161,13 @@ namespace yq::tachyon {
             return errors::graphics_queue_not_found();
         if(!m_presentQueue)
             return errors::present_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::Compute) && !m_computeQueue)
+        if(wantQueue.is_set(ViQueueType::Compute) && !m_computeQueue && is_required(iData.viewer.compute))
             return errors::compute_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncQueue)
+        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncQueue && is_required(iData.viewer.video_encode))
             return errors::video_encode_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecQueue)
+        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecQueue && is_required(iData.viewer.video_decode))
             return errors::video_decode_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::Transfer) && !m_transferQueue)
+        if(wantQueue.is_set(ViQueueType::Transfer) && !m_transferQueue && is_required(iData.viewer.transfer))
             return errors::transfer_queue_not_found();
         if(!m_transferQueue)
             m_transferQueue  = m_graphicsQueue;

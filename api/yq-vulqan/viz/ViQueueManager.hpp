@@ -62,4 +62,5 @@ namespace yq::tachyon {
 
     size_t  count(const QueueSpec&);
     bool    is_empty(const QueueSpec&);
+    bool    is_required(const QueueSpec&);
 }

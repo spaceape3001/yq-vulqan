@@ -17,19 +17,34 @@ namespace yq::tachyon {
     public:
     
         ViCommandBuffer();
+        ViCommandBuffer(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         ~ViCommandBuffer();
     
+        operator VkCommandBuffer() const { return m_buffer; }
+        
+        VkCommandBuffer command_buffer() const { return m_buffer; }
+        VkCommandPool   command_pool();
+        bool            consistent() const;
+        bool            valid() const;
+        ViVisualizer*   visualizer() const { return m_viz; }
+
+
         std::error_code init(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         void            kill();
 
-        bool            consistent() const;
-        bool            valid() const;
-    
-        operator VkCommandBuffer() const { return m_buffer; }
     private:
         ViVisualizer*   m_viz       = nullptr;
         VkCommandPool   m_pool      = nullptr;
         VkCommandBuffer m_buffer    = nullptr;
+        
+        ViCommandBuffer(const ViCommandBuffer&) = delete;
+        ViCommandBuffer(ViCommandBuffer&&) = delete;
+        ViCommandBuffer& operator=(const ViCommandBuffer&) = delete;
+        ViCommandBuffer& operator=(ViCommandBuffer&&) = delete;
+        
+        std::error_code _init(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl);
+        void            _kill();
+        void            _wipe();
     };
 
 }

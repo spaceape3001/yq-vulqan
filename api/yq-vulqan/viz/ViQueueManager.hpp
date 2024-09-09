@@ -40,6 +40,12 @@ namespace yq::tachyon {
         void                    init();
 
     private:
+    
+        ViQueueManager(const ViQueueManager&) = delete;
+        ViQueueManager(ViQueueManager&&) = delete;
+        ViQueueManager& operator=(const ViQueueManager&) = delete;
+        ViQueueManager& operator=(ViQueueManager&&) = delete;
+    
         ViVisualizer&           m_viz;
         const uint32_t          m_family;
         ViQueueTypeFlags        m_type = {};

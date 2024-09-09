@@ -32,6 +32,11 @@ namespace yq::tachyon {
         using map_t     = std::unordered_map<uint64_t, ViShaderCPtr>;
         using mutex_t   = tbb::spin_rw_mutex;
         
+        ViShaderManager(const ViShaderManager&) = delete;
+        ViShaderManager(ViShaderManager&&) = delete;
+        ViShaderManager& operator=(const ViShaderManager&) = delete;
+        ViShaderManager& operator=(ViShaderManager&&) = delete;
+        
         ViVisualizer&       m_viz;
         map_t               m_shaders;
         mutable mutex_t     m_mutex;

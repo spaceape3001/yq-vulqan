@@ -43,15 +43,16 @@ namespace yq::tachyon {
     {
         m_app       = VqApp::vk_app();
         if(!m_app)
-            return errors::NO_APPLICATION_AVAILABLE();
+            return errors::vulkan_no_application();
+
+        m_instance    = m_app -> vulkan();
+        if(!m_instance)
+            return errors::vulkan_uninitialized();
 
         m_window    = w;
         if(!w)
-            return errors::NO_WINDOW_PROVIDED();
+            return errors::vulkan_no_window_provided();
             
-        m_instance    = m_app -> vulkan();
-        if(!m_instance)
-            return errors::VULKAN_UNAVAILABLE();
         return {};
     }
     
@@ -68,7 +69,7 @@ namespace yq::tachyon {
         if(!m_physical){
             m_physical  = vqFirstDevice();
             if(!m_physical)
-                return errors::NO_PHYSICAL_DEVICE();
+                return errors::vulkan_no_physical_device();
         }
 
         vkGetPhysicalDeviceFeatures(m_physical, &m_deviceFeatures);
@@ -87,7 +88,7 @@ namespace yq::tachyon {
     {
         //  passing in the create info in case we get smarter
         if(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface) != VK_SUCCESS)
-            return errors::NO_WINDOW_SURFACE();
+            return errors::vulkan_no_window_surface();
             
         for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(m_physical, m_surface))
             m_presentModes.insert((PresentMode::enum_t) pm);
@@ -158,24 +159,31 @@ namespace yq::tachyon {
         }
         
         if(!m_graphics)
-            return errors::NO_GRAPHICS_QUEUE();
+            return errors::vulkan_no_graphics_queue();
         if(!m_present)
-            return errors::NO_PRESENT_QUEUE();
+            return errors::vulkan_no_present_queue();
         if(wantQueue.is_set(ViQueueType::Compute) && !m_compute)
-            return errors::NO_COMPUTE_QUEUE();
+            return errors::vulkan_no_compute_queue();
         if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEnc)
-            return errors::NO_VIDEO_ENCODE_QUEUE();
+            return errors::vulkan_no_video_encode_queue();
         if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDec)
-            return errors::NO_VIDEO_DECODE_QUEUE();
+            return errors::vulkan_no_video_decode_queue();
         if(wantQueue.is_set(ViQueueType::Transfer) && !m_transfer)
-            return errors::NO_TRANSFER_QUEUE();
+            return errors::vulkan_no_transfer_queue();
         return {};
     }
     
     void  ViVisualizer::_3_queues_fetch()
     {
-        for(auto& r : m_queues)
-            r->init();
+        for(auto& r : m_queues){
+            try {
+                r->init();
+            }
+            catch(const std::error_code&)
+            {
+                //  Shouldn't ever get here
+            }
+        }
     }
     
     void   ViVisualizer::_3_queues_kill()
@@ -211,7 +219,7 @@ namespace yq::tachyon {
         VkResult        res = vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device);
         if(res != VK_SUCCESS){
             vqError << "Unable to create vulkan (logical) device with result code: " << to_string_view((VqResult) res);
-            return errors::CANT_CREATE_VULKAN_DEVICE();
+            return errors::vulkan_device_cant_create();
         }
         return {};
     }
@@ -357,7 +365,7 @@ namespace yq::tachyon {
             }            
         }
         
-        return errors::UNSUPPORTED_FORMAT();
+        return errors::format_unsupported();
     }
 
     std::string_view    ViVisualizer::gpu_name() const

@@ -66,7 +66,7 @@ namespace yq::tachyon {
         createInfo.codeSize = sh.payload.bytes();
         createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
         if (vkCreateShaderModule(viz.device(), &createInfo, nullptr, &m_shader) != VK_SUCCESS) 
-            return errors::CANT_CREATE_SHADER();
+            return errors::shader_cant_create();
         
         m_viz   = &viz;
         return {};
@@ -94,9 +94,11 @@ namespace yq::tachyon {
     std::error_code         ViShader::create(ViVisualizer&viz, const Shader&sh)
     {
         if(m_shader)
-            return m_viz ? (std::error_code) errors::EXISTING_SHADER() : (std::error_code) errors::BAD_STATE_SHADER();
+            return m_viz ? (std::error_code) errors::shader_existing() : (std::error_code) errors::shader_bad_state();
         if(!sh.payload.data() || !sh.payload.bytes())
-            return errors::EMPTY_SHADER();
+            return errors::shader_empty();
+        if(!viz.device())
+            return errors::vizualizer_uninitialized();
         
         std::error_code ec  = _create(viz, sh);
         if(ec != std::error_code()){

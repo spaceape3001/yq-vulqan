@@ -33,6 +33,11 @@ namespace yq::tachyon {
         using map_t     = std::unordered_map<uint64_t, ViBufferCPtr>;
         using mutex_t   = tbb::spin_rw_mutex;
         
+        ViBufferManager(const ViBufferManager&) = delete;
+        ViBufferManager(ViBufferManager&&) = delete;
+        ViBufferManager& operator=(const ViBufferManager&) = delete;
+        ViBufferManager& operator=(ViBufferManager&&) = delete;
+        
         map_t               m_buffers;
         mutable mutex_t     m_mutex;
         ViVisualizer&       m_viz;

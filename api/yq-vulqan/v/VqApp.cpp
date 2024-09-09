@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "VqApp.hpp"
+#include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/v/VqEnums.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
@@ -24,10 +25,6 @@
 #define vulkanNotice        yNotice("vulkan")
 #define vulkanWarning       yWarning("vulkan")
 
-
-namespace yq::errors {
-    using vulkan_create_failure     = error_db::entry<"Unable to create vulkan instance">;
-}
 
 namespace yq::tachyon {
     namespace {
@@ -236,13 +233,13 @@ namespace yq::tachyon {
         if(vkCreateInstance(&createInfo, nullptr, &m_vulkan) != VK_SUCCESS){
             vqCritical << "Unable to create vulkan instance!";
             m_vulkan   = nullptr;
-            return errors::vulkan_create_failure();
+            return errors::vulkan_instance_cant_create();
         }
         
         assert(m_vulkan != nullptr);
         if(m_vulkan == nullptr){
             vqCritical << "Vulkan instance is NULL!";
-            return errors::vulkan_create_failure();
+            return errors::vulkan_instance_cant_create();
         } 
         
         vqInfo << "Vulkan instance created.";

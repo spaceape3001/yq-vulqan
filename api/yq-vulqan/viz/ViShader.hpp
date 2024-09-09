@@ -26,20 +26,25 @@ namespace yq::tachyon {
         ~ViShader();
         
         operator VkShaderModule() const { return m_shader; }
+
+        bool                    consistent() const;
+        VkShaderStageFlagBits   mask() const { return m_mask; }
         VkShaderModule          shader_module() const { return m_shader; }
+        bool                    valid() const;
+        ViVisualizer*           visualizer() const { return m_viz; }
         
         std::error_code         create(ViVisualizer&, const Shader&);
         void                    kill();
-        
-        bool                    consistent() const;
-        bool                    valid() const;
-        
-        VkShaderStageFlagBits   mask() const { return m_mask; }
         
     private:
         ViVisualizer*           m_viz       = nullptr;
         VkShaderModule          m_shader    = nullptr;
         VkShaderStageFlagBits   m_mask      = {};
+        
+        ViShader(const ViShader&) = delete;
+        ViShader(ViShader&&) = delete;
+        ViShader& operator=(const ViShader&) = delete;
+        ViShader& operator=(ViShader&&) = delete;
         
         std::error_code     _create(ViVisualizer&, const Shader&);
         void                _kill();

@@ -252,7 +252,7 @@ namespace yq::tachyon {
     {
         ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
         if(!local->valid())
-            return errors::INSUFFICIENT_GPU_MEMORY();
+            return errors::insufficient_gpu_memory();
 
         std::error_code ec;
         
@@ -274,7 +274,7 @@ namespace yq::tachyon {
             diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
             
             if(vmaCreateImage(viz.allocator(), &imgInfo, &diai, &image, &allocation, nullptr) != VK_SUCCESS)
-                return (std::error_code) errors::INSUFFICIENT_GPU_MEMORY();
+                return (std::error_code) errors::insufficient_gpu_memory();
                 
             ec = viz.upload([&](VkCommandBuffer cmd){
                 VkImageSubresourceRange range;

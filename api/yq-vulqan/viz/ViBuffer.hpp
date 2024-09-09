@@ -17,7 +17,7 @@ namespace yq::tachyon {
     class Memory;
     
     struct ViBufferOptions {
-        VmaMemoryUsage      usage   = VMA_MEMORY_USAGE_AUTO;
+        VmaMemoryUsage      usage   = VMA_MEMORY_USAGE_CPU_TO_GPU;
         //! Maps (or keeps mapped) the data
         bool                mapped  = false;
     };
@@ -32,6 +32,7 @@ namespace yq::tachyon {
         
         operator VkBuffer() const { return m_buffer; }
 
+        VmaAllocation       allocation() const { return m_allocation; }
         VkBuffer            buffer() const { return m_buffer; }
         bool                consistent() const;
         //! Data pointer (when mapped)
@@ -39,6 +40,7 @@ namespace yq::tachyon {
         bool                mapped() const { return static_cast<bool>(m_data); }
         size_t              size() const { return m_size; }
         bool                valid() const;
+        ViVisualizer*       visualizer() const { return m_viz; }
 
         std::error_code     allocate(ViVisualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
         std::error_code     create(ViVisualizer&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
@@ -48,6 +50,11 @@ namespace yq::tachyon {
         std::error_code     unmap();
 
     private:
+        
+        ViBuffer(const ViBuffer&) = delete;
+        ViBuffer(ViBuffer&&) = delete;
+        ViBuffer& operator=(const ViBuffer&) = delete;
+        ViBuffer& operator=(ViBuffer&&) = delete;
     
         std::error_code _allocate(ViVisualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
         std::error_code _create(ViVisualizer&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});

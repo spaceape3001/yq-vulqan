@@ -7,6 +7,7 @@
 #include "ViBuffer.hpp"
 
 #include <yq-vulqan/errors.hpp>
+#include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
@@ -42,14 +43,9 @@ namespace yq::tachyon {
         }
     }
     
-    ViBuffer::ViBuffer(ViVisualizer&viz, const Buffer& v, const ViBufferOptions& opts)
+    ViBuffer::ViBuffer(ViVisualizer&viz, const Buffer& v, const ViBufferOptions& opts) : 
+        ViBuffer(viz, v.memory, v.usage.value(), opts)
     {
-        if(viz.device() && v.memory.bytes()){
-            if(_create(viz, v, opts) != std::error_code()){
-                _kill();
-                _wipe();
-            }
-        }
     }
 
     std::error_code ViBuffer::_allocate(ViVisualizer&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
@@ -62,7 +58,7 @@ namespace yq::tachyon {
         vmaallocInfo.usage = vmu;
         VmaAllocationInfo   vai;
         if(vmaCreateBuffer(viz.allocator(), &bufferInfo, &vmaallocInfo, &m_buffer, &m_allocation, &vai) != VK_SUCCESS)
-            return errors::INSUFFICIENT_GPU_MEMORY();
+            return errors::buffer_cant_allocate();
 
         m_size  = cb;
         m_viz   = &viz;
@@ -75,7 +71,7 @@ namespace yq::tachyon {
         if(ec)
             return ec;
         if(vmaMapMemory(m_viz->allocator(), m_allocation, &m_data) != VK_SUCCESS)
-            return errors::CANT_MAP_BUFFER_MEMORY();
+            return errors::buffer_cant_map_memory();
         memcpy(m_data, v.data(), v.bytes());
         if(!opts.mapped){
             vmaUnmapMemory(m_viz->allocator(), m_allocation);
@@ -86,7 +82,7 @@ namespace yq::tachyon {
     
     std::error_code ViBuffer::_create(ViVisualizer&viz, const Buffer& v, const ViBufferOptions& opts)
     {
-        return _create(viz, v.memory, v.usage, opts);
+        return _create(viz, v.memory, v.usage.value(), opts);
     }
 
     void            ViBuffer::_kill()
@@ -112,11 +108,13 @@ namespace yq::tachyon {
     std::error_code     ViBuffer::allocate(ViVisualizer&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
     {
         if(m_viz || m_buffer || m_allocation)
-            return errors::EXISTING_BUFFER();
+            return errors::buffer_existing();
         if(m_data)
-            return errors::BAD_STATE_BUFFER();
+            return errors::buffer_bad_state();
         if(!cb)
-            return errors::SKIPPING_ZERO_SIZED_BUFFER();
+            return errors::buffer_empty();
+        if(!viz.device())
+            return errors::vizualizer_uninitialized();
         
         std::error_code ec =  _allocate(viz, cb, buf, vmu);
         if(ec != std::error_code())
@@ -132,11 +130,13 @@ namespace yq::tachyon {
     std::error_code     ViBuffer::create(ViVisualizer&viz, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions&opts)
     {
         if(m_viz || m_buffer || m_allocation)
-            return errors::EXISTING_BUFFER();
+            return errors::buffer_existing();
         if(m_data)
-            return errors::BAD_STATE_BUFFER();
+            return errors::buffer_bad_state();
         if(!v.bytes())
-            return errors::SKIPPING_ZERO_SIZED_BUFFER();
+            return errors::buffer_empty();
+        if(!viz.device())
+            return errors::vizualizer_uninitialized();
         
         std::error_code ec = _create(viz, v, buf, opts);
         if(ec != std::error_code())
@@ -147,11 +147,13 @@ namespace yq::tachyon {
     std::error_code     ViBuffer::create(ViVisualizer&viz, const Buffer& v, const ViBufferOptions&opts)
     {
         if(m_viz || m_buffer || m_allocation)
-            return errors::EXISTING_BUFFER();
+            return errors::buffer_existing();
         if(m_data)
-            return errors::BAD_STATE_BUFFER();
+            return errors::buffer_bad_state();
         if(!v.memory.bytes())
-            return errors::SKIPPING_ZERO_SIZED_BUFFER();
+            return errors::buffer_empty();
+        if(!viz.device())
+            return errors::vizualizer_uninitialized();
 
         std::error_code ec = _create(viz, v, opts);
         if(ec != std::error_code())
@@ -170,11 +172,11 @@ namespace yq::tachyon {
     std::error_code     ViBuffer::map()
     {
         if(!valid())
-            return errors::UNINITIALIZED_BUFFER();
+            return errors::buffer_uninitialized();
         if(!m_data){
             if(vmaMapMemory(m_viz->allocator(), m_allocation, &m_data) != VK_SUCCESS){
                 m_data  = nullptr;
-                return errors::CANT_MAP_BUFFER_MEMORY();
+                return errors::buffer_cant_map_memory();
             }
         }
         return {};
@@ -183,7 +185,7 @@ namespace yq::tachyon {
     std::error_code     ViBuffer::unmap()
     {
         if(!valid())
-            return errors::UNINITIALIZED_BUFFER();
+            return errors::buffer_uninitialized();
         if(m_data){
             vmaUnmapMemory(m_viz->allocator(), m_allocation);
             m_data  = nullptr;

@@ -256,74 +256,70 @@ namespace yq::tachyon {
 
         std::error_code ec;
         
-        try {
-            VqImageCreateInfo   imgInfo;
-            imgInfo.imageType       = (VkImageType) img.info.type.value();
-            imgInfo.extent.width    = (uint32_t) img.info.size.x;
-            imgInfo.extent.height   = (uint32_t) img.info.size.y;
-            imgInfo.extent.depth    = (uint32_t) img.info.size.z;
-            imgInfo.mipLevels       = img.info.mipLevels;
-            imgInfo.arrayLayers     = img.info.arrayLayers;
-            imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
-            imgInfo.format          = (VkFormat) img.info.format.value();
-            imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-            imgInfo.tiling          = (VkImageTiling) img.info.tiling.value();
-            imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
-           
-            VmaAllocationCreateInfo diai  = {};
-            diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
+        VqImageCreateInfo   imgInfo;
+        imgInfo.imageType       = (VkImageType) img.info.type.value();
+        imgInfo.extent.width    = (uint32_t) img.info.size.x;
+        imgInfo.extent.height   = (uint32_t) img.info.size.y;
+        imgInfo.extent.depth    = (uint32_t) img.info.size.z;
+        imgInfo.mipLevels       = img.info.mipLevels;
+        imgInfo.arrayLayers     = img.info.arrayLayers;
+        imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
+        imgInfo.format          = (VkFormat) img.info.format.value();
+        imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+        imgInfo.tiling          = (VkImageTiling) img.info.tiling.value();
+        imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
+       
+        VmaAllocationCreateInfo diai  = {};
+        diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
+        
+        if(vmaCreateImage(viz.allocator(), &imgInfo, &diai, &image, &allocation, nullptr) != VK_SUCCESS)
+            return (std::error_code) errors::insufficient_gpu_memory();
             
-            if(vmaCreateImage(viz.allocator(), &imgInfo, &diai, &image, &allocation, nullptr) != VK_SUCCESS)
-                return (std::error_code) errors::insufficient_gpu_memory();
-                
-            ec = viz.upload([&](VkCommandBuffer cmd){
-                VkImageSubresourceRange range;
-                range.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
-                range.baseMipLevel = 0;
-                range.levelCount = 1;
-                range.baseArrayLayer = 0;
-                range.layerCount = 1;
-                
-                VqImageMemoryBarrier imb;
-                imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
-                imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-                imb.image               = image;
-                imb.subresourceRange    = range;
-                imb.srcAccessMask       = 0;
-                imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
-                
-                vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+        auto uploadTask = [&](VkCommandBuffer cmd){
+            VkImageSubresourceRange range;
+            range.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
+            range.baseMipLevel = 0;
+            range.levelCount = 1;
+            range.baseArrayLayer = 0;
+            range.layerCount = 1;
+            
+            VqImageMemoryBarrier imb;
+            imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
+            imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb.image               = image;
+            imb.subresourceRange    = range;
+            imb.srcAccessMask       = 0;
+            imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
+            
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
 
-                VkBufferImageCopy creg = {};
-                creg.bufferOffset = 0;
-                creg.bufferRowLength = 0;
-                creg.bufferImageHeight = 0;
+            VkBufferImageCopy creg = {};
+            creg.bufferOffset = 0;
+            creg.bufferRowLength = 0;
+            creg.bufferImageHeight = 0;
 
-                creg.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-                creg.imageSubresource.mipLevel = 0;
-                creg.imageSubresource.baseArrayLayer = 0;
-                creg.imageSubresource.layerCount = 1;
-                creg.imageExtent = imgInfo.extent;
+            creg.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            creg.imageSubresource.mipLevel = 0;
+            creg.imageSubresource.baseArrayLayer = 0;
+            creg.imageSubresource.layerCount = 1;
+            creg.imageExtent = imgInfo.extent;
 
-                //copy the buffer into the image
-                vkCmdCopyBufferToImage(cmd, local->buffer(), image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
+            //copy the buffer into the image
+            vkCmdCopyBufferToImage(cmd, local->buffer(), image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
 
-                VkImageMemoryBarrier imb2 = imb;
+            VkImageMemoryBarrier imb2 = imb;
 
-                imb2.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-                imb2.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            imb2.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb2.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
-                imb2.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-                imb2.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+            imb2.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+            imb2.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-                //barrier the image into the shader readable layout
-                vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
-            });
-        }
-        catch(std::error_code ec2)
-        {
-            ec  = ec2;
-        }
+            //barrier the image into the shader readable layout
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
+        };
+
+        ec = viz.graphic_queue_task(uploadTask);
         return ec;
     }
     
@@ -1186,73 +1182,6 @@ namespace yq::tachyon {
         }
     }
     
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViUpload
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ViUpload::ViUpload(Visualizer&viz, const ViQueueManager&qu) : m_viz(viz)
-    {
-        try {
-            _ctor(qu);
-        }
-        catch(std::error_code ec)
-        {
-            _dtor();
-            throw;
-        }
-    }
-    
-    ViUpload::~ViUpload()
-    {
-        _dtor();
-    }
-    
-    void    ViUpload::_ctor(const ViQueueManager&qu)
-    {
-        if(m_fence)
-            throw create_error<"Upload already initialized">();
-            
-        if(qu.empty())
-            throw create_error<"QueueManager has no queues">();
-    
-        m_queue                         = qu.queue(0);
-        VqCommandPoolCreateInfo poolInfo;
-        poolInfo.queueFamilyIndex       = qu.family();
-        if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_pool) != VK_SUCCESS) 
-            throw create_error<"Failed to create an upload command pool">();
-            
-        VqCommandBufferAllocateInfo allocInfo;
-        allocInfo.commandPool           = m_pool;
-        allocInfo.level                 = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        allocInfo.commandBufferCount    = 1;
-        if (vkAllocateCommandBuffers(m_viz.device(), &allocInfo, &m_commandBuffer) != VK_SUCCESS) 
-            throw create_error<"Failed to allocate command buffers">();
-            
-        VqFenceCreateInfo   fci;
-        if(vkCreateFence(m_viz.device(), &fci, nullptr,  &m_fence) != VK_SUCCESS)
-            throw create_error<"Unable to create fence">();
-    }
-    
-    void    ViUpload::_dtor()
-    {
-        if(m_fence){
-            vkDestroyFence(m_viz.device(), m_fence, nullptr);
-            m_fence   = nullptr;
-        }
-
-        if(m_commandBuffer && m_pool){
-            vkFreeCommandBuffers(m_viz.device(), m_pool, 1, &m_commandBuffer);
-            m_commandBuffer    = nullptr;
-        }
-
-        if(m_pool){
-            vkDestroyCommandPool(m_viz.device(), m_pool, nullptr);
-            m_pool      = nullptr;
-        }
-    }
-
-
     ////////////////////////////////////////////////////////////////////////////////
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
@@ -1327,10 +1256,6 @@ namespace yq::tachyon {
 
 
         //  ================================
-        //  UPLOAD
-        m_upload            = std::make_unique<ViUpload>(*this, *m_graphics);
-
-        //  ================================
         //  RENDER PASS
 
         m_renderPass        = std::make_unique<ViRenderPass>(*this);
@@ -1359,7 +1284,6 @@ namespace yq::tachyon {
         
         m_renderPass    = {};
 
-        m_upload        = {};
         m_thread        = {};
     
         for(auto& p : m_pipelines){
@@ -1810,7 +1734,7 @@ namespace yq::tachyon {
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores    = signalSemaphores;
 
-        if (vkQueueSubmit(m_graphics->queue(0), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
+        if (vkQueueSubmit(m_graphicsQueue->queue(0), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
             return create_error<"Failed to submit draw command buffer">();
             
         VqPresentInfoKHR presentInfo;
@@ -1821,7 +1745,7 @@ namespace yq::tachyon {
         presentInfo.pSwapchains = &m_swapchain->m_swapchain;
         presentInfo.pImageIndices = &imageIndex;
         presentInfo.pResults = nullptr; // Optional
-        vkQueuePresentKHR(m_present->queue(0), &presentInfo);
+        vkQueuePresentKHR(m_presentQueue->queue(0), &presentInfo);
         
         ++m_tick;
         return std::error_code();
@@ -1915,41 +1839,4 @@ namespace yq::tachyon {
             }
         }
     }
-
-    std::error_code    Visualizer::upload(CommandFunction&&fn)
-    {
-        std::error_code     ec;
-        if(!fn)
-            return create_error<"Bad function">();
-        if(!m_upload->m_commandBuffer)
-            return create_error<"Upload capability is uninitialized">();
-    
-        VqCommandBufferBeginInfo beginInfo;
-        beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT; // Optional
-        if(vkBeginCommandBuffer(m_upload->m_commandBuffer, &beginInfo) != VK_SUCCESS)
-            return create_error<"Unable to begin the command buffer">();
-            
-        try {
-            fn(m_upload->m_commandBuffer);
-        }
-        catch(std::error_code ec2) {
-            ec      = ec2;
-        }
-        
-        if(vkEndCommandBuffer(m_upload->m_commandBuffer) != VK_SUCCESS)
-            return create_error<"Unable to end the command buffer">();
-            
-        VqSubmitInfo    subinfo;
-        subinfo.pCommandBuffers = &m_upload->m_commandBuffer;
-        subinfo.commandBufferCount  = 1;
-        if(vkQueueSubmit(m_upload->m_queue, 1, &subinfo, m_upload->m_fence) != VK_SUCCESS)
-            return create_error<"Unable to submit the task to the queue">();
-        
-        
-        vkWaitForFences(m_device, 1, &m_upload->m_fence, true, 999'999'999ULL);
-        vkResetFences(m_device, 1, &m_upload->m_fence);
-        vkResetCommandPool(m_device, m_upload->m_pool, 0);
-        return ec;
-    }
-    
 }

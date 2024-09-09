@@ -6,8 +6,10 @@
 
 #include "ViQueueManager.hpp"
 #include <yq-vulqan/errors.hpp>
+#include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
+#include <yq-vulqan/viz/ViTasker.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
@@ -131,6 +133,7 @@ namespace yq::tachyon {
     
     ViQueueManager::~ViQueueManager()
     {
+        m_taskers.clear();
     }
 
     bool      ViQueueManager::can_transfer() const
@@ -168,6 +171,13 @@ namespace yq::tachyon {
             throw create_error<"Queues size does not match weight sizes">();
         for(uint32_t i=0;i<m_queues.size();++i)
             vkGetDeviceQueue(m_viz.device(), m_family, i, &m_queues[i]);
+        m_taskers.resize(m_queues.size());
+        for(uint32_t i=0;i<m_queues.size();++i){
+            m_taskers[i]    = new ViTasker(m_viz, *this, i);
+            if(!m_taskers[i]->valid()){
+                vizWarning << "Tasker " << i << " is not valid!";
+            }
+        }
     }
     
     VkQueue   ViQueueManager::queue(uint32_t i) const
@@ -175,6 +185,13 @@ namespace yq::tachyon {
         if(i<m_queues.size()) [[likely]]
             return m_queues[i];
         return nullptr;
+    }
+
+    ViTaskerPtr       ViQueueManager::tasker(uint32_t i) const
+    {
+        if(i<m_taskers.size()) [[likely]]
+            return m_taskers[i];
+        return {};
     }
 
     ViQueueTypeFlags  ViQueueManager::types() const 

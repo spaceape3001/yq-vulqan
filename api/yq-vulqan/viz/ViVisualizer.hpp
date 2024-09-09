@@ -12,10 +12,13 @@
 #include <yq-toolbox/typedef/expected.hpp>
 #include <yq-toolbox/typedef/rgba.hpp>
 
+#include <yq-vulqan/config/vulqan.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
+#include <yq-vulqan/typedef/tasker.hpp>
 #include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/viz/ViCleanupManager.hpp>
+#include <yq-vulqan/viz/ViQueueType.hpp>
 
 #include <tbb/spin_rw_mutex.h>
 
@@ -43,6 +46,11 @@ namespace yq::tachyon {
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
     
     class VqApp;
+
+    struct VizTaskerOptions {
+        uint64_t        timeout = DEFAULT_WAIT_TIMEOUT;
+        uint32_t        queue   = 0;
+    };
     
     /*! \brief the Physical vulkan device adapter
         
@@ -59,6 +67,7 @@ namespace yq::tachyon {
     public:
         //enum class F : uint8_t {
         //};
+        
         
         //! Memory allocator
         VmaAllocator                    allocator() const { return m_allocator; }
@@ -78,6 +87,7 @@ namespace yq::tachyon {
         uint32_t                        compute_queue_count() const;
         uint32_t                        compute_queue_family() const;
         ViQueueManager*                 compute_queue_manager() const;
+        std::error_code                 compute_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
 
         //! Vulkan (logical) device
@@ -100,6 +110,7 @@ namespace yq::tachyon {
         uint32_t                        graphic_queue_count() const;
         uint32_t                        graphic_queue_family() const;
         ViQueueManager*                 graphic_queue_manager() const;
+        std::error_code                 graphic_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            graphic_queue_valid() const;
 
         //! Vulkan instance
@@ -119,7 +130,10 @@ namespace yq::tachyon {
         uint32_t                        present_queue_count() const;
         uint32_t                        present_queue_family() const;
         ViQueueManager*                 present_queue_manager() const;
+        std::error_code                 present_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            present_queue_valid() const;
+
+        std::error_code                 queue_task(ViQueueType, tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
             //! Sets the background color
         void                            set_clear_color(const RGBA4F&);
@@ -158,6 +172,7 @@ namespace yq::tachyon {
         uint32_t                        transfer_queue_count() const;
         uint32_t                        transfer_queue_family() const;
         ViQueueManager*                 transfer_queue_manager() const;
+        std::error_code                 transfer_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
         //! IF valid, means there's an asynchronous DMA transfer queue
         bool                            transfer_queue_valid() const;
@@ -166,12 +181,14 @@ namespace yq::tachyon {
         uint32_t                        video_decode_queue_count() const;
         uint32_t                        video_decode_queue_family() const;
         ViQueueManager*                 video_decode_queue_manager() const;
+        std::error_code                 video_decode_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_decode_queue_valid() const;
 
         VkQueue                         video_encode_queue(uint32_t i=0) const;
         uint32_t                        video_encode_queue_count() const;
         uint32_t                        video_encode_queue_family() const;
         ViQueueManager*                 video_encode_queue_manager() const;
+        std::error_code                 video_encode_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_encode_queue_valid() const;
 
         //! Our window (underscore to demote)
@@ -187,32 +204,32 @@ namespace yq::tachyon {
 
         mutable tbb::spin_rw_mutex          m_mutex;
         
-        VmaAllocator                        m_allocator   = nullptr;
-        VqApp*                              m_app         = nullptr;
+        VmaAllocator                        m_allocator         = nullptr;
+        VqApp*                              m_app               = nullptr;
         ViBufferManagerUPtr                 m_buffers;
         ViCleanupManager                    m_cleanup;                  // keep it one until performance bottlenecks
         Guarded<VkClearValue>               m_clearValue;
-        ViQueueManager*                     m_compute     = nullptr;
-        VkDevice                            m_device      = nullptr;
+        ViQueueManager*                     m_computeQueue      = nullptr;
+        VkDevice                            m_device            = nullptr;
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
-        ViQueueManager*                     m_graphics    = nullptr;
-        VkInstance                          m_instance    = nullptr;
+        ViQueueManager*                     m_graphicsQueue     = nullptr;
+        VkInstance                          m_instance          = nullptr;
         VkPhysicalDeviceMemoryProperties    m_memoryInfo;
-        VkPhysicalDevice                    m_physical    = nullptr;
-        ViQueueManager*                     m_present     = nullptr;
+        VkPhysicalDevice                    m_physical          = nullptr;
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;
+        ViQueueManager*                     m_presentQueue      = nullptr;
         std::vector<ViQueueManagerPtr>      m_queues;
         ViShaderManagerUPtr                 m_shaders;
-        VkSurfaceKHR                        m_surface     = nullptr;
+        VkSurfaceKHR                        m_surface           = nullptr;
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
-        ViQueueManager*                     m_transfer    = nullptr;
-        ViQueueManager*                     m_videoDec    = nullptr;
-        ViQueueManager*                     m_videoEnc    = nullptr;
-        GLFWwindow*                         m_window      = nullptr;
+        ViQueueManager*                     m_transferQueue     = nullptr;
+        ViQueueManager*                     m_videoDecQueue     = nullptr;
+        ViQueueManager*                     m_videoEncQueue     = nullptr;
+        GLFWwindow*                         m_window            = nullptr;
         
         std::atomic<uint64_t>               m_tick{0ULL};     // Always monotomically incrementing
 

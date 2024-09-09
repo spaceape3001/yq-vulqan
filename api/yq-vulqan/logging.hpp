@@ -38,6 +38,16 @@
 #define tachyonNotice       yNotice("tachyon")
 #define tachyonWarning      yWarning("tachyon")
 
+#define vizAlert             yAlert("viz")
+#define vizCritical          yCritical("viz")
+#define vizDebug             yDebug("viz")
+#define vizError             yError("viz")
+#define vizEmergency         yEmergency("viz")
+#define vizFatal             yFatal("viz")
+#define vizInfo              yInfo("viz")
+#define vizNotice            yNotice("viz")
+#define vizWarning           yWarning("viz")
+
 #define vqAlert             yAlert("vq")
 #define vqCritical          yCritical("vq")
 #define vqDebug             yDebug("vq")

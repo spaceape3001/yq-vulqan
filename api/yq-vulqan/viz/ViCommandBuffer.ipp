@@ -6,6 +6,8 @@
 
 #include "ViCommandBuffer.hpp"
 #include <yq-vulqan/errors.hpp>
+#include <yq-vulqan/logging.hpp>
+#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -33,8 +35,11 @@ namespace yq::tachyon {
         cbai.level                  = (VkCommandBufferLevel) lvl;
         cbai.commandBufferCount     = 1;
         cbai.commandPool            = pool;
-        if(vkAllocateCommandBuffers(viz.device(), &cbai,  &m_buffer) != VK_SUCCESS)
+        VkResult res = vkAllocateCommandBuffers(viz.device(), &cbai,  &m_buffer);
+        if(res != VK_SUCCESS){
+            vizWarning << "vkAllocateCommandBuffers(1): " << to_string_view((VqResult) res);
             return errors::command_buffer_cant_create();
+        }
         
         m_viz   = &viz;
         m_pool  = pool;
@@ -60,7 +65,7 @@ namespace yq::tachyon {
         if(m_buffer)
             return errors::command_buffer_existing();
         if(!viz.device())
-            return errors::vizualizer_uninitialized();
+            return errors::visualizer_uninitialized();
         if(!pool)
             return errors::command_pool_null_pointer();
         

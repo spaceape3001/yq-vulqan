@@ -25,6 +25,11 @@ namespace yq::tachyon {
         std::error_code execute(tasker_fn&&);
         std::error_code execute(uint64_t timeout, tasker_fn&&);
         bool            valid() const;
+        
+        bool            valid_command_buffer() const;
+        bool            valid_command_pool() const;
+        bool            valid_fence() const;
+        bool            valid_queue() const;
     
     private:
         ViVisualizer&   m_viz;

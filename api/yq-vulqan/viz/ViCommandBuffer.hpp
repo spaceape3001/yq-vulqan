@@ -28,6 +28,8 @@ namespace yq::tachyon {
         bool            valid() const;
         ViVisualizer*   visualizer() const { return m_viz; }
 
+        VkCommandBuffer* command_buffer_ptr() { return &m_buffer; }
+
 
         std::error_code init(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         void            kill();

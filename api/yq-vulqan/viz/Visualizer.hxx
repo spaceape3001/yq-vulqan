@@ -199,20 +199,6 @@ namespace yq::tachyon {
         void    _dtor();
         
     };
-
-    struct ViUpload {
-        Visualizer&             m_viz;
-        VkFence                 m_fence           = nullptr;
-        VkCommandPool           m_pool            = nullptr;
-        VkCommandBuffer         m_commandBuffer   = nullptr;
-        VkQueue                 m_queue           = nullptr;
-        
-        ViUpload(Visualizer&, const ViQueueManager&);
-        ~ViUpload();
-        
-        void    _ctor(const ViQueueManager&);
-        void    _dtor();
-    };
 }
 
 

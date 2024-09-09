@@ -12,3 +12,4 @@
 #include "ViQueueManager.ipp"
 #include "ViShader.ipp"
 #include "ViShaderManager.ipp"
+#include "ViTasker.ipp"

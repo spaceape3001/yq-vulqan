@@ -6,6 +6,8 @@
 
 #include "ViCommandPool.hpp"
 #include <yq-vulqan/errors.hpp>
+#include <yq-vulqan/logging.hpp>
+#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -48,7 +50,9 @@ namespace yq::tachyon {
 
     std::error_code ViCommandPool::_init(ViVisualizer&viz, const VkCommandPoolCreateInfo& cpci)
     {
-        if(vkCreateCommandPool(viz.device(), &cpci, nullptr, &m_pool) != VK_SUCCESS){
+        VkResult    res = vkCreateCommandPool(viz.device(), &cpci, nullptr, &m_pool);
+        if(res != VK_SUCCESS){
+            vizWarning << "vkCreateCommandPool(): " << to_string_view((VqResult) res);
             m_pool  = nullptr;
             return errors::command_pool_cant_create();
         }
@@ -95,7 +99,7 @@ namespace yq::tachyon {
             return errors::command_pool_existing();
         
         if(!viz.device())
-            return errors::vizualizer_uninitialized();
+            return errors::visualizer_uninitialized();
         
         std::error_code ec = _init(viz, cpci);
         if(ec != std::error_code())

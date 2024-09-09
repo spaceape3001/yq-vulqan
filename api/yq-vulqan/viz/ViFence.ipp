@@ -6,6 +6,8 @@
 
 #include "ViFence.hpp"
 #include <yq-vulqan/errors.hpp>
+#include <yq-vulqan/logging.hpp>
+#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -33,6 +35,7 @@ namespace yq::tachyon {
         VqFenceCreateInfo   fci;
         VkResult res = vkCreateFence(viz.device(), &fci, nullptr, &m_fence);
         if(res != VK_SUCCESS){
+            vizWarning << "vkFenceCreate(1): " << to_string_view((VqResult) res);
             m_fence = nullptr;
             return errors::fence_cant_create();
         }
@@ -89,7 +92,7 @@ namespace yq::tachyon {
         if(valid())
             return errors::fence_existing();
         if(!viz.device())
-            return errors::vizualizer_uninitialized();
+            return errors::visualizer_uninitialized();
         return _init(viz);
     }
     

@@ -6,7 +6,9 @@
 
 #include "ViShader.hpp"
 #include <yq-vulqan/errors.hpp>
+#include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
+#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -65,8 +67,11 @@ namespace yq::tachyon {
         VqShaderModuleCreateInfo createInfo;
         createInfo.codeSize = sh.payload.bytes();
         createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
-        if (vkCreateShaderModule(viz.device(), &createInfo, nullptr, &m_shader) != VK_SUCCESS) 
+        VkResult res = vkCreateShaderModule(viz.device(), &createInfo, nullptr, &m_shader);
+        if(res != VK_SUCCESS){
+            vizWarning << "vkCreateShaderModule(" << sh.type.key() << "): " << to_string_view((VqResult) res);
             return errors::shader_cant_create();
+        }
         
         m_viz   = &viz;
         return {};
@@ -98,7 +103,7 @@ namespace yq::tachyon {
         if(!sh.payload.data() || !sh.payload.bytes())
             return errors::shader_empty();
         if(!viz.device())
-            return errors::vizualizer_uninitialized();
+            return errors::visualizer_uninitialized();
         
         std::error_code ec  = _create(viz, sh);
         if(ec != std::error_code()){

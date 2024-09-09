@@ -153,10 +153,6 @@ namespace yq::tachyon {
         // used if no draw function is provided
         virtual void                    record(ViContext&){}
 
-        using CommandFunction   = std::function<void(VkCommandBuffer)>;
-
-        std::error_code                 upload(CommandFunction&&);
-        
         void                            update(ViContext&, const Scene&);
         
     protected:
@@ -212,7 +208,7 @@ namespace yq::tachyon {
             // eventually this will get smarter....
         std::unique_ptr<ViThread>           m_thread;
         
-        std::unique_ptr<ViUpload>           m_upload; // [Queue::COUNT];
+        //std::unique_ptr<ViUpload>           m_upload; // [Queue::COUNT];
         std::atomic<bool>                   m_rebuildSwap           = { false };
         
 

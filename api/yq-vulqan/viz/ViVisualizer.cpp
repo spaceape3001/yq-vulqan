@@ -24,6 +24,7 @@
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
+#include <yq-vulqan/viz/ViTasker.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -132,44 +133,46 @@ namespace yq::tachyon {
             hasQueue |= r->types();
             if(r->types().is_set(ViQueueType::Graphic)){
                 vqInfo << "Discovered graphics queue " << i;
-                m_graphics       = r.ptr();
+                m_graphicsQueue       = r.ptr();
             }
             if(r->types().is_set(ViQueueType::Compute)){
                 vqInfo << "Discovered compute queue " << i;
-                m_compute       = r.ptr();
+                m_computeQueue       = r.ptr();
             }
             if(r->types().is_set(ViQueueType::VideoEncode)){
                 vqInfo << "Discovered video encode queue " << i;
-                m_videoEnc   = r.ptr();
+                m_videoEncQueue   = r.ptr();
             }
             if(r->types().is_set(ViQueueType::VideoDecode)){
                 vqInfo << "Discovered video decode queue " << i;
-                m_videoDec   = r.ptr();
+                m_videoDecQueue   = r.ptr();
             }
             if(r->types().is_set(ViQueueType::Present)){
                 vqInfo << "Discovered present queue " << i;
-                m_present       = r.ptr();
+                m_presentQueue       = r.ptr();
             }
             if(r->types() == ViQueueTypeFlags(ViQueueType::Transfer)){
                 vqInfo << "Discovered transfer queue " << i;
-                m_transfer      = r.ptr();
+                m_transferQueue      = r.ptr();
             }
             iData.queues.push_back(r->info());
             m_queues.push_back(r);
         }
         
-        if(!m_graphics)
-            return errors::vulkan_no_graphics_queue();
-        if(!m_present)
-            return errors::vulkan_no_present_queue();
-        if(wantQueue.is_set(ViQueueType::Compute) && !m_compute)
-            return errors::vulkan_no_compute_queue();
-        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEnc)
-            return errors::vulkan_no_video_encode_queue();
-        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDec)
-            return errors::vulkan_no_video_decode_queue();
-        if(wantQueue.is_set(ViQueueType::Transfer) && !m_transfer)
-            return errors::vulkan_no_transfer_queue();
+        if(!m_graphicsQueue)
+            return errors::graphics_queue_not_found();
+        if(!m_presentQueue)
+            return errors::present_queue_not_found();
+        if(wantQueue.is_set(ViQueueType::Compute) && !m_computeQueue)
+            return errors::compute_queue_not_found();
+        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncQueue)
+            return errors::video_encode_queue_not_found();
+        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecQueue)
+            return errors::video_decode_queue_not_found();
+        if(wantQueue.is_set(ViQueueType::Transfer) && !m_transferQueue)
+            return errors::transfer_queue_not_found();
+        if(!m_transferQueue)
+            m_transferQueue  = m_graphicsQueue;
         return {};
     }
     
@@ -188,12 +191,12 @@ namespace yq::tachyon {
     
     void   ViVisualizer::_3_queues_kill()
     {
-        m_graphics  = nullptr;
-        m_present   = nullptr;
-        m_compute   = nullptr;
-        m_transfer  = nullptr;
-        m_videoEnc  = nullptr;
-        m_videoDec  = nullptr;
+        m_graphicsQueue  = nullptr;
+        m_presentQueue   = nullptr;
+        m_computeQueue   = nullptr;
+        m_transferQueue  = nullptr;
+        m_videoEncQueue  = nullptr;
+        m_videoDecQueue  = nullptr;
         m_queues.clear();
     }
 
@@ -261,6 +264,7 @@ namespace yq::tachyon {
     
     void                ViVisualizer::_6_manager_kill()
     {
+        m_queues        = {};
         m_shaders       = {};
         m_buffers       = {};
     }
@@ -307,27 +311,40 @@ namespace yq::tachyon {
 
     VkQueue  ViVisualizer::compute_queue(uint32_t i) const
     {
-        return m_compute ? m_compute->queue(i) : nullptr;
+        return m_computeQueue ? m_computeQueue->queue(i) : nullptr;
     }
     
     uint32_t  ViVisualizer::compute_queue_count() const
     {
-        return m_compute ? m_compute->count() : 0;
+        return m_computeQueue ? m_computeQueue->count() : 0;
     }
     
     uint32_t  ViVisualizer::compute_queue_family() const
     {
-        return m_compute ? m_compute->family() : UINT32_MAX;
+        return m_computeQueue ? m_computeQueue->family() : UINT32_MAX;
     }
 
     ViQueueManager* ViVisualizer::compute_queue_manager() const 
     { 
-        return m_compute; 
+        return m_computeQueue; 
+    }
+
+    std::error_code ViVisualizer::compute_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        if(!fn)
+            return errors::tasker_bad_function();
+        if(!m_computeQueue)
+            return errors::compute_queue_uninitialized();
+
+        ViTaskerPtr     tasker  = m_computeQueue->tasker(opts.queue);
+        if(!tasker)
+            return errors::tasker_uninitialized();
+        return tasker->execute(opts.timeout, std::move(fn));
     }
 
     bool    ViVisualizer::compute_queue_valid() const
     {
-        return m_compute != nullptr;
+        return m_computeQueue != nullptr;
     }
 
 
@@ -381,27 +398,40 @@ namespace yq::tachyon {
 
     VkQueue     ViVisualizer::graphic_queue(uint32_t i) const
     {
-        return m_graphics ? m_graphics->queue(i) : nullptr;
+        return m_graphicsQueue ? m_graphicsQueue->queue(i) : nullptr;
     }
     
     uint32_t    ViVisualizer::graphic_queue_count() const
     {
-        return m_graphics ? m_graphics->count() : 0;
+        return m_graphicsQueue ? m_graphicsQueue->count() : 0;
     }
     
     uint32_t    ViVisualizer::graphic_queue_family() const
     {
-        return m_graphics ? m_graphics->family() : UINT32_MAX;
+        return m_graphicsQueue ? m_graphicsQueue->family() : UINT32_MAX;
     }
     
     ViQueueManager* ViVisualizer::graphic_queue_manager() const 
     { 
-        return m_graphics; 
+        return m_graphicsQueue; 
     }
 
     bool        ViVisualizer::graphic_queue_valid() const
     {
-        return m_graphics != nullptr;
+        return m_graphicsQueue != nullptr;
+    }
+
+    std::error_code ViVisualizer::graphic_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        if(!fn)
+            return errors::tasker_bad_function();
+        if(!m_graphicsQueue)
+            return errors::graphics_queue_uninitialized();
+
+        ViTaskerPtr     tasker  = m_graphicsQueue->tasker(opts.queue);
+        if(!tasker)
+            return errors::tasker_uninitialized();
+        return tasker->execute(opts.timeout, std::move(fn));
     }
 
     uint32_t    ViVisualizer::max_memory_allocation_count() const  
@@ -421,29 +451,65 @@ namespace yq::tachyon {
 
     VkQueue      ViVisualizer::present_queue(uint32_t i) const
     {
-        return m_present ? m_present->queue(i) : nullptr;
+        return m_presentQueue ? m_presentQueue->queue(i) : nullptr;
     }
     
     uint32_t     ViVisualizer::present_queue_count() const
     {
-        return m_present ? m_present->count() : 0;
+        return m_presentQueue ? m_presentQueue->count() : 0;
     }
     
     uint32_t     ViVisualizer::present_queue_family() const
     {
-        return m_present ? m_present->family() : UINT32_MAX;
+        return m_presentQueue ? m_presentQueue->family() : UINT32_MAX;
     }
 
     ViQueueManager* ViVisualizer::present_queue_manager() const 
     { 
-        return m_present; 
+        return m_presentQueue; 
+    }
+
+    std::error_code ViVisualizer::present_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        if(!fn)
+            return errors::tasker_bad_function();
+        if(!m_presentQueue)
+            return errors::present_queue_uninitialized();
+
+        ViTaskerPtr     tasker  = m_presentQueue->tasker(opts.queue);
+        if(!tasker)
+            return errors::tasker_uninitialized();
+        return tasker->execute(opts.timeout, std::move(fn));
     }
 
     bool        ViVisualizer::present_queue_valid() const
     {
-        return m_present != nullptr;
+        return m_presentQueue != nullptr;
     }
     
+    std::error_code     ViVisualizer::queue_task(ViQueueType qt, tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        switch(qt){
+        case ViQueueType::Auto:
+            return graphic_queue_task(std::move(fn), opts);
+        case ViQueueType::Graphic:
+            return graphic_queue_task(std::move(fn), opts);
+        case ViQueueType::Present:
+            return present_queue_task(std::move(fn), opts);
+        case ViQueueType::Compute:
+            return compute_queue_task(std::move(fn), opts);
+        case ViQueueType::VideoEncode:
+            return video_encode_queue_task(std::move(fn), opts);
+        case ViQueueType::VideoDecode:
+            return video_decode_queue_task(std::move(fn), opts);
+        case ViQueueType::Transfer:
+            return transfer_queue_task(std::move(fn), opts);
+        default:
+            //  shrugs... how?
+            return graphic_queue_task(std::move(fn), opts);
+        }
+    }
+
     void        ViVisualizer::set_clear_color(const RGBA4F&i)
     {   
         m_clearValue    = vqClearValue(i);
@@ -509,76 +575,115 @@ namespace yq::tachyon {
 
     VkQueue     ViVisualizer::transfer_queue(uint32_t i) const
     {
-        return m_transfer ? m_transfer->queue(i) : nullptr;
+        return m_transferQueue ? m_transferQueue->queue(i) : nullptr;
     }
     
     uint32_t    ViVisualizer::transfer_queue_count() const
     {
-        return m_transfer ? m_transfer->count() : 0;
+        return m_transferQueue ? m_transferQueue->count() : 0;
     }
     
     uint32_t    ViVisualizer::transfer_queue_family() const
     {
-        return m_transfer ? m_transfer->family() : UINT32_MAX;
+        return m_transferQueue ? m_transferQueue->family() : UINT32_MAX;
     }
     
     ViQueueManager* ViVisualizer::transfer_queue_manager() const 
     { 
-        return m_transfer; 
+        return m_transferQueue; 
+    }
+
+    std::error_code ViVisualizer::transfer_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        if(!fn)
+            return errors::tasker_bad_function();
+        if(!m_transferQueue)
+            return errors::transfer_queue_uninitialized();
+
+        ViTaskerPtr     tasker  = m_transferQueue->tasker(opts.queue);
+        if(!tasker)
+            return errors::tasker_uninitialized();
+        return tasker->execute(opts.timeout, std::move(fn));
     }
 
     bool        ViVisualizer::transfer_queue_valid() const
     {
-        return m_transfer != nullptr;
+        return m_transferQueue != nullptr;
     }
 
     VkQueue   ViVisualizer::video_decode_queue(uint32_t i) const
     {
-        return m_videoDec ? m_videoDec->queue(i) : nullptr;
+        return m_videoDecQueue ? m_videoDecQueue->queue(i) : nullptr;
     }
     
     uint32_t  ViVisualizer::video_decode_queue_count() const
     {
-        return m_videoDec ? m_videoDec->count() : 0;
+        return m_videoDecQueue ? m_videoDecQueue->count() : 0;
     }
     
     uint32_t  ViVisualizer::video_decode_queue_family() const
     {
-        return m_videoDec ? m_videoDec->family() : UINT32_MAX;
+        return m_videoDecQueue ? m_videoDecQueue->family() : UINT32_MAX;
     }
 
     ViQueueManager*  ViVisualizer::video_decode_queue_manager() const 
     { 
-        return m_videoDec; 
+        return m_videoDecQueue; 
+    }
+
+    std::error_code ViVisualizer::video_decode_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        if(!fn)
+            return errors::tasker_bad_function();
+        if(!m_videoDecQueue)
+            return errors::video_decode_queue_uninitialized();
+
+        ViTaskerPtr     tasker  = m_videoDecQueue->tasker(opts.queue);
+        if(!tasker)
+            return errors::tasker_uninitialized();
+        return tasker->execute(opts.timeout, std::move(fn));
     }
 
     bool        ViVisualizer::video_decode_queue_valid() const
     {
-        return m_videoDec != nullptr;
+        return m_videoDecQueue != nullptr;
     }
 
     VkQueue   ViVisualizer::video_encode_queue(uint32_t i) const
     {
-        return m_videoEnc ? m_videoEnc->queue(i) : nullptr;
+        return m_videoEncQueue ? m_videoEncQueue->queue(i) : nullptr;
     }
     
     uint32_t  ViVisualizer::video_encode_queue_count() const
     {
-        return m_videoEnc ? m_videoEnc->count() : 0;
+        return m_videoEncQueue ? m_videoEncQueue->count() : 0;
     }
 
     uint32_t  ViVisualizer::video_encode_queue_family() const
     {
-        return m_videoEnc ? m_videoEnc->family() : UINT32_MAX;
+        return m_videoEncQueue ? m_videoEncQueue->family() : UINT32_MAX;
     }
 
     ViQueueManager*  ViVisualizer::video_encode_queue_manager() const 
     { 
-        return m_videoEnc; 
+        return m_videoEncQueue; 
+    }
+
+    std::error_code ViVisualizer::video_encode_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        if(!fn)
+            return errors::tasker_bad_function();
+        if(!m_videoEncQueue)
+            return errors::video_encode_queue_uninitialized();
+
+        ViTaskerPtr     tasker  = m_videoEncQueue->tasker(opts.queue);
+        if(!tasker)
+            return errors::tasker_uninitialized();
+        return tasker->execute(opts.timeout, std::move(fn));
     }
 
     bool        ViVisualizer::video_encode_queue_valid() const
     {
-        return m_videoEnc != nullptr;
+        return m_videoEncQueue != nullptr;
     }
 }

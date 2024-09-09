@@ -10,6 +10,7 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
+#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -57,8 +58,12 @@ namespace yq::tachyon {
         VmaAllocationCreateInfo vmaallocInfo = {};
         vmaallocInfo.usage = vmu;
         VmaAllocationInfo   vai;
-        if(vmaCreateBuffer(viz.allocator(), &bufferInfo, &vmaallocInfo, &m_buffer, &m_allocation, &vai) != VK_SUCCESS)
+        
+        VkResult res = vmaCreateBuffer(viz.allocator(), &bufferInfo, &vmaallocInfo, &m_buffer, &m_allocation, &vai);
+        if(res != VK_SUCCESS){
+            vizWarning << "vmaCreateBuffer(" << cb << "): " << to_string_view((VqResult) res);
             return errors::buffer_cant_allocate();
+        }
 
         m_size  = cb;
         m_viz   = &viz;
@@ -114,7 +119,7 @@ namespace yq::tachyon {
         if(!cb)
             return errors::buffer_empty();
         if(!viz.device())
-            return errors::vizualizer_uninitialized();
+            return errors::visualizer_uninitialized();
         
         std::error_code ec =  _allocate(viz, cb, buf, vmu);
         if(ec != std::error_code())
@@ -136,7 +141,7 @@ namespace yq::tachyon {
         if(!v.bytes())
             return errors::buffer_empty();
         if(!viz.device())
-            return errors::vizualizer_uninitialized();
+            return errors::visualizer_uninitialized();
         
         std::error_code ec = _create(viz, v, buf, opts);
         if(ec != std::error_code())
@@ -153,7 +158,7 @@ namespace yq::tachyon {
         if(!v.memory.bytes())
             return errors::buffer_empty();
         if(!viz.device())
-            return errors::vizualizer_uninitialized();
+            return errors::visualizer_uninitialized();
 
         std::error_code ec = _create(viz, v, opts);
         if(ec != std::error_code())

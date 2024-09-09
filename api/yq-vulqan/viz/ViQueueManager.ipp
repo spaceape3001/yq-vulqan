@@ -9,7 +9,7 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
-#include <yq-vulqan/viz/ViTasker.hpp>
+#include <yq-vulqan/viz/ViQueueTasker.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
@@ -192,7 +192,7 @@ namespace yq::tachyon {
             vkGetDeviceQueue(m_viz.device(), m_family, i, &m_queues[i]);
         m_taskers.resize(m_queues.size());
         for(uint32_t i=0;i<m_queues.size();++i){
-            m_taskers[i]    = new ViTasker(m_viz, *this, i);
+            m_taskers[i]    = new ViQueueTasker(m_viz, *this, i);
             if(!m_taskers[i]->valid()){
                 vizWarning << "Tasker " << i << " is not valid!";
             }
@@ -206,7 +206,7 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    ViTaskerPtr       ViQueueManager::tasker(uint32_t i) const
+    ViQueueTaskerPtr       ViQueueManager::tasker(uint32_t i) const
     {
         if(i<m_taskers.size()) [[likely]]
             return m_taskers[i];

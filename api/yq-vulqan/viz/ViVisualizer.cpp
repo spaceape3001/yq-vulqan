@@ -24,7 +24,7 @@
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
-#include <yq-vulqan/viz/ViTasker.hpp>
+#include <yq-vulqan/viz/ViQueueTasker.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -327,14 +327,14 @@ namespace yq::tachyon {
         return m_computeQueue; 
     }
 
-    std::error_code ViVisualizer::compute_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code ViVisualizer::compute_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
         if(!m_computeQueue)
             return errors::compute_queue_uninitialized();
 
-        ViTaskerPtr     tasker  = m_computeQueue->tasker(opts.queue);
+        ViQueueTaskerPtr     tasker  = m_computeQueue->tasker(opts.queue);
         if(!tasker)
             return errors::tasker_uninitialized();
         return tasker->execute(opts.timeout, std::move(fn));
@@ -419,14 +419,14 @@ namespace yq::tachyon {
         return m_graphicsQueue != nullptr;
     }
 
-    std::error_code ViVisualizer::graphic_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code ViVisualizer::graphic_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
         if(!m_graphicsQueue)
             return errors::graphics_queue_uninitialized();
 
-        ViTaskerPtr     tasker  = m_graphicsQueue->tasker(opts.queue);
+        ViQueueTaskerPtr     tasker  = m_graphicsQueue->tasker(opts.queue);
         if(!tasker)
             return errors::tasker_uninitialized();
         return tasker->execute(opts.timeout, std::move(fn));
@@ -467,14 +467,14 @@ namespace yq::tachyon {
         return m_presentQueue; 
     }
 
-    std::error_code ViVisualizer::present_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code ViVisualizer::present_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
         if(!m_presentQueue)
             return errors::present_queue_uninitialized();
 
-        ViTaskerPtr     tasker  = m_presentQueue->tasker(opts.queue);
+        ViQueueTaskerPtr     tasker  = m_presentQueue->tasker(opts.queue);
         if(!tasker)
             return errors::tasker_uninitialized();
         return tasker->execute(opts.timeout, std::move(fn));
@@ -485,7 +485,7 @@ namespace yq::tachyon {
         return m_presentQueue != nullptr;
     }
     
-    std::error_code     ViVisualizer::queue_task(ViQueueType qt, tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code     ViVisualizer::queue_task(ViQueueType qt, queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         switch(qt){
         case ViQueueType::Auto:
@@ -591,14 +591,14 @@ namespace yq::tachyon {
         return m_transferQueue; 
     }
 
-    std::error_code ViVisualizer::transfer_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code ViVisualizer::transfer_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
         if(!m_transferQueue)
             return errors::transfer_queue_uninitialized();
 
-        ViTaskerPtr     tasker  = m_transferQueue->tasker(opts.queue);
+        ViQueueTaskerPtr     tasker  = m_transferQueue->tasker(opts.queue);
         if(!tasker)
             return errors::tasker_uninitialized();
         return tasker->execute(opts.timeout, std::move(fn));
@@ -629,14 +629,14 @@ namespace yq::tachyon {
         return m_videoDecQueue; 
     }
 
-    std::error_code ViVisualizer::video_decode_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code ViVisualizer::video_decode_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
         if(!m_videoDecQueue)
             return errors::video_decode_queue_uninitialized();
 
-        ViTaskerPtr     tasker  = m_videoDecQueue->tasker(opts.queue);
+        ViQueueTaskerPtr     tasker  = m_videoDecQueue->tasker(opts.queue);
         if(!tasker)
             return errors::tasker_uninitialized();
         return tasker->execute(opts.timeout, std::move(fn));
@@ -667,14 +667,14 @@ namespace yq::tachyon {
         return m_videoEncQueue; 
     }
 
-    std::error_code ViVisualizer::video_encode_queue_task(tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code ViVisualizer::video_encode_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
         if(!m_videoEncQueue)
             return errors::video_encode_queue_uninitialized();
 
-        ViTaskerPtr     tasker  = m_videoEncQueue->tasker(opts.queue);
+        ViQueueTaskerPtr     tasker  = m_videoEncQueue->tasker(opts.queue);
         if(!tasker)
             return errors::tasker_uninitialized();
         return tasker->execute(opts.timeout, std::move(fn));

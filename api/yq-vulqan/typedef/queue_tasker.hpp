@@ -13,8 +13,8 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    using tasker_fn     = std::function<void(VkCommandBuffer)>;
+    using queue_tasker_fn     = std::function<void(VkCommandBuffer)>;
     
-    class ViTasker;
-    using ViTaskerPtr   = Ref<ViTasker>;
+    class ViQueueTasker;
+    using ViQueueTaskerPtr   = Ref<ViQueueTasker>;
 }

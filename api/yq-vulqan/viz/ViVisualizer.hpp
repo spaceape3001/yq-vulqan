@@ -14,8 +14,8 @@
 
 #include <yq-vulqan/config/vulqan.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
+#include <yq-vulqan/typedef/queue_tasker.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
-#include <yq-vulqan/typedef/tasker.hpp>
 #include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/viz/ViCleanupManager.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>
@@ -87,7 +87,7 @@ namespace yq::tachyon {
         uint32_t                        compute_queue_count() const;
         uint32_t                        compute_queue_family() const;
         ViQueueManager*                 compute_queue_manager() const;
-        std::error_code                 compute_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        std::error_code                 compute_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
 
         //! Vulkan (logical) device
@@ -110,7 +110,7 @@ namespace yq::tachyon {
         uint32_t                        graphic_queue_count() const;
         uint32_t                        graphic_queue_family() const;
         ViQueueManager*                 graphic_queue_manager() const;
-        std::error_code                 graphic_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        std::error_code                 graphic_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            graphic_queue_valid() const;
 
         //! Vulkan instance
@@ -130,10 +130,10 @@ namespace yq::tachyon {
         uint32_t                        present_queue_count() const;
         uint32_t                        present_queue_family() const;
         ViQueueManager*                 present_queue_manager() const;
-        std::error_code                 present_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        std::error_code                 present_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            present_queue_valid() const;
 
-        std::error_code                 queue_task(ViQueueType, tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        std::error_code                 queue_task(ViQueueType, queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
             //! Sets the background color
         void                            set_clear_color(const RGBA4F&);
@@ -172,7 +172,7 @@ namespace yq::tachyon {
         uint32_t                        transfer_queue_count() const;
         uint32_t                        transfer_queue_family() const;
         ViQueueManager*                 transfer_queue_manager() const;
-        std::error_code                 transfer_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        std::error_code                 transfer_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
         //! IF valid, means there's an asynchronous DMA transfer queue
         bool                            transfer_queue_valid() const;
@@ -181,14 +181,14 @@ namespace yq::tachyon {
         uint32_t                        video_decode_queue_count() const;
         uint32_t                        video_decode_queue_family() const;
         ViQueueManager*                 video_decode_queue_manager() const;
-        std::error_code                 video_decode_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        std::error_code                 video_decode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_decode_queue_valid() const;
 
         VkQueue                         video_encode_queue(uint32_t i=0) const;
         uint32_t                        video_encode_queue_count() const;
         uint32_t                        video_encode_queue_family() const;
         ViQueueManager*                 video_encode_queue_manager() const;
-        std::error_code                 video_encode_queue_task(tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        std::error_code                 video_encode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_encode_queue_valid() const;
 
         //! Our window (underscore to demote)

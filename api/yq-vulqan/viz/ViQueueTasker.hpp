@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-vulqan/typedef/tasker.hpp>
+#include <yq-vulqan/typedef/queue_tasker.hpp>
 
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-vulqan/viz/ViCommandBuffer.hpp>
@@ -17,13 +17,13 @@ namespace yq::tachyon {
     class ViVisualizer;
     class ViQueueManager;
     
-    class ViTasker : public RefCount {
+    class ViQueueTasker : public RefCount {
     public:
-        ViTasker(ViVisualizer&, const ViQueueManager&, uint32_t queue=0);
-        ~ViTasker();
+        ViQueueTasker(ViVisualizer&, const ViQueueManager&, uint32_t queue=0);
+        ~ViQueueTasker();
     
-        std::error_code execute(tasker_fn&&);
-        std::error_code execute(uint64_t timeout, tasker_fn&&);
+        std::error_code execute(queue_tasker_fn&&);
+        std::error_code execute(uint64_t timeout, queue_tasker_fn&&);
         bool            valid() const;
         
         bool            valid_command_buffer() const;

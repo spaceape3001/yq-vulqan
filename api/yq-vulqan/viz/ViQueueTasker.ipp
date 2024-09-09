@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViTasker.hpp"
+#include "ViQueueTasker.hpp"
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
@@ -13,7 +13,7 @@
 #include <exception>
 
 namespace yq::tachyon {
-    ViTasker::ViTasker(ViVisualizer&viz, const ViQueueManager& qm, uint32_t qn) : 
+    ViQueueTasker::ViQueueTasker(ViVisualizer&viz, const ViQueueManager& qm, uint32_t qn) : 
         m_viz(viz), 
         m_commandPool(viz, qm.family()), 
         m_commandBuffer(viz, m_commandPool),
@@ -22,16 +22,16 @@ namespace yq::tachyon {
     {
     }
     
-    ViTasker::~ViTasker()
+    ViQueueTasker::~ViQueueTasker()
     {
     }
 
-    std::error_code ViTasker::execute(tasker_fn&&fn)
+    std::error_code ViQueueTasker::execute(queue_tasker_fn&&fn)
     {
         return execute(DEFAULT_WAIT_TIMEOUT, std::move(fn));
     }
     
-    std::error_code ViTasker::execute(uint64_t timeout, tasker_fn&&fn)
+    std::error_code ViQueueTasker::execute(uint64_t timeout, queue_tasker_fn&&fn)
     {
         if(!valid())
             return errors::tasker_uninitialized();
@@ -78,27 +78,27 @@ namespace yq::tachyon {
         return ec;
     }
 
-    bool    ViTasker::valid() const
+    bool    ViQueueTasker::valid() const
     {
         return m_commandPool.valid() && m_commandBuffer.valid() && m_fence.valid() && m_queue;
     }
 
-    bool    ViTasker::valid_command_buffer() const
+    bool    ViQueueTasker::valid_command_buffer() const
     {
         return m_commandBuffer.valid();
     }
     
-    bool    ViTasker::valid_command_pool() const
+    bool    ViQueueTasker::valid_command_pool() const
     {
         return m_commandPool.valid();
     }
     
-    bool    ViTasker::valid_fence() const
+    bool    ViQueueTasker::valid_fence() const
     {
         return m_fence.valid();
     }
     
-    bool    ViTasker::valid_queue() const
+    bool    ViQueueTasker::valid_queue() const
     {
         return static_cast<bool>(m_queue);
     }

@@ -6,6 +6,8 @@
 
 #include "ViBuffer.ipp"
 #include "ViBufferManager.ipp"
+#include "ViCommandPool.ipp"
 #include "ViFence.ipp"
+#include "ViQueueManager.ipp"
 #include "ViShader.ipp"
 #include "ViShaderManager.ipp"

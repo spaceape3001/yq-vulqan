@@ -42,13 +42,11 @@
 #include <yq-vulqan/v/VqApp.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
-#include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViBufferObject.hpp>
 #include <yq-vulqan/viz/ViContext.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
-#include <yq-vulqan/viz/ViShaderManager.hpp>
 
 
 

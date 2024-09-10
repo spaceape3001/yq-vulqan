@@ -19,13 +19,11 @@
 #include <yq-vulqan/v/VqApp.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
+#include <yq-vulqan/viz/ViAssetManager.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
-#include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
-#include <yq-vulqan/viz/ViImageManager.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
-#include <yq-vulqan/viz/ViShaderManager.hpp>
 #include <yq-vulqan/viz/ViQueueTasker.hpp>
 
 #include <GLFW/glfw3.h>

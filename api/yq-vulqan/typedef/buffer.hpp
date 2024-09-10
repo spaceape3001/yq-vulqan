@@ -17,6 +17,4 @@ namespace yq::tachyon {
     class ViBuffer;
     using ViBufferPtr   = Ref<ViBuffer>;
     using ViBufferCPtr  = Ref<const ViBuffer>;
-
-    class ViBufferManager;
 }

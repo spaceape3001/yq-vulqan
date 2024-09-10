@@ -19,6 +19,4 @@ namespace yq::tachyon {
     class ViImage;
     using ViImagePtr    = Ref<ViImage>;
     using ViImageCPtr   = Ref<const ViImage>;
-    
-    class ViImageManager;
 }

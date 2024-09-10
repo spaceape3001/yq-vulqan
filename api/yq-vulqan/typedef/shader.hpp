@@ -24,6 +24,4 @@ namespace yq::tachyon {
 
     using ViShaderPtr       = Ref<ViShader>;
     using ViShaderCPtr      = Ref<const ViShader>;
-
-    class ViShaderManager;
 }

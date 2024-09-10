@@ -10,7 +10,6 @@
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
-#include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {

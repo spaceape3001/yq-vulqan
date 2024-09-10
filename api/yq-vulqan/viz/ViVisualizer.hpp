@@ -41,6 +41,11 @@ namespace yq::tachyon {
     
     class ViQueueManager;
     
+    template <typename V, typename A> class ViAssetManager;
+    using ViBufferManager = ViAssetManager<ViBuffer, Buffer>;
+    using ViImageManager  = ViAssetManager<ViImage, Image>;
+    using ViShaderManager = ViAssetManager<ViShader, Shader>;
+
     using ViImageManagerUPtr            = std::unique_ptr<ViImageManager>;
     using ViShaderManagerUPtr           = std::unique_ptr<ViShaderManager>;
     using ViBufferManagerUPtr           = std::unique_ptr<ViBufferManager> ;

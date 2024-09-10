@@ -8,10 +8,8 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
-    2D/ImageQuad2.cpp
-    2D/Quadrilateral.cpp
-    2D/Triangle.cpp
-   
+    2D/2D.cpp
+
     3D/Tetrahedron.cpp
 
     app/Application.cpp

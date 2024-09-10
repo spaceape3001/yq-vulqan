@@ -7,12 +7,10 @@
 #pragma once
 
 #include <yq-vulqan/typedef/buffer.hpp>
-#include <yq-toolbox/basic/Expect.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <unordered_map>
 
 namespace yq::tachyon {
-    class ViBuffer;
     struct ViVisualizer;
     
     class ViBufferManager {

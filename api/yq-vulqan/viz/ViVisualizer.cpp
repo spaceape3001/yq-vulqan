@@ -21,6 +21,8 @@
 #include <yq-vulqan/v/VqUtils.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViBufferManager.hpp>
+#include <yq-vulqan/viz/ViImage.hpp>
+#include <yq-vulqan/viz/ViImageManager.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
@@ -257,6 +259,7 @@ namespace yq::tachyon {
     {
         m_shaders           = std::make_unique<ViShaderManager>(*this);
         m_buffers           = std::make_unique<ViBufferManager>(*this);
+        m_images            = std::make_unique<ViImageManager>(*this);
         return {};
     }
     
@@ -265,6 +268,7 @@ namespace yq::tachyon {
         m_queues        = {};
         m_shaders       = {};
         m_buffers       = {};
+        m_images        = {};
     }
 
 
@@ -430,6 +434,25 @@ namespace yq::tachyon {
         if(!tasker)
             return errors::tasker_uninitialized();
         return tasker->execute(opts.timeout, std::move(fn));
+    }
+
+    ViImageCPtr     ViVisualizer::image(uint64_t i) const
+    {
+        if(!m_images)
+            return {};
+        return m_images -> get(i);
+    }
+    
+    ViImageCPtr     ViVisualizer::image_create(const Image& img)
+    {
+        if(!m_images)
+            return {};
+        return m_images -> create(img);
+    }
+    
+    ViImageManager* ViVisualizer::image_manager() const
+    {
+        return m_images.get();
     }
 
     uint32_t    ViVisualizer::max_memory_allocation_count() const  

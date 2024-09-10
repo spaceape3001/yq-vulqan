@@ -45,6 +45,7 @@
 #include <yq-vulqan/viz/ViBufferManager.hpp>
 #include <yq-vulqan/viz/ViBufferObject.hpp>
 #include <yq-vulqan/viz/ViContext.hpp>
+#include <yq-vulqan/viz/ViImage.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViShaderManager.hpp>
@@ -243,95 +244,6 @@ namespace yq::tachyon {
         }
         return nullptr;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViImage
-    ////////////////////////////////////////////////////////////////////////////////
-
-    std::error_code     ViImage::create(Visualizer&viz, const Image&img)
-    {
-        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
-        if(!local->valid())
-            return errors::insufficient_gpu_memory();
-
-        std::error_code ec;
-        
-        VqImageCreateInfo   imgInfo;
-        imgInfo.imageType       = (VkImageType) img.info.type.value();
-        imgInfo.extent.width    = (uint32_t) img.info.size.x;
-        imgInfo.extent.height   = (uint32_t) img.info.size.y;
-        imgInfo.extent.depth    = (uint32_t) img.info.size.z;
-        imgInfo.mipLevels       = img.info.mipLevels;
-        imgInfo.arrayLayers     = img.info.arrayLayers;
-        imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
-        imgInfo.format          = (VkFormat) img.info.format.value();
-        imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-        imgInfo.tiling          = (VkImageTiling) img.info.tiling.value();
-        imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
-       
-        VmaAllocationCreateInfo diai  = {};
-        diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
-        
-        if(vmaCreateImage(viz.allocator(), &imgInfo, &diai, &image, &allocation, nullptr) != VK_SUCCESS)
-            return (std::error_code) errors::insufficient_gpu_memory();
-            
-        auto uploadTask = [&](VkCommandBuffer cmd){
-            VkImageSubresourceRange range;
-            range.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
-            range.baseMipLevel = 0;
-            range.levelCount = 1;
-            range.baseArrayLayer = 0;
-            range.layerCount = 1;
-            
-            VqImageMemoryBarrier imb;
-            imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
-            imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb.image               = image;
-            imb.subresourceRange    = range;
-            imb.srcAccessMask       = 0;
-            imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
-            
-            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
-
-            VkBufferImageCopy creg = {};
-            creg.bufferOffset = 0;
-            creg.bufferRowLength = 0;
-            creg.bufferImageHeight = 0;
-
-            creg.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            creg.imageSubresource.mipLevel = 0;
-            creg.imageSubresource.baseArrayLayer = 0;
-            creg.imageSubresource.layerCount = 1;
-            creg.imageExtent = imgInfo.extent;
-
-            //copy the buffer into the image
-            vkCmdCopyBufferToImage(cmd, local->buffer(), image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
-
-            VkImageMemoryBarrier imb2 = imb;
-
-            imb2.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb2.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-
-            imb2.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-            imb2.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-
-            //barrier the image into the shader readable layout
-            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
-        };
-
-        ec = viz.graphic_queue_task(uploadTask);
-        return ec;
-    }
-    
-    void                ViImage::destroy(Visualizer&viz)
-    {
-        if(image && allocation){
-            vmaDestroyImage(viz.allocator(), image, allocation);
-            image         = nullptr;
-            allocation    = nullptr;
-        }
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViPipeline
@@ -1294,9 +1206,11 @@ namespace yq::tachyon {
         
         for(auto& tex : m_textures)
             _destroy(tex.second);
+        #if 0
         for(auto& img : m_images)
             img.second.destroy(*this);
         m_images.clear();
+        #endif
     
         //  Generally in reverse order of initialization
 
@@ -1342,8 +1256,8 @@ namespace yq::tachyon {
     
         try {
             VkImageViewCreateInfo   ivci = vqCreateInfo(tex.view);
-            ivci.format     = (VkFormat) tex.image->info.format.value(); 
-            ivci.image      = img.image;
+            ivci.format     = (VkFormat) img.info().format.value(); 
+            ivci.image      = img.image();
             
             if(vkCreateImageView(m_device, &ivci, nullptr, &p.view) != VK_SUCCESS)
                 throw create_error<"Unable to create image view">();
@@ -1424,18 +1338,6 @@ namespace yq::tachyon {
     }
 
 
-    Expect<ViImage> Visualizer::image(uint64_t i) const
-    {
-        {
-            LOCK
-            auto j = m_images.find(i);
-            if(j != m_images.end())
-                return j->second;
-        }
-        
-        return unexpected<"Unable to find specified image">();
-    }
-
 
     ViFrame&            Visualizer::next_frame()
     {
@@ -1510,35 +1412,6 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     //  SETTERS/MANIPULATORS
     
-    Expect<ViImage>     Visualizer::create(const Image&v)
-    {
-        {
-            LOCK
-            auto j = m_images.find(v.id());
-            if(j != m_images.end())
-                return j->second;
-        }
-        
-        ViImage     p, ret;
-        auto ec = p.create(*this, v);
-        if(ec)
-            return unexpected(ec);
-        
-        {
-            WLOCK
-            auto [j,f]  = m_images.try_emplace(v.id(), p);
-            if(f){
-                std::swap(p, ret);
-            } else
-                ret     = j->second;
-        }
-        
-        if(p.image)
-            p.destroy(*this);
-        return ret;
-    }
-
-    
     const ViPipeline*  Visualizer::create(const Pipeline& v)
     {
         {
@@ -1579,9 +1452,9 @@ namespace yq::tachyon {
         if(!t.image)
             return unexpected<"No image, no texture">();
         
-        Expect<ViImage> img = create(*(t.image));
-        if(!img)
-            return unexpected(img.error());
+        ViImageCPtr img = image_create(*(t.image));
+        if(!img.valid())
+            return unexpected<"No image, no texture">();
         
         ViTexture   p, ret;
         

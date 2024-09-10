@@ -64,16 +64,6 @@ namespace yq::tachyon {
         const ViRendered*   lookup(const Rendered&, const Pipeline&) const;
     };
 
-
-    //!  Represents an image (likely from file) that has been pushed to the GPU
-    struct ViImage {
-        VmaAllocation           allocation  = nullptr;
-        VkImage                 image       = nullptr;
-
-        std::error_code         create(Visualizer&, const Image&);
-        void                    destroy(Visualizer&);
-    };
-
     struct ViPipeline {
         Visualizer&             m_viz;
         const uint64_t          m_id;

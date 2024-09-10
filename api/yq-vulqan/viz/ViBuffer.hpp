@@ -12,7 +12,7 @@
 #include <system_error>
 
 namespace yq::tachyon {
-    struct ViVisualizer;
+    class ViVisualizer;
     class Buffer;
     class Memory;
     

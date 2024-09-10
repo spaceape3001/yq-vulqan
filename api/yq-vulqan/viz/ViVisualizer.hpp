@@ -14,6 +14,7 @@
 
 #include <yq-vulqan/config/vulqan.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
+#include <yq-vulqan/typedef/image.hpp>
 #include <yq-vulqan/typedef/queue_tasker.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
 #include <yq-vulqan/viewer/PresentMode.hpp>
@@ -40,6 +41,7 @@ namespace yq::tachyon {
     
     class ViQueueManager;
     
+    using ViImageManagerUPtr            = std::unique_ptr<ViImageManager>;
     using ViShaderManagerUPtr           = std::unique_ptr<ViShaderManager>;
     using ViBufferManagerUPtr           = std::unique_ptr<ViBufferManager> ;
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
@@ -112,6 +114,11 @@ namespace yq::tachyon {
         ViQueueManager*                 graphic_queue_manager() const;
         std::error_code                 graphic_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            graphic_queue_valid() const;
+
+        ViImageCPtr                     image(uint64_t) const;
+        ViImageCPtr                     image_create(const Image&);
+        ViImageManager*                 image_manager() const;
+        
 
         //! Vulkan instance
         VkInstance                      instance() const { return m_instance; }
@@ -214,6 +221,7 @@ namespace yq::tachyon {
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
         ViQueueManager*                     m_graphicsQueue     = nullptr;
+        ViImageManagerUPtr                  m_images;
         VkInstance                          m_instance          = nullptr;
         VkPhysicalDeviceMemoryProperties    m_memoryInfo;
         VkPhysicalDevice                    m_physical          = nullptr;

@@ -31,7 +31,7 @@
 
 namespace yq::tachyon {
 
-    struct ViImage;
+    //struct ViImage;
     struct ViRendered;
     struct ViRenderPass;
     struct ViSwapchain;
@@ -65,9 +65,8 @@ namespace yq::tachyon {
 
 
         //! Creates the buffer
-        Expect<ViBuffer>                create(const Buffer&);
+        //Expect<ViBuffer>                create(const Buffer&);
 
-        Expect<ViImage>                 create(const Image&);  // temporary name until texture's altered
 
         //! Creates the pipeline
         //! \note Reference is only good to the next create()
@@ -114,7 +113,7 @@ namespace yq::tachyon {
         
         size_t                          frames_in_flight() const { return m_frames.size(); }
 
-        Expect<ViImage>                 image(uint64_t) const;
+        //Expect<ViImage>                 image(uint64_t) const;
 
         
         //! Gets the next frame

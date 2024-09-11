@@ -8,6 +8,8 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
+    strings.cpp
+
     2D/2D.cpp
 
     3D/Tetrahedron.cpp
@@ -65,11 +67,7 @@ add_library(${PROJECT_NAME} SHARED
     render/Render3D.cpp
     render/Rendered.cpp
     
-    sampler/BorderColor.cpp
-    sampler/SamplerAddressMode.cpp
-    sampler/SamplerCreateFlags.cpp
-    sampler/SamplerFilter.cpp
-    sampler/SamplerMipmapMode.cpp
+    sampler/sampler.cpp
     
     scene/Perspective.cpp
 
@@ -97,8 +95,6 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViBufferObject.cpp
     viz/ViCleanupManager.cpp
     viz/ViCommandBufferVector.cpp
-    #viz/ViImage.cpp
-    #viz/ViImageManager.cpp
     viz/ViVisualizer.cpp
     viz/Visualizer.cpp
     

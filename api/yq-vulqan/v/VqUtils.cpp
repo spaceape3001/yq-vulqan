@@ -244,28 +244,6 @@ namespace yq::tachyon {
         ret.subresourceRange.layerCount     = in.layerCount;
         return ret;
     }
-
-    VkSamplerCreateInfo     vqCreateInfo(const SamplerInfo& in)
-    {
-        VqSamplerCreateInfo     ret;
-        ret.flags                   = (VkSamplerCreateFlags) in.flags.value();
-        ret.magFilter               = (VkFilter) in.magFilter.value();
-        ret.minFilter               = (VkFilter) in.minFilter.value();
-        ret.mipmapMode              = (VkSamplerMipmapMode) in.mipmapMode.value();
-        ret.addressModeU            = (VkSamplerAddressMode) in.addressMode.u.value();
-        ret.addressModeV            = (VkSamplerAddressMode) in.addressMode.v.value();
-        ret.addressModeW            = (VkSamplerAddressMode) in.addressMode.w.value();
-        ret.mipLodBias              = in.mipLodBias;
-        ret.anisotropyEnable        = in.anisotropyEnable ? VK_TRUE : VK_FALSE;
-        ret.maxAnisotropy           = in.maxAnisotropy;
-        ret.compareEnable           = in.compareEnable ? VK_TRUE : VK_FALSE;
-        ret.compareOp               = (VkCompareOp) in.compareOp.value();
-        ret.minLod                  = in.minLod;
-        ret.maxLod                  = in.maxLod;
-        ret.borderColor             = (VkBorderColor) in.borderColor.value();
-        ret.unnormalizedCoordinates = in.unnormalizedCoordinates ? VK_TRUE : VK_FALSE;
-        return ret;
-    }
     
     VkClearValue            vqClearValue(const RGBA4F& in)
     {

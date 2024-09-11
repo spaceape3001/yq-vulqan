@@ -46,6 +46,7 @@
 #include <yq-vulqan/viz/ViContext.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
+#include <yq-vulqan/viz/ViSampler.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 
 
@@ -101,12 +102,6 @@ namespace yq::tachyon {
         return false;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViContext
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ViContext::ViContext() = default;
-    ViContext::~ViContext() = default;
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViFrame
@@ -1260,9 +1255,7 @@ namespace yq::tachyon {
             if(vkCreateImageView(m_device, &ivci, nullptr, &p.view) != VK_SUCCESS)
                 throw create_error<"Unable to create image view">();
             
-            VkSamplerCreateInfo sci = vqCreateInfo(tex.sampler);
-            sci.anisotropyEnable        = VK_TRUE;
-            sci.maxAnisotropy           = m_deviceInfo.limits.maxSamplerAnisotropy;
+            VkSamplerCreateInfo sci = ViSampler::vkInfo(*this, tex.sampler);
             
             if(vkCreateSampler(m_device, &sci, nullptr, &p.sampler) != VK_SUCCESS)
                 throw create_error<"Unable to create sampler">();

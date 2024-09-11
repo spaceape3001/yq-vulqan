@@ -6,7 +6,9 @@
 
 #pragma once
 
+#include <yq-toolbox/color/RGBA.hpp>
 #include <yq-toolbox/math/UVW.hpp>
+#include <yq-toolbox/typedef/optional.hpp>
 
 #include <yq-vulqan/logic/CompareOp.hpp>
 #include <yq-vulqan/sampler/BorderColor.hpp>
@@ -42,10 +44,10 @@ namespace yq::tachyon {
         float                   mipLodBias              = 0.;
         
         //! Anistropy Enable
-        bool                    anisotropyEnable        = false;
+        boolean_opt             anisotropyEnable;
         
         //! Max Anistropy
-        float                   maxAnisotropy           = 0.;
+        float_opt               maxAnisotropy;
         
         //! Compare enable
         bool                    compareEnable           = false;

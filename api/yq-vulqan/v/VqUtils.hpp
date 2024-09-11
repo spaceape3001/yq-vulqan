@@ -68,7 +68,7 @@ namespace yq::tachyon {
 
     //! Creates vulkan create info from our specification
     VkImageViewCreateInfo   vqCreateInfo(const ImageViewInfo&);
-    VkSamplerCreateInfo     vqCreateInfo(const SamplerInfo&);
+//    VkSamplerCreateInfo     vqCreateInfo(const SamplerInfo&);
     
     //! Converts our color into vulkan clear value
     VkClearValue            vqClearValue(const RGBA4F&);

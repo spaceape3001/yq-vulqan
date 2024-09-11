@@ -25,16 +25,16 @@ namespace yq::tachyon {
         ViImage(ViVisualizer&, const Image&);
         ~ViImage();
         
-        std::error_code init(ViVisualizer&, const Image&);
-        void            kill();
+        std::error_code     init(ViVisualizer&, const Image&);
+        void                kill();
         
-        bool            consistent() const;
-        bool            valid() const;
+        bool                consistent() const;
+        bool                valid() const;
         
         operator VkImage() const { return m_image; }
-        VkImage         image() const { return m_image; }
-        VmaAllocation   allocation() const { return m_allocation; }
-        ViVisualizer*   visualizer() const { return m_viz; }
+        VkImage             image() const { return m_image; }
+        VmaAllocation       allocation() const { return m_allocation; }
+        ViVisualizer*       visualizer() const { return m_viz; }
         const ImageInfo&    info() const { return m_info; }
     
     private:
@@ -42,6 +42,7 @@ namespace yq::tachyon {
         VmaAllocation       m_allocation    = nullptr;
         VkImage             m_image         = nullptr;
         ImageInfo           m_info          = {};
+        uint64_t            m_id            = 0;
         
         ViImage(const ViImage&) = delete;
         ViImage(ViImage&&) = delete;

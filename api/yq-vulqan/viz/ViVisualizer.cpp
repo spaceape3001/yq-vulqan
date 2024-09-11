@@ -14,6 +14,7 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
+#include <yq-vulqan/sampler/Sampler.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqApp.hpp>
@@ -23,8 +24,9 @@
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
-#include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViQueueTasker.hpp>
+#include <yq-vulqan/viz/ViSampler.hpp>
+#include <yq-vulqan/viz/ViShader.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -161,14 +163,34 @@ namespace yq::tachyon {
             return errors::graphics_queue_not_found();
         if(!m_presentQueue)
             return errors::present_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::Compute) && !m_computeQueue && is_required(iData.viewer.compute))
-            return errors::compute_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncQueue && is_required(iData.viewer.video_encode))
-            return errors::video_encode_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecQueue && is_required(iData.viewer.video_decode))
-            return errors::video_decode_queue_not_found();
-        if(wantQueue.is_set(ViQueueType::Transfer) && !m_transferQueue && is_required(iData.viewer.transfer))
-            return errors::transfer_queue_not_found();
+        if(wantQueue.is_set(ViQueueType::Compute) && !m_computeQueue){
+            if(is_required(iData.viewer.compute)){
+                return errors::compute_queue_not_found();
+            } else {
+                vqNotice << "Compute queue requested, but not found.";
+            }
+        }
+        if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncQueue){
+            if(is_required(iData.viewer.video_encode)){
+                return errors::video_encode_queue_not_found();
+            } else {
+                vqNotice << "Video encoding queue requested, but not found.";
+            }
+        }
+        if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecQueue){
+            if(is_required(iData.viewer.video_decode)){
+                return errors::video_decode_queue_not_found();
+            } else {
+                vqNotice << "Video decoding queue requested, but not found.";
+            }
+        }
+        if(wantQueue.is_set(ViQueueType::Transfer) && !m_transferQueue){
+            if(is_required(iData.viewer.transfer)){
+                return errors::transfer_queue_not_found();
+            } else {
+                vqNotice << "Transfer-only queue requested, but not found (will be using the graphics queue instead).";
+            }
+        }
         if(!m_transferQueue)
             m_transferQueue  = m_graphicsQueue;
         return {};
@@ -258,11 +280,13 @@ namespace yq::tachyon {
         m_shaders           = std::make_unique<ViShaderManager>(*this);
         m_buffers           = std::make_unique<ViBufferManager>(*this);
         m_images            = std::make_unique<ViImageManager>(*this);
+        m_samplers          = std::make_unique<ViSamplerManager>(*this);
         return {};
     }
     
     void                ViVisualizer::_6_manager_kill()
     {
+        m_samplers      = {};
         m_queues        = {};
         m_shaders       = {};
         m_buffers       = {};
@@ -462,6 +486,11 @@ namespace yq::tachyon {
     { 
         return m_deviceInfo.limits.maxPushConstantsSize; 
     }
+
+    float       ViVisualizer::max_sampler_anisotropy() const
+    {
+        return m_deviceInfo.limits.maxSamplerAnisotropy;
+    }
     
     uint32_t    ViVisualizer::max_viewports() const 
     { 
@@ -527,6 +556,25 @@ namespace yq::tachyon {
             //  shrugs... how?
             return graphic_queue_task(std::move(fn), opts);
         }
+    }
+
+    ViSamplerCPtr     ViVisualizer::sampler(uint64_t i) const
+    {
+        if(!m_samplers)
+            return {};
+        return m_samplers -> get(i);
+    }
+    
+    ViSamplerCPtr     ViVisualizer::sampler_create(const Sampler& img)
+    {
+        if(!m_samplers)
+            return {};
+        return m_samplers -> create(img);
+    }
+    
+    ViSamplerManager* ViVisualizer::sampler_manager() const
+    {
+        return m_samplers.get();
     }
 
     void        ViVisualizer::set_clear_color(const RGBA4F&i)

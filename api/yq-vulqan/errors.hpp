@@ -46,6 +46,9 @@ namespace yq::tachyon::errors {
     using present_queue_not_found           = error_db::entry<"No present queue found">;
     using present_queue_uninitialized       = error_db::entry<"Present queue is uninitialized">;
     //using SKIPPING_ZERO_SIZED_BUFFER        = error_db::entry<"Skipping zero sized buffer">;
+    using sampler_bad_state                 = error_db::entry<"Sampler is in a bad state">;
+    using sampler_cant_create               = error_db::entry<"Unable to create vulkan sampler">;
+    using sampler_existing                  = error_db::entry<"Sampler already created">;
     using shader_bad_state                  = error_db::entry<"Shader is in a bad state">;
     using shader_cant_create                = error_db::entry<"Unable to create vulkan shader module">;
     using shader_empty                      = error_db::entry<"Shader is empty">;

@@ -44,7 +44,7 @@ namespace yq::tachyon {
         ~ViContext();
         
         
-        //  If modified, restore before return
+        //  If modified, restore before return (or...make copy, use copy)
         Visualizer*         m_viz           = nullptr; 
         Viewer*             m_viewer        = nullptr;
         Window*             m_window        = nullptr;

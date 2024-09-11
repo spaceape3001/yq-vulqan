@@ -38,13 +38,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
     
-    static void    reg_image_asset()
+    static void    reg_image()
     {
-        auto ti = writer<Image>();
-        ti.description("Image Asset");
+        auto w = writer<Image>();
+        w.description("Image Asset");
+        w.options({Meta::Flag::IMAGE});
     }
 
-    YQ_INVOKE(reg_image_asset();)
+    YQ_INVOKE(reg_image();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Image)

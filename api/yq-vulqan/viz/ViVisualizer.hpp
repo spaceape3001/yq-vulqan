@@ -16,6 +16,7 @@
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/image.hpp>
 #include <yq-vulqan/typedef/queue_tasker.hpp>
+#include <yq-vulqan/typedef/sampler.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
 #include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/viz/ViCleanupManager.hpp>
@@ -42,13 +43,15 @@ namespace yq::tachyon {
     class ViQueueManager;
     
     template <typename V, typename A> class ViAssetManager;
-    using ViBufferManager = ViAssetManager<ViBuffer, Buffer>;
-    using ViImageManager  = ViAssetManager<ViImage, Image>;
-    using ViShaderManager = ViAssetManager<ViShader, Shader>;
+    using ViBufferManager   = ViAssetManager<ViBuffer, Buffer>;
+    using ViImageManager    = ViAssetManager<ViImage, Image>;
+    using ViShaderManager   = ViAssetManager<ViShader, Shader>;
+    using ViSamplerManager  = ViAssetManager<ViSampler, Sampler>;
 
     using ViImageManagerUPtr            = std::unique_ptr<ViImageManager>;
     using ViShaderManagerUPtr           = std::unique_ptr<ViShaderManager>;
-    using ViBufferManagerUPtr           = std::unique_ptr<ViBufferManager> ;
+    using ViBufferManagerUPtr           = std::unique_ptr<ViBufferManager>;
+    using ViSamplerManagerUPtr          = std::unique_ptr<ViSamplerManager>;
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
     
@@ -133,6 +136,7 @@ namespace yq::tachyon {
         
         uint32_t                        max_memory_allocation_count() const;
         uint32_t                        max_push_constants_size() const;
+        float                           max_sampler_anisotropy() const;
         uint32_t                        max_viewports() const;
 
         //! Vulkan physical device (gpu)
@@ -147,6 +151,10 @@ namespace yq::tachyon {
 
         std::error_code                 queue_task(ViQueueType, queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
+        ViSamplerCPtr                   sampler(uint64_t) const;
+        ViSamplerCPtr                   sampler_create(const Sampler&);
+        ViSamplerManager*               sampler_manager() const;
+
             //! Sets the background color
         void                            set_clear_color(const RGBA4F&);
 
@@ -234,6 +242,7 @@ namespace yq::tachyon {
         std::set<PresentMode>               m_presentModes;
         ViQueueManager*                     m_presentQueue      = nullptr;
         std::vector<ViQueueManagerPtr>      m_queues;
+        ViSamplerManagerUPtr                m_samplers;
         ViShaderManagerUPtr                 m_shaders;
         VkSurfaceKHR                        m_surface           = nullptr;
         VkColorSpaceKHR                     m_surfaceColorSpace;

@@ -71,6 +71,7 @@ namespace yq::tachyon {
         UB1(){}
         ~UB1(){}
         
+        //! Copies the data into a buffer, prepped for the GPU
         void        update()
         {
             UniformBuffer::update(Memory(COPY1, data));

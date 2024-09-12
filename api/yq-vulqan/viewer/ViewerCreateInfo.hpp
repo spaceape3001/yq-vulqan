@@ -48,6 +48,9 @@ namespace yq::tachyon {
         
             //!  Set to enable fill of non-solid features
         bool                        fill_non_solid  = true;
+        
+            //!  Set if we want multiview capability (think STEREO/VR)
+        bool                        multiview   = false;
             
             //!  Set to alter graphic queue capability
         QueueSpec                   graphic;

@@ -75,9 +75,27 @@ namespace yq::tachyon {
                 return errors::vulkan_no_physical_device();
         }
 
+        VqPhysicalDeviceProperties2         prop2;
+        VqPhysicalDeviceMultiviewProperties multiProp;
+        
         vkGetPhysicalDeviceFeatures(m_physical, &m_deviceFeatures);
-        vkGetPhysicalDeviceProperties(m_physical, &m_deviceInfo);
         vkGetPhysicalDeviceMemoryProperties(m_physical, &m_memoryInfo);
+
+        if(iData.viewer.multiview){
+            m_multiview.enabled  = true;
+            prop2.pNext     = &multiProp;
+            viewNotice << "Multiview enabled";
+        }
+
+        vkGetPhysicalDeviceProperties2(m_physical, &prop2);
+        m_deviceInfo    = prop2.properties;
+        if(iData.viewer.multiview){
+            m_multiview.maxViewCount        = multiProp.maxMultiviewViewCount;
+            m_multiview.maxInstanceIndex    = multiProp.maxMultiviewInstanceIndex;
+
+            vqNotice << "Multiview max view count is " << m_multiview.maxViewCount;
+            vqNotice << "Multiview max instance count is " << m_multiview.maxInstanceIndex;
+        }
 
         return {};
     }
@@ -495,6 +513,21 @@ namespace yq::tachyon {
     uint32_t    ViVisualizer::max_viewports() const 
     { 
         return m_deviceInfo.limits.maxViewports; 
+    }
+
+    bool         ViVisualizer::multiview_enabled() const
+    {
+        return m_multiview.enabled;
+    }
+    
+    uint32_t     ViVisualizer::multiview_max_instance_index() const
+    {
+        return m_multiview.maxInstanceIndex;
+    }
+
+    uint32_t     ViVisualizer::multiview_max_view_count() const
+    {
+        return m_multiview.maxViewCount;
     }
 
     VkQueue      ViVisualizer::present_queue(uint32_t i) const

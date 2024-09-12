@@ -187,6 +187,7 @@ int main(int argc, char* argv[])
     aci.view.size           = { 1920, 1080 };
     aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };
     aci.view.imgui          = false;
+    aci.view.multiview      = true;
     
     
     Application app(argc, argv, aci);

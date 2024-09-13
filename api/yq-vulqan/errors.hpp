@@ -42,6 +42,7 @@ namespace yq::tachyon::errors {
     using graphics_queue_uninitialized      = error_db::entry<"Graphics queue is uninitialized">;
     using image_bad_state                   = error_db::entry<"Image is in a bad state">;
     using image_existing                    = error_db::entry<"Image already created">;
+    using image_view_cant_create            = error_db::entry<"Unable to create image view">;
     using insufficient_gpu_memory           = error_db::entry<"Insufficient GPU memory for requested operation">;
     using present_queue_not_found           = error_db::entry<"No present queue found">;
     using present_queue_uninitialized       = error_db::entry<"Present queue is uninitialized">;
@@ -60,6 +61,14 @@ namespace yq::tachyon::errors {
     using tasker_cant_end                   = error_db::entry<"Tasker unable to end using the command buffer">;
     using tasker_cant_submit                = error_db::entry<"Tasker unable to submit task to queue">;
     using tasker_uninitialized              = error_db::entry<"Tasker is uninitialized">;
+    using texture_bad_image                 = error_db::entry<"Texture's image is bad">;
+    using texture_bad_sampler               = error_db::entry<"Texture's sampler is bad">;
+    using texture_bad_state                 = error_db::entry<"Texture is in a bad state">;
+    using texture_cant_create_image_view    = error_db::entry<"Texture is unable to create image view">;
+    using texture_existing                  = error_db::entry<"Texture already created">;
+    using texture_image_null_pointer        = error_db::entry<"Texture's image is a null pointer">;
+    using texture_sampler_null_pointer      = error_db::entry<"Texture's sampler is a null pointer">;
+    using texture_null_pointer              = error_db::entry<"Texture is a null pointer">;
     using transfer_queue_not_found          = error_db::entry<"No transfer queue found">;
     using transfer_queue_uninitialized      = error_db::entry<"Transfer queue is uninitialized">;
     using video_decode_queue_not_found      = error_db::entry<"No video decoding queue found">;

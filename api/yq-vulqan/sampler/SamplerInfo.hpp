@@ -8,6 +8,7 @@
 
 #include <yq-toolbox/color/RGBA.hpp>
 #include <yq-toolbox/math/UVW.hpp>
+#include <yq-toolbox/typedef/filesystem_path.hpp>
 #include <yq-toolbox/typedef/optional.hpp>
 
 #include <yq-vulqan/logic/CompareOp.hpp>
@@ -24,6 +25,7 @@ namespace yq::tachyon {
 
     //! Sampler information used for sample creation
     struct SamplerInfo {
+        class File;
     
         //! Sampler creat flags
         SamplerCreateFlags      flags                   = {};
@@ -69,6 +71,11 @@ namespace yq::tachyon {
         
         //! TRUE to not normalize coordinates (ie not 0...1)
         bool                    unnormalizedCoordinates = false;
+
     };
+
+    std::error_code     sampler_info_load(SamplerInfo&is, const std::filesystem::path&);
+    std::error_code     sampler_info_save(const std::filesystem::path&path, const SamplerInfo&);
+    
 }
 

@@ -11,6 +11,7 @@
 #include <yq-vulqan/image_view/ImageViewInfo.hpp>
 #include <yq-vulqan/sampler/SamplerInfo.hpp>
 #include <yq-vulqan/v/VqApp.hpp>
+#include <yq-vulqan/v/VqStructs.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>

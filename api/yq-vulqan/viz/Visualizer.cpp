@@ -48,6 +48,7 @@
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViSampler.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
+#include <yq-vulqan/viz/ViTexture.hpp>
 
 
 
@@ -83,20 +84,19 @@ namespace yq::tachyon {
             rev    = n;
         } while(false);
         
-        TextureCPtr      c   = cfg.fetch(p);
+        TextureCPtr   c   = cfg.fetch(p);
         if(!c){     //  shouldn't really happen....
             yWarning() << "EMPTY TEXTURE DETECTED!";
             return false;
         }
         
-        Expect<ViTexture> xvb    = viz.create(*c);
-        if(xvb){
-            const ViTexture& vb  = *xvb;
-            if(vb.view && vb.sampler){
-                view    = vb.view;
-                sampler = vb.sampler;
-                return true;
-            }
+        ViTextureCPtr xvb    = viz.texture_create(*c);
+        if(xvb && xvb->valid()){
+            view    = xvb->image_view();
+            sampler = xvb->sampler();
+            return true;
+        } else {
+            yWarning() << "TEXTURE CREATION FAILED!";
         }
         
         return false;
@@ -1196,15 +1196,7 @@ namespace yq::tachyon {
                 delete p.second;
         }
         m_pipelines.clear();
-        
-        for(auto& tex : m_textures)
-            _destroy(tex.second);
-        #if 0
-        for(auto& img : m_images)
-            img.second.destroy(*this);
-        m_images.clear();
-        #endif
-    
+
         //  Generally in reverse order of initialization
 
         _6_manager_kill();
@@ -1239,50 +1231,6 @@ namespace yq::tachyon {
         _dtor();
         m_init  = false;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //  SUB CREATE/DESTROY
-    
-    std::error_code             Visualizer::_create(ViTexture&p, const ViImage& img, const Texture&tex)
-    {
-        std::error_code ec;
-    
-        try {
-            VkImageViewCreateInfo   ivci = vqCreateInfo(tex.view);
-            ivci.format     = (VkFormat) img.info().format.value(); 
-            ivci.image      = img.image();
-            
-            if(vkCreateImageView(m_device, &ivci, nullptr, &p.view) != VK_SUCCESS)
-                throw create_error<"Unable to create image view">();
-            
-            VkSamplerCreateInfo sci = ViSampler::vkInfo(*this, tex.sampler);
-            
-            if(vkCreateSampler(m_device, &sci, nullptr, &p.sampler) != VK_SUCCESS)
-                throw create_error<"Unable to create sampler">();
-            return std::error_code();
-        } 
-        catch(std::error_code ec2){
-            ec  = ec2;
-        }
-        
-        _destroy(p);
-        return ec;
-    }
-    
-    void                        Visualizer::_destroy(ViTexture&p)
-    {
-        if(p.sampler){
-            vkDestroySampler(m_device, p.sampler, nullptr);
-            p.sampler   = nullptr;
-        }
-        
-        if(p.view){
-            vkDestroyImageView(m_device, p.view, nullptr);
-            p.view = nullptr;
-        }
-    }
-        
-
 
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -1387,18 +1335,6 @@ namespace yq::tachyon {
     {
         return m_swapchain->width();
     }
-
-    Expect<ViTexture> Visualizer::texture(uint64_t i) const
-    {
-        {
-            LOCK
-            auto j = m_textures.find(i);
-            if(j != m_textures.end())
-                return j->second;
-        }
-        
-        return unexpected<"Unable to find requested texture">();
-    }
             
     ////////////////////////////////////////////////////////////////////////////////
     //  SETTERS/MANIPULATORS
@@ -1430,42 +1366,6 @@ namespace yq::tachyon {
         
         return ret;
     }
-
-    Expect<ViTexture>       Visualizer::create(const Texture& t)
-    {
-        {
-            LOCK
-            auto j = m_textures.find(t.id());
-            if(j != m_textures.end())
-                return j->second;
-        }
-        
-        if(!t.image)
-            return unexpected<"No image, no texture">();
-        
-        ViImageCPtr img = image_create(*(t.image));
-        if(!img.valid())
-            return unexpected<"No image, no texture">();
-        
-        ViTexture   p, ret;
-        
-        std::error_code ec  = _create(p, *img, t);
-        if(ec)
-            return unexpected(ec);
-            
-        {
-            WLOCK
-            auto [j,f]  = m_textures.try_emplace(t.id(), p);
-            if(f){
-                std::swap(p, ret);
-            } else
-                ret     = j->second;
-        }
-        
-        _destroy(p);
-        return ret;
-    }
-
 
     void        Visualizer::set_present_mode(PresentMode pm)
     {

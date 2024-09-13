@@ -8,6 +8,7 @@
 
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>
+#include <yq-vulqan/sampler/Sampler.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Sampler>&   Sampler::cache()
@@ -19,6 +20,12 @@ namespace yq::tachyon {
     const Sampler*  Sampler::load(std::string_view pp)
     {
         return cache().load(pp);
+    }
+
+    SamplerCPtr    Sampler::simple()
+    {
+        static SamplerCPtr  s_ret   = new Sampler(SamplerInfo());
+        return s_ret;
     }
     
     Sampler::Sampler(const SamplerInfo& samplerInfo) : info(samplerInfo) 

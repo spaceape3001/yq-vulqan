@@ -170,10 +170,12 @@ namespace yq::tachyon {
         uint32_t    height() const;
     };
 
+#if 0
     struct ViTexture  {
         VkImageView             view        = nullptr;
         VkSampler               sampler     = nullptr;
     };
+#endif
 
         // eventually multithread...
     struct ViThread {

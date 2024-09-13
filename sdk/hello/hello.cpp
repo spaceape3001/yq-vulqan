@@ -167,8 +167,7 @@ struct HelloQuad : public Rendered {
     
     HelloQuad()
     {
-        Ref<const Image>    img = Image::load("sdk/hello/flowers-512.png");
-        tex     = new Texture(img, ImageViewInfo(), SamplerInfo());
+        tex     = Texture::load("sdk/hello/flowers-512.png");
     }
 };
 

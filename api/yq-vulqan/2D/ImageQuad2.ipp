@@ -47,8 +47,7 @@ namespace yq::tachyon {
             { hh, { 1., 1. }}
         };
 
-        Ref<const Image>    img = Image::load(szImage);
-        m_texture           = new Texture(img, ImageViewInfo(), SamplerInfo());
+        m_texture           = Texture::load(szImage);
     }
     
     ImageQuad2::~ImageQuad2()

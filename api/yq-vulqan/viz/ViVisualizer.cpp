@@ -16,6 +16,7 @@
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/sampler/Sampler.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
+#include <yq-vulqan/texture/Texture.hpp>
 #include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqApp.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
@@ -27,6 +28,7 @@
 #include <yq-vulqan/viz/ViQueueTasker.hpp>
 #include <yq-vulqan/viz/ViSampler.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
+#include <yq-vulqan/viz/ViTexture.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -299,11 +301,13 @@ namespace yq::tachyon {
         m_buffers           = std::make_unique<ViBufferManager>(*this);
         m_images            = std::make_unique<ViImageManager>(*this);
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
+        m_textures          = std::make_unique<ViTextureManager>(*this);
         return {};
     }
     
     void                ViVisualizer::_6_manager_kill()
     {
+        m_textures      = {};
         m_samplers      = {};
         m_queues        = {};
         m_shaders       = {};
@@ -490,6 +494,18 @@ namespace yq::tachyon {
         return m_images -> create(img);
     }
     
+    void  ViVisualizer::image_erase(uint64_t i)
+    {
+        if(m_images){
+            m_images -> erase(i);
+        }
+    }
+    
+    void  ViVisualizer::image_erase(const Image& img)
+    {
+        image_erase(img.id());
+    }
+
     ViImageManager* ViVisualizer::image_manager() const
     {
         return m_images.get();
@@ -598,13 +614,25 @@ namespace yq::tachyon {
         return m_samplers -> get(i);
     }
     
-    ViSamplerCPtr     ViVisualizer::sampler_create(const Sampler& img)
+    ViSamplerCPtr     ViVisualizer::sampler_create(const Sampler& sam)
     {
         if(!m_samplers)
             return {};
-        return m_samplers -> create(img);
+        return m_samplers -> create(sam);
     }
     
+    void  ViVisualizer::sampler_erase(uint64_t i)
+    {
+        if(m_samplers){
+            m_samplers -> erase(i);
+        }
+    }
+    
+    void  ViVisualizer::sampler_erase(const Sampler& sam)
+    {
+        sampler_erase(sam.id());
+    }
+
     ViSamplerManager* ViVisualizer::sampler_manager() const
     {
         return m_samplers.get();
@@ -622,11 +650,23 @@ namespace yq::tachyon {
         return m_shaders -> get(i);
     }
 
-    ViShaderCPtr    ViVisualizer::shader_create(const Shader&sh)
+    ViShaderCPtr    ViVisualizer::shader_create(const Shader&sha)
     {
         if(!m_shaders)
             return {};
-        return m_shaders->create(sh);
+        return m_shaders->create(sha);
+    }
+
+    void  ViVisualizer::shader_erase(uint64_t i)
+    {
+        if(m_shaders){
+            m_shaders -> erase(i);
+        }
+    }
+    
+    void  ViVisualizer::shader_erase(const Shader& sha)
+    {
+        shader_erase(sha.id());
     }
 
     ViShaderManager*  ViVisualizer::shader_manager() const 
@@ -673,6 +713,38 @@ namespace yq::tachyon {
         return m_surfaceFormat; 
     }
 
+
+    ViTextureCPtr ViVisualizer::texture(uint64_t i) const
+    {
+        if(!m_textures)
+            return {};
+        return m_textures->get(i);
+    }
+
+    ViTextureCPtr  ViVisualizer::texture_create(const Texture& tex)
+    {
+        if(!m_textures)
+            return {};
+        return m_textures->create(tex);
+    }
+    
+    void  ViVisualizer::texture_erase(uint64_t i)
+    {
+        if(m_textures){
+            m_textures -> erase(i);
+        }
+    }
+    
+    void  ViVisualizer::texture_erase(const Texture& tex)
+    {
+        texture_erase(tex.id());
+    }
+
+    ViTextureManager* ViVisualizer::texture_manager() const 
+    { 
+        return m_textures.get(); 
+    }
+    
     VkQueue     ViVisualizer::transfer_queue(uint32_t i) const
     {
         return m_transferQueue ? m_transferQueue->queue(i) : nullptr;

@@ -18,6 +18,7 @@
 #include <yq-vulqan/typedef/queue_tasker.hpp>
 #include <yq-vulqan/typedef/sampler.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
+#include <yq-vulqan/typedef/texture.hpp>
 #include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/viz/ViCleanupManager.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>
@@ -47,12 +48,14 @@ namespace yq::tachyon {
     using ViImageManager    = ViAssetManager<ViImage, Image>;
     using ViShaderManager   = ViAssetManager<ViShader, Shader>;
     using ViSamplerManager  = ViAssetManager<ViSampler, Sampler>;
+    using ViTextureManager  = ViAssetManager<ViTexture, Texture>;
 
     using ViImageManagerUPtr            = std::unique_ptr<ViImageManager>;
     using ViShaderManagerUPtr           = std::unique_ptr<ViShaderManager>;
     using ViBufferManagerUPtr           = std::unique_ptr<ViBufferManager>;
     using ViSamplerManagerUPtr          = std::unique_ptr<ViSamplerManager>;
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
+    using ViTextureManagerUPtr          = std::unique_ptr<ViTextureManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
     
     class VqApp;
@@ -82,13 +85,10 @@ namespace yq::tachyon {
         //! Memory allocator
         VmaAllocator                    allocator() const { return m_allocator; }
 
-        //! Finds the buffer
         ViBufferCPtr                    buffer(uint64_t) const;
         ViBufferCPtr                    buffer_create(const Buffer&);
         void                            buffer_erase(uint64_t);
         void                            buffer_erase(const Buffer&);
-
-        //! Buffer manager
         ViBufferManager*                buffer_manager() const;
 
         RGBA4F                          clear_color() const;
@@ -125,6 +125,8 @@ namespace yq::tachyon {
 
         ViImageCPtr                     image(uint64_t) const;
         ViImageCPtr                     image_create(const Image&);
+        void                            image_erase(uint64_t);
+        void                            image_erase(const Image&);
         ViImageManager*                 image_manager() const;
         
 
@@ -171,6 +173,8 @@ namespace yq::tachyon {
         
         ViSamplerCPtr                   sampler(uint64_t) const;
         ViSamplerCPtr                   sampler_create(const Sampler&);
+        void                            sampler_erase(uint64_t);
+        void                            sampler_erase(const Sampler&);
         ViSamplerManager*               sampler_manager() const;
 
             //! Sets the background color
@@ -188,6 +192,9 @@ namespace yq::tachyon {
         */
         ViShaderCPtr                    shader_create(const Shader&);
 
+        void                            shader_erase(uint64_t);
+        void                            shader_erase(const Shader&);
+
         //! Current shader manager (null if not initialized)
         ViShaderManager*                shader_manager() const;
         
@@ -203,6 +210,11 @@ namespace yq::tachyon {
         VkColorSpaceKHR                 surface_color_space(VkFormat) const;
         VkFormat                        surface_format() const;
 
+        ViTextureCPtr                   texture(uint64_t) const;
+        ViTextureCPtr                   texture_create(const Texture&);
+        void                            texture_erase(uint64_t);
+        void                            texture_erase(const Texture&);
+        ViTextureManager*               texture_manager() const;
         
         uint64_t                        tick() const { return m_tick; }
 
@@ -273,6 +285,7 @@ namespace yq::tachyon {
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
+        ViTextureManagerUPtr                m_textures;
         ViQueueManager*                     m_transferQueue     = nullptr;
         ViQueueManager*                     m_videoDecQueue     = nullptr;
         ViQueueManager*                     m_videoEncQueue     = nullptr;

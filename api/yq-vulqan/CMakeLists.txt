@@ -67,6 +67,7 @@ add_library(${PROJECT_NAME} SHARED
     render/Render3D.cpp
     render/Rendered.cpp
     
+    sampler/SamplerInfoFile.cpp
     sampler/sampler.cpp
     
     scene/Perspective.cpp

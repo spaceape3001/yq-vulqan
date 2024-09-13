@@ -64,15 +64,9 @@ namespace yq::tachyon {
         VkCommandPoolCreateFlags        command_pool_create_flags() const { return m_cmdPoolCreateFlags; }
 
 
-        //! Creates the buffer
-        //Expect<ViBuffer>                create(const Buffer&);
-
-
         //! Creates the pipeline
         //! \note Reference is only good to the next create()
         const ViPipeline*               create(const Pipeline&);
-        
-        Expect<ViTexture>               create(const Texture&);
         
         //! Gets the current frame
         //! \note will return INVALID reference if construction failed!
@@ -113,8 +107,6 @@ namespace yq::tachyon {
         
         size_t                          frames_in_flight() const { return m_frames.size(); }
 
-        //Expect<ViImage>                 image(uint64_t) const;
-
         
         //! Gets the next frame
         //! \note will return INVALID reference if construction failed!
@@ -146,7 +138,7 @@ namespace yq::tachyon {
         uint32_t                        swapchain_min_image_count() const;
         uint32_t                        swapchain_width() const;
         
-        Expect<ViTexture>               texture(uint64_t) const;
+        //Expect<ViTexture>               texture(uint64_t) const;
         
 
         // used if no draw function is provided
@@ -170,8 +162,8 @@ namespace yq::tachyon {
         std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
         void                        _dtor();
 
-        std::error_code             _create(ViTexture&, const ViImage&, const Texture&);
-        void                        _destroy(ViTexture&);
+        //std::error_code             _create(ViTexture&, const ViImage&, const Texture&);
+        //void                        _destroy(ViTexture&);
 
         std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
         

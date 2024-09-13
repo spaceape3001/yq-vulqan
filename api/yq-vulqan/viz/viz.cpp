@@ -14,3 +14,4 @@
 #include "ViQueueTasker.ipp"
 #include "ViSampler.ipp"
 #include "ViShader.ipp"
+#include "ViTexture.ipp"

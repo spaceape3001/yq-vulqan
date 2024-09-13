@@ -8,3 +8,5 @@
 
 #include <string_view>
 
+namespace yq::tachyon {
+}

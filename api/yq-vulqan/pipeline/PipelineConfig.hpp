@@ -10,7 +10,7 @@
 #include <vector>
 #include <functional>
 
-#include <yq-vulqan/image/DataFormat.hpp>
+#include <yq-vulqan/data/DataFormat.hpp>
 #include <yq-vulqan/pipeline/CullMode.hpp>
 #include <yq-vulqan/pipeline/DataActivity.hpp>
 #include <yq-vulqan/pipeline/FrontFace.hpp>

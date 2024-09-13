@@ -6,11 +6,11 @@
 
 #pragma once
 
+#include <yq-vulqan/data/DataFormat.hpp>
 #include <yq-vulqan/image/ComponentSwizzle.hpp>
-#include <yq-vulqan/image/DataFormat.hpp>
 #include <yq-vulqan/image/ImageAspect.hpp>
-#include <yq-vulqan/image_view/ImageViewCreateFlags.hpp>
-#include <yq-vulqan/image_view/ImageViewType.hpp>
+#include <yq-vulqan/image/ImageViewCreateFlags.hpp>
+#include <yq-vulqan/image/ImageViewType.hpp>
 #include <yq-toolbox/color/RGBA.hpp>
 
 namespace yq::tachyon {

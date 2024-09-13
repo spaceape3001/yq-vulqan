@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-toolbox/shape/Size4.hpp>
-#include <yq-vulqan/image/DataFormat.hpp>
+#include <yq-vulqan/data/DataFormat.hpp>
 #include <yq-vulqan/image/ImageType.hpp>
 #include <yq-vulqan/image/ImageTiling.hpp>
 

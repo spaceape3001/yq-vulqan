@@ -7,30 +7,46 @@
 #pragma once
 
 #include <yq-toolbox/basic/Ref.hpp>
+#include <yq-toolbox/trait/indices.hpp>
 #include <tbb/spin_rw_mutex.h>
+#include <tuple>
 #include <unordered_map>
 
 namespace yq::tachyon {
     struct ViVisualizer;
 
-    template <typename V, typename A>
-    class ViAssetManager {
+    template <typename V, typename A, typename ... Args>
+    class ViManager {
     public:
         
+        static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
         using v_ptr_t           = Ref<V>;
         using v_cptr_t          = Ref<const V>;
         using map_t             = std::unordered_map<uint64_t, v_cptr_t>;
         using mutex_t           = tbb::spin_rw_mutex;
+        using data_t            = std::tuple<Args...>;
         
-        ViAssetManager(ViVisualizer& viz) : m_viz(viz) {}
-        ~ViAssetManager()
+        ViManager(ViVisualizer& viz) : m_viz(viz) {}
+
+        ViManager(ViVisualizer& viz, data_t dat) : m_viz(viz), m_data(dat) 
         {
-            cleanup();
         }
-    
-        void            cleanup()
+
+        ~ViManager()
         {
             m_hash.clear();
+        }
+    
+        void        clear()
+        {
+            mutex_t::scoped_lock _lock(m_mutex, true);
+            m_hash.clear();
+        }
+        
+        template <unsigned... Is>
+        v_cptr_t    _create(const A& asset)
+        {
+            return new V(m_viz, asset, get<Is, Args...>(m_data)...);
         }
         
         v_cptr_t    create(const A& asset)
@@ -44,7 +60,14 @@ namespace yq::tachyon {
 
             v_cptr_t    ret, p;
             
-            p       = new V(m_viz, asset);
+            if constexpr (sizeof...(Args) != 0){
+                p       = _create<indices_gen<ARG_COUNT>()>(asset);
+            }
+            
+            if constexpr (sizeof...(Args) == 0){
+                p       = new V(m_viz, asset);
+            }
+            
             if(!p->valid())
                 return {};
             
@@ -58,6 +81,12 @@ namespace yq::tachyon {
             }
 
             return ret;
+        }
+        
+        bool            empty() const
+        {
+            mutex_t::scoped_lock _lock(m_mutex, false);
+            return m_hash.empty();
         }
         
         void            erase(const A& asset)
@@ -95,15 +124,28 @@ namespace yq::tachyon {
             mutex_t::scoped_lock _lock(m_mutex, false);
             return m_hash.contains(i);
         }
+        
+        size_t          size() const 
+        {
+            mutex_t::scoped_lock _lock(m_mutex, false);
+            return m_hash.size();
+        }
+        
+        void            update(Args...args)
+        {
+            mutex_t::scoped_lock _lock(m_mutex, true);
+            m_data      = { args... };
+        }
 
     private:
-        ViAssetManager(const ViAssetManager&) = delete;
-        ViAssetManager(ViAssetManager&&) = delete;
-        ViAssetManager& operator=(const ViAssetManager&) = delete;
-        ViAssetManager& operator=(ViAssetManager&&) = delete;
+        ViManager(const ViManager&) = delete;
+        ViManager(ViManager&&) = delete;
+        ViManager& operator=(const ViManager&) = delete;
+        ViManager& operator=(ViManager&&) = delete;
         
+        ViVisualizer&       m_viz;
         map_t               m_hash;
         mutable mutex_t     m_mutex;
-        ViVisualizer&       m_viz;
+        data_t              m_data;
     };
 }

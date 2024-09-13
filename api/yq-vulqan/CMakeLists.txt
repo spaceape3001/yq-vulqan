@@ -28,6 +28,8 @@ add_library(${PROJECT_NAME} SHARED
     
     config/build.cpp
     
+    data/data.cpp
+    
     editor/Editor.cpp
     
     event/Event.cpp
@@ -46,9 +48,6 @@ add_library(${PROJECT_NAME} SHARED
     image/image.cpp
     image/STBImage.cpp
     
-    image_view/ImageViewCreateFlags.cpp
-    image_view/ImageViewType.cpp
-    
     imgui/MyImGui.hpp
     imgui/MyImGui.cpp
     
@@ -61,6 +60,8 @@ add_library(${PROJECT_NAME} SHARED
     manipulator/Manipulator.cpp
     
     memory/memory.cpp
+    
+    pass/RenderPass.cpp
     pipeline/pipeline.cpp
 
     render/Render2D.cpp

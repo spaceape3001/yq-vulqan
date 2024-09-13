@@ -29,7 +29,7 @@
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/image/Image.hpp>
-#include <yq-vulqan/image_view/ImageViewInfo.hpp>
+#include <yq-vulqan/image/ImageViewInfo.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>

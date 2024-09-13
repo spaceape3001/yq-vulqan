@@ -21,7 +21,7 @@
 #include <yq-vulqan/v/VqApp.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
-#include <yq-vulqan/viz/ViAssetManager.hpp>
+#include <yq-vulqan/viz/ViManager.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>

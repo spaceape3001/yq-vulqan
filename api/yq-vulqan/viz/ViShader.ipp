@@ -8,7 +8,6 @@
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
-#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -69,7 +68,7 @@ namespace yq::tachyon {
         createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
         VkResult res = vkCreateShaderModule(viz.device(), &createInfo, nullptr, &m_shader);
         if(res != VK_SUCCESS){
-            vizWarning << "vkCreateShaderModule(" << sh.type.key() << "): " << to_string_view((VqResult) res);
+            vizWarning << "vkCreateShaderModule(" << sh.type.key() << "): VkResult " << (int32_t) res;
             return errors::shader_cant_create();
         }
         

@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "RenderPass.hpp"
+#include <yq-vulqan/pass/RenderPassInfo.hpp>
 
 namespace yq::tachyon {
 }

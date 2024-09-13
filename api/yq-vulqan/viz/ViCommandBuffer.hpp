@@ -8,10 +8,14 @@
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
-#include <yq-vulqan/v/VqEnumerations.hpp>
 
 namespace yq::tachyon {
     class ViVisualizer;
+
+    enum class VqCommandBufferLevel : int32_t {
+        Primary = 0,
+        Secondary = 1
+    };
     
     class ViCommandBuffer {
     public:

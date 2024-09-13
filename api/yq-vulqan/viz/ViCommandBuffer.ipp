@@ -7,7 +7,7 @@
 #include "ViCommandBuffer.hpp"
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/v/VqEnumerations.hpp>
+//#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -37,7 +37,7 @@ namespace yq::tachyon {
         cbai.commandPool            = pool;
         VkResult res = vkAllocateCommandBuffers(viz.device(), &cbai,  &m_buffer);
         if(res != VK_SUCCESS){
-            vizWarning << "vkAllocateCommandBuffers(1): " << to_string_view((VqResult) res);
+            vizWarning << "vkAllocateCommandBuffers(1): vkResult " << (int32_t) res;
             return errors::command_buffer_cant_create();
         }
         

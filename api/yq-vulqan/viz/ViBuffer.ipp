@@ -10,7 +10,6 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
-#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -61,7 +60,7 @@ namespace yq::tachyon {
         
         VkResult res = vmaCreateBuffer(viz.allocator(), &bufferInfo, &vmaallocInfo, &m_buffer, &m_allocation, &vai);
         if(res != VK_SUCCESS){
-            vizWarning << "vmaCreateBuffer(" << cb << "): " << to_string_view((VqResult) res);
+            vizWarning << "vmaCreateBuffer(" << cb << "): VkResult " << (int32_t) res;
             return errors::buffer_cant_allocate();
         }
 

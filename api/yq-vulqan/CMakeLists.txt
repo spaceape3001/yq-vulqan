@@ -62,6 +62,7 @@ add_library(${PROJECT_NAME} SHARED
     memory/memory.cpp
     
     pass/RenderPass.cpp
+    
     pipeline/pipeline.cpp
 
     render/Render2D.cpp
@@ -86,7 +87,7 @@ add_library(${PROJECT_NAME} SHARED
     undo/Undo.cpp
     
     v/VqApp.cpp
-    v/VqEnumerations.cpp
+    #v/VqEnumerations.cpp
     v/VqEnums.cpp
     v/VqLogging.cpp
     v/VqUtils.cpp

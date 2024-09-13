@@ -6,13 +6,27 @@
 
 #pragma once
 
-#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <system_error>
 #include <vulkan/vulkan_core.h>
+#include <yq-toolbox/basic/Flags.hpp>
 
 namespace yq::tachyon {
     class ViVisualizer;
     
+
+    enum class VqCommandPoolCreateBit : uint8_t {
+        Transient = 1,
+        ResetCommandBuffer = 2,
+        Protected = 3
+    };
+
+    enum class VqCommandPoolResetBit : uint8_t {
+        ReleaseResources = 1
+    };
+    
+    using VqCommandPoolCreateFlags = Flags<VqCommandPoolCreateBit>;
+    using VqCommandPoolResetFlags = Flags<VqCommandPoolResetBit>;
+
     class ViCommandPool {
     public:
     

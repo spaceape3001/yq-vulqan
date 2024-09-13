@@ -17,7 +17,7 @@
 #include <yq-vulqan/sampler/Sampler.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
-#include <yq-vulqan/v/VqEnumerations.hpp>
+//#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqApp.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
@@ -261,7 +261,7 @@ namespace yq::tachyon {
         
         VkResult        res = vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device);
         if(res != VK_SUCCESS){
-            vqError << "Unable to create vulkan (logical) device with result code: " << to_string_view((VqResult) res);
+            vqError << "Unable to create vulkan (logical) device with result code: " << (int32_t) res;
             return errors::vulkan_device_cant_create();
         }
         return {};

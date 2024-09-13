@@ -7,4 +7,9 @@
 #pragma once
 
 namespace yq::tachyon {
+    namespace pass {
+    }
+
+    class RenderPass {
+    };
 }

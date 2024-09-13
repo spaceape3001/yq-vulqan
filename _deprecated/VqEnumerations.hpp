@@ -85,7 +85,7 @@ namespace yq::tachyon {
     };
 
     enum class VqAttachmentDescriptionBit : uint8_t {
-        MayAlias = 1
+        MayAlias = 0
     };
 
     enum class VqAttachmentLoadOp : int32_t {
@@ -1131,7 +1131,7 @@ namespace yq::tachyon {
     };
 
     enum class VqFramebufferCreateBit : uint8_t {
-        Imageless = 1
+        Imageless = 0
     };
 
     enum class VqFrontFace : int32_t {

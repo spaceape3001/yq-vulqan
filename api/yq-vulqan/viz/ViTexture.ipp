@@ -11,7 +11,6 @@
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/image/ImageInfo.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
-#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
 #include <yq-vulqan/viz/ViSampler.hpp>
@@ -106,7 +105,7 @@ namespace yq::tachyon {
 
         VkResult res = vkCreateImageView(viz.device(), &info, nullptr, &m_imageView);
         if(res != VK_SUCCESS){
-            vizWarning << "vkTexture().create(imageView): " << to_string_view((VqResult) res);
+            vizWarning << "vkTexture().create(imageView): VkResult " << (int32_t) res;
             return errors::texture_cant_create_image_view();
         }
         

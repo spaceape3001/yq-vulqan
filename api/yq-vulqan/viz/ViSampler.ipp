@@ -9,7 +9,6 @@
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/sampler/Sampler.hpp>
-#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -60,7 +59,7 @@ namespace yq::tachyon {
         VkSamplerCreateInfo sci  = vkInfo(viz, sam.info);
         VkResult res = vkCreateSampler(viz.device(), &sci, nullptr, &m_sampler);
         if(res != VK_SUCCESS){
-            vizWarning << "vkCreateSampler(): " << to_string_view(VqResult(res));
+            vizWarning << "vkCreateSampler(): VkResult " << (int32_t) res;
             return errors::sampler_cant_create();
         }
             

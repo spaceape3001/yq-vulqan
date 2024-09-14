@@ -12,6 +12,7 @@
 #include "ViImage.ipp"
 #include "ViQueueManager.ipp"
 #include "ViQueueTasker.ipp"
+#include "ViRenderPass.ipp"
 #include "ViSampler.ipp"
 #include "ViShader.ipp"
 #include "ViTexture.ipp"

@@ -9,6 +9,7 @@
 #include <yq-toolbox/color/RGBA.hpp>
 #include <yq-toolbox/container/initlist_utils.hpp>
 #include <yq-toolbox/text/basic.hpp>
+#include <yq-toolbox/text/join.hpp>
 
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
@@ -19,6 +20,7 @@
 #include <yq-vulqan/texture/Texture.hpp>
 //#include <yq-vulqan/v/VqEnumerations.hpp>
 #include <yq-vulqan/v/VqApp.hpp>
+#include <yq-vulqan/v/VqEnums.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
 #include <yq-vulqan/viz/ViManager.hpp>
@@ -29,6 +31,7 @@
 #include <yq-vulqan/viz/ViRenderPass.hpp>
 #include <yq-vulqan/viz/ViSampler.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
+#include <yq-vulqan/viz/ViSwapchain.hpp>
 #include <yq-vulqan/viz/ViTexture.hpp>
 
 #include <GLFW/glfw3.h>
@@ -87,7 +90,7 @@ namespace yq::tachyon {
         if(iData.viewer.multiview){
             m_multiview.enabled  = true;
             prop2.pNext     = &multiProp;
-            viewNotice << "Multiview enabled";
+            vizDebug << "ViVisualizer: Multiview enabled";
         }
 
         vkGetPhysicalDeviceProperties2(m_physical, &prop2);
@@ -96,9 +99,11 @@ namespace yq::tachyon {
             m_multiview.maxViewCount        = multiProp.maxMultiviewViewCount;
             m_multiview.maxInstanceIndex    = multiProp.maxMultiviewInstanceIndex;
 
-            vqNotice << "Multiview max view count is " << m_multiview.maxViewCount;
-            vqNotice << "Multiview max instance count is " << m_multiview.maxInstanceIndex;
+            //vizDebug << "ViVisualizer: Multiview max view count is " << m_multiview.maxViewCount;
+            //vizDebug << "ViVisualizer: Multiview max instance count is " << m_multiview.maxInstanceIndex;
         }
+
+        vizDebug << "ViVisualizer: Using GPU/physical device " << gpu_name();
 
         return {};
     }
@@ -106,6 +111,7 @@ namespace yq::tachyon {
     void             ViVisualizer::_1_gpu_select_kill()
     {
         m_physical  = nullptr;
+        vizDebug << "ViVisualizer: GPU forgotten";
     }
 
     std::error_code  ViVisualizer::_2_surface_initialize(InitData& iData)
@@ -125,6 +131,10 @@ namespace yq::tachyon {
         m_surfaceColorSpace     = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
 
         set_clear_color(iData.viewer.clear);
+        
+        vizDebug << "ViVisualizer: Presenting " << ((PresentMode) m_presentMode).key() << " on " 
+            << to_string_view(m_surfaceFormat);
+        
         return  {};
     }
     
@@ -134,6 +144,7 @@ namespace yq::tachyon {
             vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
             m_surface               = nullptr;
         }
+        vizDebug << "ViVisualizer: Surface destroyed";
     }
 
     std::error_code  ViVisualizer::_3_queues_create(InitData& iData)
@@ -218,6 +229,13 @@ namespace yq::tachyon {
         }
         if(!m_transferQueue)
             m_transferQueue  = m_graphicsQueue;
+            
+        std::set<uint32_t>  families;
+        for(auto& r : m_queues){
+            families.insert(r->family());
+        }
+            
+        vizDebug << "ViVisualizer: Created the queue managers on queues... " << join(families, " ");
         return {};
     }
     
@@ -232,6 +250,8 @@ namespace yq::tachyon {
                 //  Shouldn't ever get here
             }
         }
+        
+        vizDebug << "ViVisualizer: Extracted queues from device";
     }
     
     void   ViVisualizer::_3_queues_kill()
@@ -243,6 +263,8 @@ namespace yq::tachyon {
         m_videoEncQueue  = nullptr;
         m_videoDecQueue  = nullptr;
         m_queues.clear();
+        
+        vizDebug << "ViVisualizer: Killed the queue managers";
     }
 
     std::error_code     ViVisualizer::_4_device_init(InitData& iData)
@@ -269,6 +291,8 @@ namespace yq::tachyon {
             vqError << "Unable to create vulkan (logical) device with result code: " << (int32_t) res;
             return errors::vulkan_device_cant_create();
         }
+        
+        vizDebug << "ViVisualizer: Created the logical device";
         return {};
     }
     
@@ -278,6 +302,7 @@ namespace yq::tachyon {
             vkDestroyDevice(m_device, nullptr);
             m_device                = nullptr;
         }
+        vizDebug << "ViVisualizer: Destroyed the logical device";
     }
     
     std::error_code     ViVisualizer::_5_allocator_init(InitData& iData)
@@ -289,6 +314,8 @@ namespace yq::tachyon {
         allocatorCreateInfo.vulkanApiVersion                = m_app->app_info().vulkan_api;
         allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) iData.viewer.chunk_size;
         vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
+        
+        vizDebug << "ViVisualizer: Created the allocator";
         return {};
     }
     
@@ -298,6 +325,8 @@ namespace yq::tachyon {
             vmaDestroyAllocator(m_allocator);
             m_allocator = nullptr;
         }
+        
+        vizDebug << "ViVisualizer: Destroyed the allocator";
     }
     
     std::error_code     ViVisualizer::_6_manager_init()
@@ -307,6 +336,8 @@ namespace yq::tachyon {
         m_images            = std::make_unique<ViImageManager>(*this);
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
         m_textures          = std::make_unique<ViTextureManager>(*this);
+        
+        vizDebug << "ViVisualizer: Created the managers";
         return {};
     }
     
@@ -318,6 +349,8 @@ namespace yq::tachyon {
         m_shaders       = {};
         m_buffers       = {};
         m_images        = {};
+        
+        vizDebug << "ViVisualizer: Destroyed the managers";
     }
 
     std::error_code     ViVisualizer::_7_render_pass_create()
@@ -327,12 +360,49 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
         m_renderPass    = (ViRenderPassCPtr) rp;
+        vizDebug << "ViVisualizer: Created the render pass";
         return {};
     }
     
     void               ViVisualizer::_7_render_pass_kill()
     {
         m_renderPass    = nullptr;
+        vizDebug << "ViVisualizer: Destroyed the render pass";
+    }
+
+    std::error_code    ViVisualizer:: _8_swapchain_create()
+    {
+        ViSwapchainPtr      sp = new ViSwapchain;
+        std::error_code ec = sp->init(*this);
+        if(ec != std::error_code())
+            return ec;
+        m_swapchain     = (ViSwapchainCPtr) sp;
+        vizDebug << "ViVisualizer: Created the swapchain";
+        return {};
+    }
+    
+    void                ViVisualizer::_8_swapchain_kill()
+    {
+        m_swapchain     = nullptr;
+        vizDebug << "ViVisualizer: Destroyed the swapchain";
+    }
+
+    void                ViVisualizer::_rebuild_swapchain()
+    {
+        ViSwapchainConfig   cfg;
+        if(m_swapchain)
+            cfg.old_swapchain = m_swapchain -> swapchain();
+        ViSwapchainPtr  p   = new ViSwapchain;
+
+        vkDeviceWaitIdle(m_device);
+        
+        std::error_code ec  = p -> init(*this, cfg);
+        if(ec != std::error_code()){
+            vizWarning << "ViVisualizer unable to initialize new swapchain!  " << ec.message();
+            return ;
+        }
+        m_swapchain     = ViSwapchainCPtr(p);
+        vizDebug << "ViVisualizer: Rebuilt the swapchain";
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -757,7 +827,55 @@ namespace yq::tachyon {
         return m_surfaceFormat; 
     }
 
+    VkSwapchainKHR  ViVisualizer::swapchain() const
+    {
+        if(!m_swapchain)
+            return nullptr;
+        return m_swapchain->swapchain();
+    }
 
+    VkRect2D    ViVisualizer::swapchain_def_scissor() const
+    {
+        if(!m_swapchain)
+            return {};
+        return m_swapchain->def_scissor();
+    }
+    
+    VkViewport  ViVisualizer::swapchain_def_viewport() const
+    {
+        if(!m_swapchain)
+            return {};
+        return m_swapchain->def_viewport();
+    }
+
+    uint32_t    ViVisualizer::swapchain_image_count() const
+    {
+        if(!m_swapchain)
+            return 0;
+        return m_swapchain->image_count();
+    }
+
+    uint32_t    ViVisualizer::swapchain_height() const
+    {
+        if(!m_swapchain)
+            return 0;
+        return m_swapchain->height();
+    }
+
+    uint32_t    ViVisualizer::swapchain_min_image_count() const
+    {
+        if(!m_swapchain)
+            return 0;
+        return m_swapchain->min_image_count();
+    }
+
+    uint32_t    ViVisualizer::swapchain_width() const
+    {
+        if(!m_swapchain)
+            return 0;
+        return m_swapchain->width();
+    }
+            
     ViTextureCPtr ViVisualizer::texture(uint64_t i) const
     {
         if(!m_textures)

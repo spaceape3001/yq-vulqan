@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename> class Ref;
+}
+
+namespace yq::tachyon {
+    class ViSwapchain;
+    using ViSwapchainPtr    = Ref<ViSwapchain>;
+    using ViSwapchainCPtr   = Ref<const ViSwapchain>;
+}

@@ -134,30 +134,6 @@ namespace yq::tachyon {
         void    _tex(size_t);
     };
 
-    struct ViSwapchain {
-        Visualizer&                 m_viz;
-        VkSwapchainKHR              m_swapchain       = nullptr;
-        VkExtent2D                  m_extents         = {};
-        uint32_t                    m_minImageCount   = 0;
-        uint32_t                    m_imageCount      = 0;
-        std::vector<VkImage>        m_images;
-        std::vector<VkImageView>    m_imageViews;
-        std::vector<VkFramebuffer>  m_frameBuffers;
-        VkSurfaceCapabilitiesKHR    m_capabilities;
-        
-        
-        ViSwapchain(Visualizer&, VkRenderPass, const ViSwapchain*old=nullptr);
-        ~ViSwapchain();
-        void        _ctor(VkRenderPass, const ViSwapchain* old);
-        void        _dtor();
-        
-        
-        VkRect2D    def_scissor() const;
-        VkViewport  def_viewport() const;
-        uint32_t    width() const;
-        uint32_t    height() const;
-    };
-
 
         // eventually multithread...
     struct ViThread {

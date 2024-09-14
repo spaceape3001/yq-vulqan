@@ -8,6 +8,7 @@
 
 #include <yq-toolbox/basic/ErrorDB.hpp>
 #include <yq-toolbox/color/RGBA.hpp>
+#include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/image/ImageViewInfo.hpp>
 #include <yq-vulqan/sampler/SamplerInfo.hpp>
 #include <yq-vulqan/v/VqApp.hpp>

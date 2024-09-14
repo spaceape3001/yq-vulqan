@@ -122,12 +122,6 @@ namespace yq::tachyon {
         
         
 
-        VkRect2D                        swapchain_def_scissor() const;
-        VkViewport                      swapchain_def_viewport() const;
-        uint32_t                        swapchain_height() const;
-        uint32_t                        swapchain_image_count() const;
-        uint32_t                        swapchain_min_image_count() const;
-        uint32_t                        swapchain_width() const;
 
         // used if no draw function is provided
         virtual void                    record(ViContext&){}
@@ -175,26 +169,15 @@ namespace yq::tachyon {
         //std::vector<const char*>            m_extensions;
         FrameArray                          m_frames;
         PipelineMap                         m_pipelines;
-        std::unique_ptr<ViSwapchain>        m_swapchain;
         
             // eventually this will get smarter....
         std::unique_ptr<ViThread>           m_thread;
-        
-        
 
     private:
         bool                                m_init                  = false;
 
         struct Execution;
 
-        /*! Rebuilds the swapchain
-        
-            This will rebuild the swapchain, if the flag has been set or forced.
-        
-            \param[in] force    Forces a rebuild
-            \return TRUE if rebuild occured
-        */
-        void                        _rebuild();
     };
 
 }

@@ -52,6 +52,8 @@ namespace yq::tachyon {
     
     ViSampler::~ViSampler()
     {
+        kill();
+        vizDebug << "ViSampler::~ViSampler()";
     }
 
     std::error_code     ViSampler::_init(ViVisualizer&viz, const Sampler&sam)

@@ -144,6 +144,9 @@ namespace yq::tachyon {
             }
             return errors::render_pass_existing();
         }
+        if(!viz.device()){
+            return errors::visualizer_uninitialized();
+        }
         
         std::error_code ec = _init(viz, rpci);
         if(ec != std::error_code()){

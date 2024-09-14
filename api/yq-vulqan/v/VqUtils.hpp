@@ -12,11 +12,14 @@
 #include <yq-toolbox/typedef/expected.hpp>
 #include <yq-toolbox/typedef/rgba.hpp>
 
-
 #include <optional>
 #include <set>
 #include <string>
 #include <vector>
+
+namespace log4cpp {
+    class CategoryStream;
+}
 
 /*
     The VqCore is about providing simple wrappers for boiler plate code, using the prefix "Vq" in lieu of "Vk".  
@@ -76,3 +79,4 @@ namespace yq::tachyon {
     //! Extracts vulkan clear value into our color
     RGBA4F                  vqExtractRGBA4F(const VkClearValue&);
 }
+

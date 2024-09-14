@@ -19,6 +19,7 @@
 #include <yq-vulqan/typedef/render_pass.hpp>
 #include <yq-vulqan/typedef/sampler.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
+#include <yq-vulqan/typedef/swapchain.hpp>
 #include <yq-vulqan/typedef/texture.hpp>
 #include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/viz/ViCleanupManager.hpp>
@@ -218,6 +219,14 @@ namespace yq::tachyon {
         VkColorSpaceKHR                 surface_color_space(VkFormat) const;
         VkFormat                        surface_format() const;
 
+        VkSwapchainKHR                  swapchain() const;
+        VkRect2D                        swapchain_def_scissor() const;
+        VkViewport                      swapchain_def_viewport() const;
+        uint32_t                        swapchain_height() const;
+        uint32_t                        swapchain_image_count() const;
+        uint32_t                        swapchain_min_image_count() const;
+        uint32_t                        swapchain_width() const;
+
         ViTextureCPtr                   texture(uint64_t) const;
         ViTextureCPtr                   texture_create(const Texture&);
         void                            texture_erase(uint64_t);
@@ -297,6 +306,7 @@ namespace yq::tachyon {
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
+        ViSwapchainCPtr                     m_swapchain;
         ViTextureManagerUPtr                m_textures;
         ViQueueManager*                     m_transferQueue     = nullptr;
         ViQueueManager*                     m_videoDecQueue     = nullptr;
@@ -340,5 +350,12 @@ namespace yq::tachyon {
         
         std::error_code     _7_render_pass_create();
         void                _7_render_pass_kill();
+        
+        std::error_code     _8_swapchain_create();
+        void                _8_swapchain_kill();
+
+        /*! Rebuilds the swapchain
+        */
+        void                _rebuild_swapchain();
     };
 }

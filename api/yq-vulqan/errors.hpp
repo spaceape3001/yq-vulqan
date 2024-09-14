@@ -59,6 +59,10 @@ namespace yq::tachyon::errors {
     using shader_existing                   = error_db::entry<"Shader already created">;
     using shader_uninitialized              = error_db::entry<"Attempting to use an uninitialized shader">;
     using shader_manager_uninitialized      = error_db::entry<"Shader manager is uninitialized">;
+    using swapchain_bad_state               = error_db::entry<"Swapchain is in a bad state">;
+    using swapchain_cant_create             = error_db::entry<"Unable to create swapchain">;
+    using swapchain_existing                = error_db::entry<"Swapchain already exists">;
+    using swapchain_uninitialized           = error_db::entry<"Attempting to use an uninitialized/missing swapchain!">;
     using tasker_bad_function               = error_db::entry<"Tasker function is invalid">;
     using tasker_cant_begin                 = error_db::entry<"Tasker unable to begin using the command buffer">;
     using tasker_cant_end                   = error_db::entry<"Tasker unable to end using the command buffer">;
@@ -78,6 +82,7 @@ namespace yq::tachyon::errors {
     using video_decode_queue_uninitialized  = error_db::entry<"Video decoding queue is uninitialized">;
     using video_encode_queue_not_found      = error_db::entry<"No video encoding queue found">;
     using video_encode_queue_uninitialized  = error_db::entry<"Video encoding queue is uninitialized">;
+    using visualizer_insufficient           = error_db::entry<"Attempting to use an under-initialized visualizer">;
     using visualizer_uninitialized          = error_db::entry<"Attempting to use an uninitialized visualizer">;
     using vulkan_device_cant_create         = error_db::entry<"Unable to create vulkan (logical) device">;
     using vulkan_device_lost                = error_db::entry<"Device has been lost">;

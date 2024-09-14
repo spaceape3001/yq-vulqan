@@ -105,7 +105,7 @@ namespace yq::tachyon {
 
 
     ////////////////////////////////////////////////////////////////////////////////
-    //  ViFrame
+    //  ViFrame0
     ////////////////////////////////////////////////////////////////////////////////
 
     namespace {
@@ -116,7 +116,7 @@ namespace yq::tachyon {
         }
     }
 
-    ViFrame::ViFrame(Visualizer&viz) : m_viz(viz), m_id(nextFrameId())
+    ViFrame0::ViFrame0(Visualizer&viz) : m_viz(viz), m_id(nextFrameId())
     {
         try {
             _ctor();
@@ -128,12 +128,12 @@ namespace yq::tachyon {
         }
     }
     
-    ViFrame::~ViFrame()
+    ViFrame0::~ViFrame0()
     {
         _dtor();
     }
 
-    void    ViFrame::_ctor()
+    void    ViFrame0::_ctor()
     {
         if(m_renderFinished)
             throw create_error<"Frame already initialized">();
@@ -158,7 +158,7 @@ namespace yq::tachyon {
             throw create_error<"Unable to create semaphore!">();
     }
     
-    void                ViFrame::_dtor()
+    void                ViFrame0::_dtor()
     {
         for(auto& i : m_rendereds){
             if(i.second)
@@ -188,7 +188,7 @@ namespace yq::tachyon {
     }
     
     
-    ViRendered*         ViFrame::create(const Rendered&obj, const Pipeline& pipe)
+    ViRendered0*         ViFrame0::create(const Rendered&obj, const Pipeline& pipe)
     {
         {
             LOCK
@@ -199,12 +199,12 @@ namespace yq::tachyon {
             }
         }
 
-        const ViPipeline*   vp   = m_viz.create(pipe);
+        const ViPipeline0*   vp   = m_viz.create(pipe);
         if(!vp)
             return nullptr;
         
-        ViRendered* p   = new ViRendered(m_viz, *vp, obj);
-        ViRendered* ret = nullptr;
+        ViRendered0* p   = new ViRendered0(m_viz, *vp, obj);
+        ViRendered0* ret = nullptr;
         
         {
             WLOCK
@@ -226,7 +226,7 @@ namespace yq::tachyon {
         return ret;
     }
     
-    const ViRendered*   ViFrame::lookup(const Rendered&ren, const Pipeline& pipe) const
+    const ViRendered0*   ViFrame0::lookup(const Rendered&ren, const Pipeline& pipe) const
     {
         {
             LOCK
@@ -240,19 +240,19 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    //  ViPipeline
+    //  ViPipeline0
     ////////////////////////////////////////////////////////////////////////////////
 
-    ViPipeline::ViPipeline(Visualizer&viz, const Pipeline&p) : m_viz(viz), m_id(p.id()), m_cfg(p.config())
+    ViPipeline0::ViPipeline0(Visualizer&viz, const Pipeline&p) : m_viz(viz), m_id(p.id()), m_cfg(p.config())
     {
     }
     
-    ViPipeline::~ViPipeline()
+    ViPipeline0::~ViPipeline0()
     {
         _dtor();
     }
     
-    std::error_code         ViPipeline::_ctor()
+    std::error_code         ViPipeline0::_ctor()
     {
         try {
             std::vector<VkPipelineShaderStageCreateInfo>    stages;
@@ -517,7 +517,7 @@ namespace yq::tachyon {
         }
     }
     
-    void                    ViPipeline::_dtor()
+    void                    ViPipeline0::_dtor()
     {
         if(m_descriptors){
             vkDestroyDescriptorSetLayout(m_viz.device(), m_descriptors, nullptr);
@@ -539,20 +539,20 @@ namespace yq::tachyon {
 
 
     ////////////////////////////////////////////////////////////////////////////////
-    //  ViRendered
+    //  ViRendered0
     ////////////////////////////////////////////////////////////////////////////////
 
-    ViRendered::ViRendered(Visualizer&_viz, const ViPipeline& _pipe, const Rendered& _obj) : m_viz(_viz), m_pipe(_pipe), m_object(_obj)
+    ViRendered0::ViRendered0(Visualizer&_viz, const ViPipeline0& _pipe, const Rendered& _obj) : m_viz(_viz), m_pipe(_pipe), m_object(_obj)
     {
         _ctor();
     }
     
-    ViRendered::~ViRendered()
+    ViRendered0::~ViRendered0()
     {
         _dtor();
     }
 
-    std::error_code     ViRendered::_ctor()
+    std::error_code     ViRendered0::_ctor()
     {
         size_t i;
         size_t  ds = 0;
@@ -598,7 +598,7 @@ namespace yq::tachyon {
         
         
         if(ds){
-            std::vector<VkDescriptorSetLayout>      layouts(ds, m_pipe.m_descriptors);    // TODO efficiency is to push this into ViPipeline
+            std::vector<VkDescriptorSetLayout>      layouts(ds, m_pipe.m_descriptors);    // TODO efficiency is to push this into ViPipeline0
             VqDescriptorSetAllocateInfo allocInfo;
             allocInfo.descriptorPool        = m_viz.descriptor_pool();
             allocInfo.descriptorSetCount    = ds;
@@ -616,11 +616,11 @@ namespace yq::tachyon {
         return std::error_code();
     }
     
-    void                ViRendered::_dtor()
+    void                ViRendered0::_dtor()
     {
     }
 
-    void    ViRendered::_ubo(size_t i)
+    void    ViRendered0::_ubo(size_t i)
     {
         VkDescriptorBufferInfo  bufferInfo;
         bufferInfo.buffer                   = m_ubos[i].buffer;
@@ -638,7 +638,7 @@ namespace yq::tachyon {
         vkUpdateDescriptorSets(m_viz.device(), 1, &descriptorWrite, 0, nullptr);
     }
 
-    void    ViRendered::_tex(size_t i)
+    void    ViRendered0::_tex(size_t i)
     {
         VkDescriptorImageInfo   imageInfo{};
         imageInfo.imageLayout   = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
@@ -656,7 +656,7 @@ namespace yq::tachyon {
         vkUpdateDescriptorSets(m_viz.device(), 1, &descriptorWrite, 0, nullptr);
     }
 
-    void                ViRendered::descriptors(ViContext& u)
+    void                ViRendered0::descriptors(ViContext& u)
     {
         size_t i;
         for(i=0;i<m_ubos.size();++i){
@@ -669,7 +669,7 @@ namespace yq::tachyon {
         }
     }
  
-    void                ViRendered::update(ViContext& u)
+    void                ViRendered0::update(ViContext& u)
     {
         size_t i;
 
@@ -709,7 +709,7 @@ namespace yq::tachyon {
         }
     }
 
-    void                ViRendered::record(ViContext&u)
+    void                ViRendered0::record(ViContext&u)
     {
         const auto&         cfg     = m_pipe.m_cfg;
         if(cfg.binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
@@ -776,10 +776,10 @@ namespace yq::tachyon {
 
 
     ////////////////////////////////////////////////////////////////////////////////
-    //  ViThread
+    //  ViThread0
     ////////////////////////////////////////////////////////////////////////////////
     
-    ViThread::ViThread(Visualizer&viz) : m_viz(viz)
+    ViThread0::ViThread0(Visualizer&viz) : m_viz(viz)
     {
         try {
             _ctor();
@@ -791,12 +791,12 @@ namespace yq::tachyon {
         }
     }
     
-    ViThread::~ViThread()
+    ViThread0::~ViThread0()
     {
         _dtor();
     }
     
-    void    ViThread::_ctor()
+    void    ViThread0::_ctor()
     {
         uint32_t      dcount  = m_viz.descriptor_count();
         VkDescriptorPoolSize descriptorPoolSizes[] =
@@ -840,7 +840,7 @@ namespace yq::tachyon {
         }
     }
     
-    void    ViThread::_dtor()
+    void    ViThread0::_dtor()
     {
         if(m_descriptors){
             vkDestroyDescriptorPool(m_viz.device(), m_descriptors, nullptr);
@@ -933,14 +933,14 @@ namespace yq::tachyon {
 
         m_descriptorCount   = std::max(MIN_DESCRIPTOR_COUNT, vci.descriptors);
 
-        m_thread            = std::make_unique<ViThread>(*this);
+        m_thread            = std::make_unique<ViThread0>(*this);
 
 
 
 
         m_frames.reserve(vci.frames_in_flight);
         for(size_t i=0;i<vci.frames_in_flight;++i)
-            m_frames.push_back(std::make_unique<ViFrame>(*this));
+            m_frames.push_back(std::make_unique<ViFrame0>(*this));
             
         return std::error_code();
     }
@@ -1011,12 +1011,12 @@ namespace yq::tachyon {
     }
 
 
-    ViFrame&            Visualizer::current_frame()
+    ViFrame0&            Visualizer::current_frame()
     {
         return *(m_frames[m_tick % m_frames.size()]);
     }
     
-    const ViFrame&      Visualizer::current_frame() const
+    const ViFrame0&      Visualizer::current_frame() const
     {
         return const_cast<Visualizer*>(this)->current_frame();
     }
@@ -1027,28 +1027,28 @@ namespace yq::tachyon {
     }
 
     
-    ViFrame&            Visualizer::frame(int32_t i)
+    ViFrame0&            Visualizer::frame(int32_t i)
     {
         uint64_t    tick    = (uint64_t)((int64_t) m_tick + i);
         return *(m_frames[tick % m_frames.size() ]);
     }
     
-    const ViFrame&      Visualizer::frame(int32_t i) const
+    const ViFrame0&      Visualizer::frame(int32_t i) const
     {
         return const_cast<Visualizer*>(this)->frame(i);
     }
 
-    ViFrame&            Visualizer::next_frame()
+    ViFrame0&            Visualizer::next_frame()
     {
         return *(m_frames[(m_tick+1) % m_frames.size()]);
     }
     
-    const ViFrame&      Visualizer::next_frame() const
+    const ViFrame0&      Visualizer::next_frame() const
     {
         return const_cast<Visualizer*>(this)->next_frame();
     }
 
-    const ViPipeline* Visualizer::pipeline(uint64_t i) const
+    const ViPipeline0* Visualizer::pipeline(uint64_t i) const
     {
         {
             LOCK
@@ -1062,7 +1062,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     //  SETTERS/MANIPULATORS
     
-    const ViPipeline*  Visualizer::create(const Pipeline& v)
+    const ViPipeline0*  Visualizer::create(const Pipeline& v)
     {
         {
             LOCK
@@ -1071,9 +1071,9 @@ namespace yq::tachyon {
                 return j->second;
         }
         
-        ViPipeline* p   = new ViPipeline(*this, v);
+        ViPipeline0* p   = new ViPipeline0(*this, v);
         p -> _ctor();
-        ViPipeline* ret = nullptr;
+        ViPipeline0* ret = nullptr;
         
         {
             WLOCK
@@ -1141,7 +1141,7 @@ namespace yq::tachyon {
         }
     
         auto    r1 = auto_reset(u.m_viz, this);
-        ViFrame&    f   = current_frame();
+        ViFrame0&    f   = current_frame();
         auto    r2  = auto_reset(u.m_command, f.m_commandBuffer);
         auto    r3  = auto_reset(u.m_frame, &f);
 
@@ -1237,7 +1237,7 @@ namespace yq::tachyon {
         // TODO ... reduce this down to a single pipeline lookup.... (as the next one is implicit)
         
         //  FOR NOW....
-        ViRendered*         thing   = current_frame().create(r, p);
+        ViRendered0*         thing   = current_frame().create(r, p);
         if(!thing)
             return;
         thing -> update(u);
@@ -1307,7 +1307,7 @@ namespace yq::tachyon {
                 const Pipeline*pipe    = r->pipeline();
                 if(!pipe)
                     continue;
-                ViRendered* rr  = u.m_frame -> create(*r, *pipe);
+                ViRendered0* rr  = u.m_frame -> create(*r, *pipe);
                 if(!rr)
                     continue;
                 rr -> descriptors(u);

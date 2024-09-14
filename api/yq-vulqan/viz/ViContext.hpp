@@ -6,7 +6,6 @@
 
 #pragma once
 //#include <tachyon/preamble.hpp>
-//#include <tachyon/gpu/ViPipeline.hpp>
 #include <vulkan/vulkan_core.h>
 #include <yq-toolbox/math/glm.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
@@ -14,8 +13,8 @@
 //namespace yq::engine { class Viewer; }
 namespace yq::tachyon {
 
-    struct ViRendered;
-    struct ViFrame;
+    struct ViRendered0;
+    struct ViFrame0;
     class Visualizer;
     class Viewer;
     class Window;
@@ -48,7 +47,7 @@ namespace yq::tachyon {
         Visualizer*         m_viz           = nullptr; 
         Viewer*             m_viewer        = nullptr;
         Window*             m_window        = nullptr;
-        ViFrame*            m_frame         = nullptr;
+        ViFrame0*            m_frame         = nullptr;
         VkCommandBuffer     m_command       = nullptr;
         VkPipeline          m_pipeline      = nullptr;  // last pipeline set
         VkPipelineLayout    m_layout        = nullptr;  // last layout set

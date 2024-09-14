@@ -29,12 +29,12 @@ namespace yq::tachyon {
     
     class Rendered;
     class Pipeline;
-    struct ViRendered;
+    struct ViRendered0;
     struct ViContext;
     
     class ViQueueManager;
     
-    using ViRenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
+    using ViRendered0Map   = std::unordered_multimap<uint64_t,ViRendered0*>;
     
     struct ViBufferObject;
     using ViBO = ViBufferObject;
@@ -43,8 +43,8 @@ namespace yq::tachyon {
 
 
         //  and so we can be more efficient in rendering
-    struct ViFrame {
-        ViRenderedMap               m_rendereds;
+    struct ViFrame0 {
+        ViRendered0Map               m_rendereds;
         mutable tbb::spin_rw_mutex  m_mutex;
         Visualizer&                 m_viz;
         VkCommandPool               m_commandPool     = nullptr;
@@ -54,17 +54,17 @@ namespace yq::tachyon {
         VkFence                     m_fence           = nullptr;
         const uint32_t              m_id;
         
-        ViFrame(Visualizer&);
-        ~ViFrame();
+        ViFrame0(Visualizer&);
+        ~ViFrame0();
         
         void    _ctor();
         void    _dtor();
         
-        ViRendered*         create(const Rendered&, const Pipeline&);
-        const ViRendered*   lookup(const Rendered&, const Pipeline&) const;
+        ViRendered0*         create(const Rendered&, const Pipeline&);
+        const ViRendered0*   lookup(const Rendered&, const Pipeline&) const;
     };
 
-    struct ViPipeline {
+    struct ViPipeline0 {
         Visualizer&             m_viz;
         const uint64_t          m_id;
         const PipelineConfig    m_cfg;
@@ -80,8 +80,8 @@ namespace yq::tachyon {
         uint32_t                m_shaders     = 0;
         VkPipelineBindPoint     m_binding     = VK_PIPELINE_BIND_POINT_GRAPHICS;
         
-        ViPipeline(Visualizer&, const Pipeline&);
-        ~ViPipeline();
+        ViPipeline0(Visualizer&, const Pipeline&);
+        ~ViPipeline0();
         
         std::error_code         _ctor();
         void                    _dtor();
@@ -99,9 +99,9 @@ namespace yq::tachyon {
 
         //  This is the mirror to the rendered object
         //  (it'll take over the ViThing)
-    struct ViRendered {
+    struct ViRendered0 {
         Visualizer&                     m_viz;
-        const ViPipeline&               m_pipe;
+        const ViPipeline0&               m_pipe;
         const Rendered&                 m_object;
         
         /*
@@ -120,8 +120,8 @@ namespace yq::tachyon {
         
         PushBuffer                      m_push;
         
-        ViRendered(Visualizer&, const ViPipeline&, const Rendered&);
-        ~ViRendered();
+        ViRendered0(Visualizer&, const ViPipeline0&, const Rendered&);
+        ~ViRendered0();
 
         std::error_code     _ctor();
         void                _dtor();
@@ -136,14 +136,14 @@ namespace yq::tachyon {
 
 
         // eventually multithread...
-    struct ViThread {
+    struct ViThread0 {
         Visualizer&             m_viz;
         VkDescriptorPool        m_descriptors         = nullptr;
         VkCommandPool           m_graphics            = nullptr;
         VkCommandPool           m_compute             = nullptr;
         
-        ViThread(Visualizer&);
-        ~ViThread();
+        ViThread0(Visualizer&);
+        ~ViThread0();
         
         void    _ctor();
         void    _dtor();

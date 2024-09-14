@@ -32,13 +32,13 @@
 namespace yq::tachyon {
 
     //struct ViImage;
-    struct ViRendered;
+    struct ViRendered0;
     struct ViRenderPass;
     struct ViSwapchain;
-    struct ViPipeline;
-    struct ViFrame;
+    struct ViPipeline0;
+    struct ViFrame0;
     struct ViTexture;
-    struct ViThread;
+    struct ViThread0;
     struct ViUpload;
     
     struct ViContext;
@@ -66,15 +66,15 @@ namespace yq::tachyon {
 
         //! Creates the pipeline
         //! \note Reference is only good to the next create()
-        const ViPipeline*               create(const Pipeline&);
+        const ViPipeline0*               create(const Pipeline&);
         
         //! Gets the current frame
         //! \note will return INVALID reference if construction failed!
-        ViFrame&                        current_frame();
+        ViFrame0&                        current_frame();
 
         //! Gets the current frame
         //! \note will return INVALID reference if construction failed!
-        const ViFrame&                  current_frame() const;
+        const ViFrame0&                  current_frame() const;
 
         uint32_t                        descriptor_count() const { return m_descriptorCount; }
         VkDescriptorPool                descriptor_pool() const;
@@ -97,11 +97,11 @@ namespace yq::tachyon {
 
         //! Gets the frame relative to current
         //! \note will return INVALID reference if construction failed!
-        ViFrame&                        frame(int32_t);
+        ViFrame0&                        frame(int32_t);
 
         //! Gets the frame relative to current
         //! \note will return INVALID reference if construction failed!
-        const ViFrame&                  frame(int32_t) const;
+        const ViFrame0&                  frame(int32_t) const;
 
         uint64_t                        frame_number() const { return m_tick; }
         
@@ -110,15 +110,15 @@ namespace yq::tachyon {
         
         //! Gets the next frame
         //! \note will return INVALID reference if construction failed!
-        ViFrame&                        next_frame();
+        ViFrame0&                        next_frame();
 
         //! Gets the next frame
         //! \note will return INVALID reference if construction failed!
-        const ViFrame&                  next_frame() const;
+        const ViFrame0&                  next_frame() const;
         
         //! Finds the pipeline
         //! \note do NOT hold onto the reference!
-        const ViPipeline*               pipeline(uint64_t) const;
+        const ViPipeline0*               pipeline(uint64_t) const;
         
         
 
@@ -129,8 +129,8 @@ namespace yq::tachyon {
         void                            update(ViContext&, const Scene&);
         
     protected:
-        //friend struct ViPipeline;
-        //friend struct ViRendered;
+        //friend struct ViPipeline0;
+        //friend struct ViRendered0;
     
         Visualizer();
         ~Visualizer();
@@ -159,9 +159,9 @@ namespace yq::tachyon {
         Visualizer& operator=(Visualizer&&) = delete;
     
         //using DKey  = std::pair<uint64_t, uint64_t>;
-        using RenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
-        using PipelineMap   = std::unordered_map<uint64_t, ViPipeline*>;
-        using FrameArray    = std::vector<std::unique_ptr<ViFrame>>;
+        using RenderedMap   = std::unordered_multimap<uint64_t,ViRendered0*>;
+        using PipelineMap   = std::unordered_map<uint64_t, ViPipeline0*>;
+        using FrameArray    = std::vector<std::unique_ptr<ViFrame0>>;
 
     
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
@@ -171,7 +171,7 @@ namespace yq::tachyon {
         PipelineMap                         m_pipelines;
         
             // eventually this will get smarter....
-        std::unique_ptr<ViThread>           m_thread;
+        std::unique_ptr<ViThread0>           m_thread;
 
     private:
         bool                                m_init                  = false;

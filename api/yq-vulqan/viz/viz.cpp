@@ -15,4 +15,5 @@
 #include "ViRenderPass.ipp"
 #include "ViSampler.ipp"
 #include "ViShader.ipp"
+#include "ViSwapchain.ipp"
 #include "ViTexture.ipp"

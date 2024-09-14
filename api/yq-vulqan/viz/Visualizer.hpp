@@ -120,14 +120,7 @@ namespace yq::tachyon {
         //! \note do NOT hold onto the reference!
         const ViPipeline*               pipeline(uint64_t) const;
         
-        PresentMode                     present_mode() const { return m_presentMode; }
         
-        const std::set<PresentMode>&    present_modes_available() const { return m_presentModes; }
-
-        
-        void                            trigger_rebuild();
-        
-        void                            set_present_mode(PresentMode);
 
         VkRect2D                        swapchain_def_scissor() const;
         VkViewport                      swapchain_def_viewport() const;
@@ -174,28 +167,19 @@ namespace yq::tachyon {
         //using DKey  = std::pair<uint64_t, uint64_t>;
         using RenderedMap   = std::unordered_multimap<uint64_t,ViRendered*>;
         using PipelineMap   = std::unordered_map<uint64_t, ViPipeline*>;
-        using TextureMap    = std::unordered_map<uint64_t, ViTexture>;
-        using ImageMap      = std::unordered_map<uint64_t, ViImage>;
         using FrameArray    = std::vector<std::unique_ptr<ViFrame>>;
 
-        //using CleanupMap                    = std::unordered_map<uint64_t, CleanupVector*>;
     
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
         uint32_t                            m_descriptorCount       = 0;
         //std::vector<const char*>            m_extensions;
         FrameArray                          m_frames;
-        ImageMap                            m_images;
         PipelineMap                         m_pipelines;
-        //PresentMode                         m_presentMode;
-        //std::unique_ptr<ViRenderPass>       m_renderPass;
         std::unique_ptr<ViSwapchain>        m_swapchain;
         
-        TextureMap                          m_textures;
             // eventually this will get smarter....
         std::unique_ptr<ViThread>           m_thread;
         
-        //std::unique_ptr<ViUpload>           m_upload; // [Queue::COUNT];
-        std::atomic<bool>                   m_rebuildSwap           = { false };
         
 
     private:

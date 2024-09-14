@@ -116,11 +116,15 @@ namespace yq::tachyon {
             
         for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(m_physical, m_surface))
             m_presentModes.insert((PresentMode::enum_t) pm);
+        m_presentMode           = m_presentModes.contains(iData.viewer.pmode) ? iData.viewer.pmode : PresentMode{ PresentMode::Fifo };
+
         m_surfaceFormats        = vqGetPhysicalDeviceSurfaceFormatsKHR(m_physical, m_surface);
         
         // right now, cheating on format & color space
         m_surfaceFormat         = VK_FORMAT_B8G8R8A8_SRGB;
         m_surfaceColorSpace     = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
+
+        set_clear_color(iData.viewer.clear);
         return  {};
     }
     
@@ -561,6 +565,16 @@ namespace yq::tachyon {
         return m_multiview.maxViewCount;
     }
 
+    PresentMode  ViVisualizer::present_mode() const
+    {
+        return m_presentMode;
+    }
+
+    const std::set<PresentMode>&    ViVisualizer::present_modes_available() const
+    {
+        return m_presentModes;
+    }
+
     VkQueue      ViVisualizer::present_queue(uint32_t i) const
     {
         return m_presentQueue ? m_presentQueue->queue(i) : nullptr;
@@ -663,6 +677,14 @@ namespace yq::tachyon {
     void        ViVisualizer::set_clear_color(const RGBA4F&i)
     {   
         m_clearValue    = vqClearValue(i);
+    }
+
+    void        ViVisualizer::set_present_mode(PresentMode pm)
+    {
+        if((pm != m_presentMode) && supports_present(pm)){
+            m_presentMode   = pm;
+            m_rebuildSwap   = true;
+        }
     }
 
     ViShaderCPtr ViVisualizer::shader(uint64_t i) const
@@ -800,10 +822,16 @@ namespace yq::tachyon {
         return tasker->execute(opts.timeout, std::move(fn));
     }
 
-    bool        ViVisualizer::transfer_queue_valid() const
+    bool    ViVisualizer::transfer_queue_valid() const
     {
         return m_transferQueue != nullptr;
     }
+
+    void    ViVisualizer::trigger_rebuild()
+    {
+        m_rebuildSwap       = true;
+    }
+
 
     VkQueue   ViVisualizer::video_decode_queue(uint32_t i) const
     {

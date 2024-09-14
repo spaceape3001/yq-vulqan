@@ -1101,17 +1101,9 @@ namespace yq::tachyon {
 
 
 
-        //  ================================
-        //  PRESENT MODE
-
-        m_presentMode               = m_presentModes.contains(vci.pmode) ? vci.pmode : PresentMode{ PresentMode::Fifo };
-
-
         m_frames.reserve(vci.frames_in_flight);
         for(size_t i=0;i<vci.frames_in_flight;++i)
             m_frames.push_back(std::make_unique<ViFrame>(*this));
-
-        set_clear_color(vci.clear);
 
         m_swapchain = std::make_unique<ViSwapchain>(*this, render_pass());
             
@@ -1293,18 +1285,6 @@ namespace yq::tachyon {
         return ret;
     }
 
-    void        Visualizer::set_present_mode(PresentMode pm)
-    {
-        if((pm != m_presentMode) && supports_present(pm)){
-            m_presentMode   = pm;
-            m_rebuildSwap   = true;
-        }
-    }
-
-    void        Visualizer::trigger_rebuild()
-    {
-        m_rebuildSwap       = true;
-    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //  RENDERING

@@ -162,6 +162,9 @@ namespace yq::tachyon {
 
         //! Vulkan physical device (gpu)
         VkPhysicalDevice                physical() const { return m_physical; }
+        
+        PresentMode                     present_mode() const;
+        const std::set<PresentMode>&    present_modes_available() const;
 
         VkQueue                         present_queue(uint32_t i=0) const;
         uint32_t                        present_queue_count() const;
@@ -182,6 +185,8 @@ namespace yq::tachyon {
 
             //! Sets the background color
         void                            set_clear_color(const RGBA4F&);
+
+        void                            set_present_mode(PresentMode);
 
         //! Finds the shader
         ViShaderCPtr                    shader(uint64_t) const;
@@ -229,6 +234,8 @@ namespace yq::tachyon {
         
         //! IF valid, means there's an asynchronous DMA transfer queue
         bool                            transfer_queue_valid() const;
+
+        void                            trigger_rebuild();
 
         VkQueue                         video_decode_queue(uint32_t i=0) const;
         uint32_t                        video_decode_queue_count() const;
@@ -282,6 +289,7 @@ namespace yq::tachyon {
         std::set<PresentMode>               m_presentModes;
         ViQueueManager*                     m_presentQueue      = nullptr;
         std::vector<ViQueueManagerPtr>      m_queues;
+        std::atomic<bool>                   m_rebuildSwap       = { false };
         ViRenderPassCPtr                    m_renderPass;
         ViSamplerManagerUPtr                m_samplers;
         ViShaderManagerUPtr                 m_shaders;

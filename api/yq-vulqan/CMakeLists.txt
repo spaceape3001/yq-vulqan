@@ -61,7 +61,7 @@ add_library(${PROJECT_NAME} SHARED
     
     memory/memory.cpp
     
-    pass/RenderPass.cpp
+    # pass/RenderPass.cpp
     
     pipeline/pipeline.cpp
 
@@ -98,6 +98,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViBufferObject.cpp
     viz/ViCleanupManager.cpp
     viz/ViCommandBufferVector.cpp
+    viz/ViRenderPass.cpp
     viz/ViVisualizer.cpp
     viz/Visualizer.cpp
     

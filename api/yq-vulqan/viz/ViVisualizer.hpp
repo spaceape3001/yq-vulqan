@@ -16,6 +16,7 @@
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/image.hpp>
 #include <yq-vulqan/typedef/queue_tasker.hpp>
+#include <yq-vulqan/typedef/render_pass.hpp>
 #include <yq-vulqan/typedef/sampler.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
 #include <yq-vulqan/typedef/texture.hpp>
@@ -170,6 +171,8 @@ namespace yq::tachyon {
         bool                            present_queue_valid() const;
 
         std::error_code                 queue_task(ViQueueType, queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+
+        VkRenderPass                    render_pass() const;
         
         ViSamplerCPtr                   sampler(uint64_t) const;
         ViSamplerCPtr                   sampler_create(const Sampler&);
@@ -279,6 +282,7 @@ namespace yq::tachyon {
         std::set<PresentMode>               m_presentModes;
         ViQueueManager*                     m_presentQueue      = nullptr;
         std::vector<ViQueueManagerPtr>      m_queues;
+        ViRenderPassCPtr                    m_renderPass;
         ViSamplerManagerUPtr                m_samplers;
         ViShaderManagerUPtr                 m_shaders;
         VkSurfaceKHR                        m_surface           = nullptr;
@@ -325,5 +329,8 @@ namespace yq::tachyon {
         
         std::error_code     _6_manager_init();
         void                _6_manager_kill();
+        
+        std::error_code     _7_render_pass_create();
+        void                _7_render_pass_kill();
     };
 }

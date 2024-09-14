@@ -46,6 +46,9 @@ namespace yq::tachyon::errors {
     using insufficient_gpu_memory           = error_db::entry<"Insufficient GPU memory for requested operation">;
     using present_queue_not_found           = error_db::entry<"No present queue found">;
     using present_queue_uninitialized       = error_db::entry<"Present queue is uninitialized">;
+    using render_pass_bad_state             = error_db::entry<"Render pass is in a bad state">;
+    using render_pass_cant_create           = error_db::entry<"Unable to create render pass">;
+    using render_pass_existing              = error_db::entry<"Render pass already created">;
     //using SKIPPING_ZERO_SIZED_BUFFER        = error_db::entry<"Skipping zero sized buffer">;
     using sampler_bad_state                 = error_db::entry<"Sampler is in a bad state">;
     using sampler_cant_create               = error_db::entry<"Unable to create vulkan sampler">;

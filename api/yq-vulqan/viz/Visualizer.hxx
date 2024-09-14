@@ -134,18 +134,6 @@ namespace yq::tachyon {
         void    _tex(size_t);
     };
 
-    struct ViRenderPass {
-        Visualizer&         m_viz;
-        VkRenderPass        m_renderPass    = nullptr;
-        
-        ViRenderPass(Visualizer&);
-        ~ViRenderPass();
-        
-        void    _ctor();
-        void    _dtor();
-    };
-
-
     struct ViSwapchain {
         Visualizer&                 m_viz;
         VkSwapchainKHR              m_swapchain       = nullptr;
@@ -158,9 +146,9 @@ namespace yq::tachyon {
         VkSurfaceCapabilitiesKHR    m_capabilities;
         
         
-        ViSwapchain(Visualizer&, const ViRenderPass&, const ViSwapchain*old=nullptr);
+        ViSwapchain(Visualizer&, VkRenderPass, const ViSwapchain*old=nullptr);
         ~ViSwapchain();
-        void        _ctor(const ViRenderPass&, const ViSwapchain* old);
+        void        _ctor(VkRenderPass, const ViSwapchain* old);
         void        _dtor();
         
         
@@ -170,12 +158,6 @@ namespace yq::tachyon {
         uint32_t    height() const;
     };
 
-#if 0
-    struct ViTexture  {
-        VkImageView             view        = nullptr;
-        VkSampler               sampler     = nullptr;
-    };
-#endif
 
         // eventually multithread...
     struct ViThread {

@@ -6,10 +6,35 @@
 
 #pragma once
 
-namespace yq::tachyon {
-    namespace pass {
-    }
+#include <yq-vulqan/typedef/render_pass.hpp>
 
-    class RenderPass {
+#include <yq-toolbox/basic/Ref.hpp>
+#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq-vulqan/pass/RenderPassInfo.hpp>
+
+namespace yq::tachyon {
+    class RenderPass : public RefCount, public UniqueID {
+    public:
+    
+        /*
+            This is not fully thought out... sidelining the 
+            non-vulkan side of render pass until necessary.
+        */
+    
+        const RenderPassInfo    info;
+        
+        RenderPass(const RenderPassInfo&);
+        RenderPass(RenderPassInfo&&);
+        ~RenderPass();
+        
+        static RenderPassCPtr   simple(DataFormat);
+        static RenderPassInfo   simple_info(DataFormat);
+        
+    private:
+        RenderPass(const RenderPass&) = delete;
+        RenderPass(RenderPass&&) = delete;
+        RenderPass& operator=(const RenderPass&) = delete;
+        RenderPass& operator=(RenderPass&&) = delete;
     };
 }
+

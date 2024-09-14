@@ -14,7 +14,7 @@
 namespace yq::tachyon {
     struct AttachmentReference {
         uint32_t        attachment      = 0;
-        ImageLayout     layout = ImageLayout::ColorAttachment;
+        ImageLayout     layout          = ImageLayout::ColorAttachment;
     };
     
     enum class SampleCount : uint8_t {
@@ -48,11 +48,11 @@ namespace yq::tachyon {
         };
         using Flags     = ::yq::Flags<F,uint32_t>;
         
-        Flags               flags;
+        Flags               flags           = {};
         DataFormat          format;
-        SampleCountFlags    samples;
-        LoadOp              loadOp  = LoadOp::Load;
-        StoreOp             storeOp = StoreOp::Store;
+        SampleCountFlags    samples         = SampleCount::One;
+        LoadOp              loadOp          = LoadOp::Load;
+        StoreOp             storeOp         = StoreOp::Store;
         LoadOp              stencilLoadOp   = LoadOp::DontCare;
         StoreOp             stencilStoreOp  = StoreOp::DontCare;
         ImageLayout         initialLayout   = ImageLayout::Undefined;

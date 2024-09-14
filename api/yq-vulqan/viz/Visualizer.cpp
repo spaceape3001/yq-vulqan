@@ -771,77 +771,12 @@ namespace yq::tachyon {
             vkCmdDraw(u.command(), vmax, 1, 0, 0);
         }
     }
-    
-    ////////////////////////////////////////////////////////////////////////////////
-    //  ViRenderPass
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ViRenderPass::ViRenderPass(Visualizer&viz) : m_viz(viz)
-    {
-        try {
-            _ctor();
-        }
-        catch(std::error_code ec)
-        {
-            _dtor();
-            throw;
-        }
-    }
-    
-    ViRenderPass::~ViRenderPass()
-    {
-        _dtor();
-    }
-
-    void    ViRenderPass::_ctor()
-    {
-        if(m_renderPass)
-            throw create_error<"Render pass already initialized">();
-    
-        VkAttachmentDescription colorAttachment{};
-        colorAttachment.format          = m_viz.surface_format();
-        colorAttachment.samples         = VK_SAMPLE_COUNT_1_BIT;
-        colorAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
-        colorAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_STORE;        
-        colorAttachment.stencilLoadOp   = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-        colorAttachment.stencilStoreOp  = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        colorAttachment.initialLayout   = VK_IMAGE_LAYOUT_UNDEFINED;
-        colorAttachment.finalLayout     = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-        
-        VkAttachmentReference colorAttachmentRef{};
-        colorAttachmentRef.attachment = 0;
-        colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-        VkSubpassDescription subpass{};
-        subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;        
-
-        subpass.colorAttachmentCount = 1;
-        subpass.pColorAttachments = &colorAttachmentRef;
-        
-        VqRenderPassCreateInfo renderPassInfo;
-        renderPassInfo.attachmentCount = 1;
-        renderPassInfo.pAttachments = &colorAttachment;
-        renderPassInfo.subpassCount = 1;
-        renderPassInfo.pSubpasses = &subpass;
-
-        if (vkCreateRenderPass(m_viz.device(), &renderPassInfo, nullptr, &m_renderPass) != VK_SUCCESS) 
-            throw create_error<"Unable to create the render pass">();
-    }
-    
-    void    ViRenderPass::_dtor()
-    {
-        if(m_renderPass){
-            vkDestroyRenderPass(m_viz.device(), m_renderPass, nullptr);
-            m_renderPass    = nullptr;
-        }
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViSwapchain
     ////////////////////////////////////////////////////////////////////////////////
 
-    ViSwapchain::ViSwapchain(Visualizer&viz, const ViRenderPass&rp, const ViSwapchain*old) : m_viz(viz)
+    ViSwapchain::ViSwapchain(Visualizer&viz, VkRenderPass rp, const ViSwapchain*old) : m_viz(viz)
     {
         try {
             _ctor(rp, old);
@@ -858,7 +793,7 @@ namespace yq::tachyon {
         _dtor();
     }
     
-    void    ViSwapchain::_ctor(const ViRenderPass& rp, const ViSwapchain* old)
+    void    ViSwapchain::_ctor(VkRenderPass rp, const ViSwapchain* old)
     {
         if(m_swapchain)
             throw create_error<"Swapchain is already initialized">();
@@ -946,7 +881,7 @@ namespace yq::tachyon {
         m_frameBuffers.resize(m_imageCount, nullptr);
 
         VqFramebufferCreateInfo   frameBufferInfo;
-        frameBufferInfo.renderPass       = rp.m_renderPass;
+        frameBufferInfo.renderPass       = rp;
         frameBufferInfo.attachmentCount  = 1;
         frameBufferInfo.width            = m_extents.width;
         frameBufferInfo.height           = m_extents.height;
@@ -1143,6 +1078,11 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
 
+        ec = _7_render_pass_create();
+        if(ec != std::error_code())
+            return ec;
+        
+
         //  ================================
         //  GETTING THE QUEUES
 
@@ -1160,10 +1100,6 @@ namespace yq::tachyon {
 
 
 
-        //  ================================
-        //  RENDER PASS
-
-        m_renderPass        = std::make_unique<ViRenderPass>(*this);
 
         //  ================================
         //  PRESENT MODE
@@ -1177,7 +1113,7 @@ namespace yq::tachyon {
 
         set_clear_color(vci.clear);
 
-        m_swapchain = std::make_unique<ViSwapchain>(*this, *m_renderPass);
+        m_swapchain = std::make_unique<ViSwapchain>(*this, render_pass());
             
         return std::error_code();
     }
@@ -1187,8 +1123,6 @@ namespace yq::tachyon {
         m_swapchain     = {};
         m_frames.clear();
         
-        m_renderPass    = {};
-
         m_thread        = {};
     
         for(auto& p : m_pipelines){
@@ -1199,6 +1133,7 @@ namespace yq::tachyon {
 
         //  Generally in reverse order of initialization
 
+        _7_render_pass_kill();
         _6_manager_kill();
         _5_allocator_kill();
         _4_device_kill();
@@ -1276,8 +1211,6 @@ namespace yq::tachyon {
         return const_cast<Visualizer*>(this)->frame(i);
     }
 
-
-
     ViFrame&            Visualizer::next_frame()
     {
         return *(m_frames[(m_tick+1) % m_frames.size()]);
@@ -1298,13 +1231,6 @@ namespace yq::tachyon {
         }
         return nullptr;
     }
-
-
-    VkRenderPass Visualizer::render_pass() const
-    {
-        return m_renderPass -> m_renderPass;
-    }
-
 
     VkRect2D    Visualizer::swapchain_def_scissor() const
     {
@@ -1386,7 +1312,7 @@ namespace yq::tachyon {
     void                Visualizer::_rebuild()
     {
         vkDeviceWaitIdle(m_device);
-        m_swapchain     = std::make_unique<ViSwapchain>(*this, *m_renderPass, m_swapchain.get());
+        m_swapchain     = std::make_unique<ViSwapchain>(*this, render_pass(), m_swapchain.get());
     }
 
     std::error_code     Visualizer::_record(ViContext& u, uint32_t imageIndex, DrawFunction use)
@@ -1399,7 +1325,7 @@ namespace yq::tachyon {
             return create_error<"Failed to begin recording command buffer">();
 
         VqRenderPassBeginInfo renderPassInfo;
-        renderPassInfo.renderPass = m_renderPass -> m_renderPass;
+        renderPassInfo.renderPass = render_pass();
         renderPassInfo.framebuffer = m_swapchain->m_frameBuffers[imageIndex];
         renderPassInfo.renderArea.offset = {0, 0};
         renderPassInfo.renderArea.extent = m_swapchain->m_extents;

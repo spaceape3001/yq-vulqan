@@ -26,6 +26,7 @@
 #include <yq-vulqan/viz/ViImage.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViQueueTasker.hpp>
+#include <yq-vulqan/viz/ViRenderPass.hpp>
 #include <yq-vulqan/viz/ViSampler.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViTexture.hpp>
@@ -315,6 +316,20 @@ namespace yq::tachyon {
         m_images        = {};
     }
 
+    std::error_code     ViVisualizer::_7_render_pass_create()
+    {
+        ViRenderPassPtr     rp  = new ViRenderPass;
+        std::error_code ec  = rp -> init(*this, m_surfaceFormat);
+        if(ec != std::error_code())
+            return ec;
+        m_renderPass    = (ViRenderPassCPtr) rp;
+        return {};
+    }
+    
+    void               ViVisualizer::_7_render_pass_kill()
+    {
+        m_renderPass    = nullptr;
+    }
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -582,6 +597,13 @@ namespace yq::tachyon {
     bool        ViVisualizer::present_queue_valid() const
     {
         return m_presentQueue != nullptr;
+    }
+
+    VkRenderPass        ViVisualizer::render_pass() const
+    {
+        if(m_renderPass)
+            return m_renderPass -> render_pass();
+        return nullptr;
     }
     
     std::error_code     ViVisualizer::queue_task(ViQueueType qt, queue_tasker_fn&&fn, const VizTaskerOptions& opts)

@@ -125,8 +125,6 @@ namespace yq::tachyon {
         const std::set<PresentMode>&    present_modes_available() const { return m_presentModes; }
 
         
-        VkRenderPass                    render_pass() const;
-
         void                            trigger_rebuild();
         
         void                            set_present_mode(PresentMode);
@@ -137,9 +135,6 @@ namespace yq::tachyon {
         uint32_t                        swapchain_image_count() const;
         uint32_t                        swapchain_min_image_count() const;
         uint32_t                        swapchain_width() const;
-        
-        //Expect<ViTexture>               texture(uint64_t) const;
-        
 
         // used if no draw function is provided
         virtual void                    record(ViContext&){}
@@ -192,7 +187,7 @@ namespace yq::tachyon {
         ImageMap                            m_images;
         PipelineMap                         m_pipelines;
         //PresentMode                         m_presentMode;
-        std::unique_ptr<ViRenderPass>       m_renderPass;
+        //std::unique_ptr<ViRenderPass>       m_renderPass;
         std::unique_ptr<ViSwapchain>        m_swapchain;
         
         TextureMap                          m_textures;

@@ -14,6 +14,7 @@ namespace yq::tachyon {
     
     struct ViBufferObject {
         VkBuffer        buffer  = nullptr;
+        VkDescriptorSet desc    = nullptr;
         uint64_t        rev     = 0;
         uint32_t        count   = 0;
         uint32_t        offset  = 0;

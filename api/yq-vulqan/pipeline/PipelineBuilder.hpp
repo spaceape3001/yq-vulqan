@@ -16,6 +16,7 @@
 #include <yq-toolbox/trait/not_moveable.hpp>
 
 #include <yq-vulqan/texture/Texture.hpp>
+#include <yq-vulqan/pipeline/SBO.hpp>
 #include <yq-vulqan/pipeline/UBO.hpp>
 #include <yq-vulqan/pipeline/VBO.hpp>
 
@@ -64,6 +65,8 @@ namespace yq::tachyon {
         void        push_view();
 
         void        set_auto_gen(AutoGen);
+
+        void        sbo(size_t cnt=1);
         
         void        ubo(size_t cnt=1);
 
@@ -90,6 +93,17 @@ namespace yq::tachyon {
             return cfg;
         }
         
+        template <typename V>
+        static SBOConfig    sbo_(uint32_t cnt, DataActivity da, uint32_t stages=0)
+        {
+            SBOConfig       cfg;
+            cfg.activity    = da;
+            cfg.size        = sizeof(V);
+            cfg.count       = cnt;
+            cfg.shaders     = stages;
+            return cfg;
+        }
+
         template <typename V>
         static UBOConfig    ubo_(uint32_t cnt, DataActivity da, uint32_t stages=0)
         {
@@ -322,6 +336,70 @@ namespace yq::tachyon {
         */
         
         template <typename V>
+        void    storage(SBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            SBOConfig       cfg = sbo_<V>(cnt, da, stages);
+            YQ_PIPELINE_COMMON_HANDLER
+            m_build.sbos.push_back(cfg);
+        }
+        
+        template <typename V>
+        void    storage(SB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            SBOConfig       cfg = sbo_<V>(cnt, da, stages);
+            YQ_PIPELINE_COMMON_HANDLER
+            m_build.sbos.push_back(cfg);
+        }
+
+        template <typename V>
+        void    storage(SBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            storage(p, 1, da, stages);
+        }
+        
+        template <typename V>
+        void    storage(SB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            storage(p, 1, da, stages);
+        }
+        
+        
+        template <typename V>
+        void    storage(SBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            SBOConfig       cfg = sbo_<V>(cnt, da, stages);
+            YQ_PIPELINE_MEMBER_HANDLER
+            m_build.sbos.push_back(cfg);
+        }
+        
+        template <typename V>
+        void    storage(SB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            SBOConfig       cfg = sbo_<V>(cnt, da, stages);
+            YQ_PIPELINE_MEMBER_HANDLER
+            m_build.sbos.push_back(cfg);
+        }
+
+        template <typename V>
+        void    storage(SBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            storage(p, 1, da, stages);
+        }
+        
+        template <typename V>
+        void    storage(SB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        {
+            storage(p, 1, da, stages);
+        }
+
+
+        /*
+            =======================================================
+            UNIFORM BUFFERS
+            =======================================================
+        */
+        
+        template <typename V>
         void    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             UBOConfig       cfg = ubo_<V>(cnt, da, stages);
@@ -377,7 +455,7 @@ namespace yq::tachyon {
         {
             uniform(p, 1, da, stages);
         }
-
+        
         /*
             =======================================================
             VERTEX BUFFERS

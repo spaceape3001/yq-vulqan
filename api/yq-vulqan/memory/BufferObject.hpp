@@ -44,4 +44,7 @@ namespace yq::tachyon {
     
     //! Uniform Buffer
     using UniformBuffer = BufferObject<BufferUsage::Uniform>;
+
+    //! Storage Buffer
+    using StorageBuffer = BufferObject<BufferUsage::Storage>;
 }

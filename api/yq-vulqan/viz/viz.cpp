@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViBuffer.ipp"
+#include "ViBufferObject.ipp"
 #include "ViCommandBuffer.ipp"
 #include "ViCommandPool.ipp"
 #include "ViContext.ipp"
@@ -17,3 +18,4 @@
 #include "ViShader.ipp"
 #include "ViSwapchain.ipp"
 #include "ViTexture.ipp"
+#include "ViTextureObject.ipp"

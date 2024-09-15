@@ -102,6 +102,15 @@ namespace yq::tachyon {
         uint32_t                size        = 0;
     };
 
+    /*! \brief Configuration for a storage buffer
+    */
+    struct SBOConfig  : public BaseBOConfig {
+    
+        uint32_t                count       = 1;
+        uint32_t                shaders     = 0;
+        uint32_t                size        = 0;
+    };
+
     /*! \brief Configuration for the push operation
     */
     struct PushConfig {
@@ -144,6 +153,9 @@ namespace yq::tachyon {
         //! Index buffers for the pipeline
         std::vector<IBOConfig>      ibos;
         
+        //! Storage buffers for the pipeline
+        std::vector<SBOConfig>      sbos;
+
         //! Uniform buffers for the pipeline
         std::vector<UBOConfig>      ubos;
         

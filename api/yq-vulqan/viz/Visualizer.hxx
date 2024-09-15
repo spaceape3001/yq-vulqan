@@ -12,8 +12,10 @@
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
+#include <yq-vulqan/typedef/pipeline.hpp>
 #include <yq-vulqan/viz/ViBufferObjectVector.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>
+#include <yq-vulqan/viz/ViTextureObjectVector.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <vector>
@@ -39,7 +41,8 @@ namespace yq::tachyon {
     struct ViBufferObject;
     using ViBO = ViBufferObject;
 
-    struct ViTO;
+    struct ViTextureObject;
+    using ViTO = ViTextureObject;
 
 
         //  and so we can be more efficient in rendering
@@ -72,7 +75,7 @@ namespace yq::tachyon {
         ViBufferObjectVector    m_vbos;
         ViBufferObjectVector    m_ibos;
         ViBufferObjectVector    m_ubos;
-        std::vector<ViTO>       m_texs;
+        ViTextureObjectVector   m_texs;
         VkPipelineLayout        m_layout      = nullptr;
         VkPipeline              m_pipeline    = nullptr;
         VkPipeline              m_wireframe   = nullptr;
@@ -87,15 +90,6 @@ namespace yq::tachyon {
         void                    _dtor();
     };
 
-
-    struct ViTO {
-        VkImageView             view        = nullptr;
-        VkSampler               sampler     = nullptr;
-        uint64_t                rev         = 0ULL;
-
-        //  returns TRUE if changed
-        bool    update(Visualizer&, const TexConfig&, const void*);
-    };
 
         //  This is the mirror to the rendered object
         //  (it'll take over the ViThing)
@@ -115,7 +109,7 @@ namespace yq::tachyon {
         ViBufferObjectVector            m_vbos;
         ViBufferObjectVector            m_ibos;
         ViBufferObjectVector            m_ubos;
-        std::vector<ViTO>               m_texs;
+        ViTextureObjectVector           m_texs;
         std::vector<VkDescriptorSet>    m_descriptors;        // sized to ubos + textures
         
         PushBuffer                      m_push;

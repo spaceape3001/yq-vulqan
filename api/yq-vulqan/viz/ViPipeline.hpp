@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq-toolbox/basic/Ref.hpp>
+#include <yq-vulqan/viz/ViData.hpp>
+
+namespace yq::tachyon {
+    class ViPipeline : public RefCount, public ViData {
+    public:
+    
+    private:
+        
+    };
+}

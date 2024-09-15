@@ -95,9 +95,11 @@ add_library(${PROJECT_NAME} SHARED
     viewer/PresentMode.cpp
     viewer/Viewer.cpp
     
-    viz/ViBufferObject.cpp
     viz/ViCleanupManager.cpp
     viz/ViCommandBufferVector.cpp
+    viz/ViData.cpp
+    viz/ViPipeline.cpp
+    viz/ViRendered.cpp
     viz/ViVisualizer.cpp
     viz/Visualizer.cpp
     

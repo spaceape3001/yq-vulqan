@@ -30,6 +30,7 @@ namespace yq::tachyon::errors {
     using command_pool_uninitialized        = error_db::entry<"Attempting to use an uninitialized command pool">;
     using compute_queue_not_found           = error_db::entry<"No compute queue found">;
     using compute_queue_uninitialized       = error_db::entry<"Compute queue is uninitialized">;
+    using data_cant_initialize              = error_db::entry<"Data object is unable to initialize">;
     using fence_bad_state                   = error_db::entry<"Fence is in a bad state">;
     using fence_cant_create                 = error_db::entry<"Unable to create vulkan fence">;
     using fence_existing                    = error_db::entry<"Fence already created">;

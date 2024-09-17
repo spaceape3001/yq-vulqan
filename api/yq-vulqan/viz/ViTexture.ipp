@@ -105,7 +105,7 @@ namespace yq::tachyon {
 
         VkResult res = vkCreateImageView(viz.device(), &info, nullptr, &m_imageView);
         if(res != VK_SUCCESS){
-            vizWarning << "vkTexture().create(imageView): VkResult " << (int32_t) res;
+            vizWarning << "ViTexture() -- cannot create image view.  VkResult " << (int32_t) res;
             return errors::texture_cant_create_image_view();
         }
         

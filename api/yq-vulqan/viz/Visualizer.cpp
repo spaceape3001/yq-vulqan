@@ -556,7 +556,7 @@ namespace yq::tachyon {
         
         
         if(ds){
-            std::vector<VkDescriptorSetLayout>      layouts(ds, m_pipe.m_descriptors);    // TODO efficiency is to push this into ViPipeline0
+            //std::vector<VkDescriptorSetLayout>      layouts(ds, m_pipe.m_descriptors);    // TODO efficiency is to push this into ViPipeline0
             VqDescriptorSetAllocateInfo allocInfo;
             allocInfo.descriptorPool        = m_viz.descriptor_pool();
             allocInfo.descriptorSetCount    = ds;

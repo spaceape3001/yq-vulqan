@@ -183,6 +183,14 @@ namespace yq::tachyon {
         //! Object/Pipeline tracking role
         uint16_t                    role        = 0;
 
+        //! Restart the primitives?  See VkPipelineInputAssemblyStateCreateInfo documentation for details
+        bool                        primitive_restart   = false;
+        
+        bool                        wireframe_permitted = true;
+
+        //! Line width in the rasterization
+        float                       line_width          = 1.f;
+
         PipelineConfig();
         ~PipelineConfig();
     };

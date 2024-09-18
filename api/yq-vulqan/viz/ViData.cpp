@@ -577,26 +577,34 @@ namespace yq::tachyon {
                 vkDestroyDescriptorSetLayout(m_viz->device(), m_descriptorLayout, nullptr);
             }
         }
-        m_descriptors.clear();
-        m_descriptorLayout  = nullptr;
-        m_descriptorPool    = nullptr;
-
-        m_vertex        = {};
-        m_index         = {};
-        m_storage       = {};
-        m_uniform       = {};
-        m_texture       = {};
         
+        m_index             = {};
+        m_storage           = {};
+        m_uniform           = {};
+        m_vertex            = {};
+        m_texture           = {};
+        
+        m_bufferPtrs.clear();
         m_buffers.clear();
         m_bytes.clear();
-        m_sizes.clear();
+        m_descriptors.clear();
         m_ids.clear();
-        m_imageViews.clear();
+        m_revisions.clear();
         m_offsets.clear();
+        m_pointers.clear();
+        m_imageViews.clear();
         m_samplers.clear();
-
-        m_bufferPtrs.clear();
+        m_sizes.clear();
         m_texturePtrs.clear();
+        m_writes.clear();
+        m_bufferInfos.clear();
+        m_imageInfos.clear();
+        m_dispatch.clear();
+        
+        m_status            = {};
+        m_descriptorPool    = nullptr;
+        m_descriptorLayout  = nullptr;
+        m_object            = nullptr;
     }
 
     void    ViData::_publish(BB&bb, uint32_t i)
@@ -770,7 +778,6 @@ namespace yq::tachyon {
         return success;
     }
     
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     uint32_t    ViData::buffer_count() const
@@ -819,6 +826,11 @@ namespace yq::tachyon {
         return m_index.maxSize;
     }
     
+    SharedPipelineConfig    ViData::pipeline_config() const
+    {
+        return m_config;
+    }
+
     VkBuffer    ViData::storage_buffer(size_t i) const
     {
         if((i>=m_storage.count) || !m_storage.buffers)

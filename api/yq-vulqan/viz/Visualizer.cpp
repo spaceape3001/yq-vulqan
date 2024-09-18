@@ -305,10 +305,53 @@ namespace yq::tachyon {
             vertexInfo.vertexAttributeDescriptionCount  = (uint32_t) attrs.size();
             vertexInfo.pVertexAttributeDescriptions     = attrs.data();
             
+            VkPushConstantRange push{};
+            if(m_cfg.push.type != PushConfigType::None){
+                push.offset     = 0;
+                switch(m_cfg.push.type){
+                case PushConfigType::Full:
+                case PushConfigType::View:
+                    push.size   = sizeof(StdPushData);
+                    break;
+                case PushConfigType::Custom:
+                    push.size   = m_cfg.push.size;
+                    break;
+                default:
+                    break;
+                }
+            }
+            
+            pipelineLayoutInfo.setLayoutCount = 0; // Optional
+            pipelineLayoutInfo.pSetLayouts = nullptr; // Optional
+            if(push.size != 0){
+                if(m_cfg.push.shaders)
+                    push.stageFlags = m_cfg.push.shaders;
+                else
+                    push.stageFlags = m_shaders;
+                pipelineLayoutInfo.pushConstantRangeCount = 1;
+                pipelineLayoutInfo.pPushConstantRanges = &push;
+            } else {
+                pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
+                pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
+            }
+            if(m_descriptors){
+                pipelineLayoutInfo.setLayoutCount   = 1;
+                pipelineLayoutInfo.pSetLayouts      = &m_descriptors;
+            }
+
+            if (vkCreatePipelineLayout(m_viz.device(), &pipelineLayoutInfo, nullptr, &m_layout) != VK_SUCCESS) 
+                throw create_error<"Failed to create pipeline layout">();
+
+            VqGraphicsPipelineCreateInfo pipelineInfo;
+            pipelineInfo.stageCount     = stages.size();
+            if(pipelineInfo.stageCount)
+               pipelineInfo.pStages     = stages.data();
+
             VqPipelineInputAssemblyStateCreateInfo  inputAssembly;
             inputAssembly.topology                  = (VkPrimitiveTopology) m_cfg.topology.value();
             inputAssembly.primitiveRestartEnable    = VK_FALSE;
             
+
             VkViewport viewport = m_viz.swapchain_def_viewport();
 
             VkRect2D scissor = m_viz.swapchain_def_scissor();
@@ -359,48 +402,7 @@ namespace yq::tachyon {
             colorBlending.blendConstants[2] = 0.0f; // Optional
             colorBlending.blendConstants[3] = 0.0f; // Optional
             
-            VkPushConstantRange push{};
-            if(m_cfg.push.type != PushConfigType::None){
-                push.offset     = 0;
-                switch(m_cfg.push.type){
-                case PushConfigType::Full:
-                case PushConfigType::View:
-                    push.size   = sizeof(StdPushData);
-                    break;
-                case PushConfigType::Custom:
-                    push.size   = m_cfg.push.size;
-                    break;
-                default:
-                    break;
-                }
-            }
-            
-            pipelineLayoutInfo.setLayoutCount = 0; // Optional
-            pipelineLayoutInfo.pSetLayouts = nullptr; // Optional
-            if(push.size != 0){
-                if(m_cfg.push.shaders)
-                    push.stageFlags = m_cfg.push.shaders;
-                else
-                    push.stageFlags = m_shaders;
-                pipelineLayoutInfo.pushConstantRangeCount = 1;
-                pipelineLayoutInfo.pPushConstantRanges = &push;
-            } else {
-                pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
-                pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
-            }
-            if(m_descriptors){
-                pipelineLayoutInfo.setLayoutCount   = 1;
-                pipelineLayoutInfo.pSetLayouts      = &m_descriptors;
-            }
-
-            if (vkCreatePipelineLayout(m_viz.device(), &pipelineLayoutInfo, nullptr, &m_layout) != VK_SUCCESS) 
-                throw create_error<"Failed to create pipeline layout">();
-
-            VqGraphicsPipelineCreateInfo pipelineInfo;
-            pipelineInfo.stageCount     = stages.size();
-            if(pipelineInfo.stageCount)
-               pipelineInfo.pStages     = stages.data();
-            
+                        
             pipelineInfo.pVertexInputState      = &vertexInfo;
             pipelineInfo.pInputAssemblyState    = &inputAssembly;
             pipelineInfo.pViewportState         = &viewportState;

@@ -46,6 +46,9 @@ namespace yq::tachyon {
         void        polygons(PolygonMode);
         void        front(FrontFace);
         void        culling(CullMode);
+        void        wireframe_permitted(bool);
+        void        line_width(float);
+        void        primitive_restart(bool);
     
         template <typename T>
         void        push()

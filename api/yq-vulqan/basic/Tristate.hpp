@@ -18,19 +18,29 @@ namespace yq::tachyon {
     YQ_ENUM(Tristate, ,
         
         //! Default is a "maybe", which means inherit and/or optional
-        MAYBE       = 1,
+        Maybe       = 1,
+        
+        MAYBE       = Maybe,
         
         //! Assert a NO on this state, override the inheritance
-        NO          = 0,
+        No          = 0,
+        
+        NO          = No,
         
         //! Assert a YES on this state, override the inheritance
-        YES         = 2,
+        Yes         = 2,
+        
+        YES         = Yes,
         
         //! Synonym for "maybe"
-        INHERIT     = MAYBE,
+        Inherit     = Maybe,
+        
+        INHERIT     = Inherit,
 
         //! Synonym for "maybe"
-        OPTIONAL    = MAYBE
+        Optional    = Maybe,
+        
+        OPTIONAL    = Optional
     );
 }
 

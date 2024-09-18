@@ -84,10 +84,20 @@ namespace yq::tachyon {
         }
         return loc;
     }
+
+    void        Pipeline::Builder::line_width(float v)
+    {
+        m_build.line_width  = v;
+    }
     
     void        Pipeline::Builder::polygons(PolygonMode v)
     {
         m_build.polymode    = v;
+    }
+
+    void        Pipeline::Builder::primitive_restart(bool v)
+    {
+        m_build.primitive_restart = v;
     }
 
     void        Pipeline::Builder::push(PushConfigType v)
@@ -127,18 +137,6 @@ namespace yq::tachyon {
     void        Pipeline::Builder::shader(ShaderSpec ss)
     {
         m_build.shaders.push_back(ss);
-        #if 0
-        ShaderCPtr      s   = Shader::decode(ss);
-        if(!s){
-            if(const std::string*sp = std::get_if<std::string>(&ss)){
-                tachyonError    << "Unable to load shader '" << *sp << "'";
-            } else
-                tachyonError    << "Unable to load (unspecified) shader.";
-            return ;
-        }
-
-        m_build.shaders.push_back(s);
-        #endif
     }
     
     void        Pipeline::Builder::shaders(std::initializer_list<ShaderSpec> sss)
@@ -152,101 +150,8 @@ namespace yq::tachyon {
         m_build.topology    = v;
     }
 
-////////////////////////////////////////////////////////////////////////////////
-//  LEGACY BELOW
-////////////////////////////////////////////////////////////////////////////////
-#if 0
-    LegacyPipelineBuilder::~LegacyPipelineBuilder() = default;
-
-    LegacyPipelineBuilder::LegacyPipelineBuilder(PipelineConfig*cfg) : m_config(cfg)
+    void        Pipeline::Builder::wireframe_permitted(bool v)
     {
-        for(auto& vbo : cfg->vbos)
-            for(auto & a : vbo.attrs)
-        {
-            m_locations.insert(a.location);     // won't be perfect, should help though
-        }
+        m_build.wireframe_permitted   = v;
     }
-    
-
-    LegacyPipelineBuilder::LegacyPipelineBuilder(PipelineConfig& cfg) : LegacyPipelineBuilder(&cfg)
-    {
-    }
-
-    void    LegacyPipelineBuilder::culling(CullMode v)
-    {
-        m_config->culling    = v;
-    }
-    
-    void    LegacyPipelineBuilder::front(FrontFace v)
-    {
-        m_config->front = v;
-    }
-
-    uint32_t    LegacyPipelineBuilder::location_filter(uint32_t loc, uint32_t req)
-    {
-        if(loc != UINT32_MAX){
-            for(uint32_t i=loc; i<loc+req; ++i){
-                [[maybe_unused]] auto j = m_locations.insert(i);
-                assert(j.second && "Location already assigned!");
-            }
-            return loc;
-        }
-        
-        if(m_locations.empty()){
-            for(uint32_t i=0; i<req; ++i){
-                m_locations.insert(i);
-            }
-            return 0;
-        }
-        
-        loc = *(m_locations.rbegin()) + 1;
-        for(uint32_t i=0; i<req; ++i){
-            m_locations.insert(i+loc);
-        }
-        return loc;
-    }
-    
-    void    LegacyPipelineBuilder::polygons(PolygonMode v)
-    {
-        m_config->polymode   = v;
-    }
-    
-
-    void    LegacyPipelineBuilder::push(PushConfigType v)
-    {
-        switch(v){
-        case PushConfigType::Full:
-        case PushConfigType::View:
-            m_config->push.type  = v;
-            m_config->push.size  = sizeof(StdPushData);
-            break;
-        default:
-            break;
-        }
-    }
-
-    void    LegacyPipelineBuilder::shader(ShaderSpec ss)
-    {
-        m_config->shaders.push_back(ss);
-    }
-    
-    void    LegacyPipelineBuilder::shaders(std::initializer_list<ShaderSpec>sspecs)
-    {
-        for(const ShaderSpec& ss : sspecs)
-            m_config->shaders.push_back(ss);
-    }
-    
-        
-    void    LegacyPipelineBuilder::topology(Topology v)
-    {
-        m_config->topology = v;
-    }
-    
-    void    LegacyPipelineBuilder::ubo(size_t cnt)
-    {
-        UBOConfig   u;
-        u.count = cnt;
-        m_config->ubos.push_back(u);
-    }
-#endif
 }

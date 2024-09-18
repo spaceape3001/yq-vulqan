@@ -80,3 +80,10 @@ namespace yq::tachyon {
     RGBA4F                  vqExtractRGBA4F(const VkClearValue&);
 }
 
+bool operator==(const VkOffset2D&, const VkOffset2D&);
+bool operator==(const VkExtent2D&, const VkExtent2D&);
+bool operator==(const VkRect2D&, const VkRect2D&);
+bool operator==(const VkViewport&, const VkViewport&);
+
+
+

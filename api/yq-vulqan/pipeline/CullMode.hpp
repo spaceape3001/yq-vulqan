@@ -16,6 +16,7 @@ namespace yq::tachyon {
         Cull mode for vulkan/pipeline
     */
     YQ_ENUM(CullMode, , 
+        Auto    = -1,
     
         //! No culling
         None    = 0,

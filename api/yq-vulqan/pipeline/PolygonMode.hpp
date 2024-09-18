@@ -17,6 +17,7 @@ namespace yq::tachyon {
         Set to Line to get wireframe effect.
     */
     YQ_ENUM(PolygonMode, , 
+        Auto = -1,
         Fill = 0,
         Line = 1,
         Point = 2,

@@ -34,7 +34,7 @@ namespace yq::tachyon {
     public:
         struct Options;
         enum class F : uint8_t {
-            MakeDescriptorLayout    = 0
+            // MakeDescriptorLayout    = 0
         };
         using descriptor_t  = std::variant<std::monostate, layout_t, allocate_t>;
         
@@ -50,6 +50,8 @@ namespace yq::tachyon {
         uint32_t            index_bytes(size_t) const;
         uint32_t            index_count() const;
         uint32_t            index_max_size() const;
+        
+        SharedPipelineConfig    pipeline_config() const;
         
         VkBuffer            storage_buffer(size_t) const;
         uint32_t            storage_bytes() const;
@@ -179,9 +181,12 @@ namespace yq::tachyon {
         std::vector<VkDescriptorImageInfo>  m_imageInfos;       // ALL TEXTURES
         std::vector<VkWriteDescriptorSet>   m_dispatch;         // (NOT CARVED)
 
+    protected:
         ViVisualizer*           m_viz               = nullptr;
-        const void*             m_object            = nullptr;
         SharedPipelineConfig    m_config;
+    
+    private:
+        const void*             m_object            = nullptr;
         VkDescriptorSetLayout   m_descriptorLayout  = nullptr;
         VkDescriptorPool        m_descriptorPool    = nullptr;
         Flags<S>                m_status            = {};

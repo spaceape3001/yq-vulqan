@@ -26,9 +26,7 @@ namespace yq::tachyon {
         using mutex_t           = tbb::spin_rw_mutex;
         using data_t            = std::tuple<Args...>;
         
-        ViManager(ViVisualizer& viz) : m_viz(viz) {}
-
-        ViManager(ViVisualizer& viz, data_t dat) : m_viz(viz), m_data(dat) 
+        ViManager(ViVisualizer& viz, Args...args) : m_viz(viz), m_data(args...)
         {
         }
 
@@ -131,10 +129,13 @@ namespace yq::tachyon {
             return m_hash.size();
         }
         
-        void            update(Args...args)
+        void            update(Args...args, bool autoClear=false)
         {
             mutex_t::scoped_lock _lock(m_mutex, true);
             m_data      = { args... };
+            if(autoClear){
+                m_hash.clear();
+            }
         }
 
     private:

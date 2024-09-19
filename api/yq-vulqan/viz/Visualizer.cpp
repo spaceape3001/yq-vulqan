@@ -201,7 +201,8 @@ namespace yq::tachyon {
     //  ViPipeline0
     ////////////////////////////////////////////////////////////////////////////////
 
-    ViPipeline0::ViPipeline0(Visualizer&viz, const Pipeline&p) : m_viz(viz), m_id(p.id()), m_cfg(p.config())
+    ViPipeline0::ViPipeline0(Visualizer&viz, const Pipeline&p) : m_viz(viz), m_id(p.id()), 
+        m_config(p.config()), m_cfg(*m_config)
     {
     }
     
@@ -879,6 +880,10 @@ namespace yq::tachyon {
         ec = _8_swapchain_create();
         if(ec != std::error_code())
             return ec;
+            
+        ec = _9_pipeline_manager_create();
+        if(ec != std::error_code())
+            return ec;
 
         //  ================================
         //  GETTING THE QUEUES
@@ -919,6 +924,7 @@ namespace yq::tachyon {
 
         //  Generally in reverse order of initialization
 
+        _9_pipeline_manager_kill();
         _8_swapchain_kill();
         _7_render_pass_kill();
         _6_manager_kill();
@@ -1189,7 +1195,7 @@ namespace yq::tachyon {
     void    Visualizer::_draw(ViContext&u, const Rendered&r, const Pipeline&p, Tristate w)
     {
         const auto&         cfg     = p.config();
-        if(cfg.binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
+        if(cfg->binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
             return ;
         
         u.m_wireframe       = w;

@@ -21,6 +21,7 @@ namespace yq::tachyon {
         using pipeline_bad_state        = error_db::entry<"Pipeline is in a bad state">;
         using pipeline_existing         = error_db::entry<"Pipeline has already been created">;
         using pipeline_bad_config       = error_db::entry<"Pipeline has a bad configuration">;
+        using pipeline_bad_layout       = error_db::entry<"Pipeline has a bad layout">;
         using pipeline_bad_swapchain    = error_db::entry<"Swapchain not provided to pipeline">;
         using pipeline_cant_create      = error_db::entry<"Unable to create the graphics pipeline">;
     }
@@ -39,12 +40,31 @@ namespace yq::tachyon {
             }
         }
     }
+
+    ViPipeline::ViPipeline(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineOptions& opts)
+    {
+        if(viz.device()){
+            std::error_code ec = _init(viz, pipe, opts);
+            if(ec != std::error_code()){
+                vizWarning << "ViPipeline(): Unable to initialize.  " << ec.message();
+                _kill();
+            }
+        }
+    }
     
     ViPipeline::~ViPipeline()
     {
         _kill();
     }
     
+    std::error_code ViPipeline::_init(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineOptions& opts)
+    {
+        ViPipelineLayoutCPtr        pLay    = viz.pipeline_layout_create(pipe);
+        if(!pLay || !pLay->valid()){
+            return errors::pipeline_bad_layout();
+        }
+        return _init(viz, pLay, opts);
+    }
 
     std::error_code ViPipeline::_init(ViVisualizer&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
     {
@@ -185,8 +205,11 @@ namespace yq::tachyon {
         pipelineInfo.pColorBlendState       = &colorBlending;
         pipelineInfo.pDynamicState          = nullptr; // Optional   
         pipelineInfo.layout                 = pLay->pipeline_layout();
-        if(opts.render_pass && opts.render_pass->valid())
-            pipelineInfo.renderPass         = opts.render_pass->render_pass();
+        if(opts.render_pass){
+            pipelineInfo.renderPass         = opts.render_pass;
+        } else {
+            pipelineInfo.renderPass         = viz.render_pass();
+        }
         pipelineInfo.subpass                = 0;
         pipelineInfo.basePipelineHandle     = VK_NULL_HANDLE; // Optional
         pipelineInfo.basePipelineIndex      = -1; // Optional        
@@ -255,6 +278,24 @@ namespace yq::tachyon {
         }
         return ec;
     }
+
+    std::error_code     ViPipeline::init(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineOptions& opts)
+    {
+        if(m_viz){
+            if(!consistent()){
+                return errors::pipeline_bad_state();
+            }
+            
+            return errors::pipeline_existing();
+        }
+        
+        std::error_code ec  = _init(viz, pipe, opts);
+        if(ec != std::error_code()){
+            _kill();
+        }
+        return ec;
+    }
+    
     
     void            ViPipeline::kill()
     {

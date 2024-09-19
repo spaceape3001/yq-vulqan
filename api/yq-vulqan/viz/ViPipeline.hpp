@@ -12,10 +12,12 @@
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/pipeline/CullMode.hpp>
 #include <yq-vulqan/pipeline/PolygonMode.hpp>
+#include <yq-vulqan/typedef/pipeline.hpp>
 #include <yq-vulqan/typedef/pipeline_layout.hpp>
 #include <yq-vulqan/typedef/render_pass.hpp>
 #include <yq-vulqan/typedef/swapchain.hpp>
 #include <yq-vulqan/viz/ViData.hpp>
+#include <optional>
 
 namespace yq::tachyon {
 
@@ -27,7 +29,7 @@ namespace yq::tachyon {
         float                       line_width          = NaNf;
         
         //! If specified, overrides the configuratoin
-        PolygonMode                 polygon_mode           = PolygonMode::Auto;
+        PolygonMode                 polygon_mode        = PolygonMode::Auto;
         
         //! Our scissors.  If specified, overrides the swapchain's default
         VkRect2D                    scissor             = {};
@@ -41,8 +43,8 @@ namespace yq::tachyon {
         //! Restart the primitives?  See VkPipelineInputAssemblyStateCreateInfo documentation for details
         Tristate                    primitive_restart   = Tristate::Inherit;
 
-        //! The renderpass in use
-        ViRenderPassCPtr            render_pass;
+        //! The renderpass to use
+        VkRenderPass                render_pass         = nullptr;
 
         //! Our viewport.  If specified, overrides the swapchain's default
         VkViewport                  viewport            = {};
@@ -62,9 +64,11 @@ namespace yq::tachyon {
     
         ViPipeline();
         ViPipeline(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& opts={});
+        ViPipeline(ViVisualizer&, const Pipeline&, const ViPipelineOptions& opts={});
         ~ViPipeline();
         
         std::error_code     init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& opts={});
+        std::error_code     init(ViVisualizer&, const Pipeline&, const ViPipelineOptions& opts={});
         void                kill();
 
         VkPipelineBindPoint bind_point() const { return m_binding; }
@@ -75,6 +79,7 @@ namespace yq::tachyon {
     
     private:
         std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& opts);
+        std::error_code _init(ViVisualizer&, const Pipeline&, const ViPipelineOptions& opts);
         void            _kill();
         
         enum class S : uint8_t {

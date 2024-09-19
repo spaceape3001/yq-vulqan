@@ -33,9 +33,11 @@ namespace yq::tachyon {
         
         ViPipelineLayout();
         ViPipelineLayout(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& opts={});
+        ViPipelineLayout(ViVisualizer&, const Pipeline&, const ViPipelineLayoutOptions& opts={});
         ~ViPipelineLayout();
         
         std::error_code init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& opts={});
+        std::error_code init(ViVisualizer&, const Pipeline&, const ViPipelineLayoutOptions& opts={});
         void            kill();
         
         bool                consistent() const;

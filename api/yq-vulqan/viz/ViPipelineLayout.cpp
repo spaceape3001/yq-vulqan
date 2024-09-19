@@ -8,6 +8,7 @@
 #include <yq-toolbox/keywords.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
+#include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
@@ -35,6 +36,11 @@ namespace yq::tachyon {
             vizWarning << "Unable to create a pipeline layout: " << ec.message();
             kill();
         }
+    }
+
+    ViPipelineLayout::ViPipelineLayout(ViVisualizer& viz, const Pipeline& pipe, const ViPipelineLayoutOptions& opts) :
+        ViPipelineLayout(viz, pipe.config(), opts)
+    {
     }
     
     ViPipelineLayout::~ViPipelineLayout()
@@ -200,6 +206,11 @@ namespace yq::tachyon {
             _kill();
         }
         return ec;
+    }
+
+    std::error_code ViPipelineLayout::init(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineLayoutOptions& opts)
+    {
+        return init(viz, pipe.config(), opts);
     }
     
     void  ViPipelineLayout::kill()

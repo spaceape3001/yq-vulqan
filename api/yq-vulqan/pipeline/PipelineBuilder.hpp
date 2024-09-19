@@ -16,6 +16,7 @@
 #include <yq-toolbox/trait/not_moveable.hpp>
 
 #include <yq-vulqan/texture/Texture.hpp>
+#include <yq-vulqan/typedef/pipeline.hpp>
 #include <yq-vulqan/pipeline/SBO.hpp>
 #include <yq-vulqan/pipeline/UBO.hpp>
 #include <yq-vulqan/pipeline/VBO.hpp>
@@ -38,7 +39,7 @@ namespace yq::tachyon {
         using   AutoGen     = std::function<void(PipelineCPtr)>;
     
         //! Creates a new pipeline
-        PipelineCPtr        create() const;
+        PipelineCPtr        create();
     
         void        shader(ShaderSpec);
         void        shaders(std::initializer_list<ShaderSpec>);
@@ -54,8 +55,8 @@ namespace yq::tachyon {
         void        push()
         {
             static_assert(std::is_trivially_copyable_v<T>, "Must be trivially copyable!");
-            m_build.push.type  = PushConfigType::Custom;
-            m_build.push.size  = sizeof(T);
+            build().push.type  = PushConfigType::Custom;
+            build().push.size  = sizeof(T);
         }
         
         void        push(PushConfigType);
@@ -84,7 +85,9 @@ namespace yq::tachyon {
         Builder(Builder&&);
         Builder& operator=(Builder&&);
 
-        PipelineConfig&     config() { return m_build; }
+        SharedPipelineConfig    config() const { return m_build; }
+        
+        SharedPipelineConfig    take();
         
         template <typename V>
         static IBOConfig    ibo_(DataActivity da)
@@ -129,7 +132,14 @@ namespace yq::tachyon {
     protected:
         friend class Pipeline;
         template <typename> friend class VBOMaker;
-        PipelineConfig      m_build;
+        std::shared_ptr<PipelineConfig>      m_build;
+        
+        PipelineConfig& build() 
+        {
+            if(!m_build)
+                m_build = std::make_shared<PipelineConfig>();
+            return *m_build;
+        }
         
         uint32_t            location_filter(uint32_t loc, uint32_t req);
 
@@ -174,7 +184,7 @@ namespace yq::tachyon {
             }
             assert(!attrs.empty());
 
-            m_builder -> m_build.vbos.push_back(*this);
+            m_builder -> build().vbos.push_back(*this);
         }
 
         template  <typename M>
@@ -251,9 +261,9 @@ namespace yq::tachyon {
             static_assert(sizeof(T) <= MAX_PUSH, "T is TOO BIG!");
             static_assert(std::is_trivially_copyable_v<T>, "Must be trivially copyable!");
         
-            m_build.push.type   = PushConfigType::Custom;
-            m_build.push.size   = sizeof(T);
-            m_build.push.fetch  = [p](const void* obj, PushBuffer& buf) {
+            build().push.type   = PushConfigType::Custom;
+            build().push.size   = sizeof(T);
+            build().push.fetch  = [p](const void* obj, PushBuffer& buf) {
                 const C* c  = (const C*) obj;
                 buf.paste( (c->*p) );
             };
@@ -262,10 +272,10 @@ namespace yq::tachyon {
         Typed(role_t role={}) : Builder(role) 
         {
             if constexpr ( is_type_v<C>){
-                m_build.object = &meta<C>();
+                build().object = &meta<C>();
             }
             if constexpr ( is_object_v<C>){
-                m_build.object = &meta<C>();
+                build().object = &meta<C>();
             }
         }
         
@@ -305,7 +315,7 @@ namespace yq::tachyon {
         {
             IBOConfig       cfg = ibo_<V>(da);
             YQ_PIPELINE_COMMON_HANDLER
-            m_build.ibos.push_back(cfg);
+            build().ibos.push_back(cfg);
         }
         
         template <typename V>
@@ -313,7 +323,7 @@ namespace yq::tachyon {
         {
             IBOConfig       cfg = ibo_<V>(da);
             YQ_PIPELINE_COMMON_HANDLER
-            m_build.ibos.push_back(cfg);
+            build().ibos.push_back(cfg);
         }
 
         template <typename V>
@@ -321,7 +331,7 @@ namespace yq::tachyon {
         {
             IBOConfig       cfg = ibo_<V>(da);
             YQ_PIPELINE_MEMBER_HANDLER
-            m_build.ibos.push_back(cfg);
+            build().ibos.push_back(cfg);
         }
         
         template <typename V>
@@ -329,7 +339,7 @@ namespace yq::tachyon {
         {
             IBOConfig       cfg = ibo_<V>(da);
             YQ_PIPELINE_MEMBER_HANDLER
-            m_build.ibos.push_back(cfg);
+            build().ibos.push_back(cfg);
         }
 
         /*
@@ -343,7 +353,7 @@ namespace yq::tachyon {
         {
             SBOConfig       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
-            m_build.sbos.push_back(cfg);
+            build().sbos.push_back(cfg);
         }
         
         template <typename V>
@@ -351,7 +361,7 @@ namespace yq::tachyon {
         {
             SBOConfig       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
-            m_build.sbos.push_back(cfg);
+            build().sbos.push_back(cfg);
         }
 
         template <typename V>
@@ -372,7 +382,7 @@ namespace yq::tachyon {
         {
             SBOConfig       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
-            m_build.sbos.push_back(cfg);
+            build().sbos.push_back(cfg);
         }
         
         template <typename V>
@@ -380,7 +390,7 @@ namespace yq::tachyon {
         {
             SBOConfig       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
-            m_build.sbos.push_back(cfg);
+            build().sbos.push_back(cfg);
         }
 
         template <typename V>
@@ -407,7 +417,7 @@ namespace yq::tachyon {
         {
             UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
-            m_build.ubos.push_back(cfg);
+            build().ubos.push_back(cfg);
         }
         
         template <typename V>
@@ -415,7 +425,7 @@ namespace yq::tachyon {
         {
             UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
-            m_build.ubos.push_back(cfg);
+            build().ubos.push_back(cfg);
         }
 
         template <typename V>
@@ -436,7 +446,7 @@ namespace yq::tachyon {
         {
             UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
-            m_build.ubos.push_back(cfg);
+            build().ubos.push_back(cfg);
         }
         
         template <typename V>
@@ -444,7 +454,7 @@ namespace yq::tachyon {
         {
             UBOConfig       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
-            m_build.ubos.push_back(cfg);
+            build().ubos.push_back(cfg);
         }
 
         template <typename V>
@@ -528,7 +538,7 @@ namespace yq::tachyon {
             cfg.revision    = [&p](const void*) -> uint64_t {
                 return p ? p->id() : 0ULL;
             };
-            m_build.texs.push_back(cfg);
+            build().texs.push_back(cfg);
         }
 
         void    texture(Ref<const Texture> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
@@ -543,7 +553,7 @@ namespace yq::tachyon {
                 const Ref<const Texture>&   t   = (c->*p);
                 return t ? t->id() : 0ULL;
             };
-            m_build.texs.push_back(cfg);
+            build().texs.push_back(cfg);
         }
     };
 

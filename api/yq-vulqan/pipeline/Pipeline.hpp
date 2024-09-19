@@ -34,15 +34,15 @@ namespace yq::tachyon {
         template <typename C=void>
         static auto build(role_t role={});   
         
-        const PipelineConfig&       config() const { return m_config; }
+        const SharedPipelineConfig&       config() const { return m_config; }
         
-        Pipeline(const PipelineConfig&);
-        Pipeline(PipelineConfig&&);
+        Pipeline(const SharedPipelineConfig&);
+        Pipeline(SharedPipelineConfig&&);
         
-        role_t  role() const { return m_config.role; }
+        role_t  role() const;
         
     private:
-        PipelineConfig              m_config;
+        SharedPipelineConfig      m_config;
         ~Pipeline();
     };
 }

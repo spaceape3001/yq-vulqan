@@ -70,7 +70,8 @@ namespace yq::tachyon {
     struct ViPipeline0 {
         Visualizer&             m_viz;
         const uint64_t          m_id;
-        const PipelineConfig    m_cfg;
+        SharedPipelineConfig    m_config;
+        const PipelineConfig&   m_cfg;
         
         ViBufferObjectVector    m_vbos;
         ViBufferObjectVector    m_ibos;

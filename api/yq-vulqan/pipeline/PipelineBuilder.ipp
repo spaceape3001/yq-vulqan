@@ -15,7 +15,7 @@ namespace yq::tachyon {
 
     Pipeline::Builder::Builder(role_t role)
     {
-        m_build.role    = role;
+        build().role    = role;
     }
     
     Pipeline::Builder::~Builder()
@@ -45,19 +45,19 @@ namespace yq::tachyon {
         return *this;
     }
 
-    PipelineCPtr        Pipeline::Builder::create() const
+    PipelineCPtr        Pipeline::Builder::create()
     {
-        return new Pipeline(m_build);
+        return new Pipeline(take());
     }
-    
+
     void        Pipeline::Builder::culling(CullMode v)
     {
-        m_build.culling     = v;
+        build().culling     = v;
     }
     
     void        Pipeline::Builder::front(FrontFace v)
     {
-        m_build.front       = v;
+        build().front       = v;
     }
 
 
@@ -87,29 +87,29 @@ namespace yq::tachyon {
 
     void        Pipeline::Builder::line_width(float v)
     {
-        m_build.line_width  = v;
+        build().line_width  = v;
     }
     
     void        Pipeline::Builder::polygons(PolygonMode v)
     {
-        m_build.polymode    = v;
+        build().polymode    = v;
     }
 
     void        Pipeline::Builder::primitive_restart(bool v)
     {
-        m_build.primitive_restart = v;
+        build().primitive_restart = v;
     }
 
     void        Pipeline::Builder::push(PushConfigType v)
     {
-        m_build.push.type   = v;
+        build().push.type   = v;
         switch(v){
         case PushConfigType::Full:
         case PushConfigType::View:
-            m_build.push.size  = sizeof(StdPushData);
+            build().push.size  = sizeof(StdPushData);
             break;
         default:
-            m_build.push.size   = 0;
+            build().push.size   = 0;
             break;
         }
     }
@@ -136,7 +136,7 @@ namespace yq::tachyon {
 
     void        Pipeline::Builder::shader(ShaderSpec ss)
     {
-        m_build.shaders.push_back(ss);
+        build().shaders.push_back(ss);
     }
     
     void        Pipeline::Builder::shaders(std::initializer_list<ShaderSpec> sss)
@@ -145,13 +145,20 @@ namespace yq::tachyon {
             shader(ss);
     }
 
+    SharedPipelineConfig    Pipeline::Builder::take()
+    {
+        SharedPipelineConfig    ret = std::move(m_build);
+        m_build     = {};
+        return ret;
+    }
+    
     void        Pipeline::Builder::topology(Topology v)
     {
-        m_build.topology    = v;
+        build().topology    = v;
     }
 
     void        Pipeline::Builder::wireframe_permitted(bool v)
     {
-        m_build.wireframe_permitted   = v;
+        build().wireframe_permitted   = v;
     }
 }

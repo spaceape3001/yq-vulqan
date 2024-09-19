@@ -98,9 +98,12 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViCleanupManager.cpp
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
+    viz/ViFrame.cpp
+    viz/ViFrameThread.cpp
     viz/ViPipeline.cpp
     viz/ViPipelineLayout.cpp
     viz/ViRendered.cpp
+    viz/ViThread.cpp
     viz/ViVisualizer.cpp
     viz/Visualizer.cpp
     

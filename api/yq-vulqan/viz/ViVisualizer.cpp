@@ -15,6 +15,7 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
+#include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/sampler/Sampler.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
@@ -26,6 +27,8 @@
 #include <yq-vulqan/viz/ViManager.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
+#include <yq-vulqan/viz/ViPipeline.hpp>
+#include <yq-vulqan/viz/ViPipelineLayout.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
 #include <yq-vulqan/viz/ViQueueTasker.hpp>
 #include <yq-vulqan/viz/ViRenderPass.hpp>
@@ -336,6 +339,7 @@ namespace yq::tachyon {
         m_images            = std::make_unique<ViImageManager>(*this);
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
         m_textures          = std::make_unique<ViTextureManager>(*this);
+        m_pipelineLayouts   = std::make_unique<ViPipelineLayoutManager>(*this);
         
         vizDebug << "ViVisualizer: Created the managers";
         return {};
@@ -343,12 +347,13 @@ namespace yq::tachyon {
     
     void                ViVisualizer::_6_manager_kill()
     {
-        m_textures      = {};
-        m_samplers      = {};
-        m_queues        = {};
-        m_shaders       = {};
-        m_buffers       = {};
-        m_images        = {};
+        m_pipelineLayouts   = {};
+        m_textures          = {};
+        m_samplers          = {};
+        m_queues            = {};
+        m_shaders           = {};
+        m_buffers           = {};
+        m_images            = {};
         
         vizDebug << "ViVisualizer: Destroyed the managers";
     }
@@ -385,6 +390,20 @@ namespace yq::tachyon {
     {
         m_swapchain     = nullptr;
         vizDebug << "ViVisualizer: Destroyed the swapchain";
+    }
+
+    std::error_code     ViVisualizer::_9_pipeline_manager_create()
+    {
+        ViPipelineOptions   opts{
+            .swapchain  = m_swapchain
+        };
+        m_pipelines     = std::make_unique<ViPipelineManager>(*this, opts);
+        return {};
+    }
+    
+    void                ViVisualizer::_9_pipeline_manager_kill()
+    {
+        m_pipelines     = {};
     }
 
     void                ViVisualizer::_rebuild_swapchain()
@@ -633,6 +652,37 @@ namespace yq::tachyon {
     uint32_t     ViVisualizer::multiview_max_view_count() const
     {
         return m_multiview.maxViewCount;
+    }
+
+    ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout(uint64_t i) const
+    {
+        if(!m_pipelineLayouts)
+            return {};
+        return m_pipelineLayouts -> get(i);
+    }
+    
+    ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout_create(const Pipeline&pipe)
+    {
+        if(!m_pipelineLayouts)
+            return {};
+        return m_pipelineLayouts -> create(pipe);
+    }
+    
+    void                            ViVisualizer::pipeline_layout_erase(uint64_t i)
+    {
+        if(m_pipelineLayouts){
+            m_pipelineLayouts -> erase(i);
+        }
+    }
+    
+    void                            ViVisualizer::pipeline_layout_erase(const Pipeline& pipe)
+    {
+        pipeline_layout_erase(pipe.id());
+    }
+    
+    ViPipelineLayoutManager*        ViVisualizer::pipeline_layout_manager() const
+    {
+        return m_pipelineLayouts.get();
     }
 
     PresentMode  ViVisualizer::present_mode() const

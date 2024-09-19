@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <variant>
 
 namespace yq {
@@ -17,11 +18,16 @@ namespace yq::tachyon {
     class Shader;
     class ViShader;
     
-    using ShaderPtr         = Ref<Shader>;
-    using ShaderCPtr        = Ref<const Shader>;
+    using ShaderPtr             = Ref<Shader>;
+    using ShaderCPtr            = Ref<const Shader>;
 
-    using ShaderSpec        = std::variant<std::monostate, std::string, ShaderCPtr>;
+    using ShaderSpec            = std::variant<std::monostate, std::string, ShaderCPtr>;
 
-    using ViShaderPtr       = Ref<ViShader>;
-    using ViShaderCPtr      = Ref<const ViShader>;
+    using ViShaderPtr           = Ref<ViShader>;
+    using ViShaderCPtr          = Ref<const ViShader>;
+
+    template <typename V, typename A, typename ... Args> class ViManager;
+    using ViShaderManager       = ViManager<ViShader, Shader>;
+
+    using ViShaderManagerUPtr   = std::unique_ptr<ViShaderManager>;
 }

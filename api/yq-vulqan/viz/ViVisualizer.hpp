@@ -16,6 +16,8 @@
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/image.hpp>
 #include <yq-vulqan/typedef/queue_tasker.hpp>
+#include <yq-vulqan/typedef/pipeline.hpp>
+#include <yq-vulqan/typedef/pipeline_layout.hpp>
 #include <yq-vulqan/typedef/render_pass.hpp>
 #include <yq-vulqan/typedef/sampler.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
@@ -39,25 +41,10 @@
 struct GLFWwindow;
 
 namespace yq::tachyon {
-    class Shader;
-    
     struct ViewerCreateInfo;
-    
     class ViQueueManager;
     
-    template <typename V, typename A, typename ... Args> class ViManager;
-    using ViBufferManager   = ViManager<ViBuffer, Buffer>;
-    using ViImageManager    = ViManager<ViImage, Image>;
-    using ViShaderManager   = ViManager<ViShader, Shader>;
-    using ViSamplerManager  = ViManager<ViSampler, Sampler>;
-    using ViTextureManager  = ViManager<ViTexture, Texture>;
-
-    using ViImageManagerUPtr            = std::unique_ptr<ViImageManager>;
-    using ViShaderManagerUPtr           = std::unique_ptr<ViShaderManager>;
-    using ViBufferManagerUPtr           = std::unique_ptr<ViBufferManager>;
-    using ViSamplerManagerUPtr          = std::unique_ptr<ViSamplerManager>;
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
-    using ViTextureManagerUPtr          = std::unique_ptr<ViTextureManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
     
     class VqApp;
@@ -164,6 +151,12 @@ namespace yq::tachyon {
         //! Vulkan physical device (gpu)
         VkPhysicalDevice                physical() const { return m_physical; }
         
+        ViPipelineLayoutCPtr            pipeline_layout(uint64_t) const;
+        ViPipelineLayoutCPtr            pipeline_layout_create(const Pipeline&);
+        void                            pipeline_layout_erase(uint64_t);
+        void                            pipeline_layout_erase(const Pipeline&);
+        ViPipelineLayoutManager*        pipeline_layout_manager() const;
+
         PresentMode                     present_mode() const;
         const std::set<PresentMode>&    present_modes_available() const;
 
@@ -294,6 +287,8 @@ namespace yq::tachyon {
             uint32_t    maxInstanceIndex    = 0;
         }                                   m_multiview;
         VkPhysicalDevice                    m_physical          = nullptr;
+        ViPipelineLayoutManagerUPtr         m_pipelineLayouts;
+        ViPipelineManagerUPtr               m_pipelines;
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;
         ViQueueManager*                     m_presentQueue      = nullptr;
@@ -353,6 +348,9 @@ namespace yq::tachyon {
         
         std::error_code     _8_swapchain_create();
         void                _8_swapchain_kill();
+
+        std::error_code     _9_pipeline_manager_create();
+        void                _9_pipeline_manager_kill();
 
         /*! Rebuilds the swapchain
         */

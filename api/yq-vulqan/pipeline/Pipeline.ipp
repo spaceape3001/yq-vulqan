@@ -9,15 +9,22 @@
 
 namespace yq::tachyon {
 
-    Pipeline::Pipeline(const PipelineConfig& cfg) : m_config(cfg)
+    Pipeline::Pipeline(const SharedPipelineConfig& cfg) : m_config(cfg)
     {
     }
     
-    Pipeline::Pipeline(PipelineConfig&&cfg) : m_config(std::move(cfg))
+    Pipeline::Pipeline(SharedPipelineConfig&&cfg) : m_config(std::move(cfg))
     {
     }
     
     Pipeline::~Pipeline()
     {
+    }
+
+    Pipeline::role_t  Pipeline::role() const 
+    { 
+        if(m_config)
+            return m_config -> role;
+        return 0;
     }
 }

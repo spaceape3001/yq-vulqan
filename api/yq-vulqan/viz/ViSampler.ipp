@@ -13,6 +13,12 @@
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
+    namespace errors {
+        using sampler_bad_state                 = error_db::entry<"Sampler is in a bad state">;
+        using sampler_cant_create               = error_db::entry<"Unable to create vulkan sampler">;
+        using sampler_existing                  = error_db::entry<"Sampler already created">;
+    }
+
     VkSamplerCreateInfo  ViSampler::vkInfo(ViVisualizer& viz, const SamplerInfo& sami)
     {
         VqSamplerCreateInfo     ret;

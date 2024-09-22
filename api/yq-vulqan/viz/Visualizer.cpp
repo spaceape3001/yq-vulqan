@@ -965,10 +965,9 @@ namespace yq::tachyon {
     //  GETTERS/INFORMATION
 
 
-
     VkCommandBuffer Visualizer::command_buffer() const
     {
-        return current_frame().m_commandBuffer;
+        return current_frame0().m_commandBuffer;
     }
 
     VkCommandPool   Visualizer::command_pool() const
@@ -977,14 +976,14 @@ namespace yq::tachyon {
     }
 
 
-    ViFrame0&            Visualizer::current_frame()
+    ViFrame0&            Visualizer::current_frame0()
     {
         return *(m_frames[m_tick % m_frames.size()]);
     }
     
-    const ViFrame0&      Visualizer::current_frame() const
+    const ViFrame0&      Visualizer::current_frame0() const
     {
-        return const_cast<Visualizer*>(this)->current_frame();
+        return const_cast<Visualizer*>(this)->current_frame0();
     }
 
     VkDescriptorPool    Visualizer::descriptor_pool() const
@@ -993,25 +992,25 @@ namespace yq::tachyon {
     }
 
     
-    ViFrame0&            Visualizer::frame(int32_t i)
+    ViFrame0&            Visualizer::frame0(int32_t i)
     {
         uint64_t    tick    = (uint64_t)((int64_t) m_tick + i);
         return *(m_frames[tick % m_frames.size() ]);
     }
     
-    const ViFrame0&      Visualizer::frame(int32_t i) const
+    const ViFrame0&      Visualizer::frame0(int32_t i) const
     {
-        return const_cast<Visualizer*>(this)->frame(i);
+        return const_cast<Visualizer*>(this)->frame0(i);
     }
 
-    ViFrame0&            Visualizer::next_frame()
+    ViFrame0&            Visualizer::next_frame0()
     {
         return *(m_frames[(m_tick+1) % m_frames.size()]);
     }
     
-    const ViFrame0&      Visualizer::next_frame() const
+    const ViFrame0&      Visualizer::next_frame0() const
     {
-        return const_cast<Visualizer*>(this)->next_frame();
+        return const_cast<Visualizer*>(this)->next_frame0();
     }
 
     const ViPipeline0* Visualizer::pipeline(uint64_t i) const
@@ -1107,9 +1106,9 @@ namespace yq::tachyon {
         }
     
         auto    r1 = auto_reset(u.m_viz, this);
-        ViFrame0&    f   = current_frame();
+        ViFrame0&    f   = current_frame0();
         auto    r2  = auto_reset(u.m_command, f.m_commandBuffer);
-        auto    r3  = auto_reset(u.m_frame, &f);
+        auto    r3  = auto_reset(u.m_frame0, &f);
 
         VkResult        res = VK_SUCCESS;
         
@@ -1203,7 +1202,7 @@ namespace yq::tachyon {
         // TODO ... reduce this down to a single pipeline lookup.... (as the next one is implicit)
         
         //  FOR NOW....
-        ViRendered0*         thing   = current_frame().create(r, p);
+        ViRendered0*         thing   = current_frame0().create(r, p);
         if(!thing)
             return;
         thing -> update(u);
@@ -1268,12 +1267,12 @@ namespace yq::tachyon {
 
     void               Visualizer::update(ViContext&u, const Scene&sc)
     {
-        if(u.m_frame){
+        if(u.m_frame0){
             for(auto& r : sc.things){
                 const Pipeline*pipe    = r->pipeline();
                 if(!pipe)
                     continue;
-                ViRendered0* rr  = u.m_frame -> create(*r, *pipe);
+                ViRendered0* rr  = u.m_frame0 -> create(*r, *pipe);
                 if(!rr)
                     continue;
                 rr -> descriptors(u);

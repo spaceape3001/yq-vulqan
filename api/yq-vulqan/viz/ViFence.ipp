@@ -11,6 +11,16 @@
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
+    namespace errors {
+        using fence_bad_state                   = error_db::entry<"Fence is in a bad state">;
+        using fence_cant_create                 = error_db::entry<"Unable to create vulkan fence">;
+        using fence_existing                    = error_db::entry<"Fence already created">;
+        using fence_not_ready                   = error_db::entry<"Fence not ready">;
+        using fence_timeout                     = error_db::entry<"Fence wait timed out">;
+        using fence_uninitialized               = error_db::entry<"Attempting to use an uninitialized fence">;
+        using fence_unknown                     = error_db::entry<"Unknown fence error">;
+    }
+
     ViFence::ViFence()
     {
     }

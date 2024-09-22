@@ -66,18 +66,18 @@ namespace yq::tachyon {
 
         //! Creates the pipeline
         //! \note Reference is only good to the next create()
-        const ViPipeline0*               create(const Pipeline&);
+        const ViPipeline0*              create(const Pipeline&);
         
         //! Gets the current frame
         //! \note will return INVALID reference if construction failed!
-        ViFrame0&                        current_frame();
+        ViFrame0&                       current_frame0();
 
         //! Gets the current frame
         //! \note will return INVALID reference if construction failed!
-        const ViFrame0&                  current_frame() const;
+        const ViFrame0&                 current_frame0() const;
 
         uint32_t                        descriptor_count() const { return m_descriptorCount; }
-        VkDescriptorPool                descriptor_pool() const;
+        VkDescriptorPool                descriptor_pool() const override;
 
         /*! \brief "Draws" 
         
@@ -93,15 +93,13 @@ namespace yq::tachyon {
         //! Draw a specific item, matrix assumed correct, with given pipeline
         void                            draw_object(ViContext&, const Rendered&, const Pipeline&, Tristate wireframe=Tristate::INHERIT);
 
-        void                            erase(const Buffer&);
+        //! Gets the frame relative to current
+        //! \note will return INVALID reference if construction failed!
+        ViFrame0&                       frame0(int32_t);
 
         //! Gets the frame relative to current
         //! \note will return INVALID reference if construction failed!
-        ViFrame0&                        frame(int32_t);
-
-        //! Gets the frame relative to current
-        //! \note will return INVALID reference if construction failed!
-        const ViFrame0&                  frame(int32_t) const;
+        const ViFrame0&                 frame0(int32_t) const;
 
         uint64_t                        frame_number() const { return m_tick; }
         
@@ -110,11 +108,11 @@ namespace yq::tachyon {
         
         //! Gets the next frame
         //! \note will return INVALID reference if construction failed!
-        ViFrame0&                        next_frame();
+        ViFrame0&                        next_frame0();
 
         //! Gets the next frame
         //! \note will return INVALID reference if construction failed!
-        const ViFrame0&                  next_frame() const;
+        const ViFrame0&                  next_frame0() const;
         
         //! Finds the pipeline
         //! \note do NOT hold onto the reference!

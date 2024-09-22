@@ -89,6 +89,8 @@ namespace yq::tachyon {
         std::error_code                 compute_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
 
+        virtual VkDescriptorPool        descriptor_pool() const = 0;
+
         //! Vulkan (logical) device
         VkDevice                        device() const { return m_device; }
         

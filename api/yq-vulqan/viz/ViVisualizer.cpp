@@ -398,12 +398,14 @@ namespace yq::tachyon {
             .swapchain  = m_swapchain
         };
         m_pipelines     = std::make_unique<ViPipelineManager>(*this, opts);
+        vizDebug << "ViVisualizer: Created the pipeline manager";
         return {};
     }
     
     void                ViVisualizer::_9_pipeline_manager_kill()
     {
         m_pipelines     = {};
+        vizDebug << "ViVisualizer: Destroyed the pipeline manager";
     }
 
     void                ViVisualizer::_rebuild_swapchain()

@@ -47,7 +47,7 @@ namespace yq::tachyon {
 
         //  and so we can be more efficient in rendering
     struct ViFrame0 {
-        ViRendered0Map               m_rendereds;
+        ViRendered0Map              m_rendereds;
         mutable tbb::spin_rw_mutex  m_mutex;
         Visualizer&                 m_viz;
         VkCommandPool               m_commandPool     = nullptr;

@@ -14,6 +14,16 @@
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
+    namespace errors {
+        using buffer_bad_state                  = error_db::entry<"Buffer is in a bad state">;
+        using buffer_cant_allocate              = error_db::entry<"Buffer is unable to allocate requested memory">;
+        using buffer_cant_map_memory            = error_db::entry<"Unable to map buffer memory">;
+        using buffer_empty                      = error_db::entry<"Buffer is empty">;
+        using buffer_existing                   = error_db::entry<"Buffer already created">;
+        using buffer_uninitialized              = error_db::entry<"Attempting to use an uninitialized buffer">;
+        using buffer_manager_uninitialized      = error_db::entry<"Buffer manager is uninitialized">;
+    }
+
     ViBuffer::ViBuffer()
     {
     }

@@ -16,10 +16,12 @@
 #include <yq-vulqan/typedef/pipeline_layout.hpp>
 #include <yq-vulqan/typedef/render_pass.hpp>
 #include <yq-vulqan/typedef/swapchain.hpp>
-#include <yq-vulqan/viz/ViData.hpp>
 #include <optional>
+#include <vulkan/vulkan_core.h>
+
 
 namespace yq::tachyon {
+    class ViVisualizer;
 
     struct ViPipelineOptions {
         //! Culling mode

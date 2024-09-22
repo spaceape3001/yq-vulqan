@@ -250,10 +250,10 @@ namespace yq::tachyon {
         }
         
         m_status    = {};
-        m_pipeline  = {};
-        m_wireframe = {};
+        m_pipeline  = nullptr;
+        m_wireframe = nullptr;
         m_layout    = {};
-        m_viz       = {};
+        m_viz       = nullptr;
     }
 
     bool            ViPipeline::consistent() const

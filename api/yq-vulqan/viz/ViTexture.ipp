@@ -17,6 +17,17 @@
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
+    namespace errors {
+        using texture_bad_image                 = error_db::entry<"Texture's image is bad">;
+        using texture_bad_sampler               = error_db::entry<"Texture's sampler is bad">;
+        using texture_bad_state                 = error_db::entry<"Texture is in a bad state">;
+        using texture_cant_create_image_view    = error_db::entry<"Texture is unable to create image view">;
+        using texture_existing                  = error_db::entry<"Texture already created">;
+        using texture_image_null_pointer        = error_db::entry<"Texture's image is a null pointer">;
+        using texture_sampler_null_pointer      = error_db::entry<"Texture's sampler is a null pointer">;
+        using texture_null_pointer              = error_db::entry<"Texture is a null pointer">;
+    }
+
     ViTexture::ViTexture()
     {
     }

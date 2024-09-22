@@ -218,10 +218,10 @@ namespace yq::tachyon {
 
     struct ViData::Options {
         descriptor_t            descriptors;
-        VkDescriptorPool        pool                = nullptr;
-        VkDescriptorSetLayout   layout              = nullptr;
-        VkShaderStageFlags      shaders             = {};
         Flags<F>                flags               = {};
+        VkDescriptorSetLayout   layout              = nullptr;
         const void*             object              = nullptr;
+        VkDescriptorPool        pool                = nullptr;
+        VkShaderStageFlags      shaders             = {};
     };
 }

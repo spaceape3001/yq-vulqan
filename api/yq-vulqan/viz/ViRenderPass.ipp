@@ -11,6 +11,12 @@
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
+    namespace errors {
+        using render_pass_bad_state             = error_db::entry<"Render pass is in a bad state">;
+        using render_pass_cant_create           = error_db::entry<"Unable to create render pass">;
+        using render_pass_existing              = error_db::entry<"Render pass already created">;
+    }
+
     ViRenderPass::ViRenderPass()
     {
     }

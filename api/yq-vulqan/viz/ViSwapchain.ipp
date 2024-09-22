@@ -18,6 +18,11 @@
 
 
 namespace yq::tachyon {
+    namespace errors {
+        using swapchain_bad_state               = error_db::entry<"Swapchain is in a bad state">;
+        using swapchain_cant_create             = error_db::entry<"Unable to create swapchain">;
+        using swapchain_existing                = error_db::entry<"Swapchain already exists">;
+    }
 
     ViSwapchain::ViSwapchain()
     {

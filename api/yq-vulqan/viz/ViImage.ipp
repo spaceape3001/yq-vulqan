@@ -13,6 +13,12 @@
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
+    namespace errors {
+        using image_bad_state                   = error_db::entry<"Image is in a bad state">;
+        using image_existing                    = error_db::entry<"Image already created">;
+        using image_view_cant_create            = error_db::entry<"Unable to create image view">;
+    }
+    
     ViImage::ViImage()
     {
     }

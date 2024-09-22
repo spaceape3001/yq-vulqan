@@ -18,6 +18,9 @@ namespace yq::tachyon {
     class Visualizer;
     class Viewer;
     class Window;
+    class ViFrame;
+    class ViThread;
+    class ViFrameThread;
 
     /*! \brief Mutable set of parameters that'll pass through
     
@@ -47,7 +50,9 @@ namespace yq::tachyon {
         Visualizer*         m_viz           = nullptr; 
         Viewer*             m_viewer        = nullptr;
         Window*             m_window        = nullptr;
-        ViFrame0*            m_frame         = nullptr;
+        ViFrame0*           m_frame0        = nullptr;
+        ViFrameThread*      m_frame_thread  = nullptr;
+        ViThread*           m_thread        = nullptr;
         VkCommandBuffer     m_command       = nullptr;
         VkPipeline          m_pipeline      = nullptr;  // last pipeline set
         VkPipelineLayout    m_layout        = nullptr;  // last layout set
@@ -55,6 +60,7 @@ namespace yq::tachyon {
         uint64_t            m_frameNumber   = 0;
         double              m_utime         = 0.;
         bool                m_imgui         = false;
+        bool                m_rebuild       = false;    // rebulid pipelines?
         Tristate            m_wireframe     = Tristate::INHERIT;
     };
 }

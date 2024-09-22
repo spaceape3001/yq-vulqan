@@ -12,6 +12,15 @@
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
+    namespace errors {
+        using shader_bad_state                  = error_db::entry<"Shader is in a bad state">;
+        using shader_cant_create                = error_db::entry<"Unable to create vulkan shader module">;
+        using shader_empty                      = error_db::entry<"Shader is empty">;
+        using shader_existing                   = error_db::entry<"Shader already created">;
+        using shader_uninitialized              = error_db::entry<"Attempting to use an uninitialized shader">;
+        using shader_manager_uninitialized      = error_db::entry<"Shader manager is uninitialized">;
+    }
+
     ViShader::ViShader()
     {
     }

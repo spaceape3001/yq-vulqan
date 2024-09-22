@@ -91,7 +91,7 @@ namespace yq::tachyon {
         }
         
         std::error_code ec = _init_data(viz, cfg, {
-            .descriptors    = ALLOCATE,
+            .descriptors    = LAYOUT,
             .shaders        = m_shaderMask
         });
         if(ec != std::error_code()){

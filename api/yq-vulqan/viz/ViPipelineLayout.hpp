@@ -28,7 +28,7 @@ namespace yq::tachyon {
     
         This encapsulates the pipeline layout.  It *ALSO* does the heavy lifting on pipeline creation (shaders, static-data).
     */
-    class ViPipelineLayout : public RefCount, public ViData {
+    class ViPipelineLayout : public ViData, public RefCount{
     public:
         
         ViPipelineLayout();
@@ -42,6 +42,7 @@ namespace yq::tachyon {
         
         bool                consistent() const;
         VkPipelineLayout    pipeline_layout() const { return m_pipelineLayout; }
+        bool                push_enabled() const;
         const auto&         shaders() const { return m_shaders; }
         const auto&         shader_infos() const { return m_shaderInfo; }
         VkShaderStageFlags  shader_mask() const { return m_shaderMask; }
@@ -57,6 +58,10 @@ namespace yq::tachyon {
         std::error_code _init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& opts);
         void            _kill();
         
+        enum class S : uint8_t {
+            Push
+        };
+        
         VkPipelineLayout                                m_pipelineLayout        = nullptr;
         VkShaderStageFlags                              m_shaderMask    = 0;
         std::vector<VkPipelineShaderStageCreateInfo>    m_shaderInfo;
@@ -64,6 +69,7 @@ namespace yq::tachyon {
         std::vector<VkVertexInputAttributeDescription>  m_vertexAttributes;
         std::vector<VkVertexInputBindingDescription>    m_vertexBindings;
         VkPipelineVertexInputStateCreateInfo            m_vertexCreateInfo{};
+        Flags<S>                                        m_status = {};
 
         ViPipelineLayout(const ViPipelineLayout&) = delete;
         ViPipelineLayout(ViPipelineLayout&&) = delete;

@@ -21,6 +21,6 @@ namespace yq::tachyon {
     using ViBufferCPtr          = Ref<const ViBuffer>;
 
     template <typename V, typename A, typename ... Args> class ViManager;
-    using ViBufferManager       = ViManager<ViBuffer, Buffer>;
+    using ViBufferManager       = ViManager<const ViBuffer, Buffer>;
     using ViBufferManagerUPtr   = std::unique_ptr<ViBufferManager>;
 }

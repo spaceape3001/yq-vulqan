@@ -47,34 +47,31 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void    ViData::_carve_buffer(BB&bb)
+    void    ViData::_carve(BB&bb)
     {
         if(bb.count){
-            bb.buffers  = &m_buffers[bb.buf0];
-            bb.bytes    = &m_bytes[bb.buf0];
-            bb.managed  = &m_bufferPtrs[bb.buf0];
-            bb.offsets  = &m_offsets[bb.buf0];
-            bb.pointers = &m_pointers[bb.buf0];
-            bb.sizes    = &m_sizes[bb.buf0];
-        }
-    }
-    
-    void    ViData::_carve_data(BB&bb)
-    {
-        if(bb.count){
+            bb.buffers      = &m_buffers[bb.buf0];
+            bb.bytes        = &m_bytes[bb.buf0];
+            bb.managed      = &m_bufferPtrs[bb.buf0];
+            bb.offsets      = &m_offsets[bb.buf0];
+            bb.pointers     = &m_pointers[bb.buf0];
+            bb.sizes        = &m_sizes[bb.buf0];
             bb.ids          = &m_ids[bb.data0];
             bb.revisions    = &m_revisions[bb.data0];
         }
     }
     
-    void    ViData::_carve_data(TB&tb)
+    void    ViData::_carve(TB&tb)
     {
         if(tb.count){
+            tb.views        = &m_imageViews[tb.tex0];
+            tb.samplers     = &m_samplers[tb.tex0];
+            tb.managed      = &m_texturePtrs[tb.tex0];
             tb.ids          = &m_ids[tb.data0];
             tb.revisions    = &m_revisions[tb.data0];
         }
     }
-
+    
     void    ViData::_carve_descriptor(BB&bb)
     {
         if(bb.count){
@@ -93,16 +90,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    ViData::_carve_texture(TB&tb)
-    {
-        if(tb.count){
-            tb.views        = &m_imageViews[tb.tex0];
-            tb.samplers     = &m_samplers[tb.tex0];
-            tb.managed      = &m_texturePtrs[tb.tex0];
-        }
-    }
-
-    bool    ViData::_create_descriptor_sets(const Options& opts)
+    bool    ViData::_create_descriptor_sets(const ViDataOptions& opts)
     {
         uint32_t        nDesc   = m_texture.end_desc();
         if(!nDesc)
@@ -193,7 +181,7 @@ namespace yq::tachyon {
         return true;
     }
     
-    bool    ViData::_create_descriptor_layout(const Options& opts)
+    bool    ViData::_create_descriptor_layout(const ViDataOptions& opts)
     {
         uint32_t        nDesc   = m_uniform.end_desc();
         if(!nDesc)
@@ -259,7 +247,7 @@ namespace yq::tachyon {
         return true;
     }
 
-    bool    ViData::_descriptors(const Options&opts)
+    bool    ViData::_descriptors(const ViDataOptions&opts)
     {
         // this order matters in the allocation step...
         m_storage.desc0     = 0;
@@ -312,6 +300,9 @@ namespace yq::tachyon {
 
         const void* ptr = nullptr;
         if(needs_pointer(cfg.activity)){
+            if(m_status(S::Static))
+                return true;
+
             if(!m_object){
                 vizWarning << "ViData -- trying to fetch with a null pointer object";
                 return false;
@@ -341,6 +332,9 @@ namespace yq::tachyon {
         
         const void* ptr = nullptr;
         if(needs_pointer(cfg.activity)){
+            if(m_status(S::Static))
+                return true;
+                
             if(!m_object){
                 vizWarning << "ViData -- trying to fetch with a null pointer object";
                 return false;
@@ -381,15 +375,15 @@ namespace yq::tachyon {
         return success;
     }
 
-    std::error_code     ViData::_init_data(ViVisualizer&viz, SharedPipelineConfig pipe, const Options& opts)
+    std::error_code     ViData::_init_data(ViVisualizer&viz, SharedPipelineConfig pipe, const ViDataOptions& opts)
     {
         m_viz               = &viz;
         m_config            = pipe;
         m_object            = opts.object;
-        if(m_object){
-            m_status |= S::Dynamic;
-        } else {
+        if(opts.flags(ViDataOptions::F::StaticLayout)){
             m_status |= S::Static;
+        } else {
+            m_status |= S::Dynamic;
         }
         
         if(!m_config){
@@ -488,11 +482,6 @@ namespace yq::tachyon {
             m_offsets.resize(nBuf, 0);
             m_pointers.resize(nBuf, nullptr);
             m_sizes.resize(nBuf, 0);
-
-            _carve_buffer(m_index);
-            _carve_buffer(m_storage);
-            _carve_buffer(m_uniform);
-            _carve_buffer(m_vertex);
         }
 
 
@@ -502,33 +491,32 @@ namespace yq::tachyon {
         m_uniform.data0     = m_texture.end_data();
         m_vertex.data0      = m_uniform.end_data();
         uint32_t    nData   = m_vertex.end_data();
-        
         if(nData){
             m_ids.resize(nData, 0);
             m_revisions.resize(nData, 0);
-         
-            _carve_data(m_index);
-            _carve_data(m_storage);
-            _carve_data(m_texture);
-            _carve_data(m_uniform);
-            _carve_data(m_vertex);
         }
-
+        
         uint32_t    nTex    = m_texture.end_tex();
         if(nTex){
             m_imageViews.resize(nTex, nullptr);
             m_samplers.resize(nTex, nullptr);
             m_texturePtrs.resize(nTex);
             
-            _carve_texture(m_texture);
         }
-        
+    
+        _carve(m_index);
+        _carve(m_storage);
+        _carve(m_texture);
+        _carve(m_uniform);
+        _carve(m_vertex);
+        _carve(m_texture);
+
         if(!_descriptors(opts))
             return errors::data_cant_initialize();
         return {};
     }
 
-    std::error_code    ViData::_init_data(const ViData&vi, const Options& opts)
+    std::error_code    ViData::_init_data(const ViData&vi, const ViDataOptions& opts)
     {
         m_viz               = vi.m_viz;
         m_config            = vi.m_config;
@@ -561,6 +549,13 @@ namespace yq::tachyon {
         m_storage.import_stats(vi.m_storage);
         m_uniform.import_stats(vi.m_uniform);
         m_texture.import_stats(vi.m_texture);
+
+        _carve(m_index);
+        _carve(m_storage);
+        _carve(m_texture);
+        _carve(m_uniform);
+        _carve(m_vertex);
+        _carve(m_texture);
 
         if(!_descriptors(opts))
             return errors::data_cant_initialize();

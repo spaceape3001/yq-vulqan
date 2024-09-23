@@ -45,7 +45,9 @@
 #include <yq-vulqan/viz/ViBufferObject.hpp>
 #include <yq-vulqan/viz/ViContext.hpp>
 #include <yq-vulqan/viz/ViImage.hpp>
+#include <yq-vulqan/viz/ViManager.hpp>
 #include <yq-vulqan/viz/ViQueueManager.hpp>
+#include <yq-vulqan/viz/ViRendered.hpp>
 #include <yq-vulqan/viz/ViSampler.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViSwapchain.hpp>
@@ -114,15 +116,13 @@ namespace yq::tachyon {
             throw create_error<"Unable to create semaphore!">();
         if(vkCreateSemaphore(m_viz.device(), &info, nullptr, &m_renderFinished) != VK_SUCCESS)
             throw create_error<"Unable to create semaphore!">();
+            
+        m_rendereds     = std::make_unique<ViRenderedManager>(m_viz, ViRenderedOptions{});
     }
     
     void                ViFrame0::_dtor()
     {
-        for(auto& i : m_rendereds){
-            if(i.second)
-                delete i.second;
-        }
-        m_rendereds.clear();
+        m_rendereds         = {};
 
         if(m_commandBuffer && m_commandPool){
             vkFreeCommandBuffers(m_viz.device(), m_commandPool, 1, &m_commandBuffer);
@@ -144,9 +144,24 @@ namespace yq::tachyon {
             m_fence   = nullptr;
         }
     }
+
+    ViRenderedPtr      ViFrame0::create(const RenderedCPtr&obj)
+    {
+        if(!m_rendereds)
+            return {};
+        return m_rendereds -> create(obj);
+        //return create(obj, *obj.pipeline());
+    }
     
+    //ViRenderedCPtr      ViFrame0::create(const RenderedCPtr& obj, const Pipeline& pipe)
+    //{
+        //if(m_rendereds){
+            //m_rendereds -> create(obj, pipe);
+        //}
+    //}
     
-    ViRendered0*         ViFrame0::create(const Rendered&obj, const Pipeline& pipe)
+    #if 0
+    ViRendered0*         ViFrame0::create(const RenderedCPtr&obj, const PipelineCPtr& pipe)
     {
         {
             LOCK
@@ -196,11 +211,12 @@ namespace yq::tachyon {
         }
         return nullptr;
     }
+    #endif
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViPipeline0
     ////////////////////////////////////////////////////////////////////////////////
-
+#if 0
     ViPipeline0::ViPipeline0(Visualizer&viz, const Pipeline&p) : m_viz(viz), m_id(p.id()), 
         m_config(p.config()), m_cfg(*m_config)
     {
@@ -497,12 +513,12 @@ namespace yq::tachyon {
             m_layout    = nullptr;
         }
     }
-
+#endif
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViRendered0
     ////////////////////////////////////////////////////////////////////////////////
-
+#if 0
     ViRendered0::ViRendered0(Visualizer&_viz, const ViPipeline0& _pipe, const Rendered& _obj) : m_viz(_viz), m_pipe(_pipe), m_object(_obj)
     {
         _ctor();
@@ -651,12 +667,12 @@ namespace yq::tachyon {
         switch(m_pipe.m_cfg.push.type){
         case PushConfigType::Full:
             if(r3){
-                push->matrix    = u.world2eye() * r3->model2world();
+                push->matrix    = u.world2eye * r3->model2world();
                 break;
             }
             [[fallthrough]];
         case PushConfigType::View:
-            push->matrix = u.world2eye();
+            push->matrix = u.world2eye;
             break;
         case PushConfigType::Custom:
             if(m_pipe.m_cfg.push.fetch){
@@ -734,7 +750,7 @@ namespace yq::tachyon {
         }
     }
 
-
+#endif
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViThread0
@@ -916,12 +932,6 @@ namespace yq::tachyon {
         
         m_thread        = {};
     
-        for(auto& p : m_pipelines){
-            if(p.second)
-                delete p.second;
-        }
-        m_pipelines.clear();
-
         //  Generally in reverse order of initialization
 
         _9_pipeline_manager_kill();
@@ -1013,48 +1023,6 @@ namespace yq::tachyon {
         return const_cast<Visualizer*>(this)->next_frame0();
     }
 
-    const ViPipeline0* Visualizer::pipeline(uint64_t i) const
-    {
-        {
-            LOCK
-            auto j = m_pipelines.find(i);
-            if(j != m_pipelines.end())
-                return (j->second);
-        }
-        return nullptr;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //  SETTERS/MANIPULATORS
-    
-    const ViPipeline0*  Visualizer::create(const Pipeline& v)
-    {
-        {
-            LOCK
-            auto j = m_pipelines.find(v.id());
-            if(j != m_pipelines.end())
-                return j->second;
-        }
-        
-        ViPipeline0* p   = new ViPipeline0(*this, v);
-        p -> _ctor();
-        ViPipeline0* ret = nullptr;
-        
-        {
-            WLOCK
-            auto [j,f]  = m_pipelines.try_emplace(v.id(), p);
-            if(f){
-                std::swap(p, ret);
-            } else
-                ret     = j->second;
-        }
-        
-        if(p)
-            delete p;
-        
-        return ret;
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////
     //  RENDERING
@@ -1065,7 +1033,7 @@ namespace yq::tachyon {
         beginInfo.flags = 0; // Optional
         beginInfo.pInheritanceInfo = nullptr; // Optional
 
-        if (vkBeginCommandBuffer(u.command(), &beginInfo) != VK_SUCCESS)
+        if (vkBeginCommandBuffer(u.command_buffer, &beginInfo) != VK_SUCCESS)
             return create_error<"Failed to begin recording command buffer">();
 
         VqRenderPassBeginInfo renderPassInfo;
@@ -1077,7 +1045,7 @@ namespace yq::tachyon {
         renderPassInfo.clearValueCount = 1;
         VkClearValue                cv  = m_clearValue;
         renderPassInfo.pClearValues = &cv;
-        vkCmdBeginRenderPass(u.command(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+        vkCmdBeginRenderPass(u.command_buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
         std::error_code     ret;
         try {
@@ -1090,8 +1058,8 @@ namespace yq::tachyon {
             ret = ec;
         }
             
-        vkCmdEndRenderPass(u.command());
-        if (vkEndCommandBuffer(u.command()) != VK_SUCCESS)
+        vkCmdEndRenderPass(u.command_buffer);
+        if (vkEndCommandBuffer(u.command_buffer) != VK_SUCCESS)
             return create_error<"Failed to record command buffer">();
         return ret;
     }
@@ -1104,11 +1072,11 @@ namespace yq::tachyon {
             vizCritical << "Visualizer::draw ... attempting to draw on a swapchain WITHOUT a swapchain";
             return errors::swapchain_uninitialized();
         }
-    
-        auto    r1 = auto_reset(u.m_viz, this);
+        
+        auto    r1 = auto_reset(u.viz, this);
         ViFrame0&    f   = current_frame0();
-        auto    r2  = auto_reset(u.m_command, f.m_commandBuffer);
-        auto    r3  = auto_reset(u.m_frame0, &f);
+        auto    r2  = auto_reset(u.command_buffer, f.m_commandBuffer);
+        auto    r3  = auto_reset(u.frame0, &f);
 
         VkResult        res = VK_SUCCESS;
         
@@ -1151,7 +1119,7 @@ namespace yq::tachyon {
         prerecord(u);
 
         vkResetFences(m_device, 1, &f.m_fence);
-        vkResetCommandBuffer(u.command(), 0);
+        vkResetCommandBuffer(u.command_buffer, 0);
         
     
         std::error_code ec = _record(u, imageIndex, use);
@@ -1191,61 +1159,40 @@ namespace yq::tachyon {
         return std::error_code();
     }
 
-    void    Visualizer::_draw(ViContext&u, const Rendered&r, const Pipeline&p, Tristate w)
+    void    Visualizer::_draw(ViContext&u, const RenderedCPtr&r, Tristate w)
     {
-        const auto&         cfg     = p.config();
-        if(cfg->binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
-            return ;
+        //const auto&         cfg     = p.config();
+        //if(cfg->binding != PipelineBinding::Graphics)     // filter out non-graphics (for now)
+            //return ;
         
-        u.m_wireframe       = w;
+        u.wireframe       = w;
             
         // TODO ... reduce this down to a single pipeline lookup.... (as the next one is implicit)
         
         //  FOR NOW....
-        ViRendered0*         thing   = current_frame0().create(r, p);
+        
+        ViRenderedPtr       thing = current_frame0().create(r);
         if(!thing)
             return;
         thing -> update(u);
         thing -> record(u);
     }
 
-    void    Visualizer::draw_object(ViContext&u, const Rendered&r, Tristate w)
+    void    Visualizer::draw_object(ViContext&u, const RenderedCPtr&r, Tristate w)
     {
-        PipelineCPtr    pipe    = r.pipeline();
-        if(!pipe)
+        if(!r)
             return ;
-
-        _draw(u, r, *pipe, w);
-    }
-
-    void    Visualizer::draw_object(ViContext&u, const Rendered&r, const Pipeline& p, Tristate w)
-    {
-        #if 0
-            // SMARTER (later, if it becomes an issue)
-        const CompoundInfo*     info    = p.config().object;
-        if(info){
-            if(info->is_type()){
-                
-            } else if(info->is_object()){
-            }
-        
-            const RenderedInfo& ri  = r.metaInfo();
-            if((&ri != info) && !ri->is_base(*info))
-                return ;
-        }
-        #endif
-        
-        _draw(u,r,p,w);
+        _draw(u, r, w);
     }
 
     void    Visualizer::draw_scene(ViContext& u, const Scene&sc, const Perspective& p)
     {
-        if(u.m_viz != this) //  fast reject
+        if(u.viz != this) //  fast reject
             return ;
         if(!p.camera)
             return ;
             
-        auto r1 = auto_reset(u.m_utime, sc.utime);
+        auto r1 = auto_reset(u.time, sc.utime);
         
         Camera::Params      cparams;
         if(p.screen){
@@ -1256,26 +1203,28 @@ namespace yq::tachyon {
             cparams.screen  = Size2D((double) w, (double) h);
         }
         
-        auto r2 = auto_reset(u.m_world2eye, p.camera->world2screen(cparams));
+        auto r2 = auto_reset(u.world2eye, p.camera->world2screen(cparams));
         
         for(auto& r : sc.things){
             if(!r)
                 continue;
-            draw_object(u, *r, p.wireframe);
+            draw_object(u, r, p.wireframe);
         }
     }
 
     void               Visualizer::update(ViContext&u, const Scene&sc)
     {
-        if(u.m_frame0){
+        if(u.frame0){
             for(auto& r : sc.things){
                 const Pipeline*pipe    = r->pipeline();
                 if(!pipe)
                     continue;
-                ViRendered0* rr  = u.m_frame0 -> create(*r, *pipe);
+                    
+                ViRenderedPtr  rr  = u.frame0 -> create(r);
                 if(!rr)
                     continue;
-                rr -> descriptors(u);
+                rr -> update(u);
+                rr -> descriptors();
             }
         }
     }

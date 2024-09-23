@@ -656,6 +656,36 @@ namespace yq::tachyon {
         return m_multiview.maxViewCount;
     }
 
+    ViPipelineCPtr                  ViVisualizer::pipeline(uint64_t i) const
+    {
+        if(!m_pipelines)
+            return {};
+        return m_pipelines -> get(i);
+    }
+    
+    ViPipelineCPtr                  ViVisualizer::pipeline_create(const Pipeline&pipe)
+    {
+        if(!m_pipelines)
+            return {};
+        return m_pipelines -> create(pipe);
+    }
+    
+    void                            ViVisualizer::pipeline_erase(uint64_t i)
+    {
+        if(m_pipelines)
+            m_pipelines -> erase(i);
+    }
+    
+    void                            ViVisualizer::pipeline_erase(const Pipeline& p)
+    {
+        pipeline_erase(p.id());
+    }
+    
+    ViPipelineManager*              ViVisualizer::pipeline_manager() const
+    {
+        return m_pipelines.get();
+    }
+
     ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout(uint64_t i) const
     {
         if(!m_pipelineLayouts)

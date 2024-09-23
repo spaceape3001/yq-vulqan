@@ -13,6 +13,7 @@
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>
+#include <yq-vulqan/typedef/rendered.hpp>
 #include <yq-vulqan/viz/ViBufferObjectVector.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>
 #include <yq-vulqan/viz/ViTextureObjectVector.hpp>
@@ -31,23 +32,14 @@ namespace yq::tachyon {
     
     class Rendered;
     class Pipeline;
-    struct ViRendered0;
     struct ViContext;
     
     class ViQueueManager;
     
-    using ViRendered0Map   = std::unordered_multimap<uint64_t,ViRendered0*>;
-    
-    struct ViBufferObject;
-    using ViBO = ViBufferObject;
-
-    struct ViTextureObject;
-    using ViTO = ViTextureObject;
-
 
         //  and so we can be more efficient in rendering
     struct ViFrame0 {
-        ViRendered0Map              m_rendereds;
+        ViRenderedManagerUPtr       m_rendereds;
         mutable tbb::spin_rw_mutex  m_mutex;
         Visualizer&                 m_viz;
         VkCommandPool               m_commandPool     = nullptr;
@@ -63,10 +55,11 @@ namespace yq::tachyon {
         void    _ctor();
         void    _dtor();
         
-        ViRendered0*         create(const Rendered&, const Pipeline&);
-        const ViRendered0*   lookup(const Rendered&, const Pipeline&) const;
+        ViRenderedPtr         create(const RenderedCPtr&);
+        //ViRenderedCPtr      create(const RenderedCPtr&, const PipelineCPtr&);
     };
 
+#if 0
     struct ViPipeline0 {
         Visualizer&             m_viz;
         const uint64_t          m_id;
@@ -90,8 +83,9 @@ namespace yq::tachyon {
         std::error_code         _ctor();
         void                    _dtor();
     };
+#endif
 
-
+#if 0
         //  This is the mirror to the rendered object
         //  (it'll take over the ViThing)
     struct ViRendered0 {
@@ -128,7 +122,7 @@ namespace yq::tachyon {
         void    _ubo(size_t);
         void    _tex(size_t);
     };
-
+#endif
 
         // eventually multithread...
     struct ViThread0 {

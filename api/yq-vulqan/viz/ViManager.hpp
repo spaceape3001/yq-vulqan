@@ -8,6 +8,7 @@
 
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/trait/indices.hpp>
+#include <yq-toolbox/trait/is_pointer.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <tuple>
 #include <unordered_map>
@@ -20,11 +21,22 @@ namespace yq::tachyon {
     public:
         
         static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
-        using v_ptr_t           = Ref<V>;
-        using v_cptr_t          = Ref<const V>;
-        using map_t             = std::unordered_map<uint64_t, v_cptr_t>;
+        
+        using v_ref_t           = Ref<V>;
+        using map_t             = std::unordered_map<uint64_t, v_ref_t>;
         using mutex_t           = tbb::spin_rw_mutex;
         using data_t            = std::tuple<Args...>;
+        
+        static uint64_t     get_id(const A& asset_ptr)
+        {
+            if constexpr (is_pointer_v<A>){
+                return asset_ptr -> id();
+            }
+            
+            if constexpr (!is_pointer_v<A>){
+                return asset_ptr.id();
+            }
+        }
         
         ViManager(ViVisualizer& viz, Args...args) : m_viz(viz), m_data(args...)
         {
@@ -42,24 +54,25 @@ namespace yq::tachyon {
         }
         
         template <unsigned... Is>
-        v_cptr_t    _create(const A& asset)
+        v_ref_t    _create(const A& asset, indices<Is...>)
         {
-            return new V(m_viz, asset, get<Is, Args...>(m_data)...);
+            return new V(m_viz, asset, std::get<Is, Args...>(m_data)...);
         }
         
-        v_cptr_t    create(const A& asset)
+        v_ref_t     create(const A& asset)
         {
+            uint64_t    idv = get_id(asset);
+            
             {
                 mutex_t::scoped_lock _lock(m_mutex, false);
-                auto j = m_hash.find(asset.id());
+                auto j = m_hash.find(idv);
                 if(j != m_hash.end())
                     return j->second;
             }
 
-            v_cptr_t    ret, p;
-            
+            v_ref_t    ret, p;
             if constexpr (sizeof...(Args) != 0){
-                p       = _create<indices_gen<ARG_COUNT>()>(asset);
+                p       = _create(asset, indices_gen<ARG_COUNT>());
             }
             
             if constexpr (sizeof...(Args) == 0){
@@ -71,7 +84,7 @@ namespace yq::tachyon {
             
             {
                 mutex_t::scoped_lock _lock(m_mutex, true);
-                auto [j,f]  = m_hash.try_emplace(asset.id(), p);
+                auto [j,f]  = m_hash.try_emplace(idv, p);
                 if(f){
                     std::swap(p, ret);
                 } else
@@ -89,12 +102,12 @@ namespace yq::tachyon {
         
         void            erase(const A& asset)
         {
-            erase(asset.id());
+            erase(get_id(asset));
         }
         
         void            erase(uint64_t i)
         {
-            v_cptr_t    va;
+            v_ref_t    va;
             {
                 mutex_t::scoped_lock _lock(m_mutex, true);
                 auto j  = m_hash.find(i);
@@ -105,7 +118,7 @@ namespace yq::tachyon {
             }
         }
         
-        v_cptr_t    get(uint64_t i) const
+        v_ref_t    get(uint64_t i) const
         {
             {
                 mutex_t::scoped_lock _lock(m_mutex, false);

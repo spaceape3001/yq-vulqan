@@ -153,6 +153,12 @@ namespace yq::tachyon {
         //! Vulkan physical device (gpu)
         VkPhysicalDevice                physical() const { return m_physical; }
         
+        ViPipelineCPtr                  pipeline(uint64_t) const;
+        ViPipelineCPtr                  pipeline_create(const Pipeline&);
+        void                            pipeline_erase(uint64_t);
+        void                            pipeline_erase(const Pipeline&);
+        ViPipelineManager*              pipeline_manager() const;
+        
         ViPipelineLayoutCPtr            pipeline_layout(uint64_t) const;
         ViPipelineLayoutCPtr            pipeline_layout_create(const Pipeline&);
         void                            pipeline_layout_erase(uint64_t);
@@ -290,7 +296,7 @@ namespace yq::tachyon {
         }                                   m_multiview;
         VkPhysicalDevice                    m_physical          = nullptr;
         ViPipelineLayoutManagerUPtr         m_pipelineLayouts;
-        ViPipelineManagerUPtr               m_pipelines;
+        ViPipelineManagerUPtr               m_pipelines;        // temporary until relocated
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;
         ViQueueManager*                     m_presentQueue      = nullptr;
@@ -311,6 +317,8 @@ namespace yq::tachyon {
         GLFWwindow*                         m_window            = nullptr;
         
         std::atomic<uint64_t>               m_tick{0ULL};     // Always monotomically incrementing
+
+            // Temporary until moved to the frames
 
         //Flags<F>            m_flags           = {};
         

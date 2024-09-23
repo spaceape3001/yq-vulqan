@@ -27,7 +27,7 @@ namespace yq::tachyon {
     using ViShaderCPtr          = Ref<const ViShader>;
 
     template <typename V, typename A, typename ... Args> class ViManager;
-    using ViShaderManager       = ViManager<ViShader, Shader>;
+    using ViShaderManager       = ViManager<const ViShader, Shader>;
 
     using ViShaderManagerUPtr   = std::unique_ptr<ViShaderManager>;
 }

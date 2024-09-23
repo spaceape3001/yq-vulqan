@@ -23,7 +23,7 @@ namespace yq::tachyon {
     using ViImageCPtr           = Ref<const ViImage>;
 
     template <typename V, typename A, typename ... Args> class ViManager;
-    using ViImageManager        = ViManager<ViImage, Image>;
+    using ViImageManager        = ViManager<const ViImage, Image>;
 
     using ViImageManagerUPtr    = std::unique_ptr<ViImageManager>;
 }

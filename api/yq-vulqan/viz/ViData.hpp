@@ -27,16 +27,26 @@ namespace yq::tachyon {
     struct BaseBOConfig;
     struct TexConfig;
 
+    struct ViDataOptions {
+        enum class F : uint8_t {
+            StaticLayout
+            // MakeDescriptorLayout    = 0
+        };
+        using descriptor_t  = std::variant<std::monostate, layout_t, allocate_t>;
+
+        descriptor_t            descriptors;
+        Flags<F>                flags               = {};
+        VkDescriptorSetLayout   layout              = nullptr;
+        const void*             object              = nullptr;
+        VkDescriptorPool        pool                = nullptr;
+        VkShaderStageFlags      shaders             = {};
+    };
+
 
     //! Render buffer object manager (Running out of good names)
     //!
     class ViData {
     public:
-        struct Options;
-        enum class F : uint8_t {
-            // MakeDescriptorLayout    = 0
-        };
-        using descriptor_t  = std::variant<std::monostate, layout_t, allocate_t>;
         
         uint32_t                buffer_count() const;
         
@@ -44,37 +54,39 @@ namespace yq::tachyon {
         
         VkDescriptorSetLayout   descriptor_set_layout() const { return m_descriptorLayout; }
         VkDescriptorPool        descriptor_pool() const { return m_descriptorPool; }
+        
+        std::span<const VkDescriptorSet>    descriptor_span() const;
     
-        VkBuffer            index_buffer(size_t) const;
-        uint32_t            index_bytes() const;
-        uint32_t            index_bytes(size_t) const;
-        uint32_t            index_count() const;
-        uint32_t            index_max_size() const;
+        VkBuffer                index_buffer(size_t) const;
+        uint32_t                index_bytes() const;
+        uint32_t                index_bytes(size_t) const;
+        uint32_t                index_count() const;
+        uint32_t                index_max_size() const;
         
         SharedPipelineConfig    pipeline_config() const;
         
-        VkBuffer            storage_buffer(size_t) const;
-        uint32_t            storage_bytes() const;
-        uint32_t            storage_bytes(size_t) const;
-        uint32_t            storage_count() const;
+        VkBuffer                storage_buffer(size_t) const;
+        uint32_t                storage_bytes() const;
+        uint32_t                storage_bytes(size_t) const;
+        uint32_t                storage_count() const;
 
-        uint32_t            texture_count() const;
-        VkImageView         texture_image_view(size_t) const;
-        VkSampler           texture_sampler(size_t) const;
+        uint32_t                texture_count() const;
+        VkImageView             texture_image_view(size_t) const;
+        VkSampler               texture_sampler(size_t) const;
         
         
-        VkBuffer            uniform_buffer(size_t) const;
-        uint32_t            uniform_bytes() const;
-        uint32_t            uniform_bytes(size_t) const;
-        uint32_t            uniform_count() const;
+        VkBuffer                uniform_buffer(size_t) const;
+        uint32_t                uniform_bytes() const;
+        uint32_t                uniform_bytes(size_t) const;
+        uint32_t                uniform_count() const;
         
-        VkBuffer            vertex_buffer(size_t) const;
-        uint32_t            vertex_bytes() const;
-        uint32_t            vertex_bytes(size_t) const;
-        uint32_t            vertex_count() const;
-        uint32_t            vertex_max_size() const;
+        VkBuffer                vertex_buffer(size_t) const;
+        uint32_t                vertex_bytes() const;
+        uint32_t                vertex_bytes(size_t) const;
+        uint32_t                vertex_count() const;
+        uint32_t                vertex_max_size() const;
         
-        ViVisualizer*       visualizer() const { return m_viz; }
+        ViVisualizer*           visualizer() const { return m_viz; }
         
         
     protected:
@@ -82,8 +94,8 @@ namespace yq::tachyon {
         ViData();
         ~ViData();
 
-        std::error_code     _init_data(ViVisualizer&, SharedPipelineConfig, const Options& opts);
-        std::error_code     _init_data(const ViData&, const Options& opts);
+        std::error_code     _init_data(ViVisualizer&, SharedPipelineConfig, const ViDataOptions& opts);
+        std::error_code     _init_data(const ViData&, const ViDataOptions& opts);
         void                _kill_data();
         
         //! Imports the data (first time)
@@ -103,6 +115,7 @@ namespace yq::tachyon {
             Dynamic             // Dynamic data set (with object)
         };
 
+    protected:
         struct BB {
             //VmaAllocation*      allocations     = nullptr;
             VkBuffer*               buffers         = nullptr;
@@ -110,7 +123,7 @@ namespace yq::tachyon {
             uint32_t*               sizes           = nullptr;
             uint64_t*               ids             = nullptr;
             ViBufferCPtr*           managed         = nullptr;
-            uint32_t*               offsets         = nullptr;
+            VkDeviceSize*           offsets         = nullptr;
             const void**            pointers        = nullptr;
             uint64_t*               revisions       = nullptr;
             uint32_t*               bytes           = nullptr;
@@ -170,7 +183,7 @@ namespace yq::tachyon {
         std::vector<VkDescriptorSet>        m_descriptors;      // PER DESCRIPTOR (SBO+UBO+TEX)
         std::vector<uint64_t>               m_ids;              // ALL
         std::vector<uint64_t>               m_revisions;        // ALL
-        std::vector<uint32_t>               m_offsets;          // PER BUFFER
+        std::vector<VkDeviceSize>           m_offsets;          // PER BUFFER
         std::vector<const void*>            m_pointers;         // PER BUFFER
         std::vector<VkImageView>            m_imageViews;       // PER TEXTURE
         std::vector<VkSampler>              m_samplers;         // PER TEXTURE
@@ -191,17 +204,15 @@ namespace yq::tachyon {
         VkDescriptorPool        m_descriptorPool    = nullptr;
         Flags<S>                m_status            = {};
         
-        bool    _create_descriptor_sets(const Options& opts);
-        bool    _create_descriptor_layout(const Options& opts);
-        bool    _descriptors(const Options& opts);
+        bool    _create_descriptor_sets(const ViDataOptions& opts);
+        bool    _create_descriptor_layout(const ViDataOptions& opts);
+        bool    _descriptors(const ViDataOptions& opts);
         void    _kill_descriptors();
         
-        void    _carve_buffer(BB&);
-        void    _carve_data(BB&);
-        void    _carve_data(TB&);
+        void    _carve(BB&);
+        void    _carve(TB&);
         void    _carve_descriptor(BB&);
         void    _carve_descriptor(TB&);
-        void    _carve_texture(TB&);
 
         bool    _import(BB&, uint32_t, const BaseBOConfig&);
         bool    _import(TB&, uint32_t, const TexConfig&);
@@ -214,14 +225,5 @@ namespace yq::tachyon {
 
         void    _publish(BB&, uint32_t);
         void    _publish(TB&, uint32_t);
-    };
-
-    struct ViData::Options {
-        descriptor_t            descriptors;
-        Flags<F>                flags               = {};
-        VkDescriptorSetLayout   layout              = nullptr;
-        const void*             object              = nullptr;
-        VkDescriptorPool        pool                = nullptr;
-        VkShaderStageFlags      shaders             = {};
     };
 }

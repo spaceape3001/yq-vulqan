@@ -92,6 +92,7 @@ namespace yq::tachyon {
         
         std::error_code ec = _init_data(viz, cfg, {
             .descriptors    = LAYOUT,
+            .flags          = ViDataOptions::F::StaticLayout,
             .shaders        = m_shaderMask
         });
         if(ec != std::error_code()){
@@ -153,6 +154,7 @@ namespace yq::tachyon {
                 pipelineLayoutInfo.pushConstantRangeCount = 1;
                 pipelineLayoutInfo.pPushConstantRanges = &push;
             }
+            m_status |= S::Push;
         }
         
         VkDescriptorSetLayout   descriptorLayouts[1] = { descriptor_set_layout() };
@@ -223,6 +225,11 @@ namespace yq::tachyon {
         return m_viz ? (m_viz->device() && m_config && m_pipelineLayout) : (!m_config && !m_pipelineLayout);
     }
     
+    bool  ViPipelineLayout::push_enabled() const
+    {
+        return m_status(S::Push);
+    }
+
     bool  ViPipelineLayout::valid() const
     {
         return m_viz && m_viz->device() && m_config && m_pipelineLayout;

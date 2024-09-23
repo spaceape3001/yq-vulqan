@@ -14,6 +14,7 @@
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/image.hpp>
+#include <yq-vulqan/typedef/rendered.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
@@ -64,10 +65,6 @@ namespace yq::tachyon {
         VkCommandPoolCreateFlags        command_pool_create_flags() const { return m_cmdPoolCreateFlags; }
 
 
-        //! Creates the pipeline
-        //! \note Reference is only good to the next create()
-        const ViPipeline0*              create(const Pipeline&);
-        
         //! Gets the current frame
         //! \note will return INVALID reference if construction failed!
         ViFrame0&                       current_frame0();
@@ -88,10 +85,10 @@ namespace yq::tachyon {
         void                            draw_scene(ViContext&, const Scene&, const Perspective&);
         
         //! Draw a specific item, matrix assumed correct
-        void                            draw_object(ViContext&, const Rendered&, Tristate wireframe=Tristate::INHERIT);
+        void                            draw_object(ViContext&, const RenderedCPtr&, Tristate wireframe=Tristate::INHERIT);
 
         //! Draw a specific item, matrix assumed correct, with given pipeline
-        void                            draw_object(ViContext&, const Rendered&, const Pipeline&, Tristate wireframe=Tristate::INHERIT);
+        //void                            draw_object(ViContext&, const Rendered&, const Pipeline&, Tristate wireframe=Tristate::INHERIT);
 
         //! Gets the frame relative to current
         //! \note will return INVALID reference if construction failed!
@@ -113,11 +110,6 @@ namespace yq::tachyon {
         //! Gets the next frame
         //! \note will return INVALID reference if construction failed!
         const ViFrame0&                  next_frame0() const;
-        
-        //! Finds the pipeline
-        //! \note do NOT hold onto the reference!
-        const ViPipeline0*               pipeline(uint64_t) const;
-        
         
 
 
@@ -147,26 +139,19 @@ namespace yq::tachyon {
 
         std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
         
-        void                        _draw(ViContext&, const Rendered&, const Pipeline&, Tristate);
-        
-        
+        void                        _draw(ViContext&, const RenderedCPtr&, Tristate);
     
         Visualizer(const Visualizer&) = delete;
         Visualizer(Visualizer&&) = delete;
         Visualizer& operator=(const Visualizer&) = delete;
         Visualizer& operator=(Visualizer&&) = delete;
     
-        //using DKey  = std::pair<uint64_t, uint64_t>;
         using RenderedMap   = std::unordered_multimap<uint64_t,ViRendered0*>;
-        using PipelineMap   = std::unordered_map<uint64_t, ViPipeline0*>;
         using FrameArray    = std::vector<std::unique_ptr<ViFrame0>>;
 
-    
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
         uint32_t                            m_descriptorCount       = 0;
-        //std::vector<const char*>            m_extensions;
         FrameArray                          m_frames;
-        PipelineMap                         m_pipelines;
         
             // eventually this will get smarter....
         std::unique_ptr<ViThread0>           m_thread;

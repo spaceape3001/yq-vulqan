@@ -139,11 +139,11 @@ namespace yq::tachyon {
             return std::error_code();
             
         auto start = std::chrono::high_resolution_clock::now();
-        auto r1 = auto_reset(u.m_frameNumber, tick());
-        auto r2 = auto_reset(u.m_viewer, this);
-        auto r3 = auto_reset(u.m_window, static_cast<Window*>(this));
+        auto r1 = auto_reset(u.tick, tick());
+        auto r2 = auto_reset(u.viewer, this);
+        auto r3 = auto_reset(u.window, static_cast<Window*>(this));
         if(m_widget && m_imgui){
-            auto r = auto_reset(u.m_imgui, true);
+            auto r = auto_reset(u.imgui, true);
             ImGui::SetCurrentContext(m_imgui);
             ImGui_ImplVulkan_NewFrame();
             ImGui_ImplGlfw_NewFrame();
@@ -181,7 +181,7 @@ namespace yq::tachyon {
         if(m_widget)
             m_widget -> vulkan_(u);
         if(m_imgui)
-            ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command(), nullptr);
+            ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command_buffer, nullptr);
     }
 
     void    Viewer::window_framebuffer_resized(const Size2I&s)

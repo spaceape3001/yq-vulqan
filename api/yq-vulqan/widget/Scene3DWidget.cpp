@@ -19,8 +19,8 @@ namespace yq::tachyon {
     
     void    Scene3DWidget::vulkan_(ViContext& u)
     {
-        if(u.viz())
-            u.viz()->draw_scene(u, scene, perspective);
+        if(u.viz)
+            u.viz->draw_scene(u, scene, perspective);
     }
 
     void    Scene3DWidget::add_thing(RenderedPtr r)
@@ -37,8 +37,8 @@ namespace yq::tachyon {
 
     void    Scene3DWidget::prerecord(ViContext& u) 
     {
-        if(u.viz())
-            u.viz()->update(u, scene);
+        if(u.viz)
+            u.viz->update(u, scene);
         Widget::prerecord(u);
     }
 }

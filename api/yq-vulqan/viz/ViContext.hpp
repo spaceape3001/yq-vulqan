@@ -9,11 +9,11 @@
 #include <vulkan/vulkan_core.h>
 #include <yq-toolbox/math/glm.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
+#include <yq-vulqan/typedef/pipeline.hpp>
 
 //namespace yq::engine { class Viewer; }
 namespace yq::tachyon {
 
-    struct ViRendered0;
     struct ViFrame0;
     class Visualizer;
     class Viewer;
@@ -30,37 +30,66 @@ namespace yq::tachyon {
         custom data
     */
     struct ViContext {
-        Visualizer*         viz() const { return m_viz; }
-        VkCommandBuffer     command() const { return m_command; }
-        uint64_t            frame_number() const { return m_frameNumber; }
-        bool                imgui() const { return m_imgui; }
-        
-        Viewer*             viewer() const { return m_viewer; }
-        Window*             window() const { return m_window; }
-        
-        Tristate            wireframe() const { return m_wireframe; }
-        const glm::dmat4&   world2eye() const { return m_world2eye; }
-        double              utime() const { return m_utime; }
-        
         ViContext();
         ~ViContext();
         
-        
         //  If modified, restore before return (or...make copy, use copy)
-        Visualizer*         m_viz           = nullptr; 
-        Viewer*             m_viewer        = nullptr;
-        Window*             m_window        = nullptr;
-        ViFrame0*           m_frame0        = nullptr;
-        ViFrameThread*      m_frame_thread  = nullptr;
-        ViThread*           m_thread        = nullptr;
-        VkCommandBuffer     m_command       = nullptr;
-        VkPipeline          m_pipeline      = nullptr;  // last pipeline set
-        VkPipelineLayout    m_layout        = nullptr;  // last layout set
-        glm::dmat4          m_world2eye;
-        uint64_t            m_frameNumber   = 0;
-        double              m_utime         = 0.;
-        bool                m_imgui         = false;
-        bool                m_rebuild       = false;    // rebulid pipelines?
-        Tristate            m_wireframe     = Tristate::INHERIT;
+        
+        //! Current command buffer
+        VkCommandBuffer     command_buffer      = nullptr;
+        
+        //! Current command pool (if buffer needed)
+        VkCommandPool       command_pool        = nullptr;
+        
+        //! Current descriptor pool (if allocations are necessary)
+        VkDescriptorPool    descriptor_pool     = nullptr;
+        
+        //! Current frame 
+        ViFrame0*           frame0              = nullptr;
+        
+        //! Current frame thread
+        ViFrameThread*      frame_thread        = nullptr;
+        
+        //! TRUE if we're in imgui mode
+        bool                imgui               = false;
+
+        //! Current pipeline 
+        VkPipeline          pipeline            = nullptr;  // last pipeline set
+
+        //! Current pipeline layout
+        VkPipelineLayout    pipeline_layout     = nullptr;  // last layout set
+        
+        //! TRUE if the pipelines need rebuilding (ie, swapchain rebuild occured)
+        bool                pipeline_rebuild    = false; 
+        
+        VkShaderStageFlags  pipeline_shaders    = 0;
+
+        //! Current pipeline manager
+        ViPipelineManager*  pipelines           = nullptr;
+        
+        //! Current thread
+        ViThread*           thread              = nullptr;
+
+        //! Frame tick
+        uint64_t            tick                = 0;
+
+        //! Current "time"
+        double              time                = 0.;
+        
+        //! Current visualizer
+        Visualizer*         viz                 = nullptr; 
+        
+        //! Current viewer
+        Viewer*             viewer              = nullptr;
+        
+        //! Current window
+        Window*             window              = nullptr;
+        
+        //! Set to override wireframe capability
+        Tristate            wireframe           = Tristate::INHERIT;
+
+        //! Current world2eye transform
+        glm::dmat4          world2eye;
+
     };
 }

@@ -23,7 +23,7 @@ namespace yq::tachyon {
     using ViSamplerPtr          = Ref<ViSampler>;
     using ViSamplerCPtr         = Ref<const ViSampler>;
     template <typename V, typename A, typename ... Args> class ViManager;
-    using ViSamplerManager      = ViManager<ViSampler, Sampler>;
+    using ViSamplerManager      = ViManager<const ViSampler, Sampler>;
 
     using ViSamplerManagerUPtr  = std::unique_ptr<ViSamplerManager>;
 }

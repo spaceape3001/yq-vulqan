@@ -795,7 +795,7 @@ namespace yq::tachyon {
         
         VqDescriptorPoolCreateInfo descriptorPoolInfo;
         //descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT | VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
-        descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
+        descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT | VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
         descriptorPoolInfo.maxSets       = dcount * cntDPS;
         descriptorPoolInfo.poolSizeCount = (uint32_t) cntDPS;
         descriptorPoolInfo.pPoolSizes    = descriptorPoolSizes;

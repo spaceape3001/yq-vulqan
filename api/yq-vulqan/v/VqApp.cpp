@@ -31,7 +31,6 @@ namespace yq::tachyon {
         static constexpr const uint32_t kEngineVersion      = YQ_MAKE_VERSION(0, 0, 2);
         static constexpr const char*    szEngineName        = "YQ Tachyon";
 
-    
         VkBool32 vqDebuggingCallback(
             VkDebugReportFlagsEXT                       flags,
             VkDebugReportObjectTypeEXT                  objectType,
@@ -43,6 +42,17 @@ namespace yq::tachyon {
             [[maybe_unused]] void*                      pUserData
         )
         {
+            {   // a simple little filter
+                using key_t = std::pair<uint64_t, int32_t>;
+                static std::set<key_t>  seen;
+                static tbb::spin_mutex  mutex;
+                key_t k(object, messageCode);
+                tbb::spin_mutex::scoped_lock    _lock(mutex);
+                auto [i,f]  = seen.insert(k);
+                if(!f)
+                    return VK_FALSE;
+            }
+        
             log4cpp::CategoryStream  yell  = (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) ? vulkanError : 
                                             ((flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) ? vulkanWarning : 
                                              vulkanInfo);

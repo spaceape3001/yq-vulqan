@@ -6,15 +6,20 @@
 
 #include "ViPipelineLayout.hpp"
 #include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
+#include <yq-vulqan/v/VqEnums.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
+#include <yq-vulqan/viz/ViLogging.hpp>
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
+
+#include <yq-toolbox/text/format.hpp>
 
 namespace yq::tachyon {
     namespace errors {
@@ -77,6 +82,7 @@ namespace yq::tachyon {
             m_shaderMask   |= xvs->mask();
             m_shaders.push_back(xvs);
         }
+        
         return true;
     }
     
@@ -146,7 +152,7 @@ namespace yq::tachyon {
             
             if(push.size != 0){
                 if(cfg->push.shaders){
-                    push.stageFlags = cfg->push.shaders;
+                    push.stageFlags = (VkShaderStageFlags) cfg->push.shaders;
                 } else {
                     push.stageFlags = m_shaderMask;
                 }
@@ -158,7 +164,7 @@ namespace yq::tachyon {
         }
         
         VkDescriptorSetLayout   descriptorLayouts[1] = { descriptor_set_layout() };
-        if(descriptor_count()){
+        if(descriptors_defined()){
             pipelineLayoutInfo.setLayoutCount   = 1;
             pipelineLayoutInfo.pSetLayouts      = descriptorLayouts;
         }
@@ -168,6 +174,7 @@ namespace yq::tachyon {
             vizWarning << "ViPipelineLayout(): Unable to create pipeline layout.  VkResult " << (int32_t) res;
             return errors::pipeline_layout_cant_create();
         }
+
         return {};
     }
     
@@ -228,6 +235,33 @@ namespace yq::tachyon {
     bool  ViPipelineLayout::push_enabled() const
     {
         return m_status(S::Push);
+    }
+
+    void ViPipelineLayout::report(Stream& out, const ViPipelineLayoutReportOptions& options) const
+    {
+        out << "Report for ViPipelineLayout[" << hex(this) << "] " << options.message << "\n";
+        out << "    VkPipelineLayout:           [" << hex(m_pipelineLayout) << "]\n";
+        out << "    VkShaderStageFlags:         [" << hex(m_shaderMask) << "]\n";
+        out << "    Shader(s):                  " << m_shaders.size() << "\n";
+        for(uint32_t i=0;i<m_vertexAttributes.size();++i){
+            auto& attr  = m_vertexAttributes[i];
+            auto& bind  = m_vertexBindings[attr.binding];
+            out << "    VBO(" << i << "): "
+                "   location=" << attr.location << ", "
+                "   binding=" << attr.binding << ", " 
+                "   offset=" << attr.offset << ", "
+                "   stride=" << bind.stride << ", "
+                "   format=" << to_string_view(attr.format) <<
+                "\n"
+            ;
+        }
+        if(descriptors_defined()){
+            out << "    VkDescriptorSetLayout:      [" << hex(descriptor_set_layout()) << "]\n";
+            for(const VkDescriptorSetLayoutBinding& desc : m_descriptorSetLayoutBindingVector){
+                out << "        " << to_string_view(desc.descriptorType) << ", binding=" << desc.binding << ", count=" 
+                    << desc.descriptorCount << ", shaders=" << hex(desc.stageFlags) << '\n';
+            }
+        }
     }
 
     bool  ViPipelineLayout::valid() const

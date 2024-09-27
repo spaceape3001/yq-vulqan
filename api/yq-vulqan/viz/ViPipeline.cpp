@@ -5,12 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViPipeline.hpp"
+#include <yq-toolbox/io/StreamOps.hpp>
 #include <yq-toolbox/trait/has_nan.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
+#include <yq-vulqan/viz/ViLogging.hpp>
 #include <yq-vulqan/viz/ViPipelineLayout.hpp>
 #include <yq-vulqan/viz/ViRenderPass.hpp>
 #include <yq-vulqan/viz/ViSwapchain.hpp>
@@ -296,10 +298,34 @@ namespace yq::tachyon {
         return ec;
     }
     
-    
     void            ViPipeline::kill()
     {
         _kill();
+    }
+
+    ViPipelineLayoutCPtr    ViPipeline::layout() const
+    {
+        return m_layout;
+    }
+
+    void ViPipeline::report(Stream& out, const ViPipelineReportOptions& options) const
+    {
+        out << "Report for ViPipeline[" << hex(this) << "] " << options.message << "\n";
+        out << "    VkPipeline (graphics):      [" << hex(m_pipeline) << "]\n";
+        out << "    VkPipeline (wireframe):     [" << hex(m_wireframe) << "]\n";
+        out << "    Bind Point:                 " << to_string_view(m_binding) << '\n';
+        
+        if(!m_layout){
+            out << "    Pipeline Layout:        [ missing ]\n";
+        } else {
+            out << "    ViPipelineLayout:           [" << hex(m_layout.ptr()) << "]\n";
+            out << "    VkPipelineLayout:           [" << hex(m_layout->pipeline_layout()) << "]\n";
+        }
+
+
+        if(m_layout && options.layout){
+            m_layout -> report(out, { .message = "For Pipeline" });
+        }
     }
 
     bool            ViPipeline::valid() const

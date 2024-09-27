@@ -19,10 +19,19 @@
 #include <system_error>
 #include <vector>
 
+namespace yq {
+    class Stream;
+}
+
 namespace yq::tachyon {
     struct ViPipelineLayoutOptions {
         //  here in case we need to add something in...
     };
+    
+    struct ViPipelineLayoutReportOptions {
+        std::string_view    message;
+    };
+    
     
     /*! \brief Pipeline Layouts
     
@@ -32,12 +41,12 @@ namespace yq::tachyon {
     public:
         
         ViPipelineLayout();
-        ViPipelineLayout(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& opts={});
+        ViPipelineLayout(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& options={});
         ViPipelineLayout(ViVisualizer&, const Pipeline&, const ViPipelineLayoutOptions& opts={});
         ~ViPipelineLayout();
         
-        std::error_code init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& opts={});
-        std::error_code init(ViVisualizer&, const Pipeline&, const ViPipelineLayoutOptions& opts={});
+        std::error_code init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& options={});
+        std::error_code init(ViVisualizer&, const Pipeline&, const ViPipelineLayoutOptions& options={});
         void            kill();
         
         bool                consistent() const;
@@ -51,11 +60,13 @@ namespace yq::tachyon {
         const auto&         vertex_bindings() const { return m_vertexBindings; }
         const auto&         vertex_create_info() const { return m_vertexCreateInfo; }
         
+        void                report(Stream&, const ViPipelineLayoutReportOptions& options={}) const;
+
     private:
     
         bool            _import_shaders();
     
-        std::error_code _init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& opts);
+        std::error_code _init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& options);
         void            _kill();
         
         enum class S : uint8_t {

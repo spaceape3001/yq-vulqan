@@ -19,6 +19,9 @@
 #include <optional>
 #include <vulkan/vulkan_core.h>
 
+namespace yq {
+    class Stream;
+}
 
 namespace yq::tachyon {
     class ViVisualizer;
@@ -60,17 +63,22 @@ namespace yq::tachyon {
         bool                        depth_clamp         = false;
         bool                        rasterizer_discard   = false;
     };
+    
+    struct ViPipelineReportOptions {
+        std::string_view        message;
+        bool                    layout  = true;
+    };
 
     class ViPipeline : public RefCount {
     public:
     
         ViPipeline();
-        ViPipeline(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& opts={});
-        ViPipeline(ViVisualizer&, const Pipeline&, const ViPipelineOptions& opts={});
+        ViPipeline(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
+        ViPipeline(ViVisualizer&, const Pipeline&, const ViPipelineOptions& options={});
         ~ViPipeline();
         
-        std::error_code     init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& opts={});
-        std::error_code     init(ViVisualizer&, const Pipeline&, const ViPipelineOptions& opts={});
+        std::error_code     init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
+        std::error_code     init(ViVisualizer&, const Pipeline&, const ViPipelineOptions& options={});
         void                kill();
 
         VkPipelineBindPoint bind_point() const { return m_binding; }
@@ -78,10 +86,14 @@ namespace yq::tachyon {
         VkPipeline          pipeline() const { return m_pipeline; }
         bool                valid() const;
         VkPipeline          wireframe_pipeline() const { return m_wireframe; }
+        
+        ViPipelineLayoutCPtr    layout() const;
+        
+        void                report(Stream&, const ViPipelineReportOptions& options={}) const;
     
     private:
-        std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& opts);
-        std::error_code _init(ViVisualizer&, const Pipeline&, const ViPipelineOptions& opts);
+        std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options);
+        std::error_code _init(ViVisualizer&, const Pipeline&, const ViPipelineOptions& options);
         void            _kill();
         
         enum class S : uint8_t {

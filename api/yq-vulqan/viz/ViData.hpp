@@ -54,6 +54,7 @@ namespace yq::tachyon {
         
         VkDescriptorSetLayout   descriptor_set_layout() const { return m_descriptorLayout; }
         VkDescriptorPool        descriptor_pool() const { return m_descriptorPool; }
+        bool                    descriptors_defined() const;
         
         std::span<const VkDescriptorSet>    descriptor_span() const;
     
@@ -88,14 +89,13 @@ namespace yq::tachyon {
         
         ViVisualizer*           visualizer() const { return m_viz; }
         
-        
     protected:
 
         ViData();
         ~ViData();
 
-        std::error_code     _init_data(ViVisualizer&, SharedPipelineConfig, const ViDataOptions& opts);
-        std::error_code     _init_data(const ViData&, const ViDataOptions& opts);
+        std::error_code     _init_data(ViVisualizer&, SharedPipelineConfig, const ViDataOptions& options);
+        std::error_code     _init_data(const ViData&, const ViDataOptions& options);
         void                _kill_data();
         
         //! Imports the data (first time)
@@ -106,11 +106,11 @@ namespace yq::tachyon {
         
         bool                _update_data();
         
-
     private:
         enum class S : uint8_t {
             DescSets    = 0,    // We own the descriptor sets
             DescLayout,         // We own the descriptor set layout
+            DescDefined,        // Descriptors were defined
             Static,             // Static data set (no object)
             Dynamic             // Dynamic data set (with object)
         };
@@ -155,6 +155,7 @@ namespace yq::tachyon {
             VkImageView*            views           = nullptr;
             VkWriteDescriptorSet*   writes          = nullptr;
             VkDescriptorImageInfo*  infos           = nullptr;
+            VkExtent3D*             extents         = nullptr;
 
             uint32_t    modified        = 0;    //!< Modified mask
             uint32_t    count           = 0;    //!< Count of bindings/items
@@ -193,20 +194,23 @@ namespace yq::tachyon {
         std::vector<VkDescriptorBufferInfo> m_bufferInfos;      // ALL BUFFER DESCRIPTORS
         std::vector<VkDescriptorImageInfo>  m_imageInfos;       // ALL TEXTURES
         std::vector<VkWriteDescriptorSet>   m_dispatch;         // (NOT CARVED)
+        std::vector<VkExtent3D>             m_extents;          // PER TEXTURE
 
     protected:
         ViVisualizer*           m_viz               = nullptr;
         SharedPipelineConfig    m_config;
+        std::vector<VkDescriptorSetLayoutBinding>   m_descriptorSetLayoutBindingVector;
     
     private:
         const void*             m_object            = nullptr;
         VkDescriptorSetLayout   m_descriptorLayout  = nullptr;
         VkDescriptorPool        m_descriptorPool    = nullptr;
         Flags<S>                m_status            = {};
+
         
-        bool    _create_descriptor_sets(const ViDataOptions& opts);
-        bool    _create_descriptor_layout(const ViDataOptions& opts);
-        bool    _descriptors(const ViDataOptions& opts);
+        bool    _create_descriptor_sets(const ViDataOptions& options);
+        bool    _create_descriptor_layout(const ViDataOptions& options);
+        bool    _descriptors(const ViDataOptions& options);
         void    _kill_descriptors();
         
         void    _carve(BB&);

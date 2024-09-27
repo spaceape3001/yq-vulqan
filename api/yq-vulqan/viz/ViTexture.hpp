@@ -27,17 +27,18 @@ namespace yq::tachyon {
         void                kill();
     
         bool                consistent() const;
+        VkExtent3D          extents() const;
         VkImage             image() const;
         VkImageView         image_view() const;
         VkSampler           sampler() const;
         bool                valid() const;
-
     
     private:
         ViVisualizer*   m_viz       = nullptr;
         ViImageCPtr     m_image;
         ViSamplerCPtr   m_sampler;
         VkImageView     m_imageView;
+        VkExtent3D      m_extents;
 
         std::error_code     _init(ViVisualizer&, const Texture&);
         void                _kill();

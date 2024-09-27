@@ -5,17 +5,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViRendered.hpp"
+
+#include <yq-toolbox/basic/FirstSeen.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/io/stream/Logger.hpp>
+#include <yq-toolbox/io/stream/Text.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>
 #include <yq-vulqan/render/Render3D.hpp>
 #include <yq-vulqan/render/Rendered.hpp>
+#include <yq-vulqan/v/VqEnums.hpp>
 #include <yq-vulqan/viz/ViContext.hpp>
+#include <yq-vulqan/viz/ViLogging.hpp>
 #include <yq-vulqan/viz/ViManager.hpp>
 #include <yq-vulqan/viz/ViPipeline.hpp>
 #include <yq-vulqan/viz/ViPipelineLayout.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
+
 
 namespace yq::tachyon {
     namespace errors {
@@ -28,11 +36,13 @@ namespace yq::tachyon {
         using rendered_bad_pipeline         = error_db::entry<"Rendered unable to use bad pipeline">;
     }
     
+    static constexpr bool       RENDERED_DEBUG_REPORT  = true;
+    
     ViRendered::ViRendered()
     {
     }
     
-    ViRendered::ViRendered(ViVisualizer&viz, const RenderedCPtr& ren, const ViRenderedOptions& opts)
+    ViRendered::ViRendered(ViVisualizer&viz, const RenderedCPtr& ren, const ViRenderedOptions& options)
     {
         if(!viz.device())
             return;
@@ -42,13 +52,13 @@ namespace yq::tachyon {
         if(!pipe)
             return ;
 
-        std::error_code ec  = _init(viz, ren, pipe, opts);
+        std::error_code ec  = _init(viz, ren, pipe, options);
         if(ec != std::error_code()){
             vizWarning << "ViRendered -- unable to initialize: " << ec.message();
         }
     }
     
-    ViRendered::ViRendered(ViVisualizer& viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& opts)
+    ViRendered::ViRendered(ViVisualizer& viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& options)
     {
         if(!viz.device())
             return;
@@ -57,7 +67,7 @@ namespace yq::tachyon {
         if(!pipe)
             return ;
 
-        std::error_code ec  = _init(viz, ren, pipe, opts);
+        std::error_code ec  = _init(viz, ren, pipe, options);
         if(ec != std::error_code()){
             vizWarning << "ViRendered -- unable to initialize: " << ec.message();
         }
@@ -74,7 +84,7 @@ namespace yq::tachyon {
     }
     
     
-    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& opts)
+    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& options)
     {
         m_viz           = &viz;
         m_pipeline0     = pipe;
@@ -85,8 +95,8 @@ namespace yq::tachyon {
         m_rendered      = ren;
         m_render3d      = dynamic_cast<const Render3D*>(m_rendered.ptr());
         
-        if(opts.pipelines){
-            m_pipeline  = opts.pipelines->create(*pipe);
+        if(options.pipelines){
+            m_pipeline  = options.pipelines->create(*pipe);
         } else {
             m_pipeline  = viz.pipeline_create(*pipe);
         }
@@ -94,24 +104,24 @@ namespace yq::tachyon {
             return errors::rendered_bad_pipeline();
         }
         
-        ViDataOptions       options;
-        options.object      = ren.ptr();
+        ViDataOptions       dataOptions;
+        dataOptions.object      = ren.ptr();
         
-        if(m_layout->descriptor_count()){
-            options.layout      = m_layout -> descriptor_set_layout();
-            if(opts.descriptor_pool){
-                options.pool    = opts.descriptor_pool;
+        if(m_layout->descriptors_defined()){
+            dataOptions.layout      = m_layout -> descriptor_set_layout();
+            if(options.descriptor_pool){
+                dataOptions.pool    = options.descriptor_pool;
             } else {
-                options.pool    = viz.descriptor_pool();
+                dataOptions.pool    = viz.descriptor_pool();
             }
-            if(options.pool){
+            if(dataOptions.pool){
                 m_status    |= S::Descriptors;
-                options.descriptors = ALLOCATE;
+                dataOptions.descriptors = ALLOCATE;
             }
         }
-        options.shaders     = m_layout -> shader_mask();
+        dataOptions.shaders     = m_layout -> shader_mask();
         
-        std::error_code ec  = _init_data(*m_layout, options);
+        std::error_code ec  = _init_data(*m_layout, dataOptions);
         if(ec != std::error_code())
             return ec;
         
@@ -167,14 +177,36 @@ namespace yq::tachyon {
         m_viz           = nullptr;
     }
     
+    
     void            ViRendered::_record(ViContext& u)
     {
+        if constexpr (RENDERED_DEBUG_REPORT){
+            //_debug_report();
+        }
+
         if(m_pipeline -> bind_point() != VK_PIPELINE_BIND_POINT_GRAPHICS)
             return ;
 
         Tristate        wireframe   = (u.wireframe == Tristate::INHERIT) ? m_rendered->wireframe() : u.wireframe;
         VkPipeline      vkpipe      = (wireframe == Tristate::YES) ? m_pipeline->wireframe_pipeline() : m_pipeline->pipeline();
-        if(vkpipe && (vkpipe != u.pipeline)){
+
+        if(!vkpipe){
+            if(wireframe != Tristate::YES){
+                vizFirstWarning(this) << "ViRendered(" << hex(this) << ")::_record() with NULL pipeline, skipping.";
+                static FirstSeen<const ViRendered*> s_first;
+                if(s_first(this)){
+                    std::string rep;
+                    {
+                        stream::Text logger(rep);
+                        report(logger);
+                    }
+                    vizDebug << rep;
+                }
+            }
+            return ;
+        }
+
+        if(vkpipe != u.pipeline){
             vkCmdBindPipeline(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, vkpipe);
             u.pipeline          = vkpipe;
             u.pipeline_layout   = m_layout->pipeline_layout();
@@ -236,6 +268,12 @@ namespace yq::tachyon {
         return m_viz ? (m_rendered && m_pipeline && m_layout && m_viz->device()) : (!m_rendered && !m_pipeline && !m_layout);
     }
 
+    void    ViRendered::debug_report() const
+    {
+        stream::Logger  logger(vizDebug);
+        report(logger);
+    }
+
     void    ViRendered::descriptors()
     {
         if(valid()){
@@ -243,7 +281,7 @@ namespace yq::tachyon {
         }
     }
     
-    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedCPtr& ren, const ViRenderedOptions& opts)
+    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedCPtr& ren, const ViRenderedOptions& options)
     {
         if(m_viz){
             if(!consistent()){
@@ -261,14 +299,14 @@ namespace yq::tachyon {
         if(!pipe)
             return errors::rendered_missing_pipeline();
         
-        std::error_code ec  = _init(viz, ren, pipe, opts);
+        std::error_code ec  = _init(viz, ren, pipe, options);
         if(ec != std::error_code()){
             _kill();
         }
         return ec;
     }
     
-    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& opts)
+    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& options)
     {
         if(m_viz){
             if(!consistent()){
@@ -284,7 +322,7 @@ namespace yq::tachyon {
         if(!pipe)
             return errors::rendered_null_pipeline();
             
-        std::error_code ec  = _init(viz, ren, pipe, opts);
+        std::error_code ec  = _init(viz, ren, pipe, options);
         if(ec != std::error_code()){
             _kill();
         }
@@ -296,12 +334,103 @@ namespace yq::tachyon {
         _kill();
     }
     
+    ViPipelineCPtr          ViRendered::pipeline() const
+    {
+        return m_pipeline;
+    }
+    
+    ViPipelineLayoutCPtr    ViRendered::pipeline_layout() const
+    {   
+        return m_layout;
+    }
+
     void    ViRendered::record(ViContext& ctx)
     {
         if(valid() && m_pipeline)
             _record(ctx);
     }
     
+    RenderedCPtr        ViRendered::rendered() const
+    {
+        return m_rendered;
+    }
+    
+    void ViRendered::report(Stream& out, const ViRenderedReportOptions& options) const
+    {
+        out << "Report for ViRendered[" << hex(this) << "] " << options.message << "\n";
+        if(!m_rendered){
+            out << "    Rendered:                   [ missing ]\n";
+        } else {
+            out << "    Rendered:                   [" << m_rendered->metaInfo().name() << ":" << m_rendered->id() << "]\n";
+        }
+
+        if(!m_pipeline){
+            out << "    Pipeline:                   [ missing ]\n";
+        } else {
+            out << "    VkPipeline (pipeline):      [" << hex(m_pipeline->pipeline()) << "]\n";
+            out << "    VkPipeline (wireframe):     [" << hex(m_pipeline->wireframe_pipeline()) << "]\n";
+        }
+        
+        if(!m_layout){
+            out << "    Pipeline Layout:            [ missing ]\n";
+        } else {
+            if(m_pipeline && (m_layout != m_pipeline->layout())){
+                out << "    Pipeline Layout:            [ contradicts the pipeline! ]\n";
+            }
+        
+            out << "    ViPipelineLayout:           [" << hex(m_layout.ptr()) << "]\n";
+            out << "    VkPipelineLayout:           [" << hex(m_layout->pipeline_layout()) << "]\n";
+        }
+        
+        for(uint32_t i=0;i<m_index.count;++i){
+            out << "    IBO(" << i << "): " << m_index.sizes[i] << " (indices)\n";
+        }
+        for(uint32_t i=0;i<m_storage.count;++i){
+            out << "    SBO(" << i << "): " << m_storage.bytes[i] << " (bytes)\n";
+        }
+        for(uint32_t i=0;i<m_uniform.count;++i){
+            out << "    UBO(" << i << "): " << m_uniform.bytes[i] << " (bytes)\n";
+        }
+        for(uint32_t i=0;i<m_texture.count;++i){
+            auto & ext = m_texture.extents[i];
+            out << "    Tex(" << i << "): " << ext.width << " x " << ext.height << " x " << ext.depth << " (pixels)\n";
+        }
+        for(uint32_t i=0;i<m_vertex.count;++i){
+            out << "    VBO(" << i << "): " << m_vertex.sizes[i] << " (vertices)\n";
+        }
+        
+        if(!descriptors_defined()){
+            out << "    >> No descriptors defined <<\n";
+        } else {
+            out << "    VkDescriptorPool:           [" << hex(descriptor_pool()) << "]\n";
+            out << "    VkDescriptorSetLayout:      [" << hex(descriptor_set_layout()) << "]\n";
+            
+            for(const VkWriteDescriptorSet& w : m_writes){
+                out << "        " << to_string_view(w.descriptorType) << ", binding=" << w.dstBinding << ", descriptor_set=" << hex(w.dstSet) << ", count=" << w.descriptorCount;
+                if(w.pImageInfo){
+                    out << ", imageInfo";
+                }
+                if(w.pBufferInfo){
+                    out << ", bufferInfo";
+                }
+                out << '\n';
+            }
+        }
+
+        if(m_layout && options.layout){
+            m_layout -> report(out, {
+                .message = "(For rendered)"
+            });
+        }
+
+        if(m_pipeline && options.pipeline){
+            m_pipeline -> report(out, {
+                .message = "(For rendered)",
+                .layout = false
+            });
+        }
+    }
+
     void    ViRendered::update(ViContext& u)
     {
         if(valid()){

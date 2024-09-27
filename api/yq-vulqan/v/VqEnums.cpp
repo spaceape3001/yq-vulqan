@@ -8,6 +8,7 @@
 #include <yq-toolbox/basic/Enum.hpp>
 
 namespace yq::tachyon {
+    static const std::string_view szUnknown   = "(unknown)";
 
         //  TODO: Fold these into tachyon/enum
 
@@ -87,7 +88,52 @@ namespace yq::tachyon {
             return VqDebugReportObjectType(n).key();
         return "(unknown object_type)";
     }
+
+    std::string_view    to_string_view(VqDescriptorType v)
+    {
+        switch(v){
+        case VqDescriptorType::Sampler:
+            return "Sampler";
+        case VqDescriptorType::CombinedImageSampler:
+            return "CombinedImageSampler";
+        case VqDescriptorType::SampledImage:
+            return "SampledImage";
+        case VqDescriptorType::StorageImage:
+            return "StorageImage";
+        case VqDescriptorType::UniformTexelBuffer:
+            return "UniformTexelBuffer";
+        case VqDescriptorType::StorageTexelBuffer:
+            return "StorageTexelBuffer";
+        case VqDescriptorType::UniformBuffer:
+            return "UniformBuffer";
+        case VqDescriptorType::StorageBuffer:
+            return "StorageBuffer";
+        case VqDescriptorType::UniformBufferDynamic:
+            return "UniformBufferDynamic";
+        case VqDescriptorType::StorageBufferDynamic:
+            return "StorageBufferDynamic";
+        case VqDescriptorType::InputAttachment:
+            return "InputAttachment";
+        case VqDescriptorType::InlineUniformBlock:
+            return "InlineUniformBlock";
+        case VqDescriptorType::AccelerationStructure:
+            return "AccelerationStructure";
+        case VqDescriptorType::SampleWeightImage:
+            return "SampleWeightImage";
+        case VqDescriptorType::BlockMatchImage:
+            return "BlockMatchImage";
+        case VqDescriptorType::Mutable:
+            return "Mutable";
+        default:
+            return szUnknown;
+        }
+    }
     
+    std::string_view    to_string_view(VkDescriptorType v)
+    {
+        return to_string_view(VqDescriptorType(v));
+    }
+        
     YQ_ENUM(VqDynamicState, ,
         VIEWPORT = 0,
         SCISSOR = 1,
@@ -659,5 +705,30 @@ namespace yq::tachyon {
         if(VqPhysicalDeviceType::has_value(n))
             return VqPhysicalDeviceType(n).key();
         return "(unknown device type)";
+    }
+
+
+    
+    std::string_view    to_string_view(VqPipelineBindPoint v)
+    {
+        switch(v){
+        case VqPipelineBindPoint::Graphics:
+            return "Graphics";
+        case VqPipelineBindPoint::Compute:
+            return "Compute";
+        case VqPipelineBindPoint::ExecutionGraphAmdx:
+            return "ExecutionGraph";
+        case VqPipelineBindPoint::RayTracing:
+            return "RayTracing";
+        case VqPipelineBindPoint::SubpassShadingHuawei:
+            return "SubpassShading";
+        default:
+            return szUnknown;
+        }
+    }
+    
+    std::string_view    to_string_view(VkPipelineBindPoint v)
+    {
+        return to_string_view(VqPipelineBindPoint(v));
     }
 }

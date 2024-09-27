@@ -13,8 +13,12 @@
 #include <yq-vulqan/texture/Texture.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
+#include <yq-vulqan/viz/ViImage.hpp>
+#include <yq-vulqan/viz/ViLogging.hpp>
 #include <yq-vulqan/viz/ViTexture.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
+
+#include <yq-toolbox/text/format.hpp>
 
 namespace yq::tachyon {
 
@@ -69,6 +73,7 @@ namespace yq::tachyon {
             tb.managed      = &m_texturePtrs[tb.tex0];
             tb.ids          = &m_ids[tb.data0];
             tb.revisions    = &m_revisions[tb.data0];
+            tb.extents      = &m_extents[tb.tex0];
         }
     }
     
@@ -89,6 +94,83 @@ namespace yq::tachyon {
             tb.infos        = &m_imageInfos[0];
         }
     }
+
+    bool    ViData::_create_descriptor_layout(const ViDataOptions& opts)
+    {
+        uint32_t        nDesc   = m_texture.end_desc();
+        if(!nDesc){
+            return true;
+        }
+            
+        if(!opts.shaders){
+            vizWarning << "Creating a descriptor layout without binding into any shader stages... you sure?";
+        }
+
+        uint32_t        binding = 0;
+
+        for(const SBOConfig& cfg : m_config->sbos){
+            VkDescriptorSetLayoutBinding a{};
+            a.binding           = binding++;
+            a.descriptorCount   = 1;
+            a.descriptorType    = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+            if(cfg.shaders){
+                a.stageFlags    = cfg.shaders;
+            } else {
+                a.stageFlags    = opts.shaders;
+            }
+            a.pImmutableSamplers = nullptr;
+            m_descriptorSetLayoutBindingVector.push_back(a);
+        }
+        
+        binding = 0;
+        for(const UBOConfig& cfg : m_config->ubos){
+            VkDescriptorSetLayoutBinding a{};
+            a.binding           = binding++;
+            a.descriptorCount   = 1;
+            a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+            if(cfg.shaders){
+                a.stageFlags    = cfg.shaders;
+            } else {
+                a.stageFlags    = opts.shaders;
+            }
+            a.pImmutableSamplers = nullptr;
+            m_descriptorSetLayoutBindingVector.push_back(a);
+        }
+        
+        binding = 0;
+        for(const TexConfig& cfg : m_config->texs){
+            VkDescriptorSetLayoutBinding a{};
+            a.binding           = binding++;
+            a.descriptorCount   = 1;
+            a.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+            if(cfg.shaders){
+                a.stageFlags    = cfg.shaders;
+            } else {
+                a.stageFlags    = opts.shaders;
+            }
+            a.pImmutableSamplers = nullptr;
+            m_descriptorSetLayoutBindingVector.push_back(a);
+        }
+            //allocInfo.flags                 = VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT;
+
+        if(m_descriptorSetLayoutBindingVector.empty()){
+            vizWarning << "ViData(" << hex(this) << ") no descriptor infos to create with!";
+        }
+        
+        VqDescriptorSetLayoutCreateInfo layoutInfo;
+        layoutInfo.bindingCount = m_descriptorSetLayoutBindingVector.size();
+        layoutInfo.pBindings    = m_descriptorSetLayoutBindingVector.data();
+        layoutInfo.flags        = 0;
+        VkResult    res = vkCreateDescriptorSetLayout(m_viz->device(), &layoutInfo, nullptr, &m_descriptorLayout);
+        if(res != VK_SUCCESS){
+            vizWarning << "Unable to create a descriptor set layout.  VkResult " << (int32_t) res;
+            return false;
+        }
+        
+        m_status |= S::DescLayout;
+        return true;
+    }
+
 
     bool    ViData::_create_descriptor_sets(const ViDataOptions& opts)
     {
@@ -125,18 +207,17 @@ namespace yq::tachyon {
         
         if(m_texture.count){
             VkDescriptorImageInfo   imgInfo {
+                .sampler            = nullptr,
+                .imageView          = nullptr,
                 .imageLayout        = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
             };
             m_imageInfos.resize(m_texture.count, imgInfo);
         }
-        
-
-        std::vector<VkDescriptorSetLayout>  layouts(nDesc, opts.layout);
     
         VqDescriptorSetAllocateInfo allocInfo;
         allocInfo.descriptorPool        = opts.pool;
-        allocInfo.descriptorSetCount    = nDesc;
-        allocInfo.pSetLayouts           = layouts.data();
+        allocInfo.descriptorSetCount    = 1;
+        allocInfo.pSetLayouts           = &opts.layout;
         VkResult    res = vkAllocateDescriptorSets(m_viz->device(), &allocInfo, m_descriptors.data());
         if(res != VK_SUCCESS){
             vizWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
@@ -144,11 +225,10 @@ namespace yq::tachyon {
         }
         
         _carve_descriptor(m_storage);
-        _carve_descriptor(m_texture);
         _carve_descriptor(m_uniform);
+        _carve_descriptor(m_texture);
         
         //  Pre-create/define the image/buffer descriptor informations (will make updating easier)
-        
         for(uint32_t i=0;i<m_storage.count;++i){
             auto& w             = m_storage.writes[i];
             w.dstSet            = m_storage.descriptors[i];
@@ -176,84 +256,22 @@ namespace yq::tachyon {
             w.pImageInfo        = &m_texture.infos[i];
         }
 
-
         m_status |= S::DescSets;
         return true;
     }
     
-    bool    ViData::_create_descriptor_layout(const ViDataOptions& opts)
-    {
-        uint32_t        nDesc   = m_uniform.end_desc();
-        if(!nDesc)
-            return true;
-            
-        if(!opts.shaders){
-            vizWarning << "Creating a descriptor layout without binding into any shader stages... you sure?";
-        }
-
-        std::vector<VkDescriptorSetLayoutBinding>   desc;
-        uint32_t        binding = 0;
-        for(const UBOConfig& cfg : m_config->ubos){
-            VkDescriptorSetLayoutBinding a{};
-            a.binding           = binding++;
-            a.descriptorCount   = 1;
-            a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-            if(cfg.shaders){
-                a.stageFlags    = cfg.shaders;
-            } else {
-                a.stageFlags    = opts.shaders;
-            }
-            desc.push_back(a);
-        }
-        
-        for(const TexConfig& cfg : m_config->texs){
-            VkDescriptorSetLayoutBinding a{};
-            a.binding           = binding++;
-            a.descriptorCount   = 1;
-            a.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-            if(cfg.shaders){
-                a.stageFlags    = cfg.shaders;
-            } else {
-                a.stageFlags    = opts.shaders;
-            }
-            desc.push_back(a);
-        }
-
-        for(const SBOConfig& cfg : m_config->sbos){
-            VkDescriptorSetLayoutBinding a{};
-            a.binding           = binding++;
-            a.descriptorCount   = 1;
-            a.descriptorType    = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-            if(cfg.shaders){
-                a.stageFlags    = cfg.shaders;
-            } else {
-                a.stageFlags    = opts.shaders;
-            }
-            desc.push_back(a);
-        }
-
-            //allocInfo.flags                 = VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT;
-        
-        VqDescriptorSetLayoutCreateInfo layoutInfo;
-        layoutInfo.bindingCount = desc.size();
-        layoutInfo.pBindings    = desc.data();
-        VkResult    res = vkCreateDescriptorSetLayout(m_viz->device(), &layoutInfo, nullptr, &m_descriptorLayout);
-        if(res != VK_SUCCESS){
-            vizWarning << "Unable to create a descriptor set layout.  VkResult " << (int32_t) res;
-            return false;
-        }
-        
-        m_status |= S::DescLayout;
-        return true;
-    }
-
     bool    ViData::_descriptors(const ViDataOptions&opts)
     {
         // this order matters in the allocation step...
         m_storage.desc0     = 0;
-        m_uniform.desc0     = m_storage.end_data();
-        m_texture.desc0     = m_uniform.end_data();
-
+        m_uniform.desc0     = m_storage.end_desc();
+        m_texture.desc0     = m_uniform.end_desc();
+        
+        if(m_texture.end_desc() == 0)
+            return true;
+        
+        m_status |= S::DescDefined;
+ 
         if(std::get_if<layout_t>(&opts.descriptors)){
             return _create_descriptor_layout(opts);
         } else if(std::get_if<allocate_t>(&opts.descriptors)){
@@ -501,7 +519,7 @@ namespace yq::tachyon {
             m_imageViews.resize(nTex, nullptr);
             m_samplers.resize(nTex, nullptr);
             m_texturePtrs.resize(nTex);
-            
+            m_extents.resize(nTex, VkExtent3D{});
         }
     
         _carve(m_index);
@@ -537,6 +555,7 @@ namespace yq::tachyon {
 
         m_buffers           = vi.m_buffers;
         m_bytes             = vi.m_bytes;
+        m_extents           = vi.m_extents;
         m_ids               = vi.m_ids;
         m_imageViews        = vi.m_imageViews;
         m_offsets           = vi.m_offsets;
@@ -582,6 +601,7 @@ namespace yq::tachyon {
         m_bufferPtrs.clear();
         m_buffers.clear();
         m_bytes.clear();
+        m_extents.clear();
         m_descriptors.clear();
         m_ids.clear();
         m_revisions.clear();
@@ -671,6 +691,8 @@ namespace yq::tachyon {
         tb.ids[i]       = tex.id();
         tb.views[i]     = x->image_view();
         tb.samplers[i]  = x->sampler();
+        tb.extents[i]   = x->extents();
+        
         tb.modified    |= 1 << i;
         return true;
     }
@@ -785,6 +807,11 @@ namespace yq::tachyon {
         return (uint32_t) m_descriptors.size();
     }
     
+    bool        ViData::descriptors_defined() const
+    {
+        return m_status(S::DescDefined);
+    }
+
     VkBuffer    ViData::index_buffer(size_t i) const
     {
         if((i>=m_index.count) || !m_index.buffers)

@@ -75,6 +75,12 @@ namespace yq::tachyon {
         const TextureInfo&          ti  = tex.info;
         const ImageInfo&            ii  = tex.image->info;
         
+        m_extents   = { 
+            .width  = (uint32_t) ii.size.x,
+            .height = (uint32_t) ii.size.y,
+            .depth  = (uint32_t) ii.size.z
+        };
+        
         info.flags  = ti.imageViewFlags.value();
         info.image  = m_image -> image();
         
@@ -136,6 +142,29 @@ namespace yq::tachyon {
         m_sampler   = {};
         m_image     = {};
     }
+
+    bool                ViTexture::consistent() const
+    {
+        return m_viz ? (m_viz->device() && m_image && m_image->valid() && m_sampler && m_sampler->valid()) :
+            (!m_image && !m_sampler && !m_imageView);
+    }
+
+    VkExtent3D          ViTexture::extents() const
+    {
+        return m_extents;
+    }
+    
+    VkImage             ViTexture::image() const
+    {
+        if(m_image)
+            return m_image -> image();
+        return nullptr;
+    }
+    
+    VkImageView         ViTexture::image_view() const
+    {
+        return m_imageView;
+    }
     
     std::error_code     ViTexture::init(ViVisualizer&viz, const Texture&tex)
     {
@@ -157,24 +186,6 @@ namespace yq::tachyon {
     void                ViTexture::kill()
     {
         _kill();
-    }
-
-    bool                ViTexture::consistent() const
-    {
-        return m_viz ? (m_viz->device() && m_image && m_image->valid() && m_sampler && m_sampler->valid()) :
-            (!m_image && !m_sampler && !m_imageView);
-    }
-    
-    VkImage             ViTexture::image() const
-    {
-        if(m_image)
-            return m_image -> image();
-        return nullptr;
-    }
-    
-    VkImageView         ViTexture::image_view() const
-    {
-        return m_imageView;
     }
     
     VkSampler           ViTexture::sampler() const

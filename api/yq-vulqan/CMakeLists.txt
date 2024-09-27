@@ -119,6 +119,7 @@ add_library(${PROJECT_NAME} SHARED
     
 )
 
+
 target_compile_definitions(${PROJECT_NAME} 
     PUBLIC
         GLFW_INCLUDE_VULKAN=1

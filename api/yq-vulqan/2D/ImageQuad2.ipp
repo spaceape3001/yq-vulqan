@@ -20,7 +20,7 @@ namespace yq::tachyon {
     {
         auto w = writer<ImageQuad2>();
         {
-            auto p = w.pipeline();
+            auto& p = w.pipeline();
             p.shaders({ "assets/ImageQuad2.vert", "assets/ImageQuad2.frag" });
             p.vertex(&ImageQuad2::m_vertex, DataActivity::FIXED)
                 .attribute<glm::vec2>(&VData::position)

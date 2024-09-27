@@ -10,7 +10,6 @@
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
-#include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/v/VqEnums.hpp>
@@ -28,26 +27,24 @@ namespace yq::tachyon {
         using pipeline_layout_cant_create       = error_db::entry<"Unable to create the pipeline layout">;
         using pipeline_layout_cant_import_data  = error_db::entry<"Unable to import static object data into the pipeline layout">;
         using pipeline_layout_existing          = error_db::entry<"Pipeline layout has already been created">;
+        using pipeline_layout_null_pipeline     = error_db::entry<"Pipeline layout cannot be created from a NULL pointer pipeline">;
     }
 
     ViPipelineLayout::ViPipelineLayout()
     {
     }
     
-    ViPipelineLayout::ViPipelineLayout(ViVisualizer& viz, SharedPipelineConfig cfg, const ViPipelineLayoutOptions& opts)
+    ViPipelineLayout::ViPipelineLayout(ViVisualizer& viz, const PipelineCPtr& cfg, const ViPipelineLayoutOptions& opts)
     {
-        std::error_code ec  = _init(viz, cfg, opts);
-        if(ec != std::error_code()){
-            vizWarning << "Unable to create a pipeline layout: " << ec.message();
-            kill();
+        if(viz.device() && cfg){
+            std::error_code ec  = _init(viz, cfg, opts);
+            if(ec != std::error_code()){
+                vizWarning << "Unable to create a pipeline layout: " << ec.message();
+                kill();
+            }
         }
     }
 
-    ViPipelineLayout::ViPipelineLayout(ViVisualizer& viz, const Pipeline& pipe, const ViPipelineLayoutOptions& opts) :
-        ViPipelineLayout(viz, pipe.config(), opts)
-    {
-    }
-    
     ViPipelineLayout::~ViPipelineLayout()
     {
         kill();
@@ -55,13 +52,11 @@ namespace yq::tachyon {
     
     bool  ViPipelineLayout::_import_shaders()
     {
-        auto & cfg  = *m_config;
-    
         m_shaderMask        = 0;
-        m_shaders.reserve(cfg.shaders.size());
-        m_shaderInfo.reserve(cfg.shaders.size());
+        m_shaders.reserve(m_config->m_shaders.size());
+        m_shaderInfo.reserve(m_config->m_shaders.size());
         
-        for(auto& s : cfg.shaders){
+        for(auto& s : m_config->m_shaders){
             ShaderCPtr  sh  = Shader::decode(s);
             if(!sh){
                 vizWarning << "Unable to decode the shader number " << (m_shaders.size()+1) << " on this pipeline layout";
@@ -86,7 +81,7 @@ namespace yq::tachyon {
         return true;
     }
     
-    std::error_code ViPipelineLayout::_init(ViVisualizer&viz, SharedPipelineConfig cfg, const ViPipelineLayoutOptions& opts)
+    std::error_code ViPipelineLayout::_init(ViVisualizer&viz, const PipelineCPtr& cfg, const ViPipelineLayoutOptions& opts)
     {
         VqPipelineLayoutCreateInfo  pipelineLayoutInfo;
 
@@ -110,8 +105,8 @@ namespace yq::tachyon {
         }
         
         //  VERTEX BUFFERS
-        for(uint32_t i=0;i<cfg->vbos.size();++i){
-            auto& v = cfg->vbos[i];
+        for(uint32_t i=0;i<m_config->m_vertexBuffers.size();++i){
+            auto& v = m_config->m_vertexBuffers[i];
             
             VkVertexInputBindingDescription b;
             b.binding   = i;
@@ -119,7 +114,7 @@ namespace yq::tachyon {
             b.inputRate = (VkVertexInputRate) v.inputRate.value();
             m_vertexBindings.push_back(b);
             
-            for(auto& va : v.attrs){
+            for(auto& va : v.attributes){
                 VkVertexInputAttributeDescription   a;
                 a.binding       = i;
                 a.location      = va.location;
@@ -136,23 +131,23 @@ namespace yq::tachyon {
         m_vertexCreateInfo.pVertexAttributeDescriptions     = m_vertexAttributes.data();
         
         VkPushConstantRange push{};
-        if(cfg->push.type != PushConfigType::None){
+        if(m_config->m_push.type != PushConfigType::None){
             push.offset     = 0;
-            switch(cfg->push.type){
+            switch(m_config->m_push.type){
             case PushConfigType::Full:
             case PushConfigType::View:
                 push.size   = sizeof(StdPushData);
                 break;
             case PushConfigType::Custom:
-                push.size   = cfg->push.size;
+                push.size   = m_config->m_push.size;
                 break;
             default:
                 break;
             }
             
             if(push.size != 0){
-                if(cfg->push.shaders){
-                    push.stageFlags = (VkShaderStageFlags) cfg->push.shaders;
+                if(m_config->m_push.shaders){
+                    push.stageFlags = (VkShaderStageFlags) m_config->m_push.shaders;
                 } else {
                     push.stageFlags = m_shaderMask;
                 }
@@ -200,13 +195,16 @@ namespace yq::tachyon {
     }
     
 
-    std::error_code ViPipelineLayout::init(ViVisualizer& viz, SharedPipelineConfig cfg, const ViPipelineLayoutOptions& opts)
+    std::error_code ViPipelineLayout::init(ViVisualizer& viz, const PipelineCPtr& cfg, const ViPipelineLayoutOptions& opts)
     {
         if(m_viz){
             if(!consistent()){
                 return errors::pipeline_layout_bad_state();
             }
             return errors::pipeline_layout_existing();
+        }
+        if(!cfg){
+            return errors::pipeline_layout_null_pipeline();
         }
         
         std::error_code ec = _init(viz, cfg, opts);
@@ -215,11 +213,6 @@ namespace yq::tachyon {
             _kill();
         }
         return ec;
-    }
-
-    std::error_code ViPipelineLayout::init(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineLayoutOptions& opts)
-    {
-        return init(viz, pipe.config(), opts);
     }
     
     void  ViPipelineLayout::kill()

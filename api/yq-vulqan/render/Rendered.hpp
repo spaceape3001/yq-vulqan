@@ -28,7 +28,7 @@ namespace yq::tachyon {
         PipelineCPtr    pipeline(Pipeline::role_t r={}) const;
         
     private:
-        using PipelineHash  = std::unordered_map<Pipeline::role_t, PipelineCPtr>;
+        using PipelineHash  = std::unordered_map<Pipeline::role_t, PipelinePtr>;
         PipelineHash    m_pipelines;
     };
     

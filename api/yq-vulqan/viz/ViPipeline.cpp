@@ -9,7 +9,6 @@
 #include <yq-toolbox/trait/has_nan.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
 #include <yq-vulqan/viz/ViLogging.hpp>
@@ -26,6 +25,7 @@ namespace yq::tachyon {
         using pipeline_bad_layout       = error_db::entry<"Pipeline has a bad layout">;
         using pipeline_bad_swapchain    = error_db::entry<"Swapchain not provided to pipeline">;
         using pipeline_cant_create      = error_db::entry<"Unable to create the graphics pipeline">;
+        using pipeline_null_pipeline    = error_db::entry<"Pipeline provided is NULL">;
     }
     
     ViPipeline::ViPipeline()
@@ -43,9 +43,9 @@ namespace yq::tachyon {
         }
     }
 
-    ViPipeline::ViPipeline(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineOptions& opts)
+    ViPipeline::ViPipeline(ViVisualizer&viz, const PipelineCPtr&pipe, const ViPipelineOptions& opts)
     {
-        if(viz.device()){
+        if(viz.device() && pipe){
             std::error_code ec = _init(viz, pipe, opts);
             if(ec != std::error_code()){
                 vizWarning << "ViPipeline(): Unable to initialize.  " << ec.message();
@@ -59,7 +59,7 @@ namespace yq::tachyon {
         _kill();
     }
     
-    std::error_code ViPipeline::_init(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineOptions& opts)
+    std::error_code ViPipeline::_init(ViVisualizer&viz, const PipelineCPtr& pipe, const ViPipelineOptions& opts)
     {
         ViPipelineLayoutCPtr        pLay    = viz.pipeline_layout_create(pipe);
         if(!pLay || !pLay->valid()){
@@ -70,15 +70,14 @@ namespace yq::tachyon {
 
     std::error_code ViPipeline::_init(ViVisualizer&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
     {
-        SharedPipelineConfig    shCfg = pLay->pipeline_config();
-        if(!shCfg){
+        PipelineCPtr    cfg = pLay->pipeline_config();
+        if(!cfg){
             return errors::pipeline_bad_config();
         }
         
-        const PipelineConfig& cfg   = *shCfg;
         m_viz       = &viz;
         m_layout    = pLay;
-        m_binding   = (VkPipelineBindPoint) cfg.binding.value();
+        m_binding   = (VkPipelineBindPoint) cfg->binding().value();
         m_status    = {};
         
         VqGraphicsPipelineCreateInfo pipelineInfo;
@@ -92,7 +91,7 @@ namespace yq::tachyon {
         pipelineInfo.pVertexInputState = &pLay->vertex_create_info();
 
         VqPipelineInputAssemblyStateCreateInfo inputAssembly;
-        inputAssembly.topology                  = (VkPrimitiveTopology) cfg.topology.value();
+        inputAssembly.topology                  = (VkPrimitiveTopology) cfg->topology().value();
         switch(opts.primitive_restart){
         case Tristate::No:
             inputAssembly.primitiveRestartEnable = VK_FALSE;
@@ -101,7 +100,7 @@ namespace yq::tachyon {
             inputAssembly.primitiveRestartEnable = VK_TRUE;
             break;
         case Tristate::Inherit:
-            if(cfg.primitive_restart){
+            if(cfg->primitive_restart()){
                 inputAssembly.primitiveRestartEnable = VK_TRUE;
             } else {
                 inputAssembly.primitiveRestartEnable = VK_FALSE;
@@ -150,24 +149,24 @@ namespace yq::tachyon {
 
         PolygonMode polyMode    = opts.polygon_mode;
         if(polyMode == PolygonMode::Auto)
-            polyMode    = cfg.polymode;
+            polyMode    = cfg->polygons();
         if(polyMode == PolygonMode::Auto)
             polyMode    = PolygonMode::Fill;
-        if((polyMode   == PolygonMode::Fill) && (opts.wireframe == Tristate::YES)){
+        if((polyMode   == PolygonMode::Fill) && (opts.wireframe == Tristate::YES) && cfg->wireframe_permitted()){
             m_status |= S::Wireframe;
         }
 
         float lineWidth = opts.line_width;
         if(is_nan(lineWidth))
-            lineWidth   = cfg.line_width;
+            lineWidth   = cfg->line_width();
 
         VqPipelineRasterizationStateCreateInfo  rasterizer;
         rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
         rasterizer.depthClampEnable         = opts.depth_clamp ? VK_TRUE : VK_FALSE;
         rasterizer.rasterizerDiscardEnable  = opts.rasterizer_discard ? VK_TRUE : VK_FALSE;
         rasterizer.lineWidth                = lineWidth;
-        rasterizer.cullMode                 = (VkCullModeFlags) cfg.culling.value();
-        rasterizer.frontFace                = (VkFrontFace) cfg.front.value();
+        rasterizer.cullMode                 = (VkCullModeFlags) cfg->culling().value();
+        rasterizer.frontFace                = (VkFrontFace) cfg->front().value();
         rasterizer.depthBiasEnable          = VK_FALSE;
         rasterizer.depthBiasConstantFactor  = 0.0f; // Optional
         rasterizer.depthBiasClamp           = 0.0f; // Optional
@@ -281,7 +280,7 @@ namespace yq::tachyon {
         return ec;
     }
 
-    std::error_code     ViPipeline::init(ViVisualizer&viz, const Pipeline&pipe, const ViPipelineOptions& opts)
+    std::error_code     ViPipeline::init(ViVisualizer&viz, const PipelineCPtr&pipe, const ViPipelineOptions& opts)
     {
         if(m_viz){
             if(!consistent()){
@@ -289,6 +288,9 @@ namespace yq::tachyon {
             }
             
             return errors::pipeline_existing();
+        }
+        if(!pipe){
+            return errors::pipeline_null_pipeline();
         }
         
         std::error_code ec  = _init(viz, pipe, opts);

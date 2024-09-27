@@ -87,8 +87,8 @@ namespace yq::tachyon {
     std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& options)
     {
         m_viz           = &viz;
-        m_pipeline0     = pipe;
-        m_layout        = viz.pipeline_layout_create(*pipe);
+        m_config        = pipe;
+        m_layout        = viz.pipeline_layout_create(pipe);
         if(!m_layout){
             return errors::rendered_bad_pipeline_layout();
         }
@@ -96,9 +96,9 @@ namespace yq::tachyon {
         m_render3d      = dynamic_cast<const Render3D*>(m_rendered.ptr());
         
         if(options.pipelines){
-            m_pipeline  = options.pipelines->create(*pipe);
+            m_pipeline  = options.pipelines->create(pipe);
         } else {
-            m_pipeline  = viz.pipeline_create(*pipe);
+            m_pipeline  = viz.pipeline_create(pipe);
         }
         if(!m_pipeline){
             return errors::rendered_bad_pipeline();
@@ -126,7 +126,7 @@ namespace yq::tachyon {
             return ec;
         
         if(m_layout -> push_enabled()){
-            switch(m_config -> push.type){
+            switch(m_config -> m_push.type){
             case PushConfigType::Full:
                 m_status |= S::Push;
                 if(m_render3d){
@@ -140,7 +140,7 @@ namespace yq::tachyon {
                 m_status |= S::ViewPush;
                 break;
             case PushConfigType::Custom:
-                if(m_config->push.fetch){
+                if(m_config -> m_push.fetch){
                     m_status |= S::Push;
                     m_status |= S::CustomPush;
                 }
@@ -171,7 +171,7 @@ namespace yq::tachyon {
         _kill_data();
         m_rendered      = {};
         m_pipeline      = {};
-        m_pipeline0     = {};
+        m_config     = {};
         m_layout        = {};
         m_config        = {};
         m_viz           = nullptr;
@@ -227,7 +227,7 @@ namespace yq::tachyon {
         
         if(m_status(S::Index)){
             for(uint32_t i=0;i<m_index.count;++i){
-                vkCmdBindIndexBuffer(u.command_buffer, m_index.buffers[i], 0, (VkIndexType)(m_config->ibos[i].type.value()));
+                vkCmdBindIndexBuffer(u.command_buffer, m_index.buffers[i], 0, (VkIndexType)(m_config->m_indexBuffers[i].type.value()));
                 vkCmdDrawIndexed(u.command_buffer, m_index.sizes[i], 1, 0, 0, 0);  // possible point of speedup in future
             }
         } else {
@@ -241,11 +241,11 @@ namespace yq::tachyon {
         
         if(u.pipeline_rebuild){
             if(u.pipelines){
-                m_pipeline      = u.pipelines->create(*m_pipeline0);
+                m_pipeline      = u.pipelines->create(m_config);
             //} else if(u.viz){
-                //m_pipeline      = u.viz -> pipeline_create(*m_pipeline0);
+                //m_pipeline      = u.viz -> pipeline_create(m_config);
             } else {
-                m_pipeline      = m_viz -> pipeline_create(*m_pipeline0);
+                m_pipeline      = m_viz -> pipeline_create(m_config);
             }
         }
         
@@ -259,7 +259,7 @@ namespace yq::tachyon {
             push->matrix    = u.world2eye;
         } else if(m_status(S::CustomPush)){
             m_push.clear();
-            m_config->push.fetch(m_rendered.ptr(), m_push);
+            m_config->m_push.fetch(m_rendered.ptr(), m_push);
         }
     }
     

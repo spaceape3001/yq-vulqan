@@ -32,7 +32,6 @@
 #include <yq-vulqan/app/Application.hpp>
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/pipeline/FrontFace.hpp>
-#include <yq-vulqan/pipeline/PipelineBuilder.hpp>
 #include <yq-vulqan/render/Render3D.hpp>
 #include <yq-vulqan/render/Render3DWriter.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
@@ -105,7 +104,7 @@ struct HelloTriangle : public Rendered {
     
         auto w = writer<HelloTriangle>();
         {
-            auto p = w.pipeline();
+            auto& p = w.pipeline();
             p.shaders({ "sdk/hello/hello3.vert", "sdk/hello/hello2.frag" });
             p.front(FrontFace::Clockwise);
             p.push<Warp>(&HelloTriangle::warp);
@@ -153,7 +152,7 @@ struct HelloQuad : public Rendered {
 
         auto w = writer<HelloQuad>();
         {
-            auto p = w.pipeline();
+            auto& p = w.pipeline();
             p.shaders({ "sdk/hello/quad.vert", "sdk/hello/quad.frag" });
             p.vertex(verts, DataActivity::COMMON)
                 .attribute<glm::vec2>(&Vertex2::position)

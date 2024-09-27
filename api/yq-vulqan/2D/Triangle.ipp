@@ -21,7 +21,7 @@ namespace yq::tachyon {
         auto w = writer<Triangle>();
         
         {
-            auto p = w.pipeline();
+            auto& p = w.pipeline();
             
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");

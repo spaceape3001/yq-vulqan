@@ -8,6 +8,7 @@
 
 #include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/basic/Flags.hpp>
+#include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>
 #include <yq-vulqan/typedef/push.hpp>
@@ -24,8 +25,6 @@ namespace yq::tachyon {
     class ViVisualizer;
     struct ViBufferObject;
     struct ViTextureObject;
-    struct BaseBOConfig;
-    struct TexConfig;
 
     struct ViDataOptions {
         enum class F : uint8_t {
@@ -64,7 +63,7 @@ namespace yq::tachyon {
         uint32_t                index_count() const;
         uint32_t                index_max_size() const;
         
-        SharedPipelineConfig    pipeline_config() const;
+        PipelineCPtr            pipeline_config() const;
         
         VkBuffer                storage_buffer(size_t) const;
         uint32_t                storage_bytes() const;
@@ -94,7 +93,7 @@ namespace yq::tachyon {
         ViData();
         ~ViData();
 
-        std::error_code     _init_data(ViVisualizer&, SharedPipelineConfig, const ViDataOptions& options);
+        std::error_code     _init_data(ViVisualizer&, PipelineCPtr, const ViDataOptions& options);
         std::error_code     _init_data(const ViData&, const ViDataOptions& options);
         void                _kill_data();
         
@@ -198,7 +197,7 @@ namespace yq::tachyon {
 
     protected:
         ViVisualizer*           m_viz               = nullptr;
-        SharedPipelineConfig    m_config;
+        PipelineCPtr            m_config;
         std::vector<VkDescriptorSetLayoutBinding>   m_descriptorSetLayoutBindingVector;
     
     private:
@@ -218,14 +217,14 @@ namespace yq::tachyon {
         void    _carve_descriptor(BB&);
         void    _carve_descriptor(TB&);
 
-        bool    _import(BB&, uint32_t, const BaseBOConfig&);
-        bool    _import(TB&, uint32_t, const TexConfig&);
+        bool    _import(BB&, uint32_t, const Pipeline::buffer_t&);
+        bool    _import(TB&, uint32_t, const Pipeline::texture_t&);
 
         bool    _set(BB&, uint32_t, const Buffer&);
         bool    _set(TB&, uint32_t, const Texture&);
 
-        bool    _update(BB&, uint32_t, const BaseBOConfig&);
-        bool    _update(TB&, uint32_t, const TexConfig&);
+        bool    _update(BB&, uint32_t, const Pipeline::buffer_t&);
+        bool    _update(TB&, uint32_t, const Pipeline::texture_t&);
 
         void    _publish(BB&, uint32_t);
         void    _publish(TB&, uint32_t);

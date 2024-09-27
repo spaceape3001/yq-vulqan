@@ -154,15 +154,15 @@ namespace yq::tachyon {
         VkPhysicalDevice                physical() const { return m_physical; }
         
         ViPipelineCPtr                  pipeline(uint64_t) const;
-        ViPipelineCPtr                  pipeline_create(const Pipeline&);
+        ViPipelineCPtr                  pipeline_create(const PipelineCPtr&);
         void                            pipeline_erase(uint64_t);
-        void                            pipeline_erase(const Pipeline&);
+        void                            pipeline_erase(const PipelineCPtr&);
         ViPipelineManager*              pipeline_manager() const;
         
         ViPipelineLayoutCPtr            pipeline_layout(uint64_t) const;
-        ViPipelineLayoutCPtr            pipeline_layout_create(const Pipeline&);
+        ViPipelineLayoutCPtr            pipeline_layout_create(const PipelineCPtr&);
         void                            pipeline_layout_erase(uint64_t);
-        void                            pipeline_layout_erase(const Pipeline&);
+        void                            pipeline_layout_erase(const PipelineCPtr&);
         ViPipelineLayoutManager*        pipeline_layout_manager() const;
 
         PresentMode                     present_mode() const;

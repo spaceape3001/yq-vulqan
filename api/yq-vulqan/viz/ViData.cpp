@@ -9,7 +9,6 @@
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/memory/Buffer.hpp>
-#include <yq-vulqan/pipeline/PipelineConfig.hpp>
 #include <yq-vulqan/texture/Texture.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViBuffer.hpp>
@@ -108,7 +107,7 @@ namespace yq::tachyon {
 
         uint32_t        binding = 0;
 
-        for(const SBOConfig& cfg : m_config->sbos){
+        for(const Pipeline::storage_buffer_t& cfg : m_config->storage_buffers()){
             VkDescriptorSetLayoutBinding a{};
             a.binding           = binding++;
             a.descriptorCount   = 1;
@@ -123,7 +122,7 @@ namespace yq::tachyon {
         }
         
         binding = 0;
-        for(const UBOConfig& cfg : m_config->ubos){
+        for(const Pipeline::uniform_buffer_t& cfg : m_config->uniform_buffers()){
             VkDescriptorSetLayoutBinding a{};
             a.binding           = binding++;
             a.descriptorCount   = 1;
@@ -138,7 +137,7 @@ namespace yq::tachyon {
         }
         
         binding = 0;
-        for(const TexConfig& cfg : m_config->texs){
+        for(const Pipeline::texture_t& cfg : m_config->textures()){
             VkDescriptorSetLayoutBinding a{};
             a.binding           = binding++;
             a.descriptorCount   = 1;
@@ -309,7 +308,7 @@ namespace yq::tachyon {
     }
     
 
-    bool    ViData::_import(BB&bb, uint32_t i, const BaseBOConfig& cfg)
+    bool    ViData::_import(BB&bb, uint32_t i, const Pipeline::buffer_t& cfg)
     {
         if(i >= bb.count)
             return false;
@@ -341,7 +340,7 @@ namespace yq::tachyon {
     }
     
 
-    bool    ViData::_import(TB&tb, uint32_t i, const TexConfig& cfg)
+    bool    ViData::_import(TB&tb, uint32_t i, const Pipeline::texture_t& cfg)
     {
         if(i >= tb.count)
             return false;
@@ -376,24 +375,24 @@ namespace yq::tachyon {
     {
         bool    success = true;
         for(uint32_t i=0;i<m_index.count;++i){
-            success = _import(m_index, i, m_config->ibos[i]) && success;
+            success = _import(m_index, i, m_config->m_indexBuffers[i]) && success;
         }
         for(uint32_t i=0;i<m_storage.count;++i){
-            success = _import(m_storage, i, m_config->sbos[i]) && success;
+            success = _import(m_storage, i, m_config->m_storageBuffers[i]) && success;
         }
         for(uint32_t i=0;i<m_texture.count;++i){
-            success = _import(m_texture, i, m_config->texs[i]) && success;
+            success = _import(m_texture, i, m_config->m_textures[i]) && success;
         }
         for(uint32_t i=0;i<m_uniform.count;++i){
-            success = _import(m_uniform, i, m_config->ubos[i]) && success;
+            success = _import(m_uniform, i, m_config->m_uniformBuffers[i]) && success;
         }
         for(uint32_t i=0;i<m_vertex.count;++i){
-            success = _import(m_vertex, i, m_config->vbos[i]) && success;
+            success = _import(m_vertex, i, m_config->m_vertexBuffers[i]) && success;
         }
         return success;
     }
 
-    std::error_code     ViData::_init_data(ViVisualizer&viz, SharedPipelineConfig pipe, const ViDataOptions& opts)
+    std::error_code     ViData::_init_data(ViVisualizer&viz, PipelineCPtr pipe, const ViDataOptions& opts)
     {
         m_viz               = &viz;
         m_config            = pipe;
@@ -410,7 +409,7 @@ namespace yq::tachyon {
         }
         
         //  some preliminary checks...
-        for(auto& cfg : m_config->ibos){
+        for(auto& cfg : m_config->m_indexBuffers){
             if(!cfg.fetch){
                 vizWarning << "ViData() -- index buffer without a fetch method, bad configuration.";
             }
@@ -418,7 +417,7 @@ namespace yq::tachyon {
                 vizWarning << "ViData() -- index buffer without a revision method, bad configuration.";
             }
         }
-        for(auto& cfg : m_config->sbos){
+        for(auto& cfg : m_config->m_storageBuffers){
             if(!cfg.fetch){
                 vizWarning << "ViData() -- storage buffer without a fetch method, bad configuration.";
             }
@@ -426,7 +425,7 @@ namespace yq::tachyon {
                 vizWarning << "ViData() -- storage buffer without a revision method, bad configuration.";
             }
         }
-        for(auto& cfg : m_config->texs){
+        for(auto& cfg : m_config->m_textures){
             if(!cfg.fetch){
                 vizWarning << "ViData() -- texture without a fetch method, bad configuration.";
             }
@@ -434,7 +433,7 @@ namespace yq::tachyon {
                 vizWarning << "ViData() -- texture without a revision method, bad configuration.";
             }
         }
-        for(auto& cfg : m_config->ubos){
+        for(auto& cfg : m_config->m_uniformBuffers){
             if(!cfg.fetch){
                 vizWarning << "ViData() -- uniform buffer without a fetch method, bad configuration.";
             }
@@ -442,7 +441,7 @@ namespace yq::tachyon {
                 vizWarning << "ViData() -- uniform buffer without a revision method, bad configuration.";
             }
         }
-        for(auto& cfg : m_config->vbos){
+        for(auto& cfg : m_config->m_vertexBuffers){
             if(!cfg.fetch){
                 vizWarning << "ViData() -- vertex buffer without a fetch method, bad configuration.";
             }
@@ -452,36 +451,32 @@ namespace yq::tachyon {
         }
         
         
-        m_index.count       = pipe->ibos.size();
-        m_storage.count     = pipe->sbos.size();
-        m_uniform.count     = pipe->ubos.size();
-        m_vertex.count      = pipe->vbos.size();
-        m_texture.count     = pipe->texs.size();
+        m_index.count       = pipe->m_indexBuffers.size();
+        m_storage.count     = pipe->m_storageBuffers.size();
+        m_uniform.count     = pipe->m_uniformBuffers.size();
+        m_vertex.count      = pipe->m_vertexBuffers.size();
+        m_texture.count     = pipe->m_textures.size();
         
         if(m_index.count > BB::kMaxBindings){
             vizWarning << "ViData() -- too many index buffers.  Max is " << BB::kMaxBindings;
             return errors::data_cant_initialize();
         }
-        
 
         if(m_storage.count > BB::kMaxBindings){
             vizWarning << "ViData() -- too many storage buffers.  Max is " << BB::kMaxBindings;
             return errors::data_cant_initialize();
         }
-        
 
         if(m_texture.count > BB::kMaxBindings){
             vizWarning << "ViData() -- too many texture buffers.  Max is " << TB::kMaxBindings;
             return errors::data_cant_initialize();
         }
-        
 
         if(m_uniform.count > BB::kMaxBindings){
             vizWarning << "ViData() -- too many uniform buffers.  Max is " << BB::kMaxBindings;
             return errors::data_cant_initialize();
         }
         
-
         if(m_vertex.count > BB::kMaxBindings){
             vizWarning << "ViData() -- too many vertex buffers.  Max is " << BB::kMaxBindings;
             return errors::data_cant_initialize();
@@ -501,7 +496,6 @@ namespace yq::tachyon {
             m_pointers.resize(nBuf, nullptr);
             m_sizes.resize(nBuf, 0);
         }
-
 
         m_index.data0       = 0;
         m_storage.data0     = m_index.end_data();
@@ -711,7 +705,7 @@ namespace yq::tachyon {
         }
     }
 
-    bool    ViData::_update(BB& bb, uint32_t i, const BaseBOConfig& cfg)
+    bool    ViData::_update(BB& bb, uint32_t i, const Pipeline::buffer_t& cfg)
     {
         if(i >= bb.count)
             return false;
@@ -740,7 +734,7 @@ namespace yq::tachyon {
         return _set(bb, i, *c);
     }
     
-    bool    ViData::_update(TB& tb, uint32_t i, const TexConfig& cfg)
+    bool    ViData::_update(TB& tb, uint32_t i, const Pipeline::texture_t& cfg)
     {
         if(i >= tb.count)
             return false;
@@ -776,20 +770,20 @@ namespace yq::tachyon {
         m_index.maxSize  = m_vertex.maxSize = 0;
         bool    success  = true;
         for(uint32_t i=0;i<m_index.count;++i){
-            success = _update(m_index, i, m_config->ibos[i]) && success;
+            success = _update(m_index, i, m_config->m_indexBuffers[i]) && success;
             m_index.maxSize = std::max(m_index.maxSize, m_index.sizes[i]);
         }
         for(uint32_t i=0;i<m_storage.count;++i){
-            success = _update(m_storage, i, m_config->sbos[i]) && success;
+            success = _update(m_storage, i, m_config->m_storageBuffers[i]) && success;
         }
         for(uint32_t i=0;i<m_texture.count;++i){
-            success = _update(m_texture, i, m_config->texs[i]) && success;
+            success = _update(m_texture, i, m_config->m_textures[i]) && success;
         }
         for(uint32_t i=0;i<m_uniform.count;++i){
-            success = _update(m_uniform, i, m_config->ubos[i]) && success;
+            success = _update(m_uniform, i, m_config->m_uniformBuffers[i]) && success;
         }
         for(uint32_t i=0;i<m_vertex.count;++i){
-            success = _update(m_vertex, i, m_config->vbos[i]) && success;
+            success = _update(m_vertex, i, m_config->m_vertexBuffers[i]) && success;
             m_vertex.maxSize = std::max(m_vertex.maxSize, m_vertex.sizes[i]);
         }
         return success;
@@ -848,7 +842,7 @@ namespace yq::tachyon {
         return m_index.maxSize;
     }
     
-    SharedPipelineConfig    ViData::pipeline_config() const
+    PipelineCPtr    ViData::pipeline_config() const
     {
         return m_config;
     }

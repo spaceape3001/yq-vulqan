@@ -41,12 +41,10 @@ namespace yq::tachyon {
     public:
         
         ViPipelineLayout();
-        ViPipelineLayout(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& options={});
-        ViPipelineLayout(ViVisualizer&, const Pipeline&, const ViPipelineLayoutOptions& opts={});
+        ViPipelineLayout(ViVisualizer&, const PipelineCPtr&, const ViPipelineLayoutOptions& options={});
         ~ViPipelineLayout();
         
-        std::error_code init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& options={});
-        std::error_code init(ViVisualizer&, const Pipeline&, const ViPipelineLayoutOptions& options={});
+        std::error_code init(ViVisualizer&, const PipelineCPtr&, const ViPipelineLayoutOptions& options={});
         void            kill();
         
         bool                consistent() const;
@@ -66,7 +64,7 @@ namespace yq::tachyon {
     
         bool            _import_shaders();
     
-        std::error_code _init(ViVisualizer&, SharedPipelineConfig, const ViPipelineLayoutOptions& options);
+        std::error_code _init(ViVisualizer&, const PipelineCPtr&, const ViPipelineLayoutOptions& options);
         void            _kill();
         
         enum class S : uint8_t {

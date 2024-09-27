@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-vulqan/render/Rendered.hpp>
-#include <yq-vulqan/pipeline/PipelineBuilder.hpp>
+#include <yq-vulqan/pipeline/PipelineWriter.hpp>
 
 namespace yq::tachyon {
     
@@ -29,15 +29,17 @@ namespace yq::tachyon {
             This creates a new pipeline for the given meta, 
             returning the builder (moved out)
         */
-        auto    pipeline(Pipeline::role_t r={}) 
+        Pipeline::Typed<C>&    pipeline(Pipeline::role_t r={}) 
         {
-            auto    b   = Pipeline::build<C>(r);
-            b.set_auto_gen([m=m_meta](PipelineCPtr p){
-                if(m){
-                    m->m_pipelines[p->role()] = p;
-                }
-            });
-            return b;
+            assert(Meta::thread_safe_write() && m_meta);
+            
+            auto [i,f] = m_meta->m_pipelines.insert({r, nullptr});
+            if(!f)
+                return *static_cast<Pipeline::Typed<C>*>(i->second.ptr());
+            
+            Pipeline::Typed<C>*  p2 = new Pipeline::Typed<C>(r);
+            i->second   = p2;
+            return *p2;
         }
         
         //! Returns a reference to the given meta (warning, may seg fault if it's NULL)

@@ -84,7 +84,6 @@ namespace yq::tachyon {
         const Render3D*         m_render3d      = nullptr;
         ViPipelineLayoutCPtr    m_layout;
         ViPipelineCPtr          m_pipeline;
-        PipelineCPtr            m_pipeline0;
         PushBuffer              m_push;
         Flags<S>                m_status = {};
 

@@ -45,9 +45,19 @@ namespace yq::tachyon {
         This is a pipeline configuration.  Once created, can be submitted to the 
         visualizer for a proper VkPipeline.
     */
-    class Pipeline : public UniqueID, public RefCount {
+    class Pipeline {
     public:
 
+        using role_t        = uint16_t;
+
+        //! Standard roles (can disobey below)
+        enum class Role : role_t {
+            Invalid = (role_t) -1,
+            Default = 0,
+            SolidColor,
+            ColorCorner,
+            Textured
+        };
     
         //! Handler to get a buffer from an object
         using fn_buffer     = std::function<BufferCPtr(const void*)>;;
@@ -60,8 +70,6 @@ namespace yq::tachyon {
 
         //! Handler to get a revision from an object
         using fn_revision   = std::function<uint64_t(const void*)>;
-        
-        using role_t        = uint64_t;
 
         struct attribute_t {
             const TypeInfo* type    = nullptr;
@@ -131,16 +139,12 @@ namespace yq::tachyon {
         template <typename> class Typed;
         template <typename> class VBOMaker;
         
-        Pipeline(role_t r=0);
-        Pipeline(const CompoundInfo&, role_t r=0);
-        Pipeline(CompoundInfo&&, role_t r=0) = delete;
-
         PipelineBinding         binding() const { return m_binding; }
 
         // Always good to call
         std::string_view        compound_name() const;
         // NULL is valid return result
-        const CompoundInfo*     compound_type() const { return m_compound; }
+        constexpr const CompoundInfo*     compound_type() const { return m_compound; }
         
         CullMode                culling() const { return m_cullMode; }
         FrontFace               front() const { return m_frontFace; }
@@ -148,9 +152,11 @@ namespace yq::tachyon {
         PolygonMode             polygons() const { return m_polygonMode; }
         bool                    primitive_restart() const { return m_primitiveRestart; }
         const push_t&           push() const { return m_push; }
-        role_t                  role() const;
+        constexpr Role          role() const { return m_role; }
         Topology                topology() const { return m_topology; }
         bool                    wireframe_permitted() const { return m_wireframePermitted; }
+        
+        constexpr uint64_t      id() const { return m_id; }
 
         //  Building out the pipeline
         
@@ -179,18 +185,21 @@ namespace yq::tachyon {
         const auto& textures() const { return m_textures; }
         const auto& uniform_buffers() const { return m_uniformBuffers; }
         const auto& vertex_buffers() const { return m_vertexBuffers; }
-        
+
     protected:
         friend class ViData;
         friend class ViPipeline;
         friend class ViPipelineLayout;
         friend class ViRendered;
 
+        Pipeline(const CompoundInfo*, Role);
+
+
         template <typename V>
         VBOMaker<V>                 vbo_(DataActivity da=DataActivity::UNSURE, uint32_t stages=0);
 
 
-        ~Pipeline();
+        virtual ~Pipeline();
         uint32_t                    location_filter(uint32_t loc, uint32_t req);
 
         template <typename V>
@@ -202,10 +211,14 @@ namespace yq::tachyon {
         static uniform_buffer_t     ubo_(uint32_t cnt, DataActivity da, uint32_t stages=0);
         static texture_t            tex_(DataActivity da, uint32_t stages=0);
         
-        const CompoundInfo*             m_compound      = nullptr;
+        static uint64_t             _make_id();
+        
+        const CompoundInfo* const       m_compound;
+        const uint64_t                  m_id;
+        const Role                      m_role;
+
         //! Locations used
         std::set<uint32_t>              m_locations;
-        role_t                          m_role          = {};
         
         PipelineBinding                 m_binding               = PipelineBinding::Graphics;
         CullMode                        m_cullMode              = CullMode::Back;
@@ -224,4 +237,7 @@ namespace yq::tachyon {
         std::vector<texture_t>          m_textures;
         std::vector<vertex_buffer_t>    m_vertexBuffers;
     };
+
+    
+
 }

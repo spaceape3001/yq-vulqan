@@ -74,11 +74,11 @@ namespace yq::tachyon {
     
         ViPipeline();
         ViPipeline(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
-        ViPipeline(ViVisualizer&, const PipelineCPtr&, const ViPipelineOptions& options={});
+        ViPipeline(ViVisualizer&, const Pipeline*, const ViPipelineOptions& options={});
         ~ViPipeline();
         
         std::error_code     init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
-        std::error_code     init(ViVisualizer&, const PipelineCPtr&, const ViPipelineOptions& options={});
+        std::error_code     init(ViVisualizer&, const Pipeline*, const ViPipelineOptions& options={});
         void                kill();
 
         VkPipelineBindPoint bind_point() const { return m_binding; }
@@ -93,7 +93,7 @@ namespace yq::tachyon {
     
     private:
         std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options);
-        std::error_code _init(ViVisualizer&, const PipelineCPtr&, const ViPipelineOptions& options);
+        std::error_code _init(ViVisualizer&, const Pipeline*, const ViPipelineOptions& options);
         void            _kill();
         
         enum class S : uint8_t {

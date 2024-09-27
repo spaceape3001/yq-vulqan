@@ -392,7 +392,7 @@ namespace yq::tachyon {
         return success;
     }
 
-    std::error_code     ViData::_init_data(ViVisualizer&viz, PipelineCPtr pipe, const ViDataOptions& opts)
+    std::error_code     ViData::_init_data(ViVisualizer&viz, const Pipeline* pipe, const ViDataOptions& opts)
     {
         m_viz               = &viz;
         m_config            = pipe;
@@ -840,11 +840,6 @@ namespace yq::tachyon {
     uint32_t    ViData::index_max_size() const
     {
         return m_index.maxSize;
-    }
-    
-    PipelineCPtr    ViData::pipeline_config() const
-    {
-        return m_config;
     }
 
     VkBuffer    ViData::storage_buffer(size_t i) const

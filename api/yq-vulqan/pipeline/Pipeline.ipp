@@ -8,14 +8,18 @@
 #include <yq-toolbox/meta/CompoundInfo.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>
+#include <atomic>
 
 namespace yq::tachyon {
 
-    Pipeline::Pipeline(role_t r) : m_compound(nullptr), m_role(r)
+    uint64_t  Pipeline::_make_id()
     {
+        static std::atomic<uint64_t>    s_next(1);
+        return s_next++;
     }
-    
-    Pipeline::Pipeline(const CompoundInfo& ci, role_t r) : m_compound(&ci), m_role(r)
+
+    Pipeline::Pipeline(const CompoundInfo* cinfo, Role r) : 
+        m_compound(cinfo), m_id(_make_id()), m_role(r)
     {
     }
     

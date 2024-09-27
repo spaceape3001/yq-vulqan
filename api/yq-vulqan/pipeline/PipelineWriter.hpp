@@ -174,14 +174,10 @@ namespace yq::tachyon {
     class Pipeline::Typed : public Pipeline {
     public:
     
-        Typed(role_t role={}) : Pipeline(role)
+        static_assert(is_type_v<C> || is_object_v<C>);
+    
+        Typed(Role role) : Pipeline(&meta<C>(), role)
         {
-            if constexpr ( is_type_v<C>){
-                m_compound = &meta<C>();
-            }
-            if constexpr ( is_object_v<C>){
-                m_compound = &meta<C>();
-            }
         }
 
         #define YQ_PIPELINE_COMMON_HANDLER                          \

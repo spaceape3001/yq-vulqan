@@ -8,6 +8,7 @@
 
 #include <yq-vulqan/typedef/rendered.hpp>
 
+#include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/MetaObject.hpp>
 #include <yq-toolbox/basic/Mutable.hpp>
@@ -25,11 +26,17 @@ namespace yq::tachyon {
         //! Standard constructor
         RenderedInfo(std::string_view, MetaObjectInfo&, const std::source_location& sl = std::source_location::current());
         
-        PipelineCPtr    pipeline(Pipeline::role_t r={}) const;
+        const Pipeline* pipeline(Pipeline::Role r=Pipeline::Role::Default) const;
+        
+        //! Default is the FIRST pipeline defined
+        const Pipeline* default_pipeline() const { return m_default; }
         
     private:
-        using PipelineHash  = std::unordered_map<Pipeline::role_t, PipelinePtr>;
+        using PipelineHash  = std::unordered_map<Pipeline::Role, Pipeline*>;
         PipelineHash    m_pipelines;
+        const Pipeline* m_default   = nullptr;
+        
+        Pipeline*       create_pipeline(Pipeline::Role, std::function<Pipeline*(Pipeline::Role)>);
     };
     
     /*! \brief Base object that's rendered
@@ -61,14 +68,21 @@ namespace yq::tachyon {
         bool            culled() const { return m_culled; }
         
         //! Current pipeline
-        PipelineCPtr    pipeline() const;
+        const Pipeline* pipeline() const;
 
         //! Sets the wireframe mode
         void            set_wireframe(Tristate);
         
+        void            set_pipeline(clear_t);
+        void            set_pipeline(nullptr_t);
+        void            set_pipeline(Pipeline::Role);
+        
+        //! Returns the role of the current pipeline
+        Pipeline::Role  role() const;
+        
     protected:
         //! Pipeline override
-        PipelineCPtr    m_pipeline; 
+        const Pipeline* m_pipeline = nullptr;
         
         //! Draw command
         Draw            m_draw; 

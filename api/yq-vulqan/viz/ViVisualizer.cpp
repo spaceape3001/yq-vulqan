@@ -663,7 +663,7 @@ namespace yq::tachyon {
         return m_pipelines -> get(i);
     }
     
-    ViPipelineCPtr                  ViVisualizer::pipeline_create(const PipelineCPtr& pipe)
+    ViPipelineCPtr                  ViVisualizer::pipeline_create(const Pipeline* pipe)
     {
         if(!m_pipelines)
             return {};
@@ -678,7 +678,7 @@ namespace yq::tachyon {
             m_pipelines -> erase(i);
     }
     
-    void                            ViVisualizer::pipeline_erase(const PipelineCPtr& p)
+    void                            ViVisualizer::pipeline_erase(const Pipeline* p)
     {
         if(p){
             pipeline_erase(p->id());
@@ -697,7 +697,7 @@ namespace yq::tachyon {
         return m_pipelineLayouts -> get(i);
     }
     
-    ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout_create(const PipelineCPtr&pipe)
+    ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout_create(const Pipeline* pipe)
     {
         if(!m_pipelineLayouts)
             return {};
@@ -713,7 +713,7 @@ namespace yq::tachyon {
         }
     }
     
-    void                            ViVisualizer::pipeline_layout_erase(const PipelineCPtr& pipe)
+    void                            ViVisualizer::pipeline_layout_erase(const Pipeline* pipe)
     {
         if(pipe){
             pipeline_layout_erase(pipe->id());

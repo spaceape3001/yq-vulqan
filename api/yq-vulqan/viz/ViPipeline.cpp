@@ -43,7 +43,7 @@ namespace yq::tachyon {
         }
     }
 
-    ViPipeline::ViPipeline(ViVisualizer&viz, const PipelineCPtr&pipe, const ViPipelineOptions& opts)
+    ViPipeline::ViPipeline(ViVisualizer&viz, const Pipeline*pipe, const ViPipelineOptions& opts)
     {
         if(viz.device() && pipe){
             std::error_code ec = _init(viz, pipe, opts);
@@ -59,7 +59,7 @@ namespace yq::tachyon {
         _kill();
     }
     
-    std::error_code ViPipeline::_init(ViVisualizer&viz, const PipelineCPtr& pipe, const ViPipelineOptions& opts)
+    std::error_code ViPipeline::_init(ViVisualizer&viz, const Pipeline* pipe, const ViPipelineOptions& opts)
     {
         ViPipelineLayoutCPtr        pLay    = viz.pipeline_layout_create(pipe);
         if(!pLay || !pLay->valid()){
@@ -70,7 +70,7 @@ namespace yq::tachyon {
 
     std::error_code ViPipeline::_init(ViVisualizer&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
     {
-        PipelineCPtr    cfg = pLay->pipeline_config();
+        const Pipeline*    cfg = pLay->pipeline_config();
         if(!cfg){
             return errors::pipeline_bad_config();
         }
@@ -280,7 +280,7 @@ namespace yq::tachyon {
         return ec;
     }
 
-    std::error_code     ViPipeline::init(ViVisualizer&viz, const PipelineCPtr&pipe, const ViPipelineOptions& opts)
+    std::error_code     ViPipeline::init(ViVisualizer&viz, const Pipeline*pipe, const ViPipelineOptions& opts)
     {
         if(m_viz){
             if(!consistent()){

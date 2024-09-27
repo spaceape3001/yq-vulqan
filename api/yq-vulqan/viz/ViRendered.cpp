@@ -48,26 +48,7 @@ namespace yq::tachyon {
             return;
         if(!ren)
             return;
-        PipelineCPtr    pipe    = ren->pipeline();
-        if(!pipe)
-            return ;
-
-        std::error_code ec  = _init(viz, ren, pipe, options);
-        if(ec != std::error_code()){
-            vizWarning << "ViRendered -- unable to initialize: " << ec.message();
-        }
-    }
-    
-    ViRendered::ViRendered(ViVisualizer& viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& options)
-    {
-        if(!viz.device())
-            return;
-        if(!ren)
-            return;
-        if(!pipe)
-            return ;
-
-        std::error_code ec  = _init(viz, ren, pipe, options);
+        std::error_code ec  = _init(viz, ren, options);
         if(ec != std::error_code()){
             vizWarning << "ViRendered -- unable to initialize: " << ec.message();
         }
@@ -84,11 +65,15 @@ namespace yq::tachyon {
     }
     
     
-    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& options)
+    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedCPtr& ren, const ViRenderedOptions& options)
     {
         m_viz           = &viz;
-        m_config        = pipe;
-        m_layout        = viz.pipeline_layout_create(pipe);
+        m_config        = ren->pipeline();
+        if(!m_config){
+            return errors::rendered_null_pipeline();
+        }
+        
+        m_layout        = viz.pipeline_layout_create(m_config);
         if(!m_layout){
             return errors::rendered_bad_pipeline_layout();
         }
@@ -96,9 +81,9 @@ namespace yq::tachyon {
         m_render3d      = dynamic_cast<const Render3D*>(m_rendered.ptr());
         
         if(options.pipelines){
-            m_pipeline  = options.pipelines->create(pipe);
+            m_pipeline  = options.pipelines->create(m_config);
         } else {
-            m_pipeline  = viz.pipeline_create(pipe);
+            m_pipeline  = viz.pipeline_create(m_config);
         }
         if(!m_pipeline){
             return errors::rendered_bad_pipeline();
@@ -171,7 +156,7 @@ namespace yq::tachyon {
         _kill_data();
         m_rendered      = {};
         m_pipeline      = {};
-        m_config     = {};
+        m_config        = {};
         m_layout        = {};
         m_config        = {};
         m_viz           = nullptr;
@@ -289,40 +274,13 @@ namespace yq::tachyon {
             }
             return errors::rendered_existing();
         }
-        
-        if(!viz.device())
-            return errors::visualizer_uninitialized();
-        if(!ren)
-            return errors::rendered_null_pointer();
-
-        PipelineCPtr    pipe    = ren->pipeline();
-        if(!pipe)
-            return errors::rendered_missing_pipeline();
-        
-        std::error_code ec  = _init(viz, ren, pipe, options);
-        if(ec != std::error_code()){
-            _kill();
-        }
-        return ec;
-    }
-    
-    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedCPtr& ren, const PipelineCPtr& pipe, const ViRenderedOptions& options)
-    {
-        if(m_viz){
-            if(!consistent()){
-                return errors::rendered_bad_state();
-            }
-            return errors::rendered_existing();
-        }
 
         if(!viz.device())
             return errors::visualizer_uninitialized();
         if(!ren)
             return errors::rendered_null_pointer();
-        if(!pipe)
-            return errors::rendered_null_pipeline();
             
-        std::error_code ec  = _init(viz, ren, pipe, options);
+        std::error_code ec  = _init(viz, ren, options);
         if(ec != std::error_code()){
             _kill();
         }
@@ -365,8 +323,9 @@ namespace yq::tachyon {
         }
 
         if(!m_pipeline){
-            out << "    Pipeline:                   [ missing ]\n";
+            out << "    ViPipeline:                 [ missing ]\n";
         } else {
+            out << "    ViPipeline:                 [" << hex(m_pipeline.ptr()) << "]\n";
             out << "    VkPipeline (pipeline):      [" << hex(m_pipeline->pipeline()) << "]\n";
             out << "    VkPipeline (wireframe):     [" << hex(m_pipeline->wireframe_pipeline()) << "]\n";
         }

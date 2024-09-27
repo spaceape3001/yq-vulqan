@@ -63,7 +63,7 @@ namespace yq::tachyon {
         uint32_t                index_count() const;
         uint32_t                index_max_size() const;
         
-        PipelineCPtr            pipeline_config() const;
+        const Pipeline*         pipeline_config() const { return m_config; }
         
         VkBuffer                storage_buffer(size_t) const;
         uint32_t                storage_bytes() const;
@@ -93,7 +93,7 @@ namespace yq::tachyon {
         ViData();
         ~ViData();
 
-        std::error_code     _init_data(ViVisualizer&, PipelineCPtr, const ViDataOptions& options);
+        std::error_code     _init_data(ViVisualizer&, const Pipeline*, const ViDataOptions& options);
         std::error_code     _init_data(const ViData&, const ViDataOptions& options);
         void                _kill_data();
         
@@ -196,8 +196,8 @@ namespace yq::tachyon {
         std::vector<VkExtent3D>             m_extents;          // PER TEXTURE
 
     protected:
-        ViVisualizer*           m_viz               = nullptr;
-        PipelineCPtr            m_config;
+        ViVisualizer*       m_viz               = nullptr;
+        const Pipeline*     m_config            = nullptr;
         std::vector<VkDescriptorSetLayoutBinding>   m_descriptorSetLayoutBindingVector;
     
     private:

@@ -43,6 +43,16 @@ namespace yq::tachyon {
         
     }
     
+    ViTexture::ViTexture(ViVisualizer& viz, const ViImageCPtr&img, const ViSamplerCPtr&sam, const TextureInfo& info)
+    {
+        if(viz.device() && img && img->valid() && sam && sam->valid()){
+            std::error_code ec  = _init(viz, img, sam, info);
+            if(ec != std::error_code()){
+                _kill();
+            }
+        }
+    }
+
     ViTexture::~ViTexture()
     {
         kill();
@@ -50,6 +60,8 @@ namespace yq::tachyon {
     
     std::error_code     ViTexture::_init(ViVisualizer&viz, const Texture&tex)
     {
+        m_viz   = &viz;
+        
         if(!tex.image){
             vizWarning << "ViTexture() -- image is NULL!";
             return errors::texture_image_null_pointer();
@@ -58,36 +70,46 @@ namespace yq::tachyon {
             vizWarning << "ViTexture() -- sampler is NULL!";
             return errors::texture_sampler_null_pointer();
         }
-            
-        m_image     = viz.image_create(*tex.image);
-        if(!m_image){
+
+        ViImageCPtr img  = viz.image_create(*tex.image);
+        if(!img){
             vizWarning << "ViTexture() -- cannot import image!";
             return errors::texture_bad_image();
         }
         
-        m_sampler   = viz.sampler_create(*tex.sampler);
-        if(!m_sampler){
+        ViSamplerCPtr sampler  = viz.sampler_create(*tex.sampler);
+        if(!sampler){
             vizWarning << "ViTexture() -- cannot import sampler!";
             return errors::texture_bad_sampler();
         }
-            
+        
+        m_id        = tex.id();
+        return _init(viz, img, sampler, tex.info); 
+    }
+    
+    std::error_code     ViTexture::_init(ViVisualizer&viz, const ViImageCPtr& image, const ViSamplerCPtr& sampler, const TextureInfo& texInfo)
+    {
+        m_viz       = &viz;
+
+        m_image     = image;
+        m_sampler   = sampler;
+    
         VqImageViewCreateInfo       info;
-        const TextureInfo&          ti  = tex.info;
-        const ImageInfo&            ii  = tex.image->info;
+        const ImageInfo&            imgInfo  = image->info();
         
         m_extents   = { 
-            .width  = (uint32_t) ii.size.x,
-            .height = (uint32_t) ii.size.y,
-            .depth  = (uint32_t) ii.size.z
+            .width  = (uint32_t) imgInfo.size.x,
+            .height = (uint32_t) imgInfo.size.y,
+            .depth  = (uint32_t) imgInfo.size.z
         };
         
-        info.flags  = ti.imageViewFlags.value();
-        info.image  = m_image -> image();
+        info.flags  = imgInfo.imageViewFlags.value();
+        info.image  = image -> image();
         
         if(ti.imageViewType){
             info.viewType   = (VkImageViewType) (*ti.imageViewType).value();
         } else {
-            switch(ii.type){
+            switch(imgInfo.type){
             case ImageType::Is1D:
                 info.viewType   = VK_IMAGE_VIEW_TYPE_1D;
                 break;
@@ -103,22 +125,22 @@ namespace yq::tachyon {
             }
         }
         
-        if(ti.format){
-            info.format = (VkFormat) (*ti.format).value();
+        if(texInfo.format){
+            info.format = (VkFormat) (*texInfo.format).value();
         } else {
-            info.format = (VkFormat) ii.format.value();
+            info.format = (VkFormat) imgInfo.format.value();
         }
         
-        info.components.r   = (VkComponentSwizzle) ti.swizzle.red.value();
-        info.components.g   = (VkComponentSwizzle) ti.swizzle.green.value();
-        info.components.b   = (VkComponentSwizzle) ti.swizzle.blue.value();
-        info.components.a   = (VkComponentSwizzle) ti.swizzle.alpha.value();
+        info.components.r   = (VkComponentSwizzle) texInfo.swizzle.red.value();
+        info.components.g   = (VkComponentSwizzle) texInfo.swizzle.green.value();
+        info.components.b   = (VkComponentSwizzle) texInfo.swizzle.blue.value();
+        info.components.a   = (VkComponentSwizzle) texInfo.swizzle.alpha.value();
         
-        info.subresourceRange.aspectMask     = (VkImageAspectFlags) ti.aspect.value();
-        info.subresourceRange.baseMipLevel   = ti.baseMipLevel;
-        info.subresourceRange.levelCount     = ti.levelCount;
-        info.subresourceRange.baseArrayLayer = ti.baseArrayLayer;
-        info.subresourceRange.layerCount     = ti.layerCount;
+        info.subresourceRange.aspectMask     = (VkImageAspectFlags) texInfo.aspect.value();
+        info.subresourceRange.baseMipLevel   = texInfo.baseMipLevel;
+        info.subresourceRange.levelCount     = texInfo.levelCount;
+        info.subresourceRange.baseArrayLayer = texInfo.baseArrayLayer;
+        info.subresourceRange.layerCount     = texInfo.layerCount;
 
         VkResult res = vkCreateImageView(viz.device(), &info, nullptr, &m_imageView);
         if(res != VK_SUCCESS){
@@ -126,7 +148,6 @@ namespace yq::tachyon {
             return errors::texture_cant_create_image_view();
         }
         
-        m_viz       = &viz;
         return {};
     }
     
@@ -141,6 +162,7 @@ namespace yq::tachyon {
         m_imageView = nullptr;
         m_sampler   = {};
         m_image     = {};
+        m_id        = 0ULL;
     }
 
     bool                ViTexture::consistent() const

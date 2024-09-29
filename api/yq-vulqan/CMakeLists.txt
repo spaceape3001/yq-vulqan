@@ -48,8 +48,8 @@ add_library(${PROJECT_NAME} SHARED
     image/image.cpp
     image/STBImage.cpp
     
-    imgui/MyImGui.hpp
     imgui/MyImGui.cpp
+    imgui/ViGui.cpp
     
     input/KeyCode.cpp
     input/ModifierKey.cpp
@@ -99,10 +99,10 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
     viz/ViFrame.cpp
-    viz/ViFrameThread.cpp
     viz/ViPipeline.cpp
     viz/ViPipelineLayout.cpp
     viz/ViRendered.cpp
+    viz/ViTasker.cpp
     viz/ViThread.cpp
     viz/ViVisualizer.cpp
     viz/Visualizer.cpp

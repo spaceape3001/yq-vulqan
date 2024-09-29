@@ -373,6 +373,9 @@ namespace yq::tachyon {
 
     bool                ViData::_import_data()
     {
+        if(m_config->is_static())
+            return true;
+
         bool    success = true;
         for(uint32_t i=0;i<m_index.count;++i){
             success = _import(m_index, i, m_config->m_indexBuffers[i]) && success;
@@ -409,48 +412,49 @@ namespace yq::tachyon {
         }
         
         //  some preliminary checks...
-        for(auto& cfg : m_config->m_indexBuffers){
-            if(!cfg.fetch){
-                vizWarning << "ViData() -- index buffer without a fetch method, bad configuration.";
+        if(m_config->is_dynamic()){
+            for(auto& cfg : m_config->m_indexBuffers){
+                if(!cfg.fetch){
+                    vizWarning << "ViData() -- index buffer without a fetch method, bad configuration.";
+                }
+                if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
+                    vizWarning << "ViData() -- index buffer without a revision method, bad configuration.";
+                }
             }
-            if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
-                vizWarning << "ViData() -- index buffer without a revision method, bad configuration.";
+            for(auto& cfg : m_config->m_storageBuffers){
+                if(!cfg.fetch){
+                    vizWarning << "ViData() -- storage buffer without a fetch method, bad configuration.";
+                }
+                if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
+                    vizWarning << "ViData() -- storage buffer without a revision method, bad configuration.";
+                }
+            }
+            for(auto& cfg : m_config->m_textures){
+                if(!cfg.fetch){
+                    vizWarning << "ViData() -- texture without a fetch method, bad configuration.";
+                }
+                if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
+                    vizWarning << "ViData() -- texture without a revision method, bad configuration.";
+                }
+            }
+            for(auto& cfg : m_config->m_uniformBuffers){
+                if(!cfg.fetch){
+                    vizWarning << "ViData() -- uniform buffer without a fetch method, bad configuration.";
+                }
+                if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
+                    vizWarning << "ViData() -- uniform buffer without a revision method, bad configuration.";
+                }
+            }
+            for(auto& cfg : m_config->m_vertexBuffers){
+                if(!cfg.fetch){
+                    vizWarning << "ViData() -- vertex buffer without a fetch method, bad configuration.";
+                }
+                if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
+                    vizWarning << "ViData() -- vertex buffer without a revision method, bad configuration.";
+                }
             }
         }
-        for(auto& cfg : m_config->m_storageBuffers){
-            if(!cfg.fetch){
-                vizWarning << "ViData() -- storage buffer without a fetch method, bad configuration.";
-            }
-            if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
-                vizWarning << "ViData() -- storage buffer without a revision method, bad configuration.";
-            }
-        }
-        for(auto& cfg : m_config->m_textures){
-            if(!cfg.fetch){
-                vizWarning << "ViData() -- texture without a fetch method, bad configuration.";
-            }
-            if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
-                vizWarning << "ViData() -- texture without a revision method, bad configuration.";
-            }
-        }
-        for(auto& cfg : m_config->m_uniformBuffers){
-            if(!cfg.fetch){
-                vizWarning << "ViData() -- uniform buffer without a fetch method, bad configuration.";
-            }
-            if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
-                vizWarning << "ViData() -- uniform buffer without a revision method, bad configuration.";
-            }
-        }
-        for(auto& cfg : m_config->m_vertexBuffers){
-            if(!cfg.fetch){
-                vizWarning << "ViData() -- vertex buffer without a fetch method, bad configuration.";
-            }
-            if((cfg.activity == DataActivity::DYNAMIC) && !cfg.revision){
-                vizWarning << "ViData() -- vertex buffer without a revision method, bad configuration.";
-            }
-        }
-        
-        
+            
         m_index.count       = pipe->m_indexBuffers.size();
         m_storage.count     = pipe->m_storageBuffers.size();
         m_uniform.count     = pipe->m_uniformBuffers.size();
@@ -636,6 +640,8 @@ namespace yq::tachyon {
 
     void    ViData::_publish_data(bool all)
     {
+        if(m_config->is_static())
+            return;
         if(m_writes.empty())    // nothing to do... done
             return;
             
@@ -766,6 +772,9 @@ namespace yq::tachyon {
     //! Update the data (second time)
     bool    ViData::_update_data()
     {
+        if(m_config->is_static())
+            return true;
+    
         m_index.modified = m_storage.modified = m_texture.modified = m_uniform.modified = m_vertex.modified = 0;
         m_index.maxSize  = m_vertex.maxSize = 0;
         bool    success  = true;

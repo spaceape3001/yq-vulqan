@@ -1,4 +1,8 @@
 #version 450 core
+
+//  This file comes from ImGui's vulkan backend
+//  It's licensed under ImGui's terms
+
 layout(location = 0) in vec2 aPos;
 layout(location = 1) in vec2 aUV;
 layout(location = 2) in vec4 aColor;

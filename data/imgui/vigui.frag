@@ -1,4 +1,8 @@
 #version 450 core
+
+//  This file comes from ImGui's vulkan backend
+//  It's licensed under ImGui's terms
+
 layout(location = 0) out vec4 fColor;
 
 layout(set=0, binding=0) uniform sampler2D sTexture;

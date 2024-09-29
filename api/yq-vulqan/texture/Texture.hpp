@@ -61,24 +61,23 @@ namespace yq::tachyon {
     
         //! Image
         const ImageCPtr             image;
-        
-        //! View information
-        const TextureInfo           info;
 
         //! Sampler info
         const SamplerCPtr           sampler;
+        
+        //! View information
+        const TextureInfo           info;
 
         static TextureCPtr  load(std::string_view);
         static TextureCPtr  load(std::string_view, const SamplerCPtr& _sampler);
         static TextureCPtr  load(std::string_view, const TextureInfo& texInfo);
         static TextureCPtr  load(std::string_view, const TextureInfo2& texInfo);
-        static TextureCPtr  load(std::string_view, const TextureInfo& texInfo, const SamplerCPtr& _sampler);
+        static TextureCPtr  load(std::string_view, const SamplerCPtr& _sampler, const TextureInfo& texInfo = {});
 
         Texture(ImageCPtr);
-        Texture(ImageCPtr, const SamplerCPtr& _sampler);
+        Texture(ImageCPtr, const SamplerCPtr& _sampler, const TextureInfo& texInfo={});
         Texture(ImageCPtr, const TextureInfo& texInfo);
         Texture(ImageCPtr, const TextureInfo2& texInfo);
-        Texture(ImageCPtr, const TextureInfo& texInfo, const SamplerCPtr& _sampler);
         
     private:
         ~Texture();

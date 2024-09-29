@@ -170,6 +170,14 @@ namespace yq::tachyon {
             return errors::pipeline_layout_cant_create();
         }
 
+        const auto & dynamicStates    = m_config -> dynamic_states();
+        if(!dynamicStates.empty()){
+            m_dynamicStates.reserve(dynamicStates.size());
+            for(DynamicState ds : dynamicStates){
+                m_dynamicStates.push_back((VkDynamicState) ds.value());
+            }
+        }
+
         return {};
     }
     

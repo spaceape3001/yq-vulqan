@@ -11,6 +11,7 @@
 #include <yq-toolbox/math/glm_types.hpp>
 #include <yq-toolbox/trait/member_offset.hpp>
 
+#include <yq-vulqan/keywords.hpp>
 #include <yq-vulqan/config/vulqan.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PipelineUtils.hpp>
@@ -66,7 +67,6 @@ namespace yq::tachyon {
         }
         
         template  <typename M>
-        requires (!is_type_v<M>)
         VBOMaker& attribute(M V::*member, DataFormat fmt)
         {
             attr_impl(fmt, (uint32_t) member_offset(member), min_binding<M>());
@@ -111,6 +111,8 @@ namespace yq::tachyon {
         }
     };
     
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  STATIC PIPELINE
 
     template <typename V>
     Pipeline::index_buffer_t  Pipeline::ibo_(DataActivity da)
@@ -143,15 +145,6 @@ namespace yq::tachyon {
         cfg.shaders     = stages;
         return cfg;
     }
-    
-    inline Pipeline::texture_t  Pipeline::tex_(DataActivity da, uint32_t stages)
-    {   
-        texture_t       cfg;
-        cfg.activity    = da;
-        cfg.shaders     = stages;
-        return cfg;
-    }
-
 
     template <typename V>
     Pipeline::VBOMaker<V>     Pipeline::vbo_(DataActivity da, uint32_t stages)
@@ -159,7 +152,17 @@ namespace yq::tachyon {
         return VBOMaker<V>(this, da, stages);
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  PIPELINE
+
+    template <typename V>
+    uint32_t    Pipeline::index(DataActivity da)
+    {
+        index_buffer_t       cfg = ibo_<V>(da);
+        uint32_t ret = (uint32_t) m_indexBuffers.size();
+        m_indexBuffers.push_back(cfg);
+        return ret;
+    }
 
     template <typename T>
     void            Pipeline::push()
@@ -169,6 +172,52 @@ namespace yq::tachyon {
         m_push.type  = PushConfigType::Custom;
         m_push.size  = sizeof(T);
     }
+
+    template <typename V>
+    uint32_t    Pipeline::storage(DataActivity da, uint32_t stages)
+    {
+        storage_buffer_t       cfg = sbo_<V>(1, da, stages);
+        uint32_t ret = (uint32_t) m_storageBuffers.size();
+        m_storageBuffers.push_back(cfg);
+        return ret;
+    }
+    
+    template <typename V>
+    uint32_t    Pipeline::storage(uint32_t cnt, DataActivity da, uint32_t stages)
+    {
+        storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
+        uint32_t ret = (uint32_t) m_storageBuffers.size();
+        m_storageBuffers.push_back(cfg);
+        return ret;
+    }
+
+    template <typename V>
+    uint32_t    Pipeline::uniform(uint32_t cnt, DataActivity da, uint32_t stages)
+    {
+        uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
+        uint32_t ret = (uint32_t) m_uniformBuffers.size();
+        m_uniformBuffers.push_back(cfg);
+        return ret;
+    }
+
+    template <typename V>
+    uint32_t    Pipeline::uniform(DataActivity da, uint32_t stages)
+    {
+        uniform_buffer_t       cfg = ubo_<V>(1, da, stages);
+        uint32_t ret = (uint32_t) m_uniformBuffers.size();
+        m_uniformBuffers.push_back(cfg);
+        return ret;
+    }
+
+    template <typename V>
+    Pipeline::VBOMaker<V> Pipeline::vertex(DataActivity da, uint32_t stages)
+    {
+        auto cfg    = vbo_<V>(da, stages);
+        return cfg;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  TYPED PIPELINE
 
     template <typename C>
     class Pipeline::Typed : public Pipeline {
@@ -221,37 +270,45 @@ namespace yq::tachyon {
             INDEX BUFFERS
             =======================================================
         */
-
+        
         template <typename V>
-        void    index(IBO<V>& p, DataActivity da=DataActivity::REFRESH)
+        uint32_t    index(IBO<V>& p, DataActivity da=DataActivity::COMMON)
         {
             index_buffer_t       cfg = ibo_<V>(da);
             YQ_PIPELINE_COMMON_HANDLER
+            uint32_t ret = (uint32_t) m_indexBuffers.size();
             m_indexBuffers.push_back(cfg);
-        }
-        
-        template <typename V>
-        void    index(IB1<V>& p, DataActivity da=DataActivity::REFRESH)
-        {
-            index_buffer_t       cfg = ibo_<V>(da);
-            YQ_PIPELINE_COMMON_HANDLER
-            m_indexBuffers.push_back(cfg);
+            return ret;
         }
 
         template <typename V>
-        void    index(IBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        uint32_t    index(IB1<V>& p, DataActivity da=DataActivity::COMMON)
         {
             index_buffer_t       cfg = ibo_<V>(da);
-            YQ_PIPELINE_MEMBER_HANDLER
+            YQ_PIPELINE_COMMON_HANDLER
+            uint32_t ret = (uint32_t) m_indexBuffers.size();
             m_indexBuffers.push_back(cfg);
+            return ret;
         }
-        
+
         template <typename V>
-        void    index(IB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        uint32_t   index(IBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
         {
             index_buffer_t       cfg = ibo_<V>(da);
             YQ_PIPELINE_MEMBER_HANDLER
+            uint32_t ret = (uint32_t) m_indexBuffers.size();
             m_indexBuffers.push_back(cfg);
+            return ret;
+        }
+
+        template <typename V>
+        uint32_t   index(IB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        {
+            index_buffer_t       cfg = ibo_<V>(da);
+            YQ_PIPELINE_MEMBER_HANDLER
+            uint32_t ret = (uint32_t) m_indexBuffers.size();
+            m_indexBuffers.push_back(cfg);
+            return ret;
         }
 
         /*
@@ -261,60 +318,68 @@ namespace yq::tachyon {
         */
         
         template <typename V>
-        void    storage(SBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
+            uint32_t ret = (uint32_t) m_storageBuffers.size();
             m_storageBuffers.push_back(cfg);
+            return ret;
         }
         
         template <typename V>
-        void    storage(SB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
+            uint32_t ret = (uint32_t) m_storageBuffers.size();
             m_storageBuffers.push_back(cfg);
+            return ret;
         }
 
         template <typename V>
-        void    storage(SBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            storage(p, 1, da, stages);
+            return storage(p, 1, da, stages);
         }
         
         template <typename V>
-        void    storage(SB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            storage(p, 1, da, stages);
+            return storage(p, 1, da, stages);
         }
         
         
         template <typename V>
-        void    storage(SBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
+            uint32_t ret = (uint32_t) m_storageBuffers.size();
             m_storageBuffers.push_back(cfg);
+            return ret;
         }
         
         template <typename V>
-        void    storage(SB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
+            uint32_t ret = (uint32_t) m_storageBuffers.size();
             m_storageBuffers.push_back(cfg);
+            return ret;
         }
 
         template <typename V>
-        void    storage(SBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            storage(p, 1, da, stages);
+            return storage(p, 1, da, stages);
         }
         
         template <typename V>
-        void    storage(SB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            storage(p, 1, da, stages);
+            return storage(p, 1, da, stages);
         }
 
 
@@ -325,60 +390,68 @@ namespace yq::tachyon {
         */
         
         template <typename V>
-        void    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
+            uint32_t ret = (uint32_t) m_uniformBuffers.size();
             m_uniformBuffers.push_back(cfg);
+            return ret;
         }
         
         template <typename V>
-        void    uniform(UB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
+            uint32_t ret = (uint32_t) m_uniformBuffers.size();
             m_uniformBuffers.push_back(cfg);
+            return ret;
         }
 
         template <typename V>
-        void    uniform(UBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da, stages);
+            return uniform(p, 1, da, stages);
         }
         
         template <typename V>
-        void    uniform(UB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da, stages);
+            return uniform(p, 1, da, stages);
         }
         
         
         template <typename V>
-        void    uniform(UBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
+            uint32_t ret = (uint32_t) m_uniformBuffers.size();
             m_uniformBuffers.push_back(cfg);
+            return ret;
         }
         
         template <typename V>
-        void    uniform(UB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
+            uint32_t ret = (uint32_t) m_uniformBuffers.size();
             m_uniformBuffers.push_back(cfg);
+            return ret;
         }
 
         template <typename V>
-        void    uniform(UBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da, stages);
+            return uniform(p, 1, da, stages);
         }
         
         template <typename V>
-        void    uniform(UB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
-            uniform(p, 1, da, stages);
+            return uniform(p, 1, da, stages);
         }
         
         /*
@@ -428,20 +501,7 @@ namespace yq::tachyon {
             =======================================================
         */
 
-
-        #define YQ_PIPELINE_MEMBER_HANDLER                          \
-            cfg.fetch       = [p](const void*v) -> BufferCPtr {     \
-                const C* c = (const C*) v;                          \
-                return (c->*p).buffer;                              \
-            };                                                      \
-            cfg.revision    = [p](const void*v) -> uint64_t {       \
-                const C* c = (const C*) v;                          \
-                auto& b = (c->*p).buffer;                           \
-                return b ? b->id() : 0ULL;                          \
-            };
-        
-
-        void    texture(Ref<const Texture> &p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t texture(Ref<const Texture> &p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             texture_t   cfg = tex_(da, stages);
             cfg.fetch       = [&p](const void*) -> TextureCPtr {
@@ -450,10 +510,12 @@ namespace yq::tachyon {
             cfg.revision    = [&p](const void*) -> uint64_t {
                 return p ? p->id() : 0ULL;
             };
+            uint32_t ret = (uint32_t) m_textures.size();
             m_textures.push_back(cfg);
+            return ret;
         }
 
-        void    texture(Ref<const Texture> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    texture(Ref<const Texture> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
         {
             texture_t   cfg = tex_(da, stages);
             cfg.fetch       = [p](const void*v) -> TextureCPtr {
@@ -465,7 +527,9 @@ namespace yq::tachyon {
                 const Ref<const Texture>&   t   = (c->*p);
                 return t ? t->id() : 0ULL;
             };
+            uint32_t ret = (uint32_t) m_textures.size();
             m_textures.push_back(cfg);
+            return ret;
         }
 
     };

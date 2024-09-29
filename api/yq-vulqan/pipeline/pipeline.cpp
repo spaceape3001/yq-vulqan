@@ -8,6 +8,7 @@
 
 #include "CullMode.ipp"
 #include "DataActivity.ipp"
+#include "DynamicState.ipp"
 #include "FrontFace.ipp"
 #include "IndexType.ipp"
 #include "PipelineBinding.ipp"

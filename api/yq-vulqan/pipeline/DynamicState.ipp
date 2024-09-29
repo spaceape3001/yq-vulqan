@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViFrameThread.hpp"
+#include "DynamicState.hpp"
+#include <yq-toolbox/meta/Init.hpp>
 
-namespace yq::tachyon {
-}
+YQ_TYPE_IMPLEMENT(yq::tachyon::DynamicState)

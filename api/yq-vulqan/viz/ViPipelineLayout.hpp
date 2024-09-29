@@ -57,6 +57,7 @@ namespace yq::tachyon {
         const auto&         vertex_attributes() const { return m_vertexAttributes; }
         const auto&         vertex_bindings() const { return m_vertexBindings; }
         const auto&         vertex_create_info() const { return m_vertexCreateInfo; }
+        const auto&         dynamic_states() const { return m_dynamicStates; }
         
         void                report(Stream&, const ViPipelineLayoutReportOptions& options={}) const;
 
@@ -78,6 +79,7 @@ namespace yq::tachyon {
         std::vector<VkVertexInputAttributeDescription>  m_vertexAttributes;
         std::vector<VkVertexInputBindingDescription>    m_vertexBindings;
         VkPipelineVertexInputStateCreateInfo            m_vertexCreateInfo{};
+        std::vector<VkDynamicState>                     m_dynamicStates;
         Flags<S>                                        m_status = {};
 
         ViPipelineLayout(const ViPipelineLayout&) = delete;

@@ -137,11 +137,14 @@ namespace yq::tachyon {
         } else if(opts.scissor != VkRect2D{}){
             viewportState.scissorCount  = 1;
             viewportState.pScissors     = &opts.scissor;
-        } else {
-            if(!opts.swapchain){
+        } else if(opts.swapchain){
+            if(!opts.swapchain->valid())
                 return errors::pipeline_bad_swapchain();
-            }
-            defScissors = opts.swapchain->def_scissor();
+            defScissors = opts.swapchain -> def_scissor();
+            viewportState.scissorCount  = 1;
+            viewportState.pScissors     = &defScissors;
+        } else {
+            defScissors = m_viz -> swapchain_def_scissor();
             viewportState.scissorCount  = 1;
             viewportState.pScissors     = &defScissors;
         }
@@ -200,11 +203,20 @@ namespace yq::tachyon {
         colorBlending.blendConstants[1] = 0.0f; // Optional
         colorBlending.blendConstants[2] = 0.0f; // Optional
         colorBlending.blendConstants[3] = 0.0f; // Optional
+        
+        VqPipelineDynamicStateCreateInfo pdynci;
+        const auto& dynamicStates = m_layout->dynamic_states();
+        if(!dynamicStates.empty()){
+            pdynci.dynamicStateCount    = (uint32_t) dynamicStates.size();
+            pdynci.pDynamicStates       = dynamicStates.data();
+            pipelineInfo.pDynamicState  = &pdynci;
+        } else {
+            pipelineInfo.pDynamicState  = nullptr; // Optional   
+        }
 
         pipelineInfo.pMultisampleState      = &multisampling;
         pipelineInfo.pDepthStencilState     = nullptr; // Optional
         pipelineInfo.pColorBlendState       = &colorBlending;
-        pipelineInfo.pDynamicState          = nullptr; // Optional   
         pipelineInfo.layout                 = pLay->pipeline_layout();
         if(opts.render_pass){
             pipelineInfo.renderPass         = opts.render_pass;

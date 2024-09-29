@@ -12,51 +12,43 @@
 namespace yq::tachyon {
     TextureCPtr  Texture::load(std::string_view pp)
     {
-        return load(pp, TextureInfo(), Sampler::simple());
+        return load(pp, Sampler::simple(), TextureInfo());
     }
     
-    TextureCPtr  Texture::load(std::string_view pp, const SamplerCPtr& _sampler)
+    TextureCPtr  Texture::load(std::string_view pp, const SamplerCPtr& _sampler, const TextureInfo& _info)
     {
-        return load(pp, TextureInfo(), _sampler);
+        if(!_sampler)
+            return {};
+        ImageCPtr   img = Image::load(pp);
+        if(!img)
+            return {};
+        return new Texture(img, _sampler, _info);
     }
 
     TextureCPtr  Texture::load(std::string_view pp, const TextureInfo2& texInfo)
     {
-        return load(pp, texInfo, new Sampler(texInfo));
+        return load(pp, new Sampler(texInfo), texInfo);
     }
     
     TextureCPtr  Texture::load(std::string_view pp, const TextureInfo& texInfo)
     {
-        return load(pp, texInfo, Sampler::simple());
+        return load(pp, Sampler::simple(), texInfo);
     }
     
-    TextureCPtr  Texture::load(std::string_view pp, const TextureInfo& texInfo, const SamplerCPtr& _sampler)
-    {
-        if(!_sampler)
-            return {};
-        
-        ImageCPtr   img = Image::load(pp);
-        if(!img)
-            return {};
-        
-        return new Texture(img, texInfo, _sampler);
-    }
 
-
-    Texture::Texture(ImageCPtr img) : Texture(img, TextureInfo(), Sampler::simple())
+    Texture::Texture(ImageCPtr img) : Texture(img, Sampler::simple())
     {
     }
     
-    Texture::Texture(ImageCPtr img, const TextureInfo& texInfo) : Texture(img, texInfo, Sampler::simple())
+    Texture::Texture(ImageCPtr img, const TextureInfo& texInfo) : Texture(img, Sampler::simple(), texInfo)
     {
     }
 
-    Texture::Texture(ImageCPtr img, const TextureInfo2& texInfo) : Texture(img, texInfo, new Sampler(texInfo))
+    Texture::Texture(ImageCPtr img, const TextureInfo2& texInfo) : Texture(img, new Sampler(texInfo), texInfo)
     {
     }
 
-    Texture::Texture(ImageCPtr img, const TextureInfo& _info, const SamplerCPtr& sam) : 
-        image(img), info(_info), sampler(sam)
+    Texture::Texture(ImageCPtr img, const SamplerCPtr& _sampler, const TextureInfo& _info) : image(img), sampler(_sampler), info(_info)
     {
     }
     

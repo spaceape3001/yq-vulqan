@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/basic/Object.hpp>
 #include <yq-toolbox/basic/UniqueID.hpp>
 #include <yq-toolbox/basic/Ref.hpp>
@@ -62,6 +63,10 @@ namespace yq::tachyon {
         //virtual bool        save_binary(const std::filesystem::path&) const = 0;
         
         static const FileResolver&      resolver();
+        
+        static std::filesystem::path    resolve(std::string_view);
+        static std::filesystem::path    resolve(full_t, std::string_view);
+        static std::filesystem::path    resolve(partial_t, std::string_view);
         
         //static const path_vector_t&             search_path();
         //static const std::filesystem::path&     binary_root();

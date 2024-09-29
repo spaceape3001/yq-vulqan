@@ -19,6 +19,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Widget;
+    class ViGui;
     
     /*! \brief Vulkan Window
     
@@ -94,6 +95,7 @@ namespace yq::tachyon {
         bool                    m_paused        = false;
         bool                    m_zeroSize      = false;
         std::vector<Widget*>    m_delete;
+        std::unique_ptr<ViGui>  m_imguiViz;
         
         void                purge_deleted();
         

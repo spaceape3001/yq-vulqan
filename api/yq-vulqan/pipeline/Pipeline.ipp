@@ -18,6 +18,20 @@ namespace yq::tachyon {
         return s_next++;
     }
 
+    Pipeline::texture_t  Pipeline::tex_(DataActivity da, uint32_t stages)
+    {   
+        texture_t       cfg;
+        cfg.activity    = da;
+        cfg.shaders     = stages;
+        return cfg;
+    }
+    
+    ///////////////////////////////////////////////////
+    
+    Pipeline::Pipeline(Role r) : Pipeline(nullptr, r)
+    {
+    }
+
     Pipeline::Pipeline(const CompoundInfo* cinfo, Role r) : 
         m_compound(cinfo), m_id(_make_id()), m_role(r)
     {
@@ -34,6 +48,15 @@ namespace yq::tachyon {
         return {};
     }
 
+    bool  Pipeline::is_dynamic() const
+    {
+        return static_cast<bool>(m_compound);
+    }
+
+    bool  Pipeline::is_static() const
+    {
+        return !m_compound;
+    }
 
     //// SETTERS
 
@@ -45,6 +68,18 @@ namespace yq::tachyon {
     void  Pipeline::culling(CullMode v)
     {
         m_cullMode  = v;
+    }
+
+    void  Pipeline::dynamic_state(DynamicState ds)
+    {
+        m_dynamicStates.insert(ds);
+    }
+    
+    void  Pipeline::dynamic_states(std::initializer_list<DynamicState> states)
+    {
+        for(DynamicState ds : states){
+            m_dynamicStates.insert(ds);
+        }
     }
     
     void  Pipeline::front(FrontFace v)
@@ -88,7 +123,7 @@ namespace yq::tachyon {
     
     void  Pipeline::primitive_restart(bool v)
     {
-        m_primitiveRestart = v;
+        m_primitiveRestart  = v;
     }
 
     void  Pipeline::push(PushConfigType v)
@@ -120,7 +155,6 @@ namespace yq::tachyon {
         push(PushConfigType::View);
     }
 
-    
     void  Pipeline::shader(ShaderSpec ss)
     {
         m_shaders.push_back(ss);
@@ -131,7 +165,16 @@ namespace yq::tachyon {
         for(ShaderSpec ss : sss)
             m_shaders.push_back(ss);
     }
+
     
+    uint32_t    Pipeline::texture(DataActivity da, uint32_t stages)
+    {
+        texture_t   cfg = tex_(da, stages);
+        uint32_t ret = (uint32_t) m_textures.size();
+        m_textures.push_back(cfg);
+        return ret;
+    }
+
     void  Pipeline::topology(Topology v)
     {
         m_topology  = v;

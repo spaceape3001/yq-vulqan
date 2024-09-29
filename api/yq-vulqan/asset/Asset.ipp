@@ -46,6 +46,21 @@ namespace yq::tachyon {
         return ret;
     }
     
+    std::filesystem::path    Asset::resolve(std::string_view x)
+    {
+        return resolver().resolve(x);
+    }
+    
+    std::filesystem::path    Asset::resolve(full_t, std::string_view x)
+    {
+        return resolver().resolve(x);
+    }
+    
+    std::filesystem::path    Asset::resolve(partial_t, std::string_view x)
+    {
+        return resolver().partial(x);
+    }
+    
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Asset::Asset()

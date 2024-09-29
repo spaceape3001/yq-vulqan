@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq-toolbox/basic/Flags.hpp>
 
 #include <yq-vulqan/data/DataFormat.hpp>
 #include <yq-vulqan/pipeline/CullMode.hpp>
 #include <yq-vulqan/pipeline/DataActivity.hpp>
+#include <yq-vulqan/pipeline/DynamicState.hpp>
 #include <yq-vulqan/pipeline/FrontFace.hpp>
 #include <yq-vulqan/pipeline/IndexType.hpp>
 #include <yq-vulqan/pipeline/PipelineBinding.hpp>
@@ -56,7 +56,10 @@ namespace yq::tachyon {
             Default = 0,
             SolidColor,
             ColorCorner,
-            Textured
+            Textured,
+            
+            //! First user-based index (nice & large for future compatibility)
+            User = 1001
         };
     
         //! Handler to get a buffer from an object
@@ -148,6 +151,8 @@ namespace yq::tachyon {
         
         CullMode                culling() const { return m_cullMode; }
         FrontFace               front() const { return m_frontFace; }
+        bool                    is_dynamic() const;
+        bool                    is_static() const;
         float                   line_width() const { return m_lineWidth; }
         PolygonMode             polygons() const { return m_polygonMode; }
         bool                    primitive_restart() const { return m_primitiveRestart; }
@@ -162,6 +167,8 @@ namespace yq::tachyon {
         
         void  binding(PipelineBinding);
         void  culling(CullMode);
+        void  dynamic_state(DynamicState);
+        void  dynamic_states(std::initializer_list<DynamicState>);
         void  front(FrontFace);
         void  line_width(float);
         void  polygons(PolygonMode);
@@ -170,6 +177,61 @@ namespace yq::tachyon {
         void  shaders(std::initializer_list<ShaderSpec>);
         void  topology(Topology);
         void  wireframe_permitted(bool);
+        
+        /*! \brief Declares an index buffer 
+        
+            \note THIS routine assumes you're manually doing the import/record step
+            \return Binding/Location (which is the index into the array)
+        */
+        template <typename V>
+        uint32_t    index(DataActivity da=DataActivity::REFRESH);
+        
+        /*! \brief Declares a storage buffer
+        
+            \note THIS routine assumes you're manually doing the import/record step
+            \return Binding/Location (which is the index into the array)
+        */
+        template <typename V>
+        uint32_t    storage(uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+
+        /*! \brief Declares a storage buffer
+        
+            \note THIS routine assumes you're manually doing the import/record step
+            \return Binding/Location (which is the index into the array)
+        */
+        template <typename V>
+        uint32_t    storage(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+
+        /*! \brief Declares a uniform buffer
+        
+            \note THIS routine assumes you're manually doing the import/record step
+            \return Binding/Location (which is the index into the array)
+        */
+        template <typename V>
+        uint32_t    uniform(uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+
+        /*! \brief Declares a uniform buffer
+        
+            \note THIS routine assumes you're manually doing the import/record step
+            \return Binding/Location (which is the index into the array)
+        */
+        template <typename V>
+        uint32_t    uniform(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        
+        /*! \brief Declares a vertex buffer
+        
+            \note THIS routine assumes you're manually doing the import/record step
+            \return Binding/Location (which is the index into the array)
+        */
+        template <typename V>
+        VBOMaker<V> vertex(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        
+        /*! \brief Declares a texture
+        
+            \note THIS routine assumes you're manually doing the import/record step
+            \return Binding/Location (which is the index into the array)
+        */
+        uint32_t    texture(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
 
         template <typename T>
         void  push();
@@ -185,6 +247,9 @@ namespace yq::tachyon {
         const auto& textures() const { return m_textures; }
         const auto& uniform_buffers() const { return m_uniformBuffers; }
         const auto& vertex_buffers() const { return m_vertexBuffers; }
+        const auto& dynamic_states() const { return m_dynamicStates; }
+
+        Pipeline(Role r = Role::Default);
 
     protected:
         friend class ViData;
@@ -216,6 +281,7 @@ namespace yq::tachyon {
         const CompoundInfo* const       m_compound;
         const uint64_t                  m_id;
         const Role                      m_role;
+        
 
         //! Locations used
         std::set<uint32_t>              m_locations;
@@ -236,6 +302,7 @@ namespace yq::tachyon {
         std::vector<uniform_buffer_t>   m_uniformBuffers;
         std::vector<texture_t>          m_textures;
         std::vector<vertex_buffer_t>    m_vertexBuffers;
+        std::set<DynamicState>          m_dynamicStates;
     };
 
     

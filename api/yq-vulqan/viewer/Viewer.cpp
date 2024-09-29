@@ -9,6 +9,7 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/app/Application.hpp>
 #include <yq-vulqan/imgui/MyImGui.hpp>
+#include <yq-vulqan/imgui/ViGui.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViContext.hpp>
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
@@ -60,7 +61,9 @@ namespace yq::tachyon {
             return ec;
          
         if(vci.imgui){
-            m_imgui = ImGui::CreateContext();
+            m_imgui     = ImGui::CreateContext();
+            m_imguiViz  = std::make_unique<ViGui>(*this);
+
 
             ImGui_ImplVulkan_InitInfo vii{};
             
@@ -162,8 +165,10 @@ namespace yq::tachyon {
 
     void     Viewer::prerecord(ViContext&u)
     {
-        if(m_widget)
+        if(m_widget){
             m_widget -> prerecord(u);
+        }
+        //  update the imguirendered (descriptors, etc)
     }
 
 
@@ -180,8 +185,10 @@ namespace yq::tachyon {
     {
         if(m_widget)
             m_widget -> vulkan_(u);
-        if(m_imgui)
+        if(m_imgui){
+            // and render the imgui here
             ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command_buffer, nullptr);
+        }
     }
 
     void    Viewer::window_framebuffer_resized(const Size2I&s)

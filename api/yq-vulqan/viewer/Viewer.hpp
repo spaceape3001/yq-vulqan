@@ -90,12 +90,11 @@ namespace yq::tachyon {
         void                record(ViContext&) override;
 
         Widget*                 m_widget        = nullptr;
-        ImGuiContext*           m_imgui         = nullptr;
         double                  m_drawTime      = 0;
         bool                    m_paused        = false;
         bool                    m_zeroSize      = false;
         std::vector<Widget*>    m_delete;
-        std::unique_ptr<ViGui>  m_imguiViz;
+        std::unique_ptr<ViGui>  m_imgui;
         
         void                purge_deleted();
         

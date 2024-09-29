@@ -103,11 +103,11 @@ namespace yq::tachyon {
             .depth  = (uint32_t) imgInfo.size.z
         };
         
-        info.flags  = imgInfo.imageViewFlags.value();
+        info.flags  = texInfo.imageViewFlags.value();
         info.image  = image -> image();
         
-        if(ti.imageViewType){
-            info.viewType   = (VkImageViewType) (*ti.imageViewType).value();
+        if(texInfo.imageViewType){
+            info.viewType   = (VkImageViewType) (*texInfo.imageViewType).value();
         } else {
             switch(imgInfo.type){
             case ImageType::Is1D:

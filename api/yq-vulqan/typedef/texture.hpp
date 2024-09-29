@@ -16,6 +16,8 @@ namespace yq::tachyon {
     class Texture;
     using TexturePtr            = Ref<Texture>;
     using TextureCPtr           = Ref<const Texture>;
+    
+    struct TextureInfo;
 
     class ViTexture;
     using ViTexturePtr          = Ref<ViTexture>;

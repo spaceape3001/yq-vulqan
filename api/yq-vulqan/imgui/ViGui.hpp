@@ -45,7 +45,7 @@ namespace yq::tachyon {
         ViGui(ViVisualizer&, const ViGuiOptions& options={});
         ~ViGui();
         
-        
+        ImGuiContext*   context() const { return m_context; }
         
         void    update(UpdateFlags={});
         void    record(ViContext&);

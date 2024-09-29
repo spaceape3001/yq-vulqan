@@ -61,44 +61,9 @@ namespace yq::tachyon {
             return ec;
          
         if(vci.imgui){
-            m_imgui     = ImGui::CreateContext();
-            m_imguiViz  = std::make_unique<ViGui>(*this);
-
-
-            ImGui_ImplVulkan_InitInfo vii{};
-            
-            vii.Instance        = instance();
-            vii.PhysicalDevice  = physical();
-            vii.Device          = device();
-            vii.Queue           = graphic_queue(0);
-            vii.QueueFamily     = graphic_queue_family();
-            vii.MinImageCount   = swapchain_min_image_count();
-            vii.ImageCount      = swapchain_image_count();
-            vii.DescriptorPool  = descriptor_pool();
-            vii.RenderPass      = render_pass();
-            
-            ImGui::SetCurrentContext(m_imgui);
+            m_imgui         = std::make_unique<ViGui>(*this);
+            ImGui::SetCurrentContext(m_imgui -> context());
             ImGui_ImplGlfw_InitForVulkan(window(), false);
-            ImGui_ImplVulkan_Init(&vii);
-            
-            //  Uploading fonts....
-            
-            VkCommandBuffer cbuffer = command_buffer();
-
-            vkResetCommandPool(device(), command_pool(), 0);
-            VqCommandBufferBeginInfo begin_info;
-            begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-            vkBeginCommandBuffer(cbuffer, &begin_info);
-
-            ImGui_ImplVulkan_CreateFontsTexture();
-
-            VqSubmitInfo end_info;
-            end_info.commandBufferCount = 1;
-            end_info.pCommandBuffers = &cbuffer;
-            vkEndCommandBuffer(cbuffer);
-            vkQueueSubmit(graphic_queue(0), 1, &end_info, VK_NULL_HANDLE);
-            vkDeviceWaitIdle(device());
-            ImGui_ImplVulkan_DestroyFontsTexture();
         }
 
         install_hooks();
@@ -119,12 +84,9 @@ namespace yq::tachyon {
         }
         m_widget    = nullptr;
         if(m_imgui){
-            ImGui::SetCurrentContext(m_imgui);
-            ImGui_ImplVulkan_Shutdown();
+            ImGui::SetCurrentContext(m_imgui->context());
             ImGui_ImplGlfw_Shutdown();
-            ImGui::DestroyContext(m_imgui);
-            ImGui::SetCurrentContext(nullptr);
-            m_imgui     = nullptr;
+            m_imgui     = {};
         }
         kill_visualizer();
         Window::kill_window();
@@ -147,8 +109,7 @@ namespace yq::tachyon {
         auto r3 = auto_reset(u.window, static_cast<Window*>(this));
         if(m_widget && m_imgui){
             auto r = auto_reset(u.imgui, true);
-            ImGui::SetCurrentContext(m_imgui);
-            ImGui_ImplVulkan_NewFrame();
+            ImGui::SetCurrentContext(m_imgui->context());
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
             m_widget->imgui_(u);

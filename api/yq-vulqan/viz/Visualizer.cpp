@@ -389,6 +389,7 @@ namespace yq::tachyon {
     
     void                        Visualizer::_dtor()
     {
+        m_cleanup.sweep();
         m_frames.clear();
         
         m_thread        = {};

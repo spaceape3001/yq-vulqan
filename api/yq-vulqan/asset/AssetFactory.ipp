@@ -88,4 +88,12 @@ namespace yq::tachyon {
         location    = sl;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    AssetFactory::Saver::Saver(std::initializer_list<std::string_view> exts, const std::source_location& sl)
+    {
+        for(auto x : exts)
+            extensions << std::string(x);
+        location    = sl;
+    }
 }

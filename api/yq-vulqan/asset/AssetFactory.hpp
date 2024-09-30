@@ -109,6 +109,8 @@ namespace yq::tachyon {
         virtual std::error_code save(const Asset&, const std::filesystem::path&) const = 0;
         StringSet               extensions;
         std::source_location    location;
+
+        Saver(std::initializer_list<std::string_view> exts, const std::source_location& sl);
     };
     
     template <typename A>
@@ -116,7 +118,7 @@ namespace yq::tachyon {
         using Function  = std::function<bool(const A&, const std::filesystem::path&)>;
         Function fn;
         TypedSaverBool(Function f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
-            Loader(exts, sl), fn(f) {}
+            Saver(exts, sl), fn(f) {}
         
         virtual std::error_code save(const Asset& a, const std::filesystem::path& pth) const override
         {
@@ -132,7 +134,7 @@ namespace yq::tachyon {
         using Function  = std::function<std::error_code(const A&, const std::filesystem::path&)>;
         Function fn;
         TypedSaverError(Function f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
-            Loader(exts, sl), fn(f) {}
+            Saver(exts, sl), fn(f) {}
         
         virtual std::error_code            save(const Asset& a, const std::filesystem::path& pth) const override
         {

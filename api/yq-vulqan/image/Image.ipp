@@ -36,6 +36,11 @@ namespace yq::tachyon {
     {
     }
 
+    AssetFactory&       Image::factory() const 
+    {
+        return cache();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     
     static void    reg_image()

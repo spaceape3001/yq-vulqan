@@ -31,6 +31,10 @@ namespace yq::tachyon {
     
             //  sweeps away old ones
         //void        prune();
+        
+        //! TRUE if we contain the specified filepath (exact & full)
+        bool                contains(const std::filesystem::path&) const;
+        bool                contains(uint64_t) const;
     
     protected:
         Ref<const Asset>    _find(const std::filesystem::path&) const;

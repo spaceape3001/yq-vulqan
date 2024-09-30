@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/Object.hpp>
 #include <yq-toolbox/basic/UniqueID.hpp>
 #include <yq-toolbox/basic/Ref.hpp>
@@ -15,6 +16,7 @@
 
 #include <atomic>
 #include <filesystem>
+#include <system_error>
 
 namespace yq {
     class FileResolver;
@@ -37,6 +39,21 @@ namespace yq::tachyon {
         //virtual Ref<Asset>  load_binary(const std::filesystem::path&) { return nullptr; }
         
     protected:
+    };
+    
+    enum class FileCollisionStrategy {
+        Abort,
+        Overwrite,
+        Backup
+    };
+    
+    struct SaveOptions {
+    
+        //! How to deal with file collisions (on drive)
+        FileCollisionStrategy       collision   = FileCollisionStrategy::Abort;
+        
+        //! TRUE to set the name.  (CAUTION, don't do this with cached-assets)
+        bool                        set_name    = false;
     };
     
     /*! \brief An asset of the graphics engine
@@ -68,6 +85,8 @@ namespace yq::tachyon {
         static std::filesystem::path    resolve(full_t, std::string_view);
         static std::filesystem::path    resolve(partial_t, std::string_view);
         
+        std::error_code                 save_to(const std::filesystem::path&, const SaveOptions& options=SaveOptions()) const;
+        
         //static const path_vector_t&             search_path();
         //static const std::filesystem::path&     binary_root();
         //static std::filesystem::path            resolve(const std::filesystem::path&);
@@ -92,6 +111,9 @@ namespace yq::tachyon {
         Asset();
         Asset(const std::filesystem::path&);
         virtual ~Asset();
+        
+        virtual AssetFactory&       factory() const = 0;
+        
     private:
         std::filesystem::path           m_filepath;
     };

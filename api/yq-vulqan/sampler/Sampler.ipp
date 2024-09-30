@@ -36,6 +36,11 @@ namespace yq::tachyon {
     {
     }
 
+    AssetFactory&       Sampler::factory() const 
+    {
+        return cache();
+    }
+
     static void    reg_sampler()
     {
         auto w = writer<Sampler>();

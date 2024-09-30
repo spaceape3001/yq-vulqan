@@ -32,6 +32,8 @@ namespace yq::tachyon {
         virtual size_t                  data_size() const override { return 0ULL; }
     
     private:
+        AssetFactory&       factory() const override;
+
         ~Sampler();
     };
 }

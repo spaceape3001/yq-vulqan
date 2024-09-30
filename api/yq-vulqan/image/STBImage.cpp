@@ -32,6 +32,8 @@ namespace yq::tachyon::stb {
         }));
     }
     
+    
+    
     void    reg_stb_loader()
     {
         Image::cache().add_loader(

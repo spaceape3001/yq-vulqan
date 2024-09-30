@@ -92,6 +92,7 @@ namespace yq::tachyon {
         p -> texture(REFRESH);
         
         p -> push<Push>();
+        
         font.sampler = new Sampler({
             .flags  = {},
             .addressMode = SamplerAddressModeUVW(ALL, SamplerAddressMode::Repeat),

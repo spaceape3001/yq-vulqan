@@ -45,6 +45,18 @@ namespace yq::tachyon {
             m_byPath[a->filepath()] = a->id();    // clobber
     }
 
+    bool        AssetCache::contains(const std::filesystem::path&pth) const
+    {
+        tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
+        return m_byPath.contains(pth);
+    }
+
+    bool        AssetCache::contains(uint64_t i) const
+    {
+        tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
+        return m_byId.contains(i);
+    }
+
 #if 0
     void        AssetCache::prune()
     {

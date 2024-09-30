@@ -44,6 +44,8 @@ namespace yq::tachyon {
         const ShaderType  type;
     
     private:
+        AssetFactory&       factory() const override;
+        
         //! Private destructor as these are considered load-once and keep until application exit
         virtual ~Shader();
     };

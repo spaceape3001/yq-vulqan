@@ -64,6 +64,11 @@ namespace yq::tachyon {
         return payload.bytes();
     }
 
+    AssetFactory&       Shader::factory() const 
+    {
+        return cache();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
 
     void    reg_shader_asset()

@@ -45,5 +45,7 @@ namespace yq::tachyon {
 
     private:
         ~Image();
+
+        AssetFactory&       factory() const override;
     };
 }

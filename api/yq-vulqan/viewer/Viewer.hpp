@@ -11,8 +11,6 @@
 #include <yq-vulqan/window/Window.hpp>
 #include <yq-toolbox/basic/Flags.hpp>
 
-struct ImGuiContext;
-
 namespace yq {
     class Object;
 }

@@ -79,6 +79,10 @@ namespace yq::tachyon {
         void                            buffer_erase(uint64_t);
         void                            buffer_erase(const Buffer&);
         ViBufferManager*                buffer_manager() const;
+        
+        void                            cleanup(cleanup_fn&&);
+        ViCleanupManager*               cleanup_manager() const;
+        void                            cleanup_sweep();
 
         RGBA4F                          clear_color() const;
 

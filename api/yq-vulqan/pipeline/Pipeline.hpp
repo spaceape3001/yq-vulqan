@@ -128,7 +128,6 @@ namespace yq::tachyon {
             
             //! Shader stage(s) to apply this to
             uint32_t        shaders     = 0;            // shader mask (0 implies shaders)
-            
         };
         
         struct texture_t {

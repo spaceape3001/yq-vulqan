@@ -69,6 +69,16 @@
 #define vizFirstNotice(...)     yLogFirstNotice("viz", __VA_ARGS__)
 #define vizFirstWarning(...)    yLogFirstWarning("viz", __VA_ARGS__)
 
+#define vizOnceAlert            yLogOnceAlert("viz")             
+#define vizOnceCritical         yLogOnceCritical("viz")          
+#define vizOnceDebug            yLogOnceDebug("viz")             
+#define vizOnceError            yLogOnceError("viz")             
+#define vizOnceEmergency        yLogOnceEmergency("viz")         
+#define vizOnceFatal            yLogOnceFatal("viz")             
+#define vizOnceInfo             yLogOnceInfo("viz")              
+#define vizOnceNotice           yLogOnceNotice("viz")            
+#define vizOnceWarning          yLogOnceWarning("viz")           
+
 #define vqAlert                 yAlert("vq")
 #define vqCritical              yCritical("vq")
 #define vqDebug                 yDebug("vq")

@@ -459,6 +459,21 @@ namespace yq::tachyon {
         return m_buffers.get(); 
     }
 
+    void              ViVisualizer::cleanup(cleanup_fn&& fn)
+    {
+        m_cleanup.add(std::move(fn));
+    }
+
+    ViCleanupManager* ViVisualizer::cleanup_manager() const 
+    { 
+        return const_cast<ViCleanupManager*>(&m_cleanup); 
+    }
+
+    void   ViVisualizer::cleanup_sweep()
+    {
+        m_cleanup.sweep();
+    }
+
     RGBA4F ViVisualizer::clear_color() const
     {
         VkClearValue    cv = m_clearValue;

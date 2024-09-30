@@ -8,19 +8,14 @@
 
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/app/Application.hpp>
-#include <yq-vulqan/imgui/MyImGui.hpp>
 #include <yq-vulqan/imgui/ViGui.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
 #include <yq-vulqan/viz/ViContext.hpp>
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 
+#include <yq-toolbox/errors.hpp>
 #include <yq-toolbox/basic/AutoReset.hpp>
 #include <yq-toolbox/basic/ErrorDB.hpp>
-#include <yq-toolbox/errors.hpp>
-
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_vulkan.h>
 
 namespace yq::tachyon {
 
@@ -61,9 +56,7 @@ namespace yq::tachyon {
             return ec;
          
         if(vci.imgui){
-            m_imgui         = std::make_unique<ViGui>(*this);
-            ImGui::SetCurrentContext(m_imgui -> context());
-            ImGui_ImplGlfw_InitForVulkan(window(), false);
+            m_imgui = std::make_unique<ViGui>(*this);
         }
 
         install_hooks();
@@ -83,11 +76,7 @@ namespace yq::tachyon {
             delete m_widget;
         }
         m_widget    = nullptr;
-        if(m_imgui){
-            ImGui::SetCurrentContext(m_imgui->context());
-            ImGui_ImplGlfw_Shutdown();
-            m_imgui     = {};
-        }
+        m_imgui     = {};
         kill_visualizer();
         Window::kill_window();
     }
@@ -108,19 +97,14 @@ namespace yq::tachyon {
         auto r2 = auto_reset(u.viewer, this);
         auto r3 = auto_reset(u.window, static_cast<Window*>(this));
         if(m_widget && m_imgui){
-            auto r = auto_reset(u.imgui, true);
-            ImGui::SetCurrentContext(m_imgui->context());
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-            m_widget->imgui_(u);
-            ImGui::Render();
+            m_imgui -> draw(u, m_widget);
         }
-        
         std::error_code ec = Visualizer::draw(u);
         auto end   = std::chrono::high_resolution_clock::now();
         m_drawTime          = (end-start).count();
         if(ec != std::error_code())
             tachyonCritical << "Viewer::draw() failed ... " << ec.message();
+        //cleanup_sweep();
         return ec;
     }
 
@@ -129,9 +113,10 @@ namespace yq::tachyon {
         if(m_widget){
             m_widget -> prerecord(u);
         }
-        //  update the imguirendered (descriptors, etc)
+        if(m_imgui){
+            m_imgui -> update();
+        }
     }
-
 
     void     Viewer::purge_deleted()
     {
@@ -146,10 +131,8 @@ namespace yq::tachyon {
     {
         if(m_widget)
             m_widget -> vulkan_(u);
-        if(m_imgui){
-            // and render the imgui here
-            ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), u.command_buffer, nullptr);
-        }
+        if(m_imgui)
+            m_imgui -> record(u);
     }
 
     void    Viewer::window_framebuffer_resized(const Size2I&s)

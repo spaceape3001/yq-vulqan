@@ -23,11 +23,14 @@
 #include <initializer_list>
 
 struct ImFont;
+struct ImDrawData;
+struct ImDrawList;
 struct ImGuiContext;
 
 namespace yq::tachyon {
     class ViVisualizer;
     struct ViContext;
+    class Widget;
 
     struct ViGuiOptions {
     };
@@ -48,6 +51,9 @@ namespace yq::tachyon {
         ImGuiContext*   context() const { return m_context; }
         
         void    update(UpdateFlags={});
+        
+        void    draw(ViContext&, Widget*);
+        
         void    record(ViContext&);
         
         bool    valid() const;
@@ -73,6 +79,8 @@ namespace yq::tachyon {
         //! Forced updates
         UpdateFlags             m_update    = {};
         
+        struct Push;
+        
         struct T {
             VkDescriptorSet     descriptor  = nullptr;
             VkDescriptorPool    descPool    = nullptr;
@@ -94,5 +102,8 @@ namespace yq::tachyon {
         bool            _font_update();
         const ImFont*   _font_load(const std::filesystem::path&, float pixel_size=0);
         void            _descriptor_write();
+        
+        bool            _import_vertex(const ImDrawData&);
+        bool            _import_index(const ImDrawData&);
     };
 }

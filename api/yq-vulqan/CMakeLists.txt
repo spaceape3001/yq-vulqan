@@ -40,6 +40,8 @@ add_library(${PROJECT_NAME} SHARED
     event/WidgetEvent.cpp
     event/WindowEvent.cpp
     
+    font/Font.cpp
+    
     glfw/AppGLFW.cpp
     glfw/Joystick.cpp
     glfw/Monitor.cpp

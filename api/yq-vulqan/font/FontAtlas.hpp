@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq-vulqan/typedef/font.hpp>
+
+struct ImFontAtlas;
+
+namespace yq::tachyon {
+
+    class FontAtlas {
+    public:
+    
+    
+    private:
+        ImFontAtlas*    m_imgui = nullptr;
+    };
+
+}

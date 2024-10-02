@@ -8,6 +8,7 @@
 
 #include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/Ref.hpp>
+#include <yq-toolbox/basic/LogPriority.hpp>
 #include <yq-toolbox/trait/numbers.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/pipeline/CullMode.hpp>
@@ -66,7 +67,7 @@ namespace yq::tachyon {
     
     struct ViPipelineReportOptions {
         std::string_view        message;
-        bool                    layout  = true;
+        bool                    layout      = true;
     };
 
     class ViPipeline : public RefCount {
@@ -90,6 +91,7 @@ namespace yq::tachyon {
         ViPipelineLayoutCPtr    layout() const;
         
         void                report(Stream&, const ViPipelineReportOptions& options={}) const;
+        void                report(const char* cat="viz", LogPriority pri=LogPriority::Info, const ViPipelineReportOptions& options={}) const;
     
     private:
         std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options);

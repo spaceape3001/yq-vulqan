@@ -6,6 +6,7 @@
 
 #include "ViPipeline.hpp"
 #include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/io/stream/Text.hpp>
 #include <yq-toolbox/trait/has_nan.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
@@ -340,6 +341,17 @@ namespace yq::tachyon {
         if(m_layout && options.layout){
             m_layout -> report(out, { .message = "For Pipeline" });
         }
+    }
+
+    void            ViPipeline::report(const char* cat, LogPriority pri, const ViPipelineReportOptions& options) const
+    {
+        std::string     text;
+        {
+        
+            stream::Text  out(text);
+            report(out, options);
+        }
+        log_category(cat).getStream(log4cpp_priority(pri)) << text;
     }
 
     bool            ViPipeline::valid() const

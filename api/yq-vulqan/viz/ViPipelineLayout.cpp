@@ -248,11 +248,11 @@ namespace yq::tachyon {
             auto& attr  = m_vertexAttributes[i];
             auto& bind  = m_vertexBindings[attr.binding];
             out << "    VBO(" << i << "): "
-                "   location=" << attr.location << ", "
-                "   binding=" << attr.binding << ", " 
-                "   offset=" << attr.offset << ", "
-                "   stride=" << bind.stride << ", "
-                "   format=" << to_string_view(attr.format) <<
+                "location=" << attr.location << ", "
+                "binding=" << attr.binding << ", " 
+                "offset=" << attr.offset << ", "
+                "stride=" << bind.stride << ", "
+                "format=" << to_string_view(attr.format) <<
                 "\n"
             ;
         }

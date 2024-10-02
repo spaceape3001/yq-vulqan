@@ -49,6 +49,16 @@
 #define glfwNotice                  yNotice("glfw")
 #define glfwWarning                 yWarning("glfw")
 
+#define imguiAlert                  yAlert("imgui")
+#define imguiCritical               yCritical("imgui")
+#define imguiDebug                  yDebug("imgui")
+#define imguiError                  yError("imgui")
+#define imguiEmergency              yEmergency("imgui")
+#define imguiFatal                  yFatal("imgui")
+#define imguiInfo                   yInfo("imgui")
+#define imguiNotice                 yNotice("imgui")
+#define imguiWarning                yWarning("imgui")
+
 #define tachyonAlert                yAlert("tachyon")
 #define tachyonCritical             yCritical("tachyon")
 #define tachyonDebug                yDebug("tachyon")

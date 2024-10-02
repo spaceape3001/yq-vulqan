@@ -84,9 +84,8 @@ namespace yq::tachyon {
         struct T {
             VkDescriptorSet     descriptor  = nullptr;
             VkDescriptorPool    descPool    = nullptr;
-            ViImageCPtr         image;
-            ViTextureCPtr       texture;
-            ViSamplerCPtr       sampler;
+            ImageCPtr           image;
+            TextureCPtr         texture;
         }  m_font;
         
         struct Z {

@@ -90,6 +90,7 @@ namespace yq::tachyon {
         ;
         p -> index<ImDrawIdx>(REFRESH);
         p -> texture(REFRESH);
+        p -> topology(Topology::TriangleList);
         
         p -> push<Push>();
         
@@ -100,6 +101,8 @@ namespace yq::tachyon {
             .minLod = -1000,
             .maxLod = 1000
         });
+        
+        //font.texInfo.
     }
     
     ViGui::G::~G()
@@ -145,7 +148,7 @@ namespace yq::tachyon {
         
         //new ViPipelineLayout(*m_viz, g.pipeline);
         //m_pipeline              = new ViPipeline(*m_viz, m_pipelineLayout, g.pipeline_options);
-        m_font.sampler          = new ViSampler(*m_viz, *g.font.sampler);
+        //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);
         
         VkDescriptorSetLayout   descLay = m_pipelineLayout -> descriptor_set_layout();
         m_font.descPool         = m_viz->descriptor_pool();
@@ -157,11 +160,20 @@ namespace yq::tachyon {
         
         VkResult    res = vkAllocateDescriptorSets(m_viz->device(), &allocInfo, &m_font.descriptor);
         if(res != VK_SUCCESS){
-            vizWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
+            imguiWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
             return false;
+        }
+        
+        io.Fonts->AddFontDefault();
+        
+        io.Fonts->Build();
+        if(!io.Fonts->IsBuilt()){
+            imguiWarning << "Fonts are NOT built, there's going to be problems.";
         }
 
         _font_update();
+        
+        m_pipeline -> report();
         return true;
     }
     
@@ -175,7 +187,6 @@ namespace yq::tachyon {
         m_font.descPool         = nullptr;
         m_font.texture          = {};
         m_font.image            = {};
-        m_font.sampler          = {};
         
         m_pipeline              = {};
         m_pipelineLayout        = {};
@@ -206,27 +217,57 @@ namespace yq::tachyon {
     bool    ViGui::_font_update()
     {
         G&  g   = global();
+        ImFontAtlas&     fonts = *ImGui::GetIO().Fonts;
 
         int             width = 0,  height = 0;
-        glm::u8vec4*    pixels  = nullptr;
-        ImGui::GetIO().Fonts->GetTexDataAsRGBA32((unsigned char**) &pixels, &width, &height);
+        unsigned char*  pixels  = nullptr;
+        fonts.GetTexDataAsRGBA32(&pixels, &width, &height);
         size_t          count   = width * height;
         if(count == 0)
             return false;
+        count *= 4;
         
-        ImageCPtr   image  = new Image(ImageInfo{
-                .size   = Size4U((unsigned) width,(unsigned) height, 1, 1),
-                .format = DataFormat::R8G8B8A8_UNORM
-            }, 
-            Memory(COPY, pixels, count)
-        );
+        ImageInfo       imgInfo;
+        imgInfo.size.x      = (unsigned) width;
+        imgInfo.size.y      = (unsigned) height;
+        imgInfo.format      = DataFormat::R8G8B8A8_UNORM;
         
+        m_font.image  = new Image(imgInfo, Memory(COPY, pixels, count));
+        
+m_font.image -> save_to("imgui.png", { .collision = FileCollisionStrategy::Overwrite });
+m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overwrite });
+
+        if(m_font.texture)
+            m_viz -> texture_erase(m_font.texture->id());
+
+
+        m_font.texture      = new Texture(m_font.image, g.font.sampler, g.font.texInfo);
+
+
+#if 0        
         m_font.image      = new ViImage(*m_viz, *image);
-        m_font.texture    = new ViTexture(*m_viz, m_font.image, m_font.sampler, g.font.texInfo);
+        if(!m_font.image->valid()){
+            imguiWarning << "ViGui image failed to transfer!";
+        }
+#endif
         
-        VkDescriptorImageInfo   imgInfo {
-            .sampler        = m_font.sampler->sampler(),
-            .imageView      = m_font.texture->image_view(),
+        
+        #if 0
+        m_font.texture    = new ViTexture(*m_viz, m_font.image, m_font.sampler, g.font.texInfo);
+        if(!m_font.texture->valid()){
+            imguiWarning << "ViGui texture failed to initialize!";
+        }
+        #endif
+        
+        ViTextureCPtr       tex     = m_viz -> texture_create(*m_font.texture);
+        
+        //m_font.sampler      = m_viz->sampler_create(*g.font.sampler);
+        //TextureCPtr tex = Texture::load("sdk/hello/flowers-512.png", g.font.sampler, g.font.texInfo);
+        //m_font.texture  = m_viz->texture_create(*tex);
+        
+        VkDescriptorImageInfo   descImgInfo {
+            .sampler        = tex->sampler(),
+            .imageView      = tex->image_view(),
             .imageLayout    = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         };
         
@@ -235,26 +276,16 @@ namespace yq::tachyon {
         descWrite.dstBinding        = 0;
         descWrite.descriptorCount   = 1;
         descWrite.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-        descWrite.pImageInfo        = &imgInfo;
+        descWrite.pImageInfo        = &descImgInfo;
         
         vkUpdateDescriptorSets(m_viz->device(), 1, &descWrite, 0, nullptr);
+        
+        fonts.SetTexID(m_font.descriptor);
         
         return true;
     }
 
-    void    ViGui::draw(ViContext&u, Widget*w)
-    {
-        if(!w)
-            return ;
-            
-        auto r = auto_reset(u.imgui, true);
-        ImGui::SetCurrentContext(m_context);
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        w -> imgui_(u);
-        ImGui::Render();
-    }
-    
+
     bool    ViGui::_import_index(const ImDrawData&dd)
     {
         // No indices... which can be fine
@@ -358,6 +389,19 @@ namespace yq::tachyon {
         return true;
     }
 
+    void    ViGui::draw(ViContext&u, Widget*w)
+    {
+        if(!w)
+            return ;
+            
+        auto r = auto_reset(u.imgui, true);
+        ImGui::SetCurrentContext(m_context);
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        w -> imgui_(u);
+        ImGui::Render();
+    }
+    
 
     void    ViGui::record(ViContext&u)
     {
@@ -458,20 +502,15 @@ namespace yq::tachyon {
 
                 VkDescriptorSet desc_set = m_font.descriptor;
 
-#if 0
                 // Bind DescriptorSet with font or user texture
-                if constexpr (sizeof(ImTextureID) < sizeof(ImU64)) {
+                if constexpr (sizeof(ImTextureID) < sizeof(VkDescriptorSet)) {
                     desc_set    = m_font.descriptor;
                 } else {
                     desc_set    = (VkDescriptorSet) cmd.TextureId;
                 }
-                if(!desc_set){
-                    desc_set    = m_font.descriptor;
-                }
                 
                 if(!desc_set)
                     vizWarning << "Texture descriptor is NULL!";
-#endif
 
                 vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, 1, &desc_set, 0, nullptr);
 

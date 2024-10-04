@@ -13,6 +13,7 @@
 #include <yq-toolbox/text/IgCase.hpp>
 #include <yq-toolbox/typedef/string_sets.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
+#include <yq-vulqan/asset/AssetIO.hpp>
 #include <yq-vulqan/asset/AssetCache.hpp>
 #include <functional>
 #include <source_location>
@@ -21,6 +22,7 @@
 namespace yq::tachyon {
     class Asset;
     class AssetInfo;
+    struct AssetLoadOptoins;
     
     namespace errors {
         using namespace yq::errors;
@@ -39,6 +41,9 @@ namespace yq::tachyon {
             return m_source; 
         }
         
+        struct Loader;
+        struct Saver;
+
     protected:
         friend class Asset;
         
@@ -46,20 +51,14 @@ namespace yq::tachyon {
         ~AssetFactory();
 
         //! Loads the specified file path (no resolution)
-        Ref<const Asset>    _load(const std::filesystem::path&);
+        Ref<const Asset>    _load(const std::filesystem::path&, const AssetLoadOptions&);
         
         //! Resolves & loads a partial path
-        Ref<const Asset>    _pload(std::string_view);
+        Ref<const Asset>    _pload(std::string_view, const AssetLoadOptions&);
 
         //! Resolves & finds a partial path
         Ref<const Asset>    _pfind(std::string_view) const;
     
-        struct Loader;
-        template <typename> struct TypedLoader;
-        struct Saver;
-        template <typename> struct TypedSaverBool;
-        template <typename> struct TypedSaverError;
-        
         std::vector<Loader*>        m_loaders;
         std::vector<Saver*>         m_savers;
         const AssetInfo*            m_asset;
@@ -79,7 +78,7 @@ namespace yq::tachyon {
     */
     struct AssetFactory::Loader {
         //! This abstraction loads the data from a filesystem path
-        virtual Asset*          load(const std::filesystem::path&) const = 0;
+        virtual Asset*          load(const std::filesystem::path&, const AssetLoadOptions&) const = 0;
         StringSet               extensions;
         std::source_location    location;
         
@@ -91,22 +90,41 @@ namespace yq::tachyon {
         This binds a specific function based loader to the base loader
     */
     template <typename A> 
-    struct AssetFactory::TypedLoader : public Loader {
+    struct AssetLoader_Pointer : public AssetFactory::Loader {
         using Function    = std::function<A*(const std::filesystem::path&)>;
         Function            fn;
         
-        TypedLoader(Function f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
-            Loader(exts, sl), fn(f) {}
+        AssetLoader_Pointer(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
+            AssetFactory::Loader(exts, sl), fn(std::move(f)) {}
         
         //! Adapter to load the resource
-        A* load(const std::filesystem::path& p) const override
+        A* load(const std::filesystem::path& p, const AssetLoadOptions&) const override
         {
             return fn(p);
         }
     };
     
+    /*! \brief Specific asset loader
+    
+        This binds a specific function based loader to the base loader
+    */
+    template <typename A> 
+    struct AssetLoader_PointerWithOptions : public AssetFactory::Loader {
+        using Function    = std::function<A*(const std::filesystem::path&, const AssetLoadOptions&)>;
+        Function            fn;
+        
+        AssetLoader_PointerWithOptions(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
+            AssetFactory::Loader(exts, sl), fn(std::move(f)) {}
+        
+        //! Adapter to load the resource
+        A* load(const std::filesystem::path& p, const AssetLoadOptions& options) const override
+        {
+            return fn(p, options);
+        }
+    };
+
     struct AssetFactory::Saver {
-        virtual std::error_code save(const Asset&, const std::filesystem::path&) const = 0;
+        virtual std::error_code save(const Asset&, const std::filesystem::path&, const AssetSaveOptions&) const = 0;
         StringSet               extensions;
         std::source_location    location;
 
@@ -114,13 +132,13 @@ namespace yq::tachyon {
     };
     
     template <typename A>
-    struct AssetFactory::TypedSaverBool : public Saver {
+    struct AssetSaver_Bool  : public AssetFactory::Saver {
         using Function  = std::function<bool(const A&, const std::filesystem::path&)>;
         Function fn;
-        TypedSaverBool(Function f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
-            Saver(exts, sl), fn(f) {}
+        AssetSaver_Bool(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
+            AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
         
-        virtual std::error_code save(const Asset& a, const std::filesystem::path& pth) const override
+        virtual std::error_code save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions&) const override
         {
             if(!fn(static_cast<const A&>(a), pth)){
                 return errors::asset_saving_failed();
@@ -130,17 +148,47 @@ namespace yq::tachyon {
     };
     
     template <typename A>
-    struct AssetFactory::TypedSaverError : public Saver {
+    struct AssetSaver_Error : public AssetFactory::Saver {
         using Function  = std::function<std::error_code(const A&, const std::filesystem::path&)>;
         Function fn;
-        TypedSaverError(Function f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
-            Saver(exts, sl), fn(f) {}
+        AssetSaver_Error(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
+            AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
         
-        virtual std::error_code            save(const Asset& a, const std::filesystem::path& pth) const override
+        virtual std::error_code            save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions&) const override
         {
             return fn(static_cast<const A&>(a), pth);
         }
     };
+
+    template <typename A>
+    struct AssetSaver_BoolWithOptions : public AssetFactory::Saver {
+        using Function  = std::function<bool(const A&, const std::filesystem::path&, const AssetSaveOptions&)>;
+        Function fn;
+        AssetSaver_BoolWithOptions(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
+            AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
+        
+        virtual std::error_code save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions& options) const override
+        {
+            if(!fn(static_cast<const A&>(a), pth, options)){
+                return errors::asset_saving_failed();
+            }
+            return {};
+        }
+    };
+    
+    template <typename A>
+    struct AssetSaver_ErrorWithOptions : public AssetFactory::Saver {
+        using Function  = std::function<std::error_code(const A&, const std::filesystem::path&, const AssetSaveOptions&)>;
+        Function fn;
+        AssetSaver_ErrorWithOptions(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
+            AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
+        
+        virtual std::error_code            save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions& options) const override
+        {
+            return fn(static_cast<const A&>(a), pth, options);
+        }
+    };
+
 
     /*! \brief Specific factory
     
@@ -150,10 +198,6 @@ namespace yq::tachyon {
     class TypedAssetFactory : public AssetFactory {
         friend A;
     public:
-    
-        using LoadFunction      = typename AssetFactory::TypedLoader<A>::Function;
-        using SaveBoolFunction  = typename AssetFactory::TypedSaverBool<A>::Function;
-        using SaveErrorFunction = typename AssetFactory::TypedSaverError<A>::Function;
     
         //! Gets the specific resource (by ID) from the cache (if already loaded)
         Ref<const A>    get(uint64_t i) const
@@ -181,34 +225,49 @@ namespace yq::tachyon {
         }
 
         //! Loads exact path (no resolution)
-        Ref<const A>    loadx(const std::filesystem::path&p)
+        Ref<const A>    loadx(const std::filesystem::path&p, const AssetLoadOptions& options={})
         {
-            return static_cast<const A*>(_load(p).ptr());
+            return static_cast<const A*>(_load(p,options).ptr());
         }
         
-        //! Loads by resolving
-        Ref<const A>    load(std::string_view p)
+        //! Loads the item
+        Ref<const A>    load(std::string_view p, const AssetLoadOptions& options={})
         {
-            return static_cast<const A*>(_pload(p).ptr());
+            return static_cast<const A*>(_pload(p,options).ptr());
         }
         
         /*! \brief Adds a loader to the factory
         
             WARNING this is NOT thread-safe.  Do not call outside of startup-initialization!
         */
-        void    add_loader(std::initializer_list<std::string_view> exts, LoadFunction fn, const std::source_location& sl=std::source_location::current())
+        void    add_loader(std::initializer_list<std::string_view> exts, std::function<A*(const std::filesystem::path&)>&& fn, const std::source_location& sl=std::source_location::current())
         {
-            m_loaders.push_back(new TypedLoader<A>(fn, exts, sl));
+            m_loaders.push_back(new AssetLoader_Pointer<A>(std::move(fn), exts, sl));
         }
         
-        void    add_saver(std::initializer_list<std::string_view> exts, SaveBoolFunction fn, const std::source_location& sl=std::source_location::current())
+        void    add_loader(std::initializer_list<std::string_view> exts, std::function<A*(const std::filesystem::path&, const AssetLoadOptions&)>&& fn, const std::source_location& sl=std::source_location::current())
         {
-            m_savers.push_back(new TypedSaverBool<A>(fn, exts, sl));
+            m_loaders.push_back(new AssetLoader_PointerWithOptions<A>(std::move(fn), exts, sl));
+        }
+
+        void    add_saver(std::initializer_list<std::string_view> exts, std::function<bool(const A&, const std::filesystem::path&)>&& fn, const std::source_location& sl=std::source_location::current())
+        {
+            m_savers.push_back(new AssetSaver_Bool<A>(std::move(fn), exts, sl));
         }
         
-        void    add_saver(std::initializer_list<std::string_view> exts, SaveErrorFunction fn, const std::source_location& sl=std::source_location::current())
+        void    add_saver(std::initializer_list<std::string_view> exts, std::function<std::error_code(const A&, const std::filesystem::path&)>&& fn, const std::source_location& sl=std::source_location::current())
         {
-            m_savers.push_back(new TypedSaverError<A>(fn, exts, sl));
+            m_savers.push_back(new AssetSaver_Error<A>(std::move(fn), exts, sl));
+        }
+        
+        void    add_saver(std::initializer_list<std::string_view> exts, std::function<bool(const A&, const std::filesystem::path&, const AssetSaveOptions&)>&& fn, const std::source_location& sl=std::source_location::current())
+        {
+            m_savers.push_back(new AssetSaver_BoolWithOptions<A>(std::move(fn), exts, sl));
+        }
+
+        void    add_saver(std::initializer_list<std::string_view> exts, std::function<std::error_code(const A&, const std::filesystem::path&, const AssetSaveOptions&)>&& fn, const std::source_location& sl=std::source_location::current())
+        {
+            m_savers.push_back(new AssetSaver_ErrorWithOptions<A>(std::move(fn), exts, sl));
         }
 
     private:

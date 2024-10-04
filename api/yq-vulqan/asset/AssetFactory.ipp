@@ -20,7 +20,7 @@ namespace yq::tachyon {
     {
     }
 
-    Ref<const Asset>    AssetFactory::_load(const std::filesystem::path& fp)
+    Ref<const Asset>    AssetFactory::_load(const std::filesystem::path& fp, const AssetLoadOptions& options)
     {
         Ref<const Asset>  ret = _find(fp);
         if(ret)
@@ -43,7 +43,7 @@ namespace yq::tachyon {
                 continue;
             
             try {
-                loaded     = l->load(fp);
+                loaded     = l->load(fp, options);
             } 
             catch(std::error_code ec) {
                 tachyonWarning << "Unable to load (" << fp << "): " << ec.message();
@@ -61,14 +61,14 @@ namespace yq::tachyon {
         return loaded;
     }
     
-    Ref<const Asset>    AssetFactory::_pload(std::string_view pp)
+    Ref<const Asset>    AssetFactory::_pload(std::string_view pp, const AssetLoadOptions& options)
     {
         std::filesystem::path   fp   = Asset::resolver().resolve(pp);
         if(fp.empty()){
             tachyonWarning << "Unable to resolve to file: " << pp;
             return nullptr;
         }
-        return _load(fp);
+        return _load(fp, options);
     }
     
     Ref<const Asset>    AssetFactory::_pfind(std::string_view pp) const

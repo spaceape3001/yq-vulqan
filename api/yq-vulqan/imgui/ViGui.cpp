@@ -9,10 +9,13 @@
 #include <yq-toolbox/basic/AutoReset.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/io/FileResolver.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/io/stream/Text.hpp>
 #include <yq-toolbox/math/integer.hpp>
 
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
+#include <yq-vulqan/asset/AssetIO.hpp>
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PipelineWriter.hpp>
@@ -33,6 +36,8 @@
 #include <yq-vulqan/widget/Widget.hpp>
 
 #include <backends/imgui_impl_glfw.h>
+
+#include <atomic>
 
 /*
     This file leans heavily on imgui_impl_vulkan.cpp for patterns, some code is 
@@ -86,7 +91,7 @@ namespace yq::tachyon {
         p -> vertex<ImDrawVert>(REFRESH)
                 .attribute(&ImDrawVert::pos, DataFormat::R32G32_SFLOAT)
                 .attribute(&ImDrawVert::uv, DataFormat::R32G32_SFLOAT)
-                .attribute(&ImDrawVert::col, DataFormat::R8G8B8A8_UNORM)
+                .attribute(&ImDrawVert::col, DataFormat::R8G8B8A8_UNORM)  // SRGB crashes/freezes the code!
         ;
         p -> index<ImDrawIdx>(REFRESH);
         p -> texture(REFRESH);
@@ -96,10 +101,14 @@ namespace yq::tachyon {
         
         font.sampler = new Sampler({
             .flags  = {},
+            .magFilter  = SamplerFilter::Linear,
+            .minFilter  = SamplerFilter::Linear,
+            .mipmapMode = SamplerMipmapMode::Linear,
             .addressMode = SamplerAddressModeUVW(ALL, SamplerAddressMode::Repeat),
             .maxAnisotropy  = 1.0f,
             .minLod = -1000,
-            .maxLod = 1000
+            .maxLod = 1000,
+            .unnormalizedCoordinates = false
         });
         
         //font.texInfo.
@@ -384,6 +393,16 @@ m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overw
             memcpy(dst, cmd.VtxBuffer.Data, cmd.VtxBuffer.Size*sizeof(ImDrawVert));
             dst += cmd.VtxBuffer.Size;
         }
+
+static std::atomic_flag   seen;
+if(!seen.test_and_set()){
+    
+
+    for(size_t n=0;n<dd.TotalVtxCount;++n){
+        
+    }
+}
+        
         
         m_vertex.buffer ->unmap();
         return true;

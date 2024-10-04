@@ -12,6 +12,7 @@
 
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
+#include <yq-vulqan/asset/AssetIO.hpp>
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>
 #include <yq-vulqan/config/build.hpp>
@@ -90,7 +91,12 @@ namespace yq::tachyon {
         using saving_exception              = error_db::entry<"Exception thrown during saving">;
     }
 
-    std::error_code Asset::save_to(const std::filesystem::path& fp, const SaveOptions& options) const
+    std::error_code Asset::save_to(const std::filesystem::path& fp) const
+    {
+        return save_to(fp, AssetSaveOptions());
+    }
+
+    std::error_code Asset::save_to(const std::filesystem::path& fp, const AssetSaveOptions& options) const
     {
         if(fp.empty())
             return errors::filepath_empty();
@@ -130,7 +136,7 @@ namespace yq::tachyon {
             if(!s->extensions.contains(x))
                 continue;
             try {
-                ec  = s -> save(*this, save_file);
+                ec  = s -> save(*this, save_file, options);
                 if(ec != std::error_code())
                     continue;
                 break;

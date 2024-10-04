@@ -52,10 +52,19 @@ namespace yq::tachyon {
 
         //! Standard roles (can disobey below)
         enum class Role : role_t {
+            //! Invalid role (shouldn't ever get back)
             Invalid = (role_t) -1,
+            
+            //! Default pipeline
             Default = 0,
+            
+            //! Single solid color 
             SolidColor,
+            
+            //! Color corners
             ColorCorner,
+            
+            //! Textured
             Textured,
             
             //! First user-based index (nice & large for future compatibility)

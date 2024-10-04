@@ -23,7 +23,8 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class AssetFactory;
+    class AssetFactory;         //< Definition in AssetFactory.hpp
+    struct AssetSaveOptions;    //< Definition in AssetIO.hpp
 
     /*! \brief General asset information
     
@@ -39,21 +40,6 @@ namespace yq::tachyon {
         //virtual Ref<Asset>  load_binary(const std::filesystem::path&) { return nullptr; }
         
     protected:
-    };
-    
-    enum class FileCollisionStrategy {
-        Abort,
-        Overwrite,
-        Backup
-    };
-    
-    struct SaveOptions {
-    
-        //! How to deal with file collisions (on drive)
-        FileCollisionStrategy       collision   = FileCollisionStrategy::Abort;
-        
-        //! TRUE to set the name.  (CAUTION, don't do this with cached-assets)
-        bool                        set_name    = false;
     };
     
     /*! \brief An asset of the graphics engine
@@ -85,7 +71,8 @@ namespace yq::tachyon {
         static std::filesystem::path    resolve(full_t, std::string_view);
         static std::filesystem::path    resolve(partial_t, std::string_view);
         
-        std::error_code                 save_to(const std::filesystem::path&, const SaveOptions& options=SaveOptions()) const;
+        std::error_code                 save_to(const std::filesystem::path&) const;
+        std::error_code                 save_to(const std::filesystem::path&, const AssetSaveOptions& options) const;
         
         //static const path_vector_t&             search_path();
         //static const std::filesystem::path&     binary_root();

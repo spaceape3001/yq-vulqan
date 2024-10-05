@@ -10,7 +10,7 @@
 #include <yq-toolbox/container/Array.hpp>
 
 namespace yq::tachyon {
-    template <typename C, typename I>
+    template <typename C>
     class Pixmap2C : public Pixmap2 {
         YQ_OBJECT_DECLARE(Pixmap2C, Pixmap2)
     public:

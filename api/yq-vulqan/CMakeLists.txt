@@ -68,7 +68,7 @@ add_library(${PROJECT_NAME} SHARED
     pipeline/pipeline.cpp
 
     pixmap/Pixmap.cpp
-    pixmap/Pixmap2.cpp
+    #pixmap/Pixmap2.cpp
 
     render/Render2D.cpp
     render/Render3D.cpp

@@ -6,14 +6,16 @@
 
 #pragma once
 
-#include <yq-vulqan/typedef/image.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
 #include <yq-vulqan/image/ImageInfo.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
+#include <yq-vulqan/typedef/image.hpp>
+#include <yq-vulqan/typedef/pixmap.hpp>
 
 namespace yq::tachyon {
     class Buffer;
     template <typename> class TypedAssetFactory;
+    struct AssetLoadOptions;
 
     /*! \brief Image (data)
     
@@ -29,7 +31,10 @@ namespace yq::tachyon {
         static TypedAssetFactory<Image>&    cache();
         
         //! Loads an image by key
-        static const Image*                 load(std::string_view);
+        static const ImageCPtr              load(std::string_view);
+
+        //! Loads an image by key
+        static const ImageCPtr              load(std::string_view, const AssetLoadOptions&);
     
         //! Data for the image
         const Memory      memory;
@@ -42,6 +47,8 @@ namespace yq::tachyon {
 
         //! Returns the size of the memory data
         virtual size_t      data_size() const  override;
+        
+        PixmapUPtr          to_pixmap() const;
 
     private:
         ~Image();

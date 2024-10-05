@@ -13,6 +13,7 @@
 
 namespace yq::tachyon {
     template <typename> class TypedAssetFactory;
+    struct AssetLoadOptions;
 
         //! Shader is a Vulkan compatible shader (compiled)
     class Shader : public Asset {
@@ -25,8 +26,14 @@ namespace yq::tachyon {
         //! Loads the specified shader
         static Ref<const Shader>    load(std::string_view);
         
+        //! Loads the specified shader
+        static Ref<const Shader>    load(std::string_view, const AssetLoadOptions&);
+
         //! Decodes the specified shader
         static Ref<const Shader>    decode(const ShaderSpec&);
+        
+        //! Decodes the specified shader
+        static Ref<const Shader>    decode(const ShaderSpec&, const AssetLoadOptions&);
         
         //! Gets the name to the specified shader
         static std::string_view     name(const ShaderSpec&);

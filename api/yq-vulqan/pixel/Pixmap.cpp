@@ -4,4 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "Pixels.hpp"
 #include "Pixmap.hpp"
+
+namespace yq::tachyon {
+    Pixmap::Pixmap()
+    {
+    }
+    
+    Pixmap::~Pixmap()
+    {
+    }
+}
+

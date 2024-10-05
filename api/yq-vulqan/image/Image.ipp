@@ -8,6 +8,7 @@
 
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>
+#include <yq-vulqan/asset/AssetIO.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Image>&  Image::cache()
@@ -16,9 +17,14 @@ namespace yq::tachyon {
         return s_ret;
     }
 
-    const Image*       Image::load(std::string_view pp)
+    const ImageCPtr     Image::load(std::string_view pp)
     {
-        return cache().load(pp);
+        return load(pp, AssetLoadOptions());
+    }
+
+    const ImageCPtr     Image::load(std::string_view pp, const AssetLoadOptions& options)
+    {
+        return cache().load(pp, options);
     }
 
     ////////////////////////////////////////////////////////////////////////////////

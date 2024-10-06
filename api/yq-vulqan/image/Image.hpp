@@ -10,7 +10,7 @@
 #include <yq-vulqan/image/ImageInfo.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/typedef/image.hpp>
-#include <yq-vulqan/typedef/pixmap.hpp>
+#include <yq-toolbox/typedef/pixels.hpp>
 
 namespace yq::tachyon {
     class Buffer;
@@ -44,15 +44,31 @@ namespace yq::tachyon {
         
         //! Constructor (takes info & data)
         Image(const ImageInfo&, Memory&&);
+        
+        explicit Image(const pixel::Pixmap&);
+        Image(ref_t,  const pixel::Pixmap&);
+        Image(copy_t, const pixel::Pixmap&);
 
         //! Returns the size of the memory data
         virtual size_t      data_size() const  override;
-        
-        PixmapUPtr          to_pixmap() const;
+
+        //! Converts to a pixmap (NOTE, this *CAN* fail, check result)
+        pixel::PixmapSPtr  to_pixmap() const;
 
     private:
         ~Image();
 
         AssetFactory&       factory() const override;
+
+        template <typename C>
+        pixel::PixmapSPtr   _pixmap1() const;
+        template <typename C>
+        pixel::PixmapSPtr   _pixmap2() const;
+        template <typename C>
+        pixel::PixmapSPtr   _pixmap3() const;
+
+        pixel::PixmapSPtr  to_pixmap1() const;
+        pixel::PixmapSPtr  to_pixmap2() const;
+        pixel::PixmapSPtr  to_pixmap3() const;
     };
 }

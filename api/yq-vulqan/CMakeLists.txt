@@ -66,6 +66,8 @@ add_library(${PROJECT_NAME} SHARED
     # pass/RenderPass.cpp
     
     pipeline/pipeline.cpp
+    
+    pixel/Painter.cpp
 
     #pixmap/Pixmap.cpp
     #pixmap/Pixmap2.cpp

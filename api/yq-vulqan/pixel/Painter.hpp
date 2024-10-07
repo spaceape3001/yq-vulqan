@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/pixels.hpp>
+#include <yq-graphics/typedef/pixels.hpp>
 #include <yq-vulqan/data/DataFormat.hpp>
 
 namespace yq::tachyon {

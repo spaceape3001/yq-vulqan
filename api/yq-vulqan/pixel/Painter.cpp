@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Painter.hpp"
+#include <yq-graphics/pixel/Pixmap.hpp>
 #include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/pixel/Pixmap.hpp>
 
 namespace yq::tachyon {
     Painter::Painter()

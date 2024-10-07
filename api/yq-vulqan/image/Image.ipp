@@ -8,8 +8,8 @@
 
 #include <yq-toolbox/color/RGB.hpp>
 #include <yq-toolbox/color/RGBA.hpp>
-#include <yq-toolbox/pixel/Pixels.hxx>
 #include <yq-toolbox/typedef/float16.hpp>
+#include <yq-graphics/pixel/Pixels.hxx>
 
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>
@@ -69,7 +69,10 @@ namespace yq::tachyon {
     template <typename C>
     pixel::PixmapSPtr  Image:: _pixmap1() const
     {
-        return std::make_shared<pixel::Pixels1<C>>(Coord1U(info.size.x), COPY, (const C*) memory.data());
+        return std::make_shared<pixel::Pixels1<C>>(
+            Coord1U(info.size.x), 
+            COPY, (const C*) memory.data()
+        );
     }
     
     pixel::PixmapSPtr  Image::to_pixmap1() const
@@ -129,7 +132,10 @@ namespace yq::tachyon {
     template <typename C>
     pixel::PixmapSPtr  Image::_pixmap2() const
     {
-        return std::make_shared<pixel::Pixels2<C>>(Coord2U( info.size.x, info.size.y ), COPY, (const C*) memory.data());
+        return std::make_shared<pixel::Pixels2<C>>(
+            Coord2U( info.size.x, info.size.y ), 
+            COPY, (const C*) memory.data()
+        );
     }
     
     pixel::PixmapSPtr  Image::to_pixmap2() const
@@ -189,7 +195,10 @@ namespace yq::tachyon {
     template <typename C>
     pixel::PixmapSPtr   Image::_pixmap3() const
     {
-        return std::make_shared<pixel::Pixels3<C>>(Coord2U( info.size.x, info.size.y, info.size.z ), COPY, (const C*) memory.data());
+        return std::make_shared<pixel::Pixels3<C>>(
+            Coord3U( info.size.x, info.size.y, info.size.z ), 
+            COPY, (const C*) memory.data()
+        );
     }
     
     pixel::PixmapSPtr  Image::to_pixmap3() const

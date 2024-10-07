@@ -146,6 +146,7 @@ PUBLIC
 target_link_libraries(${PROJECT_NAME} 
 PUBLIC 
     yqtoolbox
+    yqgraphics
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
     imgui 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-toolbox/math/glm.hpp>
-#include <yq-toolbox/typedef/axbox2.hpp>
+#include <yq/typedef/axbox2.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 
 #include <yq-vulqan/render/Render3D.hpp>

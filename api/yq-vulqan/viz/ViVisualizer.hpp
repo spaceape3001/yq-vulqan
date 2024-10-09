@@ -9,7 +9,7 @@
 #include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/Guarded.hpp>
 #include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/typedef/expected.hpp>
+#include <yq/typedef/expected.hpp>
 #include <yq/typedef/rgba.hpp>
 
 #include <yq-vulqan/config/vulqan.hpp>

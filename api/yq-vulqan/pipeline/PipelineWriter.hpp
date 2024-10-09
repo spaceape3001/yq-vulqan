@@ -9,7 +9,7 @@
 #include <yq-toolbox/basic/steal.hpp>
 #include <yq-toolbox/container/BasicBuffer.hpp>
 #include <yq-toolbox/math/glm_types.hpp>
-#include <yq-toolbox/trait/member_offset.hpp>
+#include <yq/trait/member_offset.hpp>
 
 #include <yq-vulqan/keywords.hpp>
 #include <yq-vulqan/config/vulqan.hpp>

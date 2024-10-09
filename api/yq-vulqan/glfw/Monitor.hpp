@@ -7,9 +7,9 @@
 #pragma once
 
 
-#include <yq-toolbox/typedef/rectangle2.hpp>
-#include <yq-toolbox/typedef/size2.hpp>
-#include <yq-toolbox/typedef/vector2.hpp>
+#include <yq/typedef/rectangle2.hpp>
+#include <yq/typedef/size2.hpp>
+#include <yq/typedef/vector2.hpp>
 
 #include <vector>
 #include <string>

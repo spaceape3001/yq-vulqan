@@ -9,7 +9,7 @@
 #include <log4cpp/CategoryStream.hh>
 #include <yq-toolbox/basic/Logging.hpp>
 #include <yq-toolbox/text/format.hpp>
-#include <yq-toolbox/trait/is_pointer.hpp>
+#include <yq/trait/is_pointer.hpp>
 
 namespace log4cpp {
     class CategoryStream;

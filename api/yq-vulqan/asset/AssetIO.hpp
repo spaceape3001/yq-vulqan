@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/typedef/string_maps.hpp>
+#include <yq/typedef/string_maps.hpp>
 
 namespace yq::tachyon {
     enum class FileCollisionStrategy {

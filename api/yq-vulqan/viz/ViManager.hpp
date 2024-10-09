@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/trait/indices.hpp>
-#include <yq-toolbox/trait/is_pointer.hpp>
+#include <yq/trait/indices.hpp>
+#include <yq/trait/is_pointer.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <tuple>
 #include <unordered_map>

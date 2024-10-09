@@ -10,7 +10,7 @@
 
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
-#include <yq-toolbox/typedef/float16.hpp>
+#include <yq/typedef/float16.hpp>
 
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>

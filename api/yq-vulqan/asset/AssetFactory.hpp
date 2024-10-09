@@ -11,7 +11,7 @@
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/container/Set.hpp>
 #include <yq-toolbox/text/IgCase.hpp>
-#include <yq-toolbox/typedef/string_sets.hpp>
+#include <yq/typedef/string_sets.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
 #include <yq-vulqan/asset/AssetIO.hpp>
 #include <yq-vulqan/asset/AssetCache.hpp>

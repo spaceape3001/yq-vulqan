@@ -8,7 +8,7 @@
 
 #include <yq/color/RGBA.hpp>
 #include <yq/color/RGB.hpp>
-#include <yq-toolbox/typedef/quaternion3.hpp>
+#include <yq/typedef/quaternion3.hpp>
 #include <yq-toolbox/units.hpp>
 #include <yq-toolbox/vector/Vector1.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>

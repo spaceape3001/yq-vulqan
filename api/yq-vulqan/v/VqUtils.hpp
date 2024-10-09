@@ -9,7 +9,7 @@
 
 #include <vulkan/vulkan_core.h>
 #include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-toolbox/typedef/expected.hpp>
+#include <yq/typedef/expected.hpp>
 #include <yq/typedef/rgba.hpp>
 
 #include <optional>

@@ -8,7 +8,7 @@
 
 #include <yq-vulqan/widget/Widget.hpp>
 #include <variant>
-#include <yq-toolbox/typedef/filesystem_path.hpp>
+#include <yq/typedef/filesystem_path.hpp>
 
 namespace yq::tachyon {
 

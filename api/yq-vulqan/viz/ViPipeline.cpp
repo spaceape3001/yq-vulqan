@@ -7,7 +7,7 @@
 #include "ViPipeline.hpp"
 #include <yq-toolbox/io/StreamOps.hpp>
 #include <yq-toolbox/io/stream/Text.hpp>
-#include <yq-toolbox/trait/has_nan.hpp>
+#include <yq/trait/has_nan.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/v/VqStructs.hpp>

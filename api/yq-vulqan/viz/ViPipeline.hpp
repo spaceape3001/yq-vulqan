@@ -9,7 +9,7 @@
 #include <yq-toolbox/basic/Flags.hpp>
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/basic/LogPriority.hpp>
-#include <yq-toolbox/trait/numbers.hpp>
+#include <yq/trait/numbers.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/pipeline/CullMode.hpp>
 #include <yq-vulqan/pipeline/PolygonMode.hpp>

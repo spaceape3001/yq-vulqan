@@ -8,8 +8,8 @@
 
 #include <yq/color/RGBA.hpp>
 #include <yq-toolbox/math/UVW.hpp>
-#include <yq-toolbox/typedef/filesystem_path.hpp>
-#include <yq-toolbox/typedef/optional.hpp>
+#include <yq/typedef/filesystem_path.hpp>
+#include <yq/typedef/optional.hpp>
 
 #include <yq-vulqan/logic/CompareOp.hpp>
 #include <yq-vulqan/sampler/BorderColor.hpp>

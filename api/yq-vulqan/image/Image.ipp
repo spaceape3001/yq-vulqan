@@ -6,10 +6,11 @@
 
 #include "Image.hpp"
 
+#include <yq/pixel/Pixels.hxx>
+
 #include <yq-toolbox/color/RGB.hpp>
 #include <yq-toolbox/color/RGBA.hpp>
 #include <yq-toolbox/typedef/float16.hpp>
-#include <yq-graphics/pixel/Pixels.hxx>
 
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>

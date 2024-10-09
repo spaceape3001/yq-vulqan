@@ -10,7 +10,7 @@
 #include <yq-vulqan/image/ImageInfo.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/typedef/image.hpp>
-#include <yq-graphics/typedef/pixels.hpp>
+#include <yq/pixel/pixels_fwd.hpp>
 
 namespace yq::tachyon {
     class Buffer;

@@ -67,11 +67,6 @@ add_library(${PROJECT_NAME} SHARED
     
     pipeline/pipeline.cpp
     
-    pixel/Painter.cpp
-
-    #pixmap/Pixmap.cpp
-    #pixmap/Pixmap2.cpp
-
     render/Render2D.cpp
     render/Render3D.cpp
     render/Rendered.cpp
@@ -146,7 +141,7 @@ PUBLIC
 target_link_libraries(${PROJECT_NAME} 
 PUBLIC 
     yqtoolbox
-    yqgraphics
+    yq_pixel
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
     imgui 

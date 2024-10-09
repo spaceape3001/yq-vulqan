@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/macro/debugrel.hpp>
+#include <yq/macro/debugrel.hpp>
 #include <yq-vulqan/basic/Required.hpp>
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 

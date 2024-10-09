@@ -12,7 +12,7 @@
 #include <yq-toolbox/basic/BasicApp.hpp>
 #include <yq-toolbox/basic/ErrorDB.hpp>
 #include <yq-toolbox/basic/ThreadId.hpp>
-#include <yq-toolbox/macro/make_version.hpp>
+#include <yq/macro/make_version.hpp>
 #include <tbb/spin_mutex.h>
 
 #define vulkanAlert         yAlert("vulkan")

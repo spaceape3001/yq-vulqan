@@ -12,8 +12,8 @@
 #include <yq-toolbox/units.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/color/Colors.hpp>
-#include <yq-toolbox/color/RGB.hpp>
+#include <yq/color/colors.hpp>
+#include <yq/color/RGB.hpp>
 #include <yq-toolbox/math/trigonometry.hpp>
 #include <yq-toolbox/shape/QuadrilateralData.hpp>
 #include <yq-toolbox/shape/TetrahedronData.hpp>

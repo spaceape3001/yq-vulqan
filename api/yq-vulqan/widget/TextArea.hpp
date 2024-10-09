@@ -11,7 +11,7 @@
 #include <yq-toolbox/shape/AxBox2.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 #include <functional>
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq/color/RGBA.hpp>
 #include <array>
 #include <span>
 #include <deque>

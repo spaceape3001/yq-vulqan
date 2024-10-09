@@ -6,7 +6,7 @@
 
 #include "ViVisualizer.hpp"
 
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq-toolbox/container/initlist_utils.hpp>
 #include <yq-toolbox/text/basic.hpp>
 #include <yq-toolbox/text/join.hpp>

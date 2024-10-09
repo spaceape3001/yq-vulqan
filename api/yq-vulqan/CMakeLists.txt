@@ -141,6 +141,7 @@ PUBLIC
 target_link_libraries(${PROJECT_NAME} 
 PUBLIC 
     yqtoolbox
+    yq_color
     yq_pixel
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 

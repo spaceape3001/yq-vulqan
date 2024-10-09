@@ -11,7 +11,7 @@
 #include <yq-vulqan/image/ImageAspect.hpp>
 #include <yq-vulqan/image/ImageViewCreateFlags.hpp>
 #include <yq-vulqan/image/ImageViewType.hpp>
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {
 

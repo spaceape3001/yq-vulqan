@@ -6,7 +6,7 @@
 
 #include "PipelineUtils.hpp"
 #include <yq-toolbox/math/glm_types.hpp>
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq-toolbox/vector/Vector1.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>

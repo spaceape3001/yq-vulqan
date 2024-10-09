@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq-toolbox/math/UVW.hpp>
 #include <yq-toolbox/typedef/filesystem_path.hpp>
 #include <yq-toolbox/typedef/optional.hpp>

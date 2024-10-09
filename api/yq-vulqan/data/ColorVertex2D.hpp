@@ -8,7 +8,7 @@
 
 //  This contains some vertex helpers
 
-#include <yq-toolbox/color/RGB.hpp>
+#include <yq/color/RGB.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 
 namespace yq::tachyon {

@@ -10,7 +10,7 @@
 #include <yq-toolbox/basic/Guarded.hpp>
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/typedef/expected.hpp>
-#include <yq-toolbox/typedef/rgba.hpp>
+#include <yq/typedef/rgba.hpp>
 
 #include <yq-vulqan/config/vulqan.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>

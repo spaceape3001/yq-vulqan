@@ -8,7 +8,8 @@
 
 //#include <engine/preamble.hpp>
 #include <yq-toolbox/shape/Rectangle2.hpp>
-#include <yq-toolbox/color/RGB.hpp>
+#include <yq/color/RGB.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/camera/Camera.hpp>
 #include <yq-vulqan/typedef/camera.hpp>
@@ -23,7 +24,7 @@ namespace yq::tachyon {
     struct Perspective {
         // Only the camera shall be required
         CameraCPtr                  camera;
-        std::optional<RGB3F>        background;
+        std::optional<RGBA4F>       background;
         std::optional<Rectangle2D>  screen;
         Tristate                    wireframe   = Tristate::INHERIT;
         

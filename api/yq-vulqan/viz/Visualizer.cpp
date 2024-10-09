@@ -24,7 +24,6 @@
 #include <yq-toolbox/basic/ErrorDB.hpp>
 #include <yq-toolbox/container/BasicBuffer.hpp>
 #include <yq-toolbox/container/initlist_utils.hpp>
-#include <yq-toolbox/color/RGBA.hpp>
 
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>

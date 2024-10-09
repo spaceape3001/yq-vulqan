@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/color/RGB.hpp>
+#include <yq/color/RGB.hpp>
 #include <yq-toolbox/shape/Size2.hpp>
 
 struct GLFWvidmode;

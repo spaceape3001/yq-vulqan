@@ -8,7 +8,7 @@
 
 #include <yq-toolbox/basic/Ref.hpp>
 #include <yq-toolbox/basic/UniqueID.hpp>
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq-vulqan/data/DataFormat.hpp>
 #include <yq-vulqan/image/ComponentSwizzle.hpp>
 #include <yq-vulqan/image/ImageAspect.hpp>

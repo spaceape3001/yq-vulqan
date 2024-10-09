@@ -10,7 +10,7 @@
 
 #include <yq-toolbox/math/glm.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>
-#include <yq-toolbox/color/RGBA.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq-vulqan/data/ColorVertex2D.hpp>
 #include <yq-vulqan/data/ColorVertex3D.hpp>
 

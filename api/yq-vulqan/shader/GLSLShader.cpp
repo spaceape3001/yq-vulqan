@@ -11,7 +11,7 @@
 #include <yq/file/FileUtils.hpp>
 #include <yq/process/Execute.hpp>
 #include <yq/text/chars.hpp>
-#include <yq-vulqan/asset/AssetFactory.hpp>
+#include <yq/asset/AssetFactory.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 
 namespace yq::errors {

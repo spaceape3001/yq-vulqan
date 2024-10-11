@@ -6,8 +6,8 @@
 
 #include "Sampler.hpp"
 
-#include <yq-vulqan/asset/AssetFactory.hpp>
-#include <yq-vulqan/asset/AssetInfoWriter.hpp>
+#include <yq/asset/AssetFactory.hpp>
+#include <yq/asset/AssetInfoWriter.hpp>
 #include <yq-vulqan/sampler/Sampler.hpp>
 
 namespace yq::tachyon {

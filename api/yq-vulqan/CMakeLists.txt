@@ -15,7 +15,7 @@ add_library(${PROJECT_NAME} SHARED
     3D/Tetrahedron.cpp
 
     app/Application.cpp
-    asset/asset.cpp
+    #asset/asset.cpp
     
     basic/Tristate.cpp
     
@@ -140,6 +140,7 @@ PUBLIC
 
 target_link_libraries(${PROJECT_NAME} 
 PUBLIC 
+    yq_asset
     yq_color
     yq_keyv
     yq_pixel

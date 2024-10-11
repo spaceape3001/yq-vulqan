@@ -6,16 +6,14 @@
 
 #pragma once
 
+#include <yq/asset/Asset.hpp>
 #include <yq/core/Memory.hpp>
-#include <yq-vulqan/asset/Asset.hpp>
 #include <yq-vulqan/image/ImageInfo.hpp>
 #include <yq-vulqan/typedef/image.hpp>
 #include <yq/pixel/pixels_fwd.hpp>
 
 namespace yq::tachyon {
     class Buffer;
-    template <typename> class TypedAssetFactory;
-    struct AssetLoadOptions;
 
     /*! \brief Image (data)
     

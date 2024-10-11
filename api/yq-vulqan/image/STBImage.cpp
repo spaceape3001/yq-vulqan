@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-vulqan/asset/AssetFactory.hpp>
+#include <yq/asset/AssetFactory.hpp>
 #include <yq-vulqan/image/Image.hpp>
 
 #include <yq/core/DelayInit.hpp>

@@ -7,13 +7,11 @@
 #pragma once
 
 #include <yq/core/Memory.hpp>
-#include <yq-vulqan/asset/Asset.hpp>
+#include <yq/asset/Asset.hpp>
 #include <yq-vulqan/shader/ShaderType.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
 
 namespace yq::tachyon {
-    template <typename> class TypedAssetFactory;
-    struct AssetLoadOptions;
 
         //! Shader is a Vulkan compatible shader (compiled)
     class Shader : public Asset {

@@ -7,12 +7,10 @@
 #pragma once
 
 #include <yq-vulqan/typedef/sampler.hpp>
-#include <yq-vulqan/asset/Asset.hpp>
+#include <yq/asset/Asset.hpp>
 #include <yq-vulqan/sampler/SamplerInfo.hpp>
 
 namespace yq::tachyon {
-    template <typename> class TypedAssetFactory;
-
     class Sampler : public Asset {
         YQ_OBJECT_DECLARE(Sampler, Asset)
     public:

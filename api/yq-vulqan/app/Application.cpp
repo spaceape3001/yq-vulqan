@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Application.hpp"
+#include <yq/asset/Asset.hpp>
+#include <yq-vulqan/config/build.hpp>
 #include <yq-vulqan/viewer/Viewer.hpp>
 #include <yq-vulqan/task/TaskEngine.hpp>
 #include <GLFW/glfw3.h>
@@ -26,6 +28,8 @@ namespace yq::tachyon {
         assert(m_appInfo && "AppCreateInfo is not optional, it must be supplied.");
         if(!s_app)
             s_app   = this;
+            
+        Asset::resolver_add_paths(build::data_directory());
     }
     
 

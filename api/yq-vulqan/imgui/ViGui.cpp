@@ -14,8 +14,8 @@
 #include <yq/util/AutoReset.hpp>
 
 #include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/asset/Asset.hpp>
-#include <yq-vulqan/asset/AssetIO.hpp>
+#include <yq/asset/Asset.hpp>
+#include <yq/asset/AssetIO.hpp>
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/pipeline/PipelineWriter.hpp>

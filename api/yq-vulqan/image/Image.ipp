@@ -12,9 +12,9 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/typedef/float16.hpp>
 
-#include <yq-vulqan/asset/AssetFactory.hpp>
-#include <yq-vulqan/asset/AssetInfoWriter.hpp>
-#include <yq-vulqan/asset/AssetIO.hpp>
+#include <yq/asset/AssetFactory.hpp>
+#include <yq/asset/AssetInfoWriter.hpp>
+#include <yq/asset/AssetIO.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Image>&  Image::cache()

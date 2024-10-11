@@ -28,16 +28,16 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <yq-vulqan/2D/Triangle.hpp>
-#include <yq-vulqan/app/Application.hpp>
-#include <yq-vulqan/image/Image.hpp>
-#include <yq-vulqan/pipeline/FrontFace.hpp>
-#include <yq-vulqan/render/Render3D.hpp>
-#include <yq-vulqan/render/Render3DWriter.hpp>
-#include <yq-vulqan/shader/Shader.hpp>
-#include <yq-vulqan/texture/Texture.hpp>
-#include <yq-vulqan/viewer/Viewer.hpp>
-#include <yq-vulqan/widget/Scene3DWidget.hpp>
+#include <tachyon/2D/Triangle.hpp>
+#include <tachyon/app/Application.hpp>
+#include <tachyon/image/Image.hpp>
+#include <tachyon/pipeline/FrontFace.hpp>
+#include <tachyon/render/Render3D.hpp>
+#include <tachyon/render/Render3DWriter.hpp>
+#include <tachyon/shader/Shader.hpp>
+#include <tachyon/texture/Texture.hpp>
+#include <tachyon/viewer/Viewer.hpp>
+#include <tachyon/widget/Scene3DWidget.hpp>
 
 #include <iostream>
 #include <chrono>

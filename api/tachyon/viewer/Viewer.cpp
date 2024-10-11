@@ -6,12 +6,12 @@
 
 #include "Viewer.hpp"
 
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/app/Application.hpp>
-#include <yq-vulqan/imgui/ViGui.hpp>
-#include <yq-vulqan/viz/ViContext.hpp>
-#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
-#include <yq-vulqan/widget/Widget.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/app/Application.hpp>
+#include <tachyon/imgui/ViGui.hpp>
+#include <tachyon/viz/ViContext.hpp>
+#include <tachyon/viewer/ViewerCreateInfo.hpp>
+#include <tachyon/widget/Widget.hpp>
 
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>

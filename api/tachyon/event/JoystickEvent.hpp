@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-vulqan/event/Event.hpp>
-#include <yq-vulqan/glfw/Joystick.hpp>
+#include <tachyon/event/Event.hpp>
+#include <tachyon/glfw/Joystick.hpp>
 
 namespace yq::tachyon {
     class JoystickEventInfo : public EventInfo {

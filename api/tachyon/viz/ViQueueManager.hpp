@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq-vulqan/typedef/queue_spec.hpp>
-#include <yq-vulqan/typedef/queue_tasker.hpp>
-#include <yq-vulqan/viz/ViQueueType.hpp>
+#include <tachyon/typedef/queue_spec.hpp>
+#include <tachyon/typedef/queue_tasker.hpp>
+#include <tachyon/viz/ViQueueType.hpp>
 #include <vulkan/vulkan_core.h>
 #include <vector>
 

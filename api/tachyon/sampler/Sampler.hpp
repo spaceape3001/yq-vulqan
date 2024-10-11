@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-vulqan/typedef/sampler.hpp>
+#include <tachyon/typedef/sampler.hpp>
 #include <yq/asset/Asset.hpp>
-#include <yq-vulqan/sampler/SamplerInfo.hpp>
+#include <tachyon/sampler/SamplerInfo.hpp>
 
 namespace yq::tachyon {
     class Sampler : public Asset {

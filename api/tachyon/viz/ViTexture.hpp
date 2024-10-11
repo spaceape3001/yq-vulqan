@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq-vulqan/typedef/image.hpp>
-#include <yq-vulqan/typedef/texture.hpp>
-#include <yq-vulqan/typedef/sampler.hpp>
+#include <tachyon/typedef/image.hpp>
+#include <tachyon/typedef/texture.hpp>
+#include <tachyon/typedef/sampler.hpp>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
 

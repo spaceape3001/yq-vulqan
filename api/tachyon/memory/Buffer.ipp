@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-vulqan/memory/Buffer.hpp>
+#include <tachyon/memory/Buffer.hpp>
 
 namespace yq::tachyon {
     Buffer::Buffer(BufferUsageFlags buf, Memory&& mem) : memory(std::move(mem)), usage(buf)

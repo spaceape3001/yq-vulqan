@@ -6,7 +6,7 @@
 
 #include "Perspective.hpp"
 
-#include <yq-vulqan/camera/NullCamera.hpp>
+#include <tachyon/camera/NullCamera.hpp>
 
 namespace yq::tachyon {
     Perspective::Perspective()

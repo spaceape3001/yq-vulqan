@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-vulqan/memory/SystemAllocationScope.hpp>
+#include <tachyon/memory/SystemAllocationScope.hpp>
 
 #include <yq/meta/Init.hpp>
 

@@ -9,8 +9,8 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <yq-vulqan/render/Render3DWriter.hpp>
-#include <yq-vulqan/shader/Shader.hpp>
+#include <tachyon/render/Render3DWriter.hpp>
+#include <tachyon/shader/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 

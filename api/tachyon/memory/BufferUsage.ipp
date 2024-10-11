@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-vulqan/memory/BufferUsage.hpp>
+#include <tachyon/memory/BufferUsage.hpp>
 
 #include <yq/meta/Init.hpp>
 

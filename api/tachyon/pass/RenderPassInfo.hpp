@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/core/Flags.hpp>
-#include <yq-vulqan/data/DataFormat.hpp>
-#include <yq-vulqan/image/ImageLayout.hpp>
-#include <yq-vulqan/pipeline/PipelineBinding.hpp>
+#include <tachyon/data/DataFormat.hpp>
+#include <tachyon/image/ImageLayout.hpp>
+#include <tachyon/pipeline/PipelineBinding.hpp>
 
 namespace yq::tachyon {
     struct AttachmentReference {

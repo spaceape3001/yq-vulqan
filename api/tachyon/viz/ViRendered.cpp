@@ -10,19 +10,19 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yq/stream/Text.hpp>
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/pipeline/Pipeline.hpp>
-#include <yq-vulqan/pipeline/PushData.hpp>
-#include <yq-vulqan/render/Render3D.hpp>
-#include <yq-vulqan/render/Rendered.hpp>
-#include <yq-vulqan/v/VqEnums.hpp>
-#include <yq-vulqan/viz/ViContext.hpp>
-#include <yq-vulqan/viz/ViLogging.hpp>
-#include <yq-vulqan/viz/ViManager.hpp>
-#include <yq-vulqan/viz/ViPipeline.hpp>
-#include <yq-vulqan/viz/ViPipelineLayout.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
+#include <tachyon/pipeline/PushData.hpp>
+#include <tachyon/render/Render3D.hpp>
+#include <tachyon/render/Rendered.hpp>
+#include <tachyon/v/VqEnums.hpp>
+#include <tachyon/viz/ViContext.hpp>
+#include <tachyon/viz/ViLogging.hpp>
+#include <tachyon/viz/ViManager.hpp>
+#include <tachyon/viz/ViPipeline.hpp>
+#include <tachyon/viz/ViPipelineLayout.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 
 
 namespace yq::tachyon {

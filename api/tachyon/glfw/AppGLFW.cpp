@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/glfw/AppGLFW.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/glfw/AppGLFW.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

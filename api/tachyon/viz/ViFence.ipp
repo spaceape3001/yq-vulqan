@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViFence.hpp"
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/v/VqStructs.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
     namespace errors {

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq-vulqan/typedef/swapchain.hpp>
+#include <tachyon/typedef/swapchain.hpp>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
 #include <vector>

@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
-#include <yq-vulqan/app/AppCreateInfo.hpp>
-#include <yq-vulqan/glfw/AppGLFW.hpp>
-#include <yq-vulqan/v/VqApp.hpp>
+#include <tachyon/app/AppCreateInfo.hpp>
+#include <tachyon/glfw/AppGLFW.hpp>
+#include <tachyon/v/VqApp.hpp>
 #include <yq/units.hpp>
 #include <memory>
 #include <set>

@@ -8,11 +8,11 @@
 
 #include <yq/core/ErrorDB.hpp>
 #include <yq/color/RGBA.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/image/ImageViewInfo.hpp>
-#include <yq-vulqan/sampler/SamplerInfo.hpp>
-#include <yq-vulqan/v/VqApp.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/image/ImageViewInfo.hpp>
+#include <tachyon/sampler/SamplerInfo.hpp>
+#include <tachyon/v/VqApp.hpp>
+#include <tachyon/v/VqStructs.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>

@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "VqApp.hpp"
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/v/VqEnums.hpp>
-#include <yq-vulqan/v/VqUtils.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/v/VqEnums.hpp>
+#include <tachyon/v/VqUtils.hpp>
 #include <yq/core/BasicApp.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/ThreadId.hpp>

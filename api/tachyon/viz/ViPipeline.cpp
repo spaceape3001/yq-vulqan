@@ -8,15 +8,15 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Text.hpp>
 #include <yq/trait/has_nan.hpp>
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-vulqan/v/VqUtils.hpp>
-#include <yq-vulqan/viz/ViLogging.hpp>
-#include <yq-vulqan/viz/ViPipelineLayout.hpp>
-#include <yq-vulqan/viz/ViRenderPass.hpp>
-#include <yq-vulqan/viz/ViSwapchain.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/v/VqStructs.hpp>
+#include <tachyon/v/VqUtils.hpp>
+#include <tachyon/viz/ViLogging.hpp>
+#include <tachyon/viz/ViPipelineLayout.hpp>
+#include <tachyon/viz/ViRenderPass.hpp>
+#include <tachyon/viz/ViSwapchain.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
     namespace errors {

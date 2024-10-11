@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq-vulqan/viz/Visualizer.hpp>
-#include <yq-vulqan/window/Window.hpp>
+#include <tachyon/viz/Visualizer.hpp>
+#include <tachyon/window/Window.hpp>
 #include <yq/core/Flags.hpp>
 
 namespace yq {

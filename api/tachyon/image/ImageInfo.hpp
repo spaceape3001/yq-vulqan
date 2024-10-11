@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/shape/Size4.hpp>
-#include <yq-vulqan/data/DataFormat.hpp>
-#include <yq-vulqan/image/ImageType.hpp>
-#include <yq-vulqan/image/ImageTiling.hpp>
+#include <tachyon/data/DataFormat.hpp>
+#include <tachyon/image/ImageType.hpp>
+#include <tachyon/image/ImageTiling.hpp>
 
 namespace yq::tachyon {
 

@@ -8,9 +8,9 @@
 
 #include <yq/shape/AxBox2.hpp>
 
-#include <yq-vulqan/image/Image.hpp>
-#include <yq-vulqan/shader/Shader.hpp>
-#include <yq-vulqan/render/Render3DWriter.hpp>
+#include <tachyon/image/Image.hpp>
+#include <tachyon/shader/Shader.hpp>
+#include <tachyon/render/Render3DWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 

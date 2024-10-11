@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-vulqan/event/Event.hpp>
+#include <tachyon/event/Event.hpp>
 
 namespace yq::tachyon {
     class WidgetEventInfo : public EventInfo {

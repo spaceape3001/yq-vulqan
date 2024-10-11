@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "RenderPass.hpp"
-#include <yq-vulqan/pass/RenderPassInfo.hpp>
+#include <tachyon/pass/RenderPassInfo.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <map>
 

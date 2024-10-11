@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-vulqan/render/Rendered.hpp>
-#include <yq-vulqan/pipeline/PipelineWriter.hpp>
+#include <tachyon/render/Rendered.hpp>
+#include <tachyon/pipeline/PipelineWriter.hpp>
 
 namespace yq::tachyon {
     

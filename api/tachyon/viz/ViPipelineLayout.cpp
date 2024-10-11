@@ -7,16 +7,16 @@
 #include "ViPipelineLayout.hpp"
 #include <yq/keywords.hpp>
 #include <yq/core/StreamOps.hpp>
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/pipeline/Pipeline.hpp>
-#include <yq-vulqan/pipeline/PushData.hpp>
-#include <yq-vulqan/shader/Shader.hpp>
-#include <yq-vulqan/v/VqEnums.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-vulqan/viz/ViLogging.hpp>
-#include <yq-vulqan/viz/ViShader.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
+#include <tachyon/pipeline/PushData.hpp>
+#include <tachyon/shader/Shader.hpp>
+#include <tachyon/v/VqEnums.hpp>
+#include <tachyon/v/VqStructs.hpp>
+#include <tachyon/viz/ViLogging.hpp>
+#include <tachyon/viz/ViShader.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 
 #include <yq/text/format.hpp>
 

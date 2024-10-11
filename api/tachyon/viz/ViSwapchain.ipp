@@ -6,13 +6,13 @@
 
 #include "ViSwapchain.hpp"
 
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/image/ImageViewInfo.hpp>
-#include <yq-vulqan/v/VqLogging.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-vulqan/v/VqUtils.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/image/ImageViewInfo.hpp>
+#include <tachyon/v/VqLogging.hpp>
+#include <tachyon/v/VqStructs.hpp>
+#include <tachyon/v/VqUtils.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 #include <algorithm>
 #include <GLFW/glfw3.h>
 

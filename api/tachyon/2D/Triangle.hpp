@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-vulqan/render/Render3D.hpp>
-#include <yq-vulqan/data/ColorVertexData.hpp>
-#include <yq-vulqan/pipeline/VBO.hpp>
+#include <tachyon/render/Render3D.hpp>
+#include <tachyon/data/ColorVertexData.hpp>
+#include <tachyon/pipeline/VBO.hpp>
 
 #include <array>
 

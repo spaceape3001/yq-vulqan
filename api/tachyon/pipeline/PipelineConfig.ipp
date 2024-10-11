@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PipelineConfig.hpp"
-#include <yq-vulqan/shader/Shader.hpp>
+#include <tachyon/shader/Shader.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/meta/TypeInfo.hpp>
 

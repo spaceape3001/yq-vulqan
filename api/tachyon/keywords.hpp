@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <yq-vulqan/pipeline/DataActivity.hpp>
+#include <tachyon/pipeline/DataActivity.hpp>
 
 namespace yq::tachyon {
     struct common_t {

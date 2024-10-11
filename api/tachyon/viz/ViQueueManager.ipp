@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViQueueManager.hpp"
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
-#include <yq-vulqan/viz/ViQueueTasker.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/v/VqStructs.hpp>
+#include <tachyon/viewer/ViewerCreateInfo.hpp>
+#include <tachyon/viz/ViQueueTasker.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
     bool    is_empty(const QueueSpec& qs)

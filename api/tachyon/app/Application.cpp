@@ -6,9 +6,9 @@
 
 #include "Application.hpp"
 #include <yq/asset/Asset.hpp>
-#include <yq-vulqan/config/build.hpp>
-#include <yq-vulqan/viewer/Viewer.hpp>
-#include <yq-vulqan/task/TaskEngine.hpp>
+#include <tachyon/config/build.hpp>
+#include <tachyon/viewer/Viewer.hpp>
+#include <tachyon/task/TaskEngine.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-vulqan/render/Render3D.hpp>
-#include <yq-vulqan/render/RenderedWriter.hpp>
+#include <tachyon/render/Render3D.hpp>
+#include <tachyon/render/RenderedWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

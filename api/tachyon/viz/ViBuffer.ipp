@@ -7,11 +7,11 @@
 #include "ViBuffer.hpp"
 
 #include <yq/core/Memory.hpp>
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/memory/Buffer.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/memory/Buffer.hpp>
+#include <tachyon/v/VqStructs.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
     namespace errors {

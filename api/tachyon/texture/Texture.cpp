@@ -6,8 +6,8 @@
 
 #include "Texture.hpp"
 
-#include <yq-vulqan/image/Image.hpp>
-#include <yq-vulqan/sampler/Sampler.hpp>
+#include <tachyon/image/Image.hpp>
+#include <tachyon/sampler/Sampler.hpp>
 
 namespace yq::tachyon {
     TextureCPtr  Texture::load(std::string_view pp)

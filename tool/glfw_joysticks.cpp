@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-vulqan/app/Application.hpp>
-#include <yq-vulqan/glfw/Joystick.hpp>
+#include <tachyon/app/Application.hpp>
+#include <tachyon/glfw/Joystick.hpp>
 #include <iostream>
 
 using std::cout;

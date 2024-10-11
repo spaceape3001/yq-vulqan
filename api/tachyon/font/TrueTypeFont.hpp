@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/asset/Asset.hpp>
-#include <yq-vulqan/typedef/font.hpp>
+#include <tachyon/typedef/font.hpp>
 
 namespace yq::tachyon {
     class TrueTypeFontInfo : public AssetInfo {

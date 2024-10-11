@@ -6,15 +6,15 @@
 
 #include "ViTexture.hpp"
 
-#include <yq-vulqan/errors.hpp>
-#include <yq-vulqan/logging.hpp>
-#include <yq-vulqan/image/Image.hpp>
-#include <yq-vulqan/image/ImageInfo.hpp>
-#include <yq-vulqan/texture/Texture.hpp>
-#include <yq-vulqan/v/VqStructs.hpp>
-#include <yq-vulqan/viz/ViImage.hpp>
-#include <yq-vulqan/viz/ViSampler.hpp>
-#include <yq-vulqan/viz/ViVisualizer.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/image/Image.hpp>
+#include <tachyon/image/ImageInfo.hpp>
+#include <tachyon/texture/Texture.hpp>
+#include <tachyon/v/VqStructs.hpp>
+#include <tachyon/viz/ViImage.hpp>
+#include <tachyon/viz/ViSampler.hpp>
+#include <tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
     namespace errors {

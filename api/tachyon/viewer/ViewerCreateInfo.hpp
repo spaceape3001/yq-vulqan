@@ -10,9 +10,9 @@
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <yq-vulqan/glfw/Monitor.hpp>
-#include <yq-vulqan/typedef/queue_spec.hpp>
-#include <yq-vulqan/viewer/PresentMode.hpp>
+#include <tachyon/glfw/Monitor.hpp>
+#include <tachyon/typedef/queue_spec.hpp>
+#include <tachyon/viewer/PresentMode.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <variant>

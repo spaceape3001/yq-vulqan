@@ -6,7 +6,7 @@
 
 #include "Shader.hpp"
 
-#include <yq-vulqan/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <yq/asset/AssetFactory.hpp>
 #include <yq/asset/AssetInfoWriter.hpp>
 #include <yq/asset/AssetIO.hpp>

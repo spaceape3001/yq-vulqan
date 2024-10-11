@@ -10,9 +10,9 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
-#include <yq-vulqan/basic/Tristate.hpp>
-#include <yq-vulqan/camera/Camera.hpp>
-#include <yq-vulqan/typedef/camera.hpp>
+#include <tachyon/basic/Tristate.hpp>
+#include <tachyon/camera/Camera.hpp>
+#include <tachyon/typedef/camera.hpp>
 #include <optional>
 
 namespace yq::tachyon {

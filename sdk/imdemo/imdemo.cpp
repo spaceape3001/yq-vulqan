@@ -10,9 +10,9 @@
 
 #include <yq/process/PluginLoader.hpp>
 
-#include <yq-vulqan/app/Application.hpp>
-#include <yq-vulqan/viewer/Viewer.hpp>
-#include <yq-vulqan/widget/ImGuiDemoWidget.hpp>
+#include <tachyon/app/Application.hpp>
+#include <tachyon/viewer/Viewer.hpp>
+#include <tachyon/widget/ImGuiDemoWidget.hpp>
 
 #include <iostream>
 

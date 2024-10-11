@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq-vulqan/typedef/render_pass.hpp>
+#include <tachyon/typedef/render_pass.hpp>
 
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
-#include <yq-vulqan/pass/RenderPassInfo.hpp>
+#include <tachyon/pass/RenderPassInfo.hpp>
 
 namespace yq::tachyon {
     class RenderPass : public RefCount, public UniqueID {

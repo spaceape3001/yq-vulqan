@@ -1,4 +1,4 @@
-project(yqvulqan)
+project(yq_tachyon)
 
 
 find_package(GLFW3 REQUIRED)

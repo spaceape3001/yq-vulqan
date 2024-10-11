@@ -9,11 +9,10 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
-//#include <yq-vulqan/image/Image.hpp>
-//#include <yq-vulqan/memory/Memory.hpp>
-#include <yq-vulqan/typedef/pipeline.hpp>
-#include <yq-vulqan/typedef/rendered.hpp>
-#include <yq-vulqan/viz/ViQueueType.hpp>
+//#include <tachyon/image/Image.hpp>
+#include <tachyon/typedef/pipeline.hpp>
+#include <tachyon/typedef/rendered.hpp>
+#include <tachyon/viz/ViQueueType.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <vector>

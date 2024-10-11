@@ -8,8 +8,8 @@
 
 #include <yq/core/Memory.hpp>
 #include <yq/asset/Asset.hpp>
-#include <yq-vulqan/shader/ShaderType.hpp>
-#include <yq-vulqan/typedef/shader.hpp>
+#include <tachyon/shader/ShaderType.hpp>
+#include <tachyon/typedef/shader.hpp>
 
 namespace yq::tachyon {
 

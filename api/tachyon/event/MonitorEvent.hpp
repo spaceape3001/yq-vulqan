@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-vulqan/event/Event.hpp>
-#include <yq-vulqan/glfw/Monitor.hpp>
+#include <tachyon/event/Event.hpp>
+#include <tachyon/glfw/Monitor.hpp>
 
 namespace yq::tachyon {
     class MonitorEventInfo : public EventInfo {

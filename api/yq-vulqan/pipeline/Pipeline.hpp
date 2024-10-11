@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Flags.hpp>
+#include <yq/core/Flags.hpp>
 
 #include <yq-vulqan/data/DataFormat.hpp>
 #include <yq-vulqan/pipeline/CullMode.hpp>

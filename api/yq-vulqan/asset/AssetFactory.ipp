@@ -7,8 +7,8 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
 #include <yq-vulqan/asset/AssetFactory.hpp>
-#include <yq-toolbox/io/FileResolver.hpp>
-#include <yq-toolbox/io/FileUtils.hpp>
+#include <yq/file/FileResolver.hpp>
+#include <yq/file/FileUtils.hpp>
 #include <filesystem>
 
 namespace yq::tachyon {

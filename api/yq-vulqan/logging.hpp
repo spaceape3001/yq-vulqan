@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/basic/LogFilter.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/LogFilter.hpp>
 
 #define assetAlert                  yAlert("asset")
 #define assetCritical               yCritical("asset")

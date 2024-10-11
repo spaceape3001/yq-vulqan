@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViPipeline.hpp"
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/io/stream/Text.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/stream/Text.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>

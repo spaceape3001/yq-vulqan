@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-vulqan/typedef/sampler.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/core/Ref.hpp>
 #include <vulkan/vulkan_core.h>
 #include <yq-vulqan/sampler/SamplerInfo.hpp>
 #include <system_error>

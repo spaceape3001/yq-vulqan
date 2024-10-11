@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq-vulqan/camera/Camera.hpp>
-#include <yq-toolbox/math/SimpleSpace.hpp>
-#include <yq-toolbox/units.hpp>
+#include <yq/math/SimpleSpace.hpp>
+#include <yq/units.hpp>
 
 namespace yq::tachyon {
     class TargetCamera : public Camera {

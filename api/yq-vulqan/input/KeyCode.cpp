@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "KeyCode.hpp"
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/meta/Init.hpp>
 
 #include <GLFW/glfw3.h>
 #include <imgui.h>

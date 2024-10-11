@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq-vulqan/viz/Visualizer.hpp>
 #include <yq-vulqan/window/Window.hpp>
-#include <yq-toolbox/basic/Flags.hpp>
+#include <yq/core/Flags.hpp>
 
 namespace yq {
     class Object;

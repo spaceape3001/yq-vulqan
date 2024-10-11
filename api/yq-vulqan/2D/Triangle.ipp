@@ -6,14 +6,14 @@
 
 #include "Triangle.hpp"
 
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/shape/TriangleData.hpp>
-#include <yq-toolbox/shape/shape_utils.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/shape/TriangleData.hpp>
+#include <yq/shape/shape_utils.hpp>
 
 #include <yq-vulqan/render/Render3DWriter.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
     void Triangle::initInfo()

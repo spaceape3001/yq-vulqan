@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SamplerCreateFlags.hpp"
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlags)

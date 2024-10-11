@@ -8,8 +8,8 @@
 
 #include <yq-vulqan/typedef/render_pass.hpp>
 
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/core/UniqueID.hpp>
 #include <yq-vulqan/pass/RenderPassInfo.hpp>
 
 namespace yq::tachyon {

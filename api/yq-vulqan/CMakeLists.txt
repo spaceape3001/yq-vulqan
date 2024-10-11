@@ -140,9 +140,10 @@ PUBLIC
 
 target_link_libraries(${PROJECT_NAME} 
 PUBLIC 
-    yqtoolbox
     yq_color
+    yq_keyv
     yq_pixel
+    yq_process
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
     imgui 

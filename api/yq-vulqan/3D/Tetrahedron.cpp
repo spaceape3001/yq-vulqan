@@ -6,13 +6,13 @@
 
 #include "Tetrahedron.hpp"
 
-#include <yq-toolbox/shape/TetrahedronData.hpp>
-#include <yq-toolbox/shape/shape_utils.hpp>
+#include <yq/shape/TetrahedronData.hpp>
+#include <yq/shape/shape_utils.hpp>
 
 #include <yq-vulqan/render/Render3DWriter.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
     void Tetrahedron::initInfo()

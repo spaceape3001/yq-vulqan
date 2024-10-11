@@ -8,7 +8,7 @@
 
 //#include <tachyon/preamble.hpp>
 
-#include <yq-toolbox/basic/Guarded.hpp>
+#include <yq/core/Guarded.hpp>
 
 #include <yq-vulqan/viewer/PresentMode.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>

@@ -15,18 +15,18 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/color/colors.hpp>
 #include <yq/color/RGB.hpp>
-#include <yq-toolbox/io/PluginLoader.hpp>
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/shape/shape_utils.hpp>
-#include <yq-toolbox/shape/Triangle2.hpp>
-#include <yq-toolbox/shape/Triangle3.hpp>
-#include <yq-toolbox/shape/TriangleData.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq/meta/Meta.hpp>
+#include <yq/process/PluginLoader.hpp>
+#include <yq/shape/shape_utils.hpp>
+#include <yq/shape/Triangle2.hpp>
+#include <yq/shape/Triangle3.hpp>
+#include <yq/shape/TriangleData.hpp>
+#include <yq/vector/Vector2.hpp>
+#include <yq/vector/Vector3.hxx>
 
 #include <yq-vulqan/2D/Triangle.hpp>
 #include <yq-vulqan/app/Application.hpp>
@@ -41,7 +41,7 @@
 
 #include <iostream>
 #include <chrono>
-#include <yq-toolbox/math/glm.hpp>  // temporary
+#include <yq/math/glm.hpp>  // temporary
 #include <math.h>
 
 using namespace yq;

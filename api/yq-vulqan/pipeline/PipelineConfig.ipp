@@ -6,8 +6,8 @@
 
 #include "PipelineConfig.hpp"
 #include <yq-vulqan/shader/Shader.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/meta/TypeInfo.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/meta/TypeInfo.hpp>
 
 namespace yq::tachyon {
     PipelineConfig::PipelineConfig() = default;

@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/basic/Flags.hpp>
-#include <yq-toolbox/basic/Object.hpp>
-#include <yq-toolbox/basic/UniqueID.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/container/Set.hpp>
-#include <yq-toolbox/basic/SizeTimestamp.hpp>
+#include <yq/keywords.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/core/Object.hpp>
+#include <yq/core/UniqueID.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/container/Set.hpp>
+#include <yq/file/SizeTimestamp.hpp>
 
 #include <atomic>
 #include <filesystem>

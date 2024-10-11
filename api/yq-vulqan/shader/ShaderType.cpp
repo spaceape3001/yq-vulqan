@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ShaderType.hpp"
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::ShaderType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ShaderTypeFlags)

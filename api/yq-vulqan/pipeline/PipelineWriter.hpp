@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/steal.hpp>
-#include <yq-toolbox/container/BasicBuffer.hpp>
-#include <yq-toolbox/math/glm_types.hpp>
+#include <yq/util/steal.hpp>
+#include <yq/container/BasicBuffer.hpp>
+#include <yq/math/glm_types.hpp>
 #include <yq/trait/member_offset.hpp>
 
 #include <yq-vulqan/keywords.hpp>

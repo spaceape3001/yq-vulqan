@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq-vulqan/render/Rendered.hpp>
-#include <yq-toolbox/math/SimpleSpace.hpp>
-#include <yq-toolbox/shape/AxBox3.hpp>
+#include <yq/math/SimpleSpace.hpp>
+#include <yq/shape/AxBox3.hpp>
 
 namespace yq::tachyon {
         

@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/BasicApp.hpp>
+#include <yq/core/BasicApp.hpp>
 #include <yq-vulqan/app/AppCreateInfo.hpp>
 #include <yq-vulqan/glfw/AppGLFW.hpp>
 #include <yq-vulqan/v/VqApp.hpp>
-#include <yq-toolbox/units.hpp>
+#include <yq/units.hpp>
 #include <memory>
 #include <set>
 #include <vector>

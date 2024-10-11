@@ -6,7 +6,7 @@
 
 #include "VqUtils.hpp"
 
-#include <yq-toolbox/basic/ErrorDB.hpp>
+#include <yq/core/ErrorDB.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/image/ImageViewInfo.hpp>

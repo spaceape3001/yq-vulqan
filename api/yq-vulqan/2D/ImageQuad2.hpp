@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/math/glm.hpp>
+#include <yq/math/glm.hpp>
 #include <yq/typedef/axbox2.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 #include <yq-vulqan/render/Render3D.hpp>
 #include <yq-vulqan/texture/Texture.hpp>

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Flags.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/basic/LogPriority.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/core/LogPriority.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/pipeline/CullMode.hpp>

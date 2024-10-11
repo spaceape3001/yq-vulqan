@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Object.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/basic/UniqueID.hpp>
-#include <yq-toolbox/shape/Rectangle2.hpp>
-#include <yq-toolbox/math/glm.hpp>
-#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
+#include <yq/core/Object.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/core/UniqueID.hpp>
+#include <yq/shape/Rectangle2.hpp>
+#include <yq/math/glm.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
 

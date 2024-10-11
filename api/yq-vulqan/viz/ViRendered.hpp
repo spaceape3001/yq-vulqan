@@ -7,8 +7,8 @@
 #pragma once
 
 
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/container/BasicBuffer.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/container/BasicBuffer.hpp>
 #include <yq-vulqan/viz/ViData.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>
 #include <yq-vulqan/typedef/pipeline_layout.hpp>

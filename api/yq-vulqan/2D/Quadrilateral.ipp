@@ -6,10 +6,10 @@
 
 #include "Quadrilateral.hpp"
 
-#include <yq-toolbox/shape/QuadrilateralData.hpp>
-#include <yq-toolbox/shape/QuadrilateralData.hpp>
-#include <yq-toolbox/shape/shape_utils.hpp>
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq/shape/QuadrilateralData.hpp>
+#include <yq/shape/QuadrilateralData.hpp>
+#include <yq/shape/shape_utils.hpp>
+#include <yq/vector/Vector3.hxx>
 
 #include <yq-vulqan/render/Render3DWriter.hpp>
 #include <yq-vulqan/shader/Shader.hpp>

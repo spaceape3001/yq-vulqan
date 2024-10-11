@@ -6,13 +6,13 @@
 
 #include "ImageQuad2.hpp"
 
-#include <yq-toolbox/shape/AxBox2.hpp>
+#include <yq/shape/AxBox2.hpp>
 
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/render/Render3DWriter.hpp>
 
-#include <yq-toolbox/shape/AxBox2.hxx>
+#include <yq/shape/AxBox2.hxx>
 
 namespace yq::tachyon {
 

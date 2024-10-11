@@ -7,9 +7,9 @@
 #include "Render3D.hpp"
 
 #include <yq-vulqan/render/Render3DWriter.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/vector/Quaternion3.hxx>
-#include <yq-toolbox/tensor/Tensor44.hxx>
+#include <yq/core/DelayInit.hpp>
+#include <yq/vector/Quaternion3.hxx>
+#include <yq/tensor/Tensor44.hxx>
 
 namespace yq::tachyon {
 

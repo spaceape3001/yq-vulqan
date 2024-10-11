@@ -7,7 +7,7 @@
 #pragma once
 //#include <tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
-#include <yq-toolbox/math/glm.hpp>
+#include <yq/math/glm.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>
 

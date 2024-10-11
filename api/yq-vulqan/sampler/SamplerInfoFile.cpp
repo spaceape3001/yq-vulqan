@@ -6,10 +6,10 @@
 
 #include "SamplerInfoFile.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/container/set_utils.hpp>
-#include <yq-toolbox/io/KeyValue.hpp>
-#include <yq-toolbox/text/join.hpp>
+#include <yq/strings.hpp>
+#include <yq/container/set_utils.hpp>
+#include <yq/keyv/KeyValue.hpp>
+#include <yq/text/join.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/strings.hpp>

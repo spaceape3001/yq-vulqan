@@ -7,7 +7,7 @@
 #pragma once
 
 //#include <engine/preamble.hpp>
-#include <yq-toolbox/shape/Rectangle2.hpp>
+#include <yq/shape/Rectangle2.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>

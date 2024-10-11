@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Signal.hpp>
+#include <yq/core/Signal.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
-#include <yq-toolbox/shape/AxBox2.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/vector/Vector2.hpp>
 #include <functional>
 #include <yq/color/RGBA.hpp>
 #include <array>

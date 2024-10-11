@@ -6,10 +6,10 @@
 
 #include "ViRendered.hpp"
 
-#include <yq-toolbox/basic/FirstSeen.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/io/stream/Logger.hpp>
-#include <yq-toolbox/io/stream/Text.hpp>
+#include <yq/core/FirstSeen.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/stream/Logger.hpp>
+#include <yq/stream/Text.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>

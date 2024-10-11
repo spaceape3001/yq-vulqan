@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Object.hpp>
-#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
+#include <yq/core/Object.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
     class ManipulatorInfo : public ObjectInfo {

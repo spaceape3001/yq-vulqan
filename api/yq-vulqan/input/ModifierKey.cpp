@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ModifierKey.hpp"
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::ModifierKey)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ModifierKeys)

@@ -6,12 +6,12 @@
 
 #include "ViGui.hpp"
 
-#include <yq-toolbox/basic/AutoReset.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/io/FileResolver.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/io/stream/Text.hpp>
-#include <yq-toolbox/math/integer.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/file/FileResolver.hpp>
+#include <yq/math/integer.hpp>
+#include <yq/stream/Text.hpp>
+#include <yq/util/AutoReset.hpp>
 
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/asset/Asset.hpp>

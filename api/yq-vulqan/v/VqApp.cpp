@@ -9,9 +9,9 @@
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/v/VqEnums.hpp>
 #include <yq-vulqan/v/VqUtils.hpp>
-#include <yq-toolbox/basic/BasicApp.hpp>
-#include <yq-toolbox/basic/ErrorDB.hpp>
-#include <yq-toolbox/basic/ThreadId.hpp>
+#include <yq/core/BasicApp.hpp>
+#include <yq/core/ErrorDB.hpp>
+#include <yq/core/ThreadId.hpp>
 #include <yq/macro/make_version.hpp>
 #include <tbb/spin_mutex.h>
 

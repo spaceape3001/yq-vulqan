@@ -9,22 +9,22 @@
     as we play around with the camera.
 */
 
-#include <yq-toolbox/units.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
+#include <yq/units.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/color/colors.hpp>
 #include <yq/color/RGB.hpp>
-#include <yq-toolbox/math/trigonometry.hpp>
-#include <yq-toolbox/shape/QuadrilateralData.hpp>
-#include <yq-toolbox/shape/TetrahedronData.hpp>
-#include <yq-toolbox/shape/Triangle2.hpp>
-#include <yq-toolbox/shape/Triangle3.hpp>
-#include <yq-toolbox/shape/TriangleData.hpp>
-#include <yq-toolbox/shape/shape_utils.hpp>
-#include <yq-toolbox/text/match.hpp>
-#include <yq-toolbox/vector/Quaternion3.hxx>
-#include <yq-toolbox/vector/Vector2.hpp>
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq/math/trigonometry.hpp>
+#include <yq/shape/QuadrilateralData.hpp>
+#include <yq/shape/TetrahedronData.hpp>
+#include <yq/shape/Triangle2.hpp>
+#include <yq/shape/Triangle3.hpp>
+#include <yq/shape/TriangleData.hpp>
+#include <yq/shape/shape_utils.hpp>
+#include <yq/text/match.hpp>
+#include <yq/vector/Quaternion3.hxx>
+#include <yq/vector/Vector2.hpp>
+#include <yq/vector/Vector3.hxx>
 
 #include <yq-vulqan/2D/Quadrilateral.hpp>
 #include <yq-vulqan/2D/Triangle.hpp>

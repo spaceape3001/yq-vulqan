@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/shape/Size4.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/shape/Size4.hpp>
 #include <yq/typedef/size4.hpp>
 #include <yq-vulqan/image/ImageInfo.hpp>
 #include <vk_mem_alloc.h>

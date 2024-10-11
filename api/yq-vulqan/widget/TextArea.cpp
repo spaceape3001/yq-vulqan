@@ -5,18 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "TextArea.hpp"
-#include <yq-toolbox/io/Stream.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/text/IterUtf8.hpp>
-#include <yq-toolbox/text/vsplit.hpp>
+#include <yq/core/Stream.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/text/IterUtf8.hpp>
+#include <yq/text/vsplit.hpp>
 //
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/io/stream/Text.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/shape/AxBox2.hpp>
-#include <yq-toolbox/vector/Vector2.hxx>
+#include <yq/core/DelayInit.hpp>
+#include <yq/stream/Text.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/vector/Vector2.hxx>
 
-#include <yq-toolbox/shape/shape_utils.hpp>
+#include <yq/shape/shape_utils.hpp>
 #include <yq-vulqan/imgui/MyImGui.hpp>
 
     //  for debugging

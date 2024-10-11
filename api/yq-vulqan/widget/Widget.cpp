@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Widget.hpp"
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/text/format.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/text/format.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 

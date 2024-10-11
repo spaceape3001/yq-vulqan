@@ -13,9 +13,9 @@
 #include <yq-vulqan/viewer/ViewerCreateInfo.hpp>
 #include <yq-vulqan/widget/Widget.hpp>
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/basic/AutoReset.hpp>
-#include <yq-toolbox/basic/ErrorDB.hpp>
+#include <yq/errors.hpp>
+#include <yq/core/ErrorDB.hpp>
+#include <yq/util/AutoReset.hpp>
 
 namespace yq::tachyon {
 

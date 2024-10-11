@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/container/BasicBuffer.hpp>
-#include <yq-toolbox/basic/Flags.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/container/BasicBuffer.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq-vulqan/image/Image.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>

@@ -8,12 +8,12 @@
     Simple "demo" utilitiy
 */
 
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/io/PluginLoader.hpp>
-#include <yq-toolbox/io/FileUtils.hpp>
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
-#include <yq-toolbox/text/format.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/file/FileUtils.hpp>
+#include <yq/meta/Meta.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/process/PluginLoader.hpp>
+#include <yq/text/format.hpp>
 
 #include <yq-vulqan/app/Application.hpp>
 #include <yq-vulqan/imgui/MyImGui.hpp>

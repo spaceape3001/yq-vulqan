@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViPipelineLayout.hpp"
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq/keywords.hpp>
+#include <yq/core/StreamOps.hpp>
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
@@ -18,7 +18,7 @@
 #include <yq-vulqan/viz/ViShader.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
-#include <yq-toolbox/text/format.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq::tachyon {
     namespace errors {

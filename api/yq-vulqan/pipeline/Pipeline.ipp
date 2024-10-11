@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Pipeline.hpp"
-#include <yq-toolbox/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundInfo.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 #include <yq-vulqan/pipeline/PushData.hpp>
 #include <atomic>

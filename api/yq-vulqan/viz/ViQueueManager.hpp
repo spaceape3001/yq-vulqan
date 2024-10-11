@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq-vulqan/typedef/queue_spec.hpp>
 #include <yq-vulqan/typedef/queue_tasker.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>

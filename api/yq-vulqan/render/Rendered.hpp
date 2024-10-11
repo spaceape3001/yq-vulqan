@@ -8,10 +8,10 @@
 
 #include <yq-vulqan/typedef/rendered.hpp>
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/basic/Flags.hpp>
-#include <yq-toolbox/basic/MetaObject.hpp>
-#include <yq-toolbox/basic/Mutable.hpp>
+#include <yq/keywords.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/core/MetaObject.hpp>
+#include <yq/core/Mutable.hpp>
 //#include <tachyon/preamble.hpp>
 #include <yq-vulqan/basic/Tristate.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>

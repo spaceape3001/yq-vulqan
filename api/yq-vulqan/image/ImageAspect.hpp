@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Enum.hpp>
-#include <yq-toolbox/basic/Flag.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/core/Enum.hpp>
+#include <yq/core/Flag.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
     YQ_ENUM(ImageAspect, ,

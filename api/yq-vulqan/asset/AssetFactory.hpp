@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/ErrorDB.hpp>
-#include <yq-toolbox/basic/Object.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/container/Set.hpp>
-#include <yq-toolbox/text/IgCase.hpp>
+#include <yq/core/ErrorDB.hpp>
+#include <yq/core/Object.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/container/Set.hpp>
+#include <yq/text/IgCase.hpp>
 #include <yq/typedef/string_sets.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
 #include <yq-vulqan/asset/AssetIO.hpp>

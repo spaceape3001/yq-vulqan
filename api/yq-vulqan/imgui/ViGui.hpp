@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/basic/Flags.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/keywords.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 
 #include <yq-vulqan/imgui/MyImGui.hpp>

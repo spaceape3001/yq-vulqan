@@ -7,9 +7,9 @@
 #include "ViVisualizer.hpp"
 
 #include <yq/color/RGBA.hpp>
-#include <yq-toolbox/container/initlist_utils.hpp>
-#include <yq-toolbox/text/basic.hpp>
-#include <yq-toolbox/text/join.hpp>
+#include <yq/container/initlist_utils.hpp>
+#include <yq/text/basic.hpp>
+#include <yq/text/join.hpp>
 
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>

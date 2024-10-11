@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/basic/Flags.hpp>
+#include <yq/keywords.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq-vulqan/pipeline/Pipeline.hpp>
 #include <yq-vulqan/typedef/buffer.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>

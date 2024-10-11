@@ -6,8 +6,8 @@
 
 #include <yq-vulqan/glfw/Monitor.hpp>
 #include <yq-vulqan/glfw/VideoMode.hpp>
-#include <yq-toolbox/shape/Rectangle2.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq/shape/Rectangle2.hpp>
+#include <yq/vector/Vector2.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

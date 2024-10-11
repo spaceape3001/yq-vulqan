@@ -10,12 +10,12 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_projection.hpp>
 
-#include <yq-toolbox/shape/Rectangle2.hpp>
-#include <yq-toolbox/shape/Size2.hpp>
+#include <yq/shape/Rectangle2.hpp>
+#include <yq/shape/Size2.hpp>
 
-#include <yq-toolbox/shape/Rectangle2.hxx>
-#include <yq-toolbox/shape/Size2.hxx>
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq/shape/Rectangle2.hxx>
+#include <yq/shape/Size2.hxx>
+#include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
     TargetCamera::TargetCamera() : 

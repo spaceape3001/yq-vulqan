@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq-toolbox/io/FileResolver.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
+#include <yq/file/FileResolver.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 
 namespace ut = boost::ut;

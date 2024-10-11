@@ -6,7 +6,7 @@
 
 #include "JoystickEvent.hpp"
 
-#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickEvent)
 

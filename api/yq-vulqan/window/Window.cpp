@@ -12,8 +12,8 @@
 #include <yq-vulqan/window/Window.hpp>
 #include <yq-vulqan/window/WindowEvents.hpp>
 
-#include <yq-toolbox/basic/ErrorDB.hpp>
-#include <yq-toolbox/shape/Size2.hxx>
+#include <yq/core/ErrorDB.hpp>
+#include <yq/shape/Size2.hxx>
 
 
 #include <GLFW/glfw3.h>

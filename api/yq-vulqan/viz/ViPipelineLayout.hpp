@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Flags.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>
 #include <yq-vulqan/typedef/pipeline_layout.hpp>
 #include <yq-vulqan/typedef/shader.hpp>

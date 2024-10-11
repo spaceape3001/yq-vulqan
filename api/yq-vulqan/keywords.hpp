@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq-vulqan/pipeline/DataActivity.hpp>
 
 namespace yq::tachyon {

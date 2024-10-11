@@ -17,7 +17,7 @@
 #include <yq-vulqan/viz/ViTexture.hpp>
 #include <yq-vulqan/viz/ViVisualizer.hpp>
 
-#include <yq-toolbox/text/format.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq::tachyon {
 

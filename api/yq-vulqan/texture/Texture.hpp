@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/basic/UniqueID.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/core/UniqueID.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq-vulqan/data/DataFormat.hpp>
 #include <yq-vulqan/image/ComponentSwizzle.hpp>

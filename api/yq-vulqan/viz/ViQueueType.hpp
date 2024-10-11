@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Flags.hpp>
+#include <yq/core/Flags.hpp>
 
 namespace yq::tachyon {
     enum class ViQueueType : uint8_t {

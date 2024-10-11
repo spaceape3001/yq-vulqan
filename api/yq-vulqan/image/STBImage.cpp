@@ -7,8 +7,8 @@
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/image/Image.hpp>
 
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/basic/ErrorDB.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/ErrorDB.hpp>
 
 #include <stb_image.h>
 #include <stb_image_write.h>

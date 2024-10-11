@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Rendered.hpp"
-#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq/core/DelayInit.hpp>
 #include <yq-vulqan/render/RenderedWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)

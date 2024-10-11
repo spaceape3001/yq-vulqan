@@ -6,11 +6,11 @@
 
 #include "GLSLShader.hpp"
 
-#include <yq-toolbox/basic/ErrorDB.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/io/Execute.hpp>
-#include <yq-toolbox/io/FileUtils.hpp>
-#include <yq-toolbox/text/chars.hpp>
+#include <yq/core/ErrorDB.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/file/FileUtils.hpp>
+#include <yq/process/Execute.hpp>
+#include <yq/text/chars.hpp>
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/shader/Shader.hpp>
 

@@ -10,8 +10,8 @@
 #include <yq-vulqan/asset/AssetFactory.hpp>
 #include <yq-vulqan/asset/AssetInfoWriter.hpp>
 #include <yq-vulqan/asset/AssetIO.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/text/format.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Shader>&  Shader::cache()

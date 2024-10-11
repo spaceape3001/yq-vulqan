@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/shape/Rectangle2.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq/shape/Rectangle2.hpp>
+#include <yq/vector/Vector2.hpp>
 #include <yq-vulqan/app/Application.hpp>
 #include <yq-vulqan/glfw/Monitor.hpp>
 #include <yq-vulqan/glfw/VideoMode.hpp>

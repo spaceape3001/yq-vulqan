@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/io/FileUtils.hpp>
-#include <yq-toolbox/io/FileResolver.hpp>
-#include <yq-toolbox/text/vsplit.hpp>
+#include <yq/errors.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/file/FileUtils.hpp>
+#include <yq/file/FileResolver.hpp>
+#include <yq/text/vsplit.hpp>
 
 #include <yq-vulqan/logging.hpp>
 #include <yq-vulqan/asset/Asset.hpp>

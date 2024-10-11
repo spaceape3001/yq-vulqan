@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Flags.hpp>
-#include <yq-toolbox/basic/Guarded.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/core/Guarded.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/rgba.hpp>
 

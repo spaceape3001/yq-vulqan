@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "VqEnums.hpp"
-#include <yq-toolbox/basic/Enum.hpp>
+#include <yq/core/Enum.hpp>
 
 namespace yq::tachyon {
     static const std::string_view szUnknown   = "(unknown)";

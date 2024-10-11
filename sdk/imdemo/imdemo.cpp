@@ -8,7 +8,7 @@
     Simple "demo" utilitiy
 */
 
-#include <yq-toolbox/io/PluginLoader.hpp>
+#include <yq/process/PluginLoader.hpp>
 
 #include <yq-vulqan/app/Application.hpp>
 #include <yq-vulqan/viewer/Viewer.hpp>

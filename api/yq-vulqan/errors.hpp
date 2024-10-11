@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/errors.hpp>
+#include <yq/errors.hpp>
 
 namespace yq::tachyon::errors {
     using namespace yq::errors;

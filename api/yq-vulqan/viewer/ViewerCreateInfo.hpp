@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/color/RGBA.hpp>
-#include <yq-toolbox/shape/Size2.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 #include <yq-vulqan/glfw/Monitor.hpp>
 #include <yq-vulqan/typedef/queue_spec.hpp>

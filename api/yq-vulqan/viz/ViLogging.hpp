@@ -7,8 +7,8 @@
 #pragma once
 
 #include <log4cpp/CategoryStream.hh>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/text/format.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/text/format.hpp>
 #include <yq/trait/is_pointer.hpp>
 
 namespace log4cpp {

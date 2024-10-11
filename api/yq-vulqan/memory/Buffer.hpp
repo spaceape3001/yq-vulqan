@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/UniqueID.hpp>
-#include <yq-toolbox/basic/Ref.hpp>
+#include <yq/core/UniqueID.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/memory/BufferUsage.hpp>
 #include <span>

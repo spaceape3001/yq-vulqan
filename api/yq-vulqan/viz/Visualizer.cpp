@@ -19,11 +19,11 @@
 #include "Visualizer.hxx"
 #include "Visualizer.hpp"
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/basic/AutoReset.hpp>
-#include <yq-toolbox/basic/ErrorDB.hpp>
-#include <yq-toolbox/container/BasicBuffer.hpp>
-#include <yq-toolbox/container/initlist_utils.hpp>
+#include <yq/errors.hpp>
+#include <yq/container/BasicBuffer.hpp>
+#include <yq/container/initlist_utils.hpp>
+#include <yq/core/ErrorDB.hpp>
+#include <yq/util/AutoReset.hpp>
 
 #include <yq-vulqan/errors.hpp>
 #include <yq-vulqan/logging.hpp>

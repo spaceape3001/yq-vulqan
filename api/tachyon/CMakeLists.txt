@@ -142,15 +142,16 @@ target_link_libraries(${PROJECT_NAME}
 PUBLIC 
     yq_asset
     yq_color
+    yq_gui3rd
+    yq_imgui 
     yq_keyv
     yq_process
     yq_raster
+    yq_stb 
+    yq_vma
+
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
-    imgui 
-    stb 
-    vma
-    gui3rd
 )
 
 LinkTest(${PROJECT_NAME})

@@ -4,7 +4,7 @@
 ##
 ################################################################################
 
-project(imgui)
+project(yq_imgui)
 
 find_package(GLFW3 REQUIRED)
 find_package(Freetype REQUIRED)
@@ -19,7 +19,6 @@ add_library(${PROJECT_NAME} SHARED
     imgui/imgui_tables.cpp
     imgui/imgui_widgets.cpp
     imgui/backends/imgui_impl_glfw.cpp
-    imgui/backends/imgui_impl_vulkan.cpp
     imgui/misc/cpp/imgui_stdlib.cpp
     imgui/misc/freetype/imgui_freetype.cpp
 )
@@ -45,11 +44,9 @@ target_compile_definitions(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC  
-        stb
+        yq_stb
         ${FREETYPE_LIBRARIES}
     PRIVATE
-        vma 
-        ${Vulkan_LIBRARIES} 
         ${GLFW3_LIBRARY}
 )
 

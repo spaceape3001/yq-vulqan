@@ -4,7 +4,7 @@
 ##
 ################################################################################
 
-project(gui3rd)
+project(yq_gui3rd)
 
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
@@ -56,8 +56,8 @@ target_compile_definitions(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC  
-        imgui
-        stb
+        yq_imgui
+        yq_stb
         ${FREETYPE_LIBRARIES}
 )
 target_compile_options(${PROJECT_NAME}  PRIVATE 

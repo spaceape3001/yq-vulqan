@@ -10,7 +10,6 @@ macro(vulqan_test name)
     add_test(NAME ${name} COMMAND test_${name} ${ARGN})
 endmacro()
 
-vulqan_test(memory)
 vulqan_test(shader_load)
 vulqan_test(task_engine)
 

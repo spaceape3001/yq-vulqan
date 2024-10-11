@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/core/UniqueID.hpp>
+#include <yq/core/Memory.hpp>
 #include <yq/core/Ref.hpp>
-#include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/memory/BufferUsage.hpp>
 #include <span>
 

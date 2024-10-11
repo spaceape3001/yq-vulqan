@@ -9,8 +9,8 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
-#include <yq-vulqan/image/Image.hpp>
-#include <yq-vulqan/memory/Memory.hpp>
+//#include <yq-vulqan/image/Image.hpp>
+//#include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/typedef/pipeline.hpp>
 #include <yq-vulqan/typedef/rendered.hpp>
 #include <yq-vulqan/viz/ViQueueType.hpp>

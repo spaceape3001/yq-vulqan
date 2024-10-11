@@ -8,5 +8,4 @@
 
 #include "Buffer.ipp"
 #include "BufferUsage.ipp"
-#include "Memory.ipp"
 #include "SystemAllocationScope.ipp"

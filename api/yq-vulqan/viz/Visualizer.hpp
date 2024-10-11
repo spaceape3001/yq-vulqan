@@ -33,10 +33,10 @@
 namespace yq::tachyon {
 
     //struct ViImage;
-    struct ViRendered0;
+    //struct ViRendered0;
     struct ViRenderPass;
     struct ViSwapchain;
-    struct ViPipeline0;
+    //struct ViPipeline0;
     struct ViFrame0;
     struct ViTexture;
     struct ViThread0;
@@ -44,10 +44,10 @@ namespace yq::tachyon {
     
     struct ViContext;
     
-    class Memory;
-    class Rendered;
-    class Pipeline;
-    class Texture;
+    //class Memory;
+    //class Rendered;
+    //class Pipeline;
+    //class Texture;
     class Scene;
     
     struct Perspective;
@@ -146,7 +146,7 @@ namespace yq::tachyon {
         Visualizer& operator=(const Visualizer&) = delete;
         Visualizer& operator=(Visualizer&&) = delete;
     
-        using RenderedMap   = std::unordered_multimap<uint64_t,ViRendered0*>;
+        //using RenderedMap   = std::unordered_multimap<uint64_t,ViRendered0*>;
         using FrameArray    = std::vector<std::unique_ptr<ViFrame0>>;
 
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};

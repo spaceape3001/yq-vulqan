@@ -11,10 +11,13 @@
 #include <vulkan/vulkan_core.h>
 #include <system_error>
 
+namespace yq {
+    class Memory;
+}
+
 namespace yq::tachyon {
     class ViVisualizer;
     class Buffer;
-    class Memory;
     
     struct ViBufferOptions {
         VmaMemoryUsage      usage   = VMA_MEMORY_USAGE_CPU_TO_GPU;

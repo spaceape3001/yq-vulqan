@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <yq/core/Memory.hpp>
 #include <yq-vulqan/asset/Asset.hpp>
-#include <yq-vulqan/memory/Memory.hpp>
 #include <yq-vulqan/shader/ShaderType.hpp>
 #include <yq-vulqan/typedef/shader.hpp>
 

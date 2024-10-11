@@ -22,6 +22,13 @@ namespace yq::tachyon {
 
     //  ////////////////////////////////////////////////////////////////////////
 
+    void     configure_standand_asset_path()
+    {
+        Asset::resolver_add_paths(build::data_directory());
+    }
+
+    //  ////////////////////////////////////////////////////////////////////////
+
     Application::Application(int argc, char* argv[], std::shared_ptr<AppCreateInfo> aci) : 
         BasicApp(argc, argv), VqApp(*this, aci), m_appInfo(aci)
     {
@@ -29,7 +36,7 @@ namespace yq::tachyon {
         if(!s_app)
             s_app   = this;
             
-        Asset::resolver_add_paths(build::data_directory());
+        configure_standand_asset_path();
     }
     
 

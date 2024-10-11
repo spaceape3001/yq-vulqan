@@ -31,6 +31,7 @@ namespace yq::tachyon {
         //! Global application, if any
         static Application*       app() { return s_app; }
         
+        
     
         /*! \brief Constructor
         
@@ -98,4 +99,5 @@ namespace yq::tachyon {
         std::atomic<bool>                   m_quit;
     };
 
+    void     configure_standand_asset_path();
 }

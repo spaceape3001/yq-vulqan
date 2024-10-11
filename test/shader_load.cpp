@@ -8,6 +8,7 @@
 #include <yq/file/FileResolver.hpp>
 #include <yq/core/Logging.hpp>
 #include <tachyon/shader/Shader.hpp>
+#include <tachyon/app/Application.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;
@@ -28,7 +29,9 @@ ut::suite tests = []{
     "loading"_test = []{
         const Shader*   s   = Shader::load("sdk/hello/hello.frag");
         expect(nullptr != s);
-        expect(s->type == ShaderType::FRAG);
+        if(s){
+            expect(s->type == ShaderType::FRAG);
+        }
     };
 };
 
@@ -37,6 +40,7 @@ int main()
     log_to_std_output();
 
     Meta::init();
+    configure_standand_asset_path();
 
     #if 0
     const auto& resolver    = tachyon::Asset::resolver();

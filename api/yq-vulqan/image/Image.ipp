@@ -6,7 +6,7 @@
 
 #include "Image.hpp"
 
-#include <yq/pixel/Pixels.hxx>
+#include <yq/raster/Pixels.hxx>
 
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
@@ -53,7 +53,7 @@ namespace yq::tachyon {
         return cache();
     }
 
-    pixel::PixmapSPtr  Image::to_pixmap() const
+    raster::PixmapSPtr  Image::to_pixmap() const
     {
         switch(info.type){
         case ImageType::D1:
@@ -68,15 +68,15 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    pixel::PixmapSPtr  Image:: _pixmap1() const
+    raster::PixmapSPtr  Image:: _pixmap1() const
     {
-        return std::make_shared<pixel::Pixels1<C>>(
+        return std::make_shared<raster::Pixels1<C>>(
             Coord1U(info.size.x), 
             COPY, (const C*) memory.data()
         );
     }
     
-    pixel::PixmapSPtr  Image::to_pixmap1() const
+    raster::PixmapSPtr  Image::to_pixmap1() const
     {
         switch(info.format){
         case DataFormat::A8_UNORM:
@@ -131,15 +131,15 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    pixel::PixmapSPtr  Image::_pixmap2() const
+    raster::PixmapSPtr  Image::_pixmap2() const
     {
-        return std::make_shared<pixel::Pixels2<C>>(
+        return std::make_shared<raster::Pixels2<C>>(
             Coord2U( info.size.x, info.size.y ), 
             COPY, (const C*) memory.data()
         );
     }
     
-    pixel::PixmapSPtr  Image::to_pixmap2() const
+    raster::PixmapSPtr  Image::to_pixmap2() const
     {
         switch(info.format){
         case DataFormat::A8_UNORM:
@@ -194,17 +194,17 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    pixel::PixmapSPtr   Image::_pixmap3() const
+    raster::PixmapSPtr   Image::_pixmap3() const
     {
-        return std::make_shared<pixel::Pixels3<C>>(
+        return std::make_shared<raster::Pixels3<C>>(
             Coord3U( info.size.x, info.size.y, info.size.z ), 
             COPY, (const C*) memory.data()
         );
     }
     
-    pixel::PixmapSPtr  Image::to_pixmap3() const
+    raster::PixmapSPtr  Image::to_pixmap3() const
     {
-        using pixel::Pixels;
+        using raster::Pixels;
         switch(info.format){
         case DataFormat::A8_UNORM:
         case DataFormat::R8_SRGB:

@@ -143,8 +143,8 @@ PUBLIC
     yq_asset
     yq_color
     yq_keyv
-    yq_pixel
     yq_process
+    yq_raster
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
     imgui 

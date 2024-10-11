@@ -10,7 +10,7 @@
 #include <yq/core/Memory.hpp>
 #include <yq-vulqan/image/ImageInfo.hpp>
 #include <yq-vulqan/typedef/image.hpp>
-#include <yq/pixel/pixels_fwd.hpp>
+#include <yq/raster/forward.hpp>
 
 namespace yq::tachyon {
     class Buffer;
@@ -43,15 +43,15 @@ namespace yq::tachyon {
         //! Constructor (takes info & data)
         Image(const ImageInfo&, Memory&&);
         
-        explicit Image(const pixel::Pixmap&);
-        Image(ref_t,  const pixel::Pixmap&);
-        Image(copy_t, const pixel::Pixmap&);
+        explicit Image(const raster::Pixmap&);
+        Image(ref_t,  const raster::Pixmap&);
+        Image(copy_t, const raster::Pixmap&);
 
         //! Returns the size of the memory data
         virtual size_t      data_size() const  override;
 
         //! Converts to a pixmap (NOTE, this *CAN* fail, check result)
-        pixel::PixmapSPtr  to_pixmap() const;
+        raster::PixmapSPtr  to_pixmap() const;
 
     private:
         ~Image();
@@ -59,14 +59,14 @@ namespace yq::tachyon {
         AssetFactory&       factory() const override;
 
         template <typename C>
-        pixel::PixmapSPtr   _pixmap1() const;
+        raster::PixmapSPtr  _pixmap1() const;
         template <typename C>
-        pixel::PixmapSPtr   _pixmap2() const;
+        raster::PixmapSPtr  _pixmap2() const;
         template <typename C>
-        pixel::PixmapSPtr   _pixmap3() const;
+        raster::PixmapSPtr  _pixmap3() const;
 
-        pixel::PixmapSPtr  to_pixmap1() const;
-        pixel::PixmapSPtr  to_pixmap2() const;
-        pixel::PixmapSPtr  to_pixmap3() const;
+        raster::PixmapSPtr to_pixmap1() const;
+        raster::PixmapSPtr to_pixmap2() const;
+        raster::PixmapSPtr to_pixmap3() const;
     };
 }

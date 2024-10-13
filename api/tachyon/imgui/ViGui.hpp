@@ -16,6 +16,7 @@
 #include <tachyon/typedef/image.hpp>
 #include <tachyon/typedef/pipeline.hpp>
 #include <tachyon/typedef/pipeline_layout.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <tachyon/typedef/sampler.hpp>
 #include <tachyon/typedef/texture.hpp>
 
@@ -84,7 +85,7 @@ namespace yq::tachyon {
         struct T {
             VkDescriptorSet     descriptor  = nullptr;
             VkDescriptorPool    descPool    = nullptr;
-            ImageCPtr           image;
+            RasterCPtr          image;
             TextureCPtr         texture;
         }  m_font;
         

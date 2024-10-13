@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Image.hpp"
+#include "Raster.hpp"
 
 #include <yq/raster/Pixels.hxx>
 
@@ -16,51 +16,103 @@
 #include <yq/asset/AssetInfoWriter.hpp>
 #include <yq/asset/AssetIO.hpp>
 
+#include <tachyon/pipeline/PipelineUtils.hpp>
+
 namespace yq::tachyon {
-    TypedAssetFactory<Image>&  Image::cache()
+    TypedAssetFactory<Raster>&  Raster::cache()
     {
-        static TypedAssetFactory<Image>   s_ret;
+        static TypedAssetFactory<Raster>   s_ret;
         return s_ret;
     }
 
-    const ImageCPtr     Image::load(std::string_view pp)
+    RasterInfo    Raster::info_for(const raster::Pixmap& pix, DataFormat df)
+    {
+        RasterInfo   ii;
+        
+        switch(pix.count(DIMENSIONS)){
+        case 1:
+            ii.type     = RasterType::D1;
+            break;
+        case 2:
+            ii.type     = RasterType::D2;
+            break;
+        case 3:
+            ii.type     = RasterType::D3;
+            break;
+        default:
+            ii.type     = RasterType::D2;
+            break;
+        }
+        
+        ii.size.w   = 1;
+
+        switch(ii.type){
+        case RasterType::D3:
+            ii.size.z   = pix.count(K);
+            [[fallthrough]];
+        case RasterType::D2:
+            ii.size.y   = pix.count(J);
+            [[fallthrough]];
+        case RasterType::D1:
+            ii.size.x   = pix.count(I);
+            break;
+        }
+        
+        if(df != DataFormat::UNDEFINED){
+            ii.format   = df;
+        } else {
+            ii.format   = data_format(pix.type(PIXEL));
+        }
+        
+        return ii;
+    }
+
+    const RasterCPtr     Raster::load(std::string_view pp)
     {
         return load(pp, AssetLoadOptions());
     }
 
-    const ImageCPtr     Image::load(std::string_view pp, const AssetLoadOptions& options)
+    const RasterCPtr     Raster::load(std::string_view pp, const AssetLoadOptions& options)
     {
         return cache().load(pp, options);
     }
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Image::Image(const ImageInfo& ii, Memory&& mem) : Asset(), memory(std::move(mem)), info(ii)
+    Raster::Raster(const RasterInfo& ii, Memory&& mem) : Asset(), memory(std::move(mem)), info(ii)
     {
     }
 
-    size_t      Image::data_size() const  
+    Raster::Raster(ref_t,  const raster::Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(REF)), info(info_for(pix, df))
+    {
+    }
+    
+    Raster::Raster(copy_t, const raster::Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(COPY)), info(info_for(pix, df))
+    {
+    }
+
+    size_t      Raster::data_size() const  
     {
         return memory.bytes();
     }
 
-    Image::~Image()
+    Raster::~Raster()
     {
     }
 
-    AssetFactory&       Image::factory() const 
+    AssetFactory&       Raster::factory() const 
     {
         return cache();
     }
 
-    raster::PixmapSPtr  Image::to_pixmap() const
+    raster::PixmapSPtr  Raster::to_pixmap() const
     {
         switch(info.type){
-        case ImageType::D1:
+        case RasterType::D1:
             return to_pixmap1();
-        case ImageType::D2:
+        case RasterType::D2:
             return to_pixmap2();
-        case ImageType::D3:
+        case RasterType::D3:
             return to_pixmap3();
         default:
             return {};
@@ -68,7 +120,7 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    raster::PixmapSPtr  Image:: _pixmap1() const
+    raster::PixmapSPtr  Raster:: _pixmap1() const
     {
         return std::make_shared<raster::Pixels1<C>>(
             Coord1U(info.size.x), 
@@ -76,7 +128,7 @@ namespace yq::tachyon {
         );
     }
     
-    raster::PixmapSPtr  Image::to_pixmap1() const
+    raster::PixmapSPtr  Raster::to_pixmap1() const
     {
         switch(info.format){
         case DataFormat::A8_UNORM:
@@ -131,7 +183,7 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    raster::PixmapSPtr  Image::_pixmap2() const
+    raster::PixmapSPtr  Raster::_pixmap2() const
     {
         return std::make_shared<raster::Pixels2<C>>(
             Coord2U( info.size.x, info.size.y ), 
@@ -139,7 +191,7 @@ namespace yq::tachyon {
         );
     }
     
-    raster::PixmapSPtr  Image::to_pixmap2() const
+    raster::PixmapSPtr  Raster::to_pixmap2() const
     {
         switch(info.format){
         case DataFormat::A8_UNORM:
@@ -194,7 +246,7 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    raster::PixmapSPtr   Image::_pixmap3() const
+    raster::PixmapSPtr   Raster::_pixmap3() const
     {
         return std::make_shared<raster::Pixels3<C>>(
             Coord3U( info.size.x, info.size.y, info.size.z ), 
@@ -202,7 +254,7 @@ namespace yq::tachyon {
         );
     }
     
-    raster::PixmapSPtr  Image::to_pixmap3() const
+    raster::PixmapSPtr  Raster::to_pixmap3() const
     {
         using raster::Pixels;
         switch(info.format){
@@ -259,15 +311,15 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
     
-    static void    reg_image()
+    static void    reg_raster()
     {
-        auto w = writer<Image>();
-        w.description("Image Asset");
+        auto w = writer<Raster>();
+        w.description("Raster Image Asset");
         w.options({Meta::Flag::IMAGE});
     }
 
-    YQ_INVOKE(reg_image();)
+    YQ_INVOKE(reg_raster();)
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Image)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Raster)
 

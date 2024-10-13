@@ -13,7 +13,7 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/image/Image.hpp>
+#include <tachyon/image/Raster.hpp>
 #include <tachyon/memory/Buffer.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/sampler/Sampler.hpp>
@@ -612,7 +612,7 @@ namespace yq::tachyon {
         return m_images -> get(i);
     }
     
-    ViImageCPtr     ViVisualizer::image_create(const Image& img)
+    ViImageCPtr     ViVisualizer::image_create(const Raster& img)
     {
         if(!m_images)
             return {};
@@ -626,7 +626,7 @@ namespace yq::tachyon {
         }
     }
     
-    void  ViVisualizer::image_erase(const Image& img)
+    void  ViVisualizer::image_erase(const Raster& img)
     {
         image_erase(img.id());
     }

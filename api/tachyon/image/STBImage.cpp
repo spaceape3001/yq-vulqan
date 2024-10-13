@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/asset/AssetFactory.hpp>
-#include <tachyon/image/Image.hpp>
+#include <tachyon/image/Raster.hpp>
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/ErrorDB.hpp>
@@ -17,10 +17,10 @@ namespace yq::tachyon::stb {
     using unable_to_load_image  = error_db::entry<"Unable to load the specified image">;
     using image_size_mismatch   = error_db::entry<"Provided image size exceeds the bytes in the buffer.">;
     
-    Image*   stb_loader(const std::filesystem::path&pth)
+    Raster*   stb_loader(const std::filesystem::path&pth)
     {
         std::string     file    = pth.string();
-        ImageInfo       info;
+        RasterInfo      info;
         int             w, h, c = 0;
         void*           pixels  = stbi_load(file.c_str(), &w, &h, &c, 4);
         if(!pixels)
@@ -30,12 +30,12 @@ namespace yq::tachyon::stb {
         info.size.y     = h;
         size_t          imgsize = info.size.x * info.size.y * 4;
 
-        return new Image(info, Memory(SET, pixels, imgsize, 4, [](const void* data, size_t){
+        return new Raster(info, Memory(SET, pixels, imgsize, 4, [](const void* data, size_t){
             stbi_image_free((void*) data);
         }));
     }
     
-    std::error_code   stb_save_bmp(const Image& img, const std::filesystem::path& pth)
+    std::error_code   stb_save_bmp(const Raster& img, const std::filesystem::path& pth)
     {
         size_t  minSize = img.info.size.x * img.info.size.y * 4;
         if(img.memory.bytes() < minSize)
@@ -46,7 +46,7 @@ namespace yq::tachyon::stb {
         return {};
     }
 
-    std::error_code   stb_save_jpg(const Image& img, const std::filesystem::path& pth)
+    std::error_code   stb_save_jpg(const Raster& img, const std::filesystem::path& pth)
     {
         size_t  minSize = img.info.size.x * img.info.size.y * 4;
         if(img.memory.bytes() < minSize)
@@ -57,7 +57,7 @@ namespace yq::tachyon::stb {
         return {};
     }
 
-    std::error_code   stb_save_png(const Image& img, const std::filesystem::path& pth)
+    std::error_code   stb_save_png(const Raster& img, const std::filesystem::path& pth)
     {
         #if 0
         uint8_t comp        = 0;
@@ -81,19 +81,19 @@ namespace yq::tachyon::stb {
 
     void    reg_stb_loader()
     {
-        Image::cache().add_loader(
+        Raster::cache().add_loader(
             { "bmp", "gif", "jpg", "jpeg", "hdr", "png", "tga" },
             stb_loader
         );
-        Image::cache().add_saver(
+        Raster::cache().add_saver(
             { "bmp" },
             stb_save_bmp
         );
-        Image::cache().add_saver(
+        Raster::cache().add_saver(
             { "jpg" },
             stb_save_jpg
         );
-        Image::cache().add_saver(
+        Raster::cache().add_saver(
             { "png" },
             stb_save_png
         );

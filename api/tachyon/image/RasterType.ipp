@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ImageType.hpp"
+#include "RasterType.hpp"
 #include <yq/meta/Init.hpp>
 
-YQ_TYPE_IMPLEMENT(yq::tachyon::ImageType)
+YQ_TYPE_IMPLEMENT(yq::tachyon::RasterType)

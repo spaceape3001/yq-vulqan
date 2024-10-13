@@ -8,16 +8,16 @@
 
 #include <yq/shape/Size4.hpp>
 #include <tachyon/data/DataFormat.hpp>
-#include <tachyon/image/ImageType.hpp>
+#include <tachyon/image/RasterType.hpp>
 #include <tachyon/image/ImageTiling.hpp>
 
 namespace yq::tachyon {
 
-    /*! \brief Image information
+    /*! \brief Raster image information
     
-        Basic image information structure, can be used by pixmaps & textures
+        Basic raster image information structure, can be used by pixmaps & textures
     */
-    struct ImageInfo {
+    struct RasterInfo {
         //! Size of the image
         Size4U      size        = Size4U(ONE);
         
@@ -25,10 +25,10 @@ namespace yq::tachyon {
         DataFormat  format      = DataFormat::R8G8B8A8_SRGB;
         
         //! General dimension of image
-        ImageType   type        = ImageType::Is2D;
+        RasterType   type        = RasterType::Is2D;
         
-        //! Image tiling
-        ImageTiling tiling      = ImageTiling::Optimal;
+        //! Raster tiling
+        ImageTiling  tiling      = ImageTiling::Optimal;
         
         //! Number of layers in the array
         unsigned    arrayLayers = 1;

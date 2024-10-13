@@ -11,11 +11,11 @@
 
 namespace yq::tachyon {
 
-    /*! \brief Image type
+    /*! \brief Rasterimage type
     
         This is the type of the image for vulkan.  One...two...three dimensions.
     */
-    YQ_ENUM(ImageType, ,
+    YQ_ENUM(RasterType, ,
         D1 = 0,
         D2 = 1,
         D3 = 2,
@@ -26,4 +26,4 @@ namespace yq::tachyon {
     )
 }
 
-YQ_TYPE_DECLARE(yq::tachyon::ImageType)
+YQ_TYPE_DECLARE(yq::tachyon::RasterType)

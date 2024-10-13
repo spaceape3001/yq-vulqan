@@ -8,53 +8,57 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/Memory.hpp>
-#include <tachyon/image/ImageInfo.hpp>
-#include <tachyon/typedef/image.hpp>
+#include <tachyon/image/RasterInfo.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <yq/raster/forward.hpp>
 
 namespace yq::tachyon {
     class Buffer;
 
-    /*! \brief Image (data)
+    /*! \brief Raster image (data)
     
-        An image is *not* drawable, it's data/asset for the GPU or other 
+        A raster image is *not* drawable, it's data/asset for the GPU or other 
         render/destination.  Its data may be copied into a pixmap for 
         manipulation.
     */
-    class Image : public Asset {
-        YQ_OBJECT_DECLARE(Image, Asset)
+    //  [2024-10-13] CSA -- Renamed from "Image" to avoid conflicts in the Mithril library
+    class Raster : public Asset {
+        YQ_OBJECT_DECLARE(Raster, Asset)
     public:
     
         //! Cache of images
-        static TypedAssetFactory<Image>&    cache();
+        static TypedAssetFactory<Raster>&    cache();
         
         //! Loads an image by key
-        static const ImageCPtr              load(std::string_view);
+        static const RasterCPtr              load(std::string_view);
 
         //! Loads an image by key
-        static const ImageCPtr              load(std::string_view, const AssetLoadOptions&);
+        static const RasterCPtr              load(std::string_view, const AssetLoadOptions&);
     
         //! Data for the image
         const Memory      memory;
         
         //! Information for the image
-        const ImageInfo   info;
+        const RasterInfo   info;
         
         //! Constructor (takes info & data)
-        Image(const ImageInfo&, Memory&&);
+        Raster(const RasterInfo&, Memory&&);
         
-        explicit Image(const raster::Pixmap&);
-        Image(ref_t,  const raster::Pixmap&);
-        Image(copy_t, const raster::Pixmap&);
+        explicit Raster(const raster::Pixmap&);
+        Raster(ref_t,  const raster::Pixmap&, DataFormat df={});
+        Raster(copy_t, const raster::Pixmap&, DataFormat df={});
 
         //! Returns the size of the memory data
         virtual size_t      data_size() const  override;
 
         //! Converts to a pixmap (NOTE, this *CAN* fail, check result)
         raster::PixmapSPtr  to_pixmap() const;
+        
 
     private:
-        ~Image();
+        ~Raster();
+
+        static RasterInfo    info_for(const raster::Pixmap&, DataFormat df={});
 
         AssetFactory&       factory() const override;
 

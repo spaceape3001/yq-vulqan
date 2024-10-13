@@ -8,7 +8,6 @@
 
 #include <yq/shape/AxBox2.hpp>
 
-#include <tachyon/image/Image.hpp>
 #include <tachyon/shader/Shader.hpp>
 #include <tachyon/render/Render3DWriter.hpp>
 

@@ -13,17 +13,14 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Image;
-    
-    using ImagePtr              = Ref<Image>;
-    using ImageCPtr             = Ref<const Image>;
+    class Raster;
     
     class ViImage;
     using ViImagePtr            = Ref<ViImage>;
     using ViImageCPtr           = Ref<const ViImage>;
 
     template <typename V, typename A, typename ... Args> class ViManager;
-    using ViImageManager        = ViManager<const ViImage, Image>;
+    using ViImageManager        = ViManager<const ViImage, Raster>;
 
     using ViImageManagerUPtr    = std::unique_ptr<ViImageManager>;
 }

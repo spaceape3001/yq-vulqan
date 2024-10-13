@@ -8,8 +8,8 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/image/Image.hpp>
-#include <tachyon/image/ImageInfo.hpp>
+#include <tachyon/image/Raster.hpp>
+#include <tachyon/image/RasterInfo.hpp>
 #include <tachyon/texture/Texture.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/viz/ViImage.hpp>
@@ -95,7 +95,7 @@ namespace yq::tachyon {
         m_sampler   = sampler;
     
         VqImageViewCreateInfo       info;
-        const ImageInfo&            imgInfo  = image->info();
+        const RasterInfo&            imgInfo  = image->info();
         
         m_extents   = { 
             .width  = (uint32_t) imgInfo.size.x,
@@ -110,13 +110,13 @@ namespace yq::tachyon {
             info.viewType   = (VkImageViewType) (*texInfo.imageViewType).value();
         } else {
             switch(imgInfo.type){
-            case ImageType::Is1D:
+            case RasterType::Is1D:
                 info.viewType   = VK_IMAGE_VIEW_TYPE_1D;
                 break;
-            case ImageType::Is2D:
+            case RasterType::Is2D:
                 info.viewType   = VK_IMAGE_VIEW_TYPE_2D;
                 break;
-            case ImageType::Is3D:
+            case RasterType::Is3D:
                 info.viewType   = VK_IMAGE_VIEW_TYPE_3D;
                 break;
             default:

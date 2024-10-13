@@ -10,13 +10,16 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/file/FileResolver.hpp>
 #include <yq/math/integer.hpp>
+#include <yq/raster/Painter2.hpp>
+#include <yq/raster/Pixels.hxx>
 #include <yq/stream/Text.hpp>
+#include <yq/text/format.hpp>
 #include <yq/util/AutoReset.hpp>
 
 #include <tachyon/logging.hpp>
 #include <yq/asset/Asset.hpp>
 #include <yq/asset/AssetIO.hpp>
-#include <tachyon/image/Image.hpp>
+#include <tachyon/image/Raster.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/pipeline/PipelineWriter.hpp>
 #include <tachyon/sampler/Sampler.hpp>
@@ -43,7 +46,6 @@
     This file leans heavily on imgui_impl_vulkan.cpp for patterns, some code is 
     copied.  As we're basically leaning into our vulkan engine instead.
 */
-
 
 namespace yq::tachyon {
 
@@ -236,12 +238,12 @@ namespace yq::tachyon {
             return false;
         count *= 4;
         
-        ImageInfo       imgInfo;
+        RasterInfo  imgInfo;
         imgInfo.size.x      = (unsigned) width;
         imgInfo.size.y      = (unsigned) height;
         imgInfo.format      = DataFormat::R8G8B8A8_UNORM;
         
-        m_font.image  = new Image(imgInfo, Memory(COPY, pixels, count));
+        m_font.image  = new Raster(imgInfo, Memory(COPY, pixels, count));
         
 m_font.image -> save_to("imgui.png", { .collision = FileCollisionStrategy::Overwrite });
 m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overwrite });
@@ -251,22 +253,6 @@ m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overw
 
 
         m_font.texture      = new Texture(m_font.image, g.font.sampler, g.font.texInfo);
-
-
-#if 0        
-        m_font.image      = new ViImage(*m_viz, *image);
-        if(!m_font.image->valid()){
-            imguiWarning << "ViGui image failed to transfer!";
-        }
-#endif
-        
-        
-        #if 0
-        m_font.texture    = new ViTexture(*m_viz, m_font.image, m_font.sampler, g.font.texInfo);
-        if(!m_font.texture->valid()){
-            imguiWarning << "ViGui texture failed to initialize!";
-        }
-        #endif
         
         ViTextureCPtr       tex     = m_viz -> texture_create(*m_font.texture);
         
@@ -453,6 +439,9 @@ if(!seen.test_and_set()){
             return;
         if(!_import_index(*drawData))
             return ;
+
+raster::Pixels2<RGBA4U8>  result({ (unsigned) fb_width, (unsigned) fb_height }, { 0xFF, 0xFF, 0xFF, 0xFF });
+std::string png_file    = std::string("imgui_") + std::string(fmt_hex(u.tick)) + std::string(".png");            
             
         vkCmdBindPipeline(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline);
         
@@ -540,6 +529,9 @@ if(!seen.test_and_set()){
             global_vtx_offset += cmdL.VtxBuffer.Size;
         }
 
+RasterCPtr   resImg = new Raster(REF, result);
+resImg -> save_to(png_file);
+resImg = {};
 
     //  Restore the scissors to back to a full viewport
         VkRect2D scissor = { { 0, 0 }, { (uint32_t)fb_width, (uint32_t)fb_height } };

@@ -15,7 +15,7 @@
 #include <tachyon/image/ImageViewCreateFlags.hpp>
 #include <tachyon/image/ImageViewType.hpp>
 #include <tachyon/sampler/SamplerInfo.hpp>
-#include <tachyon/typedef/image.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <tachyon/typedef/sampler.hpp>
 #include <tachyon/typedef/texture.hpp>
 #include <optional>
@@ -60,7 +60,7 @@ namespace yq::tachyon {
     public:
     
         //! Image
-        const ImageCPtr             image;
+        const RasterCPtr            image;
 
         //! Sampler info
         const SamplerCPtr           sampler;
@@ -74,10 +74,10 @@ namespace yq::tachyon {
         static TextureCPtr  load(std::string_view, const TextureInfo2& texInfo);
         static TextureCPtr  load(std::string_view, const SamplerCPtr& _sampler, const TextureInfo& texInfo = {});
 
-        Texture(ImageCPtr);
-        Texture(ImageCPtr, const SamplerCPtr& _sampler, const TextureInfo& texInfo={});
-        Texture(ImageCPtr, const TextureInfo& texInfo);
-        Texture(ImageCPtr, const TextureInfo2& texInfo);
+        Texture(RasterCPtr);
+        Texture(RasterCPtr, const SamplerCPtr& _sampler, const TextureInfo& texInfo={});
+        Texture(RasterCPtr, const TextureInfo& texInfo);
+        Texture(RasterCPtr, const TextureInfo2& texInfo);
         
     private:
         ~Texture();

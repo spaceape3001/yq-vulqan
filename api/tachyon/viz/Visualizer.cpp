@@ -27,16 +27,16 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/image/Image.hpp>
 #include <tachyon/image/ImageViewInfo.hpp>
-#include <tachyon/memory/Buffer.hpp>
-#include <tachyon/pipeline/Pipeline.hpp>
-#include <tachyon/pipeline/PushData.hpp>
-#include <tachyon/render/Render3D.hpp>
+//#include <tachyon/image/Raster.hpp>
+//#include <tachyon/memory/Buffer.hpp>
+//#include <tachyon/pipeline/Pipeline.hpp>
+//#include <tachyon/pipeline/PushData.hpp>
+//#include <tachyon/render/Render3D.hpp>
 #include <tachyon/scene/Perspective.hpp>
 #include <tachyon/scene/Scene.hpp>
-#include <tachyon/shader/Shader.hpp>
-#include <tachyon/texture/Texture.hpp>
+//#include <tachyon/shader/Shader.hpp>
+//#include <tachyon/texture/Texture.hpp>
 #include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/v/VqApp.hpp>
 #include <tachyon/v/VqUtils.hpp>

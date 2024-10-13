@@ -119,9 +119,9 @@ namespace yq::tachyon {
         bool                            graphic_queue_valid() const;
 
         ViImageCPtr                     image(uint64_t) const;
-        ViImageCPtr                     image_create(const Image&);
+        ViImageCPtr                     image_create(const Raster&);
         void                            image_erase(uint64_t);
-        void                            image_erase(const Image&);
+        void                            image_erase(const Raster&);
         ViImageManager*                 image_manager() const;
         
 

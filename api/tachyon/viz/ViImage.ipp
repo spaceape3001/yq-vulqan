@@ -7,7 +7,7 @@
 #include "ViImage.hpp"
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/image/Image.hpp>
+#include <tachyon/image/Raster.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/viz/ViBuffer.hpp>
 #include <tachyon/viz/ViVisualizer.hpp>
@@ -23,7 +23,7 @@ namespace yq::tachyon {
     {
     }
     
-    ViImage::ViImage(ViVisualizer&viz, const Image&img)
+    ViImage::ViImage(ViVisualizer&viz, const Raster&img)
     {
         if(viz.device()){
             if(_init(viz, img) != std::error_code()){
@@ -38,7 +38,7 @@ namespace yq::tachyon {
         kill();
     }
 
-    std::error_code ViImage::_init(ViVisualizer& viz, const Image& img)
+    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img)
     {
         ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
         if(!local->valid())
@@ -138,7 +138,7 @@ namespace yq::tachyon {
     }
     
     
-    std::error_code ViImage::init(ViVisualizer&viz, const Image&img)
+    std::error_code ViImage::init(ViVisualizer&viz, const Raster&img)
     {
         if(m_viz){
             if(!consistent())

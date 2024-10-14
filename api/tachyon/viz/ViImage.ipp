@@ -95,10 +95,10 @@ namespace yq::tachyon {
                 copy.extent         = extent;
                 i2  = temp->image();
                 
-                vkCmdCopyImage(cmd, img, vix.src_layout, i2, 
+                vkCmdCopyImage(cmd, img, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, i2, 
                     VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &copy);
 
-
+#if 0
                 VqImageMemoryBarrier imb;
                 imb.oldLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
                 imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
@@ -110,13 +110,13 @@ namespace yq::tachyon {
                     .baseArrayLayer = 0,
                     .layerCount     = 1
                 };
-                imb.srcAccessMask       = 0;
+                imb.srcAccessMask       = VK_ACCESS_TRANSFER_READ_BIT;
                 imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
             
-                vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+                vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+#endif
                 lay = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
             }
-
 
             vkCmdCopyImageToBuffer(cmd, i2, lay, local->buffer(), 1, &creg);
         };

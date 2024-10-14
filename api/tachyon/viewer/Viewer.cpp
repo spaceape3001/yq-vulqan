@@ -95,14 +95,9 @@ namespace yq::tachyon {
     std::error_code     Viewer::draw()
     {
         ViContext   u;
-
-if(tick() > 0){
-    //  temporary hack
-    char filename[256];
-    sprintf(filename, "vulkan-%ld.png", tick());
-    u.snapshot  = std::filesystem::path(filename);
-}
         
+        //  ENABLE to get the validation issue
+        //  u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
         return draw(u);
     }
 

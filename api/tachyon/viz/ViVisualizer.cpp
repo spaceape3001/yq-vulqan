@@ -171,27 +171,27 @@ namespace yq::tachyon {
             ViQueueManagerPtr   r   = new ViQueueManager(*this, iData.viewer, i, qfp[i], wantQueue & ~hasQueue );
             hasQueue |= r->types();
             if(r->types().is_set(ViQueueType::Graphic)){
-                vqInfo << "Discovered graphics queue " << i;
+                vizInfo << "Discovered graphics queue " << i;
                 m_graphicsQueue       = r.ptr();
             }
             if(r->types().is_set(ViQueueType::Compute)){
-                vqInfo << "Discovered compute queue " << i;
+                vizInfo << "Discovered compute queue " << i;
                 m_computeQueue       = r.ptr();
             }
             if(r->types().is_set(ViQueueType::VideoEncode)){
-                vqInfo << "Discovered video encode queue " << i;
+                vizInfo << "Discovered video encode queue " << i;
                 m_videoEncQueue   = r.ptr();
             }
             if(r->types().is_set(ViQueueType::VideoDecode)){
-                vqInfo << "Discovered video decode queue " << i;
+                vizInfo << "Discovered video decode queue " << i;
                 m_videoDecQueue   = r.ptr();
             }
             if(r->types().is_set(ViQueueType::Present)){
-                vqInfo << "Discovered present queue " << i;
+                vizInfo << "Discovered present queue " << i;
                 m_presentQueue       = r.ptr();
             }
             if(r->types() == ViQueueTypeFlags(ViQueueType::Transfer)){
-                vqInfo << "Discovered transfer queue " << i;
+                vizInfo << "Discovered transfer queue " << i;
                 m_transferQueue      = r.ptr();
             }
             iData.queues.push_back(r->info());
@@ -206,28 +206,28 @@ namespace yq::tachyon {
             if(is_required(iData.viewer.compute)){
                 return errors::compute_queue_not_found();
             } else {
-                vqNotice << "Compute queue requested, but not found.";
+                vizNotice << "Compute queue requested, but not found.";
             }
         }
         if(wantQueue.is_set(ViQueueType::VideoEncode) && !m_videoEncQueue){
             if(is_required(iData.viewer.video_encode)){
                 return errors::video_encode_queue_not_found();
             } else {
-                vqNotice << "Video encoding queue requested, but not found.";
+                vizNotice << "Video encoding queue requested, but not found.";
             }
         }
         if(wantQueue.is_set(ViQueueType::VideoDecode) && !m_videoDecQueue){
             if(is_required(iData.viewer.video_decode)){
                 return errors::video_decode_queue_not_found();
             } else {
-                vqNotice << "Video decoding queue requested, but not found.";
+                vizNotice << "Video decoding queue requested, but not found.";
             }
         }
         if(wantQueue.is_set(ViQueueType::Transfer) && !m_transferQueue){
             if(is_required(iData.viewer.transfer)){
                 return errors::transfer_queue_not_found();
             } else {
-                vqNotice << "Transfer-only queue requested, but not found (will be using the graphics queue instead).";
+                vizNotice << "Transfer-only queue requested, but not found (will be using the graphics queue instead).";
             }
         }
         if(!m_transferQueue)

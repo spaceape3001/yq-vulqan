@@ -61,15 +61,6 @@ namespace yq::tachyon {
         imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
         imgInfo.tiling          = (VkImageTiling) m_info.tiling.value();
         imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
-
-#if 0
-// temporary overrides
-imgInfo.mipLevels       = 1;
-imgInfo.arrayLayers     = 1;
-imgInfo.format          = VK_FORMAT_R8G8B8A8_UNORM;
-imgInfo.tiling          = VK_IMAGE_TILING_OPTIMAL;
-imgInfo.initialLayout   = VK_IMAGE_LAYOUT_UNDEFINED;
-#endif
        
         VmaAllocationCreateInfo diai  = {};
         diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;

@@ -98,26 +98,14 @@ namespace yq::tachyon {
         VqImageViewCreateInfo       info;
         const RasterInfo&            imgInfo  = image->info();
 
-        
         m_extents  = { 
             .width          = (uint32_t) imgInfo.size.x,
             .height         = (uint32_t) imgInfo.size.y,
             .depth          = (uint32_t) imgInfo.size.z
         };
 
-vizInfo << "ViTexture::init on image that's (" << m_extents.width << " x " << m_extents.height << ")";
-
         info.image          = image -> image();
-
-        //info.viewType = VK_IMAGE_VIEW_TYPE_2D;
-        info.format = VK_FORMAT_R8G8B8A8_UNORM;
-        info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-        //info.subresourceRange.levelCount = 1;
-        //info.subresourceRange.layerCount = 1;
-
-#if 0        
         info.flags  = texInfo.imageViewFlags.value();
-#endif
         
         if(texInfo.imageViewType){
             info.viewType   = (VkImageViewType) (*texInfo.imageViewType).value();
@@ -138,13 +126,11 @@ vizInfo << "ViTexture::init on image that's (" << m_extents.width << " x " << m_
             }
         }
 
-#if 0        
         if(texInfo.format){
             info.format = (VkFormat) (*texInfo.format).value();
         } else {
             info.format = (VkFormat) imgInfo.format.value();
         }
-#endif
         
         info.components = {
             .r = (VkComponentSwizzle) texInfo.swizzle.red.value(),
@@ -165,8 +151,6 @@ vizInfo << "ViTexture::init on image that's (" << m_extents.width << " x " << m_
             vizWarning << "ViTexture() -- cannot create image view.  VkResult " << (int32_t) res;
             return errors::texture_cant_create_image_view();
         }
-        
-vizDebug << "ViTexture::init() ... " << hex(m_imageView);
         
         return {};
     }

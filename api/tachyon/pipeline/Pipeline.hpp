@@ -8,6 +8,7 @@
 
 #include <yq/core/Flags.hpp>
 
+#include <tachyon/enum/ColorBlend.hpp>
 #include <tachyon/enum/CullMode.hpp>
 #include <tachyon/enum/DataActivity.hpp>
 #include <tachyon/enum/DataFormat.hpp>
@@ -157,6 +158,8 @@ namespace yq::tachyon {
         // NULL is valid return result
         constexpr const CompoundInfo*     compound_type() const { return m_compound; }
         
+        ColorBlend              color_blending() const { return m_colorBlend; }
+        
         CullMode                culling() const { return m_cullMode; }
         FrontFace               front() const { return m_frontFace; }
         bool                    is_dynamic() const;
@@ -174,6 +177,7 @@ namespace yq::tachyon {
         //  Building out the pipeline
         
         void  binding(PipelineBinding);
+        void  color_blending(ColorBlend);
         void  culling(CullMode);
         void  dynamic_state(DynamicState);
         void  dynamic_states(std::initializer_list<DynamicState>);
@@ -302,6 +306,7 @@ namespace yq::tachyon {
         bool                            m_primitiveRestart      = false;
         Topology                        m_topology              = Topology::TriangleList;
         bool                            m_wireframePermitted    = true;
+        ColorBlend                      m_colorBlend            = ColorBlend::Disabled;
 
         push_t                          m_push                  = {};
         std::vector<index_buffer_t>     m_indexBuffers;

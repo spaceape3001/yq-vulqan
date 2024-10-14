@@ -185,26 +185,85 @@ namespace yq::tachyon {
         multisampling.alphaToCoverageEnable = VK_FALSE; // Optional
         multisampling.alphaToOneEnable = VK_FALSE; // Optional
 
-        VkPipelineColorBlendAttachmentState colorBlendAttachment{};
-        colorBlendAttachment.colorWriteMask         = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-        colorBlendAttachment.blendEnable            = VK_TRUE;
-        colorBlendAttachment.srcColorBlendFactor    = VK_BLEND_FACTOR_ONE; // Optional
-        colorBlendAttachment.dstColorBlendFactor    = VK_BLEND_FACTOR_ZERO; // Optional
-        colorBlendAttachment.colorBlendOp           = VK_BLEND_OP_ADD; // Optional
-        colorBlendAttachment.srcAlphaBlendFactor    = VK_BLEND_FACTOR_ONE; // Optional
-        colorBlendAttachment.dstAlphaBlendFactor    = VK_BLEND_FACTOR_ZERO; // Optional
-        colorBlendAttachment.alphaBlendOp           = VK_BLEND_OP_ADD; // Optional
+        static const VkPipelineColorBlendAttachmentState    colorBlendAttachment_disabled = {
+            .blendEnable                = VK_FALSE,
+            .srcColorBlendFactor        = VK_BLEND_FACTOR_ONE,
+            .dstColorBlendFactor        = VK_BLEND_FACTOR_ZERO,
+            .colorBlendOp               = VK_BLEND_OP_ADD,
+            .srcAlphaBlendFactor        = VK_BLEND_FACTOR_ONE,
+            .dstAlphaBlendFactor        = VK_BLEND_FACTOR_ZERO,
+            .alphaBlendOp               = VK_BLEND_OP_ADD,
+            .colorWriteMask             = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT
+        };
+
+        static const VkPipelineColorBlendStateCreateInfo    colorBlend_disabled = {
+            .sType                      = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+            .pNext                      = nullptr,
+            .flags                      = 0,
+            .logicOpEnable              = VK_FALSE,
+            .logicOp                    = VK_LOGIC_OP_COPY,
+            .attachmentCount            = 1,
+            .pAttachments               = &colorBlendAttachment_disabled,
+            .blendConstants             = { 0., 0., 0., 0. }
+        };
         
-        VqPipelineColorBlendStateCreateInfo colorBlending;
-        colorBlending.logicOpEnable = VK_FALSE;
-        colorBlending.logicOp = VK_LOGIC_OP_COPY; // Optional
-        colorBlending.attachmentCount = 1;
-        colorBlending.pAttachments = &colorBlendAttachment;
-        colorBlending.blendConstants[0] = 0.0f; // Optional
-        colorBlending.blendConstants[1] = 0.0f; // Optional
-        colorBlending.blendConstants[2] = 0.0f; // Optional
-        colorBlending.blendConstants[3] = 0.0f; // Optional
-        
+        static const VkPipelineColorBlendAttachmentState    colorBlendAttachment_additive = {
+            .blendEnable                = VK_TRUE,
+            .srcColorBlendFactor        = VK_BLEND_FACTOR_SRC_ALPHA,
+            .dstColorBlendFactor        = VK_BLEND_FACTOR_ONE,
+            .colorBlendOp               = VK_BLEND_OP_ADD,
+            .srcAlphaBlendFactor        = VK_BLEND_FACTOR_ONE,
+            .dstAlphaBlendFactor        = VK_BLEND_FACTOR_ZERO,
+            .alphaBlendOp               = VK_BLEND_OP_ADD,
+            .colorWriteMask             = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT
+        };
+
+        static const VkPipelineColorBlendStateCreateInfo    colorBlend_additive = {
+            .sType                      = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+            .pNext                      = nullptr,
+            .flags                      = 0,
+            .logicOpEnable              = VK_FALSE,
+            .logicOp                    = VK_LOGIC_OP_COPY,
+            .attachmentCount            = 1,
+            .pAttachments               = &colorBlendAttachment_additive,
+            .blendConstants             = { 0., 0., 0., 0. }
+        };
+
+        static const VkPipelineColorBlendAttachmentState    colorBlendAttachment_alphaBlend = {
+            .blendEnable                = VK_TRUE,
+            .srcColorBlendFactor        = VK_BLEND_FACTOR_SRC_ALPHA,
+            .dstColorBlendFactor        = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+            .colorBlendOp               = VK_BLEND_OP_ADD,
+            .srcAlphaBlendFactor        = VK_BLEND_FACTOR_ONE,
+            .dstAlphaBlendFactor        = VK_BLEND_FACTOR_ZERO,
+            .alphaBlendOp               = VK_BLEND_OP_ADD,
+            .colorWriteMask             = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT
+        };
+
+        static const VkPipelineColorBlendStateCreateInfo    colorBlend_alphaBlend = {
+            .sType                      = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+            .pNext                      = nullptr,
+            .flags                      = 0,
+            .logicOpEnable              = VK_FALSE,
+            .logicOp                    = VK_LOGIC_OP_COPY,
+            .attachmentCount            = 1,
+            .pAttachments               = &colorBlendAttachment_alphaBlend,
+            .blendConstants             = { 0., 0., 0., 0. }
+        };
+
+        switch(cfg->color_blending()){
+        case ColorBlend::Additive:
+            pipelineInfo.pColorBlendState   = &colorBlend_additive;
+            break;
+        case ColorBlend::AlphaBlend:
+            pipelineInfo.pColorBlendState   = &colorBlend_alphaBlend;
+            break;
+        case ColorBlend::Disabled:
+        default:
+            pipelineInfo.pColorBlendState   = &colorBlend_disabled;
+            break;
+        }
+
         VqPipelineDynamicStateCreateInfo pdynci;
         const auto& dynamicStates = m_layout->dynamic_states();
         if(!dynamicStates.empty()){
@@ -217,7 +276,6 @@ namespace yq::tachyon {
 
         pipelineInfo.pMultisampleState      = &multisampling;
         pipelineInfo.pDepthStencilState     = nullptr; // Optional
-        pipelineInfo.pColorBlendState       = &colorBlending;
         pipelineInfo.layout                 = pLay->pipeline_layout();
         if(opts.render_pass){
             pipelineInfo.renderPass         = opts.render_pass;

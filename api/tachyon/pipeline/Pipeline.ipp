@@ -65,6 +65,11 @@ namespace yq::tachyon {
         m_binding = v;
     }
     
+    void  Pipeline::color_blending(ColorBlend v)
+    {
+        m_colorBlend = v;
+    }
+
     void  Pipeline::culling(CullMode v)
     {
         m_cullMode  = v;

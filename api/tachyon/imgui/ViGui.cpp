@@ -105,6 +105,8 @@ namespace yq::tachyon {
         
         p -> push<Push>();
         
+        p -> color_blending(ColorBlend::AlphaBlend);
+        
         font.sampler = new Sampler({
             .flags  = {},
             .magFilter  = SamplerFilter::Linear,
@@ -117,7 +119,7 @@ namespace yq::tachyon {
             .unnormalizedCoordinates = false
         });
         
-        font.texInfo.swizzle = { ComponentSwizzle::Alpha, ComponentSwizzle::Alpha, ComponentSwizzle::Alpha, ComponentSwizzle::Alpha };
+        //font.texInfo.swizzle = { ComponentSwizzle::Alpha, ComponentSwizzle::Alpha, ComponentSwizzle::Alpha, ComponentSwizzle::Alpha };
         
         //font.texInfo.
     }
@@ -181,8 +183,6 @@ namespace yq::tachyon {
             return false;
         }
         
-imguiInfo << "Descriptor is " << hex(m_font.descriptor);
-        
         io.Fonts->AddFontDefault();
         
         io.Fonts->Build();
@@ -191,8 +191,6 @@ imguiInfo << "Descriptor is " << hex(m_font.descriptor);
         }
 
         _font_update();
-        
-        m_pipeline -> report();
         return true;
     }
     
@@ -253,9 +251,6 @@ imguiInfo << "Descriptor is " << hex(m_font.descriptor);
         
         m_font.image        = new Raster(imgInfo, Memory(COPY, pixels, count));
         
-m_font.image -> save_to("imgui.png", { .collision = FileCollisionStrategy::Overwrite });
-m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overwrite });
-
         if(m_font.texture)
             m_viz -> texture_erase(m_font.texture->id());
 
@@ -274,8 +269,6 @@ m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overw
             .imageLayout    = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         };
 
-imguiInfo << "Updating descriptor sampler to:\nImageView -> " << hex(tex->image_view()) << "\nSampler -> " << hex(tex->sampler()) << "\nDescriptor -> " << hex(m_font.descriptor);
-        
         VqWriteDescriptorSet    descWrite;
         descWrite.dstSet            = m_font.descriptor;
         descWrite.dstBinding        = 0;

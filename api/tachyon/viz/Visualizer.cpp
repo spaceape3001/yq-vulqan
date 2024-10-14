@@ -535,17 +535,25 @@ namespace yq::tachyon {
 
         VkResult        res = VK_SUCCESS;
         
-        bool    snapshot    = false;
+        struct {
+            VkFormat    format  = VK_FORMAT_UNDEFINED;
+            bool        enable  = false;
+        } snapshot;
+
         if(auto p = std::get_if<bool>(&u.snapshot)){
-            snapshot    = *p;
+            snapshot.enable    = *p;
+        }
+        if(auto p = std::get_if<DataFormat>(&u.snapshot)){
+            snapshot.enable = true;
+            snapshot.format = (VkFormat) (p->value());
         }
         
         res = vkWaitForFences(m_device, 1, &f.m_fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
         if(res == VK_TIMEOUT)
             return create_error<"Fence timeout">();
             
-        if(snapshot){
-            auto r = m_swapchain -> snapshot(m_frameImageIndex);
+        if(snapshot.enable){
+            auto r = m_swapchain -> snapshot(m_frameImageIndex, snapshot.format);
             if(r){
                 u.snapshot  = r.value();
             } else {

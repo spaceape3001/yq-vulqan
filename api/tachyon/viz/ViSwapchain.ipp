@@ -98,7 +98,7 @@ namespace yq::tachyon {
         swapInfo.imageColorSpace  = viz.surface_color_space();
         swapInfo.imageExtent      = m_extents;
         swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
-        swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+        swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
         
         uint32_t queueFamilyIndices[] = {viz.graphic_queue_family(), viz.present_queue_family()};
         if (viz.graphic_queue_family() != viz.present_queue_family()) {
@@ -285,17 +285,20 @@ namespace yq::tachyon {
         _kill();
     }
     
-    Expect<RasterPtr>   ViSwapchain::snapshot(uint32_t i) const
+    Expect<RasterPtr>   ViSwapchain::snapshot(uint32_t i, VkFormat desired) const
     {
         if(i >= m_images.size())
             return errors::swapchain_image_out_of_range();
-        return export_image(*m_viz, m_images[i], ViImageExport {
-            .type   = VK_IMAGE_TYPE_2D,
-            .format = m_viz -> surface_format(),
-            .extent = VkExtent3D{
-                .width  = m_extents.width,
-                .height = m_extents.height,
-                .depth  = 1
+        
+        return export_image(*m_viz, m_images[i], ViImageExport{
+            .type       = VK_IMAGE_TYPE_2D,
+            .src_layout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
+            .format     = m_viz -> surface_format(),
+            .desired    = desired,
+            .extent     = VkExtent3D{
+                .width      = m_extents.width,
+                .height     = m_extents.height,
+                .depth      = 1
             }
         });
     }

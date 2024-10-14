@@ -52,7 +52,7 @@ namespace yq::tachyon {
         const std::vector<VkImage>&         images() const { return m_images; }
         const std::vector<VkImageView>&     image_views() const { return m_imageViews; }
         
-        Expect<RasterPtr>   snapshot(uint32_t) const;
+        Expect<RasterPtr>   snapshot(uint32_t, VkFormat desired=VK_FORMAT_UNDEFINED) const;
 
     private:
         ViVisualizer*               m_viz               = nullptr;

@@ -26,6 +26,9 @@ namespace yq::tachyon {
     
         ViImage();
         ViImage(ViVisualizer&, const Raster&);
+        
+        //! Creates temporary (that isn't ID'd), can be written to
+        ViImage(ViVisualizer&, const RasterInfo&, VkImageUsageFlags flags={});
         ~ViImage();
         
         std::error_code     init(ViVisualizer&, const Raster&);
@@ -53,15 +56,17 @@ namespace yq::tachyon {
         ViImage& operator=(ViImage&&) = delete;
         
         std::error_code _init(ViVisualizer&, const Raster&);
+        std::error_code _init(ViVisualizer&, const RasterInfo&, VkImageUsageFlags flags);
         void            _wipe();
         void            _kill();
     };
 
-    
     struct ViImageExport {
-        VkImageType     type;
-        VkFormat        format;
-        VkExtent3D      extent;
+        VkImageType     type        = {};
+        VkImageLayout   src_layout  = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+        VkFormat        format      = VK_FORMAT_UNDEFINED;
+        VkFormat        desired     = VK_FORMAT_UNDEFINED;
+        VkExtent3D      extent      = {};
     };
     
     Expect<RasterPtr>   export_image(ViVisualizer&, VkImage, const ViImageExport& vix);

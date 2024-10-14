@@ -114,7 +114,7 @@ if(tick() > 0){
         std::filesystem::path   snapshot;
         if(auto p = std::get_if<std::filesystem::path>(&u.snapshot)){
             snapshot    = *p;
-            u.snapshot  = !snapshot.empty();
+            u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
         }
         
         auto start = std::chrono::high_resolution_clock::now();

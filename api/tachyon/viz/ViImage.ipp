@@ -17,6 +17,7 @@ namespace yq::tachyon {
         using image_bad_state                   = error_db::entry<"Image is in a bad state">;
         using image_bad_format                  = error_db::entry<"Image format is unknown">;
         using image_existing                    = error_db::entry<"Image already created">;
+        using image_cant_create_temporary       = error_db::entry<"Unable to create temporary image">;
         using image_empty                       = error_db::entry<"Image is empty">;
         using image_view_cant_create            = error_db::entry<"Unable to create image view">;
     }
@@ -25,10 +26,6 @@ namespace yq::tachyon {
     {
         if(!img)
             return errors::null_pointer();
-            
-        size_t       bpp       = ViImage::format_bytes(vix.format);
-        if(!bpp)
-            return errors::image_bad_format();
             
         VkExtent3D  extent = vix.extent;
         size_t       cnt        = 0;
@@ -47,20 +44,37 @@ namespace yq::tachyon {
         default:
             break;
         }
-        
+
         if(!cnt)
             return errors::image_empty();
-        
-        size_t      bytes       = bpp * cnt;
 
-        ViBufferPtr      local = new ViBuffer(viz, bytes, VK_BUFFER_USAGE_TRANSFER_DST_BIT, VMA_MEMORY_USAGE_GPU_TO_CPU);
+        RasterInfo  info;
+        info.type       = (RasterType) vix.type;
+        info.format     = (DataFormat) vix.format;
+        info.size.x     = extent.width;
+        info.size.y     = extent.height;
+        info.size.z     = extent.depth;
+
+        ViImagePtr  temp;
+        if(vix.desired && (vix.desired != vix.format)){
+            info.format = (DataFormat) vix.desired;
+            temp    = new ViImage(viz, info, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT);
+            if(!temp->valid())
+                return errors::image_cant_create_temporary();
+        }
+        
+        size_t       bpp       = ViImage::format_bytes((VkFormat) info.format.value());
+        if(!bpp)
+            return errors::image_bad_format();
+        
+
+        size_t      bytes       = bpp * cnt;
+        ViBufferPtr      local = new ViBuffer(viz, bytes, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VMA_MEMORY_USAGE_GPU_TO_CPU);
         if(!local->valid())
             return errors::insufficient_gpu_memory();
         
         std::error_code ec, ec2;
         auto downloadTask = [&](VkCommandBuffer cmd) {
-vizInfo << "ViImage trying to export image of " << cnt << " pixels or " << bytes << " bytes";
-
             VkBufferImageCopy creg  = {};
             creg.bufferOffset       = 0;
             creg.bufferRowLength    = 0;
@@ -72,7 +86,39 @@ vizInfo << "ViImage trying to export image of " << cnt << " pixels or " << bytes
             creg.imageSubresource.layerCount        = 1;
             creg.imageExtent                        = extent;
 
-            vkCmdCopyImageToBuffer(cmd, img, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, local->buffer(), 1, &creg);
+            VkImage         i2      = img;
+            VkImageLayout   lay     = vix.src_layout;
+            if(temp){
+                VkImageCopy     copy{};
+                copy.srcSubresource = creg.imageSubresource;
+                copy.dstSubresource = creg.imageSubresource;
+                copy.extent         = extent;
+                i2  = temp->image();
+                
+                vkCmdCopyImage(cmd, img, vix.src_layout, i2, 
+                    VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &copy);
+
+
+                VqImageMemoryBarrier imb;
+                imb.oldLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+                imb.newLayout           = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+                imb.image               = i2;
+                imb.subresourceRange    = VkImageSubresourceRange{ 
+                    .aspectMask     = VK_IMAGE_ASPECT_COLOR_BIT,
+                    .baseMipLevel   = 0,
+                    .levelCount     = 1,
+                    .baseArrayLayer = 0,
+                    .layerCount     = 1
+                };
+                imb.srcAccessMask       = 0;
+                imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
+            
+                vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+                lay = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+            }
+
+
+            vkCmdCopyImageToBuffer(cmd, i2, lay, local->buffer(), 1, &creg);
         };
 
         if(viz.transfer_queue_valid()){
@@ -90,14 +136,6 @@ vizInfo << "ViImage trying to export image of " << cnt << " pixels or " << bytes
         if(ec != std::error_code())
             return unexpected(ec);
             
-
-        RasterInfo  info;
-        info.type   = (RasterType) vix.type;
-        info.format = (DataFormat) vix.format;
-        info.size.x = extent.width;
-        info.size.y = extent.height;
-        info.size.z = extent.depth;
-
         void*   p   = malloc(bytes);
         if(!p)
             return errors::insufficient_cpu_memory();
@@ -417,21 +455,26 @@ vizInfo << "ViImage trying to export image of " << cnt << " pixels or " << bytes
         }
     }
     
+    ViImage::ViImage(ViVisualizer&viz, const RasterInfo& info, VkImageUsageFlags usage)
+    {
+        if(viz.device()){
+            if(_init(viz, info, usage) != std::error_code()){
+                _kill();
+                _wipe();
+            }
+        }
+    }
+    
+
     ViImage::~ViImage()
     {
         kill();
     }
 
-    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img)
+    std::error_code ViImage::_init(ViVisualizer&viz, const RasterInfo& info, VkImageUsageFlags usage)
     {
-        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
-        if(!local->valid())
-            return errors::insufficient_gpu_memory();
-
-        m_viz       = &viz;
-        m_info      = img.info;
-
-        std::error_code ec;
+        m_viz                   = &viz;
+        m_info                  = info;
         
         VqImageCreateInfo   imgInfo;
         imgInfo.imageType       = (VkImageType) m_info.type.value();
@@ -442,15 +485,29 @@ vizInfo << "ViImage trying to export image of " << cnt << " pixels or " << bytes
         imgInfo.arrayLayers     = m_info.arrayLayers;
         imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
         imgInfo.format          = (VkFormat) m_info.format.value();
-        imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+        imgInfo.usage           = usage;
         imgInfo.tiling          = (VkImageTiling) m_info.tiling.value();
         imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
        
         VmaAllocationCreateInfo diai  = {};
         diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
-        
-        if(vmaCreateImage(viz.allocator(), &imgInfo, &diai, &m_image, &m_allocation, nullptr) != VK_SUCCESS)
-            return (std::error_code) errors::insufficient_gpu_memory();
+
+        if(vmaCreateImage(viz.allocator(), &imgInfo, &diai, &m_image, &m_allocation, nullptr) != VK_SUCCESS){
+            return errors::insufficient_gpu_memory();
+        }
+        return {};
+    }
+
+    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img)
+    {
+        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
+        if(!local->valid())
+            return errors::insufficient_gpu_memory();
+
+        std::error_code ec = _init(viz, img.info, VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT);
+        if(ec != std::error_code()){
+            return ec;
+        }
             
         auto uploadTask = [&](VkCommandBuffer cmd){
             VkImageSubresourceRange range;
@@ -479,7 +536,9 @@ vizInfo << "ViImage trying to export image of " << cnt << " pixels or " << bytes
             creg.imageSubresource.mipLevel          = 0;
             creg.imageSubresource.baseArrayLayer    = 0;
             creg.imageSubresource.layerCount        = 1;
-            creg.imageExtent                        = imgInfo.extent;
+            creg.imageExtent.width                  = (uint32_t) m_info.size.x;
+            creg.imageExtent.height                 = (uint32_t) m_info.size.y;
+            creg.imageExtent.depth                  = (uint32_t) m_info.size.z;
 
             //copy the buffer into the image
             vkCmdCopyBufferToImage(cmd, local->buffer(), m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
@@ -501,7 +560,12 @@ vizInfo << "ViImage trying to export image of " << cnt << " pixels or " << bytes
         } else {
             ec = viz.graphic_queue_task(uploadTask);
         }
-        return ec;
+
+        if(ec != std::error_code())
+            return ec;
+            
+        m_id                = img.id();
+        return {};
     }
         
     void ViImage::_kill()

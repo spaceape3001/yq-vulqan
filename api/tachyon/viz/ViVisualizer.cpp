@@ -631,6 +631,28 @@ namespace yq::tachyon {
         image_erase(img.id());
     }
 
+    Expect<RasterPtr>       ViVisualizer::image_export(VkImage img, const VkExtent2D&size, VkFormat fmt)
+    {
+        return export_image(*this, img, ViImageExport{
+            .type       = VK_IMAGE_TYPE_2D,
+            .format     = fmt,
+            .extent     = VkExtent3D{
+                .width  = size.width,
+                .height = size.height,
+                .depth  = 1
+            }
+        });
+    }
+    
+    Expect<RasterPtr>       ViVisualizer::image_export(VkImage img, const VkExtent3D&size, VkFormat fmt)
+    {
+        return export_image(*this, img, ViImageExport{
+            .type       = VK_IMAGE_TYPE_3D,
+            .format     = fmt,
+            .extent     = size
+        });
+    }
+
     ViImageManager* ViVisualizer::image_manager() const
     {
         return m_images.get();

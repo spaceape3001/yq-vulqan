@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <tachyon/typedef/swapchain.hpp>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
@@ -50,6 +51,8 @@ namespace yq::tachyon {
         const std::vector<VkFramebuffer>&   framebuffers() const { return m_frameBuffers; }
         const std::vector<VkImage>&         images() const { return m_images; }
         const std::vector<VkImageView>&     image_views() const { return m_imageViews; }
+        
+        Expect<RasterPtr>   snapshot(uint32_t) const;
 
     private:
         ViVisualizer*               m_viz               = nullptr;

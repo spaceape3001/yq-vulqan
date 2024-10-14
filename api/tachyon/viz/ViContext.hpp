@@ -7,9 +7,13 @@
 #pragma once
 //#include <tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
+#include <yq/core/Ref.hpp>
 #include <yq/math/glm.hpp>
+#include <yq/typedef/filesystem_path.hpp>
 #include <tachyon/enum/Tristate.hpp>
 #include <tachyon/typedef/pipeline.hpp>
+#include <tachyon/typedef/raster.hpp>
+#include <system_error>
 
 //namespace yq::engine { class Viewer; }
 namespace yq::tachyon {
@@ -30,6 +34,8 @@ namespace yq::tachyon {
         custom data
     */
     struct ViContext {
+        using snapshot_t    = std::variant<std::monostate, bool, RasterPtr, std::filesystem::path, std::error_code>;
+    
         ViContext();
         ~ViContext();
         
@@ -66,6 +72,9 @@ namespace yq::tachyon {
 
         //! Current pipeline manager
         ViPipelineManager*  pipelines           = nullptr;
+        
+        //! Grabs the previous frame's snapshot
+        snapshot_t          snapshot;
         
         //! Current thread
         ViThread*           thread              = nullptr;

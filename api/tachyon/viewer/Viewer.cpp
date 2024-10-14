@@ -9,6 +9,7 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/imgui/ViGui.hpp>
+#include <tachyon/image/Raster.hpp>
 #include <tachyon/viz/ViContext.hpp>
 #include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/widget/Widget.hpp>
@@ -36,6 +37,16 @@ namespace yq::tachyon {
             tachyonCritical << "Unable to initialize the viewer ... " << ec.message();
             throw ec;
         }
+    }
+
+    void    Viewer::cmd_pause()
+    {
+        set_render_paused(true);
+    }
+    
+    void    Viewer::cmd_unpause()
+    {
+        set_render_paused(false);
     }
 
     std::error_code     Viewer::initialize(const ViewerCreateInfo&vci, Widget* w)
@@ -84,6 +95,14 @@ namespace yq::tachyon {
     std::error_code     Viewer::draw()
     {
         ViContext   u;
+
+if(tick() > 0){
+    //  temporary hack
+    char filename[256];
+    sprintf(filename, "vulkan-%ld.png", tick());
+    u.snapshot  = std::filesystem::path(filename);
+}
+        
         return draw(u);
     }
 
@@ -91,7 +110,13 @@ namespace yq::tachyon {
     {
         if(m_paused || m_zeroSize)
             return std::error_code();
-            
+        
+        std::filesystem::path   snapshot;
+        if(auto p = std::get_if<std::filesystem::path>(&u.snapshot)){
+            snapshot    = *p;
+            u.snapshot  = !snapshot.empty();
+        }
+        
         auto start = std::chrono::high_resolution_clock::now();
         auto r1 = auto_reset(u.tick, tick());
         auto r2 = auto_reset(u.viewer, this);
@@ -103,7 +128,19 @@ namespace yq::tachyon {
         auto end   = std::chrono::high_resolution_clock::now();
         m_drawTime          = (end-start).count();
         if(ec != std::error_code())
-            tachyonCritical << "Viewer::draw() failed ... " << ec.message();
+            viewCritical << "Viewer::draw() failed ... " << ec.message();
+            
+        if(!snapshot.empty()){
+            if(auto p = std::get_if<RasterPtr>(&u.snapshot)){
+                RasterPtr   img  = *p;
+                if(img){
+                    img -> save_to(snapshot);
+                }
+            }
+            if(auto p = std::get_if<std::error_code>(&u.snapshot)){
+                viewError << "Viewer::draw() snapshot failed ... " << p->message();
+            }
+        }
         //cleanup_sweep();
         return ec;
     }
@@ -161,13 +198,4 @@ namespace yq::tachyon {
             m_delete.push_back(w);
     }
     
-    void    Viewer::cmd_pause()
-    {
-        set_render_paused(true);
-    }
-    
-    void    Viewer::cmd_unpause()
-    {
-        set_render_paused(false);
-    }
 }

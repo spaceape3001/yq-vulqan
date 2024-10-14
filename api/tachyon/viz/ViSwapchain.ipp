@@ -12,6 +12,7 @@
 #include <tachyon/v/VqLogging.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/v/VqUtils.hpp>
+#include <tachyon/viz/ViImage.hpp>
 #include <tachyon/viz/ViVisualizer.hpp>
 #include <algorithm>
 #include <GLFW/glfw3.h>
@@ -22,6 +23,7 @@ namespace yq::tachyon {
         using swapchain_bad_state               = error_db::entry<"Swapchain is in a bad state">;
         using swapchain_cant_create             = error_db::entry<"Unable to create swapchain">;
         using swapchain_existing                = error_db::entry<"Swapchain already exists">;
+        using swapchain_image_out_of_range      = error_db::entry<"Specified image index is out of range">;
     }
 
     ViSwapchain::ViSwapchain()
@@ -281,6 +283,21 @@ namespace yq::tachyon {
     void            ViSwapchain::kill()
     {
         _kill();
+    }
+    
+    Expect<RasterPtr>   ViSwapchain::snapshot(uint32_t i) const
+    {
+        if(i >= m_images.size())
+            return errors::swapchain_image_out_of_range();
+        return export_image(*m_viz, m_images[i], ViImageExport {
+            .type   = VK_IMAGE_TYPE_2D,
+            .format = m_viz -> surface_format(),
+            .extent = VkExtent3D{
+                .width  = m_extents.width,
+                .height = m_extents.height,
+                .depth  = 1
+            }
+        });
     }
     
     bool            ViSwapchain::valid() const

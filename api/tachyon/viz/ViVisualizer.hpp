@@ -19,6 +19,7 @@
 #include <tachyon/typedef/queue_tasker.hpp>
 #include <tachyon/typedef/pipeline.hpp>
 #include <tachyon/typedef/pipeline_layout.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <tachyon/typedef/render_pass.hpp>
 #include <tachyon/typedef/sampler.hpp>
 #include <tachyon/typedef/shader.hpp>
@@ -120,11 +121,12 @@ namespace yq::tachyon {
 
         ViImageCPtr                     image(uint64_t) const;
         ViImageCPtr                     image_create(const Raster&);
+        Expect<RasterPtr>               image_export(VkImage, const VkExtent2D&, VkFormat fmt = VK_FORMAT_R8G8B8A8_SRGB);
+        Expect<RasterPtr>               image_export(VkImage, const VkExtent3D&, VkFormat fmt = VK_FORMAT_R8G8B8A8_SRGB);
         void                            image_erase(uint64_t);
         void                            image_erase(const Raster&);
         ViImageManager*                 image_manager() const;
         
-
         //! Vulkan instance
         VkInstance                      instance() const { return m_instance; }
         
@@ -287,6 +289,7 @@ namespace yq::tachyon {
         VkDevice                            m_device            = nullptr;
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
+        uint32_t                            m_frameImageIndex   = 0;
         ViQueueManager*                     m_graphicsQueue     = nullptr;
         ViImageManagerUPtr                  m_images;
         VkInstance                          m_instance          = nullptr;

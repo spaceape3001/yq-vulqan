@@ -28,15 +28,9 @@
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
 #include <tachyon/image/ImageViewInfo.hpp>
-//#include <tachyon/image/Raster.hpp>
-//#include <tachyon/memory/Buffer.hpp>
-//#include <tachyon/pipeline/Pipeline.hpp>
-//#include <tachyon/pipeline/PushData.hpp>
-//#include <tachyon/render/Render3D.hpp>
+#include <tachyon/image/Raster.hpp>
 #include <tachyon/scene/Perspective.hpp>
 #include <tachyon/scene/Scene.hpp>
-//#include <tachyon/shader/Shader.hpp>
-//#include <tachyon/texture/Texture.hpp>
 #include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/v/VqApp.hpp>
 #include <tachyon/v/VqUtils.hpp>
@@ -541,9 +535,23 @@ namespace yq::tachyon {
 
         VkResult        res = VK_SUCCESS;
         
+        bool    snapshot    = false;
+        if(auto p = std::get_if<bool>(&u.snapshot)){
+            snapshot    = *p;
+        }
+        
         res = vkWaitForFences(m_device, 1, &f.m_fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
         if(res == VK_TIMEOUT)
             return create_error<"Fence timeout">();
+            
+        if(snapshot){
+            auto r = m_swapchain -> snapshot(m_frameImageIndex);
+            if(r){
+                u.snapshot  = r.value();
+            } else {
+                u.snapshot  = r.error();
+            }
+        }
 
         bool    rebuildFlag = m_rebuildSwap.exchange(false);
         if(rebuildFlag){
@@ -551,8 +559,7 @@ namespace yq::tachyon {
             return std::error_code();
         }
 
-        uint32_t imageIndex = 0;
-        res    = vkAcquireNextImageKHR(m_device, m_swapchain->swapchain(), kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &imageIndex);
+        res    = vkAcquireNextImageKHR(m_device, m_swapchain->swapchain(), kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &m_frameImageIndex);
         
         switch(res){
         case VK_TIMEOUT:
@@ -583,7 +590,7 @@ namespace yq::tachyon {
         vkResetCommandBuffer(u.command_buffer, 0);
         
     
-        std::error_code ec = _record(u, imageIndex, use);
+        std::error_code ec = _record(u, m_frameImageIndex, use);
         if(ec)
             return ec;
         
@@ -612,7 +619,7 @@ namespace yq::tachyon {
         presentInfo.pWaitSemaphores = signalSemaphores;
         presentInfo.swapchainCount = 1;
         presentInfo.pSwapchains = swapchains;
-        presentInfo.pImageIndices = &imageIndex;
+        presentInfo.pImageIndices = &m_frameImageIndex;
         presentInfo.pResults = nullptr; // Optional
         vkQueuePresentKHR(m_presentQueue->queue(0), &presentInfo);
         

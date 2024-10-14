@@ -29,6 +29,7 @@ namespace yq::tachyon::errors {
     using format_unsupported                = error_db::entry<"Requested format(s) is not supported">;
     using graphics_queue_not_found          = error_db::entry<"No graphics queue found">;
     using graphics_queue_uninitialized      = error_db::entry<"Graphics queue is uninitialized">;
+    using insufficient_cpu_memory           = error_db::entry<"Insufficient CPU memory for requested operation">;
     using insufficient_gpu_memory           = error_db::entry<"Insufficient GPU memory for requested operation">;
     using present_queue_not_found           = error_db::entry<"No present queue found">;
     using present_queue_uninitialized       = error_db::entry<"Present queue is uninitialized">;

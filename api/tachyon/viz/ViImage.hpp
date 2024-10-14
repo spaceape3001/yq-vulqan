@@ -10,6 +10,7 @@
 #include <yq/shape/Size4.hpp>
 #include <yq/typedef/size4.hpp>
 #include <tachyon/image/RasterInfo.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <vk_mem_alloc.h>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
@@ -17,9 +18,11 @@
 
 namespace yq::tachyon {
     class ViVisualizer;
-    class Raster;
+
     class ViImage : public RefCount {
     public:
+    
+        static size_t       format_bytes(VkFormat);
     
         ViImage();
         ViImage(ViVisualizer&, const Raster&);
@@ -53,4 +56,13 @@ namespace yq::tachyon {
         void            _wipe();
         void            _kill();
     };
+
+    
+    struct ViImageExport {
+        VkImageType     type;
+        VkFormat        format;
+        VkExtent3D      extent;
+    };
+    
+    Expect<RasterPtr>   export_image(ViVisualizer&, VkImage, const ViImageExport& vix);
 }

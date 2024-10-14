@@ -30,8 +30,6 @@
 
 #include <tachyon/2D/Triangle.hpp>
 #include <tachyon/app/Application.hpp>
-//#include <tachyon/image/Raster.hpp>
-#include <tachyon/pipeline/FrontFace.hpp>
 #include <tachyon/render/Render3D.hpp>
 #include <tachyon/render/Render3DWriter.hpp>
 #include <tachyon/shader/Shader.hpp>

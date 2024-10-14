@@ -7,9 +7,11 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <tachyon/pipeline/DataActivity.hpp>
+#include <tachyon/enum/DataActivity.hpp>
 
 namespace yq::tachyon {
+
+    // IF we define these in the toolbox, we'll derive the types
     struct common_t {
         consteval operator DataActivity() const noexcept { return DataActivity::COMMON; }
     };

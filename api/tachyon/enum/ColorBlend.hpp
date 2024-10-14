@@ -4,7 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PipelineBinding.hpp"
-#include <yq/meta/Init.hpp>
+#pragma once
 
-YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)
+#include <cstdint>
+
+namespace yq::tachyon {
+    enum class ColorBlend : uint8_t {
+        Disabled    = 0,
+        Additive,
+        AlphaBlend
+    };
+}

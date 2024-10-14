@@ -29,6 +29,7 @@
 #include <tachyon/viz/ViBuffer.hpp>
 #include <tachyon/viz/ViContext.hpp>
 #include <tachyon/viz/ViImage.hpp>
+#include <tachyon/viz/ViLogging.hpp>
 #include <tachyon/viz/ViManager.hpp>
 #include <tachyon/viz/ViPipeline.hpp>
 #include <tachyon/viz/ViPipelineLayout.hpp>
@@ -41,6 +42,9 @@
 #include <backends/imgui_impl_glfw.h>
 
 #include <atomic>
+
+//  for debugging....
+#include <fstream>
 
 /*
     This file leans heavily on imgui_impl_vulkan.cpp for patterns, some code is 
@@ -113,6 +117,8 @@ namespace yq::tachyon {
             .unnormalizedCoordinates = false
         });
         
+        font.texInfo.swizzle = { ComponentSwizzle::Alpha, ComponentSwizzle::Alpha, ComponentSwizzle::Alpha, ComponentSwizzle::Alpha };
+        
         //font.texInfo.
     }
     
@@ -174,6 +180,8 @@ namespace yq::tachyon {
             imguiWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
             return false;
         }
+        
+imguiInfo << "Descriptor is " << hex(m_font.descriptor);
         
         io.Fonts->AddFontDefault();
         
@@ -243,7 +251,7 @@ namespace yq::tachyon {
         imgInfo.size.y      = (unsigned) height;
         imgInfo.format      = DataFormat::R8G8B8A8_UNORM;
         
-        m_font.image  = new Raster(imgInfo, Memory(COPY, pixels, count));
+        m_font.image        = new Raster(imgInfo, Memory(COPY, pixels, count));
         
 m_font.image -> save_to("imgui.png", { .collision = FileCollisionStrategy::Overwrite });
 m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overwrite });
@@ -265,6 +273,8 @@ m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overw
             .imageView      = tex->image_view(),
             .imageLayout    = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         };
+
+imguiInfo << "Updating descriptor sampler to:\nImageView -> " << hex(tex->image_view()) << "\nSampler -> " << hex(tex->sampler()) << "\nDescriptor -> " << hex(m_font.descriptor);
         
         VqWriteDescriptorSet    descWrite;
         descWrite.dstSet            = m_font.descriptor;
@@ -327,6 +337,21 @@ m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overw
             dst += cmd.IdxBuffer.Size;
         }
         
+        if(m_update(U::Index)){
+            if(cnt){
+                m_index.data.resize(cnt, 0);
+                dst = m_index.data.data();
+                for(int n=0;n<dd.CmdListsCount;++n){
+                    const ImDrawList&   cmd = *dd.CmdLists[n];
+                    memcpy(dst, cmd.IdxBuffer.Data, cmd.IdxBuffer.Size*sizeof(ImDrawIdx));
+                    dst += cmd.IdxBuffer.Size;
+                }
+            } else {
+                m_index.data.clear();
+            }
+            m_update -= U::Index;
+        }
+        
         m_index.buffer ->unmap();
         return true;
     }
@@ -372,7 +397,6 @@ m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overw
             return false;
         }
         
-    
         ImDrawVert* dst = (ImDrawVert*) m_vertex.buffer->data();
         for(int n=0;n<dd.CmdListsCount;++n){
             const ImDrawList&   cmd = *dd.CmdLists[n];
@@ -380,20 +404,64 @@ m_font.image -> save_to("imgui.jpg", { .collision = FileCollisionStrategy::Overw
             dst += cmd.VtxBuffer.Size;
         }
 
-static std::atomic_flag   seen;
-if(!seen.test_and_set()){
-    
+        if(m_update(U::Vertex)){
+            if(cnt){
+                m_vertex.data.resize(cnt);
+                dst = m_vertex.data.data();
+                for(int n=0;n<dd.CmdListsCount;++n){
+                    const ImDrawList&   cmd = *dd.CmdLists[n];
+                    memcpy(dst, cmd.VtxBuffer.Data, cmd.VtxBuffer.Size*sizeof(ImDrawVert));
+                    dst += cmd.VtxBuffer.Size;
+                }
+            } else {
+                m_vertex.data.clear();
+            }
+            m_update -= U::Vertex;
+        }
 
-    for(size_t n=0;n<dd.TotalVtxCount;++n){
-        
-    }
-}
-        
-        
         m_vertex.buffer ->unmap();
+
         return true;
     }
 
+    void    ViGui::_write_csv(const ImDrawData&dd, std::string_view pfx)
+    {
+        std::string     vfile = std::string(pfx) + "vertex.csv";
+        _write_csv_vertex(dd, vfile);
+        std::string     ifile = std::string(pfx) + "index.csv";
+        _write_csv_index(dd, ifile);
+    }
+
+    void    ViGui::_write_csv_index(const ImDrawData&dd, std::string_view filename)
+    {
+        std::ofstream   fidx(std::string(filename), std::ios_base::out | std::ios_base::trunc);
+        fidx << "index,vertex,x,y,u,v,red,green,blue,alpha\n";
+        for(size_t n=0;n<m_index.data.size();++n){
+            ImDrawIdx    val = m_index.data[n];
+            if(val >= m_vertex.data.size())
+                continue;
+                
+            const auto&  vtx = m_vertex.data[val];
+            ImVec4  clr = ImGui::ColorConvertU32ToFloat4(vtx.col);
+            fidx << n << "," << val << "," << vtx.pos.x << "," << vtx.pos.y << "," << vtx.uv.x << "," << vtx.uv.y << "," 
+                << clr.x << "," << clr.y << "," << clr.z << "," << clr.w << "\n";
+        }
+        fidx.close();
+    }
+
+    void    ViGui::_write_csv_vertex(const ImDrawData&dd, std::string_view filename)
+    {
+        std::ofstream   fvtx(std::string(filename), std::ios_base::out | std::ios_base::trunc);
+        fvtx << "vertex,x,y,u,v,red,green,blue,alpha\n";
+        for(size_t n=0;n<m_vertex.data.size();++n){
+            const auto&  vtx = m_vertex.data[n];
+            ImVec4  clr = ImGui::ColorConvertU32ToFloat4(vtx.col);
+            fvtx << n << "," << vtx.pos.x << "," << vtx.pos.y << "," << vtx.uv.x << "," << vtx.uv.y << "," 
+                << clr.x << "," << clr.y << "," << clr.z << "," << clr.w << "\n";
+        }
+        fvtx.close();
+    }
+    
     void    ViGui::draw(ViContext&u, Widget*w)
     {
         if(!w)
@@ -405,6 +473,7 @@ if(!seen.test_and_set()){
         ImGui::NewFrame();
         w -> imgui_(u);
         ImGui::Render();
+        m_update |= U::DrawList;
     }
     
 
@@ -432,17 +501,17 @@ if(!seen.test_and_set()){
             u.pipeline_shaders  = m_pipelineLayout -> shader_mask();
         }
         
-        if(drawData->CmdListsCount <= 0)    // nothing to do
-            return ;
-    
-        if(!_import_vertex(*drawData))
-            return;
-        if(!_import_index(*drawData))
-            return ;
+        
+        if(m_update(U::DrawList)){
+            if(drawData->CmdListsCount <= 0)    // nothing to do
+                return ;
+            if(!_import_vertex(*drawData))
+                return;
+            if(!_import_index(*drawData))
+                return ;
+            m_update -= U::DrawList;
+        }
 
-raster::Pixels2<RGBA4U8>  result({ (unsigned) fb_width, (unsigned) fb_height }, { 0xFF, 0xFF, 0xFF, 0xFF });
-std::string png_file    = std::string("imgui_") + std::string(fmt_hex(u.tick)) + std::string(".png");            
-            
         vkCmdBindPipeline(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline);
         
         if(m_vertex.count){
@@ -450,7 +519,8 @@ std::string png_file    = std::string("imgui_") + std::string(fmt_hex(u.tick)) +
             VkDeviceSize    offset = 0;
             
             vkCmdBindVertexBuffers(u.command_buffer, 0, 1, &vbo, &offset);
-            vkCmdBindIndexBuffer(u.command_buffer, m_index.buffer->buffer(), 0, sizeof(ImDrawIdx) == 2 ? VK_INDEX_TYPE_UINT16 : VK_INDEX_TYPE_UINT32);
+            vkCmdBindIndexBuffer(u.command_buffer, m_index.buffer->buffer(), 0, (sizeof(ImDrawIdx) == 2) ? 
+                VK_INDEX_TYPE_UINT16 : VK_INDEX_TYPE_UINT32);
         }
 
         VkViewport viewport;
@@ -517,8 +587,9 @@ std::string png_file    = std::string("imgui_") + std::string(fmt_hex(u.tick)) +
                     desc_set    = (VkDescriptorSet) cmd.TextureId;
                 }
                 
-                if(!desc_set)
+                if(!desc_set){
                     vizWarning << "Texture descriptor is NULL!";
+                }
 
                 vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, 1, &desc_set, 0, nullptr);
 
@@ -528,10 +599,6 @@ std::string png_file    = std::string("imgui_") + std::string(fmt_hex(u.tick)) +
             global_idx_offset += cmdL.IdxBuffer.Size;
             global_vtx_offset += cmdL.VtxBuffer.Size;
         }
-
-RasterCPtr   resImg = new Raster(REF, result);
-resImg -> save_to(png_file);
-resImg = {};
 
     //  Restore the scissors to back to a full viewport
         VkRect2D scissor = { { 0, 0 }, { (uint32_t)fb_width, (uint32_t)fb_height } };

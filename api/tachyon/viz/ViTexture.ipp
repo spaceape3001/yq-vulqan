@@ -13,6 +13,7 @@
 #include <tachyon/texture/Texture.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/viz/ViImage.hpp>
+#include <tachyon/viz/ViLogging.hpp>
 #include <tachyon/viz/ViSampler.hpp>
 #include <tachyon/viz/ViVisualizer.hpp>
 
@@ -96,15 +97,27 @@ namespace yq::tachyon {
     
         VqImageViewCreateInfo       info;
         const RasterInfo&            imgInfo  = image->info();
+
         
-        m_extents   = { 
-            .width  = (uint32_t) imgInfo.size.x,
-            .height = (uint32_t) imgInfo.size.y,
-            .depth  = (uint32_t) imgInfo.size.z
+        m_extents  = { 
+            .width          = (uint32_t) imgInfo.size.x,
+            .height         = (uint32_t) imgInfo.size.y,
+            .depth          = (uint32_t) imgInfo.size.z
         };
-        
+
+vizInfo << "ViTexture::init on image that's (" << m_extents.width << " x " << m_extents.height << ")";
+
+        info.image          = image -> image();
+
+        //info.viewType = VK_IMAGE_VIEW_TYPE_2D;
+        info.format = VK_FORMAT_R8G8B8A8_UNORM;
+        info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+        //info.subresourceRange.levelCount = 1;
+        //info.subresourceRange.layerCount = 1;
+
+#if 0        
         info.flags  = texInfo.imageViewFlags.value();
-        info.image  = image -> image();
+#endif
         
         if(texInfo.imageViewType){
             info.viewType   = (VkImageViewType) (*texInfo.imageViewType).value();
@@ -124,29 +137,36 @@ namespace yq::tachyon {
                 break;
             }
         }
-        
+
+#if 0        
         if(texInfo.format){
             info.format = (VkFormat) (*texInfo.format).value();
         } else {
             info.format = (VkFormat) imgInfo.format.value();
         }
+#endif
         
-        info.components.r   = (VkComponentSwizzle) texInfo.swizzle.red.value();
-        info.components.g   = (VkComponentSwizzle) texInfo.swizzle.green.value();
-        info.components.b   = (VkComponentSwizzle) texInfo.swizzle.blue.value();
-        info.components.a   = (VkComponentSwizzle) texInfo.swizzle.alpha.value();
-        
-        info.subresourceRange.aspectMask     = (VkImageAspectFlags) texInfo.aspect.value();
-        info.subresourceRange.baseMipLevel   = texInfo.baseMipLevel;
-        info.subresourceRange.levelCount     = texInfo.levelCount;
-        info.subresourceRange.baseArrayLayer = texInfo.baseArrayLayer;
-        info.subresourceRange.layerCount     = texInfo.layerCount;
+        info.components = {
+            .r = (VkComponentSwizzle) texInfo.swizzle.red.value(),
+            .g = (VkComponentSwizzle) texInfo.swizzle.green.value(),
+            .b = (VkComponentSwizzle) texInfo.swizzle.blue.value(),
+            .a = (VkComponentSwizzle) texInfo.swizzle.alpha.value()
+        };
+
+        info.subresourceRange.aspectMask        = (VkImageAspectFlags) texInfo.aspect.value();
+
+        info.subresourceRange.baseMipLevel      = texInfo.baseMipLevel;
+        info.subresourceRange.levelCount        = texInfo.levelCount;
+        info.subresourceRange.baseArrayLayer    = texInfo.baseArrayLayer;
+        info.subresourceRange.layerCount        = texInfo.layerCount;
 
         VkResult res = vkCreateImageView(viz.device(), &info, nullptr, &m_imageView);
         if(res != VK_SUCCESS){
             vizWarning << "ViTexture() -- cannot create image view.  VkResult " << (int32_t) res;
             return errors::texture_cant_create_image_view();
         }
+        
+vizDebug << "ViTexture::init() ... " << hex(m_imageView);
         
         return {};
     }

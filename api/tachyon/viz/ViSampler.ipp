@@ -12,6 +12,8 @@
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/viz/ViVisualizer.hpp>
 
+#include <tachyon/viz/ViLogging.hpp>
+
 namespace yq::tachyon {
     namespace errors {
         using sampler_bad_state                 = error_db::entry<"Sampler is in a bad state">;
@@ -63,7 +65,8 @@ namespace yq::tachyon {
 
     std::error_code     ViSampler::_init(ViVisualizer&viz, const Sampler&sam)
     {
-        VkSamplerCreateInfo sci  = vkInfo(viz, sam.info);
+        VkSamplerCreateInfo sci = vkInfo(viz, sam.info);
+
         VkResult res = vkCreateSampler(viz.device(), &sci, nullptr, &m_sampler);
         if(res != VK_SUCCESS){
             vizWarning << "vkCreateSampler(): VkResult " << (int32_t) res;

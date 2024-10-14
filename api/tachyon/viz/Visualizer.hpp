@@ -10,24 +10,13 @@
 
 #include <yq/core/Guarded.hpp>
 
-#include <tachyon/viewer/PresentMode.hpp>
-#include <tachyon/basic/Tristate.hpp>
-#include <tachyon/typedef/buffer.hpp>
-#include <tachyon/typedef/image.hpp>
+#include <tachyon/enum/Tristate.hpp>
 #include <tachyon/typedef/rendered.hpp>
-#include <tachyon/typedef/shader.hpp>
 #include <tachyon/viz/ViVisualizer.hpp>
 
 #include <atomic>
 #include <functional>
-#include <map>
-#include <set>
-#include <string_view>
-#include <unordered_map>
-#include <vector>
 
-#include <vk_mem_alloc.h>
-#include <vulkan/vulkan_core.h>
 #include <tbb/spin_rw_mutex.h>
 
 namespace yq::tachyon {

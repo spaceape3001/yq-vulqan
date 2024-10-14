@@ -14,5 +14,8 @@ layout(location = 0) in struct {
 
 void main()
 {
+    //vec4 v = texture(sTexture, In.UV.st);
+    //fColor  = In.Color * v.b;
+
     fColor = In.Color * texture(sTexture, In.UV.st);
 }

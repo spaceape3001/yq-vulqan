@@ -8,7 +8,7 @@
 
 #include <yq/core/Memory.hpp>
 #include <yq/asset/Asset.hpp>
-#include <tachyon/shader/ShaderType.hpp>
+#include <tachyon/enum/ShaderType.hpp>
 #include <tachyon/typedef/shader.hpp>
 
 namespace yq::tachyon {

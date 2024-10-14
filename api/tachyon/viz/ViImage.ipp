@@ -61,6 +61,15 @@ namespace yq::tachyon {
         imgInfo.usage           = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
         imgInfo.tiling          = (VkImageTiling) m_info.tiling.value();
         imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
+
+#if 0
+// temporary overrides
+imgInfo.mipLevels       = 1;
+imgInfo.arrayLayers     = 1;
+imgInfo.format          = VK_FORMAT_R8G8B8A8_UNORM;
+imgInfo.tiling          = VK_IMAGE_TILING_OPTIMAL;
+imgInfo.initialLayout   = VK_IMAGE_LAYOUT_UNDEFINED;
+#endif
        
         VmaAllocationCreateInfo diai  = {};
         diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
@@ -70,11 +79,11 @@ namespace yq::tachyon {
             
         auto uploadTask = [&](VkCommandBuffer cmd){
             VkImageSubresourceRange range;
-            range.aspectMask    = VK_IMAGE_ASPECT_COLOR_BIT;
-            range.baseMipLevel = 0;
-            range.levelCount = 1;
-            range.baseArrayLayer = 0;
-            range.layerCount = 1;
+            range.aspectMask        = VK_IMAGE_ASPECT_COLOR_BIT;
+            range.baseMipLevel      = 0;
+            range.levelCount        = 1;
+            range.baseArrayLayer    = 0;
+            range.layerCount        = 1;
             
             VqImageMemoryBarrier imb;
             imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -86,27 +95,27 @@ namespace yq::tachyon {
             
             vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
 
-            VkBufferImageCopy creg = {};
-            creg.bufferOffset = 0;
-            creg.bufferRowLength = 0;
-            creg.bufferImageHeight = 0;
+            VkBufferImageCopy creg  = {};
+            creg.bufferOffset       = 0;
+            creg.bufferRowLength    = 0;
+            creg.bufferImageHeight  = 0;
 
-            creg.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            creg.imageSubresource.mipLevel = 0;
-            creg.imageSubresource.baseArrayLayer = 0;
-            creg.imageSubresource.layerCount = 1;
-            creg.imageExtent = imgInfo.extent;
+            creg.imageSubresource.aspectMask        = VK_IMAGE_ASPECT_COLOR_BIT;
+            creg.imageSubresource.mipLevel          = 0;
+            creg.imageSubresource.baseArrayLayer    = 0;
+            creg.imageSubresource.layerCount        = 1;
+            creg.imageExtent                        = imgInfo.extent;
 
             //copy the buffer into the image
             vkCmdCopyBufferToImage(cmd, local->buffer(), m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &creg);
 
             VkImageMemoryBarrier imb2 = imb;
 
-            imb2.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb2.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            imb2.oldLayout          = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb2.newLayout          = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
-            imb2.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-            imb2.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+            imb2.srcAccessMask      = VK_ACCESS_TRANSFER_WRITE_BIT;
+            imb2.dstAccessMask      = VK_ACCESS_SHADER_READ_BIT;
 
             //barrier the image into the shader readable layout
             vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);

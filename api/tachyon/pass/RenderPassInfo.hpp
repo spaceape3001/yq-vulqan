@@ -7,39 +7,17 @@
 #pragma once
 
 #include <yq/core/Flags.hpp>
-#include <tachyon/data/DataFormat.hpp>
-#include <tachyon/image/ImageLayout.hpp>
-#include <tachyon/pipeline/PipelineBinding.hpp>
+#include <tachyon/enum/DataFormat.hpp>
+#include <tachyon/enum/ImageLayout.hpp>
+#include <tachyon/enum/LoadOp.hpp>
+#include <tachyon/enum/PipelineBinding.hpp>
+#include <tachyon/enum/SampleCount.hpp>
+#include <tachyon/enum/StoreOp.hpp>
 
 namespace yq::tachyon {
     struct AttachmentReference {
         uint32_t        attachment      = 0;
         ImageLayout     layout          = ImageLayout::ColorAttachment;
-    };
-    
-    enum class SampleCount : uint8_t {
-        One         = 0,
-        Two         = 1,
-        Four        = 2,
-        Eight       = 3,
-        Sixteen     = 4,
-        ThirtyTwo   = 5,
-        SixtyFour   = 6
-    };
-    
-    using SampleCountFlags  = Flags<SampleCount,uint32_t>;
-    
-    enum class LoadOp : int32_t {
-        Load        = 0,
-        Clear       = 1,
-        DontCare    = 2,
-        None        = 1000400000
-    };
-    
-    enum class StoreOp : int32_t {
-        Store       = 0,
-        DontCare    = 1,
-        None        = 1000301000
     };
 
     struct AttachmentDescription {

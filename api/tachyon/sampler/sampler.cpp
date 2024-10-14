@@ -4,11 +4,4 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Auto-generated file
-
-#include "BorderColor.ipp"
 #include "Sampler.ipp"
-#include "SamplerAddressMode.ipp"
-#include "SamplerCreateFlags.ipp"
-#include "SamplerFilter.ipp"
-#include "SamplerMipmapMode.ipp"

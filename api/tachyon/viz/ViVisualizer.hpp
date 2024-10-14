@@ -13,6 +13,7 @@
 #include <yq/typedef/rgba.hpp>
 
 #include <tachyon/config/vulqan.hpp>
+#include <tachyon/enum/PresentMode.hpp>
 #include <tachyon/typedef/buffer.hpp>
 #include <tachyon/typedef/image.hpp>
 #include <tachyon/typedef/queue_tasker.hpp>
@@ -23,7 +24,6 @@
 #include <tachyon/typedef/shader.hpp>
 #include <tachyon/typedef/swapchain.hpp>
 #include <tachyon/typedef/texture.hpp>
-#include <tachyon/viewer/PresentMode.hpp>
 #include <tachyon/viz/ViCleanupManager.hpp>
 #include <tachyon/viz/ViQueueType.hpp>
 

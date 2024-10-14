@@ -7,5 +7,3 @@
 // Auto-generated file
 
 #include "Buffer.ipp"
-#include "BufferUsage.ipp"
-#include "SystemAllocationScope.ipp"

@@ -17,7 +17,7 @@ add_library(${PROJECT_NAME} SHARED
     app/Application.cpp
     #asset/asset.cpp
     
-    basic/Tristate.cpp
+    #basic/Tristate.cpp
     
     camera/Camera.cpp
     camera/NullCamera.cpp
@@ -28,9 +28,10 @@ add_library(${PROJECT_NAME} SHARED
     
     config/build.cpp
     
-    data/data.cpp
-    
     editor/Editor.cpp
+    
+    enum/enum.cpp
+    enum/KeyCode.cpp
     
     event/Event.cpp
     event/KeyboardEvent.cpp
@@ -53,12 +54,6 @@ add_library(${PROJECT_NAME} SHARED
     imgui/MyImGui.cpp
     imgui/ViGui.cpp
     
-    input/KeyCode.cpp
-    input/ModifierKey.cpp
-    
-    logic/CompareOp.cpp
-    logic/LogicOp.cpp
-    
     manipulator/Manipulator.cpp
     
     memory/memory.cpp
@@ -78,7 +73,6 @@ add_library(${PROJECT_NAME} SHARED
 
     shader/GLSLShader.cpp
     shader/Shader.cpp
-    shader/ShaderType.cpp
     
     task/task.cpp
     
@@ -94,7 +88,6 @@ add_library(${PROJECT_NAME} SHARED
     v/VqLogging.cpp
     v/VqUtils.cpp
     
-    viewer/PresentMode.cpp
     viewer/Viewer.cpp
     
     viz/ViCleanupManager.cpp

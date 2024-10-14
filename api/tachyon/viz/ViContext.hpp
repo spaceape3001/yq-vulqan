@@ -8,7 +8,7 @@
 //#include <tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
 #include <yq/math/glm.hpp>
-#include <tachyon/basic/Tristate.hpp>
+#include <tachyon/enum/Tristate.hpp>
 #include <tachyon/typedef/pipeline.hpp>
 
 //namespace yq::engine { class Viewer; }

@@ -8,17 +8,17 @@
 
 #include <yq/core/Flags.hpp>
 
-#include <tachyon/data/DataFormat.hpp>
-#include <tachyon/pipeline/CullMode.hpp>
-#include <tachyon/pipeline/DataActivity.hpp>
-#include <tachyon/pipeline/DynamicState.hpp>
-#include <tachyon/pipeline/FrontFace.hpp>
-#include <tachyon/pipeline/IndexType.hpp>
-#include <tachyon/pipeline/PipelineBinding.hpp>
-#include <tachyon/pipeline/PolygonMode.hpp>
+#include <tachyon/enum/CullMode.hpp>
+#include <tachyon/enum/DataActivity.hpp>
+#include <tachyon/enum/DataFormat.hpp>
+#include <tachyon/enum/DynamicState.hpp>
+#include <tachyon/enum/FrontFace.hpp>
+#include <tachyon/enum/IndexType.hpp>
+#include <tachyon/enum/PipelineBinding.hpp>
+#include <tachyon/enum/PolygonMode.hpp>
+#include <tachyon/enum/Topology.hpp>
+#include <tachyon/enum/VertexInputRate.hpp>
 #include <tachyon/pipeline/PushConfigType.hpp>
-#include <tachyon/pipeline/Topology.hpp>
-#include <tachyon/pipeline/VertexInputRate.hpp>
 
 #include <tachyon/typedef/buffer.hpp>
 #include <tachyon/typedef/pipeline.hpp>

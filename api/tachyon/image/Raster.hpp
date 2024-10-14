@@ -44,33 +44,33 @@ namespace yq::tachyon {
         //! Constructor (takes info & data)
         Raster(const RasterInfo&, Memory&&);
         
-        explicit Raster(const raster::Pixmap&);
-        Raster(ref_t,  const raster::Pixmap&, DataFormat df={});
-        Raster(copy_t, const raster::Pixmap&, DataFormat df={});
+        explicit Raster(const Pixmap&);
+        Raster(ref_t,  const Pixmap&, DataFormat df={});
+        Raster(copy_t, const Pixmap&, DataFormat df={});
 
         //! Returns the size of the memory data
         virtual size_t      data_size() const  override;
 
         //! Converts to a pixmap (NOTE, this *CAN* fail, check result)
-        raster::PixmapSPtr  to_pixmap() const;
+        PixmapSPtr  to_pixmap() const;
         
 
     private:
         ~Raster();
 
-        static RasterInfo    info_for(const raster::Pixmap&, DataFormat df={});
+        static RasterInfo    info_for(const Pixmap&, DataFormat df={});
 
         AssetFactory&       factory() const override;
 
         template <typename C>
-        raster::PixmapSPtr  _pixmap1() const;
+        PixmapSPtr  _pixmap1() const;
         template <typename C>
-        raster::PixmapSPtr  _pixmap2() const;
+        PixmapSPtr  _pixmap2() const;
         template <typename C>
-        raster::PixmapSPtr  _pixmap3() const;
+        PixmapSPtr  _pixmap3() const;
 
-        raster::PixmapSPtr to_pixmap1() const;
-        raster::PixmapSPtr to_pixmap2() const;
-        raster::PixmapSPtr to_pixmap3() const;
+        PixmapSPtr to_pixmap1() const;
+        PixmapSPtr to_pixmap2() const;
+        PixmapSPtr to_pixmap3() const;
     };
 }

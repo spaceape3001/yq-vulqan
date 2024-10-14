@@ -12,7 +12,7 @@
 
 #include <tachyon/glfw/Monitor.hpp>
 #include <tachyon/typedef/queue_spec.hpp>
-#include <tachyon/viewer/PresentMode.hpp>
+#include <tachyon/enum/PresentMode.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <variant>

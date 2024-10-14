@@ -4,7 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VertexInputRate.hpp"
-#include <yq/meta/Init.hpp>
+#pragma once
 
-YQ_TYPE_IMPLEMENT(yq::tachyon::VertexInputRate)
+#include <cstdint>
+
+namespace yq::tachyon {
+    enum class StoreOp : int32_t {
+        Store       = 0,
+        DontCare    = 1,
+        None        = 1000301000
+    };
+}

@@ -13,7 +13,7 @@
 #include <yq/core/MetaObject.hpp>
 #include <yq/core/Mutable.hpp>
 //#include <tachyon/preamble.hpp>
-#include <tachyon/basic/Tristate.hpp>
+#include <tachyon/enum/Tristate.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
 
 namespace yq::tachyon {

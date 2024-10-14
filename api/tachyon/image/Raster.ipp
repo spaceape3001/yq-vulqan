@@ -25,7 +25,7 @@ namespace yq::tachyon {
         return s_ret;
     }
 
-    RasterInfo    Raster::info_for(const raster::Pixmap& pix, DataFormat df)
+    RasterInfo    Raster::info_for(const Pixmap& pix, DataFormat df)
     {
         RasterInfo   ii;
         
@@ -83,11 +83,11 @@ namespace yq::tachyon {
     {
     }
 
-    Raster::Raster(ref_t,  const raster::Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(REF)), info(info_for(pix, df))
+    Raster::Raster(ref_t,  const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(REF)), info(info_for(pix, df))
     {
     }
     
-    Raster::Raster(copy_t, const raster::Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(COPY)), info(info_for(pix, df))
+    Raster::Raster(copy_t, const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(COPY)), info(info_for(pix, df))
     {
     }
 
@@ -105,7 +105,7 @@ namespace yq::tachyon {
         return cache();
     }
 
-    raster::PixmapSPtr  Raster::to_pixmap() const
+    PixmapSPtr  Raster::to_pixmap() const
     {
         switch(info.type){
         case RasterType::D1:
@@ -120,15 +120,15 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    raster::PixmapSPtr  Raster:: _pixmap1() const
+    PixmapSPtr  Raster:: _pixmap1() const
     {
-        return std::make_shared<raster::Pixels1<C>>(
+        return std::make_shared<Pixels1<C>>(
             Coord1U(info.size.x), 
             COPY, (const C*) memory.data()
         );
     }
     
-    raster::PixmapSPtr  Raster::to_pixmap1() const
+    PixmapSPtr  Raster::to_pixmap1() const
     {
         switch(info.format){
         case DataFormat::A8_UNORM:
@@ -183,15 +183,15 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    raster::PixmapSPtr  Raster::_pixmap2() const
+    PixmapSPtr  Raster::_pixmap2() const
     {
-        return std::make_shared<raster::Pixels2<C>>(
+        return std::make_shared<Pixels2<C>>(
             Coord2U( info.size.x, info.size.y ), 
             COPY, (const C*) memory.data()
         );
     }
     
-    raster::PixmapSPtr  Raster::to_pixmap2() const
+    PixmapSPtr  Raster::to_pixmap2() const
     {
         switch(info.format){
         case DataFormat::A8_UNORM:
@@ -246,17 +246,16 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    raster::PixmapSPtr   Raster::_pixmap3() const
+    PixmapSPtr   Raster::_pixmap3() const
     {
-        return std::make_shared<raster::Pixels3<C>>(
+        return std::make_shared<Pixels3<C>>(
             Coord3U( info.size.x, info.size.y, info.size.z ), 
             COPY, (const C*) memory.data()
         );
     }
     
-    raster::PixmapSPtr  Raster::to_pixmap3() const
+    PixmapSPtr  Raster::to_pixmap3() const
     {
-        using raster::Pixels;
         switch(info.format){
         case DataFormat::A8_UNORM:
         case DataFormat::R8_SRGB:

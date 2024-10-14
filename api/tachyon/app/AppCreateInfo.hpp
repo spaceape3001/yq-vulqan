@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/macro/debugrel.hpp>
-#include <tachyon/basic/Required.hpp>
+#include <tachyon/enum/Required.hpp>
 #include <tachyon/viewer/ViewerCreateInfo.hpp>
 
 #include <string>

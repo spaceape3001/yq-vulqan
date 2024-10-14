@@ -23,10 +23,11 @@
 #include <vk_mem_alloc.h>
 #include <initializer_list>
 
-struct ImFont;
-struct ImDrawData;
-struct ImDrawList;
-struct ImGuiContext;
+//struct ImFont;
+//struct ImDrawData;
+//struct ImDrawList;
+//struct ImDrawVert;
+//struct ImGuiContext;
 
 namespace yq::tachyon {
     class ViVisualizer;
@@ -41,7 +42,13 @@ namespace yq::tachyon {
     
         enum class U : uint8_t {
             Font,
-            Pipeline
+            Pipeline,
+            DrawList,
+            
+            //! Update vertex list
+            Vertex,
+            //! Update index list
+            Index
         };
         
         using UpdateFlags = Flags<U>;
@@ -94,10 +101,17 @@ namespace yq::tachyon {
             size_t          bytes   = 0;
         };
         
-        struct B : public Z {
-            Z               capacity;
-            ViBufferPtr     buffer;
-        }                   m_vertex, m_index;
+        struct V : public Z {
+            Z                       capacity;
+            ViBufferPtr             buffer;
+            std::vector<ImDrawVert> data;
+        }                           m_vertex;
+        
+        struct I : public Z {
+            Z                       capacity;
+            ViBufferPtr             buffer;
+            std::vector<ImDrawIdx>  data;
+        }                   m_index;
         
         bool            _font_update();
         const ImFont*   _font_load(const std::filesystem::path&, float pixel_size=0);
@@ -105,5 +119,17 @@ namespace yq::tachyon {
         
         bool            _import_vertex(const ImDrawData&);
         bool            _import_index(const ImDrawData&);
+        
+        void            _write_csv(const ImDrawData&, std::string_view pfx="imgui-");
+        void            _write_csv_vertex(const ImDrawData&, std::string_view filename);
+        void            _write_csv_index(const ImDrawData&, std::string_view filename);
     };
+    
+    #if 0
+    //  For ImGuiTextures, need to have some sort of system for widgets to register
+    class MyGuiTexture {
+        void    inc_ref();
+        void    dec_ref();
+    };
+    #endif
 }

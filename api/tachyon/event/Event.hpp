@@ -7,52 +7,48 @@
 #pragma once
 
 #include <yq/core/Object.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/core/UniqueID.hpp>
+#include <tachyon/typedef/event.hpp>
 
 namespace yq::tachyon {
-
     class EventInfo : public ObjectInfo {
     public:
         template <typename C> class Writer;
 
         EventInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
     };
 
     /*! \brief Something happens
     
-        An event is something that happens/commanded (ie, inputs, triggers, windows, etc)
+        An event is something that happens/commanded (ie, inputs, triggers, windows, etc).
+        
+        EventProducer is something that can generate events (ie GLFW)
+        
+        EventSocket is something that can receive events
+        
+        EventMapper is something that translates between events (ie maps "spacebar" to "a jump command")
+        
+        EventFrame is a collection of events (and its technically an event socket)
     */
-    class Event : public Object {
+    class Event : public Object, public RefCount, public UniqueID {
         YQ_OBJECT_INFO(EventInfo)
         YQ_OBJECT_DECLARE(Event, Object)
     public:
     
-        //  EVENT TODO
+        bool    is_command() const;
+        bool    is_input() const;
     
         Event();
         virtual ~Event();
-    };
-
-    /*! \brief Writer of event information
-    */
-    template <typename C>
-    class EventInfo::Writer : public ObjectInfo::Writer<C> {
-    public:
-    
-        //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(EventInfo* eventInfo) : ObjectInfo::Writer<C>(eventInfo), m_meta(eventInfo)
-        {
-        }
+        virtual void        dispatch() {}
+        EventProducer*      producer() const { return m_producer; }
         
-        //! Constructor of widget info (this is used by the writer<T>() methods)
-        Writer(EventInfo& eventInfo) : Writer(&eventInfo)
-        {
-        }
-
     private:
-        EventInfo* m_meta;
+        friend class EventProducer;
+        
+        EventProducer*      m_producer  = nullptr;
+        std::atomic<bool>   m_handled{ false };
     };
 
 }

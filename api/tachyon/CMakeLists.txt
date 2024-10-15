@@ -24,7 +24,7 @@ add_library(${PROJECT_NAME} SHARED
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
     
-    command/Command.cpp
+    #command/Command.cpp
     
     config/build.cpp
     
@@ -33,13 +33,14 @@ add_library(${PROJECT_NAME} SHARED
     enum/enum.cpp
     enum/KeyCode.cpp
     
-    event/Event.cpp
-    event/KeyboardEvent.cpp
-    event/JoystickEvent.cpp
-    event/MonitorEvent.cpp
-    event/MouseEvent.cpp
-    event/WidgetEvent.cpp
-    event/WindowEvent.cpp
+    event/event.cpp
+    #event/Event.cpp
+    #event/KeyboardEvent.cpp
+    #event/JoystickEvent.cpp
+    #event/MonitorEvent.cpp
+    #event/MouseEvent.cpp
+    #event/WidgetEvent.cpp
+    #event/WindowEvent.cpp
     
     font/Font.cpp
     

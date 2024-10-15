@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Event.hpp"
+#include "EventInfoWriter.hpp"
+#include "EventProducer.hpp"
 #include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Event)
@@ -26,7 +28,7 @@ namespace yq::tachyon {
     Event::~Event()
     {
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////
 
     static void reg_event()

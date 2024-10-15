@@ -5,5 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Event.ipp"
+#include "EventFrame.ipp"
 #include "EventProducer.ipp"
 #include "EventSocket.ipp"

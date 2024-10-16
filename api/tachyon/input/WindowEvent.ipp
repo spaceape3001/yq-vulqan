@@ -6,22 +6,25 @@
 
 #include "WindowEvent.hpp"
 
+#include <tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <cassert>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowEvent)
 
 namespace yq::tachyon {
     
-    WindowEventInfo::WindowEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
+    WindowEventInfo::WindowEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+        InputEventInfo(zName, base, sl)
     {
         set(Flag::WINDOW);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    WindowEvent::WindowEvent()
+    WindowEvent::WindowEvent(Window* w) : m_window(w)
     {
+        assert(m_window);
     }
     
     WindowEvent::~WindowEvent()

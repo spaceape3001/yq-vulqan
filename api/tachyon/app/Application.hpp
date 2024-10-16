@@ -8,7 +8,7 @@
 
 #include <yq/core/BasicApp.hpp>
 #include <tachyon/app/AppCreateInfo.hpp>
-#include <tachyon/glfw/AppGLFW.hpp>
+//#include <tachyon/glfw/AppGLFW.hpp>
 #include <tachyon/v/VqApp.hpp>
 #include <yq/units.hpp>
 #include <memory>
@@ -21,6 +21,7 @@ namespace yq::tachyon {
     class TaskEngine;
     class Viewer;
     class Widget;
+    class GLFWManager;
 
     /*! \brief Engine/Vulkan application
     
@@ -97,6 +98,8 @@ namespace yq::tachyon {
         std::unique_ptr<TaskEngine>         m_taskEngine;
         std::vector<Viewer*>                m_viewers;
         std::atomic<bool>                   m_quit;
+        
+        std::unique_ptr<GLFWManager>        m_glfw;
     };
 
     void     configure_standand_asset_path();

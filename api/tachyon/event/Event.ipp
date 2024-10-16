@@ -29,6 +29,35 @@ namespace yq::tachyon {
     {
     }
 
+    bool    Event::_dispatch()
+    {
+        return false;
+    }
+
+    void Event::dispatch()
+    {
+        if(mark()){
+            if(!_dispatch()){
+                m_handled.clear();
+            }
+        }
+    }
+
+    bool Event::handled() const
+    {
+        return m_handled.test();
+    }
+
+    bool Event::mark()
+    {
+        return !m_handled.test_and_set();
+    }
+
+    void Event::reset()
+    {
+        m_handled.clear();
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     static void reg_event()

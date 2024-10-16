@@ -17,10 +17,15 @@ namespace yq::tachyon {
     class Event;
     using EventPtr = Ref<Event>;
     
+    class EventFilter;
+    class EventFrame;
+    class EventManager;
+    class EventMapper;  // might rename to EventWizard?
     class EventSocket;
     class EventProducer;
-    class EventMapper;
-    class EventFrame;
+    class EventTrigger;
+    
+    using EventFilterUPtr       = std::unique_ptr<EventFilter>;
     
     //using EventMapperSPtr       = std::shared_ptr<EventMapper>;
     //using EventFrameSPtr        = std::shared_ptr<EventFrame>;

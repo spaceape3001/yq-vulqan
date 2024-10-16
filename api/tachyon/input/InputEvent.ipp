@@ -4,39 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MonitorEvent.hpp"
+#include "InputEvent.hpp"
 
+#include <tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::InputEvent)
 
 namespace yq::tachyon {
     
-    MonitorEventInfo::MonitorEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
+    InputEventInfo::InputEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
         EventInfo(zName, base, sl)
     {
-        set(Flag::COMMAND);
+        set(Flag::INPUT);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    MonitorEvent::MonitorEvent(Monitor m) : m_monitor(m)
+    InputEvent::InputEvent()
     {
     }
     
-    MonitorEvent::~MonitorEvent()
+    InputEvent::~InputEvent()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_monitor_event()
+    static void reg_input_event()
     {
         {
-            auto w = writer<MonitorEvent>();
-            w.description("Monitor event base class");
+            auto w = writer<InputEvent>();
+            w.description("Input event base class");
         }
     }
     
-    YQ_INVOKE(reg_monitor_event();)
+    YQ_INVOKE(reg_input_event();)
 }

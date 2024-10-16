@@ -6,14 +6,15 @@
 
 #include "MouseEvent.hpp"
 
+#include <tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseEvent)
 
 namespace yq::tachyon {
     
-    MouseEventInfo::MouseEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
+    MouseEventInfo::MouseEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+        InputEventInfo(zName, base, sl)
     {
         set(Flag::MOUSE);
     }

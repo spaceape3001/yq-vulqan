@@ -4,7 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "EventTrigger.ipp"
 #include "Event.ipp"
+#include "EventFilter.ipp"
 #include "EventFrame.ipp"
+#include "EventManager.ipp"
 #include "EventProducer.ipp"
 #include "EventSocket.ipp"

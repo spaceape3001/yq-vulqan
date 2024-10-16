@@ -9,8 +9,8 @@
 #include <tachyon/glfw/Monitor.hpp>
 #include <tachyon/viewer/ViewerCreateInfo.hpp>
 
-#include <tachyon/window/Window.hpp>
-#include <tachyon/window/WindowEvents.hpp>
+#include <tachyon/glfw/Window.hpp>
+#include <tachyon/glfw/WindowEvents.hpp>
 
 #include <yq/core/ErrorDB.hpp>
 #include <yq/shape/Size2.hxx>

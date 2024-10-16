@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/window/Window.hpp>
+#include <tachyon/glfw/Window.hpp>
 #include <tachyon/glfw/Joystick.hpp>
 #include <tachyon/glfw/Monitor.hpp>
 

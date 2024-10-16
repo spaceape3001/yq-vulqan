@@ -15,6 +15,7 @@ add_library(${PROJECT_NAME} SHARED
     3D/Tetrahedron.cpp
 
     app/Application.cpp
+    app/Manager.cpp
     #asset/asset.cpp
     
     #basic/Tristate.cpp
@@ -45,15 +46,19 @@ add_library(${PROJECT_NAME} SHARED
     font/Font.cpp
     
     glfw/AppGLFW.cpp
+    glfw/GLFWManager.cpp
     glfw/Joystick.cpp
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
+    glfw/Window.cpp
     
     image/image.cpp
     image/STBImage.cpp
     
     imgui/MyImGui.cpp
     imgui/ViGui.cpp
+    
+    input/input.cpp
     
     manipulator/Manipulator.cpp
     
@@ -111,7 +116,6 @@ add_library(${PROJECT_NAME} SHARED
     widget/TextArea.cpp
     widget/Widget.cpp
     
-    window/Window.cpp
     
 )
 

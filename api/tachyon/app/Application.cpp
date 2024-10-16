@@ -7,6 +7,7 @@
 #include "Application.hpp"
 #include <yq/asset/Asset.hpp>
 #include <tachyon/config/build.hpp>
+#include <tachyon/glfw/GLFWManager.hpp>
 #include <tachyon/viewer/Viewer.hpp>
 #include <tachyon/task/TaskEngine.hpp>
 #include <GLFW/glfw3.h>
@@ -104,7 +105,8 @@ namespace yq::tachyon {
     { 
         if(m_appInfo->want_tasking)
             m_taskEngine    = std::make_unique<TaskEngine>();
-        init_glfw();
+        m_glfw  = new GLFWManager;
+        //init_glfw();
         return init_vulkan();
     }
         
@@ -120,7 +122,8 @@ namespace yq::tachyon {
         if(this == s_app)
             s_app = nullptr;
         kill_vulkan();
-        kill_glfw();
+        m_glfw  = {};
+        //kill_glfw();
     }
 
     void    Application::run(Second amt)

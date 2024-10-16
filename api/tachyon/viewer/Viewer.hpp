@@ -8,7 +8,7 @@
 
 #include <yq/core/Ref.hpp>
 #include <tachyon/viz/Visualizer.hpp>
-#include <tachyon/window/Window.hpp>
+#include <tachyon/glfw/Window.hpp>
 #include <yq/core/Flags.hpp>
 
 namespace yq {

@@ -6,9 +6,8 @@
 
 #pragma once
 
-#include <tachyon/typedef/event.hpp>
-#include <string_view>
-#include <vector>
+#include <tachyon/event/Event.hpp>
+#include <yq/keywords.hpp>
 //#include <tbb/spin_rw_mutex.h> // if we need it
 
 namespace yq::tachyon {
@@ -18,20 +17,23 @@ namespace yq::tachyon {
     */
     class EventSocket {
     public:
-        virtual void                handle(EventPtr) = 0;
+
         virtual std::string_view    description() const;
         virtual std::string_view    name() const;
         
         void    subscribe(EventProducer&);
         void    unsubscribe(EventProducer&);
         void    unsubscribe_all();
-        
+
     protected:
+        friend class EventProducer;
+
         EventSocket();
         ~EventSocket();
+        
+        virtual void  handle(Event&) = 0;
+
     private:
-        friend class EventProducer;
-    
         bool    _has(EventProducer*) const;
         void    _subscribe(EventProducer*);
         void    _unsubscribe(EventProducer*);

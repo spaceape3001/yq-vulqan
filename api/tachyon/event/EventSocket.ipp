@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Event.hpp"
+#include "EventFilter.hpp"
 #include "EventProducer.hpp"
 #include "EventSocket.hpp"
 
@@ -34,6 +35,7 @@ namespace yq::tachyon {
         m_producers.push_back(prod);
     }
     
+
     void    EventSocket::_unsubscribe(EventProducer* prod)
     {
         std::erase(m_producers, prod);
@@ -47,7 +49,7 @@ namespace yq::tachyon {
         
         return "Generic Event Socket";
     }
-    
+
     std::string_view    EventSocket::name() const
     {
         if(const Object* obj = dynamic_cast<const Object*>(this)){

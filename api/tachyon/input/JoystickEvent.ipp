@@ -6,16 +6,17 @@
 
 #include "JoystickEvent.hpp"
 
+#include <tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickEvent)
 
 namespace yq::tachyon {
     
-    JoystickEventInfo::JoystickEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
+    JoystickEventInfo::JoystickEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+        InputEventInfo(zName, base, sl)
     {
-        set(Flag::COMMAND);
+        set(Flag::JOYSTICK);
     }
 
     ////////////////////////////////////////////////////////////////////////////

@@ -6,13 +6,10 @@
 
 #include "Event.hpp"
 #include "EventProducer.hpp"
+#include "EventProducerThread.hpp"
 #include "EventSocket.hpp"
 
 namespace yq::tachyon {
-    struct EventProducer::Thread {
-        EventSocket*    socket  = nullptr;
-    };
-
     EventProducer::Thread&      EventProducer::thread()
     {
         static thread_local Thread  s_ret;
@@ -35,25 +32,6 @@ namespace yq::tachyon {
                 return true;
         }
         return false;
-    }
-
-    void    EventProducer::_poll(EventSocket* sock)
-    {
-        auto& t = thread();
-        EventSocket*    old = t.socket;
-        t.socket        = sock;
-        poll_events();
-        t.socket        = old;
-    }
-    
-    void    EventProducer::_push(EventPtr&& ev)
-    {
-        auto& t = thread();
-        if(t.socket){
-            t.socket->handle(ev);
-        }
-        for(EventSocket* s : m_sockets)
-            s -> handle(ev);
     }
 
     void    EventProducer::_subscribe(EventSocket* sock)
@@ -86,24 +64,17 @@ namespace yq::tachyon {
         return "EventProducer";
     }
 
-    void  EventProducer::poll()
+    void  EventProducer::publish(EventPtr evt)
     {
-        _poll(nullptr);
-    }
-    
-    void  EventProducer::poll(EventSocket&sock)
-    {
-        _poll(&sock);
-    }
-
-    void  EventProducer::publish(EventPtr ep, bool keepExisting)
-    {
-        if(ep){
-            if(!(keepExisting && ep->m_producer)){
-                ep -> m_producer    = this;
-            }
-            _push(std::move(ep));
-        }
+        if(!evt)
+            return ;
+        if(!evt->m_originator)
+            evt -> m_originator    = this;
+        auto& t = thread();
+        if(t.socket)
+            t.socket->handle(*evt);
+        for(EventSocket* s : m_sockets)
+            s -> handle(*evt);
     }
 
     void  EventProducer::subscribe(EventSocket& sock)

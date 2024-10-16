@@ -17,12 +17,17 @@ namespace yq::tachyon {
     EventFrame::~EventFrame()
     {
     }
-    
-    void                EventFrame::handle(EventPtr ep) 
+
+    void                EventFrame::add(EventPtr ep)
     {
         if(ep){
             m_events.push_back(ep);
         }
+    }
+    
+    void                EventFrame::handle(Event& evt) 
+    {
+        m_events.push_back(&evt);
     }
     
     std::string_view    EventFrame::description() const 

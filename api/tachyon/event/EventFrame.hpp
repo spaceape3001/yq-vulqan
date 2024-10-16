@@ -21,10 +21,14 @@ namespace yq::tachyon {
         EventFrame(const EventFrameOptions&options={});
         ~EventFrame();
 
-        virtual void                handle(EventPtr) override;
         virtual std::string_view    description() const override;
         virtual std::string_view    name() const override;
-    
+        
+        void                        add(EventPtr);
+
+    protected:
+        virtual void                handle(Event&) override;
+
     private:
         std::vector<EventPtr>   m_events;
     };

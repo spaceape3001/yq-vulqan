@@ -55,6 +55,12 @@ namespace yq::tachyon {
         return "Generic Event Producer";
     }
 
+    uint64_t    EventProducer::events_generated() const 
+    { 
+        return m_count; 
+    }
+
+
     std::string_view    EventProducer::name() const
     {
         if(const Object* obj = dynamic_cast<const Object*>(this)){
@@ -68,6 +74,7 @@ namespace yq::tachyon {
     {
         if(!evt)
             return ;
+        ++m_count;
         if(!evt->m_originator)
             evt -> m_originator    = this;
         auto& t = thread();

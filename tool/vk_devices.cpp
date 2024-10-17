@@ -13,7 +13,9 @@ using namespace yq::tachyon;
 
 int main(int argc, char* argv[])
 {
-    Application vi(argc, argv);
+    AppCreateInfo aci;
+    aci.glfw      = false;
+    Application vi(argc, argv, aci);
     auto data = vqEnumeratePhysicalDevices();
     std::cout << data.size() << " physical device(s)\n";
     for(const auto& dev : data){

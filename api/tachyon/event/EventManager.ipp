@@ -26,8 +26,8 @@ namespace yq::tachyon {
     EventManager::~EventManager()
     {
     }
-
-    void    EventManager::_poll(EventSocket* sock)
+    
+    void                EventManager::_poll(EventSocket*sock, unit::Second timeout)
     {
         if(m_polling.test_and_set())
             return ;
@@ -35,7 +35,7 @@ namespace yq::tachyon {
         auto& t = thread();
         EventSocket*    old = t.socket;
         t.socket        = sock;
-        _poll();
+        _poll(timeout);
         t.socket        = old;
         
         m_polling.clear();
@@ -56,16 +56,16 @@ namespace yq::tachyon {
         return metaInfo().name();
     }
 
-    void  EventManager::poll()
+    void  EventManager::poll(Second dur)
     {
-        _poll(nullptr);
+        _poll(nullptr, dur);
     }
     
-    void  EventManager::poll(EventSocket&sock)
+    void  EventManager::poll(EventSocket&sock, Second dur)
     {
-        _poll(&sock);
+        _poll(&sock, dur);
     }
-    
+
     YQ_INVOKE(EventManager::init_info();)
 }
 

@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
     aci.view.imgui        = true;
     aci.view.size         = { 1920, 1080 };
 
-    Application         app(argc, argv, AppCreateInfo());
+    Application         app(argc, argv, aci);
     app.finalize();
     app.add_viewer(new Widget);
     app.run();

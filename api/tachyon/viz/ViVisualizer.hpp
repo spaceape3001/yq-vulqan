@@ -48,8 +48,6 @@ namespace yq::tachyon {
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
     
-    class VqApp;
-
     struct VizTaskerOptions {
         uint64_t        timeout = DEFAULT_WAIT_TIMEOUT;
         uint32_t        queue   = 0;
@@ -281,7 +279,6 @@ namespace yq::tachyon {
         mutable tbb::spin_rw_mutex          m_mutex;
         
         VmaAllocator                        m_allocator         = nullptr;
-        VqApp*                              m_app               = nullptr;
         ViBufferManagerUPtr                 m_buffers;
         ViCleanupManager                    m_cleanup;                  // keep it one until performance bottlenecks
         Guarded<VkClearValue>               m_clearValue;

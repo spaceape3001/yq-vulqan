@@ -26,7 +26,7 @@ namespace yq::tachyon {
         GLFWManager();
         ~GLFWManager();
     
-        virtual void    _poll() override;
+        virtual void    _poll(unit::Second) override;
         static GLFWManager*        manager();
         
     private:
@@ -54,8 +54,8 @@ namespace yq::tachyon {
         static void joystick_kill(Joystick);
 
         struct Joystix; //< Not to be confused with joystick class
-        struct Global;
-        static Global&  global();
+        struct Common;
+        static Common&  common();
         friend class Window;
     };
 }

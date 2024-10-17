@@ -18,6 +18,7 @@ struct GLFWmonitor;
 
 namespace yq::tachyon {
     class Monitor;
+    struct ViewerCreateInfo;
     
     class Window {
     public:

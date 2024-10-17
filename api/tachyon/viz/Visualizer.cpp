@@ -32,7 +32,6 @@
 #include <tachyon/scene/Perspective.hpp>
 #include <tachyon/scene/Scene.hpp>
 #include <tachyon/viewer/ViewerCreateInfo.hpp>
-#include <tachyon/v/VqApp.hpp>
 #include <tachyon/v/VqUtils.hpp>
 #include <tachyon/viz/ViBuffer.hpp>
 #include <tachyon/viz/ViContext.hpp>
@@ -44,6 +43,7 @@
 #include <tachyon/viz/ViShader.hpp>
 #include <tachyon/viz/ViSwapchain.hpp>
 #include <tachyon/viz/ViTexture.hpp>
+//#include <tachyon/vulqan/VulqanManager.hpp>
 
 
 

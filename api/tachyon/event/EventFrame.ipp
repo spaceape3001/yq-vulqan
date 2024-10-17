@@ -24,6 +24,12 @@ namespace yq::tachyon {
             m_events.push_back(ep);
         }
     }
+
+    void                EventFrame::dispatch_all()
+    {
+        for(EventPtr& ep : m_events)
+            ep -> dispatch();
+    }
     
     void                EventFrame::handle(Event& evt) 
     {

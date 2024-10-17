@@ -8,8 +8,7 @@
 
 #include <yq/core/BasicApp.hpp>
 #include <tachyon/app/AppCreateInfo.hpp>
-//#include <tachyon/glfw/AppGLFW.hpp>
-#include <tachyon/v/VqApp.hpp>
+#include <tachyon/typedef/application.hpp>
 #include <yq/units.hpp>
 #include <memory>
 #include <set>
@@ -23,26 +22,35 @@ namespace yq::tachyon {
     class Widget;
     class GLFWManager;
 
+
     /*! \brief Engine/Vulkan application
     
     */
-    class Application : public BasicApp, public AppGLFW, public VqApp {
+    class Application : public BasicApp {
     public:
     
+        
+        //! Creates a viewer with widget
+        static Viewer*              add_viewer(Widget*);
+        //! Creates a viewer with title/widget
+        static Viewer*              add_viewer(std::string_view, Widget*);
+        //! Creates a viewer with viewer
+        static Viewer*              add_viewer(Viewer*);
+
         //! Global application, if any
-        static Application*       app() { return s_app; }
+        static Application*       app();
+
+        static const AppCreateInfo& app_info();
         
+        static bool                 contains(const Viewer*);
         
-    
-        /*! \brief Constructor
-        
-            \param[in]  argc    Pass onto me what the main() was given
-            \param[in]  argv    Pass onto me what the main() was given
-            \param[in]  aci     Initialization paraemters for this application
+        /*! \brief Exec loop for a bunch of windows
+
+            \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
+                                    is the max stall duration.
         */
-        Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
-        Application(int argc, char* argv[], std::shared_ptr<AppCreateInfo>);
-        ~Application();
+        static void                 run(Second timeout={0.});
+        
         
         /*!  Simple exec loop for a single window.
         
@@ -53,53 +61,33 @@ namespace yq::tachyon {
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        void    run(Viewer*win, Second timeout={0.});
+        static void    run(Viewer*win, Second timeout={0.});
         
-        static void initialize();
-        
-        TaskEngine*     task_engine() const { return m_taskEngine.get(); }
-        
-        //! Creates a viewer with widget
-        Viewer*         add_viewer(Widget*);
-        //! Creates a viewer with title/widget
-        Viewer*         add_viewer(std::string_view, Widget*);
-        //! Creates a viewer with viewer
-        Viewer*         add_viewer(Viewer*);
-        
-        bool            contains(const Viewer*) const;
-        
-        /*! \brief Exec loop for a bunch of windows
 
-            \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
-                                    is the max stall duration.
+        static TaskEngine*          task_engine();
+        
+    
+        /*! \brief Constructor
+        
+            \param[in]  argc    Pass onto me what the main() was given
+            \param[in]  argv    Pass onto me what the main() was given
+            \param[in]  aci     Initialization paraemters for this application
         */
-        void            run(Second timeout={0.});
-        
-        
+        Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
+        ~Application();
+
     private:
         friend class Viewer;
         
-        static Application*                 s_app;
         
-        std::error_code     init();
-        void                kill();
-        
-        virtual bool        vk_init() override;
-        
-        Viewer*     _add(Viewer*);
-        
-        //using ExecFN    = std::function<void()>;
+        static Viewer*     _add(Viewer*);
         
         //  this is being called by viewer, deletion unnecessary
-        void    _remove(Viewer*);
+        static void        _remove(Viewer*);
         
-        
-        std::shared_ptr<AppCreateInfo>      m_appInfo;
-        std::unique_ptr<TaskEngine>         m_taskEngine;
-        std::vector<Viewer*>                m_viewers;
-        std::atomic<bool>                   m_quit;
-        
-        std::unique_ptr<GLFWManager>        m_glfw;
+
+        struct Common;
+        static Common&  common();
     };
 
     void     configure_standand_asset_path();

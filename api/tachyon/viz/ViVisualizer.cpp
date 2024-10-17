@@ -20,10 +20,10 @@
 #include <tachyon/shader/Shader.hpp>
 #include <tachyon/texture/Texture.hpp>
 //#include <tachyon/v/VqEnumerations.hpp>
-#include <tachyon/v/VqApp.hpp>
 #include <tachyon/v/VqEnums.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/v/VqUtils.hpp>
+#include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/viz/ViManager.hpp>
 #include <tachyon/viz/ViBuffer.hpp>
 #include <tachyon/viz/ViImage.hpp>
@@ -36,6 +36,7 @@
 #include <tachyon/viz/ViShader.hpp>
 #include <tachyon/viz/ViSwapchain.hpp>
 #include <tachyon/viz/ViTexture.hpp>
+#include <tachyon/vulqan/VulqanManager.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -53,11 +54,7 @@ namespace yq::tachyon {
 
     std::error_code  ViVisualizer::_0_app_window_initialize(GLFWwindow* w)
     {
-        m_app       = VqApp::vk_app();
-        if(!m_app)
-            return errors::vulkan_no_application();
-
-        m_instance    = m_app -> vulkan();
+        m_instance    = VulqanManager::instance();
         if(!m_instance)
             return errors::vulkan_uninitialized();
 
@@ -72,7 +69,6 @@ namespace yq::tachyon {
     {
         m_instance      = nullptr;
         m_window        = nullptr;
-        m_app           = nullptr;
     }
 
     std::error_code  ViVisualizer::_1_gpu_select_initialize(InitData& iData)
@@ -314,7 +310,7 @@ namespace yq::tachyon {
         allocatorCreateInfo.instance                        = m_instance;
         allocatorCreateInfo.physicalDevice                  = m_physical;
         allocatorCreateInfo.device                          = m_device;
-        allocatorCreateInfo.vulkanApiVersion                = m_app->app_info().vulkan_api;
+        allocatorCreateInfo.vulkanApiVersion                = VulqanManager::vulkan_api();
         allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) iData.viewer.chunk_size;
         vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
         

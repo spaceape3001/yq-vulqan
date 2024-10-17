@@ -57,8 +57,6 @@ namespace yq::tachyon {
         if(!w)
             return errors::null_pointer();
     
-        Application::initialize();
-
         std::error_code ec = init_window(vci);
         if(ec)
             return ec;

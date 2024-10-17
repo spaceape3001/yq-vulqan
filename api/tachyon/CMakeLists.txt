@@ -18,8 +18,6 @@ add_library(${PROJECT_NAME} SHARED
     app/Manager.cpp
     #asset/asset.cpp
     
-    #basic/Tristate.cpp
-    
     camera/Camera.cpp
     camera/NullCamera.cpp
     camera/SpaceCamera.cpp
@@ -36,16 +34,9 @@ add_library(${PROJECT_NAME} SHARED
     
     event/event.cpp
     #event/Event.cpp
-    #event/KeyboardEvent.cpp
-    #event/JoystickEvent.cpp
-    #event/MonitorEvent.cpp
-    #event/MouseEvent.cpp
-    #event/WidgetEvent.cpp
-    #event/WindowEvent.cpp
     
     font/Font.cpp
     
-    glfw/AppGLFW.cpp
     glfw/GLFWManager.cpp
     glfw/Joystick.cpp
     glfw/Monitor.cpp
@@ -88,7 +79,6 @@ add_library(${PROJECT_NAME} SHARED
     
     undo/Undo.cpp
     
-    v/VqApp.cpp
     #v/VqEnumerations.cpp
     v/VqEnums.cpp
     v/VqLogging.cpp
@@ -109,6 +99,9 @@ add_library(${PROJECT_NAME} SHARED
     viz/Visualizer.cpp
     
     viz/viz.cpp
+    
+    vulqan/vulqan.cpp
+    vulqan/VulqanManager.cpp
     
     widget/ImGuiDemoWidget.cpp
     widget/Scene3DWidget.cpp

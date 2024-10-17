@@ -10,8 +10,12 @@
 #include <tachyon/glfw/Monitor.hpp>
 #include <tachyon/glfw/Window.hpp>
 #include <tachyon/input/JoystickConnect.hpp>
+#include <tachyon/input/JoystickDisconnect.hpp>
+#include <tachyon/input/MonitorConnect.hpp>
+#include <tachyon/input/MonitorDisconnect.hpp>
 #include <GLFW/glfw3.h>
 #include <tachyon/logging.hpp>
+#include <yq/core/ThreadId.hpp>
 
 namespace yq::tachyon {
 
@@ -28,9 +32,6 @@ namespace yq::tachyon {
             std::vector<unsigned char>      hats;
         } snapshot;
         
-        JoystickData<std::span>     state;
-        JoystickData<std::vector>   snapshot;
-        
         
         bool                        connected   = false;
         bool                        gamepad     = false;
@@ -43,28 +44,26 @@ namespace yq::tachyon {
         }
     };
 
-    struct GLFWManager::Global {
-        enum State { Uninit = 0, Init, Killed };
+    struct GLFWManager::Common {
         static constexpr const unsigned kMaxJoysticks   = (unsigned) GLFW_JOYSTICK_LAST + 1;
         
 
         GLFWManager*                            manager = nullptr;
-        State                                   state   = Uninit;
         std::atomic_flag                        claimed;
         std::array<Joystix, kMaxJoysticks>      joysticks{};
         bool                                    imgui   = false;
         
     };
     
-    GLFWManager::Global&  GLFWManager::global()
+    GLFWManager::Common&  GLFWManager::common()
     {
-        static Global s_ret;
+        static Common s_ret;
         return s_ret;
     }
 
     GLFWManager*        GLFWManager::manager()
     {
-        return global().manager;
+        return common().manager;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,10 +91,10 @@ namespace yq::tachyon {
     
     void GLFWManager::callback_joystick(int jid, int event)
     {
-        if(jid > Global::kMaxJoysticks)
+        if((unsigned) jid > Common::kMaxJoysticks)
             return ;
     
-        Global& g   = global();
+        Common& g   = common();
         
         if(!g.manager)
             return ;
@@ -120,7 +119,7 @@ namespace yq::tachyon {
         #if 0
         
             //  disabled until we can figure out the Monitor thing (because the pointer will be bad after the fact)
-        Global& g   = global();
+        Common& g   = common();
         if(!g.manager)
             return ;
             
@@ -171,7 +170,7 @@ namespace yq::tachyon {
 
     void GLFWManager::joystick_initialize(Joystick j)
     {
-        Global& g = global();
+        Common& g = common();
         if(j.id >= g.joysticks.size())
             return ;
         
@@ -190,7 +189,7 @@ namespace yq::tachyon {
     
     void GLFWManager::joystick_kill(Joystick j)
     {
-        Global& g = global();
+        Common& g = common();
         if(j.id >= g.joysticks.size())
             return ;
         g.joysticks[j.id]   = {};
@@ -215,13 +214,15 @@ namespace yq::tachyon {
 
     GLFWManager::GLFWManager()
     {
-        Global&     g = global();
+        if(thread::id())    // not the main thread...
+            return ;
+
+        Common&     g = common();
         if(g.claimed.test_and_set())
             return ;
             
         g.manager   = this;
 
-        glfwInfo << "GLFWManager::GLFWManager()";
         glfwLogging(0,nullptr);
         glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
         glfwInit();
@@ -232,29 +233,39 @@ namespace yq::tachyon {
         
         glfwSetJoystickCallback( callback_joystick );
         glfwSetMonitorCallback( callback_monitor );
-
-        g.state     = Global::Init;
-
-
+        
+        tachyonInfo << "GLFWManager initialized";
     }
     
     GLFWManager::~GLFWManager()
     {
-        Global& g   = global();
+        Common& g   = common();
         if(g.manager != this)
             return;
             
-        glfwInfo << "GLFWManager::~GLFWManager()";
         glfwTerminate();
         g.manager   = nullptr;
-        g.state     = Global::Killed;
+
+        tachyonInfo << "GLFWManager destroyed";
     }
 
-
-    void    GLFWManager::_poll() 
+    void    GLFWManager::_poll(unit::Second timeout) 
     {
-        glfwPollEvents();
+        if(timeout.value > 0.){
+            glfwWaitEventsTimeout(timeout.value);
+        } else {
+            glfwPollEvents();
+        }
     }
+    
+    static void reg_glfw_manager()
+    {
+        auto w = writer<GLFWManager>();
+        w.abstract();
+        w.description("GLFW Manager");
+    }
+    
+    YQ_INVOKE(reg_glfw_manager();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWManager)

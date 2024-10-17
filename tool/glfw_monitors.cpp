@@ -17,8 +17,9 @@ using namespace yq::tachyon;
 
 int main(int argc, char* argv[])
 {
-    Application   app(argc, argv);
-    app.init_glfw();
+    AppCreateInfo aci;
+    aci.vulkan      = false;
+    Application   app(argc, argv, aci);
     std::vector<Monitor>  monitors    = Monitor::enumerate();
     Monitor               primary     = Monitor::primary();
     

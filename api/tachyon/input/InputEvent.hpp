@@ -20,7 +20,8 @@ namespace yq::tachyon {
 
     /*! \brief Input event 
     
-        "Input" event comes from the user/operating-system
+        "Input" event is externally generated, comes from the 
+        user/operating-system (or a fast response to it)
     */
     class InputEvent : public Event {
         YQ_OBJECT_INFO(InputEventInfo)

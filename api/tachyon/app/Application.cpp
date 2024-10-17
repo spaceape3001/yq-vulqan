@@ -5,71 +5,56 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Application.hpp"
-#include <yq/asset/Asset.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/config/build.hpp>
+#include <tachyon/event/EventFrame.hpp>
 #include <tachyon/glfw/GLFWManager.hpp>
-#include <tachyon/viewer/Viewer.hpp>
 #include <tachyon/task/TaskEngine.hpp>
+#include <tachyon/viewer/Viewer.hpp>
+#include <tachyon/vulqan/VulqanManager.hpp>
+#include <yq/asset/Asset.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
-    Application*    Application::s_app    = nullptr;
 
-    void Application::initialize()
-    {
-        if(s_app)
-            s_app -> init();
-    }
-
-    //  ////////////////////////////////////////////////////////////////////////
-
-    void     configure_standand_asset_path()
-    {
-        Asset::resolver_add_paths(build::data_directory());
-    }
-
-    //  ////////////////////////////////////////////////////////////////////////
-
-    Application::Application(int argc, char* argv[], std::shared_ptr<AppCreateInfo> aci) : 
-        BasicApp(argc, argv), VqApp(*this, aci), m_appInfo(aci)
-    {
-        assert(m_appInfo && "AppCreateInfo is not optional, it must be supplied.");
-        if(!s_app)
-            s_app   = this;
-            
-        configure_standand_asset_path();
-    }
+    struct Application::Common {
+        AppCreateInfo                   app_info;
+        Application*                    application    = nullptr;
+        std::atomic_flag                claimed;
+        std::unique_ptr<GLFWManager>    glfw;
+        std::unique_ptr<TaskEngine>     tasking;
+        std::vector<Viewer*>            viewers;
+        std::unique_ptr<VulqanManager>  vulqan;
+        std::atomic<bool>               quit{false};
+        
+        
+        //  eventually the vulkan goes here too
+    };
     
-
-    Application::Application(int argc, char *argv[], const AppCreateInfo& aci) : 
-        Application(argc, argv, std::make_shared<AppCreateInfo>(aci))
+    Application::Common&    Application::common()
     {
-    }
-    
-    Application::~Application()
-    {
-        if(s_app == this)
-            s_app   = nullptr;
-        kill();
+        static Common s_ret;
+        return s_ret;
     }
 
     Viewer*     Application::_add(Viewer* v)
     {
-        m_viewers.push_back(v);
+        common().viewers.push_back(v);
         return v;
     }
 
     void    Application::_remove(Viewer* v)
     {
-        std::erase(m_viewers, v);
+        std::erase(common().viewers, v);
     }
-
+    
     Viewer*         Application::add_viewer(Widget*w)
     {
         if(!w)
             return nullptr;
 
-        return _add(new Viewer(m_appInfo->view, w));
+        Common& g = common();
+        return _add(new Viewer(g.app_info.view, w));
     }
     
     Viewer*         Application::add_viewer(std::string_view n, Widget*w)
@@ -77,10 +62,12 @@ namespace yq::tachyon {
         if(!w)
             return nullptr;
             
-        ViewerCreateInfo    vci = m_appInfo->view;
+        Common& g = common();
+        ViewerCreateInfo    vci = g.app_info.view;
         vci.title       = n;
         return _add(new Viewer(vci, w));
     }
+    
     
     //! Creates a viewer with viewer
     Viewer*         Application::add_viewer(Viewer*v)
@@ -93,78 +80,123 @@ namespace yq::tachyon {
         return _add(v);
     }
 
-    bool            Application::contains(const Viewer*v) const
+    Application*       Application::app() 
+    { 
+        return common().application;
+    }
+
+    bool            Application::contains(const Viewer*v) 
     {
-        for(auto& p : m_viewers)
+        Common& g = common();
+        for(auto& p : g.viewers)
             if(p == v)
                 return true;
         return false;
     }
 
-    std::error_code    Application::init()
-    { 
-        if(m_appInfo->want_tasking)
-            m_taskEngine    = std::make_unique<TaskEngine>();
-        m_glfw  = new GLFWManager;
-        //init_glfw();
-        return init_vulkan();
-    }
-        
-    void        Application::kill()
-    {
-        for(Viewer* v : m_viewers){
-            if(v){
-                vkDeviceWaitIdle(v->device());
-                delete v;
-            }
-        }
-        m_viewers.clear();
-        if(this == s_app)
-            s_app = nullptr;
-        kill_vulkan();
-        m_glfw  = {};
-        //kill_glfw();
-    }
 
     void    Application::run(Second amt)
     {
-        while((!m_quit) && (m_appInfo->run_without_viewers || !m_viewers.empty())){
-            if(amt <= Second(0.)){
-                glfwPollEvents();
-            } else { 
-                glfwWaitEventsTimeout(amt.value);
-            }
-            
-            if(m_taskEngine)            // eventually be smarter about this... multithreading
-                m_taskEngine -> step();
+        Common& g   = common();
+        
+        if(g.glfw){
+            while((!g.quit) && (g.app_info.headless || !g.viewers.empty())){
+                EventFrame      events;
+                g.glfw->poll(events, amt);
+                events.dispatch_all();
 
-            for(auto& v : m_viewers){
-                v->draw();
-                if(v->should_close() || !v->m_delete.empty()){
-                    vkDeviceWaitIdle(v->device());
-                    v->purge_deleted();
-                    if(v->should_close()){
-                        delete v;
-                        v   = nullptr;
+                if(g.tasking)            // eventually be smarter about this... multithreading
+                    g.tasking -> step();
+
+                for(auto& v : g.viewers){
+                    v->draw();
+                    if(v->should_close() || !v->m_delete.empty()){
+                        vkDeviceWaitIdle(v->device());
+                        v->purge_deleted();
+                        if(v->should_close()){
+                            delete v;
+                            v   = nullptr;
+                        }
                     }
                 }
+                    
+                std::erase(g.viewers, nullptr);
             }
-                
-            std::erase(m_viewers, nullptr);
         }
     }
-
 
     void    Application::run(Viewer* win, Second amt)
     {
         if(!win)
             return;
-        m_viewers.push_back(win);
+        Common& g = common();
+        g.viewers.push_back(win);
         run(amt);
     }
 
-    bool    Application::vk_init() 
+    TaskEngine*         Application::task_engine() 
+    { 
+        return common().tasking.get(); 
+    }
+
+    void     configure_standand_asset_path()
     {
-        return init() == std::error_code();
+        Asset::resolver_add_paths(build::data_directory());
+    }
+
+    //  ////////////////////////////////////////////////////////////////////////
+    //  ////////////////////////////////////////////////////////////////////////
+
+    Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
+        BasicApp(argc, argv)
+    {
+        Common& g = common();
+        if(g.claimed.test_and_set())
+            return ;
+            
+        tachyonInfo << "Application::Application(" << argv[0] << ")";
+
+        g.application   = this;
+        g.app_info      = aci;
+        if(g.app_info.app_name.empty())
+            g.app_info.app_name = app_name();
+        
+
+        configure_standand_asset_path();
+        
+        if(g.app_info.tasking)
+            g.tasking           = std::make_unique<TaskEngine>();
+        if(g.app_info.glfw)
+            g.glfw              = std::make_unique<GLFWManager>();
+        if(g.app_info.vulkan)
+            g.vulqan            = std::make_unique<VulqanManager>(g.app_info);
+        
+        //  TODO event connections
+        
+        tachyonDebug << "Application initialized";
+    }
+    
+
+    Application::~Application()
+    {
+        Common& g = common();
+        if(g.application != this)
+            return ;
+            
+        g.application   = nullptr;
+
+        for(Viewer* v : g.viewers){
+            if(v){
+                vkDeviceWaitIdle(v->device());
+                delete v;
+            }
+        }
+        g.viewers.clear();
+        
+        g.vulqan        = {};
+        g.glfw          = {};
+        g.tasking       = {};
+    
+        tachyonDebug << "Application destroyed";
     }
 }

@@ -11,8 +11,8 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/image/ImageViewInfo.hpp>
 #include <tachyon/sampler/SamplerInfo.hpp>
-#include <tachyon/v/VqApp.hpp>
 #include <tachyon/v/VqStructs.hpp>
+#include <tachyon/vulqan/VulqanManager.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>
@@ -61,7 +61,7 @@ namespace yq::tachyon {
     std::vector<VkPhysicalDeviceGroupProperties>    vqEnumeratePhysicalDeviceGroups(VkInstance inst)
     {
         if(!inst)
-            inst    = VqApp::vulkan();
+            inst    = VulqanManager::instance();
         uint32_t    count   = 0;
         vkEnumeratePhysicalDeviceGroups(inst, &count, nullptr);
         std::vector<VkPhysicalDeviceGroupProperties>    ret(count);
@@ -88,7 +88,7 @@ namespace yq::tachyon {
     std::vector<VkPhysicalDevice>        vqEnumeratePhysicalDevices(VkInstance inst)
     {
         if(!inst)
-            inst    = VqApp::vulkan();
+            inst    = VulqanManager::instance();
         uint32_t    count   = 0;
         vkEnumeratePhysicalDevices(inst, &count, nullptr);
         std::vector<VkPhysicalDevice>    ret(count);
@@ -148,7 +148,7 @@ namespace yq::tachyon {
     VkPhysicalDevice                     vqFirstDevice(VkInstance inst)
     {
         if(!inst)
-            inst    = VqApp::vulkan();
+            inst    = VulqanManager::instance();
         for(VkPhysicalDevice v : vqEnumeratePhysicalDevices(inst)){
             if(v)
                 return v;
@@ -259,28 +259,4 @@ namespace yq::tachyon {
             in.color.float32[2], in.color.float32[3] 
         );
     }
-
 }
-
-bool operator==(const VkOffset2D&a, const VkOffset2D&b)
-{
-    return (a.x == b.x) && (a.y == b.y);
-}
-
-bool operator==(const VkExtent2D&a, const VkExtent2D&b)
-{
-    return (a.width == b.width) && (a.height == b.height);
-}
-
-bool operator==(const VkRect2D&a, const VkRect2D&b)
-{
-    return (a.offset == b.offset) && (a.extent == b.extent);
-}
-
-bool operator==(const VkViewport&a, const VkViewport&b)
-{
-    return (a.x == b.x) && (a.y == b.y) && 
-        (a.width == b.width) && (a.height == b.height) && 
-        (a.minDepth == b.minDepth) && (a.maxDepth == b.maxDepth);
-}
-

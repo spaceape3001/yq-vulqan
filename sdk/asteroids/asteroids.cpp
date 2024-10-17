@@ -181,7 +181,7 @@ YQ_OBJECT_IMPLEMENT(PlayPane)
 int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
-    aci.want_tasking        = true;
+    aci.tasking             = true;
     aci.view.title          = "Asteroids";
     aci.view.resizable      = false;
     aci.view.size           = { 1920, 1080 };

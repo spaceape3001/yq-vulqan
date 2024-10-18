@@ -41,7 +41,7 @@
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
-    ViVisualizer::ViVisualizer()
+    ViVisualizer::ViVisualizer(Cleanup& clean) : m_cleanup(clean)
     {
         m_presentMode   = PresentMode::Fifo;
     }

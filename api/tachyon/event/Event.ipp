@@ -13,6 +13,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Event)
 
 namespace yq::tachyon {
     
+    
     EventInfo::EventInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
@@ -21,7 +22,12 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Event::Event()
+    std::atomic<uint64_t>    Event::s_lastId{0};
+
+    Event::Event(flags_t flags) : 
+        m_id(++s_lastId), 
+        m_time(std::chrono::high_resolution_clock::now()), 
+        m_flags(flags)
     {
     }
     
@@ -48,6 +54,11 @@ namespace yq::tachyon {
         return m_handled.test();
     }
 
+    bool Event::is_imgui() const 
+    { 
+        return m_flags(EventFlag::ImGui); 
+    }
+
     bool Event::mark()
     {
         return !m_handled.test_and_set();
@@ -56,6 +67,11 @@ namespace yq::tachyon {
     void Event::reset()
     {
         m_handled.clear();
+    }
+
+    void Event::set_flag(Flag f)
+    {
+        m_flags.set(f);
     }
 
     ////////////////////////////////////////////////////////////////////////////

@@ -12,7 +12,7 @@ struct GLFWwindow;
 struct GLFWmonitor;
 
 namespace yq::tachyon {
-    class Window;
+    class Viewer;
     class Joystick;
 
     /*! \brief GLFW Event Manager
@@ -30,6 +30,7 @@ namespace yq::tachyon {
         static GLFWManager*        manager();
         
     private:
+        friend class Viewer;
         
         static void callback_character(GLFWwindow* window, unsigned int codepoint);
         static void callback_cursor_enter(GLFWwindow* window, int entered);

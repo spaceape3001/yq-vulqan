@@ -8,7 +8,7 @@
 
 #include <yq/macro/debugrel.hpp>
 #include <tachyon/enum/Required.hpp>
-#include <tachyon/viewer/ViewerCreateInfo.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 
 #include <optional>
 #include <string>

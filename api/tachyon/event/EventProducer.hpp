@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/typedef/event.hpp>
+#include <tachyon/event/Event.hpp>
 #include <vector>
 #include <atomic>
 //#include <tbb/spin_rw_mutex.h> // if we need it
@@ -28,6 +28,30 @@ namespace yq::tachyon {
     protected:
 
         void                    publish(EventPtr);
+
+        template <SomeEvent E>
+        E&                      publish(E* ep, ref_t)
+        {
+            assert(ep);
+            publish(ep);
+            return *ep;
+        }
+
+        template <SomeEvent E>
+        E&                      publish(E* ep, reference_t)
+        {
+            assert(ep);
+            publish(ep);
+            return *ep;
+        }
+
+        template <SomeEvent E>
+        E*                      publish(E* ep, pointer_t)
+        {
+            assert(ep);
+            publish(ep);
+            return ep;
+        }
 
         EventProducer();
         ~EventProducer();

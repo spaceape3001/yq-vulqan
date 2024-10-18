@@ -6,11 +6,11 @@
 
 #include "Application.hpp"
 #include <tachyon/logging.hpp>
+#include <tachyon/app/Viewer.hpp>
 #include <tachyon/config/build.hpp>
 #include <tachyon/event/EventFrame.hpp>
 #include <tachyon/glfw/GLFWManager.hpp>
 #include <tachyon/task/TaskEngine.hpp>
-#include <tachyon/viewer/Viewer.hpp>
 #include <tachyon/vulqan/VulqanManager.hpp>
 #include <yq/asset/Asset.hpp>
 #include <GLFW/glfw3.h>

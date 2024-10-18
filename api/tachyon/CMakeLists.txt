@@ -16,6 +16,7 @@ add_library(${PROJECT_NAME} SHARED
 
     app/Application.cpp
     app/Manager.cpp
+    app/Viewer.cpp
     #asset/asset.cpp
     
     camera/Camera.cpp
@@ -41,7 +42,7 @@ add_library(${PROJECT_NAME} SHARED
     glfw/Joystick.cpp
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
-    glfw/Window.cpp
+    #glfw/Window.cpp
     
     image/image.cpp
     image/STBImage.cpp
@@ -84,9 +85,6 @@ add_library(${PROJECT_NAME} SHARED
     v/VqLogging.cpp
     v/VqUtils.cpp
     
-    viewer/Viewer.cpp
-    
-    viz/ViCleanupManager.cpp
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
     viz/ViFrame.cpp

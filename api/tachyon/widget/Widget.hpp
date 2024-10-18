@@ -10,10 +10,16 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/typedef/vector2.hpp>
 
 namespace yq::tachyon {
     class Viewer;
     struct ViContext;
+    class Event;
+    class KeyCharacter;
+    class KeyPress;
+    class KeyRelease;
+    class MousePress;
 
     class WidgetInfo : public ObjectInfo {
     public:
@@ -86,6 +92,8 @@ namespace yq::tachyon {
         */
         bool    has_parentage(const Widget* p) const;
         
+        bool    is_imgui() const;
+        
         //! Our parent widget
         Widget*         parent()  { return m_parent; }
 
@@ -103,6 +111,8 @@ namespace yq::tachyon {
 
         //! Our viewer
         const Viewer*   viewer() const ;
+        
+        virtual Widget* widget_at(const Vector2D&) const;
 
     protected:
         friend class Viewer;
@@ -124,10 +134,47 @@ namespace yq::tachyon {
         virtual void            prerecord(ViContext&);
 
         //! Called when a child of this widget is added
-        virtual void            child_added(Widget*){}
+        virtual void            on_child_added(Widget*){}
         
         //! Called when a child of this widget is removed
-        virtual void            child_removed(Widget*){}
+        virtual void            on_child_removed(Widget*){}
+        
+        //! Called when the user submits a character (could be meta-induced)
+        virtual void            on(const KeyCharacter&){}
+        
+        virtual void            on_widget_moved(const Vector2I&){}
+        
+        virtual void            on_widget_resized(const Size2I&) {}
+        
+        virtual void            on_widget_rescaled(const Vector2F&) {}
+        
+        virtual void            on_close_request() {}
+        
+        virtual void            on_mouse_moved(const Vector2D&) {}
+        
+        virtual void            on_cursor_entered() {}
+        
+        virtual void            on_cursor_left() {}
+        
+        virtual void            on(const KeyPress&) {}
+
+        virtual void            on(const KeyRelease&) {}
+        
+        virtual void            on_key_repeat(KeyCode, int, ModifierKeys) {}
+        
+        virtual void            on_mouse_press(const Vector2D&, ModifierKeys) {}
+        
+        virtual void            on_scroll_wheel(const Vector2D&) {}
+        
+        virtual void            on_widget_focused() {}
+        
+        virtual void            on_widget_left() {}
+        
+        virtual void            on_window_iconified() {}
+        
+        virtual void            on_window_restored() {}
+        
+        virtual void            on_window_maximized() {}
     };
 
     /*! \brief Writer of widget information

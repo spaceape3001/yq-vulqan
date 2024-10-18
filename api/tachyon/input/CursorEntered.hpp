@@ -12,17 +12,17 @@ namespace yq::tachyon {
     class Window;
     class Viewer;
 
-    class KeyboardEventInfo : public InputEventInfo {
+    class CursorEventInfo : public InputEventInfo {
     public:
-        KeyboardEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
+        CursorEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
 
-    class KeyboardEvent : public InputEvent {
-        YQ_OBJECT_INFO(KeyboardEventInfo)
-        YQ_OBJECT_DECLARE(KeyboardEvent, InputEvent)
+    class CursorEvent : public InputEvent {
+        YQ_OBJECT_INFO(CursorEventInfo)
+        YQ_OBJECT_DECLARE(CursorEvent, InputEvent)
     public:
 
         //  EVENT TODO
@@ -30,10 +30,10 @@ namespace yq::tachyon {
         Viewer*     viewer() const { return m_viewer; }
         Widget*     widget() const { return m_widget; }
 
-        virtual ~KeyboardEvent();
+        virtual ~CursorEvent();
     
     protected:
-        KeyboardEvent(Viewer* v, Widget*w);
+        CursorEvent(Viewer* v, Widget*w);
 
     private:
         Viewer* const   m_viewer;

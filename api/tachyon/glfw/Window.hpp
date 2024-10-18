@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#error "Window is going away, file remains for reference"
+
 #pragma once
 
 //#include <tachyon/preamble.hpp>
@@ -24,12 +26,12 @@ namespace yq::tachyon {
     public:
     
         // callback for non-window specific events
-        struct Events;
+        //struct Events;
     
         static bool rawMouseMotionSupported();
     
-        static void set_events(Events*);
-        static void poll_events();
+        //static void set_events(Events*);
+        //static void poll_events();
     
     
         //static_assert(!is_template_enum_v<Hooks>, "Hooks violates enum constraitn");
@@ -171,9 +173,9 @@ namespace yq::tachyon {
         //! Cursor (mouse) has entered the widnow
         virtual void        mouse_entered() {}
         
-        virtual void        key_pressed(int key, int scancode, ModifierKeys) {}
-        virtual void        key_released(int key, int scancode, ModifierKeys) {}
-        virtual void        key_repeat(int key, int scancode, ModifierKeys) {}
+        virtual void        key_pressed(KeyCode key, int scancode, ModifierKeys) {}
+        virtual void        key_released(KeyCode key, int scancode, ModifierKeys) {}
+        virtual void        key_repeat(KeyCode key, int scancode, ModifierKeys) {}
         
         //! Cursor (mouse) has left the window
         virtual void        mouse_left() {}
@@ -210,8 +212,7 @@ namespace yq::tachyon {
         
         GLFWwindow*     m_window    = nullptr;
         std::string     m_title;
-        //  Updated with every callback
-        Vector2D        m_cursor    = {};
+        //Vector2D        m_cursor    = {};
         bool            m_imgui     = false;
         bool            m_init      = false;
         ModifierKeys    m_modifiers;

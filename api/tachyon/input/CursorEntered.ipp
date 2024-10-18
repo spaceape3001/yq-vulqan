@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "KeyboardEvent.hpp"
+#include "CursorEvent.hpp"
 
 #include <tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyboardEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorEvent)
 
 namespace yq::tachyon {
     
-    KeyboardEventInfo::KeyboardEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+    CursorEventInfo::CursorEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
         InputEventInfo(zName, base, sl)
     {
-        set(Flag::KEYBOARD);
+        set(Flag::CURSOR);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    KeyboardEvent::KeyboardEvent(Viewer* v, Widget*w) : m_viewer(v), m_widget(w)
+    CursorEvent::CursorEvent(Viewer* v, Widget*w) : m_viewer(v), m_widget(w)
     {
     }
     
-    KeyboardEvent::~KeyboardEvent()
+    CursorEvent::~CursorEvent()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_keyboard_event()
+    static void reg_cursor_event()
     {
         {
-            auto w = writer<KeyboardEvent>();
-            w.description("Keyboard event base class");
+            auto w = writer<CursorEvent>();
+            w.description("Cursor event base class");
         }
     }
     
-    YQ_INVOKE(reg_keyboard_event();)
+    YQ_INVOKE(reg_cursor_event();)
 }

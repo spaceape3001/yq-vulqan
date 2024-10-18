@@ -59,6 +59,11 @@ namespace yq::tachyon {
         return false;
     }
 
+    bool    Widget::is_imgui() const
+    {
+        return metaInfo().is_imgui();
+    }
+
     void            Widget::prerecord(ViContext& u)
     {
         for(Widget* w : m_children)
@@ -112,6 +117,11 @@ namespace yq::tachyon {
         return const_cast<Widget*>(this)->viewer();
     }
     
+    Widget* Widget::widget_at(const Vector2D&) const
+    {
+        return this;
+    }
+
     static void reg_widget()
     {
         {

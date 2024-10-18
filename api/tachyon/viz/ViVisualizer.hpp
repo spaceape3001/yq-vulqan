@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Guarded.hpp>
 #include <yq/core/Ref.hpp>
@@ -271,7 +272,7 @@ namespace yq::tachyon {
 
 
     protected:
-        ViVisualizer();
+        ViVisualizer(Cleanup&);
         ~ViVisualizer();
 
         using mutex_t = tbb::spin_rw_mutex;
@@ -280,7 +281,7 @@ namespace yq::tachyon {
         
         VmaAllocator                        m_allocator         = nullptr;
         ViBufferManagerUPtr                 m_buffers;
-        ViCleanupManager                    m_cleanup;                  // keep it one until performance bottlenecks
+        Cleanup&                            m_cleanup;                  // keep it one until performance bottlenecks
         Guarded<VkClearValue>               m_clearValue;
         ViQueueManager*                     m_computeQueue      = nullptr;
         VkDevice                            m_device            = nullptr;

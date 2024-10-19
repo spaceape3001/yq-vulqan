@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <tachyon/input/KeyboardEvent.hpp>
+
 namespace yq::tachyon {
     class KeyCharacter : public KeyboardEvent {
         YQ_OBJECT_DECLARE(KeyCharacter, KeyboardEvent)

@@ -17,6 +17,10 @@ namespace yq::tachyon {
         
     protected:
     };
+    
+    class Viewer;
+    class Widget;
+
 
     /*! \brief Input event 
     
@@ -28,10 +32,26 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(InputEvent, Event)
     public:
     
+        struct Param : public Event::Param {
+            Viewer*     viewer = nullptr;
+            Widget*     widget = nullptr;
+        };
+    
         //  EVENT TODO
     
-        InputEvent();
         virtual ~InputEvent();
+        
+        //! Viewer (note, for some events, this might be NULL)
+        Viewer*     viewer() const { return m_viewer; }
+        
+        //! Widget (note, for some events, this might be NULL)
+        Widget*     widget() const { return m_widget; }
+        
+    protected:
+        InputEvent(const Param&);
+    private:
+        Viewer* m_viewer;
+        Widget* m_widget;
     };
     
     #if 0

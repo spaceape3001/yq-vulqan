@@ -8,12 +8,12 @@
 
 #include <tachyon/logging.hpp>
 #include <tachyon/app/Application.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/glfw/GLFWManager.hpp>
 #include <tachyon/imgui/ViGui.hpp>
 #include <tachyon/image/Raster.hpp>
 #include <tachyon/input/KeyCharacter.hpp>
 #include <tachyon/viz/ViContext.hpp>
-#include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/widget/Widget.hpp>
 
 #include <yq/errors.hpp>
@@ -27,7 +27,6 @@
 
 namespace yq::tachyon {
 
-
     //  ----------------------------------------------------------------------------------------------------------------
     //  CALLBACKS
 
@@ -36,15 +35,8 @@ namespace yq::tachyon {
         Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
         if(!viewer) // shouldn't ever happen.... but
             return ;
+        viewer->dispatch_character(codepoint);
         
-        if(viewer->m_imgui && (!viewer->m_focus || viewer->m_focus->is_imgui())){
-            ImGui_ImplGlfw_CharCallback(window, codepoint);
-        }
-
-        KeyCharacter&   evt = publish(new KeyCharacter(viewer, viewer->m_focus, codepoint), REFERENCE);
-        if(viewer->m_focus){
-            viewer->m_focus->on(evt);
-        }
     }
     
     void Viewer::callback_cursor_enter(GLFWwindow* window, int entered)
@@ -52,77 +44,119 @@ namespace yq::tachyon {
         Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
         if(!viewer) // shouldn't ever happen.... but
             return ;
-        
-        if(viewer->m_imgui){
-            ImGui_ImplGlfw_CursorEnterCallback(window, entered);
-        }
-        
-        switch(entered){
-        case GLFW_TRUE:
-            {
-            }
-            break;
-        case GLFW_FALSE:
-            {
-            }
-            break;
-        }
+        viewer->dispatch_cursor_enter(entered);
     }
     
     void Viewer::callback_cursor_position(GLFWwindow* window, double xpos, double ypos)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_cursor_position(xpos, ypow);
     }
     
     void Viewer::callback_drop(GLFWwindow* window, int count, const char** paths)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_drop(count, paths);
     }
     
     void Viewer::callback_framebuffer_size(GLFWwindow* window, int width, int height)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_framebuffer_size(width, height);
     }
     
     void Viewer::callback_key(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_key(key, scancode, action, mods);
     }
     
     void Viewer::callback_mouse_button(GLFWwindow* window, int button, int action, int mods)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_mouse_button(button, action, mods);
     }
     
     void Viewer::callback_scroll(GLFWwindow* window, double xoffset, double yoffset)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_scroll(xoffset, yoffset);
     }
     
     void Viewer::callback_window_close(GLFWwindow* window)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_close();
     }
     
     void Viewer::callback_window_focus(GLFWwindow* window, int focused)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_focus(focused);
     }
     
     void Viewer::callback_window_iconify(GLFWwindow* window, int iconified)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_iconify(iconified);
     }
     
     void Viewer::callback_window_maximize(GLFWwindow* window, int maximized)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_maximized(maximized);
     }
     
     void Viewer::callback_window_position(GLFWwindow* window, int xpos, int ypos)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_position(xpos, ypos);
     }
     
     void Viewer::callback_window_refresh(GLFWwindow* window)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_refresh();
     }
     
     void Viewer::callback_window_scale(GLFWwindow* window, float xscale, float yscale)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_scale(xscale, yscale);
     }
     
-    void Viewer::callback_window_size(GLFWwindow*, int, int)
+    void Viewer::callback_window_size(GLFWwindow* window, int xsize, int ysize)
     {
+        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!viewer) // shouldn't ever happen.... but
+            return ;
+        viewer->dispatch_window_size(window, xsize, ysize);
     }
 
     //  ----------------------------------------------------------------------------------------------------------------
@@ -183,6 +217,9 @@ namespace yq::tachyon {
         m_widget    = w;
         w->m_viewer = this;
         return std::error_code();
+        
+        
+        m_cursorPos = _probe_cursor_position();
     }
 
     void                Viewer::_kill()
@@ -198,17 +235,26 @@ namespace yq::tachyon {
         m_widget    = nullptr;
         m_imgui     = {};
         kill_visualizer();
-        Window::kill_window();
+        Viewer::kill_window();
     }
     
     //  ----------------------------------------------------------------------------------------------------------------
     //  INFORMATION/GETTERS
     
-    Vector2D    Viewer::cursor_position() const
+    Vector2D    Viewer::_probe_cursor_position() const
     {
         Vector2D    ret;
         glfwGetCursorPos(m_window, &ret.x, &ret.y);
         return ret;
+    }
+
+    Vector2D    Viewer::cursor_position(bool probe) const
+    {
+        if(probe){
+            return _probe_cursor_position();
+        } else {
+            return m_cursorPos;
+        }
     }
 
     uint64_t    Viewer::frame_number() const
@@ -250,51 +296,51 @@ namespace yq::tachyon {
         return glfwGetWindowMonitor(m_window) != nullptr;
     }
     
-    bool        Window::is_hovered() const
+    bool        Viewer::is_hovered() const
     {
         return glfwGetWindowAttrib(m_window, GLFW_HOVERED) != 0;
     }
     
-    bool        Window::is_iconified() const
+    bool        Viewer::is_iconified() const
     {
         return glfwGetWindowAttrib(m_window, GLFW_ICONIFIED) != 0;
     }
 
-    bool        Window::is_maximized() const
+    bool        Viewer::is_maximized() const
     {
         return glfwGetWindowAttrib(m_window, GLFW_MAXIMIZED) != 0;
     }
     
-    bool        Window::is_resizable() const
+    bool        Viewer::is_resizable() const
     {
         return glfwGetWindowAttrib(m_window, GLFW_RESIZABLE) != 0;
     }
     
-    bool        Window::is_visible() const
+    bool        Viewer::is_visible() const
     {
         return glfwGetWindowAttrib(m_window, GLFW_VISIBLE) != 0;
     }
 
-    Monitor     Window::monitor() const
+    Monitor     Viewer::monitor() const
     {
         return Monitor();
     }
 
-    Vector2I    Window::position() const
+    Vector2I    Viewer::position() const
     {
         Vector2I   ret;
         glfwGetWindowPos(m_window, &ret.x, &ret.y);
         return ret;
     }
     
-    bool        Window::should_close() const
+    bool        Viewer::should_close() const
     {
         if(!m_window) 
             return true;
         return glfwWindowShouldClose(m_window);
     }
 
-    Size2I      Window::size() const
+    Size2I      Viewer::size() const
     {
         Size2I  ret;
         glfwGetWindowSize(m_window, &ret.x, &ret.y);
@@ -306,18 +352,87 @@ namespace yq::tachyon {
         return m_title; 
     }
 
-    int  Window::width() const
+    Widget*             Viewer::widget_at(const Vector2D& pt) const
+    {
+        return m_widget -> widget_at(pt);
+    }
+
+    Visualizer&         Viewer::visualizer() const
+    {
+        assert(m_viz);
+        return *m_viz;
+    }
+
+    int  Viewer::width() const
     {
         int ret;
         glfwGetWindowSize(m_window, &ret, nullptr);
         return ret;
     }
 
-    bool Window::zero_framebuffer() const
+    bool Viewer::zero_framebuffer() const
     {
         return any(framebuffer_size()) <= 0;
     }
     
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  GLFW EVENT DISPATCHERS
+ 
+    void    Viewer::dispatch_character(unsigned int code)
+    {
+        if(m_imgui && (!m_focus || m_focus->is_imgui())){
+            ImGui_ImplGlfw_CharCallback(m_window, codepoint);
+        }
+
+        KeyCharacter&   evt = publish(new KeyCharacter(this, m_focus, codepoint), REFERENCE);
+        if(m_focus){
+            m_focus->on(evt);
+        }
+    }
+    
+    void    Viewer::dispatch_cursor_enter(int)
+    {
+        
+        
+        if(viewer->m_imgui){
+            ImGui_ImplGlfw_CursorEnterCallback(window, entered);
+        }
+        
+        Vector2D    pos = viewer -> cursor_position();
+        Widget* widget  = viewer -> widget_at(pos);
+        
+        switch(entered){
+        case GLFW_TRUE:
+            {
+            }
+            break;
+        case GLFW_FALSE:
+            {
+            }
+            break;
+        }
+    }
+    
+    void    Viewer::dispatch_cursor_position(double x, double y)
+    {
+        m_cursorPos     = Vector2D(x,y);
+        
+    }
+    
+    void    Viewer::dispatch_drop(int, const char**);
+    void    Viewer::dispatch_framebuffer_size(int, int);
+    void    Viewer::dispatch_key(int, int, int, int);
+    void    Viewer::dispatch_mouse_button(int, int, int);
+    void    Viewer::dispatch_scroll(double, double);
+    void    Viewer::dispatch_window_close();
+    void    Viewer::dispatch_window_focus(int);
+    void    Viewer::dispatch_window_iconify(int);
+    void    Viewer::dispatch_window_maximize(int);
+    void    Viewer::dispatch_window_position(int, int);
+    void    Viewer::dispatch_window_refresh();
+    void    Viewer::dispatch_window_scale(float, float);
+    void    Viewer::dispatch_window_size(int,int);
+
     //  ----------------------------------------------------------------------------------------------------------------
     //  GLFW/SETTERS
     

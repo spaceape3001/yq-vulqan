@@ -460,9 +460,9 @@ namespace yq::tachyon {
         m_cleanup.add(std::move(fn));
     }
 
-    ViCleanupManager* ViVisualizer::cleanup_manager() const 
-    { 
-        return const_cast<ViCleanupManager*>(&m_cleanup); 
+    Cleanup&          ViVisualizer::cleanup_manager() const
+    {
+        return *const_cast<Cleanup*>(&m_cleanup);
     }
 
     void   ViVisualizer::cleanup_sweep()

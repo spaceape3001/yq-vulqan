@@ -26,7 +26,6 @@
 #include <tachyon/typedef/shader.hpp>
 #include <tachyon/typedef/swapchain.hpp>
 #include <tachyon/typedef/texture.hpp>
-#include <tachyon/viz/ViCleanupManager.hpp>
 #include <tachyon/viz/ViQueueType.hpp>
 
 #include <tbb/spin_rw_mutex.h>
@@ -81,7 +80,7 @@ namespace yq::tachyon {
         ViBufferManager*                buffer_manager() const;
         
         void                            cleanup(cleanup_fn&&);
-        ViCleanupManager*               cleanup_manager() const;
+        Cleanup&                        cleanup_manager() const;
         void                            cleanup_sweep();
 
         RGBA4F                          clear_color() const;

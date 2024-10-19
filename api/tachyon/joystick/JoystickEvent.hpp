@@ -22,7 +22,11 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(JoystickEvent, InputEvent)
     public:
     
-        JoystickEvent(Joystick);
+        struct Param : public InputEvent::Param {
+            Joystick        joystick    = {};
+        };
+    
+        JoystickEvent(const Param&);
         virtual ~JoystickEvent();
         
         const Joystick& joystick() const { return m_joystick; }

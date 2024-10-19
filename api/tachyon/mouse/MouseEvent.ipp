@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "InputEvent.hpp"
+#include "MouseEvent.hpp"
 
 #include <tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::InputEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseEvent)
 
 namespace yq::tachyon {
     
-    InputEventInfo::InputEventInfo(std::string_view zName, const EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
+    MouseEventInfo::MouseEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+        InputEventInfo(zName, base, sl)
     {
-        set(Flag::INPUT);
+        set(Flag::MOUSE);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    InputEvent::InputEvent()
+    MouseEvent::MouseEvent(const Param& p) : InputEvent(p)
     {
     }
     
-    InputEvent::~InputEvent()
+    MouseEvent::~MouseEvent()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_input_event()
+    static void reg_mouse_event()
     {
         {
-            auto w = writer<InputEvent>();
-            w.description("Input event base class");
+            auto w = writer<MouseEvent>();
+            w.description("Mouse event base class");
         }
     }
     
-    YQ_INVOKE(reg_input_event();)
+    YQ_INVOKE(reg_mouse_event();)
 }

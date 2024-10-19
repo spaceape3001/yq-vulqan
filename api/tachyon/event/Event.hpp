@@ -50,9 +50,13 @@ namespace yq::tachyon {
         };
         
         using flags_t       = Flags<Flag>;
+        
+        struct Param {
+            flags_t          flags = {};
+        };
     
     
-        using time_point_t  = std::chrono::time_point;
+        using time_point_t  = std::chrono::high_resolution_clock::time_point;
     
         bool    is_command() const;
         bool    is_input() const;
@@ -86,7 +90,7 @@ namespace yq::tachyon {
 
     protected:
 
-        Event(flags_t flags={});
+        Event(const Param&);
 
         /*! \brief Invokes the event's handler
         

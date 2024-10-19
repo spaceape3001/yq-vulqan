@@ -14,6 +14,8 @@ namespace yq::tachyon {
     public:
         static void init_info();
     
+    
+    
         JoystickConnect(Joystick);
         ~JoystickConnect();
     };

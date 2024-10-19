@@ -11,6 +11,7 @@
 #include <tachyon/event/EventFrame.hpp>
 #include <tachyon/glfw/GLFWManager.hpp>
 #include <tachyon/task/TaskEngine.hpp>
+#include <tachyon/viz/Visualizer.hpp>
 #include <tachyon/vulqan/VulqanManager.hpp>
 #include <yq/asset/Asset.hpp>
 #include <GLFW/glfw3.h>
@@ -111,7 +112,7 @@ namespace yq::tachyon {
                 for(auto& v : g.viewers){
                     v->draw();
                     if(v->should_close() || !v->m_delete.empty()){
-                        vkDeviceWaitIdle(v->device());
+                        vkDeviceWaitIdle(v->visualizer().device());
                         v->purge_deleted();
                         if(v->should_close()){
                             delete v;
@@ -187,7 +188,7 @@ namespace yq::tachyon {
 
         for(Viewer* v : g.viewers){
             if(v){
-                vkDeviceWaitIdle(v->device());
+                vkDeviceWaitIdle(v->visualizer().device());
                 delete v;
             }
         }

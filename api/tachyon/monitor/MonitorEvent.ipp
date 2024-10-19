@@ -20,7 +20,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    MonitorEvent::MonitorEvent(Monitor m) : m_monitor(m)
+    MonitorEvent::MonitorEvent(const Param& p) : InputEvent(p), m_monitor(p.monitor)
     {
     }
     

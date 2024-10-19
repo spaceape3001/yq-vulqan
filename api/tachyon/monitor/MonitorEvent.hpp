@@ -19,12 +19,17 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(MonitorEventInfo)
         YQ_OBJECT_DECLARE(MonitorEvent, InputEvent)
     public:
+    
+        struct Param : public InputEvent::Param {
+            Monitor     monitor;
+        };
+    
         virtual ~MonitorEvent();
 
         const Monitor&  monitor() const { return m_monitor; }
         
     protected:
-        MonitorEvent(Monitor);
+        MonitorEvent(const Param&);
     private:
         const Monitor  m_monitor;
     };

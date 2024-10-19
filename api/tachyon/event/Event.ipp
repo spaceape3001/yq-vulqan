@@ -24,10 +24,10 @@ namespace yq::tachyon {
 
     std::atomic<uint64_t>    Event::s_lastId{0};
 
-    Event::Event(flags_t flags) : 
+    Event::Event(const Param& p) : 
         m_id(++s_lastId), 
         m_time(std::chrono::high_resolution_clock::now()), 
-        m_flags(flags)
+        m_flags(p.flags)
     {
     }
     

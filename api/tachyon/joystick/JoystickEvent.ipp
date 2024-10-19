@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "KeyboardEvent.hpp"
+#include "JoystickEvent.hpp"
 
 #include <tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyboardEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickEvent)
 
 namespace yq::tachyon {
     
-    KeyboardEventInfo::KeyboardEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+    JoystickEventInfo::JoystickEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
         InputEventInfo(zName, base, sl)
     {
-        set(Flag::KEYBOARD);
+        set(Flag::JOYSTICK);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    KeyboardEvent::KeyboardEvent(Viewer* v, Widget*w) : m_viewer(v), m_widget(w)
+    JoystickEvent::JoystickEvent(const Param& p) : InputEvent(p), m_joystick(p.joystick)
     {
     }
     
-    KeyboardEvent::~KeyboardEvent()
+    JoystickEvent::~JoystickEvent()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_keyboard_event()
+    static void reg_joystick_event()
     {
         {
-            auto w = writer<KeyboardEvent>();
-            w.description("Keyboard event base class");
+            auto w = writer<JoystickEvent>();
+            w.description("Joystick event base class");
         }
     }
     
-    YQ_INVOKE(reg_keyboard_event();)
+    YQ_INVOKE(reg_joystick_event();)
 }

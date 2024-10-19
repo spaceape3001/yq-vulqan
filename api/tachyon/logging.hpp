@@ -98,3 +98,22 @@
 #define vqFirstInfo(...)            yLogFirstInfo("vq", __VA_ARGS__)
 #define vqFirstNotice(...)          yLogFirstNotice("vq", __VA_ARGS__)
 #define vqFirstWarning(...)         yLogFirstWarning("vq", __VA_ARGS__)
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/core/Logging.hpp>
+
+#define glfwAlert           yAlert("glfw")
+#define glfwCritical        yCritical("glfw")
+#define glfwDebug           yDebug("glfw")
+#define glfwError           yError("glfw")
+#define glfwEmergency       yEmergency("glfw")
+#define glfwFatal           yFatal("glfw")
+#define glfwInfo            yInfo("glfw")
+#define glfwNotice          yNotice("glfw")
+#define glfwWarning         yWarning("glfw")

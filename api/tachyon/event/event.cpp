@@ -11,3 +11,4 @@
 #include "EventManager.ipp"
 #include "EventProducer.ipp"
 #include "EventSocket.ipp"
+#include "InputEvent.ipp"

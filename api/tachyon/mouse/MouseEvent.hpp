@@ -12,7 +12,6 @@ namespace yq::tachyon {
     class MouseEventInfo : public InputEventInfo {
     public:
         MouseEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
-        
     protected:
     };
 
@@ -22,9 +21,12 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(MouseEvent, InputEvent)
     public:
     
+        struct Param : public InputEvent::Param {
+        };
+    
         //  EVENT TODO
     
-        MouseEvent();
+        MouseEvent(const Param&);
         virtual ~MouseEvent();
     };
 }

@@ -24,19 +24,17 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(KeyboardEventInfo)
         YQ_OBJECT_DECLARE(KeyboardEvent, InputEvent)
     public:
+    
+        struct Param : public InputEvent::Param {
+        };
 
         //  EVENT TODO
         
-        Viewer*     viewer() const { return m_viewer; }
-        Widget*     widget() const { return m_widget; }
-
         virtual ~KeyboardEvent();
     
     protected:
-        KeyboardEvent(Viewer* v, Widget*w);
+        KeyboardEvent(const Param& p);
 
     private:
-        Viewer* const   m_viewer;
-        Widget* const   m_widget;
     };
 }

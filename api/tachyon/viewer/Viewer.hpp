@@ -11,7 +11,8 @@
 
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
-#include <yq/typedef/vector2.hpp>
+#include <yq/typedef/size2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 //#include <tachyon/viz/Visualizer.hpp>
 //#include <tachyon/glfw/Window.hpp>
@@ -28,10 +29,12 @@ struct GLFWwindow;
 struct GLFWmonitor;
 
 namespace yq::tachyon {
+    class Monitor;
     class Widget;
     class ViGui;
     class Visualizer;
     struct ViContext;
+    struct ViewerCreateInfo;
     
     /*! \brief Vulkan Window
     
@@ -41,6 +44,12 @@ namespace yq::tachyon {
     */
     class Viewer : public EventProducer {
         friend class Application;
+
+    //  TODO FEATURE LIST
+    //
+    //  + Raw Mouse Motion (set https://www.glfw.org/docs/latest/input_guide.html#input_mouse_button )
+    //  + Cursor control
+    
     public:
 
         static bool rawMouseMotionSupported();
@@ -95,7 +104,7 @@ namespace yq::tachyon {
         //! Unpause the rendering
         void                cmd_unpause();
 
-        Vector2D            cursor_position() const;
+        Vector2D            cursor_position(bool probe=false) const;
 
         //! Runs the draw sequence
         std::error_code     draw(ViContext&);
@@ -109,6 +118,8 @@ namespace yq::tachyon {
 
         //! Current frame number
         uint64_t            frame_number() const;
+        
+        Widget*             focus_widget() const { return m_focus; }
         
             //! Height of the window
         int                 height() const;
@@ -182,9 +193,12 @@ namespace yq::tachyon {
 
         std::string_view    title() const;
 
+        Widget*             widget_at(const Vector2D&) const;
+
             //! Width of the window
         int                 width() const;
 
+        Visualizer&         visualizer() const;
 
         GLFWwindow*         window() const { return m_window; }
         
@@ -226,6 +240,9 @@ namespace yq::tachyon {
         std::unique_ptr<ViGui>          m_imgui;
         std::unique_ptr<Visualizer>     m_viz;
         std::string                     m_title;
+        Vector2D                        m_cursorPos     = ZERO;
+        
+        //  Maybe some sort of focus manager (or policy)?
         
         void                purge_deleted();
         
@@ -248,6 +265,25 @@ namespace yq::tachyon {
         static void callback_window_refresh(GLFWwindow* window);
         static void callback_window_scale(GLFWwindow* window, float xscale, float yscale);
         static void callback_window_size(GLFWwindow*, int, int);
+        
+        void    dispatch_character(unsigned int);
+        void    dispatch_cursor_enter(int);
+        void    dispatch_cursor_position(double, double);
+        void    dispatch_drop(int, const char**);
+        void    dispatch_framebuffer_size(int, int);
+        void    dispatch_key(int, int, int, int);
+        void    dispatch_mouse_button(int, int, int);
+        void    dispatch_scroll(double, double);
+        void    dispatch_window_close();
+        void    dispatch_window_focus(int);
+        void    dispatch_window_iconify(int);
+        void    dispatch_window_maximize(int);
+        void    dispatch_window_position(int, int);
+        void    dispatch_window_refresh();
+        void    dispatch_window_scale(float, float);
+        void    dispatch_window_size(int,int);
+        
+        Vector2D    _probe_cursor_position() const;
     };
     
     

@@ -16,10 +16,18 @@ namespace yq::tachyon {
     class Viewer;
     struct ViContext;
     class Event;
-    class KeyCharacter;
-    class KeyPress;
-    class KeyRelease;
-    class MousePress;
+    class KeyCharacterEvent;
+    class KeyPressEvent;
+    class KeyReleaseEvent;
+    
+    class MouseMoveEvent;
+    class MousePressEvent;
+    class MouseReleaseEvent;
+    
+    class WidgetMoveEvent;
+    class WidgetResizeEvent;
+    class WidgetRescaleEvent;
+    class WidgetCloseRequest;
 
     class WidgetInfo : public ObjectInfo {
     public:
@@ -142,14 +150,14 @@ namespace yq::tachyon {
         //! Called when the user submits a character (could be meta-induced)
         virtual void            on(const KeyCharacter&){}
         
-        virtual void            on_widget_moved(const Vector2I&){}
+        virtual void            on(const WidgetMoved&){}
+
+        virtual void            on(const WidgetResized&){}
         
-        virtual void            on_widget_resized(const Size2I&) {}
+        virtual void            on(const WidgetRescaled&){}
         
-        virtual void            on_widget_rescaled(const Vector2F&) {}
-        
-        virtual void            on_close_request() {}
-        
+        virtual void            on(const WidgetCloseRequest&){}
+
         virtual void            on_mouse_moved(const Vector2D&) {}
         
         virtual void            on_cursor_entered() {}

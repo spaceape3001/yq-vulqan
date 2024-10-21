@@ -148,7 +148,7 @@ namespace yq::tachyon {
         virtual void            on_child_removed(Widget*){}
         
         //! Called when the user submits a character (could be meta-induced)
-        virtual void            on(const KeyCharacter&){}
+        virtual void            on(const KeyCharacterEvent&){}
         
         virtual void            on(const WidgetMoved&){}
 

@@ -16,8 +16,6 @@ add_library(${PROJECT_NAME} SHARED
 
     app/Application.cpp
     app/Manager.cpp
-    app/Viewer.cpp
-    #asset/asset.cpp
     
     camera/Camera.cpp
     camera/NullCamera.cpp
@@ -34,15 +32,8 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     
     event/event.cpp
-    #event/Event.cpp
     
     font/Font.cpp
-    
-    glfw/GLFWManager.cpp
-    glfw/Joystick.cpp
-    glfw/Monitor.cpp
-    glfw/VideoMode.cpp
-    #glfw/Window.cpp
     
     image/image.cpp
     image/STBImage.cpp
@@ -50,11 +41,15 @@ add_library(${PROJECT_NAME} SHARED
     imgui/MyImGui.cpp
     imgui/ViGui.cpp
     
-    input/input.cpp
+    joystick/joystick.cpp
+    
+    keyboard/keyboard.cpp
     
     manipulator/Manipulator.cpp
     
     memory/memory.cpp
+    
+    monitor/monitor.cpp
     
     # pass/RenderPass.cpp
     
@@ -84,6 +79,9 @@ add_library(${PROJECT_NAME} SHARED
     v/VqEnums.cpp
     v/VqLogging.cpp
     v/VqUtils.cpp
+    
+    viewer/GLFWManager.cpp
+    viewer/Viewer.cpp
     
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp

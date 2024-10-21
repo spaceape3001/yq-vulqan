@@ -10,24 +10,33 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/meta/ObjectInfoWriter.hpp>
-#include <yq/typedef/vector2.hpp>
+#include <tachyon/event/EventProducer.hpp>
 
 namespace yq::tachyon {
     class Viewer;
     struct ViContext;
     class Event;
-    class KeyCharacterEvent;
-    class KeyPressEvent;
-    class KeyReleaseEvent;
     
-    class MouseMoveEvent;
-    class MousePressEvent;
-    class MouseReleaseEvent;
+    class KeyCharacter;
+    class KeyPress;
+    class KeyRelease;
     
-    class WidgetMoveEvent;
-    class WidgetResizeEvent;
-    class WidgetRescaleEvent;
-    class WidgetCloseRequest;
+    class MouseEnter;
+    class MouseLeft;
+    class MouseMove;
+    class MousePress;
+    class MouseRelease;
+    
+    class WidgetMove;
+    class WidgetResize;
+    class WidgetRescale;
+    
+    class CloseRequest;
+    
+    //class WidgetMoveEvent;
+    //class WidgetResizeEvent;
+    //class WidgetRescaleEvent;
+    //class WidgetCloseRequest;
 
     class WidgetInfo : public ObjectInfo {
     public:
@@ -148,23 +157,25 @@ namespace yq::tachyon {
         virtual void            on_child_removed(Widget*){}
         
         //! Called when the user submits a character (could be meta-induced)
-        virtual void            on(const KeyCharacterEvent&){}
+        virtual void            on(const KeyCharacter&){}
+        virtual void            on(const KeyPress&){}
+        virtual void            on(const KeyRelease&){}
+        virtual void            on(const KeyRepeat&){}
         
-        virtual void            on(const WidgetMoved&){}
+        virtual void            on(const WidgetMove&){}
 
-        virtual void            on(const WidgetResized&){}
+        virtual void            on(const WidgetResize&){}
         
-        virtual void            on(const WidgetRescaled&){}
+        virtual void            on(const WidgetRescale&){}
         
-        virtual void            on(const WidgetCloseRequest&){}
+        virtual void            on(const CloseRequest&){}
 
-        virtual void            on_mouse_moved(const Vector2D&) {}
+        virtual void            on(const MouseMove&) {}
         
-        virtual void            on_cursor_entered() {}
+        virtual void            on(const MouseEnter&) {}
         
-        virtual void            on_cursor_left() {}
+        virtual void            on(const MouseLeft&) {}
         
-        virtual void            on(const KeyPress&) {}
 
         virtual void            on(const KeyRelease&) {}
         

@@ -10,7 +10,7 @@
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <tachyon/monitor/Monitor.hpp>
+#include <tachyon/glfw/Monitor.hpp>
 #include <tachyon/typedef/queue_spec.hpp>
 #include <tachyon/enum/PresentMode.hpp>
 

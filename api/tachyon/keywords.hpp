@@ -33,4 +33,7 @@ namespace yq::tachyon {
     static constexpr fixed_t        FIXED;
     static constexpr refresh_t      REFRESH;
     static constexpr static_t       STATIC;
+    
+    static constexpr rx_t           RX;
+    static constexpr tx_t           TX;
 }

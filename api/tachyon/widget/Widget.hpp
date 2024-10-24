@@ -26,6 +26,7 @@ namespace yq::tachyon {
     class MouseMove;
     class MousePress;
     class MouseRelease;
+    class MouseScroll;
     
     class WidgetMove;
     class WidgetResize;
@@ -151,10 +152,13 @@ namespace yq::tachyon {
         virtual void            prerecord(ViContext&);
 
         //! Called when a child of this widget is added
-        virtual void            on_child_added(Widget*){}
+        //virtual void            on_child_added(Widget*){}
         
         //! Called when a child of this widget is removed
-        virtual void            on_child_removed(Widget*){}
+        //virtual void            on_child_removed(Widget*){}
+        
+        virtual void            on(const WidgetChildAdd&) {};
+        virtual void            on(const WidgetChildRemove&) {};
         
         //! Called when the user submits a character (could be meta-induced)
         virtual void            on(const KeyCharacter&){}
@@ -163,37 +167,25 @@ namespace yq::tachyon {
         virtual void            on(const KeyRepeat&){}
         
         virtual void            on(const WidgetMove&){}
-
         virtual void            on(const WidgetResize&){}
-        
         virtual void            on(const WidgetRescale&){}
-        
         virtual void            on(const CloseRequest&){}
 
         virtual void            on(const MouseMove&) {}
-        
         virtual void            on(const MouseEnter&) {}
-        
         virtual void            on(const MouseLeft&) {}
-        
+        virtual void            on(const MousePress&) {}
+        virtual void            on(const MouseRelease&) {}
+        virtual void            on(const MouseScroll&) {}
 
-        virtual void            on(const KeyRelease&) {}
-        
-        virtual void            on_key_repeat(KeyCode, int, ModifierKeys) {}
-        
-        virtual void            on_mouse_press(const Vector2D&, ModifierKeys) {}
-        
-        virtual void            on_scroll_wheel(const Vector2D&) {}
-        
-        virtual void            on_widget_focused() {}
-        
-        virtual void            on_widget_left() {}
-        
+
+        #if 0
         virtual void            on_window_iconified() {}
         
         virtual void            on_window_restored() {}
         
         virtual void            on_window_maximized() {}
+        #endif
     };
 
     /*! \brief Writer of widget information

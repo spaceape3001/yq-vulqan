@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/event/Event.hpp>
-#include <yq/keywords.hpp>
+#include <tachyon/keywords.hpp>
 //#include <tbb/spin_rw_mutex.h> // if we need it
 
 namespace yq::tachyon {
@@ -21,9 +21,9 @@ namespace yq::tachyon {
         virtual std::string_view    description() const;
         virtual std::string_view    name() const;
         
-        void    subscribe(EventProducer&);
-        void    unsubscribe(EventProducer&);
-        void    unsubscribe_all();
+        void    subscribe(pull_t, EventProducer&);
+        void    unsubscribe(pull_t, EventProducer&);
+        void    unsubscribe(pull_t);
 
     protected:
         friend class EventProducer;

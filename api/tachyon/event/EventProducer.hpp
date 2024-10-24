@@ -10,14 +10,15 @@
 #include <vector>
 #include <atomic>
 //#include <tbb/spin_rw_mutex.h> // if we need it
+#include <tachyon/keywords.hpp>
 
 namespace yq::tachyon {
     class EventProducer {
     public:
 
-        void    subscribe(EventSocket&);
-        void    unsubscribe(EventSocket&);
-        void    unsubscribe_all();
+        void    subscribe(push_t, EventSocket&);
+        void    unsubscribe(push_t, EventSocket&);
+        void    unsubscribe(push_t);
 
         virtual std::string_view    name() const;
         virtual std::string_view    description() const;

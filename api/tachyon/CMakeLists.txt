@@ -31,7 +31,7 @@ add_library(${PROJECT_NAME} SHARED
     enum/enum.cpp
     enum/KeyCode.cpp
     
-    event/event.cpp
+    #event/event.cpp
     
     font/Font.cpp
     
@@ -41,15 +41,15 @@ add_library(${PROJECT_NAME} SHARED
     imgui/MyImGui.cpp
     imgui/ViGui.cpp
     
-    joystick/joystick.cpp
+    #joystick/joystick.cpp
     
-    keyboard/keyboard.cpp
+    #keyboard/keyboard.cpp
     
-    manipulator/Manipulator.cpp
+    #manipulator/Manipulator.cpp
     
     memory/memory.cpp
     
-    monitor/monitor.cpp
+    #monitor/monitor.cpp
     
     # pass/RenderPass.cpp
     
@@ -80,8 +80,8 @@ add_library(${PROJECT_NAME} SHARED
     v/VqLogging.cpp
     v/VqUtils.cpp
     
-    viewer/GLFWManager.cpp
-    viewer/Viewer.cpp
+    #viewer/GLFWManager.cpp
+    #viewer/Viewer.cpp
     
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
@@ -99,11 +99,11 @@ add_library(${PROJECT_NAME} SHARED
     vulqan/vulqan.cpp
     vulqan/VulqanManager.cpp
     
-    widget/ImGuiDemoWidget.cpp
-    widget/Scene3DWidget.cpp
-    widget/StackedWidget.cpp
-    widget/TextArea.cpp
-    widget/Widget.cpp
+    #widget/ImGuiDemoWidget.cpp
+    #widget/Scene3DWidget.cpp
+    #widget/StackedWidget.cpp
+    #widget/TextArea.cpp
+    #widget/Widget.cpp
     
     
 )

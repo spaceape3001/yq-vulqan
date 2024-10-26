@@ -8,8 +8,8 @@
 #include "ManagerInfoWriter.hpp"
 
 namespace yq::tachyon {
-    ManagerInfo::ManagerInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, base, sl)
+    ManagerInfo::ManagerInfo(std::string_view zName, const post::PBXInfo& base, const std::source_location& sl) :
+        post::PBXInfo(zName, base, sl)
     {
         set(Flag::MANAGER);
     }
@@ -20,7 +20,7 @@ namespace yq::tachyon {
         w.description("Manager abstract base class");
     }
 
-    Manager::Manager()
+    Manager::Manager(const Param& p) : post::PBX(p)
     {
     }
     

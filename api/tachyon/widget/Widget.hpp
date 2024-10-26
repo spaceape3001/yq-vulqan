@@ -6,11 +6,8 @@
 
 #pragma once
 
-#include <yq/core/Object.hpp>
+#include <yq/post/PBX.hpp>
 #include <yq/core/UniqueID.hpp>
-#include <yq/core/Flags.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
-#include <tachyon/event/EventProducer.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -39,10 +36,10 @@ namespace yq::tachyon {
     //class WidgetRescaleEvent;
     //class WidgetCloseRequest;
 
-    class WidgetInfo : public ObjectInfo {
+    class WidgetInfo : public post::PBXInfo {
     public:
         template <typename C> class Writer;
-        WidgetInfo(std::string_view, const ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        WidgetInfo(std::string_view, const post::PBXInfo&, const std::source_location& sl = std::source_location::current());
     };
     
     /*! \brief Root something that's drawwable & interactable
@@ -50,9 +47,9 @@ namespace yq::tachyon {
         It follows ImGui's rules, this is something that is 
         "drawable" and needs some amount of state information.
     */
-    class Widget : public Object, public UniqueID {    
+    class Widget : public post::PBX, public UniqueID {    
         YQ_OBJECT_INFO(WidgetInfo)
-        YQ_OBJECT_DECLARE(Widget, Object)
+        YQ_OBJECT_DECLARE(Widget, post::PBX)
     public:
     
         //! Default constructor
@@ -157,6 +154,7 @@ namespace yq::tachyon {
         //! Called when a child of this widget is removed
         //virtual void            on_child_removed(Widget*){}
         
+        #if 0
         virtual void            on(const WidgetChildAdd&) {};
         virtual void            on(const WidgetChildRemove&) {};
         
@@ -177,7 +175,7 @@ namespace yq::tachyon {
         virtual void            on(const MousePress&) {}
         virtual void            on(const MouseRelease&) {}
         virtual void            on(const MouseScroll&) {}
-
+        #endif
 
         #if 0
         virtual void            on_window_iconified() {}
@@ -188,35 +186,4 @@ namespace yq::tachyon {
         #endif
     };
 
-    /*! \brief Writer of widget information
-    */
-    template <typename C>
-    class WidgetInfo::Writer : public ObjectInfo::Writer<C> {
-    public:
-    
-        //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(WidgetInfo* widgetInfo) : ObjectInfo::Writer<C>(widgetInfo), m_meta(widgetInfo)
-        {
-        }
-        
-        //! Constructor of widget info (this is used by the writer<T>() methods)
-        Writer(WidgetInfo& widgetInfo) : Writer(&widgetInfo)
-        {
-        }
-
-        //! Annotates that this widget will render IMGUI content
-        void    imgui()
-        {
-            Meta::Writer::options({Flag::IMGUI});
-        }
-        
-        //! Annotates that this widget will render Vulkan content
-        void    vulkan()
-        {
-            Meta::Writer::options({Flag::VULKAN});
-        }
-        
-    private:
-        WidgetInfo* m_meta;
-    };
 }

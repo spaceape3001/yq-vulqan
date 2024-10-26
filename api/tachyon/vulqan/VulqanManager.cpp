@@ -351,10 +351,10 @@ namespace yq::tachyon {
         tachyonDebug << "VulqanManager destroyed";
     }
 
-    void VulqanManager::handle(Event&evt)
-    {
-        // monitor connect/disconnect
-    }
+    //void VulqanManager::handle(Event&evt)
+    //{
+        //// monitor connect/disconnect
+    //}
     
     static void init_vulqan_manager()
     {

@@ -27,11 +27,11 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/image/ImageViewInfo.hpp>
 #include <tachyon/image/Raster.hpp>
 #include <tachyon/scene/Perspective.hpp>
 #include <tachyon/scene/Scene.hpp>
-#include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/v/VqUtils.hpp>
 #include <tachyon/viz/ViBuffer.hpp>
 #include <tachyon/viz/ViContext.hpp>
@@ -291,7 +291,7 @@ namespace yq::tachyon {
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
 
-    Visualizer::Visualizer() 
+    Visualizer::Visualizer(Cleanup& c)  : ViVisualizer(c)
     {
         m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
     }

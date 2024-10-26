@@ -4,15 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Viewer.hpp"
 
 #include <tachyon/logging.hpp>
-#include <tachyon/app/Application.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
 #include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/glfw/GLFWManager.hpp>
 #include <tachyon/imgui/ViGui.hpp>
 #include <tachyon/image/Raster.hpp>
-#include <tachyon/input/KeyCharacter.hpp>
+//#include <tachyon/inputs/KeyCharacter.hpp>
 #include <tachyon/viz/ViContext.hpp>
 #include <tachyon/widget/Widget.hpp>
 
@@ -52,7 +52,7 @@ namespace yq::tachyon {
         Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
         if(!viewer) // shouldn't ever happen.... but
             return ;
-        viewer->dispatch_cursor_position(xpos, ypow);
+        viewer->dispatch_cursor_position(xpos, ypos);
     }
     
     void Viewer::callback_drop(GLFWwindow* window, int count, const char** paths)
@@ -124,7 +124,7 @@ namespace yq::tachyon {
         Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
         if(!viewer) // shouldn't ever happen.... but
             return ;
-        viewer->dispatch_window_maximized(maximized);
+        viewer->dispatch_window_maximize(maximized);
     }
     
     void Viewer::callback_window_position(GLFWwindow* window, int xpos, int ypos)
@@ -156,7 +156,7 @@ namespace yq::tachyon {
         Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
         if(!viewer) // shouldn't ever happen.... but
             return ;
-        viewer->dispatch_window_size(window, xsize, ysize);
+        viewer->dispatch_window_size(xsize, ysize);
     }
 
     //  ----------------------------------------------------------------------------------------------------------------
@@ -164,11 +164,6 @@ namespace yq::tachyon {
 
     std::atomic<int>        Viewer::s_count{0};
     std::atomic<uint64_t>   Viewer::s_lastId{1};
-
-    Viewer::Viewer() : m_id(++s_lastId)
-    {
-        ++s_count;
-    }
     
     Viewer::~Viewer()
     {
@@ -176,18 +171,19 @@ namespace yq::tachyon {
         kill();
     }
 
-    Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : m_id(++s_lastId)
+    Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : post::PBX({}), m_id(++s_lastId)
     {
-    
-        std::error_code ec = initialize(vci, w);
-        if(ec){
-            tachyonCritical << "Unable to initialize the viewer ... " << ec.message();
-            throw ec;
-        }
+        try {
+            std::error_code ec = initialize(vci, w);
+            if(ec){
+                tachyonCritical << "Unable to initialize the viewer ... " << ec.message();
+                throw ec;
+            }
         
         } 
         catch(...){
             --s_count;
+            rethrow;
         }
         
         ++s_count;
@@ -384,10 +380,12 @@ namespace yq::tachyon {
             ImGui_ImplGlfw_CharCallback(m_window, codepoint);
         }
 
+#if 0
         KeyCharacter&   evt = publish(new KeyCharacter(this, m_focus, codepoint), REFERENCE);
         if(m_focus){
             m_focus->on(evt);
         }
+#endif
     }
     
     void    Viewer::dispatch_cursor_enter(int)
@@ -419,19 +417,58 @@ namespace yq::tachyon {
         
     }
     
-    void    Viewer::dispatch_drop(int, const char**);
-    void    Viewer::dispatch_framebuffer_size(int, int);
-    void    Viewer::dispatch_key(int, int, int, int);
-    void    Viewer::dispatch_mouse_button(int, int, int);
-    void    Viewer::dispatch_scroll(double, double);
-    void    Viewer::dispatch_window_close();
-    void    Viewer::dispatch_window_focus(int);
-    void    Viewer::dispatch_window_iconify(int);
-    void    Viewer::dispatch_window_maximize(int);
-    void    Viewer::dispatch_window_position(int, int);
-    void    Viewer::dispatch_window_refresh();
-    void    Viewer::dispatch_window_scale(float, float);
-    void    Viewer::dispatch_window_size(int,int);
+    void    Viewer::dispatch_drop(int, const char**)
+    {
+    }
+    
+    void    Viewer::dispatch_framebuffer_size(int, int)
+    {
+    }
+    
+    void    Viewer::dispatch_key(int, int, int, int)
+    {
+    }
+    
+    void    Viewer::dispatch_mouse_button(int, int, int)
+    {
+    }
+    
+    void    Viewer::dispatch_scroll(double, double)
+    {
+    }
+    
+    void    Viewer::dispatch_window_close()
+    {
+    }
+    
+    void    Viewer::dispatch_window_focus(int)
+    {
+    }
+    
+    void    Viewer::dispatch_window_iconify(int)
+    {
+    }
+    
+    void    Viewer::dispatch_window_maximize(int)
+    {
+    }
+    
+    void    Viewer::dispatch_window_position(int, int)
+    {
+    }
+    
+    void    Viewer::dispatch_window_refresh()
+    {
+    }
+    
+    void    Viewer::dispatch_window_scale(float, float)
+    {
+    }
+    
+    void    Viewer::dispatch_window_size(int,int)
+    {
+    }
+    
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  GLFW/SETTERS
@@ -540,9 +577,6 @@ namespace yq::tachyon {
 
 
     //  ----------------------------------------------------------------------------------------------------------------
-
-
-
 
 
     std::error_code     Viewer::draw()

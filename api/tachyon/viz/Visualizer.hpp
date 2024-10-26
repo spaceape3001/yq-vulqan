@@ -111,7 +111,7 @@ namespace yq::tachyon {
         //friend struct ViPipeline0;
         //friend struct ViRendered0;
     
-        Visualizer();
+        Visualizer(Cleanup&);
         ~Visualizer();
 
         virtual void                    prerecord(ViContext&){}

@@ -13,6 +13,7 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/image/Raster.hpp>
 #include <tachyon/memory/Buffer.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
@@ -23,7 +24,6 @@
 #include <tachyon/v/VqEnums.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/v/VqUtils.hpp>
-#include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/viz/ViManager.hpp>
 #include <tachyon/viz/ViBuffer.hpp>
 #include <tachyon/viz/ViImage.hpp>

@@ -8,8 +8,9 @@
 
 #include <yq/core/Enum.hpp>
 #include <yq/core/Flag.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
-namespace yq {
+namespace yq::tachyon {
     YQ_ENUM(MouseButton, ,
         Button1 = 0,
         Button2 = 1,
@@ -23,7 +24,7 @@ namespace yq {
         Left    = Button1,
         Right   = Button2,
         Middle  = Button3
-    };
+    );
     
     using MouseButtons  = Flag<MouseButton,uint8_t>;
 }

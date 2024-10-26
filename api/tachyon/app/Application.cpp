@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Application.hpp"
 #include <tachyon/logging.hpp>
-#include <tachyon/app/Viewer.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
 #include <tachyon/config/build.hpp>
-#include <tachyon/event/EventFrame.hpp>
 #include <tachyon/glfw/GLFWManager.hpp>
 #include <tachyon/task/TaskEngine.hpp>
 #include <tachyon/viz/Visualizer.hpp>
 #include <tachyon/vulqan/VulqanManager.hpp>
 #include <yq/asset/Asset.hpp>
+#include <yq/post/boxes/SimpleBox.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
@@ -102,9 +102,9 @@ namespace yq::tachyon {
         
         if(g.glfw){
             while((!g.quit) && (g.app_info.headless || !g.viewers.empty())){
-                EventFrame      events;
-                g.glfw->poll(events, amt);
-                events.dispatch_all();
+                post::SimpleBox     capture({ .name = "TachyonFrame"});
+                g.glfw->poll(capture, amt);
+                //events.dispatch_all();
 
                 if(g.tasking)            // eventually be smarter about this... multithreading
                     g.tasking -> step();

@@ -8,11 +8,13 @@
 #include <tachyon/app/ManagerInfoWriter.hpp>
 #include <tachyon/glfw/Joystick.hpp>
 #include <tachyon/glfw/Monitor.hpp>
-#include <tachyon/glfw/Window.hpp>
+//#include <tachyon/glfw/Window.hpp>
+#if 0
 #include <tachyon/input/JoystickConnect.hpp>
 #include <tachyon/input/JoystickDisconnect.hpp>
 #include <tachyon/input/MonitorConnect.hpp>
 #include <tachyon/input/MonitorDisconnect.hpp>
+#endif
 #include <GLFW/glfw3.h>
 #include <tachyon/logging.hpp>
 #include <yq/core/ThreadId.hpp>
@@ -68,6 +70,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    #if 0
     void GLFWManager::callback_character(GLFWwindow* window, unsigned int codepoint)
     {
     }
@@ -88,12 +91,14 @@ namespace yq::tachyon {
     void GLFWManager::callback_framebuffer_size(GLFWwindow* window, int width, int height)
     {
     }
+    #endif
     
     void GLFWManager::callback_joystick(int jid, int event)
     {
         if((unsigned) jid > Common::kMaxJoysticks)
             return ;
     
+    #if 0
         Common& g   = common();
         
         if(!g.manager)
@@ -107,12 +112,14 @@ namespace yq::tachyon {
             joystick_kill(j);
             g.manager->publish(new JoystickDisconnect(j));
         }
-        
+    #endif
     }
     
+    #if 0
     void GLFWManager::callback_key(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
     }
+    #endif
     
     void GLFWManager::callback_monitor(GLFWmonitor* monitor, int event)
     {
@@ -126,6 +133,7 @@ namespace yq::tachyon {
         #endif
     }
     
+    #if 0
     void GLFWManager::callback_mouse_button(GLFWwindow* window, int button, int action, int mods)
     {
     }
@@ -165,6 +173,7 @@ namespace yq::tachyon {
     void GLFWManager::callback_window_size(GLFWwindow*, int, int)
     {
     }
+    #endif
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -212,10 +221,20 @@ namespace yq::tachyon {
         }
     }
 
-    GLFWManager::GLFWManager()
+    GLFWManager::Param    GLFWManager::_augment(const Param&pars)
+    {
+        Param p(pars);
+        if(p.name.empty())
+            p.name  = "GLFW";
+        return p;
+    }
+
+    GLFWManager::GLFWManager(const Param&p) : Manager(_augment(p))
     {
         if(thread::id())    // not the main thread...
             return ;
+
+        add_role(R::Poller);
 
         Common&     g = common();
         if(g.claimed.test_and_set())
@@ -249,7 +268,7 @@ namespace yq::tachyon {
         tachyonInfo << "GLFWManager destroyed";
     }
 
-    void    GLFWManager::_poll(unit::Second timeout) 
+    void    GLFWManager::polling(unit::Second timeout) 
     {
         if(timeout.value > 0.){
             glfwWaitEventsTimeout(timeout.value);

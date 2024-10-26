@@ -6,15 +6,14 @@
 
 #pragma once
 
-#include <tachyon/event/EventManager.hpp>
-#include <tachyon/event/EventSocket.hpp>
+#include <tachyon/app/Manager.hpp>
 #include <tachyon/vulqan/vulqan.hpp>
 
 namespace yq::tachyon {
     class BasicApp;
     struct AppCreateInfo;
 
-    class VulqanManager : public Manager, public EventProducer, public EventSocket {
+    class VulqanManager : public Manager {
         YQ_OBJECT_DECLARE(VulqanManager, Manager)
     public:
     
@@ -27,8 +26,6 @@ namespace yq::tachyon {
         ~VulqanManager();
 
     protected:
-        void  handle(Event&) override;
-        
     
     private:
         struct Common;

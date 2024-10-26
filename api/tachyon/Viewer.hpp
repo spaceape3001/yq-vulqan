@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <tachyon/event/EventProducer.hpp>
 //#include <tachyon/event/EventSocket.hpp>
 
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
+#include <yq/post/PBX.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
@@ -42,7 +42,9 @@ namespace yq::tachyon {
         GLFW Window and the Vulkan Device.  It will hold ONE widget
         and one widget only, this is the root widget for the viewer.
     */
-    class Viewer : public EventProducer {
+    class Viewer : public post::PBX {
+    
+        YQ_OBJECT_DECLARE(Viewer, post::PBX)
         friend class Application;
 
     //  TODO FEATURE LIST

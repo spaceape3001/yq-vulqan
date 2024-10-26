@@ -8,8 +8,8 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/app/AppCreateInfo.hpp>
-#include <tachyon/app/ManagerInfoWriter.hpp>
+#include <tachyon/AppCreateInfo.hpp>
+#include <tachyon/ManagerInfoWriter.hpp>
 #include <tachyon/v/VqEnums.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/v/VqUtils.hpp>

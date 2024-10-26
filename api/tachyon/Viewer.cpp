@@ -8,7 +8,7 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/Application.hpp>
 #include <tachyon/Viewer.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/glfw/GLFWManager.hpp>
 #include <tachyon/imgui/ViGui.hpp>
 #include <tachyon/image/Raster.hpp>

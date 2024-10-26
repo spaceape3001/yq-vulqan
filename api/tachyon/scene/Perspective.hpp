@@ -11,7 +11,7 @@
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
 #include <tachyon/enum/Tristate.hpp>
-#include <tachyon/camera/Camera.hpp>
+#include <tachyon/Camera.hpp>
 #include <tachyon/typedef/camera.hpp>
 #include <optional>
 

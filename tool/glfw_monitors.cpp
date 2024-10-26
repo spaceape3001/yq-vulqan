@@ -6,7 +6,7 @@
 
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <tachyon/app/Application.hpp>
+#include <tachyon/Application.hpp>
 #include <tachyon/glfw/Monitor.hpp>
 #include <tachyon/glfw/VideoMode.hpp>
 #include <iostream>

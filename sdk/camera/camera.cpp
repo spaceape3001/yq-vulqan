@@ -29,14 +29,13 @@
 #include <tachyon/2D/Quadrilateral.hpp>
 #include <tachyon/2D/Triangle.hpp>
 #include <tachyon/3D/Tetrahedron.hpp>
-#include <tachyon/app/Application.hpp>
-#include <tachyon/camera/NullCamera.hpp>
-#include <tachyon/camera/SpaceCamera.hpp>
-#include <tachyon/camera/TargetCamera.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
+#include <tachyon/cameras/NullCamera.hpp>
+#include <tachyon/cameras/SpaceCamera.hpp>
+#include <tachyon/cameras/TargetCamera.hpp>
 #include <tachyon/imgui/MyImGui.hpp>
 #include <tachyon/scene/Scene.hpp>
-#include <tachyon/viewer/Viewer.hpp>
-#include <tachyon/viewer/ViewerCreateInfo.hpp>
 #include <tachyon/widget/Scene3DWidget.hpp>
 
 #include <chrono>

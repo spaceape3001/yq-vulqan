@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "GLFWManager.hpp"
-#include <tachyon/app/ManagerInfoWriter.hpp>
+#include <tachyon/ManagerInfoWriter.hpp>
 #include <tachyon/glfw/Joystick.hpp>
 #include <tachyon/glfw/Monitor.hpp>
 //#include <tachyon/glfw/Window.hpp>

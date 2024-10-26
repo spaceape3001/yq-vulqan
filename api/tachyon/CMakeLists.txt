@@ -14,14 +14,12 @@ add_library(${PROJECT_NAME} SHARED
 
     3D/Tetrahedron.cpp
 
-    app/Application.cpp
-    app/Manager.cpp
-    app/Viewer.cpp
+    Application.cpp
+    Manager.cpp
     
-    camera/Camera.cpp
-    camera/NullCamera.cpp
-    camera/SpaceCamera.cpp
-    camera/TargetCamera.cpp
+    Camera.cpp
+    
+    cameras/cameras.cpp
     
     #command/Command.cpp
     
@@ -111,6 +109,7 @@ add_library(${PROJECT_NAME} SHARED
     #widget/Widget.cpp
     
     
+    Viewer.cpp
 )
 
 

@@ -7,7 +7,7 @@
 #include "ViQueueManager.hpp"
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/v/VqStructs.hpp>
 #include <tachyon/viz/ViQueueTasker.hpp>
 #include <tachyon/viz/ViVisualizer.hpp>

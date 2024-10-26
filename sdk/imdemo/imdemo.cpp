@@ -10,8 +10,8 @@
 
 #include <yq/process/PluginLoader.hpp>
 
-#include <tachyon/app/Application.hpp>
-#include <tachyon/viewer/Viewer.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
 #include <tachyon/widget/ImGuiDemoWidget.hpp>
 
 #include <iostream>

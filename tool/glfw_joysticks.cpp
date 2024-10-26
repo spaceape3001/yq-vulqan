@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/app/Application.hpp>
+#include <tachyon/Application.hpp>
 #include <tachyon/glfw/Joystick.hpp>
 #include <iostream>
 

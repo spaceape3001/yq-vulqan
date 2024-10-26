@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/app/Manager.hpp>
+#include <tachyon/Manager.hpp>
 #include <yq/post/Dispatcher.hpp>
 
 struct GLFWwindow;

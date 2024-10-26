@@ -8,9 +8,9 @@
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 
-#include <tachyon/app/Application.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
 #include <tachyon/task/Task.hpp>
-#include <tachyon/viewer/Viewer.hpp>
 #include <tachyon/widget/Widget.hpp>
 #include <tachyon/widget/StackedWidget.hpp>
 

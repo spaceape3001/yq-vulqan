@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/app/Application.hpp>
-#include <tachyon/viewer/Viewer.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
 #include <tachyon/widget/Widget.hpp>
 
 using namespace yq;

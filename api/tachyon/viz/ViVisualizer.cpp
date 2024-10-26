@@ -13,7 +13,7 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/image/Raster.hpp>
 #include <tachyon/memory/Buffer.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>

@@ -27,7 +27,7 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
+#include <tachyon/ViewerCreateInfo.hpp>
 #include <tachyon/image/ImageViewInfo.hpp>
 #include <tachyon/image/Raster.hpp>
 #include <tachyon/scene/Perspective.hpp>

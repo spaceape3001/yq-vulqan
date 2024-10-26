@@ -29,12 +29,12 @@
 #include <yq/vector/Vector3.hxx>
 
 #include <tachyon/2D/Triangle.hpp>
-#include <tachyon/app/Application.hpp>
+#include <tachyon/Application.hpp>
+#include <tachyon/Viewer.hpp>
 #include <tachyon/render/Render3D.hpp>
 #include <tachyon/render/Render3DWriter.hpp>
 #include <tachyon/shader/Shader.hpp>
 #include <tachyon/texture/Texture.hpp>
-#include <tachyon/viewer/Viewer.hpp>
 #include <tachyon/widget/Scene3DWidget.hpp>
 
 #include <iostream>

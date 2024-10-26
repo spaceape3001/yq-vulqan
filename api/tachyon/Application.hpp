@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
-#include <tachyon/app/AppCreateInfo.hpp>
+#include <tachyon/AppCreateInfo.hpp>
 #include <tachyon/typedef/application.hpp>
 #include <yq/units.hpp>
 #include <memory>

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/camera/Camera.hpp>
+#include <tachyon/Camera.hpp>
 #include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {

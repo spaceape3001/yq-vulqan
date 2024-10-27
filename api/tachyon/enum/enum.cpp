@@ -33,7 +33,6 @@
 #include "ShaderType.hpp"
 #include "SystemAllocationScope.hpp"
 #include "Topology.hpp"
-#include "Tristate.hpp"
 #include "VertexInputRate.hpp"
 
 #include <yq/meta/Init.hpp>
@@ -75,6 +74,5 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ShaderTypeFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScope)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScopeFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Topology)
-YQ_TYPE_IMPLEMENT(yq::tachyon::Tristate)
 YQ_TYPE_IMPLEMENT(yq::tachyon::VertexInputRate)
 

@@ -7,10 +7,27 @@
 cmake_minimum_required(VERSION 3.26.0)
 
 if("${PROJECT_NAME}" STREQUAL "")
-    project(YourQuill VERSION 0.0.0.3 LANGUAGES CXX)
+    project(YQ_Vulqan VERSION 0.0.0.3 LANGUAGES CXX)
 endif()
 
 include(local.cmake OPTIONAL)
+
+if(NOT DEFINED Feature_SDK)
+    SET(Feature_SDK ON)
+endif()
+if(NOT DEFINED Feature_UnitTests)
+    SET(Feature_UnitTests ON)
+endif()
+
+if(NOT DEFINED Build_GLM)
+    SET(Build_GLM ON)
+endif()
+if(NOT DEFINED Build_SDK)
+    SET(Build_SDK ${Feature_SDK})
+endif()
+if(NOT DEFINED Build_UnitTests)
+    SET(Build_UnitTests ${Feature_UnitTests})
+endif()
 
 if(NOT YOUR_QUILL_TOOLBOX)
     if((DEFINED TOOLBOX_DIR) AND (EXISTS ${TOOLBOX_DIR}))
@@ -35,10 +52,19 @@ endif()
 
 set(YQ_TACHYON_DATA_DIR "${CMAKE_CURRENT_LIST_DIR}/data" )
 
+
 add_subdirectory(3rd)
 add_subdirectory(api)
-add_subdirectory(test)
+
+if(${Build_UnitTests})
+    enable_testing()
+    add_subdirectory(test)
+endif()
+
 add_subdirectory(tool)
-add_subdirectory(sdk)
+
+if(${Build_SDK})
+    add_subdirectory(sdk)
+endif()
 add_subdirectory(plugin)
 

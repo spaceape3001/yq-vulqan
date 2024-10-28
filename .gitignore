@@ -1,3 +1,7 @@
+local.cmake
+toolbox
+yq-toolbox
+
 # Other source control
 .svn
 .svn0

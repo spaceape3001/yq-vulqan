@@ -11,7 +11,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/PushData.hpp>
-#include <yq/tachyon/shader/Shader.hpp>
+#include <yq/tachyon/Shader.hpp>
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>

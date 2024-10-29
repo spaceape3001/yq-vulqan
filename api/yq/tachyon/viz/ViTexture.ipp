@@ -10,7 +10,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 #include <yq/tachyon/image/RasterInfo.hpp>
-#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>

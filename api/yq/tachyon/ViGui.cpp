@@ -23,8 +23,8 @@
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/PipelineWriter.hpp>
 #include <yq/tachyon/sampler/Sampler.hpp>
-#include <yq/tachyon/shader/Shader.hpp>
-#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/Shader.hpp>
+#include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>

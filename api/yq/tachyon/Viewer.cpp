@@ -6,11 +6,11 @@
 
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/app/Application.hpp>
-#include <yq/tachyon/viewer/Viewer.hpp>
-#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
-#include <yq/tachyon/glfw/GLFWManager.hpp>
-#include <yq/tachyon/imgui/ViGui.hpp>
+#include <yq/tachyon/Application.hpp>
+#include <yq/tachyon/Viewer.hpp>
+#include <yq/tachyon/ViewerCreateInfo.hpp>
+#include <yq/tachyon/GLFWManager.hpp>
+#include <yq/tachyon/ViGui.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>

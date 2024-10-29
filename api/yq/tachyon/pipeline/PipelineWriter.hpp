@@ -18,7 +18,7 @@
 #include <yq/tachyon/pipeline/SBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
-#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/Texture.hpp>
 
 namespace yq::tachyon {
 

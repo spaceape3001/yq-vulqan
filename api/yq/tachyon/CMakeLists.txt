@@ -22,10 +22,14 @@ add_library(${PROJECT_NAME} SHARED
 
     Application.cpp
     Camera.cpp
-    Manager.cpp
     GLFWManager.cpp
+    GLSLShader.cpp
     Joystick.cpp
+    Manager.cpp
     Monitor.cpp
+    MyImGui.cpp
+    Shader.cpp
+    Texture.cpp
     VideoMode.cpp
     
     
@@ -48,7 +52,6 @@ add_library(${PROJECT_NAME} SHARED
     image/image.cpp
     image/STBImage.cpp
     
-    imgui/MyImGui.cpp
     #imgui/ViGui.cpp
     
     #joystick/joystick.cpp
@@ -74,12 +77,8 @@ add_library(${PROJECT_NAME} SHARED
     
     scene/Perspective.cpp
 
-    shader/GLSLShader.cpp
-    shader/Shader.cpp
     
     task/task.cpp
-    
-    texture/Texture.cpp
     
     tool/Tool.cpp
     

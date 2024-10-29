@@ -11,7 +11,7 @@
 #include <yq/vector/Vector2.hpp>
 
 #include <yq/tachyon/render/Render3D.hpp>
-#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 
 #include <array>

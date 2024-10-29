@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/Application.hpp>
-#include <tachyon/glfw/Joystick.hpp>
+#include <yq/tachyon/Application.hpp>
+#include <yq/tachyon/glfw/Joystick.hpp>
 #include <iostream>
 
 using std::cout;

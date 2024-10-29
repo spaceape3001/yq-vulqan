@@ -8,7 +8,7 @@
 
 
 #include <vulkan/vulkan_core.h>
-#include <tachyon/v/VqStructs.hpp>
+#include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/rgba.hpp>
 

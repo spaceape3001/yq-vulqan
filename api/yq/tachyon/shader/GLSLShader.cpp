@@ -12,7 +12,7 @@
 #include <yq/process/Execute.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/asset/AssetFactory.hpp>
-#include <tachyon/shader/Shader.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
 
 namespace yq::errors {
    using shader_compile_failure    = error_db::entry<"Shader failed to compile">;

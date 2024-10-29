@@ -6,8 +6,8 @@
 
 #include "Pipeline.hpp"
 #include <yq/meta/CompoundInfo.hpp>
-#include <tachyon/shader/Shader.hpp>
-#include <tachyon/pipeline/PushData.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
+#include <yq/tachyon/pipeline/PushData.hpp>
 #include <atomic>
 
 namespace yq::tachyon {

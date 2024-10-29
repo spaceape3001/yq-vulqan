@@ -6,16 +6,16 @@
 
 #include "ViData.hpp"
 
-#include <tachyon/errors.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/memory/Buffer.hpp>
-#include <tachyon/texture/Texture.hpp>
-#include <tachyon/v/VqStructs.hpp>
-#include <tachyon/viz/ViBuffer.hpp>
-#include <tachyon/viz/ViImage.hpp>
-#include <tachyon/viz/ViLogging.hpp>
-#include <tachyon/viz/ViTexture.hpp>
-#include <tachyon/viz/ViVisualizer.hpp>
+#include <yq/tachyon/errors.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/memory/Buffer.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/v/VqStructs.hpp>
+#include <yq/tachyon/viz/ViBuffer.hpp>
+#include <yq/tachyon/viz/ViImage.hpp>
+#include <yq/tachyon/viz/ViLogging.hpp>
+#include <yq/tachyon/viz/ViTexture.hpp>
+#include <yq/tachyon/viz/ViVisualizer.hpp>
 
 #include <yq/text/format.hpp>
 

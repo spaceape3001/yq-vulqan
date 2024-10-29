@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "KeyPress.hpp"
-#include <tachyon/event/EventInfoWriter.hpp>
+#include <yq/tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {

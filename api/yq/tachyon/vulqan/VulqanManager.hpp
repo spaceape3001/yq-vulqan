@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/Manager.hpp>
-#include <tachyon/vulqan/vulqan.hpp>
+#include <yq/tachyon/Manager.hpp>
+#include <yq/tachyon/vulqan/vulqan.hpp>
 
 namespace yq::tachyon {
     class BasicApp;

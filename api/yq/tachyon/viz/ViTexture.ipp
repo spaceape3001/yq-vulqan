@@ -6,16 +6,16 @@
 
 #include "ViTexture.hpp"
 
-#include <tachyon/errors.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/image/Raster.hpp>
-#include <tachyon/image/RasterInfo.hpp>
-#include <tachyon/texture/Texture.hpp>
-#include <tachyon/v/VqStructs.hpp>
-#include <tachyon/viz/ViImage.hpp>
-#include <tachyon/viz/ViLogging.hpp>
-#include <tachyon/viz/ViSampler.hpp>
-#include <tachyon/viz/ViVisualizer.hpp>
+#include <yq/tachyon/errors.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/image/Raster.hpp>
+#include <yq/tachyon/image/RasterInfo.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/v/VqStructs.hpp>
+#include <yq/tachyon/viz/ViImage.hpp>
+#include <yq/tachyon/viz/ViLogging.hpp>
+#include <yq/tachyon/viz/ViSampler.hpp>
+#include <yq/tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
     namespace errors {

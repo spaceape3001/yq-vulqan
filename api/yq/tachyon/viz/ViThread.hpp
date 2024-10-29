@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <tachyon/typedef/thread.hpp>
+#include <yq/tachyon/typedef/thread.hpp>
 #include <vulkan/vulkan_core.h>
 
 namespace yq::tachyon {

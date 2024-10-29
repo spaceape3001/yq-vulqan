@@ -10,7 +10,7 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
-#include <tachyon/typedef/event.hpp>
+#include <yq/tachyon/typedef/event.hpp>
 #include <atomic>
 #include <chrono>
 #include <concepts>

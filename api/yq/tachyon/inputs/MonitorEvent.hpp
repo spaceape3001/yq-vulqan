@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/input/InputEvent.hpp>
-#include <tachyon/glfw/Monitor.hpp>
+#include <yq/tachyon/input/InputEvent.hpp>
+#include <yq/tachyon/glfw/Monitor.hpp>
 
 namespace yq::tachyon {
     class MonitorEventInfo : public InputEventInfo {

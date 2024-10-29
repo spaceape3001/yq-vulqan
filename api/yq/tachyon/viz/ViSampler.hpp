@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/typedef/sampler.hpp>
+#include <yq/tachyon/typedef/sampler.hpp>
 #include <yq/core/Ref.hpp>
 #include <vulkan/vulkan_core.h>
-#include <tachyon/sampler/SamplerInfo.hpp>
+#include <yq/tachyon/sampler/SamplerInfo.hpp>
 #include <system_error>
 
 namespace yq::tachyon {

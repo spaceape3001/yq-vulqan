@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/MetaObject.hpp>
 #include <yq/core/Mutable.hpp>
-//#include <tachyon/preamble.hpp>
-#include <tachyon/enum/Tristate.hpp>
-#include <tachyon/pipeline/Pipeline.hpp>
+#include <yq/core/Tristate.hpp>
+//#include <yq/tachyon/preamble.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
 
 namespace yq::tachyon {
 

@@ -6,13 +6,13 @@
 
 #include "ViSampler.hpp"
 
-#include <tachyon/errors.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/sampler/Sampler.hpp>
-#include <tachyon/v/VqStructs.hpp>
-#include <tachyon/viz/ViVisualizer.hpp>
+#include <yq/tachyon/errors.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/sampler/Sampler.hpp>
+#include <yq/tachyon/v/VqStructs.hpp>
+#include <yq/tachyon/viz/ViVisualizer.hpp>
 
-#include <tachyon/viz/ViLogging.hpp>
+#include <yq/tachyon/viz/ViLogging.hpp>
 
 namespace yq::tachyon {
     namespace errors {

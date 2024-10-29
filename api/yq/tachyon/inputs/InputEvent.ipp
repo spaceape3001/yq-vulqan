@@ -6,7 +6,7 @@
 
 #include "InputEvent.hpp"
 
-#include <tachyon/event/EventInfoWriter.hpp>
+#include <yq/tachyon/event/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::InputEvent)

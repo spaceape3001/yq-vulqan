@@ -8,10 +8,10 @@
 
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
-#include <tachyon/typedef/pipeline.hpp>
-#include <tachyon/typedef/pipeline_layout.hpp>
-#include <tachyon/typedef/shader.hpp>
-#include <tachyon/viz/ViData.hpp>
+#include <yq/tachyon/typedef/pipeline.hpp>
+#include <yq/tachyon/typedef/pipeline_layout.hpp>
+#include <yq/tachyon/typedef/shader.hpp>
+#include <yq/tachyon/viz/ViData.hpp>
 
 #include <vulkan/vulkan_core.h>
 

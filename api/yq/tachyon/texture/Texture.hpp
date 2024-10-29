@@ -9,15 +9,15 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/color/RGBA.hpp>
-#include <tachyon/enum/DataFormat.hpp>
-#include <tachyon/enum/ComponentSwizzle.hpp>
-#include <tachyon/enum/ImageAspect.hpp>
-#include <tachyon/enum/ImageViewCreateFlags.hpp>
-#include <tachyon/enum/ImageViewType.hpp>
-#include <tachyon/sampler/SamplerInfo.hpp>
-#include <tachyon/typedef/raster.hpp>
-#include <tachyon/typedef/sampler.hpp>
-#include <tachyon/typedef/texture.hpp>
+#include <yq/tachyon/enum/DataFormat.hpp>
+#include <yq/tachyon/enum/ComponentSwizzle.hpp>
+#include <yq/tachyon/enum/ImageAspect.hpp>
+#include <yq/tachyon/enum/ImageViewCreateFlags.hpp>
+#include <yq/tachyon/enum/ImageViewType.hpp>
+#include <yq/tachyon/sampler/SamplerInfo.hpp>
+#include <yq/tachyon/typedef/raster.hpp>
+#include <yq/tachyon/typedef/sampler.hpp>
+#include <yq/tachyon/typedef/texture.hpp>
 #include <optional>
 
 namespace yq::tachyon {

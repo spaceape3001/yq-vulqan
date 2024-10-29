@@ -5,18 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "GLFWManager.hpp"
-#include <tachyon/ManagerInfoWriter.hpp>
-#include <tachyon/glfw/Joystick.hpp>
-#include <tachyon/glfw/Monitor.hpp>
-//#include <tachyon/glfw/Window.hpp>
+#include <yq/tachyon/ManagerInfoWriter.hpp>
+#include <yq/tachyon/Joystick.hpp>
+#include <yq/tachyon/Monitor.hpp>
+//#include <yq/tachyon/glfw/Window.hpp>
 #if 0
-#include <tachyon/input/JoystickConnect.hpp>
-#include <tachyon/input/JoystickDisconnect.hpp>
-#include <tachyon/input/MonitorConnect.hpp>
-#include <tachyon/input/MonitorDisconnect.hpp>
+#include <yq/tachyon/input/JoystickConnect.hpp>
+#include <yq/tachyon/input/JoystickDisconnect.hpp>
+#include <yq/tachyon/input/MonitorConnect.hpp>
+#include <yq/tachyon/input/MonitorDisconnect.hpp>
 #endif
 #include <GLFW/glfw3.h>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/core/ThreadId.hpp>
 
 namespace yq::tachyon {

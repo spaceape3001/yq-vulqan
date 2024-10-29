@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/input/KeyEvent.hpp>
-#include <tachyon/enum/KeyCode.hpp>
+#include <yq/tachyon/input/KeyEvent.hpp>
+#include <yq/tachyon/enum/KeyCode.hpp>
 
 namespace yq::tachyon {
     class KeyRepeat : public KeyEvent {

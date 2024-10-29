@@ -7,8 +7,8 @@
 #include <boost/ut.hpp>
 #include <yq/file/FileResolver.hpp>
 #include <yq/core/Logging.hpp>
-#include <tachyon/shader/Shader.hpp>
-#include <tachyon/app/Application.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
+#include <yq/tachyon/app/Application.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

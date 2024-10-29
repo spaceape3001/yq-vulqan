@@ -6,7 +6,7 @@
 
 #pragma once
 
-//#include <tachyon/event/EventSocket.hpp>
+//#include <yq/tachyon/event/EventSocket.hpp>
 
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
@@ -14,8 +14,8 @@
 #include <yq/typedef/size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-//#include <tachyon/viz/Visualizer.hpp>
-//#include <tachyon/glfw/Window.hpp>
+//#include <yq/tachyon/viz/Visualizer.hpp>
+//#include <yq/tachyon/glfw/Window.hpp>
 
 #include <atomic>
 #include <memory>
@@ -43,8 +43,8 @@ namespace yq::tachyon {
         and one widget only, this is the root widget for the viewer.
     */
     class Viewer : public post::PBX {
-    
         YQ_OBJECT_DECLARE(Viewer, post::PBX)
+    
         friend class Application;
 
     //  TODO FEATURE LIST
@@ -205,6 +205,8 @@ namespace yq::tachyon {
         GLFWwindow*         window() const { return m_window; }
         
     protected:
+
+        class Dispatch;
 
         //! Hint to do anything needed before the next render frame is actually rendered
         //! So do the uniform buffer & texture descriptor sets here.

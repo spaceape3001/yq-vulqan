@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/event/EventSocket.hpp>
-#include <tachyon/event/EventPublisher.hpp>
+#include <yq/tachyon/event/EventSocket.hpp>
+#include <yq/tachyon/event/EventPublisher.hpp>
 
 namespace yq::tachyon {
     class EventCounter : public EventSocket, public EventPublisher {

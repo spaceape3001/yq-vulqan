@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/glfw/Window.hpp>
-#include <tachyon/glfw/Joystick.hpp>
-#include <tachyon/glfw/Monitor.hpp>
+#include <yq/tachyon/glfw/Window.hpp>
+#include <yq/tachyon/glfw/Joystick.hpp>
+#include <yq/tachyon/glfw/Monitor.hpp>
 
 namespace yq::tachyon {
 

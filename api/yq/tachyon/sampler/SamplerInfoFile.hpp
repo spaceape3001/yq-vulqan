@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/sampler/SamplerInfo.hpp>
+#include <yq/tachyon/sampler/SamplerInfo.hpp>
 #include <yq/keyv/StdFile.hpp>
 
 namespace yq::tachyon {

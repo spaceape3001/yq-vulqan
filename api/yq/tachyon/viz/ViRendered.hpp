@@ -9,10 +9,10 @@
 
 #include <yq/core/Ref.hpp>
 #include <yq/container/BasicBuffer.hpp>
-#include <tachyon/viz/ViData.hpp>
-#include <tachyon/typedef/pipeline.hpp>
-#include <tachyon/typedef/pipeline_layout.hpp>
-#include <tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/viz/ViData.hpp>
+#include <yq/tachyon/typedef/pipeline.hpp>
+#include <yq/tachyon/typedef/pipeline_layout.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
 
 namespace yq {
     class Stream;

@@ -10,9 +10,9 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <tachyon/render/Render3D.hpp>
-#include <tachyon/texture/Texture.hpp>
-#include <tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/render/Render3D.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>
 
 #include <array>
 

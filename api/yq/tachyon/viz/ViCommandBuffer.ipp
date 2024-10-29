@@ -5,11 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViCommandBuffer.hpp"
-#include <tachyon/errors.hpp>
-#include <tachyon/logging.hpp>
-//#include <tachyon/v/VqEnumerations.hpp>
-#include <tachyon/v/VqStructs.hpp>
-#include <tachyon/viz/ViVisualizer.hpp>
+#include <yq/tachyon/errors.hpp>
+#include <yq/tachyon/logging.hpp>
+//#include <yq/tachyon/v/VqEnumerations.hpp>
+#include <yq/tachyon/v/VqStructs.hpp>
+#include <yq/tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {
     ViCommandBuffer::ViCommandBuffer()

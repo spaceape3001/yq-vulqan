@@ -6,13 +6,13 @@
 
 #pragma once
 
-//#include <tachyon/preamble.hpp>
+//#include <yq/tachyon/preamble.hpp>
 
 #include <yq/core/Guarded.hpp>
 
-#include <tachyon/enum/Tristate.hpp>
-#include <tachyon/typedef/rendered.hpp>
-#include <tachyon/viz/ViVisualizer.hpp>
+#include <yq/core/Tristate.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/viz/ViVisualizer.hpp>
 
 #include <atomic>
 #include <functional>

@@ -15,11 +15,11 @@
 #include <yq/process/PluginLoader.hpp>
 #include <yq/text/format.hpp>
 
-#include <tachyon/app/Application.hpp>
-#include <tachyon/imgui/MyImGui.hpp>
-#include <tachyon/viewer/Viewer.hpp>
-#include <tachyon/widget/TextArea.hpp>
-#include <tachyon/widget/Widget.hpp>
+#include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/imgui/MyImGui.hpp>
+#include <yq/tachyon/viewer/Viewer.hpp>
+#include <yq/tachyon/widget/TextArea.hpp>
+#include <yq/tachyon/widget/Widget.hpp>
 
 #include <iostream>
 #include <TextEditor.h>

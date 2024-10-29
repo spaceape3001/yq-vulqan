@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/post/PBXInfoWriter.hpp>
-#include <tachyon/Manager.hpp>
+#include <yq/tachyon/Manager.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of manager information

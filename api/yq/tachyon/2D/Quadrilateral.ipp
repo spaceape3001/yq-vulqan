@@ -11,8 +11,8 @@
 #include <yq/shape/shape_utils.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/render/Render3DWriter.hpp>
-#include <tachyon/shader/Shader.hpp>
+#include <yq/tachyon/render/Render3DWriter.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
 
 
 namespace yq::tachyon {

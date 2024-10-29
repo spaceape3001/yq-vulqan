@@ -28,14 +28,14 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/2D/Triangle.hpp>
-#include <tachyon/Application.hpp>
-#include <tachyon/Viewer.hpp>
-#include <tachyon/render/Render3D.hpp>
-#include <tachyon/render/Render3DWriter.hpp>
-#include <tachyon/shader/Shader.hpp>
-#include <tachyon/texture/Texture.hpp>
-#include <tachyon/widget/Scene3DWidget.hpp>
+#include <yq/tachyon/2D/Triangle.hpp>
+#include <yq/tachyon/Application.hpp>
+#include <yq/tachyon/Viewer.hpp>
+#include <yq/tachyon/render/Render3D.hpp>
+#include <yq/tachyon/render/Render3DWriter.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/widget/Scene3DWidget.hpp>
 
 #include <iostream>
 #include <chrono>

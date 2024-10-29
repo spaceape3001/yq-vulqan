@@ -11,14 +11,14 @@
 #include <yq/math/glm_types.hpp>
 #include <yq/trait/member_offset.hpp>
 
-#include <tachyon/keywords.hpp>
-#include <tachyon/config/vulqan.hpp>
-#include <tachyon/pipeline/Pipeline.hpp>
-#include <tachyon/pipeline/PipelineUtils.hpp>
-#include <tachyon/pipeline/SBO.hpp>
-#include <tachyon/pipeline/UBO.hpp>
-#include <tachyon/pipeline/VBO.hpp>
-#include <tachyon/texture/Texture.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/config/vulqan.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/tachyon/pipeline/PipelineUtils.hpp>
+#include <yq/tachyon/pipeline/SBO.hpp>
+#include <yq/tachyon/pipeline/UBO.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
 
 namespace yq::tachyon {
 

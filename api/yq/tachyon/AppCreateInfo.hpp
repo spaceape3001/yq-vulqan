@@ -6,9 +6,9 @@
 
 #pragma once
 
+#include <yq/core/Required.hpp>
 #include <yq/macro/debugrel.hpp>
-#include <tachyon/ViewerCreateInfo.hpp>
-#include <tachyon/enum/Required.hpp>
+#include <yq/tachyon/ViewerCreateInfo.hpp>
 
 #include <optional>
 #include <string>

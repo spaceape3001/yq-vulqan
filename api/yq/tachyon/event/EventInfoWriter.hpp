@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/ObjectInfoWriter.hpp>
-#include <tachyon/event/Event.hpp>
+#include <yq/tachyon/event/Event.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of event information

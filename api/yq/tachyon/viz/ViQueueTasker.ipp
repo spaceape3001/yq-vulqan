@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViQueueTasker.hpp"
-#include <tachyon/errors.hpp>
-#include <tachyon/v/VqStructs.hpp>
-#include <tachyon/viz/ViQueueManager.hpp>
-#include <tachyon/viz/ViVisualizer.hpp>
+#include <yq/tachyon/errors.hpp>
+#include <yq/tachyon/v/VqStructs.hpp>
+#include <yq/tachyon/viz/ViQueueManager.hpp>
+#include <yq/tachyon/viz/ViVisualizer.hpp>
 #include <utility>
 #include <exception>
 

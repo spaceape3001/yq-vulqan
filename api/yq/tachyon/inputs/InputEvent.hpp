@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/Event.hpp>
+#include <yq/tachyon/event/Event.hpp>
 
 namespace yq::tachyon {
     class InputEventInfo : public EventInfo {

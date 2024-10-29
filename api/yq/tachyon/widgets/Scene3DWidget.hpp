@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/widget/Widget.hpp>
-#include <tachyon/scene/Perspective.hpp>
-#include <tachyon/scene/Scene.hpp>
+#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/scene/Perspective.hpp>
+#include <yq/tachyon/scene/Scene.hpp>
 
 namespace yq::tachyon {
 

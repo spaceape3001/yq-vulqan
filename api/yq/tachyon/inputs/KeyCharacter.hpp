@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/input/KeyEvent.hpp>
+#include <yq/tachyon/input/KeyEvent.hpp>
 
 namespace yq::tachyon {
     class KeyCharacter : public KeyEvent {

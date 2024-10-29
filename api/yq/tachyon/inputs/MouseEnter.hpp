@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/input/CursorEvent.hpp>
+#include <yq/tachyon/input/CursorEvent.hpp>
 
 namespace yq::tachyon {
     class CursorEnter : public CursorEvent {

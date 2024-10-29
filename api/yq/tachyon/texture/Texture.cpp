@@ -6,8 +6,8 @@
 
 #include "Texture.hpp"
 
-#include <tachyon/image/Raster.hpp>
-#include <tachyon/sampler/Sampler.hpp>
+#include <yq/tachyon/image/Raster.hpp>
+#include <yq/tachyon/sampler/Sampler.hpp>
 
 namespace yq::tachyon {
     TextureCPtr  Texture::load(std::string_view pp)

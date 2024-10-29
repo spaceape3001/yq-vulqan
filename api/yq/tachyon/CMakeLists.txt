@@ -24,13 +24,33 @@ add_library(${PROJECT_NAME} SHARED
     Camera.cpp
     GLFWManager.cpp
     GLSLShader.cpp
+    InputEvent.cpp
     Joystick.cpp
+    JoystickConnectEvent.cpp
+    JoystickDisconnectEvent.cpp
+    JoystickEvent.cpp
+    KeyboardEvent.cpp
+    KeyCode.cpp
+    KeyPressEvent.cpp
+    KeyReleaseEvent.cpp
     Manager.cpp
+    ModifierKey.cpp
     Monitor.cpp
+    MonitorConnectEvent.cpp
+    MonitorEvent.cpp
+    MouseButton.cpp
+    #MouseEvent.cpp
     MyImGui.cpp
     Shader.cpp
+    Task.cpp
+    TaskEngine.cpp
     Texture.cpp
+    Undo.cpp
     VideoMode.cpp
+    vulqan.cpp
+    VulqanEvent.cpp
+    VulqanManager.cpp
+    # Widget.cpp
     
     
     cameras/cameras.cpp
@@ -42,9 +62,6 @@ add_library(${PROJECT_NAME} SHARED
     #editor/Editor.cpp
     
     enum/enum.cpp
-    enum/KeyCode.cpp
-    
-    #event/event.cpp
     
     font/Font.cpp
     
@@ -78,11 +95,9 @@ add_library(${PROJECT_NAME} SHARED
     scene/Perspective.cpp
 
     
-    task/task.cpp
     
     tool/Tool.cpp
     
-    undo/Undo.cpp
     
     #v/VqEnumerations.cpp
     v/VqEnums.cpp
@@ -103,9 +118,6 @@ add_library(${PROJECT_NAME} SHARED
     viz/Visualizer.cpp
     
     viz/viz.cpp
-    
-    vulqan/vulqan.cpp
-    vulqan/VulqanManager.cpp
     
     #widget/ImGuiDemoWidget.cpp
     #widget/Scene3DWidget.cpp

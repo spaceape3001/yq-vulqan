@@ -5,23 +5,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "GLFWManager.hpp"
+
+#include <yq/core/ThreadId.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/ManagerInfoWriter.hpp>
 #include <yq/tachyon/Joystick.hpp>
+#include <yq/tachyon/JoystickConnectEvent.hpp>
+#include <yq/tachyon/JoystickDisconnectEvent.hpp>
 #include <yq/tachyon/Monitor.hpp>
-//#include <yq/tachyon/glfw/Window.hpp>
-#if 0
-#include <yq/tachyon/input/JoystickConnect.hpp>
-#include <yq/tachyon/input/JoystickDisconnect.hpp>
-#include <yq/tachyon/input/MonitorConnect.hpp>
-#include <yq/tachyon/input/MonitorDisconnect.hpp>
-#endif
+#include <yq/tachyon/MonitorConnectEvent.hpp>
+#include <yq/tachyon/MonitorDisconnectEvent.hpp>
+#include <yq/tachyon/Viewer.hpp>
+
 #include <GLFW/glfw3.h>
-#include <yq/tachyon/logging.hpp>
-#include <yq/core/ThreadId.hpp>
 
 namespace yq::tachyon {
 
-    struct GLFWManager::Joystix {
+    struct GLFWManager::JoystickData {
         
         struct {
             std::span<const float>          axes;
@@ -45,16 +45,50 @@ namespace yq::tachyon {
             snapshot.hats.assign(state.hats.begin(), state.hats.end());
         }
     };
+    
+    struct GLFWManager::ViewerData {
+        Viewer*         viewer  = nullptr;
+        GLFWwindow*     window  = nullptr;
+    };
 
     struct GLFWManager::Common {
         static constexpr const unsigned kMaxJoysticks   = (unsigned) GLFW_JOYSTICK_LAST + 1;
         
-
-        GLFWManager*                            manager = nullptr;
-        std::atomic_flag                        claimed;
-        std::array<Joystix, kMaxJoysticks>      joysticks{};
-        bool                                    imgui   = false;
+        GLFWManager*                                m_manager = nullptr;
+        std::atomic_flag                            m_claimed;
+        std::array<JoystickData, kMaxJoysticks>     m_joysticks{};
+        std::map<Viewer*, ViewerData>               m_viewers;
+        bool                                        m_imgui   = false;
         
+        void    install(Viewer& v)
+        {
+            ViewerData& vd = m_viewers[&v];
+            vd.viewer   = &v;
+            vd.window   = v.window();
+        }
+        
+        void    remove(Viewer &v)
+        {
+            m_viewers.erase(&v);
+        }
+        
+        
+        void    initialize(Joystick j)
+        {
+            if(j.id >= kMaxJoysticks)
+                return ;
+            
+            auto & jx = m_joysticks[j.id];
+            if(!j.is_present()){
+                jx  = {};
+            } else {
+                jx.gamepad          = j.is_gamepad();
+                jx.state.axes       = j.axes();
+                jx.state.buttons    = j.buttons();
+                jx.state.hats       = j.hats();
+                jx.copy();
+            }
+        }
     };
     
     GLFWManager::Common&  GLFWManager::common()
@@ -65,7 +99,17 @@ namespace yq::tachyon {
 
     GLFWManager*        GLFWManager::manager()
     {
-        return common().manager;
+        return common().m_manager;
+    }
+
+    void    GLFWManager::install(Viewer& v)
+    {
+        common().install(v);
+    }
+    
+    void    GLFWManager::remove(Viewer& v)
+    {
+        common().remove(v);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,21 +142,17 @@ namespace yq::tachyon {
         if((unsigned) jid > Common::kMaxJoysticks)
             return ;
     
-    #if 0
         Common& g   = common();
-        
-        if(!g.manager)
+        if(!g.m_manager)
             return ;
-        
+            
         Joystick    j(jid);
+        g.initialize(j);
         if(event == GLFW_CONNECTED){
-            joystick_initialize(j);
-            g.manager->publish(new JoystickConnect(j));
-        } else if(event == GLFW_DISCONNECTED){
-            joystick_kill(j);
-            g.manager->publish(new JoystickDisconnect(j));
+            g.m_manager->dispatch(new JoystickConnectEvent(j));
+        } else {
+            g.m_manager->dispatch(new JoystickDisconnectEvent(j));
         }
-    #endif
     }
     
     #if 0
@@ -123,14 +163,15 @@ namespace yq::tachyon {
     
     void GLFWManager::callback_monitor(GLFWmonitor* monitor, int event)
     {
-        #if 0
-        
-            //  disabled until we can figure out the Monitor thing (because the pointer will be bad after the fact)
-        Common& g   = common();
-        if(!g.manager)
+        if(!monitor)
             return ;
-            
-        #endif
+
+        Common& g = common();
+        if(event == GLFW_CONNECTED){
+            g.m_manager->dispatch(new MonitorConnectEvent(monitor));
+        } else {
+            g.m_manager->dispatch(new MonitorDisconnectEvent(monitor));
+        }
     }
     
     #if 0
@@ -176,34 +217,6 @@ namespace yq::tachyon {
     #endif
 
     ///////////////////////////////////////////////////////////////////////////
-
-    void GLFWManager::joystick_initialize(Joystick j)
-    {
-        Common& g = common();
-        if(j.id >= g.joysticks.size())
-            return ;
-        
-        auto & jx = g.joysticks[j.id];
-        if(!j.is_present()){
-            jx  = {};
-        } else {
-            jx.gamepad          = j.is_gamepad();
-            jx.state.axes       = j.axes();
-            jx.state.buttons    = j.buttons();
-            jx.state.hats       = j.hats();
-            jx.copy();
-        }
-        
-    }
-    
-    void GLFWManager::joystick_kill(Joystick j)
-    {
-        Common& g = common();
-        if(j.id >= g.joysticks.size())
-            return ;
-        g.joysticks[j.id]   = {};
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     
 
@@ -237,10 +250,10 @@ namespace yq::tachyon {
         add_role(R::Poller);
 
         Common&     g = common();
-        if(g.claimed.test_and_set())
+        if(g.m_claimed.test_and_set())
             return ;
             
-        g.manager   = this;
+        g.m_manager   = this;
 
         glfwLogging(0,nullptr);
         glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
@@ -259,11 +272,11 @@ namespace yq::tachyon {
     GLFWManager::~GLFWManager()
     {
         Common& g   = common();
-        if(g.manager != this)
+        if(g.m_manager != this)
             return;
             
         glfwTerminate();
-        g.manager   = nullptr;
+        g.m_manager   = nullptr;
 
         tachyonInfo << "GLFWManager destroyed";
     }

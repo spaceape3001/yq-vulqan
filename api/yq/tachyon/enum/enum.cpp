@@ -20,8 +20,6 @@
 #include "ImageViewType.hpp"
 #include "IndexType.hpp"
 #include "LogicOp.hpp"
-#include "ModifierKey.hpp"
-#include "MouseButton.hpp"
 #include "PipelineBinding.hpp"
 #include "PolygonMode.hpp"
 #include "PresentMode.hpp"
@@ -56,10 +54,6 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
-YQ_TYPE_IMPLEMENT(yq::tachyon::ModifierKey)
-YQ_TYPE_IMPLEMENT(yq::tachyon::ModifierKeys)
-YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
-YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PolygonMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PresentMode)

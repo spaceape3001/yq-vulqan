@@ -5,16 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
+#include <yq/tachyon/ViewerException.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/Application.hpp>
 #include <yq/tachyon/Viewer.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/GLFWManager.hpp>
+#include <yq/tachyon/ViewerException.hpp>
 #include <yq/tachyon/ViGui.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/Widget.hpp>
 
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>
@@ -167,12 +169,30 @@ namespace yq::tachyon {
     
     Viewer::~Viewer()
     {
+        Application::remove(this);
         --s_count;
         kill();
     }
 
-    Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : post::PBX({}), m_id(++s_lastId)
+    post::PBX::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
     {
+        PBX::Param  ret;
+        ret.name    = "TachyonViewer";
+        return ret;
+    }
+
+    Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : post::PBX(_pbx(vci)), m_id(++s_lastId)
+    {
+        if(!Application::initialized())
+            throw ViewerException("Application is not initialized");
+        if(!w)
+            throw ViewerException("Widget is required");
+        
+        m_widget    = w;
+        
+        
+        
+    
         try {
             std::error_code ec = initialize(vci, w);
             if(ec){
@@ -186,6 +206,7 @@ namespace yq::tachyon {
             rethrow;
         }
         
+        Application::add(this);
         ++s_count;
     }
 

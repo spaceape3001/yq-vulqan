@@ -36,7 +36,7 @@
 #include <yq/tachyon/viz/ViShader.hpp>
 #include <yq/tachyon/viz/ViSwapchain.hpp>
 #include <yq/tachyon/viz/ViTexture.hpp>
-#include <yq/tachyon/vulqan/VulqanManager.hpp>
+#include <yq/tachyon/VulqanManager.hpp>
 
 #include <GLFW/glfw3.h>
 

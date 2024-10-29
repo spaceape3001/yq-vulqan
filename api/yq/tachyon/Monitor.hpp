@@ -18,6 +18,7 @@ struct GLFWmonitor;
 
 namespace yq::tachyon {
     struct VideoMode;
+    class GLFWManager;
 
     /*! \brief Wrapper for a monitor in GLFW 
     
@@ -70,7 +71,7 @@ namespace yq::tachyon {
         constexpr bool    operator==(const Monitor&) const noexcept = default;
     
     private:
-        friend class Window;
+        friend class GLFWManager;
         
         GLFWmonitor *m_monitor = nullptr;
         constexpr Monitor(GLFWmonitor *m) noexcept : m_monitor(m) {}

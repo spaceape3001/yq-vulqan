@@ -36,6 +36,8 @@ namespace yq::tachyon {
     struct ViContext;
     struct ViewerCreateInfo;
     
+    
+    
     /*! \brief Vulkan Window
     
         This is a vulkan window, called the viewer, that binds the 
@@ -226,6 +228,8 @@ namespace yq::tachyon {
         
         static std::atomic<int>         s_count;
         static std::atomic<uint64_t>    s_lastId;
+        
+        static PBX::Param   _pbx(const ViewerCreateInfo&);
 
         
         void    _init(const ViewerCreateInfo&vci, Widget*w);

@@ -27,12 +27,16 @@ namespace yq::tachyon {
         GLFWManager(const Param& p = {});
         ~GLFWManager();
     
-        virtual void    polling(unit::Second) override;
-        static GLFWManager*        manager();
+        static void                 install(Viewer&);
+        static void                 remove(Viewer&);
+        static GLFWManager*         manager();
         
+    protected:
+        
+        virtual void                polling(unit::Second) override;
+
     private:
-        friend class Viewer;
-        
+
         static Param    _augment(const Param&);
         
         #if 0
@@ -67,7 +71,8 @@ namespace yq::tachyon {
         static void joystick_initialize(Joystick);
         static void joystick_kill(Joystick);
 
-        struct Joystix; //< Not to be confused with joystick class
+        struct JoystickData; //< Not to be confused with joystick class
+        struct ViewerData;
         struct Common;
         static Common&  common();
         friend class Window;

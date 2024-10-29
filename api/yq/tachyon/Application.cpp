@@ -4,23 +4,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/Application.hpp>
-#include <yq/tachyon/Viewer.hpp>
-#include <yq/tachyon/config/build.hpp>
-#include <yq/tachyon/GLFWManager.hpp>
-#include <yq/tachyon/task/TaskEngine.hpp>
+#include "logging.hpp"
+#include "Application.hpp"
+#include "Viewer.hpp"
+#include "GLFWManager.hpp"
+#include "TaskEngine.hpp"
 #include <yq/tachyon/viz/Visualizer.hpp>
-#include <yq/tachyon/vulqan/VulqanManager.hpp>
+#include "VulqanManager.hpp"
+
 #include <yq/asset/Asset.hpp>
 #include <yq/post/boxes/SimpleBox.hpp>
+#include <yq/tachyon/config/build.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
 
     struct Application::Common {
         AppCreateInfo                   app_info;
-        Application*                    application    = nullptr;
+        Application*                    app         = nullptr;
         std::atomic_flag                claimed;
         std::unique_ptr<GLFWManager>    glfw;
         std::unique_ptr<TaskEngine>     tasking;
@@ -38,24 +39,31 @@ namespace yq::tachyon {
         return s_ret;
     }
 
-    Viewer*     Application::_add(Viewer* v)
+    void     Application::add(Viewer* v)
     {
-        common().viewers.push_back(v);
-        return v;
+        if(!v)
+            return ;
+            
+        if(contains(v))
+            return ;
+        
+        static Common& g = common();
+        if(!g.app)
+            return ;
+            
+        g.viewers.push_back(v);
+        GLFWManager::install(*v);
+        g.app->connect(RX, *v);
     }
 
-    void    Application::_remove(Viewer* v)
-    {
-        std::erase(common().viewers, v);
-    }
-    
+
     Viewer*         Application::add_viewer(Widget*w)
     {
         if(!w)
             return nullptr;
 
         Common& g = common();
-        return _add(new Viewer(g.app_info.view, w));
+        return new Viewer(g.app_info.view, w);
     }
     
     Viewer*         Application::add_viewer(std::string_view n, Widget*w)
@@ -66,24 +74,13 @@ namespace yq::tachyon {
         Common& g = common();
         ViewerCreateInfo    vci = g.app_info.view;
         vci.title       = n;
-        return _add(new Viewer(vci, w));
+        return new Viewer(vci, w);
     }
     
-    
-    //! Creates a viewer with viewer
-    Viewer*         Application::add_viewer(Viewer*v)
-    {
-        if(!v)
-            return nullptr;
-            
-        if(contains(v))
-            return v;
-        return _add(v);
-    }
 
     Application*       Application::app() 
     { 
-        return common().application;
+        return common().app;
     }
 
     bool            Application::contains(const Viewer*v) 
@@ -95,6 +92,32 @@ namespace yq::tachyon {
         return false;
     }
 
+    bool    Application::initialized()
+    {
+        return static_cast<bool>(common().app);
+    }
+
+    post::PBX::Param  Application::params(const AppCreateInfo& aci)
+    {
+        post::PBX::Param ret;
+        return ret;
+    }
+
+    void    Application::remove(Viewer* v)
+    {
+        if(!v)
+            return ;
+        if(!contains(v))
+            return ;
+            
+        static Common& g = common();
+        if(!g.app)
+            return ;
+            
+        g.app->disconnect(*v);
+        GLFWManager::remove(*v);
+        std::erase(g.viewers, v);
+    }
 
     void    Application::run(Second amt)
     {
@@ -142,35 +165,45 @@ namespace yq::tachyon {
 
     void     configure_standand_asset_path()
     {
+        static bool s_done  = false;
+        if(s_done)
+            return;
         Asset::resolver_add_paths(build::data_directory());
+        s_done = true;
     }
 
     //  ////////////////////////////////////////////////////////////////////////
     //  ////////////////////////////////////////////////////////////////////////
 
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv)
+        BasicApp(argc, argv), post::PBX(params(aci))
     {
         Common& g = common();
         if(g.claimed.test_and_set())
             return ;
+        
+        add_role(R::Listener);
             
         tachyonInfo << "Application::Application(" << argv[0] << ")";
 
-        g.application   = this;
+        g.app   = this;
         g.app_info      = aci;
         if(g.app_info.app_name.empty())
             g.app_info.app_name = app_name();
-        
+        Dispatcher::name(g.app_info.app_name);
 
         configure_standand_asset_path();
         
         if(g.app_info.tasking)
             g.tasking           = std::make_unique<TaskEngine>();
-        if(g.app_info.glfw)
+        if(g.app_info.glfw){
             g.glfw              = std::make_unique<GLFWManager>();
-        if(g.app_info.vulkan)
+            connect(TX, *g.glfw);
+        }
+        if(g.app_info.vulkan){
             g.vulqan            = std::make_unique<VulqanManager>(g.app_info);
+            connect(TX, *g.vulqan);
+        }
         
         //  TODO event connections
         
@@ -181,10 +214,10 @@ namespace yq::tachyon {
     Application::~Application()
     {
         Common& g = common();
-        if(g.application != this)
+        if(g.app != this)
             return ;
             
-        g.application   = nullptr;
+        g.app   = nullptr;
 
         for(Viewer* v : g.viewers){
             if(v){
@@ -194,10 +227,22 @@ namespace yq::tachyon {
         }
         g.viewers.clear();
         
+        if(g.vulqan){
+            disconnect(*g.vulqan);
+        }
         g.vulqan        = {};
+        if(g.glfw){
+            disconnect(*g.glfw);
+        }
         g.glfw          = {};
         g.tasking       = {};
     
         tachyonDebug << "Application destroyed";
+    }
+
+    void    Application::receive(const post::PostCPtr& pp) 
+    {
+        post::PBX::receive(pp);
+        dispatch(pp);  // and rebroadcast
     }
 }

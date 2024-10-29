@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
+#include <yq/post/PBX.hpp>
 #include <yq/tachyon/AppCreateInfo.hpp>
 #include <yq/tachyon/typedef/application.hpp>
 #include <yq/units.hpp>
@@ -26,7 +27,8 @@ namespace yq::tachyon {
     /*! \brief Engine/Vulkan application
     
     */
-    class Application : public BasicApp {
+    class Application : public BasicApp, public post::PBX {
+        YQ_OBJECT_DECLARE(Application, post::PBX)
     public:
     
         
@@ -34,15 +36,15 @@ namespace yq::tachyon {
         static Viewer*              add_viewer(Widget*);
         //! Creates a viewer with title/widget
         static Viewer*              add_viewer(std::string_view, Widget*);
-        //! Creates a viewer with viewer
-        static Viewer*              add_viewer(Viewer*);
 
         //! Global application, if any
-        static Application*       app();
+        static Application*         app();
 
         static const AppCreateInfo& app_info();
         
         static bool                 contains(const Viewer*);
+        
+        static bool                 initialized();
         
         /*! \brief Exec loop for a bunch of windows
 
@@ -76,14 +78,19 @@ namespace yq::tachyon {
         Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
         ~Application();
 
+    protected:
+        virtual void  receive(const post::PostCPtr&) override;
+        
     private:
         friend class Viewer;
         
         
-        static Viewer*     _add(Viewer*);
+        static void         add(Viewer*);
         
         //  this is being called by viewer, deletion unnecessary
-        static void        _remove(Viewer*);
+        static void         remove(Viewer*);
+        
+        static post::PBX::Param  params(const AppCreateInfo&);
         
 
         struct Common;

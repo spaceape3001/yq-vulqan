@@ -84,17 +84,4 @@ namespace yq::tachyon {
         //  Dimensions of the screen
         Rectangle2D     screen;
     };
-
-    template <typename C>
-    class CameraInfo::Writer : public ObjectInfo::Writer<C> {
-    public:
-        Writer(CameraInfo* cameraInfo) : ObjectInfo::Writer<C>(cameraInfo)
-        {
-        }
-        
-        Writer(CameraInfo& cameraInfo) : Writer(&cameraInfo)
-        {
-        }
-    };
-
 }

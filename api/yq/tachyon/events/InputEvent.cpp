@@ -12,7 +12,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::InputEvent)
 
 namespace yq::tachyon {
     
-    InputEventInfo::InputEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl) :
+    InputEventInfo::InputEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
         post::EventInfo(zName, base, sl)
     {
         set(Flag::INPUT);

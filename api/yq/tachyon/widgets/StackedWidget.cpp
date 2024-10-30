@@ -6,6 +6,7 @@
 
 #include "StackedWidget.hpp"
 #include <yq/core/DelayInit.hpp>
+#include <yq/tachyon/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     Widget*         StackedWidget::active() 

@@ -13,7 +13,7 @@ namespace yq::tachyon {
     
     class WidgetEventInfo : public post::EventInfo {
     public:
-        WidgetEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        WidgetEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };

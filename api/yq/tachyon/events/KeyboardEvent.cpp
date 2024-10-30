@@ -13,7 +13,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyboardEvent)
 
 namespace yq::tachyon {
     
-    KeyboardEventInfo::KeyboardEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+    KeyboardEventInfo::KeyboardEventInfo(std::string_view zName, InputEventInfo& base, const std::source_location& sl) :
         InputEventInfo(zName, base, sl)
     {
         set(Flag::KEYBOARD);

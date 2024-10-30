@@ -12,7 +12,7 @@
 namespace yq::tachyon {
     class InputEventInfo : public post::EventInfo {
     public:
-        InputEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        InputEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };

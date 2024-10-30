@@ -14,7 +14,7 @@ namespace yq::tachyon {
     public:
         template <typename C> class Writer;
 
-        ManagerInfo(std::string_view zName, const post::PBXInfo& base, const std::source_location& sl=std::source_location::current());
+        ManagerInfo(std::string_view zName, post::PBXInfo& base, const std::source_location& sl=std::source_location::current());
     };
 
     /*! \brief Manager of something in the application

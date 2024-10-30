@@ -8,7 +8,7 @@
 #include "ManagerInfoWriter.hpp"
 
 namespace yq::tachyon {
-    ManagerInfo::ManagerInfo(std::string_view zName, const post::PBXInfo& base, const std::source_location& sl) :
+    ManagerInfo::ManagerInfo(std::string_view zName, post::PBXInfo& base, const std::source_location& sl) :
         post::PBXInfo(zName, base, sl)
     {
         set(Flag::MANAGER);

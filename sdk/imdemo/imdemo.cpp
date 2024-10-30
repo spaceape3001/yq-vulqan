@@ -12,7 +12,7 @@
 
 #include <yq/tachyon/Application.hpp>
 #include <yq/tachyon/Viewer.hpp>
-#include <yq/tachyon/widget/ImGuiDemoWidget.hpp>
+#include <yq/tachyon/widgets/ImGuiDemoWidget.hpp>
 
 #include <iostream>
 

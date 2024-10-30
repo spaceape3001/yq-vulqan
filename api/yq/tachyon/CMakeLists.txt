@@ -124,10 +124,10 @@ add_library(${PROJECT_NAME} SHARED
     
     viz/viz.cpp
     
-    #widget/ImGuiDemoWidget.cpp
-    #widget/Scene3DWidget.cpp
-    #widget/StackedWidget.cpp
-    #widget/TextArea.cpp
+    widgets/ImGuiDemoWidget.cpp
+    widgets/Scene3DWidget.cpp
+    widgets/StackedWidget.cpp
+    widgets/TextArea.cpp
     #widget/Widget.cpp
     
     Viewer.cpp

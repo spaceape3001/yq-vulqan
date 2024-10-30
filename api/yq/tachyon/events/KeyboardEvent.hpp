@@ -14,7 +14,7 @@ namespace yq::tachyon {
 
     class KeyboardEventInfo : public InputEventInfo {
     public:
-        KeyboardEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
+        KeyboardEventInfo(std::string_view zName, InputEventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };

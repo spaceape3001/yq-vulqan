@@ -42,7 +42,7 @@ namespace yq::tachyon {
     class WidgetInfo : public post::PBXInfo {
     public:
         template <typename C> class Writer;
-        WidgetInfo(std::string_view, const post::PBXInfo&, const std::source_location& sl = std::source_location::current());
+        WidgetInfo(std::string_view, post::PBXInfo&, const std::source_location& sl = std::source_location::current());
     };
     
     /*! \brief Root something that's drawwable & interactable

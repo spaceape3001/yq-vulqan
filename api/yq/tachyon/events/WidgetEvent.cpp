@@ -13,7 +13,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WidgetEvent)
 
 namespace yq::tachyon {
     
-    WidgetEventInfo::WidgetEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl) :
+    WidgetEventInfo::WidgetEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
         post::EventInfo(zName, base, sl)
     {
         set(Flag::WIDGET);

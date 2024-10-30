@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq::tachyon {
-    WidgetInfo::WidgetInfo(std::string_view zName, const post::PBXInfo& base, const std::source_location& sl) :
+    WidgetInfo::WidgetInfo(std::string_view zName, post::PBXInfo& base, const std::source_location& sl) :
         post::PBXInfo(zName, base, sl)
     {
         set(Flag::WIDGET);

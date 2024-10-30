@@ -35,7 +35,7 @@
 #include <yq/tachyon/render/Render3DWriter.hpp>
 #include <yq/tachyon/Shader.hpp>
 #include <yq/tachyon/Texture.hpp>
-#include <yq/tachyon/widget/Scene3DWidget.hpp>
+#include <yq/tachyon/widgets/Scene3DWidget.hpp>
 
 #include <iostream>
 #include <chrono>

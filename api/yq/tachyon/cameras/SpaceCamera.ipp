@@ -15,6 +15,7 @@
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/tensor/Tensor44.hxx>
+#include <yq/tachyon/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
     SpaceCamera::SpaceCamera() : 

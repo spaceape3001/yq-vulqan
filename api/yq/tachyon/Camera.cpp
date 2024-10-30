@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/Camera.hpp>
+#include <yq/tachyon/CameraInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {

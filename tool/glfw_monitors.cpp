@@ -7,8 +7,8 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/tachyon/Application.hpp>
-#include <yq/tachyon/glfw/Monitor.hpp>
-#include <yq/tachyon/glfw/VideoMode.hpp>
+#include <yq/tachyon/Monitor.hpp>
+#include <yq/tachyon/VideoMode.hpp>
 #include <iostream>
 
 using std::cout;

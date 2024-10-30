@@ -10,8 +10,8 @@
 
 #include <yq/tachyon/Application.hpp>
 #include <yq/tachyon/Viewer.hpp>
-#include <yq/tachyon/task/Task.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/Task.hpp>
+#include <yq/tachyon/Widget.hpp>
 #include <yq/tachyon/widget/StackedWidget.hpp>
 
 

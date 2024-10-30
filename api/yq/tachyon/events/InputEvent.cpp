@@ -39,6 +39,11 @@ namespace yq::tachyon {
         return m_modifiers(ModifierKey::AltLeft);
     }
     
+    bool  InputEvent::alt_right() const
+    {
+        return m_modifiers(ModifierKey::AltRight);
+    }
+
     bool  InputEvent::caps_lock() const
     {
         return has_caps_lock(m_modifiers);

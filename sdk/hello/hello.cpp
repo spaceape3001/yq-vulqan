@@ -33,8 +33,8 @@
 #include <yq/tachyon/Viewer.hpp>
 #include <yq/tachyon/render/Render3D.hpp>
 #include <yq/tachyon/render/Render3DWriter.hpp>
-#include <yq/tachyon/shader/Shader.hpp>
-#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/Shader.hpp>
+#include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/widget/Scene3DWidget.hpp>
 
 #include <iostream>

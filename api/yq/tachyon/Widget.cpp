@@ -5,19 +5,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Widget.hpp"
+#include "WidgetInfoWriter.hpp"
+
 #include <yq/core/DelayInit.hpp>
 #include <yq/text/format.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq::tachyon {
-    WidgetInfo::WidgetInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, base, sl)
+    WidgetInfo::WidgetInfo(std::string_view zName, const post::PBXInfo& base, const std::source_location& sl) :
+        post::PBXInfo(zName, base, sl)
     {
         set(Flag::WIDGET);
     }
 
-    Widget::Widget()
+    Widget::Widget(const Param& p) : post::PBX(p)
     {
         m_windowID      = std::string(fmt_hex(id()));
     }
@@ -93,13 +96,13 @@ namespace yq::tachyon {
             return false;
             
         if(m_parent){
-            m_parent->child_removed(this);
+            //m_parent->child_removed(this);
             std::erase(m_parent->m_children, this);
         }
         m_parent    = p;
         if(m_parent){
             m_parent->m_children.push_back(this);
-            m_parent->child_added(this);
+            //m_parent->child_added(this);
         }
         return true;
    }
@@ -119,7 +122,7 @@ namespace yq::tachyon {
     
     Widget* Widget::widget_at(const Vector2D&) const
     {
-        return this;
+        return const_cast<Widget*>(this);
     }
 
     static void reg_widget()

@@ -68,8 +68,8 @@ namespace yq::tachyon {
         static void callback_window_size(GLFWwindow*, int, int);
         #endif
         
-        static void joystick_initialize(Joystick);
-        static void joystick_kill(Joystick);
+        //static void joystick_initialize(Joystick);
+        //static void joystick_kill(Joystick);
 
         struct JoystickData; //< Not to be confused with joystick class
         struct ViewerData;

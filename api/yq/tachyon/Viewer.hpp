@@ -110,8 +110,6 @@ namespace yq::tachyon {
         void                cmd_unpause();
 
         const Vector2D&     cursor_position() const { return m_cursorPos; }
-        
-        Vector2D            cursor_position(probe_t) const;
 
         //! Runs the draw sequence
         std::error_code     draw(ViContext&);
@@ -122,6 +120,7 @@ namespace yq::tachyon {
         //! Time (in seconds) of last draw call
         double              draw_time() const { return m_drawTime; }
         
+        Size2I              framebuffer_size() const;
 
         //! Current frame number
         uint64_t            frame_number() const;
@@ -198,7 +197,7 @@ namespace yq::tachyon {
             //! Viewer size
         Size2I              size() const;
 
-        std::string_view    title() const;
+        std::string         title() const;
 
         Widget*             widget_at(const Vector2D&) const;
 
@@ -211,11 +210,9 @@ namespace yq::tachyon {
         
     protected:
 
-        class Dispatch;
-
         //! Hint to do anything needed before the next render frame is actually rendered
         //! So do the uniform buffer & texture descriptor sets here.
-        virtual void        prerecord(ViContext&);
+        //virtual void        prerecord(ViContext&);
         
         enum class F : uint8_t {
             Paused,
@@ -227,7 +224,7 @@ namespace yq::tachyon {
         //virtual void  handle(Event&) override;
 
     private:
-        void                record(ViContext&);
+        //void                record(ViContext&);
         
         static std::atomic<int>         s_count;
         static std::atomic<uint64_t>    s_lastId;
@@ -253,12 +250,15 @@ namespace yq::tachyon {
         std::string                     m_title;
         Vector2D                        m_cursorPos     = ZERO;
         
+        //  No mutexes, if we can help it....
+        //mutable tbb::spin_rw_mutex      m_mutex;
+        
         //  Maybe some sort of focus manager (or policy)?
         
         void                purge_deleted();
         
-        virtual void        kill_window() { kill(); }
-        void                kill();
+        //virtual void        kill_window() { kill(); }
+        //void                kill();
 
 #if 0
         static void callback_character(GLFWwindow* window, unsigned int codepoint);

@@ -8,12 +8,14 @@
 
 #include <yq/post/PBX.hpp>
 #include <yq/core/UniqueID.hpp>
+#include <yq/typedef/vector2.hpp>
 
 namespace yq::tachyon {
     class Viewer;
     struct ViContext;
     class Event;
     
+    #if 0
     class KeyCharacter;
     class KeyPress;
     class KeyRelease;
@@ -30,6 +32,7 @@ namespace yq::tachyon {
     class WidgetRescale;
     
     class CloseRequest;
+    #endif
     
     //class WidgetMoveEvent;
     //class WidgetResizeEvent;
@@ -52,8 +55,10 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Widget, post::PBX)
     public:
     
+        struct Param : public post::PBX::Param {};
+    
         //! Default constructor
-        Widget();
+        Widget(const Param&p={});
         
         //! Default destructor
         virtual ~Widget();

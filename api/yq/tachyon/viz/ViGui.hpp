@@ -34,9 +34,6 @@ namespace yq::tachyon {
     struct ViContext;
     class Widget;
 
-    struct ViGuiOptions {
-    };
-
     class ViGui {
     public:
     
@@ -52,8 +49,11 @@ namespace yq::tachyon {
         };
         
         using UpdateFlags = Flags<U>;
+        
+        struct Options {
+        };
     
-        ViGui(ViVisualizer&, const ViGuiOptions& options={});
+        ViGui(ViVisualizer&, const Options& options={});
         ~ViGui();
         
         ImGuiContext*   context() const { return m_context; }
@@ -69,7 +69,7 @@ namespace yq::tachyon {
         
     private:
     
-        bool    _init(const ViGuiOptions&);
+        bool    _init(const Options&);
         void    _kill();
     
         ViGui(const ViGui&) = delete;

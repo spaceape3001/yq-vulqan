@@ -34,7 +34,7 @@
 #include <yq/tachyon/cameras/NullCamera.hpp>
 #include <yq/tachyon/cameras/SpaceCamera.hpp>
 #include <yq/tachyon/cameras/TargetCamera.hpp>
-#include <yq/tachyon/imgui/MyImGui.hpp>
+#include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/scene/Scene.hpp>
 #include <yq/tachyon/widget/Scene3DWidget.hpp>
 

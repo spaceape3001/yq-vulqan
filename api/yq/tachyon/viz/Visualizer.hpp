@@ -45,7 +45,6 @@ namespace yq::tachyon {
     public:
         
         
-        using DrawFunction              = std::function<void(ViContext&)>;
 
 
         VkCommandBuffer                 command_buffer() const;
@@ -69,7 +68,7 @@ namespace yq::tachyon {
         
             \note Nothing stops recursion... DON'T
         */
-        std::error_code                 draw(ViContext&, DrawFunction use={});
+        std::error_code                 draw(ViContext&, const DrawFunctions& functions);
         
         void                            draw_scene(ViContext&, const Scene&, const Perspective&);
         
@@ -103,19 +102,19 @@ namespace yq::tachyon {
 
 
         // used if no draw function is provided
-        virtual void                    record(ViContext&){}
+        //virtual void                    record(ViContext&){}
 
         void                            update(ViContext&, const Scene&);
         
         Visualizer(const ViewerCreateInfo&, GLFWwindow*, Cleanup&);
+        ~Visualizer();
         
     protected:
         //friend struct ViPipeline0;
         //friend struct ViRendered0;
     
-        ~Visualizer();
 
-        virtual void                    prerecord(ViContext&){}
+        //virtual void                    prerecord(ViContext&){}
     
         std::error_code             init_visualizer(const ViewerCreateInfo&, GLFWwindow*);
         void                        kill_visualizer();
@@ -127,7 +126,7 @@ namespace yq::tachyon {
         //std::error_code             _create(ViTexture&, const ViImage&, const Texture&);
         //void                        _destroy(ViTexture&);
 
-        std::error_code             _record(ViContext&, uint32_t, DrawFunction use={}); // may have extents (later)
+        std::error_code             _record(ViContext&, uint32_t, const DrawFunctions& functions); // may have extents (later)
         
         void                        _draw(ViContext&, const RenderedCPtr&, Tristate);
     

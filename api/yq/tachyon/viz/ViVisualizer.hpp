@@ -44,6 +44,7 @@ struct GLFWwindow;
 namespace yq::tachyon {
     struct ViewerCreateInfo;
     class ViQueueManager;
+    struct ViContext;
     
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
@@ -68,6 +69,11 @@ namespace yq::tachyon {
     public:
         //enum class F : uint8_t {
         //};
+
+        struct DrawFunctions {
+            std::function<void(ViContext&)>     prerecord;
+            std::function<void(ViContext&)>     record;
+        };
         
         
         //! Memory allocator

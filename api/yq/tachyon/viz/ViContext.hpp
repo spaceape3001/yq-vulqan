@@ -22,7 +22,7 @@ namespace yq::tachyon {
     struct ViFrame0;
     class Visualizer;
     class Viewer;
-    class Window;
+    //class Window;
     class ViFrame;
     class ViThread;
     class ViFrameThread;
@@ -93,7 +93,7 @@ namespace yq::tachyon {
         Viewer*             viewer              = nullptr;
         
         //! Current window
-        Window*             window              = nullptr;
+        //Window*             window              = nullptr;
         
         //! Set to override wireframe capability
         Tristate            wireframe           = Tristate::INHERIT;

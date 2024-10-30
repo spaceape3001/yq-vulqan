@@ -25,6 +25,8 @@
 #include <yq/tachyon/sampler/Sampler.hpp>
 #include <yq/tachyon/Shader.hpp>
 #include <yq/tachyon/Texture.hpp>
+#include <yq/tachyon/Widget.hpp>
+
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
@@ -37,7 +39,6 @@
 #include <yq/tachyon/viz/ViSwapchain.hpp>
 #include <yq/tachyon/viz/ViTexture.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
 
 #include <backends/imgui_impl_glfw.h>
 
@@ -136,7 +137,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    ViGui::ViGui(ViVisualizer& viz, const ViGuiOptions& options) : m_viz(&viz)
+    ViGui::ViGui(ViVisualizer& viz, const Options& options) : m_viz(&viz)
     {
         if(!_init(options)){
             _kill();
@@ -148,7 +149,7 @@ namespace yq::tachyon {
         _kill();
     }
 
-    bool    ViGui::_init(const ViGuiOptions& options)
+    bool    ViGui::_init(const Options& options)
     {
         G&  g   = global();
 

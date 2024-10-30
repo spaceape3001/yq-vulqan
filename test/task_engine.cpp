@@ -7,7 +7,7 @@
 #include <boost/ut.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/meta/Init.hpp>
-#include <yq/tachyon/task/TaskEngine.hpp>
+#include <yq/tachyon/TaskEngine.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

@@ -13,9 +13,12 @@
 #include "VulqanManager.hpp"
 
 #include <yq/asset/Asset.hpp>
+#include <yq/meta/Init.hpp>
 #include <yq/post/boxes/SimpleBox.hpp>
 #include <yq/tachyon/config/build.hpp>
 #include <GLFW/glfw3.h>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
 
 namespace yq::tachyon {
 

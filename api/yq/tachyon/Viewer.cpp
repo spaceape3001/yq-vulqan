@@ -19,7 +19,10 @@
 #include <yq/tachyon/Widget.hpp>
 
 #include <yq/errors.hpp>
+#include <yq/core/DelayInit.hpp>
 #include <yq/core/ErrorDB.hpp>
+#include <yq/post/PBXInfoWriter.hpp>
+#include <yq/shape/Size2.hxx>
 #include <yq/util/AutoReset.hpp>
 #include <yq/vector/Vector2.hpp>
 
@@ -38,6 +41,7 @@
 #define viewerNotice                yNotice("viewer")
 #define viewerWarning               yWarning("viewer")
 
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
 
 namespace yq::tachyon {
 
@@ -253,22 +257,6 @@ namespace yq::tachyon {
     //  ----------------------------------------------------------------------------------------------------------------
     //  INFORMATION/GETTERS
     
-    Vector2D    Viewer::_probe_cursor_position() const
-    {
-        Vector2D    ret;
-        glfwGetCursorPos(m_window, &ret.x, &ret.y);
-        return ret;
-    }
-
-    Vector2D    Viewer::cursor_position(bool probe) const
-    {
-        if(probe){
-            return _probe_cursor_position();
-        } else {
-            return m_cursorPos;
-        }
-    }
-
     uint64_t    Viewer::frame_number() const
     {
         return m_viz -> tick();
@@ -278,7 +266,7 @@ namespace yq::tachyon {
     {
         Size2I  ret;
         glfwGetFramebufferSize(m_window, &ret.x, &ret.y);
-        return Size2I(width, height);
+        return ret;
     }
     
     int  Viewer::height() const
@@ -359,7 +347,7 @@ namespace yq::tachyon {
         return ret;
     }
     
-    std::string_view    Viewer::title() const 
+    std::string    Viewer::title() const 
     { 
         return m_title; 
     }
@@ -382,10 +370,12 @@ namespace yq::tachyon {
         return ret;
     }
 
+#if 0
     bool Viewer::zero_framebuffer() const
     {
         return any(framebuffer_size()) <= 0;
     }
+#endif
     
     //  ----------------------------------------------------------------------------------------------------------------
     //  GLFW EVENT DISPATCHERS
@@ -617,17 +607,32 @@ namespace yq::tachyon {
         }
         
         auto start = std::chrono::high_resolution_clock::now();
-        auto r1 = auto_reset(u.tick, tick());
+        auto r1 = auto_reset(u.tick, m_viz->tick());
         auto r2 = auto_reset(u.viewer, this);
-        auto r3 = auto_reset(u.window, static_cast<Window*>(this));
+        //auto r3 = auto_reset(u.window, static_cast<Window*>(this));
         if(m_widget && m_imgui){
             m_imgui -> draw(u, m_widget);
         }
-        std::error_code ec = Visualizer::draw(u);
+        std::error_code ec = m_viz->draw(u, {
+            .prerecord = [&](ViContext& u){
+                if(m_widget){
+                    m_widget -> prerecord(u);
+                }
+                if(m_imgui){
+                    m_imgui -> update();
+                }
+            },
+            .record = [&](ViContext& u){
+                if(m_widget)
+                    m_widget -> vulkan_(u);
+                if(m_imgui)
+                    m_imgui -> record(u);
+            }
+        });
         auto end   = std::chrono::high_resolution_clock::now();
         m_drawTime          = (end-start).count();
         if(ec != std::error_code())
-            viewCritical << "Viewer::draw() failed ... " << ec.message();
+            viewerCritical << "Viewer::draw() failed ... " << ec.message();
             
         if(!snapshot.empty()){
             if(auto p = std::get_if<RasterPtr>(&u.snapshot)){
@@ -637,52 +642,35 @@ namespace yq::tachyon {
                 }
             }
             if(auto p = std::get_if<std::error_code>(&u.snapshot)){
-                viewError << "Viewer::draw() snapshot failed ... " << p->message();
+                viewerError << "Viewer::draw() snapshot failed ... " << p->message();
             }
         }
-        //cleanup_sweep();
         return ec;
-    }
-
-
-    void     Viewer::prerecord(ViContext&u)
-    {
-        if(m_widget){
-            m_widget -> prerecord(u);
-        }
-        if(m_imgui){
-            m_imgui -> update();
-        }
     }
 
     void     Viewer::purge_deleted()
     {
-        if(!m_delete.empty()){
-            for(Widget* w : m_delete)
-                delete w;
-            m_delete.clear();
-        }
+        m_cleanup.sweep();
     }
 
-    void    Viewer::record(ViContext&u)
-    {
-        if(m_widget)
-            m_widget -> vulkan_(u);
-        if(m_imgui)
-            m_imgui -> record(u);
-    }
-
-
+/*
     void    Viewer::window_framebuffer_resized(const Size2I&s)
     {
         m_zeroSize  = zero_framebuffer();
         trigger_rebuild();
     }
+*/
 
     void    Viewer::set_render_paused(bool v)
     {
         m_paused    = v;
     }
 
-    
+    static void reg_viewer()
+    {
+        auto w = writer<Viewer>();
+        w.description("Tachyon Viewer");
+    }
+
+    YQ_INVOKE(reg_viewer();)
 }

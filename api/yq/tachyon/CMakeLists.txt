@@ -39,7 +39,7 @@ add_library(${PROJECT_NAME} SHARED
     VideoMode.cpp
     vulqan.cpp
     VulqanManager.cpp
-    # Widget.cpp
+    Widget.cpp
     
     
     cameras/cameras.cpp
@@ -62,9 +62,11 @@ add_library(${PROJECT_NAME} SHARED
     events/KeyPressEvent.cpp
     events/KeyReleaseEvent.cpp
     events/MonitorConnectEvent.cpp
+    events/MonitorDisconnectEvent.cpp
     events/MonitorEvent.cpp
     events/ViewerEvent.cpp
     events/VulqanEvent.cpp
+    events/WidgetEvent.cpp
     
     font/Font.cpp
     
@@ -111,7 +113,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
     viz/ViFrame.cpp
-    #viz/ViGui.cpp
+    viz/ViGui.cpp
     viz/ViPipeline.cpp
     viz/ViPipelineLayout.cpp
     viz/ViRendered.cpp

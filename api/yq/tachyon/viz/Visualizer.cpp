@@ -486,7 +486,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////
     //  RENDERING
 
-    std::error_code     Visualizer::_record(ViContext& u, uint32_t imageIndex, DrawFunction use)
+    std::error_code     Visualizer::_record(ViContext& u, uint32_t imageIndex, const DrawFunctions& fcn)
     {
         VqCommandBufferBeginInfo beginInfo;
         beginInfo.flags = 0; // Optional
@@ -508,10 +508,9 @@ namespace yq::tachyon {
 
         std::error_code     ret;
         try {
-            if(use){
-                use(u);
-            } else
-                record(u);
+            if(fcn.record){
+                fcn.record(u);
+            }
         }
         catch(std::error_code ec) {
             ret = ec;
@@ -523,7 +522,7 @@ namespace yq::tachyon {
         return ret;
     }
 
-    std::error_code     Visualizer::draw(ViContext& u, DrawFunction use)
+    std::error_code     Visualizer::draw(ViContext& u, const DrawFunctions& fcn)
     {
         static constexpr const uint64_t     kMaxWait = 100'000'000ULL;
     
@@ -596,13 +595,14 @@ namespace yq::tachyon {
             return create_error<"Unexpected error">();
         }
         
-        prerecord(u);
+        if(fcn.prerecord)
+            fcn.prerecord(u);
 
         vkResetFences(m_device, 1, &f.m_fence);
         vkResetCommandBuffer(u.command_buffer, 0);
         
     
-        std::error_code ec = _record(u, m_frameImageIndex, use);
+        std::error_code ec = _record(u, m_frameImageIndex, fcn);
         if(ec)
             return ec;
         

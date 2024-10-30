@@ -263,7 +263,7 @@ namespace yq::tachyon {
         glfwInit();
         
         for(int jid = GLFW_JOYSTICK_1; jid <= GLFW_JOYSTICK_LAST; ++jid){
-            joystick_initialize(Joystick(jid));
+            g.initialize(Joystick(jid));
         }
         
         glfwSetJoystickCallback( callback_joystick );

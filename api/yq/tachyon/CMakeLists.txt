@@ -22,23 +22,13 @@ add_library(${PROJECT_NAME} SHARED
 
     Application.cpp
     Camera.cpp
+    
+
     GLFWManager.cpp
     GLSLShader.cpp
-    InputEvent.cpp
     Joystick.cpp
-    JoystickConnectEvent.cpp
-    JoystickDisconnectEvent.cpp
-    JoystickEvent.cpp
-    KeyboardEvent.cpp
-    KeyCode.cpp
-    KeyPressEvent.cpp
-    KeyReleaseEvent.cpp
     Manager.cpp
-    ModifierKey.cpp
     Monitor.cpp
-    MonitorConnectEvent.cpp
-    MonitorEvent.cpp
-    MouseButton.cpp
     #MouseEvent.cpp
     MyImGui.cpp
     Shader.cpp
@@ -48,7 +38,6 @@ add_library(${PROJECT_NAME} SHARED
     Undo.cpp
     VideoMode.cpp
     vulqan.cpp
-    VulqanEvent.cpp
     VulqanManager.cpp
     # Widget.cpp
     
@@ -62,6 +51,20 @@ add_library(${PROJECT_NAME} SHARED
     #editor/Editor.cpp
     
     enum/enum.cpp
+    enum/KeyCode.cpp
+    enum/ModifierKey.cpp
+
+    events/InputEvent.cpp
+    events/JoystickConnectEvent.cpp
+    events/JoystickDisconnectEvent.cpp
+    events/JoystickEvent.cpp
+    events/KeyboardEvent.cpp
+    events/KeyPressEvent.cpp
+    events/KeyReleaseEvent.cpp
+    events/MonitorConnectEvent.cpp
+    events/MonitorEvent.cpp
+    events/ViewerEvent.cpp
+    events/VulqanEvent.cpp
     
     font/Font.cpp
     
@@ -69,7 +72,6 @@ add_library(${PROJECT_NAME} SHARED
     image/image.cpp
     image/STBImage.cpp
     
-    #imgui/ViGui.cpp
     
     #joystick/joystick.cpp
     
@@ -109,6 +111,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
     viz/ViFrame.cpp
+    #viz/ViGui.cpp
     viz/ViPipeline.cpp
     viz/ViPipelineLayout.cpp
     viz/ViRendered.cpp

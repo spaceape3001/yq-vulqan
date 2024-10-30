@@ -10,12 +10,15 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/ManagerInfoWriter.hpp>
 #include <yq/tachyon/Joystick.hpp>
-#include <yq/tachyon/JoystickConnectEvent.hpp>
-#include <yq/tachyon/JoystickDisconnectEvent.hpp>
 #include <yq/tachyon/Monitor.hpp>
-#include <yq/tachyon/MonitorConnectEvent.hpp>
-#include <yq/tachyon/MonitorDisconnectEvent.hpp>
 #include <yq/tachyon/Viewer.hpp>
+
+#include <yq/tachyon/events/JoystickConnectEvent.hpp>
+#include <yq/tachyon/events/JoystickDisconnectEvent.hpp>
+#include <yq/tachyon/events/MonitorConnectEvent.hpp>
+#include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
+
+#include <yq/tachyon/exceptions/GLFWException.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -245,13 +248,13 @@ namespace yq::tachyon {
     GLFWManager::GLFWManager(const Param&p) : Manager(_augment(p))
     {
         if(thread::id())    // not the main thread...
-            return ;
+            throw GLFWException("GLFW must be created/reside on the main thread");
 
         add_role(R::Poller);
 
         Common&     g = common();
         if(g.m_claimed.test_and_set())
-            return ;
+            throw GLFWException("Only one GLFWManagers is permitted");
             
         g.m_manager   = this;
 

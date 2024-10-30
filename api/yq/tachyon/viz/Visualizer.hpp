@@ -107,11 +107,12 @@ namespace yq::tachyon {
 
         void                            update(ViContext&, const Scene&);
         
+        Visualizer(const ViewerCreateInfo&, GLFWwindow*, Cleanup&);
+        
     protected:
         //friend struct ViPipeline0;
         //friend struct ViRendered0;
     
-        Visualizer(Cleanup&);
         ~Visualizer();
 
         virtual void                    prerecord(ViContext&){}

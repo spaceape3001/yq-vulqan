@@ -39,16 +39,6 @@
 #define tachyonNotice               yNotice("tachyon")
 #define tachyonWarning              yWarning("tachyon")
 
-#define viewAlert                   yAlert("view")
-#define viewCritical                yCritical("view")
-#define viewDebug                   yDebug("view")
-#define viewError                   yError("view")
-#define viewEmergency               yEmergency("view")
-#define viewFatal                   yFatal("view")
-#define viewInfo                    yInfo("view")
-#define viewNotice                  yNotice("view")
-#define viewWarning                 yWarning("view")
-
 #define vizAlert                    yAlert("viz")
 #define vizCritical                 yCritical("viz")
 #define vizDebug                    yDebug("viz")

@@ -28,6 +28,7 @@
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
+#include <yq/tachyon/exceptions/VulqanException.hpp>
 #include <yq/tachyon/image/ImageViewInfo.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 #include <yq/tachyon/scene/Perspective.hpp>
@@ -291,9 +292,12 @@ namespace yq::tachyon {
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
 
-    Visualizer::Visualizer(Cleanup& c)  : ViVisualizer(c)
+    Visualizer::Visualizer(const ViewerCreateInfo&vci, GLFWwindow*w, Cleanup& c)  : ViVisualizer(c)
     {
         m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
+        
+        if(_ctor(vci, w) != std::error_code())
+            throw VulqanException("Unable to initialize");
     }
     
     Visualizer::~Visualizer()

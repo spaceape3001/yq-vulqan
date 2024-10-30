@@ -8,8 +8,9 @@
 #include "logging.hpp"
 #include "AppCreateInfo.hpp"
 #include "ManagerInfoWriter.hpp"
-#include "VulqanException.hpp"
 #include "VulqanManager.hpp"
+
+#include <yq/tachyon/exceptions/VulqanException.hpp>
 
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>

@@ -6,18 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/MonitorEvent.hpp>
+#include <yq/tachyon/events/MonitorEvent.hpp>
 
 namespace yq::tachyon {
-    class MonitorConnectEvent : public MonitorEvent {
-        YQ_OBJECT_DECLARE(MonitorConnectEvent, MonitorEvent);
+    class MonitorDisconnectEvent : public MonitorEvent {
+        YQ_OBJECT_DECLARE(MonitorDisconnectEvent, MonitorEvent);
     public:
         static void init_info();
-        
+    
+    
         struct Param : public MonitorEvent::Param {
         };
     
-        MonitorConnectEvent(Monitor, const Param& p={});
-        ~MonitorConnectEvent();
+        MonitorDisconnectEvent(Monitor, const Param& p = {});
+        ~MonitorDisconnectEvent();
     };
 }

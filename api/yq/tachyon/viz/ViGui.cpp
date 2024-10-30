@@ -6,6 +6,8 @@
 
 #include "ViGui.hpp"
 
+#include <yq/asset/Asset.hpp>
+#include <yq/asset/AssetIO.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/file/FileResolver.hpp>
@@ -17,8 +19,6 @@
 #include <yq/util/AutoReset.hpp>
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/asset/Asset.hpp>
-#include <yq/asset/AssetIO.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/PipelineWriter.hpp>

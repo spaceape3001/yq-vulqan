@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/TachyonException.hpp>
+#include <yq/tachyon/exceptions/TachyonException.hpp>
 
 namespace yq::tachyon {
     class ViewerException : public TachyonException {

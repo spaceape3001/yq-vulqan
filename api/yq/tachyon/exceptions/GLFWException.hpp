@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq/tachyon/TachyonException.hpp>
+#include <yq/tachyon/exceptions/TachyonException.hpp>
 
 namespace yq::tachyon {
-    class VulqanException : public TachyonException {
+    class GLFWException : public TachyonException {
     public:
-        VulqanException(const VulqanException&) = default;
+        GLFWException(const GLFWException&) = default;
         template <size_t N>
-        VulqanException(const char (&msg)[N], const std::source_location& sl=std::source_location::current()) : 
+        GLFWException(const char (&msg)[N], const std::source_location& sl=std::source_location::current()) : 
             TachyonException(msg, sl) {}
     };
 }

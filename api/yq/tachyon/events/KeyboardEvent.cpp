@@ -4,39 +4,41 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MonitorEvent.hpp"
+#include "KeyboardEvent.hpp"
+
 #include <yq/post/EventInfoWriter.hpp>
 #include <yq/core/DelayInit.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyboardEvent)
 
 namespace yq::tachyon {
     
-    MonitorEventInfo::MonitorEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
+    KeyboardEventInfo::KeyboardEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl) :
         InputEventInfo(zName, base, sl)
     {
-        set(Flag::MONITOR);
+        set(Flag::KEYBOARD);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    MonitorEvent::MonitorEvent(Monitor m, const Param& p) : InputEvent(p), m_monitor(m)
+    KeyboardEvent::KeyboardEvent(const Param& p) : InputEvent(p)
     {
     }
     
-    MonitorEvent::~MonitorEvent()
+    KeyboardEvent::~KeyboardEvent()
     {
     }
-    
+
+
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_monitor_event()
+    static void reg_keyboard_event()
     {
         {
-            auto w = writer<MonitorEvent>();
-            w.description("Monitor event base class");
+            auto w = writer<KeyboardEvent>();
+            w.description("Keyboard event base class");
         }
     }
     
-    YQ_INVOKE(reg_monitor_event();)
+    YQ_INVOKE(reg_keyboard_event();)
 }

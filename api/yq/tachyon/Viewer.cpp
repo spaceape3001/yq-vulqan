@@ -4,18 +4,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "Viewer.hpp"
 
-#include <yq/tachyon/ViewerException.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/Application.hpp>
-#include <yq/tachyon/Viewer.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
-#include <yq/tachyon/GLFWManager.hpp>
-#include <yq/tachyon/ViewerException.hpp>
-#include <yq/tachyon/ViGui.hpp>
+#include <yq/tachyon/viz/ViGui.hpp>
+
+#include <yq/tachyon/exceptions/ViewerException.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
+#include <yq/tachyon/viz/Visualizer.hpp>
 #include <yq/tachyon/Widget.hpp>
 
 #include <yq/errors.hpp>
@@ -27,11 +27,24 @@
 
 #include <GLFW/glfw3.h>
 
+
+#define viewerAlert                 yAlert("viewer")
+#define viewerCritical              yCritical("viewer")
+#define viewerDebug                 yDebug("viewer")
+#define viewerError                 yError("viewer")
+#define viewerEmergency             yEmergency("viewer")
+#define viewerFatal                 yFatal("viewer")
+#define viewerInfo                  yInfo("viewer")
+#define viewerNotice                yNotice("viewer")
+#define viewerWarning               yWarning("viewer")
+
+
 namespace yq::tachyon {
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  CALLBACKS
 
+#if 0
     void Viewer::callback_character(GLFWwindow* window, unsigned int codepoint)
     {
         Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
@@ -160,6 +173,7 @@ namespace yq::tachyon {
             return ;
         viewer->dispatch_window_size(xsize, ysize);
     }
+#endif
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  INITIALIZATION/DESTRUCTION
@@ -169,9 +183,14 @@ namespace yq::tachyon {
     
     Viewer::~Viewer()
     {
+        m_cleanup.sweep();
+
         Application::remove(this);
+        glfwDestroyWindow(m_window);
+        m_widget -> m_viewer    = nullptr;
+        delete m_widget;
+        
         --s_count;
-        kill();
     }
 
     post::PBX::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
@@ -183,76 +202,52 @@ namespace yq::tachyon {
 
     Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : post::PBX(_pbx(vci)), m_id(++s_lastId)
     {
-        if(!Application::initialized())
-            throw ViewerException("Application is not initialized");
-        if(!w)
-            throw ViewerException("Widget is required");
-        
-        m_widget    = w;
-        
-        
-        
-    
         try {
-            std::error_code ec = initialize(vci, w);
-            if(ec){
-                tachyonCritical << "Unable to initialize the viewer ... " << ec.message();
-                throw ec;
+            if(!Application::initialized())
+                throw ViewerException("Application is not initialized");
+            if(!w)
+                throw ViewerException("Widget is required");
+            
+            m_widget    = w;
+            
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+            glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
+            glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
+            glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
+            
+            int wx      = std::max(1,vci.size.width());
+            int wy      = std::max(1,vci.size.height());
+            
+            m_title     = vci.title;
+            m_window    = glfwCreateWindow(wx, wy, m_title.c_str(), vci.monitor.monitor(), nullptr);
+            if(!m_window){
+                const char* description = nullptr;
+                glfwGetError(&description);
+                if(description)
+                    viewerCritical << "Unable to create GLFW window.  " << description;
+                throw ViewerException("GLFW window could not be instantiated");
             }
-        
-        } 
-        catch(...){
-            --s_count;
-            rethrow;
+
+            m_viz       = std::make_unique<Visualizer>(vci, m_window, m_cleanup);
+            
+            if(vci.imgui)
+                m_imgui= std::make_unique<ViGui>(*m_viz);
+        }
+        catch(...)
+        {
+            if(m_imgui)
+                m_imgui = {};
+            if(m_viz)
+                m_viz   = {};
+            if(m_window)
+                glfwDestroyWindow(m_window);
+            throw;
         }
         
+        m_widget -> m_viewer    = this;
+        glfwGetCursorPos(m_window, &m_cursorPos.x, &m_cursorPos.y);
         Application::add(this);
         ++s_count;
-    }
-
-
-    void    Viewer::_init(const ViewerCreateInfo&vci, Widget* w)
-    {
-        if(m_widget)
-            return std::error_code();
-
-        if(!w)
-            return errors::null_pointer();
-    
-        std::error_code ec = init_window(vci);
-        if(ec)
-            return ec;
-        ec  = init_visualizer(vci, window());
-        if(ec)
-            return ec;
-         
-        if(vci.imgui){
-            m_imgui = std::make_unique<ViGui>(*this);
-        }
-
-        install_hooks();
-        m_widget    = w;
-        w->m_viewer = this;
-        return std::error_code();
-        
-        
-        m_cursorPos = _probe_cursor_position();
-    }
-
-    void                Viewer::_kill()
-    {
-        Application*    s   = Application::app();
-        if(s)
-            s->_remove(this);
-        purge_deleted();
-        if(m_widget){
-            m_widget->m_viewer  = nullptr;
-            delete m_widget;
-        }
-        m_widget    = nullptr;
-        m_imgui     = {};
-        kill_visualizer();
-        Viewer::kill_window();
     }
     
     //  ----------------------------------------------------------------------------------------------------------------
@@ -395,6 +390,7 @@ namespace yq::tachyon {
     //  ----------------------------------------------------------------------------------------------------------------
     //  GLFW EVENT DISPATCHERS
  
+#if 0
     void    Viewer::dispatch_character(unsigned int code)
     {
         if(m_imgui && (!m_focus || m_focus->is_imgui())){
@@ -489,7 +485,7 @@ namespace yq::tachyon {
     void    Viewer::dispatch_window_size(int,int)
     {
     }
-    
+#endif    
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  GLFW/SETTERS

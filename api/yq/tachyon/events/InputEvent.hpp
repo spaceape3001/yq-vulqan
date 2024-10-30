@@ -6,36 +6,42 @@
 
 #pragma once
 
-#include <yq/tachyon/InputEvent.hpp>
-#include <yq/tachyon/ModifierKey.hpp>
+#include <yq/post/Event.hpp>
+#include <yq/tachyon/enum/ModifierKey.hpp>
 
 namespace yq::tachyon {
-    class Window;
-    class Viewer;
-
-    class KeyboardEventInfo : public InputEventInfo {
+    class InputEventInfo : public post::EventInfo {
     public:
-        KeyboardEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
+        InputEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
+    
+    class Viewer;
 
-
-    class KeyboardEvent : public InputEvent {
-        YQ_OBJECT_INFO(KeyboardEventInfo)
-        YQ_OBJECT_DECLARE(KeyboardEvent, InputEvent)
-        
-        template <typename> friend class Ref;
+    /*! \brief Input event 
+    
+        This is a common base class for keyboard/mouse events since 
+        they both need modifier keys & are attached to viewers.
+    */
+    class InputEvent : public post::Event {
+        YQ_OBJECT_INFO(InputEventInfo)
+        YQ_OBJECT_DECLARE(InputEvent, post::Event)
     public:
     
-        struct Param : public InputEvent::Param {
+        struct Param : public post::Event::Param {
+            Viewer*         viewer      = nullptr;
             ModifierKeys    modifiers   = {};
         };
-
+    
         //  EVENT TODO
- 
+    
+        virtual ~InputEvent();
+        
+        //! Viewer (note, for some events, this might be NULL)
+        Viewer*             viewer() const { return m_viewer; }
         ModifierKeys        modifiers() const { return m_modifiers; }
-
+        
         bool    alt() const;
         bool    alt_left() const;
         bool    alt_right() const;
@@ -57,12 +63,12 @@ namespace yq::tachyon {
         bool    super() const;
         bool    super_left() const;
         bool    super_right() const;
-     
+        
     protected:
-        KeyboardEvent(const Param& p);
-        virtual ~KeyboardEvent();
+        InputEvent(const Param&);
 
     private:
-        ModifierKeys        m_modifiers;
+        Viewer*         m_viewer;
+        ModifierKeys    m_modifiers;
     };
 }

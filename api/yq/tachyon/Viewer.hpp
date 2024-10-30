@@ -11,6 +11,7 @@
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/post/PBX.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
@@ -108,7 +109,9 @@ namespace yq::tachyon {
         //! Unpause the rendering
         void                cmd_unpause();
 
-        Vector2D            cursor_position(bool probe=false) const;
+        const Vector2D&     cursor_position() const { return m_cursorPos; }
+        
+        Vector2D            cursor_position(probe_t) const;
 
         //! Runs the draw sequence
         std::error_code     draw(ViContext&);
@@ -257,6 +260,7 @@ namespace yq::tachyon {
         virtual void        kill_window() { kill(); }
         void                kill();
 
+#if 0
         static void callback_character(GLFWwindow* window, unsigned int codepoint);
         static void callback_cursor_enter(GLFWwindow* window, int entered);
         static void callback_cursor_position(GLFWwindow* window, double xpos, double ypos);
@@ -290,6 +294,7 @@ namespace yq::tachyon {
         void    dispatch_window_refresh();
         void    dispatch_window_scale(float, float);
         void    dispatch_window_size(int,int);
+#endif
         
         Vector2D    _probe_cursor_position() const;
     };

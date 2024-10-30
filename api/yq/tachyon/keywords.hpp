@@ -28,12 +28,13 @@ namespace yq::tachyon {
         consteval operator DataActivity() const noexcept { return DataActivity::STATIC; }
     };
     
+    struct probe_t {};
+
     static constexpr common_t       COMMON;
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;
     static constexpr refresh_t      REFRESH;
     static constexpr static_t       STATIC;
     
-    static constexpr rx_t           RX;
-    static constexpr tx_t           TX;
+    static constexpr probe_t        PROBE;
 }

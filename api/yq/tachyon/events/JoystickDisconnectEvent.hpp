@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/JoystickEvent.hpp>
+#include <yq/tachyon/events/JoystickEvent.hpp>
 
 namespace yq::tachyon {
-    class JoystickConnectEvent : public JoystickEvent {
-        YQ_OBJECT_DECLARE(JoystickConnectEvent, JoystickEvent);
+    class JoystickDisconnectEvent : public JoystickEvent {
+        YQ_OBJECT_DECLARE(JoystickDisconnectEvent, JoystickEvent);
     public:
         static void init_info();
-    
+        
         struct Param : public JoystickEvent::Param {
         };
     
-        JoystickConnectEvent(Joystick, const Param& p = {});
-        ~JoystickConnectEvent();
+        JoystickDisconnectEvent(Joystick, const Param& p={});
+        ~JoystickDisconnectEvent();
     };
 }

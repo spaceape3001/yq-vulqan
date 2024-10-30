@@ -13,7 +13,7 @@ namespace yq::tachyon {
 
     class ViewerEventInfo : public post::EventInfo {
     public:
-        ViewerEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        ViewerEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };

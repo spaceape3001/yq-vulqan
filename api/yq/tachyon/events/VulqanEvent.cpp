@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VulqanEvent)
 
 namespace yq::tachyon {
-    VulqanEventInfo::VulqanEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl) :
+    VulqanEventInfo::VulqanEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
         post::EventInfo(zName, base, sl)
     {
         set(Flag::VULKAN);

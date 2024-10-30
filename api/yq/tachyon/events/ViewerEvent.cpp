@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerEvent)
 
 namespace yq::tachyon {
-    ViewerEventInfo::ViewerEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl) :
+    ViewerEventInfo::ViewerEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
         post::EventInfo(zName, base, sl)
     {
     }

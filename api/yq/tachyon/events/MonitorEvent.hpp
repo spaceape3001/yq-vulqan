@@ -12,7 +12,7 @@
 namespace yq::tachyon {
     class MonitorEventInfo : public post::EventInfo {
     public:
-        MonitorEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        MonitorEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
     };
 
     class MonitorEvent : public post::Event {

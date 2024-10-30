@@ -13,7 +13,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickEvent)
 
 namespace yq::tachyon {
     
-    JoystickEventInfo::JoystickEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl) :
+    JoystickEventInfo::JoystickEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
         post::EventInfo(zName, base, sl)
     {
         set(Flag::JOYSTICK);

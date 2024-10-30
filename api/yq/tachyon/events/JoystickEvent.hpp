@@ -12,7 +12,7 @@
 namespace yq::tachyon {
     class JoystickEventInfo : public post::EventInfo {
     public:
-        JoystickEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        JoystickEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };

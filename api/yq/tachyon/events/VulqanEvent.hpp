@@ -11,7 +11,7 @@
 namespace yq::tachyon {
     class VulqanEventInfo : public post::EventInfo {
     public:
-        VulqanEventInfo(std::string_view zName, const post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        VulqanEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };

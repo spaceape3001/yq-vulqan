@@ -23,6 +23,8 @@
 #include <yq/tachyon/events/KeyReleaseEvent.hpp>
 #include <yq/tachyon/events/MonitorConnectEvent.hpp>
 #include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
+#include <yq/tachyon/events/ViewerMoveEvent.hpp>
+#include <yq/tachyon/events/ViewerResizeEvent.hpp>
 
 #include <yq/tachyon/exceptions/GLFWException.hpp>
 
@@ -228,11 +230,15 @@ namespace yq::tachyon {
     }
     #endif
     
-    #if 0
     void GLFWManager::callback_window_position(GLFWwindow* window, int xpos, int ypos)
     {
+        static Common& g = common();
+        
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
+        if(v){
+            g.manager->dispatch(new ViewerMoveEvent(v, { xpos, ypos }));
+        }
     }
-    #endif
     
     #if 0
     void GLFWManager::callback_window_refresh(GLFWwindow* window)
@@ -246,11 +252,15 @@ namespace yq::tachyon {
     }
     #endif
     
-    #if 0
-    void GLFWManager::callback_window_size(GLFWwindow*, int, int)
+    void GLFWManager::callback_window_size(GLFWwindow* window, int xsize, int ysize)
     {
+        static Common& g = common();
+        
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
+        if(v){
+            g.manager->dispatch(new ViewerResizeEvent(v, { xsize, ysize }));
+        }
     }
-    #endif
         
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //   INFORMATION/PROBING
@@ -389,6 +399,8 @@ namespace yq::tachyon {
         
         glfwSetKeyCallback(vd.window, callback_key);
         glfwSetWindowCloseCallback(vd.window, callback_window_close);
+        glfwSetWindowPosCallback(vd.window, callback_window_position);
+        glfwSetWindowSizeCallback(vd.window, callback_window_size);
     }
     
 

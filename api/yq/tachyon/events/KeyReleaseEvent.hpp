@@ -34,7 +34,7 @@ namespace yq::tachyon {
     private:
     
         //! 
-        int             m_scan;
-        KeyCode         m_key;
+        const int             m_scan;
+        const KeyCode         m_key;
     };
 }

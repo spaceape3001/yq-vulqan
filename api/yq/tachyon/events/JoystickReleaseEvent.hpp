@@ -23,6 +23,6 @@ namespace yq::tachyon {
         size_t  button() const { return m_button; }
         
     private:
-        size_t  m_button;
+        const size_t  m_button;
     };
 }

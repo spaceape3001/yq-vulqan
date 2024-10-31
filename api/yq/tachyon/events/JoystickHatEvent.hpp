@@ -25,7 +25,7 @@ namespace yq::tachyon {
         ~JoystickHatEvent();
 
     private:
-        size_t              m_hat;
-        JoystickHatState    m_state;
+        const size_t              m_hat;
+        const JoystickHatState    m_state;
     };
 }

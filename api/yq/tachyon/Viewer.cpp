@@ -11,8 +11,17 @@
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/viz/ViGui.hpp>
 
+#include <yq/tachyon/commands/ViewerAttentionCommand.hpp>
 #include <yq/tachyon/commands/ViewerCloseCommand.hpp>
+#include <yq/tachyon/commands/ViewerHideCommand.hpp>
+#include <yq/tachyon/commands/ViewerIconifyCommand.hpp>
+#include <yq/tachyon/commands/ViewerMaximizeCommand.hpp>
+#include <yq/tachyon/commands/ViewerPauseCommand.hpp>
+#include <yq/tachyon/commands/ViewerRestoreCommand.hpp>
+#include <yq/tachyon/commands/ViewerResumeCommand.hpp>
+#include <yq/tachyon/commands/ViewerShowCommand.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
+#include <yq/tachyon/events/ViewerResizeEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
@@ -55,141 +64,8 @@ namespace yq::tachyon {
         w.description("Tachyon Viewer");
         w.receive(&Viewer::viewer_close_request);
         w.receive(&Viewer::viewer_close_command);
+        w.receive(&Viewer::viewer_resize_event);
     }
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  CALLBACKS
-
-#if 0
-    void Viewer::callback_character(GLFWwindow* window, unsigned int codepoint)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_character(codepoint);
-        
-    }
-    
-    void Viewer::callback_cursor_enter(GLFWwindow* window, int entered)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_cursor_enter(entered);
-    }
-    
-    void Viewer::callback_cursor_position(GLFWwindow* window, double xpos, double ypos)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_cursor_position(xpos, ypos);
-    }
-    
-    void Viewer::callback_drop(GLFWwindow* window, int count, const char** paths)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_drop(count, paths);
-    }
-    
-    void Viewer::callback_framebuffer_size(GLFWwindow* window, int width, int height)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_framebuffer_size(width, height);
-    }
-    
-    void Viewer::callback_key(GLFWwindow* window, int key, int scancode, int action, int mods)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_key(key, scancode, action, mods);
-    }
-    
-    void Viewer::callback_mouse_button(GLFWwindow* window, int button, int action, int mods)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_mouse_button(button, action, mods);
-    }
-    
-    void Viewer::callback_scroll(GLFWwindow* window, double xoffset, double yoffset)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_scroll(xoffset, yoffset);
-    }
-    
-    void Viewer::callback_window_close(GLFWwindow* window)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_close();
-    }
-    
-    void Viewer::callback_window_focus(GLFWwindow* window, int focused)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_focus(focused);
-    }
-    
-    void Viewer::callback_window_iconify(GLFWwindow* window, int iconified)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_iconify(iconified);
-    }
-    
-    void Viewer::callback_window_maximize(GLFWwindow* window, int maximized)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_maximize(maximized);
-    }
-    
-    void Viewer::callback_window_position(GLFWwindow* window, int xpos, int ypos)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_position(xpos, ypos);
-    }
-    
-    void Viewer::callback_window_refresh(GLFWwindow* window)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_refresh();
-    }
-    
-    void Viewer::callback_window_scale(GLFWwindow* window, float xscale, float yscale)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_scale(xscale, yscale);
-    }
-    
-    void Viewer::callback_window_size(GLFWwindow* window, int xsize, int ysize)
-    {
-        Viewer* viewer  = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!viewer) // shouldn't ever happen.... but
-            return ;
-        viewer->dispatch_window_size(xsize, ysize);
-    }
-#endif
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  INITIALIZATION/DESTRUCTION
@@ -282,6 +158,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         Application::add(this);
         ++s_count;
     }
+
     
     //  ----------------------------------------------------------------------------------------------------------------
     //  INFORMATION/GETTERS
@@ -561,10 +438,6 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     //  ----------------------------------------------------------------------------------------------------------------
     //  COMMANDS
 
-    void    Viewer::cmd_attention()
-    {
-        glfwRequestWindowAttention(m_window);
-    }
 
     
     void    Viewer::cmd_focus()
@@ -572,11 +445,6 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         glfwFocusWindow(m_window);
     }
 
-    void    Viewer::cmd_hide()
-    {
-        glfwHideWindow(m_window);
-    }
-    
     void    Viewer::cmd_iconify()
     {
         glfwIconifyWindow(m_window);
@@ -696,8 +564,31 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  EVENT PROCESSING (BELOW, one "section" per event/command type)
+    //  EVENT/COMMAND/POST PROCESSING (BELOW, one "section" per event/command type)
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  ATTENTION
+    //  
+
+    void    Viewer::cmd_attention()
+    {
+        glfwRequestWindowAttention(m_window);
+    }
+
+    bool    Viewer::viewer_attention_command(const ViewerAttentionCommandCPtr&cmd)
+    {
+        if(!cmd)
+            return false;
+        if(cmd->viewer() != this)
+            return false;
+        cmd_attention();
+        return true;
+    }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  CLOSING
+    //  
 
     void    Viewer::cmd_close()
     {
@@ -750,6 +641,40 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         }
     }
     
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  HIDING
+    //  
+
+    void    Viewer::cmd_hide()
+    {
+        glfwHideWindow(m_window);
+    }
+    
+    bool    Viewer::viewer_hide_command(const ViewerHideCommandCPtr& cmd)
+    {
+        if(!cmd)
+            return false;
+        if(cmd->viewer() != this)
+            return false;
+        cmd_hide();
+        return true;
+    }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  RESIZING
+    //  
+
+    bool     Viewer::viewer_resize_event(const ViewerResizeEventCPtr& evt)
+    {
+        if(!evt)
+            return false;
+        if(evt->viewer() != this)
+            return false;
+            
+        // TODO
+        
+        return false;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

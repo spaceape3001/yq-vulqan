@@ -50,7 +50,7 @@ namespace yq::tachyon {
         MouseEvent(const Param&);
         
     private:
-        Vector2D        m_position;
-        MouseButtons    m_buttons;
+        const Vector2D        m_position;
+        const MouseButtons    m_buttons;
     };
 }

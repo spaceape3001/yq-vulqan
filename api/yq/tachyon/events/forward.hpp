@@ -11,6 +11,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    using ViewerEventCPtr       = Ref<const class ViewerEvent>;
-    using ViewerCloseEventCPtr  = Ref<const class ViewerCloseEvent>;
+    using ViewerEventCPtr           = Ref<const class ViewerEvent>;
+    using ViewerCloseEventCPtr      = Ref<const class ViewerCloseEvent>;
+    using ViewerResizeEventCPtr     = Ref<const class ViewerResizeEvent>;
 }

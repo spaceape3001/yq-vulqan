@@ -21,5 +21,7 @@
 #include "MouseEvent.ipp"
 #include "ViewerCloseEvent.ipp"
 #include "ViewerEvent.ipp"
+#include "ViewerMoveEvent.ipp"
+#include "ViewerResizeEvent.ipp"
 #include "VulqanEvent.ipp"
 #include "WidgetEvent.ipp"

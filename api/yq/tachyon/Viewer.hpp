@@ -237,8 +237,11 @@ namespace yq::tachyon {
 
     private:
         
-        bool     viewer_close_request(const ViewerCloseRequestCPtr&);
-        bool     viewer_close_command(const ViewerCloseCommandCPtr&);
+        bool    viewer_attention_command(const ViewerAttentionCommandCPtr&);
+        bool    viewer_close_request(const ViewerCloseRequestCPtr&);
+        bool    viewer_close_command(const ViewerCloseCommandCPtr&);
+        bool    viewer_hide_command(const ViewerHideCommandCPtr&);
+        bool    viewer_resize_event(const ViewerResizeEventCPtr&);
         
 
     private:

@@ -70,7 +70,7 @@ namespace yq::tachyon {
         InputEvent(const Param&);
 
     private:
-        Viewer*         m_viewer;
-        ModifierKeys    m_modifiers;
+        Viewer* const         m_viewer;
+        const ModifierKeys    m_modifiers;
     };
 }

@@ -29,7 +29,9 @@ namespace yq::tachyon {
     };
     
     struct probe_t {};
+    struct close_t {};
 
+    static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;

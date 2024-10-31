@@ -11,9 +11,13 @@
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/viz/ViGui.hpp>
 
+#include <yq/tachyon/commands/ViewerCloseCommand.hpp>
+#include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
+#include <yq/tachyon/replies/ViewerCloseReply.hpp>
+#include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/Visualizer.hpp>
 #include <yq/tachyon/Widget.hpp>
@@ -44,6 +48,14 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
 
 namespace yq::tachyon {
+
+    void Viewer::init_info()
+    {
+        auto w = writer<Viewer>();
+        w.description("Tachyon Viewer");
+        w.receive(&Viewer::viewer_close_request);
+        w.receive(&Viewer::viewer_close_command);
+    }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  CALLBACKS
@@ -248,12 +260,19 @@ namespace yq::tachyon {
             throw;
         }
         
+        
         m_widget -> m_viewer    = this;
+        connect(TX, *m_widget);
+        connect(RX, *m_widget);
+        
         glfwGetCursorPos(m_window, &m_cursorPos.x, &m_cursorPos.y);
         Application::add(this);
         ++s_count;
     }
     
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  INFORMATION/GETTERS
+
     //  ----------------------------------------------------------------------------------------------------------------
     //  INFORMATION/GETTERS
     
@@ -534,10 +553,6 @@ namespace yq::tachyon {
         glfwRequestWindowAttention(m_window);
     }
 
-    void    Viewer::cmd_close()
-    {
-        glfwSetWindowShouldClose(m_window, GLFW_TRUE);
-    }
     
     void    Viewer::cmd_focus()
     {
@@ -666,11 +681,64 @@ namespace yq::tachyon {
         m_paused    = v;
     }
 
-    static void reg_viewer()
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  EVENT PROCESSING (BELOW, one "section" per event/command type)
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    void    Viewer::cmd_close()
     {
-        auto w = writer<Viewer>();
-        w.description("Tachyon Viewer");
+        dispatch(new ViewerCloseEvent(this));
+        glfwSetWindowShouldClose(m_window, GLFW_TRUE);
     }
 
-    YQ_INVOKE(reg_viewer();)
+    bool     Viewer::viewer_close_command(const ViewerCloseCommandCPtr& cmd)
+    {
+        if(!cmd)
+            return false;
+        if(cmd->viewer() != this)
+            return false;
+        cmd_close();
+        return true;
+    }
+
+    bool     Viewer::viewer_close_request(const ViewerCloseRequestCPtr& req)
+    {
+        if(!req)
+            return false;
+        if(req->viewer() != this)
+            return false;
+        if(m_viewerCloseRequest){
+            if(m_viewerCloseRequest != req){
+                dispatch(new ViewerCloseReply(req, this, Response::Busy));
+            }
+            return true;
+        }
+
+        m_viewerCloseRequest    = req;
+        on_close_request();
+        return true;
+    }
+
+    void     Viewer::accept(close_t)
+    {
+        if(m_viewerCloseRequest){
+            dispatch(new ViewerCloseReply(m_viewerCloseRequest, this, Response::QaPla));
+            m_viewerCloseRequest = {};
+        }
+        cmd_close();
+    }
+    
+    void     Viewer::reject(close_t)
+    {
+        if(m_viewerCloseRequest){
+            dispatch(new ViewerCloseReply(m_viewerCloseRequest, this, Response::Rejected));
+            m_viewerCloseRequest = {};
+        }
+    }
+    
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    YQ_INVOKE(Viewer::init_info();)
 }

@@ -44,7 +44,9 @@ add_library(${PROJECT_NAME} SHARED
     
     cameras/cameras.cpp
     
-    #command/Command.cpp
+    commands/ViewerCloseCommand.cpp
+    commands/ViewerCommand.cpp
+    commands/commands.cpp
     
     config/build.cpp
     
@@ -54,7 +56,6 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
-    events/InputEvent.cpp
     events/JoystickConnectEvent.cpp
     events/JoystickDisconnectEvent.cpp
     events/JoystickEvent.cpp
@@ -64,9 +65,10 @@ add_library(${PROJECT_NAME} SHARED
     events/MonitorConnectEvent.cpp
     events/MonitorDisconnectEvent.cpp
     events/MonitorEvent.cpp
-    events/ViewerEvent.cpp
+    events/ViewerCloseEvent.cpp
     events/VulqanEvent.cpp
     events/WidgetEvent.cpp
+    events/events.cpp
     
     font/Font.cpp
     
@@ -92,6 +94,14 @@ add_library(${PROJECT_NAME} SHARED
     render/Render2D.cpp
     render/Render3D.cpp
     render/Rendered.cpp
+    
+    replies/ViewerReply.cpp
+    replies/ViewerCloseReply.cpp
+    replies/replies.cpp
+    
+    requests/ViewerCloseRequest.cpp
+    requests/ViewerRequest.cpp
+    requests/requests.cpp
     
     sampler/SamplerInfoFile.cpp
     sampler/sampler.cpp

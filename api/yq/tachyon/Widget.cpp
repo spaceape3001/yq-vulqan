@@ -14,6 +14,12 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq::tachyon {
+    void Widget::init_info()
+    {
+        auto w = writer<Widget>();
+        w.description("Widget base class");
+    }
+
     WidgetInfo::WidgetInfo(std::string_view zName, post::PBXInfo& base, const std::source_location& sl) :
         post::PBXInfo(zName, base, sl)
     {
@@ -124,15 +130,14 @@ namespace yq::tachyon {
     {
         return const_cast<Widget*>(this);
     }
-
-    static void reg_widget()
-    {
-        {
-            auto w = writer<Widget>();
-            w.description("Widget base class");
-        }
-    }
     
-    YQ_INVOKE(reg_widget();)
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  EVENT PROCESSING (BELOW, one "section" per event type
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    YQ_INVOKE(Widget::init_info();)
 }
 

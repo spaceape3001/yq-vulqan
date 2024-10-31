@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 //  YOUR QUILL
@@ -30,7 +29,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_vulqan_event()
+    static void reg_viewer_event()
     {
         {
             auto w = writer<ViewerEvent>();
@@ -38,5 +37,5 @@ namespace yq::tachyon {
         }
     }
     
-    YQ_INVOKE(reg_vulqan_event();)
+    YQ_INVOKE(reg_viewer_event();)
 }

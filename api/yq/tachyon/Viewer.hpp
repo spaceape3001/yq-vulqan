@@ -6,12 +6,17 @@
 
 #pragma once
 
+
 //#include <yq/tachyon/event/EventSocket.hpp>
 
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/post/PBX.hpp>
 #include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/commands/forward.hpp>
+#include <yq/tachyon/events/forward.hpp>
+#include <yq/tachyon/replies/forward.hpp>
+#include <yq/tachyon/requests/forward.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
@@ -38,7 +43,6 @@ namespace yq::tachyon {
     struct ViewerCreateInfo;
     
     
-    
     /*! \brief Vulkan Window
     
         This is a vulkan window, called the viewer, that binds the 
@@ -57,8 +61,10 @@ namespace yq::tachyon {
     
     public:
 
-        static bool rawMouseMotionSupported();
+        static bool raw_mouse_motion_supported();
     
+    
+        static void init_info();
     
         /*! \brief Creates the viewer
         */
@@ -222,6 +228,18 @@ namespace yq::tachyon {
         void                set_flag(F);
 
         //virtual void  handle(Event&) override;
+        
+        //! Override to have a more nuianced approach
+        virtual void    on_close_request() { accept(CLOSE); }
+        
+        void     accept(close_t);
+        void     reject(close_t);
+
+    private:
+        
+        bool     viewer_close_request(const ViewerCloseRequestCPtr&);
+        bool     viewer_close_command(const ViewerCloseCommandCPtr&);
+        
 
     private:
         //void                record(ViContext&);
@@ -249,6 +267,8 @@ namespace yq::tachyon {
         std::unique_ptr<Visualizer>     m_viz;
         std::string                     m_title;
         Vector2D                        m_cursorPos     = ZERO;
+        
+        ViewerCloseRequestCPtr          m_viewerCloseRequest;
         
         //  No mutexes, if we can help it....
         //mutable tbb::spin_rw_mutex      m_mutex;

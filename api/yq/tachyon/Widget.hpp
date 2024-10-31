@@ -9,35 +9,14 @@
 #include <yq/post/PBX.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/typedef/vector2.hpp>
+#include <yq/tachyon/commands/forward.hpp>
+#include <yq/tachyon/events/forward.hpp>
+#include <yq/tachyon/replies/forward.hpp>
+#include <yq/tachyon/requests/forward.hpp>
 
 namespace yq::tachyon {
     class Viewer;
     struct ViContext;
-    class Event;
-    
-    #if 0
-    class KeyCharacter;
-    class KeyPress;
-    class KeyRelease;
-    
-    class MouseEnter;
-    class MouseLeft;
-    class MouseMove;
-    class MousePress;
-    class MouseRelease;
-    class MouseScroll;
-    
-    class WidgetMove;
-    class WidgetResize;
-    class WidgetRescale;
-    
-    class CloseRequest;
-    #endif
-    
-    //class WidgetMoveEvent;
-    //class WidgetResizeEvent;
-    //class WidgetRescaleEvent;
-    //class WidgetCloseRequest;
 
     class WidgetInfo : public post::PBXInfo {
     public:
@@ -54,6 +33,8 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(WidgetInfo)
         YQ_OBJECT_DECLARE(Widget, post::PBX)
     public:
+    
+        static void init_info();
     
         struct Param : public post::PBX::Param {};
     
@@ -159,6 +140,8 @@ namespace yq::tachyon {
         //! Called when a child of this widget is removed
         //virtual void            on_child_removed(Widget*){}
         
+        
+        
         #if 0
         virtual void            on(const WidgetChildAdd&) {};
         virtual void            on(const WidgetChildRemove&) {};
@@ -189,6 +172,7 @@ namespace yq::tachyon {
         
         virtual void            on_window_maximized() {}
         #endif
+
     };
 
 }

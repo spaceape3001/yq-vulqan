@@ -25,6 +25,7 @@
 #include "PolygonMode.hpp"
 #include "PresentMode.hpp"
 #include "RasterType.hpp"
+#include "Response.hpp"
 #include "SamplerAddressMode.hpp"
 #include "SamplerCreateFlags.hpp"
 #include "SamplerFilter.hpp"
@@ -61,6 +62,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PolygonMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PresentMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::RasterType)
+YQ_TYPE_IMPLEMENT(yq::tachyon::Response)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerAddressMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlags)

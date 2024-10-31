@@ -18,5 +18,6 @@ namespace yq::tachyon {
     
         ViewerCloseRequest(Viewer*, const Param& p = {});
         virtual ~ViewerCloseRequest();
+        static void init_info();
     };
 }

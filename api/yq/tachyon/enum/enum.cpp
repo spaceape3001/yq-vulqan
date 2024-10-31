@@ -19,6 +19,7 @@
 #include "ImageViewCreateFlags.hpp"
 #include "ImageViewType.hpp"
 #include "IndexType.hpp"
+#include "JoystickHatState.hpp"
 #include "LogicOp.hpp"
 #include "MouseButton.hpp"
 #include "PipelineBinding.hpp"
@@ -55,6 +56,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
+YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickHatState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)

@@ -13,8 +13,14 @@
 #include <yq/tachyon/Monitor.hpp>
 #include <yq/tachyon/Viewer.hpp>
 
+#include <yq/tachyon/events/JoystickAxisEvent.hpp>
 #include <yq/tachyon/events/JoystickConnectEvent.hpp>
 #include <yq/tachyon/events/JoystickDisconnectEvent.hpp>
+#include <yq/tachyon/events/JoystickHatEvent.hpp>
+#include <yq/tachyon/events/JoystickPressEvent.hpp>
+#include <yq/tachyon/events/JoystickReleaseEvent.hpp>
+#include <yq/tachyon/events/KeyPressEvent.hpp>
+#include <yq/tachyon/events/KeyReleaseEvent.hpp>
 #include <yq/tachyon/events/MonitorConnectEvent.hpp>
 #include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
 
@@ -33,6 +39,7 @@ namespace yq::tachyon {
             std::span<const unsigned char>  buttons;
             std::span<const unsigned char>  hats;
         } state;
+        
         struct {
             std::vector<float>              axes;
             std::vector<unsigned char>      buttons;
@@ -42,12 +49,20 @@ namespace yq::tachyon {
         
         bool                        connected   = false;
         bool                        gamepad     = false;
+        bool                        present     = false;
 
         void                        copy()
         {
             snapshot.axes.assign(state.axes.begin(), state.axes.end());
             snapshot.buttons.assign(state.buttons.begin(), state.buttons.end());
             snapshot.hats.assign(state.hats.begin(), state.hats.end());
+        }
+        
+        void                        probe(Joystick j)
+        {
+            state.axes       = j.axes();
+            state.buttons    = j.buttons();
+            state.hats       = j.hats();
         }
     };
     
@@ -56,44 +71,13 @@ namespace yq::tachyon {
         GLFWwindow*     window  = nullptr;
     };
 
+    static constexpr const unsigned kMaxJoysticks   = (unsigned) GLFW_JOYSTICK_LAST + 1;
     struct GLFWManager::Common {
-        static constexpr const unsigned kMaxJoysticks   = (unsigned) GLFW_JOYSTICK_LAST + 1;
-        
-        GLFWManager*                                m_manager = nullptr;
-        std::atomic_flag                            m_claimed;
-        std::array<JoystickData, kMaxJoysticks>     m_joysticks{};
-        std::map<Viewer*, ViewerData>               m_viewers;
-        bool                                        m_imgui   = false;
-        
-        void    install(Viewer& v)
-        {
-            ViewerData& vd = m_viewers[&v];
-            vd.viewer   = &v;
-            vd.window   = v.window();
-        }
-        
-        void    remove(Viewer &v)
-        {
-            m_viewers.erase(&v);
-        }
-        
-        
-        void    initialize(Joystick j)
-        {
-            if(j.id >= kMaxJoysticks)
-                return ;
-            
-            auto & jx = m_joysticks[j.id];
-            if(!j.is_present()){
-                jx  = {};
-            } else {
-                jx.gamepad          = j.is_gamepad();
-                jx.state.axes       = j.axes();
-                jx.state.buttons    = j.buttons();
-                jx.state.hats       = j.hats();
-                jx.copy();
-            }
-        }
+        GLFWManager*                                manager = nullptr;
+        std::atomic_flag                            claimed;
+        std::array<JoystickData, kMaxJoysticks>     joysticks{};
+        std::map<Viewer*, ViewerData>               viewers;
+        bool                                        imgui   = false;
     };
     
     GLFWManager::Common&  GLFWManager::common()
@@ -105,31 +89,11 @@ namespace yq::tachyon {
     GLFWManager*        GLFWManager::manager()
     {
         static Common& g = common();
-        return g.m_manager;
+        return g.manager;
     }
 
-    void    GLFWManager::install(Viewer& v)
-    {
-        static Common& g = common();
-        g.install(v);
-        
-        GLFWwindow* w   = v.window();
-        glfwSetWindowUserPointer(w, &v);
-        glfwSetWindowCloseCallback(w, callback_window_close);
-    }
-    
-    bool    GLFWManager::raw_mouse_motion_supported()
-    {
-        return glfwRawMouseMotionSupported() == GLFW_TRUE;
-    }
-
-    void    GLFWManager::remove(Viewer& v)
-    {
-        static Common& g = common();
-        g.remove(v);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   CALLBACKS
 
     #if 0
     void GLFWManager::callback_character(GLFWwindow* window, unsigned int codepoint)
@@ -165,26 +129,45 @@ namespace yq::tachyon {
     {
         static Common& g = common();
 
-        if((unsigned) jid > Common::kMaxJoysticks)
+        if((unsigned) jid > kMaxJoysticks)
             return ;
     
-        if(!g.m_manager)
+        if(!g.manager)
             return ;
             
         Joystick    j(jid);
-        g.initialize(j);
+        _install(j);
         if(event == GLFW_CONNECTED){
-            g.m_manager->dispatch(new JoystickConnectEvent(j));
+            g.manager->dispatch(new JoystickConnectEvent(j));
         } else {
-            g.m_manager->dispatch(new JoystickDisconnectEvent(j));
+            g.manager->dispatch(new JoystickDisconnectEvent(j));
         }
     }
     
-    #if 0
     void GLFWManager::callback_key(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
+        static Common& g = common();
+
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!v)
+            return ;
+            
+        if(action == GLFW_PRESS){
+            KeyPressEvent::Param    p;
+            p.viewer        = v;
+            p.modifiers     = _modifiers(window);
+            p.scan          = scancode;
+            p.key           = keycode_glfw(key);
+            g.manager->dispatch(new KeyPressEvent(p));
+        } else {
+            KeyReleaseEvent::Param    p;
+            p.viewer        = v;
+            p.modifiers     = _modifiers(window);
+            p.scan          = scancode;
+            p.key           = keycode_glfw(key);
+            g.manager->dispatch(new KeyReleaseEvent(p));
+        }
     }
-    #endif
     
     void GLFWManager::callback_monitor(GLFWmonitor* monitor, int event)
     {
@@ -194,9 +177,9 @@ namespace yq::tachyon {
             return ;
 
         if(event == GLFW_CONNECTED){
-            g.m_manager->dispatch(new MonitorConnectEvent(monitor));
+            g.manager->dispatch(new MonitorConnectEvent(monitor));
         } else {
-            g.m_manager->dispatch(new MonitorDisconnectEvent(monitor));
+            g.manager->dispatch(new MonitorDisconnectEvent(monitor));
         }
     }
     
@@ -218,7 +201,7 @@ namespace yq::tachyon {
         static Common& g = common();
         Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(v){
-            g.m_manager->dispatch(new ViewerCloseRequest(v));
+            g.manager->dispatch(new ViewerCloseRequest(v));
         } else {
             glfwSetWindowShouldClose(window, GLFW_TRUE);
         }
@@ -268,10 +251,158 @@ namespace yq::tachyon {
     {
     }
     #endif
-
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
+        
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   INFORMATION/PROBING
     
+    bool    GLFWManager::raw_mouse_motion_supported()
+    {
+        return glfwRawMouseMotionSupported() == GLFW_TRUE;
+    }
+
+    ModifierKeys GLFWManager::_modifiers(GLFWwindow* w)
+    {
+        ModifierKeys    ret;
+        if(glfwGetKey(w, GLFW_KEY_LEFT_ALT) == GLFW_PRESS)
+            ret |= ModifierKey::AltLeft;
+        if(glfwGetKey(w, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
+            ret |= ModifierKey::AltRight;
+        if(glfwGetKey(w, GLFW_KEY_CAPS_LOCK) == GLFW_PRESS)
+            ret |= ModifierKey::CapsLock;
+        if(glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+            ret |= ModifierKey::ControlLeft;
+        if(glfwGetKey(w, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS)
+            ret |= ModifierKey::ControlRight;
+        if(glfwGetKey(w, GLFW_KEY_NUM_LOCK) == GLFW_PRESS)
+            ret |= ModifierKey::NumLock;
+        if(glfwGetKey(w, GLFW_KEY_SCROLL_LOCK) == GLFW_PRESS)
+            ret |= ModifierKey::ScrollLock;
+        if(glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+            ret |= ModifierKey::ShiftLeft;
+        if(glfwGetKey(w, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
+            ret |= ModifierKey::ShiftRight;
+        if(glfwGetKey(w, GLFW_KEY_LEFT_SUPER) == GLFW_PRESS)
+            ret |= ModifierKey::SuperLeft;
+        if(glfwGetKey(w, GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS)
+            ret |= ModifierKey::SuperRight;
+        return ret;
+    }
+    
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   JOYSTICKS
+
+    void    GLFWManager::_install(Joystick j)
+    {
+        static Common& g = common();
+        if(j.id >= kMaxJoysticks)
+            return ;
+        
+        auto & jx = g.joysticks[j.id];
+        if(!j.is_present()){
+            jx  = {};
+        } else {
+            jx.present          = true;
+            jx.gamepad          = j.is_gamepad();
+            jx.probe(j);
+            jx.copy();
+        }
+    }
+    
+    void    GLFWManager::_poll(Joystick j)
+    {
+        static Common& g = common();
+
+        if(j.id >= kMaxJoysticks)
+            return;
+
+        auto & jx = g.joysticks[j.id];
+        if(!jx.present)
+            return;
+        
+        bool    changed = false;
+        
+        jx.probe(j);
+        
+        for(size_t i=0;i<jx.state.axes.size();++i){
+            if(jx.state.axes[i] != jx.snapshot.axes[i]){
+                g.manager -> dispatch(new JoystickAxisEvent(j, i, jx.state.axes[i], 
+                    jx.state.axes[i] - jx.snapshot.axes[i]));
+                changed = true;
+            }
+        }
+        
+        for(size_t i=0;i<jx.state.buttons.size();++i){
+            if(jx.state.buttons[i] != jx.snapshot.buttons[i]){
+                if(jx.state.buttons[i] == GLFW_PRESS){
+                    g.manager->dispatch(new JoystickPressEvent(j,i));
+                } else {
+                    g.manager->dispatch(new JoystickReleaseEvent(j,i));
+                }
+                changed = true;
+            }
+        }
+        
+        for(size_t i=0;i<jx.state.hats.size();++i){
+            if(jx.state.hats[i] != jx.snapshot.hats[i]){
+                g.manager->dispatch(new JoystickHatEvent(j, i, (JoystickHatState) jx.state.hats[i]));
+                changed = true;
+            }
+        }
+
+        if(changed){
+            jx.copy();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   POLL-LOOP
+
+    void    GLFWManager::_poll(unit::Second timeout)
+    {
+        Common& g   = common();
+
+        if(timeout.value > 0.){
+            glfwWaitEventsTimeout(timeout.value);
+        } else {
+            glfwPollEvents();
+        }
+        
+        for(int jid = GLFW_JOYSTICK_1; jid <= GLFW_JOYSTICK_LAST; ++jid){
+            _poll(Joystick(jid));
+        }
+    }
+
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   VIEWERS
+
+    void    GLFWManager::install(Viewer& v)
+    {
+        static Common& g = common();
+
+        ViewerData& vd = g.viewers[&v];
+        vd.viewer       = &v;
+        vd.window       = v.window();
+        
+        glfwSetWindowUserPointer(vd.window, &v);
+        
+        glfwSetKeyCallback(vd.window, callback_key);
+        glfwSetWindowCloseCallback(vd.window, callback_window_close);
+    }
+    
+
+
+    void    GLFWManager::remove(Viewer& v)
+    {
+        static Common& g = common();
+        g.viewers.erase(&v);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     namespace {
         static void    glfwLogging(int ec, const char* why)
         {
@@ -302,17 +433,17 @@ namespace yq::tachyon {
         add_role(R::Poller);
 
         Common&     g = common();
-        if(g.m_claimed.test_and_set())
+        if(g.claimed.test_and_set())
             throw GLFWException("Only one GLFWManagers is permitted");
             
-        g.m_manager   = this;
+        g.manager   = this;
 
         glfwLogging(0,nullptr);
         glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
         glfwInit();
         
         for(int jid = GLFW_JOYSTICK_1; jid <= GLFW_JOYSTICK_LAST; ++jid){
-            g.initialize(Joystick(jid));
+            _install(Joystick(jid));
         }
         
         glfwSetJoystickCallback( callback_joystick );
@@ -324,22 +455,18 @@ namespace yq::tachyon {
     GLFWManager::~GLFWManager()
     {
         Common& g   = common();
-        if(g.m_manager != this)
+        if(g.manager != this)
             return;
             
         glfwTerminate();
-        g.m_manager   = nullptr;
+        g.manager   = nullptr;
 
         tachyonInfo << "GLFWManager destroyed";
     }
 
     void    GLFWManager::polling(unit::Second timeout) 
     {
-        if(timeout.value > 0.){
-            glfwWaitEventsTimeout(timeout.value);
-        } else {
-            glfwPollEvents();
-        }
+        _poll(timeout);
     }
     
     static void reg_glfw_manager()

@@ -18,5 +18,7 @@ namespace yq::tachyon {
     
         ViewerCloseEvent(Viewer*, const Param& p = {});
         virtual ~ViewerCloseEvent();
+        
+        static void init_info();
     };
 }

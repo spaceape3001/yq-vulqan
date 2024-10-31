@@ -29,13 +29,11 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_viewer_command()
+    void ViewerCommand::init_info()
     {
-        {
-            auto w = writer<ViewerCommand>();
-            w.description("Viewer command base class");
-        }
+        auto w = writer<ViewerCommand>();
+        w.description("Viewer command base class");
     }
     
-    YQ_INVOKE(reg_viewer_command();)
+    YQ_INVOKE(ViewerCommand::init_info();)
 }

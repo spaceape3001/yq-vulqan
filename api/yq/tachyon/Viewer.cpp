@@ -199,14 +199,27 @@ namespace yq::tachyon {
     
     Viewer::~Viewer()
     {
-        m_cleanup.sweep();
-
+viewerInfo << "Viewer::~Viewer() [START]";
+        disconnect(ALL);
+viewerInfo << "Viewer::~Viewer() [REMOVING FROM APP]";
         Application::remove(this);
-        glfwDestroyWindow(m_window);
+        m_cleanup.sweep();
         m_widget -> m_viewer    = nullptr;
+viewerInfo << "Viewer::~Viewer() [DELETING WIDGET]";
         delete m_widget;
+        m_cleanup.sweep();
+viewerInfo << "Viewer::~Viewer() [CLEARING IMGUI]";
+        m_imgui     = {};
+        m_cleanup.sweep();
+viewerInfo << "Viewer::~Viewer() [KILLING VISUALIZER]";
+        m_viz       = {};
+        m_cleanup.sweep();
+viewerInfo << "Viewer::~Viewer() [DESTROYING GLFW WINDOW]";
+        glfwDestroyWindow(m_window);
+        m_cleanup.sweep();
         
         --s_count;
+viewerInfo << "Viewer::~Viewer() [DONE]";
     }
 
     post::PBX::Param   Viewer::_pbx(const ViewerCreateInfo&vci)

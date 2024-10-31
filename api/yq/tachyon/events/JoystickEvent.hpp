@@ -30,6 +30,10 @@ namespace yq::tachyon {
         
         const Joystick& joystick() const { return m_joystick; }
         
+        uint8_t joystick_id() const { return m_joystick.id; }
+        
+        static void init_info();
+        
     private:
         const Joystick  m_joystick;
     };

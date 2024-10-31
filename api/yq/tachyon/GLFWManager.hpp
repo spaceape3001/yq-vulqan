@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/Manager.hpp>
 #include <yq/post/Dispatcher.hpp>
+#include <yq/tachyon/enum/ModifierKey.hpp>
 
 struct GLFWwindow;
 struct GLFWmonitor;
@@ -59,6 +60,14 @@ namespace yq::tachyon {
         static void callback_window_refresh(GLFWwindow* window);
         static void callback_window_scale(GLFWwindow* window, float xscale, float yscale);
         static void callback_window_size(GLFWwindow*, int, int);
+        
+        static void _poll(Joystick);
+        static void _install(Joystick);
+
+        static void _poll(unit::Second);
+        
+        static ModifierKeys _modifiers(GLFWwindow*);
+        
         
         //static void joystick_initialize(Joystick);
         //static void joystick_kill(Joystick);

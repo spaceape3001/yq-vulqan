@@ -18,15 +18,15 @@ namespace yq::tachyon {
     {
     }
     
-    static void reg_key_press()
+    void KeyPressEvent::init_info()
     {
         auto w = writer<KeyPressEvent>();
         w.description("Key Press Event");
-        w.property("scancode", &KeyPressEvent::scan).description("O/S scan code");
-        w.property("key", &KeyPressEvent::key).description("Key code");
+        w.property("key", &KeyPressEvent::key).description("Key code").tag(kTag_Log);
+        w.property("scancode", &KeyPressEvent::scan).description("O/S scan code").tag(kTag_Log);
     }
     
-    YQ_INVOKE(reg_key_press();)
+    YQ_INVOKE(KeyPressEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyPressEvent)

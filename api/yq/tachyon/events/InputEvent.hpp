@@ -29,6 +29,8 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(InputEvent, post::Event)
     public:
     
+        static void init_info();
+    
         struct Param : public post::Event::Param {
             Viewer*         viewer      = nullptr;
             ModifierKeys    modifiers   = {};

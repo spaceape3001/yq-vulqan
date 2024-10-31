@@ -16,17 +16,17 @@ namespace yq::tachyon {
         These are obviously used in UI framework, expected/supported modifier keys
     */
     YQ_ENUM(ModifierKey, , 
-        ShiftLeft,
-        ShiftRight,
-        ControlLeft,
-        ControlRight,
         AltLeft,
         AltRight,
-        SuperLeft,
-        SuperRight,
         CapsLock,
+        ControlLeft,
+        ControlRight,
         NumLock,
-        ScrollLock
+        ScrollLock,
+        ShiftLeft,
+        ShiftRight,
+        SuperLeft,
+        SuperRight
     )
     //! Bit mask of modifier keys
     using ModifierKeys  = Flag<ModifierKey,uint16_t>;

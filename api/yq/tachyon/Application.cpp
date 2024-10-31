@@ -119,7 +119,7 @@ namespace yq::tachyon {
             
         g.app->disconnect(*v);
         GLFWManager::remove(*v);
-        std::erase(g.viewers, v);
+        //std::erase(g.viewers, v);
     }
 
     void    Application::run(Second amt)

@@ -30,6 +30,8 @@ namespace yq::tachyon {
         
         virtual ~KeyPressEvent();
         
+        static void init_info();
+        
     private:
     
         //! 

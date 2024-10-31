@@ -31,13 +31,12 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_joystick_event()
+    void JoystickEvent::init_info()
     {
-        {
-            auto w = writer<JoystickEvent>();
-            w.description("Joystick event base class");
-        }
+        auto w = writer<JoystickEvent>();
+        w.description("Joystick event base class");
+        w.property("jid", &JoystickEvent::joystick_id).tag(kTag_Log);
     }
     
-    YQ_INVOKE(reg_joystick_event();)
+    YQ_INVOKE(JoystickEvent::init_info();)
 }

@@ -29,13 +29,11 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_viewer_reply()
+    void ViewerReply::init_info()
     {
-        {
-            auto w = writer<ViewerReply>();
-            w.description("Viewer reply base class");
-        }
+        auto w = writer<ViewerReply>();
+        w.description("Viewer reply base class");
     }
     
-    YQ_INVOKE(reg_viewer_reply();)
+    YQ_INVOKE(ViewerReply::init_info();)
 }

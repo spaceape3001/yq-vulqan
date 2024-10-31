@@ -22,13 +22,11 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_viewer_close_request()
+    void ViewerCloseEvent::init_info()
     {
-        {
-            auto w = writer<ViewerCloseEvent>();
-            w.description("Viewer Close Event");
-        }
+        auto w = writer<ViewerCloseEvent>();
+        w.description("Viewer Close Event");
     }
     
-    YQ_INVOKE(reg_viewer_close_request();)
+    YQ_INVOKE(ViewerCloseEvent::init_info();)
 }

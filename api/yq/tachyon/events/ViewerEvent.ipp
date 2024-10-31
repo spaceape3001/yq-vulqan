@@ -29,13 +29,11 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_viewer_event()
+    void ViewerEvent::init_info()
     {
-        {
-            auto w = writer<ViewerEvent>();
-            w.description("Viewer event base class");
-        }
+        auto w = writer<ViewerEvent>();
+        w.description("Viewer event base class");
     }
     
-    YQ_INVOKE(reg_viewer_event();)
+    YQ_INVOKE(ViewerEvent::init_info();)
 }

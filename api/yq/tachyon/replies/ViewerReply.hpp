@@ -32,6 +32,8 @@ namespace yq::tachyon {
         
         Viewer*     viewer() const { return m_viewer; }
         
+        static void init_info();
+        
     private:
         Viewer*     m_viewer    = nullptr;
     };

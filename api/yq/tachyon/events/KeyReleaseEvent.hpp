@@ -29,6 +29,8 @@ namespace yq::tachyon {
         
         virtual ~KeyReleaseEvent();
         
+        static void init_info();
+        
     private:
     
         //! 

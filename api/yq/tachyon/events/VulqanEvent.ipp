@@ -31,13 +31,11 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_vulqan_event()
+    void VulqanEvent::init_info()
     {
-        {
-            auto w = writer<VulqanEvent>();
-            w.description("Vulqan event base class");
-        }
+        auto w = writer<VulqanEvent>();
+        w.description("Vulqan event base class");
     }
     
-    YQ_INVOKE(reg_vulqan_event();)
+    YQ_INVOKE(VulqanEvent::init_info();)
 }

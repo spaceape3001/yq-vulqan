@@ -23,6 +23,8 @@ namespace yq::tachyon {
         
         Response     response() const { return m_response; }
         
+        static void  init_info();
+        
     private:
         Response     m_response;
     };

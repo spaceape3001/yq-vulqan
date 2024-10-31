@@ -30,6 +30,8 @@ namespace yq::tachyon {
         struct Param : public InputEvent::Param {
         };
 
+        static void init_info();
+
     protected:
         KeyboardEvent(const Param& p);
         virtual ~KeyboardEvent();

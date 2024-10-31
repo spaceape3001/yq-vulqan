@@ -35,8 +35,7 @@ namespace yq::tachyon {
     static constexpr common_t       COMMON;
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;
+    static constexpr probe_t        PROBE;
     static constexpr refresh_t      REFRESH;
     static constexpr static_t       STATIC;
-    
-    static constexpr probe_t        PROBE;
 }

@@ -106,28 +106,26 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_input_event()
+    void InputEvent::init_info()
     {
-        {
-            auto w = writer<InputEvent>();
-            w.description("Input event base class");
-            w.property("alt", &InputEvent::alt).description("Either alt key was down");
-            w.property("alt_left", &InputEvent::alt_left).description("Left alt key was down");
-            w.property("alt_right", &InputEvent::alt_right).description("Right alt key was down");
-            w.property("caps_lock", &InputEvent::caps_lock).description("TRUE if the caps lock was active");
-            w.property("control", &InputEvent::control).description("Either control key was down");
-            w.property("control_left", &InputEvent::control_left).description("Left control key was down");
-            w.property("control_right", &InputEvent::control_right).description("Right control key was down");
-            w.property("num_lock", &InputEvent::num_lock).description("TRUE if the num lock was active");
-            w.property("scroll_lock", &InputEvent::scroll_lock).description("TRUE if the scroll lock was active");
-            w.property("shift", &InputEvent::shift).description("Either shift key was down");
-            w.property("shift_left", &InputEvent::shift_left).description("Left shift key was down");
-            w.property("shift_right", &InputEvent::shift_right).description("Right shift key was down");
-            w.property("super", &InputEvent::super).description("Either super (OS) key was down");
-            w.property("super_left", &InputEvent::super).description("Left super (OS) key was down");
-            w.property("super_right", &InputEvent::super).description("Right super (OS) key was down");
-        }
+        auto w = writer<InputEvent>();
+        w.description("Input event base class");
+        w.property("alt", &InputEvent::alt).description("Either alt key was down").tag(kTag_Log);
+        w.property("alt_left", &InputEvent::alt_left).description("Left alt key was down");
+        w.property("alt_right", &InputEvent::alt_right).description("Right alt key was down");
+        w.property("caps_lock", &InputEvent::caps_lock).description("TRUE if the caps lock was active");
+        w.property("control", &InputEvent::control).description("Either control key was down").tag(kTag_Log);
+        w.property("control_left", &InputEvent::control_left).description("Left control key was down");
+        w.property("control_right", &InputEvent::control_right).description("Right control key was down");
+        w.property("num_lock", &InputEvent::num_lock).description("TRUE if the num lock was active");
+        w.property("scroll_lock", &InputEvent::scroll_lock).description("TRUE if the scroll lock was active");
+        w.property("shift", &InputEvent::shift).description("Either shift key was down").tag(kTag_Log);
+        w.property("shift_left", &InputEvent::shift_left).description("Left shift key was down");
+        w.property("shift_right", &InputEvent::shift_right).description("Right shift key was down");
+        w.property("super", &InputEvent::super).description("Either super (OS) key was down").tag(kTag_Log);
+        w.property("super_left", &InputEvent::super).description("Left super (OS) key was down");
+        w.property("super_right", &InputEvent::super).description("Right super (OS) key was down");
     }
     
-    YQ_INVOKE(reg_input_event();)
+    YQ_INVOKE(InputEvent::init_info();)
 }

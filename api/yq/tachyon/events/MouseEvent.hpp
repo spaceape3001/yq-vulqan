@@ -14,7 +14,7 @@
 namespace yq::tachyon {
     class MouseEventInfo : public InputEventInfo {
     public:
-        MouseEventInfo(std::string_view zName, const InputEventInfo& base, const std::source_location& sl=std::source_location::current());
+        MouseEventInfo(std::string_view zName, InputEventInfo& base, const std::source_location& sl=std::source_location::current());
     protected:
     };
 
@@ -39,6 +39,12 @@ namespace yq::tachyon {
         const Vector2D&     position() const { return m_position; }
         double              x() const { return m_position.x; }
         double              y() const { return m_position.y; }
+        
+        bool    left_button() const;
+        bool    right_button() const;
+        bool    middle_button() const;
+        
+        static void init_info();
         
     protected:
         MouseEvent(const Param&);

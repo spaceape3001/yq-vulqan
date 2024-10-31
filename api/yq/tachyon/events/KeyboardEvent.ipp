@@ -32,7 +32,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_keyboard_event()
+    void KeyboardEvent::init_info()
     {
         {
             auto w = writer<KeyboardEvent>();
@@ -40,5 +40,5 @@ namespace yq::tachyon {
         }
     }
     
-    YQ_INVOKE(reg_keyboard_event();)
+    YQ_INVOKE(KeyboardEvent::init_info();)
 }

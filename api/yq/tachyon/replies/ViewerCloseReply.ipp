@@ -24,14 +24,12 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_viewer_close_reply()
+    void ViewerCloseReply::init_info()
     {
-        {
-            auto w = writer<ViewerCloseReply>();
-            w.description("Viewer Close Reply");
-            w.property("response", &ViewerCloseReply::response);
-        }
+        auto w = writer<ViewerCloseReply>();
+        w.description("Viewer Close Reply");
+        w.property("response", &ViewerCloseReply::response).tag(kTag_Log);
     }
     
-    YQ_INVOKE(reg_viewer_close_reply();)
+    YQ_INVOKE(ViewerCloseReply::init_info();)
 }

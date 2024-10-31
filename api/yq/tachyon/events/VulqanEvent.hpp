@@ -26,5 +26,6 @@ namespace yq::tachyon {
     
         VulqanEvent(const Param& p = {});
         virtual ~VulqanEvent();
+        static void init_info();
     };
 }

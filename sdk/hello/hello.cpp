@@ -20,6 +20,7 @@
 #include <yq/color/colors.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/meta/Meta.hpp>
+#include <yq/post/boxes/LoggerBox.hpp>
 #include <yq/process/PluginLoader.hpp>
 #include <yq/shape/shape_utils.hpp>
 #include <yq/shape/Triangle2.hpp>
@@ -222,6 +223,8 @@ int main(int argc, char* argv[])
     
     HelloTriangle::initInfo();
     HelloQuad::initInfo();
+    
+    post::LoggerBox     postLogging({.global=true});
     
     app.finalize();
     app.add_viewer(new HelloScene);

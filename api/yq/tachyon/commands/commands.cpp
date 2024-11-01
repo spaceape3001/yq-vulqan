@@ -4,6 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "MouseCaptureCommand.ipp"
+#include "MouseCommand.ipp"
+#include "MouseDisableCommand.ipp"
+#include "MouseHideCommand.ipp"
+#include "MouseNormalCommand.ipp"
 #include "ViewerAttentionCommand.ipp"
 #include "ViewerCloseCommand.ipp"
 #include "ViewerCommand.ipp"

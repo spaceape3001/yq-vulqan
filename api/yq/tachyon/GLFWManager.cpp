@@ -22,6 +22,7 @@
 #include <yq/tachyon/events/KeyCharacterEvent.hpp>
 #include <yq/tachyon/events/KeyPressEvent.hpp>
 #include <yq/tachyon/events/KeyReleaseEvent.hpp>
+#include <yq/tachyon/events/KeyRepeatEvent.hpp>
 #include <yq/tachyon/events/MonitorConnectEvent.hpp>
 #include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
@@ -179,20 +180,37 @@ namespace yq::tachyon {
         if(!v)
             return ;
             
-        if(action == GLFW_PRESS){
-            KeyPressEvent::Param    p;
-            p.viewer        = v;
-            p.modifiers     = _modifiers(window);
-            p.scan          = scancode;
-            p.key           = keycode_glfw(key);
-            g.manager->dispatch(new KeyPressEvent(p));
-        } else {
-            KeyReleaseEvent::Param    p;
-            p.viewer        = v;
-            p.modifiers     = _modifiers(window);
-            p.scan          = scancode;
-            p.key           = keycode_glfw(key);
-            g.manager->dispatch(new KeyReleaseEvent(p));
+        switch(action){
+        case GLFW_PRESS:
+            {
+                KeyPressEvent::Param    p;
+                p.viewer        = v;
+                p.modifiers     = _modifiers(window);
+                p.scan          = scancode;
+                p.key           = keycode_glfw(key);
+                g.manager->dispatch(new KeyPressEvent(p));
+            }
+            break;
+        case GLFW_RELEASE:
+            {
+                KeyReleaseEvent::Param    p;
+                p.viewer        = v;
+                p.modifiers     = _modifiers(window);
+                p.scan          = scancode;
+                p.key           = keycode_glfw(key);
+                g.manager->dispatch(new KeyReleaseEvent(p));
+            }
+            break;
+        case GLFW_REPEAT:
+            {
+                KeyRepeatEvent::Param    p;
+                p.viewer        = v;
+                p.modifiers     = _modifiers(window);
+                p.scan          = scancode;
+                p.key           = keycode_glfw(key);
+                g.manager->dispatch(new KeyRepeatEvent(p));
+            }
+            break;
         }
     }
     

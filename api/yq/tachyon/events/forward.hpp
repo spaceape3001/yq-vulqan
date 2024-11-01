@@ -20,6 +20,7 @@ namespace yq::tachyon {
     using KeyCharacterEventCPtr         = Ref<const class KeyCharacterEvent>;
     using KeyPressEventCPtr             = Ref<const class KeyPressEvent>;
     using KeyReleaseEventCPtr           = Ref<const class KeyReleaseEvent>;
+    using KeyRepeatEventCPtr            = Ref<const class KeyRepeatEvent>;
     using MonitorConnectEventCPtr       = Ref<const class MonitorConnectEvent>;
     using MonitorDisconnectEventCPtr    = Ref<const class MonitorDisconnectEvent>;
     using MouseMoveEventCPtr            = Ref<const class MouseMoveEvent>;

@@ -14,6 +14,7 @@
 #include <yq/post/PBX.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/commands/forward.hpp>
+#include <yq/tachyon/enum/MouseState.hpp>
 #include <yq/tachyon/events/forward.hpp>
 #include <yq/tachyon/replies/forward.hpp>
 #include <yq/tachyon/requests/forward.hpp>
@@ -103,6 +104,11 @@ namespace yq::tachyon {
         //! Maximizes widnow
         void                cmd_maximize();
         
+        void                cmd_mouse_capture();
+        void                cmd_mouse_disable();
+        void                cmd_mouse_hide();
+        void                cmd_mouse_normal();
+        
         //! Pause the rendering
         void                cmd_pause();
         
@@ -168,6 +174,8 @@ namespace yq::tachyon {
         
             //! Monitor (if fullscreen)
         Monitor             monitor() const;
+        
+        MouseState          mouse_state() const { return m_mouseState; }
 
         //! TRUE if rendering is paused
         bool                render_paused() const { return m_paused; }
@@ -236,6 +244,11 @@ namespace yq::tachyon {
         void     reject(close_t);
 
     private:
+    
+        bool    mouse_capture_command(const MouseCaptureCommandCPtr&);
+        bool    mouse_disable_command(const MouseDisableCommandCPtr&);
+        bool    mouse_hide_command(const MouseHideCommandCPtr&);
+        bool    mouse_normal_command(const MouseNormalCommandCPtr&);
         
         bool    viewer_attention_command(const ViewerAttentionCommandCPtr&);
         bool    viewer_close_request(const ViewerCloseRequestCPtr&);
@@ -270,6 +283,7 @@ namespace yq::tachyon {
         std::unique_ptr<Visualizer>     m_viz;
         std::string                     m_title;
         Vector2D                        m_cursorPos     = ZERO;
+        MouseState                      m_mouseState    = MouseState::Normal;
         
         ViewerCloseRequestCPtr          m_viewerCloseRequest;
         

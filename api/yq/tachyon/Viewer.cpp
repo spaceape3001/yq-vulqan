@@ -11,6 +11,10 @@
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/viz/ViGui.hpp>
 
+#include <yq/tachyon/commands/MouseCaptureCommand.hpp>
+#include <yq/tachyon/commands/MouseDisableCommand.hpp>
+#include <yq/tachyon/commands/MouseHideCommand.hpp>
+#include <yq/tachyon/commands/MouseNormalCommand.hpp>
 #include <yq/tachyon/commands/ViewerAttentionCommand.hpp>
 #include <yq/tachyon/commands/ViewerCloseCommand.hpp>
 #include <yq/tachyon/commands/ViewerHideCommand.hpp>
@@ -20,6 +24,10 @@
 #include <yq/tachyon/commands/ViewerRestoreCommand.hpp>
 #include <yq/tachyon/commands/ViewerResumeCommand.hpp>
 #include <yq/tachyon/commands/ViewerShowCommand.hpp>
+#include <yq/tachyon/events/MouseCaptureEvent.hpp>
+#include <yq/tachyon/events/MouseDisableEvent.hpp>
+#include <yq/tachyon/events/MouseHideEvent.hpp>
+#include <yq/tachyon/events/MouseNormalEvent.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/events/ViewerResizeEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
@@ -65,6 +73,7 @@ namespace yq::tachyon {
         w.receive(&Viewer::viewer_close_request);
         w.receive(&Viewer::viewer_close_command);
         w.receive(&Viewer::viewer_resize_event);
+        w.property("mouse", &Viewer::mouse_state).description("Mouse state");
     }
 
     //  ----------------------------------------------------------------------------------------------------------------
@@ -158,6 +167,77 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         Application::add(this);
         ++s_count;
     }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  MOUSE
+
+        void    Viewer::cmd_mouse_capture()
+        {
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
+            m_mouseState    = MouseState::Captured;
+            dispatch(new MouseCaptureEvent(this));
+        }
+        
+        void    Viewer::cmd_mouse_disable()
+        {
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            m_mouseState    = MouseState::Disabled;
+            dispatch(new MouseDisableEvent(this));
+        }
+        
+        void    Viewer::cmd_mouse_hide()
+        {
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            m_mouseState    = MouseState::Hidden;
+            dispatch(new MouseHideEvent(this));
+        }
+        
+        void    Viewer::cmd_mouse_normal()
+        {
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            m_mouseState    = MouseState::Normal;
+            dispatch(new MouseNormalEvent(this));
+        }
+
+        bool    Viewer::mouse_capture_command(const MouseCaptureCommandCPtr&cmd)
+        {
+            if(!cmd)
+                return false;
+            if(cmd->viewer() != this)
+                return false;
+            cmd_mouse_capture();
+            return true;
+        }
+        
+        bool    Viewer::mouse_disable_command(const MouseDisableCommandCPtr&cmd)
+        {
+            if(!cmd)
+                return false;
+            if(cmd->viewer() != this)
+                return false;
+            cmd_mouse_disable();
+            return true;
+        }
+        
+        bool    Viewer::mouse_hide_command(const MouseHideCommandCPtr&cmd)
+        {
+            if(!cmd)
+                return false;
+            if(cmd->viewer() != this)
+                return false;
+            cmd_mouse_hide();
+            return true;
+        }
+        
+        bool    Viewer::mouse_normal_command(const MouseNormalCommandCPtr&cmd)
+        {
+            if(!cmd)
+                return false;
+            if(cmd->viewer() != this)
+                return false;
+            cmd_mouse_normal();
+            return true;
+        }
 
     
     //  ----------------------------------------------------------------------------------------------------------------
@@ -289,102 +369,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     //  ----------------------------------------------------------------------------------------------------------------
     //  GLFW EVENT DISPATCHERS
  
-#if 0
-    void    Viewer::dispatch_character(unsigned int code)
-    {
-        if(m_imgui && (!m_focus || m_focus->is_imgui())){
-            ImGui_ImplGlfw_CharCallback(m_window, codepoint);
-        }
 
-#if 0
-        KeyCharacter&   evt = publish(new KeyCharacter(this, m_focus, codepoint), REFERENCE);
-        if(m_focus){
-            m_focus->on(evt);
-        }
-#endif
-    }
-    
-    void    Viewer::dispatch_cursor_enter(int)
-    {
-        
-        
-        if(viewer->m_imgui){
-            ImGui_ImplGlfw_CursorEnterCallback(window, entered);
-        }
-        
-        Vector2D    pos = viewer -> cursor_position();
-        Widget* widget  = viewer -> widget_at(pos);
-        
-        switch(entered){
-        case GLFW_TRUE:
-            {
-            }
-            break;
-        case GLFW_FALSE:
-            {
-            }
-            break;
-        }
-    }
-    
-    void    Viewer::dispatch_cursor_position(double x, double y)
-    {
-        m_cursorPos     = Vector2D(x,y);
-        
-    }
-    
-    void    Viewer::dispatch_drop(int, const char**)
-    {
-    }
-    
-    void    Viewer::dispatch_framebuffer_size(int, int)
-    {
-    }
-    
-    void    Viewer::dispatch_key(int, int, int, int)
-    {
-    }
-    
-    void    Viewer::dispatch_mouse_button(int, int, int)
-    {
-    }
-    
-    void    Viewer::dispatch_scroll(double, double)
-    {
-    }
-    
-    void    Viewer::dispatch_window_close()
-    {
-    }
-    
-    void    Viewer::dispatch_window_focus(int)
-    {
-    }
-    
-    void    Viewer::dispatch_window_iconify(int)
-    {
-    }
-    
-    void    Viewer::dispatch_window_maximize(int)
-    {
-    }
-    
-    void    Viewer::dispatch_window_position(int, int)
-    {
-    }
-    
-    void    Viewer::dispatch_window_refresh()
-    {
-    }
-    
-    void    Viewer::dispatch_window_scale(float, float)
-    {
-    }
-    
-    void    Viewer::dispatch_window_size(int,int)
-    {
-    }
-#endif    
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  GLFW/SETTERS

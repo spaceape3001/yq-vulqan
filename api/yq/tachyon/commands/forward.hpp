@@ -11,6 +11,11 @@ namespace yq {
 }
 
 namespace yq::tachyon {
+    using MouseCaptureCommandCPtr       = Ref<const class MouseCaptureCommand>;
+    using MouseDisableCommandCPtr       = Ref<const class MouseDisableCommand>;
+    using MouseHideCommandCPtr          = Ref<const class MouseHideCommand>;
+    using MouseNormalCommandCPtr        = Ref<const class MouseNormalCommand>;
+
     using ViewerAttentionCommandCPtr    = Ref<const class ViewerAttentionCommand>;
     using ViewerCloseCommandCPtr        = Ref<const class ViewerCloseCommand>;
     using ViewerHideCommandCPtr         = Ref<const class ViewerHideCommand>;

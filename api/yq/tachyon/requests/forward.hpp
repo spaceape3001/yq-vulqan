@@ -11,5 +11,6 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    using ViewerCloseRequestCPtr = Ref<const class ViewerCloseRequest>;
+    using ViewerCloseRequestCPtr    = Ref<const class ViewerCloseRequest>;
+    using ViewerRefreshRequestCPtr  = Ref<const class ViewerRefreshRequest>;
 }

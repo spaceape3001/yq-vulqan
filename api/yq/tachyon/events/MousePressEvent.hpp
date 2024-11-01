@@ -6,27 +6,32 @@
 
 #pragma once
 
-#include <yq/tachyon/input/MouseEvent.hpp>
+#include <yq/tachyon/events/MouseEvent.hpp>
 
 namespace yq::tachyon {
-    class MouseRelease : public MouseEvent {
-        YQ_OBJECT_DECLARE(MouseRelease, MouseEvent)
+    class MousePressEvent : public MouseEvent {
+        YQ_OBJECT_DECLARE(MousePressEvent, MouseEvent)
     public:
     
         struct Param : public MouseEvent::Param {
-            MouseButton     button      = {};
+            MouseButton     button;
         };
     
-        MouseRelease(const Param&);
-
+        MousePressEvent(const Param&);
+        
+        //! Scan code from the operating system (no interpretation)
         MouseButton         button() const { return m_button; }
-        virtual ~MouseRelease();
         
         bool    left() const;
         bool    right() const;
         bool    middle() const;
+
+        virtual ~MousePressEvent();
+        
+        static void init_info();
         
     private:
-        MouseButton     m_button;
+    
+        const MouseButton m_button;
     };
 }

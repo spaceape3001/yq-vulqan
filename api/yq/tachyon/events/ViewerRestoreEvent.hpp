@@ -6,21 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/events/MouseEvent.hpp>
+#include <yq/tachyon/events/ViewerEvent.hpp>
 
 namespace yq::tachyon {
-    class MouseMoveEvent : public MouseEvent {
-        YQ_OBJECT_DECLARE(MouseMoveEvent, MouseEvent)
+    class ViewerRestoreEvent : public ViewerEvent {
+        YQ_OBJECT_DECLARE(ViewerRestoreEvent, ViewerEvent)
     public:
     
-        struct Param : public MouseEvent::Param {
+        struct Param : public ViewerEvent::Param {
         };
     
-        MouseMoveEvent(const Param&);
-
-        virtual ~MouseMoveEvent();
+        ViewerRestoreEvent(Viewer*, const Param& p = {});
+        virtual ~ViewerRestoreEvent();
         
         static void init_info();
     };
 }
-

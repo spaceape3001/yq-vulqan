@@ -19,4 +19,5 @@ namespace yq::tachyon {
     using ViewerPauseCommandCPtr        = Ref<const class ViewerPauseCommand>;
     using ViewerRestoreCommandCPtr      = Ref<const class ViewerRestoreCommand>;
     using ViewerResumeCommandCPtr       = Ref<const class ViewerResumeCommand>;
+    using ViewerShowCommandCPtr         = Ref<const class ViewerShowCommand>;
 }

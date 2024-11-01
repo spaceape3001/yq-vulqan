@@ -5,4 +5,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViewerCloseRequest.ipp"
+#include "ViewerRefreshRequest.ipp"
 #include "ViewerRequest.ipp"

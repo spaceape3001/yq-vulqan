@@ -9,6 +9,8 @@
 #include <yq/tachyon/Manager.hpp>
 #include <yq/post/Dispatcher.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
+#include <yq/tachyon/enum/MouseButton.hpp>
+#include <yq/typedef/vector2.hpp>
 
 struct GLFWwindow;
 struct GLFWmonitor;
@@ -67,6 +69,8 @@ namespace yq::tachyon {
         static void _poll(unit::Second);
         
         static ModifierKeys _modifiers(GLFWwindow*);
+        static MouseButtons _buttons(GLFWwindow*);
+        static Vector2D     _mouse_pos(GLFWwindow*);
         
         
         //static void joystick_initialize(Joystick);

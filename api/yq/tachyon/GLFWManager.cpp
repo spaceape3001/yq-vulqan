@@ -25,10 +25,15 @@
 #include <yq/tachyon/events/KeyRepeatEvent.hpp>
 #include <yq/tachyon/events/MonitorConnectEvent.hpp>
 #include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
+#include <yq/tachyon/events/MouseDropEvent.hpp>
+#include <yq/tachyon/events/MouseEnterEvent.hpp>
+#include <yq/tachyon/events/MouseLeaveEvent.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
 #include <yq/tachyon/events/MouseScrollEvent.hpp>
+#include <yq/tachyon/events/ViewerDefocusEvent.hpp>
+#include <yq/tachyon/events/ViewerFocusEvent.hpp>
 #include <yq/tachyon/events/ViewerIconifyEvent.hpp>
 #include <yq/tachyon/events/ViewerMaximizeEvent.hpp>
 #include <yq/tachyon/events/ViewerMoveEvent.hpp>
@@ -104,27 +109,6 @@ namespace yq::tachyon {
         static Common& g = common();
         return g.manager;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //   CALLBACKS
-
-    
-    #if 0
-    void GLFWManager::callback_cursor_enter(GLFWwindow* window, int entered)
-    {
-    }
-    #endif
-    
-    
-    #if 0
-    void GLFWManager::callback_drop(GLFWwindow* window, int count, const char** paths)
-    {
-    }
-    #endif
-    
-    
-    #if 0
-    #endif
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //   KEYBOARD
@@ -332,6 +316,55 @@ namespace yq::tachyon {
         return ret;
     }
 
+    void GLFWManager::callback_cursor_enter(GLFWwindow* window, int entered)
+    {
+        static Common& g = common();
+
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!v)
+            return ;
+        if(entered){
+            MouseEnterEvent::Param p;
+            p.viewer    = v;
+            p.modifiers = _modifiers(window);
+            p.buttons   = _buttons(window);
+            p.position  = _mouse_pos(window);
+            g.manager->dispatch(new MouseEnterEvent(p));
+        } else {
+            MouseLeaveEvent::Param p;
+            p.viewer    = v;
+            p.modifiers = _modifiers(window);
+            p.buttons   = _buttons(window);
+            p.position  = _mouse_pos(window);
+            g.manager->dispatch(new MouseLeaveEvent(p));
+        }
+    }
+
+    void GLFWManager::callback_drop(GLFWwindow* window, int count, const char** paths)
+    {
+        static Common& g = common();
+
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!v)
+            return ;
+        if(count <= 0)
+            return ;
+        
+        std::vector<std::string>    copy;
+        for(int i=0;i<count;++i){
+            if(!paths[i])
+                continue;
+            copy.push_back(std::string(paths[i]));
+        }
+        
+        MouseDropEvent::Param p;
+        p.viewer    = v;
+        p.modifiers = _modifiers(window);
+        p.buttons   = _buttons(window);
+        p.position  = _mouse_pos(window);
+        g.manager->dispatch(new MouseDropEvent(std::move(copy), p));
+    }
+
     void GLFWManager::callback_cursor_position(GLFWwindow* window, double xpos, double ypos)
     {
         static Common& g = common();
@@ -444,16 +477,16 @@ namespace yq::tachyon {
         glfwSetWindowUserPointer(vd.window, &v);
         
         glfwSetCharCallback(vd.window, callback_character);
-        //glfwSetCursorEnterCallback(vd.window, callback_cursor_enter);
+        glfwSetCursorEnterCallback(vd.window, callback_cursor_enter);
         glfwSetCursorPosCallback(vd.window, callback_cursor_position);
-        //glfwSetDropCallback(vd.window, callback_drop);
+        glfwSetDropCallback(vd.window, callback_drop);
         //glfwSetFramebufferSizeCallback(vd.window, callback_framebuffer_size);
         glfwSetKeyCallback(vd.window, callback_key);
         glfwSetMouseButtonCallback(vd.window, callback_mouse_button);
         glfwSetScrollCallback(vd.window, callback_scroll);
         glfwSetWindowCloseCallback(vd.window, callback_window_close);
         glfwSetWindowContentScaleCallback(vd.window, callback_window_scale);
-        //glfwSetWindowFocusCallback(vd.window, callback_window_focus);
+        glfwSetWindowFocusCallback(vd.window, callback_window_focus);
         glfwSetWindowIconifyCallback(vd.window, callback_window_iconify);
         glfwSetWindowMaximizeCallback(vd.window, callback_window_maximize);
         glfwSetWindowPosCallback(vd.window, callback_window_position);
@@ -485,12 +518,19 @@ namespace yq::tachyon {
         }
     }
     
-    #if 0
     void GLFWManager::callback_window_focus(GLFWwindow* window, int focused)
     {
         static Common& g = common();
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!v)
+            return ;
+
+        if(focused){
+            g.manager->dispatch(new ViewerFocusEvent(v));
+        } else {
+            g.manager->dispatch(new ViewerDefocusEvent(v));
+        }
     }
-    #endif
     
     void GLFWManager::callback_window_iconify(GLFWwindow* window, int iconified)
     {

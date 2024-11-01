@@ -23,6 +23,7 @@
 #include "MouseMoveEvent.ipp"
 #include "MousePressEvent.ipp"
 #include "MouseReleaseEvent.ipp"
+#include "MouseScrollEvent.ipp"
 #include "ViewerCloseEvent.ipp"
 #include "ViewerEvent.ipp"
 #include "ViewerIconifyEvent.ipp"

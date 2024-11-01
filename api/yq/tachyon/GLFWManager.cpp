@@ -22,11 +22,12 @@
 #include <yq/tachyon/events/KeyCharacterEvent.hpp>
 #include <yq/tachyon/events/KeyPressEvent.hpp>
 #include <yq/tachyon/events/KeyReleaseEvent.hpp>
+#include <yq/tachyon/events/MonitorConnectEvent.hpp>
+#include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
-#include <yq/tachyon/events/MonitorConnectEvent.hpp>
-#include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
+#include <yq/tachyon/events/MouseScrollEvent.hpp>
 #include <yq/tachyon/events/ViewerIconifyEvent.hpp>
 #include <yq/tachyon/events/ViewerMaximizeEvent.hpp>
 #include <yq/tachyon/events/ViewerMoveEvent.hpp>
@@ -122,9 +123,6 @@ namespace yq::tachyon {
     
     
     #if 0
-    void GLFWManager::callback_scroll(GLFWwindow* window, double xoffset, double yoffset)
-    {
-    }
     #endif
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -360,6 +358,21 @@ namespace yq::tachyon {
         
     }
 
+    void GLFWManager::callback_scroll(GLFWwindow* window, double xoffset, double yoffset)
+    {
+        static Common& g = common();
+
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
+        if(!v)
+            return ;
+        MouseScrollEvent::Param p;
+        p.viewer    = v;
+        p.modifiers = _modifiers(window);
+        p.buttons   = _buttons(window);
+        p.delta     = { xoffset, yoffset };
+        g.manager->dispatch(new MouseScrollEvent(p));
+    }
+
     bool    GLFWManager::raw_mouse_motion_supported()
     {
         return glfwRawMouseMotionSupported() == GLFW_TRUE;
@@ -387,8 +400,6 @@ namespace yq::tachyon {
 
     void    GLFWManager::_poll(unit::Second timeout)
     {
-        Common& g   = common();
-
         if(timeout.value > 0.){
             glfwWaitEventsTimeout(timeout.value);
         } else {
@@ -414,14 +425,14 @@ namespace yq::tachyon {
         
         glfwSetWindowUserPointer(vd.window, &v);
         
-        //glfwSetCharCallback(vd.window, callback_character);
+        glfwSetCharCallback(vd.window, callback_character);
         //glfwSetCursorEnterCallback(vd.window, callback_cursor_enter);
         glfwSetCursorPosCallback(vd.window, callback_cursor_position);
         //glfwSetDropCallback(vd.window, callback_drop);
         //glfwSetFramebufferSizeCallback(vd.window, callback_framebuffer_size);
         glfwSetKeyCallback(vd.window, callback_key);
         glfwSetMouseButtonCallback(vd.window, callback_mouse_button);
-        //glfwSetScrollCallback(vd.window, callback_scroll);
+        glfwSetScrollCallback(vd.window, callback_scroll);
         glfwSetWindowCloseCallback(vd.window, callback_window_close);
         glfwSetWindowContentScaleCallback(vd.window, callback_window_scale);
         //glfwSetWindowFocusCallback(vd.window, callback_window_focus);

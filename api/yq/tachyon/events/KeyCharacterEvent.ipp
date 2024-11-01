@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
         auto w = writer<KeyCharacterEvent>();
         w.description("Key Character Event");
-        w.property("code", &KeyCharacterEvent::code);
+        w.property("code", &KeyCharacterEvent::code).tag(kTag_Log);
     }
     
     YQ_INVOKE(KeyCharacterEvent::init_info();)

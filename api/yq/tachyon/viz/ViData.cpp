@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/memory/Buffer.hpp>
+#include <yq/tachyon/Buffer.hpp>
 #include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>

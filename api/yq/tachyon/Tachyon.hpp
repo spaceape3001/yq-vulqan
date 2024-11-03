@@ -33,6 +33,8 @@ namespace yq::tachyon {
         
         unsigned int                    thread_id() const { return m_threadId; }
         
+        bool    in_thread() const;
+        
         static void init_info();
 
     protected:

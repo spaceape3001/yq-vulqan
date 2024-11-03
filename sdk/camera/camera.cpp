@@ -35,7 +35,7 @@
 #include <yq/tachyon/cameras/SpaceCamera.hpp>
 #include <yq/tachyon/cameras/TargetCamera.hpp>
 #include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
+#include <yq/tachyon/Scene.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>
 
 #include <chrono>

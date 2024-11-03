@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/tachyon/Widget.hpp>
-#include <yq/tachyon/scene/Perspective.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
+#include <yq/tachyon/Perspective.hpp>
+#include <yq/tachyon/Scene.hpp>
 
 namespace yq::tachyon {
 

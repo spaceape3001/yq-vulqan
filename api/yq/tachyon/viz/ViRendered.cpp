@@ -12,10 +12,10 @@
 #include <yq/stream/Text.hpp>
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/pipeline/Pipeline.hpp>
-#include <yq/tachyon/pipeline/PushData.hpp>
-#include <yq/tachyon/render/Render3D.hpp>
-#include <yq/tachyon/render/Rendered.hpp>
+#include <yq/tachyon/Pipeline.hpp>
+#include <yq/tachyon/PushData.hpp>
+#include <yq/tachyon/Render3D.hpp>
+#include <yq/tachyon/Rendered.hpp>
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>

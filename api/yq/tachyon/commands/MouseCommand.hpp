@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/post/Command.hpp>
-#include <yq/tachyon/util/ViewerBind.hpp>
+#include <yq/tachyon/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;

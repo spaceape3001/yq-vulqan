@@ -28,6 +28,11 @@ namespace yq::tachyon {
     {
     }
     
+    bool Tachyon::in_thread() const
+    {
+        return m_threadId == thread::id();
+    }
+
     void Tachyon::init_info()
     {
         auto w = writer<Tachyon>();

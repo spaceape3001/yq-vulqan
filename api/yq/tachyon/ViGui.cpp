@@ -20,10 +20,10 @@
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/TachyonInfoWriter.hpp>
-#include <yq/tachyon/image/Raster.hpp>
-#include <yq/tachyon/pipeline/Pipeline.hpp>
-#include <yq/tachyon/pipeline/PipelineWriter.hpp>
-#include <yq/tachyon/sampler/Sampler.hpp>
+#include <yq/tachyon/Raster.hpp>
+#include <yq/tachyon/Pipeline.hpp>
+#include <yq/tachyon/PipelineWriter.hpp>
+#include <yq/tachyon/Sampler.hpp>
 #include <yq/tachyon/Shader.hpp>
 #include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/Widget.hpp>

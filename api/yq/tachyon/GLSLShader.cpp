@@ -6,13 +6,13 @@
 
 #include "GLSLShader.hpp"
 
+#include <yq/asset/AssetFactory.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/process/Execute.hpp>
-#include <yq/text/chars.hpp>
-#include <yq/asset/AssetFactory.hpp>
 #include <yq/tachyon/Shader.hpp>
+#include <yq/text/chars.hpp>
 
 namespace yq::errors {
    using shader_compile_failure    = error_db::entry<"Shader failed to compile">;

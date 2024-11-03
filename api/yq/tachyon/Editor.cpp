@@ -6,7 +6,7 @@
 
 #include "Editor.hpp"
 #include <yq/core/DelayInit.hpp>
-#include <yq/tachyon/imgui/MyImGui.hpp>
+#include <yq/tachyon/MyImGui.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Editor)
 

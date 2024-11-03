@@ -10,7 +10,7 @@
 #include <yq/tachyon/Application.hpp>
 #include <yq/tachyon/TachyonInfoWriter.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
-#include <yq/tachyon/viz/ViGui.hpp>
+#include <yq/tachyon/ViGui.hpp>
 
 #include <yq/tachyon/commands/MouseCaptureCommand.hpp>
 #include <yq/tachyon/commands/MouseDisableCommand.hpp>
@@ -32,7 +32,7 @@
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/events/ViewerResizeEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
-#include <yq/tachyon/image/Raster.hpp>
+#include <yq/tachyon/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
 #include <yq/tachyon/replies/ViewerCloseReply.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>

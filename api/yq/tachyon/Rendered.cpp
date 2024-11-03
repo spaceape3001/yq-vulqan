@@ -6,7 +6,7 @@
 
 #include "Rendered.hpp"
 #include <yq/core/DelayInit.hpp>
-#include <yq/tachyon/render/RenderedWriter.hpp>
+#include <yq/tachyon/RenderedInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)
 

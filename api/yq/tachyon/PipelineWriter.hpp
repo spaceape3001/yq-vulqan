@@ -13,11 +13,11 @@
 
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/config/vulqan.hpp>
-#include <yq/tachyon/pipeline/Pipeline.hpp>
-#include <yq/tachyon/pipeline/PipelineUtils.hpp>
-#include <yq/tachyon/pipeline/SBO.hpp>
-#include <yq/tachyon/pipeline/UBO.hpp>
-#include <yq/tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/Pipeline.hpp>
+#include <yq/tachyon/PipelineUtils.hpp>
+#include <yq/tachyon/SBO.hpp>
+#include <yq/tachyon/UBO.hpp>
+#include <yq/tachyon/VBO.hpp>
 #include <yq/tachyon/Texture.hpp>
 
 namespace yq::tachyon {

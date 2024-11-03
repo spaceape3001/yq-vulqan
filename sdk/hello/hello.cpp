@@ -32,8 +32,8 @@
 #include <yq/tachyon/2D/Triangle.hpp>
 #include <yq/tachyon/Application.hpp>
 #include <yq/tachyon/Viewer.hpp>
-#include <yq/tachyon/render/Render3D.hpp>
-#include <yq/tachyon/render/Render3DWriter.hpp>
+#include <yq/tachyon/Render3D.hpp>
+#include <yq/tachyon/Render3DInfoWriter.hpp>
 #include <yq/tachyon/Shader.hpp>
 #include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/memory/BufferObject.hpp>
+#include <yq/tachyon/BufferObject.hpp>
 
 namespace yq::tachyon {
 

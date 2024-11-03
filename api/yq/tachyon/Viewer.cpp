@@ -10,6 +10,7 @@
 #include <yq/tachyon/Application.hpp>
 #include <yq/tachyon/TachyonInfoWriter.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
+#include <yq/tachyon/ViewerInitData.hpp>
 #include <yq/tachyon/ViGui.hpp>
 
 #include <yq/tachyon/commands/MouseCaptureCommand.hpp>
@@ -117,6 +118,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
 
     Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : Tachyon(_pbx(vci)), m_id(++s_lastId)
     {
+        ViewerInitData  vid;
         try {
             if(!Application::initialized())
                 throw ViewerException("Application is not initialized");
@@ -125,24 +127,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
             
             m_widget    = w;
             
-            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-            glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
-            glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
-            glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
-            
-            int wx      = std::max(1,vci.size.width());
-            int wy      = std::max(1,vci.size.height());
-            
-            m_title     = vci.title;
-            m_window    = glfwCreateWindow(wx, wy, m_title.c_str(), vci.monitor.monitor(), nullptr);
-            if(!m_window){
-                const char* description = nullptr;
-                glfwGetError(&description);
-                if(description)
-                    viewerCritical << "Unable to create GLFW window.  " << description;
-                throw ViewerException("GLFW window could not be instantiated");
-            }
-
+            vid = GLFWManager::create(this, vci);
             m_viz       = std::make_unique<Visualizer>(vci, m_window, m_cleanup);
             
             if(vci.imgui)
@@ -154,8 +139,8 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
                 m_imgui = {};
             if(m_viz)
                 m_viz   = {};
-            if(m_window)
-                glfwDestroyWindow(m_window);
+            if(vid.window)
+                GLFWManager::remove(this);
             throw;
         }
         

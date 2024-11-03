@@ -18,6 +18,10 @@ struct GLFWmonitor;
 namespace yq::tachyon {
     class Viewer;
     class Joystick;
+    
+    struct ViewerState;
+    
+    struct ViewerInitData;
 
     /*! \brief GLFW Event Manager
     
@@ -30,7 +34,6 @@ namespace yq::tachyon {
         GLFWManager(const Param& p = {});
         ~GLFWManager();
     
-        static void                 install(Viewer&);
         static void                 remove(Viewer&);
         static GLFWManager*         manager();
         
@@ -42,7 +45,16 @@ namespace yq::tachyon {
 
     private:
 
-        static Param    _augment(const Param&);
+        struct JoystickData; //< Not to be confused with joystick class
+        struct ViewerData;
+        struct Common;
+        static Common&  common();
+        friend class Viewer;
+        
+        static ViewerInitData       create(Viewer*, const ViewerCreateInfo&);
+        static void                 remove(Viewer*);
+
+        static Param                _augment(const Param&);
         
         static void callback_character(GLFWwindow* window, unsigned int codepoint);
         static void callback_cursor_enter(GLFWwindow* window, int entered);
@@ -71,15 +83,10 @@ namespace yq::tachyon {
         static ModifierKeys _modifiers(GLFWwindow*);
         static MouseButtons _buttons(GLFWwindow*);
         static Vector2D     _mouse_pos(GLFWwindow*);
-        
+        static void         _update(GLFWwindow*, ViewerState&);
         
         //static void joystick_initialize(Joystick);
         //static void joystick_kill(Joystick);
 
-        struct JoystickData; //< Not to be confused with joystick class
-        struct ViewerData;
-        struct Common;
-        static Common&  common();
-        friend class Window;
     };
 }

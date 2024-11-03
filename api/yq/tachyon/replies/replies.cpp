@@ -4,5 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "AppReply.ipp"
+#include "TachyonReply.ipp"
 #include "ViewerCloseReply.ipp"
 #include "ViewerReply.ipp"

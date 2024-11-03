@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "AppEvent.ipp"
 #include "InputEvent.ipp"
 #include "JoystickAxisEvent.ipp"
 #include "JoystickConnectEvent.ipp"
@@ -32,6 +33,7 @@
 #include "MouseReleaseEvent.ipp"
 #include "MouseNormalEvent.ipp"
 #include "MouseScrollEvent.ipp"
+#include "TachyonEvent.ipp"
 #include "ViewerCloseEvent.ipp"
 #include "ViewerDefocusEvent.ipp"
 #include "ViewerEvent.ipp"
@@ -42,5 +44,6 @@
 #include "ViewerResizeEvent.ipp"
 #include "ViewerRestoreEvent.ipp"
 #include "ViewerScaleEvent.ipp"
+#include "ViewerStateEvent.ipp"
 #include "VulqanEvent.ipp"
 #include "WidgetEvent.ipp"

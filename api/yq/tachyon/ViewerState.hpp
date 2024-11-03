@@ -1,0 +1,66 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/container/BitArray.hpp>
+#include <yq/core/Flags.hpp>
+#include <yq/shape/Rectangle2.hpp>
+#include <yq/shape/Size2.hpp>
+#include <yq/tachyon/enum/ModifierKey.hpp>
+#include <yq/tachyon/enum/MouseButton.hpp>
+#include <yq/tachyon/enum/MouseState.hpp>
+#include <yq/vector/Vector2.hpp>
+
+namespace yq::tachyon {
+    struct MouseState {
+        Vector2D                position{};     //!< Cursor position
+        MouseButtons            buttons{};      //!< Buttons down
+        MouseState              state = MouseState::Normal;
+    };
+    
+    struct KeyboardState {
+        BitArray<uint64_t,8>    keys;           //!< Keys down
+        ModifierKeys            modifiers;      //!< Current modifiers
+    };
+
+    enum class WindowFlag : uint8_t {
+        AutoIconify,        //!< Auto Iconified (full screen on focus loss)
+        Decorated,          //!< Window decorations (ie, border, etc?)
+        FixedAspect,        //!< Fixed aspect ratio
+        Floating,           //!< Floating
+        Focused,            //!< Focused
+        FocusOnShow,        //!< Auto-focused when shown
+        Hovered,            //!< Cursor over content area?
+        Iconified,          //!< Iconified
+        Maximized,          //!< Maximized
+        MousePassThrough,   //!< Mouse being passed through (needs to be undecorated)
+        RawMouseMotion,     //!< Raw Mouse Motion
+        Resizable,          //!< Resizable
+        Transparent,        //!< Transparent frame buffer?
+        Visible             //!< Visible
+    };
+    
+    using WindowFlags = Flags<WindowFlag, uint32_t>;
+    
+    struct WindowState {
+        std::string             title;          //!< Window title
+        WindowFlags             flags{};        //!< Window flags
+        Vector2I                position{};     //!< Window position
+        Size2I                  max{-1,-1};     //!< Max size (-1 is the don't care value)
+        Size2I                  min{-1,-1};     //!< Min size (-1 is the don't care value)
+        Size2I                  area{};         //!< Content area
+        Size2I                  pixels{};       //!< Frame buffer size in pixels
+        float                   opacity = 1.f;  //!< Opacity 
+    };
+
+    struct ViewerState {
+        WindowState             window;
+        MouseState              mouse;
+        KeyboardState           keyboard;
+        double                  time = 0.;
+    };
+}

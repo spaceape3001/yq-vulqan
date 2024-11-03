@@ -40,6 +40,7 @@
 #include <yq/tachyon/events/ViewerResizeEvent.hpp>
 #include <yq/tachyon/events/ViewerRestoreEvent.hpp>
 #include <yq/tachyon/events/ViewerScaleEvent.hpp>
+#include <yq/tachyon/events/ViewerStateEvent.hpp>
 
 #include <yq/tachyon/exceptions/GLFWException.hpp>
 
@@ -84,9 +85,14 @@ namespace yq::tachyon {
         }
     };
     
+    enum class VD : uint8_t {
+        Modifiers,
+        Buttons
+    };
+    
     struct GLFWManager::ViewerData {
-        Viewer*         viewer  = nullptr;
-        GLFWwindow*     window  = nullptr;
+        GLFWwindow*     window      = nullptr;
+        ViewerState     state;
     };
 
     static constexpr const unsigned kMaxJoysticks   = (unsigned) GLFW_JOYSTICK_LAST + 1;
@@ -323,6 +329,7 @@ namespace yq::tachyon {
         Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(!v)
             return ;
+        
         if(entered){
             MouseEnterEvent::Param p;
             p.viewer    = v;
@@ -451,6 +458,11 @@ namespace yq::tachyon {
 
     void    GLFWManager::_poll(unit::Second timeout)
     {
+        static Common& g = common();
+        for(auto& itr : g.viewers){
+            itr.second.pending  = ALL;
+        }
+    
         if(timeout.value > 0.){
             glfwWaitEventsTimeout(timeout.value);
         } else {
@@ -460,19 +472,41 @@ namespace yq::tachyon {
         for(int jid = GLFW_JOYSTICK_1; jid <= GLFW_JOYSTICK_LAST; ++jid){
             _poll(Joystick(jid));
         }
+        
+        for(auto& itr : g.viewers){
+            _update(itr.second);
+            g.manager->dispatch(new ViewerStateEvent(itr.first, itr.second.state));
+        }
     }
 
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //   VIEWERS/WINDOW
+    //   VIEWER RELATIONS
 
-    void    GLFWManager::install(Viewer& v)
+    ViewerInitData       GLFWManager::create(Viewer* v, const ViewerCreateInfo& vci)
     {
         static Common& g = common();
 
-        ViewerData& vd = g.viewers[&v];
-        vd.viewer       = &v;
-        vd.window       = v.window();
+        if(!v)
+            return {};
+
+        ViewerData& vd = g.viewers[v];
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
+        
+        int wx      = std::max(1,vci.size.width());
+        int wy      = std::max(1,vci.size.height());
+        
+        vd.window   = glfwCreateWindow(wx, wy, m_title.c_str(), vci.monitor.monitor(), nullptr);
+        if(!vd.window){
+            const char* description = nullptr;
+            glfwGetError(&description);
+            if(description)
+                glfwCritical << "Unable to create GLFW window.  " << description;
+            throw GLFWException("GLFW window could not be instantiated");
+        }
         
         glfwSetWindowUserPointer(vd.window, &v);
         
@@ -492,13 +526,39 @@ namespace yq::tachyon {
         glfwSetWindowPosCallback(vd.window, callback_window_position);
         glfwSetWindowRefreshCallback(vd.window, callback_window_refresh);
         glfwSetWindowSizeCallback(vd.window, callback_window_size);
+
+        _update(vd.window, vd.state);
+        
+        g.manager->connect(TX, *v);
+        g.manager->connect(RX, *v);
+       
+        ViewerInitData  ret;
+        ret.window  = vd.window;
+        ret.state   = vd.state;
+        return ret;
     }
-    
-    void    GLFWManager::remove(Viewer& v)
+
+    void    GLFWManager::remove(Viewer* v)
     {
         static Common& g = common();
-        g.viewers.erase(&v);
+
+        if(!v)
+            return ;
+            
+        auto itr = g.viewers.find(v);
+        if(itr == g.viewers.end())
+            return ;
+
+        g.manager->disconnect(*v);
+
+        ViewerData& vd = itr->second;
+        glfwDestroyWindow(vd.window);
+        g.viewers.erase(itr);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   WINDOW
+
 
     
     #if 0
@@ -601,6 +661,40 @@ namespace yq::tachyon {
         }
     }
         
+    void  GLFWManager::_update(GLFWwindow* w, ViewerState&vs)
+    {
+        for(KeyCode kc : KeyCode::all_values()){
+            int gk  = encode_glfw(kc);
+            if(gk == GLFW_KEY_UNKNOWN)
+                continue;
+            vs.keyboard.keys.set(kc, glfwGetKey(w, gk) == GLFW_PRESS);
+        }
+        vs.keyboard.modifiers    = _modifiers(w);
+
+        vs.mouse.buttons      = _buttons(w);
+        glfwGetCursorPos(w, &vs.mouse.x, &vs.mouse.y);
+        
+        vs.window.title        = glfwGetWindowTitle(w);
+
+        vs.flags.set(ViewerFlag::AutoIconify,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_AUTO_ICONIFY));
+        vs.flags.set(ViewerFlag::Decorated,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_DECORATED));
+        vs.flags.set(ViewerFlag::Floating,          static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FLOATING));
+        vs.flags.set(ViewerFlag::Focused,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FOCUSED));
+        vs.flags.set(ViewerFlag::FocusOnShow,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FOCUS_ON_SHOW));
+        vs.flags.set(ViewerFlag::Hovered,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_HOVERED));
+        vs.flags.set(ViewerFlag::Iconified,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_ICONIFIED));
+        vs.flags.set(ViewerFlag::Maximized,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_MAXIMIZED));
+        vs.flags.set(ViewerFlag::MousePassThrough,  static_cast<bool>(glfwGetWindowAttrib(w, GLFW_MOUSE_PASSTHROUGH));
+        vs.flags.set(ViewerFlag::Resizable,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_RESIZABLE));
+        vs.flags.set(ViewerFlag::Transparent,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_TRANSPARENT_FRAMEBUFFER));
+        vs.flags.set(ViewerFlag::Visible,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_VISIBLE));
+
+        vs.window.opacity      = glfwGetWindowOpacity(w);
+        glfwGetWindowSize(w, &vs.window.area.x, &vs.window.area.y);
+        glfwGetFramebufferSize(w, &vs.window.pixels.x, &vs.window.pixels.y);
+        glfwGetWindowContentScale(w, &vs.window.scale.x, &vs.window.scale.y);
+        glfwGetWindowPos(w, &vs.window.position.x, &vs.window.position.y);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

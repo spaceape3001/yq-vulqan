@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
-#include <yq/post/PBX.hpp>
 #include <yq/tachyon/AppCreateInfo.hpp>
+#include <yq/tachyon/Tachyon.hpp>
 #include <yq/tachyon/typedef/application.hpp>
 #include <yq/units.hpp>
 #include <memory>
@@ -27,8 +27,8 @@ namespace yq::tachyon {
     /*! \brief Engine/Vulkan application
     
     */
-    class Application : public BasicApp, public post::PBX {
-        YQ_OBJECT_DECLARE(Application, post::PBX)
+    class Application : public BasicApp, public Tachyon {
+        YQ_OBJECT_DECLARE(Application, Tachyon)
     public:
     
         
@@ -90,7 +90,7 @@ namespace yq::tachyon {
         //  this is being called by viewer, deletion unnecessary
         static void         remove(Viewer*);
         
-        static post::PBX::Param  params(const AppCreateInfo&);
+        static Tachyon::Param  params(const AppCreateInfo&);
         
 
         struct Common;

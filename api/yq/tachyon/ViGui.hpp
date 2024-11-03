@@ -9,9 +9,13 @@
 #include <yq/keywords.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
+#include <yq/vector/Vector2.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/Tachyon.hpp>
+#include <yq/tachyon/enum/ModifierKey.hpp>
+#include <yq/tachyon/events/forward.hpp>
 #include <yq/tachyon/typedef/buffer.hpp>
 #include <yq/tachyon/typedef/image.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>
@@ -33,8 +37,14 @@ namespace yq::tachyon {
     class ViVisualizer;
     struct ViContext;
     class Widget;
+    class MousePressEvent;
+    class MouseMoveEvent;
+    class MouseReleaseEvent;
+    
+    //class 
 
-    class ViGui {
+    class ViGui : public Tachyon {
+        YQ_OBJECT_DECLARE(ViGui, Tachyon)
     public:
     
         enum class U : uint8_t {
@@ -66,6 +76,8 @@ namespace yq::tachyon {
         
         bool    valid() const;
         
+        static void init_info();
+        
         
     private:
     
@@ -86,6 +98,8 @@ namespace yq::tachyon {
         ViPipelineLayoutCPtr    m_pipelineLayout;
         //! Forced updates
         UpdateFlags             m_update    = {};
+        ModifierKeys            m_modifiers;
+        Vector2D                m_mouse;
         
         struct Push;
         
@@ -123,6 +137,11 @@ namespace yq::tachyon {
         void            _write_csv(const ImDrawData&, std::string_view pfx="imgui-");
         void            _write_csv_vertex(const ImDrawData&, std::string_view filename);
         void            _write_csv_index(const ImDrawData&, std::string_view filename);
+
+        void    update_modifiers(ModifierKeys);
+        void    mouse_move_event(const MousePressEvent&);
+        void    mouse_press_event(const MousePressEvent&);
+        void    mouse_release_event(const MouseReleaseEvent&);
     };
     
     #if 0

@@ -19,6 +19,7 @@
 #include <yq/util/AutoReset.hpp>
 
 #include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/TachyonInfoWriter.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/PipelineWriter.hpp>
@@ -26,6 +27,10 @@
 #include <yq/tachyon/Shader.hpp>
 #include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/Widget.hpp>
+
+#include <yq/tachyon/events/MouseMoveEvent.hpp>
+#include <yq/tachyon/events/MousePressEvent.hpp>
+#include <yq/tachyon/events/MouseReleaseEvent.hpp>
 
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
@@ -40,7 +45,7 @@
 #include <yq/tachyon/viz/ViTexture.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 
-#include <backends/imgui_impl_glfw.h>
+//#include <backends/imgui_impl_glfw.h>
 
 #include <atomic>
 
@@ -155,16 +160,19 @@ namespace yq::tachyon {
 
         m_context   = ImGui::CreateContext();
         ImGui::SetCurrentContext(m_context);
-        ImGui_ImplGlfw_InitForVulkan(m_viz->_window(), false);
+        //ImGui_ImplGlfw_InitForVulkan(m_viz->_window(), false);
         
         ImGuiIO& io = ImGui::GetIO();
         io.BackendRendererName      = "yq::tachyon::ViGui";
         io.BackendRendererUserData  = this;
         io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;  // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
         
+        io.BackendPlatformUserData  = this;
+        io.BackendPlatformName      = "yq::tachyon::ViGui";
+
         //m_pipelineLayout        = m_viz -> pipeline_layout_create(g.pipeline);
-        m_pipeline              = m_viz -> pipeline_create(g.pipeline);
-        m_pipelineLayout        = m_pipeline -> layout();
+        m_pipeline                  = m_viz -> pipeline_create(g.pipeline);
+        m_pipelineLayout            = m_pipeline -> layout();
         
         //new ViPipelineLayout(*m_viz, g.pipeline);
         //m_pipeline              = new ViPipeline(*m_viz, m_pipelineLayout, g.pipeline_options);
@@ -212,11 +220,15 @@ namespace yq::tachyon {
 
         if(m_context){
             ImGui::SetCurrentContext(m_context);
-            ImGui_ImplGlfw_Shutdown();
+            //ImGui_ImplGlfw_Shutdown();
             ImGuiIO& io = ImGui::GetIO();
             io.BackendRendererName      = nullptr;
             io.BackendRendererUserData  = nullptr;
-            io.BackendFlags            &= ~ImGuiBackendFlags_RendererHasVtxOffset;
+            io.BackendPlatformName      = nullptr;
+            io.BackendPlatformUserData  = nullptr;
+
+            io.BackendFlags            &= ~(ImGuiBackendFlags_RendererHasVtxOffset);
+
             ImGui::DestroyContext(m_context);
             m_context           = nullptr;
         }
@@ -463,7 +475,10 @@ namespace yq::tachyon {
             
         auto r = auto_reset(u.imgui, true);
         ImGui::SetCurrentContext(m_context);
-        ImGui_ImplGlfw_NewFrame();
+        
+        //  Do updates here...
+        
+        //ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         w -> imgui_(u);
         ImGui::Render();
@@ -617,5 +632,76 @@ namespace yq::tachyon {
     {
         return m_viz && m_viz -> device() && m_context;
     }
+
+    ///////////////////////////////////
+
+    void ViGui::update_modifiers(ModifierKeys mk)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        ModifierKeys    diff    = m_modifiers ^ mk;
+        m_modifiers = mk;
+        if(has_alt(diff)){
+            io.AddKeyEvent(ImGuiMod_Alt, has_alt(mk));
+        }
+        
+        if(has_control(diff)){
+            io.AddKeyEvent(ImGuiMod_Ctrl, has_control(mk));
+        }
+        
+        if(has_shift(diff)){
+            io.AddKeyEvent(ImGuiMod_Shift, has_shift(mk));
+        }
+        
+        if(has_super(diff)){
+            io.AddKeyEvent(ImGuiMod_Super, has_super(mk));
+        }
+        
+    }
+    
+    void ViGui::mouse_move_event(const MousePressEvent&evt)
+    {
+        ImGui::SetCurrentContext(m_context);
+        update_modifiers(evt.modifiers());
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddMousePosEvent(evt.x(), evt.y());
+        m_mouse = evt.position();
+    }
+    
+    void ViGui::mouse_press_event(const MousePressEvent&evt)
+    {
+        ImGui::SetCurrentContext(m_context);
+        update_modifiers(evt.modifiers());
+        ImGuiIO& io = ImGui::GetIO();
+        int b   = (int) evt.button().value();
+        if((b >= 0) && (b < ImGuiMouseButton_COUNT)){
+            io.AddMouseButtonEvent(b, true);
+        }
+        m_mouse = evt.position();
+    }
+    
+    void ViGui::mouse_release_event(const MouseReleaseEvent&evt)
+    {
+        ImGui::SetCurrentContext(m_context);
+        update_modifiers(evt.modifiers());
+        ImGuiIO& io = ImGui::GetIO();
+        int b   = (int) evt.button().value();
+        if((b >= 0) && (b < ImGuiMouseButton_COUNT)){
+            io.AddMouseButtonEvent(b, false);
+        }
+        m_mouse = evt.position();
+    }
+
+    ///////////////////////////////////
+    void ViGui::init_info()
+    {
+        auto w = writer<ViGui>();
+        w.description("ImGui Visualization");
+        w.receive(&ViGui::mouse_move_event);
+        w.receive(&ViGui::mouse_press_event);
+        w.receive(&ViGui::mouse_move_event);
+    }
+    YQ_INVOKE(ViGui::init_info();)
 }
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ViGui)
 

@@ -100,9 +100,9 @@ namespace yq::tachyon {
         return static_cast<bool>(common().app);
     }
 
-    post::PBX::Param  Application::params(const AppCreateInfo& aci)
+    Tachyon::Param  Application::params(const AppCreateInfo& aci)
     {
-        post::PBX::Param ret;
+        Tachyon::Param ret;
         return ret;
     }
 
@@ -179,7 +179,7 @@ namespace yq::tachyon {
     //  ////////////////////////////////////////////////////////////////////////
 
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv), post::PBX(params(aci))
+        BasicApp(argc, argv), Tachyon(params(aci))
     {
         Common& g = common();
         if(g.claimed.test_and_set())

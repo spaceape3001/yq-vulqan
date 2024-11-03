@@ -20,13 +20,13 @@ namespace yq::tachyon {
         w.description("Widget base class");
     }
 
-    WidgetInfo::WidgetInfo(std::string_view zName, post::PBXInfo& base, const std::source_location& sl) :
-        post::PBXInfo(zName, base, sl)
+    WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
+        TachyonInfo(zName, base, sl)
     {
         set(Flag::WIDGET);
     }
 
-    Widget::Widget(const Param& p) : post::PBX(p)
+    Widget::Widget(const Param& p) : Tachyon(p)
     {
         m_windowID      = std::string(fmt_hex(id()));
     }

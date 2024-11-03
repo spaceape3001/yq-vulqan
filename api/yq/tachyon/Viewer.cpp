@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/Application.hpp>
+#include <yq/tachyon/TachyonInfoWriter.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/viz/ViGui.hpp>
 
@@ -107,14 +108,14 @@ viewerInfo << "Viewer::~Viewer() [DESTROYING GLFW WINDOW]";
 viewerInfo << "Viewer::~Viewer() [DONE]";
     }
 
-    post::PBX::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
+    Tachyon::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
     {
-        PBX::Param  ret;
-        ret.name    = "TachyonViewer";
+        Tachyon::Param  ret;
+        ret.name    = "Viewer";
         return ret;
     }
 
-    Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : post::PBX(_pbx(vci)), m_id(++s_lastId)
+    Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : Tachyon(_pbx(vci)), m_id(++s_lastId)
     {
         try {
             if(!Application::initialized())
@@ -551,6 +552,18 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  EVENT/COMMAND/POST PROCESSING (BELOW, one "section" per event/command type)
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    void    Viewer::receive(const post::PostCPtr& pp) 
+    {
+        if(const ViewerBind* p = dynamic_cast<const ViewerBind*>(pp.ptr())){
+            if(p->viewer() != this)
+                return ;
+            if(m_imgui)
+                m_imgui->receive(pp);
+        }
+        m_widget->receive(pp);
+        Tachyon::receive(pp);
+    }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  ATTENTION

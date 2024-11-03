@@ -1,6 +1,13 @@
 local.cmake
 toolbox
 yq-toolbox
+apix
+exex
+sdkx
+testx
+toolx
+playx
+pluginx
 
 # Other source control
 .svn

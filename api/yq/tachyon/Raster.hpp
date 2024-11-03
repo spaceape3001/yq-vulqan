@@ -8,7 +8,7 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/Memory.hpp>
-#include <yq/tachyon/image/RasterInfo.hpp>
+#include <yq/tachyon/RasterInfo.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
 #include <yq/raster/forward.hpp>
 

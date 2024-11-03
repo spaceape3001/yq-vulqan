@@ -16,14 +16,9 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME} SHARED
     strings.cpp
 
-    2D/2D.cpp
-
-    3D/Tetrahedron.cpp
-
     Application.cpp
+    Buffer.cpp
     Camera.cpp
-    
-
     GLFWManager.cpp
     GLSLShader.cpp
     Joystick.cpp
@@ -31,17 +26,37 @@ add_library(${PROJECT_NAME} SHARED
     Monitor.cpp
     #MouseEvent.cpp
     MyImGui.cpp
+    Perspective.cpp
+    Pipeline.cpp
+    PipelineUtils.cpp
+    Raster.cpp
+    Render2D.cpp
+    Render3D.cpp
+    Rendered.cpp
+    #RenderPass.cpp
+    SamplerInfoFile.cpp
+    Sampler.cpp
     Shader.cpp
+    STBImage.cpp
+    Tachyon.cpp
     Task.cpp
     TaskEngine.cpp
     Texture.cpp
+    Thread.cpp
+    Tool.cpp
     Undo.cpp
     VideoMode.cpp
+    Viewer.cpp
+    ViGui.cpp
     vulqan.cpp
     VulqanManager.cpp
     Widget.cpp
     
-    
+    2D/2D.cpp
+
+    3D/Tetrahedron.cpp
+
+   
     cameras/cameras.cpp
     
     commands/commands.cpp
@@ -59,40 +74,9 @@ add_library(${PROJECT_NAME} SHARED
     font/Font.cpp
     
     
-    image/image.cpp
-    image/STBImage.cpp
-    
-    
-    #joystick/joystick.cpp
-    
-    #keyboard/keyboard.cpp
-    
-    #manipulator/Manipulator.cpp
-    
-    memory/memory.cpp
-    
-    #monitor/monitor.cpp
-    
-    # pass/RenderPass.cpp
-    
-    pipeline/pipeline.cpp
-    
-    render/Render2D.cpp
-    render/Render3D.cpp
-    render/Rendered.cpp
-    
     replies/replies.cpp
     
     requests/requests.cpp
-    
-    sampler/SamplerInfoFile.cpp
-    sampler/sampler.cpp
-    
-    scene/Perspective.cpp
-
-    
-    
-    tool/Tool.cpp
     
     
     #v/VqEnumerations.cpp
@@ -105,7 +89,6 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
     viz/ViFrame.cpp
-    viz/ViGui.cpp
     viz/ViPipeline.cpp
     viz/ViPipelineLayout.cpp
     viz/ViRendered.cpp
@@ -120,9 +103,6 @@ add_library(${PROJECT_NAME} SHARED
     widgets/Scene3DWidget.cpp
     widgets/StackedWidget.cpp
     widgets/TextArea.cpp
-    #widget/Widget.cpp
-    
-    Viewer.cpp
 )
 
 

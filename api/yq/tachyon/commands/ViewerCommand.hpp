@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/post/Command.hpp>
+#include <yq/tachyon/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -18,7 +19,7 @@ namespace yq::tachyon {
     protected:
     };
 
-    class ViewerCommand : public post::Command {
+    class ViewerCommand : public post::Command, public ViewerBind {
         YQ_OBJECT_INFO(ViewerCommandInfo)
         YQ_OBJECT_DECLARE(ViewerCommand, post::Command)
     public:
@@ -29,11 +30,6 @@ namespace yq::tachyon {
         ViewerCommand(Viewer*, const Param& p = {});
         virtual ~ViewerCommand();
         
-        Viewer*     viewer() const { return m_viewer; }
-        
         static void init_info();
-        
-    private:
-        Viewer*     m_viewer    = nullptr;
     };
 }

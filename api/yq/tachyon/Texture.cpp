@@ -6,7 +6,7 @@
 
 #include "Texture.hpp"
 
-#include <yq/tachyon/image/Raster.hpp>
+#include <yq/tachyon/Raster.hpp>
 #include <yq/tachyon/sampler/Sampler.hpp>
 
 namespace yq::tachyon {

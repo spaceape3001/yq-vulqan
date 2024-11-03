@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/post/Event.hpp>
+#include <yq/tachyon/ViewerBind.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 
 namespace yq::tachyon {
@@ -24,7 +25,7 @@ namespace yq::tachyon {
         This is a common base class for keyboard/mouse events since 
         they both need modifier keys & are attached to viewers.
     */
-    class InputEvent : public post::Event {
+    class InputEvent : public post::Event, public ViewerBind {
         YQ_OBJECT_INFO(InputEventInfo)
         YQ_OBJECT_DECLARE(InputEvent, post::Event)
     public:
@@ -40,8 +41,6 @@ namespace yq::tachyon {
     
         virtual ~InputEvent();
         
-        //! Viewer (note, for some events, this might be NULL)
-        Viewer*             viewer() const { return m_viewer; }
         ModifierKeys        modifiers() const { return m_modifiers; }
         
         bool    alt() const;
@@ -66,11 +65,11 @@ namespace yq::tachyon {
         bool    super_left() const;
         bool    super_right() const;
         
+        
     protected:
         InputEvent(const Param&);
 
     private:
-        Viewer* const         m_viewer;
         const ModifierKeys    m_modifiers;
     };
 }

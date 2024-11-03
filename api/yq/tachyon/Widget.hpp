@@ -9,6 +9,7 @@
 #include <yq/post/PBX.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/typedef/vector2.hpp>
+#include <yq/tachyon/Tachyon.hpp>
 #include <yq/tachyon/commands/forward.hpp>
 #include <yq/tachyon/events/forward.hpp>
 #include <yq/tachyon/replies/forward.hpp>
@@ -18,10 +19,10 @@ namespace yq::tachyon {
     class Viewer;
     struct ViContext;
 
-    class WidgetInfo : public post::PBXInfo {
+    class WidgetInfo : public TachyonInfo {
     public:
         template <typename C> class Writer;
-        WidgetInfo(std::string_view, post::PBXInfo&, const std::source_location& sl = std::source_location::current());
+        WidgetInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
     };
     
     /*! \brief Root something that's drawwable & interactable
@@ -29,14 +30,15 @@ namespace yq::tachyon {
         It follows ImGui's rules, this is something that is 
         "drawable" and needs some amount of state information.
     */
-    class Widget : public post::PBX, public UniqueID {    
+    class Widget : public Tachyon, public UniqueID {    
         YQ_OBJECT_INFO(WidgetInfo)
-        YQ_OBJECT_DECLARE(Widget, post::PBX)
+        YQ_OBJECT_DECLARE(Widget, Tachyon)
     public:
     
         static void init_info();
     
-        struct Param : public post::PBX::Param {};
+        struct Param : public Tachyon::Param {
+        };
     
         //! Default constructor
         Widget(const Param&p={});

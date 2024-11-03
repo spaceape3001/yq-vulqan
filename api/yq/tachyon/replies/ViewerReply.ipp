@@ -19,7 +19,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerReply::ViewerReply(const post::RequestCPtr& rq, Viewer* v, const Param& p) : post::Reply(rq, p), m_viewer(v)
+    ViewerReply::ViewerReply(const post::RequestCPtr& rq, Viewer* v, const Param& p) : post::Reply(rq, p), ViewerBind(v)
     {
     }
     

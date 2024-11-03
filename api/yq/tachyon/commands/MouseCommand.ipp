@@ -19,7 +19,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    MouseCommand::MouseCommand(Viewer* v, const Param& p) : post::Command(p), m_viewer(v)
+    MouseCommand::MouseCommand(Viewer* v, const Param& p) : post::Command(p), ViewerBind(v)
     {
     }
     

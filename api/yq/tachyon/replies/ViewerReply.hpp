@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/post/Reply.hpp>
+#include <yq/tachyon/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -19,7 +20,7 @@ namespace yq::tachyon {
     protected:
     };
 
-    class ViewerReply : public post::Reply {
+    class ViewerReply : public post::Reply, public ViewerBind {
         YQ_OBJECT_INFO(ViewerReplyInfo)
         YQ_OBJECT_DECLARE(ViewerReply, post::Reply)
     public:
@@ -30,11 +31,6 @@ namespace yq::tachyon {
         ViewerReply(const post::RequestCPtr&, Viewer*, const Param& p = {});
         virtual ~ViewerReply();
         
-        Viewer*     viewer() const { return m_viewer; }
-        
         static void init_info();
-        
-    private:
-        Viewer*     m_viewer    = nullptr;
     };
 }

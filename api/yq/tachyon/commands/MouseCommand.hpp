@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/post/Command.hpp>
+#include <yq/tachyon/util/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -18,7 +19,7 @@ namespace yq::tachyon {
     protected:
     };
 
-    class MouseCommand : public post::Command {
+    class MouseCommand : public post::Command, public ViewerBind {
         YQ_OBJECT_INFO(MouseCommandInfo)
         YQ_OBJECT_DECLARE(MouseCommand, post::Command)
     public:
@@ -29,11 +30,6 @@ namespace yq::tachyon {
         MouseCommand(Viewer*, const Param& p = {});
         virtual ~MouseCommand();
         
-        Viewer*     viewer() const { return m_viewer; }
-        
         static void init_info();
-        
-    private:
-        Viewer*     m_viewer    = nullptr;
     };
 }

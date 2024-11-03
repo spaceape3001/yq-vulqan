@@ -19,7 +19,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerEvent::ViewerEvent(Viewer* v, const Param& p) : post::Event(p), m_viewer(v)
+    ViewerEvent::ViewerEvent(Viewer* v, const Param& p) : post::Event(p), ViewerBind(v)
     {
     }
     

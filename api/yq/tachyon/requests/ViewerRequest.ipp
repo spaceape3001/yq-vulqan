@@ -19,7 +19,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerRequest::ViewerRequest(Viewer* v, const Param& p) : post::Request(p), m_viewer(v)
+    ViewerRequest::ViewerRequest(Viewer* v, const Param& p) : post::Request(p), ViewerBind(v)
     {
     }
     

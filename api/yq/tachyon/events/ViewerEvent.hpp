@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/post/Event.hpp>
+#include <yq/tachyon/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -18,7 +19,7 @@ namespace yq::tachyon {
     protected:
     };
 
-    class ViewerEvent : public post::Event {
+    class ViewerEvent : public post::Event, public ViewerBind {
         YQ_OBJECT_INFO(ViewerEventInfo)
         YQ_OBJECT_DECLARE(ViewerEvent, post::Event)
     public:
@@ -29,11 +30,6 @@ namespace yq::tachyon {
         ViewerEvent(Viewer*, const Param& p = {});
         virtual ~ViewerEvent();
         
-        Viewer*     viewer() const { return m_viewer; }
-        
         static void init_info();
-        
-    private:
-        Viewer*     m_viewer    = nullptr;
     };
 }

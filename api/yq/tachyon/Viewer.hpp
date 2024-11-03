@@ -11,8 +11,8 @@
 
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
-#include <yq/post/PBX.hpp>
 #include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/Tachyon.hpp>
 #include <yq/tachyon/commands/forward.hpp>
 #include <yq/tachyon/enum/MouseState.hpp>
 #include <yq/tachyon/events/forward.hpp>
@@ -50,8 +50,8 @@ namespace yq::tachyon {
         GLFW Window and the Vulkan Device.  It will hold ONE widget
         and one widget only, this is the root widget for the viewer.
     */
-    class Viewer : public post::PBX {
-        YQ_OBJECT_DECLARE(Viewer, post::PBX)
+    class Viewer : public Tachyon {
+        YQ_OBJECT_DECLARE(Viewer, Tachyon)
     
         friend class Application;
 
@@ -61,6 +61,13 @@ namespace yq::tachyon {
     //  + Cursor control
     
     public:
+        
+        
+    
+        struct State {
+            Vector2D        position, size, frame_buffer, scale;
+            std::string     title;
+        };
 
         static bool raw_mouse_motion_supported();
     
@@ -243,6 +250,8 @@ namespace yq::tachyon {
         void     accept(close_t);
         void     reject(close_t);
 
+        virtual void    receive(const post::PostCPtr&) override;
+        
     private:
     
         bool    mouse_capture_command(const MouseCaptureCommandCPtr&);
@@ -263,7 +272,7 @@ namespace yq::tachyon {
         static std::atomic<int>         s_count;
         static std::atomic<uint64_t>    s_lastId;
         
-        static PBX::Param   _pbx(const ViewerCreateInfo&);
+        static Tachyon::Param   _pbx(const ViewerCreateInfo&);
 
         
         void    _init(const ViewerCreateInfo&vci, Widget*w);

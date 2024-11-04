@@ -29,7 +29,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_viewer_request()
+    void TachyonRequest::init_info()
     {
         {
             auto w = writer<TachyonRequest>();
@@ -37,5 +37,5 @@ namespace yq::tachyon {
         }
     }
     
-    YQ_INVOKE(reg_viewer_request();)
+    YQ_INVOKE(TachyonRequest::init_info();)
 }

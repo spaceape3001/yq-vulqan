@@ -18,15 +18,13 @@ namespace yq::tachyon {
     {
     }
     
-    static void reg_key_release()
+    void KeyReleaseEvent::init_info()
     {
         auto w = writer<KeyReleaseEvent>();
         w.description("Key Release Event");
         w.property("scancode", &KeyReleaseEvent::scan).description("O/S scan code");
         w.property("key", &KeyReleaseEvent::key).description("Key code");
     }
-    
-    YQ_INVOKE(reg_key_release();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyReleaseEvent)

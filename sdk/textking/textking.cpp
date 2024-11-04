@@ -292,7 +292,6 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    app.add_viewer(new TextKing);
-    app.run();
+    app.run(new TextKing);
     return 0;
 }

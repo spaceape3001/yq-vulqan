@@ -227,7 +227,6 @@ int main(int argc, char* argv[])
     post::LoggerBox     postLogging({.global=true});
     
     app.finalize();
-    app.add_viewer(new HelloScene);
-    app.run();
+    app.run(new HelloScene);
     return 0;
 }

@@ -29,13 +29,11 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_viewer_request()
+    void AppRequest::init_info()
     {
-        {
-            auto w = writer<AppRequest>();
-            w.description("App request base class");
-        }
+        auto w = writer<AppRequest>();
+        w.description("App request base class");
     }
     
-    YQ_INVOKE(reg_viewer_request();)
+    YQ_INVOKE(AppRequest::init_info();)
 }

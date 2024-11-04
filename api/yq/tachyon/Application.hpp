@@ -32,16 +32,17 @@ namespace yq::tachyon {
     public:
     
         
-        //! Creates a viewer with widget
-        static Viewer*              add_viewer(Widget*);
-        //! Creates a viewer with title/widget
-        static Viewer*              add_viewer(std::string_view, Widget*);
 
         //! Global application, if any
         static Application*         app();
 
         static const AppCreateInfo& app_info();
         
+        //! Creates a viewer with widget
+        static Viewer*              create_viewer(Widget*);
+        //! Creates a viewer with title/widget
+        static Viewer*              create_viewer(std::string_view, Widget*);
+
         static bool                 contains(const Viewer*);
         
         static bool                 initialized();
@@ -63,8 +64,10 @@ namespace yq::tachyon {
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        static void    run(Viewer*win, Second timeout={0.});
+        static void                 run(Viewer*win, Second timeout={0.});
         
+        //! Simple create viewer & exec loop
+        static void                 run(Widget*wid, Second timeout={0.});
 
         static TaskEngine*          task_engine();
         

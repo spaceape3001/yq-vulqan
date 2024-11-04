@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/Application.hpp>
+#include <yq/tachyon/GLFWManager.hpp>
 #include <yq/tachyon/TachyonInfoWriter.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/ViewerInitData.hpp>
@@ -44,6 +45,7 @@
 #include <yq/errors.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/ErrorDB.hpp>
+#include <yq/core/ThreadId.hpp>
 #include <yq/post/PBXInfoWriter.hpp>
 #include <yq/shape/Size2.hxx>
 #include <yq/util/AutoReset.hpp>
@@ -72,10 +74,12 @@ namespace yq::tachyon {
     {
         auto w = writer<Viewer>();
         w.description("Tachyon Viewer");
+#if 0        
         w.receive(&Viewer::viewer_close_request);
         w.receive(&Viewer::viewer_close_command);
         w.receive(&Viewer::viewer_resize_event);
         w.property("mouse", &Viewer::mouse_state).description("Mouse state");
+#endif
     }
 
     //  ----------------------------------------------------------------------------------------------------------------
@@ -102,7 +106,9 @@ viewerInfo << "Viewer::~Viewer() [KILLING VISUALIZER]";
         m_viz       = {};
         m_cleanup.sweep();
 viewerInfo << "Viewer::~Viewer() [DESTROYING GLFW WINDOW]";
-        glfwDestroyWindow(m_window);
+
+        GLFWManager::remove(this);
+//        glfwDestroyWindow(m_window);
         m_cleanup.sweep();
         
         --s_count;
@@ -122,16 +128,20 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         try {
             if(!Application::initialized())
                 throw ViewerException("Application is not initialized");
+            if(!is_main_thread())
+                throw ViewerException("Viewer being created outside main thread.");
             if(!w)
                 throw ViewerException("Widget is required");
             
             m_widget    = w;
             
             vid = GLFWManager::create(this, vci);
-            m_viz       = std::make_unique<Visualizer>(vci, m_window, m_cleanup);
+            m_viz       = std::make_unique<Visualizer>(vci, vid.window, m_cleanup);
             
             if(vci.imgui)
                 m_imgui= std::make_unique<ViGui>(*m_viz);
+                
+            m_state     = vid.state;
         }
         catch(...)
         {
@@ -149,7 +159,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         connect(TX, *m_widget);
         connect(RX, *m_widget);
         
-        glfwGetCursorPos(m_window, &m_cursorPos.x, &m_cursorPos.y);
+        //glfwGetCursorPos(m_window, &m_cursorPos.x, &m_cursorPos.y);
         Application::add(this);
         ++s_count;
     }
@@ -157,31 +167,32 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     //  ----------------------------------------------------------------------------------------------------------------
     //  MOUSE
 
+#if 0
         void    Viewer::cmd_mouse_capture()
         {
             glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
-            m_mouseState    = MouseState::Captured;
+            m_mouseState    = MouseMode::Captured;
             dispatch(new MouseCaptureEvent(this));
         }
         
         void    Viewer::cmd_mouse_disable()
         {
             glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            m_mouseState    = MouseState::Disabled;
+            m_mouseState    = MouseMode::Disabled;
             dispatch(new MouseDisableEvent(this));
         }
         
         void    Viewer::cmd_mouse_hide()
         {
             glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-            m_mouseState    = MouseState::Hidden;
+            m_mouseState    = MouseMode::Hidden;
             dispatch(new MouseHideEvent(this));
         }
         
         void    Viewer::cmd_mouse_normal()
         {
             glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            m_mouseState    = MouseState::Normal;
+            m_mouseState    = MouseMode::Normal;
             dispatch(new MouseNormalEvent(this));
         }
 
@@ -224,6 +235,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
             cmd_mouse_normal();
             return true;
         }
+#endif
 
     
     //  ----------------------------------------------------------------------------------------------------------------
@@ -237,6 +249,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         return m_viz -> tick();
     }
 
+#if 0
     Size2I  Viewer::framebuffer_size() const
     {
         Size2I  ret;
@@ -307,14 +320,16 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         glfwGetWindowPos(m_window, &ret.x, &ret.y);
         return ret;
     }
-    
+#endif
+
     bool        Viewer::should_close() const
     {
-        if(!m_window) 
-            return true;
-        return glfwWindowShouldClose(m_window);
+//        if(!m_window) 
+//            return true;
+        return false; // glfwWindowShouldClose(m_window);
     }
 
+#if 0
     Size2I      Viewer::size() const
     {
         Size2I  ret;
@@ -326,6 +341,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     { 
         return m_title; 
     }
+#endif
 
     Widget*             Viewer::widget_at(const Vector2D& pt) const
     {
@@ -338,13 +354,14 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         return *m_viz;
     }
 
+#if 0
     int  Viewer::width() const
     {
         int ret;
         glfwGetWindowSize(m_window, &ret, nullptr);
         return ret;
     }
-
+#endif
 #if 0
     bool Viewer::zero_framebuffer() const
     {
@@ -364,7 +381,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     {
         m_flags |= f;
     }
-
+#if 0
     void        Viewer::set_position(int x, int y)
     {
         glfwSetWindowPos(m_window, x, y);
@@ -390,6 +407,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         m_title = std::string(txt);
         glfwSetWindowTitle(m_window, m_title.c_str());
     }
+#endif
     
     void        Viewer::set_widget(Widget*w, bool fDestroyOld)
     {
@@ -410,7 +428,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     //  COMMANDS
 
 
-    
+#if 0    
     void    Viewer::cmd_focus()
     {
         glfwFocusWindow(m_window);
@@ -445,6 +463,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     {
         m_flags -= F::Paused;
     }
+#endif
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  VULKAN/RENDER
@@ -553,7 +572,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     //  ----------------------------------------------------------------------------------------------------------------
     //  ATTENTION
     //  
-
+#if 0
     void    Viewer::cmd_attention()
     {
         glfwRequestWindowAttention(m_window);
@@ -568,11 +587,13 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         cmd_attention();
         return true;
     }
+#endif
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  CLOSING
     //  
 
+#if 0
     void    Viewer::cmd_close()
     {
         dispatch(new ViewerCloseEvent(this));
@@ -588,6 +609,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         cmd_close();
         return true;
     }
+#endif
 
     bool     Viewer::viewer_close_request(const ViewerCloseRequestCPtr& req)
     {
@@ -613,7 +635,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
             dispatch(new ViewerCloseReply(m_viewerCloseRequest, this, Response::QaPla));
             m_viewerCloseRequest = {};
         }
-        cmd_close();
+//        cmd_close();
     }
     
     void     Viewer::reject(close_t)
@@ -627,7 +649,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     //  ----------------------------------------------------------------------------------------------------------------
     //  HIDING
     //  
-
+#if 0
     void    Viewer::cmd_hide()
     {
         glfwHideWindow(m_window);
@@ -658,6 +680,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         
         return false;
     }
+#endif
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

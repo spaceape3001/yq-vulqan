@@ -7,8 +7,11 @@
 #pragma once
 
 #include <yq/post/PBX.hpp>
+#include <tbb/spin_rw_mutex.h>
 
 namespace yq::tachyon {
+    class Thread;
+    
     class TachyonInfo : public post::PBXInfo {
     public:
         
@@ -26,7 +29,8 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Tachyon, post::PBX)
     public:
     
-        using post::PBX::Param;
+        struct Param : public post::PBX::Param {
+        };
     
         Tachyon(const Param&p={});
         ~Tachyon();
@@ -38,9 +42,17 @@ namespace yq::tachyon {
         static void init_info();
 
     protected:
+        mutable tbb::spin_rw_mutex      m_mutex;
+
+        // The constructor meant for Thread's use (because... C++ won't let the friend declaration get to it in private)
         Tachyon(const Param&p, thread_t);
-        
+
     private:
-        std::atomic<unsigned int>        m_threadId;
+        std::atomic<unsigned int>       m_threadId;
+        //std::vector<Tachyon*>           m_children;
+        //Tachyon*                        m_parent = nullptr;
+
+        // The common constructor used between the two
+        Tachyon(const Param&p, init_t);
     };
 }

@@ -25,8 +25,6 @@ namespace yq::tachyon {
         w.property("key", &KeyPressEvent::key).description("Key code").tag(kTag_Log);
         w.property("scancode", &KeyPressEvent::scan).description("O/S scan code").tag(kTag_Log);
     }
-    
-    YQ_INVOKE(KeyPressEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyPressEvent)

@@ -55,31 +55,10 @@ namespace yq::tachyon {
             return ;
             
         g.viewers.push_back(v);
-        GLFWManager::install(*v);
+        //GLFWManager::install(*v);
         g.app->connect(RX, *v);
     }
 
-
-    Viewer*         Application::add_viewer(Widget*w)
-    {
-        if(!w)
-            return nullptr;
-
-        Common& g = common();
-        return new Viewer(g.app_info.view, w);
-    }
-    
-    Viewer*         Application::add_viewer(std::string_view n, Widget*w)
-    {
-        if(!w)
-            return nullptr;
-            
-        Common& g = common();
-        ViewerCreateInfo    vci = g.app_info.view;
-        vci.title       = n;
-        return new Viewer(vci, w);
-    }
-    
 
     Application*       Application::app() 
     { 
@@ -94,6 +73,28 @@ namespace yq::tachyon {
                 return true;
         return false;
     }
+
+    Viewer*         Application::create_viewer(Widget*w)
+    {
+        if(!w)
+            return nullptr;
+
+        Common& g = common();
+        return new Viewer(g.app_info.view, w);
+    }
+    
+    Viewer*         Application::create_viewer(std::string_view n, Widget*w)
+    {
+        if(!w)
+            return nullptr;
+            
+        Common& g = common();
+        ViewerCreateInfo    vci = g.app_info.view;
+        vci.title       = n;
+        return new Viewer(vci, w);
+    }
+    
+
 
     bool    Application::initialized()
     {
@@ -118,7 +119,7 @@ namespace yq::tachyon {
             return ;
             
         g.app->disconnect(*v);
-        GLFWManager::remove(*v);
+        //GLFWManager::remove(*v);
         //std::erase(g.viewers, v);
     }
 
@@ -159,6 +160,13 @@ namespace yq::tachyon {
         Common& g = common();
         g.viewers.push_back(win);
         run(amt);
+    }
+
+    void    Application::run(Widget*wid, Second timeout)
+    {
+        if(!wid)
+            return ;
+        run(create_viewer(wid), timeout);
     }
 
     TaskEngine*         Application::task_engine() 

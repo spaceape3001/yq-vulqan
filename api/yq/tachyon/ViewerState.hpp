@@ -12,14 +12,14 @@
 #include <yq/shape/Size2.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
-#include <yq/tachyon/enum/MouseState.hpp>
+#include <yq/tachyon/enum/MouseMode.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
     struct MouseState {
         Vector2D                position{};     //!< Cursor position
         MouseButtons            buttons{};      //!< Buttons down
-        MouseState              state = MouseState::Normal;
+        MouseMode               mode = MouseMode::Normal;
     };
     
     struct KeyboardState {
@@ -40,6 +40,7 @@ namespace yq::tachyon {
         MousePassThrough,   //!< Mouse being passed through (needs to be undecorated)
         RawMouseMotion,     //!< Raw Mouse Motion
         Resizable,          //!< Resizable
+        ShouldClose,        //!< Should close has been triggered
         Transparent,        //!< Transparent frame buffer?
         Visible             //!< Visible
     };
@@ -54,6 +55,7 @@ namespace yq::tachyon {
         Size2I                  min{-1,-1};     //!< Min size (-1 is the don't care value)
         Size2I                  area{};         //!< Content area
         Size2I                  pixels{};       //!< Frame buffer size in pixels
+        Vector2F                scale{1.f,1.f};
         float                   opacity = 1.f;  //!< Opacity 
     };
 

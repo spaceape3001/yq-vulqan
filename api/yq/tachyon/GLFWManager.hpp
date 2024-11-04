@@ -20,6 +20,7 @@ namespace yq::tachyon {
     class Joystick;
     
     struct ViewerState;
+    struct ViewerCreateInfo;
     
     struct ViewerInitData;
 
@@ -34,7 +35,6 @@ namespace yq::tachyon {
         GLFWManager(const Param& p = {});
         ~GLFWManager();
     
-        static void                 remove(Viewer&);
         static GLFWManager*         manager();
         
         static bool                 raw_mouse_motion_supported();

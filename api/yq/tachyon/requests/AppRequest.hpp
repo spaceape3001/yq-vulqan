@@ -26,6 +26,6 @@ namespace yq::tachyon {
     
         AppRequest(const Param& p = {});
         virtual ~AppRequest();
-        
+        static void init_info();
     };
 }

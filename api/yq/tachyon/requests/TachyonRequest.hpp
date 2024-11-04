@@ -29,6 +29,6 @@ namespace yq::tachyon {
     
         TachyonRequest(Tachyon*, const Param& p = {});
         virtual ~TachyonRequest();
-        
+        static void init_info();
     };
 }

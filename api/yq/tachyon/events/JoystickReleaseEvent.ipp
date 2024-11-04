@@ -24,8 +24,6 @@ namespace yq::tachyon {
     JoystickReleaseEvent::~JoystickReleaseEvent()
     {
     }
-    
-    YQ_INVOKE(JoystickReleaseEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickReleaseEvent)

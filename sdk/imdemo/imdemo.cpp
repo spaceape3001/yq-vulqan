@@ -33,7 +33,6 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    app.add_viewer(new ImGuiDemoWidget);
-    app.run();
+    app.run(new ImGuiDemoWidget);
     return 0;
 }

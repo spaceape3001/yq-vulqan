@@ -23,7 +23,6 @@ int main(int argc, char* argv[])
 
     Application         app(argc, argv, aci);
     app.finalize();
-    app.add_viewer(new Widget);
-    app.run();
+    app.run(new Widget);
     return 0;
 }

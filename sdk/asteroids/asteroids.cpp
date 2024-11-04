@@ -195,7 +195,6 @@ int main(int argc, char* argv[])
         // do any init infos....
         
     app.finalize();
-    app.add_viewer(new MainWin);
-    app.run();
+    app.run(new MainWin);
     return 0;
 }

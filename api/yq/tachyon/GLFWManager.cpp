@@ -7,11 +7,15 @@
 #include "GLFWManager.hpp"
 
 #include <yq/core/ThreadId.hpp>
+
 #include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/Application.hpp>
 #include <yq/tachyon/ManagerInfoWriter.hpp>
 #include <yq/tachyon/Joystick.hpp>
 #include <yq/tachyon/Monitor.hpp>
 #include <yq/tachyon/Viewer.hpp>
+#include <yq/tachyon/ViewerCreateInfo.hpp>
+#include <yq/tachyon/ViewerInitData.hpp>
 
 #include <yq/tachyon/events/JoystickAxisEvent.hpp>
 #include <yq/tachyon/events/JoystickConnectEvent.hpp>
@@ -46,6 +50,8 @@
 
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 #include <yq/tachyon/requests/ViewerRefreshRequest.hpp>
+
+#include <yq/shape/Size2.hxx>
 
 #include <GLFW/glfw3.h>
 
@@ -459,10 +465,7 @@ namespace yq::tachyon {
     void    GLFWManager::_poll(unit::Second timeout)
     {
         static Common& g = common();
-        for(auto& itr : g.viewers){
-            itr.second.pending  = ALL;
-        }
-    
+      
         if(timeout.value > 0.){
             glfwWaitEventsTimeout(timeout.value);
         } else {
@@ -474,7 +477,7 @@ namespace yq::tachyon {
         }
         
         for(auto& itr : g.viewers){
-            _update(itr.second);
+            _update(itr.second.window, itr.second.state);
             g.manager->dispatch(new ViewerStateEvent(itr.first, itr.second.state));
         }
     }
@@ -499,7 +502,11 @@ namespace yq::tachyon {
         int wx      = std::max(1,vci.size.width());
         int wy      = std::max(1,vci.size.height());
         
-        vd.window   = glfwCreateWindow(wx, wy, m_title.c_str(), vci.monitor.monitor(), nullptr);
+        std::string     title   = vci.title;
+        if(title.empty())
+            title   = Application::app_name();
+        
+        vd.window   = glfwCreateWindow(wx, wy, vci.title.c_str(), vci.monitor.monitor(), nullptr);
         if(!vd.window){
             const char* description = nullptr;
             glfwGetError(&description);
@@ -667,33 +674,35 @@ namespace yq::tachyon {
             int gk  = encode_glfw(kc);
             if(gk == GLFW_KEY_UNKNOWN)
                 continue;
-            vs.keyboard.keys.set(kc, glfwGetKey(w, gk) == GLFW_PRESS);
+            vs.keyboard.keys.set((int) kc.value(), glfwGetKey(w, gk) == GLFW_PRESS);
         }
         vs.keyboard.modifiers    = _modifiers(w);
 
         vs.mouse.buttons      = _buttons(w);
-        glfwGetCursorPos(w, &vs.mouse.x, &vs.mouse.y);
+        glfwGetCursorPos(w, &vs.mouse.position.x, &vs.mouse.position.y);
         
         vs.window.title        = glfwGetWindowTitle(w);
 
-        vs.flags.set(ViewerFlag::AutoIconify,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_AUTO_ICONIFY));
-        vs.flags.set(ViewerFlag::Decorated,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_DECORATED));
-        vs.flags.set(ViewerFlag::Floating,          static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FLOATING));
-        vs.flags.set(ViewerFlag::Focused,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FOCUSED));
-        vs.flags.set(ViewerFlag::FocusOnShow,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FOCUS_ON_SHOW));
-        vs.flags.set(ViewerFlag::Hovered,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_HOVERED));
-        vs.flags.set(ViewerFlag::Iconified,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_ICONIFIED));
-        vs.flags.set(ViewerFlag::Maximized,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_MAXIMIZED));
-        vs.flags.set(ViewerFlag::MousePassThrough,  static_cast<bool>(glfwGetWindowAttrib(w, GLFW_MOUSE_PASSTHROUGH));
-        vs.flags.set(ViewerFlag::Resizable,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_RESIZABLE));
-        vs.flags.set(ViewerFlag::Transparent,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_TRANSPARENT_FRAMEBUFFER));
-        vs.flags.set(ViewerFlag::Visible,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_VISIBLE));
+        vs.window.flags.set(WindowFlag::AutoIconify,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_AUTO_ICONIFY)));
+        vs.window.flags.set(WindowFlag::Decorated,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_DECORATED)));
+        vs.window.flags.set(WindowFlag::Floating,          static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FLOATING)));
+        vs.window.flags.set(WindowFlag::Focused,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FOCUSED)));
+        vs.window.flags.set(WindowFlag::FocusOnShow,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_FOCUS_ON_SHOW)));
+        vs.window.flags.set(WindowFlag::Hovered,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_HOVERED)));
+        vs.window.flags.set(WindowFlag::Iconified,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_ICONIFIED)));
+        vs.window.flags.set(WindowFlag::Maximized,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_MAXIMIZED)));
+        vs.window.flags.set(WindowFlag::MousePassThrough,  static_cast<bool>(glfwGetWindowAttrib(w, GLFW_MOUSE_PASSTHROUGH)));
+        vs.window.flags.set(WindowFlag::Resizable,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_RESIZABLE)));
+        vs.window.flags.set(WindowFlag::Transparent,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_TRANSPARENT_FRAMEBUFFER)));
+        vs.window.flags.set(WindowFlag::Visible,           static_cast<bool>(glfwGetWindowAttrib(w, GLFW_VISIBLE)));
 
         vs.window.opacity      = glfwGetWindowOpacity(w);
         glfwGetWindowSize(w, &vs.window.area.x, &vs.window.area.y);
         glfwGetFramebufferSize(w, &vs.window.pixels.x, &vs.window.pixels.y);
         glfwGetWindowContentScale(w, &vs.window.scale.x, &vs.window.scale.y);
         glfwGetWindowPos(w, &vs.window.position.x, &vs.window.position.y);
+        
+        vs.time             = glfwGetTime();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

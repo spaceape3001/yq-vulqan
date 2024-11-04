@@ -29,6 +29,6 @@ namespace yq::tachyon {
     
         ViewerRequest(Viewer*, const Param& p = {});
         virtual ~ViewerRequest();
-        
+        static void init_info();
     };
 }

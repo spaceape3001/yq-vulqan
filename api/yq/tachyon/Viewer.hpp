@@ -179,7 +179,7 @@ namespace yq::tachyon {
             //! Monitor (if fullscreen)
         Monitor             monitor() const;
         
-//        MouseState          mouse_state() const { return m_mouseState; }
+//        MouseMode          mouse_state() const { return m_mouseState; }
 
         //! TRUE if rendering is paused
         bool                render_paused() const { return m_paused; }

@@ -345,8 +345,7 @@ int main(int argc, char* argv[])
     
     //load_plugin_dir("plugin");
     app.finalize();
-    app.add_viewer(new CameraScene3DWidget);
-    app.run();
+    app.run(new CameraScene3DWidget);
     return 0;
 }
 

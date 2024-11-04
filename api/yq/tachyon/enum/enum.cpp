@@ -22,7 +22,7 @@
 #include "JoystickHatState.hpp"
 #include "LogicOp.hpp"
 #include "MouseButton.hpp"
-#include "MouseState.hpp"
+#include "MouseMode.hpp"
 #include "PipelineBinding.hpp"
 #include "PolygonMode.hpp"
 #include "PresentMode.hpp"
@@ -61,7 +61,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickHatState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)
-YQ_TYPE_IMPLEMENT(yq::tachyon::MouseState)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MouseMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PolygonMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PresentMode)

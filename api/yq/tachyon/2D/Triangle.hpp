@@ -29,7 +29,7 @@ namespace yq::tachyon {
         Triangle(const TriangleData<ColorVertex2D>&);
         ~Triangle();
         
-        static void initInfo();
+        static void init_info();
         
     private:
         VB1<ColorVertexData>    m_vertex;

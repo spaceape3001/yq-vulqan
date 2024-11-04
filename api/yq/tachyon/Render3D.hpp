@@ -111,6 +111,8 @@ namespace yq::tachyon {
         */
         //bool                            has_parentage(const Widget* p) const;
 
+        static void init_info();
+
     protected:
         
         Render3D();

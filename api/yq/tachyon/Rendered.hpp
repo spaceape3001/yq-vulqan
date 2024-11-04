@@ -80,6 +80,8 @@ namespace yq::tachyon {
         //! Returns the role of the current pipeline
         Pipeline::Role  role() const;
         
+        static void init_info();
+        
     protected:
         //! Pipeline override
         const Pipeline* m_pipeline = nullptr;

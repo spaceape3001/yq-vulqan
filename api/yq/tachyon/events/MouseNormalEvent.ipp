@@ -6,7 +6,6 @@
 
 #include "MouseNormalEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseNormalEvent)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<MouseNormalEvent>();
         w.description("Mouse Restore Event");
     }
-    
-    YQ_INVOKE(MouseNormalEvent::init_info();)
 }

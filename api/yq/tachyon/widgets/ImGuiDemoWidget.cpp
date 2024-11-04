@@ -22,13 +22,11 @@ namespace yq::tachyon {
         ImGui::ShowDemoWindow();
     }
     
-    namespace {
-        void reg_imgui_demo()
-        {
-            auto w = writer<ImGuiDemoWidget>();
-            w.imgui();
-        }
-        YQ_INVOKE(reg_imgui_demo();)
+    void ImGuiDemoWidget::init_info()
+    {
+        auto w = writer<ImGuiDemoWidget>();
+        w.description("Widget using the imgui demo");
+        w.imgui();
     }
 }
 

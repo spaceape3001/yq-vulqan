@@ -6,7 +6,6 @@
 
 #include "JoystickDisconnectEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void JoystickDisconnectEvent::init_info()
@@ -22,8 +21,6 @@ namespace yq::tachyon {
     JoystickDisconnectEvent::~JoystickDisconnectEvent()
     {
     }
-    
-    YQ_INVOKE(JoystickDisconnectEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickDisconnectEvent)

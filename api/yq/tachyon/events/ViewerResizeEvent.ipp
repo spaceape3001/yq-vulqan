@@ -6,7 +6,6 @@
 
 #include "ViewerResizeEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerResizeEvent)
 
@@ -30,6 +29,4 @@ namespace yq::tachyon {
         w.property("height", &ViewerResizeEvent::height).description("Viewer Window's new height").tag(kTag_Log);
         w.property("size", &ViewerResizeEvent::size).description("Viewer Window's new size");
     }
-    
-    YQ_INVOKE(ViewerResizeEvent::init_info();)
 }

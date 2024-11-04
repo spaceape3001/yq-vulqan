@@ -6,7 +6,6 @@
 
 #include "MouseDisableCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseDisableCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<MouseDisableCommand>();
         w.description("Mouse Disable Command");
     }
-    
-    YQ_INVOKE(MouseDisableCommand::init_info();)
 }

@@ -42,6 +42,12 @@ namespace yq::tachyon {
             u.viz->update(u, scene);
         Widget::prerecord(u);
     }
+
+    void Scene3DWidget::init_info()
+    {   
+        auto w = writer<Scene3DWidget>();
+        w.description("Widget for a 3D Scene");
+    }
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Scene3DWidget)

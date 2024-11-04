@@ -18,7 +18,7 @@ namespace yq::tachyon {
         //! Cache of images
         static TypedAssetFactory<Sampler>&    cache();
         
-        static SamplerCPtr                      simple();
+        static SamplerCPtr                    simple();
         
         //! Loads an image by key
         static const Sampler*                 load(std::string_view);
@@ -28,6 +28,8 @@ namespace yq::tachyon {
         Sampler(const SamplerInfo&);
         
         virtual size_t                  data_size() const override { return 0ULL; }
+        
+        static void init_info();
     
     private:
         AssetFactory&       factory() const override;

@@ -47,6 +47,8 @@ namespace yq::tachyon {
         
         //! Shader type
         const ShaderType  type;
+        
+        static void init_info();
     
     private:
         AssetFactory&       factory() const override;

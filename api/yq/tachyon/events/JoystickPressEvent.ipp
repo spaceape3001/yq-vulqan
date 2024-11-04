@@ -6,7 +6,6 @@
 
 #include "JoystickPressEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void JoystickPressEvent::init_info()
@@ -23,8 +22,6 @@ namespace yq::tachyon {
     JoystickPressEvent::~JoystickPressEvent()
     {
     }
-    
-    YQ_INVOKE(JoystickPressEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickPressEvent)

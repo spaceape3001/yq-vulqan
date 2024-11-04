@@ -310,14 +310,12 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
     
-    static void    reg_raster()
+    void    Raster::init_info()
     {
         auto w = writer<Raster>();
         w.description("Raster Image Asset");
-        w.options({Meta::Flag::IMAGE});
+        w.options({Meta::Flag::IMAGE, Meta::Flag::RASTER});
     }
-
-    YQ_INVOKE(reg_raster();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Raster)

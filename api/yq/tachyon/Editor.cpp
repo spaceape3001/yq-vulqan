@@ -36,11 +36,9 @@ namespace yq::tachyon {
         content_(u);
     }
     
-    static void reg_editor()
+    void Editor::init_info()
     {
         auto w = writer<Editor>();
         w.description("Editor base");
     }
-    
-    YQ_INVOKE(reg_editor();)
 }

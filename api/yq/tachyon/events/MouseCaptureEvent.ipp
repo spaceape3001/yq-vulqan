@@ -6,7 +6,6 @@
 
 #include "MouseCaptureEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseCaptureEvent)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<MouseCaptureEvent>();
         w.description("Mouse Capture Event");
     }
-    
-    YQ_INVOKE(MouseCaptureEvent::init_info();)
 }

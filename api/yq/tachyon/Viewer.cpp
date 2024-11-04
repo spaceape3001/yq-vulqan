@@ -43,7 +43,6 @@
 #include <yq/tachyon/Widget.hpp>
 
 #include <yq/errors.hpp>
-#include <yq/core/DelayInit.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/post/PBXInfoWriter.hpp>
@@ -682,7 +681,4 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     }
 #endif
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    YQ_INVOKE(Viewer::init_info();)
 }

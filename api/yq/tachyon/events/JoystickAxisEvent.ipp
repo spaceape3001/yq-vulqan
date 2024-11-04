@@ -6,7 +6,6 @@
 
 #include "JoystickAxisEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void JoystickAxisEvent::init_info()
@@ -26,8 +25,6 @@ namespace yq::tachyon {
     JoystickAxisEvent::~JoystickAxisEvent()
     {
     }
-    
-    YQ_INVOKE(JoystickAxisEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickAxisEvent)

@@ -15,7 +15,7 @@
 
 namespace yq::tachyon {
 
-    void ImageQuad2::initInfo()
+    void ImageQuad2::init_info()
     {
         auto w = writer<ImageQuad2>();
         {
@@ -52,11 +52,6 @@ namespace yq::tachyon {
     ImageQuad2::~ImageQuad2()
     {
     }
-
-
-    YQ_INVOKE(
-        ImageQuad2::initInfo();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ImageQuad2)

@@ -6,7 +6,6 @@
 
 #include "ViewerMaximizeEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerMaximizeEvent)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerMaximizeEvent>();
         w.description("Viewer Maximize Event");
     }
-    
-    YQ_INVOKE(ViewerMaximizeEvent::init_info();)
 }

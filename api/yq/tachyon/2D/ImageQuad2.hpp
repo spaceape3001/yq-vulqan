@@ -28,7 +28,7 @@ namespace yq::tachyon {
         ImageQuad2(const AxBox2D&, std::string_view szImage);
         ~ImageQuad2();
         
-        static void initInfo();
+        static void init_info();
         
     private:
 

@@ -7,7 +7,6 @@
 #include "MouseCommand.hpp"
 
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseCommand)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<MouseCommand>();
         w.description("Mouse command base class");
     }
-    
-    YQ_INVOKE(MouseCommand::init_info();)
 }

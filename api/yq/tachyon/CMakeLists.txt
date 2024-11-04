@@ -23,8 +23,8 @@ add_library(${PROJECT_NAME} SHARED
     GLSLShader.cpp
     Joystick.cpp
     Manager.cpp
+    Manipulator.cpp
     Monitor.cpp
-    #MouseEvent.cpp
     MyImGui.cpp
     Perspective.cpp
     Pipeline.cpp

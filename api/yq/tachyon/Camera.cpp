@@ -6,7 +6,6 @@
 
 #include <yq/tachyon/Camera.hpp>
 #include <yq/tachyon/CameraInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -54,11 +53,12 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    YQ_INVOKE(
-        auto cam   = writer<Camera>();
-        cam.property("name", &Camera::get_name).setter(&Camera::set_name);
-        cam.abstract();
-    )
+    void Camera::init_info()
+    {
+        auto w   = writer<Camera>();
+        w.property("name", &Camera::get_name).setter(&Camera::set_name);
+        w.abstract();
+    }
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Camera)

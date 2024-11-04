@@ -8,7 +8,6 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/asset/AssetIO.hpp>
-#include <yq/core/DelayInit.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/file/FileResolver.hpp>
 #include <yq/math/integer.hpp>
@@ -700,7 +699,6 @@ namespace yq::tachyon {
         w.receive(&ViGui::mouse_press_event);
         w.receive(&ViGui::mouse_move_event);
     }
-    YQ_INVOKE(ViGui::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViGui)

@@ -84,7 +84,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void    reg_render_3d()
+    void    Render3D::init_info()
     {
         auto w   = writer<Render3D>();
         w.property("pos", &Render3D::position).setter(&Render3D::set_position);
@@ -92,8 +92,6 @@ namespace yq::tachyon {
         w.property("ori", &Render3D::orientation).setter(&Render3D::set_orientation);
         w.property("bounds", &Render3D::bounds).setter(&Render3D::set_bounds);
     }
-    
-    YQ_INVOKE(reg_render_3d();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Render3D)

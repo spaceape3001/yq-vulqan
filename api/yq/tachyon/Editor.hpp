@@ -58,6 +58,8 @@ namespace yq::tachyon {
         //! Default destructor
         virtual ~Editor();
         
+        static void init_info();
+        
     protected:
 
         //! File path

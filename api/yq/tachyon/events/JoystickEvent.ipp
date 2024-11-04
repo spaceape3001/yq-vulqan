@@ -7,7 +7,6 @@
 #include "JoystickEvent.hpp"
 
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickEvent)
 
@@ -37,6 +36,4 @@ namespace yq::tachyon {
         w.description("Joystick event base class");
         w.property("jid", &JoystickEvent::joystick_id).tag(kTag_Log);
     }
-    
-    YQ_INVOKE(JoystickEvent::init_info();)
 }

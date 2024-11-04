@@ -7,7 +7,6 @@
 #include "ViewerCloseReply.hpp"
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 #include <yq/post/ReplyInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseReply)
 
@@ -30,6 +29,4 @@ namespace yq::tachyon {
         w.description("Viewer Close Reply");
         w.property("response", &ViewerCloseReply::response).tag(kTag_Log);
     }
-    
-    YQ_INVOKE(ViewerCloseReply::init_info();)
 }

@@ -775,14 +775,12 @@ namespace yq::tachyon {
         _poll(timeout);
     }
     
-    static void reg_glfw_manager()
+    void GLFWManager::init_info()
     {
         auto w = writer<GLFWManager>();
         w.abstract();
         w.description("GLFW Manager");
     }
-    
-    YQ_INVOKE(reg_glfw_manager();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWManager)

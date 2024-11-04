@@ -362,14 +362,12 @@ namespace yq::tachyon {
         //// monitor connect/disconnect
     //}
     
-    static void init_vulqan_manager()
+    void VulqanManager::init_info()
     {
         auto w = writer<VulqanManager>();
         w.abstract();   // prohibit creation outside of main
         w.description("Tachyon Vulkan Manager");
     }
-    
-    YQ_INVOKE(init_vulqan_manager();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VulqanManager)

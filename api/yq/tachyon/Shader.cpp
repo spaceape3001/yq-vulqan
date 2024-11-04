@@ -82,14 +82,12 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    void    reg_shader_asset()
+    void    Shader::init_info()
     {
         auto ti = writer<Shader>();
         ti.description("Shader Asset");
         ti.property("Type", &Shader::type);
     }
-
-    YQ_INVOKE(reg_shader_asset();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Shader)

@@ -6,7 +6,6 @@
 
 #include "ViewerMoveEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerMoveEvent)
 
@@ -30,6 +29,4 @@ namespace yq::tachyon {
         w.property("y", &ViewerMoveEvent::y).description("Viewer Window's new y-position").tag(kTag_Log);
         w.property("position", &ViewerMoveEvent::position).description("Viewer Window's new position");
     }
-    
-    YQ_INVOKE(ViewerMoveEvent::init_info();)
 }

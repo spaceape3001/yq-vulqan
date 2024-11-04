@@ -6,7 +6,6 @@
 
 #include "MouseEnterEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -23,8 +22,6 @@ namespace yq::tachyon {
         auto w = writer<MouseEnterEvent>();
         w.description("Mouse Enter Event");
     }
-    
-    YQ_INVOKE(MouseEnterEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseEnterEvent)

@@ -43,5 +43,7 @@ namespace yq::tachyon {
         
         //! Sets the camera for us (helper)
         void    set_camera(CameraCPtr);
+        
+        static void init_info();
     };
 }

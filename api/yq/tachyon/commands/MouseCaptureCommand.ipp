@@ -6,7 +6,6 @@
 
 #include "MouseCaptureCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseCaptureCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<MouseCaptureCommand>();
         w.description("Mouse Capture Command");
     }
-    
-    YQ_INVOKE(MouseCaptureCommand::init_info();)
 }

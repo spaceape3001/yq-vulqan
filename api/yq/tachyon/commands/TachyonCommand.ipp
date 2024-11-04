@@ -7,7 +7,6 @@
 #include "TachyonCommand.hpp"
 
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonCommand)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<TachyonCommand>();
         w.description("Tachyon command base class");
     }
-    
-    YQ_INVOKE(TachyonCommand::init_info();)
 }

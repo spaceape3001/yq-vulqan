@@ -5,9 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MouseReleaseEvent.hpp"
-#include <yq/core/DelayInit.hpp>
-
 #include <yq/post/EventInfoWriter.hpp>
+
 namespace yq::tachyon {
 
     MouseReleaseEvent::MouseReleaseEvent(const Param& p) : MouseEvent(p), 
@@ -43,8 +42,6 @@ namespace yq::tachyon {
         w.property("middle", &MouseReleaseEvent::middle).description("TRUE if the middle button was released");
         w.property("right", &MouseReleaseEvent::right).description("TRUE if the right button was released");
     }
-    
-    YQ_INVOKE(MouseReleaseEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseReleaseEvent)

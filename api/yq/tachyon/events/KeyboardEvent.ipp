@@ -7,7 +7,6 @@
 #include "KeyboardEvent.hpp"
 
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyboardEvent)
 
@@ -39,6 +38,4 @@ namespace yq::tachyon {
             w.description("Keyboard event base class");
         }
     }
-    
-    YQ_INVOKE(KeyboardEvent::init_info();)
 }

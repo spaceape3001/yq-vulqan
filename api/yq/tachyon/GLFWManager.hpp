@@ -38,6 +38,8 @@ namespace yq::tachyon {
         static GLFWManager*         manager();
         
         static bool                 raw_mouse_motion_supported();
+        
+        static void init_info();
 
     protected:
         

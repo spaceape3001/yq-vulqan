@@ -7,7 +7,6 @@
 #include "AppCommand.hpp"
 
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppCommand)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<AppCommand>();
         w.description("App command base class");
     }
-    
-    YQ_INVOKE(AppCommand::init_info();)
 }

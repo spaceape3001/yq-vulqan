@@ -7,7 +7,6 @@
 #include "ViewerCommand.hpp"
 
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCommand)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerCommand>();
         w.description("Viewer command base class");
     }
-    
-    YQ_INVOKE(ViewerCommand::init_info();)
 }

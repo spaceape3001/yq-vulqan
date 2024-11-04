@@ -7,7 +7,6 @@
 #include "ViewerReply.hpp"
 
 #include <yq/post/ReplyInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerReply)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerReply>();
         w.description("Viewer reply base class");
     }
-    
-    YQ_INVOKE(ViewerReply::init_info();)
 }

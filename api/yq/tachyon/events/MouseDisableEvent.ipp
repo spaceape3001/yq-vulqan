@@ -6,7 +6,6 @@
 
 #include "MouseDisableEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseDisableEvent)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<MouseDisableEvent>();
         w.description("Mouse Disable Event");
     }
-    
-    YQ_INVOKE(MouseDisableEvent::init_info();)
 }

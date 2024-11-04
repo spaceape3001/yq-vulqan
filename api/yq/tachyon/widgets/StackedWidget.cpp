@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "StackedWidget.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/tachyon/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -45,15 +44,11 @@ namespace yq::tachyon {
     StackedWidget::StackedWidget() = default;
     StackedWidget::~StackedWidget() = default;
     
-    static void reg_stacked_widget()
+    void StackedWidget::init_info()
     {
-        {
-            auto w = writer<StackedWidget>();
-            w.description("Stacked, as in one widget at a time");
-        }
+        auto w = writer<StackedWidget>();
+        w.description("Stacked, as in one widget at a time");
     }
-    
-    YQ_INVOKE(reg_stacked_widget();)
 }
 
 

@@ -6,7 +6,6 @@
 
 #include "ViewerShowCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerShowCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerShowCommand>();
         w.description("Viewer Show Command");
     }
-    
-    YQ_INVOKE(ViewerShowCommand::init_info();)
 }

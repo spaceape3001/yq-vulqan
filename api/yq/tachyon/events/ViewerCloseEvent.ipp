@@ -6,7 +6,6 @@
 
 #include "ViewerCloseEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseEvent)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerCloseEvent>();
         w.description("Viewer Close Event");
     }
-    
-    YQ_INVOKE(ViewerCloseEvent::init_info();)
 }

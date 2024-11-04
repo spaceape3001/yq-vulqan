@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/core/Object.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
     class ToolInfo : public ObjectInfo {
@@ -30,21 +29,10 @@ namespace yq::tachyon {
         
         //  Tool TODO
         
+        static void init_info();
+        
     protected:
         Tool();
         virtual ~Tool();
     };
-    
-    template <typename C>
-    class ToolInfo::Writer : public ObjectInfo::Writer<C> {
-    public:
-        Writer(ToolInfo* manipInfo) : ObjectInfo::Writer<C>(manipInfo)
-        {
-        }
-        
-        Writer(ToolInfo& manipInfo) : Writer(&manipInfo)
-        {
-        }
-    };
-    
 }

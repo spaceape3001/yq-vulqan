@@ -6,7 +6,6 @@
 
 #include "KeyRepeatEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -25,8 +24,6 @@ namespace yq::tachyon {
         w.property("key", &KeyRepeatEvent::key).description("Key code").tag(kTag_Log);
         w.property("scancode", &KeyRepeatEvent::scan).description("O/S scan code").tag(kTag_Log);
     }
-    
-    YQ_INVOKE(KeyRepeatEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyRepeatEvent)

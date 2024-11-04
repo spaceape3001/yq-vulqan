@@ -15,7 +15,7 @@
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    void Tetrahedron::initInfo()
+    void Tetrahedron::init_info()
     {
         static const uint16_t   kIndices[] = { 1, 2, 3, 0, 3, 2, 0, 1, 3, 0, 2, 1 };
         static IBO<uint16_t>    indices(kIndices);
@@ -45,10 +45,6 @@ namespace yq::tachyon {
     Tetrahedron::~Tetrahedron()
     {
     }
-    
-    YQ_INVOKE(
-        Tetrahedron::initInfo();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Tetrahedron)

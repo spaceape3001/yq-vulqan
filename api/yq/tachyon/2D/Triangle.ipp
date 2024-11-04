@@ -16,7 +16,7 @@
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    void Triangle::initInfo()
+    void Triangle::init_info()
     {
         auto w = writer<Triangle>();
         
@@ -44,10 +44,6 @@ namespace yq::tachyon {
     Triangle::~Triangle()
     {
     }
-    
-    YQ_INVOKE(
-        Triangle::initInfo();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Triangle)

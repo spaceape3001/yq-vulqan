@@ -6,7 +6,6 @@
 
 #include "MonitorConnectEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void MonitorConnectEvent::init_info()
@@ -22,8 +21,6 @@ namespace yq::tachyon {
     MonitorConnectEvent::~MonitorConnectEvent()
     {
     }
-    
-    YQ_INVOKE(MonitorConnectEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorConnectEvent)

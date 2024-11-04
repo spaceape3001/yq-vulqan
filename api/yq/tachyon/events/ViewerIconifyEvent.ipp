@@ -6,7 +6,6 @@
 
 #include "ViewerIconifyEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerIconifyEvent)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerIconifyEvent>();
         w.description("Viewer Iconify Event");
     }
-    
-    YQ_INVOKE(ViewerIconifyEvent::init_info();)
 }

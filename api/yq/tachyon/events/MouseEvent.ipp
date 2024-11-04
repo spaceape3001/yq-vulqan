@@ -7,7 +7,6 @@
 #include "MouseEvent.hpp"
 
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseEvent)
 
@@ -58,6 +57,4 @@ namespace yq::tachyon {
         w.property("middle", &MouseEvent::middle_button).description("State of Mouse's button button").tag(kTag_Log);
         w.property("right", &MouseEvent::right_button).description("State of Mouse's right button").tag(kTag_Log);
     }
-    
-    YQ_INVOKE(MouseEvent::init_info();)
 }

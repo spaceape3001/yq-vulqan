@@ -6,7 +6,6 @@
 
 #include "ViewerRestoreCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerRestoreCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerRestoreCommand>();
         w.description("Viewer Restore Command");
     }
-    
-    YQ_INVOKE(ViewerRestoreCommand::init_info();)
 }

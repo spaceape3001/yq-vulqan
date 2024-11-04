@@ -12,8 +12,8 @@
 #include <yq/tachyon/Viewer.hpp>
 #include <yq/tachyon/Task.hpp>
 #include <yq/tachyon/Widget.hpp>
+#include <yq/tachyon/WidgetInfoWriter.hpp>
 #include <yq/tachyon/widgets/StackedWidget.hpp>
-
 
 #include <iostream>
 

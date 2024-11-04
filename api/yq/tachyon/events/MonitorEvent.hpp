@@ -27,6 +27,8 @@ namespace yq::tachyon {
 
         const Monitor&  monitor() const { return m_monitor; }
         
+        static void init_info();
+        
     protected:
         MonitorEvent(Monitor, const Param&);
     private:

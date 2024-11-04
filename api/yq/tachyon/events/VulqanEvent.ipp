@@ -8,7 +8,6 @@
 #include "VulqanEvent.hpp"
 
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VulqanEvent)
 
@@ -36,6 +35,4 @@ namespace yq::tachyon {
         auto w = writer<VulqanEvent>();
         w.description("Vulqan event base class");
     }
-    
-    YQ_INVOKE(VulqanEvent::init_info();)
 }

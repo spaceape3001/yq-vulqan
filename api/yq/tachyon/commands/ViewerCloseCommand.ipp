@@ -6,7 +6,6 @@
 
 #include "ViewerCloseCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerCloseCommand>();
         w.description("Viewer Close Command");
     }
-    
-    YQ_INVOKE(ViewerCloseCommand::init_info();)
 }

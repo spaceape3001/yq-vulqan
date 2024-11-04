@@ -6,7 +6,6 @@
 
 #include "ViewerCloseRequest.hpp"
 #include <yq/post/RequestInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseRequest)
 
@@ -24,11 +23,7 @@ namespace yq::tachyon {
 
     void ViewerCloseRequest::init_info()
     {
-        {
-            auto w = writer<ViewerCloseRequest>();
-            w.description("Viewer Close Request");
-        }
+        auto w = writer<ViewerCloseRequest>();
+        w.description("Viewer Close Request");
     }
-    
-    YQ_INVOKE(ViewerCloseRequest::init_info();)
 }

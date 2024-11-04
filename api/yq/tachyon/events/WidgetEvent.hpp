@@ -34,6 +34,8 @@ namespace yq::tachyon {
         
         Widget*     widget() const { return m_widget; }
         
+        static void init_info();
+        
     private:
         Widget*     m_widget;
     };

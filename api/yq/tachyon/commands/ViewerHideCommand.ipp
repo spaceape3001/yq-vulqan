@@ -6,7 +6,6 @@
 
 #include "ViewerHideCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerHideCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerHideCommand>();
         w.description("Viewer Hide Command");
     }
-    
-    YQ_INVOKE(ViewerHideCommand::init_info();)
 }

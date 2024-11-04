@@ -6,7 +6,6 @@
 
 #include "MonitorDisconnectEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void MonitorDisconnectEvent::init_info()
@@ -22,8 +21,6 @@ namespace yq::tachyon {
     MonitorDisconnectEvent::~MonitorDisconnectEvent()
     {
     }
-    
-    YQ_INVOKE(MonitorDisconnectEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorDisconnectEvent)

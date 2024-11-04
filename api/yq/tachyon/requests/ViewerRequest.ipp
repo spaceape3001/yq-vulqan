@@ -7,7 +7,6 @@
 #include "ViewerRequest.hpp"
 
 #include <yq/post/RequestInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerRequest)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerRequest>();
         w.description("Viewer request base class");
     }
-    
-    YQ_INVOKE(ViewerRequest::init_info();)
 }

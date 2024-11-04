@@ -25,6 +25,8 @@ namespace yq::tachyon {
     
         VulqanManager(const AppCreateInfo&);
         ~VulqanManager();
+        
+        static void init_info();
 
     protected:
     

@@ -6,7 +6,6 @@
 
 #include "KeyReleaseEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 

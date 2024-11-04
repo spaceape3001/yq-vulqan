@@ -7,7 +7,6 @@
 #include "TachyonRequest.hpp"
 
 #include <yq/post/RequestInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonRequest)
 
@@ -31,11 +30,7 @@ namespace yq::tachyon {
 
     void TachyonRequest::init_info()
     {
-        {
-            auto w = writer<TachyonRequest>();
-            w.description("Tachyon request base class");
-        }
+        auto w = writer<TachyonRequest>();
+        w.description("Tachyon request base class");
     }
-    
-    YQ_INVOKE(TachyonRequest::init_info();)
 }

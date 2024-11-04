@@ -8,8 +8,6 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/tachyon/RenderedInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)
-
 namespace yq::tachyon {
     RenderedInfo::RenderedInfo(std::string_view name, MetaObjectInfo& base, const std::source_location& sl) : 
         MetaObjectInfo(name, base, sl)
@@ -93,11 +91,11 @@ namespace yq::tachyon {
         m_wireframe = v;
     }
     
-    static void reg_rendered()
+    void Rendered::init_info()
     {
         auto w = writer<Rendered>();
         w.description("Render object base");
     }
-    
-    YQ_INVOKE(reg_rendered();)
 }
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)

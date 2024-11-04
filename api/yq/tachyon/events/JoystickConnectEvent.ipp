@@ -6,7 +6,6 @@
 
 #include "JoystickConnectEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void JoystickConnectEvent::init_info()
@@ -22,8 +21,6 @@ namespace yq::tachyon {
     JoystickConnectEvent::~JoystickConnectEvent()
     {
     }
-    
-    YQ_INVOKE(JoystickConnectEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickConnectEvent)

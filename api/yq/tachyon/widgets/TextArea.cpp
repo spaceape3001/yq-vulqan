@@ -10,7 +10,6 @@
 #include <yq/text/IterUtf8.hpp>
 #include <yq/text/vsplit.hpp>
 //
-#include <yq/core/DelayInit.hpp>
 #include <yq/stream/Text.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -515,12 +514,10 @@ namespace yq::widget {
         }
     }
     
-    void    reg_textarea()
+    void    TextArea::init_info()
     {
         auto w = writer<TextArea>();
         w.imgui();
     }
-    
-    YQ_INVOKE(reg_textarea();)
 }
 

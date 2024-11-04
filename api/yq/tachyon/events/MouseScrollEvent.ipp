@@ -6,7 +6,6 @@
 
 #include "MouseScrollEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -26,8 +25,6 @@ namespace yq::tachyon {
         w.property("dx", &MouseScrollEvent::delta_x).tag(kTag_Log);
         w.property("dy", &MouseScrollEvent::delta_y).tag(kTag_Log);
     }
-    
-    YQ_INVOKE(MouseScrollEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseScrollEvent)

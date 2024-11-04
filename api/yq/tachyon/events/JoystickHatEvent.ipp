@@ -6,7 +6,6 @@
 
 #include "JoystickHatEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void JoystickHatEvent::init_info()
@@ -25,8 +24,6 @@ namespace yq::tachyon {
     JoystickHatEvent::~JoystickHatEvent()
     {
     }
-    
-    YQ_INVOKE(JoystickHatEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickHatEvent)

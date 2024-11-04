@@ -37,6 +37,7 @@
 #include <yq/tachyon/Shader.hpp>
 #include <yq/tachyon/Texture.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>
+#include <yq/tachyon/WidgetInfoWriter.hpp>
 
 #include <iostream>
 #include <chrono>
@@ -97,7 +98,7 @@ struct HelloTriangle : public Rendered {
     
     Warp                warp;
     
-    static void initInfo()
+    static void init_info()
     {
         static VBO<Vertex>  verts(vertices);
     
@@ -144,7 +145,7 @@ struct HelloQuad : public Rendered {
 
     Ref<const Texture>  tex;
 
-    static void initInfo()
+    static void init_info()
     {
         static VBO<Vertex2>  verts(vertices2);
         //static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
@@ -220,9 +221,6 @@ int main(int argc, char* argv[])
     
     Application app(argc, argv, aci);
     //load_plugin_dir("plugin");
-    
-    HelloTriangle::initInfo();
-    HelloQuad::initInfo();
     
     post::LoggerBox     postLogging({.global=true});
     

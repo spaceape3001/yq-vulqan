@@ -6,7 +6,6 @@
 
 #include "InputEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::InputEvent)
 
@@ -126,6 +125,4 @@ namespace yq::tachyon {
         w.property("super_left", &InputEvent::super).description("Left super (OS) key was down");
         w.property("super_right", &InputEvent::super).description("Right super (OS) key was down");
     }
-    
-    YQ_INVOKE(InputEvent::init_info();)
 }

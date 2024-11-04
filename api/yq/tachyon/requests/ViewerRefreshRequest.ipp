@@ -6,7 +6,6 @@
 
 #include "ViewerRefreshRequest.hpp"
 #include <yq/post/RequestInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerRefreshRequest)
 
@@ -24,11 +23,7 @@ namespace yq::tachyon {
 
     void ViewerRefreshRequest::init_info()
     {
-        {
-            auto w = writer<ViewerRefreshRequest>();
-            w.description("Viewer Refresh Request");
-        }
+        auto w = writer<ViewerRefreshRequest>();
+        w.description("Viewer Refresh Request");
     }
-    
-    YQ_INVOKE(ViewerRefreshRequest::init_info();)
 }

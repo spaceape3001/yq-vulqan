@@ -7,7 +7,6 @@
 #include "ViewerEvent.hpp"
 
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerEvent)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerEvent>();
         w.description("Viewer event base class");
     }
-    
-    YQ_INVOKE(ViewerEvent::init_info();)
 }

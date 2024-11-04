@@ -20,6 +20,7 @@
 #include <yq/tachyon/Viewer.hpp>
 #include <yq/tachyon/widgets/TextArea.hpp>
 #include <yq/tachyon/Widget.hpp>
+#include <yq/tachyon/WidgetInfoWriter.hpp>
 
 #include <iostream>
 #include <TextEditor.h>
@@ -167,6 +168,12 @@ void    N2Editor::imgui_(ViContext&u)
 class TextKing : public Widget {
     YQ_OBJECT_DECLARE(TextKing, Widget)
 public:
+    static void init_info()
+    {
+        auto w = writer<TextKing>();
+        w.imgui();
+    }
+
     TextKing() 
     {
     }

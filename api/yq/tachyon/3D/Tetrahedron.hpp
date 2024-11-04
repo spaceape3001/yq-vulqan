@@ -34,7 +34,7 @@ namespace yq::tachyon {
         ~Tetrahedron();
         
         //! Internal use, initializes the tetrahedron meta information
-        static void initInfo();
+        static void init_info();
         
     private:
         VB1<ColorVertexData>   m_vertex;

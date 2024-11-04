@@ -6,7 +6,6 @@
 
 #include "JoystickReleaseEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
     void JoystickReleaseEvent::init_info()

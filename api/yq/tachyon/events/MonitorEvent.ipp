@@ -6,7 +6,6 @@
 
 #include "MonitorEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorEvent)
 
@@ -30,13 +29,9 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_monitor_event()
+    void MonitorEvent::init_info()
     {
-        {
-            auto w = writer<MonitorEvent>();
-            w.description("Monitor event base class");
-        }
+        auto w = writer<MonitorEvent>();
+        w.description("Monitor event base class");
     }
-    
-    YQ_INVOKE(reg_monitor_event();)
 }

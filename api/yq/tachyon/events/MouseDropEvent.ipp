@@ -6,7 +6,6 @@
 
 #include "MouseDropEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -24,8 +23,6 @@ namespace yq::tachyon {
         auto w = writer<MouseDropEvent>();
         w.description("Mouse Drop Event");
     }
-    
-    YQ_INVOKE(MouseDropEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseDropEvent)

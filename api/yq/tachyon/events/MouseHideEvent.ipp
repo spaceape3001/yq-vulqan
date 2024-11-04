@@ -6,7 +6,6 @@
 
 #include "MouseHideEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseHideEvent)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<MouseHideEvent>();
         w.description("Mouse Hide Event");
     }
-    
-    YQ_INVOKE(MouseHideEvent::init_info();)
 }

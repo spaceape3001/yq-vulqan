@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Manipulator.hpp"
-#include <yq/core/DelayInit.hpp>
+#include "ManipulatorInfoWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Manipulator)
 
@@ -26,13 +26,9 @@ namespace yq::tachyon {
     }
     
     
-    static void reg_manipulator()
+    void Manipulator::init_info()
     {
-        {
-            auto w = writer<Manipulator>();
-            w.description("Manipulator base");
-        }
+        auto w = writer<Manipulator>();
+        w.description("Manipulator base");
     }
-    
-    YQ_INVOKE(reg_manipulator();)
 }

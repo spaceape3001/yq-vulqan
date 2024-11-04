@@ -6,7 +6,6 @@
 
 #include "ViewerPauseCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerPauseCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerPauseCommand>();
         w.description("Viewer Pause Command");
     }
-    
-    YQ_INVOKE(ViewerPauseCommand::init_info();)
 }

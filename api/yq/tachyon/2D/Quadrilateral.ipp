@@ -16,7 +16,7 @@
 
 
 namespace yq::tachyon {
-    void Quadrilateral::initInfo()
+    void Quadrilateral::init_info()
     {
         static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
     
@@ -46,10 +46,6 @@ namespace yq::tachyon {
     Quadrilateral::~Quadrilateral()
     {
     }
-    
-    YQ_INVOKE(
-        Quadrilateral::initInfo();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Quadrilateral)

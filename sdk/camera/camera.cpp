@@ -36,6 +36,7 @@
 #include <yq/tachyon/cameras/TargetCamera.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/Scene.hpp>
+#include <yq/tachyon/WidgetInfoWriter.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>
 
 #include <chrono>
@@ -113,8 +114,10 @@ struct CameraScene3DWidget : public Scene3DWidget {
     bool                    slave_clock = true;
     bool                    show_control    = true;
     
-    static void    initInfo()
+    static void    init_info()
     {
+        auto w = writer<CameraScene3DWidget>();
+        w.imgui();
     }
     
 
@@ -340,8 +343,6 @@ int main(int argc, char* argv[])
     aci.view.imgui        = true;
     
     Application app(argc, argv, aci);
-    
-    CameraScene3DWidget::initInfo();
     
     //load_plugin_dir("plugin");
     app.finalize();

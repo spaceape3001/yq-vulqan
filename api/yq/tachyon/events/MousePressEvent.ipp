@@ -6,7 +6,6 @@
 
 #include "MousePressEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -43,8 +42,6 @@ namespace yq::tachyon {
         w.property("middle", &MousePressEvent::middle).description("TRUE if the middle button was pressed");
         w.property("right", &MousePressEvent::right).description("TRUE if the right button was pressed");
     }
-    
-    YQ_INVOKE(MousePressEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MousePressEvent)

@@ -6,7 +6,6 @@
 
 #include "ViewerAttentionCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerAttentionCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerAttentionCommand>();
         w.description("Viewer Attention Command");
     }
-    
-    YQ_INVOKE(ViewerAttentionCommand::init_info();)
 }

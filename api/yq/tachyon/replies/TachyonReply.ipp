@@ -7,7 +7,6 @@
 #include "TachyonReply.hpp"
 
 #include <yq/post/ReplyInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonReply)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<TachyonReply>();
         w.description("Tachyon reply base class");
     }
-    
-    YQ_INVOKE(TachyonReply::init_info();)
 }

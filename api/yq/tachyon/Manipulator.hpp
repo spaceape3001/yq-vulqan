@@ -29,6 +29,8 @@ namespace yq::tachyon {
         //  Manipulator TODO
         Manipulator();
         virtual ~Manipulator();
+        
+        static void init_info();
     };
     
     template <typename C>

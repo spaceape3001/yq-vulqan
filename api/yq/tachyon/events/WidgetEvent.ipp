@@ -5,8 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "WidgetEvent.hpp"
-
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WidgetEvent)
@@ -31,13 +29,9 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_widget_event()
+    void WidgetEvent::init_info()
     {
-        {
-            auto w = writer<WidgetEvent>();
-            w.description("WidgetEvent base class");
-        }
+        auto w = writer<WidgetEvent>();
+        w.description("WidgetEvent base class");
     }
-    
-    YQ_INVOKE(reg_widget_event();)
 }

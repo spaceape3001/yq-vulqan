@@ -7,7 +7,6 @@
 #include "TachyonEvent.hpp"
 
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonEvent)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<TachyonEvent>();
         w.description("Tachyon event base class");
     }
-    
-    YQ_INVOKE(TachyonEvent::init_info();)
 }

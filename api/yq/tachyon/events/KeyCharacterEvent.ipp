@@ -6,7 +6,6 @@
 
 #include "KeyCharacterEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -24,8 +23,6 @@ namespace yq::tachyon {
         w.description("Key Character Event");
         w.property("code", &KeyCharacterEvent::code).tag(kTag_Log);
     }
-    
-    YQ_INVOKE(KeyCharacterEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyCharacterEvent)

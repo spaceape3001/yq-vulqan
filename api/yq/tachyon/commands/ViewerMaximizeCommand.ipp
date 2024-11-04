@@ -6,7 +6,6 @@
 
 #include "ViewerMaximizeCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerMaximizeCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<ViewerMaximizeCommand>();
         w.description("Viewer Maximize Command");
     }
-    
-    YQ_INVOKE(ViewerMaximizeCommand::init_info();)
 }

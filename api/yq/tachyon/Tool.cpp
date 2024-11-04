@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Tool.hpp"
-#include <yq/core/DelayInit.hpp>
+#include "ToolInfoWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Tool)
 
@@ -24,11 +24,9 @@ namespace yq::tachyon {
     {
     }
     
-    static void reg_tool()
+    void Tool::init_info()
     {
         auto w = writer<Tool>();
         w.description("Tool base");
     }
-    
-    YQ_INVOKE(reg_tool();)
 }

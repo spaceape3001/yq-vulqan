@@ -6,7 +6,6 @@
 
 #include "MouseMoveEvent.hpp"
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 namespace yq::tachyon {
 
@@ -23,8 +22,6 @@ namespace yq::tachyon {
         auto w = writer<MouseMoveEvent>();
         w.description("Mouse Move Event");
     }
-    
-    YQ_INVOKE(MouseMoveEvent::init_info();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseMoveEvent)

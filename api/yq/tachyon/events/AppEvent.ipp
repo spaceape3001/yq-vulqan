@@ -7,7 +7,6 @@
 #include "AppEvent.hpp"
 
 #include <yq/post/EventInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppEvent)
 
@@ -34,6 +33,4 @@ namespace yq::tachyon {
         auto w = writer<AppEvent>();
         w.description("Application event base class");
     }
-    
-    YQ_INVOKE(AppEvent::init_info();)
 }

@@ -6,7 +6,6 @@
 
 #include "MouseNormalCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseNormalCommand)
 
@@ -27,6 +26,4 @@ namespace yq::tachyon {
         auto w = writer<MouseNormalCommand>();
         w.description("Mouse Normal Command");
     }
-    
-    YQ_INVOKE(MouseNormalCommand::init_info();)
 }

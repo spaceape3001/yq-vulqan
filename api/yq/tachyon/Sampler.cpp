@@ -41,14 +41,12 @@ namespace yq::tachyon {
         return cache();
     }
 
-    static void    reg_sampler()
+    void    Sampler::init_info()
     {
         auto w = writer<Sampler>();
         w.description("Sampler Asset");
         w.options({Meta::Flag::SAMPLER});
     }
-
-    YQ_INVOKE(reg_sampler();)
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Sampler)

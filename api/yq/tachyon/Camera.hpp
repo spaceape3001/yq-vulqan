@@ -66,6 +66,8 @@ namespace yq::tachyon {
         //! Sets the camera's name
         void                set_name(const std::string&);
 
+        static void init_info();
+
     protected:
     
         //! Default constructor

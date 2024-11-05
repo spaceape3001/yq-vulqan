@@ -4,33 +4,33 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerCommand.hpp"
+#include "GLFWCommand.hpp"
 
 #include <yq/post/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWCommand)
 
 namespace yq::tachyon {
-    ViewerCommandInfo::ViewerCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl) :
+    GLFWCommandInfo::GLFWCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl) :
         post::CommandInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerCommand::ViewerCommand(ViewerPtr v, const Param& p) : post::Command(p), ViewerBind(v)
+    GLFWCommand::GLFWCommand(const Param& p) : post::Command(p)
     {
     }
     
-    ViewerCommand::~ViewerCommand()
+    GLFWCommand::~GLFWCommand()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerCommand::init_info()
+    void GLFWCommand::init_info()
     {
-        auto w = writer<ViewerCommand>();
-        w.description("Viewer command base class");
+        auto w = writer<GLFWCommand>();
+        w.description("GLFW command base class");
     }
 }

@@ -6,17 +6,21 @@
 
 #pragma once
 
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/core/Ref.hpp>
+
 namespace yq::tachyon {
     class Viewer;
 
     //! Utiltity to bind a viewer to the whatever...
     class ViewerBind {
     public:
-        Viewer* viewer() const { return m_viewer; }
+        const ViewerPtr&    viewer() const;
         
     protected:
-        ViewerBind(Viewer* v) : m_viewer(v) {}
-        virtual ~ViewerBind(){}
-        Viewer* const   m_viewer;
+        ViewerBind(ViewerPtr v);
+        virtual ~ViewerBind();
+        
+        const ViewerPtr m_viewer;
     };
 }

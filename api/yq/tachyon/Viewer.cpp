@@ -14,6 +14,7 @@
 #include <yq/tachyon/ViewerInitData.hpp>
 #include <yq/tachyon/ViGui.hpp>
 
+#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
 #include <yq/tachyon/commands/MouseCaptureCommand.hpp>
 #include <yq/tachyon/commands/MouseDisableCommand.hpp>
 #include <yq/tachyon/commands/MouseHideCommand.hpp>
@@ -73,13 +74,28 @@ namespace yq::tachyon {
     {
         auto w = writer<Viewer>();
         w.description("Tachyon Viewer");
+        w.receive(&Viewer::close_request);
+        w.receive(&Viewer::close_command);
 #if 0        
-        w.receive(&Viewer::viewer_close_request);
-        w.receive(&Viewer::viewer_close_command);
         w.receive(&Viewer::viewer_resize_event);
         w.property("mouse", &Viewer::mouse_state).description("Mouse state");
 #endif
     }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+
+        const ViewerPtr&    ViewerBind::viewer() const 
+        { 
+            return m_viewer; 
+        }
+        
+        ViewerBind::ViewerBind(ViewerPtr v) : m_viewer(v)
+        {
+        }
+        
+        ViewerBind::~ViewerBind()
+        {
+        }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  INITIALIZATION/DESTRUCTION
@@ -592,56 +608,54 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
     //  CLOSING
     //  
 
-#if 0
     void    Viewer::cmd_close()
     {
+        //  Steps on destruction
+        //  Viewer close event & hide
+        //  (Wait 0.1s?)
+        //  Destroy imgui/vulkan
+        //  Delete window
+        //  Remove from app & destroy viewer
+    
+    
+        //  For now... we're keeping this distinct (separete)
         dispatch(new ViewerCloseEvent(this));
-        glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+        dispatch(new GLFWCloseCommand(this));
     }
 
-    bool     Viewer::viewer_close_command(const ViewerCloseCommandCPtr& cmd)
+    void     Viewer::close_command(const ViewerCloseCommand& cmd)
     {
-        if(!cmd)
-            return false;
-        if(cmd->viewer() != this)
-            return false;
         cmd_close();
-        return true;
     }
-#endif
 
-    bool     Viewer::viewer_close_request(const ViewerCloseRequestCPtr& req)
+    void     Viewer::close_request(const ViewerCloseRequestCPtr& req)
     {
-        if(!req)
-            return false;
-        if(req->viewer() != this)
-            return false;
+        // this is the *ONLY* thread that'll be altering this
         if(m_viewerCloseRequest){
             if(m_viewerCloseRequest != req){
                 dispatch(new ViewerCloseReply(req, this, Response::Busy));
             }
-            return true;
+            return;
         }
-
-        m_viewerCloseRequest    = req;
+        
+        assign(&Viewer::m_viewerCloseRequest, req);
         on_close_request();
-        return true;
     }
 
     void     Viewer::accept(close_t)
     {
-        if(m_viewerCloseRequest){
-            dispatch(new ViewerCloseReply(m_viewerCloseRequest, this, Response::QaPla));
-            m_viewerCloseRequest = {};
+        ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
+        if(req){
+            dispatch(new ViewerCloseReply(req, this, Response::QaPla));
+            cmd_close();
         }
-//        cmd_close();
     }
     
     void     Viewer::reject(close_t)
     {
-        if(m_viewerCloseRequest){
-            dispatch(new ViewerCloseReply(m_viewerCloseRequest, this, Response::Rejected));
-            m_viewerCloseRequest = {};
+        ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
+        if(req){
+            dispatch(new ViewerCloseReply(req, this, Response::Rejected));
         }
     }
     

@@ -14,10 +14,13 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/Tachyon.hpp>
 #include <yq/tachyon/ViewerState.hpp>
+#include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/commands/forward.hpp>
 #include <yq/tachyon/events/forward.hpp>
 #include <yq/tachyon/replies/forward.hpp>
 #include <yq/tachyon/requests/forward.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>
@@ -41,7 +44,6 @@ namespace yq::tachyon {
     class ViGui;
     class Visualizer;
     struct ViContext;
-    struct ViewerCreateInfo;
     
     
     /*! \brief Vulkan Window
@@ -50,7 +52,7 @@ namespace yq::tachyon {
         GLFW Window and the Vulkan Device.  It will hold ONE widget
         and one widget only, this is the root widget for the viewer.
     */
-    class Viewer : public Tachyon {
+    class Viewer : public Tachyon, public RefCount {
         YQ_OBJECT_DECLARE(Viewer, Tachyon)
     
         friend class Application;
@@ -69,7 +71,7 @@ namespace yq::tachyon {
     
         /*! \brief Creates the viewer
         */
-        Viewer(const ViewerCreateInfo&vci, Widget* w);
+        Viewer(const ViewerCreateInfo&vci, WidgetPtr w);
         
         //! Destructor
         virtual ~Viewer();
@@ -90,10 +92,12 @@ namespace yq::tachyon {
         
         //! Attention from the user
         void                cmd_attention();
+#endif
 
-        //! Sets the close flag
+        //! Starts the "close" process
         void                cmd_close();
-    
+
+#if 0    
         //! Focus onto this window
         void                cmd_focus();
 
@@ -264,6 +268,13 @@ namespace yq::tachyon {
         
     private:
     
+        enum Mode {
+            Init,
+            Run,
+            Destroy
+        };
+    
+    
     #if 0
         bool    mouse_capture_command(const MouseCaptureCommandCPtr&);
         bool    mouse_disable_command(const MouseDisableCommandCPtr&);
@@ -271,12 +282,12 @@ namespace yq::tachyon {
         bool    mouse_normal_command(const MouseNormalCommandCPtr&);
         
         bool    viewer_attention_command(const ViewerAttentionCommandCPtr&);
-        bool    viewer_close_command(const ViewerCloseCommandCPtr&);
         bool    viewer_hide_command(const ViewerHideCommandCPtr&);
         bool    viewer_resize_event(const ViewerResizeEventCPtr&);
     #endif
 
-        bool    viewer_close_request(const ViewerCloseRequestCPtr&);
+        void    close_command(const ViewerCloseCommand&);
+        void    close_request(const ViewerCloseRequestCPtr&);
 
     private:
         //void                record(ViContext&);
@@ -302,6 +313,7 @@ namespace yq::tachyon {
         std::unique_ptr<ViGui>          m_imgui;
         std::unique_ptr<Visualizer>     m_viz;
         ViewerState                     m_state;
+        Mode                            m_mode          = Mode::Init;
         
         ViewerCloseRequestCPtr          m_viewerCloseRequest;
         

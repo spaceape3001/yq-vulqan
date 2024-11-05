@@ -17,6 +17,8 @@
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/ViewerInitData.hpp>
 
+#include <yq/tachyon/commands/ViewerCloseCommand.hpp>
+
 #include <yq/tachyon/events/JoystickAxisEvent.hpp>
 #include <yq/tachyon/events/JoystickConnectEvent.hpp>
 #include <yq/tachyon/events/JoystickDisconnectEvent.hpp>
@@ -97,6 +99,7 @@ namespace yq::tachyon {
     };
     
     struct GLFWManager::ViewerData {
+        ViewerPtr       viewer;
         GLFWwindow*     window      = nullptr;
         ViewerState     state;
     };
@@ -545,6 +548,11 @@ namespace yq::tachyon {
         return ret;
     }
 
+    bool    GLFWManager::has_viewers()
+    {
+        return !common().viewers.empty();
+    }
+
     void    GLFWManager::remove(Viewer* v)
     {
         static Common& g = common();
@@ -705,6 +713,26 @@ namespace yq::tachyon {
         vs.time             = glfwGetTime();
     }
 
+    void    GLFWManager::close_command(const GLFWCloseCommand& cmd)
+    {
+        Common& g = common();
+    
+        Viewer* v   = cmd.viewer();
+        if(!v)
+            return ;
+        
+        auto i = g.viewers.find(v);
+        if(i != g.viewers.end()){
+            
+        }
+        delete v;
+    }
+
+    void    GLFWManager::hide_command(const GLFWHideCommand& cmd)
+    {
+        
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -780,6 +808,8 @@ namespace yq::tachyon {
         auto w = writer<GLFWManager>();
         w.abstract();
         w.description("GLFW Manager");
+        w.receive(&GLFWManager::close_command);
+        w.receive(&GLFWManager::hide_command);
     }
 }
 

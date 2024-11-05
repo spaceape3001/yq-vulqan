@@ -26,6 +26,7 @@
 #include <yq/shape/Triangle2.hpp>
 #include <yq/shape/Triangle3.hpp>
 #include <yq/shape/TriangleData.hpp>
+#include <yq/text/match.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
@@ -206,9 +207,19 @@ struct HelloScene : public Scene3DWidget {
 
 YQ_OBJECT_IMPLEMENT(HelloScene)
 
+using LoggerBoxUPtr     = std::unique_ptr<post::LoggerBox>;
 
 int main(int argc, char* argv[])
 {
+    bool    posts = false;
+    
+    for(int n=1;n<argc;++n){
+        if(is_similar(argv[n], "--posts"))
+            posts   = true;
+        if(is_similar(argv[n], "--post"))
+            posts   = true;
+    }
+
     writer<HelloTriangle>();
     writer<HelloQuad>();
 
@@ -222,7 +233,12 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     //load_plugin_dir("plugin");
     
-    post::LoggerBox     postLogging({.global=true});
+    LoggerBoxUPtr       postLogging;
+    if(posts){
+        post::LoggerBox::Param  cfg;
+        cfg.global  = true;
+        postLogging = std::make_unique<post::LoggerBox>(cfg);
+    }
     
     app.finalize();
     app.run(new HelloScene);

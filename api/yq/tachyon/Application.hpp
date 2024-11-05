@@ -39,9 +39,9 @@ namespace yq::tachyon {
         static const AppCreateInfo& app_info();
         
         //! Creates a viewer with widget
-        static Viewer*              create_viewer(Widget*);
+        static ViewerPtr            create_viewer(WidgetPtr);
         //! Creates a viewer with title/widget
-        static Viewer*              create_viewer(std::string_view, Widget*);
+        static ViewerPtr            create_viewer(std::string_view, WidgetPtr);
 
         static bool                 contains(const Viewer*);
         
@@ -64,10 +64,10 @@ namespace yq::tachyon {
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        static void                 run(Viewer*win, Second timeout={0.});
+        static void                 run(ViewerPtr win, Second timeout={0.});
         
         //! Simple create viewer & exec loop
-        static void                 run(Widget*wid, Second timeout={0.});
+        static void                 run(WidgetPtr wid, Second timeout={0.});
 
         static TaskEngine*          task_engine();
         
@@ -88,10 +88,10 @@ namespace yq::tachyon {
         friend class Viewer;
         
         
-        static void         add(Viewer*);
+        static void         add(ViewerPtr);
         
         //  this is being called by viewer, deletion unnecessary
-        static void         remove(Viewer*);
+        static void         remove(ViewerPtr);
         
         static Tachyon::Param  params(const AppCreateInfo&);
         

@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/tachyon/Manager.hpp>
-#include <yq/post/Dispatcher.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/typedef/vector2.hpp>
@@ -23,6 +22,9 @@ namespace yq::tachyon {
     struct ViewerCreateInfo;
     
     struct ViewerInitData;
+    
+    class GLFWCloseCommand;
+    class GLFWHideCommand;
 
     /*! \brief GLFW Event Manager
     
@@ -40,6 +42,8 @@ namespace yq::tachyon {
         static bool                 raw_mouse_motion_supported();
         
         static void init_info();
+        
+        static bool                 has_viewers();
 
     protected:
         
@@ -53,8 +57,8 @@ namespace yq::tachyon {
         static Common&  common();
         friend class Viewer;
         
-        static ViewerInitData       create(Viewer*, const ViewerCreateInfo&);
-        static void                 remove(Viewer*);
+        static ViewerInitData       create(ViewerPtr, const ViewerCreateInfo&);
+        //static void                 remove(Viewer*);
 
         static Param                _augment(const Param&);
         
@@ -89,6 +93,9 @@ namespace yq::tachyon {
         
         //static void joystick_initialize(Joystick);
         //static void joystick_kill(Joystick);
+        
+        void    close_command(const GLFWCloseCommand&);
+        void    hide_command(const GLFWHideCommand&);
 
     };
 }

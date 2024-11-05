@@ -4,26 +4,26 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerCloseCommand.hpp"
+#include "GLFWHideCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWHideCommand)
 
 namespace yq::tachyon {
 
-    ViewerCloseCommand::ViewerCloseCommand(ViewerPtr v, const Param& p) : ViewerCommand(v, p)
+    GLFWHideCommand::GLFWHideCommand(ViewerPtr v, const Param& p) : GLFWCommand(p), m_viewer(v)
     {
     }
     
-    ViewerCloseCommand::~ViewerCloseCommand()
+    GLFWHideCommand::~GLFWHideCommand()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerCloseCommand::init_info()
+    void GLFWHideCommand::init_info()
     {
-        auto w = writer<ViewerCloseCommand>();
-        w.description("Viewer Close Command");
+        auto w = writer<GLFWHideCommand>();
+        w.description("GLFW Hide Command");
     }
 }

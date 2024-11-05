@@ -4,26 +4,26 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerCloseCommand.hpp"
+#include "GLFWCloseCommand.hpp"
 #include <yq/post/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWCloseCommand)
 
 namespace yq::tachyon {
 
-    ViewerCloseCommand::ViewerCloseCommand(ViewerPtr v, const Param& p) : ViewerCommand(v, p)
+    GLFWCloseCommand::GLFWCloseCommand(ViewerPtr v, const Param& p) : GLFWCommand(p), m_viewer(v)
     {
     }
     
-    ViewerCloseCommand::~ViewerCloseCommand()
+    GLFWCloseCommand::~GLFWCloseCommand()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerCloseCommand::init_info()
+    void GLFWCloseCommand::init_info()
     {
-        auto w = writer<ViewerCloseCommand>();
-        w.description("Viewer Close Command");
+        auto w = writer<GLFWCloseCommand>();
+        w.description("GLFW Close Command");
     }
 }

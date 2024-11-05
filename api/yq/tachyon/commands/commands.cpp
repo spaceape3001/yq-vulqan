@@ -5,6 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AppCommand.ipp"
+#include "GLFWCommand.ipp"
+#include "GLFWCloseCommand.ipp"
+#include "GLFWHideCommand.ipp"
 #include "MouseCaptureCommand.ipp"
 #include "MouseCommand.ipp"
 #include "MouseDisableCommand.ipp"

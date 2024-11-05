@@ -29,6 +29,7 @@ namespace yq::tachyon {
 
     enum class WindowFlag : uint8_t {
         AutoIconify,        //!< Auto Iconified (full screen on focus loss)
+        Closed,             //!< Have we been closed?
         Decorated,          //!< Window decorations (ie, border, etc?)
         FixedAspect,        //!< Fixed aspect ratio
         Floating,           //!< Floating
@@ -40,7 +41,6 @@ namespace yq::tachyon {
         MousePassThrough,   //!< Mouse being passed through (needs to be undecorated)
         RawMouseMotion,     //!< Raw Mouse Motion
         Resizable,          //!< Resizable
-        ShouldClose,        //!< Should close has been triggered
         Transparent,        //!< Transparent frame buffer?
         Visible             //!< Visible
     };

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/post/PBX.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/typedef/vector2.hpp>
 #include <yq/tachyon/Tachyon.hpp>
@@ -14,6 +15,7 @@
 #include <yq/tachyon/events/forward.hpp>
 #include <yq/tachyon/replies/forward.hpp>
 #include <yq/tachyon/requests/forward.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -30,7 +32,7 @@ namespace yq::tachyon {
         It follows ImGui's rules, this is something that is 
         "drawable" and needs some amount of state information.
     */
-    class Widget : public Tachyon, public UniqueID {    
+    class Widget : public Tachyon, public UniqueID, public RefCount {    
         YQ_OBJECT_INFO(WidgetInfo)
         YQ_OBJECT_DECLARE(Widget, Tachyon)
     public:

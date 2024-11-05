@@ -28,7 +28,7 @@ namespace yq::tachyon {
         std::atomic_flag                claimed;
         std::unique_ptr<GLFWManager>    glfw;
         std::unique_ptr<TaskEngine>     tasking;
-        std::vector<Viewer*>            viewers;
+        std::vector<ViewerPtr>            viewers;
         std::unique_ptr<VulqanManager>  vulqan;
         std::atomic<bool>               quit{false};
         
@@ -42,7 +42,7 @@ namespace yq::tachyon {
         return s_ret;
     }
 
-    void     Application::add(Viewer* v)
+    void     Application::add(ViewerPtr v)
     {
         if(!v)
             return ;
@@ -65,7 +65,7 @@ namespace yq::tachyon {
         return common().app;
     }
 
-    bool            Application::contains(const Viewer*v) 
+    bool            Application::contains(const ViewerPtrv) 
     {
         Common& g = common();
         for(auto& p : g.viewers)
@@ -74,7 +74,7 @@ namespace yq::tachyon {
         return false;
     }
 
-    Viewer*         Application::create_viewer(Widget*w)
+    ViewerPtr         Application::create_viewer(Widget*w)
     {
         if(!w)
             return nullptr;
@@ -83,7 +83,7 @@ namespace yq::tachyon {
         return new Viewer(g.app_info.view, w);
     }
     
-    Viewer*         Application::create_viewer(std::string_view n, Widget*w)
+    ViewerPtr         Application::create_viewer(std::string_view n, Widget*w)
     {
         if(!w)
             return nullptr;
@@ -107,7 +107,7 @@ namespace yq::tachyon {
         return ret;
     }
 
-    void    Application::remove(Viewer* v)
+    void    Application::remove(ViewerPtr v)
     {
         if(!v)
             return ;
@@ -153,7 +153,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    Application::run(Viewer* win, Second amt)
+    void    Application::run(ViewerPtr win, Second amt)
     {
         if(!win)
             return;
@@ -230,7 +230,7 @@ namespace yq::tachyon {
             
         g.app   = nullptr;
 
-        for(Viewer* v : g.viewers){
+        for(ViewerPtr v : g.viewers){
             if(v){
                 vkDeviceWaitIdle(v->visualizer().device());
                 delete v;

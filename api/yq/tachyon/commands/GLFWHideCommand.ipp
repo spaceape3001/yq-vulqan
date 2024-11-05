@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWHideCommand)
 
 namespace yq::tachyon {
 
-    GLFWHideCommand::GLFWHideCommand(ViewerPtr v, const Param& p) : GLFWCommand(p), m_viewer(v)
+    GLFWHideCommand::GLFWHideCommand(Viewer* v, const Param& p) : GLFWCommand(p), m_viewer(v)
     {
     }
     

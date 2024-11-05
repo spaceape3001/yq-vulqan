@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public ViewerCommand::Param {
         };
     
-        ViewerCloseCommand(ViewerPtr, const Param& p = {});
+        ViewerCloseCommand(Viewer*, const Param& p = {});
         virtual ~ViewerCloseCommand();
         
         static void init_info();

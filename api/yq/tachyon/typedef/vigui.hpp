@@ -8,12 +8,7 @@
 
 #include <memory>
 
-namespace yq { template <typename> class Ref; }
-
 namespace yq::tachyon {
-    class Application;
-    struct AppCreateInfo;
-    using AppCreateInfoSCPtr   = std::shared_ptr<AppCreateInfo>;
-    
-    class AppFrame;
+    class ViGui;
+    using ViGuiUPtr         = std::unique_ptr<ViGui>;
 }

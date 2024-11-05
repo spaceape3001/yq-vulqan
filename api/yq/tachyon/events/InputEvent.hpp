@@ -33,7 +33,7 @@ namespace yq::tachyon {
         static void init_info();
     
         struct Param : public post::Event::Param {
-            Viewer*         viewer      = nullptr;
+            Viewer*       viewer;
             ModifierKeys    modifiers   = {};
         };
     

@@ -84,24 +84,16 @@ namespace yq::tachyon {
 
     //  ----------------------------------------------------------------------------------------------------------------
 
-        const ViewerPtr&    ViewerBind::viewer() const 
-        { 
-            return m_viewer; 
-        }
-        
-        ViewerBind::ViewerBind(ViewerPtr v) : m_viewer(v)
-        {
-        }
-        
-        ViewerBind::~ViewerBind()
-        {
-        }
-
     //  ----------------------------------------------------------------------------------------------------------------
     //  INITIALIZATION/DESTRUCTION
 
     std::atomic<int>        Viewer::s_count{0};
     std::atomic<uint64_t>   Viewer::s_lastId{1};
+
+
+
+
+
     
     Viewer::~Viewer()
     {
@@ -137,8 +129,13 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         return ret;
     }
 
+#if 0    
     Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : Tachyon(_pbx(vci)), m_id(++s_lastId)
     {
+        
+        Viewer(ViewerCreateInfoUPtr&& vci, WidgetPtr w);
+
+    
         ViewerInitData  vid;
         try {
             if(!Application::initialized())
@@ -178,6 +175,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         Application::add(this);
         ++s_count;
     }
+#endif
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  MOUSE
@@ -258,11 +256,13 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  INFORMATION/GETTERS
-    
+
+#if 0    
     uint64_t    Viewer::frame_number() const
     {
         return m_viz -> tick();
     }
+#endif
 
 #if 0
     Size2I  Viewer::framebuffer_size() const
@@ -693,6 +693,7 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         
         return false;
     }
+#endif
 #endif
 
 }

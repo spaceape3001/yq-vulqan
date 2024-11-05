@@ -15,12 +15,12 @@ namespace yq::tachyon {
     //! Utiltity to bind a viewer to the whatever...
     class ViewerBind {
     public:
-        const ViewerPtr&    viewer() const;
+        Viewer*    viewer() const { return m_viewer; }
         
     protected:
-        ViewerBind(ViewerPtr v);
-        virtual ~ViewerBind();
+        ViewerBind(Viewer* v) : m_viewer(v) {}
+        virtual ~ViewerBind() {}
         
-        const ViewerPtr m_viewer;
+        const Viewer* m_viewer;
     };
 }

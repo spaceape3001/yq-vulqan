@@ -11,6 +11,7 @@
 #include "TaskEngine.hpp"
 #include <yq/tachyon/viz/Visualizer.hpp>
 #include "VulqanManager.hpp"
+#include "Widget.hpp"
 
 #include <yq/asset/Asset.hpp>
 #include <yq/meta/Init.hpp>
@@ -22,15 +23,20 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
 
 namespace yq::tachyon {
 
+    struct Application::ViewerData {
+        Viewer*           viewer;
+    };
+
     struct Application::Common {
         AppCreateInfo                   app_info;
         Application*                    app         = nullptr;
         std::atomic_flag                claimed;
         std::unique_ptr<GLFWManager>    glfw;
         std::unique_ptr<TaskEngine>     tasking;
-        std::vector<ViewerPtr>            viewers;
         std::unique_ptr<VulqanManager>  vulqan;
         std::atomic<bool>               quit{false};
+        
+        std::map<Viewer*,ViewerData>    viewers;
         
         
         //  eventually the vulkan goes here too
@@ -42,7 +48,7 @@ namespace yq::tachyon {
         return s_ret;
     }
 
-    void     Application::add(ViewerPtr v)
+    void     Application::add(Viewer* v)
     {
         if(!v)
             return ;
@@ -65,7 +71,7 @@ namespace yq::tachyon {
         return common().app;
     }
 
-    bool            Application::contains(const ViewerPtrv) 
+    bool            Application::contains(const Viewer*& v) 
     {
         Common& g = common();
         for(auto& p : g.viewers)
@@ -74,7 +80,7 @@ namespace yq::tachyon {
         return false;
     }
 
-    ViewerPtr         Application::create_viewer(Widget*w)
+    Viewer*         Application::create_viewer(Widget* w)
     {
         if(!w)
             return nullptr;
@@ -83,7 +89,7 @@ namespace yq::tachyon {
         return new Viewer(g.app_info.view, w);
     }
     
-    ViewerPtr         Application::create_viewer(std::string_view n, Widget*w)
+    Viewer*         Application::create_viewer(std::string_view n, Widget* w)
     {
         if(!w)
             return nullptr;
@@ -101,13 +107,13 @@ namespace yq::tachyon {
         return static_cast<bool>(common().app);
     }
 
-    Tachyon::Param  Application::params(const AppCreateInfo& aci)
+    Thread::Param  Application::params(const AppCreateInfo& aci)
     {
-        Tachyon::Param ret;
+        Thread::Param ret;
         return ret;
     }
 
-    void    Application::remove(ViewerPtr v)
+    void    Application::remove(Viewer* v)
     {
         if(!v)
             return ;
@@ -153,7 +159,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    Application::run(ViewerPtr win, Second amt)
+    void    Application::run(Viewer* win, Second amt)
     {
         if(!win)
             return;
@@ -162,7 +168,7 @@ namespace yq::tachyon {
         run(amt);
     }
 
-    void    Application::run(Widget*wid, Second timeout)
+    void    Application::run(Widget* wid, Second timeout)
     {
         if(!wid)
             return ;
@@ -187,7 +193,7 @@ namespace yq::tachyon {
     //  ////////////////////////////////////////////////////////////////////////
 
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv), Tachyon(params(aci))
+        BasicApp(argc, argv), Thread(params(aci))
     {
         Common& g = common();
         if(g.claimed.test_and_set())
@@ -230,7 +236,7 @@ namespace yq::tachyon {
             
         g.app   = nullptr;
 
-        for(ViewerPtr v : g.viewers){
+        for(Viewer* v : g.viewers){
             if(v){
                 vkDeviceWaitIdle(v->visualizer().device());
                 delete v;

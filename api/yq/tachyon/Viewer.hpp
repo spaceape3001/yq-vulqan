@@ -13,6 +13,7 @@
 #include <yq/core/Flags.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/Tachyon.hpp>
+#include <yq/tachyon/Thread.hpp>
 #include <yq/tachyon/ViewerState.hpp>
 #include <yq/tachyon/ViewerCreateInfo.hpp>
 #include <yq/tachyon/commands/forward.hpp>
@@ -20,6 +21,8 @@
 #include <yq/tachyon/replies/forward.hpp>
 #include <yq/tachyon/requests/forward.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/vigui.hpp>
+#include <yq/tachyon/typedef/visualizer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>
@@ -51,11 +54,35 @@ namespace yq::tachyon {
         This is a vulkan window, called the viewer, that binds the 
         GLFW Window and the Vulkan Device.  It will hold ONE widget
         and one widget only, this is the root widget for the viewer.
+        
     */
     class Viewer : public Tachyon, public RefCount {
         YQ_OBJECT_DECLARE(Viewer, Tachyon)
     
         friend class Application;
+
+    /*
+        THREADING -- being written so that each viewer is a separate thread.
+            
+    
+        OWNERSHIP -- once submitted, the viewer will be owned by Application, 
+            and only the application shall delete it
+            
+        INITIALIZATION -- have to separate
+        
+            >   Construction (new Viewer/derived)
+            >   Windowing (new GLFW window instance)
+
+        RUNNING
+            
+            >   Can't directly access GLFW, must rely on events
+            
+        CLOSING -- here's the current rub
+        
+        
+    
+    */
+
 
     //  TODO FEATURE LIST
     //
@@ -64,17 +91,25 @@ namespace yq::tachyon {
     
     public:
         
-        static bool raw_mouse_motion_supported();
+        
+        
+        //static bool raw_mouse_motion_supported();
     
     
         static void init_info();
     
         /*! \brief Creates the viewer
         */
-        Viewer(const ViewerCreateInfo&vci, WidgetPtr w);
+        Viewer(ViewerCreateInfoUPtr&& vci, WidgetPtr w);
         
         //! Destructor
         virtual ~Viewer();
+        
+        //! Initialize viewer
+        std::error_code     initialize();
+        
+        
+        
         
         /*! \brief Creates & initializes viewer 
         
@@ -266,6 +301,8 @@ namespace yq::tachyon {
 
         virtual void    receive(const post::PostCPtr&) override;
         
+        virtual std::error_code init();
+        
     private:
     
         enum Mode {
@@ -314,6 +351,8 @@ namespace yq::tachyon {
         std::unique_ptr<Visualizer>     m_viz;
         ViewerState                     m_state;
         Mode                            m_mode          = Mode::Init;
+        
+        ViewerCreateInfoUPtr            m_createInfo;
         
         ViewerCloseRequestCPtr          m_viewerCloseRequest;
         

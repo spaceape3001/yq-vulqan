@@ -21,8 +21,25 @@ namespace yq::tachyon {
     {
     }
     
+    void Thread::check()
+    {
+    }
+    
+    void Thread::cmd_start()
+    {
+        
+    }
+    
+    void Thread::cmd_quit()
+    {
+        m_quit      = true;
+    }
+    
     void Thread::exec()
     {
+        while(!m_quit){
+            check();
+        }
     }
     
     void Thread::init_info()

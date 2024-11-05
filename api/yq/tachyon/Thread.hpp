@@ -8,6 +8,7 @@
 
 #include <yq/post/PBX.hpp>
 #include <yq/tachyon/Tachyon.hpp>
+#include <thread>
 
 namespace yq::tachyon {
 
@@ -32,15 +33,17 @@ namespace yq::tachyon {
         //! Override to do your own thing
         virtual void    run() { exec(); }
         
-        //! Executes until quit flag
-        void    exec();
+        //! Executes check until quit flag
+        void            exec();
+        virtual void    check();
         
         static Thread&  current();
 
         Thread(const Param& p = {});
         ~Thread();
         
-        void        cmd_quit();
+        void            cmd_quit();
+        void            cmd_start();
         
     private:
     
@@ -50,5 +53,6 @@ namespace yq::tachyon {
         std::atomic<bool>       m_quit{ false };
         unit::Second            m_snooze    = 1_ms;
         std::vector<Tachyon*>   m_objects;
+        std::thread             m_thread;
     };
 }

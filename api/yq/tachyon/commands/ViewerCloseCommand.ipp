@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseCommand)
 
 namespace yq::tachyon {
 
-    ViewerCloseCommand::ViewerCloseCommand(ViewerPtr v, const Param& p) : ViewerCommand(v, p)
+    ViewerCloseCommand::ViewerCloseCommand(Viewer* v, const Param& p) : ViewerCommand(v, p)
     {
     }
     

@@ -10,6 +10,8 @@
 #include <yq/tachyon/AppCreateInfo.hpp>
 #include <yq/tachyon/Tachyon.hpp>
 #include <yq/tachyon/typedef/application.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 #include <yq/units.hpp>
 #include <memory>
 #include <set>
@@ -39,11 +41,11 @@ namespace yq::tachyon {
         static const AppCreateInfo& app_info();
         
         //! Creates a viewer with widget
-        static ViewerPtr            create_viewer(WidgetPtr);
+        static Viewer*            create_viewer(Widget*);
         //! Creates a viewer with title/widget
-        static ViewerPtr            create_viewer(std::string_view, WidgetPtr);
+        static Viewer*            create_viewer(std::string_view, Widget*);
 
-        static bool                 contains(const Viewer*);
+        static bool                 contains(const Viewer*&);
         
         static bool                 initialized();
         
@@ -64,10 +66,10 @@ namespace yq::tachyon {
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        static void                 run(ViewerPtr win, Second timeout={0.});
+        static void                 run(Viewer* win, Second timeout={0.});
         
         //! Simple create viewer & exec loop
-        static void                 run(WidgetPtr wid, Second timeout={0.});
+        static void                 run(Widget* wid, Second timeout={0.});
 
         static TaskEngine*          task_engine();
         
@@ -88,10 +90,12 @@ namespace yq::tachyon {
         friend class Viewer;
         
         
-        static void         add(ViewerPtr);
+        struct ViewerData;
+        
+        static void         add(Viewer*);
         
         //  this is being called by viewer, deletion unnecessary
-        static void         remove(ViewerPtr);
+        static void         remove(Viewer*);
         
         static Tachyon::Param  params(const AppCreateInfo&);
         

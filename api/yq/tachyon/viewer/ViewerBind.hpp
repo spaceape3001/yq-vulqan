@@ -21,6 +21,6 @@ namespace yq::tachyon {
         ViewerBind(Viewer* v) : m_viewer(v) {}
         virtual ~ViewerBind() {}
         
-        const Viewer* m_viewer;
+        Viewer* const m_viewer;
     };
 }

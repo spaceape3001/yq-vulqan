@@ -22,7 +22,7 @@ namespace yq::tachyon {
         
         static void init_info();
         
-        const Viewer*& viewer() const { return m_viewer; }
+        Viewer* viewer() const { return m_viewer; }
     private:
         Viewer* const m_viewer;
     };

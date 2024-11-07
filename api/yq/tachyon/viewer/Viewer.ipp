@@ -694,6 +694,5 @@ viewerInfo << "Viewer::~Viewer() [DONE]";
         return false;
     }
 #endif
-#endif
 
 }

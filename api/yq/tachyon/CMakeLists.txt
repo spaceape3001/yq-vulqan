@@ -16,52 +16,52 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME} SHARED
     strings.cpp
 
-    Application.cpp
-    Buffer.cpp
-    Camera.cpp
-    GLFWManager.cpp
-    GLSLShader.cpp
-    Joystick.cpp
-    Manager.cpp
-    Manipulator.cpp
-    Monitor.cpp
-    MyImGui.cpp
-    Perspective.cpp
-    Pipeline.cpp
-    PipelineUtils.cpp
-    Raster.cpp
-    Render2D.cpp
-    Render3D.cpp
-    Rendered.cpp
+    #Application.cpp
+    #Buffer.cpp
+    #Camera.cpp
+    #GLFWManager.cpp
+    #GLSLShader.cpp
+    #Joystick.cpp
+    #Manager.cpp
+    #Manipulator.cpp
+    #Monitor.cpp
+    #MyImGui.cpp
+    #Perspective.cpp
+    #Pipeline.cpp
+    #PipelineUtils.cpp
+    #Raster.cpp
+    #Render2D.cpp
+    #Render3D.cpp
+    #Rendered.cpp
     #RenderPass.cpp
-    SamplerInfoFile.cpp
-    Sampler.cpp
-    Shader.cpp
-    STBImage.cpp
-    Tachyon.cpp
-    Task.cpp
-    TaskEngine.cpp
-    Texture.cpp
-    Thread.cpp
-    Tool.cpp
-    Undo.cpp
-    VideoMode.cpp
-    Viewer.cpp
-    ViGui.cpp
-    vulqan.cpp
-    VulqanManager.cpp
-    Widget.cpp
+    #SamplerInfoFile.cpp
+    #Sampler.cpp
+    #Shader.cpp
+    #STBImage.cpp
+    #Tachyon.cpp
+    #Task.cpp
+    #TaskEngine.cpp
+    #Texture.cpp
+    #Thread.cpp
+    #Tool.cpp
+    #Undo.cpp
+    #VideoMode.cpp
+    #Viewer.cpp
+    #ViGui.cpp
+    #vulqan.cpp
+    #VulqanManager.cpp
+    #Widget.cpp
     
-    2D/2D.cpp
+    #2D/2D.cpp
 
-    3D/Tetrahedron.cpp
+    #3D/Tetrahedron.cpp
 
    
-    cameras/cameras.cpp
+    #cameras/cameras.cpp
     
-    commands/commands.cpp
+    #commands/commands.cpp
     
-    config/build.cpp
+    #config/build.cpp
     
     #editor/Editor.cpp
     
@@ -69,40 +69,40 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
-    events/events.cpp
+    #events/events.cpp
     
-    font/Font.cpp
+    #font/Font.cpp
     
     
-    replies/replies.cpp
+    #replies/replies.cpp
     
-    requests/requests.cpp
+    #requests/requests.cpp
     
     
     #v/VqEnumerations.cpp
-    v/VqEnums.cpp
-    v/VqLogging.cpp
-    v/VqUtils.cpp
+    #v/VqEnums.cpp
+    #v/VqLogging.cpp
+    #v/VqUtils.cpp
     
     #viewer/GLFWManager.cpp
     
-    viz/ViCommandBufferVector.cpp
-    viz/ViData.cpp
-    viz/ViFrame.cpp
-    viz/ViPipeline.cpp
-    viz/ViPipelineLayout.cpp
-    viz/ViRendered.cpp
-    viz/ViTasker.cpp
-    viz/ViThread.cpp
-    viz/ViVisualizer.cpp
-    viz/Visualizer.cpp
+    #viz/ViCommandBufferVector.cpp
+    #viz/ViData.cpp
+    #viz/ViFrame.cpp
+    #viz/ViPipeline.cpp
+    #viz/ViPipelineLayout.cpp
+    #viz/ViRendered.cpp
+    #viz/ViTasker.cpp
+    #viz/ViThread.cpp
+    #viz/ViVisualizer.cpp
+    #viz/Visualizer.cpp
     
-    viz/viz.cpp
+    #viz/viz.cpp
     
-    widgets/ImGuiDemoWidget.cpp
-    widgets/Scene3DWidget.cpp
-    widgets/StackedWidget.cpp
-    widgets/TextArea.cpp
+    #widgets/ImGuiDemoWidget.cpp
+    #widgets/Scene3DWidget.cpp
+    #widgets/StackedWidget.cpp
+    #widgets/TextArea.cpp
 )
 
 

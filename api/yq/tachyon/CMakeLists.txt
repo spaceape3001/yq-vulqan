@@ -17,25 +17,14 @@ add_library(${PROJECT_NAME} SHARED
     strings.cpp
 
     #Application.cpp
-    #Buffer.cpp
     #GLFWManager.cpp
-    #Manipulator.cpp
     
     MyImGui.cpp
     
-    #Perspective.cpp
-    #Pipeline.cpp
-    #PipelineUtils.cpp
-    #Raster.cpp
     #Render2D.cpp
     #Render3D.cpp
     #Rendered.cpp
     #RenderPass.cpp
-    #SamplerInfoFile.cpp
-    #Sampler.cpp
-    #STBImage.cpp
-    #Texture.cpp
-    #Tool.cpp
     #Viewer.cpp
     #ViGui.cpp
     #vulqan.cpp
@@ -44,6 +33,8 @@ add_library(${PROJECT_NAME} SHARED
 
     app/Manager.cpp
     
+    buffer/Buffer.cpp
+
     core/Tachyon.cpp
     core/Thread.cpp
 
@@ -57,7 +48,7 @@ add_library(${PROJECT_NAME} SHARED
     
     #commands/commands.cpp
     
-    #config/build.cpp
+    config/build.cpp
     
     #editor/Editor.cpp
     
@@ -73,16 +64,33 @@ add_library(${PROJECT_NAME} SHARED
     glfw/Joystick.cpp
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
+
+    image/Raster.cpp
+    image/STBImage.cpp
+
+    manipulator/Manipulator.cpp
     
+    pipeline/Pipeline.cpp
+    pipeline/PipelineUtils.cpp
+
     replies/replies.cpp
     
     requests/requests.cpp
+
+    sampler/Sampler.cpp
+    sampler/SamplerInfoFile.cpp
+
+    scene/Perspective.cpp
     
     shader/GLSLShader.cpp
     shader/Shader.cpp
     
     task/Task.cpp
     task/TaskEngine.cpp
+
+    texture/Texture.cpp
+
+    tool/Tool.cpp
 
     undo/Undo.cpp
 

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/asset/AssetFactory.hpp>
-#include <yq/tachyon/Raster.hpp>
+#include <yq/tachyon/image/Raster.hpp>
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/ErrorDB.hpp>

@@ -14,7 +14,7 @@
 #include <yq/tachyon/enum/ImageAspect.hpp>
 #include <yq/tachyon/enum/ImageViewCreateFlags.hpp>
 #include <yq/tachyon/enum/ImageViewType.hpp>
-#include <yq/tachyon/SamplerInfo.hpp>
+#include <yq/tachyon/sampler/SamplerInfo.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
 #include <yq/tachyon/typedef/sampler.hpp>
 #include <yq/tachyon/typedef/texture.hpp>

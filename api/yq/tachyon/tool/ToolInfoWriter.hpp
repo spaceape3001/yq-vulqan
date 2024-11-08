@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/Tool.hpp>
+#include <yq/tachyon/tool/Tool.hpp>
 #include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {

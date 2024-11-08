@@ -18,9 +18,9 @@ namespace yq::tachyon {
     };
     
     
-    /*! \brief Controls the camera
+    /*! \brief A tool (like paint brush, pan to target, etc)
     
-        The manipulator is about controlling the camera/viewer with user input.
+        A tool is supposed to be hooked to gesture recognition/commands.
     */
     class Tool : public Object {
         YQ_OBJECT_INFO(ToolInfo)

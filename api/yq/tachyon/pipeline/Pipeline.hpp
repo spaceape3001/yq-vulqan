@@ -8,7 +8,6 @@
 
 #include <yq/core/Flags.hpp>
 
-#include <yq/tachyon/PushConfigType.hpp>
 #include <yq/tachyon/enum/ColorBlend.hpp>
 #include <yq/tachyon/enum/CullMode.hpp>
 #include <yq/tachyon/enum/DataActivity.hpp>
@@ -18,6 +17,7 @@
 #include <yq/tachyon/enum/IndexType.hpp>
 #include <yq/tachyon/enum/PipelineBinding.hpp>
 #include <yq/tachyon/enum/PolygonMode.hpp>
+#include <yq/tachyon/enum/PushConfigType.hpp>
 #include <yq/tachyon/enum/Topology.hpp>
 #include <yq/tachyon/enum/VertexInputRate.hpp>
 

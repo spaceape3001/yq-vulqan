@@ -15,7 +15,7 @@
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/tensor/Tensor44.hxx>
-#include <yq/tachyon/CameraInfoWriter.hpp>
+#include <yq/tachyon/camera/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
     SpaceCamera::SpaceCamera() : 
@@ -79,6 +79,12 @@ namespace yq::tachyon {
     glm::dmat4  SpaceCamera::world2screen(const Params&p) const
     {
         return projection_matrix(p.screen) * view_matrix();
+    }
+
+    void SpaceCamera::init_info()
+    {
+        auto w = writer<SpaceCamera>();
+        w.description("Simple space camera (position, orientation, fov)");
     }
 }
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SpaceCamera)

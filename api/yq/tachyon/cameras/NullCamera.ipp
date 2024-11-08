@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "NullCamera.hpp"
-#include <yq/tachyon/CameraInfoWriter.hpp>
+#include <yq/tachyon/camera/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
     glm::dmat4  NullCamera::world2screen(const Params&) const 
@@ -24,6 +24,12 @@ namespace yq::tachyon {
     
     NullCamera::~NullCamera()
     {
+    }
+
+    void NullCamera::init_info()
+    {
+        auto w = writer<NullCamera>();
+        w.description("Null camera, (Identity transform)");
     }
 }
 

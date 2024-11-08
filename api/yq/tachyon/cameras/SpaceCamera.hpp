@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/Camera.hpp>
+#include <yq/tachyon/camera/Camera.hpp>
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/units.hpp>
 
@@ -73,6 +73,8 @@ namespace yq::tachyon {
         
         //! Computes the view matrix (ie, space -> camera XYZ)
         glm::dmat4              view_matrix() const;
+        
+        static void init_info();
 
     private:
         SimpleSpace    m_space;

@@ -12,6 +12,7 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
 
 namespace yq::tachyon {
 
@@ -49,6 +50,12 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(CameraInfo);
         YQ_OBJECT_DECLARE(Camera, Object)
     public:    
+        /*
+            We *MIGHT* want to divide up the camera into position, 
+            lens, etc... or that's a later development on a dedicated
+            camera.  (class DynamicCamera, StandardCamera, etc???)
+        */
+    
     
         //! Generic parameter structure
         //! Allows us to expand parameters w/o affecting *everybody*

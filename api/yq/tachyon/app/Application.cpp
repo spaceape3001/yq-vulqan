@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "logging.hpp"
-#include "Application.hpp"
-#include "Viewer.hpp"
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/viewer/Viewer.hpp>
 #include "GLFWManager.hpp"
 #include "TaskEngine.hpp"
 #include <yq/tachyon/viz/Visualizer.hpp>

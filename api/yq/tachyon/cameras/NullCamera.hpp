@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/Camera.hpp>
+#include <yq/tachyon/camera/Camera.hpp>
 
 namespace yq::tachyon {
 
@@ -23,5 +23,7 @@ namespace yq::tachyon {
         glm::dmat4  world2screen(const Params&) const override;
         NullCamera();
         ~NullCamera();
+        
+        static void init_info();
     };
 }

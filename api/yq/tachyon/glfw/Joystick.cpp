@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/Joystick.hpp>
+#include <yq/tachyon/glfw/Joystick.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

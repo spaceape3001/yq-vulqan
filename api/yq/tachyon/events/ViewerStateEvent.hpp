@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/events/ViewerEvent.hpp>
-#include <yq/tachyon/ViewerState.hpp>
+#include <yq/tachyon/viewer/ViewerState.hpp>
 
 namespace yq::tachyon {
     class ViewerStateEvent : public ViewerEvent {

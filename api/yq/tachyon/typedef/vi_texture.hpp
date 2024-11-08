@@ -5,11 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
 namespace yq {
     template <typename> class Ref;
 }
 
 namespace yq::tachyon {
-    class Buffer;
-    using BufferCPtr            = Ref<const Buffer>;
+    class ViTexture;
+    using ViTexturePtr          = Ref<ViTexture>;
+    using ViTextureCPtr         = Ref<const ViTexture>;
 }

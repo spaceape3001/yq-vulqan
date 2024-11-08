@@ -18,14 +18,11 @@ add_library(${PROJECT_NAME} SHARED
 
     #Application.cpp
     #Buffer.cpp
-    #Camera.cpp
     #GLFWManager.cpp
-    #GLSLShader.cpp
-    #Joystick.cpp
-    #Manager.cpp
     #Manipulator.cpp
-    #Monitor.cpp
-    #MyImGui.cpp
+    
+    MyImGui.cpp
+    
     #Perspective.cpp
     #Pipeline.cpp
     #PipelineUtils.cpp
@@ -36,28 +33,27 @@ add_library(${PROJECT_NAME} SHARED
     #RenderPass.cpp
     #SamplerInfoFile.cpp
     #Sampler.cpp
-    #Shader.cpp
     #STBImage.cpp
-    #Tachyon.cpp
-    #Task.cpp
-    #TaskEngine.cpp
     #Texture.cpp
-    #Thread.cpp
     #Tool.cpp
-    #Undo.cpp
-    #VideoMode.cpp
     #Viewer.cpp
     #ViGui.cpp
     #vulqan.cpp
     #VulqanManager.cpp
     #Widget.cpp
+
+    app/Manager.cpp
     
+    core/Tachyon.cpp
+    core/Thread.cpp
+
     #2D/2D.cpp
 
     #3D/Tetrahedron.cpp
 
+    camera/Camera.cpp
    
-    #cameras/cameras.cpp
+    cameras/cameras.cpp
     
     #commands/commands.cpp
     
@@ -73,15 +69,26 @@ add_library(${PROJECT_NAME} SHARED
     
     #font/Font.cpp
     
+    #glfw/GLFWManager.cpp
+    glfw/Joystick.cpp
+    glfw/Monitor.cpp
+    glfw/VideoMode.cpp
     
     #replies/replies.cpp
     
     #requests/requests.cpp
     
+    shader/GLSLShader.cpp
+    shader/Shader.cpp
     
-    #v/VqEnumerations.cpp
-    #v/VqEnums.cpp
-    #v/VqLogging.cpp
+    task/Task.cpp
+    task/TaskEngine.cpp
+
+    undo/Undo.cpp
+
+    # v/VqEnumerations.cpp
+    v/VqEnums.cpp
+    v/VqLogging.cpp
     #v/VqUtils.cpp
     
     #viewer/GLFWManager.cpp

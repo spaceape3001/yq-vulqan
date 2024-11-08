@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/Camera.hpp>
-#include <yq/tachyon/CameraInfoWriter.hpp>
+#include <yq/tachyon/camera/Camera.hpp>
+#include <yq/tachyon/camera/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
 

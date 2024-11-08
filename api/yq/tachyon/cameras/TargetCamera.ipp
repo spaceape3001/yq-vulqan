@@ -16,7 +16,7 @@
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector3.hxx>
-#include <yq/tachyon/CameraInfoWriter.hpp>
+#include <yq/tachyon/camera/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
     TargetCamera::TargetCamera() : 

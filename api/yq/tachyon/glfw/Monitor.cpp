@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/Monitor.hpp>
-#include <yq/tachyon/VideoMode.hpp>
+#include <yq/tachyon/glfw/Monitor.hpp>
+#include <yq/tachyon/glfw/VideoMode.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <GLFW/glfw3.h>

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/Undo.hpp>
+#include <yq/tachyon/undo/Undo.hpp>
 
 namespace yq::tachyon {
     Undo::~Undo() = default;

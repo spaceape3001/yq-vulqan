@@ -6,19 +6,10 @@
 
 #include "GLFWManager.hpp"
 
-#include <yq/core/ThreadId.hpp>
-
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/Application.hpp>
-#include <yq/tachyon/ManagerInfoWriter.hpp>
-#include <yq/tachyon/Joystick.hpp>
-#include <yq/tachyon/Monitor.hpp>
-#include <yq/tachyon/Viewer.hpp>
-#include <yq/tachyon/ViewerCreateInfo.hpp>
-#include <yq/tachyon/ViewerInitData.hpp>
-
+#include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/app/ManagerInfoWriter.hpp>
 #include <yq/tachyon/commands/ViewerCloseCommand.hpp>
-
 #include <yq/tachyon/events/JoystickAxisEvent.hpp>
 #include <yq/tachyon/events/JoystickConnectEvent.hpp>
 #include <yq/tachyon/events/JoystickDisconnectEvent.hpp>
@@ -47,12 +38,16 @@
 #include <yq/tachyon/events/ViewerRestoreEvent.hpp>
 #include <yq/tachyon/events/ViewerScaleEvent.hpp>
 #include <yq/tachyon/events/ViewerStateEvent.hpp>
-
 #include <yq/tachyon/exceptions/GLFWException.hpp>
-
+#include <yq/tachyon/glfw/Joystick.hpp>
+#include <yq/tachyon/glfw/Monitor.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 #include <yq/tachyon/requests/ViewerRefreshRequest.hpp>
+#include <yq/tachyon/viewer/Viewer.hpp>
+#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
+#include <yq/tachyon/viewer/ViewerInitData.hpp>
 
+#include <yq/core/ThreadId.hpp>
 #include <yq/shape/Size2.hxx>
 
 #include <GLFW/glfw3.h>

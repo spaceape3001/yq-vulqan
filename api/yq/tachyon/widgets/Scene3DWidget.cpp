@@ -7,7 +7,7 @@
 #include "Scene3DWidget.hpp"
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/Visualizer.hpp>
-#include <yq/tachyon/WidgetInfoWriter.hpp>
+#include <yq/tachyon/widget/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     Scene3DWidget::Scene3DWidget()

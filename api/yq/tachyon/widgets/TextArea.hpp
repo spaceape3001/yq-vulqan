@@ -7,7 +7,7 @@
 #pragma once
 
 //#include <yq/core/Signal.hpp>
-#include <yq/tachyon/Widget.hpp>
+#include <yq/tachyon/widget/Widget.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <functional>

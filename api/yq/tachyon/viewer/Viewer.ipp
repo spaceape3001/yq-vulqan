@@ -7,13 +7,8 @@
 #include "Viewer.hpp"
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/Application.hpp>
-#include <yq/tachyon/GLFWManager.hpp>
-#include <yq/tachyon/TachyonInfoWriter.hpp>
-#include <yq/tachyon/ViewerCreateInfo.hpp>
-#include <yq/tachyon/ViewerInitData.hpp>
-#include <yq/tachyon/ViGui.hpp>
 
+#include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/commands/GLFWCloseCommand.hpp>
 #include <yq/tachyon/commands/MouseCaptureCommand.hpp>
 #include <yq/tachyon/commands/MouseDisableCommand.hpp>
@@ -28,6 +23,7 @@
 #include <yq/tachyon/commands/ViewerRestoreCommand.hpp>
 #include <yq/tachyon/commands/ViewerResumeCommand.hpp>
 #include <yq/tachyon/commands/ViewerShowCommand.hpp>
+#include <yq/tachyon/core/TachyonInfoWriter.hpp>
 #include <yq/tachyon/events/MouseCaptureEvent.hpp>
 #include <yq/tachyon/events/MouseDisableEvent.hpp>
 #include <yq/tachyon/events/MouseHideEvent.hpp>
@@ -35,13 +31,17 @@
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/events/ViewerResizeEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
-#include <yq/tachyon/Raster.hpp>
+#include <yq/tachyon/glfw/GLFWManager.hpp>
+#include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
 #include <yq/tachyon/replies/ViewerCloseReply.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
+#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
+#include <yq/tachyon/viewer/ViewerInitData.hpp>
+#include <yq/tachyon/viewer/ViGui.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/Visualizer.hpp>
-#include <yq/tachyon/Widget.hpp>
+#include <yq/tachyon/widget/Widget.hpp>
 
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>

@@ -9,8 +9,11 @@
 #include <yq/tachyon/app/Manager.hpp>
 #include <yq/tachyon/vulqan.hpp>
 
-namespace yq::tachyon {
+namespace yq {
     class BasicApp;
+}
+
+namespace yq::tachyon {
     struct AppCreateInfo;
 
     class VulqanManager : public Manager {

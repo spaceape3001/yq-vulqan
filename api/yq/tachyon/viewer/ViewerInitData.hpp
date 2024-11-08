@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/ViewerState.hpp>
+#include <yq/tachyon/viewer/ViewerState.hpp>
 
 struct GLFWwindow;
 

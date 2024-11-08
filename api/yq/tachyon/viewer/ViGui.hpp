@@ -13,13 +13,14 @@
 #include <yq/typedef/filesystem_path.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/Tachyon.hpp>
+#include <yq/tachyon/core/Tachyon.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
-#include <yq/tachyon/events/forward.hpp>
 #include <yq/tachyon/typedef/buffer.hpp>
-#include <yq/tachyon/typedef/image.hpp>
+#include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>
-#include <yq/tachyon/typedef/pipeline_layout.hpp>
+#include <yq/tachyon/typedef/vi_buffer.hpp>
+#include <yq/tachyon/typedef/vi_pipeline.hpp>
+#include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
 #include <yq/tachyon/typedef/sampler.hpp>
 #include <yq/tachyon/typedef/texture.hpp>

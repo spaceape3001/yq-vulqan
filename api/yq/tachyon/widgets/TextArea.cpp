@@ -17,7 +17,7 @@
 
 #include <yq/shape/shape_utils.hpp>
 #include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/WidgetInfoWriter.hpp>
+#include <yq/tachyon/widget/WidgetInfoWriter.hpp>
 
     //  for debugging
 #include <yq/color/colors.hpp>

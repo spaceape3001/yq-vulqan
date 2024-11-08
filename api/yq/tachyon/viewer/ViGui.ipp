@@ -18,19 +18,16 @@
 #include <yq/util/AutoReset.hpp>
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/TachyonInfoWriter.hpp>
-#include <yq/tachyon/Raster.hpp>
-#include <yq/tachyon/Pipeline.hpp>
-#include <yq/tachyon/PipelineWriter.hpp>
-#include <yq/tachyon/Sampler.hpp>
-#include <yq/tachyon/Shader.hpp>
-#include <yq/tachyon/Texture.hpp>
-#include <yq/tachyon/Widget.hpp>
-
+#include <yq/tachyon/core/TachyonInfoWriter.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
-
+#include <yq/tachyon/image/Raster.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/tachyon/pipeline/PipelineWriter.hpp>
+#include <yq/tachyon/sampler/Sampler.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
@@ -43,6 +40,8 @@
 #include <yq/tachyon/viz/ViSwapchain.hpp>
 #include <yq/tachyon/viz/ViTexture.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
+#include <yq/tachyon/widget/Widget.hpp>
+
 
 //#include <backends/imgui_impl_glfw.h>
 

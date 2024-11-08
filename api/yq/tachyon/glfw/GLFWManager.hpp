@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/Manager.hpp>
+#include <yq/tachyon/app/Manager.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>

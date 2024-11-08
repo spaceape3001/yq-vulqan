@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/VulqanManager.hpp>
 #include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/glfw/GLFWManager.hpp>
+#include <yq/tachyon/task/TaskEngine.hpp>
 #include <yq/tachyon/viewer/Viewer.hpp>
-#include "GLFWManager.hpp"
-#include "TaskEngine.hpp"
 #include <yq/tachyon/viz/Visualizer.hpp>
-#include "VulqanManager.hpp"
-#include "Widget.hpp"
+#include <yq/tachyon/widget/Widget.hpp>
 
 #include <yq/asset/Asset.hpp>
 #include <yq/meta/Init.hpp>

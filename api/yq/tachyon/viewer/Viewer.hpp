@@ -12,18 +12,18 @@
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/Tachyon.hpp>
-#include <yq/tachyon/Thread.hpp>
-#include <yq/tachyon/ViewerState.hpp>
-#include <yq/tachyon/ViewerCreateInfo.hpp>
-#include <yq/tachyon/commands/forward.hpp>
-#include <yq/tachyon/events/forward.hpp>
-#include <yq/tachyon/replies/forward.hpp>
-#include <yq/tachyon/requests/forward.hpp>
+#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/core/Thread.hpp>
+#include <yq/tachyon/typedef/commands.hpp>
+#include <yq/tachyon/typedef/events.hpp>
+#include <yq/tachyon/typedef/replies.hpp>
+#include <yq/tachyon/typedef/requests.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/vigui.hpp>
 #include <yq/tachyon/typedef/visualizer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/viewer/ViewerState.hpp>
+#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>

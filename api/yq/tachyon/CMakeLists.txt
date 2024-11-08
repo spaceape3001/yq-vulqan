@@ -16,16 +16,14 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME} SHARED
     strings.cpp
 
-    #Application.cpp
     #GLFWManager.cpp
     
     MyImGui.cpp
     
-    #Viewer.cpp
-    #ViGui.cpp
     vulqan.cpp
     VulqanManager.cpp
 
+    app/Application.cpp
     app/Manager.cpp
     
     buffer/Buffer.cpp
@@ -53,7 +51,7 @@ add_library(${PROJECT_NAME} SHARED
     
     # frame/AppFrame.cpp # Issue/TODO
     
-    #glfw/GLFWManager.cpp
+    glfw/GLFWManager.cpp
     glfw/Joystick.cpp
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
@@ -101,7 +99,7 @@ add_library(${PROJECT_NAME} SHARED
     v/VqLogging.cpp
     v/VqUtils.cpp
     
-    #viewer/GLFWManager.cpp
+    viewer/viewer.cpp
     
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
@@ -118,10 +116,10 @@ add_library(${PROJECT_NAME} SHARED
     
     widget/Widget.cpp
     
-    #widgets/ImGuiDemoWidget.cpp
-    #widgets/Scene3DWidget.cpp
-    #widgets/StackedWidget.cpp
-    #widgets/TextArea.cpp
+    widgets/ImGuiDemoWidget.cpp
+    widgets/Scene3DWidget.cpp
+    widgets/StackedWidget.cpp
+    widgets/TextArea.cpp
 )
 
 

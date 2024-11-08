@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/enum/Response.hpp> 
 #include <yq/tachyon/replies/ViewerReply.hpp>
-#include <yq/tachyon/requests/forward.hpp>
+#include <yq/tachyon/typedef/requests.hpp>
 
 namespace yq::tachyon {
     class ViewerCloseReply : public ViewerReply {

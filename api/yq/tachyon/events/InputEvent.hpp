@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/post/Event.hpp>
-#include <yq/tachyon/ViewerBind.hpp>
+#include <yq/tachyon/viewer/ViewerBind.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 
 namespace yq::tachyon {

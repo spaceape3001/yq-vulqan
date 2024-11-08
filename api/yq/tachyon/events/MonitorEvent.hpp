@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/post/Event.hpp>
-#include <yq/tachyon/Monitor.hpp>
+#include <yq/tachyon/glfw/Monitor.hpp>
 
 namespace yq::tachyon {
     class MonitorEventInfo : public post::EventInfo {

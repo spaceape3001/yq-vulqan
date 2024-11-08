@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/post/Event.hpp>
-#include <yq/tachyon/TachyonBind.hpp>
+#include <yq/tachyon/core/TachyonBind.hpp>
 
 namespace yq::tachyon {
     class Tachyon;

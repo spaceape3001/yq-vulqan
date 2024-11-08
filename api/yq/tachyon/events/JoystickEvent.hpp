@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/post/Event.hpp>
-#include <yq/tachyon/Joystick.hpp>
+#include <yq/tachyon/glfw/Joystick.hpp>
 
 namespace yq::tachyon {
     class JoystickEventInfo : public post::EventInfo {

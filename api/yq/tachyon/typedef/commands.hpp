@@ -11,6 +11,27 @@ namespace yq {
 }
 
 namespace yq::tachyon {
+    class AppCommand;
+    class GLFWCloseCommand;
+    class GLFWCommand;
+    class GLFWHideCommand;
+    class MouseCaptureCommand;
+    class MouseCommand;
+    class MouseDisableCommand;
+    class MouseHideCommand;
+    class MouseNormalCommand;
+    class TachyonCommand;
+    class ViewerAttentionCommand;
+    class ViewerCloseCommand;
+    class ViewerCommand;
+    class ViewerHideCommand;
+    class ViewerIconifyCommand;
+    class ViewerMaximizeCommand;
+    class ViewerPauseCommand;
+    class ViewerRestoreCommand;
+    class ViewerResumeCommand;
+    class ViewerShowCommand;
+
     using MouseCaptureCommandCPtr       = Ref<const class MouseCaptureCommand>;
     using MouseDisableCommandCPtr       = Ref<const class MouseDisableCommand>;
     using MouseHideCommandCPtr          = Ref<const class MouseHideCommand>;

@@ -65,7 +65,7 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
-    #events/events.cpp
+    events/events.cpp
     
     #font/Font.cpp
     
@@ -74,9 +74,9 @@ add_library(${PROJECT_NAME} SHARED
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
     
-    #replies/replies.cpp
+    replies/replies.cpp
     
-    #requests/requests.cpp
+    requests/requests.cpp
     
     shader/GLSLShader.cpp
     shader/Shader.cpp

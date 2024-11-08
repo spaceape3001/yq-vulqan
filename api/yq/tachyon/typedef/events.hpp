@@ -11,6 +11,52 @@ namespace yq {
 }
 
 namespace yq::tachyon {
+    class AppEvent;
+    class InputEvent;
+    class JoystickAxisEvent;
+    class JoystickConnectEvent;
+    class JoystickDisconnectEvent;
+    class JoystickEventInfo;
+    class JoystickEvent;
+    class JoystickHatEvent;
+    class JoystickPressEvent;
+    class JoystickReleaseEvent;
+    class KeyboardEvent;
+    class KeyCharacterEvent;
+    class KeyPressEvent;
+    class KeyReleaseEvent;
+    class KeyRepeatEvent;
+    class MonitorConnectEvent;
+    class MonitorDisconnectEvent;
+    class MonitorEventInfo;
+    class MonitorEvent;
+    class MouseCaptureEvent;
+    class MouseDisableEvent;
+    class MouseDropEvent;
+    class MouseEnterEvent;
+    class MouseEvent;
+    class MouseHideEvent;
+    class MouseLeaveEvent;
+    class MouseMoveEvent;
+    class MouseNormalEvent;
+    class MousePressEvent;
+    class MouseReleaseEvent;
+    class MouseScrollEvent;
+    class TachyonEvent;
+    class ViewerCloseEvent;
+    class ViewerDefocusEvent;
+    class ViewerEvent;
+    class ViewerFocusEvent;
+    class ViewerIconifyEvent;
+    class ViewerMaximizeEvent;
+    class ViewerMoveEvent;
+    class ViewerResizeEvent;
+    class ViewerRestoreEvent;
+    class ViewerScaleEvent;
+    class ViewerStateEvent;
+    class VulqanEvent;
+    class WidgetEvent;
+
     using JoystickAxisEventCPtr         = Ref<const class JoystickAxisEvent>;
     using JoystickConnectEventCPtr      = Ref<const class JoystickConnectEvent>;
     using JoystickDisconnectEventCPtr   = Ref<const class JoystickDisconnectEvent>;

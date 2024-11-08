@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq/tachyon/typedef/tasker.hpp>
-#include <yq/tachyon/typedef/thread.hpp>
+#include <yq/tachyon/typedef/vi_tasker.hpp>
+#include <yq/tachyon/typedef/vi_thread.hpp>
 //#include <yq/tachyon/viz/ViCommandPool.hpp>
 #include <system_error>
 #include <vulkan/vulkan_core.h>

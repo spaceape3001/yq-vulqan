@@ -8,8 +8,8 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/Buffer.hpp>
-#include <yq/tachyon/Texture.hpp>
+#include <yq/tachyon/buffer/Buffer.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>

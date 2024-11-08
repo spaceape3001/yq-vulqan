@@ -15,17 +15,23 @@
 
 #include <yq/tachyon/config/vulqan.hpp>
 #include <yq/tachyon/enum/PresentMode.hpp>
-#include <yq/tachyon/typedef/buffer.hpp>
-#include <yq/tachyon/typedef/image.hpp>
-#include <yq/tachyon/typedef/queue_tasker.hpp>
-#include <yq/tachyon/typedef/pipeline.hpp>
-#include <yq/tachyon/typedef/pipeline_layout.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
-#include <yq/tachyon/typedef/render_pass.hpp>
-#include <yq/tachyon/typedef/sampler.hpp>
-#include <yq/tachyon/typedef/shader.hpp>
-#include <yq/tachyon/typedef/swapchain.hpp>
-#include <yq/tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/vi_buffer.hpp>
+#include <yq/tachyon/typedef/vi_buffer_manager.hpp>
+#include <yq/tachyon/typedef/vi_image.hpp>
+#include <yq/tachyon/typedef/vi_image_manager.hpp>
+#include <yq/tachyon/typedef/vi_queue_tasker.hpp>
+#include <yq/tachyon/typedef/vi_pipeline.hpp>
+#include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
+#include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
+#include <yq/tachyon/typedef/vi_render_pass.hpp>
+#include <yq/tachyon/typedef/vi_sampler.hpp>
+#include <yq/tachyon/typedef/vi_sampler_manager.hpp>
+#include <yq/tachyon/typedef/vi_shader.hpp>
+#include <yq/tachyon/typedef/vi_shader_manager.hpp>
+#include <yq/tachyon/typedef/vi_swapchain.hpp>
+#include <yq/tachyon/typedef/vi_texture.hpp>
+#include <yq/tachyon/typedef/vi_texture_manager.hpp>
 #include <yq/tachyon/viz/ViQueueType.hpp>
 
 #include <tbb/spin_rw_mutex.h>
@@ -45,6 +51,7 @@ namespace yq::tachyon {
     struct ViewerCreateInfo;
     class ViQueueManager;
     struct ViContext;
+    class Buffer;
     
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;

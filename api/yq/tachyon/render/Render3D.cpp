@@ -6,8 +6,7 @@
 
 #include "Render3D.hpp"
 
-#include <yq/tachyon/Render3DInfoWriter.hpp>
-#include <yq/core/DelayInit.hpp>
+#include <yq/tachyon/render/Render3DInfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
 

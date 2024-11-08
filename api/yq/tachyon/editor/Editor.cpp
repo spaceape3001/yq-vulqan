@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Editor.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/editor/EditorInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Editor)
 

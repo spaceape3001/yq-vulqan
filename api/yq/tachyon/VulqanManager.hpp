@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/Manager.hpp>
+#include <yq/tachyon/app/Manager.hpp>
 #include <yq/tachyon/vulqan.hpp>
 
 namespace yq::tachyon {

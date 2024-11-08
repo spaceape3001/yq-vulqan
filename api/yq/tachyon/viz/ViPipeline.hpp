@@ -9,15 +9,17 @@
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/LogPriority.hpp>
-#include <yq/trait/numbers.hpp>
+#include <yq/core/Tristate.hpp>
 #include <yq/tachyon/enum/CullMode.hpp>
 #include <yq/tachyon/enum/PolygonMode.hpp>
-#include <yq/core/Tristate.hpp>
-#include <yq/tachyon/typedef/pipeline.hpp>
-#include <yq/tachyon/typedef/pipeline_layout.hpp>
-#include <yq/tachyon/typedef/render_pass.hpp>
-#include <yq/tachyon/typedef/swapchain.hpp>
+#include <yq/tachyon/typedef/vi_pipeline.hpp>
+#include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
+#include <yq/tachyon/typedef/vi_render_pass.hpp>
+#include <yq/tachyon/typedef/vi_swapchain.hpp>
+#include <yq/trait/numbers.hpp>
+
 #include <optional>
+#include <span>
 #include <vulkan/vulkan_core.h>
 
 namespace yq {
@@ -69,6 +71,8 @@ namespace yq::tachyon {
         std::string_view        message;
         bool                    layout      = true;
     };
+    
+    class Pipeline;
 
     class ViPipeline : public RefCount {
     public:

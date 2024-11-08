@@ -6,8 +6,8 @@
 
 #include "errors.hpp"
 #include "logging.hpp"
-#include "AppCreateInfo.hpp"
-#include "ManagerInfoWriter.hpp"
+#include <yq/tachyon/app/AppCreateInfo.hpp>
+#include <yq/tachyon/app/ManagerInfoWriter.hpp>
 #include "VulqanManager.hpp"
 
 #include <yq/tachyon/exceptions/VulqanException.hpp>

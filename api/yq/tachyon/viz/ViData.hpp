@@ -8,11 +8,12 @@
 
 #include <yq/keywords.hpp>
 #include <yq/core/Flags.hpp>
-#include <yq/tachyon/Pipeline.hpp>
-#include <yq/tachyon/typedef/buffer.hpp>
-#include <yq/tachyon/typedef/pipeline.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/tachyon/typedef/vi_buffer.hpp>
+#include <yq/tachyon/typedef/vi_pipeline.hpp>
 #include <yq/tachyon/typedef/push.hpp>
-#include <yq/tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/vi_texture.hpp>
+#include <yq/tachyon/typedef/vi_buffer.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <span>

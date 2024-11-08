@@ -6,4 +6,5 @@
 
 #include "ImageQuad2.ipp"
 #include "Quadrilateral.ipp"
+#include "Tetrahedron.ipp"
 #include "Triangle.ipp"

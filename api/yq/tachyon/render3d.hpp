@@ -6,10 +6,4 @@
 
 #pragma once
 
-namespace yq {
-    template <typename> class Ref;
-}
-
-namespace yq::tachyon {
-    class Scene3D;
-}
+#include <yq/tachyon/render/Render3D.hpp>

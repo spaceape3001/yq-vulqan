@@ -12,6 +12,8 @@
 //#include <tachyon/image/Image.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/vi_rendered.hpp>
+#include <yq/tachyon/typedef/vi_rendered_manager.hpp>
 #include <yq/tachyon/viz/ViQueueType.hpp>
 
 #include <vulkan/vulkan_core.h>

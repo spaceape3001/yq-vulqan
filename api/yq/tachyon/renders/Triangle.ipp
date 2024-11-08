@@ -10,8 +10,8 @@
 #include <yq/shape/TriangleData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <yq/tachyon/Render3DInfoWriter.hpp>
-#include <yq/tachyon/Shader.hpp>
+#include <yq/tachyon/render/Render3DInfoWriter.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 

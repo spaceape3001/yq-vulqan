@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/tachyon/commands/GLFWCommand.hpp>
-#include <yq/tachyon/typedef/viewer.hpp>
 
 namespace yq::tachyon {
     class Viewer;

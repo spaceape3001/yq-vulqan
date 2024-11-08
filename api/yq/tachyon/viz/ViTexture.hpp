@@ -7,14 +7,16 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq/tachyon/typedef/image.hpp>
-#include <yq/tachyon/typedef/texture.hpp>
-#include <yq/tachyon/typedef/sampler.hpp>
+#include <yq/tachyon/typedef/vi_image.hpp>
+#include <yq/tachyon/typedef/vi_texture.hpp>
+#include <yq/tachyon/typedef/vi_sampler.hpp>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
 
 namespace yq::tachyon {
     class ViVisualizer;
+    struct TextureInfo;
+    class Texture;
     
     class ViTexture : public RefCount {
     public:

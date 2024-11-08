@@ -7,9 +7,10 @@
 #pragma once
 
 #include <yq/tachyon/commands/GLFWCommand.hpp>
-#include <yq/tachyon/typedef/viewer.hpp>
 
 namespace yq::tachyon {
+    class Viewer;
+    
     class GLFWHideCommand : public GLFWCommand {
         YQ_OBJECT_DECLARE(GLFWHideCommand, GLFWCommand)
     public:

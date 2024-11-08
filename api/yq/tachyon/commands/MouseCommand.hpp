@@ -7,11 +7,9 @@
 #pragma once
 
 #include <yq/post/Command.hpp>
-#include <yq/tachyon/ViewerBind.hpp>
+#include <yq/tachyon/viewer/ViewerBind.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
-
     class MouseCommandInfo : public post::CommandInfo {
     public:
         MouseCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl=std::source_location::current());

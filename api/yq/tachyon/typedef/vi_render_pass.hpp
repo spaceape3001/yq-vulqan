@@ -11,9 +11,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Sampler;
-    struct SamplerInfo;
-    
-    using SamplerPtr            = Ref<Sampler>;
-    using SamplerCPtr           = Ref<const Sampler>;
+    class ViRenderPass;
+    using ViRenderPassPtr   = Ref<ViRenderPass>;
+    using ViRenderPassCPtr  = Ref<const ViRenderPass>;
 }

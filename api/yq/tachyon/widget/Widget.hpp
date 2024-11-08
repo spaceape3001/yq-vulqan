@@ -10,11 +10,11 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/typedef/vector2.hpp>
-#include <yq/tachyon/Tachyon.hpp>
-#include <yq/tachyon/commands/forward.hpp>
-#include <yq/tachyon/events/forward.hpp>
-#include <yq/tachyon/replies/forward.hpp>
-#include <yq/tachyon/requests/forward.hpp>
+#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/typedef/commands.hpp>
+#include <yq/tachyon/typedef/events.hpp>
+#include <yq/tachyon/typedef/replies.hpp>
+#include <yq/tachyon/typedef/requests.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
 
 namespace yq::tachyon {

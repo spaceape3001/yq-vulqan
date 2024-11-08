@@ -11,9 +11,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Sampler;
-    struct SamplerInfo;
-    
-    using SamplerPtr            = Ref<Sampler>;
-    using SamplerCPtr           = Ref<const Sampler>;
+    class ViPipelineLayout;
+    using ViPipelineLayoutPtr           = Ref<ViPipelineLayout>;
+    using ViPipelineLayoutCPtr          = Ref<const ViPipelineLayout>;
 }

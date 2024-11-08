@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/Rendered.hpp>
+#include <yq/tachyon/render/Rendered.hpp>
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/shape/AxBox3.hpp>
 

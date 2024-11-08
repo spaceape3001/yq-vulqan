@@ -5,8 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Rendered.hpp"
-#include <yq/core/DelayInit.hpp>
-#include <yq/tachyon/RenderedInfoWriter.hpp>
+#include <yq/tachyon/render/RenderedInfoWriter.hpp>
 
 namespace yq::tachyon {
     RenderedInfo::RenderedInfo(std::string_view name, MetaObjectInfo& base, const std::source_location& sl) : 

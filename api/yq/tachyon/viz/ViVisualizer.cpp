@@ -13,13 +13,14 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/ViewerCreateInfo.hpp>
-#include <yq/tachyon/Raster.hpp>
-#include <yq/tachyon/Buffer.hpp>
-#include <yq/tachyon/Pipeline.hpp>
-#include <yq/tachyon/Sampler.hpp>
-#include <yq/tachyon/Shader.hpp>
-#include <yq/tachyon/Texture.hpp>
+#include <yq/tachyon/VulqanManager.hpp>
+#include <yq/tachyon/buffer/Buffer.hpp>
+#include <yq/tachyon/image/Raster.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/tachyon/sampler/Sampler.hpp>
+#include <yq/tachyon/shader/Shader.hpp>
+#include <yq/tachyon/texture/Texture.hpp>
+#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
 //#include <yq/tachyon/v/VqEnumerations.hpp>
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
@@ -36,7 +37,6 @@
 #include <yq/tachyon/viz/ViShader.hpp>
 #include <yq/tachyon/viz/ViSwapchain.hpp>
 #include <yq/tachyon/viz/ViTexture.hpp>
-#include <yq/tachyon/VulqanManager.hpp>
 
 #include <GLFW/glfw3.h>
 

@@ -21,15 +21,10 @@ add_library(${PROJECT_NAME} SHARED
     
     MyImGui.cpp
     
-    #Render2D.cpp
-    #Render3D.cpp
-    #Rendered.cpp
-    #RenderPass.cpp
     #Viewer.cpp
     #ViGui.cpp
-    #vulqan.cpp
-    #VulqanManager.cpp
-    #Widget.cpp
+    vulqan.cpp
+    VulqanManager.cpp
 
     app/Manager.cpp
     
@@ -38,19 +33,15 @@ add_library(${PROJECT_NAME} SHARED
     core/Tachyon.cpp
     core/Thread.cpp
 
-    #2D/2D.cpp
-
-    #3D/Tetrahedron.cpp
-
     camera/Camera.cpp
    
     cameras/cameras.cpp
     
-    #commands/commands.cpp
+    commands/commands.cpp
     
     config/build.cpp
     
-    #editor/Editor.cpp
+    editor/Editor.cpp
     
     enum/enum.cpp
     enum/KeyCode.cpp
@@ -58,7 +49,9 @@ add_library(${PROJECT_NAME} SHARED
 
     events/events.cpp
     
-    #font/Font.cpp
+    # font/Font.cpp      # Issue/TODO
+    
+    # frame/AppFrame.cpp # Issue/TODO
     
     #glfw/GLFWManager.cpp
     glfw/Joystick.cpp
@@ -70,10 +63,19 @@ add_library(${PROJECT_NAME} SHARED
 
     manipulator/Manipulator.cpp
     
+    pass/RenderPass.cpp
+
     pipeline/Pipeline.cpp
     pipeline/PipelineUtils.cpp
 
+    render/Render2D.cpp
+    render/Render3D.cpp
+    render/Rendered.cpp
+
+    renders/renders.cpp
+
     replies/replies.cpp
+    
     
     requests/requests.cpp
 
@@ -97,22 +99,24 @@ add_library(${PROJECT_NAME} SHARED
     # v/VqEnumerations.cpp
     v/VqEnums.cpp
     v/VqLogging.cpp
-    #v/VqUtils.cpp
+    v/VqUtils.cpp
     
     #viewer/GLFWManager.cpp
     
-    #viz/ViCommandBufferVector.cpp
-    #viz/ViData.cpp
-    #viz/ViFrame.cpp
-    #viz/ViPipeline.cpp
-    #viz/ViPipelineLayout.cpp
-    #viz/ViRendered.cpp
-    #viz/ViTasker.cpp
-    #viz/ViThread.cpp
-    #viz/ViVisualizer.cpp
-    #viz/Visualizer.cpp
+    viz/ViCommandBufferVector.cpp
+    viz/ViData.cpp
+    viz/ViFrame.cpp
+    viz/ViPipeline.cpp
+    viz/ViPipelineLayout.cpp
+    viz/ViRendered.cpp
+    viz/ViTasker.cpp
+    viz/ViThread.cpp
+    viz/ViVisualizer.cpp
+    viz/Visualizer.cpp
     
-    #viz/viz.cpp
+    viz/viz.cpp
+    
+    widget/Widget.cpp
     
     #widgets/ImGuiDemoWidget.cpp
     #widgets/Scene3DWidget.cpp

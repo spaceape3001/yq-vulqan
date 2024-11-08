@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
-#include <yq/tachyon/AppCreateInfo.hpp>
-#include <yq/tachyon/Tachyon.hpp>
+#include <yq/tachyon/app/AppCreateInfo.hpp>
+#include <yq/tachyon/core/Tachyon.hpp>
 #include <yq/tachyon/typedef/application.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>

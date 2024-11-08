@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/post/PBX.hpp>
-#include <yq/tachyon/Tachyon.hpp>
+#include <yq/tachyon/core/Tachyon.hpp>
 
 namespace yq::tachyon {
 

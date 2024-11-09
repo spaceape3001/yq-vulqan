@@ -102,6 +102,11 @@ namespace yq::tachyon {
         for(const post::PostCPtr& p : posts)
             receive(p);
     }
+
+    bool    Tachyon::in_replay() const
+    {
+        return in_thread() && m_replay;
+    }
     
     void    Tachyon::replay(direct_t)
     {

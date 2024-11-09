@@ -39,6 +39,8 @@ add_library(${PROJECT_NAME} SHARED
     
     config/build.cpp
     
+    controllers/controllers.cpp
+    
     editor/Editor.cpp
     
     enum/enum.cpp

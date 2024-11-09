@@ -39,6 +39,7 @@ namespace yq::tachyon {
     class WindowHideCommand;
     class WindowIconifyCommand;
     class WindowMaximizeCommand;
+    class WindowMoveCommand;
     class WindowRestoreCommand;
     class WindowShowCommand;
 

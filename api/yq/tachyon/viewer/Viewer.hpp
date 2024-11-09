@@ -178,8 +178,11 @@ namespace yq::tachyon {
         //! TRUE if we've not called START
         bool                        never_started() const;
         
+        const Vector2I&             position() const;
+
         //! TRUE if we're started
         bool                        started() const;
+        
         
         //! Current state
         const ViewerState&          state() const;
@@ -210,10 +213,32 @@ namespace yq::tachyon {
         //! Runs the draw sequence
         std::error_code     draw(ViContext&);
 
+        //! Attention from the user
+        void                cmd_attention();
+        
+        //! Closes the viewer
+        //! \param[in] force TRUE to force the close (ie, no option to save)
         void                cmd_close(bool force=false);
+        
+        //! Hides the viewer (ie, renders invisible)
+        void                cmd_hide();
+        
+        //! Pauses the viewer (ie, the render won't update)
         void                cmd_pause();
+        
+        //! Resumes (unpauses) the viewer
         void                cmd_resume();
+        
+        //! Shows the viewer
+        void                cmd_show();
 
+            //! Sets the window position
+        void                set_position(const Vector2I&);
+
+            //! Sets the window position
+        void                set_position(int x, int y);
+
+        //! Our general "update()" that includes the visualizer
         void                tick(/* const AppFrame& */);
 
     protected:
@@ -231,10 +256,14 @@ namespace yq::tachyon {
 
         virtual void    receive(const post::PostCPtr&) override;
 
-        //! Override to have a more nuianced approach
+        //! Override to have a more nuianced approach (default is accept)
         virtual void    on_close_request();
         
+        
+        //! Call if you accept the close request
         void     accept(close_t);
+        
+        //! Call if you reject the close request
         void     reject(close_t);
 
     private:
@@ -272,19 +301,19 @@ namespace yq::tachyon {
         Stage               _stage() const;
         void                _sweepwait();
         
-        
-        void    close();
+        void    attention_command(const ViewerAttentionCommand&);
         void    close_request(const ViewerCloseRequestCPtr&);
         void    close_command(const ViewerCloseCommand&);
-        
-        void    on_hide_closing();
-        
-        void    hide_event(const WindowHideEvent&);
-        void    show_event(const WindowShowEvent&);
         void    destroy_event(const WindowDestroyEvent&);
-
+        void    hide_command(const ViewerHideCommand&);
+        void    hide_event(const WindowHideEvent&);
+        void    on_hide_closing();
         void    pause_command(const ViewerPauseCommand&);
         void    resume_command(const ViewerResumeCommand&);
+        void    show_command(const ViewerShowCommand&);
+        void    show_event(const WindowShowEvent&);
+        void    state_event(const WindowStateEvent&);
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE
@@ -299,28 +328,10 @@ namespace yq::tachyon {
         */
 //        Viewer();
 
-#if 0
-        
-        /*! \brief Initializes the viewer
-            
-            Initializes the viewer to render specified top-level widget
-        */
-        //std::error_code     initialize(const ViewerCreateInfo&vci, Widget*);
-        
-        //! Attention from the user
-        void                cmd_attention();
-#endif
-
-        //! Starts the "close" process
-        void                cmd_close();
-
 #if 0    
         //! Focus onto this window
         void                cmd_focus();
 
-        //! Hides the window
-        void                cmd_hide();
-        
         //! Iconify/minimizes the window;
         void                cmd_iconify();
         
@@ -332,17 +343,9 @@ namespace yq::tachyon {
         void                cmd_mouse_hide();
         void                cmd_mouse_normal();
         
-        //! Pause the rendering
-        void                cmd_pause();
-        
         //! Restore the window to non-icon/non-fullscreen
         void                cmd_restore();
 
-        //! Show the window
-        void                cmd_show();
-        
-        //! Unpause the rendering
-        void                cmd_unpause();
 #endif
 
 //        const Vector2D&     cursor_position() const { return m_cursorPos; }
@@ -355,9 +358,6 @@ namespace yq::tachyon {
 //        int                 height() const;
 
 
-#if 0
-#endif
-        
             //! Monitor (if fullscreen)
         //Monitor             monitor() const;
         
@@ -373,11 +373,6 @@ namespace yq::tachyon {
         //void                set_render_paused(bool);
         
 #if 0        
-            //! Sets the window position
-        void                set_position(const Vector2I&);
-
-            //! Sets the window position
-        void                set_position(int x, int y);
 
             //! Sets window size
         void                set_size(const Size2I&);
@@ -447,35 +442,5 @@ namespace yq::tachyon {
         bool    viewer_resize_event(const ViewerResizeEventCPtr&);
     #endif
 
-    #if 0
-        void    close_command(const ViewerCloseCommand&);
-        void    close_request(const ViewerCloseRequestCPtr&);
-    #endif
-
-    private:
-        //void                record(ViContext&);
-        
-        
-        
-        
-        
-        // SAME thread close & impending delete
-
-        
-        //void    _init(const ViewerCreateInfo&vci, Widget*w);
-
-        
-        
-        
-        
-        //  Maybe some sort of focus manager (or policy)?
-        
-        void                purge_deleted();
-        
-        
-        //Vector2D    _probe_cursor_position() const;
     };
-    
-    
-    
 }

@@ -16,14 +16,18 @@
 #include <yq/tachyon/commands/MouseDisableCommand.hpp>
 #include <yq/tachyon/commands/MouseHideCommand.hpp>
 #include <yq/tachyon/commands/MouseNormalCommand.hpp>
+#include <yq/tachyon/commands/ViewerAttentionCommand.hpp>
 #include <yq/tachyon/commands/ViewerCloseCommand.hpp>
+#include <yq/tachyon/commands/ViewerHideCommand.hpp>
 #include <yq/tachyon/commands/ViewerPauseCommand.hpp>
 #include <yq/tachyon/commands/ViewerResumeCommand.hpp>
+#include <yq/tachyon/commands/ViewerShowCommand.hpp>
 #include <yq/tachyon/commands/WindowAttentionCommand.hpp>
 #include <yq/tachyon/commands/WindowDestroyCommand.hpp>
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
 #include <yq/tachyon/commands/WindowIconifyCommand.hpp>
 #include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
+#include <yq/tachyon/commands/WindowMoveCommand.hpp>
 #include <yq/tachyon/commands/WindowRestoreCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
 #include <yq/tachyon/core/TachyonInfoWriter.hpp>
@@ -37,6 +41,8 @@
 #include <yq/tachyon/events/WindowDestroyEvent.hpp>
 #include <yq/tachyon/events/WindowHideEvent.hpp>
 #include <yq/tachyon/events/WindowResizeEvent.hpp>
+#include <yq/tachyon/events/WindowShowEvent.hpp>
+#include <yq/tachyon/events/WindowStateEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
 #include <yq/tachyon/glfw/GLFWManager.hpp>
 #include <yq/tachyon/image/Raster.hpp>
@@ -90,12 +96,17 @@ namespace yq::tachyon {
         w.description("Tachyon Viewer");
         w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
         
+        w.receive(&Viewer::attention_command).name("attention_command");
         w.receive(&Viewer::close_command).name("close_command");
         w.receive(&Viewer::close_request).name("close_request");
-        w.receive(&Viewer::hide_event).name("hide_event");
         w.receive(&Viewer::destroy_event).name("destroy_event");
+        w.receive(&Viewer::hide_command).name("hide_command");
+        w.receive(&Viewer::hide_event).name("hide_event");
         w.receive(&Viewer::pause_command).name("pause_command");
         w.receive(&Viewer::resume_command).name("resume_command");
+        w.receive(&Viewer::show_command).name("show_command");
+        w.receive(&Viewer::show_event).name("show_event");
+        w.receive(&Viewer::state_event).name("state_event");
         
 #if 0        
         w.receive(&Viewer::viewer_resize_event);
@@ -262,9 +273,10 @@ namespace yq::tachyon {
             if(p->viewer() != this){
                 return ;
             }
-            if(m_imgui)
+            if(m_imgui && !in_replay())  
                 m_imgui->receive(pp);
-        } else {
+            
+        } else if(!in_replay()){   
             m_widget->receive(pp);
         }
         Tachyon::receive(pp);
@@ -273,7 +285,11 @@ namespace yq::tachyon {
     void    Viewer::tick(/* frame...eventually */)
     {
         replay(ALL);
-        if(m_stage == Stage::Running){
+        if(m_imgui)
+            m_imgui->tick();
+        if(m_widget)
+            m_widget -> tick();
+        if((m_stage == Stage::Running) && is_visible() && !is_iconified()){
             draw(); // HACK (for now)
         }
         m_cleanup.sweep();
@@ -366,6 +382,11 @@ namespace yq::tachyon {
             return m_paused; 
         }
 
+        const Vector2I&   Viewer::position() const
+        {
+            return m_state.window.position;
+        }
+
         bool    Viewer::running() const
         {
             return _stage() == Stage::Running;
@@ -410,7 +431,22 @@ namespace yq::tachyon {
             return *m_viz;
         }
 
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  ATTENTION
+    //  
 
+        void    Viewer::attention_command(const ViewerAttentionCommand&)
+        {
+            if(m_stage == Stage::Running){
+                dispatch(new WindowAttentionCommand(this));
+            }
+        }
+
+        void    Viewer::cmd_attention()
+        {
+            dispatch(SELF, new ViewerAttentionCommand(this));
+        }
+        
     //  ----------------------------------------------------------------------------------------------------------------
     //  CLOSING
     //  
@@ -495,26 +531,6 @@ namespace yq::tachyon {
             }
         }
 
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  SHOW/HIDE
-    //  
-
-    void    Viewer::hide_event(const WindowHideEvent&)
-    {
-        switch(m_stage){
-        case Stage::Closing:
-            on_hide_closing();
-            break;
-        default:
-            break;
-        }
-    }
-    
-    void    Viewer::show_event(const WindowShowEvent&)
-    {
-    }
-    
     //  ----------------------------------------------------------------------------------------------------------------
     //  PAUSE/PLAY
     //  
@@ -540,6 +556,76 @@ namespace yq::tachyon {
             m_paused    = false;
             dispatch(new ViewerResumeEvent(this));
         }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  SHOW/HIDE
+    //  
+
+    void    Viewer::cmd_hide()
+    {
+        if(m_stage == Stage::Running){
+            dispatch(new WindowHideCommand(this));
+        }
+    }
+
+    void    Viewer::cmd_show()
+    {
+        if(m_stage == Stage::Running){
+            dispatch(new WindowShowCommand(this));
+        }
+    }
+
+    void    Viewer::hide_command(const ViewerHideCommand&)
+    {
+        cmd_hide();
+    }
+
+    void    Viewer::hide_event(const WindowHideEvent&)
+    {
+        switch(m_stage){
+        case Stage::Closing:
+            on_hide_closing();
+            break;
+        case Stage::Started:
+        case Stage::Running:
+            break;
+        default:
+            break;
+        }
+    }
+    
+    void    Viewer::show_command(const ViewerShowCommand&)
+    {
+        cmd_show();
+    }
+
+    void    Viewer::show_event(const WindowShowEvent&)
+    {
+        switch(m_stage){
+        case Stage::Started:
+        case Stage::Running:
+            break;
+        default:
+            break;
+        }
+    }
+
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  STATE
+    //  
+
+    void    Viewer::set_position(int x, int y)
+    {
+        dispatch(new WindowMoveCommand(this, {x,y}));
+    }
+
+    void    Viewer::state_event(const WindowStateEvent&evt)
+    {
+        XLOCK
+        m_state = evt.state();
+    }
+    
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -773,40 +859,14 @@ namespace yq::tachyon {
         glfwMaximizeWindow(m_window);
     }
     
-    void    Viewer::cmd_pause()
-    {
-        m_flags |= F::Paused;
-    }
-
     void    Viewer::cmd_restore()
     {
         glfwRestoreWindow(m_window);
-    }
-    
-    void    Viewer::cmd_show()
-    {
-        glfwShowWindow(m_window);
-    }
-    
-    void    Viewer::cmd_unpause()
-    {
-        m_flags -= F::Paused;
     }
 #endif
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  VULKAN/RENDER
-
-
-    //  ----------------------------------------------------------------------------------------------------------------
-
-
-#if 0
-    void     Viewer::purge_deleted()
-    {
-        m_cleanup.sweep();
-    }
-#endif
 
 /*
     void    Viewer::window_framebuffer_resized(const Size2I&s)
@@ -815,105 +875,13 @@ namespace yq::tachyon {
         trigger_rebuild();
     }
 */
-#if 0
-    void    Viewer::set_render_paused(bool v)
-    {
-        m_paused    = v;
-    }
-#endif
 
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  EVENT/COMMAND/POST PROCESSING (BELOW, one "section" per event/command type)
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  ATTENTION
-    //  
-#if 0
-    void    Viewer::cmd_attention()
-    {
-        glfwRequestWindowAttention(m_window);
-    }
-
-    bool    Viewer::viewer_attention_command(const ViewerAttentionCommandCPtr&cmd)
-    {
-        if(!cmd)
-            return false;
-        if(cmd->viewer() != this)
-            return false;
-        cmd_attention();
-        return true;
-    }
-#endif
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  CLOSING
-    //  
-
-    void    Viewer::cmd_close()
-    {
-    #if 0
-        //  Steps on destruction
-        //  Viewer close event & hide
-        //  (Wait 0.1s?)
-        //  Destroy imgui/vulkan
-        //  Delete window
-        //  Remove from app & destroy viewer
-    
-    
-        //  For now... we're keeping this distinct (separete)
-        dispatch(new ViewerCloseEvent(this));
-        dispatch(new GLFWCloseCommand(this));
-    #endif
-    }
-
-#if 0
-    void     Viewer::close_command(const ViewerCloseCommand& cmd)
-    {
-        cmd_close();
-    }
-
-    void     Viewer::close_request(const ViewerCloseRequestCPtr& req)
-    {
-    #if 0
-        // this is the *ONLY* thread that'll be altering this
-        if(m_viewerCloseRequest){
-            if(m_viewerCloseRequest != req){
-                dispatch(new ViewerCloseReply(req, this, Response::Busy));
-            }
-            return;
-        }
-        
-        assign(&Viewer::m_viewerCloseRequest, req);
-        on_close_request();
-    #endif
-    }
-#endif
-    
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  HIDING
-    //  
-#if 0
-    void    Viewer::cmd_hide()
-    {
-        glfwHideWindow(m_window);
-    }
-    
-    bool    Viewer::viewer_hide_command(const ViewerHideCommandCPtr& cmd)
-    {
-        if(!cmd)
-            return false;
-        if(cmd->viewer() != this)
-            return false;
-        cmd_hide();
-        return true;
-    }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  RESIZING
     //  
 
+#if 0
     bool     Viewer::viewer_resize_event(const ViewerResizeEventCPtr& evt)
     {
         if(!evt)

@@ -30,6 +30,7 @@ namespace yq::tachyon {
     Widget::Widget(const Param& p) : Tachyon(p)
     {
         m_windowID      = std::string(fmt_hex(id()));
+        set_post_mode(PostMode::Queued);
     }
     
     Widget::~Widget()
@@ -125,6 +126,13 @@ namespace yq::tachyon {
         }
         return true;
    }
+
+    void    Widget::tick()
+    {
+        replay(ALL);
+        for(auto& w : m_children)
+            w->tick();
+    }
 
     Viewer*         Widget::viewer()
     {

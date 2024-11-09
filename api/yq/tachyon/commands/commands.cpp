@@ -16,6 +16,7 @@
 #include "ViewerAttentionCommand.ipp"
 #include "ViewerCloseCommand.ipp"
 #include "ViewerCommand.ipp"
+#include "ViewerFocusCommand.ipp"
 #include "ViewerHideCommand.ipp"
 #include "ViewerIconifyCommand.ipp"
 #include "ViewerMaximizeCommand.ipp"
@@ -30,6 +31,7 @@
 #include "WindowHideCommand.ipp"
 #include "WindowIconifyCommand.ipp"
 #include "WindowMaximizeCommand.ipp"
+#include "WindowMoveCommand.ipp"
 #include "WindowRestoreCommand.ipp"
 #include "WindowShowCommand.ipp"
 

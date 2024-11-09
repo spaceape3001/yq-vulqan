@@ -112,6 +112,8 @@ namespace yq::tachyon {
         
         void    set_post_mode(PostMode);
         
+        bool    in_replay() const;
+        
         
     private:
         uint64_t                        m_padding0[7];  // to avoid false sharing

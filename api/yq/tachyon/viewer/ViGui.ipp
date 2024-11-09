@@ -22,6 +22,9 @@
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
+#include <yq/tachyon/events/WindowDefocusEvent.hpp>
+#include <yq/tachyon/events/WindowFocusEvent.hpp>
+#include <yq/tachyon/events/WindowStateEvent.hpp>
 #include <yq/tachyon/image/Raster.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/PipelineWriter.hpp>
@@ -145,6 +148,7 @@ namespace yq::tachyon {
         if(!_init(options)){
             _kill();
         }
+        set_post_mode(PostMode::Queued);
     }
     
     ViGui::~ViGui()
@@ -158,7 +162,6 @@ namespace yq::tachyon {
 
         m_context   = ImGui::CreateContext();
         ImGui::SetCurrentContext(m_context);
-        //ImGui_ImplGlfw_InitForVulkan(m_viz->_window(), false);
         
         ImGuiIO& io = ImGui::GetIO();
         io.BackendRendererName      = "yq::tachyon::ViGui";
@@ -168,12 +171,9 @@ namespace yq::tachyon {
         io.BackendPlatformUserData  = this;
         io.BackendPlatformName      = "yq::tachyon::ViGui";
 
-        //m_pipelineLayout        = m_viz -> pipeline_layout_create(g.pipeline);
         m_pipeline                  = m_viz -> pipeline_create(g.pipeline);
         m_pipelineLayout            = m_pipeline -> layout();
         
-        //new ViPipelineLayout(*m_viz, g.pipeline);
-        //m_pipeline              = new ViPipeline(*m_viz, m_pipelineLayout, g.pipeline_options);
         //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);
         
         VkDescriptorSetLayout   descLay = m_pipelineLayout -> descriptor_set_layout();
@@ -653,10 +653,9 @@ namespace yq::tachyon {
         if(has_super(diff)){
             io.AddKeyEvent(ImGuiMod_Super, has_super(mk));
         }
-        
     }
     
-    void ViGui::mouse_move_event(const MousePressEvent&evt)
+    void ViGui::mouse_move_event(const MouseMoveEvent&evt)
     {
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
@@ -689,6 +688,50 @@ namespace yq::tachyon {
         m_mouse = evt.position();
     }
 
+    void    ViGui::tick()
+    {
+        replay(ALL);
+    }
+
+    void    ViGui::window_defocus_event(const WindowDefocusEvent&)
+    {
+        ImGui::SetCurrentContext(m_context);
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddFocusEvent(false);
+    }
+    
+    void    ViGui::window_focus_event(const WindowFocusEvent&)
+    {
+        ImGui::SetCurrentContext(m_context);
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddFocusEvent(true);
+    }
+
+    void    ViGui::window_state_event(const WindowStateEvent&evt)
+    {
+        ImGui::SetCurrentContext(m_context);
+        ImGuiIO& io = ImGui::GetIO();
+
+        const ViewerState& state    = evt.state();
+
+        // update the area
+        io.DisplaySize  = ImVec2((float) state.window.area.x, (float) state.window.area.y);
+        if((state.window.area.x > 0) && (state.window.area.y > 0)){
+            io.DisplayFramebufferScale  = ImVec2(
+                (float) state.window.pixels.x / (float) state.window.area.x,
+                (float) state.window.pixels.y / (float) state.window.area.y
+            );
+        }
+        
+        // update the time
+        double  curtime = std::max(state.time, m_time+0.00001f);
+        io.DeltaTime = (m_time>0.) ? (float)(curtime - m_time) : (float)(1.f/60.f);
+        m_time = curtime;
+        
+        // update mouse position
+        io.AddMousePosEvent((float) state.mouse.position.x, (float) state.mouse.position.y);
+    }
+
     ///////////////////////////////////
     void ViGui::init_info()
     {
@@ -696,7 +739,10 @@ namespace yq::tachyon {
         w.description("ImGui Visualization");
         w.receive(&ViGui::mouse_move_event);
         w.receive(&ViGui::mouse_press_event);
-        w.receive(&ViGui::mouse_move_event);
+        w.receive(&ViGui::mouse_release_event);
+        w.receive(&ViGui::window_defocus_event);
+        w.receive(&ViGui::window_focus_event);
+        w.receive(&ViGui::window_state_event);
     }
 }
 

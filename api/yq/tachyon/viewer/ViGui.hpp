@@ -41,6 +41,9 @@ namespace yq::tachyon {
     class MousePressEvent;
     class MouseMoveEvent;
     class MouseReleaseEvent;
+    class WindowFocusEvent;
+    class WindowDefocusEvent;
+    class WindowStateEvent;
     
     //class 
 
@@ -79,6 +82,8 @@ namespace yq::tachyon {
         
         static void init_info();
         
+        void    tick();
+        
         
     private:
     
@@ -101,6 +106,7 @@ namespace yq::tachyon {
         UpdateFlags             m_update    = {};
         ModifierKeys            m_modifiers;
         Vector2D                m_mouse;
+        double                  m_time = 0.;
         
         struct Push;
         
@@ -140,9 +146,13 @@ namespace yq::tachyon {
         void            _write_csv_index(const ImDrawData&, std::string_view filename);
 
         void    update_modifiers(ModifierKeys);
-        void    mouse_move_event(const MousePressEvent&);
+        void    mouse_move_event(const MouseMoveEvent&);
         void    mouse_press_event(const MousePressEvent&);
         void    mouse_release_event(const MouseReleaseEvent&);
+        
+        void    window_focus_event(const WindowFocusEvent&);
+        void    window_defocus_event(const WindowDefocusEvent&);
+        void    window_state_event(const WindowStateEvent&);
     };
     
     #if 0

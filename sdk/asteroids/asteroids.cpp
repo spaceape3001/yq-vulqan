@@ -8,11 +8,10 @@
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 
-#include <yq/tachyon/Application.hpp>
-#include <yq/tachyon/Viewer.hpp>
-#include <yq/tachyon/Task.hpp>
-#include <yq/tachyon/Widget.hpp>
-#include <yq/tachyon/WidgetInfoWriter.hpp>
+#include <yq/tachyon/application.hpp>
+#include <yq/tachyon/viewer.hpp>
+#include <yq/tachyon/task.hpp>
+#include <yq/tachyon/widget.hpp>
 #include <yq/tachyon/widgets/StackedWidget.hpp>
 
 #include <iostream>

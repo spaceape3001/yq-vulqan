@@ -187,7 +187,7 @@ namespace yq::tachyon {
                     g.tasking -> step();
 
                 for(auto& v : g.viewers){
-                    v->draw();
+                    v->tick();
                     #if 0
                     if(v->should_close() || !v->m_delete.empty()){
                         vkDeviceWaitIdle(v->visualizer().device());

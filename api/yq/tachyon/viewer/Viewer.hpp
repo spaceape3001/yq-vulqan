@@ -283,7 +283,11 @@ namespace yq::tachyon {
 
             //! Viewer size
         Size2I              size() const;
+#endif
 
+        void                tick(/* const AppFrame& */) { _tick(); }
+    
+#if 0
         std::string         title() const;
 #endif
 
@@ -311,9 +315,6 @@ namespace yq::tachyon {
         
         //! TRUE if we're started or running
         bool    started_or_running() const;
-        
-        //! TRUE if we're finished (ie closing/kaput)
-        bool    finished() const;
         
         //! TRUE if we're closing
         bool    closing() const;
@@ -354,7 +355,7 @@ namespace yq::tachyon {
 
         virtual void    receive(const post::PostCPtr&) override;
         
-        virtual std::error_code init();
+        //virtual std::error_code init();
         
         
         //! Called *AFTER* vulkan/imgui are initialized
@@ -377,8 +378,10 @@ namespace yq::tachyon {
         bool    viewer_resize_event(const ViewerResizeEventCPtr&);
     #endif
 
+    #if 0
         void    close_command(const ViewerCloseCommand&);
         void    close_request(const ViewerCloseRequestCPtr&);
+    #endif
 
     private:
         //void                record(ViContext&);
@@ -392,8 +395,9 @@ namespace yq::tachyon {
         
         
         // SAME thread close & impending delete
-        void                    _quit();
+        void    _quit();    // basically unconditional (without app-destroy)
 
+        void    _tick();
         
         //void    _init(const ViewerCreateInfo&vci, Widget*w);
         void    _kill();
@@ -423,6 +427,7 @@ namespace yq::tachyon {
         
         void                purge_deleted();
         
+        Stage   _stage() const;
         
         //Vector2D    _probe_cursor_position() const;
     };

@@ -69,18 +69,6 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
 
 namespace yq::tachyon {
 
-    void Viewer::init_info()
-    {
-        auto w = writer<Viewer>();
-        w.description("Tachyon Viewer");
-#if 0        
-        w.receive(&Viewer::close_request);
-        w.receive(&Viewer::close_command);
-        w.receive(&Viewer::viewer_resize_event);
-        w.property("mouse", &Viewer::mouse_state).description("Mouse state");
-#endif
-    }
-
     Tachyon::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
     {
         Tachyon::Param  ret;
@@ -105,8 +93,12 @@ namespace yq::tachyon {
         if(!w)
             throw ViewerException("Widget is required");
             
-        m_createInfo    = std::make_unique<ViewerCreateInfo>(vci);
-        m_widget        = w;
+        m_createInfo        = std::make_unique<ViewerCreateInfo>(vci);
+        m_widget                = w;
+        m_widget -> m_viewer    = this;
+        connect(TX, *m_widget);
+        connect(RX, *m_widget);
+        ++s_count;
     }
     
     Viewer::~Viewer()
@@ -131,57 +123,87 @@ namespace yq::tachyon {
     {
         assert(m_stage == Stage::Preinit);
         m_state     = st;
+        m_viz       = std::make_unique<Visualizer>(*m_createInfo, win, m_cleanup);
+        if(m_createInfo->imgui){
+            m_imgui = std::make_unique<ViGui>(*m_viz);
+        }
         
+        std::error_code ec = startup({win});
+        if(ec != std::error_code()){
+            _kill();
+            m_stage = Stage::Kaput;
+            return ec;
+        }
+        
+        m_stage = Stage::Started;
+        return {};
     }
-
-
-#if 0    
-    Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : Tachyon(_pbx(vci)), m_id(++s_lastId)
-    {
-        
-        Viewer(ViewerCreateInfoUPtr&& vci, WidgetPtr w);
-
     
-        ViewerInitData  vid;
-        try {
-            if(!Application::initialized())
-                throw ViewerException("Application is not initialized");
-            if(!is_main_thread())
-                throw ViewerException("Viewer being created outside main thread.");
-            if(!w)
-                throw ViewerException("Widget is required");
-            
-            m_widget    = w;
-            
-            vid = GLFWManager::create(this, vci);
-            m_viz       = std::make_unique<Visualizer>(vci, vid.window, m_cleanup);
-            
-            if(vci.imgui)
-                m_imgui= std::make_unique<ViGui>(*m_viz);
-                
-            m_state     = vid.state;
-        }
-        catch(...)
-        {
-            if(m_imgui)
-                m_imgui = {};
-            if(m_viz)
-                m_viz   = {};
-            if(vid.window)
-                GLFWManager::remove(this);
-            throw;
-        }
-        
-        
-        m_widget -> m_viewer    = this;
-        connect(TX, *m_widget);
-        connect(RX, *m_widget);
-        
-        //glfwGetCursorPos(m_window, &m_cursorPos.x, &m_cursorPos.y);
-        Application::add(this);
-        ++s_count;
+    void    Viewer::_quit()
+    {
+        // TODO
     }
-#endif
+
+    void    Viewer::_tick()
+    {
+        //  imgui update....
+        //  visualizer update...
+        if(m_stage == Stage::Running){
+            draw(); // HACK (for now)
+        }
+    }
+    
+    const ViewerCreateInfo&     Viewer::create_info() const
+    {
+        return *m_createInfo;
+    }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  STAGE INFO
+    //  
+
+        Viewer::Stage   Viewer::_stage() const
+        {
+            return m_stage;
+        }
+
+        bool    Viewer::closing() const
+        {
+            return _stage() == Stage::Closing;
+        }
+        
+        bool    Viewer::closing_or_kaput() const
+        {
+            Stage st = _stage();
+            return (st == Stage::Closing) || (st == Stage::Kaput);
+        }
+
+        bool    Viewer::kaput() const
+        {
+            return _stage() == Stage::Kaput;
+        }
+        
+        bool    Viewer::never_started() const
+        {
+            return _stage() == Stage::Preinit;
+        }
+
+        bool    Viewer::running() const
+        {
+            return _stage() == Stage::Running;
+        }
+        
+
+        bool    Viewer::started() const
+        {
+            return _stage() == Stage::Started;
+        }
+        
+        bool    Viewer::started_or_running() const
+        {
+            Stage st = _stage();
+            return (st == Stage::Started) || (st == Stage::Running);
+        }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  MOUSE
@@ -616,6 +638,7 @@ namespace yq::tachyon {
 
     void    Viewer::cmd_close()
     {
+    #if 0
         //  Steps on destruction
         //  Viewer close event & hide
         //  (Wait 0.1s?)
@@ -627,8 +650,10 @@ namespace yq::tachyon {
         //  For now... we're keeping this distinct (separete)
         dispatch(new ViewerCloseEvent(this));
         dispatch(new GLFWCloseCommand(this));
+    #endif
     }
 
+#if 0
     void     Viewer::close_command(const ViewerCloseCommand& cmd)
     {
         cmd_close();
@@ -636,6 +661,7 @@ namespace yq::tachyon {
 
     void     Viewer::close_request(const ViewerCloseRequestCPtr& req)
     {
+    #if 0
         // this is the *ONLY* thread that'll be altering this
         if(m_viewerCloseRequest){
             if(m_viewerCloseRequest != req){
@@ -646,23 +672,29 @@ namespace yq::tachyon {
         
         assign(&Viewer::m_viewerCloseRequest, req);
         on_close_request();
+    #endif
     }
+#endif
 
     void     Viewer::accept(close_t)
     {
+    #if 0
         ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
         if(req){
             dispatch(new ViewerCloseReply(req, this, Response::QaPla));
             cmd_close();
         }
+    #endif
     }
     
     void     Viewer::reject(close_t)
     {
+    #if 0
         ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
         if(req){
             dispatch(new ViewerCloseReply(req, this, Response::Rejected));
         }
+    #endif
     }
     
     //  ----------------------------------------------------------------------------------------------------------------
@@ -700,5 +732,17 @@ namespace yq::tachyon {
         return false;
     }
 #endif
+
+    void Viewer::init_info()
+    {
+        auto w = writer<Viewer>();
+        w.description("Tachyon Viewer");
+#if 0        
+        w.receive(&Viewer::close_request);
+        w.receive(&Viewer::close_command);
+        w.receive(&Viewer::viewer_resize_event);
+        w.property("mouse", &Viewer::mouse_state).description("Mouse state");
+#endif
+    }
 
 }

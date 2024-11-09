@@ -10,6 +10,7 @@
 #include <yq/core/Flags.hpp>
 #include <yq/core/Guarded.hpp>
 #include <yq/core/Ref.hpp>
+#include <yq/shape/Size2.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/rgba.hpp>
 
@@ -299,6 +300,7 @@ namespace yq::tachyon {
         VkDevice                            m_device            = nullptr;
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
+        //Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;
         ViQueueManager*                     m_graphicsQueue     = nullptr;
         ViImageManagerUPtr                  m_images;
@@ -331,7 +333,7 @@ namespace yq::tachyon {
         ViQueueManager*                     m_transferQueue     = nullptr;
         ViQueueManager*                     m_videoDecQueue     = nullptr;
         ViQueueManager*                     m_videoEncQueue     = nullptr;
-        GLFWwindow*                         m_window            = nullptr;
+        GLFWwindow*                         m_window            = nullptr; //< DEPRECATED (will be removed for main thread divorce)
         
         std::atomic<uint64_t>               m_tick{0ULL};     // Always monotomically incrementing
 

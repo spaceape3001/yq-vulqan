@@ -26,17 +26,17 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <yq/tachyon/2D/Quadrilateral.hpp>
-#include <yq/tachyon/2D/Triangle.hpp>
-#include <yq/tachyon/3D/Tetrahedron.hpp>
-#include <yq/tachyon/Application.hpp>
-#include <yq/tachyon/Viewer.hpp>
+#include <yq/tachyon/application.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/scene.hpp>
+#include <yq/tachyon/viewer.hpp>
+#include <yq/tachyon/widget.hpp>
+#include <yq/tachyon/renders/Quadrilateral.hpp>
+#include <yq/tachyon/renders/Triangle.hpp>
+#include <yq/tachyon/renders/Tetrahedron.hpp>
 #include <yq/tachyon/cameras/NullCamera.hpp>
 #include <yq/tachyon/cameras/SpaceCamera.hpp>
 #include <yq/tachyon/cameras/TargetCamera.hpp>
-#include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/Scene.hpp>
-#include <yq/tachyon/WidgetInfoWriter.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>
 
 #include <chrono>

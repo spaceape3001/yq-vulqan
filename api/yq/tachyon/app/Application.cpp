@@ -17,6 +17,7 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/ThreadId.hpp>
+#include <yq/core/Cleanup.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/post/boxes/SimpleBox.hpp>
 #include <yq/tachyon/config/build.hpp>
@@ -42,6 +43,7 @@ namespace yq::tachyon {
         std::unique_ptr<VulqanManager>  vulqan;
         std::atomic<bool>               quit{false};
         std::vector<ViewerPtr>          viewers;
+        Cleanup                         cleanup;
         
         //  eventually the vulkan goes here too
     };
@@ -199,6 +201,8 @@ namespace yq::tachyon {
                     }
                     #endif
                 }
+                
+                g.cleanup.sweep();
                     
                 //std::erase(g.viewers, nullptr);
             }
@@ -267,6 +271,8 @@ namespace yq::tachyon {
             g.vulqan            = std::make_unique<VulqanManager>(g.app_info);
             connect(TX, *g.vulqan);
         }
+
+        set_post_mode(PostMode::Queued);
         
         //  TODO other event connections
         
@@ -311,7 +317,13 @@ namespace yq::tachyon {
 
     void    Application::cmd_delete_viewer(const AppDeleteViewerCommand&cmd)
     {
-        _remove(cmd.viewer());
+        static Common& g = common();
+        Viewer* v = cmd.viewer();
+        if(v){
+            g.cleanup.add([v](){
+                _remove(v);
+            });
+        }
     }
 
     void    Application::receive(const post::PostCPtr& pp) 

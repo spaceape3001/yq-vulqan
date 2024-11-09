@@ -8,6 +8,7 @@
 
 #include <yq/post/PBX.hpp>
 #include <tbb/spin_rw_mutex.h>
+#include <yq/tachyon/keywords.hpp>
 #include <concepts>
 
 namespace yq::tachyon {
@@ -33,6 +34,23 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(TachyonInfo)
         YQ_OBJECT_DECLARE(Tachyon, post::PBX)
     public:
+        
+        //! How we deal with posts
+        enum class PostMode {
+        
+            //! Everything direct (no buffering)
+            Direct,
+            
+            //! Other thread into queue, this thread direct
+            ThreadSafe,
+            
+            //! Everything into queues
+            Queued,
+            
+            //! Everything into the one queue (can preserve order, but at a performance cost)
+            OneQueue
+        };
+    
     
         struct Param : public post::PBX::Param {
         };
@@ -42,9 +60,12 @@ namespace yq::tachyon {
         
         unsigned int                    thread_id() const { return m_threadId; }
         
-        bool    in_thread() const;
+        bool        in_thread() const;
+        PostMode    post_mode() const { return m_postMode; }
         
         static void init_info();
+
+        virtual void receive(const post::PostCPtr&) override;
 
     protected:
         mutable tbb::spin_rw_mutex      m_mutex;
@@ -78,9 +99,30 @@ namespace yq::tachyon {
             }
             return temp;
         }
+        
+        
+        //! Replay queued posts (from our thread)
+        void    replay(direct_t);
 
+        //! Replay queued posts (from other threads)
+        void    replay(thread_t);
+        
+        //! Replay queued posts (depends on post mode)
+        void    replay(all_t);
+        
+        void    set_post_mode(PostMode);
+        
+        
     private:
+        uint64_t                        m_padding0[7];  // to avoid false sharing
         std::atomic<unsigned int>       m_threadId;
+        std::vector<post::PostCPtr>     m_direct, m_threaded; 
+        std::atomic<PostMode>           m_postMode  = PostMode::Direct;
+        bool                            m_replay    = false;
+        
+        void    _replay(direct_t);
+        void    _replay(thread_t);
+
         //std::vector<Tachyon*>           m_children;
         //Tachyon*                        m_parent = nullptr;
 

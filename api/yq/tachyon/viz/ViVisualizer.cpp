@@ -1149,4 +1149,10 @@ namespace yq::tachyon {
     {
         return m_videoEncQueue != nullptr;
     }
+
+    std::error_code                 ViVisualizer::wait_idle()
+    {
+        vkDeviceWaitIdle(m_device);
+        return {};
+    }
 }

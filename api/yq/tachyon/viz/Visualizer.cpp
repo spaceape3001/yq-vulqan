@@ -296,7 +296,7 @@ namespace yq::tachyon {
     {
         m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
         
-        if(_ctor(vci, w) != std::error_code())
+        if(init_visualizer(vci, w) != std::error_code())
             throw VulqanException("Unable to initialize");
     }
     
@@ -374,9 +374,6 @@ namespace yq::tachyon {
 
         m_thread            = std::make_unique<ViThread0>(*this);
 
-
-
-
         m_frames.reserve(vci.frames_in_flight);
         for(size_t i=0;i<vci.frames_in_flight;++i)
             m_frames.push_back(std::make_unique<ViFrame0>(*this));
@@ -386,6 +383,7 @@ namespace yq::tachyon {
     
     void                        Visualizer::_dtor()
     {
+        vizInfo << "Visualizer::Destructor";
         m_cleanup.sweep();
         m_frames.clear();
         
@@ -393,10 +391,34 @@ namespace yq::tachyon {
     
         //  Generally in reverse order of initialization
 
+        m_cleanup.sweep();
+        if(m_device)
+            vkDeviceWaitIdle(m_device);
+
         _9_pipeline_manager_kill();
+
+        m_cleanup.sweep();
+        if(m_device)
+            vkDeviceWaitIdle(m_device);
+
         _8_swapchain_kill();
+
+        m_cleanup.sweep();
+        if(m_device)
+            vkDeviceWaitIdle(m_device);
+
         _7_render_pass_kill();
+
+        m_cleanup.sweep();
+        if(m_device)
+            vkDeviceWaitIdle(m_device);
+
         _6_manager_kill();
+
+        m_cleanup.sweep();
+        if(m_device)
+            vkDeviceWaitIdle(m_device);
+
         _5_allocator_kill();
         _4_device_kill();
         _3_queues_kill();

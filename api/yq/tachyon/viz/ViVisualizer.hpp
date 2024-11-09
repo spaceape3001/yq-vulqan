@@ -282,6 +282,7 @@ namespace yq::tachyon {
         //! Our window (underscore to demote)
         GLFWwindow*                     _window() const { return m_window; }
 
+        std::error_code                 wait_idle();
 
 
     protected:

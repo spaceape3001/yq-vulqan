@@ -514,12 +514,33 @@ namespace yq::tachyon {
         if(!w->window)
             return ;
 
+        Viewer* v   = w->viewer;
+        glfwSetWindowUserPointer(w->window, nullptr);
+
+        glfwSetCharCallback(w->window, nullptr);
+        glfwSetCursorEnterCallback(w->window, nullptr);
+        glfwSetCursorPosCallback(w->window, nullptr);
+        glfwSetDropCallback(w->window, nullptr);
+        glfwSetFramebufferSizeCallback(w->window, nullptr);
+        glfwSetKeyCallback(w->window, nullptr);
+        glfwSetMouseButtonCallback(w->window, nullptr);
+        glfwSetScrollCallback(w->window, nullptr);
+        glfwSetWindowCloseCallback(w->window, nullptr);
+        glfwSetWindowContentScaleCallback(w->window, nullptr);
+        glfwSetWindowFocusCallback(w->window, nullptr);
+        glfwSetWindowIconifyCallback(w->window, nullptr);
+        glfwSetWindowMaximizeCallback(w->window, nullptr);
+        glfwSetWindowPosCallback(w->window, nullptr);
+        glfwSetWindowRefreshCallback(w->window, nullptr);
+        glfwSetWindowSizeCallback(w->window, nullptr);
+
         glfwDestroyWindow(w->window);
         w->window   = nullptr;
-        if(w->viewer){
-            g.manager->dispatch(new WindowDestroyEvent(w->viewer));
+        g.viewers.erase(v); // WARNING, implicitly destroys w!
+        if(v){
+            g.manager->dispatch(new WindowDestroyEvent(v));
         }
-        g.viewers.erase(w->viewer); // WARNING, implicitly destroys w!
+        g.manager->disconnect(*v);
     }
     
     
@@ -657,9 +678,9 @@ namespace yq::tachyon {
         if(!v)
             return ;
 
+            // so we don't repeat this....
+        glfwSetWindowShouldClose(window, GLFW_FALSE);
         g.manager->dispatch(new ViewerCloseRequest(v));
-        
-        glfwInfo << "GLFWManager::callback_window_close";
     }
     
     void GLFWManager::callback_window_focus(GLFWwindow* window, int focused)
@@ -990,6 +1011,8 @@ namespace yq::tachyon {
         glfwSetJoystickCallback( callback_joystick );
         glfwSetMonitorCallback( callback_monitor );
         
+        set_post_mode(PostMode::Queued);
+        
         tachyonInfo << "GLFWManager initialized";
     }
     
@@ -1007,6 +1030,7 @@ namespace yq::tachyon {
 
     void    GLFWManager::polling(unit::Second timeout) 
     {
+        replay(ALL);
         _poll(timeout);
     }
     

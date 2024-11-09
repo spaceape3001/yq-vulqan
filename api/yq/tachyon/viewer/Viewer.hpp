@@ -270,6 +270,7 @@ namespace yq::tachyon {
         void                _quit();    // basically unconditional (without app-destroy)
         std::error_code     _startup(GLFWwindow*, const ViewerState&);
         Stage               _stage() const;
+        void                _sweepwait();
         
         
         void    close();

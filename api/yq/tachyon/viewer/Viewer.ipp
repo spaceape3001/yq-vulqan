@@ -123,6 +123,7 @@ namespace yq::tachyon {
         m_widget -> m_viewer    = this;
         connect(TX, *m_widget);
         connect(RX, *m_widget);
+        set_post_mode(PostMode::Queued);
         ++s_count;
     }
     
@@ -183,6 +184,12 @@ namespace yq::tachyon {
         return {};
     }
 
+    void    Viewer::_sweepwait()
+    {
+        if(m_viz)
+            m_viz -> wait_idle();
+        m_cleanup.sweep();
+    }
 
     std::error_code     Viewer::draw()
     {
@@ -265,9 +272,7 @@ namespace yq::tachyon {
 
     void    Viewer::tick(/* frame...eventually */)
     {
-        //  Event shuffle here too
-        //  imgui update....
-        //  visualizer update...
+        replay(ALL);
         if(m_stage == Stage::Running){
             draw(); // HACK (for now)
         }
@@ -421,7 +426,7 @@ namespace yq::tachyon {
         
         void    Viewer::close_command(const ViewerCloseCommand&)
         {
-            if(m_stage != Stage::Kaput){
+            if(!closing_or_kaput()){
                 m_stage = Stage::Closing;
                 dispatch(new WindowHideCommand(this));
             }
@@ -429,8 +434,11 @@ namespace yq::tachyon {
 
         void    Viewer::close_request(const ViewerCloseRequestCPtr& req)
         {
-            viewerNotice << "Close request received";
-
+            if(closing_or_kaput()){
+                dispatch(new ViewerCloseReply(req, this, Response::Busy));
+                return ;
+            }
+        
             // this is the *ONLY* thread that'll be altering this
             if(m_viewerCloseRequest){
                 if(m_viewerCloseRequest != req){
@@ -464,15 +472,18 @@ namespace yq::tachyon {
 
         void    Viewer::on_hide_closing()
         {
+            _sweepwait();
             // eventually... threading
             m_imgui     = {};
+            _sweepwait();
             m_viz       = {};
-            m_cleanup.sweep();
+            _sweepwait();
             dispatch(new WindowDestroyCommand(this));
         }
 
         void    Viewer::destroy_event(const WindowDestroyEvent&)
         {
+            m_stage = Stage::Kaput;
             dispatch(new AppDeleteViewerCommand(this));
         }
 
@@ -494,6 +505,8 @@ namespace yq::tachyon {
         switch(m_stage){
         case Stage::Closing:
             on_hide_closing();
+            break;
+        default:
             break;
         }
     }

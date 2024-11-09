@@ -36,6 +36,8 @@
 #include "TachyonEvent.ipp"
 #include "ViewerCloseEvent.ipp"
 #include "ViewerEvent.ipp"
+#include "ViewerPauseEvent.ipp"
+#include "ViewerResumeEvent.ipp"
 #include "ViewerTickEvent.ipp"
 #include "VulqanEvent.ipp"
 #include "WidgetEvent.ipp"

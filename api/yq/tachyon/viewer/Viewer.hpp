@@ -145,6 +145,33 @@ namespace yq::tachyon {
         //! Viewer number
         uint64_t                    id() const { return m_id; }
 
+            //! TRUE if the window has standard decorations (close/buttons/frame)
+        bool                        is_decorated() const;
+        
+            //! TRUE if the window has input focus
+        bool                        is_focused() const;
+        
+            //! TRUE if window is floating (ie always-on-top)
+        bool                        is_floating() const;
+        
+            //! TRUE if the window is fullscreen
+        bool                        is_fullscreen() const;
+        
+            //! TRUE if the mouse cursor is hovering directly above us
+        bool                        is_hovered() const;
+        
+            //! TRUE if the window is iconified
+        bool                        is_iconified() const;
+        
+            //! TRUE if the window is maximized
+        bool                        is_maximized() const;
+        
+            //! TRUE if the window is resizable
+        bool                        is_resizable() const;
+        
+            //! TRUE if the window is visible
+        bool                        is_visible() const;
+
         //! TRUE if we're done (ready for deletion)
         bool                        kaput() const;
 
@@ -183,6 +210,10 @@ namespace yq::tachyon {
         //! Runs the draw sequence
         std::error_code     draw(ViContext&);
 
+        void                cmd_close(bool force=false);
+        void                cmd_pause();
+        void                cmd_resume();
+
         void                tick(/* const AppFrame& */);
 
     protected:
@@ -200,10 +231,17 @@ namespace yq::tachyon {
 
         virtual void    receive(const post::PostCPtr&) override;
 
+        //! Override to have a more nuianced approach
+        virtual void    on_close_request();
+        
+        void     accept(close_t);
+        void     reject(close_t);
+
     private:
 
         friend class GLFWManager;
         friend class Application;
+        friend class Widget;
 
         static std::atomic<int>         s_count;
         static std::atomic<uint64_t>    s_lastId;
@@ -235,9 +273,17 @@ namespace yq::tachyon {
         
         
         void    close();
-        void    req_close(const ViewerCloseRequestCPtr&);
-        void    cmd_close(const ViewerCloseCommand&);
+        void    close_request(const ViewerCloseRequestCPtr&);
+        void    close_command(const ViewerCloseCommand&);
+        
+        void    on_hide_closing();
+        
+        void    hide_event(const WindowHideEvent&);
+        void    show_event(const WindowShowEvent&);
+        void    destroy_event(const WindowDestroyEvent&);
 
+        void    pause_command(const ViewerPauseCommand&);
+        void    resume_command(const ViewerResumeCommand&);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE
@@ -309,32 +355,6 @@ namespace yq::tachyon {
 
 
 #if 0
-            //! TRUE if the window has standard decorations (close/buttons/frame)
-        bool                is_decorated() const;
-        
-            //! TRUE if the window has input focus
-        bool                is_focused() const;
-        
-            //! TRUE if window is floating (ie always-on-top)
-        bool                is_floating() const;
-        
-            //! TRUE if the window is fullscreen
-        bool                is_fullscreen() const;
-        
-            //! TRUE if the mouse cursor is hovering directly above us
-        bool                is_hovered() const;
-        
-            //! TRUE if the window is iconified
-        bool                is_iconified() const;
-        
-            //! TRUE if the window is maximized
-        bool                is_maximized() const;
-        
-            //! TRUE if the window is resizable
-        bool                is_resizable() const;
-        
-            //! TRUE if the window is visible
-        bool                is_visible() const;
 #endif
         
             //! Monitor (if fullscreen)
@@ -404,11 +424,6 @@ namespace yq::tachyon {
 
         //virtual void  handle(Event&) override;
         
-        //! Override to have a more nuianced approach
-        virtual void    on_close_request() { accept(CLOSE); }
-        
-        void     accept(close_t);
-        void     reject(close_t);
 
         
         //virtual std::error_code init();

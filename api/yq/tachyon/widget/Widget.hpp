@@ -7,9 +7,11 @@
 #pragma once
 
 #include <yq/post/PBX.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/typedef/vector2.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/core/Tachyon.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/events.hpp>
@@ -122,6 +124,10 @@ namespace yq::tachyon {
     protected:
         friend class Viewer;
         
+        enum class F : uint8_t {
+            ClosePending
+        };
+        
         //! Our viewer
         Viewer*                 m_viewer    = nullptr;
         
@@ -134,9 +140,16 @@ namespace yq::tachyon {
         //! A string ID for ImGui
         std::string             m_windowID;
         
+        Flags<F>                m_flags = {};
+        
         //! Called before record, this is the opportunity to 
         //! pass descriptor sets to the graphics card.
         virtual void            prerecord(ViContext&);
+
+        virtual void            on_close_request() { accept(CLOSE); }
+        void                    accept(close_t);
+        void                    reject(close_t);
+
 
         //! Called when a child of this widget is added
         //virtual void            on_child_added(Widget*){}

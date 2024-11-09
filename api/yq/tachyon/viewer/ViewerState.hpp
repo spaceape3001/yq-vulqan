@@ -13,6 +13,7 @@
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/tachyon/enum/MouseMode.hpp>
+#include <yq/tachyon/glfw/Monitor.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
@@ -51,6 +52,7 @@ namespace yq::tachyon {
         std::string             title;          //!< Window title
         WindowFlags             flags{};        //!< Window flags
         Vector2I                position{};     //!< Window position
+        Monitor                 monitor{};
         Size2I                  max{-1,-1};     //!< Max size (-1 is the don't care value)
         Size2I                  min{-1,-1};     //!< Min size (-1 is the don't care value)
         Size2I                  area{};         //!< Content area

@@ -7,6 +7,8 @@
 #include "Widget.hpp"
 #include "WidgetInfoWriter.hpp"
 
+#include <yq/tachyon/viewer/Viewer.hpp>
+
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
 
@@ -47,6 +49,18 @@ namespace yq::tachyon {
     {
         for(Widget* w : m_children)
             w->vulkan_(u);
+    }
+
+    void    Widget::accept(close_t)
+    {
+        if(m_viewer)
+            m_viewer -> accept(CLOSE);
+    }
+    
+    void    Widget::reject(close_t)
+    {
+        if(m_viewer)
+            m_viewer -> reject(CLOSE);
     }
 
     bool    Widget::add_child(Widget* ch)

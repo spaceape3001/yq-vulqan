@@ -104,7 +104,7 @@ namespace yq::tachyon {
         static void     _maximize(Window*);
         static void     _restore(Window*);
         static void     _show(Window*);
-        static Viewer*  _viewer(GLFWwindow*);
+        //static Viewer*  _viewer(GLFWwindow*);
         static Window*  _window(Viewer*);
         static Window*  _window(GLFWwindow*);
         

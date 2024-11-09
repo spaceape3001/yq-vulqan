@@ -8,6 +8,8 @@
 
 #include <yq/core/Logging.hpp>
 #include <yq/core/LogFilter.hpp>
+#include <yq/text/format.hpp>
+#include <yq/trait/is_pointer.hpp>
 
 #define glfwAlert                   yAlert("glfw")
 #define glfwCritical                yCritical("glfw")
@@ -88,22 +90,15 @@
 #define vqFirstInfo(...)            yLogFirstInfo("vq", __VA_ARGS__)
 #define vqFirstNotice(...)          yLogFirstNotice("vq", __VA_ARGS__)
 #define vqFirstWarning(...)         yLogFirstWarning("vq", __VA_ARGS__)
-////////////////////////////////////////////////////////////////////////////////
-//
-//  YOUR QUILL
-//
-////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <yq/core/Logging.hpp>
-
-#define glfwAlert           yAlert("glfw")
-#define glfwCritical        yCritical("glfw")
-#define glfwDebug           yDebug("glfw")
-#define glfwError           yError("glfw")
-#define glfwEmergency       yEmergency("glfw")
-#define glfwFatal           yFatal("glfw")
-#define glfwInfo            yInfo("glfw")
-#define glfwNotice          yNotice("glfw")
-#define glfwWarning         yWarning("glfw")
+namespace yq::tachyon {
+    template <typename T>
+    constexpr std::string_view hex(T v) 
+    { 
+        if constexpr ( std::is_pointer_v<T> ){
+            return fmt_hex((uint64_t) v);
+        } else {
+            return fmt_hex(v);
+        }
+    }
+}

@@ -6,22 +6,25 @@
 
 #include "Viewer.hpp"
 
+#include <log4cpp/CategoryStream.hh>
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/tachyon/app/Application.hpp>
 //#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
+#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
 #include <yq/tachyon/commands/MouseCaptureCommand.hpp>
 #include <yq/tachyon/commands/MouseDisableCommand.hpp>
 #include <yq/tachyon/commands/MouseHideCommand.hpp>
 #include <yq/tachyon/commands/MouseNormalCommand.hpp>
-#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
 #include <yq/tachyon/commands/ViewerCloseCommand.hpp>
+#include <yq/tachyon/commands/ViewerPauseCommand.hpp>
+#include <yq/tachyon/commands/ViewerResumeCommand.hpp>
+#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
+#include <yq/tachyon/commands/WindowDestroyCommand.hpp>
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
 #include <yq/tachyon/commands/WindowIconifyCommand.hpp>
 #include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
-#include <yq/tachyon/commands/ViewerPauseCommand.hpp>
 #include <yq/tachyon/commands/WindowRestoreCommand.hpp>
-#include <yq/tachyon/commands/ViewerResumeCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
 #include <yq/tachyon/core/TachyonInfoWriter.hpp>
 #include <yq/tachyon/events/MouseCaptureEvent.hpp>
@@ -29,6 +32,10 @@
 #include <yq/tachyon/events/MouseHideEvent.hpp>
 #include <yq/tachyon/events/MouseNormalEvent.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
+#include <yq/tachyon/events/ViewerPauseEvent.hpp>
+#include <yq/tachyon/events/ViewerResumeEvent.hpp>
+#include <yq/tachyon/events/WindowDestroyEvent.hpp>
+#include <yq/tachyon/events/WindowHideEvent.hpp>
 #include <yq/tachyon/events/WindowResizeEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
 #include <yq/tachyon/glfw/GLFWManager.hpp>
@@ -79,11 +86,18 @@ namespace yq::tachyon {
     void Viewer::init_info()
     {
         auto w = writer<Viewer>();
+        
         w.description("Tachyon Viewer");
         w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
+        
+        w.receive(&Viewer::close_command).name("close_command");
+        w.receive(&Viewer::close_request).name("close_request");
+        w.receive(&Viewer::hide_event).name("hide_event");
+        w.receive(&Viewer::destroy_event).name("destroy_event");
+        w.receive(&Viewer::pause_command).name("pause_command");
+        w.receive(&Viewer::resume_command).name("resume_command");
+        
 #if 0        
-        w.receive(&Viewer::close_request);
-        w.receive(&Viewer::close_command);
         w.receive(&Viewer::viewer_resize_event);
         w.property("mouse", &Viewer::mouse_state).description("Mouse state");
 #endif
@@ -93,7 +107,7 @@ namespace yq::tachyon {
     //  INITIALIZATION/DESTRUCTION
 
     std::atomic<int>        Viewer::s_count{0};
-    std::atomic<uint64_t>   Viewer::s_lastId{1};
+    std::atomic<uint64_t>   Viewer::s_lastId{0};
 
     Viewer::Viewer(const ViewerCreateInfo&vci, WidgetPtr w) : Tachyon(_pbx(vci)), m_id(++s_lastId)
     {
@@ -234,13 +248,18 @@ namespace yq::tachyon {
     
     void    Viewer::receive(const post::PostCPtr& pp) 
     {
+        if(!pp)
+            return ;
+    
         if(const ViewerBind* p = dynamic_cast<const ViewerBind*>(pp.ptr())){
-            if(p->viewer() != this)
+            if(p->viewer() != this){
                 return ;
+            }
             if(m_imgui)
                 m_imgui->receive(pp);
+        } else {
+            m_widget->receive(pp);
         }
-        m_widget->receive(pp);
         Tachyon::receive(pp);
     }
 
@@ -280,6 +299,51 @@ namespace yq::tachyon {
         const ViewerCreateInfo&     Viewer::create_info() const
         {
             return *m_createInfo;
+        }
+
+        bool        Viewer::is_decorated() const
+        {
+            return state().window.flags(WindowFlag::Decorated);
+        }
+        
+        bool        Viewer::is_focused() const
+        {
+            return state().window.flags(WindowFlag::Focused);
+        }
+        
+        bool        Viewer::is_floating() const
+        {
+            return state().window.flags(WindowFlag::Floating);
+        }
+        
+        bool        Viewer::is_fullscreen() const
+        {
+            return state().window.monitor;
+        }
+        
+        bool        Viewer::is_hovered() const
+        {
+            return state().window.flags(WindowFlag::Hovered);
+        }
+        
+        bool        Viewer::is_iconified() const
+        {
+            return state().window.flags(WindowFlag::Iconified);
+        }
+
+        bool        Viewer::is_maximized() const
+        {
+            return state().window.flags(WindowFlag::Maximized);
+        }
+        
+        bool        Viewer::is_resizable() const
+        {
+            return state().window.flags(WindowFlag::Resizable);
+        }
+        
+        bool        Viewer::is_visible() const
+        {
+            return state().window.flags(WindowFlag::Visible);
         }
 
         bool    Viewer::kaput() const
@@ -345,8 +409,124 @@ namespace yq::tachyon {
     //  ----------------------------------------------------------------------------------------------------------------
     //  CLOSING
     //  
-    
 
+        void     Viewer::accept(close_t)
+        {
+            ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
+            if(req){
+                dispatch(new ViewerCloseReply(req, this, Response::QaPla));
+                dispatch(SELF, new ViewerCloseCommand(this));
+            }
+        }
+        
+        void    Viewer::close_command(const ViewerCloseCommand&)
+        {
+            if(m_stage != Stage::Kaput){
+                m_stage = Stage::Closing;
+                dispatch(new WindowHideCommand(this));
+            }
+        }
+
+        void    Viewer::close_request(const ViewerCloseRequestCPtr& req)
+        {
+            viewerNotice << "Close request received";
+
+            // this is the *ONLY* thread that'll be altering this
+            if(m_viewerCloseRequest){
+                if(m_viewerCloseRequest != req){
+                    dispatch(new ViewerCloseReply(req, this, Response::Busy));
+                }
+                return;
+            }
+            
+            assign(&Viewer::m_viewerCloseRequest, req);
+            on_close_request();
+        }
+
+        void    Viewer::cmd_close(bool force)
+        {
+            if(force){
+                dispatch(SELF, new ViewerCloseCommand(this));
+            } else {
+                dispatch(SELF, new ViewerCloseRequest(this));
+            }
+        }
+        
+        void    Viewer::on_close_request() 
+        { 
+            if(m_widget){
+                m_widget -> m_flags |= Widget::F::ClosePending;
+                m_widget -> on_close_request();
+            } else {
+                accept(CLOSE); 
+            }
+        }
+
+        void    Viewer::on_hide_closing()
+        {
+            // eventually... threading
+            m_imgui     = {};
+            m_viz       = {};
+            m_cleanup.sweep();
+            dispatch(new WindowDestroyCommand(this));
+        }
+
+        void    Viewer::destroy_event(const WindowDestroyEvent&)
+        {
+            dispatch(new AppDeleteViewerCommand(this));
+        }
+
+        void     Viewer::reject(close_t)
+        {
+            ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
+            if(req){
+                dispatch(new ViewerCloseReply(req, this, Response::Rejected));
+            }
+        }
+
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  SHOW/HIDE
+    //  
+
+    void    Viewer::hide_event(const WindowHideEvent&)
+    {
+        switch(m_stage){
+        case Stage::Closing:
+            on_hide_closing();
+            break;
+        }
+    }
+    
+    void    Viewer::show_event(const WindowShowEvent&)
+    {
+    }
+    
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  PAUSE/PLAY
+    //  
+
+        void    Viewer::cmd_pause()
+        {
+            dispatch(SELF, new ViewerPauseCommand(this));
+        }
+        
+        void    Viewer::cmd_resume()
+        {
+            dispatch(SELF, new ViewerResumeCommand(this));
+        }
+
+        void    Viewer::pause_command(const ViewerPauseCommand&)
+        {
+            m_paused    = true;
+            dispatch(new ViewerPauseEvent(this));
+        }
+        
+        void    Viewer::resume_command(const ViewerResumeCommand&)
+        {
+            m_paused    = false;
+            dispatch(new ViewerResumeEvent(this));
+        }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -450,50 +630,6 @@ namespace yq::tachyon {
         return ret;
     }
 
-    bool        Viewer::is_decorated() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_DECORATED) != 0;
-    }
-    
-    bool        Viewer::is_focused() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_FOCUSED ) != 0;
-    }
-    
-    bool        Viewer::is_floating() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_FLOATING) != 0;
-    }
-    
-    bool        Viewer::is_fullscreen() const
-    {
-        return glfwGetWindowMonitor(m_window) != nullptr;
-    }
-    
-    bool        Viewer::is_hovered() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_HOVERED) != 0;
-    }
-    
-    bool        Viewer::is_iconified() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_ICONIFIED) != 0;
-    }
-
-    bool        Viewer::is_maximized() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_MAXIMIZED) != 0;
-    }
-    
-    bool        Viewer::is_resizable() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_RESIZABLE) != 0;
-    }
-    
-    bool        Viewer::is_visible() const
-    {
-        return glfwGetWindowAttrib(m_window, GLFW_VISIBLE) != 0;
-    }
 
     Monitor     Viewer::monitor() const
     {
@@ -741,27 +877,6 @@ namespace yq::tachyon {
     #endif
     }
 #endif
-
-    void     Viewer::accept(close_t)
-    {
-    #if 0
-        ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
-        if(req){
-            dispatch(new ViewerCloseReply(req, this, Response::QaPla));
-            cmd_close();
-        }
-    #endif
-    }
-    
-    void     Viewer::reject(close_t)
-    {
-    #if 0
-        ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
-        if(req){
-            dispatch(new ViewerCloseReply(req, this, Response::Rejected));
-        }
-    #endif
-    }
     
     //  ----------------------------------------------------------------------------------------------------------------
     //  HIDING

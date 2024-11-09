@@ -592,7 +592,8 @@ namespace yq::tachyon {
         vs.mouse.buttons      = _buttons(w);
         glfwGetCursorPos(w, &vs.mouse.position.x, &vs.mouse.position.y);
         
-        vs.window.title        = glfwGetWindowTitle(w);
+        vs.window.title         = glfwGetWindowTitle(w);
+        vs.window.monitor       = Monitor(glfwGetWindowMonitor(w));
 
         vs.window.flags.set(WindowFlag::AutoIconify,       static_cast<bool>(glfwGetWindowAttrib(w, GLFW_AUTO_ICONIFY)));
         vs.window.flags.set(WindowFlag::Decorated,         static_cast<bool>(glfwGetWindowAttrib(w, GLFW_DECORATED)));
@@ -616,10 +617,10 @@ namespace yq::tachyon {
         vs.time             = glfwGetTime();
     }
     
-    Viewer*  GLFWManager::_viewer(GLFWwindow*w)
-    {
-        return (Viewer*) glfwGetWindowUserPointer(w);
-    }
+    //Viewer*  GLFWManager::_viewer(GLFWwindow*w)
+    //{
+        //return (Viewer*) glfwGetWindowUserPointer(w);
+    //}
 
     GLFWManager::Window*  GLFWManager::_window(Viewer* vd)
     {
@@ -632,7 +633,8 @@ namespace yq::tachyon {
     
     GLFWManager::Window*  GLFWManager::_window(GLFWwindow* w)
     {
-        return _window(_viewer(w));
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(w);
+        return _window(v);
     }
 
     //  ...............................................................................................................
@@ -641,27 +643,30 @@ namespace yq::tachyon {
     void GLFWManager::callback_framebuffer_size(GLFWwindow* window, int width, int height)
     {
         static Common& g = common();
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(!v)
             return ;
+
         g.manager->dispatch(new WindowFrameBufferResizeEvent(v, {width, height}));
     }
 
     void GLFWManager::callback_window_close(GLFWwindow* window)
     {
         static Common& g = common();
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(!v)
             return ;
 
         g.manager->dispatch(new ViewerCloseRequest(v));
+        
+        glfwInfo << "GLFWManager::callback_window_close";
     }
     
     void GLFWManager::callback_window_focus(GLFWwindow* window, int focused)
     {
         static Common& g = common();
 
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(!v)
             return ;
 
@@ -676,7 +681,7 @@ namespace yq::tachyon {
     {
         static Common& g = common();
 
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(!v)
             return ;
 
@@ -691,7 +696,7 @@ namespace yq::tachyon {
     {
         static Common& g = common();
 
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(!v)
             return ;
 
@@ -706,7 +711,7 @@ namespace yq::tachyon {
     {
         static Common& g = common();
         
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(!v)
             return ;
 
@@ -717,7 +722,7 @@ namespace yq::tachyon {
     {
         static Common& g = common();
         
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(v){
             g.manager->dispatch(new WindowRefreshRequest(v));
         }
@@ -727,7 +732,7 @@ namespace yq::tachyon {
     {
         static Common& g = common();
         
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(v){
             g.manager->dispatch(new WindowScaleEvent(v, { xscale, yscale }));
         }
@@ -737,7 +742,7 @@ namespace yq::tachyon {
     {
         static Common& g = common();
         
-        Viewer*v    = _viewer(window);
+        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(v){
             g.manager->dispatch(new WindowResizeEvent(v, { xsize, ysize }));
         }
@@ -886,7 +891,7 @@ namespace yq::tachyon {
             glfwDestroyWindow(vd.window);
         });
         
-        glfwSetWindowUserPointer(vd.window, &v);
+        glfwSetWindowUserPointer(vd.window, v);
         glfwSetCharCallback(vd.window, callback_character);
         glfwSetCursorEnterCallback(vd.window, callback_cursor_enter);
         glfwSetCursorPosCallback(vd.window, callback_cursor_position);

@@ -167,7 +167,7 @@ namespace yq::tachyon {
             m_stage = Stage::Kaput;
             
             #ifdef NDEBUG
-            ec = create_error<"Exception caught during Viewer startup">;
+            ec = create_error<"Exception caught during Viewer startup">();
             #else
             throw;
             #endif

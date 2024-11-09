@@ -38,6 +38,10 @@ namespace yq::tachyon {
     class ViVisualizer;
     struct ViContext;
     class Widget;
+    
+    class KeyCharacterEvent;
+    class KeyPressEvent;
+    class KeyReleaseEvent;
     class MousePressEvent;
     class MouseMoveEvent;
     class MouseReleaseEvent;
@@ -149,6 +153,10 @@ namespace yq::tachyon {
         void    mouse_move_event(const MouseMoveEvent&);
         void    mouse_press_event(const MousePressEvent&);
         void    mouse_release_event(const MouseReleaseEvent&);
+        
+        void    key_press_event(const KeyPressEvent&);
+        void    key_release_event(const KeyReleaseEvent&);
+        void    key_character_event(const KeyCharacterEvent&);
         
         void    window_focus_event(const WindowFocusEvent&);
         void    window_defocus_event(const WindowDefocusEvent&);

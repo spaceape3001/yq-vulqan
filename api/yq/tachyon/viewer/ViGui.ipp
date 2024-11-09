@@ -19,6 +19,9 @@
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/core/TachyonInfoWriter.hpp>
+#include <yq/tachyon/events/KeyCharacterEvent.hpp>
+#include <yq/tachyon/events/KeyPressEvent.hpp>
+#include <yq/tachyon/events/KeyReleaseEvent.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
@@ -654,6 +657,38 @@ namespace yq::tachyon {
             io.AddKeyEvent(ImGuiMod_Super, has_super(mk));
         }
     }
+
+    void ViGui::key_character_event(const KeyCharacterEvent&evt)
+    {
+        ImGui::SetCurrentContext(m_context);
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddInputCharacter((unsigned int) evt.code());
+    }
+    
+    
+    void ViGui::key_press_event(const KeyPressEvent&evt)
+    {
+        ImGuiKey ik  = (ImGuiKey) encode_imgui(evt.key());
+        if(ik < 0)
+            return ;
+    
+        ImGui::SetCurrentContext(m_context);
+        update_modifiers(evt.modifiers());
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddKeyEvent(ik, true);
+    }
+    
+    void ViGui::key_release_event(const KeyReleaseEvent&evt)
+    {
+        ImGuiKey ik  = (ImGuiKey) encode_imgui(evt.key());
+        if(ik < 0)
+            return ;
+
+        ImGui::SetCurrentContext(m_context);
+        update_modifiers(evt.modifiers());
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddKeyEvent(ik, false);
+    }
     
     void ViGui::mouse_move_event(const MouseMoveEvent&evt)
     {
@@ -737,6 +772,9 @@ namespace yq::tachyon {
     {
         auto w = writer<ViGui>();
         w.description("ImGui Visualization");
+        w.receive(&ViGui::key_character_event);
+        w.receive(&ViGui::key_press_event);
+        w.receive(&ViGui::key_release_event);
         w.receive(&ViGui::mouse_move_event);
         w.receive(&ViGui::mouse_press_event);
         w.receive(&ViGui::mouse_release_event);

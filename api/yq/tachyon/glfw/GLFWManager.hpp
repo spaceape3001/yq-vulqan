@@ -18,14 +18,19 @@ struct GLFWmonitor;
 namespace yq::tachyon {
     class Viewer;
     class Joystick;
+    class Application;
     
     struct ViewerState;
     struct ViewerCreateInfo;
-    
-    struct ViewerInitData;
-    
-    class GLFWCloseCommand;
-    class GLFWHideCommand;
+
+    class WindowAttentionCommand;
+    class WindowDestroyCommand;
+    class WindowFocusCommand;
+    class WindowHideCommand;
+    class WindowIconifyCommand;
+    class WindowMaximizeCommand;
+    class WindowRestoreCommand;
+    class WindowShowCommand;
 
     /*! \brief GLFW Event Manager
     
@@ -42,25 +47,24 @@ namespace yq::tachyon {
         
         static bool                 raw_mouse_motion_supported();
         
-        static void init_info();
+        static void                 init_info();
         
         static bool                 has_viewers();
+
 
     protected:
         
         virtual void                polling(unit::Second) override;
 
     private:
-
+    
         struct JoystickData; //< Not to be confused with joystick class
-        struct ViewerData;
+        struct Window;
         struct Common;
         static Common&  common();
         friend class Viewer;
+        friend class Application;
         
-        static ViewerInitData       create(ViewerPtr, const ViewerCreateInfo&);
-        //static void                 remove(Viewer*);
-
         static Param                _augment(const Param&);
         
         static void callback_character(GLFWwindow* window, unsigned int codepoint);
@@ -92,11 +96,32 @@ namespace yq::tachyon {
         static Vector2D     _mouse_pos(GLFWwindow*);
         static void         _update(GLFWwindow*, ViewerState&);
         
-        //static void joystick_initialize(Joystick);
-        //static void joystick_kill(Joystick);
+        static void     _attention(Window*);
+        static void     _destroy(Window*);
+        static void     _focus(Window*);
+        static void     _hide(Window*);
+        static void     _iconify(Window*);
+        static void     _maximize(Window*);
+        static void     _restore(Window*);
+        static void     _show(Window*);
+        static Viewer*  _viewer(GLFWwindow*);
+        static Window*  _window(Viewer*);
+        static Window*  _window(GLFWwindow*);
         
-        void    close_command(const GLFWCloseCommand&);
-        void    hide_command(const GLFWHideCommand&);
+        void    cmd_attention(const WindowAttentionCommand&);
+        void    cmd_destroy(const WindowDestroyCommand&);
+        void    cmd_focus(const WindowFocusCommand&);
+        void    cmd_hide(const WindowHideCommand&);
+        void    cmd_iconify(const WindowIconifyCommand&);
+        void    cmd_maximize(const WindowMaximizeCommand&);
+        void    cmd_restore(const WindowRestoreCommand&);
+        void    cmd_show(const WindowShowCommand&);
+
+        //! Starts up the viewer (ie, creates the GLFWwindow, passes it off to the viewer's startup routine)
+        static std::error_code      win_start(Viewer*);
+        static std::error_code      win_show(Viewer*);
+        static std::error_code      win_hide(Viewer*);
+        static std::error_code      win_destroy(Viewer*);
 
     };
 }

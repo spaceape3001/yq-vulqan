@@ -8,6 +8,7 @@
 
 #include <yq/units.hpp>
 #include <yq/core/Ref.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
 
 namespace yq::tachyon {
     class AppFrame : public RefCount {
@@ -20,7 +21,9 @@ namespace yq::tachyon {
         unit::Second    time() const { return m_time; }
     
     private:
-        unit::Second        m_time      = {};
-        uint64_t            m_tick      = 0;
+        unit::Second            m_time      = {};
+        uint64_t                m_tick      = 0;
+        
+        std::vector<ViewerPtr>  m_viewers;
     };
 }

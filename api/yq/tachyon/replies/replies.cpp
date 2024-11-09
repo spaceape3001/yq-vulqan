@@ -8,3 +8,4 @@
 #include "TachyonReply.ipp"
 #include "ViewerCloseReply.ipp"
 #include "ViewerReply.ipp"
+#include "WindowReply.ipp"

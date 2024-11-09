@@ -5,9 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AppCommand.ipp"
+#include "AppDeleteViewerCommand.ipp"
 #include "GLFWCommand.ipp"
-#include "GLFWCloseCommand.ipp"
-#include "GLFWHideCommand.ipp"
 #include "MouseCaptureCommand.ipp"
 #include "MouseCommand.ipp"
 #include "MouseDisableCommand.ipp"
@@ -24,4 +23,13 @@
 #include "ViewerRestoreCommand.ipp"
 #include "ViewerResumeCommand.ipp"
 #include "ViewerShowCommand.ipp"
+#include "WindowAttentionCommand.ipp"
+#include "WindowCommand.ipp"
+#include "WindowDestroyCommand.ipp"
+#include "WindowFocusCommand.ipp"
+#include "WindowHideCommand.ipp"
+#include "WindowIconifyCommand.ipp"
+#include "WindowMaximizeCommand.ipp"
+#include "WindowRestoreCommand.ipp"
+#include "WindowShowCommand.ipp"
 

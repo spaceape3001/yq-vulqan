@@ -9,27 +9,27 @@
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/tachyon/app/Application.hpp>
-#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
+//#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
 #include <yq/tachyon/commands/MouseCaptureCommand.hpp>
 #include <yq/tachyon/commands/MouseDisableCommand.hpp>
 #include <yq/tachyon/commands/MouseHideCommand.hpp>
 #include <yq/tachyon/commands/MouseNormalCommand.hpp>
-#include <yq/tachyon/commands/ViewerAttentionCommand.hpp>
+#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
 #include <yq/tachyon/commands/ViewerCloseCommand.hpp>
-#include <yq/tachyon/commands/ViewerHideCommand.hpp>
-#include <yq/tachyon/commands/ViewerIconifyCommand.hpp>
-#include <yq/tachyon/commands/ViewerMaximizeCommand.hpp>
+#include <yq/tachyon/commands/WindowHideCommand.hpp>
+#include <yq/tachyon/commands/WindowIconifyCommand.hpp>
+#include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
 #include <yq/tachyon/commands/ViewerPauseCommand.hpp>
-#include <yq/tachyon/commands/ViewerRestoreCommand.hpp>
+#include <yq/tachyon/commands/WindowRestoreCommand.hpp>
 #include <yq/tachyon/commands/ViewerResumeCommand.hpp>
-#include <yq/tachyon/commands/ViewerShowCommand.hpp>
+#include <yq/tachyon/commands/WindowShowCommand.hpp>
 #include <yq/tachyon/core/TachyonInfoWriter.hpp>
 #include <yq/tachyon/events/MouseCaptureEvent.hpp>
 #include <yq/tachyon/events/MouseDisableEvent.hpp>
 #include <yq/tachyon/events/MouseHideEvent.hpp>
 #include <yq/tachyon/events/MouseNormalEvent.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
-#include <yq/tachyon/events/ViewerResizeEvent.hpp>
+#include <yq/tachyon/events/WindowResizeEvent.hpp>
 #include <yq/tachyon/exceptions/ViewerException.hpp>
 #include <yq/tachyon/glfw/GLFWManager.hpp>
 #include <yq/tachyon/image/Raster.hpp>
@@ -37,7 +37,6 @@
 #include <yq/tachyon/replies/ViewerCloseReply.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 #include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
-#include <yq/tachyon/viewer/ViewerInitData.hpp>
 #include <yq/tachyon/viewer/ViGui.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/Visualizer.hpp>
@@ -74,12 +73,19 @@ namespace yq::tachyon {
     {
         auto w = writer<Viewer>();
         w.description("Tachyon Viewer");
+#if 0        
         w.receive(&Viewer::close_request);
         w.receive(&Viewer::close_command);
-#if 0        
         w.receive(&Viewer::viewer_resize_event);
         w.property("mouse", &Viewer::mouse_state).description("Mouse state");
 #endif
+    }
+
+    Tachyon::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
+    {
+        Tachyon::Param  ret;
+        ret.name    = "Viewer";
+        return ret;
     }
 
     //  ----------------------------------------------------------------------------------------------------------------
@@ -90,44 +96,44 @@ namespace yq::tachyon {
     std::atomic<int>        Viewer::s_count{0};
     std::atomic<uint64_t>   Viewer::s_lastId{1};
 
-
-
-
-
+    Viewer::Viewer(const ViewerCreateInfo&vci, WidgetPtr w) : Tachyon(_pbx(vci)), m_id(++s_lastId)
+    {
+        if(!Application::initialized())
+            throw ViewerException("Application is not initialized");
+        if(!is_main_thread())
+            throw ViewerException("Viewer being created outside main thread.");
+        if(!w)
+            throw ViewerException("Widget is required");
+            
+        m_createInfo    = std::make_unique<ViewerCreateInfo>(vci);
+        m_widget        = w;
+    }
     
     Viewer::~Viewer()
     {
-viewerInfo << "Viewer::~Viewer() [START]";
         disconnect(ALL);
-viewerInfo << "Viewer::~Viewer() [REMOVING FROM APP]";
-        Application::remove(this);
-        m_cleanup.sweep();
-        m_widget -> m_viewer    = nullptr;
-viewerInfo << "Viewer::~Viewer() [DELETING WIDGET]";
-        delete m_widget;
-        m_cleanup.sweep();
-viewerInfo << "Viewer::~Viewer() [CLEARING IMGUI]";
-        m_imgui     = {};
-        m_cleanup.sweep();
-viewerInfo << "Viewer::~Viewer() [KILLING VISUALIZER]";
-        m_viz       = {};
-        m_cleanup.sweep();
-viewerInfo << "Viewer::~Viewer() [DESTROYING GLFW WINDOW]";
-
-        GLFWManager::remove(this);
-//        glfwDestroyWindow(m_window);
-        m_cleanup.sweep();
+        assert("Viewer not destroyed properly" && !m_viz && !m_imgui);
         
+        m_widget    = {};
+        m_cleanup.sweep();
         --s_count;
-viewerInfo << "Viewer::~Viewer() [DONE]";
     }
 
-    Tachyon::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
+    void    Viewer::_kill()
     {
-        Tachyon::Param  ret;
-        ret.name    = "Viewer";
-        return ret;
+        if(m_imgui)
+            m_imgui = {};
+        if(m_viz)
+            m_viz   = {};
     }
+
+    std::error_code         Viewer::_startup(GLFWwindow* win, const ViewerState& st)
+    {
+        assert(m_stage == Stage::Preinit);
+        m_state     = st;
+        
+    }
+
 
 #if 0    
     Viewer::Viewer(const ViewerCreateInfo&vci, Widget*w) : Tachyon(_pbx(vci)), m_id(++s_lastId)

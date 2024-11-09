@@ -7,5 +7,6 @@
 #include "AppRequest.ipp"
 #include "TachyonRequest.ipp"
 #include "ViewerCloseRequest.ipp"
-#include "ViewerRefreshRequest.ipp"
 #include "ViewerRequest.ipp"
+#include "WindowRefreshRequest.ipp"
+#include "WindowRequest.ipp"

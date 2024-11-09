@@ -47,6 +47,9 @@ namespace yq::tachyon {
     class ViGui;
     class Visualizer;
     struct ViContext;
+    class GLFWManager;
+    
+    struct ViewerInitData;
     
     
     /*! \brief Vulkan Window
@@ -91,6 +94,23 @@ namespace yq::tachyon {
     
     public:
         
+        enum class Stage {
+            
+            //! Ctor called, that's it
+            Preinit,
+            
+            //! Window created, but not yet running
+            Started,
+            
+            //! Running
+            Running,
+            
+            //! Closing (ie, window still valid)
+            Closing,
+            
+            //! Done/Busted (ie, ready for destruction)
+            Kaput
+        };
         
         
         //static bool raw_mouse_motion_supported();
@@ -99,11 +119,16 @@ namespace yq::tachyon {
         static void init_info();
     
         /*! \brief Creates the viewer
+        
+            \note this *WILL* throw exceptions if the viewer create or the widget are bad
         */
-        Viewer(ViewerCreateInfoUPtr&& vci, WidgetPtr w);
+        Viewer(const ViewerCreateInfo& vci, WidgetPtr w);
         
         //! Destructor
         virtual ~Viewer();
+        
+        
+        
         
         //! Initialize viewer
         std::error_code     initialize();
@@ -278,6 +303,30 @@ namespace yq::tachyon {
         
         const ViewerState&  state() const;
         
+        //! TRUE if we're started
+        bool    started() const;
+        
+        //! TRUE if we're running
+        bool    running() const;
+        
+        //! TRUE if we're started or running
+        bool    started_or_running() const;
+        
+        //! TRUE if we're finished (ie closing/kaput)
+        bool    finished() const;
+        
+        //! TRUE if we're closing
+        bool    closing() const;
+        
+        bool    closing_or_kaput() const;
+
+        //! TRUE if we're done (ready for deletion)
+        bool    kaput() const;
+        
+        bool    never_started() const;
+        
+        const ViewerCreateInfo&     create_info() const;
+        
     protected:
 
         //! Hint to do anything needed before the next render frame is actually rendered
@@ -291,6 +340,10 @@ namespace yq::tachyon {
         
         void                set_flag(F);
 
+        struct Init {
+            GLFWwindow*     window = nullptr;
+        };
+
         //virtual void  handle(Event&) override;
         
         //! Override to have a more nuianced approach
@@ -303,13 +356,14 @@ namespace yq::tachyon {
         
         virtual std::error_code init();
         
+        
+        //! Called *AFTER* vulkan/imgui are initialized
+        virtual std::error_code startup(const Init&) { return {}; }
+        
     private:
     
-        enum Mode {
-            Init,
-            Run,
-            Destroy
-        };
+        friend class GLFWManager;
+    
     
     
     #if 0
@@ -333,10 +387,16 @@ namespace yq::tachyon {
         static std::atomic<uint64_t>    s_lastId;
         
         static Tachyon::Param   _pbx(const ViewerCreateInfo&);
+        
+        std::error_code         _startup(GLFWwindow*, const ViewerState&);
+        
+        
+        // SAME thread close & impending delete
+        void                    _quit();
 
         
         //void    _init(const ViewerCreateInfo&vci, Widget*w);
-        //void    _kill();
+        void    _kill();
 
         const uint64_t                  m_id;
         Widget*                         m_widget        = nullptr;
@@ -350,7 +410,7 @@ namespace yq::tachyon {
         std::unique_ptr<ViGui>          m_imgui;
         std::unique_ptr<Visualizer>     m_viz;
         ViewerState                     m_state;
-        Mode                            m_mode          = Mode::Init;
+        std::atomic<Stage>              m_stage         = { Stage::Preinit };
         
         ViewerCreateInfoUPtr            m_createInfo;
         

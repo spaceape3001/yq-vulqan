@@ -7,13 +7,16 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/VulqanManager.hpp>
 #include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
+#include <yq/tachyon/core/TachyonInfoWriter.hpp>
 #include <yq/tachyon/glfw/GLFWManager.hpp>
 #include <yq/tachyon/task/TaskEngine.hpp>
 #include <yq/tachyon/viewer/Viewer.hpp>
-#include <yq/tachyon/viz/Visualizer.hpp>
+//#include <yq/tachyon/viz/Visualizer.hpp>
 #include <yq/tachyon/widget/Widget.hpp>
 
 #include <yq/asset/Asset.hpp>
+#include <yq/core/ThreadId.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/post/boxes/SimpleBox.hpp>
 #include <yq/tachyon/config/build.hpp>
@@ -23,9 +26,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
 
 namespace yq::tachyon {
 
+    #if 0
+        // MIGHT need to bring this back... until then
     struct Application::ViewerData {
-        Viewer*           viewer;
+        ViewerPtr         viewer;
     };
+    #endif
 
     struct Application::Common {
         AppCreateInfo                   app_info;
@@ -35,9 +41,7 @@ namespace yq::tachyon {
         std::unique_ptr<TaskEngine>     tasking;
         std::unique_ptr<VulqanManager>  vulqan;
         std::atomic<bool>               quit{false};
-        
-        std::map<Viewer*,ViewerData>    viewers;
-        
+        std::vector<ViewerPtr>          viewers;
         
         //  eventually the vulkan goes here too
     };
@@ -48,30 +52,40 @@ namespace yq::tachyon {
         return s_ret;
     }
 
-    void     Application::add(Viewer* v)
+    Viewer*      Application::_add(ViewerPtr v)
     {
-        if(!v)
-            return ;
+        if(!is_main_thread())
+            return nullptr;
             
-        if(contains(v))
-            return ;
-        
         static Common& g = common();
         if(!g.app)
-            return ;
+            return nullptr;
+            
+        if(v->closing_or_kaput())
+            return nullptr;
+
+        if(!v->started_or_running()){
+            std::error_code ec = g.glfw -> win_start(v.ptr());
+            if(ec != std::error_code()){
+                tachyonCritical << "Unable to start viewer.  [Error code] " << ec.message();
+                return nullptr;
+            }
+        }
             
         g.viewers.push_back(v);
-        //GLFWManager::install(*v);
         g.app->connect(RX, *v);
+        g.app->connect(TX, *v);
+
+        if(!v->running()){
+            //  TODO -- VIEWER THREAD/UPDATE/ETC
+            GLFWManager::win_show(v.ptr());
+            v->m_stage  = Viewer::Stage::Running;
+        }
+
+        return v.ptr();
     }
 
-
-    Application*       Application::app() 
-    { 
-        return common().app;
-    }
-
-    bool            Application::contains(const Viewer*& v) 
+    bool            Application::_contains(const Viewer* v) 
     {
         Common& g = common();
         for(auto& p : g.viewers)
@@ -80,26 +94,54 @@ namespace yq::tachyon {
         return false;
     }
 
-    Viewer*         Application::create_viewer(Widget* w)
+    void     Application::_remove(Viewer*v)
     {
-        if(!w)
-            return nullptr;
-
         Common& g = common();
-        return new Viewer(g.app_info.view, w);
+        if(g.app)
+            g.app->disconnect(*v);
+        if(g.glfw)
+            g.glfw->disconnect(*v);
+        std::erase_if(g.viewers, [v](const ViewerPtr& vp) -> bool {
+            return v == vp;
+        });
+    }
+
+
+    void     Application::add_viewer(ViewerPtr v)
+    {
+        if(!v)
+            return ;
+        if(_contains(v))
+            return ;
+        _add(v);
+    }
+
+
+    Application*       Application::app() 
+    { 
+        return common().app;
+    }
+
+    Viewer*         Application::create_viewer(WidgetPtr w)
+    {
+        return create_viewer(common().app_info.view, w);
     }
     
-    Viewer*         Application::create_viewer(std::string_view n, Widget* w)
+    Viewer*         Application::create_viewer(std::string_view n, WidgetPtr w)
+    {
+        Common& g = common();
+        ViewerCreateInfo    vci = g.app_info.view;
+        vci.title       = n;
+        return create_viewer(vci, w);
+    }
+    
+    Viewer* Application::create_viewer(const ViewerCreateInfo& vci, WidgetPtr w)
     {
         if(!w)
             return nullptr;
             
-        Common& g = common();
-        ViewerCreateInfo    vci = g.app_info.view;
-        vci.title       = n;
-        return new Viewer(vci, w);
+        return _add(new Viewer(vci, w));
     }
-    
 
 
     bool    Application::initialized()
@@ -107,12 +149,13 @@ namespace yq::tachyon {
         return static_cast<bool>(common().app);
     }
 
-    Thread::Param  Application::params(const AppCreateInfo& aci)
+    Tachyon::Param  Application::params(const AppCreateInfo& aci)
     {
-        Thread::Param ret;
+        Tachyon::Param ret;
         return ret;
     }
 
+#if 0
     void    Application::remove(Viewer* v)
     {
         if(!v)
@@ -128,15 +171,16 @@ namespace yq::tachyon {
         //GLFWManager::remove(*v);
         //std::erase(g.viewers, v);
     }
+#endif
 
-    void    Application::run(Second amt)
+    void    Application::run(Second timeout)
     {
         Common& g   = common();
         
         if(g.glfw){
             while((!g.quit) && (g.app_info.headless || !g.viewers.empty())){
                 post::SimpleBox     capture({ .name = "TachyonFrame"});
-                g.glfw->poll(capture, amt);
+                g.glfw->poll(capture, timeout);
                 //events.dispatch_all();
 
                 if(g.tasking)            // eventually be smarter about this... multithreading
@@ -144,6 +188,7 @@ namespace yq::tachyon {
 
                 for(auto& v : g.viewers){
                     v->draw();
+                    #if 0
                     if(v->should_close() || !v->m_delete.empty()){
                         vkDeviceWaitIdle(v->visualizer().device());
                         v->purge_deleted();
@@ -152,27 +197,28 @@ namespace yq::tachyon {
                             v   = nullptr;
                         }
                     }
+                    #endif
                 }
                     
-                std::erase(g.viewers, nullptr);
+                //std::erase(g.viewers, nullptr);
             }
         }
     }
 
-    void    Application::run(Viewer* win, Second amt)
+    void    Application::run(ViewerPtr win, Second timeout)
     {
         if(!win)
             return;
-        Common& g = common();
-        g.viewers.push_back(win);
-        run(amt);
+        _add(win);
+        run(timeout);
     }
 
-    void    Application::run(Widget* wid, Second timeout)
+    void    Application::run(WidgetPtr wid, Second timeout)
     {
         if(!wid)
             return ;
-        run(create_viewer(wid), timeout);
+        create_viewer(wid);
+        run(timeout);
     }
 
     TaskEngine*         Application::task_engine() 
@@ -193,7 +239,7 @@ namespace yq::tachyon {
     //  ////////////////////////////////////////////////////////////////////////
 
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv), Thread(params(aci))
+        BasicApp(argc, argv), Tachyon(params(aci))
     {
         Common& g = common();
         if(g.claimed.test_and_set())
@@ -222,7 +268,7 @@ namespace yq::tachyon {
             connect(TX, *g.vulqan);
         }
         
-        //  TODO event connections
+        //  TODO other event connections
         
         tachyonDebug << "Application initialized";
     }
@@ -235,12 +281,18 @@ namespace yq::tachyon {
             return ;
             
         g.app   = nullptr;
-
-        for(Viewer* v : g.viewers){
-            if(v){
-                vkDeviceWaitIdle(v->visualizer().device());
-                delete v;
-            }
+        
+            //  TODO ... threads (which include the viewer)
+    
+        for(ViewerPtr& v : g.viewers){
+            if(!v)
+                continue;
+            v -> _quit();
+            v   = {};
+            //if(v){
+                //vkDeviceWaitIdle(v->visualizer().device());
+                //delete v;
+            //}
         }
         g.viewers.clear();
         
@@ -257,9 +309,21 @@ namespace yq::tachyon {
         tachyonDebug << "Application destroyed";
     }
 
+    void    Application::cmd_delete_viewer(const AppDeleteViewerCommand&cmd)
+    {
+        _remove(cmd.viewer());
+    }
+
     void    Application::receive(const post::PostCPtr& pp) 
     {
         post::PBX::receive(pp);
         dispatch(pp);  // and rebroadcast
+    }
+
+    void Application::init_info()
+    {
+        auto w = writer<Application>();
+        w.description("Tachyon Application");
+        w.receive(&Application::cmd_delete_viewer);
     }
 }

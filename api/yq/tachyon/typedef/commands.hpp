@@ -15,6 +15,7 @@ namespace yq::tachyon {
     class GLFWCloseCommand;
     class GLFWCommand;
     class GLFWHideCommand;
+    class GLFWShowCommand;
     class MouseCaptureCommand;
     class MouseCommand;
     class MouseDisableCommand;
@@ -31,6 +32,15 @@ namespace yq::tachyon {
     class ViewerRestoreCommand;
     class ViewerResumeCommand;
     class ViewerShowCommand;
+    class WindowAttentionCommand;
+    class WindowCommand;
+    class WindowDestroyCommand;
+    class WindowFocusCommand;
+    class WindowHideCommand;
+    class WindowIconifyCommand;
+    class WindowMaximizeCommand;
+    class WindowRestoreCommand;
+    class WindowShowCommand;
 
     using MouseCaptureCommandCPtr       = Ref<const class MouseCaptureCommand>;
     using MouseDisableCommandCPtr       = Ref<const class MouseDisableCommand>;

@@ -63,7 +63,6 @@ namespace yq::tachyon {
         //! Desired layers (taking optional & yes)
         std::vector<NameRequired>   vulkan_layers;
 
-
         
         AppCreateInfo() = default;
     };

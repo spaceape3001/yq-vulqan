@@ -24,6 +24,7 @@ namespace yq::tachyon {
     class Viewer;
     class Widget;
     class GLFWManager;
+    class AppDeleteViewerCommand;
 
 
     /*! \brief Engine/Vulkan application
@@ -40,12 +41,13 @@ namespace yq::tachyon {
 
         static const AppCreateInfo& app_info();
         
-        //! Creates a viewer with widget
-        static Viewer*            create_viewer(Widget*);
+        //! Creates a viewer with widget (note, application owns it)
+        static Viewer*              create_viewer(WidgetPtr);
         //! Creates a viewer with title/widget
-        static Viewer*            create_viewer(std::string_view, Widget*);
+        static Viewer*              create_viewer(std::string_view, WidgetPtr);
+        
+        static Viewer*              create_viewer(const ViewerCreateInfo&, WidgetPtr);
 
-        static bool                 contains(const Viewer*&);
         
         static bool                 initialized();
         
@@ -66,13 +68,15 @@ namespace yq::tachyon {
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        static void                 run(Viewer* win, Second timeout={0.});
+        static void                 run(ViewerPtr win, Second timeout={0.});
         
         //! Simple create viewer & exec loop
-        static void                 run(Widget* wid, Second timeout={0.});
+        static void                 run(WidgetPtr wid, Second timeout={0.});
 
         static TaskEngine*          task_engine();
         
+        //! Adds a viewer, returns the pointer
+        static void                 add_viewer(ViewerPtr);
     
         /*! \brief Constructor
         
@@ -82,6 +86,8 @@ namespace yq::tachyon {
         */
         Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
         ~Application();
+        
+        static void init_info();
 
     protected:
         virtual void  receive(const post::PostCPtr&) override;
@@ -89,13 +95,14 @@ namespace yq::tachyon {
     private:
         friend class Viewer;
         
+        static Viewer*          _add(ViewerPtr);
+        static bool             _contains(const Viewer*);
+        static void             _remove(Viewer*);
         
-        struct ViewerData;
+        void    cmd_delete_viewer(const AppDeleteViewerCommand&);
         
-        static void         add(Viewer*);
         
         //  this is being called by viewer, deletion unnecessary
-        static void         remove(Viewer*);
         
         static Tachyon::Param  params(const AppCreateInfo&);
         

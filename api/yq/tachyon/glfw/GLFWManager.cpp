@@ -6,10 +6,18 @@
 
 #include "GLFWManager.hpp"
 
+#include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/app/ManagerInfoWriter.hpp>
-#include <yq/tachyon/commands/ViewerCloseCommand.hpp>
+#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
+#include <yq/tachyon/commands/WindowDestroyCommand.hpp>
+#include <yq/tachyon/commands/WindowFocusCommand.hpp>
+#include <yq/tachyon/commands/WindowHideCommand.hpp>
+#include <yq/tachyon/commands/WindowIconifyCommand.hpp>
+#include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
+#include <yq/tachyon/commands/WindowRestoreCommand.hpp>
+#include <yq/tachyon/commands/WindowShowCommand.hpp>
 #include <yq/tachyon/events/JoystickAxisEvent.hpp>
 #include <yq/tachyon/events/JoystickConnectEvent.hpp>
 #include <yq/tachyon/events/JoystickDisconnectEvent.hpp>
@@ -29,30 +37,39 @@
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
 #include <yq/tachyon/events/MouseScrollEvent.hpp>
-#include <yq/tachyon/events/ViewerDefocusEvent.hpp>
-#include <yq/tachyon/events/ViewerFocusEvent.hpp>
-#include <yq/tachyon/events/ViewerIconifyEvent.hpp>
-#include <yq/tachyon/events/ViewerMaximizeEvent.hpp>
-#include <yq/tachyon/events/ViewerMoveEvent.hpp>
-#include <yq/tachyon/events/ViewerResizeEvent.hpp>
-#include <yq/tachyon/events/ViewerRestoreEvent.hpp>
-#include <yq/tachyon/events/ViewerScaleEvent.hpp>
-#include <yq/tachyon/events/ViewerStateEvent.hpp>
+#include <yq/tachyon/events/WindowDefocusEvent.hpp>
+#include <yq/tachyon/events/WindowDestroyEvent.hpp>
+#include <yq/tachyon/events/WindowFocusEvent.hpp>
+#include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
+#include <yq/tachyon/events/WindowHideEvent.hpp>
+#include <yq/tachyon/events/WindowIconifyEvent.hpp>
+#include <yq/tachyon/events/WindowMaximizeEvent.hpp>
+#include <yq/tachyon/events/WindowMoveEvent.hpp>
+#include <yq/tachyon/events/WindowResizeEvent.hpp>
+#include <yq/tachyon/events/WindowRestoreEvent.hpp>
+#include <yq/tachyon/events/WindowScaleEvent.hpp>
+#include <yq/tachyon/events/WindowShowEvent.hpp>
+#include <yq/tachyon/events/WindowStateEvent.hpp>
 #include <yq/tachyon/exceptions/GLFWException.hpp>
 #include <yq/tachyon/glfw/Joystick.hpp>
 #include <yq/tachyon/glfw/Monitor.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
-#include <yq/tachyon/requests/ViewerRefreshRequest.hpp>
+#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
 #include <yq/tachyon/viewer/Viewer.hpp>
 #include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
-#include <yq/tachyon/viewer/ViewerInitData.hpp>
 
 #include <yq/core/ThreadId.hpp>
+#include <yq/util/Safety.hpp>
 #include <yq/shape/Size2.hxx>
 
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
+
+    namespace errors {
+        using glfw_no_window_for_viewer         = error_db::entry<"No associated window to the specified viewer">;
+        using glfw_no_viewer_for_window         = error_db::entry<"No viewer associated with GLFW window">;
+    }
 
     struct GLFWManager::JoystickData {
         
@@ -93,8 +110,8 @@ namespace yq::tachyon {
         Buttons
     };
     
-    struct GLFWManager::ViewerData {
-        ViewerPtr       viewer;
+    struct GLFWManager::Window {
+        Viewer*         viewer      = nullptr;
         GLFWwindow*     window      = nullptr;
         ViewerState     state;
     };
@@ -104,7 +121,7 @@ namespace yq::tachyon {
         GLFWManager*                                manager = nullptr;
         std::atomic_flag                            claimed;
         std::array<JoystickData, kMaxJoysticks>     joysticks{};
-        std::map<Viewer*, ViewerData>               viewers;
+        std::map<Viewer*, Window>               viewers;
         bool                                        imgui   = false;
     };
     
@@ -476,201 +493,92 @@ namespace yq::tachyon {
         
         for(auto& itr : g.viewers){
             _update(itr.second.window, itr.second.state);
-            g.manager->dispatch(new ViewerStateEvent(itr.first, itr.second.state));
+            g.manager->dispatch(new WindowStateEvent(itr.first, itr.second.state));
         }
     }
 
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //   VIEWER RELATIONS
-
-    ViewerInitData       GLFWManager::create(Viewer* v, const ViewerCreateInfo& vci)
+    //   VIEWER/WINDOW RELATIONS
+    
+    void     GLFWManager::_attention(Window*w)
     {
-        static Common& g = common();
-
-        if(!v)
-            return {};
-
-        ViewerData& vd = g.viewers[v];
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
-        glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
-        
-        int wx      = std::max(1,vci.size.width());
-        int wy      = std::max(1,vci.size.height());
-        
-        std::string     title   = vci.title;
-        if(title.empty())
-            title   = Application::app_name();
-        
-        vd.window   = glfwCreateWindow(wx, wy, vci.title.c_str(), vci.monitor.monitor(), nullptr);
-        if(!vd.window){
-            const char* description = nullptr;
-            glfwGetError(&description);
-            if(description)
-                glfwCritical << "Unable to create GLFW window.  " << description;
-            throw GLFWException("GLFW window could not be instantiated");
-        }
-        
-        glfwSetWindowUserPointer(vd.window, &v);
-        
-        glfwSetCharCallback(vd.window, callback_character);
-        glfwSetCursorEnterCallback(vd.window, callback_cursor_enter);
-        glfwSetCursorPosCallback(vd.window, callback_cursor_position);
-        glfwSetDropCallback(vd.window, callback_drop);
-        //glfwSetFramebufferSizeCallback(vd.window, callback_framebuffer_size);
-        glfwSetKeyCallback(vd.window, callback_key);
-        glfwSetMouseButtonCallback(vd.window, callback_mouse_button);
-        glfwSetScrollCallback(vd.window, callback_scroll);
-        glfwSetWindowCloseCallback(vd.window, callback_window_close);
-        glfwSetWindowContentScaleCallback(vd.window, callback_window_scale);
-        glfwSetWindowFocusCallback(vd.window, callback_window_focus);
-        glfwSetWindowIconifyCallback(vd.window, callback_window_iconify);
-        glfwSetWindowMaximizeCallback(vd.window, callback_window_maximize);
-        glfwSetWindowPosCallback(vd.window, callback_window_position);
-        glfwSetWindowRefreshCallback(vd.window, callback_window_refresh);
-        glfwSetWindowSizeCallback(vd.window, callback_window_size);
-
-        _update(vd.window, vd.state);
-        
-        g.manager->connect(TX, *v);
-        g.manager->connect(RX, *v);
-       
-        ViewerInitData  ret;
-        ret.window  = vd.window;
-        ret.state   = vd.state;
-        return ret;
-    }
-
-    bool    GLFWManager::has_viewers()
-    {
-        return !common().viewers.empty();
-    }
-
-    void    GLFWManager::remove(Viewer* v)
-    {
-        static Common& g = common();
-
-        if(!v)
+        if(!w->window)
             return ;
-            
-        auto itr = g.viewers.find(v);
-        if(itr == g.viewers.end())
+        glfwRequestWindowAttention(w->window);
+    }
+    
+    void     GLFWManager::_destroy(Window*w)
+    {
+        static Common& g = common();
+        if(!w->window)
             return ;
 
-        g.manager->disconnect(*v);
-
-        ViewerData& vd = itr->second;
-        glfwDestroyWindow(vd.window);
-        g.viewers.erase(itr);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //   WINDOW
-
-
-    
-    #if 0
-    void GLFWManager::callback_framebuffer_size(GLFWwindow* window, int width, int height)
-    {
-    }
-    #endif
-
-    void GLFWManager::callback_window_close(GLFWwindow* window)
-    {
-        static Common& g = common();
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(v){
-            g.manager->dispatch(new ViewerCloseRequest(v));
-        } else {
-            glfwSetWindowShouldClose(window, GLFW_TRUE);
+        glfwDestroyWindow(w->window);
+        w->window   = nullptr;
+        if(w->viewer){
+            g.manager->dispatch(new WindowDestroyEvent(w->viewer));
         }
+        g.viewers.erase(w->viewer); // WARNING, implicitly destroys w!
     }
     
-    void GLFWManager::callback_window_focus(GLFWwindow* window, int focused)
+    
+    void     GLFWManager::_focus(Window*w)
     {
-        static Common& g = common();
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!v)
+        if(!w->window)
             return ;
-
-        if(focused){
-            g.manager->dispatch(new ViewerFocusEvent(v));
-        } else {
-            g.manager->dispatch(new ViewerDefocusEvent(v));
-        }
+        glfwFocusWindow(w->window);
     }
     
-    void GLFWManager::callback_window_iconify(GLFWwindow* window, int iconified)
+    void     GLFWManager::_hide(Window*w)
     {
         static Common& g = common();
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!v)
+
+        if(!w->window)
             return ;
-
-        if(iconified){
-            g.manager->dispatch(new ViewerIconifyEvent(v));
-        } else {
-            g.manager->dispatch(new ViewerRestoreEvent(v));
-        }
-    }
-    
-    void GLFWManager::callback_window_maximize(GLFWwindow* window, int maximized)
-    {
-        static Common& g = common();
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!v)
+        if(!glfwGetWindowAttrib(w->window, GLFW_VISIBLE))
             return ;
-
-        if(maximized){
-            g.manager->dispatch(new ViewerMaximizeEvent(v));
-        } else {
-            g.manager->dispatch(new ViewerRestoreEvent(v));
+        glfwHideWindow(w->window);
+        if(w->viewer){
+            g.manager->dispatch(new WindowHideEvent(w->viewer));
         }
     }
     
-    void GLFWManager::callback_window_position(GLFWwindow* window, int xpos, int ypos)
+    void     GLFWManager::_iconify(Window*w)
     {
-        static Common& g = common();
-        
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(!v)
+        if(!w->window)
             return ;
+        glfwIconifyWindow(w->window);
+    }
+    
+    void     GLFWManager::_maximize(Window*w)
+    {
+        if(!w->window)
+            return ;
+        glfwMaximizeWindow(w->window);
+    }
+    
+    void     GLFWManager::_restore(Window*w)
+    {
+        if(!w->window)
+            return ;
+        glfwRestoreWindow(w->window);
+    }
+    
+    void     GLFWManager::_show(Window*w)
+    {
+        static Common& g = common();
 
-        g.manager->dispatch(new ViewerMoveEvent(v, { xpos, ypos }));
-    }
-    
-    void GLFWManager::callback_window_refresh(GLFWwindow* window)
-    {
-        static Common& g = common();
-        
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(v){
-            g.manager->dispatch(new ViewerRefreshRequest(v));
+        if(!w->window)
+            return ;
+        if(glfwGetWindowAttrib(w->window, GLFW_VISIBLE))
+            return ;
+        glfwShowWindow(w->window);
+        if(w->viewer){
+            g.manager->dispatch(new WindowShowEvent(w->viewer));
         }
     }
-    
-    void GLFWManager::callback_window_scale(GLFWwindow* window, float xscale, float yscale)
-    {
-        static Common& g = common();
-        
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(v){
-            g.manager->dispatch(new ViewerScaleEvent(v, { xscale, yscale }));
-        }
-    }
-    
-    void GLFWManager::callback_window_size(GLFWwindow* window, int xsize, int ysize)
-    {
-        static Common& g = common();
-        
-        Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
-        if(v){
-            g.manager->dispatch(new ViewerResizeEvent(v, { xsize, ysize }));
-        }
-    }
-        
+
     void  GLFWManager::_update(GLFWwindow* w, ViewerState&vs)
     {
         for(KeyCode kc : KeyCode::all_values()){
@@ -707,30 +615,329 @@ namespace yq::tachyon {
         
         vs.time             = glfwGetTime();
     }
-
-    void    GLFWManager::close_command(const GLFWCloseCommand& cmd)
-    {
-        Common& g = common();
     
-        Viewer* v   = cmd.viewer();
+    Viewer*  GLFWManager::_viewer(GLFWwindow*w)
+    {
+        return (Viewer*) glfwGetWindowUserPointer(w);
+    }
+
+    GLFWManager::Window*  GLFWManager::_window(Viewer* vd)
+    {
+        static Common& g = common();
+        auto itr = g.viewers.find(vd);
+        if(itr == g.viewers.end())
+            return nullptr;
+        return &(itr->second);
+    }
+    
+    GLFWManager::Window*  GLFWManager::_window(GLFWwindow* w)
+    {
+        return _window(_viewer(w));
+    }
+
+    //  ...............................................................................................................
+    //      CALLBACKS
+    
+    void GLFWManager::callback_framebuffer_size(GLFWwindow* window, int width, int height)
+    {
+        static Common& g = common();
+        Viewer*v    = _viewer(window);
         if(!v)
             return ;
-        
-        auto i = g.viewers.find(v);
-        if(i != g.viewers.end()){
-            
-        }
-        delete v;
+        g.manager->dispatch(new WindowFrameBufferResizeEvent(v, {width, height}));
     }
 
-    void    GLFWManager::hide_command(const GLFWHideCommand& cmd)
+    void GLFWManager::callback_window_close(GLFWwindow* window)
     {
+        static Common& g = common();
+        Viewer*v    = _viewer(window);
+        if(!v)
+            return ;
+
+        g.manager->dispatch(new ViewerCloseRequest(v));
+    }
+    
+    void GLFWManager::callback_window_focus(GLFWwindow* window, int focused)
+    {
+        static Common& g = common();
+
+        Viewer*v    = _viewer(window);
+        if(!v)
+            return ;
+
+        if(focused){
+            g.manager->dispatch(new WindowFocusEvent(v));
+        } else {
+            g.manager->dispatch(new WindowDefocusEvent(v));
+        }
+    }
+    
+    void GLFWManager::callback_window_iconify(GLFWwindow* window, int iconified)
+    {
+        static Common& g = common();
+
+        Viewer*v    = _viewer(window);
+        if(!v)
+            return ;
+
+        if(iconified){
+            g.manager->dispatch(new WindowIconifyEvent(v));
+        } else {
+            g.manager->dispatch(new WindowRestoreEvent(v));
+        }
+    }
+    
+    void GLFWManager::callback_window_maximize(GLFWwindow* window, int maximized)
+    {
+        static Common& g = common();
+
+        Viewer*v    = _viewer(window);
+        if(!v)
+            return ;
+
+        if(maximized){
+            g.manager->dispatch(new WindowMaximizeEvent(v));
+        } else {
+            g.manager->dispatch(new WindowRestoreEvent(v));
+        }
+    }
+    
+    void GLFWManager::callback_window_position(GLFWwindow* window, int xpos, int ypos)
+    {
+        static Common& g = common();
         
+        Viewer*v    = _viewer(window);
+        if(!v)
+            return ;
+
+        g.manager->dispatch(new WindowMoveEvent(v, { xpos, ypos }));
+    }
+    
+    void GLFWManager::callback_window_refresh(GLFWwindow* window)
+    {
+        static Common& g = common();
+        
+        Viewer*v    = _viewer(window);
+        if(v){
+            g.manager->dispatch(new WindowRefreshRequest(v));
+        }
+    }
+    
+    void GLFWManager::callback_window_scale(GLFWwindow* window, float xscale, float yscale)
+    {
+        static Common& g = common();
+        
+        Viewer*v    = _viewer(window);
+        if(v){
+            g.manager->dispatch(new WindowScaleEvent(v, { xscale, yscale }));
+        }
+    }
+    
+    void GLFWManager::callback_window_size(GLFWwindow* window, int xsize, int ysize)
+    {
+        static Common& g = common();
+        
+        Viewer*v    = _viewer(window);
+        if(v){
+            g.manager->dispatch(new WindowResizeEvent(v, { xsize, ysize }));
+        }
+    }
+        
+    //  ...............................................................................................................
+    //      COMMANDS
+
+    void    GLFWManager::cmd_attention(const WindowAttentionCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _show(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_destroy(const WindowDestroyCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _destroy(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_focus(const WindowFocusCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _focus(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_hide(const WindowHideCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _hide(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_iconify(const WindowIconifyCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _iconify(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_maximize(const WindowMaximizeCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _maximize(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_restore(const WindowRestoreCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _restore(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_show(const WindowShowCommand& cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _show(w);
+        }
+    }
+
+
+    //  ...............................................................................................................
+    //      WINDOW MANAGEMENT
+
+
+    std::error_code     GLFWManager::win_destroy(Viewer* v)
+    {
+        Window* w   = _window(v);
+        if(!w)
+            return errors::glfw_no_window_for_viewer();
+        _destroy(w);
+        return {};
+    }
+
+    std::error_code     GLFWManager::win_hide(Viewer* v)
+    {
+        Window*w    = _window(v);
+        if(!w)
+            return errors::glfw_no_window_for_viewer();
+    
+        _hide(w);
+        return {};
+    }
+
+    std::error_code     GLFWManager::win_show(Viewer* v)
+    {
+        Window*w    = _window(v);
+        if(!w)
+            return errors::glfw_no_window_for_viewer();
+        _show(w);
+        return {};
+    }
+
+    std::error_code     GLFWManager::win_start(Viewer* v)
+    {
+        if(!v->never_started())
+            return create_error<"Viewer has already been started">();
+    
+        static Common& g = common();
+        if(!g.manager)
+            return create_error<"GLFW has not been initialized">();
+            
+        if(g.viewers.contains(v))
+            return create_error<"Viewer is already known to GLFW">();
+
+        const ViewerCreateInfo& vci = v->create_info();
+
+        Window  vd;
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        
+        int wx      = std::max(1,vci.size.width());
+        int wy      = std::max(1,vci.size.height());
+        
+        std::string     title   = vci.title;
+        if(title.empty())
+            title   = Application::app_name();
+        
+        vd.viewer   = v;
+        
+        vd.window   = glfwCreateWindow(wx, wy, title.c_str(), vci.monitor.monitor(), nullptr);
+        if(!vd.window){
+            const char* description = nullptr;
+            glfwGetError(&description);
+            if(description)
+                glfwCritical << "Unable to create GLFW window.  " << description;
+            return create_error<"GLFW window could not be instantiated">();
+        }
+        
+        auto destruct   = safety([&](){
+            glfwDestroyWindow(vd.window);
+        });
+        
+        glfwSetWindowUserPointer(vd.window, &v);
+        glfwSetCharCallback(vd.window, callback_character);
+        glfwSetCursorEnterCallback(vd.window, callback_cursor_enter);
+        glfwSetCursorPosCallback(vd.window, callback_cursor_position);
+        glfwSetDropCallback(vd.window, callback_drop);
+        glfwSetFramebufferSizeCallback(vd.window, callback_framebuffer_size);
+        glfwSetKeyCallback(vd.window, callback_key);
+        glfwSetMouseButtonCallback(vd.window, callback_mouse_button);
+        glfwSetScrollCallback(vd.window, callback_scroll);
+        glfwSetWindowCloseCallback(vd.window, callback_window_close);
+        glfwSetWindowContentScaleCallback(vd.window, callback_window_scale);
+        glfwSetWindowFocusCallback(vd.window, callback_window_focus);
+        glfwSetWindowIconifyCallback(vd.window, callback_window_iconify);
+        glfwSetWindowMaximizeCallback(vd.window, callback_window_maximize);
+        glfwSetWindowPosCallback(vd.window, callback_window_position);
+        glfwSetWindowRefreshCallback(vd.window, callback_window_refresh);
+        glfwSetWindowSizeCallback(vd.window, callback_window_size);
+            
+        _update(vd.window, vd.state);
+
+        try {
+            std::error_code ec  = v->_startup(vd.window, vd.state);
+            if(ec != std::error_code()){
+                glfwCritical << "Viewer unable to startup (error " << ec.message() << ")";
+                return ec;
+            }
+        }
+        catch(std::error_code ec)
+        {
+            glfwCritical << "Viewer unable to startup (error " << ec.message() << ")";
+            return ec;
+        }
+        catch(const std::exception& ex)
+        {
+            glfwCritical << "Viewer unable to startup (exception " << ex.what() << ")";
+            return create_error<"Exception thrown during viewer startup">();
+        }
+        
+        destruct.disarm();
+        g.manager->connect(RX, *v);
+        g.manager->connect(TX, *v);
+        g.viewers[v]        = std::move(vd);
+        return {};
+    }
+
+    bool    GLFWManager::has_viewers()
+    {
+        return !common().viewers.empty();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     namespace {
         static void    glfwLogging(int ec, const char* why)
@@ -803,8 +1010,14 @@ namespace yq::tachyon {
         auto w = writer<GLFWManager>();
         w.abstract();
         w.description("GLFW Manager");
-        w.receive(&GLFWManager::close_command);
-        w.receive(&GLFWManager::hide_command);
+        w.receive(&GLFWManager::cmd_attention);
+        w.receive(&GLFWManager::cmd_destroy);
+        w.receive(&GLFWManager::cmd_focus);
+        w.receive(&GLFWManager::cmd_hide);
+        w.receive(&GLFWManager::cmd_iconify);
+        w.receive(&GLFWManager::cmd_maximize);
+        w.receive(&GLFWManager::cmd_restore);
+        w.receive(&GLFWManager::cmd_show);
     }
 }
 

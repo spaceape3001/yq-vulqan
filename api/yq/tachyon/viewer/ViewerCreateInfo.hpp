@@ -80,7 +80,7 @@ namespace yq::tachyon {
             //!  Number of frames in flight
         size_t                      frames_in_flight    = 2;
         
-            //! Device extensions
+        //! Device extensions
         std::vector<const char*>    extensions;
         
         ViewerCreateInfo(){}

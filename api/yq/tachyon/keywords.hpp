@@ -30,11 +30,13 @@ namespace yq::tachyon {
     
     struct probe_t {};
     struct close_t {};
+    struct number_t {};
 
     static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;
+    static constexpr number_t       NUMBER;
     static constexpr probe_t        PROBE;
     static constexpr refresh_t      REFRESH;
     static constexpr static_t       STATIC;

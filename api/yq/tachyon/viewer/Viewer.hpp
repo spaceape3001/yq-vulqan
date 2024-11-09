@@ -9,6 +9,7 @@
 
 //#include <yq/tachyon/event/EventSocket.hpp>
 
+#include <yq/units.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/tachyon/keywords.hpp>
@@ -62,8 +63,6 @@ namespace yq::tachyon {
     class Viewer : public Tachyon, public RefCount {
         YQ_OBJECT_DECLARE(Viewer, Tachyon)
     
-        friend class Application;
-
     /*
         THREADING -- being written so that each viewer is a separate thread.
             
@@ -111,10 +110,6 @@ namespace yq::tachyon {
             //! Done/Busted (ie, ready for destruction)
             Kaput
         };
-        
-        
-        //static bool raw_mouse_motion_supported();
-    
     
         static void init_info();
     
@@ -127,12 +122,127 @@ namespace yq::tachyon {
         //! Destructor
         virtual ~Viewer();
         
+        //  -----------------------------------------
+        //  INFORMATION
+        
+
+        //! TRUE if we're closing
+        bool                        closing() const;
+        
+        //! TRUE if we're closing or kaput
+        bool                        closing_or_kaput() const;
+
+        //! Create information that created us
+        const ViewerCreateInfo&     create_info() const;
+        
+        //! Time of last draw call
+        unit::Second                draw_time() const { return m_drawTime; }
+
+        //! Focus widget 
+        //! \note Currently not safe outside viewer's thread
+        Widget*                     focus_widget() const { return m_focus; }
+
+        //! Viewer number
+        uint64_t                    id() const { return m_id; }
+
+        //! TRUE if we're done (ready for deletion)
+        bool                        kaput() const;
+
+        //! TRUE if we've not called START
+        bool                        never_started() const;
+        
+        //! TRUE if we're started
+        bool                        started() const;
+        
+        //! Current state
+        const ViewerState&          state() const;
+
+        //! TRUE if we're started or running
+        bool                        started_or_running() const;
+
+        //! TRUE if rendering is paused
+        bool                        paused() const;
+
+        //! TRUE if we're running
+        bool                        running() const;
+        
+        //! Current tick/frame number
+        //! \note Might not be the same as the visualizer's
+        uint64_t                    ticks() const { return m_ticks; }
+
+
+        //! \note Will throw exceptions if visualizer is not defined
+        Visualizer&                 visualizer() const;
+
+        //  -----------------------------------------
+        //  ACTION/SETTERS
+
+        //! Runs the draw sequence (uses a default context and calls the other)
+        std::error_code     draw();
+
+        //! Runs the draw sequence
+        std::error_code     draw(ViContext&);
+
+        void                tick(/* const AppFrame& */);
+
+    protected:
+
+        //! Hint to do anything needed before the next render frame is actually rendered
+        //! So do the uniform buffer & texture descriptor sets here.
+        //virtual void        prerecord(ViContext&);
+        
+        struct Init {
+            GLFWwindow*     window = nullptr;
+        };
+
+        //! Called *AFTER* vulkan/imgui are initialized
+        virtual std::error_code startup(const Init&) { return {}; }
+
+        virtual void    receive(const post::PostCPtr&) override;
+
+    private:
+
+        friend class GLFWManager;
+        friend class Application;
+
+        static std::atomic<int>         s_count;
+        static std::atomic<uint64_t>    s_lastId;
+
+        static Tachyon::Param   _pbx(const ViewerCreateInfo&);
+
+        const uint64_t                  m_id;
+        Cleanup                         m_cleanup;
+        ViewerCreateInfoUPtr            m_createInfo;
+        std::atomic<unit::Second>       m_drawTime      = { 0. };
+        Widget*                         m_focus         = nullptr;
+        std::unique_ptr<ViGui>          m_imgui;
+        std::atomic<bool>               m_paused;
+        ViewerState                     m_state;
+        std::atomic<Stage>              m_stage         = { Stage::Preinit };
+        std::atomic<uint64_t>           m_ticks{0};
+        std::unique_ptr<Visualizer>     m_viz;
+        WidgetPtr                       m_widget;
+        bool                            m_zeroSize  = false;
+
+        // Might have a filter/time thing (later) so a spam of the close button triggers fast-close
+        ViewerCloseRequestCPtr          m_viewerCloseRequest;
+
+
+        void                _kill();
+        void                _quit();    // basically unconditional (without app-destroy)
+        std::error_code     _startup(GLFWwindow*, const ViewerState&);
+        Stage               _stage() const;
         
         
-        
-        //! Initialize viewer
-        std::error_code     initialize();
-        
+        void    close();
+        void    req_close(const ViewerCloseRequestCPtr&);
+        void    cmd_close(const ViewerCloseCommand&);
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  OLD CODE
+
+    public:        
         
         
         
@@ -190,26 +300,13 @@ namespace yq::tachyon {
 
 //        const Vector2D&     cursor_position() const { return m_cursorPos; }
 
-        //! Runs the draw sequence
-        std::error_code     draw(ViContext&);
-        
-        //! Runs the draw sequence (uses a default context and calls the other)
-        std::error_code     draw();
-        
-        //! Time (in seconds) of last draw call
-        double              draw_time() const { return m_drawTime; }
         
 //        Size2I              framebuffer_size() const;
 
-        //! Current frame number
-        uint64_t            frame_number() const;
-        
-        Widget*             focus_widget() const { return m_focus; }
         
             //! Height of the window
 //        int                 height() const;
 
-        uint64_t            id() const { return m_id; }
 
 #if 0
             //! TRUE if the window has standard decorations (close/buttons/frame)
@@ -241,12 +338,10 @@ namespace yq::tachyon {
 #endif
         
             //! Monitor (if fullscreen)
-        Monitor             monitor() const;
+        //Monitor             monitor() const;
         
 //        MouseMode          mouse_state() const { return m_mouseState; }
 
-        //! TRUE if rendering is paused
-        bool                render_paused() const { return m_paused; }
 
 #if 0        
             //! Current window position
@@ -254,7 +349,7 @@ namespace yq::tachyon {
 #endif
 
         //! Set the rendering paused flag
-        void                set_render_paused(bool);
+        //void                set_render_paused(bool);
         
 #if 0        
             //! Sets the window position
@@ -274,10 +369,10 @@ namespace yq::tachyon {
 #endif
         
         //! Set the widget
-        void                set_widget(Widget*, bool fDestroyOld=true);
+        //void                set_widget(Widget*, bool fDestroyOld=true);
 
             //! TRUE if user wants window to close
-        bool                should_close() const;
+        //bool                should_close() const;
 
 #if 0
 
@@ -285,13 +380,12 @@ namespace yq::tachyon {
         Size2I              size() const;
 #endif
 
-        void                tick(/* const AppFrame& */) { _tick(); }
     
 #if 0
         std::string         title() const;
 #endif
 
-        Widget*             widget_at(const Vector2D&) const;
+        //Widget*             widget_at(const Vector2D&) const;
 
 #if 0
 
@@ -301,49 +395,12 @@ namespace yq::tachyon {
 #endif
 
 
-        Visualizer&         visualizer() const;
 
 //        GLFWwindow*         window() const { return m_window; }
         
-        const ViewerState&  state() const;
-        
-        //! TRUE if we're started
-        bool    started() const;
-        
-        //! TRUE if we're running
-        bool    running() const;
-        
-        //! TRUE if we're started or running
-        bool    started_or_running() const;
-        
-        //! TRUE if we're closing
-        bool    closing() const;
-        
-        bool    closing_or_kaput() const;
-
-        //! TRUE if we're done (ready for deletion)
-        bool    kaput() const;
-        
-        bool    never_started() const;
-        
-        const ViewerCreateInfo&     create_info() const;
-        
     protected:
 
-        //! Hint to do anything needed before the next render frame is actually rendered
-        //! So do the uniform buffer & texture descriptor sets here.
-        //virtual void        prerecord(ViContext&);
-        
-        enum class F : uint8_t {
-            Paused,
-            ZeroSize
-        };
-        
-        void                set_flag(F);
 
-        struct Init {
-            GLFWwindow*     window = nullptr;
-        };
 
         //virtual void  handle(Event&) override;
         
@@ -353,17 +410,13 @@ namespace yq::tachyon {
         void     accept(close_t);
         void     reject(close_t);
 
-        virtual void    receive(const post::PostCPtr&) override;
         
         //virtual std::error_code init();
         
         
-        //! Called *AFTER* vulkan/imgui are initialized
-        virtual std::error_code startup(const Init&) { return {}; }
         
     private:
     
-        friend class GLFWManager;
     
     
     
@@ -386,48 +439,23 @@ namespace yq::tachyon {
     private:
         //void                record(ViContext&);
         
-        static std::atomic<int>         s_count;
-        static std::atomic<uint64_t>    s_lastId;
         
-        static Tachyon::Param   _pbx(const ViewerCreateInfo&);
         
-        std::error_code         _startup(GLFWwindow*, const ViewerState&);
         
         
         // SAME thread close & impending delete
-        void    _quit();    // basically unconditional (without app-destroy)
 
-        void    _tick();
         
         //void    _init(const ViewerCreateInfo&vci, Widget*w);
-        void    _kill();
 
-        const uint64_t                  m_id;
-        Widget*                         m_widget        = nullptr;
-        Widget*                         m_focus         = nullptr;
-        double                          m_drawTime      = 0;
-        Flags<F>                        m_flags         = {};
-        bool                            m_paused        = false;
-        bool                            m_zeroSize      = false;
-        Cleanup                         m_cleanup;
-        std::vector<Widget*>            m_delete;
-        std::unique_ptr<ViGui>          m_imgui;
-        std::unique_ptr<Visualizer>     m_viz;
-        ViewerState                     m_state;
-        std::atomic<Stage>              m_stage         = { Stage::Preinit };
         
-        ViewerCreateInfoUPtr            m_createInfo;
         
-        ViewerCloseRequestCPtr          m_viewerCloseRequest;
         
-        //  No mutexes, if we can help it....
-        mutable tbb::spin_rw_mutex      m_mutex;
         
         //  Maybe some sort of focus manager (or policy)?
         
         void                purge_deleted();
         
-        Stage   _stage() const;
         
         //Vector2D    _probe_cursor_position() const;
     };

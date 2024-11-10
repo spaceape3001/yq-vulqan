@@ -12,7 +12,11 @@ namespace yq::tachyon {
     class Viewer;
     class Widget;
     class Tachyon;
+    class Camera;
     
+    struct AsCamera {
+        Camera*     camera      = nullptr;
+    };
     struct AsViewer {
         Viewer*     viewer      = nullptr;
     };
@@ -26,25 +30,5 @@ namespace yq::tachyon {
         Tachyon*    tachyon     = nullptr;
     };
     
-    using As    = std::variant<std::monostate, AsTachyon, AsViewer, AsWidget, AsWindow>;
-    
-    constexpr bool    is_tachyon(const As& as)
-    {
-        return static_cast<bool>(std::get_if<AsTachyon>(&as));
-    }
-
-    constexpr bool    is_viewer(const As& as)
-    {
-        return static_cast<bool>(std::get_if<AsViewer>(&as));
-    }
-
-    constexpr bool    is_window(const As& as)
-    {
-        return static_cast<bool>(std::get_if<AsWindow>(&as));
-    }
-
-    constexpr bool    is_widget(const As& as)
-    {
-        return static_cast<bool>(std::get_if<AsWidget>(&as));
-    }
+    using As    = std::variant<std::monostate, AsCamera, AsTachyon, AsViewer, AsWidget, AsWindow>;
 };

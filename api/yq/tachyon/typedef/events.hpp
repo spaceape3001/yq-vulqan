@@ -12,6 +12,10 @@ namespace yq {
 
 namespace yq::tachyon {
     class AppEvent;
+    class CursorCaptureEvent;
+    class CursorDisableEvent;
+    class CursorHideEvent;
+    class CursorNormalEvent;
     class InputEvent;
     class JoystickAxisEvent;
     class JoystickConnectEvent;

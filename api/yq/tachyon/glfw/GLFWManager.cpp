@@ -10,52 +10,14 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/app/ManagerInfoWriter.hpp>
-#include <yq/tachyon/commands/WindowAspectCommand.hpp>
-#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
-#include <yq/tachyon/commands/WindowDestroyCommand.hpp>
-#include <yq/tachyon/commands/WindowFocusCommand.hpp>
-#include <yq/tachyon/commands/WindowHideCommand.hpp>
-#include <yq/tachyon/commands/WindowIconifyCommand.hpp>
-#include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
-#include <yq/tachyon/commands/WindowMoveCommand.hpp>
-#include <yq/tachyon/commands/WindowRestoreCommand.hpp>
-#include <yq/tachyon/commands/WindowShowCommand.hpp>
-#include <yq/tachyon/commands/WindowSizeCommand.hpp>
-#include <yq/tachyon/commands/WindowTitleCommand.hpp>
-#include <yq/tachyon/events/JoystickAxisEvent.hpp>
-#include <yq/tachyon/events/JoystickConnectEvent.hpp>
-#include <yq/tachyon/events/JoystickDisconnectEvent.hpp>
-#include <yq/tachyon/events/JoystickHatEvent.hpp>
-#include <yq/tachyon/events/JoystickPressEvent.hpp>
-#include <yq/tachyon/events/JoystickReleaseEvent.hpp>
-#include <yq/tachyon/events/KeyCharacterEvent.hpp>
-#include <yq/tachyon/events/KeyPressEvent.hpp>
-#include <yq/tachyon/events/KeyReleaseEvent.hpp>
-#include <yq/tachyon/events/KeyRepeatEvent.hpp>
+#include <yq/tachyon/commands/window.hpp>
+#include <yq/tachyon/events/cursor.hpp>
+#include <yq/tachyon/events/joystick.hpp>
+#include <yq/tachyon/events/keyboard.hpp>
 #include <yq/tachyon/events/MonitorConnectEvent.hpp>
 #include <yq/tachyon/events/MonitorDisconnectEvent.hpp>
-#include <yq/tachyon/events/MouseDropEvent.hpp>
-#include <yq/tachyon/events/MouseEnterEvent.hpp>
-#include <yq/tachyon/events/MouseLeaveEvent.hpp>
-#include <yq/tachyon/events/MouseMoveEvent.hpp>
-#include <yq/tachyon/events/MousePressEvent.hpp>
-#include <yq/tachyon/events/MouseReleaseEvent.hpp>
-#include <yq/tachyon/events/MouseScrollEvent.hpp>
-#include <yq/tachyon/events/WindowAspectEvent.hpp>
-#include <yq/tachyon/events/WindowDefocusEvent.hpp>
-#include <yq/tachyon/events/WindowDestroyEvent.hpp>
-#include <yq/tachyon/events/WindowFocusEvent.hpp>
-#include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
-#include <yq/tachyon/events/WindowHideEvent.hpp>
-#include <yq/tachyon/events/WindowIconifyEvent.hpp>
-#include <yq/tachyon/events/WindowMaximizeEvent.hpp>
-#include <yq/tachyon/events/WindowMoveEvent.hpp>
-#include <yq/tachyon/events/WindowResizeEvent.hpp>
-#include <yq/tachyon/events/WindowRestoreEvent.hpp>
-#include <yq/tachyon/events/WindowScaleEvent.hpp>
-#include <yq/tachyon/events/WindowShowEvent.hpp>
-#include <yq/tachyon/events/WindowStateEvent.hpp>
-#include <yq/tachyon/events/WindowTitleEvent.hpp>
+#include <yq/tachyon/events/mouse.hpp>
+#include <yq/tachyon/events/window.hpp>
 #include <yq/tachyon/exceptions/GLFWException.hpp>
 #include <yq/tachyon/glfw/Joystick.hpp>
 #include <yq/tachyon/glfw/Monitor.hpp>
@@ -342,6 +304,57 @@ namespace yq::tachyon {
         return ret;
     }
 
+    void     GLFWManager::_cursor_capture(Window*w)
+    {
+        static Common& g = common();
+        if(!w->window)
+            return;
+            
+        glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
+        w->state.mouse.mode = MouseMode::Captured;
+        if(w->viewer){
+            g.manager->dispatch(new CursorCaptureEvent(w->viewer));
+        }
+    }
+    
+    void     GLFWManager::_cursor_disable(Window*w)
+    {
+        static Common& g = common();
+        if(!w->window)
+            return;
+
+        glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        w->state.mouse.mode = MouseMode::Disabled;
+        if(w->viewer){
+            g.manager->dispatch(new CursorDisableEvent(w->viewer));
+        }
+    }
+    
+    void     GLFWManager::_cursor_hide(Window*w)
+    {
+        static Common& g = common();
+        if(!w->window)
+            return;
+
+        glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        w->state.mouse.mode = MouseMode::Hidden;
+        if(w->viewer){
+            g.manager->dispatch(new CursorHideEvent(w->viewer));
+        }
+    }
+    
+    void     GLFWManager::_cursor_normal(Window*w)
+    {
+        static Common& g = common();
+        if(!w->window)
+            return;
+        glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        w->state.mouse.mode = MouseMode::Normal;
+        if(w->viewer){
+            g.manager->dispatch(new CursorNormalEvent(w->viewer));
+        }
+    }
+
     Vector2D     GLFWManager::_mouse_pos(GLFWwindow*w)
     {
         Vector2D ret;
@@ -458,6 +471,38 @@ namespace yq::tachyon {
         g.manager->dispatch(new MouseScrollEvent(p));
     }
 
+    void    GLFWManager::cmd_cursor_capture(const WindowCursorCaptureCommand&cmd)
+    {
+        Window* w = _window(cmd.viewer());
+        if(w){
+            _cursor_capture(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_cursor_disable(const WindowCursorDisableCommand&cmd)
+    {
+        Window* w = _window(cmd.viewer());
+        if(w){
+            _cursor_disable(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_cursor_hide(const WindowCursorHideCommand&cmd)
+    {
+        Window* w = _window(cmd.viewer());
+        if(w){
+            _cursor_hide(w);
+        }
+    }
+    
+    void    GLFWManager::cmd_cursor_normal(const WindowCursorNormalCommand&cmd)
+    {
+        Window* w = _window(cmd.viewer());
+        if(w){
+            _cursor_normal(w);
+        }
+    }
+
     bool    GLFWManager::raw_mouse_motion_supported()
     {
         return glfwRawMouseMotionSupported() == GLFW_TRUE;
@@ -561,6 +606,12 @@ namespace yq::tachyon {
         g.manager->disconnect(*v);
     }
     
+    void     GLFWManager::_float(Window*w)
+    {
+        if(!w->window)
+            return;
+        glfwSetWindowAttrib(w->window, GLFW_FLOATING, GLFW_TRUE);
+    }
     
     void     GLFWManager::_focus(Window*w)
     {
@@ -627,6 +678,9 @@ namespace yq::tachyon {
 
     void  GLFWManager::_size(Window*w, const Size2I&size)
     {
+        if(!w->window)
+            return ;
+        glfwSetWindowSize(w->window, size.x, size.y );
     }
 
     void  GLFWManager::_title(Window*w, const std::string&title)
@@ -638,6 +692,13 @@ namespace yq::tachyon {
         if(w->viewer){
             g.manager->dispatch(new WindowTitleEvent(w->viewer, title));
         }
+    }
+
+    void     GLFWManager::_unfloat(Window*w)
+    {
+        if(!w->window)
+            return;
+        glfwSetWindowAttrib(w->window, GLFW_FLOATING, GLFW_FALSE);
     }
 
     void  GLFWManager::_update(GLFWwindow* w, ViewerState&vs)
@@ -835,6 +896,14 @@ namespace yq::tachyon {
             _destroy(w);
         }
     }
+
+    void    GLFWManager::cmd_float(const WindowFloatCommand&cmd)
+    {
+        Window* w = _window(cmd.viewer());
+        if(w){
+            _float(w);
+        }
+    }
     
     void    GLFWManager::cmd_focus(const WindowFocusCommand& cmd)
     {
@@ -905,6 +974,14 @@ namespace yq::tachyon {
         Window* w   = _window(cmd.viewer());
         if(w){
             _title(w, cmd.title());
+        }
+    }
+
+    void    GLFWManager::cmd_unfloat(const WindowUnfloatCommand&cmd)
+    {
+        Window* w = _window(cmd.viewer());
+        if(w){
+            _unfloat(w);
         }
     }
 
@@ -1111,7 +1188,12 @@ namespace yq::tachyon {
         w.abstract();
         w.description("GLFW Manager");
         w.receive(&GLFWManager::cmd_attention);
+        w.receive(&GLFWManager::cmd_cursor_capture);
+        w.receive(&GLFWManager::cmd_cursor_disable);
+        w.receive(&GLFWManager::cmd_cursor_hide);
+        w.receive(&GLFWManager::cmd_cursor_normal);
         w.receive(&GLFWManager::cmd_destroy);
+        w.receive(&GLFWManager::cmd_float);
         w.receive(&GLFWManager::cmd_focus);
         w.receive(&GLFWManager::cmd_hide);
         w.receive(&GLFWManager::cmd_iconify);
@@ -1121,6 +1203,7 @@ namespace yq::tachyon {
         w.receive(&GLFWManager::cmd_show);
         w.receive(&GLFWManager::cmd_size);
         w.receive(&GLFWManager::cmd_title);
+        w.receive(&GLFWManager::cmd_unfloat);
     }
 }
 

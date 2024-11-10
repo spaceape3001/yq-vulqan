@@ -26,7 +26,12 @@ namespace yq::tachyon {
 
     class WindowAspectCommand;
     class WindowAttentionCommand;
+    class WindowCursorCaptureCommand;
+    class WindowCursorDisableCommand;
+    class WindowCursorHideCommand;
+    class WindowCursorNormalCommand;
     class WindowDestroyCommand;
+    class WindowFloatCommand;
     class WindowFocusCommand;
     class WindowHideCommand;
     class WindowIconifyCommand;
@@ -36,6 +41,7 @@ namespace yq::tachyon {
     class WindowShowCommand;
     class WindowSizeCommand;
     class WindowTitleCommand;
+    class WindowUnfloatCommand;
 
     /*! \brief GLFW Event Manager
     
@@ -104,6 +110,7 @@ namespace yq::tachyon {
         static void     _aspect(Window*, const Size2I&);
         static void     _attention(Window*);
         static void     _destroy(Window*);
+        static void     _float(Window*);
         static void     _focus(Window*);
         static void     _hide(Window*);
         static void     _iconify(Window*);
@@ -113,13 +120,24 @@ namespace yq::tachyon {
         static void     _show(Window*);
         static void     _size(Window*, const Size2I&);
         static void     _title(Window*, const std::string&);
+        static void     _unfloat(Window*);
         //static Viewer*  _viewer(GLFWwindow*);
         static Window*  _window(Viewer*);
         static Window*  _window(GLFWwindow*);
         
+        static void     _cursor_capture(Window*);
+        static void     _cursor_disable(Window*);
+        static void     _cursor_hide(Window*);
+        static void     _cursor_normal(Window*);
+        
         void    cmd_aspect(const WindowAspectCommand&);
         void    cmd_attention(const WindowAttentionCommand&);
         void    cmd_destroy(const WindowDestroyCommand&);
+        void    cmd_cursor_capture(const WindowCursorCaptureCommand&);
+        void    cmd_cursor_disable(const WindowCursorDisableCommand&);
+        void    cmd_cursor_hide(const WindowCursorHideCommand&);
+        void    cmd_cursor_normal(const WindowCursorNormalCommand&);
+        void    cmd_float(const WindowFloatCommand&);
         void    cmd_focus(const WindowFocusCommand&);
         void    cmd_hide(const WindowHideCommand&);
         void    cmd_iconify(const WindowIconifyCommand&);
@@ -129,6 +147,7 @@ namespace yq::tachyon {
         void    cmd_show(const WindowShowCommand&);
         void    cmd_size(const WindowSizeCommand&);
         void    cmd_title(const WindowTitleCommand&);
+        void    cmd_unfloat(const WindowUnfloatCommand&);
 
         //! Starts up the viewer (ie, creates the GLFWwindow, passes it off to the viewer's startup routine)
         static std::error_code      win_start(Viewer*);

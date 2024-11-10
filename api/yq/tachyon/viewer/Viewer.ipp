@@ -12,41 +12,10 @@
 #include <yq/tachyon/app/Application.hpp>
 //#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
 #include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
-#include <yq/tachyon/commands/MouseCaptureCommand.hpp>
-#include <yq/tachyon/commands/MouseDisableCommand.hpp>
-#include <yq/tachyon/commands/MouseHideCommand.hpp>
-#include <yq/tachyon/commands/MouseNormalCommand.hpp>
-#include <yq/tachyon/commands/ViewerAspectCommand.hpp>
-#include <yq/tachyon/commands/ViewerAttentionCommand.hpp>
-#include <yq/tachyon/commands/ViewerCloseCommand.hpp>
-#include <yq/tachyon/commands/ViewerFocusCommand.hpp>
-#include <yq/tachyon/commands/ViewerHideCommand.hpp>
-#include <yq/tachyon/commands/ViewerIconifyCommand.hpp>
-#include <yq/tachyon/commands/ViewerMaximizeCommand.hpp>
-#include <yq/tachyon/commands/ViewerMoveCommand.hpp>
-#include <yq/tachyon/commands/ViewerPauseCommand.hpp>
-#include <yq/tachyon/commands/ViewerResumeCommand.hpp>
-#include <yq/tachyon/commands/ViewerRestoreCommand.hpp>
-#include <yq/tachyon/commands/ViewerShowCommand.hpp>
-#include <yq/tachyon/commands/ViewerSizeCommand.hpp>
-#include <yq/tachyon/commands/ViewerTitleCommand.hpp>
-#include <yq/tachyon/commands/WindowAspectCommand.hpp>
-#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
-#include <yq/tachyon/commands/WindowDestroyCommand.hpp>
-#include <yq/tachyon/commands/WindowFocusCommand.hpp>
-#include <yq/tachyon/commands/WindowHideCommand.hpp>
-#include <yq/tachyon/commands/WindowIconifyCommand.hpp>
-#include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
-#include <yq/tachyon/commands/WindowMoveCommand.hpp>
-#include <yq/tachyon/commands/WindowRestoreCommand.hpp>
-#include <yq/tachyon/commands/WindowShowCommand.hpp>
-#include <yq/tachyon/commands/WindowSizeCommand.hpp>
-#include <yq/tachyon/commands/WindowTitleCommand.hpp>
+#include <yq/tachyon/commands/viewer.hpp>
+#include <yq/tachyon/commands/window.hpp>
+
 #include <yq/tachyon/core/TachyonInfoWriter.hpp>
-#include <yq/tachyon/events/MouseCaptureEvent.hpp>
-#include <yq/tachyon/events/MouseDisableEvent.hpp>
-#include <yq/tachyon/events/MouseHideEvent.hpp>
-#include <yq/tachyon/events/MouseNormalEvent.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/events/ViewerPauseEvent.hpp>
 #include <yq/tachyon/events/ViewerResumeEvent.hpp>
@@ -113,7 +82,12 @@ namespace yq::tachyon {
         w.receive(&Viewer::attention_command).name("attention_command");
         w.receive(&Viewer::close_command).name("close_command");
         w.receive(&Viewer::close_request).name("close_request");
+        w.receive(&Viewer::cursor_capture_command).name("cursor_capture_command");
+        w.receive(&Viewer::cursor_disable_command).name("cursor_disable_command");
+        w.receive(&Viewer::cursor_hide_command).name("cursor_hide_command");
+        w.receive(&Viewer::cursor_normal_command).name("cursor_normal_command");
         w.receive(&Viewer::destroy_event).name("destroy_event");
+        w.receive(&Viewer::float_command).name("float_command");
         w.receive(&Viewer::focus_command).name("focus_command");
         w.receive(&Viewer::hide_command).name("hide_command");
         w.receive(&Viewer::hide_event).name("hide_event");
@@ -128,6 +102,7 @@ namespace yq::tachyon {
         w.receive(&Viewer::size_command).name("size_command");
         w.receive(&Viewer::state_event).name("state_event");
         w.receive(&Viewer::title_command).name("title_command");
+        w.receive(&Viewer::unfloat_command).name("unfloat_command");
         
 #if 0        
         w.receive(&Viewer::viewer_resize_event);
@@ -632,6 +607,86 @@ namespace yq::tachyon {
         }
 
     //  ----------------------------------------------------------------------------------------------------------------
+    //  CURSOR CONTROL
+    //  
+
+        void    Viewer::cmd_cursor_capture()
+        {
+            dispatch(SELF, new ViewerCursorCaptureCommand(this));
+        }
+        
+        void    Viewer::cmd_cursor_disable()
+        {
+            dispatch(SELF, new ViewerCursorDisableCommand(this));
+        }
+        
+        void    Viewer::cmd_cursor_hide()
+        {
+            dispatch(SELF, new ViewerCursorHideCommand(this));
+        }
+        
+        void    Viewer::cmd_cursor_normal()
+        {
+            dispatch(SELF, new ViewerCursorNormalCommand(this));
+        }
+
+        void    Viewer::cursor_capture_command(const ViewerCursorCaptureCommand&)
+        {
+            if(started_or_running()){
+                dispatch(new WindowCursorCaptureCommand(this));
+            }
+        }
+        
+        void    Viewer::cursor_disable_command(const ViewerCursorDisableCommand&)
+        {
+            if(started_or_running()){
+                dispatch(new WindowCursorDisableCommand(this));
+            }
+        }
+        
+        void    Viewer::cursor_hide_command(const ViewerCursorHideCommand&)
+        {
+            if(started_or_running()){
+                dispatch(new WindowCursorHideCommand(this));
+            }
+        }
+        
+        void    Viewer::cursor_normal_command(const ViewerCursorNormalCommand&)
+        {
+            if(started_or_running()){
+                dispatch(new WindowCursorNormalCommand(this));
+            }
+        }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  FLOATING (ie, ALWAYS ON TOP)
+    //  
+
+        void    Viewer::cmd_float()
+        {
+            dispatch(SELF, new ViewerFloatCommand(this));
+        }
+        
+        void    Viewer::cmd_unfloat()
+        {
+            dispatch(SELF, new ViewerUnfloatCommand(this));
+        }
+
+        void    Viewer::float_command(const ViewerFloatCommand&)
+        {
+            if(started_or_running()){
+                dispatch(new WindowFloatCommand(this));
+            }
+        }
+        
+        void    Viewer::unfloat_command(const ViewerUnfloatCommand&)
+        {
+            if(started_or_running()){
+                dispatch(new WindowUnfloatCommand(this));
+            }
+        }
+
+    //  ----------------------------------------------------------------------------------------------------------------
     //  FOCUS
     //  
 
@@ -749,21 +804,19 @@ namespace yq::tachyon {
 
         void    Viewer::cmd_hide()
         {
-            if(m_stage == Stage::Running){
-                dispatch(new WindowHideCommand(this));
-            }
+            dispatch(SELF, new ViewerHideCommand(this));
         }
 
         void    Viewer::cmd_show()
         {
-            if(m_stage == Stage::Running){
-                dispatch(new WindowShowCommand(this));
-            }
+            dispatch(SELF, new ViewerShowCommand(this));
         }
 
         void    Viewer::hide_command(const ViewerHideCommand&)
         {
-            cmd_hide();
+            if(started_or_running()){
+                dispatch(new WindowHideCommand(this));
+            }
         }
 
         void    Viewer::hide_event(const WindowHideEvent&)
@@ -772,9 +825,6 @@ namespace yq::tachyon {
             case Stage::Closing:
                 on_hide_closing();
                 break;
-            case Stage::Started:
-            case Stage::Running:
-                break;
             default:
                 break;
             }
@@ -782,18 +832,13 @@ namespace yq::tachyon {
         
         void    Viewer::show_command(const ViewerShowCommand&)
         {
-            cmd_show();
+            if(started_or_running()){
+                dispatch(new WindowShowCommand(this));
+            }
         }
 
         void    Viewer::show_event(const WindowShowEvent&)
         {
-            switch(m_stage){
-            case Stage::Started:
-            case Stage::Running:
-                break;
-            default:
-                break;
-            }
         }
 
     //  ----------------------------------------------------------------------------------------------------------------

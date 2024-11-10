@@ -235,6 +235,14 @@ namespace yq::tachyon {
         //! \param[in] force TRUE to force the close (ie, no option to save)
         void                cmd_close(bool force=false);
         
+        void                cmd_cursor_capture();
+        void                cmd_cursor_disable();
+        void                cmd_cursor_hide();
+        void                cmd_cursor_normal();
+        
+        //! Makes this viewer "always-on-top"
+        void                cmd_float();
+        
         //! Focuss on this window
         //! \note Excessive use annoys users
         void                cmd_focus();
@@ -259,6 +267,8 @@ namespace yq::tachyon {
         
         //! Shows the viewer
         void                cmd_show();
+        
+        void                cmd_unfloat();
 
         void                set_aspect(const Size2I&);
         void                set_aspect(int w, int h);
@@ -344,7 +354,12 @@ namespace yq::tachyon {
         void    attention_command(const ViewerAttentionCommand&);
         void    close_request(const ViewerCloseRequestCPtr&);
         void    close_command(const ViewerCloseCommand&);
+        void    cursor_capture_command(const ViewerCursorCaptureCommand&);
+        void    cursor_disable_command(const ViewerCursorDisableCommand&);
+        void    cursor_hide_command(const ViewerCursorHideCommand&);
+        void    cursor_normal_command(const ViewerCursorNormalCommand&);
         void    destroy_event(const WindowDestroyEvent&);
+        void    float_command(const ViewerFloatCommand&);
         void    focus_command(const ViewerFocusCommand&);
         void    hide_command(const ViewerHideCommand&);
         void    hide_event(const WindowHideEvent&);
@@ -360,6 +375,7 @@ namespace yq::tachyon {
         void    size_command(const ViewerSizeCommand&);
         void    state_event(const WindowStateEvent&);
         void    title_command(const ViewerTitleCommand&);
+        void    unfloat_command(const ViewerUnfloatCommand&);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE

@@ -26,6 +26,11 @@ namespace yq::tachyon {
     class ViewerAttentionCommand;
     class ViewerCloseCommand;
     class ViewerCommand;
+    class ViewerCursorCaptureCommand;
+    class ViewerCursorDisableCommand;
+    class ViewerCursorHideCommand;
+    class ViewerCursorNormalCommand;
+    class ViewerFloatCommand;
     class ViewerFocusCommand;
     class ViewerHideCommand;
     class ViewerIconifyCommand;
@@ -37,10 +42,16 @@ namespace yq::tachyon {
     class ViewerShowCommand;
     class ViewerSizeCommand;
     class ViewerTitleCommand;
+    class ViewerUnfloatCommand;
     class WindowAspectCommand;
     class WindowAttentionCommand;
     class WindowCommand;
+    class WindowCursorCaptureCommand;
+    class WindowCursorDisableCommand;
+    class WindowCursorHideCommand;
+    class WindowCursorNormalCommand;
     class WindowDestroyCommand;
+    class WindowFloatCommand;
     class WindowFocusCommand;
     class WindowHideCommand;
     class WindowIconifyCommand;
@@ -50,19 +61,5 @@ namespace yq::tachyon {
     class WindowShowCommand;
     class WindowSizeCommand;
     class WindowTitleCommand;
-
-    using MouseCaptureCommandCPtr       = Ref<const class MouseCaptureCommand>;
-    using MouseDisableCommandCPtr       = Ref<const class MouseDisableCommand>;
-    using MouseHideCommandCPtr          = Ref<const class MouseHideCommand>;
-    using MouseNormalCommandCPtr        = Ref<const class MouseNormalCommand>;
-
-    using ViewerAttentionCommandCPtr    = Ref<const class ViewerAttentionCommand>;
-    using ViewerCloseCommandCPtr        = Ref<const class ViewerCloseCommand>;
-    using ViewerHideCommandCPtr         = Ref<const class ViewerHideCommand>;
-    using ViewerIconifyCommandCPtr      = Ref<const class ViewerIconifyCommand>;
-    using ViewerMaximizeCommandCPtr     = Ref<const class ViewerMaximizeCommand>;
-    using ViewerPauseCommandCPtr        = Ref<const class ViewerPauseCommand>;
-    using ViewerRestoreCommandCPtr      = Ref<const class ViewerRestoreCommand>;
-    using ViewerResumeCommandCPtr       = Ref<const class ViewerResumeCommand>;
-    using ViewerShowCommandCPtr         = Ref<const class ViewerShowCommand>;
+    class WindowUnfloatCommand;
 }

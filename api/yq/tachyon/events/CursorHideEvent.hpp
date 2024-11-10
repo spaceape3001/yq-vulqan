@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/events/ViewerEvent.hpp>
+#include <yq/tachyon/events/WindowEvent.hpp>
 
 namespace yq::tachyon {
-    class MouseHideEvent : public ViewerEvent {
-        YQ_OBJECT_DECLARE(MouseHideEvent, ViewerEvent)
+    class CursorHideEvent : public WindowEvent {
+        YQ_OBJECT_DECLARE(CursorHideEvent, WindowEvent)
     public:
     
-        struct Param : public ViewerEvent::Param {
+        struct Param : public WindowEvent::Param {
         };
     
-        MouseHideEvent(Viewer*, const Param& p = {});
-        virtual ~MouseHideEvent();
+        CursorHideEvent(Viewer*, const Param& p = {});
+        virtual ~CursorHideEvent();
         
         static void init_info();
     };

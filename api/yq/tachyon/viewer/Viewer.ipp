@@ -296,7 +296,7 @@ namespace yq::tachyon {
             m_imgui->tick();
         if(m_widget)
             m_widget -> tick();
-        if((m_stage == Stage::Running) && is_visible() && !is_iconified()){
+        if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
             draw(); // HACK (for now)
         }
         m_cleanup.sweep();
@@ -897,75 +897,6 @@ namespace yq::tachyon {
     //  ----------------------------------------------------------------------------------------------------------------
     //  MOUSE
 
-#if 0
-        void    Viewer::cmd_mouse_capture()
-        {
-            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
-            m_mouseState    = MouseMode::Captured;
-            dispatch(new MouseCaptureEvent(this));
-        }
-        
-        void    Viewer::cmd_mouse_disable()
-        {
-            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            m_mouseState    = MouseMode::Disabled;
-            dispatch(new MouseDisableEvent(this));
-        }
-        
-        void    Viewer::cmd_mouse_hide()
-        {
-            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-            m_mouseState    = MouseMode::Hidden;
-            dispatch(new MouseHideEvent(this));
-        }
-        
-        void    Viewer::cmd_mouse_normal()
-        {
-            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            m_mouseState    = MouseMode::Normal;
-            dispatch(new MouseNormalEvent(this));
-        }
-
-        bool    Viewer::mouse_capture_command(const MouseCaptureCommandCPtr&cmd)
-        {
-            if(!cmd)
-                return false;
-            if(cmd->viewer() != this)
-                return false;
-            cmd_mouse_capture();
-            return true;
-        }
-        
-        bool    Viewer::mouse_disable_command(const MouseDisableCommandCPtr&cmd)
-        {
-            if(!cmd)
-                return false;
-            if(cmd->viewer() != this)
-                return false;
-            cmd_mouse_disable();
-            return true;
-        }
-        
-        bool    Viewer::mouse_hide_command(const MouseHideCommandCPtr&cmd)
-        {
-            if(!cmd)
-                return false;
-            if(cmd->viewer() != this)
-                return false;
-            cmd_mouse_hide();
-            return true;
-        }
-        
-        bool    Viewer::mouse_normal_command(const MouseNormalCommandCPtr&cmd)
-        {
-            if(!cmd)
-                return false;
-            if(cmd->viewer() != this)
-                return false;
-            cmd_mouse_normal();
-            return true;
-        }
-#endif
 
     
     //  ----------------------------------------------------------------------------------------------------------------

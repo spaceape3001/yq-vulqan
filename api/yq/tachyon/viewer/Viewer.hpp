@@ -383,27 +383,6 @@ namespace yq::tachyon {
     public:        
         
         
-        
-        /*! \brief Creates & initializes viewer 
-        
-            \note This one throws a std::error_code if problems occur
-        */
-//        Viewer();
-
-#if 0    
-
-        //! Iconify/minimizes the window;
-        
-        
-        void                cmd_mouse_capture();
-        void                cmd_mouse_disable();
-        void                cmd_mouse_hide();
-        void                cmd_mouse_normal();
-        
-
-#endif
-
-//        const Vector2D&     cursor_position() const { return m_cursorPos; }
 
 
             //! Monitor (if fullscreen)
@@ -411,17 +390,6 @@ namespace yq::tachyon {
         
 //        MouseMode          mouse_state() const { return m_mouseState; }
         
-#if 0        
-
-            //! Sets window size
-        void                set_size(const Size2I&);
-
-            //! Sets window size
-        void                set_size(int w, int h);
-        
-            //! Sets the window title
-        void                set_title(std::string_view);
-#endif
         
         //! Set the widget
         //void                set_widget(Widget*, bool fDestroyOld=true);
@@ -429,29 +397,8 @@ namespace yq::tachyon {
             //! TRUE if user wants window to close
         //bool                should_close() const;
 
-#if 0
-
-            //! Viewer size
-        Size2I              size() const;
-#endif
-
     
         //Widget*             widget_at(const Vector2D&) const;
-
-
-
-        
-    private:
-    
-    
-    
-    
-    #if 0
-        bool    mouse_capture_command(const MouseCaptureCommandCPtr&);
-        bool    mouse_disable_command(const MouseDisableCommandCPtr&);
-        bool    mouse_hide_command(const MouseHideCommandCPtr&);
-        bool    mouse_normal_command(const MouseNormalCommandCPtr&);
-    #endif
 
     };
 }

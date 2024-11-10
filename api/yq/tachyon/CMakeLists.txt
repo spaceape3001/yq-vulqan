@@ -32,14 +32,14 @@ add_library(${PROJECT_NAME} SHARED
     core/Thread.cpp
 
     camera/Camera.cpp
-   
     cameras/cameras.cpp
     
     commands/commands.cpp
     
     config/build.cpp
     
-    controllers/controllers.cpp
+    #controller/Controller.cpp
+    #controllers/controllers.cpp
     
     editor/Editor.cpp
     
@@ -61,7 +61,13 @@ add_library(${PROJECT_NAME} SHARED
     image/Raster.cpp
     image/STBImage.cpp
 
+    #light/Light.cpp
+    #lights/lights.cpp
+
     manipulator/Manipulator.cpp
+    
+    #model/Model.cpp
+    #models/models.cpp
     
     pass/RenderPass.cpp
 
@@ -93,6 +99,7 @@ add_library(${PROJECT_NAME} SHARED
     texture/Texture.cpp
 
     tool/Tool.cpp
+    #tools/tools.cpp
 
     undo/Undo.cpp
 

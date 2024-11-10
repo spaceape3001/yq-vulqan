@@ -10,6 +10,7 @@
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
 
 struct GLFWwindow;
@@ -23,14 +24,18 @@ namespace yq::tachyon {
     struct ViewerState;
     struct ViewerCreateInfo;
 
+    class WindowAspectCommand;
     class WindowAttentionCommand;
     class WindowDestroyCommand;
     class WindowFocusCommand;
     class WindowHideCommand;
     class WindowIconifyCommand;
     class WindowMaximizeCommand;
+    class WindowMoveCommand;
     class WindowRestoreCommand;
     class WindowShowCommand;
+    class WindowSizeCommand;
+    class WindowTitleCommand;
 
     /*! \brief GLFW Event Manager
     
@@ -96,26 +101,34 @@ namespace yq::tachyon {
         static Vector2D     _mouse_pos(GLFWwindow*);
         static void         _update(GLFWwindow*, ViewerState&);
         
+        static void     _aspect(Window*, const Size2I&);
         static void     _attention(Window*);
         static void     _destroy(Window*);
         static void     _focus(Window*);
         static void     _hide(Window*);
         static void     _iconify(Window*);
         static void     _maximize(Window*);
+        static void     _move(Window*, const Vector2I&);
         static void     _restore(Window*);
         static void     _show(Window*);
+        static void     _size(Window*, const Size2I&);
+        static void     _title(Window*, const std::string&);
         //static Viewer*  _viewer(GLFWwindow*);
         static Window*  _window(Viewer*);
         static Window*  _window(GLFWwindow*);
         
+        void    cmd_aspect(const WindowAspectCommand&);
         void    cmd_attention(const WindowAttentionCommand&);
         void    cmd_destroy(const WindowDestroyCommand&);
         void    cmd_focus(const WindowFocusCommand&);
         void    cmd_hide(const WindowHideCommand&);
         void    cmd_iconify(const WindowIconifyCommand&);
         void    cmd_maximize(const WindowMaximizeCommand&);
+        void    cmd_move(const WindowMoveCommand&);
         void    cmd_restore(const WindowRestoreCommand&);
         void    cmd_show(const WindowShowCommand&);
+        void    cmd_size(const WindowSizeCommand&);
+        void    cmd_title(const WindowTitleCommand&);
 
         //! Starts up the viewer (ie, creates the GLFWwindow, passes it off to the viewer's startup routine)
         static std::error_code      win_start(Viewer*);

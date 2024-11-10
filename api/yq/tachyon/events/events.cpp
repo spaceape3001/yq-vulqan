@@ -41,6 +41,7 @@
 #include "ViewerTickEvent.ipp"
 #include "VulqanEvent.ipp"
 #include "WidgetEvent.ipp"
+#include "WindowAspectEvent.ipp"
 #include "WindowDefocusEvent.ipp"
 #include "WindowDestroyEvent.ipp"
 #include "WindowEvent.ipp"
@@ -55,3 +56,4 @@
 #include "WindowScaleEvent.ipp"
 #include "WindowShowEvent.ipp"
 #include "WindowStateEvent.ipp"
+#include "WindowTitleEvent.ipp"

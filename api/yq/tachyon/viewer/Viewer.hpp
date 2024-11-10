@@ -126,6 +126,9 @@ namespace yq::tachyon {
         //  INFORMATION
         
 
+        //! Current specified locked aspect ratio (-1,-1 if unlocked)
+        const Size2I&               aspect() const;
+
         //! TRUE if we're closing
         bool                        closing() const;
         
@@ -141,6 +144,10 @@ namespace yq::tachyon {
         //! Focus widget 
         //! \note Currently not safe outside viewer's thread
         Widget*                     focus_widget() const { return m_focus; }
+        
+        const Size2I&               framebuffer_size() const;
+
+        int                         height() const;
 
         //! Viewer number
         uint64_t                    id() const { return m_id; }
@@ -180,6 +187,8 @@ namespace yq::tachyon {
         
         const Vector2I&             position() const;
 
+        const Size2I&               size() const;
+
         //! TRUE if we're started
         bool                        started() const;
         
@@ -196,6 +205,8 @@ namespace yq::tachyon {
         //! TRUE if we're running
         bool                        running() const;
         
+        const std::string&          title() const;
+        
         //! Current tick/frame number
         //! \note Might not be the same as the visualizer's
         uint64_t                    ticks() const { return m_ticks; }
@@ -203,6 +214,10 @@ namespace yq::tachyon {
 
         //! \note Will throw exceptions if visualizer is not defined
         Visualizer&                 visualizer() const;
+
+        int                         width() const;
+        
+        bool                        zero_framebuffer() const;
 
         //  -----------------------------------------
         //  ACTION/SETTERS
@@ -220,23 +235,47 @@ namespace yq::tachyon {
         //! \param[in] force TRUE to force the close (ie, no option to save)
         void                cmd_close(bool force=false);
         
+        //! Focuss on this window
+        //! \note Excessive use annoys users
+        void                cmd_focus();
+        
         //! Hides the viewer (ie, renders invisible)
         void                cmd_hide();
-        
+
+        //! Minimizes/iconifies the viewer
+        void                cmd_iconify();
+
+        //! Maximizes widnow
+        void                cmd_maximize();
+
         //! Pauses the viewer (ie, the render won't update)
         void                cmd_pause();
         
+        //! Restore the window to non-icon/non-fullscreen
+        void                cmd_restore();
+
         //! Resumes (unpauses) the viewer
         void                cmd_resume();
         
         //! Shows the viewer
         void                cmd_show();
 
+        void                set_aspect(const Size2I&);
+        void                set_aspect(int w, int h);
+        void                set_aspect(unlock_t);
+        void                set_aspect(unlocked_t);
+
             //! Sets the window position
         void                set_position(const Vector2I&);
 
             //! Sets the window position
         void                set_position(int x, int y);
+        
+        void                set_size(const Size2I&);
+        void                set_size(int w, int h);
+        
+            //! Sets the window title
+        void                set_title(std::string_view);
 
         //! Our general "update()" that includes the visualizer
         void                tick(/* const AppFrame& */);
@@ -301,19 +340,26 @@ namespace yq::tachyon {
         Stage               _stage() const;
         void                _sweepwait();
         
+        void    aspect_command(const ViewerAspectCommand&);
         void    attention_command(const ViewerAttentionCommand&);
         void    close_request(const ViewerCloseRequestCPtr&);
         void    close_command(const ViewerCloseCommand&);
         void    destroy_event(const WindowDestroyEvent&);
+        void    focus_command(const ViewerFocusCommand&);
         void    hide_command(const ViewerHideCommand&);
         void    hide_event(const WindowHideEvent&);
+        void    iconify_command(const ViewerIconifyCommand&);
+        void    maximize_command(const WindowMaximizeCommand&);
+        void    move_command(const ViewerMoveCommand&);
         void    on_hide_closing();
         void    pause_command(const ViewerPauseCommand&);
+        void    restore_command(const ViewerRestoreCommand&);
         void    resume_command(const ViewerResumeCommand&);
         void    show_command(const ViewerShowCommand&);
         void    show_event(const WindowShowEvent&);
+        void    size_command(const ViewerSizeCommand&);
         void    state_event(const WindowStateEvent&);
-
+        void    title_command(const ViewerTitleCommand&);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE
@@ -329,48 +375,25 @@ namespace yq::tachyon {
 //        Viewer();
 
 #if 0    
-        //! Focus onto this window
-        void                cmd_focus();
 
         //! Iconify/minimizes the window;
-        void                cmd_iconify();
         
-        //! Maximizes widnow
-        void                cmd_maximize();
         
         void                cmd_mouse_capture();
         void                cmd_mouse_disable();
         void                cmd_mouse_hide();
         void                cmd_mouse_normal();
         
-        //! Restore the window to non-icon/non-fullscreen
-        void                cmd_restore();
 
 #endif
 
 //        const Vector2D&     cursor_position() const { return m_cursorPos; }
-
-        
-//        Size2I              framebuffer_size() const;
-
-        
-            //! Height of the window
-//        int                 height() const;
 
 
             //! Monitor (if fullscreen)
         //Monitor             monitor() const;
         
 //        MouseMode          mouse_state() const { return m_mouseState; }
-
-
-#if 0        
-            //! Current window position
-        Vector2I            position() const;
-#endif
-
-        //! Set the rendering paused flag
-        //void                set_render_paused(bool);
         
 #if 0        
 
@@ -397,34 +420,10 @@ namespace yq::tachyon {
 #endif
 
     
-#if 0
-        std::string         title() const;
-#endif
-
         //Widget*             widget_at(const Vector2D&) const;
 
-#if 0
-
-            //! Width of the window
-        int                 width() const;
-        
-#endif
 
 
-
-//        GLFWwindow*         window() const { return m_window; }
-        
-    protected:
-
-
-
-        //virtual void  handle(Event&) override;
-        
-
-        
-        //virtual std::error_code init();
-        
-        
         
     private:
     
@@ -436,10 +435,6 @@ namespace yq::tachyon {
         bool    mouse_disable_command(const MouseDisableCommandCPtr&);
         bool    mouse_hide_command(const MouseHideCommandCPtr&);
         bool    mouse_normal_command(const MouseNormalCommandCPtr&);
-        
-        bool    viewer_attention_command(const ViewerAttentionCommandCPtr&);
-        bool    viewer_hide_command(const ViewerHideCommandCPtr&);
-        bool    viewer_resize_event(const ViewerResizeEventCPtr&);
     #endif
 
     };

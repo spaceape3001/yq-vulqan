@@ -25,5 +25,8 @@ namespace yq::tachyon {
     {
         auto w = writer<WindowMoveCommand>();
         w.description("Window Move Command");
+        w.property("position", &WindowMoveCommand::position).description("New position");
+        w.property("x", &WindowMoveCommand::x).description("New X position");
+        w.property("y", &WindowMoveCommand::y).description("New Y position");
     }
 }

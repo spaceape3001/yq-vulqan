@@ -6,21 +6,21 @@
 
 #pragma once
 
-#include <yq/tachyon/commands/WindowCommand.hpp>
+#include <yq/tachyon/commands/ViewerCommand.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
     class Viewer;
     
-    class WindowMoveCommand : public WindowCommand {
-        YQ_OBJECT_DECLARE(WindowMoveCommand, WindowCommand)
+    class ViewerMoveCommand : public ViewerCommand {
+        YQ_OBJECT_DECLARE(ViewerMoveCommand, ViewerCommand)
     public:
     
-        struct Param : public WindowCommand::Param {
+        struct Param : public ViewerCommand::Param {
         };
     
-        WindowMoveCommand(Viewer*, const Vector2I&, const Param& p = {});
-        virtual ~WindowMoveCommand();
+        ViewerMoveCommand(Viewer*, const Vector2I&, const Param& p = {});
+        virtual ~ViewerMoveCommand();
         
         static void init_info();
 

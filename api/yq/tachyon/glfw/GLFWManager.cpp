@@ -10,14 +10,18 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/app/ManagerInfoWriter.hpp>
+#include <yq/tachyon/commands/WindowAspectCommand.hpp>
 #include <yq/tachyon/commands/WindowAttentionCommand.hpp>
 #include <yq/tachyon/commands/WindowDestroyCommand.hpp>
 #include <yq/tachyon/commands/WindowFocusCommand.hpp>
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
 #include <yq/tachyon/commands/WindowIconifyCommand.hpp>
 #include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
+#include <yq/tachyon/commands/WindowMoveCommand.hpp>
 #include <yq/tachyon/commands/WindowRestoreCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
+#include <yq/tachyon/commands/WindowSizeCommand.hpp>
+#include <yq/tachyon/commands/WindowTitleCommand.hpp>
 #include <yq/tachyon/events/JoystickAxisEvent.hpp>
 #include <yq/tachyon/events/JoystickConnectEvent.hpp>
 #include <yq/tachyon/events/JoystickDisconnectEvent.hpp>
@@ -37,6 +41,7 @@
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
 #include <yq/tachyon/events/MouseScrollEvent.hpp>
+#include <yq/tachyon/events/WindowAspectEvent.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
 #include <yq/tachyon/events/WindowDestroyEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
@@ -50,6 +55,7 @@
 #include <yq/tachyon/events/WindowScaleEvent.hpp>
 #include <yq/tachyon/events/WindowShowEvent.hpp>
 #include <yq/tachyon/events/WindowStateEvent.hpp>
+#include <yq/tachyon/events/WindowTitleEvent.hpp>
 #include <yq/tachyon/exceptions/GLFWException.hpp>
 #include <yq/tachyon/glfw/Joystick.hpp>
 #include <yq/tachyon/glfw/Monitor.hpp>
@@ -501,6 +507,18 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //   VIEWER/WINDOW RELATIONS
     
+    void     GLFWManager::_aspect(Window* w, const Size2I& sz)
+    {
+        static Common& g = common();
+        if(!w->window)
+            return ;
+        glfwSetWindowAspectRatio(w->window, sz.x, sz.y);
+        w->state.window.aspect   = sz;
+        if(w->viewer){
+            g.manager->dispatch(new WindowAspectEvent(w->viewer, sz));
+        }
+    }
+
     void     GLFWManager::_attention(Window*w)
     {
         if(!w->window)
@@ -579,6 +597,13 @@ namespace yq::tachyon {
         glfwMaximizeWindow(w->window);
     }
     
+    void     GLFWManager::_move(Window*w, const Vector2I&v)
+    {
+        if(!w->window)
+            return;
+        glfwSetWindowPos(w->window, v.x, v.y);
+    }
+
     void     GLFWManager::_restore(Window*w)
     {
         if(!w->window)
@@ -597,6 +622,21 @@ namespace yq::tachyon {
         glfwShowWindow(w->window);
         if(w->viewer){
             g.manager->dispatch(new WindowShowEvent(w->viewer));
+        }
+    }
+
+    void  GLFWManager::_size(Window*w, const Size2I&size)
+    {
+    }
+
+    void  GLFWManager::_title(Window*w, const std::string&title)
+    {
+        static Common& g = common();
+        if(!w->window)
+            return;
+        glfwSetWindowTitle(w->window, title.c_str());
+        if(w->viewer){
+            g.manager->dispatch(new WindowTitleEvent(w->viewer, title));
         }
     }
 
@@ -772,6 +812,14 @@ namespace yq::tachyon {
     //  ...............................................................................................................
     //      COMMANDS
 
+    void    GLFWManager::cmd_aspect(const WindowAspectCommand&cmd)
+    {
+        Window *w   = _window(cmd.viewer());
+        if(w){
+            _aspect(w, cmd.aspect());
+        }
+    }
+    
     void    GLFWManager::cmd_attention(const WindowAttentionCommand& cmd)
     {
         Window *w = _window(cmd.viewer());
@@ -820,6 +868,14 @@ namespace yq::tachyon {
         }
     }
     
+    void    GLFWManager::cmd_move(const WindowMoveCommand&cmd)
+    {
+        Window *w = _window(cmd.viewer());
+        if(w){
+            _move(w, cmd.position());
+        }
+    }
+
     void    GLFWManager::cmd_restore(const WindowRestoreCommand& cmd)
     {
         Window *w = _window(cmd.viewer());
@@ -836,6 +892,21 @@ namespace yq::tachyon {
         }
     }
 
+    void    GLFWManager::cmd_size(const WindowSizeCommand& cmd)
+    {
+        Window* w = _window(cmd.viewer());
+        if(w){
+            _size(w, cmd.size());
+        }
+    }
+
+    void    GLFWManager::cmd_title(const WindowTitleCommand&cmd)
+    {
+        Window* w   = _window(cmd.viewer());
+        if(w){
+            _title(w, cmd.title());
+        }
+    }
 
     //  ...............................................................................................................
     //      WINDOW MANAGEMENT
@@ -1045,8 +1116,11 @@ namespace yq::tachyon {
         w.receive(&GLFWManager::cmd_hide);
         w.receive(&GLFWManager::cmd_iconify);
         w.receive(&GLFWManager::cmd_maximize);
+        w.receive(&GLFWManager::cmd_move);
         w.receive(&GLFWManager::cmd_restore);
         w.receive(&GLFWManager::cmd_show);
+        w.receive(&GLFWManager::cmd_size);
+        w.receive(&GLFWManager::cmd_title);
     }
 }
 

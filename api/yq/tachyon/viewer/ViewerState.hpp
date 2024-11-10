@@ -52,7 +52,8 @@ namespace yq::tachyon {
         std::string             title;          //!< Window title
         WindowFlags             flags{};        //!< Window flags
         Vector2I                position{};     //!< Window position
-        Monitor                 monitor{};
+        Monitor                 monitor{};      //!< Monitor (might need to alter to non-glfw...)
+        Size2I                  aspect{-1,-1};  //!< Fixed aspect ratio (-1 is the don't care value)
         Size2I                  max{-1,-1};     //!< Max size (-1 is the don't care value)
         Size2I                  min{-1,-1};     //!< Min size (-1 is the don't care value)
         Size2I                  area{};         //!< Content area

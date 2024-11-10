@@ -7,28 +7,28 @@
 #pragma once
 
 #include <yq/tachyon/commands/WindowCommand.hpp>
-#include <yq/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
     class Viewer;
     
-    class WindowMoveCommand : public WindowCommand {
-        YQ_OBJECT_DECLARE(WindowMoveCommand, WindowCommand)
+    class WindowAspectCommand : public WindowCommand {
+        YQ_OBJECT_DECLARE(WindowAspectCommand, WindowCommand)
     public:
     
         struct Param : public WindowCommand::Param {
         };
     
-        WindowMoveCommand(Viewer*, const Vector2I&, const Param& p = {});
-        virtual ~WindowMoveCommand();
+        WindowAspectCommand(Viewer*, const Size2I&, const Param& p = {});
+        virtual ~WindowAspectCommand();
         
         static void init_info();
 
-        const Vector2I& position() const { return m_position; }
-        int x() const { return m_position.x; }
-        int y() const { return m_position.y; }
+        const Size2I& aspect() const { return m_aspect; }
+        int width() const { return m_aspect.x; }
+        int height() const { return m_aspect.y; }
         
     private:
-        const Vector2I    m_position;
+        const Size2I    m_aspect;
     };
 }

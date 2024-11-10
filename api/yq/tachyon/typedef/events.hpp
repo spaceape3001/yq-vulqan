@@ -60,6 +60,7 @@ namespace yq::tachyon {
     class WindowScaleEvent;
     class WindowShowEvent;
     class WindowStateEvent;
+    class WindowTitleEvent;
 
     using JoystickAxisEventCPtr         = Ref<const class JoystickAxisEvent>;
     using JoystickConnectEventCPtr      = Ref<const class JoystickConnectEvent>;

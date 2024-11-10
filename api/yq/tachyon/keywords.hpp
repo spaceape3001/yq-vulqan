@@ -33,6 +33,12 @@ namespace yq::tachyon {
     struct number_t {};
     struct probe_t {};
     struct queue_t {};
+    struct unlock_t {};
+    struct unlocked_t {};
+    
+    struct viewer_t {};
+    struct widget_t {};
+    struct window_t {};
 
     static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
@@ -44,4 +50,9 @@ namespace yq::tachyon {
     static constexpr refresh_t      REFRESH;
     static constexpr static_t       STATIC;
     static constexpr queue_t        QUEUE;
+    static constexpr unlock_t       UNLOCK;
+    static constexpr unlocked_t     UNLOCKED;
+    static constexpr viewer_t       VIEWER;
+    static constexpr widget_t       WIDGET;
+    static constexpr window_t       WINDOW;
 }

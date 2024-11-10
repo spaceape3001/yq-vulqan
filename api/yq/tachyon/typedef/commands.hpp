@@ -22,16 +22,22 @@ namespace yq::tachyon {
     class MouseHideCommand;
     class MouseNormalCommand;
     class TachyonCommand;
+    class ViewerAspectCommand;
     class ViewerAttentionCommand;
     class ViewerCloseCommand;
     class ViewerCommand;
+    class ViewerFocusCommand;
     class ViewerHideCommand;
     class ViewerIconifyCommand;
     class ViewerMaximizeCommand;
+    class ViewerMoveCommand;
     class ViewerPauseCommand;
     class ViewerRestoreCommand;
     class ViewerResumeCommand;
     class ViewerShowCommand;
+    class ViewerSizeCommand;
+    class ViewerTitleCommand;
+    class WindowAspectCommand;
     class WindowAttentionCommand;
     class WindowCommand;
     class WindowDestroyCommand;
@@ -42,6 +48,8 @@ namespace yq::tachyon {
     class WindowMoveCommand;
     class WindowRestoreCommand;
     class WindowShowCommand;
+    class WindowSizeCommand;
+    class WindowTitleCommand;
 
     using MouseCaptureCommandCPtr       = Ref<const class MouseCaptureCommand>;
     using MouseDisableCommandCPtr       = Ref<const class MouseDisableCommand>;

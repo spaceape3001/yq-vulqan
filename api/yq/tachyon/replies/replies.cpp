@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AppReply.ipp"
+#include "CameraReply.ipp"
 #include "TachyonReply.ipp"
 #include "ViewerCloseReply.ipp"
 #include "ViewerReply.ipp"

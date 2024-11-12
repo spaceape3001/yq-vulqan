@@ -202,6 +202,12 @@ struct CameraScene3DWidget : public Scene3DWidget {
         quad->set_position({ 0.5, 0.5, 0. });
         add_thing(quad);
     }
+    
+    void        tick() override
+    {
+        Scene3DWidget::tick();
+        cam -> tick();
+    }
 
     void        vulkan_(ViContext& ctx) override
     {

@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AppEvent.ipp"
+#include "CameraEvent.ipp"
 #include "CursorCaptureEvent.ipp"
 #include "CursorDisableEvent.ipp"
 #include "CursorHideEvent.ipp"

@@ -13,6 +13,7 @@ namespace yq {
 namespace yq::tachyon {
     class AppRequest;
     class AppReply;
+    class CameraReply;
     class TachyonRequest;
     class TachyonReply;
     class ViewerCloseReply;

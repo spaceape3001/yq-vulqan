@@ -74,6 +74,8 @@ namespace yq::tachyon {
 
         static void init_info();
 
+        virtual void tick();
+
     protected:
     
         //! Default constructor

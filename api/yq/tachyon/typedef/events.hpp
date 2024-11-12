@@ -12,6 +12,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class AppEvent;
+    class CameraEvent;
     class CursorCaptureEvent;
     class CursorDisableEvent;
     class CursorHideEvent;

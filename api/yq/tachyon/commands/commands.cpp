@@ -6,6 +6,7 @@
 
 #include "AppCommand.ipp"
 #include "AppDeleteViewerCommand.ipp"
+#include "CameraCommand.ipp"
 #include "GLFWCommand.ipp"
 #include "MouseCaptureCommand.ipp"
 #include "MouseCommand.ipp"

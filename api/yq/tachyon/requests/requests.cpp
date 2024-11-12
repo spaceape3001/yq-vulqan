@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AppRequest.ipp"
+#include "CameraRequest.ipp"
 #include "TachyonRequest.ipp"
 #include "ViewerCloseRequest.ipp"
 #include "ViewerRequest.ipp"

@@ -7,17 +7,17 @@
 #pragma once
 
 namespace yq::tachyon {
-    class Widget;
+    class Camera;
 
     //! Utiltity to bind a viewer to the whatever...
-    class WidgetBind {
+    class CameraBind {
     public:
-        Widget*    widget() const { return m_widget; }
+        Camera*    camera() const { return m_camera; }
         
     protected:
-        WidgetBind(Widget* v) : m_widget(v) {}
-        virtual ~WidgetBind() {}
+        CameraBind(Camera* v) : m_camera(v) {}
+        virtual ~CameraBind() {}
         
-        Widget* const m_widget;
+        Camera* const m_camera;
     };
 }

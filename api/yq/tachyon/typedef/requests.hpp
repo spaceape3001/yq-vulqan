@@ -12,6 +12,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class AppRequest;
+    class CameraRequest;
     class TachyonRequest;
     class ViewerRequest;
     class ViewerCloseRequest;

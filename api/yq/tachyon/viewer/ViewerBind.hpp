@@ -6,9 +6,6 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/viewer.hpp>
-#include <yq/core/Ref.hpp>
-
 namespace yq::tachyon {
     class Viewer;
 

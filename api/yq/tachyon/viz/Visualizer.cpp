@@ -50,6 +50,9 @@
 
 #include <GLFW/glfw3.h>
 
+#undef LOCK
+#undef WLOCK
+
 #define LOCK        tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
 #define WLOCK       tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, true);
 
@@ -696,7 +699,7 @@ namespace yq::tachyon {
             
         auto r1 = auto_reset(u.time, sc.utime);
         
-        Camera::Params      cparams;
+        Camera::Values      cparams;
         if(p.screen){
             cparams.screen = *p.screen;
         } else {

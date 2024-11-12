@@ -81,7 +81,7 @@ namespace yq::tachyon {
         return glm::lookAt((glm::dvec3) m_position, (glm::dvec3) m_target, (glm::dvec3) m_up);
     }
 
-    glm::dmat4  TargetCamera::world2screen(const Params&p) const
+    glm::dmat4  TargetCamera::world2screen(const Values&p) const
     {
         return projection_matrix(p.screen) * view_matrix();
     }

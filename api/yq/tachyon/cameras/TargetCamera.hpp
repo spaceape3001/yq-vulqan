@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(TargetCamera, Camera)
     public:
     
-        glm::dmat4  world2screen(const Params&) const override;
+        glm::dmat4  world2screen(const Values&) const override;
         TargetCamera();
         ~TargetCamera();
 

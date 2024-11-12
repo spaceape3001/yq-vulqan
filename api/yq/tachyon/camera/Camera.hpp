@@ -6,12 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/tachyon/core/Tachyon.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 
 namespace yq::tachyon {
@@ -22,7 +21,7 @@ namespace yq::tachyon {
     
         Information for cameras.
     */
-    class CameraInfo : public ObjectInfo {
+    class CameraInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
 
@@ -30,7 +29,7 @@ namespace yq::tachyon {
         static const std::vector<const CameraInfo*>&    all();
         
         //! Standard constructor for the camera information
-        CameraInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        CameraInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -46,9 +45,9 @@ namespace yq::tachyon {
         
         \note We're limited to three dimensions here
     */
-    class Camera : public Object, public UniqueID, public RefCount {
+    class Camera : public Tachyon, public UniqueID, public RefCount {
         YQ_OBJECT_INFO(CameraInfo);
-        YQ_OBJECT_DECLARE(Camera, Object)
+        YQ_OBJECT_DECLARE(Camera, Tachyon)
     public:    
         /*
             We *MIGHT* want to divide up the camera into position, 
@@ -59,10 +58,10 @@ namespace yq::tachyon {
     
         //! Generic parameter structure
         //! Allows us to expand parameters w/o affecting *everybody*
-        struct Params;
+        struct Values;
     
         //! Returns the transform to go world -> screen space
-        virtual glm::dmat4  world2screen(const Params&) const = 0;
+        virtual glm::dmat4  world2screen(const Values&) const = 0;
     
         //! Name of this camera's instance
         std::string_view    name() const { return m_name; }
@@ -89,7 +88,7 @@ namespace yq::tachyon {
 
     /*! \brief Camera parameters
     */
-    struct Camera::Params {
+    struct Camera::Values {
         //  Dimensions of the screen
         Rectangle2D     screen;
     };

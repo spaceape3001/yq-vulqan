@@ -76,7 +76,7 @@ namespace yq::tachyon {
         return m_space.parent2local();
     }
 
-    glm::dmat4  SpaceCamera::world2screen(const Params&p) const
+    glm::dmat4  SpaceCamera::world2screen(const Values&p) const
     {
         return projection_matrix(p.screen) * view_matrix();
     }

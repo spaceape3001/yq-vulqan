@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/camera/Camera.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/tachyon/core/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class CameraInfo::Writer : public ObjectInfo::Writer<C> {
+    class CameraInfo::Writer : public TachyonInfo::Writer<C> {
     public:
-        Writer(CameraInfo* cameraInfo) : ObjectInfo::Writer<C>(cameraInfo)
+        Writer(CameraInfo* cameraInfo) : TachyonInfo::Writer<C>(cameraInfo)
         {
         }
         

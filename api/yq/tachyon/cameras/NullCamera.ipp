@@ -8,7 +8,7 @@
 #include <yq/tachyon/camera/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
-    glm::dmat4  NullCamera::world2screen(const Params&) const 
+    glm::dmat4  NullCamera::world2screen(const Values&) const 
     {
         return {
             1.,  0.,  0.,  0.,

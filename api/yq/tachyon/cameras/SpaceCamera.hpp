@@ -24,7 +24,7 @@ namespace yq::tachyon {
     
         //! \brief World to screen matrix
         //! This routine returns the relevant world to screen projection matrix
-        glm::dmat4  world2screen(const Params&) const override;
+        glm::dmat4  world2screen(const Values&) const override;
         
         //! Default constructor
         SpaceCamera();

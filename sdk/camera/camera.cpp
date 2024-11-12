@@ -120,7 +120,6 @@ struct CameraController : public Controller {
     
     void key_press(const KeyPressEvent& evt)
     {
-yInfo() << "Key press";
         switch(evt.key()){
         case KeyCode::UpArrow:
             dispatch(new CameraPitchCommand(m_camera, 10._deg));

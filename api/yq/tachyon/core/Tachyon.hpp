@@ -134,7 +134,7 @@ namespace yq::tachyon {
         std::atomic<unsigned int>       m_threadId;
         std::vector<post::PostCPtr>     m_direct, m_threaded; 
         std::vector<post::Dispatcher*>  m_forward;       //!< Things that we can forward messages too
-        std::atomic<PostMode>           m_postMode  = PostMode::Direct;
+        std::atomic<PostMode>           m_postMode  = PostMode::Queued;
         bool                            m_replay    = false;
         
         void    _replay(direct_t);

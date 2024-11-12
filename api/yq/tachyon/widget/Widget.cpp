@@ -7,7 +7,9 @@
 #include "Widget.hpp"
 #include "WidgetInfoWriter.hpp"
 
+#include <yq/tachyon/util/AsBind.hpp>
 #include <yq/tachyon/viewer/Viewer.hpp>
+#include <yq/tachyon/widget/WidgetBind.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
@@ -21,13 +23,13 @@ namespace yq::tachyon {
         w.description("Widget base class");
     }
 
-    WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
-        TachyonInfo(zName, base, sl)
+    WidgetInfo::WidgetInfo(std::string_view zName, ControllingInfo& base, const std::source_location& sl) :
+        ControllingInfo(zName, base, sl)
     {
         set(Flag::WIDGET);
     }
 
-    Widget::Widget(const Param& p) : Tachyon(p)
+    Widget::Widget(const Param& p) : Controlling(p)
     {
         m_windowID      = std::string(fmt_hex(id()));
         set_post_mode(PostMode::Queued);
@@ -58,11 +60,6 @@ namespace yq::tachyon {
             m_viewer -> accept(CLOSE);
     }
     
-    void    Widget::reject(close_t)
-    {
-        if(m_viewer)
-            m_viewer -> reject(CLOSE);
-    }
 
     bool    Widget::add_child(Widget* ch)
     {
@@ -96,6 +93,33 @@ namespace yq::tachyon {
     {
         for(Widget* w : m_children)
             w->prerecord(u);
+    }
+
+    void    Widget::receive(const post::PostCPtr&pp)
+    {
+        if(!pp)
+            return;
+        if(const AsBind* p = dynamic_cast<const AsBind*>(pp.ptr())){
+            if(p->is_widget() && (p->widget() != this))
+                return;
+            if(!in_replay())
+                forward(pp);
+        } else if(const WidgetBind* p = dynamic_cast<const WidgetBind*>(pp.ptr())){
+            if(p->widget() != this){
+                return ;
+            }
+            if(!in_replay())
+                forward(pp);
+        } else if(!in_replay()){   
+            forward(pp);
+        }
+        Controlling::receive(pp);
+    }
+
+    void    Widget::reject(close_t)
+    {
+        if(m_viewer)
+            m_viewer -> reject(CLOSE);
     }
 
     Widget*         Widget::root()

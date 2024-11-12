@@ -12,7 +12,7 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/typedef/vector2.hpp>
 #include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/core/Controlling.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/replies.hpp>
@@ -23,10 +23,10 @@ namespace yq::tachyon {
     class Viewer;
     struct ViContext;
 
-    class WidgetInfo : public TachyonInfo {
+    class WidgetInfo : public ControllingInfo {
     public:
         template <typename C> class Writer;
-        WidgetInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        WidgetInfo(std::string_view, ControllingInfo&, const std::source_location& sl = std::source_location::current());
     };
     
     /*! \brief Root something that's drawwable & interactable
@@ -34,14 +34,14 @@ namespace yq::tachyon {
         It follows ImGui's rules, this is something that is 
         "drawable" and needs some amount of state information.
     */
-    class Widget : public Tachyon, public UniqueID, public RefCount {    
+    class Widget : public Controlling, public UniqueID, public RefCount {    
         YQ_OBJECT_INFO(WidgetInfo)
-        YQ_OBJECT_DECLARE(Widget, Tachyon)
+        YQ_OBJECT_DECLARE(Widget, Controlling)
     public:
     
         static void init_info();
     
-        struct Param : public Tachyon::Param {
+        struct Param : public Controlling::Param {
         };
     
         //! Default constructor
@@ -125,6 +125,7 @@ namespace yq::tachyon {
         
         bool    attached() const;
 
+
     protected:
         friend class Viewer;
         
@@ -154,6 +155,7 @@ namespace yq::tachyon {
         void                    accept(close_t);
         void                    reject(close_t);
 
+        virtual void            receive(const post::PostCPtr&);
 
         //! Called when a child of this widget is added
         //virtual void            on_child_added(Widget*){}

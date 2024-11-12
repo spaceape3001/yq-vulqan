@@ -290,6 +290,8 @@ namespace yq::tachyon {
             /*! Changes the main widget
             
                 \note This will fail if the widget is attached to another viewer
+                \note To *SWAP* widgets between viewers, use an empty widget as 
+                        interrim, & wait for replies
             */
         void                set_widget(WidgetPtr);
 

@@ -302,7 +302,7 @@ namespace yq::tachyon {
         } else if(!in_replay()){   
             forward(pp);
         }
-        Tachyon::receive(pp);
+        Controlling::receive(pp);
     }
 
     void    Viewer::tick(/* frame...eventually */)

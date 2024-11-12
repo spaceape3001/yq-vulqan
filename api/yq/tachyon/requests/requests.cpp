@@ -9,4 +9,5 @@
 #include "ViewerCloseRequest.ipp"
 #include "ViewerRequest.ipp"
 #include "WindowRefreshRequest.ipp"
+#include "ViewerWidgetRequest.ipp"
 #include "WindowRequest.ipp"

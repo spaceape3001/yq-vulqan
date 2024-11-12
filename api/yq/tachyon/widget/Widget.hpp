@@ -122,6 +122,8 @@ namespace yq::tachyon {
         virtual Widget* widget_at(const Vector2D&) const;
         
         virtual void    tick();
+        
+        bool    attached() const;
 
     protected:
         friend class Viewer;

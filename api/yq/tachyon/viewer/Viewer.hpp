@@ -287,7 +287,10 @@ namespace yq::tachyon {
             //! Sets the window title
         void                set_title(std::string_view);
         
-            //! Changes the main widget (cannot be null, or replacement won't happen)
+            /*! Changes the main widget
+            
+                \note This will fail if the widget is attached to another viewer
+            */
         void                set_widget(WidgetPtr);
 
         //! Our general "update()" that includes the visualizer
@@ -352,6 +355,9 @@ namespace yq::tachyon {
         std::error_code     _startup(GLFWwindow*, const ViewerState&);
         Stage               _stage() const;
         void                _sweepwait();
+        void                _install(widget_t);     // Installs new widget
+        void                _remove(widget_t);      // Removes the current widget
+        void                _widget(WidgetPtr);     // Changes the widget
         
         void    aspect_command(const ViewerAspectCommand&);
         void    attention_command(const ViewerAttentionCommand&);
@@ -379,6 +385,7 @@ namespace yq::tachyon {
         void    state_event(const WindowStateEvent&);
         void    title_command(const ViewerTitleCommand&);
         void    unfloat_command(const ViewerUnfloatCommand&);
+        void    widget_request(const ViewerWidgetRequestCPtr&);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE

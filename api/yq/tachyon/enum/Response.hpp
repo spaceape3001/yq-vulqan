@@ -21,18 +21,25 @@ namespace yq::tachyon {
         
     */
     YQ_ENUM(Response, ,
+        //! Success
         QaPla           = 0,
         Accepted        = QaPla,
         Success         = QaPla,
         
-        // Generic failure
+        //! Generic failure
         Failed          = -1,
         
-        // General rejection
+        //! General rejection
         Rejected        = -2,
         
-        // Similar request received
+        //! Similar request received
         Duplicate       = -3,
+        
+        //! It's attached to something
+        NotUnattached   = -4,
+        
+        //! Sent us a null pointer
+        NullPointer     = -5,
         
         // Busy/Processing
         Busy            = 1,

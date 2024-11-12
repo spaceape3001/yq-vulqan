@@ -18,6 +18,7 @@ namespace yq::tachyon {
     class ViewerCloseReply;
     class ViewerRequest;
     class ViewerReply;
+    class ViewerWidgetReply;
 
     using ViewerCloseReplyCPtr  = Ref<const class ViewerCloseReply>;
 }

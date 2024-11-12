@@ -15,7 +15,7 @@
 #include <yq/tachyon/commands/viewer.hpp>
 #include <yq/tachyon/commands/window.hpp>
 
-#include <yq/tachyon/core/TachyonInfoWriter.hpp>
+#include <yq/tachyon/core/ControllingInfoWriter.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/events/ViewerPauseEvent.hpp>
 #include <yq/tachyon/events/ViewerResumeEvent.hpp>
@@ -29,7 +29,10 @@
 #include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/inputs/KeyCharacter.hpp>
 #include <yq/tachyon/replies/ViewerCloseReply.hpp>
+#include <yq/tachyon/replies/ViewerWidgetReply.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
+#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
+#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
 #include <yq/tachyon/util/AsBind.hpp>
 #include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
 #include <yq/tachyon/viewer/ViGui.hpp>
@@ -103,6 +106,7 @@ namespace yq::tachyon {
         w.receive(&Viewer::state_event).name("state_event");
         w.receive(&Viewer::title_command).name("title_command");
         w.receive(&Viewer::unfloat_command).name("unfloat_command");
+        w.receive(&Viewer::widget_request).name("widget_request");
         
 #if 0        
         w.receive(&Viewer::viewer_resize_event);
@@ -144,10 +148,8 @@ namespace yq::tachyon {
 
     void    Viewer::_kill()
     {
-        if(m_widget){
-            detach(FORWARD, m_widget.ptr());
-            m_widget = {};
-        }
+        _remove(WIDGET);
+        m_widget = {};
         if(m_imgui){
             detach(FORWARD, m_imgui.get());
             m_imgui = {};
@@ -204,7 +206,6 @@ namespace yq::tachyon {
             //attach(FORWARD, m_viz.get()); // TODO
         }
         attach(FORWARD, m_widget.ptr());
-
         return {};
     }
 
@@ -903,6 +904,59 @@ namespace yq::tachyon {
             if(started_or_running()){
                 dispatch(new WindowTitleCommand(this, cmd.title()));
             }
+        }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  WIDGET
+    //  
+
+        void    Viewer::_install(widget_t)
+        {
+            if(m_widget){
+                m_widget -> m_viewer    = this;
+                attach(FORWARD, m_widget.ptr());
+                connect(TX, *m_widget);
+                connect(RX, *m_widget);
+            }
+        }
+        
+        void    Viewer::_remove(widget_t)
+        {
+            if(m_widget){
+                m_widget -> m_viewer    = nullptr;
+                detach(FORWARD, m_widget.ptr());
+                disconnect(*m_widget);
+            }
+        }
+        
+        void    Viewer::_widget(WidgetPtr w)
+        {
+            _remove(WIDGET);
+            m_widget    = w;
+            _install(WIDGET);
+        }
+        
+        void    Viewer::set_widget(WidgetPtr w)
+        {
+            dispatch(SELF, new ViewerWidgetRequest(this, w));
+        }
+        
+        void    Viewer::widget_request(const ViewerWidgetRequestCPtr& cmd)
+        {
+            if(!cmd)
+                return ;
+            
+            Response    rep     = Response::QaPla;
+            WidgetPtr   w       = cmd->widget();
+            if(!w){
+                rep = Response::NullPointer;
+            } else if(w->attached()){
+                rep = Response::NotUnattached;
+            } else {
+                _widget(w);
+            }
+            
+            dispatch(new ViewerWidgetReply(cmd, this, rep));
         }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

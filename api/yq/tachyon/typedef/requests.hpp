@@ -14,10 +14,12 @@ namespace yq::tachyon {
     class AppRequest;
     class TachyonRequest;
     class ViewerRequest;
-    class WindowRequest;
     class ViewerCloseRequest;
+    class ViewerWidgetRequest;
+    class WindowRequest;
     class WindowRefreshRequest;
 
-    using ViewerCloseRequestCPtr    = Ref<const class ViewerCloseRequest>;
-    using WindowRefreshRequestCPtr  = Ref<const class WindowRefreshRequest>;
+    using ViewerCloseRequestCPtr    = Ref<const ViewerCloseRequest>;
+    using ViewerWidgetRequestCPtr   = Ref<const ViewerWidgetRequest>;
+    using WindowRefreshRequestCPtr  = Ref<const WindowRefreshRequest>;
 }

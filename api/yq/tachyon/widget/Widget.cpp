@@ -71,6 +71,11 @@ namespace yq::tachyon {
         return ch->set_parent(this);
     }
 
+    bool    Widget::attached() const
+    {
+        return m_parent || m_viewer;
+    }
+
     bool    Widget::has_parentage(const Widget* p) const
     {
         if(!p)

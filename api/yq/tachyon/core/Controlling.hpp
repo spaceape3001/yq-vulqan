@@ -33,6 +33,8 @@ namespace yq::tachyon {
     
     protected:
     
+        void    tick(controllers_t);
+    
         Controlling(const Param&p={});
         ~Controlling();
     

@@ -300,6 +300,8 @@ namespace yq::tachyon {
 
     protected:
 
+        using Controlling::tick;
+
         //! Hint to do anything needed before the next render frame is actually rendered
         //! So do the uniform buffer & texture descriptor sets here.
         //virtual void        prerecord(ViContext&);

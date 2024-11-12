@@ -12,6 +12,8 @@
 
 namespace yq::tachyon {
 
+    class CameraPitchCommand;
+
     /*! \brief Camera in 3D space
     
         This is a simple camera that has a position, orientation
@@ -81,5 +83,7 @@ namespace yq::tachyon {
         Degree         m_fov;
         double         m_near;
         double         m_far;
+        
+        void            pitch_command(const CameraPitchCommand&);
     };
 }

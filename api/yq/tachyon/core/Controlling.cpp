@@ -52,6 +52,12 @@ namespace yq::tachyon {
         });
     }
 
+    void    Controlling::tick(controllers_t)
+    {
+        for(auto& c : m_controllers)
+            c -> tick();
+    }
+
     void Controlling::init_info()
     {
         auto w = writer<Controlling>();

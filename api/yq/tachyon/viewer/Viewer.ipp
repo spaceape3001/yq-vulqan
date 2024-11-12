@@ -33,7 +33,6 @@
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 #include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
 #include <yq/tachyon/requests/WindowRefreshRequest.hpp>
-#include <yq/tachyon/util/AsBind.hpp>
 #include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
 #include <yq/tachyon/viewer/ViGui.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
@@ -283,17 +282,7 @@ namespace yq::tachyon {
         if(!pp)
             return ;
     
-        if(const AsBind* p = dynamic_cast<const AsBind*>(pp.ptr())){
-            if(p->is_viewer() && (p->viewer() != this)){
-                return ;
-            }
-            if(p->is_window() && (p->viewer() != this)){
-                return ;
-            }
-            
-            if(!in_replay())
-                forward(pp);
-        } else if(const ViewerBind* p = dynamic_cast<const ViewerBind*>(pp.ptr())){
+        if(const ViewerBind* p = dynamic_cast<const ViewerBind*>(pp.ptr())){
             if(p->viewer() != this){
                 return ;
             }
@@ -307,6 +296,8 @@ namespace yq::tachyon {
 
     void    Viewer::tick(/* frame...eventually */)
     {
+        replay(ALL);
+        tick(CONTROLLERS);
         replay(ALL);
         if(m_imgui)
             m_imgui->tick();

@@ -10,12 +10,15 @@
 #include <glm/ext/matrix_projection.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/tensor/Tensor44.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/vector/Vector3.hxx>
 
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/tensor/Tensor44.hxx>
+#include <yq/vector/Quaternion3.hxx>
+
 #include <yq/tachyon/camera/CameraInfoWriter.hpp>
+#include <yq/tachyon/commands/CameraPitchCommand.hpp>
 
 namespace yq::tachyon {
     SpaceCamera::SpaceCamera() : 
@@ -29,6 +32,11 @@ namespace yq::tachyon {
     {
     }
     
+    void        SpaceCamera::pitch_command(const CameraPitchCommand& amt)
+    {
+        m_space.orientation = rotor_y(amt.angle()) * m_space.orientation;
+    }
+
     glm::dmat4  SpaceCamera::projection_matrix(const Rectangle2D&sz) const
     {
         //  ignore the translation (for now)
@@ -85,6 +93,7 @@ namespace yq::tachyon {
     {
         auto w = writer<SpaceCamera>();
         w.description("Simple space camera (position, orientation, fov)");
+        w.receive(&SpaceCamera::pitch_command);
     }
 }
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SpaceCamera)

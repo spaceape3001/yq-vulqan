@@ -78,6 +78,8 @@ namespace yq::tachyon {
 
     protected:
     
+        virtual void    receive(const post::PostCPtr&) override;
+
         //! Default constructor
         Camera();
         

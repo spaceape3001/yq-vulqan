@@ -13,6 +13,10 @@ namespace yq {
 namespace yq::tachyon {
     class AppCommand;
     class CameraCommand;
+    class CameraPitchCommand;
+    class CameraRollCommand;
+    class CameraYawCommand;
+    class ControllerCommand;
     class GLFWCloseCommand;
     class GLFWCommand;
     class GLFWHideCommand;

@@ -12,6 +12,8 @@
 
 namespace yq::tachyon {
 
+    class Controlling;
+
     class ControllerInfo : public TachyonInfo {
     public:
         template <typename C> class Writer;
@@ -30,11 +32,29 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(ControllerInfo)
         YQ_OBJECT_DECLARE(Controller, Tachyon)
     public:
-    
-        Controller(const Param& p={});
+        Controller(Tachyon* t=nullptr, const Param& p={});
         ~Controller();
         
         static void init_info();
+        
+        Tachyon*    target() const { return m_target; }
+        
+        bool        enabled() const;
+        void        enable();
+        void        disable();
+        
+    protected:    
+        friend class Controlling;
+        virtual void receive(const post::PostCPtr&) override;
+        
+        virtual void    tick();
+
+    private:
+        Tachyon*            m_target;
+        std::atomic<bool>   m_enable;
+        
+        void    _attach(target_t);
+        void    _detach(target_t);
     };
 
 }

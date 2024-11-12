@@ -27,10 +27,13 @@
 #include <yq/vector/Vector3.hxx>
 
 #include <yq/tachyon/application.hpp>
+#include <yq/tachyon/controller.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/scene.hpp>
 #include <yq/tachyon/viewer.hpp>
 #include <yq/tachyon/widget.hpp>
+#include <yq/tachyon/commands/CameraPitchCommand.hpp>
+#include <yq/tachyon/events/KeyPressEvent.hpp>
 #include <yq/tachyon/renders/Quadrilateral.hpp>
 #include <yq/tachyon/renders/Triangle.hpp>
 #include <yq/tachyon/renders/Tetrahedron.hpp>
@@ -101,6 +104,44 @@ const auto QuadData = QuadrilateralData<ColorVertex2D> {
     { {0.5, -1.0}, color::Yellow },
     { {-0.5, -1.0}, color::Red }
 };
+
+struct CameraController : public Controller {
+    YQ_OBJECT_DECLARE(CameraController, Controller)
+    
+    Camera*     m_camera;
+
+    CameraController(Camera* cam) : Controller(cam), m_camera(cam)
+    {
+    }
+    
+    ~CameraController()
+    {
+    }
+    
+    void key_press(const KeyPressEvent& evt)
+    {
+yInfo() << "Key press";
+        switch(evt.key()){
+        case KeyCode::UpArrow:
+            dispatch(new CameraPitchCommand(m_camera, 10._deg));
+            break;
+        case KeyCode::DownArrow:
+            dispatch(new CameraPitchCommand(m_camera, -10._deg));
+            break;
+        default:
+            break;
+        }
+    }
+    
+    static void init_info()
+    {
+        auto w = writer<CameraController>();
+        w.receive(&CameraController::key_press);
+    }
+    
+};
+
+YQ_OBJECT_IMPLEMENT(CameraController)
 
 struct CameraScene3DWidget : public Scene3DWidget {
     YQ_OBJECT_DECLARE(CameraScene3DWidget, Scene3DWidget)
@@ -201,6 +242,8 @@ struct CameraScene3DWidget : public Scene3DWidget {
         quad->set_heading( (Radian) 45._deg );
         quad->set_position({ 0.5, 0.5, 0. });
         add_thing(quad);
+        
+        attach(CONTROLLER, new CameraController(cam));
     }
     
     void        tick() override

@@ -7,7 +7,6 @@
 #include "Widget.hpp"
 #include "WidgetInfoWriter.hpp"
 
-#include <yq/tachyon/util/AsBind.hpp>
 #include <yq/tachyon/viewer/Viewer.hpp>
 #include <yq/tachyon/widget/WidgetBind.hpp>
 
@@ -99,12 +98,7 @@ namespace yq::tachyon {
     {
         if(!pp)
             return;
-        if(const AsBind* p = dynamic_cast<const AsBind*>(pp.ptr())){
-            if(p->is_widget() && (p->widget() != this))
-                return;
-            if(!in_replay())
-                forward(pp);
-        } else if(const WidgetBind* p = dynamic_cast<const WidgetBind*>(pp.ptr())){
+        if(const WidgetBind* p = dynamic_cast<const WidgetBind*>(pp.ptr())){
             if(p->widget() != this){
                 return ;
             }
@@ -158,6 +152,8 @@ namespace yq::tachyon {
 
     void    Widget::tick()
     {
+        replay(ALL);
+        tick(CONTROLLERS);
         replay(ALL);
         for(auto& w : m_children)
             w->tick();

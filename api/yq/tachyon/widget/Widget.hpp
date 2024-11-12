@@ -127,6 +127,8 @@ namespace yq::tachyon {
 
 
     protected:
+        using Controlling::tick;
+    
         friend class Viewer;
         
         enum class F : uint8_t {

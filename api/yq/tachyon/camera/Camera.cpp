@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/camera/Camera.hpp>
+#include <yq/tachyon/camera/CameraBind.hpp>
 #include <yq/tachyon/camera/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -48,6 +49,21 @@ namespace yq::tachyon {
     void            Camera::set_name(const std::string& v)
     {
         m_name  = v;
+    }
+
+    void    Camera::receive(const post::PostCPtr&pp)
+    {
+        if(!pp)
+            return;
+        if(const CameraBind* p = dynamic_cast<const CameraBind*>(pp.ptr())){
+            if(p->camera() != this)
+                return ;
+            if(!in_replay())
+                forward(pp);
+        } else if(!in_replay()){   
+            forward(pp);
+        }
+        Tachyon::receive(pp);
     }
 
     void Camera::tick()

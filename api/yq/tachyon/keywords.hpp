@@ -30,14 +30,15 @@ namespace yq::tachyon {
     
     struct close_t {};
     struct controller_t {};
+    struct controllers_t {};
     struct direct_t{};
     struct forward_t {};
     struct number_t {};
     struct probe_t {};
     struct queue_t {};
+    struct target_t {};
     struct unlock_t {};
     struct unlocked_t {};
-    
     struct viewer_t {};
     struct widget_t {};
     struct window_t {};
@@ -45,6 +46,7 @@ namespace yq::tachyon {
     static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
     static constexpr controller_t   CONTROLLER;
+    static constexpr controllers_t  CONTROLLERS;
     static constexpr direct_t       DIRECT;
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;
@@ -53,6 +55,7 @@ namespace yq::tachyon {
     static constexpr probe_t        PROBE;
     static constexpr refresh_t      REFRESH;
     static constexpr static_t       STATIC;
+    static constexpr target_t       TARGET;
     static constexpr queue_t        QUEUE;
     static constexpr unlock_t       UNLOCK;
     static constexpr unlocked_t     UNLOCKED;

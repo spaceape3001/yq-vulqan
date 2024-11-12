@@ -34,6 +34,39 @@ namespace yq::tachyon {
     Tachyon::~Tachyon()
     {
     }
+
+    
+    void    Tachyon::attach(forward_t, post::Dispatcher* pDispatcher)
+    {
+        if(!pDispatcher)
+            return;
+        if(attached(FORWARD, pDispatcher))
+            return ;
+        m_forward.push_back(pDispatcher);
+    }
+
+    bool    Tachyon::attached(forward_t, post::Dispatcher* pDispatcher) const
+    {
+        if(!pDispatcher)
+            return false;
+        for(post::Dispatcher* p : m_forward){
+            if(p == pDispatcher)
+                return true;
+        }
+        return false;
+    }
+    
+    //! Detaches from the given dispatcher
+    void    Tachyon::detach(forward_t, post::Dispatcher*pDispatcher)
+    {
+        std::erase(m_forward, pDispatcher);
+    }
+    
+    void    Tachyon::forward(const post::PostCPtr&pp)
+    {
+        for(Dispatcher* p : m_forward)
+            p -> receive(pp);
+    }
     
     bool Tachyon::in_thread() const
     {

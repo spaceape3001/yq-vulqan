@@ -9,6 +9,7 @@
 #include <yq/post/PBX.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/typedef/controller.hpp>
 #include <concepts>
 
 namespace yq::tachyon {
@@ -67,6 +68,12 @@ namespace yq::tachyon {
 
         virtual void receive(const post::PostCPtr&) override;
 
+        //! Checks for attachment
+        bool        attached(forward_t, post::Dispatcher*) const;
+
+        //! TRUE if we're in event replay mode (only one replay at a time)
+        bool        in_replay() const;
+
     protected:
         mutable tbb::spin_rw_mutex      m_mutex;
         
@@ -110,15 +117,23 @@ namespace yq::tachyon {
         //! Replay queued posts (depends on post mode)
         void    replay(all_t);
         
+        //! Sets the post mode
         void    set_post_mode(PostMode);
         
-        bool    in_replay() const;
+        //! Forward said message to the forwarding vector
+        void    forward(const post::PostCPtr&);
         
+        //! Attaches to the given dispatcher
+        void    attach(forward_t, post::Dispatcher*);
+        
+        //! Detaches from the given dispatcher
+        void    detach(forward_t, post::Dispatcher*);
         
     private:
         uint64_t                        m_padding0[7];  // to avoid false sharing
         std::atomic<unsigned int>       m_threadId;
         std::vector<post::PostCPtr>     m_direct, m_threaded; 
+        std::vector<post::Dispatcher*>  m_forward;       //!< Things that we can forward messages too
         std::atomic<PostMode>           m_postMode  = PostMode::Direct;
         bool                            m_replay    = false;
         

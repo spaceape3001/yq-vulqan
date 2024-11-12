@@ -64,9 +64,9 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
 
 namespace yq::tachyon {
 
-    Tachyon::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
+    Controlling::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
     {
-        Tachyon::Param  ret;
+        Controlling::Param  ret;
         ret.name    = "Viewer";
         return ret;
     }
@@ -116,7 +116,7 @@ namespace yq::tachyon {
     std::atomic<int>        Viewer::s_count{0};
     std::atomic<uint64_t>   Viewer::s_lastId{0};
 
-    Viewer::Viewer(const ViewerCreateInfo&vci, WidgetPtr w) : Tachyon(_pbx(vci)), m_id(++s_lastId)
+    Viewer::Viewer(const ViewerCreateInfo&vci, WidgetPtr w) : Controlling(_pbx(vci)), m_id(++s_lastId)
     {
         if(!Application::initialized())
             throw ViewerException("Application is not initialized");
@@ -138,17 +138,24 @@ namespace yq::tachyon {
     {
         disconnect(ALL);
         _kill();
-        m_widget    = {};
         m_cleanup.sweep();
         --s_count;
     }
 
     void    Viewer::_kill()
     {
-        if(m_imgui)
+        if(m_widget){
+            detach(FORWARD, m_widget.ptr());
+            m_widget = {};
+        }
+        if(m_imgui){
+            detach(FORWARD, m_imgui.get());
             m_imgui = {};
-        if(m_viz)
+        }
+        if(m_viz){
+            //detach(FORWARD, m_viz.get()); // TODO
             m_viz   = {};
+        }
     }
 
     void    Viewer::_quit()
@@ -182,6 +189,7 @@ namespace yq::tachyon {
             #endif
             
         }
+        
 
         if(ec != std::error_code()){
             m_stage = Stage::Kaput;
@@ -189,6 +197,14 @@ namespace yq::tachyon {
             return ec;
         }
         
+        if(m_imgui){
+            attach(FORWARD, m_imgui.get());
+        }
+        if(m_viz){
+            //attach(FORWARD, m_viz.get()); // TODO
+        }
+        attach(FORWARD, m_widget.ptr());
+
         return {};
     }
 
@@ -273,18 +289,17 @@ namespace yq::tachyon {
             if(p->is_window() && (p->viewer() != this)){
                 return ;
             }
-
-            if(m_imgui && !in_replay())  
-                m_imgui->receive(pp);
+            
+            if(!in_replay())
+                forward(pp);
         } else if(const ViewerBind* p = dynamic_cast<const ViewerBind*>(pp.ptr())){
             if(p->viewer() != this){
                 return ;
             }
-            if(m_imgui && !in_replay())  
-                m_imgui->receive(pp);
-            
+            if(!in_replay())
+                forward(pp);
         } else if(!in_replay()){   
-            m_widget->receive(pp);
+            forward(pp);
         }
         Tachyon::receive(pp);
     }

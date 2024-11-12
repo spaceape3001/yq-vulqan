@@ -13,7 +13,7 @@
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/core/Controlling.hpp>
 #include <yq/tachyon/core/Thread.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/events.hpp>
@@ -60,8 +60,8 @@ namespace yq::tachyon {
         and one widget only, this is the root widget for the viewer.
         
     */
-    class Viewer : public Tachyon, public RefCount {
-        YQ_OBJECT_DECLARE(Viewer, Tachyon)
+    class Viewer : public Controlling, public RefCount {
+        YQ_OBJECT_DECLARE(Viewer, Controlling)
     
     /*
         THREADING -- being written so that each viewer is a separate thread.
@@ -286,6 +286,9 @@ namespace yq::tachyon {
         
             //! Sets the window title
         void                set_title(std::string_view);
+        
+            //! Changes the main widget (cannot be null, or replacement won't happen)
+        void                set_widget(WidgetPtr);
 
         //! Our general "update()" that includes the visualizer
         void                tick(/* const AppFrame& */);
@@ -324,7 +327,7 @@ namespace yq::tachyon {
         static std::atomic<int>         s_count;
         static std::atomic<uint64_t>    s_lastId;
 
-        static Tachyon::Param   _pbx(const ViewerCreateInfo&);
+        static Controlling::Param   _pbx(const ViewerCreateInfo&);
 
         const uint64_t                  m_id;
         Cleanup                         m_cleanup;

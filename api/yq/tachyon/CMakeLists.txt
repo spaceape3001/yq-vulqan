@@ -29,6 +29,7 @@ add_library(${PROJECT_NAME} SHARED
     
     buffer/Buffer.cpp
 
+    core/Controlling.cpp
     core/Tachyon.cpp
     core/Thread.cpp
 

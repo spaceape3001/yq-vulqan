@@ -29,6 +29,7 @@ namespace yq::tachyon {
     };
     
     struct close_t {};
+    struct controller_t {};
     struct direct_t{};
     struct forward_t {};
     struct number_t {};
@@ -43,6 +44,7 @@ namespace yq::tachyon {
 
     static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
+    static constexpr controller_t   CONTROLLER;
     static constexpr direct_t       DIRECT;
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;

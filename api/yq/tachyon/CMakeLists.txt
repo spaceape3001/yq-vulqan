@@ -23,6 +23,7 @@ add_library(${PROJECT_NAME} SHARED
     vulqan.cpp
     VulqanManager.cpp
 
+
     app/Application.cpp
     app/Manager.cpp
     
@@ -38,7 +39,7 @@ add_library(${PROJECT_NAME} SHARED
     
     config/build.cpp
     
-    #controller/Controller.cpp
+    controller/Controller.cpp
     #controllers/controllers.cpp
     
     editor/Editor.cpp

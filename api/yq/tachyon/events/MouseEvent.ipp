@@ -6,7 +6,7 @@
 
 #include "MouseEvent.hpp"
 
-#include <yq/post/EventInfoWriter.hpp>
+#include <yq/tachyon/post/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseEvent)
 

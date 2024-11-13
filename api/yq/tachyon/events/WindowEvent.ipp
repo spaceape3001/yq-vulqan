@@ -6,19 +6,19 @@
 
 #include "WindowEvent.hpp"
 
-#include <yq/post/EventInfoWriter.hpp>
+#include <yq/tachyon/post/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowEvent)
 
 namespace yq::tachyon {
-    WindowEventInfo::WindowEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
-        post::EventInfo(zName, base, sl)
+    WindowEventInfo::WindowEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
+        EventInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    WindowEvent::WindowEvent(Viewer* v, const Param& p) : post::Event(p), ViewerBind(v)
+    WindowEvent::WindowEvent(Viewer* v, const Param& p) : Event(p), ViewerBind(v)
     {
     }
     

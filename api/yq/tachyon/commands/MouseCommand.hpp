@@ -6,23 +6,23 @@
 
 #pragma once
 
-#include <yq/post/Command.hpp>
+#include <yq/tachyon/post/Command.hpp>
 #include <yq/tachyon/viewer/ViewerBind.hpp>
 
 namespace yq::tachyon {
-    class MouseCommandInfo : public post::CommandInfo {
+    class MouseCommandInfo : public CommandInfo {
     public:
-        MouseCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl=std::source_location::current());
+        MouseCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class MouseCommand : public post::Command, public ViewerBind {
+    class MouseCommand : public Command, public ViewerBind {
         YQ_OBJECT_INFO(MouseCommandInfo)
-        YQ_OBJECT_DECLARE(MouseCommand, post::Command)
+        YQ_OBJECT_DECLARE(MouseCommand, Command)
     public:
     
-        struct Param : public post::Command::Param {
+        struct Param : public Command::Param {
         };
     
         MouseCommand(Viewer*, const Param& p = {});

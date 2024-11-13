@@ -6,19 +6,19 @@
 
 #include "ViewerEvent.hpp"
 
-#include <yq/post/EventInfoWriter.hpp>
+#include <yq/tachyon/post/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerEvent)
 
 namespace yq::tachyon {
-    ViewerEventInfo::ViewerEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
-        post::EventInfo(zName, base, sl)
+    ViewerEventInfo::ViewerEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
+        EventInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerEvent::ViewerEvent(Viewer* v, const Param& p) : post::Event(p), ViewerBind(v)
+    ViewerEvent::ViewerEvent(Viewer* v, const Param& p) : Event(p), ViewerBind(v)
     {
     }
     

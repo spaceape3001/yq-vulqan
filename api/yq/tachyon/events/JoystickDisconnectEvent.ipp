@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "JoystickDisconnectEvent.hpp"
-#include <yq/post/EventInfoWriter.hpp>
+#include <yq/tachyon/post/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickDisconnectEvent::init_info()

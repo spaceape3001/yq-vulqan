@@ -15,9 +15,6 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(WindowShowCommand, WindowCommand)
     public:
     
-        struct Param : public WindowCommand::Param {
-        };
-    
         WindowShowCommand(Viewer*, const Param& p = {});
         virtual ~WindowShowCommand();
         

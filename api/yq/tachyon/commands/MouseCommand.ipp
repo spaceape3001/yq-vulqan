@@ -6,19 +6,19 @@
 
 #include "MouseCommand.hpp"
 
-#include <yq/post/CommandInfoWriter.hpp>
+#include <yq/tachyon/post/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseCommand)
 
 namespace yq::tachyon {
-    MouseCommandInfo::MouseCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl) :
-        post::CommandInfo(zName, base, sl)
+    MouseCommandInfo::MouseCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
+        CommandInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    MouseCommand::MouseCommand(Viewer* v, const Param& p) : post::Command(p), ViewerBind(v)
+    MouseCommand::MouseCommand(Viewer* v, const Param& p) : Command(p), ViewerBind(v)
     {
     }
     

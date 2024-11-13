@@ -6,25 +6,25 @@
 
 #pragma once
 
-#include <yq/post/Command.hpp>
+#include <yq/tachyon/post/Command.hpp>
 #include <yq/tachyon/core/TachyonBind.hpp>
 
 namespace yq::tachyon {
     class Tachyon;
 
-    class TachyonCommandInfo : public post::CommandInfo {
+    class TachyonCommandInfo : public CommandInfo {
     public:
-        TachyonCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl=std::source_location::current());
+        TachyonCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class TachyonCommand : public post::Command, public TachyonBind {
+    class TachyonCommand : public Command, public TachyonBind {
         YQ_OBJECT_INFO(TachyonCommandInfo)
-        YQ_OBJECT_DECLARE(TachyonCommand, post::Command)
+        YQ_OBJECT_DECLARE(TachyonCommand, Command)
     public:
     
-        struct Param : public post::Command::Param {
+        struct Param : public Command::Param {
         };
     
         TachyonCommand(Tachyon*, const Param& p = {});

@@ -6,19 +6,19 @@
 
 #include "WindowCommand.hpp"
 
-#include <yq/post/CommandInfoWriter.hpp>
+#include <yq/tachyon/post/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCommand)
 
 namespace yq::tachyon {
-    WindowCommandInfo::WindowCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl) :
-        post::CommandInfo(zName, base, sl)
+    WindowCommandInfo::WindowCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
+        CommandInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    WindowCommand::WindowCommand(Viewer* v, const Param& p) : post::Command(p), ViewerBind(v)
+    WindowCommand::WindowCommand(Viewer* v, const Param& p) : Command(p), ViewerBind(v)
     {
     }
     

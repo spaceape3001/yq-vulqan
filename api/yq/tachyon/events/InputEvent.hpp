@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq/post/Event.hpp>
+#include <yq/tachyon/post/Event.hpp>
 #include <yq/tachyon/viewer/ViewerBind.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 
 namespace yq::tachyon {
-    class InputEventInfo : public post::EventInfo {
+    class InputEventInfo : public EventInfo {
     public:
-        InputEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        InputEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
@@ -25,14 +25,14 @@ namespace yq::tachyon {
         This is a common base class for keyboard/mouse events since 
         they both need modifier keys & are attached to viewers.
     */
-    class InputEvent : public post::Event, public ViewerBind {
+    class InputEvent : public Event, public ViewerBind {
         YQ_OBJECT_INFO(InputEventInfo)
-        YQ_OBJECT_DECLARE(InputEvent, post::Event)
+        YQ_OBJECT_DECLARE(InputEvent, Event)
     public:
     
         static void init_info();
     
-        struct Param : public post::Event::Param {
+        struct Param : public Event::Param {
             Viewer*       viewer;
             ModifierKeys    modifiers   = {};
         };

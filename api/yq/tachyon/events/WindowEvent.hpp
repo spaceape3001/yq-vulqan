@@ -6,23 +6,23 @@
 
 #pragma once
 
-#include <yq/post/Event.hpp>
+#include <yq/tachyon/post/Event.hpp>
 #include <yq/tachyon/viewer/ViewerBind.hpp>
 
 namespace yq::tachyon {
-    class WindowEventInfo : public post::EventInfo {
+    class WindowEventInfo : public EventInfo {
     public:
-        WindowEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        WindowEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class WindowEvent : public post::Event, public ViewerBind {
+    class WindowEvent : public Event, public ViewerBind {
         YQ_OBJECT_INFO(WindowEventInfo)
-        YQ_OBJECT_DECLARE(WindowEvent, post::Event)
+        YQ_OBJECT_DECLARE(WindowEvent, Event)
     public:
     
-        struct Param : public post::Event::Param {
+        struct Param : public Event::Param {
         };
     
         WindowEvent(Viewer*, const Param& p = {});

@@ -10,6 +10,7 @@
 #include "CursorDisableEvent.ipp"
 #include "CursorHideEvent.ipp"
 #include "CursorNormalEvent.ipp"
+#include "EmptyEvent.ipp"
 #include "InputEvent.ipp"
 #include "JoystickAxisEvent.ipp"
 #include "JoystickConnectEvent.ipp"

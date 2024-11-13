@@ -6,23 +6,23 @@
 
 #pragma once
 
-#include <yq/post/Event.hpp>
+#include <yq/tachyon/post/Event.hpp>
 #include <yq/tachyon/glfw/Joystick.hpp>
 
 namespace yq::tachyon {
-    class JoystickEventInfo : public post::EventInfo {
+    class JoystickEventInfo : public EventInfo {
     public:
-        JoystickEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        JoystickEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class JoystickEvent : public post::Event {
+    class JoystickEvent : public Event {
         YQ_OBJECT_INFO(JoystickEventInfo)
-        YQ_OBJECT_DECLARE(JoystickEvent, post::Event)
+        YQ_OBJECT_DECLARE(JoystickEvent, Event)
     public:
     
-        struct Param : public post::Event::Param {
+        struct Param : public Event::Param {
         };
     
         JoystickEvent(Joystick j, const Param&);

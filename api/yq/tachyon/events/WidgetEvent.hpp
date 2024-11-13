@@ -6,25 +6,25 @@
 
 #pragma once
 
-#include <yq/post/Event.hpp>
+#include <yq/tachyon/post/Event.hpp>
 
 namespace yq::tachyon {
     class Widget;
     
-    class WidgetEventInfo : public post::EventInfo {
+    class WidgetEventInfo : public EventInfo {
     public:
-        WidgetEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl=std::source_location::current());
+        WidgetEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
 
-    class WidgetEvent : public post::Event {
+    class WidgetEvent : public Event {
         YQ_OBJECT_INFO(WidgetEventInfo)
-        YQ_OBJECT_DECLARE(WidgetEvent, post::Event)
+        YQ_OBJECT_DECLARE(WidgetEvent, Event)
     public:
     
-        struct Param : public post::Event::Param {
+        struct Param : public Event::Param {
         };
     
         //  EVENT TODO

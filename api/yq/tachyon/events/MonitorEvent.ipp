@@ -5,21 +5,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MonitorEvent.hpp"
-#include <yq/post/EventInfoWriter.hpp>
+#include <yq/tachyon/post/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorEvent)
 
 namespace yq::tachyon {
     
-    MonitorEventInfo::MonitorEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
-        post::EventInfo(zName, base, sl)
+    MonitorEventInfo::MonitorEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
+        EventInfo(zName, base, sl)
     {
         set(Flag::MONITOR);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    MonitorEvent::MonitorEvent(Monitor m, const Param& p) : post::Event(p), m_monitor(m)
+    MonitorEvent::MonitorEvent(Monitor m, const Param& p) : Event(p), m_monitor(m)
     {
     }
     

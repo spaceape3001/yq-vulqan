@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "WindowMaximizeCommand.hpp"
-#include <yq/post/CommandInfoWriter.hpp>
+#include <yq/tachyon/post/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowMaximizeCommand)
 

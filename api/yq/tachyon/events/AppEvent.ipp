@@ -6,19 +6,19 @@
 
 #include "AppEvent.hpp"
 
-#include <yq/post/EventInfoWriter.hpp>
+#include <yq/tachyon/post/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppEvent)
 
 namespace yq::tachyon {
-    AppEventInfo::AppEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
-        post::EventInfo(zName, base, sl)
+    AppEventInfo::AppEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
+        EventInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    AppEvent::AppEvent(const Param& p) : post::Event(p)
+    AppEvent::AppEvent(const Param& p) : Event(p)
     {
     }
     

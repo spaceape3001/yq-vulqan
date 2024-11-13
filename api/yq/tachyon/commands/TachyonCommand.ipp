@@ -6,19 +6,19 @@
 
 #include "TachyonCommand.hpp"
 
-#include <yq/post/CommandInfoWriter.hpp>
+#include <yq/tachyon/post/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonCommand)
 
 namespace yq::tachyon {
-    TachyonCommandInfo::TachyonCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl) :
-        post::CommandInfo(zName, base, sl)
+    TachyonCommandInfo::TachyonCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
+        CommandInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    TachyonCommand::TachyonCommand(Tachyon* v, const Param& p) : post::Command(p), TachyonBind(v)
+    TachyonCommand::TachyonCommand(Tachyon* v, const Param& p) : Command(p), TachyonBind(v)
     {
     }
     

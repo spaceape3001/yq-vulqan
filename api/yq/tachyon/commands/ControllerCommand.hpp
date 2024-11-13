@@ -6,25 +6,25 @@
 
 #pragma once
 
-#include <yq/post/Command.hpp>
+#include <yq/tachyon/post/Command.hpp>
 #include <yq/tachyon/viewer/ControllerBind.hpp>
 
 namespace yq::tachyon {
     class Controller;
 
-    class ControllerCommandInfo : public post::CommandInfo {
+    class ControllerCommandInfo : public CommandInfo {
     public:
-        ControllerCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl=std::source_location::current());
+        ControllerCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class ControllerCommand : public post::Command, public ControllerBind {
+    class ControllerCommand : public Command, public ControllerBind {
         YQ_OBJECT_INFO(ControllerCommandInfo)
-        YQ_OBJECT_DECLARE(ControllerCommand, post::Command)
+        YQ_OBJECT_DECLARE(ControllerCommand, Command)
     public:
     
-        struct Param : public post::Command::Param {
+        struct Param : public Command::Param {
         };
     
         ControllerCommand(Controller*, const Param& p = {});

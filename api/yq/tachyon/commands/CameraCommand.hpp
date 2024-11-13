@@ -6,25 +6,25 @@
 
 #pragma once
 
-#include <yq/post/Command.hpp>
+#include <yq/tachyon/post/Command.hpp>
 #include <yq/tachyon/camera/CameraBind.hpp>
 
 namespace yq::tachyon {
     class Camera;
 
-    class CameraCommandInfo : public post::CommandInfo {
+    class CameraCommandInfo : public CommandInfo {
     public:
-        CameraCommandInfo(std::string_view zName, post::CommandInfo& base, const std::source_location& sl=std::source_location::current());
+        CameraCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class CameraCommand : public post::Command, public CameraBind {
+    class CameraCommand : public Command, public CameraBind {
         YQ_OBJECT_INFO(CameraCommandInfo)
-        YQ_OBJECT_DECLARE(CameraCommand, post::Command)
+        YQ_OBJECT_DECLARE(CameraCommand, Command)
     public:
     
-        struct Param : public post::Command::Param {
+        struct Param : public Command::Param {
         };
     
         CameraCommand(Camera*, const Param& p = {});

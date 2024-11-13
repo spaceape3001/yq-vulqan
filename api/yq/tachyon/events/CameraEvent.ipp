@@ -6,19 +6,19 @@
 
 #include "CameraEvent.hpp"
 
-#include <yq/post/EventInfoWriter.hpp>
+#include <yq/tachyon/post/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraEvent)
 
 namespace yq::tachyon {
-    CameraEventInfo::CameraEventInfo(std::string_view zName, post::EventInfo& base, const std::source_location& sl) :
-        post::EventInfo(zName, base, sl)
+    CameraEventInfo::CameraEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
+        EventInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    CameraEvent::CameraEvent(Camera* v, const Param& p) : post::Event(p), CameraBind(v)
+    CameraEvent::CameraEvent(Camera* v, const Param& p) : Event(p), CameraBind(v)
     {
     }
     

@@ -6,19 +6,19 @@
 
 #include "AppReply.hpp"
 
-#include <yq/post/ReplyInfoWriter.hpp>
+#include <yq/tachyon/post/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppReply)
 
 namespace yq::tachyon {
-    AppReplyInfo::AppReplyInfo(std::string_view zName, post::ReplyInfo& base, const std::source_location& sl) :
-        post::ReplyInfo(zName, base, sl)
+    AppReplyInfo::AppReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
+        ReplyInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    AppReply::AppReply(const post::RequestCPtr& rq, const Param& p) : post::Reply(rq, p)
+    AppReply::AppReply(const RequestCPtr& rq, const Param& p) : Reply(rq, p)
     {
     }
     

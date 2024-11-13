@@ -6,19 +6,19 @@
 
 #include "ViewerReply.hpp"
 
-#include <yq/post/ReplyInfoWriter.hpp>
+#include <yq/tachyon/post/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerReply)
 
 namespace yq::tachyon {
-    ViewerReplyInfo::ViewerReplyInfo(std::string_view zName, post::ReplyInfo& base, const std::source_location& sl) :
-        post::ReplyInfo(zName, base, sl)
+    ViewerReplyInfo::ViewerReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
+        ReplyInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerReply::ViewerReply(const post::RequestCPtr& rq, Viewer* v, const Param& p) : post::Reply(rq, p), ViewerBind(v)
+    ViewerReply::ViewerReply(const RequestCPtr& rq, Viewer* v, const Param& p) : Reply(rq, p), ViewerBind(v)
     {
     }
     

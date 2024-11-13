@@ -6,19 +6,19 @@
 
 #include "CameraReply.hpp"
 
-#include <yq/post/ReplyInfoWriter.hpp>
+#include <yq/tachyon/post/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraReply)
 
 namespace yq::tachyon {
-    CameraReplyInfo::CameraReplyInfo(std::string_view zName, post::ReplyInfo& base, const std::source_location& sl) :
-        post::ReplyInfo(zName, base, sl)
+    CameraReplyInfo::CameraReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
+        ReplyInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    CameraReply::CameraReply(const post::RequestCPtr& rq, Camera* v, const Param& p) : post::Reply(rq, p), CameraBind(v)
+    CameraReply::CameraReply(const RequestCPtr& rq, Camera* v, const Param& p) : Reply(rq, p), CameraBind(v)
     {
     }
     

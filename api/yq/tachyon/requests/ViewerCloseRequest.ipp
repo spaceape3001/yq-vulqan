@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViewerCloseRequest.hpp"
-#include <yq/post/RequestInfoWriter.hpp>
+#include <yq/tachyon/post/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseRequest)
 

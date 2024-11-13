@@ -6,29 +6,29 @@
 
 #pragma once
 
-#include <yq/post/Reply.hpp>
+#include <yq/tachyon/post/Reply.hpp>
 #include <yq/tachyon/camera/CameraBind.hpp>
 
 namespace yq::tachyon {
     class Camera;
     class CameraRequest;
 
-    class CameraReplyInfo : public post::ReplyInfo {
+    class CameraReplyInfo : public ReplyInfo {
     public:
-        CameraReplyInfo(std::string_view zName, post::ReplyInfo& base, const std::source_location& sl=std::source_location::current());
+        CameraReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class CameraReply : public post::Reply, public CameraBind {
+    class CameraReply : public Reply, public CameraBind {
         YQ_OBJECT_INFO(CameraReplyInfo)
-        YQ_OBJECT_DECLARE(CameraReply, post::Reply)
+        YQ_OBJECT_DECLARE(CameraReply, Reply)
     public:
     
-        struct Param : public post::Reply::Param {
+        struct Param : public Reply::Param {
         };
     
-        CameraReply(const post::RequestCPtr&, Camera*, const Param& p = {});
+        CameraReply(const RequestCPtr&, Camera*, const Param& p = {});
         virtual ~CameraReply();
         
         static void init_info();

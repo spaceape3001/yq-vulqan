@@ -6,7 +6,11 @@
 
 #pragma once
 
-#include <yq/post/PBX.hpp>
+#include <yq/core/Object.hpp>
+#include <yq/tachyon/tachyon/TachyonID.hpp>
+
+
+
 #include <tbb/spin_rw_mutex.h>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
@@ -19,21 +23,21 @@ namespace yq::tachyon {
     template <typename T>
     concept SomeTachyon = std::derived_from<T,Tachyon>;
     
-    class TachyonInfo : public post::PBXInfo {
+    class TachyonInfo : public PBXInfo {
     public:
         
         template <typename C> class Writer;
 
-        TachyonInfo(std::string_view zName, post::PBXInfo& base, const std::source_location& sl=std::source_location::current());
+        TachyonInfo(std::string_view zName, PBXInfo& base, const std::source_location& sl=std::source_location::current());
     };
 
     /*! \brief Tachyon is thread-aware base post-passing heavy object
     
         The tachyon is the bit that makes the world go around
     */
-    class Tachyon : public post::PBX {
+    class Tachyon : public Object, public RefCount {
         YQ_OBJECT_INFO(TachyonInfo)
-        YQ_OBJECT_DECLARE(Tachyon, post::PBX)
+        YQ_OBJECT_DECLARE(Tachyon, PBX)
     public:
         
         //! How we deal with posts
@@ -53,7 +57,7 @@ namespace yq::tachyon {
         };
     
     
-        struct Param : public post::PBX::Param {
+        struct Param : public PBX::Param {
         };
     
         Tachyon(const Param&p={});
@@ -66,10 +70,10 @@ namespace yq::tachyon {
         
         static void init_info();
 
-        virtual void receive(const post::PostCPtr&) override;
+        virtual void receive(const PostCPtr&) override;
 
         //! Checks for attachment
-        bool        attached(forward_t, post::Dispatcher*) const;
+        bool        attached(forward_t, Dispatcher*) const;
 
         //! TRUE if we're in event replay mode (only one replay at a time)
         bool        in_replay() const;
@@ -121,19 +125,21 @@ namespace yq::tachyon {
         void    set_post_mode(PostMode);
         
         //! Forward said message to the forwarding vector
-        void    forward(const post::PostCPtr&);
+        void    forward(const PostCPtr&);
         
         //! Attaches to the given dispatcher
-        void    attach(forward_t, post::Dispatcher*);
+        void    attach(forward_t, Dispatcher*);
         
         //! Detaches from the given dispatcher
-        void    detach(forward_t, post::Dispatcher*);
+        void    detach(forward_t, Dispatcher*);
         
     private:
+        const uint64_t              m_id;
+    
         uint64_t                        m_padding0[7];  // to avoid false sharing
         std::atomic<unsigned int>       m_threadId;
-        std::vector<post::PostCPtr>     m_direct, m_threaded; 
-        std::vector<post::Dispatcher*>  m_forward;       //!< Things that we can forward messages too
+        std::vector<PostCPtr>     m_direct, m_threaded; 
+        std::vector<Dispatcher*>  m_forward;       //!< Things that we can forward messages too
         std::atomic<PostMode>           m_postMode  = PostMode::Queued;
         bool                            m_replay    = false;
         

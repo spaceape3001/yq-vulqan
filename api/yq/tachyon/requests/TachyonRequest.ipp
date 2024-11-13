@@ -6,19 +6,19 @@
 
 #include "TachyonRequest.hpp"
 
-#include <yq/post/RequestInfoWriter.hpp>
+#include <yq/tachyon/post/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonRequest)
 
 namespace yq::tachyon {
-    TachyonRequestInfo::TachyonRequestInfo(std::string_view zName, post::RequestInfo& base, const std::source_location& sl) :
-        post::RequestInfo(zName, base, sl)
+    TachyonRequestInfo::TachyonRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl) :
+        RequestInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    TachyonRequest::TachyonRequest(Tachyon* v, const Param& p) : post::Request(p), TachyonBind(v)
+    TachyonRequest::TachyonRequest(Tachyon* v, const Param& p) : Request(p), TachyonBind(v)
     {
     }
     

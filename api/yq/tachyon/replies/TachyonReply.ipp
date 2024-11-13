@@ -6,19 +6,19 @@
 
 #include "TachyonReply.hpp"
 
-#include <yq/post/ReplyInfoWriter.hpp>
+#include <yq/tachyon/post/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonReply)
 
 namespace yq::tachyon {
-    TachyonReplyInfo::TachyonReplyInfo(std::string_view zName, post::ReplyInfo& base, const std::source_location& sl) :
-        post::ReplyInfo(zName, base, sl)
+    TachyonReplyInfo::TachyonReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
+        ReplyInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    TachyonReply::TachyonReply(const post::RequestCPtr& rq, Tachyon* v, const Param& p) : post::Reply(rq, p), TachyonBind(v)
+    TachyonReply::TachyonReply(const RequestCPtr& rq, Tachyon* v, const Param& p) : Reply(rq, p), TachyonBind(v)
     {
     }
     

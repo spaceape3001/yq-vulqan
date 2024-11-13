@@ -6,23 +6,23 @@
 
 #pragma once
 
-#include <yq/post/Request.hpp>
+#include <yq/tachyon/post/Request.hpp>
 #include <yq/tachyon/viewer/ViewerBind.hpp>
 
 namespace yq::tachyon {
-    class WindowRequestInfo : public post::RequestInfo {
+    class WindowRequestInfo : public RequestInfo {
     public:
-        WindowRequestInfo(std::string_view zName, post::RequestInfo& base, const std::source_location& sl=std::source_location::current());
+        WindowRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class WindowRequest : public post::Request, public ViewerBind {
+    class WindowRequest : public Request, public ViewerBind {
         YQ_OBJECT_INFO(WindowRequestInfo)
-        YQ_OBJECT_DECLARE(WindowRequest, post::Request)
+        YQ_OBJECT_DECLARE(WindowRequest, Request)
     public:
     
-        struct Param : public post::Request::Param {
+        struct Param : public Request::Param {
         };
     
         WindowRequest(Viewer*, const Param& p = {});

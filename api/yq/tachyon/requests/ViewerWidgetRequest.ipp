@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViewerWidgetRequest.hpp"
-#include <yq/post/CommandInfoWriter.hpp>
+#include <yq/tachyon/post/CommandInfoWriter.hpp>
 #include <yq/tachyon/widget/Widget.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerWidgetRequest)

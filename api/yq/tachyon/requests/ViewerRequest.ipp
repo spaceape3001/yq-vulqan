@@ -6,19 +6,19 @@
 
 #include "ViewerRequest.hpp"
 
-#include <yq/post/RequestInfoWriter.hpp>
+#include <yq/tachyon/post/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerRequest)
 
 namespace yq::tachyon {
-    ViewerRequestInfo::ViewerRequestInfo(std::string_view zName, post::RequestInfo& base, const std::source_location& sl) :
-        post::RequestInfo(zName, base, sl)
+    ViewerRequestInfo::ViewerRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl) :
+        RequestInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerRequest::ViewerRequest(Viewer* v, const Param& p) : post::Request(p), ViewerBind(v)
+    ViewerRequest::ViewerRequest(Viewer* v, const Param& p) : Request(p), ViewerBind(v)
     {
     }
     

@@ -6,7 +6,7 @@
 
 #include "ViewerCloseReply.hpp"
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
-#include <yq/post/ReplyInfoWriter.hpp>
+#include <yq/tachyon/post/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseReply)
 

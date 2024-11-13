@@ -6,19 +6,19 @@
 
 #include "AppRequest.hpp"
 
-#include <yq/post/RequestInfoWriter.hpp>
+#include <yq/tachyon/post/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppRequest)
 
 namespace yq::tachyon {
-    AppRequestInfo::AppRequestInfo(std::string_view zName, post::RequestInfo& base, const std::source_location& sl) :
-        post::RequestInfo(zName, base, sl)
+    AppRequestInfo::AppRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl) :
+        RequestInfo(zName, base, sl)
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    AppRequest::AppRequest(const Param& p) : post::Request(p)
+    AppRequest::AppRequest(const Param& p) : Request(p)
     {
     }
     

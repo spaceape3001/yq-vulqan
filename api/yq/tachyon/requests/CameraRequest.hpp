@@ -6,25 +6,25 @@
 
 #pragma once
 
-#include <yq/post/Request.hpp>
+#include <yq/tachyon/post/Request.hpp>
 #include <yq/tachyon/camera/CameraBind.hpp>
 
 namespace yq::tachyon {
     class Camera;
 
-    class CameraRequestInfo : public post::RequestInfo {
+    class CameraRequestInfo : public RequestInfo {
     public:
-        CameraRequestInfo(std::string_view zName, post::RequestInfo& base, const std::source_location& sl=std::source_location::current());
+        CameraRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class CameraRequest : public post::Request, public CameraBind {
+    class CameraRequest : public Request, public CameraBind {
         YQ_OBJECT_INFO(CameraRequestInfo)
-        YQ_OBJECT_DECLARE(CameraRequest, post::Request)
+        YQ_OBJECT_DECLARE(CameraRequest, Request)
     public:
     
-        struct Param : public post::Request::Param {
+        struct Param : public Request::Param {
         };
     
         CameraRequest(Camera*, const Param& p = {});

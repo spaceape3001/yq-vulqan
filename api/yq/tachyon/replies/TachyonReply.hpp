@@ -6,29 +6,29 @@
 
 #pragma once
 
-#include <yq/post/Reply.hpp>
+#include <yq/tachyon/post/Reply.hpp>
 #include <yq/tachyon/core/TachyonBind.hpp>
 
 namespace yq::tachyon {
     class Tachyon;
     class TachyonRequest;
 
-    class TachyonReplyInfo : public post::ReplyInfo {
+    class TachyonReplyInfo : public ReplyInfo {
     public:
-        TachyonReplyInfo(std::string_view zName, post::ReplyInfo& base, const std::source_location& sl=std::source_location::current());
+        TachyonReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
-    class TachyonReply : public post::Reply, public TachyonBind {
+    class TachyonReply : public Reply, public TachyonBind {
         YQ_OBJECT_INFO(TachyonReplyInfo)
-        YQ_OBJECT_DECLARE(TachyonReply, post::Reply)
+        YQ_OBJECT_DECLARE(TachyonReply, Reply)
     public:
     
-        struct Param : public post::Reply::Param {
+        struct Param : public Reply::Param {
         };
     
-        TachyonReply(const post::RequestCPtr&, Tachyon*, const Param& p = {});
+        TachyonReply(const RequestCPtr&, Tachyon*, const Param& p = {});
         virtual ~TachyonReply();
         
         static void init_info();

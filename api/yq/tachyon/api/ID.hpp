@@ -7,13 +7,11 @@
 #pragma once
 
 #include <cstdint>
-#include <yq/tachyon/api/ID.hpp>
 
 namespace yq::tachyon {
-    struct TachyonID {
+    struct ID {
         uint64_t    id  = 0ULL;
-        constexpr auto operator<=>(const TachyonID&) const noexcept = default;
+        constexpr auto operator<=>(const ID&) const noexcept = default;
         constexpr operator uint64_t() const noexcept { return id; }
-        constexpr operator ID() const noexcept { return { id }; }
     };
 }

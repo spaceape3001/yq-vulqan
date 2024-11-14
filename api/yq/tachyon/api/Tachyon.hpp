@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/core/Ref.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/tachyon/tachyon/TachyonID.hpp>
 

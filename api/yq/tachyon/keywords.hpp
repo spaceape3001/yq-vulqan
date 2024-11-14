@@ -33,15 +33,23 @@ namespace yq::tachyon {
     struct controllers_t {};
     struct direct_t{};
     struct forward_t {};
+    struct lock_t {};
+    struct locked_t {};
     struct number_t {};
     struct probe_t {};
     struct queue_t {};
+    struct settable_t {};
     struct target_t {};
     struct unlock_t {};
     struct unlocked_t {};
     struct viewer_t {};
     struct widget_t {};
     struct window_t {};
+
+    // any problematic macros....
+    #ifdef LOCK
+        #undef LOCK
+    #endif
 
     static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
@@ -51,12 +59,15 @@ namespace yq::tachyon {
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;
     static constexpr forward_t      FORWARD;
+    static constexpr lock_t         LOCK;
+    static constexpr locked_t       LOCKED;
     static constexpr number_t       NUMBER;
     static constexpr probe_t        PROBE;
+    static constexpr queue_t        QUEUE;
     static constexpr refresh_t      REFRESH;
+    static constexpr settable_t     SETTABLE;
     static constexpr static_t       STATIC;
     static constexpr target_t       TARGET;
-    static constexpr queue_t        QUEUE;
     static constexpr unlock_t       UNLOCK;
     static constexpr unlocked_t     UNLOCKED;
     static constexpr viewer_t       VIEWER;

@@ -20,30 +20,30 @@ add_library(${PROJECT_NAME} SHARED
     
     MyImGui.cpp
     
-    vulqan.cpp
-    VulqanManager.cpp
+    #vulqan.cpp
+    #VulqanManager.cpp
 
 
-    app/Application.cpp
-    app/Manager.cpp
+    #app/Application.cpp
+    #app/Manager.cpp
     
     buffer/Buffer.cpp
 
-    core/Controlling.cpp
-    core/Tachyon.cpp
-    core/Thread.cpp
+    #core/Controlling.cpp
+    #core/Tachyon.cpp
+    #core/Thread.cpp
 
-    camera/Camera.cpp
-    cameras/cameras.cpp
+    #camera/Camera.cpp
+    #cameras/cameras.cpp
     
     commands/commands.cpp
     
     config/build.cpp
     
-    controller/Controller.cpp
+    #controller/Controller.cpp
     #controllers/controllers.cpp
     
-    editor/Editor.cpp
+    #editor/Editor.cpp
     
     enum/enum.cpp
     enum/KeyCode.cpp
@@ -55,7 +55,7 @@ add_library(${PROJECT_NAME} SHARED
     
     # frame/AppFrame.cpp # Issue/TODO
     
-    glfw/GLFWManager.cpp
+    #glfw/GLFWManager.cpp
     glfw/Joystick.cpp
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
@@ -66,7 +66,9 @@ add_library(${PROJECT_NAME} SHARED
     #light/Light.cpp
     #lights/lights.cpp
 
-    manipulator/Manipulator.cpp
+    #manipulator/Manipulator.cpp
+    
+    messages/messages.cpp
     
     #model/Model.cpp
     #models/models.cpp
@@ -75,6 +77,9 @@ add_library(${PROJECT_NAME} SHARED
 
     pipeline/Pipeline.cpp
     pipeline/PipelineUtils.cpp
+    
+    post/post.cpp
+    posts/posts.cpp
 
     render/Render2D.cpp
     render/Render3D.cpp
@@ -90,7 +95,7 @@ add_library(${PROJECT_NAME} SHARED
     sampler/Sampler.cpp
     sampler/SamplerInfoFile.cpp
 
-    scene/Perspective.cpp
+    #scene/Perspective.cpp
     
     shader/GLSLShader.cpp
     shader/Shader.cpp
@@ -108,9 +113,9 @@ add_library(${PROJECT_NAME} SHARED
     # v/VqEnumerations.cpp
     v/VqEnums.cpp
     v/VqLogging.cpp
-    v/VqUtils.cpp
+    #v/VqUtils.cpp
     
-    viewer/viewer.cpp
+    #viewer/viewer.cpp
     
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
@@ -120,17 +125,17 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViRendered.cpp
     viz/ViTasker.cpp
     viz/ViThread.cpp
-    viz/ViVisualizer.cpp
-    viz/Visualizer.cpp
+    #viz/ViVisualizer.cpp
+    #viz/Visualizer.cpp
     
     viz/viz.cpp
     
-    widget/Widget.cpp
+    #widget/Widget.cpp
     
-    widgets/ImGuiDemoWidget.cpp
-    widgets/Scene3DWidget.cpp
-    widgets/StackedWidget.cpp
-    widgets/TextArea.cpp
+    #widgets/ImGuiDemoWidget.cpp
+    #widgets/Scene3DWidget.cpp
+    #widgets/StackedWidget.cpp
+    #widgets/TextArea.cpp
 )
 
 
@@ -157,7 +162,6 @@ PUBLIC
     yq_gui3rd
     yq_imgui 
     yq_keyv
-    yq_post
     yq_process
     yq_raster
     yq_stb 

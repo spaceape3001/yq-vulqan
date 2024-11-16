@@ -23,6 +23,9 @@ add_library(${PROJECT_NAME} SHARED
     #vulqan.cpp
     #VulqanManager.cpp
 
+    api/api.cpp
+    interfaces/interfaces.cpp
+    proxies/proxies.cpp
 
     #app/Application.cpp
     #app/Manager.cpp
@@ -36,7 +39,7 @@ add_library(${PROJECT_NAME} SHARED
     #camera/Camera.cpp
     #cameras/cameras.cpp
     
-    commands/commands.cpp
+    #commands/commands.cpp
     
     config/build.cpp
     
@@ -49,7 +52,7 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
-    events/events.cpp
+    #events/events.cpp
     
     # font/Font.cpp      # Issue/TODO
     
@@ -78,19 +81,19 @@ add_library(${PROJECT_NAME} SHARED
     pipeline/Pipeline.cpp
     pipeline/PipelineUtils.cpp
     
-    post/post.cpp
-    posts/posts.cpp
+    #post/post.cpp
+    #posts/posts.cpp
 
     render/Render2D.cpp
     render/Render3D.cpp
     render/Rendered.cpp
 
-    renders/renders.cpp
+    #renders/renders.cpp
 
-    replies/replies.cpp
+    #replies/replies.cpp
     
     
-    requests/requests.cpp
+    #requests/requests.cpp
 
     sampler/Sampler.cpp
     sampler/SamplerInfoFile.cpp

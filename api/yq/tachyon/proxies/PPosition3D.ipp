@@ -7,9 +7,12 @@
 #pragma once
 
 #include "PPosition3D.hpp"
-#include <yq/tachyon/api/ProxyWriter.hpp>
 
 namespace yq::tachyon {
+    PPosition3D::PPosition3D(Tachyon* t, IPosition3D& i) : PPosition3D(t, i, i.position3d())
+    {
+    }
+
     PPosition3D::PPosition3D(Tachyon* t, IPosition3D& i, const Vector3D& p, uint64_t rev) : 
         Proxy(t, rev), m_interface(i), m_position(p)
     {
@@ -17,12 +20,12 @@ namespace yq::tachyon {
 
     void        PPosition3D::position3d(set_t, const Vector3D& v) 
     {
-        dispatch([=](){ this.m_interface.position3d(SET, v) });
+        dispatch([=,this](){ m_interface.position3d(SET, v); });
     }
     
     void        PPosition3D::position3d(move_t, const Vector3D& v) 
     {
-        dispatch([=](){ this.m_interface.position3d(MOVE, v) });
+        dispatch([=,this](){ m_interface.position3d(MOVE, v); });
     }
 
     Proxy*    PPosition3D::reproxy() const 

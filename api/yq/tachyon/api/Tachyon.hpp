@@ -6,99 +6,91 @@
 
 #pragma once
 
+#include <yq/tachyon/keywords.hpp>
 #include <yq/core/Ref.hpp>
-#include <yq/core/Object.hpp>
-#include <yq/tachyon/tachyon/TachyonID.hpp>
-
-
+#include <yq/core/MetaObject.hpp>
+#include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/typedef/post.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/typedef/types.hpp>
 
 #include <tbb/spin_rw_mutex.h>
-#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
 #include <concepts>
 
 namespace yq::tachyon {
     class Thread;
-    class Tachyon;
     
-    template <typename T>
-    concept SomeTachyon = std::derived_from<T,Tachyon>;
-    
-    class TachyonInfo : public PBXInfo {
+    class TachyonInfo : public MetaObjectInfo {
     public:
         
         template <typename C> class Writer;
 
-        TachyonInfo(std::string_view zName, PBXInfo& base, const std::source_location& sl=std::source_location::current());
+        TachyonInfo(std::string_view zName, MetaObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        
+        Types       types() const { return m_types; }
+        
+    private:
+        Types       m_types;
     };
+    
+    
+    class Proxy;
+    
 
     /*! \brief Tachyon is thread-aware base post-passing heavy object
     
         The tachyon is the bit that makes the world go around
     */
-    class Tachyon : public Object, public RefCount {
+    class Tachyon : public MetaObject {
         YQ_OBJECT_INFO(TachyonInfo)
-        YQ_OBJECT_DECLARE(Tachyon, PBX)
+        YQ_OBJECT_DECLARE(Tachyon, MetaObject)
     public:
         
-        //! How we deal with posts
-        enum class PostMode {
-        
-            //! Everything direct (no buffering)
-            Direct,
-            
-            //! Other thread into queue, this thread direct
-            ThreadSafe,
-            
-            //! Everything into queues
-            Queued,
-            
-            //! Everything into the one queue (can preserve order, but at a performance cost)
-            OneQueue
+        struct Param {
+            std::string_view        name;
         };
     
-    
-        struct Param : public PBX::Param {
-        };
-    
-        Tachyon(const Param&p={});
+        Tachyon(const Param&p = {});
         ~Tachyon();
         
-        unsigned int                    thread_id() const { return m_threadId; }
-        
-        bool        in_thread() const;
-        PostMode    post_mode() const { return m_postMode; }
-        
-        static void init_info();
+        unsigned int    thread_id() const { return m_threadId; }
+        bool            in_thread() const;
+        static void     init_info();
 
-        virtual void receive(const PostCPtr&) override;
+        //  Inbound mail
+        void        mail(const PostCPtr&);
+        void        mail(proxy_t, const PostCPtr&);
+
+        //virtual void receive(const PostCPtr&) override;
 
         //! Checks for attachment
-        bool        attached(forward_t, Dispatcher*) const;
+        //bool        attached(forward_t, Dispatcher*) const;
 
         //! TRUE if we're in event replay mode (only one replay at a time)
-        bool        in_replay() const;
+        //bool        in_replay() const;
 
     protected:
         mutable tbb::spin_rw_mutex      m_mutex;
         
         //! Read-only lock, conditional to object's thread
-        #define LOCK                                        \
-            tbb::spin_rw_mutex::scoped_lock    _lock;       \
-            if(!in_thread())                                \
+        #define TRLOCK                                          \
+            tbb::spin_rw_mutex::scoped_lock    _lock;           \
+            if(!in_thread())                                    \
                 _lock.acquire(m_mutex, false);
 
         //! Write lock, conditional to object's thread
-        #define WLOCK                                       \
-            tbb::spin_rw_mutex::scoped_lock    _lock;       \
-            if(!in_thread())                                \
+        #define TWLOCK                                          \
+            tbb::spin_rw_mutex::scoped_lock    _lock;           \
+            if(!in_thread())                                    \
                 _lock.acquire(m_mutex, true);
         
         //! Write lock, unconditional
-        #define XLOCK tbb::spin_rw_mutex::scoped_lock  _lock(m_mutex, true);
+        #define TXLOCK tbb::spin_rw_mutex::scoped_lock  _lock(m_mutex, true);
 
         // The constructor meant for Thread's use (because... C++ won't let the friend declaration get to it in private)
-        Tachyon(const Param&p, thread_t);
+        Tachyon(const Param&, thread_t);
         
         //! Thread safe member-assignment
         template <SomeTachyon T, typename V>
@@ -109,22 +101,28 @@ namespace yq::tachyon {
                 XLOCK
                 std::swap( static_cast<T*>(this)->*member, temp );
             }
+            changed();
             return temp;
         }
-        
         
         //! Replay queued posts (from our thread)
         void    replay(direct_t);
 
         //! Replay queued posts (from other threads)
         void    replay(thread_t);
+
+        //! Replay from proxied posts
+        void    replay(proxy_t);
         
         //! Replay queued posts (depends on post mode)
         void    replay(all_t);
         
-        //! Sets the post mode
-        void    set_post_mode(PostMode);
         
+        
+        
+        
+
+
         //! Forward said message to the forwarding vector
         void    forward(const PostCPtr&);
         
@@ -134,15 +132,28 @@ namespace yq::tachyon {
         //! Detaches from the given dispatcher
         void    detach(forward_t, Dispatcher*);
         
+        enum class PostAdvice {
+            Reject,
+            Accept
+        };
+        
+        virtual PostAdvice  advise(const PostCPtr&) const;
+        
     private:
-        const uint64_t              m_id;
-    
-        uint64_t                        m_padding0[7];  // to avoid false sharing
-        std::atomic<unsigned int>       m_threadId;
-        std::vector<PostCPtr>     m_direct, m_threaded; 
-        std::vector<Dispatcher*>  m_forward;       //!< Things that we can forward messages too
-        std::atomic<PostMode>           m_postMode  = PostMode::Queued;
-        bool                            m_replay    = false;
+
+        std::string                 m_name;
+        std::atomic<unsigned int>   m_threadId;
+
+
+        // Mail boxes....
+        std::vector<PostCPtr>               m_direct, m_threaded, m_outbound; 
+        std::vector<TachyonID>              m_snoops;       //!< Those eavesdropping on us
+        std::vector<TachyonID>              m_eavesdrops;   //!< Who we're eavesdropping on
+        std::vector<TachyonID>              m_senders;      //!< Who we're broadcasting from
+        std::vector<TachyonID>              m_recievers;    //!< Who we're broadcasting to
+        std::multimap<uint32_t, TachyonID>  m_control;      //!< Those controlling us
+        
+        
         
         void    _replay(direct_t);
         void    _replay(thread_t);

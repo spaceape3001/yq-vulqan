@@ -7,24 +7,23 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 
 namespace yq::tachyon {
     class Tachyon;
     
-
     //! The proxy is a *buffer* to an interface
     class Proxy {
     public:
     
-        Tachyon*    object() const { return m_tachyon; }
-        uint64_t    revision() const { return m_revision; }
+        Tachyon*        object() const { return m_tachyon; }
+        uint64_t        revision() const { return m_revision; }
     
     protected:
-        Proxy(Tachyon*, uint64_t);
+        Proxy(Tachyon*);
         ~Proxy();
 
-        template <Pred pred>
-        void        dispatch(pred);
+        void            dispatch(std::function<void()>&&);
     
     private:
         Tachyon*        m_tachyon;

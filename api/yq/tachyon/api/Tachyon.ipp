@@ -11,8 +11,8 @@
 
 namespace yq::tachyon {
 
-    TachyonInfo::TachyonInfo(std::string_view zName, post::PBXInfo& base, const std::source_location& sl) :
-        post::PBXInfo(zName, base, sl)
+    TachyonInfo::TachyonInfo(std::string_view zName, MetaObjectInfo& base, const std::source_location& sl) :
+        MetaObjectInfo(zName, base, sl)
     {
         set(Flag::TACHYON);
     }
@@ -22,7 +22,7 @@ namespace yq::tachyon {
         //  Add to thread...
     }
     
-    Tachyon::Tachyon(const Param&p, init_t) : post::PBX(p)
+    Tachyon::Tachyon(const Param&p, init_t)
     {
         m_threadId  = thread::id();
     }
@@ -35,6 +35,22 @@ namespace yq::tachyon {
     {
     }
 
+    Tachyon::PostAdvice  Tachyon::advise(const PostCPtr&) const 
+    { 
+        return PostAdvice::Accept; 
+    }
+    
+    bool Tachyon::in_thread() const
+    {
+        return m_threadId == thread::id();
+    }
+
+
+
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    
     
     void    Tachyon::attach(forward_t, post::Dispatcher* pDispatcher)
     {
@@ -68,10 +84,6 @@ namespace yq::tachyon {
             p -> receive(pp);
     }
     
-    bool Tachyon::in_thread() const
-    {
-        return m_threadId == thread::id();
-    }
 
     void    Tachyon::receive(const post::PostCPtr& pp) 
     {

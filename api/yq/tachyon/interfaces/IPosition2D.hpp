@@ -8,6 +8,7 @@
 
 #include <yq/vector/Vector3.hpp>
 #include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/PluginID.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {

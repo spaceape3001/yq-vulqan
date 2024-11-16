@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <yq/post/PBXInfoWriter.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/meta/MetaObjectInfoWriter.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of manager information
     */
     template <typename C>
-    class TachyonInfo::Writer : public PBXInfo::Writer<C> {
+    class TachyonInfo::Writer : public MetaObjectInfo::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(TachyonInfo* theInfo) : PBXInfo::Writer<C>(theInfo), m_meta(theInfo)
+        Writer(TachyonInfo* theInfo) : MetaObjectInfo::Writer<C>(theInfo), m_meta(theInfo)
         {
         }
         

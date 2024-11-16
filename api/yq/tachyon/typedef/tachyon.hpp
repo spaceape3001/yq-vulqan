@@ -7,6 +7,7 @@
 #pragma once
 
 #include <concepts>
+#include <cstdint>
 
 namespace yq { 
     template <typename> class Ref;
@@ -20,4 +21,8 @@ namespace yq::tachyon {
 
     template <class E>
     concept SomeTachyon = std::derived_from<E,Tachyon>;
+
+    template <class> class ID;
+    
+    using TachyonID = ID<Tachyon>;
 }

@@ -16,4 +16,8 @@ namespace yq::tachyon {
     using TextureCPtr           = Ref<const Texture>;
     
     struct TextureInfo;
+
+    template <class> class ID;
+    
+    using TextureID = ID<Texture>;
 }

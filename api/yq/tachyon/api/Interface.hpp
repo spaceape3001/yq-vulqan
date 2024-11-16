@@ -6,15 +6,14 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <concepts>
 
 namespace yq::tachyon {
 
-    template <typename T>
-    static constexpr const bool     is_interface_v       = InfoBinder<T>::IsTachyon && InfoBinder<T>::IsInterface;
-    
+    class Tachyon;
+
     class InterfaceInfo;
-    
     
     /*! \class Interface
     
@@ -26,29 +25,51 @@ namespace yq::tachyon {
         NO CHAINED INHERITANCE of Interfaces... Interfaces are derived by tachyons,
         no interface chains, they are meant to be SIMPLE.
     */
+    
+    template <typename T>
+    concept Interface    = requires {
+        T::IsInterface == true;
+    };
 }
+
+namespace yq {
+    template <tachyon::Interface I>
+    struct InfoBinder<I> {
+        using Info = tachyon::InterfaceInfo;
+        static constexpr const bool Defined         = true;
+        static constexpr const bool IsObject        = false;
+        static constexpr const bool IsCompound      = true;
+        static constexpr const bool IsType          = false;
+        static constexpr const bool IsTachyon       = true;
+        static constexpr const bool IsInterface     = true;
+        static const Info& bind() { return I::staticMetaInfo(); } 
+        static Info&       edit() { return const_cast<Info&>(I::staticMetaInfo()); }
+    };
+}
+
 
 
 /*! \brief Declares a meta type
 
     \note   MUST BE USED AT GLOBAL SCOPE (NO NAMESPACES)
 */
-#define YQ_INTERFACE_DECLARE(...)                                       \
-    namespace yq {                                                      \
-        template <>                                                     \
-        struct InfoBinder<__VA_ARGS__>  : public std::true_type {       \
-            using Info = tachyon::InterfaceInfo;                        \
-            static constexpr const bool Defined         = true;         \
-            static constexpr const bool IsObject        = false;        \
-            static constexpr const bool IsType          = false;        \
-            static constexpr const bool IsCompound      = true;         \
-            static constexpr const bool IsInterface     = true;         \
-            static constexpr const bool IsProxy         = false;        \
-            static constexpr const bool IsTachyon       = true;         \
-            static const Info&   bind() { return edit(); }              \
-            static Info&         edit();                                \
-        };                                                              \
-    } 
+#define YQ_INTERFACE_DECLARE(iface, proxy)                                                  \
+    public:                                                                                 \
+        static constexpr const bool IsInterface = true;                                     \
+        using MyProxy               = proxy;                                                \
+        static const ::yq::tachyon::InterfaceInfo&  staticMetaInfo();                       \
+        const ::yq::tachyon::InterfaceInfo&  metaInfo() const;
+        
+#define YQ_INTERFACE_IMPLEMENT(name)                                                                                \
+    const ::yq::tachyon::InterfaceInfo&     name::staticMetaInfo()                                                                  \
+    {                                                                                                               \
+        static yq::tachyon::InterfaceFixer<name>*  s_info = new yq::tachyon::InterfaceFixer<name>(#name);           \
+        return *s_info;                                                                                             \
+    }                                                                                                               \
+    const ::yq::tachyon::InterfaceInfo&     name::metaInfo() const                                                                  \
+    {                                                                                                               \
+        return staticMetaInfo();                                                                                    \
+    }                                                                                                               \
+    template <> yq::DelayInit::Ctor yq::tachyon::InterfaceFixer<name>::s_reg([](){ name::staticMetaInfo(); });                  \
     
-#define YQ_PROXY(...)   \
-    using MyProxy   = __VA_ARGS__;
+    

@@ -28,6 +28,7 @@ namespace yq::tachyon {
         consteval operator DataActivity() const noexcept { return DataActivity::STATIC; }
     };
     
+    struct changed_t {};
     struct close_t {};
     struct controller_t {};
     struct controllers_t {};
@@ -37,9 +38,12 @@ namespace yq::tachyon {
     struct locked_t {};
     struct number_t {};
     struct probe_t {};
+    struct proxy_t {};
     struct queue_t {};
     struct settable_t {};
     struct target_t {};
+    struct typed_t {};
+    struct types_t {};
     struct unlock_t {};
     struct unlocked_t {};
     struct viewer_t {};
@@ -51,6 +55,7 @@ namespace yq::tachyon {
         #undef LOCK
     #endif
 
+    static constexpr changed_t      CHANGED;
     static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
     static constexpr controller_t   CONTROLLER;
@@ -63,11 +68,14 @@ namespace yq::tachyon {
     static constexpr locked_t       LOCKED;
     static constexpr number_t       NUMBER;
     static constexpr probe_t        PROBE;
+    static constexpr proxy_t        PROXY;
     static constexpr queue_t        QUEUE;
     static constexpr refresh_t      REFRESH;
     static constexpr settable_t     SETTABLE;
     static constexpr static_t       STATIC;
     static constexpr target_t       TARGET;
+    static constexpr typed_t        TYPED;
+    static constexpr types_t        TYPES;
     static constexpr unlock_t       UNLOCK;
     static constexpr unlocked_t     UNLOCKED;
     static constexpr viewer_t       VIEWER;

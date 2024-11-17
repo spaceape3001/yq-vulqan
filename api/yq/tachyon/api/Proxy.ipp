@@ -8,7 +8,7 @@
 #include "Tachyon.hpp"
 
 namespace yq::tachyon {
-    Proxy::Proxy(Tachyon*t) : m_tachyon(t), m_revision(t->revision())
+    Proxy::Proxy()
     {
     }
     
@@ -16,8 +16,10 @@ namespace yq::tachyon {
     {
     }
 
-    void    Proxy::dispatch(std::function<void()>&& fn)
+    void    Proxy::dispatch(ProxyFN&& fn)
     {
-        //  Do the delayed command here...
+        if(m_tachyon){
+            m_tachyon -> proxy(std::move(fn));
+        }
     }
 }

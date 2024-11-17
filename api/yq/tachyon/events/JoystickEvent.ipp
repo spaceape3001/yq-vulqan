@@ -6,7 +6,7 @@
 
 #include "JoystickEvent.hpp"
 
-#include <yq/tachyon/post/EventInfoWriter.hpp>
+#include <yq/tachyon/api/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickEvent)
 

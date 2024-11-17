@@ -58,7 +58,7 @@ namespace yq::tachyon {
             if(!i)
                 return nullptr;
                 
-            return typename I::Proxy(tac, *i);
+            return new typename I::Proxy(*i);
         }
 
         static DelayInit::Ctor  s_reg;

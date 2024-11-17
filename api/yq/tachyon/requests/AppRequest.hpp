@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/post/Request.hpp>
+#include <yq/tachyon/api/Request.hpp>
 
 namespace yq::tachyon {
     class AppRequestInfo : public RequestInfo {

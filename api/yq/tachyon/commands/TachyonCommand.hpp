@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/post/Command.hpp>
-#include <yq/tachyon/core/TachyonBind.hpp>
+#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class Tachyon;

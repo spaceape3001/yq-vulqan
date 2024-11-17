@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/post/Reply.hpp>
+#include <yq/tachyon/api/Reply.hpp>
 #include <yq/tachyon/viewer/ViewerBind.hpp>
 
 namespace yq::tachyon {

@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "IPosition3D.hpp"
+#include "IPosition2D.hpp"
 
 #include <yq/tachyon/api/InterfaceInfoWriter.hpp>
-#include <yq/tachyon/proxies/PPosition3D.hpp>
+#include <yq/tachyon/proxies/PPosition2D.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition3D)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition2D)
 
 namespace yq::tachyon {
-    void    IPosition3D::init_info()
+    void    IPosition2D::init_info()
     {
-        auto w = writer<IPosition3D>();
-        w.proxy<PPosition3D>();
+        auto w = writer<IPosition2D>();
+        w.proxy<PPosition2D>();
     }
 }

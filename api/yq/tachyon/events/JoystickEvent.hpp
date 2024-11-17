@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/post/Event.hpp>
+#include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/glfw/Joystick.hpp>
 
 namespace yq::tachyon {

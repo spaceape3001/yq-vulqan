@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViewerCursorNormalCommand.hpp"
-#include <yq/tachyon/post/CommandInfoWriter.hpp>
+#include <yq/tachyon/api/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCursorNormalCommand)
 

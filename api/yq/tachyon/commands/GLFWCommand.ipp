@@ -6,7 +6,7 @@
 
 #include "GLFWCommand.hpp"
 
-#include <yq/tachyon/post/CommandInfoWriter.hpp>
+#include <yq/tachyon/api/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWCommand)
 

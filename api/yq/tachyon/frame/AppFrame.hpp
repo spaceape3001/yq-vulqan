@@ -20,13 +20,8 @@ namespace yq::tachyon {
         using clock_t  = std::chrono::high_resolution_clock;
     
         //! Our time point
-        //using time_point_t  = clock_t::time_point;
+        //
     
-        //! App Tick number, always monotonically increasing
-        uint64_t        tick() const { return m_tick; }
-        
-        //! App time
-        unit::Second    time() const { return m_time; }
         
     
     private:

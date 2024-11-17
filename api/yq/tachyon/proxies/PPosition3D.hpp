@@ -19,13 +19,10 @@ namespace yq::tachyon {
         void        position3d(move_t, const Vector3D&) override;
 
     private:
-        PPosition3D(Tachyon* t, IPosition3D& i);
-        PPosition3D(Tachyon* t, IPosition3D& i, const Vector3D& p, uint64_t rev=0);
+        PPosition3D(IPosition3D& i);
 
         IPosition3D&    m_interface;
         Vector3D        m_position;
-
-        virtual Proxy*    reproxy() const override;
     };
 }
 

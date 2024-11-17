@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "JoystickConnectEvent.hpp"
-#include <yq/tachyon/post/EventInfoWriter.hpp>
+#include <yq/tachyon/api/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickConnectEvent::init_info()

@@ -24,7 +24,9 @@ add_library(${PROJECT_NAME} SHARED
     #VulqanManager.cpp
 
     api/api.cpp
-    interfaces/interfaces.cpp
+    commands/commands.cpp
+    events/events.cpp
+    #interfaces/interfaces.cpp
     proxies/proxies.cpp
 
     #app/Application.cpp
@@ -39,7 +41,6 @@ add_library(${PROJECT_NAME} SHARED
     #camera/Camera.cpp
     #cameras/cameras.cpp
     
-    #commands/commands.cpp
     
     config/build.cpp
     
@@ -52,7 +53,6 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
-    #events/events.cpp
     
     # font/Font.cpp      # Issue/TODO
     

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/post/Message.hpp>
+#include <yq/tachyon/api/Message.hpp>
 
 namespace yq::tachyon {
 

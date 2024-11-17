@@ -7,6 +7,9 @@
 #include "Tachyon.hpp"
 #include "TachyonBind.hpp"
 #include "TachyonInfoWriter.hpp"
+#include "Post.hpp"
+#include "InterfaceInfo.hpp"
+
 #include <yq/core/ThreadId.hpp>
 
 namespace yq::tachyon {
@@ -16,6 +19,44 @@ namespace yq::tachyon {
     {
         set(Flag::TACHYON);
     }
+
+    TachyonInfo::~TachyonInfo()
+    {
+    }
+
+    void    TachyonInfo::add_dispatch(const PBXDispatch*pbx)
+    {
+        if(thread_safe_write()){
+            m_dispatches.local.push_back(pbx);
+        }
+    }
+
+    void    TachyonInfo::add_interface(const InterfaceInfo* ii)
+    {
+        if(thread_safe_write()){
+            m_interfaces.local << ii;
+        }
+    }
+
+    void    TachyonInfo::sweep_impl() 
+    {   
+        MetaObjectInfo::sweep_impl();
+        base()->sweep();
+        
+        m_dispatch.clear();
+        m_interface.all.clear();
+        
+        const TachyonInfo*  tibase = dynamic_cast<const TachyonInfo*>(base());
+        if(tibase){
+            m_dispatch          = tibase->m_dispatch;
+            m_interfaces.all   += tibase->m_interfaces.all;
+        }
+        
+        m_interfaces.all += m_interfaces.local;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
 
     Tachyon::Tachyon(const Param& p) : Tachyon(p, INIT)
     {
@@ -35,9 +76,32 @@ namespace yq::tachyon {
     {
     }
 
-    Tachyon::PostAdvice  Tachyon::advise(const PostCPtr&) const 
+    void        Tachyon::_inbound()
+    {
+        std::vector<PostCPtr>   msgs;
+        
+    }
+
+    void        Tachyon::mail(rx_t, const PostCPtr& pp)
+    {
+        if(advise(pp) == PostAdvice::Reject)
+            return ;
+        
+        TXLOCK
+        m_mailbox.push_back(pp);
+    }
+
+    void    Tachyon::mail(TX, const PostCPtr&pp)
+    {
+        m_outbox.push_back(pp);
+    }
+
+    Tachyon::PostAdvice  Tachyon::advise(const PostCPtr&pp) const 
     { 
-        return PostAdvice::Accept; 
+        if(const TachyonBind* p = dynamic_cast<const TachyonBind*>(pp.ptr())){
+            return (p -> tachyon() == this) ? PostAdvice::Accept : PostAdvice::Reject;
+        }
+        return PostAdvice::None; 
     }
     
     bool Tachyon::in_thread() const
@@ -45,10 +109,27 @@ namespace yq::tachyon {
         return m_threadId == thread::id();
     }
 
+    void Tachyon::proxy(ProxyFN&& fn)
+    {
+        TXLOCK
+        m_proxied.push_back(std::move(fn));
+    }
 
+    void Tachyon::proxy_me(std::function<void(Proxy*)>&& dst)
+    {
+        for(const InterfaceInfo* ii : metaInfo().interfaces().all){
+            Proxy*  p   = ii.proxy(this);
+            if(!p)
+                continue;
+            p->m_interface  = ii;
+            p->m_tachyon    = this;
+            p->m_revision   = revision();
+            dst(p);
+        }
+    }
 
     
-    
+    /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     
     

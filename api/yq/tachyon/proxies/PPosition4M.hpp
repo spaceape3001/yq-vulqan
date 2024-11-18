@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/unit/MKS.hpp>
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/interfaces/IPosition4M.hpp>
 

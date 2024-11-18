@@ -19,6 +19,7 @@ namespace yq::tachyon {
         Camera,
         Editor,
         ImGui,
+        Manager,
         Rendered,
         Thread,
         Viewer,

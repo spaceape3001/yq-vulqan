@@ -28,7 +28,8 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
-        TachyonCommand(Tachyon*, const Param& p = {});
+        TachyonCommand(const Tachyon*, const Param& p = {});
+        TachyonCommand(TachyonID, const Param& p = {});
         virtual ~TachyonCommand();
         
         static void init_info();

@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <yq/post/PBX.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 #include <thread>
 
 namespace yq::tachyon {
@@ -44,15 +43,17 @@ namespace yq::tachyon {
         
         void            cmd_quit();
         void            cmd_start();
+
+        void            tick();
         
     private:
     
         struct Repo;
         static Repo&    repo();
     
-        std::atomic<bool>       m_quit{ false };
-        unit::Second            m_snooze    = 1_ms;
-        std::vector<Tachyon*>   m_objects;
-        std::thread             m_thread;
+        std::atomic<bool>           m_quit{ false };
+        unit::Second                m_snooze    = 1_ms;
+        std::vector<TachyonPtr>     m_objects;
+        std::thread                 m_thread;
     };
 }

@@ -34,6 +34,7 @@ namespace yq::tachyon {
     struct controllers_t {};
     struct direct_t{};
     struct forward_t {};
+    struct hash_t {};
     struct info_t {};
     struct lock_t {};
     struct locked_t {};
@@ -66,6 +67,7 @@ namespace yq::tachyon {
     static constexpr dynamic_t      DYNAMIC;
     static constexpr fixed_t        FIXED;
     static constexpr forward_t      FORWARD;
+    static constexpr hash_t         HASH;
     static constexpr info_t         INFO;
     static constexpr lock_t         LOCK;
     static constexpr locked_t       LOCKED;

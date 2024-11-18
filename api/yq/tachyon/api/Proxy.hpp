@@ -15,6 +15,7 @@ namespace yq::tachyon {
     class AppFrame;
     class Tachyon;
     class InterfaceInfo;
+    struct TachyonSnap;
     
     //! The proxy is a *buffer* to an interface
     class Proxy {
@@ -32,6 +33,7 @@ namespace yq::tachyon {
     
     private:
         friend class Tachyon;
+        friend struct TachyonSnap;
         
         Tachyon*                m_tachyon   = nullptr;
         uint64_t                m_revision  = 0;

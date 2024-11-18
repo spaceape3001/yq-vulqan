@@ -24,4 +24,12 @@ namespace yq::tachyon {
 
     template <class> class ID;
     using TachyonID = ID<Tachyon>;
+    
+    struct TachyonData;
+    using TachyonDataPtr    = Ref<TachyonData>;
+    using TachyonDataCPtr   = Ref<const TachyonData>;
+
+    struct TachyonSnap;
+    using TachyonSnapPtr    = Ref<TachyonSnap>;
+    using TachyonSnapCPtr   = Ref<const TachyonSnap>;
 }

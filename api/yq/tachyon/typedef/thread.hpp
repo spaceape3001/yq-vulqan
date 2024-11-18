@@ -19,4 +19,8 @@ namespace yq::tachyon {
     /*
         DO NOT DECLARE THREAD ID with the ID class... different IDs.
     */
+    
+    struct ThreadData;
+    using ThreadDataPtr     = Ref<ThreadData>;
+    using ThreadDataCPtr    = Ref<const ThreadData>;
 }

@@ -42,6 +42,10 @@ namespace yq::tachyon {
         }
     }
     
+    void Thread::tick()
+    {
+    }
+    
     void Thread::init_info()
     {
         auto w = writer<Thread>();

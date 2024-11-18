@@ -33,6 +33,9 @@ namespace yq::tachyon {
     
     
     /// TACHYON INFO
+
+    struct TachyonData;
+    struct TachyonSnap;
     
     class TachyonInfo : public MetaObjectInfo {
     public:
@@ -62,6 +65,10 @@ namespace yq::tachyon {
         virtual void    sweep_impl() override;
     
     private:
+        friend class Tachyon;
+        
+        virtual TachyonSnapPtr   create_snap(Tachyon*) const = 0;
+        virtual TachyonDataPtr   create_data() const = 0;
         
         struct {
             InterfaceLUC    all, local;
@@ -82,9 +89,16 @@ namespace yq::tachyon {
         The tachyon is the bit that makes the world go around
     */
     class Tachyon : public MetaObject {
+    public:
+        template <typename> class Fixer;
+
+    private:
         YQ_OBJECT_INFO(TachyonInfo)
+        YQ_OBJECT_FIXER(Fixer)
         YQ_OBJECT_DECLARE(Tachyon, MetaObject)
     public:
+        
+        using MyData    = TachyonData;
         
         
         /*! \brief Initialization 
@@ -105,6 +119,7 @@ namespace yq::tachyon {
         
         TachyonID       id(tachyon_t={}) const { return { UniqueID::id() }; }
         ThreadID        id(thread_t) const;
+
 
     protected:
         mutable tbb::spin_rw_mutex      m_mutex;
@@ -144,7 +159,7 @@ namespace yq::tachyon {
         void    proxy_me(std::function<void(Proxy*)>&&);
         
         // This is where you get your processing should be done
-        virtual void    tick(Context&);
+        virtual void    update(Context&){}
         
         //virtual void  pre_tick();     // maybe
         //virtual void  post_tick();    // maybe
@@ -174,10 +189,8 @@ namespace yq::tachyon {
         //! Override to forward (call base to do normal processing)
         virtual void    handle(const PostCPtr&);
         
-        
-        //! Snapshot of the current data....
-        virtual Ref<TachyonData>    snapshot() const;
-        
+        void            snap(TachyonSnap&) const;
+
 
 
     private:
@@ -198,15 +211,14 @@ namespace yq::tachyon {
         
         //! Current thread ID if tick-processing (invalid outside of tick)
         std::atomic<unsigned int>           m_threadId  = kInvalidThread;
-        
+        bool                                m_dirty     = false;
         
         //void    _inbound(Frame&);
         //void    _outbound(Frame&);
         
         void    proxy(ProxyFN&&);
 
-
-        Ref<TachyonData>            ticker(Context&);
+        virtual TachyonDataPtr              tick(Context&);
 
         //std::vector<Tachyon*>           m_children;
         //Tachyon*                        m_parent = nullptr;
@@ -216,4 +228,7 @@ namespace yq::tachyon {
         // The common constructor used between the two
         Tachyon(const Param&p, init_t);
     };
+    
+    #define YQ_TACHYON_DECLARE(...) YQ_OBJECT_DECLARE(__VA_ARGS__)
+    
 }

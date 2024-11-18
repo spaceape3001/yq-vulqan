@@ -6,6 +6,7 @@
 
 #include "Tachyon.hpp"
 #include "TachyonBind.hpp"
+#include "TachyonData.hpp"
 #include "TachyonInfoWriter.hpp"
 #include "InterfaceInfo.hpp"
 #include "Post.hpp"
@@ -18,6 +19,34 @@ namespace yq::tachyon {
     TachyonBind::TachyonBind(const Tachyon*tc) : m_tachyon(tc ? tc -> id() : TachyonID{}) 
     {
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    
+    TachyonSnap::TachyonSnap()
+    {
+    }
+    
+    TachyonSnap::~TachyonSnap()
+    {
+        for(Proxy* p : proxies)
+            delete p;
+        proxies.clear();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+
+    TachyonData::TachyonData()
+    {
+    }
+    
+    TachyonData::~TachyonData()
+    {
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
     TachyonInfo::TachyonInfo(std::string_view zName, MetaObjectInfo& base, const std::source_location& sl) :
         MetaObjectInfo(zName, base, sl)
@@ -146,8 +175,14 @@ namespace yq::tachyon {
         }
     }
 
-
-        Ref<TachyonData>            ticker(Context&);
+    TachyonDataPtr              Tachyon::tick(Context&)
+    {
+        TachyonDataPtr  data    = metaInfo().create_data();
+        if(!data)
+            return {};
+        data.tick       = 
+        return {};
+    }
     
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////

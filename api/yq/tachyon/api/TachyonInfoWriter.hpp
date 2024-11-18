@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/meta/ArgDeducer.hpp>
 #include <yq/meta/MetaObjectInfoWriter.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/Interface.hpp>
@@ -232,5 +233,41 @@ namespace yq::tachyon {
         
     private:
         TachyonInfo* m_meta;
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////
+    
+    template <typename C>
+    class Tachyon::Fixer : public ObjectFixer<C> {
+    public:
+    
+        using snap_fn   = decltype(args::deduce(&C::snap));
+        using data_t    = typename C::MyData;
+        using snap_t    = typename snap_fn::arg_t;
+
+        Fixer(std::string_view zName, typename C::MyBase::MyInfo& base, const std::source_location& sl=std::source_location::current()) : 
+            ObjectFixer<C>(zName, base, sl)
+        {
+        }
+        
+        virtual TachyonSnapPtr   create_snap(Tachyon* t) const override 
+        {
+            if(!t)
+                return {};
+            C* c = static_cast<C*>(t);
+            Ref<snap_t>     snap    = new snap_t(c);
+            c->snap(*snap);
+            return snap;
+        }
+        
+        virtual TachyonDataPtr   create_data(const TachyonSnapPtr& tsp) const override
+        {
+            if(!tsp)
+                return {};
+            return new data_t( static_cast<snap_t*>(tsp.ptr()));
+        }
+        
     };
 }

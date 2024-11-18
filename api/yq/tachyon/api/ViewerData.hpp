@@ -6,15 +6,13 @@
 
 #pragma once
 
-namespace yq {
-    template <typename> class Ref;
-}
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
 
 namespace yq::tachyon {
-    class Camera;
-    using CameraPtr     = Ref<Camera>;
-    using CameraCPtr    = Ref<const Camera>;
-
-    template <class> class ID;
-    using CameraID = ID<Camera>;
+    struct ViewerSnap : public TachyonSnap {
+    };
+    
+    struct ViewerData : public TachyonData {
+    };
 }

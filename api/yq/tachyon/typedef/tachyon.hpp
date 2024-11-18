@@ -23,17 +23,5 @@ namespace yq::tachyon {
     concept SomeTachyon = std::derived_from<E,Tachyon>;
 
     template <class> class ID;
-    
     using TachyonID = ID<Tachyon>;
-
-    //! Utiltity to bind a tachyon to the whatever...
-    class TachyonBind {
-    public:
-        Tachyon* tachyon() const { return m_tachyon; }
-        
-    protected:
-        TachyonBind(Tachyon* v) : m_tachyon(v) {}
-        virtual ~TachyonBind(){}
-        Tachyon* const   m_tachyon;
-    };
 }

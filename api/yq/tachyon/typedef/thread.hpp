@@ -6,21 +6,17 @@
 
 #pragma once
 
+namespace yq {
+    template <typename> class Ref;
+}
+
 namespace yq::tachyon {
     class Thread;
     
+    template <class> class ID;
+    using ThreadID = ID<Thread>;
+
     /*
         DO NOT DECLARE THREAD ID with the ID class... different IDs.
     */
-
-    //! Utiltity to bind a thread to the whatever...
-    class ThreadBind {
-    public:
-        Thread* thread() const { return m_thread; }
-        
-    protected:
-        ThreadBind(Thread* v) : m_thread(v) {}
-        virtual ~ThreadBind(){}
-        Thread* const   m_thread;
-    };
 }

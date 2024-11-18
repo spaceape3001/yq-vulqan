@@ -7,12 +7,17 @@
 #include "Tachyon.hpp"
 #include "TachyonBind.hpp"
 #include "TachyonInfoWriter.hpp"
-#include "Post.hpp"
 #include "InterfaceInfo.hpp"
+#include "Post.hpp"
+#include "Proxy.hpp"
 
 #include <yq/core/ThreadId.hpp>
 
 namespace yq::tachyon {
+
+    TachyonBind::TachyonBind(const Tachyon*tc) : m_tachyon(tc ? tc -> id() : TachyonID{}) 
+    {
+    }
 
     TachyonInfo::TachyonInfo(std::string_view zName, MetaObjectInfo& base, const std::source_location& sl) :
         MetaObjectInfo(zName, base, sl)
@@ -38,13 +43,22 @@ namespace yq::tachyon {
         }
     }
 
+    TachyonInfo::dispatch_span_t     TachyonInfo::dispatches(const PostInfo* pi) const
+    {
+        if(!pi)
+            return {};
+        auto i = m_dispatch.find(pi);
+        if(i == m_dispatch.end())
+            return {};
+        return i->second;
+    }
+
     void    TachyonInfo::sweep_impl() 
     {   
         MetaObjectInfo::sweep_impl();
-        base()->sweep();
         
         m_dispatch.clear();
-        m_interface.all.clear();
+        m_interfaces.all.clear();
         
         const TachyonInfo*  tibase = dynamic_cast<const TachyonInfo*>(base());
         if(tibase){
@@ -76,10 +90,14 @@ namespace yq::tachyon {
     {
     }
 
-    void        Tachyon::_inbound()
+    void        Tachyon::handle(const PostCPtr&pp)
     {
-        std::vector<PostCPtr>   msgs;
         
+    }
+
+    void        Tachyon::mail(forward_t, const PostCPtr& pp)
+    {
+        m_forward.push_back(pp);
     }
 
     void        Tachyon::mail(rx_t, const PostCPtr& pp)
@@ -91,7 +109,7 @@ namespace yq::tachyon {
         m_mailbox.push_back(pp);
     }
 
-    void    Tachyon::mail(TX, const PostCPtr&pp)
+    void    Tachyon::mail(tx_t, const PostCPtr&pp)
     {
         m_outbox.push_back(pp);
     }
@@ -99,7 +117,7 @@ namespace yq::tachyon {
     Tachyon::PostAdvice  Tachyon::advise(const PostCPtr&pp) const 
     { 
         if(const TachyonBind* p = dynamic_cast<const TachyonBind*>(pp.ptr())){
-            return (p -> tachyon() == this) ? PostAdvice::Accept : PostAdvice::Reject;
+            return (p -> tachyon() == id()) ? PostAdvice::Accept : PostAdvice::Reject;
         }
         return PostAdvice::None; 
     }
@@ -118,7 +136,7 @@ namespace yq::tachyon {
     void Tachyon::proxy_me(std::function<void(Proxy*)>&& dst)
     {
         for(const InterfaceInfo* ii : metaInfo().interfaces().all){
-            Proxy*  p   = ii.proxy(this);
+            Proxy*  p   = ii->proxy(this);
             if(!p)
                 continue;
             p->m_interface  = ii;
@@ -128,44 +146,21 @@ namespace yq::tachyon {
         }
     }
 
-    
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-    
-    
-    void    Tachyon::attach(forward_t, post::Dispatcher* pDispatcher)
-    {
-        if(!pDispatcher)
-            return;
-        if(attached(FORWARD, pDispatcher))
-            return ;
-        m_forward.push_back(pDispatcher);
-    }
 
-    bool    Tachyon::attached(forward_t, post::Dispatcher* pDispatcher) const
-    {
-        if(!pDispatcher)
-            return false;
-        for(post::Dispatcher* p : m_forward){
-            if(p == pDispatcher)
-                return true;
-        }
-        return false;
-    }
+        Ref<TachyonData>            ticker(Context&);
     
-    //! Detaches from the given dispatcher
-    void    Tachyon::detach(forward_t, post::Dispatcher*pDispatcher)
-    {
-        std::erase(m_forward, pDispatcher);
-    }
-    
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+
+#if 0    
     void    Tachyon::forward(const post::PostCPtr&pp)
     {
         for(Dispatcher* p : m_forward)
             p -> receive(pp);
     }
-    
+#endif    
 
+#if 0
     void    Tachyon::receive(const post::PostCPtr& pp) 
     {
         if(!pp)
@@ -266,6 +261,7 @@ namespace yq::tachyon {
     {
         m_postMode      = pm;
     }
+#endif
 
     void Tachyon::init_info()
     {

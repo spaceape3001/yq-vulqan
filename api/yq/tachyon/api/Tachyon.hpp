@@ -6,15 +6,16 @@
 
 #pragma once
 
-#include <yq/tachyon/keywords.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/MetaObject.hpp>
 #include <yq/meta/MetaLookup.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/typedef/thread.hpp>
 #include <yq/tachyon/typedef/types.hpp>
 
 #include <tbb/spin_rw_mutex.h>
@@ -25,31 +26,13 @@ namespace yq::tachyon {
     class Thread;
     class InterfaceInfo;
     class Proxy;
+    class PBXDispatch;
     class Frame;
+    struct TachyonData;
+    struct Context;
     
-    class PBXDispatch {
-    public:
-        class Writer;
-
-        const PostInfo*     post() const { return m_post; }
-        const TachyonInfo*  tachyon() const { return m_tachyon; }
     
-            //! Lets us know the syntax being invoked
-        virtual const char* debug_string() const = 0;
-        std::string_view    name() const { return m_name; }
-        
-    protected:
-        const PostInfo*     m_post          = nullptr;
-        const TachyonInfo*  m_tachyon       = nullptr;
-        std::string_view    m_name;
-        
-        friend class Tachyon;
-        PBXDispatch(){}
-        virtual ~PBXDispatch(){}
-        
-        virtual bool        dispatch(PBX&, const PostCPtr&) const = 0;
-    };
-    
+    /// TACHYON INFO
     
     class TachyonInfo : public MetaObjectInfo {
     public:
@@ -64,6 +47,12 @@ namespace yq::tachyon {
         Types       types() const { return m_types; }
     
         const InterfaceLUC& interfaces() const { return m_interfaces.all; }
+
+        using dispatch_vec_t     = std::vector<const PBXDispatch*>;
+        using dispatch_span_t   = std::span<const PBXDispatch*>;
+        using dispatch_map_t    = std::unordered_map<const PostInfo*, dispatch_span_t>;
+
+        dispatch_span_t     dispatches(const PostInfo*) const;
     
     protected:
     
@@ -71,14 +60,8 @@ namespace yq::tachyon {
         virtual ~TachyonInfo();
         
         virtual void    sweep_impl() override;
-        
     
     private:
-        friend class Proxy;
-    
-        using dispatch_vec_t     = std::vector<const PBXDispatch*>;
-        using dispatch_span_t   = std::span<const PBXDispatch*>;
-        using dispatch_map_t    = std::unordered_map<const PostInfo*, dispatch_span_t>;
         
         struct {
             InterfaceLUC    all, local;
@@ -88,16 +71,10 @@ namespace yq::tachyon {
         }                       m_dispatches;
         dispatch_map_t          m_dispatch;
         Types                   m_types;
-        std::vector<ProxyFN>    m_proxied;
         
         void    add_interface(const InterfaceInfo*);
         void    add_dispatch(const PBXDispatch*);
-        
-        void    proxy(ProxyFN&&);
     };
-    
-    
-    class Proxy;
     
 
     /*! \brief Tachyon is thread-aware base post-passing heavy object
@@ -109,28 +86,25 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Tachyon, MetaObject)
     public:
         
-        struct Param {
+        
+        /*! \brief Initialization 
+        */
+        struct Param {  
             /* Reserved for future use */
         };
+
     
         Tachyon(const Param&p = {});
         ~Tachyon();
         
-        unsigned int    thread_id() const { return m_threadId; }
         bool            in_thread() const;
         static void     init_info();
 
         //  Inbound mail
-        void        mail(rx_t, const PostCPtr&);
-        //void        mail(proxy_t, const PostCPtr&);
-
-        //virtual void receive(const PostCPtr&) override;
-
-        //! Checks for attachment
-        //bool        attached(forward_t, Dispatcher*) const;
-
-        //! TRUE if we're in event replay mode (only one replay at a time)
-        //bool        in_replay() const;
+        void            mail(rx_t, const PostCPtr&);
+        
+        TachyonID       id(tachyon_t={}) const { return { UniqueID::id() }; }
+        ThreadID        id(thread_t) const;
 
     protected:
         mutable tbb::spin_rw_mutex      m_mutex;
@@ -159,40 +133,22 @@ namespace yq::tachyon {
         {
             V   temp = newValue;
             {
-                XLOCK
+                TXLOCK
                 std::swap( static_cast<T*>(this)->*member, temp );
             }
             changed();
             return temp;
         }
         
-        //! Replay queued posts (from our thread)
-        void    replay(direct_t);
-
-        //! Replay queued posts (from other threads)
-        void    replay(thread_t);
-
-        //! Replay from proxied posts
-        void    replay(proxy_t);
-        
-        //! Replay queued posts (depends on post mode)
-        void    replay(all_t);
-        
         
         void    proxy_me(std::function<void(Proxy*)>&&);
         
-        void    tick(const AppFrame&);
+        // This is where you get your processing should be done
+        virtual void    tick(Context&);
+        
+        //virtual void  pre_tick();     // maybe
+        //virtual void  post_tick();    // maybe
 
-
-        //! Forward said message to the forwarding vector
-        void    forward(const PostCPtr&);
-        
-        //! Attaches to the given dispatcher
-        void    attach(forward_t, Dispatcher*);
-        
-        //! Detaches from the given dispatcher
-        void    detach(forward_t, Dispatcher*);
-        
         enum class PostAdvice {
             None    = 0,    //! No advice (ie, it's not an advisable type)
             Reject,
@@ -212,26 +168,50 @@ namespace yq::tachyon {
         */
         virtual PostAdvice  advise(const PostCPtr&) const;
         
-        void    mail(TX, const PostCPtr&);
+        void    mail(tx_t, const PostCPtr&);
+        void    mail(forward_t, const PostCPtr&);
         
-    private:
+        //! Override to forward (call base to do normal processing)
+        virtual void    handle(const PostCPtr&);
+        
+        
+        //! Snapshot of the current data....
+        virtual Ref<TachyonData>    snapshot() const;
+        
 
-        std::atomic<unsigned int>           m_threadId;
+
+    private:
+        friend class Proxy;
+        
+        static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
 
         // Mail boxes....
         std::vector<PostCPtr>               m_mailbox;      //!< Inbound (under mutex guard)
+        std::vector<ProxyFN>                m_proxied;      //!< Inbound proxy changes (under mutex guard)
         std::vector<PostCPtr>               m_outbox;       //!< Outbound
+        std::vector<PostCPtr>               m_forward;      //!< Forwarding posts
         std::vector<TachyonID>              m_snoops;       //!< Those eavesdropping on us
+        std::vector<TachyonID>              m_forwards;     //!< Those we'll forward (conditionally)
         std::vector<TachyonID>              m_subscribers;  //!< Who we're broadcasting to
         std::multimap<uint32_t, TachyonID>  m_control;      //!< Those controlling us
+        ThreadID                            m_thread;
+        
+        //! Current thread ID if tick-processing (invalid outside of tick)
+        std::atomic<unsigned int>           m_threadId  = kInvalidThread;
         
         
-        void    _inbound(Frame&);
-        void    _outbound(Frame&);
+        //void    _inbound(Frame&);
+        //void    _outbound(Frame&);
         
+        void    proxy(ProxyFN&&);
+
+
+        Ref<TachyonData>            ticker(Context&);
 
         //std::vector<Tachyon*>           m_children;
         //Tachyon*                        m_parent = nullptr;
+        
+        //virtual void    _tick
 
         // The common constructor used between the two
         Tachyon(const Param&p, init_t);

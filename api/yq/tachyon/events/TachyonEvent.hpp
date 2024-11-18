@@ -27,7 +27,8 @@ namespace yq::tachyon {
         struct Param : public Event::Param {
         };
     
-        TachyonEvent(Tachyon*, const Param& p = {});
+        TachyonEvent(TachyonID, const Param& p = {});
+        TachyonEvent(const Tachyon*, const Param& p = {});
         virtual ~TachyonEvent();
         
         static void init_info();

@@ -42,6 +42,7 @@ namespace yq::tachyon {
     struct proxy_t {};
     struct queue_t {};
     struct settable_t {};
+    struct tachyon_t {};
     struct target_t {};
     struct typed_t {};
     struct types_t {};
@@ -75,6 +76,7 @@ namespace yq::tachyon {
     static constexpr refresh_t      REFRESH;
     static constexpr settable_t     SETTABLE;
     static constexpr static_t       STATIC;
+    static constexpr tachyon_t      TACHYON;
     static constexpr target_t       TARGET;
     static constexpr typed_t        TYPED;
     static constexpr types_t        TYPES;

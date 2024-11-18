@@ -23,6 +23,7 @@ add_library(${PROJECT_NAME} SHARED
     #vulqan.cpp
     #VulqanManager.cpp
 
+    api/Tachyon.cpp
     api/api.cpp
     commands/commands.cpp
     events/events.cpp

@@ -18,10 +18,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    TachyonEvent::TachyonEvent(Tachyon* v, const Param& p) : Event(p), TachyonBind(v)
+    TachyonEvent::TachyonEvent(const Tachyon* v, const Param& p) : Event(p), TachyonBind(v)
     {
     }
     
+    TachyonEvent::TachyonEvent(TachyonID v, const Param& p) : Event(p), TachyonBind(v)
+    {
+    }
+
     TachyonEvent::~TachyonEvent()
     {
     }

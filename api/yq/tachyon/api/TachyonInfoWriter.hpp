@@ -262,11 +262,9 @@ namespace yq::tachyon {
             return snap;
         }
         
-        virtual TachyonDataPtr   create_data(const TachyonSnapPtr& tsp) const override
+        virtual TachyonDataPtr   create_data() const override
         {
-            if(!tsp)
-                return {};
-            return new data_t( static_cast<snap_t*>(tsp.ptr()));
+            return new data_t();
         }
         
     };

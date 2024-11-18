@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Thread.hpp"
+#include "ThreadData.hpp"
 #include "ThreadInfoWriter.hpp"
 
 namespace yq::tachyon {

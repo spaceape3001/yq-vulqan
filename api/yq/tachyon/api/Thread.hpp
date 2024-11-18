@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/units.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <thread>
 
@@ -32,19 +33,18 @@ namespace yq::tachyon {
         //! Override to do your own thing
         virtual void    run() { exec(); }
         
-        //! Executes check until quit flag
+        //! Executes tick until quit flag
         void            exec();
-        virtual void    check();
         
         static Thread&  current();
 
         Thread(const Param& p = {});
         ~Thread();
         
-        void            cmd_quit();
-        void            cmd_start();
+        virtual void    quit();
+        virtual void    start();
 
-        void            tick();
+        virtual void    tick();
         
     private:
     

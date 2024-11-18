@@ -45,7 +45,7 @@ namespace yq::tachyon {
         
         \note We're limited to three dimensions here
     */
-    class Camera : public Tachyon, public UniqueID, public RefCount {
+    class Camera : public Tachyon {
         YQ_OBJECT_INFO(CameraInfo);
         YQ_OBJECT_DECLARE(Camera, Tachyon)
     public:    
@@ -75,9 +75,12 @@ namespace yq::tachyon {
         static void init_info();
 
         virtual void tick();
+        
+        
 
     protected:
     
+        virtual void    snap(CameraData&) const override;
         virtual void    receive(const post::PostCPtr&) override;
 
         //! Default constructor

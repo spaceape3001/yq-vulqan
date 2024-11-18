@@ -46,6 +46,11 @@ namespace yq::tachyon {
     {
     }
 
+    void Camera::snap(CameraData& data) const
+    {
+        Tachyon::snap(data);
+    }
+
     void            Camera::set_name(const std::string& v)
     {
         m_name  = v;

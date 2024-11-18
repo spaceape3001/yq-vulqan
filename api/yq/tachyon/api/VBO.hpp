@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/buffer/BufferObject.hpp>
+#include <yq/tachyon/api/BufferObject.hpp>
 #include <yq/container/vector_utils.hpp>
 
 namespace yq::tachyon {
@@ -30,7 +30,7 @@ namespace yq::tachyon {
         
         //! Proxy for span & data
         template <typename K>
-        struct Proxy {
+        struct ProxyI {
             ABO *abo;
             
             //! Assigns by span
@@ -50,13 +50,13 @@ namespace yq::tachyon {
         };
 
         //! Used for assigning by copy
-        Proxy<copy_t>   operator=(copy_t)
+        ProxyI<copy_t>   operator=(copy_t)
         {
             return { this };
         }
         
         //! Used by assigning by reference
-        Proxy<ref_t>   operator=(ref_t)
+        ProxyI<ref_t>   operator=(ref_t)
         {
             return { this };
         }

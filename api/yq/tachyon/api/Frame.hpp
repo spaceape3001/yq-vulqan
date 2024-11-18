@@ -127,7 +127,7 @@ namespace yq::tachyon {
         Frame& operator=(const Frame&) = delete;
         Frame& operator=(Frame&&) = delete;
 
-        void    _add(Tachyon*);
+        bool    _add(const TachyonData*);
         void    _clear(hash_t);
     };
 }

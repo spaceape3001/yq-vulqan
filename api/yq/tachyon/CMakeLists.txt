@@ -23,6 +23,7 @@ add_library(${PROJECT_NAME} SHARED
     #vulqan.cpp
     #VulqanManager.cpp
 
+    api/Buffer.cpp
     api/Frame.cpp
     #api/Tachyon.cpp
     api/Thread.cpp
@@ -35,7 +36,6 @@ add_library(${PROJECT_NAME} SHARED
     #app/Application.cpp
     #app/Manager.cpp
     
-    buffer/Buffer.cpp
 
     #core/Controlling.cpp
     #core/Tachyon.cpp

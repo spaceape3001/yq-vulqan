@@ -18,15 +18,6 @@
 namespace yq::tachyon {
     std::atomic<uint64_t>    Frame::s_lastId{0};
     
-    const Tachyon*      _tachyon(const TachyonData* th)
-    {
-        if(!th)
-            return nullptr;
-        if(!th->snap)
-            return nullptr;
-        return th->snap->object.ptr();
-    }
-
     Frame::Frame(ThreadID th) : thread(th), number(++s_lastId), wallclock(clock_t::now()) 
     {
     }
@@ -37,32 +28,38 @@ namespace yq::tachyon {
         raw.clear();
     }
 
-    void    Frame::_add(Tachyon* tac)
+    bool    Frame::_add(const TachyonData* td)
     {
+        if(!td)
+            return false;
+        if(!td->snap)
+            return false;
+        const Tachyon* tac    = td->snap->object.ptr();
         if(!tac)
-            return ;
+            return false;
         
-        tachyons[tac->id()]     = tac;
+        tachyons[tac->id()]     = td;
         
         Types   types  = tac->metaInfo().types();
         
         //  And we'll do this one by one
         
         //if(types(Type::Camera))
-        //    cameras[tac->id()]  = static_cast<Camera*>(tac);
+        //    cameras[tac->id()]  = static_cast<const CameraData*>(td);
         //if(types(Type::Editor))
-        //    editors[tac->id()]  = static_cast<Editor*>(tac);
+        //    editors[tac->id()]  = static_cast<const EditorData*>(td);
         //if(types(Type::Manager))
-        //    managers[tac->id()] = static_cast<Manager*>(tac);
+        //    managers[tac->id()] = static_cast<const ManagerData*>(td);
         //if(types(Type::Rendered))
-        //    rendereds[tac->id()]  = static_cast<Rendered*>(tac);
+        //    rendereds[tac->id()]  = static_cast<const RenderedData*>(td);
         if(types(Type::Thread))
-            threads[tac->id()]  = static_cast<Thread*>(tac);
+            threads[tac->id()]  = static_cast<const ThreadData*>(td);
         //if(types(Type::Viewer))
-        //    viewers[tac->id()]  = static_cast<Viewer*>(tac);
+        //    viewers[tac->id()]  = static_cast<const ViewerData*>(td);
         //if(types(Type::Widget))
-        //    widgets[tac->id()]  = static_cast<Widget*>(tac);
+        //    widgets[tac->id()]  = static_cast<const WidgetData*>(td);
         
+        return true;
     }
 
     void    Frame::_clear(hash_t)
@@ -79,11 +76,10 @@ namespace yq::tachyon {
     void    Frame::build()
     {
         _clear(HASH);
-        for(const ThreadDataPtr& th : raw){
-            if(!th)
+        for(const ThreadDataCPtr& th : raw){
+            if(!_add(th.ptr()))
                 continue;
-            add(_tachyon(th.ptr()));
-            for(const TachyonDataPtr& tp : th->tachyons)
+            for(const TachyonDataCPtr& tp : th->tachyons)
                 _add(tp.ptr());
         }
     }
@@ -255,7 +251,7 @@ namespace yq::tachyon {
     #if 0
     const CameraSnap*                  Frame::snap(CameraID id) const
     {
-        const CameraSnap*  td  = data(id);
+        const CameraData*  td  = data(id);
         if(!td)
             return nullptr;
         return static_cast<const CameraSnap*>(td->snap.ptr());
@@ -265,7 +261,7 @@ namespace yq::tachyon {
     #if 0
     const ManagerSnap*                 Frame::snap(ManagerID id) const
     {
-        const ManagerSnap*  td  = data(id);
+        const ManagerData*  td  = data(id);
         if(!td)
             return nullptr;
         return static_cast<const ManagerSnap*>(td->snap.ptr());
@@ -273,7 +269,7 @@ namespace yq::tachyon {
     #endif
 
     #if 0
-    const RenderedSnap*                Frame::snap(RenderedID id) const
+    const RenderedData*                Frame::snap(RenderedID id) const
     {
         const RenderedSnap*  td  = data(id);
         if(!td)
@@ -292,7 +288,7 @@ namespace yq::tachyon {
     
     const ThreadSnap*                  Frame::snap(ThreadID id) const
     {
-        const ThreadSnap*  td  = data(id);
+        const ThreadData*  td  = data(id);
         if(!td)
             return nullptr;
         return static_cast<const ThreadSnap*>(td->snap.ptr());
@@ -301,7 +297,7 @@ namespace yq::tachyon {
     #if 0
     const ViewerSnap*                  Frame::snap(ViewerID id) const
     {
-        const ViewerSnap*  td  = data(id);
+        const ViewerData*  td  = data(id);
         if(!td)
             return nullptr;
         return static_cast<const ViewerSnap*>(td->snap.ptr());
@@ -311,7 +307,7 @@ namespace yq::tachyon {
     #if 0
     const WidgetSnap*                  Frame::snap(WidgetID id) const
     {
-        const WidgetSnap*  td  = data(id);
+        const WidgetData*  td  = data(id);
         if(!td)
             return nullptr;
         return static_cast<const WidgetSnap*>(td->snap.ptr());

@@ -8,7 +8,7 @@
 
 #include <yq/core/BasicApp.hpp>
 #include <yq/tachyon/app/AppCreateInfo.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/typedef/application.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
@@ -30,8 +30,8 @@ namespace yq::tachyon {
     /*! \brief Engine/Vulkan application
     
     */
-    class Application : public BasicApp, public Tachyon {
-        YQ_OBJECT_DECLARE(Application, Tachyon)
+    class Application : public BasicApp, public Thread {
+        YQ_OBJECT_DECLARE(Application, Thread)
     public:
     
         

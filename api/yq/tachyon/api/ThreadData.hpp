@@ -18,7 +18,6 @@ namespace yq::tachyon {
         std::vector<TachyonDataCPtr>    tachyons;       //! Tachyons (excluding the thread)
         std::set<TachyonID>             created, arrived, left, deleted;
         
-        ThreadData(Thread*);
         virtual ~ThreadData();
     };
 

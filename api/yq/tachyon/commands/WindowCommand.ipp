@@ -22,6 +22,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowCommand::WindowCommand(ViewerID v, const Param& p) : Command(p), ViewerBind(v)
+    {
+    }
+
     WindowCommand::~WindowCommand()
     {
     }

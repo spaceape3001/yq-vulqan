@@ -4,10 +4,3 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Command.ipp"
-#include "Event.ipp"
-#include "Message.ipp"
-#include "Post.ipp"
-#include "Reply.ipp"
-#include "Request.ipp"
-#include "TriggerInfoWriter.hpp"

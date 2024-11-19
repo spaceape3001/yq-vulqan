@@ -22,6 +22,11 @@ namespace yq::tachyon {
     {
     }
     
+    ViewerCommand::ViewerCommand(ViewerID v, const Param& p) : Command(p), ViewerBind(v)
+    {
+    }
+    
+
     ViewerCommand::~ViewerCommand()
     {
     }

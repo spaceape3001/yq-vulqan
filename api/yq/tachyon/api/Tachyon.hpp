@@ -7,9 +7,11 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq/core/MetaObject.hpp>
+#include <yq/core/Object.hpp>
+#include <yq/core/UniqueID.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/Execution.hpp>
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yq/tachyon/typedef/post.hpp>
@@ -34,10 +36,11 @@ namespace yq::tachyon {
     
     /// TACHYON INFO
 
+    struct TachyonContext;
     struct TachyonData;
     struct TachyonSnap;
     
-    class TachyonInfo : public MetaObjectInfo {
+    class TachyonInfo : public ObjectInfo {
     public:
 
         using InterfaceLUC  = MetaLookup<InterfaceInfo>;
@@ -45,7 +48,7 @@ namespace yq::tachyon {
         
         template <typename C> class Writer;
 
-        TachyonInfo(std::string_view zName, MetaObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        TachyonInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
         
         Types       types() const { return m_types; }
     
@@ -83,22 +86,47 @@ namespace yq::tachyon {
         void    add_dispatch(const PBXDispatch*);
     };
     
+    //  Call these *BEFORE* the declare
+    #define YQ_TACHYON_CONTEXT(...)     using MyContext = __VA_ARGS__;
+    #define YQ_TACHYON_DATA(...)        using MyData = __VA_ARGS__;
+    #define YQ_TACHYON_INFO(...)    YQ_OBJECT_INFO(__VA_ARGS__)
+    #define YQ_TACHYON_FIXER(...)   YQ_OBJECT_FIXER(__VA_ARGS__)
+    #define YQ_TACHYON_SNAP(...)        using MySnap = __VA_ARGS__;
 
-    /*! \brief Tachyon is thread-aware base post-passing heavy object
+    #define YQ_TACHYON_DECLARE(...)                             \
+        YQ_OBJECT_DECLARE(__VA_ARGS__)
+
+
+    /*! \brief Base (heavy) object in the tachyon library
     
-        The tachyon is the bit that makes the world go around
+        Unfortunately, this class has picked up a bit of heft and isn't light-weight. 
+        
+        **TASKING** Implement update(Context&) to get this feature.
+    
+    
+        \note The tachyon is the bit that makes the world go around!
+        
+        
     */
-    class Tachyon : public MetaObject {
+    class Tachyon : public Object, public UniqueID, public RefCount {
     public:
         template <typename> class Fixer;
 
     private:
-        YQ_OBJECT_INFO(TachyonInfo)
-        YQ_OBJECT_FIXER(Fixer)
-        YQ_OBJECT_DECLARE(Tachyon, MetaObject)
+        YQ_TACHYON_CONTEXT(TachyonContext)
+        YQ_TACHYON_DATA(TachyonData)
+        YQ_TACHYON_FIXER(Fixer)
+        YQ_TACHYON_INFO(TachyonInfo)
+        YQ_TACHYON_SNAP(TachyonSnap)
+        
+        YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
         
-        using MyData    = TachyonData;
+        enum class PostAdvice {
+            None    = 0,    //! No advice (ie, it's not an advisable type)
+            Reject,
+            Accept
+        };
         
         
         /*! \brief Initialization 
@@ -111,65 +139,54 @@ namespace yq::tachyon {
         Tachyon(const Param&p = {});
         ~Tachyon();
         
-        bool            in_thread() const;
-        static void     init_info();
+        bool                in_thread() const;
+        static void         init_info();
 
         //  Inbound mail
-        void            mail(rx_t, const PostCPtr&);
+        void                mail(rx_t, const PostCPtr&);
         
-        TachyonID       id(tachyon_t={}) const { return { UniqueID::id() }; }
-        ThreadID        id(thread_t) const;
-
+        TachyonID           id() const { return { UniqueID::id() }; }
+        //ThreadID        id(thread_t) const;
+        
+        //ThreadID            owning_thread() const { return m_thread; }
+        
+        #if 0
+        struct Context {
+            double              Δt          = 0.;   //!< Our time step (zero for paused, or first tick)
+            double              overclock   = 1.;   //!< Current ratio sim:wall time (1.0 for normal speed, -1.0 for reverse)
+            time_point_t        wall;               //!< Wall clock time (start of tick-cycle)
+            // current events....?
+        };
+        #endif
+        
+        virtual Execution   update(const Frame&, const MyContext&);
+        
 
     protected:
-        mutable tbb::spin_rw_mutex      m_mutex;
         
-        //! Read-only lock, conditional to object's thread
-        #define TRLOCK                                          \
-            tbb::spin_rw_mutex::scoped_lock    _lock;           \
-            if(!in_thread())                                    \
-                _lock.acquire(m_mutex, false);
-
-        //! Write lock, conditional to object's thread
-        #define TWLOCK                                          \
-            tbb::spin_rw_mutex::scoped_lock    _lock;           \
-            if(!in_thread())                                    \
-                _lock.acquire(m_mutex, true);
-        
-        //! Write lock, unconditional
-        #define TXLOCK tbb::spin_rw_mutex::scoped_lock  _lock(m_mutex, true);
-
         // The constructor meant for Thread's use (because... C++ won't let the friend declaration get to it in private)
         Tachyon(const Param&, thread_t);
         
-        //! Thread safe member-assignment
-        template <SomeTachyon T, typename V>
-        V    assign(V (T::*member), const V& newValue)
-        {
-            V   temp = newValue;
-            {
-                TXLOCK
-                std::swap( static_cast<T*>(this)->*member, temp );
-            }
-            changed();
-            return temp;
-        }
+
+        /*! \brief Your update routine
         
+            Drawing, modeling, etc... goes here
+        */
+        disabled_t      update(...);
         
+        /*! \brief Advise routine for posts
+        
+        */
+        disabled_t      advise(...) const;
+
+
+
         void    proxy_me(std::function<void(Proxy*)>&&);
         
-        // This is where you get your processing should be done
-        virtual void    update(Context&){}
         
         //virtual void  pre_tick();     // maybe
         //virtual void  post_tick();    // maybe
 
-        enum class PostAdvice {
-            None    = 0,    //! No advice (ie, it's not an advisable type)
-            Reject,
-            Accept
-        };
-        
         /*! Advise to the disposition of the post
         
             \note This may be called multithreaded, and shouldn't 
@@ -192,33 +209,28 @@ namespace yq::tachyon {
         void            snap(TachyonSnap&) const;
 
 
+        void                mark_dirty();
+
+        TachyonDataPtr      _tick_start();
+        
+        
+        void                _tick_done();
 
     private:
         friend class Proxy;
+        friend class Thread;
         
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
+        
+        struct Impl;
+        std::unique_ptr<Impl>       m;
 
-        // Mail boxes....
-        std::vector<PostCPtr>               m_mailbox;      //!< Inbound (under mutex guard)
-        std::vector<ProxyFN>                m_proxied;      //!< Inbound proxy changes (under mutex guard)
-        std::vector<PostCPtr>               m_outbox;       //!< Outbound
-        std::vector<PostCPtr>               m_forward;      //!< Forwarding posts
-        std::vector<TachyonID>              m_snoops;       //!< Those eavesdropping on us
-        std::vector<TachyonID>              m_forwards;     //!< Those we'll forward (conditionally)
-        std::vector<TachyonID>              m_subscribers;  //!< Who we're broadcasting to
-        std::multimap<uint32_t, TachyonID>  m_control;      //!< Those controlling us
-        ThreadID                            m_thread;
-        
-        //! Current thread ID if tick-processing (invalid outside of tick)
-        std::atomic<unsigned int>           m_threadId  = kInvalidThread;
-        bool                                m_dirty     = false;
-        
         //void    _inbound(Frame&);
         //void    _outbound(Frame&);
         
         void    proxy(ProxyFN&&);
 
-        virtual TachyonDataPtr              tick(Context&);
+        virtual TachyonDataPtr          tick(Context&);
 
         //std::vector<Tachyon*>           m_children;
         //Tachyon*                        m_parent = nullptr;
@@ -229,6 +241,5 @@ namespace yq::tachyon {
         Tachyon(const Param&p, init_t);
     };
     
-    #define YQ_TACHYON_DECLARE(...) YQ_OBJECT_DECLARE(__VA_ARGS__)
     
 }

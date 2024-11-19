@@ -22,6 +22,10 @@ namespace yq::tachyon {
     {
     }
     
+    CameraEvent::CameraEvent(CameraID v, const Param& p) : Event(p), CameraBind(v)
+    {
+    }
+
     CameraEvent::~CameraEvent()
     {
     }

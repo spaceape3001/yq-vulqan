@@ -44,16 +44,26 @@ namespace yq::tachyon {
         virtual void    quit();
         virtual void    start();
 
-        virtual void    tick();
+        ThreadID        id() const { return ThreadID(Tachyon::id()); }
+        
+    protected:
+        virtual TachyonDataPtr  tick(Context&);
         
     private:
     
         struct Repo;
         static Repo&    repo();
+        
+        struct Tac;
+
+        struct Control;
+        struct ImplT;
+        std::unique_ptr<ImplT>      t;
+    
     
         std::atomic<bool>           m_quit{ false };
         unit::Second                m_snooze    = 1_ms;
-        std::vector<TachyonPtr>     m_objects;
+        std::map<TachyonID, Tac>    m_objects;
         std::thread                 m_thread;
     };
 }

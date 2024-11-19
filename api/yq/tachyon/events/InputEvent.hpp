@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Event.hpp>
-#include <yq/tachyon/viewer/ViewerBind.hpp>
+#include <yq/tachyon/api/ViewerBind.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 
 namespace yq::tachyon {
@@ -68,6 +68,8 @@ namespace yq::tachyon {
         
     protected:
         InputEvent(const Param&);
+        InputEvent(ViewerID, const Param&);
+        InputEvent(Viewer*, const Param&);
 
     private:
         const ModifierKeys    m_modifiers;

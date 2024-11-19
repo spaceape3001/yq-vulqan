@@ -22,6 +22,10 @@ namespace yq::tachyon {
     {
     }
     
+    MouseCommand::MouseCommand(ViewerID v, const Param& p) : Command(p), ViewerBind(v)
+    {
+    }
+
     MouseCommand::~MouseCommand()
     {
     }

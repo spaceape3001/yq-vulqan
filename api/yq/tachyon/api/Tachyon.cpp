@@ -16,6 +16,46 @@
 
 namespace yq::tachyon {
 
+    struct Tachyon::Tick {
+        time_point_t        start;
+        ThreadData*         data    = nullptr;
+        unsigned int        thread  = 0;
+    };
+
+        //! Read-only lock, conditional to object's thread
+        #define TRLOCK                                          \
+            tbb::spin_rw_mutex::scoped_lock    _lock;           \
+            if(!in_thread())                                    \
+                _lock.acquire(m_mutex, false);
+
+        //! Write lock, conditional to object's thread
+        #define TWLOCK                                          \
+            tbb::spin_rw_mutex::scoped_lock    _lock;           \
+            if(!in_thread())                                    \
+                _lock.acquire(m_mutex, true);
+        
+        //! Write lock, unconditional
+        #define TXLOCK tbb::spin_rw_mutex::scoped_lock  _lock(m_mutex, true);
+
+
+    struct Tachyon::Impl {
+        mutable tbb::spin_rw_mutex          mutex;
+        std::vector<PostCPtr>               inbox;        //!< Inbound (under mutex guard)
+        std::vector<ProxyFN>                proxied;      //!< Inbound proxy changes (under mutex guard)
+        std::vector<PostCPtr>               outbox;       //!< Outbound
+        std::vector<PostCPtr>               forward;      //!< Forwarding posts
+        std::vector<TachyonID>              snoops;       //!< Those eavesdropping on us
+        std::vector<TachyonID>              forwards;     //!< Those we'll forward (conditionally)
+        std::vector<TachyonID>              subscribers;  //!< Who we're broadcasting to
+        std::multimap<uint32_t, TachyonID>  control;      //!< Those controlling us
+        ThreadID                            thread;
+        uint64_t                            revision    = 1;
+        bool                                dirty       = false;
+        
+        //  TICK CONTROL
+        Tick                                tick;
+    };
+
     TachyonBind::TachyonBind(const Tachyon*tc) : m_tachyon(tc ? tc -> id() : TachyonID{}) 
     {
     }
@@ -49,7 +89,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////
 
     TachyonInfo::TachyonInfo(std::string_view zName, MetaObjectInfo& base, const std::source_location& sl) :
-        MetaObjectInfo(zName, base, sl)
+        ObjectInfo(zName, base, sl)
     {
         set(Flag::TACHYON);
     }
@@ -101,7 +141,7 @@ namespace yq::tachyon {
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
 
-    Tachyon::Tachyon(const Param& p) : Tachyon(p, INIT)
+    Tachyon::Tachyon(const Param& p) : Tachyon(p, INIT), m(new Impl)
     {
         //  Add to thread...
     }
@@ -119,6 +159,14 @@ namespace yq::tachyon {
     {
     }
 
+    Tachyon::PostAdvice  Tachyon::advise(const PostCPtr&pp) const 
+    { 
+        if(const TachyonBind* p = dynamic_cast<const TachyonBind*>(pp.ptr())){
+            return (p -> tachyon() == id()) ? PostAdvice::Accept : PostAdvice::Reject;
+        }
+        return PostAdvice::None; 
+    }
+    
     void        Tachyon::handle(const PostCPtr&pp)
     {
         
@@ -135,7 +183,7 @@ namespace yq::tachyon {
             return ;
         
         TXLOCK
-        m_mailbox.push_back(pp);
+        m_inbox.push_back(pp);
     }
 
     void    Tachyon::mail(tx_t, const PostCPtr&pp)
@@ -143,14 +191,6 @@ namespace yq::tachyon {
         m_outbox.push_back(pp);
     }
 
-    Tachyon::PostAdvice  Tachyon::advise(const PostCPtr&pp) const 
-    { 
-        if(const TachyonBind* p = dynamic_cast<const TachyonBind*>(pp.ptr())){
-            return (p -> tachyon() == id()) ? PostAdvice::Accept : PostAdvice::Reject;
-        }
-        return PostAdvice::None; 
-    }
-    
     bool Tachyon::in_thread() const
     {
         return m_threadId == thread::id();
@@ -175,12 +215,40 @@ namespace yq::tachyon {
         }
     }
 
-    TachyonDataPtr              Tachyon::tick(Context&)
+    TachyonDataPtr      Tachyon::_tick_create()
     {
         TachyonDataPtr  data    = metaInfo().create_data();
         if(!data)
             return {};
-        data.tick       = 
+        m_data  = data.ptr();
+        return data;
+    }
+
+    TachyonDataPtr              Tachyon::tick(Context&ctx)
+    {
+        
+        m_dirty             = false;
+        m_threadId          = thread::id();
+            
+        std::vector<ProxyFN>    proxied;
+        {
+            TXLOCK
+            std::swap(data->received, m_inbox);
+            std::swap(proxied, m_proxied);
+        }
+        
+        
+        //  Not sure to the order...
+        for(const PostCPtr& p : data->received){
+        }
+        
+        for(ProxyFN&& fn : proxied){
+            fn();
+        }
+        proxied.clear();
+        
+        data.tick       = ctx.tick;
+        
         return {};
     }
     

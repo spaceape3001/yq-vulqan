@@ -4,5 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Viewer.ipp"
-#include "ViGui.ipp"
+#pragma once
+
+namespace yq::tachyon {
+}
+
+
+/*
+
+    TACHYON     -- WAS OUR OBJECT (ie TASKABLE)
+    RUNNER      -- RUNNER OF TASKS (is TASKABLE itself)
+*/

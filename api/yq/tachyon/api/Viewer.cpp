@@ -66,6 +66,10 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
 
 namespace yq::tachyon {
 
+    ViewerBind::ViewerBind(Viewer* v) : m_viewer(v->id()) 
+    {
+    }
+
     Controlling::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
     {
         Controlling::Param  ret;

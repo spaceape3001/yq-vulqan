@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Command.hpp>
-#include <yq/tachyon/camera/CameraBind.hpp>
+#include <yq/tachyon/api/CameraBind.hpp>
 
 namespace yq::tachyon {
     class Camera;
@@ -28,6 +28,7 @@ namespace yq::tachyon {
         };
     
         CameraCommand(Camera*, const Param& p = {});
+        CameraCommand(CameraID, const Param& p = {});
         virtual ~CameraCommand();
         
         static void init_info();

@@ -23,11 +23,38 @@ add_library(${PROJECT_NAME} SHARED
     #vulqan.cpp
     #VulqanManager.cpp
 
+    api/System.cpp
+
+    #api/Application.cpp
     api/Buffer.cpp
-    api/Frame.cpp
+    api/Command.cpp
+    api/Event.cpp
+    api/Interface.cpp
+    #api/Frame.cpp
+    api/Message.cpp
+
+    #api/Pipeline.cpp
+    #api/PipelineUtils.cpp
+    api/Post.cpp
+    #api/Raster.cpp
+    #api/Render2D.cpp
+    #api/Render3D.cpp
+    #api/Rendered.cpp
+    api/RenderPass.cpp
+    api/Reply.cpp
+    api/Request.cpp
+    #api/Sampler.cpp
+    #api/Shader.cpp
     #api/Tachyon.cpp
-    api/Thread.cpp
-    api/api.cpp
+    #api/Texture.cpp
+    #api/Thread.cpp
+    #api/Tool.cpp
+    api/Undo.cpp
+    
+    
+    #api/api.cpp
+    
+    
     commands/commands.cpp
     events/events.cpp
     #interfaces/interfaces.cpp
@@ -66,8 +93,9 @@ add_library(${PROJECT_NAME} SHARED
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
 
-    image/Raster.cpp
-    image/STBImage.cpp
+    io/GLSLShader.cpp
+    io/SamplerInfoFile.cpp
+    io/STBImage.cpp
 
     #light/Light.cpp
     #lights/lights.cpp
@@ -79,17 +107,10 @@ add_library(${PROJECT_NAME} SHARED
     #model/Model.cpp
     #models/models.cpp
     
-    pass/RenderPass.cpp
 
-    pipeline/Pipeline.cpp
-    pipeline/PipelineUtils.cpp
     
     #post/post.cpp
     #posts/posts.cpp
-
-    render/Render2D.cpp
-    render/Render3D.cpp
-    render/Rendered.cpp
 
     #renders/renders.cpp
 
@@ -98,23 +119,15 @@ add_library(${PROJECT_NAME} SHARED
     
     #requests/requests.cpp
 
-    sampler/Sampler.cpp
-    sampler/SamplerInfoFile.cpp
 
     #scene/Perspective.cpp
     
-    shader/GLSLShader.cpp
-    shader/Shader.cpp
     
-    task/Task.cpp
-    task/TaskEngine.cpp
+    #task/Task.cpp
+    #task/TaskEngine.cpp
 
-    texture/Texture.cpp
-
-    tool/Tool.cpp
     #tools/tools.cpp
 
-    undo/Undo.cpp
 
     # v/VqEnumerations.cpp
     v/VqEnums.cpp

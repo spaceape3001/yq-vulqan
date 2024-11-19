@@ -22,6 +22,10 @@ namespace yq::tachyon {
     {
     }
     
+    CameraCommand::CameraCommand(CameraID v, const Param& p) : Command(p), CameraBind(v)
+    {
+    }
+    
     CameraCommand::~CameraCommand()
     {
     }

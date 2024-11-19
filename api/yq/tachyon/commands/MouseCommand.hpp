@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Command.hpp>
-#include <yq/tachyon/viewer/ViewerBind.hpp>
+#include <yq/tachyon/api/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class MouseCommandInfo : public CommandInfo {
@@ -26,6 +26,7 @@ namespace yq::tachyon {
         };
     
         MouseCommand(Viewer*, const Param& p = {});
+        MouseCommand(ViewerID, const Param& p = {});
         virtual ~MouseCommand();
         
         static void init_info();

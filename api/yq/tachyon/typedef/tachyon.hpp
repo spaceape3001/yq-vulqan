@@ -8,6 +8,7 @@
 
 #include <concepts>
 #include <cstdint>
+#include <tuple>
 
 namespace yq { 
     template <typename> class Ref;

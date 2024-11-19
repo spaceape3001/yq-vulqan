@@ -6,18 +6,22 @@
 
 #pragma once
 
+#include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
+
 namespace yq::tachyon {
     class Camera;
 
     //! Utiltity to bind a viewer to the whatever...
     class CameraBind {
     public:
-        Camera*    camera() const { return m_camera; }
+        CameraID    camera() const { return m_camera; }
         
     protected:
-        CameraBind(Camera* v) : m_camera(v) {}
+        CameraBind(CameraID v) : m_camera(v) {}
+        CameraBind(Camera* v);
         virtual ~CameraBind() {}
         
-        Camera* const m_camera;
+        CameraID const m_camera;
     };
 }

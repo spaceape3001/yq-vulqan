@@ -28,14 +28,8 @@ namespace yq::tachyon {
         
         uint64_t        tick        = 0ULL;     //!< Thread Tick 
 
-        Context(){}
-        Context(Context& cp) : 
-            frame(cp.frame), 
-            time(cp.time),
-            Δt(cp.Δt) 
-            overclock(cp.overclock),
-            wall(cp.wall),
-            tick(cp.tick)
-        {}
+        Context(const Frame& _frame) : frame(_frame){}
+        Context(Frame&&) = delete;
+        Context(Context& cp) = default;
     };
 }

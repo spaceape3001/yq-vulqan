@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/units.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/ID.hpp>
@@ -34,6 +33,7 @@ namespace yq::tachyon {
     struct WidgetData;
     
     struct ThreadSnap;
+    class Thread;
 
     /*
         Tachyons will *belong* to a thread... either directly or indirectly 
@@ -45,40 +45,8 @@ namespace yq::tachyon {
     class Frame : public RefCount {
     public:
     
-        //using camera_hash_t     = std::unordered_map<uint64_t, const CameraData*>;
-        //using light_hash_t      = std::unordered_map<uint64_t, const LightData*>;
-        //using manager_hash_t     = std::unordered_map<uint64_t, const ManagerData*>;
-        //using rendered_hash_t   = std::unordered_map<uint64_t, const RenderedData*>;
-        //using scene_hash_t        = std::unordered_map<uint64_t, const SceneData*>;
-        using tachyon_hash_t    = std::unordered_map<uint64_t, const TachyonData*>;
-        using thread_hash_t     = std::unordered_map<uint64_t, const ThreadData*>;
-        //using viewer_hash_t     = std::unordered_map<uint64_t, const ViewerData*>;
-        //using widget_hash_t     = std::unordered_map<uint64_t, const WidgetData*>;
-
-        //! Building ThreadID
-        const ThreadID                      thread;
-
-        //! Our frame number, assume *nothing* from this
-        const uint64_t                      number;
-
-        //! Wall clock at frame creation
-        const time_point_t                  wallclock;
-
-
-        //! Our raw data
-        std::vector<ThreadDataCPtr>         raw;
-        
-        //camera_hash_t                       cameras;
-        //manager_hash_t                      managers;
-        //light_hash_t                        lights;
-        //rendered_hash_t                     rendereds;
-        //scene_hash_t                        scenes;
-        tachyon_hash_t                      tachyons;
-        thread_hash_t                       threads;
-        //viewer_hash_t                       viewers;
-        //widget_hash_t                       widgets;
-        
         //const CameraData*                   data(CameraID) const;
+        //const EditorData*                   data(EditorID) const;
         //const LightData*                    data(LightID) const;
         //const ManagerData*                  data(ManagerID) const;
         //const RenderedData*                 data(RenderedID) const;
@@ -116,9 +84,8 @@ namespace yq::tachyon {
         Frame(ThreadID);
         ~Frame();
         
-        void    build();
-        
     private:
+        friend class Thread;
     
         static std::atomic<uint64_t>    s_lastId;
         
@@ -126,8 +93,12 @@ namespace yq::tachyon {
         Frame(Frame&&) = delete;
         Frame& operator=(const Frame&) = delete;
         Frame& operator=(Frame&&) = delete;
-
-        bool    _add(const TachyonData*);
-        void    _clear(hash_t);
+        
+        template <SomeTachyon> struct Container;
+        
+        struct Impl;
+        std::unique_ptr<Impl>       m;
+        
+        void    add(TachyonPtr, TachyonDataCPtr, TachyonSnapCPtr);
     };
 }

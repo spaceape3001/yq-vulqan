@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Command.hpp>
-#include <yq/tachyon/viewer/ViewerBind.hpp>
+#include <yq/tachyon/api/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -28,6 +28,7 @@ namespace yq::tachyon {
         };
     
         ViewerCommand(Viewer*, const Param& p = {});
+        ViewerCommand(ViewerID, const Param& p = {});
         virtual ~ViewerCommand();
         
         static void init_info();

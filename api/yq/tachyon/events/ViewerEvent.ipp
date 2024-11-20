@@ -22,6 +22,10 @@ namespace yq::tachyon {
     {
     }
     
+    ViewerEvent::ViewerEvent(ViewerID v, const Param& p) : Event(p), ViewerBind(v)
+    {
+    }
+    
     ViewerEvent::~ViewerEvent()
     {
     }

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Request.hpp>
-#include <yq/tachyon/core/TachyonBind.hpp>
+#include <yq/tachyon/api/TachyonBind.hpp>
 
 namespace yq::tachyon {
     class Tachyon;
@@ -27,7 +27,8 @@ namespace yq::tachyon {
         struct Param : public Request::Param {
         };
     
-        TachyonRequest(Tachyon*, const Param& p = {});
+        TachyonRequest(TachyonID, const Param& p = {});
+        TachyonRequest(const Tachyon*, const Param& p = {});
         virtual ~TachyonRequest();
         static void init_info();
     };

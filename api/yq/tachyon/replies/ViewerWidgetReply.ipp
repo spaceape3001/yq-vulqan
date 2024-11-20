@@ -12,11 +12,16 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerWidgetReply)
 
 namespace yq::tachyon {
 
-    ViewerWidgetReply::ViewerWidgetReply(const ViewerWidgetRequestCPtr&rq, Viewer* v, Response r, const Param& p) :
+    ViewerWidgetReply::ViewerWidgetReply(const ViewerWidgetRequestCPtr&rq, ViewerID v, Response r, const Param& p) :
         ViewerReply(rq, v, p), m_response(r)
     {
     }
     
+    ViewerWidgetReply::ViewerWidgetReply(const ViewerWidgetRequestCPtr&rq, const Viewer* v, Response r, const Param& p) :
+        ViewerReply(rq, v, p), m_response(r)
+    {
+    }
+
     ViewerWidgetReply::~ViewerWidgetReply()
     {
     }

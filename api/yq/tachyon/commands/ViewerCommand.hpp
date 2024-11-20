@@ -27,7 +27,7 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
-        ViewerCommand(Viewer*, const Param& p = {});
+        ViewerCommand(const Viewer*, const Param& p = {});
         ViewerCommand(ViewerID, const Param& p = {});
         virtual ~ViewerCommand();
         

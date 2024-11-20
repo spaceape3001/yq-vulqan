@@ -18,7 +18,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    CameraCommand::CameraCommand(Camera* v, const Param& p) : Command(p), CameraBind(v)
+    CameraCommand::CameraCommand(const Camera* v, const Param& p) : Command(p), CameraBind(v)
     {
     }
     

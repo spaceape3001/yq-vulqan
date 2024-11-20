@@ -66,7 +66,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
 
 namespace yq::tachyon {
 
-    ViewerBind::ViewerBind(Viewer* v) : m_viewer(v->id()) 
+    ViewerBind::ViewerBind(const Viewer* v) : m_viewer(v ? v->id() : ViewerID{}) 
     {
     }
 

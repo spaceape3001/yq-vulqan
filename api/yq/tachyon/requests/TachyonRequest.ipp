@@ -18,7 +18,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    TachyonRequest::TachyonRequest(Tachyon* v, const Param& p) : Request(p), TachyonBind(v)
+    TachyonRequest::TachyonRequest(TachyonID v, const Param& p) : Request(p), TachyonBind(v)
+    {
+    }
+    
+    TachyonRequest::TachyonRequest(const Tachyon* v, const Param& p) : Request(p), TachyonBind(v)
     {
     }
     

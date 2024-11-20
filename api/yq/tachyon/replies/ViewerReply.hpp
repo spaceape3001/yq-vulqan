@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Reply.hpp>
-#include <yq/tachyon/viewer/ViewerBind.hpp>
+#include <yq/tachyon/api/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;
@@ -28,7 +28,8 @@ namespace yq::tachyon {
         struct Param : public Reply::Param {
         };
     
-        ViewerReply(const RequestCPtr&, Viewer*, const Param& p = {});
+        ViewerReply(const RequestCPtr&, ViewerID, const Param& p = {});
+        ViewerReply(const RequestCPtr&, const Viewer*, const Param& p = {});
         virtual ~ViewerReply();
         
         static void init_info();

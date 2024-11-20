@@ -28,6 +28,7 @@ namespace yq::tachyon {
         };
     
         ViewerEvent(Viewer*, const Param& p = {});
+        ViewerEvent(ViewerID, const Param& p = {});
         virtual ~ViewerEvent();
         
         static void init_info();

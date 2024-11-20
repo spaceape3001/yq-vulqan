@@ -16,6 +16,10 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq::tachyon {
+    WidgetBind::WidgetBind(const Widget* v) : m_widget(id ? v->id() : WidgetID{}) 
+    {
+    }
+
     void Widget::init_info()
     {
         auto w = writer<Widget>();

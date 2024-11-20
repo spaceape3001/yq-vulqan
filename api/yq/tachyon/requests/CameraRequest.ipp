@@ -18,10 +18,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    CameraRequest::CameraRequest(Camera* v, const Param& p) : Request(p), CameraBind(v)
+    CameraRequest::CameraRequest(CameraID v, const Param& p) : Request(p), CameraBind(v)
     {
     }
     
+    CameraRequest::CameraRequest(const Camera* v, const Param& p) : Request(p), CameraBind(v)
+    {
+    }
+
     CameraRequest::~CameraRequest()
     {
     }

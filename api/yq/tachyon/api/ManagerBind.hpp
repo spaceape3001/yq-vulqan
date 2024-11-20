@@ -7,21 +7,21 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/typedef/manager.hpp>
 
 namespace yq::tachyon {
-    class Widget;
+    class Manager;
 
     //! Utiltity to bind a viewer to the whatever...
-    class WidgetBind {
+    class ManagerBind {
     public:
-        WidgetID    widget() const { return m_widget; }
+        ManagerID    manager() const { return m_manager; }
         
     protected:
-        WidgetBind(WidgetID v) : m_widget(v) {}
-        WidgetBind(const Widget* v);
-        virtual ~WidgetBind() {}
+        ManagerBind(ManagerID v) : m_manager(v) {}
+        ManagerBind(const Manager* v);
+        virtual ~ManagerBind() {}
         
-        WidgetID const m_widget;
+        ManagerID const m_manager;
     };
 }

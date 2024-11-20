@@ -25,7 +25,7 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
-        WindowCommand(Viewer*, const Param& p = {});
+        WindowCommand(const Viewer*, const Param& p = {});
         WindowCommand(ViewerID, const Param& p = {});
         virtual ~WindowCommand();
         

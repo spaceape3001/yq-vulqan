@@ -27,10 +27,15 @@ add_library(${PROJECT_NAME} SHARED
 
     #api/Application.cpp
     api/Buffer.cpp
+    #api/Camera.cpp
     api/Command.cpp
+    #api/Editor.cpp
     api/Event.cpp
     api/Interface.cpp
     #api/Frame.cpp
+    #api/Light.cpp
+    #api/Model.cpp
+    #api/Manager.cpp
     api/Message.cpp
 
     #api/Pipeline.cpp
@@ -43,8 +48,8 @@ add_library(${PROJECT_NAME} SHARED
     api/RenderPass.cpp
     api/Reply.cpp
     api/Request.cpp
-    #api/Sampler.cpp
-    #api/Shader.cpp
+    api/Sampler.cpp
+    api/Shader.cpp
     #api/Tachyon.cpp
     #api/Texture.cpp
     #api/Thread.cpp
@@ -60,24 +65,16 @@ add_library(${PROJECT_NAME} SHARED
     #interfaces/interfaces.cpp
     proxies/proxies.cpp
 
-    #app/Application.cpp
-    #app/Manager.cpp
-    
 
     #core/Controlling.cpp
-    #core/Tachyon.cpp
-    #core/Thread.cpp
 
-    #camera/Camera.cpp
     #cameras/cameras.cpp
-    
     
     config/build.cpp
     
     #controller/Controller.cpp
     #controllers/controllers.cpp
     
-    #editor/Editor.cpp
     
     enum/enum.cpp
     enum/KeyCode.cpp
@@ -95,29 +92,24 @@ add_library(${PROJECT_NAME} SHARED
 
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
-    io/STBImage.cpp
+    #io/STBImage.cpp
 
-    #light/Light.cpp
     #lights/lights.cpp
 
     #manipulator/Manipulator.cpp
     
     messages/messages.cpp
     
-    #model/Model.cpp
     #models/models.cpp
     
-
-    
-    #post/post.cpp
     #posts/posts.cpp
 
     #renders/renders.cpp
 
-    #replies/replies.cpp
+    replies/replies.cpp
     
     
-    #requests/requests.cpp
+    requests/requests.cpp
 
 
     #scene/Perspective.cpp

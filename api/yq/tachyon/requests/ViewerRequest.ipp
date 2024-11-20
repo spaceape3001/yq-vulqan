@@ -18,10 +18,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerRequest::ViewerRequest(Viewer* v, const Param& p) : Request(p), ViewerBind(v)
+    ViewerRequest::ViewerRequest(ViewerID v, const Param& p) : Request(p), ViewerBind(v)
     {
     }
     
+    ViewerRequest::ViewerRequest(const Viewer* v, const Param& p) : Request(p), ViewerBind(v)
+    {
+    }
+
     ViewerRequest::~ViewerRequest()
     {
     }

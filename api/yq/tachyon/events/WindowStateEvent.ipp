@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowStateEvent::WindowStateEvent(ViewerID v, const ViewerState& st, const Param& p) : WindowEvent(v, p), m_state(st)
+    {
+    }
+
     WindowStateEvent::~WindowStateEvent()
     {
     }

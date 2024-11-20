@@ -10,7 +10,7 @@
 
 namespace yq::tachyon {
 
-    CameraBind::CameraBind(Camera* v) : m_camera(v->id())
+    CameraBind::CameraBind(const Camera* v) : m_camera(v ? v->id() : CameraID{})
     {
     }
 

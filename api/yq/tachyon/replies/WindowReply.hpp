@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Reply.hpp>
-#include <yq/tachyon/viewer/ViewerBind.hpp>
+#include <yq/tachyon/api/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class WindowRequest;
@@ -27,7 +27,8 @@ namespace yq::tachyon {
         struct Param : public Reply::Param {
         };
     
-        WindowReply(const RequestCPtr&, Viewer*, const Param& p = {});
+        WindowReply(const RequestCPtr&, ViewerID, const Param& p = {});
+        WindowReply(const RequestCPtr&, const Viewer*, const Param& p = {});
         virtual ~WindowReply();
         
         static void init_info();

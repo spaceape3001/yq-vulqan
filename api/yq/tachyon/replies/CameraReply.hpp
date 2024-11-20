@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Reply.hpp>
-#include <yq/tachyon/camera/CameraBind.hpp>
+#include <yq/tachyon/api/CameraBind.hpp>
 
 namespace yq::tachyon {
     class Camera;
@@ -28,7 +28,8 @@ namespace yq::tachyon {
         struct Param : public Reply::Param {
         };
     
-        CameraReply(const RequestCPtr&, Camera*, const Param& p = {});
+        CameraReply(const RequestCPtr&, CameraID, const Param& p = {});
+        CameraReply(const RequestCPtr&, const Camera*, const Param& p = {});
         virtual ~CameraReply();
         
         static void init_info();

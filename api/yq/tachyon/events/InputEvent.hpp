@@ -69,7 +69,7 @@ namespace yq::tachyon {
     protected:
         InputEvent(const Param&);
         InputEvent(ViewerID, const Param&);
-        InputEvent(Viewer*, const Param&);
+        InputEvent(const Viewer*, const Param&);
 
     private:
         const ModifierKeys    m_modifiers;

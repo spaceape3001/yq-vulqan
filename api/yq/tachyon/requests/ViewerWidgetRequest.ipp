@@ -12,10 +12,14 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerWidgetRequest)
 
 namespace yq::tachyon {
 
-    ViewerWidgetRequest::ViewerWidgetRequest(Viewer* v, WidgetPtr w, const Param& p) : ViewerRequest(v, p), m_widget(w)
+    ViewerWidgetRequest::ViewerWidgetRequest(ViewerID v, WidgetPtr w, const Param& p) : ViewerRequest(v, p), m_widget(w)
     {
     }
     
+    ViewerWidgetRequest::ViewerWidgetRequest(const Viewer* v, WidgetPtr w, const Param& p) : ViewerRequest(v, p), m_widget(w)
+    {
+    }
+
     ViewerWidgetRequest::~ViewerWidgetRequest()
     {
     }

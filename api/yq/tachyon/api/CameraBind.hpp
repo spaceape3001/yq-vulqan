@@ -19,7 +19,7 @@ namespace yq::tachyon {
         
     protected:
         CameraBind(CameraID v) : m_camera(v) {}
-        CameraBind(Camera* v);
+        CameraBind(const Camera* v);
         virtual ~CameraBind() {}
         
         CameraID const m_camera;

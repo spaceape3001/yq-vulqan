@@ -25,7 +25,7 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
-        MouseCommand(Viewer*, const Param& p = {});
+        MouseCommand(const Viewer*, const Param& p = {});
         MouseCommand(ViewerID, const Param& p = {});
         virtual ~MouseCommand();
         

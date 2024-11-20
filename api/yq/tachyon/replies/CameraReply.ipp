@@ -18,10 +18,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    CameraReply::CameraReply(const RequestCPtr& rq, Camera* v, const Param& p) : Reply(rq, p), CameraBind(v)
+    CameraReply::CameraReply(const RequestCPtr& rq, CameraID v, const Param& p) : Reply(rq, p), CameraBind(v)
     {
     }
     
+    CameraReply::CameraReply(const RequestCPtr& rq, const Camera* v, const Param& p) : Reply(rq, p), CameraBind(v)
+    {
+    }
+
     CameraReply::~CameraReply()
     {
     }

@@ -18,7 +18,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    WindowEvent::WindowEvent(Viewer* v, const Param& p) : Event(p), ViewerBind(v)
+    WindowEvent::WindowEvent(ViewerID v, const Param& p) : Event(p), ViewerBind(v)
+    {
+    }
+    
+    WindowEvent::WindowEvent(const Viewer* v, const Param& p) : Event(p), ViewerBind(v)
     {
     }
     

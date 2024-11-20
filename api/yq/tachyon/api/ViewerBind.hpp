@@ -19,7 +19,7 @@ namespace yq::tachyon {
         
     protected:
         ViewerBind(ViewerID v) : m_viewer(v) {}
-        ViewerBind(Viewer* v);
+        ViewerBind(const Viewer* v);
         virtual ~ViewerBind() {}
         
         ViewerID const m_viewer;

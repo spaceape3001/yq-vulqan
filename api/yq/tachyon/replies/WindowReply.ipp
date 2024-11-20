@@ -18,10 +18,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    WindowReply::WindowReply(const RequestCPtr& rq, Viewer* v, const Param& p) : Reply(rq, p), ViewerBind(v)
+    WindowReply::WindowReply(const RequestCPtr& rq, ViewerID v, const Param& p) : Reply(rq, p), ViewerBind(v)
     {
     }
     
+    WindowReply::WindowReply(const RequestCPtr& rq, const Viewer* v, const Param& p) : Reply(rq, p), ViewerBind(v)
+    {
+    }
+
     WindowReply::~WindowReply()
     {
     }

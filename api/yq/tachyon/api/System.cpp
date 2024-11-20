@@ -9,7 +9,9 @@
 #include "Execution.hpp"
 #include "Post.hpp"
 #include "Tachyon.hpp"
+#include "TachyonBind.hpp"
 #include "Thread.hpp"
+#include "ThreadBind.hpp"
 
 namespace yq::tachyon {
 
@@ -248,6 +250,14 @@ namespace yq::tachyon {
         TachyonDataPtr      data;
         TachyonSnapCPtr     snap;
     };
+
+    TachyonBind::TachyonBind(const Tachyon*v ) : m_tachyon(v ? v->id() : TachyonID{})
+    {
+    }
+
+    ThreadBind::ThreadBind(const Thread* v) : m_thread( v ? v->id() : ThreadID{})
+    {
+    }
 
 
 #if 0

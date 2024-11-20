@@ -11,10 +11,14 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseRequest)
 
 namespace yq::tachyon {
 
-    ViewerCloseRequest::ViewerCloseRequest(Viewer* v, const Param& p) : ViewerRequest(v, p)
+    ViewerCloseRequest::ViewerCloseRequest(ViewerID v, const Param& p) : ViewerRequest(v, p)
     {
     }
     
+    ViewerCloseRequest::ViewerCloseRequest(const Viewer* v, const Param& p) : ViewerRequest(v, p)
+    {
+    }
+
     ViewerCloseRequest::~ViewerCloseRequest()
     {
     }

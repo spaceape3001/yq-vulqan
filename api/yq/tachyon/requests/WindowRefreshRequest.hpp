@@ -16,7 +16,8 @@ namespace yq::tachyon {
         struct Param : public WindowRequest::Param {
         };
     
-        WindowRefreshRequest(Viewer*, const Param& p = {});
+        WindowRefreshRequest(ViewerID, const Param& p = {});
+        WindowRefreshRequest(const Viewer*, const Param& p = {});
         virtual ~WindowRefreshRequest();
         static void init_info();
     };

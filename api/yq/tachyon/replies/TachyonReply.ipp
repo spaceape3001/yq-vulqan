@@ -18,10 +18,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    TachyonReply::TachyonReply(const RequestCPtr& rq, Tachyon* v, const Param& p) : Reply(rq, p), TachyonBind(v)
+    TachyonReply::TachyonReply(const RequestCPtr& rq, TachyonID v, const Param& p) : Reply(rq, p), TachyonBind(v)
     {
     }
     
+    TachyonReply::TachyonReply(const RequestCPtr& rq, const Tachyon* v, const Param& p) : Reply(rq, p), TachyonBind(v)
+    {
+    }
+
     TachyonReply::~TachyonReply()
     {
     }

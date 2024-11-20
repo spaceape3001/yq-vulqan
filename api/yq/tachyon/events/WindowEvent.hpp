@@ -25,7 +25,8 @@ namespace yq::tachyon {
         struct Param : public Event::Param {
         };
     
-        WindowEvent(Viewer*, const Param& p = {});
+        WindowEvent(ViewerID, const Param& p = {});
+        WindowEvent(const Viewer*, const Param& p = {});
         virtual ~WindowEvent();
         
         static void init_info();

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/events/WindowEvent.hpp>
-#include <yq/tachyon/viewer/ViewerState.hpp>
+#include <yq/tachyon/api/ViewerState.hpp>
 
 namespace yq::tachyon {
     class WindowStateEvent : public WindowEvent {
@@ -18,6 +18,7 @@ namespace yq::tachyon {
         };
     
         WindowStateEvent(Viewer*, const ViewerState&, const Param& p = {});
+        WindowStateEvent(ViewerID, const ViewerState&, const Param& p = {});
         virtual ~WindowStateEvent();
         
         static void init_info();

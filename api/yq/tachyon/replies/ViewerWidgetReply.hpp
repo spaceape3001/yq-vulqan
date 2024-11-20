@@ -18,7 +18,8 @@ namespace yq::tachyon {
         struct Param : public ViewerReply::Param {
         };
     
-        ViewerWidgetReply(const ViewerWidgetRequestCPtr&, Viewer*, Response, const Param& p = {});
+        ViewerWidgetReply(const ViewerWidgetRequestCPtr&, ViewerID, Response, const Param& p = {});
+        ViewerWidgetReply(const ViewerWidgetRequestCPtr&, const Viewer*, Response, const Param& p = {});
         virtual ~ViewerWidgetReply();
         
         Response     response() const { return m_response; }

@@ -18,7 +18,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerCommand::ViewerCommand(Viewer* v, const Param& p) : Command(p), ViewerBind(v)
+    ViewerCommand::ViewerCommand(const Viewer* v, const Param& p) : Command(p), ViewerBind(v)
     {
     }
     

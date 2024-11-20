@@ -23,7 +23,7 @@ namespace yq::tachyon {
     {
     }
     
-    InputEvent::InputEvent(Viewer*v, const Param& : Event(p), ViewerBind(v), m_modifiers(p.modifiers)
+    InputEvent::InputEvent(const Viewer*v, const Param&p) : Event(p), ViewerBind(v), m_modifiers(p.modifiers)
     {
     }
 

@@ -38,10 +38,12 @@ add_library(${PROJECT_NAME} SHARED
     #api/Manager.cpp
     api/Message.cpp
 
-    #api/Pipeline.cpp
-    #api/PipelineUtils.cpp
+    #api/Perspective.cpp
+    api/Pipeline.cpp
+    api/PipelineUtils.cpp
+    #api/Proxy.cpp
     api/Post.cpp
-    #api/Raster.cpp
+    api/Raster.cpp
     #api/Render2D.cpp
     #api/Render3D.cpp
     #api/Rendered.cpp
@@ -51,7 +53,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Sampler.cpp
     api/Shader.cpp
     #api/Tachyon.cpp
-    #api/Texture.cpp
+    api/Texture.cpp
     #api/Thread.cpp
     #api/Tool.cpp
     api/Undo.cpp

@@ -17,6 +17,7 @@ namespace yq {
 namespace yq::tachyon {
     class Tachyon;
     class TachyonInfo;
+    
     using TachyonPtr    = Ref<Tachyon>;
     using TachyonCPtr   = Ref<const Tachyon>;
 
@@ -33,4 +34,6 @@ namespace yq::tachyon {
     struct TachyonSnap;
     using TachyonSnapPtr    = Ref<TachyonSnap>;
     using TachyonSnapCPtr   = Ref<const TachyonSnap>;
+    
+    struct TachyonContext;
 }

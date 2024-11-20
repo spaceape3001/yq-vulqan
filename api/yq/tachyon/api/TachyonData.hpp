@@ -21,6 +21,7 @@ namespace yq::tachyon {
         std::vector<Proxy*>     proxies;
         uint64_t                revision    = 0ULL;
         
+        TachyonSnap();
         virtual ~TachyonSnap();
     };
 
@@ -28,8 +29,9 @@ namespace yq::tachyon {
         uint64_t                tick        = 0ULL;
         std::vector<PostCPtr>   sent, received;
         ThreadID                owner;
-        unsigned                thread_id;      //! thread::id() that corresponded to tick()
+        unsigned                thread_id   = ~0;      //! thread::id() that corresponded to tick()
         
+        TachyonData();
         virtual ~TachyonData();
     };
 }

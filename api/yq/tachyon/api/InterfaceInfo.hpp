@@ -13,6 +13,7 @@
 
 namespace yq::tachyon {
     class Proxy;
+    class Tachyon;
     
     class InterfaceInfo : public CompoundInfo {
         using MethodLUC     = MetaLookup<MethodInfo>;

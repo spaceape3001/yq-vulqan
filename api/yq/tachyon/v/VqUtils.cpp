@@ -12,7 +12,7 @@
 #include <yq/tachyon/image/ImageViewInfo.hpp>
 #include <yq/tachyon/sampler/SamplerInfo.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
-#include <yq/tachyon/VulqanManager.hpp>
+#include <yq/tachyon/v/VulqanManager.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>

@@ -46,20 +46,23 @@ namespace yq::tachyon {
 
         ThreadID        id() const { return ThreadID(Tachyon::id()); }
         
+        //  This is the thread's tick
+        virtual void        tick();
+        
     protected:
-        virtual TachyonDataPtr  tick(Context&);
+        virtual void        tick(Context&) override {}
         
     private:
     
         struct Repo;
         static Repo&    repo();
         
-        struct Tac;
-
+        struct Mini;
         struct Control;
-        struct ImplT;
-        std::unique_ptr<ImplT>      t;
+        struct Impl;
     
+    
+        void    tick(TachyonID);
     
         std::atomic<bool>           m_quit{ false };
         unit::Second                m_snooze    = 1_ms;

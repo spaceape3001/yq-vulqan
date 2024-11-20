@@ -13,7 +13,7 @@
 #include <yq/typedef/filesystem_path.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/typedef/buffer.hpp>
 #include <yq/tachyon/typedef/events.hpp>

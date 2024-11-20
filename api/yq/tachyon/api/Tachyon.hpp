@@ -14,6 +14,7 @@
 #include <yq/tachyon/api/Execution.hpp>
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/typedef/frame.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
@@ -25,18 +26,14 @@
 #include <concepts>
 
 namespace yq::tachyon {
-    class Thread;
     class InterfaceInfo;
     class Proxy;
     class PBXDispatch;
-    class Frame;
-    struct TachyonData;
     struct Context;
     
     
     /// TACHYON INFO
 
-    struct TachyonContext;
     struct TachyonData;
     struct TachyonSnap;
     
@@ -77,7 +74,7 @@ namespace yq::tachyon {
             InterfaceLUC    all, local;
         }                       m_interfaces;
         struct {
-            dispatch_vec_t  all, local;
+            dispatch_vec_t  defined, ranked;
         }                       m_dispatches;
         dispatch_map_t          m_dispatch;
         Types                   m_types;
@@ -87,7 +84,6 @@ namespace yq::tachyon {
     };
     
     //  Call these *BEFORE* the declare
-    #define YQ_TACHYON_CONTEXT(...)     using MyContext = __VA_ARGS__;
     #define YQ_TACHYON_DATA(...)        using MyData = __VA_ARGS__;
     #define YQ_TACHYON_INFO(...)    YQ_OBJECT_INFO(__VA_ARGS__)
     #define YQ_TACHYON_FIXER(...)   YQ_OBJECT_FIXER(__VA_ARGS__)
@@ -113,7 +109,6 @@ namespace yq::tachyon {
         template <typename> class Fixer;
 
     private:
-        YQ_TACHYON_CONTEXT(TachyonContext)
         YQ_TACHYON_DATA(TachyonData)
         YQ_TACHYON_FIXER(Fixer)
         YQ_TACHYON_INFO(TachyonInfo)
@@ -121,12 +116,6 @@ namespace yq::tachyon {
         
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
-        
-        enum class PostAdvice {
-            None    = 0,    //! No advice (ie, it's not an advisable type)
-            Reject,
-            Accept
-        };
         
         
         /*! \brief Initialization 
@@ -136,8 +125,6 @@ namespace yq::tachyon {
         };
 
     
-        Tachyon(const Param&p = {});
-        ~Tachyon();
         
         bool                in_thread() const;
         static void         init_info();
@@ -158,47 +145,58 @@ namespace yq::tachyon {
             // current events....?
         };
         #endif
-        
-        virtual Execution   update(const Frame&, const MyContext&);
+            
+        enum class PostAdvice {
+            None    = 0,    //! No advice (ie, it's not an advisable type)
+            Reject,
+            Accept
+        };
         
 
     protected:
+    
+        friend TachyonPtr;
+        friend TachyonCPtr;
         
-        // The constructor meant for Thread's use (because... C++ won't let the friend declaration get to it in private)
-        Tachyon(const Param&, thread_t);
+        struct Impl;
+        
+        using ImplCreator   = std::function<Impl*(uint64_t)>;
+
+        Tachyon(const Param& p={}, ImplCreator&& impl={});
+        virtual ~Tachyon();
         
 
         /*! \brief Your update routine
         
             Drawing, modeling, etc... goes here
         */
-        disabled_t      update(...);
+        //disabled_t      update(...);
         
-        /*! \brief Advise routine for posts
-        
+        /*! \brief YOUR update
+            \note Do NOT call ticks on other objects!
+            
+            This is your update, at frame rate.  During this tick, 
+            you may call frame() to get the current frame
         */
-        disabled_t      advise(...) const;
-
-
-
-        void    proxy_me(std::function<void(Proxy*)>&&);
+        virtual void        tick(Context&){}
         
         
-        //virtual void  pre_tick();     // maybe
-        //virtual void  post_tick();    // maybe
-
+        
         /*! Advise to the disposition of the post
         
             \note This may be called multithreaded, and shouldn't 
             be exhaustive.  For example, checking that if it's a 
-            command with an object binding, it's bound to you type
+            command with an object binding, it's bound to your type
             of thing.
-            
-            \note CALL base objects first, if it's none, advise.
             
             \return Advise... 
         */
-        virtual PostAdvice  advise(const PostCPtr&) const;
+        virtual PostAdvice  advise(const Post&) const;
+
+        
+        //virtual void  pre_tick();     // maybe
+        //virtual void  post_tick();    // maybe
+
         
         void    mail(tx_t, const PostCPtr&);
         void    mail(forward_t, const PostCPtr&);
@@ -209,36 +207,39 @@ namespace yq::tachyon {
         void            snap(TachyonSnap&) const;
 
 
-        void                mark_dirty();
+        //! Marks us as dirty
+        void            mark();
 
-        TachyonDataPtr      _tick_start();
+        //TachyonDataPtr      _tick_start();
         
         
-        void                _tick_done();
+        //void                _tick_done();
+
+        Impl&               _impl();
+        const Impl&         _impl() const;
 
     private:
         friend class Proxy;
-        friend class Thread;
+        friend class Frame;
         
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
         
-        struct Impl;
         std::unique_ptr<Impl>       m;
 
         //void    _inbound(Frame&);
         //void    _outbound(Frame&);
         
         void    proxy(ProxyFN&&);
+        
+        void    proxy_me(std::vector<Proxy*>&);
 
-        virtual TachyonDataPtr          tick(Context&);
+        //virtual TachyonDataPtr          tick(Context&);
 
         //std::vector<Tachyon*>           m_children;
         //Tachyon*                        m_parent = nullptr;
         
         //virtual void    _tick
 
-        // The common constructor used between the two
-        Tachyon(const Param&p, init_t);
     };
     
     

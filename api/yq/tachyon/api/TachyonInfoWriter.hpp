@@ -19,7 +19,6 @@ namespace yq::tachyon {
         class Writer;
 
         const PostInfo*     post() const { return m_post; }
-        const TachyonInfo*  tachyon() const { return m_tachyon; }
     
             //! Lets us know the syntax being invoked
         virtual const char* debug_string() const = 0;
@@ -27,14 +26,13 @@ namespace yq::tachyon {
         
     protected:
         const PostInfo*     m_post          = nullptr;
-        const TachyonInfo*  m_tachyon       = nullptr;
         std::string_view    m_name;
         
         friend class Tachyon;
         PBXDispatch(){}
         virtual ~PBXDispatch(){}
         
-        virtual bool        dispatch(Tachyon&, const PostCPtr&) const = 0;
+        virtual bool        dispatch(Tachyon*, const PostCPtr&) const = 0;
     };
     
     template <SomeTachyon C, SomePost P>
@@ -45,14 +43,15 @@ namespace yq::tachyon {
         
         PBXDispatch_VoidCRef(FN fn) : PBXDispatch(), m_fn(fn)
         {
-            m_tachyon   = &meta<C>();
             m_post      = &meta<P>();
         }
         
-        bool  dispatch(Tachyon &tac, const PostCPtr& pp) const override
+        bool  dispatch(Tachyon *tac, const PostCPtr& pp) const override
         {
-            C&  c   = static_cast<C&>(tac);
-            (c.*m_fn)(static_cast<const P&>(*pp));
+            C*  c   = dynamic_cast<C*>(tac);
+            if(!c)
+                return false;
+            (c->*m_fn)(static_cast<const P&>(*pp));
             return true;
         }
 
@@ -70,14 +69,15 @@ namespace yq::tachyon {
         
         PBXDispatch_BoolCRef(FN fn) : PBXDispatch(), m_fn(fn)
         {
-            m_tachyon   = &meta<C>();
             m_post      = &meta<P>();
         }
         
-        bool  dispatch(Tachyon &pbx, const PostCPtr& pp) const override
+        bool  dispatch(Tachyon *pbx, const PostCPtr& pp) const override
         {
-            C&  c   = static_cast<C&>(pbx);
-            return (c.*m_fn)(static_cast<const P&>(*pp));
+            C*  c   = dynamic_cast<C&>(pbx);
+            if(!c)
+                return false;
+            return (c->*m_fn)(static_cast<const P&>(*pp));
         }
 
         const char* debug_string() const override
@@ -94,15 +94,16 @@ namespace yq::tachyon {
         
         PBXDispatch_VoidCPtr(FN fn) : PBXDispatch(), m_fn(fn)
         {
-            m_tachyon   = &meta<C>();
             m_post      = &meta<P>();
         }
         
-        bool  dispatch(Tachyon &pbx, const PostCPtr& pp) const override
+        bool  dispatch(Tachyon *pbx, const PostCPtr& pp) const override
         {
-            C&  c   = static_cast<C&>(pbx);
+            C*  c   = dynamic_cast<C*>(pbx);
+            if(!c)
+                return false;
             Ref<const P>    ppp(static_cast<const P*>(pp.ptr()));
-            (c.*m_fn)(ppp);
+            (c->*m_fn)(ppp);
             return true;
         }
 
@@ -120,13 +121,14 @@ namespace yq::tachyon {
         
         PBXDispatch_BoolCPtr(FN fn) : PBXDispatch(), m_fn(fn)
         {
-            m_tachyon   = &meta<C>();
             m_post      = &meta<P>();
         }
         
         bool  dispatch(Tachyon &pbx, const PostCPtr& pp) const override
         {
-            C&  c   = static_cast<C&>(pbx);
+            C*  c   = dynamic_cast<C*>(pbx);
+            if(!c)
+                return false;
             Ref<const P>    ppp(static_cast<const P*>(pp.ptr()));
             return (c.*m_fn)(ppp);
         }

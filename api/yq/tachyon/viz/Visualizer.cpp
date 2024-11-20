@@ -27,12 +27,12 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
+#include <yq/tachyon/api/ViewerCreateInfo.hpp>
 #include <yq/tachyon/exceptions/VulqanException.hpp>
-#include <yq/tachyon/image/ImageViewInfo.hpp>
-#include <yq/tachyon/image/Raster.hpp>
-#include <yq/tachyon/scene/Perspective.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
+#include <yq/tachyon/api/ImageViewInfo.hpp>
+#include <yq/tachyon/api/Raster.hpp>
+#include <yq/tachyon/api/Perspective.hpp>
+#include <yq/tachyon/api/Scene.hpp>
 #include <yq/tachyon/v/VqUtils.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>

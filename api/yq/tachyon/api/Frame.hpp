@@ -60,7 +60,7 @@ namespace yq::tachyon {
         //Light*                              object(LightID) const;
         //Manager*                            object(ManagerID) const;
         //Rendered*                           object(RenderedID) const;
-        //Scene*                              scene(SceneID) const;
+        //Scene*                              object(SceneID) const;
         Tachyon*                            object(TachyonID) const;
         Thread*                             object(ThreadID) const;
         //Viewer*                             object(ThreadID) const;
@@ -81,6 +81,17 @@ namespace yq::tachyon {
         //const ViewerSnap*                   snap(ViewerID) const;
         //const WidgetSnap*                   snap(WidgetID) const;
         
+        //CameraSnapCPtr                      snap(ref_t,CameraID) const;
+        //LightSnapCPtr                       snap(ref_t,LightID) const;
+        //ManagerSnapCPtr                     snap(ref_t,ManagerID) const;
+        //RenderedSnapCPtr                    snap(ref_t,RenderedID) const;
+        TachyonSnapCPtr                     snap(ref_t,TachyonID) const;
+        ThreadSnapCPtr                      snap(ref_t,ThreadID) const;
+        //SceneSnapCPtr                       snap(ref_t,SceneID) const;
+        //ViewerSnapCPtr                      snap(ref_t,ViewerID) const;
+        //WidgetSnapCPtr                      snap(ref_t,WidgetID) const;
+
+
         Frame(ThreadID);
         ~Frame();
         

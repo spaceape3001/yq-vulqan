@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/camera/Camera.hpp>
-#include <yq/tachyon/core/TachyonInfoWriter.hpp>
+#include <yq/tachyon/api/Camera.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -10,8 +10,8 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
-#include <yq/tachyon/typedef/camera.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/camera.hpp>
 
 namespace yq::tachyon {
 
@@ -75,6 +75,8 @@ namespace yq::tachyon {
         static void init_info();
 
         virtual void tick();
+        
+        
         
         
 

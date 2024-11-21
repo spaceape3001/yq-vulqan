@@ -11,8 +11,6 @@
 #include <yq/tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
-    class Tachyon;
-
     class TachyonCommandInfo : public CommandInfo {
     public:
         TachyonCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
@@ -28,7 +26,6 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
-        TachyonCommand(const Tachyon*, const Param& p = {});
         TachyonCommand(TachyonID, const Param& p = {});
         virtual ~TachyonCommand();
         

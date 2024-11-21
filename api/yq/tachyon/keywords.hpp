@@ -30,6 +30,7 @@ namespace yq::tachyon {
     
     struct abort_t {};
     struct changed_t {};
+    struct children_t {};
     struct close_t {};
     struct continue_t {};
     struct controller_t {};
@@ -44,6 +45,7 @@ namespace yq::tachyon {
     struct lock_t {};
     struct locked_t {};
     struct number_t {};
+    struct parent_t {};
     struct pause_t {};
     struct probe_t {};
     struct proxy_t {};
@@ -71,6 +73,7 @@ namespace yq::tachyon {
 
     static constexpr abort_t        ABORT;
     static constexpr changed_t      CHANGED;
+    static constexpr children_t     CHILDREN;
     static constexpr close_t        CLOSE;
     static constexpr common_t       COMMON;
     static constexpr continue_t     CONTINUE;
@@ -88,6 +91,7 @@ namespace yq::tachyon {
     static constexpr lock_t         LOCK;
     static constexpr locked_t       LOCKED;
     static constexpr number_t       NUMBER;
+    static constexpr parent_t       PARENT;
     static constexpr pause_t        PAUSE;
     static constexpr probe_t        PROBE;
     static constexpr proxy_t        PROXY;

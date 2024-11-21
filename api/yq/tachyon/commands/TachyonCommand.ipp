@@ -18,10 +18,6 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    TachyonCommand::TachyonCommand(const Tachyon* v, const Param& p) : Command(p), TachyonBind(v)
-    {
-    }
-    
     TachyonCommand::TachyonCommand(TachyonID v, const Param& p) : Command(p), TachyonBind(v)
     {
     }

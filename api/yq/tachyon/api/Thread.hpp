@@ -57,16 +57,26 @@ namespace yq::tachyon {
         struct Repo;
         static Repo&    repo();
         
-        struct Mini;
+        struct Tack;        //< Snapshot to a tachyon (object, data, snap)
+        struct Snap;
         struct Control;
-        struct Impl;
-    
+        struct Inbox;
+        
+        
+        
+//        struct Impl;
+
+        //using TacRepVector          = std::vector<TacRep>;
+        //using SharedTacRepVector    = std::shared_ptr<TacRepVector>;
+        
+        using thread_data_map_t     = std::map<ThreadID, ThreadDataCPtr>;
+        using inbox_map_t           = std::map<ThreadID, Inbox>;
     
         void    tick(TachyonID);
-    
-        std::atomic<bool>           m_quit{ false };
-        unit::Second                m_snooze    = 1_ms;
-        std::map<TachyonID, Tac>    m_objects;
-        std::thread                 m_thread;
+        
+        bool                            m_quit{ false };
+        unit::Second                    m_snooze    = 1_ms;
+        std::map<ThreadID, Control>     m_objects;
+        std::thread                     m_thread;
     };
 }

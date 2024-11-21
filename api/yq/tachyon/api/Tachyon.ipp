@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "Context.hpp"
+#include "Frame.hpp"
 #include "InterfaceInfo.hpp"
 #include "Post.hpp"
 #include "Tachyon.hpp"
@@ -14,40 +16,11 @@
 #include "TachyonInfoWriter.hpp"
 
 #include <yq/core/ThreadId.hpp>
+#include <yq/command/TachyonSetParentCommand.hpp>
 
 namespace yq::tachyon {
 
-    static constexpr const unsigned int kInvalidThread   = ~0;
-
-    class Context;
-
-    struct Tachyon::Impl {
-        using mutex_t       = tbb::spin_rw_mutex;
-        using lock_t        = mutex_t::scoped_lock;
-        
-        using control_hash_t    = std::multimap<uint32_t, TachyonID>;
-    
-        const uint64_t          id;
-
-        mutable mutex_t         mutex;          // used for guards
-        std::vector<PostCPtr>   inbox;          //< Inbox (under mutex guard)
-        std::vector<ProxyFN>    proxied;        //< Setters (under mutex guard)
-        std::vector<PostCPtr>   outbox;
-        std::vector<PostCPtr>   forward;
-        std::vector<TachyonID>  snoops;         //!< Those eavesdropping on us
-        std::vector<TachyonID>  forwards;       //!< Those we'll forward (conditionally)
-        std::vector<TachyonID>  subscribers;    //!< Who we're broadcasting to
-        control_hash_t          control;
-        ThreadID                thread;
-        uint64_t                revision        = 0;
-        bool                    dirty           = false;
-        
-        ThreadData*             tick_data       = nullptr;
-        Context*                tick_context    = nullptr;
-        unsigned int            wthread         = kInvalidThread;
-        
-        Impl(uint64_t i) : id(i) {};
-    };
+    struct Mail;
 
     TachyonBind::TachyonBind(const Tachyon*v ) : m_tachyon(v ? v->id() : TachyonID{})
     {
@@ -198,52 +171,91 @@ namespace yq::tachyon {
 // ------------------------------------------------------------------------
 
 
-    Tachyon::Tachyon(const Param&, ImplCreator&& impl) : m( impl ? impl(UniqueID::id()) : new Impl(UniqueID::id()))
+    Tachyon::Tachyon(const Param& cfg)
     {
+        m_thread    = thread::id();
+        
+        TachyonID   parent;
+        if(auto p = std::get_if<Tachyon*>(&cfg.parent)){
+            Tachyon*    t   = *p;
+            if(t){
+                parent    = t->id();
+            }
+        }
+
+        if(auto p = std::get_if<TachyonID>(&cfg.parent)){
+            parent  = *p;
+        }
+        
+        if(parent){
+            m_inbox.push_back(new TachyonSetParentCommand(parent));
+        }
     }
     
     Tachyon::~Tachyon()
     {
     }
 
-    Tachyon::Impl&               Tachyon::_impl()
+
+    Tachyon::PostAdviceFlags  Tachyon::advise(const Post& pp) const
     {
-        return *m.get();
-    }
-    
-    const Tachyon::Impl&         Tachyon::_impl() const
-    {
-        return *m.get();
+        return {} 
     }
 
-    Tachyon::PostAdvice  Tachyon::advise(const Post& pp) const
-    {
-        if(const TachyonBind* p = dynamic_cast<const TachyonBind*>(&pp)){
-            return (p -> tachyon() == id()) ? PostAdvice::Accept : PostAdvice::Reject;
-        }
-        return PostAdvice::None; 
+    std::span<const TachyonID>      Tachyon::children() const 
+    { 
+        return m_children; 
     }
 
-    void    Tachyon::handle(const PostCPtr&pp)
+    void    Tachyon::dispatch(const PostCPtr& pp)
     {
         if(!pp)
             return ;
-        
+
         for(const PBXDispatch* fn : metaInfo().dispatches(&pp->metaInfo())){
             if(fn->dispatch(this, pp))
-                break;
+                return ;
         }
+
+        unhandled(pp);
     }
 
     bool Tachyon::in_thread() const
     {
-        return m->wthread == thread::id();
+        return m_thread == thread::id();
     }
 
+    void    Tachyon::mail(children_t, const PostCPtr&pp)
+    {
+        if(!pp)
+            return;
+        if(!m_data)
+            return;
+        if(!in_thread())
+            return;
+        m_data -> post.children.push_back(pp);
+    }
 
     void        Tachyon::mail(forward_t, const PostCPtr& pp)
     {
-        m->forward.push_back(pp);
+        if(!pp)
+            return ;
+        if(!m_data)
+            return;
+        if(!in_thread())
+            return;
+        m_data->post.forward.push_back(pp);
+    }
+
+    void    Tachyon::mail(parent_t, const PostCPtr&pp)
+    {
+        if(!pp)
+            return ;
+        if(!m_data)
+            return;
+        if(!in_thread())
+            return;
+        m_data->post.parent.push_back(pp);
     }
 
     void        Tachyon::mail(rx_t, const PostCPtr& pp)
@@ -251,39 +263,149 @@ namespace yq::tachyon {
         if(!pp)
             return ;
             
-        if(advise(*pp) == PostAdvice::Reject)
-            return ;
-        
-        Impl::lock_t    _lock(m->mutex, true);
-        m->inbox.push_back(pp);
+        TWLOCK
+        m_inbox.push_back(pp);
+    }
+
+    void    Tachyon::mail(rx_t, std::span<PostCPtr const> pp)
+    {
+        TWLOCK
+        m_inbox.insert(m_post.inbox.end(), pp.begin(), pp.end());
     }
 
     void    Tachyon::mail(tx_t, const PostCPtr&pp)
     {
-        m->outbox.push_back(pp);
+        if(!m_data)
+            continue;
+        if(!m_data)
+            return;
+        if(!in_thread())
+            return;
+        m_data->post.sent.push_back(pp);
     }
 
     void        Tachyon::mark()
     {
-        m->dirty    = true;
+        m_dirty    = true;
     }
 
-    void Tachyon::proxy(ProxyFN&& fn)
+    void    Tachyon::reset(thread_t)
     {
-        Impl::lock_t    _lock(m->mutex, true);
-        m->proxied.push_back(std::move(fn));
+        m_wthread   = kInvalidThread;
     }
 
-    void Tachyon::proxy_me(std::vector<Proxy*>&dst) 
+    void Tachyon::snap(TachyonSnap&snap) const
     {
         for(const InterfaceInfo* ii : metaInfo().interfaces().all){
             Proxy*  p   = ii->proxy(this);
             if(!p)
                 continue;
+                
             p->m_interface  = ii;
             p->m_tachyon    = this;
-            p->m_revision   = m->revision;
-            dst.push_back(p);
+            p->m_revision   = m_revision;
+            snap.proxies.push_back(p);
         }
+    }
+
+    std::pair<TachyonDataPtr, TachyonSnapPtr>      Tachyon::tick(thread_t, zero_t)
+    {
+        TachyonDataPtr  data    = metaInfo().create_data();
+        m_thread    = thread::id();
+        m_data      = data.ptr();
+
+        data->owner             = m_owner;
+        
+    }
+
+    std::pair<TachyonDataPtr, TachyonSnapPtr>      Tachyon::tick(thread_t, Context&ctx)
+    {
+        TachyonDataPtr  data    = metaInfo().create_data();
+
+        m_thread    = thread::id();
+        m_data      = data.ptr();
+        
+        data->tick              = ctx.tick;
+        data->owner             = m_owner;
+
+        {
+            TXLOCK
+            std::swap(data->post.received, m_inbox);
+        }
+        
+        if(!data->received.empty()){
+            for(TachyonID sn : m_snoops){
+                tx(ctx.frame, sn, data->post.received);
+            }
+        }
+        
+        for(const PostCPtr& pp : data->post.received){
+            if(!pp)
+                continue;
+            PostAdviceFlags paf = advise(*pp);
+            if(paf(PostAdvice::Reject))
+                continue;
+            if(paf(PostAdvice::Forward))
+                data->post.forward.push_back();
+            if(paf(PostAdvice::Parent))
+                data->post.parent.push_back();
+            if(paf(PostAdvice::Children))
+                data->post.children.push_back();
+            data->post.accepted.push_back(pp);
+            dispatch(pp);
+        }
+        
+        {
+            TXLOCK
+            std::swap(data->post.forward, m_post.forward);
+        }
+
+        if(!data->post.forward.empty()){
+            for(TachyonID fwd : m_forward){
+                tx(ctx.frame, fwd, data->post.forward);
+            }
+        }
+        
+        tick();
+        
+        if(!data->post.outbox.empty()){
+            for(TachyonID sub : m_subscriber){
+                tx(ctx.frame, sub, data->post.outbox);
+            }
+        }
+        
+        if(!data->post.children.empty()){
+            for(TachyonID ch : m_children){
+                tx(ctx.frame, ch, data->post.children);
+            }
+        }
+        
+        if(m_parent && !data->post.parent.empty()){
+            tx(ctx.frame, m_parent, data->post.parent);
+        }
+        
+        if(m_dirty || !m_snap || (m_snap->revision != m_revision)){
+            m_snap              = metaInfo().create_snap(this);
+            m_snap -> time      = ctx.time;
+            m_snap -> revision  = ++m_revision;
+            m_dirty             = false;
+        }
+        
+        m_thread    = kInvalidThread;
+        m_data      = nullptr;
+        return { data, m_snap };
+    }
+
+    void Tachyon::tx(const Frame& frame, TachyonID tid, std::span<const PostCPtr> posts)
+    {
+        Tachyon* t  = frame.object(tid);
+        if(!t)
+            return ;
+        t->mail(RX, posts);
+    }
+
+    void Tachyon::unhandled(const PostCPtr&)
+    {
+        //  Default does nothing
     }
 }

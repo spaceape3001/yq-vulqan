@@ -15,7 +15,7 @@ namespace yq::tachyon {
         //! Previous tick
         const Frame&    frame;
         
-        //! Sim time
+        //! Expected time for the snapshot
         double          time        = 0.;
 
         //! Our expected sim time delta (paused is 0., rewinding is negative)

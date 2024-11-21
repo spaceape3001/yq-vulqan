@@ -21,7 +21,6 @@ add_library(${PROJECT_NAME} SHARED
     MyImGui.cpp
     
     #vulqan.cpp
-    #VulqanManager.cpp
 
     api/System.cpp
 
@@ -31,17 +30,15 @@ add_library(${PROJECT_NAME} SHARED
     api/Command.cpp
     #api/Editor.cpp
     api/Event.cpp
+    api/Frame.cpp
     api/Interface.cpp
-    #api/Frame.cpp
     #api/Light.cpp
     #api/Model.cpp
     #api/Manager.cpp
     api/Message.cpp
-
     #api/Perspective.cpp
     api/Pipeline.cpp
     api/PipelineUtils.cpp
-    #api/Proxy.cpp
     api/Post.cpp
     api/Raster.cpp
     #api/Render2D.cpp
@@ -65,7 +62,7 @@ add_library(${PROJECT_NAME} SHARED
     commands/commands.cpp
     events/events.cpp
     #interfaces/interfaces.cpp
-    proxies/proxies.cpp
+    #proxies/proxies.cpp
 
 
     #core/Controlling.cpp
@@ -127,6 +124,7 @@ add_library(${PROJECT_NAME} SHARED
     v/VqEnums.cpp
     v/VqLogging.cpp
     #v/VqUtils.cpp
+    #v/VulqanManager.cpp
     
     #viewer/viewer.cpp
     

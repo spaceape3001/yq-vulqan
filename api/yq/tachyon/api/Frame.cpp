@@ -4,245 +4,295 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CameraData.hpp"
+//#include "Camera.hpp"
+//#include "CameraData.hpp"
+//#include "Editor.hpp"
+//#include "EditorData.hpp"
 #include "Frame.hpp"
-#include "Post.hpp"
-#include "Proxy.hpp"
+#include "FrameBuilder.hpp"
+//#include "Light.hpp"
+//#include "LightData.hpp"
+//#include "Manager.hpp"
+//#include "ManagerData.hpp"
+//#include "Post.hpp"
+//#include "Proxy.hpp"
+//#include "Rendered.hpp"
+//#include "RenderedData.hpp"
+//#include "Scene.hpp"
+//#include "SceneData.hpp"
 #include "Tachyon.hpp"
 #include "TachyonData.hpp"
 #include "Thread.hpp"
 #include "ThreadData.hpp"
-#include "ViewerData.hpp"
-#include "WidgetData.hpp"
+//#include "Viewer.hpp"
+//#include "ViewerData.hpp"
+//#include "Widget.hpp"
+//#include "WidgetData.hpp"
 
 namespace yq::tachyon {
 
-    template <SomeTachyon T>
-    struct Frame::Container {
-        using snap_t    = typename T::MySnap;
-        using data_t    = typename T::MyData;
+    template <typename T, typename D, typename S>
+    const D*   Frame::Container<T,D,S>::data(uint64_t n) const
+    {
+        auto i = datas.find(n);
+        if(i != datas.end())
+            return i->second.ptr();
+        return nullptr;
+    }
+
+    template <typename T, typename D, typename S>
+    bool    Frame::Container<T,D,S>::has(uint64_t n) const
+    {
+        return datas.contains(n);
+    }
+
+    template <typename T, typename D, typename S>
+    void    Frame::Container<T,D,S>::insert(Tachyon* p, const TachyonData* d, const TachyonSnap* s)
+    {
+        objects[p->id()]      = static_cast<T*>(p);
+        datas[p->id()]        = static_cast<const data_t*>(d);
+        snaps[p->id()]        = static_cast<const snap_t*>(s);
+    }
     
-        std::unordered_map<uint64_t, Ref<T>>                objects;
-        std::unordered_map<uint64_t, Ref<const data_t>>     datas;
-        std::unordered_map<uint64_t, Ref<const snap_t>>     snaps;
+    template <typename T, typename D, typename S>
+    T* Frame::Container<T,D,S>::pointer(uint64_t n) const
+    {
+        auto i = objects.find(n);
+        if(i != objects.end())
+            return const_cast<T*>(i->second.ptr());
+        return nullptr;
+    }
         
-        void    insert(Tachyon* p, const TachyonData* d, const TachyonSnap* s)
-        {
-            objects[p->id]      = static_cast<T*>(p);
-            datas[p->id]        = static_cast<const data_t*>(d);
-            snaps[p->id]        = static_cast<const snap_t*>(s);
-        }
-        
-        const data_t*   data(uint64_t n) const
-        {
-            auto i = datas.find(n);
-            if(i != datas.end())
-                return i->second.ptr();
-            return nullptr;
-        }
-        
-        const snap_t    snap(uint64_t n) const
-        {
-            auto i = snaps.find(n);
-            if(i != snaps.end())
-                return i->second.ptr();
-            return nullptr;
-        }
-        
-        T* pointer(uint64_t n) const
-        {
-            auto i = objects.find(n);
-            if(i != objects.end())
-                return i->second.ptr();
-            return nullptr;
-        }
-    };
+    template <typename T, typename D, typename S>
+    const S*    Frame::Container<T,D,S>::snap(uint64_t n) const
+    {
+        auto i = snaps.find(n);
+        if(i != snaps.end())
+            return i->second.ptr();
+        return nullptr;
+    }
 
     std::atomic<uint64_t>    Frame::s_lastId{0};
     
-    struct Frame::Impl {
-        const ThreadID          thread;
-        const uint64_t          number;
-        const time_point_t      wallclock;
-
-        //Container<Camera>       cameras;
-        //Container<Editor>       editors;
-        //Container<Light>        lights;
-        //Container<Manager>      managers;
-        //Container<Rendered>     rendereds;
-        //Container<Scene>        scenes;
-        Container<Tachyon>      tachyons;
-        Container<Thread>       threads;
-        //Container<Viewer>       viewers;
-        //Container<Widget>       widgets;
-        
-        Impl(ThreadID th) : thread(th), number(++s_lastId), wallclock(clock_t::now()) 
-    };
-
-
-    
-    Frame::Frame(ThreadID th) : m(new Impl(th))
+    Frame::Frame(ThreadID th) : m_origin(th), m_number(++s_lastId), m_wallclock(clock_t::now()) 
     {
     }
+
 
     Frame::~Frame()
     {
     }
 
-    void    Frame::add(TachyonPtr p, TachyonDataPtr d, TachyonSnapPtr s)
+    void    Frame::add(ThreadID th, const TachyonFrame& tac)
     {
-        if(!(p && d && s))  
+        if(!(tac.object && tac.data && tac.snap))  
             return ;
 
-        m->tachyons.insert(p.ptr(), d.ptr(), s.ptr());
+        Types     types = tac.object->metaInfo().types();
+        TachyonID id    = tac.object->id();
 
-        Types   types   = p -> metaInfo().types();
+        m_owners[id]    = th;
+        m_types[id]     = types;
+        
+        Tachyon*   t = const_cast<Tachyon*>(tac.object.ptr());
+        m_tachyons.insert(t, tac.data.ptr(), tac.snap.ptr());
+
         //if(types(Type::Camera))
-            //m->cameras.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_cameras.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Editor))
-            //m->editors.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_editors.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Light))
-            //m->lights.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_lights.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Manager))
-            //m->managers.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_managers.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Rendered))
-            //m->rendereds.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_rendereds.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Scene))
-            //m->scenes.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_scenes.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Thread))
-            m->threads.insert(p.ptr(), d.ptr(), s.ptr());
+            m_threads.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Viewer))
-            //m->viewers.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_viewers.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Widget))
-            //m->widgets.insert(p.ptr(), d.ptr(), s.ptr());
+            //m_widgets.insert(t, tac.data.ptr(), tac.snap.ptr());
     }
     
+    #if 0
+    bool Frame::contains(CameraID id) const
+    {
+        return m_cameras.has(id);
+    }
+    #endif
+
+    #if 0
+    bool Frame::contains(EditorID id) const
+    {
+        return m_editors.has(id);
+    }
+    #endif
+
+    #if 0
+    bool Frame::contains(LightID id) const
+    {
+        return m_lights.has(id);
+    }
+    #endif
+
+    #if 0
+    bool Frame::contains(ManagerID id) const
+    {
+        return m_managers.has(id);
+    }
+    #endif
+
+    #if 0
+    bool Frame::contains(RenderedID id) const
+    {
+        return m_rendereds.has(id);
+    }
+    #endif
+
+    #if 0
+    bool Frame::contains(SceneID id) const
+    {
+        return m_scenes.has(id);
+    }
+    #endif
+    
+    bool Frame::contains(TachyonID id) const
+    {
+        return m_tachyons.has(id);
+    }
+    
+    bool Frame::contains(ThreadID id) const
+    {
+        return m_threads.has(id);
+    }
+    
+    #if 0
+    bool Frame::contains(ViewerID id) const
+    {
+        return m_viewers.has(id);
+    }
+    #endif
+
+    #if 0
+    bool Frame::contains(WidgetID id) const
+    {
+        return m_widgets.has(id);
+    }
+    #endif
     
     #if 0
     const CameraData*                   Frame::data(CameraID id) const
     {
-        return m->cameras.data(id);
+        return m_cameras.data(id);
     }
     #endif
 
     #if 0
     const EditorData*                   Frame::data(EditorID id) const
     {
-        return m->editors.data(id);
+        return m_editors.data(id);
     }
     #endif
 
     #if 0
     const LightData*                   Frame::data(LightID id) const
     {
-        return m->lights.data(id);
+        return m_lights.data(id);
     }
     #endif
 
     #if 0
     const ManagerData*                  Frame::data(ManagerID id) const
     {
-        return m->managers.data(id);
+        return m_managers.data(id);
     }
     #endif
 
     #if 0
     const RenderedsData*                Frame::data(RenderedsID id) const
     {
-        return m->rendereds.data(id);
+        return m_rendereds.data(id);
     }
     #endif
 
     const TachyonData*                  Frame::data(TachyonID id) const
     {
-        return m->tachyons.data(id);
+        return m_tachyons.data(id);
     }
     
     const ThreadData*                   Frame::data(ThreadID id) const
     {
-        return m->threads.data(id);
+        return m_threads.data(id);
     }
 
     #if 0
     const ViewerData*                   Frame::data(ViewerID id) const
     {
-        return m->viewers.data(id);
+        return m_viewers.data(id);
     }
     #endif
 
     #if 0
     const WidgetData*                   Frame::data(WidgetID id) const
     {
-        return m->widgets.data(id);
+        return m_widgets.data(id);
     }
     #endif
 
     #if 0
     Camera*                             Frame::object(CameraID id) const
     {
-        return m->cameras.pointer(id);
+        return m_cameras.pointer(id);
     }
     #endif
 
     #if 0
     Manager*                            Frame::object(ManagerID id) const
     {
-        return m->managers.pointer(id);
+        return m_managers.pointer(id);
     }
     #endif
 
     #if 0
     Rendered*                           Frame::object(RenderedID id) const
     {
-        const RenderedSnap*   ts  = snap(id);
-        if(!ts)
-            return nullptr;
-        return static_cast<Rendered*>(const_cast<Tachyon*>(ts->object.ptr()));
+        return m_rendereds.pointer(id);
     }
     #endif
 
     Tachyon*                            Frame::object(TachyonID id) const
     {
-        const TachyonSnap*  ts  = snap(id);
-        if(!ts)
-            return nullptr;
-        return const_cast<Tachyon*>(ts->object.ptr());
+        return m_tachyons.pointer(id);
     }
     
     Thread*                             Frame::object(ThreadID id) const
     {
-        const ThreadSnap*   ts  = snap(id);
-        if(!ts)
-            return nullptr;
-        return static_cast<Thread*>(const_cast<Tachyon*>(ts->object.ptr()));
+        return m_threads.pointer(id);
     }
     
     #if 0
     Viewer*                             Frame::object(ViewerID id) const
     {
-        const ViewerSnap*   ts  = snap(id);
-        if(!ts)
-            return nullptr;
-        return static_cast<Viewer*>(const_cast<Tachyon*>(ts->object.ptr()));
+        return m_viewers.pointer(id);
     }
     #endif
 
     #if 0
     Widget*                             Frame::object(WidgetID id) const
     {
-        const WidgetSnap*   ts  = snap(id);
-        if(!ts)
-            return nullptr;
-        return static_cast<Widget*>(const_cast<Tachyon*>(ts->object.ptr()));
+        return m_widgets.pointer(id);
     }
     #endif
 
     ThreadID                            Frame::owner(TachyonID id) const
     {
-        const TachyonData* td   = data(id);
-        if(!td)
-            return {};
-        return td->owner;
+        auto i = m_owners.find(id);
+        if(i != m_owners.end())
+            return i->second;
+        return {};
     }
     
     std::span<Proxy* const>             Frame::proxies(TachyonID id) const
@@ -253,85 +303,111 @@ namespace yq::tachyon {
         return ts->proxies;
     }
     
-    std::span<PostCPtr const>           Frame::received(TachyonID id) const
-    {
-        const TachyonData*  td  = data(id);
-        if(!td)
-            return {};
-        return td->received;
-    }
-    
-    std::span<PostCPtr const>           Frame::sent(TachyonID id) const
-    {
-        const TachyonData*  td  = data(id);
-        if(!td)
-            return {};
-        return td->sent;
-    }
     
     #if 0
     const CameraSnap*                  Frame::snap(CameraID id) const
     {
-        const CameraData*  td  = data(id);
-        if(!td)
-            return nullptr;
-        return static_cast<const CameraSnap*>(td->snap.ptr());
+        return m_cameras.snap(id);
     }
     #endif
 
     #if 0
     const ManagerSnap*                 Frame::snap(ManagerID id) const
     {
-        const ManagerData*  td  = data(id);
-        if(!td)
-            return nullptr;
-        return static_cast<const ManagerSnap*>(td->snap.ptr());
+        return m_managers.snap(id);
     }
     #endif
 
     #if 0
     const RenderedData*                Frame::snap(RenderedID id) const
     {
-        const RenderedSnap*  td  = data(id);
-        if(!td)
-            return nullptr;
-        return static_cast<const RenderedSnap*>(td->snap.ptr());
+        return m_rendereds.snap(id);
     }
     #endif
 
     const TachyonSnap*                 Frame::snap(TachyonID id) const
     {
-        const TachyonData*  td  = data(id);
-        if(!td)
-            return nullptr;
-        return td->snap.ptr();
+        return m_tachyons.snap(id);
     }
     
     const ThreadSnap*                  Frame::snap(ThreadID id) const
     {
-        const ThreadData*  td  = data(id);
-        if(!td)
-            return nullptr;
-        return static_cast<const ThreadSnap*>(td->snap.ptr());
+        return m_threads.snap(id);
     }
 
     #if 0
     const ViewerSnap*                  Frame::snap(ViewerID id) const
     {
-        const ViewerData*  td  = data(id);
-        if(!td)
-            return nullptr;
-        return static_cast<const ViewerSnap*>(td->snap.ptr());
+        return m_viewers.snap(id);
     }
     #endif
 
     #if 0
     const WidgetSnap*                  Frame::snap(WidgetID id) const
     {
-        const WidgetData*  td  = data(id);
-        if(!td)
-            return nullptr;
-        return static_cast<const WidgetSnap*>(td->snap.ptr());
+        return m_widgets.snap(id);
     }
     #endif
+    
+    Types   Frame::types(TachyonID id) const
+    {
+        auto i = m_types.find(id);
+        if(i != m_types.end())
+            return i->second;
+        return {};
+    }
+
+    ////////////////////////
+    // FRAME BUILDER
+    
+    Frame::Builder::Builder(ThreadID th)
+    {
+        m_frame   = new Frame(th);
+    }
+    
+    Frame::Builder::~Builder()
+    {
+    }
+    
+    void        Frame::Builder::add(ThreadID th, const ThreadData& tdata)
+    {
+        if(!m_frame)
+            return ;
+            
+        for(const TachyonFrame& tf : tdata.tachyons){
+            if(!tf.object)
+                continue;
+            if(!tf.data)
+                continue;
+            if(!tf.snap)
+                continue;
+            switch(tf.state){
+            case TachyonThreadState::Normal:
+                m_frame->add(th, tf);
+                break;
+            case TachyonThreadState::Pushed:
+                m_pushed.push_back({th, tf});
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    
+    FramePtr    Frame::Builder::finalize()
+    {
+        if(!m_frame)
+            return {};
+            
+        for(auto& p : m_pushed){
+            if(m_frame -> contains(p.second.object->id()))
+                continue;
+            m_frame->add(p.first, p.second);
+        }
+        
+        FramePtr    ret;
+        std::swap(ret, m_frame);
+        return ret;
+    }
+    
 }

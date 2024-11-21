@@ -10,9 +10,9 @@
 #include <functional>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
+#include <yq/tachyon/typedef/post.hpp>
 
 namespace yq::tachyon {
-    class AppFrame;
     class Tachyon;
     class InterfaceInfo;
     struct TachyonSnap;
@@ -29,13 +29,17 @@ namespace yq::tachyon {
         Proxy();
         virtual ~Proxy();
 
-        void            dispatch(ProxyFN&&);
+        //! Pushes a setter-style function onto the tachyon's queue for their next tick()
+        void    dispatch(ProxyFN&&);
+        
+        //! Pushes a post into the tachyon's inbox for their next tick()
+        void    dispatch(const PostCPtr&);
     
     private:
         friend class Tachyon;
         friend struct TachyonSnap;
         
-        Tachyon*                m_tachyon   = nullptr;
+        Tachyon*                m_tachyon;
         uint64_t                m_revision  = 0;
         const InterfaceInfo*    m_interface = nullptr;
     };

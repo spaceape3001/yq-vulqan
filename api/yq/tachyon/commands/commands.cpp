@@ -16,6 +16,7 @@
 #include "MouseHideCommand.ipp"
 #include "MouseNormalCommand.ipp"
 #include "TachyonCommand.ipp"
+#include "TachyonSetParentCommand.ipp"
 #include "ViewerAspectCommand.ipp"
 #include "ViewerAttentionCommand.ipp"
 #include "ViewerCloseCommand.ipp"

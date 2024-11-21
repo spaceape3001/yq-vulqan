@@ -51,7 +51,7 @@ namespace yq::tachyon {
     
         const InterfaceLUC& interfaces() const { return m_interfaces.all; }
 
-        using dispatch_vec_t     = std::vector<const PBXDispatch*>;
+        using dispatch_vec_t    = std::vector<const PBXDispatch*>;
         using dispatch_span_t   = std::span<const PBXDispatch*>;
         using dispatch_map_t    = std::unordered_map<const PostInfo*, dispatch_span_t>;
 
@@ -117,53 +117,68 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
         
+        using parent_spec_t = std::variant<std::monostate, TachyonID, Tachyon*>;
+        
         
         /*! \brief Initialization 
         */
         struct Param {  
-            /* Reserved for future use */
+            parent_spec_t   parent;
         };
-
-    
         
         bool                in_thread() const;
         static void         init_info();
 
-        //  Inbound mail
+        // Inbound mail
         void                mail(rx_t, const PostCPtr&);
+        void                mail(rx_t, std::span<PostCPtr const>);
         
         TachyonID           id() const { return { UniqueID::id() }; }
         //ThreadID        id(thread_t) const;
         
         //ThreadID            owning_thread() const { return m_thread; }
         
-        #if 0
-        struct Context {
-            double              Δt          = 0.;   //!< Our time step (zero for paused, or first tick)
-            double              overclock   = 1.;   //!< Current ratio sim:wall time (1.0 for normal speed, -1.0 for reverse)
-            time_point_t        wall;               //!< Wall clock time (start of tick-cycle)
-            // current events....?
-        };
-        #endif
-            
-        enum class PostAdvice {
-            None    = 0,    //! No advice (ie, it's not an advisable type)
-            Reject,
-            Accept
+        virtual TachyonID                       parent() const { return m_parent; }
+        virtual std::span<const TachyonID>      children() const;
+        
+        enum class PostAdvice : uint8_t {
+            Reject,     //!< Reject dispatch/handling of the post
+            Forward,
+            Children,
+            Parent
         };
         
+        using PostAdviceFlags = Flags<PostAdvice>;
 
     protected:
+
+        using mutex_t           = tbb::spin_rw_mutex;
+        using lock_t            = mutex_t::scoped_lock;
+        using control_hash_t    = std::multimap<uint32_t, TachyonID>;
+
+        mutable mutex_t         m_mutex;          // used for guards
+
     
+        #define TXLOCK  \
+            lock_t  _lock(m_mutex, true);
+
+        #define TRLOCK                          \
+            lock_t  _lock;                      \
+            if(!in_thread())                    \
+                _lock.acquire(m_mutex, false);
+
+        #define TWLOCK                          \
+            lock_t  _lock;                      \
+            if(!in_thread())                    \
+                _lock.acquire(m_mutex, true);
+
+
         friend TachyonPtr;
         friend TachyonCPtr;
-        
-        struct Impl;
-        
-        using ImplCreator   = std::function<Impl*(uint64_t)>;
 
-        Tachyon(const Param& p={}, ImplCreator&& impl={});
+        Tachyon(const Param& p={});
         virtual ~Tachyon();
+        
         
 
         /*! \brief Your update routine
@@ -175,11 +190,12 @@ namespace yq::tachyon {
         /*! \brief YOUR update
             \note Do NOT call ticks on other objects!
             
-            This is your update, at frame rate.  During this tick, 
-            you may call frame() to get the current frame
+            This is your update, at frame rate.
         */
         virtual void        tick(Context&){}
         
+        //! First tick w/o context/frame (basically, bootstrap out messages)
+        virtual void        tick(zero_t) {}
         
         
         /*! Advise to the disposition of the post
@@ -191,18 +207,28 @@ namespace yq::tachyon {
             
             \return Advise... 
         */
-        virtual PostAdvice  advise(const Post&) const;
+        virtual PostAdviceFlags  advise(const Post&) const;
 
         
         //virtual void  pre_tick();     // maybe
         //virtual void  post_tick();    // maybe
 
         
-        void    mail(tx_t, const PostCPtr&);
-        void    mail(forward_t, const PostCPtr&);
+        void        mail(tx_t, const PostCPtr&);
+        void        mail(forward_t, const PostCPtr&);
         
-        //! Override to forward (call base to do normal processing)
-        virtual void    handle(const PostCPtr&);
+        // mail to children
+        void        mail(children_t, const PostCPtr&);
+        
+        // mail to parent
+        void        mail(parent_t, const PostCPtr&);
+
+        /*! \brief HANDLES the specified post
+        
+            \note Override to forward, call base to do normal processing 
+            (ie, the dispatch...eventually)
+        */
+        virtual void    dispatch(const PostCPtr&);
         
         void            snap(TachyonSnap&) const;
 
@@ -212,35 +238,57 @@ namespace yq::tachyon {
 
         //TachyonDataPtr      _tick_start();
         
-        
         //void                _tick_done();
 
-        Impl&               _impl();
-        const Impl&         _impl() const;
+        //! When no handler found in dispatch, this gets called
+        virtual void    unhandled(const PostCPtr&);
 
     private:
         friend class Proxy;
         friend class Frame;
-        
+
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
         
-        std::unique_ptr<Impl>       m;
+        std::vector<PostCPtr>       m_inbox;      //< Inbox (under mutex guard)
+        control_hash_t              m_control;    //< Who controls us
+        std::vector<TachyonID>      m_children;   //< Children
+        std::vector<TachyonID>      m_forward;    //< Those we forward to
+        std::vector<TachyonID>      m_snoop;      //< Those eavesdropping on our inbox
+        std::vector<TachyonID>      m_subscriber; //< Those we're sending too.
+        TachyonID                   m_parent;     //< Parent
+        ThreadID                    m_owner;      //< Thread that owns us
+        uint64_t                    m_revision      = 0;    //< Revision
+        TachyonSnapCPtr             m_snap;                 //< Last snap
+        TachyonData*                m_data          = nullptr;
+        std::atomic<unsigned int>   m_thread        = kInvalidThread;
+        bool                        m_dirty         = false;
+        
+        
+        virtual void                    parent(set_t, TachyonID);
+        
+        void    tx(const Frame&, TachyonID, std::span<const PostCPtr>);
+        
+//        std::unique_ptr<Impl>       m;
 
         //void    _inbound(Frame&);
         //void    _outbound(Frame&);
         
-        void    proxy(ProxyFN&&);
+        //void    proxy(ProxyFN&&);
         
-        void    proxy_me(std::vector<Proxy*>&);
+
+        void                                            reset(thread_t);
+        std::pair<TachyonDataPtr, TachyonSnapPtr>       tick(thread_t, Context&);
+        std::pair<TachyonDataPtr, TachyonSnapPtr>       tick(thread_t, zero_t);
+        
 
         //virtual TachyonDataPtr          tick(Context&);
 
         //std::vector<Tachyon*>           m_children;
         //Tachyon*                        m_parent = nullptr;
         
+        //void    _inbox(const Frame&, TachyonData&);
+        
         //virtual void    _tick
 
     };
-    
-    
 }

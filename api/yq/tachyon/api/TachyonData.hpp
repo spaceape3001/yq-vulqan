@@ -17,19 +17,27 @@ namespace yq::tachyon {
     class Proxy;
     
     struct TachyonSnap : public RefCount {
-        double                  time        = 0.;
         std::vector<Proxy*>     proxies;
         uint64_t                revision    = 0ULL;
+        double                  time        = 0.;
         
         TachyonSnap();
         virtual ~TachyonSnap();
     };
 
     struct TachyonData : public RefCount {
+        struct {
+            std::vector<PostCPtr>   sent;
+            std::vector<PostCPtr>   received;
+            std::vector<PostCPtr>   accepted;
+            std::vector<PostCPtr>   forward;
+            std::vector<PostCPtr>   children;
+            std::vector<PostCPtr>   parent;
+        }                       post;
+
         uint64_t                tick        = 0ULL;
-        std::vector<PostCPtr>   sent, received;
+        
         ThreadID                owner;
-        unsigned                thread_id   = ~0;      //! thread::id() that corresponded to tick()
         
         TachyonData();
         virtual ~TachyonData();

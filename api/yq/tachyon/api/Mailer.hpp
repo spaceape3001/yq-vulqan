@@ -1,0 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/typedef/post.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
+
+namespace yq::tachyon {
+    void    mail(TachyonID, const PostCPtr&);
+}

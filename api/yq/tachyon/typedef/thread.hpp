@@ -15,10 +15,10 @@ namespace yq::tachyon {
     
     template <class> class ID;
     using ThreadID = ID<Thread>;
-
-    /*
-        DO NOT DECLARE THREAD ID with the ID class... different IDs.
-    */
+    
+    struct ThreadSnap;
+    using ThreadSnapPtr     = Ref<ThreadSnap>;
+    using ThreadSnapCPtr    = Ref<const ThreadSnap>;
     
     struct ThreadData;
     using ThreadDataPtr     = Ref<ThreadData>;

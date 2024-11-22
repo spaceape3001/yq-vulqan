@@ -9,8 +9,8 @@
 #include <yq/core/ErrorDB.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/image/ImageViewInfo.hpp>
-#include <yq/tachyon/sampler/SamplerInfo.hpp>
+#include <yq/tachyon/api/ImageViewInfo.hpp>
+#include <yq/tachyon/api/SamplerInfo.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/v/VulqanManager.hpp>
 

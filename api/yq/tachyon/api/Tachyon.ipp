@@ -403,6 +403,10 @@ namespace yq::tachyon {
         }
     }
 
+    Execution   Tachyon::tick(Context&)
+    {
+        return {};
+    }
 
     void Tachyon::tx(TachyonID tid, PostCPtr pp)
     {

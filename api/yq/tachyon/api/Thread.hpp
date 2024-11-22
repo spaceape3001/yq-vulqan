@@ -26,8 +26,10 @@ namespace yq::tachyon {
             is *NOT* supported.
     */
     class Thread : public Tachyon {
-        YQ_OBJECT_INFO(ThreadInfo)
-        YQ_OBJECT_DECLARE(Thread, Tachyon)
+        YQ_TACHYON_INFO(ThreadInfo)
+        YQ_TACHYON_DATA(ThreadData)
+        YQ_TACHYON_SNAP(ThreadSnap)
+        YQ_TACHYON_DECLARE(Thread, Tachyon)
     public:
     
         static void init_info();
@@ -46,8 +48,12 @@ namespace yq::tachyon {
         Thread(const Param& p = {});
         ~Thread();
         
+        //! Quit demand (virtual to allow others to object)
         virtual void    quit();
-        virtual void    start();
+        void            start();
+        
+        //! STALLS until thread is joined
+        void            join();
 
         ThreadID        id() const { return ThreadID(Tachyon::id()); }
         

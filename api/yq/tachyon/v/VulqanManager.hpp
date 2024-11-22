@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/app/Manager.hpp>
+#include <yq/tachyon/api/Manager.hpp>
 #include <yq/tachyon/vulqan.hpp>
 
 namespace yq {
@@ -17,7 +17,7 @@ namespace yq::tachyon {
     struct AppCreateInfo;
 
     class VulqanManager : public Manager {
-        YQ_OBJECT_DECLARE(VulqanManager, Manager)
+        YQ_TACHYON_DECLARE(VulqanManager, Manager)
     public:
     
         static VulqanManager*   manager();

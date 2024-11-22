@@ -20,7 +20,7 @@ add_library(${PROJECT_NAME} SHARED
     
     MyImGui.cpp
     
-    #vulqan.cpp
+    vulqan.cpp
 
     api/AppThread.cpp
     api/System.cpp
@@ -34,7 +34,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Frame.cpp
     #api/Light.cpp
     #api/Model.cpp
-    #api/Manager.cpp
+    api/Manager.cpp
     api/Message.cpp
     #api/Perspective.cpp
     api/Pipeline.cpp
@@ -125,8 +125,8 @@ add_library(${PROJECT_NAME} SHARED
     # v/VqEnumerations.cpp
     v/VqEnums.cpp
     v/VqLogging.cpp
-    #v/VqUtils.cpp
-    #v/VulqanManager.cpp
+    v/VqUtils.cpp
+    v/VulqanManager.cpp
     
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
@@ -136,7 +136,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViRendered.cpp
     viz/ViTasker.cpp
     viz/ViThread.cpp
-    #viz/ViVisualizer.cpp
+    viz/ViVisualizer.cpp
     #viz/Visualizer.cpp
     
     viz/viz.cpp

@@ -26,6 +26,7 @@ namespace yq::tachyon {
     };
 
     struct ThreadSnap : public TachyonSnap {
+        virtual ~ThreadSnap();
     };
     
     struct ThreadData : public TachyonData {

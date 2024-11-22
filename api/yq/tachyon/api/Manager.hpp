@@ -22,6 +22,8 @@ namespace yq::tachyon {
     */
     class Manager : public Tachyon {
         YQ_TACHYON_INFO(ManagerInfo)
+        YQ_TACHYON_DATA(ManagerData)
+        YQ_TACHYON_SNAP(ManagerSnap)
         YQ_TACHYON_DECLARE(Manager, Tachyon)
     public:
     

@@ -13,7 +13,6 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/VulqanManager.hpp>
 #include <yq/tachyon/api/Buffer.hpp>
 #include <yq/tachyon/api/Raster.hpp>
 #include <yq/tachyon/api/Pipeline.hpp>
@@ -25,6 +24,7 @@
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/v/VqUtils.hpp>
+#include <yq/tachyon/v/VulqanManager.hpp>
 #include <yq/tachyon/viz/ViManager.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>

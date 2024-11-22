@@ -68,6 +68,18 @@ namespace yq::tachyon {
 
 // ------------------------------------------------------------------------
 
+    ThreadData::~ThreadData()
+    {
+    }
+
+// ------------------------------------------------------------------------
+
+    ThreadSnap::~ThreadSnap()
+    {
+    }
+
+// ------------------------------------------------------------------------
+
     ThreadInfo::ThreadInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(zName, base, sl)
     {
@@ -83,6 +95,12 @@ namespace yq::tachyon {
     }
     
     thread_local Thread*     Thread::s_current  = nullptr;
+    
+    void Thread::init_info()
+    {
+        auto w = writer<Thread>();
+        w.description("Thread of execution");
+    }
 
 // ------------------------------------------------------------------------
 
@@ -102,6 +120,42 @@ namespace yq::tachyon {
     ThreadData&     Thread::data()
     {
         return static_cast<ThreadData&>(Tachyon::data());
+    }
+
+    void    Thread::exec()
+    {
+        while(!m_quit){
+            tick();
+        }
+    }
+
+    void    Thread::execute(Control& ctr, Context& ctx)
+    {
+        ThreadData&     d    = data();
+
+        //  Ignore the actual execution control (for now)
+        
+        auto res    = ctr.object->cycle(ctx);
+        ctr.snap    = res.snap;
+        d.tachyons.push_back({ ctr.object, res.data, res.snap });
+    }
+
+    void    Thread::join()
+    {
+        quit();
+        m_thread.join();
+    }
+
+    void    Thread::quit()
+    {
+        m_quit  = true;
+    }
+    
+    void    Thread::start()
+    {
+        if(m_thread.joinable()) // something's running... don't
+            return ;
+        m_thread    = std::thread([this](){ run(); });
     }
 
     void    Thread::tick()
@@ -174,16 +228,7 @@ namespace yq::tachyon {
     }
 
 
-    void    Thread::execute(Control& ctr, Context& ctx)
-    {
-        ThreadData&     d    = data();
-
-        //  Ignore the actual execution control (for now)
-        
-        auto res    = ctr.object->cycle(ctx);
-        ctr.snap    = res.snap;
-        d.tachyons.push_back({ ctr.object, res.data, res.snap });
-    }
-    
     
 }
+
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Thread)

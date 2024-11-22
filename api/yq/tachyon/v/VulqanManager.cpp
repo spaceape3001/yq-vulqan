@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "errors.hpp"
-#include "logging.hpp"
-#include <yq/tachyon/app/AppCreateInfo.hpp>
-#include <yq/tachyon/app/ManagerInfoWriter.hpp>
+#include <yq/tachyon/errors.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/api/AppCreateInfo.hpp>
+#include <yq/tachyon/api/ManagerInfoWriter.hpp>
 #include "VulqanManager.hpp"
 
 #include <yq/tachyon/exceptions/VulqanException.hpp>

@@ -8,6 +8,7 @@
 
 #include <yq/units.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/thread.hpp>
 #include <thread>
 
 namespace yq::tachyon {
@@ -20,6 +21,9 @@ namespace yq::tachyon {
     };
 
     /*! \brief Thread of something in the application
+    
+        \note Threads within threads on the same thread 
+            is *NOT* supported.
     */
     class Thread : public Tachyon {
         YQ_OBJECT_INFO(ThreadInfo)
@@ -27,6 +31,9 @@ namespace yq::tachyon {
     public:
     
         static void init_info();
+        
+        //  Might be NULL...
+        static Thread*  current() { return s_current; }
 
         using Tachyon::Param;
 
@@ -36,8 +43,6 @@ namespace yq::tachyon {
         //! Executes tick until quit flag
         void            exec();
         
-        static Thread&  current();
-
         Thread(const Param& p = {});
         ~Thread();
         
@@ -47,10 +52,13 @@ namespace yq::tachyon {
         ThreadID        id() const { return ThreadID(Tachyon::id()); }
         
         //  This is the thread's tick
-        virtual void        tick();
+        virtual void    tick();
         
     protected:
-        virtual void        tick(Context&) override {}
+        virtual Execution   tick(Context&) override;
+        
+        // same caveats as tachyon
+        ThreadData&     data();
         
     private:
     
@@ -62,6 +70,7 @@ namespace yq::tachyon {
         struct Control;
         struct Inbox;
         
+        friend class Tachyon;
         
         
 //        struct Impl;
@@ -70,13 +79,19 @@ namespace yq::tachyon {
         //using SharedTacRepVector    = std::shared_ptr<TacRepVector>;
         
         using thread_data_map_t     = std::map<ThreadID, ThreadDataCPtr>;
+        using thread_map_t          = std::map<ThreadID, ThreadPtr>;
         using inbox_map_t           = std::map<ThreadID, Inbox>;
     
         void    tick(TachyonID);
         
+        void    execute(Control&, Context&);
+        
+        static thread_local Thread*     s_current;
+        
         bool                            m_quit{ false };
         unit::Second                    m_snooze    = 1_ms;
-        std::map<ThreadID, Control>     m_objects;
+        std::map<TachyonID, Control>    m_objects;
         std::thread                     m_thread;
+        uint64_t                        m_tick      = 0ULL;
     };
 }

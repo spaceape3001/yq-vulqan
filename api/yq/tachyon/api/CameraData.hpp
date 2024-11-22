@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     struct CameraSnap : public TachyonSnap {
+        glm::mat4       view, projection;
     };
     
     struct CameraData : public TachyonData {

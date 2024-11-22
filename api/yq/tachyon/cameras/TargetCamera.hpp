@@ -6,17 +6,22 @@
 
 #pragma once
 
-#include <yq/tachyon/camera/Camera.hpp>
+#include <yq/tachyon/api/Camera.hpp>
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
     class TargetCamera : public Camera {
-        YQ_OBJECT_DECLARE(TargetCamera, Camera)
+        YQ_TACHYON_DECLARE(TargetCamera, Camera)
     public:
     
+        /*
+            TargetCamera might go away in favor of attaching a 
+            controller (basically an aimbot)
+        */
+    
         glm::dmat4  world2screen(const Values&) const override;
-        TargetCamera();
+        TargetCamera(const Param&p = {});
         ~TargetCamera();
 
         double                  far() const { return m_far; }

@@ -22,16 +22,16 @@ add_library(${PROJECT_NAME} SHARED
     
     #vulqan.cpp
 
+    api/AppThread.cpp
     api/System.cpp
 
     #api/Application.cpp
     api/Buffer.cpp
-    #api/Camera.cpp
+    api/Camera.cpp
     api/Command.cpp
     #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
-    api/Interface.cpp
     #api/Light.cpp
     #api/Model.cpp
     #api/Manager.cpp
@@ -42,8 +42,8 @@ add_library(${PROJECT_NAME} SHARED
     api/Post.cpp
     api/Raster.cpp
     #api/Render2D.cpp
-    #api/Render3D.cpp
-    #api/Rendered.cpp
+    api/Render3.cpp
+    api/Rendered.cpp
     api/RenderPass.cpp
     api/Reply.cpp
     api/Request.cpp
@@ -54,6 +54,8 @@ add_library(${PROJECT_NAME} SHARED
     #api/Thread.cpp
     #api/Tool.cpp
     api/Undo.cpp
+    #api/Viewer.cpp
+    #api/Widget.cpp
     
     
     #api/api.cpp
@@ -67,7 +69,7 @@ add_library(${PROJECT_NAME} SHARED
 
     #core/Controlling.cpp
 
-    #cameras/cameras.cpp
+    cameras/cameras.cpp
     
     config/build.cpp
     
@@ -126,8 +128,6 @@ add_library(${PROJECT_NAME} SHARED
     #v/VqUtils.cpp
     #v/VulqanManager.cpp
     
-    #viewer/viewer.cpp
-    
     viz/ViCommandBufferVector.cpp
     viz/ViData.cpp
     viz/ViFrame.cpp
@@ -140,8 +140,6 @@ add_library(${PROJECT_NAME} SHARED
     #viz/Visualizer.cpp
     
     viz/viz.cpp
-    
-    #widget/Widget.cpp
     
     #widgets/ImGuiDemoWidget.cpp
     #widgets/Scene3DWidget.cpp

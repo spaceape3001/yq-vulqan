@@ -12,6 +12,8 @@ namespace yq {
 
 namespace yq::tachyon {
     class Thread;
+    using ThreadPtr         = Ref<Thread>;
+    using ThreadCPtr        = Ref<const Thread>;
     
     template <class> class ID;
     using ThreadID = ID<Thread>;

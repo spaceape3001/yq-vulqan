@@ -17,11 +17,11 @@
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/vector/Quaternion3.hxx>
 
-#include <yq/tachyon/camera/CameraInfoWriter.hpp>
+#include <yq/tachyon/api/CameraInfoWriter.hpp>
 #include <yq/tachyon/commands/CameraPitchCommand.hpp>
 
 namespace yq::tachyon {
-    SpaceCamera::SpaceCamera() : 
+    SpaceCamera::SpaceCamera(const Param&p) : Camera(p),
         m_fov(70_deg),
         m_near(0.1),
         m_far(10.)
@@ -93,7 +93,7 @@ namespace yq::tachyon {
     {
         auto w = writer<SpaceCamera>();
         w.description("Simple space camera (position, orientation, fov)");
-        w.receive(&SpaceCamera::pitch_command);
+        w.slot(&SpaceCamera::pitch_command);
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SpaceCamera)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::SpaceCamera)

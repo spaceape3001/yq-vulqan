@@ -29,6 +29,7 @@ namespace yq::tachyon {
     };
     
     struct abort_t {};
+    struct accept_t {};
     struct changed_t {};
     struct children_t {};
     struct close_t {};
@@ -39,6 +40,7 @@ namespace yq::tachyon {
     struct direct_t{};
     struct disable_t {};
     struct error_t {};
+    struct for_t {};
     struct forward_t {};
     struct hash_t {};
     struct info_t {};
@@ -50,8 +52,10 @@ namespace yq::tachyon {
     struct probe_t {};
     struct proxy_t {};
     struct queue_t {};
+    struct reject_t {};
     struct resume_t {};
     struct settable_t {};
+    struct stop_t {};
     struct tachyon_t {};
     struct target_t {};
     struct typed_t {};
@@ -72,6 +76,7 @@ namespace yq::tachyon {
     
 
     static constexpr abort_t        ABORT;
+    static constexpr accept_t       ACCEPT;
     static constexpr changed_t      CHANGED;
     static constexpr children_t     CHILDREN;
     static constexpr close_t        CLOSE;
@@ -85,6 +90,7 @@ namespace yq::tachyon {
     static constexpr dynamic_t      DYNAMIC;
     static constexpr error_t        ERROR;
     static constexpr fixed_t        FIXED;
+    static constexpr for_t          FOR;
     static constexpr forward_t      FORWARD;
     static constexpr hash_t         HASH;
     static constexpr info_t         INFO;
@@ -97,9 +103,11 @@ namespace yq::tachyon {
     static constexpr proxy_t        PROXY;
     static constexpr queue_t        QUEUE;
     static constexpr refresh_t      REFRESH;
+    static constexpr reject_t       REJECT;
     static constexpr resume_t       RESUME;
     static constexpr settable_t     SETTABLE;
     static constexpr static_t       STATIC;
+    static constexpr stop_t         STOP;
     static constexpr tachyon_t      TACHYON;
     static constexpr target_t       TARGET;
     static constexpr typed_t        TYPED;

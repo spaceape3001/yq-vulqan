@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/camera/Camera.hpp>
+#include <yq/tachyon/api/Camera.hpp>
 
 namespace yq::tachyon {
 
@@ -16,12 +16,12 @@ namespace yq::tachyon {
         projection.
     */
     class NullCamera : public Camera {
-        YQ_OBJECT_DECLARE(NullCamera, Camera)
+        YQ_TACHYON_DECLARE(NullCamera, Camera)
     public:
     
         //! Gets the world2screen matrix
         glm::dmat4  world2screen(const Values&) const override;
-        NullCamera();
+        NullCamera(const Param&p={});
         ~NullCamera();
         
         static void init_info();

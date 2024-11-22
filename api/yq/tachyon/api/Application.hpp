@@ -30,8 +30,7 @@ namespace yq::tachyon {
     /*! \brief Engine/Vulkan application
     
     */
-    class Application : public BasicApp, public Thread {
-        YQ_OBJECT_DECLARE(Application, Thread)
+    class Application : public BasicApp {
     public:
     
         

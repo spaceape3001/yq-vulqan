@@ -16,10 +16,10 @@
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector3.hxx>
-#include <yq/tachyon/camera/CameraInfoWriter.hpp>
+#include <yq/tachyon/api/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
-    TargetCamera::TargetCamera() : 
+    TargetCamera::TargetCamera(const Param&p) : Camera(p),
         m_position({0., 0., -10.}),
         m_target({0., 0., 0.}),
         m_up({0., 1., 0.}),
@@ -86,4 +86,4 @@ namespace yq::tachyon {
         return projection_matrix(p.screen) * view_matrix();
     }
 }
-YQ_OBJECT_IMPLEMENT(yq::tachyon::TargetCamera)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::TargetCamera)

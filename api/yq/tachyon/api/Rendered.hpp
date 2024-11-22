@@ -9,22 +9,21 @@
 #include <yq/tachyon/typedef/rendered.hpp>
 
 #include <yq/keywords.hpp>
-#include <yq/core/Flags.hpp>
-#include <yq/core/MetaObject.hpp>
-#include <yq/core/Mutable.hpp>
 #include <yq/core/Tristate.hpp>
 //#include <yq/tachyon/preamble.hpp>
-#include <yq/tachyon/pipeline/Pipeline.hpp>
+
+#include <yq/tachyon/api/Pipeline.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 
     //! Information to a rendered object
-    class RenderedInfo : public MetaObjectInfo {
+    class RenderedInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
         
         //! Standard constructor
-        RenderedInfo(std::string_view, MetaObjectInfo&, const std::source_location& sl = std::source_location::current());
+        RenderedInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
         
         const Pipeline* pipeline(Pipeline::Role r=Pipeline::Role::Default) const;
         
@@ -44,12 +43,14 @@ namespace yq::tachyon {
         A rendered object is one that'll be rendered in the visualizer.  
         It'll have a pipeline (or more), with light extra information
     */
-    class Rendered : public MetaObject {
-        YQ_OBJECT_INFO(RenderedInfo)
-        YQ_OBJECT_DECLARE(Rendered, MetaObject)
+    class Rendered : public Tachyon {
+        YQ_TACHYON_INFO(RenderedInfo)
+        YQ_TACHYON_DATA(RenderedData)
+        YQ_TACHYON_SNAP(RenderedSnap)
+        YQ_TACHYON_DECLARE(Rendered, Tachyon)
     public:
     
-        Rendered();
+        Rendered(const Param&p={});
         ~Rendered();
         
         //! Helper for draw counts
@@ -82,7 +83,13 @@ namespace yq::tachyon {
         
         static void init_info();
         
+        RenderedID      id() const { return RenderedID(UniqueID::id()); }
+
     protected:
+
+        virtual PostAdvice  advise(const Post&) const override;
+        void snap(RenderedSnap&) const;
+
         //! Pipeline override
         const Pipeline* m_pipeline = nullptr;
         

@@ -11,6 +11,7 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <yq/tachyon/typedef/post.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class Tachyon;
@@ -21,19 +22,17 @@ namespace yq::tachyon {
     class Proxy {
     public:
     
-        Tachyon*                object() const { return m_tachyon; }
+        TachyonID               object() const;
         uint64_t                revision() const { return m_revision; }
         const InterfaceInfo*    interface(info_t) const { return m_interface; }
     
     protected:
         Proxy();
         virtual ~Proxy();
-
-        //! Pushes a setter-style function onto the tachyon's queue for their next tick()
-        void    dispatch(ProxyFN&&);
         
         //! Pushes a post into the tachyon's inbox for their next tick()
         void    dispatch(const PostCPtr&);
+        
     
     private:
         friend class Tachyon;

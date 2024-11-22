@@ -6,13 +6,14 @@
 
 #pragma once
 
-#include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/api/Thread.hpp>
 
 namespace yq::tachyon {
-    struct RenderedSnap : public TachyonSnap {
-    };
-    
-    struct RenderedData : public TachyonData {
+    class AppThread : public Thread {
+        YQ_TACHYON_DECLARE(AppThread, Thread)
+    public:
+        AppThread(const Param&p ={});
+        ~AppThread();
+        static void init_info();
     };
 }

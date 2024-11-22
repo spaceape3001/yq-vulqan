@@ -23,7 +23,7 @@ namespace yq {
 namespace yq::tachyon {
     class ViVisualizer;
     struct ViContext;
-    class Render3D;
+    class Render³;
     
     struct ViRenderedOptions {
         VkDescriptorPool        descriptor_pool = nullptr;
@@ -81,7 +81,7 @@ namespace yq::tachyon {
         };
     
         RenderedCPtr            m_rendered;
-        const Render3D*         m_render3d      = nullptr;
+        const Render³*          m_render3d      = nullptr;
         ViPipelineLayoutCPtr    m_layout;
         ViPipelineCPtr          m_pipeline;
         PushBuffer              m_push;

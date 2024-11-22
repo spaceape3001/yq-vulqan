@@ -13,6 +13,7 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/Execution.hpp>
 #include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/api/MG.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yq/tachyon/typedef/frame.hpp>
 #include <yq/tachyon/typedef/post.hpp>
@@ -63,7 +64,9 @@ namespace yq::tachyon {
         virtual ~TachyonInfo();
         
         virtual void    sweep_impl() override;
-    
+        using ObjectInfo::set;
+        void    set(Type);
+        
     private:
         friend class Tachyon;
         
@@ -90,7 +93,11 @@ namespace yq::tachyon {
     #define YQ_TACHYON_SNAP(...)        using MySnap = __VA_ARGS__;
 
     #define YQ_TACHYON_DECLARE(...)                             \
-        YQ_OBJECT_DECLARE(__VA_ARGS__)
+        YQ_OBJECT_DECLARE(__VA_ARGS__)                          \
+        template <typename T> friend class Fixer;
+        
+    #define YQ_TACHYON_IMPLEMENT(...)                           \
+        YQ_OBJECT_IMPLEMENT(__VA_ARGS__)
 
 
     /*! \brief Base (heavy) object in the tachyon library
@@ -117,40 +124,25 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
         
-        using parent_spec_t = std::variant<std::monostate, TachyonID, Tachyon*>;
-        
-        
-        /*! \brief Initialization 
-        */
-        struct Param {  
-            parent_spec_t   parent;
-        };
-        
-        bool                in_thread() const;
         static void         init_info();
 
         // Inbound mail
-        void                mail(rx_t, const PostCPtr&);
-        void                mail(rx_t, std::span<PostCPtr const>);
+        void                mail(const PostCPtr&);
+        void                mail(std::span<PostCPtr const>);
         
         TachyonID           id() const { return { UniqueID::id() }; }
-        //ThreadID        id(thread_t) const;
+        ThreadID            owner() const;
         
-        //ThreadID            owning_thread() const { return m_thread; }
+        struct Param { /* reserved for future use */ };
         
-        virtual TachyonID                       parent() const { return m_parent; }
-        virtual std::span<const TachyonID>      children() const;
-        
-        enum class PostAdvice : uint8_t {
-            Reject,     //!< Reject dispatch/handling of the post
-            Forward,
-            Children,
-            Parent
-        };
-        
-        using PostAdviceFlags = Flags<PostAdvice>;
-
     protected:
+
+        using PostAdvice = std::variant<std::monostate, accept_t, reject_t, MG, MGF>;
+
+        static bool accepting(const PostAdvice&);
+        static bool rejecting(const PostAdvice&);
+        static bool unspecified(const PostAdvice&pa);
+        static MGF  groups(const PostAdvice&pa);
 
         using mutex_t           = tbb::spin_rw_mutex;
         using lock_t            = mutex_t::scoped_lock;
@@ -164,12 +156,12 @@ namespace yq::tachyon {
 
         #define TRLOCK                          \
             lock_t  _lock;                      \
-            if(!in_thread())                    \
+            if(!in_tick())                      \
                 _lock.acquire(m_mutex, false);
 
         #define TWLOCK                          \
             lock_t  _lock;                      \
-            if(!in_thread())                    \
+            if(!in_tick())                      \
                 _lock.acquire(m_mutex, true);
 
 
@@ -180,48 +172,25 @@ namespace yq::tachyon {
         virtual ~Tachyon();
         
         
-
-        /*! \brief Your update routine
-        
-            Drawing, modeling, etc... goes here
-        */
-        //disabled_t      update(...);
-        
         /*! \brief YOUR update
             \note Do NOT call ticks on other objects!
             
             This is your update, at frame rate.
         */
-        virtual void        tick(Context&){}
-        
-        //! First tick w/o context/frame (basically, bootstrap out messages)
-        virtual void        tick(zero_t) {}
+        virtual Execution   tick(Context&);
         
         
         /*! Advise to the disposition of the post
         
-            \note This may be called multithreaded, and shouldn't 
-            be exhaustive.  For example, checking that if it's a 
-            command with an object binding, it's bound to your type
-            of thing.
-            
+            SIMPLE tests preferred, for instance, that it's a command
+            bound to this tachyon.  Check the base object too,
+            and augment as necesary 
+        
             \return Advise... 
         */
-        virtual PostAdviceFlags  advise(const Post&) const;
+        virtual PostAdvice  advise(const Post&) const;
 
-        
-        //virtual void  pre_tick();     // maybe
-        //virtual void  post_tick();    // maybe
-
-        
-        void        mail(tx_t, const PostCPtr&);
-        void        mail(forward_t, const PostCPtr&);
-        
-        // mail to children
-        void        mail(children_t, const PostCPtr&);
-        
-        // mail to parent
-        void        mail(parent_t, const PostCPtr&);
+        void            send(const PostCPtr&, MGF dst=MG::General);
 
         /*! \brief HANDLES the specified post
         
@@ -230,15 +199,47 @@ namespace yq::tachyon {
         */
         virtual void    dispatch(const PostCPtr&);
         
+        /*! \brief Record snapshot
+        
+            Assume this is blank-initialized, call base classes
+        */
         void            snap(TachyonSnap&) const;
 
+        /*! \brief TRUE if we're in tick
+        */
+        bool            in_tick() const;
+
+        /*! \brief Context
+        
+            When we're in the tick cycle, the current context.  
+            
+            \note Using this OUT of tick cycle will lead to 
+                segmentation faults!
+        */
+        Context&        context() const;
+
+        /*! \brief Our outgoing data
+            
+            When we're in the tick cycle, the data being generated
+            
+            \note Using this OUT of tick cycle will lead to 
+                segmentation faults!
+        */
+        TachyonData&    data();
+        
+        bool            dirty() const { return m_dirty; }
+        
+        /*! \brief Frame
+        
+            When we're in the tick cycle, the current frame
+            
+            \note Using this OUT of tick cycle will lead to 
+                segmentation faults!
+        */
+        const Frame&    frame() const;
 
         //! Marks us as dirty
         void            mark();
-
-        //TachyonDataPtr      _tick_start();
-        
-        //void                _tick_done();
 
         //! When no handler found in dispatch, this gets called
         virtual void    unhandled(const PostCPtr&);
@@ -246,49 +247,36 @@ namespace yq::tachyon {
     private:
         friend class Proxy;
         friend class Frame;
+        friend class Thread;
+
+        Tachyon(init_t, const Param& p={});
+        Tachyon(thread_t, const Param& p={});
 
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
         
         std::vector<PostCPtr>       m_inbox;      //< Inbox (under mutex guard)
         control_hash_t              m_control;    //< Who controls us
-        std::vector<TachyonID>      m_children;   //< Children
-        std::vector<TachyonID>      m_forward;    //< Those we forward to
+        std::map<TachyonID,MGF>     m_listeners;  //< Who we send to
         std::vector<TachyonID>      m_snoop;      //< Those eavesdropping on our inbox
-        std::vector<TachyonID>      m_subscriber; //< Those we're sending too.
-        TachyonID                   m_parent;     //< Parent
         ThreadID                    m_owner;      //< Thread that owns us
         uint64_t                    m_revision      = 0;    //< Revision
         TachyonSnapCPtr             m_snap;                 //< Last snap
         TachyonData*                m_data          = nullptr;
+        Context*                    m_context       = nullptr;
         std::atomic<unsigned int>   m_thread        = kInvalidThread;
         bool                        m_dirty         = false;
         
+        //virtual void                    parent(set_t, TachyonID);
         
-        virtual void                    parent(set_t, TachyonID);
+        void    tx(TachyonID, std::span<const PostCPtr>);
+        void    tx(TachyonID, PostCPtr);
         
-        void    tx(const Frame&, TachyonID, std::span<const PostCPtr>);
-        
-//        std::unique_ptr<Impl>       m;
+        struct Result {
+            TachyonDataCPtr  data;
+            TachyonSnapCPtr snap;
+            Execution       execute;
+        };
 
-        //void    _inbound(Frame&);
-        //void    _outbound(Frame&);
-        
-        //void    proxy(ProxyFN&&);
-        
-
-        void                                            reset(thread_t);
-        std::pair<TachyonDataPtr, TachyonSnapPtr>       tick(thread_t, Context&);
-        std::pair<TachyonDataPtr, TachyonSnapPtr>       tick(thread_t, zero_t);
-        
-
-        //virtual TachyonDataPtr          tick(Context&);
-
-        //std::vector<Tachyon*>           m_children;
-        //Tachyon*                        m_parent = nullptr;
-        
-        //void    _inbox(const Frame&, TachyonData&);
-        
-        //virtual void    _tick
-
+        Result  cycle(Context&);
     };
 }

@@ -12,9 +12,81 @@
 #include <variant>
 
 namespace yq::tachyon {
-    struct Skip {
-        unsigned count = 1; // number to skip, so 1 is every other time, 2 is every third time, etc...
+    struct EveryTime {
+        unit::Second    time;
     };
+    
+    constexpr EveryTime operator,(every_t, unit::Second time)
+    {
+        return {time};
+    }
+    
+    struct EveryCount {
+        unsigned count;
+    };
+
+    constexpr EveryCount operator,(every_t, unsigned count)
+    {
+        return { count };
+    }
+    
+    struct OnceTime {
+        unit::Second    time;
+    };
+    
+    constexpr OnceTime operator,(once_t, unit::Second time)
+    {
+        return { time };
+    }
+    
+    struct OnceCount {
+        unsigned count;
+    };
+
+    constexpr OnceCount operator,(once_t, unsigned count)
+    {
+        return { count };
+    }
+
+    struct ForTime {
+        unit::Second    time;
+    };
+    
+    constexpr ForTime operator,(for_t, unit::Second time)
+    {
+        return { time };
+    }
+    
+    struct ForTimeAt {
+        unit::Second    time;
+        unit::Second    Δt;
+    };
+    
+    constexpr ForTimeAt operator,(ForTime ft, unit::Second Δt)
+    {
+        return { ft.time,  Δt};
+    }
+    
+    struct ForCount {
+        unsigned count;
+    };
+    
+    constexpr ForCount operator,(for_t, unsigned count)
+    {
+        return { count };
+    }
+    
+    struct ForCountAt {
+        unsigned count;
+        unsigned Δt;
+    };
+    
+    constexpr ForCountAt operator,(ForCount fc, unsigned Δt)
+    {
+        return { fc.count, Δt };
+    }
+    
+    
     
     /*! \brief Execution Control
     
@@ -41,12 +113,20 @@ namespace yq::tachyon {
         delete_t,           //< Delete
         disable_t,          //< Disable
         error_t,            //< Error occured (ie abort)
-        once_t,             //< Execute once, auto-drop
-        pause_t,            //< Pause
-        unsigned, 
-        unit::Hertz, 
-        unit::Second, 
-        Skip
+        once_t,             //< Execute once, auto-stop
+        pause_t,            //< Stop/Pause
+        stop_t,             //< Stop/Pause (functionally the same)
+        unsigned,           //< Again in X ticks
+        unit::Hertz,        //< At rate
+        unit::Second,       //< Again in X time
+        EveryTime,          //< Every X time
+        EveryCount,         //< Every X ticks
+        OnceTime,           //< Once more in X time
+        OnceCount,          //< Once more in X ticks
+        ForTime,            //< For X time, every tick
+        ForTimeAt,          //< For X time, at specified interval
+        ForCount,           //< For X ticks at specified interval
+        ForCountAt          //< For X ticks at specified interval
     >;
     
 }

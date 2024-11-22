@@ -4,10 +4,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Interface.hpp"
-#include "InterfaceInfo.hpp"
-#include "InterfaceInfoWriter.hpp"
+#pragma once
+
+#include <yq/core/Flags.hpp>
 
 namespace yq::tachyon {
-}
 
+    //! Mail Groups
+    enum class MG : uint8_t {
+        General = 0,
+        Forward,
+        Parent,
+        Children
+    };
+    
+    using MGF = Flags<MG>;
+}

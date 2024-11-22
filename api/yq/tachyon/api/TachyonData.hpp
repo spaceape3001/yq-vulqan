@@ -8,6 +8,7 @@
 
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/api/MG.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
@@ -25,18 +26,24 @@ namespace yq::tachyon {
         virtual ~TachyonSnap();
     };
 
-    struct TachyonData : public RefCount {
-        struct {
-            std::vector<PostCPtr>   sent;
-            std::vector<PostCPtr>   received;
-            std::vector<PostCPtr>   accepted;
-            std::vector<PostCPtr>   forward;
-            std::vector<PostCPtr>   children;
-            std::vector<PostCPtr>   parent;
-        }                       post;
+    struct InPost {
+        enum class State {
+            Rejected = 0,
+            Accepted
+        };
+        PostCPtr    post;
+        State       state   = State::Rejected;
+    };
 
+    struct OutPost {
+        PostCPtr    post;
+        MGF         groups;
+    };
+
+    struct TachyonData : public RefCount {
+        std::vector<InPost>     inbound;
+        std::vector<OutPost>    outbound;
         uint64_t                tick        = 0ULL;
-        
         ThreadID                owner;
         
         TachyonData();

@@ -16,38 +16,57 @@ namespace yq::tachyon {
     }
 
     //! Execution Modes, some will be redundant in some cases
-    enum class ExecutionMode : uint8_t {
+    enum class XIns : uint8_t {
+    
+        //! Unspecified
         Unspecified = 0,
     
+
         //! In abort mode
         Abort,
         
-        //! In error mode
-        Error,
-        
-        //! Delete this thing (Abort implied)
-        Delete,
-        
-        //! Disabled
-        Disabled,
-        
+        //! Run always (every tick)
+        Always,
+
         //! As previously arranged
         Continue,
 
-        //! Temporarily stopped (whatever reason)
-        Paused,
-    
-        //! Run once (or step for tachyons)
-        Once,
+        //! Delete
+        Delete,
+        
+        //! Disable
+        Disable,
+
+        //! In error mode
+        Error,
+        
+        //! Every number of ticks
+        Every,
+
+        //! Run at specified frequency
+        Frequency,
+
+        //! Run again in X ticks
+        InCount,
+        
+        //! Run again in X time
+        InTime,
+        
+
         
         //! Run specified number of ticks, then delete
         Ticks,
 
-        //! Run always (every tick)
-        Always,
+
+        //! Run once (or step for tachyons)
+        Once,
         
-        //! Run at specified frequency
-        Frequency,
+        //! Temporarily stopped (whatever reason)
+        Pause,
+        
+
+
+
         
         //! Run at specified interval (time)
         Interval,
@@ -56,102 +75,85 @@ namespace yq::tachyon {
         Every
     };
     
+    /*
+    using XArg = std::variant<std::monostate, unsigned, double, unit::Second, std::error_code>;
 
-    struct ExecutionControl {
-        union { // union, so raw data
-            unsigned int    ticks;
-            unsigned int    skip;  
-            double          interval;
-            double          hertz;
-        };
-        std::error_code     ec;
-        
-        ExecutionMode       mode = ExecutionMode::Unspecified;
-        
-        ExecutionControl(){}
-        ExecutionControl(const Execution& es)
-        {
-            set(es);
-        }
-        
-        ExecutionControl&   operator=(const Execution& es)
-        {
-            set(es);
-            return *this;
-        }
-        
-        void                set(const Execution& es)
+    struct XDecode {
+        XIns    mode = XIns::Unspecified;
+        XArg    arg1, arg2;
+
+        XDecode(const Execution& es)
         {
             if(std::get_if<std::monostate>(&es)){
-                mode    = ExecutionMode::Unspecified;
+                mode    = XIns::Unspecified;
                 return;
             }
             
             if(auto p = std::get_if<std::error_code>(&es)){
                 if(*p != std::error_code()){
-                    mode    = ExecutionMode::Error;
-                    ec      = *p;
+                    mode    = XIns::Error;
+                    arg1    = *p;
                 } else {
-                    mode    = ExecutionMode::Continue;
+                    mode    = XIns::Continue;
                 }
                 return;
             }
             
             if(auto p = std::get_if<bool>(&es)){
                 if(*p){
-                    mode    = ExecutionMode::Continue;
+                    mode    = XIns::Continue;
                 } else {
-                    mode    = ExecutionMode::Abort;
+                    mode    = XIns::Abort;
                 }
                 return;
             }
             
             if(std::get_if<abort_t>(&es)){
-                mode    = ExecutionMode::Abort;
+                mode    = XIns::Abort;
                 return;
             }
             
             if(std::get_if<always_t>(&es)){
-                mode    = ExecutionMode::Always;
+                mode    = XIns::Always;
                 return;
             }
             
             if(std::get_if<continue_t>(&es)){
-                mode    = ExecutionMode::Continue;
+                mode    = XIns::Continue;
                 return;
             }
             
             if(std::get_if<delete_t>(&es)){
-                mode    = ExecutionMode::Delete;
+                mode    = XIns::Delete;
                 return;
             }
             
             if(std::get_if<disable_t>(&es)){
-                mode    = ExecutionMode::Disabled;
+                mode    = XIns::Disabled;
                 return;
             }
             
             if(std::get_if<error_t>(&es)){
-                mode    = ExecutionMode::Error;
+                mode    = XIns::Error;
                 return;
             }
             
             if(std::get_if<once_t>(&es)){
-               mode     = ExecutionMode::Once; 
+               mode     = XIns::Once; 
                return;
             }
             
             if(std::get_if<pause_t>(&es)){
-                mode    = ExecutionMode::Paused;
+                mode    = XIns::Paused;
                 return;
             }
             
             if(auto p = std::get_if<unsigned>(&es)){
                 if(*p){
                     ticks   = *p;
-                    mode    = ExecutionMode::Ticks;
+                    mode    = XIns::Ticks;
                 } else {
-                    mode    = ExecutionMode::Paused;
+                    mode    = XIns::Paused;
                 }
                 return;
             }
@@ -159,9 +161,9 @@ namespace yq::tachyon {
             if(auto p = std::get_if<unit::Hertz>(&es)){
                 if(*p > 0._Hz){
                     hertz   = p->value;
-                    mode    = ExecutionMode::Frequency;
+                    mode    = XIns::Frequency;
                 } else {
-                    mode    = ExecutionMode::Paused;
+                    mode    = XIns::Paused;
                 }
                 return;
             }
@@ -169,9 +171,9 @@ namespace yq::tachyon {
             if(auto p = std::get_if<unit::Second>(&es)){
                 if(*p > 0._s){
                     interval    = p->value;
-                    mode        = ExecutionMode::Interval;
+                    mode        = XIns::Interval;
                 } else {
-                    mode    = ExecutionMode::Always;
+                    mode    = XIns::Always;
                 }
                 return ;
             }
@@ -179,15 +181,16 @@ namespace yq::tachyon {
             if(auto p = std::get_if<Skip>(&es)){
                 if(p->count > 0){
                     skip        = p->count;
-                    mode        = ExecutionMode::Every;
+                    mode        = XIns::Every;
                 } else {
-                    mode        = ExecutionMode::Always;
+                    mode        = XIns::Always;
                 }
                 return;
             }
             
             //  Assert?  Maybe... still
-            mode    = ExecutionMode::Error;
+            mode    = XIns::Error;
         }
     };
+    */
 }

@@ -12,14 +12,14 @@ namespace yq::tachyon {
 
     struct Frame::Builder {
     
-        Builder(ThreadID);
+        Builder(Frame&);
         ~Builder();
         
         void        add(ThreadID, const ThreadData&);
-        FramePtr    finalize();
+        void        finalize();
         
     private:
-        FramePtr                                        m_frame;
+        Frame&                                          m_frame;
         std::vector<std::pair<ThreadID, TachyonFrame>>  m_pushed;
     };
 }

@@ -9,6 +9,7 @@
 #include <yq/meta/ArgDeducer.hpp>
 #include <yq/meta/MetaObjectInfoWriter.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/Post.hpp>
 
@@ -163,11 +164,11 @@ namespace yq::tachyon {
     /*! \brief Writer of manager information
     */
     template <typename C>
-    class TachyonInfo::Writer : public MetaObjectInfo::Writer<C> {
+    class TachyonInfo::Writer : public ObjectInfo::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(TachyonInfo* theInfo) : MetaObjectInfo::Writer<C>(theInfo), m_meta(theInfo)
+        Writer(TachyonInfo* theInfo) : ObjectInfo::Writer<C>(theInfo), m_meta(theInfo)
         {
         }
         
@@ -259,7 +260,7 @@ namespace yq::tachyon {
             if(!t)
                 return {};
             C* c = static_cast<C*>(t);
-            Ref<snap_t>     snap    = new snap_t(c);
+            Ref<snap_t>     snap    = new snap_t;
             c->snap(*snap);
             return snap;
         }

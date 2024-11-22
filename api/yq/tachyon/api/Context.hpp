@@ -24,7 +24,7 @@ namespace yq::tachyon {
         //! Current clock rate (compared to real time, zero is single-step mode)
         double          overclock   = 1.;
         
-        time_point_t    wall;                   //!< Wall clock time (start of tick-cycle)
+        time_point_t    wall;                   //!< Wall clock time (start of cycle)
         
         uint64_t        tick        = 0ULL;     //!< Thread Tick 
 

@@ -5,7 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "Execution.ipp"    //< Before thread
+#include "Interface.hpp"
+#include "InterfaceInfo.hpp"
+
 #include "Proxy.ipp"
 #include "Tachyon.ipp"
 

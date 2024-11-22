@@ -4,14 +4,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Rendered.hpp"
-#include <yq/tachyon/render/RenderedInfoWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
+#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/api/RenderedBind.hpp>
+#include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/api/RenderedInfoWriter.hpp>
 
 namespace yq::tachyon {
-    RenderedInfo::RenderedInfo(std::string_view name, MetaObjectInfo& base, const std::source_location& sl) : 
-        MetaObjectInfo(name, base, sl)
+    RenderedInfo::RenderedInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+        TachyonInfo(name, base, sl)
     {
         set(Flag::RENDERED);
+        set(Type::Rendered);
     }
 
     const Pipeline*    RenderedInfo::pipeline(Pipeline::Role r) const
@@ -40,12 +44,25 @@ namespace yq::tachyon {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    Rendered::Rendered()
+    Rendered::Rendered(const Param&p) : Tachyon(p)
     {
     }
     
     Rendered::~Rendered()
     {
+    }
+
+    Tachyon::PostAdvice    Rendered::advise(const Post&pp) const
+    {
+        PostAdvice  pa  = Tachyon::advise(pp);
+        if(!unspecified(pa))
+            return pa;
+        
+        if(const RenderedBind* p = dynamic_cast<const RenderedBind*>(&pp)){
+            if(p->rendered() != id())
+                return REJECT;
+        }
+        return {};
     }
 
     const Pipeline* Rendered::pipeline() const
@@ -90,6 +107,11 @@ namespace yq::tachyon {
         m_wireframe = v;
     }
     
+    void Rendered::snap(RenderedSnap&sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     void Rendered::init_info()
     {
         auto w = writer<Rendered>();

@@ -5,10 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/typedef/post.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
+
+#include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/typedef/render3.hpp>
 
 namespace yq::tachyon {
-    void    mail(TachyonID, const PostCPtr&);
+    struct Render³Snap : public RenderedSnap {
+    };
+    
+    struct Render³Data : public RenderedData {
+    };
 }

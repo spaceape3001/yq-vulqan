@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "NullCamera.hpp"
-#include <yq/tachyon/camera/CameraInfoWriter.hpp>
+#include <yq/tachyon/api/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
     glm::dmat4  NullCamera::world2screen(const Values&) const 
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         };
     }
     
-    NullCamera::NullCamera()
+    NullCamera::NullCamera(const Param&p) : Camera(p)
     {
     }
     
@@ -33,4 +33,4 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::NullCamera)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::NullCamera)

@@ -31,7 +31,7 @@ namespace yq::tachyon {
     struct ThreadData : public TachyonData {
         std::vector<TachyonFrame>       tachyons;       //! Tachyons
         std::set<TachyonID>             created, arrived, left, deleted;
-        unit::Second                    duration;
+        unit::Second                    duration;       //! Time to process
         
         virtual ~ThreadData();
     };

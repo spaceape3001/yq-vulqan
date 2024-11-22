@@ -18,17 +18,17 @@ namespace yq::tachyon {
     {
     }
 
-    void    Proxy::dispatch(ProxyFN&& fn)
-    {
-        if(m_tachyon && fn){
-            m_tachyon -> proxy(std::move(fn));
-        }
-    }
-
     void    Proxy::dispatch(const PostCPtr& pp)
     {
         if(m_tachyon && pp){
-            m_tachyon -> mail(RX, pp);
+            m_tachyon -> mail(pp);
         }
+    }
+
+    TachyonID   Proxy::object() const
+    {
+        if(!m_tachyon)
+            return {};
+        return m_tachyon->id();
     }
 }

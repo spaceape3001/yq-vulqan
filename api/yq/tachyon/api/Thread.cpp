@@ -109,4 +109,4 @@ namespace yq::tachyon {
 
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Thread)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Thread)

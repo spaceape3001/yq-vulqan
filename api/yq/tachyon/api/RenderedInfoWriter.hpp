@@ -6,17 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/render/Rendered.hpp>
-#include <yq/tachyon/pipeline/PipelineWriter.hpp>
+#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/api/PipelineWriter.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     
     /*! \brief Writer of information for rendered information
     */
     template <typename C>
-    class RenderedInfo::Writer : public MetaObjectInfo::Writer<C> {
+    class RenderedInfo::Writer : public TachyonInfo::Writer<C> {
     public:
-        Writer(RenderedInfo* renderInfo) : MetaObjectInfo::Writer<C>(renderInfo), m_meta(renderInfo)
+        Writer(RenderedInfo* renderInfo) : TachyonInfo::Writer<C>(renderInfo), m_meta(renderInfo)
         {
         }
         

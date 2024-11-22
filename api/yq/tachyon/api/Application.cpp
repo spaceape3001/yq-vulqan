@@ -6,14 +6,16 @@
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/VulqanManager.hpp>
-#include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/api/AppThread.hpp>
+#include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+
 #include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
-#include <yq/tachyon/core/TachyonInfoWriter.hpp>
 #include <yq/tachyon/glfw/GLFWManager.hpp>
 #include <yq/tachyon/task/TaskEngine.hpp>
-#include <yq/tachyon/viewer/Viewer.hpp>
+#include <yq/tachyon/api/Viewer.hpp>
 //#include <yq/tachyon/viz/Visualizer.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/ThreadId.hpp>
@@ -44,6 +46,8 @@ namespace yq::tachyon {
         std::atomic<bool>               quit{false};
         std::vector<ViewerPtr>          viewers;
         Cleanup                         cleanup;
+        
+        Ref<AppThread>                  appThread;
         
         //  eventually the vulkan goes here too
     };

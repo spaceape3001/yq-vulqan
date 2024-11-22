@@ -6,12 +6,10 @@
 
 #pragma once
 
-#include <yq/core/Ref.hpp>
-#include <yq/core/UniqueID.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/api/camera.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
 
 namespace yq::tachyon {
 
@@ -36,6 +34,10 @@ namespace yq::tachyon {
         struct Repo;
         static Repo& repo();
     };
+    
+    /*
+        Right *now*, the camera is assumed to be simple....
+    */
 
 
     /*! \brief Shows up on the screen
@@ -46,9 +48,12 @@ namespace yq::tachyon {
         \note We're limited to three dimensions here
     */
     class Camera : public Tachyon {
-        YQ_OBJECT_INFO(CameraInfo);
-        YQ_OBJECT_DECLARE(Camera, Tachyon)
+        YQ_TACHYON_INFO(CameraInfo);
+        YQ_TACHYON_DATA(CameraData)
+        YQ_TACHYON_SNAP(CameraSnap)
+        YQ_TACHYON_DECLARE(Camera, Tachyon)
     public:    
+    
         /*
             We *MIGHT* want to divide up the camera into position, 
             lens, etc... or that's a later development on a dedicated
@@ -74,19 +79,16 @@ namespace yq::tachyon {
 
         static void init_info();
 
-        virtual void tick();
-        
-        
-        
-        
+        CameraID            id() const { return CameraID(UniqueID::id()); }
 
     protected:
     
-        virtual void    snap(CameraData&) const override;
-        virtual void    receive(const post::PostCPtr&) override;
+        void        snap(CameraSnap&) const;
+        //virtual void    receive(const post::PostCPtr&) override;
+        virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
-        Camera();
+        Camera(const Param&p = {});
         
         //! Default destructor
         ~Camera();

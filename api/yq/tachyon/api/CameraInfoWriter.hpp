@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Camera.hpp>
+#include <yq/tachyon/api/CameraData.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {

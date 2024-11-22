@@ -9,12 +9,12 @@
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/ID.hpp>
-//#include <yq/tachyon/typedef/camera.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
 #include <yq/tachyon/typedef/frame.hpp>
 //#include <yq/tachyon/typedef/light.hpp>
 //#include <yq/tachyon/typedef/manager.hpp>
-//#include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 //#include <yq/tachyon/typedef/scene.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
@@ -43,22 +43,22 @@ namespace yq::tachyon {
     
         using proxy_span_t  = std::span<Proxy* const>;
 
-        //bool contains(CameraID) const;
+        bool contains(CameraID) const;
         //bool contains(EditorID) const;
         //bool contains(LightID) const;
         //bool contains(ManagerID) const;
-        //bool contains(RenderedID) const;
+        bool contains(RenderedID) const;
         //bool contains(SceneID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
         //bool contains(ViewerID) const;
         //bool contains(WidgetID) const;
     
-        //const CameraData*                   data(CameraID) const;
+        const CameraData*                   data(CameraID) const;
         //const EditorData*                   data(EditorID) const;
         //const LightData*                    data(LightID) const;
         //const ManagerData*                  data(ManagerID) const;
-        //const RenderedData*                 data(RenderedID) const;
+        const RenderedData*                 data(RenderedID) const;
         //const SceneData*                    data(SceneID) const;
         const TachyonData*                  data(TachyonID) const;
         const ThreadData*                   data(ThreadID) const;
@@ -66,11 +66,11 @@ namespace yq::tachyon {
         //const WidgetData*                   data(WidgetID) const;
         
 
-        //Camera*                             object(CameraID) const;
+        Camera*                             object(CameraID) const;
         //Editor*                             object(EditorID) const;
         //Light*                              object(LightID) const;
         //Manager*                            object(ManagerID) const;
-        //Rendered*                           object(RenderedID) const;
+        Rendered*                           object(RenderedID) const;
         //Scene*                              object(SceneID) const;
         Tachyon*                            object(TachyonID) const;
         Thread*                             object(ThreadID) const;
@@ -80,11 +80,11 @@ namespace yq::tachyon {
         ThreadID                            owner(TachyonID) const;
         proxy_span_t                        proxies(TachyonID) const;
         
-        //const CameraSnap*                   snap(CameraID) const;
+        const CameraSnap*                   snap(CameraID) const;
         //const EditorSnap*                   snap(EditorID) const;
         //const LightSnap*                    snap(LightID) const;
         //const ManagerSnap*                  snap(ManagerID) const;
-        //const RenderedSnap*                 snap(RenderedID) const;
+        const RenderedSnap*                 snap(RenderedID) const;
         const TachyonSnap*                  snap(TachyonID) const;
         const ThreadSnap*                   snap(ThreadID) const;
         //const SceneSnap*                    snap(SceneID) const;
@@ -96,6 +96,7 @@ namespace yq::tachyon {
         ThreadID        origin() const { return m_origin; }
         uint64_t        number() const { return m_number; }
         time_point_t    wallclock() const { return m_wallclock; }
+        uint64_t        tick() const { return m_tick; }
 
     private:
 
@@ -121,15 +122,16 @@ namespace yq::tachyon {
         const ThreadID          m_origin;
         const uint64_t          m_number;
         const time_point_t      m_wallclock;
+        const uint64_t          m_tick;
         
         std::unordered_map<uint64_t, ThreadID>              m_owners;
         std::unordered_map<uint64_t, Types>                 m_types;
 
-        //Container<Camera, CameraData, CameraSnap>           m_cameras;
+        Container<Camera, CameraData, CameraSnap>           m_cameras;
         //Container<Editor, EditorData, EditorSnap>           m_editors;
         //Container<Light, LightData, LightSnap>              m_lights;
         //Container<Manager, ManagerData, ManagerSnap>        m_managers;
-        //Container<Rendered, RenderedData, RenderedSnap>     m_rendereds;
+        Container<Rendered, RenderedData, RenderedSnap>     m_rendereds;
         Container<Tachyon, TachyonData, TachyonSnap>        m_tachyons;
         Container<Thread, ThreadData, ThreadSnap>           m_threads;
         //Container<Viewer, ViewerData, ViewerSnap>           m_viewers;
@@ -139,7 +141,7 @@ namespace yq::tachyon {
         friend FramePtr;
         friend FrameCPtr;
 
-        Frame(ThreadID);
+        Frame(ThreadID, uint64_t);
         ~Frame();
         
         void add(ThreadID, const TachyonFrame&);

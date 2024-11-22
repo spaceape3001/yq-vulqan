@@ -6,7 +6,9 @@
 
 #include <yq/tachyon/api/Camera.hpp>
 #include <yq/tachyon/api/CameraBind.hpp>
+#include <yq/tachyon/api/CameraData.hpp>
 #include <yq/tachyon/api/CameraInfoWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
 
 namespace yq::tachyon {
 
@@ -36,13 +38,14 @@ namespace yq::tachyon {
         TachyonInfo(name, base, sl)
     {
         set(Flag::CAMERA);
+        set(Type::Camera);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Camera::Camera()
+    Camera::Camera(const Param& p) : Tachyon(p)
     {
     }
 
@@ -50,9 +53,10 @@ namespace yq::tachyon {
     {
     }
 
-    void Camera::snap(CameraData& data) const
+
+    void Camera::snap(CameraSnap& sn) const
     {
-        Tachyon::snap(data);
+        Tachyon::snap(sn);
     }
 
     void            Camera::set_name(const std::string& v)
@@ -60,24 +64,17 @@ namespace yq::tachyon {
         m_name  = v;
     }
 
-    void    Camera::receive(const post::PostCPtr&pp)
+    Tachyon::PostAdvice    Camera::advise(const Post&pp) const
     {
-        if(!pp)
-            return;
-        if(const CameraBind* p = dynamic_cast<const CameraBind*>(pp.ptr())){
-            if(p->camera() != this)
-                return ;
-            if(!in_replay())
-                forward(pp);
-        } else if(!in_replay()){   
-            forward(pp);
+        PostAdvice  pa  = Tachyon::advise(pp);
+        if(!unspecified(pa))
+            return pa;
+        
+        if(const CameraBind* p = dynamic_cast<const CameraBind*>(&pp)){
+            if(p->camera() != id())
+                return REJECT;
         }
-        Tachyon::receive(pp);
-    }
-
-    void Camera::tick()
-    {
-        replay(ALL);
+        return {};
     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,4 +88,4 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Camera)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera)

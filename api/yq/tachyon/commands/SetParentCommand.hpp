@@ -6,15 +6,16 @@
 
 #pragma once
 
-#include <yq/tachyon/commands/TachyonCommand.hpp>
+#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/api/TachyonBind.hpp>
 
 namespace yq::tachyon {
-    class TachyonSetParentCommand : public TachyonCommand {
-        YQ_OBJECT_DECLARE(TachyonSetParentCommand, TachyonCommand)
+    class SetParentCommand : public Command, public TachyonBind {
+        YQ_OBJECT_DECLARE(SetParentCommand, Command)
     public:
     
-        TachyonSetParentCommand(TachyonID, TachyonID parentID, const Param& p = {});
-        virtual ~TachyonSetParentCommand();
+        SetParentCommand(TachyonID, TachyonID parentID, const Param& p = {});
+        virtual ~SetParentCommand();
         
         TachyonID   parent() const { return m_parent; }
         

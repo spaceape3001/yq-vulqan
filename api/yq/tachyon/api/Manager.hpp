@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/post/PBX.hpp>
-#include <yq/tachyon/core/Tachyon.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/manager.hpp>
 
 namespace yq::tachyon {
 
@@ -21,8 +21,8 @@ namespace yq::tachyon {
     /*! \brief Manager of something in the application
     */
     class Manager : public Tachyon {
-        YQ_OBJECT_INFO(ManagerInfo)
-        YQ_OBJECT_DECLARE(Manager, Tachyon)
+        YQ_TACHYON_INFO(ManagerInfo)
+        YQ_TACHYON_DECLARE(Manager, Tachyon)
     public:
     
         static void init_info();

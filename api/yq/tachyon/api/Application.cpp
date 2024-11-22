@@ -12,9 +12,8 @@
 
 #include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
 #include <yq/tachyon/glfw/GLFWManager.hpp>
-#include <yq/tachyon/task/TaskEngine.hpp>
+//#include <yq/tachyon/task/TaskEngine.hpp>
 #include <yq/tachyon/api/Viewer.hpp>
-//#include <yq/tachyon/viz/Visualizer.hpp>
 #include <yq/tachyon/api/Widget.hpp>
 
 #include <yq/asset/Asset.hpp>
@@ -41,7 +40,7 @@ namespace yq::tachyon {
         Application*                    app         = nullptr;
         std::atomic_flag                claimed;
         std::unique_ptr<GLFWManager>    glfw;
-        std::unique_ptr<TaskEngine>     tasking;
+        //std::unique_ptr<TaskEngine>     tasking;
         std::unique_ptr<VulqanManager>  vulqan;
         std::atomic<bool>               quit{false};
         std::vector<ViewerPtr>          viewers;
@@ -155,11 +154,13 @@ namespace yq::tachyon {
         return static_cast<bool>(common().app);
     }
 
+#if 0
     Tachyon::Param  Application::params(const AppCreateInfo& aci)
     {
         Tachyon::Param ret;
         return ret;
     }
+#endif
 
 #if 0
     void    Application::remove(Viewer* v)

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/app/Manager.hpp>
+#include <yq/tachyon/api/Manager.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
@@ -48,7 +48,7 @@ namespace yq::tachyon {
         \note There should only be ONE of these (might combine it with AppGLFW TBH....)
     */
     class GLFWManager : public Manager {
-        YQ_OBJECT_DECLARE(GLFWManager, Manager)
+        YQ_TACHYON_DECLARE(GLFWManager, Manager)
     public:
     
         GLFWManager(const Param& p = {});

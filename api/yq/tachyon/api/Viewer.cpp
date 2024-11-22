@@ -9,7 +9,7 @@
 #include <log4cpp/CategoryStream.hh>
 #include <yq/tachyon/logging.hpp>
 
-#include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/api/Application.hpp>
 //#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
 #include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
 #include <yq/tachyon/commands/viewer.hpp>
@@ -42,7 +42,7 @@
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/ThreadId.hpp>
-#include <yq/post/PBXInfoWriter.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yq/shape/Size2.hxx>
 #include <yq/util/AutoReset.hpp>
 #include <yq/vector/Vector2.hpp>
@@ -84,35 +84,35 @@ namespace yq::tachyon {
         w.description("Tachyon Viewer");
         w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
         
-        w.receive(&Viewer::aspect_command).name("aspect_command");
-        w.receive(&Viewer::attention_command).name("attention_command");
-        w.receive(&Viewer::close_command).name("close_command");
-        w.receive(&Viewer::close_request).name("close_request");
-        w.receive(&Viewer::cursor_capture_command).name("cursor_capture_command");
-        w.receive(&Viewer::cursor_disable_command).name("cursor_disable_command");
-        w.receive(&Viewer::cursor_hide_command).name("cursor_hide_command");
-        w.receive(&Viewer::cursor_normal_command).name("cursor_normal_command");
-        w.receive(&Viewer::destroy_event).name("destroy_event");
-        w.receive(&Viewer::float_command).name("float_command");
-        w.receive(&Viewer::focus_command).name("focus_command");
-        w.receive(&Viewer::hide_command).name("hide_command");
-        w.receive(&Viewer::hide_event).name("hide_event");
-        w.receive(&Viewer::iconify_command).name("iconify_command");
-        w.receive(&Viewer::maximize_command).name("maximize_command");
-        w.receive(&Viewer::move_command).name("move_command");
-        w.receive(&Viewer::pause_command).name("pause_command");
-        w.receive(&Viewer::resume_command).name("resume_command");
-        w.receive(&Viewer::restore_command).name("restore_command");
-        w.receive(&Viewer::show_command).name("show_command");
-        w.receive(&Viewer::show_event).name("show_event");
-        w.receive(&Viewer::size_command).name("size_command");
-        w.receive(&Viewer::state_event).name("state_event");
-        w.receive(&Viewer::title_command).name("title_command");
-        w.receive(&Viewer::unfloat_command).name("unfloat_command");
-        w.receive(&Viewer::widget_request).name("widget_request");
+        w.slot(&Viewer::aspect_command).name("aspect_command");
+        w.slot(&Viewer::attention_command).name("attention_command");
+        w.slot(&Viewer::close_command).name("close_command");
+        w.slot(&Viewer::close_request).name("close_request");
+        w.slot(&Viewer::cursor_capture_command).name("cursor_capture_command");
+        w.slot(&Viewer::cursor_disable_command).name("cursor_disable_command");
+        w.slot(&Viewer::cursor_hide_command).name("cursor_hide_command");
+        w.slot(&Viewer::cursor_normal_command).name("cursor_normal_command");
+        w.slot(&Viewer::destroy_event).name("destroy_event");
+        w.slot(&Viewer::float_command).name("float_command");
+        w.slot(&Viewer::focus_command).name("focus_command");
+        w.slot(&Viewer::hide_command).name("hide_command");
+        w.slot(&Viewer::hide_event).name("hide_event");
+        w.slot(&Viewer::iconify_command).name("iconify_command");
+        w.slot(&Viewer::maximize_command).name("maximize_command");
+        w.slot(&Viewer::move_command).name("move_command");
+        w.slot(&Viewer::pause_command).name("pause_command");
+        w.slot(&Viewer::resume_command).name("resume_command");
+        w.slot(&Viewer::restore_command).name("restore_command");
+        w.slot(&Viewer::show_command).name("show_command");
+        w.slot(&Viewer::show_event).name("show_event");
+        w.slot(&Viewer::size_command).name("size_command");
+        w.slot(&Viewer::state_event).name("state_event");
+        w.slot(&Viewer::title_command).name("title_command");
+        w.slot(&Viewer::unfloat_command).name("unfloat_command");
+        w.slot(&Viewer::widget_request).name("widget_request");
         
 #if 0        
-        w.receive(&Viewer::viewer_resize_event);
+        w.slot(&Viewer::viewer_resize_event);
         w.property("mouse", &Viewer::mouse_state).description("Mouse state");
 #endif
     }

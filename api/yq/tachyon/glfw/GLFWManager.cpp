@@ -8,8 +8,10 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/app/Application.hpp>
-#include <yq/tachyon/app/ManagerInfoWriter.hpp>
+#include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/ManagerInfoWriter.hpp>
+#include <yq/tachyon/api/Viewer.hpp>
+#include <yq/tachyon/api/ViewerCreateInfo.hpp>
 #include <yq/tachyon/commands/window.hpp>
 #include <yq/tachyon/events/cursor.hpp>
 #include <yq/tachyon/events/joystick.hpp>
@@ -23,8 +25,6 @@
 #include <yq/tachyon/glfw/Monitor.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 #include <yq/tachyon/requests/WindowRefreshRequest.hpp>
-#include <yq/tachyon/viewer/Viewer.hpp>
-#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
 
 #include <yq/core/ThreadId.hpp>
 #include <yq/util/Safety.hpp>
@@ -148,7 +148,7 @@ namespace yq::tachyon {
         p.viewer        = v;
         p.modifiers     = _modifiers(window);
         p.code          = (char32_t) codepoint;
-        g.manager->dispatch(new KeyCharacterEvent(p));
+        g.manager->send(new KeyCharacterEvent(p));
     }
 
     void GLFWManager::callback_key(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -167,7 +167,7 @@ namespace yq::tachyon {
                 p.modifiers     = _modifiers(window);
                 p.scan          = scancode;
                 p.key           = keycode_glfw(key);
-                g.manager->dispatch(new KeyPressEvent(p));
+                g.manager->send(new KeyPressEvent(p));
             }
             break;
         case GLFW_RELEASE:
@@ -177,7 +177,7 @@ namespace yq::tachyon {
                 p.modifiers     = _modifiers(window);
                 p.scan          = scancode;
                 p.key           = keycode_glfw(key);
-                g.manager->dispatch(new KeyReleaseEvent(p));
+                g.manager->send(new KeyReleaseEvent(p));
             }
             break;
         case GLFW_REPEAT:
@@ -187,7 +187,7 @@ namespace yq::tachyon {
                 p.modifiers     = _modifiers(window);
                 p.scan          = scancode;
                 p.key           = keycode_glfw(key);
-                g.manager->dispatch(new KeyRepeatEvent(p));
+                g.manager->send(new KeyRepeatEvent(p));
             }
             break;
         }
@@ -240,9 +240,9 @@ namespace yq::tachyon {
         for(size_t i=0;i<jx.state.buttons.size();++i){
             if(jx.state.buttons[i] != jx.snapshot.buttons[i]){
                 if(jx.state.buttons[i] == GLFW_PRESS){
-                    g.manager->dispatch(new JoystickPressEvent(j,i));
+                    g.manager->send(new JoystickPressEvent(j,i));
                 } else {
-                    g.manager->dispatch(new JoystickReleaseEvent(j,i));
+                    g.manager->send(new JoystickReleaseEvent(j,i));
                 }
                 changed = true;
             }
@@ -250,7 +250,7 @@ namespace yq::tachyon {
         
         for(size_t i=0;i<jx.state.hats.size();++i){
             if(jx.state.hats[i] != jx.snapshot.hats[i]){
-                g.manager->dispatch(new JoystickHatEvent(j, i, (JoystickHatState) jx.state.hats[i]));
+                g.manager->send(new JoystickHatEvent(j, i, (JoystickHatState) jx.state.hats[i]));
                 changed = true;
             }
         }
@@ -273,9 +273,9 @@ namespace yq::tachyon {
         Joystick    j(jid);
         _install(j);
         if(event == GLFW_CONNECTED){
-            g.manager->dispatch(new JoystickConnectEvent(j));
+            g.manager->send(new JoystickConnectEvent(j));
         } else {
-            g.manager->dispatch(new JoystickDisconnectEvent(j));
+            g.manager->send(new JoystickDisconnectEvent(j));
         }
     }
     
@@ -313,7 +313,7 @@ namespace yq::tachyon {
         glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
         w->state.mouse.mode = MouseMode::Captured;
         if(w->viewer){
-            g.manager->dispatch(new CursorCaptureEvent(w->viewer));
+            g.manager->send(new CursorCaptureEvent(w->viewer));
         }
     }
     
@@ -326,7 +326,7 @@ namespace yq::tachyon {
         glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         w->state.mouse.mode = MouseMode::Disabled;
         if(w->viewer){
-            g.manager->dispatch(new CursorDisableEvent(w->viewer));
+            g.manager->send(new CursorDisableEvent(w->viewer));
         }
     }
     
@@ -339,7 +339,7 @@ namespace yq::tachyon {
         glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         w->state.mouse.mode = MouseMode::Hidden;
         if(w->viewer){
-            g.manager->dispatch(new CursorHideEvent(w->viewer));
+            g.manager->send(new CursorHideEvent(w->viewer));
         }
     }
     
@@ -351,7 +351,7 @@ namespace yq::tachyon {
         glfwSetInputMode(w->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         w->state.mouse.mode = MouseMode::Normal;
         if(w->viewer){
-            g.manager->dispatch(new CursorNormalEvent(w->viewer));
+            g.manager->send(new CursorNormalEvent(w->viewer));
         }
     }
 
@@ -376,14 +376,14 @@ namespace yq::tachyon {
             p.modifiers = _modifiers(window);
             p.buttons   = _buttons(window);
             p.position  = _mouse_pos(window);
-            g.manager->dispatch(new MouseEnterEvent(p));
+            g.manager->send(new MouseEnterEvent(p));
         } else {
             MouseLeaveEvent::Param p;
             p.viewer    = v;
             p.modifiers = _modifiers(window);
             p.buttons   = _buttons(window);
             p.position  = _mouse_pos(window);
-            g.manager->dispatch(new MouseLeaveEvent(p));
+            g.manager->send(new MouseLeaveEvent(p));
         }
     }
 
@@ -409,7 +409,7 @@ namespace yq::tachyon {
         p.modifiers = _modifiers(window);
         p.buttons   = _buttons(window);
         p.position  = _mouse_pos(window);
-        g.manager->dispatch(new MouseDropEvent(std::move(copy), p));
+        g.manager->send(new MouseDropEvent(std::move(copy), p));
     }
 
     void GLFWManager::callback_cursor_position(GLFWwindow* window, double xpos, double ypos)
@@ -443,7 +443,7 @@ namespace yq::tachyon {
             p.buttons   = _buttons(window);
             p.position  = _mouse_pos(window);
             p.button    = MouseButton(button);
-            g.manager->dispatch(new MousePressEvent(p));
+            g.manager->send(new MousePressEvent(p));
         } else {
             MouseReleaseEvent::Param p;
             p.viewer    = v;
@@ -451,7 +451,7 @@ namespace yq::tachyon {
             p.buttons   = _buttons(window);
             p.position  = _mouse_pos(window);
             p.button    = MouseButton(button);
-            g.manager->dispatch(new MouseReleaseEvent(p));
+            g.manager->send(new MouseReleaseEvent(p));
         }
         
     }
@@ -468,7 +468,7 @@ namespace yq::tachyon {
         p.modifiers = _modifiers(window);
         p.buttons   = _buttons(window);
         p.delta     = { xoffset, yoffset };
-        g.manager->dispatch(new MouseScrollEvent(p));
+        g.manager->send(new MouseScrollEvent(p));
     }
 
     void    GLFWManager::cmd_cursor_capture(const WindowCursorCaptureCommand&cmd)
@@ -519,9 +519,9 @@ namespace yq::tachyon {
             return ;
 
         if(event == GLFW_CONNECTED){
-            g.manager->dispatch(new MonitorConnectEvent(monitor));
+            g.manager->send(new MonitorConnectEvent(monitor));
         } else {
-            g.manager->dispatch(new MonitorDisconnectEvent(monitor));
+            g.manager->send(new MonitorDisconnectEvent(monitor));
         }
     }
 
@@ -544,7 +544,7 @@ namespace yq::tachyon {
         
         for(auto& itr : g.viewers){
             _update(itr.second.window, itr.second.state);
-            g.manager->dispatch(new WindowStateEvent(itr.first, itr.second.state));
+            g.manager->send(new WindowStateEvent(itr.first, itr.second.state));
         }
     }
 
@@ -560,7 +560,7 @@ namespace yq::tachyon {
         glfwSetWindowAspectRatio(w->window, sz.x, sz.y);
         w->state.window.aspect   = sz;
         if(w->viewer){
-            g.manager->dispatch(new WindowAspectEvent(w->viewer, sz));
+            g.manager->send(new WindowAspectEvent(w->viewer, sz));
         }
     }
 
@@ -601,7 +601,7 @@ namespace yq::tachyon {
         w->window   = nullptr;
         g.viewers.erase(v); // WARNING, implicitly destroys w!
         if(v){
-            g.manager->dispatch(new WindowDestroyEvent(v));
+            g.manager->send(new WindowDestroyEvent(v));
         }
         g.manager->disconnect(*v);
     }
@@ -630,7 +630,7 @@ namespace yq::tachyon {
             return ;
         glfwHideWindow(w->window);
         if(w->viewer){
-            g.manager->dispatch(new WindowHideEvent(w->viewer));
+            g.manager->send(new WindowHideEvent(w->viewer));
         }
     }
     
@@ -672,7 +672,7 @@ namespace yq::tachyon {
             return ;
         glfwShowWindow(w->window);
         if(w->viewer){
-            g.manager->dispatch(new WindowShowEvent(w->viewer));
+            g.manager->send(new WindowShowEvent(w->viewer));
         }
     }
 
@@ -690,7 +690,7 @@ namespace yq::tachyon {
             return;
         glfwSetWindowTitle(w->window, title.c_str());
         if(w->viewer){
-            g.manager->dispatch(new WindowTitleEvent(w->viewer, title));
+            g.manager->send(new WindowTitleEvent(w->viewer, title));
         }
     }
 
@@ -769,7 +769,7 @@ namespace yq::tachyon {
         if(!v)
             return ;
 
-        g.manager->dispatch(new WindowFrameBufferResizeEvent(v, {width, height}));
+        g.manager->send(new WindowFrameBufferResizeEvent(v, {width, height}));
     }
 
     void GLFWManager::callback_window_close(GLFWwindow* window)
@@ -781,7 +781,7 @@ namespace yq::tachyon {
 
             // so we don't repeat this....
         glfwSetWindowShouldClose(window, GLFW_FALSE);
-        g.manager->dispatch(new ViewerCloseRequest(v));
+        g.manager->send(new ViewerCloseRequest(v));
     }
     
     void GLFWManager::callback_window_focus(GLFWwindow* window, int focused)
@@ -793,9 +793,9 @@ namespace yq::tachyon {
             return ;
 
         if(focused){
-            g.manager->dispatch(new WindowFocusEvent(v));
+            g.manager->send(new WindowFocusEvent(v));
         } else {
-            g.manager->dispatch(new WindowDefocusEvent(v));
+            g.manager->send(new WindowDefocusEvent(v));
         }
     }
     
@@ -808,9 +808,9 @@ namespace yq::tachyon {
             return ;
 
         if(iconified){
-            g.manager->dispatch(new WindowIconifyEvent(v));
+            g.manager->send(new WindowIconifyEvent(v));
         } else {
-            g.manager->dispatch(new WindowRestoreEvent(v));
+            g.manager->send(new WindowRestoreEvent(v));
         }
     }
     
@@ -823,9 +823,9 @@ namespace yq::tachyon {
             return ;
 
         if(maximized){
-            g.manager->dispatch(new WindowMaximizeEvent(v));
+            g.manager->send(new WindowMaximizeEvent(v));
         } else {
-            g.manager->dispatch(new WindowRestoreEvent(v));
+            g.manager->send(new WindowRestoreEvent(v));
         }
     }
     
@@ -837,7 +837,7 @@ namespace yq::tachyon {
         if(!v)
             return ;
 
-        g.manager->dispatch(new WindowMoveEvent(v, { xpos, ypos }));
+        g.manager->send(new WindowMoveEvent(v, { xpos, ypos }));
     }
     
     void GLFWManager::callback_window_refresh(GLFWwindow* window)
@@ -846,7 +846,7 @@ namespace yq::tachyon {
         
         Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(v){
-            g.manager->dispatch(new WindowRefreshRequest(v));
+            g.manager->send(new WindowRefreshRequest(v));
         }
     }
     
@@ -856,7 +856,7 @@ namespace yq::tachyon {
         
         Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(v){
-            g.manager->dispatch(new WindowScaleEvent(v, { xscale, yscale }));
+            g.manager->send(new WindowScaleEvent(v, { xscale, yscale }));
         }
     }
     
@@ -866,7 +866,7 @@ namespace yq::tachyon {
         
         Viewer*v    = (Viewer*) glfwGetWindowUserPointer(window);
         if(v){
-            g.manager->dispatch(new WindowResizeEvent(v, { xsize, ysize }));
+            g.manager->send(new WindowResizeEvent(v, { xsize, ysize }));
         }
     }
         
@@ -1187,24 +1187,24 @@ namespace yq::tachyon {
         auto w = writer<GLFWManager>();
         w.abstract();
         w.description("GLFW Manager");
-        w.receive(&GLFWManager::cmd_attention);
-        w.receive(&GLFWManager::cmd_cursor_capture);
-        w.receive(&GLFWManager::cmd_cursor_disable);
-        w.receive(&GLFWManager::cmd_cursor_hide);
-        w.receive(&GLFWManager::cmd_cursor_normal);
-        w.receive(&GLFWManager::cmd_destroy);
-        w.receive(&GLFWManager::cmd_float);
-        w.receive(&GLFWManager::cmd_focus);
-        w.receive(&GLFWManager::cmd_hide);
-        w.receive(&GLFWManager::cmd_iconify);
-        w.receive(&GLFWManager::cmd_maximize);
-        w.receive(&GLFWManager::cmd_move);
-        w.receive(&GLFWManager::cmd_restore);
-        w.receive(&GLFWManager::cmd_show);
-        w.receive(&GLFWManager::cmd_size);
-        w.receive(&GLFWManager::cmd_title);
-        w.receive(&GLFWManager::cmd_unfloat);
+        w.slot(&GLFWManager::cmd_attention);
+        w.slot(&GLFWManager::cmd_cursor_capture);
+        w.slot(&GLFWManager::cmd_cursor_disable);
+        w.slot(&GLFWManager::cmd_cursor_hide);
+        w.slot(&GLFWManager::cmd_cursor_normal);
+        w.slot(&GLFWManager::cmd_destroy);
+        w.slot(&GLFWManager::cmd_float);
+        w.slot(&GLFWManager::cmd_focus);
+        w.slot(&GLFWManager::cmd_hide);
+        w.slot(&GLFWManager::cmd_iconify);
+        w.slot(&GLFWManager::cmd_maximize);
+        w.slot(&GLFWManager::cmd_move);
+        w.slot(&GLFWManager::cmd_restore);
+        w.slot(&GLFWManager::cmd_show);
+        w.slot(&GLFWManager::cmd_size);
+        w.slot(&GLFWManager::cmd_title);
+        w.slot(&GLFWManager::cmd_unfloat);
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWManager)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::GLFWManager)

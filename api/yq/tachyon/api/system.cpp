@@ -14,24 +14,3 @@
 #include "Context.hpp"
 #include "Thread.ipp"
 
-
-namespace yq::tachyon {
-
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  TACHYON
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  THREAD
-
-
-
-#if 0
-    Execution   Tachyon::update(Context&)
-    {
-        return PAUSE;
-    }
-#endif
-    
-}
-

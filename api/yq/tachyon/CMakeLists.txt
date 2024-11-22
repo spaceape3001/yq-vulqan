@@ -16,42 +16,32 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME} SHARED
     strings.cpp
 
-    #GLFWManager.cpp
+    #glfw/GLFWManager.cpp
     
     MyImGui.cpp
     
     vulqan.cpp
 
     api/AppThread.cpp
-    api/System.cpp
+    api/graphics.cpp
+    api/messaging.cpp
+    api/system.cpp
 
     #api/Application.cpp
     api/Buffer.cpp
     api/Camera.cpp
-    api/Command.cpp
     #api/Editor.cpp
-    api/Event.cpp
     api/Frame.cpp
     #api/Light.cpp
     #api/Model.cpp
     api/Manager.cpp
-    api/Message.cpp
-    #api/Perspective.cpp
+    api/Perspective.cpp
     api/Pipeline.cpp
     api/PipelineUtils.cpp
-    api/Post.cpp
-    api/Raster.cpp
     #api/Render2D.cpp
     api/Render3.cpp
     api/Rendered.cpp
     api/RenderPass.cpp
-    api/Reply.cpp
-    api/Request.cpp
-    api/Sampler.cpp
-    api/Shader.cpp
-    #api/Tachyon.cpp
-    api/Texture.cpp
-    #api/Thread.cpp
     #api/Tool.cpp
     api/Undo.cpp
     #api/Viewer.cpp
@@ -137,7 +127,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViTasker.cpp
     viz/ViThread.cpp
     viz/ViVisualizer.cpp
-    #viz/Visualizer.cpp
+    viz/Visualizer.cpp
     
     viz/viz.cpp
     

@@ -13,8 +13,9 @@
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/core/Controlling.hpp>
-#include <yq/tachyon/core/Thread.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/api/ViewerState.hpp>
+#include <yq/tachyon/api/ViewerCreateInfo.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/replies.hpp>
@@ -23,8 +24,6 @@
 #include <yq/tachyon/typedef/vigui.hpp>
 #include <yq/tachyon/typedef/visualizer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
-#include <yq/tachyon/viewer/ViewerState.hpp>
-#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>
@@ -60,8 +59,8 @@ namespace yq::tachyon {
         and one widget only, this is the root widget for the viewer.
         
     */
-    class Viewer : public Controlling, public RefCount {
-        YQ_OBJECT_DECLARE(Viewer, Controlling)
+    class Viewer : public Tachyon {
+        YQ_OBJECT_DECLARE(Viewer, Tachyon)
     
     /*
         THREADING -- being written so that each viewer is a separate thread.

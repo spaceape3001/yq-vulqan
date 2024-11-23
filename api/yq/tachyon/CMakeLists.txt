@@ -254,18 +254,29 @@ add_library(${PROJECT_NAME} SHARED
     v/VqUtils.cpp
     v/VulqanManager.cpp
     
+    viz/ViBuffer.cpp
+    viz/ViCommandBuffer.cpp
     viz/ViCommandBufferVector.cpp
+    viz/ViCommandPool.cpp
+    viz/ViContext.cpp
     viz/ViData.cpp
+    viz/ViFence.cpp
     viz/ViFrame.cpp
+    viz/ViImage.cpp
     viz/ViPipeline.cpp
     viz/ViPipelineLayout.cpp
+    viz/ViQueueManager.cpp
+    viz/ViQueueTasker.cpp
     viz/ViRendered.cpp
+    viz/ViRenderPass.cpp
+    viz/ViSampler.cpp
+    viz/ViShader.cpp
+    viz/ViSwapchain.cpp
+    viz/ViTexture.cpp
     viz/ViTasker.cpp
     viz/ViThread.cpp
     viz/ViVisualizer.cpp
     viz/Visualizer.cpp
-    
-    viz/viz.cpp
     
     #widgets/ImGuiDemoWidget.cpp
     #widgets/Scene3DWidget.cpp

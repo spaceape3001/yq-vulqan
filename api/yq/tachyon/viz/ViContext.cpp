@@ -6,6 +6,8 @@
 
 #include "ViContext.hpp"
 
+#include <yq/tachyon/api/Raster.hpp>
+
 namespace yq::tachyon {
     ViContext::ViContext() = default;
     ViContext::~ViContext() = default;

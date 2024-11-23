@@ -203,11 +203,11 @@ add_library(${PROJECT_NAME} SHARED
 
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
-    #io/STBImage.cpp
+    io/STBImage.cpp
 
     #manipulator/Manipulator.cpp
     
-    messages/messages.cpp
+    messages/EmptyMessage.cpp
     
     #models/models.cpp
 
@@ -222,12 +222,26 @@ add_library(${PROJECT_NAME} SHARED
     renders/Tetrahedron.cpp
     renders/Triangle.cpp
 
-    replies/replies.cpp
+    replies/AnyReply.cpp
+    replies/AppReply.cpp
+    replies/CameraReply.cpp
+    replies/EmptyReply.cpp
+    replies/StringReply.cpp
+    replies/TachyonReply.cpp
+    replies/ViewerCloseReply.cpp
+    replies/ViewerReply.cpp
+    replies/ViewerWidgetReply.cpp
+    replies/WindowReply.cpp
     
-    # Render³D 
-    
-    
-    requests/requests.cpp
+    requests/AppRequest.cpp
+    requests/CameraRequest.cpp
+    requests/EmptyRequest.cpp
+    requests/TachyonRequest.cpp
+    requests/ViewerCloseRequest.cpp
+    requests/ViewerRequest.cpp
+    #requests/ViewerWidgetRequest.cpp
+    requests/WindowRefreshRequest.cpp
+    requests/WindowRequest.cpp
     
     #task/Task.cpp
     #task/TaskEngine.cpp

@@ -17,12 +17,13 @@ namespace yq::tachyon {
     class Tachyon;
     class InterfaceInfo;
     struct TachyonSnap;
+    struct TypedID;
     
     //! The proxy is a *buffer* to an interface
     class Proxy {
     public:
     
-        TachyonID               object() const;
+        TypedID                 object() const;
         uint64_t                revision() const { return m_revision; }
         const InterfaceInfo*    interface(info_t) const { return m_interface; }
     

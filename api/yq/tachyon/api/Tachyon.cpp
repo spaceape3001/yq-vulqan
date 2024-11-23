@@ -13,6 +13,7 @@
 #include "TachyonBind.hpp"
 #include "TachyonData.hpp"
 #include "TachyonInfoWriter.hpp"
+#include "Thread.hpp"
 
 #include <yq/core/ThreadId.hpp>
 
@@ -204,6 +205,16 @@ namespace yq::tachyon {
         w.description("Tachyon Object");
     }
 
+    void Tachyon::retain(TachyonPtr tp)
+    {
+        Thread::retain(tp);
+    }
+    
+    void Tachyon::retain(TachyonPtr tp, ThreadID tid)
+    {
+        Thread::retain(tp, tid);
+    }
+
 // ------------------------------------------------------------------------
 
 
@@ -224,6 +235,83 @@ namespace yq::tachyon {
     {
     }
 
+    void    Tachyon::_add_child(TypedID tid)
+    {
+        m_children.push_back(tid);
+        _subscribe(tid, MG::Children);
+        
+        // TODO: SEND EVENT HERE
+    }
+    
+    void    Tachyon::_add_snoop(TachyonID tid)
+    {
+        m_snoop.push_back(tid);
+    }
+
+    void    Tachyon::_del_child(TachyonID tid)
+    {
+        TypedID child = {};
+        
+        size_t cnt = std::erase_if(m_children, [&](const TypedID& a) -> bool { 
+            if(a.id == tid.id){
+                child   = a;
+                return true;
+            } else {
+                return false;
+            }
+        });
+        if(cnt){
+            _unsubscribe(tid, MG::Children);
+        
+            // TODO: SEND EVENT HERE
+        }
+    }
+    
+    void    Tachyon::_del_snoop(TachyonID tid)
+    {
+        std::erase(m_snoop, tid);
+    }
+
+    bool    Tachyon::_has_child(TachyonID tid) const 
+    {
+        for(const TypedID& c : m_children){
+            if(c.id == tid.id)
+                return true;
+        }
+        return false;
+    }
+
+    void    Tachyon::_set_parent(TypedID tid)
+    {
+        if(tid == m_parent)
+            return ;
+            
+        _unsubscribe(m_parent, MG::Parent);
+        m_parent    = tid;
+        if(tid){
+            _subscribe(tid, MG::Parent);
+        }
+        
+        
+        //  TODO: SEND EVENT HERE
+    }
+    
+    void    Tachyon::_subscribe(TachyonID tid, MGF mgf)
+    {
+        m_listeners[tid] |= mgf;
+    }
+
+    void    Tachyon::_unsubscribe(TachyonID tid, MGF mgf)
+    {
+        auto i = m_listeners.find(tid);
+        if(i != m_listeners.end()){
+            i->second -= mgf;
+            if(!i->second){
+                m_listeners.erase(i);
+            }
+        }
+    }
+    
     Tachyon::PostAdvice  Tachyon::advise(const Post& pp) const
     {
         return {};
@@ -254,7 +342,8 @@ namespace yq::tachyon {
 
         {
             TXLOCK
-            std::swap(messages, m_inbox);
+            std::swap(messages,         m_inbox);
+            std::swap(data->outbound,   m_outbox);
         }
         
         if(!messages.empty()){
@@ -383,9 +472,12 @@ namespace yq::tachyon {
     {
         if(!pp)
             return;
-        if(!in_tick())
-            return;
-        m_data->outbound.push_back({pp, mgf});
+        if(in_tick()){
+            m_data->outbound.push_back({pp, mgf});
+        } else {
+            TXLOCK
+            m_outbox.push_back({pp, mgf});
+        }
     }
 
     void Tachyon::snap(TachyonSnap&snap) const

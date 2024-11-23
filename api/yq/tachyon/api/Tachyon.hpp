@@ -40,7 +40,7 @@ namespace yq::tachyon {
     
     class TachyonInfo : public ObjectInfo {
     public:
-
+    
         using InterfaceLUC  = MetaLookup<InterfaceInfo>;
         using DispatchMM    = std::unordered_multimap<const PostInfo*, const PBXDispatch*>;
         
@@ -99,6 +99,8 @@ namespace yq::tachyon {
     #define YQ_TACHYON_IMPLEMENT(...)                           \
         YQ_OBJECT_IMPLEMENT(__VA_ARGS__)
 
+    class Frame;
+    struct OutPost;
 
     /*! \brief Base (heavy) object in the tachyon library
     
@@ -130,8 +132,15 @@ namespace yq::tachyon {
         void                mail(const PostCPtr&);
         void                mail(std::span<PostCPtr const>);
         
+        static void         mail(TachyonID, const PostCPtr&);
+        
         TachyonID           id() const { return { UniqueID::id() }; }
         ThreadID            owner() const;
+        
+        TypedID             parent() const { return m_parent; }
+        
+        Tachyon*            parent(const Frame&) const;
+        
         
         //! \note NOT thread-safe (yet)
         void                subscribe(TachyonID, MGF grp=MG::General);
@@ -140,6 +149,12 @@ namespace yq::tachyon {
         
         struct Param { /* reserved for future use */ };
         
+        template <SomeTachyon T, typename ... Args>
+        static T*   create(Args...);
+    
+        template <SomeTachyon T, typename ... Args>
+        T*          create(child_t, Args...);
+
     protected:
 
         using PostAdvice = std::variant<std::monostate, accept_t, reject_t, MG, MGF>;
@@ -256,10 +271,14 @@ namespace yq::tachyon {
 
         Tachyon(init_t, const Param& p={});
         Tachyon(thread_t, const Param& p={});
+        
+        static void retain(TachyonPtr);
+        static void retain(TachyonPtr, ThreadID);
 
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
         
         std::vector<PostCPtr>       m_inbox;      //< Inbox (under mutex guard)
+        std::vector<OutPost>        m_outbox;     //< Outbox (under mutex guard)
         control_hash_t              m_control;    //< Who controls us
         std::map<TachyonID,MGF>     m_listeners;  //< Who we send to
         std::vector<TachyonID>      m_snoop;      //< Those eavesdropping on our inbox
@@ -269,6 +288,8 @@ namespace yq::tachyon {
         TachyonData*                m_data          = nullptr;
         Context*                    m_context       = nullptr;
         std::atomic<unsigned int>   m_thread        = kInvalidThread;
+        TypedID                     m_parent;
+        std::vector<TypedID>        m_children;
         bool                        m_dirty         = false;
         
         //virtual void                    parent(set_t, TachyonID);
@@ -277,11 +298,48 @@ namespace yq::tachyon {
         void    tx(TachyonID, PostCPtr);
         
         struct Result {
-            TachyonDataCPtr  data;
-            TachyonSnapCPtr snap;
-            Execution       execute;
+            TachyonDataCPtr     data;
+            TachyonSnapCPtr     snap;
+            Execution           execute;
         };
 
         Result  cycle(Context&);
+        
+        //! Sets the parent (thread-safety assumed)
+        void    _set_parent(TypedID);
+        
+        //! Adds the child (thread-safety assumed)
+        void    _add_child(TypedID);
+        
+        void    _add_snoop(TachyonID);
+        void    _del_snoop(TachyonID);
+        
+        //! Deletes the child (thread-safety assumed)
+        void    _del_child(TachyonID);
+        
+        //! Queries for the existence of the child
+        bool    _has_child(TachyonID) const;
+        
+        void    _unsubscribe(TachyonID, MGF);
+
+        void    _subscribe(TachyonID, MGF);
     };
+
+    template <SomeTachyon T, typename ... Args>
+    T*  Tachyon::create(Args... args)
+    {
+        TachyonPtr  tp  = new T(args...);
+        retain(tp);
+        return tp.ptr();
+    }
+
+    template <SomeTachyon T, typename ... Args>
+    T*  Tachyon::create(child_t, Args... args)
+    {
+        Ref<T>   tp  = new T(args...);
+        retain(tp);
+        tp->_set_parent(*this);
+        _add_child(*tp);
+        return tp.ptr();
+    }
 }

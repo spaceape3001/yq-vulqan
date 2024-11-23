@@ -12,6 +12,8 @@
 #include "ThreadData.hpp"
 #include "ThreadInfoWriter.hpp"
 
+#include <yq/core/ThreadId.hpp>
+
 namespace yq::tachyon {
 
     inline bool    is_specified(const Execution&es)
@@ -46,10 +48,20 @@ namespace yq::tachyon {
     
 
     struct Thread::Repo {
+    
+        Thread*                 main = nullptr;
+        ThreadID                mainID;
+    
+        //! Sink is the thread that'll be "in case" nothing fits
+        Thread*                 sink = nullptr;
+        ThreadID                sinkID;
+
         mutable mutex_t         mutex;
         thread_data_map_t       data;  // must be modified under mutex guard
         inbox_map_t             inboxes;
         thread_map_t            threads;
+        
+        std::vector<TachyonPtr> misfits;  //<! Adds that need retention by the next available thread
         
         void    acknowledge(ThreadID tgt, TachyonID tac)
         {
@@ -101,19 +113,96 @@ namespace yq::tachyon {
         w.description("Thread of execution");
     }
 
+    void Thread::retain(TachyonPtr tp)
+    {
+        static Repo&    _r  = repo();
+    
+        if(!tp)
+            return;
+            
+        if(Thread* th = dynamic_cast<Thread*>(tp.ptr())){
+            lock_t _lock(_r.mutex, true);
+            _r.threads[th->id()]    = th;
+            return;
+        }
+        
+        if(s_current){
+            lock_t _lock(s_current->m_mutex, true);
+            s_current -> m_creates.push_back(tp);
+            return;
+        }
+        
+        lock_t _lock(_r.mutex, true);
+        if(_r.sink){
+            lock_t _lock2(_r.sink->m_mutex, true);
+            _r.sink->m_creates.push_back(tp);
+            return ;
+        }
+        if(_r.main){
+            lock_t _lock2(_r.main->m_mutex, true);
+            _r.main->m_creates.push_back(tp);
+            return ;
+        }
+        
+        _r.misfits.push_back(tp);
+    }
+    
+    void Thread::retain(TachyonPtr tp, ThreadID tid)
+    {
+        static Repo&    _r  = repo();
+        if(!tp)
+            return;
+
+        ThreadPtr   th;
+        {
+            lock_t _lock(_r.mutex, false);
+            auto i = _r.threads.find(tid);
+            if(i != _r.threads.end())
+                th = i->second;
+        }
+        
+        if(th){
+            lock_t _lock(tp->m_mutex, true);
+            th->m_creates.push_back(tp);
+            return;
+        }
+        
+        retain(tp);
+    }
+
 // ------------------------------------------------------------------------
 
     Thread::Thread(const Param& p) : Tachyon(p)
     {
         static Repo&    _r  = repo();
+        ThreadID    _id = id();
+        
         lock_t    _lock(_r.mutex, true);
-        _r.threads[id()]    = this;
-        _r.data[id()]       = {};
-        _r.inboxes[id()]    = {};
+        if(!thread::id() && !_r.main){
+            _r.main     = this;
+            _r.mainID   = _id;
+            _r.sink     = this;
+            _r.sinkID   = _id;
+        }
+        
+        _r.threads[_id]    = this;
+        _r.data[_id]       = {};
+        _r.inboxes[_id]    = {};
     }
     
     Thread::~Thread()
     {
+        if(this == s_current){
+            s_current    = nullptr;
+        }
+    
+        static Repo& _r = repo();
+        lock_t _lock(_r.mutex, true);
+        if(_r.main == this){
+            _r.main = nullptr;
+            _r.mainID   = {};
+        }
+        
     }
 
     ThreadData&     Thread::data()

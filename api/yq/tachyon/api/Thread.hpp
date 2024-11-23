@@ -78,6 +78,8 @@ namespace yq::tachyon {
         
         friend class Tachyon;
         
+        static void retain(TachyonPtr);
+        static void retain(TachyonPtr, ThreadID);
         
 //        struct Impl;
 
@@ -97,6 +99,7 @@ namespace yq::tachyon {
         bool                            m_quit{ false };
         unit::Second                    m_snooze    = 1_ms;
         std::map<TachyonID, Control>    m_objects;
+        std::vector<TachyonPtr>         m_creates;  //!< Objects that were created (will be handled next tick)
         std::thread                     m_thread;
         uint64_t                        m_tick      = 0ULL;
     };

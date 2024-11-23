@@ -64,8 +64,63 @@ add_library(${PROJECT_NAME} SHARED
     cameras/SpaceCamera.cpp
     cameras/TargetCamera.cpp
     
-    commands/commands.cpp
-
+    commands/AddChildCommand.cpp
+    commands/AppCommand.cpp
+    commands/AppDeleteViewerCommand.cpp
+    commands/CameraCommand.cpp
+    commands/CameraPitchCommand.cpp
+    commands/CameraRollCommand.cpp
+    commands/CameraYawCommand.cpp
+    #commands/ControllerCommand.cpp
+    commands/EmptyCommand.cpp
+    commands/GLFWCommand.cpp
+    commands/MouseCaptureCommand.cpp
+    commands/MouseCommand.cpp
+    commands/MouseDisableCommand.cpp
+    commands/MouseHideCommand.cpp
+    commands/MouseNormalCommand.cpp
+    #commands/SetParentCommand.cpp
+    commands/TachyonCommand.cpp
+    commands/ViewerAspectCommand.cpp
+    commands/ViewerAttentionCommand.cpp
+    commands/ViewerCloseCommand.cpp
+    commands/ViewerCommand.cpp
+    commands/ViewerCursorCaptureCommand.cpp
+    commands/ViewerCursorDisableCommand.cpp
+    commands/ViewerCursorHideCommand.cpp
+    commands/ViewerCursorNormalCommand.cpp
+    commands/ViewerFloatCommand.cpp
+    commands/ViewerFocusCommand.cpp
+    commands/ViewerHideCommand.cpp
+    commands/ViewerIconifyCommand.cpp
+    commands/ViewerMaximizeCommand.cpp
+    commands/ViewerMoveCommand.cpp
+    commands/ViewerPauseCommand.cpp
+    commands/ViewerRestoreCommand.cpp
+    commands/ViewerResumeCommand.cpp
+    commands/ViewerShowCommand.cpp
+    commands/ViewerSizeCommand.cpp
+    commands/ViewerTitleCommand.cpp
+    commands/ViewerUnfloatCommand.cpp
+    commands/WindowAspectCommand.cpp
+    commands/WindowAttentionCommand.cpp
+    commands/WindowCommand.cpp
+    commands/WindowCursorCaptureCommand.cpp
+    commands/WindowCursorDisableCommand.cpp
+    commands/WindowCursorHideCommand.cpp
+    commands/WindowCursorNormalCommand.cpp
+    commands/WindowDestroyCommand.cpp
+    commands/WindowFloatCommand.cpp
+    commands/WindowFocusCommand.cpp
+    commands/WindowHideCommand.cpp
+    commands/WindowIconifyCommand.cpp
+    commands/WindowMaximizeCommand.cpp
+    commands/WindowMoveCommand.cpp
+    commands/WindowRestoreCommand.cpp
+    commands/WindowShowCommand.cpp
+    commands/WindowSizeCommand.cpp
+    commands/WindowTitleCommand.cpp
+    commands/WindowUnfloatCommand.cpp
     
     config/build.cpp
     
@@ -77,7 +132,64 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
-    events/events.cpp
+    events/AppEvent.cpp
+    events/CameraEvent.cpp
+    events/CursorCaptureEvent.cpp
+    events/CursorDisableEvent.cpp
+    events/CursorHideEvent.cpp
+    events/CursorNormalEvent.cpp
+    events/EmptyEvent.cpp
+    events/InputEvent.cpp
+    events/JoystickAxisEvent.cpp
+    events/JoystickConnectEvent.cpp
+    events/JoystickDisconnectEvent.cpp
+    events/JoystickEvent.cpp
+    events/JoystickHatEvent.cpp
+    events/JoystickPressEvent.cpp
+    events/JoystickReleaseEvent.cpp
+    events/KeyboardEvent.cpp
+    events/KeyCharacterEvent.cpp
+    events/KeyPressEvent.cpp
+    events/KeyReleaseEvent.cpp
+    events/KeyRepeatEvent.cpp
+    events/MonitorConnectEvent.cpp
+    events/MonitorDisconnectEvent.cpp
+    events/MonitorEvent.cpp
+    events/MouseCaptureEvent.cpp
+    events/MouseDisableEvent.cpp
+    events/MouseDropEvent.cpp
+    events/MouseEnterEvent.cpp
+    events/MouseEvent.cpp
+    events/MouseLeaveEvent.cpp
+    events/MouseMoveEvent.cpp
+    events/MouseNormalEvent.cpp
+    events/MousePressEvent.cpp
+    events/MouseReleaseEvent.cpp
+    events/MouseScrollEvent.cpp
+    events/TachyonEvent.cpp
+    events/ViewerCloseEvent.cpp
+    events/ViewerEvent.cpp
+    events/ViewerPauseEvent.cpp
+    events/ViewerResumeEvent.cpp
+    events/ViewerTickEvent.cpp
+    events/VulqanEvent.cpp
+    events/WidgetEvent.cpp
+    events/WindowAspectEvent.cpp
+    events/WindowDefocusEvent.cpp
+    events/WindowDestroyEvent.cpp
+    events/WindowEvent.cpp
+    events/WindowFocusEvent.cpp
+    events/WindowFrameBufferResizeEvent.cpp
+    events/WindowHideEvent.cpp
+    events/WindowIconifyEvent.cpp
+    events/WindowMaximizeEvent.cpp
+    events/WindowMoveEvent.cpp
+    events/WindowResizeEvent.cpp
+    events/WindowRestoreEvent.cpp
+    events/WindowScaleEvent.cpp
+    events/WindowShowEvent.cpp
+    events/WindowStateEvent.cpp
+    events/WindowTitleEvent.cpp
     
     # font/Font.cpp      # Issue/TODO
     
@@ -177,3 +289,4 @@ PUBLIC
 )
 
 LinkTest(${PROJECT_NAME})
+

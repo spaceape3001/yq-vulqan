@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Render3.hpp>
+#include <yq/tachyon/api/Render3D.hpp>
 #include <yq/tachyon/api/RenderedInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class Render³Info::Writer : public RenderedInfo::Writer<C> {
+    class Render3DInfo::Writer : public RenderedInfo::Writer<C> {
     public:
-        Writer(Render³Info* renderInfo) : RenderedInfo::Writer<C>(renderInfo)
+        Writer(Render3DInfo* renderInfo) : RenderedInfo::Writer<C>(renderInfo)
         {
             RenderedInfo::Writer<C>::_3d();
         }
         
-        Writer(Render³Info& renderInfo) : Writer(&renderInfo)
+        Writer(Render3DInfo& renderInfo) : Writer(&renderInfo)
         {
         }
     };

@@ -70,10 +70,10 @@ namespace yq::tachyon {
     {
     }
 
-    Controlling::Param   Viewer::_pbx(const ViewerCreateInfo&vci)
+    Viewer::Param   Viewer::_params(const ViewerCreateInfo&vci)
     {
-        Controlling::Param  ret;
-        ret.name    = "Viewer";
+        Param  ret;
+        //ret.name    = "Viewer";
         return ret;
     }
 
@@ -121,9 +121,13 @@ namespace yq::tachyon {
     //  INITIALIZATION/DESTRUCTION
 
     std::atomic<int>        Viewer::s_count{0};
-    std::atomic<uint64_t>   Viewer::s_lastId{0};
+    std::atomic<uint64_t>   Viewer::s_lastNumber{0};
 
-    Viewer::Viewer(const ViewerCreateInfo&vci, WidgetPtr w) : Controlling(_pbx(vci)), m_id(++s_lastId)
+    Viewer::Viewer(WidgetPtr w, const ViewerCreateInfo& vci) : Viewer(w, vci, _params(vci))
+    {
+    }
+    
+    Viewer::Viewer(WidgetPtr w, const ViewerCreateInfo& vci, const Param&p)
     {
         if(!Application::initialized())
             throw ViewerException("Application is not initialized");

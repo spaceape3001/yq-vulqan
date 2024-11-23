@@ -6,10 +6,6 @@
 
 #pragma once
 
-#include <yq/post/PBX.hpp>
-#include <yq/core/Flags.hpp>
-#include <yq/core/Ref.hpp>
-#include <yq/core/UniqueID.hpp>
 #include <yq/typedef/vector2.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
@@ -40,9 +36,6 @@ namespace yq::tachyon {
     public:
     
         static void init_info();
-    
-        struct Param : public Controlling::Param {
-        };
     
         //! Default constructor
         Widget(const Param&p={});
@@ -99,6 +92,8 @@ namespace yq::tachyon {
         */
         bool    has_parentage(const Widget* p) const;
         
+        WidgetID   id() const { return WidgetID(UniqueID::id()); }
+
         bool    is_imgui() const;
         
         //! Our parent widget
@@ -121,14 +116,10 @@ namespace yq::tachyon {
         
         virtual Widget* widget_at(const Vector2D&) const;
         
-        virtual void    tick();
-        
         bool    attached() const;
 
 
     protected:
-        using Controlling::tick;
-    
         friend class Viewer;
         
         enum class F : uint8_t {
@@ -157,13 +148,15 @@ namespace yq::tachyon {
         void                    accept(close_t);
         void                    reject(close_t);
 
-        virtual void            receive(const post::PostCPtr&);
+        //virtual void            receive(const post::PostCPtr&);
 
         //! Called when a child of this widget is added
         //virtual void            on_child_added(Widget*){}
         
         //! Called when a child of this widget is removed
         //virtual void            on_child_removed(Widget*){}
+        
+        virtual PostAdvice      advise(const Post&) const override;
         
         
         

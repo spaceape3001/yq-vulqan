@@ -4,12 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "Context.hpp"
 #include "Frame.hpp"
 #include "InterfaceInfo.hpp"
 #include "Post.hpp"
+#include "Proxy.hpp"
 #include "Tachyon.hpp"
 #include "TachyonBind.hpp"
 #include "TachyonData.hpp"
@@ -403,6 +402,12 @@ namespace yq::tachyon {
         }
     }
 
+    void        Tachyon::subscribe(TachyonID tid, MGF grp)
+    {
+        m_listeners[tid] |= grp;
+    }
+    
+
     Execution   Tachyon::tick(Context&)
     {
         return {};
@@ -429,6 +434,13 @@ namespace yq::tachyon {
     void Tachyon::unhandled(const PostCPtr&)
     {
         //  Default does nothing
+    }
+
+    void        Tachyon::unsubscribe(TachyonID tid, MGF grp)
+    {
+        if((m_listeners[tid] -= grp) == MGF{}){
+            m_listeners.erase(tid);
+        }
     }
 }
 

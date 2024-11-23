@@ -116,7 +116,8 @@ namespace yq::tachyon {
         
             \note this *WILL* throw exceptions if the viewer create or the widget are bad
         */
-        Viewer(const ViewerCreateInfo& vci, WidgetPtr w);
+        Viewer(WidgetPtr w, const ViewerCreateInfo& vci);
+        Viewer(WidgetPtr w, const ViewerCreateInfo& vci, const Param&);
         
         //! Destructor
         virtual ~Viewer();
@@ -149,7 +150,8 @@ namespace yq::tachyon {
         int                         height() const;
 
         //! Viewer number
-        uint64_t                    id() const { return m_id; }
+        ViewerID                    id() const { return ViewerID(UniqueID::id()); }
+//        uint64_t                    id() const { return m_id; }
 
             //! TRUE if the window has standard decorations (close/buttons/frame)
         bool                        is_decorated() const;
@@ -295,11 +297,9 @@ namespace yq::tachyon {
         void                set_widget(WidgetPtr);
 
         //! Our general "update()" that includes the visualizer
-        void                tick(/* const AppFrame& */);
+        virtual Execution   tick(Context&) override;
 
     protected:
-
-        using Controlling::tick;
 
         //! Hint to do anything needed before the next render frame is actually rendered
         //! So do the uniform buffer & texture descriptor sets here.
@@ -312,7 +312,9 @@ namespace yq::tachyon {
         //! Called *AFTER* vulkan/imgui are initialized
         virtual std::error_code startup(const Init&) { return {}; }
 
-        virtual void    receive(const post::PostCPtr&) override;
+        virtual PostAdvice  advise(const Post&) const override;
+
+        //virtual void    receive(const post::PostCPtr&) override;
 
         //! Override to have a more nuianced approach (default is accept)
         virtual void    on_close_request();
@@ -331,11 +333,12 @@ namespace yq::tachyon {
         friend class Widget;
 
         static std::atomic<int>         s_count;
-        static std::atomic<uint64_t>    s_lastId;
+        static std::atomic<unsigned>    s_lastNumber;
 
-        static Controlling::Param   _pbx(const ViewerCreateInfo&);
+        static Param   _params(const ViewerCreateInfo&);
 
-        const uint64_t                  m_id;
+        const unsigned                  m_number;
+
         Cleanup                         m_cleanup;
         ViewerCreateInfoUPtr            m_createInfo;
         std::atomic<unit::Second>       m_drawTime      = { 0. };

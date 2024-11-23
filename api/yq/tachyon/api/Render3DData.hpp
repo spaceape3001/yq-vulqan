@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/typedef/light.hpp>
+#include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/typedef/render3.hpp>
 
 namespace yq::tachyon {
-    struct LightSnap : public TachyonSnap {
+    struct Render3DSnap : public RenderedSnap {
     };
     
-    struct LightData : public TachyonData {
+    struct Render3DData : public RenderedData {
     };
 }

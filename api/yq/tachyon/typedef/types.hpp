@@ -17,9 +17,12 @@ namespace yq::tachyon {
     
     enum class Type : uint8_t {
         Camera,
+        Controller,
         Editor,
         ImGui,
+        Light,
         Manager,
+        Model,
         Rendered,
         Thread,
         Viewer,
@@ -27,5 +30,5 @@ namespace yq::tachyon {
         Widget
     };
     
-    using Types = Flags<Type, uint32_t>;
+    using Types = Flags<Type>;
 }

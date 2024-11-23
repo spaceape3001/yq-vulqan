@@ -13,14 +13,10 @@
 namespace yq::tachyon {
     struct WidgetSnap : public TachyonSnap {
         ViewerID        viewer;
-        
-        WidgetSnap(Widget*);
         virtual ~WidgetSnap();
     };
     
     struct WidgetData : public TachyonData {
-    
-        WidgetData();
         virtual ~WidgetData();
     };
 }

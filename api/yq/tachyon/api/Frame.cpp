@@ -10,10 +10,12 @@
 //#include "EditorData.hpp"
 #include "Frame.hpp"
 #include "FrameBuilder.hpp"
-//#include "Light.hpp"
-//#include "LightData.hpp"
-//#include "Manager.hpp"
-//#include "ManagerData.hpp"
+#include "Light.hpp"
+#include "LightData.hpp"
+#include "Manager.hpp"
+#include "ManagerData.hpp"
+#include "Model.hpp"
+#include "ModelData.hpp"
 //#include "Post.hpp"
 //#include "Proxy.hpp"
 #include "Rendered.hpp"
@@ -26,8 +28,8 @@
 #include "ThreadData.hpp"
 //#include "Viewer.hpp"
 //#include "ViewerData.hpp"
-//#include "Widget.hpp"
-//#include "WidgetData.hpp"
+#include "Widget.hpp"
+#include "WidgetData.hpp"
 
 namespace yq::tachyon {
 
@@ -101,10 +103,12 @@ namespace yq::tachyon {
             m_cameras.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Editor))
             //m_editors.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Light))
-            //m_lights.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Manager))
-            //m_managers.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Light))
+            m_lights.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Manager))
+            m_managers.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Model))
+            m_models.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Rendered))
             m_rendereds.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Scene))
@@ -113,8 +117,8 @@ namespace yq::tachyon {
             m_threads.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Viewer))
             //m_viewers.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Widget))
-            //m_widgets.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Widget))
+            m_widgets.insert(t, tac.data.ptr(), tac.snap.ptr());
     }
     
     bool Frame::contains(CameraID id) const
@@ -129,19 +133,20 @@ namespace yq::tachyon {
     }
     #endif
 
-    #if 0
     bool Frame::contains(LightID id) const
     {
         return m_lights.has(id);
     }
-    #endif
 
-    #if 0
     bool Frame::contains(ManagerID id) const
     {
         return m_managers.has(id);
     }
-    #endif
+
+    bool Frame::contains(ModelID id) const
+    {
+        return m_models.has(id);
+    }
 
     bool Frame::contains(RenderedID id) const
     {
@@ -172,12 +177,10 @@ namespace yq::tachyon {
     }
     #endif
 
-    #if 0
     bool Frame::contains(WidgetID id) const
     {
         return m_widgets.has(id);
     }
-    #endif
     
     const CameraData*                   Frame::data(CameraID id) const
     {
@@ -191,19 +194,20 @@ namespace yq::tachyon {
     }
     #endif
 
-    #if 0
     const LightData*                   Frame::data(LightID id) const
     {
         return m_lights.data(id);
     }
-    #endif
 
-    #if 0
     const ManagerData*                  Frame::data(ManagerID id) const
     {
         return m_managers.data(id);
     }
-    #endif
+
+    const ModelData*                    Frame::data(ModelID id) const
+    {
+        return m_models.data(id);
+    }
 
     const RenderedData*                Frame::data(RenderedID id) const
     {
@@ -227,24 +231,30 @@ namespace yq::tachyon {
     }
     #endif
 
-    #if 0
     const WidgetData*                   Frame::data(WidgetID id) const
     {
         return m_widgets.data(id);
     }
-    #endif
 
     Camera*                             Frame::object(CameraID id) const
     {
         return m_cameras.pointer(id);
     }
 
-    #if 0
+    Light*                             Frame::object(LightID id) const
+    {
+        return m_lights.pointer(id);
+    }
+
     Manager*                            Frame::object(ManagerID id) const
     {
         return m_managers.pointer(id);
     }
-    #endif
+
+    Model*                              Frame::object(ModelID id) const
+    {
+        return m_models.pointer(id);
+    }
 
     Rendered*                           Frame::object(RenderedID id) const
     {
@@ -268,12 +278,10 @@ namespace yq::tachyon {
     }
     #endif
 
-    #if 0
     Widget*                             Frame::object(WidgetID id) const
     {
         return m_widgets.pointer(id);
     }
-    #endif
 
     ThreadID                            Frame::owner(TachyonID id) const
     {
@@ -291,18 +299,25 @@ namespace yq::tachyon {
         return ts->proxies;
     }
     
-    
     const CameraSnap*                  Frame::snap(CameraID id) const
     {
         return m_cameras.snap(id);
     }
 
-    #if 0
+    const LightSnap*                   Frame::snap(LightID id) const
+    {
+        return m_lights.snap(id);
+    }
+
     const ManagerSnap*                 Frame::snap(ManagerID id) const
     {
         return m_managers.snap(id);
     }
-    #endif
+
+    const ModelSnap*                   Frame::snap(ModelID id) const
+    {
+        return m_models.snap(id);
+    }
 
     const RenderedSnap*                Frame::snap(RenderedID id) const
     {
@@ -326,12 +341,10 @@ namespace yq::tachyon {
     }
     #endif
 
-    #if 0
     const WidgetSnap*                  Frame::snap(WidgetID id) const
     {
         return m_widgets.snap(id);
     }
-    #endif
     
     Types   Frame::types(TachyonID id) const
     {

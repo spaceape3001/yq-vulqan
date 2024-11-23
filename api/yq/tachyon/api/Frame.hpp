@@ -12,16 +12,17 @@
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
 #include <yq/tachyon/typedef/frame.hpp>
-//#include <yq/tachyon/typedef/light.hpp>
+#include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/manager.hpp>
+#include <yq/tachyon/typedef/model.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 //#include <yq/tachyon/typedef/scene.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
 #include <yq/tachyon/typedef/types.hpp>
-//#include <yq/tachyon/typedef/viewer.hpp>
-//#include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 
 #include <chrono>
 #include <unordered_map>
@@ -45,51 +46,55 @@ namespace yq::tachyon {
 
         bool contains(CameraID) const;
         //bool contains(EditorID) const;
-        //bool contains(LightID) const;
+        bool contains(LightID) const;
         bool contains(ManagerID) const;
+        bool contains(ModelID) const;
         bool contains(RenderedID) const;
         //bool contains(SceneID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
         //bool contains(ViewerID) const;
-        //bool contains(WidgetID) const;
+        bool contains(WidgetID) const;
     
         const CameraData*                   data(CameraID) const;
         //const EditorData*                   data(EditorID) const;
-        //const LightData*                    data(LightID) const;
+        const LightData*                    data(LightID) const;
         const ManagerData*                  data(ManagerID) const;
+        const ModelData*                    data(ModelID) const;
         const RenderedData*                 data(RenderedID) const;
         //const SceneData*                    data(SceneID) const;
         const TachyonData*                  data(TachyonID) const;
         const ThreadData*                   data(ThreadID) const;
         //const ViewerData*                   data(ViewerID) const;
-        //const WidgetData*                   data(WidgetID) const;
+        const WidgetData*                   data(WidgetID) const;
         
 
         Camera*                             object(CameraID) const;
         //Editor*                             object(EditorID) const;
-        //Light*                              object(LightID) const;
+        Light*                              object(LightID) const;
         Manager*                            object(ManagerID) const;
+        Model*                              object(ModelID) const;
         Rendered*                           object(RenderedID) const;
         //Scene*                              object(SceneID) const;
         Tachyon*                            object(TachyonID) const;
         Thread*                             object(ThreadID) const;
         //Viewer*                             object(ThreadID) const;
-        //Widget*                             object(ThreadID) const;
+        Widget*                             object(WidgetID) const;
         
         ThreadID                            owner(TachyonID) const;
         proxy_span_t                        proxies(TachyonID) const;
         
         const CameraSnap*                   snap(CameraID) const;
         //const EditorSnap*                   snap(EditorID) const;
-        //const LightSnap*                    snap(LightID) const;
+        const LightSnap*                    snap(LightID) const;
         const ManagerSnap*                  snap(ManagerID) const;
+        const ModelSnap*                    snap(ModelID) const;
         const RenderedSnap*                 snap(RenderedID) const;
+        //const SceneSnap*                    snap(SceneID) const;
         const TachyonSnap*                  snap(TachyonID) const;
         const ThreadSnap*                   snap(ThreadID) const;
-        //const SceneSnap*                    snap(SceneID) const;
         //const ViewerSnap*                   snap(ViewerID) const;
-        //const WidgetSnap*                   snap(WidgetID) const;
+        const WidgetSnap*                   snap(WidgetID) const;
 
         Types           types(TachyonID) const;
 
@@ -129,13 +134,14 @@ namespace yq::tachyon {
 
         Container<Camera, CameraData, CameraSnap>           m_cameras;
         //Container<Editor, EditorData, EditorSnap>           m_editors;
-        //Container<Light, LightData, LightSnap>              m_lights;
-        //Container<Manager, ManagerData, ManagerSnap>        m_managers;
+        Container<Light, LightData, LightSnap>              m_lights;
+        Container<Manager, ManagerData, ManagerSnap>        m_managers;
+        Container<Model, ModelData, ModelSnap>              m_models;
         Container<Rendered, RenderedData, RenderedSnap>     m_rendereds;
         Container<Tachyon, TachyonData, TachyonSnap>        m_tachyons;
         Container<Thread, ThreadData, ThreadSnap>           m_threads;
         //Container<Viewer, ViewerData, ViewerSnap>           m_viewers;
-        //Container<Widget, WidgetData, WidgetSnap>           m_widgets;
+        Container<Widget, WidgetData, WidgetSnap>           m_widgets;
 
         friend class Thread;
         friend FramePtr;

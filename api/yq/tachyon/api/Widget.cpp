@@ -7,8 +7,9 @@
 #include "Widget.hpp"
 #include "WidgetInfoWriter.hpp"
 
-#include <yq/tachyon/viewer/Viewer.hpp>
-#include <yq/tachyon/widget/WidgetBind.hpp>
+#include <yq/tachyon/api/Viewer.hpp>
+#include <yq/tachyon/api/WidgetBind.hpp>
+#include <yq/tachyon/api/WidgetData.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
@@ -16,7 +17,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq::tachyon {
-    WidgetBind::WidgetBind(const Widget* v) : m_widget(id ? v->id() : WidgetID{}) 
+    WidgetBind::WidgetBind(const Widget* v) : m_widget(v ? v->id() : WidgetID{}) 
     {
     }
 
@@ -26,16 +27,16 @@ namespace yq::tachyon {
         w.description("Widget base class");
     }
 
-    WidgetInfo::WidgetInfo(std::string_view zName, ControllingInfo& base, const std::source_location& sl) :
-        ControllingInfo(zName, base, sl)
+    WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
+        TachyonInfo(zName, base, sl)
     {
         set(Flag::WIDGET);
+        set(Type::Widget);
     }
 
-    Widget::Widget(const Param& p) : Controlling(p)
+    Widget::Widget(const Param& p) : Tachyon(p)
     {
         m_windowID      = std::string(fmt_hex(id()));
-        set_post_mode(PostMode::Queued);
     }
     
     Widget::~Widget()
@@ -71,6 +72,19 @@ namespace yq::tachyon {
         return ch->set_parent(this);
     }
 
+    Tachyon::PostAdvice    Widget::advise(const Post&pp) const
+    {
+        PostAdvice  pa  = Tachyon::advise(pp);
+        if(!unspecified(pa))
+            return pa;
+        
+        if(const WidgetBind* p = dynamic_cast<const WidgetBind*>(&pp)){
+            if(p->widget() != id())
+                return REJECT;
+        }
+        return {};
+    }
+
     bool    Widget::attached() const
     {
         return m_parent || m_viewer;
@@ -96,22 +110,6 @@ namespace yq::tachyon {
     {
         for(Widget* w : m_children)
             w->prerecord(u);
-    }
-
-    void    Widget::receive(const post::PostCPtr&pp)
-    {
-        if(!pp)
-            return;
-        if(const WidgetBind* p = dynamic_cast<const WidgetBind*>(pp.ptr())){
-            if(p->widget() != this){
-                return ;
-            }
-            if(!in_replay())
-                forward(pp);
-        } else if(!in_replay()){   
-            forward(pp);
-        }
-        Controlling::receive(pp);
     }
 
     void    Widget::reject(close_t)
@@ -153,15 +151,6 @@ namespace yq::tachyon {
         }
         return true;
    }
-
-    void    Widget::tick()
-    {
-        replay(ALL);
-        tick(CONTROLLERS);
-        replay(ALL);
-        for(auto& w : m_children)
-            w->tick();
-    }
 
     Viewer*         Widget::viewer()
     {

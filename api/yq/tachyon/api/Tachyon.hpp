@@ -133,6 +133,11 @@ namespace yq::tachyon {
         TachyonID           id() const { return { UniqueID::id() }; }
         ThreadID            owner() const;
         
+        //! \note NOT thread-safe (yet)
+        void                subscribe(TachyonID, MGF grp=MG::General);
+        //! \note NOT thread-safe (yet)
+        void                unsubscribe(TachyonID, MGF grp=ALL);
+        
         struct Param { /* reserved for future use */ };
         
     protected:

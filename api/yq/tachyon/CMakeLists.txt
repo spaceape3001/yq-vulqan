@@ -23,43 +23,49 @@ add_library(${PROJECT_NAME} SHARED
     vulqan.cpp
 
     api/AppThread.cpp
-    api/graphics.cpp
-    api/messaging.cpp
-    api/system.cpp
 
     #api/Application.cpp
     api/Buffer.cpp
     api/Camera.cpp
+    api/Command.cpp
+    api/Context.hpp
     #api/Editor.cpp
+    api/Event.cpp
     api/Frame.cpp
-    #api/Light.cpp
-    #api/Model.cpp
+    api/Interface.hpp
+    api/InterfaceInfo.hpp
+    api/Light.cpp
     api/Manager.cpp
+    api/Message.cpp
+    api/Model.cpp
     api/Perspective.cpp
     api/Pipeline.cpp
     api/PipelineUtils.cpp
+    api/Post.cpp
+    api/Proxy.cpp
+    api/Raster.cpp
     #api/Render2D.cpp
-    api/Render3.cpp
+    api/Render3D.cpp
     api/Rendered.cpp
     api/RenderPass.cpp
+    api/Reply.cpp
+    api/Request.cpp
+    api/Sampler.cpp
+    api/Shader.cpp
+    api/Tachyon.cpp
+    api/Texture.cpp
+    api/Thread.cpp
     #api/Tool.cpp
     api/Undo.cpp
     #api/Viewer.cpp
-    #api/Widget.cpp
-    
-    
-    #api/api.cpp
-    
+    api/Widget.cpp
+
+    cameras/NullCamera.cpp
+    cameras/SpaceCamera.cpp
+    cameras/TargetCamera.cpp
     
     commands/commands.cpp
-    events/events.cpp
-    #interfaces/interfaces.cpp
-    #proxies/proxies.cpp
 
-
-    #core/Controlling.cpp
-
-    cameras/cameras.cpp
     
     config/build.cpp
     
@@ -71,6 +77,7 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
+    events/events.cpp
     
     # font/Font.cpp      # Issue/TODO
     
@@ -81,19 +88,23 @@ add_library(${PROJECT_NAME} SHARED
     glfw/Monitor.cpp
     glfw/VideoMode.cpp
 
+    #interfaces/interfaces.cpp
+
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
     #io/STBImage.cpp
-
-    #lights/lights.cpp
 
     #manipulator/Manipulator.cpp
     
     messages/messages.cpp
     
     #models/models.cpp
-    
-    #posts/posts.cpp
+
+    posts/AnyPost.cpp
+    posts/EmptyPost.cpp
+    posts/StringPost.cpp
+
+    #proxies/proxies.cpp
 
     #renders/renders.cpp
 
@@ -101,14 +112,9 @@ add_library(${PROJECT_NAME} SHARED
     
     
     requests/requests.cpp
-
-
-    #scene/Perspective.cpp
-    
     
     #task/Task.cpp
     #task/TaskEngine.cpp
-
     #tools/tools.cpp
 
 

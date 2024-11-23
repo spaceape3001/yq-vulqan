@@ -10,18 +10,18 @@
 #include <yq/tachyon/typedef/render.hpp>
 
 namespace yq::tachyon {
-    class Render3D;
+    class Render³D;
 
     //! Utiltity to bind a viewer to the whatever...
-    class Render3DBind {
+    class Render³DBind {
     public:
-        Render3DID    render³() const { return m_render³; }
+        Render³DID    render³() const { return m_render³; }
         
     protected:
-        Render3DBind(Render3DID v) : m_render³(v) {}
-        Render3DBind(const Render3D* v);
-        virtual ~Render3DBind() {}
+        Render³DBind(Render³DID v) : m_render³(v) {}
+        Render³DBind(const Render³D* v);
+        virtual ~Render³DBind() {}
         
-        Render3DID const m_render³;
+        Render³DID const m_render³;
     };
 }

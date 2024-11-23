@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/data/ColorVertexData.hpp>
-#include <yq/tachyon/buffer/VBO.hpp>
-#include <yq/tachyon/render/Render3D.hpp>
+#include <yq/tachyon/api/ColorVertexData.hpp>
+#include <yq/tachyon/api/VBO.hpp>
+#include <yq/tachyon/api/Render³D.hpp>
 #include <array>
 
 namespace yq {
@@ -18,12 +18,12 @@ namespace yq {
 namespace yq::tachyon {
 
     /*! \brief A quadrilateral, taking in four points */
-    class Quadrilateral : public Render3D {
-        YQ_OBJECT_DECLARE(Quadrilateral, Render3D)
+    class Quadrilateral³ : public Render³D {
+        YQ_TACHYON_DECLARE(Quadrilateral³, Render³D)
     public:
     
-        Quadrilateral(const QuadrilateralData<ColorVertex2D>&);
-        ~Quadrilateral();
+        Quadrilateral³(const QuadrilateralData<ColorVertex2D>&);
+        ~Quadrilateral³();
         
         static void init_info();
         

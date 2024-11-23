@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/render/Render3D.hpp>
-#include <yq/tachyon/data/ColorVertexData.hpp>
-#include <yq/tachyon/buffer/VBO.hpp>
+#include <yq/tachyon/api/Render³D.hpp>
+#include <yq/tachyon/api/ColorVertexData.hpp>
+#include <yq/tachyon/api/VBO.hpp>
 
 #include <array>
 
@@ -18,16 +18,14 @@ namespace yq {
 
 namespace yq::tachyon {
 
-    /*! \brief Triangle
-    
-        This is a 2D triangle -- should be on a 2D render, but it's 3D.
+    /*! \brief Triangle for three dimensions
     */
-    class Triangle : public Render3D {
-        YQ_OBJECT_DECLARE(Triangle, Render3D)
+    class Triangle³ : public Render³D {
+        YQ_TACHYON_DECLARE(Triangle³, Render³D)
     public:
     
-        Triangle(const TriangleData<ColorVertex2D>&);
-        ~Triangle();
+        Triangle³(const TriangleData<ColorVertex2D>&);
+        ~Triangle³();
         
         static void init_info();
         

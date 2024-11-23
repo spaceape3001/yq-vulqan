@@ -19,9 +19,9 @@ namespace yq::tachyon {
     using Render3SnapPtr  = Ref<Render3Snap>;
     using Render3SnapCPtr = Ref<const Render3Snap>;
     
-    struct Render3Data;
-    using Render3DataPtr  = Ref<Render3Data>;
-    using Render3DataCPtr = Ref<const Render3Data>;
+    struct Render³Data;
+    using Render³DataPtr  = Ref<Render³Data>;
+    using Render³DataCPtr = Ref<const Render³Data>;
 
     template <class> class ID;
     

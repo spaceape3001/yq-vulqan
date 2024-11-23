@@ -45,7 +45,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Proxy.cpp
     api/Raster.cpp
     #api/Render2D.cpp
-    api/Render3D.cpp
+    api/Render³D.cpp
     api/Rendered.cpp
     api/RenderPass.cpp
     api/Reply.cpp
@@ -126,7 +126,6 @@ add_library(${PROJECT_NAME} SHARED
     
     #controller/Controller.cpp
     #controllers/controllers.cpp
-    
     
     enum/enum.cpp
     enum/KeyCode.cpp
@@ -218,9 +217,14 @@ add_library(${PROJECT_NAME} SHARED
 
     #proxies/proxies.cpp
 
-    #renders/renders.cpp
+    renders/ImageQuad.cpp
+    renders/Quadrilateral.cpp
+    renders/Tetrahedron.cpp
+    renders/Triangle.cpp
 
     replies/replies.cpp
+    
+    # Render³D 
     
     
     requests/requests.cpp

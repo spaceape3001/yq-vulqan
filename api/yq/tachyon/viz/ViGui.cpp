@@ -18,7 +18,14 @@
 #include <yq/util/AutoReset.hpp>
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/core/TachyonInfoWriter.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yq/tachyon/api/Raster.hpp>
+#include <yq/tachyon/api/Pipeline.hpp>
+#include <yq/tachyon/api/PipelineWriter.hpp>
+#include <yq/tachyon/api/Sampler.hpp>
+#include <yq/tachyon/api/Shader.hpp>
+#include <yq/tachyon/api/Texture.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/events/keyboard.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
@@ -26,12 +33,6 @@
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
 #include <yq/tachyon/events/WindowStateEvent.hpp>
-#include <yq/tachyon/image/Raster.hpp>
-#include <yq/tachyon/pipeline/Pipeline.hpp>
-#include <yq/tachyon/pipeline/PipelineWriter.hpp>
-#include <yq/tachyon/sampler/Sampler.hpp>
-#include <yq/tachyon/shader/Shader.hpp>
-#include <yq/tachyon/texture/Texture.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
@@ -44,7 +45,6 @@
 #include <yq/tachyon/viz/ViSwapchain.hpp>
 #include <yq/tachyon/viz/ViTexture.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
 
 
 //#include <backends/imgui_impl_glfw.h>
@@ -149,7 +149,6 @@ namespace yq::tachyon {
         if(!_init(options)){
             _kill();
         }
-        set_post_mode(PostMode::Queued);
     }
     
     ViGui::~ViGui()
@@ -656,7 +655,7 @@ namespace yq::tachyon {
         }
     }
 
-    void ViGui::key_character_event(const KeyCharacterEvent&evt)
+    void ViGui::on(const KeyCharacterEvent&evt)
     {
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
@@ -664,7 +663,7 @@ namespace yq::tachyon {
     }
     
     
-    void ViGui::key_press_event(const KeyPressEvent&evt)
+    void ViGui::on(const KeyPressEvent&evt)
     {
         ImGuiKey ik  = (ImGuiKey) encode_imgui(evt.key());
         if(ik < 0)
@@ -676,7 +675,7 @@ namespace yq::tachyon {
         io.AddKeyEvent(ik, true);
     }
     
-    void ViGui::key_release_event(const KeyReleaseEvent&evt)
+    void ViGui::on(const KeyReleaseEvent&evt)
     {
         ImGuiKey ik  = (ImGuiKey) encode_imgui(evt.key());
         if(ik < 0)
@@ -688,7 +687,7 @@ namespace yq::tachyon {
         io.AddKeyEvent(ik, false);
     }
     
-    void ViGui::mouse_move_event(const MouseMoveEvent&evt)
+    void ViGui::on(const MouseMoveEvent&evt)
     {
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
@@ -697,7 +696,7 @@ namespace yq::tachyon {
         m_mouse = evt.position();
     }
     
-    void ViGui::mouse_press_event(const MousePressEvent&evt)
+    void ViGui::on(const MousePressEvent&evt)
     {
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
@@ -709,7 +708,7 @@ namespace yq::tachyon {
         m_mouse = evt.position();
     }
     
-    void ViGui::mouse_release_event(const MouseReleaseEvent&evt)
+    void ViGui::on(const MouseReleaseEvent&evt)
     {
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
@@ -721,26 +720,21 @@ namespace yq::tachyon {
         m_mouse = evt.position();
     }
 
-    void    ViGui::tick()
-    {
-        replay(ALL);
-    }
-
-    void    ViGui::window_defocus_event(const WindowDefocusEvent&)
+    void    ViGui::on(const WindowDefocusEvent&)
     {
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
         io.AddFocusEvent(false);
     }
     
-    void    ViGui::window_focus_event(const WindowFocusEvent&)
+    void    ViGui::on(const WindowFocusEvent&)
     {
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
         io.AddFocusEvent(true);
     }
 
-    void    ViGui::window_state_event(const WindowStateEvent&evt)
+    void    ViGui::on(const WindowStateEvent&evt)
     {
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
@@ -766,21 +760,20 @@ namespace yq::tachyon {
     }
 
     ///////////////////////////////////
-    void ViGui::init_info()
-    {
-        auto w = writer<ViGui>();
-        w.description("ImGui Visualization");
-        w.receive(&ViGui::key_character_event);
-        w.receive(&ViGui::key_press_event);
-        w.receive(&ViGui::key_release_event);
-        w.receive(&ViGui::mouse_move_event);
-        w.receive(&ViGui::mouse_press_event);
-        w.receive(&ViGui::mouse_release_event);
-        w.receive(&ViGui::window_defocus_event);
-        w.receive(&ViGui::window_focus_event);
-        w.receive(&ViGui::window_state_event);
-    }
+    //void ViGui::init_info()
+    //{
+        //auto w = writer<ViGui>();
+        //w.description("ImGui Visualization");
+        //w.receive(&ViGui::key_character_event);
+        //w.receive(&ViGui::key_press_event);
+        //w.receive(&ViGui::key_release_event);
+        //w.receive(&ViGui::mouse_move_event);
+        //w.receive(&ViGui::mouse_press_event);
+        //w.receive(&ViGui::mouse_release_event);
+        //w.receive(&ViGui::window_defocus_event);
+        //w.receive(&ViGui::window_focus_event);
+        //w.receive(&ViGui::window_state_event);
+    //}
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ViGui)
 

@@ -56,6 +56,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Texture.cpp
     api/Thread.cpp
     #api/Tool.cpp
+    api/TypedID.cpp
     api/Undo.cpp
     #api/Viewer.cpp
     api/Widget.cpp
@@ -262,6 +263,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViData.cpp
     viz/ViFence.cpp
     viz/ViFrame.cpp
+    viz/ViGui.cpp
     viz/ViImage.cpp
     viz/ViPipeline.cpp
     viz/ViPipelineLayout.cpp

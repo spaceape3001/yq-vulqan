@@ -51,8 +51,7 @@ namespace yq::tachyon {
     
     //class 
 
-    class ViGui : public Tachyon {
-        YQ_OBJECT_DECLARE(ViGui, Tachyon)
+    class ViGui {
     public:
     
         enum class U : uint8_t {
@@ -86,7 +85,7 @@ namespace yq::tachyon {
         
         static void init_info();
         
-        void    tick();
+//        void    tick();
         
         
     private:
@@ -150,17 +149,19 @@ namespace yq::tachyon {
         void            _write_csv_index(const ImDrawData&, std::string_view filename);
 
         void    update_modifiers(ModifierKeys);
-        void    mouse_move_event(const MouseMoveEvent&);
-        void    mouse_press_event(const MousePressEvent&);
-        void    mouse_release_event(const MouseReleaseEvent&);
+    public:
+    
+        void    on(const MouseMoveEvent&);
+        void    on(const MousePressEvent&);
+        void    on(const MouseReleaseEvent&);
         
-        void    key_press_event(const KeyPressEvent&);
-        void    key_release_event(const KeyReleaseEvent&);
-        void    key_character_event(const KeyCharacterEvent&);
+        void    on(const KeyPressEvent&);
+        void    on(const KeyReleaseEvent&);
+        void    on(const KeyCharacterEvent&);
         
-        void    window_focus_event(const WindowFocusEvent&);
-        void    window_defocus_event(const WindowDefocusEvent&);
-        void    window_state_event(const WindowStateEvent&);
+        void    on(const WindowFocusEvent&);
+        void    on(const WindowDefocusEvent&);
+        void    on(const WindowStateEvent&);
     };
     
     #if 0

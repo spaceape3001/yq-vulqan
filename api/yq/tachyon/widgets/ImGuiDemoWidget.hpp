@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {
     //! ImGuiDemoWidget widget
     //!
     //! This shows the ImGui demo as a widget
     class ImGuiDemoWidget : public Widget {
-        YQ_OBJECT_DECLARE(ImGuiDemoWidget, Widget)
+        YQ_TACHYON_DECLARE(ImGuiDemoWidget, Widget)
     public:
     
         //! Default constructor

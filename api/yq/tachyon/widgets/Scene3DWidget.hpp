@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/scene/Perspective.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/api/Perspective.hpp>
+#include <yq/tachyon/api/Scene.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {
 
@@ -17,7 +17,7 @@ namespace yq::tachyon {
         Simple widget that allows for a camera & scene (render-frame)
     */
     class Scene3DWidget : public Widget {
-        YQ_OBJECT_DECLARE(Scene3DWidget, Widget)
+        YQ_TACHYON_DECLARE(Scene3DWidget, Widget)
     public:
     
         //! Our perspective (ie, camera)

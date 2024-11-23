@@ -6,7 +6,7 @@
 
 #include "ImGuiDemoWidget.hpp"
 #include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/widget/WidgetInfoWriter.hpp>
+#include <yq/tachyon/api/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     ImGuiDemoWidget::ImGuiDemoWidget()
@@ -30,4 +30,4 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ImGuiDemoWidget)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::ImGuiDemoWidget)

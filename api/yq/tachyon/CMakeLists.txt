@@ -278,10 +278,10 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViVisualizer.cpp
     viz/Visualizer.cpp
     
-    #widgets/ImGuiDemoWidget.cpp
-    #widgets/Scene3DWidget.cpp
-    #widgets/StackedWidget.cpp
-    #widgets/TextArea.cpp
+    widgets/ImGuiDemoWidget.cpp
+    widgets/Scene3DWidget.cpp
+    widgets/StackedWidget.cpp
+    widgets/TextArea.cpp
 )
 
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {
 
@@ -15,7 +15,7 @@ namespace yq::tachyon {
         This is a selector of widgets, will show/render the Nth child widget.
     */
     class StackedWidget : public Widget {
-        YQ_OBJECT_DECLARE(StackedWidget, Widget)
+        YQ_TACHYON_DECLARE(StackedWidget, Widget)
     public:
 
         //! Active widget

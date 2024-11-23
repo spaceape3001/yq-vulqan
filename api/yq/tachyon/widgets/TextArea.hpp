@@ -7,7 +7,7 @@
 #pragma once
 
 //#include <yq/core/Signal.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <functional>
@@ -33,7 +33,7 @@ namespace yq {
             to do anything except rewrite it.
         */
         class TextArea : public tachyon::Widget {
-            YQ_OBJECT_DECLARE(TextArea, tachyon::Widget)
+            YQ_TACHYON_DECLARE(TextArea, tachyon::Widget)
         public:
         
             static constexpr const uint8_t  MAX_TAB         = 32;

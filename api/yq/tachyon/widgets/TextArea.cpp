@@ -17,12 +17,12 @@
 
 #include <yq/shape/shape_utils.hpp>
 #include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/widget/WidgetInfoWriter.hpp>
+#include <yq/tachyon/api/WidgetInfoWriter.hpp>
 
     //  for debugging
 #include <yq/color/colors.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::widget::TextArea)
+YQ_TACHYON_IMPLEMENT(yq::widget::TextArea)
 
 namespace yq::widget {
         

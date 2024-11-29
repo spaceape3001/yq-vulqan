@@ -65,7 +65,9 @@ namespace yq::tachyon {
 
     protected:
         
-        virtual void                polling(unit::Second) override;
+        virtual void                tick(Context&) override;
+        
+        //virtual void                polling(unit::Second) override;
 
     private:
     

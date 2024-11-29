@@ -195,7 +195,7 @@ add_library(${PROJECT_NAME} SHARED
     
     # frame/AppFrame.cpp # Issue/TODO
     
-    #glfw/GLFWManager.cpp
+    glfw/GLFWManager.cpp
     glfw/Joystick.cpp
     glfw/Monitor.cpp
     glfw/VideoMode.cpp

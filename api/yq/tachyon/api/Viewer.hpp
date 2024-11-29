@@ -392,6 +392,17 @@ namespace yq::tachyon {
         void    title_command(const ViewerTitleCommand&);
         void    unfloat_command(const ViewerUnfloatCommand&);
         void    widget_request(const ViewerWidgetRequestCPtr&);
+        
+        void    mouse_move_event(const MouseMoveEvent&);
+        void    mouse_press_event(const MousePressEvent&);
+        void    mouse_release_event(const MouseReleaseEvent&);
+        
+        void    key_press_event(const KeyPressEvent&);
+        void    key_release_event(const KeyReleaseEvent&);
+        void    key_character_event(const KeyCharacterEvent&);
+        
+        void    focus_event(const WindowFocusEvent&);
+        void    defocus_event(const WindowDefocusEvent&);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE

@@ -10,12 +10,19 @@
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+
 //#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
 #include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
 #include <yq/tachyon/commands/viewer.hpp>
 #include <yq/tachyon/commands/window.hpp>
 
-#include <yq/tachyon/core/ControllingInfoWriter.hpp>
+#include <yq/tachyon/events/KeyCharacterEvent.hpp>
+#include <yq/tachyon/events/KeyPressEvent.hpp>
+#include <yq/tachyon/events/KeyReleaseEvent.hpp>
+#include <yq/tachyon/events/MouseMoveEvent.hpp>
+#include <yq/tachyon/events/MousePressEvent.hpp>
+#include <yq/tachyon/events/MouseReleaseEvent.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/events/ViewerPauseEvent.hpp>
 #include <yq/tachyon/events/ViewerResumeEvent.hpp>
@@ -673,6 +680,8 @@ namespace yq::tachyon {
             }
         }
 
+        
+
     //  ----------------------------------------------------------------------------------------------------------------
     //  FLOATING (ie, ALWAYS ON TOP)
     //  
@@ -710,10 +719,49 @@ namespace yq::tachyon {
             dispatch(SELF, new ViewerFocusCommand(this));
         }
 
+        void    Viewer::defocus_event(const WindowDefocusEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
+            }
+        }
+        
+        void    Viewer::focus_event(const WindowFocusEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
+            }
+        }
+
         void    Viewer::focus_command(const ViewerFocusCommand&)
         {
             if(started_or_running()){
                 dispatch(new WindowFocusCommand(this));
+            }
+        }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  KEYBOARD
+    //  
+
+        void    Viewer::key_press_event(const KeyPressEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
+            }
+        }
+        
+        void    Viewer::key_release_event(const KeyReleaseEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
+            }
+        }
+        
+        void    Viewer::key_character_event(const KeyCharacterEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
             }
         }
 
@@ -768,6 +816,31 @@ namespace yq::tachyon {
         {
             if(started_or_running()){
                 dispatch(new WindowMoveCommand(this, cmd.position()));
+            }
+        }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+    //  MOUSE
+    //  
+
+        void    Viewer::mouse_move_event(const MouseMoveEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
+            }
+        }
+        
+        void    Viewer::mouse_press_event(const MousePressEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
+            }
+        }
+        
+        void    Viewer::mouse_release_event(const MouseReleaseEvent&evt)
+        {
+            if(m_imgui){
+                m_imgui->on(evt);
             }
         }
 
@@ -884,8 +957,13 @@ namespace yq::tachyon {
 
         void    Viewer::state_event(const WindowStateEvent&evt)
         {
-            XLOCK
-            m_state = evt.state();
+            {
+                XLOCK
+                m_state = evt.state();
+            }
+            if(m_imgui){
+                m_imgui->on(evt);
+            }
         }
         
 

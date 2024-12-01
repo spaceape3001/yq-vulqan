@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "PPosition2I.hpp"
 
 namespace yq::tachyon {
@@ -15,11 +13,11 @@ namespace yq::tachyon {
 
     void        PPosition2I::position2i(set_t, const Vector2I& v) 
     {
-        dispatch([=,this](){ m_interface.position2i(SET, v); });
+        //dispatch([=,this](){ m_interface.position2i(SET, v); });
     }
     
     void        PPosition2I::position2i(move_t, const Vector2I& v) 
     {
-        dispatch([=,this](){ m_interface.position2i(MOVE, v); });
+        //dispatch([=,this](){ m_interface.position2i(MOVE, v); });
     }
 }

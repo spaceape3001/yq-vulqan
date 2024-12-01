@@ -9,6 +9,8 @@
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/api/Interface.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
 #include <yq/tachyon/typedef/frame.hpp>
@@ -29,6 +31,7 @@
 
 namespace yq::tachyon {
     class Proxy;
+    class InterfaceInfo;
 
     /*
         Tachyons will *belong* to a thread... either directly or indirectly 
@@ -43,6 +46,9 @@ namespace yq::tachyon {
     public:
     
         using proxy_span_t  = std::span<Proxy* const>;
+
+        template <typename C>
+        C*                                  as(TachyonID) const;
 
         bool contains(CameraID) const;
         //bool contains(EditorID) const;
@@ -68,7 +74,6 @@ namespace yq::tachyon {
         //const ViewerData*                   data(ViewerID) const;
         const WidgetData*                   data(WidgetID) const;
         
-
         Camera*                             object(CameraID) const;
         //Editor*                             object(EditorID) const;
         Light*                              object(LightID) const;
@@ -83,6 +88,8 @@ namespace yq::tachyon {
         
         ThreadID                            owner(TachyonID) const;
         proxy_span_t                        proxies(TachyonID) const;
+        
+        Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
         
         const CameraSnap*                   snap(CameraID) const;
         //const EditorSnap*                   snap(EditorID) const;
@@ -159,4 +166,26 @@ namespace yq::tachyon {
         Frame& operator=(const Frame&) = delete;
         Frame& operator=(Frame&&) = delete;
     };
+
+    template <typename C>
+    C*      Frame::as(TachyonID tid) const
+    {
+        if constexpr (is_proxied<C>){
+            for(Proxy* p : proxies(tid)){
+                if(p -> interface(INFO) == &meta<C>()){
+                    return static_cast<typename C::MyProxy*>(p);
+                }
+            }
+            return nullptr;
+        } 
+
+        if constexpr (!is_proxied<C>){
+            for(Proxy* p : proxies(tid)){
+                if(C* c = dynamic_cast<C*>(p)){
+                    return c;
+                }
+            }
+            return nullptr;
+        }
+    }
 }

@@ -15,6 +15,8 @@
 #include "TachyonInfoWriter.hpp"
 #include "Thread.hpp"
 
+#include <yq/tachyon/commands/TachyonProxyCommand.hpp>
+
 #include <yq/core/ThreadId.hpp>
 
 namespace yq::tachyon {
@@ -203,6 +205,7 @@ namespace yq::tachyon {
     {
         auto w = writer<Tachyon>();
         w.description("Tachyon Object");
+        w.slot(&Tachyon::slot_proxy_command);
     }
 
     void Tachyon::retain(TachyonPtr tp)
@@ -477,6 +480,13 @@ namespace yq::tachyon {
         } else {
             TXLOCK
             m_outbox.push_back({pp, mgf});
+        }
+    }
+
+    void Tachyon::slot_proxy_command(const TachyonProxyCommand& cmd)
+    {
+        if(cmd.tachyon() == id()){
+            cmd.function()();
         }
     }
 

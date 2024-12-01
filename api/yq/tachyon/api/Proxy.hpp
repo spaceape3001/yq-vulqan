@@ -23,6 +23,12 @@ namespace yq::tachyon {
     class Proxy {
     public:
     
+        /*
+            Debate: Make this a generic "object" with object inheritance?  This'd
+            give rise to meta based properties/methods.
+        */
+    
+    
         TypedID                 object() const;
         uint64_t                revision() const { return m_revision; }
         const InterfaceInfo*    interface(info_t) const { return m_interface; }
@@ -33,6 +39,8 @@ namespace yq::tachyon {
         
         //! Pushes a post into the tachyon's inbox for their next tick()
         void    dispatch(const PostCPtr&);
+        
+        void    dispatch(ProxyFN&&);
         
     
     private:

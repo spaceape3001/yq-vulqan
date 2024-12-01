@@ -28,7 +28,7 @@ namespace yq::tachyon {
     Size2MM     MonitorGLFW::_dimensions() const
     {
         Size2I  tmp;
-        glfwGetMonitorPhysicalSize(&tmp.x, &tmp.y);
+        glfwGetMonitorPhysicalSize(m_monitor, &tmp.x, &tmp.y);
         return {{ (double) tmp.x },{ (double) tmp.y }};
     }
 

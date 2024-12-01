@@ -24,11 +24,20 @@ namespace yq::tachyon {
         
         NO CHAINED INHERITANCE of Interfaces... Interfaces are derived by tachyons,
         no interface chains, they are meant to be SIMPLE.
+        
+        \note When associating these with tachyons, consider the proxy 
+        interfaces/adapters, the PRIMARY for a trait should be listed first on the 
+        tachyon (ie position).
     */
     
     template <typename T>
     concept Interface    = requires {
         T::IsInterface == true;
+    };
+    
+    template <typename T>
+    concept is_proxied    = requires {
+        { T::MyProxy };
     };
 }
 
@@ -49,9 +58,7 @@ namespace yq {
 
 
 
-/*! \brief Declares a meta type
-
-    \note   MUST BE USED AT GLOBAL SCOPE (NO NAMESPACES)
+/*! \brief Declares a proxied interface
 */
 #define YQ_INTERFACE_DECLARE(iface, proxy)                                                  \
     public:                                                                                 \
@@ -60,6 +67,8 @@ namespace yq {
         static const ::yq::tachyon::InterfaceInfo&  staticMetaInfo();                       \
         const ::yq::tachyon::InterfaceInfo&  metaInfo() const;
         
+/*! \brief IMPLEMENTS a proxied interface
+*/        
 #define YQ_INTERFACE_IMPLEMENT(name)                                                                                \
     const ::yq::tachyon::InterfaceInfo&     name::staticMetaInfo()                                                                  \
     {                                                                                                               \

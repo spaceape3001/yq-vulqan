@@ -31,7 +31,7 @@ namespace yq::tachyon {
     class Proxy;
     class PBXDispatch;
     struct Context;
-    
+    class TachyonProxyCommand;
     
     /// TACHYON INFO
 
@@ -325,6 +325,8 @@ namespace yq::tachyon {
         void    _unsubscribe(TachyonID, MGF);
 
         void    _subscribe(TachyonID, MGF);
+        
+        void    slot_proxy_command(const TachyonProxyCommand&);
     };
 
     template <SomeTachyon T, typename ... Args>

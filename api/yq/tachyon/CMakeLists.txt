@@ -88,6 +88,7 @@ add_library(${PROJECT_NAME} SHARED
     commands/MouseNormalCommand.cpp
     #commands/SetParentCommand.cpp
     commands/TachyonCommand.cpp
+    commands/TachyonProxyCommand.cpp
     commands/ViewerAspectCommand.cpp
     commands/ViewerAttentionCommand.cpp
     commands/ViewerCloseCommand.cpp
@@ -205,7 +206,7 @@ add_library(${PROJECT_NAME} SHARED
     #glfw/Joystick.cpp
     glfw/MonitorGLFW.cpp
 
-    #interfaces/interfaces.cpp
+    interfaces/IPosition2I.cpp
 
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
@@ -221,7 +222,7 @@ add_library(${PROJECT_NAME} SHARED
     posts/EmptyPost.cpp
     posts/StringPost.cpp
 
-    #proxies/proxies.cpp
+    proxies/PPosition2I.cpp
 
     renders/ImageQuad.cpp
     renders/Quadrilateral.cpp

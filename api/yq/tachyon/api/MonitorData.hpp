@@ -9,7 +9,7 @@
 #include <yq/units.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/shape/Rectangle2.hpp>
-#include <yq/size/Size2.hpp>
+#include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/VideoMode.hpp>

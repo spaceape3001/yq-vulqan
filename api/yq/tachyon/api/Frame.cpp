@@ -10,6 +10,7 @@
 //#include "EditorData.hpp"
 #include "Frame.hpp"
 #include "FrameBuilder.hpp"
+#include "Interface.hpp"
 #include "Light.hpp"
 #include "LightData.hpp"
 #include "Manager.hpp"
@@ -17,7 +18,7 @@
 #include "Model.hpp"
 #include "ModelData.hpp"
 //#include "Post.hpp"
-//#include "Proxy.hpp"
+#include "Proxy.hpp"
 #include "Rendered.hpp"
 #include "RenderedData.hpp"
 //#include "Scene.hpp"
@@ -299,6 +300,18 @@ namespace yq::tachyon {
         return ts->proxies;
     }
     
+    Proxy*                              Frame::proxy(TachyonID id, const InterfaceInfo& ii) const
+    {
+        const TachyonSnap*  ts  = snap(id);
+        if(!ts)
+            return nullptr;
+        for(Proxy* p : ts->proxies){
+            if(p->interface(INFO) == &ii)
+                return p;
+        }
+        return nullptr;
+    }
+
     const CameraSnap*                  Frame::snap(CameraID id) const
     {
         return m_cameras.snap(id);

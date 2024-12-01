@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/api/InterfaceInfo.hpp>
 #include <yq/meta/CompoundInfoDynamic.hpp>
+#include <yq/tachyon/api/InterfaceInfo.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <type_traits>
 
@@ -58,7 +59,7 @@ namespace yq::tachyon {
             if(!i)
                 return nullptr;
                 
-            return new typename I::Proxy(*i);
+            return new typename I::MyProxy(*i);
         }
 
         static DelayInit::Ctor  s_reg;

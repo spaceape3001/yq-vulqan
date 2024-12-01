@@ -47,8 +47,6 @@ namespace yq::tachyon {
     
         using proxy_span_t  = std::span<Proxy* const>;
 
-        template <typename C>
-        C*                                  as(TachyonID) const;
 
         bool contains(CameraID) const;
         //bool contains(EditorID) const;
@@ -87,6 +85,19 @@ namespace yq::tachyon {
         Widget*                             object(WidgetID) const;
         
         ThreadID                            owner(TachyonID) const;
+
+        /*! \brief Gets the specific interface
+        
+            This will get the specific interface, if it exists.  
+            Practically, this will be okay to call once a tick for a specific 
+            tachyon/interface need, however, it should be cached for the rest
+            of the tick (if practical). 
+            
+            \note DON'T GO WILD, ONLY CALL FOR NECESSARY INTERFACES ON DEMAND
+        */
+        template <typename C>
+        C*                                  interface(TachyonID) const;
+
         proxy_span_t                        proxies(TachyonID) const;
         
         Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
@@ -168,9 +179,9 @@ namespace yq::tachyon {
     };
 
     template <typename C>
-    C*      Frame::as(TachyonID tid) const
+    C*      Frame::interface(TachyonID tid) const
     {
-        if constexpr (is_proxied<C>){
+        if constexpr (is_interface_v<C>){
             for(Proxy* p : proxies(tid)){
                 if(p -> interface(INFO) == &meta<C>()){
                     return static_cast<typename C::MyProxy*>(p);
@@ -178,14 +189,13 @@ namespace yq::tachyon {
             }
             return nullptr;
         } 
-
-        if constexpr (!is_proxied<C>){
-            for(Proxy* p : proxies(tid)){
-                if(C* c = dynamic_cast<C*>(p)){
-                    return c;
-                }
+        
+        // other type, or non-existent, try the other way
+        for(Proxy* p : proxies(tid)){
+            if(C* c = dynamic_cast<C*>(p)){
+                return c;
             }
-            return nullptr;
         }
+        return nullptr;
     }
 }

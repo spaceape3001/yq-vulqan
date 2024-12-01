@@ -12,6 +12,8 @@ namespace yq::tachyon {
 
     MonitorGLFW::MonitorGLFW(GLFWmonitor* m, const Param&p) : Monitor(p), m_monitor(m)
     {
+        m_position  = _position();
+        
     #if 0
         m_state.position    = _position();
         m_state.dimensions  = _dimensions();
@@ -68,6 +70,8 @@ namespace yq::tachyon {
 
     Execution MonitorGLFW::tick(Context&) 
     {
+        set(m_position, _position());
+        return {};
     }
     
     void MonitorGLFW::MonitorGLFW::init_info()
@@ -75,6 +79,7 @@ namespace yq::tachyon {
         auto w = writer<MonitorGLFW>();
         w.description("GLFW Monitor");
         w.execution(EVERY(5_s));
+        w.interface<IPosition2I>();
     }
 }
 

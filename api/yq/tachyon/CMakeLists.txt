@@ -33,8 +33,7 @@ add_library(${PROJECT_NAME} SHARED
     #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
-    api/Interface.hpp
-    api/InterfaceInfo.hpp
+    api/InterfaceInfo.cpp
     api/Joystick.cpp
     api/Keyboard.cpp
     api/Light.cpp

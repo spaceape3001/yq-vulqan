@@ -13,7 +13,7 @@ struct GLFWmonitor;
 struct GLFWvidmode;
 
 namespace yq::tachyon {
-    class MonitorGLFW : public Monitor, public IPosition2I {
+    class MonitorGLFW : public Monitor, private IPosition2I {
         YQ_TACHYON_DECLARE(MonitorGLFW, Monitor);
     public:
         MonitorGLFW(GLFWmonitor*, const Param&p = {});
@@ -24,9 +24,14 @@ namespace yq::tachyon {
         
         void        snap(MonitorSnap&) const;
         
+        
+        
     private:
-        GLFWmonitor*    m_monitor;
+        GLFWmonitor*        m_monitor;
         //MonitorState    m_state;
+        
+        Vector2I            m_position;
+        
         
         Vector2I                        _position() const;
         Rectangle2I                     _working() const;

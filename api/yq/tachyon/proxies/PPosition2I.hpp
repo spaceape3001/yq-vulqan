@@ -18,9 +18,9 @@ namespace yq::tachyon {
         void        position2i(set_t, const Vector2I&) override;
         void        position2i(move_t, const Vector2I&) override;
 
-    private:
         PPosition2I(IPosition2I& i);
 
+    private:
         IPosition2I&    m_interface;
         Vector2I        m_position;
     };

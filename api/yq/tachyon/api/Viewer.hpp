@@ -55,9 +55,9 @@ namespace yq::tachyon {
     /*! \brief Vulkan Window
     
         This is a vulkan window, called the viewer, that binds the 
-        GLFW Window and the Vulkan Device.  It will hold ONE widget
-        and one widget only, this is the root widget for the viewer.
-        
+        GLFW Window, the Vulkan Device, and (optionally) ImGUI.  
+        It will hold ONE widget and one widget only, this is the 
+        root widget for the viewer.
     */
     class Viewer : public Tachyon {
         YQ_OBJECT_DECLARE(Viewer, Tachyon)

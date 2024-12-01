@@ -187,6 +187,16 @@ namespace yq::tachyon {
                 _lock.acquire(m_mutex, true);
 
 
+        template <typename T>
+        bool    set(T& member, T&& value)
+        {
+            if(member == value)
+                return false;
+            member  = std::move(value);
+            mark();
+            return true;
+        }
+
         friend TachyonPtr;
         friend TachyonCPtr;
 

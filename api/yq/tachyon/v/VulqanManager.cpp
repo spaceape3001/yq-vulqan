@@ -10,11 +10,11 @@
 #include <yq/tachyon/api/ManagerInfoWriter.hpp>
 #include "VulqanManager.hpp"
 
-#include <yq/tachyon/exceptions/VulqanException.hpp>
 
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/v/VqUtils.hpp>
+#include <yq/tachyon/v/VulqanException.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>
 
 #include <yq/core/BasicApp.hpp>

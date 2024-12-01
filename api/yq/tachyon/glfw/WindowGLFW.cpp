@@ -18,7 +18,21 @@ namespace yq::tachyon {
     WindowGLFW::~WindowGLFW()
     {
     }
+
+    Vector2I    WindowGLFW::position2i() const 
+    {
+        return m_position;
+    }
     
+    Execution WindowGLFW::tick(Context&ctx) 
+    {
+        Window::tick(ctx);
+        
+        //  TODO
+        
+        return {};
+    }
+
     void WindowGLFW::init_info()
     {
         auto w = writer<WindowGLFW>();

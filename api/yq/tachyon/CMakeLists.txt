@@ -203,8 +203,9 @@ add_library(${PROJECT_NAME} SHARED
     
     # frame/AppFrame.cpp # Issue/TODO
     
-    #glfw/GLFWManager.cpp
-    #glfw/Joystick.cpp
+    glfw/DesktopGLFW.cpp
+    glfw/JoystickGLFW.cpp
+    glfw/KeyboardGLFW.cpp
     glfw/MonitorGLFW.cpp
     glfw/WindowGLFW.cpp
 

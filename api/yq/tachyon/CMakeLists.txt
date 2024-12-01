@@ -85,7 +85,9 @@ add_library(${PROJECT_NAME} SHARED
     commands/MouseDisableCommand.cpp
     commands/MouseHideCommand.cpp
     commands/MouseNormalCommand.cpp
+    commands/MovePosition2I.cpp
     #commands/SetParentCommand.cpp
+    commands/SetPosition2I.cpp
     commands/TachyonCommand.cpp
     commands/TachyonProxyCommand.cpp
     commands/ViewerAspectCommand.cpp
@@ -204,6 +206,7 @@ add_library(${PROJECT_NAME} SHARED
     #glfw/GLFWManager.cpp
     #glfw/Joystick.cpp
     glfw/MonitorGLFW.cpp
+    glfw/WindowGLFW.cpp
 
     interfaces/IPosition2I.cpp
 

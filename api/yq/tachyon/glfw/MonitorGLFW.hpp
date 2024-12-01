@@ -24,7 +24,7 @@ namespace yq::tachyon {
         
         void        snap(MonitorSnap&) const;
         
-        
+        Vector2I    position2i() const override;
         
     private:
         GLFWmonitor*        m_monitor;

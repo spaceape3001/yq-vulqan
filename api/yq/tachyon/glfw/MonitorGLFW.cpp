@@ -63,6 +63,11 @@ namespace yq::tachyon {
         return ret;
     }
 
+    Vector2I    MonitorGLFW::position2i() const 
+    {
+        return m_position;
+    }
+
     void MonitorGLFW::snap(MonitorSnap&sn) const
     {
         Monitor::snap(sn);

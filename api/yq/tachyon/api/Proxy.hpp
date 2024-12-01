@@ -12,6 +12,7 @@
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/typedef/types.hpp>
 
 namespace yq::tachyon {
     class Tachyon;
@@ -28,7 +29,8 @@ namespace yq::tachyon {
             give rise to meta based properties/methods.
         */
     
-    
+        TachyonID               id() const;
+        Types                   types() const;
         TypedID                 object() const;
         uint64_t                revision() const { return m_revision; }
         const InterfaceInfo*    interface(info_t) const { return m_interface; }
@@ -40,9 +42,6 @@ namespace yq::tachyon {
         //! Pushes a post into the tachyon's inbox for their next tick()
         void    dispatch(const PostCPtr&);
         
-        void    dispatch(ProxyFN&&);
-        
-    
     private:
         friend class Tachyon;
         friend struct TachyonSnap;
@@ -50,6 +49,16 @@ namespace yq::tachyon {
         Tachyon*                m_tachyon;
         uint64_t                m_revision  = 0;
         const InterfaceInfo*    m_interface = nullptr;
+        
+    protected:
+        enum class F {
+            Disabled,
+            Settable,
+            Moveable
+        };
+        
+        using FFlags    = Flags<F>;
+        FFlags                  m_flags     = {};
     };
 }
 

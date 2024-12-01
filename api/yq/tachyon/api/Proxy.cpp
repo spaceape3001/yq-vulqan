@@ -25,6 +25,22 @@ namespace yq::tachyon {
 
     TypedID   Proxy::object() const
     {
+        if(!m_tachyon)
+            return {};
         return TypedID(m_tachyon);
+    }
+
+    TachyonID Proxy::id() const
+    {
+        if(!m_tachyon)
+            return {};
+        return m_tachyon -> id();
+    }
+    
+    Types       Proxy::types() const
+    {
+        if(!m_tachyon)
+            return {};
+        return m_tachyon->metaInfo().types();
     }
 }

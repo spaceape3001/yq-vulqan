@@ -7,21 +7,21 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
-    class Monitor;
+    class Window;
 
     //! Utiltity to bind a viewer to the whatever...
-    class MonitorBind {
+    class WindowBind {
     public:
-        MonitorID    monitor() const { return m_monitor; }
+        WindowID    light() const { return m_light; }
         
     protected:
-        MonitorBind(MonitorID v) : m_monitor(v) {}
-        MonitorBind(const Monitor* v);
-        virtual ~MonitorBind() {}
+        WindowBind(WindowID v) : m_light(v) {}
+        WindowBind(const Window* v);
+        virtual ~WindowBind() {}
         
-        MonitorID const m_monitor;
+        WindowID const m_light;
     };
 }

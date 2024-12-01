@@ -9,25 +9,25 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/typedef/light.hpp>
+#include <yq/tachyon/typedef/joystick.hpp>
 
 namespace yq::tachyon {
 
-    class Light;
+    class Joystick;
     
-    /*! \brief Light Information
+    /*! \brief Joystick Information
     
-        Information for lights.
+        Information for joysticks.
     */
-    class LightInfo : public TachyonInfo {
+    class JoystickInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
 
-        //! Gets all light informations
-        static const std::vector<const LightInfo*>&    all();
+        //! Gets all joystick informations
+        static const std::vector<const JoystickInfo*>&    all();
         
         //! Standard constructor for the camera information
-        LightInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        JoystickInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -36,22 +36,22 @@ namespace yq::tachyon {
     };
     
     /*
-        Right *now*, the light is assumed to be simple....
+        Right *now*, the joystick is assumed to be simple....
     */
 
-    /*! \brief A light
+    /*! \brief A joystick
     */
-    class Light : public Tachyon {
-        YQ_TACHYON_INFO(LightInfo);
-        YQ_TACHYON_DATA(LightData)
-        YQ_TACHYON_SNAP(LightSnap)
-        YQ_TACHYON_DECLARE(Light, Tachyon)
+    class Joystick : public Tachyon {
+        YQ_TACHYON_INFO(JoystickInfo);
+        YQ_TACHYON_DATA(JoystickData)
+        YQ_TACHYON_SNAP(JoystickSnap)
+        YQ_TACHYON_DECLARE(Joystick, Tachyon)
     public:    
     
         /*
             We *MIGHT* want to divide up the camera into position, 
             lens, etc... or that's a later development on a dedicated
-            camera.  (class DynamicLight, StandardLight, etc???)
+            camera.  (class DynamicJoystick, StandardJoystick, etc???)
         */
     
     
@@ -66,19 +66,19 @@ namespace yq::tachyon {
 
         static void init_info();
 
-        LightID            id() const { return LightID(UniqueID::id()); }
+        JoystickID            id() const { return JoystickID(UniqueID::id()); }
 
     protected:
     
-        void        snap(LightSnap&) const;
+        void        snap(JoystickSnap&) const;
         //virtual void    receive(const post::PostCPtr&) override;
         virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
-        Light(const Param&p = {});
+        Joystick(const Param&p = {});
         
         //! Default destructor
-        ~Light();
+        ~Joystick();
         
     private:
         std::string         m_name;

@@ -7,21 +7,21 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/typedef/joystick.hpp>
 
 namespace yq::tachyon {
-    class Monitor;
+    class Joystick;
 
     //! Utiltity to bind a viewer to the whatever...
-    class MonitorBind {
+    class JoystickBind {
     public:
-        MonitorID    monitor() const { return m_monitor; }
+        JoystickID    joystick() const { return m_joystick; }
         
     protected:
-        MonitorBind(MonitorID v) : m_monitor(v) {}
-        MonitorBind(const Monitor* v);
-        virtual ~MonitorBind() {}
+        JoystickBind(JoystickID v) : m_joystick(v) {}
+        JoystickBind(const Joystick* v);
+        virtual ~JoystickBind() {}
         
-        MonitorID const m_monitor;
+        JoystickID const m_joystick;
     };
 }

@@ -4,68 +4,68 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Monitor.hpp>
-#include <yq/tachyon/api/MonitorBind.hpp>
-#include <yq/tachyon/api/MonitorData.hpp>
-#include <yq/tachyon/api/MonitorInfoWriter.hpp>
+#include <yq/tachyon/api/Window.hpp>
+#include <yq/tachyon/api/WindowBind.hpp>
+#include <yq/tachyon/api/WindowData.hpp>
+#include <yq/tachyon/api/WindowInfoWriter.hpp>
 #include <yq/tachyon/api/Post.hpp>
 
 namespace yq::tachyon {
 
-    MonitorBind::MonitorBind(const Monitor* v) : m_monitor(v ? v->id() : MonitorID{})
+    WindowBind::WindowBind(const Window* v) : m_light(v ? v->id() : WindowID{})
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    struct MonitorInfo::Repo {
-        std::vector<const MonitorInfo*> all;
+    struct WindowInfo::Repo {
+        std::vector<const WindowInfo*> all;
     };
     
-    MonitorInfo::Repo& MonitorInfo::repo()
+    WindowInfo::Repo& WindowInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const MonitorInfo*>&    MonitorInfo::all()
+    const std::vector<const WindowInfo*>&    WindowInfo::all()
     {
         return repo().all;
     }
 
-    MonitorInfo::MonitorInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    WindowInfo::WindowInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Monitor);
+        set(Type::Window);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Monitor::Monitor(const Param& p) : Tachyon(p)
+    Window::Window(const Param& p) : Tachyon(p)
     {
     }
 
-    Monitor::~Monitor()
+    Window::~Window()
     {
     }
 
 
-    void Monitor::snap(MonitorSnap& sn) const
+    void Window::snap(WindowSnap& sn) const
     {
         Tachyon::snap(sn);
     }
 
-    Tachyon::PostAdvice    Monitor::advise(const Post&pp) const
+    Tachyon::PostAdvice    Window::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
             return pa;
         
-        if(const MonitorBind* p = dynamic_cast<const MonitorBind*>(&pp)){
-            if(p->monitor() != id())
+        if(const WindowBind* p = dynamic_cast<const WindowBind*>(&pp)){
+            if(p->light() != id())
                 return REJECT;
         }
         return {};
@@ -74,11 +74,11 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Monitor::init_info()
+    void Window::init_info()
     {
-        auto w   = writer<Monitor>();
+        auto w   = writer<Window>();
         w.abstract();
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Monitor)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Window)

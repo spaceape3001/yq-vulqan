@@ -4,68 +4,73 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Monitor.hpp>
-#include <yq/tachyon/api/MonitorBind.hpp>
-#include <yq/tachyon/api/MonitorData.hpp>
-#include <yq/tachyon/api/MonitorInfoWriter.hpp>
+#include <yq/tachyon/api/Joystick.hpp>
+#include <yq/tachyon/api/JoystickBind.hpp>
+#include <yq/tachyon/api/JoystickData.hpp>
+#include <yq/tachyon/api/JoystickInfoWriter.hpp>
 #include <yq/tachyon/api/Post.hpp>
 
 namespace yq::tachyon {
 
-    MonitorBind::MonitorBind(const Monitor* v) : m_monitor(v ? v->id() : MonitorID{})
+    JoystickBind::JoystickBind(const Joystick* v) : m_joystick(v ? v->id() : JoystickID{})
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    struct MonitorInfo::Repo {
-        std::vector<const MonitorInfo*> all;
+    struct JoystickInfo::Repo {
+        std::vector<const JoystickInfo*> all;
     };
     
-    MonitorInfo::Repo& MonitorInfo::repo()
+    JoystickInfo::Repo& JoystickInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const MonitorInfo*>&    MonitorInfo::all()
+    const std::vector<const JoystickInfo*>&    JoystickInfo::all()
     {
         return repo().all;
     }
 
-    MonitorInfo::MonitorInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    JoystickInfo::JoystickInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Monitor);
+        set(Type::Joystick);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Monitor::Monitor(const Param& p) : Tachyon(p)
+    Joystick::Joystick(const Param& p) : Tachyon(p)
     {
     }
 
-    Monitor::~Monitor()
+    Joystick::~Joystick()
     {
     }
 
 
-    void Monitor::snap(MonitorSnap& sn) const
+    void Joystick::snap(JoystickSnap& sn) const
     {
         Tachyon::snap(sn);
     }
 
-    Tachyon::PostAdvice    Monitor::advise(const Post&pp) const
+    void            Joystick::set_name(const std::string& v)
+    {
+        m_name  = v;
+    }
+
+    Tachyon::PostAdvice    Joystick::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
             return pa;
         
-        if(const MonitorBind* p = dynamic_cast<const MonitorBind*>(&pp)){
-            if(p->monitor() != id())
+        if(const JoystickBind* p = dynamic_cast<const JoystickBind*>(&pp)){
+            if(p->joystick() != id())
                 return REJECT;
         }
         return {};
@@ -74,11 +79,12 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Monitor::init_info()
+    void Joystick::init_info()
     {
-        auto w   = writer<Monitor>();
+        auto w   = writer<Joystick>();
+        w.property("name", &Joystick::get_name).setter(&Joystick::set_name);
         w.abstract();
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Monitor)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Joystick)

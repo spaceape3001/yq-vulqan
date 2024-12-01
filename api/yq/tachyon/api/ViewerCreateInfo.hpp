@@ -10,8 +10,9 @@
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
+#include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/enum/PresentMode.hpp>
-#include <yq/tachyon/glfw/Monitor.hpp>
+#include <yq/tachyon/typedef/monitor.hpp>
 #include <yq/tachyon/typedef/queue_spec.hpp>
 
 #include <vulkan/vulkan_core.h>
@@ -28,7 +29,7 @@ namespace yq::tachyon {
         Size2I                      size     = { 1920, 1080 };
         std::optional<Vector2I>     position;
             //!  Set to get full screen, windowed otherwise
-        Monitor                     monitor;
+        MonitorID                   monitor;
         PresentMode                 pmode   = PresentMode::Fifo;
         
         

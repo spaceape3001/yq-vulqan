@@ -16,7 +16,7 @@ namespace yq::tachyon {
         unit::Second    time;
     };
     
-    constexpr EveryTime operator,(every_t, unit::Second time)
+    constexpr EveryTime every_t::operator()(unit::Second time)
     {
         return {time};
     }
@@ -25,7 +25,7 @@ namespace yq::tachyon {
         unsigned count;
     };
 
-    constexpr EveryCount operator,(every_t, unsigned count)
+    constexpr EveryCount every_t::operator()(unsigned count)
     {
         return { count };
     }

@@ -9,25 +9,25 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/typedef/light.hpp>
+#include <yq/tachyon/typedef/keyboard.hpp>
 
 namespace yq::tachyon {
 
-    class Light;
+    class Keyboard;
     
-    /*! \brief Light Information
+    /*! \brief Keyboard Information
     
-        Information for lights.
+        Information for keyboards.
     */
-    class LightInfo : public TachyonInfo {
+    class KeyboardInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
 
-        //! Gets all light informations
-        static const std::vector<const LightInfo*>&    all();
+        //! Gets all keyboard informations
+        static const std::vector<const KeyboardInfo*>&    all();
         
         //! Standard constructor for the camera information
-        LightInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        KeyboardInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -36,22 +36,22 @@ namespace yq::tachyon {
     };
     
     /*
-        Right *now*, the light is assumed to be simple....
+        Right *now*, the keyboard is assumed to be simple....
     */
 
-    /*! \brief A light
+    /*! \brief A keyboard
     */
-    class Light : public Tachyon {
-        YQ_TACHYON_INFO(LightInfo);
-        YQ_TACHYON_DATA(LightData)
-        YQ_TACHYON_SNAP(LightSnap)
-        YQ_TACHYON_DECLARE(Light, Tachyon)
+    class Keyboard : public Tachyon {
+        YQ_TACHYON_INFO(KeyboardInfo);
+        YQ_TACHYON_DATA(KeyboardData)
+        YQ_TACHYON_SNAP(KeyboardSnap)
+        YQ_TACHYON_DECLARE(Keyboard, Tachyon)
     public:    
     
         /*
             We *MIGHT* want to divide up the camera into position, 
             lens, etc... or that's a later development on a dedicated
-            camera.  (class DynamicLight, StandardLight, etc???)
+            camera.  (class DynamicKeyboard, StandardKeyboard, etc???)
         */
     
     
@@ -66,19 +66,19 @@ namespace yq::tachyon {
 
         static void init_info();
 
-        LightID            id() const { return LightID(UniqueID::id()); }
+        KeyboardID            id() const { return KeyboardID(UniqueID::id()); }
 
     protected:
     
-        void        snap(LightSnap&) const;
+        void        snap(KeyboardSnap&) const;
         //virtual void    receive(const post::PostCPtr&) override;
         virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
-        Light(const Param&p = {});
+        Keyboard(const Param&p = {});
         
         //! Default destructor
-        ~Light();
+        ~Keyboard();
         
     private:
         std::string         m_name;

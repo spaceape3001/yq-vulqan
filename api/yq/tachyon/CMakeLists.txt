@@ -28,16 +28,20 @@ add_library(${PROJECT_NAME} SHARED
     api/Buffer.cpp
     api/Camera.cpp
     api/Command.cpp
-    api/Context.hpp
+    #api/Context.hpp
+    api/Desktop.cpp
     #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
     api/Interface.hpp
     api/InterfaceInfo.hpp
+    api/Joystick.cpp
+    api/Keyboard.cpp
     api/Light.cpp
     api/Manager.cpp
     api/Message.cpp
     api/Model.cpp
+    api/Monitor.cpp
     api/Perspective.cpp
     api/Pipeline.cpp
     api/PipelineUtils.cpp
@@ -58,8 +62,10 @@ add_library(${PROJECT_NAME} SHARED
     #api/Tool.cpp
     api/TypedID.cpp
     api/Undo.cpp
+    api/VideoMode.cpp
     #api/Viewer.cpp
     api/Widget.cpp
+    api/Window.cpp
 
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp
@@ -195,10 +201,9 @@ add_library(${PROJECT_NAME} SHARED
     
     # frame/AppFrame.cpp # Issue/TODO
     
-    glfw/GLFWManager.cpp
-    glfw/Joystick.cpp
-    glfw/Monitor.cpp
-    glfw/VideoMode.cpp
+    #glfw/GLFWManager.cpp
+    #glfw/Joystick.cpp
+    glfw/MonitorGLFW.cpp
 
     #interfaces/interfaces.cpp
 

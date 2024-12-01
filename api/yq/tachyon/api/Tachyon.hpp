@@ -57,6 +57,7 @@ namespace yq::tachyon {
         using dispatch_map_t    = std::unordered_map<const PostInfo*, dispatch_span_t>;
 
         dispatch_span_t     dispatches(const PostInfo*) const;
+        Execution           execution() const { return m_execution; }
     
     protected:
     
@@ -81,6 +82,7 @@ namespace yq::tachyon {
         }                       m_dispatches;
         dispatch_map_t          m_dispatch;
         Types                   m_types;
+        Execution               m_execution;
         
         void    add_interface(const InterfaceInfo*);
         void    add_dispatch(const PBXDispatch*);

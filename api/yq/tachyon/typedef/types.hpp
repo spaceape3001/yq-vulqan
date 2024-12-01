@@ -18,16 +18,21 @@ namespace yq::tachyon {
     enum class Type : uint8_t {
         Camera,
         Controller,
+        Desktop,
         Editor,
         ImGui,
+        Joystick,
+        Keyboard,
         Light,
         Manager,
         Model,
+        Monitor,
         Rendered,
         Thread,
         Viewer,
         Visualizer,
-        Widget
+        Widget,
+        Window
     };
     
     using Types = Flags<Type>;

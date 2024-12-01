@@ -27,6 +27,9 @@ namespace yq::tachyon {
         
         //!  Move the position (ie set to position + delta)
         virtual void            position2i(move_t, const Vector2I&){}
+        
+        virtual bool            position2i(disabled_t) const { return false; }
+        virtual bool            position2i(settable_t) const { return false; }
 
         static void init_info();
     };

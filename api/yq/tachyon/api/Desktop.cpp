@@ -4,68 +4,68 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Monitor.hpp>
-#include <yq/tachyon/api/MonitorBind.hpp>
-#include <yq/tachyon/api/MonitorData.hpp>
-#include <yq/tachyon/api/MonitorInfoWriter.hpp>
+#include <yq/tachyon/api/Desktop.hpp>
+#include <yq/tachyon/api/DesktopBind.hpp>
+#include <yq/tachyon/api/DesktopData.hpp>
+#include <yq/tachyon/api/DesktopInfoWriter.hpp>
 #include <yq/tachyon/api/Post.hpp>
 
 namespace yq::tachyon {
 
-    MonitorBind::MonitorBind(const Monitor* v) : m_monitor(v ? v->id() : MonitorID{})
+    DesktopBind::DesktopBind(const Desktop* v) : m_light(v ? v->id() : DesktopID{})
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    struct MonitorInfo::Repo {
-        std::vector<const MonitorInfo*> all;
+    struct DesktopInfo::Repo {
+        std::vector<const DesktopInfo*> all;
     };
     
-    MonitorInfo::Repo& MonitorInfo::repo()
+    DesktopInfo::Repo& DesktopInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const MonitorInfo*>&    MonitorInfo::all()
+    const std::vector<const DesktopInfo*>&    DesktopInfo::all()
     {
         return repo().all;
     }
 
-    MonitorInfo::MonitorInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    DesktopInfo::DesktopInfo(std::string_view name, ManagerInfo& base, const std::source_location& sl) : 
+        ManagerInfo(name, base, sl)
     {
-        set(Type::Monitor);
+        set(Type::Desktop);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Monitor::Monitor(const Param& p) : Tachyon(p)
+    Desktop::Desktop(const Param& p) : Manager(p)
     {
     }
 
-    Monitor::~Monitor()
+    Desktop::~Desktop()
     {
     }
 
 
-    void Monitor::snap(MonitorSnap& sn) const
+    void Desktop::snap(DesktopSnap& sn) const
     {
-        Tachyon::snap(sn);
+        Manager::snap(sn);
     }
 
-    Tachyon::PostAdvice    Monitor::advise(const Post&pp) const
+    Manager::PostAdvice    Desktop::advise(const Post&pp) const
     {
-        PostAdvice  pa  = Tachyon::advise(pp);
+        PostAdvice  pa  = Manager::advise(pp);
         if(!unspecified(pa))
             return pa;
         
-        if(const MonitorBind* p = dynamic_cast<const MonitorBind*>(&pp)){
-            if(p->monitor() != id())
+        if(const DesktopBind* p = dynamic_cast<const DesktopBind*>(&pp)){
+            if(p->light() != id())
                 return REJECT;
         }
         return {};
@@ -74,11 +74,11 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Monitor::init_info()
+    void Desktop::init_info()
     {
-        auto w   = writer<Monitor>();
+        auto w   = writer<Desktop>();
         w.abstract();
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Monitor)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Desktop)

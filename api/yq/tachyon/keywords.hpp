@@ -8,6 +8,7 @@
 
 #include <yq/keywords.hpp>
 #include <yq/tachyon/enum/DataActivity.hpp>
+#include <yq/unit/declare.hpp>
 
 namespace yq::tachyon {
 
@@ -40,14 +41,30 @@ namespace yq::tachyon {
     struct delete_t {};
     struct direct_t{};
     struct disable_t {};
+    struct enable_t {};
+    struct enabled_t {};
     struct error_t {};
+    
+    struct EveryTime;
+    struct EveryCount;
+    
+    struct every_t : public ::yq::every_t {
+        static constexpr EveryTime    operator()(unit::Second);
+        static constexpr EveryCount   operator()(unsigned);
+    };
+    
     struct for_t {};
     struct forward_t {};
     struct hash_t {};
     struct info_t {};
     struct lock_t {};
     struct locked_t {};
+    struct moveable_t {};
     struct number_t {};
+    
+    struct once_t : public ::yq::once_t {
+    };
+    
     struct parent_t {};
     struct pause_t {};
     struct probe_t {};
@@ -90,7 +107,10 @@ namespace yq::tachyon {
     static constexpr direct_t       DIRECT;
     static constexpr disable_t      DISABLE;
     static constexpr dynamic_t      DYNAMIC;
+    static constexpr enable_t       ENABLE;
+    static constexpr enabled_t      ENABLED;
     static constexpr error_t        ERROR;
+    static constexpr every_t        EVERY;
     static constexpr fixed_t        FIXED;
     static constexpr for_t          FOR;
     static constexpr forward_t      FORWARD;
@@ -98,7 +118,9 @@ namespace yq::tachyon {
     static constexpr info_t         INFO;
     static constexpr lock_t         LOCK;
     static constexpr locked_t       LOCKED;
+    static constexpr moveable_t     MOVEABLE;
     static constexpr number_t       NUMBER;
+    static constexpr once_t         ONCE;
     static constexpr parent_t       PARENT;
     static constexpr pause_t        PAUSE;
     static constexpr probe_t        PROBE;

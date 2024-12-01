@@ -7,21 +7,21 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/typedef/light.hpp>
 
 namespace yq::tachyon {
-    class Monitor;
+    class Desktop;
 
     //! Utiltity to bind a viewer to the whatever...
-    class MonitorBind {
+    class DesktopBind {
     public:
-        MonitorID    monitor() const { return m_monitor; }
+        DesktopID    light() const { return m_light; }
         
     protected:
-        MonitorBind(MonitorID v) : m_monitor(v) {}
-        MonitorBind(const Monitor* v);
-        virtual ~MonitorBind() {}
+        DesktopBind(DesktopID v) : m_light(v) {}
+        DesktopBind(const Desktop* v);
+        virtual ~DesktopBind() {}
         
-        MonitorID const m_monitor;
+        DesktopID const m_light;
     };
 }

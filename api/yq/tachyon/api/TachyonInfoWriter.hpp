@@ -229,10 +229,18 @@ namespace yq::tachyon {
         template <Interface I>
         void    interface()
         {
-            if(m_meta){
+            if(m_meta && Meta::thread_safe_write()){
                 m_meta -> add_interface(&meta<I>());
             }
         }
+        
+        void    execution(Execution ex)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_execution = ex;
+            }
+        }
+        
         
     private:
         TachyonInfo* m_meta;

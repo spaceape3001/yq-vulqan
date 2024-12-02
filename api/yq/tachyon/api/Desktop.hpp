@@ -13,6 +13,7 @@
 
 namespace yq::tachyon {
 
+    struct AppCreateInfo;
     class Desktop;
     
     /*! \brief Desktop Information
@@ -47,6 +48,23 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Desktop, Manager)
     public:    
     
+        enum class C {
+            Cursor,
+            Joystick,
+            Keyboard,
+            Monitor,
+            Mouse,
+            Window
+        };
+        
+        using ControlFlags  = Flags<C>;
+    
+        struct Param : public Manager::Param {
+            ControlFlags    control = ALL;
+            
+            Param();
+        };
+
         static void init_info();
 
         DesktopID            id() const { return DesktopID(UniqueID::id()); }
@@ -59,10 +77,12 @@ namespace yq::tachyon {
         virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
-        Desktop(const Param&p = {});
+        Desktop(const AppCreateInfo&, const Param&p);
         
         //! Default destructor
         ~Desktop();
+        
+        ControlFlags const  m_control;
         
     };
 

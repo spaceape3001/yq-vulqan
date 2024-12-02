@@ -44,7 +44,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Desktop::Desktop(const Param& p) : Manager(p)
+    Desktop::Param::Param()
+    {
+    }
+
+    Desktop::Desktop(const AppCreateInfo& aci, const Param& p) : Manager(p), m_control(p.control)
     {
     }
 

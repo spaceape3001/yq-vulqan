@@ -209,6 +209,7 @@ add_library(${PROJECT_NAME} SHARED
     glfw/JoystickGLFW.cpp
     glfw/KeyboardGLFW.cpp
     glfw/MonitorGLFW.cpp
+    glfw/MouseGLFW.cpp
     glfw/WindowGLFW.cpp
 
     interfaces/IPosition2I.cpp

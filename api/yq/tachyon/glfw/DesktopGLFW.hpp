@@ -23,7 +23,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(DesktopGLFW, Desktop);
     public:
     
-        DesktopGLFW(const AppCreateInfo&, const Param& p={});
+    
+        DesktopGLFW(const AppCreateInfo&, const Param& p=Param());
         ~DesktopGLFW();
         
         virtual Execution tick(Context&) override;
@@ -54,6 +55,7 @@ namespace yq::tachyon {
         KeyboardGLFW*   m_keyboard  = nullptr;
         MonitorGLFW*    m_monitor   = nullptr;
         MouseGLFW*      m_mouse     = nullptr;
+        ControlFlags    m_control;
         Stage           m_stage     = Stage::Uninit;
     };
 }

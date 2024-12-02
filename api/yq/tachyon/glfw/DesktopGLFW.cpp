@@ -32,10 +32,9 @@ namespace yq::tachyon {
         }
     }
 
-
     DesktopGLFW*     DesktopGLFW::s_desktop = nullptr;
 
-    DesktopGLFW::DesktopGLFW(const AppCreateInfo&aci, const Param& p) : Desktop(p)
+    DesktopGLFW::DesktopGLFW(const AppCreateInfo&aci, const Param& p) : Desktop(aci, p)
     {
         if(!is_main_thread()){
             throw ExceptionGLFW("GLFW must only be used on the main thread!");
@@ -62,7 +61,8 @@ namespace yq::tachyon {
     
     Execution    DesktopGLFW::_start(Context& ctx)
     {
-        m_keyboard      = create<KeyboardGLFW>(CHILD);
+        if(m_control(C::Keyboard))
+            m_keyboard      = create<KeyboardGLFW>(CHILD);
     
         return {};
     }

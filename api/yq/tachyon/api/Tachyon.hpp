@@ -129,7 +129,8 @@ namespace yq::tachyon {
     public:
         
         static void         init_info();
-
+        
+        
         // Inbound mail
         void                mail(const PostCPtr&);
         void                mail(std::span<PostCPtr const>);
@@ -137,6 +138,9 @@ namespace yq::tachyon {
         static void         mail(TachyonID, const PostCPtr&);
         
         TachyonID           id() const { return { UniqueID::id() }; }
+        
+        const std::string&  name() const { return m_name; }
+        
         ThreadID            owner() const;
         
         TypedID             parent() const { return m_parent; }
@@ -148,8 +152,10 @@ namespace yq::tachyon {
         void                subscribe(TachyonID, MGF grp=MG::General);
         //! \note NOT thread-safe (yet)
         void                unsubscribe(TachyonID, MGF grp=ALL);
-        
-        struct Param { /* reserved for future use */ };
+
+        struct Param { /* reserved for future use */ 
+            name_spec       name;
+        };
         
         template <SomeTachyon T, typename ... Args>
         static T*   create(Args...);
@@ -302,6 +308,7 @@ namespace yq::tachyon {
         std::atomic<unsigned int>   m_thread        = kInvalidThread;
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
+        std::string                 m_name;
         bool                        m_dirty         = false;
         
         //virtual void                    parent(set_t, TachyonID);
@@ -335,6 +342,10 @@ namespace yq::tachyon {
         void    _unsubscribe(TachyonID, MGF);
 
         void    _subscribe(TachyonID, MGF);
+        
+        using OldNameFN = std::function<void(std::string&&)>;
+        
+        bool    _name(name_spec, OldNameFN cap={});
         
         void    slot_proxy_command(const TachyonProxyCommand&);
     };

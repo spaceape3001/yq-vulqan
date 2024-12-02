@@ -9,11 +9,11 @@
 #include <yq/tachyon/api/Exception.hpp>
 
 namespace yq::tachyon {
-    class VqException : public Exception {
+    class ExceptionGLFW : public Exception {
     public:
-        VqException(const TachyonException&) = default;
+        ExceptionGLFW(const ExceptionGLFW&) = default;
         template <size_t N>
-        VqException(const char (&msg)[N], const std::source_location& sl=std::source_location::current()) : 
+        ExceptionGLFW(const char (&msg)[N], const std::source_location& sl=std::source_location::current()) : 
             Exception(msg, sl) {}
     };
 }

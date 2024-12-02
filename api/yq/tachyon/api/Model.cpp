@@ -58,11 +58,6 @@ namespace yq::tachyon {
         Tachyon::snap(sn);
     }
 
-    void            Model::set_name(const std::string& v)
-    {
-        m_name  = v;
-    }
-
     Tachyon::PostAdvice    Model::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
@@ -82,7 +77,6 @@ namespace yq::tachyon {
     void Model::init_info()
     {
         auto w   = writer<Model>();
-        w.property("name", &Model::get_name).setter(&Model::set_name);
         w.abstract();
     }
 }

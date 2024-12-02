@@ -59,11 +59,6 @@ namespace yq::tachyon {
         Tachyon::snap(sn);
     }
 
-    void            Camera::set_name(const std::string& v)
-    {
-        m_name  = v;
-    }
-
     Tachyon::PostAdvice    Camera::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
@@ -83,7 +78,6 @@ namespace yq::tachyon {
     void Camera::init_info()
     {
         auto w   = writer<Camera>();
-        w.property("name", &Camera::get_name).setter(&Camera::set_name);
         w.abstract();
     }
 }

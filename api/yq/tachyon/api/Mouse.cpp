@@ -4,68 +4,68 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Joystick.hpp>
-#include <yq/tachyon/api/JoystickBind.hpp>
-#include <yq/tachyon/api/JoystickData.hpp>
-#include <yq/tachyon/api/JoystickInfoWriter.hpp>
+#include <yq/tachyon/api/Mouse.hpp>
+#include <yq/tachyon/api/MouseBind.hpp>
+#include <yq/tachyon/api/MouseData.hpp>
+#include <yq/tachyon/api/MouseInfoWriter.hpp>
 #include <yq/tachyon/api/Post.hpp>
 
 namespace yq::tachyon {
 
-    JoystickBind::JoystickBind(const Joystick* v) : m_joystick(v ? v->id() : JoystickID{})
+    MouseBind::MouseBind(const Mouse* v) : m_mouse(v ? v->id() : MouseID{})
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    struct JoystickInfo::Repo {
-        std::vector<const JoystickInfo*> all;
+    struct MouseInfo::Repo {
+        std::vector<const MouseInfo*> all;
     };
     
-    JoystickInfo::Repo& JoystickInfo::repo()
+    MouseInfo::Repo& MouseInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const JoystickInfo*>&    JoystickInfo::all()
+    const std::vector<const MouseInfo*>&    MouseInfo::all()
     {
         return repo().all;
     }
 
-    JoystickInfo::JoystickInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    MouseInfo::MouseInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Joystick);
+        set(Type::Mouse);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Joystick::Joystick(const Param& p) : Tachyon(p)
+    Mouse::Mouse(const Param& p) : Tachyon(p)
     {
     }
 
-    Joystick::~Joystick()
+    Mouse::~Mouse()
     {
     }
 
 
-    void Joystick::snap(JoystickSnap& sn) const
+    void Mouse::snap(MouseSnap& sn) const
     {
         Tachyon::snap(sn);
     }
 
-    Tachyon::PostAdvice    Joystick::advise(const Post&pp) const
+    Tachyon::PostAdvice    Mouse::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
             return pa;
         
-        if(const JoystickBind* p = dynamic_cast<const JoystickBind*>(&pp)){
-            if(p->joystick() != id())
+        if(const MouseBind* p = dynamic_cast<const MouseBind*>(&pp)){
+            if(p->mouse() != id())
                 return REJECT;
         }
         return {};
@@ -74,11 +74,11 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Joystick::init_info()
+    void Mouse::init_info()
     {
-        auto w   = writer<Joystick>();
+        auto w   = writer<Mouse>();
         w.abstract();
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Joystick)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Mouse)

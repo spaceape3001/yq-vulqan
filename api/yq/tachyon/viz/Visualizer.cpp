@@ -32,8 +32,8 @@
 #include <yq/tachyon/api/Raster.hpp>
 #include <yq/tachyon/api/Perspective.hpp>
 #include <yq/tachyon/api/Scene.hpp>
-#include <yq/tachyon/v/VqUtils.hpp>
 #include <yq/tachyon/v/VulqanException.hpp>
+#include <yq/tachyon/v/VqUtils.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>

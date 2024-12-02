@@ -68,15 +68,6 @@ namespace yq::tachyon {
         //! Returns the transform to go world -> screen space
         virtual glm::dmat4  world2screen(const Values&) const = 0;
     
-        //! Name of this camera's instance
-        std::string_view    name() const { return m_name; }
-        
-        //! Getter for the property system
-        const std::string&  get_name() const { return m_name; }
-        
-        //! Sets the camera's name
-        void                set_name(const std::string&);
-
         static void init_info();
 
         CameraID            id() const { return CameraID(UniqueID::id()); }
@@ -93,8 +84,6 @@ namespace yq::tachyon {
         //! Default destructor
         ~Camera();
         
-    private:
-        std::string         m_name;
     };
 
     /*! \brief Camera parameters

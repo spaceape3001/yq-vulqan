@@ -58,11 +58,6 @@ namespace yq::tachyon {
         Tachyon::snap(sn);
     }
 
-    void            Keyboard::set_name(const std::string& v)
-    {
-        m_name  = v;
-    }
-
     Tachyon::PostAdvice    Keyboard::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
@@ -82,7 +77,6 @@ namespace yq::tachyon {
     void Keyboard::init_info()
     {
         auto w   = writer<Keyboard>();
-        w.property("name", &Keyboard::get_name).setter(&Keyboard::set_name);
         w.abstract();
     }
 }

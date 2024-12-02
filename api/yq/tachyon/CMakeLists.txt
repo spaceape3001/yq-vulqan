@@ -22,7 +22,6 @@ add_library(${PROJECT_NAME} SHARED
     
     vulqan.cpp
 
-    api/AppThread.cpp
 
     #api/Application.cpp
     api/Buffer.cpp
@@ -41,6 +40,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Message.cpp
     api/Model.cpp
     api/Monitor.cpp
+    api/Mouse.cpp
     api/Perspective.cpp
     api/Pipeline.cpp
     api/PipelineUtils.cpp
@@ -65,6 +65,8 @@ add_library(${PROJECT_NAME} SHARED
     #api/Viewer.cpp
     api/Widget.cpp
     api/Window.cpp
+
+    app/AppThread.cpp
 
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp

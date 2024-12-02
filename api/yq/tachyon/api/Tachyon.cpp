@@ -201,12 +201,6 @@ namespace yq::tachyon {
         return static_cast<bool>(std::get_if<std::monostate>(&pa));
     }
 
-    void Tachyon::init_info()
-    {
-        auto w = writer<Tachyon>();
-        w.description("Tachyon Object");
-        w.slot(&Tachyon::slot_proxy_command);
-    }
 
     void Tachyon::retain(TachyonPtr tp)
     {
@@ -228,6 +222,7 @@ namespace yq::tachyon {
     
     Tachyon::Tachyon(init_t, const Param& p) 
     {
+        _name(p.name);
     }
     
     Tachyon::Tachyon(thread_t, const Param& p) : Tachyon(INIT, p)
@@ -281,6 +276,53 @@ namespace yq::tachyon {
             if(c.id == tid.id)
                 return true;
         }
+        return false;
+    }
+
+    bool    Tachyon::_name(name_spec ns, OldNameFN cap)
+    {
+        auto clear = [&]() -> bool {
+            if(m_name.empty())
+                return false;
+            if(cap)
+                cap(std::move(m_name));
+            m_name  = {};
+            return true;
+        };
+        
+        auto set = [&](std::string&& nv) -> bool {
+            if(nv == m_name)
+                return false;
+            if(cap)
+                cap(std::move(m_name));
+            m_name  = std::move(nv);
+            return true;
+        };
+        
+        if(std::get_if<std::monostate>(&ns))
+            return clear();
+        
+        if(auto p = std::get_if<const char*>(&ns)){
+            const char* z   = *p;
+            if(!z || !*z)
+                return clear();
+            return set(z);
+        }
+        
+        if(auto p = std::get_if<std::string_view>(&ns)){
+            std::string_view    z   = *p;
+            if(z.empty())
+                return clear();
+            return set(std::string(z));
+        }
+        
+        if(auto p = std::get_if<std::string>(&ns)){
+            std::string&    z   = *p;
+            if(z.empty())
+                return clear();
+            return set(std::move(z));
+        }
+        
         return false;
     }
 
@@ -543,6 +585,15 @@ namespace yq::tachyon {
         if((m_listeners[tid] -= grp) == MGF{}){
             m_listeners.erase(tid);
         }
+    }
+
+    // ---- INFO AT THE END ---
+    void Tachyon::init_info()
+    {
+        auto w = writer<Tachyon>();
+        w.description("Tachyon Object");
+        w.slot(&Tachyon::slot_proxy_command);
+        w.property("name", &Tachyon::name);
     }
 }
 

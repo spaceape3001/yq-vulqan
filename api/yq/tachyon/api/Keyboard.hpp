@@ -54,16 +54,6 @@ namespace yq::tachyon {
             camera.  (class DynamicKeyboard, StandardKeyboard, etc???)
         */
     
-    
-        //! Name of this camera's instance
-        std::string_view    name() const { return m_name; }
-        
-        //! Getter for the property system
-        const std::string&  get_name() const { return m_name; }
-        
-        //! Sets the camera's name
-        void                set_name(const std::string&);
-
         static void init_info();
 
         KeyboardID            id() const { return KeyboardID(UniqueID::id()); }
@@ -80,8 +70,6 @@ namespace yq::tachyon {
         //! Default destructor
         ~Keyboard();
         
-    private:
-        std::string         m_name;
     };
 
 }

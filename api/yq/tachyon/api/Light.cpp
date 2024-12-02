@@ -58,11 +58,6 @@ namespace yq::tachyon {
         Tachyon::snap(sn);
     }
 
-    void            Light::set_name(const std::string& v)
-    {
-        m_name  = v;
-    }
-
     Tachyon::PostAdvice    Light::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
@@ -82,7 +77,6 @@ namespace yq::tachyon {
     void Light::init_info()
     {
         auto w   = writer<Light>();
-        w.property("name", &Light::get_name).setter(&Light::set_name);
         w.abstract();
     }
 }

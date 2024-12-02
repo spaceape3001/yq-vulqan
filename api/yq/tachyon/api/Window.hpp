@@ -67,8 +67,6 @@ namespace yq::tachyon {
         //! Default destructor
         ~Window();
         
-    private:
-        std::string         m_name;
     };
 
 }

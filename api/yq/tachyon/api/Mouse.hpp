@@ -9,25 +9,25 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/typedef/model.hpp>
+#include <yq/tachyon/typedef/mouse.hpp>
 
 namespace yq::tachyon {
 
-    class Model;
+    class Mouse;
     
-    /*! \brief Model Information
+    /*! \brief Mouse Information
     
-        Information for cameras.
+        Information for mouses.
     */
-    class ModelInfo : public TachyonInfo {
+    class MouseInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
 
-        //! Gets all camera informations
-        static const std::vector<const ModelInfo*>&    all();
+        //! Gets all mouse informations
+        static const std::vector<const MouseInfo*>&    all();
         
         //! Standard constructor for the camera information
-        ModelInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        MouseInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -36,47 +36,41 @@ namespace yq::tachyon {
     };
     
     /*
-        Right *now*, the camera is assumed to be simple....
+        Right *now*, the mouse is assumed to be simple....
     */
 
-
-    /*! \brief Shows up on the screen
+    /*! \brief A mouse or similar tracking device (trackball, etc)
     
-        If you want it to show up on the viewport, it needs to be renderable, and thus derived
-        from this thing.  
-        
-        \note We're limited to three dimensions here
+        A mouse, presumably, controls a cursor (or other thing)
     */
-    class Model : public Tachyon {
-        YQ_TACHYON_INFO(ModelInfo);
-        YQ_TACHYON_DATA(ModelData)
-        YQ_TACHYON_SNAP(ModelSnap)
-        YQ_TACHYON_DECLARE(Model, Tachyon)
+    class Mouse : public Tachyon {
+        YQ_TACHYON_INFO(MouseInfo);
+        YQ_TACHYON_DATA(MouseData)
+        YQ_TACHYON_SNAP(MouseSnap)
+        YQ_TACHYON_DECLARE(Mouse, Tachyon)
     public:    
     
         /*
             We *MIGHT* want to divide up the camera into position, 
             lens, etc... or that's a later development on a dedicated
-            camera.  (class DynamicModel, StandardModel, etc???)
+            camera.  (class DynamicMouse, StandardMouse, etc???)
         */
     
-
         static void init_info();
 
-        ModelID            id() const { return ModelID(UniqueID::id()); }
+        MouseID            id() const { return MouseID(UniqueID::id()); }
 
     protected:
     
-        void        snap(ModelSnap&) const;
+        void        snap(MouseSnap&) const;
         //virtual void    receive(const post::PostCPtr&) override;
         virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
-        Model(const Param&p = {});
+        Mouse(const Param&p = {});
         
         //! Default destructor
-        ~Model();
-        
+        ~Mouse();
     };
 
 }

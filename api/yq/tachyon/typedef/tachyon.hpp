@@ -9,6 +9,9 @@
 #include <concepts>
 #include <cstdint>
 #include <tuple>
+#include <string>
+#include <string_view>
+#include <variant>
 
 namespace yq { 
     template <typename> class Ref;
@@ -36,4 +39,6 @@ namespace yq::tachyon {
     using TachyonSnapCPtr   = Ref<const TachyonSnap>;
     
     struct TachyonContext;
+
+    using name_spec = std::variant<std::monostate, const char*, std::string_view, std::string>;
 }

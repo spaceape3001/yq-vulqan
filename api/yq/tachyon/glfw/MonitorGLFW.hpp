@@ -26,8 +26,10 @@ namespace yq::tachyon {
         
         Vector2I    position2i() const override;
         
+        GLFWmonitor*    glfw() const { return m_monitor; }
+        
     private:
-        GLFWmonitor*        m_monitor;
+        GLFWmonitor* const  m_monitor;
         //MonitorState    m_state;
         
         Vector2I            m_position;

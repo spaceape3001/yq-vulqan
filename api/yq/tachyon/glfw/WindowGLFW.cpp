@@ -11,7 +11,8 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 
 namespace yq::tachyon {
 
-    WindowGLFW::WindowGLFW(const ViewerCreateInfo & vci, const Param&p)
+    WindowGLFW::WindowGLFW(DesktopGLFW* d, GLFWwindow* w, const ViewerCreateInfo & vci, const Param&p) : 
+        Window(vci, p), m_desktop(d), m_window(w)
     {
     }
     

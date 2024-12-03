@@ -48,12 +48,6 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Keyboard, Tachyon)
     public:    
     
-        /*
-            We *MIGHT* want to divide up the camera into position, 
-            lens, etc... or that's a later development on a dedicated
-            camera.  (class DynamicKeyboard, StandardKeyboard, etc???)
-        */
-    
         static void init_info();
 
         KeyboardID            id() const { return KeyboardID(UniqueID::id()); }

@@ -57,6 +57,7 @@ namespace yq::tachyon {
     struct forward_t {};
     struct hash_t {};
     struct info_t {};
+    struct joystick_t {};
     struct lock_t {};
     struct locked_t {};
     struct moveable_t {};
@@ -116,6 +117,7 @@ namespace yq::tachyon {
     static constexpr forward_t      FORWARD;
     static constexpr hash_t         HASH;
     static constexpr info_t         INFO;
+    static constexpr joystick_t     JOYSTICK;
     static constexpr lock_t         LOCK;
     static constexpr locked_t       LOCKED;
     static constexpr moveable_t     MOVEABLE;

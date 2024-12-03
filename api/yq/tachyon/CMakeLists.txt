@@ -28,6 +28,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Camera.cpp
     api/Command.cpp
     #api/Context.hpp
+    api/Cursor.cpp
     api/Desktop.cpp
     #api/Editor.cpp
     api/Event.cpp
@@ -205,6 +206,7 @@ add_library(${PROJECT_NAME} SHARED
     
     # frame/AppFrame.cpp # Issue/TODO
     
+    glfw/CursorGLFW.cpp
     glfw/DesktopGLFW.cpp
     glfw/JoystickGLFW.cpp
     glfw/KeyboardGLFW.cpp

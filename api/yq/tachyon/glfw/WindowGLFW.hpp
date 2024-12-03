@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/api/Window.hpp>
 #include <yq/tachyon/interfaces/IPosition2I.hpp>
+#include <yq/tachyon/typedef/glfw.hpp>
 
 struct GLFWwindow;
 
@@ -17,7 +18,7 @@ namespace yq::tachyon {
     class WindowGLFW : public Window, private IPosition2I {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
     public:
-        WindowGLFW(const ViewerCreateInfo&, const Param&p={});
+        WindowGLFW(DesktopGLFW*, GLFWwindow*, const ViewerCreateInfo&, const Param&p={});
         ~WindowGLFW();
         
         static void init_info();
@@ -27,9 +28,9 @@ namespace yq::tachyon {
         virtual Execution tick(Context&) override;
 
     private:
-        GLFWwindow*     m_window = nullptr;
-        
-        Vector2I        m_position;
+        DesktopGLFW* const  m_desktop;
+        GLFWwindow* const   m_window;
+        Vector2I            m_position;
 
         static void callback_character(GLFWwindow* window, unsigned int codepoint);
         static void callback_cursor_enter(GLFWwindow* window, int entered);

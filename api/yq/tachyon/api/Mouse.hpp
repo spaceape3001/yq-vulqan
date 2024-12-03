@@ -50,12 +50,6 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Mouse, Tachyon)
     public:    
     
-        /*
-            We *MIGHT* want to divide up the camera into position, 
-            lens, etc... or that's a later development on a dedicated
-            camera.  (class DynamicMouse, StandardMouse, etc???)
-        */
-    
         static void init_info();
 
         MouseID            id() const { return MouseID(UniqueID::id()); }

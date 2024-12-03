@@ -54,13 +54,6 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Model, Tachyon)
     public:    
     
-        /*
-            We *MIGHT* want to divide up the camera into position, 
-            lens, etc... or that's a later development on a dedicated
-            camera.  (class DynamicModel, StandardModel, etc???)
-        */
-    
-
         static void init_info();
 
         ModelID            id() const { return ModelID(UniqueID::id()); }

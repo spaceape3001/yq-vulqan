@@ -4,68 +4,68 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Window.hpp>
-#include <yq/tachyon/api/WindowBind.hpp>
-#include <yq/tachyon/api/WindowData.hpp>
-#include <yq/tachyon/api/WindowInfoWriter.hpp>
+#include <yq/tachyon/api/Cursor.hpp>
+#include <yq/tachyon/api/CursorBind.hpp>
+#include <yq/tachyon/api/CursorData.hpp>
+#include <yq/tachyon/api/CursorInfoWriter.hpp>
 #include <yq/tachyon/api/Post.hpp>
 
 namespace yq::tachyon {
 
-    WindowBind::WindowBind(const Window* v) : m_light(v ? v->id() : WindowID{})
+    CursorBind::CursorBind(const Cursor* v) : m_cursor(v ? v->id() : CursorID{})
     {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    struct WindowInfo::Repo {
-        std::vector<const WindowInfo*> all;
+    struct CursorInfo::Repo {
+        std::vector<const CursorInfo*> all;
     };
     
-    WindowInfo::Repo& WindowInfo::repo()
+    CursorInfo::Repo& CursorInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const WindowInfo*>&    WindowInfo::all()
+    const std::vector<const CursorInfo*>&    CursorInfo::all()
     {
         return repo().all;
     }
 
-    WindowInfo::WindowInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    CursorInfo::CursorInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Window);
+        set(Type::Cursor);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Window::Window(const ViewerCreateInfo&, const Param& p) : Tachyon(p)
+    Cursor::Cursor(const Param& p) : Tachyon(p)
     {
     }
 
-    Window::~Window()
+    Cursor::~Cursor()
     {
     }
 
 
-    void Window::snap(WindowSnap& sn) const
+    void Cursor::snap(CursorSnap& sn) const
     {
         Tachyon::snap(sn);
     }
 
-    Tachyon::PostAdvice    Window::advise(const Post&pp) const
+    Tachyon::PostAdvice    Cursor::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
             return pa;
         
-        if(const WindowBind* p = dynamic_cast<const WindowBind*>(&pp)){
-            if(p->light() != id())
+        if(const CursorBind* p = dynamic_cast<const CursorBind*>(&pp)){
+            if(p->cursor() != id())
                 return REJECT;
         }
         return {};
@@ -74,11 +74,11 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Window::init_info()
+    void Cursor::init_info()
     {
-        auto w   = writer<Window>();
+        auto w   = writer<Cursor>();
         w.abstract();
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Window)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Cursor)

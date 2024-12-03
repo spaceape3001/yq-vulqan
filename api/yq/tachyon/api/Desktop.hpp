@@ -14,7 +14,10 @@
 namespace yq::tachyon {
 
     struct AppCreateInfo;
+    struct ViewerCreateInfo;
+
     class Desktop;
+    class Window;
     
     /*! \brief Desktop Information
     
@@ -68,6 +71,9 @@ namespace yq::tachyon {
         static void init_info();
 
         DesktopID            id() const { return DesktopID(UniqueID::id()); }
+
+        using Manager::create;
+        virtual Window*      create(window_t, const ViewerCreateInfo&) { return nullptr; }
 
     protected:
     

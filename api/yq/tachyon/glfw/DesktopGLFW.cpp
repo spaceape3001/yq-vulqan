@@ -5,12 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DesktopGLFW.hpp"
-#include "ExceptionGLFW.hpp"
 #include <yq/core/ThreadId.hpp>
 #include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/DesktopInfoWriter.hpp>
+#include <yq/tachyon/glfw/CursorGLFW.hpp>
 #include <yq/tachyon/glfw/ExceptionGLFW.hpp>
+#include <yq/tachyon/glfw/JoystickGLFW.hpp>
 #include <yq/tachyon/glfw/KeyboardGLFW.hpp>
+#include <yq/tachyon/glfw/MouseGLFW.hpp>
+#include <yq/tachyon/glfw/MonitorGLFW.hpp>
+#include <yq/tachyon/glfw/WindowGLFW.hpp>
 #include <yq/tachyon/glfw/LoggingGLFW.hpp>
 #include <GLFW/glfw3.h>
 
@@ -43,6 +47,8 @@ namespace yq::tachyon {
             throw ExceptionGLFW("Only one GLFW desktop per customer!");
         }
         
+        m_joysticks.fill(nullptr);
+        
         glfwLogging(0, nullptr);
         glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
         glfwInit();
@@ -53,6 +59,19 @@ namespace yq::tachyon {
     {
     }
 
+    bool DesktopGLFW::_install(joystick_t, int jid)
+    {
+        if((jid < 0) || (jid >= kCntGLFWJoysticks))
+            return false;
+        if(!glfwJoystickPresent(jid))
+            return false;
+        if(m_joysticks[jid])
+            return false;
+        
+        m_joysticks[jid]    = create<JoystickGLFW>(CHILD, jid);
+        return true;
+    }
+    
     Execution    DesktopGLFW::_tick(Context& ctx)
     {
         glfwPollEvents();
@@ -61,9 +80,26 @@ namespace yq::tachyon {
     
     Execution    DesktopGLFW::_start(Context& ctx)
     {
-        if(m_control(C::Keyboard))
+        if(m_control(C::Cursor)){
+        
+        }
+        if(m_control(C::Joystick)){
+            for(int j=0;j<kCntGLFWJoysticks;++j)
+                _install(JOYSTICK, j);
+        }
+        if(m_control(C::Keyboard)){
             m_keyboard      = create<KeyboardGLFW>(CHILD);
-    
+        }
+        if(m_control(C::Monitor)){
+        
+        }
+        if(m_control(C::Mouse)){
+            m_mouse         = create<MouseGLFW>(CHILD);
+        }
+        if(m_control(C::Window)){
+        
+        }
+        
         return {};
     }
 

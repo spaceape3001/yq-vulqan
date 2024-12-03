@@ -14,6 +14,7 @@
 namespace yq::tachyon {
 
     class Window;
+    struct ViewerCreateInfo;
     
     /*! \brief Window Information
     
@@ -62,7 +63,7 @@ namespace yq::tachyon {
         virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
-        Window(const Param&p = {});
+        Window(const ViewerCreateInfo&, const Param&p = {});
         
         //! Default destructor
         ~Window();

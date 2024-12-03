@@ -18,6 +18,7 @@ namespace yq::tachyon {
     enum class Type : uint8_t {
         Camera,
         Controller,
+        Cursor,
         Desktop,
         Editor,
         ImGui,

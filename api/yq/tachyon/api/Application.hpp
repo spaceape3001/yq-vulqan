@@ -25,7 +25,8 @@ namespace yq::tachyon {
     class Widget;
     class GLFWManager;
     class AppDeleteViewerCommand;
-
+    class AppThread;
+    class ViewerThread;
 
     /*! \brief Engine/Vulkan application
     
@@ -38,7 +39,7 @@ namespace yq::tachyon {
         //! Global application, if any
         static Application*         app();
 
-        static const AppCreateInfo& app_info();
+        const AppCreateInfo&        app_info() const;
         
         //! Creates a viewer with widget (note, application owns it)
         static Viewer*              create_viewer(WidgetPtr);
@@ -92,6 +93,10 @@ namespace yq::tachyon {
         virtual void  receive(const post::PostCPtr&) override;
         
     private:
+    
+        AppThread*              m_athread   = nullptr;
+        ViewerThread*           m_vthread   = nullptr;
+    
         friend class Viewer;
         
         static Viewer*          _add(ViewerPtr);
@@ -105,6 +110,9 @@ namespace yq::tachyon {
         
         static Tachyon::Param  params(const AppCreateInfo&);
         
+        static Application*     s_app;
+        
+        AppCreateInfo const     m_cInfo;
 
         struct Common;
         static Common&  common();

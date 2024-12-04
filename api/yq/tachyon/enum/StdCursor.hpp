@@ -14,6 +14,8 @@ namespace yq::tachyon {
         PointingHand,
         ResizeEW,
         ResizeNS,
+        ResizeNWSE,
+        ResizeNESW,
         ResizeAll,
         NotAllowed
     };

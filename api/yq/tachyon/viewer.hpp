@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/viewer/Viewer.hpp>
-#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
+#include <yq/tachyon/api/Viewer.hpp>
+#include <yq/tachyon/api/ViewerCreateInfo.hpp>

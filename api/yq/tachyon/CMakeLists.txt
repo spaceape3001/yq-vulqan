@@ -24,6 +24,7 @@ add_library(${PROJECT_NAME} SHARED
 
 
     #api/Application.cpp
+    api/AppThread.cpp
     api/Buffer.cpp
     api/Camera.cpp
     api/Command.cpp
@@ -64,10 +65,10 @@ add_library(${PROJECT_NAME} SHARED
     api/Undo.cpp
     api/VideoMode.cpp
     #api/Viewer.cpp
+    api/ViewerThread.cpp
     api/Widget.cpp
     api/Window.cpp
 
-    app/AppThread.cpp
 
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp

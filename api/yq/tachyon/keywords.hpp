@@ -38,6 +38,7 @@ namespace yq::tachyon {
     struct continue_t {};
     struct controller_t {};
     struct controllers_t {};
+    struct cursor_t {};
     struct delete_t {};
     struct direct_t{};
     struct disable_t {};
@@ -58,9 +59,12 @@ namespace yq::tachyon {
     struct hash_t {};
     struct info_t {};
     struct joystick_t {};
+    struct keyboard_t {};
     struct lock_t {};
     struct locked_t {};
     struct moveable_t {};
+    struct monitor_t {};
+    struct mouse_t {};
     struct number_t {};
     
     struct once_t : public ::yq::once_t {
@@ -104,6 +108,7 @@ namespace yq::tachyon {
     static constexpr continue_t     CONTINUE;
     static constexpr controller_t   CONTROLLER;
     static constexpr controllers_t  CONTROLLERS;
+    static constexpr cursor_t       CURSOR;
     static constexpr delete_t       DELETE;
     static constexpr direct_t       DIRECT;
     static constexpr disable_t      DISABLE;
@@ -118,9 +123,12 @@ namespace yq::tachyon {
     static constexpr hash_t         HASH;
     static constexpr info_t         INFO;
     static constexpr joystick_t     JOYSTICK;
+    static constexpr keyboard_t     KEYBOARD;
     static constexpr lock_t         LOCK;
     static constexpr locked_t       LOCKED;
+    static constexpr monitor_t      MONITOR;
     static constexpr moveable_t     MOVEABLE;
+    static constexpr mouse_t        MOUSE;
     static constexpr number_t       NUMBER;
     static constexpr once_t         ONCE;
     static constexpr parent_t       PARENT;

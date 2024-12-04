@@ -26,7 +26,11 @@ namespace yq::tachyon {
         virtual Execution tick(Context&) override;
 
         static void init_info();
+
+        virtual CursorID    cursor(StdCursor) const override;
         
+        virtual bool        is_running() const override;
+
     private:
         enum class Stage {
             Uninit      = 0,
@@ -44,19 +48,25 @@ namespace yq::tachyon {
         
         using joysticks_t   = std::array<JoystickGLFW*, nMaxJoysticks>;
         using windows_t     = std::vector<WindowGLFW*>;
-        using cursors_t     = std::map<CursorID, CursorGLFW*>;
+        
+        using std_cursor_lookup = std::map<StdCursor, CursorID>;
         
         //! Joysticks (number comes from GLFW)
-        joysticks_t     m_joysticks;
-        cursors_t       m_cursors;
-        windows_t       m_windows;
-        KeyboardGLFW*   m_keyboard  = nullptr;
-        MonitorGLFW*    m_monitor   = nullptr;
-        MouseGLFW*      m_mouse     = nullptr;
-        ControlFlags    m_control;
-        Stage           m_stage     = Stage::Uninit;
+        joysticks_t         m_joysticks;
+        glfw_cursor_map     m_cursors;
+        std_cursor_lookup   m_stdCursors;
+        windows_t           m_windows;
+        KeyboardGLFW*       m_keyboard  = nullptr;
+        
+        //! Primary monitor
+        MonitorGLFW*        m_monitor   = nullptr;
+        glfw_monitor_map    m_monitors;
+        MouseGLFW*          m_mouse     = nullptr;
+        ControlFlags        m_control;
+        Stage               m_stage     = Stage::Uninit;
         
         // TRUE if an insertion occured
         bool _install(joystick_t, int);
+        bool _install(cursor_t, StdCursor, int);
     };
 }

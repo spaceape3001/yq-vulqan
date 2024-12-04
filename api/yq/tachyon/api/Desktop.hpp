@@ -9,7 +9,13 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Manager.hpp>
+#include <yq/tachyon/typedef/cursor.hpp>
 #include <yq/tachyon/typedef/desktop.hpp>
+#include <yq/tachyon/typedef/joystick.hpp>
+#include <yq/tachyon/typedef/keyboard.hpp>
+#include <yq/tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/typedef/mouse.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
 
@@ -17,7 +23,6 @@ namespace yq::tachyon {
     struct ViewerCreateInfo;
 
     class Desktop;
-    class Window;
     
     /*! \brief Desktop Information
     
@@ -70,10 +75,21 @@ namespace yq::tachyon {
 
         static void init_info();
 
-        DesktopID            id() const { return DesktopID(UniqueID::id()); }
+        DesktopID           id() const { return DesktopID(UniqueID::id()); }
 
         using Manager::create;
-        virtual Window*      create(window_t, const ViewerCreateInfo&) { return nullptr; }
+        virtual Window*     create(window_t, const ViewerCreateInfo&) { return nullptr; }
+        
+        virtual CursorID    cursor(StdCursor) const { return {}; }
+        
+        virtual bool        is_running() const { return false; }
+
+        bool    does(cursor_t) const;
+        bool    does(joystick_t) const;
+        bool    does(keyboard_t) const;
+        bool    does(monitor_t) const;
+        bool    does(mouse_t) const;
+        bool    does(window_t) const;
 
     protected:
     

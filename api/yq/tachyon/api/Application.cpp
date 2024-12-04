@@ -247,8 +247,15 @@ namespace yq::tachyon {
     //  ////////////////////////////////////////////////////////////////////////
     //  ////////////////////////////////////////////////////////////////////////
 
+    static AppCreateInfo    _update(const AppCreateInfo& aci, std::string_view appName)
+    {
+        
+    }
+    
+    Application*    Application::s_app  = nullptr;
+    
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv), Tachyon(params(aci))
+        BasicApp(argc, argv), m_cInfo(_update(aci, app_name()))
     {
         Common& g = common();
         if(g.claimed.test_and_set())

@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/widget/Widget.hpp>
-#include <yq/tachyon/widget/WidgetInfoWriter.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/WidgetInfoWriter.hpp>

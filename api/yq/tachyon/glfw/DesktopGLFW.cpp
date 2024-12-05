@@ -38,6 +38,22 @@ namespace yq::tachyon {
 
     DesktopGLFW*     DesktopGLFW::s_desktop = nullptr;
 
+    void DesktopGLFW::callback_joystick(int jid, int event)
+    {
+        if(!s_desktop)
+            return;
+            
+        // TODO
+    }
+    
+    void DesktopGLFW::callback_monitor(GLFWmonitor* monitor, int event)
+    {
+        if(!s_desktop)
+            return;
+        
+        // TODO
+    }
+
     DesktopGLFW::DesktopGLFW(const AppCreateInfo&aci, const Param& p) : Desktop(aci, p)
     {
         if(!is_main_thread()){
@@ -52,11 +68,26 @@ namespace yq::tachyon {
         glfwLogging(0, nullptr);
         glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
         glfwInit();
+        
         m_stage = Stage::Init;
     }
     
     DesktopGLFW::~DesktopGLFW()
     {
+    }
+
+    void DesktopGLFW::_install(cursor_t, all_t)
+    {
+        _install(CURSOR, StdCursor::Arrow,          GLFW_ARROW_CURSOR);
+        _install(CURSOR, StdCursor::IBeam,          GLFW_IBEAM_CURSOR);
+        _install(CURSOR, StdCursor::Crosshair,      GLFW_CROSSHAIR_CURSOR);
+        _install(CURSOR, StdCursor::PointingHand,   GLFW_POINTING_HAND_CURSOR);
+        _install(CURSOR, StdCursor::ResizeEW,       GLFW_RESIZE_EW_CURSOR);
+        _install(CURSOR, StdCursor::ResizeNS,       GLFW_RESIZE_NS_CURSOR);
+        _install(CURSOR, StdCursor::ResizeNWSE,     GLFW_RESIZE_NWSE_CURSOR);
+        _install(CURSOR, StdCursor::ResizeNESW,     GLFW_RESIZE_NESW_CURSOR);
+        _install(CURSOR, StdCursor::ResizeAll,      GLFW_RESIZE_ALL_CURSOR);
+        _install(CURSOR, StdCursor::NotAllowed,     GLFW_NOT_ALLOWED_CURSOR);
     }
 
     bool DesktopGLFW::_install(cursor_t, StdCursor stdC, int glfwId)
@@ -79,9 +110,15 @@ namespace yq::tachyon {
         return true;
     }
 
+    void DesktopGLFW::_install(joystick_t, all_t)
+    {
+        for(int j=0;j<kCntGLFWJoysticks;++j)
+            _install(JOYSTICK, j);
+    }
+
     bool DesktopGLFW::_install(joystick_t, int jid)
     {
-        if((jid < 0) || (jid >= kCntGLFWJoysticks))
+        if((jid < 0) || (jid >=  kCntGLFWJoysticks))
             return false;
         if(!glfwJoystickPresent(jid))
             return false;
@@ -92,35 +129,48 @@ namespace yq::tachyon {
         return true;
     }
     
+    void DesktopGLFW::_install(monitor_t, all_t)
+    {
+        int             cnt = 0;
+        GLFWmonitor**   ptr = glfwGetMonitors(&cnt);
+        if(!cnt || ptr)
+            return ;
+        for(int i=0;i<cnt;++i)
+            _install(MONITOR, ptr[i]);
+    }
+    
+    bool DesktopGLFW::_install(monitor_t, GLFWmonitor*m)
+    {
+        MonitorID   id  = MonitorGLFW::monitor(m);
+        if(id || m_monitors.contains(id))
+            return false;
+        MonitorGLFW*    mm  = create<MonitorGLFW>(CHILD, m);
+        m_monitors[mm->id()]    = mm;
+        return true;
+    }
+        
     Execution    DesktopGLFW::_start(Context& ctx)
     {
         if(m_control(C::Cursor)){
-            _install(CURSOR, StdCursor::Arrow,          GLFW_ARROW_CURSOR);
-            _install(CURSOR, StdCursor::IBeam,          GLFW_IBEAM_CURSOR);
-            _install(CURSOR, StdCursor::Crosshair,      GLFW_CROSSHAIR_CURSOR);
-            _install(CURSOR, StdCursor::PointingHand,   GLFW_POINTING_HAND_CURSOR);
-            _install(CURSOR, StdCursor::ResizeEW,       GLFW_RESIZE_EW_CURSOR);
-            _install(CURSOR, StdCursor::ResizeNS,       GLFW_RESIZE_NS_CURSOR);
-            _install(CURSOR, StdCursor::ResizeNWSE,     GLFW_RESIZE_NWSE_CURSOR);
-            _install(CURSOR, StdCursor::ResizeNESW,     GLFW_RESIZE_NESW_CURSOR);
-            _install(CURSOR, StdCursor::ResizeAll,      GLFW_RESIZE_ALL_CURSOR);
-            _install(CURSOR, StdCursor::NotAllowed,     GLFW_NOT_ALLOWED_CURSOR);
+            _install(CURSOR, ALL);
         }
         if(m_control(C::Joystick)){
-            for(int j=0;j<kCntGLFWJoysticks;++j)
-                _install(JOYSTICK, j);
+            _install(JOYSTICK, ALL);
+            glfwSetJoystickCallback( callback_joystick );
         }
         if(m_control(C::Keyboard)){
             m_keyboard      = create<KeyboardGLFW>(CHILD);
         }
         if(m_control(C::Monitor)){
-            
+            _install(MONITOR, ALL);
+            m_monitor   = MonitorGLFW::monitor(PTR, glfwGetPrimaryMonitor());
+            glfwSetMonitorCallback( callback_monitor );
         }
         if(m_control(C::Mouse)){
             m_mouse         = create<MouseGLFW>(CHILD);
         }
         if(m_control(C::Window)){
-        
+            // this one might not be necessary
         }
         
         m_stage = Stage::Running;
@@ -131,6 +181,14 @@ namespace yq::tachyon {
     {
         glfwPollEvents();
         return {};
+    }
+
+    void DesktopGLFW::_uninstall(joystick_t, int)
+    {
+    }
+    
+    void DesktopGLFW::_uninstall(monitor_t, GLFWmonitor*)
+    {
     }
 
     CursorID  DesktopGLFW::cursor(StdCursor sc) const 

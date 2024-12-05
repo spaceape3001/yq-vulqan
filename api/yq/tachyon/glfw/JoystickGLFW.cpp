@@ -18,9 +18,16 @@ namespace yq::tachyon {
     {
     }
 
+    void    JoystickGLFW::disconnecting()
+    {
+    }
+
     Execution JoystickGLFW::tick(Context&ctx) 
     {
         Joystick::tick(ctx);
+        if(m_dead)
+            return STOP;
+        
         
         //  probe
         

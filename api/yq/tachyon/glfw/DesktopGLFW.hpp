@@ -14,7 +14,6 @@
 namespace yq::tachyon {
     struct AppCreateInfo;
     
-
     class DesktopGLFW : public Desktop {
         YQ_TACHYON_DECLARE(DesktopGLFW, Desktop);
     public:
@@ -44,29 +43,34 @@ namespace yq::tachyon {
         Execution    _start(Context&);
         
         static DesktopGLFW*     s_desktop;
-        static constexpr size_t nMaxJoysticks  = 16;
-        
-        using joysticks_t   = std::array<JoystickGLFW*, nMaxJoysticks>;
-        using windows_t     = std::vector<WindowGLFW*>;
+        static void callback_joystick(int jid, int event);
+        static void callback_monitor(GLFWmonitor* monitor, int event);
         
         using std_cursor_lookup = std::map<StdCursor, CursorID>;
         
         //! Joysticks (number comes from GLFW)
-        joysticks_t         m_joysticks;
-        glfw_cursor_map     m_cursors;
-        std_cursor_lookup   m_stdCursors;
-        windows_t           m_windows;
-        KeyboardGLFW*       m_keyboard  = nullptr;
+        glfw_joystick_array     m_joysticks;
+        glfw_cursor_map         m_cursors;
+        std_cursor_lookup       m_stdCursors;
+        glfw_window_map         m_windows;
+        KeyboardGLFW*           m_keyboard  = nullptr;
         
         //! Primary monitor
-        MonitorGLFW*        m_monitor   = nullptr;
-        glfw_monitor_map    m_monitors;
-        MouseGLFW*          m_mouse     = nullptr;
-        ControlFlags        m_control;
-        Stage               m_stage     = Stage::Uninit;
+        MonitorGLFW*            m_monitor   = nullptr;
+        glfw_monitor_map        m_monitors;
+        MouseGLFW*              m_mouse     = nullptr;
+        ControlFlags            m_control;
+        Stage                   m_stage     = Stage::Uninit;
         
         // TRUE if an insertion occured
-        bool _install(joystick_t, int);
+        void _install(cursor_t, all_t);
         bool _install(cursor_t, StdCursor, int);
+        void _install(joystick_t, all_t);
+        bool _install(joystick_t, int);
+        void _install(monitor_t, all_t);
+        bool _install(monitor_t, GLFWmonitor*);
+        
+        void _uninstall(joystick_t, int);
+        void _uninstall(monitor_t, GLFWmonitor*);
     };
 }

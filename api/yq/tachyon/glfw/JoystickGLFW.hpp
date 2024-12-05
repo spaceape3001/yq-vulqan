@@ -20,9 +20,12 @@ namespace yq::tachyon {
         int glfw() const { return m_joystick; }
         
         virtual Execution tick(Context&) override;
+        
+        void    disconnecting();
 
     private:
         const int   m_joystick;
+        bool        m_dead      = false;
     };
 
 }

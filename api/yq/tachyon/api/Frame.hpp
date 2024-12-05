@@ -13,10 +13,16 @@
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
+#include <yq/tachyon/typedef/cursor.hpp>
+#include <yq/tachyon/typedef/desktop.hpp>
 #include <yq/tachyon/typedef/frame.hpp>
+#include <yq/tachyon/typedef/joystick.hpp>
+#include <yq/tachyon/typedef/keyboard.hpp>
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/manager.hpp>
 #include <yq/tachyon/typedef/model.hpp>
+#include <yq/tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/typedef/mouse.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 //#include <yq/tachyon/typedef/scene.hpp>
@@ -25,6 +31,7 @@
 #include <yq/tachyon/typedef/types.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 
 #include <chrono>
 #include <unordered_map>
@@ -49,41 +56,104 @@ namespace yq::tachyon {
 
 
         bool contains(CameraID) const;
+        bool contains(CursorID) const;
+        bool contains(DesktopID) const;
         //bool contains(EditorID) const;
+        bool contains(JoystickID) const;
+        bool contains(KeyboardID) const;
         bool contains(LightID) const;
         bool contains(ManagerID) const;
         bool contains(ModelID) const;
+        bool contains(MonitorID) const;
+        bool contains(MouseID) const;
         bool contains(RenderedID) const;
         //bool contains(SceneID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
         //bool contains(ViewerID) const;
         bool contains(WidgetID) const;
+        bool contains(WindowID) const;
     
         const CameraData*                   data(CameraID) const;
+        const CursorData*                   data(CursorID) const;
+        const DesktopData*                  data(DesktopID) const;
         //const EditorData*                   data(EditorID) const;
+        const JoystickData*                 data(JoystickID) const;
+        const KeyboardData*                 data(KeyboardID) const;
         const LightData*                    data(LightID) const;
         const ManagerData*                  data(ManagerID) const;
         const ModelData*                    data(ModelID) const;
+        const MonitorData*                  data(MonitorID) const;
+        const MouseData*                    data(MouseID) const;
         const RenderedData*                 data(RenderedID) const;
         //const SceneData*                    data(SceneID) const;
         const TachyonData*                  data(TachyonID) const;
         const ThreadData*                   data(ThreadID) const;
         //const ViewerData*                   data(ViewerID) const;
         const WidgetData*                   data(WidgetID) const;
+        const WindowData*                   data(WindowID) const;
         
+        //! Camera pointer
+        //! \note WARNING this will break thread-safety guarantees
         Camera*                             object(CameraID) const;
+
+        //! Cursor pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Cursor*                             object(CursorID) const;
+
+        //! Desktop pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Desktop*                            object(DesktopID) const;
+
         //Editor*                             object(EditorID) const;
+
+        //! Joystick pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Joystick*                           object(JoystickID) const;
+
+        //! Keyboard pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Keyboard*                           object(KeyboardID) const;
+
+        //! Light pointer
+        //! \note WARNING this will break thread-safety guarantees
         Light*                              object(LightID) const;
+
+        //! Manager pointer
+        //! \note WARNING this will break thread-safety guarantees
         Manager*                            object(ManagerID) const;
+
+        //! Model pointer
+        //! \note WARNING this will break thread-safety guarantees
         Model*                              object(ModelID) const;
+
+        //! Mouse pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Mouse*                              object(MouseID) const;
+
+        //! Rendered pointer
+        //! \note WARNING this will break thread-safety guarantees
         Rendered*                           object(RenderedID) const;
+
         //Scene*                              object(SceneID) const;
+
+        //! Tachyon pointer
+        //! \note WARNING this will break thread-safety guarantees
         Tachyon*                            object(TachyonID) const;
+
+        //! Thread pointer
+        //! \note WARNING this will break thread-safety guarantees
         Thread*                             object(ThreadID) const;
         //Viewer*                             object(ThreadID) const;
+
+        //! Widget pointer
+        //! \note WARNING this will break thread-safety guarantees
         Widget*                             object(WidgetID) const;
         
+        //! Window pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Window*                             object(WindowID) const;
+
         ThreadID                            owner(TachyonID) const;
 
         /*! \brief Gets the specific interface
@@ -103,16 +173,23 @@ namespace yq::tachyon {
         Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
         
         const CameraSnap*                   snap(CameraID) const;
+        const CursorSnap*                   snap(CursorID) const;
+        const DesktopSnap*                  snap(DesktopID) const;
         //const EditorSnap*                   snap(EditorID) const;
+        const JoystickSnap*                 snap(JoystickID) const;
+        const KeyboardSnap*                 snap(KeyboardID) const;
         const LightSnap*                    snap(LightID) const;
         const ManagerSnap*                  snap(ManagerID) const;
         const ModelSnap*                    snap(ModelID) const;
+        const MonitorSnap*                  snap(MonitorID) const;
+        const MouseSnap*                    snap(MouseID) const;
         const RenderedSnap*                 snap(RenderedID) const;
         //const SceneSnap*                    snap(SceneID) const;
         const TachyonSnap*                  snap(TachyonID) const;
         const ThreadSnap*                   snap(ThreadID) const;
         //const ViewerSnap*                   snap(ViewerID) const;
         const WidgetSnap*                   snap(WidgetID) const;
+        const WindowSnap*                   snap(WindowID) const;
 
         Types           types(TachyonID) const;
 
@@ -151,15 +228,23 @@ namespace yq::tachyon {
         std::unordered_map<uint64_t, Types>                 m_types;
 
         Container<Camera, CameraData, CameraSnap>           m_cameras;
+        Container<Cursor, CursorData, CursorSnap>           m_cursors;
+        Container<Desktop, DesktopData, DesktopSnap>        m_desktops;
         //Container<Editor, EditorData, EditorSnap>           m_editors;
+        Container<Joystick, JoystickData, JoystickSnap>     m_joysticks;
+        Container<Keyboard, KeyboardData, KeyboardSnap>     m_keyboards;
         Container<Light, LightData, LightSnap>              m_lights;
         Container<Manager, ManagerData, ManagerSnap>        m_managers;
         Container<Model, ModelData, ModelSnap>              m_models;
+        Container<Monitor, MonitorData, MonitorSnap>        m_monitors;
+        Container<Mouse, MouseData, MouseSnap>              m_mouses;
         Container<Rendered, RenderedData, RenderedSnap>     m_rendereds;
         Container<Tachyon, TachyonData, TachyonSnap>        m_tachyons;
         Container<Thread, ThreadData, ThreadSnap>           m_threads;
         //Container<Viewer, ViewerData, ViewerSnap>           m_viewers;
         Container<Widget, WidgetData, WidgetSnap>           m_widgets;
+        Container<Window, WindowData, WindowSnap>           m_windows;
+
 
         friend class Thread;
         friend FramePtr;

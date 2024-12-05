@@ -17,13 +17,17 @@
 
 #include <GLFW/glfw3.h>
 
+struct GLFWcursor;
+struct GLFWmonitor;
+struct GLFWwindow;
+
 namespace yq::tachyon {
     class CursorGLFW;
     using glfw_cursor_map       = std::map<CursorID, CursorGLFW*>;
     
     class DesktopGLFW;
     
-    static constexpr const size_t   kCntGLFWJoysticks   = GLFW_JOYSTICK_LAST + 1;
+    static constexpr const int   kCntGLFWJoysticks   = GLFW_JOYSTICK_LAST + 1;
     class JoystickGLFW;
     using glfw_joystick_map     = std::map<JoystickID, JoystickGLFW*>;
     using glfw_joystick_array   = std::array<JoystickGLFW*, kCntGLFWJoysticks>;

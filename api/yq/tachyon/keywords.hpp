@@ -74,6 +74,7 @@ namespace yq::tachyon {
     struct pause_t {};
     struct probe_t {};
     struct proxy_t {};
+    struct ptr_t {};
     struct queue_t {};
     struct reject_t {};
     struct resume_t {};
@@ -135,6 +136,7 @@ namespace yq::tachyon {
     static constexpr pause_t        PAUSE;
     static constexpr probe_t        PROBE;
     static constexpr proxy_t        PROXY;
+    static constexpr ptr_t          PTR;
     static constexpr queue_t        QUEUE;
     static constexpr refresh_t      REFRESH;
     static constexpr reject_t       REJECT;

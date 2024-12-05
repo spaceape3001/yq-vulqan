@@ -26,11 +26,16 @@ namespace yq::tachyon {
         Vector2I    position2i() const override;
 
         virtual Execution tick(Context&) override;
+        
+        static WindowGLFW*  window(ptr_t, GLFWwindow*);
+        static WindowID     window(GLFWwindow*);
 
     private:
         DesktopGLFW* const  m_desktop;
         GLFWwindow* const   m_window;
         Vector2I            m_position;
+
+        static WindowGLFW*  _window(GLFWwindow*);
 
         static void callback_character(GLFWwindow* window, unsigned int codepoint);
         static void callback_cursor_enter(GLFWwindow* window, int entered);

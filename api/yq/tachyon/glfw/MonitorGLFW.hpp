@@ -28,8 +28,17 @@ namespace yq::tachyon {
         
         GLFWmonitor*    glfw() const { return m_monitor; }
         
+        static MonitorID       monitor(GLFWmonitor*);
+        static MonitorGLFW*    monitor(ptr_t, GLFWmonitor*);
+
+        void    disconnecting();
+        
     private:
+    
+        static MonitorGLFW* _monitor(GLFWmonitor*);
+    
         GLFWmonitor* const  m_monitor;
+        bool                m_dead      = false;
         //MonitorState    m_state;
         
         Vector2I            m_position;

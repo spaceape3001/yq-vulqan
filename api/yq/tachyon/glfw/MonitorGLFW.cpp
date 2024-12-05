@@ -10,8 +10,30 @@
 
 namespace yq::tachyon {
 
+    MonitorGLFW* MonitorGLFW::_monitor(GLFWmonitor*m)
+    {
+        return (MonitorGLFW*) glfwGetMonitorUserPointer(m);
+    }
+
+    MonitorID       MonitorGLFW::monitor(GLFWmonitor*m)
+    {
+        MonitorGLFW*p  = _monitor(m);
+        if(!p)
+            return {};
+        return p->id();
+    }
+    
+    MonitorGLFW*    MonitorGLFW::monitor(ptr_t, GLFWmonitor*m)
+    {
+        return _monitor(m);
+    }
+        
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     MonitorGLFW::MonitorGLFW(GLFWmonitor* m, const Param&p) : Monitor(p), m_monitor(m)
     {
+        assert(m);
+        glfwSetMonitorUserPointer(m, this);
         m_position  = _position();
         
     #if 0
@@ -73,8 +95,12 @@ namespace yq::tachyon {
         Monitor::snap(sn);
     }
 
-    Execution MonitorGLFW::tick(Context&) 
+    Execution MonitorGLFW::tick(Context&ctx) 
     {
+        Monitor::tick(ctx);
+        if(m_dead)
+            return STOP;
+            
         set(m_position, _position());
         return {};
     }

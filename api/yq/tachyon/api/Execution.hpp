@@ -114,8 +114,8 @@ namespace yq::tachyon {
         disable_t,          //< Disable
         error_t,            //< Error occured (ie abort)
         once_t,             //< Execute once, auto-stop
-        pause_t,            //< Stop/Pause
-        stop_t,             //< Stop/Pause (functionally the same)
+        pause_t,            //< Pause
+        stop_t,             //< Stop (functionally the same as Pause)
         unsigned,           //< Again in X ticks
         unit::Hertz,        //< At rate
         unit::Second,       //< Again in X time

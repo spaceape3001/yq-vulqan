@@ -31,6 +31,8 @@ namespace yq::tachyon {
     
     struct abort_t {};
     struct accept_t {};
+    struct adjust_t {};
+    struct adjustable_t {};
     struct changed_t {};
     struct child_t {};
     struct children_t {};
@@ -101,6 +103,8 @@ namespace yq::tachyon {
 
     static constexpr abort_t        ABORT;
     static constexpr accept_t       ACCEPT;
+    static constexpr adjust_t       ADJUST;
+    static constexpr adjustable_t   ADJUSTABLE;
     static constexpr changed_t      CHANGED;
     static constexpr child_t        CHILD;
     static constexpr children_t     CHILDREN;

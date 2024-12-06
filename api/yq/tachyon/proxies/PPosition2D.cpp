@@ -4,22 +4,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "PPosition2D.hpp"
+#include <yq/tachyon/commands/AdjustPosition2D.hpp>
+#include <yq/tachyon/commands/SetPosition2D.hpp>
 
 namespace yq::tachyon {
-    PPosition2D::PPosition2D(IPosition2D& i) : m_interface(i), m_position(i.position2d())
+    PPosition2D::PPosition2D(const IPosition2D& i)
     {
+        if(i.position2d(DISABLED))
+            m_flags |= F::Disabled;
+        if(i.position2d(SETTABLE))
+            m_flags |= F::Settable;
+        if(i.position2d(ADJUSTABLE))
+            m_flags |= F::Adjustable;
     }
 
-    void        PPosition2D::position2d(set_t, const Vector2D& v) 
+    bool        PPosition2D::position2d(disabled_t) const 
     {
-        dispatch([=,this](){ m_interface.position2d(SET, v); });
+        return m_flags(F::Disabled);
     }
     
-    void        PPosition2D::position2d(move_t, const Vector2D& v) 
+    bool        PPosition2D::position2d(settable_t) const 
+    {   
+        return m_flags(F::Settable);
+    }
+    
+    bool        PPosition2D::position2d(adjustable_t) const 
     {
-        dispatch([=,this](){ m_interface.position2d(MOVE, v); });
+        return m_flags(F::Adjustable);
+    }
+        
+    void        PPosition2D::position2d(set_t, const Vector2D& v) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            dispatch(new SetPosition2D(id(), v));
+        }
+    }
+    
+    void        PPosition2D::position2d(adjust_t, const Vector2D& v) 
+    {
+        if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
+            dispatch(new AdjustPosition2D(id(), v));
+        }
     }
 }

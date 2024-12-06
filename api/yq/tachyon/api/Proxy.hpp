@@ -52,9 +52,16 @@ namespace yq::tachyon {
         
     protected:
         enum class F {
+            //! Interface is disabled
             Disabled,
+            
+            //! Interface can have its property be set
             Settable,
-            Moveable
+            
+            //! Interface can have its property tweaked (ie, += or moveable )
+            Adjustable,
+            
+            Moveable = Adjustable
         };
         
         using FFlags    = Flags<F>;

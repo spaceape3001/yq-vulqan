@@ -20,13 +20,21 @@ namespace yq::tachyon {
         YQ_INTERFACE_DECLARE(IPosition1D, PPosition1D)
         
         //!  Basic position in the 1D space
-        virtual Vector1D        position1d() const = 0;
+        virtual Vector1D    position1d() const = 0;
         
         //!  Set position the position
-        virtual void            position1d(set_t, const Vector1D&){}
+        virtual void        position1d(set_t, const Vector1D&){}
+        
+        //virtual void        position1d(set_t, x_t, double){}
         
         //!  Move the position (ie set to position + delta)
-        virtual void            position1d(move_t, const Vector1D&){}
+        virtual void        position1d(adjust_t, const Vector1D&){}
+
+        //virtual void        position1d(adjust_t, x_t, double){}
+
+        virtual bool        position1d(disabled_t) const { return false; }
+        virtual bool        position1d(settable_t) const { return false; }
+        virtual bool        position1d(adjustable_t) const { return false; }
 
         static void init_info();
     };

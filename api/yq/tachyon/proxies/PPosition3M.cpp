@@ -4,22 +4,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "PPosition3M.hpp"
+#include <yq/tachyon/commands/AdjustPosition3M.hpp>
+#include <yq/tachyon/commands/SetPosition3M.hpp>
 
 namespace yq::tachyon {
-    PPosition3M::PPosition3M(IPosition3M& i) : m_interface(i), m_position(i.position3m())
+    PPosition3M::PPosition3M(const IPosition3M& i)
     {
+        if(i.position3m(DISABLED))
+            m_flags |= F::Disabled;
+        if(i.position3m(SETTABLE))
+            m_flags |= F::Settable;
+        if(i.position3m(ADJUSTABLE))
+            m_flags |= F::Adjustable;
     }
 
-    void        PPosition3M::position3m(set_t, const Vector3M& v) 
+    bool        PPosition3M::position3m(disabled_t) const 
     {
-        dispatch([=,this](){ m_interface.position3m(SET, v); });
+        return m_flags(F::Disabled);
     }
     
-    void        PPosition3M::position3m(move_t, const Vector3M& v) 
+    bool        PPosition3M::position3m(settable_t) const 
+    {   
+        return m_flags(F::Settable);
+    }
+    
+    bool        PPosition3M::position3m(adjustable_t) const 
     {
-        dispatch([=,this](){ m_interface.position3m(MOVE, v); });
+        return m_flags(F::Adjustable);
+    }
+        
+    void        PPosition3M::position3m(set_t, const Vector3M& v) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            dispatch(new SetPosition3M(id(), v));
+        }
+    }
+    
+    void        PPosition3M::position3m(adjust_t, const Vector3M& v) 
+    {
+        if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
+            dispatch(new AdjustPosition3M(id(), v));
+        }
     }
 }

@@ -15,6 +15,6 @@ namespace yq::tachyon {
     void    IPosition1D::init_info()
     {
         auto w = writer<IPosition1D>();
-        w.proxy<PPosition1D>();
+        w.description("1D Position");
     }
 }

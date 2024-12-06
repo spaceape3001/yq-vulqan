@@ -7,23 +7,24 @@
 #pragma once
 
 #include <yq/tachyon/commands/TachyonCommand.hpp>
-#include <yq/vector/Vector2.hpp>
+#include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {
-    class MovePosition2I : public TachyonCommand {
-        YQ_OBJECT_DECLARE(MovePosition2I, TachyonCommand)
+
+    //! Instructs an object to set it's position
+    class SetPosition1I : public TachyonCommand {
+        YQ_OBJECT_DECLARE(SetPosition1I, TachyonCommand)
     public:
-        MovePosition2I(TachyonID, const Vector2I&, const Param& p={});
-        ~MovePosition2I();
+        SetPosition1I(TachyonID, const Vector1I&, const Param& p={});
+        ~SetPosition1I();
     
-        const Vector2I&   position2i() const  { return m_position; }
+        const Vector1I&   position() const  { return m_position; }
         
         static void init_info();
         
         int     x() const { return m_position.x; }
-        int     y() const { return m_position.y; }
         
     private:
-        Vector2I const  m_position;
+        Vector1I const  m_position;
     };
 }

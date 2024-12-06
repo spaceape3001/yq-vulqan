@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PPosition2I.hpp"
-#include <yq/tachyon/commands/MovePosition2I.hpp>
+#include <yq/tachyon/commands/AdjustPosition2I.hpp>
 #include <yq/tachyon/commands/SetPosition2I.hpp>
 
 namespace yq::tachyon {
@@ -15,10 +15,25 @@ namespace yq::tachyon {
             m_flags |= F::Disabled;
         if(i.position2i(SETTABLE))
             m_flags |= F::Settable;
-        if(i.position2i(MOVEABLE))
-            m_flags |= F::Moveable;
+        if(i.position2i(ADJUSTABLE))
+            m_flags |= F::Adjustable;
     }
 
+    bool        PPosition2I::position2i(disabled_t) const 
+    {
+        return m_flags(F::Disabled);
+    }
+    
+    bool        PPosition2I::position2i(settable_t) const 
+    {   
+        return m_flags(F::Settable);
+    }
+    
+    bool        PPosition2I::position2i(adjustable_t) const 
+    {
+        return m_flags(F::Adjustable);
+    }
+        
     void        PPosition2I::position2i(set_t, const Vector2I& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
@@ -26,10 +41,10 @@ namespace yq::tachyon {
         }
     }
     
-    void        PPosition2I::position2i(move_t, const Vector2I& v) 
+    void        PPosition2I::position2i(adjust_t, const Vector2I& v) 
     {
-        if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            dispatch(new MovePosition2I(id(), v));
+        if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
+            dispatch(new AdjustPosition2I(id(), v));
         }
     }
 }

@@ -10,18 +10,20 @@
 #include <yq/tachyon/interfaces/IPosition3D.hpp>
 
 namespace yq::tachyon {
-    class PPosition3D : public Proxy, public IPosition3D {
+    class PPosition3D : public Proxy, public IPosition3D  /* TODO: public IPosition3I, public IPosition3, public IPosition */ {
     public:
     
         Vector3D    position3d() const override {  return m_position;  }
+        bool        position3d(disabled_t) const override;
+        bool        position3d(settable_t) const override;
+        bool        position3d(adjustable_t) const override;
         
         void        position3d(set_t, const Vector3D&) override;
-        void        position3d(move_t, const Vector3D&) override;
+        void        position3d(adjust_t, const Vector3D&) override;
+
+        PPosition3D(const IPosition3D& i);
 
     private:
-        PPosition3D(IPosition3D& i);
-
-        IPosition3D&    m_interface;
         Vector3D        m_position;
     };
 }

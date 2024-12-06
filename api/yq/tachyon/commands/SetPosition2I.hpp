@@ -10,6 +10,8 @@
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
+
+    //! Instructs an object to set it's position
     class SetPosition2I : public TachyonCommand {
         YQ_OBJECT_DECLARE(SetPosition2I, TachyonCommand)
     public:

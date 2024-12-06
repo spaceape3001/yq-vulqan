@@ -27,6 +27,7 @@ namespace yq::tachyon {
     class AppDeleteViewerCommand;
     class AppThread;
     class ViewerThread;
+    class Desktop;
 
     /*! \brief Engine/Vulkan application
     
@@ -37,26 +38,23 @@ namespace yq::tachyon {
         
 
         //! Global application, if any
-        static Application*         app();
+        static Application*         app() { return s_app; }
 
         const AppCreateInfo&        app_info() const;
         
         //! Creates a viewer with widget (note, application owns it)
-        static Viewer*              create_viewer(WidgetPtr);
+        Viewer*              create_viewer(WidgetPtr);
         //! Creates a viewer with title/widget
-        static Viewer*              create_viewer(std::string_view, WidgetPtr);
+        Viewer*              create_viewer(std::string_view, WidgetPtr);
         
-        static Viewer*              create_viewer(const ViewerCreateInfo&, WidgetPtr);
+        Viewer*              create_viewer(const ViewerCreateInfo&, WidgetPtr);
 
-        
-        static bool                 initialized();
-        
         /*! \brief Exec loop for a bunch of windows
 
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        static void                 run(Second timeout={0.});
+        void                 run(Second timeout={0.});
         
         
         /*!  Simple exec loop for a single window.
@@ -68,15 +66,15 @@ namespace yq::tachyon {
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        static void                 run(ViewerPtr win, Second timeout={0.});
+        void                 run(ViewerPtr win, Second timeout={0.});
         
         //! Simple create viewer & exec loop
-        static void                 run(WidgetPtr wid, Second timeout={0.});
+        void                 run(WidgetPtr wid, Second timeout={0.});
 
-        static TaskEngine*          task_engine();
+        //TaskEngine*          task_engine();
         
         //! Adds a viewer, returns the pointer
-        static void                 add_viewer(ViewerPtr);
+        void                 add_viewer(ViewerPtr);
     
         /*! \brief Constructor
         
@@ -90,15 +88,21 @@ namespace yq::tachyon {
         static void init_info();
 
     protected:
-        virtual void  receive(const post::PostCPtr&) override;
+        //virtual void  receive(const post::PostCPtr&) override;
         
     private:
+
+        static Application*     s_app;
     
+        AppCreateInfo const     m_cInfo;
+        std::vector<Desktop*>   m_desktops;
+        std::vector<Viewer*>    m_viewers;
         AppThread*              m_athread   = nullptr;
         ViewerThread*           m_vthread   = nullptr;
     
         friend class Viewer;
         
+        #if 0
         static Viewer*          _add(ViewerPtr);
         static bool             _contains(const Viewer*);
         static void             _remove(Viewer*);
@@ -110,12 +114,10 @@ namespace yq::tachyon {
         
         static Tachyon::Param  params(const AppCreateInfo&);
         
-        static Application*     s_app;
-        
-        AppCreateInfo const     m_cInfo;
 
         struct Common;
         static Common&  common();
+        #endif
     };
 
     void     configure_standand_asset_path();

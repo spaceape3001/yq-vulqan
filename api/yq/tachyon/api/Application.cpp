@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/VulqanManager.hpp>
 #include <yq/tachyon/api/AppThread.hpp>
 #include <yq/tachyon/api/Application.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+//#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yq/tachyon/v/VulqanManager.hpp>
 
-#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
-#include <yq/tachyon/glfw/GLFWManager.hpp>
+//#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
+//#include <yq/tachyon/glfw/GLFWManager.hpp>
 //#include <yq/tachyon/task/TaskEngine.hpp>
 #include <yq/tachyon/api/Viewer.hpp>
 #include <yq/tachyon/api/Widget.hpp>
@@ -20,11 +20,11 @@
 #include <yq/core/ThreadId.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/meta/Init.hpp>
-#include <yq/post/boxes/SimpleBox.hpp>
+//#include <yq/post/boxes/SimpleBox.hpp>
 #include <yq/tachyon/config/build.hpp>
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
+//YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
 
 namespace yq::tachyon {
 
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         ViewerPtr         viewer;
     };
     #endif
-
+#if 0
     struct Application::Common {
         AppCreateInfo                   app_info;
         Application*                    app         = nullptr;
@@ -235,21 +235,17 @@ namespace yq::tachyon {
         return common().tasking.get(); 
     }
 
-    void     configure_standand_asset_path()
-    {
-        static bool s_done  = false;
-        if(s_done)
-            return;
-        Asset::resolver_add_paths(build::data_directory());
-        s_done = true;
-    }
 
     //  ////////////////////////////////////////////////////////////////////////
     //  ////////////////////////////////////////////////////////////////////////
+#endif
 
     static AppCreateInfo    _update(const AppCreateInfo& aci, std::string_view appName)
     {
+        AppCreateInfo   ret = aci;
         
+        
+        return ret;
     }
     
     Application*    Application::s_app  = nullptr;
@@ -257,6 +253,8 @@ namespace yq::tachyon {
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
         BasicApp(argc, argv), m_cInfo(_update(aci, app_name()))
     {
+#if 0    
+    
         Common& g = common();
         if(g.claimed.test_and_set())
             return ;
@@ -287,6 +285,7 @@ namespace yq::tachyon {
         set_post_mode(PostMode::Queued);
         
         //  TODO other event connections
+#endif
         
         tachyonDebug << "Application initialized";
     }
@@ -294,6 +293,7 @@ namespace yq::tachyon {
 
     Application::~Application()
     {
+#if 0
         Common& g = common();
         if(g.app != this)
             return ;
@@ -323,10 +323,12 @@ namespace yq::tachyon {
         }
         g.glfw          = {};
         g.tasking       = {};
-    
+#endif
+
         tachyonDebug << "Application destroyed";
     }
 
+#if 0
     void    Application::cmd_delete_viewer(const AppDeleteViewerCommand&cmd)
     {
         static Common& g = common();
@@ -344,10 +346,24 @@ namespace yq::tachyon {
         dispatch(pp);  // and rebroadcast
     }
 
+#endif    
+#if 0
     void Application::init_info()
     {
         auto w = writer<Application>();
         w.description("Tachyon Application");
-        w.receive(&Application::cmd_delete_viewer);
+        //w.receive(&Application::cmd_delete_viewer);
+    }
+#endif    
+    
+    // Helper here
+
+    void     configure_standand_asset_path()
+    {
+        static bool s_done  = false;
+        if(s_done)
+            return;
+        Asset::resolver_add_paths(build::data_directory());
+        s_done = true;
     }
 }

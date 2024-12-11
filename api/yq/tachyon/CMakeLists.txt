@@ -73,10 +73,20 @@ add_library(${PROJECT_NAME} SHARED
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp
     cameras/TargetCamera.cpp
-    
-    commands/commands.cpp
-    
+
     commands/AddChildCommand.cpp
+    commands/AdjustPosition1D.cpp
+    commands/AdjustPosition1I.cpp
+    commands/AdjustPosition1M.cpp
+    commands/AdjustPosition2D.cpp
+    commands/AdjustPosition2I.cpp
+    commands/AdjustPosition2M.cpp
+    commands/AdjustPosition3D.cpp
+    commands/AdjustPosition3I.cpp
+    commands/AdjustPosition3M.cpp
+    commands/AdjustPosition4D.cpp
+    commands/AdjustPosition4I.cpp
+    commands/AdjustPosition4M.cpp
     commands/AppCommand.cpp
     commands/AppDeleteViewerCommand.cpp
     commands/CameraCommand.cpp
@@ -92,6 +102,18 @@ add_library(${PROJECT_NAME} SHARED
     commands/MouseHideCommand.cpp
     commands/MouseNormalCommand.cpp
     #commands/SetParentCommand.cpp
+    commands/SetPosition1D.cpp
+    commands/SetPosition1I.cpp
+    commands/SetPosition1M.cpp
+    commands/SetPosition2D.cpp
+    commands/SetPosition2I.cpp
+    commands/SetPosition2M.cpp
+    commands/SetPosition3D.cpp
+    commands/SetPosition3I.cpp
+    commands/SetPosition3M.cpp
+    commands/SetPosition4D.cpp
+    commands/SetPosition4I.cpp
+    commands/SetPosition4M.cpp
     commands/SetSize2I.cpp
     commands/TachyonCommand.cpp
     commands/TachyonProxyCommand.cpp
@@ -218,7 +240,18 @@ add_library(${PROJECT_NAME} SHARED
     glfw/MouseGLFW.cpp
     glfw/WindowGLFW.cpp
 
-    interfaces/interfaces.cpp
+    interfaces/IPosition1D.cpp
+    interfaces/IPosition1I.cpp
+    interfaces/IPosition1M.cpp
+    interfaces/IPosition2D.cpp
+    interfaces/IPosition2I.cpp
+    interfaces/IPosition2M.cpp
+    interfaces/IPosition3D.cpp
+    interfaces/IPosition3I.cpp
+    interfaces/IPosition3M.cpp
+    interfaces/IPosition4D.cpp
+    interfaces/IPosition4I.cpp
+    interfaces/IPosition4M.cpp
 
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
@@ -234,7 +267,18 @@ add_library(${PROJECT_NAME} SHARED
     posts/EmptyPost.cpp
     posts/StringPost.cpp
 
-    proxies/proxies.cpp
+    proxies/PPosition1D.cpp
+    proxies/PPosition1I.cpp
+    proxies/PPosition1M.cpp
+    proxies/PPosition2D.cpp
+    proxies/PPosition2I.cpp
+    proxies/PPosition2M.cpp
+    proxies/PPosition3D.cpp
+    proxies/PPosition3I.cpp
+    proxies/PPosition3M.cpp
+    proxies/PPosition4D.cpp
+    proxies/PPosition4I.cpp
+    proxies/PPosition4M.cpp
 
     renders/ImageQuad.cpp
     renders/Quadrilateral.cpp

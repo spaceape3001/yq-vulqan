@@ -24,19 +24,44 @@ add_library(${PROJECT_NAME} SHARED
 
     api/Application.cpp
     api/AppThread.cpp
+    api/Buffer.cpp
+    api/Camera.cpp
+    api/Command.cpp
+    api/Cursor.cpp
     #api/Context.hpp
+    api/Desktop.cpp
     #api/Editor.cpp
+    api/Event.cpp
+    api/Frame.cpp
+    api/InterfaceInfo.cpp
+    api/Joystick.cpp
+    api/Keyboard.cpp
+    api/Light.cpp
     api/Manager.cpp
+    api/Message.cpp
+    api/Model.cpp
+    api/Monitor.cpp
+    api/Mouse.cpp
     api/Perspective.cpp
     api/Pipeline.cpp
     api/PipelineUtils.cpp
+    api/Post.cpp
+    api/Proxy.cpp
     api/Raster.cpp
     #api/Render2D.cpp
     api/Render³D.cpp
     api/Rendered.cpp
+    api/RenderPass.cpp
+    api/Reply.cpp
+    api/Request.cpp
+    api/Sampler.cpp
+    api/Shader.cpp
     api/Tachyon.cpp
+    api/Texture.cpp
     api/Thread.cpp
     #api/Tool.cpp
+    #api/Trigger.cpp
+    api/TypedID.cpp
     api/Undo.cpp
     api/VideoMode.cpp
     #api/Viewer.cpp
@@ -44,7 +69,6 @@ add_library(${PROJECT_NAME} SHARED
     api/Widget.cpp
     api/Window.cpp
 
-    api/api.cpp
 
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp

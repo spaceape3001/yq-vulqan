@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/shader/Shader.hpp>
-#include <yq/tachyon/shader/GLSLShader.hpp>
+#include <yq/tachyon/api/Shader.hpp>
+#include <yq/tachyon/io/GLSLShader.hpp>

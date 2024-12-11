@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Buffer.ipp"
 #include "Camera.ipp"
 #include "Command.ipp"
 #include "Cursor.ipp"
@@ -19,7 +18,6 @@
 #include "Model.ipp"
 #include "Monitor.ipp"
 #include "Mouse.ipp"
-#include "Post.ipp"
 #include "Proxy.ipp"
 #include "RenderPass.ipp"
 #include "Request.ipp"

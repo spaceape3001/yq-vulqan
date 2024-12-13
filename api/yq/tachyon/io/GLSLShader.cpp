@@ -15,8 +15,10 @@
 #include <yq/text/chars.hpp>
 
 namespace yq::errors {
-   using shader_compile_failure    = error_db::entry<"Shader failed to compile">;
-   using shader_validate_failure   = error_db::entry<"Shader failed to validate">;
+   using shader_compile_failure     = error_db::entry<"Shader failed to compile">;
+   using shader_validate_failure    = error_db::entry<"Shader failed to validate">;
+   using compiler_missing           = error_db::entry<"Compiler missing">;
+   using validator_missing          = error_db::entry<"Compiler missing">;
  }
     
 namespace yq::tachyon::glsl {
@@ -57,8 +59,14 @@ namespace yq::tachyon::glsl {
     {
         int                                 ecode   = -1;
         
+        static const    std::filesystem::path& s_compiler  = compiler();
+        static bool     s_exists                        = std::filesystem::exists(s_compiler);
+        if(!s_exists){
+            return { ByteArray(), errors::compiler_missing() };
+        }
+        
         ProcessDescriptor   pd;
-        pd.args.push_back(compiler().string());
+        pd.args.push_back(s_compiler.string());
         
         #if 0
         static const path_vector_t          dirs    = shader_dirs();
@@ -69,7 +77,7 @@ namespace yq::tachyon::glsl {
         }
         #endif
         
-        pd.args.push_back("--target-env=vulkan1.2");
+        pd.args.push_back("--target-env=vulkan1.3");
         pd.args.push_back("-x");        // GLSL is the language of choice
         pd.args.push_back("glsl");
         
@@ -101,10 +109,16 @@ namespace yq::tachyon::glsl {
     {
         int                                 ecode   = -1;
 
+        static const    std::filesystem::path& s_validator  = validator();
+        static bool     s_exists                        = std::filesystem::exists(s_validator);
+        if(!s_exists){
+            return { ByteArray(), errors::validator_missing() };
+        }
+
         ProcessDescriptor   pd;
-        pd.args.push_back(validator().string());
+        pd.args.push_back(s_validator.string());
         pd.args.push_back("--target-env");
-        pd.args.push_back("vulkan1.2");
+        pd.args.push_back("vulkan1.3");
         
         #if 0
             // #include is a google extension...apparently (TODO, implement it)

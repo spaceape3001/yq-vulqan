@@ -38,7 +38,6 @@ ut::suite tests = []{
 int main()
 {
     log_to_std_output();
-
     Meta::init();
     configure_standand_asset_path();
 

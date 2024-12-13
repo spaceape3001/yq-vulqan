@@ -52,13 +52,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Joystick::snap(JoystickSnap& sn) const
-    {
-        Tachyon::snap(sn);
-    }
-
-    Tachyon::PostAdvice    Joystick::advise(const Post&pp) const
+    PostAdvice    Joystick::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
@@ -70,7 +64,12 @@ namespace yq::tachyon {
         }
         return {};
     }
-    
+
+    void Joystick::snap(JoystickSnap& sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

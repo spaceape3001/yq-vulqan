@@ -24,6 +24,7 @@
 #include <yq/tachyon/typedef/vigui.hpp>
 #include <yq/tachyon/typedef/visualizer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>
@@ -91,7 +92,7 @@ namespace yq::tachyon {
     //  + Cursor control
     
     public:
-        
+    
         enum class Stage {
             
             //! Ctor called, that's it
@@ -116,8 +117,8 @@ namespace yq::tachyon {
         
             \note this *WILL* throw exceptions if the viewer create or the widget are bad
         */
-        Viewer(WidgetPtr w, const ViewerCreateInfo& vci);
-        Viewer(WidgetPtr w, const ViewerCreateInfo& vci, const Param&);
+        Viewer(Window*, WidgetPtr, const ViewerCreateInfo& vci);
+        Viewer(Window*, WidgetPtr, const ViewerCreateInfo& vci, const Param& );
         
         //! Destructor
         virtual ~Viewer();
@@ -185,6 +186,9 @@ namespace yq::tachyon {
 
         //! TRUE if we've not called START
         bool                        never_started() const;
+        
+        //! Our viewer number (always incrementing 1...N)
+        unsigned int                number() const { return m_number; }
         
         const Vector2I&             position() const;
 
@@ -337,10 +341,10 @@ namespace yq::tachyon {
 
         static Param   _params(const ViewerCreateInfo&);
 
+        const ViewerCreateInfo          m_createInfo;
         const unsigned                  m_number;
 
         Cleanup                         m_cleanup;
-        ViewerCreateInfoUPtr            m_createInfo;
         std::atomic<unit::Second>       m_drawTime      = { 0. };
         Widget*                         m_focus         = nullptr;
         std::unique_ptr<ViGui>          m_imgui;
@@ -350,6 +354,7 @@ namespace yq::tachyon {
         std::atomic<uint64_t>           m_ticks{0};
         std::unique_ptr<Visualizer>     m_viz;
         WidgetPtr                       m_widget;
+        WindowID                        m_window;
         bool                            m_zeroSize  = false;
 
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close

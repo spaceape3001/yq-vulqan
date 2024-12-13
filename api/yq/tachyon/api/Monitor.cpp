@@ -52,13 +52,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Monitor::snap(MonitorSnap& sn) const
-    {
-        Tachyon::snap(sn);
-    }
-
-    Tachyon::PostAdvice    Monitor::advise(const Post&pp) const
+    PostAdvice    Monitor::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
@@ -71,6 +65,11 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Monitor::snap(MonitorSnap& sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

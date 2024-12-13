@@ -27,6 +27,8 @@ namespace yq::tachyon {
         static void init_info();
 
         virtual CursorID    cursor(StdCursor) const override;
+
+        virtual Window*     create_window(const ViewerCreateInfo&) override;
         
         virtual bool        is_running() const override;
 
@@ -69,6 +71,8 @@ namespace yq::tachyon {
         bool _install(joystick_t, int);
         void _install(monitor_t, all_t);
         bool _install(monitor_t, GLFWmonitor*);
+        
+        MonitorGLFW*    _monitor(MonitorID);
         
         void _uninstall(joystick_t, int);
         void _uninstall(monitor_t, GLFWmonitor*);

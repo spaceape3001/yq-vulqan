@@ -64,7 +64,7 @@ add_library(${PROJECT_NAME} SHARED
     api/TypedID.cpp
     api/Undo.cpp
     api/VideoMode.cpp
-    #api/Viewer.cpp
+    api/Viewer.cpp
     api/ViewerThread.cpp
     api/Widget.cpp
     api/Window.cpp

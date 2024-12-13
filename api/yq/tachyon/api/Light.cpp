@@ -52,13 +52,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Light::snap(LightSnap& sn) const
-    {
-        Tachyon::snap(sn);
-    }
-
-    Tachyon::PostAdvice    Light::advise(const Post&pp) const
+    PostAdvice    Light::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
@@ -71,6 +65,11 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Light::snap(LightSnap& sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

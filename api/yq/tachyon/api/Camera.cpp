@@ -53,13 +53,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Camera::snap(CameraSnap& sn) const
-    {
-        Tachyon::snap(sn);
-    }
-
-    Tachyon::PostAdvice    Camera::advise(const Post&pp) const
+    PostAdvice    Camera::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
@@ -72,6 +66,12 @@ namespace yq::tachyon {
         return {};
     }
     
+
+    void Camera::snap(CameraSnap& sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

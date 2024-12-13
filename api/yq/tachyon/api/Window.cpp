@@ -52,13 +52,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Window::snap(WindowSnap& sn) const
-    {
-        Tachyon::snap(sn);
-    }
-
-    Tachyon::PostAdvice    Window::advise(const Post&pp) const
+    PostAdvice    Window::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
@@ -71,6 +65,11 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Window::snap(WindowSnap& sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

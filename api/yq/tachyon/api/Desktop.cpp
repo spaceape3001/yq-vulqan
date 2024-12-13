@@ -56,13 +56,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Desktop::snap(DesktopSnap& sn) const
-    {
-        Manager::snap(sn);
-    }
-
-    Manager::PostAdvice    Desktop::advise(const Post&pp) const
+    PostAdvice    Desktop::advise(const Post&pp) const
     {
         PostAdvice  pa  = Manager::advise(pp);
         if(!unspecified(pa))
@@ -104,6 +98,12 @@ namespace yq::tachyon {
     {
         return m_control(C::Window);
     }
+
+    void Desktop::snap(DesktopSnap& sn) const
+    {
+        Manager::snap(sn);
+    }
+
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -58,7 +58,7 @@ namespace yq::tachyon {
         Tachyon::snap(sn);
     }
 
-    Tachyon::PostAdvice    Model::advise(const Post&pp) const
+    PostAdvice    Model::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))

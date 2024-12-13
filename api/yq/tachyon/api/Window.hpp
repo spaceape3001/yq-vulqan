@@ -54,7 +54,7 @@ namespace yq::tachyon {
     
         static void init_info();
 
-        WindowID            id() const { return WindowID(UniqueID::id()); }
+        WindowID    id() const { return WindowID(UniqueID::id()); }
 
     protected:
     

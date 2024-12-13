@@ -10,41 +10,41 @@
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/ViewerBind.hpp>
+#include <yq/tachyon/api/ViewerException.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/viz/ViContext.hpp>
 
 //#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
-#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
-#include <yq/tachyon/commands/viewer.hpp>
-#include <yq/tachyon/commands/window.hpp>
+//#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
+//#include <yq/tachyon/commands/viewer.hpp>
+//#include <yq/tachyon/commands/window.hpp>
 
-#include <yq/tachyon/events/KeyCharacterEvent.hpp>
-#include <yq/tachyon/events/KeyPressEvent.hpp>
-#include <yq/tachyon/events/KeyReleaseEvent.hpp>
-#include <yq/tachyon/events/MouseMoveEvent.hpp>
-#include <yq/tachyon/events/MousePressEvent.hpp>
-#include <yq/tachyon/events/MouseReleaseEvent.hpp>
-#include <yq/tachyon/events/ViewerCloseEvent.hpp>
-#include <yq/tachyon/events/ViewerPauseEvent.hpp>
-#include <yq/tachyon/events/ViewerResumeEvent.hpp>
-#include <yq/tachyon/events/WindowDestroyEvent.hpp>
-#include <yq/tachyon/events/WindowHideEvent.hpp>
-#include <yq/tachyon/events/WindowResizeEvent.hpp>
-#include <yq/tachyon/events/WindowShowEvent.hpp>
-#include <yq/tachyon/events/WindowStateEvent.hpp>
-#include <yq/tachyon/exceptions/ViewerException.hpp>
-#include <yq/tachyon/glfw/GLFWManager.hpp>
-#include <yq/tachyon/image/Raster.hpp>
-//#include <yq/tachyon/inputs/KeyCharacter.hpp>
-#include <yq/tachyon/replies/ViewerCloseReply.hpp>
-#include <yq/tachyon/replies/ViewerWidgetReply.hpp>
+//#include <yq/tachyon/events/KeyCharacterEvent.hpp>
+//#include <yq/tachyon/events/KeyPressEvent.hpp>
+//#include <yq/tachyon/events/KeyReleaseEvent.hpp>
+//#include <yq/tachyon/events/MouseMoveEvent.hpp>
+//#include <yq/tachyon/events/MousePressEvent.hpp>
+//#include <yq/tachyon/events/MouseReleaseEvent.hpp>
+//#include <yq/tachyon/events/ViewerCloseEvent.hpp>
+//#include <yq/tachyon/events/ViewerPauseEvent.hpp>
+//#include <yq/tachyon/events/ViewerResumeEvent.hpp>
+//#include <yq/tachyon/events/WindowDestroyEvent.hpp>
+//#include <yq/tachyon/events/WindowHideEvent.hpp>
+//#include <yq/tachyon/events/WindowResizeEvent.hpp>
+//#include <yq/tachyon/events/WindowShowEvent.hpp>
+//#include <yq/tachyon/events/WindowStateEvent.hpp>
+//#include <yq/tachyon/glfw/GLFWManager.hpp>
+//#include <yq/tachyon/image/Raster.hpp>
+//#include <yq/tachyon/replies/ViewerCloseReply.hpp>
+//#include <yq/tachyon/replies/ViewerWidgetReply.hpp>
 #include <yq/tachyon/requests/ViewerCloseRequest.hpp>
-#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
-#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
-#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
-#include <yq/tachyon/viewer/ViGui.hpp>
-#include <yq/tachyon/viz/ViContext.hpp>
+//#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
+//#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
+//#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
+#include <yq/tachyon/viz/ViGui.hpp>
 #include <yq/tachyon/viz/Visualizer.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
 
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>
@@ -77,12 +77,86 @@ namespace yq::tachyon {
     {
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::atomic<int>        Viewer::s_count{0};
+    std::atomic<unsigned>   Viewer::s_lastNumber{0};
+
     Viewer::Param   Viewer::_params(const ViewerCreateInfo&vci)
     {
         Param  ret;
         //ret.name    = "Viewer";
         return ret;
     }
+
+    void Viewer::init_info()
+    {
+        auto w = writer<Viewer>();
+        
+        w.description("Tachyon Viewer");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Viewer::Viewer(Window* win, WidgetPtr w, const ViewerCreateInfo& vci) : Viewer(win, w, vci, _params(vci))
+    {
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  OLD/COMPATIBILITY STUFF (ie, some stuff brought in to satisfy linker issues)
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    Viewer::Viewer(Window* win, WidgetPtr w, const ViewerCreateInfo& vci, const Param&p) : 
+        Tachyon(p), m_createInfo(vci), m_number(++s_lastNumber)
+    {
+    }
+    
+    Viewer::~Viewer()
+    {
+    }
+    
+    void     Viewer::accept(close_t)
+    {
+    }
+
+    PostAdvice  Viewer::advise(const Post&) const 
+    {
+        return {};
+    }
+ 
+    std::error_code     Viewer::draw()
+    {
+        ViContext   u;
+        
+        //  ENABLE to get the validation issue
+        //  u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
+        return draw(u);
+    }
+
+    std::error_code     Viewer::draw(ViContext& u)
+    {
+        return {};
+    }
+
+    Execution   Viewer::tick(Context&) 
+    {
+        return {};
+    }
+    
+    void    Viewer::on_close_request() 
+    { 
+    }
+
+    //! Call if you reject the close request
+    void     Viewer::reject(close_t)
+    {
+    }
+
+#if 0
+
 
     void Viewer::init_info()
     {
@@ -127,13 +201,7 @@ namespace yq::tachyon {
     //  ----------------------------------------------------------------------------------------------------------------
     //  INITIALIZATION/DESTRUCTION
 
-    std::atomic<int>        Viewer::s_count{0};
-    std::atomic<uint64_t>   Viewer::s_lastNumber{0};
 
-    Viewer::Viewer(WidgetPtr w, const ViewerCreateInfo& vci) : Viewer(w, vci, _params(vci))
-    {
-    }
-    
     Viewer::Viewer(WidgetPtr w, const ViewerCreateInfo& vci, const Param&p)
     {
         if(!Application::initialized())
@@ -228,15 +296,6 @@ namespace yq::tachyon {
         if(m_viz)
             m_viz -> wait_idle();
         m_cleanup.sweep();
-    }
-
-    std::error_code     Viewer::draw()
-    {
-        ViContext   u;
-        
-        //  ENABLE to get the validation issue
-        //  u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
-        return draw(u);
     }
 
     std::error_code     Viewer::draw(ViContext& u)
@@ -1101,6 +1160,6 @@ namespace yq::tachyon {
     }
 */
 
-
+#endif
 
 }

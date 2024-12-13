@@ -52,7 +52,7 @@ namespace yq::tachyon {
     {
     }
 
-    Tachyon::PostAdvice    Rendered::advise(const Post&pp) const
+    PostAdvice    Rendered::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))

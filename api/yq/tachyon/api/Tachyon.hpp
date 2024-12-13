@@ -104,6 +104,8 @@ namespace yq::tachyon {
     class Frame;
     struct OutPost;
 
+    using PostAdvice = std::variant<std::monostate, accept_t, reject_t, MG, MGF>;
+
     /*! \brief Base (heavy) object in the tachyon library
     
         Unfortunately, this class has picked up a bit of heft and isn't light-weight. 
@@ -163,9 +165,11 @@ namespace yq::tachyon {
         template <SomeTachyon T, typename ... Args>
         T*          create(child_t, Args...);
 
+        template <SomeTachyon T, typename ... Args>
+        T*          create_child(Args...);
+
     protected:
 
-        using PostAdvice = std::variant<std::monostate, accept_t, reject_t, MG, MGF>;
 
         static bool accepting(const PostAdvice&);
         static bool rejecting(const PostAdvice&);
@@ -359,12 +363,18 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create(child_t, Args... args)
+    T*  Tachyon::create_child(Args... args)
     {
         Ref<T>   tp  = new T(args...);
         retain(tp);
         tp->_set_parent(*this);
         _add_child(*tp);
         return tp.ptr();
+    }
+
+    template <SomeTachyon T, typename ... Args>
+    T*  Tachyon::create(child_t, Args... args)
+    {
+        return create_child<T>(args...);
     }
 }

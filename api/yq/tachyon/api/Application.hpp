@@ -40,14 +40,15 @@ namespace yq::tachyon {
         //! Global application, if any
         static Application*         app() { return s_app; }
 
-        const AppCreateInfo&        app_info() const;
+        const AppCreateInfo&        app_info() const { return m_cInfo; }
         
         //! Creates a viewer with widget (note, application owns it)
-        Viewer*              create_viewer(WidgetPtr);
-        //! Creates a viewer with title/widget
-        Viewer*              create_viewer(std::string_view, WidgetPtr);
+        Viewer*                     create_viewer(WidgetPtr);
         
-        Viewer*              create_viewer(const ViewerCreateInfo&, WidgetPtr);
+        //! Creates a viewer with title/widget
+        Viewer*                     create_viewer(std::string_view, WidgetPtr);
+        
+        Viewer*                     create_viewer(const ViewerCreateInfo&, WidgetPtr);
 
         /*! \brief Exec loop for a bunch of windows
 

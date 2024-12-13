@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/api/AppException.hpp>
 #include <yq/tachyon/api/AppThread.hpp>
 #include <yq/tachyon/api/Application.hpp>
 //#include <yq/tachyon/api/TachyonInfoWriter.hpp>
@@ -28,13 +29,68 @@
 
 namespace yq::tachyon {
 
-    #if 0
+    static AppCreateInfo    _update(const AppCreateInfo& aci, std::string_view appName)
+    {
+        AppCreateInfo   ret = aci;
+        
+        
+        return ret;
+    }
+    
+    void     configure_standand_asset_path()
+    {
+        static bool s_done  = false;
+        if(s_done)
+            return;
+        Asset::resolver_add_paths(build::data_directory());
+        s_done = true;
+    }
+
+    Application*    Application::s_app  = nullptr;
+
+    Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
+        BasicApp(argc, argv), m_cInfo(_update(aci, app_name()))
+    {
+        if(!is_main_thread()){
+            throw AppException("Applications must only be used on the main thread!");
+        }
+        if(s_app){
+            throw AppException("Only one application per customer!");
+        }
+        s_app   = this;
+
+        tachyonDebug << "Application initialized";
+    }
+    
+
+    Application::~Application()
+    {
+        if(this == s_app){
+            s_app   = nullptr;
+        }
+        tachyonDebug << "Application destroyed";
+    }
+
+#if 0
+    Viewer*                     create_viewer(WidgetPtr);
+    
+    //! Creates a viewer with title/widget
+    Viewer*                     create_viewer(std::string_view, WidgetPtr);
+    
+    Viewer*                     create_viewer(const ViewerCreateInfo&, WidgetPtr);
+#endif
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  OLD STUFF
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#if 0
         // MIGHT need to bring this back... until then
     struct Application::ViewerData {
         ViewerPtr         viewer;
     };
-    #endif
-#if 0
+
     struct Application::Common {
         AppCreateInfo                   app_info;
         Application*                    app         = nullptr;
@@ -121,12 +177,6 @@ namespace yq::tachyon {
         _add(v);
     }
 
-
-    Application*       Application::app() 
-    { 
-        return common().app;
-    }
-
     Viewer*         Application::create_viewer(WidgetPtr w)
     {
         return create_viewer(common().app_info.view, w);
@@ -154,15 +204,12 @@ namespace yq::tachyon {
         return static_cast<bool>(common().app);
     }
 
-#if 0
     Tachyon::Param  Application::params(const AppCreateInfo& aci)
     {
         Tachyon::Param ret;
         return ret;
     }
-#endif
 
-#if 0
     void    Application::remove(Viewer* v)
     {
         if(!v)
@@ -178,7 +225,6 @@ namespace yq::tachyon {
         //GLFWManager::remove(*v);
         //std::erase(g.viewers, v);
     }
-#endif
 
     void    Application::run(Second timeout)
     {
@@ -238,22 +284,11 @@ namespace yq::tachyon {
 
     //  ////////////////////////////////////////////////////////////////////////
     //  ////////////////////////////////////////////////////////////////////////
-#endif
 
-    static AppCreateInfo    _update(const AppCreateInfo& aci, std::string_view appName)
-    {
-        AppCreateInfo   ret = aci;
-        
-        
-        return ret;
-    }
-    
-    Application*    Application::s_app  = nullptr;
     
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
         BasicApp(argc, argv), m_cInfo(_update(aci, app_name()))
     {
-#if 0    
     
         Common& g = common();
         if(g.claimed.test_and_set())
@@ -284,8 +319,6 @@ namespace yq::tachyon {
 
         set_post_mode(PostMode::Queued);
         
-        //  TODO other event connections
-#endif
         
         tachyonDebug << "Application initialized";
     }
@@ -293,7 +326,6 @@ namespace yq::tachyon {
 
     Application::~Application()
     {
-#if 0
         Common& g = common();
         if(g.app != this)
             return ;
@@ -323,12 +355,10 @@ namespace yq::tachyon {
         }
         g.glfw          = {};
         g.tasking       = {};
-#endif
 
         tachyonDebug << "Application destroyed";
     }
 
-#if 0
     void    Application::cmd_delete_viewer(const AppDeleteViewerCommand&cmd)
     {
         static Common& g = common();
@@ -346,8 +376,6 @@ namespace yq::tachyon {
         dispatch(pp);  // and rebroadcast
     }
 
-#endif    
-#if 0
     void Application::init_info()
     {
         auto w = writer<Application>();
@@ -355,15 +383,5 @@ namespace yq::tachyon {
         //w.receive(&Application::cmd_delete_viewer);
     }
 #endif    
-    
-    // Helper here
 
-    void     configure_standand_asset_path()
-    {
-        static bool s_done  = false;
-        if(s_done)
-            return;
-        Asset::resolver_add_paths(build::data_directory());
-        s_done = true;
-    }
 }

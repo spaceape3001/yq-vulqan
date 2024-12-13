@@ -52,13 +52,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Mouse::snap(MouseSnap& sn) const
-    {
-        Tachyon::snap(sn);
-    }
-
-    Tachyon::PostAdvice    Mouse::advise(const Post&pp) const
+    PostAdvice    Mouse::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
@@ -71,6 +65,11 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Mouse::snap(MouseSnap& sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

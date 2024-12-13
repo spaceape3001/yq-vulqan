@@ -52,13 +52,7 @@ namespace yq::tachyon {
     {
     }
 
-
-    void Keyboard::snap(KeyboardSnap& sn) const
-    {
-        Tachyon::snap(sn);
-    }
-
-    Tachyon::PostAdvice    Keyboard::advise(const Post&pp) const
+    PostAdvice    Keyboard::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
@@ -71,6 +65,11 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Keyboard::snap(KeyboardSnap& sn) const
+    {
+        Tachyon::snap(sn);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     

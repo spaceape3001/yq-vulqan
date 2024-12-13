@@ -6,8 +6,10 @@
 
 #include "DesktopGLFW.hpp"
 #include <yq/core/ThreadId.hpp>
+#include <yq/tachyon/api/Application.hpp>
 #include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/DesktopInfoWriter.hpp>
+#include <yq/tachyon/api/ViewerCreateInfo.hpp>
 #include <yq/tachyon/glfw/CursorGLFW.hpp>
 #include <yq/tachyon/glfw/ExceptionGLFW.hpp>
 #include <yq/tachyon/glfw/JoystickGLFW.hpp>
@@ -16,6 +18,8 @@
 #include <yq/tachyon/glfw/MonitorGLFW.hpp>
 #include <yq/tachyon/glfw/WindowGLFW.hpp>
 #include <yq/tachyon/glfw/LoggingGLFW.hpp>
+
+#include <yq/shape/Size2.hxx>
 #include <GLFW/glfw3.h>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::DesktopGLFW)
@@ -70,6 +74,7 @@ namespace yq::tachyon {
         glfwInit();
         
         m_stage = Stage::Init;
+        s_desktop   = this;
     }
     
     DesktopGLFW::~DesktopGLFW()
@@ -149,6 +154,14 @@ namespace yq::tachyon {
         return true;
     }
         
+    MonitorGLFW*    DesktopGLFW::_monitor(MonitorID id)
+    {
+        auto i = m_monitors.find(id);
+        if(i != m_monitors.end())
+            return i->second;
+        return nullptr;
+    }
+
     Execution    DesktopGLFW::_start(Context& ctx)
     {
         if(m_control(C::Cursor)){
@@ -189,6 +202,51 @@ namespace yq::tachyon {
     
     void DesktopGLFW::_uninstall(monitor_t, GLFWmonitor*)
     {
+    }
+
+    Window*   DesktopGLFW::create_window(const ViewerCreateInfo& vci) 
+    {
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        
+        int wx      = std::max(1,vci.size.width());
+        int wy      = std::max(1,vci.size.height());
+        
+        std::string     title   = vci.title;
+        if(title.empty())
+            title   = Application::app_name();
+        
+        GLFWmonitor*    m   = nullptr;
+        if(vci.monitor){
+            MonitorGLFW* mm   = _monitor(vci.monitor);
+            if(!mm){
+                glfwCritical << "Unable to find specified monitor.";
+                return nullptr;
+            }
+            
+            m   = mm->glfw();
+            if(!m){
+                glfwCritical << "Unable to find specified monitor.";
+                return nullptr;
+            }
+        }
+    
+    
+        GLFWwindow* ww  = glfwCreateWindow(wx, wy, title.c_str(), m, nullptr);
+        if(!ww){
+            const char* description = nullptr;
+            glfwGetError(&description);
+            if(description)
+                glfwCritical << "Unable to create GLFW window.  " << description;
+            return nullptr;
+        }
+        
+        WindowGLFW* w       = create<WindowGLFW>(CHILD, this, ww, vci);
+        m_windows[w->id()]  = w;
+        return w;
     }
 
     CursorID  DesktopGLFW::cursor(StdCursor sc) const 

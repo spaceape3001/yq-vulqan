@@ -72,7 +72,7 @@ namespace yq::tachyon {
         return ch->set_parent(this);
     }
 
-    Tachyon::PostAdvice    Widget::advise(const Post&pp) const
+    PostAdvice    Widget::advise(const Post&pp) const
     {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))

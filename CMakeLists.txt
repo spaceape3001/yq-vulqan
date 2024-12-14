@@ -61,12 +61,12 @@ if(${Build_UnitTests})
     add_subdirectory(test)
 endif()
 
-# add_subdirectory(tool)
+add_subdirectory(tool)
 
 if(${Build_SDK})
-    # add_subdirectory(sdk)
+    add_subdirectory(sdk)
 endif()
-# add_subdirectory(plugin)
+add_subdirectory(plugin)
 
 #   Not in GIT, but a spot to experiement
 if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/apix)

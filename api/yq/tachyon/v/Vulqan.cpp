@@ -8,7 +8,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/AppCreateInfo.hpp>
 #include <yq/tachyon/api/ManagerInfoWriter.hpp>
-#include "VulqanManager.hpp"
+#include "Vulqan.hpp"
 
 
 #include <yq/tachyon/v/VqEnums.hpp>
@@ -74,14 +74,14 @@ namespace yq::tachyon {
     }
 
 
-    struct VulqanManager::Common {
-        VulqanManager*                      manager         = nullptr;
-        std::atomic_flag                    claimed;
-        VkInstance                          instance        = nullptr;
-        std::string                         app_name;
-        uint32_t                            vulkan_api      = 0;
-        bool                                validation      = false;
-        bool                                best_practices  = false;
+    struct Vulqan::Common {
+        Vulqan*                      manager         = nullptr;
+        std::atomic_flag             claimed;
+        VkInstance                   instance        = nullptr;
+        std::string                  app_name;
+        uint32_t                     vulkan_api      = 0;
+        bool                         validation      = false;
+        bool                         best_practices  = false;
         
         struct {
             std::string         name        = "YQ Tachyon";
@@ -110,7 +110,7 @@ namespace yq::tachyon {
         bool    add_layer(const char*);
     };
     
-    VulqanManager::Common& VulqanManager::common()
+    Vulqan::Common& Vulqan::common()
     {
         static Common s_ret;
         return s_ret;
@@ -118,7 +118,7 @@ namespace yq::tachyon {
 
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    bool    VulqanManager::Common::add_extension(const char*z)
+    bool    Vulqan::Common::add_extension(const char*z)
     {
         if(!z)
             return false;
@@ -128,7 +128,7 @@ namespace yq::tachyon {
         return true;
     }
     
-    bool    VulqanManager::Common::add_layer(const char* z)
+    bool    Vulqan::Common::add_layer(const char* z)
     {
         if(!z)
             return false;
@@ -138,7 +138,7 @@ namespace yq::tachyon {
         return true;
     }
 
-    void    VulqanManager::Common::enumerate_extensions()
+    void    Vulqan::Common::enumerate_extensions()
     {
         uint32_t    count   = 0;
         vkEnumerateInstanceExtensionProperties(nullptr, &count, nullptr);
@@ -151,7 +151,7 @@ namespace yq::tachyon {
         }
     }
     
-    void    VulqanManager::Common::enumerate_layers()
+    void    Vulqan::Common::enumerate_layers()
     {
         uint32_t    count   = 0;
         vkEnumerateInstanceLayerProperties(&count, nullptr);
@@ -166,7 +166,7 @@ namespace yq::tachyon {
 
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    void  VulqanManager::_init(const AppCreateInfo& aci)
+    void  Vulqan::_init(const AppCreateInfo& aci)
     {
         Common& g   = common();
         
@@ -190,7 +190,7 @@ namespace yq::tachyon {
             } else {
                 {
                     auto stream    = (aci.vulkan_validation == Required::YES) ? tachyonCritical : tachyonError;
-                    stream << "VulqanManager: Unable to find validation layers.";
+                    stream << "Vulqan: Unable to find validation layers.";
                 }
                 if(aci.vulkan_validation == Required::YES)
                     throw VulqanException("VulganManager: Required validation layer is unavailable!");
@@ -208,32 +208,32 @@ namespace yq::tachyon {
 
         for(auto& x : aci.vulkan_layers){
             if(!x.name)
-                throw VulqanException("VulqanManager: Specified layer name is a null pointer!");
+                throw VulqanException("Vulqan: Specified layer name is a null pointer!");
             if(g.add_layer(x.name)){
-                tachyonInfo << "VulqanManager: Enabling vulkan layer '" << x.name << "'";
+                tachyonInfo << "Vulqan: Enabling vulkan layer '" << x.name << "'";
             } else {
                 {
                     auto stream    = (x.req == Required::YES) ? vqCritical : vqError;
-                    stream << "VulqanManager: Unable to find requested layer '" << x.name << "'";
+                    stream << "Vulqan: Unable to find requested layer '" << x.name << "'";
                 }
                 if(x.req == Required::YES){
-                    throw VulqanException("VulqanManager: Vulkan API missing required layer!");
+                    throw VulqanException("Vulqan: Vulkan API missing required layer!");
                 }
             }
         }
 
         for(auto& x : aci.vulkan_extensions){
             if(!x.name)
-                throw VulqanException("VulqanManager: Specified extension name is a null pointer!");
+                throw VulqanException("Vulqan: Specified extension name is a null pointer!");
             if(g.add_extension(x.name)){
-                tachyonInfo << "VulqanManager: Enabling vulkan extension '" << x.name << "'";
+                tachyonInfo << "Vulqan: Enabling vulkan extension '" << x.name << "'";
             } else {
                 {
                     auto stream    = (x.req == Required::YES) ? vqCritical : vqError;
-                    stream << "VulqanManager: Unable to find requested extension '" << x.name << "'";
+                    stream << "Vulqan: Unable to find requested extension '" << x.name << "'";
                 }
                 if(x.req == Required::YES){
-                    throw VulqanException("VulqanManager: Vulkan API missing required extension!");
+                    throw VulqanException("Vulqan: Vulkan API missing required extension!");
                 }
             }
         }
@@ -272,14 +272,14 @@ namespace yq::tachyon {
             
         VkResult res = vkCreateInstance(&createInfo, nullptr, &g.instance);
         if(res != VK_SUCCESS){
-            tachyonCritical << "VulqanManager: unable to create vulkan instance.  Code " << (int) res;
-            throw VulqanException("VulqanManager: Unable to create vulkan instance!");
+            tachyonCritical << "Vulqan: unable to create vulkan instance.  Code " << (int) res;
+            throw VulqanException("Vulqan: Unable to create vulkan instance!");
         }
         
         assert(g.instance != nullptr);
         if(g.instance == nullptr){
-            tachyonCritical << "VulqanManager: vulkan instance is a null pointer.";
-            throw VulqanException("VulqanManager: Vulkan instance is NULL!");
+            tachyonCritical << "Vulqan: vulkan instance is a null pointer.";
+            throw VulqanException("Vulqan: Vulkan instance is NULL!");
         } 
         
         if(want_debug){
@@ -293,7 +293,7 @@ namespace yq::tachyon {
         }
     }
     
-    void  VulqanManager::_kill()
+    void  Vulqan::_kill()
     {
         Common& g   = common();
         if(g.debug){
@@ -310,43 +310,43 @@ namespace yq::tachyon {
     
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    VulqanManager*   VulqanManager::manager()
+    Vulqan*   Vulqan::manager()
     {
         return common().manager;
     }
     
-    VkInstance       VulqanManager::instance()
+    VkInstance       Vulqan::instance()
     {
         return common().instance;
     }
 
-    bool             VulqanManager::initialized()
+    bool             Vulqan::initialized()
     {
         return static_cast<bool>(common().manager);
     }
 
-    uint32_t         VulqanManager::vulkan_api()
+    uint32_t         Vulqan::vulkan_api()
     {
         return common().vulkan_api;
     }
 
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    VulqanManager::VulqanManager(const AppCreateInfo& appInfo)
+    Vulqan::Vulqan(const AppCreateInfo& appInfo)
     {
         if(yq::thread::id())    // not the main thread...
-            throw VulqanException("VulqanManager can only be initialized in the main thread!");
+            throw VulqanException("Vulqan can only be initialized in the main thread!");
 
         Common&     g = common();
         if(g.claimed.test_and_set())
-            throw VulqanException("VulqanManager can only have one instance!");
+            throw VulqanException("Vulqan can only have one instance!");
         
         _init(appInfo);
 
         g.manager   = this;
-        tachyonDebug << "VulqanManager initialized";
+        tachyonDebug << "Vulqan initialized";
     }
     
-    VulqanManager::~VulqanManager()
+    Vulqan::~Vulqan()
     {
         Common& g   = common();
         if(g.manager != this)
@@ -354,21 +354,21 @@ namespace yq::tachyon {
             
         _kill();
         g.manager   = nullptr;
-        tachyonDebug << "VulqanManager destroyed";
+        tachyonDebug << "Vulqan destroyed";
     }
 
-    //void VulqanManager::handle(Event&evt)
+    //void Vulqan::handle(Event&evt)
     //{
         //// monitor connect/disconnect
     //}
     
-    void VulqanManager::init_info()
+    void Vulqan::init_info()
     {
-        auto w = writer<VulqanManager>();
+        auto w = writer<Vulqan>();
         w.abstract();   // prohibit creation outside of main
         w.description("Tachyon Vulkan Manager");
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::VulqanManager)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Vulqan)
 

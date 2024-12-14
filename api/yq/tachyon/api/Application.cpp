@@ -9,7 +9,7 @@
 #include <yq/tachyon/api/AppThread.hpp>
 #include <yq/tachyon/api/Application.hpp>
 //#include <yq/tachyon/api/TachyonInfoWriter.hpp>
-#include <yq/tachyon/v/VulqanManager.hpp>
+#include <yq/tachyon/v/Vulqan.hpp>
 
 //#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
 //#include <yq/tachyon/glfw/GLFWManager.hpp>
@@ -97,7 +97,7 @@ namespace yq::tachyon {
         std::atomic_flag                claimed;
         std::unique_ptr<GLFWManager>    glfw;
         //std::unique_ptr<TaskEngine>     tasking;
-        std::unique_ptr<VulqanManager>  vulqan;
+        std::unique_ptr<Vulqan>  vulqan;
         std::atomic<bool>               quit{false};
         std::vector<ViewerPtr>          viewers;
         Cleanup                         cleanup;
@@ -313,7 +313,7 @@ namespace yq::tachyon {
             connect(TX, *g.glfw);
         }
         if(g.app_info.vulkan){
-            g.vulqan            = std::make_unique<VulqanManager>(g.app_info);
+            g.vulqan            = std::make_unique<Vulqan>(g.app_info);
             connect(TX, *g.vulqan);
         }
 

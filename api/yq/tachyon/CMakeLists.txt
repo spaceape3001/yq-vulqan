@@ -315,7 +315,7 @@ add_library(${PROJECT_NAME} SHARED
     v/VqEnums.cpp
     v/VqLogging.cpp
     v/VqUtils.cpp
-    v/VulqanManager.cpp
+    v/Vulqan.cpp
     
     viz/ViBuffer.cpp
     viz/ViCommandBuffer.cpp

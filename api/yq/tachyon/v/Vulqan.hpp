@@ -16,24 +16,29 @@ namespace yq {
 namespace yq::tachyon {
     struct AppCreateInfo;
 
-    class VulqanManager : public Manager {
-        YQ_TACHYON_DECLARE(VulqanManager, Manager)
+    class Vulqan : public Manager {
+        YQ_TACHYON_DECLARE(Vulqan, Manager)
     public:
     
-        static VulqanManager*   manager();
+        static Vulqan*          manager();
         static VkInstance       instance();
         static bool             initialized();
         
         static uint32_t         vulkan_api();
     
-        VulqanManager(const AppCreateInfo&);
-        ~VulqanManager();
+        Vulqan(const AppCreateInfo&);
+        ~Vulqan();
         
         static void init_info();
 
     protected:
     
+    
     private:
+    
+        static Vulqan*          s_manager;
+        static VkInstance       s_instance;
+    
         struct Common;
         static Common&  common();
         

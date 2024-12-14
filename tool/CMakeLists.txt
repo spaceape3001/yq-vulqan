@@ -5,11 +5,11 @@
 ################################################################################
 
 
-add_executable(glfw_joysticks glfw_joysticks.cpp)
-target_link_libraries(glfw_joysticks yq_tachyon)
+#add_executable(glfw_joysticks glfw_joysticks.cpp)
+#target_link_libraries(glfw_joysticks yq_tachyon)
 
-add_executable(glfw_monitors glfw_monitors.cpp)
-target_link_libraries(glfw_monitors yq_tachyon)
+#add_executable(glfw_monitors glfw_monitors.cpp)
+#target_link_libraries(glfw_monitors yq_tachyon)
 
 add_executable(vk_devices vk_devices.cpp)
 target_link_libraries(vk_devices yq_tachyon)

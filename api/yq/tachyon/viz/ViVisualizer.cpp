@@ -24,7 +24,7 @@
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/v/VqUtils.hpp>
-#include <yq/tachyon/v/VulqanManager.hpp>
+#include <yq/tachyon/v/Vulqan.hpp>
 #include <yq/tachyon/viz/ViManager.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>
@@ -54,7 +54,7 @@ namespace yq::tachyon {
 
     std::error_code  ViVisualizer::_0_app_window_initialize(GLFWwindow* w)
     {
-        m_instance    = VulqanManager::instance();
+        m_instance    = Vulqan::instance();
         if(!m_instance)
             return errors::vulkan_uninitialized();
 
@@ -310,7 +310,7 @@ namespace yq::tachyon {
         allocatorCreateInfo.instance                        = m_instance;
         allocatorCreateInfo.physicalDevice                  = m_physical;
         allocatorCreateInfo.device                          = m_device;
-        allocatorCreateInfo.vulkanApiVersion                = VulqanManager::vulkan_api();
+        allocatorCreateInfo.vulkanApiVersion                =  Vulqan::vulkan_api();
         allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) iData.viewer.chunk_size;
         vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
         

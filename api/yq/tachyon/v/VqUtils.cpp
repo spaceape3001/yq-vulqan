@@ -12,7 +12,7 @@
 #include <yq/tachyon/api/ImageViewInfo.hpp>
 #include <yq/tachyon/api/SamplerInfo.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
-#include <yq/tachyon/v/VulqanManager.hpp>
+#include <yq/tachyon/v/Vulqan.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>
@@ -61,7 +61,7 @@ namespace yq::tachyon {
     std::vector<VkPhysicalDeviceGroupProperties>    vqEnumeratePhysicalDeviceGroups(VkInstance inst)
     {
         if(!inst)
-            inst    = VulqanManager::instance();
+            inst    = Vulqan::instance();
         uint32_t    count   = 0;
         vkEnumeratePhysicalDeviceGroups(inst, &count, nullptr);
         std::vector<VkPhysicalDeviceGroupProperties>    ret(count);
@@ -88,7 +88,7 @@ namespace yq::tachyon {
     std::vector<VkPhysicalDevice>        vqEnumeratePhysicalDevices(VkInstance inst)
     {
         if(!inst)
-            inst    = VulqanManager::instance();
+            inst    = Vulqan::instance();
         uint32_t    count   = 0;
         vkEnumeratePhysicalDevices(inst, &count, nullptr);
         std::vector<VkPhysicalDevice>    ret(count);
@@ -148,7 +148,7 @@ namespace yq::tachyon {
     VkPhysicalDevice                     vqFirstDevice(VkInstance inst)
     {
         if(!inst)
-            inst    = VulqanManager::instance();
+            inst    = Vulqan::instance();
         for(VkPhysicalDevice v : vqEnumeratePhysicalDevices(inst)){
             if(v)
                 return v;

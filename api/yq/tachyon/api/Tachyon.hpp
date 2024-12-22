@@ -145,6 +145,8 @@ namespace yq::tachyon {
         
         ThreadID            owner() const;
         
+        bool                owner(push_t, ThreadID);
+        
         TypedID             parent() const { return m_parent; }
         
         Tachyon*            parent(const Frame&) const;
@@ -357,7 +359,7 @@ namespace yq::tachyon {
     template <SomeTachyon T, typename ... Args>
     T*  Tachyon::create(Args... args)
     {
-        TachyonPtr  tp  = new T(args...);
+        Ref<T>  tp  = new T(args...);
         retain(tp);
         return tp.ptr();
     }

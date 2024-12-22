@@ -78,7 +78,7 @@ namespace yq::tachyon {
         DesktopID           id() const { return DesktopID(UniqueID::id()); }
 
         using Manager::create;
-        virtual Window*     create_window(const ViewerCreateInfo&) { return nullptr; }
+        virtual Window*     create(window_t, const ViewerCreateInfo&) { return nullptr; }
         
         virtual CursorID    cursor(StdCursor) const { return {}; }
         

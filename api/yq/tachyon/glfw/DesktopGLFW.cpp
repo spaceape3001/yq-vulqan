@@ -6,6 +6,7 @@
 
 #include "DesktopGLFW.hpp"
 #include <yq/core/ThreadId.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Application.hpp>
 #include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/DesktopInfoWriter.hpp>
@@ -75,10 +76,14 @@ namespace yq::tachyon {
         
         m_stage = Stage::Init;
         s_desktop   = this;
+        tachyonInfo << "DesktopGFLW initialized";
     }
     
     DesktopGLFW::~DesktopGLFW()
     {
+        tachyonInfo << "DesktopGFLW terminated";
+        glfwTerminate();
+        s_desktop   = nullptr;
     }
 
     void DesktopGLFW::_install(cursor_t, all_t)
@@ -204,7 +209,12 @@ namespace yq::tachyon {
     {
     }
 
-    Window*   DesktopGLFW::create_window(const ViewerCreateInfo& vci) 
+    Window*     DesktopGLFW::create(window_t, const ViewerCreateInfo& vci)
+    {
+        return create_window(vci);
+    }
+    
+    WindowGLFW*   DesktopGLFW::create_window(const ViewerCreateInfo& vci) 
     {
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);

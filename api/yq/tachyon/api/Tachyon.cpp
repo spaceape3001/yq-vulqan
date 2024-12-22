@@ -18,6 +18,7 @@
 #include <yq/tachyon/commands/TachyonProxyCommand.hpp>
 
 #include <yq/core/ThreadId.hpp>
+#include <yq/tachyon/logging.hpp>
 
 namespace yq::tachyon {
 
@@ -511,6 +512,17 @@ namespace yq::tachyon {
     { 
         TRLOCK
         return m_owner; 
+    }
+
+    bool    Tachyon::owner(push_t, ThreadID tid)
+    {
+        if(!tid)
+            return false;
+        if(owner() == tid)
+            return true;
+        
+        //  TODO
+        return false;
     }
 
     void    Tachyon::send(const PostCPtr&pp, MGF mgf)

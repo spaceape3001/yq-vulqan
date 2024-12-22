@@ -12,6 +12,7 @@
 #include <thread>
 
 namespace yq::tachyon {
+    class AppThread;
 
     class ThreadInfo : public TachyonInfo {
     public:
@@ -36,6 +37,8 @@ namespace yq::tachyon {
         
         //  Might be NULL...
         static Thread*  current() { return s_current; }
+        
+        static std::vector<ThreadPtr>   all();
 
         using Tachyon::Param;
 
@@ -65,6 +68,8 @@ namespace yq::tachyon {
         
         // same caveats as tachyon
         ThreadData&     data();
+        
+        friend class AppThread;
         
     private:
     

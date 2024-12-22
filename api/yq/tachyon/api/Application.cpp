@@ -8,14 +8,16 @@
 #include <yq/tachyon/api/AppException.hpp>
 #include <yq/tachyon/api/AppThread.hpp>
 #include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/Viewer.hpp>
+#include <yq/tachyon/api/ViewerThread.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/Window.hpp>
 //#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yq/tachyon/v/Vulqan.hpp>
 
 //#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
-//#include <yq/tachyon/glfw/GLFWManager.hpp>
+#include <yq/tachyon/glfw/DesktopGLFW.hpp>
 //#include <yq/tachyon/task/TaskEngine.hpp>
-#include <yq/tachyon/api/Viewer.hpp>
-#include <yq/tachyon/api/Widget.hpp>
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/ThreadId.hpp>
@@ -65,11 +67,104 @@ namespace yq::tachyon {
 
     Application::~Application()
     {
+        _kill();
+        
         if(this == s_app){
             s_app   = nullptr;
         }
+
         tachyonDebug << "Application destroyed";
     }
+
+    void    Application::_kill()
+    {
+        if(m_vthread){
+            m_vthread -> shutdown();
+            m_vthread -> join();
+            m_vthread   = nullptr;
+        }
+
+        if(m_athread){
+            m_athread -> shutdown();
+            m_athread   = nullptr;
+        }
+        
+    }
+
+    ViewerID                    Application::create(viewer_t, WidgetPtr w)
+    {
+        return create(VIEWER, m_cInfo.view, w);
+    }
+    
+    ViewerID                    Application::create(viewer_t, std::string_view n, WidgetPtr w)
+    {
+        ViewerCreateInfo        vci   = m_cInfo.view;
+        vci.title       = n;
+        return create(VIEWER, vci, w);
+    }
+    
+    ViewerID                    Application::create(viewer_t, const ViewerCreateInfo&vci, WidgetPtr w)
+    {
+        DesktopGLFW&        desk    = desktop(GLFW);
+        Window*             win     = desk.create(WINDOW, vci);
+        if(!win)
+            return {};
+        
+        Viewer*         v = nullptr;
+        // TODO ... catch/replace
+        v = new Viewer(win, w, vci);
+        
+        win->subscribe(v->id());
+        v->subscribe(win->id());
+        
+        m_viewers.insert(v->id());
+        
+        ViewerThread&       vthread = thread(VIEWER);
+        v->owner(PUSH, vthread.id());
+        return v->id();
+    }
+
+    DesktopGLFW&                Application::desktop(glfw_t)
+    {
+        if(!m_glfw){
+            AppThread&  at  = thread(APP);
+            m_glfw  = Tachyon::create<DesktopGLFW>(m_cInfo);
+            
+            //  Connections?
+        }
+        
+        return *m_glfw;
+    }
+
+    void                        Application::run(const RunConfig& r)
+    {
+    }
+
+    void                        Application::run(WidgetPtr wid, const RunConfig& r)
+    {
+        ViewerID    vid = create(VIEWER, wid);
+        if(!vid)
+            return ;
+        run(r);
+    }
+
+    AppThread&  Application::thread(app_t)
+    {
+        if(!m_athread){
+            m_athread   = new AppThread(this);
+        }
+        return *m_athread;
+    }
+
+    ViewerThread&              Application::thread(viewer_t)
+    {
+        if(!m_vthread){
+            m_vthread   = new ViewerThread;
+            m_vthread->start();
+        }
+        return *m_vthread;
+    }
+    
 
 #if 0
     Viewer*                     create_viewer(WidgetPtr);
@@ -177,19 +272,6 @@ namespace yq::tachyon {
         _add(v);
     }
 
-    Viewer*         Application::create_viewer(WidgetPtr w)
-    {
-        return create_viewer(common().app_info.view, w);
-    }
-    
-    Viewer*         Application::create_viewer(std::string_view n, WidgetPtr w)
-    {
-        Common& g = common();
-        ViewerCreateInfo    vci = g.app_info.view;
-        vci.title       = n;
-        return create_viewer(vci, w);
-    }
-    
     Viewer* Application::create_viewer(const ViewerCreateInfo& vci, WidgetPtr w)
     {
         if(!w)

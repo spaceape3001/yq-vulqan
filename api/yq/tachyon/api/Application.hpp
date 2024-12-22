@@ -7,8 +7,9 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/AppCreateInfo.hpp>
-#include <yq/tachyon/api/Thread.hpp>
+//#include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/typedef/application.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
@@ -23,18 +24,26 @@ namespace yq::tachyon {
     class TaskEngine;
     class Viewer;
     class Widget;
-    class GLFWManager;
+    class Manager;
     class AppDeleteViewerCommand;
     class AppThread;
     class ViewerThread;
     class Desktop;
+    class DesktopGLFW;
+    class Vulqan;
 
     /*! \brief Engine/Vulkan application
     
     */
     class Application : public BasicApp {
+        friend class AppThread;
     public:
     
+        struct RunConfig {
+            Second      tick    = { 0. };
+            
+            RunConfig(){}
+        };
         
 
         //! Global application, if any
@@ -43,19 +52,19 @@ namespace yq::tachyon {
         const AppCreateInfo&        app_info() const { return m_cInfo; }
         
         //! Creates a viewer with widget (note, application owns it)
-        Viewer*                     create_viewer(WidgetPtr);
+        ViewerID                    create(viewer_t, WidgetPtr);
         
         //! Creates a viewer with title/widget
-        Viewer*                     create_viewer(std::string_view, WidgetPtr);
+        ViewerID                    create(viewer_t, std::string_view, WidgetPtr);
         
-        Viewer*                     create_viewer(const ViewerCreateInfo&, WidgetPtr);
+        ViewerID                    create(viewer_t, const ViewerCreateInfo&, WidgetPtr);
 
         /*! \brief Exec loop for a bunch of windows
 
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        void                 run(Second timeout={0.});
+        void                        run(const RunConfig& r = RunConfig());
         
         
         /*!  Simple exec loop for a single window.
@@ -63,19 +72,19 @@ namespace yq::tachyon {
             Meant as a convienence function to run a single window in a tight event/draw loop
             until the window is ready to be closed
             
-            \param[in] win          Viewer to watch
+            \param[in] win          Widget to watch
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
                                     is the max stall duration.
         */
-        void                 run(ViewerPtr win, Second timeout={0.});
+        //void                 run(ViewerPtr win, Second timeout={0.});
         
-        //! Simple create viewer & exec loop
-        void                 run(WidgetPtr wid, Second timeout={0.});
+        //! Simple create viewer & run the exec loop
+        void                        run(WidgetPtr wid, const RunConfig& r = RunConfig());
 
         //TaskEngine*          task_engine();
         
-        //! Adds a viewer, returns the pointer
-        void                 add_viewer(ViewerPtr);
+        //! Adds a viewer
+        //void                 add_viewer(ViewerPtr);
     
         /*! \brief Constructor
         
@@ -98,13 +107,21 @@ namespace yq::tachyon {
         AppCreateInfo const     m_cInfo;
         std::vector<Desktop*>   m_desktops;
         std::vector<Manager*>   m_managers;
-        std::vector<Viewer*>    m_viewers;
+        std::set<ViewerID>      m_viewers;
         AppThread*              m_athread   = nullptr;
         ViewerThread*           m_vthread   = nullptr;
         DesktopGLFW*            m_glfw      = nullptr;
         Vulqan*                 m_vulkan    = nullptr;
     
         friend class Viewer;
+        
+        AppThread&              thread(app_t);
+        ViewerThread&           thread(viewer_t);
+        DesktopGLFW&            desktop(glfw_t);
+        Vulqan&                 manager(vulqan_t);
+        
+        void    _kill();
+        
         
         #if 0
         static Viewer*          _add(ViewerPtr);

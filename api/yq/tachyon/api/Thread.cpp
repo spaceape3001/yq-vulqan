@@ -13,6 +13,7 @@
 #include "ThreadInfoWriter.hpp"
 
 #include <yq/core/ThreadId.hpp>
+#include <yq/tachyon/logging.hpp>
 
 namespace yq::tachyon {
 
@@ -113,6 +114,19 @@ namespace yq::tachyon {
         w.description("Thread of execution");
     }
 
+    std::vector<ThreadPtr>   Thread::all()
+    {
+        std::vector<ThreadPtr>  ret;
+        {
+            static Repo& _r = repo();
+            lock_t  _lock(_r.mutex, false);
+            ret.reserve(_r.threads.size());
+            for(auto& i : _r.threads)
+                ret.push_back(i.second);
+        }
+        return ret;
+    }
+
     void Thread::retain(TachyonPtr tp)
     {
         static Repo&    _r  = repo();
@@ -188,6 +202,8 @@ namespace yq::tachyon {
         _r.threads[_id]    = this;
         _r.data[_id]       = {};
         _r.inboxes[_id]    = {};
+        
+        tachyonInfo << "Thread::Thread()";
     }
     
     Thread::~Thread()
@@ -203,6 +219,7 @@ namespace yq::tachyon {
             _r.mainID   = {};
         }
         
+        tachyonInfo << "Thread::~Thread()";
     }
 
     ThreadData&     Thread::data()
@@ -212,6 +229,7 @@ namespace yq::tachyon {
 
     void    Thread::exec()
     {
+        tachyonInfo << "Thread{" << metaInfo().name() << "}::exec()";
         while(!m_quit){
             tick();
         }
@@ -219,6 +237,7 @@ namespace yq::tachyon {
 
     void    Thread::execute(Control& ctr, Context& ctx)
     {
+        tachyonInfo << "Thread{" << metaInfo().name() << "}::execute(Control&, Context&)";
         ThreadData&     d    = data();
 
         //  Ignore the actual execution control (for now)
@@ -230,24 +249,32 @@ namespace yq::tachyon {
 
     void    Thread::join()
     {
+        tachyonInfo << "Thread{" << metaInfo().name() << "}::join()";
         quit();
         m_thread.join();
     }
 
     void    Thread::quit()
     {
+        tachyonInfo << "Thread{" << metaInfo().name() << "}::quit()";
         m_quit  = true;
     }
     
     void    Thread::start()
     {
+        tachyonInfo << "Thread{" << metaInfo().name() << "}::start()";
         if(m_thread.joinable()) // something's running... don't
             return ;
-        m_thread    = std::thread([this](){ run(); });
+        m_thread    = std::thread([this](){ 
+            s_current   = this;
+            run(); 
+            s_current   = nullptr;
+        });
     }
 
     void    Thread::tick()
     {
+        tachyonInfo << "Thread{" << metaInfo().name() << "}::tick()";
         static Repo&  _r  = repo();
   
         thread_data_map_t   data;
@@ -269,6 +296,7 @@ namespace yq::tachyon {
     
     Execution    Thread::tick(Context& ctx)
     {
+        tachyonInfo << "Thread{" << metaInfo().name() << "}::tick(Context&)";
         static Repo& _r = repo();
         Thread* old = s_current;
         s_current   = this;

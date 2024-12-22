@@ -12,14 +12,23 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
 
 namespace yq::tachyon {
-    AppThread::AppThread(const Param&p) : Thread(p)
+    AppThread::AppThread(Application* app, const Param&p) : Thread(p), m_app(app)
     {
+        Thread::s_current       = this;
     }
     
     AppThread::~AppThread()
     {
+        Thread::s_current       = nullptr;
     }
     
+    void AppThread::shutdown()
+    {
+        /* TODO */
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     void AppThread::init_info()
     {
         auto w = writer<AppThread>();

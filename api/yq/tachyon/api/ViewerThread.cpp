@@ -20,6 +20,12 @@ namespace yq::tachyon {
     {
     }
     
+    void    ViewerThread::shutdown()
+    {
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+
     void ViewerThread::init_info()
     {
         auto w = writer<ViewerThread>();

@@ -28,7 +28,9 @@ namespace yq::tachyon {
 
         virtual CursorID    cursor(StdCursor) const override;
 
-        virtual Window*     create_window(const ViewerCreateInfo&) override;
+        using Desktop::create;
+        virtual Window*     create(window_t, const ViewerCreateInfo&) override;
+        WindowGLFW*         create_window(const ViewerCreateInfo&);
         
         virtual bool        is_running() const override;
 

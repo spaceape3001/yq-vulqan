@@ -33,6 +33,7 @@ namespace yq::tachyon {
     struct accept_t {};
     struct adjust_t {};
     struct adjustable_t {};
+    struct app_t {};
     struct changed_t {};
     struct child_t {};
     struct children_t {};
@@ -40,6 +41,7 @@ namespace yq::tachyon {
     struct continue_t {};
     struct controller_t {};
     struct controllers_t {};
+    struct create_t {};
     struct cursor_t {};
     struct delete_t {};
     struct direct_t{};
@@ -58,6 +60,7 @@ namespace yq::tachyon {
     
     struct for_t {};
     struct forward_t {};
+    struct glfw_t {};
     struct hash_t {};
     struct info_t {};
     struct joystick_t {};
@@ -80,15 +83,18 @@ namespace yq::tachyon {
     struct queue_t {};
     struct reject_t {};
     struct resume_t {};
+    struct root_t {};
     struct settable_t {};
     struct stop_t {};
     struct tachyon_t {};
     struct target_t {};
+    struct top_t {};
     struct typed_t {};
     struct types_t {};
     struct unlock_t {};
     struct unlocked_t {};
     struct viewer_t {};
+    struct vulqan_t {};
     struct widget_t {};
     struct window_t {};
 
@@ -105,6 +111,7 @@ namespace yq::tachyon {
     static constexpr accept_t       ACCEPT;
     static constexpr adjust_t       ADJUST;
     static constexpr adjustable_t   ADJUSTABLE;
+    static constexpr app_t          APP;
     static constexpr changed_t      CHANGED;
     static constexpr child_t        CHILD;
     static constexpr children_t     CHILDREN;
@@ -113,6 +120,7 @@ namespace yq::tachyon {
     static constexpr continue_t     CONTINUE;
     static constexpr controller_t   CONTROLLER;
     static constexpr controllers_t  CONTROLLERS;
+    static constexpr create_t       CREATE;
     static constexpr cursor_t       CURSOR;
     static constexpr delete_t       DELETE;
     static constexpr direct_t       DIRECT;
@@ -125,6 +133,7 @@ namespace yq::tachyon {
     static constexpr fixed_t        FIXED;
     static constexpr for_t          FOR;
     static constexpr forward_t      FORWARD;
+    static constexpr glfw_t         GLFW;
     static constexpr hash_t         HASH;
     static constexpr info_t         INFO;
     static constexpr joystick_t     JOYSTICK;
@@ -145,16 +154,19 @@ namespace yq::tachyon {
     static constexpr refresh_t      REFRESH;
     static constexpr reject_t       REJECT;
     static constexpr resume_t       RESUME;
+    static constexpr root_t         ROOT;
     static constexpr settable_t     SETTABLE;
     static constexpr static_t       STATIC;
     static constexpr stop_t         STOP;
     static constexpr tachyon_t      TACHYON;
     static constexpr target_t       TARGET;
+    static constexpr top_t          TOP;
     static constexpr typed_t        TYPED;
     static constexpr types_t        TYPES;
     static constexpr unlock_t       UNLOCK;
     static constexpr unlocked_t     UNLOCKED;
     static constexpr viewer_t       VIEWER;
+    static constexpr vulqan_t       VULQAN;
     static constexpr widget_t       WIDGET;
     static constexpr window_t       WINDOW;
 }

@@ -8,6 +8,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/WindowInfoWriter.hpp>
 #include <yq/tachyon/events/WindowMoveEvent.hpp>
+#include <yq/tachyon/events/WindowResizeEvent.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 
@@ -35,7 +36,13 @@ namespace yq::tachyon {
     
     void callback_window_refresh(GLFWwindow* window);
     void callback_window_scale(GLFWwindow* window, float xscale, float yscale);
-    void callback_window_size(GLFWwindow*, int, int);
+    void WindowGLFW::callback_window_size(GLFWwindow* win, int width, int height)
+    {
+        WindowGLFW *_w  = _window(win);
+        if(!_w)
+            return ;
+        _w->send(new WindowResizeEvent(_w, Size2I(width, height)));
+    }
 
     WindowGLFW*  WindowGLFW::_window(GLFWwindow*w)
     {
@@ -61,6 +68,7 @@ namespace yq::tachyon {
         assert(w && d);
         glfwSetWindowUserPointer(w, this);
         glfwSetWindowPosCallback(w, callback_window_position);
+        glfwSetWindowSizeCallback(w, callback_window_size);
     }
     
     WindowGLFW::~WindowGLFW()

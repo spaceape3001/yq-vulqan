@@ -11,11 +11,11 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowRefreshRequest)
 
 namespace yq::tachyon {
 
-    WindowRefreshRequest::WindowRefreshRequest(ViewerID v, const Param& p) : WindowRequest(v, p)
+    WindowRefreshRequest::WindowRefreshRequest(WindowID v, const Param& p) : WindowRequest(v, p)
     {
     }
     
-    WindowRefreshRequest::WindowRefreshRequest(const Viewer* v, const Param& p) : WindowRequest(v, p)
+    WindowRefreshRequest::WindowRefreshRequest(const Window* v, const Param& p) : WindowRequest(v, p)
     {
     }
 

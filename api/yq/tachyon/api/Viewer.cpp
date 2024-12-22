@@ -16,7 +16,12 @@
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/api/Window.hpp>
 
+
+#include <yq/tachyon/events/WindowDefocusEvent.hpp>
+#include <yq/tachyon/events/WindowFocusEvent.hpp>
+#include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
 #include <yq/tachyon/events/WindowMoveEvent.hpp>
+#include <yq/tachyon/events/WindowResizeEvent.hpp>
 
 #include <yq/tachyon/viz/ViContext.hpp>
 
@@ -99,7 +104,8 @@ namespace yq::tachyon {
         auto w = writer<Viewer>();
         
         w.description("Tachyon Viewer");
-        w.slot(&Viewer::on_move);
+        w.slot(&Viewer::on_move_event);
+        w.slot(&Viewer::on_resize_event);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,6 +143,14 @@ namespace yq::tachyon {
 
     PostAdvice  Viewer::advise(const Post& pp) const 
     {
+        if(const WindowBind*   wb  = dynamic_cast<const WindowBind*>(&pp)){
+            if(wb -> window() != m_window)
+                return REJECT;
+        }
+        if(const ViewerBind* vb = dynamic_cast<const ViewerBind*>(&pp)){
+            if(vb -> viewer() != id())
+                return REJECT;
+        }
         return {};
     }
  
@@ -159,13 +173,34 @@ namespace yq::tachyon {
         return {};
     }
     
-    void    Viewer::on_close_request() 
+    void    Viewer::on_close_request(const WindowCloseRequestCPtr&) 
     { 
+        tachyonInfo << ident() << " Window close requested";
     }
 
-    void    Viewer::on_move(const WindowMoveEvent&evt)
+    void    Viewer::on_move_event(const WindowMoveEvent&evt)
     {
         tachyonInfo << ident() << " Window moved (" << evt.x() << ", " << evt.y() << ")";
+    }
+
+    void    Viewer::on_resize_event(const WindowResizeEvent&evt)
+    {
+        tachyonInfo << ident() << " Window resized (" << evt.width() << ", " << evt.height() << ")";
+    }
+    
+    void    Viewer::on_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
+    {
+        tachyonInfo << ident() << " Framebuffer resized (" << evt.width() << ", " << evt.height() << ")";
+    }
+    
+    void    Viewer::on_focus_event(const WindowFocusEvent&)
+    {
+        tachyonInfo << ident() << " Window focused";
+    }
+    
+    void    Viewer::on_defocus_event(const WindowDefocusEvent&)
+    {
+        tachyonInfo << ident() << " Window defocused";
     }
 
     //! Call if you reject the close request

@@ -56,6 +56,7 @@ namespace yq::tachyon {
     class WindowDestroyEvent;
     class WindowEvent;
     class WindowFocusEvent;
+    class WindowFrameBufferResizeEvent;
     class WindowHideEvent;
     class WindowIconifyEvent;
     class WindowMaximizeEvent;

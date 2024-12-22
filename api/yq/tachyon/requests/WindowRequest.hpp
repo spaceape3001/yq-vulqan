@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Request.hpp>
-#include <yq/tachyon/api/ViewerBind.hpp>
+#include <yq/tachyon/api/WindowBind.hpp>
 
 namespace yq::tachyon {
     class WindowRequestInfo : public RequestInfo {
@@ -17,7 +17,7 @@ namespace yq::tachyon {
     protected:
     };
 
-    class WindowRequest : public Request, public ViewerBind {
+    class WindowRequest : public Request, public WindowBind {
         YQ_OBJECT_INFO(WindowRequestInfo)
         YQ_OBJECT_DECLARE(WindowRequest, Request)
     public:
@@ -25,8 +25,8 @@ namespace yq::tachyon {
         struct Param : public Request::Param {
         };
     
-        WindowRequest(ViewerID, const Param& p = {});
-        WindowRequest(const Viewer*, const Param& p = {});
+        WindowRequest(WindowID, const Param& p = {});
+        WindowRequest(const Window*, const Param& p = {});
         virtual ~WindowRequest();
         static void init_info();
     };

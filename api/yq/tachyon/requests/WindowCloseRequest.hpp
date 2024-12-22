@@ -9,16 +9,16 @@
 #include <yq/tachyon/requests/WindowRequest.hpp>
 
 namespace yq::tachyon {
-    class WindowRefreshRequest : public WindowRequest {
-        YQ_OBJECT_DECLARE(WindowRefreshRequest, WindowRequest)
+    class WindowCloseRequest : public WindowRequest {
+        YQ_OBJECT_DECLARE(WindowCloseRequest, WindowRequest)
     public:
     
         struct Param : public WindowRequest::Param {
         };
     
-        WindowRefreshRequest(WindowID, const Param& p = {});
-        WindowRefreshRequest(const Window*, const Param& p = {});
-        virtual ~WindowRefreshRequest();
+        WindowCloseRequest(WindowID, const Param& p = {});
+        WindowCloseRequest(const Window*, const Param& p = {});
+        virtual ~WindowCloseRequest();
         static void init_info();
     };
 }

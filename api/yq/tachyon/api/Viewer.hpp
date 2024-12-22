@@ -320,8 +320,6 @@ namespace yq::tachyon {
 
         //virtual void    receive(const post::PostCPtr&) override;
 
-        //! Override to have a more nuianced approach (default is accept)
-        virtual void    on_close_request();
         
         
         //! Call if you accept the close request
@@ -370,7 +368,14 @@ namespace yq::tachyon {
         void                _remove(widget_t);      // Removes the current widget
         void                _widget(WidgetPtr);     // Changes the widget
         
-        void    on_move(const WindowMoveEvent&);
+        void    on_close_request(const WindowCloseRequestCPtr&);
+        void    on_move_event(const WindowMoveEvent&);
+        void    on_resize_event(const WindowResizeEvent&);
+        void    on_fb_resize_event(const WindowFrameBufferResizeEvent&);
+        void    on_focus_event(const WindowFocusEvent&);
+        void    on_defocus_event(const WindowDefocusEvent&);
+        
+        
         
         void    aspect_command(const ViewerAspectCommand&);
         void    attention_command(const ViewerAttentionCommand&);

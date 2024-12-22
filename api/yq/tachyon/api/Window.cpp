@@ -12,7 +12,7 @@
 
 namespace yq::tachyon {
 
-    WindowBind::WindowBind(const Window* v) : m_light(v ? v->id() : WindowID{})
+    WindowBind::WindowBind(const Window* v) : m_window(v ? v->id() : WindowID{})
     {
     }
 
@@ -59,7 +59,7 @@ namespace yq::tachyon {
             return pa;
         
         if(const WindowBind* p = dynamic_cast<const WindowBind*>(&pp)){
-            if(p->light() != id())
+            if(p->window() != id())
                 return REJECT;
         }
         return {};

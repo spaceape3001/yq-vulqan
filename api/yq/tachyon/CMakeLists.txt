@@ -303,6 +303,7 @@ add_library(${PROJECT_NAME} SHARED
     requests/ViewerCloseRequest.cpp
     requests/ViewerRequest.cpp
     #requests/ViewerWidgetRequest.cpp
+    requests/WindowCloseRequest.cpp
     requests/WindowRefreshRequest.cpp
     requests/WindowRequest.cpp
     

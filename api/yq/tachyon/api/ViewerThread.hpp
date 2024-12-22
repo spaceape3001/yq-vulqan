@@ -10,6 +10,7 @@
 
 namespace yq::tachyon {
     class Application;
+    class Viewer;
     /*! \brief Viewer threads run viewers
         
         A viewer thread will own and run viewers (can be one, or more)
@@ -17,7 +18,14 @@ namespace yq::tachyon {
     class ViewerThread : public Thread {
         YQ_TACHYON_DECLARE(ViewerThread, Thread)
     public:
-        ViewerThread(const Param&p ={});
+    
+        struct Param : public Thread::Param {
+            Viewer*     viewer  = nullptr;
+            
+            Param(){}
+        };
+    
+        ViewerThread(const Param&p = Param());
         ~ViewerThread();
         static void init_info();
         

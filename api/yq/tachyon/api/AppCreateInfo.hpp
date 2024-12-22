@@ -47,15 +47,13 @@ namespace yq::tachyon {
         
         bool                        imgui                   = true;
 
-        bool                        multithread             = false;
-
         //! Want the task-engine
         bool                        tasking                 = false;
         
         //! Used for app-created viewers
         ViewerCreateInfo            view;
 
-        ViewerThreadPolicy          vthreads                = ViewerThreadPolicy::Main;
+        ViewerThreadPolicy          vthreads                = ViewerThreadPolicy::Single;
 
         //! Set to enable vulkan
         bool                        vulkan                  = true;

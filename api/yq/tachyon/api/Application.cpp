@@ -119,9 +119,13 @@ namespace yq::tachyon {
         
         m_viewers.insert(v->id());
         
-        if(m_cInfo.multithread){
-            ViewerThread&       vthread = thread(VIEWER);
-            v->owner(PUSH, vthread.id());
+        switch(m_cInfo.vthreads){
+        case ViewerThreadPolicy::Single:
+        case ViewerThreadPolicy::Individual:
+            v->owner(PUSH, thread(VIEWER).id());
+            break;
+        default:
+            break;
         }
         
         win->show();    // TEMPORARY

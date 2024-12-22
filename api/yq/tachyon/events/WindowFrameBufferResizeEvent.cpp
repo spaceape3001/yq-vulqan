@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowFrameBufferResizeEvent)
 
 namespace yq::tachyon {
 
-    WindowFrameBufferResizeEvent::WindowFrameBufferResizeEvent(Viewer* v, const Size2I& sz, const Param& p) : WindowEvent(v, p), m_size(sz)
+    WindowFrameBufferResizeEvent::WindowFrameBufferResizeEvent(Window* v, const Size2I& sz, const Param& p) : WindowEvent(v, p), m_size(sz)
     {
     }
     

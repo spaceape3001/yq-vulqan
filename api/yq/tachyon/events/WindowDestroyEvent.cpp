@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowDestroyEvent)
 
 namespace yq::tachyon {
 
-    WindowDestroyEvent::WindowDestroyEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowDestroyEvent::WindowDestroyEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

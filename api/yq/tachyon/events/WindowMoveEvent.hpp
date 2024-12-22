@@ -17,14 +17,14 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowMoveEvent(Viewer*, const Vector2I&, const Param& p = {});
+        WindowMoveEvent(Window*, const Vector2I&, const Param& p = {});
         virtual ~WindowMoveEvent();
         
         static void init_info();
         
         const Vector2I& position() const { return m_position; }
-        double x() const { return m_position.x; }
-        double y() const { return m_position.y; }
+        int x() const { return m_position.x; }
+        int y() const { return m_position.y; }
         
     private:
         const Vector2I    m_position;

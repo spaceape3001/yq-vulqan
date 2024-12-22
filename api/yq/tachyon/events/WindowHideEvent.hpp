@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowHideEvent(Viewer*, const Param& p = {});
+        WindowHideEvent(Window*, const Param& p = {});
         virtual ~WindowHideEvent();
         
         static void init_info();

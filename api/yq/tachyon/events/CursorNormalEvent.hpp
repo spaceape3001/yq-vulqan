@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        CursorNormalEvent(Viewer*, const Param& p = {});
+        CursorNormalEvent(Window*, const Param& p = {});
         virtual ~CursorNormalEvent();
         
         static void init_info();

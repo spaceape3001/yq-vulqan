@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowFocusEvent)
 
 namespace yq::tachyon {
 
-    WindowFocusEvent::WindowFocusEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowFocusEvent::WindowFocusEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

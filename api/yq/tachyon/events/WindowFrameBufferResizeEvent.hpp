@@ -17,7 +17,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowFrameBufferResizeEvent(Viewer*, const Size2I&, const Param& p = {});
+        WindowFrameBufferResizeEvent(Window*, const Size2I&, const Param& p = {});
         virtual ~WindowFrameBufferResizeEvent();
         
         static void init_info();

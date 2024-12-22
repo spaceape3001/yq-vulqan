@@ -19,6 +19,16 @@ namespace yq::tachyon {
         const char*     name    = nullptr;
         Required        req     = Required::NO;
     };
+    
+    enum class ViewerThreadPolicy {
+    
+        //! Viewers go on main thread
+        Main,
+        //! Viewers go on a single viewer thread
+        Single,
+        //! Viewers go onto seperate individual threads
+        Individual
+    };
 
 
     //! Info for initialization
@@ -37,12 +47,15 @@ namespace yq::tachyon {
         
         bool                        imgui                   = true;
 
+        bool                        multithread             = false;
+
         //! Want the task-engine
         bool                        tasking                 = false;
         
         //! Used for app-created viewers
         ViewerCreateInfo            view;
 
+        ViewerThreadPolicy          vthreads                = ViewerThreadPolicy::Main;
 
         //! Set to enable vulkan
         bool                        vulkan                  = true;

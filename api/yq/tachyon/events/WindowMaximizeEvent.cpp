@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowMaximizeEvent)
 
 namespace yq::tachyon {
 
-    WindowMaximizeEvent::WindowMaximizeEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowMaximizeEvent::WindowMaximizeEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

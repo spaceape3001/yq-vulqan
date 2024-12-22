@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowMoveEvent)
 
 namespace yq::tachyon {
 
-    WindowMoveEvent::WindowMoveEvent(Viewer* v, const Vector2I& pos, const Param& p) : WindowEvent(v, p), m_position(pos)
+    WindowMoveEvent::WindowMoveEvent(Window* v, const Vector2I& pos, const Param& p) : WindowEvent(v, p), m_position(pos)
     {
     }
     

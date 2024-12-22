@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        CursorDisableEvent(Viewer*, const Param& p = {});
+        CursorDisableEvent(Window*, const Param& p = {});
         virtual ~CursorDisableEvent();
         
         static void init_info();

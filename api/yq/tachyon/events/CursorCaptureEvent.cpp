@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorCaptureEvent)
 
 namespace yq::tachyon {
 
-    CursorCaptureEvent::CursorCaptureEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    CursorCaptureEvent::CursorCaptureEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

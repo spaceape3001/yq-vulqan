@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowDefocusEvent(Viewer*, const Param& p = {});
+        WindowDefocusEvent(Window*, const Param& p = {});
         virtual ~WindowDefocusEvent();
         
         static void init_info();

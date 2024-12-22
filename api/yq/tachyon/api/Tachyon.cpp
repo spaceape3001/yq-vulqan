@@ -439,10 +439,10 @@ namespace yq::tachyon {
         
         if(m_dirty || !m_snap || (m_snap->revision != m_revision)){
             TachyonSnapPtr  snap    = metaInfo().create_snap(this);
-            snap -> time        = ctx.time;
-            snap -> revision    = ++m_revision;
-            m_snap              = snap.ptr();
-            m_dirty             = false;
+            snap -> time            = ctx.time;
+            snap -> revision        = ++m_revision;
+            m_snap                  = snap.ptr();
+            m_dirty                 = false;
         }
         
         //////////////////////////////////
@@ -481,6 +481,11 @@ namespace yq::tachyon {
     {
         assert(in_tick());
         return m_context->frame;
+    }
+
+    Tachyon::Ident               Tachyon::ident() const
+    {
+        return { metaInfo().name(), (uint64_t) id() };
     }
 
     bool Tachyon::in_tick() const
@@ -607,6 +612,12 @@ namespace yq::tachyon {
         w.slot(&Tachyon::slot_proxy_command);
         w.property("name", &Tachyon::name);
     }
+}
+
+std::ostringstream& operator<<(std::ostringstream&str, const yq::tachyon::Tachyon::Ident& i)
+{
+    str << "{" << i.metaName << ":" << i.id << "}";
+    return str;
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Tachyon)

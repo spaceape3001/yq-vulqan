@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorNormalEvent)
 
 namespace yq::tachyon {
 
-    CursorNormalEvent::CursorNormalEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    CursorNormalEvent::CursorNormalEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

@@ -10,7 +10,7 @@
 #include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowAspectEvent : public WindowEvent {
         YQ_OBJECT_DECLARE(WindowAspectEvent, WindowEvent)
@@ -19,7 +19,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowAspectEvent(Viewer*, const Size2I&, const Param& p = {});
+        WindowAspectEvent(Window*, const Size2I&, const Param& p = {});
         virtual ~WindowAspectEvent();
         
         static void init_info();

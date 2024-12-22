@@ -46,6 +46,8 @@
 #include "Window.hpp"
 #include "WindowData.hpp"
 
+#include <yq/tachyon/logging.hpp>
+
 namespace yq::tachyon {
 
     template <typename T, typename D, typename S>

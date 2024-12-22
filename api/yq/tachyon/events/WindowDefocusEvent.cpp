@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowDefocusEvent)
 
 namespace yq::tachyon {
 
-    WindowDefocusEvent::WindowDefocusEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowDefocusEvent::WindowDefocusEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

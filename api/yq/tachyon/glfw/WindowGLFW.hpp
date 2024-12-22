@@ -29,6 +29,9 @@ namespace yq::tachyon {
         
         static WindowGLFW*  window(ptr_t, GLFWwindow*);
         static WindowID     window(GLFWwindow*);
+        
+        virtual void        show() override;
+        virtual void        hide() override;
 
     private:
         DesktopGLFW* const  m_desktop;

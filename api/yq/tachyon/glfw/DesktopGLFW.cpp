@@ -197,6 +197,7 @@ namespace yq::tachyon {
     
     Execution    DesktopGLFW::_tick(Context& ctx)
     {
+//tachyonInfo << "DesktopGLFW::_tick(Context& ctx)";
         glfwPollEvents();
         return {};
     }

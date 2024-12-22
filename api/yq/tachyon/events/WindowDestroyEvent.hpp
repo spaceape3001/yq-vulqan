@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowDestroyEvent(Viewer*, const Param& p = {});
+        WindowDestroyEvent(Window*, const Param& p = {});
         virtual ~WindowDestroyEvent();
         
         static void init_info();

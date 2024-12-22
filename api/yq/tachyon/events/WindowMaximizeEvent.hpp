@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowMaximizeEvent(Viewer*, const Param& p = {});
+        WindowMaximizeEvent(Window*, const Param& p = {});
         virtual ~WindowMaximizeEvent();
         
         static void init_info();

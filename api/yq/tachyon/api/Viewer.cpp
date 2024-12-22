@@ -14,6 +14,10 @@
 #include <yq/tachyon/api/ViewerException.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/Window.hpp>
+
+#include <yq/tachyon/events/WindowMoveEvent.hpp>
+
 #include <yq/tachyon/viz/ViContext.hpp>
 
 //#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
@@ -95,6 +99,7 @@ namespace yq::tachyon {
         auto w = writer<Viewer>();
         
         w.description("Tachyon Viewer");
+        w.slot(&Viewer::on_move);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,17 +117,25 @@ namespace yq::tachyon {
     Viewer::Viewer(Window* win, WidgetPtr w, const ViewerCreateInfo& vci, const Param&p) : 
         Tachyon(p), m_createInfo(vci), m_number(++s_lastNumber)
     {
+        assert(win && w);
+        
+        m_window        = win->id();
+        m_widget        = w;
+        
+        tachyonInfo << "Viewer::Viewer(" << m_number << ") ID " << (uint64_t) id() << ", window=" 
+            << (uint64_t) win->id() << ", widget=" << w->id();
     }
     
     Viewer::~Viewer()
     {
+        tachyonInfo << "Viewer::~Viewer(" << m_number << ")";
     }
     
     void     Viewer::accept(close_t)
     {
     }
 
-    PostAdvice  Viewer::advise(const Post&) const 
+    PostAdvice  Viewer::advise(const Post& pp) const 
     {
         return {};
     }
@@ -150,14 +163,19 @@ namespace yq::tachyon {
     { 
     }
 
+    void    Viewer::on_move(const WindowMoveEvent&evt)
+    {
+        tachyonInfo << ident() << " Window moved (" << evt.x() << ", " << evt.y() << ")";
+    }
+
     //! Call if you reject the close request
     void     Viewer::reject(close_t)
     {
     }
 
+
+
 #if 0
-
-
     void Viewer::init_info()
     {
         auto w = writer<Viewer>();
@@ -192,12 +210,12 @@ namespace yq::tachyon {
         w.slot(&Viewer::unfloat_command).name("unfloat_command");
         w.slot(&Viewer::widget_request).name("widget_request");
         
-#if 0        
         w.slot(&Viewer::viewer_resize_event);
         w.property("mouse", &Viewer::mouse_state).description("Mouse state");
-#endif
     }
+#endif
 
+#if 0
     //  ----------------------------------------------------------------------------------------------------------------
     //  INITIALIZATION/DESTRUCTION
 

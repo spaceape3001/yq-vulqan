@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        CursorCaptureEvent(Viewer*, const Param& p = {});
+        CursorCaptureEvent(Window*, const Param& p = {});
         virtual ~CursorCaptureEvent();
         
         static void init_info();

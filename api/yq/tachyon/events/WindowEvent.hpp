@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Event.hpp>
-#include <yq/tachyon/api/ViewerBind.hpp>
+#include <yq/tachyon/api/WindowBind.hpp>
 
 namespace yq::tachyon {
     class WindowEventInfo : public EventInfo {
@@ -17,7 +17,7 @@ namespace yq::tachyon {
     protected:
     };
 
-    class WindowEvent : public Event, public ViewerBind {
+    class WindowEvent : public Event, public WindowBind {
         YQ_OBJECT_INFO(WindowEventInfo)
         YQ_OBJECT_DECLARE(WindowEvent, Event)
     public:
@@ -25,8 +25,8 @@ namespace yq::tachyon {
         struct Param : public Event::Param {
         };
     
-        WindowEvent(ViewerID, const Param& p = {});
-        WindowEvent(const Viewer*, const Param& p = {});
+        WindowEvent(WindowID, const Param& p = {});
+        WindowEvent(const Window*, const Param& p = {});
         virtual ~WindowEvent();
         
         static void init_info();

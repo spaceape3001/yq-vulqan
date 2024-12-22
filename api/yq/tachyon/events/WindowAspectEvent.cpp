@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowAspectEvent)
 
 namespace yq::tachyon {
 
-    WindowAspectEvent::WindowAspectEvent(Viewer* v, const Size2I& asp, const Param& p) : WindowEvent(v, p), m_aspect(asp)
+    WindowAspectEvent::WindowAspectEvent(Window* v, const Size2I& asp, const Param& p) : WindowEvent(v, p), m_aspect(asp)
     {
     }
     

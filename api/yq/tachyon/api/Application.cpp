@@ -112,15 +112,19 @@ namespace yq::tachyon {
         
         Viewer*         v = nullptr;
         // TODO ... catch/replace
-        v = new Viewer(win, w, vci);
+        v = Tachyon::create<Viewer>(win, w, vci);
         
         win->subscribe(v->id());
         v->subscribe(win->id());
         
         m_viewers.insert(v->id());
         
-        ViewerThread&       vthread = thread(VIEWER);
-        v->owner(PUSH, vthread.id());
+        if(m_cInfo.multithread){
+            ViewerThread&       vthread = thread(VIEWER);
+            v->owner(PUSH, vthread.id());
+        }
+        
+        win->show();    // TEMPORARY
         return v->id();
     }
 
@@ -138,6 +142,7 @@ namespace yq::tachyon {
 
     void                        Application::run(const RunConfig& r)
     {
+        thread(APP).run();
     }
 
     void                        Application::run(WidgetPtr wid, const RunConfig& r)

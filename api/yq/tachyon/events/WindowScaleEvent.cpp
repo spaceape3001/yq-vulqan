@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowScaleEvent)
 
 namespace yq::tachyon {
 
-    WindowScaleEvent::WindowScaleEvent(Viewer* v, const Vector2F& sc, const Param& p) : WindowEvent(v, p), m_scale(sc)
+    WindowScaleEvent::WindowScaleEvent(Window* v, const Vector2F& sc, const Param& p) : WindowEvent(v, p), m_scale(sc)
     {
     }
     

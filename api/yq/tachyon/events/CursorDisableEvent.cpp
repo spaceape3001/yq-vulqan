@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorDisableEvent)
 
 namespace yq::tachyon {
 
-    CursorDisableEvent::CursorDisableEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    CursorDisableEvent::CursorDisableEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

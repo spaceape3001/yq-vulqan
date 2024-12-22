@@ -44,6 +44,9 @@ namespace yq::tachyon {
     /*! \brief The window
     
         This will represent the OS/GUI/Abstraction window
+        
+        Commands on this will go direct into the OS mechanism 
+        (even *if* it's thread-unsafe).
     */
     class Window : public Tachyon {
         YQ_TACHYON_INFO(WindowInfo);
@@ -55,6 +58,9 @@ namespace yq::tachyon {
         static void init_info();
 
         WindowID    id() const { return WindowID(UniqueID::id()); }
+
+        virtual void    show() {}
+        virtual void    hide() {}
 
     protected:
     

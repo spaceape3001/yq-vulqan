@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowIconifyEvent)
 
 namespace yq::tachyon {
 
-    WindowIconifyEvent::WindowIconifyEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowIconifyEvent::WindowIconifyEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowTitleEvent)
 
 namespace yq::tachyon {
 
-    WindowTitleEvent::WindowTitleEvent(Viewer* v, std::string_view szTitle, const Param& p) : WindowEvent(v, p), m_title(szTitle)
+    WindowTitleEvent::WindowTitleEvent(Window* v, std::string_view szTitle, const Param& p) : WindowEvent(v, p), m_title(szTitle)
     {
     }
     

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowRestoreEvent)
 
 namespace yq::tachyon {
 
-    WindowRestoreEvent::WindowRestoreEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowRestoreEvent::WindowRestoreEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

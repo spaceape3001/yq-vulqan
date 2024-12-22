@@ -22,7 +22,6 @@
 namespace yq::tachyon {
 
     struct ViewerCreateInfo {
-    
         VkPhysicalDevice            device   = nullptr;
     
         std::string                 title    = "(untitled)";

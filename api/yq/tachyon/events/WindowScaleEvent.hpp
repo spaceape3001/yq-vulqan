@@ -17,7 +17,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowScaleEvent(Viewer*, const Vector2F&, const Param& p = {});
+        WindowScaleEvent(Window*, const Vector2F&, const Param& p = {});
         virtual ~WindowScaleEvent();
         
         static void init_info();

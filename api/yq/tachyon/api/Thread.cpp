@@ -130,17 +130,23 @@ namespace yq::tachyon {
     void Thread::retain(TachyonPtr tp)
     {
         static Repo&    _r  = repo();
+
+tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t) tp -> id() << ")";
     
         if(!tp)
             return;
             
         if(Thread* th = dynamic_cast<Thread*>(tp.ptr())){
+tachyonInfo << ">> it's a thread\n";        
+        
             lock_t _lock(_r.mutex, true);
             _r.threads[th->id()]    = th;
             return;
         }
         
         if(s_current){
+tachyonInfo << ">> binding to current thread\n";        
+
             lock_t _lock(s_current->m_mutex, true);
             s_current -> m_creates.push_back(tp);
             return;
@@ -148,21 +154,27 @@ namespace yq::tachyon {
         
         lock_t _lock(_r.mutex, true);
         if(_r.sink){
+tachyonInfo << ">> sink\n";        
             lock_t _lock2(_r.sink->m_mutex, true);
             _r.sink->m_creates.push_back(tp);
             return ;
         }
+        
         if(_r.main){
+tachyonInfo << ">> binding to main\n";        
             lock_t _lock2(_r.main->m_mutex, true);
             _r.main->m_creates.push_back(tp);
             return ;
         }
         
+tachyonInfo << ">> it's a misfit\n";        
+
         _r.misfits.push_back(tp);
     }
     
     void Thread::retain(TachyonPtr tp, ThreadID tid)
     {
+tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t) tp -> id() << ", thread " << (uint64_t) tid << ")";
         static Repo&    _r  = repo();
         if(!tp)
             return;
@@ -237,7 +249,7 @@ namespace yq::tachyon {
 
     void    Thread::execute(Control& ctr, Context& ctx)
     {
-        tachyonInfo << "Thread{" << metaInfo().name() << "}::execute(Control&, Context&)";
+        //tachyonInfo << "Thread{" << metaInfo().name() << "}::execute(Control&, Context&)";
         ThreadData&     d    = data();
 
         //  Ignore the actual execution control (for now)
@@ -274,7 +286,7 @@ namespace yq::tachyon {
 
     void    Thread::tick()
     {
-        tachyonInfo << "Thread{" << metaInfo().name() << "}::tick()";
+        //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick()";
         static Repo&  _r  = repo();
   
         thread_data_map_t   data;
@@ -286,17 +298,23 @@ namespace yq::tachyon {
         FramePtr        frame   = new Frame(id(), m_tick);
         Frame::Builder  build(*frame);
         for(auto& i : data){
+            if(!i.second)
+                continue;
             build.add(i.first, *i.second);
         }
         build.finalize();
 
         Context ctx(*frame);
-        cycle(ctx);
+        auto d = cycle(ctx);
+        {
+            lock_t  _lock(_r.mutex, true);
+            _r.data[id()] = (ThreadData*) d.data.ptr();
+        }
     }
     
     Execution    Thread::tick(Context& ctx)
     {
-        tachyonInfo << "Thread{" << metaInfo().name() << "}::tick(Context&)";
+        //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick(Context&)";
         static Repo& _r = repo();
         Thread* old = s_current;
         s_current   = this;
@@ -333,6 +351,15 @@ namespace yq::tachyon {
         }
         
         //data.duration   = ctx.
+        std::vector<TachyonPtr>         creates;
+        {
+            lock_t  _lock(m_mutex, true);
+            std::swap(m_creates, creates);
+        }
+        for(TachyonPtr& tp : creates){
+            Control&    c   = m_objects[tp->id()];
+            c.object        = std::move(tp);
+        }
         
         //  TODO: Some multithreadedness...
         for(auto itr = m_objects.begin(); itr != m_objects.end(); ++itr){

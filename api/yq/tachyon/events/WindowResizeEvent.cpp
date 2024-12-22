@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowResizeEvent)
 
 namespace yq::tachyon {
 
-    WindowResizeEvent::WindowResizeEvent(Viewer* v, const Size2I& sz, const Param& p) : WindowEvent(v, p), m_size(sz)
+    WindowResizeEvent::WindowResizeEvent(Window* v, const Size2I& sz, const Param& p) : WindowEvent(v, p), m_size(sz)
     {
     }
     

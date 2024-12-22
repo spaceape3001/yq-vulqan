@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowShowEvent)
 
 namespace yq::tachyon {
 
-    WindowShowEvent::WindowShowEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowShowEvent::WindowShowEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

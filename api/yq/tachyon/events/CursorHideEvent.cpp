@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorHideEvent)
 
 namespace yq::tachyon {
 
-    CursorHideEvent::CursorHideEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    CursorHideEvent::CursorHideEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

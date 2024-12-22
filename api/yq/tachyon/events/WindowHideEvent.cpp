@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowHideEvent)
 
 namespace yq::tachyon {
 
-    WindowHideEvent::WindowHideEvent(Viewer* v, const Param& p) : WindowEvent(v, p)
+    WindowHideEvent::WindowHideEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

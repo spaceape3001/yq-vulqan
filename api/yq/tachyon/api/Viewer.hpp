@@ -370,6 +370,8 @@ namespace yq::tachyon {
         void                _remove(widget_t);      // Removes the current widget
         void                _widget(WidgetPtr);     // Changes the widget
         
+        void    on_move(const WindowMoveEvent&);
+        
         void    aspect_command(const ViewerAspectCommand&);
         void    attention_command(const ViewerAttentionCommand&);
         void    close_request(const ViewerCloseRequestCPtr&);

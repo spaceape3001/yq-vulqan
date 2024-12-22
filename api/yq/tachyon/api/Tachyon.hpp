@@ -25,6 +25,7 @@
 #include <tbb/spin_rw_mutex.h>
 //#include <yq/tachyon/typedef/controller.hpp>
 #include <concepts>
+#include <iosfwd>
 
 namespace yq::tachyon {
     class InterfaceInfo;
@@ -70,6 +71,7 @@ namespace yq::tachyon {
         
     private:
         friend class Tachyon;
+        friend class Thread;
         
         virtual TachyonSnapPtr   create_snap(Tachyon*) const = 0;
         virtual TachyonDataPtr   create_data() const = 0;
@@ -130,6 +132,11 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
         
+        struct Ident {
+            std::string_view    metaName;
+            uint64_t            id  = 0;
+        };
+        
         static void         init_info();
         
         
@@ -140,6 +147,8 @@ namespace yq::tachyon {
         static void         mail(TachyonID, const PostCPtr&);
         
         TachyonID           id() const { return { UniqueID::id() }; }
+        
+        Ident               ident() const;
         
         const std::string&  name() const { return m_name; }
         
@@ -380,3 +389,5 @@ namespace yq::tachyon {
         return create_child<T>(args...);
     }
 }
+
+std::ostringstream& operator<<(std::ostringstream&, const yq::tachyon::Tachyon::Ident&);

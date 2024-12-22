@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowEvent::Param {
         };
     
-        WindowRestoreEvent(Viewer*, const Param& p = {});
+        WindowRestoreEvent(Window*, const Param& p = {});
         virtual ~WindowRestoreEvent();
         
         static void init_info();

@@ -11,11 +11,11 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowStateEvent)
 
 namespace yq::tachyon {
 
-    WindowStateEvent::WindowStateEvent(Viewer* v, const ViewerState& st, const Param& p) : WindowEvent(v, p), m_state(st)
+    WindowStateEvent::WindowStateEvent(Window* v, const ViewerState& st, const Param& p) : WindowEvent(v, p), m_state(st)
     {
     }
     
-    WindowStateEvent::WindowStateEvent(ViewerID v, const ViewerState& st, const Param& p) : WindowEvent(v, p), m_state(st)
+    WindowStateEvent::WindowStateEvent(WindowID v, const ViewerState& st, const Param& p) : WindowEvent(v, p), m_state(st)
     {
     }
 

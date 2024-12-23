@@ -108,6 +108,8 @@ namespace yq::tachyon {
 
     using PostAdvice = std::variant<std::monostate, accept_t, reject_t, MG, MGF>;
 
+    bool unspecified(const PostAdvice& pa);
+
     /*! \brief Base (heavy) object in the tachyon library
     
         Unfortunately, this class has picked up a bit of heft and isn't light-weight. 

@@ -7,6 +7,9 @@
 #pragma once
 
 #include <yq/tachyon/api/Window.hpp>
+#include <yq/tachyon/api/WindowState.hpp>
+#include <yq/tachyon/enum/ModifierKey.hpp>
+#include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/tachyon/interfaces/IPosition2I.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/glfw.hpp>
@@ -34,13 +37,32 @@ namespace yq::tachyon {
         //std::string_view    title() const;
         //void                title(const std::string&);
 
+    protected:
+        void        snap(WindowSnap&) const;
+        virtual PostAdvice  advise(const Post&) const override;
+
     private:
         DesktopGLFW* const  m_desktop;
         GLFWwindow* const   m_window;
-        Vector2I            m_position;
+        Size2I              m_aspect    = { -1, -1 };
+        Size2I              m_maxSize   = { -1, -1 };
+        Size2I              m_minSize   = { -1, -1 };
         
+        void    on_aspect_command(const WindowAspectCommand&);
+        void    on_attention_command(const WindowAttentionCommand&);
+        void    on_float_command(const WindowFloatCommand&);
+        void    on_focus_command(const WindowFocusCommand&);
         void    on_hide_command(const WindowHideCommand&);
+        void    on_iconify_command(const WindowIconifyCommand&);
+        void    on_maximize_command(const WindowMaximizeCommand&);
+        void    on_restore_command(const WindowRestoreCommand&);
         void    on_show_command(const WindowShowCommand&);
+        
+        ModifierKeys        modifiers() const;
+        MouseButtons        buttons() const;
+        Vector2D            mouse() const;
+        std::string         title() const;
+        WindowFlags         flags() const;
 
         static WindowGLFW*  _window(GLFWwindow*);
 

@@ -23,7 +23,7 @@ namespace yq::tachyon {
     /*! \brief Input event 
     
         This is a common base class for keyboard/mouse events since 
-        they both need modifier keys & are attached to viewers.
+        they both need modifier keys & are attached to windows.
     */
     class InputEvent : public Event, public ViewerBind {
         YQ_OBJECT_INFO(InputEventInfo)

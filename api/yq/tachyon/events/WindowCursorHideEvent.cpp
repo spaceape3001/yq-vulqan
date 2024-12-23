@@ -4,26 +4,26 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CursorCaptureEvent.hpp"
+#include "WindowCursorHideEvent.hpp"
 #include <yq/tachyon/api/EventInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorCaptureEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCursorHideEvent)
 
 namespace yq::tachyon {
 
-    CursorCaptureEvent::CursorCaptureEvent(Window* v, const Param& p) : WindowEvent(v, p)
+    WindowCursorHideEvent::WindowCursorHideEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     
-    CursorCaptureEvent::~CursorCaptureEvent()
+    WindowCursorHideEvent::~WindowCursorHideEvent()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void CursorCaptureEvent::init_info()
+    void WindowCursorHideEvent::init_info()
     {
-        auto w = writer<CursorCaptureEvent>();
-        w.description("Cursor Capture Event");
+        auto w = writer<WindowCursorHideEvent>();
+        w.description("Window Cursor Hide Event");
     }
 }

@@ -7,8 +7,16 @@
 #include "WindowGLFW.hpp"
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/WindowInfoWriter.hpp>
+#include <yq/tachyon/commands/WindowAspectCommand.hpp>
+#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
+#include <yq/tachyon/commands/WindowFloatCommand.hpp>
+#include <yq/tachyon/commands/WindowFocusCommand.hpp>
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
+#include <yq/tachyon/commands/WindowIconifyCommand.hpp>
+#include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
+#include <yq/tachyon/commands/WindowRestoreCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
+#include <yq/tachyon/enum/KeyCode.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
 #include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
@@ -18,16 +26,36 @@
 #include <yq/tachyon/events/WindowMoveEvent.hpp>
 #include <yq/tachyon/events/WindowRestoreEvent.hpp>
 #include <yq/tachyon/events/WindowResizeEvent.hpp>
+#include <yq/tachyon/events/WindowScaleEvent.hpp>
 #include <yq/tachyon/events/WindowShowEvent.hpp>
+#include <yq/tachyon/requests/WindowCloseRequest.hpp>
+#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
+#include <yq/tachyon/glfw/MonitorGLFW.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 
 namespace yq::tachyon {
 
-    void callback_character(GLFWwindow* win, unsigned int codepoint);
-    void callback_cursor_enter(GLFWwindow* win, int entered);
-    void callback_cursor_position(GLFWwindow* win, double xpos, double ypos);
-    void callback_drop(GLFWwindow* win, int count, const char** paths);
+    void WindowGLFW::callback_character(GLFWwindow* win, unsigned int codepoint)
+    {
+        //  TODO
+    }
+    
+    void WindowGLFW::callback_cursor_enter(GLFWwindow* win, int entered)
+    {
+        //  TODO
+    }
+    
+    void WindowGLFW::callback_cursor_position(GLFWwindow* win, double xpos, double ypos)
+    {
+        //  TODO
+    }
+    
+    void WindowGLFW::callback_drop(GLFWwindow* win, int count, const char** paths)
+    {
+        //  TODO
+    }
+    
     void WindowGLFW::callback_framebuffer_size(GLFWwindow* win, int width, int height)
     {
         WindowGLFW *_w  = _window(win);
@@ -36,10 +64,42 @@ namespace yq::tachyon {
         _w->send(new WindowFrameBufferResizeEvent(_w, Size2I( width, height)));
     }
     
-    void callback_key(GLFWwindow* win, int key, int scancode, int action, int mods);
-    void callback_mouse_button(GLFWwindow* win, int button, int action, int mods);
-    void callback_scroll(GLFWwindow* win, double xoffset, double yoffset);
-    void callback_window_close(GLFWwindow* win);
+    void WindowGLFW::callback_key(GLFWwindow* win, int key, int scancode, int action, int mods)
+    {
+        //  TODO
+    }
+    
+    void WindowGLFW::callback_mouse_button(GLFWwindow* win, int button, int action, int mods)
+    {
+        //  TODO
+    }
+    
+    void WindowGLFW::callback_scroll(GLFWwindow* win, double xoffset, double yoffset)
+    {
+        WindowGLFW *_w  = _window(win);
+        if(!_w)
+            return ;
+
+        MouseScrollEvent::Param p;
+        p.modifiers = _w->modifiers();
+        p.buttons   = _w->buttons();
+        p.delta     = { xoffset, yoffset };
+        //_w->send(
+
+        //  TODO
+    }
+    
+    void WindowGLFW::callback_window_close(GLFWwindow* win)
+    {
+        WindowGLFW *_w  = _window(win);
+        if(!_w)
+            return ;
+    
+            // so we don't repeat this....
+        glfwSetWindowShouldClose(win, GLFW_FALSE);
+        _w->send(new WindowCloseRequest(_w));
+    }
+    
     void WindowGLFW::callback_window_focus(GLFWwindow* win, int focused)
     {
         WindowGLFW *_w  = _window(win);
@@ -84,8 +144,22 @@ namespace yq::tachyon {
         _w->send(new WindowMoveEvent(_w, Vector2I(xpos, ypos)));
     }
     
-    void callback_window_refresh(GLFWwindow* win);
-    void callback_window_scale(GLFWwindow* win, float xscale, float yscale);
+    void WindowGLFW::callback_window_refresh(GLFWwindow* win)
+    {
+        WindowGLFW *_w  = _window(win);
+        if(!_w)
+            return ;
+        _w->send(new WindowRefreshRequest(_w));
+    }
+    
+    void WindowGLFW::callback_window_scale(GLFWwindow* win, float xscale, float yscale)
+    {
+        WindowGLFW *_w  = _window(win);
+        if(!_w)
+            return ;
+        _w->send(new WindowScaleEvent(_w, { xscale, yscale }));
+    }
+    
     void WindowGLFW::callback_window_size(GLFWwindow* win, int width, int height)
     {
         WindowGLFW *_w  = _window(win);
@@ -120,16 +194,150 @@ namespace yq::tachyon {
         assert(w && d);
         glfwSetWindowUserPointer(w, this);
         
+        glfwSetCharCallback(w, callback_character);
+        glfwSetCursorEnterCallback(w, callback_cursor_enter);
+        glfwSetCursorPosCallback(w, callback_cursor_position);
+        glfwSetDropCallback(w, callback_drop);
         glfwSetFramebufferSizeCallback(w, callback_framebuffer_size);
+        glfwSetKeyCallback(w, callback_key);
+        glfwSetMouseButtonCallback(w, callback_mouse_button);
+        glfwSetScrollCallback(w, callback_scroll);
+        glfwSetWindowCloseCallback(w, callback_window_close);
+        glfwSetWindowContentScaleCallback(w, callback_window_scale);
         glfwSetWindowFocusCallback(w, callback_window_focus);
         glfwSetWindowIconifyCallback(w, callback_window_iconify);
         glfwSetWindowMaximizeCallback(w, callback_window_maximize);
         glfwSetWindowPosCallback(w, callback_window_position);
+        glfwSetWindowRefreshCallback(w, callback_window_refresh);
         glfwSetWindowSizeCallback(w, callback_window_size);
     }
     
     WindowGLFW::~WindowGLFW()
     {
+        glfwSetWindowUserPointer(m_window, nullptr);
+
+        glfwSetCharCallback(m_window, nullptr);
+        glfwSetCursorEnterCallback(m_window, nullptr);
+        glfwSetCursorPosCallback(m_window, nullptr);
+        glfwSetDropCallback(m_window, nullptr);
+        glfwSetFramebufferSizeCallback(m_window, nullptr);
+        glfwSetKeyCallback(m_window, nullptr);
+        glfwSetMouseButtonCallback(m_window, nullptr);
+        glfwSetScrollCallback(m_window, nullptr);
+        glfwSetWindowCloseCallback(m_window, nullptr);
+        glfwSetWindowContentScaleCallback(m_window, nullptr);
+        glfwSetWindowFocusCallback(m_window, nullptr);
+        glfwSetWindowIconifyCallback(m_window, nullptr);
+        glfwSetWindowMaximizeCallback(m_window, nullptr);
+        glfwSetWindowPosCallback(m_window, nullptr);
+        glfwSetWindowRefreshCallback(m_window, nullptr);
+        glfwSetWindowSizeCallback(m_window, nullptr);
+
+        glfwDestroyWindow(m_window);
+    }
+
+    PostAdvice  WindowGLFW::advise(const Post&pp) const 
+    {
+        PostAdvice  pa  = Window::advise(pp);
+        if(!unspecified(pa))
+            return pa;
+        if(dynamic_cast<const WindowCloseRequest*>(&pp))
+            return MG::General;
+        return {};
+    }
+
+    MouseButtons        WindowGLFW::buttons() const
+    {
+        MouseButtons    ret;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+            ret |= MouseButton::Button1;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_2) == GLFW_PRESS)
+            ret |= MouseButton::Button2;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_3) == GLFW_PRESS)
+            ret |= MouseButton::Button3;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_4) == GLFW_PRESS)
+            ret |= MouseButton::Button4;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_5) == GLFW_PRESS)
+            ret |= MouseButton::Button5;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_6) == GLFW_PRESS)
+            ret |= MouseButton::Button6;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_7) == GLFW_PRESS)
+            ret |= MouseButton::Button7;
+        if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_8) == GLFW_PRESS)
+            ret |= MouseButton::Button8;
+        return ret;
+    }
+
+    WindowFlags         WindowGLFW::flags() const
+    {
+        WindowFlags ret;
+        ret.set(WindowFlag::AutoIconify,       static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_AUTO_ICONIFY)));
+        ret.set(WindowFlag::Decorated,         static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_DECORATED)));
+        ret.set(WindowFlag::Floating,          static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_FLOATING)));
+        ret.set(WindowFlag::Focused,           static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_FOCUSED)));
+        ret.set(WindowFlag::FocusOnShow,       static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_FOCUS_ON_SHOW)));
+        ret.set(WindowFlag::Hovered,           static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_HOVERED)));
+        ret.set(WindowFlag::Iconified,         static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_ICONIFIED)));
+        ret.set(WindowFlag::Maximized,         static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_MAXIMIZED)));
+        ret.set(WindowFlag::MousePassThrough,  static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_MOUSE_PASSTHROUGH)));
+        ret.set(WindowFlag::Resizable,         static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_RESIZABLE)));
+        ret.set(WindowFlag::Transparent,       static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_TRANSPARENT_FRAMEBUFFER)));
+        ret.set(WindowFlag::Visible,           static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_VISIBLE)));
+        return ret;
+    }
+
+    ModifierKeys        WindowGLFW::modifiers() const
+    {
+        ModifierKeys    ret;
+        if(glfwGetKey(m_window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS)
+            ret |= ModifierKey::AltLeft;
+        if(glfwGetKey(m_window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
+            ret |= ModifierKey::AltRight;
+        if(glfwGetKey(m_window, GLFW_KEY_CAPS_LOCK) == GLFW_PRESS)
+            ret |= ModifierKey::CapsLock;
+        if(glfwGetKey(m_window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+            ret |= ModifierKey::ControlLeft;
+        if(glfwGetKey(m_window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS)
+            ret |= ModifierKey::ControlRight;
+        if(glfwGetKey(m_window, GLFW_KEY_NUM_LOCK) == GLFW_PRESS)
+            ret |= ModifierKey::NumLock;
+        if(glfwGetKey(m_window, GLFW_KEY_SCROLL_LOCK) == GLFW_PRESS)
+            ret |= ModifierKey::ScrollLock;
+        if(glfwGetKey(m_window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+            ret |= ModifierKey::ShiftLeft;
+        if(glfwGetKey(m_window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
+            ret |= ModifierKey::ShiftRight;
+        if(glfwGetKey(m_window, GLFW_KEY_LEFT_SUPER) == GLFW_PRESS)
+            ret |= ModifierKey::SuperLeft;
+        if(glfwGetKey(m_window, GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS)
+            ret |= ModifierKey::SuperRight;
+        return ret;
+    }
+
+    Vector2D  WindowGLFW::mouse() const
+    {
+        Vector2D ret;
+        glfwGetCursorPos(m_window, &ret.x, &ret.y);
+        return ret;
+    }
+
+    void    WindowGLFW::on_aspect_command(const WindowAspectCommand&cmd)
+    {
+    }
+
+    void    WindowGLFW::on_attention_command(const WindowAttentionCommand&)
+    {
+        glfwRequestWindowAttention(m_window);
+    }
+
+    void    WindowGLFW::on_float_command(const WindowFloatCommand&cmd)
+    {
+        glfwSetWindowAttrib(m_window, GLFW_FLOATING, GLFW_TRUE);
+    }
+
+    void    WindowGLFW::on_focus_command(const WindowFocusCommand&)
+    {
+        glfwFocusWindow(m_window);
     }
 
     void    WindowGLFW::on_hide_command(const WindowHideCommand&)
@@ -140,6 +348,21 @@ namespace yq::tachyon {
         send(new WindowHideEvent(this));
     }
     
+    void    WindowGLFW::on_iconify_command(const WindowIconifyCommand&)
+    {
+        glfwIconifyWindow(m_window);
+    }
+    
+    void    WindowGLFW::on_maximize_command(const WindowMaximizeCommand&)
+    {
+        glfwMaximizeWindow(m_window);
+    }
+    
+    void    WindowGLFW::on_restore_command(const WindowRestoreCommand&)
+    {
+        glfwRestoreWindow(m_window);
+    }
+
     void    WindowGLFW::on_show_command(const WindowShowCommand&)
     {
         if(glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
@@ -156,13 +379,51 @@ namespace yq::tachyon {
         return ret;
     }
     
+    void      WindowGLFW::snap(WindowSnap& sn) const
+    {
+        Window::snap(sn);
+
+        for(KeyCode kc : KeyCode::all_values()){
+            int gk  = encode_glfw(kc);
+            if(gk == GLFW_KEY_UNKNOWN)
+                continue;
+            sn.keyboard.keys.set((int) kc.value(), glfwGetKey(m_window, gk) == GLFW_PRESS);
+        }
+
+        sn.keyboard.modifiers   = modifiers();
+        sn.mouse.buttons        = buttons();
+        glfwGetCursorPos(m_window, &sn.mouse.position.x, &sn.mouse.position.y);
+        
+        sn.window.aspect        = m_aspect;
+        sn.window.flags         = flags();
+        sn.window.max           = m_maxSize;
+        sn.window.min           = m_minSize;
+        sn.window.monitor       = MonitorGLFW::monitor(glfwGetWindowMonitor(m_window));
+        sn.window.opacity       = glfwGetWindowOpacity(m_window);
+        sn.window.title         = title();
+
+        glfwGetWindowSize(m_window, &sn.window.area.x, &sn.window.area.y);
+        glfwGetFramebufferSize(m_window, &sn.window.pixels.x, &sn.window.pixels.y);
+        glfwGetWindowPos(m_window, &sn.window.position.x, &sn.window.position.y);
+        glfwGetWindowContentScale(m_window, &sn.window.scale.x, &sn.window.scale.y);
+        
+        sn.time             = glfwGetTime();
+    }
+
     Execution WindowGLFW::tick(Context&ctx) 
     {
         Window::tick(ctx);
         
+        
+        
         //  TODO
         
         return {};
+    }
+
+    std::string         WindowGLFW::title() const
+    {
+        return glfwGetWindowTitle(m_window);
     }
 
     //std::string_view    WindowGLFW::title() const
@@ -180,7 +441,13 @@ namespace yq::tachyon {
         auto w = writer<WindowGLFW>();
         w.description("GLFW Window");
         w.interface<IPosition2I>();
+        w.slot(&WindowGLFW::on_attention_command);
+        w.slot(&WindowGLFW::on_float_command);
+        w.slot(&WindowGLFW::on_focus_command);
         w.slot(&WindowGLFW::on_hide_command);
+        w.slot(&WindowGLFW::on_iconify_command);
+        w.slot(&WindowGLFW::on_maximize_command);
+        w.slot(&WindowGLFW::on_restore_command);
         w.slot(&WindowGLFW::on_show_command);
     }
 }

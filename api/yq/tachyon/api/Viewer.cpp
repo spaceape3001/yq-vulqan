@@ -770,28 +770,28 @@ namespace yq::tachyon {
         void    Viewer::cursor_capture_command(const ViewerCursorCaptureCommand&)
         {
             if(started_or_running()){
-                dispatch(new WindowCursorCaptureCommand(this));
+                dispatch(new CursorCaptureCommand(this));
             }
         }
         
         void    Viewer::cursor_disable_command(const ViewerCursorDisableCommand&)
         {
             if(started_or_running()){
-                dispatch(new WindowCursorDisableCommand(this));
+                dispatch(new CursorDisableCommand(this));
             }
         }
         
         void    Viewer::cursor_hide_command(const ViewerCursorHideCommand&)
         {
             if(started_or_running()){
-                dispatch(new WindowCursorHideCommand(this));
+                dispatch(new CursorHideCommand(this));
             }
         }
         
         void    Viewer::cursor_normal_command(const ViewerCursorNormalCommand&)
         {
             if(started_or_running()){
-                dispatch(new WindowCursorNormalCommand(this));
+                dispatch(new CursorNormalCommand(this));
             }
         }
 

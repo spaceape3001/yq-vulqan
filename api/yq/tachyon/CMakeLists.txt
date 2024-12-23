@@ -167,14 +167,8 @@ add_library(${PROJECT_NAME} SHARED
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
 
-    events/events.cpp
-
     events/AppEvent.cpp
     events/CameraEvent.cpp
-    events/CursorCaptureEvent.cpp
-    events/CursorDisableEvent.cpp
-    events/CursorHideEvent.cpp
-    events/CursorNormalEvent.cpp
     events/EmptyEvent.cpp
     events/InputEvent.cpp
     events/JoystickAxisEvent.cpp
@@ -212,6 +206,10 @@ add_library(${PROJECT_NAME} SHARED
     events/VulqanEvent.cpp
     events/WidgetEvent.cpp
     events/WindowAspectEvent.cpp
+    events/WindowCursorCaptureEvent.cpp
+    events/WindowCursorDisableEvent.cpp
+    events/WindowCursorHideEvent.cpp
+    events/WindowCursorNormalEvent.cpp
     events/WindowDefocusEvent.cpp
     events/WindowDestroyEvent.cpp
     events/WindowEvent.cpp

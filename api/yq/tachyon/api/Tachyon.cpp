@@ -24,6 +24,13 @@ namespace yq::tachyon {
 
     struct Mail;
 
+    bool unspecified(const PostAdvice& pa)
+    {
+        return static_cast<bool>(std::get_if<std::monostate>(&pa));
+    }
+
+// ------------------------------------------------------------------------
+
     TachyonBind::TachyonBind(const Tachyon*v ) : m_tachyon(v ? v->id() : TachyonID{})
     {
     }

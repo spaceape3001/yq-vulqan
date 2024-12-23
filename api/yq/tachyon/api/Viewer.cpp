@@ -179,6 +179,11 @@ namespace yq::tachyon {
 
     Execution   Viewer::tick(Context&) 
     {
+static ThreadID s_owner;
+if(s_owner != owner()){
+    s_owner = owner();
+    tachyonInfo << ident() << " on thread " << (uint64_t) s_owner;
+}
         return {};
     }
     

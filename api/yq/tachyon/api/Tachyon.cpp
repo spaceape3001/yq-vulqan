@@ -16,6 +16,7 @@
 #include "Thread.hpp"
 
 #include <yq/tachyon/commands/TachyonProxyCommand.hpp>
+#include <yq/tachyon/commands/TachyonThreadCommand.hpp>
 
 #include <yq/core/ThreadId.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -540,15 +541,16 @@ namespace yq::tachyon {
         return m_owner; 
     }
 
-    bool    Tachyon::owner(push_t, ThreadID tid)
+    void    Tachyon::on_thread_command(const TachyonThreadCommand& cmd)
     {
-        if(!tid)
-            return false;
-        if(owner() == tid)
-            return true;
-        
-        //  TODO
-        return false;
+        if(cmd.tachyon() != id())
+            return ;
+        Thread::rethread(this, cmd.thread());
+    }
+
+    void    Tachyon::owner(push_t, ThreadID tid)
+    {
+        mail(new TachyonThreadCommand(this, tid));
     }
 
     void    Tachyon::send(const PostCPtr&pp, PostTarget to)
@@ -631,6 +633,7 @@ namespace yq::tachyon {
         auto w = writer<Tachyon>();
         w.description("Tachyon Object");
         w.slot(&Tachyon::slot_proxy_command);
+        w.slot(&Tachyon::on_thread_command);
         w.property("name", &Tachyon::name);
     }
 }

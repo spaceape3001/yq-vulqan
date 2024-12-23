@@ -29,6 +29,11 @@ namespace yq::tachyon {
     
         It follows ImGui's rules, this is something that is 
         "drawable" and needs some amount of state information.
+        
+        \note ONE spot in the tree, with one viewer.  
+        Need a second view of something?  New widget (though 
+        certainly use ref-pointers to data, models, etc to
+        reduce overhead!)
     */
     class Widget : public Tachyon {    
         YQ_OBJECT_INFO(WidgetInfo)

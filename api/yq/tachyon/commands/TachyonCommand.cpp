@@ -22,6 +22,10 @@ namespace yq::tachyon {
     {
     }
     
+    TachyonCommand::TachyonCommand(Tachyon* v, const Param& p) : Command(p), TachyonBind(v)
+    {
+    }
+
     TachyonCommand::~TachyonCommand()
     {
     }

@@ -36,7 +36,11 @@ namespace yq::tachyon {
         static void init_info();
         
         //  Might be NULL...
-        static Thread*  current() { return s_current; }
+        static Thread*      current() { return s_current; }
+        
+        static ThreadPtr    get(ThreadID);
+        static Thread*      main() { return s_main; }
+        static Thread*      sink() { return s_sink; }
         
         static std::vector<ThreadPtr>   all();
 
@@ -73,8 +77,8 @@ namespace yq::tachyon {
         
     private:
     
-        struct Repo;
-        static Repo&    repo();
+        //struct Repo;
+        //static Repo&    repo();
         
         struct Tack;        //< Snapshot to a tachyon (object, data, snap)
         struct Snap;
@@ -85,6 +89,8 @@ namespace yq::tachyon {
         
         static void retain(TachyonPtr);
         static void retain(TachyonPtr, ThreadID);
+        
+        static void rethread(TachyonPtr, ThreadID);
         
 //        struct Impl;
 
@@ -100,6 +106,13 @@ namespace yq::tachyon {
         void    execute(Control&, Context&);
         
         static thread_local Thread*     s_current;
+        static Thread*                  s_main;
+        static Thread*                  s_sink;
+        static mutex_t                  s_mutex;
+        static thread_data_map_t        s_data;
+        static thread_map_t             s_threads;
+        static inbox_map_t              s_inboxes;
+        static std::vector<TachyonPtr>  s_misfits;
         
         bool                            m_quit{ false };
         unit::Second                    m_snooze    = 1_ms;

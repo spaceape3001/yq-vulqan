@@ -117,6 +117,8 @@ add_library(${PROJECT_NAME} SHARED
     commands/SetSize2I.cpp
     commands/TachyonCommand.cpp
     commands/TachyonProxyCommand.cpp
+    commands/TachyonThreadCommand.cpp
+    commands/ThreadCommand.cpp
     commands/ViewerAspectCommand.cpp
     commands/ViewerAttentionCommand.cpp
     commands/ViewerCloseCommand.cpp

@@ -48,30 +48,6 @@ namespace yq::tachyon {
     };
     
 
-    struct Thread::Repo {
-    
-        Thread*                 main = nullptr;
-        ThreadID                mainID;
-    
-        //! Sink is the thread that'll be "in case" nothing fits
-        Thread*                 sink = nullptr;
-        ThreadID                sinkID;
-
-        mutable mutex_t         mutex;
-        thread_data_map_t       data;  // must be modified under mutex guard
-        inbox_map_t             inboxes;
-        thread_map_t            threads;
-        
-        std::vector<TachyonPtr> misfits;  //<! Adds that need retention by the next available thread
-        
-        void    acknowledge(ThreadID tgt, TachyonID tac)
-        {
-            lock_t  _lock(mutex, true);
-            inboxes[tgt].pushed.insert(tac);
-        }
-    };
-
-
 // ------------------------------------------------------------------------
 
     ThreadBind::ThreadBind(const Thread* v) : m_thread( v ? v->id() : ThreadID{} )
@@ -100,13 +76,14 @@ namespace yq::tachyon {
 
 // ------------------------------------------------------------------------
 
-    Thread::Repo&    Thread::repo()
-    {
-        static Repo s_repo;
-        return s_repo;
-    }
-    
-    thread_local Thread*     Thread::s_current  = nullptr;
+    thread_local Thread*        Thread::s_current   = nullptr;
+    Thread*                     Thread::s_main      = nullptr;
+    Thread*                     Thread::s_sink      = nullptr;
+    Thread::mutex_t             Thread::s_mutex;
+    Thread::thread_data_map_t   Thread::s_data;
+    Thread::thread_map_t        Thread::s_threads;
+    Thread::inbox_map_t         Thread::s_inboxes;
+    std::vector<TachyonPtr>     Thread::s_misfits;
     
     void Thread::init_info()
     {
@@ -118,75 +95,59 @@ namespace yq::tachyon {
     {
         std::vector<ThreadPtr>  ret;
         {
-            static Repo& _r = repo();
-            lock_t  _lock(_r.mutex, false);
-            ret.reserve(_r.threads.size());
-            for(auto& i : _r.threads)
+            lock_t  _lock(s_mutex, false);
+            ret.reserve(s_threads.size());
+            for(auto& i : s_threads)
                 ret.push_back(i.second);
         }
         return ret;
     }
 
+    ThreadPtr    Thread::get(ThreadID tid)
+    {
+        lock_t  _lock(s_mutex, false);
+        auto i = s_threads.find(tid);
+        if(i != s_threads.end())
+            return i->second;
+        return {};
+    }
+
     void Thread::retain(TachyonPtr tp)
     {
-        static Repo&    _r  = repo();
-
-tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t) tp -> id() << ")";
-    
         if(!tp)
             return;
             
-        if(Thread* th = dynamic_cast<Thread*>(tp.ptr())){
-tachyonInfo << ">> it's a thread\n";        
-        
-            lock_t _lock(_r.mutex, true);
-            _r.threads[th->id()]    = th;
+        if(dynamic_cast<Thread*>(tp.ptr()))
             return;
-        }
         
         if(s_current){
-tachyonInfo << ">> binding to current thread\n";        
-
             lock_t _lock(s_current->m_mutex, true);
             s_current -> m_creates.push_back(tp);
             return;
         }
         
-        lock_t _lock(_r.mutex, true);
-        if(_r.sink){
-tachyonInfo << ">> sink\n";        
-            lock_t _lock2(_r.sink->m_mutex, true);
-            _r.sink->m_creates.push_back(tp);
+        if(s_sink){
+            lock_t _lock2(s_sink->m_mutex, true);
+            s_sink->m_creates.push_back(tp);
             return ;
         }
         
-        if(_r.main){
-tachyonInfo << ">> binding to main\n";        
-            lock_t _lock2(_r.main->m_mutex, true);
-            _r.main->m_creates.push_back(tp);
+        if(s_main){
+            lock_t _lock2(s_main->m_mutex, true);
+            s_main->m_creates.push_back(tp);
             return ;
         }
         
-tachyonInfo << ">> it's a misfit\n";        
-
-        _r.misfits.push_back(tp);
+        lock_t  _lock(s_mutex, true);
+        s_misfits.push_back(tp);
     }
     
     void Thread::retain(TachyonPtr tp, ThreadID tid)
     {
-tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t) tp -> id() << ", thread " << (uint64_t) tid << ")";
-        static Repo&    _r  = repo();
         if(!tp)
             return;
 
-        ThreadPtr   th;
-        {
-            lock_t _lock(_r.mutex, false);
-            auto i = _r.threads.find(tid);
-            if(i != _r.threads.end())
-                th = i->second;
-        }
-        
+        ThreadPtr   th = get(tid);
         if(th){
             lock_t _lock(tp->m_mutex, true);
             th->m_creates.push_back(tp);
@@ -196,24 +157,51 @@ tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t)
         retain(tp);
     }
 
+    void Thread::rethread(TachyonPtr tac, ThreadID tgt)
+    {
+        if(!tac)
+            return ;
+            
+        ThreadPtr   th  = get(tgt);
+        if(!th)
+            return;
+
+        ThreadPtr   me  = get(tac->owner());
+        if(me){
+            {
+                lock_t _lock(me->m_mutex, true);
+                auto& obj   = me->m_objects[tac->id()];
+                obj.pushed  = tgt;
+                obj.state   = TachyonThreadState::Pushed;
+                if(!obj.object)
+                    obj.object  = tac;
+            }
+            {
+                lock_t _lock(s_mutex, true);
+                s_inboxes[tgt].push.push_back(tac);
+            }
+        } else {
+            //  Not in any, becomes a create
+            lock_t  _lock(th->m_mutex, true);
+            th->m_creates.push_back(tac);
+        }
+    }
+
 // ------------------------------------------------------------------------
 
     Thread::Thread(const Param& p) : Tachyon(p)
     {
-        static Repo&    _r  = repo();
         ThreadID    _id = id();
         
-        lock_t    _lock(_r.mutex, true);
-        if(!thread::id() && !_r.main){
-            _r.main     = this;
-            _r.mainID   = _id;
-            _r.sink     = this;
-            _r.sinkID   = _id;
+        if(!thread::id() && !s_main){
+            s_main      = this;
+            s_sink      = this;
         }
         
-        _r.threads[_id]    = this;
-        _r.data[_id]       = {};
-        _r.inboxes[_id]    = {};
+        lock_t    _lock(s_mutex, true);
+        s_threads[_id]    = this;
+        s_data[_id]       = {};
+        s_inboxes[_id]    = {};
         
         tachyonInfo << "Thread::Thread()";
     }
@@ -224,11 +212,12 @@ tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t)
             s_current    = nullptr;
         }
     
-        static Repo& _r = repo();
-        lock_t _lock(_r.mutex, true);
-        if(_r.main == this){
-            _r.main = nullptr;
-            _r.mainID   = {};
+        lock_t _lock(s_mutex, true);
+        if(s_main == this){
+            s_main  = nullptr;
+        }
+        if(s_sink == this){
+            s_sink  = nullptr;
         }
         
         tachyonInfo << "Thread::~Thread()";
@@ -287,12 +276,11 @@ tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t)
     void    Thread::tick()
     {
         //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick()";
-        static Repo&  _r  = repo();
   
         thread_data_map_t   data;
         {
-            lock_t      _lock(_r.mutex, false);
-            data        = _r.data;
+            lock_t      _lock(s_mutex, false);
+            data        = s_data;
         }
   
         FramePtr        frame   = new Frame(id(), m_tick);
@@ -307,15 +295,14 @@ tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t)
         Context ctx(*frame);
         auto d = cycle(ctx);
         {
-            lock_t  _lock(_r.mutex, true);
-            _r.data[id()] = (ThreadData*) d.data.ptr();
+            lock_t  _lock(s_mutex, true);
+            s_data[id()] = (ThreadData*) d.data.ptr();
         }
     }
     
     Execution    Thread::tick(Context& ctx)
     {
         //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick(Context&)";
-        static Repo& _r = repo();
         Thread* old = s_current;
         s_current   = this;
     
@@ -323,8 +310,8 @@ tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t)
 
         Inbox   inbox;
         {
-            lock_t    _lock(_r.mutex, true);
-            std::swap(inbox, _r.inboxes[id()]);
+            lock_t    _lock(s_mutex, true);
+            std::swap(inbox, s_inboxes[id()]);
         }
         
         //  Process the inbox...
@@ -333,7 +320,10 @@ tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t)
                 continue;
             
             m_objects[in->id()].object  = in;
-            _r.acknowledge(in->owner(), in->id());
+            {
+                lock_t  _lock(s_mutex, true);
+                s_inboxes[in->owner()].pushed.insert(in->id());
+            }
             {
                 lock_t  _lock(in->m_mutex, true);
                 in->m_owner = id();
@@ -358,6 +348,7 @@ tachyonInfo << "Thread::retain({" << tp->metaInfo().name() << "} " << (uint64_t)
         }
         for(TachyonPtr& tp : creates){
             Control&    c   = m_objects[tp->id()];
+            tp->m_owner     = id();
             c.object        = std::move(tp);
         }
         

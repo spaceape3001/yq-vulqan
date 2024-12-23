@@ -28,6 +28,7 @@ namespace yq::tachyon {
     class MouseNormalCommand;
     class TachyonCommand;
     class TachyonProxyCommand;
+    class TachyonThreadCommand;
     class ViewerAspectCommand;
     class ViewerAttentionCommand;
     class ViewerCloseCommand;

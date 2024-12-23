@@ -33,6 +33,7 @@ namespace yq::tachyon {
     class PBXDispatch;
     struct Context;
     class TachyonProxyCommand;
+    class TachyonThreadCommand;
     
     /// TACHYON INFO
 
@@ -156,12 +157,12 @@ namespace yq::tachyon {
         
         ThreadID            owner() const;
         
-        bool                owner(push_t, ThreadID);
+        //! Virtual so derived classes can push children as well
+        virtual void        owner(push_t, ThreadID);
         
         TypedID             parent() const { return m_parent; }
         
         Tachyon*            parent(const Frame&) const;
-        
         
         //! \note NOT thread-safe (yet)
         void                subscribe(TachyonID, MGF grp=MG::General);
@@ -195,6 +196,7 @@ namespace yq::tachyon {
 
         mutable mutex_t         m_mutex;          // used for guards
 
+        
     
         #define TXLOCK  \
             lock_t  _lock(m_mutex, true);
@@ -365,6 +367,9 @@ namespace yq::tachyon {
         bool    _name(name_spec, OldNameFN cap={});
         
         void    slot_proxy_command(const TachyonProxyCommand&);
+        
+        void    on_thread_command(const TachyonThreadCommand&);
+        
     };
 
     template <SomeTachyon T, typename ... Args>

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCursorHideCommand)
 
 namespace yq::tachyon {
 
-    WindowCursorHideCommand::WindowCursorHideCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowCursorHideCommand::WindowCursorHideCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

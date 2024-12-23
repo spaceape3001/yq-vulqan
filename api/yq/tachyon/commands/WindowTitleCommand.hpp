@@ -16,7 +16,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowTitleCommand(Viewer*, std::string_view, const Param& p = {});
+        WindowTitleCommand(Window*, std::string_view, const Param& p = {});
         virtual ~WindowTitleCommand();
         
         static void init_info();

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowIconifyCommand)
 
 namespace yq::tachyon {
 
-    WindowIconifyCommand::WindowIconifyCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowIconifyCommand::WindowIconifyCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

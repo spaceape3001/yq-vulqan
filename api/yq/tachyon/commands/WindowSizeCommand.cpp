@@ -13,7 +13,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowSizeCommand)
 
 namespace yq::tachyon {
 
-    WindowSizeCommand::WindowSizeCommand(Viewer* v, const Size2I& sz, const Param& p) : WindowCommand(v, p), m_size(sz)
+    WindowSizeCommand::WindowSizeCommand(Window* v, const Size2I& sz, const Param& p) : WindowCommand(v, p), m_size(sz)
     {
     }
     

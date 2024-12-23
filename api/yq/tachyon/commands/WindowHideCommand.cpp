@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowHideCommand)
 
 namespace yq::tachyon {
 
-    WindowHideCommand::WindowHideCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowHideCommand::WindowHideCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

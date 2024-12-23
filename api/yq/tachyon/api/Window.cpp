@@ -9,6 +9,8 @@
 #include <yq/tachyon/api/WindowData.hpp>
 #include <yq/tachyon/api/WindowInfoWriter.hpp>
 #include <yq/tachyon/api/Post.hpp>
+#include <yq/tachyon/commands/WindowHideCommand.hpp>
+#include <yq/tachyon/commands/WindowShowCommand.hpp>
 
 namespace yq::tachyon {
 
@@ -65,6 +67,16 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Window::hide()
+    {
+        mail(new WindowHideCommand(this));
+    }
+    
+    void Window::show()
+    {
+        mail(new WindowShowCommand(this));
+    }
+
     void Window::snap(WindowSnap& sn) const
     {
         Tachyon::snap(sn);

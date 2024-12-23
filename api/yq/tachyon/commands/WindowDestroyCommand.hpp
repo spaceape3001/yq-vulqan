@@ -9,7 +9,7 @@
 #include <yq/tachyon/commands/WindowCommand.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowDestroyCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowDestroyCommand, WindowCommand)
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowDestroyCommand(Viewer*, const Param& p = {});
+        WindowDestroyCommand(Window*, const Param& p = {});
         virtual ~WindowDestroyCommand();
         
         static void init_info();

@@ -37,10 +37,11 @@ namespace yq::tachyon {
         PostCPtr    post;
         State       state   = State::Rejected;
     };
+    
 
     struct OutPost {
+        PostTarget  to;
         PostCPtr    post;
-        MGF         groups;
     };
 
     struct TachyonData : public RefCount {

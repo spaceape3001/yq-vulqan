@@ -9,7 +9,7 @@
 #include <yq/tachyon/commands/WindowCommand.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowMaximizeCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowMaximizeCommand, WindowCommand)
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowMaximizeCommand(Viewer*, const Param& p = {});
+        WindowMaximizeCommand(Window*, const Param& p = {});
         virtual ~WindowMaximizeCommand();
         
         static void init_info();

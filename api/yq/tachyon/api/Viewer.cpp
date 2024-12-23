@@ -104,6 +104,9 @@ namespace yq::tachyon {
         auto w = writer<Viewer>();
         
         w.description("Tachyon Viewer");
+        w.slot(&Viewer::on_defocus_event);
+        w.slot(&Viewer::on_fb_resize_event);
+        w.slot(&Viewer::on_focus_event);
         w.slot(&Viewer::on_move_event);
         w.slot(&Viewer::on_resize_event);
     }

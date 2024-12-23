@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowDestroyCommand)
 
 namespace yq::tachyon {
 
-    WindowDestroyCommand::WindowDestroyCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowDestroyCommand::WindowDestroyCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

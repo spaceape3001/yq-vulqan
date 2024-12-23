@@ -18,11 +18,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    WindowCommand::WindowCommand(const Viewer* v, const Param& p) : Command(p), ViewerBind(v)
+    WindowCommand::WindowCommand(const Window* v, const Param& p) : Command(p), WindowBind(v)
     {
     }
     
-    WindowCommand::WindowCommand(ViewerID v, const Param& p) : Command(p), ViewerBind(v)
+    WindowCommand::WindowCommand(WindowID v, const Param& p) : Command(p), WindowBind(v)
     {
     }
 

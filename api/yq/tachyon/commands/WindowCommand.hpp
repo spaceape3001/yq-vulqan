@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Command.hpp>
-#include <yq/tachyon/api/ViewerBind.hpp>
+#include <yq/tachyon/api/WindowBind.hpp>
 
 namespace yq::tachyon {
     class WindowCommandInfo : public CommandInfo {
@@ -17,7 +17,7 @@ namespace yq::tachyon {
     protected:
     };
 
-    class WindowCommand : public Command, public ViewerBind {
+    class WindowCommand : public Command, public WindowBind {
         YQ_OBJECT_INFO(WindowCommandInfo)
         YQ_OBJECT_DECLARE(WindowCommand, Command)
     public:
@@ -25,8 +25,8 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
-        WindowCommand(const Viewer*, const Param& p = {});
-        WindowCommand(ViewerID, const Param& p = {});
+        WindowCommand(const Window*, const Param& p = {});
+        WindowCommand(WindowID, const Param& p = {});
         virtual ~WindowCommand();
         
         static void init_info();

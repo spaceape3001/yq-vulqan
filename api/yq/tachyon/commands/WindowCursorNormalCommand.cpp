@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCursorNormalCommand)
 
 namespace yq::tachyon {
 
-    WindowCursorNormalCommand::WindowCursorNormalCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowCursorNormalCommand::WindowCursorNormalCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

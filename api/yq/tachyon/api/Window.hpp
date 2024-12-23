@@ -59,8 +59,8 @@ namespace yq::tachyon {
 
         WindowID    id() const { return WindowID(UniqueID::id()); }
 
-        virtual void    show() {}
-        virtual void    hide() {}
+        void        show();
+        void        hide();
 
     protected:
     

@@ -9,7 +9,7 @@
 #include <yq/tachyon/commands/WindowCommand.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowAttentionCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowAttentionCommand, WindowCommand)
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowAttentionCommand(Viewer*, const Param& p = {});
+        WindowAttentionCommand(Window*, const Param& p = {});
         virtual ~WindowAttentionCommand();
         
         static void init_info();

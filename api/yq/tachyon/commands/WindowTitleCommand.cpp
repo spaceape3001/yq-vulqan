@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowTitleCommand)
 
 namespace yq::tachyon {
 
-    WindowTitleCommand::WindowTitleCommand(Viewer* v, std::string_view szTitle, const Param& p) : WindowCommand(v, p), m_title(szTitle)
+    WindowTitleCommand::WindowTitleCommand(Window* v, std::string_view szTitle, const Param& p) : WindowCommand(v, p), m_title(szTitle)
     {
     }
     

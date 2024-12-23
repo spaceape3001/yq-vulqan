@@ -243,7 +243,7 @@ namespace yq::tachyon {
         */
         virtual PostAdvice  advise(const Post&) const;
 
-        void            send(const PostCPtr&, MGF dst=MG::General);
+        void            send(const PostCPtr&, PostTarget dst=MG::General);
 
         /*! \brief HANDLES the specified post
         

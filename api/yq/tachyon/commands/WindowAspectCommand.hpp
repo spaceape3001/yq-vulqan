@@ -10,7 +10,7 @@
 #include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowAspectCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowAspectCommand, WindowCommand)
@@ -19,7 +19,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowAspectCommand(Viewer*, const Size2I&, const Param& p = {});
+        WindowAspectCommand(Window*, const Size2I&, const Param& p = {});
         virtual ~WindowAspectCommand();
         
         static void init_info();

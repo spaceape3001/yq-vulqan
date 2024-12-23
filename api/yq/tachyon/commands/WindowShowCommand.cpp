@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowShowCommand)
 
 namespace yq::tachyon {
 
-    WindowShowCommand::WindowShowCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowShowCommand::WindowShowCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

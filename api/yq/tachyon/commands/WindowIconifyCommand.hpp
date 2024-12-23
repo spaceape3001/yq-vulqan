@@ -9,7 +9,7 @@
 #include <yq/tachyon/commands/WindowCommand.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowIconifyCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowIconifyCommand, WindowCommand)
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowIconifyCommand(Viewer*, const Param& p = {});
+        WindowIconifyCommand(Window*, const Param& p = {});
         virtual ~WindowIconifyCommand();
         
         static void init_info();

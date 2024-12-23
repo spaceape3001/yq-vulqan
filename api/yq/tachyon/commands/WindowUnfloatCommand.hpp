@@ -9,7 +9,7 @@
 #include <yq/tachyon/commands/WindowCommand.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowUnfloatCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowUnfloatCommand, WindowCommand)
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowUnfloatCommand(Viewer*, const Param& p = {});
+        WindowUnfloatCommand(Window*, const Param& p = {});
         virtual ~WindowUnfloatCommand();
         
         static void init_info();

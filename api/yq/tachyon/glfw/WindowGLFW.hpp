@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/api/Window.hpp>
 #include <yq/tachyon/interfaces/IPosition2I.hpp>
+#include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/glfw.hpp>
 
 struct GLFWwindow;
@@ -30,13 +31,16 @@ namespace yq::tachyon {
         static WindowGLFW*  window(ptr_t, GLFWwindow*);
         static WindowID     window(GLFWwindow*);
         
-        virtual void        show() override;
-        virtual void        hide() override;
+        //std::string_view    title() const;
+        //void                title(const std::string&);
 
     private:
         DesktopGLFW* const  m_desktop;
         GLFWwindow* const   m_window;
         Vector2I            m_position;
+        
+        void    on_hide_command(const WindowHideCommand&);
+        void    on_show_command(const WindowShowCommand&);
 
         static WindowGLFW*  _window(GLFWwindow*);
 

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCursorDisableCommand)
 
 namespace yq::tachyon {
 
-    WindowCursorDisableCommand::WindowCursorDisableCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowCursorDisableCommand::WindowCursorDisableCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

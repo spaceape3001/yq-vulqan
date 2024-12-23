@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCursorCaptureCommand)
 
 namespace yq::tachyon {
 
-    WindowCursorCaptureCommand::WindowCursorCaptureCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowCursorCaptureCommand::WindowCursorCaptureCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

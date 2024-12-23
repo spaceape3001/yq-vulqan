@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowMoveCommand)
 
 namespace yq::tachyon {
 
-    WindowMoveCommand::WindowMoveCommand(Viewer* v, const Vector2I& pos, const Param& p) : WindowCommand(v, p), m_position(pos)
+    WindowMoveCommand::WindowMoveCommand(Window* v, const Vector2I& pos, const Param& p) : WindowCommand(v, p), m_position(pos)
     {
     }
     

@@ -9,7 +9,7 @@
 #include <yq/tachyon/commands/WindowCommand.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowHideCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowHideCommand, WindowCommand)
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowHideCommand(Viewer*, const Param& p = {});
+        WindowHideCommand(Window*, const Param& p = {});
         virtual ~WindowHideCommand();
         
         static void init_info();

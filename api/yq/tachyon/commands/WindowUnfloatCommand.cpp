@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowUnfloatCommand)
 
 namespace yq::tachyon {
 
-    WindowUnfloatCommand::WindowUnfloatCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowUnfloatCommand::WindowUnfloatCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

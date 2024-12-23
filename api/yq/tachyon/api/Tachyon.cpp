@@ -412,7 +412,7 @@ namespace yq::tachyon {
                 data->inbound.push_back({pp, InPost::State::Accepted });
                 MGF mgf = groups(pa);
                 if(mgf != MGF{}){
-                    data->outbound.push_back({pp, mgf});
+                    data->outbound.push_back({mgf, pp});
                 }
                 dispatch(pp);
             }
@@ -427,10 +427,24 @@ namespace yq::tachyon {
         //  OUTBOUND MESSAGES
         
         for(auto& out : data->outbound){
-            for(auto& i : m_listeners){
-                if((i.second & out.groups) != MGF{}){
-                    tx(i.first, out.post);
+            if(auto p = std::get_if<MG>(&out.to)){
+                for(auto& i : m_listeners){
+                    if(i.second(*p)){
+                        tx(i.first, out.post);
+                    }
                 }
+            }
+            
+            if(auto p = std::get_if<MGF>(&out.to)){
+                for(auto& i : m_listeners){
+                    if((i.second & *p) != MGF{}){
+                        tx(i.first, out.post);
+                    }
+                }
+            }
+            
+            if(auto p = std::get_if<TachyonID>(&out.to)){
+                tx(*p, out.post);
             }
         }
 
@@ -530,15 +544,15 @@ namespace yq::tachyon {
         return false;
     }
 
-    void    Tachyon::send(const PostCPtr&pp, MGF mgf)
+    void    Tachyon::send(const PostCPtr&pp, PostTarget to)
     {
         if(!pp)
             return;
         if(in_tick()){
-            m_data->outbound.push_back({pp, mgf});
+            m_data->outbound.push_back({to, pp});
         } else {
             TXLOCK
-            m_outbox.push_back({pp, mgf});
+            m_outbox.push_back({to, pp});
         }
     }
 

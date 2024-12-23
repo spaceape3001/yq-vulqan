@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowFloatCommand)
 
 namespace yq::tachyon {
 
-    WindowFloatCommand::WindowFloatCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowFloatCommand::WindowFloatCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

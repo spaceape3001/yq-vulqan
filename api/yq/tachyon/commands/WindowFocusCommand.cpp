@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowFocusCommand)
 
 namespace yq::tachyon {
 
-    WindowFocusCommand::WindowFocusCommand(Viewer* v, const Param& p) : WindowCommand(v, p)
+    WindowFocusCommand::WindowFocusCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
     

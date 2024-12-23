@@ -10,7 +10,7 @@
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
+    class Window;
     
     class WindowMoveCommand : public WindowCommand {
         YQ_OBJECT_DECLARE(WindowMoveCommand, WindowCommand)
@@ -19,7 +19,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
-        WindowMoveCommand(Viewer*, const Vector2I&, const Param& p = {});
+        WindowMoveCommand(Window*, const Vector2I&, const Param& p = {});
         virtual ~WindowMoveCommand();
         
         static void init_info();

@@ -175,7 +175,9 @@ namespace yq::tachyon {
                 obj.state   = TachyonThreadState::Pushed;
                 if(!obj.object)
                     obj.object  = tac;
+                me->unsubscribe(tac->id(), MG::Tachyon);
             }
+            tac->unsubscribe(tac->owner(), MG::Thread);
             {
                 lock_t _lock(s_mutex, true);
                 s_inboxes[tgt].push.push_back(tac);
@@ -238,6 +240,9 @@ namespace yq::tachyon {
 
     void    Thread::execute(Control& ctr, Context& ctx)
     {
+        if(ctr.state != TachyonThreadState::Normal)
+            return ;
+    
         //tachyonInfo << "Thread{" << metaInfo().name() << "}::execute(Control&, Context&)";
         ThreadData&     d    = data();
 
@@ -327,16 +332,19 @@ namespace yq::tachyon {
             {
                 lock_t  _lock(in->m_mutex, true);
                 in->m_owner = id();
+                in->subscribe(id(), MG::Thread);
             }
+            subscribe(in->id(), MG::Tachyon);
             d.arrived.insert(in->id());
         }
         
         for(auto  in : inbox.pushed){
-            m_control.erase(in);
+            m_objects.erase(in);
         }
         
         for(auto in : inbox.deletes){
-            m_control.erase(in);
+            unsubscribe(in, MG::Tachyon);
+            m_objects.erase(in);
             d.deleted.insert(in);
         }
         
@@ -349,6 +357,8 @@ namespace yq::tachyon {
         for(TachyonPtr& tp : creates){
             Control&    c   = m_objects[tp->id()];
             tp->m_owner     = id();
+            tp->subscribe(id(), MG::Thread);
+            subscribe(tp->id(), MG::Tachyon);
             c.object        = std::move(tp);
         }
         

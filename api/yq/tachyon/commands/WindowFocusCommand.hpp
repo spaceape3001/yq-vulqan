@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowFocusCommand(Window*, const Param& p = {});
+        WindowFocusCommand(WindowID, const Param& p = {});
         virtual ~WindowFocusCommand();
         
         static void init_info();

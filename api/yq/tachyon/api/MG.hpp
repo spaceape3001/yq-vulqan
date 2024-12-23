@@ -15,7 +15,11 @@ namespace yq::tachyon {
         General = 0,
         Forward,
         Parent,
-        Children
+        Children,
+        // used by objects to mail their thread
+        Thread,
+        // used by threads to mail their objects
+        Tachyon
     };
     
     using MGF = Flags<MG>;

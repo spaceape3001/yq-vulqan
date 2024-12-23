@@ -17,6 +17,7 @@ namespace yq::tachyon {
         };
     
         WindowCursorNormalCommand(Window*, const Param& p = {});
+        WindowCursorNormalCommand(WindowID, const Param& p = {});
         virtual ~WindowCursorNormalCommand();
         
         static void init_info();

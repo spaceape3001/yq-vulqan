@@ -16,6 +16,7 @@ namespace yq::tachyon {
     public:
     
         WindowShowCommand(Window*, const Param& p = {});
+        WindowShowCommand(WindowID, const Param& p = {});
         virtual ~WindowShowCommand();
         
         static void init_info();

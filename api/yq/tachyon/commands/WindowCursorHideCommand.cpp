@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowCursorHideCommand::WindowCursorHideCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowCursorHideCommand::~WindowCursorHideCommand()
     {
     }

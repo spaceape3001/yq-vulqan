@@ -14,6 +14,10 @@ namespace yq::tachyon {
     WindowRestoreCommand::WindowRestoreCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
+
+    WindowRestoreCommand::WindowRestoreCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
     
     WindowRestoreCommand::~WindowRestoreCommand()
     {

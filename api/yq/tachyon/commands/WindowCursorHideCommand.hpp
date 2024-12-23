@@ -17,6 +17,7 @@ namespace yq::tachyon {
         };
     
         WindowCursorHideCommand(Window*, const Param& p = {});
+        WindowCursorHideCommand(WindowID, const Param& p = {});
         virtual ~WindowCursorHideCommand();
         
         static void init_info();

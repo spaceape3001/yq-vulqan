@@ -19,6 +19,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
+        WindowAspectCommand(WindowID, const Size2I&, const Param& p = {});
         WindowAspectCommand(Window*, const Size2I&, const Param& p = {});
         virtual ~WindowAspectCommand();
         

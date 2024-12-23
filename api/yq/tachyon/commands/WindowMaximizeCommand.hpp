@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowMaximizeCommand(Window*, const Param& p = {});
+        WindowMaximizeCommand(WindowID, const Param& p = {});
         virtual ~WindowMaximizeCommand();
         
         static void init_info();

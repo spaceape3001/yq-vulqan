@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowFloatCommand::WindowFloatCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowFloatCommand::~WindowFloatCommand()
     {
     }

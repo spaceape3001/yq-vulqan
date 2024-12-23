@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowCursorCaptureCommand::WindowCursorCaptureCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowCursorCaptureCommand::~WindowCursorCaptureCommand()
     {
     }

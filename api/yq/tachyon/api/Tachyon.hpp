@@ -221,6 +221,18 @@ namespace yq::tachyon {
             mark();
             return true;
         }
+        
+        //  Swaps in a thread-safe manner
+        template <typename T>
+        T       swap(T& member, T value)
+        {
+            T   old = std::move(value);
+            {
+                TXLOCK
+                std::swap(member, old);
+            }
+            return old;
+        }
 
         friend TachyonPtr;
         friend TachyonCPtr;

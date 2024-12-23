@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowShowCommand::WindowShowCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+    
     WindowShowCommand::~WindowShowCommand()
     {
     }

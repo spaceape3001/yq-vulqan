@@ -10,52 +10,88 @@
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yq/tachyon/api/ViewerBind.hpp>
 #include <yq/tachyon/api/ViewerException.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/api/Window.hpp>
+#include <yq/tachyon/api/WindowData.hpp>
 
+#include <yq/tachyon/commands/ViewerAspectCommand.hpp>
+#include <yq/tachyon/commands/ViewerAttentionCommand.hpp>
+#include <yq/tachyon/commands/ViewerCloseCommand.hpp>
+#include <yq/tachyon/commands/ViewerCursorCaptureCommand.hpp>
+#include <yq/tachyon/commands/ViewerCursorDisableCommand.hpp>
+#include <yq/tachyon/commands/ViewerCursorHideCommand.hpp>
+#include <yq/tachyon/commands/ViewerCursorNormalCommand.hpp>
+#include <yq/tachyon/commands/ViewerFloatCommand.hpp>
+#include <yq/tachyon/commands/ViewerFocusCommand.hpp>
+#include <yq/tachyon/commands/ViewerHideCommand.hpp>
+#include <yq/tachyon/commands/ViewerIconifyCommand.hpp>
+#include <yq/tachyon/commands/ViewerMaximizeCommand.hpp>
+#include <yq/tachyon/commands/ViewerPauseCommand.hpp>
+#include <yq/tachyon/commands/ViewerRestoreCommand.hpp>
+#include <yq/tachyon/commands/ViewerResumeCommand.hpp>
+#include <yq/tachyon/commands/ViewerShowCommand.hpp>
+#include <yq/tachyon/commands/ViewerTitleCommand.hpp>
+#include <yq/tachyon/commands/ViewerUnfloatCommand.hpp>
+#include <yq/tachyon/commands/WindowAspectCommand.hpp>
+#include <yq/tachyon/commands/WindowAttentionCommand.hpp>
+#include <yq/tachyon/commands/WindowCursorCaptureCommand.hpp>
+#include <yq/tachyon/commands/WindowCursorDisableCommand.hpp>
+#include <yq/tachyon/commands/WindowCursorHideCommand.hpp>
+#include <yq/tachyon/commands/WindowCursorNormalCommand.hpp>
+#include <yq/tachyon/commands/WindowFloatCommand.hpp>
+#include <yq/tachyon/commands/WindowFocusCommand.hpp>
+#include <yq/tachyon/commands/WindowHideCommand.hpp>
+#include <yq/tachyon/commands/WindowIconifyCommand.hpp>
+#include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
+#include <yq/tachyon/commands/WindowRestoreCommand.hpp>
+#include <yq/tachyon/commands/WindowShowCommand.hpp>
+#include <yq/tachyon/commands/WindowTitleCommand.hpp>
+#include <yq/tachyon/commands/WindowUnfloatCommand.hpp>
 
 #include <yq/tachyon/events/KeyCharacterEvent.hpp>
+#include <yq/tachyon/events/KeyPressEvent.hpp>
+#include <yq/tachyon/events/KeyReleaseEvent.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
+#include <yq/tachyon/events/MouseMoveEvent.hpp>
+#include <yq/tachyon/events/MousePressEvent.hpp>
+#include <yq/tachyon/events/MouseReleaseEvent.hpp>
+#include <yq/tachyon/events/ViewerPauseEvent.hpp>
+#include <yq/tachyon/events/ViewerResumeEvent.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
 #include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
 #include <yq/tachyon/events/WindowMoveEvent.hpp>
 #include <yq/tachyon/events/WindowResizeEvent.hpp>
 
+#include <yq/tachyon/replies/ViewerCloseReply.hpp>
+
+#include <yq/tachyon/requests/ViewerCloseRequest.hpp>
+#include <yq/tachyon/requests/WindowCloseRequest.hpp>
+#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
+
 #include <yq/tachyon/viz/ViContext.hpp>
+#include <yq/tachyon/viz/ViGui.hpp>
+#include <yq/tachyon/viz/Visualizer.hpp>
 
 //#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
 //#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
 //#include <yq/tachyon/commands/viewer.hpp>
 //#include <yq/tachyon/commands/window.hpp>
 
-//#include <yq/tachyon/events/KeyPressEvent.hpp>
-//#include <yq/tachyon/events/KeyReleaseEvent.hpp>
-//#include <yq/tachyon/events/MouseMoveEvent.hpp>
-//#include <yq/tachyon/events/MousePressEvent.hpp>
-//#include <yq/tachyon/events/MouseReleaseEvent.hpp>
 //#include <yq/tachyon/even4s/ViewerCloseEvent.hpp>
-//#include <yq/tachyon/events/ViewerPauseEvent.hpp>
-//#include <yq/tachyon/events/ViewerResumeEvent.hpp>
 //#include <yq/tachyon/events/WindowDestroyEvent.hpp>
 //#include <yq/tachyon/events/WindowHideEvent.hpp>
 //#include <yq/tachyon/events/WindowResizeEvent.hpp>
 //#include <yq/tachyon/events/WindowShowEvent.hpp>
-//#include <yq/tachyon/events/WindowStateEvent.hpp>
 //#include <yq/tachyon/image/Raster.hpp>
-//#include <yq/tachyon/replies/ViewerCloseReply.hpp>
 //#include <yq/tachyon/replies/ViewerWidgetReply.hpp>
-#include <yq/tachyon/requests/ViewerCloseRequest.hpp>
 //#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
-//#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
-//#include <yq/tachyon/viewer/ViewerCreateInfo.hpp>
-#include <yq/tachyon/viz/ViGui.hpp>
-#include <yq/tachyon/viz/Visualizer.hpp>
 
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>
@@ -106,10 +142,33 @@ namespace yq::tachyon {
         auto w = writer<Viewer>();
         
         w.description("Tachyon Viewer");
+        w.slot(&Viewer::on_cursor_capture_command);
+        w.slot(&Viewer::on_cursor_disable_command);
+        w.slot(&Viewer::on_cursor_hide_command);
+        w.slot(&Viewer::on_cursor_normal_command);
+        
         w.slot(&Viewer::on_key_character_event);
+        
         w.slot(&Viewer::on_mouse_move_event);
         w.slot(&Viewer::on_mouse_press_event);
         w.slot(&Viewer::on_mouse_release_event);
+        
+        w.slot(&Viewer::on_viewer_aspect_command);
+        w.slot(&Viewer::on_viewer_attention_command);
+        w.slot(&Viewer::on_viewer_close_request);
+        w.slot(&Viewer::on_viewer_float_command);
+        w.slot(&Viewer::on_viewer_focus_command);
+        w.slot(&Viewer::on_viewer_hide_command);
+        w.slot(&Viewer::on_viewer_iconify_command);
+        w.slot(&Viewer::on_viewer_maximize_command);
+        w.slot(&Viewer::on_viewer_pause_command);
+        w.slot(&Viewer::on_viewer_restore_command);
+        w.slot(&Viewer::on_viewer_resume_command);
+        w.slot(&Viewer::on_viewer_show_command);
+        w.slot(&Viewer::on_viewer_title_command);
+        w.slot(&Viewer::on_viewer_unfloat_command);
+        
+        w.slot(&Viewer::on_window_close_request);
         w.slot(&Viewer::on_window_defocus_event);
         w.slot(&Viewer::on_window_fb_resize_event);
         w.slot(&Viewer::on_window_focus_event);
@@ -123,19 +182,14 @@ namespace yq::tachyon {
     {
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  OLD/COMPATIBILITY STUFF (ie, some stuff brought in to satisfy linker issues)
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     Viewer::Viewer(Window* win, WidgetPtr w, const ViewerCreateInfo& vci, const Param&p) : 
         Tachyon(p), m_createInfo(vci), m_number(++s_lastNumber)
     {
         assert(win && w);
         
-        m_window        = win->id();
-        m_widget        = w;
+        m_window                = win->id();
+        _widget(w);
         
         tachyonInfo << "Viewer::Viewer(" << m_number << ") ID " << (uint64_t) id() << ", window=" 
             << (uint64_t) win->id() << ", widget=" << w->id();
@@ -145,9 +199,40 @@ namespace yq::tachyon {
     {
         tachyonInfo << "Viewer::~Viewer(" << m_number << ")";
     }
+
+    void    Viewer::_install(widget_t)
+    {
+        if(m_widget){
+            m_widget -> m_viewer    = this;
+            subscribe(m_widget->id(), {MG::Forward, MG::General});
+            m_widget->subscribe(id(), MG::General);
+        }
+    }
     
+    void    Viewer::_remove(widget_t)
+    {
+        if(m_widget){
+            m_widget -> m_viewer    = nullptr;
+            m_widget->unsubscribe(id(), {MG::Forward, MG::General});
+        }
+    }
+    
+    void    Viewer::_widget(WidgetPtr w)
+    {
+        _remove(WIDGET);
+        m_widget    = w;
+        _install(WIDGET);
+    }
+
     void     Viewer::accept(close_t)
     {
+        m_widget -> m_flags -= Widget::F::ClosePending;
+        RequestCPtr  req = swap(Viewer::m_closeRequest, {});
+        if(req){
+            send(new ViewerCloseReply(req, this, Response::QaPla));
+            mail(new ViewerCloseCommand(this));
+        }
+        tachyonInfo << ident() << "::accept(CLOSE)";
     }
 
     PostAdvice  Viewer::advise(const Post& pp) const 
@@ -162,7 +247,117 @@ namespace yq::tachyon {
         }
         return {};
     }
- 
+
+    const Size2I&   Viewer::aspect() const
+    {
+        return m_state.window.aspect;
+    }
+
+    void    Viewer::close_request()
+    {
+        if(m_widget){
+            m_widget -> m_flags |= Widget::F::ClosePending;
+            m_widget -> on_close_request();
+        } else {
+            accept(CLOSE); 
+        }
+    }
+
+    bool    Viewer::closing() const
+    {
+        return stage() == Stage::Closing;
+    }
+    
+    bool    Viewer::closing_or_kaput() const
+    {
+        Stage st = stage();
+        return (st == Stage::Closing) || (st == Stage::Kaput);
+    }
+
+    void    Viewer::cmd_attention()
+    {
+        mail(new ViewerAttentionCommand(this));
+    }
+
+    void    Viewer::cmd_close(bool force)
+    {
+        if(force){
+            mail(new ViewerCloseCommand(this));
+        } else {
+            mail(new ViewerCloseRequest(this));
+        }
+    }
+
+    void    Viewer::cmd_cursor_capture()
+    {
+        mail(new ViewerCursorCaptureCommand(this));
+    }
+    
+    void    Viewer::cmd_cursor_disable()
+    {
+        mail(new ViewerCursorDisableCommand(this));
+    }
+    
+    void    Viewer::cmd_cursor_hide()
+    {
+        mail(new ViewerCursorHideCommand(this));
+    }
+    
+    void    Viewer::cmd_cursor_normal()
+    {
+        mail(new ViewerCursorNormalCommand(this));
+    }
+
+    void    Viewer::cmd_float()
+    {
+        mail(new ViewerFloatCommand(this));
+    }
+
+    void    Viewer::cmd_focus()
+    {
+        mail(new ViewerFocusCommand(this));
+    }
+
+    void    Viewer::cmd_hide()
+    {
+        mail(new ViewerHideCommand(this));
+    }
+
+    void    Viewer::cmd_iconify()
+    {
+        mail(new ViewerIconifyCommand(this));
+    }
+
+    void    Viewer::cmd_maximize()
+    {
+        mail(new ViewerMaximizeCommand(this));
+    }
+
+    void    Viewer::cmd_pause()
+    {
+        mail(new ViewerPauseCommand(this));
+    }
+    
+    void    Viewer::cmd_restore()
+    {
+        mail(new ViewerRestoreCommand(this));
+    }
+
+    void    Viewer::cmd_resume()
+    {
+        mail(new ViewerResumeCommand(this));
+    }
+
+    void    Viewer::cmd_show()
+    {
+        mail(new ViewerShowCommand(this));
+    }
+
+    void    Viewer::cmd_unfloat()
+    {
+        mail(new ViewerUnfloatCommand(this));
+    }
+
     std::error_code     Viewer::draw()
     {
         ViContext   u;
@@ -177,16 +372,99 @@ namespace yq::tachyon {
         return {};
     }
 
-    Execution   Viewer::tick(Context&) 
+    const Size2I&   Viewer::framebuffer_size() const
     {
-static ThreadID s_owner;
-if(s_owner != owner()){
-    s_owner = owner();
-    tachyonInfo << ident() << " on thread " << (uint64_t) s_owner;
-}
-        return {};
+        return m_state.window.pixels;
+    }
+
+    int         Viewer::height() const
+    {
+        return m_state.window.area.y;
+    }
+
+    bool        Viewer::is_decorated() const
+    {
+        return m_state.window.flags(WindowFlag::Decorated);
     }
     
+    bool        Viewer::is_focused() const
+    {
+        return m_state.window.flags(WindowFlag::Focused);
+    }
+    
+    bool        Viewer::is_floating() const
+    {
+        return m_state.window.flags(WindowFlag::Floating);
+    }
+    
+    bool        Viewer::is_fullscreen() const
+    {
+        return m_state.window.monitor;
+    }
+    
+    bool        Viewer::is_hovered() const
+    {
+        return m_state.window.flags(WindowFlag::Hovered);
+    }
+    
+    bool        Viewer::is_iconified() const
+    {
+        return m_state.window.flags(WindowFlag::Iconified);
+    }
+
+    bool        Viewer::is_maximized() const
+    {
+        return m_state.window.flags(WindowFlag::Maximized);
+    }
+    
+    bool        Viewer::is_resizable() const
+    {
+        return m_state.window.flags(WindowFlag::Resizable);
+    }
+    
+    bool        Viewer::is_visible() const
+    {
+        return m_state.window.flags(WindowFlag::Visible);
+    }
+    
+    bool    Viewer::kaput() const
+    {
+        return stage() == Stage::Kaput;
+    }
+    
+    bool    Viewer::never_started() const
+    {
+        return stage() == Stage::Preinit;
+    }
+
+    void    Viewer::on_cursor_capture_command(const ViewerCursorCaptureCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowCursorCaptureCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_cursor_disable_command(const ViewerCursorDisableCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowCursorDisableCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_cursor_hide_command(const ViewerCursorHideCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowCursorHideCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_cursor_normal_command(const ViewerCursorNormalCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowCursorNormalCommand(m_window));
+        }
+    }
+
     void    Viewer::on_key_character_event(const KeyCharacterEvent&evt)
     {
         tachyonInfo << ident() << " Key Character " << (uint64_t) evt.code();
@@ -207,9 +485,143 @@ if(s_owner != owner()){
         tachyonInfo << ident() << " Mouse Released (" << evt.x() << ", " << evt.y() << ")";
     }
 
-    void    Viewer::on_window_close_request(const WindowCloseRequestCPtr&) 
+    void    Viewer::on_viewer_aspect_command(const ViewerAspectCommand& cmd)
+    {
+        if(started_or_running()){
+            send(new WindowAspectCommand(m_window, cmd.aspect()));
+        }
+    }
+
+    void    Viewer::on_viewer_attention_command(const ViewerAttentionCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowAttentionCommand(m_window));
+        }
+    }
+
+    void    Viewer::on_viewer_close_request(const ViewerCloseRequestCPtr&req) 
     { 
-        tachyonInfo << ident() << " Window close requested";
+        if(!req){
+            return ;
+        }
+        
+        if(closing_or_kaput()){
+            send(new ViewerCloseReply(req, this, Response::Busy));
+            return ;
+        }
+
+        if(m_closeRequest){
+            if(m_closeRequest->id() != req->id()){
+                send(new ViewerCloseReply(req, this, Response::Busy));
+            }
+            return ;
+        }
+    
+        {
+            TXLOCK
+            m_closeRequest  = req.ptr();
+        }
+        close_request();
+    }
+
+    void    Viewer::on_viewer_float_command(const ViewerFloatCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowFloatCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_viewer_focus_command(const ViewerFocusCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowFocusCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_viewer_hide_command(const ViewerHideCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowHideCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_viewer_iconify_command(const ViewerIconifyCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowIconifyCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_viewer_maximize_command(const ViewerMaximizeCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowMaximizeCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_viewer_pause_command(const ViewerPauseCommand&)
+    {
+        m_paused    = true;
+        send(new ViewerPauseEvent(this));
+    }
+    
+    void    Viewer::on_viewer_restore_command(const ViewerRestoreCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowRestoreCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_viewer_resume_command(const ViewerResumeCommand&)
+    {
+        m_paused    = false;
+        send(new ViewerResumeEvent(this));
+    }
+    
+    void    Viewer::on_viewer_show_command(const ViewerShowCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowShowCommand(m_window));
+        }
+    }
+    
+    void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
+    {
+        if(started_or_running()){
+            send(new WindowTitleCommand(m_window, cmd.title()));
+        }
+    }
+    
+    void    Viewer::on_viewer_unfloat_command(const ViewerUnfloatCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowUnfloatCommand(m_window));
+        }
+    }
+
+    void    Viewer::on_window_close_request(const WindowCloseRequestCPtr&req) 
+    { 
+        if(!req){
+            return ;
+        }
+
+        if(closing_or_kaput()){
+            send(new ViewerCloseReply(req, this, Response::Busy));
+            return ;
+        }
+
+        if(m_closeRequest){
+            if(m_closeRequest->id() != req->id()){
+                send(new ViewerCloseReply(req, this, Response::Busy));
+            }
+            return ;
+        }
+    
+        {
+            TXLOCK
+            m_closeRequest  = req.ptr();
+        }
+        close_request();
     }
 
     void    Viewer::on_window_defocus_event(const WindowDefocusEvent&)
@@ -237,13 +649,131 @@ if(s_owner != owner()){
         tachyonInfo << ident() << " Window resized (" << evt.width() << ", " << evt.height() << ")";
     }
     
+    void     Viewer::owner(push_t, ThreadID tid) 
+    {
+        Tachyon::owner(PUSH, tid);
+        if(m_widget)
+            m_widget -> owner(PUSH, tid);
+            
+        #if 0
+            //  here in case we move imgui/viz to the tachyon model
+        if(m_imgui)
+            m_imgui -> owner(PUSH, tid);
+        if(m_viz)
+            m_viz -> owner(PUSH, tid);
+        #endif
+    }
 
-    //! Call if you reject the close request
+    bool    Viewer::paused() const 
+    { 
+        return m_paused; 
+    }
+
+    const Vector2I&   Viewer::position() const
+    {
+        return m_state.window.position;
+    }
+
     void     Viewer::reject(close_t)
     {
+        m_widget -> m_flags -= Widget::F::ClosePending;
+        RequestCPtr  req = swap(Viewer::m_closeRequest, {});
+        if(req){
+            send(new ViewerCloseReply(req, this, Response::Rejected));
+        }
+        tachyonInfo << ident() << "::reject(CLOSE)";
+    }
+
+    bool    Viewer::running() const
+    {
+        return stage() == Stage::Running;
+    }
+
+    void    Viewer::set_aspect(const Size2I& sz)
+    {
+        mail(new ViewerAspectCommand(this, sz));
+    }
+    
+    void    Viewer::set_aspect(int w, int h)
+    {
+        set_aspect({w,h});
+    }
+    
+    void    Viewer::set_aspect(unlock_t)
+    {
+        set_aspect({-1,-1});
+    }
+    
+    void    Viewer::set_aspect(unlocked_t)
+    {
+        set_aspect({-1,-1});
+    }
+
+    void    Viewer::set_title(std::string_view kTitle)
+    {
+        mail(new ViewerTitleCommand(this, kTitle));
+    }
+
+    const Size2I&   Viewer::size() const
+    {
+        return m_state.window.area;
+    }
+
+    Viewer::Stage   Viewer::stage() const
+    {
+        return m_stage;
+    }
+
+    bool    Viewer::started() const
+    {
+        return stage() == Stage::Started;
+    }
+    
+    bool    Viewer::started_or_running() const
+    {
+        Stage st = stage();
+        return (st == Stage::Started) || (st == Stage::Running);
     }
 
 
+    Execution   Viewer::tick(Context&) 
+    {
+static ThreadID s_owner;
+if(s_owner != owner()){
+    s_owner = owner();
+    tachyonInfo << ident() << " on thread " << (uint64_t) s_owner;
+}
+    
+        const WindowSnap* sn = frame().snap(m_window);
+        if(sn){
+            m_state.window      = sn->window;
+            m_state.keyboard    = sn->keyboard;
+            m_state.mouse       = sn->mouse;
+            m_state.time        = sn->time;
+        }
+
+
+        return {};
+    }
+
+    const std::string&  Viewer::title() const
+    {
+        return m_state.window.title;
+    }
+
+    int Viewer::width() const
+    {
+        return m_state.window.area.x;
+    }
+
+    bool Viewer::zero_framebuffer() const
+    {
+        return any(framebuffer_size()) <= 0;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  OLD CODE
 
 #if 0
     void Viewer::init_info()
@@ -477,154 +1007,6 @@ if(s_owner != owner()){
     //  GENERAL INFO
     //  
 
-        Viewer::Stage   Viewer::_stage() const
-        {
-            return m_stage;
-        }
-
-        const Size2I&   Viewer::aspect() const
-        {
-            return state().window.aspect;
-        }
-
-        bool    Viewer::closing() const
-        {
-            return _stage() == Stage::Closing;
-        }
-        
-        bool    Viewer::closing_or_kaput() const
-        {
-            Stage st = _stage();
-            return (st == Stage::Closing) || (st == Stage::Kaput);
-        }
-
-        const ViewerCreateInfo&     Viewer::create_info() const
-        {
-            return *m_createInfo;
-        }
-
-        const Size2I&               Viewer::framebuffer_size() const
-        {
-            return state().window.pixels;
-        }
-
-        int         Viewer::height() const
-        {
-            return state().window.area.y;
-        }
-
-        bool        Viewer::is_decorated() const
-        {
-            return state().window.flags(WindowFlag::Decorated);
-        }
-        
-        bool        Viewer::is_focused() const
-        {
-            return state().window.flags(WindowFlag::Focused);
-        }
-        
-        bool        Viewer::is_floating() const
-        {
-            return state().window.flags(WindowFlag::Floating);
-        }
-        
-        bool        Viewer::is_fullscreen() const
-        {
-            return state().window.monitor;
-        }
-        
-        bool        Viewer::is_hovered() const
-        {
-            return state().window.flags(WindowFlag::Hovered);
-        }
-        
-        bool        Viewer::is_iconified() const
-        {
-            return state().window.flags(WindowFlag::Iconified);
-        }
-
-        bool        Viewer::is_maximized() const
-        {
-            return state().window.flags(WindowFlag::Maximized);
-        }
-        
-        bool        Viewer::is_resizable() const
-        {
-            return state().window.flags(WindowFlag::Resizable);
-        }
-        
-        bool        Viewer::is_visible() const
-        {
-            return state().window.flags(WindowFlag::Visible);
-        }
-
-        bool    Viewer::kaput() const
-        {
-            return _stage() == Stage::Kaput;
-        }
-        
-        bool    Viewer::never_started() const
-        {
-            return _stage() == Stage::Preinit;
-        }
-
-        bool    Viewer::paused() const 
-        { 
-            return m_paused; 
-        }
-
-        const Vector2I&   Viewer::position() const
-        {
-            return m_state.window.position;
-        }
-
-        bool    Viewer::running() const
-        {
-            return _stage() == Stage::Running;
-        }
-
-        const Size2I&   Viewer::size() const
-        {
-            return state().window.area;
-        }
-
-        bool    Viewer::started() const
-        {
-            return _stage() == Stage::Started;
-        }
-        
-        bool    Viewer::started_or_running() const
-        {
-            Stage st = _stage();
-            return (st == Stage::Started) || (st == Stage::Running);
-        }
-
-        const ViewerState&  Viewer::state() const
-        {
-            if(thread_id() == thread::id()) // same thread, horse's mouth
-                return m_state;
-
-            struct VData {
-                ViewerState     state;
-                uint64_t        ticks   = 0;
-            };
-            
-            static thread_local std::map<const Viewer*,VData> tls;
-            
-            VData&  v   = tls[this];
-            if(v.ticks != m_ticks){
-                LOCK
-                v.state = m_state;
-                v.ticks = m_ticks;
-            }
-            
-            return v.state;
-        }
-
-        const std::string&  Viewer::title() const
-        {
-            return state().window.title;
-        }
 
         Visualizer&         Viewer::visualizer() const
         {
@@ -632,77 +1014,13 @@ if(s_owner != owner()){
             return *m_viz;
         }
 
-        int Viewer::width() const
-        {
-            return state().window.area.x;
-        }
-
-        bool Viewer::zero_framebuffer() const
-        {
-            return any(framebuffer_size()) <= 0;
-        }
 
 
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  ATTENTION
-    //  
-
-        void    Viewer::aspect_command(const ViewerAspectCommand&cmd)
-        {
-            if(started_or_running()){
-                dispatch(new WindowAspectCommand(this, cmd.aspect()));
-            }
-        }
-
-        void    Viewer::set_aspect(const Size2I& sz)
-        {
-            dispatch(SELF, new ViewerAspectCommand(this, sz));
-        }
-        
-        void    Viewer::set_aspect(int w, int h)
-        {
-            set_aspect({w,h});
-        }
-        
-        void    Viewer::set_aspect(unlock_t)
-        {
-            set_aspect({-1,-1});
-        }
-        
-        void    Viewer::set_aspect(unlocked_t)
-        {
-            set_aspect({-1,-1});
-        }
-
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  ATTENTION
-    //  
-
-        void    Viewer::attention_command(const ViewerAttentionCommand&)
-        {
-            if(m_stage == Stage::Running){
-                dispatch(new WindowAttentionCommand(this));
-            }
-        }
-
-        void    Viewer::cmd_attention()
-        {
-            dispatch(SELF, new ViewerAttentionCommand(this));
-        }
         
     //  ----------------------------------------------------------------------------------------------------------------
     //  CLOSING
     //  
 
-        void     Viewer::accept(close_t)
-        {
-            ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
-            if(req){
-                dispatch(new ViewerCloseReply(req, this, Response::QaPla));
-                dispatch(SELF, new ViewerCloseCommand(this));
-            }
-        }
         
         void    Viewer::close_command(const ViewerCloseCommand&)
         {
@@ -731,15 +1049,6 @@ if(s_owner != owner()){
             on_close_request();
         }
 
-        void    Viewer::cmd_close(bool force)
-        {
-            if(force){
-                dispatch(SELF, new ViewerCloseCommand(this));
-            } else {
-                dispatch(SELF, new ViewerCloseRequest(this));
-            }
-        }
-        
         void    Viewer::on_close_request() 
         { 
             if(m_widget){
@@ -767,104 +1076,11 @@ if(s_owner != owner()){
             dispatch(new AppDeleteViewerCommand(this));
         }
 
-        void     Viewer::reject(close_t)
-        {
-            ViewerCloseRequestCPtr  req = assign(&Viewer::m_viewerCloseRequest, {});
-            if(req){
-                dispatch(new ViewerCloseReply(req, this, Response::Rejected));
-            }
-        }
 
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  CURSOR CONTROL
-    //  
-
-        void    Viewer::cmd_cursor_capture()
-        {
-            dispatch(SELF, new ViewerCursorCaptureCommand(this));
-        }
-        
-        void    Viewer::cmd_cursor_disable()
-        {
-            dispatch(SELF, new ViewerCursorDisableCommand(this));
-        }
-        
-        void    Viewer::cmd_cursor_hide()
-        {
-            dispatch(SELF, new ViewerCursorHideCommand(this));
-        }
-        
-        void    Viewer::cmd_cursor_normal()
-        {
-            dispatch(SELF, new ViewerCursorNormalCommand(this));
-        }
-
-        void    Viewer::cursor_capture_command(const ViewerCursorCaptureCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new CursorCaptureCommand(this));
-            }
-        }
-        
-        void    Viewer::cursor_disable_command(const ViewerCursorDisableCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new CursorDisableCommand(this));
-            }
-        }
-        
-        void    Viewer::cursor_hide_command(const ViewerCursorHideCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new CursorHideCommand(this));
-            }
-        }
-        
-        void    Viewer::cursor_normal_command(const ViewerCursorNormalCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new CursorNormalCommand(this));
-            }
-        }
-
-        
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  FLOATING (ie, ALWAYS ON TOP)
-    //  
-
-        void    Viewer::cmd_float()
-        {
-            dispatch(SELF, new ViewerFloatCommand(this));
-        }
-        
-        void    Viewer::cmd_unfloat()
-        {
-            dispatch(SELF, new ViewerUnfloatCommand(this));
-        }
-
-        void    Viewer::float_command(const ViewerFloatCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new WindowFloatCommand(this));
-            }
-        }
-        
-        void    Viewer::unfloat_command(const ViewerUnfloatCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new WindowUnfloatCommand(this));
-            }
-        }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  FOCUS
     //  
-
-        void    Viewer::cmd_focus()
-        {
-            dispatch(SELF, new ViewerFocusCommand(this));
-        }
 
         void    Viewer::defocus_event(const WindowDefocusEvent&evt)
         {
@@ -880,12 +1096,6 @@ if(s_owner != owner()){
             }
         }
 
-        void    Viewer::focus_command(const ViewerFocusCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new WindowFocusCommand(this));
-            }
-        }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  KEYBOARD
@@ -912,37 +1122,6 @@ if(s_owner != owner()){
             }
         }
 
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  ICONIFY
-    //  
-
-        void    Viewer::cmd_iconify()
-        {
-            dispatch(SELF, new ViewerIconifyCommand(this));
-        }
-
-        void    Viewer::iconify_command(const ViewerIconifyCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new WindowIconifyCommand(this));
-            }
-        }
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  MAXIMIZE
-    //  
-
-        void    Viewer::cmd_maximize()
-        {
-            dispatch(SELF, new ViewerMaximizeCommand(this));
-        }
-
-        void    Viewer::maximize_command(const WindowMaximizeCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new WindowMaximizeCommand(this));
-            }
-        }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  MOVE/POSITION
@@ -991,68 +1170,10 @@ if(s_owner != owner()){
             }
         }
 
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  PAUSE/PLAY
-    //  
-
-        void    Viewer::cmd_pause()
-        {
-            dispatch(SELF, new ViewerPauseCommand(this));
-        }
-        
-        void    Viewer::cmd_resume()
-        {
-            dispatch(SELF, new ViewerResumeCommand(this));
-        }
-
-        void    Viewer::pause_command(const ViewerPauseCommand&)
-        {
-            m_paused    = true;
-            dispatch(new ViewerPauseEvent(this));
-        }
-        
-        void    Viewer::resume_command(const ViewerResumeCommand&)
-        {
-            m_paused    = false;
-            dispatch(new ViewerResumeEvent(this));
-        }
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  RESTORE
-    //  
-
-        void    Viewer::cmd_restore()
-        {
-            dispatch(SELF, new ViewerRestoreCommand(this));
-        }
-
-        void    Viewer::restore_command(const ViewerRestoreCommand&cmd)
-        {
-            if(started_or_running()){
-                dispatch(new WindowRestoreCommand(this));
-            }
-        }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  SHOW/HIDE
     //  
-
-        void    Viewer::cmd_hide()
-        {
-            dispatch(SELF, new ViewerHideCommand(this));
-        }
-
-        void    Viewer::cmd_show()
-        {
-            dispatch(SELF, new ViewerShowCommand(this));
-        }
-
-        void    Viewer::hide_command(const ViewerHideCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new WindowHideCommand(this));
-            }
-        }
 
         void    Viewer::hide_event(const WindowHideEvent&)
         {
@@ -1065,12 +1186,6 @@ if(s_owner != owner()){
             }
         }
         
-        void    Viewer::show_command(const ViewerShowCommand&)
-        {
-            if(started_or_running()){
-                dispatch(new WindowShowCommand(this));
-            }
-        }
 
         void    Viewer::show_event(const WindowShowEvent&)
         {
@@ -1114,51 +1229,12 @@ if(s_owner != owner()){
         }
         
 
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  TITLE
-    //  
 
-        void    Viewer::set_title(std::string_view kTitle)
-        {
-            dispatch(SELF, new ViewerTitleCommand(this, kTitle));
-        }
-
-        void    Viewer::title_command(const ViewerTitleCommand&cmd)
-        {
-            if(started_or_running()){
-                dispatch(new WindowTitleCommand(this, cmd.title()));
-            }
-        }
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  WIDGET
     //  
 
-        void    Viewer::_install(widget_t)
-        {
-            if(m_widget){
-                m_widget -> m_viewer    = this;
-                attach(FORWARD, m_widget.ptr());
-                connect(TX, *m_widget);
-                connect(RX, *m_widget);
-            }
-        }
-        
-        void    Viewer::_remove(widget_t)
-        {
-            if(m_widget){
-                m_widget -> m_viewer    = nullptr;
-                detach(FORWARD, m_widget.ptr());
-                disconnect(*m_widget);
-            }
-        }
-        
-        void    Viewer::_widget(WidgetPtr w)
-        {
-            _remove(WIDGET);
-            m_widget    = w;
-            _install(WIDGET);
-        }
         
         void    Viewer::set_widget(WidgetPtr w)
         {
@@ -1183,12 +1259,6 @@ if(s_owner != owner()){
             dispatch(new ViewerWidgetReply(cmd, this, rep));
         }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  OLD CODE
-
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  MOUSE
 
 
     

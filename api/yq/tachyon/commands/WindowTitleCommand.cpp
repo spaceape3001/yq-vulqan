@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowTitleCommand::WindowTitleCommand(WindowID v, std::string_view szTitle, const Param& p) : WindowCommand(v, p), m_title(szTitle)
+    {
+    }
+
     WindowTitleCommand::~WindowTitleCommand()
     {
     }

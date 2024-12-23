@@ -20,6 +20,7 @@ namespace yq::tachyon {
         };
     
         WindowMoveCommand(Window*, const Vector2I&, const Param& p = {});
+        WindowMoveCommand(WindowID, const Vector2I&, const Param& p = {});
         virtual ~WindowMoveCommand();
         
         static void init_info();

@@ -19,6 +19,7 @@
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/replies.hpp>
+#include <yq/tachyon/typedef/request.hpp>
 #include <yq/tachyon/typedef/requests.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/vigui.hpp>
@@ -137,7 +138,7 @@ namespace yq::tachyon {
         bool                        closing_or_kaput() const;
 
         //! Create information that created us
-        const ViewerCreateInfo&     create_info() const;
+        const ViewerCreateInfo&     create_info() const { return m_createInfo; }
         
         //! Time of last draw call
         unit::Second                draw_time() const { return m_drawTime; }
@@ -194,13 +195,11 @@ namespace yq::tachyon {
 
         const Size2I&               size() const;
 
+        Stage                       stage() const;
+
         //! TRUE if we're started
         bool                        started() const;
         
-        
-        //! Current state
-        const ViewerState&          state() const;
-
         //! TRUE if we're started or running
         bool                        started_or_running() const;
 
@@ -302,6 +301,9 @@ namespace yq::tachyon {
 
         //! Our general "update()" that includes the visualizer
         virtual Execution   tick(Context&) override;
+        
+        using Tachyon::owner;
+        virtual void        owner(push_t, ThreadID) override;
 
     protected:
 
@@ -356,22 +358,47 @@ namespace yq::tachyon {
         bool                            m_zeroSize  = false;
 
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close
-        ViewerCloseRequestCPtr          m_viewerCloseRequest;
+        RequestCPtr                     m_closeRequest;
 
 
         void                _kill();
         void                _quit();    // basically unconditional (without app-destroy)
         std::error_code     _startup(GLFWwindow*, const ViewerState&);
-        Stage               _stage() const;
         void                _sweepwait();
         void                _install(widget_t);     // Installs new widget
         void                _remove(widget_t);      // Removes the current widget
         void                _widget(WidgetPtr);     // Changes the widget
         
+        
+        void    close_request();
+
+        void    on_cursor_capture_command(const ViewerCursorCaptureCommand&);
+        void    on_cursor_disable_command(const ViewerCursorDisableCommand&);
+        void    on_cursor_hide_command(const ViewerCursorHideCommand&);
+        void    on_cursor_normal_command(const ViewerCursorNormalCommand&);
+        
         void    on_key_character_event(const KeyCharacterEvent&);
+        void    on_key_press_event(const KeyPressEvent&);
+        void    on_key_release_event(const KeyReleaseEvent&);
+
         void    on_mouse_move_event(const MouseMoveEvent&);
         void    on_mouse_press_event(const MousePressEvent&);
         void    on_mouse_release_event(const MouseReleaseEvent&);
+
+        void    on_viewer_aspect_command(const ViewerAspectCommand&);
+        void    on_viewer_attention_command(const ViewerAttentionCommand&);
+        void    on_viewer_close_request(const ViewerCloseRequestCPtr&);
+        void    on_viewer_float_command(const ViewerFloatCommand&);
+        void    on_viewer_focus_command(const ViewerFocusCommand&);
+        void    on_viewer_hide_command(const ViewerHideCommand&);
+        void    on_viewer_iconify_command(const ViewerIconifyCommand&);
+        void    on_viewer_maximize_command(const ViewerMaximizeCommand&);
+        void    on_viewer_pause_command(const ViewerPauseCommand&);
+        void    on_viewer_restore_command(const ViewerRestoreCommand&);
+        void    on_viewer_resume_command(const ViewerResumeCommand&);
+        void    on_viewer_show_command(const ViewerShowCommand&);
+        void    on_viewer_title_command(const ViewerTitleCommand&);
+        void    on_viewer_unfloat_command(const ViewerUnfloatCommand&);
 
         void    on_window_close_request(const WindowCloseRequestCPtr&);
         void    on_window_defocus_event(const WindowDefocusEvent&);
@@ -382,44 +409,16 @@ namespace yq::tachyon {
         
         
         
-        void    aspect_command(const ViewerAspectCommand&);
-        void    attention_command(const ViewerAttentionCommand&);
-        void    close_request(const ViewerCloseRequestCPtr&);
         void    close_command(const ViewerCloseCommand&);
-        void    cursor_capture_command(const ViewerCursorCaptureCommand&);
-        void    cursor_disable_command(const ViewerCursorDisableCommand&);
-        void    cursor_hide_command(const ViewerCursorHideCommand&);
-        void    cursor_normal_command(const ViewerCursorNormalCommand&);
         void    destroy_event(const WindowDestroyEvent&);
-        void    float_command(const ViewerFloatCommand&);
-        void    focus_command(const ViewerFocusCommand&);
-        void    hide_command(const ViewerHideCommand&);
         void    hide_event(const WindowHideEvent&);
-        void    iconify_command(const ViewerIconifyCommand&);
-        void    maximize_command(const WindowMaximizeCommand&);
         void    move_command(const ViewerMoveCommand&);
         void    on_hide_closing();
-        void    pause_command(const ViewerPauseCommand&);
-        void    restore_command(const ViewerRestoreCommand&);
-        void    resume_command(const ViewerResumeCommand&);
-        void    show_command(const ViewerShowCommand&);
         void    show_event(const WindowShowEvent&);
         void    size_command(const ViewerSizeCommand&);
-        void    state_event(const WindowStateEvent&);
-        void    title_command(const ViewerTitleCommand&);
-        void    unfloat_command(const ViewerUnfloatCommand&);
         void    widget_request(const ViewerWidgetRequestCPtr&);
         
-        void    mouse_move_event(const MouseMoveEvent&);
-        void    mouse_press_event(const MousePressEvent&);
-        void    mouse_release_event(const MouseReleaseEvent&);
         
-        void    key_press_event(const KeyPressEvent&);
-        void    key_release_event(const KeyReleaseEvent&);
-        void    key_character_event(const KeyCharacterEvent&);
-        
-        void    focus_event(const WindowFocusEvent&);
-        void    defocus_event(const WindowDefocusEvent&);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE

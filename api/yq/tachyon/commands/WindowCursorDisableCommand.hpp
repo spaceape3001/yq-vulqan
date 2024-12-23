@@ -17,6 +17,7 @@ namespace yq::tachyon {
         };
     
         WindowCursorDisableCommand(Window*, const Param& p = {});
+        WindowCursorDisableCommand(WindowID, const Param& p = {});
         virtual ~WindowCursorDisableCommand();
         
         static void init_info();

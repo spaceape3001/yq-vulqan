@@ -14,6 +14,10 @@ namespace yq::tachyon {
     WindowCursorNormalCommand::WindowCursorNormalCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
+
+    WindowCursorNormalCommand::WindowCursorNormalCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
     
     WindowCursorNormalCommand::~WindowCursorNormalCommand()
     {

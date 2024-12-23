@@ -17,6 +17,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowSizeCommand::WindowSizeCommand(WindowID v, const Size2I& sz, const Param& p) : WindowCommand(v, p), m_size(sz)
+    {
+    }
+    
     WindowSizeCommand::~WindowSizeCommand()
     {
     }

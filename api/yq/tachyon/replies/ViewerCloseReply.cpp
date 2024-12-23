@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseReply)
 
 namespace yq::tachyon {
 
-    ViewerCloseReply::ViewerCloseReply(const ViewerCloseRequestCPtr&rq, ViewerID v, Response r, const Param& p) :
+    ViewerCloseReply::ViewerCloseReply(const RequestCPtr&rq, ViewerID v, Response r, const Param& p) :
         ViewerReply(rq, v, p), m_response(r)
     {
     }
     
-    ViewerCloseReply::ViewerCloseReply(const ViewerCloseRequestCPtr&rq, const Viewer* v, Response r, const Param& p) :
+    ViewerCloseReply::ViewerCloseReply(const RequestCPtr&rq, const Viewer* v, Response r, const Param& p) :
         ViewerReply(rq, v, p), m_response(r)
     {
     }

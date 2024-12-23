@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowFloatCommand(Window*, const Param& p = {});
+        WindowFloatCommand(WindowID, const Param& p = {});
         virtual ~WindowFloatCommand();
         
         static void init_info();

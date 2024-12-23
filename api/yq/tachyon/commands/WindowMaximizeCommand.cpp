@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowMaximizeCommand::WindowMaximizeCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowMaximizeCommand::~WindowMaximizeCommand()
     {
     }

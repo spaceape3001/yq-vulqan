@@ -14,6 +14,10 @@ namespace yq::tachyon {
     WindowHideCommand::WindowHideCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
+
+    WindowHideCommand::WindowHideCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
     
     WindowHideCommand::~WindowHideCommand()
     {

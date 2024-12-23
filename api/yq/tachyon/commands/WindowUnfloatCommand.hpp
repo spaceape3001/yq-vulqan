@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowUnfloatCommand(Window*, const Param& p = {});
+        WindowUnfloatCommand(WindowID, const Param& p = {});
         virtual ~WindowUnfloatCommand();
         
         static void init_info();

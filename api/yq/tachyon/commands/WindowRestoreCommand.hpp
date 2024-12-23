@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowRestoreCommand(Window*, const Param& p = {});
+        WindowRestoreCommand(WindowID, const Param& p = {});
         virtual ~WindowRestoreCommand();
         
         static void init_info();

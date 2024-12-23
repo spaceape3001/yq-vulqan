@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowCursorDisableCommand::WindowCursorDisableCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowCursorDisableCommand::~WindowCursorDisableCommand()
     {
     }

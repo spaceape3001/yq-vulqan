@@ -14,6 +14,10 @@ namespace yq::tachyon {
     WindowMoveCommand::WindowMoveCommand(Window* v, const Vector2I& pos, const Param& p) : WindowCommand(v, p), m_position(pos)
     {
     }
+
+    WindowMoveCommand::WindowMoveCommand(WindowID v, const Vector2I& pos, const Param& p) : WindowCommand(v, p), m_position(pos)
+    {
+    }
     
     WindowMoveCommand::~WindowMoveCommand()
     {

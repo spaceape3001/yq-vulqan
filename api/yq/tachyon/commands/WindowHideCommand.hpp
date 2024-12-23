@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowHideCommand(Window*, const Param& p = {});
+        WindowHideCommand(WindowID, const Param& p = {});
         virtual ~WindowHideCommand();
         
         static void init_info();

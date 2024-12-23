@@ -11,6 +11,10 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowAttentionCommand)
 
 namespace yq::tachyon {
 
+    WindowAttentionCommand::WindowAttentionCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowAttentionCommand::WindowAttentionCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }

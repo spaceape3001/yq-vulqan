@@ -17,6 +17,7 @@ namespace yq::tachyon {
         };
     
         WindowTitleCommand(Window*, std::string_view, const Param& p = {});
+        WindowTitleCommand(WindowID, std::string_view, const Param& p = {});
         virtual ~WindowTitleCommand();
         
         static void init_info();

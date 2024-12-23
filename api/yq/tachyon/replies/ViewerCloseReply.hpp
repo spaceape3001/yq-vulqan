@@ -18,8 +18,8 @@ namespace yq::tachyon {
         struct Param : public ViewerReply::Param {
         };
     
-        ViewerCloseReply(const ViewerCloseRequestCPtr&, const Viewer*, Response, const Param& p = {});
-        ViewerCloseReply(const ViewerCloseRequestCPtr&, ViewerID, Response, const Param& p = {});
+        ViewerCloseReply(const RequestCPtr&, const Viewer*, Response, const Param& p = {});
+        ViewerCloseReply(const RequestCPtr&, ViewerID, Response, const Param& p = {});
         virtual ~ViewerCloseReply();
         
         Response     response() const { return m_response; }

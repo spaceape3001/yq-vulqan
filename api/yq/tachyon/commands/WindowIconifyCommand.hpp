@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowIconifyCommand(Window*, const Param& p = {});
+        WindowIconifyCommand(WindowID, const Param& p = {});
         virtual ~WindowIconifyCommand();
         
         static void init_info();

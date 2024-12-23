@@ -17,6 +17,7 @@ namespace yq::tachyon {
         };
     
         WindowCursorCaptureCommand(Window*, const Param& p = {});
+        WindowCursorCaptureCommand(WindowID, const Param& p = {});
         virtual ~WindowCursorCaptureCommand();
         
         static void init_info();

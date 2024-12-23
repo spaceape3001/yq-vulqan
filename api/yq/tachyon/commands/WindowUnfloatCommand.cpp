@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowUnfloatCommand::WindowUnfloatCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowUnfloatCommand::~WindowUnfloatCommand()
     {
     }

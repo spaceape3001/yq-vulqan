@@ -19,6 +19,7 @@ namespace yq::tachyon {
         };
     
         WindowDestroyCommand(Window*, const Param& p = {});
+        WindowDestroyCommand(WindowID, const Param& p = {});
         virtual ~WindowDestroyCommand();
         
         static void init_info();

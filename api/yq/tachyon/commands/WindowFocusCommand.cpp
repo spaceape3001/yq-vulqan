@@ -14,6 +14,10 @@ namespace yq::tachyon {
     WindowFocusCommand::WindowFocusCommand(Window* v, const Param& p) : WindowCommand(v, p)
     {
     }
+
+    WindowFocusCommand::WindowFocusCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
     
     WindowFocusCommand::~WindowFocusCommand()
     {

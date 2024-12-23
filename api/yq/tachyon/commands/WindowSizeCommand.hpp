@@ -19,6 +19,7 @@ namespace yq::tachyon {
         struct Param : public WindowCommand::Param {
         };
     
+        WindowSizeCommand(WindowID, const Size2I&, const Param& p = {});
         WindowSizeCommand(Window*, const Size2I&, const Param& p = {});
         virtual ~WindowSizeCommand();
         

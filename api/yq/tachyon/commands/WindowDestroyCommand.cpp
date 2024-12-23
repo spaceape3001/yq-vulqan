@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    WindowDestroyCommand::WindowDestroyCommand(WindowID v, const Param& p) : WindowCommand(v, p)
+    {
+    }
+
     WindowDestroyCommand::~WindowDestroyCommand()
     {
     }

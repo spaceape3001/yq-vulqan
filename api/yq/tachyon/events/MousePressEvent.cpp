@@ -9,11 +9,16 @@
 
 namespace yq::tachyon {
 
-    MousePressEvent::MousePressEvent(const Param& p) : MouseEvent(p), 
+    MousePressEvent::MousePressEvent(Window* w, const Param& p) : MouseEvent(w, p), 
         m_button(p.button)
     {
     }
     
+    MousePressEvent::MousePressEvent(WindowID w, const Param& p) : MouseEvent(w, p), 
+        m_button(p.button)
+    {
+    }
+
     MousePressEvent::~MousePressEvent()
     {
     }

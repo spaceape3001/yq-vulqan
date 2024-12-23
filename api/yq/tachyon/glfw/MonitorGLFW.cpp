@@ -12,6 +12,8 @@ namespace yq::tachyon {
 
     MonitorGLFW* MonitorGLFW::_monitor(GLFWmonitor*m)
     {
+        if(!m)
+            return nullptr;
         return (MonitorGLFW*) glfwGetMonitorUserPointer(m);
     }
 

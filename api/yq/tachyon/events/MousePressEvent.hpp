@@ -17,7 +17,8 @@ namespace yq::tachyon {
             MouseButton     button;
         };
     
-        MousePressEvent(const Param&);
+        MousePressEvent(Window*, const Param&);
+        MousePressEvent(WindowID, const Param&);
         
         //! Scan code from the operating system (no interpretation)
         MouseButton         button() const { return m_button; }

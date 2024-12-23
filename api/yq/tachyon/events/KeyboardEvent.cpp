@@ -20,7 +20,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    KeyboardEvent::KeyboardEvent(const Param& p) : InputEvent(p)
+    KeyboardEvent::KeyboardEvent(Window* w, const Param& p) : InputEvent(w, p)
+    {
+    }
+
+    KeyboardEvent::KeyboardEvent(WindowID w, const Param& p) : InputEvent(w, p)
     {
     }
     

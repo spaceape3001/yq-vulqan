@@ -9,10 +9,14 @@
 
 namespace yq::tachyon {
 
-    MouseEnterEvent::MouseEnterEvent(const Param& p) : MouseEvent(p)
+    MouseEnterEvent::MouseEnterEvent(Window* w, const Param& p) : MouseEvent(w, p)
     {
     }
     
+    MouseEnterEvent::MouseEnterEvent(WindowID w, const Param& p) : MouseEvent(w, p)
+    {
+    }
+
     MouseEnterEvent::~MouseEnterEvent()
     {
     }

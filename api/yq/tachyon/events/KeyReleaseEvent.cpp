@@ -9,7 +9,11 @@
 
 namespace yq::tachyon {
 
-    KeyReleaseEvent::KeyReleaseEvent(const Param& p) : KeyboardEvent(p), m_scan(p.scan), m_key(p.key)
+    KeyReleaseEvent::KeyReleaseEvent(Window*w, const Param& p) : KeyboardEvent(w, p), m_scan(p.scan), m_key(p.key)
+    {
+    }
+    
+    KeyReleaseEvent::KeyReleaseEvent(WindowID w, const Param& p) : KeyboardEvent(w, p), m_scan(p.scan), m_key(p.key)
     {
     }
     

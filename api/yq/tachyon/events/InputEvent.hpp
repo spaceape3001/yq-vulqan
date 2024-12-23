@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Event.hpp>
-#include <yq/tachyon/api/ViewerBind.hpp>
+#include <yq/tachyon/api/WindowBind.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 
 namespace yq::tachyon {
@@ -18,14 +18,14 @@ namespace yq::tachyon {
     protected:
     };
     
-    class Viewer;
+    class Window;
 
     /*! \brief Input event 
     
         This is a common base class for keyboard/mouse events since 
         they both need modifier keys & are attached to windows.
     */
-    class InputEvent : public Event, public ViewerBind {
+    class InputEvent : public Event, public WindowBind {
         YQ_OBJECT_INFO(InputEventInfo)
         YQ_OBJECT_DECLARE(InputEvent, Event)
     public:
@@ -33,7 +33,6 @@ namespace yq::tachyon {
         static void init_info();
     
         struct Param : public Event::Param {
-            Viewer*       viewer;
             ModifierKeys    modifiers   = {};
         };
     
@@ -67,9 +66,8 @@ namespace yq::tachyon {
         
         
     protected:
-        InputEvent(const Param&);
-        InputEvent(ViewerID, const Param&);
-        InputEvent(const Viewer*, const Param&);
+        InputEvent(WindowID, const Param&);
+        InputEvent(const Window*, const Param&);
 
     private:
         const ModifierKeys    m_modifiers;

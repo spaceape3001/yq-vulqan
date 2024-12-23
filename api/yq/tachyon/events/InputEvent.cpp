@@ -19,18 +19,14 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    InputEvent::InputEvent(ViewerID v, const Param&p) : Event(p), ViewerBind(v), m_modifiers(p.modifiers)
+    InputEvent::InputEvent(WindowID v, const Param&p) : Event(p), WindowBind(v), m_modifiers(p.modifiers)
     {
     }
     
-    InputEvent::InputEvent(const Viewer*v, const Param&p) : Event(p), ViewerBind(v), m_modifiers(p.modifiers)
+    InputEvent::InputEvent(const Window*v, const Param&p) : Event(p), WindowBind(v), m_modifiers(p.modifiers)
     {
     }
 
-    InputEvent::InputEvent(const Param& p) : Event(p), ViewerBind(p.viewer), m_modifiers(p.modifiers)
-    {
-    }
-    
     InputEvent::~InputEvent()
     {
     }

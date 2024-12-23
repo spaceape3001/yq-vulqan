@@ -12,15 +12,15 @@ namespace yq::tachyon {
     
     /*! \brief Emitted when mouse returns to normal mode
     */
-    class MouseNormalEvent : public WindowEvent {
-        YQ_OBJECT_DECLARE(MouseNormalEvent, WindowEvent)
+    class MouseHideEvent : public WindowEvent {
+        YQ_OBJECT_DECLARE(MouseHideEvent, WindowEvent)
     public:
     
         struct Param : public WindowEvent::Param {
         };
     
-        MouseNormalEvent(Window*, const Param& p = {});
-        virtual ~MouseNormalEvent();
+        MouseHideEvent(Window*, const Param& p = {});
+        virtual ~MouseHideEvent();
         
         static void init_info();
     };

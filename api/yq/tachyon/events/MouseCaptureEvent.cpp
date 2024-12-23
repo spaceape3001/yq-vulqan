@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseCaptureEvent)
 
 namespace yq::tachyon {
 
-    MouseCaptureEvent::MouseCaptureEvent(Viewer* v, const Param& p) : ViewerEvent(v, p)
+    MouseCaptureEvent::MouseCaptureEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

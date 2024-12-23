@@ -9,7 +9,11 @@
 
 namespace yq::tachyon {
 
-    MouseScrollEvent::MouseScrollEvent(const Param& p) : MouseEvent(p), m_delta(p.delta)
+    MouseScrollEvent::MouseScrollEvent(Window* w, const Param& p) : MouseEvent(w, p), m_delta(p.delta)
+    {
+    }
+    
+    MouseScrollEvent::MouseScrollEvent(WindowID w, const Param& p) : MouseEvent(w, p), m_delta(p.delta)
     {
     }
     

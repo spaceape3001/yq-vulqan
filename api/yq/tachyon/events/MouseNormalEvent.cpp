@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseNormalEvent)
 
 namespace yq::tachyon {
 
-    MouseNormalEvent::MouseNormalEvent(Viewer* v, const Param& p) : ViewerEvent(v, p)
+    MouseNormalEvent::MouseNormalEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     

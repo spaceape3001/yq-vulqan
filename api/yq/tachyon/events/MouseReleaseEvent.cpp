@@ -9,11 +9,16 @@
 
 namespace yq::tachyon {
 
-    MouseReleaseEvent::MouseReleaseEvent(const Param& p) : MouseEvent(p), 
+    MouseReleaseEvent::MouseReleaseEvent(Window* w, const Param& p) : MouseEvent(w, p), 
         m_button(p.button)
     {
     }
     
+    MouseReleaseEvent::MouseReleaseEvent(WindowID w, const Param& p) : MouseEvent(w, p), 
+        m_button(p.button)
+    {
+    }
+
     MouseReleaseEvent::~MouseReleaseEvent()
     {
     }

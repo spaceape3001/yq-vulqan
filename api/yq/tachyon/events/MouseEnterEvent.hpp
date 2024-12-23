@@ -16,7 +16,8 @@ namespace yq::tachyon {
         struct Param : public MouseEvent::Param {
         };
     
-        MouseEnterEvent(const Param&);
+        MouseEnterEvent(Window*, const Param&);
+        MouseEnterEvent(WindowID, const Param&);
 
         virtual ~MouseEnterEvent();
         

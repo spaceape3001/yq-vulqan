@@ -9,7 +9,11 @@
 
 namespace yq::tachyon {
 
-    KeyPressEvent::KeyPressEvent(const Param& p) : KeyboardEvent(p), m_scan(p.scan), m_key(p.key)
+    KeyPressEvent::KeyPressEvent(Window* w, const Param& p) : KeyboardEvent(w, p), m_scan(p.scan), m_key(p.key)
+    {
+    }
+    
+    KeyPressEvent::KeyPressEvent(WindowID w, const Param& p) : KeyboardEvent(w, p), m_scan(p.scan), m_key(p.key)
     {
     }
     

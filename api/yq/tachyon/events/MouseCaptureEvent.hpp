@@ -6,20 +6,20 @@
 
 #pragma once
 
-#include <yq/tachyon/events/ViewerEvent.hpp>
+#include <yq/tachyon/events/WindowEvent.hpp>
 
 namespace yq::tachyon {
 
     /*! \brief Emitted when mouse is set to "capture" mode
     */
-    class MouseCaptureEvent : public ViewerEvent {
-        YQ_OBJECT_DECLARE(MouseCaptureEvent, ViewerEvent)
+    class MouseCaptureEvent : public WindowEvent {
+        YQ_OBJECT_DECLARE(MouseCaptureEvent, WindowEvent)
     public:
     
-        struct Param : public ViewerEvent::Param {
+        struct Param : public WindowEvent::Param {
         };
     
-        MouseCaptureEvent(Viewer*, const Param& p = {});
+        MouseCaptureEvent(Window*, const Param& p = {});
         virtual ~MouseCaptureEvent();
         
         static void init_info();

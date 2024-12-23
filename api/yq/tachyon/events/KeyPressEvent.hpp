@@ -19,7 +19,8 @@ namespace yq::tachyon {
             KeyCode         key         = KeyCode::Unknown;
         };
     
-        KeyPressEvent(const Param&);
+        KeyPressEvent(Window*, const Param&);
+        KeyPressEvent(WindowID, const Param&);
         
         //! Scan code from the operating system (no interpretation)
         int                 scan() const { return m_scan; }

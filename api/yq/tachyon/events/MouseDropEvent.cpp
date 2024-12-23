@@ -9,11 +9,16 @@
 
 namespace yq::tachyon {
 
-    MouseDropEvent::MouseDropEvent(std::vector<std::string>&& _paths, const Param& p) : 
-        MouseEvent(p), m_paths(std::move(_paths))
+    MouseDropEvent::MouseDropEvent(Window* w, std::vector<std::string>&& _paths, const Param& p) : 
+        MouseEvent(w, p), m_paths(std::move(_paths))
     {
     }
     
+    MouseDropEvent::MouseDropEvent(WindowID w, std::vector<std::string>&& _paths, const Param& p) : 
+        MouseEvent(w, p), m_paths(std::move(_paths))
+    {
+    }
+
     MouseDropEvent::~MouseDropEvent()
     {
     }

@@ -17,6 +17,17 @@
 #include <yq/tachyon/commands/WindowRestoreCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
 #include <yq/tachyon/enum/KeyCode.hpp>
+#include <yq/tachyon/events/KeyCharacterEvent.hpp>
+#include <yq/tachyon/events/KeyPressEvent.hpp>
+#include <yq/tachyon/events/KeyReleaseEvent.hpp>
+#include <yq/tachyon/events/KeyRepeatEvent.hpp>
+#include <yq/tachyon/events/MouseDropEvent.hpp>
+#include <yq/tachyon/events/MouseEnterEvent.hpp>
+#include <yq/tachyon/events/MouseLeaveEvent.hpp>
+#include <yq/tachyon/events/MouseMoveEvent.hpp>
+#include <yq/tachyon/events/MousePressEvent.hpp>
+#include <yq/tachyon/events/MouseReleaseEvent.hpp>
+#include <yq/tachyon/events/MouseScrollEvent.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
 #include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
@@ -28,9 +39,10 @@
 #include <yq/tachyon/events/WindowResizeEvent.hpp>
 #include <yq/tachyon/events/WindowScaleEvent.hpp>
 #include <yq/tachyon/events/WindowShowEvent.hpp>
+#include <yq/tachyon/glfw/LoggingGLFW.hpp>
+#include <yq/tachyon/glfw/MonitorGLFW.hpp>
 #include <yq/tachyon/requests/WindowCloseRequest.hpp>
 #include <yq/tachyon/requests/WindowRefreshRequest.hpp>
-#include <yq/tachyon/glfw/MonitorGLFW.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 
@@ -38,134 +50,233 @@ namespace yq::tachyon {
 
     void WindowGLFW::callback_character(GLFWwindow* win, unsigned int codepoint)
     {
-        //  TODO
+        WindowGLFW *w  = _window(win);
+        if(!w)
+            return ;
+        KeyCharacterEvent::Param    p;
+        p.modifiers = w->modifiers();
+        p.code      = codepoint;
+        w->send(new KeyCharacterEvent(w, p));
     }
     
     void WindowGLFW::callback_cursor_enter(GLFWwindow* win, int entered)
     {
-        //  TODO
+        WindowGLFW *w  = _window(win);
+        if(!w)
+            return ;
+            
+        if(entered){
+            MouseEnterEvent::Param p;
+            p.modifiers = w->modifiers();
+            p.buttons   = w->buttons();
+            p.position  = w->mouse();
+            w->send(new MouseEnterEvent(w, p));
+        } else {
+            MouseLeaveEvent::Param p;
+            p.modifiers = w->modifiers();
+            p.buttons   = w->buttons();
+            p.position  = w->mouse();
+            w->send(new MouseLeaveEvent(w, p));
+        }
     }
     
     void WindowGLFW::callback_cursor_position(GLFWwindow* win, double xpos, double ypos)
     {
-        //  TODO
+        WindowGLFW *w  = _window(win);
+        if(!w)
+            return ;
+
+        MouseMoveEvent::Param p;
+        p.modifiers = w->modifiers();
+        p.buttons   = w->buttons();
+        p.position  = { xpos, ypos };
+        w->send(new MouseMoveEvent(w, p));
     }
     
     void WindowGLFW::callback_drop(GLFWwindow* win, int count, const char** paths)
     {
-        //  TODO
+        WindowGLFW *w  = _window(win);
+        if(!w)
+            return ;
+        if(count <= 0)
+            return ;
+        if(!paths)
+            return ;
+
+        std::vector<std::string>    copy;
+        for(int i=0;i<count;++i){
+            if(!paths[i])
+                continue;
+            copy.push_back(std::string(paths[i]));
+        }
+        
+        MouseDropEvent::Param p;
+        p.modifiers = w->modifiers();
+        p.buttons   = w->buttons();
+        p.position  = w->mouse();
+        w->send(new MouseDropEvent(w, std::move(copy), p));
     }
     
     void WindowGLFW::callback_framebuffer_size(GLFWwindow* win, int width, int height)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
-        _w->send(new WindowFrameBufferResizeEvent(_w, Size2I( width, height)));
+        w->send(new WindowFrameBufferResizeEvent(w, Size2I( width, height)));
     }
     
     void WindowGLFW::callback_key(GLFWwindow* win, int key, int scancode, int action, int mods)
     {
-        //  TODO
+        WindowGLFW *w  = _window(win);
+        if(!w)
+            return ;
+
+        switch(action){
+        case GLFW_PRESS:
+            {
+                KeyPressEvent::Param    p;
+                p.modifiers     = w->modifiers();
+                p.scan          = scancode;
+                p.key           = keycode_glfw(key);
+                w->send(new KeyPressEvent(w,p));
+            }
+            break;
+        case GLFW_RELEASE:
+            {
+                KeyReleaseEvent::Param    p;
+                p.modifiers     = w->modifiers();
+                p.scan          = scancode;
+                p.key           = keycode_glfw(key);
+                w->send(new KeyReleaseEvent(w,p));
+            }
+            break;
+        case GLFW_REPEAT:
+            {
+                KeyRepeatEvent::Param    p;
+                p.modifiers     = w->modifiers();
+                p.scan          = scancode;
+                p.key           = keycode_glfw(key);
+                w->send(new KeyRepeatEvent(w,p));
+            }
+            break;
+        default:
+            break;
+        }
     }
     
     void WindowGLFW::callback_mouse_button(GLFWwindow* win, int button, int action, int mods)
     {
-        //  TODO
+        WindowGLFW *w  = _window(win);
+        if(!w)
+            return ;
+        
+        if(action == GLFW_PRESS){
+            MousePressEvent::Param p;
+            p.modifiers = w->modifiers();
+            p.buttons   = w->buttons();
+            p.position  = w->mouse();
+            p.button    = MouseButton(button);
+            w->send(new MousePressEvent(w, p));
+        } else {
+            MouseReleaseEvent::Param p;
+            p.modifiers = w->modifiers();
+            p.buttons   = w->buttons();
+            p.position  = w->mouse();
+            p.button    = MouseButton(button);
+            w->send(new MouseReleaseEvent(w, p));
+        }
     }
     
     void WindowGLFW::callback_scroll(GLFWwindow* win, double xoffset, double yoffset)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
 
         MouseScrollEvent::Param p;
-        p.modifiers = _w->modifiers();
-        p.buttons   = _w->buttons();
+        p.modifiers = w->modifiers();
+        p.buttons   = w->buttons();
         p.delta     = { xoffset, yoffset };
-        //_w->send(
-
-        //  TODO
+        w->send(new MouseScrollEvent(w, p));
     }
     
     void WindowGLFW::callback_window_close(GLFWwindow* win)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
     
             // so we don't repeat this....
         glfwSetWindowShouldClose(win, GLFW_FALSE);
-        _w->send(new WindowCloseRequest(_w));
+        w->send(new WindowCloseRequest(w));
     }
     
     void WindowGLFW::callback_window_focus(GLFWwindow* win, int focused)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
         if(focused){
-            _w->send(new WindowFocusEvent(_w));
+            w->send(new WindowFocusEvent(w));
         } else {
-            _w->send(new WindowDefocusEvent(_w));
+            w->send(new WindowDefocusEvent(w));
         }
     }
     
     void WindowGLFW::callback_window_iconify(GLFWwindow* win, int iconified)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
         if(iconified){
-            _w->send(new WindowIconifyEvent(_w));
+            w->send(new WindowIconifyEvent(w));
         } else {
-            _w->send(new WindowRestoreEvent(_w));
+            w->send(new WindowRestoreEvent(w));
         }
     }
     
     void WindowGLFW::callback_window_maximize(GLFWwindow* win, int maximized)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
         if(maximized){
-            _w->send(new WindowMaximizeEvent(_w));
+            w->send(new WindowMaximizeEvent(w));
         } else {
-            _w->send(new WindowRestoreEvent(_w));
+            w->send(new WindowRestoreEvent(w));
         }
     }
     
     void WindowGLFW::callback_window_position(GLFWwindow* win, int xpos, int ypos)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
-        _w->send(new WindowMoveEvent(_w, Vector2I(xpos, ypos)));
+        w->send(new WindowMoveEvent(w, Vector2I(xpos, ypos)));
     }
     
     void WindowGLFW::callback_window_refresh(GLFWwindow* win)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
-        _w->send(new WindowRefreshRequest(_w));
+        w->send(new WindowRefreshRequest(w));
     }
     
     void WindowGLFW::callback_window_scale(GLFWwindow* win, float xscale, float yscale)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
-        _w->send(new WindowScaleEvent(_w, { xscale, yscale }));
+        w->send(new WindowScaleEvent(w, { xscale, yscale }));
     }
     
     void WindowGLFW::callback_window_size(GLFWwindow* win, int width, int height)
     {
-        WindowGLFW *_w  = _window(win);
-        if(!_w)
+        WindowGLFW *w  = _window(win);
+        if(!w)
             return ;
-        _w->send(new WindowResizeEvent(_w, Size2I(width, height)));
+        w->send(new WindowResizeEvent(w, Size2I(width, height)));
     }
 
     WindowGLFW*  WindowGLFW::_window(GLFWwindow*w)

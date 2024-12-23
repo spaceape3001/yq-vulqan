@@ -9,10 +9,15 @@
 
 namespace yq::tachyon {
 
-    KeyCharacterEvent::KeyCharacterEvent(const Param& p) : KeyboardEvent(p), m_code(p.code)
+    KeyCharacterEvent::KeyCharacterEvent(WindowID w, const Param& p) : KeyboardEvent(w, p), m_code(p.code)
     {
     }
     
+    KeyCharacterEvent::KeyCharacterEvent(Window* w, const Param& p) : KeyboardEvent(w, p), m_code(p.code)
+    {
+    }
+    
+
     KeyCharacterEvent::~KeyCharacterEvent()
     {
     }

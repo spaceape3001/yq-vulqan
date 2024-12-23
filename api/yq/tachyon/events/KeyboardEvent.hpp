@@ -33,7 +33,8 @@ namespace yq::tachyon {
         static void init_info();
 
     protected:
-        KeyboardEvent(const Param& p);
+        KeyboardEvent(WindowID, const Param& p);
+        KeyboardEvent(Window*, const Param& p);
         virtual ~KeyboardEvent();
     };
 }

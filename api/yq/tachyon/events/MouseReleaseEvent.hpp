@@ -17,7 +17,8 @@ namespace yq::tachyon {
             MouseButton     button      = {};
         };
     
-        MouseReleaseEvent(const Param&);
+        MouseReleaseEvent(Window*, const Param&);
+        MouseReleaseEvent(WindowID, const Param&);
 
         MouseButton         button() const { return m_button; }
         virtual ~MouseReleaseEvent();

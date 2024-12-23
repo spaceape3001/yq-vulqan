@@ -6,17 +6,17 @@
 
 #pragma once
 
-#include <yq/tachyon/events/ViewerEvent.hpp>
+#include <yq/tachyon/events/WindowEvent.hpp>
 
 namespace yq::tachyon {
-    class MouseDisableEvent : public ViewerEvent {
-        YQ_OBJECT_DECLARE(MouseDisableEvent, ViewerEvent)
+    class MouseDisableEvent : public WindowEvent {
+        YQ_OBJECT_DECLARE(MouseDisableEvent, WindowEvent)
     public:
     
-        struct Param : public ViewerEvent::Param {
+        struct Param : public WindowEvent::Param {
         };
     
-        MouseDisableEvent(Viewer*, const Param& p = {});
+        MouseDisableEvent(Window*, const Param& p = {});
         virtual ~MouseDisableEvent();
         
         static void init_info();

@@ -20,7 +20,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    MouseEvent::MouseEvent(const Param& p) : InputEvent(p), m_position(p.position), m_buttons(p.buttons)
+    MouseEvent::MouseEvent(Window* w, const Param& p) : InputEvent(w, p), m_position(p.position), m_buttons(p.buttons)
+    {
+    }
+    
+    MouseEvent::MouseEvent(WindowID w, const Param& p) : InputEvent(w, p), m_position(p.position), m_buttons(p.buttons)
     {
     }
     

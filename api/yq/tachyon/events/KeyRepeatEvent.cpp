@@ -8,11 +8,14 @@
 #include <yq/tachyon/api/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
-
-    KeyRepeatEvent::KeyRepeatEvent(const Param& p) : KeyboardEvent(p), m_scan(p.scan), m_key(p.key)
+    KeyRepeatEvent::KeyRepeatEvent(Window*w, const Param& p) : KeyboardEvent(w, p), m_scan(p.scan), m_key(p.key)
     {
     }
     
+    KeyRepeatEvent::KeyRepeatEvent(WindowID w, const Param& p) : KeyboardEvent(w, p), m_scan(p.scan), m_key(p.key)
+    {
+    }
+
     KeyRepeatEvent::~KeyRepeatEvent()
     {
     }

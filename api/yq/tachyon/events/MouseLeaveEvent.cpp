@@ -9,7 +9,11 @@
 
 namespace yq::tachyon {
 
-    MouseLeaveEvent::MouseLeaveEvent(const Param& p) : MouseEvent(p)
+    MouseLeaveEvent::MouseLeaveEvent(Window* w, const Param& p) : MouseEvent(w, p)
+    {
+    }
+    
+    MouseLeaveEvent::MouseLeaveEvent(WindowID w, const Param& p) : MouseEvent(w, p)
     {
     }
     

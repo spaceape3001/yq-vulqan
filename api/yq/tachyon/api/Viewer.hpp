@@ -368,12 +368,17 @@ namespace yq::tachyon {
         void                _remove(widget_t);      // Removes the current widget
         void                _widget(WidgetPtr);     // Changes the widget
         
-        void    on_close_request(const WindowCloseRequestCPtr&);
-        void    on_move_event(const WindowMoveEvent&);
-        void    on_resize_event(const WindowResizeEvent&);
-        void    on_fb_resize_event(const WindowFrameBufferResizeEvent&);
-        void    on_focus_event(const WindowFocusEvent&);
-        void    on_defocus_event(const WindowDefocusEvent&);
+        void    on_key_character_event(const KeyCharacterEvent&);
+        void    on_mouse_move_event(const MouseMoveEvent&);
+        void    on_mouse_press_event(const MousePressEvent&);
+        void    on_mouse_release_event(const MouseReleaseEvent&);
+
+        void    on_window_close_request(const WindowCloseRequestCPtr&);
+        void    on_window_defocus_event(const WindowDefocusEvent&);
+        void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
+        void    on_window_focus_event(const WindowFocusEvent&);
+        void    on_window_move_event(const WindowMoveEvent&);
+        void    on_window_resize_event(const WindowResizeEvent&);
         
         
         

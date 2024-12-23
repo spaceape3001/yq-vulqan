@@ -4,26 +4,26 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MouseDisableEvent.hpp"
+#include "MouseHideEvent.hpp"
 #include <yq/tachyon/api/EventInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseDisableEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseHideEvent)
 
 namespace yq::tachyon {
 
-    MouseDisableEvent::MouseDisableEvent(Window* v, const Param& p) : WindowEvent(v, p)
+    MouseHideEvent::MouseHideEvent(Window* v, const Param& p) : WindowEvent(v, p)
     {
     }
     
-    MouseDisableEvent::~MouseDisableEvent()
+    MouseHideEvent::~MouseHideEvent()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void MouseDisableEvent::init_info()
+    void MouseHideEvent::init_info()
     {
-        auto w = writer<MouseDisableEvent>();
-        w.description("Mouse Disable Event");
+        auto w = writer<MouseHideEvent>();
+        w.description("Mouse Restore Event");
     }
 }

@@ -191,6 +191,7 @@ add_library(${PROJECT_NAME} SHARED
     events/MouseDropEvent.cpp
     events/MouseEnterEvent.cpp
     events/MouseEvent.cpp
+    events/MouseHideEvent.cpp
     events/MouseLeaveEvent.cpp
     events/MouseMoveEvent.cpp
     events/MouseNormalEvent.cpp

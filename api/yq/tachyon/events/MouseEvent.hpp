@@ -47,7 +47,8 @@ namespace yq::tachyon {
         static void init_info();
         
     protected:
-        MouseEvent(const Param&);
+        MouseEvent(Window*, const Param&);
+        MouseEvent(WindowID, const Param&);
         
     private:
         const Vector2D        m_position;

@@ -19,7 +19,8 @@ namespace yq::tachyon {
             KeyCode         key         = KeyCode::Unknown;
         };
     
-        KeyReleaseEvent(const Param&);
+        KeyReleaseEvent(Window*, const Param&);
+        KeyReleaseEvent(WindowID, const Param&);
         
         //! Scan code from the operating system (no interpretation)
         int                 scan() const { return m_scan; }

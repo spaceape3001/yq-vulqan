@@ -16,7 +16,8 @@ namespace yq::tachyon {
         struct Param : public MouseEvent::Param {
         };
     
-        MouseDropEvent(std::vector<std::string>&&, const Param& p);
+        MouseDropEvent(Window*, std::vector<std::string>&&, const Param& p);
+        MouseDropEvent(WindowID, std::vector<std::string>&&, const Param& p);
 
         virtual ~MouseDropEvent();
         

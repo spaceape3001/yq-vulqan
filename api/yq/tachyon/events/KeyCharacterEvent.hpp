@@ -22,7 +22,8 @@ namespace yq::tachyon {
             char32_t    code    = 0;
         };
     
-        KeyCharacterEvent(const Param&);
+        KeyCharacterEvent(Window*, const Param&);
+        KeyCharacterEvent(WindowID, const Param&);
         
         char32_t        code() const { return m_code; }
         
@@ -31,6 +32,6 @@ namespace yq::tachyon {
         static void init_info();
         
     private:
-        char32_t        m_code;
+        const char32_t  m_code;
     };
 }

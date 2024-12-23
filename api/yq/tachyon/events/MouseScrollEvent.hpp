@@ -17,7 +17,8 @@ namespace yq::tachyon {
             Vector2D    delta;
         };
     
-        MouseScrollEvent(const Param&);
+        MouseScrollEvent(Window*, const Param&);
+        MouseScrollEvent(WindowID, const Param&);
 
         virtual ~MouseScrollEvent();
         
@@ -28,7 +29,7 @@ namespace yq::tachyon {
         double          delta_y() const { return m_delta.y; }
         
     private:
-        Vector2D    m_delta;
+        const Vector2D    m_delta;
     };
 }
 

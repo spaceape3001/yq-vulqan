@@ -9,10 +9,14 @@
 
 namespace yq::tachyon {
 
-    MouseMoveEvent::MouseMoveEvent(const Param& p) : MouseEvent(p)
+    MouseMoveEvent::MouseMoveEvent(Window* w, const Param& p) : MouseEvent(w, p)
     {
     }
     
+    MouseMoveEvent::MouseMoveEvent(WindowID w, const Param& p) : MouseEvent(w, p)
+    {
+    }
+
     MouseMoveEvent::~MouseMoveEvent()
     {
     }

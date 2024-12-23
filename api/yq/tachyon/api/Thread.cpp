@@ -112,6 +112,15 @@ namespace yq::tachyon {
         return {};
     }
 
+    bool Thread::valid(ThreadID tid)
+    {
+        lock_t  _lock(s_mutex, false);
+        auto i = s_threads.find(tid);
+        if(i != s_threads.end())
+            return i->second.valid();
+        return false;
+    }
+
     void Thread::retain(TachyonPtr tp)
     {
         if(!tp)
@@ -170,17 +179,7 @@ namespace yq::tachyon {
         if(me){
             {
                 lock_t _lock(me->m_mutex, true);
-                auto& obj   = me->m_objects[tac->id()];
-                obj.pushed  = tgt;
-                obj.state   = TachyonThreadState::Pushed;
-                if(!obj.object)
-                    obj.object  = tac;
-                me->unsubscribe(tac->id(), MG::Tachyon);
-            }
-            tac->unsubscribe(tac->owner(), MG::Thread);
-            {
-                lock_t _lock(s_mutex, true);
-                s_inboxes[tgt].push.push_back(tac);
+                me->m_pushing.push_back({tac->id(), tgt});
             }
         } else {
             //  Not in any, becomes a create
@@ -365,6 +364,33 @@ namespace yq::tachyon {
         //  TODO: Some multithreadedness...
         for(auto itr = m_objects.begin(); itr != m_objects.end(); ++itr){
             execute(itr->second, ctx);
+        }
+        
+        std::vector<PP> pushing;
+        {
+            lock_t _lock(m_mutex, true);
+            std::swap(m_pushing, pushing);
+        }
+        
+        for(const PP& pp : pushing){
+            ThreadPtr   th  = get(pp.destination);
+            if(!th) // skipping pushes to non-existent threads
+                continue;
+            
+            auto j  = m_objects.find(pp.tachyon);
+            if(j == m_objects.end())    // not in this object
+                continue;
+            Control&    c   = j->second;
+            if(!c.object)               // nothing to push
+                continue;
+            
+            c.pushed    = pp.destination;
+            c.state     = TachyonThreadState::Pushed;
+            c.object->unsubscribe(id(), MG::Thread);
+            unsubscribe(pp.tachyon, MG::Tachyon);
+        
+            lock_t _lock(s_mutex, true);
+            s_inboxes[pp.destination].push.push_back(c.object);
         }
         
         s_current   = old;

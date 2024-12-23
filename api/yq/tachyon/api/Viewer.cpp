@@ -30,10 +30,12 @@
 #include <yq/tachyon/commands/ViewerHideCommand.hpp>
 #include <yq/tachyon/commands/ViewerIconifyCommand.hpp>
 #include <yq/tachyon/commands/ViewerMaximizeCommand.hpp>
+#include <yq/tachyon/commands/ViewerMoveCommand.hpp>
 #include <yq/tachyon/commands/ViewerPauseCommand.hpp>
 #include <yq/tachyon/commands/ViewerRestoreCommand.hpp>
 #include <yq/tachyon/commands/ViewerResumeCommand.hpp>
 #include <yq/tachyon/commands/ViewerShowCommand.hpp>
+#include <yq/tachyon/commands/ViewerSizeCommand.hpp>
 #include <yq/tachyon/commands/ViewerTitleCommand.hpp>
 #include <yq/tachyon/commands/ViewerUnfloatCommand.hpp>
 #include <yq/tachyon/commands/WindowAspectCommand.hpp>
@@ -47,6 +49,7 @@
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
 #include <yq/tachyon/commands/WindowIconifyCommand.hpp>
 #include <yq/tachyon/commands/WindowMaximizeCommand.hpp>
+#include <yq/tachyon/commands/WindowMoveCommand.hpp>
 #include <yq/tachyon/commands/WindowRestoreCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
 #include <yq/tachyon/commands/WindowTitleCommand.hpp>
@@ -148,6 +151,8 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_cursor_normal_command);
         
         w.slot(&Viewer::on_key_character_event);
+        w.slot(&Viewer::on_key_press_event);
+        w.slot(&Viewer::on_key_release_event);
         
         w.slot(&Viewer::on_mouse_move_event);
         w.slot(&Viewer::on_mouse_press_event);
@@ -467,22 +472,44 @@ namespace yq::tachyon {
 
     void    Viewer::on_key_character_event(const KeyCharacterEvent&evt)
     {
-        tachyonInfo << ident() << " Key Character " << (uint64_t) evt.code();
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
+    }
+
+    void    Viewer::on_key_press_event(const KeyPressEvent&evt)
+    {
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
+    }
+    
+    void    Viewer::on_key_release_event(const KeyReleaseEvent&evt)
+    {
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
     }
 
     void    Viewer::on_mouse_move_event(const MouseMoveEvent&evt)
     {
-        tachyonInfo << ident() << " Mouse Moved (" << evt.x() << ", " << evt.y() << ")";
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
     }
 
     void    Viewer::on_mouse_press_event(const MousePressEvent&evt)
     {
-        tachyonInfo << ident() << " Mouse Pressed (" << evt.x() << ", " << evt.y() << ")";
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
     }
     
     void    Viewer::on_mouse_release_event(const MouseReleaseEvent&evt)
     {
-        tachyonInfo << ident() << " Mouse Released (" << evt.x() << ", " << evt.y() << ")";
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
     }
 
     void    Viewer::on_viewer_aspect_command(const ViewerAspectCommand& cmd)
@@ -624,9 +651,11 @@ namespace yq::tachyon {
         close_request();
     }
 
-    void    Viewer::on_window_defocus_event(const WindowDefocusEvent&)
+    void    Viewer::on_window_defocus_event(const WindowDefocusEvent&evt)
     {
-        tachyonInfo << ident() << " Window defocused";
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
     }
 
     void    Viewer::on_window_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
@@ -634,9 +663,11 @@ namespace yq::tachyon {
         tachyonInfo << ident() << " Framebuffer resized (" << evt.width() << ", " << evt.height() << ")";
     }
     
-    void    Viewer::on_window_focus_event(const WindowFocusEvent&)
+    void    Viewer::on_window_focus_event(const WindowFocusEvent&evt)
     {
-        tachyonInfo << ident() << " Window focused";
+        if(m_imgui){
+            m_imgui->on(evt);
+        }
     }
     
     void    Viewer::on_window_move_event(const WindowMoveEvent&evt)
@@ -707,6 +738,26 @@ namespace yq::tachyon {
     void    Viewer::set_aspect(unlocked_t)
     {
         set_aspect({-1,-1});
+    }
+
+    void    Viewer::set_position(const Vector2I&v)
+    {
+        mail(new ViewerMoveCommand(this, v));
+    }
+
+    void    Viewer::set_position(int x, int y)
+    {
+        set_position({x,y});
+    }
+
+    void    Viewer::set_size(const Size2I&sz)
+    {
+        mail(new ViewerSizeCommand(this, sz));
+    }
+    
+    void    Viewer::set_size(int w, int h)
+    {
+        set_size({w,h});
     }
 
     void    Viewer::set_title(std::string_view kTitle)
@@ -1078,65 +1129,11 @@ if(s_owner != owner()){
 
 
 
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  FOCUS
-    //  
-
-        void    Viewer::defocus_event(const WindowDefocusEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-        
-        void    Viewer::focus_event(const WindowFocusEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  KEYBOARD
-    //  
-
-        void    Viewer::key_press_event(const KeyPressEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-        
-        void    Viewer::key_release_event(const KeyReleaseEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-        
-        void    Viewer::key_character_event(const KeyCharacterEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
 
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  MOVE/POSITION
     //  
-
-        void    Viewer::set_position(const Vector2I&v)
-        {
-            dispatch(SELF, new ViewerMoveCommand(this, v));
-        }
-
-        void    Viewer::set_position(int x, int y)
-        {
-            set_position({x,y});
-        }
-
 
         void    Viewer::move_command(const ViewerMoveCommand& cmd)
         {
@@ -1144,32 +1141,6 @@ if(s_owner != owner()){
                 dispatch(new WindowMoveCommand(this, cmd.position()));
             }
         }
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  MOUSE
-    //  
-
-        void    Viewer::mouse_move_event(const MouseMoveEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-        
-        void    Viewer::mouse_press_event(const MousePressEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-        
-        void    Viewer::mouse_release_event(const MouseReleaseEvent&evt)
-        {
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  SHOW/HIDE
@@ -1195,15 +1166,6 @@ if(s_owner != owner()){
     //  SIZE
     //  
 
-        void    Viewer::set_size(const Size2I&sz)
-        {
-            dispatch(SELF, new ViewerSizeCommand(this, sz));
-        }
-        
-        void    Viewer::set_size(int w, int h)
-        {
-            set_size({w,h});
-        }
 
         void    Viewer::size_command(const ViewerSizeCommand& cmd)
         {

@@ -39,6 +39,7 @@ namespace yq::tachyon {
         static Thread*      current() { return s_current; }
         
         static ThreadPtr    get(ThreadID);
+        static bool         valid(ThreadID);
         static Thread*      main() { return s_main; }
         static Thread*      sink() { return s_sink; }
         
@@ -105,6 +106,12 @@ namespace yq::tachyon {
         
         void    execute(Control&, Context&);
         
+        struct PP {
+            TachyonID   tachyon;
+            ThreadID    destination;
+        };
+        
+        
         static thread_local Thread*     s_current;
         static Thread*                  s_main;
         static Thread*                  s_sink;
@@ -118,6 +125,7 @@ namespace yq::tachyon {
         unit::Second                    m_snooze    = 1_ms;
         std::map<TachyonID, Control>    m_objects;
         std::vector<TachyonPtr>         m_creates;  //!< Objects that were created (will be handled next tick)
+        std::vector<PP>                 m_pushing;
         std::thread                     m_thread;
         uint64_t                        m_tick      = 0ULL;
     };

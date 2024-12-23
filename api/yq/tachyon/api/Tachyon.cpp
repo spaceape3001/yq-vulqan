@@ -501,6 +501,10 @@ namespace yq::tachyon {
 
     const Frame&  Tachyon::frame() const
     {
+        if(!in_tick()){
+            tachyonCritical << ident() << "::frame() -- not in tick!  Owner is " << (uint64_t) m_owner 
+                << " though current is " << (uint64_t) Thread::current()->id();
+        }
         assert(in_tick());
         return m_context->frame;
     }

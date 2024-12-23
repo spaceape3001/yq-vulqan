@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/WindowState.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
+#include <yq/tachyon/enum/MouseMode.hpp>
 #include <yq/tachyon/interfaces/IPosition2I.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/glfw.hpp>
@@ -47,16 +48,25 @@ namespace yq::tachyon {
         Size2I              m_aspect    = { -1, -1 };
         Size2I              m_maxSize   = { -1, -1 };
         Size2I              m_minSize   = { -1, -1 };
+        MouseMode           m_mouseMode = MouseMode::Normal;
         
         void    on_aspect_command(const WindowAspectCommand&);
         void    on_attention_command(const WindowAttentionCommand&);
+        void    on_cursor_capture_command(const WindowCursorCaptureCommand&);
+        void    on_cursor_disable_command(const WindowCursorDisableCommand&);
+        void    on_cursor_hide_command(const WindowCursorHideCommand&);
+        void    on_cursor_normal_command(const WindowCursorNormalCommand&);
         void    on_float_command(const WindowFloatCommand&);
         void    on_focus_command(const WindowFocusCommand&);
         void    on_hide_command(const WindowHideCommand&);
         void    on_iconify_command(const WindowIconifyCommand&);
         void    on_maximize_command(const WindowMaximizeCommand&);
+        void    on_move_command(const WindowMoveCommand&);
         void    on_restore_command(const WindowRestoreCommand&);
         void    on_show_command(const WindowShowCommand&);
+        void    on_size_command(const WindowSizeCommand&);
+        void    on_title_command(const WindowTitleCommand&);
+        void    on_unfloat_command(const WindowUnfloatCommand&);
         
         ModifierKeys        modifiers() const;
         MouseButtons        buttons() const;

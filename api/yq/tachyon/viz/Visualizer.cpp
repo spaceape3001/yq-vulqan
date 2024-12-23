@@ -299,8 +299,10 @@ namespace yq::tachyon {
     {
         m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
         
-        if(init_visualizer(vci, w) != std::error_code())
-            throw VulqanException("Unable to initialize");
+        std::error_code     ec  = init_visualizer(vci, w); // != std::error_code();
+        if(ec != std::error_code())
+            throw ec;
+            //throw VulqanException("Unable to initialize");
     }
     
     Visualizer::~Visualizer()

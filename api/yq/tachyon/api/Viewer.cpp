@@ -52,6 +52,7 @@
 #include <yq/tachyon/commands/WindowMoveCommand.hpp>
 #include <yq/tachyon/commands/WindowRestoreCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
+#include <yq/tachyon/commands/WindowSizeCommand.hpp>
 #include <yq/tachyon/commands/WindowTitleCommand.hpp>
 #include <yq/tachyon/commands/WindowUnfloatCommand.hpp>
 
@@ -69,8 +70,12 @@
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
 #include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
+#include <yq/tachyon/events/WindowHideEvent.hpp>
 #include <yq/tachyon/events/WindowMoveEvent.hpp>
 #include <yq/tachyon/events/WindowResizeEvent.hpp>
+#include <yq/tachyon/events/WindowShowEvent.hpp>
+
+#include <yq/tachyon/glfw/WindowGLFW.hpp>
 
 #include <yq/tachyon/replies/ViewerCloseReply.hpp>
 
@@ -104,7 +109,7 @@
 #include <yq/util/AutoReset.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <backends/imgui_impl_glfw.h>
+//#include <backends/imgui_impl_glfw.h>
 
 #include <GLFW/glfw3.h>
 
@@ -160,16 +165,19 @@ namespace yq::tachyon {
         
         w.slot(&Viewer::on_viewer_aspect_command);
         w.slot(&Viewer::on_viewer_attention_command);
+        w.slot(&Viewer::on_viewer_close_command);
         w.slot(&Viewer::on_viewer_close_request);
         w.slot(&Viewer::on_viewer_float_command);
         w.slot(&Viewer::on_viewer_focus_command);
         w.slot(&Viewer::on_viewer_hide_command);
         w.slot(&Viewer::on_viewer_iconify_command);
         w.slot(&Viewer::on_viewer_maximize_command);
+        w.slot(&Viewer::on_viewer_move_command);
         w.slot(&Viewer::on_viewer_pause_command);
         w.slot(&Viewer::on_viewer_restore_command);
         w.slot(&Viewer::on_viewer_resume_command);
         w.slot(&Viewer::on_viewer_show_command);
+        w.slot(&Viewer::on_viewer_size_command);
         w.slot(&Viewer::on_viewer_title_command);
         w.slot(&Viewer::on_viewer_unfloat_command);
         
@@ -177,8 +185,10 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_window_defocus_event);
         w.slot(&Viewer::on_window_fb_resize_event);
         w.slot(&Viewer::on_window_focus_event);
+        w.slot(&Viewer::on_window_hide_event);
         w.slot(&Viewer::on_window_move_event);
         w.slot(&Viewer::on_window_resize_event);
+        w.slot(&Viewer::on_window_show_event);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,12 +206,53 @@ namespace yq::tachyon {
         m_window                = win->id();
         _widget(w);
         
+        // HACK (becase we know it's GLFW ATM)
+        GLFWwindow* gw  = static_cast<WindowGLFW*>(win) -> glfw();
+        try {
+            m_viz       = std::make_unique<Visualizer>(m_createInfo, gw, m_cleanup);
+        } 
+        catch(const std::exception& ex) {
+            tachyonCritical << ident() << " cannot create the visualizer.  " << ex.what();
+            throw;
+        }
+        catch(const std::error_code& ec){
+            tachyonCritical << ident() << " cannot create the visualizer.  " << ec.message();
+            throw;
+        }
+        
+        
+        if(m_createInfo.imgui){
+            try {
+                m_imgui = std::make_unique<ViGui>(*m_viz);
+            }
+            catch(const std::exception& ex){
+                tachyonCritical << ident() << " cannot create imgui.  " << ex.what();
+            }
+            catch(const std::error_code& ec){
+                tachyonCritical << ident() << " cannot create imgui.  " << ec.message();
+                throw;
+            }
+        }
+        
+        m_stage     = Stage::Started;
+        
+        ++s_count;
         tachyonInfo << "Viewer::Viewer(" << m_number << ") ID " << (uint64_t) id() << ", window=" 
             << (uint64_t) win->id() << ", widget=" << w->id();
     }
     
     Viewer::~Viewer()
     {
+        --s_count;
+        _remove(WIDGET);
+        m_widget = {};
+        m_cleanup.sweep();
+        if(m_imgui)
+            m_imgui = {};
+        m_cleanup.sweep();
+        if(m_viz)
+            m_viz   = {};
+        m_cleanup.sweep();
         tachyonInfo << "Viewer::~Viewer(" << m_number << ")";
     }
 
@@ -526,6 +577,14 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_viewer_close_command(const ViewerCloseCommand&)
+    {
+        if(started_or_running()){
+            send(new WindowHideCommand(m_window));
+            m_stage = Stage::Closing;
+        }
+    }
+
     void    Viewer::on_viewer_close_request(const ViewerCloseRequestCPtr&req) 
     { 
         if(!req){
@@ -571,6 +630,21 @@ namespace yq::tachyon {
             send(new WindowHideCommand(m_window));
         }
     }
+
+    void    Viewer::on_window_hide_event(const WindowHideEvent&)
+    {
+        if(closing()){
+            m_stage     = Stage::Kaput;
+            
+            
+            tachyonInfo << ident() << " Window Hidden (TODO -- DESTRUCTION)";
+            
+            //  DESTROY VIEWER
+            
+        } else {
+            //  DO NOTHING
+        }
+    }
     
     void    Viewer::on_viewer_iconify_command(const ViewerIconifyCommand&)
     {
@@ -586,6 +660,13 @@ namespace yq::tachyon {
         }
     }
     
+    void    Viewer::on_viewer_move_command(const ViewerMoveCommand&cmd)
+    {
+        if(started_or_running()){
+            send(new WindowMoveCommand(m_window, cmd.position()));
+        }
+    }
+
     void    Viewer::on_viewer_pause_command(const ViewerPauseCommand&)
     {
         m_paused    = true;
@@ -611,7 +692,14 @@ namespace yq::tachyon {
             send(new WindowShowCommand(m_window));
         }
     }
-    
+
+    void    Viewer::on_viewer_size_command(const ViewerSizeCommand& cmd)
+    {
+        if(started_or_running()){
+            send(new WindowSizeCommand(m_window, cmd.size()));
+        }
+    }
+
     void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
     {
         if(started_or_running()){
@@ -680,6 +768,11 @@ namespace yq::tachyon {
         tachyonInfo << ident() << " Window resized (" << evt.width() << ", " << evt.height() << ")";
     }
     
+    void    Viewer::on_window_show_event(const WindowHideEvent&evt)
+    {
+        
+    }
+
     void     Viewer::owner(push_t, ThreadID tid) 
     {
         Tachyon::owner(PUSH, tid);
@@ -787,14 +880,8 @@ namespace yq::tachyon {
     }
 
 
-    Execution   Viewer::tick(Context&) 
+    Execution   Viewer::tick(Context&ctx) 
     {
-static ThreadID s_owner;
-if(s_owner != owner()){
-    s_owner = owner();
-    tachyonInfo << ident() << " on thread " << (uint64_t) s_owner;
-}
-    
         const WindowSnap* sn = frame().snap(m_window);
         if(sn){
             m_state.window      = sn->window;
@@ -802,8 +889,48 @@ if(s_owner != owner()){
             m_state.mouse       = sn->mouse;
             m_state.time        = sn->time;
         }
+        
+        switch(stage()){
+        case Stage::Preinit:
+            return tick_1_preinit(ctx);
+        case Stage::Started:
+            return tick_2_started(ctx);
+        case Stage::Running:
+            return tick_3_running(ctx);
+        case Stage::Closing:
+            return tick_4_closing(ctx);
+        case Stage::Kaput:
+            return tick_5_kaput(ctx);
+        }
 
+        return {};
+    }
 
+    Execution    Viewer::tick_1_preinit(Context&)
+    {
+        return {};
+    }
+    
+    Execution    Viewer::tick_2_started(Context&)
+    {
+        // Might do something with the widget?
+        send(new WindowShowCommand(m_window));
+        m_stage = Stage::Running;
+        return {};
+    }
+    
+    Execution    Viewer::tick_3_running(Context&)
+    {
+        return {};
+    }
+    
+    Execution    Viewer::tick_4_closing(Context&)
+    {
+        return {};
+    }
+    
+    Execution    Viewer::tick_5_kaput(Context&)
+    {
         return {};
     }
 
@@ -871,24 +998,7 @@ if(s_owner != owner()){
     //  INITIALIZATION/DESTRUCTION
 
 
-    Viewer::Viewer(WidgetPtr w, const ViewerCreateInfo& vci, const Param&p)
-    {
-        if(!Application::initialized())
-            throw ViewerException("Application is not initialized");
-        if(!is_main_thread())
-            throw ViewerException("Viewer being created outside main thread.");
-        if(!w)
-            throw ViewerException("Widget is required");
-            
-        m_createInfo        = std::make_unique<ViewerCreateInfo>(vci);
-        m_widget                = w;
-        m_widget -> m_viewer    = this;
-        connect(TX, *m_widget);
-        connect(RX, *m_widget);
-        set_post_mode(PostMode::Queued);
-        ++s_count;
-    }
-    
+ 
     Viewer::~Viewer()
     {
         disconnect(ALL);
@@ -1081,25 +1191,6 @@ if(s_owner != owner()){
             }
         }
 
-        void    Viewer::close_request(const ViewerCloseRequestCPtr& req)
-        {
-            if(closing_or_kaput()){
-                dispatch(new ViewerCloseReply(req, this, Response::Busy));
-                return ;
-            }
-        
-            // this is the *ONLY* thread that'll be altering this
-            if(m_viewerCloseRequest){
-                if(m_viewerCloseRequest != req){
-                    dispatch(new ViewerCloseReply(req, this, Response::Busy));
-                }
-                return;
-            }
-            
-            assign(&Viewer::m_viewerCloseRequest, req);
-            on_close_request();
-        }
-
         void    Viewer::on_close_request() 
         { 
             if(m_widget){
@@ -1167,18 +1258,13 @@ if(s_owner != owner()){
     //  
 
 
-        void    Viewer::size_command(const ViewerSizeCommand& cmd)
-        {
-            if(started_or_running()){
-                dispatch(new WindowSizeCommand(this, cmd.size()));
-            }
-        }
 
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  STATE
     //  
 
+#if 0
         void    Viewer::state_event(const WindowStateEvent&evt)
         {
             {
@@ -1189,7 +1275,7 @@ if(s_owner != owner()){
                 m_imgui->on(evt);
             }
         }
-        
+#endif
 
 
 

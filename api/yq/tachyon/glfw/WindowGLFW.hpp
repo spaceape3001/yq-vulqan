@@ -38,6 +38,9 @@ namespace yq::tachyon {
         //std::string_view    title() const;
         //void                title(const std::string&);
 
+        // hack for the moment
+        GLFWwindow*         glfw() const { return m_window; }
+
     protected:
         void        snap(WindowSnap&) const;
         virtual PostAdvice  advise(const Post&) const override;

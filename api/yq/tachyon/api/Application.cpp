@@ -106,9 +106,12 @@ namespace yq::tachyon {
     ViewerID                    Application::create(viewer_t, const ViewerCreateInfo&vci, WidgetPtr w)
     {
         DesktopGLFW&        desk    = desktop(GLFW);
+        manager(VULQAN);
+        
         Window*             win     = desk.create(WINDOW, vci);
         if(!win)
             return {};
+        
         
         Viewer*         v = nullptr;
         // TODO ... catch/replace
@@ -135,13 +138,22 @@ namespace yq::tachyon {
     DesktopGLFW&                Application::desktop(glfw_t)
     {
         if(!m_glfw){
-            AppThread&  at  = thread(APP);
+            thread(APP);
             m_glfw  = Tachyon::create<DesktopGLFW>(m_cInfo);
             
             //  Connections?
         }
         
         return *m_glfw;
+    }
+
+    Vulqan&                     Application::manager(vulqan_t)
+    {
+        if(!m_vulkan){
+            thread(APP);
+            m_vulkan    = Tachyon::create<Vulqan>(m_cInfo);
+        }
+        return *m_vulkan;
     }
 
     void                        Application::run(const RunConfig& r)

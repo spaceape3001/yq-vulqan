@@ -159,6 +159,7 @@ namespace yq::tachyon {
             layers.properties.resize(count);
             vkEnumerateInstanceLayerProperties(&count, layers.properties.data());
             for(auto& v : layers.properties){
+tachyonInfo << "VulqanLayer " << v.layerName;            
                 layers.names.insert(v.layerName);
             }
         }
@@ -190,7 +191,7 @@ namespace yq::tachyon {
             } else {
                 {
                     auto stream    = (aci.vulkan_validation == Required::YES) ? tachyonCritical : tachyonError;
-                    stream << "Vulqan: Unable to find validation layers.";
+                    stream << "Vulqan: Unable to find validation layer: " << kValidationLayer;
                 }
                 if(aci.vulkan_validation == Required::YES)
                     throw VulqanException("VulganManager: Required validation layer is unavailable!");

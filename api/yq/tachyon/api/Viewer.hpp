@@ -387,16 +387,19 @@ namespace yq::tachyon {
 
         void    on_viewer_aspect_command(const ViewerAspectCommand&);
         void    on_viewer_attention_command(const ViewerAttentionCommand&);
+        void    on_viewer_close_command(const ViewerCloseCommand&);
         void    on_viewer_close_request(const ViewerCloseRequestCPtr&);
         void    on_viewer_float_command(const ViewerFloatCommand&);
         void    on_viewer_focus_command(const ViewerFocusCommand&);
         void    on_viewer_hide_command(const ViewerHideCommand&);
         void    on_viewer_iconify_command(const ViewerIconifyCommand&);
         void    on_viewer_maximize_command(const ViewerMaximizeCommand&);
+        void    on_viewer_move_command(const ViewerMoveCommand&);
         void    on_viewer_pause_command(const ViewerPauseCommand&);
         void    on_viewer_restore_command(const ViewerRestoreCommand&);
         void    on_viewer_resume_command(const ViewerResumeCommand&);
         void    on_viewer_show_command(const ViewerShowCommand&);
+        void    on_viewer_size_command(const ViewerSizeCommand&);
         void    on_viewer_title_command(const ViewerTitleCommand&);
         void    on_viewer_unfloat_command(const ViewerUnfloatCommand&);
 
@@ -404,12 +407,18 @@ namespace yq::tachyon {
         void    on_window_defocus_event(const WindowDefocusEvent&);
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
         void    on_window_focus_event(const WindowFocusEvent&);
+        void    on_window_hide_event(const WindowHideEvent&);
         void    on_window_move_event(const WindowMoveEvent&);
         void    on_window_resize_event(const WindowResizeEvent&);
+        void    on_window_show_event(const WindowHideEvent&);
+        
+        Execution    tick_1_preinit(Context&);
+        Execution    tick_2_started(Context&);
+        Execution    tick_3_running(Context&);
+        Execution    tick_4_closing(Context&);
+        Execution    tick_5_kaput(Context&);
         
         
-        
-        void    close_command(const ViewerCloseCommand&);
         void    destroy_event(const WindowDestroyEvent&);
         void    hide_event(const WindowHideEvent&);
         void    move_command(const ViewerMoveCommand&);

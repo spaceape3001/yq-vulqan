@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <yq/shape/Rectangle2.hpp>
-#include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/typedef/model.hpp>
 

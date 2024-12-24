@@ -27,6 +27,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Buffer.cpp
     api/Camera.cpp
     api/Command.cpp
+    api/Controller.cpp
     api/Cursor.cpp
     #api/Context.hpp
     api/Desktop.cpp
@@ -69,7 +70,6 @@ add_library(${PROJECT_NAME} SHARED
     api/Widget.cpp
     api/Window.cpp
 
-
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp
     cameras/TargetCamera.cpp
@@ -93,7 +93,11 @@ add_library(${PROJECT_NAME} SHARED
     commands/CameraPitchCommand.cpp
     commands/CameraRollCommand.cpp
     commands/CameraYawCommand.cpp
-    #commands/ControllerCommand.cpp
+    commands/ControllerCommand.cpp
+    commands/ControllerControlCommand.cpp
+    commands/ControllerDisableCommand.cpp
+    commands/ControllerEnableCommand.cpp
+    commands/ControllerUncontrolCommand.cpp
     commands/EmptyCommand.cpp
     commands/GLFWCommand.cpp
     commands/MouseCaptureCommand.cpp
@@ -118,7 +122,9 @@ add_library(${PROJECT_NAME} SHARED
     commands/TachyonCommand.cpp
     commands/TachyonDeleteCommand.cpp
     commands/TachyonProxyCommand.cpp
+    commands/TachyonSubscribeCommand.cpp
     commands/TachyonThreadCommand.cpp
+    commands/TachyonUnsubscribeCommand.cpp
     commands/ThreadCommand.cpp
     commands/ViewerAspectCommand.cpp
     commands/ViewerAttentionCommand.cpp
@@ -162,9 +168,6 @@ add_library(${PROJECT_NAME} SHARED
     commands/WindowUnfloatCommand.cpp
     
     config/build.cpp
-    
-    #controller/Controller.cpp
-    #controllers/controllers.cpp
     
     enum/enum.cpp
     enum/KeyCode.cpp
@@ -232,8 +235,6 @@ add_library(${PROJECT_NAME} SHARED
     events/WindowTitleEvent.cpp
     
     # font/Font.cpp      # Issue/TODO
-    
-    # frame/AppFrame.cpp # Issue/TODO
     
     glfw/CursorGLFW.cpp
     glfw/DesktopGLFW.cpp

@@ -16,6 +16,7 @@ namespace yq::tachyon {
         struct Param : public ViewerCommand::Param {
         };
     
+        ViewerRestoreCommand(ViewerID, const Param& p = {});
         ViewerRestoreCommand(Viewer*, const Param& p = {});
         virtual ~ViewerRestoreCommand();
         

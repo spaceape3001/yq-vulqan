@@ -17,7 +17,9 @@
 
 #include <yq/tachyon/commands/TachyonDeleteCommand.hpp>
 #include <yq/tachyon/commands/TachyonProxyCommand.hpp>
+#include <yq/tachyon/commands/TachyonSubscribeCommand.hpp>
 #include <yq/tachyon/commands/TachyonThreadCommand.hpp>
+#include <yq/tachyon/commands/TachyonUnsubscribeCommand.hpp>
 
 #include <yq/core/ThreadId.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -561,11 +563,25 @@ namespace yq::tachyon {
         }
     }
 
+    void    Tachyon::on_subscribe_command(const TachyonSubscribeCommand&cmd)
+    {
+        if(cmd.tachyon() != id())
+            return ;
+        subscribe(cmd.listener(), cmd.groups());
+    }
+
     void    Tachyon::on_thread_command(const TachyonThreadCommand& cmd)
     {
         if(cmd.tachyon() != id())
             return ;
         Thread::rethread(this, cmd.thread());
+    }
+
+    void    Tachyon::on_unsubscribe_command(const TachyonUnsubscribeCommand&cmd)
+    {
+        if(cmd.tachyon() != id())
+            return ;
+        unsubscribe(cmd.listener(), cmd.groups());
     }
 
     void    Tachyon::owner(push_t, ThreadID tid)

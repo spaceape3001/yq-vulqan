@@ -22,6 +22,10 @@ namespace yq::tachyon {
     {
     }
     
+    ControllerCommand::ControllerCommand(ControllerID v, const Param& p) : Command(p), ControllerBind(v)
+    {
+    }
+
     ControllerCommand::~ControllerCommand()
     {
     }

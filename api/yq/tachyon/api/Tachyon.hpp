@@ -34,7 +34,9 @@ namespace yq::tachyon {
     struct Context;
     class TachyonProxyCommand;
     class TachyonDeleteCommand;
+    class TachyonSubscribeCommand;
     class TachyonThreadCommand;
+    class TachyonUnsubscribeCommand;
     
     /// TACHYON INFO
 
@@ -382,8 +384,9 @@ namespace yq::tachyon {
         void    on_proxy_command(const TachyonProxyCommand&);
         
         void    on_delete_command(const TachyonDeleteCommand&);
+        void    on_subscribe_command(const TachyonSubscribeCommand&);
         void    on_thread_command(const TachyonThreadCommand&);
-        
+        void    on_unsubscribe_command(const TachyonUnsubscribeCommand&);
     };
 
     template <SomeTachyon T, typename ... Args>

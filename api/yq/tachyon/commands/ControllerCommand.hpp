@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Command.hpp>
-#include <yq/tachyon/viewer/ControllerBind.hpp>
+#include <yq/tachyon/api/ControllerBind.hpp>
 
 namespace yq::tachyon {
     class Controller;
@@ -27,6 +27,7 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
+        ControllerCommand(ControllerID, const Param& p = {});
         ControllerCommand(Controller*, const Param& p = {});
         virtual ~ControllerCommand();
         

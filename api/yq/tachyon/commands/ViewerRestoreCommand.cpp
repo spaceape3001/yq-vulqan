@@ -15,6 +15,10 @@ namespace yq::tachyon {
     {
     }
     
+    ViewerRestoreCommand::ViewerRestoreCommand(ViewerID v, const Param& p) : ViewerCommand(v, p)
+    {
+    }
+    
     ViewerRestoreCommand::~ViewerRestoreCommand()
     {
     }

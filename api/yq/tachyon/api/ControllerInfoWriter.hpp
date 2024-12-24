@@ -6,18 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/controller/Controller.hpp>
-#include <yq/tachyon/core/TachyonInfoWriter.hpp>
+#include <yq/tachyon/api/Controller.hpp>
+#include <yq/tachyon/api/ControllerData.hpp>
+#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of manager information
     */
     template <typename C>
-    class ControllerInfo::Writer : public PBXInfo::Writer<C> {
+    class ControllerInfo::Writer : public TachyonInfo::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(ControllerInfo* theInfo) : PBXInfo::Writer<C>(theInfo), m_meta(theInfo)
+        Writer(ControllerInfo* theInfo) : TachyonInfo::Writer<C>(theInfo), m_meta(theInfo)
         {
         }
         

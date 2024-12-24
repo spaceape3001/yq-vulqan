@@ -26,7 +26,9 @@
 #include <yq/tachyon/api/Shader.hpp>
 #include <yq/tachyon/api/Texture.hpp>
 #include <yq/tachyon/api/Widget.hpp>
-#include <yq/tachyon/events/keyboard.hpp>
+#include <yq/tachyon/events/KeyCharacterEvent.hpp>
+#include <yq/tachyon/events/KeyPressEvent.hpp>
+#include <yq/tachyon/events/KeyReleaseEvent.hpp>
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>

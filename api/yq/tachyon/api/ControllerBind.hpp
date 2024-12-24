@@ -6,18 +6,23 @@
 
 #pragma once
 
+#include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/typedef/controller.hpp>
+
+
 namespace yq::tachyon {
     class Controller;
 
     //! Utiltity to bind a controller to the whatever...
     class ControllerBind {
     public:
-        Controller*    controller() const { return m_controller; }
+        ControllerID    controller() const { return m_controller; }
         
     protected:
-        ControllerBind(Controller* v) : m_controller(v) {}
+        ControllerBind(ControllerID v) : m_controller(v) {}
+        ControllerBind(Controller* v);
         virtual ~ControllerBind() {}
         
-        Controller* const m_controller;
+        ControllerID const m_controller;
     };
 }

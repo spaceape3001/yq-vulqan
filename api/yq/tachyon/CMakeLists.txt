@@ -116,6 +116,7 @@ add_library(${PROJECT_NAME} SHARED
     commands/SetPosition4M.cpp
     commands/SetSize2I.cpp
     commands/TachyonCommand.cpp
+    commands/TachyonDeleteCommand.cpp
     commands/TachyonProxyCommand.cpp
     commands/TachyonThreadCommand.cpp
     commands/ThreadCommand.cpp

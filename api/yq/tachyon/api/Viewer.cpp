@@ -11,6 +11,7 @@
 
 #include <yq/tachyon/api/Application.hpp>
 #include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/Raster.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yq/tachyon/api/ViewerBind.hpp>
 #include <yq/tachyon/api/ViewerException.hpp>
@@ -44,6 +45,7 @@
 #include <yq/tachyon/commands/WindowCursorDisableCommand.hpp>
 #include <yq/tachyon/commands/WindowCursorHideCommand.hpp>
 #include <yq/tachyon/commands/WindowCursorNormalCommand.hpp>
+#include <yq/tachyon/commands/WindowDestroyCommand.hpp>
 #include <yq/tachyon/commands/WindowFloatCommand.hpp>
 #include <yq/tachyon/commands/WindowFocusCommand.hpp>
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
@@ -65,9 +67,11 @@
 #include <yq/tachyon/events/MouseMoveEvent.hpp>
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
+#include <yq/tachyon/events/ViewerCloseEvent.hpp>
 #include <yq/tachyon/events/ViewerPauseEvent.hpp>
 #include <yq/tachyon/events/ViewerResumeEvent.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
+#include <yq/tachyon/events/WindowDestroyEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
 #include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
 #include <yq/tachyon/events/WindowHideEvent.hpp>
@@ -76,6 +80,7 @@
 #include <yq/tachyon/events/WindowShowEvent.hpp>
 
 #include <yq/tachyon/glfw/WindowGLFW.hpp>
+
 
 #include <yq/tachyon/replies/ViewerCloseReply.hpp>
 
@@ -87,17 +92,6 @@
 #include <yq/tachyon/viz/ViGui.hpp>
 #include <yq/tachyon/viz/Visualizer.hpp>
 
-//#include <yq/tachyon/commands/GLFWCloseCommand.hpp>
-//#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
-//#include <yq/tachyon/commands/viewer.hpp>
-//#include <yq/tachyon/commands/window.hpp>
-
-//#include <yq/tachyon/even4s/ViewerCloseEvent.hpp>
-//#include <yq/tachyon/events/WindowDestroyEvent.hpp>
-//#include <yq/tachyon/events/WindowHideEvent.hpp>
-//#include <yq/tachyon/events/WindowResizeEvent.hpp>
-//#include <yq/tachyon/events/WindowShowEvent.hpp>
-//#include <yq/tachyon/image/Raster.hpp>
 //#include <yq/tachyon/replies/ViewerWidgetReply.hpp>
 //#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
 
@@ -108,11 +102,6 @@
 #include <yq/shape/Size2.hxx>
 #include <yq/util/AutoReset.hpp>
 #include <yq/vector/Vector2.hpp>
-
-//#include <backends/imgui_impl_glfw.h>
-
-#include <GLFW/glfw3.h>
-
 
 #define viewerAlert                 yAlert("viewer")
 #define viewerCritical              yCritical("viewer")
@@ -183,6 +172,7 @@ namespace yq::tachyon {
         
         w.slot(&Viewer::on_window_close_request);
         w.slot(&Viewer::on_window_defocus_event);
+        w.slot(&Viewer::on_window_destroy_event);
         w.slot(&Viewer::on_window_fb_resize_event);
         w.slot(&Viewer::on_window_focus_event);
         w.slot(&Viewer::on_window_hide_event);
@@ -246,10 +236,10 @@ namespace yq::tachyon {
         --s_count;
         _remove(WIDGET);
         m_widget = {};
-        m_cleanup.sweep();
+        _sweepwait();
         if(m_imgui)
             m_imgui = {};
-        m_cleanup.sweep();
+        _sweepwait();
         if(m_viz)
             m_viz   = {};
         m_cleanup.sweep();
@@ -273,6 +263,14 @@ namespace yq::tachyon {
         }
     }
     
+    void    Viewer::_sweepwait()
+    {
+        if(m_viz)
+            m_viz -> wait_idle();
+        m_cleanup.sweep();
+    }
+
+
     void    Viewer::_widget(WidgetPtr w)
     {
         _remove(WIDGET);
@@ -425,7 +423,55 @@ namespace yq::tachyon {
 
     std::error_code     Viewer::draw(ViContext& u)
     {
-        return {};
+        if(m_paused || m_zeroSize)
+            return std::error_code();
+        
+        std::filesystem::path   snapshot;
+        if(auto p = std::get_if<std::filesystem::path>(&u.snapshot)){
+            snapshot    = *p;
+            u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
+        }
+        
+        auto start = std::chrono::high_resolution_clock::now();
+        auto r1 = auto_reset(u.tick, m_viz->tick());
+        auto r2 = auto_reset(u.viewer, this);
+        //auto r3 = auto_reset(u.window, static_cast<Window*>(this));
+        if(m_widget && m_imgui){
+            m_imgui -> draw(u, m_widget);
+        }
+        std::error_code ec = m_viz->draw(u, {
+            .prerecord = [&](ViContext& u){
+                if(m_widget){
+                    m_widget -> prerecord(u);
+                }
+                if(m_imgui){
+                    m_imgui -> update();
+                }
+            },
+            .record = [&](ViContext& u){
+                if(m_widget)
+                    m_widget -> vulkan_(u);
+                if(m_imgui)
+                    m_imgui -> record(u);
+            }
+        });
+        auto end   = std::chrono::high_resolution_clock::now();
+        m_drawTime          = (end-start).count();
+        if(ec != std::error_code())
+            viewerCritical << "Viewer::draw() failed ... " << ec.message();
+            
+        if(!snapshot.empty()){
+            if(auto p = std::get_if<RasterPtr>(&u.snapshot)){
+                RasterPtr   img  = *p;
+                if(img){
+                    img -> save_to(snapshot);
+                }
+            }
+            if(auto p = std::get_if<std::error_code>(&u.snapshot)){
+                viewerError << "Viewer::draw() snapshot failed ... " << p->message();
+            }
+        }
+        return ec;
     }
 
     const Size2I&   Viewer::framebuffer_size() const
@@ -630,22 +676,6 @@ namespace yq::tachyon {
             send(new WindowHideCommand(m_window));
         }
     }
-
-    void    Viewer::on_window_hide_event(const WindowHideEvent&)
-    {
-        if(closing()){
-            m_stage     = Stage::Kaput;
-            
-            
-            tachyonInfo << ident() << " Window Hidden (TODO -- DESTRUCTION)";
-            
-            //  DESTROY VIEWER
-            
-        } else {
-            //  DO NOTHING
-        }
-    }
-    
     void    Viewer::on_viewer_iconify_command(const ViewerIconifyCommand&)
     {
         if(started_or_running()){
@@ -746,6 +776,11 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_window_destroy_event(const WindowDestroyEvent&)
+    {
+        m_stage     = Stage::Destruct;
+    }
+
     void    Viewer::on_window_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
     {
         tachyonInfo << ident() << " Framebuffer resized (" << evt.width() << ", " << evt.height() << ")";
@@ -755,6 +790,25 @@ namespace yq::tachyon {
     {
         if(m_imgui){
             m_imgui->on(evt);
+        }
+    }
+
+
+    void    Viewer::on_window_hide_event(const WindowHideEvent&)
+    {
+        if(closing()){
+            m_stage     = Stage::Kaput;
+            
+            send(new WindowDestroyCommand(m_window));
+            send(new ViewerCloseEvent(this));
+
+            _sweepwait();
+            m_imgui     = {};
+            _sweepwait();
+            m_viz       = {};
+            _sweepwait();
+        } else {
+            //  DO NOTHING
         }
     }
     
@@ -879,9 +933,25 @@ namespace yq::tachyon {
         return (st == Stage::Started) || (st == Stage::Running);
     }
 
-
     Execution   Viewer::tick(Context&ctx) 
     {
+        switch(stage()){
+        case Stage::Preinit:
+            return {};
+        case Stage::Started:
+            send(new WindowShowCommand(m_window));
+            m_stage = Stage::Running;
+            break;
+        case Stage::Running:
+            break;
+        case Stage::Closing:
+            return {};
+        case Stage::Kaput:
+            return {};
+        case Stage::Destruct:
+            return DELETE;
+        }
+
         const WindowSnap* sn = frame().snap(m_window);
         if(sn){
             m_state.window      = sn->window;
@@ -889,54 +959,31 @@ namespace yq::tachyon {
             m_state.mouse       = sn->mouse;
             m_state.time        = sn->time;
         }
+
+        #if 0
+            //  TODO
+        if(m_imgui)
+            m_imgui->tick();
+        #endif
         
-        switch(stage()){
-        case Stage::Preinit:
-            return tick_1_preinit(ctx);
-        case Stage::Started:
-            return tick_2_started(ctx);
-        case Stage::Running:
-            return tick_3_running(ctx);
-        case Stage::Closing:
-            return tick_4_closing(ctx);
-        case Stage::Kaput:
-            return tick_5_kaput(ctx);
+        if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
+            draw(); // HACK (for now)
         }
-
+        m_cleanup.sweep();
+        ++m_ticks;
         return {};
     }
 
-    Execution    Viewer::tick_1_preinit(Context&)
-    {
-        return {};
-    }
-    
-    Execution    Viewer::tick_2_started(Context&)
-    {
-        // Might do something with the widget?
-        send(new WindowShowCommand(m_window));
-        m_stage = Stage::Running;
-        return {};
-    }
-    
-    Execution    Viewer::tick_3_running(Context&)
-    {
-        return {};
-    }
-    
-    Execution    Viewer::tick_4_closing(Context&)
-    {
-        return {};
-    }
-    
-    Execution    Viewer::tick_5_kaput(Context&)
-    {
-        return {};
-    }
 
     const std::string&  Viewer::title() const
     {
         return m_state.window.title;
+    }
+
+    Visualizer&         Viewer::visualizer() const
+    {
+        assert(m_viz);
+        return *m_viz;
     }
 
     int Viewer::width() const
@@ -997,35 +1044,6 @@ namespace yq::tachyon {
     //  ----------------------------------------------------------------------------------------------------------------
     //  INITIALIZATION/DESTRUCTION
 
-
- 
-    Viewer::~Viewer()
-    {
-        disconnect(ALL);
-        _kill();
-        m_cleanup.sweep();
-        --s_count;
-    }
-
-    void    Viewer::_kill()
-    {
-        _remove(WIDGET);
-        m_widget = {};
-        if(m_imgui){
-            detach(FORWARD, m_imgui.get());
-            m_imgui = {};
-        }
-        if(m_viz){
-            //detach(FORWARD, m_viz.get()); // TODO
-            m_viz   = {};
-        }
-    }
-
-    void    Viewer::_quit()
-    {
-        // TODO
-    }
-
     std::error_code         Viewer::_startup(GLFWwindow* win, const ViewerState& st)
     {
         assert(m_stage == Stage::Preinit);
@@ -1070,214 +1088,10 @@ namespace yq::tachyon {
         return {};
     }
 
-    void    Viewer::_sweepwait()
-    {
-        if(m_viz)
-            m_viz -> wait_idle();
-        m_cleanup.sweep();
-    }
-
     std::error_code     Viewer::draw(ViContext& u)
     {
-        if(m_paused || m_zeroSize)
-            return std::error_code();
-        
-        std::filesystem::path   snapshot;
-        if(auto p = std::get_if<std::filesystem::path>(&u.snapshot)){
-            snapshot    = *p;
-            u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
-        }
-        
-        auto start = std::chrono::high_resolution_clock::now();
-        auto r1 = auto_reset(u.tick, m_viz->tick());
-        auto r2 = auto_reset(u.viewer, this);
-        //auto r3 = auto_reset(u.window, static_cast<Window*>(this));
-        if(m_widget && m_imgui){
-            m_imgui -> draw(u, m_widget);
-        }
-        std::error_code ec = m_viz->draw(u, {
-            .prerecord = [&](ViContext& u){
-                if(m_widget){
-                    m_widget -> prerecord(u);
-                }
-                if(m_imgui){
-                    m_imgui -> update();
-                }
-            },
-            .record = [&](ViContext& u){
-                if(m_widget)
-                    m_widget -> vulkan_(u);
-                if(m_imgui)
-                    m_imgui -> record(u);
-            }
-        });
-        auto end   = std::chrono::high_resolution_clock::now();
-        m_drawTime          = (end-start).count();
-        if(ec != std::error_code())
-            viewerCritical << "Viewer::draw() failed ... " << ec.message();
-            
-        if(!snapshot.empty()){
-            if(auto p = std::get_if<RasterPtr>(&u.snapshot)){
-                RasterPtr   img  = *p;
-                if(img){
-                    img -> save_to(snapshot);
-                }
-            }
-            if(auto p = std::get_if<std::error_code>(&u.snapshot)){
-                viewerError << "Viewer::draw() snapshot failed ... " << p->message();
-            }
-        }
-        return ec;
     }
     
-    void    Viewer::receive(const post::PostCPtr& pp) 
-    {
-        if(!pp)
-            return ;
-    
-        if(const ViewerBind* p = dynamic_cast<const ViewerBind*>(pp.ptr())){
-            if(p->viewer() != this){
-                return ;
-            }
-            if(!in_replay())
-                forward(pp);
-        } else if(!in_replay()){   
-            forward(pp);
-        }
-        Controlling::receive(pp);
-    }
-
-    void    Viewer::tick(/* frame...eventually */)
-    {
-        replay(ALL);
-        tick(CONTROLLERS);
-        replay(ALL);
-        if(m_imgui)
-            m_imgui->tick();
-        if(m_widget)
-            m_widget -> tick();
-        if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
-            draw(); // HACK (for now)
-        }
-        m_cleanup.sweep();
-        ++m_ticks;
-    }
-    
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  GENERAL INFO
-    //  
-
-
-        Visualizer&         Viewer::visualizer() const
-        {
-            assert(m_viz);
-            return *m_viz;
-        }
-
-
-
-        
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  CLOSING
-    //  
-
-        
-        void    Viewer::close_command(const ViewerCloseCommand&)
-        {
-            if(!closing_or_kaput()){
-                m_stage = Stage::Closing;
-                dispatch(new WindowHideCommand(this));
-            }
-        }
-
-        void    Viewer::on_close_request() 
-        { 
-            if(m_widget){
-                m_widget -> m_flags |= Widget::F::ClosePending;
-                m_widget -> on_close_request();
-            } else {
-                accept(CLOSE); 
-            }
-        }
-
-        void    Viewer::on_hide_closing()
-        {
-            _sweepwait();
-            // eventually... threading
-            m_imgui     = {};
-            _sweepwait();
-            m_viz       = {};
-            _sweepwait();
-            dispatch(new WindowDestroyCommand(this));
-        }
-
-        void    Viewer::destroy_event(const WindowDestroyEvent&)
-        {
-            m_stage = Stage::Kaput;
-            dispatch(new AppDeleteViewerCommand(this));
-        }
-
-
-
-
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  MOVE/POSITION
-    //  
-
-        void    Viewer::move_command(const ViewerMoveCommand& cmd)
-        {
-            if(started_or_running()){
-                dispatch(new WindowMoveCommand(this, cmd.position()));
-            }
-        }
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  SHOW/HIDE
-    //  
-
-        void    Viewer::hide_event(const WindowHideEvent&)
-        {
-            switch(m_stage){
-            case Stage::Closing:
-                on_hide_closing();
-                break;
-            default:
-                break;
-            }
-        }
-        
-
-        void    Viewer::show_event(const WindowShowEvent&)
-        {
-        }
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  SIZE
-    //  
-
-
-
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  STATE
-    //  
-
-#if 0
-        void    Viewer::state_event(const WindowStateEvent&evt)
-        {
-            {
-                XLOCK
-                m_state = evt.state();
-            }
-            if(m_imgui){
-                m_imgui->on(evt);
-            }
-        }
-#endif
-
-
 
     //  ----------------------------------------------------------------------------------------------------------------
     //  WIDGET

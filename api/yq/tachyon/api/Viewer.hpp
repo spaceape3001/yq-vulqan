@@ -109,7 +109,9 @@ namespace yq::tachyon {
             Closing,
             
             //! Done/Busted (ie, ready for destruction)
-            Kaput
+            Kaput,
+            
+            Destruct
         };
     
         static void init_info();
@@ -361,9 +363,6 @@ namespace yq::tachyon {
         RequestCPtr                     m_closeRequest;
 
 
-        void                _kill();
-        void                _quit();    // basically unconditional (without app-destroy)
-        std::error_code     _startup(GLFWwindow*, const ViewerState&);
         void                _sweepwait();
         void                _install(widget_t);     // Installs new widget
         void                _remove(widget_t);      // Removes the current widget
@@ -405,6 +404,7 @@ namespace yq::tachyon {
 
         void    on_window_close_request(const WindowCloseRequestCPtr&);
         void    on_window_defocus_event(const WindowDefocusEvent&);
+        void    on_window_destroy_event(const WindowDestroyEvent&);
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
         void    on_window_focus_event(const WindowFocusEvent&);
         void    on_window_hide_event(const WindowHideEvent&);
@@ -412,25 +412,13 @@ namespace yq::tachyon {
         void    on_window_resize_event(const WindowResizeEvent&);
         void    on_window_show_event(const WindowHideEvent&);
         
-        Execution    tick_1_preinit(Context&);
-        Execution    tick_2_started(Context&);
-        Execution    tick_3_running(Context&);
-        Execution    tick_4_closing(Context&);
-        Execution    tick_5_kaput(Context&);
-        
-        
-        void    destroy_event(const WindowDestroyEvent&);
-        void    hide_event(const WindowHideEvent&);
-        void    move_command(const ViewerMoveCommand&);
-        void    on_hide_closing();
-        void    show_event(const WindowShowEvent&);
-        void    size_command(const ViewerSizeCommand&);
-        void    widget_request(const ViewerWidgetRequestCPtr&);
         
         
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE
+
+        void    widget_request(const ViewerWidgetRequestCPtr&);
 
     public:        
         

@@ -92,6 +92,7 @@ namespace yq::tachyon {
         static void retain(TachyonPtr, ThreadID);
         
         static void rethread(TachyonPtr, ThreadID);
+        static void remove(TachyonID, ThreadID);
         
 //        struct Impl;
 

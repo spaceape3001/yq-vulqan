@@ -33,6 +33,7 @@ namespace yq::tachyon {
     class PBXDispatch;
     struct Context;
     class TachyonProxyCommand;
+    class TachyonDeleteCommand;
     class TachyonThreadCommand;
     
     /// TACHYON INFO
@@ -378,8 +379,9 @@ namespace yq::tachyon {
         
         bool    _name(name_spec, OldNameFN cap={});
         
-        void    slot_proxy_command(const TachyonProxyCommand&);
+        void    on_proxy_command(const TachyonProxyCommand&);
         
+        void    on_delete_command(const TachyonDeleteCommand&);
         void    on_thread_command(const TachyonThreadCommand&);
         
     };

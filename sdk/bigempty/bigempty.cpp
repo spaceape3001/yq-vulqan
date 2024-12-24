@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     aci.view.title      = "Big Empty";
     aci.view.clear        = { 0.0, 0.2, 0.5, 1. };
     aci.view.resizable    = true;
-    aci.view.imgui        = true;
+    //aci.view.imgui        = true;
     aci.view.size         = { 1920, 1080 };
 
     Application         app(argc, argv, aci);

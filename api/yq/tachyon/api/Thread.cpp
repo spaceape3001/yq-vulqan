@@ -43,7 +43,7 @@ namespace yq::tachyon {
     
     struct Thread::Inbox {
         std::vector<TachyonPtr>  push;       //!< Tachyons being pushed to us
-        std::set<TachyonID>      deletes;    //!< Tachyons to delete
+        std::vector<TachyonID>   deletes;    //!< Tachyons to delete
         std::set<TachyonID>      pushed;     //!< Acknowledgement to being pushed (so delete from sender)
     };
     
@@ -112,15 +112,12 @@ namespace yq::tachyon {
         return {};
     }
 
-    bool Thread::valid(ThreadID tid)
+    void Thread::remove(TachyonID tid, ThreadID th)
     {
-        lock_t  _lock(s_mutex, false);
-        auto i = s_threads.find(tid);
-        if(i != s_threads.end())
-            return i->second.valid();
-        return false;
+        lock_t _lock(s_mutex, true);
+        s_inboxes[th].deletes.push_back(tid);
     }
-
+    
     void Thread::retain(TachyonPtr tp)
     {
         if(!tp)
@@ -188,6 +185,16 @@ namespace yq::tachyon {
         }
     }
 
+    bool Thread::valid(ThreadID tid)
+    {
+        lock_t  _lock(s_mutex, false);
+        auto i = s_threads.find(tid);
+        if(i != s_threads.end())
+            return i->second.valid();
+        return false;
+    }
+
+
 // ------------------------------------------------------------------------
 
     Thread::Thread(const Param& p) : Tachyon(p)
@@ -250,6 +257,11 @@ namespace yq::tachyon {
         auto res    = ctr.object->cycle(ctx);
         ctr.snap    = res.snap;
         d.tachyons.push_back({ ctr.object, res.data, res.snap });
+        
+        if(std::get_if<delete_t>(&res.execute)){
+            lock_t _lock(s_mutex, true);
+            s_inboxes[id()].deletes.push_back(ctr.object->id());
+        }
     }
 
     void    Thread::join()
@@ -338,6 +350,7 @@ namespace yq::tachyon {
         }
         
         for(auto  in : inbox.pushed){
+            unsubscribe(in, MG::Tachyon);
             m_objects.erase(in);
         }
         

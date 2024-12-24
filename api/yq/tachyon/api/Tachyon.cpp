@@ -15,6 +15,7 @@
 #include "TachyonInfoWriter.hpp"
 #include "Thread.hpp"
 
+#include <yq/tachyon/commands/TachyonDeleteCommand.hpp>
 #include <yq/tachyon/commands/TachyonProxyCommand.hpp>
 #include <yq/tachyon/commands/TachyonThreadCommand.hpp>
 
@@ -545,6 +546,21 @@ namespace yq::tachyon {
         return m_owner; 
     }
 
+    void    Tachyon::on_delete_command(const TachyonDeleteCommand&cmd)
+    {
+        if(cmd.tachyon() != id())
+            return ;
+        Thread::remove(id(), owner());
+    }
+
+
+    void Tachyon::on_proxy_command(const TachyonProxyCommand& cmd)
+    {
+        if(cmd.tachyon() == id()){
+            cmd.function()();
+        }
+    }
+
     void    Tachyon::on_thread_command(const TachyonThreadCommand& cmd)
     {
         if(cmd.tachyon() != id())
@@ -569,13 +585,6 @@ namespace yq::tachyon {
         }
     }
 
-    void Tachyon::slot_proxy_command(const TachyonProxyCommand& cmd)
-    {
-        if(cmd.tachyon() == id()){
-            cmd.function()();
-        }
-    }
-
     void Tachyon::snap(TachyonSnap&snap) const
     {
         for(const InterfaceInfo* ii : metaInfo().interfaces().all){
@@ -594,7 +603,6 @@ namespace yq::tachyon {
     {
         m_listeners[tid] |= grp;
     }
-    
 
     Execution   Tachyon::tick(Context&)
     {
@@ -636,7 +644,8 @@ namespace yq::tachyon {
     {
         auto w = writer<Tachyon>();
         w.description("Tachyon Object");
-        w.slot(&Tachyon::slot_proxy_command);
+        w.slot(&Tachyon::on_delete_command);
+        w.slot(&Tachyon::on_proxy_command);
         w.slot(&Tachyon::on_thread_command);
         w.property("name", &Tachyon::name);
     }

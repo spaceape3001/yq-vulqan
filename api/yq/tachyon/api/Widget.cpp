@@ -7,9 +7,12 @@
 #include "Widget.hpp"
 #include "WidgetInfoWriter.hpp"
 
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Viewer.hpp>
 #include <yq/tachyon/api/WidgetBind.hpp>
 #include <yq/tachyon/api/WidgetData.hpp>
+#include <yq/tachyon/commands/ViewerShowCommand.hpp>
+#include <yq/tachyon/commands/WidgetStartupCommand.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
@@ -25,6 +28,7 @@ namespace yq::tachyon {
     {
         auto w = writer<Widget>();
         w.description("Widget base class");
+        w.slot(&Widget::on_startup_command);
     }
 
     WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
@@ -41,8 +45,8 @@ namespace yq::tachyon {
     
     Widget::~Widget()
     {
-        for(Widget* w : m_children)
-            delete w;
+        //for(Widget* w : m_children)
+            //delete w;
         m_children.clear();
     }
 
@@ -106,6 +110,11 @@ namespace yq::tachyon {
         return metaInfo().is_imgui();
     }
 
+    void    Widget::on_startup_command(const WidgetStartupCommand&)
+    {
+        startup();
+    }
+    
     void            Widget::prerecord(ViContext& u)
     {
         for(Widget* w : m_children)
@@ -151,6 +160,18 @@ namespace yq::tachyon {
         }
         return true;
    }
+
+    void            Widget::startup()
+    {
+        tachyonInfo << ident() << "::startup()";
+    
+        send(new ViewerShowCommand(m_viewer), MG::Viewer);
+    }
+
+    Execution       Widget::tick(Context&) 
+    {
+        return {};
+    }
 
     Viewer*         Widget::viewer()
     {

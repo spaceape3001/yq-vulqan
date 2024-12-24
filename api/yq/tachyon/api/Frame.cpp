@@ -673,15 +673,21 @@ namespace yq::tachyon {
         for(const TachyonFrame& tf : tdata.tachyons){
             if(!tf.object)
                 continue;
-            if(!tf.data)
+            if(!tf.data){
+            tachyonInfo << "frame build... item " << tf.object->ident() << " has no data";
                 continue;
-            if(!tf.snap)
+            }
+            if(!tf.snap){
+            tachyonInfo << "frame build... item " << tf.object->ident() << " has no snap";
                 continue;
+            }
+                
             switch(tf.state){
             case TachyonThreadState::Normal:
                 m_frame.add(th, tf);
                 break;
             case TachyonThreadState::Pushed:
+                tachyonInfo << "frame build... item " << tf.object->ident() << " pushed";
                 m_pushed.push_back({th, tf});
                 break;
             default:

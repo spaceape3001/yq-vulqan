@@ -6,6 +6,8 @@
 
 #include "AppThread.hpp"
 
+#include <yq/core/StreamOps.hpp>
+#include <yq/stream/Logger.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/Frame.hpp>
@@ -34,13 +36,19 @@ namespace yq::tachyon {
 
     Execution AppThread::subtick(Context&ctx) 
     {
-        size_t  vc  = frame().count(VIEWER);
+        size_t  vc  = ctx.frame.count(VIEWER);
         if(vc && !m_quitOnZero){
             tachyonInfo << ident() << " now with viewers, quit-on-close activated";
             m_quitOnZero        = true;
         }
-        if(m_quitOnZero && (vc == 0)){
-            //tachyonInfo << ident() << " all viewers closed, quitting";
+        if(m_quitOnZero && (vc == 0) && !missing()){
+            #if 0
+            {
+                stream::Logger log(tachyonInfo);
+                tachyonInfo << ident() << " all viewers closed, quitting\n";
+                ctx.frame.report(log);
+            }
+            #endif
             quit();
         }
         return {};

@@ -122,8 +122,10 @@ add_library(${PROJECT_NAME} SHARED
     commands/TachyonCommand.cpp
     commands/TachyonDeleteCommand.cpp
     commands/TachyonProxyCommand.cpp
+    commands/TachyonSnoopCommand.cpp
     commands/TachyonSubscribeCommand.cpp
     commands/TachyonThreadCommand.cpp
+    commands/TachyonUnsnoopCommand.cpp
     commands/TachyonUnsubscribeCommand.cpp
     commands/ThreadCommand.cpp
     commands/ViewerAspectCommand.cpp
@@ -147,6 +149,8 @@ add_library(${PROJECT_NAME} SHARED
     commands/ViewerSizeCommand.cpp
     commands/ViewerTitleCommand.cpp
     commands/ViewerUnfloatCommand.cpp
+    commands/WidgetCommand.cpp
+    commands/WidgetStartupCommand.cpp
     commands/WindowAspectCommand.cpp
     commands/WindowAttentionCommand.cpp
     commands/WindowCommand.cpp

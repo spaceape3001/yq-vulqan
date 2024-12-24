@@ -80,6 +80,8 @@ namespace yq::tachyon {
         
         friend class AppThread;
         
+        bool missing() const { return m_missing; }
+        
     private:
     
         //struct Repo;
@@ -127,6 +129,7 @@ namespace yq::tachyon {
         static std::vector<TachyonPtr>  s_misfits;
         
         bool                            m_quit{ false };
+        bool                            m_missing{false};
         unit::Second                    m_snooze    = 1_ms;
         std::map<TachyonID, Control>    m_objects;
         std::vector<TachyonPtr>         m_creates;  //!< Objects that were created (will be handled next tick)

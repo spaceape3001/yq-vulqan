@@ -17,8 +17,10 @@
 
 #include <yq/tachyon/commands/TachyonDeleteCommand.hpp>
 #include <yq/tachyon/commands/TachyonProxyCommand.hpp>
+#include <yq/tachyon/commands/TachyonSnoopCommand.hpp>
 #include <yq/tachyon/commands/TachyonSubscribeCommand.hpp>
 #include <yq/tachyon/commands/TachyonThreadCommand.hpp>
+#include <yq/tachyon/commands/TachyonUnsnoopCommand.hpp>
 #include <yq/tachyon/commands/TachyonUnsubscribeCommand.hpp>
 
 #include <yq/core/StreamOps.hpp>
@@ -564,6 +566,15 @@ namespace yq::tachyon {
         }
     }
 
+    void    Tachyon::on_snoop_command(const TachyonSnoopCommand&cmd)
+    {
+        if(cmd.tachyon() != id())
+            return ;
+        if(std::find(m_snoop.begin(), m_snoop.end(), cmd.listener()) != m_snoop.end())
+            return ;
+        m_snoop.push_back(cmd.listener());
+    }
+
     void    Tachyon::on_subscribe_command(const TachyonSubscribeCommand&cmd)
     {
         if(cmd.tachyon() != id())
@@ -583,6 +594,13 @@ namespace yq::tachyon {
         if(cmd.tachyon() != id())
             return ;
         unsubscribe(cmd.listener(), cmd.groups());
+    }
+
+    void    Tachyon::on_unsnoop_command(const TachyonUnsnoopCommand&cmd)
+    {
+        if(cmd.tachyon() != id())
+            return ;
+        std::erase(m_snoop, cmd.listener());
     }
 
     void    Tachyon::owner(push_t, ThreadID tid)
@@ -663,7 +681,11 @@ namespace yq::tachyon {
         w.description("Tachyon Object");
         w.slot(&Tachyon::on_delete_command);
         w.slot(&Tachyon::on_proxy_command);
+        w.slot(&Tachyon::on_snoop_command);
+        w.slot(&Tachyon::on_subscribe_command);
         w.slot(&Tachyon::on_thread_command);
+        w.slot(&Tachyon::on_unsnoop_command);
+        w.slot(&Tachyon::on_unsubscribe_command);
         w.property("name", &Tachyon::name);
     }
 

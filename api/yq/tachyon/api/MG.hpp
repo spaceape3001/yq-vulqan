@@ -21,7 +21,9 @@ namespace yq::tachyon {
         // used by threads to mail their objects
         Tachyon,
         Controlled,
-        Controller
+        Controller,
+        Viewer,
+        Widget
     };
     
     using MGF = Flags<MG>;

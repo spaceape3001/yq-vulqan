@@ -42,6 +42,7 @@
 #include <yq/tachyon/commands/ViewerSizeCommand.hpp>
 #include <yq/tachyon/commands/ViewerTitleCommand.hpp>
 #include <yq/tachyon/commands/ViewerUnfloatCommand.hpp>
+#include <yq/tachyon/commands/WidgetStartupCommand.hpp>
 #include <yq/tachyon/commands/WindowAspectCommand.hpp>
 #include <yq/tachyon/commands/WindowAttentionCommand.hpp>
 #include <yq/tachyon/commands/WindowCursorCaptureCommand.hpp>
@@ -260,8 +261,8 @@ namespace yq::tachyon {
     {
         if(m_widget){
             m_widget -> m_viewer    = this;
-            subscribe(m_widget->id(), {MG::Forward, MG::General});
-            m_widget->subscribe(id(), MG::General);
+            subscribe(m_widget->id(), {MG::Widget, MG::General});
+            m_widget->subscribe(id(), {MG::General, MG::Viewer});
         }
     }
     
@@ -269,7 +270,8 @@ namespace yq::tachyon {
     {
         if(m_widget){
             m_widget -> m_viewer    = nullptr;
-            m_widget->unsubscribe(id(), {MG::Forward, MG::General});
+            m_widget->unsubscribe(id(), {MG::Viewer, MG::General});
+            unsubscribe(m_widget->id(), {MG::Widget, MG::General});
         }
     }
     
@@ -303,11 +305,15 @@ namespace yq::tachyon {
         if(const WindowBind*   wb  = dynamic_cast<const WindowBind*>(&pp)){
             if(wb -> window() != m_window)
                 return REJECT;
+            if(dynamic_cast<const InputEvent*>(&pp)){
+                return MG::Widget;
+            }
         }
         if(const ViewerBind* vb = dynamic_cast<const ViewerBind*>(&pp)){
             if(vb -> viewer() != id())
                 return REJECT;
         }
+        
         return {};
     }
 
@@ -729,6 +735,7 @@ namespace yq::tachyon {
     
     void    Viewer::on_viewer_show_command(const ViewerShowCommand&)
     {
+        tachyonInfo << ident() << "::on_viewer_show_command()";
         if(started_or_running()){
             send(new WindowShowCommand(m_window));
         }
@@ -830,9 +837,17 @@ namespace yq::tachyon {
     {
     }
     
-    void    Viewer::on_window_show_event(const WindowHideEvent&evt)
+    void    Viewer::on_window_show_event(const WindowShowEvent&evt)
     {
-        
+        tachyonInfo << ident() << "::on_window_show_event()";
+        switch(m_stage){
+        case Stage::Started:
+        case Stage::WidgetStart:
+            m_stage = Stage::Running;
+            break;
+        default:
+            break;
+        }
     }
 
     void     Viewer::owner(push_t, ThreadID tid) 
@@ -943,7 +958,7 @@ namespace yq::tachyon {
     bool    Viewer::started_or_running() const
     {
         Stage st = stage();
-        return (st == Stage::Started) || (st == Stage::Running);
+        return (st == Stage::Started) || (st == Stage::WidgetStart) || (st == Stage::Running);
     }
 
     Execution   Viewer::tick(Context&ctx) 
@@ -952,11 +967,20 @@ namespace yq::tachyon {
         case Stage::Preinit:
             return {};
         case Stage::Started:
-            if(ctx.frame.contains(m_window)){
-                send(new WindowShowCommand(m_window), m_window);
-viewerInfo << "Showing the window";            
-                m_stage = Stage::Running;
+            if(!(ctx.frame.contains(id()) && ctx.frame.contains(m_window))){
+                tachyonInfo << ident() << " startup tick waiting";
+                return {};
             }
+            send(new WidgetStartupCommand(m_widget), m_widget->id());
+            
+            
+            //send(new WindowShowCommand(m_window));
+            
+            m_stage = Stage::WidgetStart;
+            //
+tachyonInfo << ident() << " starting";
+            break;
+        case Stage::WidgetStart:
             break;
         case Stage::Running:
             break;
@@ -965,6 +989,7 @@ viewerInfo << "Showing the window";
         case Stage::Kaput:
             return {};
         case Stage::Destruct:
+tachyonInfo << ident() << " destruct";
             send(new ViewerDestroyEvent(this), MGF{MG::Thread, MG::General});
             return DELETE;
         }
@@ -982,6 +1007,22 @@ viewerInfo << "Showing the window";
         
         if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
             draw(); // HACK (for now)
+        } 
+        else {
+        #if 0
+            if(m_stage != Stage::Running){
+                tachyonInfo << ident() << "::tick() skipping draw() due to not running";        
+            }
+            if(!is_visible()){
+                tachyonInfo << ident() << "::tick() skipping draw() due to not being visible";        
+            }
+            if(!is_iconified()){
+                tachyonInfo << ident() << "::tick() skipping draw() due to being iconified";        
+            }
+            if(any(m_state.window.pixels) == 0){
+                tachyonInfo << ident() << "::tick() skipping draw() due to no pixels";        
+            }
+        #endif
         }
         m_cleanup.sweep();
         ++m_ticks;

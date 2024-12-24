@@ -18,6 +18,7 @@
 namespace yq::tachyon {
     class Viewer;
     struct ViContext;
+    class WidgetStartupCommand;
 
     class WidgetInfo : public TachyonInfo {
     public:
@@ -163,7 +164,13 @@ namespace yq::tachyon {
         
         virtual PostAdvice      advise(const Post&) const override;
         
+        virtual Execution       tick(Context&) override;
         
+        //  override to do your own startup... 
+        virtual void            startup();
+        
+        
+        void    on_startup_command(const WidgetStartupCommand&);
         
         #if 0
         virtual void            on(const WidgetChildAdd&) {};

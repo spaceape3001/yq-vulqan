@@ -110,6 +110,9 @@ namespace yq::tachyon {
             //! Window created, but not yet running
             Started,
             
+            //! Deferred to widget... waiting
+            WidgetStart,
+            
             //! Running
             Running,
             
@@ -420,7 +423,7 @@ namespace yq::tachyon {
         void    on_window_hide_event(const WindowHideEvent&);
         void    on_window_move_event(const WindowMoveEvent&);
         void    on_window_resize_event(const WindowResizeEvent&);
-        void    on_window_show_event(const WindowHideEvent&);
+        void    on_window_show_event(const WindowShowEvent&);
         
         
         

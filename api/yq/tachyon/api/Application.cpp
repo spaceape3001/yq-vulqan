@@ -62,6 +62,9 @@ namespace yq::tachyon {
         s_app   = this;
         
         configure_standand_asset_path();
+        
+        if(!aci.headless)
+            thread(APP);
 
         tachyonDebug << "Application initialized";
     }

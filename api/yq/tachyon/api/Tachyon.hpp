@@ -34,8 +34,10 @@ namespace yq::tachyon {
     struct Context;
     class TachyonProxyCommand;
     class TachyonDeleteCommand;
+    class TachyonSnoopCommand;
     class TachyonSubscribeCommand;
     class TachyonThreadCommand;
+    class TachyonUnsnoopCommand;
     class TachyonUnsubscribeCommand;
     
     /// TACHYON INFO
@@ -384,8 +386,10 @@ namespace yq::tachyon {
         void    on_proxy_command(const TachyonProxyCommand&);
         
         void    on_delete_command(const TachyonDeleteCommand&);
+        void    on_snoop_command(const TachyonSnoopCommand&);
         void    on_subscribe_command(const TachyonSubscribeCommand&);
         void    on_thread_command(const TachyonThreadCommand&);
+        void    on_unsnoop_command(const TachyonUnsnoopCommand&);
         void    on_unsubscribe_command(const TachyonUnsubscribeCommand&);
     };
 

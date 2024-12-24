@@ -576,9 +576,9 @@ namespace yq::tachyon {
 
     void    WindowGLFW::on_show_command(const WindowShowCommand&)
     {
-tachyonInfo << ident() << " show command";    
         if(glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
             return ;
+tachyonInfo << ident() << " show command";    
         glfwShowWindow(m_window);
         send(new WindowShowEvent(this));
         mark();

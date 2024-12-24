@@ -307,9 +307,20 @@ namespace yq::tachyon {
   
         FramePtr        frame   = new Frame(id(), m_tick);
         Frame::Builder  build(*frame);
+        
+        /*
+            NOTE, on the threadripper, we seem to be missing data/frames
+            for a few steps, which causes the whole thing not to startup
+            properly.  (TODO... fix later once the t-ripper is back
+            in operation)
+        */
+        
+        m_missing   = false;
         for(auto& i : data){
-            if(!i.second)
+            if(!i.second){
+                m_missing   = true;
                 continue;
+            }
             build.add(i.first, *i.second);
         }
         build.finalize();

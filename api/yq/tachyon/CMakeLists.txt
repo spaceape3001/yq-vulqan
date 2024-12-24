@@ -203,6 +203,7 @@ add_library(${PROJECT_NAME} SHARED
     events/MouseScrollEvent.cpp
     events/TachyonEvent.cpp
     events/ViewerCloseEvent.cpp
+    events/ViewerDestroyEvent.cpp
     events/ViewerEvent.cpp
     events/ViewerPauseEvent.cpp
     events/ViewerResumeEvent.cpp

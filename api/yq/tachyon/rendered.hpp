@@ -6,4 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/render/Rendered.hpp>
+#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/api/RenderedInfoWriter.hpp>

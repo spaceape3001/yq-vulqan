@@ -68,6 +68,7 @@
 #include <yq/tachyon/events/MousePressEvent.hpp>
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
 #include <yq/tachyon/events/ViewerCloseEvent.hpp>
+#include <yq/tachyon/events/ViewerDestroyEvent.hpp>
 #include <yq/tachyon/events/ViewerPauseEvent.hpp>
 #include <yq/tachyon/events/ViewerResumeEvent.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
@@ -949,6 +950,7 @@ namespace yq::tachyon {
         case Stage::Kaput:
             return {};
         case Stage::Destruct:
+            send(new ViewerDestroyEvent(this), MGF{MG::Thread, MG::General});
             return DELETE;
         }
 

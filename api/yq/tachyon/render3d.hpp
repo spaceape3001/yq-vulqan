@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/render/Render3D.hpp>
-#include <yq/tachyon/render/Render3DInfoWriter.hpp>
+#include <yq/tachyon/render³.hpp>
+

@@ -19,6 +19,7 @@ struct GLFWwindow;
 
 namespace yq::tachyon {
     class ViewerCreateInfo;
+    class WindowDestroyCommand;
 
     class WindowGLFW : public Window, private IPosition2I {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
@@ -46,12 +47,19 @@ namespace yq::tachyon {
         virtual PostAdvice  advise(const Post&) const override;
 
     private:
+        enum Stage {
+            Preinit,
+            Running,
+            Destruct
+        };
+    
         DesktopGLFW* const  m_desktop;
         GLFWwindow* const   m_window;
         Size2I              m_aspect    = { -1, -1 };
         Size2I              m_maxSize   = { -1, -1 };
         Size2I              m_minSize   = { -1, -1 };
         MouseMode           m_mouseMode = MouseMode::Normal;
+        Stage               m_stage     = Stage::Preinit;
         
         void    on_aspect_command(const WindowAspectCommand&);
         void    on_attention_command(const WindowAttentionCommand&);
@@ -59,6 +67,7 @@ namespace yq::tachyon {
         void    on_cursor_disable_command(const WindowCursorDisableCommand&);
         void    on_cursor_hide_command(const WindowCursorHideCommand&);
         void    on_cursor_normal_command(const WindowCursorNormalCommand&);
+        void    on_destroy_command(const WindowDestroyCommand&);
         void    on_float_command(const WindowFloatCommand&);
         void    on_focus_command(const WindowFocusCommand&);
         void    on_hide_command(const WindowHideCommand&);

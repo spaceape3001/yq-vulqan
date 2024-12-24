@@ -20,7 +20,7 @@
 #include <yq/color/colors.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/meta/Meta.hpp>
-#include <yq/post/boxes/LoggerBox.hpp>
+//#include <yq/post/boxes/LoggerBox.hpp>
 #include <yq/process/PluginLoader.hpp>
 #include <yq/shape/shape_utils.hpp>
 #include <yq/shape/Triangle2.hpp>
@@ -31,7 +31,7 @@
 #include <yq/vector/Vector3.hxx>
 
 #include <yq/tachyon/application.hpp>
-#include <yq/tachyon/render3d.hpp>
+#include <yq/tachyon/rendered.hpp>
 #include <yq/tachyon/shader.hpp>
 #include <yq/tachyon/texture.hpp>
 #include <yq/tachyon/widget.hpp>
@@ -177,17 +177,17 @@ struct HelloScene : public Scene3DWidget {
     YQ_OBJECT_DECLARE(HelloScene, Scene3DWidget)
     
     Ref<HelloTriangle>      triangle;
-    Ref<Triangle>           tri2;
+    Ref<Triangle³>          tri2;
     Ref<HelloQuad>          quad;
     timepoint_t             start;
 
     HelloScene()
     {
         start       = std::chrono::steady_clock::now();
-        triangle    = new HelloTriangle;
-        tri2        = new Triangle(TriData);
+        triangle    = Rendered::create<HelloTriangle>();
+        tri2        = Rendered::create<Triangle³>(TriData);
         tri2->set_position({0.,0.,0.1});
-        quad        = new HelloQuad;
+        quad        = Rendered::create<HelloQuad>();
         
         add_thing(tri2);
         add_thing(triangle);
@@ -207,10 +207,11 @@ struct HelloScene : public Scene3DWidget {
 
 YQ_OBJECT_IMPLEMENT(HelloScene)
 
-using LoggerBoxUPtr     = std::unique_ptr<post::LoggerBox>;
+//using LoggerBoxUPtr     = std::unique_ptr<post::LoggerBox>;
 
 int main(int argc, char* argv[])
 {
+    #if 0
     bool    posts = false;
     
     for(int n=1;n<argc;++n){
@@ -219,6 +220,7 @@ int main(int argc, char* argv[])
         if(is_similar(argv[n], "--post"))
             posts   = true;
     }
+    #endif
 
     writer<HelloTriangle>();
     writer<HelloQuad>();
@@ -233,14 +235,17 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     //load_plugin_dir("plugin");
     
+    #if 0
     LoggerBoxUPtr       postLogging;
     if(posts){
         post::LoggerBox::Param  cfg;
         cfg.global  = true;
         postLogging = std::make_unique<post::LoggerBox>(cfg);
     }
+    #endif
     
     app.finalize();
-    app.run(new HelloScene);
+    WidgetPtr   wp  = Widget::create<HelloScene>();
+    app.run(wp);
     return 0;
 }

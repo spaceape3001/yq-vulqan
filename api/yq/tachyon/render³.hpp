@@ -6,4 +6,6 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Texture.hpp>
+#include <yq/tachyon/api/Render³D.hpp>
+#include <yq/tachyon/api/Render³DInfoWriter.hpp>
+

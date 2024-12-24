@@ -41,6 +41,7 @@ namespace yq::tachyon {
             Running,
             Dead
         };
+        friend class WindowGLFW;
         
         
         Execution    _tick(Context&);

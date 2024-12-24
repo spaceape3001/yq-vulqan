@@ -13,6 +13,7 @@
 #include <yq/tachyon/commands/WindowCursorDisableCommand.hpp>
 #include <yq/tachyon/commands/WindowCursorHideCommand.hpp>
 #include <yq/tachyon/commands/WindowCursorNormalCommand.hpp>
+#include <yq/tachyon/commands/WindowDestroyCommand.hpp>
 #include <yq/tachyon/commands/WindowFloatCommand.hpp>
 #include <yq/tachyon/commands/WindowFocusCommand.hpp>
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
@@ -42,6 +43,7 @@
 #include <yq/tachyon/events/WindowCursorHideEvent.hpp>
 #include <yq/tachyon/events/WindowCursorNormalEvent.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
+#include <yq/tachyon/events/WindowDestroyEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
 #include <yq/tachyon/events/WindowFrameBufferResizeEvent.hpp>
 #include <yq/tachyon/events/WindowHideEvent.hpp>
@@ -53,6 +55,7 @@
 #include <yq/tachyon/events/WindowScaleEvent.hpp>
 #include <yq/tachyon/events/WindowShowEvent.hpp>
 #include <yq/tachyon/events/WindowTitleEvent.hpp>
+#include <yq/tachyon/glfw/DesktopGLFW.hpp>
 #include <yq/tachyon/glfw/LoggingGLFW.hpp>
 #include <yq/tachyon/glfw/MonitorGLFW.hpp>
 #include <yq/tachyon/requests/WindowCloseRequest.hpp>
@@ -335,10 +338,14 @@ namespace yq::tachyon {
         glfwSetWindowPosCallback(w, callback_window_position);
         glfwSetWindowRefreshCallback(w, callback_window_refresh);
         glfwSetWindowSizeCallback(w, callback_window_size);
+        
+        m_stage = Stage::Running;
     }
     
     WindowGLFW::~WindowGLFW()
     {
+        m_desktop->m_windows.erase(id());
+    
         glfwSetWindowUserPointer(m_window, nullptr);
 
         glfwSetCharCallback(m_window, nullptr);
@@ -359,6 +366,7 @@ namespace yq::tachyon {
         glfwSetWindowSizeCallback(m_window, nullptr);
 
         glfwDestroyWindow(m_window);
+    tachyonInfo << ident() << " destroyed";
     }
 
     PostAdvice  WindowGLFW::advise(const Post&pp) const 
@@ -496,6 +504,11 @@ namespace yq::tachyon {
         send(new WindowCursorNormalEvent(this));
     }
 
+    void    WindowGLFW::on_destroy_command(const WindowDestroyCommand& cmd)
+    {
+        m_stage = Stage::Destruct;
+    }
+
     void    WindowGLFW::on_float_command(const WindowFloatCommand&cmd)
     {
         glfwSetWindowAttrib(m_window, GLFW_FLOATING, GLFW_TRUE);
@@ -600,8 +613,10 @@ namespace yq::tachyon {
     Execution WindowGLFW::tick(Context&ctx) 
     {
         Window::tick(ctx);
-        
-        
+        if(m_stage == Stage::Destruct){
+            send(new WindowDestroyEvent(this));
+            return DELETE;
+        }
         
         //  TODO
         
@@ -634,6 +649,7 @@ namespace yq::tachyon {
         w.slot(&WindowGLFW::on_cursor_disable_command);
         w.slot(&WindowGLFW::on_cursor_hide_command);
         w.slot(&WindowGLFW::on_cursor_normal_command);
+        w.slot(&WindowGLFW::on_destroy_command);
         w.slot(&WindowGLFW::on_float_command);
         w.slot(&WindowGLFW::on_focus_command);
         w.slot(&WindowGLFW::on_hide_command);

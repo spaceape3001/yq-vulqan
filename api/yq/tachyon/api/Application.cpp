@@ -60,6 +60,8 @@ namespace yq::tachyon {
             throw AppException("Only one application per customer!");
         }
         s_app   = this;
+        
+        configure_standand_asset_path();
 
         tachyonDebug << "Application initialized";
     }

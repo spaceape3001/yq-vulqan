@@ -381,7 +381,6 @@ namespace yq::tachyon {
         glfwSetWindowSizeCallback(m_window, nullptr);
 
         glfwDestroyWindow(m_window);
-    tachyonInfo << ident() << " destroyed";
     }
 
     PostAdvice  WindowGLFW::advise(const Post&pp) const 
@@ -578,7 +577,6 @@ namespace yq::tachyon {
     {
         if(glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
             return ;
-tachyonInfo << ident() << " show command";    
         glfwShowWindow(m_window);
         send(new WindowShowEvent(this));
         mark();

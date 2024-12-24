@@ -163,8 +163,6 @@ namespace yq::tachyon {
 
     void            Widget::startup()
     {
-        tachyonInfo << ident() << "::startup()";
-    
         send(new ViewerShowCommand(m_viewer), MG::Viewer);
     }
 

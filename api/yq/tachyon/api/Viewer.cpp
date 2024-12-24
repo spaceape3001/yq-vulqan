@@ -150,6 +150,7 @@ namespace yq::tachyon {
         auto w = writer<Viewer>();
         
         w.description("Tachyon Viewer");
+        w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
         w.slot(&Viewer::on_cursor_capture_command);
         w.slot(&Viewer::on_cursor_disable_command);
         w.slot(&Viewer::on_cursor_hide_command);
@@ -473,7 +474,7 @@ namespace yq::tachyon {
         auto end   = std::chrono::high_resolution_clock::now();
         m_drawTime          = (end-start).count();
         if(ec != std::error_code())
-            viewerCritical << "Viewer::draw() failed ... " << ec.message();
+            viewerCritical << "Viewer" << ident() << "::draw() failed ... " << ec.message();
             
         if(!snapshot.empty()){
             if(auto p = std::get_if<RasterPtr>(&u.snapshot)){
@@ -483,7 +484,7 @@ namespace yq::tachyon {
                 }
             }
             if(auto p = std::get_if<std::error_code>(&u.snapshot)){
-                viewerError << "Viewer::draw() snapshot failed ... " << p->message();
+                viewerError << "Viewer" << ident() << "::draw() snapshot failed ... " << p->message();
             }
         }
         return ec;
@@ -735,7 +736,6 @@ namespace yq::tachyon {
     
     void    Viewer::on_viewer_show_command(const ViewerShowCommand&)
     {
-        tachyonInfo << ident() << "::on_viewer_show_command()";
         if(started_or_running()){
             send(new WindowShowCommand(m_window));
         }
@@ -839,7 +839,6 @@ namespace yq::tachyon {
     
     void    Viewer::on_window_show_event(const WindowShowEvent&evt)
     {
-        tachyonInfo << ident() << "::on_window_show_event()";
         switch(m_stage){
         case Stage::Started:
         case Stage::WidgetStart:
@@ -978,7 +977,6 @@ namespace yq::tachyon {
             
             m_stage = Stage::WidgetStart;
             //
-tachyonInfo << ident() << " starting";
             break;
         case Stage::WidgetStart:
             break;
@@ -989,7 +987,6 @@ tachyonInfo << ident() << " starting";
         case Stage::Kaput:
             return {};
         case Stage::Destruct:
-tachyonInfo << ident() << " destruct";
             send(new ViewerDestroyEvent(this), MGF{MG::Thread, MG::General});
             return DELETE;
         }
@@ -1007,9 +1004,9 @@ tachyonInfo << ident() << " destruct";
         
         if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
             draw(); // HACK (for now)
-        } 
-        else {
+        } else {
         #if 0
+            //  Here for use with debuging
             if(m_stage != Stage::Running){
                 tachyonInfo << ident() << "::tick() skipping draw() due to not running";        
             }
@@ -1054,148 +1051,37 @@ tachyonInfo << ident() << " destruct";
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  OLD CODE
+    //  OLD CODE (some still needs to be brought over)
 
 #if 0
-    void Viewer::init_info()
+    void    Viewer::set_widget(WidgetPtr w)
     {
-        auto w = writer<Viewer>();
+        dispatch(SELF, new ViewerWidgetRequest(this, w));
+    }
+    
+    void    Viewer::widget_request(const ViewerWidgetRequestCPtr& cmd)
+    {
+        if(!cmd)
+            return ;
         
-        w.description("Tachyon Viewer");
-        w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
+        Response    rep     = Response::QaPla;
+        WidgetPtr   w       = cmd->widget();
+        if(!w){
+            rep = Response::NullPointer;
+        } else if(w->attached()){
+            rep = Response::NotUnattached;
+        } else {
+            _widget(w);
+        }
         
-        w.slot(&Viewer::aspect_command).name("aspect_command");
-        w.slot(&Viewer::attention_command).name("attention_command");
-        w.slot(&Viewer::close_command).name("close_command");
-        w.slot(&Viewer::close_request).name("close_request");
-        w.slot(&Viewer::cursor_capture_command).name("cursor_capture_command");
-        w.slot(&Viewer::cursor_disable_command).name("cursor_disable_command");
-        w.slot(&Viewer::cursor_hide_command).name("cursor_hide_command");
-        w.slot(&Viewer::cursor_normal_command).name("cursor_normal_command");
-        w.slot(&Viewer::destroy_event).name("destroy_event");
-        w.slot(&Viewer::float_command).name("float_command");
-        w.slot(&Viewer::focus_command).name("focus_command");
-        w.slot(&Viewer::hide_command).name("hide_command");
-        w.slot(&Viewer::hide_event).name("hide_event");
-        w.slot(&Viewer::iconify_command).name("iconify_command");
-        w.slot(&Viewer::maximize_command).name("maximize_command");
-        w.slot(&Viewer::move_command).name("move_command");
-        w.slot(&Viewer::pause_command).name("pause_command");
-        w.slot(&Viewer::resume_command).name("resume_command");
-        w.slot(&Viewer::restore_command).name("restore_command");
-        w.slot(&Viewer::show_command).name("show_command");
-        w.slot(&Viewer::show_event).name("show_event");
-        w.slot(&Viewer::size_command).name("size_command");
-        w.slot(&Viewer::state_event).name("state_event");
-        w.slot(&Viewer::title_command).name("title_command");
-        w.slot(&Viewer::unfloat_command).name("unfloat_command");
-        w.slot(&Viewer::widget_request).name("widget_request");
-        
-        w.slot(&Viewer::viewer_resize_event);
-        w.property("mouse", &Viewer::mouse_state).description("Mouse state");
+        dispatch(new ViewerWidgetReply(cmd, this, rep));
     }
 #endif
-
-#if 0
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  INITIALIZATION/DESTRUCTION
-
-    std::error_code         Viewer::_startup(GLFWwindow* win, const ViewerState& st)
-    {
-        assert(m_stage == Stage::Preinit);
-        m_state     = st;
-        m_viz       = std::make_unique<Visualizer>(*m_createInfo, win, m_cleanup);
-        if(m_createInfo->imgui){
-            m_imgui = std::make_unique<ViGui>(*m_viz);
-        }
-        
-        m_stage = Stage::Started;
-
-        std::error_code     ec;
-        try {
-            ec = startup({win});
-        }
-        catch(...)
-        {
-            m_stage = Stage::Kaput;
-            
-            #ifdef NDEBUG
-            ec = create_error<"Exception caught during Viewer startup">();
-            #else
-            throw;
-            #endif
-            
-        }
-        
-
-        if(ec != std::error_code()){
-            m_stage = Stage::Kaput;
-            _kill();
-            return ec;
-        }
-        
-        if(m_imgui){
-            attach(FORWARD, m_imgui.get());
-        }
-        if(m_viz){
-            //attach(FORWARD, m_viz.get()); // TODO
-        }
-        attach(FORWARD, m_widget.ptr());
-        return {};
-    }
-
-    std::error_code     Viewer::draw(ViContext& u)
-    {
-    }
-    
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  WIDGET
-    //  
-
-        
-        void    Viewer::set_widget(WidgetPtr w)
-        {
-            dispatch(SELF, new ViewerWidgetRequest(this, w));
-        }
-        
-        void    Viewer::widget_request(const ViewerWidgetRequestCPtr& cmd)
-        {
-            if(!cmd)
-                return ;
-            
-            Response    rep     = Response::QaPla;
-            WidgetPtr   w       = cmd->widget();
-            if(!w){
-                rep = Response::NullPointer;
-            } else if(w->attached()){
-                rep = Response::NotUnattached;
-            } else {
-                _widget(w);
-            }
-            
-            dispatch(new ViewerWidgetReply(cmd, this, rep));
-        }
-
-
-
-    
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  ----------------------------------------------------------------------------------------------------------------
-
 
 #if 0
     Monitor     Viewer::monitor() const
     {
         return Monitor();
-    }
-#endif
-#if 0
-    bool        Viewer::should_close() const
-    {
-//        if(!m_window) 
-//            return true;
-        return false; // glfwWindowShouldClose(m_window);
     }
 #endif
 
@@ -1223,19 +1109,4 @@ tachyonInfo << ident() << " destruct";
             m_delete.push_back(w);
     }
 #endif
-
-
-    //  ----------------------------------------------------------------------------------------------------------------
-    //  VULKAN/RENDER
-
-/*
-    void    Viewer::window_framebuffer_resized(const Size2I&s)
-    {
-        m_zeroSize  = zero_framebuffer();
-        trigger_rebuild();
-    }
-*/
-
-#endif
-
 }

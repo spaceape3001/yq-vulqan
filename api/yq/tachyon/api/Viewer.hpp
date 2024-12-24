@@ -53,6 +53,11 @@ namespace yq::tachyon {
     
     struct ViewerInitData;
     
+    class ViewerInfo : public TachyonInfo {
+    public:
+        ViewerInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+    };
+    
     
     /*! \brief Vulkan Window
     
@@ -62,7 +67,10 @@ namespace yq::tachyon {
         root widget for the viewer.
     */
     class Viewer : public Tachyon {
-        YQ_OBJECT_DECLARE(Viewer, Tachyon)
+        YQ_TACHYON_INFO(ViewerInfo)
+        YQ_TACHYON_DATA(ViewerData)
+        YQ_TACHYON_SNAP(ViewerSnap)
+        YQ_TACHYON_DECLARE(Viewer, Tachyon)
     
     /*
         THREADING -- being written so that each viewer is a separate thread.
@@ -331,6 +339,8 @@ namespace yq::tachyon {
         
         //! Call if you reject the close request
         void     reject(close_t);
+        
+        void        snap(ViewerSnap&) const;
 
     private:
 

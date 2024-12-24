@@ -28,7 +28,7 @@ namespace yq::tachyon {
     ControllerInfo::ControllerInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(zName, base, sl)
     {
-        //set(Flag::CONTROLLER);
+        set(Type::Controller);
     }
 
     Controller::Controller(const Param& p) : Tachyon(p)

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/typedef/clock.hpp>
 
 namespace yq::tachyon {
     class Application;
@@ -17,9 +18,15 @@ namespace yq::tachyon {
         AppThread(Application*, const Param&p ={});
         ~AppThread();
         static void init_info();
+        
+        using Thread::tick;
+        
+        virtual Execution subtick(Context&) override;
+        
     private:
         friend class Application;
-        Application* const    m_app;
+        Application* const      m_app;
+        bool                    m_quitOnZero = false;
         
         void                shutdown();
     };

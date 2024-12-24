@@ -107,6 +107,7 @@ namespace yq::tachyon {
     
     ViewerID                    Application::create(viewer_t, const ViewerCreateInfo&vci, WidgetPtr w)
     {
+        AppThread&  at  = thread(APP);
         DesktopGLFW&        desk    = desktop(GLFW);
         manager(VULQAN);
         
@@ -122,7 +123,9 @@ namespace yq::tachyon {
         win->subscribe(v->id());
         v->subscribe(win->id());
         
-        m_viewers.insert(v->id());
+        at.tick();
+        
+        //m_viewers.insert(v->id());
         
         switch(m_cInfo.vthreads){
         case ViewerThreadPolicy::Single:
@@ -133,7 +136,7 @@ namespace yq::tachyon {
             break;
         }
         
-        win->show();    // TEMPORARY
+        at.tick();
         return v->id();
     }
 

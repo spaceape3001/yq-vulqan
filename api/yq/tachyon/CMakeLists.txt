@@ -205,6 +205,8 @@ add_library(${PROJECT_NAME} SHARED
     events/MouseReleaseEvent.cpp
     events/MouseScrollEvent.cpp
     events/TachyonEvent.cpp
+    events/ThreadEvent.cpp
+    events/ThreadAddTachyonEvent.cpp
     events/ViewerCloseEvent.cpp
     events/ViewerDestroyEvent.cpp
     events/ViewerEvent.cpp

@@ -69,7 +69,10 @@ namespace yq::tachyon {
         virtual void    tick();
         
     protected:
-        virtual Execution   tick(Context&) override;
+        virtual Execution   tick(Context&) override final;
+        
+        //! This is for derived classes, in the middle of tick
+        virtual Execution   subtick(Context&);
         
         // same caveats as tachyon
         ThreadData&     data();

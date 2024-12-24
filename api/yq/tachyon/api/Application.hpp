@@ -107,7 +107,7 @@ namespace yq::tachyon {
         AppCreateInfo const     m_cInfo;
         std::vector<Desktop*>   m_desktops;
         std::vector<Manager*>   m_managers;
-        std::set<ViewerID>      m_viewers;
+        //std::set<ViewerID>      m_viewers;
         AppThread*              m_athread   = nullptr;
         ViewerThread*           m_vthread   = nullptr;
         DesktopGLFW*            m_glfw      = nullptr;

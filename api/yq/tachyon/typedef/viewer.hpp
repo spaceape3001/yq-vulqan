@@ -17,6 +17,14 @@ namespace yq::tachyon {
     using ViewerPtr         = Ref<Viewer>;
     using ViewerCPtr        = Ref<const Viewer>;
 
+    struct ViewerSnap;
+    using ViewerSnapPtr  = Ref<ViewerSnap>;
+    using ViewerSnapCPtr = Ref<const ViewerSnap>;
+    
+    struct ViewerData;
+    using ViewerDataPtr  = Ref<ViewerData>;
+    using ViewerDataCPtr = Ref<const ViewerData>;
+
     template <class> class ID;
     using ViewerID = ID<Viewer>;
     

@@ -14,6 +14,7 @@
 
 #include <yq/core/ThreadId.hpp>
 #include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/events/ThreadAddTachyonEvent.hpp>
 
 namespace yq::tachyon {
 
@@ -210,8 +211,6 @@ namespace yq::tachyon {
         s_threads[_id]    = this;
         s_data[_id]       = {};
         s_inboxes[_id]    = {};
-        
-        tachyonInfo << "Thread::Thread()";
     }
     
     Thread::~Thread()
@@ -227,8 +226,6 @@ namespace yq::tachyon {
         if(s_sink == this){
             s_sink  = nullptr;
         }
-        
-        tachyonInfo << "Thread::~Thread()";
     }
 
     ThreadData&     Thread::data()
@@ -238,7 +235,7 @@ namespace yq::tachyon {
 
     void    Thread::exec()
     {
-        tachyonInfo << "Thread{" << metaInfo().name() << "}::exec()";
+        tachyonInfo << ident() << "::exec()";
         while(!m_quit){
             tick();
         }
@@ -266,20 +263,20 @@ namespace yq::tachyon {
 
     void    Thread::join()
     {
-        tachyonInfo << "Thread{" << metaInfo().name() << "}::join()";
+        tachyonInfo << ident() << "::join()";
         quit();
         m_thread.join();
     }
 
     void    Thread::quit()
     {
-        tachyonInfo << "Thread{" << metaInfo().name() << "}::quit()";
+        tachyonInfo << ident() << "::quit()";
         m_quit  = true;
     }
     
     void    Thread::start()
     {
-        tachyonInfo << "Thread{" << metaInfo().name() << "}::start()";
+        tachyonInfo << ident() << "::start()";
         if(m_thread.joinable()) // something's running... don't
             return ;
         m_thread    = std::thread([this](){ 
@@ -287,6 +284,11 @@ namespace yq::tachyon {
             run(); 
             s_current   = nullptr;
         });
+    }
+
+    Execution   Thread::subtick(Context&)
+    {
+        return {};
     }
 
     void    Thread::tick()
@@ -347,6 +349,7 @@ namespace yq::tachyon {
             }
             subscribe(in->id(), MG::Tachyon);
             d.arrived.insert(in->id());
+            send(new ThreadAddTachyonEvent(this, in.ptr()));
         }
         
         for(auto  in : inbox.pushed){
@@ -372,9 +375,12 @@ namespace yq::tachyon {
             tp->subscribe(id(), MG::Thread);
             subscribe(tp->id(), MG::Tachyon);
             c.object        = std::move(tp);
+            send(new ThreadAddTachyonEvent(this, tp.ptr()));
         }
         
         //  TODO: Some multithreadedness...
+        Execution ex = subtick(ctx);
+        
         for(auto itr = m_objects.begin(); itr != m_objects.end(); ++itr){
             execute(itr->second, ctx);
         }
@@ -407,7 +413,7 @@ namespace yq::tachyon {
         }
         
         s_current   = old;
-        return {};
+        return ex;
     }
 
 

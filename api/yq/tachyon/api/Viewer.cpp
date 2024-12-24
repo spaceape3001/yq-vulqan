@@ -13,7 +13,9 @@
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Raster.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/ViewerBind.hpp>
+#include <yq/tachyon/api/ViewerData.hpp>
 #include <yq/tachyon/api/ViewerException.hpp>
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/api/Window.hpp>
@@ -122,6 +124,12 @@ namespace yq::tachyon {
     {
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ViewerInfo::ViewerInfo(std::string_view szName, TachyonInfo& base, const std::source_location& sl) :
+        TachyonInfo(szName, base, sl)
+    {
+        set(Type::Viewer);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -287,7 +295,6 @@ namespace yq::tachyon {
             send(new ViewerCloseReply(req, this, Response::QaPla));
             mail(new ViewerCloseCommand(this));
         }
-        tachyonInfo << ident() << "::accept(CLOSE)";
     }
 
     PostAdvice  Viewer::advise(const Post& pp) const 
@@ -702,6 +709,7 @@ namespace yq::tachyon {
     {
         m_paused    = true;
         send(new ViewerPauseEvent(this));
+        mark();
     }
     
     void    Viewer::on_viewer_restore_command(const ViewerRestoreCommand&)
@@ -715,6 +723,7 @@ namespace yq::tachyon {
     {
         m_paused    = false;
         send(new ViewerResumeEvent(this));
+        mark();
     }
     
     void    Viewer::on_viewer_show_command(const ViewerShowCommand&)
@@ -784,7 +793,6 @@ namespace yq::tachyon {
 
     void    Viewer::on_window_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
     {
-        tachyonInfo << ident() << " Framebuffer resized (" << evt.width() << ", " << evt.height() << ")";
     }
     
     void    Viewer::on_window_focus_event(const WindowFocusEvent&evt)
@@ -815,12 +823,10 @@ namespace yq::tachyon {
     
     void    Viewer::on_window_move_event(const WindowMoveEvent&evt)
     {
-        tachyonInfo << ident() << " Window moved (" << evt.x() << ", " << evt.y() << ")";
     }
 
     void    Viewer::on_window_resize_event(const WindowResizeEvent&evt)
     {
-        tachyonInfo << ident() << " Window resized (" << evt.width() << ", " << evt.height() << ")";
     }
     
     void    Viewer::on_window_show_event(const WindowHideEvent&evt)
@@ -860,7 +866,6 @@ namespace yq::tachyon {
         if(req){
             send(new ViewerCloseReply(req, this, Response::Rejected));
         }
-        tachyonInfo << ident() << "::reject(CLOSE)";
     }
 
     bool    Viewer::running() const
@@ -918,6 +923,12 @@ namespace yq::tachyon {
         return m_state.window.area;
     }
 
+    void Viewer::snap(ViewerSnap&sn) const
+    {
+        sn.window   = m_window;
+        sn.paused   = m_paused;
+    }
+
     Viewer::Stage   Viewer::stage() const
     {
         return m_stage;
@@ -940,7 +951,8 @@ namespace yq::tachyon {
         case Stage::Preinit:
             return {};
         case Stage::Started:
-            send(new WindowShowCommand(m_window));
+            send(new WindowShowCommand(m_window), m_window);
+viewerInfo << "Showing the window";            
             m_stage = Stage::Running;
             break;
         case Stage::Running:
@@ -970,6 +982,7 @@ namespace yq::tachyon {
         }
         m_cleanup.sweep();
         ++m_ticks;
+        mark();
         return {};
     }
 

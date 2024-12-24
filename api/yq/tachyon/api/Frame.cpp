@@ -39,8 +39,8 @@
 #include "TachyonData.hpp"
 #include "Thread.hpp"
 #include "ThreadData.hpp"
-//#include "Viewer.hpp"
-//#include "ViewerData.hpp"
+#include "Viewer.hpp"
+#include "ViewerData.hpp"
 #include "Widget.hpp"
 #include "WidgetData.hpp"
 #include "Window.hpp"
@@ -49,6 +49,12 @@
 #include <yq/tachyon/logging.hpp>
 
 namespace yq::tachyon {
+
+    template <typename T, typename D, typename S>
+    size_t   Frame::Container<T,D,S>::count() const
+    {
+        return objects.size();
+    }
 
     template <typename T, typename D, typename S>
     const D*   Frame::Container<T,D,S>::data(uint64_t n) const
@@ -144,8 +150,8 @@ namespace yq::tachyon {
             //m_scenes.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Thread))
             m_threads.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Viewer))
-            //m_viewers.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Viewer))
+            m_viewers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Widget))
             m_widgets.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Window))
@@ -231,12 +237,10 @@ namespace yq::tachyon {
         return m_threads.has(id);
     }
     
-    #if 0
     bool Frame::contains(ViewerID id) const
     {
         return m_viewers.has(id);
     }
-    #endif
 
     bool Frame::contains(WidgetID id) const
     {
@@ -246,6 +250,11 @@ namespace yq::tachyon {
     bool Frame::contains(WindowID id) const
     {
         return m_windows.has(id);
+    }
+
+    size_t Frame::count(viewer_t) const
+    {
+        return m_viewers.count();
     }
     
     const CameraData*                   Frame::data(CameraID id) const
@@ -315,12 +324,10 @@ namespace yq::tachyon {
         return m_threads.data(id);
     }
 
-    #if 0
     const ViewerData*                   Frame::data(ViewerID id) const
     {
         return m_viewers.data(id);
     }
-    #endif
 
     const WidgetData*                   Frame::data(WidgetID id) const
     {
@@ -393,12 +400,10 @@ namespace yq::tachyon {
         return m_threads.pointer(id);
     }
     
-    #if 0
     Viewer*                             Frame::object(ViewerID id) const
     {
         return m_viewers.pointer(id);
     }
-    #endif
 
     Widget*                             Frame::object(WidgetID id) const
     {
@@ -498,12 +503,10 @@ namespace yq::tachyon {
         return m_threads.snap(id);
     }
 
-    #if 0
     const ViewerSnap*                  Frame::snap(ViewerID id) const
     {
         return m_viewers.snap(id);
     }
-    #endif
 
     const WidgetSnap*                  Frame::snap(WidgetID id) const
     {

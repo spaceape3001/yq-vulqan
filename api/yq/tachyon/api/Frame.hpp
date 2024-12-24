@@ -70,9 +70,11 @@ namespace yq::tachyon {
         //bool contains(SceneID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
-        //bool contains(ViewerID) const;
+        bool contains(ViewerID) const;
         bool contains(WidgetID) const;
         bool contains(WindowID) const;
+        
+        size_t count(viewer_t) const;
     
         const CameraData*                   data(CameraID) const;
         const CursorData*                   data(CursorID) const;
@@ -89,7 +91,7 @@ namespace yq::tachyon {
         //const SceneData*                    data(SceneID) const;
         const TachyonData*                  data(TachyonID) const;
         const ThreadData*                   data(ThreadID) const;
-        //const ViewerData*                   data(ViewerID) const;
+        const ViewerData*                   data(ViewerID) const;
         const WidgetData*                   data(WidgetID) const;
         const WindowData*                   data(WindowID) const;
         
@@ -144,7 +146,8 @@ namespace yq::tachyon {
         //! Thread pointer
         //! \note WARNING this will break thread-safety guarantees
         Thread*                             object(ThreadID) const;
-        //Viewer*                             object(ThreadID) const;
+        
+        Viewer*                             object(ViewerID) const;
 
         //! Widget pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -187,7 +190,7 @@ namespace yq::tachyon {
         //const SceneSnap*                    snap(SceneID) const;
         const TachyonSnap*                  snap(TachyonID) const;
         const ThreadSnap*                   snap(ThreadID) const;
-        //const ViewerSnap*                   snap(ViewerID) const;
+        const ViewerSnap*                   snap(ViewerID) const;
         const WidgetSnap*                   snap(WidgetID) const;
         const WindowSnap*                   snap(WindowID) const;
 
@@ -217,6 +220,7 @@ namespace yq::tachyon {
             const S*    snap(uint64_t) const;
             T*          pointer(uint64_t) const;
             bool        has(uint64_t) const;
+            size_t      count() const;
         };
     
         const ThreadID          m_origin;
@@ -241,7 +245,7 @@ namespace yq::tachyon {
         Container<Rendered, RenderedData, RenderedSnap>     m_rendereds;
         Container<Tachyon, TachyonData, TachyonSnap>        m_tachyons;
         Container<Thread, ThreadData, ThreadSnap>           m_threads;
-        //Container<Viewer, ViewerData, ViewerSnap>           m_viewers;
+        Container<Viewer, ViewerData, ViewerSnap>           m_viewers;
         Container<Widget, WidgetData, WidgetSnap>           m_widgets;
         Container<Window, WindowData, WindowSnap>           m_windows;
 

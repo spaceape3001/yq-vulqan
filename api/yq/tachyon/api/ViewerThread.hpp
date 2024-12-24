@@ -31,6 +31,6 @@ namespace yq::tachyon {
         
     private:
         friend class Application;
-        void    shutdown();
+        void        shutdown();
     };
 }

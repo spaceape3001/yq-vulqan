@@ -962,11 +962,8 @@ namespace yq::tachyon {
             m_state.time        = sn->time;
         }
 
-        #if 0
-            //  TODO
         if(m_imgui)
-            m_imgui->tick();
-        #endif
+            m_imgui->tick(m_state);
         
         if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
             draw(); // HACK (for now)

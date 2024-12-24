@@ -26,6 +26,7 @@
 #include <yq/tachyon/api/Shader.hpp>
 #include <yq/tachyon/api/Texture.hpp>
 #include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/ViewerState.hpp>
 #include <yq/tachyon/events/KeyCharacterEvent.hpp>
 #include <yq/tachyon/events/KeyPressEvent.hpp>
 #include <yq/tachyon/events/KeyReleaseEvent.hpp>
@@ -34,7 +35,6 @@
 #include <yq/tachyon/events/MouseReleaseEvent.hpp>
 #include <yq/tachyon/events/WindowDefocusEvent.hpp>
 #include <yq/tachyon/events/WindowFocusEvent.hpp>
-#include <yq/tachyon/events/WindowStateEvent.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
@@ -736,12 +736,10 @@ namespace yq::tachyon {
         io.AddFocusEvent(true);
     }
 
-    void    ViGui::on(const WindowStateEvent&evt)
+    void    ViGui::tick(const ViewerState&state)
     {
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
-
-        const ViewerState& state    = evt.state();
 
         // update the area
         io.DisplaySize  = ImVec2((float) state.window.area.x, (float) state.window.area.y);
@@ -760,6 +758,7 @@ namespace yq::tachyon {
         // update mouse position
         io.AddMousePosEvent((float) state.mouse.position.x, (float) state.mouse.position.y);
     }
+    
 
     ///////////////////////////////////
     //void ViGui::init_info()

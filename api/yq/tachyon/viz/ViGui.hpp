@@ -47,7 +47,8 @@ namespace yq::tachyon {
     class MouseReleaseEvent;
     class WindowFocusEvent;
     class WindowDefocusEvent;
-    class WindowStateEvent;
+    
+    struct ViewerState;
     
     //class 
 
@@ -85,7 +86,7 @@ namespace yq::tachyon {
         
         static void init_info();
         
-//        void    tick();
+        void    tick(const ViewerState&);
         
         
     private:
@@ -161,7 +162,7 @@ namespace yq::tachyon {
         
         void    on(const WindowFocusEvent&);
         void    on(const WindowDefocusEvent&);
-        void    on(const WindowStateEvent&);
+//        void    on(const WindowStateEvent&);
     };
     
     #if 0

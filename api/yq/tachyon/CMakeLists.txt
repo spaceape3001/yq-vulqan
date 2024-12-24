@@ -231,7 +231,6 @@ add_library(${PROJECT_NAME} SHARED
     events/WindowRestoreEvent.cpp
     events/WindowScaleEvent.cpp
     events/WindowShowEvent.cpp
-    events/WindowStateEvent.cpp
     events/WindowTitleEvent.cpp
     
     # font/Font.cpp      # Issue/TODO

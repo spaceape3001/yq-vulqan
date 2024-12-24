@@ -32,6 +32,6 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    app.run(new ImGuiDemoWidget);
+    app.run(Widget::create<ImGuiDemoWidget>());
     return 0;
 }

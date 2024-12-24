@@ -6,6 +6,8 @@
 
 #include "Camera.hpp"
 #include "CameraData.hpp"
+#include "Controller.hpp"
+#include "ControllerData.hpp"
 #include "Cursor.hpp"
 #include "CursorData.hpp"
 #include "Desktop.hpp"
@@ -46,6 +48,7 @@
 #include "Window.hpp"
 #include "WindowData.hpp"
 
+#include <yq/core/StreamOps.hpp>
 #include <yq/tachyon/logging.hpp>
 
 namespace yq::tachyon {
@@ -124,6 +127,8 @@ namespace yq::tachyon {
 
         if(types(Type::Camera))
             m_cameras.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Controller))
+            m_controllers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Cursor))
             m_cursors.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Desktop))
@@ -161,6 +166,11 @@ namespace yq::tachyon {
     bool Frame::contains(CameraID id) const
     {
         return m_cameras.has(id);
+    }
+
+    bool Frame::contains(ControllerID id) const
+    {
+        return m_controllers.has(id);
     }
 
     bool Frame::contains(CursorID id) const
@@ -252,14 +262,99 @@ namespace yq::tachyon {
         return m_windows.has(id);
     }
 
+    size_t Frame::count(camera_t) const
+    {
+        return m_cameras.count();
+    }
+    
+    size_t Frame::count(controller_t) const
+    {
+        return m_controllers.count();
+    }
+    
+    size_t Frame::count(cursor_t) const
+    {
+        return m_cursors.count();
+    }
+    
+    size_t Frame::count(desktop_t) const
+    {
+        return m_desktops.count();
+    }
+    
+    size_t Frame::count(keyboard_t) const
+    {
+        return m_keyboards.count();
+    }
+    
+    size_t Frame::count(joystick_t) const
+    {
+        return m_joysticks.count();
+    }
+    
+    size_t Frame::count(light_t) const
+    {
+        return m_lights.count();
+    }
+    
+    size_t Frame::count(manager_t) const
+    {
+        return m_managers.count();
+    }
+    
+    size_t Frame::count(model_t) const
+    {
+        return m_models.count();
+    }
+    
+    size_t Frame::count(monitor_t) const
+    {
+        return m_monitors.count();
+    }
+
+    size_t Frame::count(mouse_t) const
+    {
+        return m_mouses.count();
+    }
+    
+    size_t Frame::count(rendered_t) const
+    {
+        return m_rendereds.count();
+    }
+
+    size_t Frame::count(tachyon_t) const
+    {
+        return m_tachyons.count();
+    }
+
+    size_t Frame::count(thread_t) const
+    {
+        return m_threads.count();
+    }
+
     size_t Frame::count(viewer_t) const
     {
         return m_viewers.count();
+    }
+
+    size_t Frame::count(widget_t) const
+    {
+        return m_widgets.count();
+    }
+    
+    size_t Frame::count(window_t) const
+    {
+        return m_windows.count();
     }
     
     const CameraData*                   Frame::data(CameraID id) const
     {
         return m_cameras.data(id);
+    }
+
+    const ControllerData*               Frame::data(ControllerID id) const
+    {
+        return m_controllers.data(id);
     }
 
     const CursorData*                   Frame::data(CursorID id) const
@@ -339,10 +434,14 @@ namespace yq::tachyon {
         return m_windows.data(id);
     }
 
-
     Camera*                             Frame::object(CameraID id) const
     {
         return m_cameras.pointer(id);
+    }
+
+    Controller*                         Frame::object(ControllerID id) const
+    {
+        return m_controllers.pointer(id);
     }
 
     Cursor*                             Frame::object(CursorID id) const
@@ -443,9 +542,40 @@ namespace yq::tachyon {
         return nullptr;
     }
 
+    void    Frame::report(Stream& out) const
+    {
+        out << "Report for Frame (" << m_number << ")\n"
+            << "  Origin:       " << (uint64_t) m_origin << "\n"
+            << "  Tick:         " << m_tick << "\n"
+            << "  Clock:        " << std::format("{:%Y%m%d %H:%M:%S.%Z}", m_wallclock) << "\n"
+            << "     - - - - - \n"
+            << "  Cameras:      " << count(CAMERA) << "\n"
+            << "  Controllers:  " << count(CONTROLLER) << "\n"
+            << "  Cursors:      " << count(CURSOR) << "\n"
+            << "  Desktops:     " << count(DESKTOP) << "\n"
+            << "  Keyboards:    " << count(KEYBOARD) << "\n"
+            << "  Joysticks:    " << count(JOYSTICK) << "\n"
+            << "  Lights:       " << count(LIGHT) << "\n"
+            << "  Managers:     " << count(MANAGER) << "\n"
+            << "  Models:       " << count(MODEL) << "\n"
+            << "  Mouses:       " << count(MOUSE) << "\n"
+            << "  Rendereds:    " << count(RENDERED) << "\n"
+            << "  Tachyons:     " << count(TACHYON) << "\n"
+            << "  Threads:      " << count(THREAD) << "\n"
+            << "  Viewers:      " << count(VIEWER) << "\n"
+            << "  Widgets:      " << count(WIDGET) << "\n"
+            << "  Windows:      " << count(WINDOW) << "\n"
+        ;
+    }
+
     const CameraSnap*                  Frame::snap(CameraID id) const
     {
         return m_cameras.snap(id);
+    }
+
+    const ControllerSnap*              Frame::snap(ControllerID id) const
+    {
+        return m_controllers.snap(id);
     }
 
     const CursorSnap*                  Frame::snap(CursorID id) const

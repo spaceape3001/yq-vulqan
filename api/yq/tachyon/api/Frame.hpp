@@ -13,6 +13,7 @@
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
+#include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/cursor.hpp>
 #include <yq/tachyon/typedef/desktop.hpp>
 #include <yq/tachyon/typedef/frame.hpp>
@@ -36,6 +37,8 @@
 #include <chrono>
 #include <unordered_map>
 
+namespace yq { class Stream; }
+
 namespace yq::tachyon {
     class Proxy;
     class InterfaceInfo;
@@ -54,8 +57,8 @@ namespace yq::tachyon {
     
         using proxy_span_t  = std::span<Proxy* const>;
 
-
         bool contains(CameraID) const;
+        bool contains(ControllerID) const;
         bool contains(CursorID) const;
         bool contains(DesktopID) const;
         //bool contains(EditorID) const;
@@ -74,9 +77,26 @@ namespace yq::tachyon {
         bool contains(WidgetID) const;
         bool contains(WindowID) const;
         
+        size_t count(camera_t) const;
+        size_t count(controller_t) const;
+        size_t count(cursor_t) const;
+        size_t count(desktop_t) const;
+        size_t count(keyboard_t) const;
+        size_t count(joystick_t) const;
+        size_t count(light_t) const;
+        size_t count(manager_t) const;
+        size_t count(model_t) const;
+        size_t count(monitor_t) const;
+        size_t count(mouse_t) const;
+        size_t count(rendered_t) const;
+        size_t count(tachyon_t) const;
+        size_t count(thread_t) const;
         size_t count(viewer_t) const;
+        size_t count(widget_t) const;
+        size_t count(window_t) const;
     
         const CameraData*                   data(CameraID) const;
+        const ControllerData*               data(ControllerID) const;
         const CursorData*                   data(CursorID) const;
         const DesktopData*                  data(DesktopID) const;
         //const EditorData*                   data(EditorID) const;
@@ -98,6 +118,8 @@ namespace yq::tachyon {
         //! Camera pointer
         //! \note WARNING this will break thread-safety guarantees
         Camera*                             object(CameraID) const;
+
+        Controller*                         object(ControllerID) const;
 
         //! Cursor pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -176,6 +198,7 @@ namespace yq::tachyon {
         Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
         
         const CameraSnap*                   snap(CameraID) const;
+        const ControllerSnap*               snap(ControllerID) const;
         const CursorSnap*                   snap(CursorID) const;
         const DesktopSnap*                  snap(DesktopID) const;
         //const EditorSnap*                   snap(EditorID) const;
@@ -200,6 +223,8 @@ namespace yq::tachyon {
         uint64_t        number() const { return m_number; }
         time_point_t    wallclock() const { return m_wallclock; }
         uint64_t        tick() const { return m_tick; }
+        
+        void            report(Stream&) const;
 
     private:
 
@@ -228,26 +253,27 @@ namespace yq::tachyon {
         const time_point_t      m_wallclock;
         const uint64_t          m_tick;
         
-        std::unordered_map<uint64_t, ThreadID>              m_owners;
-        std::unordered_map<uint64_t, Types>                 m_types;
+        std::unordered_map<uint64_t, ThreadID>                  m_owners;
+        std::unordered_map<uint64_t, Types>                     m_types;
 
-        Container<Camera, CameraData, CameraSnap>           m_cameras;
-        Container<Cursor, CursorData, CursorSnap>           m_cursors;
-        Container<Desktop, DesktopData, DesktopSnap>        m_desktops;
-        //Container<Editor, EditorData, EditorSnap>           m_editors;
-        Container<Joystick, JoystickData, JoystickSnap>     m_joysticks;
-        Container<Keyboard, KeyboardData, KeyboardSnap>     m_keyboards;
-        Container<Light, LightData, LightSnap>              m_lights;
-        Container<Manager, ManagerData, ManagerSnap>        m_managers;
-        Container<Model, ModelData, ModelSnap>              m_models;
-        Container<Monitor, MonitorData, MonitorSnap>        m_monitors;
-        Container<Mouse, MouseData, MouseSnap>              m_mouses;
-        Container<Rendered, RenderedData, RenderedSnap>     m_rendereds;
-        Container<Tachyon, TachyonData, TachyonSnap>        m_tachyons;
-        Container<Thread, ThreadData, ThreadSnap>           m_threads;
-        Container<Viewer, ViewerData, ViewerSnap>           m_viewers;
-        Container<Widget, WidgetData, WidgetSnap>           m_widgets;
-        Container<Window, WindowData, WindowSnap>           m_windows;
+        Container<Camera, CameraData, CameraSnap>               m_cameras;
+        Container<Controller, ControllerData, ControllerSnap>   m_controllers;
+        Container<Cursor, CursorData, CursorSnap>               m_cursors;
+        Container<Desktop, DesktopData, DesktopSnap>            m_desktops;
+        //Container<Editor, EditorData, EditorSnap>               m_editors;
+        Container<Joystick, JoystickData, JoystickSnap>         m_joysticks;
+        Container<Keyboard, KeyboardData, KeyboardSnap>         m_keyboards;
+        Container<Light, LightData, LightSnap>                  m_lights;
+        Container<Manager, ManagerData, ManagerSnap>            m_managers;
+        Container<Model, ModelData, ModelSnap>                  m_models;
+        Container<Monitor, MonitorData, MonitorSnap>            m_monitors;
+        Container<Mouse, MouseData, MouseSnap>                  m_mouses;
+        Container<Rendered, RenderedData, RenderedSnap>         m_rendereds;
+        Container<Tachyon, TachyonData, TachyonSnap>            m_tachyons;
+        Container<Thread, ThreadData, ThreadSnap>               m_threads;
+        Container<Viewer, ViewerData, ViewerSnap>               m_viewers;
+        Container<Widget, WidgetData, WidgetSnap>               m_widgets;
+        Container<Window, WindowData, WindowSnap>               m_windows;
 
 
         friend class Thread;

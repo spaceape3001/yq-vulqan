@@ -21,6 +21,7 @@
 #include <yq/tachyon/commands/TachyonThreadCommand.hpp>
 #include <yq/tachyon/commands/TachyonUnsubscribeCommand.hpp>
 
+#include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/tachyon/logging.hpp>
 
@@ -664,6 +665,13 @@ namespace yq::tachyon {
         w.slot(&Tachyon::on_proxy_command);
         w.slot(&Tachyon::on_thread_command);
         w.property("name", &Tachyon::name);
+    }
+
+
+    Stream& operator<<(Stream&str, const Tachyon::Ident& i)
+    {
+        str << "{" << i.metaName << ":" << i.id << "}";
+        return str;
     }
 }
 

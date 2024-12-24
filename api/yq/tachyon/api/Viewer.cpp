@@ -10,6 +10,7 @@
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Raster.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
@@ -951,9 +952,11 @@ namespace yq::tachyon {
         case Stage::Preinit:
             return {};
         case Stage::Started:
-            send(new WindowShowCommand(m_window), m_window);
+            if(ctx.frame.contains(m_window)){
+                send(new WindowShowCommand(m_window), m_window);
 viewerInfo << "Showing the window";            
-            m_stage = Stage::Running;
+                m_stage = Stage::Running;
+            }
             break;
         case Stage::Running:
             break;

@@ -13,10 +13,14 @@
 #include "ThreadInfoWriter.hpp"
 
 #include <yq/core/ThreadId.hpp>
+#include <yq/stream/Logger.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/events/ThreadAddTachyonEvent.hpp>
 
 namespace yq::tachyon {
+    using namespace std::chrono_literals;
+
+    static constexpr const std::chrono::milliseconds kFrameReport    = 0ms;
 
     inline bool    is_specified(const Execution&es)
     {
@@ -309,6 +313,16 @@ namespace yq::tachyon {
             build.add(i.first, *i.second);
         }
         build.finalize();
+        
+        if constexpr (kFrameReport != 0ms){
+            time_point_t    n   = clock_t::now();
+            if((m_lastFrameReport == time_point_t{}) || (m_lastFrameReport + kFrameReport <= n)){
+                m_lastFrameReport   = n;
+                stream::Logger  log(tachyonInfo);
+                log << ident() << " -- ";
+                frame->report(log);
+            }
+        }
 
         Context ctx(*frame);
         auto d = cycle(ctx);
@@ -316,6 +330,8 @@ namespace yq::tachyon {
             lock_t  _lock(s_mutex, true);
             s_data[id()] = (ThreadData*) d.data.ptr();
         }
+        
+        ++m_tick;
     }
     
     Execution    Thread::tick(Context& ctx)

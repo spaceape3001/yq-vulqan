@@ -40,8 +40,8 @@ namespace yq::tachyon {
             m_quitOnZero        = true;
         }
         if(m_quitOnZero && (vc == 0)){
-            tachyonInfo << ident() << " all viewers closed, quitting";
-            //quit();
+            //tachyonInfo << ident() << " all viewers closed, quitting";
+            quit();
         }
         return {};
     }

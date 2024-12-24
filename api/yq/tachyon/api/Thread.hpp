@@ -8,6 +8,7 @@
 
 #include <yq/units.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/clock.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
 #include <thread>
 
@@ -132,5 +133,6 @@ namespace yq::tachyon {
         std::vector<PP>                 m_pushing;
         std::thread                     m_thread;
         uint64_t                        m_tick      = 0ULL;
+        time_point_t                    m_lastFrameReport{};
     };
 }

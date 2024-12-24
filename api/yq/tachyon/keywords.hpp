@@ -34,6 +34,7 @@ namespace yq::tachyon {
     struct adjust_t {};
     struct adjustable_t {};
     struct app_t {};
+    struct camera_t {};
     struct changed_t {};
     struct child_t {};
     struct children_t {};
@@ -44,6 +45,7 @@ namespace yq::tachyon {
     struct create_t {};
     struct cursor_t {};
     struct delete_t {};
+    struct desktop_t {};
     struct direct_t{};
     struct disable_t {};
     struct enable_t {};
@@ -65,8 +67,11 @@ namespace yq::tachyon {
     struct info_t {};
     struct joystick_t {};
     struct keyboard_t {};
+    struct light_t {};
     struct lock_t {};
     struct locked_t {};
+    struct manager_t {};
+    struct model_t {};
     struct moveable_t {};
     struct monitor_t {};
     struct mouse_t {};
@@ -82,6 +87,7 @@ namespace yq::tachyon {
     struct ptr_t {};
     struct queue_t {};
     struct reject_t {};
+    struct rendered_t {};
     struct resume_t {};
     struct root_t {};
     struct settable_t {};
@@ -112,6 +118,7 @@ namespace yq::tachyon {
     static constexpr adjust_t       ADJUST;
     static constexpr adjustable_t   ADJUSTABLE;
     static constexpr app_t          APP;
+    static constexpr camera_t       CAMERA;
     static constexpr changed_t      CHANGED;
     static constexpr child_t        CHILD;
     static constexpr children_t     CHILDREN;
@@ -123,6 +130,7 @@ namespace yq::tachyon {
     static constexpr create_t       CREATE;
     static constexpr cursor_t       CURSOR;
     static constexpr delete_t       DELETE;
+    static constexpr desktop_t      DESKTOP;
     static constexpr direct_t       DIRECT;
     static constexpr disable_t      DISABLE;
     static constexpr dynamic_t      DYNAMIC;
@@ -138,8 +146,11 @@ namespace yq::tachyon {
     static constexpr info_t         INFO;
     static constexpr joystick_t     JOYSTICK;
     static constexpr keyboard_t     KEYBOARD;
+    static constexpr light_t        LIGHT;
     static constexpr lock_t         LOCK;
     static constexpr locked_t       LOCKED;
+    static constexpr manager_t      MANAGER;
+    static constexpr model_t        MODEL;
     static constexpr monitor_t      MONITOR;
     static constexpr moveable_t     MOVEABLE;
     static constexpr mouse_t        MOUSE;
@@ -153,6 +164,7 @@ namespace yq::tachyon {
     static constexpr queue_t        QUEUE;
     static constexpr refresh_t      REFRESH;
     static constexpr reject_t       REJECT;
+    static constexpr rendered_t     RENDERED;
     static constexpr resume_t       RESUME;
     static constexpr root_t         ROOT;
     static constexpr settable_t     SETTABLE;

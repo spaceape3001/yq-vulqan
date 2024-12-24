@@ -412,6 +412,8 @@ namespace yq::tachyon {
     {
         return create_child<T>(args...);
     }
+
+    Stream& operator<<(Stream&, const Tachyon::Ident&);
 }
 
 std::ostringstream& operator<<(std::ostringstream&, const yq::tachyon::Tachyon::Ident&);

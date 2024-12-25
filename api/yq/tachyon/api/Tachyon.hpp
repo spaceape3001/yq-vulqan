@@ -140,50 +140,73 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
         
+        /*! \brief Quick identity
+        
+            Used for logging to the logger (class/id)
+        */
         struct Ident {
             std::string_view    metaName;
+            std::string_view    tacName;
             uint64_t            id  = 0;
         };
         
         static void         init_info();
         
         
-        // Inbound mail
+        //! Inbound mail to this tachyon
+        //! \note Can be used to self-mail commands
         void                mail(const PostCPtr&);
+        
+        //! Inbound mail to this tachyon
         void                mail(std::span<PostCPtr const>);
         
-        static void         mail(TachyonID, const PostCPtr&);
+        // Mail this post to the given tachyon...
+        //static void         mail(TachyonID, const PostCPtr&);
         
         TachyonID           id() const { return { UniqueID::id() }; }
         
+        /*! Short ident meant for logging (meta/ID)
+        
+            This is used for debug logging... yes, having loads of issues, and
+            it's good to have meta/ID/name tuple there.
+        */
         Ident               ident() const;
         
+        //! Our name
         const std::string&  name() const { return m_name; }
         
+        //! Thread that owns us
         ThreadID            owner() const;
         
         //! Virtual so derived classes can push children as well
         virtual void        owner(push_t, ThreadID);
         
+        //! Our parent
         TypedID             parent() const { return m_parent; }
         
+        //! Parent pointer (from a frame)
         Tachyon*            parent(const Frame&) const;
         
         //! \note NOT thread-safe (yet)
-        void                subscribe(TachyonID, MGF grp=MG::General);
+        //! Subscribes the given listener to OUR posts
+        void                subscribe(TachyonID listener, MGF grp=MG::General);
         //! \note NOT thread-safe (yet)
-        void                unsubscribe(TachyonID, MGF grp=ALL);
+        //! Unsubscribes the given listener from OUR posts
+        void                unsubscribe(TachyonID listener, MGF grp=ALL);
 
         struct Param { /* reserved for future use */ 
             name_spec       name;
         };
         
+        //! Creates a tachyon (no parent)
         template <SomeTachyon T, typename ... Args>
         static T*   create(Args...);
     
+        //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
         T*          create(child_t, Args...);
 
+        //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
         T*          create_child(Args...);
 
@@ -197,9 +220,11 @@ namespace yq::tachyon {
         //template <SomeTachyon T>
         //static T*   create(const typename T::MyInfo&, std::span<const Any> args);
 
+        //! Creates a tachyon (no parent) using the given meta information
         template <SomeTachyon T>
         T*          create(child_t, const typename T::MyInfo&);
 
+        //! Creates a "child" tachyon using the given meta information
         template <SomeTachyon T>
         T*          create_child(const typename T::MyInfo&);
 
@@ -283,12 +308,18 @@ namespace yq::tachyon {
         */
         virtual PostAdvice  advise(const Post&) const;
 
+        /*! \brief SENDS a post
+        
+            \note Preferred method to send post
+        */
         void            send(const PostCPtr&, PostTarget dst=MG::General);
 
-        /*! \brief HANDLES the specified post
+        /*! \brief DIRECTLY HANDLES the specified post
         
             \note Override to forward, call base to do normal processing 
             (ie, the dispatch...eventually)
+            
+            \note Inadvisable to routinely call this (aside from the tachyon class itself)
         */
         virtual void    dispatch(const PostCPtr&);
         

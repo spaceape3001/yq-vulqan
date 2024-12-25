@@ -15,13 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(KeyPressTrigger, Trigger)
     public:
     
-        struct Param : public Trigger::Param {
-            ModifierKeys::Checker   modifiers;
-            
-            Param(){}
-        };
-        
-        KeyPressTrigger(KeyCode, const Param& p=Param());
+        KeyPressTrigger(KeyCode, ModifierKeys::Checker chk={}, const Param& p=Param());
         ~KeyPressTrigger();
         
         virtual const PostInfo&     post_info() const override;

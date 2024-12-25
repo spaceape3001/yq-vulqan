@@ -31,9 +31,10 @@ namespace yq::tachyon {
         friend class Trigger;
     };
     
-    /*! \brief Triggers posts
+    /*! \brief Detector of posts
     
-        A trigger is a detector of posts
+        This is meant to register "triggered" whenever a qualifying 
+        post is found & values are suitablly matched.
     */
     class Trigger : public Object, public RefCount, public UniqueID {
     private:
@@ -53,8 +54,9 @@ namespace yq::tachyon {
         >;
         
         struct Param {
-            bool    mismatch;
-            bool    errors;
+            bool    mismatch    = false;    // TRUE turns mismatch to accept
+            bool    errors      = false;    // TRUE turns failure to accept
+            Param(){}
         };
         
         //! Gets the raw match data (with exception catching)
@@ -71,7 +73,7 @@ namespace yq::tachyon {
         static void init_info();
 
     protected:
-        Trigger(const Param& p = {});
+        Trigger(const Param& p = Param());
         ~Trigger();
 
 

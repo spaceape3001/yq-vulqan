@@ -12,7 +12,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyPressTrigger)
 
 namespace yq::tachyon {
-    KeyPressTrigger::KeyPressTrigger(KeyCode kc, const Param& p) : Trigger(p), m_key(kc), m_modifiers(p.modifiers)
+    KeyPressTrigger::KeyPressTrigger(KeyCode kc, ModifierKeys::Checker chk, const Param& p) : 
+        Trigger(p), m_key(kc), m_modifiers(chk)
     {
     }
     

@@ -517,7 +517,7 @@ namespace yq::tachyon {
 
     Tachyon::Ident               Tachyon::ident() const
     {
-        return { metaInfo().name(), (uint64_t) id() };
+        return { metaInfo().name(), m_name, (uint64_t) id() };
     }
 
     bool Tachyon::in_tick() const
@@ -692,14 +692,22 @@ namespace yq::tachyon {
 
     Stream& operator<<(Stream&str, const Tachyon::Ident& i)
     {
-        str << "{" << i.metaName << ":" << i.id << "}";
+        str << "{" << i.metaName << ":" << i.id;
+        if(!i.tacName.empty()){
+            str<<":\"" << i.tacName << "\"";
+        }
+        str << "}";
         return str;
     }
 }
 
 std::ostringstream& operator<<(std::ostringstream&str, const yq::tachyon::Tachyon::Ident& i)
 {
-    str << "{" << i.metaName << ":" << i.id << "}";
+    str << "{" << i.metaName << ":" << i.id;
+    if(!i.tacName.empty()){
+        str<<":\"" << i.tacName << "\"";
+    }
+    str << "}";
     return str;
 }
 

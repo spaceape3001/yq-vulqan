@@ -300,6 +300,14 @@ namespace yq::tachyon {
         return {};
     }
 
+    void    Thread::task(task_fn&&fn)
+    {
+        if(!fn)
+            return ;
+        lock_t _lock(m_mutex, true);
+        m_tasks.push_back(fn);
+    }
+
     void    Thread::tick()
     {
         //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick()";
@@ -415,12 +423,22 @@ namespace yq::tachyon {
             tp->subscribe(id(), MG::Thread);
             subscribe(tp->id(), MG::Tachyon);
             c.object        = std::move(tp);
+            d.created.insert(tp->id());
             send(new ThreadAddTachyonEvent(this, tp.ptr()));
         }
         
         //  TODO: Some multithreadedness...
-        Execution ex = subtick(ctx);
+        {
+            std::vector<task_fn>            tasks;
+            {
+                lock_t _lock(m_mutex, true);
+                std::swap(tasks, m_tasks);
+            }
+            for(task_fn& fn : tasks)
+                fn();
+        }
         
+        Execution ex = subtick(ctx);
         for(auto itr = m_objects.begin(); itr != m_objects.end(); ++itr){
             execute(itr->second, ctx);
         }

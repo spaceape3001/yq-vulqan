@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
+#include <functional>
 #include <thread>
 
 namespace yq::tachyon {
@@ -70,6 +71,11 @@ namespace yq::tachyon {
         
         //  This is the thread's tick
         virtual void    tick();
+        
+        using task_fn   = std::function<void()>;
+        
+        //! Adds a run-once task to the queue (ran on the next tick)
+        void            task(task_fn&&);
         
     protected:
         virtual Execution   tick(Context&) override final;
@@ -134,6 +140,7 @@ namespace yq::tachyon {
         std::map<TachyonID, Control>    m_objects;
         std::vector<TachyonPtr>         m_creates;  //!< Objects that were created (will be handled next tick)
         std::vector<PP>                 m_pushing;
+        std::vector<task_fn>            m_tasks;
         std::thread                     m_thread;
         uint64_t                        m_tick      = 0ULL;
         time_point_t                    m_lastFrameReport{};

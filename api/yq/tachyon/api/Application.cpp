@@ -8,6 +8,7 @@
 #include <yq/tachyon/api/AppException.hpp>
 #include <yq/tachyon/api/AppThread.hpp>
 #include <yq/tachyon/api/Application.hpp>
+#include <yq/tachyon/api/TaskThread.hpp>
 #include <yq/tachyon/api/Viewer.hpp>
 #include <yq/tachyon/api/ViewerThread.hpp>
 #include <yq/tachyon/api/Widget.hpp>
@@ -87,6 +88,12 @@ namespace yq::tachyon {
             m_vthread -> shutdown();
             m_vthread -> join();
             m_vthread   = nullptr;
+        }
+
+        if(m_tthread){
+            m_tthread -> shutdown();
+            m_tthread -> join();
+            m_tthread   = nullptr;
         }
 
         if(m_athread){
@@ -193,12 +200,23 @@ namespace yq::tachyon {
     ViewerThread&              Application::thread(viewer_t)
     {
         if(!m_vthread){
+            thread(APP);
             m_vthread   = new ViewerThread;
             m_vthread->start();
         }
         return *m_vthread;
     }
     
+    TaskThread&             Application::thread(task_t)
+    {
+        if(!m_tthread){
+            thread(APP);
+            m_tthread   = new TaskThread;
+            m_tthread->start();
+        }
+        return *m_tthread;
+    }
+
 
 #if 0
     Viewer*                     create_viewer(WidgetPtr);

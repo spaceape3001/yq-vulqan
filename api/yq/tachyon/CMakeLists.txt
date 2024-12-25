@@ -58,6 +58,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Sampler.cpp
     api/Shader.cpp
     api/Tachyon.cpp
+    api/TaskThread.cpp
     api/Texture.cpp
     api/Thread.cpp
     #api/Tool.cpp
@@ -335,6 +336,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViCommandPool.cpp
     viz/ViContext.cpp
     viz/ViData.cpp
+    viz/ViDevice.cpp
     viz/ViFence.cpp
     viz/ViFrame.cpp
     viz/ViGui.cpp
@@ -347,6 +349,7 @@ add_library(${PROJECT_NAME} SHARED
     viz/ViRenderPass.cpp
     viz/ViSampler.cpp
     viz/ViShader.cpp
+    viz/ViSurface.cpp
     viz/ViSwapchain.cpp
     viz/ViTexture.cpp
     viz/ViTasker.cpp

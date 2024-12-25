@@ -93,6 +93,7 @@ namespace yq::tachyon {
     struct settable_t {};
     struct stop_t {};
     struct tachyon_t {};
+    struct task_t {};
     struct target_t {};
     struct top_t {};
     struct typed_t {};
@@ -172,6 +173,7 @@ namespace yq::tachyon {
     static constexpr stop_t         STOP;
     static constexpr tachyon_t      TACHYON;
     static constexpr target_t       TARGET;
+    static constexpr task_t         TASK;
     static constexpr top_t          TOP;
     static constexpr typed_t        TYPED;
     static constexpr types_t        TYPES;

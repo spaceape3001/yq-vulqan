@@ -6,6 +6,11 @@
 
 #pragma once
 
+#include <yq/core/Ref.hpp>
+#include <yq/core/Cleanup.hpp>
+#include <vulkan/vulkan_core.h>
+#include <vk_mem_alloc.h>
+
 namespace yq::tachyon {
     /*
 
@@ -19,8 +24,21 @@ namespace yq::tachyon {
     
     */
     
-    class ViDevice {
+    class ViDevice : public RefCount {
+    public:
         /* TBD */
+        
+        ViDevice(VkDevice);
+        ~ViDevice();
+        
+        void        cleanup();
+        
+    private:
+        VkDevice            m_device;
+        VmaAllocator        m_allocator         = nullptr;
+        Cleanup             m_cleanup;
+        
+        void    _kill();
     };
 }
 

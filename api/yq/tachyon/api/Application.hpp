@@ -27,6 +27,7 @@ namespace yq::tachyon {
     class Manager;
     class AppDeleteViewerCommand;
     class AppThread;
+    class TaskThread;
     class ViewerThread;
     class Desktop;
     class DesktopGLFW;
@@ -97,6 +98,10 @@ namespace yq::tachyon {
         
         static void init_info();
 
+        AppThread&              thread(app_t);
+        TaskThread&             thread(task_t);
+        ViewerThread&           thread(viewer_t);
+
     protected:
         //virtual void  receive(const post::PostCPtr&) override;
         
@@ -109,14 +114,13 @@ namespace yq::tachyon {
         std::vector<Manager*>   m_managers;
         //std::set<ViewerID>      m_viewers;
         AppThread*              m_athread   = nullptr;
+        TaskThread*             m_tthread   = nullptr;
         ViewerThread*           m_vthread   = nullptr;
         DesktopGLFW*            m_glfw      = nullptr;
         Vulqan*                 m_vulkan    = nullptr;
     
         friend class Viewer;
         
-        AppThread&              thread(app_t);
-        ViewerThread&           thread(viewer_t);
         DesktopGLFW&            desktop(glfw_t);
         Vulqan&                 manager(vulqan_t);
         

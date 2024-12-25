@@ -324,6 +324,7 @@ add_library(${PROJECT_NAME} SHARED
     #tools/tools.cpp
     
     triggers/AndTrigger.cpp
+    triggers/KeyPressTrigger.cpp
     triggers/NandTrigger.cpp
     triggers/NorTrigger.cpp
     triggers/NotTrigger.cpp

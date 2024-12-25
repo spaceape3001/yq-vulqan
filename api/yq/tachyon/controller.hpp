@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/controller/Controller.hpp>
-#include <yq/tachyon/controller/ControllerInfoWriter.hpp>
+#include <yq/tachyon/api/Controller.hpp>
+#include <yq/tachyon/api/ControllerInfoWriter.hpp>

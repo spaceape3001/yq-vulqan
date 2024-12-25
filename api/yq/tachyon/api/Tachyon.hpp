@@ -187,6 +187,25 @@ namespace yq::tachyon {
         template <SomeTachyon T, typename ... Args>
         T*          create_child(Args...);
 
+        /*! \brief Creates a tachyon using its meta information
+            
+            \note THIS CAN RETURN NULL!  (So chack)
+        */
+        template <SomeTachyon T>
+        static T*   create(const typename T::MyInfo&);
+
+        //template <SomeTachyon T>
+        //static T*   create(const typename T::MyInfo&, std::span<const Any> args);
+
+        template <SomeTachyon T>
+        T*          create(child_t, const typename T::MyInfo&);
+
+        template <SomeTachyon T>
+        T*          create_child(const typename T::MyInfo&);
+
+        //template <SomeTachyon T>
+        //T*          create(child_t, const typename T::MyInfo&, std::span<const Any> args);
+
     protected:
 
 
@@ -392,6 +411,9 @@ namespace yq::tachyon {
         void    on_unsnoop_command(const TachyonUnsnoopCommand&);
         void    on_unsubscribe_command(const TachyonUnsubscribeCommand&);
     };
+    
+    ////////////////////////////////////////////
+    //  Top-tachyon creates
 
     template <SomeTachyon T, typename ... Args>
     T*  Tachyon::create(Args... args)
@@ -401,6 +423,20 @@ namespace yq::tachyon {
         return tp.ptr();
     }
 
+    template <SomeTachyon T>
+    T*   Tachyon::create(const typename T::MyInfo& info)
+    {
+        Ref<T> tp = static_cast<T*>(info.create());
+        if(tp){
+            retain(tp);
+        }
+        return tp.ptr();
+    }
+
+    ////////////////////////////////////////////
+    //  Child-tachyon creates
+
+
     template <SomeTachyon T, typename ... Args>
     T*  Tachyon::create_child(Args... args)
     {
@@ -409,6 +445,24 @@ namespace yq::tachyon {
         tp->_set_parent(*this);
         _add_child(*tp);
         return tp.ptr();
+    }
+    
+    template <SomeTachyon T>
+    T*   Tachyon::create_child(const typename T::MyInfo& info)
+    {
+        Ref<T> tp = static_cast<T*>(info.create());
+        if(tp){
+            retain(tp);
+            tp->_set_parent(*this);
+            _add_child(*tp);
+        }
+        return tp.ptr();
+    }
+
+    template <SomeTachyon T>
+    T*   Tachyon::create(child_t, const typename T::MyInfo& info)
+    {
+        return create_child<T>(info);
     }
 
     template <SomeTachyon T, typename ... Args>

@@ -106,12 +106,13 @@ const auto QuadData = QuadrilateralData<ColorVertex2D> {
 };
 
 struct CameraController : public Controller {
-    YQ_OBJECT_DECLARE(CameraController, Controller)
+    YQ_TACHYON_DECLARE(CameraController, Controller)
     
-    Camera*     m_camera;
+    Camera*     m_camera = nullptr;
 
-    CameraController(Camera* cam) : Controller(cam), m_camera(cam)
+    CameraController(Camera* cam) : Controller(), m_camera(cam)
     {
+        cmd_control(cam->id());
     }
     
     ~CameraController()
@@ -122,10 +123,10 @@ struct CameraController : public Controller {
     {
         switch(evt.key()){
         case KeyCode::UpArrow:
-            dispatch(new CameraPitchCommand(m_camera, 10._deg));
+            send(new CameraPitchCommand(m_camera, 10._deg));
             break;
         case KeyCode::DownArrow:
-            dispatch(new CameraPitchCommand(m_camera, -10._deg));
+            send(new CameraPitchCommand(m_camera, -10._deg));
             break;
         default:
             break;
@@ -135,21 +136,21 @@ struct CameraController : public Controller {
     static void init_info()
     {
         auto w = writer<CameraController>();
-        w.receive(&CameraController::key_press);
+        w.slot(&CameraController::key_press);
     }
     
 };
 
-YQ_OBJECT_IMPLEMENT(CameraController)
+YQ_TACHYON_IMPLEMENT(CameraController)
 
 struct CameraScene3DWidget : public Scene3DWidget {
-    YQ_OBJECT_DECLARE(CameraScene3DWidget, Scene3DWidget)
+    YQ_TACHYON_DECLARE(CameraScene3DWidget, Scene3DWidget)
 
     std::vector<const CameraInfo*>      cam_infos;
     Map<std::string,Ref<Camera>,IgCase> cameras;
 
     timepoint_t             start;
-    Ref<SpaceCamera>        cam;
+    SpaceCamera*            cam = nullptr;
     bool                    show_camera = true;
     bool                    slave_clock = true;
     bool                    show_control    = true;
@@ -161,19 +162,19 @@ struct CameraScene3DWidget : public Scene3DWidget {
     }
     
 
-    Camera*     add_camera(const CameraInfo* ci)
+    Camera*     add_camera(const CameraInfo& ci)
     {
-        Ref<Camera> c   = new SpaceCamera; //static_cast<Camera*>(ci->create());
+        Camera* c   = create<Camera>(ci);
         if(!c){
-            yError() << "Unable to create camera of type " << ci->name();
+            yError() << "Unable to create camera of type " << ci.name();
             return nullptr;
         }
         
-        std::string     base(ci->name_stem());
+        std::string     base(ci.name_stem());
         std::string     candidate   = base;
         for(unsigned int n=2; cameras.contains(candidate); ++n)
             candidate   = base + ':' + to_string(n);
-        c->set_name(candidate);
+        //c->set_name(candidate);
         cameras[candidate]  = c;
         return c;
     }
@@ -195,9 +196,9 @@ struct CameraScene3DWidget : public Scene3DWidget {
             }
         );
         
-        new SpaceCamera;
+        //new SpaceCamera;
         
-        Camera*     c   = add_camera(&meta<SpaceCamera>());
+        Camera*     c   = add_camera(meta<SpaceCamera>());
         assert(c);
         
         set_camera(c);
@@ -208,47 +209,47 @@ struct CameraScene3DWidget : public Scene3DWidget {
         cam->set_near(.1);
         cam->set_far(20.);
         
-        Ref<Triangle>   tri = new Triangle(TriData);
+        Triangle³*   tri = create<Triangle³>(TriData);
         tri->set_scaling(0.5);
         add_thing(tri);
         
-        Ref<Tetrahedron>    dir     = new Tetrahedron(NorthData);
+        Tetrahedron³*    dir     = create<Tetrahedron³>(NorthData);
         dir->set_position({0., 5., 0. });
         add_thing(dir);
 
-        dir     = new Tetrahedron(SouthData);
+        dir     = create<Tetrahedron³>(SouthData);
         dir->set_position({0., -5., 0. });
         add_thing(dir);
             
-        dir     = new Tetrahedron(EastData);
+        dir     = create<Tetrahedron³>(EastData);
         dir->set_position({5., 0., 0. });
         add_thing(dir);
 
-        dir     = new Tetrahedron(WestData);
+        dir     = create<Tetrahedron³>(WestData);
         dir->set_position({-5., 0., 0. });
         add_thing(dir);
         
-        dir     = new Tetrahedron(TopData);
+        dir     = create<Tetrahedron³>(TopData);
         dir->set_position({0., 0., 5. });
         add_thing(dir);
         
-        dir     = new Tetrahedron(BottomData);
+        dir     = create<Tetrahedron³>(BottomData);
         dir->set_position({0., 0., -5. });
         add_thing(dir);
             
-        Ref<Quadrilateral> quad = new Quadrilateral(QuadData);
+        Quadrilateral³* quad = create<Quadrilateral³>(QuadData);
         quad->set_scaling(0.5);
         quad->set_heading( (Radian) 45._deg );
         quad->set_position({ 0.5, 0.5, 0. });
         add_thing(quad);
         
-        attach(CONTROLLER, new CameraController(cam));
+        CameraController*cc = create<CameraController>(cam);
+        cc->cmd_listen(id());
     }
     
-    void        tick() override
+    Execution        tick(Context&) override
     {
-        Scene3DWidget::tick();
-        cam -> tick();
+        return {};
     }
 
     void        vulkan_(ViContext& ctx) override
@@ -281,7 +282,7 @@ struct CameraScene3DWidget : public Scene3DWidget {
                     for(const CameraInfo* ci : cam_infos){
                         std::string txt(ci->name_stem());
                         if(MenuItem(txt.c_str())){
-                            Camera*c    = add_camera(ci);
+                            Camera*c    = add_camera(*ci);
                             if(c){
                                 set_camera(c);
                             }
@@ -379,7 +380,7 @@ struct CameraScene3DWidget : public Scene3DWidget {
     
 };
 
-YQ_OBJECT_IMPLEMENT(CameraScene3DWidget)
+YQ_TACHYON_IMPLEMENT(CameraScene3DWidget)
 
 int main(int argc, char* argv[])
 {
@@ -394,7 +395,8 @@ int main(int argc, char* argv[])
     
     //load_plugin_dir("plugin");
     app.finalize();
-    app.run(new CameraScene3DWidget);
+    WidgetPtr wp = Widget::create<CameraScene3DWidget>();
+    app.run(wp);
     return 0;
 }
 

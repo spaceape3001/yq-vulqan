@@ -12,8 +12,12 @@
 #include <yq/tachyon/commands/ControllerControlCommand.hpp>
 #include <yq/tachyon/commands/ControllerDisableCommand.hpp>
 #include <yq/tachyon/commands/ControllerEnableCommand.hpp>
+#include <yq/tachyon/commands/ControllerListenCommand.hpp>
 #include <yq/tachyon/commands/ControllerUncontrolCommand.hpp>
+#include <yq/tachyon/commands/ControllerUnlistenCommand.hpp>
+#include <yq/tachyon/commands/TachyonSnoopCommand.hpp>
 #include <yq/tachyon/commands/TachyonSubscribeCommand.hpp>
+#include <yq/tachyon/commands/TachyonUnsnoopCommand.hpp>
 #include <yq/tachyon/commands/TachyonUnsubscribeCommand.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Controller);
@@ -67,9 +71,19 @@ namespace yq::tachyon {
         mail(new ControllerDisableCommand(this));
     }
     
+    void Controller::cmd_listen(TachyonID t)
+    {
+        mail(new ControllerListenCommand(this, t));
+    }
+
     void Controller::cmd_uncontrol(TachyonID t)
     {
         mail(new ControllerUncontrolCommand(this, t));
+    }
+
+    void Controller::cmd_unlisten(TachyonID t)
+    {
+        mail(new ControllerUnlistenCommand(this, t));
     }
 
     void Controller::on_control_command(const ControllerControlCommand&cmd)
@@ -92,11 +106,25 @@ namespace yq::tachyon {
         mark();
     }
 
-    void Controller::on_uncontrol_command(const ControllerUncontrolCommand&cmd)
+    void Controller::on_listen_command(const ControllerListenCommand& cmd)
+    {
+        m_listening.insert(cmd.tachyon());
+        send(new TachyonSnoopCommand(cmd.tachyon(), id()), cmd.tachyon());
+        mark();
+    }
+
+    void Controller::on_uncontrol_command(const ControllerUncontrolCommand& cmd)
     {
         m_controlled.erase(cmd.tachyon());
         unsubscribe(cmd.tachyon(), MG::Controlled);
         send(new TachyonUnsubscribeCommand(cmd.tachyon(), id(), MG::Controller), cmd.tachyon());
+        mark();
+    }
+
+    void Controller::on_unlisten_command(const ControllerUnlistenCommand& cmd)
+    {
+        m_listening.erase(cmd.tachyon());
+        send(new TachyonUnsnoopCommand(cmd.tachyon(), id()), cmd.tachyon());
         mark();
     }
 
@@ -117,7 +145,11 @@ namespace yq::tachyon {
         auto w = writer<Controller>();
         w.abstract();
         w.description("Abstract Controller");
+        w.slot(&Controller::on_control_command);
         w.slot(&Controller::on_disable_command);
         w.slot(&Controller::on_enable_command);
+        w.slot(&Controller::on_listen_command);
+        w.slot(&Controller::on_uncontrol_command);
+        w.slot(&Controller::on_unlisten_command);
     }
 }

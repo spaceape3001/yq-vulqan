@@ -12,6 +12,7 @@
 namespace yq::tachyon {
     struct ControllerSnap : public TachyonSnap {
         std::set<TachyonID>     controlled;
+        std::set<TachyonID>     listening;
         bool                    enabled = false;
     };
     

@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/scene/Perspective.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
+#include <yq/tachyon/api/Perspective.hpp>
+#include <yq/tachyon/api/Scene.hpp>

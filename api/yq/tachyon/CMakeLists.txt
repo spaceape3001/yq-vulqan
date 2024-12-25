@@ -97,7 +97,9 @@ add_library(${PROJECT_NAME} SHARED
     commands/ControllerControlCommand.cpp
     commands/ControllerDisableCommand.cpp
     commands/ControllerEnableCommand.cpp
+    commands/ControllerListenCommand.cpp
     commands/ControllerUncontrolCommand.cpp
+    commands/ControllerUnlistenCommand.cpp
     commands/EmptyCommand.cpp
     commands/GLFWCommand.cpp
     commands/MouseCaptureCommand.cpp

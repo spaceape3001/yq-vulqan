@@ -61,7 +61,8 @@ namespace yq::tachyon {
         m_window    = w;
         if(!w)
             return errors::vulkan_no_window_provided();
-            
+     
+        glfwGetFramebufferSize(w, &m_frameBufferSize.x, &m_frameBufferSize.y);
         return {};
     }
     
@@ -870,6 +871,14 @@ namespace yq::tachyon {
     void        ViVisualizer::set_clear_color(const RGBA4F&i)
     {   
         m_clearValue    = vqClearValue(i);
+    }
+
+    void        ViVisualizer::set_framebuffer_size(const Size2I&sz)
+    {
+        if(sz != m_frameBufferSize){
+            m_frameBufferSize   = sz;
+            m_rebuildSwap       = true;
+        }
     }
 
     void        ViVisualizer::set_present_mode(PresentMode pm)

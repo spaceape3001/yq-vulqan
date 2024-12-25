@@ -67,6 +67,13 @@ namespace yq::tachyon {
 
 // ------------------------------------------------------------------------
 
+    ThreadFrame::operator TachyonFrame() const
+    {
+        return { thread, data, snap};
+    }
+
+// ------------------------------------------------------------------------
+
     ThreadSnap::~ThreadSnap()
     {
     }
@@ -85,7 +92,6 @@ namespace yq::tachyon {
     Thread*                     Thread::s_main      = nullptr;
     Thread*                     Thread::s_sink      = nullptr;
     Thread::mutex_t             Thread::s_mutex;
-    Thread::thread_data_map_t   Thread::s_data;
     Thread::thread_map_t        Thread::s_threads;
     Thread::inbox_map_t         Thread::s_inboxes;
     std::vector<TachyonPtr>     Thread::s_misfits;
@@ -103,7 +109,7 @@ namespace yq::tachyon {
             lock_t  _lock(s_mutex, false);
             ret.reserve(s_threads.size());
             for(auto& i : s_threads)
-                ret.push_back(i.second);
+                ret.push_back(i.second.thread);
         }
         return ret;
     }
@@ -113,7 +119,7 @@ namespace yq::tachyon {
         lock_t  _lock(s_mutex, false);
         auto i = s_threads.find(tid);
         if(i != s_threads.end())
-            return i->second;
+            return i->second.thread;
         return {};
     }
 
@@ -195,7 +201,7 @@ namespace yq::tachyon {
         lock_t  _lock(s_mutex, false);
         auto i = s_threads.find(tid);
         if(i != s_threads.end())
-            return i->second.valid();
+            return i->second.thread.valid();
         return false;
     }
 
@@ -212,9 +218,8 @@ namespace yq::tachyon {
         }
         
         lock_t    _lock(s_mutex, true);
-        s_threads[_id]    = this;
-        s_data[_id]       = {};
-        s_inboxes[_id]    = {};
+        s_threads[_id].thread   = this;
+        s_inboxes[_id]          = {};
     }
     
     Thread::~Thread()
@@ -299,10 +304,10 @@ namespace yq::tachyon {
     {
         //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick()";
   
-        thread_data_map_t   data;
+        thread_map_t        threads;
         {
             lock_t      _lock(s_mutex, false);
-            data        = s_data;
+            threads     = s_threads;
         }
   
         FramePtr        frame   = new Frame(id(), m_tick);
@@ -316,12 +321,13 @@ namespace yq::tachyon {
         */
         
         m_missing   = false;
-        for(auto& i : data){
-            if(!i.second){
+        for(auto& i : threads){
+            if(!i.second.data){
                 m_missing   = true;
                 continue;
             }
-            build.add(i.first, *i.second);
+            frame->add({}, i.second);
+            build.add(i.first, *i.second.data);
         }
         build.finalize();
         
@@ -338,8 +344,15 @@ namespace yq::tachyon {
         Context ctx(*frame);
         auto d = cycle(ctx);
         {
-            lock_t  _lock(s_mutex, true);
-            s_data[id()] = (ThreadData*) d.data.ptr();
+            // doing this trick to postpone any destructors
+            ThreadDataCPtr      data    = (const ThreadData*) d.data.ptr();
+            ThreadSnapCPtr      snap    = (const ThreadSnap*) d.snap.ptr();
+            {
+                lock_t  _lock(s_mutex, true);
+                auto& tf    = s_threads[id()];
+                std::swap(data, tf.data);
+                std::swap(snap, tf.snap);
+            }
         }
         
         ++m_tick;

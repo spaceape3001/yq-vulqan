@@ -395,8 +395,7 @@ int main(int argc, char* argv[])
     
     //load_plugin_dir("plugin");
     app.finalize();
-    WidgetPtr wp = Widget::create<CameraScene3DWidget>();
-    app.run(wp);
+    app.run(Widget::create<CameraScene3DWidget>());
     return 0;
 }
 

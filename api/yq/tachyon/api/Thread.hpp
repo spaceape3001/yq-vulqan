@@ -21,6 +21,8 @@ namespace yq::tachyon {
 
         ThreadInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl=std::source_location::current());
     };
+    
+    struct ThreadFrame;
 
     /*! \brief Thread of something in the application
     
@@ -105,8 +107,7 @@ namespace yq::tachyon {
         //using TacRepVector          = std::vector<TacRep>;
         //using SharedTacRepVector    = std::shared_ptr<TacRepVector>;
         
-        using thread_data_map_t     = std::map<ThreadID, ThreadDataCPtr>;
-        using thread_map_t          = std::map<ThreadID, ThreadPtr>;
+        using thread_map_t          = std::map<ThreadID, ThreadFrame>;
         using inbox_map_t           = std::map<ThreadID, Inbox>;
     
         void    tick(TachyonID);
@@ -123,7 +124,6 @@ namespace yq::tachyon {
         static Thread*                  s_main;
         static Thread*                  s_sink;
         static mutex_t                  s_mutex;
-        static thread_data_map_t        s_data;
         static thread_map_t             s_threads;
         static inbox_map_t              s_inboxes;
         static std::vector<TachyonPtr>  s_misfits;

@@ -37,4 +37,11 @@ namespace yq::tachyon {
         virtual ~ThreadData();
     };
 
+    struct ThreadFrame {
+        ThreadPtr           thread;
+        ThreadDataCPtr      data;
+        ThreadSnapCPtr      snap;
+        
+        operator TachyonFrame() const;
+    };
 }

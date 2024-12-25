@@ -245,7 +245,6 @@ int main(int argc, char* argv[])
     #endif
     
     app.finalize();
-    WidgetPtr   wp  = Widget::create<HelloScene>();
-    app.run(wp);
+    app.run(Widget::create<HelloScene>());
     return 0;
 }

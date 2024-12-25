@@ -209,7 +209,9 @@ namespace yq::tachyon {
         _widget(w);
         
         // HACK (becase we know it's GLFW ATM)
-        GLFWwindow* gw  = static_cast<WindowGLFW*>(win) -> glfw();
+        WindowGLFW* w2  = static_cast<WindowGLFW*>(win);
+        GLFWwindow* gw  = w2 -> glfw();
+        m_pixels        = w2->framebuffer();
         try {
             m_viz       = std::make_unique<Visualizer>(m_createInfo, gw, m_cleanup);
         } 
@@ -737,6 +739,7 @@ namespace yq::tachyon {
     void    Viewer::on_viewer_show_command(const ViewerShowCommand&)
     {
         if(started_or_running()){
+    tachyonInfo << "Viewer::on_viewer_show_command()";
             send(new WindowShowCommand(m_window));
         }
     }
@@ -839,6 +842,7 @@ namespace yq::tachyon {
     
     void    Viewer::on_window_show_event(const WindowShowEvent&evt)
     {
+    tachyonInfo << "Viewer::on_window_show_event";
         switch(m_stage){
         case Stage::Started:
         case Stage::WidgetStart:
@@ -971,12 +975,7 @@ namespace yq::tachyon {
                 return {};
             }
             send(new WidgetStartupCommand(m_widget), m_widget->id());
-            
-            
-            //send(new WindowShowCommand(m_window));
-            
             m_stage = Stage::WidgetStart;
-            //
             break;
         case Stage::WidgetStart:
             break;
@@ -1003,6 +1002,7 @@ namespace yq::tachyon {
             m_imgui->tick(m_state);
         
         if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
+            
             draw(); // HACK (for now)
         } else {
         #if 0

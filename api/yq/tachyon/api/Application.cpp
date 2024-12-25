@@ -123,6 +123,11 @@ namespace yq::tachyon {
         // TODO ... catch/replace
         v = Tachyon::create<Viewer>(win, w, vci);
         
+        ++at.m_viewers;
+        
+        v->subscribe(at.id());
+        at.subscribe(v->id());
+        
         win->subscribe(v->id());
         v->subscribe(win->id());
         

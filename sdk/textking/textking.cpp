@@ -298,7 +298,6 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    WidgetPtr   wp  = Widget::create<TextKing>();
-    app.run(wp);
+    app.run(Widget::create<TextKing>());
     return 0;
 }

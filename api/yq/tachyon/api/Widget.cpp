@@ -163,7 +163,8 @@ namespace yq::tachyon {
 
     void            Widget::startup()
     {
-        send(new ViewerShowCommand(m_viewer), MG::Viewer);
+    tachyonInfo << "Widget" << ident() << "::startup()";
+        m_viewer->mail(new ViewerShowCommand(m_viewer));
     }
 
     Execution       Widget::tick(Context&) 

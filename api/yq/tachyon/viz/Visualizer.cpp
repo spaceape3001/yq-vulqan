@@ -705,9 +705,7 @@ namespace yq::tachyon {
         if(p.screen){
             cparams.screen = *p.screen;
         } else {
-            int         w, h;
-            glfwGetFramebufferSize(m_window, &w, &h);
-            cparams.screen  = Size2D((double) w, (double) h);
+            cparams.screen  = Size2D((double) m_frameBufferSize.x, (double) m_frameBufferSize.y);
         }
         
         auto r2 = auto_reset(u.world2eye, p.camera->world2screen(cparams));

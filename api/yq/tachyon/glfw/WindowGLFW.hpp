@@ -41,6 +41,9 @@ namespace yq::tachyon {
 
         // hack for the moment
         GLFWwindow*         glfw() const { return m_window; }
+        
+        //! LOCAL THREAD ONLY
+        Size2I              framebuffer() const;
 
     protected:
         void        snap(WindowSnap&) const;

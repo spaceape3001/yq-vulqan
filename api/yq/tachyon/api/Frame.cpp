@@ -119,7 +119,9 @@ namespace yq::tachyon {
         Types     types = tac.object->metaInfo().types();
         TachyonID id    = tac.object->id();
 
-        m_owners[id]    = th;
+        if(th){
+            m_owners[id]    = th;
+        }
         m_types[id]     = types;
         
         Tachyon*   t = const_cast<Tachyon*>(tac.object.ptr());

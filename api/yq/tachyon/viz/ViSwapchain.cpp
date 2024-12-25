@@ -16,8 +16,7 @@
 #include <yq/tachyon/viz/ViImage.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 #include <algorithm>
-#include <GLFW/glfw3.h>
-
+//#include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
     namespace errors {
@@ -61,24 +60,19 @@ namespace yq::tachyon {
         if (m_capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
             m_extents = m_capabilities.currentExtent;
         } else if(viz._window()){
-            int w, h;
-            glfwGetFramebufferSize(viz._window(), &w, &h);
+            Size2I fb  = viz.framebuffer_size();
             m_extents = {};
-            m_extents.width  = std::clamp((uint32_t) w, m_capabilities.minImageExtent.width, m_capabilities.maxImageExtent.width);
-            m_extents.height = std::clamp((uint32_t) h, m_capabilities.minImageExtent.height, m_capabilities.maxImageExtent.height);
+            m_extents.width  = std::clamp((uint32_t) fb.x, m_capabilities.minImageExtent.width, m_capabilities.maxImageExtent.width);
+            m_extents.height = std::clamp((uint32_t) fb.y, m_capabilities.minImageExtent.height, m_capabilities.maxImageExtent.height);
         } else {
             vizWarning << "ViSwapchain(): Cannot get extents.";
         }
         
         if(cfg.debug_echo_extents){
-            int w   = 0;
-            int h   = 0;
-            if(viz._window()){
-                glfwGetFramebufferSize(viz._window(), &w, &h);
-            }
+            Size2I fb  = viz.framebuffer_size();
 
             vizInfo << "ViSwapchain() : Extents\n" <<
-                "Frame itself is " << VkExtent2D{ (uint32_t) w, (uint32_t) h } << " vs\n" <<
+                "Frame itself is " << VkExtent2D{ (uint32_t) fb.x, (uint32_t) fb.y } << " vs\n" <<
                 "Image extents is " << m_extents << '\n' <<
                 "Cur is " << m_capabilities.currentExtent << '\n' <<
                 "Min is " << m_capabilities.minImageExtent << '\n' <<

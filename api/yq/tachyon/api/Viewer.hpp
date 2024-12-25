@@ -370,6 +370,7 @@ namespace yq::tachyon {
         std::unique_ptr<Visualizer>     m_viz;
         WidgetPtr                       m_widget;
         WindowID                        m_window;
+        Size2I                          m_pixels    = {};
         bool                            m_zeroSize  = false;
 
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close

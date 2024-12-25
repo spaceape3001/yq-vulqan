@@ -115,6 +115,8 @@ namespace yq::tachyon {
         Expect<VkFormat>                find_supported_format(std::span<const VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
         Expect<VkFormat>                find_supported_format(std::initializer_list<VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
 
+        Size2I                          framebuffer_size() const { return m_frameBufferSize; }
+
         //! Vulkan GPU (physical device)
         VkPhysicalDevice                gpu() const { return m_physical; }
         
@@ -205,6 +207,8 @@ namespace yq::tachyon {
 
             //! Sets the background color
         void                            set_clear_color(const RGBA4F&);
+
+        void                            set_framebuffer_size(const Size2I&);
 
         void                            set_present_mode(PresentMode);
 
@@ -301,7 +305,7 @@ namespace yq::tachyon {
         VkDevice                            m_device            = nullptr;
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
-        //Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
+        Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;
         ViQueueManager*                     m_graphicsQueue     = nullptr;
         ViImageManagerUPtr                  m_images;

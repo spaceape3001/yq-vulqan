@@ -433,6 +433,13 @@ namespace yq::tachyon {
         return ret;
     }
 
+    Size2I              WindowGLFW::framebuffer() const
+    {
+        Size2I  ret;
+        glfwGetFramebufferSize(m_window, &ret.x, &ret.y);
+        return ret;
+    }
+
     ModifierKeys        WindowGLFW::modifiers() const
     {
         ModifierKeys    ret;
@@ -577,6 +584,7 @@ namespace yq::tachyon {
     {
         if(glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
             return ;
+tachyonInfo << ident() << " show command";    
         glfwShowWindow(m_window);
         send(new WindowShowEvent(this));
         mark();

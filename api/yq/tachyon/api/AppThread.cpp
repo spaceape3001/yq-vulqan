@@ -13,6 +13,7 @@
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
 #include <yq/tachyon/api/ThreadInfoWriter.hpp>
+#include <yq/tachyon/events/ViewerDestroyEvent.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
 
@@ -36,6 +37,7 @@ namespace yq::tachyon {
 
     Execution AppThread::subtick(Context&ctx) 
     {
+    #if 0
         size_t  vc  = ctx.frame.count(VIEWER);
         if(vc && !m_quitOnZero){
             tachyonInfo << ident() << " now with viewers, quit-on-close activated";
@@ -51,7 +53,16 @@ namespace yq::tachyon {
             #endif
             quit();
         }
+    #endif
         return {};
+    }
+
+    void    AppThread::on_viewer_destroy_event(const ViewerDestroyEvent&)
+    {
+    tachyonInfo << "AppThread::on_viewer_destroy_event";
+        if(!--m_viewers){
+            quit();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,5 +71,6 @@ namespace yq::tachyon {
     {
         auto w = writer<AppThread>();
         w.description("Application Thread");
+        w.slot(&AppThread::on_viewer_destroy_event);
     }
 }

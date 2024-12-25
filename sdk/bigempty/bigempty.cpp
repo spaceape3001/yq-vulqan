@@ -23,6 +23,6 @@ int main(int argc, char* argv[])
 
     Application         app(argc, argv, aci);
     app.finalize();
-    app.run(new Widget);
+    app.run(Widget::create<Widget>());
     return 0;
 }

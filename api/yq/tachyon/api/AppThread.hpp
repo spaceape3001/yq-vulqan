@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     class Application;
+    class ViewerDestroyEvent;
     
     class AppThread : public Thread {
         YQ_TACHYON_DECLARE(AppThread, Thread)
@@ -26,7 +27,10 @@ namespace yq::tachyon {
     private:
         friend class Application;
         Application* const      m_app;
+        int                     m_viewers   = 0;
         bool                    m_quitOnZero = false;
+        
+        void    on_viewer_destroy_event(const ViewerDestroyEvent&);
         
         void                shutdown();
     };

@@ -194,6 +194,6 @@ int main(int argc, char* argv[])
         // do any init infos....
         
     app.finalize();
-    app.run(new MainWin);
+    app.run(Tachyon::create<MainWin>());
     return 0;
 }

@@ -739,7 +739,6 @@ namespace yq::tachyon {
     void    Viewer::on_viewer_show_command(const ViewerShowCommand&)
     {
         if(started_or_running()){
-    tachyonInfo << "Viewer::on_viewer_show_command()";
             send(new WindowShowCommand(m_window));
         }
     }
@@ -842,7 +841,6 @@ namespace yq::tachyon {
     
     void    Viewer::on_window_show_event(const WindowShowEvent&evt)
     {
-    tachyonInfo << "Viewer::on_window_show_event";
         switch(m_stage){
         case Stage::Started:
         case Stage::WidgetStart:
@@ -971,7 +969,6 @@ namespace yq::tachyon {
             return {};
         case Stage::Started:
             if(!(ctx.frame.contains(id()) && ctx.frame.contains(m_window))){
-                tachyonInfo << ident() << " startup tick waiting";
                 return {};
             }
             send(new WidgetStartupCommand(m_widget), m_widget->id());
@@ -1001,25 +998,24 @@ namespace yq::tachyon {
         if(m_imgui)
             m_imgui->tick(m_state);
         
-        if((m_stage == Stage::Running) && is_visible() && !is_iconified() && (all(m_state.window.pixels) != 0)){
+        if((m_stage == Stage::Running) && is_visible() && (!is_iconified()) && (all(m_state.window.pixels) != 0)){
             
             draw(); // HACK (for now)
         } else {
-        #if 0
+            #if 0
             //  Here for use with debuging
-            if(m_stage != Stage::Running){
-                tachyonInfo << ident() << "::tick() skipping draw() due to not running";        
+            if(m_stage == Stage::Running){
+                if(!is_visible()){
+                    tachyonInfo << ident() << "::tick() skipping draw() due to not being visible";        
+                }
+                if(is_iconified()){
+                    tachyonInfo << ident() << "::tick() skipping draw() due to being iconified";        
+                }
+                if(any(m_state.window.pixels) == 0){
+                    tachyonInfo << ident() << "::tick() skipping draw() due to no pixels";        
+                }
             }
-            if(!is_visible()){
-                tachyonInfo << ident() << "::tick() skipping draw() due to not being visible";        
-            }
-            if(!is_iconified()){
-                tachyonInfo << ident() << "::tick() skipping draw() due to being iconified";        
-            }
-            if(any(m_state.window.pixels) == 0){
-                tachyonInfo << ident() << "::tick() skipping draw() due to no pixels";        
-            }
-        #endif
+            #endif
         }
         m_cleanup.sweep();
         ++m_ticks;

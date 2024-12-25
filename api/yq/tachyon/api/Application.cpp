@@ -131,9 +131,9 @@ namespace yq::tachyon {
         win->subscribe(v->id());
         v->subscribe(win->id());
         
+        // two ticks to force it into the frame
         at.tick();
-        
-        //m_viewers.insert(v->id());
+        at.tick();
         
         switch(m_cInfo.vthreads){
         case ViewerThreadPolicy::Single:

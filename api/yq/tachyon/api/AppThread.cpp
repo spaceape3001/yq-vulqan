@@ -37,29 +37,12 @@ namespace yq::tachyon {
 
     Execution AppThread::subtick(Context&ctx) 
     {
-    #if 0
-        size_t  vc  = ctx.frame.count(VIEWER);
-        if(vc && !m_quitOnZero){
-            tachyonInfo << ident() << " now with viewers, quit-on-close activated";
-            m_quitOnZero        = true;
-        }
-        if(m_quitOnZero && (vc == 0) && !missing()){
-            #if 0
-            {
-                stream::Logger log(tachyonInfo);
-                tachyonInfo << ident() << " all viewers closed, quitting\n";
-                ctx.frame.report(log);
-            }
-            #endif
-            quit();
-        }
-    #endif
         return {};
     }
 
     void    AppThread::on_viewer_destroy_event(const ViewerDestroyEvent&)
     {
-    tachyonInfo << "AppThread::on_viewer_destroy_event";
+        tachyonInfo << "AppThread::on_viewer_destroy_event";
         if(!--m_viewers){
             quit();
         }

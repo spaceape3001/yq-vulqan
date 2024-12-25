@@ -673,14 +673,16 @@ namespace yq::tachyon {
     void        Frame::Builder::add(ThreadID th, const ThreadData& tdata)
     {
         for(const TachyonFrame& tf : tdata.tachyons){
-            if(!tf.object)
+            if(!tf.object){
+                //tachyonInfo << "frame build... item " << tf.object->ident() << " has no object";
                 continue;
+            }
             if(!tf.data){
-            tachyonInfo << "frame build... item " << tf.object->ident() << " has no data";
+                //tachyonInfo << "frame build... item " << tf.object->ident() << " has no data";
                 continue;
             }
             if(!tf.snap){
-            tachyonInfo << "frame build... item " << tf.object->ident() << " has no snap";
+                //tachyonInfo << "frame build... item " << tf.object->ident() << " has no snap";
                 continue;
             }
                 
@@ -689,10 +691,14 @@ namespace yq::tachyon {
                 m_frame.add(th, tf);
                 break;
             case TachyonThreadState::Pushed:
-                tachyonInfo << "frame build... item " << tf.object->ident() << " pushed";
+                //tachyonInfo << "frame build... item " << tf.object->ident() << " pushed";
                 m_pushed.push_back({th, tf});
                 break;
+            case TachyonThreadState::Delete:
+                //tachyonInfo << "frame build... item " << tf.object->ident() << " deleted";
+                break;
             default:
+                //tachyonInfo << "frame build... item " << tf.object->ident() << " unknown state";
                 break;
             }
         }

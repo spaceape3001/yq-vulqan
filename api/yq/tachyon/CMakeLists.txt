@@ -62,7 +62,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Texture.cpp
     api/Thread.cpp
     #api/Tool.cpp
-    #api/Trigger.cpp
+    api/Trigger.cpp
     api/TypedID.cpp
     api/Undo.cpp
     api/VideoMode.cpp
@@ -322,6 +322,13 @@ add_library(${PROJECT_NAME} SHARED
     #task/Task.cpp
     #task/TaskEngine.cpp
     #tools/tools.cpp
+    
+    triggers/AndTrigger.cpp
+    triggers/NandTrigger.cpp
+    triggers/NorTrigger.cpp
+    triggers/NotTrigger.cpp
+    triggers/OrTrigger.cpp
+    triggers/PostTrigger.cpp
 
 
     # v/VqEnumerations.cpp

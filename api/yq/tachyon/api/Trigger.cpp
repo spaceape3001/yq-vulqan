@@ -6,6 +6,7 @@
 
 #include "Trigger.hpp"
 #include "TriggerInfoWriter.hpp"
+#include "Post.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Trigger)
 
@@ -16,7 +17,7 @@ namespace yq::tachyon {
         set(Flag::TRIGGER);
     }
     
-    Trigger::Trigger(const Param& p) : Filter(p)
+    Trigger::Trigger(const Param& p) : m_mismatch(p.mismatch), m_errors(p.errors)
     {
     }
     
@@ -24,24 +25,35 @@ namespace yq::tachyon {
     {
     }
 
-    TriggerResult    Trigger::check(const Post& pp) const
+    Trigger::Result Trigger::analyze(const Post& pp) const
     {
-        return metaInfo().accept(*this, pp);
+        try {
+            return match(pp);
+        }
+        catch(...) {
+            return FAILURE;
+        }
     }
 
-    MismatchPolicy  Trigger::mismatch() const
+    const PostInfo&     Trigger::post_info() const
     {
-        return m_mismatch(MismatchType::InPost) ? MismatchPolicy::Accept : MismatchPolicy::Reject;
+        return meta<Post>();
     }
 
-    bool    Trigger::passed(const Post& pp) const
+    bool            Trigger::triggered(const Post&pp) const
     {
-        FilterResult    chk  = check(pp);
-        if(auto p = std::get_if<bool>(&chk))
+        Result  r = analyze(pp);
+        if(auto p = std::get_if<bool>(&r))
             return *p;
-        if(auto p = std::get_if<MismatchFlags>(&chk))
-            return (*p - m_mismatch) == MismatchFlags();
-        return false;   // should never hit here
+        if(std::get_if<accept_t>(&r))
+            return true;
+        if(std::get_if<reject_t>(&r))
+            return false;
+        if(std::get_if<mismatch_t>(&r))
+            return m_mismatch;
+        if(std::get_if<failure_t>(&r))
+            return m_errors;
+        return false;
     }
 
     void Trigger::init_info()

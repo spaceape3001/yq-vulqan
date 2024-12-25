@@ -6,34 +6,19 @@
 
 #pragma once
 
+#include <yq/core/Flags.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/enum/MismatchPolicy.hpp>
+#include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/trigger.hpp>
+#include <yq/tachyon/typedef/yesno.hpp>
 #include <concepts>
+#include <variant>
 
 namespace yq::tachyon {
-
-    enum class TriggerResult : uint8_t {
-        //! Accepted
-        Accept  = 0,
-        
-        //! Rejected
-        Reject,
-        
-        //! Type mismatch
-        Mismatch,
-        
-        //! Exception/error thrown
-        Exception,
-        
-        //! No accept is defined on the trigger
-        Undefined,
-        
-        //! Other failure
-        Failure
-    };
 
 
     class TriggerInfo : public ObjectInfo {
@@ -42,14 +27,8 @@ namespace yq::tachyon {
 
         TriggerInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
     
-        //! \note NULL means it's generic post, not refined
-        const PostInfo*     post_info() const { return m_postInfo; }
-
     protected:
         friend class Trigger;
-        virtual TriggerResult accept(const Trigger&, const Post&) const = 0;
-        
-        const PostInfo*     m_postInfo      = nullptr;
     };
     
     /*! \brief Triggers posts
@@ -57,42 +36,50 @@ namespace yq::tachyon {
         A trigger is a detector of posts
     */
     class Trigger : public Object, public RefCount, public UniqueID {
-    public:
-        template <typename> class Fixer;
     private:
         YQ_OBJECT_INFO(TriggerInfo)
-        YQ_OBJECT_FIXER(Fixer)
         YQ_OBJECT_DECLARE(Trigger, Object)
     public:
     
-        static constexpr const TriggerResult   Accept       = TriggerResult::Accept;
-        static constexpr const TriggerResult   Reject       = TriggerResult::Reject;
+        /*! \brief General Trigger Result
+        */
+        using Result = std::variant<
+            std::monostate,     //< TREATED AS FALSE/REJECT
+            bool,               //< TRUE/FALSE accept/reject
+            accept_t,           //< ACCEPT
+            reject_t,           //< REJECT
+            mismatch_t,         //< Not-our-type (so mismatch policy)
+            failure_t           //< General other failure (ie exception, error condition)
+        >;
         
         struct Param {
-            MismatchPolicy      mismatch = MismatchPolicy::Reject;
+            bool    mismatch;
+            bool    errors;
         };
         
-        /*! \fn bool accept(const Post&pp) const;
+        //! Gets the raw match data (with exception catching)
+        Result                      analyze(const Post&) const;
         
-            \brief This is your acceptance function, define it, implement it
-            \param[in] pp   The post (ref to it)
-            \return TRUE to accept the match (FALSE rejects)
-        */
-    
-        //!     Calls the accept (filter) function, returns up/down
-        bool                passed(const Post&) const;
-        //!     Calls the accept (filter) function, returns more specific result
-        TriggerResult       check(const Post&) const;
+        bool                        errors_policy() const { return m_errors; }
+        bool                        mismatch_policy() const { return m_mismatch; }
+        
+        //! Return your relevant post info (default is post... absolutely generic)
+        virtual const PostInfo&     post_info() const;
+        
+        bool                        triggered(const Post&) const;
 
-        MismatchPolicy      mismatch() const;
-        
         static void init_info();
 
     protected:
-        Trigger(const Param& p);
+        Trigger(const Param& p = {});
         ~Trigger();
+
+
+        //! This is your advisor (accept/reject) function
+        virtual Result      match(const Post&) const = 0;
         
     private:
-        MismatchPolicy      m_mismatch;
+        bool        m_mismatch;
+        bool        m_errors;
     };
 }

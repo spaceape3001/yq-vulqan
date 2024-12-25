@@ -60,6 +60,7 @@ namespace yq::tachyon {
         static constexpr EveryCount   operator()(unsigned);
     };
     
+    struct failure_t {};
     struct for_t {};
     struct forward_t {};
     struct glfw_t {};
@@ -71,6 +72,7 @@ namespace yq::tachyon {
     struct lock_t {};
     struct locked_t {};
     struct manager_t {};
+    struct mismatch_t {};
     struct model_t {};
     struct moveable_t {};
     struct monitor_t {};
@@ -139,6 +141,7 @@ namespace yq::tachyon {
     static constexpr enabled_t      ENABLED;
     static constexpr error_t        ERROR;
     static constexpr every_t        EVERY;
+    static constexpr failure_t      FAILURE;
     static constexpr fixed_t        FIXED;
     static constexpr for_t          FOR;
     static constexpr forward_t      FORWARD;
@@ -151,6 +154,7 @@ namespace yq::tachyon {
     static constexpr lock_t         LOCK;
     static constexpr locked_t       LOCKED;
     static constexpr manager_t      MANAGER;
+    static constexpr mismatch_t     MISMATCH;
     static constexpr model_t        MODEL;
     static constexpr monitor_t      MONITOR;
     static constexpr moveable_t     MOVEABLE;

@@ -26,6 +26,9 @@ namespace yq::tachyon {
         LoggerBox();
         LoggerBox(const Param& p);
         ~LoggerBox();
+        
+        //! NOT THREAD_SAFE
+        void    unsafe_snoop(Tachyon*);
  
     private:
         log4cpp::Category&  m_category;

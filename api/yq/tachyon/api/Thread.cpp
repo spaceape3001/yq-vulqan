@@ -422,9 +422,9 @@ namespace yq::tachyon {
             tp->m_owner     = id();
             tp->subscribe(id(), MG::Thread);
             subscribe(tp->id(), MG::Tachyon);
-            c.object        = std::move(tp);
             d.created.insert(tp->id());
             send(new ThreadAddTachyonEvent(this, tp.ptr()));
+            c.object        = std::move(tp);
         }
         
         //  TODO: Some multithreadedness...

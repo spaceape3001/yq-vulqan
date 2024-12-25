@@ -40,6 +40,7 @@
 #include <yq/tachyon/cameras/NullCamera.hpp>
 #include <yq/tachyon/cameras/SpaceCamera.hpp>
 #include <yq/tachyon/cameras/TargetCamera.hpp>
+#include <yq/tachyon/util/LoggerBox.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>
 
 #include <chrono>
@@ -104,6 +105,8 @@ const auto QuadData = QuadrilateralData<ColorVertex2D> {
     { {0.5, -1.0}, color::Yellow },
     { {-0.5, -1.0}, color::Red }
 };
+
+TachyonID       gLogger;
 
 struct CameraController : public Controller {
     YQ_TACHYON_DECLARE(CameraController, Controller)
@@ -181,6 +184,11 @@ struct CameraScene3DWidget : public Scene3DWidget {
 
     CameraScene3DWidget() 
     {
+        setup();
+    }
+    
+    void setup() 
+    {
         start   = std::chrono::steady_clock::now();
         
         for(const CameraInfo* i : CameraInfo::all()){
@@ -245,6 +253,7 @@ struct CameraScene3DWidget : public Scene3DWidget {
         
         CameraController*cc = create<CameraController>(cam);
         cc->cmd_listen(id());
+        cc->cmd_control(gLogger);
     }
     
     Execution        tick(Context&) override
@@ -395,7 +404,11 @@ int main(int argc, char* argv[])
     
     //load_plugin_dir("plugin");
     app.finalize();
-    app.run(Widget::create<CameraScene3DWidget>());
+    Widget*     w   = Widget::create<CameraScene3DWidget>();
+    LoggerBox*  lb  = Tachyon::create<LoggerBox>();
+    gLogger = lb->id();
+    //lb->unsafe_snoop(w);
+    app.run(w);
     return 0;
 }
 

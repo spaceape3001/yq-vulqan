@@ -17,7 +17,7 @@
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Widget)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq::tachyon {
     WidgetBind::WidgetBind(const Widget* v) : m_widget(v ? v->id() : WidgetID{}) 

@@ -330,6 +330,8 @@ add_library(${PROJECT_NAME} SHARED
     triggers/NotTrigger.cpp
     triggers/OrTrigger.cpp
     triggers/PostTrigger.cpp
+    
+    util/LoggerBox.cpp
 
 
     # v/VqEnumerations.cpp

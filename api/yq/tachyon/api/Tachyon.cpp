@@ -235,7 +235,7 @@ namespace yq::tachyon {
         //  Add us to the current thread
     }
     
-    Tachyon::Tachyon(init_t, const Param& p) 
+    Tachyon::Tachyon(init_k, const Param& p) 
     {
         _name(p.name);
     }

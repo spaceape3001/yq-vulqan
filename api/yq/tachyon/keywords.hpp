@@ -55,7 +55,7 @@ namespace yq::tachyon {
     struct EveryTime;
     struct EveryCount;
     
-    struct every_k : public ::yq::every_t {
+    struct every_k : public ::yq::every_k {
         static constexpr EveryTime    operator()(unit::Second);
         static constexpr EveryCount   operator()(unsigned);
     };
@@ -79,7 +79,7 @@ namespace yq::tachyon {
     struct mouse_k {};
     struct number_k {};
     
-    struct once_k : public ::yq::once_t {
+    struct once_k : public ::yq::once_k {
     };
     
     struct parent_k {};
@@ -107,10 +107,6 @@ namespace yq::tachyon {
     struct widget_k {};
     struct window_k {};
     
-    using always_k = always_t;
-    using push_k = push_t;
-    using thread_k = thread_t;
-
     // any problematic macros....
     #ifdef LOCK
         #undef LOCK

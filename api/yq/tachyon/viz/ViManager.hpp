@@ -25,7 +25,7 @@ namespace yq::tachyon {
         using v_ref_t           = Ref<V>;
         using map_t             = std::unordered_map<uint64_t, v_ref_t>;
         using mutex_t           = tbb::spin_rw_mutex;
-        using data_t            = std::tuple<Args...>;
+        using data_k            = std::tuple<Args...>;
         
         static uint64_t     get_id(const A& asset_ptr)
         {
@@ -160,6 +160,6 @@ namespace yq::tachyon {
         ViVisualizer&       m_viz;
         map_t               m_hash;
         mutable mutex_t     m_mutex;
-        data_t              m_data;
+        data_k              m_data;
     };
 }

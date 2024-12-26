@@ -41,7 +41,7 @@ namespace yq::tachyon {
         }
     }
     
-    void        PPosition4M::position4m(adjust_t, const Vector4M& v) 
+    void        PPosition4M::position4m(adjust_k, const Vector4M& v) 
     {
         if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
             dispatch(new AdjustPosition4M(id(), v));

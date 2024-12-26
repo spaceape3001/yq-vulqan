@@ -233,7 +233,7 @@ namespace yq::tachyon {
         template <typename T, typename D, typename S> 
         struct Container {
             using tachyon_t     = T;
-            using data_t        = D;
+            using data_k        = D;
             using snap_t        = S;
             
             std::unordered_map<uint64_t, Ref<T>>        objects;

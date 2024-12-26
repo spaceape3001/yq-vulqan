@@ -373,7 +373,7 @@ namespace yq::tachyon {
         friend class Frame;
         friend class Thread;
 
-        Tachyon(init_t, const Param& p={});
+        Tachyon(init_k, const Param& p={});
         Tachyon(thread_t, const Param& p={});
         
         static void retain(TachyonPtr);

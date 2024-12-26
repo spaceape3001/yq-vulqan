@@ -255,7 +255,7 @@ namespace yq::tachyon {
     public:
     
         using snap_fn   = decltype(args::deduce(&C::snap));
-        using data_t    = typename C::MyData;
+        using data_k    = typename C::MyData;
         using snap_t    = typename snap_fn::arg_t;
 
         Fixer(std::string_view zName, typename C::MyBase::MyInfo& base, const std::source_location& sl=std::source_location::current()) : 
@@ -275,7 +275,7 @@ namespace yq::tachyon {
         
         virtual TachyonDataPtr   create_data() const override
         {
-            return new data_t();
+            return new data_k();
         }
         
     };

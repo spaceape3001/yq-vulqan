@@ -41,7 +41,7 @@ namespace yq::tachyon {
         }
     }
     
-    void        PPosition2M::position2m(adjust_t, const Vector2M& v) 
+    void        PPosition2M::position2m(adjust_k, const Vector2M& v) 
     {
         if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
             dispatch(new AdjustPosition2M(id(), v));

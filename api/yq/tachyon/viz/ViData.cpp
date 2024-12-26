@@ -271,7 +271,7 @@ namespace yq::tachyon {
         
         m_status |= S::DescDefined;
  
-        if(std::get_if<layout_t>(&opts.descriptors)){
+        if(std::get_if<layout_k>(&opts.descriptors)){
             return _create_descriptor_layout(opts);
         } else if(std::get_if<allocate_t>(&opts.descriptors)){
             return _create_descriptor_sets(opts);

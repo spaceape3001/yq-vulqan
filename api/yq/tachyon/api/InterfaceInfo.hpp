@@ -42,12 +42,12 @@ namespace yq::tachyon {
         //! List of methods for this type
         const std::vector<const MethodInfo*>&   methods() const;
         
-        size_t      methods(count_t) const;
+        size_t      methods(count_k) const;
 
 
         const PropertyInfo*                 property(std::string_view) const;
         
-        size_t      properties(count_t) const;
+        size_t      properties(count_k) const;
 
         //! List of properties for this type
         const std::vector<const PropertyInfo*>&  properties() const;

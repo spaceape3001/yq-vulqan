@@ -55,7 +55,7 @@ namespace yq::tachyon {
         return m_methods.all;
     }
     
-    size_t      InterfaceInfo::methods(count_t) const
+    size_t      InterfaceInfo::methods(count_k) const
     {
         return m_methods.all.size();
     }
@@ -66,7 +66,7 @@ namespace yq::tachyon {
         return m_properties.find(k);
     }
     
-    size_t      InterfaceInfo::properties(count_t) const
+    size_t      InterfaceInfo::properties(count_k) const
     {
         return m_properties.all.size();
     }

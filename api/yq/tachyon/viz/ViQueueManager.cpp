@@ -17,7 +17,7 @@ namespace yq::tachyon {
     {
         if(std::get_if<std::monostate>(&qs) != nullptr)
             return true;
-        if(std::get_if<optional_t>(&qs) != nullptr)
+        if(std::get_if<optional_k>(&qs) != nullptr)
             return false;
         if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
             return p->empty();
@@ -32,7 +32,7 @@ namespace yq::tachyon {
     {
         if( std::get_if<std::monostate>(&qs) != nullptr)
             return 0;
-        if(std::get_if<optional_t>(&qs) != nullptr)
+        if(std::get_if<optional_k>(&qs) != nullptr)
             return 1;
         if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
             return p->size();
@@ -47,7 +47,7 @@ namespace yq::tachyon {
     {
         if(std::get_if<std::monostate>(&qs) != nullptr)
             return false;
-        if(std::get_if<optional_t>(&qs) != nullptr)
+        if(std::get_if<optional_k>(&qs) != nullptr)
             return false;
         if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
             return !p->empty();

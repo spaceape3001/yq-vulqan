@@ -41,7 +41,7 @@ namespace yq::tachyon {
         }
     }
     
-    void        PPosition3I::position3i(adjust_t, const Vector3I& v) 
+    void        PPosition3I::position3i(adjust_k, const Vector3I& v) 
     {
         if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
             dispatch(new AdjustPosition3I(id(), v));

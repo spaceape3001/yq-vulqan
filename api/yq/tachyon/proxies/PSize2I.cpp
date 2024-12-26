@@ -41,7 +41,7 @@ namespace yq::tachyon {
         }
     }
     
-    void        PSize2I::size2i(adjust_t, const Size2I& v) 
+    void        PSize2I::size2i(adjust_k, const Size2I& v) 
     {
         if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
             dispatch(new MoveSize2I(id(), v));

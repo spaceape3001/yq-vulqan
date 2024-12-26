@@ -97,7 +97,7 @@ namespace yq::tachyon {
         std::error_code     An error, the task will terminate, otherwise continues as previously scheduled 
         bool                FALSE will abort, TRUE will continue as previously scheduled
         always_t            Task will be executed EVERY frame
-        once_t              Task will be executed ONCE (or once more), next available tick
+        once_k              Task will be executed ONCE (or once more), next available tick
         unsigned            Task will be executed X times (or update the count remaining) at present update rate
         Hertz               Task will be executed at specified frequency (good for those needing more ticks, but not every tick)
         Second              Task will be executed in X seconds (good for slow/recurring)

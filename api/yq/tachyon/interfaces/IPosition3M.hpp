@@ -30,11 +30,11 @@ namespace yq::tachyon {
         //virtual void        position3m(set_k, z_k, Meter){}
         
         //!  Move the position (ie set to position + delta)
-        virtual void        position3m(adjust_t, const Vector3M&){}
+        virtual void        position3m(adjust_k, const Vector3M&){}
 
-        //virtual void        position3m(adjust_t, x_k, Meter){}
-        //virtual void        position3m(adjust_t, y_k, Meter){}
-        //virtual void        position3m(adjust_t, z_k, Meter){}
+        //virtual void        position3m(adjust_k, x_k, Meter){}
+        //virtual void        position3m(adjust_k, y_k, Meter){}
+        //virtual void        position3m(adjust_k, z_k, Meter){}
 
         virtual bool        position3m(disabled_t) const { return false; }
         virtual bool        position3m(settable_t) const { return false; }

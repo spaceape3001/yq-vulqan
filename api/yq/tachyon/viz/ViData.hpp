@@ -32,7 +32,7 @@ namespace yq::tachyon {
             StaticLayout
             // MakeDescriptorLayout    = 0
         };
-        using descriptor_t  = std::variant<std::monostate, layout_t, allocate_t>;
+        using descriptor_t  = std::variant<std::monostate, layout_k, allocate_t>;
 
         descriptor_t            descriptors;
         Flags<F>                flags               = {};

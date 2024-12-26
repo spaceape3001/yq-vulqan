@@ -33,7 +33,7 @@ namespace yq::tachyon {
         Types                   types() const;
         TypedID                 object() const;
         uint64_t                revision() const { return m_revision; }
-        const InterfaceInfo*    interface(info_t) const { return m_interface; }
+        const InterfaceInfo*    interface(info_k) const { return m_interface; }
     
     protected:
         Proxy();

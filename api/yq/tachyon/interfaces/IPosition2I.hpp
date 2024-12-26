@@ -29,10 +29,10 @@ namespace yq::tachyon {
         //virtual void        position2i(set_k, y_k, int){}
         
         //!  Move the position (ie set to position + delta)
-        virtual void        position2i(adjust_t, const Vector2I&){}
+        virtual void        position2i(adjust_k, const Vector2I&){}
 
-        //virtual void        position2i(adjust_t, x_k, int){}
-        //virtual void        position2i(adjust_t, y_k, int){}
+        //virtual void        position2i(adjust_k, x_k, int){}
+        //virtual void        position2i(adjust_k, y_k, int){}
 
         virtual bool        position2i(disabled_t) const { return false; }
         virtual bool        position2i(settable_t) const { return false; }

@@ -18,7 +18,7 @@ namespace yq::tachyon {
         bool        size2i(settable_t) const override;
         bool        size2i(adjustable_t) const override;
         
-        void        size2i(adjust_t, const Size2I&) override;
+        void        size2i(adjust_k, const Size2I&) override;
         void        size2i(move_t, const Size2I&) override;
 
         PSize2I(const ISize2I& i);

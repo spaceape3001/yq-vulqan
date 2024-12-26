@@ -78,7 +78,7 @@ namespace yq::tachyon {
     void    Frame::Container<T,D,S>::insert(Tachyon* p, const TachyonData* d, const TachyonSnap* s)
     {
         objects[p->id()]      = static_cast<T*>(p);
-        datas[p->id()]        = static_cast<const data_t*>(d);
+        datas[p->id()]        = static_cast<const data_k*>(d);
         snaps[p->id()]        = static_cast<const snap_t*>(s);
     }
     

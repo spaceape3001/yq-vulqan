@@ -138,7 +138,7 @@ namespace yq::tachyon {
                 return;
             }
             
-            if(std::get_if<once_t>(&es)){
+            if(std::get_if<once_k>(&es)){
                mode     = XIns::Once; 
                return;
             }

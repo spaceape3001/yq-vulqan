@@ -128,7 +128,7 @@ namespace yq::tachyon {
             uint32_t  size    = 0;
         };
         
-        struct push_t {
+        struct push_k {
             fn_push         fetch = {};
             fn_revision     revision = {};
             size_t          size;
@@ -167,7 +167,7 @@ namespace yq::tachyon {
         float                   line_width() const { return m_lineWidth; }
         PolygonMode             polygons() const { return m_polygonMode; }
         bool                    primitive_restart() const { return m_primitiveRestart; }
-        const push_t&           push() const { return m_push; }
+        const push_k&           push() const { return m_push; }
         constexpr Role          role() const { return m_role; }
         Topology                topology() const { return m_topology; }
         bool                    wireframe_permitted() const { return m_wireframePermitted; }
@@ -308,7 +308,7 @@ namespace yq::tachyon {
         bool                            m_wireframePermitted    = true;
         ColorBlend                      m_colorBlend            = ColorBlend::Disabled;
 
-        push_t                          m_push                  = {};
+        push_k                          m_push                  = {};
         std::vector<index_buffer_t>     m_indexBuffers;
         std::vector<storage_buffer_t>   m_storageBuffers;
         std::vector<ShaderSpec>         m_shaders;

@@ -89,7 +89,7 @@ namespace yq::tachyon {
         size_t count(monitor_k) const;
         size_t count(mouse_k) const;
         size_t count(rendered_k) const;
-        size_t count(tachyon_t) const;
+        size_t count(tachyon_k) const;
         size_t count(thread_k) const;
         size_t count(viewer_k) const;
         size_t count(widget_k) const;
@@ -232,7 +232,7 @@ namespace yq::tachyon {
 
         template <typename T, typename D, typename S> 
         struct Container {
-            using tachyon_t     = T;
+            using tachyon_k     = T;
             using data_k        = D;
             using snap_t        = S;
             

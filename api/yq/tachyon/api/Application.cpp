@@ -103,19 +103,19 @@ namespace yq::tachyon {
         
     }
 
-    ViewerID                    Application::create(viewer_t, WidgetPtr w)
+    ViewerID                    Application::create(viewer_k, WidgetPtr w)
     {
         return create(VIEWER, m_cInfo.view, w);
     }
     
-    ViewerID                    Application::create(viewer_t, std::string_view n, WidgetPtr w)
+    ViewerID                    Application::create(viewer_k, std::string_view n, WidgetPtr w)
     {
         ViewerCreateInfo        vci   = m_cInfo.view;
         vci.title       = n;
         return create(VIEWER, vci, w);
     }
     
-    ViewerID                    Application::create(viewer_t, const ViewerCreateInfo&vci, WidgetPtr w)
+    ViewerID                    Application::create(viewer_k, const ViewerCreateInfo&vci, WidgetPtr w)
     {
         AppThread&  at  = thread(APP);
         DesktopGLFW&        desk    = desktop(GLFW);
@@ -155,7 +155,7 @@ namespace yq::tachyon {
         return v->id();
     }
 
-    DesktopGLFW&                Application::desktop(glfw_t)
+    DesktopGLFW&                Application::desktop(glfw_k)
     {
         if(!m_glfw){
             thread(APP);
@@ -167,7 +167,7 @@ namespace yq::tachyon {
         return *m_glfw;
     }
 
-    Vulqan&                     Application::manager(vulqan_t)
+    Vulqan&                     Application::manager(vulqan_k)
     {
         if(!m_vulkan){
             thread(APP);
@@ -189,7 +189,7 @@ namespace yq::tachyon {
         run(r);
     }
 
-    AppThread&  Application::thread(app_t)
+    AppThread&  Application::thread(app_k)
     {
         if(!m_athread){
             m_athread   = new AppThread(this);
@@ -197,7 +197,7 @@ namespace yq::tachyon {
         return *m_athread;
     }
 
-    ViewerThread&              Application::thread(viewer_t)
+    ViewerThread&              Application::thread(viewer_k)
     {
         if(!m_vthread){
             thread(APP);
@@ -207,7 +207,7 @@ namespace yq::tachyon {
         return *m_vthread;
     }
     
-    TaskThread&             Application::thread(task_t)
+    TaskThread&             Application::thread(task_k)
     {
         if(!m_tthread){
             thread(APP);

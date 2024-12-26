@@ -36,9 +36,9 @@ namespace yq::tachyon {
         //virtual void        position3d(adjust_k, y_k, double){}
         //virtual void        position3d(adjust_k, z_k, double){}
 
-        virtual bool        position3d(disabled_t) const { return false; }
-        virtual bool        position3d(settable_t) const { return false; }
-        virtual bool        position3d(adjustable_t) const { return false; }
+        virtual bool        position3d(disabled_k) const { return false; }
+        virtual bool        position3d(settable_k) const { return false; }
+        virtual bool        position3d(adjustable_k) const { return false; }
 
         static void init_info();
     };

@@ -45,13 +45,13 @@ namespace yq::tachyon {
         Result  r = analyze(pp);
         if(auto p = std::get_if<bool>(&r))
             return *p;
-        if(std::get_if<accept_t>(&r))
+        if(std::get_if<accept_k>(&r))
             return true;
-        if(std::get_if<reject_t>(&r))
+        if(std::get_if<reject_k>(&r))
             return false;
-        if(std::get_if<mismatch_t>(&r))
+        if(std::get_if<mismatch_k>(&r))
             return m_mismatch;
-        if(std::get_if<failure_t>(&r))
+        if(std::get_if<failure_k>(&r))
             return m_errors;
         return false;
     }

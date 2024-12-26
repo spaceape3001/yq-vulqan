@@ -273,7 +273,7 @@ namespace yq::tachyon {
  
         if(std::get_if<layout_k>(&opts.descriptors)){
             return _create_descriptor_layout(opts);
-        } else if(std::get_if<allocate_t>(&opts.descriptors)){
+        } else if(std::get_if<allocate_k>(&opts.descriptors)){
             return _create_descriptor_sets(opts);
         } else {
             return true;

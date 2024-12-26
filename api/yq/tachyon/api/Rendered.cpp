@@ -90,7 +90,7 @@ namespace yq::tachyon {
         return p->role();
     }
 
-    void            Rendered::set_pipeline(clear_t)
+    void            Rendered::set_pipeline(clear_k)
     {
         m_pipeline  = nullptr;
     }

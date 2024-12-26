@@ -316,7 +316,7 @@ namespace yq::tachyon {
         return  (WindowGLFW*) glfwGetWindowUserPointer(w);
     }
 
-    WindowGLFW*  WindowGLFW::window(ptr_t, GLFWwindow* w)
+    WindowGLFW*  WindowGLFW::window(ptr_k, GLFWwindow* w)
     {
         return _window(w);
     }

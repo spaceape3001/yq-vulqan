@@ -28,9 +28,9 @@ namespace yq::tachyon {
         //!  Move the size (ie set to size + delta)
         virtual void        size2i(adjust_k, const Size2I&){}
 
-        virtual bool        size2i(disabled_t) const { return false; }
-        virtual bool        size2i(settable_t) const { return false; }
-        virtual bool        size2i(adjustable_t) const { return false; }
+        virtual bool        size2i(disabled_k) const { return false; }
+        virtual bool        size2i(settable_k) const { return false; }
+        virtual bool        size2i(adjustable_k) const { return false; }
 
         static void init_info();
     };

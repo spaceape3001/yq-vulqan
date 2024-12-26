@@ -14,9 +14,9 @@ namespace yq::tachyon {
     public:
     
         Vector1D    position1d() const override {  return m_position;  }
-        bool        position1d(disabled_t) const override;
-        bool        position1d(settable_t) const override;
-        bool        position1d(adjustable_t) const override;
+        bool        position1d(disabled_k) const override;
+        bool        position1d(settable_k) const override;
+        bool        position1d(adjustable_k) const override;
         
         void        position1d(set_k, const Vector1D&) override;
         void        position1d(adjust_k, const Vector1D&) override;

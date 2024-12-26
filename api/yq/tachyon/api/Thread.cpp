@@ -264,7 +264,7 @@ namespace yq::tachyon {
         ctr.snap    = res.snap;
         d.tachyons.push_back({ ctr.object, res.data, res.snap });
         
-        if(std::get_if<delete_t>(&res.execute)){
+        if(std::get_if<delete_k>(&res.execute)){
             lock_t _lock(s_mutex, true);
             s_inboxes[id()].deletes.push_back(ctr.object->id());
         }

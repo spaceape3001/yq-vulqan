@@ -192,7 +192,7 @@ namespace yq::tachyon {
 
     bool Tachyon::accepting(const PostAdvice& pa)
     {
-        return std::get_if<accept_t>(&pa) || std::get_if<MG>(&pa) || std::get_if<MGF>(&pa);
+        return std::get_if<accept_k>(&pa) || std::get_if<MG>(&pa) || std::get_if<MGF>(&pa);
     }
 
     MGF  Tachyon::groups(const PostAdvice&pa)
@@ -208,7 +208,7 @@ namespace yq::tachyon {
     
     bool Tachyon::rejecting(const PostAdvice&pa)
     {
-        return static_cast<bool>(std::get_if<reject_t>(&pa));
+        return static_cast<bool>(std::get_if<reject_k>(&pa));
     }
 
     bool Tachyon::unspecified(const PostAdvice&pa) 
@@ -240,7 +240,7 @@ namespace yq::tachyon {
         _name(p.name);
     }
     
-    Tachyon::Tachyon(thread_t, const Param& p) : Tachyon(INIT, p)
+    Tachyon::Tachyon(thread_k, const Param& p) : Tachyon(INIT, p)
     {
     }
 
@@ -603,7 +603,7 @@ namespace yq::tachyon {
         std::erase(m_snoop, cmd.listener());
     }
 
-    void    Tachyon::owner(push_t, ThreadID tid)
+    void    Tachyon::owner(push_k, ThreadID tid)
     {
         mail(new TachyonThreadCommand(this, tid));
     }

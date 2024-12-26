@@ -29,7 +29,7 @@ namespace yq::tachyon {
         GLFWmonitor*    glfw() const { return m_monitor; }
         
         static MonitorID       monitor(GLFWmonitor*);
-        static MonitorGLFW*    monitor(ptr_t, GLFWmonitor*);
+        static MonitorGLFW*    monitor(ptr_k, GLFWmonitor*);
 
         void    disconnecting();
         

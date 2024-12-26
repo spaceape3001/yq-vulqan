@@ -86,7 +86,7 @@ namespace yq::tachyon {
         s_desktop   = nullptr;
     }
 
-    void DesktopGLFW::_install(cursor_t, all_k)
+    void DesktopGLFW::_install(cursor_k, all_k)
     {
         _install(CURSOR, StdCursor::Arrow,          GLFW_ARROW_CURSOR);
         _install(CURSOR, StdCursor::IBeam,          GLFW_IBEAM_CURSOR);
@@ -100,7 +100,7 @@ namespace yq::tachyon {
         _install(CURSOR, StdCursor::NotAllowed,     GLFW_NOT_ALLOWED_CURSOR);
     }
 
-    bool DesktopGLFW::_install(cursor_t, StdCursor stdC, int glfwId)
+    bool DesktopGLFW::_install(cursor_k, StdCursor stdC, int glfwId)
     {
         if(m_stdCursors.contains(stdC))
             return false;
@@ -120,13 +120,13 @@ namespace yq::tachyon {
         return true;
     }
 
-    void DesktopGLFW::_install(joystick_t, all_k)
+    void DesktopGLFW::_install(joystick_k, all_k)
     {
         for(int j=0;j<kCntGLFWJoysticks;++j)
             _install(JOYSTICK, j);
     }
 
-    bool DesktopGLFW::_install(joystick_t, int jid)
+    bool DesktopGLFW::_install(joystick_k, int jid)
     {
         if((jid < 0) || (jid >=  kCntGLFWJoysticks))
             return false;
@@ -139,7 +139,7 @@ namespace yq::tachyon {
         return true;
     }
     
-    void DesktopGLFW::_install(monitor_t, all_k)
+    void DesktopGLFW::_install(monitor_k, all_k)
     {
         int             cnt = 0;
         GLFWmonitor**   ptr = glfwGetMonitors(&cnt);
@@ -149,7 +149,7 @@ namespace yq::tachyon {
             _install(MONITOR, ptr[i]);
     }
     
-    bool DesktopGLFW::_install(monitor_t, GLFWmonitor*m)
+    bool DesktopGLFW::_install(monitor_k, GLFWmonitor*m)
     {
         MonitorID   id  = MonitorGLFW::monitor(m);
         if(id || m_monitors.contains(id))
@@ -202,15 +202,15 @@ namespace yq::tachyon {
         return {};
     }
 
-    void DesktopGLFW::_uninstall(joystick_t, int)
+    void DesktopGLFW::_uninstall(joystick_k, int)
     {
     }
     
-    void DesktopGLFW::_uninstall(monitor_t, GLFWmonitor*)
+    void DesktopGLFW::_uninstall(monitor_k, GLFWmonitor*)
     {
     }
 
-    Window*     DesktopGLFW::create(window_t, const ViewerCreateInfo& vci)
+    Window*     DesktopGLFW::create(window_k, const ViewerCreateInfo& vci)
     {
         return create_window(vci);
     }

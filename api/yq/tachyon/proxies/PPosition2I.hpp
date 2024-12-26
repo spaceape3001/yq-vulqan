@@ -14,9 +14,9 @@ namespace yq::tachyon {
     public:
     
         Vector2I    position2i() const override {  return m_position;  }
-        bool        position2i(disabled_t) const override;
-        bool        position2i(settable_t) const override;
-        bool        position2i(adjustable_t) const override;
+        bool        position2i(disabled_k) const override;
+        bool        position2i(settable_k) const override;
+        bool        position2i(adjustable_k) const override;
         
         void        position2i(set_k, const Vector2I&) override;
         void        position2i(adjust_k, const Vector2I&) override;

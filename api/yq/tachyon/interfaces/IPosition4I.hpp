@@ -38,9 +38,9 @@ namespace yq::tachyon {
         //virtual void        position4i(adjust_k, z_k, int){}
         //virtual void        position4i(adjust_k, w_k, int){}
 
-        virtual bool        position4i(disabled_t) const { return false; }
-        virtual bool        position4i(settable_t) const { return false; }
-        virtual bool        position4i(adjustable_t) const { return false; }
+        virtual bool        position4i(disabled_k) const { return false; }
+        virtual bool        position4i(settable_k) const { return false; }
+        virtual bool        position4i(adjustable_k) const { return false; }
 
         static void init_info();
     };

@@ -25,7 +25,7 @@ namespace yq::tachyon {
         return p->id();
     }
     
-    MonitorGLFW*    MonitorGLFW::monitor(ptr_t, GLFWmonitor*m)
+    MonitorGLFW*    MonitorGLFW::monitor(ptr_k, GLFWmonitor*m)
     {
         return _monitor(m);
     }

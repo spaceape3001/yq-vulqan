@@ -39,7 +39,7 @@ namespace yq::tachyon {
         Second              Task will be executed in X seconds (good for slow/recurring)
         Skip                Task will be executed, repeatedly, every X times
     */
-    using TaskExecutionControl  = std::variant<std::monostate, std::error_code, bool, always_t, once_t, unsigned, unit::Hertz, unit::Second, TaskSkip>;
+    using TaskExecutionControl  = std::variant<std::monostate, std::error_code, bool, always_k, once_k, unsigned, unit::Hertz, unit::Second, TaskSkip>;
 
     //! Modes, which will *ONLY* be re-evaulated after a tick
     enum class TaskMode : uint8_t {

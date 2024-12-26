@@ -74,7 +74,7 @@ namespace yq::tachyon {
         //! Sets the wireframe mode
         void            set_wireframe(Tristate);
         
-        void            set_pipeline(clear_t);
+        void            set_pipeline(clear_k);
         void            set_pipeline(nullptr_t);
         void            set_pipeline(Pipeline::Role);
         

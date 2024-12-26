@@ -900,12 +900,12 @@ namespace yq::tachyon {
         set_aspect({w,h});
     }
     
-    void    Viewer::set_aspect(unlock_t)
+    void    Viewer::set_aspect(unlock_k)
     {
         set_aspect({-1,-1});
     }
     
-    void    Viewer::set_aspect(unlocked_t)
+    void    Viewer::set_aspect(unlocked_k)
     {
         set_aspect({-1,-1});
     }

@@ -47,10 +47,10 @@ namespace yq::tachyon {
         using Result = std::variant<
             std::monostate,     //< TREATED AS FALSE/REJECT
             bool,               //< TRUE/FALSE accept/reject
-            accept_t,           //< ACCEPT
-            reject_t,           //< REJECT
-            mismatch_t,         //< Not-our-type (so mismatch policy)
-            failure_t           //< General other failure (ie exception, error condition)
+            accept_k,           //< ACCEPT
+            reject_k,           //< REJECT
+            mismatch_k,         //< Not-our-type (so mismatch policy)
+            failure_k           //< General other failure (ie exception, error condition)
         >;
         
         struct Param {

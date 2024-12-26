@@ -19,17 +19,17 @@ namespace yq::tachyon {
             m_flags |= F::Adjustable;
     }
 
-    bool        PPosition3M::position3m(disabled_t) const 
+    bool        PPosition3M::position3m(disabled_k) const 
     {
         return m_flags(F::Disabled);
     }
     
-    bool        PPosition3M::position3m(settable_t) const 
+    bool        PPosition3M::position3m(settable_k) const 
     {   
         return m_flags(F::Settable);
     }
     
-    bool        PPosition3M::position3m(adjustable_t) const 
+    bool        PPosition3M::position3m(adjustable_k) const 
     {
         return m_flags(F::Adjustable);
     }

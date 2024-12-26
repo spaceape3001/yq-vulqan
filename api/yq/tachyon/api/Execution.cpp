@@ -123,7 +123,7 @@ namespace yq::tachyon {
                 return;
             }
             
-            if(std::get_if<delete_t>(&es)){
+            if(std::get_if<delete_k>(&es)){
                 mode    = XIns::Delete;
                 return;
             }

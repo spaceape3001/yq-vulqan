@@ -29,7 +29,7 @@ namespace yq::tachyon {
         virtual CursorID    cursor(StdCursor) const override;
 
         using Desktop::create;
-        virtual Window*     create(window_t, const ViewerCreateInfo&) override;
+        virtual Window*     create(window_k, const ViewerCreateInfo&) override;
         WindowGLFW*         create_window(const ViewerCreateInfo&);
         
         virtual bool        is_running() const override;
@@ -68,16 +68,16 @@ namespace yq::tachyon {
         Stage                   m_stage     = Stage::Uninit;
         
         // TRUE if an insertion occured
-        void _install(cursor_t, all_k);
-        bool _install(cursor_t, StdCursor, int);
-        void _install(joystick_t, all_k);
-        bool _install(joystick_t, int);
-        void _install(monitor_t, all_k);
-        bool _install(monitor_t, GLFWmonitor*);
+        void _install(cursor_k, all_k);
+        bool _install(cursor_k, StdCursor, int);
+        void _install(joystick_k, all_k);
+        bool _install(joystick_k, int);
+        void _install(monitor_k, all_k);
+        bool _install(monitor_k, GLFWmonitor*);
         
         MonitorGLFW*    _monitor(MonitorID);
         
-        void _uninstall(joystick_t, int);
-        void _uninstall(monitor_t, GLFWmonitor*);
+        void _uninstall(joystick_k, int);
+        void _uninstall(monitor_k, GLFWmonitor*);
     };
 }

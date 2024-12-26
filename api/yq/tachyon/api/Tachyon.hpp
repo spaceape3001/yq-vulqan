@@ -374,7 +374,7 @@ namespace yq::tachyon {
         friend class Thread;
 
         Tachyon(init_k, const Param& p={});
-        Tachyon(thread_t, const Param& p={});
+        Tachyon(thread_k, const Param& p={});
         
         static void retain(TachyonPtr);
         static void retain(TachyonPtr, ThreadID);

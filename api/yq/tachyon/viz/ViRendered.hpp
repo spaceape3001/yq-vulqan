@@ -81,7 +81,7 @@ namespace yq::tachyon {
         };
     
         RenderedCPtr            m_rendered;
-        const Render³D*          m_render3d      = nullptr;
+        const Render³D*         m_render3d      = nullptr;
         ViPipelineLayoutCPtr    m_layout;
         ViPipelineCPtr          m_pipeline;
         PushBuffer              m_push;

@@ -9,8 +9,18 @@
 #include <yq/tachyon/api/RenderedBind.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/api/RenderedInfoWriter.hpp>
+#include <yq/tachyon/viz/ViBuffer.hpp>
+#include <yq/tachyon/viz/ViTexture.hpp>
 
 namespace yq::tachyon {
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    RenderedSnap::RenderedSnap()    = default;
+    RenderedSnap::RenderedSnap(const RenderedSnap&) = default;
+    RenderedSnap::~RenderedSnap() = default;
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     RenderedInfo::RenderedInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {

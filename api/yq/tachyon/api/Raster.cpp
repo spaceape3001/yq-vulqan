@@ -83,11 +83,11 @@ namespace yq::tachyon {
     {
     }
 
-    Raster::Raster(ref_t,  const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(REF)), info(info_for(pix, df))
+    Raster::Raster(ref_k,  const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(REF)), info(info_for(pix, df))
     {
     }
     
-    Raster::Raster(copy_t, const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(COPY)), info(info_for(pix, df))
+    Raster::Raster(copy_k, const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(COPY)), info(info_for(pix, df))
     {
     }
 

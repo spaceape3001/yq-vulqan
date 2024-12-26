@@ -18,7 +18,7 @@ namespace yq::tachyon {
         bool        position1d(settable_t) const override;
         bool        position1d(adjustable_t) const override;
         
-        void        position1d(set_t, const Vector1D&) override;
+        void        position1d(set_k, const Vector1D&) override;
         void        position1d(adjust_t, const Vector1D&) override;
 
         PPosition1D(const IPosition1D& i);

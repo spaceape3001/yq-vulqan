@@ -397,7 +397,7 @@ namespace yq::tachyon {
         std::string                 m_name;
         bool                        m_dirty         = false;
         
-        //virtual void                    parent(set_t, TachyonID);
+        //virtual void                    parent(set_k, TachyonID);
         
         void    tx(TachyonID, std::span<const PostCPtr>);
         void    tx(TachyonID, PostCPtr);

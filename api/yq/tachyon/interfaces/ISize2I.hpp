@@ -23,7 +23,7 @@ namespace yq::tachyon {
         virtual Size2I      size2i() const = 0;
         
         //!  Set size the size
-        virtual void        size2i(set_t, const Size2I&){}
+        virtual void        size2i(set_k, const Size2I&){}
         
         //!  Move the size (ie set to size + delta)
         virtual void        size2i(adjust_t, const Size2I&){}

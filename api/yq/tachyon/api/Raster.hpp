@@ -45,8 +45,8 @@ namespace yq::tachyon {
         Raster(const RasterInfo&, Memory&&);
         
         explicit Raster(const Pixmap&);
-        Raster(ref_t,  const Pixmap&, DataFormat df={});
-        Raster(copy_t, const Pixmap&, DataFormat df={});
+        Raster(ref_k,  const Pixmap&, DataFormat df={});
+        Raster(copy_k, const Pixmap&, DataFormat df={});
 
         //! Returns the size of the memory data
         virtual size_t      data_size() const  override;

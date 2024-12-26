@@ -50,13 +50,13 @@ namespace yq::tachyon {
         };
 
         //! Used for assigning by copy
-        ProxyI<copy_t>   operator=(copy_t)
+        ProxyI<copy_k>   operator=(copy_k)
         {
             return { this };
         }
         
         //! Used by assigning by reference
-        ProxyI<ref_t>   operator=(ref_t)
+        ProxyI<ref_k>   operator=(ref_k)
         {
             return { this };
         }

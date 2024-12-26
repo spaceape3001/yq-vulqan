@@ -23,18 +23,18 @@ namespace yq::tachyon {
         virtual Vector3M    position3m() const = 0;
         
         //!  Set position the position
-        virtual void        position3m(set_t, const Vector3M&){}
+        virtual void        position3m(set_k, const Vector3M&){}
         
-        //virtual void        position3m(set_t, x_t, Meter){}
-        //virtual void        position3m(set_t, y_t, Meter){}
-        //virtual void        position3m(set_t, z_t, Meter){}
+        //virtual void        position3m(set_k, x_k, Meter){}
+        //virtual void        position3m(set_k, y_k, Meter){}
+        //virtual void        position3m(set_k, z_k, Meter){}
         
         //!  Move the position (ie set to position + delta)
         virtual void        position3m(adjust_t, const Vector3M&){}
 
-        //virtual void        position3m(adjust_t, x_t, Meter){}
-        //virtual void        position3m(adjust_t, y_t, Meter){}
-        //virtual void        position3m(adjust_t, z_t, Meter){}
+        //virtual void        position3m(adjust_t, x_k, Meter){}
+        //virtual void        position3m(adjust_t, y_k, Meter){}
+        //virtual void        position3m(adjust_t, z_k, Meter){}
 
         virtual bool        position3m(disabled_t) const { return false; }
         virtual bool        position3m(settable_t) const { return false; }

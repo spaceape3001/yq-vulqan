@@ -23,20 +23,20 @@ namespace yq::tachyon {
         virtual Vector4I    position4i() const = 0;
         
         //!  Set position the position
-        virtual void        position4i(set_t, const Vector4I&){}
+        virtual void        position4i(set_k, const Vector4I&){}
         
-        //virtual void        position4i(set_t, x_t, int){}
-        //virtual void        position4i(set_t, y_t, int){}
-        //virtual void        position4i(set_t, z_t, int){}
-        //virtual void        position4i(set_t, w_t, int){}
+        //virtual void        position4i(set_k, x_k, int){}
+        //virtual void        position4i(set_k, y_k, int){}
+        //virtual void        position4i(set_k, z_k, int){}
+        //virtual void        position4i(set_k, w_k, int){}
         
         //!  Move the position (ie set to position + delta)
         virtual void        position4i(adjust_t, const Vector4I&){}
 
-        //virtual void        position4i(adjust_t, x_t, int){}
-        //virtual void        position4i(adjust_t, y_t, int){}
-        //virtual void        position4i(adjust_t, z_t, int){}
-        //virtual void        position4i(adjust_t, w_t, int){}
+        //virtual void        position4i(adjust_t, x_k, int){}
+        //virtual void        position4i(adjust_t, y_k, int){}
+        //virtual void        position4i(adjust_t, z_k, int){}
+        //virtual void        position4i(adjust_t, w_k, int){}
 
         virtual bool        position4i(disabled_t) const { return false; }
         virtual bool        position4i(settable_t) const { return false; }

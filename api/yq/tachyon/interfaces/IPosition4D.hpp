@@ -23,20 +23,20 @@ namespace yq::tachyon {
         virtual Vector4D    position4d() const = 0;
         
         //!  Set position the position
-        virtual void        position4d(set_t, const Vector4D&){}
+        virtual void        position4d(set_k, const Vector4D&){}
         
-        //virtual void        position4d(set_t, x_t, double){}
-        //virtual void        position4d(set_t, y_t, double){}
-        //virtual void        position4d(set_t, z_t, double){}
-        //virtual void        position4d(set_t, w_t, double){}
+        //virtual void        position4d(set_k, x_k, double){}
+        //virtual void        position4d(set_k, y_k, double){}
+        //virtual void        position4d(set_k, z_k, double){}
+        //virtual void        position4d(set_k, w_k, double){}
         
         //!  Move the position (ie set to position + delta)
         virtual void        position4d(adjust_t, const Vector4D&){}
 
-        //virtual void        position4d(adjust_t, x_t, double){}
-        //virtual void        position4d(adjust_t, y_t, double){}
-        //virtual void        position4d(adjust_t, z_t, double){}
-        //virtual void        position4d(adjust_t, w_t, double){}
+        //virtual void        position4d(adjust_t, x_k, double){}
+        //virtual void        position4d(adjust_t, y_k, double){}
+        //virtual void        position4d(adjust_t, z_k, double){}
+        //virtual void        position4d(adjust_t, w_k, double){}
 
         virtual bool        position4d(disabled_t) const { return false; }
         virtual bool        position4d(settable_t) const { return false; }

@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return m_flags(F::Adjustable);
     }
         
-    void        PSize2I::size2i(set_t, const Size2I& v) 
+    void        PSize2I::size2i(set_k, const Size2I& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
             dispatch(new SetSize2I(id(), v));

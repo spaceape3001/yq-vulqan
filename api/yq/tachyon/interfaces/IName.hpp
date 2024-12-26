@@ -19,7 +19,7 @@ namespace yq::tachyon {
     public:
     
         virtual std::string_view    name() const = 0;
-        virtual void                name(set_t, std::string&&){}
+        virtual void                name(set_k, std::string&&){}
         
         static void init_info();
     };

@@ -19,7 +19,7 @@ namespace yq::tachyon {
         bool        position3m(settable_t) const override;
         bool        position3m(adjustable_t) const override;
         
-        void        position3m(set_t, const Vector3M&) override;
+        void        position3m(set_k, const Vector3M&) override;
         void        position3m(adjust_t, const Vector3M&) override;
 
         PPosition3M(const IPosition3M& i);

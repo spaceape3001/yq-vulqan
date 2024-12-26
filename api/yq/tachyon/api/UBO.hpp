@@ -48,12 +48,12 @@ namespace yq::tachyon {
             }
         };
         
-        RefProxy    operator=(ref_t)
+        RefProxy    operator=(ref_k)
         {
             return { this };
         }
 
-        CopyProxy    operator=(copy_t)
+        CopyProxy    operator=(copy_k)
         {
             return { this };
         }

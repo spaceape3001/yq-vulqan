@@ -78,18 +78,18 @@ namespace yq::tachyon {
         DesktopID           id() const { return DesktopID(UniqueID::id()); }
 
         using Manager::create;
-        virtual Window*     create(window_t, const ViewerCreateInfo&) { return nullptr; }
+        virtual Window*     create(window_k, const ViewerCreateInfo&) { return nullptr; }
         
         virtual CursorID    cursor(StdCursor) const { return {}; }
         
         virtual bool        is_running() const { return false; }
 
-        bool    does(cursor_t) const;
-        bool    does(joystick_t) const;
-        bool    does(keyboard_t) const;
-        bool    does(monitor_t) const;
-        bool    does(mouse_t) const;
-        bool    does(window_t) const;
+        bool    does(cursor_k) const;
+        bool    does(joystick_k) const;
+        bool    does(keyboard_k) const;
+        bool    does(monitor_k) const;
+        bool    does(mouse_k) const;
+        bool    does(window_k) const;
 
     protected:
     

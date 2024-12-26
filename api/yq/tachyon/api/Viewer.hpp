@@ -289,8 +289,8 @@ namespace yq::tachyon {
 
         void                set_aspect(const Size2I&);
         void                set_aspect(int w, int h);
-        void                set_aspect(unlock_t);
-        void                set_aspect(unlocked_t);
+        void                set_aspect(unlock_k);
+        void                set_aspect(unlocked_k);
 
             //! Sets the window position
         void                set_position(const Vector2I&);
@@ -316,7 +316,7 @@ namespace yq::tachyon {
         virtual Execution   tick(Context&) override;
         
         using Tachyon::owner;
-        virtual void        owner(push_t, ThreadID) override;
+        virtual void        owner(push_k, ThreadID) override;
 
     protected:
 
@@ -338,10 +338,10 @@ namespace yq::tachyon {
         
         
         //! Call if you accept the close request
-        void     accept(close_t);
+        void     accept(close_k);
         
         //! Call if you reject the close request
-        void     reject(close_t);
+        void     reject(close_k);
         
         void        snap(ViewerSnap&) const;
 
@@ -378,8 +378,8 @@ namespace yq::tachyon {
 
 
         void                _sweepwait();
-        void                _install(widget_t);     // Installs new widget
-        void                _remove(widget_t);      // Removes the current widget
+        void                _install(widget_k);     // Installs new widget
+        void                _remove(widget_k);      // Removes the current widget
         void                _widget(WidgetPtr);     // Changes the widget
         
         

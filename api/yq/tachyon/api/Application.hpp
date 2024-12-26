@@ -53,12 +53,12 @@ namespace yq::tachyon {
         const AppCreateInfo&        app_info() const { return m_cInfo; }
         
         //! Creates a viewer with widget (note, application owns it)
-        ViewerID                    create(viewer_t, WidgetPtr);
+        ViewerID                    create(viewer_k, WidgetPtr);
         
         //! Creates a viewer with title/widget
-        ViewerID                    create(viewer_t, std::string_view, WidgetPtr);
+        ViewerID                    create(viewer_k, std::string_view, WidgetPtr);
         
-        ViewerID                    create(viewer_t, const ViewerCreateInfo&, WidgetPtr);
+        ViewerID                    create(viewer_k, const ViewerCreateInfo&, WidgetPtr);
 
         /*! \brief Exec loop for a bunch of windows
 
@@ -98,9 +98,9 @@ namespace yq::tachyon {
         
         static void init_info();
 
-        AppThread&              thread(app_t);
-        TaskThread&             thread(task_t);
-        ViewerThread&           thread(viewer_t);
+        AppThread&              thread(app_k);
+        TaskThread&             thread(task_k);
+        ViewerThread&           thread(viewer_k);
 
     protected:
         //virtual void  receive(const post::PostCPtr&) override;
@@ -121,8 +121,8 @@ namespace yq::tachyon {
     
         friend class Viewer;
         
-        DesktopGLFW&            desktop(glfw_t);
-        Vulqan&                 manager(vulqan_t);
+        DesktopGLFW&            desktop(glfw_k);
+        Vulqan&                 manager(vulqan_k);
         
         void    _kill();
         

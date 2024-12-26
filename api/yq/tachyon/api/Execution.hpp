@@ -16,7 +16,7 @@ namespace yq::tachyon {
         unit::Second    time;
     };
     
-    constexpr EveryTime every_t::operator()(unit::Second time)
+    constexpr EveryTime every_k::operator()(unit::Second time)
     {
         return {time};
     }
@@ -25,7 +25,7 @@ namespace yq::tachyon {
         unsigned count;
     };
 
-    constexpr EveryCount every_t::operator()(unsigned count)
+    constexpr EveryCount every_k::operator()(unsigned count)
     {
         return { count };
     }
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         unit::Second    time;
     };
     
-    constexpr OnceTime operator,(once_t, unit::Second time)
+    constexpr OnceTime operator,(once_k, unit::Second time)
     {
         return { time };
     }
@@ -43,7 +43,7 @@ namespace yq::tachyon {
         unsigned count;
     };
 
-    constexpr OnceCount operator,(once_t, unsigned count)
+    constexpr OnceCount operator,(once_k, unsigned count)
     {
         return { count };
     }
@@ -52,7 +52,7 @@ namespace yq::tachyon {
         unit::Second    time;
     };
     
-    constexpr ForTime operator,(for_t, unit::Second time)
+    constexpr ForTime operator,(for_k, unit::Second time)
     {
         return { time };
     }
@@ -71,7 +71,7 @@ namespace yq::tachyon {
         unsigned count;
     };
     
-    constexpr ForCount operator,(for_t, unsigned count)
+    constexpr ForCount operator,(for_k, unsigned count)
     {
         return { count };
     }
@@ -107,15 +107,15 @@ namespace yq::tachyon {
         std::monostate,     //< Unspecified (ie, don't change, implicit continue)
         std::error_code,    //< Error occured (ie, becomes "ABORT" if not empty)
         bool,               //< TRUE/FALSE (continue/abort)
-        abort_t,            //< Abort
-        always_t,           //< Always run (will be the default)         
-        continue_t,         //< Continue
-        delete_t,           //< Delete
-        disable_t,          //< Disable
-        error_t,            //< Error occured (ie abort)
-        once_t,             //< Execute once, auto-stop
-        pause_t,            //< Pause
-        stop_t,             //< Stop (functionally the same as Pause)
+        abort_k,            //< Abort
+        always_k,           //< Always run (will be the default)         
+        continue_k,         //< Continue
+        delete_k,           //< Delete
+        disable_k,          //< Disable
+        error_k,            //< Error occured (ie abort)
+        once_k,             //< Execute once, auto-stop
+        pause_k,            //< Pause
+        stop_k,             //< Stop (functionally the same as Pause)
         unsigned,           //< Again in X ticks
         unit::Hertz,        //< At rate
         unit::Second,       //< Again in X time

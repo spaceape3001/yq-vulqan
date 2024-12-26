@@ -86,7 +86,7 @@ namespace yq::tachyon {
         s_desktop   = nullptr;
     }
 
-    void DesktopGLFW::_install(cursor_t, all_t)
+    void DesktopGLFW::_install(cursor_t, all_k)
     {
         _install(CURSOR, StdCursor::Arrow,          GLFW_ARROW_CURSOR);
         _install(CURSOR, StdCursor::IBeam,          GLFW_IBEAM_CURSOR);
@@ -120,7 +120,7 @@ namespace yq::tachyon {
         return true;
     }
 
-    void DesktopGLFW::_install(joystick_t, all_t)
+    void DesktopGLFW::_install(joystick_t, all_k)
     {
         for(int j=0;j<kCntGLFWJoysticks;++j)
             _install(JOYSTICK, j);
@@ -139,7 +139,7 @@ namespace yq::tachyon {
         return true;
     }
     
-    void DesktopGLFW::_install(monitor_t, all_t)
+    void DesktopGLFW::_install(monitor_t, all_k)
     {
         int             cnt = 0;
         GLFWmonitor**   ptr = glfwGetMonitors(&cnt);

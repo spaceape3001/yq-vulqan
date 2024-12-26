@@ -69,32 +69,32 @@ namespace yq::tachyon {
         return {};
     }
 
-    bool    Desktop::does(cursor_t) const
+    bool    Desktop::does(cursor_k) const
     {
         return m_control(C::Cursor);
     }
     
-    bool    Desktop::does(joystick_t) const
+    bool    Desktop::does(joystick_k) const
     {
         return m_control(C::Joystick);
     }
     
-    bool    Desktop::does(keyboard_t) const
+    bool    Desktop::does(keyboard_k) const
     {
         return m_control(C::Keyboard);
     }
     
-    bool    Desktop::does(monitor_t) const
+    bool    Desktop::does(monitor_k) const
     {
         return m_control(C::Monitor);
     }
     
-    bool    Desktop::does(mouse_t) const
+    bool    Desktop::does(mouse_k) const
     {
         return m_control(C::Mouse);
     }
     
-    bool    Desktop::does(window_t) const
+    bool    Desktop::does(window_k) const
     {
         return m_control(C::Window);
     }

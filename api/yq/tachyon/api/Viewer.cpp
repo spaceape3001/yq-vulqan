@@ -260,7 +260,7 @@ namespace yq::tachyon {
         tachyonInfo << "Viewer::~Viewer(" << m_number << ")";
     }
 
-    void    Viewer::_install(widget_t)
+    void    Viewer::_install(widget_k)
     {
         if(m_widget){
             m_widget -> m_viewer    = this;
@@ -269,7 +269,7 @@ namespace yq::tachyon {
         }
     }
     
-    void    Viewer::_remove(widget_t)
+    void    Viewer::_remove(widget_k)
     {
         if(m_widget){
             m_widget -> m_viewer    = nullptr;
@@ -293,7 +293,7 @@ namespace yq::tachyon {
         _install(WIDGET);
     }
 
-    void     Viewer::accept(close_t)
+    void     Viewer::accept(close_k)
     {
         m_widget -> m_flags -= Widget::F::ClosePending;
         RequestCPtr  req = swap(Viewer::m_closeRequest, {});
@@ -851,7 +851,7 @@ namespace yq::tachyon {
         }
     }
 
-    void     Viewer::owner(push_t, ThreadID tid) 
+    void     Viewer::owner(push_k, ThreadID tid) 
     {
         Tachyon::owner(PUSH, tid);
         if(m_widget)
@@ -876,7 +876,7 @@ namespace yq::tachyon {
         return m_state.window.position;
     }
 
-    void     Viewer::reject(close_t)
+    void     Viewer::reject(close_k)
     {
         m_widget -> m_flags -= Widget::F::ClosePending;
         RequestCPtr  req = swap(Viewer::m_closeRequest, {});

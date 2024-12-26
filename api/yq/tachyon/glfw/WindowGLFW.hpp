@@ -33,7 +33,7 @@ namespace yq::tachyon {
 
         virtual Execution tick(Context&) override;
         
-        static WindowGLFW*  window(ptr_t, GLFWwindow*);
+        static WindowGLFW*  window(ptr_k, GLFWwindow*);
         static WindowID     window(GLFWwindow*);
         
         //std::string_view    title() const;

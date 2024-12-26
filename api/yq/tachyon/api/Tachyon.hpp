@@ -112,7 +112,7 @@ namespace yq::tachyon {
     class Frame;
     struct OutPost;
 
-    using PostAdvice = std::variant<std::monostate, accept_t, reject_t, MG, MGF>;
+    using PostAdvice = std::variant<std::monostate, accept_k, reject_k, MG, MGF>;
 
     bool unspecified(const PostAdvice& pa);
 
@@ -179,7 +179,7 @@ namespace yq::tachyon {
         ThreadID            owner() const;
         
         //! Virtual so derived classes can push children as well
-        virtual void        owner(push_t, ThreadID);
+        virtual void        owner(push_k, ThreadID);
         
         //! Our parent
         TypedID             parent() const { return m_parent; }
@@ -204,7 +204,7 @@ namespace yq::tachyon {
     
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
-        T*          create(child_t, Args...);
+        T*          create(child_k, Args...);
 
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
@@ -222,7 +222,7 @@ namespace yq::tachyon {
 
         //! Creates a tachyon (no parent) using the given meta information
         template <SomeTachyon T>
-        T*          create(child_t, const typename T::MyInfo&);
+        T*          create(child_k, const typename T::MyInfo&);
 
         //! Creates a "child" tachyon using the given meta information
         template <SomeTachyon T>
@@ -491,13 +491,13 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T>
-    T*   Tachyon::create(child_t, const typename T::MyInfo& info)
+    T*   Tachyon::create(child_k, const typename T::MyInfo& info)
     {
         return create_child<T>(info);
     }
 
     template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create(child_t, Args... args)
+    T*  Tachyon::create(child_k, Args... args)
     {
         return create_child<T>(args...);
     }

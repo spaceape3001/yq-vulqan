@@ -62,7 +62,7 @@ namespace yq::tachyon {
             w->vulkan_(u);
     }
 
-    void    Widget::accept(close_t)
+    void    Widget::accept(close_k)
     {
         if(m_viewer)
             m_viewer -> accept(CLOSE);
@@ -121,7 +121,7 @@ namespace yq::tachyon {
             w->prerecord(u);
     }
 
-    void    Widget::reject(close_t)
+    void    Widget::reject(close_k)
     {
         if(m_viewer)
             m_viewer -> reject(CLOSE);

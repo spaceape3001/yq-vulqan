@@ -264,87 +264,87 @@ namespace yq::tachyon {
         return m_windows.has(id);
     }
 
-    size_t Frame::count(camera_t) const
+    size_t Frame::count(camera_k) const
     {
         return m_cameras.count();
     }
     
-    size_t Frame::count(controller_t) const
+    size_t Frame::count(controller_k) const
     {
         return m_controllers.count();
     }
     
-    size_t Frame::count(cursor_t) const
+    size_t Frame::count(cursor_k) const
     {
         return m_cursors.count();
     }
     
-    size_t Frame::count(desktop_t) const
+    size_t Frame::count(desktop_k) const
     {
         return m_desktops.count();
     }
     
-    size_t Frame::count(keyboard_t) const
+    size_t Frame::count(keyboard_k) const
     {
         return m_keyboards.count();
     }
     
-    size_t Frame::count(joystick_t) const
+    size_t Frame::count(joystick_k) const
     {
         return m_joysticks.count();
     }
     
-    size_t Frame::count(light_t) const
+    size_t Frame::count(light_k) const
     {
         return m_lights.count();
     }
     
-    size_t Frame::count(manager_t) const
+    size_t Frame::count(manager_k) const
     {
         return m_managers.count();
     }
     
-    size_t Frame::count(model_t) const
+    size_t Frame::count(model_k) const
     {
         return m_models.count();
     }
     
-    size_t Frame::count(monitor_t) const
+    size_t Frame::count(monitor_k) const
     {
         return m_monitors.count();
     }
 
-    size_t Frame::count(mouse_t) const
+    size_t Frame::count(mouse_k) const
     {
         return m_mouses.count();
     }
     
-    size_t Frame::count(rendered_t) const
+    size_t Frame::count(rendered_k) const
     {
         return m_rendereds.count();
     }
 
-    size_t Frame::count(tachyon_t) const
+    size_t Frame::count(tachyon_k) const
     {
         return m_tachyons.count();
     }
 
-    size_t Frame::count(thread_t) const
+    size_t Frame::count(thread_k) const
     {
         return m_threads.count();
     }
 
-    size_t Frame::count(viewer_t) const
+    size_t Frame::count(viewer_k) const
     {
         return m_viewers.count();
     }
 
-    size_t Frame::count(widget_t) const
+    size_t Frame::count(widget_k) const
     {
         return m_widgets.count();
     }
     
-    size_t Frame::count(window_t) const
+    size_t Frame::count(window_k) const
     {
         return m_windows.count();
     }

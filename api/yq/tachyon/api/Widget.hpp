@@ -151,8 +151,8 @@ namespace yq::tachyon {
         virtual void            prerecord(ViContext&);
 
         virtual void            on_close_request() { accept(CLOSE); }
-        void                    accept(close_t);
-        void                    reject(close_t);
+        void                    accept(close_k);
+        void                    reject(close_k);
 
         //virtual void            receive(const post::PostCPtr&);
 

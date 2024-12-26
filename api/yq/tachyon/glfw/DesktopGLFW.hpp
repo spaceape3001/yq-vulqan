@@ -68,11 +68,11 @@ namespace yq::tachyon {
         Stage                   m_stage     = Stage::Uninit;
         
         // TRUE if an insertion occured
-        void _install(cursor_t, all_t);
+        void _install(cursor_t, all_k);
         bool _install(cursor_t, StdCursor, int);
-        void _install(joystick_t, all_t);
+        void _install(joystick_t, all_k);
         bool _install(joystick_t, int);
-        void _install(monitor_t, all_t);
+        void _install(monitor_t, all_k);
         bool _install(monitor_t, GLFWmonitor*);
         
         MonitorGLFW*    _monitor(MonitorID);

@@ -39,7 +39,7 @@ namespace yq::tachyon {
     Triangle³::Triangle³(const TriangleData<ColorVertex2D>&tri)
     {
         m_vertex    = { tri.a, tri.b, tri.c};
-        m_draw.vertex_count  = 3;
+        //m_draw.vertex_count  = 3;
     }
     
     Triangle³::~Triangle³()

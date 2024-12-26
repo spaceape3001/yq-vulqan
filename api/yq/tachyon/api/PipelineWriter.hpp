@@ -292,7 +292,7 @@ namespace yq::tachyon {
         }
 
         template <typename V>
-        uint32_t   index(IBO<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        uint32_t   index(IBO<V> C::*p, DataActivity da=DataActivity::DYNAMIC)
         {
             index_buffer_t       cfg = ibo_<V>(da);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -302,7 +302,7 @@ namespace yq::tachyon {
         }
 
         template <typename V>
-        uint32_t   index(IB1<V> C::*p, DataActivity da=DataActivity::REFRESH)
+        uint32_t   index(IB1<V> C::*p, DataActivity da=DataActivity::DYNAMIC)
         {
             index_buffer_t       cfg = ibo_<V>(da);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -318,7 +318,7 @@ namespace yq::tachyon {
         */
         
         template <typename V>
-        uint32_t    storage(SBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
@@ -328,7 +328,7 @@ namespace yq::tachyon {
         }
         
         template <typename V>
-        uint32_t    storage(SB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
@@ -338,20 +338,20 @@ namespace yq::tachyon {
         }
 
         template <typename V>
-        uint32_t    storage(SBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V>& p, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             return storage(p, 1, da, stages);
         }
         
         template <typename V>
-        uint32_t    storage(SB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V>& p, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             return storage(p, 1, da, stages);
         }
         
         
         template <typename V>
-        uint32_t    storage(SBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -361,7 +361,7 @@ namespace yq::tachyon {
         }
         
         template <typename V>
-        uint32_t    storage(SB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             storage_buffer_t       cfg = sbo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -371,13 +371,13 @@ namespace yq::tachyon {
         }
 
         template <typename V>
-        uint32_t    storage(SBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SBO<V> C::*p, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             return storage(p, 1, da, stages);
         }
         
         template <typename V>
-        uint32_t    storage(SB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    storage(SB1<V> C::*p, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             return storage(p, 1, da, stages);
         }
@@ -390,7 +390,7 @@ namespace yq::tachyon {
         */
         
         template <typename V>
-        uint32_t    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V>& p, uint32_t cnt, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
@@ -400,7 +400,7 @@ namespace yq::tachyon {
         }
         
         template <typename V>
-        uint32_t    uniform(UB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V>& p, uint32_t cnt, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_COMMON_HANDLER
@@ -410,20 +410,20 @@ namespace yq::tachyon {
         }
 
         template <typename V>
-        uint32_t    uniform(UBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V>& p, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             return uniform(p, 1, da, stages);
         }
         
         template <typename V>
-        uint32_t    uniform(UB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V>& p, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             return uniform(p, 1, da, stages);
         }
         
         
         template <typename V>
-        uint32_t    uniform(UBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -433,7 +433,7 @@ namespace yq::tachyon {
         }
         
         template <typename V>
-        uint32_t    uniform(UB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V> C::*p, uint32_t cnt, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             uniform_buffer_t       cfg = ubo_<V>(cnt, da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -443,13 +443,13 @@ namespace yq::tachyon {
         }
 
         template <typename V>
-        uint32_t    uniform(UBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UBO<V> C::*p, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             return uniform(p, 1, da, stages);
         }
         
         template <typename V>
-        uint32_t    uniform(UB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    uniform(UB1<V> C::*p, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             return uniform(p, 1, da, stages);
         }
@@ -461,7 +461,7 @@ namespace yq::tachyon {
         */
 
         template <typename V>
-        VBOMaker<V> vertex(VBO<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        VBOMaker<V> vertex(VBO<V>& p, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             auto cfg    = vbo_<V>(da, stages);
             YQ_PIPELINE_COMMON_HANDLER
@@ -469,7 +469,7 @@ namespace yq::tachyon {
         }
         
         template <typename V>
-        VBOMaker<V> vertex(VB1<V>& p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        VBOMaker<V> vertex(VB1<V>& p, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             auto cfg    = vbo_<V>(da, stages);
             YQ_PIPELINE_COMMON_HANDLER
@@ -477,7 +477,7 @@ namespace yq::tachyon {
         }
 
         template <typename V>
-        VBOMaker<V> vertex(VBO<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        VBOMaker<V> vertex(VBO<V> C::*p, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             auto cfg    = vbo_<V>(da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -485,7 +485,7 @@ namespace yq::tachyon {
         }
         
         template <typename V>
-        VBOMaker<V> vertex(VB1<V> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        VBOMaker<V> vertex(VB1<V> C::*p, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             auto cfg    = vbo_<V>(da, stages);
             YQ_PIPELINE_MEMBER_HANDLER
@@ -501,7 +501,7 @@ namespace yq::tachyon {
             =======================================================
         */
 
-        uint32_t texture(Ref<const Texture> &p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t texture(Ref<const Texture> &p, DataActivity da=DataActivity::COMMON, uint32_t stages=0)
         {
             texture_t   cfg = tex_(da, stages);
             cfg.fetch       = [&p](const void*) -> TextureCPtr {
@@ -515,7 +515,7 @@ namespace yq::tachyon {
             return ret;
         }
 
-        uint32_t    texture(Ref<const Texture> C::*p, DataActivity da=DataActivity::REFRESH, uint32_t stages=0)
+        uint32_t    texture(Ref<const Texture> C::*p, DataActivity da=DataActivity::DYNAMIC, uint32_t stages=0)
         {
             texture_t   cfg = tex_(da, stages);
             cfg.fetch       = [p](const void*v) -> TextureCPtr {

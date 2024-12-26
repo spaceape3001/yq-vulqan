@@ -23,6 +23,7 @@ namespace yq::tachyon {
         uint64_t                revision    = 0ULL;
         double                  time        = 0.;
         TypedID                 parent;
+        TypedID                 self;
         std::vector<TypedID>    children;
         
         TachyonSnap();

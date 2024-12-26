@@ -54,22 +54,24 @@ namespace yq::tachyon {
         ~Rendered();
         
         //! Helper for draw counts
-        struct Draw {
-            uint32_t    vertex_count     = 0;
-            uint32_t    instance_count   = 1;
-        };
+        //struct Draw {
+            //uint32_t    vertex_count     = 0;
+            //uint32_t    instance_count   = 1;
+        //};
         
         //! Gets the current draw commands
-        const Draw&     draw() const { return m_draw; }
+        //const Draw&     draw() const { return m_draw; }
         
         //! Wireframe (override), inherit uses scene's setting
         Tristate        wireframe() const { return m_wireframe; }
         
         //! TRUE if this object is culled (ie not rendered)
-        bool            culled() const { return m_culled; }
+        Tristate        culled() const { return m_culled; }
         
         //! Current pipeline
         const Pipeline* pipeline() const;
+        
+        void            set_culled(Tristate);
 
         //! Sets the wireframe mode
         void            set_wireframe(Tristate);
@@ -94,14 +96,13 @@ namespace yq::tachyon {
         const Pipeline* m_pipeline = nullptr;
         
         //! Draw command
-        Draw            m_draw; 
+        //Draw            m_draw; 
 
         //! Wireframe mode
         Tristate        m_wireframe;
         
-        //! Culling flag
-        bool            m_culled    = false;
-        
+        //! Culling flag (UNIVERSAL)
+        Tristate        m_culled    = Tristate::INHERIT;
     };
     
 }

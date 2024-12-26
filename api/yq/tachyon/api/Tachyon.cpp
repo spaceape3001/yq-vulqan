@@ -622,6 +622,9 @@ namespace yq::tachyon {
 
     void Tachyon::snap(TachyonSnap&snap) const
     {
+        snap.parent     = m_parent;
+        snap.self       = this;
+        snap.children   = m_children;
         for(const InterfaceInfo* ii : metaInfo().interfaces().all){
             Proxy*  p   = ii->proxy(const_cast<Tachyon*>(this));
             if(!p)

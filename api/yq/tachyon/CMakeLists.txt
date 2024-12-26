@@ -6,6 +6,7 @@
 
 project(yq_tachyon)
 
+#   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⁿ
 
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
@@ -49,8 +50,8 @@ add_library(${PROJECT_NAME} SHARED
     api/Post.cpp
     api/Proxy.cpp
     api/Raster.cpp
-    #api/Render2D.cpp
-    api/Render³D.cpp
+    #api/Render².cpp
+    api/Render³.cpp
     api/Rendered.cpp
     api/RenderPass.cpp
     api/Reply.cpp

@@ -10,9 +10,9 @@
 #include <yq/tachyon/typedef/render3.hpp>
 
 namespace yq::tachyon {
-    struct Render³DSnap : public RenderedSnap {
+    struct Render³Snap : public RenderedSnap {
     };
     
-    struct Render³DData : public RenderedData {
+    struct Render³Data : public RenderedData {
     };
 }

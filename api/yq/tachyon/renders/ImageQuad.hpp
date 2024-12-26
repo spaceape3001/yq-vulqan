@@ -10,7 +10,7 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <yq/tachyon/api/Render³D.hpp>
+#include <yq/tachyon/api/Render³.hpp>
 #include <yq/tachyon/api/Texture.hpp>
 #include <yq/tachyon/api/VBO.hpp>
 
@@ -19,8 +19,8 @@
 namespace yq::tachyon {
 
     /*! \brief A quadrilateral, taking in four points */
-    class ImageQuad³ : public Render³D {
-        YQ_TACHYON_DECLARE(ImageQuad³, Render³D)
+    class ImageQuad³ : public Render³ {
+        YQ_TACHYON_DECLARE(ImageQuad³, Render³)
     private:
         struct VData;
     public:

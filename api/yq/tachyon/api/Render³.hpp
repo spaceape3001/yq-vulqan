@@ -14,18 +14,21 @@ namespace yq::tachyon {
         
     /*! \brief Information for the render3D object
     */
-    class Render³DInfo : public RenderedInfo {
+    class Render³Info : public RenderedInfo {
     public:
         template <typename C> struct Writer;
 
-        Render³DInfo(std::string_view, RenderedInfo&, const std::source_location& sl = std::source_location::current());
+        Render³Info(std::string_view, RenderedInfo&, const std::source_location& sl = std::source_location::current());
     };
 
     /*! \brief Something that's rendered with a defined position, size, etc
+    
+    
+        \note ONCE it's here, it's considered "fixed" into abstract graphical units.
     */
-    class Render³D : public Rendered {
-        YQ_TACHYON_INFO(Render³DInfo);
-        YQ_TACHYON_DECLARE(Render³D, Rendered)
+    class Render³ : public Rendered {
+        YQ_TACHYON_INFO(Render³Info);
+        YQ_TACHYON_DECLARE(Render³, Rendered)
     public:    
 
         //  The model matrix in relation to its parent
@@ -34,10 +37,10 @@ namespace yq::tachyon {
         //  Computes the model to world matrix
         glm::dmat4                      model2world() const;
         
-        //Render³D*                       parent() { return m_parent; }
+        //Render³*                       parent() { return m_parent; }
         
         //! Parent of this render object
-        const Render³D*                 parent() const { return m_parent; }
+        const Render³*                 parent() const { return m_parent; }
         
         //! Position of the render object
         const Vector3D&                 position() const { return m_space.position; }
@@ -80,7 +83,7 @@ namespace yq::tachyon {
         void                            set_space(const SimpleSpace&);
         
         //! Generic clone routine, to be implemented by the derived object
-        //virtual Ref<Render³D>           clone() const { return {}; }
+        //virtual Ref<Render³>           clone() const { return {}; }
         
         /*! \brief Sets the parent of this widget
         
@@ -115,12 +118,12 @@ namespace yq::tachyon {
 
     protected:
         
-        Render³D(const Param&p={});
-        virtual ~Render³D();
+        Render³(const Param&p={});
+        virtual ~Render³();
         
     private:
-        Render³D*                      m_parent;
-        std::vector<Ref<Render³D>>     m_children;
+        Render³*                      m_parent;
+        std::vector<Ref<Render³>>     m_children;
         
         //! This is the coordinate space for the object (position, scale, & orientation)
         SimpleSpace                    m_space;

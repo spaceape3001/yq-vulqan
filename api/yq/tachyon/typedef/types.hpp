@@ -29,6 +29,7 @@ namespace yq::tachyon {
         Model,
         Monitor,
         Mouse,
+        Render³,
         Rendered,
         Thread,
         Viewer,

@@ -14,7 +14,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/PushData.hpp>
 #include <yq/tachyon/api/Pipeline.hpp>
-#include <yq/tachyon/api/Render³.hpp>
+#include <yq/tachyon/api/Rendered³.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
@@ -78,7 +78,7 @@ namespace yq::tachyon {
             return errors::rendered_bad_pipeline_layout();
         }
         m_rendered      = ren;
-        m_render3d      = dynamic_cast<const Render³*>(m_rendered.ptr());
+        m_render3d      = dynamic_cast<const Rendered³*>(m_rendered.ptr());
         
         if(options.pipelines){
             m_pipeline  = options.pipelines->create(m_config);

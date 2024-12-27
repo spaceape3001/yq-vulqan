@@ -91,7 +91,7 @@ namespace yq::tachyon {
     struct ptr_k {};
     struct queue_k {};
     struct reject_k {};
-    struct render³_k {};
+    struct rendered³_k {};
     struct rendered_k {};
     struct resume_k {};
     struct root_k {};
@@ -174,7 +174,7 @@ namespace yq::tachyon {
     static constexpr queue_k        QUEUE;
     static constexpr refresh_k      REFRESH;
     static constexpr reject_k       REJECT;
-    static constexpr render³_k      RENDER³;
+    static constexpr rendered³_k      RENDER³;
     static constexpr rendered_k     RENDERED;
     static constexpr resume_k       RESUME;
     static constexpr root_k         ROOT;

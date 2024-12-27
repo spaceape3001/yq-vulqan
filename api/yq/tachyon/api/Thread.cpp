@@ -277,6 +277,11 @@ namespace yq::tachyon {
         m_thread.join();
     }
 
+    void    Thread::owner(push_k, ThreadID) 
+    {
+        //  Threads cannot be pushed to another thread, they are their own entity
+    }
+
     void    Thread::quit()
     {
         tachyonInfo << ident() << "::quit()";
@@ -348,6 +353,8 @@ namespace yq::tachyon {
                 frame->report(log);
             }
         }
+        
+        s_frame        = frame.ptr();
 
         Context ctx(*frame);
         auto d = cycle(ctx);
@@ -362,6 +369,8 @@ namespace yq::tachyon {
                 std::swap(snap, tf.snap);
             }
         }
+        
+        s_frame         = nullptr;
         
         ++m_tick;
     }

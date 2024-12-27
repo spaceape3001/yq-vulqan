@@ -22,15 +22,6 @@ namespace yq::tachyon {
         using texture_t  = std::variant<std::monostate, TextureCPtr, ViTextureCPtr>;
     
         PushBuffer              push;
-  
-#if 0
-        
-        //! Us to the world so xyz = world * uvw
-        glm::dmat4              world{  1., 0., 0., 0.,
-                                        0., 1., 0., 0., 
-                                        0., 0., 1., 0.,
-                                        0., 0., 0., 1. }; 
-#endif
 
         std::vector<buffer_t>   vbos;
         std::vector<buffer_t>   ibos;
@@ -44,7 +35,6 @@ namespace yq::tachyon {
         Tristate                culled          = Tristate::INHERIT;
         
         RenderedSnap();
-        RenderedSnap(const RenderedSnap&);
         ~RenderedSnap();
     };
     

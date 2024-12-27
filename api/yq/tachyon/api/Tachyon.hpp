@@ -231,6 +231,15 @@ namespace yq::tachyon {
         //template <SomeTachyon T>
         //T*          create(child_t, const typename T::MyInfo&, std::span<const Any> args);
 
+        /*! \brief Frame
+        
+            When we're in the tick cycle, the current frame
+            
+            \note THIS MAY BE NULL (out-of-frame); however, it's thread-local so it won't go
+            bad during your current call.
+        */
+        static const Frame*   frame() { return s_frame; }
+
     protected:
 
 
@@ -245,7 +254,6 @@ namespace yq::tachyon {
 
         mutable mutex_t         m_mutex;          // used for guards
 
-        
     
         #define TXLOCK  \
             lock_t  _lock(m_mutex, true);
@@ -353,14 +361,7 @@ namespace yq::tachyon {
         
         bool            dirty() const { return m_dirty; }
         
-        /*! \brief Frame
-        
-            When we're in the tick cycle, the current frame
-            
-            \note Using this OUT of tick cycle will lead to 
-                segmentation faults!
-        */
-        const Frame&    frame() const;
+        //const Frame&    frame() const;
 
         //! Marks us as dirty
         void            mark();
@@ -396,6 +397,8 @@ namespace yq::tachyon {
         std::vector<TypedID>        m_children;
         std::string                 m_name;
         bool                        m_dirty         = false;
+        
+        static thread_local const Frame*  s_frame;
         
         //virtual void                    parent(set_k, TachyonID);
         

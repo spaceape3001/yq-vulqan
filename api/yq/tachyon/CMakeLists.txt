@@ -50,9 +50,9 @@ add_library(${PROJECT_NAME} SHARED
     api/Post.cpp
     api/Proxy.cpp
     api/Raster.cpp
-    #api/Render².cpp
-    api/Render³.cpp
     api/Rendered.cpp
+    api/Rendered³.cpp
+    #api/Rendered².cpp
     api/RenderPass.cpp
     api/Reply.cpp
     api/Request.cpp

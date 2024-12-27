@@ -77,6 +77,8 @@ namespace yq::tachyon {
         //! Adds a run-once task to the queue (ran on the next tick)
         void            task(task_fn&&);
         
+        virtual void    owner(push_k, ThreadID) override final;
+        
     protected:
         virtual Execution   tick(Context&) override final;
         

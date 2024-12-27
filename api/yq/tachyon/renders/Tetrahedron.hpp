@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/ColorVertexData.hpp>
 #include <yq/tachyon/api/VBO.hpp>
-#include <yq/tachyon/api/Render³.hpp>
+#include <yq/tachyon/api/Rendered³.hpp>
 
 #include <array>
 
@@ -23,8 +23,8 @@ namespace yq::tachyon {
         This can render as a tetrahedron in the scene 
         with the specified color/vertex corners.
     */
-    class Tetrahedron³ : public Render³ {
-        YQ_TACHYON_DECLARE(Tetrahedron³, Render³)
+    class Tetrahedron³ : public Rendered³ {
+        YQ_TACHYON_DECLARE(Tetrahedron³, Rendered³)
     public:
 
         //! Constructor taking in the data

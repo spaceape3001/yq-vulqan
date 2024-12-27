@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/ColorVertexData.hpp>
 #include <yq/tachyon/api/VBO.hpp>
-#include <yq/tachyon/api/Render³.hpp>
+#include <yq/tachyon/api/Rendered³.hpp>
 #include <array>
 
 namespace yq {
@@ -18,8 +18,8 @@ namespace yq {
 namespace yq::tachyon {
 
     /*! \brief A quadrilateral, taking in four points */
-    class Quadrilateral³ : public Render³ {
-        YQ_TACHYON_DECLARE(Quadrilateral³, Render³)
+    class Quadrilateral³ : public Rendered³ {
+        YQ_TACHYON_DECLARE(Quadrilateral³, Rendered³)
     public:
     
         Quadrilateral³(const QuadrilateralData<ColorVertex2D>&);

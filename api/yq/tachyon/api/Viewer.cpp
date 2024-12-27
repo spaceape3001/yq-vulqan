@@ -987,12 +987,13 @@ namespace yq::tachyon {
             return DELETE;
         }
 
-        const WindowSnap* sn = frame().snap(m_window);
-        if(sn){
-            m_state.window      = sn->window;
-            m_state.keyboard    = sn->keyboard;
-            m_state.mouse       = sn->mouse;
-            m_state.time        = sn->time;
+        if(const Frame* f = frame()){
+            if(const WindowSnap* sn = f->snap(m_window)){
+                m_state.window      = sn->window;
+                m_state.keyboard    = sn->keyboard;
+                m_state.mouse       = sn->mouse;
+                m_state.time        = sn->time;
+            }
         }
 
         if(m_imgui)

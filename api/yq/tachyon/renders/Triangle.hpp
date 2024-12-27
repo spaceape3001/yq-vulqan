@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Render³.hpp>
+#include <yq/tachyon/api/Rendered³.hpp>
 #include <yq/tachyon/api/ColorVertexData.hpp>
 #include <yq/tachyon/api/VBO.hpp>
 
@@ -20,8 +20,8 @@ namespace yq::tachyon {
 
     /*! \brief Triangle for three dimensions
     */
-    class Triangle³ : public Render³ {
-        YQ_TACHYON_DECLARE(Triangle³, Render³)
+    class Triangle³ : public Rendered³ {
+        YQ_TACHYON_DECLARE(Triangle³, Rendered³)
     public:
     
         Triangle³(const TriangleData<ColorVertex2D>&);

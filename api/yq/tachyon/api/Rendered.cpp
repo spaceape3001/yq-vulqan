@@ -16,8 +16,8 @@ namespace yq::tachyon {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     RenderedSnap::RenderedSnap()    = default;
-    RenderedSnap::RenderedSnap(const RenderedSnap&) = default;
     RenderedSnap::~RenderedSnap() = default;
+
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

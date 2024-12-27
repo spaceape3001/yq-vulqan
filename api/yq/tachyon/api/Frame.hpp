@@ -12,6 +12,7 @@
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
+#include <yq/tachyon/typedef/camera³.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/cursor.hpp>
@@ -20,11 +21,13 @@
 #include <yq/tachyon/typedef/joystick.hpp>
 #include <yq/tachyon/typedef/keyboard.hpp>
 #include <yq/tachyon/typedef/light.hpp>
+#include <yq/tachyon/typedef/light³.hpp>
 #include <yq/tachyon/typedef/manager.hpp>
 #include <yq/tachyon/typedef/model.hpp>
 #include <yq/tachyon/typedef/monitor.hpp>
 #include <yq/tachyon/typedef/mouse.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/rendered³.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 //#include <yq/tachyon/typedef/scene.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
@@ -58,6 +61,7 @@ namespace yq::tachyon {
         using proxy_span_t  = std::span<Proxy* const>;
 
         bool contains(CameraID) const;
+        bool contains(Camera³ID) const;
         bool contains(ControllerID) const;
         bool contains(CursorID) const;
         bool contains(DesktopID) const;
@@ -65,11 +69,13 @@ namespace yq::tachyon {
         bool contains(JoystickID) const;
         bool contains(KeyboardID) const;
         bool contains(LightID) const;
+        bool contains(Light³ID) const;
         bool contains(ManagerID) const;
         bool contains(ModelID) const;
         bool contains(MonitorID) const;
         bool contains(MouseID) const;
         bool contains(RenderedID) const;
+        bool contains(Rendered³ID) const;
         //bool contains(SceneID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
@@ -78,16 +84,19 @@ namespace yq::tachyon {
         bool contains(WindowID) const;
         
         size_t count(camera_k) const;
+        size_t count(camera³_k) const;
         size_t count(controller_k) const;
         size_t count(cursor_k) const;
         size_t count(desktop_k) const;
         size_t count(keyboard_k) const;
         size_t count(joystick_k) const;
         size_t count(light_k) const;
+        size_t count(light³_k) const;
         size_t count(manager_k) const;
         size_t count(model_k) const;
         size_t count(monitor_k) const;
         size_t count(mouse_k) const;
+        size_t count(rendered³_k) const;
         size_t count(rendered_k) const;
         size_t count(tachyon_k) const;
         size_t count(thread_k) const;
@@ -96,6 +105,7 @@ namespace yq::tachyon {
         size_t count(window_k) const;
     
         const CameraData*                   data(CameraID) const;
+        const Camera³Data*                   data(Camera³ID) const;
         const ControllerData*               data(ControllerID) const;
         const CursorData*                   data(CursorID) const;
         const DesktopData*                  data(DesktopID) const;

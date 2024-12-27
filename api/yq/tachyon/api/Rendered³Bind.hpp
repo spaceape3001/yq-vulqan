@@ -7,21 +7,21 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/render³.hpp>
+#include <yq/tachyon/typedef/rendered³.hpp>
 
 namespace yq::tachyon {
-    class Render³;
+    class Rendered³;
 
     //! Utiltity to bind a viewer to the whatever...
-    class Render³Bind {
+    class Rendered³Bind {
     public:
-        Render³ID    render³() const { return m_render³; }
+        Rendered³ID    rendered³() const { return m_rendered³; }
         
     protected:
-        Render³Bind(Render³ID v) : m_render³(v) {}
-        Render³Bind(const Render³* v);
-        virtual ~Render³Bind() {}
+        Rendered³Bind(Rendered³ID v) : m_rendered³(v) {}
+        Rendered³Bind(const Rendered³* v);
+        virtual ~Rendered³Bind() {}
         
-        Render³ID const m_render³;
+        Rendered³ID const m_rendered³;
     };
 }

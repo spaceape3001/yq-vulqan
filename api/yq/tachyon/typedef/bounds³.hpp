@@ -6,13 +6,10 @@
 
 #pragma once
 
-#include <yq/tachyon/api/RenderedData.hpp>
-#include <yq/tachyon/typedef/render3.hpp>
+#include <variant>
+#include <yq/typedef/axbox3.hpp>
+#include <yq/typedef/sphere3.hpp>
 
 namespace yq::tachyon {
-    struct Render³Snap : public RenderedSnap {
-    };
-    
-    struct Render³Data : public RenderedData {
-    };
+    using bounds³_t = std::variant<std::monostate, AxBox3D, Sphere3D>;
 }

@@ -35,6 +35,7 @@ namespace yq::tachyon {
     struct adjustable_k {};
     struct app_k {};
     struct camera_k {};
+    struct camera³_k {};
     struct changed_k {};
     struct child_k {};
     struct children_k {};
@@ -69,6 +70,7 @@ namespace yq::tachyon {
     struct joystick_k {};
     struct keyboard_k {};
     struct light_k {};
+    struct light³_k {};
     struct lock_k {};
     struct locked_k {};
     struct manager_k {};
@@ -89,6 +91,7 @@ namespace yq::tachyon {
     struct ptr_k {};
     struct queue_k {};
     struct reject_k {};
+    struct render³_k {};
     struct rendered_k {};
     struct resume_k {};
     struct root_k {};
@@ -122,6 +125,7 @@ namespace yq::tachyon {
     static constexpr adjustable_k   ADJUSTABLE;
     static constexpr app_k          APP;
     static constexpr camera_k       CAMERA;
+    static constexpr camera³_k      CAMERA³;
     static constexpr changed_k      CHANGED;
     static constexpr child_k        CHILD;
     static constexpr children_k     CHILDREN;
@@ -151,6 +155,7 @@ namespace yq::tachyon {
     static constexpr joystick_k     JOYSTICK;
     static constexpr keyboard_k     KEYBOARD;
     static constexpr light_k        LIGHT;
+    static constexpr light³_k       LIGHT³;
     static constexpr lock_k         LOCK;
     static constexpr locked_k       LOCKED;
     static constexpr manager_k      MANAGER;
@@ -169,6 +174,7 @@ namespace yq::tachyon {
     static constexpr queue_k        QUEUE;
     static constexpr refresh_k      REFRESH;
     static constexpr reject_k       REJECT;
+    static constexpr render³_k      RENDER³;
     static constexpr rendered_k     RENDERED;
     static constexpr resume_k       RESUME;
     static constexpr root_k         ROOT;

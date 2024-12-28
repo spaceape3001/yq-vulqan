@@ -13,16 +13,19 @@
 
 namespace yq::tachyon {
     struct Rendered³Snap : public RenderedSnap {
-        //! This is who our coordinates are expressed in
+        //! This is who our coordinates are expressed in (Null implies world world)
         TachyonID   domain;
         
         //! Our model matrix (in domain coordinates)
-        Tensor44D   model           = IDENTITY;
+        Tensor44D   model2domain    = IDENTITY;
+        
+        //! Local coordinate
+        Tensor44D   domain2model    = IDENTITY;
         
         //! Override to the view*model matrix (used for billboarding & other effects)  
         Tensor44D   vm_override     = NAN;
         
-        bounds³_t   bounds;
+        //bounds³_t   bounds;
         
         Rendered³Snap();
         ~Rendered³Snap();

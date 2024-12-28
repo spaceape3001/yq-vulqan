@@ -11,6 +11,7 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
 #include <yq/tachyon/enum/MismatchPolicy.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/trigger.hpp>
@@ -21,14 +22,14 @@
 namespace yq::tachyon {
 
 
-    class TriggerInfo : public ObjectInfo {
+    class TriggerInfo : public DelegateInfo {
     public:
         template <typename C> class Writer;
 
-        TriggerInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        TriggerInfo(std::string_view zName, DelegateInfo& base, const std::source_location& sl=std::source_location::current());
     
     protected:
-        friend class Trigger;
+        ~TriggerInfo();
     };
     
     /*! \brief Detector of posts
@@ -36,10 +37,10 @@ namespace yq::tachyon {
         This is meant to register "triggered" whenever a qualifying 
         post is found & values are suitablly matched.
     */
-    class Trigger : public Object, public RefCount, public UniqueID {
+    class Trigger : public Delegate {
     private:
         YQ_OBJECT_INFO(TriggerInfo)
-        YQ_OBJECT_DECLARE(Trigger, Object)
+        YQ_OBJECT_DECLARE(Trigger, Delegate)
     public:
     
         /*! \brief General Trigger Result
@@ -72,9 +73,11 @@ namespace yq::tachyon {
 
         static void init_info();
 
+        virtual ~Trigger(); // GRR... unique ptr basically requires public destructors :(
+
     protected:
+    
         Trigger(const Param& p = Param());
-        ~Trigger();
 
 
         //! This is your advisor (accept/reject) function

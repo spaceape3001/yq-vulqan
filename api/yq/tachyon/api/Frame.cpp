@@ -6,6 +6,8 @@
 
 #include "Camera.hpp"
 #include "CameraData.hpp"
+#include "Camera³.hpp"
+#include "Camera³Data.hpp"
 #include "Controller.hpp"
 #include "ControllerData.hpp"
 #include "Cursor.hpp"
@@ -23,6 +25,8 @@
 #include "KeyboardData.hpp"
 #include "Light.hpp"
 #include "LightData.hpp"
+#include "Light³.hpp"
+#include "Light³Data.hpp"
 #include "Manager.hpp"
 #include "ManagerData.hpp"
 #include "Model.hpp"
@@ -35,6 +39,8 @@
 #include "Proxy.hpp"
 #include "Rendered.hpp"
 #include "RenderedData.hpp"
+#include "Rendered³.hpp"
+#include "Rendered³Data.hpp"
 //#include "Scene.hpp"
 //#include "SceneData.hpp"
 #include "Tachyon.hpp"
@@ -99,8 +105,12 @@ namespace yq::tachyon {
             return i->second.ptr();
         return nullptr;
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
-    std::atomic<uint64_t>    Frame::s_lastId{0};
+    std::atomic<uint64_t>      Frame::s_lastId{0};
+    thread_local const Frame*  Frame::s_current = nullptr;
     
     Frame::Frame(ThreadID th, uint64_t ti) : m_origin(th), m_number(++s_lastId), m_wallclock(clock_t::now()), m_tick(ti)
     {
@@ -129,6 +139,8 @@ namespace yq::tachyon {
 
         if(types(Type::Camera))
             m_cameras.insert(t, tac.data.ptr(), tac.snap.ptr());
+        //if(types(Type::Camera³))
+        //    m_camera³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Controller))
             m_controllers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Cursor))
@@ -143,6 +155,8 @@ namespace yq::tachyon {
             m_keyboards.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Light))
             m_lights.insert(t, tac.data.ptr(), tac.snap.ptr());
+        //if(types(Type::Light³))
+        //    m_light³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Manager))
             m_managers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Model))
@@ -153,6 +167,8 @@ namespace yq::tachyon {
             m_mouses.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Rendered))
             m_rendereds.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Rendered³))
+            m_rendered³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Scene))
             //m_scenes.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Thread))
@@ -169,6 +185,13 @@ namespace yq::tachyon {
     {
         return m_cameras.has(id);
     }
+
+    #if 0
+    bool Frame::contains(Camera³ID id) const
+    {
+        return m_camera³s.has(id);
+    }
+    #endif
 
     bool Frame::contains(ControllerID id) const
     {
@@ -207,6 +230,13 @@ namespace yq::tachyon {
         return m_lights.has(id);
     }
 
+    #if 0
+    bool Frame::contains(Light³ID id) const
+    {
+        return m_light³s.has(id);
+    }
+    #endif
+
     bool Frame::contains(ManagerID id) const
     {
         return m_managers.has(id);
@@ -230,6 +260,11 @@ namespace yq::tachyon {
     bool Frame::contains(RenderedID id) const
     {
         return m_rendereds.has(id);
+    }
+
+    bool Frame::contains(Rendered³ID id) const
+    {
+        return m_rendered³s.has(id);
     }
 
     #if 0
@@ -269,6 +304,13 @@ namespace yq::tachyon {
         return m_cameras.count();
     }
     
+    #if 0
+    size_t Frame::count(camera³_k) const
+    {
+        return m_camera³s.count();
+    }
+    #endif
+
     size_t Frame::count(controller_k) const
     {
         return m_controllers.count();
@@ -299,6 +341,13 @@ namespace yq::tachyon {
         return m_lights.count();
     }
     
+    #if 0
+    size_t Frame::count(light³_k) const
+    {
+        return m_light³s.count();
+    }
+    #endif
+
     size_t Frame::count(manager_k) const
     {
         return m_managers.count();
@@ -322,6 +371,11 @@ namespace yq::tachyon {
     size_t Frame::count(rendered_k) const
     {
         return m_rendereds.count();
+    }
+
+    size_t Frame::count(rendered³_k) const
+    {
+        return m_rendered³s.count();
     }
 
     size_t Frame::count(tachyon_k) const
@@ -354,6 +408,13 @@ namespace yq::tachyon {
         return m_cameras.data(id);
     }
 
+    #if 0
+    const Camera³Data*                  Frame::data(Camera³ID id) const
+    {
+        return m_camera³s.data(id);
+    }
+    #endif
+
     const ControllerData*               Frame::data(ControllerID id) const
     {
         return m_controllers.data(id);
@@ -364,7 +425,7 @@ namespace yq::tachyon {
         return m_cursors.data(id);
     }
 
-    const DesktopData*                   Frame::data(DesktopID id) const
+    const DesktopData*                  Frame::data(DesktopID id) const
     {
         return m_desktops.data(id);
     }
@@ -376,20 +437,27 @@ namespace yq::tachyon {
     }
     #endif
 
-    const JoystickData*                   Frame::data(JoystickID id) const
+    const JoystickData*                 Frame::data(JoystickID id) const
     {
         return m_joysticks.data(id);
     }
 
-    const KeyboardData*                   Frame::data(KeyboardID id) const
+    const KeyboardData*                 Frame::data(KeyboardID id) const
     {
         return m_keyboards.data(id);
     }
 
-    const LightData*                   Frame::data(LightID id) const
+    const LightData*                    Frame::data(LightID id) const
     {
         return m_lights.data(id);
     }
+
+    #if 0
+    const Light³Data*                   Frame::data(Light³ID id) const
+    {
+        return m_light³s.data(id);
+    }
+    #endif
 
     const ManagerData*                  Frame::data(ManagerID id) const
     {
@@ -411,7 +479,12 @@ namespace yq::tachyon {
         return m_rendereds.data(id);
     }
 
-    const TachyonData*                  Frame::data(TachyonID id) const
+    const Rendered³Data*               Frame::data(Rendered³ID id) const
+    {
+        return m_rendered³s.data(id);
+    }
+
+    const TachyonData*                 Frame::data(TachyonID id) const
     {
         return m_tachyons.data(id);
     }
@@ -440,6 +513,13 @@ namespace yq::tachyon {
     {
         return m_cameras.pointer(id);
     }
+
+    #if 0
+    Camera³*                            Frame::object(Camera³ID id) const
+    {
+        return m_camera³s.pointer(id);
+    }
+    #endif
 
     Controller*                         Frame::object(ControllerID id) const
     {
@@ -471,6 +551,13 @@ namespace yq::tachyon {
         return m_lights.pointer(id);
     }
 
+    #if 0
+    Light³*                             Frame::object(Light³ID id) const
+    {
+        return m_light³s.pointer(id);
+    }
+    #endif
+
     Manager*                            Frame::object(ManagerID id) const
     {
         return m_managers.pointer(id);
@@ -489,6 +576,11 @@ namespace yq::tachyon {
     Rendered*                           Frame::object(RenderedID id) const
     {
         return m_rendereds.pointer(id);
+    }
+
+    Rendered³*                          Frame::object(Rendered³ID id) const
+    {
+        return m_rendered³s.pointer(id);
     }
 
     Tachyon*                            Frame::object(TachyonID id) const
@@ -552,16 +644,19 @@ namespace yq::tachyon {
             << "  Clock:        " << std::format("{:%Y%m%d %H:%M:%S.%Z}", m_wallclock) << "\n"
             << "     - - - - - \n"
             << "  Cameras:      " << count(CAMERA) << "\n"
+            //<< "  Camera³s:     " << count(CAMERA³) << "\n"
             << "  Controllers:  " << count(CONTROLLER) << "\n"
             << "  Cursors:      " << count(CURSOR) << "\n"
             << "  Desktops:     " << count(DESKTOP) << "\n"
             << "  Keyboards:    " << count(KEYBOARD) << "\n"
             << "  Joysticks:    " << count(JOYSTICK) << "\n"
             << "  Lights:       " << count(LIGHT) << "\n"
+            //<< "  Light³s:      " << count(LIGHT³) << "\n"
             << "  Managers:     " << count(MANAGER) << "\n"
             << "  Models:       " << count(MODEL) << "\n"
             << "  Mouses:       " << count(MOUSE) << "\n"
             << "  Rendereds:    " << count(RENDERED) << "\n"
+            //<< "  Rendered³s:   " << count(RENDERED³) << "\n"
             << "  Tachyons:     " << count(TACHYON) << "\n"
             << "  Threads:      " << count(THREAD) << "\n"
             << "  Viewers:      " << count(VIEWER) << "\n"
@@ -574,6 +669,13 @@ namespace yq::tachyon {
     {
         return m_cameras.snap(id);
     }
+
+    #if 0
+    const Camera³Snap*                 Frame::snap(Camera³ID id) const
+    {
+        return m_camera³s.snap(id);
+    }
+    #endif
 
     const ControllerSnap*              Frame::snap(ControllerID id) const
     {
@@ -605,6 +707,13 @@ namespace yq::tachyon {
         return m_lights.snap(id);
     }
 
+    #if 0
+    const Light³Snap*                   Frame::snap(Light³ID id) const
+    {
+        return m_light³s.snap(id);
+    }
+    #endif
+
     const ManagerSnap*                 Frame::snap(ManagerID id) const
     {
         return m_managers.snap(id);
@@ -623,6 +732,11 @@ namespace yq::tachyon {
     const RenderedSnap*                Frame::snap(RenderedID id) const
     {
         return m_rendereds.snap(id);
+    }
+
+    const Rendered³Snap*               Frame::snap(Rendered³ID id) const
+    {
+        return m_rendered³s.snap(id);
     }
 
     const TachyonSnap*                 Frame::snap(TachyonID id) const

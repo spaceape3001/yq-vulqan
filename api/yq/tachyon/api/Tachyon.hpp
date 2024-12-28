@@ -238,7 +238,7 @@ namespace yq::tachyon {
             \note THIS MAY BE NULL (out-of-frame); however, it's thread-local so it won't go
             bad during your current call.
         */
-        static const Frame*   frame() { return s_frame; }
+        static const Frame*   frame();
 
     protected:
 

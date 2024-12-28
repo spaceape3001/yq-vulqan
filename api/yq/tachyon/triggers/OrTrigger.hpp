@@ -22,14 +22,7 @@ namespace yq::tachyon {
     
         using Param = Trigger::Param;
     
-        OrTrigger(std::span<const TriggerCPtr>, const Param& p = {});
-        OrTrigger(std::initializer_list<TriggerCPtr>, const Param& p = {});
-        // Add overloads as necessary
-        
-        //OrTrigger(std::vector<TriggerCPtr>&&);
-        //OrTrigger(const std::vector<TriggerCPtr>&);
-        //OrTrigger(const std::span<TriggerCPtr>);
-        //
+        OrTrigger(std::vector<TriggerCPtr>&&, const Param& p = {});
 
         ~OrTrigger();
         Result match(const Post&) const override;

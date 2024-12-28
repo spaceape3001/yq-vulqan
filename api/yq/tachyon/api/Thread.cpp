@@ -354,7 +354,7 @@ namespace yq::tachyon {
             }
         }
         
-        s_frame        = frame.ptr();
+        Frame::s_current  = frame.ptr();
 
         Context ctx(*frame);
         auto d = cycle(ctx);
@@ -370,7 +370,7 @@ namespace yq::tachyon {
             }
         }
         
-        s_frame         = nullptr;
+        Frame::s_current  = nullptr;
         
         ++m_tick;
     }
@@ -436,7 +436,8 @@ namespace yq::tachyon {
             c.object        = std::move(tp);
         }
         
-        //  TODO: Some multithreadedness...
+        //  TODO: Some multithreadedness... 
+        //  NOTE: For multithreading, don't forget to set Frame::s_current!
         {
             std::vector<task_fn>            tasks;
             {

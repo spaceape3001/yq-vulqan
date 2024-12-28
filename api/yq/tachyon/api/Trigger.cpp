@@ -11,12 +11,14 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Trigger)
 
 namespace yq::tachyon {
-    TriggerInfo::TriggerInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, base, sl)
+    TriggerInfo::TriggerInfo(std::string_view zName, DelegateInfo& base, const std::source_location& sl) :
+        DelegateInfo(zName, base, sl)
     {
         set(Flag::TRIGGER);
     }
     
+    TriggerInfo::~TriggerInfo(){}
+
     Trigger::Trigger(const Param& p) : m_mismatch(p.mismatch), m_errors(p.errors)
     {
     }

@@ -22,14 +22,7 @@ namespace yq::tachyon {
     
         using Param = Trigger::Param;
     
-        NorTrigger(std::span<const TriggerCPtr>, const Param& p = {});
-        NorTrigger(std::initializer_list<TriggerCPtr>, const Param& p = {});
-        // Add overloads as necessary
-        
-        //NorTrigger(std::vector<TriggerCPtr>&&);
-        //NorTrigger(const std::vector<TriggerCPtr>&);
-        //NorTrigger(const std::span<TriggerCPtr>);
-        //
+        NorTrigger(std::vector<TriggerCPtr>&&, const Param& p = {});
 
         ~NorTrigger();
         Result match(const Post&) const override;

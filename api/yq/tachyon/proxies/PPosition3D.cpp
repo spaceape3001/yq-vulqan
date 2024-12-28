@@ -9,7 +9,7 @@
 #include <yq/tachyon/commands/SetPosition3D.hpp>
 
 namespace yq::tachyon {
-    PPosition3D::PPosition3D(const IPosition3D& i)
+    PPosition3D::PPosition3D(const IPosition3D& i) : m_position(i.position3d())
     {
         if(i.position3d(DISABLED))
             m_flags |= F::Disabled;
@@ -17,6 +17,10 @@ namespace yq::tachyon {
             m_flags |= F::Settable;
         if(i.position3d(ADJUSTABLE))
             m_flags |= F::Adjustable;
+    }
+
+    PPosition3D::~PPosition3D()
+    {
     }
 
     bool        PPosition3D::position3d(disabled_k) const 

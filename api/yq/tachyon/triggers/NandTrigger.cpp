@@ -11,20 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NandTrigger)
 
 namespace yq::tachyon {
-    NandTrigger::NandTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : Trigger(p)
+    NandTrigger::NandTrigger(std::vector<TriggerCPtr>&& triggers, const Param&p) : 
+        Trigger(p), m_triggers(std::move(triggers))
     {
-        for(TriggerCPtr tp : triggers){
-            if(!tp) 
-                continue;
-            m_triggers.push_back(tp);
-        }
     }
     
-    NandTrigger::NandTrigger(std::initializer_list<TriggerCPtr>triggers, const Param& p) : 
-        NandTrigger(span(triggers), p)
-    {
-    }
-
     NandTrigger::~NandTrigger()
     {
     }
@@ -34,7 +25,7 @@ namespace yq::tachyon {
         if(m_triggers.empty())
             return true;
         for(const TriggerCPtr& f : m_triggers){
-            if(!f->triggered(pp))
+            if(f && !f->triggered(pp))
                 return true;
         }
         return false;

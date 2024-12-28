@@ -20,7 +20,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(NotTrigger, Trigger)
     public:
 
-        NotTrigger(const TriggerCPtr&, const Param& p = {});
+        NotTrigger(TriggerCPtr&&, const Param& p = {});
         ~NotTrigger();
 
         Result              match(const Post&) const override;

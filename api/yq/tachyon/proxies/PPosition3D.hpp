@@ -22,6 +22,7 @@ namespace yq::tachyon {
         void        position3d(adjust_k, const Vector3D&) override;
 
         PPosition3D(const IPosition3D& i);
+        ~PPosition3D();
 
     private:
         Vector3D        m_position;

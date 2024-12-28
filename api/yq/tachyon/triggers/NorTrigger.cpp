@@ -11,17 +11,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NorTrigger)
 
 namespace yq::tachyon {
-    NorTrigger::NorTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : Trigger(p)
-    {
-        for(TriggerCPtr tp : triggers){
-            if(!tp) 
-                continue;
-            m_triggers.push_back(tp);
-        }
-    }
-    
-    NorTrigger::NorTrigger(std::initializer_list<TriggerCPtr>triggers, const Param& p) : 
-        NorTrigger(span(triggers), p)
+    NorTrigger::NorTrigger(std::vector<TriggerCPtr>&& triggers, const Param&p) : 
+        Trigger(p), m_triggers(std::move(triggers))
     {
     }
 
@@ -32,7 +23,7 @@ namespace yq::tachyon {
     Trigger::Result    NorTrigger::match(const Post& pp) const 
     {
         for(const TriggerCPtr& f : m_triggers){
-            if(f->triggered(pp))
+            if(f && f->triggered(pp))
                 return false;
         }
         return true;

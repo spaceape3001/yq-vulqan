@@ -29,8 +29,6 @@
 
 namespace yq::tachyon {
 
-    thread_local const Frame*  Tachyon::s_frame   = nullptr;
-
     struct Mail;
 
     bool unspecified(const PostAdvice& pa)
@@ -195,6 +193,11 @@ namespace yq::tachyon {
     bool Tachyon::accepting(const PostAdvice& pa)
     {
         return std::get_if<accept_k>(&pa) || std::get_if<MG>(&pa) || std::get_if<MGF>(&pa);
+    }
+
+    const Frame*   Tachyon::frame()
+    {
+        return Frame::current();
     }
 
     MGF  Tachyon::groups(const PostAdvice&pa)

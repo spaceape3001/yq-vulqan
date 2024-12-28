@@ -20,6 +20,7 @@ namespace yq::tachyon {
         RenderedInfo(name, base, sl)
     {
         set(Flag::RENDER3D);
+        set(Type::Rendered³);
     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,17 +11,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::OrTrigger)
 
 namespace yq::tachyon {
-    OrTrigger::OrTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : Trigger(p)
-    {
-        for(TriggerCPtr tp : triggers){
-            if(!tp) 
-                continue;
-            m_triggers.push_back(tp);
-        }
-    }
-    
-    OrTrigger::OrTrigger(std::initializer_list<TriggerCPtr>triggers, const Param& p) : 
-        OrTrigger(span(triggers), p)
+    OrTrigger::OrTrigger(std::vector<TriggerCPtr>&& triggers, const Param&p) : 
+        Trigger(p), m_triggers(std::move(triggers))
     {
     }
 
@@ -32,7 +23,7 @@ namespace yq::tachyon {
     Trigger::Result    OrTrigger::match(const Post& pp) const 
     {
         for(const TriggerCPtr& f : m_triggers){
-            if(f->triggered(pp))
+            if(f && f->triggered(pp))
                 return true;
         }
         return false;

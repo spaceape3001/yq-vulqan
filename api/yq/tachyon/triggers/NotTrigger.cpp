@@ -12,7 +12,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::NotTrigger)
 
 namespace yq::tachyon {
 
-    NotTrigger::NotTrigger(const TriggerCPtr& inc, const Param& p) : Trigger(p), m_original(inc)
+    NotTrigger::NotTrigger(TriggerCPtr&& inc, const Param& p) : Trigger(p), m_original(std::move(inc))
     {
         assert(m_original);
     }

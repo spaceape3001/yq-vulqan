@@ -11,20 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AndTrigger)
 
 namespace yq::tachyon {
-    AndTrigger::AndTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : Trigger(p)
+    AndTrigger::AndTrigger(std::vector<TriggerCPtr>&& triggers, const Param&p) : 
+        Trigger(p), m_triggers(std::move(triggers))
     {
-        for(TriggerCPtr tp : triggers){
-            if(!tp) 
-                continue;
-            m_triggers.push_back(tp);
-        }
     }
     
-    AndTrigger::AndTrigger(std::initializer_list<TriggerCPtr>triggers, const Param& p) : 
-        AndTrigger(span(triggers), p)
-    {
-    }
-
     AndTrigger::~AndTrigger()
     {
     }
@@ -34,7 +25,7 @@ namespace yq::tachyon {
         if(m_triggers.empty())
             return false;
         for(const TriggerCPtr& f : m_triggers){
-            if(!f->triggered(pp))
+            if(f && !f->triggered(pp))
                 return false;
         }
         return true;

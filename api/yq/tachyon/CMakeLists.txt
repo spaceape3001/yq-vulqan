@@ -31,6 +31,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Controller.cpp
     api/Cursor.cpp
     #api/Context.hpp
+    api/Delegate.cpp
     api/Desktop.cpp
     #api/Editor.cpp
     api/Event.cpp
@@ -265,6 +266,7 @@ add_library(${PROJECT_NAME} SHARED
     interfaces/IPosition4D.cpp
     interfaces/IPosition4I.cpp
     interfaces/IPosition4M.cpp
+    interfaces/ISpatial³.cpp
 
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
@@ -292,6 +294,7 @@ add_library(${PROJECT_NAME} SHARED
     proxies/PPosition4D.cpp
     proxies/PPosition4I.cpp
     proxies/PPosition4M.cpp
+    proxies/PSpatial³.cpp
 
     renders/ImageQuad.cpp
     renders/Quadrilateral.cpp

@@ -34,6 +34,7 @@ namespace yq::tachyon {
     struct adjust_k {};
     struct adjustable_k {};
     struct app_k {};
+    struct calculate_k {};
     struct camera_k {};
     struct camera³_k {};
     struct changed_k {};
@@ -45,10 +46,12 @@ namespace yq::tachyon {
     struct controllers_k {};
     struct create_k {};
     struct cursor_k {};
+    struct d2l_k    {};
     struct delete_k {};
     struct desktop_k {};
     struct direct_k{};
     struct disable_k {};
+    struct domain_k {};
     struct enable_k {};
     struct enabled_k {};
     struct error_k {};
@@ -69,6 +72,7 @@ namespace yq::tachyon {
     struct info_k {};
     struct joystick_k {};
     struct keyboard_k {};
+    struct l2d_k {};
     struct light_k {};
     struct light³_k {};
     struct lock_k {};
@@ -124,6 +128,7 @@ namespace yq::tachyon {
     static constexpr adjust_k       ADJUST;
     static constexpr adjustable_k   ADJUSTABLE;
     static constexpr app_k          APP;
+    static constexpr calculate_k    CALCULATE;
     static constexpr camera_k       CAMERA;
     static constexpr camera³_k      CAMERA³;
     static constexpr changed_k      CHANGED;
@@ -136,10 +141,12 @@ namespace yq::tachyon {
     static constexpr controllers_k  CONTROLLERS;
     static constexpr create_k       CREATE;
     static constexpr cursor_k       CURSOR;
+    static constexpr d2l_k          D2L;
     static constexpr delete_k       DELETE;
     static constexpr desktop_k      DESKTOP;
     static constexpr direct_k       DIRECT;
     static constexpr disable_k      DISABLE;
+    static constexpr domain_k       DOMAIN;
     static constexpr dynamic_k      DYNAMIC;
     static constexpr enable_k       ENABLE;
     static constexpr enabled_k      ENABLED;
@@ -154,6 +161,7 @@ namespace yq::tachyon {
     static constexpr info_k         INFO;
     static constexpr joystick_k     JOYSTICK;
     static constexpr keyboard_k     KEYBOARD;
+    static constexpr l2d_k          L2D;
     static constexpr light_k        LIGHT;
     static constexpr light³_k       LIGHT³;
     static constexpr lock_k         LOCK;

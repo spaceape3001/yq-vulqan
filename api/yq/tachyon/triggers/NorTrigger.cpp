@@ -11,8 +11,13 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NorTrigger)
 
 namespace yq::tachyon {
-    NorTrigger::NorTrigger(std::vector<TriggerCPtr>&& triggers, const Param&p) : 
-        Trigger(p), m_triggers(std::move(triggers))
+    NorTrigger::NorTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : 
+        Trigger(p), m_triggers(triggers.begin(), triggers.end())
+    {
+    }
+
+    NorTrigger::NorTrigger(std::initializer_list<TriggerCPtr> triggers, const Param&p) : 
+        Trigger(p), m_triggers(triggers.begin(), triggers.end())
     {
     }
 

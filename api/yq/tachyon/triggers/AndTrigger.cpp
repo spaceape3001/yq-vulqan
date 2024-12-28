@@ -11,11 +11,16 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AndTrigger)
 
 namespace yq::tachyon {
-    AndTrigger::AndTrigger(std::vector<TriggerCPtr>&& triggers, const Param&p) : 
-        Trigger(p), m_triggers(std::move(triggers))
+    AndTrigger::AndTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : 
+        Trigger(p), m_triggers(triggers.begin(), triggers.end())
     {
     }
     
+    AndTrigger::AndTrigger(std::initializer_list<TriggerCPtr> triggers, const Param&p) : 
+        Trigger(p), m_triggers(triggers.begin(), triggers.end())
+    {
+    }
+
     AndTrigger::~AndTrigger()
     {
     }

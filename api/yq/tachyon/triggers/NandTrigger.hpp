@@ -22,7 +22,8 @@ namespace yq::tachyon {
     
         using Param = Trigger::Param;
     
-        NandTrigger(std::vector<TriggerCPtr>&&, const Param& p = {});
+        NandTrigger(std::span<const TriggerCPtr>, const Param& p = {});
+        NandTrigger(std::initializer_list<TriggerCPtr>, const Param& p = {});
  
         ~NandTrigger();
         Result match(const Post&) const override;

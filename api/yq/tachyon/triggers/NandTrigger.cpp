@@ -11,11 +11,16 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NandTrigger)
 
 namespace yq::tachyon {
-    NandTrigger::NandTrigger(std::vector<TriggerCPtr>&& triggers, const Param&p) : 
-        Trigger(p), m_triggers(std::move(triggers))
+    NandTrigger::NandTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : 
+        Trigger(p), m_triggers(triggers.begin(), triggers.end())
     {
     }
     
+    NandTrigger::NandTrigger(std::initializer_list<TriggerCPtr> triggers, const Param&p) : 
+        Trigger(p), m_triggers(triggers.begin(), triggers.end())
+    {
+    }
+
     NandTrigger::~NandTrigger()
     {
     }

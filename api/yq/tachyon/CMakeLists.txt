@@ -59,6 +59,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Request.cpp
     api/Sampler.cpp
     api/Shader.cpp
+    api/Spatial.cpp
     api/Tachyon.cpp
     api/TaskThread.cpp
     api/Texture.cpp

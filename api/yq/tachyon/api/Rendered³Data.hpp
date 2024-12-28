@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <yq/shape/AxBox3.hpp>
+#include <yq/shape/Sphere3.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/typedef/bounds³.hpp>
 #include <yq/tachyon/typedef/rendered³.hpp>
@@ -13,20 +15,20 @@
 
 namespace yq::tachyon {
     struct Rendered³Snap : public RenderedSnap {
-        //! This is who our coordinates are expressed in (Null implies world world)
-        TachyonID   domain;
         
         //! Our model matrix (in domain coordinates)
-        Tensor44D   model2domain    = IDENTITY;
+        Tensor44D   model           = IDENTITY;
         
-        //! Local coordinate
-        Tensor44D   domain2model    = IDENTITY;
+        Tensor44D   vm_tensor       = NAN;
         
+        bounds³_t   bounds;
+
         //! Override to the view*model matrix (used for billboarding & other effects)  
-        Tensor44D   vm_override     = NAN;
+        bool        vm_override     = false;
         
-        //bounds³_t   bounds;
-        
+        //! This is who our coordinates are expressed in (Null implies world world)
+        //TachyonID   domain;
+
         Rendered³Snap();
         ~Rendered³Snap();
     };

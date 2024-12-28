@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Object.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq/meta/ObjectInfo.hpp>
 
 namespace yq::tachyon {
@@ -33,7 +34,7 @@ namespace yq::tachyon {
         the frame.  (Configuration exposure for save/load TBD.)
         
     */
-    class Delegate : public Object {
+    class Delegate : public Object, public RefCount {
         YQ_OBJECT_INFO(DelegateInfo)
         YQ_OBJECT_DECLARE(Delegate, Object)
     public:

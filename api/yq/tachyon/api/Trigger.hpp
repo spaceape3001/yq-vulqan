@@ -73,11 +73,11 @@ namespace yq::tachyon {
 
         static void init_info();
 
-        virtual ~Trigger(); // GRR... unique ptr basically requires public destructors :(
 
     protected:
     
         Trigger(const Param& p = Param());
+        virtual ~Trigger();
 
 
         //! This is your advisor (accept/reject) function

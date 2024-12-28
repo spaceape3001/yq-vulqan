@@ -33,6 +33,12 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(Rendered³Snap);
         YQ_TACHYON_DECLARE(Rendered³, Rendered)
     public:    
+    
+        /*
+            Really been overthinking this... for *NOW* the rendered will be in full control, 
+            however, think it'll be moving to a delegate based system (TBD)
+        */
+    
 
         //  The model matrix in relation to its parent
         Tensor44D                       calc_local() const;

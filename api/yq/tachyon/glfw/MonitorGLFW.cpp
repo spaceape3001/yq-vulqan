@@ -87,9 +87,9 @@ namespace yq::tachyon {
         return ret;
     }
 
-    Vector2I    MonitorGLFW::position2i() const 
+    Vector2D    MonitorGLFW::position() const 
     {
-        return m_position;
+        return m_position.cast<double>();
     }
 
     void MonitorGLFW::snap(MonitorSnap&sn) const
@@ -112,7 +112,7 @@ namespace yq::tachyon {
         auto w = writer<MonitorGLFW>();
         w.description("GLFW Monitor");
         w.execution(EVERY(5_s));
-        w.interface<IPosition2I>();
+        w.interface<IPosition²>();
     }
 }
 

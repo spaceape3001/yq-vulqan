@@ -16,7 +16,7 @@ namespace yq::tachyon {
     {
     }
 
-    void    Proxy::dispatch(const PostCPtr& pp)
+    void    Proxy::mail(const PostCPtr& pp)
     {
         if(m_tachyon && pp){
             m_tachyon -> mail(pp);

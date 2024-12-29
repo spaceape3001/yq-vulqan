@@ -608,11 +608,11 @@ namespace yq::tachyon {
         mark();
     }
 
-    Vector2I    WindowGLFW::position2i() const 
+    Vector2D    WindowGLFW::position() const 
     {
         Vector2I    ret;
         glfwGetWindowPos(m_window, &ret.x, &ret.y);
-        return ret;
+        return ret.cast<double>();
     }
     
     void      WindowGLFW::snap(WindowSnap& sn) const
@@ -679,7 +679,7 @@ namespace yq::tachyon {
     {
         auto w = writer<WindowGLFW>();
         w.description("GLFW Window");
-        w.interface<IPosition2I>();
+        w.interface<IPosition²>();
         w.slot(&WindowGLFW::on_aspect_command);
         w.slot(&WindowGLFW::on_attention_command);
         w.slot(&WindowGLFW::on_cursor_capture_command);

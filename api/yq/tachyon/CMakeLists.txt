@@ -6,7 +6,7 @@
 
 project(yq_tachyon)
 
-#   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⁿ
+#   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⁿ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ
 
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
@@ -60,6 +60,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Sampler.cpp
     api/Shader.cpp
     api/Spatial.cpp
+    api/Spatial³.cpp
     api/Tachyon.cpp
     api/TaskThread.cpp
     api/Texture.cpp
@@ -79,18 +80,6 @@ add_library(${PROJECT_NAME} SHARED
     cameras/TargetCamera.cpp
 
     commands/AddChildCommand.cpp
-    commands/AdjustPosition1D.cpp
-    commands/AdjustPosition1I.cpp
-    commands/AdjustPosition1M.cpp
-    commands/AdjustPosition2D.cpp
-    commands/AdjustPosition2I.cpp
-    commands/AdjustPosition2M.cpp
-    commands/AdjustPosition3D.cpp
-    commands/AdjustPosition3I.cpp
-    commands/AdjustPosition3M.cpp
-    commands/AdjustPosition4D.cpp
-    commands/AdjustPosition4I.cpp
-    commands/AdjustPosition4M.cpp
     commands/AppCommand.cpp
     commands/AppDeleteViewerCommand.cpp
     commands/CameraCommand.cpp
@@ -111,20 +100,32 @@ add_library(${PROJECT_NAME} SHARED
     commands/MouseDisableCommand.cpp
     commands/MouseHideCommand.cpp
     commands/MouseNormalCommand.cpp
+    commands/MoveBy¹.cpp
+    commands/MoveBy².cpp
+    commands/MoveBy³.cpp
+    commands/MoveByˣ.cpp
+    commands/MoveByʸ.cpp
+    commands/MoveByᶻ.cpp
+    commands/PositionCommand.cpp
     #commands/SetParentCommand.cpp
-    commands/SetPosition1D.cpp
-    commands/SetPosition1I.cpp
-    commands/SetPosition1M.cpp
-    commands/SetPosition2D.cpp
-    commands/SetPosition2I.cpp
-    commands/SetPosition2M.cpp
-    commands/SetPosition3D.cpp
-    commands/SetPosition3I.cpp
-    commands/SetPosition3M.cpp
-    commands/SetPosition4D.cpp
-    commands/SetPosition4I.cpp
-    commands/SetPosition4M.cpp
-    commands/SetSize2I.cpp
+    commands/SetPosition¹.cpp
+    commands/SetPosition².cpp
+    commands/SetPosition³.cpp
+    commands/SetPositionˣ.cpp
+    commands/SetPositionʸ.cpp
+    commands/SetPositionᶻ.cpp
+    commands/SetScale¹.cpp
+    commands/SetScale².cpp
+    commands/SetScale³.cpp
+    commands/SetScaleˣ.cpp
+    commands/SetScaleʸ.cpp
+    commands/SetScaleᶻ.cpp
+    commands/SetSize¹.cpp
+    commands/SetSize².cpp
+    commands/SetSize³.cpp
+    commands/SetSizeˣ.cpp
+    commands/SetSizeʸ.cpp
+    commands/SetSizeᶻ.cpp
     commands/TachyonCommand.cpp
     commands/TachyonDeleteCommand.cpp
     commands/TachyonProxyCommand.cpp
@@ -176,6 +177,7 @@ add_library(${PROJECT_NAME} SHARED
     commands/WindowSizeCommand.cpp
     commands/WindowTitleCommand.cpp
     commands/WindowUnfloatCommand.cpp
+    
     
     config/build.cpp
     
@@ -255,18 +257,9 @@ add_library(${PROJECT_NAME} SHARED
     glfw/MouseGLFW.cpp
     glfw/WindowGLFW.cpp
 
-    interfaces/IPosition1D.cpp
-    interfaces/IPosition1I.cpp
-    interfaces/IPosition1M.cpp
-    interfaces/IPosition2D.cpp
-    interfaces/IPosition2I.cpp
-    interfaces/IPosition2M.cpp
-    interfaces/IPosition3D.cpp
-    interfaces/IPosition3I.cpp
-    interfaces/IPosition3M.cpp
-    interfaces/IPosition4D.cpp
-    interfaces/IPosition4I.cpp
-    interfaces/IPosition4M.cpp
+    interfaces/IPosition¹.cpp
+    interfaces/IPosition².cpp
+    interfaces/IPosition³.cpp
     interfaces/ISpatial³.cpp
 
     io/GLSLShader.cpp
@@ -283,18 +276,9 @@ add_library(${PROJECT_NAME} SHARED
     posts/EmptyPost.cpp
     posts/StringPost.cpp
 
-    proxies/PPosition1D.cpp
-    proxies/PPosition1I.cpp
-    proxies/PPosition1M.cpp
-    proxies/PPosition2D.cpp
-    proxies/PPosition2I.cpp
-    proxies/PPosition2M.cpp
-    proxies/PPosition3D.cpp
-    proxies/PPosition3I.cpp
-    proxies/PPosition3M.cpp
-    proxies/PPosition4D.cpp
-    proxies/PPosition4I.cpp
-    proxies/PPosition4M.cpp
+    proxies/PPosition¹.cpp
+    proxies/PPosition².cpp
+    proxies/PPosition³.cpp
     proxies/PSpatial³.cpp
 
     renders/ImageQuad.cpp
@@ -323,6 +307,8 @@ add_library(${PROJECT_NAME} SHARED
     requests/WindowCloseRequest.cpp
     requests/WindowRefreshRequest.cpp
     requests/WindowRequest.cpp
+    
+    spatials/SimpleSpatial³.cpp
     
     #task/Task.cpp
     #task/TaskEngine.cpp

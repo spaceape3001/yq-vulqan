@@ -11,7 +11,7 @@
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/tachyon/enum/MouseMode.hpp>
-#include <yq/tachyon/interfaces/IPosition2I.hpp>
+#include <yq/tachyon/interfaces/IPosition².hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/glfw.hpp>
 
@@ -21,7 +21,7 @@ namespace yq::tachyon {
     class ViewerCreateInfo;
     class WindowDestroyCommand;
 
-    class WindowGLFW : public Window, private IPosition2I {
+    class WindowGLFW : public Window, private IPosition² {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
     public:
         WindowGLFW(DesktopGLFW*, GLFWwindow*, const ViewerCreateInfo&, const Param&p={});
@@ -29,7 +29,7 @@ namespace yq::tachyon {
         
         static void init_info();
 
-        Vector2I    position2i() const override;
+        Vector2D    position() const override;
 
         virtual Execution tick(Context&) override;
         

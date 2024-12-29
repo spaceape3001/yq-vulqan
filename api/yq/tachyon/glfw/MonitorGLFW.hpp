@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/api/Monitor.hpp>
-#include <yq/tachyon/interfaces/IPosition2I.hpp>
+#include <yq/tachyon/interfaces/IPosition².hpp>
 
 struct GLFWmonitor;
 struct GLFWvidmode;
 
 namespace yq::tachyon {
-    class MonitorGLFW : public Monitor, private IPosition2I {
+    class MonitorGLFW : public Monitor, private IPosition² {
         YQ_TACHYON_DECLARE(MonitorGLFW, Monitor);
     public:
         MonitorGLFW(GLFWmonitor*, const Param&p = {});
@@ -24,7 +24,7 @@ namespace yq::tachyon {
         
         void        snap(MonitorSnap&) const;
         
-        Vector2I    position2i() const override;
+        Vector2D    position() const override;
         
         GLFWmonitor*    glfw() const { return m_monitor; }
         

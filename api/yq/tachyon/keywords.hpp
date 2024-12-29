@@ -69,6 +69,7 @@ namespace yq::tachyon {
     struct forward_k {};
     struct glfw_k {};
     struct hash_k {};
+    struct inflatable_k {};
     struct info_k {};
     struct joystick_k {};
     struct keyboard_k {};
@@ -99,6 +100,7 @@ namespace yq::tachyon {
     struct rendered_k {};
     struct resume_k {};
     struct root_k {};
+    struct scalable_k {};
     struct settable_k {};
     struct stop_k {};
     struct tachyon_k {};
@@ -158,6 +160,7 @@ namespace yq::tachyon {
     static constexpr forward_k      FORWARD;
     static constexpr glfw_k         GLFW;
     static constexpr hash_k         HASH;
+    static constexpr inflatable_k   INFLATABLE;
     static constexpr info_k         INFO;
     static constexpr joystick_k     JOYSTICK;
     static constexpr keyboard_k     KEYBOARD;
@@ -182,10 +185,11 @@ namespace yq::tachyon {
     static constexpr queue_k        QUEUE;
     static constexpr refresh_k      REFRESH;
     static constexpr reject_k       REJECT;
-    static constexpr rendered³_k      RENDER³;
     static constexpr rendered_k     RENDERED;
+    static constexpr rendered³_k    RENDERED³;
     static constexpr resume_k       RESUME;
     static constexpr root_k         ROOT;
+    static constexpr scalable_k     SCALABLE;
     static constexpr settable_k     SETTABLE;
     static constexpr static_k       STATIC;
     static constexpr stop_k         STOP;

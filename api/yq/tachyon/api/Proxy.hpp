@@ -40,7 +40,7 @@ namespace yq::tachyon {
         virtual ~Proxy();
         
         //! Pushes a post into the tachyon's inbox for their next tick()
-        void    dispatch(const PostCPtr&);
+        void    mail(const PostCPtr&);
         
     private:
         friend class Tachyon;
@@ -59,9 +59,14 @@ namespace yq::tachyon {
             Settable,
             
             //! Interface can have its property tweaked (ie, += or moveable )
-            Adjustable,
+            Moveable,
             
-            Moveable = Adjustable
+            Adjustable = Moveable,
+            
+            //! Interface can have its property tweaked (ie *= or inflatable )
+            Scalable,
+            
+            Inflatable = Scalable
         };
         
         using FFlags    = Flags<F>;

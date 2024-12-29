@@ -100,32 +100,14 @@ add_library(${PROJECT_NAME} SHARED
     commands/MouseDisableCommand.cpp
     commands/MouseHideCommand.cpp
     commands/MouseNormalCommand.cpp
-    commands/MoveBy¹.cpp
-    commands/MoveBy².cpp
-    commands/MoveBy³.cpp
-    commands/MoveByˣ.cpp
-    commands/MoveByʸ.cpp
-    commands/MoveByᶻ.cpp
-    commands/PositionCommand.cpp
     #commands/SetParentCommand.cpp
-    commands/SetPosition¹.cpp
-    commands/SetPosition².cpp
-    commands/SetPosition³.cpp
-    commands/SetPositionˣ.cpp
-    commands/SetPositionʸ.cpp
-    commands/SetPositionᶻ.cpp
-    commands/SetScale¹.cpp
-    commands/SetScale².cpp
-    commands/SetScale³.cpp
-    commands/SetScaleˣ.cpp
-    commands/SetScaleʸ.cpp
-    commands/SetScaleᶻ.cpp
     commands/SetSize¹.cpp
     commands/SetSize².cpp
     commands/SetSize³.cpp
     commands/SetSizeˣ.cpp
     commands/SetSizeʸ.cpp
     commands/SetSizeᶻ.cpp
+    commands/SpatialCommand.cpp
     commands/TachyonCommand.cpp
     commands/TachyonDeleteCommand.cpp
     commands/TachyonProxyCommand.cpp
@@ -177,6 +159,25 @@ add_library(${PROJECT_NAME} SHARED
     commands/WindowSizeCommand.cpp
     commands/WindowTitleCommand.cpp
     commands/WindowUnfloatCommand.cpp
+
+    commands/spatial/MoveBy¹.cpp
+    commands/spatial/MoveBy².cpp
+    commands/spatial/MoveBy³.cpp
+    commands/spatial/MoveByˣ.cpp
+    commands/spatial/MoveByʸ.cpp
+    commands/spatial/MoveByᶻ.cpp
+    commands/spatial/SetScale¹.cpp
+    commands/spatial/SetScale².cpp
+    commands/spatial/SetScale³.cpp
+    commands/spatial/SetScaleˣ.cpp
+    commands/spatial/SetScaleʸ.cpp
+    commands/spatial/SetScaleᶻ.cpp
+    commands/spatial/SetPosition¹.cpp
+    commands/spatial/SetPosition².cpp
+    commands/spatial/SetPosition³.cpp
+    commands/spatial/SetPositionˣ.cpp
+    commands/spatial/SetPositionʸ.cpp
+    commands/spatial/SetPositionᶻ.cpp
     
     
     config/build.cpp

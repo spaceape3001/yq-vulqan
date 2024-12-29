@@ -22,14 +22,21 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Spatial³::Spatial³()
+    Spatial³::Spatial³(const Param& p) : Spatial(p)
     {
     }
     
     Spatial³::~Spatial³()
     {
     }
-    
+
+    void        Spatial³::snap(Spatial³Snap& sn) const
+    {
+        Spatial::snap(sn);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     void Spatial³::init_info()
     {
         auto w = writer<Spatial³>();

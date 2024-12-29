@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByᶻ)
 
 namespace yq::tachyon {
     MoveByᶻ::MoveByᶻ(TachyonID tid, double Δz, const Param& p) : 
-        TachyonCommand(tid, p), m_Δz(Δz)
+        SpatialCommand(tid, p), m_Δz(Δz)
     {
     }
     

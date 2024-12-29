@@ -127,7 +127,7 @@ namespace yq::tachyon {
 
     protected:
         
-        Rendered³(const Param&p={});
+        Rendered³(const Param&);
         virtual ~Rendered³();
         
     private:

@@ -37,7 +37,7 @@ namespace yq::tachyon {
         }
     }
 
-    Tetrahedron³::Tetrahedron³(const TetrahedronData<ColorVertex3D>&tri)
+    Tetrahedron³::Tetrahedron³(const TetrahedronData<ColorVertex3D>&tri, const Param& p) : Rendered³(p)
     {
         m_vertex    = { tri.a, tri.b, tri.c, tri.d};
     }

@@ -52,8 +52,6 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Rendered, Tachyon)
     public:
     
-        Rendered(const Param&p={});
-        ~Rendered();
         
         //! Helper for draw counts
         //struct Draw {
@@ -90,6 +88,9 @@ namespace yq::tachyon {
         RenderedID      id() const { return RenderedID(UniqueID::id()); }
 
     protected:
+
+        Rendered(const Param&p);
+        virtual ~Rendered();
 
         virtual PostAdvice  advise(const Post&) const override;
         void snap(RenderedSnap&) const;

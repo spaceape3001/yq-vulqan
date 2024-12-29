@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq/tachyon/commands/TachyonCommand.hpp>
+#include <yq/tachyon/commands/SpatialCommand.hpp>
 #include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class MoveBy³ : public TachyonCommand {
-        YQ_OBJECT_DECLARE(MoveBy³, TachyonCommand)
+    class MoveBy³ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(MoveBy³, SpatialCommand)
     public:
         MoveBy³(TachyonID, const Vector3D&Δ, const Param& p={});
         ~MoveBy³();

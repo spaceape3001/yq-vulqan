@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy²)
 
 namespace yq::tachyon {
     MoveBy²::MoveBy²(TachyonID tid, const Vector2D& Δ, const Param& p) : 
-        TachyonCommand(tid, p), m_Δ(Δ)
+        SpatialCommand(tid, p), m_Δ(Δ)
     {
     }
     

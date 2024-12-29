@@ -25,7 +25,7 @@ namespace yq::tachyon {
         struct VData;
     public:
     
-        ImageQuad³(const AxBox2D&, std::string_view szImage);
+        ImageQuad³(const AxBox2D&, std::string_view szImage, const Param& p={});
         ~ImageQuad³();
         
         static void init_info();

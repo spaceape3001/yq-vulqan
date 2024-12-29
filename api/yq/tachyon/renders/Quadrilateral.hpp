@@ -22,7 +22,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Quadrilateral³, Rendered³)
     public:
     
-        Quadrilateral³(const QuadrilateralData<ColorVertex2D>&);
+        Quadrilateral³(const QuadrilateralData<ColorVertex2D>&, const Param& p={});
         ~Quadrilateral³();
         
         static void init_info();

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy³)
 
 namespace yq::tachyon {
     MoveBy³::MoveBy³(TachyonID tid, const Vector3D& Δ, const Param& p) : 
-        TachyonCommand(tid, p), m_Δ(Δ)
+        SpatialCommand(tid, p), m_Δ(Δ)
     {
     }
     

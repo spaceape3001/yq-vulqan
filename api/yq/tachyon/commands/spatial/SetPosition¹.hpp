@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq/tachyon/commands/TachyonCommand.hpp>
+#include <yq/tachyon/commands/SpatialCommand.hpp>
 #include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SetPosition¹ : public TachyonCommand {
-        YQ_OBJECT_DECLARE(SetPosition¹, TachyonCommand)
+    class SetPosition¹ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(SetPosition¹, SpatialCommand)
     public:
         SetPosition¹(TachyonID, const Vector1D&, const Param& p={});
         ~SetPosition¹();

@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByˣ)
 
 namespace yq::tachyon {
     MoveByˣ::MoveByˣ(TachyonID tid, double Δx, const Param& p) : 
-        TachyonCommand(tid, p), m_Δx(Δx)
+        SpatialCommand(tid, p), m_Δx(Δx)
     {
     }
     

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Spatial³.hpp>
+#include <yq/tachyon/api/Spatial³Data.hpp>
 #include <yq/tachyon/api/SpatialInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -14,10 +15,10 @@ namespace yq::tachyon {
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class Spatial³Info::Writer : public ObjectInfo::Writer<C> {
+    class Spatial³Info::Writer : public SpatialInfo::Writer<C> {
     public:
     
-        Writer(Spatial³Info* pInfo) : ObjectInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(Spatial³Info* pInfo) : SpatialInfo::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         

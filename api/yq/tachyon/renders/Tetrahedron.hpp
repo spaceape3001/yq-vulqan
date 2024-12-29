@@ -28,7 +28,7 @@ namespace yq::tachyon {
     public:
 
         //! Constructor taking in the data
-        Tetrahedron³(const TetrahedronData<ColorVertex3D>&);
+        Tetrahedron³(const TetrahedronData<ColorVertex3D>&, const Param& p={});
         
         //! Destructor
         ~Tetrahedron³();

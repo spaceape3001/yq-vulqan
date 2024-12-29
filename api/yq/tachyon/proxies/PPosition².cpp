@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PPosition².hpp"
-#include <yq/tachyon/commands/MoveBy².hpp>
-#include <yq/tachyon/commands/MoveByˣ.hpp>
-#include <yq/tachyon/commands/MoveByʸ.hpp>
-#include <yq/tachyon/commands/SetPosition².hpp>
-#include <yq/tachyon/commands/SetPositionˣ.hpp>
-#include <yq/tachyon/commands/SetPositionʸ.hpp>
+#include <yq/tachyon/commands/spatial/MoveBy².hpp>
+#include <yq/tachyon/commands/spatial/MoveByˣ.hpp>
+#include <yq/tachyon/commands/spatial/MoveByʸ.hpp>
+#include <yq/tachyon/commands/spatial/SetPosition².hpp>
+#include <yq/tachyon/commands/spatial/SetPositionˣ.hpp>
+#include <yq/tachyon/commands/spatial/SetPositionʸ.hpp>
 
 namespace yq::tachyon {
     PPosition²::PPosition²(const IPosition²& i) : m_position(i.position())

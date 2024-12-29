@@ -10,7 +10,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPosition¹)
 
 namespace yq::tachyon {
-    SetPosition¹::SetPosition¹(TachyonID tid, const Vector1D& v, const Param& p) : TachyonCommand(tid, p), m_position(v)
+    SetPosition¹::SetPosition¹(TachyonID tid, const Vector1D& v, const Param& p) : 
+        SpatialCommand(tid, p), m_position(v)
     {
     }
     

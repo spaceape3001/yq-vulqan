@@ -6,26 +6,25 @@
 
 #pragma once
 
-#include <yq/tachyon/commands/TachyonCommand.hpp>
-#include <yq/vector/Vector2.hpp>
+#include <yq/tachyon/commands/SpatialCommand.hpp>
+#include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class MoveBy² : public TachyonCommand {
-        YQ_OBJECT_DECLARE(MoveBy², TachyonCommand)
+    class MoveBy¹ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(MoveBy¹, SpatialCommand)
     public:
-        MoveBy²(TachyonID, const Vector2D&Δ, const Param& p={});
-        ~MoveBy²();
+        MoveBy¹(TachyonID, const Vector1D&Δ, const Param& p={});
+        ~MoveBy¹();
     
-        const Vector2D&   Δ() const  { return m_Δ; }
+        const Vector1D&   Δ() const  { return m_Δ; }
         
         static void init_info();
         
         double  Δx() const { return m_Δ.x; }
-        double  Δy() const { return m_Δ.y; }
         
     private:
-        Vector2D const  m_Δ;
+        Vector1D const  m_Δ;
     };
 }

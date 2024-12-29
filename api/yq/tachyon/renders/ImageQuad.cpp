@@ -32,7 +32,7 @@ namespace yq::tachyon {
         }
     }
 
-    ImageQuad³::ImageQuad³(const AxBox2D&box, std::string_view szImage)
+    ImageQuad³::ImageQuad³(const AxBox2D&box, std::string_view szImage, const Param& p) : Rendered³(p)
     {
         glm::dvec2  ll  = box.ll();
         glm::dvec2  lh  = box.lh();

@@ -24,7 +24,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Triangle³, Rendered³)
     public:
     
-        Triangle³(const TriangleData<ColorVertex2D>&);
+        Triangle³(const TriangleData<ColorVertex2D>&, const Param& p={});
         ~Triangle³();
         
         static void init_info();

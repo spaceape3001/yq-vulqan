@@ -16,19 +16,14 @@
 namespace yq::tachyon {
     struct Rendered³Snap : public RenderedSnap {
         
-        //! Our model matrix (in domain coordinates)
-        Tensor44D   model           = IDENTITY;
-        
         Tensor44D   vm_tensor       = NAN;
         
+        // Our "bounds" in model coordinates
         bounds³_t   bounds;
 
         //! Override to the view*model matrix (used for billboarding & other effects)  
         bool        vm_override     = false;
         
-        //! This is who our coordinates are expressed in (Null implies world world)
-        //TachyonID   domain;
-
         Rendered³Snap();
         ~Rendered³Snap();
     };

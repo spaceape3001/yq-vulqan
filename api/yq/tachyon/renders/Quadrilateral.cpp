@@ -38,7 +38,7 @@ namespace yq::tachyon {
         }
     }
 
-    Quadrilateral³::Quadrilateral³(const QuadrilateralData<ColorVertex2D>&quad)
+    Quadrilateral³::Quadrilateral³(const QuadrilateralData<ColorVertex2D>&quad, const Param& p) : Rendered³(p)
     {
         m_vertex = { quad.a, quad.b, quad.c, quad.d};
     }

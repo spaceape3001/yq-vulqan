@@ -6,27 +6,26 @@
 
 #pragma once
 
-#include <yq/tachyon/commands/TachyonCommand.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/tachyon/commands/SpatialCommand.hpp>
+#include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SetPosition³ : public TachyonCommand {
-        YQ_OBJECT_DECLARE(SetPosition³, TachyonCommand)
+    class SetPosition² : public SpatialCommand {
+        YQ_OBJECT_DECLARE(SetPosition², SpatialCommand)
     public:
-        SetPosition³(TachyonID, const Vector3D&, const Param& p={});
-        ~SetPosition³();
+        SetPosition²(TachyonID, const Vector2D&, const Param& p={});
+        ~SetPosition²();
     
-        const Vector3D&   position() const  { return m_position; }
+        const Vector2D&   position() const  { return m_position; }
         
         static void init_info();
         
         double  x() const { return m_position.x; }
         double  y() const { return m_position.y; }
-        double  z() const { return m_position.z; }
         
     private:
-        Vector3D const  m_position;
+        Vector2D const  m_position;
     };
 }

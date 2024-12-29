@@ -119,7 +119,7 @@ struct HelloTriangle : public Rendered {
         }
     }
     
-    HelloTriangle() 
+    HelloTriangle() : Rendered({})
     {
         ubo     = { { 1.0, 1.0, 1.0, 1.0 } };
     }
@@ -165,7 +165,7 @@ struct HelloQuad : public Rendered {
         }
     }
     
-    HelloQuad()
+    HelloQuad() : Rendered({})
     {
         tex     = Texture::load("sdk/hello/flowers-512.png");
     }

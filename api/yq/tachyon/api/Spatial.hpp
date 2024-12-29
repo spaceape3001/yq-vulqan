@@ -6,17 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Delegate.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 
     class Spatial;
     
-    class SpatialInfo : public DelegateInfo {
+    class SpatialInfo : public TachyonInfo {
     public:
         template <typename C> class Writer;
 
-        SpatialInfo(std::string_view zName, DelegateInfo& base, const std::source_location& sl=std::source_location::current());
+        SpatialInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl=std::source_location::current());
     
     protected:
         ~SpatialInfo();
@@ -27,18 +28,31 @@ namespace yq::tachyon {
     
         
     */
-    class Spatial : public Delegate {
-        YQ_OBJECT_INFO(SpatialInfo)
-        YQ_OBJECT_DECLARE(Spatial, Delegate)
+    class Spatial : public Tachyon {
+        YQ_TACHYON_INFO(SpatialInfo)
+        YQ_TACHYON_DATA(SpatialData)
+        YQ_TACHYON_SNAP(SpatialSnap)
+        YQ_TACHYON_DECLARE(Spatial, Tachyon)
     public:
     
         virtual uint8_t dimensions(count_k) const = 0;
     
-        Spatial();
+        SpatialID       domain() const { return m_domain; }
         
         static void init_info();
+        
+        struct Param : public Tachyon::Param {
+            SpatialID   domain;
+        };
     
     protected:
+        Spatial(const Param&);
         virtual ~Spatial();
+        
+        void snap(SpatialSnap&) const;
+        virtual PostAdvice  advise(const Post&) const override;
+    
+    private:
+        SpatialID       m_domain;
     };
 }

@@ -28,6 +28,7 @@ namespace yq::tachyon {
         
         //! Standard constructor for the camera information
         CameraInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -63,10 +64,10 @@ namespace yq::tachyon {
     
         //! Generic parameter structure
         //! Allows us to expand parameters w/o affecting *everybody*
-        struct Values;
+        //struct Values;
     
         //! Returns the transform to go world -> screen space
-        virtual glm::dmat4  world2screen(const Values&) const = 0;
+        //virtual glm::dmat4  world2screen(const Values&) const = 0;
     
         static void init_info();
 
@@ -88,8 +89,8 @@ namespace yq::tachyon {
 
     /*! \brief Camera parameters
     */
-    struct Camera::Values {
-        //  Dimensions of the screen
-        Rectangle2D     screen;
-    };
+    //struct Camera::Values {
+        ////  Dimensions of the screen
+        //Rectangle2D     screen;
+    //};
 }

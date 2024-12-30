@@ -34,6 +34,8 @@ namespace yq::tachyon {
     
         virtual uint8_t dimensions(count_k) const override final { return 3; }
         
+        Spatial³ID id() const { return Spatial³ID(UniqueID::id()); }
+
         static void init_info();
         
     protected:

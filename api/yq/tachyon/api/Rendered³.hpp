@@ -8,8 +8,13 @@
 
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/shape/AxBox3.hpp>
+#include <yq/shape/Sphere3.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/typedef/bounds³.hpp>
 #include <yq/tachyon/typedef/rendered³.hpp>
+#include <yq/tachyon/typedef/spatial³.hpp>
+#include <yq/vector/Quaternion3.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
         
@@ -34,6 +39,20 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Rendered³, Rendered)
     public:    
     
+        struct Param : public Rendered::Param {
+            
+            // setting *ANY* of these creates a simple spatial (3D)
+        
+            Vector3D        position        = NAN;
+            Quaternion3D    orientation     = NAN;
+            Vector3D        scale           = NAN;
+        };
+    
+        Spatial³ID                      spatial³() const { return m_spatial; }
+        
+        void    set_bounds(bounds³_t);
+        void    set_spatial(Spatial³ID);
+    
         /*
             Really been overthinking this... for *NOW* the rendered will be in full control, 
             however, think it'll be moving to a delegate based system (TBD)
@@ -41,10 +60,10 @@ namespace yq::tachyon {
     
 
         //  The model matrix in relation to its parent
-        Tensor44D                       calc_local() const;
+        //Tensor44D                       calc_local() const;
         
         //  Computes the model to world matrix
-        glm::dmat4                      model2world() const;
+        //glm::dmat4                      model2world() const;
         
         //Rendered³*                       parent() { return m_parent; }
         
@@ -52,44 +71,44 @@ namespace yq::tachyon {
         //const Rendered³*                 parent() const { return m_parent; }
         
         //! Position of the render object
-        const Vector3D&                 position() const { return m_space.position; }
+        //const Vector3D&                 position() const { return m_space.position; }
         
         //! Scale of the render object
-        const Vector3D&                 scale() const { return m_space.scale; }
+        //const Vector3D&                 scale() const { return m_space.scale; }
         
         //! Orientation of the render object
-        const Quaternion3D&             orientation() const { return m_space.orientation; }
+        //const Quaternion3D&             orientation() const { return m_space.orientation; }
         
         //! Bounds of the render object
-        const AxBox3D&                  bounds() const { return m_bounds; }
+        //const AxBox3D&                  bounds() const { return m_bounds; }
         
         //! Space of the render object
-        const SimpleSpace&              space() const { return m_space; }
+        //const SimpleSpace&              space() const { return m_space; }
         
         //! Set the position of the render object
-        void                            set_position(const Vector3D&);
+        //void                            set_position(const Vector3D&);
         
         //! Set the scale of the render object
-        void                            set_scale(const Vector3D&);
+        //void                            set_scale(const Vector3D&);
         
         //! Convienent single-setting set of scale 
         //! 
         //! Equivalent to Vector3D(ALL, v)
-        void                            set_scaling(double);
+        //void                            set_scaling(double);
         
         //! Set the orientation of the render object
-        void                            set_orientation(const Quaternion3D&);
+        //void                            set_orientation(const Quaternion3D&);
         
         //! Sets the heading of the object (equivlent to creating a quaternion and setting)
-        void                            set_heading(Radian hdg);
+        //void                            set_heading(Radian hdg);
         //! Sets the heading, pitch, roll of the object (equivlent to creating a quaternion and setting)
-        void                            set_hpr(Radian hdg, Radian pitch, Radian roll);
+        //void                            set_hpr(Radian hdg, Radian pitch, Radian roll);
         
         //! Sets the bounds of the render object
-        void                            set_bounds(const AxBox3D&);
+        //void                            set_bounds(const AxBox3D&);
         
         //! Sets the space of the render object
-        void                            set_space(const SimpleSpace&);
+        //void                            set_space(const SimpleSpace&);
         
         //! Generic clone routine, to be implemented by the derived object
         //virtual Ref<Rendered³>           clone() const { return {}; }
@@ -130,15 +149,13 @@ namespace yq::tachyon {
         Rendered³(const Param&);
         virtual ~Rendered³();
         
+        void    snap(Rendered³Snap&) const;
+        
     private:
-        //Rendered³*                      m_parent;
-        //std::vector<Ref<Rendered³>>     m_children;
+        Spatial³ID      m_spatial;
         
-        //! This is the coordinate space for the object (position, scale, & orientation)
-        SimpleSpace                    m_space;
-        
-        //! Bounding box of the render object in its x/y/z axis
-        AxBox3D                        m_bounds;
+        //! Bounds of the item (in render coordinate)
+        bounds³_t       m_bounds;
     };
 
 }

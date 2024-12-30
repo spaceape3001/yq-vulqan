@@ -6,7 +6,7 @@
 
 project(yq_tachyon)
 
-#   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⁿ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ
+#   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ʰ ᵖ ⁿ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ
 
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
@@ -166,19 +166,23 @@ add_library(${PROJECT_NAME} SHARED
     commands/spatial/MoveByˣ.cpp
     commands/spatial/MoveByʸ.cpp
     commands/spatial/MoveByᶻ.cpp
-    commands/spatial/SetScale¹.cpp
-    commands/spatial/SetScale².cpp
-    commands/spatial/SetScale³.cpp
-    commands/spatial/SetScaleˣ.cpp
-    commands/spatial/SetScaleʸ.cpp
-    commands/spatial/SetScaleᶻ.cpp
+    commands/spatial/PitchBy.cpp
+    commands/spatial/RotateBy³.cpp
+    commands/spatial/RollBy.cpp
+    commands/spatial/SetOrientation³.cpp
     commands/spatial/SetPosition¹.cpp
     commands/spatial/SetPosition².cpp
     commands/spatial/SetPosition³.cpp
     commands/spatial/SetPositionˣ.cpp
     commands/spatial/SetPositionʸ.cpp
     commands/spatial/SetPositionᶻ.cpp
-    
+    commands/spatial/SetScale¹.cpp
+    commands/spatial/SetScale².cpp
+    commands/spatial/SetScale³.cpp
+    commands/spatial/SetScaleˣ.cpp
+    commands/spatial/SetScaleʸ.cpp
+    commands/spatial/SetScaleᶻ.cpp
+    commands/spatial/YawBy.cpp
     
     config/build.cpp
     

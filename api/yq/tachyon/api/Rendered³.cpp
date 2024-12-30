@@ -6,6 +6,7 @@
 
 #include "Rendered³.hpp"
 #include <yq/tachyon/api/Rendered³InfoWriter.hpp>
+#include <yq/tachyon/spatials/SimpleSpatial³.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
 
@@ -27,11 +28,32 @@ namespace yq::tachyon {
 
     Rendered³::Rendered³(const Param&p) : Rendered(p)
     {
+        if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
+            SimpleSpatial³::Param p3;
+            p3.position     = p.position;
+            p3.orientation  = p.orientation;
+            p3.scale        = p.scale;
+            m_spatial       = create<SimpleSpatial³>(CHILD, p3) -> id();
+            //subscribe(m_spatial, MG::Spatial);
+        }
     }
     
     Rendered³::~Rendered³()   = default;
 
+    void    Rendered³::set_bounds(bounds³_t b)
+    {
+        m_bounds = b;
+        mark();
+    }
+    
+    void    Rendered³::set_spatial(Spatial³ID sid)
+    {
+        m_spatial   = sid;
+        mark();
+    }
 
+
+#if 0
     Tensor44D   Rendered³::calc_local() const
     {
         return m_space.local2parent();
@@ -84,6 +106,14 @@ namespace yq::tachyon {
     {
         m_space = v;
     }
+#endif
+
+    void    Rendered³::snap(Rendered³Snap&sn) const
+    {
+        Rendered::snap(sn);
+        sn.bounds       = m_bounds;
+        sn.spatial      = m_spatial;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,10 +121,11 @@ namespace yq::tachyon {
     void    Rendered³::init_info()
     {
         auto w   = writer<Rendered³>();
-        w.property("pos", &Rendered³::position).setter(&Rendered³::set_position);
-        w.property("scale", &Rendered³::scale).setter(&Rendered³::set_scale);
-        w.property("ori", &Rendered³::orientation).setter(&Rendered³::set_orientation);
-        w.property("bounds", &Rendered³::bounds).setter(&Rendered³::set_bounds);
+        w.description("Rendered in ³D");
+        //w.property("pos", &Rendered³::position).setter(&Rendered³::set_position);
+        //w.property("scale", &Rendered³::scale).setter(&Rendered³::set_scale);
+        //w.property("ori", &Rendered³::orientation).setter(&Rendered³::set_orientation);
+        //w.property("bounds", &Rendered³::bounds).setter(&Rendered³::set_bounds);
     }
 }
 

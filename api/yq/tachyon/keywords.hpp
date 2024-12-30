@@ -69,6 +69,7 @@ namespace yq::tachyon {
     struct forward_k {};
     struct glfw_k {};
     struct hash_k {};
+    struct heading_k {};
     struct inflatable_k {};
     struct info_k {};
     struct joystick_k {};
@@ -91,6 +92,7 @@ namespace yq::tachyon {
     
     struct parent_k {};
     struct pause_k {};
+    struct pitch_k {};
     struct probe_k {};
     struct proxy_k {};
     struct ptr_k {};
@@ -99,6 +101,7 @@ namespace yq::tachyon {
     struct rendered³_k {};
     struct rendered_k {};
     struct resume_k {};
+    struct roll_k {};
     struct root_k {};
     struct scalable_k {};
     struct settable_k {};
@@ -115,6 +118,7 @@ namespace yq::tachyon {
     struct vulqan_k {};
     struct widget_k {};
     struct window_k {};
+    struct yaw_k {};
     
     // any problematic macros....
     #ifdef LOCK
@@ -160,6 +164,7 @@ namespace yq::tachyon {
     static constexpr forward_k      FORWARD;
     static constexpr glfw_k         GLFW;
     static constexpr hash_k         HASH;
+    static constexpr heading_k      HEADING;
     static constexpr inflatable_k   INFLATABLE;
     static constexpr info_k         INFO;
     static constexpr joystick_k     JOYSTICK;
@@ -179,6 +184,7 @@ namespace yq::tachyon {
     static constexpr once_k         ONCE;
     static constexpr parent_k       PARENT;
     static constexpr pause_k        PAUSE;
+    static constexpr pitch_k        PITCH;
     static constexpr probe_k        PROBE;
     static constexpr proxy_k        PROXY;
     static constexpr ptr_k          PTR;
@@ -188,6 +194,7 @@ namespace yq::tachyon {
     static constexpr rendered_k     RENDERED;
     static constexpr rendered³_k    RENDERED³;
     static constexpr resume_k       RESUME;
+    static constexpr roll_k         ROLL;
     static constexpr root_k         ROOT;
     static constexpr scalable_k     SCALABLE;
     static constexpr settable_k     SETTABLE;
@@ -205,4 +212,5 @@ namespace yq::tachyon {
     static constexpr vulqan_k       VULQAN;
     static constexpr widget_k       WIDGET;
     static constexpr window_k       WINDOW;
+    static constexpr yaw_k          YAW;
 }

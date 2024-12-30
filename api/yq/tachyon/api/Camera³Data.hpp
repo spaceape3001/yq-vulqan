@@ -13,9 +13,12 @@
 
 namespace yq::tachyon {
     struct Camera³Snap : public CameraSnap {
-        Tensor44D   view        = IDENTITY;
+        //  This now comes from the spatial³....
+        //Tensor44D   view        = IDENTITY;
         Tensor44D   projection  = IDENTITY;
         Rectangle2D screen      = Rectangle2D(ZERO, ONE);
+        
+        Spatial³ID              m_spatial;
     };
     
     struct Camera³Data : public CameraData {

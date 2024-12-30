@@ -22,6 +22,7 @@ namespace yq::tachyon {
         Tachyon,
         Controlled,
         Controller,
+        Spatial,
         Viewer,
         Widget
     };

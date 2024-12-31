@@ -23,57 +23,38 @@ add_library(${PROJECT_NAME} SHARED
     
     vulqan.cpp
 
-    api/Application.cpp
-    api/AppThread.cpp
-    api/Buffer.cpp
-    api/Camera.cpp
     api/Command.cpp
     api/Controller.cpp
-    api/Cursor.cpp
     #api/Context.hpp
     api/Delegate.cpp
-    api/Desktop.cpp
     #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
     api/InterfaceInfo.cpp
-    api/Joystick.cpp
-    api/Keyboard.cpp
-    api/Light.cpp
     api/Manager.cpp
     api/Message.cpp
     api/Model.cpp
-    api/Monitor.cpp
-    api/Mouse.cpp
     api/Perspective.cpp
-    api/Pipeline.cpp
-    api/PipelineUtils.cpp
     api/Post.cpp
     api/Proxy.cpp
     api/Raster.cpp
-    api/Rendered.cpp
-    api/Rendered³.cpp
     #api/Rendered².cpp
     api/RenderPass.cpp
     api/Reply.cpp
     api/Request.cpp
-    api/Sampler.cpp
-    api/Shader.cpp
-    api/Spatial.cpp
-    api/Spatial³.cpp
     api/Tachyon.cpp
     api/TaskThread.cpp
-    api/Texture.cpp
     api/Thread.cpp
     #api/Tool.cpp
     api/Trigger.cpp
     api/TypedID.cpp
     api/Undo.cpp
-    api/VideoMode.cpp
-    api/Viewer.cpp
-    api/ViewerThread.cpp
     api/Widget.cpp
-    api/Window.cpp
+
+    app/Application.cpp
+    app/AppThread.cpp
+    app/Viewer.cpp
+    app/ViewerThread.cpp
 
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp
@@ -186,6 +167,15 @@ add_library(${PROJECT_NAME} SHARED
     
     config/build.cpp
     
+    desktop/Cursor.cpp
+    desktop/Desktop.cpp
+    desktop/Joystick.cpp
+    desktop/Keyboard.cpp
+    desktop/Monitor.cpp
+    desktop/Mouse.cpp
+    desktop/VideoMode.cpp
+    desktop/Window.cpp
+
     enum/enum.cpp
     enum/KeyCode.cpp
     enum/ModifierKey.cpp
@@ -277,6 +267,13 @@ add_library(${PROJECT_NAME} SHARED
     
     #models/models.cpp
 
+    pipeline/Buffer.cpp
+    pipeline/Pipeline.cpp
+    pipeline/PipelineUtils.cpp
+    pipeline/Sampler.cpp
+    pipeline/Shader.cpp
+    pipeline/Texture.cpp
+
     posts/AnyPost.cpp
     posts/EmptyPost.cpp
     posts/StringPost.cpp
@@ -312,8 +309,19 @@ add_library(${PROJECT_NAME} SHARED
     requests/WindowCloseRequest.cpp
     requests/WindowRefreshRequest.cpp
     requests/WindowRequest.cpp
-    
-    spatials/SimpleSpatial³.cpp
+
+    scene/Camera.cpp
+    #scene/Camera3.cpp
+    scene/Light.cpp
+    #scene/Light3.cpp
+    scene/Rendered.cpp
+    scene/Rendered³.cpp
+    #scene/Scene.cpp
+    #scene/Scene3.cpp
+    scene/Spatial.cpp
+    scene/Spatial³.cpp
+
+    spatials/SimpleSpatial3.cpp
     
     #task/Task.cpp
     #task/TaskEngine.cpp

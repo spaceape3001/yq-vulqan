@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "KeyboardGLFW.hpp"
-#include <yq/tachyon/api/KeyboardInfoWriter.hpp>
+#include <yq/tachyon/desktop/KeyboardInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::KeyboardGLFW)
 

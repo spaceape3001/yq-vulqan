@@ -9,7 +9,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Application.hpp>
 #include <yq/tachyon/api/Context.hpp>
-#include <yq/tachyon/api/DesktopInfoWriter.hpp>
+#include <yq/tachyon/desktop/DesktopInfoWriter.hpp>
 #include <yq/tachyon/api/ViewerCreateInfo.hpp>
 #include <yq/tachyon/glfw/CursorGLFW.hpp>
 #include <yq/tachyon/glfw/ExceptionGLFW.hpp>

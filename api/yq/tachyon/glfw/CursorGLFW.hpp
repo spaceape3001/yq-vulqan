@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Cursor.hpp>
+#include <yq/tachyon/desktop/Cursor.hpp>
 
 struct GLFWcursor;
 

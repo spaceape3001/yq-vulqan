@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MonitorGLFW.hpp"
-#include <yq/tachyon/api/MonitorInfoWriter.hpp>
+#include <yq/tachyon/desktop/MonitorInfoWriter.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

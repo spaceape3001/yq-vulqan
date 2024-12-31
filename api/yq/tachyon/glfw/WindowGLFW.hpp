@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Window.hpp>
-#include <yq/tachyon/api/WindowState.hpp>
+#include <yq/tachyon/desktop/Window.hpp>
+#include <yq/tachyon/desktop/WindowState.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
 #include <yq/tachyon/enum/MouseMode.hpp>

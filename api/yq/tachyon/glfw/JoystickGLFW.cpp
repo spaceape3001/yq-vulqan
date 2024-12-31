@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "JoystickGLFW.hpp"
-#include <yq/tachyon/api/JoystickInfoWriter.hpp>
+#include <yq/tachyon/desktop/JoystickInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::JoystickGLFW)
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Desktop.hpp>
+#include <yq/tachyon/desktop/Desktop.hpp>
 #include <yq/tachyon/typedef/glfw.hpp>
 #include <array>
 #include <vector>

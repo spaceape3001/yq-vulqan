@@ -8,7 +8,7 @@
 #include "WidgetInfoWriter.hpp"
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Viewer.hpp>
+#include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/api/WidgetBind.hpp>
 #include <yq/tachyon/api/WidgetData.hpp>
 #include <yq/tachyon/commands/ViewerShowCommand.hpp>

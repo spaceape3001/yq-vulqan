@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Joystick.hpp>
+#include <yq/tachyon/desktop/Joystick.hpp>
 
 namespace yq::tachyon {
     class JoystickGLFW : public Joystick {

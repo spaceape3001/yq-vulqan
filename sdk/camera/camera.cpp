@@ -211,6 +211,8 @@ struct CameraScene3DWidget : public Scene3DWidget {
         
         set_camera(c);
         
+        
+        
         cam     = static_cast<SpaceCamera*>(c);
         cam->set_position({-10, 0, -5.});
         cam->set_orientation(hpr((Radian) 0._deg, (Radian) 45._deg, (Radian) 0._deg));

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "CursorGLFW.hpp"
-#include <yq/tachyon/api/CursorInfoWriter.hpp>
+#include <yq/tachyon/desktop/CursorInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::CursorGLFW)
 

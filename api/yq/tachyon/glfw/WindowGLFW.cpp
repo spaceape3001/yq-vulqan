@@ -6,7 +6,7 @@
 
 #include "WindowGLFW.hpp"
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/WindowInfoWriter.hpp>
+#include <yq/tachyon/desktop/WindowInfoWriter.hpp>
 #include <yq/tachyon/commands/WindowAspectCommand.hpp>
 #include <yq/tachyon/commands/WindowAttentionCommand.hpp>
 #include <yq/tachyon/commands/WindowCursorCaptureCommand.hpp>

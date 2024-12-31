@@ -16,7 +16,7 @@
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector3.hxx>
-#include <yq/tachyon/api/CameraInfoWriter.hpp>
+#include <yq/tachyon/scene/Camera3InfoWriter.hpp>
 
 namespace yq::tachyon {
     TargetCamera::TargetCamera(const Param&p) : Camera(p),
@@ -81,9 +81,11 @@ namespace yq::tachyon {
         return glm::lookAt((glm::dvec3) m_position, (glm::dvec3) m_target, (glm::dvec3) m_up);
     }
 
+/*
     glm::dmat4  TargetCamera::world2screen(const Values&p) const
     {
         return projection_matrix(p.screen) * view_matrix();
     }
+*/
 }
 YQ_TACHYON_IMPLEMENT(yq::tachyon::TargetCamera)

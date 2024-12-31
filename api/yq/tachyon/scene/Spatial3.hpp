@@ -11,37 +11,37 @@
 #include <yq/typedef/tensor44.hpp>
 
 namespace yq::tachyon {
-    class Spatial3;
+    class Spatial³;
     
-    class Spatial3Info : public SpatialInfo {
+    class Spatial³Info : public SpatialInfo {
     public:
     
         template <typename C> class Writer;
 
-        Spatial3Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl=std::source_location::current());
+        Spatial³Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl=std::source_location::current());
     
     protected:
-        ~Spatial3Info();
+        ~Spatial³Info();
     
     };
     
-    class Spatial3 : public Spatial {
-        YQ_TACHYON_INFO(Spatial3Info)
-        YQ_TACHYON_SNAP(Spatial3Snap)
-        YQ_TACHYON_DATA(Spatial3Data)
-        YQ_TACHYON_DECLARE(Spatial3, Spatial)
+    class Spatial³ : public Spatial {
+        YQ_TACHYON_INFO(Spatial³Info)
+        YQ_TACHYON_SNAP(Spatial³Snap)
+        YQ_TACHYON_DATA(Spatial³Data)
+        YQ_TACHYON_DECLARE(Spatial³, Spatial)
     public:
     
         virtual uint8_t dimensions(count_k) const override final { return 3; }
         
-        Spatial3ID id() const { return Spatial3ID(UniqueID::id()); }
+        Spatial³ID id() const { return Spatial³ID(UniqueID::id()); }
 
         static void init_info();
         
     protected:
-        Spatial3(const Param&);
-        virtual ~Spatial3();
+        Spatial³(const Param&);
+        virtual ~Spatial³();
 
-        void        snap(Spatial3Snap&) const;
+        void        snap(Spatial³Snap&) const;
     };
 }

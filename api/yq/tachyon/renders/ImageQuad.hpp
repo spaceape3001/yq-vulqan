@@ -10,23 +10,23 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <yq/tachyon/api/Rendered3.hpp>
-#include <yq/tachyon/api/Texture.hpp>
-#include <yq/tachyon/api/VBO.hpp>
+#include <yq/tachyon/scene/Rendered3.hpp>
+#include <yq/tachyon/gfx/Texture.hpp>
+#include <yq/tachyon/gfx/VBO.hpp>
 
 #include <array>
 
 namespace yq::tachyon {
 
     /*! \brief A quadrilateral, taking in four points */
-    class ImageQuad3 : public Rendered3 {
-        YQ_TACHYON_DECLARE(ImageQuad3, Rendered3)
+    class ImageQuad³ : public Rendered³ {
+        YQ_TACHYON_DECLARE(ImageQuad³, Rendered³)
     private:
         struct VData;
     public:
     
-        ImageQuad3(const AxBox2D&, std::string_view szImage, const Param& p={});
-        ~ImageQuad3();
+        ImageQuad³(const AxBox2D&, std::string_view szImage, const Param& p={});
+        ~ImageQuad³();
         
         static void init_info();
         

@@ -11,5 +11,5 @@
 #include <yq/typedef/sphere3.hpp>
 
 namespace yq::tachyon {
-    using bounds3_t = std::variant<std::monostate, AxBox3D, Sphere3D>;
+    using bounds³_t = std::variant<std::monostate, AxBox3D, Sphere3D>;
 }

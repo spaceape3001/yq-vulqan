@@ -9,7 +9,7 @@
 #include <yq/core/Memory.hpp>
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Buffer.hpp>
+#include <yq/tachyon/gfx/Buffer.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 

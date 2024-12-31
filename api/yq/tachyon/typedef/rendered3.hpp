@@ -11,19 +11,19 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Rendered3;
-    using Rendered3Ptr       = Ref<Rendered3>;
-    using Rendered3CPtr      = Ref<const Rendered3>;
+    class Rendered³;
+    using Rendered³Ptr       = Ref<Rendered³>;
+    using Rendered³CPtr      = Ref<const Rendered³>;
 
-    struct Rendered3Snap;
-    using Rendered3SnapPtr  = Ref<Rendered3Snap>;
-    using Rendered3SnapCPtr = Ref<const Rendered3Snap>;
+    struct Rendered³Snap;
+    using Rendered³SnapPtr  = Ref<Rendered³Snap>;
+    using Rendered³SnapCPtr = Ref<const Rendered³Snap>;
     
-    struct Rendered3Data;
-    using Rendered3DataPtr  = Ref<Rendered3Data>;
-    using Rendered3DataCPtr = Ref<const Rendered3Data>;
+    struct Rendered³Data;
+    using Rendered³DataPtr  = Ref<Rendered³Data>;
+    using Rendered³DataCPtr = Ref<const Rendered³Data>;
 
     template <class> class ID;
     
-    using Rendered3ID = ID<Rendered3>;
+    using Rendered³ID = ID<Rendered³>;
 }

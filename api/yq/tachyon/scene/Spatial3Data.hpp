@@ -11,7 +11,7 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Spatial3Snap : public SpatialSnap {
+    struct Spatial³Snap : public SpatialSnap {
     
         // make sure your sub-class sets these!
 
@@ -19,6 +19,6 @@ namespace yq::tachyon {
         Tensor44D       domain2local    = IDENTITY;
     };
     
-    struct Spatial3Data : public SpatialData {
+    struct Spatial³Data : public SpatialData {
     };
 }

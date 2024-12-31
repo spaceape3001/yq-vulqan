@@ -20,7 +20,7 @@ namespace yq::tachyon {
     public:
     
         //! Gets the world2screen matrix
-        glm::dmat4  world2screen(const Values&) const override;
+        //glm::dmat4  world2screen(const Values&) const override;
         NullCamera(const Param&p={});
         ~NullCamera();
         

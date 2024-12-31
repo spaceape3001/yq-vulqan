@@ -6,4 +6,4 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Texture.hpp>
+#include <yq/tachyon/gfx/Texture.hpp>

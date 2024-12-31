@@ -12,10 +12,10 @@
 #include <yq/stream/Text.hpp>
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/PushData.hpp>
-#include <yq/tachyon/api/Pipeline.hpp>
-#include <yq/tachyon/api/Rendered3.hpp>
-#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/gfx/PushData.hpp>
+#include <yq/tachyon/gfx/Pipeline.hpp>
+#include <yq/tachyon/scene/Rendered3.hpp>
+#include <yq/tachyon/scene/Rendered.hpp>
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>
@@ -78,7 +78,7 @@ namespace yq::tachyon {
             return errors::rendered_bad_pipeline_layout();
         }
         m_rendered      = ren;
-        m_render3d      = dynamic_cast<const Rendered3*>(m_rendered.ptr());
+        m_render3d      = dynamic_cast<const Rendered³*>(m_rendered.ptr());
         
         if(options.pipelines){
             m_pipeline  = options.pipelines->create(m_config);
@@ -237,7 +237,8 @@ namespace yq::tachyon {
         if(m_status(S::FullPush)){
             StdPushData*    push = m_push.create_single<StdPushData>();
             push->time      = u.time;
-            push->matrix    = u.world2eye * m_render3d ->model2world();
+// TODO (Spatial rework)
+//            push->matrix    = u.world2eye * m_render3d ->model2world();
         } else if(m_status(S::ViewPush)){
             StdPushData*    push = m_push.create_single<StdPushData>();
             push->time      = u.time;

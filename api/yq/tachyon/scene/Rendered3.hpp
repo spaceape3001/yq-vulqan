@@ -9,7 +9,7 @@
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
-#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/scene/Rendered.hpp>
 #include <yq/tachyon/typedef/bounds3.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
 #include <yq/tachyon/typedef/spatial3.hpp>
@@ -20,11 +20,11 @@ namespace yq::tachyon {
         
     /*! \brief Information for the render3D object
     */
-    class Rendered3Info : public RenderedInfo {
+    class Rendered³Info : public RenderedInfo {
     public:
         template <typename C> struct Writer;
 
-        Rendered3Info(std::string_view, RenderedInfo&, const std::source_location& sl = std::source_location::current());
+        Rendered³Info(std::string_view, RenderedInfo&, const std::source_location& sl = std::source_location::current());
     };
 
     /*! \brief Something that's rendered with a defined position, size, etc
@@ -32,11 +32,11 @@ namespace yq::tachyon {
     
         \note ONCE it's here, it's considered "fixed" into abstract graphical units.
     */
-    class Rendered3 : public Rendered {
-        YQ_TACHYON_INFO(Rendered3Info);
-        YQ_TACHYON_DATA(Rendered3Data);
-        YQ_TACHYON_SNAP(Rendered3Snap);
-        YQ_TACHYON_DECLARE(Rendered3, Rendered)
+    class Rendered³ : public Rendered {
+        YQ_TACHYON_INFO(Rendered³Info);
+        YQ_TACHYON_DATA(Rendered³Data);
+        YQ_TACHYON_SNAP(Rendered³Snap);
+        YQ_TACHYON_DECLARE(Rendered³, Rendered)
     public:    
     
         struct Param : public Rendered::Param {
@@ -48,10 +48,10 @@ namespace yq::tachyon {
             Vector3D        scale           = NAN;
         };
     
-        Spatial3ID                      spatial3() const { return m_spatial; }
+        Spatial³ID                      spatial3() const { return m_spatial; }
         
         void    set_bounds(bounds3_t);
-        void    set_spatial(Spatial3ID);
+        void    set_spatial(Spatial³ID);
     
     
         //! Creates/sets a position (NOTE NOT THREAD SAFE!)
@@ -76,7 +76,7 @@ namespace yq::tachyon {
         //Rendered3*                       parent() { return m_parent; }
         
         //! Parent of this render object
-        //const Rendered3*                 parent() const { return m_parent; }
+        //const Rendered³*                 parent() const { return m_parent; }
         
         //! Position of the render object
         //const Vector3D&                 position() const { return m_space.position; }
@@ -119,7 +119,7 @@ namespace yq::tachyon {
         //void                            set_space(const SimpleSpace&);
         
         //! Generic clone routine, to be implemented by the derived object
-        //virtual Ref<Rendered3>           clone() const { return {}; }
+        //virtual Ref<Rendered³>           clone() const { return {}; }
         
         /*! \brief Sets the parent of this widget
         
@@ -154,14 +154,14 @@ namespace yq::tachyon {
 
     protected:
         
-        Rendered3(const Param&);
-        virtual ~Rendered3();
+        Rendered³(const Param&);
+        virtual ~Rendered³();
         
-        void    snap(Rendered3Snap&) const;
+        void    snap(Rendered³Snap&) const;
         virtual PostAdvice  advise(const Post&) const override;
         
     private:
-        Spatial3ID      m_spatial;
+        Spatial³ID      m_spatial;
         
         //! Bounds of the item (in render coordinate)
         bounds3_t       m_bounds;

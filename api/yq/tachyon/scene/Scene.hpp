@@ -7,7 +7,7 @@
 #pragma once
 
 
-#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/scene/Rendered.hpp>
 
 namespace yq::tachyon {
     /*! \brief Frame of things to be rendered

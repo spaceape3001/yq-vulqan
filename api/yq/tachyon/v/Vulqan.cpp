@@ -6,7 +6,7 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/AppCreateInfo.hpp>
+#include <yq/tachyon/app/AppCreateInfo.hpp>
 #include <yq/tachyon/api/ManagerInfoWriter.hpp>
 #include "Vulqan.hpp"
 

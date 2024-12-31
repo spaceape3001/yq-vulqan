@@ -18,6 +18,13 @@
 
 namespace yq::tachyon {
     class Camera3Info : public CameraInfo {
+    public:
+    
+        template <typename> class Writer;
+        
+        Camera3Info(std::string_view, CameraInfo&, const std::source_location& sl = std::source_location::current());
+    protected:
+        ~Camera3Info();
     };
     
     class Camera3 : public Camera {
@@ -45,6 +52,6 @@ namespace yq::tachyon {
         
         void snap(Camera3Snap&) const;
         
-        Spatial3ID      m_spatial;
+        Spatial³ID      m_spatial;
     };
 }

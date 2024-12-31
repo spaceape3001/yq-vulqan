@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/api/CameraData.hpp>
+#include <yq/tachyon/scene/CameraData.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         Tensor44D   projection  = IDENTITY;
         Rectangle2D screen      = Rectangle2D(ZERO, ONE);
         
-        Spatial3ID              m_spatial;
+        Spatial³ID              m_spatial;
     };
     
     struct Camera3Data : public CameraData {

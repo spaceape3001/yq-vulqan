@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Monitor.hpp>
-#include <yq/tachyon/api/VideoMode.hpp>
+#include <yq/tachyon/desktop/Monitor.hpp>
+#include <yq/tachyon/desktop/VideoMode.hpp>

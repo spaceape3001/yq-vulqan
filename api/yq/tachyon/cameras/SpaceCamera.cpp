@@ -17,11 +17,11 @@
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/vector/Quaternion3.hxx>
 
-#include <yq/tachyon/api/CameraInfoWriter.hpp>
 #include <yq/tachyon/commands/CameraPitchCommand.hpp>
+#include <yq/tachyon/scene/Camera3InfoWriter.hpp>
 
 namespace yq::tachyon {
-    SpaceCamera::SpaceCamera(const Param&p) : Camera(p),
+    SpaceCamera::SpaceCamera(const Param&p) : Camera3(p),
         m_fov(70_deg),
         m_near(0.1),
         m_far(10.)
@@ -84,10 +84,12 @@ namespace yq::tachyon {
         return m_space.parent2local();
     }
 
+#if 0
     glm::dmat4  SpaceCamera::world2screen(const Values&p) const
     {
         return projection_matrix(p.screen) * view_matrix();
     }
+#endif
 
     void SpaceCamera::init_info()
     {

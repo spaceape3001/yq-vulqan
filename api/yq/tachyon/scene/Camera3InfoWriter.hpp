@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Camera3.hpp>
-#include <yq/tachyon/api/Camera3Data.hpp>
-#include <yq/tachyon/api/CameraInfoWriter.hpp>
+#include <yq/tachyon/scene/Camera3.hpp>
+#include <yq/tachyon/scene/Camera3Data.hpp>
+#include <yq/tachyon/scene/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class CameraInfo3::Writer : public CameraInfo::Writer<C> {
+    class Camera3Info::Writer : public CameraInfo::Writer<C> {
     public:
-        Writer(CameraInfo3* cameraInfo) : CameraInfo::Writer<C>(cameraInfo)
+        Writer(Camera3Info* cameraInfo) : CameraInfo::Writer<C>(cameraInfo)
         {
         }
         
-        Writer(CameraInfo3& cameraInfo) : Writer(&cameraInfo)
+        Writer(Camera3Info& cameraInfo) : Writer(&cameraInfo)
         {
         }
     };

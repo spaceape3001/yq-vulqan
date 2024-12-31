@@ -11,18 +11,18 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Light3;
-    using Light3Ptr      = Ref<Light3>;
-    using Light3CPtr     = Ref<const Light3>;
+    class Light³;
+    using Light³Ptr      = Ref<Light³>;
+    using Light³CPtr     = Ref<const Light³>;
 
-    struct Light3Snap;
-    using Light3SnapPtr  = Ref<Light3Snap>;
-    using Light3SnapCPtr = Ref<const Light3Snap>;
+    struct Light³Snap;
+    using Light³SnapPtr  = Ref<Light³Snap>;
+    using Light³SnapCPtr = Ref<const Light³Snap>;
     
-    struct Light3Data;
-    using Light3DataPtr  = Ref<Light3Data>;
-    using Light3DataCPtr = Ref<const Light3Data>;
+    struct Light³Data;
+    using Light³DataPtr  = Ref<Light³Data>;
+    using Light³DataCPtr = Ref<const Light³Data>;
 
     template <class> class ID;
-    using Light3ID = ID<Light3>;
+    using Light³ID = ID<Light³>;
 }

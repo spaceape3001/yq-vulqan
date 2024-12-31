@@ -7,7 +7,7 @@
 #include "ViShader.hpp"
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Shader.hpp>
+#include <yq/tachyon/gfx/Shader.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 

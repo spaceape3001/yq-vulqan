@@ -8,7 +8,7 @@
 
 #include <yq/asset/AssetFactory.hpp>
 #include <yq/asset/AssetInfoWriter.hpp>
-#include <yq/tachyon/pipeline/Sampler.hpp>
+#include <yq/tachyon/gfx/Sampler.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Sampler>&   Sampler::cache()

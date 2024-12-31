@@ -34,16 +34,12 @@ add_library(${PROJECT_NAME} SHARED
     api/Manager.cpp
     api/Message.cpp
     api/Model.cpp
-    api/Perspective.cpp
     api/Post.cpp
     api/Proxy.cpp
     api/Raster.cpp
-    #api/Rendered².cpp
-    api/RenderPass.cpp
     api/Reply.cpp
     api/Request.cpp
     api/Tachyon.cpp
-    api/TaskThread.cpp
     api/Thread.cpp
     #api/Tool.cpp
     api/Trigger.cpp
@@ -53,6 +49,7 @@ add_library(${PROJECT_NAME} SHARED
 
     app/Application.cpp
     app/AppThread.cpp
+    app/TaskThread.cpp
     app/Viewer.cpp
     app/ViewerThread.cpp
 
@@ -244,6 +241,14 @@ add_library(${PROJECT_NAME} SHARED
     
     # font/Font.cpp      # Issue/TODO
     
+    gfx/Buffer.cpp
+    gfx/Pipeline.cpp
+    gfx/PipelineUtils.cpp
+    gfx/RenderPass.cpp
+    gfx/Sampler.cpp
+    gfx/Shader.cpp
+    gfx/Texture.cpp
+
     glfw/CursorGLFW.cpp
     glfw/DesktopGLFW.cpp
     glfw/JoystickGLFW.cpp
@@ -255,7 +260,6 @@ add_library(${PROJECT_NAME} SHARED
     interfaces/IPosition1.cpp
     interfaces/IPosition2.cpp
     interfaces/IPosition3.cpp
-    interfaces/ISpatial3.cpp
 
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
@@ -267,13 +271,6 @@ add_library(${PROJECT_NAME} SHARED
     
     #models/models.cpp
 
-    pipeline/Buffer.cpp
-    pipeline/Pipeline.cpp
-    pipeline/PipelineUtils.cpp
-    pipeline/Sampler.cpp
-    pipeline/Shader.cpp
-    pipeline/Texture.cpp
-
     posts/AnyPost.cpp
     posts/EmptyPost.cpp
     posts/StringPost.cpp
@@ -281,7 +278,6 @@ add_library(${PROJECT_NAME} SHARED
     proxies/PPosition1.cpp
     proxies/PPosition2.cpp
     proxies/PPosition3.cpp
-    proxies/PSpatial3.cpp
 
     renders/ImageQuad.cpp
     renders/Quadrilateral.cpp
@@ -311,12 +307,15 @@ add_library(${PROJECT_NAME} SHARED
     requests/WindowRequest.cpp
 
     scene/Camera.cpp
-    #scene/Camera3.cpp
+    scene/Camera3.cpp
     scene/Light.cpp
     #scene/Light3.cpp
+    scene/Perspective.cpp
     scene/Rendered.cpp
+    #scene/Rendered2.cpp
     scene/Rendered3.cpp
     #scene/Scene.cpp
+    #scene/Scene2.cpp
     #scene/Scene3.cpp
     scene/Spatial.cpp
     scene/Spatial3.cpp

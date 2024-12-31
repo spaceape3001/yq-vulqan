@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/scene/Camera.hpp>
+#include <yq/tachyon/scene/Camera3.hpp>
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/units.hpp>
 
@@ -20,13 +20,13 @@ namespace yq::tachyon {
         as defined in the simple space object.  It's got near and
         far, along with a POV angle.
     */
-    class SpaceCamera : public Camera {
-        YQ_TACHYON_DECLARE(SpaceCamera, Camera)
+    class SpaceCamera : public Camera3 {
+        YQ_TACHYON_DECLARE(SpaceCamera, Camera3)
     public:
     
         //! \brief World to screen matrix
         //! This routine returns the relevant world to screen projection matrix
-        glm::dmat4  world2screen(const Values&) const override;
+        //glm::dmat4  world2screen(const Values&) const override;
         
         //! Default constructor
         SpaceCamera(const Param&p = {});

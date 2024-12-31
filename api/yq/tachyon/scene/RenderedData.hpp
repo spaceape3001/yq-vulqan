@@ -8,7 +8,7 @@
 
 //#include <yq/config/glm.hpp>
 #include <yq/container/BasicBuffer.hpp>
-#include <yq/tachyon/pipeline/Buffer.hpp>
+#include <yq/tachyon/gfx/Buffer.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/push.hpp>

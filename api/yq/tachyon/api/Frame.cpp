@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Camera.hpp"
-#include "CameraData.hpp"
 #include "Controller.hpp"
 #include "ControllerData.hpp"
 //#include "Editor.hpp"
@@ -13,26 +11,23 @@
 #include "Frame.hpp"
 #include "FrameBuilder.hpp"
 #include "Interface.hpp"
-#include "Light.hpp"
-#include "LightData.hpp"
 #include "Manager.hpp"
 #include "ManagerData.hpp"
 #include "Model.hpp"
 #include "ModelData.hpp"
 //#include "Post.hpp"
 #include "Proxy.hpp"
-#include "Rendered.hpp"
-#include "RenderedData.hpp"
 //#include "Scene.hpp"
 //#include "SceneData.hpp"
 #include "Tachyon.hpp"
 #include "TachyonData.hpp"
 #include "Thread.hpp"
 #include "ThreadData.hpp"
-#include "Viewer.hpp"
-#include "ViewerData.hpp"
 #include "Widget.hpp"
 #include "WidgetData.hpp"
+
+#include <yq/tachyon/app/Viewer.hpp>
+#include <yq/tachyon/app/ViewerData.hpp>
 
 #include <yq/tachyon/desktop/Cursor.hpp>
 #include <yq/tachyon/desktop/CursorData.hpp>
@@ -49,12 +44,18 @@
 #include <yq/tachyon/desktop/Window.hpp>
 #include <yq/tachyon/desktop/WindowData.hpp>
 
-#include <yq/tachyon/scene3/Camera3.hpp>
-#include <yq/tachyon/scene3/Camera3Data.hpp>
-#include <yq/tachyon/scene3/Light3.hpp>
-#include <yq/tachyon/scene3/Light3Data.hpp>
-#include <yq/tachyon/scene3/Rendered3.hpp>
-#include <yq/tachyon/scene3/Rendered3Data.hpp>
+#include <yq/tachyon/scene/Camera.hpp>
+#include <yq/tachyon/scene/CameraData.hpp>
+#include <yq/tachyon/scene/Camera3.hpp>
+#include <yq/tachyon/scene/Camera3Data.hpp>
+#include <yq/tachyon/scene/Light.hpp>
+#include <yq/tachyon/scene/LightData.hpp>
+#include <yq/tachyon/scene/Light3.hpp>
+#include <yq/tachyon/scene/Light3Data.hpp>
+#include <yq/tachyon/scene/Rendered.hpp>
+#include <yq/tachyon/scene/RenderedData.hpp>
+#include <yq/tachyon/scene/Rendered3.hpp>
+#include <yq/tachyon/scene/Rendered3Data.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -169,7 +170,7 @@ namespace yq::tachyon {
             m_mouses.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Rendered))
             m_rendereds.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Rendered3))
+        if(types(Type::Rendered³))
             m_rendered3s.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Scene))
             //m_scenes.insert(t, tac.data.ptr(), tac.snap.ptr());
@@ -264,7 +265,7 @@ namespace yq::tachyon {
         return m_rendereds.has(id);
     }
 
-    bool Frame::contains(Rendered3ID id) const
+    bool Frame::contains(Rendered³ID id) const
     {
         return m_rendered3s.has(id);
     }
@@ -481,7 +482,7 @@ namespace yq::tachyon {
         return m_rendereds.data(id);
     }
 
-    const Rendered3Data*               Frame::data(Rendered3ID id) const
+    const Rendered³Data*               Frame::data(Rendered³ID id) const
     {
         return m_rendered3s.data(id);
     }
@@ -580,7 +581,7 @@ namespace yq::tachyon {
         return m_rendereds.pointer(id);
     }
 
-    Rendered3*                          Frame::object(Rendered3ID id) const
+    Rendered³*                          Frame::object(Rendered³ID id) const
     {
         return m_rendered3s.pointer(id);
     }
@@ -658,7 +659,7 @@ namespace yq::tachyon {
             << "  Models:       " << count(MODEL) << "\n"
             << "  Mouses:       " << count(MOUSE) << "\n"
             << "  Rendereds:    " << count(RENDERED) << "\n"
-            //<< "  Rendered3s:   " << count(RENDERED3) << "\n"
+            //<< "  Rendered³s:   " << count(RENDERED3) << "\n"
             << "  Tachyons:     " << count(TACHYON) << "\n"
             << "  Threads:      " << count(THREAD) << "\n"
             << "  Viewers:      " << count(VIEWER) << "\n"
@@ -736,7 +737,7 @@ namespace yq::tachyon {
         return m_rendereds.snap(id);
     }
 
-    const Rendered3Snap*               Frame::snap(Rendered3ID id) const
+    const Rendered³Snap*               Frame::snap(Rendered³ID id) const
     {
         return m_rendered3s.snap(id);
     }

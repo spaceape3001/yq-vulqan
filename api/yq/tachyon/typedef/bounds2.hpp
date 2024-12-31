@@ -11,5 +11,5 @@
 #include <yq/typedef/circle2.hpp>
 
 namespace yq::tachyon {
-    using bounds2_t = std::variant<std::monostate, AxBox2D, Circle2D>;
+    using bounds²_t = std::variant<std::monostate, AxBox2D, Circle2D>;
 }

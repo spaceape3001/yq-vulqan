@@ -11,16 +11,16 @@
 #include <yq/shape/shape_utils.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <yq/tachyon/api/Rendered3InfoWriter.hpp>
-#include <yq/tachyon/api/Shader.hpp>
+#include <yq/tachyon/scene/Rendered3InfoWriter.hpp>
+#include <yq/tachyon/gfx/Shader.hpp>
 
 
 namespace yq::tachyon {
-    void Quadrilateral3::init_info()
+    void Quadrilateral³::init_info()
     {
         static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
     
-        auto w = writer<Quadrilateral3>();
+        auto w = writer<Quadrilateral>();
         
         {
             auto& p = w.pipeline();
@@ -28,7 +28,7 @@ namespace yq::tachyon {
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");
 
-            p.vertex(&Quadrilateral3::m_vertex, DataActivity::FIXED)
+            p.vertex(&Quadrilateral::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;
@@ -38,14 +38,14 @@ namespace yq::tachyon {
         }
     }
 
-    Quadrilateral3::Quadrilateral3(const QuadrilateralData<ColorVertex2D>&quad, const Param& p) : Rendered3(p)
+    Quadrilateral³::Quadrilateral³(const QuadrilateralData<ColorVertex2D>&quad, const Param& p) : Rendered³(p)
     {
         m_vertex = { quad.a, quad.b, quad.c, quad.d};
     }
     
-    Quadrilateral3::~Quadrilateral3()
+    Quadrilateral³::~Quadrilateral³()
     {
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Quadrilateral3)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Quadrilateral³)

@@ -20,7 +20,8 @@ namespace yq::tachyon {
             controller (basically an aimbot)
         */
     
-        glm::dmat4  world2screen(const Values&) const override;
+        // temporary disable
+        //glm::dmat4  world2screen(const Values&) const override;
         TargetCamera(const Param&p = {});
         ~TargetCamera();
 

@@ -8,7 +8,7 @@
 
 #include <yq/keywords.hpp>
 #include <yq/core/Flags.hpp>
-#include <yq/tachyon/api/Pipeline.hpp>
+#include <yq/tachyon/gfx/Pipeline.hpp>
 #include <yq/tachyon/typedef/vi_buffer.hpp>
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
 #include <yq/tachyon/typedef/push.hpp>

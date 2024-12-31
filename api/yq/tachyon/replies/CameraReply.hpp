@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Reply.hpp>
-#include <yq/tachyon/api/CameraBind.hpp>
+#include <yq/tachyon/scene/CameraBind.hpp>
 
 namespace yq::tachyon {
     class Camera;

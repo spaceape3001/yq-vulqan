@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/scene/Spatial3.hpp>
 #include <yq/tachyon/interfaces/IPosition3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
@@ -33,11 +33,11 @@ namespace yq::tachyon {
     class SetScaleZ;
     class YawBy;
 
-    class SimpleSpatial3 : public Spatial3, private IPosition3 {
-        YQ_TACHYON_DECLARE(SimpleSpatial3, Spatial3);
+    class SimpleSpatial³ : public Spatial³, private IPosition3 {
+        YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
     public:
     
-        struct Param : public Spatial3::Param {
+        struct Param : public Spatial³::Param {
             Vector3D        position        = NAN;
             Quaternion3D    orientation     = NAN;
             Vector3D        scale           = NAN;
@@ -45,8 +45,8 @@ namespace yq::tachyon {
             Param(){}
         };
     
-        SimpleSpatial3(const Param&p = Param());
-        ~SimpleSpatial3();
+        SimpleSpatial³(const Param&p = Param());
+        ~SimpleSpatial³();
         
         void    move_by(const Vector3D&);
         void    rotate_by(const Quaternion3D&);
@@ -101,7 +101,7 @@ namespace yq::tachyon {
 
     protected:
         
-        void        snap(Spatial3Snap&) const;
+        void        snap(Spatial³Snap&) const;
 
     private:
         Vector3D        m_position        = ZERO;

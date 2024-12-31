@@ -219,35 +219,35 @@ struct CameraScene3DWidget : public Scene3DWidget {
         cam->set_near(.1);
         cam->set_far(20.);
         
-        Triangle³*   tri = create<Triangle³>(TriData);
-        tri->set_scaling(0.5);
+        Triangle*   tri = create<Triangle>(TriData);
+        //tri->set_scaling(0.5);
         add_thing(tri);
         
-        Tetrahedron³*    dir     = create<Tetrahedron³>(NorthData);
-        dir->set_position({0., 5., 0. });
+        Tetrahedron*    dir     = create<Tetrahedron³>(NorthData);
+        //dir->set_position({0., 5., 0. });
         add_thing(dir);
 
-        dir     = create<Tetrahedron³>(SouthData);
-        dir->set_position({0., -5., 0. });
+        dir     = create<Tetrahedron>(SouthData);
+        //dir->set_position({0., -5., 0. });
         add_thing(dir);
             
-        dir     = create<Tetrahedron³>(EastData);
-        dir->set_position({5., 0., 0. });
+        dir     = create<Tetrahedron>(EastData);
+        //dir->set_position({5., 0., 0. });
         add_thing(dir);
 
-        dir     = create<Tetrahedron³>(WestData);
-        dir->set_position({-5., 0., 0. });
+        dir     = create<Tetrahedron>(WestData);
+        //dir->set_position({-5., 0., 0. });
         add_thing(dir);
         
-        dir     = create<Tetrahedron³>(TopData);
-        dir->set_position({0., 0., 5. });
+        dir     = create<Tetrahedron>(TopData);
+        //dir->set_position({0., 0., 5. });
         add_thing(dir);
         
-        dir     = create<Tetrahedron³>(BottomData);
+        dir     = create<Tetrahedron>(BottomData);
         dir->set_position({0., 0., -5. });
         add_thing(dir);
             
-        Quadrilateral³* quad = create<Quadrilateral³>(QuadData);
+        Quadrilateral* quad = create<Quadrilateral>(QuadData);
         quad->set_scaling(0.5);
         quad->set_heading( (Radian) 45._deg );
         quad->set_position({ 0.5, 0.5, 0. });

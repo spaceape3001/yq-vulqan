@@ -11,18 +11,18 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Camera3;
-    using Camera3Ptr      = Ref<Camera3>;
-    using Camera3CPtr     = Ref<const Camera3>;
+    class Camera³;
+    using Camera³Ptr      = Ref<Camera³>;
+    using Camera³CPtr     = Ref<const Camera³>;
 
-    struct Camera3Snap;
-    using Camera3SnapPtr  = Ref<Camera3Snap>;
-    using Camera3SnapCPtr = Ref<const Camera3Snap>;
+    struct Camera³Snap;
+    using Camera³SnapPtr  = Ref<Camera³Snap>;
+    using Camera³SnapCPtr = Ref<const Camera³Snap>;
     
-    struct Camera3Data;
-    using Camera3DataPtr  = Ref<Camera3Data>;
-    using Camera3DataCPtr = Ref<const Camera3Data>;
+    struct Camera³Data;
+    using Camera³DataPtr  = Ref<Camera³Data>;
+    using Camera³DataCPtr = Ref<const Camera³Data>;
 
     template <class> class ID;
-    using Camera3ID = ID<Camera3>;
+    using Camera³ID = ID<Camera³>;
 }

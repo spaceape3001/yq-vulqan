@@ -16,7 +16,7 @@
 #include <yq/asset/AssetInfoWriter.hpp>
 #include <yq/asset/AssetIO.hpp>
 
-#include <yq/tachyon/pipeline/PipelineUtils.hpp>
+#include <yq/tachyon/gfx/PipelineUtils.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Raster>&  Raster::cache()

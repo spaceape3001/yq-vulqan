@@ -79,7 +79,7 @@ namespace yq::tachyon {
         bool contains(MonitorID) const;
         bool contains(MouseID) const;
         bool contains(RenderedID) const;
-        bool contains(Rendered3ID) const;
+        bool contains(Rendered³ID) const;
         //bool contains(SceneID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
@@ -123,7 +123,7 @@ namespace yq::tachyon {
         const MonitorData*                  data(MonitorID) const;
         const MouseData*                    data(MouseID) const;
         const RenderedData*                 data(RenderedID) const;
-        const Rendered3Data*                data(Rendered3ID) const;
+        const Rendered³Data*                data(Rendered³ID) const;
         //const SceneData*                    data(SceneID) const;
         const TachyonData*                  data(TachyonID) const;
         const ThreadData*                   data(ThreadID) const;
@@ -178,7 +178,7 @@ namespace yq::tachyon {
         //! \note WARNING this will break thread-safety guarantees
         Rendered*                           object(RenderedID) const;
 
-        Rendered3*                          object(Rendered3ID) const;
+        Rendered³*                          object(Rendered³ID) const;
 
         //Scene*                              object(SceneID) const;
 
@@ -233,7 +233,7 @@ namespace yq::tachyon {
         const MonitorSnap*                  snap(MonitorID) const;
         const MouseSnap*                    snap(MouseID) const;
         const RenderedSnap*                 snap(RenderedID) const;
-        const Rendered3Snap*                snap(Rendered3ID) const;
+        const Rendered³Snap*                snap(Rendered³ID) const;
         //const SceneSnap*                    snap(SceneID) const;
         const TachyonSnap*                  snap(TachyonID) const;
         const ThreadSnap*                   snap(ThreadID) const;
@@ -297,7 +297,7 @@ namespace yq::tachyon {
         Container<Monitor, MonitorData, MonitorSnap>            m_monitors;
         Container<Mouse, MouseData, MouseSnap>                  m_mouses;
         Container<Rendered, RenderedData, RenderedSnap>         m_rendereds;
-        Container<Rendered3, Rendered3Data, Rendered3Snap>      m_rendered3s;
+        Container<Rendered³, Rendered³Data, Rendered³Snap>      m_rendered3s;
         Container<Tachyon, TachyonData, TachyonSnap>            m_tachyons;
         Container<Thread, ThreadData, ThreadSnap>               m_threads;
         Container<Viewer, ViewerData, ViewerSnap>               m_viewers;

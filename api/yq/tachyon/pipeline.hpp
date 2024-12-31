@@ -6,4 +6,4 @@
 
 #pragma once
 
-#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/tachyon/gfx/Pipeline.hpp>

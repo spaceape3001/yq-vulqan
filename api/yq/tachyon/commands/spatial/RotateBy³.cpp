@@ -4,35 +4,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "RotateBy³.hpp"
+#include "RotateBy3.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/vector/Vector3.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::RotateBy³)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::RotateBy3)
 
 namespace yq::tachyon {
-    RotateBy³::RotateBy³(TachyonID tid, const Quaternion3D&δ, const Param& p) : 
+    RotateBy3::RotateBy3(TachyonID tid, const Quaternion3D&δ, const Param& p) : 
         SpatialCommand(tid, p), m_δ(δ)
     {
     }
     
-    RotateBy³::RotateBy³(TachyonID tid, const unit::Radian3D&δ, const Param& p) :
+    RotateBy3::RotateBy3(TachyonID tid, const unit::Radian3D&δ, const Param& p) :
         SpatialCommand(tid, p), m_δ(CCW, δ)
     {
     }
     
-    RotateBy³::~RotateBy³()
+    RotateBy3::~RotateBy3()
     {
     }
     
-    void RotateBy³::init_info()
+    void RotateBy3::init_info()
     {
-        auto w = writer<RotateBy³>();
-        w.description("Position RotateBy Command in ³D");
-        w.property("δw", &RotateBy³::δw);
-        w.property("δx", &RotateBy³::δx);
-        w.property("δy", &RotateBy³::δy);
-        w.property("δz", &RotateBy³::δz);
+        auto w = writer<RotateBy3>();
+        w.description("Position RotateBy Command in 3D");
+        w.property("δw", &RotateBy3::δw);
+        w.property("δx", &RotateBy3::δx);
+        w.property("δy", &RotateBy3::δy);
+        w.property("δz", &RotateBy3::δz);
     }
 }

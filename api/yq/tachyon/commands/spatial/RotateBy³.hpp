@@ -13,12 +13,12 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class RotateBy³ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(RotateBy³, SpatialCommand)
+    class RotateBy3 : public SpatialCommand {
+        YQ_OBJECT_DECLARE(RotateBy3, SpatialCommand)
     public:
-        RotateBy³(TachyonID, const Quaternion3D&δ, const Param& p={});
-        RotateBy³(TachyonID, const unit::Radian3D&δ, const Param& p={});
-        ~RotateBy³();
+        RotateBy3(TachyonID, const Quaternion3D&δ, const Param& p={});
+        RotateBy3(TachyonID, const unit::Radian3D&δ, const Param& p={});
+        ~RotateBy3();
     
         const Quaternion3D&   δ() const  { return m_δ; }
         

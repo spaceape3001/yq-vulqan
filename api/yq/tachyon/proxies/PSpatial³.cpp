@@ -4,47 +4,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PSpatial³.hpp"
+#include "PSpatial3.hpp"
 #include <yq/core/Any.hpp>
 
 namespace yq::tachyon {
-    PSpatial³::PSpatial³(const ISpatial³&i) : 
-        m_domain(i.spatial³(DOMAIN)), 
-        m_L2D(i.spatial³(L2D)),
-        m_D2L(i.spatial³(D2L))
+    PSpatial3::PSpatial3(const ISpatial3&i) : 
+        m_domain(i.spatial3(DOMAIN)), 
+        m_L2D(i.spatial3(L2D)),
+        m_D2L(i.spatial3(D2L))
     {
     }
     
-    PSpatial³::~PSpatial³()
+    PSpatial3::~PSpatial3()
     {
     }
 
-    TachyonID           PSpatial³::spatial(domain_k) const 
+    TachyonID           PSpatial3::spatial(domain_k) const 
     {
         return m_domain;
     }
     
-    Any                 PSpatial³::spatial(l2d_k) const 
+    Any                 PSpatial3::spatial(l2d_k) const 
     {
         return Any(m_L2D);
     }
     
-    Any                 PSpatial³::spatial(d2l_k) const 
+    Any                 PSpatial3::spatial(d2l_k) const 
     {
         return Any(m_D2L);
     }
     
-    TachyonID           PSpatial³::spatial³(domain_k) const 
+    TachyonID           PSpatial3::spatial3(domain_k) const 
     {
         return m_domain;
     }
     
-    Tensor44D           PSpatial³::spatial³(l2d_k) const 
+    Tensor44D           PSpatial3::spatial3(l2d_k) const 
     {
         return m_L2D;
     }
     
-    Tensor44D           PSpatial³::spatial³(d2l_k) const 
+    Tensor44D           PSpatial3::spatial3(d2l_k) const 
     {
         return m_D2L;
     }

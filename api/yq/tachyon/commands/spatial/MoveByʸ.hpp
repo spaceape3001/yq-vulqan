@@ -11,11 +11,11 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class MoveByʸ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(MoveByʸ, SpatialCommand)
+    class MoveByY : public SpatialCommand {
+        YQ_OBJECT_DECLARE(MoveByY, SpatialCommand)
     public:
-        MoveByʸ(TachyonID, double Δy, const Param& p={});
-        ~MoveByʸ();
+        MoveByY(TachyonID, double Δy, const Param& p={});
+        ~MoveByY();
     
         static void init_info();
         

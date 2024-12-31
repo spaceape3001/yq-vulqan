@@ -10,11 +10,11 @@
 #include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
-    class SetSize² : public TachyonCommand {
-        YQ_OBJECT_DECLARE(SetSize², TachyonCommand)
+    class SetSize2 : public TachyonCommand {
+        YQ_OBJECT_DECLARE(SetSize2, TachyonCommand)
     public:
-        SetSize²(TachyonID, const Size2D&, const Param& p={});
-        ~SetSize²();
+        SetSize2(TachyonID, const Size2D&, const Param& p={});
+        ~SetSize2();
     
         const Size2D&   size() const  { return m_size; }
         

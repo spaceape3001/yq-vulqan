@@ -11,13 +11,13 @@
 #include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {
-    class PPosition¹;
+    class PPosition1;
 
     //! Interface for a single object position
     //! \note Inheritance is not permissible here
-    class IPosition¹ {
+    class IPosition1 {
     public:
-        YQ_INTERFACE_DECLARE(IPosition¹, PPosition¹)
+        YQ_INTERFACE_DECLARE(IPosition1, PPosition1)
         
         //!  Basic position in the 1D space
         virtual Vector1D    position() const = 0;

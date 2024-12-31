@@ -6,5 +6,10 @@
 
 #pragma once
 
-#include <yq/tachyon/rendered³.hpp>
+#include <variant>
+#include <yq/typedef/axbox3.hpp>
+#include <yq/typedef/sphere3.hpp>
 
+namespace yq::tachyon {
+    using bounds3_t = std::variant<std::monostate, AxBox3D, Sphere3D>;
+}

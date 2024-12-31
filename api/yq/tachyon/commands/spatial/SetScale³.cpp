@@ -4,27 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetScale³.hpp"
+#include "SetScale3.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScale³)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScale3)
 
 namespace yq::tachyon {
-    SetScale³::SetScale³(TachyonID tid, const Vector3D& v, const Param& p) : 
+    SetScale3::SetScale3(TachyonID tid, const Vector3D& v, const Param& p) : 
         SpatialCommand(tid, p), m_scale(v)
     {
     }
     
-    SetScale³::~SetScale³()
+    SetScale3::~SetScale3()
     {
     }
     
-    void SetScale³::init_info()
+    void SetScale3::init_info()
     {
-        auto w = writer<SetScale³>();
+        auto w = writer<SetScale3>();
         w.description("Set Scale Command");
-        w.property("x", &SetScale³::x);
-        w.property("y", &SetScale³::y);
-        w.property("z", &SetScale³::z);
+        w.property("x", &SetScale3::x);
+        w.property("y", &SetScale3::y);
+        w.property("z", &SetScale3::z);
     }
 }

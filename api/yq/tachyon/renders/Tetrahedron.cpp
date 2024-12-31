@@ -9,25 +9,25 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <yq/tachyon/api/Rendered³InfoWriter.hpp>
+#include <yq/tachyon/api/Rendered3InfoWriter.hpp>
 #include <yq/tachyon/api/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    void Tetrahedron³::init_info()
+    void Tetrahedron3::init_info()
     {
         static const uint16_t   kIndices[] = { 1, 2, 3, 0, 3, 2, 0, 1, 3, 0, 2, 1 };
         static IBO<uint16_t>    indices(kIndices);
     
-        auto w = writer<Tetrahedron³>();
+        auto w = writer<Tetrahedron3>();
         {
             auto& p = w.pipeline();
             
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");
 
-            p.vertex(&Tetrahedron³::m_vertex, DataActivity::FIXED)
+            p.vertex(&Tetrahedron3::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;
@@ -37,14 +37,14 @@ namespace yq::tachyon {
         }
     }
 
-    Tetrahedron³::Tetrahedron³(const TetrahedronData<ColorVertex3D>&tri, const Param& p) : Rendered³(p)
+    Tetrahedron3::Tetrahedron3(const TetrahedronData<ColorVertex3D>&tri, const Param& p) : Rendered3(p)
     {
         m_vertex    = { tri.a, tri.b, tri.c, tri.d};
     }
     
-    Tetrahedron³::~Tetrahedron³()
+    Tetrahedron3::~Tetrahedron3()
     {
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Tetrahedron³)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Tetrahedron3)

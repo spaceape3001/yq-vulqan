@@ -4,25 +4,25 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetPositionᶻ.hpp"
+#include "SetPositionZ.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPositionᶻ)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPositionZ)
 
 namespace yq::tachyon {
-    SetPositionᶻ::SetPositionᶻ(TachyonID tid, double z, const Param& p) : 
+    SetPositionZ::SetPositionZ(TachyonID tid, double z, const Param& p) : 
         SpatialCommand(tid, p), m_z(z)
     {
     }
     
-    SetPositionᶻ::~SetPositionᶻ()
+    SetPositionZ::~SetPositionZ()
     {
     }
     
-    void SetPositionᶻ::init_info()
+    void SetPositionZ::init_info()
     {
-        auto w = writer<SetPositionᶻ>();
+        auto w = writer<SetPositionZ>();
         w.description("Set Position Command");
-        w.property("z", &SetPositionᶻ::z);
+        w.property("z", &SetPositionZ::z);
     }
 }

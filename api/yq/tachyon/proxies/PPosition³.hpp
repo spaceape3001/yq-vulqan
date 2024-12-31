@@ -7,10 +7,10 @@
 #pragma once
 
 #include <yq/tachyon/api/Proxy.hpp>
-#include <yq/tachyon/interfaces/IPosition³.hpp>
+#include <yq/tachyon/interfaces/IPosition3.hpp>
 
 namespace yq::tachyon {
-    class PPosition³ : public Proxy, public IPosition³  /* TODO: public IPosition3I, public IPosition3, public IPosition */ {
+    class PPosition3 : public Proxy, public IPosition3  /* TODO: public IPosition3I, public IPosition3, public IPosition */ {
     public:
     
         Vector3D    position() const override {  return m_position;  }
@@ -33,8 +33,8 @@ namespace yq::tachyon {
 
         const Vector3D&  position(ref_k) const {  return m_position;  }
 
-        PPosition³(const IPosition³& i);
-        ~PPosition³();
+        PPosition3(const IPosition3& i);
+        ~PPosition3();
 
     private:
         const Vector3D  m_position;

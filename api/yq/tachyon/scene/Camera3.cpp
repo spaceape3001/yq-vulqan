@@ -4,27 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Camera³.hpp"
-#include "Camera³InfoWriter.hpp"
+#include "Camera3.hpp"
+#include "Camera3InfoWriter.hpp"
 
 namespace yq::tachyon {
-    Camera³::Camera³(const Param& p) : Camera(p)
+    Camera3::Camera3(const Param& p) : Camera(p)
     {
         if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
-            SimpleSpatial³::Param p3;
+            SimpleSpatial3::Param p3;
             p3.position     = p.position;
             p3.orientation  = p.orientation;
             p3.scale        = p.scale;
-            m_spatial       = create<SimpleSpatial³>(CHILD, p3) -> id();
+            m_spatial       = create<SimpleSpatial3>(CHILD, p3) -> id();
             subscribe(m_spatial, MG::Spatial);
         }
     }
     
-    Camera³::~Camera³()
+    Camera3::~Camera3()
     {
     }
     
-    void Camera³::snap(Camera³Snap& sn) const
+    void Camera3::snap(Camera3Snap& sn) const
     {
         Camera::snap(sn);
     }

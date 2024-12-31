@@ -7,8 +7,8 @@
 #pragma once
 
 #include "Camera.hpp"
-#include <yq/tachyon/typedef/camera³.hpp>
-#include <yq/tachyon/typedef/spatial³.hpp>
+#include <yq/tachyon/typedef/camera3.hpp>
+#include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 
@@ -17,14 +17,14 @@
 #endif
 
 namespace yq::tachyon {
-    class Camera³Info : public CameraInfo {
+    class Camera3Info : public CameraInfo {
     };
     
-    class Camera³ : public Camera {
-        YQ_TACHYON_INFO(Camera³Info)
-        YQ_TACHYON_SNAP(Camera³Snap)
-        YQ_TACHYON_DATA(Camera³Data)
-        YQ_TACHYON_DECLARE(Camera³, Camera)
+    class Camera3 : public Camera {
+        YQ_TACHYON_INFO(Camera3Info)
+        YQ_TACHYON_SNAP(Camera3Snap)
+        YQ_TACHYON_DATA(Camera3Data)
+        YQ_TACHYON_DECLARE(Camera3, Camera)
     public:
     
         struct Param : public Camera::Param {
@@ -37,14 +37,14 @@ namespace yq::tachyon {
     
         static void init_info();
     
-        Camera³ID id() const { return Camera³ID(UniqueID::id()); }
+        Camera3ID id() const { return Camera3ID(UniqueID::id()); }
     
     protected:
-        Camera³(const Param&);
-        ~Camera³();
+        Camera3(const Param&);
+        ~Camera3();
         
-        void snap(Camera³Snap&) const;
+        void snap(Camera3Snap&) const;
         
-        Spatial³ID      m_spatial;
+        Spatial3ID      m_spatial;
     };
 }

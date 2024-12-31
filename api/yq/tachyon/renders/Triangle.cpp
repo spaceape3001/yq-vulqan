@@ -10,15 +10,15 @@
 #include <yq/shape/TriangleData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <yq/tachyon/api/Rendered³InfoWriter.hpp>
+#include <yq/tachyon/api/Rendered3InfoWriter.hpp>
 #include <yq/tachyon/api/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    void Triangle³::init_info()
+    void Triangle3::init_info()
     {
-        auto w = writer<Triangle³>();
+        auto w = writer<Triangle3>();
         w.description("Triangle in three dimensions");
         
         {
@@ -27,7 +27,7 @@ namespace yq::tachyon {
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");
 
-            p.vertex(&Triangle³::m_vertex, DataActivity::FIXED)
+            p.vertex(&Triangle3::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;
@@ -36,15 +36,15 @@ namespace yq::tachyon {
         }
     }
 
-    Triangle³::Triangle³(const TriangleData<ColorVertex2D>&tri, const Param& p) : Rendered³(p)
+    Triangle3::Triangle3(const TriangleData<ColorVertex2D>&tri, const Param& p) : Rendered3(p)
     {
         m_vertex    = { tri.a, tri.b, tri.c};
         //m_draw.vertex_count  = 3;
     }
     
-    Triangle³::~Triangle³()
+    Triangle3::~Triangle3()
     {
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Triangle³)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Triangle3)

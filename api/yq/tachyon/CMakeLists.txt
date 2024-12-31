@@ -82,12 +82,12 @@ add_library(${PROJECT_NAME} SHARED
     commands/MouseHideCommand.cpp
     commands/MouseNormalCommand.cpp
     #commands/SetParentCommand.cpp
-    commands/SetSize¹.cpp
-    commands/SetSize².cpp
-    commands/SetSize³.cpp
-    commands/SetSizeˣ.cpp
-    commands/SetSizeʸ.cpp
-    commands/SetSizeᶻ.cpp
+    commands/SetSize1.cpp
+    commands/SetSize2.cpp
+    commands/SetSize3.cpp
+    commands/SetSizeX.cpp
+    commands/SetSizeY.cpp
+    commands/SetSizeZ.cpp
     commands/SpatialCommand.cpp
     commands/TachyonCommand.cpp
     commands/TachyonDeleteCommand.cpp
@@ -141,28 +141,28 @@ add_library(${PROJECT_NAME} SHARED
     commands/WindowTitleCommand.cpp
     commands/WindowUnfloatCommand.cpp
 
-    commands/spatial/MoveBy¹.cpp
-    commands/spatial/MoveBy².cpp
-    commands/spatial/MoveBy³.cpp
-    commands/spatial/MoveByˣ.cpp
-    commands/spatial/MoveByʸ.cpp
-    commands/spatial/MoveByᶻ.cpp
+    commands/spatial/MoveBy1.cpp
+    commands/spatial/MoveBy2.cpp
+    commands/spatial/MoveBy3.cpp
+    commands/spatial/MoveByX.cpp
+    commands/spatial/MoveByY.cpp
+    commands/spatial/MoveByZ.cpp
     commands/spatial/PitchBy.cpp
-    commands/spatial/RotateBy³.cpp
+    commands/spatial/RotateBy3.cpp
     commands/spatial/RollBy.cpp
-    commands/spatial/SetOrientation³.cpp
-    commands/spatial/SetPosition¹.cpp
-    commands/spatial/SetPosition².cpp
-    commands/spatial/SetPosition³.cpp
-    commands/spatial/SetPositionˣ.cpp
-    commands/spatial/SetPositionʸ.cpp
-    commands/spatial/SetPositionᶻ.cpp
-    commands/spatial/SetScale¹.cpp
-    commands/spatial/SetScale².cpp
-    commands/spatial/SetScale³.cpp
-    commands/spatial/SetScaleˣ.cpp
-    commands/spatial/SetScaleʸ.cpp
-    commands/spatial/SetScaleᶻ.cpp
+    commands/spatial/SetOrientation3.cpp
+    commands/spatial/SetPosition1.cpp
+    commands/spatial/SetPosition2.cpp
+    commands/spatial/SetPosition3.cpp
+    commands/spatial/SetPositionX.cpp
+    commands/spatial/SetPositionY.cpp
+    commands/spatial/SetPositionZ.cpp
+    commands/spatial/SetScale1.cpp
+    commands/spatial/SetScale2.cpp
+    commands/spatial/SetScale3.cpp
+    commands/spatial/SetScaleX.cpp
+    commands/spatial/SetScaleY.cpp
+    commands/spatial/SetScaleZ.cpp
     commands/spatial/YawBy.cpp
     
     config/build.cpp
@@ -252,10 +252,10 @@ add_library(${PROJECT_NAME} SHARED
     glfw/MouseGLFW.cpp
     glfw/WindowGLFW.cpp
 
-    interfaces/IPosition¹.cpp
-    interfaces/IPosition².cpp
-    interfaces/IPosition³.cpp
-    interfaces/ISpatial³.cpp
+    interfaces/IPosition1.cpp
+    interfaces/IPosition2.cpp
+    interfaces/IPosition3.cpp
+    interfaces/ISpatial3.cpp
 
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
@@ -278,10 +278,10 @@ add_library(${PROJECT_NAME} SHARED
     posts/EmptyPost.cpp
     posts/StringPost.cpp
 
-    proxies/PPosition¹.cpp
-    proxies/PPosition².cpp
-    proxies/PPosition³.cpp
-    proxies/PSpatial³.cpp
+    proxies/PPosition1.cpp
+    proxies/PPosition2.cpp
+    proxies/PPosition3.cpp
+    proxies/PSpatial3.cpp
 
     renders/ImageQuad.cpp
     renders/Quadrilateral.cpp
@@ -315,11 +315,11 @@ add_library(${PROJECT_NAME} SHARED
     scene/Light.cpp
     #scene/Light3.cpp
     scene/Rendered.cpp
-    scene/Rendered³.cpp
+    scene/Rendered3.cpp
     #scene/Scene.cpp
     #scene/Scene3.cpp
     scene/Spatial.cpp
-    scene/Spatial³.cpp
+    scene/Spatial3.cpp
 
     spatials/SimpleSpatial3.cpp
     

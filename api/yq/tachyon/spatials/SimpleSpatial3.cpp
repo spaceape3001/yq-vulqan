@@ -5,22 +5,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SimpleSpatial3.hpp"
-#include <yq/tachyon/api/Spatial³InfoWriter.hpp>
-#include <yq/tachyon/commands/spatial/MoveBy³.hpp>
-#include <yq/tachyon/commands/spatial/MoveByˣ.hpp>
-#include <yq/tachyon/commands/spatial/MoveByʸ.hpp>
-#include <yq/tachyon/commands/spatial/MoveByᶻ.hpp>
+#include <yq/tachyon/api/Spatial3InfoWriter.hpp>
+#include <yq/tachyon/commands/spatial/MoveBy3.hpp>
+#include <yq/tachyon/commands/spatial/MoveByX.hpp>
+#include <yq/tachyon/commands/spatial/MoveByY.hpp>
+#include <yq/tachyon/commands/spatial/MoveByZ.hpp>
 #include <yq/tachyon/commands/spatial/PitchBy.hpp>
 #include <yq/tachyon/commands/spatial/RollBy.hpp>
-#include <yq/tachyon/commands/spatial/SetOrientation³.hpp>
-#include <yq/tachyon/commands/spatial/SetPosition³.hpp>
-#include <yq/tachyon/commands/spatial/SetPositionˣ.hpp>
-#include <yq/tachyon/commands/spatial/SetPositionʸ.hpp>
-#include <yq/tachyon/commands/spatial/SetPositionᶻ.hpp>
-#include <yq/tachyon/commands/spatial/SetScale³.hpp>
-#include <yq/tachyon/commands/spatial/SetScaleˣ.hpp>
-#include <yq/tachyon/commands/spatial/SetScaleʸ.hpp>
-#include <yq/tachyon/commands/spatial/SetScaleᶻ.hpp>
+#include <yq/tachyon/commands/spatial/SetOrientation3.hpp>
+#include <yq/tachyon/commands/spatial/SetPosition3.hpp>
+#include <yq/tachyon/commands/spatial/SetPositionX.hpp>
+#include <yq/tachyon/commands/spatial/SetPositionY.hpp>
+#include <yq/tachyon/commands/spatial/SetPositionZ.hpp>
+#include <yq/tachyon/commands/spatial/SetScale3.hpp>
+#include <yq/tachyon/commands/spatial/SetScaleX.hpp>
+#include <yq/tachyon/commands/spatial/SetScaleY.hpp>
+#include <yq/tachyon/commands/spatial/SetScaleZ.hpp>
 #include <yq/tachyon/commands/spatial/YawBy.hpp>
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/tensor/Tensor33.hxx>
@@ -30,7 +30,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SimpleSpatial3)
 
 namespace yq::tachyon {
-    SimpleSpatial3::SimpleSpatial3(const Param&p) : Spatial³(p)
+    SimpleSpatial3::SimpleSpatial3(const Param&p) : Spatial3(p)
     {
         if(!is_nan(p.position))
             m_position    = p.position;
@@ -60,7 +60,7 @@ namespace yq::tachyon {
         m_scale = δZ.emul(m_scale);
     }
 
-    void SimpleSpatial3::on_move³(const MoveBy³&cmd)
+    void SimpleSpatial3::on_move3(const MoveBy3&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -68,7 +68,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_moveˣ(const MoveByˣ&cmd)
+    void SimpleSpatial3::on_moveX(const MoveByX&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -76,7 +76,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_moveʸ(const MoveByʸ&cmd)
+    void SimpleSpatial3::on_moveY(const MoveByY&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -84,7 +84,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_moveᶻ(const MoveByᶻ&cmd)
+    void SimpleSpatial3::on_moveZ(const MoveByZ&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -108,7 +108,7 @@ namespace yq::tachyon {
          mark();
     }
 
-    void SimpleSpatial3::on_set_orientation³(const SetOrientation³&cmd)
+    void SimpleSpatial3::on_set_orientation3(const SetOrientation3&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -116,7 +116,7 @@ namespace yq::tachyon {
         mark();
     }
 
-    void SimpleSpatial3::on_set_position³(const SetPosition³&cmd)
+    void SimpleSpatial3::on_set_position3(const SetPosition3&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -124,7 +124,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_set_positionˣ(const SetPositionˣ&cmd)
+    void SimpleSpatial3::on_set_positionX(const SetPositionX&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -132,7 +132,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_set_positionʸ(const SetPositionʸ&cmd)
+    void SimpleSpatial3::on_set_positionY(const SetPositionY&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -140,7 +140,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_set_positionᶻ(const SetPositionᶻ&cmd)
+    void SimpleSpatial3::on_set_positionZ(const SetPositionZ&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -148,7 +148,7 @@ namespace yq::tachyon {
         mark();
     }
 
-    void SimpleSpatial3::on_set_scale³(const SetScale³&cmd)
+    void SimpleSpatial3::on_set_scale3(const SetScale3&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -156,7 +156,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_set_scaleˣ(const SetScaleˣ&cmd)
+    void SimpleSpatial3::on_set_scaleX(const SetScaleX&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -164,7 +164,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_set_scaleʸ(const SetScaleʸ&cmd)
+    void SimpleSpatial3::on_set_scaleY(const SetScaleY&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -172,7 +172,7 @@ namespace yq::tachyon {
         mark();
     }
     
-    void SimpleSpatial3::on_set_scaleᶻ(const SetScaleᶻ&cmd)
+    void SimpleSpatial3::on_set_scaleZ(const SetScaleZ&cmd)
     {
         if(cmd.tachyon() != id())
             return;
@@ -254,9 +254,9 @@ namespace yq::tachyon {
         mark();
     }
 
-    void SimpleSpatial3::snap(Spatial³Snap& sn) const
+    void SimpleSpatial3::snap(Spatial3Snap& sn) const
     {
-        Spatial³::snap(sn);
+        Spatial3::snap(sn);
 
         Tensor33D   T       = tensor(m_orientation);
         Tensor33D   T1   = T * diagonal(m_scale);
@@ -281,20 +281,20 @@ namespace yq::tachyon {
     void SimpleSpatial3::init_info()
     {
         auto w = writer<SimpleSpatial3>();
-        w.interface<IPosition³>();
-        w.description("Simple Spatial in ³ dimensions");
-        w.slot(&SimpleSpatial3::on_move³);
-        w.slot(&SimpleSpatial3::on_moveˣ);
-        w.slot(&SimpleSpatial3::on_moveʸ);
-        w.slot(&SimpleSpatial3::on_moveᶻ);
-        w.slot(&SimpleSpatial3::on_set_orientation³);
-        w.slot(&SimpleSpatial3::on_set_position³);
-        w.slot(&SimpleSpatial3::on_set_positionˣ);
-        w.slot(&SimpleSpatial3::on_set_positionʸ);
-        w.slot(&SimpleSpatial3::on_set_positionᶻ);
-        w.slot(&SimpleSpatial3::on_set_scale³);
-        w.slot(&SimpleSpatial3::on_set_scaleˣ);
-        w.slot(&SimpleSpatial3::on_set_scaleʸ);
-        w.slot(&SimpleSpatial3::on_set_scaleᶻ);
+        w.interface<IPosition3>();
+        w.description("Simple Spatial in 3 dimensions");
+        w.slot(&SimpleSpatial3::on_move3);
+        w.slot(&SimpleSpatial3::on_moveX);
+        w.slot(&SimpleSpatial3::on_moveY);
+        w.slot(&SimpleSpatial3::on_moveZ);
+        w.slot(&SimpleSpatial3::on_set_orientation3);
+        w.slot(&SimpleSpatial3::on_set_position3);
+        w.slot(&SimpleSpatial3::on_set_positionX);
+        w.slot(&SimpleSpatial3::on_set_positionY);
+        w.slot(&SimpleSpatial3::on_set_positionZ);
+        w.slot(&SimpleSpatial3::on_set_scale3);
+        w.slot(&SimpleSpatial3::on_set_scaleX);
+        w.slot(&SimpleSpatial3::on_set_scaleY);
+        w.slot(&SimpleSpatial3::on_set_scaleZ);
     }
 }

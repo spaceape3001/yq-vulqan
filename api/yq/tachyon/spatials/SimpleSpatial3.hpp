@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Spatial³.hpp>
-#include <yq/tachyon/interfaces/IPosition³.hpp>
+#include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/interfaces/IPosition3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 
@@ -16,28 +16,28 @@
 #endif
 
 namespace yq::tachyon {
-    class MoveBy³;
-    class MoveByˣ;
-    class MoveByʸ;
-    class MoveByᶻ;
+    class MoveBy3;
+    class MoveByX;
+    class MoveByY;
+    class MoveByZ;
     class PitchBy;
     class RollBy;
-    class SetOrientation³;
-    class SetPosition³;
-    class SetPositionˣ;
-    class SetPositionʸ;
-    class SetPositionᶻ;
-    class SetScale³;
-    class SetScaleˣ;
-    class SetScaleʸ;
-    class SetScaleᶻ;
+    class SetOrientation3;
+    class SetPosition3;
+    class SetPositionX;
+    class SetPositionY;
+    class SetPositionZ;
+    class SetScale3;
+    class SetScaleX;
+    class SetScaleY;
+    class SetScaleZ;
     class YawBy;
 
-    class SimpleSpatial3 : public Spatial³, private IPosition³ {
-        YQ_TACHYON_DECLARE(SimpleSpatial3, Spatial³);
+    class SimpleSpatial3 : public Spatial3, private IPosition3 {
+        YQ_TACHYON_DECLARE(SimpleSpatial3, Spatial3);
     public:
     
-        struct Param : public Spatial³::Param {
+        struct Param : public Spatial3::Param {
             Vector3D        position        = NAN;
             Quaternion3D    orientation     = NAN;
             Vector3D        scale           = NAN;
@@ -82,26 +82,26 @@ namespace yq::tachyon {
 
         static void init_info();
         
-        void on_move³(const MoveBy³&);
-        void on_moveˣ(const MoveByˣ&);
-        void on_moveʸ(const MoveByʸ&);
-        void on_moveᶻ(const MoveByᶻ&);
+        void on_move3(const MoveBy3&);
+        void on_moveX(const MoveByX&);
+        void on_moveY(const MoveByY&);
+        void on_moveZ(const MoveByZ&);
         void on_pitch_by(const PitchBy&);
         void on_roll_by(const RollBy&);
-        void on_set_orientation³(const SetOrientation³&);
-        void on_set_position³(const SetPosition³&);
-        void on_set_positionˣ(const SetPositionˣ&);
-        void on_set_positionʸ(const SetPositionʸ&);
-        void on_set_positionᶻ(const SetPositionᶻ&);
-        void on_set_scale³(const SetScale³&);
-        void on_set_scaleˣ(const SetScaleˣ&);
-        void on_set_scaleʸ(const SetScaleʸ&);
-        void on_set_scaleᶻ(const SetScaleᶻ&);
+        void on_set_orientation3(const SetOrientation3&);
+        void on_set_position3(const SetPosition3&);
+        void on_set_positionX(const SetPositionX&);
+        void on_set_positionY(const SetPositionY&);
+        void on_set_positionZ(const SetPositionZ&);
+        void on_set_scale3(const SetScale3&);
+        void on_set_scaleX(const SetScaleX&);
+        void on_set_scaleY(const SetScaleY&);
+        void on_set_scaleZ(const SetScaleZ&);
         void on_yaw_by(const YawBy&);
 
     protected:
         
-        void        snap(Spatial³Snap&) const;
+        void        snap(Spatial3Snap&) const;
 
     private:
         Vector3D        m_position        = ZERO;

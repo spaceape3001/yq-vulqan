@@ -7,9 +7,9 @@
 #pragma once
 
 #include <variant>
-#include <yq/typedef/axbox3.hpp>
-#include <yq/typedef/sphere3.hpp>
+#include <yq/typedef/axbox2.hpp>
+#include <yq/typedef/circle2.hpp>
 
 namespace yq::tachyon {
-    using bounds³_t = std::variant<std::monostate, AxBox3D, Sphere3D>;
+    using bounds2_t = std::variant<std::monostate, AxBox2D, Circle2D>;
 }

@@ -17,7 +17,7 @@ namespace yq::tachyon {
     
     enum class Type : uint8_t {
         Camera,
-        Camera³,
+        Camera3,
         Controller,
         Cursor,
         Desktop,
@@ -26,12 +26,12 @@ namespace yq::tachyon {
         Joystick,
         Keyboard,
         Light,
-        Light³,
+        Light3,
         Manager,
         Model,
         Monitor,
         Mouse,
-        Rendered³,
+        Rendered3,
         Rendered,
         Thread,
         Viewer,

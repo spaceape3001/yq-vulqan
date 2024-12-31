@@ -4,42 +4,42 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Spatial³.hpp"
-#include <yq/tachyon/api/Spatial³InfoWriter.hpp>
+#include "Spatial3.hpp"
+#include <yq/tachyon/api/Spatial3InfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Spatial³);
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Spatial3);
 
 namespace yq::tachyon {
-    Spatial³Info::Spatial³Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl)
+    Spatial3Info::Spatial3Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl)
         : SpatialInfo(zName, base, sl)
     {
     }
 
-    Spatial³Info::~Spatial³Info()
+    Spatial3Info::~Spatial3Info()
     {
     }
     
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Spatial³::Spatial³(const Param& p) : Spatial(p)
+    Spatial3::Spatial3(const Param& p) : Spatial(p)
     {
     }
     
-    Spatial³::~Spatial³()
+    Spatial3::~Spatial3()
     {
     }
 
-    void        Spatial³::snap(Spatial³Snap& sn) const
+    void        Spatial3::snap(Spatial3Snap& sn) const
     {
         Spatial::snap(sn);
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Spatial³::init_info()
+    void Spatial3::init_info()
     {
-        auto w = writer<Spatial³>();
-        w.description("Spatial in ³ Dimensions");
+        auto w = writer<Spatial3>();
+        w.description("Spatial in 3 Dimensions");
     }
 }

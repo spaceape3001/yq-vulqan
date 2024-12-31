@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/desktop/Monitor.hpp>
-#include <yq/tachyon/interfaces/IPosition².hpp>
+#include <yq/tachyon/interfaces/IPosition2.hpp>
 
 struct GLFWmonitor;
 struct GLFWvidmode;
 
 namespace yq::tachyon {
-    class MonitorGLFW : public Monitor, private IPosition² {
+    class MonitorGLFW : public Monitor, private IPosition2 {
         YQ_TACHYON_DECLARE(MonitorGLFW, Monitor);
     public:
         MonitorGLFW(GLFWmonitor*, const Param&p = {});

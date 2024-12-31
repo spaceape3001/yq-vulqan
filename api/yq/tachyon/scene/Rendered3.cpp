@@ -63,7 +63,7 @@ namespace yq::tachyon {
         mark();
     }
 
-    void    Rendered³::set_spatial(
+    Spatial³ID    Rendered³::make_simple_spatial(
         const Vector3D& position,
         const Quaternion3D& orientation,
         const Vector3D& scale
@@ -74,6 +74,7 @@ namespace yq::tachyon {
         p3.scale        = scale;
         m_spatial       = create<SimpleSpatial³>(CHILD, p3) -> id();
         subscribe(m_spatial, MG::Spatial);
+        return m_spatial;
     }
 
 #if 0

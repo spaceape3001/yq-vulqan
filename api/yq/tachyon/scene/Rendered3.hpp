@@ -48,14 +48,14 @@ namespace yq::tachyon {
             Vector3D        scale           = NAN;
         };
     
-        Spatial³ID                      spatial3() const { return m_spatial; }
+        Spatial³ID                      spatial³() const { return m_spatial; }
         
         void    set_bounds(bounds³_t);
         void    set_spatial(Spatial³ID);
     
     
         //! Creates/sets a position (NOTE NOT THREAD SAFE!)
-        void    set_spatial(
+        Spatial³ID    make_simple_spatial(
             const Vector3D& position,
             const Quaternion3D& orientation=IDENTITY,
             const Vector3D& scale=ONE

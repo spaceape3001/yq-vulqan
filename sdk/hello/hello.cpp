@@ -37,7 +37,9 @@
 #include <yq/tachyon/widget.hpp>
 #include <yq/tachyon/viewer.hpp>
 
+#include <yq/tachyon/commands/spatial/SetOrientation3.hpp>
 #include <yq/tachyon/renders/Triangle.hpp>
+#include <yq/tachyon/scene/Spatial3.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>
 
 #include <iostream>
@@ -180,26 +182,37 @@ struct HelloScene : public Scene3DWidget {
     Ref<Triangle³>          tri2;
     Ref<HelloQuad>          quad;
     timepoint_t             start;
+    TachyonID               triSpatialID;
 
     HelloScene()
     {
         start       = std::chrono::steady_clock::now();
         triangle    = Rendered::create<HelloTriangle>();
-        tri2        = Rendered::create<Triangle³>(TriData);
-        tri2->set_position({0.,0.,0.1});
-        quad        = Rendered::create<HelloQuad>();
+        
+        Triangle³::Param p;
+        p.position      = {0.,0.,0.1};
+        tri2            = Tachyon::create<Triangle³>(TriData, p);
+        triSpatialID    = tri2 -> spatial³();
+        quad            = Tachyon::create<HelloQuad>();
         
         add_thing(tri2);
         add_thing(triangle);
         add_thing(quad);
     }
     
-    void    vulkan_(ViContext& v)
+    Execution tick(Context& ctx)
     {
+        Scene3DWidget::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
-        tri2->set_heading( Degree(diff.count()) );
+        send(new SetOrientation³(triSpatialID, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
         triangle->update(diff.count());
+        return {};
+    }
+    
+    
+    void    vulkan_(ViContext& v)
+    {
         Scene3DWidget::vulkan_(v);
     }
 };

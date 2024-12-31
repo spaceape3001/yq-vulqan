@@ -19,7 +19,7 @@ namespace yq::tachyon {
         Tensor44D   vm_tensor       = NAN;
         
         // Our "bounds" in model coordinates
-        bounds3_t   bounds;
+        bounds³_t   bounds;
 
         // Set this to have coordinates & model transform
         Spatial³ID  spatial;

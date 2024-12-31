@@ -21,7 +21,7 @@
 #include <yq/tachyon/scene/Camera3InfoWriter.hpp>
 
 namespace yq::tachyon {
-    SpaceCamera::SpaceCamera(const Param&p) : Camera3(p),
+    SpaceCamera::SpaceCamera(const Param&p) : Camera³(p),
         m_fov(70_deg),
         m_near(0.1),
         m_far(10.)

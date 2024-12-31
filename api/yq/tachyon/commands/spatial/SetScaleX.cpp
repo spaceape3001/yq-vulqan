@@ -7,22 +7,22 @@
 #include "SetScaleX.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScaleX)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScaleˣ)
 
 namespace yq::tachyon {
-    SetScaleX::SetScaleX(TachyonID tid, double x, const Param& p) : 
+    SetScaleˣ::SetScaleˣ(TachyonID tid, double x, const Param& p) : 
         SpatialCommand(tid, p), m_x(x)
     {
     }
     
-    SetScaleX::~SetScaleX()
+    SetScaleˣ::~SetScaleˣ()
     {
     }
     
-    void SetScaleX::init_info()
+    void SetScaleˣ::init_info()
     {
-        auto w = writer<SetScaleX>();
+        auto w = writer<SetScaleˣ>();
         w.description("Set Scale Command");
-        w.property("x", &SetScaleX::x);
+        w.property("x", &SetScaleˣ::x);
     }
 }

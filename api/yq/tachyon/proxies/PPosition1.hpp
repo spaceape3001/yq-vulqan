@@ -10,7 +10,7 @@
 #include <yq/tachyon/interfaces/IPosition1.hpp>
 
 namespace yq::tachyon {
-    class PPosition1 : public Proxy, public IPosition1  /* TODO: public IPosition1I, public IPosition1, public IPosition */  {
+    class PPosition¹ : public Proxy, public IPosition¹  /* TODO: public IPosition¹I, public IPosition¹, public IPosition */  {
     public:
     
         Vector1D    position() const override {  return m_position;  }
@@ -27,7 +27,7 @@ namespace yq::tachyon {
 
         double      x() const { return m_position.x; }
 
-        PPosition1(const IPosition1& i);
+        PPosition¹(const IPosition¹& i);
 
     private:
         Vector1D        m_position;

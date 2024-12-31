@@ -7,22 +7,22 @@
 #include "SetScaleZ.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScaleZ)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScaleᶻ)
 
 namespace yq::tachyon {
-    SetScaleZ::SetScaleZ(TachyonID tid, double z, const Param& p) : 
+    SetScaleᶻ::SetScaleᶻ(TachyonID tid, double z, const Param& p) : 
         SpatialCommand(tid, p), m_z(z)
     {
     }
     
-    SetScaleZ::~SetScaleZ()
+    SetScaleᶻ::~SetScaleᶻ()
     {
     }
     
-    void SetScaleZ::init_info()
+    void SetScaleᶻ::init_info()
     {
-        auto w = writer<SetScaleZ>();
+        auto w = writer<SetScaleᶻ>();
         w.description("Set Scale Command");
-        w.property("z", &SetScaleZ::z);
+        w.property("z", &SetScaleᶻ::z);
     }
 }

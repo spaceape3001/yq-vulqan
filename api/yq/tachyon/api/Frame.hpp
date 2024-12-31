@@ -65,7 +65,7 @@ namespace yq::tachyon {
         using proxy_span_t  = std::span<Proxy* const>;
 
         bool contains(CameraID) const;
-        //bool contains(Camera3ID) const;
+        //bool contains(Camera³ID) const;
         bool contains(ControllerID) const;
         bool contains(CursorID) const;
         bool contains(DesktopID) const;
@@ -109,7 +109,7 @@ namespace yq::tachyon {
         size_t count(window_k) const;
     
         const CameraData*                   data(CameraID) const;
-        //const Camera3Data*                  data(Camera3ID) const;
+        //const Camera³Data*                  data(Camera³ID) const;
         const ControllerData*               data(ControllerID) const;
         const CursorData*                   data(CursorID) const;
         const DesktopData*                  data(DesktopID) const;
@@ -134,7 +134,7 @@ namespace yq::tachyon {
         //! Camera pointer
         //! \note WARNING this will break thread-safety guarantees
         Camera*                             object(CameraID) const;
-        //Camera3*                            object(Camera3ID) const;
+        //Camera³*                            object(Camera³ID) const;
 
         Controller*                         object(ControllerID) const;
 
@@ -219,7 +219,7 @@ namespace yq::tachyon {
         Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
         
         const CameraSnap*                   snap(CameraID) const;
-        //const Camera3Snap*                  snap(Camera3ID) const;
+        //const Camera³Snap*                  snap(Camera³ID) const;
         const ControllerSnap*               snap(ControllerID) const;
         const CursorSnap*                   snap(CursorID) const;
         const DesktopSnap*                  snap(DesktopID) const;
@@ -283,7 +283,7 @@ namespace yq::tachyon {
         std::unordered_map<uint64_t, Types>                     m_types;
 
         Container<Camera, CameraData, CameraSnap>               m_cameras;
-        //Container<Camera3, Camera3Data, Camera3Snap>            m_camera3s;
+        //Container<Camera³, Camera³Data, Camera³Snap>            m_camera3s;
         Container<Controller, ControllerData, ControllerSnap>   m_controllers;
         Container<Cursor, CursorData, CursorSnap>               m_cursors;
         Container<Desktop, DesktopData, DesktopSnap>            m_desktops;

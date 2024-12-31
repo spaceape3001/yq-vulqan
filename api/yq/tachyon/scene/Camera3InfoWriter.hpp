@@ -12,13 +12,13 @@
 
 namespace yq::tachyon {
     template <typename C>
-    class Camera3Info::Writer : public CameraInfo::Writer<C> {
+    class Camera³Info::Writer : public CameraInfo::Writer<C> {
     public:
-        Writer(Camera3Info* cameraInfo) : CameraInfo::Writer<C>(cameraInfo)
+        Writer(Camera³Info* cameraInfo) : CameraInfo::Writer<C>(cameraInfo)
         {
         }
         
-        Writer(Camera3Info& cameraInfo) : Writer(&cameraInfo)
+        Writer(Camera³Info& cameraInfo) : Writer(&cameraInfo)
         {
         }
     };

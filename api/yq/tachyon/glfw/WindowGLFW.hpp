@@ -21,7 +21,7 @@ namespace yq::tachyon {
     class ViewerCreateInfo;
     class WindowDestroyCommand;
 
-    class WindowGLFW : public Window, private IPosition2 {
+    class WindowGLFW : public Window, private IPosition² {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
     public:
         WindowGLFW(DesktopGLFW*, GLFWwindow*, const ViewerCreateInfo&, const Param&p={});

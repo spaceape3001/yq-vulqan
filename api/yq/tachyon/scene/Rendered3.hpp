@@ -50,7 +50,7 @@ namespace yq::tachyon {
     
         Spatial³ID                      spatial3() const { return m_spatial; }
         
-        void    set_bounds(bounds3_t);
+        void    set_bounds(bounds³_t);
         void    set_spatial(Spatial³ID);
     
     
@@ -164,7 +164,7 @@ namespace yq::tachyon {
         Spatial³ID      m_spatial;
         
         //! Bounds of the item (in render coordinate)
-        bounds3_t       m_bounds;
+        bounds³_t       m_bounds;
     };
 
 }

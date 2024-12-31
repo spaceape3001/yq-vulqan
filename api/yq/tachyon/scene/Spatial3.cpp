@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Spatial3.hpp"
-#include <yq/tachyon/scene/Spatial³InfoWriter.hpp>
+#include <yq/tachyon/scene/Spatial3InfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Spatial³);
 

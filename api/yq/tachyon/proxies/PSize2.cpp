@@ -6,7 +6,7 @@
 
 #include "PSize2I.hpp"
 #include <yq/tachyon/commands/MoveSize2I.hpp>
-#include <yq/tachyon/commands/SetSize2I.hpp>
+#include <yq/tachyon/commands/SetSize²I.hpp>
 
 namespace yq::tachyon {
     PSize2I::PSize2I(const ISize2I& i)
@@ -37,7 +37,7 @@ namespace yq::tachyon {
     void        PSize2I::size2i(set_k, const Size2I& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            dispatch(new SetSize2I(id(), v));
+            dispatch(new SetSize²I(id(), v));
         }
     }
     

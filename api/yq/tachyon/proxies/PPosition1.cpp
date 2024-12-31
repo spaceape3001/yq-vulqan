@@ -11,7 +11,7 @@
 #include <yq/tachyon/commands/spatial/SetPositionX.hpp>
 
 namespace yq::tachyon {
-    PPosition1::PPosition1(const IPosition1& i)
+    PPosition¹::PPosition¹(const IPosition¹& i)
     {
         if(i.position(DISABLED))
             m_flags |= F::Disabled;
@@ -21,46 +21,46 @@ namespace yq::tachyon {
             m_flags |= F::Moveable;
     }
 
-    bool        PPosition1::position(disabled_k) const 
+    bool        PPosition¹::position(disabled_k) const 
     {
         return m_flags(F::Disabled);
     }
     
-    bool        PPosition1::position(settable_k) const 
+    bool        PPosition¹::position(settable_k) const 
     {   
         return m_flags(F::Settable);
     }
     
-    bool        PPosition1::position(moveable_k) const 
+    bool        PPosition¹::position(moveable_k) const 
     {
         return m_flags(F::Moveable);
     }
         
-    void        PPosition1::position(set_k, const Vector1D& v) 
+    void        PPosition¹::position(set_k, const Vector1D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPosition1(id(), v));
+            mail(new SetPosition¹(id(), v));
         }
     }
 
-    void        PPosition1::position(set_k, x_k, double x) 
+    void        PPosition¹::position(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionX(id(), x));
+            mail(new SetPositionˣ(id(), x));
         }
     }
     
-    void        PPosition1::position(move_k, const Vector1D& Δ) 
+    void        PPosition¹::position(move_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveBy1(id(), Δ));
+            mail(new MoveBy¹(id(), Δ));
         }
     }
 
-    void        PPosition1::position(move_k, x_k, double Δx) 
+    void        PPosition¹::position(move_k, x_k, double Δx) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByX(id(), Δx));
+            mail(new MoveByˣ(id(), Δx));
         }
     }
 }

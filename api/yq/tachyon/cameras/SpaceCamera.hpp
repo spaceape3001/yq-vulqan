@@ -20,8 +20,8 @@ namespace yq::tachyon {
         as defined in the simple space object.  It's got near and
         far, along with a POV angle.
     */
-    class SpaceCamera : public Camera3 {
-        YQ_TACHYON_DECLARE(SpaceCamera, Camera3)
+    class SpaceCamera : public Camera³ {
+        YQ_TACHYON_DECLARE(SpaceCamera, Camera³)
     public:
     
         //! \brief World to screen matrix

@@ -51,7 +51,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    void    Rendered³::set_bounds(bounds3_t b)
+    void    Rendered³::set_bounds(bounds³_t b)
     {
         m_bounds = b;
         mark();

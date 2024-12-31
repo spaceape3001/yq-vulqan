@@ -12,7 +12,7 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Camera3Snap : public CameraSnap {
+    struct Camera³Snap : public CameraSnap {
         //  This now comes from the spatial3....
         //Tensor44D   view        = IDENTITY;
         Tensor44D   projection  = IDENTITY;
@@ -21,7 +21,7 @@ namespace yq::tachyon {
         Spatial³ID              m_spatial;
     };
     
-    struct Camera3Data : public CameraData {
+    struct Camera³Data : public CameraData {
     };
 }
 

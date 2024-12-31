@@ -13,7 +13,7 @@
 #include <yq/tachyon/commands/spatial/SetPositionY.hpp>
 
 namespace yq::tachyon {
-    PPosition2::PPosition2(const IPosition2& i) : m_position(i.position())
+    PPosition²::PPosition²(const IPosition²& i) : m_position(i.position())
     {
         if(i.position(DISABLED))
             m_flags |= F::Disabled;
@@ -23,57 +23,57 @@ namespace yq::tachyon {
             m_flags |= F::Moveable;
     }
 
-    bool        PPosition2::position(disabled_k) const 
+    bool        PPosition²::position(disabled_k) const 
     {
         return m_flags(F::Disabled);
     }
     
-    bool        PPosition2::position(settable_k) const 
+    bool        PPosition²::position(settable_k) const 
     {   
         return m_flags(F::Settable);
     }
     
-    bool        PPosition2::position(moveable_k) const 
+    bool        PPosition²::position(moveable_k) const 
     {
         return m_flags(F::Moveable);
     }
         
-    void        PPosition2::position(set_k, const Vector2D& v) 
+    void        PPosition²::position(set_k, const Vector2D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPosition2(id(), v));
+            mail(new SetPosition²(id(), v));
         }
     }
 
-    void        PPosition2::position(set_k, x_k, double x) 
+    void        PPosition²::position(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionX(id(), x));
+            mail(new SetPositionˣ(id(), x));
         }
     }
     
-    void        PPosition2::position(set_k, y_k, double y) 
+    void        PPosition²::position(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionY(id(), y));
+            mail(new SetPositionʸ(id(), y));
         }
     }
 
-    void        PPosition2::position(move_k, const Vector2D& Δ) 
+    void        PPosition²::position(move_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
-            mail(new MoveBy2(id(), Δ));
+            mail(new MoveBy²(id(), Δ));
         }
     }
 
-    void        PPosition2::position(move_k, x_k, double Δx) 
+    void        PPosition²::position(move_k, x_k, double Δx) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByX(id(), Δx));
+            mail(new MoveByˣ(id(), Δx));
         }
     }
 
-    void        PPosition2::position(move_k, y_k, double Δy) 
+    void        PPosition²::position(move_k, y_k, double Δy) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
             mail(new MoveByY(id(), Δy));

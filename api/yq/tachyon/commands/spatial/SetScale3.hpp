@@ -12,11 +12,11 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class SetScale3 : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetScale3, SpatialCommand)
+    class SetScale³ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(SetScale³, SpatialCommand)
     public:
-        SetScale3(TachyonID, const Vector3D&, const Param& p={});
-        ~SetScale3();
+        SetScale³(TachyonID, const Vector3D&, const Param& p={});
+        ~SetScale³();
     
         const Vector3D&   scale() const  { return m_scale; }
         

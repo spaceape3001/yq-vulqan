@@ -12,11 +12,11 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's y-position
-    class SetPositionY : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetPositionY, SpatialCommand)
+    class SetPositionʸ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(SetPositionʸ, SpatialCommand)
     public:
-        SetPositionY(TachyonID, double, const Param& p={});
-        ~SetPositionY();
+        SetPositionʸ(TachyonID, double, const Param& p={});
+        ~SetPositionʸ();
         
         static void init_info();
         

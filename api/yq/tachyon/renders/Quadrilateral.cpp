@@ -20,7 +20,7 @@ namespace yq::tachyon {
     {
         static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
     
-        auto w = writer<Quadrilateral>();
+        auto w = writer<Quadrilateral³>();
         
         {
             auto& p = w.pipeline();
@@ -28,7 +28,7 @@ namespace yq::tachyon {
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");
 
-            p.vertex(&Quadrilateral::m_vertex, DataActivity::FIXED)
+            p.vertex(&Quadrilateral³::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;

@@ -7,22 +7,22 @@
 #include "SetPosition1.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPosition1)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPosition¹)
 
 namespace yq::tachyon {
-    SetPosition1::SetPosition1(TachyonID tid, const Vector1D& v, const Param& p) : 
+    SetPosition¹::SetPosition¹(TachyonID tid, const Vector1D& v, const Param& p) : 
         SpatialCommand(tid, p), m_position(v)
     {
     }
     
-    SetPosition1::~SetPosition1()
+    SetPosition¹::~SetPosition¹()
     {
     }
     
-    void SetPosition1::init_info()
+    void SetPosition¹::init_info()
     {
-        auto w = writer<SetPosition1>();
+        auto w = writer<SetPosition¹>();
         w.description("Set Position Command");
-        w.property("x", &SetPosition1::x);
+        w.property("x", &SetPosition¹::x);
     }
 }

@@ -9,12 +9,12 @@
 #include <yq/tachyon/api/InterfaceInfoWriter.hpp>
 #include <yq/tachyon/proxies/PPosition1.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition1)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition¹)
 
 namespace yq::tachyon {
-    void    IPosition1::init_info()
+    void    IPosition¹::init_info()
     {
-        auto w = writer<IPosition1>();
+        auto w = writer<IPosition¹>();
         w.description("1D Position");
     }
 }

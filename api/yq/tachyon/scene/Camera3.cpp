@@ -8,20 +8,20 @@
 #include "Camera3InfoWriter.hpp"
 #include <yq/tachyon/spatials/SimpleSpatial3.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera3)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 
 namespace yq::tachyon {
-    Camera3Info::Camera3Info(std::string_view name, CameraInfo& base, const std::source_location& sl) :
+    Camera³Info::Camera³Info(std::string_view name, CameraInfo& base, const std::source_location& sl) :
         CameraInfo(name, base, sl)
     {
     }
 
-    Camera3Info::~Camera3Info()
+    Camera³Info::~Camera³Info()
     {
     }
     
 
-    Camera3::Camera3(const Param& p) : Camera(p)
+    Camera³::Camera³(const Param& p) : Camera(p)
     {
         if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
             SimpleSpatial³::Param p3;
@@ -33,18 +33,18 @@ namespace yq::tachyon {
         }
     }
     
-    Camera3::~Camera3()
+    Camera³::~Camera³()
     {
     }
     
-    void Camera3::snap(Camera3Snap& sn) const
+    void Camera³::snap(Camera³Snap& sn) const
     {
         Camera::snap(sn);
     }
     
-    void Camera3::init_info()
+    void Camera³::init_info()
     {
-        auto w = writer<Camera3>();
+        auto w = writer<Camera³>();
         w.description("Camera in 3D");
     }
 }

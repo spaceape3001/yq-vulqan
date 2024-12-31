@@ -12,11 +12,11 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's x-position
-    class SetScaleX : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetScaleX, SpatialCommand)
+    class SetScaleˣ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(SetScaleˣ, SpatialCommand)
     public:
-        SetScaleX(TachyonID, double, const Param& p={});
-        ~SetScaleX();
+        SetScaleˣ(TachyonID, double, const Param& p={});
+        ~SetScaleˣ();
         
         static void init_info();
         

@@ -7,23 +7,23 @@
 #include "MoveBy2.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy2)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy²)
 
 namespace yq::tachyon {
-    MoveBy2::MoveBy2(TachyonID tid, const Vector2D& Δ, const Param& p) : 
+    MoveBy²::MoveBy²(TachyonID tid, const Vector2D& Δ, const Param& p) : 
         SpatialCommand(tid, p), m_Δ(Δ)
     {
     }
     
-    MoveBy2::~MoveBy2()
+    MoveBy²::~MoveBy²()
     {
     }
     
-    void MoveBy2::init_info()
+    void MoveBy²::init_info()
     {
-        auto w = writer<MoveBy2>();
+        auto w = writer<MoveBy²>();
         w.description("Position MoveBy Command in 2D");
-        w.property("Δx", &MoveBy2::Δx);
-        w.property("Δy", &MoveBy2::Δy);
+        w.property("Δx", &MoveBy²::Δx);
+        w.property("Δy", &MoveBy²::Δy);
     }
 }

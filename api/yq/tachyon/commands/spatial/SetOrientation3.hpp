@@ -13,12 +13,12 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SetOrientation3 : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetOrientation3, SpatialCommand)
+    class SetOrientation³ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(SetOrientation³, SpatialCommand)
     public:
-        SetOrientation3(TachyonID, hpr_k, Radian hdg, Radian pitch, Radian roll, const Param& p={});
-        SetOrientation3(TachyonID, const Quaternion3D&, const Param& p={});
-        ~SetOrientation3();
+        SetOrientation³(TachyonID, hpr_k, Radian hdg, Radian pitch, Radian roll, const Param& p={});
+        SetOrientation³(TachyonID, const Quaternion3D&, const Param& p={});
+        ~SetOrientation³();
     
         const Quaternion3D&   orientation() const  { return m_orientation; }
         

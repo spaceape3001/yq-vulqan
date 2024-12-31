@@ -142,7 +142,7 @@ namespace yq::tachyon {
 
         if(types(Type::Camera))
             m_cameras.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Camera3))
+        //if(types(Type::Camera³))
         //    m_camera3s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Controller))
             m_controllers.insert(t, tac.data.ptr(), tac.snap.ptr());
@@ -190,7 +190,7 @@ namespace yq::tachyon {
     }
 
     #if 0
-    bool Frame::contains(Camera3ID id) const
+    bool Frame::contains(Camera³ID id) const
     {
         return m_camera3s.has(id);
     }
@@ -412,7 +412,7 @@ namespace yq::tachyon {
     }
 
     #if 0
-    const Camera3Data*                  Frame::data(Camera3ID id) const
+    const Camera³Data*                  Frame::data(Camera³ID id) const
     {
         return m_camera3s.data(id);
     }
@@ -518,7 +518,7 @@ namespace yq::tachyon {
     }
 
     #if 0
-    Camera3*                            Frame::object(Camera3ID id) const
+    Camera³*                            Frame::object(Camera³ID id) const
     {
         return m_camera3s.pointer(id);
     }
@@ -647,7 +647,7 @@ namespace yq::tachyon {
             << "  Clock:        " << std::format("{:%Y%m%d %H:%M:%S.%Z}", m_wallclock) << "\n"
             << "     - - - - - \n"
             << "  Cameras:      " << count(CAMERA) << "\n"
-            //<< "  Camera3s:     " << count(CAMERA3) << "\n"
+            //<< "  Camera³s:     " << count(CAMERA3) << "\n"
             << "  Controllers:  " << count(CONTROLLER) << "\n"
             << "  Cursors:      " << count(CURSOR) << "\n"
             << "  Desktops:     " << count(DESKTOP) << "\n"
@@ -674,7 +674,7 @@ namespace yq::tachyon {
     }
 
     #if 0
-    const Camera3Snap*                 Frame::snap(Camera3ID id) const
+    const Camera³Snap*                 Frame::snap(Camera³ID id) const
     {
         return m_camera3s.snap(id);
     }

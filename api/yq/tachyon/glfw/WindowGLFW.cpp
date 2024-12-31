@@ -679,7 +679,7 @@ namespace yq::tachyon {
     {
         auto w = writer<WindowGLFW>();
         w.description("GLFW Window");
-        w.interface<IPosition2>();
+        w.interface<IPosition²>();
         w.slot(&WindowGLFW::on_aspect_command);
         w.slot(&WindowGLFW::on_attention_command);
         w.slot(&WindowGLFW::on_cursor_capture_command);

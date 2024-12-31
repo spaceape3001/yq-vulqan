@@ -11,18 +11,18 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Spatial3;
-    using Spatial3Ptr      = Ref<Spatial3>;
-    using Spatial3CPtr     = Ref<const Spatial3>;
+    class Spatial³;
+    using Spatial³Ptr      = Ref<Spatial³>;
+    using Spatial³CPtr     = Ref<const Spatial³>;
 
-    struct Spatial3Snap;
-    using Spatial3SnapPtr  = Ref<Spatial3Snap>;
-    using Spatial3SnapCPtr = Ref<const Spatial3Snap>;
+    struct Spatial³Snap;
+    using Spatial³SnapPtr  = Ref<Spatial³Snap>;
+    using Spatial³SnapCPtr = Ref<const Spatial³Snap>;
     
-    struct Spatial3Data;
-    using Spatial3DataPtr  = Ref<Spatial3Data>;
-    using Spatial3DataCPtr = Ref<const Spatial3Data>;
+    struct Spatial³Data;
+    using Spatial³DataPtr  = Ref<Spatial³Data>;
+    using Spatial³DataCPtr = Ref<const Spatial³Data>;
 
     template <class> class ID;
-    using Spatial3ID = ID<Spatial3>;
+    using Spatial³ID = ID<Spatial³>;
 }

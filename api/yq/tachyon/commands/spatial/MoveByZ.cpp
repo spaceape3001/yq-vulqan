@@ -7,22 +7,22 @@
 #include "MoveByZ.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByZ)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByᶻ)
 
 namespace yq::tachyon {
-    MoveByZ::MoveByZ(TachyonID tid, double Δz, const Param& p) : 
+    MoveByᶻ::MoveByᶻ(TachyonID tid, double Δz, const Param& p) : 
         SpatialCommand(tid, p), m_Δz(Δz)
     {
     }
     
-    MoveByZ::~MoveByZ()
+    MoveByᶻ::~MoveByᶻ()
     {
     }
     
-    void MoveByZ::init_info()
+    void MoveByᶻ::init_info()
     {
-        auto w = writer<MoveByZ>();
+        auto w = writer<MoveByᶻ>();
         w.description("Position MoveBy Command in Z");
-        w.property("Δz", &MoveByZ::Δz);
+        w.property("Δz", &MoveByᶻ::Δz);
     }
 }

@@ -7,22 +7,22 @@
 #include "MoveByX.hpp"
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByX)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByˣ)
 
 namespace yq::tachyon {
-    MoveByX::MoveByX(TachyonID tid, double Δx, const Param& p) : 
+    MoveByˣ::MoveByˣ(TachyonID tid, double Δx, const Param& p) : 
         SpatialCommand(tid, p), m_Δx(Δx)
     {
     }
     
-    MoveByX::~MoveByX()
+    MoveByˣ::~MoveByˣ()
     {
     }
     
-    void MoveByX::init_info()
+    void MoveByˣ::init_info()
     {
-        auto w = writer<MoveByX>();
+        auto w = writer<MoveByˣ>();
         w.description("Position MoveBy Command in X");
-        w.property("Δx", &MoveByX::Δx);
+        w.property("Δx", &MoveByˣ::Δx);
     }
 }

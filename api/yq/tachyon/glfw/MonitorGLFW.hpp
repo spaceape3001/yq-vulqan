@@ -13,7 +13,7 @@ struct GLFWmonitor;
 struct GLFWvidmode;
 
 namespace yq::tachyon {
-    class MonitorGLFW : public Monitor, private IPosition2 {
+    class MonitorGLFW : public Monitor, private IPosition² {
         YQ_TACHYON_DECLARE(MonitorGLFW, Monitor);
     public:
         MonitorGLFW(GLFWmonitor*, const Param&p = {});

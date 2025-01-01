@@ -16,21 +16,21 @@ namespace yq::tachyon {
     
         Simple widget that allows for a camera & scene (render-frame)
     */
-    class Scene3DWidget : public Widget {
-        YQ_TACHYON_DECLARE(Scene3DWidget, Widget)
+    class Scene3DWidget0 : public Widget {
+        YQ_TACHYON_DECLARE(Scene3DWidget0, Widget)
     public:
     
         //! Our perspective (ie, camera)
-        Perspective     perspective;
+        Perspective0    perspective;
         
         //! Our scene (ie, renders, lights, etc)
-        Scene           scene;
+        Scene0          scene;
     
         //! Default constructor
-        Scene3DWidget();
+        Scene3DWidget0();
         
         //! Default destructor
-        virtual ~Scene3DWidget();
+        virtual ~Scene3DWidget0();
     
         //! Vulkan recording override
         virtual void    vulkan_(ViContext&) override;

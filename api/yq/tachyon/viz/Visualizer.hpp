@@ -37,9 +37,9 @@ namespace yq::tachyon {
     //class Rendered;
     //class Pipeline;
     //class Texture;
-    class Scene;
+    class Scene0;
     
-    struct Perspective;
+    struct Perspective0;
 
     class Visualizer : public ViVisualizer  {
     public:
@@ -70,7 +70,7 @@ namespace yq::tachyon {
         */
         std::error_code                 draw(ViContext&, const DrawFunctions& functions);
         
-        void                            draw_scene(ViContext&, const Scene&, const Perspective&);
+        void                            draw_scene(ViContext&, const Scene0&, const Perspective0&);
         
         //! Draw a specific item, matrix assumed correct
         void                            draw_object(ViContext&, const RenderedCPtr&, Tristate wireframe=Tristate::INHERIT);
@@ -104,7 +104,7 @@ namespace yq::tachyon {
         // used if no draw function is provided
         //virtual void                    record(ViContext&){}
 
-        void                            update(ViContext&, const Scene&);
+        void                            update(ViContext&, const Scene0&);
         
         Visualizer(const ViewerCreateInfo&, GLFWwindow*, Cleanup&);
         ~Visualizer();

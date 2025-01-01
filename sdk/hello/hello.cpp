@@ -175,8 +175,8 @@ struct HelloQuad : public Rendered {
 
 YQ_OBJECT_IMPLEMENT(HelloQuad)
 
-struct HelloScene : public Scene3DWidget {
-    YQ_OBJECT_DECLARE(HelloScene, Scene3DWidget)
+struct HelloScene : public Scene3DWidget0 {
+    YQ_OBJECT_DECLARE(HelloScene, Scene3DWidget0)
     
     Ref<HelloTriangle>      triangle;
     Ref<Triangle³>          tri2;
@@ -202,7 +202,7 @@ struct HelloScene : public Scene3DWidget {
     
     Execution tick(Context& ctx)
     {
-        Scene3DWidget::tick(ctx);
+        Scene3DWidget0::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
         send(new SetOrientation³(triSpatialID, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
@@ -213,7 +213,7 @@ struct HelloScene : public Scene3DWidget {
     
     void    vulkan_(ViContext& v)
     {
-        Scene3DWidget::vulkan_(v);
+        Scene3DWidget0::vulkan_(v);
     }
 };
 

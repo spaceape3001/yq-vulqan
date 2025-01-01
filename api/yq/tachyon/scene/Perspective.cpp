@@ -9,12 +9,12 @@
 #include <yq/tachyon/cameras/NullCamera.hpp>
 
 namespace yq::tachyon {
-    Perspective::Perspective()
+    Perspective0::Perspective0()
     {
         camera = new NullCamera;
     }
     
-    Perspective::~Perspective()
+    Perspective0::~Perspective0()
     {
     }
 }

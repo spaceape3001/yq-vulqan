@@ -14,7 +14,7 @@ namespace yq::tachyon {
     
         This will include lighting (eventually) & rendered objects.
     */
-    struct Scene {
+    struct Scene0 {
         std::vector<RenderedPtr>    things;
         std::optional<RGB3F>        background;
         // eventually things like lights, background/layers/materials/etc will go here

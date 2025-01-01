@@ -146,8 +146,8 @@ struct CameraController : public Controller {
 
 YQ_TACHYON_IMPLEMENT(CameraController)
 
-struct CameraScene3DWidget : public Scene3DWidget {
-    YQ_TACHYON_DECLARE(CameraScene3DWidget, Scene3DWidget)
+struct CameraScene3DWidget : public Scene3DWidget0 {
+    YQ_TACHYON_DECLARE(CameraScene3DWidget, Scene3DWidget0)
 
     std::vector<const CameraInfo*>      cam_infos;
     Map<std::string,Ref<Camera>,IgCase> cameras;
@@ -285,7 +285,7 @@ struct CameraScene3DWidget : public Scene3DWidget {
         }
         #endif
 
-        Scene3DWidget::vulkan_(ctx);
+        Scene3DWidget0::vulkan_(ctx);
     }
     
     void    imgui_(ViContext&) override

@@ -21,16 +21,16 @@ namespace yq::tachyon {
     
         This is meant to capture the basics to a perspective, camera required.
     */
-    struct Perspective {
+    struct Perspective0 {
         // Only the camera shall be required
         CameraCPtr                  camera;
         std::optional<RGBA4F>       background;
         std::optional<Rectangle2D>  screen;
         Tristate                    wireframe   = Tristate::INHERIT;
         
-        Perspective();
-        Perspective(const CameraCPtr& c) : camera(c) {}
+        Perspective0();
+        Perspective0(const CameraCPtr& c) : camera(c) {}
 
-        ~Perspective();
+        ~Perspective0();
     };
 }

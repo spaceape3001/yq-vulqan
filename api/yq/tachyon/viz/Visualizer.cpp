@@ -692,7 +692,7 @@ namespace yq::tachyon {
         _draw(u, r, w);
     }
 
-    void    Visualizer::draw_scene(ViContext& u, const Scene&sc, const Perspective& p)
+    void    Visualizer::draw_scene(ViContext& u, const Scene0&sc, const Perspective0& p)
     {
         if(u.viz != this) //  fast reject
             return ;
@@ -720,7 +720,7 @@ namespace yq::tachyon {
         }
     }
 
-    void               Visualizer::update(ViContext&u, const Scene&sc)
+    void               Visualizer::update(ViContext&u, const Scene0&sc)
     {
         if(u.frame0){
             for(auto& r : sc.things){

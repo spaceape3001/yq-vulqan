@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Trigger.hpp>
+#include <yt/Action.hpp>
 #include <yt/DelegateInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -14,18 +14,18 @@ namespace yq::tachyon {
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class TriggerInfo::Writer : public DelegateInfo::Writer<C> {
+    class ActionInfo::Writer : public DelegateInfo::Writer<C> {
     public:
     
-        Writer(TriggerInfo* pInfo) : DelegateInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(ActionInfo* pInfo) : DelegateInfo::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
-        Writer(TriggerInfo& pInfo) : Writer(&pInfo)
+        Writer(ActionInfo& pInfo) : Writer(&pInfo)
         {
         }
 
     private:
-        TriggerInfo* m_meta;
+        ActionInfo* m_meta;
     };
 }

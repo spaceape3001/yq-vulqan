@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Delegate.hpp"
-#include <yq/tachyon/api/DelegateInfoWriter.hpp>
+#include <yt/Delegate.hpp>
+#include <yt/DelegateInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Delegate)
 

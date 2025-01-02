@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "build.hpp"
+#include <yt/build.hpp>
 
 namespace yq::build {
     //! The share path to the one inside the build directory;

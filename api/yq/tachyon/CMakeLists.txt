@@ -15,7 +15,6 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
-    strings.cpp
 
     #glfw/GLFWManager.cpp
     
@@ -32,7 +31,6 @@ add_library(${PROJECT_NAME} SHARED
     api/Command.cpp
     api/Controller.cpp
     #api/Context.hpp
-    api/Delegate.cpp
     #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
@@ -167,8 +165,6 @@ add_library(${PROJECT_NAME} SHARED
     commands/spatial/SetScaleY.cpp
     commands/spatial/SetScaleZ.cpp
     commands/spatial/YawBy.cpp
-    
-    config/build.cpp
     
     desktop/Cursor.cpp
     desktop/Desktop.cpp
@@ -391,23 +387,13 @@ target_compile_definitions(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
 PUBLIC
+    ../../../lib/tachyon/public
     ${VULQAN_API_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME} 
 PUBLIC 
-    yq_asset
-    yq_color
-    yq_gui3rd
-    yq_imgui 
-    yq_keyv
-    yq_process
-    yq_raster
-    yq_stb 
-    yq_vma
-
-    ${Vulkan_LIBRARIES} 
-    ${GLFW3_LIBRARY} 
+    yq_tachyon2
 )
 
 LinkTest(${PROJECT_NAME})

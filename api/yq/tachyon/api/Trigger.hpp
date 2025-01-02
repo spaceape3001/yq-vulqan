@@ -11,7 +11,7 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/api/Delegate.hpp>
+#include <yt/Delegate.hpp>
 #include <yq/tachyon/enum/MismatchPolicy.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/trigger.hpp>

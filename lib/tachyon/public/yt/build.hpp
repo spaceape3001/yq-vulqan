@@ -6,4 +6,7 @@
 
 #pragma once
 
-#include <yt/keywords.hpp>
+namespace yq::build {
+    //! The share path to the one inside the build directory;
+    const char*     data_directory();
+}

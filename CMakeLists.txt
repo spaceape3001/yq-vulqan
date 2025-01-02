@@ -54,6 +54,7 @@ set(YQ_TACHYON_DATA_DIR "${CMAKE_CURRENT_LIST_DIR}/data" )
 
 
 add_subdirectory(3rd)
+add_subdirectory(lib)
 add_subdirectory(api)
 
 if(${Build_UnitTests})
@@ -66,6 +67,8 @@ add_subdirectory(tool)
 if(${Build_SDK})
     add_subdirectory(sdk)
 endif()
+add_subdirectory(exe)
+
 add_subdirectory(plugin)
 
 #   Not in GIT, but a spot to experiement

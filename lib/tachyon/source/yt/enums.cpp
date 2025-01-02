@@ -33,6 +33,8 @@
 #include <yt/gfx/Topology.hpp>
 #include <yt/gfx/VertexInputRate.hpp>
 
+#include <yt/msg/Response.hpp>
+
 #include <yt/os/JoystickHatState.hpp>
 #include <yt/os/MouseButton.hpp>
 #include <yt/os/MouseMode.hpp>
@@ -66,6 +68,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PolygonMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PresentMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::RasterType)
+YQ_TYPE_IMPLEMENT(yq::tachyon::Response)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerAddressMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlags)

@@ -6,7 +6,7 @@
 
 #include "EmptyEvent.hpp"
 #include <yq/core/DelayInit.hpp>
-#include <yq/tachyon/api/EventInfoWriter.hpp>
+#include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     EmptyEvent::EmptyEvent(const Param& p) : Event(p) 

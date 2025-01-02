@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MonitorDisconnectEvent.hpp"
-#include <yq/tachyon/api/EventInfoWriter.hpp>
+#include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void MonitorDisconnectEvent::init_info()

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "JoystickReleaseEvent.hpp"
-#include <yq/tachyon/api/EventInfoWriter.hpp>
+#include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickReleaseEvent::init_info()

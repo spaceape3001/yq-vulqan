@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MonitorConnectEvent.hpp"
-#include <yq/tachyon/api/EventInfoWriter.hpp>
+#include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void MonitorConnectEvent::init_info()

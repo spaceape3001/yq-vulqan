@@ -7,7 +7,7 @@
 
 #include "VulqanEvent.hpp"
 
-#include <yq/tachyon/api/EventInfoWriter.hpp>
+#include <yt/msg/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VulqanEvent)
 

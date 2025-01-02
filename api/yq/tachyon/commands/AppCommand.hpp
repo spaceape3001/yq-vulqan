@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Command.hpp>
+#include <yt/msg/Command.hpp>
 
 namespace yq::tachyon {
     class AppCommandInfo : public CommandInfo {

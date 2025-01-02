@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "StringReply.hpp"
-#include <yq/tachyon/api/ReplyInfoWriter.hpp>
+#include <yt/msg/ReplyInfoWriter.hpp>
 
 namespace yq::tachyon {
     StringReply::StringReply(const RequestCPtr&rq, std::string&& k, const Param& p) : Reply(rq, p), m_text(std::move(k))

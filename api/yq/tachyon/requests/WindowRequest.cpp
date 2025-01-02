@@ -6,7 +6,7 @@
 
 #include "WindowRequest.hpp"
 
-#include <yq/tachyon/api/RequestInfoWriter.hpp>
+#include <yt/msg/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowRequest)
 

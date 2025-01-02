@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "KeyRepeatEvent.hpp"
-#include <yq/tachyon/api/EventInfoWriter.hpp>
+#include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     KeyRepeatEvent::KeyRepeatEvent(Window*w, const Param& p) : KeyboardEvent(w, p), m_scan(p.scan), m_key(p.key)

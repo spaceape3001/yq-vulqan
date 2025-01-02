@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Reply.hpp>
+#include <yt/msg/Reply.hpp>
 #include <yq/tachyon/api/TachyonBind.hpp>
 
 namespace yq::tachyon {

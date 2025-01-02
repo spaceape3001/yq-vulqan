@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Event.hpp>
+#include <yt/msg/Event.hpp>
 #include <yq/tachyon/api/ThreadBind.hpp>
 #include <yt/typedef/thread.hpp>
 

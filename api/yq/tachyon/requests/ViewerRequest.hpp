@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Request.hpp>
+#include <yt/msg/Request.hpp>
 #include <yq/tachyon/app/ViewerBind.hpp>
 
 namespace yq::tachyon {

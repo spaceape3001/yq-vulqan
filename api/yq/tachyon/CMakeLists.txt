@@ -158,8 +158,6 @@ add_library(${PROJECT_NAME} SHARED
     commands/spatial/SetScaleZ.cpp
     commands/spatial/YawBy.cpp
 
-    enum/enum.cpp
-
     events/AppEvent.cpp
     events/CameraEvent.cpp
     events/EmptyEvent.cpp

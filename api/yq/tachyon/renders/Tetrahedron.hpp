@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/ColorVertexData.hpp>
-#include <yq/tachyon/gfx/VBO.hpp>
+#include <yt/gfx/VBO.hpp>
 #include <yq/tachyon/3D/Rendered3.hpp>
 
 #include <array>

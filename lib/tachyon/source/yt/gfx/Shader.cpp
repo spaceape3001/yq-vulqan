@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Shader.hpp"
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/asset/AssetFactory.hpp>
@@ -12,6 +11,7 @@
 #include <yq/asset/AssetIO.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/text/format.hpp>
+#include <yt/gfx/Shader.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Shader>&  Shader::cache()

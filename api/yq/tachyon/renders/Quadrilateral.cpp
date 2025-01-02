@@ -12,7 +12,7 @@
 #include <yq/vector/Vector3.hxx>
 
 #include <yq/tachyon/3D/Rendered3InfoWriter.hpp>
-#include <yq/tachyon/gfx/Shader.hpp>
+#include <yt/gfx/Shader.hpp>
 
 
 namespace yq::tachyon {

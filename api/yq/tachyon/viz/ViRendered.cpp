@@ -13,8 +13,8 @@
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/3D/Rendered3.hpp>
-#include <yq/tachyon/gfx/PushData.hpp>
-#include <yq/tachyon/gfx/Pipeline.hpp>
+#include <yt/gfx/PushData.hpp>
+#include <yt/gfx/Pipeline.hpp>
 #include <yq/tachyon/scene/Rendered.hpp>
 #include <yq/tachyon/v/VqEnums.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>

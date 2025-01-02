@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/gfx/Sampler.hpp>
+#include <yt/gfx/Sampler.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 

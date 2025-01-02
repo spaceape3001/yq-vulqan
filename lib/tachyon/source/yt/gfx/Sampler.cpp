@@ -4,11 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Sampler.hpp"
-
 #include <yq/asset/AssetFactory.hpp>
 #include <yq/asset/AssetInfoWriter.hpp>
-#include <yq/tachyon/gfx/Sampler.hpp>
+#include <yt/gfx/Sampler.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Sampler>&   Sampler::cache()

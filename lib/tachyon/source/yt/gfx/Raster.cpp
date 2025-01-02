@@ -4,9 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Raster.hpp"
-
-#include <yq/raster/Pixels.hxx>
 
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
@@ -16,7 +13,9 @@
 #include <yq/asset/AssetInfoWriter.hpp>
 #include <yq/asset/AssetIO.hpp>
 
-#include <yq/tachyon/gfx/PipelineUtils.hpp>
+#include <yt/gfx/PipelineUtils.hpp>
+#include <yt/gfx/Raster.hpp>
+#include <yq/raster/Pixels.hxx>
 
 namespace yq::tachyon {
     TypedAssetFactory<Raster>&  Raster::cache()

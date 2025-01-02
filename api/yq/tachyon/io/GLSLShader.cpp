@@ -11,7 +11,7 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/process/Execute.hpp>
-#include <yq/tachyon/gfx/Shader.hpp>
+#include <yt/gfx/Shader.hpp>
 #include <yq/text/chars.hpp>
 
 namespace yq::errors {

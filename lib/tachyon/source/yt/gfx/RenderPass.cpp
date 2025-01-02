@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "RenderPass.hpp"
-#include <yq/tachyon/gfx/RenderPassInfo.hpp>
+#include <yt/gfx/RenderPass.hpp>
+#include <yt/gfx/RenderPassInfo.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <map>
 

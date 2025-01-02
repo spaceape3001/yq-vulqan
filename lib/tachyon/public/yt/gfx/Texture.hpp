@@ -14,7 +14,7 @@
 #include <yt/gfx/ImageAspect.hpp>
 #include <yt/gfx/ImageViewCreateFlags.hpp>
 #include <yt/gfx/ImageViewType.hpp>
-#include <yq/tachyon/gfx/SamplerInfo.hpp>
+#include <yt/gfx/SamplerInfo.hpp>
 #include <yt/typedef/raster.hpp>
 #include <yt/typedef/sampler.hpp>
 #include <yt/typedef/texture.hpp>

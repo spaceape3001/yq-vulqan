@@ -12,13 +12,13 @@
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/Frame.hpp>
-#include <yq/tachyon/api/Raster.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/app/ViewerBind.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
 #include <yq/tachyon/app/ViewerException.hpp>
 #include <yq/tachyon/api/Widget.hpp>
+#include <yt/gfx/Raster.hpp>
 #include <yt/os/Window.hpp>
 #include <yt/os/WindowData.hpp>
 

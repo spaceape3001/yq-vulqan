@@ -19,12 +19,12 @@
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonInfoWriter.hpp>
-#include <yq/tachyon/api/Raster.hpp>
-#include <yq/tachyon/gfx/Pipeline.hpp>
-#include <yq/tachyon/gfx/PipelineWriter.hpp>
-#include <yq/tachyon/gfx/Sampler.hpp>
-#include <yq/tachyon/gfx/Shader.hpp>
-#include <yq/tachyon/gfx/Texture.hpp>
+#include <yt/gfx/Raster.hpp>
+#include <yt/gfx/Pipeline.hpp>
+#include <yt/gfx/PipelineWriter.hpp>
+#include <yt/gfx/Sampler.hpp>
+#include <yt/gfx/Shader.hpp>
+#include <yt/gfx/Texture.hpp>
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/app/ViewerState.hpp>
 #include <yq/tachyon/events/KeyCharacterEvent.hpp>

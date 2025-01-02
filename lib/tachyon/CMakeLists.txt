@@ -23,6 +23,15 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/Delegate.cpp
     source/yt/Undo.cpp
 
+    source/yt/gfx/Buffer.cpp
+    source/yt/gfx/Pipeline.cpp
+    source/yt/gfx/PipelineUtils.cpp
+    source/yt/gfx/Raster.cpp
+    source/yt/gfx/RenderPass.cpp
+    source/yt/gfx/Sampler.cpp
+    source/yt/gfx/Shader.cpp
+    source/yt/gfx/Texture.cpp
+
     source/yt/msg/Action.cpp
     source/yt/msg/Command.cpp
     source/yt/msg/Event.cpp

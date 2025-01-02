@@ -11,7 +11,7 @@
 #include <yq/shape/shape_utils.hpp>
 
 #include <yq/tachyon/3D/Rendered3InfoWriter.hpp>
-#include <yq/tachyon/gfx/Shader.hpp>
+#include <yt/gfx/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 

@@ -8,9 +8,9 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/Memory.hpp>
-#include <yq/tachyon/api/RasterInfo.hpp>
-#include <yt/typedef/raster.hpp>
 #include <yq/raster/forward.hpp>
+#include <yt/gfx/RasterInfo.hpp>
+#include <yt/typedef/raster.hpp>
 
 namespace yq::tachyon {
     class Buffer;

@@ -9,7 +9,7 @@
 #include <yt/typedef/sampler.hpp>
 #include <yq/core/Ref.hpp>
 #include <vulkan/vulkan_core.h>
-#include <yq/tachyon/gfx/SamplerInfo.hpp>
+#include <yt/gfx/SamplerInfo.hpp>
 #include <system_error>
 
 namespace yq::tachyon {

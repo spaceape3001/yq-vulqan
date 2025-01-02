@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Texture.hpp"
 
-#include <yq/tachyon/api/Raster.hpp>
-#include <yq/tachyon/gfx/Sampler.hpp>
+#include <yt/gfx/Raster.hpp>
+#include <yt/gfx/Sampler.hpp>
+#include <yt/gfx/Texture.hpp>
 
 namespace yq::tachyon {
     TextureCPtr  Texture::load(std::string_view pp)

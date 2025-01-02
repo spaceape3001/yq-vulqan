@@ -9,7 +9,7 @@
 #include <yq/core/Ref.hpp>
 #include <yq/shape/Size4.hpp>
 #include <yq/typedef/size4.hpp>
-#include <yq/tachyon/api/RasterInfo.hpp>
+#include <yt/gfx/RasterInfo.hpp>
 #include <yt/typedef/raster.hpp>
 #include <vk_mem_alloc.h>
 #include <vulkan/vulkan_core.h>

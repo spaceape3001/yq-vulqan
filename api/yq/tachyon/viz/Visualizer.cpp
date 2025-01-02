@@ -28,8 +28,8 @@
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
-#include <yq/tachyon/api/Raster.hpp>
-#include <yq/tachyon/gfx/ImageViewInfo.hpp>
+#include <yt/gfx/Raster.hpp>
+#include <yt/gfx/ImageViewInfo.hpp>
 #include <yq/tachyon/scene/Perspective.hpp>
 #include <yq/tachyon/scene/Scene.hpp>
 #include <yq/tachyon/v/VulqanException.hpp>

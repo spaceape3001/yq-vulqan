@@ -7,7 +7,7 @@
 #include "ViImage.hpp"
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Raster.hpp>
+#include <yt/gfx/Raster.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>

@@ -36,7 +36,6 @@ add_library(${PROJECT_NAME} SHARED
     api/Manager.cpp
     api/Model.cpp
     api/Proxy.cpp
-    api/Raster.cpp
     api/Tachyon.cpp
     api/Thread.cpp
     #api/Tool.cpp
@@ -222,14 +221,6 @@ add_library(${PROJECT_NAME} SHARED
     
     # font/Font.cpp      # Issue/TODO
     
-    gfx/Buffer.cpp
-    gfx/Pipeline.cpp
-    gfx/PipelineUtils.cpp
-    gfx/RenderPass.cpp
-    gfx/Sampler.cpp
-    gfx/Shader.cpp
-    gfx/Texture.cpp
-
     glfw/CursorGLFW.cpp
     glfw/DesktopGLFW.cpp
     glfw/JoystickGLFW.cpp

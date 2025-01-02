@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "GLSLShader.hpp"
+#include <yt/io/GLSLShader.hpp>
 
 #include <yq/asset/AssetFactory.hpp>
 #include <yq/core/ErrorDB.hpp>

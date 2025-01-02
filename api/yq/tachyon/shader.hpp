@@ -7,4 +7,4 @@
 #pragma once
 
 #include <yt/gfx/Shader.hpp>
-#include <yq/tachyon/io/GLSLShader.hpp>
+#include <yt/io/GLSLShader.hpp>

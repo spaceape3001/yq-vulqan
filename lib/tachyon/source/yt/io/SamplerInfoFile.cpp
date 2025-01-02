@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SamplerInfoFile.hpp"
+#include <yt/io/SamplerInfoFile.hpp>
 
 #include <yq/strings.hpp>
 #include <yq/container/set_utils.hpp>

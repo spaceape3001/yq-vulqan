@@ -32,6 +32,10 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/gfx/Shader.cpp
     source/yt/gfx/Texture.cpp
 
+    source/yt/io/GLSLShader.cpp
+    source/yt/io/SamplerInfoFile.cpp
+    source/yt/io/STBImage.cpp
+
     source/yt/msg/Action.cpp
     source/yt/msg/Command.cpp
     source/yt/msg/Event.cpp
@@ -40,7 +44,6 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/msg/Reply.cpp
     source/yt/msg/Request.cpp
     source/yt/msg/Trigger.cpp
-
     
     source/yt/os/Cursor.cpp
     source/yt/os/Desktop.cpp

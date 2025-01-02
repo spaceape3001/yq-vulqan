@@ -232,10 +232,6 @@ add_library(${PROJECT_NAME} SHARED
     interfaces/IPosition2.cpp
     interfaces/IPosition3.cpp
 
-    io/GLSLShader.cpp
-    io/SamplerInfoFile.cpp
-    io/STBImage.cpp
-
     #manipulator/Manipulator.cpp
     
     

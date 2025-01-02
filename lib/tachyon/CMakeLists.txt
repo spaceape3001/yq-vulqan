@@ -20,12 +20,17 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/build.cpp
     source/yt/enums.cpp
     source/yt/strings.cpp
-    source/yt/Action.cpp
-    source/yt/Command.cpp
     source/yt/Delegate.cpp
-    source/yt/Post.cpp
-    source/yt/Trigger.cpp
     source/yt/Undo.cpp
+
+    source/yt/msg/Action.cpp
+    source/yt/msg/Command.cpp
+    source/yt/msg/Event.cpp
+    source/yt/msg/Message.cpp
+    source/yt/msg/Post.cpp
+    source/yt/msg/Reply.cpp
+    source/yt/msg/Request.cpp
+    source/yt/msg/Trigger.cpp
 
     #######################################################
     #   Vulqan
@@ -41,6 +46,11 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/triggers/OrTrigger.cpp
     source/ya/triggers/PostTrigger.cpp
     
+    source/ya/messages/EmptyMessage.cpp
+
+    source/ya/posts/AnyPost.cpp
+    source/ya/posts/EmptyPost.cpp
+    source/ya/posts/StringPost.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

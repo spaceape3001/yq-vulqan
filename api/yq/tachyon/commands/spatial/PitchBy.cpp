@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PitchBy.hpp"
-#include <yq/tachyon/api/CommandInfoWriter.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::PitchBy)

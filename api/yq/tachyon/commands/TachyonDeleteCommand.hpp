@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/commands/TachyonCommand.hpp>
-#include <yq/tachyon/typedef/thread.hpp>
+#include <yt/typedef/thread.hpp>
 
 namespace yq::tachyon {
     class TachyonDeleteCommand : public TachyonCommand {

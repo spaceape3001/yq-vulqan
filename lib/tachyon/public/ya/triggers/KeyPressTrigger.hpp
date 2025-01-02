@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Trigger.hpp>
+#include <yt/msg/Trigger.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/KeyCode.hpp>
 

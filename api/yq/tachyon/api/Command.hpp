@@ -1,2 +1,2 @@
 #pragma once
-#include <yt/Command.hpp>
+#include <yt/msg/Command.hpp>

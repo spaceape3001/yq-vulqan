@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SetOrientation3.hpp"
-#include <yq/tachyon/api/CommandInfoWriter.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/vector/Quaternion3.hxx>
 

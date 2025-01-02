@@ -8,7 +8,7 @@
 #include <yq/tachyon/scene/LightBind.hpp>
 #include <yq/tachyon/scene/LightData.hpp>
 #include <yq/tachyon/scene/LightInfoWriter.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

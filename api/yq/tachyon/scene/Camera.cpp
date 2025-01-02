@@ -8,7 +8,7 @@
 #include <yq/tachyon/scene/CameraBind.hpp>
 #include <yq/tachyon/scene/CameraData.hpp>
 #include <yq/tachyon/scene/CameraInfoWriter.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

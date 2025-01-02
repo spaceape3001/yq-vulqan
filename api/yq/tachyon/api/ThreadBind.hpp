@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/thread.hpp>
+#include <yt/typedef/thread.hpp>
 
 namespace yq::tachyon {
     /*

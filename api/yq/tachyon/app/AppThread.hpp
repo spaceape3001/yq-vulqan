@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Thread.hpp>
-#include <yq/tachyon/typedef/clock.hpp>
+#include <yt/typedef/clock.hpp>
 
 namespace yq::tachyon {
     class Application;

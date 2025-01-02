@@ -31,16 +31,12 @@ add_library(${PROJECT_NAME} SHARED
     api/Controller.cpp
     #api/Context.hpp
     #api/Editor.cpp
-    api/Event.cpp
     api/Frame.cpp
     api/InterfaceInfo.cpp
     api/Manager.cpp
-    api/Message.cpp
     api/Model.cpp
     api/Proxy.cpp
     api/Raster.cpp
-    api/Reply.cpp
-    api/Request.cpp
     api/Tachyon.cpp
     api/Thread.cpp
     #api/Tool.cpp
@@ -265,13 +261,8 @@ add_library(${PROJECT_NAME} SHARED
 
     #manipulator/Manipulator.cpp
     
-    messages/EmptyMessage.cpp
     
     #models/models.cpp
-
-    posts/AnyPost.cpp
-    posts/EmptyPost.cpp
-    posts/StringPost.cpp
 
     proxies/PPosition1.cpp
     proxies/PPosition2.cpp

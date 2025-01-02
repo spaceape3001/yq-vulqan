@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/typedef/thread.hpp>
+#include <yt/typedef/thread.hpp>
 #include <set>
 
 namespace yq::tachyon {

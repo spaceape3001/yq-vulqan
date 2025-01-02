@@ -6,7 +6,7 @@
 
 #include <ya/triggers/OrTrigger.hpp>
 #include <yq/container/initlist_utils.hpp>
-#include <yt/TriggerInfoWriter.hpp>
+#include <yt/msg/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::OrTrigger)
 

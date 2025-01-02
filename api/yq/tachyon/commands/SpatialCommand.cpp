@@ -6,7 +6,7 @@
 
 #include "SpatialCommand.hpp"
 //#include <yq/tachyon/scene/Spatial.hpp>
-#include <yq/tachyon/api/CommandInfoWriter.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SpatialCommand)
 

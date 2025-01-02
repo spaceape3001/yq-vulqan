@@ -1,2 +1,2 @@
 #pragma once
-#include <yt/Trigger.hpp>
+#include <yt/msg/Trigger.hpp>

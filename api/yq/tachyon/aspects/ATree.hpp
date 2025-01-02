@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/interfaces/ITree.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
+#include <yt/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class ATree : public ITree {

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "WindowRestoreCommand.hpp"
-#include <yq/tachyon/api/CommandInfoWriter.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowRestoreCommand)
 

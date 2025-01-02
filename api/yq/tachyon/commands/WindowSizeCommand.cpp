@@ -6,7 +6,7 @@
 
 #include "WindowSizeCommand.hpp"
 
-#include <yq/tachyon/api/CommandInfoWriter.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/strings.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowSizeCommand)

@@ -8,11 +8,11 @@
 
 #include <yq/core/Ref.hpp>
 #include <yt/ID.hpp>
-#include <yt/MG.hpp>
+#include <yt/msg/MG.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yt/typedef/post.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
-#include <yq/tachyon/typedef/thread.hpp>
+#include <yt/typedef/tachyon.hpp>
+#include <yt/typedef/thread.hpp>
 #include <vector>
 
 namespace yq::tachyon {

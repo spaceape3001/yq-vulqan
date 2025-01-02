@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Trigger.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Trigger.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

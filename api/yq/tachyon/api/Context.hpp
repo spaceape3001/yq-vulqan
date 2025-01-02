@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/clock.hpp>
+#include <yt/typedef/clock.hpp>
 
 namespace yq::tachyon {
     class Frame;

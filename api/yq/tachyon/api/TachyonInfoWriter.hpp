@@ -11,7 +11,7 @@
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/Interface.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

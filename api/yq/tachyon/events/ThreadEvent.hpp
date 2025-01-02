@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/api/ThreadBind.hpp>
-#include <yq/tachyon/typedef/thread.hpp>
+#include <yt/typedef/thread.hpp>
 
 namespace yq::tachyon {
     class Thread;

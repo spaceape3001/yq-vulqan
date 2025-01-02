@@ -8,7 +8,7 @@
 #include <yq/tachyon/desktop/MonitorBind.hpp>
 #include <yq/tachyon/desktop/MonitorData.hpp>
 #include <yq/tachyon/desktop/MonitorInfoWriter.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

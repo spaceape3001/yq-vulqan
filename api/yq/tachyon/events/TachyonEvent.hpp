@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/api/TachyonBind.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
+#include <yt/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class Tachyon;

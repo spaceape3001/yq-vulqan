@@ -8,7 +8,7 @@
 #include <yq/tachyon/desktop/MouseBind.hpp>
 #include <yq/tachyon/desktop/MouseData.hpp>
 #include <yq/tachyon/desktop/MouseInfoWriter.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

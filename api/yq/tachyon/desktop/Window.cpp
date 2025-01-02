@@ -8,7 +8,7 @@
 #include <yq/tachyon/desktop/WindowBind.hpp>
 #include <yq/tachyon/desktop/WindowData.hpp>
 #include <yq/tachyon/desktop/WindowInfoWriter.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 #include <yq/tachyon/commands/WindowHideCommand.hpp>
 #include <yq/tachyon/commands/WindowShowCommand.hpp>
 

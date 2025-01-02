@@ -8,7 +8,7 @@
 #include <yq/tachyon/api/ModelBind.hpp>
 #include <yq/tachyon/api/ModelData.hpp>
 #include <yq/tachyon/api/ModelInfoWriter.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

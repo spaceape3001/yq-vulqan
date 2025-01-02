@@ -14,7 +14,7 @@
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
-#include <yq/tachyon/typedef/clock.hpp>
+#include <yt/typedef/clock.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/cursor.hpp>
 #include <yq/tachyon/typedef/desktop.hpp>
@@ -34,8 +34,8 @@
 #include <yq/tachyon/typedef/scene3.hpp>
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/tachyon/typedef/spatial3.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
-#include <yq/tachyon/typedef/thread.hpp>
+#include <yt/typedef/tachyon.hpp>
+#include <yt/typedef/thread.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
 #include <yq/tachyon/typedef/window.hpp>

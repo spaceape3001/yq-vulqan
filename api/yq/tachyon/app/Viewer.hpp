@@ -12,14 +12,14 @@
 #include <yq/units.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
-#include <yq/tachyon/keywords.hpp>
+#include <yt/keywords.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/app/ViewerState.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/replies.hpp>
-#include <yq/tachyon/typedef/request.hpp>
+#include <yt/typedef/request.hpp>
 #include <yq/tachyon/typedef/requests.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/vigui.hpp>

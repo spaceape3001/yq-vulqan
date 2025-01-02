@@ -8,7 +8,7 @@
 #include <yq/tachyon/desktop/CursorBind.hpp>
 #include <yq/tachyon/desktop/CursorData.hpp>
 #include <yq/tachyon/desktop/CursorInfoWriter.hpp>
-#include <yq/tachyon/api/Post.hpp>
+#include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
 

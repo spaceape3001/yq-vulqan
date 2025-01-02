@@ -11,7 +11,7 @@
 #include <yt/keywords.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <yt/typedef/post.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
+#include <yt/typedef/tachyon.hpp>
 #include <yt/Type.hpp>
 
 namespace yq::tachyon {

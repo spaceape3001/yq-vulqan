@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Event.hpp>
-#include <yq/tachyon/glfw/Monitor.hpp>
+#include <yt/os/Monitor.hpp>
 
 namespace yq::tachyon {
     class MonitorEventInfo : public EventInfo {
@@ -19,6 +19,8 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(MonitorEventInfo)
         YQ_OBJECT_DECLARE(MonitorEvent, Event)
     public:
+    
+        // NOT USED....
     
         struct Param : public Event::Param {
         };
@@ -32,6 +34,6 @@ namespace yq::tachyon {
     protected:
         MonitorEvent(Monitor, const Param&);
     private:
-        const Monitor  m_monitor;
+        const MonitorID  m_monitor;
     };
 }

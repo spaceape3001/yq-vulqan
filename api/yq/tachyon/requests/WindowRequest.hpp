@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Request.hpp>
-#include <yq/tachyon/desktop/WindowBind.hpp>
+#include <yt/os/WindowBind.hpp>
 
 namespace yq::tachyon {
     class WindowRequestInfo : public RequestInfo {

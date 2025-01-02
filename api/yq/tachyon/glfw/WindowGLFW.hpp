@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/tachyon/desktop/Window.hpp>
-#include <yq/tachyon/desktop/WindowState.hpp>
-#include <yq/tachyon/enum/ModifierKey.hpp>
-#include <yq/tachyon/enum/MouseButton.hpp>
-#include <yq/tachyon/enum/MouseMode.hpp>
+#include <yt/os/Window.hpp>
+#include <yt/os/WindowState.hpp>
+#include <yt/os/ModifierKey.hpp>
+#include <yt/os/MouseButton.hpp>
+#include <yt/os/MouseMode.hpp>
 #include <yq/tachyon/interfaces/IPosition2.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/glfw.hpp>

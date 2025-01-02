@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/events/KeyboardEvent.hpp>
-#include <yq/tachyon/enum/KeyCode.hpp>
+#include <yt/os/KeyCode.hpp>
 
 namespace yq::tachyon {
     class KeyReleaseEvent : public KeyboardEvent {

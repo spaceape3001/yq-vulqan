@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/desktop/Keyboard.hpp>
+#include <yt/os/Keyboard.hpp>
 
 namespace yq::tachyon {
     class KeyboardGLFW : public Keyboard {

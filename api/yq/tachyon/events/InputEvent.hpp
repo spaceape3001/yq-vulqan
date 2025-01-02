@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/tachyon/api/Event.hpp>
-#include <yq/tachyon/desktop/WindowBind.hpp>
-#include <yq/tachyon/enum/ModifierKey.hpp>
+#include <yt/os/ModifierKey.hpp>
+#include <yt/os/WindowBind.hpp>
 
 namespace yq::tachyon {
     class InputEventInfo : public EventInfo {

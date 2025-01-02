@@ -9,7 +9,7 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
-#include <yq/tachyon/typedef/window.hpp>
+#include <yt/typedef/window.hpp>
 
 namespace yq::tachyon {
     struct ViewerSnap : public TachyonSnap {

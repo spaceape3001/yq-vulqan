@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/tachyon/events/InputEvent.hpp>
-#include <yq/tachyon/enum/MouseButton.hpp>
-#include <yq/tachyon/enum/ModifierKey.hpp>
+#include <yt/os/MouseButton.hpp>
+#include <yt/os/ModifierKey.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {

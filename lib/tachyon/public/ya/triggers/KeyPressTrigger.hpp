@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yt/msg/Trigger.hpp>
-#include <yq/tachyon/enum/ModifierKey.hpp>
-#include <yq/tachyon/enum/KeyCode.hpp>
+#include <yt/os/ModifierKey.hpp>
+#include <yt/os/KeyCode.hpp>
 
 namespace yq::tachyon {
     class KeyPressTrigger : public Trigger {

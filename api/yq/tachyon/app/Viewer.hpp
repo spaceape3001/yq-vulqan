@@ -25,7 +25,7 @@
 #include <yq/tachyon/typedef/vigui.hpp>
 #include <yq/tachyon/typedef/visualizer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
-#include <yq/tachyon/typedef/window.hpp>
+#include <yt/typedef/window.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>

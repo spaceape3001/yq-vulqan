@@ -19,8 +19,8 @@
 #include <yq/tachyon/app/ViewerData.hpp>
 #include <yq/tachyon/app/ViewerException.hpp>
 #include <yq/tachyon/api/Widget.hpp>
-#include <yq/tachyon/desktop/Window.hpp>
-#include <yq/tachyon/desktop/WindowData.hpp>
+#include <yt/os/Window.hpp>
+#include <yt/os/WindowData.hpp>
 
 #include <yq/tachyon/commands/ViewerAspectCommand.hpp>
 #include <yq/tachyon/commands/ViewerAttentionCommand.hpp>

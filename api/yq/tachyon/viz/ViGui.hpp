@@ -14,7 +14,7 @@
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/enum/ModifierKey.hpp>
+#include <yt/os/ModifierKey.hpp>
 #include <yq/tachyon/typedef/buffer.hpp>
 #include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>

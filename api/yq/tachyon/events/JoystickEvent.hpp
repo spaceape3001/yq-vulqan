@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Event.hpp>
-#include <yq/tachyon/glfw/Joystick.hpp>
+#include <yt/os/Joystick.hpp>
 
 namespace yq::tachyon {
     class JoystickEventInfo : public EventInfo {
@@ -25,16 +25,14 @@ namespace yq::tachyon {
         struct Param : public Event::Param {
         };
     
-        JoystickEvent(Joystick j, const Param&);
+        JoystickEvent(JoystickID j, const Param&);
         virtual ~JoystickEvent();
         
-        const Joystick& joystick() const { return m_joystick; }
-        
-        uint8_t joystick_id() const { return m_joystick.id; }
+        JoystickID          joystick() const { return m_joystick; }
         
         static void init_info();
         
     private:
-        const Joystick  m_joystick;
+        const JoystickID  m_joystick;
     };
 }

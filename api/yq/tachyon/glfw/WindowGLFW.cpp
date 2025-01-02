@@ -6,7 +6,7 @@
 
 #include "WindowGLFW.hpp"
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/desktop/WindowInfoWriter.hpp>
+#include <yt/os/WindowInfoWriter.hpp>
 #include <yq/tachyon/commands/WindowAspectCommand.hpp>
 #include <yq/tachyon/commands/WindowAttentionCommand.hpp>
 #include <yq/tachyon/commands/WindowCursorCaptureCommand.hpp>
@@ -25,7 +25,7 @@
 #include <yq/tachyon/commands/WindowSizeCommand.hpp>
 #include <yq/tachyon/commands/WindowTitleCommand.hpp>
 #include <yq/tachyon/commands/WindowUnfloatCommand.hpp>
-#include <yq/tachyon/enum/KeyCode.hpp>
+#include <yt/os/KeyCode.hpp>
 #include <yq/tachyon/events/KeyCharacterEvent.hpp>
 #include <yq/tachyon/events/KeyPressEvent.hpp>
 #include <yq/tachyon/events/KeyReleaseEvent.hpp>

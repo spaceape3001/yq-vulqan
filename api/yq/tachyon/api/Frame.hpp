@@ -16,17 +16,17 @@
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yt/typedef/clock.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
-#include <yq/tachyon/typedef/cursor.hpp>
-#include <yq/tachyon/typedef/desktop.hpp>
+#include <yt/typedef/cursor.hpp>
+#include <yt/typedef/desktop.hpp>
 #include <yt/typedef/frame.hpp>
-#include <yq/tachyon/typedef/joystick.hpp>
-#include <yq/tachyon/typedef/keyboard.hpp>
+#include <yt/typedef/joystick.hpp>
+#include <yt/typedef/keyboard.hpp>
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/light3.hpp>
 #include <yq/tachyon/typedef/manager.hpp>
 #include <yq/tachyon/typedef/model.hpp>
-#include <yq/tachyon/typedef/monitor.hpp>
-#include <yq/tachyon/typedef/mouse.hpp>
+#include <yt/typedef/monitor.hpp>
+#include <yt/typedef/mouse.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
 #include <yt/typedef/post.hpp>
@@ -38,7 +38,7 @@
 #include <yt/typedef/thread.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
-#include <yq/tachyon/typedef/window.hpp>
+#include <yt/typedef/window.hpp>
 
 #include <chrono>
 #include <unordered_map>

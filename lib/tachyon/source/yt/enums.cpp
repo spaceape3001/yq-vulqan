@@ -33,6 +33,10 @@
 #include <yt/gfx/Topology.hpp>
 #include <yt/gfx/VertexInputRate.hpp>
 
+#include <yt/os/JoystickHatState.hpp>
+#include <yt/os/MouseButton.hpp>
+#include <yt/os/MouseMode.hpp>
+
 #include <yq/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::BorderColor)
@@ -53,7 +57,11 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
+YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickHatState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MouseMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PolygonMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PresentMode)
@@ -69,4 +77,5 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScope)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScopeFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Topology)
 YQ_TYPE_IMPLEMENT(yq::tachyon::VertexInputRate)
+
 

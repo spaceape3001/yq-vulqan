@@ -157,39 +157,28 @@ add_library(${PROJECT_NAME} SHARED
     commands/spatial/SetScaleY.cpp
     commands/spatial/SetScaleZ.cpp
     commands/spatial/YawBy.cpp
-    
-    desktop/Cursor.cpp
-    desktop/Desktop.cpp
-    desktop/Joystick.cpp
-    desktop/Keyboard.cpp
-    desktop/Monitor.cpp
-    desktop/Mouse.cpp
-    desktop/VideoMode.cpp
-    desktop/Window.cpp
 
     enum/enum.cpp
-    enum/KeyCode.cpp
-    enum/ModifierKey.cpp
 
     events/AppEvent.cpp
     events/CameraEvent.cpp
     events/EmptyEvent.cpp
     events/InputEvent.cpp
-    events/JoystickAxisEvent.cpp
-    events/JoystickConnectEvent.cpp
-    events/JoystickDisconnectEvent.cpp
-    events/JoystickEvent.cpp
-    events/JoystickHatEvent.cpp
-    events/JoystickPressEvent.cpp
-    events/JoystickReleaseEvent.cpp
+    #events/JoystickAxisEvent.cpp
+    #events/JoystickConnectEvent.cpp
+    #events/JoystickDisconnectEvent.cpp
+    #events/JoystickEvent.cpp
+    #events/JoystickHatEvent.cpp
+    #events/JoystickPressEvent.cpp
+    #events/JoystickReleaseEvent.cpp
     events/KeyboardEvent.cpp
     events/KeyCharacterEvent.cpp
     events/KeyPressEvent.cpp
     events/KeyReleaseEvent.cpp
     events/KeyRepeatEvent.cpp
-    events/MonitorConnectEvent.cpp
-    events/MonitorDisconnectEvent.cpp
-    events/MonitorEvent.cpp
+    #events/MonitorConnectEvent.cpp
+    #events/MonitorDisconnectEvent.cpp
+    #events/MonitorEvent.cpp
     events/MouseCaptureEvent.cpp
     events/MouseDisableEvent.cpp
     events/MouseDropEvent.cpp

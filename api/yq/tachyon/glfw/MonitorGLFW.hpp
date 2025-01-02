@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/desktop/Monitor.hpp>
+#include <yt/os/Monitor.hpp>
 #include <yq/tachyon/interfaces/IPosition2.hpp>
 
 struct GLFWmonitor;

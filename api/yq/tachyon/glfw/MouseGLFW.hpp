@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/desktop/Mouse.hpp>
+#include <yt/os/Mouse.hpp>
 
 namespace yq::tachyon {
     class MouseGLFW : public Mouse {

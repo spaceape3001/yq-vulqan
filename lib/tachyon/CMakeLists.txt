@@ -32,6 +32,18 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/msg/Request.cpp
     source/yt/msg/Trigger.cpp
 
+    
+    source/yt/os/Cursor.cpp
+    source/yt/os/Desktop.cpp
+    source/yt/os/Joystick.cpp
+    source/yt/os/Keyboard.cpp
+    source/yt/os/KeyCode.cpp
+    source/yt/os/ModifierKey.cpp
+    source/yt/os/Monitor.cpp
+    source/yt/os/Mouse.cpp
+    source/yt/os/VideoMode.cpp
+    source/yt/os/Window.cpp
+
     #######################################################
     #   Vulqan
     

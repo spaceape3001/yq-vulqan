@@ -40,20 +40,20 @@
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
 
-#include <yq/tachyon/desktop/Cursor.hpp>
-#include <yq/tachyon/desktop/CursorData.hpp>
-#include <yq/tachyon/desktop/Desktop.hpp>
-#include <yq/tachyon/desktop/DesktopData.hpp>
-#include <yq/tachyon/desktop/Joystick.hpp>
-#include <yq/tachyon/desktop/JoystickData.hpp>
-#include <yq/tachyon/desktop/Keyboard.hpp>
-#include <yq/tachyon/desktop/KeyboardData.hpp>
-#include <yq/tachyon/desktop/Monitor.hpp>
-#include <yq/tachyon/desktop/MonitorData.hpp>
-#include <yq/tachyon/desktop/Mouse.hpp>
-#include <yq/tachyon/desktop/MouseData.hpp>
-#include <yq/tachyon/desktop/Window.hpp>
-#include <yq/tachyon/desktop/WindowData.hpp>
+#include <yt/os/Cursor.hpp>
+#include <yt/os/CursorData.hpp>
+#include <yt/os/Desktop.hpp>
+#include <yt/os/DesktopData.hpp>
+#include <yt/os/Joystick.hpp>
+#include <yt/os/JoystickData.hpp>
+#include <yt/os/Keyboard.hpp>
+#include <yt/os/KeyboardData.hpp>
+#include <yt/os/Monitor.hpp>
+#include <yt/os/MonitorData.hpp>
+#include <yt/os/Mouse.hpp>
+#include <yt/os/MouseData.hpp>
+#include <yt/os/Window.hpp>
+#include <yt/os/WindowData.hpp>
 
 #include <yq/tachyon/scene/Camera.hpp>
 #include <yq/tachyon/scene/CameraData.hpp>

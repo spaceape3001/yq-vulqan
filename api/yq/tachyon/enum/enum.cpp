@@ -9,7 +9,6 @@
 #include "CompareOp.hpp"
 #include "ComponentSwizzle.hpp"
 #include "CullMode.hpp"
-#include "DataActivity.hpp"
 #include "DataFormat.hpp"
 #include "DynamicState.hpp"
 #include "FrontFace.hpp"
@@ -45,7 +44,6 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::BufferUsageFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::CompareOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ComponentSwizzle)
 YQ_TYPE_IMPLEMENT(yq::tachyon::CullMode)
-YQ_TYPE_IMPLEMENT(yq::tachyon::DataActivity)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DataFormat)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DynamicState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::FrontFace)

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <yq/tachyon/enum/DataActivity.hpp>
+#include <yt/DataActivity.hpp>
 #include <yq/unit/declare.hpp>
 
 namespace yq::tachyon {

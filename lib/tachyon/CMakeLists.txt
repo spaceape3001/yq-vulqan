@@ -13,11 +13,33 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
-    source/yt/strings.cpp
+    
+    #######################################################
+    #   Core First
+    
     source/yt/build.cpp
-
+    source/yt/enums.cpp
+    source/yt/strings.cpp
     source/yt/Action.cpp
     source/yt/Delegate.cpp
+    source/yt/Post.cpp
+    source/yt/Trigger.cpp
+    source/yt/Undo.cpp
+
+    #######################################################
+    #   Vulqan
+    
+    #######################################################
+    #   Assets (Yes, the above will use some of these)
+
+    source/ya/triggers/AndTrigger.cpp
+    source/ya/triggers/KeyPressTrigger.cpp
+    source/ya/triggers/NandTrigger.cpp
+    source/ya/triggers/NorTrigger.cpp
+    source/ya/triggers/NotTrigger.cpp
+    source/ya/triggers/OrTrigger.cpp
+    source/ya/triggers/PostTrigger.cpp
+    
 )
 
 target_compile_definitions(${PROJECT_NAME} 
@@ -34,7 +56,7 @@ target_compile_definitions(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
 PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/public
-    ../../../api/yq
+    ${CMAKE_CURRENT_LIST_DIR}/../../api
     ${VULQAN_API_DIR}
 )
 

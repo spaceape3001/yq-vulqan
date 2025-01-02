@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "NorTrigger.hpp"
+#include <ya/triggers/NorTrigger.hpp>
 #include <yq/container/initlist_utils.hpp>
-#include <yq/tachyon/api/TriggerInfoWriter.hpp>
+#include <yt/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NorTrigger)
 

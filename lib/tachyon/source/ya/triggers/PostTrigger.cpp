@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PostTrigger.hpp"
-#include <yq/tachyon/api/TriggerInfoWriter.hpp>
+#include <ya/triggers/PostTrigger.hpp>
+#include <yt/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::PostTrigger)
 

@@ -4,13 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Undo.hpp>
+#include <yt/DataActivity.hpp>
 
-namespace yq::tachyon {
-    Undo::~Undo() = default;
+#include <yq/meta/Init.hpp>
 
-    bool Undo::combine(Undo*) 
-    { 
-        return false; 
-    }
-}
+YQ_TYPE_IMPLEMENT(yq::tachyon::DataActivity)

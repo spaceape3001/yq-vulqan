@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "NotTrigger.hpp"
-#include <yq/tachyon/api/Post.hpp>
-#include <yq/tachyon/api/TriggerInfoWriter.hpp>
+#include <ya/triggers/NotTrigger.hpp>
+#include <yt/Post.hpp>
+#include <yt/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NotTrigger)
 

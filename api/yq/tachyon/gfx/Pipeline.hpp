@@ -8,9 +8,9 @@
 
 #include <yq/core/Flags.hpp>
 
+#include <yt/DataActivity.hpp>
 #include <yq/tachyon/enum/ColorBlend.hpp>
 #include <yq/tachyon/enum/CullMode.hpp>
-#include <yq/tachyon/enum/DataActivity.hpp>
 #include <yq/tachyon/enum/DataFormat.hpp>
 #include <yq/tachyon/enum/DynamicState.hpp>
 #include <yq/tachyon/enum/FrontFace.hpp>

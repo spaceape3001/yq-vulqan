@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Message.hpp>
-#include <yq/tachyon/api/PostInfoWriter.hpp>
+#include <yt/PostInfoWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of event information

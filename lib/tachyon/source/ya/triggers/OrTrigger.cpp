@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "OrTrigger.hpp"
+#include <ya/triggers/OrTrigger.hpp>
 #include <yq/container/initlist_utils.hpp>
-#include <yq/tachyon/api/TriggerInfoWriter.hpp>
+#include <yt/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::OrTrigger)
 

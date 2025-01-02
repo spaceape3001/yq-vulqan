@@ -38,7 +38,6 @@ add_library(${PROJECT_NAME} SHARED
     api/Manager.cpp
     api/Message.cpp
     api/Model.cpp
-    api/Post.cpp
     api/Proxy.cpp
     api/Raster.cpp
     api/Reply.cpp
@@ -46,9 +45,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Tachyon.cpp
     api/Thread.cpp
     #api/Tool.cpp
-    api/Trigger.cpp
     api/TypedID.cpp
-    api/Undo.cpp
     api/Widget.cpp
 
     app/Application.cpp
@@ -323,13 +320,6 @@ add_library(${PROJECT_NAME} SHARED
     #task/TaskEngine.cpp
     #tools/tools.cpp
     
-    triggers/AndTrigger.cpp
-    triggers/KeyPressTrigger.cpp
-    triggers/NandTrigger.cpp
-    triggers/NorTrigger.cpp
-    triggers/NotTrigger.cpp
-    triggers/OrTrigger.cpp
-    triggers/PostTrigger.cpp
     
     util/LoggerBox.cpp
 

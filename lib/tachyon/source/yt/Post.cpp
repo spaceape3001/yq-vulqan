@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Post.hpp"
-#include "PostInfoWriter.hpp"
+#include <yt/Post.hpp>
+#include <yt/PostInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Post)
 

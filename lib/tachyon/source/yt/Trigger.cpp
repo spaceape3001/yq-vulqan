@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Trigger.hpp"
-#include "TriggerInfoWriter.hpp"
-#include "Post.hpp"
+#include <yt/Trigger.hpp>
+#include <yt/TriggerInfoWriter.hpp>
+#include <yt/Post.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Trigger)
 

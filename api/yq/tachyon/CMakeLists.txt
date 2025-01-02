@@ -23,6 +23,12 @@ add_library(${PROJECT_NAME} SHARED
     
     vulqan.cpp
 
+    3D/Camera3.cpp
+    3D/Light3.cpp
+    3D/Rendered3.cpp
+    3D/Scene3.cpp
+    3D/Spatial3.cpp
+
     api/Command.cpp
     api/Controller.cpp
     #api/Context.hpp
@@ -307,18 +313,13 @@ add_library(${PROJECT_NAME} SHARED
     requests/WindowRequest.cpp
 
     scene/Camera.cpp
-    scene/Camera3.cpp
     scene/Light.cpp
-    #scene/Light3.cpp
     scene/Perspective.cpp
     scene/Rendered.cpp
     #scene/Rendered2.cpp
-    scene/Rendered3.cpp
-    #scene/Scene.cpp
+    scene/Scene.cpp
     #scene/Scene2.cpp
-    #scene/Scene3.cpp
     scene/Spatial.cpp
-    scene/Spatial3.cpp
 
     spatials/SimpleSpatial3.cpp
     

@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SimpleSpatial3.hpp"
+#include <yq/tachyon/3D/Spatial3InfoWriter.hpp>
 #include <yq/tachyon/commands/spatial/MoveBy3.hpp>
 #include <yq/tachyon/commands/spatial/MoveByX.hpp>
 #include <yq/tachyon/commands/spatial/MoveByY.hpp>
@@ -21,7 +22,6 @@
 #include <yq/tachyon/commands/spatial/SetScaleY.hpp>
 #include <yq/tachyon/commands/spatial/SetScaleZ.hpp>
 #include <yq/tachyon/commands/spatial/YawBy.hpp>
-#include <yq/tachyon/scene/Spatial3InfoWriter.hpp>
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>

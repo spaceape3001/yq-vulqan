@@ -10,7 +10,7 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <yq/tachyon/scene/Rendered3.hpp>
+#include <yq/tachyon/3D/Rendered3.hpp>
 #include <yq/tachyon/gfx/Texture.hpp>
 #include <yq/tachyon/gfx/VBO.hpp>
 

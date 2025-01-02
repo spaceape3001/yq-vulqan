@@ -4,8 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Camera3.hpp"
-#include "Camera3InfoWriter.hpp"
+#include <yq/tachyon/3D/Camera3.hpp>
+#include <yq/tachyon/3D/Camera3Bind.hpp>
+#include <yq/tachyon/3D/Camera3Data.hpp>
+#include <yq/tachyon/3D/Camera3InfoWriter.hpp>
 #include <yq/tachyon/spatials/SimpleSpatial3.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
@@ -14,6 +16,7 @@ namespace yq::tachyon {
     Camera³Info::Camera³Info(std::string_view name, CameraInfo& base, const std::source_location& sl) :
         CameraInfo(name, base, sl)
     {
+        set(Type::Camera³);
     }
 
     Camera³Info::~Camera³Info()

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/scene/Rendered3.hpp>
+#include <yq/tachyon/3D/Rendered3.hpp>
 #include <yq/tachyon/api/ColorVertexData.hpp>
 #include <yq/tachyon/gfx/VBO.hpp>
 

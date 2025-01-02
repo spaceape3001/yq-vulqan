@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "Camera.hpp"
-#include <yq/tachyon/typedef/camera3.hpp>
+#include <yq/tachyon/scene/Scene.hpp>
+#include <yq/tachyon/typedef/scene3.hpp>
 #include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
@@ -17,24 +17,24 @@
 #endif
 
 namespace yq::tachyon {
-    class Camera³Info : public CameraInfo {
+    class Scene³Info : public SceneInfo {
     public:
     
         template <typename> class Writer;
         
-        Camera³Info(std::string_view, CameraInfo&, const std::source_location& sl = std::source_location::current());
+        Scene³Info(std::string_view, SceneInfo&, const std::source_location& sl = std::source_location::current());
     protected:
-        ~Camera³Info();
+        ~Scene³Info();
     };
     
-    class Camera³ : public Camera {
-        YQ_TACHYON_INFO(Camera³Info)
-        YQ_TACHYON_SNAP(Camera³Snap)
-        YQ_TACHYON_DATA(Camera³Data)
-        YQ_TACHYON_DECLARE(Camera³, Camera)
+    class Scene³ : public Scene {
+        YQ_TACHYON_INFO(Scene³Info)
+        YQ_TACHYON_SNAP(Scene³Snap)
+        YQ_TACHYON_DATA(Scene³Data)
+        YQ_TACHYON_DECLARE(Scene³, Scene)
     public:
     
-        struct Param : public Camera::Param {
+        struct Param : public Scene::Param {
             // setting *ANY* of these creates a simple spatial (3D)
         
             Vector3D        position        = NAN;
@@ -44,13 +44,13 @@ namespace yq::tachyon {
     
         static void init_info();
     
-        Camera³ID id() const { return Camera³ID(UniqueID::id()); }
+        Scene³ID id() const { return Scene³ID(UniqueID::id()); }
     
     protected:
-        Camera³(const Param&);
-        ~Camera³();
+        Scene³(const Param&);
+        ~Scene³();
         
-        void snap(Camera³Snap&) const;
+        void snap(Scene³Snap&) const;
         
         Spatial³ID      m_spatial;
     };

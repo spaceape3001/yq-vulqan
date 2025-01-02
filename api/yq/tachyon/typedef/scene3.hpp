@@ -11,18 +11,18 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class Scene3;
-    using Scene3Ptr      = Ref<Scene3>;
-    using Scene3CPtr     = Ref<const Scene3>;
+    class Scene³;
+    using Scene³Ptr      = Ref<Scene³>;
+    using Scene³CPtr     = Ref<const Scene³>;
 
-    struct Scene3Snap;
-    using Scene3SnapPtr  = Ref<Scene3Snap>;
-    using Scene3SnapCPtr = Ref<const Scene3Snap>;
+    struct Scene³Snap;
+    using Scene³SnapPtr  = Ref<Scene³Snap>;
+    using Scene³SnapCPtr = Ref<const Scene³Snap>;
     
-    struct Scene3Data;
-    using Scene3DataPtr  = Ref<Scene3Data>;
-    using Scene3DataCPtr = Ref<const Scene3Data>;
+    struct Scene³Data;
+    using Scene³DataPtr  = Ref<Scene³Data>;
+    using Scene³DataCPtr = Ref<const Scene³Data>;
 
     template <class> class ID;
-    using Scene3ID = ID<Scene3>;
+    using Scene³ID = ID<Scene³>;
 }

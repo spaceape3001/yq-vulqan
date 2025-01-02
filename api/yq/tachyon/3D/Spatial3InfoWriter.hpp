@@ -6,9 +6,9 @@
 
 #pragma once
 
+#include <yq/tachyon/3D/Spatial3.hpp>
+#include <yq/tachyon/3D/Spatial3Data.hpp>
 #include <yq/tachyon/scene/SpatialInfoWriter.hpp>
-#include <yq/tachyon/scene/Spatial3.hpp>
-#include <yq/tachyon/scene/Spatial3Data.hpp>
 
 namespace yq::tachyon {
     

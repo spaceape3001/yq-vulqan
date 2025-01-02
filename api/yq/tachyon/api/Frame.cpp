@@ -26,6 +26,17 @@
 #include "Widget.hpp"
 #include "WidgetData.hpp"
 
+#include <yq/tachyon/3D/Camera3.hpp>
+#include <yq/tachyon/3D/Camera3Data.hpp>
+#include <yq/tachyon/3D/Light3.hpp>
+#include <yq/tachyon/3D/Light3Data.hpp>
+#include <yq/tachyon/3D/Rendered3.hpp>
+#include <yq/tachyon/3D/Rendered3Data.hpp>
+#include <yq/tachyon/3D/Scene3.hpp>
+#include <yq/tachyon/3D/Scene3Data.hpp>
+#include <yq/tachyon/3D/Spatial3.hpp>
+#include <yq/tachyon/3D/Spatial3Data.hpp>
+
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
 
@@ -46,16 +57,14 @@
 
 #include <yq/tachyon/scene/Camera.hpp>
 #include <yq/tachyon/scene/CameraData.hpp>
-#include <yq/tachyon/scene/Camera3.hpp>
-#include <yq/tachyon/scene/Camera3Data.hpp>
 #include <yq/tachyon/scene/Light.hpp>
 #include <yq/tachyon/scene/LightData.hpp>
-#include <yq/tachyon/scene/Light3.hpp>
-#include <yq/tachyon/scene/Light3Data.hpp>
 #include <yq/tachyon/scene/Rendered.hpp>
 #include <yq/tachyon/scene/RenderedData.hpp>
-#include <yq/tachyon/scene/Rendered3.hpp>
-#include <yq/tachyon/scene/Rendered3Data.hpp>
+#include <yq/tachyon/scene/Scene.hpp>
+#include <yq/tachyon/scene/SceneData.hpp>
+#include <yq/tachyon/scene/Spatial.hpp>
+#include <yq/tachyon/scene/SpatialData.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -142,8 +151,8 @@ namespace yq::tachyon {
 
         if(types(Type::Camera))
             m_cameras.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Camera³))
-        //    m_camera3s.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Camera³))
+            m_camera³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Controller))
             m_controllers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Cursor))
@@ -158,8 +167,8 @@ namespace yq::tachyon {
             m_keyboards.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Light))
             m_lights.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Light3))
-        //    m_light3s.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Light³))
+            m_light³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Manager))
             m_managers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Model))
@@ -171,9 +180,15 @@ namespace yq::tachyon {
         if(types(Type::Rendered))
             m_rendereds.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Rendered³))
-            m_rendered3s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Scene))
-            //m_scenes.insert(t, tac.data.ptr(), tac.snap.ptr());
+            m_rendered³s.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Scene))
+            m_scenes.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Scene³))
+            m_scene³s.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Spatial))
+            m_spatials.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Spatial³))
+            m_spatial³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Thread))
             m_threads.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Viewer))
@@ -189,12 +204,10 @@ namespace yq::tachyon {
         return m_cameras.has(id);
     }
 
-    #if 0
     bool Frame::contains(Camera³ID id) const
     {
-        return m_camera3s.has(id);
+        return m_camera³s.has(id);
     }
-    #endif
 
     bool Frame::contains(ControllerID id) const
     {
@@ -233,12 +246,10 @@ namespace yq::tachyon {
         return m_lights.has(id);
     }
 
-    #if 0
-    bool Frame::contains(Light3ID id) const
+    bool Frame::contains(Light³ID id) const
     {
-        return m_light3s.has(id);
+        return m_light³s.has(id);
     }
-    #endif
 
     bool Frame::contains(ManagerID id) const
     {
@@ -267,16 +278,29 @@ namespace yq::tachyon {
 
     bool Frame::contains(Rendered³ID id) const
     {
-        return m_rendered3s.has(id);
+        return m_rendered³s.has(id);
     }
 
-    #if 0
     bool Frame::contains(SceneID id) const
     {
         return m_scenes.has(id);
     }
-    #endif
+
+    bool Frame::contains(Scene³ID id) const
+    {
+        return m_scene³s.has(id);
+    }
     
+    bool Frame::contains(SpatialID id) const
+    {
+        return m_spatials.has(id);
+    }
+
+    bool Frame::contains(Spatial³ID id) const
+    {
+        return m_spatial³s.has(id);
+    }
+
     bool Frame::contains(TachyonID id) const
     {
         return m_tachyons.has(id);
@@ -307,12 +331,10 @@ namespace yq::tachyon {
         return m_cameras.count();
     }
     
-    #if 0
-    size_t Frame::count(camera3_k) const
+    size_t Frame::count(camera³_k) const
     {
-        return m_camera3s.count();
+        return m_camera³s.count();
     }
-    #endif
 
     size_t Frame::count(controller_k) const
     {
@@ -344,12 +366,10 @@ namespace yq::tachyon {
         return m_lights.count();
     }
     
-    #if 0
-    size_t Frame::count(light3_k) const
+    size_t Frame::count(light³_k) const
     {
-        return m_light3s.count();
+        return m_light³s.count();
     }
-    #endif
 
     size_t Frame::count(manager_k) const
     {
@@ -376,9 +396,29 @@ namespace yq::tachyon {
         return m_rendereds.count();
     }
 
-    size_t Frame::count(rendered3_k) const
+    size_t Frame::count(rendered³_k) const
     {
-        return m_rendered3s.count();
+        return m_rendered³s.count();
+    }
+
+    size_t Frame::count(scene_k) const
+    {
+        return m_scenes.count();
+    }
+    
+    size_t Frame::count(scene³_k) const
+    {
+        return m_scene³s.count();
+    }
+
+    size_t Frame::count(spatial_k) const
+    {
+        return m_spatials.count();
+    }
+    
+    size_t Frame::count(spatial³_k) const
+    {
+        return m_spatial³s.count();
     }
 
     size_t Frame::count(tachyon_k) const
@@ -411,12 +451,10 @@ namespace yq::tachyon {
         return m_cameras.data(id);
     }
 
-    #if 0
     const Camera³Data*                  Frame::data(Camera³ID id) const
     {
-        return m_camera3s.data(id);
+        return m_camera³s.data(id);
     }
-    #endif
 
     const ControllerData*               Frame::data(ControllerID id) const
     {
@@ -455,12 +493,10 @@ namespace yq::tachyon {
         return m_lights.data(id);
     }
 
-    #if 0
-    const Light3Data*                   Frame::data(Light3ID id) const
+    const Light³Data*                   Frame::data(Light³ID id) const
     {
-        return m_light3s.data(id);
+        return m_light³s.data(id);
     }
-    #endif
 
     const ManagerData*                  Frame::data(ManagerID id) const
     {
@@ -484,7 +520,27 @@ namespace yq::tachyon {
 
     const Rendered³Data*               Frame::data(Rendered³ID id) const
     {
-        return m_rendered3s.data(id);
+        return m_rendered³s.data(id);
+    }
+
+    const SceneData*                   Frame::data(SceneID id) const
+    {
+        return m_scenes.data(id);
+    }
+
+    const Scene³Data*                  Frame::data(Scene³ID id) const
+    {
+        return m_scene³s.data(id);
+    }
+
+    const SpatialData*                 Frame::data(SpatialID id) const
+    {
+        return m_spatials.data(id);
+    }
+
+    const Spatial³Data*                Frame::data(Spatial³ID id) const
+    {
+        return m_spatial³s.data(id);
     }
 
     const TachyonData*                 Frame::data(TachyonID id) const
@@ -517,12 +573,10 @@ namespace yq::tachyon {
         return m_cameras.pointer(id);
     }
 
-    #if 0
     Camera³*                            Frame::object(Camera³ID id) const
     {
-        return m_camera3s.pointer(id);
+        return m_camera³s.pointer(id);
     }
-    #endif
 
     Controller*                         Frame::object(ControllerID id) const
     {
@@ -554,12 +608,10 @@ namespace yq::tachyon {
         return m_lights.pointer(id);
     }
 
-    #if 0
-    Light3*                             Frame::object(Light3ID id) const
+    Light³*                             Frame::object(Light³ID id) const
     {
-        return m_light3s.pointer(id);
+        return m_light³s.pointer(id);
     }
-    #endif
 
     Manager*                            Frame::object(ManagerID id) const
     {
@@ -583,7 +635,27 @@ namespace yq::tachyon {
 
     Rendered³*                          Frame::object(Rendered³ID id) const
     {
-        return m_rendered3s.pointer(id);
+        return m_rendered³s.pointer(id);
+    }
+
+    Scene*                              Frame::object(SceneID id) const
+    {
+        return m_scenes.pointer(id);
+    }
+
+    Scene³*                             Frame::object(Scene³ID id) const
+    {
+        return m_scene³s.pointer(id);
+    }
+
+    Spatial*                              Frame::object(SpatialID id) const
+    {
+        return m_spatials.pointer(id);
+    }
+
+    Spatial³*                             Frame::object(Spatial³ID id) const
+    {
+        return m_spatial³s.pointer(id);
     }
 
     Tachyon*                            Frame::object(TachyonID id) const
@@ -647,19 +719,23 @@ namespace yq::tachyon {
             << "  Clock:        " << std::format("{:%Y%m%d %H:%M:%S.%Z}", m_wallclock) << "\n"
             << "     - - - - - \n"
             << "  Cameras:      " << count(CAMERA) << "\n"
-            //<< "  Camera³s:     " << count(CAMERA3) << "\n"
+            << "  Camera³s:     " << count(CAMERA³) << "\n"
             << "  Controllers:  " << count(CONTROLLER) << "\n"
             << "  Cursors:      " << count(CURSOR) << "\n"
             << "  Desktops:     " << count(DESKTOP) << "\n"
             << "  Keyboards:    " << count(KEYBOARD) << "\n"
             << "  Joysticks:    " << count(JOYSTICK) << "\n"
             << "  Lights:       " << count(LIGHT) << "\n"
-            //<< "  Light3s:      " << count(LIGHT3) << "\n"
+            << "  Light³s:      " << count(LIGHT³) << "\n"
             << "  Managers:     " << count(MANAGER) << "\n"
             << "  Models:       " << count(MODEL) << "\n"
             << "  Mouses:       " << count(MOUSE) << "\n"
             << "  Rendereds:    " << count(RENDERED) << "\n"
-            //<< "  Rendered³s:   " << count(RENDERED3) << "\n"
+            << "  Rendered³s:   " << count(RENDERED³) << "\n"
+            << "  Scenes:       " << count(LIGHT) << "\n"
+            << "  Scene³s:      " << count(LIGHT³) << "\n"
+            << "  Spatials:     " << count(SPATIAL) << "\n"
+            << "  Spatial³s:    " << count(SPATIAL³) << "\n"
             << "  Tachyons:     " << count(TACHYON) << "\n"
             << "  Threads:      " << count(THREAD) << "\n"
             << "  Viewers:      " << count(VIEWER) << "\n"
@@ -673,12 +749,10 @@ namespace yq::tachyon {
         return m_cameras.snap(id);
     }
 
-    #if 0
     const Camera³Snap*                 Frame::snap(Camera³ID id) const
     {
-        return m_camera3s.snap(id);
+        return m_camera³s.snap(id);
     }
-    #endif
 
     const ControllerSnap*              Frame::snap(ControllerID id) const
     {
@@ -710,12 +784,10 @@ namespace yq::tachyon {
         return m_lights.snap(id);
     }
 
-    #if 0
-    const Light3Snap*                   Frame::snap(Light3ID id) const
+    const Light³Snap*                   Frame::snap(Light³ID id) const
     {
-        return m_light3s.snap(id);
+        return m_light³s.snap(id);
     }
-    #endif
 
     const ManagerSnap*                 Frame::snap(ManagerID id) const
     {
@@ -739,7 +811,27 @@ namespace yq::tachyon {
 
     const Rendered³Snap*               Frame::snap(Rendered³ID id) const
     {
-        return m_rendered3s.snap(id);
+        return m_rendered³s.snap(id);
+    }
+
+    const SceneSnap*                   Frame::snap(SceneID id) const
+    {
+        return m_scenes.snap(id);
+    }
+
+    const Scene³Snap*                   Frame::snap(Scene³ID id) const
+    {
+        return m_scene³s.snap(id);
+    }
+
+    const SpatialSnap*                   Frame::snap(SpatialID id) const
+    {
+        return m_spatials.snap(id);
+    }
+
+    const Spatial³Snap*                   Frame::snap(Spatial³ID id) const
+    {
+        return m_spatial³s.snap(id);
     }
 
     const TachyonSnap*                 Frame::snap(TachyonID id) const

@@ -29,7 +29,10 @@
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
 #include <yq/tachyon/typedef/post.hpp>
-//#include <yq/tachyon/typedef/scene.hpp>
+#include <yq/tachyon/typedef/scene.hpp>
+#include <yq/tachyon/typedef/scene3.hpp>
+#include <yq/tachyon/typedef/spatial.hpp>
+#include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
 #include <yq/tachyon/typedef/types.hpp>
@@ -65,7 +68,7 @@ namespace yq::tachyon {
         using proxy_span_t  = std::span<Proxy* const>;
 
         bool contains(CameraID) const;
-        //bool contains(Camera³ID) const;
+        bool contains(Camera³ID) const;
         bool contains(ControllerID) const;
         bool contains(CursorID) const;
         bool contains(DesktopID) const;
@@ -73,14 +76,17 @@ namespace yq::tachyon {
         bool contains(JoystickID) const;
         bool contains(KeyboardID) const;
         bool contains(LightID) const;
-        //bool contains(Light3ID) const;
+        bool contains(Light³ID) const;
         bool contains(ManagerID) const;
         bool contains(ModelID) const;
         bool contains(MonitorID) const;
         bool contains(MouseID) const;
         bool contains(RenderedID) const;
         bool contains(Rendered³ID) const;
-        //bool contains(SceneID) const;
+        bool contains(SceneID) const;
+        bool contains(Scene³ID) const;
+        bool contains(SpatialID) const;
+        bool contains(Spatial³ID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
         bool contains(ViewerID) const;
@@ -88,20 +94,24 @@ namespace yq::tachyon {
         bool contains(WindowID) const;
         
         size_t count(camera_k) const;
-        //size_t count(camera3_k) const;
+        size_t count(camera³_k) const;
         size_t count(controller_k) const;
         size_t count(cursor_k) const;
         size_t count(desktop_k) const;
         size_t count(keyboard_k) const;
         size_t count(joystick_k) const;
         size_t count(light_k) const;
-        //size_t count(light3_k) const;
+        size_t count(light³_k) const;
         size_t count(manager_k) const;
         size_t count(model_k) const;
         size_t count(monitor_k) const;
         size_t count(mouse_k) const;
-        size_t count(rendered3_k) const;
+        size_t count(rendered³_k) const;
         size_t count(rendered_k) const;
+        size_t count(scene_k) const;
+        size_t count(scene³_k) const;
+        size_t count(spatial_k) const;
+        size_t count(spatial³_k) const;
         size_t count(tachyon_k) const;
         size_t count(thread_k) const;
         size_t count(viewer_k) const;
@@ -109,7 +119,7 @@ namespace yq::tachyon {
         size_t count(window_k) const;
     
         const CameraData*                   data(CameraID) const;
-        //const Camera³Data*                  data(Camera³ID) const;
+        const Camera³Data*                  data(Camera³ID) const;
         const ControllerData*               data(ControllerID) const;
         const CursorData*                   data(CursorID) const;
         const DesktopData*                  data(DesktopID) const;
@@ -117,14 +127,17 @@ namespace yq::tachyon {
         const JoystickData*                 data(JoystickID) const;
         const KeyboardData*                 data(KeyboardID) const;
         const LightData*                    data(LightID) const;
-        //const Light3Data*                   data(Light3ID) const;
+        const Light³Data*                   data(Light³ID) const;
         const ManagerData*                  data(ManagerID) const;
         const ModelData*                    data(ModelID) const;
         const MonitorData*                  data(MonitorID) const;
         const MouseData*                    data(MouseID) const;
         const RenderedData*                 data(RenderedID) const;
         const Rendered³Data*                data(Rendered³ID) const;
-        //const SceneData*                    data(SceneID) const;
+        const SceneData*                    data(SceneID) const;
+        const Scene³Data*                   data(Scene³ID) const;
+        const SpatialData*                  data(SpatialID) const;
+        const Spatial³Data*                 data(Spatial³ID) const;
         const TachyonData*                  data(TachyonID) const;
         const ThreadData*                   data(ThreadID) const;
         const ViewerData*                   data(ViewerID) const;
@@ -134,7 +147,7 @@ namespace yq::tachyon {
         //! Camera pointer
         //! \note WARNING this will break thread-safety guarantees
         Camera*                             object(CameraID) const;
-        //Camera³*                            object(Camera³ID) const;
+        Camera³*                            object(Camera³ID) const;
 
         Controller*                         object(ControllerID) const;
 
@@ -160,7 +173,7 @@ namespace yq::tachyon {
         //! \note WARNING this will break thread-safety guarantees
         Light*                              object(LightID) const;
 
-        //Light3*                             object(Light3ID) const;
+        Light³*                             object(Light³ID) const;
 
         //! Manager pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -180,7 +193,11 @@ namespace yq::tachyon {
 
         Rendered³*                          object(Rendered³ID) const;
 
-        //Scene*                              object(SceneID) const;
+        Scene*                              object(SceneID) const;
+        Scene³*                             object(Scene³ID) const;
+
+        Spatial*                            object(SpatialID) const;
+        Spatial³*                           object(Spatial³ID) const;
 
         //! Tachyon pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -219,7 +236,7 @@ namespace yq::tachyon {
         Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
         
         const CameraSnap*                   snap(CameraID) const;
-        //const Camera³Snap*                  snap(Camera³ID) const;
+        const Camera³Snap*                  snap(Camera³ID) const;
         const ControllerSnap*               snap(ControllerID) const;
         const CursorSnap*                   snap(CursorID) const;
         const DesktopSnap*                  snap(DesktopID) const;
@@ -227,14 +244,17 @@ namespace yq::tachyon {
         const JoystickSnap*                 snap(JoystickID) const;
         const KeyboardSnap*                 snap(KeyboardID) const;
         const LightSnap*                    snap(LightID) const;
-        //const Light3Snap*                   snap(Light3ID) const;
+        const Light³Snap*                   snap(Light³ID) const;
         const ManagerSnap*                  snap(ManagerID) const;
         const ModelSnap*                    snap(ModelID) const;
         const MonitorSnap*                  snap(MonitorID) const;
         const MouseSnap*                    snap(MouseID) const;
         const RenderedSnap*                 snap(RenderedID) const;
         const Rendered³Snap*                snap(Rendered³ID) const;
-        //const SceneSnap*                    snap(SceneID) const;
+        const SceneSnap*                    snap(SceneID) const;
+        const Scene³Snap*                   snap(Scene³ID) const;
+        const SpatialSnap*                  snap(SpatialID) const;
+        const Spatial³Snap*                 snap(Spatial³ID) const;
         const TachyonSnap*                  snap(TachyonID) const;
         const ThreadSnap*                   snap(ThreadID) const;
         const ViewerSnap*                   snap(ViewerID) const;
@@ -283,7 +303,7 @@ namespace yq::tachyon {
         std::unordered_map<uint64_t, Types>                     m_types;
 
         Container<Camera, CameraData, CameraSnap>               m_cameras;
-        //Container<Camera³, Camera³Data, Camera³Snap>            m_camera3s;
+        Container<Camera³, Camera³Data, Camera³Snap>            m_camera³s;
         Container<Controller, ControllerData, ControllerSnap>   m_controllers;
         Container<Cursor, CursorData, CursorSnap>               m_cursors;
         Container<Desktop, DesktopData, DesktopSnap>            m_desktops;
@@ -291,13 +311,17 @@ namespace yq::tachyon {
         Container<Joystick, JoystickData, JoystickSnap>         m_joysticks;
         Container<Keyboard, KeyboardData, KeyboardSnap>         m_keyboards;
         Container<Light, LightData, LightSnap>                  m_lights;
-        //Container<Light3, Light3Data, Light3Snap>               m_light3s;
+        Container<Light³, Light³Data, Light³Snap>               m_light³s;
         Container<Manager, ManagerData, ManagerSnap>            m_managers;
         Container<Model, ModelData, ModelSnap>                  m_models;
         Container<Monitor, MonitorData, MonitorSnap>            m_monitors;
         Container<Mouse, MouseData, MouseSnap>                  m_mouses;
         Container<Rendered, RenderedData, RenderedSnap>         m_rendereds;
-        Container<Rendered³, Rendered³Data, Rendered³Snap>      m_rendered3s;
+        Container<Rendered³, Rendered³Data, Rendered³Snap>      m_rendered³s;
+        Container<Scene, SceneData, SceneSnap>                  m_scenes;
+        Container<Scene³, Scene³Data, Scene³Snap>               m_scene³s;
+        Container<Spatial, SpatialData, SpatialSnap>            m_spatials;
+        Container<Spatial³, Spatial³Data, Spatial³Snap>         m_spatial³s;
         Container<Tachyon, TachyonData, TachyonSnap>            m_tachyons;
         Container<Thread, ThreadData, ThreadSnap>               m_threads;
         Container<Viewer, ViewerData, ViewerSnap>               m_viewers;

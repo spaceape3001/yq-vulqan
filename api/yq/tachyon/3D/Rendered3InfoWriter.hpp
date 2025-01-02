@@ -8,8 +8,8 @@
 
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
-#include <yq/tachyon/scene/Rendered3.hpp>
-#include <yq/tachyon/scene/Rendered3Data.hpp>
+#include <yq/tachyon/3D/Rendered3.hpp>
+#include <yq/tachyon/3D/Rendered3Data.hpp>
 #include <yq/tachyon/scene/RenderedInfoWriter.hpp>
 
 namespace yq::tachyon {

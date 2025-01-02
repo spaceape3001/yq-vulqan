@@ -4,9 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Spatial.hpp"
-#include "SpatialBind.hpp"
-#include "SpatialInfoWriter.hpp"
+#include <yq/tachyon/scene/Spatial.hpp>
+#include <yq/tachyon/scene/SpatialData.hpp>
+#include <yq/tachyon/scene/SpatialBind.hpp>
+#include <yq/tachyon/scene/SpatialInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial)
 

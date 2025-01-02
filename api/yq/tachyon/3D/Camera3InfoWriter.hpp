@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/scene/Camera3.hpp>
-#include <yq/tachyon/scene/Camera3Data.hpp>
+#include <yq/tachyon/3D/Camera3.hpp>
+#include <yq/tachyon/3D/Camera3Data.hpp>
 #include <yq/tachyon/scene/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {

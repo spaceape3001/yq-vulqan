@@ -11,7 +11,7 @@
 #include <yq/tachyon/gfx/Pipeline.hpp>
 #include <yq/tachyon/typedef/vi_buffer.hpp>
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
-#include <yq/tachyon/typedef/push.hpp>
+#include <yt/typedef/push.hpp>
 #include <yq/tachyon/typedef/vi_texture.hpp>
 #include <yq/tachyon/typedef/vi_buffer.hpp>
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/render_pass.hpp>
+#include <yt/typedef/render_pass.hpp>
 
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>

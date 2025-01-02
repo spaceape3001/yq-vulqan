@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/camera.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/camera.hpp>
 
 namespace yq::tachyon {
     class Camera;

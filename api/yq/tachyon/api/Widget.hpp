@@ -13,7 +13,7 @@
 #include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/replies.hpp>
 #include <yq/tachyon/typedef/requests.hpp>
-#include <yq/tachyon/typedef/widget.hpp>
+#include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class Viewer;

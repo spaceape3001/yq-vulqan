@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/scene/SceneData.hpp>
-#include <yq/tachyon/typedef/scene3.hpp>
+#include <yt/typedef/scene3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

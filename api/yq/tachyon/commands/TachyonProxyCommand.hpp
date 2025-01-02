@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/commands/TachyonCommand.hpp>
-#include <yq/tachyon/typedef/proxy.hpp>
+#include <yt/typedef/proxy.hpp>
 
 namespace yq::tachyon {
     class TachyonProxyCommand : public TachyonCommand {

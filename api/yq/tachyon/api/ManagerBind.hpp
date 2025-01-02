@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/manager.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/manager.hpp>
 
 namespace yq::tachyon {
     class Manager;

@@ -9,7 +9,7 @@
 #include <yq/core/Memory.hpp>
 #include <yq/asset/Asset.hpp>
 #include <yt/gfx/ShaderType.hpp>
-#include <yq/tachyon/typedef/shader.hpp>
+#include <yt/typedef/shader.hpp>
 
 namespace yq::tachyon {
 

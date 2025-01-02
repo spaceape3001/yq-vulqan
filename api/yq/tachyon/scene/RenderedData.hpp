@@ -10,9 +10,9 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <yq/tachyon/gfx/Buffer.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/typedef/rendered.hpp>
-#include <yq/tachyon/typedef/push.hpp>
-#include <yq/tachyon/typedef/texture.hpp>
+#include <yt/typedef/rendered.hpp>
+#include <yt/typedef/push.hpp>
+#include <yt/typedef/texture.hpp>
 #include <yq/tachyon/typedef/vi_buffer.hpp>
 #include <yq/tachyon/typedef/vi_texture.hpp>
 

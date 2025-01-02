@@ -15,15 +15,15 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yt/os/ModifierKey.hpp>
-#include <yq/tachyon/typedef/buffer.hpp>
+#include <yt/typedef/buffer.hpp>
 #include <yq/tachyon/typedef/events.hpp>
-#include <yq/tachyon/typedef/pipeline.hpp>
+#include <yt/typedef/pipeline.hpp>
 #include <yq/tachyon/typedef/vi_buffer.hpp>
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
-#include <yq/tachyon/typedef/raster.hpp>
-#include <yq/tachyon/typedef/sampler.hpp>
-#include <yq/tachyon/typedef/texture.hpp>
+#include <yt/typedef/raster.hpp>
+#include <yt/typedef/sampler.hpp>
+#include <yt/typedef/texture.hpp>
 
 #include <vk_mem_alloc.h>
 #include <initializer_list>

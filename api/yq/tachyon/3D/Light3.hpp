@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/tachyon/scene/Light.hpp>
-#include <yq/tachyon/typedef/light3.hpp>
-#include <yq/tachyon/typedef/spatial3.hpp>
+#include <yt/typedef/light3.hpp>
+#include <yt/typedef/spatial3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 

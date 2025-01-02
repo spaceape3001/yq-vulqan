@@ -21,10 +21,10 @@
 #include <yq/tachyon/typedef/replies.hpp>
 #include <yt/typedef/request.hpp>
 #include <yq/tachyon/typedef/requests.hpp>
-#include <yq/tachyon/typedef/viewer.hpp>
+#include <yt/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/vigui.hpp>
 #include <yq/tachyon/typedef/visualizer.hpp>
-#include <yq/tachyon/typedef/widget.hpp>
+#include <yt/typedef/widget.hpp>
 #include <yt/typedef/window.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>

@@ -9,9 +9,9 @@
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
 #include <yq/tachyon/scene/RenderedData.hpp>
-#include <yq/tachyon/typedef/bounds3.hpp>
-#include <yq/tachyon/typedef/rendered3.hpp>
-#include <yq/tachyon/typedef/spatial3.hpp>
+#include <yt/typedef/bounds3.hpp>
+#include <yt/typedef/rendered3.hpp>
+#include <yt/typedef/spatial3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

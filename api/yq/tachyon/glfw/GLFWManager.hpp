@@ -9,7 +9,7 @@
 #include <yq/tachyon/api/Manager.hpp>
 #include <yq/tachyon/enum/ModifierKey.hpp>
 #include <yq/tachyon/enum/MouseButton.hpp>
-#include <yq/tachyon/typedef/viewer.hpp>
+#include <yt/typedef/viewer.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
 

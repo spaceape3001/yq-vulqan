@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <yq/math/SimpleSpace.hpp>
+//#include <yq/math/SimpleSpace.hpp>
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
 #include <yq/tachyon/scene/Rendered.hpp>
-#include <yq/tachyon/typedef/bounds3.hpp>
-#include <yq/tachyon/typedef/rendered3.hpp>
-#include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
+#include <yt/typedef/bounds3.hpp>
+#include <yt/typedef/rendered3.hpp>
+#include <yt/typedef/spatial3.hpp>
 
 namespace yq::tachyon {
         

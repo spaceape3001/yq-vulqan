@@ -18,12 +18,12 @@
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yt/typedef/frame.hpp>
 #include <yt/typedef/post.hpp>
-#include <yq/tachyon/typedef/proxy.hpp>
+#include <yt/typedef/proxy.hpp>
 #include <yt/typedef/tachyon.hpp>
 #include <yt/typedef/thread.hpp>
 
 #include <tbb/spin_rw_mutex.h>
-//#include <yq/tachyon/typedef/controller.hpp>
+//#include <yt/typedef/controller.hpp>
 #include <concepts>
 #include <iosfwd>
 

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/scene3.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/scene3.hpp>
 
 namespace yq::tachyon {
     class Scene³;

@@ -10,9 +10,9 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/app/AppCreateInfo.hpp>
 //#include <yq/tachyon/api/Thread.hpp>
-#include <yq/tachyon/typedef/application.hpp>
-#include <yq/tachyon/typedef/viewer.hpp>
-#include <yq/tachyon/typedef/widget.hpp>
+#include <yt/typedef/application.hpp>
+#include <yt/typedef/viewer.hpp>
+#include <yt/typedef/widget.hpp>
 #include <yq/units.hpp>
 #include <memory>
 #include <set>

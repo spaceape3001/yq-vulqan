@@ -12,9 +12,9 @@
 #include <yq/math/glm.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <yt/gfx/DataFormat.hpp>
-#include <yq/tachyon/typedef/pipeline.hpp>
+#include <yt/typedef/pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
-#include <yq/tachyon/typedef/raster.hpp>
+#include <yt/typedef/raster.hpp>
 #include <system_error>
 
 //namespace yq::engine { class Viewer; }

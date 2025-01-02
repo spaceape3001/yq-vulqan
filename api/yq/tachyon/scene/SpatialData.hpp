@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/typedef/spatial.hpp>
+#include <yt/typedef/spatial.hpp>
 
 namespace yq::tachyon {
     struct SpatialSnap : public TachyonSnap {

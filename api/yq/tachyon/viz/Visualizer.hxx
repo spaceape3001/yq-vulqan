@@ -10,8 +10,8 @@
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
 //#include <tachyon/image/Image.hpp>
-#include <yq/tachyon/typedef/pipeline.hpp>
-#include <yq/tachyon/typedef/rendered.hpp>
+#include <yt/typedef/pipeline.hpp>
+#include <yt/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/vi_rendered.hpp>
 #include <yq/tachyon/typedef/vi_rendered_manager.hpp>
 #include <yq/tachyon/viz/ViQueueType.hpp>

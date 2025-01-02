@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/sampler.hpp>
+#include <yt/typedef/sampler.hpp>
 #include <yq/core/Ref.hpp>
 #include <vulkan/vulkan_core.h>
 #include <yq/tachyon/gfx/SamplerInfo.hpp>

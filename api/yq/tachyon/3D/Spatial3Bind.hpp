@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/spatial3.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/spatial3.hpp>
 
 namespace yq::tachyon {
     class Spatial³;

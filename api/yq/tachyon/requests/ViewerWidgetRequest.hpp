@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/requests/ViewerRequest.hpp>
-#include <yq/tachyon/typedef/widget.hpp>
+#include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class ViewerWidgetRequest : public ViewerRequest {

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/model.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/model.hpp>
 
 namespace yq::tachyon {
     class Model;

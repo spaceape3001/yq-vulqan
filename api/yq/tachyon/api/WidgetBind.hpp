@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/widget.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class Widget;

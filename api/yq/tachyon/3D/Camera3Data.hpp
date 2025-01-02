@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/scene/CameraData.hpp>
-#include <yq/tachyon/typedef/camera3.hpp>
+#include <yt/typedef/camera3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

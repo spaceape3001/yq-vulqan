@@ -10,7 +10,7 @@
 #include <yq/core/Ref.hpp>
 #include <yq/container/BasicBuffer.hpp>
 #include <yq/tachyon/viz/ViData.hpp>
-#include <yq/tachyon/typedef/rendered.hpp>
+#include <yt/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_layout.hpp>

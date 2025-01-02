@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/controller.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/controller.hpp>
 
 
 namespace yq::tachyon {

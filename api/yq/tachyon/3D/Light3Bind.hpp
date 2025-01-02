@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/light3.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/light3.hpp>
 
 namespace yq::tachyon {
     class Light³;

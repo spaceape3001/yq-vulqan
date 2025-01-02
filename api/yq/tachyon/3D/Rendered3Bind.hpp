@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/rendered3.hpp>
+#include <yt/ID.hpp>
+#include <yt/typedef/rendered3.hpp>
 
 namespace yq::tachyon {
     class Rendered³;

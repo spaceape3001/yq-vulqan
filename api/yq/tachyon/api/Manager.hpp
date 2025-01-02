@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/typedef/manager.hpp>
+#include <yt/typedef/manager.hpp>
 
 namespace yq::tachyon {
 

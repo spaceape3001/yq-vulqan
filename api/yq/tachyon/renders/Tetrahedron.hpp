@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ColorVertexData.hpp>
+#include <yt/ColorVertexData.hpp>
 #include <yq/tachyon/gfx/VBO.hpp>
 #include <yq/tachyon/3D/Rendered3.hpp>
 

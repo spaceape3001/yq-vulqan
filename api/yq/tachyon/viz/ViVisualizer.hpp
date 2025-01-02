@@ -15,7 +15,7 @@
 #include <yq/typedef/rgba.hpp>
 
 #include <yq/tachyon/config/vulqan.hpp>
-#include <yq/tachyon/enum/PresentMode.hpp>
+#include <yt/gfx/PresentMode.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
 #include <yq/tachyon/typedef/vi_buffer.hpp>
 #include <yq/tachyon/typedef/vi_buffer_manager.hpp>

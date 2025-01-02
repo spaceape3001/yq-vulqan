@@ -10,8 +10,8 @@
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/enum/PresentMode.hpp>
+#include <yt/ID.hpp>
+#include <yt/gfx/PresentMode.hpp>
 #include <yq/tachyon/typedef/monitor.hpp>
 #include <yq/tachyon/typedef/queue_spec.hpp>
 

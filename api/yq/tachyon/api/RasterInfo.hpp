@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/shape/Size4.hpp>
-#include <yq/tachyon/enum/DataFormat.hpp>
-#include <yq/tachyon/enum/ImageTiling.hpp>
-#include <yq/tachyon/enum/RasterType.hpp>
+#include <yt/gfx/DataFormat.hpp>
+#include <yt/gfx/ImageTiling.hpp>
+#include <yt/gfx/RasterType.hpp>
 
 namespace yq::tachyon {
 

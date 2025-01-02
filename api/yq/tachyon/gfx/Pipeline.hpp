@@ -8,18 +8,18 @@
 
 #include <yq/core/Flags.hpp>
 
-#include <yt/DataActivity.hpp>
-#include <yq/tachyon/enum/ColorBlend.hpp>
-#include <yq/tachyon/enum/CullMode.hpp>
-#include <yq/tachyon/enum/DataFormat.hpp>
-#include <yq/tachyon/enum/DynamicState.hpp>
-#include <yq/tachyon/enum/FrontFace.hpp>
-#include <yq/tachyon/enum/IndexType.hpp>
-#include <yq/tachyon/enum/PipelineBinding.hpp>
-#include <yq/tachyon/enum/PolygonMode.hpp>
-#include <yq/tachyon/enum/PushConfigType.hpp>
-#include <yq/tachyon/enum/Topology.hpp>
-#include <yq/tachyon/enum/VertexInputRate.hpp>
+#include <yt/gfx/DataActivity.hpp>
+#include <yt/gfx/ColorBlend.hpp>
+#include <yt/gfx/CullMode.hpp>
+#include <yt/gfx/DataFormat.hpp>
+#include <yt/gfx/DynamicState.hpp>
+#include <yt/gfx/FrontFace.hpp>
+#include <yt/gfx/IndexType.hpp>
+#include <yt/gfx/PipelineBinding.hpp>
+#include <yt/gfx/PolygonMode.hpp>
+#include <yt/gfx/PushConfigType.hpp>
+#include <yt/gfx/Topology.hpp>
+#include <yt/gfx/VertexInputRate.hpp>
 
 #include <yq/tachyon/typedef/buffer.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>

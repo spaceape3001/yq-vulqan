@@ -9,7 +9,7 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/core/Memory.hpp>
 #include <yq/core/Ref.hpp>
-#include <yq/tachyon/enum/BufferUsage.hpp>
+#include <yt/gfx/BufferUsage.hpp>
 #include <span>
 
 namespace yq::tachyon {

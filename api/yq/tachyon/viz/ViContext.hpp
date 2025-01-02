@@ -11,7 +11,7 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/typedef/filesystem_path.hpp>
-#include <yq/tachyon/enum/DataFormat.hpp>
+#include <yt/gfx/DataFormat.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
 #include <yq/tachyon/typedef/raster.hpp>

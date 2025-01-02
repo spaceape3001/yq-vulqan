@@ -9,11 +9,11 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/color/RGBA.hpp>
-#include <yq/tachyon/enum/DataFormat.hpp>
-#include <yq/tachyon/enum/ComponentSwizzle.hpp>
-#include <yq/tachyon/enum/ImageAspect.hpp>
-#include <yq/tachyon/enum/ImageViewCreateFlags.hpp>
-#include <yq/tachyon/enum/ImageViewType.hpp>
+#include <yt/gfx/DataFormat.hpp>
+#include <yt/gfx/ComponentSwizzle.hpp>
+#include <yt/gfx/ImageAspect.hpp>
+#include <yt/gfx/ImageViewCreateFlags.hpp>
+#include <yt/gfx/ImageViewType.hpp>
 #include <yq/tachyon/gfx/SamplerInfo.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
 #include <yq/tachyon/typedef/sampler.hpp>

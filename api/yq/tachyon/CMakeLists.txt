@@ -18,7 +18,6 @@ add_library(${PROJECT_NAME} SHARED
 
     #glfw/GLFWManager.cpp
     
-    MyImGui.cpp
     
     vulqan.cpp
 

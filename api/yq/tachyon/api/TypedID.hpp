@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/types.hpp>
+#include <yt/Type.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
-#include <yq/tachyon/api/ID.hpp>
+#include <yt/ID.hpp>
 #include <compare>
 #include <cstdint>
 

@@ -21,6 +21,7 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/enums.cpp
     source/yt/strings.cpp
     source/yt/Action.cpp
+    source/yt/Command.cpp
     source/yt/Delegate.cpp
     source/yt/Post.cpp
     source/yt/Trigger.cpp

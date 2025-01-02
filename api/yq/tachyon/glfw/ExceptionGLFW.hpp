@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Exception.hpp>
+#include <yt/Exception.hpp>
 
 namespace yq::tachyon {
     class ExceptionGLFW : public Exception {

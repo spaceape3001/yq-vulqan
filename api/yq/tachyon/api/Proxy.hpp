@@ -8,11 +8,11 @@
 
 #include <cstdint>
 #include <functional>
-#include <yq/tachyon/keywords.hpp>
+#include <yt/keywords.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
-#include <yq/tachyon/typedef/post.hpp>
+#include <yt/typedef/post.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
-#include <yq/tachyon/typedef/types.hpp>
+#include <yt/Type.hpp>
 
 namespace yq::tachyon {
     class Tachyon;

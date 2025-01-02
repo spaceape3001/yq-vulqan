@@ -7,8 +7,9 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/api/ID.hpp>
+#include <yt/keywords.hpp>
+#include <yt/Type.hpp>
+#include <yt/ID.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
@@ -17,7 +18,7 @@
 #include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/cursor.hpp>
 #include <yq/tachyon/typedef/desktop.hpp>
-#include <yq/tachyon/typedef/frame.hpp>
+#include <yt/typedef/frame.hpp>
 #include <yq/tachyon/typedef/joystick.hpp>
 #include <yq/tachyon/typedef/keyboard.hpp>
 #include <yq/tachyon/typedef/light.hpp>
@@ -28,14 +29,13 @@
 #include <yq/tachyon/typedef/mouse.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
-#include <yq/tachyon/typedef/post.hpp>
+#include <yt/typedef/post.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
 #include <yq/tachyon/typedef/scene3.hpp>
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
-#include <yq/tachyon/typedef/types.hpp>
 #include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tachyon/typedef/widget.hpp>
 #include <yq/tachyon/typedef/window.hpp>

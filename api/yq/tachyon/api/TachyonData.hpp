@@ -7,10 +7,10 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/api/MG.hpp>
+#include <yt/ID.hpp>
+#include <yt/MG.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
-#include <yq/tachyon/typedef/post.hpp>
+#include <yt/typedef/post.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
 #include <vector>

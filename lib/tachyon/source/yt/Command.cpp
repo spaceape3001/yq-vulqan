@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Command.hpp"
-#include "CommandInfoWriter.hpp"
+#include <yt/Command.hpp>
+#include <yt/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Command)
 

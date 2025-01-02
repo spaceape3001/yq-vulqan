@@ -28,7 +28,6 @@ add_library(${PROJECT_NAME} SHARED
     3D/Scene3.cpp
     3D/Spatial3.cpp
 
-    api/Command.cpp
     api/Controller.cpp
     #api/Context.hpp
     #api/Editor.cpp

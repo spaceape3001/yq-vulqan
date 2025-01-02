@@ -10,17 +10,17 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/meta/MetaLookup.hpp>
-#include <yq/tachyon/keywords.hpp>
-#include <yq/tachyon/api/Execution.hpp>
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/api/MG.hpp>
+#include <yt/keywords.hpp>
+#include <yt/Execution.hpp>
+#include <yt/ID.hpp>
+#include <yt/MG.hpp>
+#include <yt/Type.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
-#include <yq/tachyon/typedef/frame.hpp>
-#include <yq/tachyon/typedef/post.hpp>
+#include <yt/typedef/frame.hpp>
+#include <yt/typedef/post.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
-#include <yq/tachyon/typedef/types.hpp>
 
 #include <tbb/spin_rw_mutex.h>
 //#include <yq/tachyon/typedef/controller.hpp>

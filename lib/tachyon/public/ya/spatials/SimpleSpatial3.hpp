@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/3D/Spatial3.hpp>
+#include <yt/3D/Spatial3.hpp>
 #include <ya/interfaces/IPosition3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>

@@ -8,7 +8,7 @@
 
 #include <yt/data/ColorVertexData.hpp>
 #include <yt/gfx/VBO.hpp>
-#include <yq/tachyon/3D/Rendered3.hpp>
+#include <yt/3D/Rendered3.hpp>
 
 #include <array>
 

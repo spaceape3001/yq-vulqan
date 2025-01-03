@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/spatials/SimpleSpatial3.hpp>
-#include <yq/tachyon/3D/Spatial3InfoWriter.hpp>
+#include <yt/3D/Spatial3InfoWriter.hpp>
 #include <ya/commands/spatial/MoveBy3.hpp>
 #include <ya/commands/spatial/MoveByX.hpp>
 #include <ya/commands/spatial/MoveByY.hpp>

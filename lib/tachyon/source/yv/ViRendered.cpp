@@ -12,10 +12,10 @@
 #include <yq/stream/Text.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
-#include <yq/tachyon/3D/Rendered3.hpp>
+#include <yt/3D/Rendered3.hpp>
 #include <yt/gfx/PushData.hpp>
 #include <yt/gfx/Pipeline.hpp>
-#include <yq/tachyon/scene/Rendered.hpp>
+#include <yt/scene/Rendered.hpp>
 #include <yv/VqEnums.hpp>
 #include <yv/ViContext.hpp>
 #include <yv/ViLogging.hpp>

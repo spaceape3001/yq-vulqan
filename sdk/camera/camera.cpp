@@ -29,7 +29,7 @@
 #include <yt/application.hpp>
 #include <yt/controller.hpp>
 #include <yt/ui/MyImGui.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
+#include <yt/scene/Scene.hpp>
 #include <yt/viewer.hpp>
 #include <yt/widget.hpp>
 #include <ya/commands/CameraPitchCommand.hpp>

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/commands/SpatialCommand.hpp>
-//#include <yq/tachyon/scene/Spatial.hpp>
+//#include <yt/scene/Spatial.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SpatialCommand)

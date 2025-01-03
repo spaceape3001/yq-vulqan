@@ -19,18 +19,12 @@ add_library(${PROJECT_NAME} SHARED
     #glfw/GLFWManager.cpp
     
     
-    3D/Camera3.cpp
-    3D/Light3.cpp
-    3D/Rendered3.cpp
-    3D/Scene3.cpp
-    3D/Spatial3.cpp
 
     api/Controller.cpp
     #api/Context.hpp
     api/Frame.cpp
     api/InterfaceInfo.cpp
     api/Manager.cpp
-    api/Model.cpp
     api/Proxy.cpp
     api/Tachyon.cpp
     api/Thread.cpp
@@ -56,15 +50,6 @@ add_library(${PROJECT_NAME} SHARED
     renders/Quadrilateral.cpp
     renders/Tetrahedron.cpp
     renders/Triangle.cpp
-
-    scene/Camera.cpp
-    scene/Light.cpp
-    scene/Perspective.cpp
-    scene/Rendered.cpp
-    #scene/Rendered2.cpp
-    scene/Scene.cpp
-    #scene/Scene2.cpp
-    scene/Spatial.cpp
 
     
     #task/Task.cpp

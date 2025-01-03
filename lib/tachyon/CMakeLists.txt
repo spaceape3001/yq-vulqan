@@ -20,6 +20,12 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/enums.cpp
     source/yt/strings.cpp
 
+    source/yt/3D/Camera3.cpp
+    source/yt/3D/Light3.cpp
+    source/yt/3D/Rendered3.cpp
+    source/yt/3D/Scene3.cpp
+    source/yt/3D/Spatial3.cpp
+
     source/yt/api/Action.cpp
     source/yt/api/Delegate.cpp
 
@@ -58,6 +64,17 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/os/Mouse.cpp
     source/yt/os/VideoMode.cpp
     source/yt/os/Window.cpp
+
+    source/yt/scene/Camera.cpp
+    source/yt/scene/Light.cpp
+    source/yt/scene/Perspective.cpp
+    source/yt/scene/Rendered.cpp
+    #source/yt/scene/Rendered2.cpp
+    source/yt/scene/Scene.cpp
+    #source/yt/scene/Scene2.cpp
+    source/yt/scene/Spatial.cpp
+
+    source/yt/sim/Model.cpp
 
     #source/yt/ui/Editor.cpp
     source/yt/ui/MyImGui.cpp

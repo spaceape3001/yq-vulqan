@@ -30,8 +30,8 @@
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/ImageViewInfo.hpp>
-#include <yq/tachyon/scene/Perspective.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
+#include <yt/scene/Perspective.hpp>
+#include <yt/scene/Scene.hpp>
 #include <yv/VulqanException.hpp>
 #include <yv/VqUtils.hpp>
 #include <yv/ViBuffer.hpp>

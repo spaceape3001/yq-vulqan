@@ -17,7 +17,7 @@
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/vector/Quaternion3.hxx>
 
-#include <yq/tachyon/3D/Camera3InfoWriter.hpp>
+#include <yt/3D/Camera3InfoWriter.hpp>
 #include <ya/commands/CameraPitchCommand.hpp>
 
 namespace yq::tachyon {

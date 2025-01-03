@@ -13,8 +13,6 @@
 #include "Interface.hpp"
 #include "Manager.hpp"
 #include "ManagerData.hpp"
-#include "Model.hpp"
-#include "ModelData.hpp"
 //#include "Post.hpp"
 #include "Proxy.hpp"
 //#include "Scene.hpp"
@@ -24,16 +22,16 @@
 #include "Thread.hpp"
 #include "ThreadData.hpp"
 
-#include <yq/tachyon/3D/Camera3.hpp>
-#include <yq/tachyon/3D/Camera3Data.hpp>
-#include <yq/tachyon/3D/Light3.hpp>
-#include <yq/tachyon/3D/Light3Data.hpp>
-#include <yq/tachyon/3D/Rendered3.hpp>
-#include <yq/tachyon/3D/Rendered3Data.hpp>
-#include <yq/tachyon/3D/Scene3.hpp>
-#include <yq/tachyon/3D/Scene3Data.hpp>
-#include <yq/tachyon/3D/Spatial3.hpp>
-#include <yq/tachyon/3D/Spatial3Data.hpp>
+#include <yt/3D/Camera3.hpp>
+#include <yt/3D/Camera3Data.hpp>
+#include <yt/3D/Light3.hpp>
+#include <yt/3D/Light3Data.hpp>
+#include <yt/3D/Rendered3.hpp>
+#include <yt/3D/Rendered3Data.hpp>
+#include <yt/3D/Scene3.hpp>
+#include <yt/3D/Scene3Data.hpp>
+#include <yt/3D/Spatial3.hpp>
+#include <yt/3D/Spatial3Data.hpp>
 
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
@@ -57,16 +55,19 @@
 #include <yt/ui/WidgetData.hpp>
 
 
-#include <yq/tachyon/scene/Camera.hpp>
-#include <yq/tachyon/scene/CameraData.hpp>
-#include <yq/tachyon/scene/Light.hpp>
-#include <yq/tachyon/scene/LightData.hpp>
-#include <yq/tachyon/scene/Rendered.hpp>
-#include <yq/tachyon/scene/RenderedData.hpp>
-#include <yq/tachyon/scene/Scene.hpp>
-#include <yq/tachyon/scene/SceneData.hpp>
-#include <yq/tachyon/scene/Spatial.hpp>
-#include <yq/tachyon/scene/SpatialData.hpp>
+#include <yt/scene/Camera.hpp>
+#include <yt/scene/CameraData.hpp>
+#include <yt/scene/Light.hpp>
+#include <yt/scene/LightData.hpp>
+#include <yt/scene/Rendered.hpp>
+#include <yt/scene/RenderedData.hpp>
+#include <yt/scene/Scene.hpp>
+#include <yt/scene/SceneData.hpp>
+#include <yt/scene/Spatial.hpp>
+#include <yt/scene/SpatialData.hpp>
+
+#include <yt/sim/Model.hpp>
+#include <yt/sim/ModelData.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yt/logging.hpp>

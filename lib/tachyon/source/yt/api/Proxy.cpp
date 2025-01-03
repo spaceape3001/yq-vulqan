@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Proxy.hpp"
-#include "Tachyon.hpp"
+#include <yt/api/Proxy.hpp>
+#include <yt/api/Tachyon.hpp>
 
 namespace yq::tachyon {
     Proxy::Proxy()

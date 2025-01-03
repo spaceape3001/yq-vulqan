@@ -13,7 +13,7 @@
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yt/keywords.hpp>
-#include <yq/tachyon/api/Thread.hpp>
+#include <yt/api/Thread.hpp>
 #include <yq/tachyon/app/ViewerState.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 

@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Manager.hpp"
-#include "ManagerBind.hpp"
-#include "ManagerData.hpp"
-#include "ManagerInfoWriter.hpp"
+#include <yt/api/Manager.hpp>
+#include <yt/api/ManagerBind.hpp>
+#include <yt/api/ManagerData.hpp>
+#include <yt/api/ManagerInfoWriter.hpp>
 
 namespace yq::tachyon {
     ManagerBind::ManagerBind(const Manager* v) : m_manager(v ? v->id() : ManagerID{})

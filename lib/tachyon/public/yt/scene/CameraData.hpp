@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/TachyonData.hpp>
+#include <yt/api/TachyonData.hpp>
 #include <yt/typedef/camera.hpp>
 
 namespace yq::tachyon {

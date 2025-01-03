@@ -8,7 +8,7 @@
 
 #include <yq/vector/Size2.hpp>
 #include <yt/keywords.hpp>
-#include <yq/tachyon/api/Interface.hpp>
+#include <yt/api/Interface.hpp>
 
 namespace yq::tachyon {
     class PSize2I;

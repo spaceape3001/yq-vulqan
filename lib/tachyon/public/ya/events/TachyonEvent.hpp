@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Event.hpp>
-#include <yq/tachyon/api/TachyonBind.hpp>
+#include <yt/api/TachyonBind.hpp>
 #include <yt/typedef/tachyon.hpp>
 
 namespace yq::tachyon {

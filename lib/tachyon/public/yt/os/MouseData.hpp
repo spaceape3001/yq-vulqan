@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/TachyonData.hpp>
+#include <yt/api/TachyonData.hpp>
 #include <yt/typedef/mouse.hpp>
 
 namespace yq::tachyon {

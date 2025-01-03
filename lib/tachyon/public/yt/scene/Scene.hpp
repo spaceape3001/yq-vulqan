@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/color/RGB.hpp>
-#include <yq/tachyon/api/Tachyon.hpp>
+#include <yt/api/Tachyon.hpp>
 #include <yt/scene/Rendered.hpp>
 #include <yt/typedef/scene.hpp>
 

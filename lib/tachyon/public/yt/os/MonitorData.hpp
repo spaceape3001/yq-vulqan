@@ -11,7 +11,7 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <yq/tachyon/api/TachyonData.hpp>
+#include <yt/api/TachyonData.hpp>
 #include <yt/os/VideoMode.hpp>
 #include <yt/typedef/monitor.hpp>
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yq/tachyon/api/TachyonBind.hpp>
+#include <yt/api/TachyonBind.hpp>
 
 namespace yq::tachyon {
     class SetParentCommand : public Command, public TachyonBind {

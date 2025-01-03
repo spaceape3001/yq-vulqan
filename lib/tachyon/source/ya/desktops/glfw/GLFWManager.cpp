@@ -8,10 +8,10 @@
 
 #include <yq/tachyon/errors.hpp>
 #include <yt/logging.hpp>
-#include <yq/tachyon/api/Application.hpp>
-#include <yq/tachyon/api/ManagerInfoWriter.hpp>
-#include <yq/tachyon/api/Viewer.hpp>
-#include <yq/tachyon/api/ViewerCreateInfo.hpp>
+#include <yt/api/Application.hpp>
+#include <yt/api/ManagerInfoWriter.hpp>
+#include <yt/api/Viewer.hpp>
+#include <yt/api/ViewerCreateInfo.hpp>
 #include <ya/commands/window.hpp>
 #include <ya/events/cursor.hpp>
 #include <ya/events/joystick.hpp>

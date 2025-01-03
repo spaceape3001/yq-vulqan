@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yq/tachyon/api/ControllerBind.hpp>
+#include <yt/api/ControllerBind.hpp>
 
 namespace yq::tachyon {
     class Controller;

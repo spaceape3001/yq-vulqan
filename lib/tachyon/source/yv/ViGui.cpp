@@ -18,7 +18,7 @@
 #include <yq/util/AutoReset.hpp>
 
 #include <yt/logging.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/Pipeline.hpp>
 #include <yt/gfx/PipelineWriter.hpp>

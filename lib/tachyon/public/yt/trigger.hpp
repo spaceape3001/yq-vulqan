@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Trigger.hpp>
-#include <yq/tachyon/api/TriggerInfoWriter.hpp>
+#include <yt/api/Trigger.hpp>
+#include <yt/api/TriggerInfoWriter.hpp>

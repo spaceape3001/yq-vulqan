@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Interface.hpp"
-#include "InterfaceInfo.hpp"
-#include "InterfaceInfoWriter.hpp"
+#include <yt/api/Interface.hpp>
+#include <yt/api/InterfaceInfo.hpp>
+#include <yt/api/InterfaceInfoWriter.hpp>
 
 namespace yq::tachyon {
     struct InterfaceInfo::Repo {

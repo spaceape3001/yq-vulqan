@@ -20,16 +20,6 @@ add_library(${PROJECT_NAME} SHARED
     
     
 
-    api/Controller.cpp
-    #api/Context.hpp
-    api/Frame.cpp
-    api/InterfaceInfo.cpp
-    api/Manager.cpp
-    api/Proxy.cpp
-    api/Tachyon.cpp
-    api/Thread.cpp
-    api/TypedID.cpp
-
     app/Application.cpp
     app/AppThread.cpp
     app/TaskThread.cpp

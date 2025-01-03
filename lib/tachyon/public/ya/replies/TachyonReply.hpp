@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Reply.hpp>
-#include <yq/tachyon/api/TachyonBind.hpp>
+#include <yt/api/TachyonBind.hpp>
 
 namespace yq::tachyon {
     class Tachyon;

@@ -8,7 +8,7 @@
 
 #include <yt/scene/Light.hpp>
 #include <yt/scene/LightData.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

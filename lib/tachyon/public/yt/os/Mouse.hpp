@@ -8,7 +8,7 @@
 
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
-#include <yq/tachyon/api/Tachyon.hpp>
+#include <yt/api/Tachyon.hpp>
 #include <yt/typedef/mouse.hpp>
 
 namespace yq::tachyon {

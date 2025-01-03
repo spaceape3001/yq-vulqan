@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Controller.hpp"
-#include "ControllerInfoWriter.hpp"
-#include <yq/tachyon/api/ControllerBind.hpp>
-#include <yq/tachyon/api/ControllerData.hpp>
+#include <yt/api/Controller.hpp>
+#include <yt/api/ControllerInfoWriter.hpp>
+#include <yt/api/ControllerBind.hpp>
+#include <yt/api/ControllerData.hpp>
 #include <yt/api/ID.hpp>
 #include <ya/commands/ControllerControlCommand.hpp>
 #include <ya/commands/ControllerDisableCommand.hpp>

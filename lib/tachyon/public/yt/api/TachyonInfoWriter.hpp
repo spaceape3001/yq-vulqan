@@ -8,9 +8,9 @@
 
 #include <yq/meta/ArgDeducer.hpp>
 #include <yq/meta/MetaObjectInfoWriter.hpp>
-#include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/api/Interface.hpp>
+#include <yt/api/Tachyon.hpp>
+#include <yt/api/TachyonData.hpp>
+#include <yt/api/Interface.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Thread.hpp>
-#include <yq/tachyon/api/ThreadData.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yt/api/Thread.hpp>
+#include <yt/api/ThreadData.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of manager information

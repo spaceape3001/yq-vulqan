@@ -10,10 +10,10 @@
 #include <yt/logging.hpp>
 
 #include <yq/tachyon/app/Application.hpp>
-#include <yq/tachyon/api/Context.hpp>
-#include <yq/tachyon/api/Frame.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
-#include <yq/tachyon/api/Thread.hpp>
+#include <yt/api/Context.hpp>
+#include <yt/api/Frame.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
+#include <yt/api/Thread.hpp>
 #include <yq/tachyon/app/ViewerBind.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
 #include <yq/tachyon/app/ViewerException.hpp>
@@ -103,7 +103,7 @@
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/ThreadId.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 #include <yq/shape/Size2.hxx>
 #include <yq/util/AutoReset.hpp>
 #include <yq/vector/Vector2.hpp>

@@ -8,7 +8,7 @@
 
 #include <yt/scene/Spatial.hpp>
 #include <yt/scene/SpatialData.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     

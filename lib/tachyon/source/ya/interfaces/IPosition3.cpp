@@ -6,7 +6,7 @@
 
 #include <ya/interfaces/IPosition3.hpp>
 
-#include <yq/tachyon/api/InterfaceInfoWriter.hpp>
+#include <yt/api/InterfaceInfoWriter.hpp>
 #include <ya/proxies/PPosition3.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition³)

@@ -4,23 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Controller.hpp"
-#include "ControllerData.hpp"
-//#include "Editor.hpp"
-//#include "EditorData.hpp"
-#include "Frame.hpp"
-#include "FrameBuilder.hpp"
-#include "Interface.hpp"
-#include "Manager.hpp"
-#include "ManagerData.hpp"
-//#include "Post.hpp"
-#include "Proxy.hpp"
-//#include "Scene.hpp"
-//#include "SceneData.hpp"
-#include "Tachyon.hpp"
-#include "TachyonData.hpp"
-#include "Thread.hpp"
-#include "ThreadData.hpp"
+#include <yt/api/Controller.hpp>
+#include <yt/api/ControllerData.hpp>
+//#include <yt/api/Editor.hpp>
+//#include <yt/api/EditorData.hpp>
+#include <yt/api/Frame.hpp>
+#include <yt/api/FrameBuilder.hpp>
+#include <yt/api/Interface.hpp>
+#include <yt/api/Manager.hpp>
+#include <yt/api/ManagerData.hpp>
+//#include <yt/api/Post.hpp>
+#include <yt/api/Proxy.hpp>
+//#include <yt/api/Scene.hpp>
+//#include <yt/api/SceneData.hpp>
+#include <yt/api/Tachyon.hpp>
+#include <yt/api/TachyonData.hpp>
+#include <yt/api/Thread.hpp>
+#include <yt/api/ThreadData.hpp>
 
 #include <yt/3D/Camera3.hpp>
 #include <yt/3D/Camera3Data.hpp>

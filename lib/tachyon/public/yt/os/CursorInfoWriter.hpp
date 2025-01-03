@@ -8,7 +8,7 @@
 
 #include <yt/os/Cursor.hpp>
 #include <yt/os/CursorData.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -27,7 +27,17 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/3D/Spatial3.cpp
 
     source/yt/api/Action.cpp
+    source/yt/api/Controller.cpp
+    #source/yt/api/Context.hpp
     source/yt/api/Delegate.cpp
+    source/yt/api/Frame.cpp
+    source/yt/api/InterfaceInfo.cpp
+    source/yt/api/Manager.cpp
+    source/yt/api/Proxy.cpp
+    source/yt/api/Tachyon.cpp
+    source/yt/api/Thread.cpp
+    source/yt/api/TypedID.cpp
+
 
     source/yt/config/build.cpp
 

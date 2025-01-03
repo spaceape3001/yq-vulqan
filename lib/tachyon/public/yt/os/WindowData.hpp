@@ -9,7 +9,7 @@
 #include <yt/os/KeyboardState.hpp>
 #include <yt/os/MouseState.hpp>
 #include <yt/os/WindowState.hpp>
-#include <yq/tachyon/api/TachyonData.hpp>
+#include <yt/api/TachyonData.hpp>
 #include <yt/typedef/window.hpp>
 
 namespace yq::tachyon {

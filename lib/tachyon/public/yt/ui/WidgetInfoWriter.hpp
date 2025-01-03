@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/ui/Widget.hpp>
-#include <yq/tachyon/api/TachyonInfoWriter.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
 

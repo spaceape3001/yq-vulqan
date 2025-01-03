@@ -9,10 +9,10 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yt/logging.hpp>
-#include <yq/tachyon/api/Context.hpp>
-#include <yq/tachyon/api/Frame.hpp>
-#include <yq/tachyon/api/ThreadData.hpp>
-#include <yq/tachyon/api/ThreadInfoWriter.hpp>
+#include <yt/api/Context.hpp>
+#include <yt/api/Frame.hpp>
+#include <yt/api/ThreadData.hpp>
+#include <yt/api/ThreadInfoWriter.hpp>
 #include <ya/events/ViewerDestroyEvent.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)

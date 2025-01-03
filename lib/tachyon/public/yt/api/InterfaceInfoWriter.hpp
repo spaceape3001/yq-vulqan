@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/meta/CompoundInfoDynamic.hpp>
-#include <yq/tachyon/api/InterfaceInfo.hpp>
-#include <yq/tachyon/api/Tachyon.hpp>
+#include <yt/api/InterfaceInfo.hpp>
+#include <yt/api/Tachyon.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <type_traits>
 

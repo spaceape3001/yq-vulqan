@@ -6,9 +6,9 @@
 
 #include "TaskThread.hpp"
 
-#include <yq/tachyon/api/Thread.hpp>
-#include <yq/tachyon/api/ThreadData.hpp>
-#include <yq/tachyon/api/ThreadInfoWriter.hpp>
+#include <yt/api/Thread.hpp>
+#include <yt/api/ThreadData.hpp>
+#include <yt/api/ThreadInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::TaskThread)
 

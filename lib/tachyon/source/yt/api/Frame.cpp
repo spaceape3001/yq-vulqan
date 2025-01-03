@@ -33,8 +33,8 @@
 #include <yt/3D/Spatial3.hpp>
 #include <yt/3D/Spatial3Data.hpp>
 
-#include <yq/tachyon/app/Viewer.hpp>
-#include <yq/tachyon/app/ViewerData.hpp>
+#include <yt/app/Viewer.hpp>
+#include <yt/app/ViewerData.hpp>
 
 #include <yt/os/Cursor.hpp>
 #include <yt/os/CursorData.hpp>

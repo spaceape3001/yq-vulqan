@@ -20,11 +20,6 @@ add_library(${PROJECT_NAME} SHARED
     
     
 
-    app/Application.cpp
-    app/AppThread.cpp
-    app/TaskThread.cpp
-    app/Viewer.cpp
-    app/ViewerThread.cpp
 
     cameras/NullCamera.cpp
     cameras/SpaceCamera.cpp
@@ -33,8 +28,6 @@ add_library(${PROJECT_NAME} SHARED
 
     #manipulator/Manipulator.cpp
     
-    
-    #models/models.cpp
 
     renders/ImageQuad.cpp
     renders/Quadrilateral.cpp
@@ -42,8 +35,6 @@ add_library(${PROJECT_NAME} SHARED
     renders/Triangle.cpp
 
     
-    #task/Task.cpp
-    #task/TaskEngine.cpp
     #tools/tools.cpp
     
     

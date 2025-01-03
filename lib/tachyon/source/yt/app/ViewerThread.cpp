@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerThread.hpp"
+#include <yt/app/ViewerThread.hpp>
 
 #include <yt/logging.hpp>
 #include <yt/api/Thread.hpp>

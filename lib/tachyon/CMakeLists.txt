@@ -38,6 +38,11 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/api/Thread.cpp
     source/yt/api/TypedID.cpp
 
+    source/yt/app/Application.cpp
+    source/yt/app/Viewer.cpp
+    source/yt/app/AppThread.cpp
+    source/yt/app/TaskThread.cpp
+    source/yt/app/ViewerThread.cpp
 
     source/yt/config/build.cpp
 
@@ -85,6 +90,10 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/scene/Spatial.cpp
 
     source/yt/sim/Model.cpp
+
+    # possibly being removed.... TBD (IIRC, tachyon replaced its usefulness)
+    #sim/Task.cpp
+    #sim/TaskEngine.cpp
 
     #source/yt/ui/Editor.cpp
     source/yt/ui/MyImGui.cpp

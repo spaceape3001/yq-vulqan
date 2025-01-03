@@ -10,7 +10,7 @@
 #include <yt/ui/WidgetData.hpp>
 
 #include <yt/logging.hpp>
-#include <yq/tachyon/app/Viewer.hpp>
+#include <yt/app/Viewer.hpp>
 #include <ya/commands/ViewerShowCommand.hpp>
 #include <ya/commands/WidgetStartupCommand.hpp>
 

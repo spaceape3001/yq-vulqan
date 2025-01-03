@@ -6,12 +6,12 @@
 
 #include <yt/logging.hpp>
 #include <yt/ui/Widget.hpp>
-#include <yq/tachyon/app/AppException.hpp>
-#include <yq/tachyon/app/AppThread.hpp>
-#include <yq/tachyon/app/Application.hpp>
-#include <yq/tachyon/app/TaskThread.hpp>
-#include <yq/tachyon/app/Viewer.hpp>
-#include <yq/tachyon/app/ViewerThread.hpp>
+#include <yt/app/AppException.hpp>
+#include <yt/app/AppThread.hpp>
+#include <yt/app/Application.hpp>
+#include <yt/app/TaskThread.hpp>
+#include <yt/app/Viewer.hpp>
+#include <yt/app/ViewerThread.hpp>
 #include <yt/os/Window.hpp>
 //#include <yt/api/TachyonInfoWriter.hpp>
 #include <yv/VulqanManager.hpp>

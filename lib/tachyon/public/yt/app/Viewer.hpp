@@ -14,8 +14,8 @@
 #include <yq/core/Flags.hpp>
 #include <yt/keywords.hpp>
 #include <yt/api/Thread.hpp>
-#include <yq/tachyon/app/ViewerState.hpp>
-#include <yq/tachyon/app/ViewerCreateInfo.hpp>
+#include <yt/app/ViewerState.hpp>
+#include <yt/app/ViewerCreateInfo.hpp>
 
 #include <ya/typedef/commands.hpp>
 #include <ya/typedef/events.hpp>

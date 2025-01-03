@@ -13,16 +13,18 @@
 #include <yt/api/ID.hpp>
 #include <yt/gfx/PresentMode.hpp>
 #include <yt/typedef/monitor.hpp>
-#include <yq/tachyon/typedef/queue_spec.hpp>
+#include <yv/typedef/queue_spec.hpp>
 
-#include <vulkan/vulkan_core.h>
+//#include <vulkan/vulkan_core.h>
 #include <variant>
 #include <vector>
+
+struct VkPhysicalDevice_T;
 
 namespace yq::tachyon {
 
     struct ViewerCreateInfo {
-        VkPhysicalDevice            device   = nullptr;
+        VkPhysicalDevice_T*         device   = nullptr;
     
         std::string                 title    = "(untitled)";
         Size2I                      size     = { 1920, 1080 };

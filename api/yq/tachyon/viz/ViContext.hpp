@@ -13,7 +13,7 @@
 #include <yq/typedef/filesystem_path.hpp>
 #include <yt/gfx/DataFormat.hpp>
 #include <yt/typedef/pipeline.hpp>
-#include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
+#include <yv/typedef/vi_pipeline_manager.hpp>
 #include <yt/typedef/raster.hpp>
 #include <system_error>
 

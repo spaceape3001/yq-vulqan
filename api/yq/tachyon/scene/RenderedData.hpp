@@ -13,8 +13,8 @@
 #include <yt/typedef/rendered.hpp>
 #include <yt/typedef/push.hpp>
 #include <yt/typedef/texture.hpp>
-#include <yq/tachyon/typedef/vi_buffer.hpp>
-#include <yq/tachyon/typedef/vi_texture.hpp>
+#include <yv/typedef/vi_buffer.hpp>
+#include <yv/typedef/vi_texture.hpp>
 
 namespace yq::tachyon {
     struct RenderedSnap : public TachyonSnap {

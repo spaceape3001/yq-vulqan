@@ -8,7 +8,7 @@
 
 #include <yt/msg/Response.hpp> 
 #include <yq/tachyon/replies/ViewerReply.hpp>
-#include <yq/tachyon/typedef/requests.hpp>
+#include <ya/typedef/requests.hpp>
 
 namespace yq::tachyon {
     class ViewerWidgetReply : public ViewerReply {

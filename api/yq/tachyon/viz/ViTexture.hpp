@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yq/tachyon/typedef/vi_image.hpp>
-#include <yq/tachyon/typedef/vi_texture.hpp>
-#include <yq/tachyon/typedef/vi_sampler.hpp>
+#include <yv/typedef/vi_image.hpp>
+#include <yv/typedef/vi_texture.hpp>
+#include <yv/typedef/vi_sampler.hpp>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/vi_queue_tasker.hpp>
+#include <yv/typedef/vi_queue_tasker.hpp>
 
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/viz/ViCommandBuffer.hpp>

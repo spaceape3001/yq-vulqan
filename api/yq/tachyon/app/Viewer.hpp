@@ -16,16 +16,19 @@
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/app/ViewerState.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
-#include <yq/tachyon/typedef/commands.hpp>
-#include <yq/tachyon/typedef/events.hpp>
-#include <yq/tachyon/typedef/replies.hpp>
+
+#include <ya/typedef/commands.hpp>
+#include <ya/typedef/events.hpp>
+#include <ya/typedef/replies.hpp>
+#include <ya/typedef/requests.hpp>
+
 #include <yt/typedef/request.hpp>
-#include <yq/tachyon/typedef/requests.hpp>
 #include <yt/typedef/viewer.hpp>
-#include <yq/tachyon/typedef/vigui.hpp>
-#include <yq/tachyon/typedef/visualizer.hpp>
 #include <yt/typedef/widget.hpp>
 #include <yt/typedef/window.hpp>
+
+#include <yv/typedef/vigui.hpp>
+#include <yv/typedef/visualizer.hpp>
 
 //#include <yq/tachyon/viz/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>

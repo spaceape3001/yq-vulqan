@@ -11,10 +11,10 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <yq/tachyon/viz/ViData.hpp>
 #include <yt/typedef/rendered.hpp>
-#include <yq/tachyon/typedef/vi_pipeline.hpp>
-#include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
-#include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
-#include <yq/tachyon/typedef/vi_rendered.hpp>
+#include <yv/typedef/vi_pipeline.hpp>
+#include <yv/typedef/vi_pipeline_manager.hpp>
+#include <yv/typedef/vi_pipeline_layout.hpp>
+#include <yv/typedef/vi_rendered.hpp>
 
 namespace yq {
     class Stream;

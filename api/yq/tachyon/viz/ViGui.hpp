@@ -16,11 +16,11 @@
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yt/os/ModifierKey.hpp>
 #include <yt/typedef/buffer.hpp>
-#include <yq/tachyon/typedef/events.hpp>
+#include <ya/typedef/events.hpp>
 #include <yt/typedef/pipeline.hpp>
-#include <yq/tachyon/typedef/vi_buffer.hpp>
-#include <yq/tachyon/typedef/vi_pipeline.hpp>
-#include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
+#include <yv/typedef/vi_buffer.hpp>
+#include <yv/typedef/vi_pipeline.hpp>
+#include <yv/typedef/vi_pipeline_layout.hpp>
 #include <yt/typedef/raster.hpp>
 #include <yt/typedef/sampler.hpp>
 #include <yt/typedef/texture.hpp>

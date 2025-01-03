@@ -9,11 +9,11 @@
 #include <yq/keywords.hpp>
 #include <yq/core/Flags.hpp>
 #include <yt/gfx/Pipeline.hpp>
-#include <yq/tachyon/typedef/vi_buffer.hpp>
-#include <yq/tachyon/typedef/vi_pipeline.hpp>
+#include <yv/typedef/vi_buffer.hpp>
+#include <yv/typedef/vi_pipeline.hpp>
 #include <yt/typedef/push.hpp>
-#include <yq/tachyon/typedef/vi_texture.hpp>
-#include <yq/tachyon/typedef/vi_buffer.hpp>
+#include <yv/typedef/vi_texture.hpp>
+#include <yv/typedef/vi_buffer.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <span>

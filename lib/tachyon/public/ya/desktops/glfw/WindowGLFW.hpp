@@ -12,7 +12,7 @@
 #include <yt/os/MouseButton.hpp>
 #include <yt/os/MouseMode.hpp>
 #include <yq/tachyon/interfaces/IPosition2.hpp>
-#include <yq/tachyon/typedef/commands.hpp>
+#include <ya/typedef/commands.hpp>
 
 struct GLFWwindow;
 

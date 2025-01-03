@@ -9,10 +9,10 @@
 #include <yq/typedef/vector2.hpp>
 #include <yt/keywords.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/typedef/commands.hpp>
-#include <yq/tachyon/typedef/events.hpp>
-#include <yq/tachyon/typedef/replies.hpp>
-#include <yq/tachyon/typedef/requests.hpp>
+#include <ya/typedef/commands.hpp>
+#include <ya/typedef/events.hpp>
+#include <ya/typedef/replies.hpp>
+#include <ya/typedef/requests.hpp>
 #include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {

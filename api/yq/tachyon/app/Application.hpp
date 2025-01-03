@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
-#include <yq/tachyon/keywords.hpp>
+#include <yt/keywords.hpp>
 #include <yq/tachyon/app/AppCreateInfo.hpp>
 //#include <yq/tachyon/api/Thread.hpp>
 #include <yt/typedef/application.hpp>
@@ -31,7 +31,7 @@ namespace yq::tachyon {
     class ViewerThread;
     class Desktop;
     class DesktopGLFW;
-    class Vulqan;
+    class VulqanManager;
 
     /*! \brief Engine/Vulkan application
     
@@ -117,12 +117,12 @@ namespace yq::tachyon {
         TaskThread*             m_tthread   = nullptr;
         ViewerThread*           m_vthread   = nullptr;
         DesktopGLFW*            m_glfw      = nullptr;
-        Vulqan*                 m_vulkan    = nullptr;
+        VulqanManager*          m_vulkan    = nullptr;
     
         friend class Viewer;
         
         DesktopGLFW&            desktop(glfw_k);
-        Vulqan&                 manager(vulqan_k);
+        VulqanManager&          manager(vulqan_k);
         
         void    _kill();
         

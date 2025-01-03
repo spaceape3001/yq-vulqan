@@ -30,12 +30,13 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <yq/tachyon/application.hpp>
-#include <yq/tachyon/rendered.hpp>
-#include <yq/tachyon/shader.hpp>
-#include <yq/tachyon/texture.hpp>
-#include <yq/tachyon/widget.hpp>
-#include <yq/tachyon/viewer.hpp>
+#include <yt/application.hpp>
+#include <yt/buffer.hpp>
+#include <yt/rendered.hpp>
+#include <yt/shader.hpp>
+#include <yt/texture.hpp>
+#include <yt/viewer.hpp>
+#include <yt/widget.hpp>
 
 #include <yq/tachyon/commands/spatial/SetOrientation3.hpp>
 #include <yq/tachyon/renders/Triangle.hpp>

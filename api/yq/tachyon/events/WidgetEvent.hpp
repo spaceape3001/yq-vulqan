@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yt/msg/Event.hpp>
+#include <yt/ui/WidgetBind.hpp>
 
 namespace yq::tachyon {
     class Widget;

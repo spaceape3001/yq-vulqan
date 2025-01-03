@@ -23,8 +23,6 @@
 #include "TachyonData.hpp"
 #include "Thread.hpp"
 #include "ThreadData.hpp"
-#include "Widget.hpp"
-#include "WidgetData.hpp"
 
 #include <yq/tachyon/3D/Camera3.hpp>
 #include <yq/tachyon/3D/Camera3Data.hpp>
@@ -55,6 +53,10 @@
 #include <yt/os/Window.hpp>
 #include <yt/os/WindowData.hpp>
 
+#include <yt/ui/Widget.hpp>
+#include <yt/ui/WidgetData.hpp>
+
+
 #include <yq/tachyon/scene/Camera.hpp>
 #include <yq/tachyon/scene/CameraData.hpp>
 #include <yq/tachyon/scene/Light.hpp>
@@ -67,7 +69,7 @@
 #include <yq/tachyon/scene/SpatialData.hpp>
 
 #include <yq/core/StreamOps.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 
 namespace yq::tachyon {
 

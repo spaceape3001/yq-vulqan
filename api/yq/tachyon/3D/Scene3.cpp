@@ -8,7 +8,7 @@
 #include <yq/tachyon/3D/Scene3Bind.hpp>
 #include <yq/tachyon/3D/Scene3Data.hpp>
 #include <yq/tachyon/3D/Scene3InfoWriter.hpp>
-#include <yq/tachyon/spatials/SimpleSpatial3.hpp>
+#include <ya/spatials/SimpleSpatial3.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³)
 

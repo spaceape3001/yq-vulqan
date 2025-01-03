@@ -6,7 +6,7 @@
 
 #include "ImGuiDemoWidget.hpp"
 #include <yt/ui/MyImGui.hpp>
-#include <yq/tachyon/api/WidgetInfoWriter.hpp>
+#include <yt/ui/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     ImGuiDemoWidget::ImGuiDemoWidget()

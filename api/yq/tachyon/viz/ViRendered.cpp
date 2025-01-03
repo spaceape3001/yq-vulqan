@@ -10,8 +10,8 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yq/stream/Text.hpp>
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/3D/Rendered3.hpp>
 #include <yt/gfx/PushData.hpp>
 #include <yt/gfx/Pipeline.hpp>

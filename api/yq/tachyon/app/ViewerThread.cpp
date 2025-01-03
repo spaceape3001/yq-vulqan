@@ -6,7 +6,7 @@
 
 #include "ViewerThread.hpp"
 
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
 #include <yq/tachyon/api/ThreadInfoWriter.hpp>

@@ -10,7 +10,7 @@
 
 #include <yq/process/PluginLoader.hpp>
 
-#include <yq/tachyon/application.hpp>
+#include <yt/application.hpp>
 #include <yq/tachyon/widgets/ImGuiDemoWidget.hpp>
 
 #include <iostream>

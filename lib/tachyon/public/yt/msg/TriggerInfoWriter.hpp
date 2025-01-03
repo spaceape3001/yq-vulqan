@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Trigger.hpp>
-#include <yt/DelegateInfoWriter.hpp>
+#include <yt/api/DelegateInfoWriter.hpp>
 
 namespace yq::tachyon {
     

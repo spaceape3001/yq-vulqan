@@ -6,4 +6,4 @@
 
 #pragma once
 
-#include <yt/build.hpp>
+#include <yt/config/build.hpp>

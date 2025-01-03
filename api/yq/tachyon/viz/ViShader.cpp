@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViShader.hpp"
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
 #include <yt/gfx/Shader.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>

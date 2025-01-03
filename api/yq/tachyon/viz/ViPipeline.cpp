@@ -8,8 +8,8 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Text.hpp>
 #include <yq/trait/has_nan.hpp>
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/v/VqUtils.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>

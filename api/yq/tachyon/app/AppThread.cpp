@@ -8,7 +8,7 @@
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>

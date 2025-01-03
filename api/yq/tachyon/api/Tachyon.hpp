@@ -11,9 +11,9 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yt/keywords.hpp>
-#include <yt/Execution.hpp>
-#include <yt/ID.hpp>
-#include <yt/Type.hpp>
+#include <yt/api/Execution.hpp>
+#include <yt/api/ID.hpp>
+#include <yt/api/Type.hpp>
 #include <yt/msg/MG.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yt/typedef/frame.hpp>

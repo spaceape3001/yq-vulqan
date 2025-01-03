@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "WindowGLFW.hpp"
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
 #include <yq/tachyon/commands/WindowAspectCommand.hpp>
 #include <yq/tachyon/commands/WindowAttentionCommand.hpp>

@@ -12,7 +12,7 @@
 #include <yt/typedef/proxy.hpp>
 #include <yt/typedef/post.hpp>
 #include <yt/typedef/tachyon.hpp>
-#include <yt/Type.hpp>
+#include <yt/api/Type.hpp>
 
 namespace yq::tachyon {
     class Tachyon;

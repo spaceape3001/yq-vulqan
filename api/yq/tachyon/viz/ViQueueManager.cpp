@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ViQueueManager.hpp"
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 #include <yq/tachyon/v/VqStructs.hpp>
 #include <yq/tachyon/viz/ViQueueTasker.hpp>

@@ -14,7 +14,7 @@
 
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/events/ThreadAddTachyonEvent.hpp>
 
 namespace yq::tachyon {

@@ -26,7 +26,7 @@
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 
 namespace yq::tachyon {
 

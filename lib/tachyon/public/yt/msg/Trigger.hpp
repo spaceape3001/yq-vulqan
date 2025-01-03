@@ -12,9 +12,9 @@
 #include <yq/core/UniqueID.hpp>
 
 #include <yt/keywords.hpp>
-#include <yt/Delegate.hpp>
+#include <yt/api/Delegate.hpp>
+#include <yt/api/YesNo.hpp>
 #include <yt/msg/MismatchPolicy.hpp>
-#include <yt/YesNo.hpp>
 #include <yt/typedef/post.hpp>
 #include <yt/typedef/trigger.hpp>
 

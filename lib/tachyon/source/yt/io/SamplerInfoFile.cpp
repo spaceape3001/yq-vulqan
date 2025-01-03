@@ -10,9 +10,9 @@
 #include <yq/container/set_utils.hpp>
 #include <yq/keyv/KeyValue.hpp>
 #include <yq/text/join.hpp>
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/strings.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
+#include <yt/strings.hpp>
 
 namespace yq::tachyon {
     #if 0

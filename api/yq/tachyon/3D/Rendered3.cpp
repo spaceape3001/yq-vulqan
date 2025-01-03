@@ -8,7 +8,7 @@
 #include <yq/tachyon/3D/Rendered3Bind.hpp>
 #include <yq/tachyon/3D/Rendered3InfoWriter.hpp>
 #include <yq/tachyon/commands/SpatialCommand.hpp>
-#include <yq/tachyon/spatials/SimpleSpatial3.hpp>
+#include <ya/spatials/SimpleSpatial3.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
 

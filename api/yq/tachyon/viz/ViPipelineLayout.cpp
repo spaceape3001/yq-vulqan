@@ -7,8 +7,8 @@
 #include "ViPipelineLayout.hpp"
 #include <yq/keywords.hpp>
 #include <yq/core/StreamOps.hpp>
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
 #include <yt/gfx/Pipeline.hpp>
 #include <yt/gfx/PushData.hpp>
 #include <yt/gfx/Shader.hpp>

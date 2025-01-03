@@ -1,2 +1,2 @@
 #pragma once
-#include <yt/vulqan.hpp>
+#include <yt/config/vulqan.hpp>

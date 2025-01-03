@@ -14,7 +14,7 @@
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/rgba.hpp>
 
-#include <yq/tachyon/config/vulqan.hpp>
+#include <yt/config/vulqan.hpp>
 #include <yt/gfx/PresentMode.hpp>
 #include <yt/typedef/raster.hpp>
 #include <yq/tachyon/typedef/vi_buffer.hpp>
@@ -35,9 +35,10 @@
 #include <yq/tachyon/typedef/vi_texture_manager.hpp>
 #include <yq/tachyon/viz/ViQueueType.hpp>
 
+#include <yv/vulqan.hpp>
+
 #include <tbb/spin_rw_mutex.h>
 
-#include <vulkan/vulkan_core.h>
 #include <vk_mem_alloc.h>
 
 #include <functional>

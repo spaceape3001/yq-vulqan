@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/application.hpp>
-#include <yq/tachyon/viewer.hpp>
-#include <yq/tachyon/widget.hpp>
+#include <yt/application.hpp>
+#include <yt/viewer.hpp>
+#include <yt/widget.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;

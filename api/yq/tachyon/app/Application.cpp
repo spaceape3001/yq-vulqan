@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Widget.hpp>
+#include <yt/logging.hpp>
+#include <yt/ui/Widget.hpp>
 #include <yq/tachyon/app/AppException.hpp>
 #include <yq/tachyon/app/AppThread.hpp>
 #include <yq/tachyon/app/Application.hpp>
@@ -14,7 +14,7 @@
 #include <yq/tachyon/app/ViewerThread.hpp>
 #include <yt/os/Window.hpp>
 //#include <yq/tachyon/api/TachyonInfoWriter.hpp>
-#include <yq/tachyon/v/Vulqan.hpp>
+#include <yv/VulqanManager.hpp>
 
 //#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
 #include <yq/tachyon/glfw/DesktopGLFW.hpp>
@@ -25,7 +25,7 @@
 #include <yq/core/Cleanup.hpp>
 #include <yq/meta/Init.hpp>
 //#include <yq/post/boxes/SimpleBox.hpp>
-#include <yq/tachyon/config/build.hpp>
+#include <yt/config/build.hpp>
 //#include <GLFW/glfw3.h>
 
 //YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
@@ -167,11 +167,11 @@ namespace yq::tachyon {
         return *m_glfw;
     }
 
-    Vulqan&                     Application::manager(vulqan_k)
+    VulqanManager&              Application::manager(vulqan_k)
     {
         if(!m_vulkan){
             thread(APP);
-            m_vulkan    = Tachyon::create<Vulqan>(m_cInfo);
+            m_vulkan    = Tachyon::create<VulqanManager>(m_cInfo);
         }
         return *m_vulkan;
     }

@@ -26,12 +26,12 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <yq/tachyon/application.hpp>
-#include <yq/tachyon/controller.hpp>
+#include <yt/application.hpp>
+#include <yt/controller.hpp>
 #include <yt/ui/MyImGui.hpp>
-#include <yq/tachyon/scene.hpp>
-#include <yq/tachyon/viewer.hpp>
-#include <yq/tachyon/widget.hpp>
+#include <yq/tachyon/scene/Scene.hpp>
+#include <yt/viewer.hpp>
+#include <yt/widget.hpp>
 #include <yq/tachyon/commands/CameraPitchCommand.hpp>
 #include <yq/tachyon/events/KeyPressEvent.hpp>
 #include <yq/tachyon/renders/Quadrilateral.hpp>

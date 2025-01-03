@@ -15,10 +15,10 @@
 #include <yq/process/PluginLoader.hpp>
 #include <yq/text/format.hpp>
 
-#include <yq/tachyon/application.hpp>
+#include <yt/application.hpp>
 #include <yt/ui/MyImGui.hpp>
-#include <yq/tachyon/viewer.hpp>
-#include <yq/tachyon/widget.hpp>
+#include <yt/viewer.hpp>
+#include <yt/widget.hpp>
 #include <yq/tachyon/widgets/TextArea.hpp>
 
 #include <iostream>

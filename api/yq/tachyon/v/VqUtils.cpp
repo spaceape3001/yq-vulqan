@@ -8,11 +8,11 @@
 
 #include <yq/core/ErrorDB.hpp>
 #include <yq/color/RGBA.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 #include <yt/gfx/ImageViewInfo.hpp>
 #include <yt/gfx/SamplerInfo.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
-#include <yq/tachyon/v/Vulqan.hpp>
+#include <yv/VqStructs.hpp>
+#include <yv/VulqanManager.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>
 #include <GLFW/glfw3.h>
@@ -61,7 +61,7 @@ namespace yq::tachyon {
     std::vector<VkPhysicalDeviceGroupProperties>    vqEnumeratePhysicalDeviceGroups(VkInstance inst)
     {
         if(!inst)
-            inst    = Vulqan::instance();
+            inst    = VulqanManager::instance();
         uint32_t    count   = 0;
         vkEnumeratePhysicalDeviceGroups(inst, &count, nullptr);
         std::vector<VkPhysicalDeviceGroupProperties>    ret(count);
@@ -75,7 +75,7 @@ namespace yq::tachyon {
     std::vector<VkPhysicalDeviceGroupProperties>    vqEnumeratePhysicalDeviceGroupsKHR(VkInstance inst)
     {  
         if(!inst)
-            inst    = VqApp::vulkan();
+            VulqanManager    = VqApp::vulkan();
         uint32_t    count   = 0;
         vkEnumeratePhysicalDeviceGroupsKHR(inst, &count, nullptr);
         std::vector<VkPhysicalDeviceGroupProperties>    ret(count);
@@ -88,7 +88,7 @@ namespace yq::tachyon {
     std::vector<VkPhysicalDevice>        vqEnumeratePhysicalDevices(VkInstance inst)
     {
         if(!inst)
-            inst    = Vulqan::instance();
+            inst    = VulqanManager::instance();
         uint32_t    count   = 0;
         vkEnumeratePhysicalDevices(inst, &count, nullptr);
         std::vector<VkPhysicalDevice>    ret(count);
@@ -148,7 +148,7 @@ namespace yq::tachyon {
     VkPhysicalDevice                     vqFirstDevice(VkInstance inst)
     {
         if(!inst)
-            inst    = Vulqan::instance();
+            inst    = VulqanManager::instance();
         for(VkPhysicalDevice v : vqEnumeratePhysicalDevices(inst)){
             if(v)
                 return v;

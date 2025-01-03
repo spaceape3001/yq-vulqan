@@ -8,8 +8,8 @@
 
 #include <yq/core/Ref.hpp>
 #include <yt/keywords.hpp>
-#include <yt/Type.hpp>
-#include <yt/ID.hpp>
+#include <yt/api/Type.hpp>
+#include <yt/api/ID.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yt/typedef/camera.hpp>

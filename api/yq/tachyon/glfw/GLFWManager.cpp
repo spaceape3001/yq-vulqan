@@ -7,7 +7,7 @@
 #include "GLFWManager.hpp"
 
 #include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/api/Application.hpp>
 #include <yq/tachyon/api/ManagerInfoWriter.hpp>
 #include <yq/tachyon/api/Viewer.hpp>

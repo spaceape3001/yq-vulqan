@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/Type.hpp>
-#include <yt/ID.hpp>
+#include <yt/api/Type.hpp>
+#include <yt/api/ID.hpp>
 #include <yt/typedef/tachyon.hpp>
 #include <compare>
 #include <cstdint>

@@ -7,7 +7,7 @@
 #include "Viewer.hpp"
 
 #include <log4cpp/CategoryStream.hh>
-#include <yq/tachyon/logging.hpp>
+#include <yt/logging.hpp>
 
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/api/Context.hpp>
@@ -17,10 +17,10 @@
 #include <yq/tachyon/app/ViewerBind.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
 #include <yq/tachyon/app/ViewerException.hpp>
-#include <yq/tachyon/api/Widget.hpp>
 #include <yt/gfx/Raster.hpp>
 #include <yt/os/Window.hpp>
 #include <yt/os/WindowData.hpp>
+#include <yt/ui/Widget.hpp>
 
 #include <yq/tachyon/commands/ViewerAspectCommand.hpp>
 #include <yq/tachyon/commands/ViewerAttentionCommand.hpp>

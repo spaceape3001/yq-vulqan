@@ -25,14 +25,14 @@
 #include <yq/core/ErrorDB.hpp>
 #include <yq/util/AutoReset.hpp>
 
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/ImageViewInfo.hpp>
 #include <yq/tachyon/scene/Perspective.hpp>
 #include <yq/tachyon/scene/Scene.hpp>
-#include <yq/tachyon/v/VulqanException.hpp>
+#include <yv/VulqanException.hpp>
 #include <yq/tachyon/v/VqUtils.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>

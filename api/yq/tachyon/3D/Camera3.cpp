@@ -8,7 +8,7 @@
 #include <yq/tachyon/3D/Camera3Bind.hpp>
 #include <yq/tachyon/3D/Camera3Data.hpp>
 #include <yq/tachyon/3D/Camera3InfoWriter.hpp>
-#include <yq/tachyon/spatials/SimpleSpatial3.hpp>
+#include <ya/spatials/SimpleSpatial3.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 

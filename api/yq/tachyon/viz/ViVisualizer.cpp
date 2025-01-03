@@ -11,8 +11,8 @@
 #include <yq/text/basic.hpp>
 #include <yq/text/join.hpp>
 
-#include <yq/tachyon/errors.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
 #include <yt/gfx/Raster.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 #include <yt/gfx/Buffer.hpp>
@@ -22,9 +22,9 @@
 #include <yt/gfx/Texture.hpp>
 //#include <yq/tachyon/v/VqEnumerations.hpp>
 #include <yq/tachyon/v/VqEnums.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/v/VqUtils.hpp>
-#include <yq/tachyon/v/Vulqan.hpp>
+#include <yv/VulqanManager.hpp>
 #include <yq/tachyon/viz/ViManager.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>
@@ -54,7 +54,7 @@ namespace yq::tachyon {
 
     std::error_code  ViVisualizer::_0_app_window_initialize(GLFWwindow* w)
     {
-        m_instance    = Vulqan::instance();
+        m_instance    = VulqanManager::instance();
         if(!m_instance)
             return errors::vulkan_uninitialized();
 
@@ -311,7 +311,7 @@ namespace yq::tachyon {
         allocatorCreateInfo.instance                        = m_instance;
         allocatorCreateInfo.physicalDevice                  = m_physical;
         allocatorCreateInfo.device                          = m_device;
-        allocatorCreateInfo.vulkanApiVersion                =  Vulqan::vulkan_api();
+        allocatorCreateInfo.vulkanApiVersion                = VulqanManager::vulkan_api();
         allocatorCreateInfo.preferredLargeHeapBlockSize     = (VkDeviceSize) iData.viewer.chunk_size;
         vmaCreateAllocator(&allocatorCreateInfo, &m_allocator);
         

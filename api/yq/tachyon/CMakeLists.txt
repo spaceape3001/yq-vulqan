@@ -19,8 +19,6 @@ add_library(${PROJECT_NAME} SHARED
     #glfw/GLFWManager.cpp
     
     
-    vulqan.cpp
-
     3D/Camera3.cpp
     3D/Light3.cpp
     3D/Rendered3.cpp
@@ -29,7 +27,6 @@ add_library(${PROJECT_NAME} SHARED
 
     api/Controller.cpp
     #api/Context.hpp
-    #api/Editor.cpp
     api/Frame.cpp
     api/InterfaceInfo.cpp
     api/Manager.cpp
@@ -37,9 +34,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Proxy.cpp
     api/Tachyon.cpp
     api/Thread.cpp
-    #api/Tool.cpp
     api/TypedID.cpp
-    api/Widget.cpp
 
     app/Application.cpp
     app/AppThread.cpp
@@ -277,7 +272,6 @@ add_library(${PROJECT_NAME} SHARED
     #scene/Scene2.cpp
     scene/Spatial.cpp
 
-    spatials/SimpleSpatial3.cpp
     
     #task/Task.cpp
     #task/TaskEngine.cpp
@@ -291,7 +285,6 @@ add_library(${PROJECT_NAME} SHARED
     v/VqEnums.cpp
     v/VqLogging.cpp
     v/VqUtils.cpp
-    v/Vulqan.cpp
     
     viz/ViBuffer.cpp
     viz/ViCommandBuffer.cpp

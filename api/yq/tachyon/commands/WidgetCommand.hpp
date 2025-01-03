@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yq/tachyon/api/WidgetBind.hpp>
+#include <yt/ui/WidgetBind.hpp>
 
 namespace yq::tachyon {
     class WidgetCommandInfo : public CommandInfo {

@@ -17,11 +17,13 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Core First
     
-    source/yt/build.cpp
     source/yt/enums.cpp
     source/yt/strings.cpp
-    source/yt/Delegate.cpp
-    source/yt/Undo.cpp
+
+    source/yt/api/Action.cpp
+    source/yt/api/Delegate.cpp
+
+    source/yt/config/build.cpp
 
     source/yt/gfx/Buffer.cpp
     source/yt/gfx/Pipeline.cpp
@@ -36,7 +38,6 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/io/SamplerInfoFile.cpp
     source/yt/io/STBImage.cpp
 
-    source/yt/msg/Action.cpp
     source/yt/msg/Command.cpp
     source/yt/msg/Event.cpp
     source/yt/msg/Message.cpp
@@ -56,11 +57,19 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/os/VideoMode.cpp
     source/yt/os/Window.cpp
 
+    #source/yt/ui/Editor.cpp
     source/yt/ui/MyImGui.cpp
+    #source/yt/ui/Tool.cpp
+    source/yt/ui/Undo.cpp
+    source/yt/ui/Widget.cpp
 
     #######################################################
     #   Vulqan
     
+    source/yv/vulqan.cpp
+    source/yv/VulqanManager.cpp
+
+
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
@@ -77,6 +86,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/posts/AnyPost.cpp
     source/ya/posts/EmptyPost.cpp
     source/ya/posts/StringPost.cpp
+
+    source/ya/spatials/SimpleSpatial3.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

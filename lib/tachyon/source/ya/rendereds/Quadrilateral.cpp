@@ -4,22 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Triangle.hpp"
+#include <ya/rendereds/Quadrilateral.hpp>
 
-#include <yq/core/Logging.hpp>
-#include <yq/shape/TriangleData.hpp>
+#include <yq/shape/QuadrilateralData.hpp>
+#include <yq/shape/QuadrilateralData.hpp>
 #include <yq/shape/shape_utils.hpp>
+#include <yq/vector/Vector3.hxx>
 
 #include <yt/3D/Rendered3InfoWriter.hpp>
 #include <yt/gfx/Shader.hpp>
 
-#include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    void Triangle³::init_info()
+    void Quadrilateral³::init_info()
     {
-        auto w = writer<Triangle³>();
-        w.description("Triangle in three dimensions");
+        static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
+    
+        auto w = writer<Quadrilateral³>();
         
         {
             auto& p = w.pipeline();
@@ -27,24 +28,24 @@ namespace yq::tachyon {
             p.shader("assets/colored.vert");
             p.shader("assets/colored.frag");
 
-            p.vertex(&Triangle³::m_vertex, DataActivity::FIXED)
+            p.vertex(&Quadrilateral³::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;
             
+            p.index(kIndices, DataActivity::COMMON);
             p.push_full();
         }
     }
 
-    Triangle³::Triangle³(const TriangleData<ColorVertex2D>&tri, const Param& p) : Rendered³(p)
+    Quadrilateral³::Quadrilateral³(const QuadrilateralData<ColorVertex2D>&quad, const Param& p) : Rendered³(p)
     {
-        m_vertex    = { tri.a, tri.b, tri.c};
-        //m_draw.vertex_count  = 3;
+        m_vertex = { quad.a, quad.b, quad.c, quad.d};
     }
     
-    Triangle³::~Triangle³()
+    Quadrilateral³::~Quadrilateral³()
     {
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Triangle³)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Quadrilateral³)

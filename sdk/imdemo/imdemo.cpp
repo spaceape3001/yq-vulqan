@@ -11,7 +11,7 @@
 #include <yq/process/PluginLoader.hpp>
 
 #include <yt/application.hpp>
-#include <yq/tachyon/widgets/ImGuiDemoWidget.hpp>
+#include <ya/widgets/ImGuiDemoWidget.hpp>
 
 #include <iostream>
 

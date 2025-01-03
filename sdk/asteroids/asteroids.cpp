@@ -12,7 +12,7 @@
 #include <yt/viewer.hpp>
 #include <yt/task.hpp>
 #include <yt/widget.hpp>
-#include <yq/tachyon/widgets/StackedWidget.hpp>
+#include <ya/widgets/StackedWidget.hpp>
 
 #include <iostream>
 

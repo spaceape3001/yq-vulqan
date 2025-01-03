@@ -39,9 +39,9 @@
 #include <yt/widget.hpp>
 
 #include <ya/commands/spatial/SetOrientation3.hpp>
-#include <yq/tachyon/renders/Triangle.hpp>
+#include <ya/rendereds/Triangle.hpp>
 #include <yt/3D/Spatial3.hpp>
-#include <yq/tachyon/widgets/Scene3DWidget.hpp>
+#include <ya/widgets/Scene3DWidget.hpp>
 
 #include <iostream>
 #include <chrono>

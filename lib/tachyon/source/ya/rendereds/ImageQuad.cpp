@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ImageQuad.hpp"
+#include <ya/rendereds/ImageQuad.hpp>
 
 #include <yq/shape/AxBox2.hpp>
 

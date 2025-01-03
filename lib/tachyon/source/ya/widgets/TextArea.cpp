@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "TextArea.hpp"
+#include <ya/widgets/TextArea.hpp>
 #include <yq/core/Stream.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/text/IterUtf8.hpp>

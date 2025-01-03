@@ -4,7 +4,9 @@
 ##
 ################################################################################
 
-project(yq_tachyon2) # temporary until switched
+project(yq_tachyon) # temporary until switched
+
+#   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ʰ ᵖ ⁿ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ
 
 find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
@@ -142,6 +144,9 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
+    source/ya/cameras/NullCamera.cpp
+    source/ya/cameras/SpaceCamera.cpp
+    source/ya/cameras/TargetCamera.cpp
 
     source/ya/commands/AddChildCommand.cpp
     source/ya/commands/AppCommand.cpp
@@ -332,6 +337,11 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/proxies/PPosition2.cpp
     source/ya/proxies/PPosition3.cpp
 
+    source/ya/rendereds/ImageQuad.cpp
+    source/ya/rendereds/Quadrilateral.cpp
+    source/ya/rendereds/Tetrahedron.cpp
+    source/ya/rendereds/Triangle.cpp
+
     source/ya/replies/AnyReply.cpp
     source/ya/replies/AppReply.cpp
     source/ya/replies/CameraReply.cpp
@@ -365,6 +375,11 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/triggers/PostTrigger.cpp
     
     source/ya/utils/LoggerBox.cpp
+
+    source/ya/widgets/ImGuiDemoWidget.cpp
+    source/ya/widgets/Scene3DWidget.cpp
+    source/ya/widgets/StackedWidget.cpp
+    source/ya/widgets/TextArea.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 
@@ -384,7 +399,6 @@ PUBLIC
     ${VULQAN_API_DIR}
 PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/source
-    ${CMAKE_CURRENT_LIST_DIR}/../../api
 )
 
 

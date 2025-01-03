@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Scene3DWidget.hpp"
+#include <ya/widgets/Scene3DWidget.hpp>
 #include <yv/ViContext.hpp>
 #include <yv/Visualizer.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>

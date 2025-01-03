@@ -34,14 +34,14 @@
 #include <yt/widget.hpp>
 #include <ya/commands/CameraPitchCommand.hpp>
 #include <ya/events/KeyPressEvent.hpp>
-#include <yq/tachyon/renders/Quadrilateral.hpp>
-#include <yq/tachyon/renders/Triangle.hpp>
-#include <yq/tachyon/renders/Tetrahedron.hpp>
-#include <yq/tachyon/cameras/NullCamera.hpp>
-#include <yq/tachyon/cameras/SpaceCamera.hpp>
-#include <yq/tachyon/cameras/TargetCamera.hpp>
+#include <ya/rendereds/Quadrilateral.hpp>
+#include <ya/rendereds/Triangle.hpp>
+#include <ya/rendereds/Tetrahedron.hpp>
+#include <ya/cameras/NullCamera.hpp>
+#include <ya/cameras/SpaceCamera.hpp>
+#include <ya/cameras/TargetCamera.hpp>
 #include <ya/utils/LoggerBox.hpp>
-#include <yq/tachyon/widgets/Scene3DWidget.hpp>
+#include <ya/widgets/Scene3DWidget.hpp>
 
 #include <chrono>
 

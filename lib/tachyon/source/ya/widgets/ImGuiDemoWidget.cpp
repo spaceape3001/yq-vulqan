@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ImGuiDemoWidget.hpp"
+#include <ya/widgets/ImGuiDemoWidget.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 

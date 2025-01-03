@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Logging.hpp>
+#include <yt/logging.hpp>
 
 #define glfwAlert                   yAlert("glfw")
 #define glfwCritical                yCritical("glfw")

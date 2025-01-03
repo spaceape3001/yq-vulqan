@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MonitorGLFW.hpp"
+#include <ya/desktops/glfw/MonitorGLFW.hpp>
 #include <yt/os/MonitorInfoWriter.hpp>
 #include <GLFW/glfw3.h>
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Flags.hpp>
-#include <yq/tachyon/enum/JoystickHatState.hpp>
+#include <yq/os/JoystickHatState.hpp>
 #include <vector>
 
 namespace yq::tachyon {

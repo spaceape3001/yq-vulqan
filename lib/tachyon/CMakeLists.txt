@@ -77,6 +77,23 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
+    
+    source/ya/desktops/glfw/CursorGLFW.cpp
+    source/ya/desktops/glfw/DesktopGLFW.cpp
+    source/ya/desktops/glfw/JoystickGLFW.cpp
+    source/ya/desktops/glfw/KeyboardGLFW.cpp
+    source/ya/desktops/glfw/MonitorGLFW.cpp
+    source/ya/desktops/glfw/MouseGLFW.cpp
+    source/ya/desktops/glfw/WindowGLFW.cpp
+
+    source/ya/messages/EmptyMessage.cpp
+
+    source/ya/posts/AnyPost.cpp
+    source/ya/posts/EmptyPost.cpp
+    source/ya/posts/StringPost.cpp
+
+    source/ya/spatials/SimpleSpatial3.cpp
+
     source/ya/triggers/AndTrigger.cpp
     source/ya/triggers/KeyPressTrigger.cpp
     source/ya/triggers/NandTrigger.cpp
@@ -85,13 +102,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/triggers/OrTrigger.cpp
     source/ya/triggers/PostTrigger.cpp
     
-    source/ya/messages/EmptyMessage.cpp
-
-    source/ya/posts/AnyPost.cpp
-    source/ya/posts/EmptyPost.cpp
-    source/ya/posts/StringPost.cpp
-
-    source/ya/spatials/SimpleSpatial3.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 
@@ -108,8 +118,10 @@ target_compile_definitions(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
 PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/public
-    ${CMAKE_CURRENT_LIST_DIR}/../../api
     ${VULQAN_API_DIR}
+PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/source
+    ${CMAKE_CURRENT_LIST_DIR}/../../api
 )
 
 

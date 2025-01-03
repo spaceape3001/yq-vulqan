@@ -13,11 +13,11 @@
 #include <yt/os/MouseMode.hpp>
 #include <yq/tachyon/interfaces/IPosition2.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
-#include <yq/tachyon/typedef/glfw.hpp>
 
 struct GLFWwindow;
 
 namespace yq::tachyon {
+    class DesktopGLFW;
     class ViewerCreateInfo;
     class WindowDestroyCommand;
 

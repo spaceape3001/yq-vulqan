@@ -214,14 +214,6 @@ add_library(${PROJECT_NAME} SHARED
     events/WindowTitleEvent.cpp
     
     # font/Font.cpp      # Issue/TODO
-    
-    glfw/CursorGLFW.cpp
-    glfw/DesktopGLFW.cpp
-    glfw/JoystickGLFW.cpp
-    glfw/KeyboardGLFW.cpp
-    glfw/MonitorGLFW.cpp
-    glfw/MouseGLFW.cpp
-    glfw/WindowGLFW.cpp
 
     interfaces/IPosition1.cpp
     interfaces/IPosition2.cpp
@@ -321,7 +313,6 @@ target_compile_definitions(${PROJECT_NAME}
         GLFW_INCLUDE_VULKAN=1
         YQ_USE_GLM=1
     PRIVATE 
-        "-DYQ_DATA_DIR=\"${YQ_TACHYON_DATA_DIR}\"" 
         VK_ENABLE_BETA_EXTENSIONS=1
         DONT_DEFINE_AGAIN__STB_IMAGE_IMPLEMENTATION=1
         DONT_DEFINE_AGAIN__STB_IMAGE_RESIZE_IMPLEMENTATION=1

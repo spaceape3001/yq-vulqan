@@ -4,24 +4,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "DesktopGLFW.hpp"
 #include <yq/core/ThreadId.hpp>
 #include <yt/logging.hpp>
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/api/Context.hpp>
 #include <yt/os/DesktopInfoWriter.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
-#include <yq/tachyon/glfw/CursorGLFW.hpp>
-#include <yq/tachyon/glfw/ExceptionGLFW.hpp>
-#include <yq/tachyon/glfw/JoystickGLFW.hpp>
-#include <yq/tachyon/glfw/KeyboardGLFW.hpp>
-#include <yq/tachyon/glfw/MouseGLFW.hpp>
-#include <yq/tachyon/glfw/MonitorGLFW.hpp>
-#include <yq/tachyon/glfw/WindowGLFW.hpp>
-#include <yq/tachyon/glfw/LoggingGLFW.hpp>
+
+#include <ya/desktops/glfw/CursorGLFW.hpp>
+#include <ya/desktops/glfw/DesktopGLFW.hpp>
+#include <ya/desktops/glfw/ExceptionGLFW.hpp>
+#include <ya/desktops/glfw/JoystickGLFW.hpp>
+#include <ya/desktops/glfw/KeyboardGLFW.hpp>
+#include <ya/desktops/glfw/MouseGLFW.hpp>
+#include <ya/desktops/glfw/MonitorGLFW.hpp>
+#include <ya/desktops/glfw/WindowGLFW.hpp>
+#include <ya/desktops/glfw/LoggingGLFW.hpp>
 
 #include <yq/shape/Size2.hxx>
-#include <GLFW/glfw3.h>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::DesktopGLFW)
 

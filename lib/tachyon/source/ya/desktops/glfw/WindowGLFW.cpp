@@ -4,7 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "WindowGLFW.hpp"
+#include <ya/desktops/glfw/WindowGLFW.hpp>
+#include <ya/desktops/glfw/LoggingGLFW.hpp>
 #include <yt/logging.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
 #include <yq/tachyon/commands/WindowAspectCommand.hpp>
@@ -55,11 +56,12 @@
 #include <yq/tachyon/events/WindowScaleEvent.hpp>
 #include <yq/tachyon/events/WindowShowEvent.hpp>
 #include <yq/tachyon/events/WindowTitleEvent.hpp>
-#include <yq/tachyon/glfw/DesktopGLFW.hpp>
-#include <yq/tachyon/glfw/LoggingGLFW.hpp>
-#include <yq/tachyon/glfw/MonitorGLFW.hpp>
 #include <yq/tachyon/requests/WindowCloseRequest.hpp>
 #include <yq/tachyon/requests/WindowRefreshRequest.hpp>
+
+#include <ya/desktops/glfw/DesktopGLFW.hpp>
+#include <ya/desktops/glfw/LoggingGLFW.hpp>
+#include <ya/desktops/glfw/MonitorGLFW.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 

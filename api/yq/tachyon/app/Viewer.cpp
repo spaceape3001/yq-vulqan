@@ -84,7 +84,7 @@
 #include <yq/tachyon/events/WindowResizeEvent.hpp>
 #include <yq/tachyon/events/WindowShowEvent.hpp>
 
-#include <yq/tachyon/glfw/WindowGLFW.hpp>
+#include <ya/desktops/glfw/WindowGLFW.hpp>
 
 
 #include <yq/tachyon/replies/ViewerCloseReply.hpp>

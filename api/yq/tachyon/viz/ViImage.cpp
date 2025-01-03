@@ -8,7 +8,7 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/gfx/Raster.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 

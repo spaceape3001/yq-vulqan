@@ -10,7 +10,7 @@
 #include <yt/logging.hpp>
 #include <yt/gfx/Buffer.hpp>
 #include <yt/gfx/Texture.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>

@@ -10,8 +10,8 @@
 #include <yq/trait/has_nan.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
-#include <yq/tachyon/v/VqUtils.hpp>
+#include <yv/VqStructs.hpp>
+#include <yv/VqUtils.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>
 #include <yq/tachyon/viz/ViPipelineLayout.hpp>
 #include <yq/tachyon/viz/ViRenderPass.hpp>

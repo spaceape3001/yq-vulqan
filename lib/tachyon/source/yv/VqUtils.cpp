@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VqUtils.hpp"
 
 #include <yq/core/ErrorDB.hpp>
 #include <yq/color/RGBA.hpp>
@@ -12,6 +11,7 @@
 #include <yt/gfx/ImageViewInfo.hpp>
 #include <yt/gfx/SamplerInfo.hpp>
 #include <yv/VqStructs.hpp>
+#include <yv/VqUtils.hpp>
 #include <yv/VulqanManager.hpp>
 
 //#include <0/basic/CollectionUtils.hpp>

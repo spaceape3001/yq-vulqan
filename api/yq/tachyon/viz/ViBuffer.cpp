@@ -10,7 +10,7 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/gfx/Buffer.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 
 namespace yq::tachyon {

@@ -21,9 +21,9 @@
 #include <yt/gfx/Shader.hpp>
 #include <yt/gfx/Texture.hpp>
 //#include <yq/tachyon/v/VqEnumerations.hpp>
-#include <yq/tachyon/v/VqEnums.hpp>
+#include <yv/VqEnums.hpp>
 #include <yv/VqStructs.hpp>
-#include <yq/tachyon/v/VqUtils.hpp>
+#include <yv/VqUtils.hpp>
 #include <yv/VulqanManager.hpp>
 #include <yq/tachyon/viz/ViManager.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>

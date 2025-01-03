@@ -281,10 +281,6 @@ add_library(${PROJECT_NAME} SHARED
     util/LoggerBox.cpp
 
 
-    # v/VqEnumerations.cpp
-    v/VqEnums.cpp
-    v/VqLogging.cpp
-    v/VqUtils.cpp
     
     viz/ViBuffer.cpp
     viz/ViCommandBuffer.cpp

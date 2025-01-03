@@ -8,7 +8,7 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/viz/ViQueueTasker.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 

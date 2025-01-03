@@ -68,6 +68,10 @@ add_library(${PROJECT_NAME} SHARED
     
     source/yv/vulqan.cpp
     source/yv/VulqanManager.cpp
+    # source/yv/VqEnumerations.cpp
+    source/yv/VqEnums.cpp
+    source/yv/VqLogging.cpp
+    source/yv/VqUtils.cpp
 
 
     #######################################################

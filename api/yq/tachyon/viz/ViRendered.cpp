@@ -16,7 +16,7 @@
 #include <yt/gfx/PushData.hpp>
 #include <yt/gfx/Pipeline.hpp>
 #include <yq/tachyon/scene/Rendered.hpp>
-#include <yq/tachyon/v/VqEnums.hpp>
+#include <yv/VqEnums.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>
 #include <yq/tachyon/viz/ViManager.hpp>

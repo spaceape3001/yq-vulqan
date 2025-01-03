@@ -10,9 +10,9 @@
 #include <yt/logging.hpp>
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/ImageViewInfo.hpp>
-#include <yq/tachyon/v/VqLogging.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
-#include <yq/tachyon/v/VqUtils.hpp>
+#include <yv/VqLogging.hpp>
+#include <yv/VqStructs.hpp>
+#include <yv/VqUtils.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 #include <algorithm>

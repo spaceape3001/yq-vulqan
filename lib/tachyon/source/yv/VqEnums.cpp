@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VqEnums.hpp"
+#include <yv/VqEnums.hpp>
 #include <yq/core/Enum.hpp>
 
 namespace yq::tachyon {

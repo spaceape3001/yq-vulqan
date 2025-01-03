@@ -33,7 +33,7 @@
 #include <yq/tachyon/scene/Perspective.hpp>
 #include <yq/tachyon/scene/Scene.hpp>
 #include <yv/VulqanException.hpp>
-#include <yq/tachyon/v/VqUtils.hpp>
+#include <yv/VqUtils.hpp>
 #include <yq/tachyon/viz/ViBuffer.hpp>
 #include <yq/tachyon/viz/ViContext.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>

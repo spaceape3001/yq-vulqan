@@ -11,7 +11,7 @@
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/RasterInfo.hpp>
 #include <yt/gfx/Texture.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/viz/ViImage.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>
 #include <yq/tachyon/viz/ViSampler.hpp>

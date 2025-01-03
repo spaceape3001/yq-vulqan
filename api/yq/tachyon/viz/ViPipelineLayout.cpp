@@ -12,8 +12,8 @@
 #include <yt/gfx/Pipeline.hpp>
 #include <yt/gfx/PushData.hpp>
 #include <yt/gfx/Shader.hpp>
-#include <yq/tachyon/v/VqEnums.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqEnums.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>
 #include <yq/tachyon/viz/ViShader.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>

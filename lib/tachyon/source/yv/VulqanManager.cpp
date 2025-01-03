@@ -11,9 +11,9 @@
 #include <yv/VulqanManager.hpp>
 
 
-#include <yq/tachyon/v/VqEnums.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
-#include <yq/tachyon/v/VqUtils.hpp>
+#include <yv/VqEnums.hpp>
+#include <yv/VqStructs.hpp>
+#include <yv/VqUtils.hpp>
 #include <yv/VulqanException.hpp>
 #include <yq/tachyon/viz/ViLogging.hpp>
 

@@ -9,7 +9,7 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/gfx/Sampler.hpp>
-#include <yq/tachyon/v/VqStructs.hpp>
+#include <yv/VqStructs.hpp>
 #include <yq/tachyon/viz/ViVisualizer.hpp>
 
 #include <yq/tachyon/viz/ViLogging.hpp>

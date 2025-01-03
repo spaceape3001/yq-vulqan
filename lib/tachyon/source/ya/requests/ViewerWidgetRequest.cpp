@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerWidgetRequest.hpp"
+#include <ya/requests/ViewerWidgetRequest.hpp>
 #include <yq/tachyon/api/CommandInfoWriter.hpp>
 #include <yq/tachyon/widget/Widget.hpp>
 

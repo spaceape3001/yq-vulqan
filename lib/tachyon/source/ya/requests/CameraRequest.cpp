@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CameraRequest.hpp"
+#include <ya/requests/CameraRequest.hpp>
 
 #include <yt/msg/RequestInfoWriter.hpp>
 

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AppRequest.hpp"
+#include <ya/requests/AppRequest.hpp>
 
 #include <yt/msg/RequestInfoWriter.hpp>
 

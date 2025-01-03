@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "EmptyReply.hpp"
+#include <ya/replies/EmptyReply.hpp>
 #include <yt/msg/ReplyInfoWriter.hpp>
 
 namespace yq::tachyon {

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "StringReply.hpp"
+#include <ya/replies/StringReply.hpp>
 #include <yt/msg/ReplyInfoWriter.hpp>
 
 namespace yq::tachyon {

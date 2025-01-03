@@ -57,28 +57,6 @@ add_library(${PROJECT_NAME} SHARED
     renders/Tetrahedron.cpp
     renders/Triangle.cpp
 
-    replies/AnyReply.cpp
-    replies/AppReply.cpp
-    replies/CameraReply.cpp
-    replies/EmptyReply.cpp
-    replies/StringReply.cpp
-    replies/TachyonReply.cpp
-    replies/ViewerCloseReply.cpp
-    replies/ViewerReply.cpp
-    replies/ViewerWidgetReply.cpp
-    replies/WindowReply.cpp
-    
-    requests/AppRequest.cpp
-    requests/CameraRequest.cpp
-    requests/EmptyRequest.cpp
-    requests/TachyonRequest.cpp
-    requests/ViewerCloseRequest.cpp
-    requests/ViewerRequest.cpp
-    #requests/ViewerWidgetRequest.cpp
-    requests/WindowCloseRequest.cpp
-    requests/WindowRefreshRequest.cpp
-    requests/WindowRequest.cpp
-
     scene/Camera.cpp
     scene/Light.cpp
     scene/Perspective.cpp

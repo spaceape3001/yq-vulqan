@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerRequest.hpp"
+#include <ya/requests/ViewerRequest.hpp>
 
 #include <yt/msg/RequestInfoWriter.hpp>
 

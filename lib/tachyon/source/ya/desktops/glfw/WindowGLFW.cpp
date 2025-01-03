@@ -56,8 +56,8 @@
 #include <ya/events/WindowScaleEvent.hpp>
 #include <ya/events/WindowShowEvent.hpp>
 #include <ya/events/WindowTitleEvent.hpp>
-#include <yq/tachyon/requests/WindowCloseRequest.hpp>
-#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
+#include <ya/requests/WindowCloseRequest.hpp>
+#include <ya/requests/WindowRefreshRequest.hpp>
 
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
 #include <ya/desktops/glfw/LoggingGLFW.hpp>

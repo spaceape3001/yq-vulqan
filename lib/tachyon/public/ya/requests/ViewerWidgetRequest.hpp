@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/requests/ViewerRequest.hpp>
+#include <ya/requests/ViewerRequest.hpp>
 #include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "EmptyRequest.hpp"
+#include <ya/requests/EmptyRequest.hpp>
 #include <yt/msg/RequestInfoWriter.hpp>
 
 namespace yq::tachyon {

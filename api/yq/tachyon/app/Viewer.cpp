@@ -87,18 +87,18 @@
 #include <ya/desktops/glfw/WindowGLFW.hpp>
 
 
-#include <yq/tachyon/replies/ViewerCloseReply.hpp>
+#include <ya/replies/ViewerCloseReply.hpp>
 
-#include <yq/tachyon/requests/ViewerCloseRequest.hpp>
-#include <yq/tachyon/requests/WindowCloseRequest.hpp>
-#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
+#include <ya/requests/ViewerCloseRequest.hpp>
+#include <ya/requests/WindowCloseRequest.hpp>
+#include <ya/requests/WindowRefreshRequest.hpp>
 
 #include <yv/ViContext.hpp>
 #include <yv/ViGui.hpp>
 #include <yv/Visualizer.hpp>
 
-//#include <yq/tachyon/replies/ViewerWidgetReply.hpp>
-//#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
+//#include <ya/replies/ViewerWidgetReply.hpp>
+//#include <ya/requests/ViewerWidgetRequest.hpp>
 
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>

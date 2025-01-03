@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "WindowReply.hpp"
+#include <ya/replies/WindowReply.hpp>
 
 #include <yt/msg/ReplyInfoWriter.hpp>
 

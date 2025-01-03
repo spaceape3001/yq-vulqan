@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerWidgetReply.hpp"
-#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>
+#include <ya/replies/ViewerWidgetReply.hpp>
+#include <ya/requests/ViewerWidgetRequest.hpp>
 #include <yt/msg/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerWidgetReply)

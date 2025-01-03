@@ -7,20 +7,20 @@
 #pragma once
 
 #include <yt/msg/Response.hpp> 
-#include <yq/tachyon/replies/ViewerReply.hpp>
+#include <ya/replies/ViewerReply.hpp>
 #include <ya/typedef/requests.hpp>
 
 namespace yq::tachyon {
-    class ViewerCloseReply : public ViewerReply {
-        YQ_OBJECT_DECLARE(ViewerCloseReply, ViewerReply)
+    class ViewerWidgetReply : public ViewerReply {
+        YQ_OBJECT_DECLARE(ViewerWidgetReply, ViewerReply)
     public:
     
         struct Param : public ViewerReply::Param {
         };
     
-        ViewerCloseReply(const RequestCPtr&, const Viewer*, Response, const Param& p = {});
-        ViewerCloseReply(const RequestCPtr&, ViewerID, Response, const Param& p = {});
-        virtual ~ViewerCloseReply();
+        ViewerWidgetReply(const ViewerWidgetRequestCPtr&, ViewerID, Response, const Param& p = {});
+        ViewerWidgetReply(const ViewerWidgetRequestCPtr&, const Viewer*, Response, const Param& p = {});
+        virtual ~ViewerWidgetReply();
         
         Response     response() const { return m_response; }
         

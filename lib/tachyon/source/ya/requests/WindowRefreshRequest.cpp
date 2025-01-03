@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "WindowRefreshRequest.hpp"
+#include <ya/requests/WindowRefreshRequest.hpp>
 #include <yt/msg/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowRefreshRequest)

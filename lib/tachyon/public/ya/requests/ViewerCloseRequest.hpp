@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/requests/ViewerRequest.hpp>
+#include <ya/requests/ViewerRequest.hpp>
 
 namespace yq::tachyon {
     class ViewerCloseRequest : public ViewerRequest {

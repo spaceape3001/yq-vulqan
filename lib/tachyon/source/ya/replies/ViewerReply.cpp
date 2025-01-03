@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerReply.hpp"
+#include <ya/replies/ViewerReply.hpp>
 
 #include <yt/msg/ReplyInfoWriter.hpp>
 

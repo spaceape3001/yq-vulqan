@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViewerCloseRequest.hpp"
+#include <ya/requests/ViewerCloseRequest.hpp>
 #include <yt/msg/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseRequest)

@@ -296,6 +296,28 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/proxies/PPosition2.cpp
     source/ya/proxies/PPosition3.cpp
 
+    source/ya/replies/AnyReply.cpp
+    source/ya/replies/AppReply.cpp
+    source/ya/replies/CameraReply.cpp
+    source/ya/replies/EmptyReply.cpp
+    source/ya/replies/StringReply.cpp
+    source/ya/replies/TachyonReply.cpp
+    source/ya/replies/ViewerCloseReply.cpp
+    source/ya/replies/ViewerReply.cpp
+    source/ya/replies/ViewerWidgetReply.cpp
+    source/ya/replies/WindowReply.cpp
+    
+    source/ya/requests/AppRequest.cpp
+    source/ya/requests/CameraRequest.cpp
+    source/ya/requests/EmptyRequest.cpp
+    source/ya/requests/TachyonRequest.cpp
+    source/ya/requests/ViewerCloseRequest.cpp
+    source/ya/requests/ViewerRequest.cpp
+    #source/ya/requests/ViewerWidgetRequest.cpp
+    source/ya/requests/WindowCloseRequest.cpp
+    source/ya/requests/WindowRefreshRequest.cpp
+    source/ya/requests/WindowRequest.cpp
+
     source/ya/spatials/SimpleSpatial3.cpp
 
     source/ya/triggers/AndTrigger.cpp

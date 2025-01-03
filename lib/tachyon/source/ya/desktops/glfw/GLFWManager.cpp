@@ -23,8 +23,8 @@
 #include <yq/tachyon/exceptions/GLFWException.hpp>
 #include <yq/tachyon/glfw/Joystick.hpp>
 #include <yq/tachyon/glfw/Monitor.hpp>
-#include <yq/tachyon/requests/ViewerCloseRequest.hpp>
-#include <yq/tachyon/requests/WindowRefreshRequest.hpp>
+#include <ya/requests/ViewerCloseRequest.hpp>
+#include <ya/requests/WindowRefreshRequest.hpp>
 
 #include <yq/core/ThreadId.hpp>
 #include <yq/util/Safety.hpp>

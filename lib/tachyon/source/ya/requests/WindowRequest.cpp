@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "WindowRequest.hpp"
+#include <ya/requests/WindowRequest.hpp>
 
 #include <yt/msg/RequestInfoWriter.hpp>
 

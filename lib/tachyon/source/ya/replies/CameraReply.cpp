@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CameraReply.hpp"
+#include <ya/replies/CameraReply.hpp>
 
 #include <yt/msg/ReplyInfoWriter.hpp>
 

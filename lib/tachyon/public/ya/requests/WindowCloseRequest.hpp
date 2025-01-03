@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/requests/WindowRequest.hpp>
+#include <ya/requests/WindowRequest.hpp>
 
 namespace yq::tachyon {
     class WindowCloseRequest : public WindowRequest {

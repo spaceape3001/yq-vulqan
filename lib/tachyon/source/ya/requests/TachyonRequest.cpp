@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "TachyonRequest.hpp"
+#include <ya/requests/TachyonRequest.hpp>
 
 #include <yt/msg/RequestInfoWriter.hpp>
 

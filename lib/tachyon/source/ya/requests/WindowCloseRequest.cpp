@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "WindowCloseRequest.hpp"
+#include <ya/requests/WindowCloseRequest.hpp>
 #include <yt/msg/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCloseRequest)

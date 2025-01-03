@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AppReply.hpp"
+#include <ya/replies/AppReply.hpp>
 
 #include <yt/msg/ReplyInfoWriter.hpp>
 

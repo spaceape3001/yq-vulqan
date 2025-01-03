@@ -9,8 +9,8 @@
 #include <yq/tachyon/scene/RenderedBind.hpp>
 #include <yq/tachyon/scene/RenderedData.hpp>
 #include <yq/tachyon/scene/RenderedInfoWriter.hpp>
-#include <yq/tachyon/viz/ViBuffer.hpp>
-#include <yq/tachyon/viz/ViTexture.hpp>
+#include <yv/ViBuffer.hpp>
+#include <yv/ViTexture.hpp>
 
 namespace yq::tachyon {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

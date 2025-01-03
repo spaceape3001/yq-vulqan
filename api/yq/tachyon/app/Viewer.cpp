@@ -93,9 +93,9 @@
 #include <yq/tachyon/requests/WindowCloseRequest.hpp>
 #include <yq/tachyon/requests/WindowRefreshRequest.hpp>
 
-#include <yq/tachyon/viz/ViContext.hpp>
-#include <yq/tachyon/viz/ViGui.hpp>
-#include <yq/tachyon/viz/Visualizer.hpp>
+#include <yv/ViContext.hpp>
+#include <yv/ViGui.hpp>
+#include <yv/Visualizer.hpp>
 
 //#include <yq/tachyon/replies/ViewerWidgetReply.hpp>
 //#include <yq/tachyon/requests/ViewerWidgetRequest.hpp>

@@ -68,12 +68,39 @@ add_library(${PROJECT_NAME} SHARED
     
     source/yv/vulqan.cpp
     source/yv/VulqanManager.cpp
+
     # source/yv/VqEnumerations.cpp
     source/yv/VqEnums.cpp
     source/yv/VqLogging.cpp
     source/yv/VqUtils.cpp
 
-
+    source/yv/ViBuffer.cpp
+    source/yv/ViCommandBuffer.cpp
+    source/yv/ViCommandBufferVector.cpp
+    source/yv/ViCommandPool.cpp
+    source/yv/ViContext.cpp
+    source/yv/ViData.cpp
+    source/yv/ViDevice.cpp
+    source/yv/ViFence.cpp
+    source/yv/ViFrame.cpp
+    source/yv/ViGui.cpp
+    source/yv/ViImage.cpp
+    source/yv/ViPipeline.cpp
+    source/yv/ViPipelineLayout.cpp
+    source/yv/ViQueueManager.cpp
+    source/yv/ViQueueTasker.cpp
+    source/yv/ViRendered.cpp
+    source/yv/ViRenderPass.cpp
+    source/yv/ViSampler.cpp
+    source/yv/ViShader.cpp
+    source/yv/ViSurface.cpp
+    source/yv/ViSwapchain.cpp
+    source/yv/ViTexture.cpp
+    source/yv/ViTasker.cpp
+    source/yv/ViThread.cpp
+    source/yv/ViVisualizer.cpp
+    source/yv/Visualizer.cpp
+    
     #######################################################
     #   Assets (Yes, the above will use some of these)
 

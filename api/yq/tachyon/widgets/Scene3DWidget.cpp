@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Scene3DWidget.hpp"
-#include <yq/tachyon/viz/ViContext.hpp>
-#include <yq/tachyon/viz/Visualizer.hpp>
+#include <yv/ViContext.hpp>
+#include <yv/Visualizer.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {

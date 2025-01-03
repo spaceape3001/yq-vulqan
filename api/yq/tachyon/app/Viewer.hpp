@@ -30,7 +30,7 @@
 #include <yv/typedef/vigui.hpp>
 #include <yv/typedef/visualizer.hpp>
 
-//#include <yq/tachyon/viz/Visualizer.hpp>
+//#include <yv/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>
 
 #include <tbb/spin_rw_mutex.h>

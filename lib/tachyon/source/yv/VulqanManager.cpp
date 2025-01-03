@@ -15,7 +15,7 @@
 #include <yv/VqStructs.hpp>
 #include <yv/VqUtils.hpp>
 #include <yv/VulqanException.hpp>
-#include <yq/tachyon/viz/ViLogging.hpp>
+#include <yv/ViLogging.hpp>
 
 #include <yq/core/BasicApp.hpp>
 #include <yq/core/DelayInit.hpp>

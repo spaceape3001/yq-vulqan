@@ -46,68 +46,6 @@ add_library(${PROJECT_NAME} SHARED
     cameras/SpaceCamera.cpp
     cameras/TargetCamera.cpp
 
-    events/AppEvent.cpp
-    events/CameraEvent.cpp
-    events/EmptyEvent.cpp
-    events/InputEvent.cpp
-    #events/JoystickAxisEvent.cpp
-    #events/JoystickConnectEvent.cpp
-    #events/JoystickDisconnectEvent.cpp
-    #events/JoystickEvent.cpp
-    #events/JoystickHatEvent.cpp
-    #events/JoystickPressEvent.cpp
-    #events/JoystickReleaseEvent.cpp
-    events/KeyboardEvent.cpp
-    events/KeyCharacterEvent.cpp
-    events/KeyPressEvent.cpp
-    events/KeyReleaseEvent.cpp
-    events/KeyRepeatEvent.cpp
-    #events/MonitorConnectEvent.cpp
-    #events/MonitorDisconnectEvent.cpp
-    #events/MonitorEvent.cpp
-    events/MouseCaptureEvent.cpp
-    events/MouseDisableEvent.cpp
-    events/MouseDropEvent.cpp
-    events/MouseEnterEvent.cpp
-    events/MouseEvent.cpp
-    events/MouseHideEvent.cpp
-    events/MouseLeaveEvent.cpp
-    events/MouseMoveEvent.cpp
-    events/MouseNormalEvent.cpp
-    events/MousePressEvent.cpp
-    events/MouseReleaseEvent.cpp
-    events/MouseScrollEvent.cpp
-    events/TachyonEvent.cpp
-    events/ThreadEvent.cpp
-    events/ThreadAddTachyonEvent.cpp
-    events/ViewerCloseEvent.cpp
-    events/ViewerDestroyEvent.cpp
-    events/ViewerEvent.cpp
-    events/ViewerPauseEvent.cpp
-    events/ViewerResumeEvent.cpp
-    events/ViewerTickEvent.cpp
-    events/VulqanEvent.cpp
-    events/WidgetEvent.cpp
-    events/WindowAspectEvent.cpp
-    events/WindowCursorCaptureEvent.cpp
-    events/WindowCursorDisableEvent.cpp
-    events/WindowCursorHideEvent.cpp
-    events/WindowCursorNormalEvent.cpp
-    events/WindowDefocusEvent.cpp
-    events/WindowDestroyEvent.cpp
-    events/WindowEvent.cpp
-    events/WindowFocusEvent.cpp
-    events/WindowFrameBufferResizeEvent.cpp
-    events/WindowHideEvent.cpp
-    events/WindowIconifyEvent.cpp
-    events/WindowMaximizeEvent.cpp
-    events/WindowMoveEvent.cpp
-    events/WindowResizeEvent.cpp
-    events/WindowRestoreEvent.cpp
-    events/WindowScaleEvent.cpp
-    events/WindowShowEvent.cpp
-    events/WindowTitleEvent.cpp
-    
 
     #manipulator/Manipulator.cpp
     

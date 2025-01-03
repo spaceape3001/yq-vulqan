@@ -15,7 +15,7 @@
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yt/logging.hpp>
-#include <yq/tachyon/events/ThreadAddTachyonEvent.hpp>
+#include <ya/events/ThreadAddTachyonEvent.hpp>
 
 namespace yq::tachyon {
     using namespace std::chrono_literals;

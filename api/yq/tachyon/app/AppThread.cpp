@@ -13,7 +13,7 @@
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
 #include <yq/tachyon/api/ThreadInfoWriter.hpp>
-#include <yq/tachyon/events/ViewerDestroyEvent.hpp>
+#include <ya/events/ViewerDestroyEvent.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
 

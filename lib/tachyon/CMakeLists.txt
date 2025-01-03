@@ -220,6 +220,68 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/desktops/glfw/MouseGLFW.cpp
     source/ya/desktops/glfw/WindowGLFW.cpp
 
+    source/ya/events/AppEvent.cpp
+    source/ya/events/CameraEvent.cpp
+    source/ya/events/EmptyEvent.cpp
+    source/ya/events/InputEvent.cpp
+    #source/ya/events/JoystickAxisEvent.cpp
+    #source/ya/events/JoystickConnectEvent.cpp
+    #source/ya/events/JoystickDisconnectEvent.cpp
+    #source/ya/events/JoystickEvent.cpp
+    #source/ya/events/JoystickHatEvent.cpp
+    #source/ya/events/JoystickPressEvent.cpp
+    #source/ya/events/JoystickReleaseEvent.cpp
+    source/ya/events/KeyboardEvent.cpp
+    source/ya/events/KeyCharacterEvent.cpp
+    source/ya/events/KeyPressEvent.cpp
+    source/ya/events/KeyReleaseEvent.cpp
+    source/ya/events/KeyRepeatEvent.cpp
+    #source/ya/events/MonitorConnectEvent.cpp
+    #source/ya/events/MonitorDisconnectEvent.cpp
+    #source/ya/events/MonitorEvent.cpp
+    source/ya/events/MouseCaptureEvent.cpp
+    source/ya/events/MouseDisableEvent.cpp
+    source/ya/events/MouseDropEvent.cpp
+    source/ya/events/MouseEnterEvent.cpp
+    source/ya/events/MouseEvent.cpp
+    source/ya/events/MouseHideEvent.cpp
+    source/ya/events/MouseLeaveEvent.cpp
+    source/ya/events/MouseMoveEvent.cpp
+    source/ya/events/MouseNormalEvent.cpp
+    source/ya/events/MousePressEvent.cpp
+    source/ya/events/MouseReleaseEvent.cpp
+    source/ya/events/MouseScrollEvent.cpp
+    source/ya/events/TachyonEvent.cpp
+    source/ya/events/ThreadEvent.cpp
+    source/ya/events/ThreadAddTachyonEvent.cpp
+    source/ya/events/ViewerCloseEvent.cpp
+    source/ya/events/ViewerDestroyEvent.cpp
+    source/ya/events/ViewerEvent.cpp
+    source/ya/events/ViewerPauseEvent.cpp
+    source/ya/events/ViewerResumeEvent.cpp
+    source/ya/events/ViewerTickEvent.cpp
+    source/ya/events/VulqanEvent.cpp
+    source/ya/events/WidgetEvent.cpp
+    source/ya/events/WindowAspectEvent.cpp
+    source/ya/events/WindowCursorCaptureEvent.cpp
+    source/ya/events/WindowCursorDisableEvent.cpp
+    source/ya/events/WindowCursorHideEvent.cpp
+    source/ya/events/WindowCursorNormalEvent.cpp
+    source/ya/events/WindowDefocusEvent.cpp
+    source/ya/events/WindowDestroyEvent.cpp
+    source/ya/events/WindowEvent.cpp
+    source/ya/events/WindowFocusEvent.cpp
+    source/ya/events/WindowFrameBufferResizeEvent.cpp
+    source/ya/events/WindowHideEvent.cpp
+    source/ya/events/WindowIconifyEvent.cpp
+    source/ya/events/WindowMaximizeEvent.cpp
+    source/ya/events/WindowMoveEvent.cpp
+    source/ya/events/WindowResizeEvent.cpp
+    source/ya/events/WindowRestoreEvent.cpp
+    source/ya/events/WindowScaleEvent.cpp
+    source/ya/events/WindowShowEvent.cpp
+    source/ya/events/WindowTitleEvent.cpp
+    
     source/ya/interfaces/IPosition1.cpp
     source/ya/interfaces/IPosition2.cpp
     source/ya/interfaces/IPosition3.cpp

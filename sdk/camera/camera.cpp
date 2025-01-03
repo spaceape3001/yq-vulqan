@@ -33,7 +33,7 @@
 #include <yt/viewer.hpp>
 #include <yt/widget.hpp>
 #include <ya/commands/CameraPitchCommand.hpp>
-#include <yq/tachyon/events/KeyPressEvent.hpp>
+#include <ya/events/KeyPressEvent.hpp>
 #include <yq/tachyon/renders/Quadrilateral.hpp>
 #include <yq/tachyon/renders/Triangle.hpp>
 #include <yq/tachyon/renders/Tetrahedron.hpp>

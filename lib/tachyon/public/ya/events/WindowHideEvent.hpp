@@ -1,0 +1,24 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <ya/events/WindowEvent.hpp>
+
+namespace yq::tachyon {
+    class WindowHideEvent : public WindowEvent {
+        YQ_OBJECT_DECLARE(WindowHideEvent, WindowEvent)
+    public:
+    
+        struct Param : public WindowEvent::Param {
+        };
+    
+        WindowHideEvent(Window*, const Param& p = {});
+        virtual ~WindowHideEvent();
+        
+        static void init_info();
+    };
+}

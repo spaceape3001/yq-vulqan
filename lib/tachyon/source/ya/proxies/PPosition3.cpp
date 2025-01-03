@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PPosition3.hpp>
-#include <yq/tachyon/commands/spatial/MoveBy3.hpp>
-#include <yq/tachyon/commands/spatial/MoveByX.hpp>
-#include <yq/tachyon/commands/spatial/MoveByY.hpp>
-#include <yq/tachyon/commands/spatial/MoveByZ.hpp>
-#include <yq/tachyon/commands/spatial/SetPosition3.hpp>
-#include <yq/tachyon/commands/spatial/SetPositionX.hpp>
-#include <yq/tachyon/commands/spatial/SetPositionY.hpp>
-#include <yq/tachyon/commands/spatial/SetPositionZ.hpp>
+#include <ya/commands/spatial/MoveBy3.hpp>
+#include <ya/commands/spatial/MoveByX.hpp>
+#include <ya/commands/spatial/MoveByY.hpp>
+#include <ya/commands/spatial/MoveByZ.hpp>
+#include <ya/commands/spatial/SetPosition3.hpp>
+#include <ya/commands/spatial/SetPositionX.hpp>
+#include <ya/commands/spatial/SetPositionY.hpp>
+#include <ya/commands/spatial/SetPositionZ.hpp>
 
 namespace yq::tachyon {
     PPosition³::PPosition³(const IPosition³& i) : m_position(i.position())

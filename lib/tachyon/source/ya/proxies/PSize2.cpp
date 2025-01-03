@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PSize2I.hpp>
-#include <yq/tachyon/commands/MoveSize2I.hpp>
-#include <yq/tachyon/commands/SetSize²I.hpp>
+#include <ya/commands/MoveSize2I.hpp>
+#include <ya/commands/SetSize²I.hpp>
 
 namespace yq::tachyon {
     PSize2I::PSize2I(const ISize2I& i)

@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PPosition1.hpp>
-#include <yq/tachyon/commands/spatial/MoveBy1.hpp>
-#include <yq/tachyon/commands/spatial/MoveByX.hpp>
-#include <yq/tachyon/commands/spatial/SetPosition1.hpp>
-#include <yq/tachyon/commands/spatial/SetPositionX.hpp>
+#include <ya/commands/spatial/MoveBy1.hpp>
+#include <ya/commands/spatial/MoveByX.hpp>
+#include <ya/commands/spatial/SetPosition1.hpp>
+#include <ya/commands/spatial/SetPositionX.hpp>
 
 namespace yq::tachyon {
     PPosition¹::PPosition¹(const IPosition¹& i)

@@ -16,13 +16,13 @@
 
 #include <yt/msg/Post.hpp>
 
-#include <yq/tachyon/commands/TachyonDeleteCommand.hpp>
-#include <yq/tachyon/commands/TachyonProxyCommand.hpp>
-#include <yq/tachyon/commands/TachyonSnoopCommand.hpp>
-#include <yq/tachyon/commands/TachyonSubscribeCommand.hpp>
-#include <yq/tachyon/commands/TachyonThreadCommand.hpp>
-#include <yq/tachyon/commands/TachyonUnsnoopCommand.hpp>
-#include <yq/tachyon/commands/TachyonUnsubscribeCommand.hpp>
+#include <ya/commands/TachyonDeleteCommand.hpp>
+#include <ya/commands/TachyonProxyCommand.hpp>
+#include <ya/commands/TachyonSnoopCommand.hpp>
+#include <ya/commands/TachyonSubscribeCommand.hpp>
+#include <ya/commands/TachyonThreadCommand.hpp>
+#include <ya/commands/TachyonUnsnoopCommand.hpp>
+#include <ya/commands/TachyonUnsubscribeCommand.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>

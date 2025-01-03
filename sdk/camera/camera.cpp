@@ -32,7 +32,7 @@
 #include <yq/tachyon/scene/Scene.hpp>
 #include <yt/viewer.hpp>
 #include <yt/widget.hpp>
-#include <yq/tachyon/commands/CameraPitchCommand.hpp>
+#include <ya/commands/CameraPitchCommand.hpp>
 #include <yq/tachyon/events/KeyPressEvent.hpp>
 #include <yq/tachyon/renders/Quadrilateral.hpp>
 #include <yq/tachyon/renders/Triangle.hpp>

@@ -9,16 +9,16 @@
 #include <yq/tachyon/api/ControllerBind.hpp>
 #include <yq/tachyon/api/ControllerData.hpp>
 #include <yt/api/ID.hpp>
-#include <yq/tachyon/commands/ControllerControlCommand.hpp>
-#include <yq/tachyon/commands/ControllerDisableCommand.hpp>
-#include <yq/tachyon/commands/ControllerEnableCommand.hpp>
-#include <yq/tachyon/commands/ControllerListenCommand.hpp>
-#include <yq/tachyon/commands/ControllerUncontrolCommand.hpp>
-#include <yq/tachyon/commands/ControllerUnlistenCommand.hpp>
-#include <yq/tachyon/commands/TachyonSnoopCommand.hpp>
-#include <yq/tachyon/commands/TachyonSubscribeCommand.hpp>
-#include <yq/tachyon/commands/TachyonUnsnoopCommand.hpp>
-#include <yq/tachyon/commands/TachyonUnsubscribeCommand.hpp>
+#include <ya/commands/ControllerControlCommand.hpp>
+#include <ya/commands/ControllerDisableCommand.hpp>
+#include <ya/commands/ControllerEnableCommand.hpp>
+#include <ya/commands/ControllerListenCommand.hpp>
+#include <ya/commands/ControllerUncontrolCommand.hpp>
+#include <ya/commands/ControllerUnlistenCommand.hpp>
+#include <ya/commands/TachyonSnoopCommand.hpp>
+#include <ya/commands/TachyonSubscribeCommand.hpp>
+#include <ya/commands/TachyonUnsnoopCommand.hpp>
+#include <ya/commands/TachyonUnsubscribeCommand.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Controller);
 

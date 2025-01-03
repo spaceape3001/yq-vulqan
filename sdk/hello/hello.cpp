@@ -38,7 +38,7 @@
 #include <yt/viewer.hpp>
 #include <yt/widget.hpp>
 
-#include <yq/tachyon/commands/spatial/SetOrientation3.hpp>
+#include <ya/commands/spatial/SetOrientation3.hpp>
 #include <yq/tachyon/renders/Triangle.hpp>
 #include <yq/tachyon/3D/Spatial3.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>

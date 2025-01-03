@@ -12,7 +12,7 @@
 #include <yq/tachyon/api/ManagerInfoWriter.hpp>
 #include <yq/tachyon/api/Viewer.hpp>
 #include <yq/tachyon/api/ViewerCreateInfo.hpp>
-#include <yq/tachyon/commands/window.hpp>
+#include <ya/commands/window.hpp>
 #include <yq/tachyon/events/cursor.hpp>
 #include <yq/tachyon/events/joystick.hpp>
 #include <yq/tachyon/events/keyboard.hpp>

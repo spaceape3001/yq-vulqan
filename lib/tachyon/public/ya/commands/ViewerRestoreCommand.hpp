@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <ya/commands/ViewerCommand.hpp>
+
+namespace yq::tachyon {
+    class ViewerRestoreCommand : public ViewerCommand {
+        YQ_OBJECT_DECLARE(ViewerRestoreCommand, ViewerCommand)
+    public:
+    
+        struct Param : public ViewerCommand::Param {
+        };
+    
+        ViewerRestoreCommand(ViewerID, const Param& p = {});
+        ViewerRestoreCommand(Viewer*, const Param& p = {});
+        virtual ~ViewerRestoreCommand();
+        
+        static void init_info();
+    };
+}

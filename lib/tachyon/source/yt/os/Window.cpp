@@ -9,8 +9,8 @@
 #include <yt/os/WindowData.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
-#include <yq/tachyon/commands/WindowHideCommand.hpp>
-#include <yq/tachyon/commands/WindowShowCommand.hpp>
+#include <ya/commands/WindowHideCommand.hpp>
+#include <ya/commands/WindowShowCommand.hpp>
 
 namespace yq::tachyon {
 

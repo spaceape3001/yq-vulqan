@@ -106,7 +106,112 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
-    
+
+    source/ya/commands/AddChildCommand.cpp
+    source/ya/commands/AppCommand.cpp
+    source/ya/commands/AppDeleteViewerCommand.cpp
+    source/ya/commands/CameraCommand.cpp
+    source/ya/commands/CameraPitchCommand.cpp
+    source/ya/commands/CameraRollCommand.cpp
+    source/ya/commands/CameraYawCommand.cpp
+    source/ya/commands/ControllerCommand.cpp
+    source/ya/commands/ControllerControlCommand.cpp
+    source/ya/commands/ControllerDisableCommand.cpp
+    source/ya/commands/ControllerEnableCommand.cpp
+    source/ya/commands/ControllerListenCommand.cpp
+    source/ya/commands/ControllerUncontrolCommand.cpp
+    source/ya/commands/ControllerUnlistenCommand.cpp
+    source/ya/commands/EmptyCommand.cpp
+    source/ya/commands/GLFWCommand.cpp
+    source/ya/commands/MouseCaptureCommand.cpp
+    source/ya/commands/MouseCommand.cpp
+    source/ya/commands/MouseDisableCommand.cpp
+    source/ya/commands/MouseHideCommand.cpp
+    source/ya/commands/MouseNormalCommand.cpp
+    #source/ya/commands/SetParentCommand.cpp
+    source/ya/commands/SetSize1.cpp
+    source/ya/commands/SetSize2.cpp
+    source/ya/commands/SetSize3.cpp
+    source/ya/commands/SetSizeX.cpp
+    source/ya/commands/SetSizeY.cpp
+    source/ya/commands/SetSizeZ.cpp
+    source/ya/commands/SpatialCommand.cpp
+    source/ya/commands/TachyonCommand.cpp
+    source/ya/commands/TachyonDeleteCommand.cpp
+    source/ya/commands/TachyonProxyCommand.cpp
+    source/ya/commands/TachyonSnoopCommand.cpp
+    source/ya/commands/TachyonSubscribeCommand.cpp
+    source/ya/commands/TachyonThreadCommand.cpp
+    source/ya/commands/TachyonUnsnoopCommand.cpp
+    source/ya/commands/TachyonUnsubscribeCommand.cpp
+    source/ya/commands/ThreadCommand.cpp
+    source/ya/commands/ViewerAspectCommand.cpp
+    source/ya/commands/ViewerAttentionCommand.cpp
+    source/ya/commands/ViewerCloseCommand.cpp
+    source/ya/commands/ViewerCommand.cpp
+    source/ya/commands/ViewerCursorCaptureCommand.cpp
+    source/ya/commands/ViewerCursorDisableCommand.cpp
+    source/ya/commands/ViewerCursorHideCommand.cpp
+    source/ya/commands/ViewerCursorNormalCommand.cpp
+    source/ya/commands/ViewerFloatCommand.cpp
+    source/ya/commands/ViewerFocusCommand.cpp
+    source/ya/commands/ViewerHideCommand.cpp
+    source/ya/commands/ViewerIconifyCommand.cpp
+    source/ya/commands/ViewerMaximizeCommand.cpp
+    source/ya/commands/ViewerMoveCommand.cpp
+    source/ya/commands/ViewerPauseCommand.cpp
+    source/ya/commands/ViewerRestoreCommand.cpp
+    source/ya/commands/ViewerResumeCommand.cpp
+    source/ya/commands/ViewerShowCommand.cpp
+    source/ya/commands/ViewerSizeCommand.cpp
+    source/ya/commands/ViewerTitleCommand.cpp
+    source/ya/commands/ViewerUnfloatCommand.cpp
+    source/ya/commands/WidgetCommand.cpp
+    source/ya/commands/WidgetStartupCommand.cpp
+    source/ya/commands/WindowAspectCommand.cpp
+    source/ya/commands/WindowAttentionCommand.cpp
+    source/ya/commands/WindowCommand.cpp
+    source/ya/commands/WindowCursorCaptureCommand.cpp
+    source/ya/commands/WindowCursorDisableCommand.cpp
+    source/ya/commands/WindowCursorHideCommand.cpp
+    source/ya/commands/WindowCursorNormalCommand.cpp
+    source/ya/commands/WindowDestroyCommand.cpp
+    source/ya/commands/WindowFloatCommand.cpp
+    source/ya/commands/WindowFocusCommand.cpp
+    source/ya/commands/WindowHideCommand.cpp
+    source/ya/commands/WindowIconifyCommand.cpp
+    source/ya/commands/WindowMaximizeCommand.cpp
+    source/ya/commands/WindowMoveCommand.cpp
+    source/ya/commands/WindowRestoreCommand.cpp
+    source/ya/commands/WindowShowCommand.cpp
+    source/ya/commands/WindowSizeCommand.cpp
+    source/ya/commands/WindowTitleCommand.cpp
+    source/ya/commands/WindowUnfloatCommand.cpp
+
+    source/ya/commands/spatial/MoveBy1.cpp
+    source/ya/commands/spatial/MoveBy2.cpp
+    source/ya/commands/spatial/MoveBy3.cpp
+    source/ya/commands/spatial/MoveByX.cpp
+    source/ya/commands/spatial/MoveByY.cpp
+    source/ya/commands/spatial/MoveByZ.cpp
+    source/ya/commands/spatial/PitchBy.cpp
+    source/ya/commands/spatial/RotateBy3.cpp
+    source/ya/commands/spatial/RollBy.cpp
+    source/ya/commands/spatial/SetOrientation3.cpp
+    source/ya/commands/spatial/SetPosition1.cpp
+    source/ya/commands/spatial/SetPosition2.cpp
+    source/ya/commands/spatial/SetPosition3.cpp
+    source/ya/commands/spatial/SetPositionX.cpp
+    source/ya/commands/spatial/SetPositionY.cpp
+    source/ya/commands/spatial/SetPositionZ.cpp
+    source/ya/commands/spatial/SetScale1.cpp
+    source/ya/commands/spatial/SetScale2.cpp
+    source/ya/commands/spatial/SetScale3.cpp
+    source/ya/commands/spatial/SetScaleX.cpp
+    source/ya/commands/spatial/SetScaleY.cpp
+    source/ya/commands/spatial/SetScaleZ.cpp
+    source/ya/commands/spatial/YawBy.cpp
+
     source/ya/desktops/glfw/CursorGLFW.cpp
     source/ya/desktops/glfw/DesktopGLFW.cpp
     source/ya/desktops/glfw/JoystickGLFW.cpp

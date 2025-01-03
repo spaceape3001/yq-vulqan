@@ -11,8 +11,8 @@
 
 #include <yt/logging.hpp>
 #include <yq/tachyon/app/Viewer.hpp>
-#include <yq/tachyon/commands/ViewerShowCommand.hpp>
-#include <yq/tachyon/commands/WidgetStartupCommand.hpp>
+#include <ya/commands/ViewerShowCommand.hpp>
+#include <ya/commands/WidgetStartupCommand.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>

@@ -16,7 +16,7 @@
 //#include <yq/tachyon/api/TachyonInfoWriter.hpp>
 #include <yv/VulqanManager.hpp>
 
-//#include <yq/tachyon/commands/AppDeleteViewerCommand.hpp>
+//#include <ya/commands/AppDeleteViewerCommand.hpp>
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
 //#include <yq/tachyon/task/TaskEngine.hpp>
 

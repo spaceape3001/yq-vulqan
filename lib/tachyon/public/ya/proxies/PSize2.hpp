@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Proxy.hpp>
-#include <yq/tachyon/interfaces/ISize2I.hpp>
+#include <ya/interfaces/ISize2I.hpp>
 
 namespace yq::tachyon {
     class PSize2I : public Proxy, public ISize2I {

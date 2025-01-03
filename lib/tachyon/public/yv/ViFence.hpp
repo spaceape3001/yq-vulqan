@@ -8,7 +8,7 @@
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
-#include <yq/tachyon/config/vulqan.hpp>
+#include <yt/config/vulqan.hpp>
 
 namespace yq::tachyon {
     class ViVisualizer;

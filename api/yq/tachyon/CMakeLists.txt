@@ -213,20 +213,11 @@ add_library(${PROJECT_NAME} SHARED
     events/WindowShowEvent.cpp
     events/WindowTitleEvent.cpp
     
-    # font/Font.cpp      # Issue/TODO
-
-    interfaces/IPosition1.cpp
-    interfaces/IPosition2.cpp
-    interfaces/IPosition3.cpp
 
     #manipulator/Manipulator.cpp
     
     
     #models/models.cpp
-
-    proxies/PPosition1.cpp
-    proxies/PPosition2.cpp
-    proxies/PPosition3.cpp
 
     renders/ImageQuad.cpp
     renders/Quadrilateral.cpp
@@ -269,10 +260,6 @@ add_library(${PROJECT_NAME} SHARED
     #task/TaskEngine.cpp
     #tools/tools.cpp
     
-    
-    util/LoggerBox.cpp
-
-
     
     widgets/ImGuiDemoWidget.cpp
     widgets/Scene3DWidget.cpp

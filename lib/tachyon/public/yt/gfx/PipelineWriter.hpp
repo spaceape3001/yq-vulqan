@@ -15,7 +15,7 @@
 #include <yt/gfx/SBO.hpp>
 #include <yt/gfx/UBO.hpp>
 #include <yt/gfx/VBO.hpp>
-#include <yq/tachyon/config/vulqan.hpp>
+#include <yt/config/vulqan.hpp>
 #include <yt/gfx/Pipeline.hpp>
 #include <yt/gfx/PipelineUtils.hpp>
 #include <yt/gfx/Texture.hpp>

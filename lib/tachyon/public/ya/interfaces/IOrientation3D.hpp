@@ -6,4 +6,12 @@
 
 #pragma once
 
-#include <yt/config/build.hpp>
+#include <yq/vector/Quaternion3.hpp>
+#include <yt/api/ID.hpp>
+
+namespace yq::tachyon {
+    class IOrientation3D {
+    public:
+    
+    };
+}

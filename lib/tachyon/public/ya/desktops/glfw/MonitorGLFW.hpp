@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/os/Monitor.hpp>
-#include <yq/tachyon/interfaces/IPosition2.hpp>
+#include <ya/interfaces/IPosition2.hpp>
 
 struct GLFWmonitor;
 struct GLFWvidmode;

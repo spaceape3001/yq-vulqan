@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PPosition3.hpp"
+#include <ya/proxies/PPosition3.hpp>
 #include <yq/tachyon/commands/spatial/MoveBy3.hpp>
 #include <yq/tachyon/commands/spatial/MoveByX.hpp>
 #include <yq/tachyon/commands/spatial/MoveByY.hpp>

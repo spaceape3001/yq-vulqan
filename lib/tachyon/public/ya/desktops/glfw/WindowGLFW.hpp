@@ -11,7 +11,7 @@
 #include <yt/os/ModifierKey.hpp>
 #include <yt/os/MouseButton.hpp>
 #include <yt/os/MouseMode.hpp>
-#include <yq/tachyon/interfaces/IPosition2.hpp>
+#include <ya/interfaces/IPosition2.hpp>
 #include <ya/typedef/commands.hpp>
 
 struct GLFWwindow;

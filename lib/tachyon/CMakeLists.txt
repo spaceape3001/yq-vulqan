@@ -25,6 +25,8 @@ add_library(${PROJECT_NAME} SHARED
 
     source/yt/config/build.cpp
 
+    # font/Font.cpp      # Issue/TODO
+
     source/yt/gfx/Buffer.cpp
     source/yt/gfx/Pipeline.cpp
     source/yt/gfx/PipelineUtils.cpp
@@ -113,11 +115,19 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/desktops/glfw/MouseGLFW.cpp
     source/ya/desktops/glfw/WindowGLFW.cpp
 
+    source/ya/interfaces/IPosition1.cpp
+    source/ya/interfaces/IPosition2.cpp
+    source/ya/interfaces/IPosition3.cpp
+
     source/ya/messages/EmptyMessage.cpp
 
     source/ya/posts/AnyPost.cpp
     source/ya/posts/EmptyPost.cpp
     source/ya/posts/StringPost.cpp
+
+    source/ya/proxies/PPosition1.cpp
+    source/ya/proxies/PPosition2.cpp
+    source/ya/proxies/PPosition3.cpp
 
     source/ya/spatials/SimpleSpatial3.cpp
 
@@ -129,6 +139,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/triggers/OrTrigger.cpp
     source/ya/triggers/PostTrigger.cpp
     
+    source/ya/utils/LoggerBox.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

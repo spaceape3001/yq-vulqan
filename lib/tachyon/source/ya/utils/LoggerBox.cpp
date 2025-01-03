@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "LoggerBox.hpp"
+#include <ya/utils/LoggerBox.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>
 #include <log4cpp/Category.hh>

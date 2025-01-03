@@ -40,7 +40,7 @@
 #include <yq/tachyon/cameras/NullCamera.hpp>
 #include <yq/tachyon/cameras/SpaceCamera.hpp>
 #include <yq/tachyon/cameras/TargetCamera.hpp>
-#include <yq/tachyon/util/LoggerBox.hpp>
+#include <ya/utils/LoggerBox.hpp>
 #include <yq/tachyon/widgets/Scene3DWidget.hpp>
 
 #include <chrono>

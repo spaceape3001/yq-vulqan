@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PSize2I.hpp"
+#include <ya/proxies/PSize2I.hpp>
 #include <yq/tachyon/commands/MoveSize2I.hpp>
 #include <yq/tachyon/commands/SetSize²I.hpp>
 

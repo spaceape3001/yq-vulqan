@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yt/3D/3D.hpp>
 #include <yt/scene/Light.hpp>
 #include <yt/typedef/light3.hpp>
 #include <yt/typedef/spatial3.hpp>
@@ -27,7 +28,7 @@ namespace yq::tachyon {
         ~Light³Info();
     };
     
-    class Light³ : public Light {
+    class Light³ : public Light, public ③ {
         YQ_TACHYON_INFO(Light³Info)
         YQ_TACHYON_SNAP(Light³Snap)
         YQ_TACHYON_DATA(Light³Data)

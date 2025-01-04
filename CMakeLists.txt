@@ -54,7 +54,6 @@ set(YQ_TACHYON_DATA_DIR "${CMAKE_CURRENT_LIST_DIR}/data" )
 
 
 add_subdirectory(3rd)
-add_subdirectory(lib)
 add_subdirectory(api)
 
 if(${Build_UnitTests})

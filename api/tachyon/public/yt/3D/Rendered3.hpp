@@ -12,6 +12,7 @@
 #include <yt/scene/Rendered.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
+#include <yt/3D/3D.hpp>
 #include <yt/typedef/bounds3.hpp>
 #include <yt/typedef/rendered3.hpp>
 #include <yt/typedef/spatial3.hpp>
@@ -32,7 +33,7 @@ namespace yq::tachyon {
     
         \note ONCE it's here, it's considered "fixed" into abstract graphical units.
     */
-    class Rendered³ : public Rendered {
+    class Rendered³ : public Rendered, public ③ {
         YQ_TACHYON_INFO(Rendered³Info);
         YQ_TACHYON_DATA(Rendered³Data);
         YQ_TACHYON_SNAP(Rendered³Snap);

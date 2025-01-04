@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yt/api/ID.hpp>
+#include <yt/typedef/spatial3.hpp>
+
+namespace yq::tachyon {
+    struct ③Snap {
+        // Set this to have coordinates & model transform
+        Spatial³ID  spatial;
+    };
+}

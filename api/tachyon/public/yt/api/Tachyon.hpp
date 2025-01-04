@@ -112,7 +112,25 @@ namespace yq::tachyon {
     class Frame;
     struct OutPost;
 
-    using PostAdvice = std::variant<std::monostate, accept_k, reject_k, MG, MGF>;
+    /*! \brief Advice for post
+    
+        
+    */
+    using PostAdvice    = std::variant<
+        std::monostate,     //< Default/unspecified, processing will commence
+        accept_k,           //< Unconditionally accept this post
+        reject_k,           //< Unconditionally reject this post
+        MG,                 //< Accept & forward this post to the given groups
+        MGF                 //< Accept & forward this post to the specified group
+    >;
+    
+    /*! \brief Configuration status
+    */
+    using ConfigStatus  = std::variant<
+        reject_k,           //< Reject configuration (we failed, whatever the reason)
+        accept_k,           //< Accept configuration (ie done)
+        continue_k          //< We need another pass (response required)
+    >;
 
     bool unspecified(const PostAdvice& pa);
 
@@ -239,6 +257,8 @@ namespace yq::tachyon {
             bad during your current call.
         */
         static const Frame*   frame();
+
+        //virtual ConfigAdvice    configure() const;
 
     protected:
 

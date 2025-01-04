@@ -4,7 +4,7 @@
 ##
 ################################################################################
 
-project(yq_tachyon) # temporary until switched
+project(yq_tachyon)
 
 #   SUPERSCRIPTS ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ʰ ᵖ ⁿ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ
 
@@ -22,6 +22,7 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/enums.cpp
     source/yt/strings.cpp
 
+    source/yt/3D/3D.cpp
     source/yt/3D/Camera3.cpp
     source/yt/3D/Light3.cpp
     source/yt/3D/Rendered3.cpp

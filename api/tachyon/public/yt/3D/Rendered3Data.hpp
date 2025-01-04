@@ -8,6 +8,7 @@
 
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
+#include <yt/3D/3DData.hpp>
 #include <yt/scene/RenderedData.hpp>
 #include <yt/typedef/bounds3.hpp>
 #include <yt/typedef/rendered3.hpp>
@@ -15,14 +16,11 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Rendered³Snap : public RenderedSnap {
+    struct Rendered³Snap : public RenderedSnap, public ③Snap {
         Tensor44D   vm_tensor       = NAN;
         
         // Our "bounds" in model coordinates
         bounds³_t   bounds;
-
-        // Set this to have coordinates & model transform
-        Spatial³ID  spatial;
 
         //! Override to the view*model matrix (used for billboarding & other effects)  
         bool        vm_override     = false;

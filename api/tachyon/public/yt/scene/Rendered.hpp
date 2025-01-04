@@ -42,8 +42,13 @@ namespace yq::tachyon {
     
     /*! \brief Base object that's rendered
     
-        A rendered object is one that'll be rendered in the visualizer.  
-        It'll have a pipeline (or more), with light extra information
+        A rendered object is an object, like a box, that's rendered in 
+        the visualizer.  It'll generally be owned by a scene, and will 
+        have a pipeline with extra information (keep this frugal!)
+        
+        If a model needs to show itself via a rendered object, it'll be
+        considered the "puppet master" and will push commands to that
+        rendered (or puppet its spatial... that's an option too).
     */
     class Rendered : public Tachyon {
         YQ_TACHYON_INFO(RenderedInfo)

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yt/3D/3D.hpp>
 #include <yt/scene/Camera.hpp>
 #include <yt/typedef/camera3.hpp>
 #include <yt/typedef/spatial3.hpp>
@@ -27,7 +28,7 @@ namespace yq::tachyon {
         ~Camera³Info();
     };
     
-    class Camera³ : public Camera {
+    class Camera³ : public Camera, public ③ {
         YQ_TACHYON_INFO(Camera³Info)
         YQ_TACHYON_SNAP(Camera³Snap)
         YQ_TACHYON_DATA(Camera³Data)

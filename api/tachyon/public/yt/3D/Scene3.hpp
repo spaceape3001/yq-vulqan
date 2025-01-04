@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yt/3D/3D.hpp>
 #include <yt/scene/Scene.hpp>
 #include <yt/typedef/scene3.hpp>
 #include <yt/typedef/spatial3.hpp>
@@ -27,7 +28,7 @@ namespace yq::tachyon {
         ~Scene³Info();
     };
     
-    class Scene³ : public Scene {
+    class Scene³ : public Scene, public ③ {
         YQ_TACHYON_INFO(Scene³Info)
         YQ_TACHYON_SNAP(Scene³Snap)
         YQ_TACHYON_DATA(Scene³Data)

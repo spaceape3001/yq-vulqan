@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/rendereds/Tetrahedron.hpp>
+#include <ya/rendereds/Tetrahedron3.hpp>
 
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/shape_utils.hpp>

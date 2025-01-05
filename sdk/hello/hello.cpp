@@ -39,7 +39,7 @@
 #include <yt/widget.hpp>
 
 #include <ya/commands/spatial/SetOrientation3.hpp>
-#include <ya/rendereds/Triangle.hpp>
+#include <ya/rendereds/Triangle3.hpp>
 #include <yt/3D/Spatial3.hpp>
 #include <ya/widgets/Scene3DWidget.hpp>
 

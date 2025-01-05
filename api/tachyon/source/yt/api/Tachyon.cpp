@@ -472,12 +472,14 @@ namespace yq::tachyon {
         //  SNAPSHOT
         
         if(m_dirty || !m_snap || (m_snap->revision != m_revision)){
-            TachyonSnapPtr  snap    = metaInfo().create_snap(this);
+            TachyonSnapPtr  snap    = metaInfo().create_snap(*this);
             snap -> time            = ctx.time;
             snap -> revision        = ++m_revision;
             m_snap                  = snap.ptr();
             m_dirty                 = false;
         }
+        
+        metaInfo().finalize_data(*this, *m_data);
         
         //////////////////////////////////
         //  END THE CYCLE
@@ -509,6 +511,10 @@ namespace yq::tachyon {
         }
 
         unhandled(pp);
+    }
+
+    void            Tachyon::finalize(TachyonData&) const
+    {
     }
 
     //const Frame&  Tachyon::frame() const

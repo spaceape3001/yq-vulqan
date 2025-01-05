@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/rendereds/Triangle.hpp>
+#include <ya/rendereds/Triangle3.hpp>
 
 #include <yq/core/Logging.hpp>
 #include <yq/shape/TriangleData.hpp>

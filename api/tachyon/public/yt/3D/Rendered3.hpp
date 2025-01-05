@@ -67,6 +67,8 @@ namespace yq::tachyon {
             however, think it'll be moving to a delegate based system (TBD)
         */
     
+        using Rendered::mark;
+    
 
         //  The model matrix in relation to its parent
         //Tensor44D                       calc_local() const;
@@ -159,6 +161,7 @@ namespace yq::tachyon {
         virtual ~Rendered³();
         
         void    snap(Rendered³Snap&) const;
+        void    finalize(Rendered³Data&) const;
         virtual PostAdvice  advise(const Post&) const override;
         
     private:

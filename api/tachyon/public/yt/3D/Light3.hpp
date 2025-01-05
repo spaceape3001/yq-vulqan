@@ -46,13 +46,14 @@ namespace yq::tachyon {
         static void init_info();
     
         Light³ID id() const { return Light³ID(UniqueID::id()); }
+        
+        using Light::mark;
     
     protected:
         Light³(const Param&);
         ~Light³();
         
+        void finalize(Light³Data&) const;
         void snap(Light³Snap&) const;
-        
-        Spatial³ID      m_spatial;
     };
 }

@@ -39,8 +39,15 @@ namespace yq::tachyon {
     {
     }
     
+    void Light³::finalize(Light³Data&d) const
+    {
+        ③::finalize(d);
+        Light::finalize(d);
+    }
+
     void Light³::snap(Light³Snap& sn) const
     {
+        ③::snap(sn);
         Light::snap(sn);
     }
     

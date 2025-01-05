@@ -37,9 +37,10 @@ namespace yq::tachyon {
     
         virtual uint8_t dimensions(count_k) const = 0;
     
+        // For a geodetic based spatial, this domain would be the planet
         SpatialID       domain() const { return m_domain; }
         
-        SpatialID id() const { return SpatialID(UniqueID::id()); }
+        SpatialID       id() const { return SpatialID(UniqueID::id()); }
 
         static void init_info();
         

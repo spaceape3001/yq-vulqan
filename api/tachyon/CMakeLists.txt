@@ -90,9 +90,10 @@ add_library(${PROJECT_NAME} SHARED
     #source/yt/scene/Rendered2.cpp
     source/yt/scene/Scene.cpp
     #source/yt/scene/Scene2.cpp
-    source/yt/scene/Spatial.cpp
 
     source/yt/sim/Model.cpp
+    source/yt/sim/N.cpp
+    source/yt/sim/Spatial.cpp
 
     # possibly being removed.... TBD (IIRC, tachyon replaced its usefulness)
     #sim/Task.cpp
@@ -338,10 +339,10 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/proxies/PPosition2.cpp
     source/ya/proxies/PPosition3.cpp
 
-    source/ya/rendereds/ImageQuad.cpp
-    source/ya/rendereds/Quadrilateral.cpp
-    source/ya/rendereds/Tetrahedron.cpp
-    source/ya/rendereds/Triangle.cpp
+    source/ya/rendereds/ImageQuad3.cpp
+    source/ya/rendereds/Quadrilateral3.cpp
+    source/ya/rendereds/Tetrahedron3.cpp
+    source/ya/rendereds/Triangle3.cpp
 
     source/ya/replies/AnyReply.cpp
     source/ya/replies/AppReply.cpp
@@ -365,6 +366,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/requests/WindowRefreshRequest.cpp
     source/ya/requests/WindowRequest.cpp
 
+    source/ya/spatials/GeoSpatial3.cpp
     source/ya/spatials/SimpleSpatial3.cpp
 
     source/ya/triggers/AndTrigger.cpp

@@ -40,11 +40,18 @@ namespace yq::tachyon {
     {
     }
     
-    void Camera³::snap(Camera³Snap& sn) const
+    void Camera³::finalize(Camera³Data&d) const
     {
-        Camera::snap(sn);
+        ③::finalize(d);
+        Camera::finalize(d);
     }
     
+    void Camera³::snap(Camera³Snap& sn) const
+    {
+        ③::snap(sn);
+        Camera::snap(sn);
+    }
+
     void Camera³::init_info()
     {
         auto w = writer<Camera³>();

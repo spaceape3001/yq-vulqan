@@ -8,7 +8,7 @@
 
 #include <yt/3D/Spatial3.hpp>
 #include <yt/3D/Spatial3Data.hpp>
-#include <yt/scene/SpatialInfoWriter.hpp>
+#include <yt/sim/SpatialInfoWriter.hpp>
 
 namespace yq::tachyon {
     

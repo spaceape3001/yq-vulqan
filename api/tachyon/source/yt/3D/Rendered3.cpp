@@ -52,6 +52,12 @@ namespace yq::tachyon {
         return {};
     }
 
+    void    Rendered³::finalize(Rendered³Data& d) const
+    {
+        ③::finalize(d);
+        Rendered::finalize(d);
+    }
+
     void    Rendered³::set_bounds(bounds³_t b)
     {
         m_bounds = b;
@@ -135,9 +141,12 @@ namespace yq::tachyon {
 
     void    Rendered³::snap(Rendered³Snap&sn) const
     {
+        ③::snap(sn);
         Rendered::snap(sn);
+        
         sn.bounds       = m_bounds;
         sn.spatial      = m_spatial;
+        sn.model        = local2domain();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

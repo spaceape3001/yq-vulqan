@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <compare>
 #include <concepts>
 #include <cstdint>
 

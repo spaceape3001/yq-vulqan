@@ -43,5 +43,10 @@ namespace yq::tachyon {
         
         static void init_info();
 
+    protected:
+        
+        void    snap(SceneSnap&) const;
+        void    finalize(SceneData&) const;
+
     };
 }

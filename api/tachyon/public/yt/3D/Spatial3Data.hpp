@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/scene/SpatialData.hpp>
+#include <yt/sim/SpatialData.hpp>
 #include <yt/typedef/spatial3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 

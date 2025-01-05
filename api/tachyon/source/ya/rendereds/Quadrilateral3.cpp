@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/rendereds/Quadrilateral.hpp>
+#include <ya/rendereds/Quadrilateral3.hpp>
 
 #include <yq/shape/QuadrilateralData.hpp>
 #include <yq/shape/QuadrilateralData.hpp>

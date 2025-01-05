@@ -31,7 +31,17 @@ namespace yq::tachyon {
     Scene::~Scene()
     {
     }
+
+    void Scene::snap(SceneSnap&sn) const
+    {
+        Tachyon::snap(sn);
+    }
     
+    void Scene::finalize(SceneData&data) const
+    {
+        Tachyon::finalize(data);
+    }
+
     void Scene::init_info()
     {
         auto w = writer<Scene>();

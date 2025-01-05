@@ -6,14 +6,19 @@
 
 #pragma once
 
-#include <yt/api/TachyonData.hpp>
+#include <yt/api/ID.hpp>
 #include <yt/typedef/spatial.hpp>
 
 namespace yq::tachyon {
-    struct SpatialSnap : public TachyonSnap {
-        SpatialID   domain;
+
+    struct ИSnap {
+        // Set this to have coordinates & model transform
+        SpatialID   spatial;
+        
+        virtual ~ИSnap();
     };
-    
-    struct SpatialData : public TachyonData {
+
+    struct ИData {
+        virtual ~ИData();
     };
 }

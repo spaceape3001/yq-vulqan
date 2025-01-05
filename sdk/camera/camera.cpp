@@ -34,9 +34,9 @@
 #include <yt/widget.hpp>
 #include <ya/commands/CameraPitchCommand.hpp>
 #include <ya/events/KeyPressEvent.hpp>
-#include <ya/rendereds/Quadrilateral.hpp>
-#include <ya/rendereds/Triangle.hpp>
-#include <ya/rendereds/Tetrahedron.hpp>
+#include <ya/rendereds/Quadrilateral3.hpp>
+#include <ya/rendereds/Triangle3.hpp>
+#include <ya/rendereds/Tetrahedron3.hpp>
 #include <ya/cameras/NullCamera.hpp>
 #include <ya/cameras/SpaceCamera.hpp>
 #include <ya/cameras/TargetCamera.hpp>

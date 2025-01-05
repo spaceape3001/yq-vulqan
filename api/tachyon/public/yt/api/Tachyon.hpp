@@ -79,8 +79,9 @@ namespace yq::tachyon {
         friend class Tachyon;
         friend class Thread;
         
-        virtual TachyonSnapPtr   create_snap(Tachyon*) const = 0;
+        virtual TachyonSnapPtr   create_snap(const Tachyon&) const = 0;
         virtual TachyonDataPtr   create_data() const = 0;
+        virtual void             finalize_data(const Tachyon&, TachyonData&) const = 0;
         
         struct {
             InterfaceLUC    all, local;
@@ -260,6 +261,14 @@ namespace yq::tachyon {
 
         //virtual ConfigAdvice    configure() const;
 
+        //! Checks the dirty flag
+        //! \note Not 100% thread safe, meant for helpers within the same tick/thread
+        bool            dirty() const { return m_dirty; }
+
+        //! Marks us as dirty
+        //! \note Not 100% thread safe, meant for helpers within the same tick/thread
+        void            mark();
+
     protected:
 
 
@@ -356,6 +365,9 @@ namespace yq::tachyon {
             Assume this is blank-initialized, call base classes
         */
         void            snap(TachyonSnap&) const;
+        
+        //! Finalize the data
+        void            finalize(TachyonData&) const;
 
         /*! \brief TRUE if we're in tick
         */
@@ -379,12 +391,9 @@ namespace yq::tachyon {
         */
         TachyonData&    data();
         
-        bool            dirty() const { return m_dirty; }
         
         //const Frame&    frame() const;
 
-        //! Marks us as dirty
-        void            mark();
 
         //! When no handler found in dispatch, this gets called
         virtual void    unhandled(const PostCPtr&);

@@ -39,8 +39,15 @@ namespace yq::tachyon {
     {
     }
     
+    void Scene³::finalize(Scene³Data& d) const
+    {
+        ③::finalize(d);
+        Scene::finalize(d);
+    }
+
     void Scene³::snap(Scene³Snap& sn) const
     {
+        ③::snap(sn);
         Scene::snap(sn);
     }
     

@@ -63,11 +63,11 @@
 #include <yt/scene/RenderedData.hpp>
 #include <yt/scene/Scene.hpp>
 #include <yt/scene/SceneData.hpp>
-#include <yt/scene/Spatial.hpp>
-#include <yt/scene/SpatialData.hpp>
 
 #include <yt/sim/Model.hpp>
 #include <yt/sim/ModelData.hpp>
+#include <yt/sim/Spatial.hpp>
+#include <yt/sim/SpatialData.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yt/logging.hpp>

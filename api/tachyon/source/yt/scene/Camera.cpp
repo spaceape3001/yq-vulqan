@@ -66,6 +66,10 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Camera::finalize(CameraData& d) const
+    {
+        Tachyon::finalize(d);
+    }
 
     void Camera::snap(CameraSnap& sn) const
     {

@@ -65,6 +65,11 @@ namespace yq::tachyon {
         return {};
     }
     
+    void Light::finalize(LightData&d) const
+    {
+        Tachyon::finalize(d);
+    }
+
     void Light::snap(LightSnap& sn) const
     {
         Tachyon::snap(sn);

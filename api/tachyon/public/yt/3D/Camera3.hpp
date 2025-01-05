@@ -46,13 +46,15 @@ namespace yq::tachyon {
         static void init_info();
     
         Camera³ID id() const { return Camera³ID(UniqueID::id()); }
+
+        using Camera::mark;
     
     protected:
         Camera³(const Param&);
         ~Camera³();
         
+        void finalize(Camera³Data&) const;
         void snap(Camera³Snap&) const;
         
-        Spatial³ID      m_spatial;
     };
 }

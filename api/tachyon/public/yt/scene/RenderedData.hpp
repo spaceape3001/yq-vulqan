@@ -22,7 +22,6 @@ namespace yq::tachyon {
         using texture_t  = std::variant<std::monostate, TextureCPtr, ViTextureCPtr>;
     
         PushBuffer              push;
-
         std::vector<buffer_t>   vbos;
         std::vector<buffer_t>   ibos;
         std::vector<buffer_t>   ubos;

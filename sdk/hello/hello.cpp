@@ -193,7 +193,7 @@ struct HelloScene : public Scene3DWidget0 {
         Triangle³::Param p;
         p.position      = {0.,0.,0.1};
         tri2            = Tachyon::create<Triangle³>(TriData, p);
-        triSpatialID    = tri2 -> spatial³();
+        triSpatialID    = tri2 -> spatial();
         quad            = Tachyon::create<HelloQuad>();
         
         add_thing(tri2);

@@ -8,7 +8,9 @@
 #include <yt/3D/Camera3Bind.hpp>
 #include <yt/3D/Camera3Data.hpp>
 #include <yt/3D/Camera3InfoWriter.hpp>
+#include <ya/commands/camera/CameraSetScreen.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
+#include <yt/3D/3DWriter.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 
@@ -27,12 +29,7 @@ namespace yq::tachyon {
     Camera³::Camera³(const Param& p) : Camera(p)
     {
         if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
-            SimpleSpatial³::Param p3;
-            p3.position     = p.position;
-            p3.orientation  = p.orientation;
-            p3.scale        = p.scale;
-            m_spatial       = create<SimpleSpatial³>(CHILD, p3) -> id();
-            subscribe(m_spatial, MG::Spatial);
+            make_simple_spatial(p.position, p.orientation, p.scale);
         }
     }
     
@@ -46,15 +43,27 @@ namespace yq::tachyon {
         Camera::finalize(d);
     }
     
+    void Camera³::on_set_screen(const CameraSetScreen& cmd)
+    {
+        if(cmd.camera() == id()){
+            m_screen        = cmd.screen();
+            mark();
+        }
+    }
+
     void Camera³::snap(Camera³Snap& sn) const
     {
         ③::snap(sn);
         Camera::snap(sn);
+        sn.view     = domain2local();
+        sn.screen   = m_screen;
     }
 
     void Camera³::init_info()
     {
         auto w = writer<Camera³>();
+        ③::init_info(w);
         w.description("Camera in 3D");
+        w.slot(&Camera³::on_set_screen);
     }
 }

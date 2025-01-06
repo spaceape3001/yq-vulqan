@@ -91,6 +91,11 @@ namespace yq::tachyon {
     }
 #endif
 
+    void    SpaceCamera::snap(Camera³Snap&sn) const
+    {
+        sn.projection   = Tensor44D(projection_matrix(m_screen));
+    }
+
     void SpaceCamera::init_info()
     {
         auto w = writer<SpaceCamera>();

@@ -32,14 +32,15 @@
 #include <yt/scene/Scene.hpp>
 #include <yt/viewer.hpp>
 #include <yt/widget.hpp>
+#include <ya/cameras/NullCamera.hpp>
+#include <ya/cameras/SpaceCamera.hpp>
+#include <ya/cameras/TargetCamera.hpp>
 #include <ya/commands/CameraPitchCommand.hpp>
 #include <ya/events/KeyPressEvent.hpp>
 #include <ya/rendereds/Quadrilateral3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
 #include <ya/rendereds/Tetrahedron3.hpp>
-#include <ya/cameras/NullCamera.hpp>
-#include <ya/cameras/SpaceCamera.hpp>
-#include <ya/cameras/TargetCamera.hpp>
+#include <ya/scenes/SimpleScene3.hpp>
 #include <ya/utils/LoggerBox.hpp>
 #include <ya/widgets/Scene3DWidget.hpp>
 
@@ -157,6 +158,8 @@ struct CameraScene3DWidget : public Scene3DWidget0 {
     bool                    show_camera = true;
     bool                    slave_clock = true;
     bool                    show_control    = true;
+    Scene*                  scene   = nullptr;
+    
     
     static void    init_info()
     {
@@ -182,7 +185,7 @@ struct CameraScene3DWidget : public Scene3DWidget0 {
         return c;
     }
 
-    CameraScene3DWidget() 
+    CameraScene3DWidget(Scene* sc)  : scene(sc)
     {
         setup();
     }
@@ -214,41 +217,43 @@ struct CameraScene3DWidget : public Scene3DWidget0 {
         
         
         cam     = static_cast<SpaceCamera*>(c);
-        cam->set_position({-10, 0, -5.});
-        cam->set_orientation(hpr((Radian) 0._deg, (Radian) 45._deg, (Radian) 0._deg));
+        cam->make_simple_spatial(
+            Vector3D(-10, 0, -5.),
+            Quaternion3D(HPR, (Radian) 0._deg, (Radian) 180._deg, (Radian) 0._deg)
+        );
         cam->set_near(.1);
         cam->set_far(20.);
         
-        Triangle³*   tri = create<Triangle³>(TriData);
+        Triangle³*   tri = scene->create<Triangle³>(CHILD, TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
         //tri->set_scaling(0.5);
         add_thing(tri);
         
-        Tetrahedron³*    dir     = create<Tetrahedron³>(NorthData);
+        Tetrahedron³*    dir     = scene->create<Tetrahedron³>(CHILD, NorthData);
         dir -> make_simple_spatial({0., 5., 0. });
         add_thing(dir);
 
-        dir     = create<Tetrahedron³>(SouthData);
+        dir     = scene->create<Tetrahedron³>(CHILD, SouthData);
         dir -> make_simple_spatial({0., -5., 0. });
         add_thing(dir);
             
-        dir     = create<Tetrahedron³>(EastData);
+        dir     = scene->create<Tetrahedron³>(CHILD, EastData);
         dir -> make_simple_spatial({5., 0., 0. });
         add_thing(dir);
 
-        dir     = create<Tetrahedron³>(WestData);
+        dir     = scene->create<Tetrahedron³>(CHILD, WestData);
         dir -> make_simple_spatial({-5., 0., 0. });
         add_thing(dir);
         
-        dir     = create<Tetrahedron³>(TopData);
+        dir     = scene->create<Tetrahedron³>(CHILD, TopData);
         dir -> make_simple_spatial({0., 0., 5. });
         add_thing(dir);
         
-        dir     = create<Tetrahedron³>(BottomData);
+        dir     = scene->create<Tetrahedron³>(CHILD, BottomData);
         dir -> make_simple_spatial({0., 0., -5. });
         add_thing(dir);
             
-        Quadrilateral³* quad = create<Quadrilateral³>(QuadData);
+        Quadrilateral³* quad = scene->create<Quadrilateral³>(CHILD, QuadData);
         quad->make_simple_spatial(
             { 0.5, 0.5, 0. },
             Quaternion3D(CCW, Z, (Radian) 45._deg ),
@@ -409,7 +414,9 @@ int main(int argc, char* argv[])
     
     //load_plugin_dir("plugin");
     app.finalize();
-    Widget*     w   = Widget::create<CameraScene3DWidget>();
+    
+    Scene*      sc  = Tachyon::create<SimpleScene³>();
+    Widget*     w   = Widget::create<CameraScene3DWidget>(sc);
     LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     gLogger = lb->id();
     //lb->unsafe_snoop(w);

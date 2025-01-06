@@ -42,8 +42,22 @@ namespace yq::tachyon {
             t->mark();
     }
 
+    void    И::set_spatial(SpatialID sid)
+    {
+        m_spatial   = sid;
+        mark();
+    }
+
     void    И::snap(ИSnap& sn) const
     {
         sn.spatial  = m_spatial;
+    }
+
+    TachyonID   И::tachyon_id() const
+    {
+        const Tachyon* t    = dynamic_cast<const Tachyon*>(this);
+        if(t)
+            return t->id();
+        return {};
     }
 }

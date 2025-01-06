@@ -155,8 +155,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/AppDeleteViewerCommand.cpp
     source/ya/commands/CameraCommand.cpp
     source/ya/commands/CameraPitchCommand.cpp
-    source/ya/commands/CameraRollCommand.cpp
-    source/ya/commands/CameraYawCommand.cpp
+    #source/ya/commands/CameraRollCommand.cpp
+    #source/ya/commands/CameraYawCommand.cpp
     source/ya/commands/ControllerCommand.cpp
     source/ya/commands/ControllerControlCommand.cpp
     source/ya/commands/ControllerDisableCommand.cpp
@@ -230,6 +230,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/WindowSizeCommand.cpp
     source/ya/commands/WindowTitleCommand.cpp
     source/ya/commands/WindowUnfloatCommand.cpp
+    
+    source/ya/commands/camera/CameraSetScreen.cpp
 
     source/ya/commands/spatial/MoveBy1.cpp
     source/ya/commands/spatial/MoveBy2.cpp
@@ -365,6 +367,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/requests/WindowCloseRequest.cpp
     source/ya/requests/WindowRefreshRequest.cpp
     source/ya/requests/WindowRequest.cpp
+
+    source/ya/scenes/SimpleScene3.cpp
 
     source/ya/spatials/GeoSpatial3.cpp
     source/ya/spatials/SimpleSpatial3.cpp

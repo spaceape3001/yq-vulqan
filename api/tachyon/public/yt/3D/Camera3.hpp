@@ -10,6 +10,7 @@
 #include <yt/scene/Camera.hpp>
 #include <yt/typedef/camera3.hpp>
 #include <yt/typedef/spatial3.hpp>
+#include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 
@@ -18,6 +19,9 @@
 #endif
 
 namespace yq::tachyon {
+    
+    class CameraSetScreen;
+
     class Camera³Info : public CameraInfo {
     public:
     
@@ -56,5 +60,10 @@ namespace yq::tachyon {
         void finalize(Camera³Data&) const;
         void snap(Camera³Snap&) const;
         
+        //  TODO... make this clever with multiple clients?
+        Rectangle2D     m_screen;
+        
+    private:
+        void    on_set_screen(const CameraSetScreen&);
     };
 }

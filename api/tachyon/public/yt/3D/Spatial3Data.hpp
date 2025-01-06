@@ -12,7 +12,6 @@
 
 namespace yq::tachyon {
     struct Spatial³Snap : public SpatialSnap {
-    
         // make sure your sub-class sets these!
 
         Tensor44D       local2domain    = IDENTITY;

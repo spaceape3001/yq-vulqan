@@ -178,9 +178,15 @@ namespace yq::tachyon {
         }
 
         template <SomePost P, SomeTachyon C2=C>
-        PBXDispatch::Writer    slot(void (C::*fn)(const P&))
+        PBXDispatch::Writer    slot(void (C2::*fn)(const P&))
         {
             static_assert(std::derived_from<C,C2>, "Incompatible Tachyon types, need inheritance");
+            return slot_unsafe<P,C2>(fn);
+        }
+
+        template <SomePost P, SomeTachyon C2=C>
+        PBXDispatch::Writer    slot_unsafe(void (C2::*fn)(const P&))
+        {
             if(m_meta && Meta::thread_safe_write()){
                 PBXDispatch*    ret = new PBXDispatch_VoidCRef<C2,P>(fn);
                 m_meta -> add_dispatch(ret);
@@ -190,9 +196,15 @@ namespace yq::tachyon {
         }
         
         template <SomePost P, SomeTachyon C2=C>
-        PBXDispatch::Writer    slot(bool (C::*fn)(const P&))
+        PBXDispatch::Writer    slot(bool (C2::*fn)(const P&))
         {
             static_assert(std::derived_from<C,C2>, "Incompatible Tachyon types, need inheritance");
+            return slot_unsafe<P,C2>(fn);
+        }
+        
+        template <SomePost P, SomeTachyon C2=C>
+        PBXDispatch::Writer    slot_unsafe(bool (C2::*fn)(const P&))
+        {
             if(m_meta && Meta::thread_safe_write()){
                 PBXDispatch*    ret = new PBXDispatch_BoolCRef<C2,P>(fn);
                 m_meta -> add_dispatch(ret);
@@ -203,9 +215,15 @@ namespace yq::tachyon {
         
         
         template <SomePost P, SomeTachyon C2=C>
-        PBXDispatch::Writer    slot(void (C::*fn)(const Ref<const P>&))
+        PBXDispatch::Writer    slot(void (C2::*fn)(const Ref<const P>&))
         {
             static_assert(std::derived_from<C,C2>, "Incompatible Tachyon types, need inheritance");
+            return slot_unsafe<P,C2>(fn);
+        }
+        
+        template <SomePost P, SomeTachyon C2=C>
+        PBXDispatch::Writer    slot_unsafe(void (C2::*fn)(const Ref<const P>&))
+        {
             if(m_meta && Meta::thread_safe_write()){
                 PBXDispatch*    ret = new PBXDispatch_VoidCPtr<C2,P>(fn);
                 m_meta -> add_dispatch(ret);
@@ -213,11 +231,17 @@ namespace yq::tachyon {
             }
             return {};
         }
-        
+
         template <SomePost P, SomeTachyon C2=C>
-        PBXDispatch::Writer    slot(bool (C::*fn)(const Ref<const P>&))
+        PBXDispatch::Writer    slot(bool (C2::*fn)(const Ref<const P>&))
         {
             static_assert(std::derived_from<C,C2>, "Incompatible Tachyon types, need inheritance");
+            return slot_unsafe<P,C2>(fn);
+        }
+        
+        template <SomePost P, SomeTachyon C2=C>
+        PBXDispatch::Writer    slot_unsafe(bool (C2::*fn)(const Ref<const P>&))
+        {
             if(m_meta && Meta::thread_safe_write()){
                 PBXDispatch*    ret = new PBXDispatch_BoolCPtr<C2,P>(fn);
                 m_meta -> add_dispatch(ret);
@@ -225,7 +249,7 @@ namespace yq::tachyon {
             }
             return {};
         }
-        
+
         template <Interface I>
         void    interface()
         {

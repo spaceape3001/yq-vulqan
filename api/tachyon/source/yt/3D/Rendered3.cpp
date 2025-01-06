@@ -8,9 +8,9 @@
 #include <yt/3D/Rendered3Bind.hpp>
 #include <yt/3D/Rendered3InfoWriter.hpp>
 #include <ya/commands/SpatialCommand.hpp>
-#include <ya/spatials/SimpleSpatial3.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
+#include <yt/3D/3DWriter.hxx>
 
 namespace yq::tachyon {
 
@@ -31,12 +31,7 @@ namespace yq::tachyon {
     Rendered³::Rendered³(const Param&p) : Rendered(p)
     {
         if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
-            SimpleSpatial³::Param p3;
-            p3.position     = p.position;
-            p3.orientation  = p.orientation;
-            p3.scale        = p.scale;
-            m_spatial       = create<SimpleSpatial³>(CHILD, p3) -> id();
-            subscribe(m_spatial, MG::Spatial);
+            make_simple_spatial(p.position, p.orientation, p.scale);
         }
     }
     
@@ -63,27 +58,7 @@ namespace yq::tachyon {
         m_bounds = b;
         mark();
     }
-    
-    void    Rendered³::set_spatial(Spatial³ID sid)
-    {
-        m_spatial   = sid;
-        mark();
-    }
-
-    Spatial³ID    Rendered³::make_simple_spatial(
-        const Vector3D& position,
-        const Quaternion3D& orientation,
-        const Vector3D& scale
-    ) {
-        SimpleSpatial³::Param p3;
-        p3.position     = position;
-        p3.orientation  = orientation;
-        p3.scale        = scale;
-        m_spatial       = create<SimpleSpatial³>(CHILD, p3) -> id();
-        subscribe(m_spatial, MG::Spatial);
-        return m_spatial;
-    }
-
+ 
 #if 0
     Tensor44D   Rendered³::calc_local() const
     {
@@ -145,7 +120,6 @@ namespace yq::tachyon {
         Rendered::snap(sn);
         
         sn.bounds       = m_bounds;
-        sn.spatial      = m_spatial;
         sn.model        = local2domain();
     }
 
@@ -155,6 +129,7 @@ namespace yq::tachyon {
     void    Rendered³::init_info()
     {
         auto w   = writer<Rendered³>();
+        ③::init_info(w);
         w.description("Rendered in 3D");
         //w.property("pos", &Rendered³::position).setter(&Rendered³::set_position);
         //w.property("scale", &Rendered³::scale).setter(&Rendered³::set_scale);

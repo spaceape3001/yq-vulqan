@@ -77,6 +77,9 @@ namespace yq::tachyon {
         glm::dmat4              view_matrix() const;
         
         static void init_info();
+        
+    protected:
+        void    snap(Camera³Snap&) const;
 
     private:
         SimpleSpace    m_space;

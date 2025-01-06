@@ -53,7 +53,5 @@ namespace yq::tachyon {
         
         void finalize(Scene³Data&) const;
         void snap(Scene³Snap&) const;
-        
-        Spatial³ID      m_spatial;
     };
 }

@@ -27,6 +27,8 @@ namespace yq::tachyon {
         constexpr operator TachyonID() const noexcept { return { id }; }
         constexpr operator uint64_t() const noexcept { return id; }
         
+        constexpr bool operator()(Type t) const { return types(t); }
+        
         /*
         template <SomeTachyon T>
         constexpr operator ID<T>() const noexcept 

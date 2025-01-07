@@ -10,15 +10,25 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy³)
 
 namespace yq::tachyon {
-    MoveBy³::MoveBy³(TachyonID tid, const Vector3D& Δ, const Param& p) : 
-        SpatialCommand(tid, p), m_Δ(Δ)
+    MoveBy³::MoveBy³(const Header&h, const Vector3D& Δ) : 
+        SpatialCommand(h), m_Δ(Δ)
     {
     }
     
+    MoveBy³::MoveBy³(const MoveBy³&cp, const Header&h) : 
+        SpatialCommand(cp, h), m_Δ(cp.m_Δ)
+    {
+    }
+
     MoveBy³::~MoveBy³()
     {
     }
-    
+
+    PostCPtr    MoveBy³::clone(rebind_k, const Header& h) const 
+    {
+        return new MoveBy³(*this, h);
+    }
+   
     void MoveBy³::init_info()
     {
         auto w = writer<MoveBy³>();

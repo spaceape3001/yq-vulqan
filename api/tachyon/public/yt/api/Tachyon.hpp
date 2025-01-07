@@ -159,6 +159,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
         
+        class Helper;
+        
         /*! \brief Quick identity
         
             Used for logging to the logger (class/id)
@@ -183,6 +185,8 @@ namespace yq::tachyon {
         //static void         mail(TachyonID, const PostCPtr&);
         
         TachyonID           id() const { return { UniqueID::id() }; }
+        
+        TypedID             id(typed_k) const;
         
         /*! Short ident meant for logging (meta/ID)
         
@@ -265,12 +269,10 @@ namespace yq::tachyon {
         //! \note Not 100% thread safe, meant for helpers within the same tick/thread
         bool            dirty() const { return m_dirty; }
 
-        //! Marks us as dirty
-        //! \note Not 100% thread safe, meant for helpers within the same tick/thread
-        void            mark();
-
     protected:
 
+        //! Marks us as dirty
+        void            mark();
 
         static bool accepting(const PostAdvice&);
         static bool rejecting(const PostAdvice&);
@@ -535,6 +537,14 @@ namespace yq::tachyon {
     }
 
     Stream& operator<<(Stream&, const Tachyon::Ident&);
+    
+    class Tachyon::Helper {
+    protected:
+        Helper();
+        virtual ~Helper();
+        void            mark();
+    };
+    
 }
 
 std::ostringstream& operator<<(std::ostringstream&, const yq::tachyon::Tachyon::Ident&);

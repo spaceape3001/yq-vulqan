@@ -15,14 +15,24 @@ namespace yq::tachyon {
     class SetPositionᶻ : public SpatialCommand {
         YQ_OBJECT_DECLARE(SetPositionᶻ, SpatialCommand)
     public:
-        SetPositionᶻ(TachyonID, double, const Param& p={});
-        ~SetPositionᶻ();
+        SetPositionᶻ(const Header&, double);
         
         static void init_info();
         
         double  z() const { return m_z; }
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        SetPositionᶻ(const SetPositionᶻ&, const Header&);
+        ~SetPositionᶻ();
+        
     private:
         double const  m_z;
+        
+        SetPositionᶻ(const SetPositionᶻ&) = delete;
+        SetPositionᶻ(SetPositionᶻ&&) = delete;
+        SetPositionᶻ& operator=(const SetPositionᶻ&) = delete;
+        SetPositionᶻ& operator=(SetPositionᶻ&&) = delete;
     };
 }

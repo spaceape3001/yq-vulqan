@@ -6,18 +6,30 @@
 
 #pragma once
 
-#include <ya/commands/TachyonCommand.hpp>
+#include <yt/msg/Command.hpp>
 #include <yt/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SpatialCommand : public TachyonCommand {
-        YQ_OBJECT_DECLARE(SpatialCommand, TachyonCommand)
+    class SpatialCommand : public Command {
+        YQ_OBJECT_DECLARE(SpatialCommand, Command)
     public:
-        SpatialCommand(TachyonID, const Param& p={});
-        ~SpatialCommand();
     
         static void init_info();
+
+    protected:
+        SpatialCommand(const Header&);
+        SpatialCommand(const SpatialCommand&, const Header&);
+        ~SpatialCommand();
+        
+        // deprecated... keeping until all changed over
+        SpatialCommand(TachyonID, const Param&);
+    
+    private:
+        SpatialCommand(const SpatialCommand&) = delete;
+        SpatialCommand(SpatialCommand&&) = delete;
+        SpatialCommand& operator=(const SpatialCommand&) = delete;
+        SpatialCommand& operator=(SpatialCommand&&) = delete;
     };
 }

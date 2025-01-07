@@ -39,28 +39,28 @@ namespace yq::tachyon {
     void        PPosition¹::position(set_k, const Vector1D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPosition¹(id(), v));
+            mail(new SetPosition¹({.target=object()}, v));
         }
     }
 
     void        PPosition¹::position(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionˣ(id(), x));
+            mail(new SetPositionˣ({.target=object()}, x));
         }
     }
     
     void        PPosition¹::position(move_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveBy¹(id(), Δ));
+            mail(new MoveBy¹({.target=object()}, Δ));
         }
     }
 
     void        PPosition¹::position(move_k, x_k, double Δx) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByˣ(id(), Δx));
+            mail(new MoveByˣ({.target=object()}, Δx));
         }
     }
 }

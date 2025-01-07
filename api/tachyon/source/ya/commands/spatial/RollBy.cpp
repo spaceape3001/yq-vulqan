@@ -11,13 +11,23 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::RollBy)
 
 namespace yq::tachyon {
-    RollBy::RollBy(TachyonID tid, Radian θ, const Param& p) : 
-        SpatialCommand(tid, p), m_θ(θ)
+    RollBy::RollBy(const Header&h, Radian θ) : 
+        SpatialCommand(h), m_θ(θ)
     {
     }
     
+    RollBy::RollBy(const RollBy& cp, const Header&h) : 
+        SpatialCommand(cp, h), m_θ(cp.m_θ)
+    {
+    }
+
     RollBy::~RollBy()
     {
+    }
+
+    PostCPtr    RollBy::clone(rebind_k, const Header&h) const 
+    {
+        return new RollBy(*this, h);
     }
     
     void RollBy::init_info()

@@ -41,42 +41,42 @@ namespace yq::tachyon {
     void        PPosition²::position(set_k, const Vector2D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPosition²(id(), v));
+            mail(new SetPosition²({.target=object()}, v));
         }
     }
 
     void        PPosition²::position(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionˣ(id(), x));
+            mail(new SetPositionˣ({.target=object()}, x));
         }
     }
     
     void        PPosition²::position(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionʸ(id(), y));
+            mail(new SetPositionʸ({.target=object()}, y));
         }
     }
 
     void        PPosition²::position(move_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
-            mail(new MoveBy²(id(), Δ));
+            mail(new MoveBy²({.target=object()}, Δ));
         }
     }
 
     void        PPosition²::position(move_k, x_k, double Δx) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByˣ(id(), Δx));
+            mail(new MoveByˣ({.target=object()}, Δx));
         }
     }
 
     void        PPosition²::position(move_k, y_k, double Δy) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByY(id(), Δy));
+            mail(new MoveByʸ({.target=object()}, Δy));
         }
     }
 }

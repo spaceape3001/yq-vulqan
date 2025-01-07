@@ -16,14 +16,24 @@ namespace yq::tachyon {
     class RollBy : public SpatialCommand {
         YQ_OBJECT_DECLARE(RollBy, SpatialCommand)
     public:
-        RollBy(TachyonID, Radian θ, const Param& p={});
-        ~RollBy();
+        RollBy(const Header&, Radian θ);
     
         static void init_info();
         
         Radian  θ() const { return m_θ; }
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        RollBy(const RollBy&, const Header&);
+        ~RollBy();
+    
     private:
         Radian const  m_θ;
+        
+        RollBy(const RollBy&) = delete;
+        RollBy(RollBy&&) = delete;
+        RollBy& operator=(const RollBy&) = delete;
+        RollBy& operator=(RollBy&&) = delete;
     };
 }

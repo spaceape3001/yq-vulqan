@@ -61,10 +61,10 @@ namespace yq::tachyon {
             p3.position     = position;
             p3.orientation  = orientation;
             p3.scale        = scale;
-            Spatial³ID      sid = t->create<SimpleSpatial³>(CHILD, p3) -> id();
-            m_spatial       = sid;
-            t->subscribe(m_spatial, MG::Spatial);
-            return sid;
+            SimpleSpatial³*  ss³ = t->create<SimpleSpatial³>(CHILD, p3);
+            m_spatial       = ss³;
+            t->subscribe(ss³->id(), MG::Spatial);
+            return ss³->id();
         }
         return {};
     }

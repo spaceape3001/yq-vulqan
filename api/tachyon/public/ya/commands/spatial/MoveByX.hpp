@@ -14,14 +14,24 @@ namespace yq::tachyon {
     class MoveByˣ : public SpatialCommand {
         YQ_OBJECT_DECLARE(MoveByˣ, SpatialCommand)
     public:
-        MoveByˣ(TachyonID, double Δx, const Param& p={});
-        ~MoveByˣ();
+        MoveByˣ(const Header&, double Δx);
     
         static void init_info();
         
         double  Δx() const { return m_Δx; }
+
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+    protected:
         
+        MoveByˣ(const MoveByˣ&, const Header&);
+        ~MoveByˣ();
+
     private:
         double const  m_Δx;
+        
+        MoveByˣ(const MoveByˣ&) = delete;
+        MoveByˣ(MoveByˣ&&) = delete;
+        MoveByˣ& operator=(const MoveByˣ&);
+        MoveByˣ& operator=(MoveByˣ&&);
     };
 }

@@ -10,15 +10,24 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy¹)
 
 namespace yq::tachyon {
-    MoveBy¹::MoveBy¹(TachyonID tid, const Vector1D& Δ, const Param& p) : 
-        SpatialCommand(tid, p), m_Δ(Δ)
+    MoveBy¹::MoveBy¹(const Header& h, const Vector1D& Δ) : 
+        SpatialCommand(h), m_Δ(Δ)
     {
     }
-    
+
+    MoveBy¹::MoveBy¹(const MoveBy¹&cp, const Header&h) : SpatialCommand(cp, h), m_Δ(cp.m_Δ)
+    {
+    }
+
     MoveBy¹::~MoveBy¹()
     {
     }
     
+    PostCPtr    MoveBy¹::clone(rebind_k, const Header& h) const 
+    {
+        return new MoveBy¹(*this, h);
+    }
+
     void MoveBy¹::init_info()
     {
         auto w = writer<MoveBy¹>();

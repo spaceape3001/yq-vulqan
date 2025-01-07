@@ -11,17 +11,26 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class MoveByY : public SpatialCommand {
-        YQ_OBJECT_DECLARE(MoveByY, SpatialCommand)
+    class MoveByʸ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(MoveByʸ, SpatialCommand)
     public:
-        MoveByY(TachyonID, double Δy, const Param& p={});
-        ~MoveByY();
+        MoveByʸ(const Header&, double Δy);
     
         static void init_info();
         
         double  Δy() const { return m_Δy; }
+
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        MoveByʸ(const MoveByʸ&, const Header&);
+        ~MoveByʸ();
         
     private:
+        MoveByʸ(const MoveByʸ&) = delete;
+        MoveByʸ(MoveByʸ&&) = delete;
+        MoveByʸ& operator=(const MoveByʸ&) = delete;
+        MoveByʸ& operator=(MoveByʸ&&) = delete;
         double const  m_Δy;
     };
 }

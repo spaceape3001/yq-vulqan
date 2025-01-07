@@ -15,8 +15,7 @@ namespace yq::tachyon {
     class SetPosition³ : public SpatialCommand {
         YQ_OBJECT_DECLARE(SetPosition³, SpatialCommand)
     public:
-        SetPosition³(TachyonID, const Vector3D&, const Param& p={});
-        ~SetPosition³();
+        SetPosition³(const Header&, const Vector3D&);
     
         const Vector3D&   position() const  { return m_position; }
         
@@ -26,7 +25,18 @@ namespace yq::tachyon {
         double  y() const { return m_position.y; }
         double  z() const { return m_position.z; }
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        ~SetPosition³();
+        SetPosition³(const SetPosition³&, const Header&);
+    
     private:
         Vector3D const  m_position;
+        
+        SetPosition³(const SetPosition³&) = delete;
+        SetPosition³(SetPosition³&&) = delete;
+        SetPosition³& operator=(const SetPosition³&) = delete;
+        SetPosition³& operator=(SetPosition³&&) = delete;
     };
 }

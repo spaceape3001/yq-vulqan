@@ -10,13 +10,23 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPosition²)
 
 namespace yq::tachyon {
-    SetPosition²::SetPosition²(TachyonID tid, const Vector2D& v, const Param& p) : 
-        SpatialCommand(tid, p), m_position(v)
+    SetPosition²::SetPosition²(const Header& h, const Vector2D& v) : 
+        SpatialCommand(h), m_position(v)
+    {
+    }
+
+    SetPosition²::SetPosition²(const SetPosition²& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_position(cp.m_position)
     {
     }
     
     SetPosition²::~SetPosition²()
     {
+    }
+
+    PostCPtr    SetPosition²::clone(rebind_k, const Header&h) const 
+    {
+        return new SetPosition²(*this, h);
     }
     
     void SetPosition²::init_info()

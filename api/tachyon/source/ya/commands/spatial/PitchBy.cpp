@@ -11,13 +11,23 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::PitchBy)
 
 namespace yq::tachyon {
-    PitchBy::PitchBy(TachyonID tid, Radian θ, const Param& p) : 
-        SpatialCommand(tid, p), m_θ(θ)
+    PitchBy::PitchBy(const Header&h, Radian θ) : 
+        SpatialCommand(h), m_θ(θ)
     {
     }
     
+    PitchBy::PitchBy(const PitchBy& cp, const Header&h) : 
+        SpatialCommand(cp, h), m_θ(cp.m_θ)
+    {
+    }
+
     PitchBy::~PitchBy()
     {
+    }
+
+    PostCPtr    PitchBy::clone(rebind_k, const Header&h) const 
+    {
+        return new PitchBy(*this, h);
     }
     
     void PitchBy::init_info()

@@ -15,8 +15,7 @@ namespace yq::tachyon {
     class MoveBy² : public SpatialCommand {
         YQ_OBJECT_DECLARE(MoveBy², SpatialCommand)
     public:
-        MoveBy²(TachyonID, const Vector2D&Δ, const Param& p={});
-        ~MoveBy²();
+        MoveBy²(const Header&, const Vector2D&Δ);
     
         const Vector2D&   Δ() const  { return m_Δ; }
         
@@ -24,8 +23,19 @@ namespace yq::tachyon {
         
         double  Δx() const { return m_Δ.x; }
         double  Δy() const { return m_Δ.y; }
+
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        MoveBy²(const MoveBy²&, const Header&);
+        ~MoveBy²();
         
     private:
         Vector2D const  m_Δ;
+        
+        MoveBy²(const MoveBy²&) = delete;
+        MoveBy²(MoveBy²&&) = delete;
+        MoveBy²& operator=(const MoveBy²&) = delete;
+        MoveBy²& operator=(MoveBy²&&) = delete;
     };
 }

@@ -18,7 +18,7 @@
 namespace yq::tachyon {
     class MoveBy³;
     class MoveByˣ;
-    class MoveByY;
+    class MoveByʸ;
     class MoveByᶻ;
     class PitchBy;
     class RollBy;
@@ -82,21 +82,21 @@ namespace yq::tachyon {
 
         static void init_info();
         
-        void on_move3(const MoveBy³&);
-        void on_moveX(const MoveByˣ&);
-        void on_moveY(const MoveByY&);
-        void on_moveZ(const MoveByᶻ&);
+        void on_move³(const MoveBy³&);
+        void on_moveˣ(const MoveByˣ&);
+        void on_moveʸ(const MoveByʸ&);
+        void on_moveᶻ(const MoveByᶻ&);
         void on_pitch_by(const PitchBy&);
         void on_roll_by(const RollBy&);
-        void on_set_orientation3(const SetOrientation³&);
-        void on_set_position3(const SetPosition³&);
-        void on_set_positionX(const SetPositionˣ&);
-        void on_set_positionY(const SetPositionʸ&);
-        void on_set_positionZ(const SetPositionᶻ&);
-        void on_set_scale3(const SetScale³&);
-        void on_set_scaleX(const SetScaleˣ&);
-        void on_set_scaleY(const SetScaleʸ&);
-        void on_set_scaleZ(const SetScaleᶻ&);
+        void on_set_orientation³(const SetOrientation³&);
+        void on_set_position³(const SetPosition³&);
+        void on_set_positionˣ(const SetPositionˣ&);
+        void on_set_positionʸ(const SetPositionʸ&);
+        void on_set_positionᶻ(const SetPositionᶻ&);
+        void on_set_scale³(const SetScale³&);
+        void on_set_scaleˣ(const SetScaleˣ&);
+        void on_set_scaleʸ(const SetScaleʸ&);
+        void on_set_scaleᶻ(const SetScaleᶻ&);
         void on_yaw_by(const YawBy&);
 
     protected:

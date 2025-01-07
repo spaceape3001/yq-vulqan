@@ -15,16 +15,26 @@ namespace yq::tachyon {
     class MoveBy¹ : public SpatialCommand {
         YQ_OBJECT_DECLARE(MoveBy¹, SpatialCommand)
     public:
-        MoveBy¹(TachyonID, const Vector1D&Δ, const Param& p={});
-        ~MoveBy¹();
+        MoveBy¹(const Header&, const Vector1D&Δ);
     
         const Vector1D&   Δ() const  { return m_Δ; }
         
         static void init_info();
         
         double  Δx() const { return m_Δ.x; }
+
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        ~MoveBy¹();
+        MoveBy¹(const MoveBy¹&, const Header&);
         
     private:
         Vector1D const  m_Δ;
+        
+        MoveBy¹(const MoveBy¹&) = delete;
+        MoveBy¹(MoveBy¹&&) = delete;
+        MoveBy¹& operator=(const MoveBy¹&) = delete;
+        MoveBy¹& operator=(MoveBy¹&&) = delete;
     };
 }

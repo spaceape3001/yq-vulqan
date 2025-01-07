@@ -35,22 +35,17 @@ namespace yq::tachyon {
         // nothing to do (AT THE MOMENT)
     }
 
-    void    И::mark()
+    void    И::set_spatial(TypedID sid)
     {
-        Tachyon*t   = dynamic_cast<Tachyon*>(this);
-        if(t)
-            t->mark();
-    }
-
-    void    И::set_spatial(SpatialID sid)
-    {
-        m_spatial   = sid;
-        mark();
+        if(sid(Type::Spatial)){
+            m_spatial   = sid;
+            mark();
+        }
     }
 
     void    И::snap(ИSnap& sn) const
     {
-        sn.spatial  = m_spatial;
+        sn.spatial  = (SpatialID) m_spatial.id;
     }
 
     TachyonID   И::tachyon_id() const

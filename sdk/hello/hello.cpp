@@ -183,7 +183,7 @@ struct HelloScene : public Scene3DWidget0 {
     Ref<Triangle³>          tri2;
     Ref<HelloQuad>          quad;
     timepoint_t             start;
-    TachyonID               triSpatialID;
+    TypedID                 triSpatialID;
 
     HelloScene()
     {
@@ -206,7 +206,7 @@ struct HelloScene : public Scene3DWidget0 {
         Scene3DWidget0::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
-        send(new SetOrientation³(triSpatialID, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
+        send(new SetOrientation³({.target=triSpatialID}, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
         triangle->update(diff.count());
         return {};
     }

@@ -10,8 +10,13 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPositionʸ)
 
 namespace yq::tachyon {
-    SetPositionʸ::SetPositionʸ(TachyonID tid, double y, const Param& p) : 
-        SpatialCommand(tid, p), m_y(y)
+    SetPositionʸ::SetPositionʸ(const Header&h, double y) : 
+        SpatialCommand(h), m_y(y)
+    {
+    }
+
+    SetPositionʸ::SetPositionʸ(const SetPositionʸ& cp, const Header&h) : 
+        SpatialCommand(cp, h), m_y(cp.m_y)
     {
     }
     
@@ -19,6 +24,11 @@ namespace yq::tachyon {
     {
     }
     
+    PostCPtr    SetPositionʸ::clone(rebind_k, const Header&h) const 
+    {
+        return new SetPositionʸ(*this, h);
+    }
+
     void SetPositionʸ::init_info()
     {
         auto w = writer<SetPositionʸ>();

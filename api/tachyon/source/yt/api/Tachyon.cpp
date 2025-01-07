@@ -531,6 +531,11 @@ namespace yq::tachyon {
         //return m_context->frame;
     //}
 
+    TypedID             Tachyon::id(typed_k) const
+    {
+        return TypedID(*this);
+    }
+
     Tachyon::Ident               Tachyon::ident() const
     {
         return { metaInfo().name(), m_name, (uint64_t) id() };
@@ -691,6 +696,23 @@ namespace yq::tachyon {
         if((m_listeners[tid] -= grp) == MGF{}){
             m_listeners.erase(tid);
         }
+    }
+
+    // ---- TACHYON HELPER
+    
+    Tachyon::Helper::Helper()
+    {
+    }
+    
+    Tachyon::Helper::~Helper()
+    {
+    }
+    
+    void            Tachyon::Helper::mark()
+    {
+        Tachyon*t   = dynamic_cast<Tachyon*>(this);
+        if(t)
+            t->mark();
     }
 
     // ---- INFO AT THE END ---

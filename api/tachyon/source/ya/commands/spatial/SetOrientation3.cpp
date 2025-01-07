@@ -12,20 +12,30 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetOrientation³)
 
 namespace yq::tachyon {
-    SetOrientation³::SetOrientation³(TachyonID tid, const Quaternion3D& v, const Param& p) : 
-        SpatialCommand(tid, p), m_orientation(v)
+    SetOrientation³::SetOrientation³(const Header& h, const Quaternion3D& v) : 
+        SpatialCommand(h), m_orientation(v)
     {
     }
 
-    SetOrientation³::SetOrientation³(TachyonID tid, hpr_k, Radian hdg, Radian pitch, Radian roll, const Param& p) :
-        SpatialCommand(tid, p), m_orientation(HPR, hdg, pitch, roll)
+    SetOrientation³::SetOrientation³(const Header& h, hpr_k, Radian hdg, Radian pitch, Radian roll) :
+        SpatialCommand(h), m_orientation(HPR, hdg, pitch, roll)
     {
     }
     
+    SetOrientation³::SetOrientation³(const SetOrientation³& cp, const Header&h) : 
+        SpatialCommand(cp, h), m_orientation(cp.m_orientation)
+    {
+    }
+
     SetOrientation³::~SetOrientation³()
     {
     }
     
+    PostCPtr    SetOrientation³::clone(rebind_k, const Header&h) const 
+    {
+        return new SetOrientation³(*this, h);
+    }
+
     void SetOrientation³::init_info()
     {
         auto w = writer<SetOrientation³>();

@@ -47,56 +47,56 @@ namespace yq::tachyon {
     void        PPosition³::position(set_k, const Vector3D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPosition³(id(), v));
+            mail(new SetPosition³({.target=object()}, v));
         }
     }
 
     void        PPosition³::position(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionˣ(id(), x));
+            mail(new SetPositionˣ({.target=object()}, x));
         }
     }
     
     void        PPosition³::position(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionʸ(id(), y));
+            mail(new SetPositionʸ({.target=object()}, y));
         }
     }
     
     void        PPosition³::position(set_k, z_k, double z) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionᶻ(id(), z));
+            mail(new SetPositionᶻ({.target=object()}, z));
         }
     }
 
     void        PPosition³::position(move_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveBy³(id(), Δ));
+            mail(new MoveBy³({.target=object()}, Δ));
         }
     }
 
     void        PPosition³::position(move_k, x_k, double Δx) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByˣ(id(), Δx));
+            mail(new MoveByˣ({.target=object()}, Δx));
         }
     }
 
     void        PPosition³::position(move_k, y_k, double Δy) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByY(id(), Δy));
+            mail(new MoveByʸ({.target=object()}, Δy));
         }
     }
 
     void        PPosition³::position(move_k, z_k, double Δz) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByᶻ(id(), Δz));
+            mail(new MoveByᶻ({.target=object()}, Δz));
         }
     }
 }

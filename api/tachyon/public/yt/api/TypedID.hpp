@@ -29,6 +29,19 @@ namespace yq::tachyon {
         
         constexpr bool operator()(Type t) const { return types(t); }
         
+        template <typename T>
+        bool    operator==(ID<T> _id) const
+        {
+            return _id.id == id;
+        } 
+        
+        template <typename T>
+        friend bool operator==(ID<T> _id, const TypedID& t)
+        {
+            return _id.id == t.id;
+        }
+        
+        
         /*
         template <SomeTachyon T>
         constexpr operator ID<T>() const noexcept 

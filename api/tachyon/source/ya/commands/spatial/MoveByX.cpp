@@ -10,15 +10,25 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByˣ)
 
 namespace yq::tachyon {
-    MoveByˣ::MoveByˣ(TachyonID tid, double Δx, const Param& p) : 
-        SpatialCommand(tid, p), m_Δx(Δx)
+    MoveByˣ::MoveByˣ(const Header&h, double Δx) : 
+        SpatialCommand(h), m_Δx(Δx)
     {
     }
     
+    MoveByˣ::MoveByˣ(const MoveByˣ& cp, const Header&h) : 
+        SpatialCommand(cp, h), m_Δx(cp.m_Δx)
+    {
+    }
+
     MoveByˣ::~MoveByˣ()
     {
     }
     
+    PostCPtr    MoveByˣ::clone(rebind_k, const Header&h) const 
+    {
+        return new MoveByˣ(*this, h);
+    }
+
     void MoveByˣ::init_info()
     {
         auto w = writer<MoveByˣ>();

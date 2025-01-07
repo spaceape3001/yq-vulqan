@@ -16,14 +16,24 @@ namespace yq::tachyon {
     class PitchBy : public SpatialCommand {
         YQ_OBJECT_DECLARE(PitchBy, SpatialCommand)
     public:
-        PitchBy(TachyonID, Radian θ, const Param& p={});
-        ~PitchBy();
+        PitchBy(const Header&, Radian θ);
     
         static void init_info();
         
         Radian  θ() const { return m_θ; }
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        PitchBy(const PitchBy&, const Header&);
+        ~PitchBy();
+        
     private:
         Radian const  m_θ;
+        
+        PitchBy(const PitchBy&);
+        PitchBy(PitchBy&&);
+        PitchBy& operator=(const PitchBy&);
+        PitchBy& operator=(PitchBy&&);
     };
 }

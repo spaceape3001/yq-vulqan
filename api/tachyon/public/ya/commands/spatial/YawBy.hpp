@@ -16,14 +16,23 @@ namespace yq::tachyon {
     class YawBy : public SpatialCommand {
         YQ_OBJECT_DECLARE(YawBy, SpatialCommand)
     public:
-        YawBy(TachyonID, Radian θ, const Param& p={});
-        ~YawBy();
+        YawBy(const Header&, Radian θ);
     
         static void init_info();
         
         Radian  θ() const { return m_θ; }
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        YawBy(const YawBy&, const Header&);
         
     private:
         Radian const  m_θ;
+
+        ~YawBy();
+        YawBy(YawBy&&) = delete;
+        YawBy(const YawBy&) = delete;
+        YawBy& operator=(const YawBy&) = delete;
+        YawBy& operator=(YawBy&&) = delete;
     };
 }

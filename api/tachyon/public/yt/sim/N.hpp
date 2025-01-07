@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yt/api/ID.hpp>
+#include <yt/api/TypedID.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/keywords.hpp>
 #include <yt/typedef/spatial.hpp>
@@ -21,16 +22,16 @@ namespace yq::tachyon {
     
         This is the root of an object that'll latch onto a spatial description.
     */
-    class И {
+    class И : protected Tachyon::Helper {
     public:
     
         virtual uint8_t dimensions(count_k) const = 0;
         
-        SpatialID       spatial() const { return m_spatial; }
+        TypedID         spatial() const { return m_spatial; }
         
         //  \brief Sets the spatial 
         //  \note Not thread safe
-        void            set_spatial(SpatialID);
+        void            set_spatial(TypedID);
 
         template <typename C>
         static void     init_info(TachyonInfo::Writer<C>&);
@@ -41,10 +42,12 @@ namespace yq::tachyon {
         
         void            finalize(ИData&) const;
         void            snap(ИSnap&) const;
-        void            mark();
+        
+        //  these go into a tachyon helper class?  Thinking so...
+        
         TachyonID       tachyon_id() const;
         
         
-        SpatialID       m_spatial;
+        TypedID        m_spatial;
     };
 }

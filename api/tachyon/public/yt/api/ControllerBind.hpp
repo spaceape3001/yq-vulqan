@@ -12,6 +12,7 @@
 
 namespace yq::tachyon {
     class Controller;
+    struct TypedID;
 
     //! Utiltity to bind a controller to the whatever...
     class ControllerBind {
@@ -19,8 +20,9 @@ namespace yq::tachyon {
         ControllerID    controller() const { return m_controller; }
         
     protected:
-        ControllerBind(ControllerID v) : m_controller(v) {}
-        ControllerBind(Controller* v);
+        constexpr ControllerBind(ControllerID v) noexcept : m_controller(v) {}
+        ControllerBind(Controller*);
+        ControllerBind(TypedID);
         virtual ~ControllerBind() {}
         
         ControllerID const m_controller;

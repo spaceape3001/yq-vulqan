@@ -15,10 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(AppDeleteViewerCommand, AppCommand)
     public:
     
-        struct Param : public AppCommand::Param {
-        };
-    
-        AppDeleteViewerCommand(Viewer*, const Param& p = {});
+        AppDeleteViewerCommand(Viewer*);
         virtual ~AppDeleteViewerCommand();
         
         static void init_info();

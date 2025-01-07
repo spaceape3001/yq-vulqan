@@ -18,7 +18,16 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Event::Event(const Param&p) : Post(p)
+    Event::Event(const Param&) : Post({})
+    {
+        // DEPRECATED
+    }
+
+    Event::Event(const Header& h) : Post(h) 
+    {
+    }
+
+    Event::Event(const Event&cp, const Header&h) : Post(cp, h)
     {
     }
     

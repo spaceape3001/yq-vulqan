@@ -18,12 +18,18 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    CameraCommand::CameraCommand(const Camera* v, const Param& p) : Command(p), CameraBind(v)
+    CameraCommand::CameraCommand(const Header&h) : Command(h), CameraBind(CameraID())
     {
     }
-    
-    CameraCommand::CameraCommand(CameraID v, const Param& p) : Command(p), CameraBind(v)
+
+    CameraCommand::CameraCommand(const Camera* v, const Header& h) : Command(h), CameraBind(v)
     {
+        // DEPRECATED
+    }
+    
+    CameraCommand::CameraCommand(CameraID v, const Header& h) : Command(h), CameraBind(v)
+    {
+        // DEPRECATED
     }
     
     CameraCommand::~CameraCommand()

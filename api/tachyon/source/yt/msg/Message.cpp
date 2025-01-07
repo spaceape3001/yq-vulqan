@@ -18,7 +18,16 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Message::Message(const Param& p) : Post(p)
+    Message::Message(const Param&) : Post({})
+    {
+        // DEPRECATED
+    }
+
+    Message::Message(const Header&h) : Post(h)
+    {
+    }
+
+    Message::Message(const Message& cp, const Header&h) : Post(cp, h)
     {
     }
     

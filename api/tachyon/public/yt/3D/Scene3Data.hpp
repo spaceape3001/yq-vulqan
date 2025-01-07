@@ -14,9 +14,13 @@
 
 namespace yq::tachyon {
     struct Scene³Snap : public SceneSnap, public ③Snap {
+        Scene³Snap();
+        virtual ~Scene³Snap();
     };
     
     struct Scene³Data : public SceneData, public ③Data {
+        Scene³Data();
+        virtual ~Scene³Data();
     };
 }
 

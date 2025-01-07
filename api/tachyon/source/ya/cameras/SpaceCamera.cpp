@@ -18,7 +18,7 @@
 #include <yq/vector/Quaternion3.hxx>
 
 #include <yt/3D/Camera3InfoWriter.hpp>
-#include <ya/commands/CameraPitchCommand.hpp>
+//#include <ya/commands/CameraPitchCommand.hpp>
 
 namespace yq::tachyon {
     SpaceCamera::SpaceCamera(const Param&p) : Camera³(p),
@@ -32,10 +32,10 @@ namespace yq::tachyon {
     {
     }
     
-    void        SpaceCamera::pitch_command(const CameraPitchCommand& amt)
-    {
-        m_space.orientation = rotor_y(amt.angle()) * m_space.orientation;
-    }
+    //void        SpaceCamera::pitch_command(const CameraPitchCommand& amt)
+    //{
+        //m_space.orientation = rotor_y(amt.angle()) * m_space.orientation;
+    //}
 
     glm::dmat4  SpaceCamera::projection_matrix(const Rectangle2D&sz) const
     {
@@ -100,7 +100,7 @@ namespace yq::tachyon {
     {
         auto w = writer<SpaceCamera>();
         w.description("Simple space camera (position, orientation, fov)");
-        w.slot(&SpaceCamera::pitch_command);
+        //w.slot(&SpaceCamera::pitch_command);
     }
 }
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SpaceCamera)

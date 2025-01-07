@@ -8,6 +8,7 @@
 
 #include <yt/msg/Post.hpp>
 #include <yt/typedef/request.hpp>
+#include <yt/api/TypedID.hpp>
 
 namespace yq::tachyon {
 
@@ -23,13 +24,20 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Request, Post)
     public:
     
-        struct Param : public Post::Param {
-        };
-        
         static void init_info();
+
+        struct Param {}; //< DEPRECATED
         
     protected:
-        Request(const Param& p={});
+        Request(const Param&p={}); //< DEPRECATED
+        Request(const Header&);
+        Request(const Request&, const Header&);
         virtual ~Request();
+        
+    private:
+        Request(Request&&) = delete;
+        Request(const Request&) = delete;
+        Request& operator=(const Request&) = delete;
+        Request& operator=(Request&&) = delete;
     };
 }

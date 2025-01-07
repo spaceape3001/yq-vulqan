@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     class Scene³;
+    struct TypedID;
 
     //! Utiltity to bind a viewer to the whatever...
     class Scene³Bind {
@@ -19,7 +20,8 @@ namespace yq::tachyon {
         
     protected:
         Scene³Bind(Scene³ID v) : m_scene³(v) {}
-        Scene³Bind(const Scene³* v);
+        Scene³Bind(const Scene³*);
+        Scene³Bind(TypedID);
         virtual ~Scene³Bind() {}
         
         Scene³ID const m_scene³;

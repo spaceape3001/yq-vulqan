@@ -8,14 +8,18 @@
 #include <yt/msg/PostInfoWriter.hpp>
 
 namespace yq::tachyon {
-    AnyPost::AnyPost(const Any& val, const Param&p) : Post(p), m_value(val)
+    AnyPost::AnyPost(const Any& val, const Header&h) : Post(h), m_value(val)
     {
     }
     
-    AnyPost::AnyPost(Any&& val, const Param&p) : Post(p), m_value(std::move(val))
+    AnyPost::AnyPost(Any&& val, const Header&h) : Post(h), m_value(std::move(val))
     {
     }
     
+    AnyPost::AnyPost(const AnyPost&cp, const Header&h) : Post(cp, h), m_value(cp.m_value)
+    {
+    }
+
     AnyPost::~AnyPost()
     {
     }

@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     class Window;
+    struct TypedID;
 
     //! Utiltity to bind a viewer to the whatever...
     class WindowBind {
@@ -19,7 +20,8 @@ namespace yq::tachyon {
         
     protected:
         WindowBind(WindowID v) : m_window(v) {}
-        WindowBind(const Window* v);
+        WindowBind(const Window*);
+        WindowBind(TypedID);
         virtual ~WindowBind() {}
         
         WindowID const m_window;

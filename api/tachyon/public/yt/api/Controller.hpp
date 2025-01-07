@@ -24,6 +24,9 @@ namespace yq::tachyon {
         template <typename C> class Writer;
 
         ControllerInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl=std::source_location::current());
+    
+    protected:
+        virtual ~ControllerInfo();
     };
     
     /*! \brief Controller of Posts/Events/etc

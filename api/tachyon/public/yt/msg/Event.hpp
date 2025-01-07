@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yt/api/TypedID.hpp>
 #include <yt/msg/Post.hpp>
 #include <yt/typedef/event.hpp>
 
@@ -25,8 +26,17 @@ namespace yq::tachyon {
     
         static void init_info();
         
+        struct Param {};        //< DEPRECATED
+        
     protected:
         virtual ~Event();
-        Event(const Param&);
+        Event(const Param& p={});    //< DEPRECATED
+        Event(const Header&);
+        Event(const Event&, const Header&);
+    private:
+        Event(const Event&) = delete;
+        Event(Event&&) = delete;
+        Event& operator=(const Event&) = delete;
+        Event& operator=(Event&&) = delete;
     };
 }

@@ -43,6 +43,10 @@ namespace yq::tachyon {
     {
     }
 
+    TachyonBind::TachyonBind(TypedID v) : m_tachyon(v.id)
+    {
+    }
+
 // ------------------------------------------------------------------------
 
     TachyonData::TachyonData()

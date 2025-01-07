@@ -8,18 +8,26 @@
 #include <yt/msg/PostInfoWriter.hpp>
 
 namespace yq::tachyon {
-    StringPost::StringPost(std::string&&k, const Param&p) : Post(p), m_text(std::move(k))
+    StringPost::StringPost(std::string&&k, const Header&h) : Post(h), m_text(std::move(k))
     {
     }
     
-    StringPost::StringPost(const char* k, const Param&p) : Post(p), m_text(k)
+    StringPost::StringPost(const char* k, const Header&h) : Post(h), m_text(k)
     {
     }
     
-    StringPost::StringPost(std::string_view k, const Param&p) : Post(p), m_text(k)
+    StringPost::StringPost(std::string_view k, const Header&h) : Post(h), m_text(k)
     {
     }
     
+    StringPost::StringPost(const StringPost&cp, const Header& h) : Post(h), m_text(cp.m_text)
+    {
+    }
+    
+    StringPost::~StringPost()
+    {
+    }
+
     void StringPost::init_info()
     {
         auto w = writer<StringPost>();

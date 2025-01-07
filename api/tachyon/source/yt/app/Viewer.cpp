@@ -126,6 +126,10 @@ namespace yq::tachyon {
     {
     }
 
+    ViewerBind::ViewerBind(TypedID v) : m_viewer( v(Type::Viewer) ? ViewerID(v.id) : ViewerID())
+    {
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ViewerInfo::ViewerInfo(std::string_view szName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(szName, base, sl)
@@ -305,6 +309,14 @@ namespace yq::tachyon {
 
     PostAdvice  Viewer::advise(const Post& pp) const 
     {
+        const TypedID&   src = pp.source();
+        if(src(Type::Window) && src.id != m_window.id)
+            return REJECT;
+            
+        const TypedID&   tgt = pp.target();
+        if(tgt(Type::Viewer) && tgt.id != id().id)
+            return REJECT;
+    
         if(const WindowBind*   wb  = dynamic_cast<const WindowBind*>(&pp)){
             if(wb -> window() != m_window)
                 return REJECT;

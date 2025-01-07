@@ -17,14 +17,17 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(StringPost, Post)
     public:
     
-        StringPost(std::string&&, const Param&p={});
-        StringPost(const char*, const Param&p={});
-        StringPost(std::string_view, const Param&p={});
-        ~StringPost(){}
+        StringPost(std::string&&, const Header&h={});
+        StringPost(const char*, const Header&h={});
+        StringPost(std::string_view, const Header&h={});
     
         const std::string&    text() const { return m_text; }
         
         static void init_info();
+    
+    protected:
+        StringPost(const StringPost&, const Header&);
+        ~StringPost();
     
     private:
         std::string     m_text;

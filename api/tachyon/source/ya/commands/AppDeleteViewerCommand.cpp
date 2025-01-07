@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::AppDeleteViewerCommand)
 
 namespace yq::tachyon {
 
-    AppDeleteViewerCommand::AppDeleteViewerCommand(Viewer* v, const Param& p) : AppCommand(p), m_viewer(v)
+    AppDeleteViewerCommand::AppDeleteViewerCommand(Viewer* v) : m_viewer(v)
     {
     }
     

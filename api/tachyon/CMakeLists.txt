@@ -154,7 +154,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/AppCommand.cpp
     source/ya/commands/AppDeleteViewerCommand.cpp
     source/ya/commands/CameraCommand.cpp
-    source/ya/commands/CameraPitchCommand.cpp
     #source/ya/commands/CameraRollCommand.cpp
     #source/ya/commands/CameraYawCommand.cpp
     source/ya/commands/ControllerCommand.cpp

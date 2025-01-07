@@ -14,10 +14,20 @@
 
 namespace yq::tachyon {
 
+    Rendered³Bind::Rendered³Bind(const Rendered³* v) : m_rendered³(v ? v->id() : Rendered³ID())
+    {
+    }
+    
+    Rendered³Bind::Rendered³Bind(TypedID v) : m_rendered³(v(Type::Rendered³)?Rendered³ID(v.id):Rendered³ID())
+    {
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
     Rendered³Snap::Rendered³Snap() = default;
     Rendered³Snap::~Rendered³Snap() = default;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 
     Rendered³Info::Rendered³Info(std::string_view name, RenderedInfo& base, const std::source_location& sl) : 
         RenderedInfo(name, base, sl)
@@ -26,7 +36,7 @@ namespace yq::tachyon {
         set(Type::Rendered³);
     }
     
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 
     Rendered³::Rendered³(const Param&p) : Rendered(p)
     {

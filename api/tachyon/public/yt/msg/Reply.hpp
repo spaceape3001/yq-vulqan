@@ -23,19 +23,26 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Reply, Post)
         template <class> friend class Ref;
     public:
-   
-        struct Param : public Post::Param {
-        };
         
         const Request*  request() const;
         
         static void init_info();
         
+        struct Param {};        //< DEPRECATED
+        
     protected:
-        Reply(const RequestCPtr&, const Param& p={});
+        Reply(const RequestCPtr&, const Param&p={});    //< DEPRECATED;
+    
+        Reply(const RequestCPtr&, const Header&);
+        Reply(const Reply&, const Header&);
         virtual ~Reply();
         
     private:
         RequestCPtr     m_request;
+        
+        Reply(const Reply&) = delete;
+        Reply(Reply&&) = delete;
+        Reply& operator=(const Reply&) = delete;
+        Reply& operator=(Reply&&) = delete;
     };
 }

@@ -27,8 +27,9 @@ namespace yq::tachyon {
         struct Param : public Command::Param {
         };
     
-        CameraCommand(const Camera*, const Param& p = {});
-        CameraCommand(CameraID, const Param& p = {});
+        CameraCommand(const Header&);
+        CameraCommand(const Camera*, const Header& h = {});
+        CameraCommand(CameraID, const Header& h = {});
         virtual ~CameraCommand();
         
         static void init_info();

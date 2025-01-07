@@ -11,8 +11,12 @@
 
 namespace yq::tachyon {
     struct ManagerSnap : public TachyonSnap {
+        ManagerSnap();
+        virtual ~ManagerSnap();
     };
     
     struct ManagerData : public TachyonData {
+        ManagerData();
+        virtual ~ManagerData();
     };
 }

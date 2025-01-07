@@ -14,7 +14,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(CameraSetScreen, CameraCommand)
     public:
     
-        CameraSetScreen(CameraID, const Rectangle2D&, const Param& p = {});
+        CameraSetScreen(CameraID, const Rectangle2D&, const Header& h = {});
         virtual ~CameraSetScreen();
         
         static void init_info();

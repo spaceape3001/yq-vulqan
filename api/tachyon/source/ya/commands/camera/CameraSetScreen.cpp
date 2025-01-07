@@ -12,8 +12,8 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraSetScreen)
 
 namespace yq::tachyon {
     
-    CameraSetScreen::CameraSetScreen(CameraID cid, const Rectangle2D& r, const Param& p)
-        : CameraCommand(cid, p), m_screen(r)
+    CameraSetScreen::CameraSetScreen(CameraID cid, const Rectangle2D& r, const Header& h)
+        : CameraCommand(cid, h), m_screen(r)
     {
     }
     

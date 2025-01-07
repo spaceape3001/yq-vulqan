@@ -59,6 +59,10 @@ namespace yq::tachyon {
     {
     }
 
+    ThreadBind::ThreadBind(TypedID v) : m_thread( v(Type::Thread) ? ThreadID(v.id) : ThreadID())
+    {
+    }
+
 // ------------------------------------------------------------------------
 
     ThreadData::~ThreadData()

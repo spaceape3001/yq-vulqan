@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yt/api/TypedID.hpp>
 #include <yt/msg/Post.hpp>
 #include <yt/typedef/command.hpp>
 
@@ -25,8 +26,21 @@ namespace yq::tachyon {
    
         static void init_info();
         
+        struct Param {}; //< DEPRECATED
+        
     protected:
-        Command(const Param&);
+    
+        Command(const Param& p={}); //< DEPRECATED
+        
+        Command(const Header&);
+        Command(const Command&, const Header&);
         virtual ~Command();
+        
+    private:
+        Command(const Command&) = delete;
+        Command(Command&&) = delete;
+        Command& operator=(const Command&) = delete;
+        Command& operator=(Command&&) = delete;
+        
     };
 }

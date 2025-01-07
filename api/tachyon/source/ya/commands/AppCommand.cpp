@@ -18,7 +18,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    AppCommand::AppCommand(const Param& p) : Command(p)
+    AppCommand::AppCommand(const Header& h) : Command(h)
+    {
+    }
+    
+    AppCommand::AppCommand(const AppCommand& cp, const Header& h) : Command(cp, h)
     {
     }
     

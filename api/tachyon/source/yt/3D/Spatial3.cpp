@@ -12,6 +12,16 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Spatial³);
 
 namespace yq::tachyon {
+    Spatial³Bind::Spatial³Bind(const Spatial³* v) : m_spatial³(v ? v->id() : Spatial³ID())
+    {
+    }
+    
+    Spatial³Bind::Spatial³Bind(TypedID v) : m_spatial³(v(Type::Spatial³) ? Spatial³ID(v.id) : Spatial³ID())
+    {
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Spatial³Info::Spatial³Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl)
         : SpatialInfo(zName, base, sl)
     {

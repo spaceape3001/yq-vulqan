@@ -20,13 +20,17 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(AppCommandInfo)
         YQ_OBJECT_DECLARE(AppCommand, Command)
     public:
-    
-        struct Param : public Command::Param {
-        };
-    
-        AppCommand(const Param& p = {});
+
+        static void init_info();
+
+    protected:
+        AppCommand(const Header& h={});
+        AppCommand(const AppCommand&, const Header& h={});
         virtual ~AppCommand();
         
-        static void init_info();
+    private:
+        AppCommand(AppCommand&&) = delete;
+        AppCommand& operator=(const AppCommand&) = delete;
+        AppCommand& operator=(AppCommand&&) = delete;
     };
 }

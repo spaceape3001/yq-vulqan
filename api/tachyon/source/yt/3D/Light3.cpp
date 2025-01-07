@@ -14,6 +14,16 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Light³)
 
 namespace yq::tachyon {
+    Light³Bind::Light³Bind(const Light³* v) : m_light³(v ? v->id() : Light³ID() ) 
+    {
+    }
+    
+    Light³Bind::Light³Bind(TypedID v) : m_light³(v(Type::Light³) ? Light³ID(v.id) : Light³ID())
+    {
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+
     Light³Info::Light³Info(std::string_view name, LightInfo& base, const std::source_location& sl) :
         LightInfo(name, base, sl)
     {

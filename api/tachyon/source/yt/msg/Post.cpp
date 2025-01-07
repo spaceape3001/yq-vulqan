@@ -20,12 +20,22 @@ namespace yq::tachyon {
 
     std::atomic<uint64_t>    Post::s_lastId{0};
 
-    Post::Post(const Param&) : 
+    Post::Post(const Header& h) : 
+        m_source(h.source),
+        m_target(h.target),
         m_id(++s_lastId), 
-        m_time(clock_t::now())
+        m_time((h.time != time_point_t{}) ? h.time : clock_t::now())
     {
     }
     
+    Post::Post(const Post&cp, const Header& h) :
+        m_source(h.source ? h.source : cp.m_source),
+        m_target(h.target ? h.target : cp.m_target),
+        m_id(++s_lastId),
+        m_time((h.time != time_point_t{}) ? h.time : cp.m_time)
+    {
+    }
+
     Post::~Post()
     {
     }

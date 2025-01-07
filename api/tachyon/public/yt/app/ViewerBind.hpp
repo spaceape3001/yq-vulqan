@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     class Viewer;
+    struct TypedID;
 
     //! Utiltity to bind a viewer to the whatever...
     class ViewerBind {
@@ -20,6 +21,7 @@ namespace yq::tachyon {
     protected:
         ViewerBind(ViewerID v) : m_viewer(v) {}
         ViewerBind(const Viewer* v);
+        ViewerBind(TypedID);
         virtual ~ViewerBind() {}
         
         ViewerID const m_viewer;

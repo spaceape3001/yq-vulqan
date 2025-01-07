@@ -19,7 +19,16 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Reply::Reply(const RequestCPtr& req, const Param& p) : Post(p), m_request(req)
+    Reply::Reply(const RequestCPtr& req, const Param&) : Post({}), m_request(req)
+    {
+        // DEPRECATED
+    }
+    
+    Reply::Reply(const RequestCPtr& req, const Header& h) : Post(h), m_request(req)
+    {
+    }
+
+    Reply::Reply(const Reply& cp, const Header& h) : Post(cp, h), m_request(cp.m_request)
     {
     }
     

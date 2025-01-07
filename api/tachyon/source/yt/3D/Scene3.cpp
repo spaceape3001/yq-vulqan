@@ -14,6 +14,23 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³)
 
 namespace yq::tachyon {
+    /////////////////////////////////////////////////////////////////////////////
+
+    Scene³Bind::Scene³Bind(const Scene³* v) : m_scene³(v?v->id():Scene³ID()) 
+    {
+    }
+    
+    Scene³Bind::Scene³Bind(TypedID v) : m_scene³(v(Type::Scene³) ? Scene³ID(v.id) : Scene³ID())
+    {
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    Scene³Data::Scene³Data() = default;
+    Scene³Data::~Scene³Data() = default;
+
+    /////////////////////////////////////////////////////////////////////////////
+
     Scene³Info::Scene³Info(std::string_view name, SceneInfo& base, const std::source_location& sl) :
         SceneInfo(name, base, sl)
     {
@@ -23,6 +40,12 @@ namespace yq::tachyon {
     {
     }
     
+    /////////////////////////////////////////////////////////////////////////////
+
+    Scene³Snap::Scene³Snap() = default;
+    Scene³Snap::~Scene³Snap() = default;
+
+    /////////////////////////////////////////////////////////////////////////////
 
     Scene³::Scene³(const Param& p) : Scene(p)
     {

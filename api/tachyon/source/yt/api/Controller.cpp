@@ -27,13 +27,33 @@ namespace yq::tachyon {
     {
     }
 
-    //////////////////////////////////////
+    ControllerBind::ControllerBind(TypedID v) : m_controller(v(Type::Controller) ? ControllerID(v.id) : ControllerID())
+    {
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    ControllerData::ControllerData() = default;
+    ControllerData::~ControllerData() = default;
+
+    /////////////////////////////////////////////////////////////////////////////
 
     ControllerInfo::ControllerInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(zName, base, sl)
     {
         set(Type::Controller);
     }
+    
+    ControllerInfo::~ControllerInfo()
+    {
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    ControllerSnap::ControllerSnap() = default;
+    ControllerSnap::~ControllerSnap() = default;
+
+    /////////////////////////////////////////////////////////////////////////////
 
     Controller::Controller(const Param& p) : Tachyon(p)
     {

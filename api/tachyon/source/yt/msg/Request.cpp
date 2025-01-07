@@ -18,7 +18,16 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Request::Request(const Param& p) : Post(p)
+    Request::Request(const Param&) : Post({})
+    {
+        // DEPRECATED
+    }
+
+    Request::Request(const Header& h) : Post(h)
+    {
+    }
+    
+    Request::Request(const Request& cp, const Header& h) : Post(cp, h)
     {
     }
     

@@ -18,7 +18,16 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Command::Command(const Param&p) : Post(p)
+    Command::Command(const Param&) : Post({}) 
+    {
+        // DEPRECATED
+    }
+
+    Command::Command(const Header& h) : Post(h)
+    {
+    }
+
+    Command::Command(const Command& cp, const Header& h) : Post(cp, h)
     {
     }
     

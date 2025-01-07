@@ -15,9 +15,18 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(EmptyPost, Post)
     public:
         
-        EmptyPost(const Param&p={});
+        EmptyPost(const Header&p={});
         ~EmptyPost();
         
         static void init_info();
+    
+    protected:
+        EmptyPost(const EmptyPost&, const Header&);
+        
+    private:
+        EmptyPost(const EmptyPost&) = delete;
+        EmptyPost(EmptyPost&&) = delete;
+        EmptyPost& operator=(const EmptyPost&) = delete;
+        EmptyPost& operator=(EmptyPost&&) = delete;
     };
 }

@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     class Spatial³;
+    struct TypedID;
 
     //! Utiltity to bind a viewer to the whatever...
     class Spatial³Bind {
@@ -19,7 +20,8 @@ namespace yq::tachyon {
         
     protected:
         Spatial³Bind(Spatial³ID v) : m_spatial³(v) {}
-        Spatial³Bind(const Spatial³* v);
+        Spatial³Bind(const Spatial³*);
+        Spatial³Bind(TypedID);
         virtual ~Spatial³Bind() {}
         
         Spatial³ID const m_spatial³;

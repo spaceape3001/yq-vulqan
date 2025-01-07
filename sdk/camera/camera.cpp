@@ -35,7 +35,7 @@
 #include <ya/cameras/NullCamera.hpp>
 #include <ya/cameras/SpaceCamera.hpp>
 #include <ya/cameras/TargetCamera.hpp>
-#include <ya/commands/CameraPitchCommand.hpp>
+//#include <ya/commands/CameraPitchCommand.hpp>
 #include <ya/events/KeyPressEvent.hpp>
 #include <ya/rendereds/Quadrilateral3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
@@ -127,10 +127,10 @@ struct CameraController : public Controller {
     {
         switch(evt.key()){
         case KeyCode::UpArrow:
-            send(new CameraPitchCommand(m_camera, 10._deg));
+            //send(new CameraPitchCommand(m_camera, 10._deg));
             break;
         case KeyCode::DownArrow:
-            send(new CameraPitchCommand(m_camera, -10._deg));
+            //send(new CameraPitchCommand(m_camera, -10._deg));
             break;
         default:
             break;

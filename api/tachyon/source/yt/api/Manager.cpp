@@ -14,6 +14,17 @@ namespace yq::tachyon {
     {
     }
 
+    ManagerBind::ManagerBind(TypedID v) : m_manager(v(Type::Manager) ? ManagerID(v.id) : ManagerID())
+    {
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    ManagerData::ManagerData() = default;
+    ManagerData::~ManagerData() = default;
+
+    /////////////////////////////////////////////////////////////////////////////
+
     ManagerInfo::ManagerInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(zName, base, sl)
     {
@@ -21,11 +32,12 @@ namespace yq::tachyon {
         set(Type::Manager);
     }
 
-    void Manager::init_info()
-    {
-        auto w = writer<Manager>();
-        w.description("Manager abstract base class");
-    }
+    /////////////////////////////////////////////////////////////////////////////
+
+    ManagerSnap::ManagerSnap() = default;
+    ManagerSnap::~ManagerSnap() = default;
+
+    /////////////////////////////////////////////////////////////////////////////
 
     Manager::Manager(const Param& p) : Tachyon(p)
     {
@@ -35,6 +47,11 @@ namespace yq::tachyon {
     {
     }
     
+    void Manager::init_info()
+    {
+        auto w = writer<Manager>();
+        w.description("Manager abstract base class");
+    }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Manager)

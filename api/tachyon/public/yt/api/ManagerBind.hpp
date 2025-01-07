@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     class Manager;
+    struct TypedID;
 
     //! Utiltity to bind a viewer to the whatever...
     class ManagerBind {
@@ -18,8 +19,9 @@ namespace yq::tachyon {
         ManagerID    manager() const { return m_manager; }
         
     protected:
-        ManagerBind(ManagerID v) : m_manager(v) {}
-        ManagerBind(const Manager* v);
+        constexpr ManagerBind(ManagerID v) noexcept : m_manager(v) {}
+        ManagerBind(const Manager*);
+        ManagerBind(TypedID);
         virtual ~ManagerBind() {}
         
         ManagerID const m_manager;

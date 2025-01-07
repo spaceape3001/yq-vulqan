@@ -29,9 +29,20 @@ namespace yq::tachyon {
     
         static void init_info();
     
+        struct Param {}; //< DEPRECATED
+    
     protected:
 
-        Message(const Param& p);
+        Message(const Param& p={}); //< DEPRECATED
+
+        Message(const Header&);
+        Message(const Message&,const Header&);
         virtual ~Message();
+        
+    private:
+        Message(const Message&) = delete;
+        Message(Message&&) = delete;
+        Message& operator=(const Message&) = delete;
+        Message& operator=(Message&&) = delete;
     };
 }

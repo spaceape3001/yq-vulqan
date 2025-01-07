@@ -8,11 +8,15 @@
 #include <yt/msg/PostInfoWriter.hpp>
 
 namespace yq::tachyon {
-    EmptyPost::EmptyPost(const Param&p) : Post(p) 
+    EmptyPost::EmptyPost(const Header&h) : Post(h) 
     {
     }
     
     EmptyPost::~EmptyPost()
+    {
+    }
+
+    EmptyPost::EmptyPost(const EmptyPost&cp, const Header&h) : Post(cp, h) 
     {
     }
     

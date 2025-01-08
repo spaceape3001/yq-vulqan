@@ -10,13 +10,23 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScaleʸ)
 
 namespace yq::tachyon {
-    SetScaleʸ::SetScaleʸ(TachyonID tid, double y, const Param& p) : 
-        SpatialCommand(tid, p), m_y(y)
+    SetScaleʸ::SetScaleʸ(const Header& h, double y) : 
+        SpatialCommand(h), m_y(y)
     {
     }
     
+    SetScaleʸ::SetScaleʸ(const SetScaleʸ& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_y(cp.m_y)
+    {
+    }
+
     SetScaleʸ::~SetScaleʸ()
     {
+    }
+
+    PostCPtr    SetScaleʸ::clone(rebind_k, const Header&h) const 
+    {
+        return new SetScaleʸ(*this, h);
     }
     
     void SetScaleʸ::init_info()

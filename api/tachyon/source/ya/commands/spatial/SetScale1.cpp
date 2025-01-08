@@ -7,22 +7,32 @@
 #include <ya/commands/spatial/SetScale1.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScale1)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScale¹)
 
 namespace yq::tachyon {
-    SetScale1::SetScale1(TachyonID tid, const Vector1D& v, const Param& p) : 
-        SpatialCommand(tid, p), m_scale(v)
+    SetScale¹::SetScale¹(const Header& h, const Vector1D& v) : 
+        SpatialCommand(h), m_scale(v)
     {
     }
     
-    SetScale1::~SetScale1()
+    SetScale¹::SetScale¹(const SetScale¹& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_scale(cp.m_scale)
+    {
+    }
+
+    SetScale¹::~SetScale¹()
     {
     }
     
-    void SetScale1::init_info()
+    PostCPtr    SetScale¹::clone(rebind_k, const Header&h) const 
     {
-        auto w = writer<SetScale1>();
+        return new SetScale¹(*this, h);
+    }
+
+    void SetScale¹::init_info()
+    {
+        auto w = writer<SetScale¹>();
         w.description("Set Scale Command");
-        w.property("x", &SetScale1::x);
+        w.property("x", &SetScale¹::x);
     }
 }

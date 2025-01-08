@@ -12,11 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class SetScale1 : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetScale1, SpatialCommand)
+    class SetScale¹ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(SetScale¹, SpatialCommand)
     public:
-        SetScale1(TachyonID, const Vector1D&, const Param& p={});
-        ~SetScale1();
+        SetScale¹(const Header&, const Vector1D&);
     
         const Vector1D&   scale() const  { return m_scale; }
         
@@ -24,7 +23,19 @@ namespace yq::tachyon {
         
         double  x() const { return m_scale.x; }
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        ~SetScale¹();
+        SetScale¹(const SetScale¹&, const Header&);
+    
+
     private:
         Vector1D const  m_scale;
+        
+        SetScale¹(const SetScale¹&) = delete;
+        SetScale¹(SetScale¹&&) = delete;
+        SetScale¹& operator=(const SetScale¹&) = delete;
+        SetScale¹& operator=(SetScale¹&&) = delete;
     };
 }

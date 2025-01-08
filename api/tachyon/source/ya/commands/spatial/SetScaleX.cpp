@@ -10,8 +10,13 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScaleˣ)
 
 namespace yq::tachyon {
-    SetScaleˣ::SetScaleˣ(TachyonID tid, double x, const Param& p) : 
-        SpatialCommand(tid, p), m_x(x)
+    SetScaleˣ::SetScaleˣ(const Header&h, double x) : 
+        SpatialCommand(h), m_x(x)
+    {
+    }
+
+    SetScaleˣ::SetScaleˣ(const SetScaleˣ& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_x(cp.m_x)
     {
     }
     
@@ -19,6 +24,11 @@ namespace yq::tachyon {
     {
     }
     
+    PostCPtr    SetScaleˣ::clone(rebind_k, const Header&h) const 
+    {
+        return new SetScaleˣ(*this, h);
+    }
+
     void SetScaleˣ::init_info()
     {
         auto w = writer<SetScaleˣ>();

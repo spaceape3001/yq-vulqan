@@ -10,13 +10,23 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScaleᶻ)
 
 namespace yq::tachyon {
-    SetScaleᶻ::SetScaleᶻ(TachyonID tid, double z, const Param& p) : 
-        SpatialCommand(tid, p), m_z(z)
+    SetScaleᶻ::SetScaleᶻ(const Header&h, double z) : 
+        SpatialCommand(h), m_z(z)
     {
     }
     
+    SetScaleᶻ::SetScaleᶻ(const SetScaleᶻ& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_z(cp.m_z)
+    {
+    }
+
     SetScaleᶻ::~SetScaleᶻ()
     {
+    }
+
+    PostCPtr    SetScaleᶻ::clone(rebind_k, const Header&h) const 
+    {
+        return new SetScaleᶻ(*this, h);
     }
     
     void SetScaleᶻ::init_info()

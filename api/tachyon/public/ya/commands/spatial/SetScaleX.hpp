@@ -15,14 +15,24 @@ namespace yq::tachyon {
     class SetScaleˣ : public SpatialCommand {
         YQ_OBJECT_DECLARE(SetScaleˣ, SpatialCommand)
     public:
-        SetScaleˣ(TachyonID, double, const Param& p={});
-        ~SetScaleˣ();
+        SetScaleˣ(const Header&, double);
         
         static void init_info();
         
         double  x() const { return m_x; }
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        SetScaleˣ(const SetScaleˣ&, const Header&);
+        ~SetScaleˣ();
+
     private:
         double const  m_x;
+        
+        SetScaleˣ(const SetScaleˣ&) = delete;
+        SetScaleˣ(SetScaleˣ&&) = delete;
+        SetScaleˣ& operator=(const SetScaleˣ&) = delete;
+        SetScaleˣ& operator=(SetScaleˣ&&) = delete;
     };
 }

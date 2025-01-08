@@ -232,12 +232,25 @@ add_library(${PROJECT_NAME} SHARED
     
     source/ya/commands/camera/CameraSetScreen.cpp
 
+    source/ya/commands/spatial/AddScale1.cpp
+    source/ya/commands/spatial/AddScale2.cpp
+    source/ya/commands/spatial/AddScale3.cpp
+    source/ya/commands/spatial/AddScaleX.cpp
+    source/ya/commands/spatial/AddScaleY.cpp
+    source/ya/commands/spatial/AddScaleZ.cpp
     source/ya/commands/spatial/MoveBy1.cpp
     source/ya/commands/spatial/MoveBy2.cpp
     source/ya/commands/spatial/MoveBy3.cpp
     source/ya/commands/spatial/MoveByX.cpp
     source/ya/commands/spatial/MoveByY.cpp
     source/ya/commands/spatial/MoveByZ.cpp
+    source/ya/commands/spatial/MultiplyScale.cpp
+    source/ya/commands/spatial/MultiplyScale1.cpp
+    source/ya/commands/spatial/MultiplyScale2.cpp
+    source/ya/commands/spatial/MultiplyScale3.cpp
+    source/ya/commands/spatial/MultiplyScaleX.cpp
+    source/ya/commands/spatial/MultiplyScaleY.cpp
+    source/ya/commands/spatial/MultiplyScaleZ.cpp
     source/ya/commands/spatial/PitchBy.cpp
     source/ya/commands/spatial/RotateBy3.cpp
     source/ya/commands/spatial/RollBy.cpp
@@ -295,6 +308,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/MousePressEvent.cpp
     source/ya/events/MouseReleaseEvent.cpp
     source/ya/events/MouseScrollEvent.cpp
+    source/ya/events/SpatialEvent.cpp
     source/ya/events/TachyonEvent.cpp
     source/ya/events/ThreadEvent.cpp
     source/ya/events/ThreadAddTachyonEvent.cpp
@@ -326,9 +340,19 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/WindowShowEvent.cpp
     source/ya/events/WindowTitleEvent.cpp
     
+    source/ya/events/spatial/Move1Event.cpp
+    source/ya/events/spatial/Move2Event.cpp
+    source/ya/events/spatial/Move3Event.cpp
+    source/ya/events/spatial/Scale1Event.cpp
+    source/ya/events/spatial/Scale2Event.cpp
+    source/ya/events/spatial/Scale3Event.cpp
+    
     source/ya/interfaces/IPosition1.cpp
     source/ya/interfaces/IPosition2.cpp
     source/ya/interfaces/IPosition3.cpp
+    source/ya/interfaces/IScale1.cpp
+    source/ya/interfaces/IScale2.cpp
+    source/ya/interfaces/IScale3.cpp
 
     source/ya/messages/EmptyMessage.cpp
 
@@ -339,6 +363,9 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/proxies/PPosition1.cpp
     source/ya/proxies/PPosition2.cpp
     source/ya/proxies/PPosition3.cpp
+    source/ya/proxies/PScale1.cpp
+    source/ya/proxies/PScale2.cpp
+    source/ya/proxies/PScale3.cpp
 
     source/ya/rendereds/ImageQuad3.cpp
     source/ya/rendereds/Quadrilateral3.cpp

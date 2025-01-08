@@ -6,10 +6,19 @@
 
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/Spatial3InfoWriter.hpp>
+#include <ya/commands/spatial/AddScale3.hpp>
+#include <ya/commands/spatial/AddScaleX.hpp>
+#include <ya/commands/spatial/AddScaleY.hpp>
+#include <ya/commands/spatial/AddScaleZ.hpp>
 #include <ya/commands/spatial/MoveBy3.hpp>
 #include <ya/commands/spatial/MoveByX.hpp>
 #include <ya/commands/spatial/MoveByY.hpp>
 #include <ya/commands/spatial/MoveByZ.hpp>
+#include <ya/commands/spatial/MultiplyScale.hpp>
+#include <ya/commands/spatial/MultiplyScale3.hpp>
+#include <ya/commands/spatial/MultiplyScaleX.hpp>
+#include <ya/commands/spatial/MultiplyScaleY.hpp>
+#include <ya/commands/spatial/MultiplyScaleZ.hpp>
 #include <ya/commands/spatial/PitchBy.hpp>
 #include <ya/commands/spatial/RollBy.hpp>
 #include <ya/commands/spatial/SetOrientation3.hpp>
@@ -22,6 +31,8 @@
 #include <ya/commands/spatial/SetScaleY.hpp>
 #include <ya/commands/spatial/SetScaleZ.hpp>
 #include <ya/commands/spatial/YawBy.hpp>
+#include <ya/events/spatial/Move3Event.hpp>
+#include <ya/events/spatial/Scale3Event.hpp>
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
@@ -48,6 +59,7 @@ namespace yq::tachyon {
     void    SimpleSpatial³::rotate_by(const Quaternion3D& δQ)
     {
         m_orientation = δQ * m_orientation;
+        mark();
     }
     
     void    SimpleSpatial³::rotate_by(const unit::Radian3D& Δang )
@@ -58,6 +70,43 @@ namespace yq::tachyon {
     void    SimpleSpatial³::inflate_by(const Vector3D& δZ)
     {
         m_scale = δZ.emul(m_scale);
+        mark();
+    }
+
+    void SimpleSpatial³::on_add_scale³(const AddScale³&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale += cmd.scale();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
+    
+    void SimpleSpatial³::on_add_scaleˣ(const AddScaleˣ&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale.x += cmd.x();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
+    
+    void SimpleSpatial³::on_add_scaleʸ(const AddScaleʸ&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale.y += cmd.y();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
+    
+    void SimpleSpatial³::on_add_scaleᶻ(const AddScaleᶻ&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale.z += cmd.z();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
 
     void SimpleSpatial³::on_move³(const MoveBy³&cmd)
@@ -66,6 +115,7 @@ namespace yq::tachyon {
             return;
         m_position += cmd.Δ();
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void SimpleSpatial³::on_moveˣ(const MoveByˣ&cmd)
@@ -74,6 +124,7 @@ namespace yq::tachyon {
             return;
         m_position.x += cmd.Δx();
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void SimpleSpatial³::on_moveʸ(const MoveByʸ&cmd)
@@ -82,6 +133,7 @@ namespace yq::tachyon {
             return;
         m_position.y += cmd.Δy();
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void SimpleSpatial³::on_moveᶻ(const MoveByᶻ&cmd)
@@ -90,6 +142,52 @@ namespace yq::tachyon {
             return;
         m_position.z += cmd.Δz();
         mark();
+        send(new Move³Event({.source=this}, m_position));
+    }
+
+    void SimpleSpatial³::on_multiply_scale(const MultiplyScale&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale *= cmd.scale();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
+    
+    void SimpleSpatial³::on_multiply_scale³(const MultiplyScale³&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale = m_scale.emul(cmd.scale());
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
+    
+    void SimpleSpatial³::on_multiply_scaleˣ(const MultiplyScaleˣ&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale.x *= cmd.x();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
+    
+    void SimpleSpatial³::on_multiply_scaleʸ(const MultiplyScaleʸ&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale.y *= cmd.y();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
+    
+    void SimpleSpatial³::on_multiply_scaleᶻ(const MultiplyScaleᶻ&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_scale.z *= cmd.z();
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
 
     void SimpleSpatial³::on_pitch_by(const PitchBy& cmd)
@@ -122,6 +220,7 @@ namespace yq::tachyon {
             return;
         m_position = cmd.position();
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void SimpleSpatial³::on_set_positionˣ(const SetPositionˣ&cmd)
@@ -130,6 +229,7 @@ namespace yq::tachyon {
             return;
         m_position.x = cmd.x();
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void SimpleSpatial³::on_set_positionʸ(const SetPositionʸ&cmd)
@@ -138,6 +238,7 @@ namespace yq::tachyon {
             return;
         m_position.y = cmd.y();
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void SimpleSpatial³::on_set_positionᶻ(const SetPositionᶻ&cmd)
@@ -146,6 +247,7 @@ namespace yq::tachyon {
             return;
         m_position.z = cmd.z();
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
 
     void SimpleSpatial³::on_set_scale³(const SetScale³&cmd)
@@ -154,6 +256,7 @@ namespace yq::tachyon {
             return;
         m_scale = cmd.scale();
         mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
     
     void SimpleSpatial³::on_set_scaleˣ(const SetScaleˣ&cmd)
@@ -162,6 +265,7 @@ namespace yq::tachyon {
             return;
         m_scale.x = cmd.x();
         mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
     
     void SimpleSpatial³::on_set_scaleʸ(const SetScaleʸ&cmd)
@@ -170,6 +274,7 @@ namespace yq::tachyon {
             return;
         m_scale.y = cmd.y();
         mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
     
     void SimpleSpatial³::on_set_scaleᶻ(const SetScaleᶻ&cmd)
@@ -178,6 +283,7 @@ namespace yq::tachyon {
             return;
         m_scale.z = cmd.z();
         mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
 
     void SimpleSpatial³::on_yaw_by(const YawBy& cmd)
@@ -197,24 +303,28 @@ namespace yq::tachyon {
     {
         m_position      = v;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void        SimpleSpatial³::position(set_k, x_k, double x) 
     {
         m_position.x    = x;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void        SimpleSpatial³::position(set_k, y_k, double y) 
     {
         m_position.y    = y;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void        SimpleSpatial³::position(set_k, z_k, double z) 
     {
         m_position.z        = z;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     
@@ -222,24 +332,28 @@ namespace yq::tachyon {
     {
         m_position += Δ;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
 
     void        SimpleSpatial³::position(move_k, x_k, double Δx) 
     {
         m_position.x += Δx;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void    SimpleSpatial³::position(move_k, y_k, double Δy) 
     {
         m_position.y += Δy;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
     
     void    SimpleSpatial³::position(move_k, z_k, double Δz) 
     {
         m_position.z += Δz;
         mark();
+        send(new Move³Event({.source=this}, m_position));
     }
 
     void    SimpleSpatial³::set_orientation(const Quaternion3D& Q)
@@ -252,6 +366,7 @@ namespace yq::tachyon {
     {
         m_scale       = v;
         mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
 
     void SimpleSpatial³::snap(Spatial³Snap& sn) const

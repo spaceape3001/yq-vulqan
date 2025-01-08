@@ -16,10 +16,19 @@
 #endif
 
 namespace yq::tachyon {
+    class AddScale³;
+    class AddScaleˣ;
+    class AddScaleʸ;
+    class AddScaleᶻ;
     class MoveBy³;
     class MoveByˣ;
     class MoveByʸ;
     class MoveByᶻ;
+    class MultiplyScale;
+    class MultiplyScale³;
+    class MultiplyScaleˣ;
+    class MultiplyScaleʸ;
+    class MultiplyScaleᶻ;
     class PitchBy;
     class RollBy;
     class SetOrientation³;
@@ -82,10 +91,19 @@ namespace yq::tachyon {
 
         static void init_info();
         
+        void on_add_scale³(const AddScale³&);
+        void on_add_scaleˣ(const AddScaleˣ&);
+        void on_add_scaleʸ(const AddScaleʸ&);
+        void on_add_scaleᶻ(const AddScaleᶻ&);
         void on_move³(const MoveBy³&);
         void on_moveˣ(const MoveByˣ&);
         void on_moveʸ(const MoveByʸ&);
         void on_moveᶻ(const MoveByᶻ&);
+        void on_multiply_scale(const MultiplyScale&);
+        void on_multiply_scale³(const MultiplyScale³&);
+        void on_multiply_scaleˣ(const MultiplyScaleˣ&);
+        void on_multiply_scaleʸ(const MultiplyScaleʸ&);
+        void on_multiply_scaleᶻ(const MultiplyScaleᶻ&);
         void on_pitch_by(const PitchBy&);
         void on_roll_by(const RollBy&);
         void on_set_orientation³(const SetOrientation³&);

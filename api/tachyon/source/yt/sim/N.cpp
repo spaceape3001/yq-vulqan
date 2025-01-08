@@ -8,6 +8,7 @@
 #include <yt/sim/NData.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <ya/commands/SpatialCommand.hpp>
+#include <ya/events/SpatialEvent.hpp>
 
 namespace yq::tachyon {
 
@@ -44,10 +45,19 @@ namespace yq::tachyon {
         send(cmd.clone(REBIND, {.target=m_spatial}), TARGET);
     }
 
+    void    И::on_spatial_event(const SpatialEvent&evt)
+    {
+        if(evt.source() != m_spatial)
+            return;
+            
+        send(evt.clone(REBIND, {.source=typed()}));
+    }
+
     void    И::set_spatial(TypedID sid)
     {
         if(sid(Type::Spatial)){
             m_spatial   = sid;
+            // TODO (subscribe spatial to us)
             mark();
         }
     }

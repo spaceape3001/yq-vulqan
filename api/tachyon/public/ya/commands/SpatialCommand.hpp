@@ -23,9 +23,6 @@ namespace yq::tachyon {
         SpatialCommand(const SpatialCommand&, const Header&);
         ~SpatialCommand();
         
-        // deprecated... keeping until all changed over
-        SpatialCommand(TachyonID, const Param&);
-    
     private:
         SpatialCommand(const SpatialCommand&) = delete;
         SpatialCommand(SpatialCommand&&) = delete;

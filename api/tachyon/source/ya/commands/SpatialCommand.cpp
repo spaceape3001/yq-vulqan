@@ -18,11 +18,6 @@ namespace yq::tachyon {
     {
     }
 
-    SpatialCommand::SpatialCommand(TachyonID, const Param&) : Command(Header{})
-    {
-        // DEPRECATED
-    }
-
     SpatialCommand::~SpatialCommand()
     {
     }

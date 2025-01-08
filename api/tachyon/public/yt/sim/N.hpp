@@ -18,6 +18,7 @@ namespace yq::tachyon {
     struct ИSnap;
     class Tachyon; 
     class SpatialCommand;
+    class SpatialEvent;
 
     /*! \brief General N-dimensional object/presence 
     
@@ -47,6 +48,7 @@ namespace yq::tachyon {
         TachyonID       tachyon_id() const;
         
         void            on_spatial_command(const SpatialCommand&);
+        void            on_spatial_event(const SpatialEvent&);
         
         
         TypedID        m_spatial;

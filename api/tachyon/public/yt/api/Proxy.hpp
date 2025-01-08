@@ -59,14 +59,14 @@ namespace yq::tachyon {
             Settable,
             
             //! Interface can have its property tweaked (ie, += or moveable )
-            Moveable,
-            
-            Adjustable = Moveable,
+            Addable,
+            Moveable = Addable,
+            Adjustable = Addable,
             
             //! Interface can have its property tweaked (ie *= or inflatable )
-            Scalable,
-            
-            Inflatable = Scalable
+            Multipliable,
+            Scalable = Multipliable,
+            Inflatable = Multipliable
         };
         
         using FFlags    = Flags<F>;

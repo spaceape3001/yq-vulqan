@@ -31,6 +31,8 @@ namespace yq::tachyon {
     
     struct abort_k {};
     struct accept_k {};
+    struct add_k {};
+    struct addable_k {};
     struct adjust_k {};
     struct adjustable_k {};
     struct app_k {};
@@ -85,6 +87,8 @@ namespace yq::tachyon {
     struct moveable_k {};
     struct monitor_k {};
     struct mouse_k {};
+    struct multipliable_k {};
+    struct multiply_k {};
     struct number_k {};
     
     struct once_k : public ::yq::once_k {
@@ -136,6 +140,8 @@ namespace yq::tachyon {
 
     static constexpr abort_k        ABORT;
     static constexpr accept_k       ACCEPT;
+    static constexpr add_k          ADD;
+    static constexpr addable_k      ADDABLE;
     static constexpr adjust_k       ADJUST;
     static constexpr adjustable_k   ADJUSTABLE;
     static constexpr app_k          APP;
@@ -185,6 +191,8 @@ namespace yq::tachyon {
     static constexpr monitor_k      MONITOR;
     static constexpr moveable_k     MOVEABLE;
     static constexpr mouse_k        MOUSE;
+    static constexpr multipliable_k MULTIPLIABLE;
+    static constexpr multiply_k     MULTIPLY;
     static constexpr number_k       NUMBER;
     static constexpr once_k         ONCE;
     static constexpr parent_k       PARENT;

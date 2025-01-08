@@ -16,6 +16,7 @@
 
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/sim/N.hpp>
+#include <ya/events/SpatialEvent.hpp>
 #include <ya/commands/SpatialCommand.hpp>
 
 namespace yq::tachyon {
@@ -23,6 +24,7 @@ namespace yq::tachyon {
     void     И::init_info(TachyonInfo::Writer<C>& w)
     {
         w.slot(&И::on_spatial_command);
+        w.slot(&И::on_spatial_event);
     }
 }
 

@@ -17,6 +17,7 @@ namespace yq::tachyon {
     struct ИData;
     struct ИSnap;
     class Tachyon; 
+    class SpatialCommand;
 
     /*! \brief General N-dimensional object/presence 
     
@@ -43,9 +44,9 @@ namespace yq::tachyon {
         void            finalize(ИData&) const;
         void            snap(ИSnap&) const;
         
-        //  these go into a tachyon helper class?  Thinking so...
-        
         TachyonID       tachyon_id() const;
+        
+        void            on_spatial_command(const SpatialCommand&);
         
         
         TypedID        m_spatial;

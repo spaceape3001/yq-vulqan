@@ -12,6 +12,7 @@
 #include <string>
 #include <string_view>
 #include <variant>
+#include <yt/keywords.hpp>
 #include <yt/msg/MG.hpp>
 
 namespace yq { 
@@ -42,6 +43,6 @@ namespace yq::tachyon {
     struct TachyonContext;
 
     using name_spec     = std::variant<std::monostate, const char*, std::string_view, std::string>;
-    using PostTarget    = std::variant<std::monostate, MG, MGF, TachyonID>;
+    using PostTarget    = std::variant<std::monostate, MG, MGF, TachyonID, target_k>;
 
 }

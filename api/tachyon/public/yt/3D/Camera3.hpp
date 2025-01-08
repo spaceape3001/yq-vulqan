@@ -63,6 +63,10 @@ namespace yq::tachyon {
         //  TODO... make this clever with multiple clients?
         Rectangle2D     m_screen;
         
+        using Tachyon::mail;
+        using Tachyon::send;
+        using Camera::id;
+        
     private:
         void    on_set_screen(const CameraSetScreen&);
     };

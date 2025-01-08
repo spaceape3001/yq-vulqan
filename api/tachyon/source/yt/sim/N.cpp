@@ -7,6 +7,7 @@
 #include <yt/sim/N.hpp>
 #include <yt/sim/NData.hpp>
 #include <yt/api/Tachyon.hpp>
+#include <ya/commands/SpatialCommand.hpp>
 
 namespace yq::tachyon {
 
@@ -33,6 +34,14 @@ namespace yq::tachyon {
     void    И::finalize(ИData&) const
     {
         // nothing to do (AT THE MOMENT)
+    }
+
+    void    И::on_spatial_command(const SpatialCommand&cmd)
+    {
+        if(!m_spatial)
+            return;
+
+        send(cmd.clone(REBIND, {.target=m_spatial}), TARGET);
     }
 
     void    И::set_spatial(TypedID sid)

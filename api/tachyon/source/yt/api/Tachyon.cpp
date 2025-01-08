@@ -451,6 +451,10 @@ namespace yq::tachyon {
         //  OUTBOUND MESSAGES
         
         for(auto& out : data->outbound){
+            if(std::get_if<target_k>(&out.to) && out.post->target()){
+                tx(out.post->target().tachyonID(), out.post);
+            }
+        
             if(auto p = std::get_if<MG>(&out.to)){
                 for(auto& i : m_listeners){
                     if(i.second(*p)){
@@ -708,11 +712,35 @@ namespace yq::tachyon {
     {
     }
     
+    TypedID         Tachyon::Helper::typed() const
+    {
+        const Tachyon*t   = dynamic_cast<const Tachyon*>(this);
+        if(t){
+            return TypedID(t);
+        } else {
+            return {};
+        }
+    }
+
     void            Tachyon::Helper::mark()
     {
         Tachyon*t   = dynamic_cast<Tachyon*>(this);
         if(t)
             t->mark();
+    }
+
+    void            Tachyon::Helper::send(PostCPtr pp, PostTarget tgt)
+    {
+        Tachyon*t   = dynamic_cast<Tachyon*>(this);
+        if(t)
+            t->send(pp, tgt);
+    }
+    
+    void            Tachyon::Helper::mail(PostCPtr pp)
+    {
+        Tachyon*t   = dynamic_cast<Tachyon*>(this);
+        if(t)
+            t->mail(pp);
     }
 
     // ---- INFO AT THE END ---

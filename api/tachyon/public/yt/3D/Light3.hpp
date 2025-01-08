@@ -55,5 +55,8 @@ namespace yq::tachyon {
         
         void finalize(Light³Data&) const;
         void snap(Light³Snap&) const;
+
+        using Tachyon::mail;
+        using Tachyon::send;
     };
 }

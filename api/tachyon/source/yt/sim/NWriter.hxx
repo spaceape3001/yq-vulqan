@@ -14,12 +14,15 @@
     mechanisms will work.
 */
 
+#include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/sim/N.hpp>
+#include <ya/commands/SpatialCommand.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void     И::init_info(TachyonInfo::Writer<C>&)
+    void     И::init_info(TachyonInfo::Writer<C>& w)
     {
+        w.slot(&И::on_spatial_command);
     }
 }
 

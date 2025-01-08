@@ -41,19 +41,21 @@ namespace yq::tachyon {
             return _id.id == t.id;
         }
         
+        constexpr TachyonID   tachyonID() const noexcept
+        {
+            return { id };
+        }
         
-        /*
         template <SomeTachyon T>
-        constexpr operator ID<T>() const noexcept 
+        constexpr ID<T> as() const noexcept 
         {
             static const Types  _types  = meta<T>().types();
-            if(types & _types == _types){
+            if((types & _types) == _types){
                 return { id };
             } else {
                 return {};
             }
         }
-        */
     };
 }
 

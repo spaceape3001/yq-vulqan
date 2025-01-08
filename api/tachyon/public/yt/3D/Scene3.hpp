@@ -53,5 +53,8 @@ namespace yq::tachyon {
         
         void finalize(Scene³Data&) const;
         void snap(Scene³Snap&) const;
+
+        using Tachyon::mail;
+        using Tachyon::send;
     };
 }

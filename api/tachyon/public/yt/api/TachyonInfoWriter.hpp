@@ -36,7 +36,7 @@ namespace yq::tachyon {
         virtual bool        dispatch(Tachyon*, const PostCPtr&) const = 0;
     };
     
-    template <SomeTachyon C, SomePost P>
+    template <class C, SomePost P>
     class PBXDispatch_VoidCRef : public PBXDispatch {
     public:
         typedef void (C::*FN)(const P&);
@@ -62,7 +62,7 @@ namespace yq::tachyon {
         }
     };
     
-    template <SomeTachyon C, SomePost P>
+    template <class C, SomePost P>
     class PBXDispatch_BoolCRef : public PBXDispatch {
     public:
         typedef bool (C::*FN)(const P&);
@@ -87,7 +87,7 @@ namespace yq::tachyon {
         }
     };
     
-    template <SomeTachyon C, SomePost P>
+    template <class C, SomePost P>
     class PBXDispatch_VoidCPtr : public PBXDispatch {
     public:
         typedef void (C::*FN)(const Ref<const P>&);
@@ -114,7 +114,7 @@ namespace yq::tachyon {
         }
     };
 
-    template <SomeTachyon C, SomePost P>
+    template <class C, SomePost P>
     class PBXDispatch_BoolCPtr : public PBXDispatch {
     public:
         typedef bool (C::*FN)(const Ref<const P>&);
@@ -177,14 +177,14 @@ namespace yq::tachyon {
         {
         }
 
-        template <SomePost P, SomeTachyon C2=C>
+        template <SomePost P, class C2=C>
         PBXDispatch::Writer    slot(void (C2::*fn)(const P&))
         {
             static_assert(std::derived_from<C,C2>, "Incompatible Tachyon types, need inheritance");
             return slot_unsafe<P,C2>(fn);
         }
 
-        template <SomePost P, SomeTachyon C2=C>
+        template <SomePost P, class C2=C>
         PBXDispatch::Writer    slot_unsafe(void (C2::*fn)(const P&))
         {
             if(m_meta && Meta::thread_safe_write()){
@@ -195,14 +195,14 @@ namespace yq::tachyon {
             return {};
         }
         
-        template <SomePost P, SomeTachyon C2=C>
+        template <SomePost P, class C2=C>
         PBXDispatch::Writer    slot(bool (C2::*fn)(const P&))
         {
             static_assert(std::derived_from<C,C2>, "Incompatible Tachyon types, need inheritance");
             return slot_unsafe<P,C2>(fn);
         }
         
-        template <SomePost P, SomeTachyon C2=C>
+        template <SomePost P, class C2=C>
         PBXDispatch::Writer    slot_unsafe(bool (C2::*fn)(const P&))
         {
             if(m_meta && Meta::thread_safe_write()){

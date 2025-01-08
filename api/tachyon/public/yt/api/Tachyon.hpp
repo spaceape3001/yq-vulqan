@@ -542,7 +542,11 @@ namespace yq::tachyon {
     protected:
         Helper();
         virtual ~Helper();
+
         void            mark();
+        TypedID         typed() const;
+        void            send(PostCPtr, PostTarget tgt=MG::General);
+        void            mail(PostCPtr);
     };
     
 }

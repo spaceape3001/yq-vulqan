@@ -144,6 +144,8 @@ namespace yq::tachyon {
 
         static void init_info();
 
+        using Rendered::id;
+
     protected:
         
         Rendered³(const Param&);
@@ -153,6 +155,9 @@ namespace yq::tachyon {
         void    finalize(Rendered³Data&) const;
         virtual PostAdvice  advise(const Post&) const override;
         
+        using Tachyon::mail;
+        using Tachyon::send;
+
     private:
         
         //! Bounds of the item (in render coordinate)

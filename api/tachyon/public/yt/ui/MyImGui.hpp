@@ -96,6 +96,26 @@ namespace ImGui {
     {
         return IM_COL32(clr.red, clr.green, clr.blue, 255);
     }
+    
+    
+    //  ============================================
+    //  The following four are taken from https://github.com/ocornut/imgui/issues/2649
+	IMGUI_API bool SpinScaler(const char* label, ImGuiDataType data_type, void* data_ptr, const void* step, const void* step_fast, const char* format, ImGuiInputTextFlags flags);
+	IMGUI_API bool SpinInt(const char* label, int* v, int step = 1, int step_fast = 100, ImGuiInputTextFlags flags = 0);
+	IMGUI_API bool SpinFloat(const char* label, float* v, float step = 0.0f, float step_fast = 0.0f, const char* format = "%.3f", ImGuiInputTextFlags flags = 0);
+	IMGUI_API bool SpinDouble(const char* label, double* v, double step = 0.0, double step_fast = 0.0, const char* format = "%.6f", ImGuiInputTextFlags flags = 0);
+    //  ============================================
+    
+    template <typename DIM>
+	bool SpinDouble(const char* label, yq::MKS<double,DIM>* v, yq::MKS<double,DIM> step = yq::ZERO, yq::MKS<double,DIM>* step_fast = yq::ZERO, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
+    {
+        return SpinDouble(label, (double*) v, step.value, step_fast.value, format, flags);
+    }
 
+    template <typename DIM, double K>
+	bool SpinDouble(const char* label, yq::SCALED<double,DIM,K>* v, yq::SCALED<double,DIM,K> step = yq::ZERO, yq::SCALED<double,DIM,K>* step_fast = yq::ZERO, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
+    {
+        return SpinDouble(label, (double*) v, step.value, step_fast.value, format, flags);
+    }
 }
 

@@ -108,6 +108,8 @@ namespace yq::tachyon {
     struct resume_k {};
     struct roll_k {};
     struct root_k {};
+    struct rotatable_k {};
+    struct rotate_k {};
     struct scalable_k {};
     struct scene_k {};
     struct scene³_k {};
@@ -210,6 +212,8 @@ namespace yq::tachyon {
     static constexpr resume_k       RESUME;
     static constexpr roll_k         ROLL;
     static constexpr root_k         ROOT;
+    static constexpr rotatable_k    ROTATABLE;
+    static constexpr rotate_k       ROTATE;
     static constexpr scalable_k     SCALABLE;
     static constexpr scene_k        SCENE;
     static constexpr scene³_k       SCENE³;

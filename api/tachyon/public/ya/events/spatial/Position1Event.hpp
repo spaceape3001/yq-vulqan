@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Source moved in 1-Dimension
-    class Move¹Event : public SpatialEvent {
-        YQ_OBJECT_DECLARE(Move¹Event, SpatialEvent)
+    class Position¹Event : public SpatialEvent {
+        YQ_OBJECT_DECLARE(Position¹Event, SpatialEvent)
     public:
-        Move¹Event(const Header&, const Vector1D&);
+        Position¹Event(const Header&, const Vector1D&);
     
         const Vector1D&   position() const  { return m_position; }
         
@@ -26,15 +26,15 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        Move¹Event(const Move¹Event&, const Header&);
-        ~Move¹Event();
+        Position¹Event(const Position¹Event&, const Header&);
+        ~Position¹Event();
 
     private:
         Vector1D const  m_position;
         
-        Move¹Event(const Move¹Event&) = delete;
-        Move¹Event(Move¹Event&&) = delete;
-        Move¹Event& operator=(const Move¹Event&) = delete;
-        Move¹Event& operator=(Move¹Event&&) = delete;
+        Position¹Event(const Position¹Event&) = delete;
+        Position¹Event(Position¹Event&&) = delete;
+        Position¹Event& operator=(const Position¹Event&) = delete;
+        Position¹Event& operator=(Position¹Event&&) = delete;
     };
 }

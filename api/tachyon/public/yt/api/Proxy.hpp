@@ -59,9 +59,10 @@ namespace yq::tachyon {
             Settable,
             
             //! Interface can have its property tweaked (ie, += or moveable )
-            Addable,
-            Moveable = Addable,
-            Adjustable = Addable,
+            Adjustable,
+            Addable = Adjustable,
+            Moveable = Adjustable,
+            Rotatable = Adjustable,
             
             //! Interface can have its property tweaked (ie *= or inflatable )
             Multipliable,

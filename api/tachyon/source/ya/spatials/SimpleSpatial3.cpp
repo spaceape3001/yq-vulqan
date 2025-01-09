@@ -21,6 +21,7 @@
 #include <ya/commands/spatial/MultiplyScaleZ.hpp>
 #include <ya/commands/spatial/PitchBy.hpp>
 #include <ya/commands/spatial/RollBy.hpp>
+#include <ya/commands/spatial/RotateBy3.hpp>
 #include <ya/commands/spatial/SetOrientation3.hpp>
 #include <ya/commands/spatial/SetPosition3.hpp>
 #include <ya/commands/spatial/SetPositionX.hpp>
@@ -31,7 +32,8 @@
 #include <ya/commands/spatial/SetScaleY.hpp>
 #include <ya/commands/spatial/SetScaleZ.hpp>
 #include <ya/commands/spatial/YawBy.hpp>
-#include <ya/events/spatial/Move3Event.hpp>
+#include <ya/events/spatial/Orientation3Event.hpp>
+#include <ya/events/spatial/Position3Event.hpp>
 #include <ya/events/spatial/Scale3Event.hpp>
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/tensor/Tensor33.hxx>
@@ -58,242 +60,246 @@ namespace yq::tachyon {
     
     void    SimpleSpatial³::rotate_by(const Quaternion3D& δQ)
     {
-        m_orientation = δQ * m_orientation;
-        mark();
+        orientation(ROTATE, δQ);
     }
     
     void    SimpleSpatial³::rotate_by(const unit::Radian3D& Δang )
     {
-        // rotate_by(rotor(Δang)); // TODO
+        orientation(ROTATE, Δang);
     }
     
     void    SimpleSpatial³::inflate_by(const Vector3D& δZ)
     {
-        m_scale = δZ.emul(m_scale);
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(MULTIPLY, δZ);
     }
 
     void SimpleSpatial³::on_add_scale³(const AddScale³&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale += cmd.Δ();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(ADD, cmd.Δ());
     }
     
     void SimpleSpatial³::on_add_scaleˣ(const AddScaleˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.x += cmd.Δx();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(ADD, X, cmd.Δx());
     }
     
     void SimpleSpatial³::on_add_scaleʸ(const AddScaleʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.y += cmd.Δy();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(ADD, Y, cmd.Δy());
     }
     
     void SimpleSpatial³::on_add_scaleᶻ(const AddScaleᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.z += cmd.Δz();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(ADD, Z, cmd.Δz());
     }
 
     void SimpleSpatial³::on_move³(const MoveBy³&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position += cmd.Δ();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+        position(MOVE, cmd.Δ());
     }
     
     void SimpleSpatial³::on_moveˣ(const MoveByˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position.x += cmd.Δx();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+        position(MOVE, X, cmd.Δx());
     }
     
     void SimpleSpatial³::on_moveʸ(const MoveByʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position.y += cmd.Δy();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+            
+        position(MOVE, Y, cmd.Δy());
     }
     
     void SimpleSpatial³::on_moveᶻ(const MoveByᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position.z += cmd.Δz();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+        position(MOVE, Z, cmd.Δz());
     }
 
     void SimpleSpatial³::on_multiply_scale(const MultiplyScale&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale *= cmd.δ();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(MULTIPLY, cmd.δ());
     }
     
     void SimpleSpatial³::on_multiply_scale³(const MultiplyScale³&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale = m_scale.emul(cmd.δ());
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(MULTIPLY, cmd.δ());
     }
     
     void SimpleSpatial³::on_multiply_scaleˣ(const MultiplyScaleˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.x *= cmd.δx();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(MULTIPLY, X, cmd.δx());
     }
     
     void SimpleSpatial³::on_multiply_scaleʸ(const MultiplyScaleʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.y *= cmd.δy();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(MULTIPLY, Y, cmd.δy());
     }
     
     void SimpleSpatial³::on_multiply_scaleᶻ(const MultiplyScaleᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.z *= cmd.δz();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(MULTIPLY, Z, cmd.δz());
     }
 
     void SimpleSpatial³::on_pitch_by(const PitchBy& cmd)
     {
         if(cmd.target() != id())
             return;
-         m_orientation = rotor_y(cmd.θ()) * m_orientation;
-         mark();
+        orientation(ROTATE, PITCH, cmd.θ());
    }
     
     void SimpleSpatial³::on_roll_by(const RollBy& cmd)
     {
         if(cmd.target() != id())
             return;
-         m_orientation = rotor_x(cmd.θ()) * m_orientation;
-         mark();
+        orientation(ROTATE, ROLL, cmd.θ());
+    }
+
+    void SimpleSpatial³::on_rotate_by(const RotateBy³&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        orientation(ROTATE, cmd.δ());
     }
 
     void SimpleSpatial³::on_set_orientation³(const SetOrientation³&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_orientation   = cmd.orientation();
-        mark();
+        orientation(SET, cmd.orientation());
     }
 
     void SimpleSpatial³::on_set_position³(const SetPosition³&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position = cmd.position();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+        position(SET, cmd.position());
     }
     
     void SimpleSpatial³::on_set_positionˣ(const SetPositionˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position.x = cmd.x();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+        position(SET, X, cmd.x());
     }
     
     void SimpleSpatial³::on_set_positionʸ(const SetPositionʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position.y = cmd.y();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+        position(SET, Y, cmd.y());
     }
     
     void SimpleSpatial³::on_set_positionᶻ(const SetPositionᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_position.z = cmd.z();
-        mark();
-        send(new Move³Event({.source=this}, m_position));
+        position(SET, Z, cmd.z());
     }
 
     void SimpleSpatial³::on_set_scale³(const SetScale³&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale = cmd.scale();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(SET, cmd.scale());
     }
     
     void SimpleSpatial³::on_set_scaleˣ(const SetScaleˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.x = cmd.x();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(SET, X, cmd.x());
     }
     
     void SimpleSpatial³::on_set_scaleʸ(const SetScaleʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.y = cmd.y();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(SET, Y, cmd.y());
     }
     
     void SimpleSpatial³::on_set_scaleᶻ(const SetScaleᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale.z = cmd.z();
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        scale(SET, Z, cmd.z());
     }
 
     void SimpleSpatial³::on_yaw_by(const YawBy& cmd)
     {
         if(cmd.target() != id())
             return;
-         m_orientation = rotor_z(cmd.θ()) * m_orientation;
-         mark();
+        orientation(ROTATE, YAW, cmd.θ());
     }
+
+    Quaternion3D    SimpleSpatial³::orientation() const 
+    {
+        return m_orientation;
+    }
+    
+    void            SimpleSpatial³::orientation(set_k, const Quaternion3D& Q) 
+    {
+        m_orientation = Q;
+        mark();
+        send(new Orientation³Event({.source=this}, m_orientation));
+    }
+    
+    void            SimpleSpatial³::orientation(set_k, hpr_k, Radian h, Radian p, Radian r) 
+    {
+        orientation(SET, Quaternion3D(HPR, h, p, r));
+    }
+    
+    void            SimpleSpatial³::orientation(rotate_k, const Quaternion3D& Q)
+    {
+        m_orientation   = Q * m_orientation;
+        mark();
+        send(new Orientation³Event({.source=this}, m_orientation));
+    }
+    
+    void            SimpleSpatial³::orientation(rotate_k, const unit::Radian3D& Q) 
+    {
+        orientation(ROTATE, Quaternion3D(CCW, Q));
+    }
+    
+    void            SimpleSpatial³::orientation(rotate_k, pitch_k, Radian r) 
+    {
+        orientation(ROTATE, Quaternion3D(CCW, Y, r));
+    }
+    
+    void            SimpleSpatial³::orientation(rotate_k, roll_k, Radian r)
+    {
+        orientation(ROTATE, Quaternion3D(CCW, X, r));
+    }
+    
+    void            SimpleSpatial³::orientation(rotate_k, yaw_k, Radian r)
+    {
+        orientation(ROTATE, Quaternion3D(CCW, Z, r));
+    }
+
 
     Vector3D    SimpleSpatial³::position() const 
     {   
@@ -304,28 +310,28 @@ namespace yq::tachyon {
     {
         m_position      = v;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
     
     void        SimpleSpatial³::position(set_k, x_k, double x) 
     {
         m_position.x    = x;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
     
     void        SimpleSpatial³::position(set_k, y_k, double y) 
     {
         m_position.y    = y;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
     
     void        SimpleSpatial³::position(set_k, z_k, double z) 
     {
         m_position.z        = z;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
     
     
@@ -333,28 +339,28 @@ namespace yq::tachyon {
     {
         m_position += Δ;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
 
     void        SimpleSpatial³::position(move_k, x_k, double Δx) 
     {
         m_position.x += Δx;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
     
     void    SimpleSpatial³::position(move_k, y_k, double Δy) 
     {
         m_position.y += Δy;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
     
     void    SimpleSpatial³::position(move_k, z_k, double Δz) 
     {
         m_position.z += Δz;
         mark();
-        send(new Move³Event({.source=this}, m_position));
+        send(new Position³Event({.source=this}, m_position));
     }
 
     Vector3D    SimpleSpatial³::scale() const
@@ -418,6 +424,12 @@ namespace yq::tachyon {
         send(new Scale³Event({.source=this}, m_scale));
     }
     
+    void        SimpleSpatial³::scale(multiply_k, double Δ) 
+    {
+        m_scale *= Δ;
+        mark();
+        send(new Scale³Event({.source=this}, m_scale));
+    }
 
     void        SimpleSpatial³::scale(multiply_k, const Vector3D&Δ)
     {
@@ -452,6 +464,7 @@ namespace yq::tachyon {
     {
         m_orientation = Q;
         mark();
+        send(new Orientation³Event({.source=this}, m_orientation));
     }
     
     void    SimpleSpatial³::set_scale(const Vector3D& v)
@@ -488,6 +501,7 @@ namespace yq::tachyon {
     void SimpleSpatial³::init_info()
     {
         auto w = writer<SimpleSpatial³>();
+        w.interface<IOrientation³>();
         w.interface<IPosition³>();
         w.interface<IScale³>();
         w.description("Simple Spatial in 3 dimensions");
@@ -506,6 +520,7 @@ namespace yq::tachyon {
         w.slot(&SimpleSpatial³::on_multiply_scaleᶻ);
         w.slot(&SimpleSpatial³::on_pitch_by);
         w.slot(&SimpleSpatial³::on_roll_by);
+        w.slot(&SimpleSpatial³::on_rotate_by);
         w.slot(&SimpleSpatial³::on_set_orientation³);
         w.slot(&SimpleSpatial³::on_set_position³);
         w.slot(&SimpleSpatial³::on_set_positionˣ);

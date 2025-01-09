@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yt/3D/Spatial3.hpp>
+#include <ya/interfaces/IOrientation3.hpp>
 #include <ya/interfaces/IPosition3.hpp>
 #include <ya/interfaces/IScale3.hpp>
 #include <yq/vector/Quaternion3.hpp>
@@ -32,6 +33,7 @@ namespace yq::tachyon {
     class MultiplyScaleᶻ;
     class PitchBy;
     class RollBy;
+    class RotateBy³;
     class SetOrientation³;
     class SetPosition³;
     class SetPositionˣ;
@@ -43,7 +45,7 @@ namespace yq::tachyon {
     class SetScaleᶻ;
     class YawBy;
 
-    class SimpleSpatial³ : public Spatial³, private IPosition³, private IScale³ {
+    class SimpleSpatial³ : public Spatial³, private IPosition³, private IScale³, private IOrientation³ {
         YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
     public:
     
@@ -71,50 +73,65 @@ namespace yq::tachyon {
         void    set_orientation(const Quaternion3D&);
         void    set_scale(const Vector3D&);
 
+        Quaternion3D    orientation() const override;
+        bool            orientation(disabled_k) const override { return false; }
+        bool            orientation(settable_k) const override { return true; }
+        bool            orientation(rotatable_k) const override { return true; }
+        
+        void            orientation(set_k, const Quaternion3D&) override;
+        void            orientation(set_k, hpr_k, Radian, Radian, Radian) override;
+        
+        void            orientation(rotate_k, const Quaternion3D&) override;
+        void            orientation(rotate_k, const unit::Radian3D&) override;
+        
+        void            orientation(rotate_k, pitch_k, Radian) override;
+        void            orientation(rotate_k, roll_k, Radian) override;
+        void            orientation(rotate_k, yaw_k, Radian) override;
 
         //!  Basic position in the 3D space
-        virtual Vector3D    position() const override;
+        Vector3D    position() const override;
         
         //!  Set position the position
-        virtual void        position(set_k, const Vector3D&) override;
+        void        position(set_k, const Vector3D&) override;
         
-        virtual void        position(set_k, x_k, double) override;
-        virtual void        position(set_k, y_k, double) override;
-        virtual void        position(set_k, z_k, double) override;
+        void        position(set_k, x_k, double) override;
+        void        position(set_k, y_k, double) override;
+        void        position(set_k, z_k, double) override;
         
         //!  Move the position (ie set to position + delta)
-        virtual void        position(move_k, const Vector3D&Δ) override;
+        void        position(move_k, const Vector3D&Δ) override;
 
-        virtual void        position(move_k, x_k, double Δx) override;
-        virtual void        position(move_k, y_k, double Δy) override;
-        virtual void        position(move_k, z_k, double Δz) override;
+        void        position(move_k, x_k, double Δx) override;
+        void        position(move_k, y_k, double Δy) override;
+        void        position(move_k, z_k, double Δz) override;
 
-        virtual bool        position(disabled_k) const override { return false; }
-        virtual bool        position(settable_k) const override { return true; }
-        virtual bool        position(moveable_k) const override { return true; }
+        bool        position(disabled_k) const override { return false; }
+        bool        position(settable_k) const override { return true; }
+        bool        position(moveable_k) const override { return true; }
 
-        virtual Vector3D    scale() const override;
+        Vector3D    scale() const override;
         
-        virtual void        scale(set_k, const Vector3D&) override;
+        void        scale(set_k, const Vector3D&) override;
         
-        virtual void        scale(set_k, x_k, double) override;
-        virtual void        scale(set_k, y_k, double) override;
-        virtual void        scale(set_k, z_k, double) override;
+        void        scale(set_k, x_k, double) override;
+        void        scale(set_k, y_k, double) override;
+        void        scale(set_k, z_k, double) override;
         
-        virtual void        scale(add_k, const Vector3D&Δ) override;
-        virtual void        scale(add_k, x_k, double Δx) override;
-        virtual void        scale(add_k, y_k, double Δy) override;
-        virtual void        scale(add_k, z_k, double Δz) override;
+        void        scale(add_k, const Vector3D&Δ) override;
+        void        scale(add_k, x_k, double Δx) override;
+        void        scale(add_k, y_k, double Δy) override;
+        void        scale(add_k, z_k, double Δz) override;
 
-        virtual void        scale(multiply_k, const Vector3D&Δ) override;
-        virtual void        scale(multiply_k, x_k, double Δx) override;
-        virtual void        scale(multiply_k, y_k, double Δy) override;
-        virtual void        scale(multiply_k, z_k, double Δz) override;
+        void        scale(multiply_k, double) override;
+        void        scale(multiply_k, const Vector3D&Δ) override;
+        void        scale(multiply_k, x_k, double Δx) override;
+        void        scale(multiply_k, y_k, double Δy) override;
+        void        scale(multiply_k, z_k, double Δz) override;
 
-        virtual bool        scale(disabled_k) const { return false; }
-        virtual bool        scale(settable_k) const { return true; }
-        virtual bool        scale(addable_k) const { return true; }
-        virtual bool        scale(multipliable_k) const { return true; }
+        bool        scale(disabled_k) const override { return false; }
+        bool        scale(settable_k) const override { return true; }
+        bool        scale(addable_k) const override { return true; }
+        bool        scale(multipliable_k) const override { return true; }
 
         static void init_info();
         
@@ -135,6 +152,7 @@ namespace yq::tachyon {
         void on_multiply_scaleᶻ(const MultiplyScaleᶻ&);
         void on_pitch_by(const PitchBy&);
         void on_roll_by(const RollBy&);
+        void on_rotate_by(const RotateBy³&);
         void on_set_orientation³(const SetOrientation³&);
         void on_set_position³(const SetPosition³&);
         void on_set_positionˣ(const SetPositionˣ&);

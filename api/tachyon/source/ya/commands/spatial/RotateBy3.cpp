@@ -10,40 +10,40 @@
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::RotateBy3)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::RotateBy³)
 
 namespace yq::tachyon {
-    RotateBy3::RotateBy3(const Header& h, const Quaternion3D&δ) : 
+    RotateBy³::RotateBy³(const Header& h, const Quaternion3D&δ) : 
         SpatialCommand(h), m_δ(δ)
     {
     }
     
-    RotateBy3::RotateBy3(const Header& h, const unit::Radian3D&δ) :
+    RotateBy³::RotateBy³(const Header& h, const unit::Radian3D&δ) :
         SpatialCommand(h), m_δ(CCW, δ)
     {
     }
     
-    RotateBy3::RotateBy3(const RotateBy3& cp, const Header& h) : 
+    RotateBy³::RotateBy³(const RotateBy³& cp, const Header& h) : 
         SpatialCommand(cp, h), m_δ(cp.m_δ)
     {
     }
 
-    RotateBy3::~RotateBy3()
+    RotateBy³::~RotateBy³()
     {
     }
     
-    PostCPtr    RotateBy3::clone(rebind_k, const Header& h) const 
+    PostCPtr    RotateBy³::clone(rebind_k, const Header& h) const 
     {
-        return new RotateBy3(*this, h);
+        return new RotateBy³(*this, h);
     }
 
-    void RotateBy3::init_info()
+    void RotateBy³::init_info()
     {
-        auto w = writer<RotateBy3>();
+        auto w = writer<RotateBy³>();
         w.description("Position RotateBy Command in 3D");
-        w.property("δw", &RotateBy3::δw);
-        w.property("δx", &RotateBy3::δx);
-        w.property("δy", &RotateBy3::δy);
-        w.property("δz", &RotateBy3::δz);
+        w.property("δw", &RotateBy³::δw);
+        w.property("δx", &RotateBy³::δx);
+        w.property("δy", &RotateBy³::δy);
+        w.property("δz", &RotateBy³::δz);
     }
 }

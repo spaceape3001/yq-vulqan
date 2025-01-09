@@ -340,13 +340,15 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/WindowShowEvent.cpp
     source/ya/events/WindowTitleEvent.cpp
     
-    source/ya/events/spatial/Move1Event.cpp
-    source/ya/events/spatial/Move2Event.cpp
-    source/ya/events/spatial/Move3Event.cpp
+    source/ya/events/spatial/Position1Event.cpp
+    source/ya/events/spatial/Position2Event.cpp
+    source/ya/events/spatial/Position3Event.cpp
+    source/ya/events/spatial/Orientation3Event.cpp
     source/ya/events/spatial/Scale1Event.cpp
     source/ya/events/spatial/Scale2Event.cpp
     source/ya/events/spatial/Scale3Event.cpp
     
+    source/ya/interfaces/IOrientation3.cpp
     source/ya/interfaces/IPosition1.cpp
     source/ya/interfaces/IPosition2.cpp
     source/ya/interfaces/IPosition3.cpp
@@ -360,6 +362,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/posts/EmptyPost.cpp
     source/ya/posts/StringPost.cpp
 
+    source/ya/proxies/POrientation3.cpp
     source/ya/proxies/PPosition1.cpp
     source/ya/proxies/PPosition2.cpp
     source/ya/proxies/PPosition3.cpp

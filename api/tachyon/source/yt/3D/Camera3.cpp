@@ -42,6 +42,10 @@ namespace yq::tachyon {
         if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
             make_simple_spatial(p.position, p.orientation, p.scale);
         }
+        
+        //  total hack (for now)
+        m_screen.size.x = 1920;
+        m_screen.size.y = 1080;
     }
     
     Camera³::~Camera³()

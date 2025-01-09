@@ -8,6 +8,7 @@
 
 #include <yt/3D/Spatial3.hpp>
 #include <ya/interfaces/IPosition3.hpp>
+#include <ya/interfaces/IScale3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 
@@ -42,7 +43,7 @@ namespace yq::tachyon {
     class SetScaleᶻ;
     class YawBy;
 
-    class SimpleSpatial³ : public Spatial³, private IPosition³ {
+    class SimpleSpatial³ : public Spatial³, private IPosition³, private IScale³ {
         YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
     public:
     
@@ -92,9 +93,33 @@ namespace yq::tachyon {
         virtual bool        position(settable_k) const override { return true; }
         virtual bool        position(moveable_k) const override { return true; }
 
+        virtual Vector3D    scale() const override;
+        
+        virtual void        scale(set_k, const Vector3D&) override;
+        
+        virtual void        scale(set_k, x_k, double) override;
+        virtual void        scale(set_k, y_k, double) override;
+        virtual void        scale(set_k, z_k, double) override;
+        
+        virtual void        scale(add_k, const Vector3D&Δ) override;
+        virtual void        scale(add_k, x_k, double Δx) override;
+        virtual void        scale(add_k, y_k, double Δy) override;
+        virtual void        scale(add_k, z_k, double Δz) override;
+
+        virtual void        scale(multiply_k, const Vector3D&Δ) override;
+        virtual void        scale(multiply_k, x_k, double Δx) override;
+        virtual void        scale(multiply_k, y_k, double Δy) override;
+        virtual void        scale(multiply_k, z_k, double Δz) override;
+
+        virtual bool        scale(disabled_k) const { return false; }
+        virtual bool        scale(settable_k) const { return true; }
+        virtual bool        scale(addable_k) const { return true; }
+        virtual bool        scale(multipliable_k) const { return true; }
 
         static void init_info();
         
+        
+    protected:
         void on_add_scale³(const AddScale³&);
         void on_add_scaleˣ(const AddScaleˣ&);
         void on_add_scaleʸ(const AddScaleʸ&);
@@ -120,8 +145,6 @@ namespace yq::tachyon {
         void on_set_scaleʸ(const SetScaleʸ&);
         void on_set_scaleᶻ(const SetScaleᶻ&);
         void on_yaw_by(const YawBy&);
-
-    protected:
         
         void        snap(Spatial³Snap&) const;
 

@@ -24,10 +24,11 @@ namespace yq::tachyon {
     protected:
         
         MoveByˣ(const MoveByˣ&, const Header&);
+        MoveByˣ(const Header&);
         ~MoveByˣ();
 
     private:
-        double const  m_Δx;
+        double  m_Δx = 0.0;
         
         MoveByˣ(const MoveByˣ&) = delete;
         MoveByˣ(MoveByˣ&&) = delete;

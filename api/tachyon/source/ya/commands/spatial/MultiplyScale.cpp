@@ -11,15 +11,19 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyScale)
 
 namespace yq::tachyon {
     MultiplyScale::MultiplyScale(const Header&h, double f) : 
-        SpatialCommand(h), m_scale(f)
+        SpatialCommand(h), m_δ(f)
     {
     }
 
     MultiplyScale::MultiplyScale(const MultiplyScale& cp, const Header& h) : 
-        SpatialCommand(cp, h), m_scale(cp.m_scale)
+        SpatialCommand(cp, h), m_δ(cp.m_δ)
     {
     }
     
+    MultiplyScale::MultiplyScale(const Header&h) : SpatialCommand(h)
+    {
+    }
+
     MultiplyScale::~MultiplyScale()
     {
     }
@@ -33,6 +37,6 @@ namespace yq::tachyon {
     {
         auto w = writer<MultiplyScale>();
         w.description("Multiply Scale Command");
-        w.property("f", &MultiplyScale::scale);
+        w.property("δ", &MultiplyScale::m_δ).tag(kTag_Log).tag(kTag_Save);
     }
 }

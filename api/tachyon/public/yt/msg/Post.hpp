@@ -49,7 +49,7 @@ namespace yq::tachyon {
         struct Header {
             TypedID         source;
             TypedID         target;
-            time_point_t    time;
+            time_point_t    time;       //< If set, overrides the system/copy time
         };
     
         //! Post identifier (executable-unique)

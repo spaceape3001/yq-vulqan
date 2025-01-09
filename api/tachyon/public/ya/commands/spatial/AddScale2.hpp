@@ -17,21 +17,22 @@ namespace yq::tachyon {
     public:
         AddScale²(const Header&, const Vector2D&);
     
-        const Vector2D&   scale() const  { return m_scale; }
+        const Vector2D&   Δ() const  { return m_Δ; }
         
         static void init_info();
         
-        double  x() const { return m_scale.x; }
-        double  y() const { return m_scale.y; }
+        double  Δx() const { return m_Δ.x; }
+        double  Δy() const { return m_Δ.y; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
     protected:
         AddScale²(const AddScale²&, const Header&);
+        AddScale²(const Header&);
         ~AddScale²();
 
     private:
-        Vector2D const  m_scale;
+        Vector2D  m_Δ = ZERO;
         
         AddScale²(const AddScale²&) = delete;
         AddScale²(AddScale²&&) = delete;

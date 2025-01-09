@@ -10,13 +10,18 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyScaleʸ)
 
 namespace yq::tachyon {
-    MultiplyScaleʸ::MultiplyScaleʸ(const Header& h, double y) : 
-        SpatialCommand(h), m_y(y)
+    MultiplyScaleʸ::MultiplyScaleʸ(const Header& h) : 
+        SpatialCommand(h)
     {
     }
     
+    MultiplyScaleʸ::MultiplyScaleʸ(const Header& h, double y) : 
+        SpatialCommand(h), m_δy(y)
+    {
+    }
+
     MultiplyScaleʸ::MultiplyScaleʸ(const MultiplyScaleʸ& cp, const Header& h) : 
-        SpatialCommand(cp, h), m_y(cp.m_y)
+        SpatialCommand(cp, h), m_δy(cp.m_δy)
     {
     }
 
@@ -33,6 +38,6 @@ namespace yq::tachyon {
     {
         auto w = writer<MultiplyScaleʸ>();
         w.description("Multiply Scale Command");
-        w.property("y", &MultiplyScaleʸ::y);
+        w.property("δy", &MultiplyScaleʸ::m_δy).tag(kTag_Log).tag(kTag_Save);
     }
 }

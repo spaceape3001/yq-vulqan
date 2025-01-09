@@ -10,13 +10,18 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddScaleʸ)
 
 namespace yq::tachyon {
+    AddScaleʸ::AddScaleʸ(const Header& h) : 
+        SpatialCommand(h)
+    {
+    }
+
     AddScaleʸ::AddScaleʸ(const Header& h, double y) : 
-        SpatialCommand(h), m_y(y)
+        SpatialCommand(h), m_Δy(y)
     {
     }
     
     AddScaleʸ::AddScaleʸ(const AddScaleʸ& cp, const Header& h) : 
-        SpatialCommand(cp, h), m_y(cp.m_y)
+        SpatialCommand(cp, h), m_Δy(cp.m_Δy)
     {
     }
 
@@ -32,7 +37,7 @@ namespace yq::tachyon {
     void AddScaleʸ::init_info()
     {
         auto w = writer<AddScaleʸ>();
-        w.description("Add Scale Command");
-        w.property("y", &AddScaleʸ::y);
+        w.description("Add Scale Command in Y");
+        w.property("Δy", &AddScaleʸ::m_Δy).tag(kTag_Log).tag(kTag_Save);
     }
 }

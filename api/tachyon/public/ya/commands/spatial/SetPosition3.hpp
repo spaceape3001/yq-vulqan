@@ -32,7 +32,7 @@ namespace yq::tachyon {
         SetPosition³(const SetPosition³&, const Header&);
     
     private:
-        Vector3D const  m_position;
+        Vector3D  m_position;
         
         SetPosition³(const SetPosition³&) = delete;
         SetPosition³(SetPosition³&&) = delete;

@@ -17,22 +17,23 @@ namespace yq::tachyon {
     public:
         AddScale³(const Header&, const Vector3D&);
     
-        const Vector3D&   scale() const  { return m_scale; }
+        const Vector3D&   Δ() const  { return m_Δ; }
         
         static void init_info();
         
-        double  x() const { return m_scale.x; }
-        double  y() const { return m_scale.y; }
-        double  z() const { return m_scale.z; }
+        double  Δx() const { return m_Δ.x; }
+        double  Δy() const { return m_Δ.y; }
+        double  Δz() const { return m_Δ.z; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
         AddScale³(const AddScale³&, const Header&);
+        AddScale³(const Header&);
         ~AddScale³();
 
     private:
-        Vector3D const  m_scale;
+        Vector3D  m_Δ = ZERO;
         
         AddScale³(const AddScale³&) = delete;
         AddScale³(AddScale³&&) = delete;

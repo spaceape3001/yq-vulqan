@@ -32,7 +32,7 @@ namespace yq::tachyon {
         ~SetScale³();
 
     private:
-        Vector3D const  m_scale;
+        Vector3D  m_scale;
         
         SetScale³(const SetScale³&) = delete;
         SetScale³(SetScale³&&) = delete;

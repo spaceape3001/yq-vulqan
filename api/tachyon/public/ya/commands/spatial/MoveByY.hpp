@@ -24,13 +24,15 @@ namespace yq::tachyon {
 
     protected:
         MoveByʸ(const MoveByʸ&, const Header&);
+        MoveByʸ(const Header&);
         ~MoveByʸ();
         
     private:
+        double  m_Δy = 0.0;
+
         MoveByʸ(const MoveByʸ&) = delete;
         MoveByʸ(MoveByʸ&&) = delete;
         MoveByʸ& operator=(const MoveByʸ&) = delete;
         MoveByʸ& operator=(MoveByʸ&&) = delete;
-        double const  m_Δy;
     };
 }

@@ -10,13 +10,18 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddScaleᶻ)
 
 namespace yq::tachyon {
-    AddScaleᶻ::AddScaleᶻ(const Header&h, double z) : 
-        SpatialCommand(h), m_z(z)
+    AddScaleᶻ::AddScaleᶻ(const Header&h) : 
+        SpatialCommand(h)
     {
     }
     
+    AddScaleᶻ::AddScaleᶻ(const Header&h, double z) : 
+        SpatialCommand(h), m_Δz(z)
+    {
+    }
+
     AddScaleᶻ::AddScaleᶻ(const AddScaleᶻ& cp, const Header& h) : 
-        SpatialCommand(cp, h), m_z(cp.m_z)
+        SpatialCommand(cp, h), m_Δz(cp.m_Δz)
     {
     }
 
@@ -32,7 +37,7 @@ namespace yq::tachyon {
     void AddScaleᶻ::init_info()
     {
         auto w = writer<AddScaleᶻ>();
-        w.description("Add Scale Command");
-        w.property("z", &AddScaleᶻ::z);
+        w.description("Add Scale Command in Z");
+        w.property("Δz", &AddScaleᶻ::m_Δz).tag(kTag_Log).tag(kTag_Save);
     }
 }

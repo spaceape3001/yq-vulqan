@@ -28,7 +28,7 @@ namespace yq::tachyon {
         ~SetScaleᶻ();
 
     private:
-        double const  m_z;
+        double  m_z;
         
         SetScaleᶻ(const SetScaleᶻ&) = delete;
         SetScaleᶻ(SetScaleᶻ&&) = delete;

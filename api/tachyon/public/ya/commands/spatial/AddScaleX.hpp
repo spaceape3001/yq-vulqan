@@ -11,7 +11,7 @@
 
 namespace yq::tachyon {
 
-    //! Instructs an object to set it's x-position
+    //! Instructs an object to set it's x-scale
     class AddScaleˣ : public SpatialCommand {
         YQ_OBJECT_DECLARE(AddScaleˣ, SpatialCommand)
     public:
@@ -19,16 +19,17 @@ namespace yq::tachyon {
         
         static void init_info();
         
-        double  x() const { return m_x; }
+        double  Δx() const { return m_Δx; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
         AddScaleˣ(const AddScaleˣ&, const Header&);
+        AddScaleˣ(const Header&);
         ~AddScaleˣ();
 
     private:
-        double const  m_x;
+        double  m_Δx = 0.0;
         
         AddScaleˣ(const AddScaleˣ&) = delete;
         AddScaleˣ(AddScaleˣ&&) = delete;

@@ -11,28 +11,29 @@
 
 namespace yq::tachyon {
 
-    //! Instructs an object to set it's scale
+    //! Instructs an object to multiply it's scale
     class MultiplyScale³ : public SpatialCommand {
         YQ_OBJECT_DECLARE(MultiplyScale³, SpatialCommand)
     public:
         MultiplyScale³(const Header&, const Vector3D&);
     
-        const Vector3D&   scale() const  { return m_scale; }
+        const Vector3D&   δ() const  { return m_δ; }
         
         static void init_info();
         
-        double  x() const { return m_scale.x; }
-        double  y() const { return m_scale.y; }
-        double  z() const { return m_scale.z; }
+        double  δx() const { return m_δ.x; }
+        double  δy() const { return m_δ.y; }
+        double  δz() const { return m_δ.z; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
         MultiplyScale³(const MultiplyScale³&, const Header&);
+        MultiplyScale³(const Header&);
         ~MultiplyScale³();
 
     private:
-        Vector3D const  m_scale;
+        Vector3D  m_δ;
         
         MultiplyScale³(const MultiplyScale³&) = delete;
         MultiplyScale³(MultiplyScale³&&) = delete;

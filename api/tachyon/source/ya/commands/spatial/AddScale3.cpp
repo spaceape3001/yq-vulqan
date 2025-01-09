@@ -10,13 +10,17 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddScale³)
 
 namespace yq::tachyon {
+    AddScale³::AddScale³(const Header& h) : SpatialCommand(h)
+    {
+    }
+    
     AddScale³::AddScale³(const Header& h, const Vector3D& v) : 
-        SpatialCommand(h), m_scale(v)
+        SpatialCommand(h), m_Δ(v)
     {
     }
 
     AddScale³::AddScale³(const AddScale³& cp, const Header& h) : 
-        SpatialCommand(cp, h), m_scale(cp.m_scale)
+        SpatialCommand(cp, h), m_Δ(cp.m_Δ)
     {
     }
     
@@ -33,8 +37,9 @@ namespace yq::tachyon {
     {
         auto w = writer<AddScale³>();
         w.description("Add Scale Command");
-        w.property("x", &AddScale³::x);
-        w.property("y", &AddScale³::y);
-        w.property("z", &AddScale³::z);
+        w.property("Δx", &AddScale³::Δx).tag(kTag_Log);
+        w.property("Δy", &AddScale³::Δy).tag(kTag_Log);
+        w.property("Δz", &AddScale³::Δz).tag(kTag_Log);
+        w.property("Δ",  &AddScale³::m_Δ).tag(kTag_Save);
     }
 }

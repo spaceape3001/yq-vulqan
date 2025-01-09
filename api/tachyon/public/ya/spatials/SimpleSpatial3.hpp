@@ -46,6 +46,10 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
     public:
     
+        /*
+            NOTE:  Scale doesn't really belong in spatials... will move it (belongs in rendereds, for sure)
+        */
+    
         struct Param : public Spatial³::Param {
             Vector3D        position        = NAN;
             Quaternion3D    orientation     = NAN;

@@ -28,9 +28,10 @@ namespace yq::tachyon {
     protected:
         ~MoveBy¹();
         MoveBy¹(const MoveBy¹&, const Header&);
+        MoveBy¹(const Header&);
         
     private:
-        Vector1D const  m_Δ;
+        Vector1D  m_Δ = ZERO;
         
         MoveBy¹(const MoveBy¹&) = delete;
         MoveBy¹(MoveBy¹&&) = delete;

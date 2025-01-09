@@ -27,7 +27,7 @@ namespace yq::tachyon {
         SetPositionʸ(const SetPositionʸ&, const Header&);
         ~SetPositionʸ();
     private:
-        double const  m_y;
+        double  m_y = 0.0;
         
         SetPositionʸ(const SetPositionʸ&) = delete;
         SetPositionʸ(SetPositionʸ&&) = delete;

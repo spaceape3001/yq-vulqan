@@ -10,6 +10,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByʸ)
 
 namespace yq::tachyon {
+    MoveByʸ::MoveByʸ(const Header&h) : 
+        SpatialCommand(h)
+    {
+    }
+
     MoveByʸ::MoveByʸ(const Header&h, double Δy) : 
         SpatialCommand(h), m_Δy(Δy)
     {
@@ -33,6 +38,6 @@ namespace yq::tachyon {
     {
         auto w = writer<MoveByʸ>();
         w.description("Position MoveBy Command in Y");
-        w.property("Δy", &MoveByʸ::Δy);
+        w.property("Δy", &MoveByʸ::Δy).tag(kTag_Log).tag(kTag_Save);
     }
 }

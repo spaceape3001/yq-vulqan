@@ -19,16 +19,17 @@ namespace yq::tachyon {
         
         static void init_info();
         
-        double  z() const { return m_z; }
+        double  Δz() const { return m_Δz; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
         AddScaleᶻ(const AddScaleᶻ&, const Header&);
+        AddScaleᶻ(const Header&);
         ~AddScaleᶻ();
 
     private:
-        double const  m_z;
+        double  m_Δz = 0.0;
         
         AddScaleᶻ(const AddScaleᶻ&) = delete;
         AddScaleᶻ(AddScaleᶻ&&) = delete;

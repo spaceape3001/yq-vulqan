@@ -71,13 +71,14 @@ namespace yq::tachyon {
     {
         m_scale = δZ.emul(m_scale);
         mark();
+        send(new Scale³Event({.source=this}, m_scale));
     }
 
     void SimpleSpatial³::on_add_scale³(const AddScale³&cmd)
     {
         if(cmd.target() != id())
             return;
-        m_scale += cmd.scale();
+        m_scale += cmd.Δ();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -86,7 +87,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale.x += cmd.x();
+        m_scale.x += cmd.Δx();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -95,7 +96,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale.y += cmd.y();
+        m_scale.y += cmd.Δy();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -104,7 +105,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale.z += cmd.z();
+        m_scale.z += cmd.Δz();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -149,7 +150,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale *= cmd.scale();
+        m_scale *= cmd.δ();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -158,7 +159,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale = m_scale.emul(cmd.scale());
+        m_scale = m_scale.emul(cmd.δ());
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -167,7 +168,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale.x *= cmd.x();
+        m_scale.x *= cmd.δx();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -176,7 +177,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale.y *= cmd.y();
+        m_scale.y *= cmd.δy();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -185,7 +186,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        m_scale.z *= cmd.z();
+        m_scale.z *= cmd.δz();
         mark();
         send(new Scale³Event({.source=this}, m_scale));
     }
@@ -398,10 +399,21 @@ namespace yq::tachyon {
         auto w = writer<SimpleSpatial³>();
         w.interface<IPosition³>();
         w.description("Simple Spatial in 3 dimensions");
+        w.slot(&SimpleSpatial³::on_add_scale³);
+        w.slot(&SimpleSpatial³::on_add_scaleˣ);
+        w.slot(&SimpleSpatial³::on_add_scaleʸ);
+        w.slot(&SimpleSpatial³::on_add_scaleᶻ);
         w.slot(&SimpleSpatial³::on_move³);
         w.slot(&SimpleSpatial³::on_moveˣ);
         w.slot(&SimpleSpatial³::on_moveʸ);
         w.slot(&SimpleSpatial³::on_moveᶻ);
+        w.slot(&SimpleSpatial³::on_multiply_scale);
+        w.slot(&SimpleSpatial³::on_multiply_scale³);
+        w.slot(&SimpleSpatial³::on_multiply_scaleˣ);
+        w.slot(&SimpleSpatial³::on_multiply_scaleʸ);
+        w.slot(&SimpleSpatial³::on_multiply_scaleᶻ);
+        w.slot(&SimpleSpatial³::on_pitch_by);
+        w.slot(&SimpleSpatial³::on_roll_by);
         w.slot(&SimpleSpatial³::on_set_orientation³);
         w.slot(&SimpleSpatial³::on_set_position³);
         w.slot(&SimpleSpatial³::on_set_positionˣ);
@@ -411,5 +423,6 @@ namespace yq::tachyon {
         w.slot(&SimpleSpatial³::on_set_scaleˣ);
         w.slot(&SimpleSpatial³::on_set_scaleʸ);
         w.slot(&SimpleSpatial³::on_set_scaleᶻ);
+        w.slot(&SimpleSpatial³::on_yaw_by);
     }
 }

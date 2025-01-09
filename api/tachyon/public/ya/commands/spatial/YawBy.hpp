@@ -27,7 +27,7 @@ namespace yq::tachyon {
         YawBy(const YawBy&, const Header&);
         
     private:
-        Radian const  m_θ;
+        Radian  m_θ;
 
         ~YawBy();
         YawBy(YawBy&&) = delete;

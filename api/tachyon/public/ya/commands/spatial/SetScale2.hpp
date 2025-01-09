@@ -31,7 +31,7 @@ namespace yq::tachyon {
         ~SetScale²();
 
     private:
-        Vector2D const  m_scale;
+        Vector2D  m_scale;
         
         SetScale²(const SetScale²&) = delete;
         SetScale²(SetScale²&&) = delete;

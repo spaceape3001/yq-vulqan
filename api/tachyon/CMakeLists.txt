@@ -233,6 +233,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/AddScaleX.cpp
     source/ya/commands/spatial/AddScaleY.cpp
     source/ya/commands/spatial/AddScaleZ.cpp
+    source/ya/commands/spatial/AddSize1.cpp
+    source/ya/commands/spatial/AddSize2.cpp
+    source/ya/commands/spatial/AddSize3.cpp
+    source/ya/commands/spatial/AddSizeX.cpp
+    source/ya/commands/spatial/AddSizeY.cpp
+    source/ya/commands/spatial/AddSizeZ.cpp
     source/ya/commands/spatial/MoveBy1.cpp
     source/ya/commands/spatial/MoveBy2.cpp
     source/ya/commands/spatial/MoveBy3.cpp
@@ -246,6 +252,13 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/MultiplyScaleX.cpp
     source/ya/commands/spatial/MultiplyScaleY.cpp
     source/ya/commands/spatial/MultiplyScaleZ.cpp
+    source/ya/commands/spatial/MultiplySize.cpp
+    source/ya/commands/spatial/MultiplySize1.cpp
+    source/ya/commands/spatial/MultiplySize2.cpp
+    source/ya/commands/spatial/MultiplySize3.cpp
+    source/ya/commands/spatial/MultiplySizeX.cpp
+    source/ya/commands/spatial/MultiplySizeY.cpp
+    source/ya/commands/spatial/MultiplySizeZ.cpp
     source/ya/commands/spatial/PitchBy.cpp
     source/ya/commands/spatial/RotateBy3.cpp
     source/ya/commands/spatial/RollBy.cpp

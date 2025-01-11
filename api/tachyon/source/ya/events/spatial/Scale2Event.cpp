@@ -10,6 +10,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale²Event)
 
 namespace yq::tachyon {
+    Scale²Event::Scale²Event(const Header&h) : 
+        SpatialEvent(h)
+    {
+    }
+    
     Scale²Event::Scale²Event(const Header&h, const Vector2D& v) : 
         SpatialEvent(h), m_scale(v)
     {
@@ -33,7 +38,8 @@ namespace yq::tachyon {
     {
         auto w = writer<Scale²Event>();
         w.description("Scaled Event in 2D");
-        w.property("x", &Scale²Event::x);
-        w.property("y", &Scale²Event::y);
+        w.property("x", &Scale²Event::x).tag(kTag_Log);
+        w.property("y", &Scale²Event::y).tag(kTag_Log);
+        w.property("scale", &Scale²Event::m_scale).tag(kTag_Save);
     }
 }

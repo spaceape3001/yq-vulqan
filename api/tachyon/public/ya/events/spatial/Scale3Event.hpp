@@ -28,11 +28,12 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
+        Scale³Event(const Header&);
         Scale³Event(const Scale³Event&, const Header&);
         ~Scale³Event();
 
     private:
-        Vector3D const  m_scale;
+        Vector3D  m_scale   = ZERO;
         
         Scale³Event(const Scale³Event&) = delete;
         Scale³Event(Scale³Event&&) = delete;

@@ -54,10 +54,10 @@ namespace yq::tachyon {
     {
         auto w = writer<Orientation³Event>();
         w.description("Position Orientation Event in 3D");
-        w.property("w", &Orientation³Event::w);
-        w.property("x", &Orientation³Event::x);
-        w.property("y", &Orientation³Event::y);
-        w.property("z", &Orientation³Event::z);
-        w.property("orientation", &Orientation³Event::m_orientation);
+        w.property("w", &Orientation³Event::w).tag(kTag_Log);
+        w.property("x", &Orientation³Event::x).tag(kTag_Log);
+        w.property("y", &Orientation³Event::y).tag(kTag_Log);
+        w.property("z", &Orientation³Event::z).tag(kTag_Log);
+        w.property("orientation", &Orientation³Event::m_orientation).tag(kTag_Save);
     }
 }

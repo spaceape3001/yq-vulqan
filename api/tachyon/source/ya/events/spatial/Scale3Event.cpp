@@ -10,11 +10,16 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale³Event)
 
 namespace yq::tachyon {
+    Scale³Event::Scale³Event(const Header&h) : 
+        SpatialEvent(h)
+    {
+    }
+    
     Scale³Event::Scale³Event(const Header&h, const Vector3D& v) : 
         SpatialEvent(h), m_scale(v)
     {
     }
-    
+
     Scale³Event::Scale³Event(const Scale³Event&cp, const Header&h) : 
         SpatialEvent(cp, h), m_scale(cp.m_scale)
     {
@@ -33,8 +38,9 @@ namespace yq::tachyon {
     {
         auto w = writer<Scale³Event>();
         w.description("Scaled Event in 3D");
-        w.property("x", &Scale³Event::x);
-        w.property("y", &Scale³Event::y);
-        w.property("z", &Scale³Event::z);
+        w.property("x", &Scale³Event::x).tag(kTag_Log);
+        w.property("y", &Scale³Event::y).tag(kTag_Log);
+        w.property("z", &Scale³Event::z).tag(kTag_Log);
+        w.property("scale", &Scale³Event::m_scale).tag(kTag_Save);
     }
 }

@@ -26,11 +26,12 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
+        Position¹Event(const Header&);
         Position¹Event(const Position¹Event&, const Header&);
         ~Position¹Event();
 
     private:
-        Vector1D const  m_position;
+        Vector1D   m_position = ZERO;
         
         Position¹Event(const Position¹Event&) = delete;
         Position¹Event(Position¹Event&&) = delete;

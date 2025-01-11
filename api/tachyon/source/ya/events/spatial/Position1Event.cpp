@@ -10,6 +10,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Position¹Event)
 
 namespace yq::tachyon {
+    Position¹Event::Position¹Event(const Header&h) : 
+        SpatialEvent(h)
+    {
+    }
+    
     Position¹Event::Position¹Event(const Header&h, const Vector1D& v) : 
         SpatialEvent(h), m_position(v)
     {
@@ -33,6 +38,7 @@ namespace yq::tachyon {
     {
         auto w = writer<Position¹Event>();
         w.description("Position Positiond Event in 1D");
-        w.property("x", &Position¹Event::x);
+        w.property("x", &Position¹Event::x).tag(kTag_Log);
+        w.property("position", &Position¹Event::m_position).tag(kTag_Save);
     }
 }

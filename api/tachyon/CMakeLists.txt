@@ -366,6 +366,9 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/spatial/Scale1Event.cpp
     source/ya/events/spatial/Scale2Event.cpp
     source/ya/events/spatial/Scale3Event.cpp
+    source/ya/events/spatial/Size1Event.cpp
+    source/ya/events/spatial/Size2Event.cpp
+    source/ya/events/spatial/Size3Event.cpp
     
     source/ya/interfaces/IOrientation3.cpp
     source/ya/interfaces/IPosition1.cpp

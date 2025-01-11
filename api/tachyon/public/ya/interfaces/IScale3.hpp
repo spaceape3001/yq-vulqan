@@ -22,7 +22,6 @@ namespace yq::tachyon {
         virtual Vector3D    scale() const = 0;
         
         virtual void        scale(set_k, const Vector3D&){}
-        
         virtual void        scale(set_k, x_k, double){}
         virtual void        scale(set_k, y_k, double){}
         virtual void        scale(set_k, z_k, double){}

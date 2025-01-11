@@ -377,6 +377,9 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/interfaces/IScale1.cpp
     source/ya/interfaces/IScale2.cpp
     source/ya/interfaces/IScale3.cpp
+    source/ya/interfaces/ISize1.cpp
+    source/ya/interfaces/ISize2.cpp
+    source/ya/interfaces/ISize3.cpp
 
     source/ya/messages/EmptyMessage.cpp
 
@@ -391,6 +394,9 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/proxies/PScale1.cpp
     source/ya/proxies/PScale2.cpp
     source/ya/proxies/PScale3.cpp
+    source/ya/proxies/PSize1.cpp
+    source/ya/proxies/PSize2.cpp
+    source/ya/proxies/PSize3.cpp
 
     source/ya/rendereds/ImageQuad3.cpp
     source/ya/rendereds/Quadrilateral3.cpp

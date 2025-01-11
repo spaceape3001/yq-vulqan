@@ -4,20 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/proxies/PSize2.hpp>
-#include <ya/commands/spatial/AddSize2.hpp>
+#include <ya/proxies/PSize3.hpp>
+#include <ya/commands/spatial/AddSize3.hpp>
 #include <ya/commands/spatial/AddSizeX.hpp>
 #include <ya/commands/spatial/AddSizeY.hpp>
+#include <ya/commands/spatial/AddSizeZ.hpp>
 #include <ya/commands/spatial/MultiplySize.hpp>
-#include <ya/commands/spatial/MultiplySize2.hpp>
+#include <ya/commands/spatial/MultiplySize3.hpp>
 #include <ya/commands/spatial/MultiplySizeX.hpp>
 #include <ya/commands/spatial/MultiplySizeY.hpp>
-#include <ya/commands/spatial/SetSize2.hpp>
+#include <ya/commands/spatial/MultiplySizeZ.hpp>
+#include <ya/commands/spatial/SetSize3.hpp>
 #include <ya/commands/spatial/SetSizeX.hpp>
 #include <ya/commands/spatial/SetSizeY.hpp>
+#include <ya/commands/spatial/SetSizeZ.hpp>
 
 namespace yq::tachyon {
-    PSize²::PSize²(const ISize²& i) : m_size(i.size())
+    PSize³::PSize³(const ISize³& i) : m_size(i.size())
     {
         if(i.size(DISABLED))
             m_flags |= F::Disabled;
@@ -29,97 +32,118 @@ namespace yq::tachyon {
             m_flags |= F::Multipliable;
     }
 
-    PSize²::~PSize²()
+    PSize³::~PSize³()
     {
     }
 
-    bool        PSize²::size(disabled_k) const 
+    bool        PSize³::size(disabled_k) const 
     {
         return m_flags(F::Disabled);
     }
     
-    bool        PSize²::size(settable_k) const 
+    bool        PSize³::size(settable_k) const 
     {   
         return m_flags(F::Settable);
     }
     
-    bool        PSize²::size(addable_k) const 
+    bool        PSize³::size(addable_k) const 
     {
         return m_flags(F::Addable);
     }
     
-    bool        PSize²::size(multipliable_k) const 
+    bool        PSize³::size(multipliable_k) const 
     {
         return m_flags(F::Multipliable);
     }
         
-    void        PSize²::size(set_k, const Size2D& v) 
+    void        PSize³::size(set_k, const Size3D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetSize²({.target=object()}, v));
+            mail(new SetSize³({.target=object()}, v));
         }
     }
 
-    void        PSize²::size(set_k, x_k, double x) 
+    void        PSize³::size(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
             mail(new SetSizeˣ({.target=object()}, x));
         }
     }
     
-    void        PSize²::size(set_k, y_k, double y) 
+    void        PSize³::size(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
             mail(new SetSizeʸ({.target=object()}, y));
         }
     }
     
-    void        PSize²::size(add_k, const Vector2D& Δ) 
+    void        PSize³::size(set_k, z_k, double z) 
     {
-        if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddSize²({.target=object()}, Δ));
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetSizeᶻ({.target=object()}, z));
         }
     }
 
-    void        PSize²::size(add_k, x_k, double Δx) 
+    void        PSize³::size(add_k, const Vector3D& Δ) 
+    {
+        if(m_flags(F::Addable) && !m_flags(F::Disabled)){
+            mail(new AddSize³({.target=object()}, Δ));
+        }
+    }
+
+    void        PSize³::size(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddSizeˣ({.target=object()}, Δx));
         }
     }
 
-    void        PSize²::size(add_k, y_k, double Δy) 
+    void        PSize³::size(add_k, y_k, double Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddSizeʸ({.target=object()}, Δy));
         }
     }
 
-    void        PSize²::size(multiply_k, double Δ) 
+    void        PSize³::size(add_k, z_k, double Δz) 
+    {
+        if(m_flags(F::Addable) && !m_flags(F::Disabled)){
+            mail(new AddSizeᶻ({.target=object()}, Δz));
+        }
+    }
+
+    void        PSize³::size(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
             mail(new MultiplySize({.target=object()}, Δ));
         }
     }
 
-    void        PSize²::size(multiply_k, const Vector2D& Δ) 
+    void        PSize³::size(multiply_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplySize²({.target=object()}, Δ));
+            mail(new MultiplySize³({.target=object()}, Δ));
         }
     }
 
-    void        PSize²::size(multiply_k, x_k, double Δx) 
+    void        PSize³::size(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
             mail(new MultiplySizeˣ({.target=object()}, Δx));
         }
     }
 
-    void        PSize²::size(multiply_k, y_k, double Δy) 
+    void        PSize³::size(multiply_k, y_k, double Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
             mail(new MultiplySizeʸ({.target=object()}, Δy));
+        }
+    }
+
+    void        PSize³::size(multiply_k, z_k, double Δz) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplySizeᶻ({.target=object()}, Δz));
         }
     }
 }

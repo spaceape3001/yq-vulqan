@@ -172,12 +172,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/MouseHideCommand.cpp
     source/ya/commands/MouseNormalCommand.cpp
     #source/ya/commands/SetParentCommand.cpp
-    source/ya/commands/SetSize1.cpp
-    source/ya/commands/SetSize2.cpp
-    source/ya/commands/SetSize3.cpp
-    source/ya/commands/SetSizeX.cpp
-    source/ya/commands/SetSizeY.cpp
-    source/ya/commands/SetSizeZ.cpp
     source/ya/commands/SpatialCommand.cpp
     source/ya/commands/TachyonCommand.cpp
     source/ya/commands/TachyonDeleteCommand.cpp
@@ -271,6 +265,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/SetScaleX.cpp
     source/ya/commands/spatial/SetScaleY.cpp
     source/ya/commands/spatial/SetScaleZ.cpp
+    source/ya/commands/spatial/SetSize1.cpp
+    source/ya/commands/spatial/SetSize2.cpp
+    source/ya/commands/spatial/SetSize3.cpp
+    source/ya/commands/spatial/SetSizeX.cpp
+    source/ya/commands/spatial/SetSizeY.cpp
+    source/ya/commands/spatial/SetSizeZ.cpp
     source/ya/commands/spatial/YawBy.cpp
 
     source/ya/controls/Orientation3Control.cpp

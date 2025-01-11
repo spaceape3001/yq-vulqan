@@ -39,6 +39,6 @@ namespace yq::tachyon {
     {
         auto w = writer<SetPitch>();
         w.description("Set Pitch Command");
-        w.property("θ", &SetPitch::m_θ);
+        w.property("θ", &SetPitch::m_θ).tag(kTag_Log).tag(kTag_Save);
     }
 }

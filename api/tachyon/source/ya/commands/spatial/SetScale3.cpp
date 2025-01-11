@@ -10,6 +10,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScale³)
 
 namespace yq::tachyon {
+    SetScale³::SetScale³(const Header& h) : 
+        SpatialCommand(h)
+    {
+    }
+
     SetScale³::SetScale³(const Header& h, const Vector3D& v) : 
         SpatialCommand(h), m_scale(v)
     {
@@ -33,8 +38,9 @@ namespace yq::tachyon {
     {
         auto w = writer<SetScale³>();
         w.description("Set Scale Command");
-        w.property("x", &SetScale³::x);
-        w.property("y", &SetScale³::y);
-        w.property("z", &SetScale³::z);
+        w.property("x", &SetScale³::x).tag(kTag_Log);
+        w.property("y", &SetScale³::y).tag(kTag_Log);
+        w.property("z", &SetScale³::z).tag(kTag_Log);
+        w.property("scale", &SetScale³::m_scale).tag(kTag_Save);
     }
 }

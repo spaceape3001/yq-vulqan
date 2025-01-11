@@ -11,26 +11,26 @@
 #include <yt/api/Interface.hpp>
 
 namespace yq::tachyon {
-    class PSize2I;
+    class PSize²;
 
     //! Interface for a single object size
     //! \note Inheritance is not permissible here
-    class ISize2I {
+    class ISize² {
     public:
-        YQ_INTERFACE_DECLARE(ISize2I, PSize2I)
+        YQ_INTERFACE_DECLARE(ISize², PSize²)
         
         //!  Basic size in the 2I space
-        virtual Size2I      size2i() const = 0;
+        virtual Size2D      size() const = 0;
         
         //!  Set size the size
-        virtual void        size2i(set_k, const Size2I&){}
+        virtual void        size(set_k, const Size2I&){}
         
         //!  Move the size (ie set to size + delta)
-        virtual void        size2i(adjust_k, const Size2I&){}
+        virtual void        size(adjust_k, const Size2I&){}
 
-        virtual bool        size2i(disabled_k) const { return false; }
-        virtual bool        size2i(settable_k) const { return false; }
-        virtual bool        size2i(adjustable_k) const { return false; }
+        virtual bool        size(disabled_k) const { return false; }
+        virtual bool        size(settable_k) const { return false; }
+        virtual bool        size(adjustable_k) const { return false; }
 
         static void init_info();
     };

@@ -39,6 +39,6 @@ namespace yq::tachyon {
     {
         auto w = writer<SetHeading>();
         w.description("Set Heading Command");
-        w.property("θ", &SetHeading::m_θ);
+        w.property("θ", &SetHeading::m_θ).tag(kTag_Log).tag(kTag_Save);
     }
 }

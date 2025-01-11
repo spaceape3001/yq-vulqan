@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/proxies/PSize2I.hpp>
+#include <ya/proxies/PSize2.hpp>
 #include <ya/commands/MoveSize2I.hpp>
-#include <ya/commands/SetSize²I.hpp>
+#include <ya/commands/SetSize2I.hpp>
 
 namespace yq::tachyon {
-    PSize2I::PSize2I(const ISize2I& i)
+    PSize²::PSize²(const ISize²& i)
     {
         if(i.size2i(DISABLED))
             m_flags |= F::Disabled;
@@ -19,29 +19,29 @@ namespace yq::tachyon {
             m_flags |= F::Adjustable;
     }
 
-    bool        PSize2I::size2i(disabled_k) const 
+    bool        PSize²::size2i(disabled_k) const 
     {
         return m_flags(F::Disabled);
     }
     
-    bool        PSize2I::size2i(settable_k) const 
+    bool        PSize²::size2i(settable_k) const 
     {   
         return m_flags(F::Settable);
     }
     
-    bool        PSize2I::size2i(adjustable_k) const 
+    bool        PSize²::size2i(adjustable_k) const 
     {
         return m_flags(F::Adjustable);
     }
         
-    void        PSize2I::size2i(set_k, const Size2I& v) 
+    void        PSize²::size2i(set_k, const Size2I& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            dispatch(new SetSize²I(id(), v));
+            dispatch(new SetSize²(id(), v));
         }
     }
     
-    void        PSize2I::size2i(adjust_k, const Size2I& v) 
+    void        PSize²::size2i(adjust_k, const Size2I& v) 
     {
         if(m_flags(F::Adjustable) && !m_flags(F::Disabled)){
             dispatch(new MoveSize2I(id(), v));

@@ -38,6 +38,6 @@ namespace yq::tachyon {
     {
         auto w = writer<SetRoll>();
         w.description("Set Roll Command");
-        w.property("θ", &SetRoll::m_θ);
+        w.property("θ", &SetRoll::m_θ).tag(kTag_Log).tag(kTag_Save);
     }
 }

@@ -7,21 +7,21 @@
 #pragma once
 
 #include <yt/api/Proxy.hpp>
-#include <ya/interfaces/ISize2I.hpp>
+#include <ya/interfaces/ISize2.hpp>
 
 namespace yq::tachyon {
-    class PSize2I : public Proxy, public ISize2I {
+    class PSize² : public Proxy, public ISize² {
     public:
     
-        Size2I      size2i() const override {  return m_size;  }
-        bool        size2i(disabled_k) const override;
-        bool        size2i(settable_k) const override;
-        bool        size2i(adjustable_k) const override;
+        Size2I      size() const override {  return m_size;  }
+        bool        size(disabled_k) const override;
+        bool        size(settable_k) const override;
+        bool        size(adjustable_k) const override;
         
-        void        size2i(adjust_k, const Size2I&) override;
-        void        size2i(move_t, const Size2I&) override;
+        void        size(adjust_k, const Size2I&) override;
+        void        size(move_t, const Size2I&) override;
 
-        PSize2I(const ISize2I& i);
+        PSize²(const ISize²& i);
 
     private:
         Size2I        m_size;

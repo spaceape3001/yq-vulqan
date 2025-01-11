@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AScale1Writer.hxx"
-
 #include <ya/aspects/AScale1.hpp>
 #include <ya/commands/spatial/AddScale1.hpp>
 #include <ya/commands/spatial/AddScaleX.hpp>

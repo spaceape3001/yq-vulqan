@@ -23,18 +23,18 @@ namespace yq::tachyon {
     template <typename C>
     void ASize²::init_info(TachyonInfo::Writer<C>&w)
     {
-        w.interface<ISize²>();
-        w.slot(&ASize²::on_set_size2);
-        w.slot(&ASize²::on_set_sizeX);
-        w.slot(&ASize²::on_set_sizeY);
+        w.template interface<ISize²>();
+        w.slot(UNSAFE, &ASize²::on_set_size2);
+        w.slot(UNSAFE, &ASize²::on_set_sizeX);
+        w.slot(UNSAFE, &ASize²::on_set_sizeY);
 
-        w.slot(&ASize²::on_add_size2);
-        w.slot(&ASize²::on_add_sizeX);
-        w.slot(&ASize²::on_add_sizeY);
+        w.slot(UNSAFE, &ASize²::on_add_size2);
+        w.slot(UNSAFE, &ASize²::on_add_sizeX);
+        w.slot(UNSAFE, &ASize²::on_add_sizeY);
         
-        w.slot(&ASize²::on_multiply_size);
-        w.slot(&ASize²::on_multiply_size2);
-        w.slot(&ASize²::on_multiply_sizeX);
-        w.slot(&ASize²::on_multiply_sizeY);
+        w.slot(UNSAFE, &ASize²::on_multiply_size);
+        w.slot(UNSAFE, &ASize²::on_multiply_size2);
+        w.slot(UNSAFE, &ASize²::on_multiply_sizeX);
+        w.slot(UNSAFE, &ASize²::on_multiply_sizeY);
     }
 }

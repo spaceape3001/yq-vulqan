@@ -6,39 +6,19 @@
 
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/Spatial3InfoWriter.hpp>
-#include <ya/commands/spatial/AddScale3.hpp>
-#include <ya/commands/spatial/AddScaleX.hpp>
-#include <ya/commands/spatial/AddScaleY.hpp>
-#include <ya/commands/spatial/AddScaleZ.hpp>
-#include <ya/commands/spatial/AddPosition3.hpp>
-#include <ya/commands/spatial/AddPositionX.hpp>
-#include <ya/commands/spatial/AddPositionY.hpp>
-#include <ya/commands/spatial/AddPositionZ.hpp>
-#include <ya/commands/spatial/MultiplyScale.hpp>
-#include <ya/commands/spatial/MultiplyScale3.hpp>
-#include <ya/commands/spatial/MultiplyScaleX.hpp>
-#include <ya/commands/spatial/MultiplyScaleY.hpp>
-#include <ya/commands/spatial/MultiplyScaleZ.hpp>
+#include <ya/aspects/APosition3Writer.hxx>
+#include <ya/aspects/AScale3Writer.hxx>
 #include <ya/commands/spatial/PitchBy.hpp>
 #include <ya/commands/spatial/RollBy.hpp>
 #include <ya/commands/spatial/RotateBy3.hpp>
 #include <ya/commands/spatial/SetHeading.hpp>
 #include <ya/commands/spatial/SetOrientation3.hpp>
 #include <ya/commands/spatial/SetPitch.hpp>
-#include <ya/commands/spatial/SetPosition3.hpp>
-#include <ya/commands/spatial/SetPositionX.hpp>
-#include <ya/commands/spatial/SetPositionY.hpp>
-#include <ya/commands/spatial/SetPositionZ.hpp>
 #include <ya/commands/spatial/SetRoll.hpp>
-#include <ya/commands/spatial/SetScale3.hpp>
-#include <ya/commands/spatial/SetScaleX.hpp>
-#include <ya/commands/spatial/SetScaleY.hpp>
-#include <ya/commands/spatial/SetScaleZ.hpp>
 #include <ya/commands/spatial/YawBy.hpp>
 #include <ya/events/spatial/Orientation3Event.hpp>
 #include <ya/events/spatial/Position3Event.hpp>
 #include <ya/events/spatial/Scale3Event.hpp>
-#include <yq/tensor/Tensor44.hxx>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
@@ -243,9 +223,10 @@ namespace yq::tachyon {
     void SimpleSpatial³::init_info()
     {
         auto w = writer<SimpleSpatial³>();
+        
+        APosition³::init_info(w);
+        AScale³::init_info(w);
         w.interface<IOrientation³>();
-        w.interface<IPosition³>();
-        w.interface<IScale³>();
         w.description("Simple Spatial in 3 dimensions");
         w.slot(&SimpleSpatial³::on_pitch_by);
         w.slot(&SimpleSpatial³::on_roll_by);

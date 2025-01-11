@@ -18,18 +18,18 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void APosition¹::init_info(TachyonInfo::Writer<C>&w)
+    void APosition¹::init_info(TachyonInfo::Writer<C>& w)
     {
         w.template interface<IPosition¹>();
 
-        w.slot(&APosition¹::on_set_position1);
-        w.slot(&APosition¹::on_set_positionX);
+        w.slot(UNSAFE, &APosition¹::on_set_position1);
+        w.slot(UNSAFE, &APosition¹::on_set_positionX);
 
-        w.slot(&APosition¹::on_add_position1);
-        w.slot(&APosition¹::on_add_positionX);
+        w.slot(UNSAFE, &APosition¹::on_add_position1);
+        w.slot(UNSAFE, &APosition¹::on_add_positionX);
         
-        w.slot(&APosition¹::on_multiply_position);
-        w.slot(&APosition¹::on_multiply_position1);
-        w.slot(&APosition¹::on_multiply_positionX);
+        w.slot(UNSAFE, &APosition¹::on_multiply_position);
+        w.slot(UNSAFE, &APosition¹::on_multiply_position1);
+        w.slot(UNSAFE, &APosition¹::on_multiply_positionX);
     }
 }

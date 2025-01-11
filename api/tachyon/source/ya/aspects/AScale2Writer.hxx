@@ -23,19 +23,19 @@ namespace yq::tachyon {
     template <typename C>
     void AScale²::init_info(TachyonInfo::Writer<C>&w)
     {
-        w.interface<IScale²>();
+        w.template interface<IScale²>();
 
-        w.slot(&AScale²::on_set_scale2);
-        w.slot(&AScale²::on_set_scaleX);
-        w.slot(&AScale²::on_set_scaleY);
+        w.slot(UNSAFE, &AScale²::on_set_scale2);
+        w.slot(UNSAFE, &AScale²::on_set_scaleX);
+        w.slot(UNSAFE, &AScale²::on_set_scaleY);
 
-        w.slot(&AScale²::on_add_scale2);
-        w.slot(&AScale²::on_add_scaleX);
-        w.slot(&AScale²::on_add_scaleY);
+        w.slot(UNSAFE, &AScale²::on_add_scale2);
+        w.slot(UNSAFE, &AScale²::on_add_scaleX);
+        w.slot(UNSAFE, &AScale²::on_add_scaleY);
         
-        w.slot(&AScale²::on_multiply_scale);
-        w.slot(&AScale²::on_multiply_scale2);
-        w.slot(&AScale²::on_multiply_scaleX);
-        w.slot(&AScale²::on_multiply_scaleY);
+        w.slot(UNSAFE, &AScale²::on_multiply_scale);
+        w.slot(UNSAFE, &AScale²::on_multiply_scale2);
+        w.slot(UNSAFE, &AScale²::on_multiply_scaleX);
+        w.slot(UNSAFE, &AScale²::on_multiply_scaleY);
     }
 }

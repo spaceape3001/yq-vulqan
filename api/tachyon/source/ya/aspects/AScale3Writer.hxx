@@ -26,22 +26,22 @@ namespace yq::tachyon {
     template <typename C>
     void AScale³::init_info(TachyonInfo::Writer<C>&w)
     {
-        w.interface<IScale³>();
+        w.template interface<IScale³>();
         
-        w.slot(&AScale³::on_set_scale3);
-        w.slot(&AScale³::on_set_scaleX);
-        w.slot(&AScale³::on_set_scaleY);
-        w.slot(&AScale³::on_set_scaleZ);
+        w.slot(UNSAFE, &AScale³::on_set_scale3);
+        w.slot(UNSAFE, &AScale³::on_set_scaleX);
+        w.slot(UNSAFE, &AScale³::on_set_scaleY);
+        w.slot(UNSAFE, &AScale³::on_set_scaleZ);
 
-        w.slot(&AScale³::on_add_scale3);
-        w.slot(&AScale³::on_add_scaleX);
-        w.slot(&AScale³::on_add_scaleY);
-        w.slot(&AScale³::on_add_scaleZ);
+        w.slot(UNSAFE, &AScale³::on_add_scale3);
+        w.slot(UNSAFE, &AScale³::on_add_scaleX);
+        w.slot(UNSAFE, &AScale³::on_add_scaleY);
+        w.slot(UNSAFE, &AScale³::on_add_scaleZ);
         
-        w.slot(&AScale³::on_multiply_scale);
-        w.slot(&AScale³::on_multiply_scale3);
-        w.slot(&AScale³::on_multiply_scaleX);
-        w.slot(&AScale³::on_multiply_scaleY);
-        w.slot(&AScale³::on_multiply_scaleZ);
+        w.slot(UNSAFE, &AScale³::on_multiply_scale);
+        w.slot(UNSAFE, &AScale³::on_multiply_scale3);
+        w.slot(UNSAFE, &AScale³::on_multiply_scaleX);
+        w.slot(UNSAFE, &AScale³::on_multiply_scaleY);
+        w.slot(UNSAFE, &AScale³::on_multiply_scaleZ);
     }
 }

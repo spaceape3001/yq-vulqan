@@ -24,24 +24,24 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void APosition³::init_info(TachyonInfo::Writer<C>&w)
+    void APosition³::init_info(TachyonInfo::Writer<C>& w)
     {
         w.template interface<IPosition³>();
         
-        w.slot(&APosition³::on_set_position3);
-        w.slot(&APosition³::on_set_positionX);
-        w.slot(&APosition³::on_set_positionY);
-        w.slot(&APosition³::on_set_positionZ);
+        w.slot(UNSAFE, &APosition³::on_set_position3);
+        w.slot(UNSAFE, &APosition³::on_set_positionX);
+        w.slot(UNSAFE, &APosition³::on_set_positionY);
+        w.slot(UNSAFE, &APosition³::on_set_positionZ);
 
-        w.slot(&APosition³::on_add_position3);
-        w.slot(&APosition³::on_add_positionX);
-        w.slot(&APosition³::on_add_positionY);
-        w.slot(&APosition³::on_add_positionZ);
+        w.slot(UNSAFE, &APosition³::on_add_position3);
+        w.slot(UNSAFE, &APosition³::on_add_positionX);
+        w.slot(UNSAFE, &APosition³::on_add_positionY);
+        w.slot(UNSAFE, &APosition³::on_add_positionZ);
         
-        w.slot(&APosition³::on_multiply_position);
-        w.slot(&APosition³::on_multiply_position3);
-        w.slot(&APosition³::on_multiply_positionX);
-        w.slot(&APosition³::on_multiply_positionY);
-        w.slot(&APosition³::on_multiply_positionZ);
+        w.slot(UNSAFE, &APosition³::on_multiply_position);
+        w.slot(UNSAFE, &APosition³::on_multiply_position3);
+        w.slot(UNSAFE, &APosition³::on_multiply_positionX);
+        w.slot(UNSAFE, &APosition³::on_multiply_positionY);
+        w.slot(UNSAFE, &APosition³::on_multiply_positionZ);
     }
 }

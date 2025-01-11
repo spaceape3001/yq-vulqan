@@ -18,34 +18,13 @@
 #endif
 
 namespace yq::tachyon {
-    class AddScale³;
-    class AddScaleˣ;
-    class AddScaleʸ;
-    class AddScaleᶻ;
-    class AddPosition³;
-    class AddPositionˣ;
-    class AddPositionʸ;
-    class AddPositionᶻ;
-    class MultiplyScale;
-    class MultiplyScale³;
-    class MultiplyScaleˣ;
-    class MultiplyScaleʸ;
-    class MultiplyScaleᶻ;
     class PitchBy;
     class RollBy;
     class RotateBy³;
     class SetHeading;
     class SetOrientation³;
     class SetPitch;
-    class SetPosition³;
-    class SetPositionˣ;
-    class SetPositionʸ;
-    class SetPositionᶻ;
     class SetRoll;
-    class SetScale³;
-    class SetScaleˣ;
-    class SetScaleʸ;
-    class SetScaleᶻ;
     class YawBy;
 
     class SimpleSpatial³ : public Spatial³, private APosition³, private AScale³, private IOrientation³ {

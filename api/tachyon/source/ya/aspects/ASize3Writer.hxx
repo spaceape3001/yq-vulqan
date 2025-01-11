@@ -26,21 +26,21 @@ namespace yq::tachyon {
     template <typename C>
     void ASize³::init_info(TachyonInfo::Writer<C>&w)
     {
-        w.interface<ISize³>();
-        w.slot(&ASize³::on_set_size3);
-        w.slot(&ASize³::on_set_sizeX);
-        w.slot(&ASize³::on_set_sizeY);
-        w.slot(&ASize³::on_set_sizeZ);
+        w.template interface<ISize³>();
+        w.slot(UNSAFE, &ASize³::on_set_size3);
+        w.slot(UNSAFE, &ASize³::on_set_sizeX);
+        w.slot(UNSAFE, &ASize³::on_set_sizeY);
+        w.slot(UNSAFE, &ASize³::on_set_sizeZ);
 
-        w.slot(&ASize³::on_add_size3);
-        w.slot(&ASize³::on_add_sizeX);
-        w.slot(&ASize³::on_add_sizeY);
-        w.slot(&ASize³::on_add_sizeZ);
+        w.slot(UNSAFE, &ASize³::on_add_size3);
+        w.slot(UNSAFE, &ASize³::on_add_sizeX);
+        w.slot(UNSAFE, &ASize³::on_add_sizeY);
+        w.slot(UNSAFE, &ASize³::on_add_sizeZ);
         
-        w.slot(&ASize³::on_multiply_size);
-        w.slot(&ASize³::on_multiply_size3);
-        w.slot(&ASize³::on_multiply_sizeX);
-        w.slot(&ASize³::on_multiply_sizeY);
-        w.slot(&ASize³::on_multiply_sizeZ);
+        w.slot(UNSAFE, &ASize³::on_multiply_size);
+        w.slot(UNSAFE, &ASize³::on_multiply_size3);
+        w.slot(UNSAFE, &ASize³::on_multiply_sizeX);
+        w.slot(UNSAFE, &ASize³::on_multiply_sizeY);
+        w.slot(UNSAFE, &ASize³::on_multiply_sizeZ);
     }
 }

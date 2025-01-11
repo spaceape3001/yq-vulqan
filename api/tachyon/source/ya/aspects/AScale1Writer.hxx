@@ -22,14 +22,14 @@ namespace yq::tachyon {
     {
         w.template interface<IScale¹>();
 
-        w.slot(&AScale¹::on_set_scale1);
-        w.slot(&AScale¹::on_set_scaleX);
+        w.slot(UNSAFE, &AScale¹::on_set_scale1);
+        w.slot(UNSAFE, &AScale¹::on_set_scaleX);
 
-        w.slot(&AScale¹::on_add_scale1);
-        w.slot(&AScale¹::on_add_scaleX);
+        w.slot(UNSAFE, &AScale¹::on_add_scale1);
+        w.slot(UNSAFE, &AScale¹::on_add_scaleX);
         
-        w.slot(&AScale¹::on_multiply_scale);
-        w.slot(&AScale¹::on_multiply_scale1);
-        w.slot(&AScale¹::on_multiply_scaleX);
+        w.slot(UNSAFE, &AScale¹::on_multiply_scale);
+        w.slot(UNSAFE, &AScale¹::on_multiply_scale1);
+        w.slot(UNSAFE, &AScale¹::on_multiply_scaleX);
     }
 }

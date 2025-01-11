@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class MoveBy³ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(MoveBy³, SpatialCommand)
+    class AddPosition³ : public SpatialCommand {
+        YQ_OBJECT_DECLARE(AddPosition³, SpatialCommand)
     public:
-        MoveBy³(const Header&, const Vector3D&Δ);
+        AddPosition³(const Header&, const Vector3D&Δ);
     
         const Vector3D&   Δ() const  { return m_Δ; }
         
@@ -28,16 +28,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        MoveBy³(const MoveBy³&, const Header&);
-        MoveBy³(const Header&);
-        ~MoveBy³();
+        AddPosition³(const AddPosition³&, const Header&);
+        AddPosition³(const Header&);
+        ~AddPosition³();
         
     private:
         Vector3D  m_Δ = ZERO;
         
-        MoveBy³(const MoveBy³&) = delete;
-        MoveBy³(MoveBy³&&) = delete;
-        MoveBy³& operator=(const MoveBy³&) = delete;
-        MoveBy³& operator=(MoveBy³&&) = delete;
+        AddPosition³(const AddPosition³&) = delete;
+        AddPosition³(AddPosition³&&) = delete;
+        AddPosition³& operator=(const AddPosition³&) = delete;
+        AddPosition³& operator=(AddPosition³&&) = delete;
     };
 }

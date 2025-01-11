@@ -16,12 +16,18 @@ namespace yq::tachyon {
         Vector1D    position() const override {  return m_position;  }
         bool        position(disabled_k) const override;
         bool        position(settable_k) const override;
-        bool        position(moveable_k) const override;
+        bool        position(addable_k) const override;
+        bool        position(multipliable_k) const override;
         
         void        position(set_k, const Vector1D&) override;
         void        position(set_k, x_k, double) override;
-        void        position(move_k, const Vector1D&Δ) override;
-        void        position(move_k, x_k, double Δx) override;
+        
+        void        position(add_k, const Vector1D&Δ) override;
+        void        position(add_k, x_k, double Δx) override;
+
+        void        position(multiply_k, double) override;
+        void        position(multiply_k, const Vector1D&Δ) override;
+        void        position(multiply_k, x_k, double Δx) override;
 
         const Vector1D&  position(ref_k) const {  return m_position;  }
 

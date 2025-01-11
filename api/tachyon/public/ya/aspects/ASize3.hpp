@@ -61,12 +61,16 @@ namespace yq::tachyon {
         const Size3D&   size(ref_k) const { return m_size; }
 
     protected:
+
+        Size3D      m_size = ONE;
         
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);
         
         ASize³();
         virtual ~ASize³();
+        
+        void        size(emit_k);
         
     private:
         void        on_set_size3(const SetSize³&);
@@ -85,7 +89,6 @@ namespace yq::tachyon {
         void        on_multiply_sizeY(const MultiplySizeʸ&);
         void        on_multiply_sizeZ(const MultiplySizeᶻ&);
 
-        Size3D      m_size = ONE;
     };
 
 }

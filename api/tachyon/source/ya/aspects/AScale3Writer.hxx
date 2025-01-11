@@ -26,6 +26,8 @@ namespace yq::tachyon {
     template <typename C>
     void AScale³::init_info(TachyonInfo::Writer<C>&w)
     {
+        w.interface<IScale³>();
+        
         w.slot(&AScale³::on_set_scale3);
         w.slot(&AScale³::on_set_scaleX);
         w.slot(&AScale³::on_set_scaleY);

@@ -20,6 +20,8 @@ namespace yq::tachyon {
     template <typename C>
     void ASize¹::init_info(TachyonInfo::Writer<C>&w)
     {
+        w.interface<ISize¹>();
+        
         w.slot(&ASize¹::on_set_size1);
         w.slot(&ASize¹::on_set_sizeX);
 

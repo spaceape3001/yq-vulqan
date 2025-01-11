@@ -30,10 +30,15 @@ namespace yq::tachyon {
     {
     }
 
+    void        AScale³::scale(emit_k)
+    {
+        send(new Scale³Event({.source=typed()}, m_scale));
+    }
+
     void        AScale³::scale(set_k, const Vector3D& sz) 
     {
         m_scale  =    sz;
-        send(new Scale³Event({.source=typed()}, sz));
+        scale(EMIT);
     }
     
     void        AScale³::scale(set_k, x_k, double v) 

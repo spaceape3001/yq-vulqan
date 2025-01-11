@@ -26,6 +26,7 @@ namespace yq::tachyon {
     template <typename C>
     void ASize³::init_info(TachyonInfo::Writer<C>&w)
     {
+        w.interface<ISize³>();
         w.slot(&ASize³::on_set_size3);
         w.slot(&ASize³::on_set_sizeX);
         w.slot(&ASize³::on_set_sizeY);

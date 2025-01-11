@@ -55,11 +55,15 @@ namespace yq::tachyon {
 
     protected:
         
+        Vector2D    m_scale = ONE;
+
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);
         
         AScale²();
         virtual ~AScale²();
+
+        void            scale(emit_k);
         
     private:
         void        on_set_scale2(const SetScale²&);
@@ -74,8 +78,6 @@ namespace yq::tachyon {
         void        on_multiply_scale2(const MultiplyScale²&);
         void        on_multiply_scaleX(const MultiplyScaleˣ&);
         void        on_multiply_scaleY(const MultiplyScaleʸ&);
-
-        Vector2D    m_scale = ONE;
     };
 
 }

@@ -54,6 +54,7 @@ namespace yq::tachyon {
     struct direct_k{};
     struct disable_k {};
     struct domain_k {};
+    struct emit_k {};
     struct enable_k {};
     struct enabled_k {};
     struct error_k {};
@@ -167,6 +168,7 @@ namespace yq::tachyon {
     static constexpr disable_k      DISABLE;
     static constexpr domain_k       DOMAIN;
     static constexpr dynamic_k      DYNAMIC;
+    static constexpr emit_k         EMIT;
     static constexpr enable_k       ENABLE;
     static constexpr enabled_k      ENABLED;
     static constexpr error_k        ERROR;

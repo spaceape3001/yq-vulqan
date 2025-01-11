@@ -5,8 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PPosition1.hpp>
-#include <ya/commands/spatial/MoveBy1.hpp>
-#include <ya/commands/spatial/MoveByX.hpp>
+#include <ya/commands/spatial/AddPosition1.hpp>
+#include <ya/commands/spatial/AddPositionX.hpp>
+#include <ya/commands/spatial/MultiplyPosition.hpp>
+#include <ya/commands/spatial/MultiplyPosition1.hpp>
+#include <ya/commands/spatial/MultiplyPositionX.hpp>
 #include <ya/commands/spatial/SetPosition1.hpp>
 #include <ya/commands/spatial/SetPositionX.hpp>
 
@@ -17,8 +20,10 @@ namespace yq::tachyon {
             m_flags |= F::Disabled;
         if(i.position(SETTABLE))
             m_flags |= F::Settable;
-        if(i.position(MOVEABLE))
-            m_flags |= F::Moveable;
+        if(i.position(ADDABLE))
+            m_flags |= F::Addable;
+        if(i.position(MULTIPLIABLE))
+            m_flags |= F::Multipliable;
     }
 
     bool        PPosition¹::position(disabled_k) const 
@@ -31,9 +36,14 @@ namespace yq::tachyon {
         return m_flags(F::Settable);
     }
     
-    bool        PPosition¹::position(moveable_k) const 
+    bool        PPosition¹::position(addable_k) const 
     {
-        return m_flags(F::Moveable);
+        return m_flags(F::Addable);
+    }
+        
+    bool        PPosition¹::position(multipliable_k) const 
+    {
+        return m_flags(F::Addable);
     }
         
     void        PPosition¹::position(set_k, const Vector1D& v) 
@@ -50,17 +60,38 @@ namespace yq::tachyon {
         }
     }
     
-    void        PPosition¹::position(move_k, const Vector1D& Δ) 
+    void        PPosition¹::position(add_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveBy¹({.target=object()}, Δ));
+            mail(new AddPosition¹({.target=object()}, Δ));
         }
     }
 
-    void        PPosition¹::position(move_k, x_k, double Δx) 
+    void        PPosition¹::position(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Moveable) && !m_flags(F::Disabled)){
-            mail(new MoveByˣ({.target=object()}, Δx));
+            mail(new AddPositionˣ({.target=object()}, Δx));
+        }
+    }
+
+    void        PPosition¹::position(multiply_k, double Δ) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplyPosition({.target=object()}, Δ));
+        }
+    }
+
+    void        PPosition¹::position(multiply_k, const Vector1D& Δ) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplyPosition¹({.target=object()}, Δ));
+        }
+    }
+
+    void        PPosition¹::position(multiply_k, x_k, double Δx) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplyPositionˣ({.target=object()}, Δx));
         }
     }
 }

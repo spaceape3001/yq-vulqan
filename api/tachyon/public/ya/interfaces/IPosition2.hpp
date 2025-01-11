@@ -29,14 +29,19 @@ namespace yq::tachyon {
         virtual void        position(set_k, y_k, double y){}
         
         //!  Move the position (ie set to position + delta)
-        virtual void        position(move_k, const Vector2D&Δ){}
+        virtual void        position(add_k, const Vector2D&Δ){}
+        virtual void        position(add_k, x_k, double Δx){}
+        virtual void        position(add_k, y_k, double Δy){}
 
-        virtual void        position(move_k, x_k, double Δx){}
-        virtual void        position(move_k, y_k, double Δy){}
+        virtual void        position(multiply_k, double){}
+        virtual void        position(multiply_k, const Vector2D&Δ){}
+        virtual void        position(multiply_k, x_k, double Δx){}
+        virtual void        position(multiply_k, y_k, double Δy){}
 
         virtual bool        position(disabled_k) const { return false; }
         virtual bool        position(settable_k) const { return false; }
-        virtual bool        position(moveable_k) const { return false; }
+        virtual bool        position(addable_k) const { return false; }
+        virtual bool        position(multipliable_k) const { return false; }
 
         static void init_info();
     };

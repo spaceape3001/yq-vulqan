@@ -27,10 +27,15 @@ namespace yq::tachyon {
     {
     }
 
+    void        ASize²::size(emit_k)
+    {
+        send(new Size²Event({.source=typed()}, m_size));
+    }
+    
     void        ASize²::size(set_k, const Size2D& sz) 
     {
         m_size  =    sz;
-        send(new Size²Event({.source=typed()}, sz));
+        size(EMIT);
     }
     
     void        ASize²::size(set_k, x_k, double v) 

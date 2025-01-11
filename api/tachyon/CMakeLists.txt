@@ -147,6 +147,9 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
+    source/ya/aspects/APosition1.cpp
+    source/ya/aspects/APosition2.cpp
+    source/ya/aspects/APosition3.cpp
     source/ya/aspects/AScale1.cpp
     source/ya/aspects/AScale2.cpp
     source/ya/aspects/AScale3.cpp
@@ -234,6 +237,12 @@ add_library(${PROJECT_NAME} SHARED
     
     source/ya/commands/camera/CameraSetScreen.cpp
 
+    source/ya/commands/spatial/AddPosition1.cpp
+    source/ya/commands/spatial/AddPosition2.cpp
+    source/ya/commands/spatial/AddPosition3.cpp
+    source/ya/commands/spatial/AddPositionX.cpp
+    source/ya/commands/spatial/AddPositionY.cpp
+    source/ya/commands/spatial/AddPositionZ.cpp
     source/ya/commands/spatial/AddScale1.cpp
     source/ya/commands/spatial/AddScale2.cpp
     source/ya/commands/spatial/AddScale3.cpp
@@ -246,12 +255,13 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/AddSizeX.cpp
     source/ya/commands/spatial/AddSizeY.cpp
     source/ya/commands/spatial/AddSizeZ.cpp
-    source/ya/commands/spatial/MoveBy1.cpp
-    source/ya/commands/spatial/MoveBy2.cpp
-    source/ya/commands/spatial/MoveBy3.cpp
-    source/ya/commands/spatial/MoveByX.cpp
-    source/ya/commands/spatial/MoveByY.cpp
-    source/ya/commands/spatial/MoveByZ.cpp
+    source/ya/commands/spatial/MultiplyPosition.cpp
+    source/ya/commands/spatial/MultiplyPosition1.cpp
+    source/ya/commands/spatial/MultiplyPosition2.cpp
+    source/ya/commands/spatial/MultiplyPosition3.cpp
+    source/ya/commands/spatial/MultiplyPositionX.cpp
+    source/ya/commands/spatial/MultiplyPositionY.cpp
+    source/ya/commands/spatial/MultiplyPositionZ.cpp
     source/ya/commands/spatial/MultiplyScale.cpp
     source/ya/commands/spatial/MultiplyScale1.cpp
     source/ya/commands/spatial/MultiplyScale2.cpp

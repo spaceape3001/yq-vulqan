@@ -26,10 +26,15 @@ namespace yq::tachyon {
     {
     }
 
+    void        AScale¹::scale(emit_k)
+    {
+        send(new Scale¹Event({.source=typed()}, m_scale));
+    }
+
     void        AScale¹::scale(set_k, const Vector1D& sz) 
     {
         m_scale  =    sz;
-        send(new Scale¹Event({.source=typed()}, sz));
+        scale(EMIT);
     }
     
     void        AScale¹::scale(set_k, x_k, double v) 

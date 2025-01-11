@@ -30,10 +30,15 @@ namespace yq::tachyon {
     {
     }
 
+    void        ASize³::size(emit_k)
+    {
+        send(new Size³Event({.source=typed()}, m_size));
+    }
+    
     void        ASize³::size(set_k, const Size3D& sz) 
     {
         m_size  =    sz;
-        send(new Size³Event({.source=typed()}, sz));
+        size(EMIT);
     }
     
     void        ASize³::size(set_k, x_k, double v) 

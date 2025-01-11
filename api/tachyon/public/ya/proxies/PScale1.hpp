@@ -24,6 +24,7 @@ namespace yq::tachyon {
         void        scale(add_k, const Vector1D&Δ) override;
         void        scale(add_k, x_k, double Δx) override;
 
+        void        scale(multiply_k, double) override;
         void        scale(multiply_k, const Vector1D&Δ) override;
         void        scale(multiply_k, x_k, double Δx) override;
 

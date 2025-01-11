@@ -27,6 +27,7 @@ namespace yq::tachyon {
         virtual void        scale(add_k, const Vector1D&Δ){}
         virtual void        scale(add_k, x_k, double Δx){}
 
+        virtual void        scale(multiply_k, double){}
         virtual void        scale(multiply_k, const Vector1D&Δ){}
         virtual void        scale(multiply_k, x_k, double Δx){}
 

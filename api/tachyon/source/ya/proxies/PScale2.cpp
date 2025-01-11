@@ -8,6 +8,7 @@
 #include <ya/commands/spatial/AddScale2.hpp>
 #include <ya/commands/spatial/AddScaleX.hpp>
 #include <ya/commands/spatial/AddScaleY.hpp>
+#include <ya/commands/spatial/MultiplyScale.hpp>
 #include <ya/commands/spatial/MultiplyScale2.hpp>
 #include <ya/commands/spatial/MultiplyScaleX.hpp>
 #include <ya/commands/spatial/MultiplyScaleY.hpp>
@@ -91,6 +92,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddScaleʸ({.target=object()}, Δy));
+        }
+    }
+
+    void        PScale²::scale(multiply_k, double Δ) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplyScale({.target=object()}, Δ));
         }
     }
 

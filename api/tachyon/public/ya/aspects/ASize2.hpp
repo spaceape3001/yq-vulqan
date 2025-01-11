@@ -27,6 +27,9 @@ namespace yq::tachyon {
     
         //!  Basic size in the 2D space
         Size2D          size() const override { return m_size; }
+
+        double          size(x_k) const { return m_size.x; }
+        double          size(y_k) const { return m_size.y; }
         
         //!  Set size the size (OVERRIDE THIS TO INTERCEPT/REJECT)
         virtual void    size(set_k, const Size2D&) override;
@@ -47,6 +50,8 @@ namespace yq::tachyon {
         bool            size(settable_k) const { return true; }
         bool            size(addable_k) const { return true; }
         bool            size(multipliable_k) const { return true; }
+
+        const Size2D&   size(ref_k) const { return m_size; }
 
     protected:
         

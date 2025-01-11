@@ -7,6 +7,7 @@
 #include <ya/proxies/PScale1.hpp>
 #include <ya/commands/spatial/AddScale1.hpp>
 #include <ya/commands/spatial/AddScaleX.hpp>
+#include <ya/commands/spatial/MultiplyScale.hpp>
 #include <ya/commands/spatial/MultiplyScale1.hpp>
 #include <ya/commands/spatial/MultiplyScaleX.hpp>
 #include <ya/commands/spatial/SetScale1.hpp>
@@ -74,6 +75,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddScaleˣ({.target=object()}, Δx));
+        }
+    }
+
+    void        PScale¹::scale(multiply_k, double Δ) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplyScale({.target=object()}, Δ));
         }
     }
 

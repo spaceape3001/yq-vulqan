@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/vector/Quaternion3.hpp>
-#include <yt/api/ID.hpp>
+#include <memory>
+#include <variant>
 
 namespace yq::tachyon {
-    class IOrientation3D {
-    public:
-    
-    };
+
+    //! Basically a data model
+    template <typename T> struct Accessor;
+    template <typename T> using AccessorUPtr    = std::unique_ptr<Accessor<T>>;
 }

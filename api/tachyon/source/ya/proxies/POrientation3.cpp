@@ -8,7 +8,10 @@
 #include <ya/commands/spatial/RollBy.hpp>
 #include <ya/commands/spatial/PitchBy.hpp>
 #include <ya/commands/spatial/RotateBy3.hpp>
+#include <ya/commands/spatial/SetHeading.hpp>
 #include <ya/commands/spatial/SetOrientation3.hpp>
+#include <ya/commands/spatial/SetPitch.hpp>
+#include <ya/commands/spatial/SetRoll.hpp>
 #include <ya/commands/spatial/YawBy.hpp>
 #include <yq/vector/Quaternion3.hxx>
 
@@ -61,6 +64,27 @@ namespace yq::tachyon {
         }
     }
     
+    void            POrientation³::orientation(set_k, heading_k, Radian θ) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetHeading({.target=object()}, θ));
+        }
+    }
+    
+    void            POrientation³::orientation(set_k, pitch_k, Radian θ) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetPitch({.target=object()}, θ));
+        }
+    }
+    
+    void            POrientation³::orientation(set_k, roll_k, Radian θ) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetRoll({.target=object()}, θ));
+        }
+    }
+
     void            POrientation³::orientation(rotate_k, const Quaternion3D& Q)
     {
         if(m_flags(F::Rotatable) && !m_flags(F::Disabled)){

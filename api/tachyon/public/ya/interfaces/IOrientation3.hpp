@@ -26,6 +26,9 @@ namespace yq::tachyon {
         
         virtual void            orientation(set_k, const Quaternion3D&){}
         virtual void            orientation(set_k, hpr_k, Radian, Radian, Radian){}
+        virtual void            orientation(set_k, heading_k, Radian){}
+        virtual void            orientation(set_k, pitch_k, Radian){}
+        virtual void            orientation(set_k, roll_k, Radian){}
         
         virtual void            orientation(rotate_k, const Quaternion3D&){}
         virtual void            orientation(rotate_k, const unit::Radian3D&){}

@@ -99,6 +99,7 @@ add_library(${PROJECT_NAME} SHARED
     #sim/Task.cpp
     #sim/TaskEngine.cpp
 
+    source/yt/ui/Control.cpp
     #source/yt/ui/Editor.cpp
     source/yt/ui/MyImGui.cpp
     #source/yt/ui/Tool.cpp
@@ -254,13 +255,16 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/PitchBy.cpp
     source/ya/commands/spatial/RotateBy3.cpp
     source/ya/commands/spatial/RollBy.cpp
+    source/ya/commands/spatial/SetHeading.cpp
     source/ya/commands/spatial/SetOrientation3.cpp
+    source/ya/commands/spatial/SetPitch.cpp
     source/ya/commands/spatial/SetPosition1.cpp
     source/ya/commands/spatial/SetPosition2.cpp
     source/ya/commands/spatial/SetPosition3.cpp
     source/ya/commands/spatial/SetPositionX.cpp
     source/ya/commands/spatial/SetPositionY.cpp
     source/ya/commands/spatial/SetPositionZ.cpp
+    source/ya/commands/spatial/SetRoll.cpp
     source/ya/commands/spatial/SetScale1.cpp
     source/ya/commands/spatial/SetScale2.cpp
     source/ya/commands/spatial/SetScale3.cpp
@@ -268,6 +272,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/SetScaleY.cpp
     source/ya/commands/spatial/SetScaleZ.cpp
     source/ya/commands/spatial/YawBy.cpp
+
+    source/ya/controls/Orientation3Control.cpp
 
     source/ya/desktops/glfw/CursorGLFW.cpp
     source/ya/desktops/glfw/DesktopGLFW.cpp

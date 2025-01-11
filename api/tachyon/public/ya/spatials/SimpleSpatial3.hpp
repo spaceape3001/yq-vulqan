@@ -34,11 +34,14 @@ namespace yq::tachyon {
     class PitchBy;
     class RollBy;
     class RotateBy³;
+    class SetHeading;
     class SetOrientation³;
+    class SetPitch;
     class SetPosition³;
     class SetPositionˣ;
     class SetPositionʸ;
     class SetPositionᶻ;
+    class SetRoll;
     class SetScale³;
     class SetScaleˣ;
     class SetScaleʸ;
@@ -80,6 +83,9 @@ namespace yq::tachyon {
         
         void            orientation(set_k, const Quaternion3D&) override;
         void            orientation(set_k, hpr_k, Radian, Radian, Radian) override;
+        void            orientation(set_k, heading_k, Radian) override;
+        void            orientation(set_k, pitch_k, Radian) override;
+        void            orientation(set_k, roll_k, Radian) override;
         
         void            orientation(rotate_k, const Quaternion3D&) override;
         void            orientation(rotate_k, const unit::Radian3D&) override;
@@ -153,11 +159,14 @@ namespace yq::tachyon {
         void on_pitch_by(const PitchBy&);
         void on_roll_by(const RollBy&);
         void on_rotate_by(const RotateBy³&);
+        void on_set_heading(const SetHeading&);
         void on_set_orientation³(const SetOrientation³&);
+        void on_set_pitch(const SetPitch&);
         void on_set_position³(const SetPosition³&);
         void on_set_positionˣ(const SetPositionˣ&);
         void on_set_positionʸ(const SetPositionʸ&);
         void on_set_positionᶻ(const SetPositionᶻ&);
+        void on_set_roll(const SetRoll&);
         void on_set_scale³(const SetScale³&);
         void on_set_scaleˣ(const SetScaleˣ&);
         void on_set_scaleʸ(const SetScaleʸ&);

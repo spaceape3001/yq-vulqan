@@ -22,6 +22,10 @@ namespace yq::tachyon {
         void            orientation(set_k, const Quaternion3D&) override;
         void            orientation(set_k, hpr_k, Radian, Radian, Radian) override;
         
+        void            orientation(set_k, heading_k, Radian) override;
+        void            orientation(set_k, pitch_k, Radian) override;
+        void            orientation(set_k, roll_k, Radian) override;
+
         void            orientation(rotate_k, const Quaternion3D&) override;
         void            orientation(rotate_k, const unit::Radian3D&) override;
         

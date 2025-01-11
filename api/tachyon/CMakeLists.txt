@@ -147,6 +147,10 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
+    source/ya/aspects/ASize1.cpp
+    source/ya/aspects/ASize2.cpp
+    source/ya/aspects/ASize3.cpp
+
     source/ya/cameras/NullCamera.cpp
     source/ya/cameras/SpaceCamera.cpp
     source/ya/cameras/TargetCamera.cpp

@@ -63,59 +63,59 @@ namespace yq::tachyon {
     
     void    SimpleSpatial³::rotate_by(const Quaternion3D& δQ)
     {
-        orientation(ROTATE, δQ);
+        SimpleSpatial³::orientation(ROTATE, δQ);
     }
     
     void    SimpleSpatial³::rotate_by(const unit::Radian3D& Δang )
     {
-        orientation(ROTATE, Δang);
+        SimpleSpatial³::orientation(ROTATE, Δang);
     }
     
     void    SimpleSpatial³::inflate_by(const Vector3D& δZ)
     {
-        scale(MULTIPLY, δZ);
+        SimpleSpatial³::scale(MULTIPLY, δZ);
     }
 
     void SimpleSpatial³::on_add_scale³(const AddScale³&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(ADD, cmd.Δ());
+        SimpleSpatial³::scale(ADD, cmd.Δ());
     }
     
     void SimpleSpatial³::on_add_scaleˣ(const AddScaleˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(ADD, X, cmd.Δx());
+        SimpleSpatial³::scale(ADD, X, cmd.Δx());
     }
     
     void SimpleSpatial³::on_add_scaleʸ(const AddScaleʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(ADD, Y, cmd.Δy());
+        SimpleSpatial³::scale(ADD, Y, cmd.Δy());
     }
     
     void SimpleSpatial³::on_add_scaleᶻ(const AddScaleᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(ADD, Z, cmd.Δz());
+        SimpleSpatial³::scale(ADD, Z, cmd.Δz());
     }
 
     void SimpleSpatial³::on_move³(const MoveBy³&cmd)
     {
         if(cmd.target() != id())
             return;
-        position(MOVE, cmd.Δ());
+        SimpleSpatial³::position(MOVE, cmd.Δ());
     }
     
     void SimpleSpatial³::on_moveˣ(const MoveByˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        position(MOVE, X, cmd.Δx());
+        SimpleSpatial³::position(MOVE, X, cmd.Δx());
     }
     
     void SimpleSpatial³::on_moveʸ(const MoveByʸ&cmd)
@@ -123,7 +123,7 @@ namespace yq::tachyon {
         if(cmd.target() != id())
             return;
             
-        position(MOVE, Y, cmd.Δy());
+        SimpleSpatial³::position(MOVE, Y, cmd.Δy());
     }
     
     void SimpleSpatial³::on_moveᶻ(const MoveByᶻ&cmd)
@@ -137,147 +137,147 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return;
-        scale(MULTIPLY, cmd.δ());
+        SimpleSpatial³::scale(MULTIPLY, cmd.δ());
     }
     
     void SimpleSpatial³::on_multiply_scale³(const MultiplyScale³&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(MULTIPLY, cmd.δ());
+        SimpleSpatial³::scale(MULTIPLY, cmd.δ());
     }
     
     void SimpleSpatial³::on_multiply_scaleˣ(const MultiplyScaleˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(MULTIPLY, X, cmd.δx());
+        SimpleSpatial³::scale(MULTIPLY, X, cmd.δx());
     }
     
     void SimpleSpatial³::on_multiply_scaleʸ(const MultiplyScaleʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(MULTIPLY, Y, cmd.δy());
+        SimpleSpatial³::scale(MULTIPLY, Y, cmd.δy());
     }
     
     void SimpleSpatial³::on_multiply_scaleᶻ(const MultiplyScaleᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(MULTIPLY, Z, cmd.δz());
+        SimpleSpatial³::scale(MULTIPLY, Z, cmd.δz());
     }
 
     void SimpleSpatial³::on_pitch_by(const PitchBy& cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(ROTATE, PITCH, cmd.θ());
+        SimpleSpatial³::orientation(ROTATE, PITCH, cmd.θ());
    }
     
     void SimpleSpatial³::on_roll_by(const RollBy& cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(ROTATE, ROLL, cmd.θ());
+        SimpleSpatial³::orientation(ROTATE, ROLL, cmd.θ());
     }
 
     void SimpleSpatial³::on_rotate_by(const RotateBy³&cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(ROTATE, cmd.δ());
+        SimpleSpatial³::orientation(ROTATE, cmd.δ());
     }
 
     void SimpleSpatial³::on_set_heading(const SetHeading& cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(SET, HEADING, cmd.θ());
+        SimpleSpatial³::orientation(SET, HEADING, cmd.θ());
     }
 
     void SimpleSpatial³::on_set_orientation³(const SetOrientation³&cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(SET, cmd.orientation());
+        SimpleSpatial³::orientation(SET, cmd.orientation());
     }
 
     void SimpleSpatial³::on_set_pitch(const SetPitch&cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(SET, PITCH, cmd.θ());
+        SimpleSpatial³::orientation(SET, PITCH, cmd.θ());
     }
 
     void SimpleSpatial³::on_set_position³(const SetPosition³&cmd)
     {
         if(cmd.target() != id())
             return;
-        position(SET, cmd.position());
+        SimpleSpatial³::position(SET, cmd.position());
     }
     
     void SimpleSpatial³::on_set_positionˣ(const SetPositionˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        position(SET, X, cmd.x());
+        SimpleSpatial³::position(SET, X, cmd.x());
     }
     
     void SimpleSpatial³::on_set_positionʸ(const SetPositionʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        position(SET, Y, cmd.y());
+        SimpleSpatial³::position(SET, Y, cmd.y());
     }
     
     void SimpleSpatial³::on_set_positionᶻ(const SetPositionᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        position(SET, Z, cmd.z());
+        SimpleSpatial³::position(SET, Z, cmd.z());
     }
 
     void SimpleSpatial³::on_set_roll(const SetRoll&cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(SET, ROLL, cmd.θ());
+        SimpleSpatial³::orientation(SET, ROLL, cmd.θ());
     }
 
     void SimpleSpatial³::on_set_scale³(const SetScale³&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(SET, cmd.scale());
+        SimpleSpatial³::scale(SET, cmd.scale());
     }
     
     void SimpleSpatial³::on_set_scaleˣ(const SetScaleˣ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(SET, X, cmd.x());
+        SimpleSpatial³::scale(SET, X, cmd.x());
     }
     
     void SimpleSpatial³::on_set_scaleʸ(const SetScaleʸ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(SET, Y, cmd.y());
+        SimpleSpatial³::scale(SET, Y, cmd.y());
     }
     
     void SimpleSpatial³::on_set_scaleᶻ(const SetScaleᶻ&cmd)
     {
         if(cmd.target() != id())
             return;
-        scale(SET, Z, cmd.z());
+        SimpleSpatial³::scale(SET, Z, cmd.z());
     }
 
     void SimpleSpatial³::on_yaw_by(const YawBy& cmd)
     {
         if(cmd.target() != id())
             return;
-        orientation(ROTATE, YAW, cmd.θ());
+        SimpleSpatial³::orientation(ROTATE, YAW, cmd.θ());
     }
 
     Quaternion3D    SimpleSpatial³::orientation() const 
@@ -330,22 +330,22 @@ namespace yq::tachyon {
     
     void            SimpleSpatial³::orientation(rotate_k, const unit::Radian3D& Q) 
     {
-        orientation(ROTATE, Quaternion3D(CCW, Q));
+        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, Q));
     }
     
     void            SimpleSpatial³::orientation(rotate_k, pitch_k, Radian r) 
     {
-        orientation(ROTATE, Quaternion3D(CCW, Y, r));
+        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, Y, r));
     }
     
     void            SimpleSpatial³::orientation(rotate_k, roll_k, Radian r)
     {
-        orientation(ROTATE, Quaternion3D(CCW, X, r));
+        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, X, r));
     }
     
     void            SimpleSpatial³::orientation(rotate_k, yaw_k, Radian r)
     {
-        orientation(ROTATE, Quaternion3D(CCW, Z, r));
+        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, Z, r));
     }
 
 

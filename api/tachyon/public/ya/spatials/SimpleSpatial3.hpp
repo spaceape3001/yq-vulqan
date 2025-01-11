@@ -143,6 +143,10 @@ namespace yq::tachyon {
         
         
     protected:
+        void        snap(Spatial³Snap&) const;
+
+    private:
+    
         void on_add_scale³(const AddScale³&);
         void on_add_scaleˣ(const AddScaleˣ&);
         void on_add_scaleʸ(const AddScaleʸ&);
@@ -173,9 +177,6 @@ namespace yq::tachyon {
         void on_set_scaleᶻ(const SetScaleᶻ&);
         void on_yaw_by(const YawBy&);
         
-        void        snap(Spatial³Snap&) const;
-
-    private:
         Vector3D        m_position        = ZERO;
         Quaternion3D    m_orientation     = IDENTITY;
         Vector3D        m_scale           = ONE;

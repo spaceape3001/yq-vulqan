@@ -348,6 +348,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/SetSizeY.cpp
     source/ya/commands/spatial/SetSizeZ.cpp
     source/ya/commands/spatial/YawBy.cpp
+    
+    source/ya/commands/ui/HideCommand.cpp
 
     source/ya/controls/Orientation3Control.cpp
 
@@ -394,6 +396,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/TachyonEvent.cpp
     source/ya/events/ThreadEvent.cpp
     source/ya/events/ThreadAddTachyonEvent.cpp
+    source/ya/events/UIEvent.cpp
     source/ya/events/ViewerCloseEvent.cpp
     source/ya/events/ViewerDestroyEvent.cpp
     source/ya/events/ViewerEvent.cpp
@@ -438,6 +441,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/spatial/Size1Event.cpp
     source/ya/events/spatial/Size2Event.cpp
     source/ya/events/spatial/Size3Event.cpp
+    
+    source/ya/events/ui/HideEvent.cpp
     
     source/ya/interfaces/IMaxSize1.cpp
     source/ya/interfaces/IMaxSize2.cpp

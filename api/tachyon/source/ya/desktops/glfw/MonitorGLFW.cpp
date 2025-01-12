@@ -5,6 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/desktops/glfw/MonitorGLFW.hpp>
+#include <ya/events/spatial/Position2Event.hpp>
+#include <ya/events/spatial/Scale2Event.hpp>
+#include <ya/events/spatial/Size2Event.hpp>
 #include <yt/os/MonitorInfoWriter.hpp>
 #include <GLFW/glfw3.h>
 
@@ -36,11 +39,11 @@ namespace yq::tachyon {
     {
         assert(m);
         glfwSetMonitorUserPointer(m, this);
-        m_position  = _position();
+        m_position      = _position();
+        m_dimensions    = _dimensions();
         
     #if 0
         m_state.position    = _position();
-        m_state.dimensions  = _dimensions();
         m_state.name        = _name();
         m_state.working     = _working();
         m_state.scale       = _scale();
@@ -50,6 +53,9 @@ namespace yq::tachyon {
     MonitorGLFW::~MonitorGLFW()
     {
     }
+    
+    
+        ////////////////////////////////////////
     
     Size2MM     MonitorGLFW::_dimensions() const
     {
@@ -87,9 +93,26 @@ namespace yq::tachyon {
         return ret;
     }
 
+        ////////////////////////////////////////
+
+    Size2MM     MonitorGLFW::dimensions() const
+    {
+        return m_dimensions;
+    }
+
     Vector2D    MonitorGLFW::position() const 
     {
         return m_position.cast<double>();
+    }
+
+    Size2D      MonitorGLFW::size() const 
+    {
+        return m_size;
+    }
+
+    Vector2D    MonitorGLFW::scale() const 
+    {
+        return m_scale.cast<double>();
     }
 
     void MonitorGLFW::snap(MonitorSnap&sn) const
@@ -103,7 +126,25 @@ namespace yq::tachyon {
         if(m_dead)
             return STOP;
             
-        set(m_position, _position());
+        if(set(m_position, _position())){
+            send(new Position²Event({.source=this}, m_position.cast<double>()));
+        }
+        
+        const GLFWvidmode*  vm  =  glfwGetVideoMode(m_monitor);
+        if(vm != m_mode){
+            if(set(m_depth, RGB3I( vm->redBits, vm->greenBits, vm->blueBits ))){
+                // TODO: when we have color depth event, send it here
+            }
+            if(set(m_size, Size2D( vm->width, vm->height))){
+                send(new Size²Event({.source=this}, m_size));
+            }
+            m_mode      = vm;
+        }
+        
+        if(set(m_scale, _scale())){
+            send(new Scale²Event({.source=this}, m_scale.cast<double>()));
+        }
+        
         return {};
     }
     

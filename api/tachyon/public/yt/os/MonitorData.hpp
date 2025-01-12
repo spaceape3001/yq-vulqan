@@ -22,7 +22,6 @@ namespace yq::tachyon {
         //  Right now, keyed to GLFW, but can be altered...
         Vector2I                position;
         Rectangle2I             working;
-        Size2MM                 dimensions;
         Vector2F                scale;
         std::string             name;
         std::vector<RGB3U16>    gamma; //!< Will be 256 sized on windows, if specified

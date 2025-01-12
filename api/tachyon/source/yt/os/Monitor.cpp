@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yq/shape/Size2.hpp>
 #include <yt/os/Monitor.hpp>
 #include <yt/os/MonitorBind.hpp>
 #include <yt/os/MonitorData.hpp>
@@ -65,6 +66,11 @@ namespace yq::tachyon {
         return {};
     }
     
+    Size2MM     Monitor::dimensions() const
+    {
+        return Size2MM( 100_mm, 100_mm );   // default is 10 cm x 10 cm
+    }
+
     void Monitor::snap(MonitorSnap& sn) const
     {
         Tachyon::snap(sn);

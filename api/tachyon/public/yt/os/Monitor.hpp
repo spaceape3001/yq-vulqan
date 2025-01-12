@@ -8,6 +8,7 @@
 
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
+#include <yq/typedef/size2.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/typedef/monitor.hpp>
 
@@ -50,6 +51,9 @@ namespace yq::tachyon {
         static void init_info();
 
         MonitorID            id() const { return MonitorID(UniqueID::id()); }
+
+        //! Returns the approximate dimensions of the monitor, should *NEVER* change
+        virtual Size2MM     dimensions() const;
 
     protected:
     

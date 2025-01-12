@@ -43,6 +43,9 @@ namespace yq::tachyon {
     private:
     
         static MonitorGLFW* _monitor(GLFWmonitor*);
+
+        using Tachyon::send;
+        using Tachyon::mark;
     
         GLFWmonitor* const  m_monitor;
         bool                m_dead      = false;

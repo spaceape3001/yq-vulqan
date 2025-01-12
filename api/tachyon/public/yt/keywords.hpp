@@ -71,6 +71,7 @@ namespace yq::tachyon {
     struct for_k {};
     struct forward_k {};
     struct glfw_k {};
+    struct has_k {};
     struct hash_k {};
     struct heading_k {};
     struct inflatable_k {};
@@ -83,6 +84,8 @@ namespace yq::tachyon {
     struct lock_k {};
     struct locked_k {};
     struct manager_k {};
+    struct maximum_k {};
+    struct minimum_k {};
     struct mismatch_k {};
     struct model_k {};
     struct moveable_k {};
@@ -178,6 +181,7 @@ namespace yq::tachyon {
     static constexpr for_k          FOR;
     static constexpr forward_k      FORWARD;
     static constexpr glfw_k         GLFW;
+    static constexpr has_k          HAS;
     static constexpr hash_k         HASH;
     static constexpr heading_k      HEADING;
     static constexpr inflatable_k   INFLATABLE;
@@ -190,6 +194,8 @@ namespace yq::tachyon {
     static constexpr lock_k         LOCK;
     static constexpr locked_k       LOCKED;
     static constexpr manager_k      MANAGER;
+    static constexpr maximum_k      MAXIMUM;
+    static constexpr minimum_k      MINIMUM;
     static constexpr mismatch_k     MISMATCH;
     static constexpr model_k        MODEL;
     static constexpr monitor_k      MONITOR;

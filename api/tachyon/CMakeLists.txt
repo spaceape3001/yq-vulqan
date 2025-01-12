@@ -268,12 +268,14 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/AddSizeX.cpp
     source/ya/commands/spatial/AddSizeY.cpp
     source/ya/commands/spatial/AddSizeZ.cpp
+    source/ya/commands/spatial/MultiplyMaxSize.cpp
     source/ya/commands/spatial/MultiplyMaxSize1.cpp
     source/ya/commands/spatial/MultiplyMaxSize2.cpp
     source/ya/commands/spatial/MultiplyMaxSize3.cpp
     source/ya/commands/spatial/MultiplyMaxSizeX.cpp
     source/ya/commands/spatial/MultiplyMaxSizeY.cpp
     source/ya/commands/spatial/MultiplyMaxSizeZ.cpp
+    source/ya/commands/spatial/MultiplyMinSize.cpp
     source/ya/commands/spatial/MultiplyMinSize1.cpp
     source/ya/commands/spatial/MultiplyMinSize2.cpp
     source/ya/commands/spatial/MultiplyMinSize3.cpp
@@ -308,9 +310,15 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/SetMaxSize1.cpp
     source/ya/commands/spatial/SetMaxSize2.cpp
     source/ya/commands/spatial/SetMaxSize3.cpp
+    source/ya/commands/spatial/SetMaxSizeX.cpp
+    source/ya/commands/spatial/SetMaxSizeY.cpp
+    source/ya/commands/spatial/SetMaxSizeZ.cpp
     source/ya/commands/spatial/SetMinSize1.cpp
     source/ya/commands/spatial/SetMinSize2.cpp
     source/ya/commands/spatial/SetMinSize3.cpp
+    source/ya/commands/spatial/SetMinSizeX.cpp
+    source/ya/commands/spatial/SetMinSizeY.cpp
+    source/ya/commands/spatial/SetMinSizeZ.cpp
     source/ya/commands/spatial/SetOrientation3.cpp
     source/ya/commands/spatial/SetPitch.cpp
     source/ya/commands/spatial/SetPosition1.cpp
@@ -424,6 +432,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/spatial/Size2Event.cpp
     source/ya/events/spatial/Size3Event.cpp
     
+    source/ya/interfaces/IMaxSize1.cpp
+    source/ya/interfaces/IMaxSize2.cpp
+    source/ya/interfaces/IMaxSize3.cpp
+    source/ya/interfaces/IMinSize1.cpp
+    source/ya/interfaces/IMinSize2.cpp
+    source/ya/interfaces/IMinSize3.cpp
     source/ya/interfaces/IOrientation3.cpp
     source/ya/interfaces/IPosition1.cpp
     source/ya/interfaces/IPosition2.cpp
@@ -441,6 +455,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/posts/EmptyPost.cpp
     source/ya/posts/StringPost.cpp
 
+    source/ya/proxies/PMaxSize1.cpp
+    source/ya/proxies/PMaxSize2.cpp
+    source/ya/proxies/PMaxSize3.cpp
+    source/ya/proxies/PMinSize1.cpp
+    source/ya/proxies/PMinSize2.cpp
+    source/ya/proxies/PMinSize3.cpp
     source/ya/proxies/POrientation3.cpp
     source/ya/proxies/PPosition1.cpp
     source/ya/proxies/PPosition2.cpp

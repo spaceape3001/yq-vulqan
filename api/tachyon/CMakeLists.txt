@@ -224,7 +224,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/WidgetCommand.cpp
     source/ya/commands/WidgetStartupCommand.cpp
     source/ya/commands/WindowAspectCommand.cpp
-    source/ya/commands/WindowAttentionCommand.cpp
     source/ya/commands/WindowCommand.cpp
     source/ya/commands/WindowCursorCaptureCommand.cpp
     source/ya/commands/WindowCursorDisableCommand.cpp
@@ -233,7 +232,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/WindowDestroyCommand.cpp
     source/ya/commands/WindowFloatCommand.cpp
     source/ya/commands/WindowFocusCommand.cpp
-    source/ya/commands/WindowHideCommand.cpp
     source/ya/commands/WindowIconifyCommand.cpp
     source/ya/commands/WindowMaximizeCommand.cpp
     source/ya/commands/WindowMoveCommand.cpp
@@ -349,7 +347,14 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/SetSizeZ.cpp
     source/ya/commands/spatial/YawBy.cpp
     
+    source/ya/commands/ui/AttentionCommand.cpp
+    source/ya/commands/ui/CloseCommand.cpp
+    source/ya/commands/ui/FocusCommand.cpp
     source/ya/commands/ui/HideCommand.cpp
+    source/ya/commands/ui/IconifyCommand.cpp
+    source/ya/commands/ui/MaximizeCommand.cpp
+    source/ya/commands/ui/RestoreCommand.cpp
+    source/ya/commands/ui/ShowCommand.cpp
 
     source/ya/controls/Orientation3Control.cpp
 
@@ -415,14 +420,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/WindowEvent.cpp
     source/ya/events/WindowFocusEvent.cpp
     source/ya/events/WindowFrameBufferResizeEvent.cpp
-    source/ya/events/WindowHideEvent.cpp
     source/ya/events/WindowIconifyEvent.cpp
     source/ya/events/WindowMaximizeEvent.cpp
     source/ya/events/WindowMoveEvent.cpp
     source/ya/events/WindowResizeEvent.cpp
     source/ya/events/WindowRestoreEvent.cpp
     source/ya/events/WindowScaleEvent.cpp
-    source/ya/events/WindowShowEvent.cpp
     source/ya/events/WindowTitleEvent.cpp
     
     source/ya/events/spatial/MaxSize1Event.cpp
@@ -442,7 +445,13 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/spatial/Size2Event.cpp
     source/ya/events/spatial/Size3Event.cpp
     
+    source/ya/events/ui/DefocusEvent.cpp
+    source/ya/events/ui/FocusEvent.cpp
     source/ya/events/ui/HideEvent.cpp
+    source/ya/events/ui/IconifyEvent.cpp
+    source/ya/events/ui/MaximizeEvent.cpp
+    source/ya/events/ui/RestoreEvent.cpp
+    source/ya/events/ui/ShowEvent.cpp
     
     source/ya/interfaces/IMaxSize1.cpp
     source/ya/interfaces/IMaxSize2.cpp

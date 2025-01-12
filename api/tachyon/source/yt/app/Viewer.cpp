@@ -44,7 +44,6 @@
 #include <ya/commands/ViewerUnfloatCommand.hpp>
 #include <ya/commands/WidgetStartupCommand.hpp>
 #include <ya/commands/WindowAspectCommand.hpp>
-#include <ya/commands/WindowAttentionCommand.hpp>
 #include <ya/commands/WindowCursorCaptureCommand.hpp>
 #include <ya/commands/WindowCursorDisableCommand.hpp>
 #include <ya/commands/WindowCursorHideCommand.hpp>
@@ -52,7 +51,6 @@
 #include <ya/commands/WindowDestroyCommand.hpp>
 #include <ya/commands/WindowFloatCommand.hpp>
 #include <ya/commands/WindowFocusCommand.hpp>
-#include <ya/commands/WindowHideCommand.hpp>
 #include <ya/commands/WindowIconifyCommand.hpp>
 #include <ya/commands/WindowMaximizeCommand.hpp>
 #include <ya/commands/WindowMoveCommand.hpp>
@@ -61,6 +59,11 @@
 #include <ya/commands/WindowSizeCommand.hpp>
 #include <ya/commands/WindowTitleCommand.hpp>
 #include <ya/commands/WindowUnfloatCommand.hpp>
+
+
+#include <ya/commands/spatial/SetSize2.hpp>
+#include <ya/commands/ui/AttentionCommand.hpp>
+#include <ya/commands/ui/HideCommand.hpp>
 
 #include <ya/events/KeyCharacterEvent.hpp>
 #include <ya/events/KeyPressEvent.hpp>
@@ -79,10 +82,12 @@
 #include <ya/events/WindowDestroyEvent.hpp>
 #include <ya/events/WindowFocusEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
-#include <ya/events/WindowHideEvent.hpp>
 #include <ya/events/WindowMoveEvent.hpp>
 #include <ya/events/WindowResizeEvent.hpp>
-#include <ya/events/WindowShowEvent.hpp>
+
+#include <ya/events/spatial/Position2Event.hpp>
+#include <ya/events/ui/HideEvent.hpp>
+#include <ya/events/ui/ShowEvent.hpp>
 
 #include <ya/desktops/glfw/WindowGLFW.hpp>
 
@@ -191,10 +196,10 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_window_destroy_event);
         w.slot(&Viewer::on_window_fb_resize_event);
         w.slot(&Viewer::on_window_focus_event);
-        w.slot(&Viewer::on_window_hide_event);
-        w.slot(&Viewer::on_window_move_event);
+        w.slot(&Viewer::on_hide_event);
+        w.slot(&Viewer::on_move_event);
         w.slot(&Viewer::on_window_resize_event);
-        w.slot(&Viewer::on_window_show_event);
+        w.slot(&Viewer::on_show_event);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,7 +214,7 @@ namespace yq::tachyon {
     {
         assert(win && w);
         
-        m_window                = win->id();
+        m_window                = win;
         _widget(w);
         
         // HACK (becase we know it's GLFW ATM)
@@ -572,28 +577,28 @@ namespace yq::tachyon {
     void    Viewer::on_cursor_capture_command(const ViewerCursorCaptureCommand&)
     {
         if(started_or_running()){
-            send(new WindowCursorCaptureCommand(m_window));
+            send(new WindowCursorCaptureCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_cursor_disable_command(const ViewerCursorDisableCommand&)
     {
         if(started_or_running()){
-            send(new WindowCursorDisableCommand(m_window));
+            send(new WindowCursorDisableCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_cursor_hide_command(const ViewerCursorHideCommand&)
     {
         if(started_or_running()){
-            send(new WindowCursorHideCommand(m_window));
+            send(new WindowCursorHideCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_cursor_normal_command(const ViewerCursorNormalCommand&)
     {
         if(started_or_running()){
-            send(new WindowCursorNormalCommand(m_window));
+            send(new WindowCursorNormalCommand(WindowID(m_window.id)));
         }
     }
 
@@ -642,21 +647,21 @@ namespace yq::tachyon {
     void    Viewer::on_viewer_aspect_command(const ViewerAspectCommand& cmd)
     {
         if(started_or_running()){
-            send(new WindowAspectCommand(m_window, cmd.aspect()));
+            send(new WindowAspectCommand(WindowID(m_window.id), cmd.aspect()));
         }
     }
 
     void    Viewer::on_viewer_attention_command(const ViewerAttentionCommand&)
     {
         if(started_or_running()){
-            send(new WindowAttentionCommand(m_window));
+            send(new AttentionCommand({.target = m_window}));
         }
     }
 
     void    Viewer::on_viewer_close_command(const ViewerCloseCommand&)
     {
         if(started_or_running()){
-            send(new WindowHideCommand(m_window));
+            send(new HideCommand({.target=m_window}));
             m_stage = Stage::Closing;
         }
     }
@@ -689,41 +694,41 @@ namespace yq::tachyon {
     void    Viewer::on_viewer_float_command(const ViewerFloatCommand&)
     {
         if(started_or_running()){
-            send(new WindowFloatCommand(m_window));
+            send(new WindowFloatCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_viewer_focus_command(const ViewerFocusCommand&)
     {
         if(started_or_running()){
-            send(new WindowFocusCommand(m_window));
+            send(new WindowFocusCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_viewer_hide_command(const ViewerHideCommand&)
     {
         if(started_or_running()){
-            send(new WindowHideCommand(m_window));
+            send(new HideCommand({.target=m_window}));
         }
     }
     void    Viewer::on_viewer_iconify_command(const ViewerIconifyCommand&)
     {
         if(started_or_running()){
-            send(new WindowIconifyCommand(m_window));
+            send(new WindowIconifyCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_viewer_maximize_command(const ViewerMaximizeCommand&)
     {
         if(started_or_running()){
-            send(new WindowMaximizeCommand(m_window));
+            send(new WindowMaximizeCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_viewer_move_command(const ViewerMoveCommand&cmd)
     {
         if(started_or_running()){
-            send(new WindowMoveCommand(m_window, cmd.position()));
+            send(new WindowMoveCommand(WindowID(m_window.id), cmd.position()));
         }
     }
 
@@ -737,7 +742,7 @@ namespace yq::tachyon {
     void    Viewer::on_viewer_restore_command(const ViewerRestoreCommand&)
     {
         if(started_or_running()){
-            send(new WindowRestoreCommand(m_window));
+            send(new WindowRestoreCommand(WindowID(m_window.id)));
         }
     }
     
@@ -751,28 +756,28 @@ namespace yq::tachyon {
     void    Viewer::on_viewer_show_command(const ViewerShowCommand&)
     {
         if(started_or_running()){
-            send(new WindowShowCommand(m_window));
+            send(new WindowShowCommand(WindowID(m_window.id)));
         }
     }
 
     void    Viewer::on_viewer_size_command(const ViewerSizeCommand& cmd)
     {
         if(started_or_running()){
-            send(new WindowSizeCommand(m_window, cmd.size()));
+            send(new SetSize²({.target=m_window}, cmd.size().cast<double>()));
         }
     }
 
     void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
     {
         if(started_or_running()){
-            send(new WindowTitleCommand(m_window, cmd.title()));
+            send(new WindowTitleCommand(WindowID(m_window.id), cmd.title()));
         }
     }
     
     void    Viewer::on_viewer_unfloat_command(const ViewerUnfloatCommand&)
     {
         if(started_or_running()){
-            send(new WindowUnfloatCommand(m_window));
+            send(new WindowUnfloatCommand(WindowID(m_window.id)));
         }
     }
 
@@ -825,38 +830,45 @@ namespace yq::tachyon {
     }
 
 
-    void    Viewer::on_window_hide_event(const WindowHideEvent&)
+    void    Viewer::on_hide_event(const HideEvent& evt)
     {
         if(closing()){
-            m_stage     = Stage::Kaput;
-            
-            send(new WindowDestroyCommand(m_window));
-            send(new ViewerCloseEvent(this));
+            if(evt.source() == m_window){
+                m_stage     = Stage::Kaput;
+                
+                send(new WindowDestroyCommand(WindowID(m_window.id)));
+                send(new ViewerCloseEvent(this));
 
-            _sweepwait();
-            m_imgui     = {};
-            _sweepwait();
-            m_viz       = {};
-            _sweepwait();
+                _sweepwait();
+                m_imgui     = {};
+                _sweepwait();
+                m_viz       = {};
+                _sweepwait();
+            }
         } else {
             //  DO NOTHING
         }
     }
     
-    void    Viewer::on_window_move_event(const WindowMoveEvent&evt)
+    void    Viewer::on_move_event(const Position²Event&evt)
     {
+        //if(evt.source() == m_window){
+            yInfo() << "Viewer moved (" << evt.x() << ", " << evt.y() << ")";
+        //}
     }
 
     void    Viewer::on_window_resize_event(const WindowResizeEvent&evt)
     {
     }
     
-    void    Viewer::on_window_show_event(const WindowShowEvent&evt)
+    void    Viewer::on_show_event(const ShowEvent&evt)
     {
         switch(m_stage){
         case Stage::Started:
         case Stage::WidgetStart:
-            m_stage = Stage::Running;
+            if(evt.source() == m_window){
+                m_stage = Stage::Running;
+            }
             break;
         default:
             break;
@@ -944,7 +956,7 @@ namespace yq::tachyon {
 
     void Viewer::snap(ViewerSnap&sn) const
     {
-        sn.window   = m_window;
+        sn.window   = WindowID(m_window.id);
         sn.paused   = m_paused;
     }
 
@@ -990,7 +1002,7 @@ namespace yq::tachyon {
         }
 
         if(const Frame* f = frame()){
-            if(const WindowSnap* sn = f->snap(m_window)){
+            if(const WindowSnap* sn = f->snap(WindowID(m_window.id))){
                 m_state.window      = sn->window;
                 m_state.keyboard    = sn->keyboard;
                 m_state.mouse       = sn->mouse;

@@ -24,6 +24,8 @@ namespace yq::tachyon {
     class DesktopGLFW;
     class ViewerCreateInfo;
     class WindowDestroyCommand;
+    class AttentionCommand;
+    class HideCommand;
 
     class WindowGLFW : public Window, 
         private APosition², private AMaxSize², private AMinSize², private ASize²,
@@ -100,7 +102,7 @@ namespace yq::tachyon {
         
         
         void    on_aspect_command(const WindowAspectCommand&);
-        void    on_attention_command(const WindowAttentionCommand&);
+        void    on_attention_command(const AttentionCommand&);
         void    on_cursor_capture_command(const WindowCursorCaptureCommand&);
         void    on_cursor_disable_command(const WindowCursorDisableCommand&);
         void    on_cursor_hide_command(const WindowCursorHideCommand&);
@@ -108,7 +110,7 @@ namespace yq::tachyon {
         void    on_destroy_command(const WindowDestroyCommand&);
         void    on_float_command(const WindowFloatCommand&);
         void    on_focus_command(const WindowFocusCommand&);
-        void    on_hide_command(const WindowHideCommand&);
+        void    on_hide_command(const HideCommand&);
         void    on_iconify_command(const WindowIconifyCommand&);
         void    on_maximize_command(const WindowMaximizeCommand&);
         void    on_restore_command(const WindowRestoreCommand&);

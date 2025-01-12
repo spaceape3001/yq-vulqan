@@ -9,7 +9,6 @@
 #include <yt/logging.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
 #include <ya/commands/WindowAspectCommand.hpp>
-#include <ya/commands/WindowAttentionCommand.hpp>
 #include <ya/commands/WindowCursorCaptureCommand.hpp>
 #include <ya/commands/WindowCursorDisableCommand.hpp>
 #include <ya/commands/WindowCursorHideCommand.hpp>
@@ -17,7 +16,6 @@
 #include <ya/commands/WindowDestroyCommand.hpp>
 #include <ya/commands/WindowFloatCommand.hpp>
 #include <ya/commands/WindowFocusCommand.hpp>
-#include <ya/commands/WindowHideCommand.hpp>
 #include <ya/commands/WindowIconifyCommand.hpp>
 #include <ya/commands/WindowMaximizeCommand.hpp>
 #include <ya/commands/WindowMoveCommand.hpp>
@@ -26,6 +24,8 @@
 #include <ya/commands/WindowSizeCommand.hpp>
 #include <ya/commands/WindowTitleCommand.hpp>
 #include <ya/commands/WindowUnfloatCommand.hpp>
+#include <ya/commands/ui/AttentionCommand.hpp>
+#include <ya/commands/ui/HideCommand.hpp>
 #include <yt/os/KeyCode.hpp>
 #include <ya/events/KeyCharacterEvent.hpp>
 #include <ya/events/KeyPressEvent.hpp>
@@ -47,17 +47,16 @@
 #include <ya/events/WindowDestroyEvent.hpp>
 #include <ya/events/WindowFocusEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
-#include <ya/events/WindowHideEvent.hpp>
 #include <ya/events/WindowIconifyEvent.hpp>
 #include <ya/events/WindowMaximizeEvent.hpp>
-#include <ya/events/WindowMoveEvent.hpp>
 #include <ya/events/WindowRestoreEvent.hpp>
-#include <ya/events/WindowResizeEvent.hpp>
-#include <ya/events/WindowScaleEvent.hpp>
-#include <ya/events/WindowShowEvent.hpp>
 #include <ya/events/WindowTitleEvent.hpp>
+#include <ya/events/ui/HideEvent.hpp>
+#include <ya/events/ui/ShowEvent.hpp>
 #include <ya/requests/WindowCloseRequest.hpp>
 #include <ya/requests/WindowRefreshRequest.hpp>
+#include <yq/trait/numbers.hpp>
+#include <yq/math/utility.hpp>
 
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
@@ -73,7 +72,7 @@ namespace yq::tachyon {
         if(!w)
             return ;
         KeyCharacterEvent::Param    p;
-        p.modifiers = w->modifiers();
+        p.modifiers = w->modifiers(READ);
         p.code      = codepoint;
         w->send(new KeyCharacterEvent(w, p));
         w->mark();
@@ -87,15 +86,15 @@ namespace yq::tachyon {
             
         if(entered){
             MouseEnterEvent::Param p;
-            p.modifiers = w->modifiers();
-            p.buttons   = w->buttons();
-            p.position  = w->mouse();
+            p.modifiers = w->modifiers(READ);
+            p.buttons   = w->buttons(READ);
+            p.position  = w->mouse(READ);
             w->send(new MouseEnterEvent(w, p));
         } else {
             MouseLeaveEvent::Param p;
-            p.modifiers = w->modifiers();
-            p.buttons   = w->buttons();
-            p.position  = w->mouse();
+            p.modifiers = w->modifiers(READ);
+            p.buttons   = w->buttons(READ);
+            p.position  = w->mouse(READ);
             w->send(new MouseLeaveEvent(w, p));
         }
         w->mark();
@@ -108,8 +107,8 @@ namespace yq::tachyon {
             return ;
 
         MouseMoveEvent::Param p;
-        p.modifiers = w->modifiers();
-        p.buttons   = w->buttons();
+        p.modifiers = w->modifiers(READ);
+        p.buttons   = w->buttons(READ);
         p.position  = { xpos, ypos };
         w->send(new MouseMoveEvent(w, p));
         w->mark();
@@ -133,9 +132,9 @@ namespace yq::tachyon {
         }
         
         MouseDropEvent::Param p;
-        p.modifiers = w->modifiers();
-        p.buttons   = w->buttons();
-        p.position  = w->mouse();
+        p.modifiers = w->modifiers(READ);
+        p.buttons   = w->buttons(READ);
+        p.position  = w->mouse(READ);
         w->send(new MouseDropEvent(w, std::move(copy), p));
         w->mark();
     }
@@ -159,7 +158,7 @@ namespace yq::tachyon {
         case GLFW_PRESS:
             {
                 KeyPressEvent::Param    p;
-                p.modifiers     = w->modifiers();
+                p.modifiers     = w->modifiers(READ);
                 p.scan          = scancode;
                 p.key           = keycode_glfw(key);
                 w->send(new KeyPressEvent(w,p));
@@ -168,7 +167,7 @@ namespace yq::tachyon {
         case GLFW_RELEASE:
             {
                 KeyReleaseEvent::Param    p;
-                p.modifiers     = w->modifiers();
+                p.modifiers     = w->modifiers(READ);
                 p.scan          = scancode;
                 p.key           = keycode_glfw(key);
                 w->send(new KeyReleaseEvent(w,p));
@@ -177,7 +176,7 @@ namespace yq::tachyon {
         case GLFW_REPEAT:
             {
                 KeyRepeatEvent::Param    p;
-                p.modifiers     = w->modifiers();
+                p.modifiers     = w->modifiers(READ);
                 p.scan          = scancode;
                 p.key           = keycode_glfw(key);
                 w->send(new KeyRepeatEvent(w,p));
@@ -197,16 +196,16 @@ namespace yq::tachyon {
         
         if(action == GLFW_PRESS){
             MousePressEvent::Param p;
-            p.modifiers = w->modifiers();
-            p.buttons   = w->buttons();
-            p.position  = w->mouse();
+            p.modifiers = w->modifiers(READ);
+            p.buttons   = w->buttons(READ);
+            p.position  = w->mouse(READ);
             p.button    = MouseButton(button);
             w->send(new MousePressEvent(w, p));
         } else {
             MouseReleaseEvent::Param p;
-            p.modifiers = w->modifiers();
-            p.buttons   = w->buttons();
-            p.position  = w->mouse();
+            p.modifiers = w->modifiers(READ);
+            p.buttons   = w->buttons(READ);
+            p.position  = w->mouse(READ);
             p.button    = MouseButton(button);
             w->send(new MouseReleaseEvent(w, p));
         }
@@ -220,8 +219,8 @@ namespace yq::tachyon {
             return ;
 
         MouseScrollEvent::Param p;
-        p.modifiers = w->modifiers();
-        p.buttons   = w->buttons();
+        p.modifiers = w->modifiers(READ);
+        p.buttons   = w->buttons(READ);
         p.delta     = { xoffset, yoffset };
         w->send(new MouseScrollEvent(w, p));
         w->mark();
@@ -283,8 +282,10 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
-        w->send(new WindowMoveEvent(w, Vector2I(xpos, ypos)));
+            
+        w->m_position = Vector2D(xpos, ypos);
         w->mark();
+        w->position(EMIT);
     }
     
     void WindowGLFW::callback_window_refresh(GLFWwindow* win)
@@ -300,8 +301,10 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
-        w->send(new WindowScaleEvent(w, { xscale, yscale }));
+            
+        w->m_scale  = Vector2D( xscale, yscale );
         w->mark();
+        w->scale(EMIT);
     }
     
     void WindowGLFW::callback_window_size(GLFWwindow* win, int width, int height)
@@ -309,8 +312,10 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
-        w->send(new WindowResizeEvent(w, Size2I(width, height)));
+        
+        w->m_size = Size2D( width, height );
         w->mark();
+        w->size(EMIT);
     }
 
     WindowGLFW*  WindowGLFW::_window(GLFWwindow*w)
@@ -355,8 +360,11 @@ namespace yq::tachyon {
         glfwSetWindowPosCallback(w, callback_window_position);
         glfwSetWindowRefreshCallback(w, callback_window_refresh);
         glfwSetWindowSizeCallback(w, callback_window_size);
-        
-        m_stage = Stage::Running;
+     
+        m_position  = position(READ);
+        m_scale     = scale(READ);
+        m_size      = size(READ);
+        m_stage     = Stage::Running;
     }
     
     WindowGLFW::~WindowGLFW()
@@ -395,7 +403,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    MouseButtons        WindowGLFW::buttons() const
+    MouseButtons        WindowGLFW::buttons(read_k) const
     {
         MouseButtons    ret;
         if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
@@ -417,7 +425,7 @@ namespace yq::tachyon {
         return ret;
     }
 
-    WindowFlags         WindowGLFW::flags() const
+    WindowFlags         WindowGLFW::flags(read_k) const
     {
         WindowFlags ret;
         ret.set(WindowFlag::AutoIconify,       static_cast<bool>(glfwGetWindowAttrib(m_window, GLFW_AUTO_ICONIFY)));
@@ -435,14 +443,43 @@ namespace yq::tachyon {
         return ret;
     }
 
-    Size2I              WindowGLFW::framebuffer() const
+    Size2I              WindowGLFW::framebuffer(read_k) const
     {
         Size2I  ret;
         glfwGetFramebufferSize(m_window, &ret.x, &ret.y);
         return ret;
     }
 
-    ModifierKeys        WindowGLFW::modifiers() const
+    namespace {
+        std::pair<int,double>   filter(double v)
+        {
+            if(is_nan(v) || (v < 0.5)){
+                return { -1, NaN };
+            } else {
+                return { iround(v), v };
+            }
+        }
+    }
+    
+    void    WindowGLFW::max_size(set_k, const Size2D& sz) 
+    {
+        auto [i,x]  = filter(sz.x);
+        auto [j,y]  = filter(sz.y);
+
+        glfwSetWindowSizeLimits(m_window, m_minSize.x, m_minSize.y, i, j);
+        m_maxSize   = { i, j };
+        AMaxSize²::max_size(SET, Size2D(x,y));
+    }
+    
+    void    WindowGLFW::min_size(set_k, const Size2D& sz) 
+    {
+        auto [i,x]  = filter(sz.x);
+        auto [j,y]  = filter(sz.y);
+        glfwSetWindowSizeLimits(m_window, i, j, m_maxSize.x, m_maxSize.y);
+        AMinSize²::min_size(SET, Size2D(x,y));
+    }
+    
+    ModifierKeys        WindowGLFW::modifiers(read_k) const
     {
         ModifierKeys    ret;
         if(glfwGetKey(m_window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS)
@@ -470,7 +507,7 @@ namespace yq::tachyon {
         return ret;
     }
 
-    Vector2D  WindowGLFW::mouse() const
+    Vector2D  WindowGLFW::mouse(read_k) const
     {
         Vector2D ret;
         glfwGetCursorPos(m_window, &ret.x, &ret.y);
@@ -487,8 +524,11 @@ namespace yq::tachyon {
         mark();
     }
 
-    void    WindowGLFW::on_attention_command(const WindowAttentionCommand&)
+    void    WindowGLFW::on_attention_command(const AttentionCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
+            
         glfwRequestWindowAttention(m_window);
     }
 
@@ -549,12 +589,14 @@ namespace yq::tachyon {
         mark();
     }
 
-    void    WindowGLFW::on_hide_command(const WindowHideCommand&)
+    void    WindowGLFW::on_hide_command(const HideCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         if(!glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
             return ;
         glfwHideWindow(m_window);
-        send(new WindowHideEvent(this));
+        send(new HideEvent({.source=this}));
         mark();
     }
     
@@ -569,12 +611,6 @@ namespace yq::tachyon {
         glfwMaximizeWindow(m_window);
         mark();
     }
-
-    void    WindowGLFW::on_move_command(const WindowMoveCommand&cmd)
-    {
-        glfwSetWindowPos(m_window, cmd.x(), cmd.y());
-        mark();
-    }
     
     void    WindowGLFW::on_restore_command(const WindowRestoreCommand&)
     {
@@ -587,16 +623,10 @@ namespace yq::tachyon {
         if(glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
             return ;
         glfwShowWindow(m_window);
-        send(new WindowShowEvent(this));
+        send(new ShowEvent({.source=this}));
         mark();
     }
 
-    void    WindowGLFW::on_size_command(const WindowSizeCommand&cmd)
-    {
-        glfwSetWindowSize(m_window, cmd.width(), cmd.height());
-        mark();
-    }
-    
     void    WindowGLFW::on_title_command(const WindowTitleCommand&cmd)
     {
         glfwSetWindowTitle(m_window, cmd.title().c_str());
@@ -610,13 +640,62 @@ namespace yq::tachyon {
         mark();
     }
 
-    Vector2D    WindowGLFW::position() const 
+
+    Vector2D    WindowGLFW::position(read_k) const 
     {
         Vector2I    ret;
         glfwGetWindowPos(m_window, &ret.x, &ret.y);
         return ret.cast<double>();
     }
     
+    void    WindowGLFW::position(set_k, const Vector2D& ps) 
+    {
+        if(is_nan(ps.x))
+            return ;
+        if(is_nan(ps.y))
+            return ;
+        glfwSetWindowPos(m_window, iround(ps.x), iround(ps.y));
+    }
+
+    Vector2D  WindowGLFW::scale(read_k) const
+    {
+        float x, y;
+        glfwGetWindowContentScale(m_window, &x, &y);
+        return Vector2D(x,y);
+    }
+    
+    void    WindowGLFW::scale(set_k, const Vector2D&) 
+    {
+        /* OS DRIVEN, CANNOT CHANGE */
+    }
+    
+    void    WindowGLFW::size(set_k, const Size2D& sz) 
+    {
+        if(is_nan(sz.x))
+            return ;
+        if(is_nan(sz.y))
+            return ;
+        
+        int i   = iround(sz.x);
+        if((i<=0) || ((m_minSize.x > 0) && (i < m_minSize.x)) || ((m_maxSize.x > 0) && (i > m_maxSize.x))){
+            return ;
+        }
+        
+        int j   = iround(sz.y);
+        if((j<=0) || ((m_minSize.y > 0) && (j < m_minSize.y)) || ((m_maxSize.y > 0) && (j > m_maxSize.y))){
+            return;
+        }
+    
+        glfwSetWindowSize(m_window, i, j);
+    }
+
+    Size2D    WindowGLFW::size(read_k) const
+    {
+        int x, y;
+        glfwGetWindowSize(m_window, &x, &y);
+        return Size2D(x,y);
+    }
+
     void      WindowGLFW::snap(WindowSnap& sn) const
     {
         Window::snap(sn);
@@ -628,24 +707,23 @@ namespace yq::tachyon {
             sn.keyboard.keys.set((int) kc.value(), glfwGetKey(m_window, gk) == GLFW_PRESS);
         }
 
-        sn.keyboard.modifiers   = modifiers();
-        sn.mouse.buttons        = buttons();
-        glfwGetCursorPos(m_window, &sn.mouse.position.x, &sn.mouse.position.y);
+        sn.keyboard.modifiers   = modifiers(READ);
+        sn.mouse.buttons        = buttons(READ);
+        sn.mouse.position       = mouse(READ);
         sn.mouse.mode           = m_mouseMode;
         
+        sn.window.area          = m_size;
         sn.window.aspect        = m_aspect;
-        sn.window.flags         = flags();
+        sn.window.flags         = flags(READ);
         sn.window.max           = m_maxSize;
         sn.window.min           = m_minSize;
         sn.window.monitor       = MonitorGLFW::monitor(glfwGetWindowMonitor(m_window));
         sn.window.opacity       = glfwGetWindowOpacity(m_window);
-        sn.window.title         = title();
+        sn.window.pixels        = framebuffer(READ);
+        sn.window.position      = m_position;
+        sn.window.scale         = m_scale;
+        sn.window.title         = title(READ);
 
-        glfwGetWindowSize(m_window, &sn.window.area.x, &sn.window.area.y);
-        glfwGetFramebufferSize(m_window, &sn.window.pixels.x, &sn.window.pixels.y);
-        glfwGetWindowPos(m_window, &sn.window.position.x, &sn.window.position.y);
-        glfwGetWindowContentScale(m_window, &sn.window.scale.x, &sn.window.scale.y);
-        
         sn.time             = glfwGetTime();
     }
 
@@ -662,7 +740,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    std::string         WindowGLFW::title() const
+    std::string         WindowGLFW::title(read_k) const
     {
         return glfwGetWindowTitle(m_window);
     }
@@ -694,10 +772,8 @@ namespace yq::tachyon {
         w.slot(&WindowGLFW::on_hide_command);
         w.slot(&WindowGLFW::on_iconify_command);
         w.slot(&WindowGLFW::on_maximize_command);
-        w.slot(&WindowGLFW::on_move_command);
         w.slot(&WindowGLFW::on_restore_command);
         w.slot(&WindowGLFW::on_show_command);
-        w.slot(&WindowGLFW::on_size_command);
         w.slot(&WindowGLFW::on_title_command);
         w.slot(&WindowGLFW::on_unfloat_command);
     }

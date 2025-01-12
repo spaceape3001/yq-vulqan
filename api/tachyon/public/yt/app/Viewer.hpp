@@ -54,6 +54,10 @@ namespace yq::tachyon {
     struct ViContext;
     class GLFWManager;
     
+    class HideEvent;
+    class Position²Event;
+    class ShowEvent;
+    
     struct ViewerInitData;
     
     class ViewerInfo : public TachyonInfo {
@@ -372,7 +376,7 @@ namespace yq::tachyon {
         std::atomic<uint64_t>           m_ticks{0};
         std::unique_ptr<Visualizer>     m_viz;
         WidgetPtr                       m_widget;
-        WindowID                        m_window;
+        TypedID                         m_window;
         Size2I                          m_pixels    = {};
         bool                            m_zeroSize  = false;
 
@@ -424,10 +428,10 @@ namespace yq::tachyon {
         void    on_window_destroy_event(const WindowDestroyEvent&);
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
         void    on_window_focus_event(const WindowFocusEvent&);
-        void    on_window_hide_event(const WindowHideEvent&);
-        void    on_window_move_event(const WindowMoveEvent&);
+        void    on_hide_event(const HideEvent&);
+        void    on_move_event(const Position²Event&);
         void    on_window_resize_event(const WindowResizeEvent&);
-        void    on_window_show_event(const WindowShowEvent&);
+        void    on_show_event(const ShowEvent&);
         
         
         

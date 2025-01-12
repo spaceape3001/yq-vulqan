@@ -281,6 +281,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/RotateBy3.cpp
     source/ya/commands/spatial/RollBy.cpp
     source/ya/commands/spatial/SetHeading.cpp
+    source/ya/commands/spatial/SetMaxSize1.cpp
+    source/ya/commands/spatial/SetMaxSize2.cpp
+    source/ya/commands/spatial/SetMaxSize3.cpp
+    source/ya/commands/spatial/SetMinSize1.cpp
+    source/ya/commands/spatial/SetMinSize2.cpp
+    source/ya/commands/spatial/SetMinSize3.cpp
     source/ya/commands/spatial/SetOrientation3.cpp
     source/ya/commands/spatial/SetPitch.cpp
     source/ya/commands/spatial/SetPosition1.cpp
@@ -377,6 +383,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/WindowShowEvent.cpp
     source/ya/events/WindowTitleEvent.cpp
     
+    source/ya/events/spatial/MaxSize1Event.cpp
+    source/ya/events/spatial/MaxSize2Event.cpp
+    source/ya/events/spatial/MaxSize3Event.cpp
+    source/ya/events/spatial/MinSize1Event.cpp
+    source/ya/events/spatial/MinSize2Event.cpp
+    source/ya/events/spatial/MinSize3Event.cpp
     source/ya/events/spatial/Position1Event.cpp
     source/ya/events/spatial/Position2Event.cpp
     source/ya/events/spatial/Position3Event.cpp

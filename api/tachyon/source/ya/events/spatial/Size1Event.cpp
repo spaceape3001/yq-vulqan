@@ -37,7 +37,7 @@ namespace yq::tachyon {
     void Size¹Event::init_info()
     {
         auto w = writer<Size¹Event>();
-        w.description("Sized Event in 1D");
+        w.description("Size Event in 1D");
         w.property("x", &Size¹Event::x).tag(kTag_Log);
         w.property("size", &Size¹Event::m_size).tag(kTag_Save);
     }

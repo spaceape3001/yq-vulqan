@@ -147,6 +147,12 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
+    source/ya/aspects/AMaxSize1.cpp
+    source/ya/aspects/AMaxSize2.cpp
+    source/ya/aspects/AMaxSize3.cpp
+    source/ya/aspects/AMinSize1.cpp
+    source/ya/aspects/AMinSize2.cpp
+    source/ya/aspects/AMinSize3.cpp
     source/ya/aspects/AOrientation3.cpp
     source/ya/aspects/APosition1.cpp
     source/ya/aspects/APosition2.cpp

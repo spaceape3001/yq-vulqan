@@ -238,6 +238,18 @@ add_library(${PROJECT_NAME} SHARED
     
     source/ya/commands/camera/CameraSetScreen.cpp
 
+    source/ya/commands/spatial/AddMaxSize1.cpp
+    source/ya/commands/spatial/AddMaxSize2.cpp
+    source/ya/commands/spatial/AddMaxSize3.cpp
+    source/ya/commands/spatial/AddMaxSizeX.cpp
+    source/ya/commands/spatial/AddMaxSizeY.cpp
+    source/ya/commands/spatial/AddMaxSizeZ.cpp
+    source/ya/commands/spatial/AddMinSize1.cpp
+    source/ya/commands/spatial/AddMinSize2.cpp
+    source/ya/commands/spatial/AddMinSize3.cpp
+    source/ya/commands/spatial/AddMinSizeX.cpp
+    source/ya/commands/spatial/AddMinSizeY.cpp
+    source/ya/commands/spatial/AddMinSizeZ.cpp
     source/ya/commands/spatial/AddPosition1.cpp
     source/ya/commands/spatial/AddPosition2.cpp
     source/ya/commands/spatial/AddPosition3.cpp
@@ -256,6 +268,18 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/AddSizeX.cpp
     source/ya/commands/spatial/AddSizeY.cpp
     source/ya/commands/spatial/AddSizeZ.cpp
+    source/ya/commands/spatial/MultiplyMaxSize1.cpp
+    source/ya/commands/spatial/MultiplyMaxSize2.cpp
+    source/ya/commands/spatial/MultiplyMaxSize3.cpp
+    source/ya/commands/spatial/MultiplyMaxSizeX.cpp
+    source/ya/commands/spatial/MultiplyMaxSizeY.cpp
+    source/ya/commands/spatial/MultiplyMaxSizeZ.cpp
+    source/ya/commands/spatial/MultiplyMinSize1.cpp
+    source/ya/commands/spatial/MultiplyMinSize2.cpp
+    source/ya/commands/spatial/MultiplyMinSize3.cpp
+    source/ya/commands/spatial/MultiplyMinSizeX.cpp
+    source/ya/commands/spatial/MultiplyMinSizeY.cpp
+    source/ya/commands/spatial/MultiplyMinSizeZ.cpp
     source/ya/commands/spatial/MultiplyPosition.cpp
     source/ya/commands/spatial/MultiplyPosition1.cpp
     source/ya/commands/spatial/MultiplyPosition2.cpp

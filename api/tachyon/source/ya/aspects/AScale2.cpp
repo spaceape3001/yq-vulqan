@@ -34,6 +34,7 @@ namespace yq::tachyon {
     void        AScale²::scale(set_k, const Vector2D& sz) 
     {
         m_scale  =    sz;
+        mark();
         scale(EMIT);
     }
     

@@ -6,19 +6,9 @@
 
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/Spatial3InfoWriter.hpp>
+#include <ya/aspects/AOrientation3Writer.hxx>
 #include <ya/aspects/APosition3Writer.hxx>
 #include <ya/aspects/AScale3Writer.hxx>
-#include <ya/commands/spatial/PitchBy.hpp>
-#include <ya/commands/spatial/RollBy.hpp>
-#include <ya/commands/spatial/RotateBy3.hpp>
-#include <ya/commands/spatial/SetHeading.hpp>
-#include <ya/commands/spatial/SetOrientation3.hpp>
-#include <ya/commands/spatial/SetPitch.hpp>
-#include <ya/commands/spatial/SetRoll.hpp>
-#include <ya/commands/spatial/YawBy.hpp>
-#include <ya/events/spatial/Orientation3Event.hpp>
-#include <ya/events/spatial/Position3Event.hpp>
-#include <ya/events/spatial/Scale3Event.hpp>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
@@ -56,144 +46,15 @@ namespace yq::tachyon {
         SimpleSpatial³::scale(MULTIPLY, δZ);
     }
 
-    void SimpleSpatial³::on_pitch_by(const PitchBy& cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(ROTATE, PITCH, cmd.θ());
-   }
-    
-    void SimpleSpatial³::on_roll_by(const RollBy& cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(ROTATE, ROLL, cmd.θ());
-    }
-
-    void SimpleSpatial³::on_rotate_by(const RotateBy³&cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(ROTATE, cmd.δ());
-    }
-
-    void SimpleSpatial³::on_set_heading(const SetHeading& cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(SET, HEADING, cmd.θ());
-    }
-
-    void SimpleSpatial³::on_set_orientation³(const SetOrientation³&cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(SET, cmd.orientation());
-    }
-
-    void SimpleSpatial³::on_set_pitch(const SetPitch&cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(SET, PITCH, cmd.θ());
-    }
-
-    void SimpleSpatial³::on_set_roll(const SetRoll&cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(SET, ROLL, cmd.θ());
-    }
-
-
-    void SimpleSpatial³::on_yaw_by(const YawBy& cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        SimpleSpatial³::orientation(ROTATE, YAW, cmd.θ());
-    }
-
-    Quaternion3D    SimpleSpatial³::orientation() const 
-    {
-        return m_orientation;
-    }
-    
-    void            SimpleSpatial³::orientation(set_k, const Quaternion3D& Q) 
-    {
-        m_orientation = Q;
-        mark();
-        send(new Orientation³Event({.source=this}, m_orientation));
-    }
-    
-    void            SimpleSpatial³::orientation(set_k, hpr_k, Radian h, Radian p, Radian r) 
-    {
-        orientation(SET, Quaternion3D(HPR, h, p, r));
-    }
-    
-    void            SimpleSpatial³::orientation(set_k, heading_k, Radian r) 
-    {
-        unit::Radian3D  angles  = m_orientation.angle(ZYX);
-        m_orientation   = Quaternion3D(HPR, r, angles.y, angles.x);
-        mark();
-        send(new Orientation³Event({.source=this}, m_orientation));
-    }
-    
-    void            SimpleSpatial³::orientation(set_k, pitch_k, Radian r)
-    {
-        unit::Radian3D  angles  = m_orientation.angle(ZYX);
-        m_orientation   = Quaternion3D(HPR, angles.x, r, angles.x);
-        mark();
-        send(new Orientation³Event({.source=this}, m_orientation));
-    }
-    
-    void            SimpleSpatial³::orientation(set_k, roll_k, Radian r)
-    {
-        unit::Radian3D  angles  = m_orientation.angle(ZYX);
-        m_orientation   = Quaternion3D(HPR, angles.z, angles.y, r);
-        mark();
-        send(new Orientation³Event({.source=this}, m_orientation));
-    }
-
-    void            SimpleSpatial³::orientation(rotate_k, const Quaternion3D& Q)
-    {
-        m_orientation   = Q * m_orientation;
-        mark();
-        send(new Orientation³Event({.source=this}, m_orientation));
-    }
-    
-    void            SimpleSpatial³::orientation(rotate_k, const unit::Radian3D& Q) 
-    {
-        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, Q));
-    }
-    
-    void            SimpleSpatial³::orientation(rotate_k, pitch_k, Radian r) 
-    {
-        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, Y, r));
-    }
-    
-    void            SimpleSpatial³::orientation(rotate_k, roll_k, Radian r)
-    {
-        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, X, r));
-    }
-    
-    void            SimpleSpatial³::orientation(rotate_k, yaw_k, Radian r)
-    {
-        SimpleSpatial³::orientation(ROTATE, Quaternion3D(CCW, Z, r));
-    }
-
 
     void    SimpleSpatial³::set_orientation(const Quaternion3D& Q)
     {
-        m_orientation = Q;
-        mark();
-        send(new Orientation³Event({.source=this}, m_orientation));
+        SimpleSpatial³::orientation(SET, Q);
     }
     
     void    SimpleSpatial³::set_scale(const Vector3D& v)
     {
-        m_scale       = v;
-        mark();
-        send(new Scale³Event({.source=this}, m_scale));
+        SimpleSpatial³::scale(SET, v);
     }
 
     void SimpleSpatial³::snap(Spatial³Snap& sn) const
@@ -201,14 +62,14 @@ namespace yq::tachyon {
         Spatial³::snap(sn);
 
         Tensor33D   T       = tensor(m_orientation);
-        Tensor33D   T1   = T * diagonal(scale(REF));
-        Tensor33D   T2   = diagonal(1./scale(X), 1./scale(Y), 1./scale(Z)) * T;
+        Tensor33D   T1   = T * diagonal(m_scale);
+        Tensor33D   T2   = diagonal(1./m_scale.x, 1./m_scale.y, 1./m_scale.z) * T;
         Vector3D    pos2 = T2 * m_position;
         
         sn.local2domain = Tensor44D(
-            T1.xx, T1.xy, T1.xz, position(X),
-            T1.yx, T1.yy, T1.yz, position(Y),
-            T1.zx, T1.zy, T1.zz, position(Z),
+            T1.xx, T1.xy, T1.xz, m_position.z,
+            T1.yx, T1.yy, T1.yz, m_position.y,
+            T1.zx, T1.zy, T1.zz, m_position.z,
             0., 0., 0., 1.
         );
         
@@ -226,15 +87,7 @@ namespace yq::tachyon {
         
         APosition³::init_info(w);
         AScale³::init_info(w);
-        w.interface<IOrientation³>();
+        AOrientation³::init_info(w);
         w.description("Simple Spatial in 3 dimensions");
-        w.slot(&SimpleSpatial³::on_pitch_by);
-        w.slot(&SimpleSpatial³::on_roll_by);
-        w.slot(&SimpleSpatial³::on_rotate_by);
-        w.slot(&SimpleSpatial³::on_set_heading);
-        w.slot(&SimpleSpatial³::on_set_orientation³);
-        w.slot(&SimpleSpatial³::on_set_pitch);
-        w.slot(&SimpleSpatial³::on_set_roll);
-        w.slot(&SimpleSpatial³::on_yaw_by);
     }
 }

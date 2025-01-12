@@ -38,6 +38,7 @@ namespace yq::tachyon {
     void        ASize³::size(set_k, const Size3D& sz) 
     {
         m_size  =    sz;
+        mark();
         size(EMIT);
     }
     

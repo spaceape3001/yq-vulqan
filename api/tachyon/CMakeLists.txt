@@ -147,6 +147,7 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
+    source/ya/aspects/AOrientation3.cpp
     source/ya/aspects/APosition1.cpp
     source/ya/aspects/APosition2.cpp
     source/ya/aspects/APosition3.cpp

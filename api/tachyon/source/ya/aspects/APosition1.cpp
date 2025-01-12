@@ -35,6 +35,7 @@ namespace yq::tachyon {
     void        APosition¹::position(set_k, const Vector1D& sz) 
     {
         m_position  =    sz;
+        mark();
         position(EMIT);
     }
     

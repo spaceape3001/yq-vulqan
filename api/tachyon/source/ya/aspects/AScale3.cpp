@@ -38,6 +38,7 @@ namespace yq::tachyon {
     void        AScale³::scale(set_k, const Vector3D& sz) 
     {
         m_scale  =    sz;
+        mark();
         scale(EMIT);
     }
     

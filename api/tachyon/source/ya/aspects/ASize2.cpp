@@ -35,6 +35,7 @@ namespace yq::tachyon {
     void        ASize²::size(set_k, const Size2D& sz) 
     {
         m_size  =    sz;
+        mark();
         size(EMIT);
     }
     

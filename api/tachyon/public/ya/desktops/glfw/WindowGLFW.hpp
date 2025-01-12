@@ -11,7 +11,11 @@
 #include <yt/os/ModifierKey.hpp>
 #include <yt/os/MouseButton.hpp>
 #include <yt/os/MouseMode.hpp>
-#include <ya/interfaces/IPosition2.hpp>
+#include <ya/aspects/AMaxSize2.hpp>
+#include <ya/aspects/AMinSize2.hpp>
+#include <ya/aspects/APosition2.hpp>
+#include <ya/aspects/ASize2.hpp>
+#include <ya/aspects/AScale2.hpp>
 #include <ya/typedef/commands.hpp>
 
 struct GLFWwindow;
@@ -21,7 +25,10 @@ namespace yq::tachyon {
     class ViewerCreateInfo;
     class WindowDestroyCommand;
 
-    class WindowGLFW : public Window, private IPosition² {
+    class WindowGLFW : public Window, 
+        private APosition², private AMaxSize², private AMinSize², private ASize²,
+        private AScale²
+    {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
     public:
         WindowGLFW(DesktopGLFW*, GLFWwindow*, const ViewerCreateInfo&, const Param&p={});
@@ -29,12 +36,12 @@ namespace yq::tachyon {
         
         static void init_info();
 
-        Vector2D    position() const override;
-
-        virtual Execution tick(Context&) override;
-        
         static WindowGLFW*  window(ptr_k, GLFWwindow*);
         static WindowID     window(GLFWwindow*);
+ 
+ 
+        virtual Execution tick(Context&) override;
+        
         
         //std::string_view    title() const;
         //void                title(const std::string&);
@@ -43,11 +50,38 @@ namespace yq::tachyon {
         GLFWwindow*         glfw() const { return m_window; }
         
         //! LOCAL THREAD ONLY
-        Size2I              framebuffer() const;
+        Size2I              framebuffer(read_k) const;
+        
+        using AMaxSize²::max_size;
+        virtual void    max_size(set_k, const Size2D&) override;
+
+        using AMinSize²::min_size;
+        virtual void    min_size(set_k, const Size2D&) override;
+        
+        using APosition²::position;
+        Vector2D        position(read_k) const;
+        virtual void    position(set_k, const Vector2D&) override;
+
+        using AScale²::scale;
+        bool            scale(addable_k) const override { return false; }
+        bool            scale(multipliable_k) const override { return false; }
+        Vector2D        scale(read_k) const;
+        // This is OS driven
+        virtual void    scale(set_k, const Vector2D&);
+        bool            scale(settable_k) const override { return false; }
+
+
+        using ASize²::size;
+        Size2D          size(read_k) const;
+        virtual void    size(set_k, const Size2D&) override;
+
 
     protected:
         void        snap(WindowSnap&) const;
         virtual PostAdvice  advise(const Post&) const override;
+        
+        using Tachyon::send;
+        using Tachyon::mark;
 
     private:
         enum Stage {
@@ -59,10 +93,11 @@ namespace yq::tachyon {
         DesktopGLFW* const  m_desktop;
         GLFWwindow* const   m_window;
         Size2I              m_aspect    = { -1, -1 };
-        Size2I              m_maxSize   = { -1, -1 };
-        Size2I              m_minSize   = { -1, -1 };
+        Size2I              m_maxSize   = { -1, -1 };   // used to store the old values
+        Size2I              m_minSize   = { -1, -1 };   // used to store the old values
         MouseMode           m_mouseMode = MouseMode::Normal;
         Stage               m_stage     = Stage::Preinit;
+        
         
         void    on_aspect_command(const WindowAspectCommand&);
         void    on_attention_command(const WindowAttentionCommand&);
@@ -76,18 +111,16 @@ namespace yq::tachyon {
         void    on_hide_command(const WindowHideCommand&);
         void    on_iconify_command(const WindowIconifyCommand&);
         void    on_maximize_command(const WindowMaximizeCommand&);
-        void    on_move_command(const WindowMoveCommand&);
         void    on_restore_command(const WindowRestoreCommand&);
         void    on_show_command(const WindowShowCommand&);
-        void    on_size_command(const WindowSizeCommand&);
         void    on_title_command(const WindowTitleCommand&);
         void    on_unfloat_command(const WindowUnfloatCommand&);
         
-        ModifierKeys        modifiers() const;
-        MouseButtons        buttons() const;
-        Vector2D            mouse() const;
-        std::string         title() const;
-        WindowFlags         flags() const;
+        ModifierKeys        modifiers(read_k) const;
+        MouseButtons        buttons(read_k) const;
+        Vector2D            mouse(read_k) const;
+        std::string         title(read_k) const;
+        WindowFlags         flags(read_k) const;
 
         static WindowGLFW*  _window(GLFWwindow*);
 

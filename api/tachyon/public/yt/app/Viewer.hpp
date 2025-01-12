@@ -207,9 +207,9 @@ namespace yq::tachyon {
         //! Our viewer number (always incrementing 1...N)
         unsigned int                number() const { return m_number; }
         
-        const Vector2I&             position() const;
+        const Vector2D&             position() const { return m_state.window.position; }
 
-        const Size2I&               size() const;
+        const Size2D&               size() const { return m_state.window.area; }
 
         Stage                       stage() const;
 

@@ -37,14 +37,14 @@ namespace yq::tachyon {
     struct WindowState {
         std::string             title;          //!< Window title
         WindowFlags             flags{};        //!< Window flags
-        Vector2I                position{};     //!< Window position
+        Vector2D                position{};     //!< Window position
         MonitorID               monitor{};      //!< Monitor (might need to alter to non-glfw...)
         Size2I                  aspect{-1,-1};  //!< Fixed aspect ratio (-1 is the don't care value)
         Size2I                  max{-1,-1};     //!< Max size (-1 is the don't care value)
         Size2I                  min{-1,-1};     //!< Min size (-1 is the don't care value)
-        Size2I                  area{};         //!< Content area (in screen adjusted units)
+        Size2D                  area{};         //!< Content area (in screen adjusted units)
         Size2I                  pixels{};       //!< Frame buffer size in pixels
-        Vector2F                scale{1.f,1.f};
+        Vector2D                scale{1.,1.};
         float                   opacity = 1.f;  //!< Opacity 
     };
 }

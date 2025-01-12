@@ -31,9 +31,7 @@ namespace yq::tachyon {
         Vector2D            scale() const override;
         Size2D              size() const override;
         void                snap(MonitorSnap&) const;
-        virtual Execution tick(Context&) override;
-        
-        
+        virtual Execution   tick(Context&) override;
         
         static MonitorID       monitor(GLFWmonitor*);
         static MonitorGLFW*    monitor(ptr_k, GLFWmonitor*);

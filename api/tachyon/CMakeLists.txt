@@ -199,6 +199,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/TachyonUnsnoopCommand.cpp
     source/ya/commands/TachyonUnsubscribeCommand.cpp
     source/ya/commands/ThreadCommand.cpp
+    source/ya/commands/UICommand.cpp
     source/ya/commands/ViewerAspectCommand.cpp
     source/ya/commands/ViewerAttentionCommand.cpp
     source/ya/commands/ViewerCloseCommand.cpp

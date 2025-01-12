@@ -215,7 +215,7 @@ namespace yq::tachyon {
         // HACK (becase we know it's GLFW ATM)
         WindowGLFW* w2  = static_cast<WindowGLFW*>(win);
         GLFWwindow* gw  = w2 -> glfw();
-        m_pixels        = w2->framebuffer();
+        m_pixels        = w2 -> framebuffer(READ);
         try {
             m_viz       = std::make_unique<Visualizer>(m_createInfo, gw, m_cleanup);
         } 
@@ -883,11 +883,6 @@ namespace yq::tachyon {
         return m_paused; 
     }
 
-    const Vector2I&   Viewer::position() const
-    {
-        return m_state.window.position;
-    }
-
     void     Viewer::reject(close_k)
     {
         m_widget -> m_flags -= Widget::F::ClosePending;
@@ -945,11 +940,6 @@ namespace yq::tachyon {
     void    Viewer::set_title(std::string_view kTitle)
     {
         mail(new ViewerTitleCommand(this, kTitle));
-    }
-
-    const Size2I&   Viewer::size() const
-    {
-        return m_state.window.area;
     }
 
     void Viewer::snap(ViewerSnap&sn) const

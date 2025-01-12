@@ -9,6 +9,10 @@
 #include <ya/interfaces/IMaxSize1.hpp>
 #include <yt/api/Tachyon.hpp>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace yq::tachyon {
 
     class AddMaxSize¹;
@@ -46,7 +50,7 @@ namespace yq::tachyon {
         const Size1D&   max_size(ref_k) const { return m_max_size; }
 
     protected:
-        Size1D      m_max_size = ONE;
+        Size1D      m_max_size = NAN;
         
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

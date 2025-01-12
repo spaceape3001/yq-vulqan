@@ -9,6 +9,10 @@
 #include <ya/interfaces/IMinSize3.hpp>
 #include <yt/api/Tachyon.hpp>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace yq::tachyon {
 
     class AddMinSize³;
@@ -62,7 +66,7 @@ namespace yq::tachyon {
 
     protected:
 
-        Size3D      m_min_size = ONE;
+        Size3D      m_min_size = NAN;
         
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

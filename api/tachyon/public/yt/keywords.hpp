@@ -105,6 +105,7 @@ namespace yq::tachyon {
     struct proxy_k {};
     struct ptr_k {};
     struct queue_k {};
+    struct read_k {};
     struct rebind_k {};
     struct reject_k {};
     struct rendered³_k {};
@@ -133,6 +134,7 @@ namespace yq::tachyon {
     struct vulqan_k {};
     struct widget_k {};
     struct window_k {};
+    struct write_k {};
     struct yaw_k {};
     
     // any problematic macros....
@@ -212,6 +214,7 @@ namespace yq::tachyon {
     static constexpr proxy_k        PROXY;
     static constexpr ptr_k          PTR;
     static constexpr queue_k        QUEUE;
+    static constexpr read_k         READ;
     static constexpr rebind_k       REBIND;
     static constexpr refresh_k      REFRESH;
     static constexpr reject_k       REJECT;
@@ -242,5 +245,6 @@ namespace yq::tachyon {
     static constexpr vulqan_k       VULQAN;
     static constexpr widget_k       WIDGET;
     static constexpr window_k       WINDOW;
+    static constexpr write_k        WRITE;
     static constexpr yaw_k          YAW;
 }

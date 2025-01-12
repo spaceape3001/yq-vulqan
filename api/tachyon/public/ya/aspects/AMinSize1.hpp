@@ -9,6 +9,10 @@
 #include <ya/interfaces/IMinSize1.hpp>
 #include <yt/api/Tachyon.hpp>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace yq::tachyon {
 
     class AddMinSize¹;
@@ -46,7 +50,7 @@ namespace yq::tachyon {
         const Size1D&   min_size(ref_k) const { return m_min_size; }
 
     protected:
-        Size1D      m_min_size = ONE;
+        Size1D      m_min_size = NAN;
         
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

@@ -17,8 +17,6 @@
 #include <ya/commands/spatial/SetPositionY.hpp>
 #include <ya/events/spatial/Position2Event.hpp>
 
-#include "APosition2Writer.hxx"
-
 namespace yq::tachyon {
     APosition²::APosition²()
     {

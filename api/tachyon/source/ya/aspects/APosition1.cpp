@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "APosition1Writer.hxx"
-
 #include <ya/aspects/APosition1.hpp>
 #include <ya/commands/spatial/AddPosition1.hpp>
 #include <ya/commands/spatial/AddPositionX.hpp>
@@ -15,7 +13,6 @@
 #include <ya/commands/spatial/SetPosition1.hpp>
 #include <ya/commands/spatial/SetPositionX.hpp>
 #include <ya/events/spatial/Position1Event.hpp>
-
 
 namespace yq::tachyon {
     APosition¹::APosition¹()

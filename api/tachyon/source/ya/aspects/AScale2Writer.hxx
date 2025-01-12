@@ -24,6 +24,7 @@ namespace yq::tachyon {
     void AScale²::init_info(TachyonInfo::Writer<C>&w)
     {
         w.template interface<IScale²>();
+        w.property(UNSAFE, "scale", &AScale²::m_scale);
 
         w.slot(UNSAFE, &AScale²::on_set_scale2);
         w.slot(UNSAFE, &AScale²::on_set_scaleX);

@@ -24,6 +24,7 @@ namespace yq::tachyon {
     void APosition²::init_info(TachyonInfo::Writer<C>& w)
     {
         w.template interface<IPosition²>();
+        w.property(UNSAFE, "position", &APosition²::m_position);
 
         w.slot(UNSAFE, &APosition²::on_set_position2);
         w.slot(UNSAFE, &APosition²::on_set_positionX);

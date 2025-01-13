@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class SetScaleˣ;
     class SetScaleʸ;
 
-    class AScale² : public IScale², private Tachyon::Helper {
+    class AScale² : public IScale², public virtual Tachyon::Helper {
     public:
     
         //!  Basic scale in the 2D space

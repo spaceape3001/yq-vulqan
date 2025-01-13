@@ -26,7 +26,7 @@ namespace yq::tachyon {
     class SetMaxSizeˣ;
     class SetMaxSizeʸ;
 
-    class AMaxSize² : public IMaxSize², private Tachyon::Helper {
+    class AMaxSize² : public IMaxSize², public virtual Tachyon::Helper {
     public:
     
         //!  Basic max_size in the 2D space

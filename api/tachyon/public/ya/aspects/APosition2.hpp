@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class SetPositionˣ;
     class SetPositionʸ;
 
-    class APosition² : public IPosition², private Tachyon::Helper {
+    class APosition² : public IPosition², public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 2D space

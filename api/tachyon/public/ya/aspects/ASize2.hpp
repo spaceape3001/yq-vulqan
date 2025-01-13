@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class SetSizeˣ;
     class SetSizeʸ;
 
-    class ASize² : public ISize², private Tachyon::Helper {
+    class ASize² : public ISize², public virtual Tachyon::Helper {
     public:
     
         //!  Basic size in the 2D space

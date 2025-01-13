@@ -20,7 +20,7 @@ namespace yq::tachyon {
     class SetRoll;
     class YawBy;
 
-    class AOrientation³ : public IOrientation³, private Tachyon::Helper {
+    class AOrientation³ : public IOrientation³, public virtual Tachyon::Helper {
     public:
     
         //!  Basic orientation in the 3D space

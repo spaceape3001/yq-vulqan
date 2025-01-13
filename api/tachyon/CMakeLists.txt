@@ -397,6 +397,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/MousePressEvent.cpp
     source/ya/events/MouseReleaseEvent.cpp
     source/ya/events/MouseScrollEvent.cpp
+    source/ya/events/SimEvent.cpp
     source/ya/events/SpatialEvent.cpp
     source/ya/events/TachyonEvent.cpp
     source/ya/events/ThreadEvent.cpp
@@ -415,17 +416,9 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/WindowCursorDisableEvent.cpp
     source/ya/events/WindowCursorHideEvent.cpp
     source/ya/events/WindowCursorNormalEvent.cpp
-    source/ya/events/WindowDefocusEvent.cpp
     source/ya/events/WindowDestroyEvent.cpp
     source/ya/events/WindowEvent.cpp
-    source/ya/events/WindowFocusEvent.cpp
     source/ya/events/WindowFrameBufferResizeEvent.cpp
-    source/ya/events/WindowIconifyEvent.cpp
-    source/ya/events/WindowMaximizeEvent.cpp
-    source/ya/events/WindowMoveEvent.cpp
-    source/ya/events/WindowResizeEvent.cpp
-    source/ya/events/WindowRestoreEvent.cpp
-    source/ya/events/WindowScaleEvent.cpp
     source/ya/events/WindowTitleEvent.cpp
     
     source/ya/events/spatial/MaxSize1Event.cpp

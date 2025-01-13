@@ -28,8 +28,8 @@ namespace yq::tachyon {
     class HideCommand;
 
     class WindowGLFW : public Window, 
-        private APosition², private AMaxSize², private AMinSize², private ASize²,
-        private AScale²
+        public APosition², public AMaxSize², public AMinSize², public ASize²,
+        public AScale²
     {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
     public:

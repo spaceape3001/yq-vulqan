@@ -27,7 +27,7 @@ namespace yq::tachyon {
     class SetRoll;
     class YawBy;
 
-    class SimpleSpatial³ : public Spatial³, private APosition³, private AScale³, private AOrientation³ {
+    class SimpleSpatial³ : public Spatial³, public APosition³, public AScale³, public AOrientation³ {
         YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
     public:
     

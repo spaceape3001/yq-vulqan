@@ -25,7 +25,7 @@ namespace yq::tachyon {
     class SetSizeʸ;
     class SetSizeᶻ;
 
-    class ASize³ : public ISize³, private Tachyon::Helper {
+    class ASize³ : public ISize³, public virtual Tachyon::Helper {
     public:
     
         //!  Basic size in the 3D space

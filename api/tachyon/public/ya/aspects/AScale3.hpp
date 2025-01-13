@@ -25,7 +25,7 @@ namespace yq::tachyon {
     class SetScaleʸ;
     class SetScaleᶻ;
 
-    class AScale³ : public IScale³, private Tachyon::Helper {
+    class AScale³ : public IScale³, public virtual Tachyon::Helper {
     public:
     
         //!  Basic scale in the 3D space

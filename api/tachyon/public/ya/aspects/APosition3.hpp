@@ -25,7 +25,7 @@ namespace yq::tachyon {
     class SetPositionʸ;
     class SetPositionᶻ;
 
-    class APosition³ : public IPosition³, private Tachyon::Helper {
+    class APosition³ : public IPosition³, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 3D space

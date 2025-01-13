@@ -19,7 +19,7 @@ namespace yq::tachyon {
     class SetPosition¹;
     class SetPositionˣ;
 
-    class APosition¹ : public IPosition¹, private Tachyon::Helper {
+    class APosition¹ : public IPosition¹, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 1D space

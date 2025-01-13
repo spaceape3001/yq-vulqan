@@ -78,14 +78,14 @@
 #include <ya/events/ViewerDestroyEvent.hpp>
 #include <ya/events/ViewerPauseEvent.hpp>
 #include <ya/events/ViewerResumeEvent.hpp>
-#include <ya/events/WindowDefocusEvent.hpp>
 #include <ya/events/WindowDestroyEvent.hpp>
-#include <ya/events/WindowFocusEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
-#include <ya/events/WindowMoveEvent.hpp>
-#include <ya/events/WindowResizeEvent.hpp>
 
 #include <ya/events/spatial/Position2Event.hpp>
+#include <ya/events/spatial/Size2Event.hpp>
+
+#include <ya/events/ui/DefocusEvent.hpp>
+#include <ya/events/ui/FocusEvent.hpp>
 #include <ya/events/ui/HideEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
 
@@ -192,13 +192,13 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_viewer_unfloat_command);
         
         w.slot(&Viewer::on_window_close_request);
-        w.slot(&Viewer::on_window_defocus_event);
+        w.slot(&Viewer::on_defocus_event);
         w.slot(&Viewer::on_window_destroy_event);
         w.slot(&Viewer::on_window_fb_resize_event);
-        w.slot(&Viewer::on_window_focus_event);
+        w.slot(&Viewer::on_focus_event);
         w.slot(&Viewer::on_hide_event);
         w.slot(&Viewer::on_move_event);
-        w.slot(&Viewer::on_window_resize_event);
+        w.slot(&Viewer::on_size_event);
         w.slot(&Viewer::on_show_event);
     }
 
@@ -806,7 +806,7 @@ namespace yq::tachyon {
         close_request();
     }
 
-    void    Viewer::on_window_defocus_event(const WindowDefocusEvent&evt)
+    void    Viewer::on_defocus_event(const DefocusEvent&evt)
     {
         if(m_imgui){
             m_imgui->on(evt);
@@ -822,7 +822,7 @@ namespace yq::tachyon {
     {
     }
     
-    void    Viewer::on_window_focus_event(const WindowFocusEvent&evt)
+    void    Viewer::on_focus_event(const FocusEvent& evt)
     {
         if(m_imgui){
             m_imgui->on(evt);
@@ -852,13 +852,16 @@ namespace yq::tachyon {
     
     void    Viewer::on_move_event(const Position²Event&evt)
     {
-        //if(evt.source() == m_window){
+        if(evt.source() == m_window){
             yInfo() << "Viewer moved (" << evt.x() << ", " << evt.y() << ")";
-        //}
+        }
     }
 
-    void    Viewer::on_window_resize_event(const WindowResizeEvent&evt)
+    void    Viewer::on_size_event(const Size²Event&evt)
     {
+        if(evt.source() == m_window){
+            yInfo() << "Viewer resized (" << evt.x() << ", " << evt.y() << ")";
+        }
     }
     
     void    Viewer::on_show_event(const ShowEvent&evt)

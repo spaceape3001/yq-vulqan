@@ -29,7 +29,7 @@ namespace yq::tachyon {
     class SetMinSizeʸ;
     class SetMinSizeᶻ;
 
-    class AMinSize³ : public IMinSize³, private Tachyon::Helper {
+    class AMinSize³ : public IMinSize³, public virtual Tachyon::Helper {
     public:
     
         //!  Basic min_size in the 3D space

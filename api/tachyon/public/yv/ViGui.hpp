@@ -45,8 +45,8 @@ namespace yq::tachyon {
     class MousePressEvent;
     class MouseMoveEvent;
     class MouseReleaseEvent;
-    class WindowFocusEvent;
-    class WindowDefocusEvent;
+    class FocusEvent;
+    class DefocusEvent;
     
     struct ViewerState;
     
@@ -160,8 +160,8 @@ namespace yq::tachyon {
         void    on(const KeyReleaseEvent&);
         void    on(const KeyCharacterEvent&);
         
-        void    on(const WindowFocusEvent&);
-        void    on(const WindowDefocusEvent&);
+        void    on(const FocusEvent&);
+        void    on(const DefocusEvent&);
 //        void    on(const WindowStateEvent&);
     };
     

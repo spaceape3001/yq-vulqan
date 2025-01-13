@@ -57,6 +57,12 @@ namespace yq::tachyon {
     class HideEvent;
     class Position²Event;
     class ShowEvent;
+    class FocusEvent;
+    class DefocusEvent;
+    class MaximizeEvent;
+    class IconifyEvent;
+    class RestoreEvent;
+    class Size²Event;
     
     struct ViewerInitData;
     
@@ -424,13 +430,13 @@ namespace yq::tachyon {
         void    on_viewer_unfloat_command(const ViewerUnfloatCommand&);
 
         void    on_window_close_request(const WindowCloseRequestCPtr&);
-        void    on_window_defocus_event(const WindowDefocusEvent&);
+        void    on_defocus_event(const DefocusEvent&);
         void    on_window_destroy_event(const WindowDestroyEvent&);
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
-        void    on_window_focus_event(const WindowFocusEvent&);
+        void    on_focus_event(const FocusEvent&);
         void    on_hide_event(const HideEvent&);
         void    on_move_event(const Position²Event&);
-        void    on_window_resize_event(const WindowResizeEvent&);
+        void    on_size_event(const Size²Event&);
         void    on_show_event(const ShowEvent&);
         
         

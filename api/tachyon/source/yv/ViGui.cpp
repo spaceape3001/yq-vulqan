@@ -33,8 +33,8 @@
 #include <ya/events/MouseMoveEvent.hpp>
 #include <ya/events/MousePressEvent.hpp>
 #include <ya/events/MouseReleaseEvent.hpp>
-#include <ya/events/WindowDefocusEvent.hpp>
-#include <ya/events/WindowFocusEvent.hpp>
+#include <ya/events/ui/DefocusEvent.hpp>
+#include <ya/events/ui/FocusEvent.hpp>
 #include <yv/VqStructs.hpp>
 #include <yv/ViBuffer.hpp>
 #include <yv/ViContext.hpp>
@@ -722,14 +722,14 @@ namespace yq::tachyon {
         m_mouse = evt.position();
     }
 
-    void    ViGui::on(const WindowDefocusEvent&)
+    void    ViGui::on(const DefocusEvent&)
     {
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
         io.AddFocusEvent(false);
     }
     
-    void    ViGui::on(const WindowFocusEvent&)
+    void    ViGui::on(const FocusEvent&)
     {
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();

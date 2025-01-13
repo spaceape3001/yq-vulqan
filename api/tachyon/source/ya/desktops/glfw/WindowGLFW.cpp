@@ -43,15 +43,15 @@
 #include <ya/events/WindowCursorDisableEvent.hpp>
 #include <ya/events/WindowCursorHideEvent.hpp>
 #include <ya/events/WindowCursorNormalEvent.hpp>
-#include <ya/events/WindowDefocusEvent.hpp>
 #include <ya/events/WindowDestroyEvent.hpp>
-#include <ya/events/WindowFocusEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
-#include <ya/events/WindowIconifyEvent.hpp>
-#include <ya/events/WindowMaximizeEvent.hpp>
-#include <ya/events/WindowRestoreEvent.hpp>
 #include <ya/events/WindowTitleEvent.hpp>
+#include <ya/events/ui/DefocusEvent.hpp>
+#include <ya/events/ui/FocusEvent.hpp>
 #include <ya/events/ui/HideEvent.hpp>
+#include <ya/events/ui/IconifyEvent.hpp>
+#include <ya/events/ui/MaximizeEvent.hpp>
+#include <ya/events/ui/RestoreEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
 #include <ya/requests/WindowCloseRequest.hpp>
 #include <ya/requests/WindowRefreshRequest.hpp>
@@ -244,9 +244,9 @@ namespace yq::tachyon {
         if(!w)
             return ;
         if(focused){
-            w->send(new WindowFocusEvent(w));
+            w->send(new FocusEvent({.source=w}));
         } else {
-            w->send(new WindowDefocusEvent(w));
+            w->send(new DefocusEvent({.source=w}));
         }
         w->mark();
     }
@@ -257,9 +257,9 @@ namespace yq::tachyon {
         if(!w)
             return ;
         if(iconified){
-            w->send(new WindowIconifyEvent(w));
+            w->send(new IconifyEvent({.source=w}));
         } else {
-            w->send(new WindowRestoreEvent(w));
+            w->send(new RestoreEvent({.source=w}));
         }
         w->mark();
     }
@@ -270,9 +270,9 @@ namespace yq::tachyon {
         if(!w)
             return ;
         if(maximized){
-            w->send(new WindowMaximizeEvent(w));
+            w->send(new MaximizeEvent({.source=w}));
         } else {
-            w->send(new WindowRestoreEvent(w));
+            w->send(new RestoreEvent({.source=w}));
         }
         w->mark();
     }

@@ -38,8 +38,6 @@ namespace yq::tachyon {
     class ViewerCursorHideCommand;
     class ViewerCursorNormalCommand;
     class ViewerFloatCommand;
-    class ViewerPauseCommand;
-    class ViewerResumeCommand;
     class ViewerTitleCommand;
     class ViewerUnfloatCommand;
     class WindowAspectCommand;

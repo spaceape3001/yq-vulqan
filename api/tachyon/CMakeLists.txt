@@ -209,8 +209,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ViewerCursorHideCommand.cpp
     source/ya/commands/ViewerCursorNormalCommand.cpp
     source/ya/commands/ViewerFloatCommand.cpp
-    source/ya/commands/ViewerPauseCommand.cpp
-    source/ya/commands/ViewerResumeCommand.cpp
     source/ya/commands/ViewerTitleCommand.cpp
     source/ya/commands/ViewerUnfloatCommand.cpp
     source/ya/commands/WidgetCommand.cpp
@@ -226,6 +224,9 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/WindowUnfloatCommand.cpp
     
     source/ya/commands/camera/CameraSetScreen.cpp
+
+    source/ya/commands/sim/ResumeCommand.cpp
+    source/ya/commands/sim/PauseCommand.cpp
 
     source/ya/commands/spatial/AddMaxSize1.cpp
     source/ya/commands/spatial/AddMaxSize2.cpp
@@ -391,9 +392,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/ViewerCloseEvent.cpp
     source/ya/events/ViewerDestroyEvent.cpp
     source/ya/events/ViewerEvent.cpp
-    source/ya/events/ViewerPauseEvent.cpp
-    source/ya/events/ViewerResumeEvent.cpp
-    source/ya/events/ViewerTickEvent.cpp
     source/ya/events/VulqanEvent.cpp
     source/ya/events/WidgetEvent.cpp
     source/ya/events/WindowAspectEvent.cpp
@@ -422,6 +420,10 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/spatial/Size1Event.cpp
     source/ya/events/spatial/Size2Event.cpp
     source/ya/events/spatial/Size3Event.cpp
+    
+    source/ya/events/sim/PauseEvent.cpp
+    source/ya/events/sim/ResumeEvent.cpp
+    source/ya/events/sim/TickEvent.cpp
     
     source/ya/events/ui/DefocusEvent.cpp
     source/ya/events/ui/FocusEvent.cpp

@@ -64,9 +64,11 @@ namespace yq::tachyon {
     class IconifyEvent;
     class MaximizeCommand;
     class MaximizeEvent;
+    class PauseCommand;
     class Position²Event;
     class RestoreCommand;
     class RestoreEvent;
+    class ResumeCommand;
     class ShowCommand;
     class ShowEvent;
     class Size²Event;
@@ -425,7 +427,9 @@ namespace yq::tachyon {
         void    on_mouse_press_event(const MousePressEvent&);
         void    on_mouse_release_event(const MouseReleaseEvent&);
         void    on_move_event(const Position²Event&);
+        void    on_pause_command(const PauseCommand&);
         void    on_restore_command(const RestoreCommand&);
+        void    on_resume_command(const ResumeCommand&);
         void    on_size_event(const Size²Event&);
         void    on_show_command(const ShowCommand&);
         void    on_show_event(const ShowEvent&);
@@ -435,8 +439,6 @@ namespace yq::tachyon {
         void    on_viewer_close_command(const ViewerCloseCommand&);
         void    on_viewer_close_request(const ViewerCloseRequestCPtr&);
         void    on_viewer_float_command(const ViewerFloatCommand&);
-        void    on_viewer_pause_command(const ViewerPauseCommand&);
-        void    on_viewer_resume_command(const ViewerResumeCommand&);
         void    on_viewer_title_command(const ViewerTitleCommand&);
         void    on_viewer_unfloat_command(const ViewerUnfloatCommand&);
 

@@ -30,8 +30,6 @@
 #include <ya/commands/ViewerCursorHideCommand.hpp>
 #include <ya/commands/ViewerCursorNormalCommand.hpp>
 #include <ya/commands/ViewerFloatCommand.hpp>
-#include <ya/commands/ViewerPauseCommand.hpp>
-#include <ya/commands/ViewerResumeCommand.hpp>
 #include <ya/commands/ViewerTitleCommand.hpp>
 #include <ya/commands/ViewerUnfloatCommand.hpp>
 #include <ya/commands/WindowAspectCommand.hpp>
@@ -43,6 +41,9 @@
 #include <ya/commands/WindowFloatCommand.hpp>
 #include <ya/commands/WindowTitleCommand.hpp>
 #include <ya/commands/WindowUnfloatCommand.hpp>
+
+#include <ya/commands/sim/PauseCommand.hpp>
+#include <ya/commands/sim/ResumeCommand.hpp>
 
 #include <ya/commands/spatial/SetPosition2.hpp>
 #include <ya/commands/spatial/SetSize2.hpp>
@@ -67,13 +68,14 @@
 #include <ya/events/MouseReleaseEvent.hpp>
 #include <ya/events/ViewerCloseEvent.hpp>
 #include <ya/events/ViewerDestroyEvent.hpp>
-#include <ya/events/ViewerPauseEvent.hpp>
-#include <ya/events/ViewerResumeEvent.hpp>
 #include <ya/events/WindowDestroyEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
 
 #include <ya/events/spatial/Position2Event.hpp>
 #include <ya/events/spatial/Size2Event.hpp>
+
+#include <ya/events/sim/PauseEvent.hpp>
+#include <ya/events/sim/ResumeEvent.hpp>
 
 #include <ya/events/ui/DefocusEvent.hpp>
 #include <ya/events/ui/FocusEvent.hpp>
@@ -174,7 +176,9 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_mouse_release_event);
         
         w.slot(&Viewer::on_move_event);
+        w.slot(&Viewer::on_pause_command);
         w.slot(&Viewer::on_restore_command);
+        w.slot(&Viewer::on_resume_command);
         w.slot(&Viewer::on_size_event);
         w.slot(&Viewer::on_show_command);
         w.slot(&Viewer::on_show_event);
@@ -183,8 +187,6 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_viewer_close_command);
         w.slot(&Viewer::on_viewer_close_request);
         w.slot(&Viewer::on_viewer_float_command);
-        w.slot(&Viewer::on_viewer_pause_command);
-        w.slot(&Viewer::on_viewer_resume_command);
         w.slot(&Viewer::on_viewer_title_command);
         w.slot(&Viewer::on_viewer_unfloat_command);
         
@@ -415,7 +417,7 @@ namespace yq::tachyon {
 
     void    Viewer::cmd_pause()
     {
-        mail(new ViewerPauseCommand(this));
+        mail(new PauseCommand({.target=this}));
     }
     
     void    Viewer::cmd_restore()
@@ -425,7 +427,7 @@ namespace yq::tachyon {
 
     void    Viewer::cmd_resume()
     {
-        mail(new ViewerResumeCommand(this));
+        mail(new ResumeCommand({.target=this}));
     }
 
     void    Viewer::cmd_show()
@@ -711,10 +713,51 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_pause_command(const PauseCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+            
+        m_paused    = true;
+        send(new PauseEvent({.source=this}));
+        mark();
+    }
+    
+    void    Viewer::on_restore_command(const RestoreCommand& cmd)
+    {
+        if(started_or_running() && (cmd.target() == id())){
+            send(cmd.clone(REBIND, {.target=m_window}));
+        }
+    }
+    
+    void    Viewer::on_resume_command(const ResumeCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+            
+        m_paused    = false;
+        send(new ResumeEvent({.source=this}));
+        mark();
+    }
+    
     void    Viewer::on_show_command(const ShowCommand& cmd)
     {
         if(started_or_running() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
+        }
+    }
+
+    void    Viewer::on_show_event(const ShowEvent&evt)
+    {
+        switch(m_stage){
+        case Stage::Started:
+        case Stage::WidgetStart:
+            if(evt.source() == m_window){
+                m_stage = Stage::Running;
+            }
+            break;
+        default:
+            break;
         }
     }
 
@@ -772,42 +815,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    Viewer::on_viewer_pause_command(const ViewerPauseCommand&)
-    {
-        m_paused    = true;
-        send(new ViewerPauseEvent(this));
-        mark();
-    }
-    
-    void    Viewer::on_restore_command(const RestoreCommand& cmd)
-    {
-        if(started_or_running() && (cmd.target() == id())){
-            send(cmd.clone(REBIND, {.target=m_window}));
-        }
-    }
-    
-    void    Viewer::on_show_event(const ShowEvent&evt)
-    {
-        switch(m_stage){
-        case Stage::Started:
-        case Stage::WidgetStart:
-            if(evt.source() == m_window){
-                m_stage = Stage::Running;
-            }
-            break;
-        default:
-            break;
-        }
-    }
 
-
-    void    Viewer::on_viewer_resume_command(const ViewerResumeCommand&)
-    {
-        m_paused    = false;
-        send(new ViewerResumeEvent(this));
-        mark();
-    }
-    
     void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
     {
         if(started_or_running()){

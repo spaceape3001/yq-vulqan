@@ -202,7 +202,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ThreadCommand.cpp
     source/ya/commands/UICommand.cpp
     source/ya/commands/ViewerAspectCommand.cpp
-    source/ya/commands/ViewerCloseCommand.cpp
     source/ya/commands/ViewerCommand.cpp
     source/ya/commands/ViewerCursorCaptureCommand.cpp
     source/ya/commands/ViewerCursorDisableCommand.cpp
@@ -492,13 +491,15 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/requests/AppRequest.cpp
     source/ya/requests/CameraRequest.cpp
     source/ya/requests/EmptyRequest.cpp
+    source/ya/requests/SimRequest.cpp
     source/ya/requests/TachyonRequest.cpp
-    source/ya/requests/ViewerCloseRequest.cpp
+    source/ya/requests/UIRequest.cpp
     source/ya/requests/ViewerRequest.cpp
     #source/ya/requests/ViewerWidgetRequest.cpp
-    source/ya/requests/WindowCloseRequest.cpp
     source/ya/requests/WindowRefreshRequest.cpp
     source/ya/requests/WindowRequest.cpp
+    
+    source/ya/requests/ui/CloseRequest.cpp
 
     source/ya/scenes/SimpleScene3.cpp
 

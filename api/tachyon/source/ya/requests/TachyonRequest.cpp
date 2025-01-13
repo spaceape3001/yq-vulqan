@@ -5,36 +5,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/requests/TachyonRequest.hpp>
-
 #include <yt/msg/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonRequest)
 
 namespace yq::tachyon {
-    TachyonRequestInfo::TachyonRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl) :
-        RequestInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    TachyonRequest::TachyonRequest(TachyonID v, const Param& p) : Request(p), TachyonBind(v)
+    TachyonRequest::TachyonRequest(const Header& h) : Request(h)
     {
     }
     
-    TachyonRequest::TachyonRequest(const Tachyon* v, const Param& p) : Request(p), TachyonBind(v)
+    TachyonRequest::TachyonRequest(const TachyonRequest&cp, const Header&h) : Request(cp, h)
     {
     }
-    
+
     TachyonRequest::~TachyonRequest()
     {
     }
     
-    ////////////////////////////////////////////////////////////////////////////
-
     void TachyonRequest::init_info()
     {
         auto w = writer<TachyonRequest>();
-        w.description("Tachyon request base class");
+        w.abstract();
+        w.description("Tachyon Request");
     }
 }

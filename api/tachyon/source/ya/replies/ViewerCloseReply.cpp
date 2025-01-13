@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/replies/ViewerCloseReply.hpp>
-#include <ya/requests/ViewerCloseRequest.hpp>
 #include <yt/msg/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCloseReply)

@@ -51,8 +51,8 @@
 #include <ya/events/ui/MaximizeEvent.hpp>
 #include <ya/events/ui/RestoreEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
-#include <ya/requests/WindowCloseRequest.hpp>
 #include <ya/requests/WindowRefreshRequest.hpp>
+#include <ya/requests/ui/CloseRequest.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/math/utility.hpp>
 
@@ -232,7 +232,7 @@ namespace yq::tachyon {
     
             // so we don't repeat this....
         glfwSetWindowShouldClose(win, GLFW_FALSE);
-        w->send(new WindowCloseRequest(w));
+        w->send(new CloseRequest({.source=w}));
         w->mark();
     }
     
@@ -396,7 +396,7 @@ namespace yq::tachyon {
         PostAdvice  pa  = Window::advise(pp);
         if(!unspecified(pa))
             return pa;
-        if(dynamic_cast<const WindowCloseRequest*>(&pp))
+        if(dynamic_cast<const CloseRequest*>(&pp))
             return MG::General;
         return {};
     }

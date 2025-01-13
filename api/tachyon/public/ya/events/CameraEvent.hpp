@@ -1,36 +1,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  YOUR QUILL
+//  YOUR QCameraLL
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
 
 #include <yt/msg/Event.hpp>
-#include <yt/scene/CameraBind.hpp>
+#include <yt/typedef/spatial.hpp>
 
 namespace yq::tachyon {
-    class Camera;
 
-    class CameraEventInfo : public EventInfo {
-    public:
-        CameraEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class CameraEvent : public Event, public CameraBind {
-        YQ_OBJECT_INFO(CameraEventInfo)
+    //! Instructs an object to set it's position
+    class CameraEvent : public Event {
         YQ_OBJECT_DECLARE(CameraEvent, Event)
     public:
     
-        struct Param : public Event::Param {
-        };
-    
-        CameraEvent(Camera*, const Param& p = {});
-        CameraEvent(CameraID, const Param& p = {});
-        virtual ~CameraEvent();
-        
         static void init_info();
+
+    protected:
+        CameraEvent(const Header&);
+        CameraEvent(const CameraEvent&, const Header&);
+        ~CameraEvent();
+    
+    private:
+        CameraEvent(const CameraEvent&) = delete;
+        CameraEvent(CameraEvent&&) = delete;
+        CameraEvent& operator=(const CameraEvent&) = delete;
+        CameraEvent& operator=(CameraEvent&&) = delete;
     };
 }

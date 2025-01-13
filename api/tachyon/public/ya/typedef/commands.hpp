@@ -13,9 +13,6 @@ namespace yq {
 namespace yq::tachyon {
     class AppCommand;
     class CameraCommand;
-    class CameraPitchCommand;
-    class CameraRollCommand;
-    class CameraYawCommand;
     class ControllerCommand;
     class GLFWCloseCommand;
     class GLFWCommand;
@@ -31,7 +28,6 @@ namespace yq::tachyon {
     class TachyonRemoveCommand;
     class TachyonThreadCommand;
     class ViewerAspectCommand;
-    class ViewerCloseCommand;
     class ViewerCommand;
     class ViewerCursorCaptureCommand;
     class ViewerCursorDisableCommand;

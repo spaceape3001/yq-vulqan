@@ -1,32 +1,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  YOUR QUILL
+//  YOUR QAppLL
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
 
 #include <yt/msg/Event.hpp>
+#include <yt/typedef/spatial.hpp>
 
 namespace yq::tachyon {
-    class AppEventInfo : public EventInfo {
-    public:
-        AppEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
 
+    //! Instructs an object to set it's position
     class AppEvent : public Event {
-        YQ_OBJECT_INFO(AppEventInfo)
         YQ_OBJECT_DECLARE(AppEvent, Event)
     public:
     
-        struct Param : public Event::Param {
-        };
-    
-        AppEvent(const Param& p = {});
-        virtual ~AppEvent();
-        
         static void init_info();
+
+    protected:
+        AppEvent(const Header&);
+        AppEvent(const AppEvent&, const Header&);
+        ~AppEvent();
+    
+    private:
+        AppEvent(const AppEvent&) = delete;
+        AppEvent(AppEvent&&) = delete;
+        AppEvent& operator=(const AppEvent&) = delete;
+        AppEvent& operator=(AppEvent&&) = delete;
     };
 }

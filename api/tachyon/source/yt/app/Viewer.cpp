@@ -24,7 +24,6 @@
 
 #include <ya/commands/SpatialCommand.hpp>
 #include <ya/commands/ViewerAspectCommand.hpp>
-#include <ya/commands/ViewerCloseCommand.hpp>
 #include <ya/commands/ViewerCursorCaptureCommand.hpp>
 #include <ya/commands/ViewerCursorDisableCommand.hpp>
 #include <ya/commands/ViewerCursorHideCommand.hpp>
@@ -49,6 +48,7 @@
 #include <ya/commands/spatial/SetSize2.hpp>
 
 #include <ya/commands/ui/AttentionCommand.hpp>
+#include <ya/commands/ui/CloseCommand.hpp>
 #include <ya/commands/ui/FocusCommand.hpp>
 #include <ya/commands/ui/HideCommand.hpp>
 #include <ya/commands/ui/IconifyCommand.hpp>
@@ -87,9 +87,8 @@
 
 #include <ya/replies/ViewerCloseReply.hpp>
 
-#include <ya/requests/ViewerCloseRequest.hpp>
-#include <ya/requests/WindowCloseRequest.hpp>
 #include <ya/requests/WindowRefreshRequest.hpp>
+#include <ya/requests/ui/CloseRequest.hpp>
 
 #include <yv/ViContext.hpp>
 #include <yv/ViGui.hpp>
@@ -154,6 +153,10 @@ namespace yq::tachyon {
         w.description("Tachyon Viewer");
         w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
         w.slot(&Viewer::on_attention_command);
+
+        w.slot(&Viewer::on_close_command);
+        w.slot(&Viewer::on_close_request);
+
         w.slot(&Viewer::on_cursor_capture_command);
         w.slot(&Viewer::on_cursor_disable_command);
         w.slot(&Viewer::on_cursor_hide_command);
@@ -184,13 +187,10 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_show_event);
 
         w.slot(&Viewer::on_viewer_aspect_command);
-        w.slot(&Viewer::on_viewer_close_command);
-        w.slot(&Viewer::on_viewer_close_request);
         w.slot(&Viewer::on_viewer_float_command);
         w.slot(&Viewer::on_viewer_title_command);
         w.slot(&Viewer::on_viewer_unfloat_command);
         
-        w.slot(&Viewer::on_window_close_request);
         w.slot(&Viewer::on_window_destroy_event);
         w.slot(&Viewer::on_window_fb_resize_event);
     }
@@ -301,7 +301,7 @@ namespace yq::tachyon {
         RequestCPtr  req = swap(Viewer::m_closeRequest, {});
         if(req){
             send(new ViewerCloseReply(req, this, Response::QaPla));
-            mail(new ViewerCloseCommand(this));
+            mail(new CloseCommand({.target=this}));
         }
     }
 
@@ -364,9 +364,9 @@ namespace yq::tachyon {
     void    Viewer::cmd_close(bool force)
     {
         if(force){
-            mail(new ViewerCloseCommand(this));
+            mail(new CloseCommand({.target=this}));
         } else {
-            mail(new ViewerCloseRequest(this));
+            mail(new CloseRequest({.target=this}));
         }
     }
 
@@ -574,6 +574,41 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_close_command(const CloseCommand& cmd)
+    {
+        if(started_or_running() && (cmd.target() == id())){
+            send(new HideCommand({.target=m_window}));
+            m_stage = Stage::Closing;
+        }
+    }
+
+    void    Viewer::on_close_request(const CloseRequestCPtr&req) 
+    { 
+        if(!req)
+            return ;
+        
+        if((req->target() != id()) && (req->source() != m_window))
+            return;
+
+        if(closing_or_kaput()){
+            send(new ViewerCloseReply(req, this, Response::Busy));
+            return ;
+        }
+
+        if(m_closeRequest){
+            if(m_closeRequest->id() != req->id()){
+                send(new ViewerCloseReply(req, this, Response::Busy));
+            }
+            return ;
+        }
+    
+        {
+            TXLOCK
+            m_closeRequest  = req.ptr();
+        }
+        close_request();
+    }
+    
     void    Viewer::on_cursor_capture_command(const ViewerCursorCaptureCommand&)
     {
         if(started_or_running()){
@@ -775,38 +810,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    Viewer::on_viewer_close_command(const ViewerCloseCommand&)
-    {
-        if(started_or_running()){
-            send(new HideCommand({.target=m_window}));
-            m_stage = Stage::Closing;
-        }
-    }
 
-    void    Viewer::on_viewer_close_request(const ViewerCloseRequestCPtr&req) 
-    { 
-        if(!req){
-            return ;
-        }
-        
-        if(closing_or_kaput()){
-            send(new ViewerCloseReply(req, this, Response::Busy));
-            return ;
-        }
-
-        if(m_closeRequest){
-            if(m_closeRequest->id() != req->id()){
-                send(new ViewerCloseReply(req, this, Response::Busy));
-            }
-            return ;
-        }
-    
-        {
-            TXLOCK
-            m_closeRequest  = req.ptr();
-        }
-        close_request();
-    }
 
     void    Viewer::on_viewer_float_command(const ViewerFloatCommand&)
     {
@@ -814,7 +818,6 @@ namespace yq::tachyon {
             send(new WindowFloatCommand(WindowID(m_window.id)));
         }
     }
-
 
     void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
     {
@@ -830,31 +833,6 @@ namespace yq::tachyon {
         }
     }
 
-    void    Viewer::on_window_close_request(const WindowCloseRequestCPtr&req) 
-    { 
-        if(!req){
-            return ;
-        }
-
-        if(closing_or_kaput()){
-            send(new ViewerCloseReply(req, this, Response::Busy));
-            return ;
-        }
-
-        if(m_closeRequest){
-            if(m_closeRequest->id() != req->id()){
-                send(new ViewerCloseReply(req, this, Response::Busy));
-            }
-            return ;
-        }
-    
-        {
-            TXLOCK
-            m_closeRequest  = req.ptr();
-        }
-        close_request();
-    }
-
     void    Viewer::on_window_destroy_event(const WindowDestroyEvent&)
     {
         m_stage     = Stage::Destruct;
@@ -864,8 +842,6 @@ namespace yq::tachyon {
     {
     }
     
-
-
     void    Viewer::on_size_event(const Size²Event&evt)
     {
         if(evt.source() == m_window){

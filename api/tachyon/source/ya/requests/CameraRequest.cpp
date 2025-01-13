@@ -5,24 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/requests/CameraRequest.hpp>
-
 #include <yt/msg/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraRequest)
 
 namespace yq::tachyon {
-    CameraRequestInfo::CameraRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl) :
-        RequestInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    CameraRequest::CameraRequest(CameraID v, const Param& p) : Request(p), CameraBind(v)
+    CameraRequest::CameraRequest(const Header& h) : Request(h)
     {
     }
     
-    CameraRequest::CameraRequest(const Camera* v, const Param& p) : Request(p), CameraBind(v)
+    CameraRequest::CameraRequest(const CameraRequest&cp, const Header&h) : Request(cp, h)
     {
     }
 
@@ -30,11 +22,10 @@ namespace yq::tachyon {
     {
     }
     
-    ////////////////////////////////////////////////////////////////////////////
-
     void CameraRequest::init_info()
     {
         auto w = writer<CameraRequest>();
-        w.description("Camera request base class");
+        w.abstract();
+        w.description("Camera Request");
     }
 }

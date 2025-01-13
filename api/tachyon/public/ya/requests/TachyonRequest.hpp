@@ -7,29 +7,26 @@
 #pragma once
 
 #include <yt/msg/Request.hpp>
-#include <yt/api/TachyonBind.hpp>
+#include <yt/typedef/spatial.hpp>
 
 namespace yq::tachyon {
-    class Tachyon;
 
-    class TachyonRequestInfo : public RequestInfo {
-    public:
-        TachyonRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class TachyonRequest : public Request, public TachyonBind {
-        YQ_OBJECT_INFO(TachyonRequestInfo)
+    //! Instructs an object to set it's position
+    class TachyonRequest : public Request {
         YQ_OBJECT_DECLARE(TachyonRequest, Request)
     public:
     
-        struct Param : public Request::Param {
-        };
-    
-        TachyonRequest(TachyonID, const Param& p = {});
-        TachyonRequest(const Tachyon*, const Param& p = {});
-        virtual ~TachyonRequest();
         static void init_info();
+
+    protected:
+        TachyonRequest(const Header&);
+        TachyonRequest(const TachyonRequest&, const Header&);
+        ~TachyonRequest();
+        
+    private:
+        TachyonRequest(const TachyonRequest&) = delete;
+        TachyonRequest(TachyonRequest&&) = delete;
+        TachyonRequest& operator=(const TachyonRequest&) = delete;
+        TachyonRequest& operator=(TachyonRequest&&) = delete;
     };
 }

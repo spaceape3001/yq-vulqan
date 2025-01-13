@@ -12,21 +12,21 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class AppRequest : public Request {
-        YQ_OBJECT_DECLARE(AppRequest, Request)
+    class UIRequest : public Request {
+        YQ_OBJECT_DECLARE(UIRequest, Request)
     public:
     
         static void init_info();
 
     protected:
-        AppRequest(const Header&);
-        AppRequest(const AppRequest&, const Header&);
-        ~AppRequest();
+        UIRequest(const Header&);
+        UIRequest(const UIRequest&, const Header&);
+        ~UIRequest();
         
     private:
-        AppRequest(const AppRequest&) = delete;
-        AppRequest(AppRequest&&) = delete;
-        AppRequest& operator=(const AppRequest&) = delete;
-        AppRequest& operator=(AppRequest&&) = delete;
+        UIRequest(const UIRequest&) = delete;
+        UIRequest(UIRequest&&) = delete;
+        UIRequest& operator=(const UIRequest&) = delete;
+        UIRequest& operator=(UIRequest&&) = delete;
     };
 }

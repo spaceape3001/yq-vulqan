@@ -12,21 +12,21 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class AppRequest : public Request {
-        YQ_OBJECT_DECLARE(AppRequest, Request)
+    class SimRequest : public Request {
+        YQ_OBJECT_DECLARE(SimRequest, Request)
     public:
     
         static void init_info();
 
     protected:
-        AppRequest(const Header&);
-        AppRequest(const AppRequest&, const Header&);
-        ~AppRequest();
+        SimRequest(const Header&);
+        SimRequest(const SimRequest&, const Header&);
+        ~SimRequest();
         
     private:
-        AppRequest(const AppRequest&) = delete;
-        AppRequest(AppRequest&&) = delete;
-        AppRequest& operator=(const AppRequest&) = delete;
-        AppRequest& operator=(AppRequest&&) = delete;
+        SimRequest(const SimRequest&) = delete;
+        SimRequest(SimRequest&&) = delete;
+        SimRequest& operator=(const SimRequest&) = delete;
+        SimRequest& operator=(SimRequest&&) = delete;
     };
 }

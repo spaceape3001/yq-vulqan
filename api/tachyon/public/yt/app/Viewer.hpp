@@ -55,6 +55,8 @@ namespace yq::tachyon {
     class GLFWManager;
     
     class AttentionCommand;
+    class CloseCommand;
+    class CloseRequest;
     class DefocusEvent;
     class FocusCommand;
     class FocusEvent;
@@ -409,6 +411,8 @@ namespace yq::tachyon {
         void    close_request();
 
         void    on_attention_command(const AttentionCommand&);
+        void    on_close_command(const CloseCommand&);
+        void    on_close_request(const CloseRequestCPtr&);
         void    on_cursor_capture_command(const ViewerCursorCaptureCommand&);
         void    on_cursor_disable_command(const ViewerCursorDisableCommand&);
         void    on_cursor_hide_command(const ViewerCursorHideCommand&);
@@ -436,13 +440,10 @@ namespace yq::tachyon {
         void    on_spatial_command(const SpatialCommand&);
 
         void    on_viewer_aspect_command(const ViewerAspectCommand&);
-        void    on_viewer_close_command(const ViewerCloseCommand&);
-        void    on_viewer_close_request(const ViewerCloseRequestCPtr&);
         void    on_viewer_float_command(const ViewerFloatCommand&);
         void    on_viewer_title_command(const ViewerTitleCommand&);
         void    on_viewer_unfloat_command(const ViewerUnfloatCommand&);
 
-        void    on_window_close_request(const WindowCloseRequestCPtr&);
         void    on_window_destroy_event(const WindowDestroyEvent&);
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
         

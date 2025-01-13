@@ -31,7 +31,6 @@ namespace yq::tachyon {
     class TachyonRemoveCommand;
     class TachyonThreadCommand;
     class ViewerAspectCommand;
-    class ViewerAttentionCommand;
     class ViewerCloseCommand;
     class ViewerCommand;
     class ViewerCursorCaptureCommand;
@@ -39,16 +38,8 @@ namespace yq::tachyon {
     class ViewerCursorHideCommand;
     class ViewerCursorNormalCommand;
     class ViewerFloatCommand;
-    class ViewerFocusCommand;
-    class ViewerHideCommand;
-    class ViewerIconifyCommand;
-    class ViewerMaximizeCommand;
-    class ViewerMoveCommand;
     class ViewerPauseCommand;
-    class ViewerRestoreCommand;
     class ViewerResumeCommand;
-    class ViewerShowCommand;
-    class ViewerSizeCommand;
     class ViewerTitleCommand;
     class ViewerUnfloatCommand;
     class WindowAspectCommand;
@@ -60,14 +51,6 @@ namespace yq::tachyon {
     class WindowCursorNormalCommand;
     class WindowDestroyCommand;
     class WindowFloatCommand;
-    class WindowFocusCommand;
-    class WindowHideCommand;
-    class WindowIconifyCommand;
-    class WindowMaximizeCommand;
-    //class WindowMoveCommand;
-    class WindowRestoreCommand;
-    class WindowShowCommand;
-    class WindowSizeCommand;
     class WindowTitleCommand;
     class WindowUnfloatCommand;
 }

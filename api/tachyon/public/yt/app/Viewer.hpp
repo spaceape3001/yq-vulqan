@@ -54,15 +54,23 @@ namespace yq::tachyon {
     struct ViContext;
     class GLFWManager;
     
-    class HideEvent;
-    class Position²Event;
-    class ShowEvent;
-    class FocusEvent;
+    class AttentionCommand;
     class DefocusEvent;
-    class MaximizeEvent;
+    class FocusCommand;
+    class FocusEvent;
+    class HideCommand;
+    class HideEvent;
+    class IconifyCommand;
     class IconifyEvent;
+    class MaximizeCommand;
+    class MaximizeEvent;
+    class Position²Event;
+    class RestoreCommand;
     class RestoreEvent;
+    class ShowCommand;
+    class ShowEvent;
     class Size²Event;
+    class SpatialCommand;
     
     struct ViewerInitData;
     
@@ -306,13 +314,13 @@ namespace yq::tachyon {
         void                set_aspect(unlocked_k);
 
             //! Sets the window position
-        void                set_position(const Vector2I&);
+        void                set_position(const Vector2D&);
 
             //! Sets the window position
-        void                set_position(int x, int y);
+        void                set_position(double x, double y);
         
-        void                set_size(const Size2I&);
-        void                set_size(int w, int h);
+        void                set_size(const Size2D&);
+        void                set_size(double w, double h);
         
             //! Sets the window title
         void                set_title(std::string_view);
@@ -398,48 +406,43 @@ namespace yq::tachyon {
         
         void    close_request();
 
+        void    on_attention_command(const AttentionCommand&);
         void    on_cursor_capture_command(const ViewerCursorCaptureCommand&);
         void    on_cursor_disable_command(const ViewerCursorDisableCommand&);
         void    on_cursor_hide_command(const ViewerCursorHideCommand&);
         void    on_cursor_normal_command(const ViewerCursorNormalCommand&);
-        
+        void    on_defocus_event(const DefocusEvent&);
+        void    on_focus_command(const FocusCommand&);
+        void    on_focus_event(const FocusEvent&);
+        void    on_hide_event(const HideEvent&);
+        void    on_hide_command(const HideCommand&);
+        void    on_iconify_command(const IconifyCommand&);
         void    on_key_character_event(const KeyCharacterEvent&);
         void    on_key_press_event(const KeyPressEvent&);
         void    on_key_release_event(const KeyReleaseEvent&);
-
+        void    on_maximize_command(const MaximizeCommand&);
         void    on_mouse_move_event(const MouseMoveEvent&);
         void    on_mouse_press_event(const MousePressEvent&);
         void    on_mouse_release_event(const MouseReleaseEvent&);
+        void    on_move_event(const Position²Event&);
+        void    on_restore_command(const RestoreCommand&);
+        void    on_size_event(const Size²Event&);
+        void    on_show_command(const ShowCommand&);
+        void    on_show_event(const ShowEvent&);
+        void    on_spatial_command(const SpatialCommand&);
 
         void    on_viewer_aspect_command(const ViewerAspectCommand&);
-        void    on_viewer_attention_command(const ViewerAttentionCommand&);
         void    on_viewer_close_command(const ViewerCloseCommand&);
         void    on_viewer_close_request(const ViewerCloseRequestCPtr&);
         void    on_viewer_float_command(const ViewerFloatCommand&);
-        void    on_viewer_focus_command(const ViewerFocusCommand&);
-        void    on_viewer_hide_command(const ViewerHideCommand&);
-        void    on_viewer_iconify_command(const ViewerIconifyCommand&);
-        void    on_viewer_maximize_command(const ViewerMaximizeCommand&);
-        void    on_viewer_move_command(const ViewerMoveCommand&);
         void    on_viewer_pause_command(const ViewerPauseCommand&);
-        void    on_viewer_restore_command(const ViewerRestoreCommand&);
         void    on_viewer_resume_command(const ViewerResumeCommand&);
-        void    on_viewer_show_command(const ViewerShowCommand&);
-        void    on_viewer_size_command(const ViewerSizeCommand&);
         void    on_viewer_title_command(const ViewerTitleCommand&);
         void    on_viewer_unfloat_command(const ViewerUnfloatCommand&);
 
         void    on_window_close_request(const WindowCloseRequestCPtr&);
-        void    on_defocus_event(const DefocusEvent&);
         void    on_window_destroy_event(const WindowDestroyEvent&);
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
-        void    on_focus_event(const FocusEvent&);
-        void    on_hide_event(const HideEvent&);
-        void    on_move_event(const Position²Event&);
-        void    on_size_event(const Size²Event&);
-        void    on_show_event(const ShowEvent&);
-        
-        
         
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

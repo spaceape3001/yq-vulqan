@@ -11,8 +11,8 @@
 
 #include <yt/logging.hpp>
 #include <yt/app/Viewer.hpp>
-#include <ya/commands/ViewerShowCommand.hpp>
-#include <ya/commands/WidgetStartupCommand.hpp>
+#include <ya/commands/ui/ShowCommand.hpp>
+#include <ya/commands/ui/StartupCommand.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
@@ -110,9 +110,11 @@ namespace yq::tachyon {
         return metaInfo().is_imgui();
     }
 
-    void    Widget::on_startup_command(const WidgetStartupCommand&)
+    void    Widget::on_startup_command(const StartupCommand&cmd)
     {
-        startup();
+        if(cmd.target() == id()){
+            startup();
+        }
     }
     
     void            Widget::prerecord(ViContext& u)
@@ -163,7 +165,9 @@ namespace yq::tachyon {
 
     void            Widget::startup()
     {
-        m_viewer->mail(new ViewerShowCommand(m_viewer));
+        if(m_viewer){
+            m_viewer->mail(new ShowCommand({.source=this, .target=m_viewer}));
+        }
     }
 
     Execution       Widget::tick(Context&) 

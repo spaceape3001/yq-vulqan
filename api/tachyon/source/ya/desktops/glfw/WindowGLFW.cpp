@@ -15,17 +15,15 @@
 #include <ya/commands/WindowCursorNormalCommand.hpp>
 #include <ya/commands/WindowDestroyCommand.hpp>
 #include <ya/commands/WindowFloatCommand.hpp>
-#include <ya/commands/WindowFocusCommand.hpp>
-#include <ya/commands/WindowIconifyCommand.hpp>
-#include <ya/commands/WindowMaximizeCommand.hpp>
-#include <ya/commands/WindowMoveCommand.hpp>
-#include <ya/commands/WindowRestoreCommand.hpp>
-#include <ya/commands/WindowShowCommand.hpp>
-#include <ya/commands/WindowSizeCommand.hpp>
 #include <ya/commands/WindowTitleCommand.hpp>
 #include <ya/commands/WindowUnfloatCommand.hpp>
 #include <ya/commands/ui/AttentionCommand.hpp>
+#include <ya/commands/ui/FocusCommand.hpp>
 #include <ya/commands/ui/HideCommand.hpp>
+#include <ya/commands/ui/IconifyCommand.hpp>
+#include <ya/commands/ui/MaximizeCommand.hpp>
+#include <ya/commands/ui/RestoreCommand.hpp>
+#include <ya/commands/ui/ShowCommand.hpp>
 #include <yt/os/KeyCode.hpp>
 #include <ya/events/KeyCharacterEvent.hpp>
 #include <ya/events/KeyPressEvent.hpp>
@@ -583,8 +581,10 @@ namespace yq::tachyon {
         mark();
     }
 
-    void    WindowGLFW::on_focus_command(const WindowFocusCommand&)
+    void    WindowGLFW::on_focus_command(const FocusCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         glfwFocusWindow(m_window);
         mark();
     }
@@ -600,26 +600,34 @@ namespace yq::tachyon {
         mark();
     }
     
-    void    WindowGLFW::on_iconify_command(const WindowIconifyCommand&)
+    void    WindowGLFW::on_iconify_command(const IconifyCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         glfwIconifyWindow(m_window);
         mark();
     }
     
-    void    WindowGLFW::on_maximize_command(const WindowMaximizeCommand&)
+    void    WindowGLFW::on_maximize_command(const MaximizeCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         glfwMaximizeWindow(m_window);
         mark();
     }
     
-    void    WindowGLFW::on_restore_command(const WindowRestoreCommand&)
+    void    WindowGLFW::on_restore_command(const RestoreCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         glfwRestoreWindow(m_window);
         mark();
     }
 
-    void    WindowGLFW::on_show_command(const WindowShowCommand&)
+    void    WindowGLFW::on_show_command(const ShowCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         if(glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
             return ;
         glfwShowWindow(m_window);

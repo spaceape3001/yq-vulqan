@@ -189,6 +189,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/MouseHideCommand.cpp
     source/ya/commands/MouseNormalCommand.cpp
     #source/ya/commands/SetParentCommand.cpp
+    source/ya/commands/SimCommand.cpp
     source/ya/commands/SpatialCommand.cpp
     source/ya/commands/TachyonCommand.cpp
     source/ya/commands/TachyonDeleteCommand.cpp
@@ -201,7 +202,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ThreadCommand.cpp
     source/ya/commands/UICommand.cpp
     source/ya/commands/ViewerAspectCommand.cpp
-    source/ya/commands/ViewerAttentionCommand.cpp
     source/ya/commands/ViewerCloseCommand.cpp
     source/ya/commands/ViewerCommand.cpp
     source/ya/commands/ViewerCursorCaptureCommand.cpp
@@ -209,20 +209,11 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ViewerCursorHideCommand.cpp
     source/ya/commands/ViewerCursorNormalCommand.cpp
     source/ya/commands/ViewerFloatCommand.cpp
-    source/ya/commands/ViewerFocusCommand.cpp
-    source/ya/commands/ViewerHideCommand.cpp
-    source/ya/commands/ViewerIconifyCommand.cpp
-    source/ya/commands/ViewerMaximizeCommand.cpp
-    source/ya/commands/ViewerMoveCommand.cpp
     source/ya/commands/ViewerPauseCommand.cpp
-    source/ya/commands/ViewerRestoreCommand.cpp
     source/ya/commands/ViewerResumeCommand.cpp
-    source/ya/commands/ViewerShowCommand.cpp
-    source/ya/commands/ViewerSizeCommand.cpp
     source/ya/commands/ViewerTitleCommand.cpp
     source/ya/commands/ViewerUnfloatCommand.cpp
     source/ya/commands/WidgetCommand.cpp
-    source/ya/commands/WidgetStartupCommand.cpp
     source/ya/commands/WindowAspectCommand.cpp
     source/ya/commands/WindowCommand.cpp
     source/ya/commands/WindowCursorCaptureCommand.cpp
@@ -231,13 +222,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/WindowCursorNormalCommand.cpp
     source/ya/commands/WindowDestroyCommand.cpp
     source/ya/commands/WindowFloatCommand.cpp
-    source/ya/commands/WindowFocusCommand.cpp
-    source/ya/commands/WindowIconifyCommand.cpp
-    source/ya/commands/WindowMaximizeCommand.cpp
-    source/ya/commands/WindowMoveCommand.cpp
-    source/ya/commands/WindowRestoreCommand.cpp
-    source/ya/commands/WindowShowCommand.cpp
-    source/ya/commands/WindowSizeCommand.cpp
     source/ya/commands/WindowTitleCommand.cpp
     source/ya/commands/WindowUnfloatCommand.cpp
     
@@ -355,6 +339,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ui/MaximizeCommand.cpp
     source/ya/commands/ui/RestoreCommand.cpp
     source/ya/commands/ui/ShowCommand.cpp
+    source/ya/commands/ui/StartupCommand.cpp
 
     source/ya/controls/Orientation3Control.cpp
 

@@ -52,20 +52,9 @@ namespace yq::tachyon {
     class ViewerEvent;
     class VulqanEvent;
     class WidgetEvent;
-    //class WindowDefocusEvent;
     class WindowDestroyEvent;
     class WindowEvent;
-    //class WindowFocusEvent;
     class WindowFrameBufferResizeEvent;
-    //class WindowHideEvent;
-    //class WindowIconifyEvent;
-    //class WindowMaximizeEvent;
-    //class WindowMoveEvent;
-    //class WindowResizeEvent;
-    //class WindowRestoreEvent;
-    //class WindowScaleEvent;
-    //class WindowShowEvent;
-    //class WindowStateEvent;
     class WindowTitleEvent;
 
     using JoystickAxisEventCPtr         = Ref<const class JoystickAxisEvent>;
@@ -93,15 +82,4 @@ namespace yq::tachyon {
     using MouseScrollEventCPtr          = Ref<const class MouseScrollEvent>;
     using ViewerCloseEventCPtr          = Ref<const class ViewerCloseEvent>;
     using ViewerEventCPtr               = Ref<const class ViewerEvent>;
-    //using WindowDefocusEventCPtr        = Ref<const class WindowDefocusEvent>;
-    //using WindowDestroyEventCPtr        = Ref<const class WindowDestroyEvent>;
-    //using WindowEventCPtr               = Ref<const class WindowEvent>;
-    //using WindowFocusEventCPtr          = Ref<const class WindowFocusEvent>;
-    //using WindowHideEventCPtr           = Ref<const class WindowHideEvent>;
-    //using WindowIconifyEventCPtr        = Ref<const class WindowIconifyEvent>;
-    //using WindowMaximizeEventCPtr       = Ref<const class WindowMaximizeEvent>;
-    //using WindowResizeEventCPtr         = Ref<const class WindowResizeEvent>;
-    //using WindowRestoreEventCPtr        = Ref<const class WindowRestoreEvent>;
-    //using WindowScaleEventCPtr          = Ref<const class WindowScaleEvent>;
-    //using WindowShowEventCPtr           = Ref<const class WindowShowEvent>;
 }

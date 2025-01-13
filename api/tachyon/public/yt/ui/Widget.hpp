@@ -18,7 +18,7 @@
 namespace yq::tachyon {
     class Viewer;
     struct ViContext;
-    class WidgetStartupCommand;
+    class StartupCommand;
 
     class WidgetInfo : public TachyonInfo {
     public:
@@ -170,7 +170,7 @@ namespace yq::tachyon {
         virtual void            startup();
         
         
-        void    on_startup_command(const WidgetStartupCommand&);
+        void    on_startup_command(const StartupCommand&);
         
         #if 0
         virtual void            on(const WidgetChildAdd&) {};

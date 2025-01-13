@@ -9,8 +9,8 @@
 #include <yt/os/WindowData.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
-#include <ya/commands/WindowShowCommand.hpp>
 #include <ya/commands/ui/HideCommand.hpp>
+#include <ya/commands/ui/ShowCommand.hpp>
 
 namespace yq::tachyon {
 
@@ -67,14 +67,14 @@ namespace yq::tachyon {
         return {};
     }
     
-    void Window::hide()
+    void Window::cmd_hide()
     {
-        mail(new HideCommand({.target=this}));
+        mail(new HideCommand({.source=this, .target=this}));
     }
     
-    void Window::show()
+    void Window::cmd_show()
     {
-        mail(new WindowShowCommand(this));
+        mail(new ShowCommand({.source=this, .target=this}));
     }
 
     void Window::snap(WindowSnap& sn) const

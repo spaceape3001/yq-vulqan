@@ -14,16 +14,16 @@
 #include <ya/commands/WindowCursorHideCommand.hpp>
 #include <ya/commands/WindowCursorNormalCommand.hpp>
 #include <ya/commands/WindowDestroyCommand.hpp>
-#include <ya/commands/WindowFloatCommand.hpp>
 #include <ya/commands/WindowTitleCommand.hpp>
-#include <ya/commands/WindowUnfloatCommand.hpp>
 #include <ya/commands/ui/AttentionCommand.hpp>
+#include <ya/commands/ui/FloatCommand.hpp>
 #include <ya/commands/ui/FocusCommand.hpp>
 #include <ya/commands/ui/HideCommand.hpp>
 #include <ya/commands/ui/IconifyCommand.hpp>
 #include <ya/commands/ui/MaximizeCommand.hpp>
 #include <ya/commands/ui/RestoreCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
+#include <ya/commands/ui/UnfloatCommand.hpp>
 #include <yt/os/KeyCode.hpp>
 #include <ya/events/KeyCharacterEvent.hpp>
 #include <ya/events/KeyPressEvent.hpp>
@@ -575,8 +575,11 @@ namespace yq::tachyon {
         m_stage = Stage::Destruct;
     }
 
-    void    WindowGLFW::on_float_command(const WindowFloatCommand&cmd)
+    void    WindowGLFW::on_float_command(const FloatCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
+
         glfwSetWindowAttrib(m_window, GLFW_FLOATING, GLFW_TRUE);
         mark();
     }
@@ -642,8 +645,11 @@ namespace yq::tachyon {
         mark();
     }
     
-    void    WindowGLFW::on_unfloat_command(const WindowUnfloatCommand&cmd)
+    void    WindowGLFW::on_unfloat_command(const UnfloatCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
+
         glfwSetWindowAttrib(m_window, GLFW_FLOATING, GLFW_FALSE);
         mark();
     }

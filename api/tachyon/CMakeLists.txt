@@ -207,9 +207,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ViewerCursorDisableCommand.cpp
     source/ya/commands/ViewerCursorHideCommand.cpp
     source/ya/commands/ViewerCursorNormalCommand.cpp
-    source/ya/commands/ViewerFloatCommand.cpp
     source/ya/commands/ViewerTitleCommand.cpp
-    source/ya/commands/ViewerUnfloatCommand.cpp
     source/ya/commands/WidgetCommand.cpp
     source/ya/commands/WindowAspectCommand.cpp
     source/ya/commands/WindowCommand.cpp
@@ -218,9 +216,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/WindowCursorHideCommand.cpp
     source/ya/commands/WindowCursorNormalCommand.cpp
     source/ya/commands/WindowDestroyCommand.cpp
-    source/ya/commands/WindowFloatCommand.cpp
     source/ya/commands/WindowTitleCommand.cpp
-    source/ya/commands/WindowUnfloatCommand.cpp
     
     source/ya/commands/camera/CameraSetScreen.cpp
 
@@ -333,6 +329,7 @@ add_library(${PROJECT_NAME} SHARED
     
     source/ya/commands/ui/AttentionCommand.cpp
     source/ya/commands/ui/CloseCommand.cpp
+    source/ya/commands/ui/FloatCommand.cpp
     source/ya/commands/ui/FocusCommand.cpp
     source/ya/commands/ui/HideCommand.cpp
     source/ya/commands/ui/IconifyCommand.cpp
@@ -340,6 +337,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ui/RestoreCommand.cpp
     source/ya/commands/ui/ShowCommand.cpp
     source/ya/commands/ui/StartupCommand.cpp
+    source/ya/commands/ui/UnfloatCommand.cpp
 
     source/ya/controls/Orientation3Control.cpp
 

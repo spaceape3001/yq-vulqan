@@ -33,9 +33,7 @@ namespace yq::tachyon {
     class ViewerCursorDisableCommand;
     class ViewerCursorHideCommand;
     class ViewerCursorNormalCommand;
-    class ViewerFloatCommand;
     class ViewerTitleCommand;
-    class ViewerUnfloatCommand;
     class WindowAspectCommand;
     class WindowAttentionCommand;
     class WindowCommand;
@@ -44,7 +42,5 @@ namespace yq::tachyon {
     class WindowCursorHideCommand;
     class WindowCursorNormalCommand;
     class WindowDestroyCommand;
-    class WindowFloatCommand;
     class WindowTitleCommand;
-    class WindowUnfloatCommand;
 }

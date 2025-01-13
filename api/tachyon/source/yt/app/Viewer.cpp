@@ -28,18 +28,14 @@
 #include <ya/commands/ViewerCursorDisableCommand.hpp>
 #include <ya/commands/ViewerCursorHideCommand.hpp>
 #include <ya/commands/ViewerCursorNormalCommand.hpp>
-#include <ya/commands/ViewerFloatCommand.hpp>
 #include <ya/commands/ViewerTitleCommand.hpp>
-#include <ya/commands/ViewerUnfloatCommand.hpp>
 #include <ya/commands/WindowAspectCommand.hpp>
 #include <ya/commands/WindowCursorCaptureCommand.hpp>
 #include <ya/commands/WindowCursorDisableCommand.hpp>
 #include <ya/commands/WindowCursorHideCommand.hpp>
 #include <ya/commands/WindowCursorNormalCommand.hpp>
 #include <ya/commands/WindowDestroyCommand.hpp>
-#include <ya/commands/WindowFloatCommand.hpp>
 #include <ya/commands/WindowTitleCommand.hpp>
-#include <ya/commands/WindowUnfloatCommand.hpp>
 
 #include <ya/commands/sim/PauseCommand.hpp>
 #include <ya/commands/sim/ResumeCommand.hpp>
@@ -49,6 +45,7 @@
 
 #include <ya/commands/ui/AttentionCommand.hpp>
 #include <ya/commands/ui/CloseCommand.hpp>
+#include <ya/commands/ui/FloatCommand.hpp>
 #include <ya/commands/ui/FocusCommand.hpp>
 #include <ya/commands/ui/HideCommand.hpp>
 #include <ya/commands/ui/IconifyCommand.hpp>
@@ -56,6 +53,7 @@
 #include <ya/commands/ui/RestoreCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/StartupCommand.hpp>
+#include <ya/commands/ui/UnfloatCommand.hpp>
 
 #include <ya/events/KeyCharacterEvent.hpp>
 #include <ya/events/KeyPressEvent.hpp>
@@ -163,6 +161,7 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_cursor_normal_command);
 
         w.slot(&Viewer::on_defocus_event);
+        w.slot(&Viewer::on_float_command);
         w.slot(&Viewer::on_focus_command);
         w.slot(&Viewer::on_focus_event);
         w.slot(&Viewer::on_hide_command);
@@ -185,11 +184,10 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_size_event);
         w.slot(&Viewer::on_show_command);
         w.slot(&Viewer::on_show_event);
+        w.slot(&Viewer::on_unfloat_command);
 
         w.slot(&Viewer::on_viewer_aspect_command);
-        w.slot(&Viewer::on_viewer_float_command);
         w.slot(&Viewer::on_viewer_title_command);
-        w.slot(&Viewer::on_viewer_unfloat_command);
         
         w.slot(&Viewer::on_window_destroy_event);
         w.slot(&Viewer::on_window_fb_resize_event);
@@ -301,7 +299,7 @@ namespace yq::tachyon {
         RequestCPtr  req = swap(Viewer::m_closeRequest, {});
         if(req){
             send(new ViewerCloseReply(req, this, Response::QaPla));
-            mail(new CloseCommand({.target=this}));
+            mail(new CloseCommand({.source=this, .target=this}));
         }
     }
 
@@ -364,9 +362,9 @@ namespace yq::tachyon {
     void    Viewer::cmd_close(bool force)
     {
         if(force){
-            mail(new CloseCommand({.target=this}));
+            mail(new CloseCommand({.source=this, .target=this}));
         } else {
-            mail(new CloseRequest({.target=this}));
+            mail(new CloseRequest({.source=this, .target=this}));
         }
     }
 
@@ -392,52 +390,52 @@ namespace yq::tachyon {
 
     void    Viewer::cmd_float()
     {
-        mail(new ViewerFloatCommand(this));
+        send(new FloatCommand({.source=this, .target=m_window}));
     }
 
     void    Viewer::cmd_focus()
     {
-        send(new FocusCommand({.source=this,.target=m_window}));
+        send(new FocusCommand({.source=this, .target=m_window}));
     }
 
     void    Viewer::cmd_hide()
     {
-        send(new HideCommand({.source=this,.target=m_window}));
+        send(new HideCommand({.source=this, .target=m_window}));
     }
 
     void    Viewer::cmd_iconify()
     {
-        send(new IconifyCommand({.source=this,.target=m_window}));
+        send(new IconifyCommand({.source=this, .target=m_window}));
     }
 
     void    Viewer::cmd_maximize()
     {
-        send(new MaximizeCommand({.source=this,.target=m_window}));
+        send(new MaximizeCommand({.source=this, .target=m_window}));
     }
 
     void    Viewer::cmd_pause()
     {
-        mail(new PauseCommand({.target=this}));
+        mail(new PauseCommand({.source=this, .target=this}));
     }
     
     void    Viewer::cmd_restore()
     {
-        send(new RestoreCommand({.source=this,.target=m_window}));
+        send(new RestoreCommand({.source=this, .target=m_window}));
     }
 
     void    Viewer::cmd_resume()
     {
-        mail(new ResumeCommand({.target=this}));
+        mail(new ResumeCommand({.source=this, .target=this}));
     }
 
     void    Viewer::cmd_show()
     {
-        send(new ShowCommand({.source=this,.target=m_window}));
+        send(new ShowCommand({.source=this, .target=m_window}));
     }
 
     void    Viewer::cmd_unfloat()
     {
-        mail(new ViewerUnfloatCommand(this));
+        send(new UnfloatCommand({.source=this, .target=m_window}));
     }
 
     std::error_code     Viewer::draw()
@@ -644,6 +642,13 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_float_command(const FloatCommand& cmd)
+    {
+        if(started_or_running() && (cmd.target() == id())){
+            send(cmd.clone(REBIND, {.target=m_window}));
+        }
+    }
+
     void    Viewer::on_focus_command(const FocusCommand&cmd)
     {
         if(started_or_running() && (cmd.target() == id())){
@@ -803,6 +808,14 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_unfloat_command(const UnfloatCommand&cmd)
+    {
+        if(started_or_running() && (cmd.target() == id())){
+            send(cmd.clone(REBIND, {.target=m_window}));
+        }
+    }
+
+
     void    Viewer::on_viewer_aspect_command(const ViewerAspectCommand& cmd)
     {
         if(started_or_running()){
@@ -811,14 +824,6 @@ namespace yq::tachyon {
     }
 
 
-
-    void    Viewer::on_viewer_float_command(const ViewerFloatCommand&)
-    {
-        if(started_or_running()){
-            send(new WindowFloatCommand(WindowID(m_window.id)));
-        }
-    }
-
     void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
     {
         if(started_or_running()){
@@ -826,13 +831,6 @@ namespace yq::tachyon {
         }
     }
     
-    void    Viewer::on_viewer_unfloat_command(const ViewerUnfloatCommand&)
-    {
-        if(started_or_running()){
-            send(new WindowUnfloatCommand(WindowID(m_window.id)));
-        }
-    }
-
     void    Viewer::on_window_destroy_event(const WindowDestroyEvent&)
     {
         m_stage     = Stage::Destruct;

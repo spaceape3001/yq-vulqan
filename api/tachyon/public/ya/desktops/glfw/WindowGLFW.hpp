@@ -26,11 +26,13 @@ namespace yq::tachyon {
     class WindowDestroyCommand;
     class AttentionCommand;
     class FocusCommand;
+    class FloatCommand;
     class HideCommand;
     class IconifyCommand;
     class MaximizeCommand;
     class RestoreCommand;
     class ShowCommand;
+    class UnfloatCommand;
 
     class WindowGLFW : public Window, 
         public APosition², public AMaxSize², public AMinSize², public ASize²,
@@ -113,7 +115,7 @@ namespace yq::tachyon {
         void    on_cursor_hide_command(const WindowCursorHideCommand&);
         void    on_cursor_normal_command(const WindowCursorNormalCommand&);
         void    on_destroy_command(const WindowDestroyCommand&);
-        void    on_float_command(const WindowFloatCommand&);
+        void    on_float_command(const FloatCommand&);
         void    on_focus_command(const FocusCommand&);
         void    on_hide_command(const HideCommand&);
         void    on_iconify_command(const IconifyCommand&);
@@ -121,7 +123,7 @@ namespace yq::tachyon {
         void    on_restore_command(const RestoreCommand&);
         void    on_show_command(const ShowCommand&);
         void    on_title_command(const WindowTitleCommand&);
-        void    on_unfloat_command(const WindowUnfloatCommand&);
+        void    on_unfloat_command(const UnfloatCommand&);
         
         ModifierKeys        modifiers(read_k) const;
         MouseButtons        buttons(read_k) const;

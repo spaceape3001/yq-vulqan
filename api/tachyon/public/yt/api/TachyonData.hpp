@@ -28,6 +28,8 @@ namespace yq::tachyon {
         
         TachyonSnap();
         virtual ~TachyonSnap();
+        
+        constexpr uint64_t id() const { return self.id; }
     };
 
     struct InPost {

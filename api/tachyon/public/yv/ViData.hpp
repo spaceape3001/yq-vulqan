@@ -26,6 +26,7 @@ namespace yq::tachyon {
     class ViVisualizer;
     struct ViBufferObject;
     struct ViTextureObject;
+    struct RenderedSnap;
 
     struct ViDataOptions {
         enum class F : uint8_t {
@@ -38,6 +39,7 @@ namespace yq::tachyon {
         Flags<F>                flags               = {};
         VkDescriptorSetLayout   layout              = nullptr;
         const void*             object              = nullptr;
+        const RenderedSnap*     snap                = nullptr;
         VkDescriptorPool        pool                = nullptr;
         VkShaderStageFlags      shaders             = {};
     };

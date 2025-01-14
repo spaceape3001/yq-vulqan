@@ -87,7 +87,7 @@ namespace yq::tachyon {
         //! Current "time"
         double              time                = 0.;
         
-        //! Current visualizer
+        //! Current visualizer (may become deprecated TBD?)
         Visualizer*         viz                 = nullptr; 
         
         //! Current viewer

@@ -141,13 +141,13 @@ namespace yq::tachyon {
         }
     }
 
-    ViRenderedPtr      ViFrame0::create(const RenderedCPtr&obj)
+    ViRenderedPtr      ViFrame0::create(const RenderedSnap* obj)
     {
         if(!m_rendereds)
             return {};
         return m_rendereds -> create(obj);
-        //return create(obj, *obj.pipeline());
     }
+
     
     //ViRenderedCPtr      ViFrame0::create(const RenderedCPtr& obj, const Pipeline& pipe)
     //{
@@ -666,6 +666,7 @@ namespace yq::tachyon {
         return std::error_code();
     }
 
+#if 0
     void    Visualizer::_draw(ViContext&u, const RenderedCPtr&r, Tristate w)
     {
         //const auto&         cfg     = p.config();
@@ -736,4 +737,5 @@ namespace yq::tachyon {
             }
         }
     }
+#endif
 }

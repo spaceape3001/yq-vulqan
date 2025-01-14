@@ -422,6 +422,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/sim/ResumeEvent.cpp
     source/ya/events/sim/TickEvent.cpp
     
+    source/ya/events/tachyon/DirtyEvent.cpp
+    
     source/ya/events/ui/DefocusEvent.cpp
     source/ya/events/ui/FocusEvent.cpp
     source/ya/events/ui/HideEvent.cpp
@@ -516,6 +518,7 @@ add_library(${PROJECT_NAME} SHARED
 
     source/ya/widgets/ImGuiDemoWidget.cpp
     source/ya/widgets/Scene3DWidget.cpp
+    source/ya/widgets/Scene3Widget.cpp
     source/ya/widgets/StackedWidget.cpp
     source/ya/widgets/TextArea.cpp
 )

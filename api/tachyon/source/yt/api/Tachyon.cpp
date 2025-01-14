@@ -24,6 +24,8 @@
 #include <ya/commands/TachyonUnsnoopCommand.hpp>
 #include <ya/commands/TachyonUnsubscribeCommand.hpp>
 
+#include <ya/events/tachyon/DirtyEvent.hpp>
+
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yt/logging.hpp>
@@ -449,6 +451,13 @@ namespace yq::tachyon {
 
         //////////////////////////////////
         //  OUTBOUND MESSAGES
+        
+        #if 0
+        // check for "dirty" behavior -- DISABLED, UNSURE IF I WANT THIS
+        if(m_snap && (m_dirty || (m_snap->revision != m_revision))){
+            data->outbound.push_back(new DirtyEvent({.source=this}));
+        }
+        #endif
         
         for(auto& out : data->outbound){
             if(std::get_if<target_k>(&out.to) && out.post->target()){

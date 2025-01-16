@@ -31,6 +31,7 @@
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/ImageViewInfo.hpp>
 #include <yt/scene/Perspective.hpp>
+#include <yt/scene/RenderedData.hpp>
 #include <yt/scene/Scene.hpp>
 #include <yv/VulqanException.hpp>
 #include <yv/VqUtils.hpp>
@@ -141,7 +142,7 @@ namespace yq::tachyon {
         }
     }
 
-    ViRenderedPtr      ViFrame0::create(const RenderedSnap* obj)
+    ViRenderedPtr      ViFrame0::create(const ViRenderedSpec& obj)
     {
         if(!m_rendereds)
             return {};

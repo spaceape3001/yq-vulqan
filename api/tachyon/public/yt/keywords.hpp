@@ -28,6 +28,9 @@ namespace yq::tachyon {
     struct static_k {
         consteval operator DataActivity() const noexcept { return DataActivity::STATIC; }
     };
+    struct shared_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::SHARED; }
+    };
     
     struct abort_k {};
     struct accept_k {};
@@ -229,6 +232,7 @@ namespace yq::tachyon {
     static constexpr scene_k        SCENE;
     static constexpr scene³_k       SCENE³;
     static constexpr settable_k     SETTABLE;
+    static constexpr shared_k       SHARED;
     static constexpr spatial_k      SPATIAL;
     static constexpr spatial³_k     SPATIAL³;
     static constexpr static_k       STATIC;

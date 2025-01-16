@@ -33,6 +33,9 @@ namespace yq::tachyon {
         //! Revision management recommended
         DYNAMIC,
         
+        //! Common data that's expected to ALWAYS change with time
+        SHARED,
+        
         //! Data is expected to ALWAYS change with time
         //! Revision management might be useful for things not changing every tick.
         REFRESH

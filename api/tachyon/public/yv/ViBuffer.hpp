@@ -44,6 +44,9 @@ namespace yq::tachyon {
         size_t              size() const { return m_size; }
         bool                valid() const;
         ViVisualizer*       visualizer() const { return m_viz; }
+        
+        //! Count from the original buffer... (zero if unspecified)
+        size_t              count() const { return m_count; }
 
         std::error_code     allocate(ViVisualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
         std::error_code     create(ViVisualizer&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
@@ -70,5 +73,6 @@ namespace yq::tachyon {
         VmaAllocation   m_allocation = nullptr;
         void*           m_data       = nullptr;
         size_t          m_size       = 0ULL;
+        size_t          m_count      = 0ULL;    // from the buffer...
     };
 }

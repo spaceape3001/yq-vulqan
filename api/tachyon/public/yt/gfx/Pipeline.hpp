@@ -82,7 +82,7 @@ namespace yq::tachyon {
         using fn_push       = std::function<void(const void*, PushBuffer&)>;
 
         //! Handler to get a revision from an object
-        using fn_revision   = std::function<uint64_t(const void*)>;
+        using fn_revision   = std::function<uint64_t(const void*)>; //< TODO: This MAY be obsolete given current designs (16 JAN 2025)
 
         struct attribute_t {
             const TypeInfo* type    = nullptr;

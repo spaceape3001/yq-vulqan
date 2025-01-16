@@ -101,12 +101,12 @@ namespace yq::tachyon {
         void                _kill_data();
         
         //! Imports the data (first time)
-        bool                _import_data();
+        bool                _import_data(const RenderedSnap* sn=nullptr);
         
         //! Updates descriptors
         void                _publish_data(bool all=false);
         
-        bool                _update_data();
+        bool                _update_data(const RenderedSnap* sn=nullptr);
         
     private:
         enum class S : uint8_t {
@@ -221,13 +221,25 @@ namespace yq::tachyon {
         void    _carve_descriptor(TB&);
 
         bool    _import(BB&, uint32_t, const Pipeline::buffer_t&);
+        bool    _import(BB&, uint32_t, const Pipeline::buffer_t&, const Buffered&);
         bool    _import(TB&, uint32_t, const Pipeline::texture_t&);
+        bool    _import(TB&, uint32_t, const Pipeline::texture_t&, const Textured&);
 
         bool    _set(BB&, uint32_t, const Buffer&);
         bool    _set(TB&, uint32_t, const Texture&);
+        bool    _set(BB&, uint32_t, const ViBufferCPtr&, uint64_t id=0);
+        bool    _set(TB&, uint32_t, const ViTextureCPtr&, uint64_t id=0);
 
         bool    _update(BB&, uint32_t, const Pipeline::buffer_t&);
+        bool    _update(BB&, uint32_t, const Pipeline::buffer_t&, const Buffered&);
         bool    _update(TB&, uint32_t, const Pipeline::texture_t&);
+        bool    _update(TB&, uint32_t, const Pipeline::texture_t&, const Textured&);
+
+        bool    _import_from(const RenderedSnap* sn);
+        bool    _update_from(const RenderedSnap* sn);
+
+        bool    _import_self();
+        bool    _update_self();
 
         void    _publish(BB&, uint32_t);
         void    _publish(TB&, uint32_t);

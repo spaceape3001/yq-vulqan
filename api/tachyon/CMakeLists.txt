@@ -517,7 +517,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/utils/LoggerBox.cpp
 
     source/ya/widgets/ImGuiDemoWidget.cpp
-    source/ya/widgets/Scene3DWidget.cpp
+    #source/ya/widgets/Scene3DWidget.cpp
     source/ya/widgets/Scene3Widget.cpp
     source/ya/widgets/StackedWidget.cpp
     source/ya/widgets/TextArea.cpp

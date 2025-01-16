@@ -12,7 +12,7 @@
 #include <yt/3D/Scene3.hpp>
 #include <yt/3D/Scene3Data.hpp>
 #include <yt/api/Frame.hpp>
-#include <yt/gfx/StdPushData.hpp>
+#include <yt/gfx/PushData.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yv/ViContext.hpp>
 #include <yv/ViRendered.hpp>
@@ -46,7 +46,7 @@ namespace yq::tachyon {
     {
     }
 
-    void    Scene³Widget::_prerecord(ViContext& ctx)
+    void    Scene³Widget::_prerecord(ViContext& u)
     {
         const Frame*    frame   = Frame::current();
         if(!frame)
@@ -64,8 +64,9 @@ namespace yq::tachyon {
             m_projection    = camera -> projection;
         }
         
-        glm::dmat4      w2e = m_projection * m_view;
-        auto r2 = auto_reset(u.world2eye, w2e);
+        Tensor44D      w2e44 = m_projection * m_view;
+        glm::dmat4      w2e = w2e44;
+        auto r2 = auto_reset(u.world2eye, glm::dmat4(w2e));
         
         // maybe a spatial -> matrix cache here???
         
@@ -90,20 +91,20 @@ namespace yq::tachyon {
             if(!sn->pipeline)
                 continue;
             
-            ViRenderedPtr  rr  = u.frame0 -> create(sn);
+            ViRenderedPtr  rr  = u.frame0 -> create({.rendered=sn});
             if(!rr)
                 continue;
 
             const void*   pb  = nullptr;
-            switch(sn->pipeline.push().type){
+            switch(sn->pipeline->push().type){
             case PushConfigType::Full:
                 if(t(Type::Rendered³)){
                     const Rendered³Snap* r3 = static_cast<const Rendered³Snap*>(sn);
                     if(r3->vm_override){
                         Tensor44D   vm  = comingle(m_view, r3->model, r3->vm_tensor);
-                        stdpush.matrix  = m_projection * vm;
+                        stdpush.matrix  = glm::dmat4(m_projection * vm);
                     } else {
-                        stdpush.matrix  = w2e * r3->model;
+                        stdpush.matrix  = glm::dmat4(w2e44 * r3->model);
                     }
                     pb  = &stdpush;
                     break;
@@ -113,23 +114,25 @@ namespace yq::tachyon {
                 stdpush.matrix  = w2e;
                 pb      = &stdpush;
                 break;
+            case PushConfigType::Custom:
+                break;
             default:
                 break;
             }
             
-            rr->update(u, sn, pb);
+            rr->update(u, *sn, pb);
             rr->descriptors();
             m_rendereds.push_back(rr);
         }
     }
 
-    void    Scene³Widget::prerecord(ViContext& ctx) 
+    void    Scene³Widget::prerecord(ViContext& u) 
     {
-        _prerecord(ctx);
-        Widget::prerecord(ctx);
+        _prerecord(u);
+        Widget::prerecord(u);
     }
 
-    void    Scene³Widget::vulkan_(ViContext& ctx)
+    void    Scene³Widget::vulkan_(ViContext& u)
     {
         {
             auto w  = auto_reset(u.wireframe, m_wireframe);
@@ -138,7 +141,7 @@ namespace yq::tachyon {
             }
             m_rendereds.clear();
         }
-        Widget::vulkan_(ctx);
+        Widget::vulkan_(u);
     }
 
     void    Scene³Widget::set_camera(Camera³ID cid)

@@ -41,7 +41,7 @@
 #include <ya/commands/spatial/SetOrientation3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
 #include <yt/3D/Spatial3.hpp>
-#include <ya/widgets/Scene3DWidget.hpp>
+#include <ya/widgets/Scene3Widget.hpp>
 
 #include <iostream>
 #include <chrono>
@@ -176,8 +176,8 @@ struct HelloQuad : public Rendered {
 
 YQ_OBJECT_IMPLEMENT(HelloQuad)
 
-struct HelloScene : public Scene3DWidget0 {
-    YQ_OBJECT_DECLARE(HelloScene, Scene3DWidget0)
+struct HelloScene : public Scene³Widget {
+    YQ_OBJECT_DECLARE(HelloScene, Scene³Widget)
     
     Ref<HelloTriangle>      triangle;
     Ref<Triangle³>          tri2;
@@ -188,22 +188,22 @@ struct HelloScene : public Scene3DWidget0 {
     HelloScene()
     {
         start       = std::chrono::steady_clock::now();
-        triangle    = Rendered::create<HelloTriangle>();
+        triangle    = create<HelloTriangle>(CHILD);
         
         Triangle³::Param p;
         p.position      = {0.,0.,0.1};
-        tri2            = Tachyon::create<Triangle³>(TriData, p);
+        tri2            = create<Triangle³>(CHILD, TriData, p);
         triSpatialID    = tri2 -> spatial();
-        quad            = Tachyon::create<HelloQuad>();
+        quad            = create<HelloQuad>(CHILD);
         
-        add_thing(tri2);
-        add_thing(triangle);
-        add_thing(quad);
+        //add_thing(tri2);
+        //add_thing(triangle);
+        //add_thing(quad);
     }
     
     Execution tick(Context& ctx)
     {
-        Scene3DWidget0::tick(ctx);
+        Scene³Widget::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
         send(new SetOrientation³({.target=triSpatialID}, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
@@ -214,7 +214,7 @@ struct HelloScene : public Scene3DWidget0 {
     
     void    vulkan_(ViContext& v)
     {
-        Scene3DWidget0::vulkan_(v);
+        Scene³Widget::vulkan_(v);
     }
 };
 

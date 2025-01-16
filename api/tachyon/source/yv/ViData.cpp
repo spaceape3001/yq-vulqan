@@ -10,6 +10,7 @@
 #include <yt/logging.hpp>
 #include <yt/gfx/Buffer.hpp>
 #include <yt/gfx/Texture.hpp>
+#include <yt/scene/RenderedData.hpp>
 #include <yv/VqStructs.hpp>
 #include <yv/ViBuffer.hpp>
 #include <yv/ViImage.hpp>
@@ -340,6 +341,39 @@ namespace yq::tachyon {
     }
     
 
+    bool    ViData::_import(BB&bb, uint32_t i, const Pipeline::buffer_t& cfg, const Buffered& buf)
+    {
+        if(i >= bb.count)
+            return false;
+
+        if(needs_pointer(cfg.activity)){
+            if(m_status(S::Static))
+                return true;
+        }
+ 
+        if(auto p = std::get_if<BufferCPtr>(&buf)){
+            if(!*p){
+                vizWarning << "ViData -- failed to provide the buffer";
+                return false;
+            }
+            
+            return _set(bb, i, **p);
+        }
+        
+        if(auto p = std::get_if<ViBufferCPtr>(&buf)){
+            if(!*p){
+                vizWarning << "ViData -- failed to provide the buffer";
+                return false;
+            }
+            return _set(bb, i, *p);
+        }
+ 
+ 
+        vizWarning << "ViData -- failed to provide the buffer";
+        return false;
+    }
+    
+
     bool    ViData::_import(TB&tb, uint32_t i, const Pipeline::texture_t& cfg)
     {
         if(i >= tb.count)
@@ -371,11 +405,72 @@ namespace yq::tachyon {
         return _set(tb, i, *c);
     }
 
-    bool                ViData::_import_data()
+    bool    ViData::_import(TB&tb, uint32_t i, const Pipeline::texture_t& cfg, const Textured& tex)
+    {
+        if(i >= tb.count)
+            return false;
+
+        if(needs_pointer(cfg.activity)){
+            if(m_status(S::Static))
+                return true;
+        }
+
+        if(auto p = std::get_if<TextureCPtr>(&tex)){
+            if(!*p){
+                vizWarning << "ViData -- failed to provide the texture";
+                return false;
+            }
+            
+            return _set(tb, i, **p);
+        }
+        
+        if(auto p = std::get_if<ViTextureCPtr>(&tex)){
+            if(!*p){
+                vizWarning << "ViData -- failed to provide the texture";
+                return false;
+            }
+
+            return _set(tb, i, *p);
+        }
+        
+        vizWarning << "ViData -- failed to provide the texture";
+        return false;
+    }
+
+    bool                ViData::_import_data(const RenderedSnap*sn)
     {
         if(m_config->is_static())
             return true;
+        if(sn){
+            return _import_from(sn);
+        } else {
+            return _import_self();
+        }
+    }
 
+    bool                ViData::_import_from(const RenderedSnap*sn)
+    {
+        bool    success = true;
+        for(uint32_t i=0;i<std::min(m_index.count,(uint32_t) sn->ibos.size());++i){
+            success = _import(m_index, i, m_config->m_indexBuffers[i], sn->ibos[i]) && success;
+        }
+        for(uint32_t i=0;i<std::min(m_storage.count,(uint32_t) sn->sbos.size());++i){
+            success = _import(m_storage, i, m_config->m_storageBuffers[i], sn->sbos[i]) && success;
+        }
+        for(uint32_t i=0;i<std::min(m_texture.count,(uint32_t) sn->texs.size());++i){
+            success = _import(m_texture, i, m_config->m_textures[i], sn->texs[i]) && success;
+        }
+        for(uint32_t i=0;i<std::min(m_uniform.count,(uint32_t) sn->ubos.size());++i){
+            success = _import(m_uniform, i, m_config->m_uniformBuffers[i], sn->ubos[i]) && success;
+        }
+        for(uint32_t i=0;i<std::min(m_vertex.count,(uint32_t) sn->vbos.size());++i){
+            success = _import(m_vertex, i, m_config->m_vertexBuffers[i], sn->vbos[i]) && success;
+        }
+        return success;
+    }
+
+    bool                ViData::_import_self()
+    {
         bool    success = true;
         for(uint32_t i=0;i<m_index.count;++i){
             success = _import(m_index, i, m_config->m_indexBuffers[i]) && success;
@@ -537,7 +632,7 @@ namespace yq::tachyon {
         m_viz               = vi.m_viz;
         m_config            = vi.m_config;
         m_object            = opts.object;
-        if(m_object){
+        if(m_object || opts.snap){
             m_status |= S::Dynamic;
         } else {
             m_status |= S::Static;
@@ -665,30 +760,38 @@ namespace yq::tachyon {
 
     bool    ViData::_set(BB& bb, uint32_t i, const Buffer& buf)
     {
-        ViBufferCPtr  x     = m_viz->buffer_create(buf);
+        return _set(bb, i, m_viz->buffer_create(buf), buf.id());
+    }
+
+    bool    ViData::_set(BB& bb, uint32_t i, const ViBufferCPtr& x, uint64_t id)
+    {
         if(!x || !x->valid()){
             vizWarning << "ViData -- unable to load buffer";
             return false;
         }
-        
+    
         bb.managed[i]   = x;
         bb.buffers[i]   = x->buffer();
-        bb.sizes[i]     = buf.memory.count();
-        bb.bytes[i]     = buf.memory.bytes();
-        bb.ids[i]       = buf.id();
+        bb.sizes[i]     = x->count();   // yeah, bit reversed here in naming...
+        bb.bytes[i]     = x->size();
+        bb.ids[i]       = id;
         bb.modified    |= 1 << i;
         return true;
     }
 
     bool    ViData::_set(TB&tb, uint32_t i, const Texture& tex)
     {
-        ViTextureCPtr x = m_viz->texture_create(tex);
+        return _set(tb, i, m_viz->texture_create(tex), tex.id());
+    }
+    
+    bool    ViData::_set(TB&tb, uint32_t i, const ViTextureCPtr&x, uint64_t id)
+    {
         if(!x || !x->valid()){
             vizWarning << "ViData -- unable to load texture";
             return false;
         }
         tb.managed[i]   = x;
-        tb.ids[i]       = tex.id();
+        tb.ids[i]       = id;
         tb.views[i]     = x->image_view();
         tb.samplers[i]  = x->sampler();
         tb.extents[i]   = x->extents();
@@ -739,6 +842,35 @@ namespace yq::tachyon {
         
         return _set(bb, i, *c);
     }
+
+    bool    ViData::_update(BB& bb, uint32_t i, const Pipeline::buffer_t& cfg, const Buffered& buf)
+    {
+        if(i >= bb.count)
+            return false;
+        if(!is_refreshed(cfg.activity))
+            return true;
+
+        if(auto p = std::get_if<BufferCPtr>(&buf)){
+            if(!*p){
+                vizWarning << "ViData -- failed to update from a null buffer";
+                return false;
+            }
+            
+            return _set(bb, i, **p);
+        }
+        
+        if(auto p = std::get_if<ViBufferCPtr>(&buf)){
+            if(!*p){
+                vizWarning << "ViData -- failed to update from a null buffer";
+                return false;
+            }
+
+            return _set(bb, i, *p);
+        }
+
+            vizWarning << "ViData -- failed to update from an unspecified buffer";
+        return false;
+    }
     
     bool    ViData::_update(TB& tb, uint32_t i, const Pipeline::texture_t& cfg)
     {
@@ -769,14 +901,75 @@ namespace yq::tachyon {
         return _set(tb, i, *c);
     }
 
+    
+    bool    ViData::_update(TB& tb, uint32_t i, const Pipeline::texture_t& cfg, const Textured& tex)
+    {
+        if(i >= tb.count)
+            return false;
+        if(!is_refreshed(cfg.activity))
+            return true;
+
+        if(auto p = std::get_if<TextureCPtr>(&tex)){
+            if(!*p){
+                vizWarning << "ViData -- failed to update from a null texture";
+                return false;
+            }
+            return _set(tb, i, **p);
+        }
+
+        if(auto p = std::get_if<ViTextureCPtr>(&tex)){
+            if(!*p){
+                vizWarning << "ViData -- failed to update from a null texture";
+                return false;
+            }
+            return _set(tb, i, *p);
+        }
+
+        vizWarning << "ViData -- failed to update from an unspecified texture";
+        return false;
+    }
+
     //! Update the data (second time)
-    bool    ViData::_update_data()
+    bool    ViData::_update_data(const RenderedSnap* sn)
     {
         if(m_config->is_static())
             return true;
     
         m_index.modified = m_storage.modified = m_texture.modified = m_uniform.modified = m_vertex.modified = 0;
         m_index.maxSize  = m_vertex.maxSize = 0;
+        
+        if(sn){
+            return _update_from(sn);
+        } else {
+            return _update_self();
+        }
+    }
+
+    bool    ViData::_update_from(const RenderedSnap* sn)
+    {
+        bool    success  = true;
+        for(uint32_t i=0;i<m_index.count;++i){
+            success = _update(m_index, i, m_config->m_indexBuffers[i], sn->ibos[i]) && success;
+            m_index.maxSize = std::max(m_index.maxSize, m_index.sizes[i]);
+        }
+        for(uint32_t i=0;i<m_storage.count;++i){
+            success = _update(m_storage, i, m_config->m_storageBuffers[i], sn->sbos[i]) && success;
+        }
+        for(uint32_t i=0;i<m_texture.count;++i){
+            success = _update(m_texture, i, m_config->m_textures[i], sn->texs[i]) && success;
+        }
+        for(uint32_t i=0;i<m_uniform.count;++i){
+            success = _update(m_uniform, i, m_config->m_uniformBuffers[i], sn->ubos[i]) && success;
+        }
+        for(uint32_t i=0;i<m_vertex.count;++i){
+            success = _update(m_vertex, i, m_config->m_vertexBuffers[i], sn->vbos[i]) && success;
+            m_vertex.maxSize = std::max(m_vertex.maxSize, m_vertex.sizes[i]);
+        }
+        return success;
+    }
+
+    bool    ViData::_update_self()
+    {
         bool    success  = true;
         for(uint32_t i=0;i<m_index.count;++i){
             success = _update(m_index, i, m_config->m_indexBuffers[i]) && success;

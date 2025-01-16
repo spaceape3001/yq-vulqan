@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/core/Tristate.hpp>
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
 #include <yt/3D/3DData.hpp>

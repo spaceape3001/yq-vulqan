@@ -91,6 +91,7 @@ namespace yq::tachyon {
             vmaUnmapMemory(m_viz->allocator(), m_allocation);
             m_data  = nullptr;
         }
+        m_count = v.count();
         return {};
     }
     

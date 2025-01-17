@@ -15,6 +15,8 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
+#include "types.hpp"
+
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/color/colors.hpp>
@@ -41,24 +43,20 @@
 #include <ya/commands/spatial/SetOrientation3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
 #include <yt/3D/Spatial3.hpp>
+#include <ya/scenes/SimpleScene3.hpp>
+#include <yt/3D/Scene3InfoWriter.hpp>
+#include <yt/ui/WidgetInfoWriter.hpp>
 #include <ya/widgets/Scene3Widget.hpp>
+#include <ya/utils/LoggerBox.hpp>
 
 #include <iostream>
-#include <chrono>
-#include <yq/math/glm.hpp>  // temporary
 #include <math.h>
 
 using namespace yq;
 using namespace yq::tachyon;
 
-struct Vertex {
-    glm::vec2   position;
-    glm::vec3   color;
-};
+TachyonID       gLogger;
 
-struct Warp {
-    float   amt = 0;
-};
 
 const Vertex vertices[] = {
     {{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
@@ -72,10 +70,6 @@ const auto  TriData   = TriangleData<ColorVertex2D>{
     { {-0.5, 0.5}, color::Orange }
 };
 
-struct Vertex2 {
-    glm::vec2   position;
-    glm::vec2   uv;
-};
 
 const Vertex2 vertices2[] = {
     {{0.25, 0.25}, {0., 0.}},
@@ -84,8 +78,6 @@ const Vertex2 vertices2[] = {
     {{0.75, 0.75}, {1., 1.}}
 };
 
-
-using timepoint_t   = std::chrono::time_point<std::chrono::steady_clock>;
 
 struct HelloTriangle : public Rendered {
     YQ_OBJECT_DECLARE(HelloTriangle, Rendered)
@@ -176,16 +168,17 @@ struct HelloQuad : public Rendered {
 
 YQ_OBJECT_IMPLEMENT(HelloQuad)
 
-struct HelloScene : public Scene³Widget {
-    YQ_OBJECT_DECLARE(HelloScene, Scene³Widget)
-    
+struct HelloScene : public SimpleScene³ {
+    YQ_TACHYON_DECLARE(HelloScene, SimpleScene³)
+public:
+
     Ref<HelloTriangle>      triangle;
     Ref<Triangle³>          tri2;
     Ref<HelloQuad>          quad;
     timepoint_t             start;
     TypedID                 triSpatialID;
 
-    HelloScene()
+    HelloScene() : SimpleScene³()
     {
         start       = std::chrono::steady_clock::now();
         triangle    = create<HelloTriangle>(CHILD);
@@ -203,7 +196,7 @@ struct HelloScene : public Scene³Widget {
     
     Execution tick(Context& ctx)
     {
-        Scene³Widget::tick(ctx);
+        SimpleScene³::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
         send(new SetOrientation³({.target=triSpatialID}, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
@@ -211,15 +204,19 @@ struct HelloScene : public Scene³Widget {
         return {};
     }
     
-    
-    void    vulkan_(ViContext& v)
+};
+
+YQ_TACHYON_IMPLEMENT(HelloScene)
+
+struct HelloWidget : public Scene³Widget {
+    YQ_TACHYON_DECLARE(HelloWidget, Scene³Widget)
+    HelloWidget()
     {
-        Scene³Widget::vulkan_(v);
     }
 };
 
+YQ_TACHYON_IMPLEMENT(HelloWidget)
 
-YQ_OBJECT_IMPLEMENT(HelloScene)
 
 //using LoggerBoxUPtr     = std::unique_ptr<post::LoggerBox>;
 
@@ -257,8 +254,17 @@ int main(int argc, char* argv[])
         postLogging = std::make_unique<post::LoggerBox>(cfg);
     }
     #endif
-    
+
     app.finalize();
-    app.run(Widget::create<HelloScene>());
+    
+    HelloScene*     sc  = Tachyon::create<HelloScene>();
+    HelloWidget*    w   = Tachyon::create<HelloWidget>();
+    w -> set_scene(sc->id());
+    
+    LoggerBox*  lb  = Tachyon::create<LoggerBox>();
+    gLogger = lb->id();
+    lb->unsafe_snoop(w);
+
+    app.run(w);
     return 0;
 }

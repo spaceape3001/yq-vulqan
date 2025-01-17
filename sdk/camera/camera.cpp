@@ -147,8 +147,8 @@ struct CameraController : public Controller {
 
 YQ_TACHYON_IMPLEMENT(CameraController)
 
-struct CameraScene3DWidget : public Scene3DWidget0 {
-    YQ_TACHYON_DECLARE(CameraScene3DWidget, Scene3DWidget0)
+struct CameraScene3DWidget : public Scene³Widget {
+    YQ_TACHYON_DECLARE(CameraScene3DWidget, Scene³Widget)
 
     std::vector<const CameraInfo*>      cam_infos;
     Map<std::string,Ref<Camera>,IgCase> cameras;
@@ -418,7 +418,7 @@ int main(int argc, char* argv[])
     Scene*      sc  = Tachyon::create<SimpleScene³>();
     Widget*     w   = Widget::create<CameraScene3DWidget>(sc);
     LoggerBox*  lb  = Tachyon::create<LoggerBox>();
-    gLogger = lb->id();
+    gLogger         = lb->id();
     //lb->unsafe_snoop(w);
     app.run(w);
     return 0;

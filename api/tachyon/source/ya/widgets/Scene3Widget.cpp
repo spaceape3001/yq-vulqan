@@ -20,6 +20,8 @@
 #include <yv/Visualizer.hxx>
 #include <yq/util/AutoReset.hpp>
 #include <yq/tensor/Tensor44.hxx>
+#include <yt/logging.hpp>
+#include <yq/vector/Vector4.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³Widget)
 
@@ -54,6 +56,8 @@ namespace yq::tachyon {
         if(!u.frame0)
             return ;
     
+        Scene³ID    sc  = id(SCENE);
+    
         const Scene³Snap*   scene   = frame -> snap(id(SCENE));
         if(!scene)
             return ;
@@ -70,6 +74,10 @@ namespace yq::tachyon {
         
         // maybe a spatial -> matrix cache here???
         
+        yInfo() << "W2E " << diagonal(w2e44);
+        
+        
+        //  eventually ... scene has lights/cameras
         for(TypedID t : scene->children){
             if(!t.types(Type::Light))
                 continue;
@@ -79,6 +87,8 @@ namespace yq::tachyon {
         
         StdPushData     stdpush;
         stdpush.time    = u.time;
+        
+        yInfo() << "Scene has " << scene->children.size() << " children";
 
         for(TypedID t : scene->children){
             if(!t(Type::Rendered))
@@ -135,6 +145,7 @@ namespace yq::tachyon {
     void    Scene³Widget::vulkan_(ViContext& u)
     {
         {
+            yInfo() << "Scene³Widget::vulkan_() rendering with " << m_rendereds.size() << " Rendereds";
             auto w  = auto_reset(u.wireframe, m_wireframe);
             for(ViRenderedPtr& rr : m_rendereds){
                 rr->record(u);
@@ -151,6 +162,6 @@ namespace yq::tachyon {
     
     void    Scene³Widget::set_scene(Scene³ID sid)
     {
-        m_camera        = TypedID(sid.id, meta<Scene³>().types());
+        m_scene         = TypedID(sid.id, meta<Scene³>().types());
     }
 }

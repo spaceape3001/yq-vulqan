@@ -6,8 +6,6 @@
 
 #include <yt/api/Controller.hpp>
 #include <yt/api/ControllerData.hpp>
-//#include <yt/api/Editor.hpp>
-//#include <yt/api/EditorData.hpp>
 #include <yt/api/Frame.hpp>
 #include <yt/api/FrameBuilder.hpp>
 #include <yt/api/Interface.hpp>
@@ -15,8 +13,6 @@
 #include <yt/api/ManagerData.hpp>
 //#include <yt/api/Post.hpp>
 #include <yt/api/Proxy.hpp>
-//#include <yt/api/Scene.hpp>
-//#include <yt/api/SceneData.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/api/TachyonData.hpp>
 #include <yt/api/Thread.hpp>
@@ -51,9 +47,10 @@
 #include <yt/os/Window.hpp>
 #include <yt/os/WindowData.hpp>
 
+//#include <yt/ui/Editor.hpp>
+//#include <yt/ui/EditorData.hpp>
 #include <yt/ui/Widget.hpp>
 #include <yt/ui/WidgetData.hpp>
-
 
 #include <yt/scene/Camera.hpp>
 #include <yt/scene/CameraData.hpp>

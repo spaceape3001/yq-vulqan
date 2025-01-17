@@ -34,6 +34,7 @@ namespace yq::tachyon {
     Scene³Info::Scene³Info(std::string_view name, SceneInfo& base, const std::source_location& sl) :
         SceneInfo(name, base, sl)
     {
+        set(Type::Scene³);
     }
 
     Scene³Info::~Scene³Info()

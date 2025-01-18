@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
     }
     
-    void    Scene3DWidget0::vulkan_(ViContext& u)
+    void    Scene3DWidget0::vulkan(ViContext& u)
     {
         if(u.viz)
             u.viz->draw_scene(u, scene, perspective);

@@ -33,7 +33,7 @@ namespace yq::tachyon {
         virtual ~Scene3DWidget0();
     
         //! Vulkan recording override
-        virtual void    vulkan_(ViContext&) override;
+        virtual void    vulkan(ViContext&) override;
 
         //! Pre-record (ie, for textures, UBOS)
         virtual void    prerecord(ViContext&) override;

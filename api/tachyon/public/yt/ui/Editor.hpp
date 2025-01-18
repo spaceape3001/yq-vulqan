@@ -47,7 +47,7 @@ namespace yq::tachyon {
         virtual void    content_(ViContext&){}
         
         //! This editor override calls the above two, don't need to override later unless doing something way different
-        virtual void    imgui_(ViContext&) override;
+        virtual void    imgui(ViContext&) override;
         
         //virtual void    draw(/*engine::ViContext&*/) override;
         

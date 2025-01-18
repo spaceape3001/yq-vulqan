@@ -27,18 +27,18 @@ namespace yq::tachyon {
         m_active        = v;
     }
     
-    void    StackedWidget::imgui_(ViContext&ctx) 
+    void    StackedWidget::imgui(ViContext&ctx) 
     {
         Widget*w    = active();
         if(w)
-            w -> imgui_(ctx);
+            w -> imgui(ctx);
     }
     
-    void    StackedWidget::vulkan_(ViContext&ctx) 
+    void    StackedWidget::vulkan(ViContext&ctx) 
     {
         Widget*w    = active();
         if(w)
-            w -> vulkan_(ctx);
+            w -> vulkan(ctx);
     }
 
     StackedWidget::StackedWidget() = default;

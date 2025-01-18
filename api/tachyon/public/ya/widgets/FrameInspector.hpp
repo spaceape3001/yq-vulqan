@@ -16,7 +16,7 @@ namespace yq::tachyon {
         FrameInspector();
         ~FrameInspector();
         
-        virtual void    imgui_(ViContext&);
+        virtual void    imgui(ViContext&);
         
         static void init_info();
     private:

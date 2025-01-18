@@ -50,16 +50,16 @@ namespace yq::tachyon {
         m_children.clear();
     }
 
-    void    Widget::imgui_(ViContext& u)
+    void    Widget::imgui(ViContext& u)
     {
         for(Widget* w : m_children)
-            w->imgui_(u);
+            w->imgui(u);
     }
     
-    void    Widget::vulkan_(ViContext&u)
+    void    Widget::vulkan(ViContext&u)
     {
         for(Widget* w : m_children)
-            w->vulkan_(u);
+            w->vulkan(u);
     }
 
     void    Widget::accept(close_k)

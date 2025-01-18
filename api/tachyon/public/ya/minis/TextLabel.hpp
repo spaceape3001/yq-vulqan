@@ -27,7 +27,7 @@ namespace yq::tachyon {
         
         using Mini::accessor;
         virtual void    accessor(set_k, AccessorUPtr&&) override;
-        virtual void    imgui_(ViContext&) override;
+        virtual void    imgui(ViContext&) override;
 
     private:
         StringAccessor* m_accessor  = nullptr;

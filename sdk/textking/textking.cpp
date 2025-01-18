@@ -107,7 +107,7 @@ public:
         
     }
     
-    void    imgui_(ViContext&) override;
+    void    imgui(ViContext&) override;
     
 private:
     std::filesystem::path   m_path;
@@ -125,12 +125,12 @@ public:
 yInfo() << "Line count is " << m_edit -> line_count();        
     }
     
-    void    imgui_(ViContext&) override;
+    void    imgui(ViContext&) override;
     
     widget::TextArea*       m_edit = nullptr;
 };
 
-void GTEditor::imgui_(ViContext&)
+void GTEditor::imgui(ViContext&)
 {
     using namespace ImGui;
     auto cpos   = GetCursorPosition();
@@ -144,7 +144,7 @@ void GTEditor::imgui_(ViContext&)
     End();
 }
 
-void    N2Editor::imgui_(ViContext&u) 
+void    N2Editor::imgui(ViContext&u) 
 {
     using namespace ImGui;
     //auto cpos   = GetCursorPosition();
@@ -157,7 +157,7 @@ void    N2Editor::imgui_(ViContext&u)
 			//IsOverwrite() ? "Ovr" : "Ins",
 			//CanUndo() ? "*" : " ",
 			//GetLanguageDefinition().mName.c_str(), m_path.c_str());
-    m_edit -> imgui_(u);
+    m_edit -> imgui(u);
     End();
     PopStyleVar();
     PopStyleVar();
@@ -184,7 +184,7 @@ public:
         m_editors.clear();
     }
     
-    void   imgui_(ViContext&u) override 
+    void   imgui(ViContext&u) override 
     {
         enum FileMode   {
             NONE    = 0,
@@ -246,7 +246,7 @@ public:
         }
         
         for(auto& e : m_editors)
-            e->imgui_(u);
+            e->imgui(u);
             
         switch(file_mode){
         case OPEN:

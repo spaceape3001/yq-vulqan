@@ -476,7 +476,7 @@ namespace yq::tachyon {
             },
             .record = [&](ViContext& u){
                 if(m_widget)
-                    m_widget -> vulkan_(u);
+                    m_widget -> vulkan(u);
                 if(m_imgui)
                     m_imgui -> record(u);
             }

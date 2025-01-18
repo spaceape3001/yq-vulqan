@@ -24,7 +24,7 @@ namespace yq::tachyon {
         void                set_tachyon(TachyonID);
         TachyonID           tachyon() const { return m_tachyon; }
 
-        virtual void        imgui_(ViContext&) override;
+        virtual void        imgui(ViContext&) override;
         virtual Execution   tick(Context&) override;
 
         //! Resets the values (but not the tachyon ID)

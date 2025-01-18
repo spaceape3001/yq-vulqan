@@ -138,17 +138,17 @@ namespace yq::tachyon {
         Widget::prerecord(u);
     }
 
-    void    Scene³Widget::vulkan_(ViContext& u)
+    void    Scene³Widget::vulkan(ViContext& u)
     {
         {
-            yInfo() << "Scene³Widget::vulkan_() rendering with " << m_rendereds.size() << " Rendereds";
+            yInfo() << "Scene³Widget::vulkan() rendering with " << m_rendereds.size() << " Rendereds";
             auto w  = auto_reset(u.wireframe, m_wireframe);
             for(ViRenderedPtr& rr : m_rendereds){
                 rr->record(u);
             }
             m_rendereds.clear();
         }
-        Widget::vulkan_(u);
+        Widget::vulkan(u);
     }
 
     void    Scene³Widget::set_camera(Camera³ID cid)

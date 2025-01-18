@@ -23,7 +23,7 @@ namespace yq::tachyon {
         ~ImGuiDemoWidget();
     
         //! Imgui render
-        virtual void    imgui_(ViContext&) override;
+        virtual void    imgui(ViContext&) override;
         
         static void init_info();
     };

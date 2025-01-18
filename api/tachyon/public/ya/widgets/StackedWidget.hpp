@@ -31,10 +31,10 @@ namespace yq::tachyon {
         void            set_active(size_t);
         
         //! Renders imgui data
-        virtual void    imgui_(ViContext&) override;
+        virtual void    imgui(ViContext&) override;
 
         //! Renders vulkan data
-        virtual void    vulkan_(ViContext&) override;
+        virtual void    vulkan(ViContext&) override;
 
         //! Default constructor
         StackedWidget();

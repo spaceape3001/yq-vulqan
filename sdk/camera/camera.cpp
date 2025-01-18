@@ -271,7 +271,7 @@ struct CameraScene3DWidget : public Scene³Widget {
         return {};
     }
 
-    void        vulkan_(ViContext& ctx) override
+    void        vulkan(ViContext& ctx) override
     {
         
         #if 0
@@ -290,10 +290,10 @@ struct CameraScene3DWidget : public Scene³Widget {
         }
         #endif
 
-        Scene3DWidget0::vulkan_(ctx);
+        Scene3DWidget0::vulkan(ctx);
     }
     
-    void    imgui_(ViContext&) override
+    void    imgui(ViContext&) override
     {
         if(BeginMainMenuBar()){
             if(BeginMenu("Camera")){

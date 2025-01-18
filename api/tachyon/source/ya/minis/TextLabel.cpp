@@ -30,7 +30,7 @@ namespace yq::tachyon {
         m_accessor = dynamic_cast<StringAccessor*>(accessor());
     }
     
-    void    TextLabel::imgui_(ViContext&) 
+    void    TextLabel::imgui(ViContext&) 
     {
         if(m_accessor){
             std::string_view    val = m_accessor -> get(VALUE);

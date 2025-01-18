@@ -29,7 +29,7 @@ namespace yq::tachyon {
         Camera³ID   id(camera_k) const { return Camera³ID{ m_camera.id }; }
         Scene³ID    id(scene_k) const { return Scene³ID{ m_scene.id }; }
 
-        virtual void    vulkan_(ViContext&) override;
+        virtual void    vulkan(ViContext&) override;
         virtual void    prerecord(ViContext&) override;
     
         void    set_camera(Camera³ID);

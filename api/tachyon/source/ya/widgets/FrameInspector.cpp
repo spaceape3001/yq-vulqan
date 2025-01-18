@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void    FrameInspector::imgui_(ViContext&ctx)
+    void    FrameInspector::imgui(ViContext&ctx)
     {
         if(ImGui::Begin("FrameInspector")){
             const Frame*  frame = Frame::current();
@@ -33,7 +33,7 @@ namespace yq::tachyon {
                 if(ImGui::BeginTable("Frame", 2)){
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
-                    m_la1->imgui_(ctx);
+                    m_la1->imgui(ctx);
 //                    ImGui::Text("Number");
                     ImGui::TableNextColumn();
                     ImGui::Text("%ld", frame->number());

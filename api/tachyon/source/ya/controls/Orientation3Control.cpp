@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
 
-    void    Orientation³Control::imgui_(ViContext& ctx) 
+    void    Orientation³Control::imgui(ViContext& ctx) 
     {
         if(ImGui::Begin("Orientation")){
             

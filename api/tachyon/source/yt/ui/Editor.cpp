@@ -24,7 +24,7 @@ namespace yq::tachyon {
     {
     }
     
-    void    Editor::imgui_(ViContext&u)
+    void    Editor::imgui(ViContext&u)
     {
         if(metaInfo().menu_bar()){
             if(ImGui::BeginMainMenuBar()){
@@ -32,7 +32,7 @@ namespace yq::tachyon {
                 ImGui::EndMainMenuBar();
             }
         }
-        Widget::imgui_(u);
+        Widget::imgui(u);
         content_(u);
     }
     

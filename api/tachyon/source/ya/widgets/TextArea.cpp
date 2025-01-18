@@ -317,7 +317,7 @@ namespace yq::widget {
         }
     }
     
-    void    TextArea::imgui_(tachyon::ViContext&) 
+    void    TextArea::imgui(tachyon::ViContext&) 
     {
         using namespace ImGui;
         m_withinRender  = true;

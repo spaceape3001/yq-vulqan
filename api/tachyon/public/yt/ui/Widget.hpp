@@ -57,7 +57,7 @@ namespace yq::tachyon {
             not be needed.  Default implementation iterates 
             through children, calling their methods recursively.
         */
-        virtual void    imgui_(ViContext&);
+        virtual void    imgui(ViContext&);
         
         /*! \brief Renders Vulkan content
         
@@ -67,7 +67,7 @@ namespace yq::tachyon {
             not be needed.  Default implementation iterates
             through children, calling their methods recursively.
         */
-        virtual void    vulkan_(ViContext&);
+        virtual void    vulkan(ViContext&);
         
         /*! \brief Sets the parent of this widget
         

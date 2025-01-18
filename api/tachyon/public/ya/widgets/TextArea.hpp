@@ -210,7 +210,7 @@ namespace yq {
             float               top_margin() const { return m_margins.lo.y; }
 
             //  Draws the widget
-            void                imgui_(tachyon::ViContext&) override;
+            void                imgui(tachyon::ViContext&) override;
             
             void                undo();
             void                redo();

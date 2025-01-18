@@ -17,7 +17,7 @@ namespace yq::tachyon {
     {
     }
     
-    void    ImGuiDemoWidget::imgui_(ViContext&) 
+    void    ImGuiDemoWidget::imgui(ViContext&) 
     {
         ImGui::ShowDemoWindow();
     }

@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/widgets/FrameInspector.hpp>
+#include <ya/minis/TextLabel.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yt/api/Frame.hpp>
@@ -14,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspector)
 namespace yq::tachyon {
     FrameInspector::FrameInspector()
     {
+        m_la1   = new TextLabel("Number");
     }
     
     FrameInspector::~FrameInspector()
@@ -31,7 +33,8 @@ namespace yq::tachyon {
                 if(ImGui::BeginTable("Frame", 2)){
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
-                    ImGui::Text("Number");
+                    m_la1->imgui_(ctx);
+//                    ImGui::Text("Number");
                     ImGui::TableNextColumn();
                     ImGui::Text("%ld", frame->number());
 

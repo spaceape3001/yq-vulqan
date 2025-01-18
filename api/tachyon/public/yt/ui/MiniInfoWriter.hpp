@@ -6,33 +6,34 @@
 
 #pragma once
 
-#include <yt/ui/Control.hpp>
+#include <yt/ui/Mini.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of control information
     */
     template <typename C>
-    class ControlInfo::Writer : public WidgetInfo::Writer<C> {
+    class MiniInfo::Writer : public WidgetInfo::Writer<C> {
     public:
     
-        Writer(ControlInfo* editorInfo) : WidgetInfo::Writer<C>(editorInfo), m_meta(editorInfo)
+        Writer(MiniInfo* miniInfo) : WidgetInfo::Writer<C>(miniInfo), m_meta(miniInfo)
         {
         }
         
-        Writer(ControlInfo& editorInfo) : Writer(&editorInfo)
+        Writer(MiniInfo& miniInfo) : Writer(&miniInfo)
         {
         }
         
-        template <typename I>
-        Writer& controls()
+        template <typename T>
+        Writer& type()
         {
             // TODO
             return *this;
         }
         
     private:
-        ControlInfo* m_meta;
+        MiniInfo* m_meta;
         
     };
 }
+

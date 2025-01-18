@@ -6,23 +6,32 @@
 
 #pragma once
 
+#include <yq/core/Any.hpp>
+#include <yt/keywords.hpp>
 #include <yt/typedef/accessor.hpp>
 #include <cassert>
-#include <variant>
 
 namespace yq::tachyon {
 
-    //! Basically a data model
-    template <typename T>
+    //! Basically a data model (meant for SIMPLE typeinfo things)
     class Accessor {
     public:
-        using value_t   = std::variant<std::monostate, T, T*, const T*>;
-        virtual value_t     get() const = 0;
+        virtual Any         get(any_k) const = 0;
         virtual bool        editable() const { return false; }
-        virtual void        set(const T&) {}
+        virtual void        set(const Any&) {}
         virtual ~Accessor(){}
     };
+
+    //! Basically a data model
+    template <typename T>
+    class TypedAccessor : public Accessor {
+    public:
+        
+        using Accessor::get;
+        using Accessor::set;
     
-    //template <typename T>
-    //using AccessorValue = typename Accessor<T>::value_t;
+        virtual T           get(value_k) const = 0;
+        virtual void        set(value_k, const T&) {}
+        virtual ~TypedAccessor(){}
+    };
 }

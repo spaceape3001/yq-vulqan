@@ -7,11 +7,13 @@
 #pragma once
 
 #include <memory>
-#include <variant>
+//#include <variant>
 
 namespace yq::tachyon {
 
-    //! Basically a data model
-    template <typename T> struct Accessor;
-    template <typename T> using AccessorUPtr    = std::unique_ptr<Accessor<T>>;
+    class Accessor;
+
+    template <typename T> struct TypedAccessor;
+
+    using AccessorUPtr    = std::unique_ptr<Accessor>;
 }

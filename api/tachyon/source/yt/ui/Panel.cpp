@@ -13,7 +13,6 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Panel)
 namespace yq::tachyon {
     PanelInfo::PanelInfo(std::string_view n, WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
     {
-        set(Flag::EDITOR);
     }
 
     Panel::Panel()
@@ -24,6 +23,7 @@ namespace yq::tachyon {
     {
     }
     
+    /*
     void    Panel::imgui_(ViContext&u)
     {
         if(metaInfo().menu_bar()){
@@ -35,6 +35,7 @@ namespace yq::tachyon {
         Widget::imgui_(u);
         content_(u);
     }
+    */
     
     void Panel::init_info()
     {

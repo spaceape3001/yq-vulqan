@@ -46,6 +46,7 @@
 #include <ya/scenes/SimpleScene3.hpp>
 #include <yt/3D/Scene3InfoWriter.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
+#include <ya/widgets/FrameInspector.hpp>
 #include <ya/widgets/Scene3Widget.hpp>
 #include <ya/utils/LoggerBox.hpp>
 
@@ -239,6 +240,7 @@ int main(int argc, char* argv[])
     AppCreateInfo        aci;
     aci.view.title      = "Hello WORLD!";
     aci.view.resizable  = true;
+    aci.view.imgui      = true;
     aci.view.size       = { 1920, 1080 };
     aci.view.clear      = { 0.f, 0.1f, 0.2f, 1.f };
     aci.view.transfer   = OPTIONAL;
@@ -260,10 +262,12 @@ int main(int argc, char* argv[])
     HelloScene*     sc  = Tachyon::create<HelloScene>();
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
+    FrameInspector* fi = w -> create<FrameInspector>(CHILD);
+    w->add_child(fi);
     
-    LoggerBox*  lb  = Tachyon::create<LoggerBox>();
-    gLogger = lb->id();
-    lb->unsafe_snoop(w);
+    //LoggerBox*  lb  = Tachyon::create<LoggerBox>();
+    //gLogger = lb->id();
+    //lb->unsafe_snoop(w);
 
     app.run(w);
     return 0;

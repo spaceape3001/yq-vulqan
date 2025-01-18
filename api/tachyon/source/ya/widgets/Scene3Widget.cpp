@@ -74,11 +74,9 @@ namespace yq::tachyon {
         
         // maybe a spatial -> matrix cache here???
         
-        yInfo() << "W2E " << diagonal(w2e44);
-        
         
         //  eventually ... scene has lights/cameras
-        for(TypedID t : scene->children){
+        for(TypedID t : scene->lights){
             if(!t.types(Type::Light))
                 continue;
                 
@@ -88,9 +86,7 @@ namespace yq::tachyon {
         StdPushData     stdpush;
         stdpush.time    = u.time;
         
-        yInfo() << "Scene has " << scene->children.size() << " children";
-
-        for(TypedID t : scene->children){
+        for(TypedID t : scene->rendereds){
             if(!t(Type::Rendered))
                 continue;
             

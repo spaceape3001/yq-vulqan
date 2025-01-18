@@ -101,7 +101,9 @@ add_library(${PROJECT_NAME} SHARED
 
     source/yt/ui/Control.cpp
     #source/yt/ui/Editor.cpp
+    source/yt/ui/Mini.cpp
     source/yt/ui/MyImGui.cpp
+    source/yt/ui/Panel.cpp
     #source/yt/ui/Tool.cpp
     source/yt/ui/Undo.cpp
     source/yt/ui/Widget.cpp
@@ -146,6 +148,8 @@ add_library(${PROJECT_NAME} SHARED
     
     #######################################################
     #   Assets (Yes, the above will use some of these)
+
+    source/ya/accessors/StringValue.cpp
 
     source/ya/aspects/AMaxSize1.cpp
     source/ya/aspects/AMaxSize2.cpp
@@ -450,6 +454,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/interfaces/ISize3.cpp
 
     source/ya/messages/EmptyMessage.cpp
+    
+    source/ya/minis/TextLabel.cpp
 
     source/ya/posts/AnyPost.cpp
     source/ya/posts/EmptyPost.cpp
@@ -518,6 +524,7 @@ add_library(${PROJECT_NAME} SHARED
 
     source/ya/widgets/FrameInspector.cpp
     source/ya/widgets/ImGuiDemoWidget.cpp
+    #source/ya/widgets/LabelWidget.cpp
     #source/ya/widgets/Scene3DWidget.cpp
     source/ya/widgets/Scene3Widget.cpp
     source/ya/widgets/StackedWidget.cpp
@@ -554,6 +561,7 @@ PUBLIC
     yq_process
     yq_raster
     yq_stb 
+    yq_text
     yq_vma
 
     ${Vulkan_LIBRARIES} 

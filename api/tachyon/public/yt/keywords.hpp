@@ -133,6 +133,7 @@ namespace yq::tachyon {
     struct types_k {};
     struct unlock_k {};
     struct unlocked_k {};
+    struct value_k {};
     struct viewer_k {};
     struct vulqan_k {};
     struct widget_k {};
@@ -245,6 +246,7 @@ namespace yq::tachyon {
     static constexpr types_k        TYPES;
     static constexpr unlock_k       UNLOCK;
     static constexpr unlocked_k     UNLOCKED;
+    static constexpr value_k        VALUE;
     static constexpr viewer_k       VIEWER;
     static constexpr vulqan_k       VULQAN;
     static constexpr widget_k       WIDGET;

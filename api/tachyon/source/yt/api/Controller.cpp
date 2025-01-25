@@ -154,7 +154,7 @@ namespace yq::tachyon {
         sn.enabled      = m_enabled;
     }
 
-    Execution Controller::tick(Context& ctx)
+    Execution Controller::tick(const Context& ctx)
     {
         Tachyon::tick(ctx);
         return {};

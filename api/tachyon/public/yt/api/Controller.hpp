@@ -58,7 +58,7 @@ namespace yq::tachyon {
         void        cmd_unlisten(TachyonID);
         
     protected:    
-        virtual Execution        tick(Context&) override;
+        virtual Execution        tick(const Context&) override;
 
         void                snap(ControllerSnap&) const;
         virtual PostAdvice  advise(const Post&) const override;

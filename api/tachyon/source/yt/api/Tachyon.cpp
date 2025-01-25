@@ -202,11 +202,6 @@ namespace yq::tachyon {
         return std::get_if<accept_k>(&pa) || std::get_if<MG>(&pa) || std::get_if<MGF>(&pa);
     }
 
-    const Frame*   Tachyon::frame()
-    {
-        return Frame::current();
-    }
-
     MGF  Tachyon::groups(const PostAdvice&pa)
     {
         if(auto p = std::get_if<MG>(&pa)){
@@ -389,17 +384,16 @@ namespace yq::tachyon {
         return {};
     }
 
-    Context&        Tachyon::context() const
+    const Context&  Tachyon::context() const
     {
         assert(in_tick());
-        return const_cast<Context&>(*m_context);
+        return *m_context;
     }
 
-    Tachyon::Result      Tachyon::cycle(Context&ctx)
+    Tachyon::Result      Tachyon::cycle(const Context&ctx)
     {
         //////////////////////////////////
         //  START THE CYCLE
-    
         TachyonDataPtr  data    = metaInfo().create_data();
         m_thread        = thread::id();
         m_data          = data.ptr();
@@ -447,7 +441,10 @@ namespace yq::tachyon {
         //////////////////////////////////
         //  TICK
         
-        Execution ex    = tick(ctx);
+        Context     ctx2(ctx);
+        ctx2.cycles = ctx.tick - m_tick0;
+        
+        Execution   ex = tiktok(ctx2);
 
         //////////////////////////////////
         //  OUTBOUND MESSAGES
@@ -533,16 +530,6 @@ namespace yq::tachyon {
     void            Tachyon::finalize(TachyonData&) const
     {
     }
-
-    //const Frame&  Tachyon::frame() const
-    //{
-        //if(!in_tick()){
-            //tachyonCritical << ident() << "::frame() -- not in tick!  Owner is " << (uint64_t) m_owner 
-                //<< " though current is " << (uint64_t) Thread::current()->id();
-        //}
-        //assert(in_tick());
-        //return m_context->frame;
-    //}
 
     TypedID             Tachyon::id(typed_k) const
     {
@@ -642,10 +629,37 @@ namespace yq::tachyon {
         mail(new TachyonThreadCommand(this, tid));
     }
 
+#if 0
+    Tachyon*    Tachyon::parent(ptr_k, const Frame& frame) const
+    {
+        return frame.object(TachyonID(m_parent));
+    }
+
+    TypedID     Tachyon::root(const Frame& frame) const
+    {
+        if(!m_parent)
+            return TypedID(this);
+            
+        return {};
+    }
+    
+    Tachyon*    Tachyon::root(ptr_k, const Frame& frame) const
+    {
+        if(!m_parent)
+            return this;
+        
+        return nullptr;
+    }
+#endif
+
     void    Tachyon::send(const PostCPtr&pp, PostTarget to)
     {
         if(!pp)
             return;
+        if(!pp->m_source){
+            const_cast<Post*>(pp.ptr()) -> m_source = TypedID(*this);
+        }
+        
         if(in_tick()){
             m_data->outbound.push_back({to, pp});
         } else {
@@ -654,6 +668,16 @@ namespace yq::tachyon {
         }
     }
 
+    void    Tachyon::shutdown()
+    {
+        //m_stage = Stage::shutdown
+    }
+
+    Execution    Tachyon::shutdown(StartupContext&)
+    {
+        return {};
+    }
+    
     void Tachyon::snap(TachyonSnap&snap) const
     {
         snap.parent     = m_parent;
@@ -671,16 +695,257 @@ namespace yq::tachyon {
         }
     }
 
+    Execution    Tachyon::startup(StartupContext&)
+    {
+        return {};
+    }
+    
     void        Tachyon::subscribe(TachyonID tid, MGF grp)
     {
         m_listeners[tid] |= grp;
     }
 
-    Execution   Tachyon::tick(Context&)
+    Execution   Tachyon::tick(const Context&)
     {
         return {};
     }
 
+    Execution   Tachyon::tiktok(const Context&ctx)
+    {
+        
+            /*
+                Yes, there will be some evil goto's here to help cleanup 
+                the execution result handling.  While the extra routines
+                (startup & shutdown) help organize up the various 
+                implementations, it dirties up this "what-to-do" response.
+                To avoid complexity of lambdas, extra "helper" routines
+                to clutter up the logic, we're going with the goto instead.
+            */
+
+        Execution   ex;
+        switch(m_stage){
+        case Stage::Uninit:
+            goto jStartup;
+        case Stage::Startup:
+            ex      = startup(ctx);
+            if(std::get_if<std::monostate>(&ex)){
+                ex  = ALWAYS;
+                goto jRun;
+            }
+            if(auto p = std::get_if<bool>(&ex)){
+                if(*p){
+                    ex  = ALWAYS;
+                    goto jRun;
+                } else 
+                    goto jKaput;
+            }
+            if(std::get_if<accept_k>(&ex))
+                goto jRun;
+            if(auto p = std::get_if<std::error_code>(&ex)){
+                if(*p == std::error_code()){
+                    ex  = ALWAYS;
+                    goto jRun;
+                } else {
+                    goto jKaput;
+                }
+            }
+            if(std::get_if<error_k>(&ex))
+                goto jKaput;
+            if(std::get_if<abort_k>(&ex))
+                goto jKaput;
+            if(std::get_if<start_k>(&ex)){
+                ex  = ALWAYS;
+                goto jRun;
+            }
+            if(std::get_if<start_k>(&ex)){
+                ex  = ALWAYS;
+                goto jRun;
+            }
+            if(std::get_if<shutdown_k>(&ex))
+                goto jShutdown;
+                
+            if(std::get_if<delete_k>(&ex))
+                goto jKaput;
+            if(std::get_if<wait_k>(&ex)){
+                ex  = ALWAYS;
+                goto done;
+            }
+            if(std::get_if<continue_k>(&ex)){
+                ex  = ALWAYS;
+                goto jDone;
+            }
+            if(std::get_if<pause_k>(&ex)){
+                ex  = ALWAYS;
+                goto jPause;
+            }
+            if(std::get_if<resume_k>(&ex)){
+                ex  = ALWAYS;
+                goto jRun;
+            }
+            
+            if(is_ticking(ex))
+                goto jRun;
+
+            //  shouldn't really hit here... still, treat it as "wait"
+            break;
+
+        case Stage::Running:
+            ex      = tick(ctx);
+            
+            if(std::get_if<std::monostate>(&ex))
+                goto jDone;
+            
+            if(std::get_if<accept_k>(&ex))
+                goto jDone;
+
+            if(auto p = std::get_if<bool>(&ex)){
+                if(*p){
+                    goto jDone;
+                } else {
+                    goto jError;
+                }
+            }
+            
+            if(auto p = std::get_if<std::error_code>(&ex)){
+                if(*p == std::error_code()){
+                    goto jDone;
+                } else {
+                    goto jError;
+                }
+            }
+            
+            if(std::get_if<error_k>(&ex))
+                goto jError;
+            if(std::get_if<abort_k>(&ex))
+                goto jError;
+            
+            if(std::get_if<start_k>(&ex))
+                goto jDone;
+            if(std::get_if<shutdown_k>(&ex))
+                goto jShutdown;
+            if(std::get_if<delete_k>(&ex))
+                goto jKaput;
+            if(std::get_if<wait_k>(&ex))
+                goto jDone;
+            if(std::get_if<continue_k>(&ex))
+                goto jDone;
+            if(std::get_if<pause_k>(&ex))
+                goto jPause;
+            break;
+            
+        case Stage::Paused:
+            ex      = paused(ctx);
+            if(std::get_if<std::monostate>(&ex))
+                goto jDone;
+                
+            if(auto p = std::get_if<bool>(&ex)){
+                if(*p){
+                    goto jRun;
+                } else {
+                    goto jDone;
+                }
+            }
+            
+            if(std::get_if<accept_k>(&ex))
+                goto jDone;
+            if(std::get_if<std::error_code>(&ex))
+                goto jDone;
+            if(std::get_if<error_k>(&ex))
+                goto jDone;
+            if(std::get_if<abort_k>(&ex))
+                goto jDone;
+            if(std::get_if<delete_k>(&ex))
+                goto jKaput;
+            if(std::get_if<wait_k>(&ex))
+                goto jDone;
+            if(std::get_if<continue_k>(&ex))
+                goto jDone;
+            if(std::get_if<pause_k>(&ex))
+                goto jDone;
+            if(std::get_if<resume_k>(&ex))
+                goto jStart;
+            if(is_ticking(ex))
+                goto jStart;
+            break;
+        case Stage::Shutdown:
+            ex      = shutdown(ctx);
+            if(std::get_if<std::monostate>(&ex))
+                goto jKaput;
+            if(auto p = std::get_if<bool>(&ex)){
+                if(*p){
+                    goto jKaput;
+                } else {
+                    goto jDone;
+                }
+            }
+            
+            if(std::get_if<accept_k>(&ex))
+                goto jKaput;
+            if(std::get_if<std::error_code>(&ex))
+                goto jKaput;
+            if(std::get_if<error_k>(&ex))
+                goto jKaput;
+            if(std::get_if<abort_k>(&ex))
+                goto jKaput;
+            if(std::get_if<start_k>(&ex))   // technically a logic error
+                goto jKaput;
+            if(std::get_if<shutdown_k>(&ex))
+                goto jKaput;
+            if(std::get_if<delete_k>(&ex))
+                goto jKaput;
+                
+            if(std::get_if<wait_k>(&ex))
+                goto jDone;
+            if(std::get_if<continue_k>(&ex))
+                goto jDone;
+
+            if(std::get_if<pause_k>(&ex))
+                goto jKaput;
+            if(std::get_if<resume_k>(&ex))
+                goto jKaput;
+            if(is_ticking(ex))
+                goto jDone;
+            break;
+        case Stage::Kaput:
+            goto jDelete;
+        }
+        
+        goto jDone;
+
+
+    jStartup:
+        m_stage     = Stage::Startup;
+        m_tick0     = ctx.tick;
+        goto jDone;
+        
+    jError:
+    jPause:
+        m_stage     = Stage::Paused;
+        m_tick0     = ctx.tick;
+        goto jDone;
+            
+    jRun:
+        m_stage     = Stage::Running;
+        m_tick0     = ctx.tick;
+        goto jDone;
+        
+    jShutdown:
+        m_stage     = Stage::Shutdown:
+        m_tick0     = ctx.tick;
+        goto jDone;
+
+    jKaput:
+        m_stage     = Stage::Kaput;
+        m_tick0     = ctx.tick;
+        goto jDone;
+        
+    jDelete:
+        ex          = DELETE;
+            
+    jDone:
+        return ex;
+    }
+    
     void Tachyon::tx(TachyonID tid, PostCPtr pp)
     {
         assert(m_context);

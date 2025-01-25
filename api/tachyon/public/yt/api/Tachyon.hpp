@@ -31,6 +31,7 @@ namespace yq::tachyon {
     class InterfaceInfo;
     class Proxy;
     class PBXDispatch;
+    struct StartupContext;
     struct Context;
     class TachyonProxyCommand;
     class TachyonDeleteCommand;
@@ -64,8 +65,7 @@ namespace yq::tachyon {
         using dispatch_map_t    = std::unordered_map<const PostInfo*, dispatch_span_t>;
 
         dispatch_span_t     dispatches(const PostInfo*) const;
-        Execution           execution() const { return m_execution; }
-    
+        
     protected:
     
         //! Destructor that should never fire
@@ -124,14 +124,6 @@ namespace yq::tachyon {
         MG,                 //< Accept & forward this post to the given groups
         MGF                 //< Accept & forward this post to the specified group
     >;
-    
-    /*! \brief Configuration status
-    */
-    using ConfigStatus  = std::variant<
-        reject_k,           //< Reject configuration (we failed, whatever the reason)
-        accept_k,           //< Accept configuration (ie done)
-        continue_k          //< We need another pass (response required)
-    >;
 
     bool unspecified(const PostAdvice& pa);
 
@@ -139,7 +131,7 @@ namespace yq::tachyon {
     
         Unfortunately, this class has picked up a bit of heft and isn't light-weight. 
         
-        **TASKING** Implement update(Context&) to get this feature.
+        **TASKING** Implement update(const Context&) to get this feature.
     
     
         \note The tachyon is the bit that makes the world go around!
@@ -158,7 +150,7 @@ namespace yq::tachyon {
         
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
-        
+
         class Helper;
         
         /*! \brief Quick identity
@@ -173,13 +165,8 @@ namespace yq::tachyon {
         
         static void         init_info();
         
+        const std::vector<TypedID>& children() const { return m_children; }
         
-        //! Inbound mail to this tachyon
-        //! \note Can be used to self-mail commands
-        void                mail(const PostCPtr&);
-        
-        //! Inbound mail to this tachyon
-        void                mail(std::span<PostCPtr const>);
         
         // Mail this post to the given tachyon...
         //static void         mail(TachyonID, const PostCPtr&);
@@ -195,6 +182,13 @@ namespace yq::tachyon {
         */
         Ident               ident() const;
         
+        //! Inbound mail to this tachyon
+        //! \note Can be used to self-mail commands
+        void                mail(const PostCPtr&);
+        
+        //! Inbound mail to this tachyon
+        void                mail(std::span<PostCPtr const>);
+        
         //! Our name
         const std::string&  name() const { return m_name; }
         
@@ -208,7 +202,11 @@ namespace yq::tachyon {
         TypedID             parent() const { return m_parent; }
         
         //! Parent pointer (from a frame)
-        Tachyon*            parent(const Frame&) const;
+        //Tachyon*            parent(ptr_k, const Frame&) const;
+        
+        //TypedID             root(const Frame&) const;
+
+        //Tachyon*            root(ptr_k, const Frame&) const;
         
         //! \note NOT thread-safe (yet)
         //! Subscribes the given listener to OUR posts
@@ -254,24 +252,35 @@ namespace yq::tachyon {
         //template <SomeTachyon T>
         //T*          create(child_t, const typename T::MyInfo&, std::span<const Any> args);
 
-        /*! \brief Frame
-        
-            When we're in the tick cycle, the current frame
-            
-            \note THIS MAY BE NULL (out-of-frame); however, it's thread-local so it won't go
-            bad during your current call.
-        */
-        static const Frame*   frame();
-
-        //virtual ConfigAdvice    configure() const;
-
         //! Checks the dirty flag
         //! \note Not 100% thread safe, meant for helpers within the same tick/thread
         bool            dirty() const { return m_dirty; }
 
     protected:
 
-        //! Marks us as dirty
+
+        enum class Stage {
+            
+            //! Ctor called, that's it
+            Preinit,
+            
+            //! Startup phase
+            Startup,
+            
+            //! Running
+            Running,
+            
+            //! Paused (can get pushed back to run)
+            Paused,
+            
+            //! Shutting down
+            Shutdown,
+            
+            //! Done/Busted (ie, ready for delete)
+            Kaput
+        };
+        
+                //! Marks us as dirty
         void            mark();
 
         static bool accepting(const PostAdvice&);
@@ -334,7 +343,31 @@ namespace yq::tachyon {
             
             This is your update, at frame rate.
         */
-        virtual Execution   tick(Context&);
+        virtual Execution   tick(const Context&);
+        
+        /*! \brief YOUR "paused" update
+            \note Do NOT call paused() on other objects!
+            
+            When paused, this is called in lieu of tick()
+        */
+        virtual Execution   paused(const Context&);
+
+        /*! \brief Your startup routine
+        
+            \note Do NOT call startups on other objects!
+            
+            This is your startup routine, called each frame until accepted.
+            
+            The unspecified return is considered acceptance.
+        */
+        virtual Execution   startup(const Context&);
+        
+        /*! \brief Your shutdown (within the tick framework)
+
+            The unspecified return is considered acceptance, and
+            will proceed to shutdown.  
+        */
+        virtual Execution   shutdown(const Context&);
         
         
         /*! Advise to the disposition of the post
@@ -382,7 +415,7 @@ namespace yq::tachyon {
             \note Using this OUT of tick cycle will lead to 
                 segmentation faults!
         */
-        Context&        context() const;
+        const Context&  context() const;
 
         /*! \brief Our outgoing data
             
@@ -392,18 +425,23 @@ namespace yq::tachyon {
                 segmentation faults!
         */
         TachyonData&    data();
-        
-        
-        //const Frame&    frame() const;
 
 
         //! When no handler found in dispatch, this gets called
         virtual void    unhandled(const PostCPtr&);
+        
+        Stage stage() const { return m_stage; }
 
     private:
         friend class Proxy;
         friend class Frame;
         friend class Thread;
+
+        
+        enum class X : uint8_t {
+            Pause
+        };
+        using XFlags    = Flags<X>;
 
         Tachyon(init_k, const Param& p={});
         Tachyon(thread_k, const Param& p={});
@@ -421,15 +459,20 @@ namespace yq::tachyon {
         ThreadID                    m_owner;      //< Thread that owns us
         uint64_t                    m_revision      = 0;    //< Revision
         TachyonSnapCPtr             m_snap;                 //< Last snap
-        TachyonData*                m_data          = nullptr;
-        Context*                    m_context       = nullptr;
+        TachyonDataCPtr             m_data;
+        const Context*              m_context       = nullptr;
         std::atomic<unsigned int>   m_thread        = kInvalidThread;
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
         std::string                 m_name;
+        uint64_t                    m_tick0         = 0;
+        Stage                       m_stage         = Stage::Preinit;
         bool                        m_dirty         = false;
-        
-        static thread_local const Frame*  s_frame;
+
+        struct {
+            //  TODO.... 
+            XFlags                  flags;
+        } m_exec;
         
         //virtual void                    parent(set_k, TachyonID);
         
@@ -439,10 +482,10 @@ namespace yq::tachyon {
         struct Result {
             TachyonDataCPtr     data;
             TachyonSnapCPtr     snap;
-            Execution           execute;
+            Execution          execute;
         };
 
-        Result  cycle(Context&);
+        Result  cycle(const Context&);
         
         //! Sets the parent (thread-safety assumed)
         void    _set_parent(TypedID);
@@ -475,6 +518,8 @@ namespace yq::tachyon {
         void    on_thread_command(const TachyonThreadCommand&);
         void    on_unsnoop_command(const TachyonUnsnoopCommand&);
         void    on_unsubscribe_command(const TachyonUnsubscribeCommand&);
+
+        Execution   tiktok(const Context&);
     };
     
     ////////////////////////////////////////////

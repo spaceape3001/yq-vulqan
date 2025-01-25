@@ -111,8 +111,9 @@ namespace yq::tachyon {
     struct read_k {};
     struct rebind_k {};
     struct reject_k {};
-    struct rendered³_k {};
     struct rendered_k {};
+    struct rendered³_k {};
+    struct request_k {};
     struct resume_k {};
     struct roll_k {};
     struct root_k {};
@@ -122,8 +123,11 @@ namespace yq::tachyon {
     struct scene_k {};
     struct scene³_k {};
     struct settable_k {};
+    struct shutdown_k {};
     struct spatial_k {};
     struct spatial³_k {};
+    struct start_k {};
+    struct startup_k {};
     struct stop_k {};
     struct tachyon_k {};
     struct task_k {};
@@ -136,6 +140,7 @@ namespace yq::tachyon {
     struct value_k {};
     struct viewer_k {};
     struct vulqan_k {};
+    struct wait_k {};
     struct widget_k {};
     struct window_k {};
     struct write_k {};
@@ -224,6 +229,7 @@ namespace yq::tachyon {
     static constexpr reject_k       REJECT;
     static constexpr rendered_k     RENDERED;
     static constexpr rendered³_k    RENDERED³;
+    static constexpr request_k      REQUEST;
     static constexpr resume_k       RESUME;
     static constexpr roll_k         ROLL;
     static constexpr root_k         ROOT;
@@ -234,8 +240,11 @@ namespace yq::tachyon {
     static constexpr scene³_k       SCENE³;
     static constexpr settable_k     SETTABLE;
     static constexpr shared_k       SHARED;
+    static constexpr shutdown_k     SHUTDOWN;
     static constexpr spatial_k      SPATIAL;
     static constexpr spatial³_k     SPATIAL³;
+    static constexpr start_k        START;
+    static constexpr startup_k      STARTUP;
     static constexpr static_k       STATIC;
     static constexpr stop_k         STOP;
     static constexpr tachyon_k      TACHYON;
@@ -249,6 +258,7 @@ namespace yq::tachyon {
     static constexpr value_k        VALUE;
     static constexpr viewer_k       VIEWER;
     static constexpr vulqan_k       VULQAN;
+    static constexpr wait_k         WAIT;
     static constexpr widget_k       WIDGET;
     static constexpr window_k       WINDOW;
     static constexpr write_k        WRITE;

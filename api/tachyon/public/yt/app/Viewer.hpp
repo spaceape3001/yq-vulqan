@@ -56,6 +56,7 @@ namespace yq::tachyon {
     
     class AttentionCommand;
     class CloseCommand;
+    class CloseReply;
     class CloseRequest;
     class DefocusEvent;
     class FloatCommand;
@@ -129,28 +130,6 @@ namespace yq::tachyon {
     
     public:
     
-        enum class Stage {
-            
-            //! Ctor called, that's it
-            Preinit,
-            
-            //! Window created, but not yet running
-            Started,
-            
-            //! Deferred to widget... waiting
-            WidgetStart,
-            
-            //! Running
-            Running,
-            
-            //! Closing (ie, window still valid)
-            Closing,
-            
-            //! Done/Busted (ie, ready for destruction)
-            Kaput,
-            
-            Destruct
-        };
     
         static void init_info();
     
@@ -185,7 +164,7 @@ namespace yq::tachyon {
 
         //! Focus widget 
         //! \note Currently not safe outside viewer's thread
-        Widget*                     focus_widget() const { return m_focus; }
+        TypedID                     focus() const { return m_focus; }
         
         const Size2I&               framebuffer_size() const;
 
@@ -258,6 +237,9 @@ namespace yq::tachyon {
 
         //! \note Will throw exceptions if visualizer is not defined
         Visualizer&                 visualizer() const;
+
+        //! Current widget (may be NULL at times)
+        Widget*                     widget() const;
 
         int                         width() const;
         
@@ -340,7 +322,7 @@ namespace yq::tachyon {
         void                set_widget(WidgetPtr);
 
         //! Our general "update()" that includes the visualizer
-        virtual Execution   tick(Context&) override;
+        virtual Execution   tick(const Context&) override;
         
         using Tachyon::owner;
         virtual void        owner(push_k, ThreadID) override;
@@ -388,14 +370,14 @@ namespace yq::tachyon {
 
         Cleanup                         m_cleanup;
         std::atomic<unit::Second>       m_drawTime      = { 0. };
-        Widget*                         m_focus         = nullptr;
+        TypedID                         m_focus         = {};
         std::unique_ptr<ViGui>          m_imgui;
         std::atomic<bool>               m_paused;
         ViewerState                     m_state;
         std::atomic<Stage>              m_stage         = { Stage::Preinit };
         std::atomic<uint64_t>           m_ticks{0};
         std::unique_ptr<Visualizer>     m_viz;
-        WidgetPtr                       m_widget;
+        TypedID                         m_widget;
         TypedID                         m_window;
         Size2I                          m_pixels    = {};
         bool                            m_zeroSize  = false;
@@ -410,11 +392,12 @@ namespace yq::tachyon {
         void                _widget(WidgetPtr);     // Changes the widget
         
         
-        void    close_request();
+        //void    close_request();
 
         void    on_attention_command(const AttentionCommand&);
         void    on_close_command(const CloseCommand&);
         void    on_close_request(const CloseRequestCPtr&);
+        void    on_close_reply(const CloseReply&);
         void    on_cursor_capture_command(const ViewerCursorCaptureCommand&);
         void    on_cursor_disable_command(const ViewerCursorDisableCommand&);
         void    on_cursor_hide_command(const ViewerCursorHideCommand&);

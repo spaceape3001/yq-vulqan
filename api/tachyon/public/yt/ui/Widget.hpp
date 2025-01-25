@@ -13,11 +13,12 @@
 #include <ya/typedef/events.hpp>
 #include <ya/typedef/replies.hpp>
 #include <ya/typedef/requests.hpp>
+#include <yt/typedef/viewer.hpp>
 #include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {
-    class Viewer;
     struct ViContext;
+    class CloseCommand;
     class StartupCommand;
 
     class WidgetInfo : public TachyonInfo {
@@ -37,9 +38,19 @@ namespace yq::tachyon {
         reduce overhead!)
     */
     class Widget : public Tachyon {    
-        YQ_OBJECT_INFO(WidgetInfo)
-        YQ_OBJECT_DECLARE(Widget, Tachyon)
+        YQ_TACHYON_INFO(WidgetInfo)
+        YQ_TACHYON_SNAP(WidgetSnap)
+        YQ_TACHYON_DATA(WidgetData)
+        YQ_TACHYON_DECLARE(Widget, Tachyon)
     public:
+    
+        /*
+            STARTUP...
+            
+            This will be automatic, first tick.  Visibility will 
+            not be gained until startup occurs.
+        */
+    
     
         static void init_info();
     
@@ -55,7 +66,7 @@ namespace yq::tachyon {
             to properly render ImGui content.  The context
             is all the extra information that may or may
             not be needed.  Default implementation iterates 
-            through children, calling their methods recursively.
+            through children, calling their methods recursively. 
         */
         virtual void    imgui(ViContext&);
         
@@ -96,63 +107,80 @@ namespace yq::tachyon {
         
             \param p    Supposed parent in question
         */
-        bool    has_parentage(const Widget* p) const;
+        bool    has_parentage(const Widget*) const;
         
         WidgetID   id() const { return WidgetID(UniqueID::id()); }
 
         bool    is_imgui() const;
         
         //! Our parent widget
-        Widget*         parent()  { return m_parent; }
+        Widget*         parent(ptr_k);
 
         //! Our parent widget
-        const Widget*   parent() const { return m_parent; }
+        const Widget*   parent(ptr_k) const;
 
         //! Our root widget
-        Widget*         root();
+        Widget*         root(ptr_k);
 
         //! Our root widget
-        const Widget*   root() const;
+        const Widget*   root(ptr_k) const;
         
         //! Our viewer
-        Viewer*         viewer();
+        Viewer*         viewer(ptr_k);
 
         //! Our viewer
-        const Viewer*   viewer() const ;
+        const Viewer*   viewer(ptr_k) const ;
         
         virtual Widget* widget_at(const Vector2D&) const;
         
         bool    attached() const;
 
 
+        bool        visible() const;
+
     protected:
         friend class Viewer;
         
         enum class F : uint8_t {
-            ClosePending
+            ClosePending,
+            Started,
+            Visible,
+            AutoRender
         };
+        using FFlags = Flags<F>;
+        
+        bool                    started() const;
+
+        //! Override to accept/reject
+        virtual void            close(request_k) { close(ACCEPT); }
+        void                    close(accept_k);
+        void                    close(reject_k);
+        
         
         //! Our viewer
-        Viewer*                 m_viewer    = nullptr;
+        TypedID                 m_viewer;
+        
+        //Viewer*                 m_viewer    = nullptr;
         
         //! Our parent widget
-        Widget*                 m_parent    = nullptr;
+        //Widget*                 m_parent    = nullptr;
         
         //! Our child widgets
-        std::vector<Widget*>    m_children;
+        //std::vector<Widget*>    m_children;
         
         //! A string ID for ImGui
         std::string             m_windowID;
         
-        Flags<F>                m_flags = {};
+        FFlags                  m_flags = { F::Visible, F::AutoRender };
+
         
         //! Called before record, this is the opportunity to 
         //! pass descriptor sets to the graphics card.
         virtual void            prerecord(ViContext&);
 
-        virtual void            on_close_request() { accept(CLOSE); }
-        void                    accept(close_k);
-        void                    reject(close_k);
+        //virtual void            on_close_request() { accept(CLOSE); }
+        //void                    accept(close_k);
+        //void                    reject(close_k);
 
         //virtual void            receive(const post::PostCPtr&);
 
@@ -164,13 +192,18 @@ namespace yq::tachyon {
         
         virtual PostAdvice      advise(const Post&) const override;
         
-        virtual Execution       tick(Context&) override;
+        virtual Execution       tick(const Context&) override;
+        
+        void                    snap(const WidgetSnap&) const;
         
         //  override to do your own startup... 
         virtual void            startup();
         
         
+        void    on_close_command(const CloseCommand&);
+        void    on_close_request(const CloseRequestCPtr&);
         void    on_startup_command(const StartupCommand&);
+        
         
         #if 0
         virtual void            on(const WidgetChildAdd&) {};
@@ -202,7 +235,10 @@ namespace yq::tachyon {
         
         virtual void            on_window_maximized() {}
         #endif
-
+        
+    private:
+        CloseRequestCPtr        m_closeRequest;
+        
     };
 
 }

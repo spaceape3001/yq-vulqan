@@ -49,7 +49,7 @@ namespace yq::tachyon {
         }
     }
 
-    Execution   Orientation³Control::tick(Context&) 
+    Execution   Orientation³Control::tick(const Context&) 
     {
         const Frame*  frame = Frame::current();
         if(!frame)

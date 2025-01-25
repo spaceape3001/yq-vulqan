@@ -65,7 +65,7 @@ namespace yq::tachyon {
 
     protected:
         
-        virtual void                tick(Context&) override;
+        virtual void                tick(const Context&) override;
         
         //virtual void                polling(unit::Second) override;
 

@@ -105,17 +105,29 @@ namespace yq::tachyon {
     */
     using Execution     = std::variant<
         std::monostate,     //< Unspecified (ie, don't change, implicit continue)
-        std::error_code,    //< Error occured (ie, becomes "ABORT" if not empty)
         bool,               //< TRUE/FALSE (continue/abort)
-        abort_k,            //< Abort
-        always_k,           //< Always run (will be the default)         
-        continue_k,         //< Continue
-        delete_k,           //< Delete
-        disable_k,          //< Disable
+        accept_k,
+
+        //  Error conditions
+        std::error_code,    //< Error occured (ie, becomes "ABORT" if not empty)
         error_k,            //< Error occured (ie abort)
-        once_k,             //< Execute once, auto-stop
+        abort_k,            //< Abort (startup triggers destruction)
+        
+        //  Flow control
+        start_k,            //< Start/Resume
+        shutdown_k,         //< Shutdown
+        delete_k,           //< Delete
+        wait_k,             //< Wait in step (either shutdown/startup)
+        continue_k,         //< Continue as before
+        
+        //  Pause/resume control
         pause_k,            //< Pause
-        stop_k,             //< Stop (functionally the same as Pause)
+        resume_k,           //< Resume
+
+        // Tick specifications.... (will unpause
+
+        once_k,             //< Execute once, auto-stop
+        always_k,           //< Always run (will be the default)         
         unsigned,           //< Again in X ticks
         unit::Hertz,        //< At rate
         unit::Second,       //< Again in X time
@@ -125,8 +137,37 @@ namespace yq::tachyon {
         OnceCount,          //< Once more in X ticks
         ForTime,            //< For X time, every tick
         ForTimeAt,          //< For X time, at specified interval
-        ForCount,           //< For X ticks at specified interval
+        ForCount,           //< For X ticks, every tick
         ForCountAt          //< For X ticks at specified interval
     >;
     
+    constexpr bool is_unspecified(const Execution& ex)
+    {
+        return static_cast<bool>(std::get_if<std::monostate>(&ex));
+    }
+
+    constexpr bool is_error(const Execution& ex)
+    {
+        return std::get_if<std::error_code>(&ex) || std::get_if<error_k>(&ex);
+    }
+    
+    //! TRUE if the variant is a ticking specification (not pause, start/stop)
+    constexpr bool is_ticking(const Execution& ex)
+    {
+        return 
+            std::get_if<always_k>(&ex) ||
+            std::get_if<once_k>(&ex) ||
+            std::get_if<unsigned>(&ex) ||
+            std::get_if<unit::Hertz>(&ex) ||
+            std::get_if<unit::Second>(&ex) ||
+            std::get_if<EveryTime>(&ex) ||
+            std::get_if<EveryCount>(&ex) ||
+            std::get_if<OnceTime>(&ex) ||
+            std::get_if<OnceCount>(&ex) ||
+            std::get_if<ForTime>(&ex) ||
+            std::get_if<ForTimeAt>(&ex) ||
+            std::get_if<ForCount>(&ex) ||
+            std::get_if<ForCountAt>(&ex)
+        ;
+    }
 }

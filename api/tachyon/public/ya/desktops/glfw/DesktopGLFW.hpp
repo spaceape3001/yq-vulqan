@@ -22,7 +22,7 @@ namespace yq::tachyon {
         DesktopGLFW(const AppCreateInfo&, const Param& p=Param());
         ~DesktopGLFW();
         
-        virtual Execution tick(Context&) override;
+        virtual Execution tick(const Context&) override;
 
         static void init_info();
 
@@ -44,8 +44,8 @@ namespace yq::tachyon {
         friend class WindowGLFW;
         
         
-        Execution    _tick(Context&);
-        Execution    _start(Context&);
+        Execution    _tick(const Context&);
+        Execution    _start(const Context&);
         
         static DesktopGLFW*     s_desktop;
         static void callback_joystick(int jid, int event);

@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
 
-    Execution JoystickGLFW::tick(Context&ctx) 
+    Execution JoystickGLFW::tick(const Context&ctx) 
     {
         Joystick::tick(ctx);
         if(m_dead)

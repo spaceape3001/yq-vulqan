@@ -35,7 +35,7 @@ namespace yq::tachyon {
         /* TODO */
     }
 
-    Execution AppThread::subtick(Context&ctx) 
+    Execution AppThread::subtick(const Context&ctx) 
     {
         return {};
     }

@@ -198,7 +198,7 @@ namespace yq::tachyon {
         if(types(Type::Window))
             m_windows.insert(t, tac.data.ptr(), tac.snap.ptr());
     }
-    
+
     bool Frame::contains(CameraID id) const
     {
         return m_cameras.has(id);
@@ -683,25 +683,57 @@ namespace yq::tachyon {
         return m_windows.pointer(id);
     }
 
-    ThreadID                            Frame::owner(TachyonID id) const
+    Tachyon*                            Frame::object(parent_k, TachyonID tac) const
     {
-        auto i = m_owners.find(id);
+        return object(parent(tac));
+    }
+    
+    Tachyon*                            Frame::object(root_k, TachyonID tac) const
+    {
+        return object(root(tac));
+    }
+
+    Tachyon*                            Frame::object(tachyon_k, uint64_t id) const
+    {
+        return m_tachyons.pointer(id);
+    }
+
+    ThreadID                            Frame::owner(TachyonID tac) const
+    {
+        auto i = m_owners.find(tac);
         if(i != m_owners.end())
             return i->second;
         return {};
     }
     
-    std::span<Proxy* const>             Frame::proxies(TachyonID id) const
+    TypedID                             Frame::parent(TachyonID tac) const
     {
-        const TachyonSnap* ts = snap(id);
+        const TachyonSnap*sn        = snap(tac);
+        if(!sn)
+            return {};
+        return sn -> parent;
+    }
+
+    TypedID                             Frame::parent(Type t, TachyonID tac) const
+    {
+        for(const TachyonSnap* sn = snap(tac); sn && sn -> parent; sn = snap(sn->parent)){
+            if(sn->parent(t))
+                return sn->parent;
+        }
+        return {};
+    }
+
+    std::span<Proxy* const>             Frame::proxies(TachyonID tac) const
+    {
+        const TachyonSnap* ts = snap(tac);
         if(!ts)
             return {};
         return ts->proxies;
     }
     
-    Proxy*                              Frame::proxy(TachyonID id, const InterfaceInfo& ii) const
+    Proxy*                              Frame::proxy(TachyonID tac, const InterfaceInfo& ii) const
     {
-        const TachyonSnap*  ts  = snap(id);
+        const TachyonSnap*  ts  = snap(tac);
         if(!ts)
             return nullptr;
         for(Proxy* p : ts->proxies){
@@ -742,6 +774,30 @@ namespace yq::tachyon {
             << "  Widgets:      " << count(WIDGET) << "\n"
             << "  Windows:      " << count(WINDOW) << "\n"
         ;
+    }
+
+    TypedID                             Frame::root(Type type, TachyonID tac) const
+    {
+        TypedID     ret;
+        TypedID     ttid    = typed(tac);
+        if(ttid(type))
+            ret = ttid;
+        
+        for(const TachyonSnap*  sn = snap(tac); sn && sn->parent; sn = snap(sn->parent)){
+            if(sn->parent(type))
+                ret = sn->parent;
+        }
+        
+        return ret;
+    }
+
+    TypedID                             Frame::root(TachyonID tac) const
+    {
+        TypedID     ret = typed(tac);
+        for(const TachyonSnap* sn = snap(tac); sn && sn->parent; sn = snap(sn->parent)){
+            ret = sn->parent;
+        }
+        return ret;
     }
 
     const CameraSnap*                  Frame::snap(CameraID id) const
@@ -859,6 +915,10 @@ namespace yq::tachyon {
         return m_windows.snap(id);
     }
 
+    TypedID Frame::typed(TachyonID id) const
+    {
+        return TypedID(id, types(id));
+    }
     
     Types   Frame::types(TachyonID id) const
     {

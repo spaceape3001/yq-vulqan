@@ -13,7 +13,9 @@
 
 namespace yq::tachyon {
     struct ViewerSnap : public TachyonSnap {
-        WindowID        window;
+        TypedID         window;
+        TypedID         widget;
+        TypedID         focus;
         bool            paused  = false;
     };
     

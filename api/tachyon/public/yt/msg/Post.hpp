@@ -47,13 +47,14 @@ namespace yq::tachyon {
         const time_point_t& time() const { return m_time; }
         
         struct Header {
+            PostID          cause;
             TypedID         source;
             TypedID         target;
             time_point_t    time;       //< If set, overrides the system/copy time
         };
     
         //! Post identifier (executable-unique)
-        uint64_t  id() const { return m_id; }
+        PostID  id() const { return { m_id }; }
         
         static void init_info();
         
@@ -68,6 +69,11 @@ namespace yq::tachyon {
         //! Source of the post (event, from, etc) -- try to be honest :)
         const TypedID&      source() const { return m_source; }
         
+        PostID              cause() const { return m_cause; }
+        
+        bool    claim() const;
+        bool    claimed() const;
+        
     protected:
         //! Constructs a post
         Post(const Header&);
@@ -77,10 +83,12 @@ namespace yq::tachyon {
         virtual ~Post();
         
     private:
-        const TypedID       m_source;
-        const TypedID       m_target;
-        const uint64_t      m_id;
-        const time_point_t  m_time;
+        const uint64_t              m_id;
+        PostID                      m_cause;
+        TypedID                     m_source;
+        TypedID                     m_target;
+        time_point_t                m_time;
+        mutable std::atomic_flag    m_claimed;
         
         Post(const Post&) = delete;
         Post(Post&&) = delete;

@@ -10,6 +10,7 @@
 #include <yt/ui/WidgetData.hpp>
 
 #include <yt/logging.hpp>
+#include <yt/api/Frame.hpp>
 #include <yt/app/Viewer.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/StartupCommand.hpp>
@@ -50,16 +51,43 @@ namespace yq::tachyon {
         m_children.clear();
     }
 
+    void    Widget::close(accept_k)
+    {
+        PostID  pId;
+        if(m_closeRequest)
+            pId = m_closeRequest -> id();
+        send(new CloseReply({.cause=pId, .target=m_viewer}, m_closeRequest, Response::QaPla));
+        send(new CloseCommand({.cause=pId, .target=m_viewer}));
+        m_closeRequest = {};
+    }
+    
+    void    Widget::close(reject_k)
+    {
+        PostID  pId;
+        if(m_closeRequest)
+            pId = m_closeRequest -> id();
+        send(new CloseReply({.cause=pId, .target=m_viewer}, m_closeRequest, Response::Rejected));
+        m_closeRequest = {};
+    }
+
     void    Widget::imgui(ViContext& u)
     {
-        for(Widget* w : m_children)
+        const Frame*    frame   = Frame::current();
+        if(!frame)
+            return ;
+        frame->foreach<Widget>(PTR, children(), [&](Widget* w){
             w->imgui(u);
+        });
     }
     
     void    Widget::vulkan(ViContext&u)
     {
-        for(Widget* w : m_children)
+        const Frame*    frame   = Frame::current();
+        if(!frame)
+            return ;
+        frame->foreach<Widget>(PTR, children(), [&](Widget* w){
             w->vulkan(u);
+        });
     }
 
     void    Widget::accept(close_k)
@@ -68,13 +96,6 @@ namespace yq::tachyon {
             m_viewer -> accept(CLOSE);
     }
     
-
-    bool    Widget::add_child(Widget* ch)
-    {
-        if(!ch)
-            return false;
-        return ch->set_parent(this);
-    }
 
     PostAdvice    Widget::advise(const Post&pp) const
     {
@@ -94,6 +115,7 @@ namespace yq::tachyon {
         return m_parent || m_viewer;
     }
 
+/*
     bool    Widget::has_parentage(const Widget* p) const
     {
         if(!p)
@@ -104,10 +126,24 @@ namespace yq::tachyon {
         }
         return false;
     }
+*/
 
     bool    Widget::is_imgui() const
     {
         return metaInfo().is_imgui();
+    }
+
+    void    Widget::on_close_request(const CloseRequestCPtr&req)
+    {
+        if(m_closeRequest){
+            if(req){
+                send(new CloseReply({.target=req->source()}, req, Response::Busy));
+            }
+            return ;
+        }
+        
+        m_closeRequest  = req;
+        close(REQUEST);
     }
 
     void    Widget::on_startup_command(const StartupCommand&cmd)
@@ -129,7 +165,7 @@ namespace yq::tachyon {
             m_viewer -> reject(CLOSE);
     }
 
-    Widget*         Widget::root()
+    Widget*         Widget::root(ptr_k)
     {
         Widget* w   = this;
         while(w->m_parent)
@@ -137,7 +173,7 @@ namespace yq::tachyon {
         return w;
     }
     
-    const Widget*   Widget::root() const
+    const Widget*   Widget::root(ptr_k) const
     {
         return const_cast<Widget*>(this) -> root();
     }
@@ -163,15 +199,32 @@ namespace yq::tachyon {
         return true;
    }
 
+    void    Widget::snap(const WidgetSnap&sn) const
+    {
+        Tachyon::snap(sn);
+        sn.viewer   = TypedID(m_viewer);
+    }
+
+    bool            Widget::started() const
+    {
+        return m_flags(F::Started);
+    }
+
     void            Widget::startup()
     {
+        if(m_parent){
+            m_flags |= F::Startup;
+        }
         if(m_viewer){
             m_viewer->mail(new ShowCommand({.source=this, .target=m_viewer}));
         }
     }
 
-    Execution       Widget::tick(Context&) 
+    Execution       Widget::tick(const Context&) 
     {
+        if(!m_flags(F::Startup)){
+            startup();
+        }
         return {};
     }
 
@@ -188,6 +241,11 @@ namespace yq::tachyon {
         return const_cast<Widget*>(this)->viewer();
     }
     
+    bool        Widget::visible() const
+    {
+        return m_flags(F::Visible);
+    }
+
     Widget* Widget::widget_at(const Vector2D&) const
     {
         return const_cast<Widget*>(this);

@@ -26,7 +26,6 @@
 #include <yq/meta/Init.hpp>
 //#include <yq/post/boxes/SimpleBox.hpp>
 #include <yt/config/build.hpp>
-//#include <GLFW/glfw3.h>
 
 //YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
 
@@ -63,9 +62,11 @@ namespace yq::tachyon {
         s_app   = this;
         
         configure_standand_asset_path();
+        m_startTime     = clock_t::now();
         
         if(!aci.headless)
             thread(APP);
+            
 
         tachyonDebug << "Application initialized";
     }

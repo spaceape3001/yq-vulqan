@@ -304,7 +304,7 @@ namespace yq::tachyon {
         });
     }
 
-    Execution   Thread::subtick(Context&)
+    Execution   Thread::subtick(const Context&)
     {
         return {};
     }
@@ -360,7 +360,15 @@ namespace yq::tachyon {
         
         Frame::s_current  = frame.ptr();
 
-        Context ctx(*frame);
+        Context ctx;
+        ctx.wall            = frame->time();
+        ctx.tick            = m_tick;
+        
+        if(m_lastTickTime != time_point_t{}){
+            ctx.Δwall       = unit::Nanosecond(duration_picoseconds_t(frame.time() - m_lastTickTime).count());
+        }
+        m_lastTickTime   = frame->time();
+        
         auto d = cycle(ctx);
         {
             // doing this trick to postpone any destructors
@@ -379,9 +387,9 @@ namespace yq::tachyon {
         ++m_tick;
     }
     
-    Execution    Thread::tick(Context& ctx)
+    Execution    Thread::tick(const Context& ctx)
     {
-        //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick(Context&)";
+        //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick(const Context&)";
         Thread* old = s_current;
         s_current   = this;
     

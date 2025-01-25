@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
+#include <yq/unit/MKS.hpp>
 #include <yt/api/ID.hpp>
 #include <yt/msg/MG.hpp>
 #include <yt/api/TypedID.hpp>
@@ -21,7 +22,7 @@ namespace yq::tachyon {
     struct TachyonSnap : public RefCount {
         std::vector<Proxy*>     proxies;
         uint64_t                revision    = 0ULL;
-        double                  time        = 0.;
+        unit::Second            time        = 0.;
         TypedID                 parent;
         TypedID                 self;
         std::vector<TypedID>    children;

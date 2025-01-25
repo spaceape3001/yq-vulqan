@@ -22,7 +22,7 @@ namespace yq::tachyon {
         
         using Thread::tick;
         
-        virtual Execution subtick(Context&) override;
+        virtual Execution subtick(const Context&) override;
         
     private:
         friend class Application;

@@ -14,7 +14,7 @@ Tachyons are owned and live on a thread (aside from threads themselves).  As the
 
 Ticking is where the tachyon does its work, so for instance
 
-    Execution   MyNeatTachyon::tick(Context&)
+    Execution   MyNeatTachyon::tick(const Context&)
     {
         // Do work here
         
@@ -23,11 +23,37 @@ Ticking is where the tachyon does its work, so for instance
 
 Execution is the policy of ticking, specifying the default `{}` hints to the thread to keep the current ticking.
 
+### Startup
+
+Before tick is called, the tachyon must startup.  It uses a similar function.
+
+    Execution   MyNeatTachyon::startup(const Context&)
+    {
+        // Do startup here
+        
+        return START;
+    }
+
+Expected values are broadly grouped into accepting/starting, rejecting startup, and waiting another cycle.
+
+### Shutdown
+
+After the tachyon decides enough is enough, it can trigger the shutdown callback instead.
+
+    Execution   MyNeatTachyon::shutdown(const Context&)
+    {
+        // Do shutdown here
+        
+        return DELETE;
+    }
+
+
+
 ##  Update Cycle
 
 Full update cycle to the tachyon is
 1.  Process Inbox (advice, dispatch, & slots are called for each one)
-2.  Execute `tick()`
+2.  Execute startup/tick/paused/shutdown (as appropriate)
 3.  Send Outbox
 4.  Create Snap
 

@@ -502,6 +502,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/requests/UIRequest.cpp
     source/ya/requests/ViewerRequest.cpp
     #source/ya/requests/ViewerWidgetRequest.cpp
+    source/ya/requests/WidgetRequest.cpp
     source/ya/requests/WindowRefreshRequest.cpp
     source/ya/requests/WindowRequest.cpp
     

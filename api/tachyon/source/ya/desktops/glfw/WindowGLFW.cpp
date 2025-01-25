@@ -741,7 +741,7 @@ namespace yq::tachyon {
         sn.time             = glfwGetTime();
     }
 
-    Execution WindowGLFW::tick(Context&ctx) 
+    Execution WindowGLFW::tick(const Context&ctx) 
     {
         Window::tick(ctx);
         if(m_stage == Stage::Destruct){

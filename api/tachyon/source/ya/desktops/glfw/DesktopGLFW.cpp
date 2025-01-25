@@ -167,7 +167,7 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    Execution    DesktopGLFW::_start(Context& ctx)
+    Execution    DesktopGLFW::_start(const Context& ctx)
     {
         if(m_control(C::Cursor)){
             _install(CURSOR, ALL);
@@ -195,9 +195,9 @@ namespace yq::tachyon {
         return {};
     }
     
-    Execution    DesktopGLFW::_tick(Context& ctx)
+    Execution    DesktopGLFW::_tick(const Context& ctx)
     {
-//tachyonInfo << "DesktopGLFW::_tick(Context& ctx)";
+//tachyonInfo << "DesktopGLFW::_tick(const Context& ctx)";
         glfwPollEvents();
         return {};
     }
@@ -273,7 +273,7 @@ namespace yq::tachyon {
         return m_stage == Stage::Running;
     }
     
-    Execution DesktopGLFW::tick(Context& ctx)
+    Execution DesktopGLFW::tick(const Context& ctx)
     {
         Desktop::tick(ctx);
         switch(m_stage){

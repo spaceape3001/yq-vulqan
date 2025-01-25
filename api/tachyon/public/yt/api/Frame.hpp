@@ -8,8 +8,9 @@
 
 #include <yq/core/Ref.hpp>
 #include <yt/keywords.hpp>
-#include <yt/api/Type.hpp>
 #include <yt/api/ID.hpp>
+#include <yt/api/Type.hpp>
+#include <yt/api/TypedID.hpp>
 #include <yt/api/Interface.hpp>
 #include <yt/api/Proxy.hpp>
 #include <yt/typedef/camera.hpp>
@@ -41,6 +42,7 @@
 #include <yt/typedef/window.hpp>
 
 #include <chrono>
+#include <functional>
 #include <unordered_map>
 
 namespace yq { class Stream; }
@@ -144,6 +146,24 @@ namespace yq::tachyon {
         const WidgetData*                   data(WidgetID) const;
         const WindowData*                   data(WindowID) const;
         
+        template <typename C, typename Pred>
+        void        foreach(ptr_k, std::span<const TypedID> ids, Pred&& pred) const;
+        
+        template <typename C, typename Pred>
+        void        foreach(ref_k, std::span<const TypedID> ids, Pred&& pred) const;
+
+        /*! \brief Gets the specific interface
+        
+            This will get the specific interface, if it exists.  
+            Practically, this will be okay to call once a tick for a specific 
+            tachyon/interface need, however, it should be cached for the rest
+            of the tick (if practical). 
+            
+            \note DON'T GO WILD, ONLY CALL FOR NECESSARY INTERFACES ON DEMAND
+        */
+        template <typename C>
+        C*                                  interface(TachyonID) const;
+        
         //! Camera pointer
         //! \note WARNING this will break thread-safety guarantees
         Camera*                             object(CameraID) const;
@@ -203,6 +223,8 @@ namespace yq::tachyon {
         //! \note WARNING this will break thread-safety guarantees
         Tachyon*                            object(TachyonID) const;
 
+        Tachyon*                            object(tachyon_k, uint64_t) const;
+
         //! Thread pointer
         //! \note WARNING this will break thread-safety guarantees
         Thread*                             object(ThreadID) const;
@@ -217,23 +239,29 @@ namespace yq::tachyon {
         //! \note WARNING this will break thread-safety guarantees
         Window*                             object(WindowID) const;
 
-        ThreadID                            owner(TachyonID) const;
+        Tachyon*                            object(parent_k, TachyonID) const;
+        Tachyon*                            object(root_k, TachyonID) const;
 
-        /*! \brief Gets the specific interface
-        
-            This will get the specific interface, if it exists.  
-            Practically, this will be okay to call once a tick for a specific 
-            tachyon/interface need, however, it should be cached for the rest
-            of the tick (if practical). 
-            
-            \note DON'T GO WILD, ONLY CALL FOR NECESSARY INTERFACES ON DEMAND
-        */
-        template <typename C>
-        C*                                  interface(TachyonID) const;
+        ThreadID                            owner(TachyonID) const;
+        TypedID                             parent(TachyonID) const;
+
+        //! First parent of type (ie, may skip
+        TypedID                             parent(Type, TachyonID) const;
+
 
         proxy_span_t                        proxies(TachyonID) const;
         
         Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
+        
+        //! Gets the root tachyon of this chain
+        //! \note It'll return wherever the tree stops in this frame (ie, missing snapshot)
+        //! \note Root *may* be itself for the case of no-parent
+        TypedID                             root(TachyonID) const;
+        
+        //! Gets the upper most tachyon of given type
+        //! \note If specified tachyon *fits*, it'll be returned
+        TypedID                             root(Type, TachyonID) const;
+
         
         const CameraSnap*                   snap(CameraID) const;
         const Camera³Snap*                  snap(Camera³ID) const;
@@ -262,6 +290,7 @@ namespace yq::tachyon {
         const WindowSnap*                   snap(WindowID) const;
 
         Types           types(TachyonID) const;
+        TypedID         typed(TachyonID) const;
 
         ThreadID        origin() const { return m_origin; }
         uint64_t        number() const { return m_number; }
@@ -345,6 +374,28 @@ namespace yq::tachyon {
         Frame& operator=(const Frame&) = delete;
         Frame& operator=(Frame&&) = delete;
     };
+
+    template <typename C, typename Pred>
+    void    Frame::foreach(ptr_k, std::span<const TypedID> ids, Pred&& pred) const
+    {
+        for(const TypedID& t : ids){
+            C*  c   = dynamic_cast<C*>(object(TACHYON, t.id));
+            if(c){
+                pred(c);
+            }
+        }
+    }
+
+    template <typename C, typename Pred>
+    void    Frame::foreach(ref_k, std::span<const TypedID> ids, Pred&& pred) const
+    {
+        for(const TypedID& t : ids){
+            C*  c   = dynamic_cast<C*>(object(TACHYON, t.id));
+            if(c){
+                pred(*c);
+            }
+        }
+    }
 
     template <typename C>
     C*      Frame::interface(TachyonID tid) const

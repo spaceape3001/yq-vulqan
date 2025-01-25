@@ -79,11 +79,13 @@ namespace yq::tachyon {
         
         virtual void    owner(push_k, ThreadID) override final;
         
+        virtual void    shutdown();
+        
     protected:
-        virtual Execution   tick(Context&) override final;
+        virtual Execution   tick(const Context&) override final;
         
         //! This is for derived classes, in the middle of tick
-        virtual Execution   subtick(Context&);
+        virtual Execution   subtick(const Context&);
         
         // same caveats as tachyon
         ThreadData&     data();
@@ -145,6 +147,7 @@ namespace yq::tachyon {
         std::vector<task_fn>            m_tasks;
         std::thread                     m_thread;
         uint64_t                        m_tick      = 0ULL;
+        time_point_t                    m_lastTickTime;
         time_point_t                    m_lastFrameReport{};
     };
 }

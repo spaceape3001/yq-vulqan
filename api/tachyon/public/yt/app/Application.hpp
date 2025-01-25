@@ -11,6 +11,7 @@
 #include <yt/app/AppCreateInfo.hpp>
 //#include <yt/api/Thread.hpp>
 #include <yt/typedef/application.hpp>
+#include <yt/typedef/clock.hpp>
 #include <yt/typedef/viewer.hpp>
 #include <yt/typedef/widget.hpp>
 #include <yq/units.hpp>
@@ -101,6 +102,8 @@ namespace yq::tachyon {
         AppThread&              thread(app_k);
         TaskThread&             thread(task_k);
         ViewerThread&           thread(viewer_k);
+        
+        const time_point_t&     start_time() const { return m_startTime; }
 
     protected:
         //virtual void  receive(const post::PostCPtr&) override;
@@ -118,6 +121,7 @@ namespace yq::tachyon {
         ViewerThread*           m_vthread   = nullptr;
         DesktopGLFW*            m_glfw      = nullptr;
         VulqanManager*          m_vulkan    = nullptr;
+        time_point_t            m_startTime;
     
         friend class Viewer;
         

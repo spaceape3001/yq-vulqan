@@ -580,6 +580,16 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_close_reply(const CloseReply&rep)
+    {
+        if(req->target() != id())
+            return ;
+        if(m_closeRequest){
+            send(new CloseReply({.target=m_closeRequest->source()}, m_closeRequest, rep.response()));
+            m_closeRequest = {};
+        }
+    }
+
     void    Viewer::on_close_request(const CloseRequestCPtr&req) 
     { 
         if(!req)
@@ -595,16 +605,20 @@ namespace yq::tachyon {
 
         if(m_closeRequest){
             if(m_closeRequest->id() != req->id()){
+            
                 send(new ViewerCloseReply(req, this, Response::Busy));
             }
             return ;
         }
-    
-        {
-            TXLOCK
-            m_closeRequest  = req.ptr();
-        }
-        close_request();
+        
+        m_closeRequest  = req.ptr();
+        send(req->clone(REBIND, {.target=m_window}));
+        
+
+        //{
+            //TXLOCK
+        //}
+        //close_request();
     }
     
     void    Viewer::on_cursor_capture_command(const ViewerCursorCaptureCommand&)
@@ -928,7 +942,9 @@ namespace yq::tachyon {
 
     void Viewer::snap(ViewerSnap&sn) const
     {
+        sn.widget   = m_widget;
         sn.window   = WindowID(m_window.id);
+        sn.focus    = m_focus;
         sn.paused   = m_paused;
     }
 
@@ -948,7 +964,7 @@ namespace yq::tachyon {
         return (st == Stage::Started) || (st == Stage::WidgetStart) || (st == Stage::Running);
     }
 
-    Execution   Viewer::tick(Context&ctx) 
+    Execution   Viewer::tick(const Context&ctx) 
     {
         switch(stage()){
         case Stage::Preinit:

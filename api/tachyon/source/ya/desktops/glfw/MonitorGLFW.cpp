@@ -120,7 +120,7 @@ namespace yq::tachyon {
         Monitor::snap(sn);
     }
 
-    Execution MonitorGLFW::tick(Context&ctx) 
+    Execution MonitorGLFW::tick(const Context&ctx) 
     {
         Monitor::tick(ctx);
         if(m_dead)

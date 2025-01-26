@@ -12,12 +12,12 @@
 namespace yq::tachyon {
 
     class Controller;
-    class ControllerControlCommand;
-    class ControllerDisableCommand;
-    class ControllerEnableCommand;
-    class ControllerListenCommand;
-    class ControllerUncontrolCommand;
-    class ControllerUnlistenCommand;
+    class ControlCommand;
+    class DisableCommand;
+    class EnableCommand;
+    class ListenCommand;
+    class UncontrolCommand;
+    class UnlistenCommand;
 
     class ControllerInfo : public TachyonInfo {
     public:
@@ -50,12 +50,12 @@ namespace yq::tachyon {
         
         bool        enabled() const { return m_enabled; }
         
-        void        cmd_control(TachyonID);
+        void        cmd_control(TypedID);
         void        cmd_disable();
         void        cmd_enable();
-        void        cmd_listen(TachyonID);
-        void        cmd_uncontrol(TachyonID);
-        void        cmd_unlisten(TachyonID);
+        void        cmd_listen(TypedID);
+        void        cmd_uncontrol(TypedID);
+        void        cmd_unlisten(TypedID);
         
     protected:    
         virtual Execution        tick(const Context&) override;
@@ -72,12 +72,12 @@ namespace yq::tachyon {
         bool                m_enabled   = true;
         bool                m_destroyed = false;
         
-        void    on_control_command(const ControllerControlCommand&);
-        void    on_disable_command(const ControllerDisableCommand&);
-        void    on_enable_command(const ControllerEnableCommand&);
-        void    on_listen_command(const ControllerListenCommand&);
-        void    on_uncontrol_command(const ControllerUncontrolCommand&);
-        void    on_unlisten_command(const ControllerUnlistenCommand&);
+        void    on_control_command(const ControlCommand&);
+        void    on_disable_command(const DisableCommand&);
+        void    on_enable_command(const EnableCommand&);
+        void    on_listen_command(const ListenCommand&);
+        void    on_uncontrol_command(const UncontrolCommand&);
+        void    on_unlisten_command(const UnlistenCommand&);
     };
 
 }

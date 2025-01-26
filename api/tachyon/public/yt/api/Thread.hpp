@@ -122,7 +122,7 @@ namespace yq::tachyon {
     
         void    tick(TachyonID);
         
-        void    execute(Control&, Context&);
+        void    execute(Control&, const Context&);
         
         struct PP {
             TachyonID   tachyon;

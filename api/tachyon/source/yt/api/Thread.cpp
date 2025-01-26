@@ -254,7 +254,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    Thread::execute(Control& ctr, Context& ctx)
+    void    Thread::execute(Control& ctr, const Context& ctx)
     {
         if(ctr.state != TachyonThreadState::Normal)
             return ;
@@ -361,13 +361,13 @@ namespace yq::tachyon {
         Frame::s_current  = frame.ptr();
 
         Context ctx;
-        ctx.wall            = frame->time();
+        ctx.wall            = frame->wallclock();
         ctx.tick            = m_tick;
         
         if(m_lastTickTime != time_point_t{}){
-            ctx.Δwall       = unit::Nanosecond(duration_picoseconds_t(frame.time() - m_lastTickTime).count());
+            ctx.Δwall       = unit::Nanosecond(duration_picoseconds_t(frame->wallclock() - m_lastTickTime).count());
         }
-        m_lastTickTime   = frame->time();
+        m_lastTickTime   = frame->wallclock();
         
         auto d = cycle(ctx);
         {

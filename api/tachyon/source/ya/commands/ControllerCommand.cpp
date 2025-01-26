@@ -5,30 +5,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/commands/ControllerCommand.hpp>
-
 #include <yt/msg/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ControllerCommand)
 
 namespace yq::tachyon {
-    ControllerCommandInfo::ControllerCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
-        CommandInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ControllerCommand::ControllerCommand(Controller* v, const Param& p) : Command(p), ControllerBind(v)
+    ControllerCommand::ControllerCommand(const Header& h) : Command(h)
     {
     }
     
-    ControllerCommand::ControllerCommand(ControllerID v, const Param& p) : Command(p), ControllerBind(v)
+    ControllerCommand::ControllerCommand(const ControllerCommand& cp, const Header& h) : Command(cp, h)
     {
     }
-
+    
     ControllerCommand::~ControllerCommand()
     {
     }
+
     
     ////////////////////////////////////////////////////////////////////////////
 

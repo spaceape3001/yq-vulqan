@@ -26,7 +26,7 @@ namespace yq::tachyon {
     {
         Joystick::tick(ctx);
         if(m_dead)
-            return STOP;
+            return TEARDOWN;
         
         
         //  probe

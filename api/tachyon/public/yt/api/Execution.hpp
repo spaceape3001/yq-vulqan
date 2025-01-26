@@ -115,7 +115,7 @@ namespace yq::tachyon {
         
         //  Flow control
         start_k,            //< Start/Resume
-        shutdown_k,         //< Shutdown
+        teardown_k,         //< Teardown
         delete_k,           //< Delete
         wait_k,             //< Wait in step (either shutdown/startup)
         continue_k,         //< Continue as before

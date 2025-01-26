@@ -264,8 +264,8 @@ namespace yq::tachyon {
             //! Ctor called, that's it
             Preinit,
             
-            //! Startup phase
-            Startup,
+            //! Setup phase
+            Setup,
             
             //! Running
             Running,
@@ -273,8 +273,8 @@ namespace yq::tachyon {
             //! Paused (can get pushed back to run)
             Paused,
             
-            //! Shutting down
-            Shutdown,
+            //! Going down!
+            Teardown,
             
             //! Done/Busted (ie, ready for delete)
             Kaput
@@ -343,7 +343,7 @@ namespace yq::tachyon {
             
             This is your update, at frame rate.
         */
-        virtual Execution   tick(const Context&);
+        virtual Execution  tick(const Context&);
         
         /*! \brief YOUR "paused" update
             \note Do NOT call paused() on other objects!
@@ -352,22 +352,22 @@ namespace yq::tachyon {
         */
         virtual Execution   paused(const Context&);
 
-        /*! \brief Your startup routine
+        /*! \brief Your setup routine
         
-            \note Do NOT call startups on other objects!
+            \note Do NOT call setups on other objects!
             
-            This is your startup routine, called each frame until accepted.
+            This is your setup routine, called each frame until accepted.
             
             The unspecified return is considered acceptance.
         */
-        virtual Execution   startup(const Context&);
+        virtual Execution   setup(const Context&);
         
-        /*! \brief Your shutdown (within the tick framework)
+        /*! \brief Your teardown (within the tick framework)
 
             The unspecified return is considered acceptance, and
-            will proceed to shutdown.  
+            will proceed to delete.  
         */
-        virtual Execution   shutdown(const Context&);
+        virtual Execution   teardown(const Context&);
         
         
         /*! Advise to the disposition of the post
@@ -459,7 +459,7 @@ namespace yq::tachyon {
         ThreadID                    m_owner;      //< Thread that owns us
         uint64_t                    m_revision      = 0;    //< Revision
         TachyonSnapCPtr             m_snap;                 //< Last snap
-        TachyonDataCPtr             m_data;
+        TachyonData*                m_data          = nullptr;
         const Context*              m_context       = nullptr;
         std::atomic<unsigned int>   m_thread        = kInvalidThread;
         TypedID                     m_parent;

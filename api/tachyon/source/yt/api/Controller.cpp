@@ -9,16 +9,16 @@
 #include <yt/api/ControllerBind.hpp>
 #include <yt/api/ControllerData.hpp>
 #include <yt/api/ID.hpp>
-#include <ya/commands/ControllerControlCommand.hpp>
-#include <ya/commands/ControllerDisableCommand.hpp>
-#include <ya/commands/ControllerEnableCommand.hpp>
-#include <ya/commands/ControllerListenCommand.hpp>
-#include <ya/commands/ControllerUncontrolCommand.hpp>
-#include <ya/commands/ControllerUnlistenCommand.hpp>
-#include <ya/commands/TachyonSnoopCommand.hpp>
-#include <ya/commands/TachyonSubscribeCommand.hpp>
-#include <ya/commands/TachyonUnsnoopCommand.hpp>
-#include <ya/commands/TachyonUnsubscribeCommand.hpp>
+#include <ya/commands/controller/ControlCommand.hpp>
+#include <ya/commands/controller/DisableCommand.hpp>
+#include <ya/commands/controller/EnableCommand.hpp>
+#include <ya/commands/controller/ListenCommand.hpp>
+#include <ya/commands/controller/UncontrolCommand.hpp>
+#include <ya/commands/controller/UnlistenCommand.hpp>
+#include <ya/commands/tachyon/SnoopCommand.hpp>
+#include <ya/commands/tachyon/SubscribeCommand.hpp>
+#include <ya/commands/tachyon/UnsnoopCommand.hpp>
+#include <ya/commands/tachyon/UnsubscribeCommand.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Controller);
 
@@ -76,75 +76,75 @@ namespace yq::tachyon {
         return {};
     }
 
-    void  Controller::cmd_control(TachyonID t)
+    void  Controller::cmd_control(TypedID t)
     {
-        mail(new ControllerControlCommand(this, t));
+        mail(new ControlCommand({.source=this, .target=this}, t));
     }
 
     void  Controller::cmd_enable() 
     { 
-        mail(new ControllerEnableCommand(this));
+        mail(new EnableCommand({.source=this, .target=this}));
     }
     
     void  Controller::cmd_disable() 
     { 
-        mail(new ControllerDisableCommand(this));
+        mail(new DisableCommand({.source=this, .target=this}));
     }
     
-    void Controller::cmd_listen(TachyonID t)
+    void Controller::cmd_listen(TypedID t)
     {
-        mail(new ControllerListenCommand(this, t));
+        mail(new ListenCommand({.source=this, .target=this}, t));
     }
 
-    void Controller::cmd_uncontrol(TachyonID t)
+    void Controller::cmd_uncontrol(TypedID t)
     {
-        mail(new ControllerUncontrolCommand(this, t));
+        mail(new UncontrolCommand({.source=this, .target=this}, t));
     }
 
-    void Controller::cmd_unlisten(TachyonID t)
+    void Controller::cmd_unlisten(TypedID t)
     {
-        mail(new ControllerUnlistenCommand(this, t));
+        mail(new UnlistenCommand({.source=this, .target=this}, t));
     }
 
-    void Controller::on_control_command(const ControllerControlCommand&cmd)
+    void Controller::on_control_command(const ControlCommand&cmd)
     {
         m_controlled.insert(cmd.tachyon());
         subscribe(cmd.tachyon(), MG::Controlled);
-        send(new TachyonSubscribeCommand(cmd.tachyon(), id(), MG::Controller), cmd.tachyon());
+        send(new SubscribeCommand({.target=cmd.tachyon()}, *this, MG::Controller));
         mark();
     }
 
-    void Controller::on_disable_command(const ControllerDisableCommand&)
+    void Controller::on_disable_command(const DisableCommand&)
     {
         m_enabled    = false;
         mark();
     }
     
-    void Controller::on_enable_command(const ControllerEnableCommand&)
+    void Controller::on_enable_command(const EnableCommand&)
     {
         m_enabled    = true;
         mark();
     }
 
-    void Controller::on_listen_command(const ControllerListenCommand& cmd)
+    void Controller::on_listen_command(const ListenCommand& cmd)
     {
         m_listening.insert(cmd.tachyon());
-        send(new TachyonSnoopCommand(cmd.tachyon(), id()), cmd.tachyon());
+        send(new SnoopCommand({.target=cmd.tachyon()}, *this));
         mark();
     }
 
-    void Controller::on_uncontrol_command(const ControllerUncontrolCommand& cmd)
+    void Controller::on_uncontrol_command(const UncontrolCommand& cmd)
     {
         m_controlled.erase(cmd.tachyon());
         unsubscribe(cmd.tachyon(), MG::Controlled);
-        send(new TachyonUnsubscribeCommand(cmd.tachyon(), id(), MG::Controller), cmd.tachyon());
+        send(new UnsubscribeCommand({.target=cmd.tachyon()}, *this, MG::Controller));
         mark();
     }
 
-    void Controller::on_unlisten_command(const ControllerUnlistenCommand& cmd)
+    void Controller::on_unlisten_command(const UnlistenCommand& cmd)
     {
         m_listening.erase(cmd.tachyon());
-        send(new TachyonUnsnoopCommand(cmd.tachyon(), id()), cmd.tachyon());
+        send(new UnsnoopCommand({.target=cmd.tachyon()}, *this));
         mark();
     }
 

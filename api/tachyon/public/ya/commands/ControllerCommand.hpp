@@ -7,30 +7,23 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yt/api/ControllerBind.hpp>
 
 namespace yq::tachyon {
-    class Controller;
-
-    class ControllerCommandInfo : public CommandInfo {
-    public:
-        ControllerCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class ControllerCommand : public Command, public ControllerBind {
-        YQ_OBJECT_INFO(ControllerCommandInfo)
+    class ControllerCommand : public Command {
         YQ_OBJECT_DECLARE(ControllerCommand, Command)
     public:
     
-        struct Param : public Command::Param {
-        };
-    
-        ControllerCommand(ControllerID, const Param& p = {});
-        ControllerCommand(Controller*, const Param& p = {});
-        virtual ~ControllerCommand();
-        
         static void init_info();
+    
+    protected:
+        ControllerCommand(const Header&);
+        ControllerCommand(const ControllerCommand&, const Header&);
+        ~ControllerCommand();
+        
+    private:
+        ControllerCommand(const ControllerCommand&) = delete;
+        ControllerCommand(ControllerCommand&&) = delete;
+        ControllerCommand& operator=(const ControllerCommand&) = delete;
+        ControllerCommand& operator=(ControllerCommand&&) = delete;
     };
 }

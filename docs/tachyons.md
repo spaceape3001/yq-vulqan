@@ -23,13 +23,13 @@ Ticking is where the tachyon does its work, so for instance
 
 Execution is the policy of ticking, specifying the default `{}` hints to the thread to keep the current ticking.
 
-### Startup
+### Setup
 
-Before tick is called, the tachyon must startup.  It uses a similar function.
+Before tick is called, the tachyon must setup.  It uses a similar function.
 
-    Execution   MyNeatTachyon::startup(const Context&)
+    Execution   MyNeatTachyon::setup(const Context&)
     {
-        // Do startup here
+        // Do setup here
         
         return START;
     }

@@ -124,7 +124,7 @@ namespace yq::tachyon {
     {
         Monitor::tick(ctx);
         if(m_dead)
-            return STOP;
+            return TEARDOWN;
             
         if(set(m_position, _position())){
             send(new Position²Event({.source=this}, m_position.cast<double>()));

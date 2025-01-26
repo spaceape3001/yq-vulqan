@@ -668,16 +668,11 @@ namespace yq::tachyon {
         }
     }
 
-    void    Tachyon::shutdown()
-    {
-        //m_stage = Stage::shutdown
-    }
-
-    Execution    Tachyon::shutdown(StartupContext&)
+    Execution    Tachyon::setup(StartupContext&)
     {
         return {};
     }
-    
+
     void Tachyon::snap(TachyonSnap&snap) const
     {
         snap.parent     = m_parent;
@@ -695,16 +690,16 @@ namespace yq::tachyon {
         }
     }
 
-    Execution    Tachyon::startup(StartupContext&)
-    {
-        return {};
-    }
-    
     void        Tachyon::subscribe(TachyonID tid, MGF grp)
     {
         m_listeners[tid] |= grp;
     }
 
+    Execution    Tachyon::teardown(const Context&)
+    {
+        return {};
+    }
+    
     Execution   Tachyon::tick(const Context&)
     {
         return {};
@@ -725,9 +720,9 @@ namespace yq::tachyon {
         Execution   ex;
         switch(m_stage){
         case Stage::Uninit:
-            goto jStartup;
-        case Stage::Startup:
-            ex      = startup(ctx);
+            goto jSetup;
+        case Stage::Setup:
+            ex      = setup(ctx);
             if(std::get_if<std::monostate>(&ex)){
                 ex  = ALWAYS;
                 goto jRun;
@@ -761,8 +756,8 @@ namespace yq::tachyon {
                 ex  = ALWAYS;
                 goto jRun;
             }
-            if(std::get_if<shutdown_k>(&ex))
-                goto jShutdown;
+            if(std::get_if<teardown_k>(&ex))
+                goto jTeardown;
                 
             if(std::get_if<delete_k>(&ex))
                 goto jKaput;
@@ -821,8 +816,8 @@ namespace yq::tachyon {
             
             if(std::get_if<start_k>(&ex))
                 goto jDone;
-            if(std::get_if<shutdown_k>(&ex))
-                goto jShutdown;
+            if(std::get_if<teardown_k>(&ex))
+                goto jTeardown;
             if(std::get_if<delete_k>(&ex))
                 goto jKaput;
             if(std::get_if<wait_k>(&ex))
@@ -854,6 +849,8 @@ namespace yq::tachyon {
                 goto jDone;
             if(std::get_if<abort_k>(&ex))
                 goto jDone;
+            if(std::get_if<teardown_k>(&ex))
+                goto jTeardown;
             if(std::get_if<delete_k>(&ex))
                 goto jKaput;
             if(std::get_if<wait_k>(&ex))
@@ -867,8 +864,8 @@ namespace yq::tachyon {
             if(is_ticking(ex))
                 goto jStart;
             break;
-        case Stage::Shutdown:
-            ex      = shutdown(ctx);
+        case Stage::Teardown:
+            ex      = teardown(ctx);
             if(std::get_if<std::monostate>(&ex))
                 goto jKaput;
             if(auto p = std::get_if<bool>(&ex)){
@@ -889,7 +886,7 @@ namespace yq::tachyon {
                 goto jKaput;
             if(std::get_if<start_k>(&ex))   // technically a logic error
                 goto jKaput;
-            if(std::get_if<shutdown_k>(&ex))
+            if(std::get_if<teardown_k>(&ex))
                 goto jKaput;
             if(std::get_if<delete_k>(&ex))
                 goto jKaput;
@@ -913,7 +910,7 @@ namespace yq::tachyon {
         goto jDone;
 
 
-    jStartup:
+    jSetup:
         m_stage     = Stage::Startup;
         m_tick0     = ctx.tick;
         goto jDone;
@@ -929,8 +926,8 @@ namespace yq::tachyon {
         m_tick0     = ctx.tick;
         goto jDone;
         
-    jShutdown:
-        m_stage     = Stage::Shutdown:
+    jTeardown:
+        m_stage     = Stage::Teardown:
         m_tick0     = ctx.tick;
         goto jDone;
 

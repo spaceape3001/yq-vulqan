@@ -23,6 +23,12 @@ namespace yq::tachyon {
         TypedID(const Tachyon&);
         TypedID(const Tachyon*);
         
+        /*! \brief Constructor
+        
+            \note This one strips away the types information (that's why it's explicit)
+        */
+        constexpr explicit TypedID(const TachyonID& i) noexcept : id(i.id), types{} {}
+        
         constexpr TypedID(uint64_t _id, Types _types) noexcept : id(_id), types(_types) {}
         
         constexpr auto operator<=>(const TypedID&b) const noexcept { return id <=> b.id; }

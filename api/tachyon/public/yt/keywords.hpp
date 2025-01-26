@@ -132,6 +132,7 @@ namespace yq::tachyon {
     struct tachyon_k {};
     struct task_k {};
     struct target_k {};
+    struct teardown_k {};
     struct top_k {};
     struct typed_k {};
     struct types_k {};
@@ -250,6 +251,7 @@ namespace yq::tachyon {
     static constexpr tachyon_k      TACHYON;
     static constexpr target_k       TARGET;
     static constexpr task_k         TASK;
+    static constexpr teardown_k     TEARDOWN;
     static constexpr top_k          TOP;
     static constexpr typed_k        TYPED;
     static constexpr types_k        TYPES;

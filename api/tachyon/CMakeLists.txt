@@ -37,15 +37,15 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/api/InterfaceInfo.cpp
     source/yt/api/Manager.cpp
     source/yt/api/Proxy.cpp
-    source/yt/api/Tachyon.cpp
+#    source/yt/api/Tachyon.cpp
     source/yt/api/Thread.cpp
     source/yt/api/TypedID.cpp
 
-    source/yt/app/Application.cpp
-    source/yt/app/Viewer.cpp
-    source/yt/app/AppThread.cpp
-    source/yt/app/TaskThread.cpp
-    source/yt/app/ViewerThread.cpp
+#    source/yt/app/Application.cpp
+#    source/yt/app/Viewer.cpp
+#    source/yt/app/AppThread.cpp
+#    source/yt/app/TaskThread.cpp
+#    source/yt/app/ViewerThread.cpp
 
     source/yt/config/build.cpp
 
@@ -106,7 +106,7 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/ui/Panel.cpp
     #source/yt/ui/Tool.cpp
     source/yt/ui/Undo.cpp
-    source/yt/ui/Widget.cpp
+#    source/yt/ui/Widget.cpp
 
     #######################################################
     #   Vulqan
@@ -179,12 +179,6 @@ add_library(${PROJECT_NAME} SHARED
     #source/ya/commands/CameraRollCommand.cpp
     #source/ya/commands/CameraYawCommand.cpp
     source/ya/commands/ControllerCommand.cpp
-    source/ya/commands/ControllerControlCommand.cpp
-    source/ya/commands/ControllerDisableCommand.cpp
-    source/ya/commands/ControllerEnableCommand.cpp
-    source/ya/commands/ControllerListenCommand.cpp
-    source/ya/commands/ControllerUncontrolCommand.cpp
-    source/ya/commands/ControllerUnlistenCommand.cpp
     source/ya/commands/EmptyCommand.cpp
     source/ya/commands/GLFWCommand.cpp
     source/ya/commands/MouseCaptureCommand.cpp
@@ -196,13 +190,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/SimCommand.cpp
     source/ya/commands/SpatialCommand.cpp
     source/ya/commands/TachyonCommand.cpp
-    source/ya/commands/TachyonDeleteCommand.cpp
-    source/ya/commands/TachyonProxyCommand.cpp
-    source/ya/commands/TachyonSnoopCommand.cpp
-    source/ya/commands/TachyonSubscribeCommand.cpp
-    source/ya/commands/TachyonThreadCommand.cpp
-    source/ya/commands/TachyonUnsnoopCommand.cpp
-    source/ya/commands/TachyonUnsubscribeCommand.cpp
+    #source/ya/commands/TachyonThreadCommand.cpp
     source/ya/commands/ThreadCommand.cpp
     source/ya/commands/UICommand.cpp
     source/ya/commands/ViewerAspectCommand.cpp
@@ -223,6 +211,13 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/WindowTitleCommand.cpp
     
     source/ya/commands/camera/CameraSetScreen.cpp
+
+    source/ya/commands/controller/ControlCommand.cpp
+    source/ya/commands/controller/DisableCommand.cpp
+    source/ya/commands/controller/EnableCommand.cpp
+    source/ya/commands/controller/ListenCommand.cpp
+    source/ya/commands/controller/UncontrolCommand.cpp
+    source/ya/commands/controller/UnlistenCommand.cpp
 
     source/ya/commands/sim/ResumeCommand.cpp
     source/ya/commands/sim/PauseCommand.cpp
@@ -330,6 +325,12 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/SetSizeY.cpp
     source/ya/commands/spatial/SetSizeZ.cpp
     source/ya/commands/spatial/YawBy.cpp
+    
+    source/ya/commands/tachyon/DestroyCommand.cpp
+    source/ya/commands/tachyon/SnoopCommand.cpp
+    source/ya/commands/tachyon/SubscribeCommand.cpp
+    source/ya/commands/tachyon/UnsnoopCommand.cpp
+    source/ya/commands/tachyon/UnsubscribeCommand.cpp
     
     source/ya/commands/ui/AttentionCommand.cpp
     source/ya/commands/ui/CloseCommand.cpp

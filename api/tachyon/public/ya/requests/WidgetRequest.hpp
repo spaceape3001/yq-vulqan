@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Request.hpp>
-#include <yt/os/WidgetBind.hpp>
+#include <yt/ui/WidgetBind.hpp>
 
 namespace yq::tachyon {
     class WidgetRequestInfo : public RequestInfo {

@@ -24,7 +24,7 @@ namespace yq::tachyon {
         // DEPRECATED
     }
     
-    Reply::Reply(const RequestCPtr& req, const Header& h) : Post(h), m_request(req)
+    Reply::Reply(const Header& h, const RequestCPtr& req) : Post(h), m_request(req)
     {
     }
 

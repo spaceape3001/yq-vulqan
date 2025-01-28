@@ -33,7 +33,7 @@ namespace yq::tachyon {
     protected:
         Reply(const RequestCPtr&, const Param&p={});    //< DEPRECATED;
     
-        Reply(const RequestCPtr&, const Header&);
+        Reply(const Header&, const RequestCPtr&);
         Reply(const Reply&, const Header&);
         virtual ~Reply();
         

@@ -13,7 +13,7 @@
 #include <yt/api/Frame.hpp>
 #include <yt/api/ThreadData.hpp>
 #include <yt/api/ThreadInfoWriter.hpp>
-#include <ya/events/ViewerDestroyEvent.hpp>
+#include <ya/events/tachyon/DestroyEvent.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
 
@@ -40,11 +40,13 @@ namespace yq::tachyon {
         return {};
     }
 
-    void    AppThread::on_viewer_destroy_event(const ViewerDestroyEvent&)
+    void    AppThread::on_destroy_event(const DestroyEvent& evt)
     {
-        tachyonInfo << "AppThread::on_viewer_destroy_event";
-        if(!--m_viewers){
-            quit();
+        tachyonInfo << "AppThread::on_destroy_event";
+        if(evt.source()(Type::Viewer)){
+            if(!--m_viewers){
+                quit();
+            }
         }
     }
 
@@ -54,6 +56,6 @@ namespace yq::tachyon {
     {
         auto w = writer<AppThread>();
         w.description("Application Thread");
-        w.slot(&AppThread::on_viewer_destroy_event);
+        w.slot(&AppThread::on_destroy_event);
     }
 }

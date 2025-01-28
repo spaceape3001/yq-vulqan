@@ -19,7 +19,7 @@
 namespace yq::tachyon {
     struct ViContext;
     class CloseCommand;
-    class StartupCommand;
+    //class StartupCommand;
 
     class WidgetInfo : public TachyonInfo {
     public:
@@ -55,7 +55,7 @@ namespace yq::tachyon {
         static void init_info();
     
         //! Default constructor
-        Widget(const Param&p={});
+        Widget();
         
         //! Default destructor
         virtual ~Widget();
@@ -113,17 +113,23 @@ namespace yq::tachyon {
 
         bool    is_imgui() const;
         
+        using Tachyon::parent;
+        
         //! Our parent widget
         Widget*         parent(ptr_k);
 
         //! Our parent widget
         const Widget*   parent(ptr_k) const;
+        
+        WidgetID        root() const;
 
         //! Our root widget
         Widget*         root(ptr_k);
 
         //! Our root widget
         const Widget*   root(ptr_k) const;
+        
+        ViewerID        viewer() const;
         
         //! Our viewer
         Viewer*         viewer(ptr_k);
@@ -133,6 +139,7 @@ namespace yq::tachyon {
         
         virtual Widget* widget_at(const Vector2D&) const;
         
+        //! TRUE if we're attached (either as a child-widget or to a viewer)
         bool    attached() const;
 
 
@@ -143,13 +150,12 @@ namespace yq::tachyon {
         
         enum class F : uint8_t {
             ClosePending,
-            Started,
             Visible,
             AutoRender
         };
         using FFlags = Flags<F>;
         
-        bool                    started() const;
+        //bool                    started() const;
 
         //! Override to accept/reject
         virtual void            close(request_k) { close(ACCEPT); }
@@ -202,7 +208,7 @@ namespace yq::tachyon {
         
         void    on_close_command(const CloseCommand&);
         void    on_close_request(const CloseRequestCPtr&);
-        void    on_startup_command(const StartupCommand&);
+        //void    on_startup_command(const StartupCommand&);
         
         
         #if 0

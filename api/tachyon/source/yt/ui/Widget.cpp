@@ -12,8 +12,12 @@
 #include <yt/logging.hpp>
 #include <yt/api/Frame.hpp>
 #include <yt/app/Viewer.hpp>
+#include <ya/commands/tachyon/DestroyCommand.hpp>
+#include <ya/commands/ui/CloseCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/StartupCommand.hpp>
+#include <ya/requests/ui/CloseRequest.hpp>
+#include <ya/replies/ui/CloseReply.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
@@ -24,13 +28,8 @@ namespace yq::tachyon {
     WidgetBind::WidgetBind(const Widget* v) : m_widget(v ? v->id() : WidgetID{}) 
     {
     }
+    /////////////////////////
 
-    void Widget::init_info()
-    {
-        auto w = writer<Widget>();
-        w.description("Widget base class");
-        w.slot(&Widget::on_startup_command);
-    }
 
     WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(zName, base, sl)
@@ -39,16 +38,20 @@ namespace yq::tachyon {
         set(Type::Widget);
     }
 
-    Widget::Widget(const Param& p) : Tachyon(p)
+    void Widget::init_info()
     {
-        m_windowID      = std::string(fmt_hex(id()));
+        auto w = writer<Widget>();
+        w.description("Widget base class");
+        //w.slot(&Widget::on_startup_command);
+    }
+
+    Widget::Widget() : Tachyon()
+    {
+        m_windowID      = std::string(fmt_hex(UniqueID::id()));
     }
     
     Widget::~Widget()
     {
-        //for(Widget* w : m_children)
-            //delete w;
-        m_children.clear();
     }
 
     void    Widget::close(accept_k)
@@ -57,7 +60,7 @@ namespace yq::tachyon {
         if(m_closeRequest)
             pId = m_closeRequest -> id();
         send(new CloseReply({.cause=pId, .target=m_viewer}, m_closeRequest, Response::QaPla));
-        send(new CloseCommand({.cause=pId, .target=m_viewer}));
+        mail(new CloseCommand({.cause=pId, .target=*this}));
         m_closeRequest = {};
     }
     
@@ -112,7 +115,7 @@ namespace yq::tachyon {
 
     bool    Widget::attached() const
     {
-        return m_parent || m_viewer;
+        return parent() || m_viewer;
     }
 
 /*
@@ -133,6 +136,14 @@ namespace yq::tachyon {
         return metaInfo().is_imgui();
     }
 
+    void    Widget::on_close_command(const CloseCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        
+        mail(new DestroyCommand({.target=*this}));
+    }
+
     void    Widget::on_close_request(const CloseRequestCPtr&req)
     {
         if(m_closeRequest){
@@ -146,12 +157,14 @@ namespace yq::tachyon {
         close(REQUEST);
     }
 
+#if 0
     void    Widget::on_startup_command(const StartupCommand&cmd)
     {
         if(cmd.target() == id()){
             startup();
         }
     }
+#endif
     
     void            Widget::prerecord(ViContext& u)
     {
@@ -165,17 +178,34 @@ namespace yq::tachyon {
             m_viewer -> reject(CLOSE);
     }
 
+    WidgetID        Widget::root() const
+    {
+        const Frame*    f   = Frame::current();
+        if(!f)
+            return nullptr;
+        
+        TypedID     w   = f->root(Type::Widget, id());
+        if(w){
+            return WidgetID(w.id);
+        } else {
+            return {};
+        }
+    }
+
     Widget*         Widget::root(ptr_k)
     {
-        Widget* w   = this;
-        while(w->m_parent)
-            w   = w->m_parent;
-        return w;
+        const Frame*    f   = Frame::current();
+        if(!f)
+            return nullptr;
+        return f->object(root());
     }
     
     const Widget*   Widget::root(ptr_k) const
     {
-        return const_cast<Widget*>(this) -> root();
+        const Frame*    f   = Frame::current();
+        if(!f)
+            return nullptr;
+        return f->object(root());
     }
 
     bool    Widget::set_parent(Widget* p)
@@ -212,9 +242,6 @@ namespace yq::tachyon {
 
     void            Widget::startup()
     {
-        if(m_parent){
-            m_flags |= F::Startup;
-        }
         if(m_viewer){
             m_viewer->mail(new ShowCommand({.source=this, .target=m_viewer}));
         }
@@ -228,19 +255,37 @@ namespace yq::tachyon {
         return {};
     }
 
-    Viewer*         Widget::viewer()
+    Viewer*         Widget::viewer(ptr_k)
     {
-        Widget* w   = root();
-        if(w)
-            return w->m_viewer;
-        return nullptr;
+        const Frame*    f   = Frame::current();
+        if(!f)
+            return nullptr;
+        return f->object(viewer());
     }
     
-    const Viewer*   Widget::viewer() const 
+    const Viewer*   Widget::viewer(ptr_k) const 
     {
-        return const_cast<Widget*>(this)->viewer();
+        const Frame*    f   = Frame::current();
+        if(!f)
+            return nullptr;
+        return f->object(viewer());
     }
     
+    ViewerID        Widget::viewer() const
+    {
+        if(m_viewer)
+            return m_viewer;
+        
+        const Frame*    f   = Frame::current();
+        if(!f)
+            return {};
+        
+        const WidgetSnap*   sn  = f->snap(root());
+        if(!sn)
+            return {};
+        return sn -> viewer;
+    }
+
     bool        Widget::visible() const
     {
         return m_flags(F::Visible);

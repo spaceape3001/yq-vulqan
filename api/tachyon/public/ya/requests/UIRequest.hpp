@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yt/msg/Request.hpp>
-#include <yt/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 

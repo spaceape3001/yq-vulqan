@@ -10,15 +10,19 @@
 namespace yq::tachyon {
     Widget*         StackedWidget::active() 
     {
+    #if 0
         if(m_active < m_children.size())
             return m_children[m_active];
+    #endif
         return nullptr;
     }
     
     const Widget*   StackedWidget::active() const
     {
+    #if 0
         if(m_active < m_children.size())
             return m_children[m_active];
+    #endif
         return nullptr;
     }
 

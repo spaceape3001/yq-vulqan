@@ -10,7 +10,7 @@
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
 #include <yt/api/TachyonInfoWriter.hpp>
-#include <ya/commands/TachyonSnoopCommand.hpp>
+#include <ya/commands/tachyon/SnoopCommand.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::LoggerBox)
 
@@ -58,7 +58,7 @@ namespace yq::tachyon {
 
     void    LoggerBox::unsafe_snoop(Tachyon* tac)
     {
-        tac->mail(new TachyonSnoopCommand(tac->id(), id()));
+        tac->mail(new SnoopCommand({.target=tac}, *this));
     }
     
 }

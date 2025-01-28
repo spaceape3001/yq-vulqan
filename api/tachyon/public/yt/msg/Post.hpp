@@ -83,6 +83,8 @@ namespace yq::tachyon {
         virtual ~Post();
         
     private:
+        friend class Tachyon;
+    
         const uint64_t              m_id;
         PostID                      m_cause;
         TypedID                     m_source;

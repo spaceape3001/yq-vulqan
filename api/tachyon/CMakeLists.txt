@@ -37,15 +37,15 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/api/InterfaceInfo.cpp
     source/yt/api/Manager.cpp
     source/yt/api/Proxy.cpp
-#    source/yt/api/Tachyon.cpp
+    source/yt/api/Tachyon.cpp
     source/yt/api/Thread.cpp
     source/yt/api/TypedID.cpp
 
 #    source/yt/app/Application.cpp
 #    source/yt/app/Viewer.cpp
-#    source/yt/app/AppThread.cpp
-#    source/yt/app/TaskThread.cpp
-#    source/yt/app/ViewerThread.cpp
+    source/yt/app/AppThread.cpp
+    source/yt/app/TaskThread.cpp
+    source/yt/app/ViewerThread.cpp
 
     source/yt/config/build.cpp
 
@@ -106,7 +106,7 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/ui/Panel.cpp
     #source/yt/ui/Tool.cpp
     source/yt/ui/Undo.cpp
-#    source/yt/ui/Widget.cpp
+    #source/yt/ui/Widget.cpp
 
     #######################################################
     #   Vulqan
@@ -176,8 +176,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/AppCommand.cpp
     source/ya/commands/AppDeleteViewerCommand.cpp
     source/ya/commands/CameraCommand.cpp
-    #source/ya/commands/CameraRollCommand.cpp
-    #source/ya/commands/CameraYawCommand.cpp
     source/ya/commands/ControllerCommand.cpp
     source/ya/commands/EmptyCommand.cpp
     source/ya/commands/GLFWCommand.cpp
@@ -190,7 +188,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/SimCommand.cpp
     source/ya/commands/SpatialCommand.cpp
     source/ya/commands/TachyonCommand.cpp
-    #source/ya/commands/TachyonThreadCommand.cpp
     source/ya/commands/ThreadCommand.cpp
     source/ya/commands/UICommand.cpp
     source/ya/commands/ViewerAspectCommand.cpp
@@ -327,6 +324,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/spatial/YawBy.cpp
     
     source/ya/commands/tachyon/DestroyCommand.cpp
+    source/ya/commands/tachyon/RethreadCommand.cpp
     source/ya/commands/tachyon/SnoopCommand.cpp
     source/ya/commands/tachyon/SubscribeCommand.cpp
     source/ya/commands/tachyon/UnsnoopCommand.cpp
@@ -427,6 +425,7 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/events/sim/ResumeEvent.cpp
     source/ya/events/sim/TickEvent.cpp
     
+    source/ya/events/tachyon/DestroyEvent.cpp
     source/ya/events/tachyon/DirtyEvent.cpp
     
     source/ya/events/ui/DefocusEvent.cpp
@@ -490,10 +489,13 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/replies/EmptyReply.cpp
     source/ya/replies/StringReply.cpp
     source/ya/replies/TachyonReply.cpp
+    source/ya/replies/UIReply.cpp
     source/ya/replies/ViewerCloseReply.cpp
     source/ya/replies/ViewerReply.cpp
     source/ya/replies/ViewerWidgetReply.cpp
     source/ya/replies/WindowReply.cpp
+    
+    source/ya/replies/ui/CloseReply.cpp
     
     source/ya/requests/AppRequest.cpp
     source/ya/requests/CameraRequest.cpp

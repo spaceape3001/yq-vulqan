@@ -34,12 +34,14 @@ namespace yq::tachyon {
     struct StartupContext;
     struct Context;
     class TachyonProxyCommand;
+    class DestroyCommand;
+    class DestroyEvent;
     class TachyonDeleteCommand;
-    class TachyonSnoopCommand;
-    class TachyonSubscribeCommand;
-    class TachyonThreadCommand;
-    class TachyonUnsnoopCommand;
-    class TachyonUnsubscribeCommand;
+    class RethreadCommand;
+    class SnoopCommand;
+    class SubscribeCommand;
+    class UnsnoopCommand;
+    class UnsubscribeCommand;
     
     /// TACHYON INFO
 
@@ -431,6 +433,8 @@ namespace yq::tachyon {
         virtual void    unhandled(const PostCPtr&);
         
         Stage stage() const { return m_stage; }
+        
+        uint64_t    cycle() const { return m_cycle; }
 
     private:
         friend class Proxy;
@@ -465,6 +469,7 @@ namespace yq::tachyon {
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
         std::string                 m_name;
+        uint64_t                    m_cycle         = 0;
         uint64_t                    m_tick0         = 0;
         Stage                       m_stage         = Stage::Preinit;
         bool                        m_dirty         = false;
@@ -475,6 +480,8 @@ namespace yq::tachyon {
         } m_exec;
         
         //virtual void                    parent(set_k, TachyonID);
+        
+        bool    tick_cycle(const Context&);
         
         void    tx(TachyonID, std::span<const PostCPtr>);
         void    tx(TachyonID, PostCPtr);
@@ -510,14 +517,15 @@ namespace yq::tachyon {
         
         bool    _name(name_spec, OldNameFN cap={});
         
-        void    on_proxy_command(const TachyonProxyCommand&);
+//        void    on_proxy_command(const TachyonProxyCommand&);
         
-        void    on_delete_command(const TachyonDeleteCommand&);
-        void    on_snoop_command(const TachyonSnoopCommand&);
-        void    on_subscribe_command(const TachyonSubscribeCommand&);
-        void    on_thread_command(const TachyonThreadCommand&);
-        void    on_unsnoop_command(const TachyonUnsnoopCommand&);
-        void    on_unsubscribe_command(const TachyonUnsubscribeCommand&);
+        void    on_destroy_command(const DestroyCommand&);
+        void    on_destroy_event(const DestroyEvent&);
+        void    on_snoop_command(const SnoopCommand&);
+        void    on_subscribe_command(const SubscribeCommand&);
+        void    on_rethread_command(const RethreadCommand&);
+        void    on_unsnoop_command(const UnsnoopCommand&);
+        void    on_unsubscribe_command(const UnsubscribeCommand&);
 
         Execution   tiktok(const Context&);
     };

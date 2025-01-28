@@ -26,6 +26,9 @@ namespace yq::tachyon {
         TypedID                 parent;
         TypedID                 self;
         std::vector<TypedID>    children;
+        bool                    started     = false;
+        bool                    running     = false;
+        bool                    teardown    = false;
         
         TachyonSnap();
         virtual ~TachyonSnap();

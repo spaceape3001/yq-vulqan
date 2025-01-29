@@ -229,6 +229,8 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
+
+yInfo() << w->ident() << "::callback_window_close()";
     
             // so we don't repeat this....
         glfwSetWindowShouldClose(win, GLFW_FALSE);
@@ -741,18 +743,20 @@ namespace yq::tachyon {
         sn.time             = glfwGetTime();
     }
 
+#if 0
     Execution WindowGLFW::tick(const Context&ctx) 
     {
-        Window::tick(ctx);
-        if(m_stage == Stage::Destruct){
-            send(new WindowDestroyEvent(this));
-            return DELETE;
-        }
+        //Window::tick(ctx);
+        //if(m_stage == Stage::Destruct){
+            //send(new WindowDestroyEvent(this));
+            //return DELETE;
+        //}
         
         //  TODO
         
         return {};
     }
+#endif
 
     std::string         WindowGLFW::title(read_k) const
     {

@@ -141,7 +141,7 @@ namespace yq::tachyon {
     void    Scene³Widget::vulkan(ViContext& u)
     {
         {
-            yInfo() << "Scene³Widget::vulkan() rendering with " << m_rendereds.size() << " Rendereds";
+            //yInfo() << "Scene³Widget::vulkan() rendering with " << m_rendereds.size() << " Rendereds";
             auto w  = auto_reset(u.wireframe, m_wireframe);
             for(ViRenderedPtr& rr : m_rendereds){
                 rr->record(u);

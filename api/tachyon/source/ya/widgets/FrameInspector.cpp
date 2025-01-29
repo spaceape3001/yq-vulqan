@@ -9,6 +9,7 @@
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yt/api/Frame.hpp>
+#include <yt/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspector)
 
@@ -206,5 +207,17 @@ namespace yq::tachyon {
     {
         auto w = writer<FrameInspector>();
         w.imgui();
+    }
+
+    Execution FrameInspector::setup(const Context&) 
+    {
+        yInfo() << ident() << "::setup()";
+        return {};
+    }
+
+    Execution FrameInspector::tick(const Context&) 
+    {
+        yInfo() << ident() << "::tick()";
+        return {};
     }
 }

@@ -14,6 +14,7 @@
 #include <yt/app/Viewer.hpp>
 #include <ya/commands/tachyon/DestroyCommand.hpp>
 #include <ya/commands/ui/CloseCommand.hpp>
+#include <ya/commands/ui/HideCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/StartupCommand.hpp>
 #include <ya/commands/widget/SetViewer.hpp>
@@ -58,6 +59,8 @@ namespace yq::tachyon {
     {
         auto w = writer<Widget>();
         w.description("Widget base class");
+        w.slot(&Widget::on_close_request);
+        w.slot(&Widget::on_close_command);
         w.slot(&Widget::on_set_viewer);
         //w.slot(&Widget::on_startup_command);
     }
@@ -91,6 +94,7 @@ namespace yq::tachyon {
 
     void    Widget::close(accept_k)
     {
+yInfo() << ident() << "::close(ACCEPT)";
         PostID  pId;
         if(m_closeRequest)
             pId = m_closeRequest -> id();
@@ -101,6 +105,7 @@ namespace yq::tachyon {
     
     void    Widget::close(reject_k)
     {
+yInfo() << ident() <<  "::close(REJECT)";
         PostID  pId;
         if(m_closeRequest)
             pId = m_closeRequest -> id();
@@ -156,14 +161,27 @@ namespace yq::tachyon {
 
     void    Widget::on_close_command(const CloseCommand&cmd)
     {
+yInfo() << ident() << "::on_close_command(" << cmd.trace() << ")";
         if(cmd.target() != id())
             return ;
+        if(m_viewer){
+            send(new HideCommand({.source=*this, .target=m_viewer}), MG::Viewer);
+        }
+        mail(new HideCommand({.source=*this, .target=*this}));
+        for(TypedID t : children()){
+            send(new CloseCommand({.source=*this, .target=t}), {});
+        }
         
-        mail(new DestroyCommand({.target=*this}));
+yInfo() << ident() <<  "::on_close_command() ... sending destroy";
+        teardown();
+        //mail(new DestroyCommand({.target=*this}));
     }
 
     void    Widget::on_close_request(const CloseRequestCPtr&req)
     {
+        if(!req)
+            return ;
+yInfo() << ident() << "::on_close_request(" << req->trace() << ")";
         if(m_closeRequest){
             if(req){
                 send(new CloseReply({.target=req->source()}, req, Response::Busy));
@@ -181,6 +199,7 @@ namespace yq::tachyon {
             return ;
             
         m_viewer    = cmd.viewer();
+yInfo() << "Widget::on_set_viewer() ... setting to viewer " << m_viewer.id;
     }
 
 #if 0

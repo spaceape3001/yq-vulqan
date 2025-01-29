@@ -107,11 +107,13 @@
 //#include <ya/replies/ViewerWidgetReply.hpp>
 //#include <ya/requests/ViewerWidgetRequest.hpp>
 
+//#include <yt/api/TachyonInfoWriter.hpp>
+
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/ThreadId.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
 #include <yq/shape/Size2.hxx>
+#include <yq/text/format.hpp>
 #include <yq/util/AutoReset.hpp>
 #include <yq/vector/Vector2.hpp>
 
@@ -160,6 +162,7 @@ namespace yq::tachyon {
 
         w.slot(&Viewer::on_close_command);
         w.slot(&Viewer::on_close_request);
+        w.slot(&Viewer::on_close_reply);
 
         w.slot(&Viewer::on_cursor_capture_command);
         w.slot(&Viewer::on_cursor_disable_command);
@@ -167,6 +170,7 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_cursor_normal_command);
 
         w.slot(&Viewer::on_defocus_event);
+        w.slot(&Viewer::on_destroy_event);
         w.slot(&Viewer::on_float_command);
         w.slot(&Viewer::on_focus_command);
         w.slot(&Viewer::on_focus_event);
@@ -201,7 +205,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Viewer::Viewer(Window* win, TypedID w, const ViewerCreateInfo& vci) : 
+    Viewer::Viewer(Window* win, Widget* w, const ViewerCreateInfo& vci) : 
         m_createInfo(vci), m_number(++s_lastNumber)
     {
         assert(win && w);
@@ -210,6 +214,12 @@ namespace yq::tachyon {
         
         
         m_window                = win;
+        m_widget                = *w;
+        w->m_viewer             = *this;
+        subscribe(m_widget, {MG::Widget, MG::General});
+        w->subscribe(id(), {MG::Viewer, MG::General});
+        
+        
         _widget(w);
         
         // HACK (becase we know it's GLFW ATM)
@@ -361,6 +371,7 @@ namespace yq::tachyon {
 
     void    Viewer::cmd_close(bool force)
     {
+    yInfo() << ident() << "::cmd_close(" << to_string_view(force) << ")";
         if(force){
             mail(new CloseCommand({.source=this, .target=this}));
         } else {
@@ -572,6 +583,7 @@ namespace yq::tachyon {
 
     void    Viewer::on_close_command(const CloseCommand& cmd)
     {
+yInfo() << "Viewer::on_close_command(" << cmd.trace() << ")";
         if(!dying() && (cmd.target() == id())){
             send(new HideCommand({.target=m_window}));
             teardown();
@@ -582,37 +594,47 @@ namespace yq::tachyon {
 
     void    Viewer::on_close_reply(const CloseReply&rep)
     {
+yInfo() << "Viewer::on_close_reply(" << rep.trace() << ")";
         if(rep.source() != m_widget)
             return ;
+            
         if(m_closeRequest){
-            send(new CloseReply({.target=m_closeRequest->source()}, m_closeRequest, rep.response()));
+yInfo() << "Viewer::on_close_reply(" << rep.trace() << ") --> forwarding reply";
+            send(new CloseReply({.source=rep.source(), .target=m_closeRequest->source()}, m_closeRequest, rep.response()));
             m_closeRequest = {};
+        } else {
+yInfo() << "Viewer::on_close_reply(" << rep.trace() << ") --> no close request on file";
         }
     }
 
     void    Viewer::on_close_request(const CloseRequestCPtr&req) 
     { 
+
         if(!req)
             return ;
         
+yInfo() << "Viewer::on_close_request(" << req->trace() << ")";
+
         if((req->target() != id()) && (req->source() != m_window))
             return;
 
         if(dying()){
+yInfo() << "Viewer::on_close_request(" << req->trace() << ") -- already dying";
             send(new ViewerCloseReply(req, this, Response::Busy));
             return ;
         }
 
         if(m_closeRequest){
+yInfo() << "Viewer::on_close_request(" << req->trace() << ") -- already processing";
             if(m_closeRequest->id() != req->id()){
-            
                 send(new ViewerCloseReply(req, this, Response::Busy));
             }
             return ;
         }
         
         m_closeRequest  = req.ptr();
-        send(req->clone(REBIND, {.target=m_window}));
+yInfo() << "Viewer::on_close_request(" << req->trace() << ") --> forwarding";
+        send(req->clone(REBIND, {.target=m_widget}));
         
 
         //{
@@ -658,11 +680,14 @@ namespace yq::tachyon {
 
     void    Viewer::on_destroy_event(const DestroyEvent&evt)
     {
+yInfo() << "Viewer::on_destroy_event(" << evt.trace() << ")";
         if(evt.source() == m_widget){
+yInfo() << "Viewer::on_destroy_event ... it's us";
             // we're dead...
             teardown();
         }
         if(evt.source() == m_window){
+yInfo() << "Viewer::on_destroy_event ... it's the window";
             // that's dead too...
             send(new DestroyCommand({.source=evt.source(), .target=m_widget}));
             teardown();

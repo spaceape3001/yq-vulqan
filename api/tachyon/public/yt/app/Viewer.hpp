@@ -138,7 +138,7 @@ namespace yq::tachyon {
         
             \note this *WILL* throw exceptions if the viewer create or the widget are bad
         */
-        Viewer(Window*, TypedID, const ViewerCreateInfo& vci);
+        Viewer(Window*, Widget*, const ViewerCreateInfo& vci);
         
         //! Destructor
         virtual ~Viewer();

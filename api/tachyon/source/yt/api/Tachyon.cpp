@@ -358,7 +358,8 @@ namespace yq::tachyon {
         if(tid == m_parent)
             return ;
             
-        _unsubscribe(m_parent, MG::Parent);
+        if(m_parent)
+            _unsubscribe(m_parent, MG::Parent);
         m_parent    = tid;
         if(tid){
             _subscribe(tid, MG::Parent);

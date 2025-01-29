@@ -14,6 +14,8 @@
 #include <atomic>
 #include <chrono>
 
+namespace log4cpp { class CategoryStream; }
+
 namespace yq::tachyon {
     class PostInfo : public ObjectInfo {
     public:
@@ -52,6 +54,11 @@ namespace yq::tachyon {
             TypedID         target;
             time_point_t    time;       //< If set, overrides the system/copy time
         };
+        
+        struct Trace {
+            TypedID         source;
+            TypedID         target;
+        };
     
         //! Post identifier (executable-unique)
         PostID  id() const { return { m_id }; }
@@ -73,6 +80,8 @@ namespace yq::tachyon {
         
         bool    claim() const;
         bool    claimed() const;
+        
+        Trace       trace() const { return { m_source, m_target }; }
         
     protected:
         //! Constructs a post
@@ -99,4 +108,9 @@ namespace yq::tachyon {
         
         static std::atomic<uint64_t>    s_lastId;
     };
+
+    Stream& operator<<(Stream&, const Post::Trace&);
+    std::ostringstream& operator<<(std::ostringstream&, const Post::Trace&);
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const Post::Trace&);
 }
+

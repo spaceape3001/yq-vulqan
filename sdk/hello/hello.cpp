@@ -214,6 +214,12 @@ struct HelloWidget : public Scene³Widget {
     HelloWidget()
     {
     }
+    
+    Execution setup(const Context&) override
+    {
+        create<FrameInspector>(CHILD);
+        return {};
+    }
 };
 
 YQ_TACHYON_IMPLEMENT(HelloWidget)
@@ -263,7 +269,7 @@ int main(int argc, char* argv[])
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
     //FrameInspector* fi = w -> create<FrameInspector>(CHILD);
-    w->create<FrameInspector>(CHILD);
+    //w->create<FrameInspector>(CHILD);
     
     //LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     //gLogger = lb->id();

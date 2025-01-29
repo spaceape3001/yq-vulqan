@@ -6,6 +6,8 @@
 
 #include <yt/msg/Post.hpp>
 #include <yt/msg/PostInfoWriter.hpp>
+#include <sstream>
+#include <yt/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Post)
 
@@ -59,5 +61,23 @@ namespace yq::tachyon {
         auto w = writer<Post>();
         w.description("Abstract Post Base Class");
         w.property("id", &Post::m_id).description("Post ID (do NOT assume monoticity)");
+    }
+
+    Stream& operator<<(Stream&str, const Post::Trace& i)
+    {
+        str << "{source=" << i.source.id << " target=" << i.target.id << "}";
+        return str;
+    }
+
+    std::ostringstream& operator<<(std::ostringstream&str, const Post::Trace& i)
+    {
+        str << "{source=" << i.source.id << " target=" << i.target.id << "}";
+        return str;
+    }
+
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, const Post::Trace& i)
+    {
+        str << "{source=" << i.source.id << " target=" << i.target.id << "}";
+        return str;
     }
 }

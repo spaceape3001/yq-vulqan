@@ -21,6 +21,7 @@
 #include <yt/os/Window.hpp>
 #include <yt/os/WindowData.hpp>
 #include <yt/ui/Widget.hpp>
+#include <yt/ui/WidgetData.hpp>
 
 #include <ya/commands/SpatialCommand.hpp>
 #include <ya/commands/ViewerAspectCommand.hpp>
@@ -55,6 +56,13 @@
 #include <ya/commands/ui/StartupCommand.hpp>
 #include <ya/commands/ui/UnfloatCommand.hpp>
 
+#include <ya/commands/tachyon/DestroyCommand.hpp>
+#include <ya/commands/tachyon/RethreadCommand.hpp>
+#include <ya/commands/tachyon/SubscribeCommand.hpp>
+#include <ya/commands/tachyon/UnsubscribeCommand.hpp>
+
+#include <ya/commands/widget/SetViewer.hpp>
+
 #include <ya/events/KeyCharacterEvent.hpp>
 #include <ya/events/KeyPressEvent.hpp>
 #include <ya/events/KeyReleaseEvent.hpp>
@@ -75,6 +83,8 @@
 #include <ya/events/sim/PauseEvent.hpp>
 #include <ya/events/sim/ResumeEvent.hpp>
 
+#include <ya/events/tachyon/DestroyEvent.hpp>
+
 #include <ya/events/ui/DefocusEvent.hpp>
 #include <ya/events/ui/FocusEvent.hpp>
 #include <ya/events/ui/HideEvent.hpp>
@@ -84,6 +94,8 @@
 
 
 #include <ya/replies/ViewerCloseReply.hpp>
+
+#include <ya/replies/ui/CloseReply.hpp>
 
 #include <ya/requests/WindowRefreshRequest.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
@@ -137,12 +149,6 @@ namespace yq::tachyon {
     std::atomic<int>        Viewer::s_count{0};
     std::atomic<unsigned>   Viewer::s_lastNumber{0};
 
-    Viewer::Param   Viewer::_params(const ViewerCreateInfo&vci)
-    {
-        Param  ret;
-        //ret.name    = "Viewer";
-        return ret;
-    }
 
     void Viewer::init_info()
     {
@@ -178,12 +184,12 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_mouse_release_event);
         
         w.slot(&Viewer::on_move_event);
-        w.slot(&Viewer::on_pause_command);
+        //w.slot(&Viewer::on_pause_command);
         w.slot(&Viewer::on_restore_command);
-        w.slot(&Viewer::on_resume_command);
+        //w.slot(&Viewer::on_resume_command);
         w.slot(&Viewer::on_size_event);
         w.slot(&Viewer::on_show_command);
-        w.slot(&Viewer::on_show_event);
+        //w.slot(&Viewer::on_show_event);
         w.slot(&Viewer::on_unfloat_command);
 
         w.slot(&Viewer::on_viewer_aspect_command);
@@ -195,15 +201,13 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Viewer::Viewer(Window* win, WidgetPtr w, const ViewerCreateInfo& vci) : Viewer(win, w, vci, _params(vci))
-    {
-    }
-
-
-    Viewer::Viewer(Window* win, WidgetPtr w, const ViewerCreateInfo& vci, const Param&p) : 
-        Tachyon(p), m_createInfo(vci), m_number(++s_lastNumber)
+    Viewer::Viewer(Window* win, TypedID w, const ViewerCreateInfo& vci) : 
+        m_createInfo(vci), m_number(++s_lastNumber)
     {
         assert(win && w);
+        
+            // THIS WILL EVENTUALLY MERGE INTO SETUP....???
+        
         
         m_window                = win;
         _widget(w);
@@ -238,18 +242,15 @@ namespace yq::tachyon {
             }
         }
         
-        m_stage     = Stage::Started;
-        
         ++s_count;
         tachyonInfo << "Viewer::Viewer(" << m_number << ") ID " << (uint64_t) id() << ", window=" 
-            << (uint64_t) win->id() << ", widget=" << w->id();
+            << (uint64_t) m_window.id << ", widget=" << m_widget.id;
     }
     
     Viewer::~Viewer()
     {
         --s_count;
-        _remove(WIDGET);
-        m_widget = {};
+        _widget({});
         _sweepwait();
         if(m_imgui)
             m_imgui = {};
@@ -260,24 +261,6 @@ namespace yq::tachyon {
         tachyonInfo << "Viewer::~Viewer(" << m_number << ")";
     }
 
-    void    Viewer::_install(widget_k)
-    {
-        if(m_widget){
-            m_widget -> m_viewer    = this;
-            subscribe(m_widget->id(), {MG::Widget, MG::General});
-            m_widget->subscribe(id(), {MG::General, MG::Viewer});
-        }
-    }
-    
-    void    Viewer::_remove(widget_k)
-    {
-        if(m_widget){
-            m_widget -> m_viewer    = nullptr;
-            m_widget->unsubscribe(id(), {MG::Viewer, MG::General});
-            unsubscribe(m_widget->id(), {MG::Widget, MG::General});
-        }
-    }
-    
     void    Viewer::_sweepwait()
     {
         if(m_viz)
@@ -286,13 +269,25 @@ namespace yq::tachyon {
     }
 
 
-    void    Viewer::_widget(WidgetPtr w)
+    void    Viewer::_widget(TypedID w)
     {
-        _remove(WIDGET);
+        if(w == m_widget)
+            return ;
+            
+        if(m_widget){
+            send(new SetViewer({.source=*this, .target=m_widget}, {}));
+            send(new UnsubscribeCommand({.source=*this, .target=m_widget}, *this));
+            unsubscribe(m_widget, {MG::Widget, MG::General});
+        }
         m_widget    = w;
-        _install(WIDGET);
+        if(m_widget){
+            send(new SetViewer({.source=*this, .target=m_widget}, *this));
+            send(new SubscribeCommand({.source=*this, .target=m_widget}, *this, {MG::Viewer, MG::General}));
+            subscribe(m_widget, {MG::Widget, MG::General});
+        }
     }
 
+#if 0
     void     Viewer::accept(close_k)
     {
         m_widget -> m_flags -= Widget::F::ClosePending;
@@ -302,6 +297,7 @@ namespace yq::tachyon {
             mail(new CloseCommand({.source=this, .target=this}));
         }
     }
+#endif
 
     PostAdvice  Viewer::advise(const Post& pp) const 
     {
@@ -333,6 +329,7 @@ namespace yq::tachyon {
         return m_state.window.aspect;
     }
 
+#if 0
     void    Viewer::close_request()
     {
         if(m_widget){
@@ -342,7 +339,9 @@ namespace yq::tachyon {
             accept(CLOSE); 
         }
     }
+#endif
 
+#if 0
     bool    Viewer::closing() const
     {
         return stage() == Stage::Closing;
@@ -353,6 +352,7 @@ namespace yq::tachyon {
         Stage st = stage();
         return (st == Stage::Closing) || (st == Stage::Kaput);
     }
+#endif
 
     void    Viewer::cmd_attention()
     {
@@ -449,8 +449,16 @@ namespace yq::tachyon {
 
     std::error_code     Viewer::draw(ViContext& u)
     {
-        if(m_paused || m_zeroSize)
+        if(paused() || m_zeroSize)
             return std::error_code();
+            
+        const Frame*    frame   = Frame::current();
+        if(!frame)
+            return std::error_code();
+        Widget*w        = frame->object((WidgetID) m_widget);
+        if(!w)
+            return std::error_code();
+            
         
         std::filesystem::path   snapshot;
         if(auto p = std::get_if<std::filesystem::path>(&u.snapshot)){
@@ -462,21 +470,21 @@ namespace yq::tachyon {
         auto r1 = auto_reset(u.tick, m_viz->tick());
         auto r2 = auto_reset(u.viewer, this);
         //auto r3 = auto_reset(u.window, static_cast<Window*>(this));
-        if(m_widget && m_imgui){
-            m_imgui -> draw(u, m_widget);
+        if(w && m_imgui){
+            m_imgui -> draw(u, w);
         }
         std::error_code ec = m_viz->draw(u, {
             .prerecord = [&](ViContext& u){
-                if(m_widget){
-                    m_widget -> prerecord(u);
+                if(w){
+                    w -> prerecord(u);
                 }
                 if(m_imgui){
                     m_imgui -> update();
                 }
             },
             .record = [&](ViContext& u){
-                if(m_widget)
-                    m_widget -> vulkan(u);
+                if(w)
+                    w -> vulkan(u);
                 if(m_imgui)
                     m_imgui -> record(u);
             }
@@ -555,34 +563,26 @@ namespace yq::tachyon {
         return m_state.window.flags(WindowFlag::Visible);
     }
     
-    bool    Viewer::kaput() const
-    {
-        return stage() == Stage::Kaput;
-    }
-    
-    bool    Viewer::never_started() const
-    {
-        return stage() == Stage::Preinit;
-    }
-
     void    Viewer::on_attention_command(const AttentionCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
 
     void    Viewer::on_close_command(const CloseCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(new HideCommand({.target=m_window}));
-            m_stage = Stage::Closing;
+            teardown();
+            
+            //m_stage = Stage::Closing;
         }
     }
 
     void    Viewer::on_close_reply(const CloseReply&rep)
     {
-        if(req->target() != id())
+        if(rep.source() != m_widget)
             return ;
         if(m_closeRequest){
             send(new CloseReply({.target=m_closeRequest->source()}, m_closeRequest, rep.response()));
@@ -598,7 +598,7 @@ namespace yq::tachyon {
         if((req->target() != id()) && (req->source() != m_window))
             return;
 
-        if(closing_or_kaput()){
+        if(dying()){
             send(new ViewerCloseReply(req, this, Response::Busy));
             return ;
         }
@@ -623,28 +623,28 @@ namespace yq::tachyon {
     
     void    Viewer::on_cursor_capture_command(const ViewerCursorCaptureCommand&)
     {
-        if(started_or_running()){
+        if(!dying()){
             send(new WindowCursorCaptureCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_cursor_disable_command(const ViewerCursorDisableCommand&)
     {
-        if(started_or_running()){
+        if(!dying()){
             send(new WindowCursorDisableCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_cursor_hide_command(const ViewerCursorHideCommand&)
     {
-        if(started_or_running()){
+        if(!dying()){
             send(new WindowCursorHideCommand(WindowID(m_window.id)));
         }
     }
     
     void    Viewer::on_cursor_normal_command(const ViewerCursorNormalCommand&)
     {
-        if(started_or_running()){
+        if(!dying()){
             send(new WindowCursorNormalCommand(WindowID(m_window.id)));
         }
     }
@@ -656,16 +656,29 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_destroy_event(const DestroyEvent&evt)
+    {
+        if(evt.source() == m_widget){
+            // we're dead...
+            teardown();
+        }
+        if(evt.source() == m_window){
+            // that's dead too...
+            send(new DestroyCommand({.source=evt.source(), .target=m_widget}));
+            teardown();
+        }
+    }
+
     void    Viewer::on_float_command(const FloatCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
 
     void    Viewer::on_focus_command(const FocusCommand&cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
@@ -679,14 +692,14 @@ namespace yq::tachyon {
     
     void    Viewer::on_hide_command(const HideCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
 
     void    Viewer::on_hide_event(const HideEvent& evt)
     {
-        if(closing()){
+        if(dying()){
             if(evt.source() == m_window){
                 m_stage     = Stage::Kaput;
                 
@@ -706,7 +719,7 @@ namespace yq::tachyon {
     
     void    Viewer::on_iconify_command(const IconifyCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
@@ -734,7 +747,7 @@ namespace yq::tachyon {
 
     void    Viewer::on_maximize_command(const MaximizeCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
@@ -767,40 +780,45 @@ namespace yq::tachyon {
         }
     }
 
+#if 0
     void    Viewer::on_pause_command(const PauseCommand&cmd)
     {
         if(cmd.target() != id())
             return;
             
-        m_paused    = true;
+        pause(SET);
         send(new PauseEvent({.source=this}));
         mark();
     }
+#endif
     
     void    Viewer::on_restore_command(const RestoreCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
     
+    #if 0
     void    Viewer::on_resume_command(const ResumeCommand&cmd)
     {
         if(cmd.target() != id())
             return;
             
-        m_paused    = false;
+        resume(SET);
         send(new ResumeEvent({.source=this}));
         mark();
     }
+    #endif
     
     void    Viewer::on_show_command(const ShowCommand& cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
 
+#if 0
     void    Viewer::on_show_event(const ShowEvent&evt)
     {
         switch(m_stage){
@@ -814,17 +832,18 @@ namespace yq::tachyon {
             break;
         }
     }
+#endif
 
     void    Viewer::on_spatial_command(const SpatialCommand&cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
 
     void    Viewer::on_unfloat_command(const UnfloatCommand&cmd)
     {
-        if(started_or_running() && (cmd.target() == id())){
+        if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
@@ -832,7 +851,7 @@ namespace yq::tachyon {
 
     void    Viewer::on_viewer_aspect_command(const ViewerAspectCommand& cmd)
     {
-        if(started_or_running()){
+        if(!dying()){
             send(new WindowAspectCommand(WindowID(m_window.id), cmd.aspect()));
         }
     }
@@ -840,14 +859,14 @@ namespace yq::tachyon {
 
     void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
     {
-        if(started_or_running()){
+        if(!dying()){
             send(new WindowTitleCommand(WindowID(m_window.id), cmd.title()));
         }
     }
     
     void    Viewer::on_window_destroy_event(const WindowDestroyEvent&)
     {
-        m_stage     = Stage::Destruct;
+//        m_stage     = Stage::Destruct;
     }
 
     void    Viewer::on_window_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
@@ -864,8 +883,9 @@ namespace yq::tachyon {
     void     Viewer::owner(push_k, ThreadID tid) 
     {
         Tachyon::owner(PUSH, tid);
-        if(m_widget)
-            m_widget -> owner(PUSH, tid);
+        send(new RethreadCommand({.target=m_widget}, tid));
+        //if(m_widget)
+            //m_widget -> owner(PUSH, tid);
             
         #if 0
             //  here in case we move imgui/viz to the tachyon model
@@ -876,6 +896,7 @@ namespace yq::tachyon {
         #endif
     }
 
+#if 0
     bool    Viewer::paused() const 
     { 
         return m_paused; 
@@ -894,6 +915,7 @@ namespace yq::tachyon {
     {
         return stage() == Stage::Running;
     }
+#endif
 
     void    Viewer::set_aspect(const Size2I& sz)
     {
@@ -940,56 +962,46 @@ namespace yq::tachyon {
         mail(new ViewerTitleCommand(this, kTitle));
     }
 
+    Execution   Viewer::setup(const Context&ctx) 
+    {
+        const Frame*    f   = Frame::current();
+        if(!f)
+            return WAIT;
+            
+        if(!f->snap((WindowID) m_window))
+            return WAIT;
+        
+        const WidgetSnap*  w    = f->snap((WidgetID) m_widget);
+        if(!w)
+            return WAIT;
+        
+        if(!w->started)
+            return WAIT;
+    
+        if(!m_createInfo.hidden){
+            cmd_show();
+        }
+    
+        return update(ctx);
+    }
+
     void Viewer::snap(ViewerSnap&sn) const
     {
         sn.widget   = m_widget;
-        sn.window   = WindowID(m_window.id);
+        sn.window   = m_window;
         sn.focus    = m_focus;
-        sn.paused   = m_paused;
-    }
-
-    Viewer::Stage   Viewer::stage() const
-    {
-        return m_stage;
-    }
-
-    bool    Viewer::started() const
-    {
-        return stage() == Stage::Started;
-    }
-    
-    bool    Viewer::started_or_running() const
-    {
-        Stage st = stage();
-        return (st == Stage::Started) || (st == Stage::WidgetStart) || (st == Stage::Running);
+        //sn.paused   = m_paused;
     }
 
     Execution   Viewer::tick(const Context&ctx) 
     {
-        switch(stage()){
-        case Stage::Preinit:
-            return {};
-        case Stage::Started:
-            if(!(ctx.frame.contains(id()) && ctx.frame.contains(m_window))){
-                return {};
-            }
-            send(new StartupCommand({.target = *m_widget}));
-            m_stage = Stage::WidgetStart;
-            break;
-        case Stage::WidgetStart:
-            break;
-        case Stage::Running:
-            break;
-        case Stage::Closing:
-            return {};
-        case Stage::Kaput:
-            return {};
-        case Stage::Destruct:
-            send(new ViewerDestroyEvent(this), MGF{MG::Thread, MG::General});
-            return DELETE;
-        }
+        return update(ctx);
+    }
 
-        if(const Frame* f = frame()){
+
+    Execution   Viewer::update(const Context&ctx) 
+    {
+        if(const Frame* f = Frame::current()){
             if(const WindowSnap* sn = f->snap(WindowID(m_window.id))){
                 m_state.window      = sn->window;
                 m_state.keyboard    = sn->keyboard;
@@ -1001,7 +1013,7 @@ namespace yq::tachyon {
         if(m_imgui)
             m_imgui->tick(m_state);
         
-        if((m_stage == Stage::Running) && is_visible() && (!is_iconified()) && (all(m_state.window.pixels) != 0)){
+        if(running() && is_visible() && (!is_iconified()) && (all(m_state.window.pixels) != 0)){
             
             draw(); // HACK (for now)
         } else {

@@ -31,7 +31,6 @@ add_library(${PROJECT_NAME} SHARED
 
     source/yt/api/Action.cpp
     source/yt/api/Controller.cpp
-    #source/yt/api/Context.hpp
     source/yt/api/Delegate.cpp
     source/yt/api/Frame.cpp
     source/yt/api/InterfaceInfo.cpp
@@ -41,8 +40,8 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/api/Thread.cpp
     source/yt/api/TypedID.cpp
 
-#    source/yt/app/Application.cpp
-#    source/yt/app/Viewer.cpp
+    source/yt/app/Application.cpp
+    source/yt/app/Viewer.cpp
     source/yt/app/AppThread.cpp
     source/yt/app/TaskThread.cpp
     source/yt/app/ViewerThread.cpp
@@ -106,7 +105,7 @@ add_library(${PROJECT_NAME} SHARED
     source/yt/ui/Panel.cpp
     #source/yt/ui/Tool.cpp
     source/yt/ui/Undo.cpp
-    #source/yt/ui/Widget.cpp
+    source/yt/ui/Widget.cpp
 
     #######################################################
     #   Vulqan
@@ -341,6 +340,8 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/commands/ui/ShowCommand.cpp
     source/ya/commands/ui/StartupCommand.cpp
     source/ya/commands/ui/UnfloatCommand.cpp
+    
+    source/ya/commands/widget/SetViewer.cpp
 
     source/ya/controls/Orientation3Control.cpp
 

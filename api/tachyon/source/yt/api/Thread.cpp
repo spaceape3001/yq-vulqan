@@ -292,6 +292,11 @@ namespace yq::tachyon {
         m_quit  = true;
     }
     
+    void    Thread::shutdown()
+    {
+        quit();
+    }
+    
     void    Thread::start()
     {
         tachyonInfo << ident() << "::start()";

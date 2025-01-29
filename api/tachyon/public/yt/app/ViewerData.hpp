@@ -16,7 +16,7 @@ namespace yq::tachyon {
         TypedID         window;
         TypedID         widget;
         TypedID         focus;
-        bool            paused  = false;
+        //bool            paused  = false;
     };
     
     struct ViewerData : public TachyonData {

@@ -11,18 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WidgetCommand)
 
 namespace yq::tachyon {
-    WidgetCommandInfo::WidgetCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
-        CommandInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    WidgetCommand::WidgetCommand(const Widget* v, const Param& p) : Command(p), WidgetBind(v)
+    WidgetCommand::WidgetCommand(const Header&h) : Command(h)
     {
     }
     
-    WidgetCommand::WidgetCommand(WidgetID v, const Param& p) : Command(p), WidgetBind(v)
+    WidgetCommand::WidgetCommand(const WidgetCommand& cp, const Header&h) : Command(cp, h)
     {
     }
 

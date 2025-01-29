@@ -42,6 +42,8 @@ namespace yq::tachyon {
     class SubscribeCommand;
     class UnsnoopCommand;
     class UnsubscribeCommand;
+    class PauseCommand;
+    class ResumeCommand;
     
     /// TACHYON INFO
 
@@ -144,6 +146,37 @@ namespace yq::tachyon {
     public:
         template <typename> class Fixer;
 
+        /*
+            Stages... this is how the tachyon progresses through life
+            
+            1.  Preinit (no ticks yet received)
+            2.  Setup (setup stage)
+            
+                Each cycle, the setup() is called (subject to the task-spec).  
+                If it succeeds *AND* children are all started, then this tachyon
+                will be allowed to run.
+                
+            3.  Running (general spot it'll loiter)
+            
+                Each cycle, the tick() is called (subject to the task-spec).
+                The tachyon may be paused, at which point, tick isn't called.
+                
+            4.  Paused (ie, no ticks)
+            
+                Each cycle, the paused() routine is called (subject to the task-spec).
+                Tachyon can alternate between pause & run as often as it'd like.
+            
+            5.  Teardown is the destruction period before the actual delete.
+            
+                Each cycle, the teardown() routine is called (subject to the task-spec).
+                Once teardown passes, the tachyon is considered "kaput"
+                
+            6.  Kaput, broken, awaiting destruction
+
+                Once all children have been deleted, this tachyon will proceed
+                with delete.
+        */
+
     private:
         YQ_TACHYON_DATA(TachyonData)
         YQ_TACHYON_FIXER(Fixer)
@@ -169,6 +202,7 @@ namespace yq::tachyon {
         
         const std::vector<TypedID>& children() const { return m_children; }
         
+        bool                dying() const;
         
         // Mail this post to the given tachyon...
         //static void         mail(TachyonID, const PostCPtr&);
@@ -209,6 +243,8 @@ namespace yq::tachyon {
         //TypedID             root(const Frame&) const;
 
         //Tachyon*            root(ptr_k, const Frame&) const;
+        
+        bool                running() const;
         
         //! \note NOT thread-safe (yet)
         //! Subscribes the given listener to OUR posts
@@ -257,6 +293,10 @@ namespace yq::tachyon {
         //! Checks the dirty flag
         //! \note Not 100% thread safe, meant for helpers within the same tick/thread
         bool            dirty() const { return m_dirty; }
+        
+        bool            starting() const;
+        
+        bool            paused() const;
 
     protected:
 
@@ -410,6 +450,8 @@ namespace yq::tachyon {
         */
         bool            in_tick() const;
 
+        bool            children_started() const;
+
         /*! \brief Context
         
             When we're in the tick cycle, the current context.  
@@ -435,6 +477,9 @@ namespace yq::tachyon {
         Stage stage() const { return m_stage; }
         
         uint64_t    cycle() const { return m_cycle; }
+        
+
+        void teardown();
 
     private:
         friend class Proxy;
@@ -470,7 +515,6 @@ namespace yq::tachyon {
         std::vector<TypedID>        m_children;
         std::string                 m_name;
         uint64_t                    m_cycle         = 0;
-        uint64_t                    m_tick0         = 0;
         Stage                       m_stage         = Stage::Preinit;
         bool                        m_dirty         = false;
 
@@ -521,13 +565,21 @@ namespace yq::tachyon {
         
         void    on_destroy_command(const DestroyCommand&);
         void    on_destroy_event(const DestroyEvent&);
+        void    on_pause_command(const PauseCommand&);
+        void    on_resume_command(const ResumeCommand&);
+        void    on_rethread_command(const RethreadCommand&);
         void    on_snoop_command(const SnoopCommand&);
         void    on_subscribe_command(const SubscribeCommand&);
-        void    on_rethread_command(const RethreadCommand&);
         void    on_unsnoop_command(const UnsnoopCommand&);
         void    on_unsubscribe_command(const UnsubscribeCommand&);
 
         Execution   tiktok(const Context&);
+
+        void    stage_teardown();
+        void    stage_paused();
+        void    stage_resume();
+        void    stage_running();
+        void    stage_kaput();
     };
     
     ////////////////////////////////////////////

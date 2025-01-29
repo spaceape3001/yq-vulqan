@@ -59,6 +59,7 @@ namespace yq::tachyon {
     class CloseReply;
     class CloseRequest;
     class DefocusEvent;
+    class DestroyEvent;
     class FloatCommand;
     class FocusCommand;
     class FocusEvent;
@@ -137,8 +138,7 @@ namespace yq::tachyon {
         
             \note this *WILL* throw exceptions if the viewer create or the widget are bad
         */
-        Viewer(Window*, WidgetPtr, const ViewerCreateInfo& vci);
-        Viewer(Window*, WidgetPtr, const ViewerCreateInfo& vci, const Param& );
+        Viewer(Window*, TypedID, const ViewerCreateInfo& vci);
         
         //! Destructor
         virtual ~Viewer();
@@ -151,10 +151,10 @@ namespace yq::tachyon {
         const Size2I&               aspect() const;
 
         //! TRUE if we're closing
-        bool                        closing() const;
+        //bool                        closing() const;
         
         //! TRUE if we're closing or kaput
-        bool                        closing_or_kaput() const;
+        //bool                        closing_or_kaput() const;
 
         //! Create information that created us
         const ViewerCreateInfo&     create_info() const { return m_createInfo; }
@@ -201,12 +201,6 @@ namespace yq::tachyon {
             //! TRUE if the window is visible
         bool                        is_visible() const;
 
-        //! TRUE if we're done (ready for deletion)
-        bool                        kaput() const;
-
-        //! TRUE if we've not called START
-        bool                        never_started() const;
-        
         //! Our viewer number (always incrementing 1...N)
         unsigned int                number() const { return m_number; }
         
@@ -214,20 +208,6 @@ namespace yq::tachyon {
 
         const Size2D&               size() const { return m_state.window.area; }
 
-        Stage                       stage() const;
-
-        //! TRUE if we're started
-        bool                        started() const;
-        
-        //! TRUE if we're started or running
-        bool                        started_or_running() const;
-
-        //! TRUE if rendering is paused
-        bool                        paused() const;
-
-        //! TRUE if we're running
-        bool                        running() const;
-        
         const std::string&          title() const;
         
         //! Current tick/frame number
@@ -329,6 +309,8 @@ namespace yq::tachyon {
 
     protected:
 
+        virtual Execution   setup(const Context&) override;
+
         //! Hint to do anything needed before the next render frame is actually rendered
         //! So do the uniform buffer & texture descriptor sets here.
         //virtual void        prerecord(ViContext&);
@@ -338,7 +320,7 @@ namespace yq::tachyon {
         };
 
         //! Called *AFTER* vulkan/imgui are initialized
-        virtual std::error_code startup(const Init&) { return {}; }
+        //virtual std::error_code startup(const Init&) { return {}; }
 
         virtual PostAdvice  advise(const Post&) const override;
 
@@ -347,10 +329,10 @@ namespace yq::tachyon {
         
         
         //! Call if you accept the close request
-        void     accept(close_k);
+        //void     accept(close_k);
         
         //! Call if you reject the close request
-        void     reject(close_k);
+        //void     reject(close_k);
         
         void        snap(ViewerSnap&) const;
 
@@ -363,8 +345,6 @@ namespace yq::tachyon {
         static std::atomic<int>         s_count;
         static std::atomic<unsigned>    s_lastNumber;
 
-        static Param   _params(const ViewerCreateInfo&);
-
         const ViewerCreateInfo          m_createInfo;
         const unsigned                  m_number;
 
@@ -372,7 +352,7 @@ namespace yq::tachyon {
         std::atomic<unit::Second>       m_drawTime      = { 0. };
         TypedID                         m_focus         = {};
         std::unique_ptr<ViGui>          m_imgui;
-        std::atomic<bool>               m_paused;
+        //std::atomic<bool>               m_paused;
         ViewerState                     m_state;
         std::atomic<Stage>              m_stage         = { Stage::Preinit };
         std::atomic<uint64_t>           m_ticks{0};
@@ -387,10 +367,12 @@ namespace yq::tachyon {
 
 
         void                _sweepwait();
-        void                _install(widget_k);     // Installs new widget
-        void                _remove(widget_k);      // Removes the current widget
-        void                _widget(WidgetPtr);     // Changes the widget
+        //void                _install(widget_k);     // Installs new widget
+        //void                _remove(widget_k);      // Removes the current widget
+        void                _widget(TypedID);     // Changes the widget
         
+        
+        Execution    update(const Context&);
         
         //void    close_request();
 
@@ -403,6 +385,7 @@ namespace yq::tachyon {
         void    on_cursor_hide_command(const ViewerCursorHideCommand&);
         void    on_cursor_normal_command(const ViewerCursorNormalCommand&);
         void    on_defocus_event(const DefocusEvent&);
+        void    on_destroy_event(const DestroyEvent&);
         void    on_focus_command(const FocusCommand&);
         void    on_focus_event(const FocusEvent&);
         void    on_float_command(const FloatCommand&);
@@ -417,12 +400,12 @@ namespace yq::tachyon {
         void    on_mouse_press_event(const MousePressEvent&);
         void    on_mouse_release_event(const MouseReleaseEvent&);
         void    on_move_event(const Position²Event&);
-        void    on_pause_command(const PauseCommand&);
+        //void    on_pause_command(const PauseCommand&);
         void    on_restore_command(const RestoreCommand&);
-        void    on_resume_command(const ResumeCommand&);
+        //void    on_resume_command(const ResumeCommand&);
         void    on_size_event(const Size²Event&);
         void    on_show_command(const ShowCommand&);
-        void    on_show_event(const ShowEvent&);
+        //void    on_show_event(const ShowEvent&);
         void    on_spatial_command(const SpatialCommand&);
         void    on_unfloat_command(const UnfloatCommand&);
 

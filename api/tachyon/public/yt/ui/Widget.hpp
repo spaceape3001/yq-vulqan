@@ -20,6 +20,7 @@ namespace yq::tachyon {
     struct ViContext;
     class CloseCommand;
     //class StartupCommand;
+    class SetViewer;
 
     class WidgetInfo : public TachyonInfo {
     public:
@@ -88,7 +89,7 @@ namespace yq::tachyon {
             \param[in] p    Proposed parent (can be null)
             \return TRUE if the change was taken
         */
-        bool    set_parent(Widget* p);
+        //bool    set_parent(Widget* p);
         
         /*! \brief Adds the child to this widget
         
@@ -98,7 +99,7 @@ namespace yq::tachyon {
             \param[in] ch   Child to add
             \return TRUE if the change was taken
         */
-        bool    add_child(Widget* ch);
+        //bool    add_child(Widget* ch);
         
         /*! \brief Tests for parentage
         
@@ -107,7 +108,7 @@ namespace yq::tachyon {
         
             \param p    Supposed parent in question
         */
-        bool    has_parentage(const Widget*) const;
+        //bool    has_parentage(const Widget*) const;
         
         WidgetID   id() const { return WidgetID(UniqueID::id()); }
 
@@ -137,7 +138,7 @@ namespace yq::tachyon {
         //! Our viewer
         const Viewer*   viewer(ptr_k) const ;
         
-        virtual Widget* widget_at(const Vector2D&) const;
+        //virtual Widget* widget_at(const Vector2D&) const;
         
         //! TRUE if we're attached (either as a child-widget or to a viewer)
         bool    attached() const;
@@ -149,7 +150,7 @@ namespace yq::tachyon {
         friend class Viewer;
         
         enum class F : uint8_t {
-            ClosePending,
+            //ClosePending,
             Visible,
             AutoRender
         };
@@ -200,14 +201,16 @@ namespace yq::tachyon {
         
         virtual Execution       tick(const Context&) override;
         
-        void                    snap(const WidgetSnap&) const;
+        void                    snap(WidgetSnap&) const;
         
         //  override to do your own startup... 
-        virtual void            startup();
+        //virtual void            startup();
         
         
         void    on_close_command(const CloseCommand&);
         void    on_close_request(const CloseRequestCPtr&);
+        
+        void    on_set_viewer(const SetViewer&);
         //void    on_startup_command(const StartupCommand&);
         
         

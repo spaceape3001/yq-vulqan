@@ -16,6 +16,8 @@
 
 #include <yt/msg/Post.hpp>
 
+#include <ya/commands/sim/PauseCommand.hpp>
+#include <ya/commands/sim/ResumeCommand.hpp>
 #include <ya/commands/tachyon/DestroyCommand.hpp>
 //#include <ya/commands/tachyonProxyCommand.hpp>
 #include <ya/commands/tachyon/RethreadCommand.hpp>
@@ -24,6 +26,8 @@
 #include <ya/commands/tachyon/UnsnoopCommand.hpp>
 #include <ya/commands/tachyon/UnsubscribeCommand.hpp>
 
+#include <ya/events/sim/PauseEvent.hpp>
+#include <ya/events/sim/ResumeEvent.hpp>
 #include <ya/events/tachyon/DestroyEvent.hpp>
 #include <ya/events/tachyon/DirtyEvent.hpp>
 
@@ -384,6 +388,23 @@ namespace yq::tachyon {
     {
         return {};
     }
+    
+    bool            Tachyon::children_started() const
+    {
+        const Frame*    curFrame    = Frame::current();
+        if(!curFrame)
+            return false;
+            
+        for(const TypedID& t : m_children){
+            const TachyonSnap*  ts  = curFrame->snap(TachyonID(t.id));
+            if(!ts)
+                return false;
+            if(!ts->started)
+                return false;
+        }
+        
+        return true;
+    }
 
     const Context&  Tachyon::context() const
     {
@@ -443,8 +464,6 @@ namespace yq::tachyon {
         //  TICK
         
         Context     ctx2(ctx);
-        ctx2.cycles = ctx.tick - m_tick0;
-        
         Execution   ex = tiktok(ctx2);
 
         //////////////////////////////////
@@ -528,6 +547,11 @@ namespace yq::tachyon {
         unhandled(pp);
     }
 
+    bool            Tachyon::dying() const
+    {
+        return m_stage >= Stage::Teardown;
+    }
+
     void            Tachyon::finalize(TachyonData&) const
     {
     }
@@ -582,13 +606,27 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return ;
-            
-        const Context& ctx  = context();
-        if(m_stage < Stage::Teardown){
-            m_stage = Stage::Teardown;
-            m_tick0 = ctx.tick;
-            m_cycle = 0;
-        }
+
+        if(m_stage < Stage::Teardown)
+            stage_teardown();
+    }
+
+    void    Tachyon::on_pause_command(const PauseCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        if(m_stage != Stage::Running)
+            return;
+        stage_paused();
+    }
+    
+    void    Tachyon::on_resume_command(const ResumeCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        if(m_stage != Stage::Paused)
+            return;
+        stage_resume();
     }
 
     void    Tachyon::on_rethread_command(const RethreadCommand& cmd)
@@ -633,28 +671,20 @@ namespace yq::tachyon {
         mail(new RethreadCommand({.target=*this}, tid));
     }
 
-#if 0
-    Tachyon*    Tachyon::parent(ptr_k, const Frame& frame) const
+    bool    Tachyon::paused() const
     {
-        return frame.object(TachyonID(m_parent));
+        return m_stage == Stage::Paused;
     }
 
-    TypedID     Tachyon::root(const Frame& frame) const
+    Execution    Tachyon::paused(const Context&)
     {
-        if(!m_parent)
-            return TypedID(this);
-            
         return {};
     }
-    
-    Tachyon*    Tachyon::root(ptr_k, const Frame& frame) const
+
+    bool    Tachyon::running() const
     {
-        if(!m_parent)
-            return this;
-        
-        return nullptr;
+        return m_stage == Stage::Running;
     }
-#endif
 
     void    Tachyon::send(const PostCPtr&pp, PostTarget to)
     {
@@ -684,6 +714,7 @@ namespace yq::tachyon {
         snap.children   = m_children;
         snap.started    = m_stage > Stage::Setup;
         snap.running    = m_stage == Stage::Running;
+        snap.paused     = m_stage == Stage::Paused;
         snap.teardown   = m_stage >= Stage::Teardown;
         for(const InterfaceInfo* ii : metaInfo().interfaces().all){
             Proxy*  p   = ii->proxy(const_cast<Tachyon*>(this));
@@ -697,9 +728,63 @@ namespace yq::tachyon {
         }
     }
 
+
+    void Tachyon::stage_kaput()
+    {
+        m_stage     = Stage::Kaput;
+        m_cycle     = 0;
+
+        if(!m_children.empty()){
+            for(TypedID c : m_children){
+                send(new DestroyCommand({.source=*this, .target=c}));
+            }
+        }
+    }
+
+    void    Tachyon::stage_paused()
+    {
+        m_stage = Stage::Paused;
+        m_cycle = 0;
+        send(new PauseEvent({.source=*this}));
+        mark();
+    }
+
+    
+    void    Tachyon::stage_resume()
+    {
+        m_stage = Stage::Running;
+        m_cycle = 0;
+        send(new ResumeEvent({.source=*this}));
+        mark();
+    }
+
+    void    Tachyon::stage_running()
+    {
+        m_stage = Stage::Running;
+        m_cycle = 0;
+        mark();
+    }
+    
+    void Tachyon::stage_teardown()
+    {
+        m_stage     = Stage::Teardown;
+        m_cycle     = 0;
+        mark();
+    }
+
+    bool        Tachyon::starting() const
+    {
+        return m_stage <= Stage::Setup;
+    }
+
     void        Tachyon::subscribe(TachyonID tid, MGF grp)
     {
         m_listeners[tid] |= grp;
+    }
+
+    void         Tachyon::teardown()
+    {
+        mail(new DestroyCommand({.target=*this}));
     }
 
     Execution    Tachyon::teardown(const Context&)
@@ -739,22 +824,32 @@ namespace yq::tachyon {
             if(!tick_cycle(ctx))
                 goto jDone;
             ex      = setup(ctx);
+            ++m_cycle;
             if(std::get_if<std::monostate>(&ex)){
                 ex  = ALWAYS;
+                if(!children_started())
+                    goto jDone;
                 goto jRun;
             }
             if(auto p = std::get_if<bool>(&ex)){
                 if(*p){
                     ex  = ALWAYS;
+                    if(!children_started())
+                        goto jDone;
                     goto jRun;
                 } else 
                     goto jKaput;
             }
-            if(std::get_if<accept_k>(&ex))
+            if(std::get_if<accept_k>(&ex)){
+                if(!children_started())
+                    goto jDone;
                 goto jRun;
+            }
             if(auto p = std::get_if<std::error_code>(&ex)){
                 if(*p == std::error_code()){
                     ex  = ALWAYS;
+                    if(!children_started())
+                        goto jDone;
                     goto jRun;
                 } else {
                     goto jKaput;
@@ -766,10 +861,8 @@ namespace yq::tachyon {
                 goto jKaput;
             if(std::get_if<start_k>(&ex)){
                 ex  = ALWAYS;
-                goto jRun;
-            }
-            if(std::get_if<start_k>(&ex)){
-                ex  = ALWAYS;
+                if(!children_started())
+                    goto jDone;
                 goto jRun;
             }
             if(std::get_if<teardown_k>(&ex))
@@ -790,12 +883,17 @@ namespace yq::tachyon {
                 goto jPause;
             }
             if(std::get_if<resume_k>(&ex)){
+                if(!children_started())
+                    goto jDone;
                 ex  = ALWAYS;
                 goto jRun;
             }
             
-            if(is_ticking(ex))
+            if(is_ticking(ex)){
+                if(!children_started())
+                    goto jDone;
                 goto jRun;
+            }
 
             //  shouldn't really hit here... still, treat it as "wait"
             break;
@@ -806,6 +904,7 @@ namespace yq::tachyon {
                 goto jDone;
 
             ex      = tick(ctx);
+            ++m_cycle;
             
             if(std::get_if<std::monostate>(&ex))
                 goto jDone;
@@ -854,12 +953,13 @@ namespace yq::tachyon {
                 goto jDone;
 
             ex      = paused(ctx);
+            ++m_cycle;
             if(std::get_if<std::monostate>(&ex))
                 goto jDone;
                 
             if(auto p = std::get_if<bool>(&ex)){
                 if(*p){
-                    goto jRun;
+                    goto jResume;
                 } else {
                     goto jDone;
                 }
@@ -884,15 +984,16 @@ namespace yq::tachyon {
             if(std::get_if<pause_k>(&ex))
                 goto jDone;
             if(std::get_if<resume_k>(&ex))
-                goto jRun;
+                goto jResume;
             if(is_ticking(ex))
-                goto jRun;
+                goto jResume;
             break;
         case Stage::Teardown:
             if(!tick_cycle(ctx))
                 goto jDone;
                 
             ex      = teardown(ctx);
+            ++m_cycle;
             if(std::get_if<std::monostate>(&ex))
                 goto jKaput;
             if(auto p = std::get_if<bool>(&ex)){
@@ -931,6 +1032,7 @@ namespace yq::tachyon {
                 goto jDone;
             break;
         case Stage::Kaput:
+            ++m_cycle;
             if(!m_children.empty())
                 goto jDone;
             goto jDelete;
@@ -941,40 +1043,29 @@ namespace yq::tachyon {
 
     jSetup:
         m_stage     = Stage::Setup;
-        m_tick0     = ctx.tick;
         m_cycle     = 0;
+        mark();
         goto jDone;
         
     jError:
     jPause:
-        m_stage     = Stage::Paused;
-        m_tick0     = ctx.tick;
-        m_cycle     = 0;
+        stage_paused();
         goto jDone;
             
+    jResume:
+        stage_resume();
+        goto jDone;
+        
     jRun:
-        m_stage     = Stage::Running;
-        m_tick0     = ctx.tick;
-        m_cycle     = 0;
+        stage_running();
         goto jDone;
         
     jTeardown:
-        m_stage     = Stage::Teardown;
-        m_tick0     = ctx.tick;
-        m_cycle     = 0;
+        stage_teardown();
         goto jDone;
 
     jKaput:
-        m_stage     = Stage::Kaput;
-        m_tick0     = ctx.tick;
-        m_cycle     = 0;
-
-        if(!m_children.empty()){
-            for(TypedID c : m_children){
-                send(new DestroyCommand({.source=*this, .target=c}));
-            }
-        }
-
+        stage_kaput();
         goto jDone;
         
     jDelete:
@@ -984,7 +1075,7 @@ namespace yq::tachyon {
     jDone:
         return ex;
     }
-    
+
     void Tachyon::tx(TachyonID tid, PostCPtr pp)
     {
         const Frame*  curFrame = Frame::current();
@@ -1071,9 +1162,11 @@ namespace yq::tachyon {
         w.description("Tachyon Object");
         w.slot(&Tachyon::on_destroy_command);
         w.slot(&Tachyon::on_destroy_event);
+        w.slot(&Tachyon::on_pause_command);
+        w.slot(&Tachyon::on_resume_command);
+        w.slot(&Tachyon::on_rethread_command);
         w.slot(&Tachyon::on_snoop_command);
         w.slot(&Tachyon::on_subscribe_command);
-        w.slot(&Tachyon::on_rethread_command);
         w.slot(&Tachyon::on_unsnoop_command);
         w.slot(&Tachyon::on_unsubscribe_command);
         w.property("name", &Tachyon::name);

@@ -129,7 +129,7 @@ namespace yq::tachyon {
         
         Viewer*         v = nullptr;
         // TODO ... catch/replace
-        v = Tachyon::create<Viewer>(win, w, vci);
+        v = Tachyon::create<Viewer>(win, w.ptr(), vci);
         
         ++at.m_viewers;
         

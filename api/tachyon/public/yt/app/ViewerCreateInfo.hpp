@@ -49,6 +49,9 @@ namespace yq::tachyon {
             //!  Set to enable imgui
         bool                        imgui       = false;
         
+            //!  Set to start "hidden"
+        bool                        hidden      = false;
+        
             //!  Set to enable fill of non-solid features
         bool                        fill_non_solid  = true;
         

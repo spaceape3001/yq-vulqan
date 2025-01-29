@@ -195,7 +195,7 @@ public:
         //add_thing(quad);
     }
     
-    Execution tick(Context& ctx)
+    Execution tick(const Context& ctx)
     {
         SimpleScene³::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
@@ -262,8 +262,8 @@ int main(int argc, char* argv[])
     HelloScene*     sc  = Tachyon::create<HelloScene>();
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
-    FrameInspector* fi = w -> create<FrameInspector>(CHILD);
-    w->add_child(fi);
+    //FrameInspector* fi = w -> create<FrameInspector>(CHILD);
+    w->create<FrameInspector>(CHILD);
     
     //LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     //gLogger = lb->id();

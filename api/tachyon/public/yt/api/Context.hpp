@@ -27,7 +27,6 @@ namespace yq::tachyon {
         unit::Second    Δwall;
         
         uint64_t        tick            = 0ULL;     //!< Thread tick number
-        uint64_t        cycles          = 0ULL;     //!< Ticks in current stage (resets on pause/resume)
         
         //  we'll have tachyon startup map here?
     };

@@ -215,9 +215,12 @@ struct HelloWidget : public Scene³Widget {
     {
     }
     
+    FrameInspector* inspector = nullptr;
+    
     Execution setup(const Context&) override
     {
-        create<FrameInspector>(CHILD);
+        if(!inspector)
+            inspector   = create<FrameInspector>(CHILD);
         return {};
     }
 };

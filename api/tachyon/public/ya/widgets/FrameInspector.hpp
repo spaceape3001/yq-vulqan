@@ -18,9 +18,6 @@ namespace yq::tachyon {
         
         virtual void    imgui(ViContext&);
         
-        virtual Execution setup(const Context&) override;
-        virtual Execution tick(const Context&) override;
-        
         static void init_info();
     private:
         TextLabel*  m_la1;

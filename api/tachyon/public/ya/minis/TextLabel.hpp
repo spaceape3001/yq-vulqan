@@ -8,6 +8,8 @@
 
 #include <yt/ui/Mini.hpp>
 #include <ya/accessors/StringValue.hpp>
+#include <ya/accessors/TypedFunction.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq::tachyon {
     class TextLabel : public Mini {
@@ -18,10 +20,19 @@ namespace yq::tachyon {
     
         TextLabel();
         
+        TextLabel(const char*);
+        TextLabel(std::string_view);
+        
         template <typename T>
-        TextLabel(T v)
+        TextLabel(T v) requires (has_to_string_v<T> || has_to_string_view_v<T>)
         {
             accessor(SET, std::make_unique<StringValue>(v));
+        }
+        
+        template <typename T>
+        TextLabel(std::function<T()>&& fn)
+        {
+            accessor(SET, std::make_unique<TypedFunction<T>>(std::move(fn)));
         }
 
         TextLabel(AccessorUPtr&&);

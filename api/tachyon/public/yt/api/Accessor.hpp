@@ -24,7 +24,7 @@ namespace yq::tachyon {
 
     //! Basically a data model
     template <typename T>
-    class TypedAccessor : public virtual Accessor {
+    class TypedAccessor : public Accessor {
     public:
         
         using Accessor::get;

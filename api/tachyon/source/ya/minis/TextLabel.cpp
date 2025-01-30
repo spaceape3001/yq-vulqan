@@ -26,6 +26,17 @@ namespace yq::tachyon {
         accessor(SET, std::make_unique<StringFunction>(std::move(fn)));
     }
 
+    TextLabel::TextLabel(std::string_view sv)
+    {   
+        accessor(SET, std::make_unique<StringValue>(sv));
+    }
+
+    TextLabel::TextLabel(const char* pString)
+    {   
+        assert(pString);
+        accessor(SET, std::make_unique<StringValue>(pString));
+    }
+
     TextLabel::~TextLabel()
     {
     }

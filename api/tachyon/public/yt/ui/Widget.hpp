@@ -178,6 +178,9 @@ namespace yq::tachyon {
         //! A string ID for ImGui
         const std::string       m_windowID;
         
+        //! A string ID for ImGui
+        virtual const char*     imgui_id() const;
+        
         FFlags                  m_flags = { F::Visible, F::AutoRender };
 
         

@@ -44,6 +44,7 @@
 #include <chrono>
 #include <functional>
 #include <unordered_map>
+#include <set>
 
 namespace yq { class Stream; }
 
@@ -151,6 +152,31 @@ namespace yq::tachyon {
         
         template <typename C, typename Pred>
         void        foreach(ref_k, std::span<const TypedID> ids, Pred&& pred) const;
+
+        const std::set<CameraID>&           ids(camera_k) const;
+        const std::set<Camera³ID>&          ids(camera³_k) const;
+        const std::set<ControllerID>&       ids(controller_k) const;
+        const std::set<CursorID>&           ids(cursor_k) const;
+        const std::set<DesktopID>&          ids(desktop_k) const;
+        const std::set<JoystickID>&         ids(joystick_k) const;
+        const std::set<KeyboardID>&         ids(keyboard_k) const;
+        const std::set<LightID>&            ids(light_k) const;
+        const std::set<Light³ID>&           ids(light³_k) const;
+        const std::set<ManagerID>&          ids(manager_k) const;
+        const std::set<ModelID>&            ids(model_k) const;
+        const std::set<MonitorID>&          ids(monitor_k) const;
+        const std::set<MouseID>&            ids(mouse_k) const;
+        const std::set<RenderedID>&         ids(rendered_k) const;
+        const std::set<Rendered³ID>&        ids(rendered³_k) const;
+        const std::set<SceneID>&            ids(scene_k) const;
+        const std::set<Scene³ID>&           ids(scene³_k) const;
+        const std::set<SpatialID>&          ids(spatial_k) const;
+        const std::set<Spatial³ID>&         ids(spatial³_k) const;
+        const std::set<TachyonID>&          ids(tachyon_k) const;
+        const std::set<ThreadID>&           ids(thread_k) const;
+        const std::set<ViewerID>&           ids(viewer_k) const;
+        const std::set<WidgetID>&           ids(widget_k) const;
+        const std::set<WindowID>&           ids(window_k) const;
 
         /*! \brief Gets the specific interface
         
@@ -288,6 +314,7 @@ namespace yq::tachyon {
         const ViewerSnap*                   snap(ViewerID) const;
         const WidgetSnap*                   snap(WidgetID) const;
         const WindowSnap*                   snap(WindowID) const;
+        
 
         Types           types(TachyonID) const;
         TypedID         typed(TachyonID) const;
@@ -312,6 +339,7 @@ namespace yq::tachyon {
             std::unordered_map<uint64_t, Ref<T>>        objects;
             std::unordered_map<uint64_t, Ref<const D>>  datas;
             std::unordered_map<uint64_t, Ref<const S>>  snaps;
+            std::set<ID<T>>                             ids;
             
             void        insert(Tachyon*, const TachyonData*, const TachyonSnap*);
             const D*    data(uint64_t) const;

@@ -98,6 +98,7 @@ namespace yq::tachyon {
         objects[p->id()]      = static_cast<T*>(p);
         datas[p->id()]        = static_cast<const data_k*>(d);
         snaps[p->id()]        = static_cast<const snap_t*>(s);
+        ids.insert(ID<T>(p->id()));
     }
     
     template <typename T, typename D, typename S>
@@ -566,6 +567,126 @@ namespace yq::tachyon {
     const WindowData*                   Frame::data(WindowID id) const
     {
         return m_windows.data(id);
+    }
+
+    const std::set<CameraID>&           Frame::ids(camera_k) const
+    {
+        return m_cameras.ids;
+    }
+    
+    const std::set<Camera³ID>&          Frame::ids(camera³_k) const
+    {
+        return m_camera³s.ids;
+    }
+    
+    const std::set<ControllerID>&       Frame::ids(controller_k) const
+    {
+        return m_controllers.ids;
+    }
+    
+    const std::set<CursorID>&           Frame::ids(cursor_k) const
+    {
+        return m_cursors.ids;
+    }
+    
+    const std::set<DesktopID>&          Frame::ids(desktop_k) const
+    {
+        return m_desktops.ids;
+    }
+    
+    const std::set<JoystickID>&         Frame::ids(joystick_k) const
+    {
+        return m_joysticks.ids;
+    }
+    
+    const std::set<KeyboardID>&         Frame::ids(keyboard_k) const
+    {
+        return m_keyboards.ids;
+    }
+    
+    const std::set<LightID>&            Frame::ids(light_k) const
+    {
+        return m_lights.ids;
+    }
+    
+    const std::set<Light³ID>&           Frame::ids(light³_k) const
+    {
+        return m_light³s.ids;
+    }
+    
+    const std::set<ManagerID>&          Frame::ids(manager_k) const
+    {
+        return m_managers.ids;
+    }
+    
+    const std::set<ModelID>&            Frame::ids(model_k) const
+    {
+        return m_models.ids;
+    }
+
+    const std::set<MonitorID>&          Frame::ids(monitor_k) const
+    {
+        return m_monitors.ids;
+    }
+    
+    const std::set<MouseID>&            Frame::ids(mouse_k) const
+    {
+        return m_mouses.ids;
+    }
+    
+    const std::set<RenderedID>&         Frame::ids(rendered_k) const
+    {
+        return m_rendereds.ids;
+    }
+    
+    const std::set<Rendered³ID>&        Frame::ids(rendered³_k) const
+    {
+        return m_rendered³s.ids;
+    }
+    
+    const std::set<SceneID>&            Frame::ids(scene_k) const
+    {
+        return m_scenes.ids;
+    }
+    
+    const std::set<Scene³ID>&           Frame::ids(scene³_k) const
+    {
+        return m_scene³s.ids;
+    }
+    
+    const std::set<SpatialID>&          Frame::ids(spatial_k) const
+    {
+        return m_spatials.ids;
+    }
+    
+    const std::set<Spatial³ID>&         Frame::ids(spatial³_k) const
+    {
+        return m_spatial³s.ids;
+    }
+    
+    const std::set<TachyonID>&          Frame::ids(tachyon_k) const
+    {
+        return m_tachyons.ids;
+    }
+    
+    const std::set<ThreadID>&           Frame::ids(thread_k) const
+    {
+        return m_threads.ids;
+    }
+    
+    const std::set<ViewerID>&           Frame::ids(viewer_k) const
+    {
+        return m_viewers.ids;
+    }
+    
+    const std::set<WidgetID>&           Frame::ids(widget_k) const
+    {
+        return m_widgets.ids;
+    }
+    
+    const std::set<WindowID>&           Frame::ids(window_k) const
+    {
+        return m_windows.ids;
     }
 
     Camera*                             Frame::object(CameraID id) const

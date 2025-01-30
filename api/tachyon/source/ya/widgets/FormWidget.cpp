@@ -109,7 +109,7 @@ namespace yq::tachyon {
     
     void FormWidget::imgui(ViContext&ctx) 
     {
-        if(ImGui::BeginTable(m_windowID.c_str(), 2)){
+        if(ImGui::BeginTable(imgui_id(), 2)){
             for(const Row& r : m_rows){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn()){

@@ -152,6 +152,12 @@ yInfo() << ident() <<  "::close(REJECT)";
         return false;
     }
 */
+    
+    const char*     Widget::imgui_id() const
+    {
+        return m_windowID.c_str();
+    }
+
 
     bool    Widget::is_imgui() const
     {

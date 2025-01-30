@@ -58,6 +58,7 @@ namespace yq::tachyon {
         struct Trace {
             TypedID         source;
             TypedID         target;
+            uint64_t        id;
         };
     
         //! Post identifier (executable-unique)
@@ -81,7 +82,7 @@ namespace yq::tachyon {
         bool    claim() const;
         bool    claimed() const;
         
-        Trace       trace() const { return { m_source, m_target }; }
+        Trace       trace() const { return { m_source, m_target, m_id }; }
         
     protected:
         //! Constructs a post

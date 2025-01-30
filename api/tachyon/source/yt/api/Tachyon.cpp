@@ -417,6 +417,9 @@ namespace yq::tachyon {
     {
         //////////////////////////////////
         //  START THE CYCLE
+        
+        time_point_t t0 = clock_t::now();
+        
         TachyonDataPtr  data    = metaInfo().create_data();
         m_thread        = thread::id();
         m_data          = data.ptr();
@@ -435,6 +438,9 @@ namespace yq::tachyon {
             std::swap(data->outbound,   m_outbox);
         }
         
+        auto ls = m_last.span(ALL);
+        std::set<uint64_t>  seen(ls.begin(), ls.end());
+        
         if(!messages.empty()){
             for(TachyonID sn : m_snoop){
                 tx(sn, messages);
@@ -445,6 +451,12 @@ namespace yq::tachyon {
             for(const PostCPtr& pp : messages){
                 if(!pp)
                     continue;
+                
+                m_last << pp->id();
+                if(!seen.insert(pp->id()).second){   // we've already seen it...
+                    data->inbound.push_back({ pp, InPost::State::Duplicate });
+                    continue;
+                }
                 
                 PostAdvice pa = advise(*pp);
                 if(rejecting(pa)){
@@ -516,6 +528,10 @@ namespace yq::tachyon {
         
         metaInfo().finalize_data(*this, *m_data);
         
+        time_point_t t1 = clock_t::now();
+        m_data -> cycleTime = unit::Nanosecond{ duration_nanoseconds_t(t1-t0).count() };
+
+
         //////////////////////////////////
         //  END THE CYCLE
 

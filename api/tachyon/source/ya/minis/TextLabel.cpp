@@ -7,6 +7,7 @@
 #include <ya/minis/TextLabel.hpp>
 #include <yt/ui/MiniInfoWriter.hpp>
 #include <yt/ui/MyImGui.hpp>
+#include <ya/accessors/StringFunction.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::TextLabel)
 
@@ -18,6 +19,11 @@ namespace yq::tachyon {
     TextLabel::TextLabel(AccessorUPtr&& acc)
     {
         accessor(SET, std::move(acc));
+    }
+
+    TextLabel::TextLabel(StringFunction::FN&& fn)
+    {
+        accessor(SET, std::make_unique<StringFunction>(std::move(fn)));
     }
 
     TextLabel::~TextLabel()

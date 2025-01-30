@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/container/RingArray.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/UniqueID.hpp>
@@ -26,6 +27,7 @@
 //#include <yt/typedef/controller.hpp>
 #include <concepts>
 #include <iosfwd>
+#include <utility>
 
 namespace yq::tachyon {
     class InterfaceInfo;
@@ -259,15 +261,15 @@ namespace yq::tachyon {
         
         //! Creates a tachyon (no parent)
         template <SomeTachyon T, typename ... Args>
-        static T*   create(Args...);
+        static T*   create(Args&&...);
     
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
-        T*          create(child_k, Args...);
+        T*          create(child_k, Args&&...);
 
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
-        T*          create_child(Args...);
+        T*          create_child(Args&&...);
 
         /*! \brief Creates a tachyon using its meta information
             
@@ -500,6 +502,7 @@ namespace yq::tachyon {
 
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
         
+        RingArray<uint64_t,64>      m_last;       //< Filter out the last N messages
         std::vector<PostCPtr>       m_inbox;      //< Inbox (under mutex guard)
         std::vector<OutPost>        m_outbox;     //< Outbox (under mutex guard)
         control_hash_t              m_control;    //< Who controls us
@@ -586,9 +589,9 @@ namespace yq::tachyon {
     //  Top-tachyon creates
 
     template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create(Args... args)
+    T*  Tachyon::create(Args&&... args)
     {
-        Ref<T>  tp  = new T(args...);
+        Ref<T>  tp  = new T(std::forward<decltype(args)>(args)...);
         retain(tp);
         return tp.ptr();
     }
@@ -608,9 +611,9 @@ namespace yq::tachyon {
 
 
     template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create_child(Args... args)
+    T*  Tachyon::create_child(Args&&... args)
     {
-        Ref<T>   tp  = new T(args...);
+        Ref<T>   tp  = new T(std::forward<decltype(args)>(args)...);
         retain(tp);
         tp->_set_parent(*this);
         _add_child(*tp);
@@ -636,9 +639,9 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create(child_k, Args... args)
+    T*  Tachyon::create(child_k, Args&&... args)
     {
-        return create_child<T>(args...);
+        return create_child<T>(std::forward<decltype(args)>(args)...);
     }
 
     Stream& operator<<(Stream&, const Tachyon::Ident&);

@@ -148,6 +148,7 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
+    source/ya/accessors/StringFunction.cpp
     source/ya/accessors/StringValue.cpp
 
     source/ya/aspects/AMaxSize1.cpp
@@ -527,6 +528,7 @@ add_library(${PROJECT_NAME} SHARED
     
     source/ya/utils/LoggerBox.cpp
 
+    source/ya/widgets/FormWidget.cpp
     source/ya/widgets/FrameInspector.cpp
     source/ya/widgets/ImGuiDemoWidget.cpp
     #source/ya/widgets/LabelWidget.cpp

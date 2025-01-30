@@ -65,19 +65,19 @@ namespace yq::tachyon {
 
     Stream& operator<<(Stream&str, const Post::Trace& i)
     {
-        str << "{source=" << i.source.id << " target=" << i.target.id << "}";
+        str << "{id=" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
         return str;
     }
 
     std::ostringstream& operator<<(std::ostringstream&str, const Post::Trace& i)
     {
-        str << "{source=" << i.source.id << " target=" << i.target.id << "}";
+        str << "{id=" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
         return str;
     }
 
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, const Post::Trace& i)
     {
-        str << "{source=" << i.source.id << " target=" << i.target.id << "}";
+        str << "{id=" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
         return str;
     }
 }

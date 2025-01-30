@@ -16,15 +16,15 @@ namespace yq::tachyon {
     //! Basically a data model (meant for SIMPLE typeinfo things)
     class Accessor {
     public:
-        virtual Any         get(any_k) const = 0;
-        virtual bool        editable() const { return false; }
-        virtual void        set(const Any&) {}
+        virtual Any             get(any_k) const = 0;
+        virtual bool            editable() const { return false; }
+        virtual void            set(const Any&) {}
         virtual ~Accessor(){}
     };
 
     //! Basically a data model
     template <typename T>
-    class TypedAccessor : public Accessor {
+    class TypedAccessor : public virtual Accessor {
     public:
         
         using Accessor::get;

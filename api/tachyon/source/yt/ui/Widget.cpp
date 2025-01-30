@@ -65,9 +65,8 @@ namespace yq::tachyon {
         //w.slot(&Widget::on_startup_command);
     }
 
-    Widget::Widget() : Tachyon()
+    Widget::Widget() : Tachyon(), m_windowID(fmt_hex(UniqueID::id()))
     {
-        m_windowID      = std::string(fmt_hex(UniqueID::id()));
     }
     
     Widget::~Widget()

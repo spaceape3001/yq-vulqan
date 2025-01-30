@@ -7,29 +7,23 @@
 #pragma once
 
 #include <ya/typedef/accessors.hpp>
-#include <yq/text/format.hpp>
+#include <functional>
 
 namespace yq::tachyon {
 
-    class StringValue : public StringAccessor {
+    class StringFunction : public StringAccessor {
     public:
 
-        StringValue(const char* s);
-        StringValue(const std::string&s);
-        StringValue(std::string&&s);
-        StringValue(std::string_view s);
+        using FN = std::function<std::string_view()>;
 
-        template <Stringable S>
-        StringValue(S value) : StringValue(to_string(value))
-        {
-        }
+        StringFunction(FN&&);
         
         Any                 get(any_k) const override;
         std::string_view    get(value_k) const override;
         
-        ~StringValue();
+        ~StringFunction();
         
     private:
-        std::string     m_value;
+        FN                  m_function;
     };
 }

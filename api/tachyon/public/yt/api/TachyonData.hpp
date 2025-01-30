@@ -8,6 +8,7 @@
 
 #include <yq/core/Ref.hpp>
 #include <yq/unit/MKS.hpp>
+#include <yq/unit/SCALED.hpp>
 #include <yt/api/ID.hpp>
 #include <yt/msg/MG.hpp>
 #include <yt/api/TypedID.hpp>
@@ -39,8 +40,9 @@ namespace yq::tachyon {
 
     struct InPost {
         enum class State {
-            Rejected = 0,
-            Accepted
+            Accepted = 0,
+            Rejected,
+            Duplicate
         };
         PostCPtr    post;
         State       state   = State::Rejected;
@@ -57,6 +59,7 @@ namespace yq::tachyon {
         std::vector<OutPost>    outbound;
         uint64_t                tick        = 0ULL;
         ThreadID                owner;
+        unit::Nanosecond        cycleTime   = { 0. };
         
         TachyonData();
         virtual ~TachyonData();

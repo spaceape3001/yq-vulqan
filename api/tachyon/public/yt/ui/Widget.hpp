@@ -176,7 +176,7 @@ namespace yq::tachyon {
         //std::vector<Widget*>    m_children;
         
         //! A string ID for ImGui
-        std::string             m_windowID;
+        const std::string       m_windowID;
         
         FFlags                  m_flags = { F::Visible, F::AutoRender };
 

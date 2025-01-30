@@ -23,6 +23,9 @@ namespace yq::tachyon {
     using WidgetDataPtr  = Ref<WidgetData>;
     using WidgetDataCPtr = Ref<const WidgetData>;
 
+    template <class E>
+    concept SomeWidget = std::derived_from<E,Widget>;
+
     template <class> class ID;
     using WidgetID = ID<Widget>;
 }

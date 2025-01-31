@@ -220,6 +220,7 @@ namespace yq::tachyon {
         w->subscribe(id(), {MG::Viewer, MG::General});
         
         
+        m_widgetPtr     = w;
         _widget(w);
         
         // HACK (becase we know it's GLFW ATM)
@@ -905,22 +906,6 @@ yInfo() << "Viewer::on_destroy_event ... it's the window";
         }
     }
     
-    void     Viewer::owner(push_k, ThreadID tid) 
-    {
-        Tachyon::owner(PUSH, tid);
-        send(new RethreadCommand({.target=m_widget}, tid));
-        //if(m_widget)
-            //m_widget -> owner(PUSH, tid);
-            
-        #if 0
-            //  here in case we move imgui/viz to the tachyon model
-        if(m_imgui)
-            m_imgui -> owner(PUSH, tid);
-        if(m_viz)
-            m_viz -> owner(PUSH, tid);
-        #endif
-    }
-
 #if 0
     bool    Viewer::paused() const 
     { 
@@ -1016,13 +1001,13 @@ yInfo() << "Viewer::on_destroy_event ... it's the window";
         sn.window   = m_window;
         sn.focus    = m_focus;
         //sn.paused   = m_paused;
+        Tachyon::snap(sn);
     }
 
     Execution   Viewer::tick(const Context&ctx) 
     {
         return update(ctx);
     }
-
 
     Execution   Viewer::update(const Context&ctx) 
     {
@@ -1059,7 +1044,6 @@ yInfo() << "Viewer::on_destroy_event ... it's the window";
         }
         m_cleanup.sweep();
         ++m_ticks;
-        mark();
         return {};
     }
 

@@ -139,14 +139,18 @@ namespace yq::tachyon {
         win->subscribe(v->id());
         v->subscribe(win->id());
         
-        // two ticks to force it into the frame
+        // Ticks to force things into the frame
         at.tick();
         at.tick();
         
         switch(m_cInfo.vthreads){
         case ViewerThreadPolicy::Single:
         case ViewerThreadPolicy::Individual:
-            v->owner(PUSH, thread(VIEWER).id());
+            {
+                ThreadID    vid = thread(VIEWER).id();
+                v->owner(PUSH, vid);
+                w->owner(PUSH, vid);
+            }
             break;
         default:
             break;

@@ -143,7 +143,6 @@ namespace yq::tachyon {
         //! TRUE if we're attached (either as a child-widget or to a viewer)
         bool    attached() const;
 
-
         bool        visible() const;
 
     protected:
@@ -201,8 +200,6 @@ namespace yq::tachyon {
         //virtual void            on_child_removed(Widget*){}
         
         virtual PostAdvice      advise(const Post&) const override;
-        
-        virtual Execution       tick(const Context&) override;
         
         void                    snap(WidgetSnap&) const;
         

@@ -337,6 +337,21 @@ namespace yq::tachyon {
         return m_camera³s.count();
     }
 
+    size_t Frame::count(children_k, TachyonID tid) const
+    {
+        const TachyonSnap*  sn  = snap(tid);
+        if(!sn)
+            return 0;
+        
+        size_t  ret = 0;
+        for(TypedID t : sn->children){
+            if(contains((TachyonID) t)){
+                ++ ret;
+            }
+        }
+        return ret;
+    }
+
     size_t Frame::count(controller_k) const
     {
         return m_controllers.count();

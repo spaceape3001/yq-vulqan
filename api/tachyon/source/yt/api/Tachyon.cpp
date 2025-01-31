@@ -390,21 +390,59 @@ namespace yq::tachyon {
         return {};
     }
     
-    bool            Tachyon::children_started() const
+    bool    Tachyon::check_parent_thread()
+    {
+        if(!m_parent)
+            return true;
+            
+        const Frame*    curFrame    = Frame::current();
+        if(!curFrame)
+            return false;
+        const TachyonData*   parData = curFrame->data(m_parent);
+        if(!parData)
+            return false;
+        if((parData -> owner != m_owner) && !m_flags(X::DifferentThread)){
+            Thread::rethread(this, parData->owner);
+            return false;
+        }
+        return true;
+    }
+    
+    bool            Tachyon::children_started()
     {
         const Frame*    curFrame    = Frame::current();
         if(!curFrame)
             return false;
-            
+        
+        bool    ret    = true;
+        
         for(const TypedID& t : m_children){
-            const TachyonSnap*  ts  = curFrame->snap(TachyonID(t.id));
-            if(!ts)
-                return false;
-            if(!ts->started)
-                return false;
+            bool  okay  = false;
+            do {
+                const TachyonSnap*  ts  = curFrame->snap(TachyonID(t.id));
+                if(!ts)
+                    break;
+
+                if(!ts->started)
+                    break;
+
+                Tachyon*  tac = curFrame->object(TachyonID(t.id));
+                if(!tac)
+                    break;
+
+                const TachyonData*  td  = curFrame->data(TachyonID(t.id));
+                if((td->owner != m_owner) && !tac->m_flags(X::DifferentThread)){
+                    tac->mail(new RethreadCommand({.target = *tac}, m_owner));
+                    break;
+                }
+                
+                okay    = true;
+            } while(false);
+            if(!okay)
+                ret = false;
         }
         
-        return true;
+        return ret;
     }
 
     const Context&  Tachyon::context() const
@@ -650,7 +688,9 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return ;
-        Thread::rethread(this, cmd.thread());
+
+        if(cmd.thread() != m_owner)
+            Thread::rethread(this, cmd.thread());
     }
 
     void    Tachyon::on_snoop_command(const SnoopCommand&cmd)
@@ -685,6 +725,7 @@ namespace yq::tachyon {
 
     void    Tachyon::owner(push_k, ThreadID tid)
     {
+        m_flags |= X::DifferentThread;
         mail(new RethreadCommand({.target=*this}, tid));
     }
 
@@ -844,30 +885,22 @@ namespace yq::tachyon {
             ++m_cycle;
             if(std::get_if<std::monostate>(&ex)){
                 ex  = ALWAYS;
-                if(!children_started())
-                    goto jDone;
-                goto jRun;
+                goto jStart;
             }
             if(auto p = std::get_if<bool>(&ex)){
                 if(*p){
                     ex  = ALWAYS;
-                    if(!children_started())
-                        goto jDone;
-                    goto jRun;
+                    goto jStart;
                 } else 
                     goto jKaput;
             }
             if(std::get_if<accept_k>(&ex)){
-                if(!children_started())
-                    goto jDone;
-                goto jRun;
+                goto jStart;
             }
             if(auto p = std::get_if<std::error_code>(&ex)){
                 if(*p == std::error_code()){
                     ex  = ALWAYS;
-                    if(!children_started())
-                        goto jDone;
-                    goto jRun;
+                    goto jStart;
                 } else {
                     goto jKaput;
                 }
@@ -878,9 +911,7 @@ namespace yq::tachyon {
                 goto jKaput;
             if(std::get_if<start_k>(&ex)){
                 ex  = ALWAYS;
-                if(!children_started())
-                    goto jDone;
-                goto jRun;
+                goto jStart;
             }
             if(std::get_if<teardown_k>(&ex))
                 goto jTeardown;
@@ -900,17 +931,12 @@ namespace yq::tachyon {
                 goto jPause;
             }
             if(std::get_if<resume_k>(&ex)){
-                if(!children_started())
-                    goto jDone;
                 ex  = ALWAYS;
-                goto jRun;
+                goto jStart;
             }
             
-            if(is_ticking(ex)){
-                if(!children_started())
-                    goto jDone;
-                goto jRun;
-            }
+            if(is_ticking(ex))
+                goto jStart;
 
             //  shouldn't really hit here... still, treat it as "wait"
             break;
@@ -1063,6 +1089,13 @@ namespace yq::tachyon {
         m_cycle     = 0;
         mark();
         goto jDone;
+        
+    jStart:
+        if(!children_started())
+            goto jDone;
+        if(!check_parent_thread())
+            goto jDone;
+        goto jRun;
         
     jError:
     jPause:

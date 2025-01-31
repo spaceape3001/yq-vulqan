@@ -338,6 +338,7 @@ namespace yq::tachyon {
 
         mutable mutex_t         m_mutex;          // used for guards
 
+
     
         #define TXLOCK  \
             lock_t  _lock(m_mutex, true);
@@ -452,8 +453,6 @@ namespace yq::tachyon {
         */
         bool            in_tick() const;
 
-        bool            children_started() const;
-
         /*! \brief Context
         
             When we're in the tick cycle, the current context.  
@@ -490,9 +489,9 @@ namespace yq::tachyon {
 
         
         enum class X : uint8_t {
-            Pause
+            //  Set if this object's thread is *MEANT* to be different from parent
+            DifferentThread
         };
-        using XFlags    = Flags<X>;
 
         Tachyon(init_k, const Param& p={});
         Tachyon(thread_k, const Param& p={});
@@ -521,10 +520,7 @@ namespace yq::tachyon {
         Stage                       m_stage         = Stage::Preinit;
         bool                        m_dirty         = false;
 
-        struct {
-            //  TODO.... 
-            XFlags                  flags;
-        } m_exec;
+        Flags<X>                    m_flags = {};
         
         //virtual void                    parent(set_k, TachyonID);
         
@@ -583,6 +579,8 @@ namespace yq::tachyon {
         void    stage_resume();
         void    stage_running();
         void    stage_kaput();
+        bool    check_parent_thread();
+        bool    children_started();
     };
     
     ////////////////////////////////////////////

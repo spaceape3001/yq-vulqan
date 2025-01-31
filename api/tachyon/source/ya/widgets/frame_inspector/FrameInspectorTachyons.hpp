@@ -114,11 +114,34 @@ namespace yq::tachyon {
             std::string_view    mn  = objInfo.name();
             ImGui::Text("%.*s", (int) mn.size(), mn.data());
         }
+
+        void    meta_name(TachyonID tid)
+        {
+            if(!tid){
+                ImGui::Text("(none)");
+                return;
+            }
+        
+            if(!m_frame){
+                ImGui::Text("(no-frame)", tid.id);
+                return;
+            }
+            
+            const Tachyon*  t   = m_frame->object(tid);
+            if(!m_frame){
+                ImGui::Text("(missing)", tid.id);
+                return;
+            }
+            
+            meta_name(t->metaInfo());
+        }
         
         const char* name() const override { return "Tachyon"; }
         
         void    render(tachyon_k)
         {
+            bool    treeOpen    = false;
+
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
@@ -128,11 +151,23 @@ namespace yq::tachyon {
             }
 
             ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Children");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", m_snap->children.size());
+            ImGui::TableNextColumn();
+            guard([&](){
+                std::string tid    = "children";
+                tid += to_string_view(m_tachyon->id().id);
+                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Children");
+            });
+            ImGui::TableNextColumn();
+            ImGui::Text("%ld", m_snap->children.size());
+
+            if(treeOpen){
+                end(TABLE);
+                ImGui::Indent();
+
+                table_children();
+                
+                ImGui::Unindent();
+                begin(TABLE);
             }
 
             ImGui::TableNextRow();
@@ -153,7 +188,6 @@ namespace yq::tachyon {
             
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            bool    treeOpen    = false;
             guard([&](){
                 std::string tid    = "inbound";
                 tid += to_string_view(m_tachyon->id().id);
@@ -218,6 +252,14 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Revision");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", m_snap->revision);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("Stage");
             }
             if(ImGui::TableNextColumn()){
@@ -258,97 +300,111 @@ namespace yq::tachyon {
             }
         }
         
+        void    table_children()
+        {
+            if(!ImGui::BeginTable("Children", 2, ImGuiTableFlags_SizingFixedFit))
+                return ;
+            
+            ImGui::TableSetupColumn("ID");
+            ImGui::TableSetupColumn("Type");
+            ImGui::TableHeadersRow();
+            
+            for(const TypedID& t : m_snap->children){
+                ImGui::TableNextRow();
+                if(ImGui::TableNextColumn()){
+                    ImGui::Text("%ld", t.id);
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_name(t);
+                }
+            }
+            
+            ImGui::EndTable();
+        }
+        
         void    table_inbound() 
         {
-            if(ImGui::BeginTable("InPosts", 5, ImGuiTableFlags_SizingFixedFit)){
-                ImGui::TableHeadersRow();
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("ID");
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Type");
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Source");
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Target");
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("State");
+            if(!ImGui::BeginTable("InPosts", 5, ImGuiTableFlags_SizingFixedFit))
+                return ;
                 
-                for(const InPost& ip : m_data->inbound){
-                    ImGui::TableNextRow();
+            ImGui::TableSetupColumn("ID");
+            ImGui::TableSetupColumn("Type");
+            ImGui::TableSetupColumn("Source");
+            ImGui::TableSetupColumn("Target");
+            ImGui::TableSetupColumn("State");
+            ImGui::TableHeadersRow();
+            
+            for(const InPost& ip : m_data->inbound){
+                ImGui::TableNextRow();
 
-                    if(!ip.post){
-                        ImGui::TableNextColumn();
-                        ImGui::TextUnformatted("(null)");
-                        continue;
-                    }
-                        
-                    if(ImGui::TableNextColumn()){
-                        ImGui::Text("%ld", ip.post->id().id);
-                    }
-                    if(ImGui::TableNextColumn()){
-                        meta_name(ip.post->metaInfo());
-                    }
-                    if(ImGui::TableNextColumn()){
-                        meta_id(ip.post->source());
-                    }
-                    if(ImGui::TableNextColumn()){
-                        meta_id(ip.post->target());
-                    }
-                    if(ImGui::TableNextColumn()){
-                        switch(ip.state){
-                        case InPost::State::Accepted:
-                            ImGui::TextUnformatted("Accepted");
-                            break;
-                        case InPost::State::Rejected:
-                            ImGui::TextUnformatted("Rejected");
-                            break;
-                        case InPost::State::Duplicate:
-                            ImGui::TextUnformatted("Duplicate");
-                            break;
-                        }
+                if(!ip.post){
+                    ImGui::TableNextColumn();
+                    ImGui::TextUnformatted("(null)");
+                    continue;
+                }
+                    
+                if(ImGui::TableNextColumn()){
+                    ImGui::Text("%ld", ip.post->id().id);
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_name(ip.post->metaInfo());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(ip.post->source());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(ip.post->target());
+                }
+                if(ImGui::TableNextColumn()){
+                    switch(ip.state){
+                    case InPost::State::Accepted:
+                        ImGui::TextUnformatted("Accepted");
+                        break;
+                    case InPost::State::Rejected:
+                        ImGui::TextUnformatted("Rejected");
+                        break;
+                    case InPost::State::Duplicate:
+                        ImGui::TextUnformatted("Duplicate");
+                        break;
                     }
                 }
-            
-                ImGui::EndTable();
             }
+            
+            ImGui::EndTable();
         }
         
         void    table_outbound()
         {
-            if(ImGui::BeginTable("OutPosts", 4, ImGuiTableFlags_SizingFixedFit)){
-                ImGui::TableHeadersRow();
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("ID");
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Type");
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Source");
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Target");
-                
-                for(const OutPost& op : m_data->outbound){
-                    ImGui::TableNextRow();
-                    if(!op.post){
-                        ImGui::TableNextColumn();
-                        ImGui::TextUnformatted("(null)");
-                        continue;
-                    }
-                    if(ImGui::TableNextColumn()){
-                        ImGui::Text("%ld", op.post->id().id);
-                    }
-                    if(ImGui::TableNextColumn()){
-                        meta_name(op.post->metaInfo());
-                    }
-                    if(ImGui::TableNextColumn()){
-                        meta_id(op.post->source());
-                    }
-                    if(ImGui::TableNextColumn()){
-                        meta_id(op.post->target());
-                    }
-                }
+            if(!ImGui::BeginTable("OutPosts", 4, ImGuiTableFlags_SizingFixedFit))
+                return ;
+
+            ImGui::TableSetupColumn("ID");
+            ImGui::TableSetupColumn("Type");
+            ImGui::TableSetupColumn("Source");
+            ImGui::TableSetupColumn("Target");
+            ImGui::TableHeadersRow();
             
-                ImGui::EndTable();
+            for(const OutPost& op : m_data->outbound){
+                ImGui::TableNextRow();
+                if(!op.post){
+                    ImGui::TableNextColumn();
+                    ImGui::TextUnformatted("(null)");
+                    continue;
+                }
+                if(ImGui::TableNextColumn()){
+                    ImGui::Text("%ld", op.post->id().id);
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_name(op.post->metaInfo());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(op.post->source());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(op.post->target());
+                }
             }
+            ImGui::EndTable();
         }
         
         

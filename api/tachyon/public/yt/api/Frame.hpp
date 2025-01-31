@@ -120,6 +120,8 @@ namespace yq::tachyon {
         size_t count(viewer_k) const;
         size_t count(widget_k) const;
         size_t count(window_k) const;
+        
+        size_t count(children_k, TachyonID) const;
     
         const CameraData*                   data(CameraID) const;
         const Camera³Data*                  data(Camera³ID) const;

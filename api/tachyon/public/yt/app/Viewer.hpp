@@ -304,9 +304,6 @@ namespace yq::tachyon {
         //! Our general "update()" that includes the visualizer
         virtual Execution   tick(const Context&) override;
         
-        using Tachyon::owner;
-        virtual void        owner(push_k, ThreadID) override;
-
     protected:
 
         virtual Execution   setup(const Context&) override;
@@ -358,6 +355,7 @@ namespace yq::tachyon {
         std::atomic<uint64_t>           m_ticks{0};
         std::unique_ptr<Visualizer>     m_viz;
         TypedID                         m_widget;
+        Widget*                         m_widgetPtr = nullptr;  // temporary cheat
         TypedID                         m_window;
         Size2I                          m_pixels    = {};
         bool                            m_zeroSize  = false;

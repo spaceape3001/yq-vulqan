@@ -65,30 +65,30 @@ namespace yq::tachyon {
         if(!m_init){
             m_panes.push_back(create<FrameInspectorHeader>(CHILD));
             m_panes.push_back(nullptr);
-            m_panes.push_back(create<FrameInspectorCameras>());
-            m_panes.push_back(create<FrameInspectorCamera³s>());
-            m_panes.push_back(create<FrameInspectorControllers>());
-            m_panes.push_back(create<FrameInspectorCursors>());
-            m_panes.push_back(create<FrameInspectorDesktops>());
-            m_panes.push_back(create<FrameInspectorJoysticks>());
-            m_panes.push_back(create<FrameInspectorKeyboards>());
-            m_panes.push_back(create<FrameInspectorLights>());
-            m_panes.push_back(create<FrameInspectorLight³s>());
-            m_panes.push_back(create<FrameInspectorManagers>());
-            m_panes.push_back(create<FrameInspectorModels>());
-            m_panes.push_back(create<FrameInspectorMonitors>());
-            m_panes.push_back(create<FrameInspectorMouses>());
-            m_panes.push_back(create<FrameInspectorRendereds>());
-            m_panes.push_back(create<FrameInspectorRendered³s>());
-            m_panes.push_back(create<FrameInspectorScenes>());
-            m_panes.push_back(create<FrameInspectorScene³s>());
-            m_panes.push_back(create<FrameInspectorSpatials>());
-            m_panes.push_back(create<FrameInspectorSpatial³s>());
-            m_panes.push_back(create<FrameInspectorTachyons>());
-            m_panes.push_back(create<FrameInspectorThreads>());
-            m_panes.push_back(create<FrameInspectorViewers>());
-            m_panes.push_back(create<FrameInspectorWidgets>());
-            m_panes.push_back(create<FrameInspectorWindows>());
+            m_panes.push_back(create<FrameInspectorCameras>(CHILD));
+            m_panes.push_back(create<FrameInspectorCamera³s>(CHILD));
+            m_panes.push_back(create<FrameInspectorControllers>(CHILD));
+            m_panes.push_back(create<FrameInspectorCursors>(CHILD));
+            m_panes.push_back(create<FrameInspectorDesktops>(CHILD));
+            m_panes.push_back(create<FrameInspectorJoysticks>(CHILD));
+            m_panes.push_back(create<FrameInspectorKeyboards>(CHILD));
+            m_panes.push_back(create<FrameInspectorLights>(CHILD));
+            m_panes.push_back(create<FrameInspectorLight³s>(CHILD));
+            m_panes.push_back(create<FrameInspectorManagers>(CHILD));
+            m_panes.push_back(create<FrameInspectorModels>(CHILD));
+            m_panes.push_back(create<FrameInspectorMonitors>(CHILD));
+            m_panes.push_back(create<FrameInspectorMouses>(CHILD));
+            m_panes.push_back(create<FrameInspectorRendereds>(CHILD));
+            m_panes.push_back(create<FrameInspectorRendered³s>(CHILD));
+            m_panes.push_back(create<FrameInspectorScenes>(CHILD));
+            m_panes.push_back(create<FrameInspectorScene³s>(CHILD));
+            m_panes.push_back(create<FrameInspectorSpatials>(CHILD));
+            m_panes.push_back(create<FrameInspectorSpatial³s>(CHILD));
+            m_panes.push_back(create<FrameInspectorTachyons>(CHILD));
+            m_panes.push_back(create<FrameInspectorThreads>(CHILD));
+            m_panes.push_back(create<FrameInspectorViewers>(CHILD));
+            m_panes.push_back(create<FrameInspectorWidgets>(CHILD));
+            m_panes.push_back(create<FrameInspectorWindows>(CHILD));
             
             for(Pane* p : m_panes){
                 if(!p)
@@ -98,7 +98,7 @@ namespace yq::tachyon {
             
             m_init  = true;
         }
-        return {};
+        return Widget::setup(ctx);
     }
     
     void    FrameInspector::imgui(ViContext&ctx)
@@ -118,9 +118,6 @@ namespace yq::tachyon {
             if(!m_frame){
                 ImGui::Text("Missing frame");
             } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_SizingFixedFit))){
-auto &id_stack = ImGui::GetCurrentWindow()->IDStack;
-yInfo() << "ImGui Master Table ID " << id_stack.back();
-
                 for(Pane* p : m_panes){
                     if(!table_begin())
                         continue;

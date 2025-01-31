@@ -132,26 +132,6 @@ yInfo() << ident() <<  "::close(REJECT)";
             w->vulkan(u);
         });
     }
-
-    //void    Widget::accept(close_k)
-    //{
-        //if(m_viewer)
-            //m_viewer -> accept(CLOSE);
-    //}
-    
-
-/*
-    bool    Widget::has_parentage(const Widget* p) const
-    {
-        if(!p)
-            return false;
-        for(const Widget* x = m_parent; x; x = x -> m_parent){
-            if(p == x)
-                return true;
-        }
-        return false;
-    }
-*/
     
     const char*     Widget::imgui_id() const
     {
@@ -204,18 +184,8 @@ yInfo() << ident() << "::on_close_request(" << req->trace() << ")";
             return ;
             
         m_viewer    = cmd.viewer();
-yInfo() << "Widget::on_set_viewer() ... setting to viewer " << m_viewer.id;
     }
 
-#if 0
-    void    Widget::on_startup_command(const StartupCommand&cmd)
-    {
-        if(cmd.target() == id()){
-            startup();
-        }
-    }
-#endif
-    
     void            Widget::prerecord(ViContext& u)
     {
         const Frame*    frame   = Frame::current();
@@ -262,55 +232,10 @@ yInfo() << "Widget::on_set_viewer() ... setting to viewer " << m_viewer.id;
         return f->object(root());
     }
 
-#if 0
-    bool    Widget::set_parent(Widget* p)
-    {
-        if(p == m_parent)   // already the parent
-            return true;
-        if(p == this)       // it's this widget
-            return false;
-        if(p && p->has_parentage(this))      // no loops please
-            return false;
-            
-        if(m_parent){
-            //m_parent->child_removed(this);
-            std::erase(m_parent->m_children, this);
-        }
-        m_parent    = p;
-        if(m_parent){
-            m_parent->m_children.push_back(this);
-            //m_parent->child_added(this);
-        }
-        return true;
-   }
-#endif
-
     void    Widget::snap(WidgetSnap& sn) const
     {
         Tachyon::snap(sn);
         sn.viewer   = m_viewer;
-    }
-
-#if 0
-    bool            Widget::started() const
-    {
-        return m_flags(F::Started);
-    }
-
-    void            Widget::startup()
-    {
-        if(m_viewer){
-            m_viewer->mail(new ShowCommand({.source=this, .target=m_viewer}));
-        }
-    }
-#endif
-
-    Execution       Widget::tick(const Context&) 
-    {
-        //if(!m_flags(F::Startup)){
-            //startup();
-        //}
-        return {};
     }
 
     Viewer*         Widget::viewer(ptr_k)

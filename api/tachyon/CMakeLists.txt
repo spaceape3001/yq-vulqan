@@ -532,7 +532,6 @@ add_library(${PROJECT_NAME} SHARED
     source/ya/widgets/FrameInspector.cpp
     source/ya/widgets/ImGuiDemoWidget.cpp
     #source/ya/widgets/LabelWidget.cpp
-    #source/ya/widgets/Scene3DWidget.cpp
     source/ya/widgets/Scene3Widget.cpp
     source/ya/widgets/StackedWidget.cpp
     source/ya/widgets/TextArea.cpp

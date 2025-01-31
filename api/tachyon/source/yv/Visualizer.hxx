@@ -54,7 +54,7 @@ namespace yq::tachyon {
         void    _dtor();
         
 //        ViRenderedPtr         create(const RenderedCPtr&);
-        ViRenderedPtr         create(const ViRenderedSpec&);
+        ViRenderedPtr         create(const RenderedSnap*);
         //ViRenderedCPtr      create(const RenderedCPtr&, const PipelineCPtr&);
     };
 

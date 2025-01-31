@@ -40,60 +40,17 @@ namespace yq::tachyon {
     
     static constexpr bool       RENDERED_DEBUG_REPORT  = true;
     
-    uint64_t    ViRenderedSpec::id() const
-    {
-        if(auto p = std::get_if<RenderedCPtr>(&rendered)){
-            if(*p)
-                return (*p) -> id();
-            return 0ULL;
-        }
-        
-        if(auto p = std::get_if<const RenderedSnap*>(&rendered)){
-            if(*p)
-                return (*p) -> id();
-            return 0ULL;
-        }
-        return 0ULL;
-    }
-
-    const Pipeline*         ViRenderedSpec::pipeline() const
-    {
-        if(auto p = std::get_if<RenderedCPtr>(&rendered)){
-            if(!*p)
-                return nullptr;
-            return (*p) -> pipeline();
-        }
-        if(auto p = std::get_if<const RenderedSnap*>(&rendered)){
-            if(!*p)
-                return nullptr;
-            return (*p) -> pipeline;
-        }
-        return nullptr;
-    }
-
-    bool ViRenderedSpec::valid() const
-    {
-        if(auto p = std::get_if<RenderedCPtr>(&rendered)){
-            return static_cast<bool>(*p);
-        }
-        if(auto p = std::get_if<const RenderedSnap*>(&rendered)){
-            return static_cast<bool>(*p);
-        }
-        return false;
-    }
-
-    
     //////////////////////////////////
 
     ViRendered::ViRendered()
     {
     }
     
-    ViRendered::ViRendered(ViVisualizer&viz, const ViRenderedSpec& ren, const ViRenderedOptions& options)
+    ViRendered::ViRendered(ViVisualizer&viz, const RenderedSnap* ren, const ViRenderedOptions& options)
     {
         if(!viz.device())
             return;
-        if(!ren.valid())
+        if(!ren)
             return;
         std::error_code ec  = _init(viz, ren, options);
         if(ec != std::error_code()){
@@ -111,13 +68,14 @@ namespace yq::tachyon {
         _publish_data();
     }
     
-    std::error_code ViRendered::_init(ViVisualizer& viz, const ViRenderedSpec& ren, const ViRenderedOptions& options)
+    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedSnap* ren, const ViRenderedOptions& options)
     {
         m_viz           = &viz;
-        m_config        = ren.pipeline();
+        m_config        = ren->pipeline;
         if(!m_config){
             return errors::rendered_null_pipeline();
         }
+        m_id            = ren->id();
         
         m_layout        = viz.pipeline_layout_create(m_config);
         if(!m_layout){
@@ -135,18 +93,14 @@ namespace yq::tachyon {
         
         ViDataOptions       dataOptions;
         
-        if(auto* p = std::get_if<RenderedCPtr>(&ren.rendered)){
-            m_rendered          = *p;
-            m_render3d          = dynamic_cast<const Rendered³*>(m_rendered.ptr());
-            if(m_render3d)
-                m_status |= S::R3;
-            dataOptions.object  = m_rendered.ptr();
+        if(ren->wireframe == Tristate::YES){
+            m_status |= S::Wireframe;
+        } else {
+            m_status -= S::Wireframe;
         }
-        if(auto p = std::get_if<const RenderedSnap*>(&ren.rendered)){
-            if((*p)->self(Type::Rendered³))
-                m_status |= S::R3;
-            dataOptions.snap    = *p;
-        }
+        if(ren->self(Type::Rendered³))
+            m_status |= S::R3;
+        dataOptions.snap    = ren;
         
         if(m_layout->descriptors_defined()){
             dataOptions.layout      = m_layout -> descriptor_set_layout();
@@ -166,32 +120,6 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
         
-        if(m_layout -> push_enabled()){
-            switch(m_config -> m_push.type){
-            case PushConfigType::Full:
-                m_status |= S::Push;
-                if(m_status(S::R3)){
-                    m_status   |= S::FullPush;
-                } else {
-                    m_status   |= S::ViewPush;
-                }
-                break;
-            case PushConfigType::View:
-                m_status |= S::Push;
-                m_status |= S::ViewPush;
-                break;
-            case PushConfigType::Custom:
-                if(m_config -> m_push.fetch){
-                    m_status |= S::Push;
-                    m_status |= S::CustomPush;
-                }
-                break;
-            case PushConfigType::None:
-            default:
-                break;
-            }
-        }
-        
         if(m_vertex.count){
             m_status |= S::Vertex;
         }
@@ -199,15 +127,14 @@ namespace yq::tachyon {
             m_status |= S::Index;
         }
 
-        if(auto p = std::get_if<const RenderedSnap*>(&ren.rendered)){
-            _import_data(*p);
-        } else {
-            _import_data();
-        }
+        _import_data(ren);
 
         if(m_status(S::Descriptors)){
             _publish_data(true);
         }
+        
+        yInfo() << "ViRendered::_init() succeeded";
+        
         return {};
     }
     
@@ -231,7 +158,15 @@ namespace yq::tachyon {
         if(m_pipeline -> bind_point() != VK_PIPELINE_BIND_POINT_GRAPHICS)
             return ;
 
-        Tristate        wireframe   = (u.wireframe == Tristate::INHERIT) ? m_rendered->wireframe() : u.wireframe;
+        Tristate        wireframe;
+        
+        if(u.wireframe != Tristate::INHERIT){
+            wireframe   = u.wireframe;
+        } else if(m_status(S::Wireframe)){
+            wireframe   = Tristate::YES;
+        } else
+            wireframe   = Tristate::NO;
+
         VkPipeline      vkpipe      = (wireframe == Tristate::YES) ? m_pipeline->wireframe_pipeline() : m_pipeline->pipeline();
 
         if(!vkpipe){
@@ -293,18 +228,23 @@ namespace yq::tachyon {
             }
         }
         
+        if(sn){
+            if(sn->wireframe == Tristate::YES){
+                m_status |= S::Wireframe;
+            } else {
+                m_status -= S::Wireframe;
+            }
+        }
+        
         if(pb){
             m_push.clear();
             m_push.append(pb, std::min(m_config->push().size, PushBuffer::CAPACITY));
-        } else if(m_status(S::CustomPush) && m_rendered){
-            m_push.clear();
-            m_config->m_push.fetch(m_rendered.ptr(), m_push);
-        }
+        } 
     }
     
     bool    ViRendered::consistent() const
     {
-        return m_viz ? (m_rendered && m_pipeline && m_layout && m_viz->device()) : (!m_rendered && !m_pipeline && !m_layout);
+        return m_viz ? (m_pipeline && m_layout && m_viz->device()) : (!m_pipeline && !m_layout);
     }
 
     void    ViRendered::debug_report() const
@@ -320,7 +260,7 @@ namespace yq::tachyon {
         }
     }
     
-    std::error_code ViRendered::init(ViVisualizer&viz, const ViRenderedSpec& ren, const ViRenderedOptions& options)
+    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedSnap* ren, const ViRenderedOptions& options)
     {
         if(m_viz){
             if(!consistent()){
@@ -331,7 +271,7 @@ namespace yq::tachyon {
 
         if(!viz.device())
             return errors::visualizer_uninitialized();
-        if(!ren.valid())
+        if(!ren)
             return errors::rendered_null_pointer();
             
         std::error_code ec  = _init(viz, ren, options);
@@ -365,11 +305,13 @@ namespace yq::tachyon {
     void ViRendered::report(Stream& out, const ViRenderedReportOptions& options) const
     {
         out << "Report for ViRendered[" << hex(this) << "] " << options.message << "\n";
-        if(!m_rendered){
-            out << "    Rendered:                   [ missing ]\n";
-        } else {
-            out << "    Rendered:                   [" << m_rendered->metaInfo().name() << ":" << m_rendered->id() << "]\n";
-        }
+            //if(!m_rendered){
+                //out << "    Rendered:                   [ missing ]\n";
+            //} else {
+                //out << "    Rendered:                   [" << m_rendered->metaInfo().name() << ":" << m_rendered->id() << "]\n";
+            //}
+
+            out << "    Rendered:                   [" << id() << "]\n";
 
         if(!m_pipeline){
             out << "    ViPipeline:                 [ missing ]\n";
@@ -439,22 +381,15 @@ namespace yq::tachyon {
         }
     }
 
-    void    ViRendered::update(ViContext& u, const RenderedSnap& sn, const void* pb)
+    void    ViRendered::update(ViContext& u, const RenderedSnap* sn, const void* pb)
     {
         if(valid()){
-            _update(u, &sn, pb);
-        }
-    }
-
-    void    ViRendered::update(ViContext& u, const void* pb)
-    {
-        if(valid()){
-            _update(u, nullptr, pb);
+            _update(u, sn, pb);
         }
     }
 
     bool    ViRendered::valid() const
     {
-        return (m_viz && m_viz->device() && m_rendered && m_layout);
+        return (m_viz && m_viz->device() && m_layout);
     }
 }

@@ -25,16 +25,7 @@ namespace yq::tachyon {
     struct ViContext;
     class Rendered³;
     
-    struct ViRenderedSpec {
-        using spec_t    = std::variant<std::monostate, RenderedCPtr, const RenderedSnap*>;
-        spec_t                  rendered{};
-        
-        uint64_t                id() const;
-        const Pipeline*         pipeline() const;
-        bool                    valid() const;
-    };
-    
-    struct ViRenderedOptions {
+   struct ViRenderedOptions {
         VkDescriptorPool        descriptor_pool = nullptr;
         ViPipelineManager*      pipelines       = nullptr;
     };
@@ -51,10 +42,10 @@ namespace yq::tachyon {
         ViRendered();
         //ViRendered(const ViRendered&, const ViRenderedOptions& opts={});
         //ViRendered(const ViRendered&, const PipelineCPtr pipe, const ViRenderedOptions& opts={});
-        ViRendered(ViVisualizer&, const ViRenderedSpec&, const ViRenderedOptions& options={});
+        ViRendered(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& options={});
         ~ViRendered();
         
-        std::error_code init(ViVisualizer&, const ViRenderedSpec&, const ViRenderedOptions& options={});
+        std::error_code init(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& options={});
     
         //! Dumps out to the viz debug stream full information to this rendered.
         void    debug_report() const;
@@ -64,8 +55,7 @@ namespace yq::tachyon {
         //! Updates us
         // NOTE, expect an extra helper once we get proper lighting support into the scene, maybe
         // some sort of "universal" buffer or simialr
-        void    update(ViContext& u, const RenderedSnap&, const void* pb=nullptr);
-        void    update(ViContext& u, const void* pb=nullptr);
+        void    update(ViContext& u, const RenderedSnap*, const void* pb=nullptr);
         
         //! Publishes descriptor changes
         void    descriptors();
@@ -80,26 +70,25 @@ namespace yq::tachyon {
         
         void                report(Stream&, const ViRenderedReportOptions& options={}) const;
     
+        uint64_t    id() const { return m_id; }
+    
     private:
         enum class S : uint8_t {
             Descriptors,
             Push,
-            FullPush,
-            ViewPush,
-            CustomPush,
             Vertex,
             Index,
-            R3
+            R3,
+            Wireframe
         };
     
-        RenderedCPtr            m_rendered;
-        const Rendered³*        m_render3d      = nullptr;
+        uint64_t                m_id;
         ViPipelineLayoutCPtr    m_layout;
         ViPipelineCPtr          m_pipeline;
         PushBuffer              m_push;
         Flags<S>                m_status = {};
 
-        std::error_code _init(ViVisualizer&, const ViRenderedSpec&, const ViRenderedOptions& opts);
+        std::error_code _init(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& opts);
         void            _kill();
         void            _update(ViContext& u, const RenderedSnap*, const void* pb);
         void            _update(ViContext& u, const void* pb);

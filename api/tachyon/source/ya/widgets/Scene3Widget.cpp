@@ -56,8 +56,6 @@ namespace yq::tachyon {
         if(!u.frame0)
             return ;
     
-        Scene³ID    sc  = id(SCENE);
-    
         const Scene³Snap*   scene   = frame -> snap(id(SCENE));
         if(!scene)
             return ;
@@ -97,7 +95,7 @@ namespace yq::tachyon {
             if(!sn->pipeline)
                 continue;
             
-            ViRenderedPtr  rr  = u.frame0 -> create({.rendered=sn});
+            ViRenderedPtr  rr  = u.frame0 -> create(sn);
             if(!rr)
                 continue;
 
@@ -126,7 +124,7 @@ namespace yq::tachyon {
                 break;
             }
             
-            rr->update(u, *sn, pb);
+            rr->update(u, sn, pb);
             rr->descriptors();
             m_rendereds.push_back(rr);
         }
@@ -141,7 +139,6 @@ namespace yq::tachyon {
     void    Scene³Widget::vulkan(ViContext& u)
     {
         {
-            //yInfo() << "Scene³Widget::vulkan() rendering with " << m_rendereds.size() << " Rendereds";
             auto w  = auto_reset(u.wireframe, m_wireframe);
             for(ViRenderedPtr& rr : m_rendereds){
                 rr->record(u);

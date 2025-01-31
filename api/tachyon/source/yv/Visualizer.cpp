@@ -142,7 +142,7 @@ namespace yq::tachyon {
         }
     }
 
-    ViRenderedPtr      ViFrame0::create(const ViRenderedSpec& obj)
+    ViRenderedPtr      ViFrame0::create(const RenderedSnap* obj)
     {
         if(!m_rendereds)
             return {};

@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorTachyons.hpp"
 #include <yt/os/Mouse.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorMouses : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorMouses, FrameInspectorPane)
+    class FrameInspectorMouses : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorMouses, FrameInspectorTachyons)
     public:
     
         FrameInspectorMouses() 
@@ -20,15 +21,17 @@ namespace yq::tachyon {
         ~FrameInspectorMouses()
         {
         }
-        
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
 
+        uint64_t    count() const override { return m_frame->count(MOUSE); }
+        virtual const char* name() const override { return "Mouse"; }
+        
+        using FrameInspectorTachyons::render;
+        
+        void    render(ViContext&ctx) override
+        {
             for(MouseID v : m_frame->ids(MOUSE)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

@@ -7,7 +7,7 @@
 #pragma once
 
 namespace yq::tachyon {
-    class FrameInspectorHeader : public FormWidget, public FrameInspector::Sub {
+    class FrameInspectorHeader : public FormWidget, public FrameInspector::Pane {
         YQ_TACHYON_DECLARE(FrameInspectorHeader, FormWidget)
     public:
         FrameInspectorHeader() 
@@ -18,6 +18,11 @@ namespace yq::tachyon {
         {
         }
         
+        const char* name() const override
+        {
+            return "Header";
+        }
+
         Execution setup(const Context&ctx) 
         {
             if(m_init)
@@ -43,7 +48,7 @@ namespace yq::tachyon {
         {
         }
         
-        void    imgui(ViContext&ctx) override
+        void    render(ViContext&ctx) override
         {
             FormWidget::imgui(ctx);
         }

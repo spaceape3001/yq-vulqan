@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorTachyons.hpp"
 #include <yt/os/Cursor.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorCursors : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorCursors, FrameInspectorPane)
+    class FrameInspectorCursors : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorCursors, FrameInspectorTachyons)
     public:
     
         FrameInspectorCursors() 
@@ -21,14 +22,16 @@ namespace yq::tachyon {
         {
         }
         
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
+        uint64_t    count() const override { return m_frame->count(CURSOR); }
+        virtual const char* name() const override { return "Cursor"; }
 
+        using FrameInspectorTachyons::render;
+
+        void    render(ViContext&ctx) override
+        {
             for(CursorID v : m_frame->ids(CURSOR)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

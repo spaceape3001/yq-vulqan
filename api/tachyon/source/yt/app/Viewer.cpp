@@ -239,7 +239,7 @@ namespace yq::tachyon {
         }
         
         
-        if(m_createInfo.imgui){
+        if(m_createInfo.imgui || w->is_imgui()){
             try {
                 m_imgui = std::make_unique<ViGui>(*m_viz);
             }

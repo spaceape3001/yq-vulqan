@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorTachyons.hpp"
 #include <yt/sim/Spatial.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorSpatials : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorSpatials, FrameInspectorPane)
+    class FrameInspectorSpatials : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorSpatials, FrameInspectorTachyons)
     public:
     
         FrameInspectorSpatials() 
@@ -21,14 +22,16 @@ namespace yq::tachyon {
         {
         }
         
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
+        uint64_t    count() const override { return m_frame->count(SPATIAL); }
+        virtual const char* name() const override { return "Spatial"; }
 
+        using FrameInspectorTachyons::render;
+
+        void    render(ViContext&ctx) override
+        {
             for(SpatialID v : m_frame->ids(SPATIAL)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

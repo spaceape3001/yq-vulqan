@@ -215,12 +215,8 @@ struct HelloWidget : public Scene³Widget {
     {
     }
     
-    FrameInspector* inspector = nullptr;
-    
     Execution setup(const Context&) override
     {
-        if(!inspector)
-            inspector   = create<FrameInspector>(CHILD);
         return {};
     }
 };
@@ -249,7 +245,6 @@ int main(int argc, char* argv[])
     AppCreateInfo        aci;
     aci.view.title      = "Hello WORLD!";
     aci.view.resizable  = true;
-    aci.view.imgui      = true;
     aci.view.size       = { 1920, 1080 };
     aci.view.clear      = { 0.f, 0.1f, 0.2f, 1.f };
     aci.view.transfer   = OPTIONAL;
@@ -271,13 +266,15 @@ int main(int argc, char* argv[])
     HelloScene*     sc  = Tachyon::create<HelloScene>();
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
-    //FrameInspector* fi = w -> create<FrameInspector>(CHILD);
+    FrameInspector* fi = Widget::create<FrameInspector>();
+    app.create(VIEWER, w);
+    app.create(VIEWER, fi);
     //w->create<FrameInspector>(CHILD);
     
     //LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     //gLogger = lb->id();
     //lb->unsafe_snoop(w);
 
-    app.run(w);
+    app.run();
     return 0;
 }

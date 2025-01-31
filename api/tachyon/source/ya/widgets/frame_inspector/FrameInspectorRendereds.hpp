@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorTachyons.hpp"
 #include <yt/scene/Rendered.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorRendereds : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorRendereds, FrameInspectorPane)
+    class FrameInspectorRendereds : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorRendereds, FrameInspectorTachyons)
     public:
     
         FrameInspectorRendereds() 
@@ -21,14 +22,16 @@ namespace yq::tachyon {
         {
         }
         
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
+        uint64_t    count() const override { return m_frame->count(RENDERED); }
+        virtual const char* name() const override { return "Rendered"; }
 
+        using FrameInspectorTachyons::render;
+
+        void    render(ViContext&ctx) override
+        {
             for(RenderedID v : m_frame->ids(RENDERED)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

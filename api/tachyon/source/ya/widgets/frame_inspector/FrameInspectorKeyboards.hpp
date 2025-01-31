@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorTachyons.hpp"
 #include <yt/os/Keyboard.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorKeyboards : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorKeyboards, FrameInspectorPane)
+    class FrameInspectorKeyboards : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorKeyboards, FrameInspectorTachyons)
     public:
     
         FrameInspectorKeyboards() 
@@ -21,14 +22,16 @@ namespace yq::tachyon {
         {
         }
         
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
+        uint64_t    count() const override { return m_frame->count(KEYBOARD); }
+        virtual const char* name() const override { return "Keyboard"; }
 
+        using FrameInspectorTachyons::render;
+
+        void    render(ViContext&ctx) override
+        {
             for(KeyboardID v : m_frame->ids(KEYBOARD)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

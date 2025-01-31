@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorTachyons.hpp"
 #include <yt/os/Window.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorWindows : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorWindows, FrameInspectorPane)
+    class FrameInspectorWindows : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorWindows, FrameInspectorTachyons)
     public:
     
         FrameInspectorWindows() 
@@ -21,14 +22,16 @@ namespace yq::tachyon {
         {
         }
         
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
+        uint64_t    count() const override { return m_frame->count(WINDOW); }
+        virtual const char* name() const override { return "Window"; }
 
+        using FrameInspectorTachyons::render;
+        
+        void    render(ViContext&ctx) override
+        {
             for(WindowID v : m_frame->ids(WINDOW)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

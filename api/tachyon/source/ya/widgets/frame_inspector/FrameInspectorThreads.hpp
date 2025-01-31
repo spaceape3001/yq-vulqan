@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorTachyons.hpp"
 #include <yt/api/Thread.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorThreads : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorThreads, FrameInspectorPane)
+    class FrameInspectorThreads : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorThreads, FrameInspectorTachyons)
     public:
     
         FrameInspectorThreads() 
@@ -21,14 +22,16 @@ namespace yq::tachyon {
         {
         }
         
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
+        uint64_t    count() const override { return m_frame->count(THREAD); }
+        virtual const char* name() const override { return "Thread"; }
 
+        using FrameInspectorTachyons::render;
+
+        void    render(ViContext&ctx) override
+        {
             for(ThreadID v : m_frame->ids(THREAD)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

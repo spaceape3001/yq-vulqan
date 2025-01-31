@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include "FrameInspectorManagers.hpp"
 #include <yt/os/Desktop.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorDesktops : public FrameInspectorPane {
-        YQ_TACHYON_DECLARE(FrameInspectorDesktops, FrameInspectorPane)
+    class FrameInspectorDesktops : public FrameInspectorManagers {
+        YQ_TACHYON_DECLARE(FrameInspectorDesktops, FrameInspectorManagers)
     public:
     
         FrameInspectorDesktops() 
@@ -20,15 +21,17 @@ namespace yq::tachyon {
         ~FrameInspectorDesktops()
         {
         }
-        
-        void    imgui(ViContext&ctx) override
-        {
-            if(!m_frame)
-                return ;
 
+        uint64_t    count() const override { return m_frame->count(DESKTOP); }
+        virtual const char* name() const override { return "Desktop"; }
+        
+        using FrameInspectorManagers::render;
+        
+        void    render(ViContext&ctx) override
+        {
             for(DesktopID v : m_frame->ids(DESKTOP)){
                 if(begin(v)){
-                    FrameInspectorPane::imgui(ctx);
+                    render(TACHYON);
                     end();
                 }
             }

@@ -267,8 +267,7 @@ int main(int argc, char* argv[])
     HelloScene*     sc  = Tachyon::create<HelloScene>();
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
-    //FrameInspector* fi = Widget::create<FrameInspector>();
-    w->create<FrameInspector>(CHILD);
+    w -> create<FrameInspector>(CHILD);
     
     //LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     //gLogger = lb->id();

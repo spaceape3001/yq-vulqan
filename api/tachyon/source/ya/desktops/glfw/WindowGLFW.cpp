@@ -229,8 +229,6 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
-
-yInfo() << w->ident() << "::callback_window_close()";
     
             // so we don't repeat this....
         glfwSetWindowShouldClose(win, GLFW_FALSE);

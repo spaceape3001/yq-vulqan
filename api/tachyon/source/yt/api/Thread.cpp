@@ -248,7 +248,6 @@ namespace yq::tachyon {
 
     void    Thread::exec()
     {
-        tachyonInfo << ident() << "::exec()";
         while(!m_quit){
             tick();
         }
@@ -276,7 +275,6 @@ namespace yq::tachyon {
 
     void    Thread::join()
     {
-        tachyonInfo << ident() << "::join()";
         quit();
         m_thread.join();
     }
@@ -288,7 +286,6 @@ namespace yq::tachyon {
 
     void    Thread::quit()
     {
-        tachyonInfo << ident() << "::quit()";
         m_quit  = true;
     }
     
@@ -299,7 +296,6 @@ namespace yq::tachyon {
     
     void    Thread::start()
     {
-        tachyonInfo << ident() << "::start()";
         if(m_thread.joinable()) // something's running... don't
             return ;
         m_thread    = std::thread([this](){ 
@@ -324,8 +320,6 @@ namespace yq::tachyon {
 
     void    Thread::tick()
     {
-        //tachyonInfo << "Thread{" << metaInfo().name() << "}::tick()";
-  
         thread_map_t        threads;
         {
             lock_t      _lock(s_mutex, false);

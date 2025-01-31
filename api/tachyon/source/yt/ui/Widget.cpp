@@ -62,7 +62,6 @@ namespace yq::tachyon {
         w.slot(&Widget::on_close_request);
         w.slot(&Widget::on_close_command);
         w.slot(&Widget::on_set_viewer);
-        //w.slot(&Widget::on_startup_command);
     }
 
     Widget::Widget() : Tachyon(), m_windowID(fmt_hex(UniqueID::id()))
@@ -93,7 +92,6 @@ namespace yq::tachyon {
 
     void    Widget::close(accept_k)
     {
-yInfo() << ident() << "::close(ACCEPT)";
         PostID  pId;
         if(m_closeRequest)
             pId = m_closeRequest -> id();
@@ -104,7 +102,6 @@ yInfo() << ident() << "::close(ACCEPT)";
     
     void    Widget::close(reject_k)
     {
-yInfo() << ident() <<  "::close(REJECT)";
         PostID  pId;
         if(m_closeRequest)
             pId = m_closeRequest -> id();
@@ -146,7 +143,6 @@ yInfo() << ident() <<  "::close(REJECT)";
 
     void    Widget::on_close_command(const CloseCommand&cmd)
     {
-yInfo() << ident() << "::on_close_command(" << cmd.trace() << ")";
         if(cmd.target() != id())
             return ;
         if(m_viewer){
@@ -157,16 +153,13 @@ yInfo() << ident() << "::on_close_command(" << cmd.trace() << ")";
             send(new CloseCommand({.source=*this, .target=t}), {});
         }
         
-yInfo() << ident() <<  "::on_close_command() ... sending destroy";
         teardown();
-        //mail(new DestroyCommand({.target=*this}));
     }
 
     void    Widget::on_close_request(const CloseRequestCPtr&req)
     {
         if(!req)
             return ;
-yInfo() << ident() << "::on_close_request(" << req->trace() << ")";
         if(m_closeRequest){
             if(req){
                 send(new CloseReply({.target=req->source()}, req, Response::Busy));
@@ -195,12 +188,6 @@ yInfo() << ident() << "::on_close_request(" << req->trace() << ")";
             w->prerecord(u);
         });
     }
-
-    //void    Widget::reject(close_k)
-    //{
-        //if(m_viewer)
-            //m_viewer -> reject(CLOSE);
-    //}
 
     WidgetID        Widget::root() const
     {

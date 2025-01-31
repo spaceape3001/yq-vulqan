@@ -21,13 +21,11 @@ namespace yq::tachyon {
     AppThread::AppThread(Application* app, const Param&p) : Thread(p), m_app(app)
     {
         Thread::s_current       = this;
-        tachyonInfo << ident() << " constructed";
     }
     
     AppThread::~AppThread()
     {
         Thread::s_current       = nullptr;
-        tachyonInfo << ident() << " destroyed";
     }
     
     void AppThread::shutdown()
@@ -42,7 +40,6 @@ namespace yq::tachyon {
 
     void    AppThread::on_destroy_event(const DestroyEvent& evt)
     {
-        tachyonInfo << "AppThread::on_destroy_event";
         if(evt.source()(Type::Viewer)){
             if(!--m_viewers){
                 quit();

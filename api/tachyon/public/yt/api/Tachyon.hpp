@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/container/RingArray.hpp>
+#include <yq/core/LogPriority.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/UniqueID.hpp>
@@ -28,6 +29,11 @@
 #include <concepts>
 #include <iosfwd>
 #include <utility>
+
+
+namespace yq {
+    class Stream;
+}
 
 namespace yq::tachyon {
     class InterfaceInfo;
@@ -72,6 +78,9 @@ namespace yq::tachyon {
 
         dispatch_span_t     dispatches(const PostInfo*) const;
         
+        void                report(Stream&) const;
+        void                report(const char* cat="viz", LogPriority pri=LogPriority::Info) const;
+
     protected:
     
         //! Destructor that should never fire

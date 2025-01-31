@@ -34,6 +34,7 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yt/logging.hpp>
+#include <yq/stream/Text.hpp>
 
 namespace yq::tachyon {
 
@@ -186,6 +187,54 @@ namespace yq::tachyon {
         }
     }
 
+    void    TachyonInfo::report(Stream& out) const
+    {
+        out << "Report for TachyonInfo[" << name() << "]\n";
+        out << "    ID              : " << id() << "\n";
+        out << "    Description     : " << description() << "\n";
+        out << "    Base            : " << base()->name() << "\n";
+
+        out << "  BASES\n";
+        for(const ObjectInfo* obj : bases(ALL).all){
+            out << "    " << obj->name() << "\n";
+        }
+        
+        out << "  DERIVES\n";
+        for(const ObjectInfo* obj : deriveds(ALL).all){
+            out << "    " << obj->name() << "\n";
+        }
+
+        out << "  DISPATCHES\n";
+        for(auto& i : m_dispatch){
+            out << "    " << i.first->name() << " -> " << i.second.size() << "\n";
+        }
+
+        out << "  INTERFACES\n";
+        for(const InterfaceInfo* i : m_interfaces.all.all){
+            out << "    " << i->name() << "\n";
+        }
+
+        out << "  METHODS\n";
+        for(const MethodInfo* obj : methods(ALL).all){
+            out << "    " << obj->name() << "\n";
+        }
+
+        out << "  PROPERTIES\n";
+        for(const PropertyInfo* prop : properties(ALL).all){
+            out << "    " << prop->name() << "\n";
+        }
+    }
+    
+    void    TachyonInfo::report(const char* cat, LogPriority pri) const
+    {
+        std::string     text;
+        {
+        
+            stream::Text  out(text);
+            report(out);
+        }
+        log_category(cat).getStream(log4cpp_priority(pri)) << text;
+    }
 
 // ------------------------------------------------------------------------
 
@@ -528,14 +577,18 @@ namespace yq::tachyon {
         #endif
         
         for(auto& out : data->outbound){
-            if(std::get_if<target_k>(&out.to) && out.post->target()){
+            std::set<TachyonID> sent;
+            if(out.post->target()){
                 tx(out.post->target().tachyonID(), out.post);
+                sent.insert(out.post->target().tachyonID());
             }
         
             if(auto p = std::get_if<MG>(&out.to)){
                 for(auto& i : m_listeners){
                     if(i.second(*p)){
-                        tx(i.first, out.post);
+                        if(sent.insert(i.first).second){
+                            tx(i.first, out.post);
+                        }
                     }
                 }
             }
@@ -543,13 +596,17 @@ namespace yq::tachyon {
             if(auto p = std::get_if<MGF>(&out.to)){
                 for(auto& i : m_listeners){
                     if((i.second & *p) != MGF{}){
-                        tx(i.first, out.post);
+                        if(sent.insert(i.first).second){
+                            tx(i.first, out.post);
+                        }
                     }
                 }
             }
             
             if(auto p = std::get_if<TachyonID>(&out.to)){
-                tx(*p, out.post);
+                if(sent.insert(*p).second){
+                    tx(*p, out.post);
+                }
             }
         }
 

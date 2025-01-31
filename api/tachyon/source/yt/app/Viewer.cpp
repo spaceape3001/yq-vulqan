@@ -199,7 +199,6 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_viewer_aspect_command);
         w.slot(&Viewer::on_viewer_title_command);
         
-        w.slot(&Viewer::on_window_destroy_event);
         w.slot(&Viewer::on_window_fb_resize_event);
     }
 
@@ -269,7 +268,6 @@ namespace yq::tachyon {
         if(m_viz)
             m_viz   = {};
         m_cleanup.sweep();
-        tachyonInfo << "Viewer::~Viewer(" << m_number << ")";
     }
 
     void    Viewer::_sweepwait()
@@ -297,18 +295,6 @@ namespace yq::tachyon {
             subscribe(m_widget, {MG::Widget, MG::General});
         }
     }
-
-#if 0
-    void     Viewer::accept(close_k)
-    {
-        m_widget -> m_flags -= Widget::F::ClosePending;
-        RequestCPtr  req = swap(Viewer::m_closeRequest, {});
-        if(req){
-            send(new ViewerCloseReply(req, this, Response::QaPla));
-            mail(new CloseCommand({.source=this, .target=this}));
-        }
-    }
-#endif
 
     PostAdvice  Viewer::advise(const Post& pp) const 
     {
@@ -340,30 +326,6 @@ namespace yq::tachyon {
         return m_state.window.aspect;
     }
 
-#if 0
-    void    Viewer::close_request()
-    {
-        if(m_widget){
-            m_widget -> m_flags |= Widget::F::ClosePending;
-            m_widget -> on_close_request();
-        } else {
-            accept(CLOSE); 
-        }
-    }
-#endif
-
-#if 0
-    bool    Viewer::closing() const
-    {
-        return stage() == Stage::Closing;
-    }
-    
-    bool    Viewer::closing_or_kaput() const
-    {
-        Stage st = stage();
-        return (st == Stage::Closing) || (st == Stage::Kaput);
-    }
-#endif
 
     void    Viewer::cmd_attention()
     {
@@ -372,7 +334,6 @@ namespace yq::tachyon {
 
     void    Viewer::cmd_close(bool force)
     {
-    yInfo() << ident() << "::cmd_close(" << to_string_view(force) << ")";
         if(force){
             mail(new CloseCommand({.source=this, .target=this}));
         } else {
@@ -584,7 +545,6 @@ namespace yq::tachyon {
 
     void    Viewer::on_close_command(const CloseCommand& cmd)
     {
-yInfo() << "Viewer::on_close_command(" << cmd.trace() << ")";
         if(!dying() && (cmd.target() == id())){
             send(new HideCommand({.target=m_window}));
             teardown();
@@ -595,16 +555,12 @@ yInfo() << "Viewer::on_close_command(" << cmd.trace() << ")";
 
     void    Viewer::on_close_reply(const CloseReply&rep)
     {
-yInfo() << "Viewer::on_close_reply(" << rep.trace() << ")";
         if(rep.source() != m_widget)
             return ;
             
         if(m_closeRequest){
-yInfo() << "Viewer::on_close_reply(" << rep.trace() << ") --> forwarding reply";
             send(new CloseReply({.source=rep.source(), .target=m_closeRequest->source()}, m_closeRequest, rep.response()));
             m_closeRequest = {};
-        } else {
-yInfo() << "Viewer::on_close_reply(" << rep.trace() << ") --> no close request on file";
         }
     }
 
@@ -614,19 +570,15 @@ yInfo() << "Viewer::on_close_reply(" << rep.trace() << ") --> no close request o
         if(!req)
             return ;
         
-yInfo() << "Viewer::on_close_request(" << req->trace() << ")";
-
         if((req->target() != id()) && (req->source() != m_window))
             return;
 
         if(dying()){
-yInfo() << "Viewer::on_close_request(" << req->trace() << ") -- already dying";
             send(new ViewerCloseReply(req, this, Response::Busy));
             return ;
         }
 
         if(m_closeRequest){
-yInfo() << "Viewer::on_close_request(" << req->trace() << ") -- already processing";
             if(m_closeRequest->id() != req->id()){
                 send(new ViewerCloseReply(req, this, Response::Busy));
             }
@@ -634,14 +586,7 @@ yInfo() << "Viewer::on_close_request(" << req->trace() << ") -- already processi
         }
         
         m_closeRequest  = req.ptr();
-yInfo() << "Viewer::on_close_request(" << req->trace() << ") --> forwarding";
         send(req->clone(REBIND, {.target=m_widget}));
-        
-
-        //{
-            //TXLOCK
-        //}
-        //close_request();
     }
     
     void    Viewer::on_cursor_capture_command(const ViewerCursorCaptureCommand&)
@@ -681,14 +626,11 @@ yInfo() << "Viewer::on_close_request(" << req->trace() << ") --> forwarding";
 
     void    Viewer::on_destroy_event(const DestroyEvent&evt)
     {
-yInfo() << "Viewer::on_destroy_event(" << evt.trace() << ")";
         if(evt.source() == m_widget){
-yInfo() << "Viewer::on_destroy_event ... it's us";
             // we're dead...
             teardown();
         }
         if(evt.source() == m_window){
-yInfo() << "Viewer::on_destroy_event ... it's the window";
             // that's dead too...
             send(new DestroyCommand({.source=evt.source(), .target=m_widget}));
             teardown();
@@ -806,59 +748,19 @@ yInfo() << "Viewer::on_destroy_event ... it's the window";
         }
     }
 
-#if 0
-    void    Viewer::on_pause_command(const PauseCommand&cmd)
-    {
-        if(cmd.target() != id())
-            return;
-            
-        pause(SET);
-        send(new PauseEvent({.source=this}));
-        mark();
-    }
-#endif
-    
     void    Viewer::on_restore_command(const RestoreCommand& cmd)
     {
         if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
-    
-    #if 0
-    void    Viewer::on_resume_command(const ResumeCommand&cmd)
-    {
-        if(cmd.target() != id())
-            return;
-            
-        resume(SET);
-        send(new ResumeEvent({.source=this}));
-        mark();
-    }
-    #endif
-    
+
     void    Viewer::on_show_command(const ShowCommand& cmd)
     {
         if(!dying() && (cmd.target() == id())){
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
-
-#if 0
-    void    Viewer::on_show_event(const ShowEvent&evt)
-    {
-        switch(m_stage){
-        case Stage::Started:
-        case Stage::WidgetStart:
-            if(evt.source() == m_window){
-                m_stage = Stage::Running;
-            }
-            break;
-        default:
-            break;
-        }
-    }
-#endif
 
     void    Viewer::on_spatial_command(const SpatialCommand&cmd)
     {
@@ -890,11 +792,6 @@ yInfo() << "Viewer::on_destroy_event ... it's the window";
         }
     }
     
-    void    Viewer::on_window_destroy_event(const WindowDestroyEvent&)
-    {
-//        m_stage     = Stage::Destruct;
-    }
-
     void    Viewer::on_window_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
     {
     }
@@ -905,27 +802,6 @@ yInfo() << "Viewer::on_destroy_event ... it's the window";
             yInfo() << "Viewer resized (" << evt.x() << ", " << evt.y() << ")";
         }
     }
-    
-#if 0
-    bool    Viewer::paused() const 
-    { 
-        return m_paused; 
-    }
-
-    void     Viewer::reject(close_k)
-    {
-        m_widget -> m_flags -= Widget::F::ClosePending;
-        RequestCPtr  req = swap(Viewer::m_closeRequest, {});
-        if(req){
-            send(new ViewerCloseReply(req, this, Response::Rejected));
-        }
-    }
-
-    bool    Viewer::running() const
-    {
-        return stage() == Stage::Running;
-    }
-#endif
 
     void    Viewer::set_aspect(const Size2I& sz)
     {

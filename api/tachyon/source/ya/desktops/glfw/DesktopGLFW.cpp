@@ -76,12 +76,10 @@ namespace yq::tachyon {
         
         m_stage = Stage::Init;
         s_desktop   = this;
-        tachyonInfo << "DesktopGFLW initialized";
     }
     
     DesktopGLFW::~DesktopGLFW()
     {
-        tachyonInfo << "DesktopGFLW terminated";
         glfwTerminate();
         s_desktop   = nullptr;
     }
@@ -197,7 +195,6 @@ namespace yq::tachyon {
     
     Execution    DesktopGLFW::_tick(const Context& ctx)
     {
-//tachyonInfo << "DesktopGLFW::_tick(const Context& ctx)";
         glfwPollEvents();
         return {};
     }

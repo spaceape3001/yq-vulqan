@@ -118,18 +118,18 @@ namespace yq::tachyon {
         void    meta_name(TachyonID tid)
         {
             if(!tid){
-                ImGui::Text("(none)");
+                ImGui::TextUnformatted("(none)");
                 return;
             }
         
             if(!m_frame){
-                ImGui::Text("(no-frame)", tid.id);
+                ImGui::TextUnformatted("(no-frame)");
                 return;
             }
             
             const Tachyon*  t   = m_frame->object(tid);
             if(!m_frame){
-                ImGui::Text("(missing)", tid.id);
+                ImGui::TextUnformatted("(missing)");
                 return;
             }
             

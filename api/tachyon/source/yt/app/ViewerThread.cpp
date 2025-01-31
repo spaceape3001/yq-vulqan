@@ -16,12 +16,10 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::ViewerThread)
 namespace yq::tachyon {
     ViewerThread::ViewerThread(const Param&p) : Thread(p)
     {
-        tachyonInfo << ident() << " constructed";
     }
     
     ViewerThread::~ViewerThread()
     {
-        tachyonInfo << ident() << " destroyed";
     }
     
     void    ViewerThread::shutdown()

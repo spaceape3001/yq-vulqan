@@ -308,28 +308,7 @@ namespace yq::tachyon {
 
         virtual Execution   setup(const Context&) override;
 
-        //! Hint to do anything needed before the next render frame is actually rendered
-        //! So do the uniform buffer & texture descriptor sets here.
-        //virtual void        prerecord(ViContext&);
-        
-        struct Init {
-            GLFWwindow*     window = nullptr;
-        };
-
-        //! Called *AFTER* vulkan/imgui are initialized
-        //virtual std::error_code startup(const Init&) { return {}; }
-
         virtual PostAdvice  advise(const Post&) const override;
-
-        //virtual void    receive(const post::PostCPtr&) override;
-
-        
-        
-        //! Call if you accept the close request
-        //void     accept(close_k);
-        
-        //! Call if you reject the close request
-        //void     reject(close_k);
         
         void        snap(ViewerSnap&) const;
 
@@ -363,16 +342,11 @@ namespace yq::tachyon {
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close
         RequestCPtr                     m_closeRequest;
 
-
         void                _sweepwait();
-        //void                _install(widget_k);     // Installs new widget
-        //void                _remove(widget_k);      // Removes the current widget
         void                _widget(TypedID);     // Changes the widget
-        
         
         Execution    update(const Context&);
         
-        //void    close_request();
 
         void    on_attention_command(const AttentionCommand&);
         void    on_close_command(const CloseCommand&);
@@ -398,19 +372,15 @@ namespace yq::tachyon {
         void    on_mouse_press_event(const MousePressEvent&);
         void    on_mouse_release_event(const MouseReleaseEvent&);
         void    on_move_event(const Position²Event&);
-        //void    on_pause_command(const PauseCommand&);
         void    on_restore_command(const RestoreCommand&);
-        //void    on_resume_command(const ResumeCommand&);
         void    on_size_event(const Size²Event&);
         void    on_show_command(const ShowCommand&);
-        //void    on_show_event(const ShowEvent&);
         void    on_spatial_command(const SpatialCommand&);
         void    on_unfloat_command(const UnfloatCommand&);
 
         void    on_viewer_aspect_command(const ViewerAspectCommand&);
         void    on_viewer_title_command(const ViewerTitleCommand&);
 
-        void    on_window_destroy_event(const WindowDestroyEvent&);
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
         
 
@@ -419,22 +389,11 @@ namespace yq::tachyon {
 
         void    widget_request(const ViewerWidgetRequestCPtr&);
 
-    public:        
-        
-        
-
-
             //! Monitor (if fullscreen)
         //Monitor             monitor() const;
         
-//        MouseMode          mouse_state() const { return m_mouseState; }
-        
-        
         //! Set the widget
         //void                set_widget(Widget*, bool fDestroyOld=true);
-
-            //! TRUE if user wants window to close
-        //bool                should_close() const;
 
     
         //Widget*             widget_at(const Vector2D&) const;

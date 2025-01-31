@@ -25,6 +25,7 @@ namespace yq::tachyon {
     Spatial³Info::Spatial³Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl)
         : SpatialInfo(zName, base, sl)
     {
+        set(Type::Spatial³);
     }
 
     Spatial³Info::~Spatial³Info()

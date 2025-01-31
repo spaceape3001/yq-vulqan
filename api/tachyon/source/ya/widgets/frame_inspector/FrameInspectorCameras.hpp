@@ -8,6 +8,7 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yt/scene/Camera.hpp>
+#include <yt/scene/CameraData.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorCameras : public FrameInspectorTachyons {
@@ -29,12 +30,30 @@ namespace yq::tachyon {
         
         void    render(camera_k)
         {
+            const CameraSnap* snap = static_cast<const CameraSnap*>(m_snap);
+            
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
             }
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> CAMERA PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Projection");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->projection);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("View");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->view);
             }
         }
 

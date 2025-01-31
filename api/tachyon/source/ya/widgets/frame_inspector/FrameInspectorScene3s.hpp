@@ -8,6 +8,7 @@
 
 #include "FrameInspectorScenes.hpp"
 #include <yt/3D/Scene3.hpp>
+#include <yt/3D/Scene3Data.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorScene³s : public FrameInspectorScenes {
@@ -29,12 +30,22 @@ namespace yq::tachyon {
         
         void    render(scene³_k)
         {
+            const Scene³Snap* snap  = static_cast<const Scene³Snap*>(m_snap);
+        
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
             }
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> SCENE³ PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Spatial");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->spatial);
             }
         }
         

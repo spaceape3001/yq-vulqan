@@ -117,7 +117,7 @@ namespace yq::tachyon {
             ImGui::ToggleButton("Track", &m_track);
             if(!m_frame){
                 ImGui::Text("Missing frame");
-            } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_SizingFixedFit))){
+            } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_SizingFixedFit|ImGuiTableFlags_NoClip))){
                 for(Pane* p : m_panes){
                     if(!table_begin())
                         continue;
@@ -158,7 +158,7 @@ namespace yq::tachyon {
     {
         if(!m_table){
             ImGui::Unindent();
-            m_table = ImGui::BeginTable(szTable, nTableCols);
+            m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_SizingFixedFit|ImGuiTableFlags_NoClip);
         }
         return m_table;
     }

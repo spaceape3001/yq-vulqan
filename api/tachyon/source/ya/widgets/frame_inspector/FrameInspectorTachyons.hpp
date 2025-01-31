@@ -149,26 +149,8 @@ namespace yq::tachyon {
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> TACHYON PROPERTIES <<<");
             }
-
-            ImGui::TableNextRow();
-            ImGui::TableNextColumn();
-            guard([&](){
-                std::string tid    = "children";
-                tid += to_string_view(m_tachyon->id().id);
-                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Children");
-            });
-            ImGui::TableNextColumn();
-            ImGui::Text("%ld", m_snap->children.size());
-
-            if(treeOpen){
-                end(TABLE);
-                ImGui::Indent();
-
-                table_children();
-                
-                ImGui::Unindent();
-                begin(TABLE);
-            }
+            
+            table(NESTED, "Children", m_snap->children);
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
@@ -300,16 +282,16 @@ namespace yq::tachyon {
             }
         }
         
-        void    table_children()
+        void    table(const char* str_id, std::span<const TypedID> values)
         {
-            if(!ImGui::BeginTable("Children", 2, ImGuiTableFlags_SizingFixedFit))
+            if(!ImGui::BeginTable(str_id, 2, ImGuiTableFlags_SizingFixedFit))
                 return ;
             
             ImGui::TableSetupColumn("ID");
             ImGui::TableSetupColumn("Type");
             ImGui::TableHeadersRow();
             
-            for(const TypedID& t : m_snap->children){
+            for(const TypedID& t : values){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn()){
                     ImGui::Text("%ld", t.id);
@@ -320,6 +302,32 @@ namespace yq::tachyon {
             }
             
             ImGui::EndTable();
+        }
+        
+        
+        void    table(nested_k, const char* str_id, std::span<const TypedID> typed)
+        {
+            bool treeOpen = false;
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            guard([&](){
+                std::string tid    = str_id;
+                tid += to_string_view(m_tachyon->id().id);
+                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, str_id);
+            });
+            ImGui::TableNextColumn();
+            ImGui::Text("%ld", typed.size());
+
+            if(treeOpen){
+                end(TABLE);
+                table(str_id, typed);
+                begin(TABLE);
+            }
+        }
+
+        void    table_children()
+        {
+            table("Children", m_snap->children);
         }
         
         void    table_inbound() 
@@ -406,7 +414,6 @@ namespace yq::tachyon {
             }
             ImGui::EndTable();
         }
-        
         
         void    set(TachyonID tid) 
         {

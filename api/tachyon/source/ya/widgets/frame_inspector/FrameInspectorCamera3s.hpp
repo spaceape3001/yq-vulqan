@@ -8,6 +8,8 @@
 
 #include "FrameInspectorCameras.hpp"
 #include <yt/3D/Camera3.hpp>
+#include <yt/3D/Camera3Data.hpp>
+#include <yt/3D/Spatial3.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorCamera³s : public FrameInspectorCameras  {
@@ -30,12 +32,46 @@ namespace yq::tachyon {
         
         void    render(camera³_k)
         {
+            const Camera³Snap*  snap    = static_cast<const Camera³Snap*>(m_snap);
+            
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
             }
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> CAMERA³ PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Projection");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->projection);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Screen");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->screen);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Spatial");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->spatial);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("View");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->view);
             }
         }
         

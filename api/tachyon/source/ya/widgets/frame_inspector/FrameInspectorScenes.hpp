@@ -40,29 +40,9 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted(">>> SCENE PROPERTIES <<<");
             }
             
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Cameras");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->cameras.size());
-            }
-            
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Lights");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->lights.size());
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Rendereds");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->rendereds.size());
-            }
+            table(NESTED, "Cameras", snap->cameras);
+            table(NESTED, "Lights", snap->lights);
+            table(NESTED, "Rendereds", snap->rendereds);
         }
 
         void    render(ViContext&ctx) override

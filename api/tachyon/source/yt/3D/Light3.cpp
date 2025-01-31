@@ -27,6 +27,7 @@ namespace yq::tachyon {
     Light³Info::Light³Info(std::string_view name, LightInfo& base, const std::source_location& sl) :
         LightInfo(name, base, sl)
     {
+        set(Type::Light³);
     }
 
     Light³Info::~Light³Info()

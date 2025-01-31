@@ -96,6 +96,7 @@ namespace yq::tachyon {
     struct mouse_k {};
     struct multipliable_k {};
     struct multiply_k {};
+    struct nested_k {};
     struct number_k {};
     
     struct once_k : public ::yq::once_k {
@@ -216,6 +217,7 @@ namespace yq::tachyon {
     static constexpr mouse_k        MOUSE;
     static constexpr multipliable_k MULTIPLIABLE;
     static constexpr multiply_k     MULTIPLY;
+    static constexpr nested_k       NESTED;
     static constexpr number_k       NUMBER;
     static constexpr once_k         ONCE;
     static constexpr parent_k       PARENT;

@@ -8,6 +8,7 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yt/sim/Spatial.hpp>
+#include <yt/sim/SpatialData.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorSpatials : public FrameInspectorTachyons {
@@ -29,12 +30,22 @@ namespace yq::tachyon {
         
         void    render(spatial_k)
         {
+            const SpatialSnap* snap = static_cast<const SpatialSnap*>(m_snap);
+            
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
             }
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> SPATIAL PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Domain");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->domain);
             }
         }
 

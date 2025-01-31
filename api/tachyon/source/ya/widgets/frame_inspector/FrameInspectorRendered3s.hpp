@@ -43,6 +43,14 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Model");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->model);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("Spatial");
             }
             if(ImGui::TableNextColumn()){
@@ -54,8 +62,11 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("VM Override");
             }
             if(ImGui::TableNextColumn()){
-                //  eventually the matrix
-                ImGui::TextUnformatted(to_string_view(snap->vm_override));
+                if(!snap->vm_override){
+                    ImGui::TextUnformatted("(disabled)");
+                } else {
+                    ImGui::Text(snap->vm_tensor);
+                }
             }
         }
 

@@ -8,7 +8,11 @@
 
 #include <yq/color/RGBA.hpp>
 #include <yq/color/RGB.hpp>
+#include <yq/math/glm.hpp>
 #include <yq/typedef/quaternion3.hpp>
+#include <yq/typedef/rectangle2.hpp>
+#include <yq/typedef/size2.hpp>
+#include <yq/typedef/tensor44.hpp>
 #include <yq/units.hpp>
 #include <yq/vector/Vector1.hpp>
 #include <yq/vector/Vector2.hpp>
@@ -119,5 +123,20 @@ namespace ImGui {
     }
     
     void    TextUnformatted(std::string_view);
+    
+    void    Text(bool);
+    void    Text(float);
+    void    Text(double);
+    void    Text(uint64_t);
+
+    void    Text(const yq::Rectangle2D&);
+    void    Text(const yq::Size2D&);
+    void    Text(const yq::Size2I&);
+    void    Text(const yq::Tensor44D&);
+    void    Text(const yq::Vector2D&);
+    void    Text(const yq::Vector3D&);
+    void    Text(const yq::Vector4D&);
+    void    Text(const glm::mat4&);
+    void    Text(const glm::dmat4&);
 }
 

@@ -8,6 +8,9 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yt/api/Controller.hpp>
+#include <yt/api/ControllerData.hpp>
+#include <ya/commands/controller/DisableCommand.hpp>
+#include <ya/commands/controller/EnableCommand.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorControllers : public FrameInspectorTachyons {
@@ -29,6 +32,7 @@ namespace yq::tachyon {
         
         void    render(controller_k)
         {
+            const ControllerSnap*   snap    = static_cast<const ControllerSnap*>(m_snap);
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
@@ -36,6 +40,26 @@ namespace yq::tachyon {
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> CONTROLLER PROPERTIES <<<");
             }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Enable");
+            }
+            if(ImGui::TableNextColumn()){
+                bool    f   = snap->enabled;
+                std::string id  = "Enable";
+                id += to_string_view(m_tachyon->id().id);
+                ImGui::ToggleButton(id.c_str(), &f);
+                if(f != snap->enabled){
+                    if(f){
+                        send(new EnableCommand({.target=*m_tachyon}));
+                    } else {
+                        send(new DisableCommand({.target=*m_tachyon}));
+                    }
+                }
+            }
+            
+            //  TODO add listening/controlling later
         }
 
         void    render(ViContext&ctx) override

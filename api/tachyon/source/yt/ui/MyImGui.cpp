@@ -6,6 +6,11 @@
 
 #include <yt/ui/MyImGui.hpp>
 #include "imgui_internal.h"
+#include <yq/math/glm.hpp>
+#include <yq/shape/Rectangle2.hpp>
+#include <yq/shape/Size2.hpp>
+#include <yq/tensor/Tensor44.hpp>
+#include <yq/vector/Vector3.hpp>
 
 thread_local ImGuiContext* MyImGuiTLS   = nullptr;
 
@@ -239,6 +244,196 @@ namespace ImGui {
         return SpinScaler(label, ImGuiDataType_Double, (void*)v, (void*)(step>0.0 ? &step : NULL), (void*)(step_fast>0.0 ? &step_fast : NULL), format, flags);
     }
 
+    void    Text(bool f)
+    {
+        TextUnformatted( f ? "true" : "false" );
+    }
+
+    void    Text(float v)
+    {
+        Text("%f", v);
+    }
+    
+    void    Text(double v)
+    {
+        Text("%lf", v);
+    }
+    
+    void    Text(uint64_t v)
+    {
+        Text("%ld", v);
+    }
+
+    void    Text(const yq::Rectangle2D&v)
+    {
+        Text("{%lf × %lf @ (%+lf, %+lf)}", v.size.x, v.size.y, v.position.x, v.position.y );
+    }
+
+    void    Text(const yq::Size2D&v)
+    {
+        Text("{%lf × %lf}", v.x, v.y );
+    }
+    
+    void    Text(const yq::Size2I&v)
+    {
+        Text("{%d × %d}", v.x, v.y );
+    }
+
+    void    Text(const yq::Tensor44D&v)
+    {
+        if(BeginTable("Tensor44", 4, ImGuiTableFlags_BordersOuterV | ImGuiTableFlags_SizingFixedSame)){
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v.xx);
+            if(TableNextColumn())
+                Text("%lf", v.xy);
+            if(TableNextColumn())
+                Text("%lf", v.xz);
+            if(TableNextColumn())
+                Text("%lf", v.xw);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v.yx);
+            if(TableNextColumn())
+                Text("%lf", v.yy);
+            if(TableNextColumn())
+                Text("%lf", v.yz);
+            if(TableNextColumn())
+                Text("%lf", v.yw);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v.zx);
+            if(TableNextColumn())
+                Text("%lf", v.zy);
+            if(TableNextColumn())
+                Text("%lf", v.zz);
+            if(TableNextColumn())
+                Text("%lf", v.zw);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v.wx);
+            if(TableNextColumn())
+                Text("%lf", v.wy);
+            if(TableNextColumn())
+                Text("%lf", v.wz);
+            if(TableNextColumn())
+                Text("%lf", v.ww);
+            EndTable();
+        }
+    }
+    
+    void    Text(const yq::Vector2D&v)
+    {
+        Text("{%lf, %lf}", v.x, v.y );
+    }
+    
+    void    Text(const yq::Vector3D&v)
+    {
+        Text("{%lf, %lf, %lf}", v.x, v.y, v.z);
+    }
+
+    void    Text(const yq::Vector4D&v)
+    {
+        Text("{%lf, %lf, %lf, %lf}", v.x, v.y, v.z, v.w);
+    }
+
+    void    Text(const glm::mat4&v)
+    {
+        if(BeginTable("glm::mat4", 4, ImGuiTableFlags_BordersOuterV | ImGuiTableFlags_SizingFixedSame)){
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%f", v[0][0]);
+            if(TableNextColumn())
+                Text("%f", v[0][1]);
+            if(TableNextColumn())
+                Text("%f", v[0][2]);
+            if(TableNextColumn())
+                Text("%f", v[0][3]);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%f", v[1][0]);
+            if(TableNextColumn())
+                Text("%f", v[1][1]);
+            if(TableNextColumn())
+                Text("%f", v[1][2]);
+            if(TableNextColumn())
+                Text("%f", v[1][3]);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%f", v[2][0]);
+            if(TableNextColumn())
+                Text("%f", v[2][1]);
+            if(TableNextColumn())
+                Text("%f", v[2][2]);
+            if(TableNextColumn())
+                Text("%f", v[2][3]);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%f", v[3][0]);
+            if(TableNextColumn())
+                Text("%f", v[3][1]);
+            if(TableNextColumn())
+                Text("%f", v[3][2]);
+            if(TableNextColumn())
+                Text("%f", v[3][3]);
+            EndTable();
+        }
+    }
+    
+    void    Text(const glm::dmat4&v)
+    {
+        if(BeginTable("glm::dmat4", 4, ImGuiTableFlags_BordersOuterV | ImGuiTableFlags_SizingFixedSame)){
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v[0][0]);
+            if(TableNextColumn())
+                Text("%lf", v[0][1]);
+            if(TableNextColumn())
+                Text("%lf", v[0][2]);
+            if(TableNextColumn())
+                Text("%lf", v[0][3]);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v[1][0]);
+            if(TableNextColumn())
+                Text("%lf", v[1][1]);
+            if(TableNextColumn())
+                Text("%lf", v[1][2]);
+            if(TableNextColumn())
+                Text("%lf", v[1][3]);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v[2][0]);
+            if(TableNextColumn())
+                Text("%lf", v[2][1]);
+            if(TableNextColumn())
+                Text("%lf", v[2][2]);
+            if(TableNextColumn())
+                Text("%lf", v[2][3]);
+
+            TableNextRow();
+            if(TableNextColumn())
+                Text("%lf", v[3][0]);
+            if(TableNextColumn())
+                Text("%lf", v[3][1]);
+            if(TableNextColumn())
+                Text("%lf", v[3][2]);
+            if(TableNextColumn())
+                Text("%lf", v[3][3]);
+            EndTable();
+        }
+    }
+    
+
+
     void    TextUnformatted(std::string_view sv)
     {
         if(sv.empty()){
@@ -247,5 +442,6 @@ namespace ImGui {
             TextUnformatted(sv.data(), sv.data()+sv.size());
         }
     }
+
     //  ============================================
 }

@@ -53,7 +53,7 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("Area");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%lf × %lf", snap->window.area.x, snap->window.area.y);
+                ImGui::Text(snap->window.area);
             }
 
             ImGui::TableNextRow();
@@ -101,7 +101,7 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("Max");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%d × %d", snap->window.max.x, snap->window.max.y);
+                ImGui::Text(snap->window.max);
             }
 
             ImGui::TableNextRow();
@@ -109,7 +109,7 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("Min");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%d × %d", snap->window.min.x, snap->window.min.y);
+                ImGui::Text(snap->window.min);
             }
 
             ImGui::TableNextRow();
@@ -125,7 +125,7 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("Opacity");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%lf", snap->window.opacity);
+                ImGui::Text(snap->window.opacity);
             }
 
             ImGui::TableNextRow();
@@ -133,7 +133,7 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("Pixels");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%d × %d", snap->window.pixels.x, snap->window.pixels.y);
+                ImGui::Text(snap->window.pixels);
             }
 
             ImGui::TableNextRow();
@@ -141,7 +141,7 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("Position");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%lf, %lf", snap->window.position.x, snap->window.position.y);
+                ImGui::Text(snap->window.position );
             }
 
             ImGui::TableNextRow();
@@ -149,7 +149,7 @@ namespace yq::tachyon {
                 ImGui::TextUnformatted("Scale");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%lf, %lf", snap->window.scale.x, snap->window.scale.y);
+                ImGui::Text(snap->window.scale);
             }
 
             ImGui::TableNextRow();

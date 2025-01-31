@@ -8,6 +8,7 @@
 
 #include "FrameInspectorSpatials.hpp"
 #include <yt/3D/Spatial3.hpp>
+#include <yt/3D/Spatial3Data.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorSpatial³s : public FrameInspectorSpatials {
@@ -29,12 +30,30 @@ namespace yq::tachyon {
         
         void    render(spatial³_k)
         {
+            const Spatial³Snap* snap = static_cast<const Spatial³Snap*>(m_snap);
+            
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
             }
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> SPATIAL³ PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Domain to Local");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->domain2local);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Local to Domain");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->local2domain);
             }
         }
         

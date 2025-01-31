@@ -27,13 +27,22 @@ namespace yq::tachyon {
 
         using FrameInspectorSpatials::render;
         
+        void    render(spatial³_k)
+        {
+        }
+        
         void    render(ViContext&ctx) override
         {
             for(Spatial³ID v : m_frame->ids(SPATIAL³)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                
+                render(SPATIAL³);
+                separator();
+                render(SPATIAL);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

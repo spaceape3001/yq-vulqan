@@ -26,14 +26,21 @@ namespace yq::tachyon {
         virtual const char* name() const override { return "Controller"; }
 
         using FrameInspectorTachyons::render;
+        
+        void    render(controller_k)
+        {
+        }
 
         void    render(ViContext&ctx) override
         {
             for(ControllerID v : m_frame->ids(CONTROLLER)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                    
+                render(CONTROLLER);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

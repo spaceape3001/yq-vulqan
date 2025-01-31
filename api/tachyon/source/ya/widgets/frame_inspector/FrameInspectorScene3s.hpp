@@ -27,13 +27,21 @@ namespace yq::tachyon {
 
         using FrameInspectorScenes::render;
         
+        void    render(scene³_k)
+        {
+        }
+        
         void    render(ViContext&ctx) override
         {
             for(Scene³ID v : m_frame->ids(SCENE³)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(SCENE³);
+                separator();
+                render(SCENE);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

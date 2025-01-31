@@ -27,13 +27,21 @@ namespace yq::tachyon {
         
         using FrameInspectorManagers::render;
         
+        void    render(desktop_k)
+        {
+        }
+        
         void    render(ViContext&ctx) override
         {
             for(DesktopID v : m_frame->ids(DESKTOP)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(DESKTOP);
+                separator();
+                render(MANAGER);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

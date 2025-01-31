@@ -27,13 +27,22 @@ namespace yq::tachyon {
 
         using FrameInspectorLights::render;
         
+        void    render(light³_k)
+        {
+            
+        }
+        
         void    render(ViContext&ctx) override
         {
             for(Light³ID v : m_frame->ids(LIGHT³)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(LIGHT³);
+                separator();
+                render(LIGHT);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

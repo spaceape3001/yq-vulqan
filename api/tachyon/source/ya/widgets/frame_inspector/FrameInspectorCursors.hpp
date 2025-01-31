@@ -27,13 +27,20 @@ namespace yq::tachyon {
 
         using FrameInspectorTachyons::render;
 
+        void    render(cursor_k)
+        {
+        }
+
         void    render(ViContext&ctx) override
         {
             for(CursorID v : m_frame->ids(CURSOR)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                    
+                render(CURSOR);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

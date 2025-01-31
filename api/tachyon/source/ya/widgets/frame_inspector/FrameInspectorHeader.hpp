@@ -7,8 +7,8 @@
 #pragma once
 
 namespace yq::tachyon {
-    class FrameInspectorHeader : public FormWidget, public FrameInspector::Pane {
-        YQ_TACHYON_DECLARE(FrameInspectorHeader, FormWidget)
+    class FrameInspectorHeader : public Widget, public FrameInspector::Pane {
+        YQ_TACHYON_DECLARE(FrameInspectorHeader, Widget)
     public:
         FrameInspectorHeader() 
         {
@@ -23,34 +23,29 @@ namespace yq::tachyon {
             return "Header";
         }
 
-        Execution setup(const Context&ctx) 
-        {
-            if(m_init)
-                return {};
-            
-            add_row("Number", [this]() -> std::string_view {
-                return to_string_view( m_frame -> number() );
-            });
-            
-            add_row("Tick", [this]() -> std::string_view {
-                return to_string_view( m_frame -> tick() );
-            });
-            
-            add_row("Origin", [this]() -> std::string_view {
-                return to_string_view( m_frame -> origin().id );
-            });
-
-            m_init = true;
-            return {};
-        }
-        
         static void init_info()
         {
         }
         
         void    render(ViContext&ctx) override
         {
-            FormWidget::imgui(ctx);
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Number");
+            ImGui::TableNextColumn();
+            ImGui::Text("%ld", m_frame->number());
+        
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Tick");
+            ImGui::TableNextColumn();
+            ImGui::Text("%ld", m_frame->tick());
+
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Origin");
+            ImGui::TableNextColumn();
+            ImGui::Text("%ld", m_frame->origin().id);
         }
         
     private:

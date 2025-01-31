@@ -117,5 +117,7 @@ namespace ImGui {
     {
         return SpinDouble(label, (double*) v, step.value, step_fast.value, format, flags);
     }
+    
+    void    TextUnformatted(std::string_view);
 }
 

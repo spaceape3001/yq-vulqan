@@ -28,13 +28,22 @@ namespace yq::tachyon {
         
         using FrameInspectorCameras::render;
         
+        void    render(camera³_k)
+        {
+        }
+        
         void    render(ViContext&ctx) override
         {
             for(Camera³ID v : m_frame->ids(CAMERA³)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                    
+                render(CAMERA³);
+                separator();
+                render(CAMERA);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

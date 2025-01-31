@@ -13,6 +13,8 @@
 #include <yt/api/Frame.hpp>
 #include <yt/logging.hpp>
 
+#include "imgui_internal.h"
+
 #include "frame_inspector/FrameInspectorCameras.hpp"
 #include "frame_inspector/FrameInspectorCamera3s.hpp"
 #include "frame_inspector/FrameInspectorControllers.hpp"
@@ -48,6 +50,16 @@ namespace yq::tachyon {
     {
     }
 
+    template <typename Pred>
+    void      FrameInspector::guard(Pred&& pred)
+    {
+        auto &id_stack = ImGui::GetCurrentWindow()->IDStack;
+        const auto outer_table_instance_id  = id_stack.back();
+        id_stack.pop_back();
+        pred();
+        id_stack.push_back(outer_table_instance_id);
+    }
+
     Execution FrameInspector::setup(const Context&ctx)
     {
         if(!m_init){
@@ -77,6 +89,13 @@ namespace yq::tachyon {
             m_panes.push_back(create<FrameInspectorViewers>());
             m_panes.push_back(create<FrameInspectorWidgets>());
             m_panes.push_back(create<FrameInspectorWindows>());
+            
+            for(Pane* p : m_panes){
+                if(!p)
+                    continue;
+                p->m_inspector  = this;
+            }
+            
             m_init  = true;
         }
         return {};
@@ -93,33 +112,64 @@ namespace yq::tachyon {
                 s->set_frame(m_frame.ptr());
             }
         }
-        
+
         if(ImGui::Begin("FrameInspector")){
             ImGui::ToggleButton("Track", &m_track);
-        
             if(!m_frame){
                 ImGui::Text("Missing frame");
-            } else {
+            } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_SizingFixedFit))){
                 for(Pane* p : m_panes){
+                    if(!table_begin())
+                        continue;
+
+                    ImGui::TableNextRow();
                     if(!p){
                         ImGui::Separator();
                         continue;
                     }
-                    
-                    bool    tree = false;
+                    ImGui::TableNextColumn();
+
+                    bool    treeOpen = false;
+                    guard([&](){
+                        treeOpen    = ImGui::TreeNodeEx(p->name(), ImGuiTreeNodeFlags_NoTreePushOnOpen);
+                    });
+
+                    ImGui::TableNextColumn();
                     if(p->countable()){
-                        tree    = ImGui::TreeNode(p->name(), "%s (%ld)", p->name(), p->count());
-                    } else {
-                        tree    = ImGui::TreeNode(p->name());
+                        ImGui::Text("%ld", p->count());
                     }
-                    if(tree){
+                    
+                    if(treeOpen){
+                        ImGui::TreePush(p->name());
                         p->render(ctx);
                         ImGui::TreePop();
                     }
                 }
+
+                if(m_table){
+                    ImGui::EndTable();
+                }
             }
         }
         ImGui::End();
+    }
+
+    bool FrameInspector::table_begin()
+    {
+        if(!m_table){
+            ImGui::Unindent();
+            m_table = ImGui::BeginTable(szTable, nTableCols);
+        }
+        return m_table;
+    }
+    
+    void FrameInspector::table_end()
+    {
+        if(m_table){
+            ImGui::EndTable();
+            ImGui::Indent();
+            m_table = false;
+        }
     }
     
     void FrameInspector::init_info()
@@ -128,6 +178,32 @@ namespace yq::tachyon {
         w.description("Frame Inspector");
         w.imgui();
     }
+    
+    ///////////////////////////////////
+    
+    
+    bool    FrameInspector::Pane::begin(table_k)
+    {
+        if(m_inspector)
+            return m_inspector->table_begin();
+        return false;
+    }
+    
+    
+    void    FrameInspector::Pane::end(table_k)
+    {
+        if(m_inspector)
+            m_inspector->table_end();
+    }
+    
+    template <typename Pred>
+    void    FrameInspector::Pane::guard(Pred&&pred)
+    {
+        if(m_inspector){
+            m_inspector->guard<Pred>(std::move(pred));
+        }
+    }
+
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspector)

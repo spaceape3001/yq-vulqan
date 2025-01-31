@@ -27,13 +27,19 @@ namespace yq::tachyon {
         
         using FrameInspectorTachyons::render;
 
+        void    render(model_k)
+        {
+        }
+
         void    render(ViContext&ctx) override
         {
             for(ModelID v : m_frame->ids(MODEL)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(MODEL);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

@@ -26,14 +26,20 @@ namespace yq::tachyon {
         virtual const char* name() const override { return "Joystick"; }
 
         using FrameInspectorTachyons::render;
+        
+        void    render(joystick_k)
+        {
+        }
 
         void    render(ViContext&ctx) override
         {
             for(JoystickID v : m_frame->ids(JOYSTICK)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(JOYSTICK);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

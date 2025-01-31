@@ -26,14 +26,22 @@ namespace yq::tachyon {
         virtual const char* name() const override { return "Rendered³"; }
 
         using FrameInspectorRendereds::render;
+        
+        void    render(rendered³_k)
+        {
+        }
 
         void    render(ViContext&ctx) override
         {
             for(Rendered³ID v : m_frame->ids(RENDERED³)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(RENDERED³);
+                separator();
+                render(RENDERED);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

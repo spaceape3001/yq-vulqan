@@ -26,14 +26,21 @@ namespace yq::tachyon {
         virtual const char* name() const override { return "Camera"; }
 
         using FrameInspectorTachyons::render;
+        
+        void    render(camera_k)
+        {
+        }
 
         void    render(ViContext&ctx) override
         {
             for(CameraID v : m_frame->ids(CAMERA)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                    
+                render(CAMERA);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

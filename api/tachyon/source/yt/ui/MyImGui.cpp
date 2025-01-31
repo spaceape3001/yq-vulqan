@@ -239,5 +239,13 @@ namespace ImGui {
         return SpinScaler(label, ImGuiDataType_Double, (void*)v, (void*)(step>0.0 ? &step : NULL), (void*)(step_fast>0.0 ? &step_fast : NULL), format, flags);
     }
 
+    void    TextUnformatted(std::string_view sv)
+    {
+        if(sv.empty()){
+            TextUnformatted("");
+        } else {
+            TextUnformatted(sv.data(), sv.data()+sv.size());
+        }
+    }
     //  ============================================
 }

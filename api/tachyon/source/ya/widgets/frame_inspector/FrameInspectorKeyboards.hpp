@@ -27,13 +27,19 @@ namespace yq::tachyon {
 
         using FrameInspectorTachyons::render;
 
+        void    render(keyboard_k)
+        {
+        }
+
         void    render(ViContext&ctx) override
         {
             for(KeyboardID v : m_frame->ids(KEYBOARD)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(KEYBOARD);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

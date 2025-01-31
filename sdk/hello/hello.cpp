@@ -248,6 +248,7 @@ int main(int argc, char* argv[])
     aci.view.size       = { 1920, 1080 };
     aci.view.clear      = { 0.f, 0.1f, 0.2f, 1.f };
     aci.view.transfer   = OPTIONAL;
+    aci.view.imgui      = true;
     
     Application app(argc, argv, aci);
     //load_plugin_dir("plugin");
@@ -266,15 +267,13 @@ int main(int argc, char* argv[])
     HelloScene*     sc  = Tachyon::create<HelloScene>();
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
-    FrameInspector* fi = Widget::create<FrameInspector>();
-    app.create(VIEWER, w);
-    app.create(VIEWER, fi);
-    //w->create<FrameInspector>(CHILD);
+    //FrameInspector* fi = Widget::create<FrameInspector>();
+    w->create<FrameInspector>(CHILD);
     
     //LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     //gLogger = lb->id();
     //lb->unsafe_snoop(w);
 
-    app.run();
+    app.run(w);
     return 0;
 }

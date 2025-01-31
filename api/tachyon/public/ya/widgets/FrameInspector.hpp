@@ -33,6 +33,17 @@ namespace yq::tachyon {
 
         bool        m_track         = true;
         bool        m_init          = false;
+        
+        bool        m_table         = false;
+        
+        bool        table_begin();
+        void        table_end();
+        
+        template <typename Pred>
+        void        guard(Pred&&);
+        
+        static constexpr const char*  szTable     = "Panes";
+        static constexpr const int    nTableCols  = 2;
     };
 
     class FrameInspector::Pane {
@@ -48,7 +59,17 @@ namespace yq::tachyon {
         virtual void        render(ViContext&)  = 0;
         
     protected:
-        const Frame* m_frame = nullptr;
+        const Frame*        m_frame = nullptr;
+        
+        bool    begin(table_k);
+        void    end(table_k);
+
+        template <typename Pred>
+        void    guard(Pred&&);
+        
+    private:
+        friend class FrameInspector;
+        FrameInspector*     m_inspector = nullptr;
     };
 
 

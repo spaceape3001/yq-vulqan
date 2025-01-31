@@ -27,13 +27,19 @@ namespace yq::tachyon {
         
         using FrameInspectorTachyons::render;
         
+        void    render(mouse_k)
+        {
+        }
+        
         void    render(ViContext&ctx) override
         {
             for(MouseID v : m_frame->ids(MOUSE)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(MOUSE);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

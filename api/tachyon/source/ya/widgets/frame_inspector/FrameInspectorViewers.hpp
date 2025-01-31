@@ -28,21 +28,19 @@ namespace yq::tachyon {
 
         using FrameInspectorTachyons::render;
 
+        void    render(viewer_k)
+        {
+        }
+
         void    render(ViContext&ctx) override
         {
             for(ViewerID v : m_frame->ids(VIEWER)){
                 if(!begin(v))
                     continue;
-                
-                std::string vid = to_string(v.id);
-                if(ImGui::BeginTable(vid.c_str(), 2)){
-                
-                    //ImGui::TableNextRow();
-                    //ImGui::Separator();
-                
-                    render(TACHYON);
-                    ImGui::EndTable();
-                }
+
+                render(VIEWER);
+                separator();
+                render(TACHYON);
                 end();
             }
         }

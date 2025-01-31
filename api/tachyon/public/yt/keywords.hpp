@@ -129,6 +129,7 @@ namespace yq::tachyon {
     struct start_k {};
     struct startup_k {};
     struct stop_k {};
+    struct table_k {};
     struct tachyon_k {};
     struct task_k {};
     struct target_k {};
@@ -248,6 +249,7 @@ namespace yq::tachyon {
     static constexpr startup_k      STARTUP;
     static constexpr static_k       STATIC;
     static constexpr stop_k         STOP;
+    static constexpr table_k        TABLE;
     static constexpr tachyon_k      TACHYON;
     static constexpr target_k       TARGET;
     static constexpr task_k         TASK;

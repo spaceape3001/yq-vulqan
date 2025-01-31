@@ -26,14 +26,20 @@ namespace yq::tachyon {
         virtual const char* name() const override { return "Spatial"; }
 
         using FrameInspectorTachyons::render;
+        
+        void    render(spatial_k)
+        {
+        }
 
         void    render(ViContext&ctx) override
         {
             for(SpatialID v : m_frame->ids(SPATIAL)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(SPATIAL);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

@@ -26,14 +26,21 @@ namespace yq::tachyon {
         virtual const char* name() const override { return "Thread"; }
 
         using FrameInspectorTachyons::render;
-
+        
+        void    render(thread_k)
+        {
+        }
+        
         void    render(ViContext&ctx) override
         {
             for(ThreadID v : m_frame->ids(THREAD)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                    
+                render(THREAD);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

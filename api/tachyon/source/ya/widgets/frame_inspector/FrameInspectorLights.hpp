@@ -26,14 +26,20 @@ namespace yq::tachyon {
         virtual const char* name() const override { return "Light"; }
         
         using FrameInspectorTachyons::render;
+        
+        void    render(light_k)
+        {
+        }
 
         void    render(ViContext&ctx) override
         {
             for(LightID v : m_frame->ids(LIGHT)){
-                if(begin(v)){
-                    render(TACHYON);
-                    end();
-                }
+                if(!begin(v))
+                    continue;
+                render(LIGHT);
+                separator();
+                render(TACHYON);
+                end();
             }
         }
 

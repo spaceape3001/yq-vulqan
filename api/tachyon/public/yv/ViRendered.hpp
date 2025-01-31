@@ -6,7 +6,7 @@
 
 #pragma once
 
-
+#include <yq/core/LogPriority.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/container/BasicBuffer.hpp>
 #include <yv/ViData.hpp>
@@ -69,6 +69,7 @@ namespace yq::tachyon {
         ViPipelineLayoutCPtr    pipeline_layout() const;
         
         void                report(Stream&, const ViRenderedReportOptions& options={}) const;
+        void                report(const char* cat="viz", LogPriority pri=LogPriority::Info, const ViRenderedReportOptions& options={}) const;
     
         uint64_t    id() const { return m_id; }
     

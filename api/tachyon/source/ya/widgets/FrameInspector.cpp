@@ -117,7 +117,14 @@ namespace yq::tachyon {
             ImGui::ToggleButton("Track", &m_track);
             if(!m_frame){
                 ImGui::Text("Missing frame");
-            } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_SizingFixedFit|ImGuiTableFlags_NoClip))){
+            } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_NoClip))){
+                ImGui::TableSetupColumn("Key", 
+                    ImGuiTableColumnFlags_IndentEnable | 
+                    ImGuiTableColumnFlags_NoSort | ImGuiTableColumnFlags_WidthStretch, 0.20 );
+                ImGui::TableSetupColumn("Value", 
+                    ImGuiTableColumnFlags_IndentDisable | ImGuiTableColumnFlags_NoClip |
+                    ImGuiTableColumnFlags_NoSort | ImGuiTableColumnFlags_WidthStretch, 0.80 );
+            
                 for(Pane* p : m_panes){
                     if(!table_begin())
                         continue;

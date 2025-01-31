@@ -63,9 +63,8 @@ namespace yq::tachyon {
     std::error_code ViPipeline::_init(ViVisualizer&viz, const Pipeline* pipe, const ViPipelineOptions& opts)
     {
         ViPipelineLayoutCPtr        pLay    = viz.pipeline_layout_create(pipe);
-        if(!pLay || !pLay->valid()){
+        if(!pLay || !pLay->valid())
             return errors::pipeline_bad_layout();
-        }
         return _init(viz, pLay, opts);
     }
 
@@ -156,7 +155,12 @@ namespace yq::tachyon {
             polyMode    = cfg->polygons();
         if(polyMode == PolygonMode::Auto)
             polyMode    = PolygonMode::Fill;
+        #if 0
         if((polyMode   == PolygonMode::Fill) && (opts.wireframe == Tristate::YES) && cfg->wireframe_permitted()){
+            m_status |= S::Wireframe;
+        }
+        #endif
+        if(polyMode   == PolygonMode::Fill){
             m_status |= S::Wireframe;
         }
 
@@ -302,7 +306,7 @@ namespace yq::tachyon {
             pipelineInfo.basePipelineIndex  = -1;
             rasterizer.polygonMode  = VK_POLYGON_MODE_LINE;
             
-            res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_pipeline);
+            res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_wireframe);
             if(res != VK_SUCCESS){
                 vizWarning << "ViPipeline: Pipeline create (for wireframe) failed.  VkResult " << (int32_t) res;
                 return errors::pipeline_cant_create();

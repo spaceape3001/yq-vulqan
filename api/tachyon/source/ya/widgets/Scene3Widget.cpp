@@ -50,6 +50,9 @@ namespace yq::tachyon {
 
     void    Scene³Widget::_prerecord(ViContext& u)
     {
+    
+        //  We'll move these into a sub-style of widget
+    
         const Frame*    frame   = Frame::current();
         if(!frame)
             return ;

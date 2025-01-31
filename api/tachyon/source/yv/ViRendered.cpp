@@ -126,14 +126,16 @@ namespace yq::tachyon {
         if(m_index.count){
             m_status |= S::Index;
         }
+        
+        if(m_config->push().type != PushConfigType::None){
+            m_status |= S::Push;
+        }
 
         _import_data(ren);
 
         if(m_status(S::Descriptors)){
             _publish_data(true);
         }
-        
-        yInfo() << "ViRendered::_init() succeeded";
         
         return {};
     }
@@ -221,8 +223,6 @@ namespace yq::tachyon {
         if(u.pipeline_rebuild){
             if(u.pipelines){
                 m_pipeline      = u.pipelines->create(m_config);
-            //} else if(u.viz){
-                //m_pipeline      = u.viz -> pipeline_create(m_config);
             } else {
                 m_pipeline      = m_viz -> pipeline_create(m_config);
             }
@@ -239,7 +239,9 @@ namespace yq::tachyon {
         if(pb){
             m_push.clear();
             m_push.append(pb, std::min(m_config->push().size, PushBuffer::CAPACITY));
-        } 
+        } else if(m_config->push().type == PushConfigType::Custom) {
+            m_push  = sn->push;
+        }
     }
     
     bool    ViRendered::consistent() const
@@ -379,6 +381,17 @@ namespace yq::tachyon {
                 .layout = false
             });
         }
+    }
+
+    void            ViRendered::report(const char* cat, LogPriority pri, const ViRenderedReportOptions& options) const
+    {
+        std::string     text;
+        {
+        
+            stream::Text  out(text);
+            report(out, options);
+        }
+        log_category(cat).getStream(log4cpp_priority(pri)) << text;
     }
 
     void    ViRendered::update(ViContext& u, const RenderedSnap* sn, const void* pb)

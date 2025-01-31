@@ -174,6 +174,11 @@ namespace yq::tachyon {
         io.BackendPlatformName      = "yq::tachyon::ViGui";
 
         m_pipeline                  = m_viz -> pipeline_create(g.pipeline);
+        if(!m_pipeline){
+            imguiWarning << "Unable to create pipeline!";
+            return false;
+        }
+        
         m_pipelineLayout            = m_pipeline -> layout();
         
         //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);

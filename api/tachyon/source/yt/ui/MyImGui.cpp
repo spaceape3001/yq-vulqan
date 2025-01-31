@@ -281,16 +281,16 @@ namespace ImGui {
 
     void    Text(const yq::Tensor44D&v)
     {
-        if(BeginTable("Tensor44", 4, ImGuiTableFlags_BordersOuterV | ImGuiTableFlags_SizingFixedSame)){
+        if(BeginTable("Tensor44D", 4, ImGuiTableFlags_BordersOuterV | ImGuiTableFlags_SizingFixedSame)){
             TableNextRow();
-            if(TableNextColumn())
-                Text("%lf", v.xx);
-            if(TableNextColumn())
-                Text("%lf", v.xy);
-            if(TableNextColumn())
-                Text("%lf", v.xz);
-            if(TableNextColumn())
-                Text("%lf", v.xw);
+            TableNextColumn();
+            Text("%lf", v.xx);
+            TableNextColumn();
+            Text("%lf", v.xy);
+            TableNextColumn();
+            Text("%lf", v.xz);
+            TableNextColumn();
+            Text("%lf", v.xw);
 
             TableNextRow();
             if(TableNextColumn())

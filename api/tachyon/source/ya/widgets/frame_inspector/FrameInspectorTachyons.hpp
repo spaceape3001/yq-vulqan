@@ -11,6 +11,7 @@
 #include <yt/api/Tachyon.hpp>
 #include <yt/api/Thread.hpp>
 #include <yq/unit/literals.hpp>
+#include <yq/text/join.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorTachyons : public Widget, public FrameInspector::Pane {
@@ -53,7 +54,7 @@ namespace yq::tachyon {
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(m_tachyon->metaInfo().name());
             if(m_tree){
-                ImGui::TreePush(nid.c_str());
+                ImGui::Indent();
             }
             return m_tree;
         }
@@ -80,7 +81,7 @@ namespace yq::tachyon {
             ImGui::TableNextColumn();
             
             if(m_tree){
-                ImGui::TreePop();
+                ImGui::Unindent();
                 m_tree  = false;
             }
         }
@@ -149,17 +150,48 @@ namespace yq::tachyon {
                     ImGui::Text("%lf s",  unit::Second(m_data->cycleTime).value);
                 }
             }
+            
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            bool    treeOpen    = false;
+            guard([&](){
+                std::string tid    = "inbound";
+                tid += to_string_view(m_tachyon->id().id);
+                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Inbound");
+            });
+            ImGui::TableNextColumn();
+            ImGui::Text("%ld", m_data->inbound.size());
 
-            if(ImGui::TreeNode("Inbound", "Inbound (%ld)", m_data->inbound.size())){
+            if(treeOpen){
+                end(TABLE);
+                ImGui::Indent();
+
                 table_inbound();
-                ImGui::TreePop();
+                
+                ImGui::Unindent();
+                begin(TABLE);
             }
         
-            if(ImGui::TreeNode("Outbound", "Outbound (%ld)", m_data->outbound.size())){
-                table_outbound();
-                ImGui::TreePop();
-            }
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            guard([&](){
+                std::string tid    = "outbound";
+                tid += to_string_view(m_tachyon->id().id);
+                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Outbound");
+            });
+            ImGui::TableNextColumn();
+            ImGui::Text("%ld", m_data->outbound.size());
 
+            if(treeOpen){
+                end(TABLE);
+                ImGui::Indent();
+
+                table_outbound();
+                
+                ImGui::Unindent();
+                begin(TABLE);
+            }
+        
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("Owner");
@@ -228,7 +260,7 @@ namespace yq::tachyon {
         
         void    table_inbound() 
         {
-            if(ImGui::BeginTable("InPosts", 5)){
+            if(ImGui::BeginTable("InPosts", 5, ImGuiTableFlags_SizingFixedFit)){
                 ImGui::TableHeadersRow();
                 ImGui::TableNextColumn();
                 ImGui::TextUnformatted("ID");
@@ -283,7 +315,7 @@ namespace yq::tachyon {
         
         void    table_outbound()
         {
-            if(ImGui::BeginTable("OutPosts", 4)){
+            if(ImGui::BeginTable("OutPosts", 4, ImGuiTableFlags_SizingFixedFit)){
                 ImGui::TableHeadersRow();
                 ImGui::TableNextColumn();
                 ImGui::TextUnformatted("ID");

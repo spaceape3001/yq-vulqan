@@ -118,6 +118,9 @@ namespace yq::tachyon {
             if(!m_frame){
                 ImGui::Text("Missing frame");
             } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_SizingFixedFit))){
+auto &id_stack = ImGui::GetCurrentWindow()->IDStack;
+yInfo() << "ImGui Master Table ID " << id_stack.back();
+
                 for(Pane* p : m_panes){
                     if(!table_begin())
                         continue;
@@ -140,9 +143,9 @@ namespace yq::tachyon {
                     }
                     
                     if(treeOpen){
-                        ImGui::TreePush(p->name());
+                        ImGui::Indent();
                         p->render(ctx);
-                        ImGui::TreePop();
+                        ImGui::Unindent();
                     }
                 }
 

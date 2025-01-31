@@ -30,6 +30,13 @@ namespace yq::tachyon {
         
         void    render(camera³_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> CAMERA³ PROPERTIES <<<");
+            }
         }
         
         void    render(ViContext&ctx) override

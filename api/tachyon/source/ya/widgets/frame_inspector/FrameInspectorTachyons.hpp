@@ -72,6 +72,13 @@ namespace yq::tachyon {
         
         void    end()
         {
+            begin(TABLE);
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            ImGui::TableNextColumn();
+            
             if(m_tree){
                 ImGui::TreePop();
                 m_tree  = false;
@@ -113,6 +120,22 @@ namespace yq::tachyon {
         {
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> TACHYON PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Children");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", m_snap->children.size());
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("Cycle");
             }
             if(ImGui::TableNextColumn()){
@@ -151,6 +174,14 @@ namespace yq::tachyon {
             }
             if(ImGui::TableNextColumn()){
                 meta_id(m_snap->parent);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Proxies");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", m_snap->proxies.size());
             }
 
             ImGui::TableNextRow();

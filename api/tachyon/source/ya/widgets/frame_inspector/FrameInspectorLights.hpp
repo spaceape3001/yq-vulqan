@@ -29,6 +29,13 @@ namespace yq::tachyon {
         
         void    render(light_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> LIGHT PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

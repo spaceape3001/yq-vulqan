@@ -29,6 +29,13 @@ namespace yq::tachyon {
         
         void    render(joystick_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> JOYSTICK PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

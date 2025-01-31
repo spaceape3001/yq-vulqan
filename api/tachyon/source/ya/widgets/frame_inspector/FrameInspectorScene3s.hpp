@@ -29,6 +29,13 @@ namespace yq::tachyon {
         
         void    render(scene³_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> SCENE³ PROPERTIES <<<");
+            }
         }
         
         void    render(ViContext&ctx) override
@@ -37,9 +44,7 @@ namespace yq::tachyon {
                 if(!begin(v))
                     continue;
                 render(SCENE³);
-                separator();
                 render(SCENE);
-                separator();
                 render(TACHYON);
                 end();
             }

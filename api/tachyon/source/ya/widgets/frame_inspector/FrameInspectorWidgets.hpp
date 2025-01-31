@@ -8,6 +8,7 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yt/ui/Widget.hpp>
+#include <yt/ui/WidgetData.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorWidgets : public FrameInspectorTachyons {
@@ -29,6 +30,23 @@ namespace yq::tachyon {
         
         void    render(widget_k)
         {
+            const WidgetSnap*   snap    = static_cast<const WidgetSnap*>(m_snap);
+            
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> WIDGET PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Viewer");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->viewer);
+            }
         }
         
         void    render(ViContext&ctx) override

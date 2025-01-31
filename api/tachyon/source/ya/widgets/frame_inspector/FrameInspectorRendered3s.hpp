@@ -8,6 +8,8 @@
 
 #include "FrameInspectorRendereds.hpp"
 #include <yt/3D/Rendered3.hpp>
+#include <yt/3D/Rendered3Data.hpp>
+#include <yt/sim/Spatial.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorRendered³s : public FrameInspectorRendereds {
@@ -29,6 +31,32 @@ namespace yq::tachyon {
         
         void    render(rendered³_k)
         {
+            const Rendered³Snap *snap = static_cast<const Rendered³Snap*>(m_snap);
+        
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> RENDERED³ PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Spatial");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->spatial);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("VM Override");
+            }
+            if(ImGui::TableNextColumn()){
+                //  eventually the matrix
+                ImGui::TextUnformatted(to_string_view(snap->vm_override));
+            }
         }
 
         void    render(ViContext&ctx) override

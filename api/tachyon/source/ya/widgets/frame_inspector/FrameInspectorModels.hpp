@@ -29,6 +29,13 @@ namespace yq::tachyon {
 
         void    render(model_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> MODEL PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

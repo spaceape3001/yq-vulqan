@@ -29,6 +29,13 @@ namespace yq::tachyon {
         
         void    render(mouse_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> MOUSE PROPERTIES <<<");
+            }
         }
         
         void    render(ViContext&ctx) override

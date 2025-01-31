@@ -8,6 +8,7 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yt/scene/Rendered.hpp>
+#include <yt/scene/RenderedData.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorRendereds : public FrameInspectorTachyons {
@@ -29,6 +30,71 @@ namespace yq::tachyon {
 
         void    render(rendered_k)
         {
+            const RenderedSnap* snap    = static_cast<const RenderedSnap*>(m_snap);
+        
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> RENDERED PROPERTIES <<<");
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Culled");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(snap->culled.key());
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("IBOs");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", snap->ibos.size());
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("SBOs");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", snap->sbos.size());
+            }
+            
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Textures");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", snap->texs.size());
+            }
+            
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("UBOs");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", snap->ubos.size());
+            }
+            
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("VBOs");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text("%ld", snap->vbos.size());
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Wireframe");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(snap->wireframe.key());
+            }
         }
 
         void    render(ViContext&ctx) override

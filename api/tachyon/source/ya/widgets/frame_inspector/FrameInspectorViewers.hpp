@@ -8,6 +8,7 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yt/app/Viewer.hpp>
+#include <yt/app/ViewerData.hpp>
 #include <yq/text/format.hpp>
 
 namespace yq::tachyon {
@@ -30,6 +31,38 @@ namespace yq::tachyon {
 
         void    render(viewer_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> VIEWER PROPERTIES <<<");
+            }
+
+            const ViewerSnap*   snap    = static_cast<const ViewerSnap*>(m_snap);
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Focus");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->focus);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Widget");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->widget);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Window");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(snap->window);
+            }
         }
 
         void    render(ViContext&ctx) override

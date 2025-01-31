@@ -29,6 +29,13 @@ namespace yq::tachyon {
         
         void    render(controller_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> CONTROLLER PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

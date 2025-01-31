@@ -29,6 +29,13 @@ namespace yq::tachyon {
 
         void    render(monitor_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> MONITOR PROPERTIES <<<");
+            }
         }
 
         void   render(ViContext&ctx) override

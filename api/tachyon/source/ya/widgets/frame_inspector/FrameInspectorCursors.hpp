@@ -29,6 +29,13 @@ namespace yq::tachyon {
 
         void    render(cursor_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> CURSOR PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

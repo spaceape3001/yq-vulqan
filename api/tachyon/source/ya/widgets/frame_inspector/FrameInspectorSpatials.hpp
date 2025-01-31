@@ -29,6 +29,13 @@ namespace yq::tachyon {
         
         void    render(spatial_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> SPATIAL PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

@@ -29,6 +29,13 @@ namespace yq::tachyon {
 
         void    render(keyboard_k)
         {
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> KEYBOARD PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

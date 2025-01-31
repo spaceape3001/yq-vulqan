@@ -29,7 +29,13 @@ namespace yq::tachyon {
         
         void    render(light³_k)
         {
-            
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> LIGHT³ PROPERTIES <<<");
+            }
         }
         
         void    render(ViContext&ctx) override

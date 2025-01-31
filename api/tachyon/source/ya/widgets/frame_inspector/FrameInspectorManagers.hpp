@@ -29,7 +29,13 @@ namespace yq::tachyon {
         
         void    render(manager_k)
         {
-            
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("------");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted(">>> MANAGER PROPERTIES <<<");
+            }
         }
 
         void    render(ViContext&ctx) override

@@ -18,6 +18,8 @@
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/StartupCommand.hpp>
 #include <ya/commands/widget/SetViewer.hpp>
+#include <ya/events/ui/HideEvent.hpp>
+#include <ya/events/ui/ShowEvent.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 #include <ya/replies/ui/CloseReply.hpp>
 
@@ -109,6 +111,16 @@ namespace yq::tachyon {
         m_closeRequest = {};
     }
 
+    void    Widget::cmd_hide()
+    {
+        mail(new HideCommand({.target=*this}));
+    }
+
+    void    Widget::cmd_show()
+    {
+        mail(new ShowCommand({.target=*this}));
+    }
+
     void    Widget::imgui(ViContext& u)
     {
         const Frame*    frame   = Frame::current();
@@ -116,7 +128,9 @@ namespace yq::tachyon {
             return ;
             
         frame->foreach<Widget>(PTR, children(), [&](Widget* w){
-            w->imgui(u);
+            if(w->visible()){
+                w->imgui(u);
+            }
         });
     }
     
@@ -126,7 +140,9 @@ namespace yq::tachyon {
         if(!frame)
             return ;
         frame->foreach<Widget>(PTR, children(), [&](Widget* w){
-            w->vulkan(u);
+            if(w->visible()){
+                w->vulkan(u);
+            }
         });
     }
     
@@ -171,6 +187,16 @@ namespace yq::tachyon {
         close(REQUEST);
     }
 
+    void    Widget::on_hide_command(const HideCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        if(m_flags(F::Visible)){
+            m_flags -= F::Visible;
+            send(new HideEvent({.source=*this}));
+        }
+    }
+
     void    Widget::on_set_viewer(const SetViewer&cmd)
     {
         if(cmd.target() != id())
@@ -179,13 +205,24 @@ namespace yq::tachyon {
         m_viewer    = cmd.viewer();
     }
 
+    void    Widget::on_show_command(const ShowCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        if(!m_flags(F::Visible)){
+            m_flags |= F::Visible;
+            send(new ShowEvent({.source=*this}));
+        }
+    }
+
     void            Widget::prerecord(ViContext& u)
     {
         const Frame*    frame   = Frame::current();
         if(!frame)
             return ;
         frame->foreach<Widget>(PTR, children(), [&](Widget* w){
-            w->prerecord(u);
+            if(w->visible())
+                w->prerecord(u);
         });
     }
 
@@ -261,12 +298,10 @@ namespace yq::tachyon {
         return m_flags(F::Visible);
     }
 
-#if 0
     Widget* Widget::widget_at(const Vector2D&) const
     {
-        return const_cast<Widget*>(this);
+        return const_cast<Widget*>(this);   // TODO 
     }
-#endif
     
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

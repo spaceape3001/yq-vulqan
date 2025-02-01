@@ -43,6 +43,7 @@
 #include <ya/scenes/SimpleScene3.hpp>
 #include <ya/utils/LoggerBox.hpp>
 #include <ya/widgets/Scene3DWidget.hpp>
+#include <ya/widgets/FrameInspector.hpp>
 
 #include <chrono>
 
@@ -50,102 +51,12 @@ using namespace ImGui;
 using namespace yq;
 using namespace yq::tachyon;
 
-const auto  NorthData = TetrahedronData<ColorVertex3D>{
-    {{  0.,  1.,  0. }, color::White },
-    {{ -1., -1., -1. }, color::Blue },
-    {{  1., -1., -1. }, color::Blue },
-    {{  0.,  0.,  1. }, color::Blue }
-};
-
-const auto  SouthData = TetrahedronData<ColorVertex3D>{
-    {{  0.,  1.,  0. }, color::White },
-    {{ -1., -1., -1. }, color::Yellow },
-    {{  1., -1., -1. }, color::Yellow },
-    {{  0.,  0.,  1. }, color::Yellow }
-};
-
-const auto  EastData = TetrahedronData<ColorVertex3D>{
-    {{  1.,  0.,  0. }, color::White },
-    {{ -1., -1., -1. }, color::Red },
-    {{ -1.,  1., -1. }, color::Red },
-    {{  0.,  0.,  1. }, color::Red }
-};
-
-const auto  WestData = TetrahedronData<ColorVertex3D>{
-    {{ -1.,  0.,  0. }, color::White },
-    {{  1., -1., -1. }, color::Cyan },
-    {{  1.,  1., -1. }, color::Cyan },
-    {{  0.,  0.,  1. }, color::Cyan }
-};
-
-const auto  TopData = TetrahedronData<ColorVertex3D>{
-    {{  0.,  0.,  1. }, color::White },
-    {{ -1., -1., -1. }, color::Green },
-    {{  1., -1., -1. }, color::Green },
-    {{  0.,  1., -1. }, color::Green }
-};
-
-const auto  BottomData = TetrahedronData<ColorVertex3D>{
-    {{  0.,  0., -1. }, color::White },
-    {{ -1., -1.,  1. }, color::Magenta },
-    {{  1., -1.,  1. }, color::Magenta },
-    {{  0.,  1.,  1. }, color::Magenta }
-};
-
-const auto  TriData   = TriangleData<ColorVertex2D> {
-    { {1.0,1.0}, color::Red },
-    { {0., -1}, color::White },
-    { {-1., 1.}, color::Blue }
-};
-
 using timepoint_t   = std::chrono::time_point<std::chrono::steady_clock>;
 
-const auto QuadData = QuadrilateralData<ColorVertex2D> {
-    { {-1.0, 1.0}, color::Green },
-    { {1.0, 1.0}, color::Blue },
-    { {0.5, -1.0}, color::Yellow },
-    { {-0.5, -1.0}, color::Red }
-};
 
 TachyonID       gLogger;
 
-struct CameraController : public Controller {
-    YQ_TACHYON_DECLARE(CameraController, Controller)
-    
-    Camera*     m_camera = nullptr;
 
-    CameraController(Camera* cam) : Controller(), m_camera(cam)
-    {
-        cmd_control(cam->id());
-    }
-    
-    ~CameraController()
-    {
-    }
-    
-    void key_press(const KeyPressEvent& evt)
-    {
-        switch(evt.key()){
-        case KeyCode::UpArrow:
-            //send(new CameraPitchCommand(m_camera, 10._deg));
-            break;
-        case KeyCode::DownArrow:
-            //send(new CameraPitchCommand(m_camera, -10._deg));
-            break;
-        default:
-            break;
-        }
-    }
-    
-    static void init_info()
-    {
-        auto w = writer<CameraController>();
-        w.slot(&CameraController::key_press);
-    }
-    
-};
-
-YQ_TACHYON_IMPLEMENT(CameraController)
 
 struct CameraScene3DWidget : public Scene³Widget {
     YQ_TACHYON_DECLARE(CameraScene3DWidget, Scene³Widget)
@@ -153,12 +64,14 @@ struct CameraScene3DWidget : public Scene³Widget {
     std::vector<const CameraInfo*>      cam_infos;
     Map<std::string,Ref<Camera>,IgCase> cameras;
 
-    timepoint_t             start;
-    SpaceCamera*            cam = nullptr;
-    bool                    show_camera = true;
-    bool                    slave_clock = true;
-    bool                    show_control    = true;
-    Scene*                  scene   = nullptr;
+    timepoint_t             m_start;
+    SpaceCamera*            m_cam = nullptr;
+    bool                    m_show_camera = true;
+    bool                    m_slave_clock = true;
+    bool                    m_show_control    = true;
+    bool                    m_init  = false;
+    CameraScene*            m_scene   = nullptr;
+    FrameInspector*         m_inspector = nullptr;
     
     
     static void    init_info()
@@ -185,9 +98,13 @@ struct CameraScene3DWidget : public Scene³Widget {
         return c;
     }
 
-    CameraScene3DWidget(Scene* sc)  : scene(sc)
+    CameraScene3DWidget(CameraScene* sc)  : scene(sc)
     {
         setup();
+    }
+    
+    void    setup(const Context& ctx) override
+    {
     }
     
     void setup() 
@@ -321,6 +238,11 @@ struct CameraScene3DWidget : public Scene³Widget {
                     EndMenu();
                 }
                 Checkbox("Control", &show_control);
+                
+                if(MenuItem("Frame Inspector")){
+                    create<FrameInspector>(CHILD);
+                }
+                
                 #if 0
                 Separator();
                 if(MenuItem("Exit"))
@@ -415,7 +337,7 @@ int main(int argc, char* argv[])
     //load_plugin_dir("plugin");
     app.finalize();
     
-    Scene*      sc  = Tachyon::create<SimpleScene³>();
+    CameraScene* sc  = Tachyon::create<CameraScene>();
     Widget*     w   = Widget::create<CameraScene3DWidget>(sc);
     LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     gLogger         = lb->id();

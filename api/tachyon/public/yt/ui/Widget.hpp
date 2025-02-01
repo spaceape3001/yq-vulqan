@@ -19,6 +19,8 @@
 namespace yq::tachyon {
     struct ViContext;
     class CloseCommand;
+    class HideCommand;
+    class ShowCommand;
     //class StartupCommand;
     class SetViewer;
 
@@ -80,36 +82,7 @@ namespace yq::tachyon {
             through children, calling their methods recursively.
         */
         virtual void    vulkan(ViContext&);
-        
-        /*! \brief Sets the parent of this widget
-        
-            This will fail if a parent-loop is detected.  
-            (ie, trying to set to self)
-        
-            \param[in] p    Proposed parent (can be null)
-            \return TRUE if the change was taken
-        */
-        //bool    set_parent(Widget* p);
-        
-        /*! \brief Adds the child to this widget
-        
-            This will fail for reasons of set_parent, OR the
-            child is null.
-            
-            \param[in] ch   Child to add
-            \return TRUE if the change was taken
-        */
-        //bool    add_child(Widget* ch);
-        
-        /*! \brief Tests for parentage
-        
-            Checks to see if the argument is this widget's parent
-            or grandparent or great grandparent to whatever degree.
-        
-            \param p    Supposed parent in question
-        */
-        //bool    has_parentage(const Widget*) const;
-        
+
         WidgetID   id() const { return WidgetID(UniqueID::id()); }
 
         bool    is_imgui() const;
@@ -138,12 +111,15 @@ namespace yq::tachyon {
         //! Our viewer
         const Viewer*   viewer(ptr_k) const ;
         
-        //virtual Widget* widget_at(const Vector2D&) const;
+        virtual Widget* widget_at(const Vector2D&) const;
         
         //! TRUE if we're attached (either as a child-widget or to a viewer)
         bool    attached() const;
 
         bool        visible() const;
+
+        void        cmd_show();
+        void        cmd_hide();
 
     protected:
         friend class Viewer;
@@ -166,14 +142,6 @@ namespace yq::tachyon {
         //! Our viewer
         TypedID                 m_viewer;
         
-        //Viewer*                 m_viewer    = nullptr;
-        
-        //! Our parent widget
-        //Widget*                 m_parent    = nullptr;
-        
-        //! Our child widgets
-        //std::vector<Widget*>    m_children;
-        
         //! A string ID for ImGui
         const std::string       m_windowID;
         
@@ -187,31 +155,17 @@ namespace yq::tachyon {
         //! pass descriptor sets to the graphics card.
         virtual void            prerecord(ViContext&);
 
-        //virtual void            on_close_request() { accept(CLOSE); }
-        //void                    accept(close_k);
-        //void                    reject(close_k);
-
-        //virtual void            receive(const post::PostCPtr&);
-
-        //! Called when a child of this widget is added
-        //virtual void            on_child_added(Widget*){}
-        
-        //! Called when a child of this widget is removed
-        //virtual void            on_child_removed(Widget*){}
-        
         virtual PostAdvice      advise(const Post&) const override;
         
         void                    snap(WidgetSnap&) const;
         
-        //  override to do your own startup... 
-        //virtual void            startup();
-        
-        
         void    on_close_command(const CloseCommand&);
         void    on_close_request(const CloseRequestCPtr&);
         
+        void    on_hide_command(const HideCommand&);
+        
         void    on_set_viewer(const SetViewer&);
-        //void    on_startup_command(const StartupCommand&);
+        void    on_show_command(const ShowCommand&);
         
         
         #if 0
@@ -235,14 +189,6 @@ namespace yq::tachyon {
         virtual void            on(const MousePress&) {}
         virtual void            on(const MouseRelease&) {}
         virtual void            on(const MouseScroll&) {}
-        #endif
-
-        #if 0
-        virtual void            on_window_iconified() {}
-        
-        virtual void            on_window_restored() {}
-        
-        virtual void            on_window_maximized() {}
         #endif
         
     private:

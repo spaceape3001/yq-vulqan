@@ -4,40 +4,42 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <ya/commands/spatial/AddSize3.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 
-#include <ya/commands/SpatialCommand.hpp>
-#include <yq/shape/Size3.hpp>
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSize³)
 
 namespace yq::tachyon {
-
-    //! Instructs an object to set it's size
-    class AddSize³ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(AddSize³, SpatialCommand)
-    public:
-        AddSize³(const Header&, const Size3D&);
+    AddSize³::AddSize³(const Header& h) : SpatialCommand(h)
+    {
+    }
     
-        const Size3D&   size() const  { return m_size; }
-        
-        static void init_info();
-        
-        double  x() const { return m_size.x; }
-        double  y() const { return m_size.y; }
-        double  z() const { return m_size.z; }
-        
-        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+    AddSize³::AddSize³(const Header& h, const Vector3D& v) : 
+        SpatialCommand(h), m_Δ(v)
+    {
+    }
 
-    protected:
-        AddSize³(const Header&);
-        AddSize³(const AddSize³&, const Header&);
-        ~AddSize³();
+    AddSize³::AddSize³(const AddSize³& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_Δ(cp.m_Δ)
+    {
+    }
+    
+    AddSize³::~AddSize³()
+    {
+    }
 
-    private:
-        Size3D   m_size = ZERO;
-        
-        AddSize³(const AddSize³&) = delete;
-        AddSize³(AddSize³&&) = delete;
-        AddSize³& operator=(const AddSize³&) = delete;
-        AddSize³& operator=(AddSize³&&) = delete;
-    };
+    PostCPtr    AddSize³::clone(rebind_k, const Header&h) const 
+    {
+        return new AddSize³(*this, h);
+    }
+    
+    void AddSize³::init_info()
+    {
+        auto w = writer<AddSize³>();
+        w.description("Add Size Command");
+        w.property("Δx", &AddSize³::Δx).tag(kTag_Log);
+        w.property("Δy", &AddSize³::Δy).tag(kTag_Log);
+        w.property("Δz", &AddSize³::Δz).tag(kTag_Log);
+        w.property("Δ",  &AddSize³::m_Δ).tag(kTag_Save);
+    }
 }

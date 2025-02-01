@@ -4,35 +4,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <ya/commands/spatial/AddSizeX.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 
-#include <ya/commands/SpatialCommand.hpp>
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSizeˣ)
 
 namespace yq::tachyon {
+    AddSizeˣ::AddSizeˣ(const Header&h, double x) : 
+        SpatialCommand(h), m_Δx(x)
+    {
+    }
 
-    //! Instructs an object to set it's size
-    class AddSizeˣ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(AddSizeˣ, SpatialCommand)
-    public:
-        AddSizeˣ(const Header&, double);
+    AddSizeˣ::AddSizeˣ(const AddSizeˣ& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_Δx(cp.m_Δx)
+    {
+    }
     
-        static void init_info();
-        
-        double  x() const { return m_x; }
-        
-        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+    AddSizeˣ::~AddSizeˣ()
+    {
+    }
+    
+    PostCPtr    AddSizeˣ::clone(rebind_k, const Header&h) const 
+    {
+        return new AddSizeˣ(*this, h);
+    }
 
-    protected:
-        AddSizeˣ(const Header&);
-        AddSizeˣ(const AddSizeˣ&, const Header&);
-        ~AddSizeˣ();
-
-    private:
-        double   m_x = 0.;
-        
-        AddSizeˣ(const AddSizeˣ&) = delete;
-        AddSizeˣ(AddSizeˣ&&) = delete;
-        AddSizeˣ& operator=(const AddSizeˣ&) = delete;
-        AddSizeˣ& operator=(AddSizeˣ&&) = delete;
-    };
+    void AddSizeˣ::init_info()
+    {
+        auto w = writer<AddSizeˣ>();
+        w.description("Add Size Command in X");
+        w.property("Δx", &AddSizeˣ::m_Δx).tag(kTag_Log).tag(kTag_Save);
+    }
 }

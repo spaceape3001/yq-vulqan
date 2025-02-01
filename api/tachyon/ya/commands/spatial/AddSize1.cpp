@@ -4,38 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <ya/commands/spatial/AddSize1.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 
-#include <ya/commands/SpatialCommand.hpp>
-#include <yq/shape/Size1.hpp>
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSize¹)
 
 namespace yq::tachyon {
+    AddSize¹::AddSize¹(const Header& h) : SpatialCommand(h)
+    {
+    }
 
-    //! Instructs an object to set it's size
-    class AddSize¹ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(AddSize¹, SpatialCommand)
-    public:
-        AddSize¹(const Header&, const Size1D&);
+    AddSize¹::AddSize¹(const Header& h, const Vector1D& v) : 
+        SpatialCommand(h), m_Δ(v)
+    {
+    }
     
-        const Size1D&   size() const  { return m_size; }
-        
-        static void init_info();
-        
-        double  x() const { return m_size.x; }
-        
-        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+    AddSize¹::AddSize¹(const AddSize¹& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_Δ(cp.m_Δ)
+    {
+    }
 
-    protected:
-        AddSize¹(const Header&);
-        AddSize¹(const AddSize¹&, const Header&);
-        ~AddSize¹();
+    AddSize¹::~AddSize¹()
+    {
+    }
+    
+    PostCPtr    AddSize¹::clone(rebind_k, const Header&h) const 
+    {
+        return new AddSize¹(*this, h);
+    }
 
-    private:
-        Size1D   m_size = ZERO;
-        
-        AddSize¹(const AddSize¹&) = delete;
-        AddSize¹(AddSize¹&&) = delete;
-        AddSize¹& operator=(const AddSize¹&) = delete;
-        AddSize¹& operator=(AddSize¹&&) = delete;
-    };
+    void AddSize¹::init_info()
+    {
+        auto w = writer<AddSize¹>();
+        w.description("Add Size Command");
+        w.property("Δx", &AddSize¹::Δx).tag(kTag_Log);
+        w.property("Δ",  &AddSize¹::m_Δ).tag(kTag_Save);
+    }
 }

@@ -4,35 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <ya/commands/spatial/AddSizeY.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
 
-#include <ya/commands/SpatialCommand.hpp>
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSizeʸ)
 
 namespace yq::tachyon {
+    AddSizeʸ::AddSizeʸ(const Header& h) : 
+        SpatialCommand(h)
+    {
+    }
 
-    //! Instructs an object to set it's size
-    class AddSizeʸ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(AddSizeʸ, SpatialCommand)
-    public:
-        AddSizeʸ(const Header&, double);
+    AddSizeʸ::AddSizeʸ(const Header& h, double y) : 
+        SpatialCommand(h), m_Δy(y)
+    {
+    }
     
-        static void init_info();
-        
-        double  y() const { return m_y; }
-        
-        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+    AddSizeʸ::AddSizeʸ(const AddSizeʸ& cp, const Header& h) : 
+        SpatialCommand(cp, h), m_Δy(cp.m_Δy)
+    {
+    }
 
-    protected:
-        AddSizeʸ(const Header&);
-        AddSizeʸ(const AddSizeʸ&, const Header&);
-        ~AddSizeʸ();
+    AddSizeʸ::~AddSizeʸ()
+    {
+    }
 
-    private:
-        double   m_y = 0.;
-        
-        AddSizeʸ(const AddSizeʸ&) = delete;
-        AddSizeʸ(AddSizeʸ&&) = delete;
-        AddSizeʸ& operator=(const AddSizeʸ&) = delete;
-        AddSizeʸ& operator=(AddSizeʸ&&) = delete;
-    };
+    PostCPtr    AddSizeʸ::clone(rebind_k, const Header&h) const 
+    {
+        return new AddSizeʸ(*this, h);
+    }
+    
+    void AddSizeʸ::init_info()
+    {
+        auto w = writer<AddSizeʸ>();
+        w.description("Add Size Command in Y");
+        w.property("Δy", &AddSizeʸ::m_Δy).tag(kTag_Log).tag(kTag_Save);
+    }
 }

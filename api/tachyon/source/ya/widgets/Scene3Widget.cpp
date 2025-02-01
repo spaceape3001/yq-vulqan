@@ -59,19 +59,25 @@ namespace yq::tachyon {
         if(!u.frame0)
             return ;
     
-        const Scene³Snap*   scene   = frame -> snap(id(SCENE));
+        const Scene³Snap*   scene   = frame -> snap(id(SCENE³));
         if(!scene)
             return ;
             
-        const Camera³Snap*  camera  = frame->snap(id(CAMERA));
+        PushContext     ctx{ u, *frame, *scene };
+        ctx.time        = u.time;
+        
+        const Camera³Snap*  camera  = frame->snap(id(CAMERA³));
         if(camera){
-            m_view          = camera -> view;
-            m_projection    = camera -> projection;
+            ctx.view        = camera -> view;
+            ctx.projection  = camera -> projection;
+        } else {
+            ctx.view        = IDENTITY;
+            ctx.projection  = IDENTITY;
         }
         
-        Tensor44D      w2e44 = m_projection * m_view;
-        glm::dmat4      w2e = w2e44;
-        auto r2 = auto_reset(u.world2eye, glm::dmat4(w2e));
+        ctx.w2e44       = ctx.projection * ctx.view;
+        ctx.w2e         = ctx.w2e44;
+        auto r2 = auto_reset(u.world2eye, ctx.w2e);
         
         // maybe a spatial -> matrix cache here???
         
@@ -87,10 +93,12 @@ namespace yq::tachyon {
         StdPushData     stdpush;
         stdpush.time    = u.time;
         
+        m_rendereds.resize(scene->rendereds.size());
+        size_t  k   = 0;
+        
         for(TypedID t : scene->rendereds){
             if(!t(Type::Rendered))
                 continue;
-            
             const RenderedSnap* sn  = frame->snap(RenderedID(t.id));
             if(!sn)
                 continue;
@@ -101,35 +109,34 @@ namespace yq::tachyon {
             ViRenderedPtr  rr  = u.frame0 -> create(sn);
             if(!rr)
                 continue;
-
-            const void*   pb  = nullptr;
-            switch(sn->pipeline->push().type){
-            case PushConfigType::Full:
-                if(t(Type::Rendered³)){
-                    const Rendered³Snap* r3 = static_cast<const Rendered³Snap*>(sn);
-                    if(r3->vm_override){
-                        Tensor44D   vm  = comingle(m_view, r3->model, r3->vm_tensor);
-                        stdpush.matrix  = glm::dmat4(m_projection * vm);
-                    } else {
-                        stdpush.matrix  = glm::dmat4(w2e44 * r3->model);
-                    }
-                    pb  = &stdpush;
-                    break;
-                }
-                [[fallthrough]];
-            case PushConfigType::View:
-                stdpush.matrix  = w2e;
-                pb      = &stdpush;
-                break;
-            case PushConfigType::Custom:
-                break;
-            default:
-                break;
-            }
-            
-            rr->update(u, sn, pb);
+                
+            R&  r  = m_rendereds[k++];
+            r.vi    = rr;
+            _push(r.push, ctx, *sn);
+            rr->update(u, *sn);
             rr->descriptors();
-            m_rendereds.push_back(rr);
+        }
+        
+        if(k != m_rendereds.size()){
+            m_rendereds.erase(m_rendereds.begin()+k, m_rendereds.end());
+        }
+    }
+
+    CameraID    Scene³Widget::id(camera_k) const 
+    { 
+        if(m_camera(Type::Camera)){
+            return { m_camera.id }; 
+        } else {
+            return {};
+        }
+    }
+    
+    Camera³ID   Scene³Widget::id(camera³_k) const 
+    { 
+        if(m_camera(Type::Camera³)){
+            return { m_camera.id }; 
+        } else {
+            return {};
         }
     }
 
@@ -143,9 +150,8 @@ namespace yq::tachyon {
     {
         {
             auto w  = auto_reset(u.wireframe, m_wireframe);
-            for(ViRenderedPtr& rr : m_rendereds){
-                rr->record(u);
-            }
+            for(const R& r : m_rendereds)
+                r.vi->record(u, r.push);
             m_rendereds.clear();
         }
         Widget::vulkan(u);

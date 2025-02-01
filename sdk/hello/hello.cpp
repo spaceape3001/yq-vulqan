@@ -15,6 +15,9 @@
 
 //  Also it's about me developing the API in the first place .... :)
 
+//  DEFINE THIS TO GET THE FRAME INSPECTOR
+// #define WANT_FRAME_INSPECTOR
+
 #include "types.hpp"
 
 #include <yq/core/DelayInit.hpp>
@@ -46,9 +49,12 @@
 #include <ya/scenes/SimpleScene3.hpp>
 #include <yt/3D/Scene3InfoWriter.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
-#include <ya/widgets/FrameInspector.hpp>
 #include <ya/widgets/Scene3Widget.hpp>
 #include <ya/utils/LoggerBox.hpp>
+
+#ifdef WANT_FRAME_INSPECTOR
+#include <ya/widgets/FrameInspector.hpp>
+#endif
 
 #include <iostream>
 #include <math.h>
@@ -248,7 +254,10 @@ int main(int argc, char* argv[])
     aci.view.size       = { 1920, 1080 };
     aci.view.clear      = { 0.f, 0.1f, 0.2f, 1.f };
     aci.view.transfer   = OPTIONAL;
+
+    #ifdef WANT_FRAME_INSPECTOR
     aci.view.imgui      = true;
+    #endif
     
     Application app(argc, argv, aci);
     //load_plugin_dir("plugin");
@@ -267,7 +276,10 @@ int main(int argc, char* argv[])
     HelloScene*     sc  = Tachyon::create<HelloScene>();
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
+    
+    #ifdef WANT_FRAME_INSPECTOR
     w -> create<FrameInspector>(CHILD);
+    #endif
     
     //LoggerBox*  lb  = Tachyon::create<LoggerBox>();
     //gLogger = lb->id();

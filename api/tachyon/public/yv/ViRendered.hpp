@@ -45,7 +45,7 @@ namespace yq::tachyon {
         ViRendered(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& options={});
         ~ViRendered();
         
-        std::error_code init(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& options={});
+        std::error_code init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& options={});
     
         //! Dumps out to the viz debug stream full information to this rendered.
         void    debug_report() const;
@@ -55,12 +55,11 @@ namespace yq::tachyon {
         //! Updates us
         // NOTE, expect an extra helper once we get proper lighting support into the scene, maybe
         // some sort of "universal" buffer or simialr
-        void    update(ViContext& u, const RenderedSnap*, const void* pb=nullptr);
+        void    update(ViContext& u, const RenderedSnap&);
         
         //! Publishes descriptor changes
         void    descriptors();
-//        void    record(ViContext&, const PushBuffer&);
-        void    record(ViContext&);
+        void    record(ViContext&, const PushBuffer&) const;
         
         bool    consistent() const;
         bool    valid() const;
@@ -72,7 +71,7 @@ namespace yq::tachyon {
         void                report(const char* cat="viz", LogPriority pri=LogPriority::Info, const ViRenderedReportOptions& options={}) const;
     
         uint64_t    id() const { return m_id; }
-    
+        
     private:
         enum class S : uint8_t {
             Descriptors,
@@ -86,14 +85,12 @@ namespace yq::tachyon {
         uint64_t                m_id;
         ViPipelineLayoutCPtr    m_layout;
         ViPipelineCPtr          m_pipeline;
-        PushBuffer              m_push;
         Flags<S>                m_status = {};
 
-        std::error_code _init(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& opts);
+        std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts);
         void            _kill();
-        void            _update(ViContext& u, const RenderedSnap*, const void* pb);
-        void            _update(ViContext& u, const void* pb);
+        void            _update(ViContext& u, const RenderedSnap&);
         void            _descriptors();
-        void            _record(ViContext&);
+        void            _record(ViContext&, const PushBuffer&) const;
     };
 }

@@ -52,7 +52,7 @@ namespace yq::tachyon {
             return;
         if(!ren)
             return;
-        std::error_code ec  = _init(viz, ren, options);
+        std::error_code ec  = _init(viz, *ren, options);
         if(ec != std::error_code()){
             vizWarning << "ViRendered -- unable to initialize: " << ec.message();
         }
@@ -68,14 +68,14 @@ namespace yq::tachyon {
         _publish_data();
     }
     
-    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedSnap* ren, const ViRenderedOptions& options)
+    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedSnap& ren, const ViRenderedOptions& options)
     {
         m_viz           = &viz;
-        m_config        = ren->pipeline;
+        m_config        = ren.pipeline;
         if(!m_config){
             return errors::rendered_null_pipeline();
         }
-        m_id            = ren->id();
+        m_id            = ren.id();
         
         m_layout        = viz.pipeline_layout_create(m_config);
         if(!m_layout){
@@ -93,14 +93,14 @@ namespace yq::tachyon {
         
         ViDataOptions       dataOptions;
         
-        if(ren->wireframe == Tristate::YES){
+        if(ren.wireframe == Tristate::YES){
             m_status |= S::Wireframe;
         } else {
             m_status -= S::Wireframe;
         }
-        if(ren->self(Type::Rendered³))
+        if(ren.self(Type::Rendered³))
             m_status |= S::R3;
-        dataOptions.snap    = ren;
+        dataOptions.snap    = &ren;
         
         if(m_layout->descriptors_defined()){
             dataOptions.layout      = m_layout -> descriptor_set_layout();
@@ -131,7 +131,7 @@ namespace yq::tachyon {
             m_status |= S::Push;
         }
 
-        _import_data(ren);
+        _import_data(&ren);
 
         if(m_status(S::Descriptors)){
             _publish_data(true);
@@ -151,7 +151,7 @@ namespace yq::tachyon {
     }
     
 
-    void            ViRendered::_record(ViContext& u)
+    void            ViRendered::_record(ViContext& u, const PushBuffer& pb) const
     {
         if constexpr (RENDERED_DEBUG_REPORT){
             //_debug_report();
@@ -194,8 +194,8 @@ namespace yq::tachyon {
             u.pipeline_shaders  = m_layout->shader_mask();
         }
 
-        if(m_status(S::Push) && !m_push.empty()){
-            vkCmdPushConstants(u.command_buffer, u.pipeline_layout, u.pipeline_shaders, 0, m_push.size(), m_push.data() );
+        if(m_status(S::Push) && !pb.empty()){
+            vkCmdPushConstants(u.command_buffer, u.pipeline_layout, u.pipeline_shaders, 0, pb.size(), pb.data() );
         }
         
         if(m_status(S::Descriptors)){
@@ -216,9 +216,9 @@ namespace yq::tachyon {
         }
     }
     
-    void            ViRendered::_update(ViContext& u, const RenderedSnap* sn, const void* pb)
+    void            ViRendered::_update(ViContext& u, const RenderedSnap& sn)
     {
-        _update_data(sn);
+        _update_data(&sn);
         
         if(u.pipeline_rebuild){
             if(u.pipelines){
@@ -228,19 +228,10 @@ namespace yq::tachyon {
             }
         }
         
-        if(sn){
-            if(sn->wireframe == Tristate::YES){
-                m_status |= S::Wireframe;
-            } else {
-                m_status -= S::Wireframe;
-            }
-        }
-        
-        if(pb){
-            m_push.clear();
-            m_push.append(pb, std::min(m_config->push().size, PushBuffer::CAPACITY));
-        } else if(m_config->push().type == PushConfigType::Custom) {
-            m_push  = sn->push;
+        if(sn.wireframe == Tristate::YES){
+            m_status |= S::Wireframe;
+        } else {
+            m_status -= S::Wireframe;
         }
     }
     
@@ -262,7 +253,7 @@ namespace yq::tachyon {
         }
     }
     
-    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedSnap* ren, const ViRenderedOptions& options)
+    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedSnap& ren, const ViRenderedOptions& options)
     {
         if(m_viz){
             if(!consistent()){
@@ -273,8 +264,6 @@ namespace yq::tachyon {
 
         if(!viz.device())
             return errors::visualizer_uninitialized();
-        if(!ren)
-            return errors::rendered_null_pointer();
             
         std::error_code ec  = _init(viz, ren, options);
         if(ec != std::error_code()){
@@ -298,10 +287,10 @@ namespace yq::tachyon {
         return m_layout;
     }
 
-    void    ViRendered::record(ViContext& ctx)
+    void    ViRendered::record(ViContext& ctx, const PushBuffer&pb) const
     {
         if(valid() && m_pipeline)
-            _record(ctx);
+            _record(ctx, pb);
     }
     
     void ViRendered::report(Stream& out, const ViRenderedReportOptions& options) const
@@ -394,10 +383,10 @@ namespace yq::tachyon {
         log_category(cat).getStream(log4cpp_priority(pri)) << text;
     }
 
-    void    ViRendered::update(ViContext& u, const RenderedSnap* sn, const void* pb)
+    void    ViRendered::update(ViContext& u, const RenderedSnap& sn)
     {
         if(valid()){
-            _update(u, sn, pb);
+            _update(u, sn);
         }
     }
 

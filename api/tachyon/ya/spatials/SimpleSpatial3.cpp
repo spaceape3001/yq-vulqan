@@ -9,6 +9,10 @@
 #include <ya/aspects/AOrientation3Writer.hxx>
 #include <ya/aspects/APosition3Writer.hxx>
 #include <ya/aspects/AScale3Writer.hxx>
+#include <ya/commands/spatial/MoveBy3.hpp>
+#include <ya/commands/spatial/MoveByX.hpp>
+#include <ya/commands/spatial/MoveByY.hpp>
+#include <ya/commands/spatial/MoveByZ.hpp>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
@@ -46,6 +50,37 @@ namespace yq::tachyon {
         SimpleSpatial³::scale(MULTIPLY, δZ);
     }
 
+    void    SimpleSpatial³::on_move³(const MoveBy³& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+            
+        position(ADD, orientation(REF) * scale(REF).emul(cmd.Δ()));
+    }
+    
+    void    SimpleSpatial³::on_moveˣ(const MoveByˣ& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+            
+        position(ADD, orientation(REF) * Vector3D(X, scale(X) * cmd.Δx()));
+    }
+    
+    void    SimpleSpatial³::on_moveʸ(const MoveByʸ& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+
+        position(ADD, orientation(REF) * Vector3D(Y, scale(Y) * cmd.Δy()));
+    }
+    
+    void    SimpleSpatial³::on_moveᶻ(const MoveByᶻ&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        
+        position(ADD, orientation(REF) * Vector3D(Z, scale(Z) * cmd.Δz()));
+    }
 
     void    SimpleSpatial³::set_orientation(const Quaternion3D& Q)
     {
@@ -88,6 +123,12 @@ namespace yq::tachyon {
         APosition³::init_info(w);
         AScale³::init_info(w);
         AOrientation³::init_info(w);
+        
+        w.slot(&SimpleSpatial³::on_move³);
+        w.slot(&SimpleSpatial³::on_moveˣ);
+        w.slot(&SimpleSpatial³::on_moveʸ);
+        w.slot(&SimpleSpatial³::on_moveᶻ);
+        
         w.description("Simple Spatial in 3 dimensions");
     }
 }

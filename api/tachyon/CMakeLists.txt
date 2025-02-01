@@ -249,6 +249,12 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/AddSizeX.cpp
     ya/commands/spatial/AddSizeY.cpp
     ya/commands/spatial/AddSizeZ.cpp
+    ya/commands/spatial/MoveBy1.cpp
+    ya/commands/spatial/MoveBy2.cpp
+    ya/commands/spatial/MoveBy3.cpp
+    ya/commands/spatial/MoveByX.cpp
+    ya/commands/spatial/MoveByY.cpp
+    ya/commands/spatial/MoveByZ.cpp
     ya/commands/spatial/MultiplyMaxSize.cpp
     ya/commands/spatial/MultiplyMaxSize1.cpp
     ya/commands/spatial/MultiplyMaxSize2.cpp

@@ -26,6 +26,11 @@ namespace yq::tachyon {
     class SetPitch;
     class SetRoll;
     class YawBy;
+    
+    class MoveBy³;
+    class MoveByˣ;
+    class MoveByʸ;
+    class MoveByᶻ;
 
     class SimpleSpatial³ : public Spatial³, public APosition³, public AScale³, public AOrientation³ {
         YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
@@ -65,6 +70,11 @@ namespace yq::tachyon {
         
     protected:
         void        snap(Spatial³Snap&) const;
+        
+        void    on_move³(const MoveBy³&);
+        void    on_moveˣ(const MoveByˣ&);
+        void    on_moveʸ(const MoveByʸ&);
+        void    on_moveᶻ(const MoveByᶻ&);
 
     private:
         

@@ -450,7 +450,7 @@ namespace yq::tachyon {
         const TachyonData*   parData = curFrame->data(m_parent);
         if(!parData)
             return false;
-        if((parData -> owner != m_owner) && !m_flags(X::DifferentThread)){
+        if((parData -> owner != m_owner) && !m_flags(F::DifferentThread)){
             Thread::rethread(this, parData->owner);
             return false;
         }
@@ -480,7 +480,7 @@ namespace yq::tachyon {
                     break;
 
                 const TachyonData*  td  = curFrame->data(TachyonID(t.id));
-                if((td->owner != m_owner) && !tac->m_flags(X::DifferentThread)){
+                if((td->owner != m_owner) && !tac->m_flags(F::DifferentThread)){
                     tac->mail(new RethreadCommand({.target = *tac}, m_owner));
                     break;
                 }
@@ -782,7 +782,7 @@ namespace yq::tachyon {
 
     void    Tachyon::owner(push_k, ThreadID tid)
     {
-        m_flags |= X::DifferentThread;
+        m_flags |= F::DifferentThread;
         mail(new RethreadCommand({.target=*this}, tid));
     }
 

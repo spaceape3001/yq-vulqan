@@ -497,7 +497,7 @@ namespace yq::tachyon {
         friend class Thread;
 
         
-        enum class X : uint8_t {
+        enum class F : uint8_t {
             //  Set if this object's thread is *MEANT* to be different from parent
             DifferentThread
         };
@@ -529,7 +529,7 @@ namespace yq::tachyon {
         Stage                       m_stage         = Stage::Preinit;
         bool                        m_dirty         = false;
 
-        Flags<X>                    m_flags = {};
+        Flags<F>                    m_flags = {};
         
         //virtual void                    parent(set_k, TachyonID);
         

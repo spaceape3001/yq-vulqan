@@ -551,7 +551,7 @@ target_compile_definitions(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
 PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}/public
+    ${CMAKE_CURRENT_LIST_DIR}
     ${VULQAN_API_DIR}
 PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/source

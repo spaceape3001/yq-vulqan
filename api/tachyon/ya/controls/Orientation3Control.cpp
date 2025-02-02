@@ -55,7 +55,7 @@ namespace yq::tachyon {
         if(!frame)
             return {};
         
-        m_proxy     = frame -> interface<POrientation³>(m_tachyon);
+        m_proxy     = frame -> proxy<POrientation³>(m_tachyon);
         if(!m_proxy)
             return {};
         

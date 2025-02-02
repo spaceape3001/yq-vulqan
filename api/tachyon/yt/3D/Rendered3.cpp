@@ -128,9 +128,7 @@ namespace yq::tachyon {
     {
         ③::snap(sn);
         Rendered::snap(sn);
-        
         sn.bounds       = m_bounds;
-        sn.model        = local2domain();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

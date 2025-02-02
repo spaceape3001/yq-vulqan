@@ -55,13 +55,6 @@ namespace yq::tachyon {
     
     protected:
 
-        //! Gets the matrics from the spatials
-        Tensor44D   local2domain() const;
-
-        //! Gets the matrics from the spatials
-        Tensor44D   domain2local() const;
-    
-    
         ③();
         virtual ~③();
         

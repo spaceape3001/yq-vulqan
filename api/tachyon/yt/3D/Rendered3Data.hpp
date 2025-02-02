@@ -23,9 +23,6 @@ namespace yq::tachyon {
         // Our "bounds" in model coordinates
         bounds³_t       bounds;
 
-        // Our model matrix (into the domain's matrix)
-        Tensor44D       model;
-
         //! Override to the view*model matrix (used for billboarding & other effects)  
         bool            vm_override     = false;
         

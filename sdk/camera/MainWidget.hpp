@@ -12,11 +12,17 @@
 
 namespace yq::tachyon {
     class SpaceCamera;
+    class CameraInfo;
+    class FrameInspector;
 }
 
 using namespace yq;
 using namespace yq::tachyon;
 
+
+class CameraScene;
+class CameraController;
+class SpaceCameraRemote;
 
 /*! \brief Main camera app widget
     
@@ -28,10 +34,8 @@ public:
     MainWidget();
     ~MainWidget();
     
-    Camera³ID   space_camera() const { return m_spaceCamera; }
-    
-    void    imgui(ViContext&) override;
-    void    setup(const Context& ctx) override;
+    void        imgui(ViContext&) override;
+    Execution   setup(const Context& ctx) override;
     
     static void init_info();
     
@@ -44,10 +48,10 @@ private:
     };
 
     std::vector<Cam>    m_cameras;
-    SpaceCamera*        m_camera        = nullptr;
-    CameraScene*        m_scene         = nullptr;
-    CameraController*   m_controller    = nullptr;
+    TypedID             m_camera;
+    TypedID             m_scene;
+    TypedID             m_controller;
     FrameInspector*     m_inspector     = nullptr;
-    bool                m_showInspector = false;
+    SpaceCameraRemote*  m_remote        = nullptr;
     bool                m_init          = false;
 };

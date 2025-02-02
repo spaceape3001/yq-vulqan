@@ -43,14 +43,6 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Model");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->model);
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("Spatial");
             }
             if(ImGui::TableNextColumn()){

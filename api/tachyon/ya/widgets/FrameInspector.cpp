@@ -44,10 +44,12 @@
 namespace yq::tachyon {
     FrameInspector::FrameInspector()
     {
+    yInfo() << "FrameInspector::FrameInspector()";
     }
     
     FrameInspector::~FrameInspector()
     {
+    yInfo() << "FrameInspector::~FrameInspector()";
     }
 
     template <typename Pred>

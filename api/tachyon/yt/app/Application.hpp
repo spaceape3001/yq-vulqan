@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/BasicApp.hpp>
+#include <yq/core/Ref.hpp>
 #include <yt/keywords.hpp>
 #include <yt/app/AppCreateInfo.hpp>
 #include <yt/typedef/application.hpp>
@@ -112,14 +113,16 @@ namespace yq::tachyon {
         std::vector<Thread*>    m_threads;
         
         struct {
-            AppThread*      app     = nullptr;  //< valid while running
-            GameThread*     game    = nullptr;  //< valid while running if "ENABLED" but not "PER"
-            IOThread*       io      = nullptr;  //< valid while running if "ENABLED" but not "PER"
-            NetworkThread*  network = nullptr;  //< valid while running if "ENABLED" but not "PER"
-            SimThread*      sim     = nullptr;  //< valid while running if "ENABLED" but not "PER"
-            TaskThread*     task    = nullptr;  //< valid while running if "ENABLED" but not "PER"
-            ViewerThread*   viewer  = nullptr;  //< valid while running if "ENABLED" but not "PER"
+            Ref<AppThread>      app;        //< valid while running
+            Ref<GameThread>     game;       //< valid while running if "ENABLED" but not "PER"
+            Ref<IOThread>       io;         //< valid while running if "ENABLED" but not "PER"
+            Ref<NetworkThread>  network;    //< valid while running if "ENABLED" but not "PER"
+            Ref<SimThread>      sim;        //< valid while running if "ENABLED" but not "PER"
+            Ref<TaskThread>     task;       //< valid while running if "ENABLED" but not "PER"
+            Ref<ViewerThread>   viewer;     //< valid while running if "ENABLED" but not "PER"
         } m_thread;
+        
+        
 
         Desktop*                m_desktop   = nullptr;
         VulqanManager*          m_vulkan    = nullptr;

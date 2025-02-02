@@ -83,6 +83,7 @@ namespace yq::tachyon {
             for(Thread*t : m_threads)
                 t->join();
             m_thread.app -> shutdown();
+            m_threads.clear();
             m_thread    = {};
             m_vulkan    = {};
             m_stage = Stage::Terminated;
@@ -246,37 +247,37 @@ namespace yq::tachyon {
         
         if(is_single(m_cInfo.thread.game)){
             m_thread.game       = new GameThread;
-            m_threads.push_back(m_thread.game);
+            m_threads.push_back(m_thread.game.ptr());
             Thread::standard(GAME, m_thread.game->id());
         }
         
         if(is_single(m_cInfo.thread.io)){
             m_thread.io    = new IOThread;
-            m_threads.push_back(m_thread.io);
+            m_threads.push_back(m_thread.io.ptr());
             Thread::standard(IO, m_thread.io->id());
         }
         
         if(is_single(m_cInfo.thread.network)){
             m_thread.network  = new NetworkThread;
-            m_threads.push_back(m_thread.network);
+            m_threads.push_back(m_thread.network.ptr());
             Thread::standard(NETWORK, m_thread.network->id());
         }
         
         if(is_single(m_cInfo.thread.sim)){
             m_thread.sim = new SimThread;
-            m_threads.push_back(m_thread.sim);
+            m_threads.push_back(m_thread.sim.ptr());
             Thread::standard(SIM, m_thread.sim->id());
         }
 
         if(is_single(m_cInfo.thread.task)){
             m_thread.task  = new TaskThread;
-            m_threads.push_back(m_thread.task);
+            m_threads.push_back(m_thread.task.ptr());
             Thread::standard(TASK, m_thread.task->id());
         }
 
         if(is_single(m_cInfo.thread.viewer)){
             m_thread.viewer  = new ViewerThread;
-            m_threads.push_back(m_thread.viewer);
+            m_threads.push_back(m_thread.viewer.ptr());
             Thread::standard(VIEWER, m_thread.viewer->id());
         }
         

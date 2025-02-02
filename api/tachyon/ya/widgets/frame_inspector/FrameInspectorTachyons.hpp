@@ -10,6 +10,7 @@
 #include <ya/widgets/FrameInspector.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/api/Thread.hpp>
+#include <yt/api/InterfaceInfo.hpp>
 #include <yq/unit/literals.hpp>
 #include <yq/text/join.hpp>
 
@@ -224,12 +225,69 @@ namespace yq::tachyon {
                 meta_id(m_snap->parent);
             }
 
+
             ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
+            ImGui::TableNextColumn();
+            
+            if(m_snap->proxies.empty()){
+                treeOpen = false;
                 ImGui::TextUnformatted("Proxies");
+            } else {
+                guard([&](){
+                    std::string tid    = "proxies";
+                    tid += to_string_view(m_tachyon->id().id);
+                    treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Proxies");
+                });
             }
             if(ImGui::TableNextColumn()){
                 ImGui::Text("%ld", m_snap->proxies.size());
+            }
+
+            if(treeOpen){
+                ImGui::Indent();
+                for(const Proxy* p : m_snap->proxies){
+                    const InterfaceInfo*    ii  = p->interface(INFO);
+                    if(!ii)
+                        continue;
+                    const void* iff = ii->interface(p);
+
+                    std::string pname(p->interface(INFO)->stem());
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    
+                    if(!ii->properties(COUNT)){
+                        treeOpen        = false;
+                        ImGui::TextUnformatted(pname);
+                    } else {
+                        guard([&](){
+                            std::string tid    = "proxy";
+                            tid += to_string_view(m_tachyon->id().id);
+                            tid += pname;
+                            treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, pname.c_str());
+                        });
+                    }
+                    ImGui::TableNextColumn();
+                    ImGui::Text(ii->properties(COUNT));
+                    if(treeOpen && iff){
+                        ImGui::Indent();
+                        for(const PropertyInfo* pi : ii->properties()){
+                            any_x   val = pi->get(iff);
+                        
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::TextUnformatted(pi->name());
+                            ImGui::TableNextColumn();
+                            
+                            if(!val){
+                                ImGui::TextUnformatted("(unable to fetch)");
+                            } else {
+                                ImGui::Text(*val);
+                            }
+                        }
+                        ImGui::Unindent();
+                    }
+                }
+                ImGui::Unindent();
             }
 
             ImGui::TableNextRow();

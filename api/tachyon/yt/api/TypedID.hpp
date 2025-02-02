@@ -30,6 +30,7 @@ namespace yq::tachyon {
         constexpr explicit TypedID(const TachyonID& i) noexcept : id(i.id), types{} {}
         
         constexpr TypedID(uint64_t _id, Types _types) noexcept : id(_id), types(_types) {}
+        constexpr TypedID(const TachyonID& i, Types _types) noexcept : id(i.id), types(_types) {}
         
         constexpr auto operator<=>(const TypedID&b) const noexcept { return id <=> b.id; }
         constexpr operator TachyonID() const noexcept { return { id }; }

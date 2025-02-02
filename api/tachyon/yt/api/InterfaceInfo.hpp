@@ -57,6 +57,9 @@ namespace yq::tachyon {
         
         //! Proxies the tachyon... note, if the interface is unavailable, this will return NULL
         virtual Proxy*      proxy(Tachyon*) const = 0;
+
+        //! Returns the interface from the proxy, if possible (needed for properties)
+        virtual const void* interface(const Proxy*) const = 0;
         
     protected:
         InterfaceInfo(std::string_view zName, const std::source_location& sl);

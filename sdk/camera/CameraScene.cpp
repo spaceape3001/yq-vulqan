@@ -119,6 +119,8 @@ Execution  CameraScene::setup(const Context&ctx)
             Quaternion3D(CCW, Z, (Radian) 45._deg ),
             Vector3D(ALL, 0.5)
         );
+        
+        m_init  = true;
     }
     return SimpleScene³::setup(ctx);
 }

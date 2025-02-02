@@ -35,16 +35,6 @@ namespace yq::tachyon {
     {
     }
 
-    Tensor44D   ③::local2domain() const
-    {
-        return IDENTITY;
-    }
-    
-    Tensor44D   ③::domain2local() const
-    {
-        return IDENTITY;
-    }
-
     void    ③::finalize(③Data&d) const
     {
         И::finalize(d);

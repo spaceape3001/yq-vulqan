@@ -1,6 +1,13 @@
+################################################################################
+##
+##  YOUR QUILL
+##
+################################################################################
+
 add_executable(camera 
     CameraController.cpp
     CameraScene.cpp
+    SpaceCameraRemote.cpp
     MainWidget.cpp
     main.cpp
 )

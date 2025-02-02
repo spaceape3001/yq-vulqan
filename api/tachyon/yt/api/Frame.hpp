@@ -41,6 +41,8 @@
 #include <yt/typedef/widget.hpp>
 #include <yt/typedef/window.hpp>
 
+#include <yt/logging.hpp>
+
 #include <chrono>
 #include <functional>
 #include <unordered_map>
@@ -180,17 +182,6 @@ namespace yq::tachyon {
         const std::set<WidgetID>&           ids(widget_k) const;
         const std::set<WindowID>&           ids(window_k) const;
 
-        /*! \brief Gets the specific interface
-        
-            This will get the specific interface, if it exists.  
-            Practically, this will be okay to call once a tick for a specific 
-            tachyon/interface need, however, it should be cached for the rest
-            of the tick (if practical). 
-            
-            \note DON'T GO WILD, ONLY CALL FOR NECESSARY INTERFACES ON DEMAND
-        */
-        template <typename C>
-        C*                                  interface(TachyonID) const;
         
         //! Camera pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -279,6 +270,18 @@ namespace yq::tachyon {
 
         proxy_span_t                        proxies(TachyonID) const;
         
+        /*! \brief Gets the specific proxy
+        
+            This will get the specific proxy, if it exists.  
+            Practically, this will be okay to call once a tick for a specific 
+            tachyon/interface need, however, it should be cached for the rest
+            of the tick (if practical). 
+            
+            \note DON'T GO WILD, ONLY CALL FOR NECESSARY INTERFACES ON DEMAND
+        */
+        template <typename P>
+        P*                                  proxy(TachyonID) const;
+
         Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
         
         //! Gets the root tachyon of this chain
@@ -428,8 +431,9 @@ namespace yq::tachyon {
     }
 
     template <typename C>
-    C*      Frame::interface(TachyonID tid) const
+    C*      Frame::proxy(TachyonID tid) const
     {
+    #if 0
         if constexpr (is_interface_v<C>){
             for(Proxy* p : proxies(tid)){
                 if(p -> interface(INFO) == &meta<C>()){
@@ -438,13 +442,17 @@ namespace yq::tachyon {
             }
             return nullptr;
         } 
-        
+    #endif
+
         // other type, or non-existent, try the other way
         for(Proxy* p : proxies(tid)){
             if(C* c = dynamic_cast<C*>(p)){
                 return c;
             }
         }
+
+yInfo() << "Frame...no proxy found";
+    
         return nullptr;
     }
 }

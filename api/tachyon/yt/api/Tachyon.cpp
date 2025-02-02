@@ -320,6 +320,8 @@ namespace yq::tachyon {
         _subscribe(tid, MG::Children);
         
         // TODO: SEND EVENT HERE
+        
+        mark();
     }
     
     void    Tachyon::_add_snoop(TachyonID tid)
@@ -343,6 +345,8 @@ namespace yq::tachyon {
             _unsubscribe(tid, MG::Children);
         
             // TODO: SEND EVENT HERE
+
+            mark();
         }
     }
     

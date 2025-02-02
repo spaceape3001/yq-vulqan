@@ -6,6 +6,7 @@
 
 #include <yt/ui/MyImGui.hpp>
 #include "imgui_internal.h"
+#include <yq/core/Any.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/shape/Size2.hpp>
@@ -262,6 +263,11 @@ namespace ImGui {
     void    Text(uint64_t v)
     {
         Text("%ld", v);
+    }
+
+    void    Text(const yq::Any&v)
+    {
+        TextUnformatted(v.printable());
     }
 
     void    Text(const yq::Rectangle2D&v)

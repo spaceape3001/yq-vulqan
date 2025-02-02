@@ -10,6 +10,7 @@
 #include <ya/commands/spatial/PitchBy.hpp>
 #include <ya/commands/spatial/YawBy.hpp>
 #include <ya/events/KeyPressEvent.hpp>
+#include <yt/logging.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;
@@ -26,6 +27,7 @@ CameraController::~CameraController()
 
 void CameraController::on_key_press(const KeyPressEvent& evt)
 {
+    //yInfo() << "CameraController::on_key_press(" << evt.key().key() << ")";
     switch(evt.key()){
     case KeyCode::UpArrow:
         send(new PitchBy({.target=m_camera}, 10._deg));

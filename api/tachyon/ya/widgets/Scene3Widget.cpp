@@ -50,7 +50,6 @@ namespace yq::tachyon {
 
     void    Scene³Widget::_prerecord(ViContext& u)
     {
-    
         //  We'll move these into a sub-style of widget
     
         const Frame*    frame   = Frame::current();
@@ -66,14 +65,7 @@ namespace yq::tachyon {
         PushContext     ctx{ u, *frame, *scene };
         ctx.time        = u.time;
         
-        const Camera³Snap*  camera  = frame->snap(id(CAMERA³));
-        if(camera){
-            ctx.view        = camera -> view;
-            ctx.projection  = camera -> projection;
-        } else {
-            ctx.view        = IDENTITY;
-            ctx.projection  = IDENTITY;
-        }
+        _cam_matrix(ctx, id(CAMERA³));
         
         ctx.w2e44       = ctx.projection * ctx.view;
         ctx.w2e         = ctx.w2e44;

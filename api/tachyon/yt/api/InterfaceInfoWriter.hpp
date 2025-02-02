@@ -62,6 +62,11 @@ namespace yq::tachyon {
             return new typename I::MyProxy(*i);
         }
 
+        virtual const void* interface(const Proxy* p) const override
+        {
+            return dynamic_cast<const I*>(p);
+        }
+
         static DelayInit::Ctor  s_reg;
     };
 }

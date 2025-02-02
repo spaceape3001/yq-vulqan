@@ -70,7 +70,6 @@ namespace yq::tachyon {
     {
         ③::snap(sn);
         Camera::snap(sn);
-        sn.view     = domain2local();
         sn.screen   = m_screen;
     }
 

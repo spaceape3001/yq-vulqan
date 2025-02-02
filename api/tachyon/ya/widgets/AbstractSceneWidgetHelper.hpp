@@ -10,6 +10,7 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/tensor/Tensor44.hpp>
 #include <yt/ui/Widget.hpp>
+#include <yt/typedef/camera3.hpp>
 #include <yt/typedef/rendered.hpp>
 #include <yt/typedef/rendered3.hpp>
 #include <yt/typedef/scene.hpp>
@@ -46,6 +47,8 @@ namespace yq::tachyon {
             Tensor44D           w2e44;
             glm::dmat4          w2e;
         };
+        
+        void    _cam_matrix(PushContext&, Camera³ID cam);
         
         void    _push(PushBuffer&, const PushContext&, const RenderedSnap&);
         void    _push_full(PushBuffer&, const PushContext&, const Rendered³Snap&);

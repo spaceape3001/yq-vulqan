@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/widgets/AbstractSceneWidgetHelper.hpp>
+#include <yt/3D/Camera3.hpp>
+#include <yt/3D/Camera3Data.hpp>
 #include <yt/3D/Rendered3.hpp>
 #include <yt/3D/Rendered3Data.hpp>
 #include <yt/3D/Scene3.hpp>
@@ -30,6 +32,25 @@ namespace yq::tachyon {
     
     AbstractSceneWidgetHelper::~AbstractSceneWidgetHelper()
     {
+    }
+
+    void    AbstractSceneWidgetHelper::_cam_matrix(PushContext&ctx, Camera³ID cam)
+    {
+        const Camera³Snap*  camera  = ctx.frame.snap(cam);
+        if(!camera){
+            ctx.view        = IDENTITY;
+            ctx.projection  = IDENTITY;
+            return;
+        }
+        
+        ctx.projection  = camera -> projection;
+        
+        const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(camera -> spatial));
+        if(s³){
+            ctx.view        = s³ -> domain2local;
+        } else {
+            ctx.view        = IDENTITY;
+        }
     }
 
     void    AbstractSceneWidgetHelper::_push(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
@@ -61,17 +82,17 @@ namespace yq::tachyon {
         const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
         if(sn.vm_override){
             if(s³){
-                Tensor44D   vm  = comingle(ctx.view, s³->local2domain * sn.model, sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, s³->local2domain, sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             } else {
-                Tensor44D   vm  = comingle(ctx.view, sn.model, sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, Tensor44D(IDENTITY), sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             }
         } else {
             if(s³){
-                pd.matrix   = glm::dmat4(ctx.w2e44 * s³->local2domain * sn.model);
+                pd.matrix   = glm::dmat4(ctx.w2e44 * s³->local2domain);
             } else {
-                pd.matrix   = glm::dmat4(ctx.w2e44 * sn.model);
+                pd.matrix   = glm::dmat4(ctx.w2e44);
             }
         }
     }

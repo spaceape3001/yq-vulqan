@@ -129,6 +129,7 @@ namespace ImGui {
     void    Text(double);
     void    Text(uint64_t);
 
+    void    Text(const yq::Any&);
     void    Text(const yq::Rectangle2D&);
     void    Text(const yq::Size2D&);
     void    Text(const yq::Size2I&);
@@ -138,5 +139,6 @@ namespace ImGui {
     void    Text(const yq::Vector4D&);
     void    Text(const glm::mat4&);
     void    Text(const glm::dmat4&);
+    
 }
 

@@ -281,7 +281,7 @@ namespace yq::tachyon {
     ViewerID        Widget::viewer() const
     {
         if(m_viewer)
-            return (ViewerID) m_viewer;
+            return ViewerID{ m_viewer.id };
         
         const Frame*    f   = Frame::current();
         if(!f)

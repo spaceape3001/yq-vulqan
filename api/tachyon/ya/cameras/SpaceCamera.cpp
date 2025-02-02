@@ -56,6 +56,7 @@ namespace yq::tachyon {
 
     void    SpaceCamera::snap(Camera³Snap&sn) const
     {
+        Camera³::snap(sn);
         sn.projection   = Tensor44D(projection_matrix(m_screen));
     }
 

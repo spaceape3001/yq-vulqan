@@ -66,13 +66,13 @@ namespace yq::tachyon {
                 meta_id(snap->spatial);
             }
 
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("View");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->view);
-            }
+            //ImGui::TableNextRow();
+            //if(ImGui::TableNextColumn()){
+                //ImGui::TextUnformatted("View");
+            //}
+            //if(ImGui::TableNextColumn()){
+                //ImGui::Text(snap->view);
+            //}
         }
         
         void    render(ViContext&ctx) override

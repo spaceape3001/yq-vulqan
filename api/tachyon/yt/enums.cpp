@@ -4,6 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+
+#include <yt/api/StdThread.hpp>
+
 #include <yt/gfx/BorderColor.hpp>
 #include <yt/gfx/BufferUsage.hpp>
 #include <yt/gfx/CompareOp.hpp>
@@ -38,6 +41,7 @@
 #include <yt/os/JoystickHatState.hpp>
 #include <yt/os/MouseButton.hpp>
 #include <yt/os/MouseMode.hpp>
+#include <yt/os/Platform.hpp>
 
 #include <yq/meta/Init.hpp>
 
@@ -65,6 +69,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PipelineBinding)
+YQ_TYPE_IMPLEMENT(yq::tachyon::Platform)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PolygonMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PresentMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::RasterType)
@@ -76,6 +81,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerFilter)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerMipmapMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ShaderType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ShaderTypeFlags)
+YQ_TYPE_IMPLEMENT(yq::tachyon::StdThread)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScope)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScopeFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Topology)

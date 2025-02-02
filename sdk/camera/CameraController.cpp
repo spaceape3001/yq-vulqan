@@ -16,7 +16,7 @@ using namespace yq::tachyon;
 
 YQ_TACHYON_IMPLEMENT(CameraController)
 
-CameraController::CameraController(const Param& p) : Controller(), m_camera(p.camera), m_listen(p.listen)
+CameraController::CameraController(TypedID t) : Controller(), m_camera(t)
 {
 }
 
@@ -44,28 +44,9 @@ void CameraController::on_key_press(const KeyPressEvent& evt)
     }
 }
 
-Execution  CameraController::setup(const Context& ctx)
-{
-    if(!m_init){
-        const Frame*    cur = Frame::current();
-        if(!cur)
-            return WAIT;
-        
-        if(!cur->contains(m_camera))
-            return WAIT;
-
-        if(!cur->contains(m_listen))
-            return WAIT;
-        
-        cmd_control(m_camera);
-        cmd_listen(m_listen);
-        m_init  = true;
-    }
-    return Controller::setup(ctx);
-}
-
 void CameraController::init_info()
 {
     auto w = writer<CameraController>();
+    w.description("Camera SDK Example Controller");
     w.slot(&CameraController::on_key_press);
 }

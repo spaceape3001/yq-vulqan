@@ -32,11 +32,6 @@ namespace yq::tachyon {
     {
     }
     
-    //void        SpaceCamera::pitch_command(const CameraPitchCommand& amt)
-    //{
-        //m_space.orientation = rotor_y(amt.angle()) * m_space.orientation;
-    //}
-
     glm::dmat4  SpaceCamera::projection_matrix(const Rectangle2D&sz) const
     {
         //  ignore the translation (for now)
@@ -58,38 +53,6 @@ namespace yq::tachyon {
     {
         m_near  = v;
     }
-    
-    void        SpaceCamera::set_orientation(const Quaternion3D&v)
-    {
-        m_space.orientation = v;
-    }
-    
-    void        SpaceCamera::set_position(const Vector3D&v)
-    {
-        m_space.position    = v;
-    }
-    
-    void        SpaceCamera::set_scale(const Vector3D&v)
-    {
-        m_space.scale       = v;
-    }
-    
-    void        SpaceCamera::set_fov(Degree v)
-    {
-        m_fov = v;
-    }
-
-    glm::dmat4  SpaceCamera::view_matrix() const
-    {
-        return m_space.parent2local();
-    }
-
-#if 0
-    glm::dmat4  SpaceCamera::world2screen(const Values&p) const
-    {
-        return projection_matrix(p.screen) * view_matrix();
-    }
-#endif
 
     void    SpaceCamera::snap(Camera³Snap&sn) const
     {
@@ -99,8 +62,7 @@ namespace yq::tachyon {
     void SpaceCamera::init_info()
     {
         auto w = writer<SpaceCamera>();
-        w.description("Simple space camera (position, orientation, fov)");
-        //w.slot(&SpaceCamera::pitch_command);
+        w.description("3D Space camera (fov with near/far plane)");
     }
 }
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SpaceCamera)

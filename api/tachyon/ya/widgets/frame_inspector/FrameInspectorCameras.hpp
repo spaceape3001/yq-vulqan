@@ -30,7 +30,7 @@ namespace yq::tachyon {
         
         void    render(camera_k)
         {
-            const CameraSnap* snap = static_cast<const CameraSnap*>(m_snap);
+            //const CameraSnap* snap = static_cast<const CameraSnap*>(m_snap);
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
@@ -38,22 +38,6 @@ namespace yq::tachyon {
             }
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> CAMERA PROPERTIES <<<");
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Projection");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->projection);
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("View");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->view);
             }
         }
 

@@ -288,6 +288,11 @@ namespace yq::tachyon {
         Thread::retain(tp, tid);
     }
 
+    void Tachyon::retain(TachyonPtr tp, StdThread st)
+    {
+        Thread::retain(tp, st);
+    }
+
 // ------------------------------------------------------------------------
 
 

@@ -15,6 +15,7 @@
 
 namespace yq::tachyon {
     class AppThread;
+    class Application;
 
     class ThreadInfo : public TachyonInfo {
     public:
@@ -105,9 +106,14 @@ namespace yq::tachyon {
         struct Inbox;
         
         friend class Tachyon;
+
+        friend class Application;
+        static void     standard(StdThread, ThreadID);
+        static ThreadID standard(StdThread);
         
         static void retain(TachyonPtr);
         static void retain(TachyonPtr, ThreadID);
+        static void retain(TachyonPtr, StdThread);
         
         static void rethread(TachyonPtr, ThreadID);
         static void remove(TachyonID, ThreadID);
@@ -119,6 +125,7 @@ namespace yq::tachyon {
         
         using thread_map_t          = std::map<ThreadID, ThreadFrame>;
         using inbox_map_t           = std::map<ThreadID, Inbox>;
+        using sthread_map_t         = std::map<StdThread, ThreadID>;
     
         void    tick(TachyonID);
         
@@ -135,6 +142,7 @@ namespace yq::tachyon {
         static Thread*                  s_sink;
         static mutex_t                  s_mutex;
         static thread_map_t             s_threads;
+        static sthread_map_t            s_sthreads;
         static inbox_map_t              s_inboxes;
         static std::vector<TachyonPtr>  s_misfits;
         

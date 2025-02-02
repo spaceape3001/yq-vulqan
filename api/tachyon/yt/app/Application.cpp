@@ -7,27 +7,28 @@
 #include <yt/logging.hpp>
 #include <yt/ui/Widget.hpp>
 #include <yt/app/AppException.hpp>
-#include <yt/app/AppThread.hpp>
 #include <yt/app/Application.hpp>
-#include <yt/app/TaskThread.hpp>
 #include <yt/app/Viewer.hpp>
-#include <yt/app/ViewerThread.hpp>
 #include <yt/os/Window.hpp>
-//#include <yt/api/TachyonInfoWriter.hpp>
 #include <yv/VulqanManager.hpp>
 
-//#include <ya/commands/AppDeleteViewerCommand.hpp>
+#include <ya/threads/AppThread.hpp>
+#include <ya/threads/GameThread.hpp>
+#include <ya/threads/IOThread.hpp>
+#include <ya/threads/NetworkThread.hpp>
+#include <ya/threads/SimThread.hpp>
+#include <ya/threads/TaskThread.hpp>
+#include <ya/threads/ViewerThread.hpp>
+
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
-//#include <yq/tachyon/task/TaskEngine.hpp>
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/meta/Init.hpp>
+#include <yq/process/PluginLoader.hpp>
 //#include <yq/post/boxes/SimpleBox.hpp>
 #include <yt/config/build.hpp>
-
-//YQ_OBJECT_IMPLEMENT(yq::tachyon::Application)
 
 namespace yq::tachyon {
 
@@ -62,10 +63,6 @@ namespace yq::tachyon {
         s_app   = this;
         
         configure_standand_asset_path();
-        m_startTime     = clock_t::now();
-        
-        if(!aci.headless)
-            thread(APP);
     }
     
 
@@ -80,23 +77,16 @@ namespace yq::tachyon {
 
     void    Application::_kill()
     {
-        if(m_vthread){
-            m_vthread -> shutdown();
-            m_vthread -> join();
-            m_vthread   = nullptr;
+        if(m_stage == Stage::Started){
+            for(Thread*t : m_threads)
+                t->shutdown();
+            for(Thread*t : m_threads)
+                t->join();
+            m_thread.app -> shutdown();
+            m_thread    = {};
+            m_vulkan    = {};
+            m_stage = Stage::Terminated;
         }
-
-        if(m_tthread){
-            m_tthread -> shutdown();
-            m_tthread -> join();
-            m_tthread   = nullptr;
-        }
-
-        if(m_athread){
-            m_athread -> shutdown();
-            m_athread   = nullptr;
-        }
-        
     }
 
     ViewerID                    Application::create(viewer_k, WidgetPtr w)
@@ -113,11 +103,13 @@ namespace yq::tachyon {
     
     ViewerID                    Application::create(viewer_k, const ViewerCreateInfo&vci, WidgetPtr w)
     {
-        AppThread&  at  = thread(APP);
-        DesktopGLFW&        desk    = desktop(GLFW);
-        manager(VULQAN);
-        
-        Window*             win     = desk.create(WINDOW, vci);
+        if(!start())
+            return {};
+
+        if(!m_desktop)
+            return {};
+
+        Window*             win     = m_desktop->create(WINDOW, vci);
         if(!win)
             return {};
         
@@ -126,94 +118,196 @@ namespace yq::tachyon {
         // TODO ... catch/replace
         v = Tachyon::create<Viewer>(win, w.ptr(), vci);
         
-        ++at.m_viewers;
+        ++(m_thread.app->m_viewers);
         
-        v->subscribe(at.id());
-        at.subscribe(v->id());
+        v->subscribe(m_thread.app->id());
+        m_thread.app->subscribe(v->id());
         
         win->subscribe(v->id());
         v->subscribe(win->id());
         
         // Ticks to force things into the frame
-        at.tick();
-        at.tick();
+        m_thread.app->tick();
+        m_thread.app->tick();
         
-        switch(m_cInfo.vthreads){
-        case ViewerThreadPolicy::Single:
-        case ViewerThreadPolicy::Individual:
-            {
-                ThreadID    vid = thread(VIEWER).id();
-                v->owner(PUSH, vid);
-                w->owner(PUSH, vid);
-            }
-            break;
-        default:
-            break;
+        ThreadID        vt;
+        if(m_thread.viewer){
+            vt  = m_thread.viewer->id();
+        } else if(std::get_if<per_k>(&m_cInfo.thread.viewer)){
+            ViewerThread*   tt  = new ViewerThread;
+            tt -> start();
+            m_threads.push_back(tt);
+        } else {
+            vt      = Thread::standard(VIEWER);
         }
         
-        at.tick();
+        if(vt != m_thread.app->id()){
+            v->owner(PUSH, vt);
+            w->owner(PUSH, vt);
+        } 
+        
+        m_thread.app->tick();
         return v->id();
-    }
-
-    DesktopGLFW&                Application::desktop(glfw_k)
-    {
-        if(!m_glfw){
-            thread(APP);
-            m_glfw  = Tachyon::create<DesktopGLFW>(m_cInfo);
-            
-            //  Connections?
-        }
-        
-        return *m_glfw;
-    }
-
-    VulqanManager&              Application::manager(vulqan_k)
-    {
-        if(!m_vulkan){
-            thread(APP);
-            m_vulkan    = Tachyon::create<VulqanManager>(m_cInfo);
-        }
-        return *m_vulkan;
     }
 
     void                        Application::run(const RunConfig& r)
     {
-        thread(APP).run();
+        if(!start())
+            return ;
+
+        m_thread.app->run();
     }
 
     void                        Application::run(WidgetPtr wid, const RunConfig& r)
     {
+        if(!start())
+            return ;
+
         ViewerID    vid = create(VIEWER, wid);
         if(!vid)
             return ;
         run(r);
     }
 
-    AppThread&  Application::thread(app_k)
+    bool        is_single(const thread_spec_t& ts)
     {
-        if(!m_athread){
-            m_athread   = new AppThread(this);
-        }
-        return *m_athread;
+        if(std::get_if<enabled_k>(&ts))
+            return true;
+        if(auto p = std::get_if<bool>(&ts))
+            return *p;
+        return false;
     }
 
-    ViewerThread&              Application::thread(viewer_k)
+    bool        Application::start()
     {
-        if(!m_vthread){
-            thread(APP);
-            m_vthread   = new ViewerThread;
-            m_vthread->start();
+        if(thread::id()){
+            tachyonCritical << "Cannot start application from anything other than the main thread.";
+            return false;
         }
-        return *m_vthread;
-    }
-    
-    TaskThread&             Application::thread(task_k)
-    {
-        if(!m_tthread){
-            thread(APP);
-            m_tthread   = new TaskThread;
-            m_tthread->start();
+
+        if(m_stage != Stage::Uninit)
+            return m_stage == Stage::Started;
+
+        m_startTime     = clock_t::now();
+
+        Meta::init();
+        
+        for(const std::filesystem::path& fp : m_cInfo.plugins ){
+            if(std::filesystem::is_directory(fp)){
+                size_t n = load_plugin_dir(fp);
+                tachyonInfo << "loaded " << n << " plugins from: " << fp;
+            } else if(!load_plugin(fp)){
+                tachyonError << "Failed to load plugin " << fp;
+                m_stage = InError;
+                return false;
+            }
+            
+            Meta::init();
         }
-        return *m_tthread;
+        
+        Meta::freeze();
+            
+        m_thread.app       = new AppThread(this);
+        for(StdThread st : StdThread::all_values())
+            Thread::standard(st, m_thread.app->id());
+        
+        
+        switch(m_cInfo.platform){
+        case Platform::GLFW:
+            m_desktop       = Tachyon::create<DesktopGLFW>(m_cInfo);
+            
+            //  connections...?
+            
+            m_desktops.push_back(m_desktop);
+            break;
+        case Platform::None:
+            if(!m_cInfo.headless){
+                tachyonWarning << "No platform in a GUI application... are you sure about this?";
+            }
+            break;
+        }
+        
+        for(Platform p : m_cInfo.platforms){
+            if(p == m_cInfo.platform)
+                continue;
+                
+            switch(p){
+            case Platform::GLFW:
+                Tachyon::create<DesktopGLFW>(m_cInfo);
+                break;
+            default:
+                break;
+            }
+        }
+        
+        if(m_cInfo.vulkan){
+            m_vulkan    = Tachyon::create<VulqanManager>(m_cInfo);
+        }
+        
+        if(is_single(m_cInfo.thread.game)){
+            m_thread.game       = new GameThread;
+            m_threads.push_back(m_thread.game);
+            Thread::standard(GAME, m_thread.game->id());
+        }
+        
+        if(is_single(m_cInfo.thread.io)){
+            m_thread.io    = new IOThread;
+            m_threads.push_back(m_thread.io);
+            Thread::standard(IO, m_thread.io->id());
+        }
+        
+        if(is_single(m_cInfo.thread.network)){
+            m_thread.network  = new NetworkThread;
+            m_threads.push_back(m_thread.network);
+            Thread::standard(NETWORK, m_thread.network->id());
+        }
+        
+        if(is_single(m_cInfo.thread.sim)){
+            m_thread.sim = new SimThread;
+            m_threads.push_back(m_thread.sim);
+            Thread::standard(SIM, m_thread.sim->id());
+        }
+
+        if(is_single(m_cInfo.thread.task)){
+            m_thread.task  = new TaskThread;
+            m_threads.push_back(m_thread.task);
+            Thread::standard(TASK, m_thread.task->id());
+        }
+
+        if(is_single(m_cInfo.thread.viewer)){
+            m_thread.viewer  = new ViewerThread;
+            m_threads.push_back(m_thread.viewer);
+            Thread::standard(VIEWER, m_thread.viewer->id());
+        }
+        
+        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.game)){
+            Thread::standard(GAME, Thread::standard(*p));
+        }
+
+        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.io)){
+            Thread::standard(IO, Thread::standard(*p));
+        }
+
+        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.network)){
+            Thread::standard(NETWORK, Thread::standard(*p));
+        }
+
+        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.sim)){
+            Thread::standard(SIM, Thread::standard(*p));
+        }
+
+        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.task)){
+            Thread::standard(TASK, Thread::standard(*p));
+        }
+
+        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.viewer)){
+            Thread::standard(VIEWER, Thread::standard(*p));
+        }
+        
+        for(Thread* t : m_threads)
+            t->start();
+        
+        m_stage = Stage::Started;
+        return true;
     }
 }

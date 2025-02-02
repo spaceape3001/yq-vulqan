@@ -63,32 +63,32 @@ namespace yq::tachyon {
     Execution FrameInspector::setup(const Context&ctx)
     {
         if(!m_init){
-            m_panes.push_back(create<FrameInspectorHeader>(CHILD));
+            m_panes.push_back(create_child<FrameInspectorHeader>());
             m_panes.push_back(nullptr);
-            m_panes.push_back(create<FrameInspectorCameras>(CHILD));
-            m_panes.push_back(create<FrameInspectorCamera³s>(CHILD));
-            m_panes.push_back(create<FrameInspectorControllers>(CHILD));
-            m_panes.push_back(create<FrameInspectorCursors>(CHILD));
-            m_panes.push_back(create<FrameInspectorDesktops>(CHILD));
-            m_panes.push_back(create<FrameInspectorJoysticks>(CHILD));
-            m_panes.push_back(create<FrameInspectorKeyboards>(CHILD));
-            m_panes.push_back(create<FrameInspectorLights>(CHILD));
-            m_panes.push_back(create<FrameInspectorLight³s>(CHILD));
-            m_panes.push_back(create<FrameInspectorManagers>(CHILD));
-            m_panes.push_back(create<FrameInspectorModels>(CHILD));
-            m_panes.push_back(create<FrameInspectorMonitors>(CHILD));
-            m_panes.push_back(create<FrameInspectorMouses>(CHILD));
-            m_panes.push_back(create<FrameInspectorRendereds>(CHILD));
-            m_panes.push_back(create<FrameInspectorRendered³s>(CHILD));
-            m_panes.push_back(create<FrameInspectorScenes>(CHILD));
-            m_panes.push_back(create<FrameInspectorScene³s>(CHILD));
-            m_panes.push_back(create<FrameInspectorSpatials>(CHILD));
-            m_panes.push_back(create<FrameInspectorSpatial³s>(CHILD));
-            m_panes.push_back(create<FrameInspectorTachyons>(CHILD));
-            m_panes.push_back(create<FrameInspectorThreads>(CHILD));
-            m_panes.push_back(create<FrameInspectorViewers>(CHILD));
-            m_panes.push_back(create<FrameInspectorWidgets>(CHILD));
-            m_panes.push_back(create<FrameInspectorWindows>(CHILD));
+            m_panes.push_back(create_child<FrameInspectorCameras>());
+            m_panes.push_back(create_child<FrameInspectorCamera³s>());
+            m_panes.push_back(create_child<FrameInspectorControllers>());
+            m_panes.push_back(create_child<FrameInspectorCursors>());
+            m_panes.push_back(create_child<FrameInspectorDesktops>());
+            m_panes.push_back(create_child<FrameInspectorJoysticks>());
+            m_panes.push_back(create_child<FrameInspectorKeyboards>());
+            m_panes.push_back(create_child<FrameInspectorLights>());
+            m_panes.push_back(create_child<FrameInspectorLight³s>());
+            m_panes.push_back(create_child<FrameInspectorManagers>());
+            m_panes.push_back(create_child<FrameInspectorModels>());
+            m_panes.push_back(create_child<FrameInspectorMonitors>());
+            m_panes.push_back(create_child<FrameInspectorMouses>());
+            m_panes.push_back(create_child<FrameInspectorRendereds>());
+            m_panes.push_back(create_child<FrameInspectorRendered³s>());
+            m_panes.push_back(create_child<FrameInspectorScenes>());
+            m_panes.push_back(create_child<FrameInspectorScene³s>());
+            m_panes.push_back(create_child<FrameInspectorSpatials>());
+            m_panes.push_back(create_child<FrameInspectorSpatial³s>());
+            m_panes.push_back(create_child<FrameInspectorTachyons>());
+            m_panes.push_back(create_child<FrameInspectorThreads>());
+            m_panes.push_back(create_child<FrameInspectorViewers>());
+            m_panes.push_back(create_child<FrameInspectorWidgets>());
+            m_panes.push_back(create_child<FrameInspectorWindows>());
             
             for(Pane* p : m_panes){
                 if(!p)

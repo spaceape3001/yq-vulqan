@@ -8,14 +8,17 @@
 
 #include <ya/scenes/SimpleScene3.hpp>
 
+using namespace yq;
+using namespace yq::tachyon;
+
 class CameraScene : public yq::tachyon::SimpleScene³ {
-    YQ_TACHYON_DECLARE(CameraScene, yq::tachyon::SimpleScene³)
+    YQ_TACHYON_DECLARE(CameraScene, SimpleScene³)
 public:
 
     CameraScene();
     ~CameraScene();
     
-    yq::tachyon::Execution  setup(const yq::tachyon::Context&) override;
+    Execution  setup(const Context&) override;
     
     static void init_info();
     

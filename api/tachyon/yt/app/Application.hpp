@@ -9,7 +9,6 @@
 #include <yq/core/BasicApp.hpp>
 #include <yt/keywords.hpp>
 #include <yt/app/AppCreateInfo.hpp>
-//#include <yt/api/Thread.hpp>
 #include <yt/typedef/application.hpp>
 #include <yt/typedef/clock.hpp>
 #include <yt/typedef/viewer.hpp>
@@ -21,18 +20,20 @@
 #include <atomic>
 
 namespace yq::tachyon {
-
-    class TaskEngine;
-    class Viewer;
-    class Widget;
-    class Manager;
-    class AppDeleteViewerCommand;
     class AppThread;
-    class TaskThread;
-    class ViewerThread;
     class Desktop;
     class DesktopGLFW;
+    class GameThread;
+    class IOThread;
+    class Manager;
+    class NetworkThread;
+    class SimThread;
+    class TaskThread;
+    class Thread;
+    class Viewer;
+    class ViewerThread;
     class VulqanManager;
+    class Widget;
 
     /*! \brief Engine/Vulkan application
     
@@ -42,6 +43,9 @@ namespace yq::tachyon {
     public:
     
         struct RunConfig {
+        
+            /*! \brief ADVISORY time for a tick, zero is full/max rate
+            */
             Second      tick    = { 0. };
             
             RunConfig(){}
@@ -50,6 +54,16 @@ namespace yq::tachyon {
 
         //! Global application, if any
         static Application*         app() { return s_app; }
+
+        /*! \brief Constructor
+        
+            \param[in]  argc    Pass onto me what the main() was given
+            \param[in]  argv    Pass onto me what the main() was given
+            \param[in]  aci     Initialization paraemters for this application
+        */
+        Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
+        ~Application();
+        
 
         const AppCreateInfo&        app_info() const { return m_cInfo; }
         
@@ -68,85 +82,53 @@ namespace yq::tachyon {
         */
         void                        run(const RunConfig& r = RunConfig());
         
-        
-        /*!  Simple exec loop for a single window.
-        
-            Meant as a convienence function to run a single window in a tight event/draw loop
-            until the window is ready to be closed
-            
-            \param[in] win          Widget to watch
-            \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
-                                    is the max stall duration.
-        */
-        //void                 run(ViewerPtr win, Second timeout={0.});
-        
         //! Simple create viewer & run the exec loop
         void                        run(WidgetPtr wid, const RunConfig& r = RunConfig());
 
-        //TaskEngine*          task_engine();
+
+        /*! \brief "Starts" the application
         
-        //! Adds a viewer
-        //void                 add_viewer(ViewerPtr);
-    
-        /*! \brief Constructor
-        
-            \param[in]  argc    Pass onto me what the main() was given
-            \param[in]  argv    Pass onto me what the main() was given
-            \param[in]  aci     Initialization paraemters for this application
+            This "starts" the application by launching vulqan, the various threads, 
+            initializing the platform, loading plugins, etc. 
         */
-        Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
-        ~Application();
-        
-        static void init_info();
+        bool                        start();    // starts the threads
 
-        AppThread&              thread(app_k);
-        TaskThread&             thread(task_k);
-        ViewerThread&           thread(viewer_k);
-        
-        const time_point_t&     start_time() const { return m_startTime; }
+        //! When we first called "start()"
+        const time_point_t&         start_time() const { return m_startTime; }
 
-    protected:
-        //virtual void  receive(const post::PostCPtr&) override;
-        
     private:
 
         static Application*     s_app;
-    
+        
+        enum Stage {
+            Uninit,
+            Started,
+            InError,
+            Terminated
+        };
+        
         AppCreateInfo const     m_cInfo;
         std::vector<Desktop*>   m_desktops;
-        std::vector<Manager*>   m_managers;
-        //std::set<ViewerID>      m_viewers;
-        AppThread*              m_athread   = nullptr;
-        TaskThread*             m_tthread   = nullptr;
-        ViewerThread*           m_vthread   = nullptr;
-        DesktopGLFW*            m_glfw      = nullptr;
+        std::vector<Thread*>    m_threads;
+        
+        struct {
+            AppThread*      app     = nullptr;  //< valid while running
+            GameThread*     game    = nullptr;  //< valid while running if "ENABLED" but not "PER"
+            IOThread*       io      = nullptr;  //< valid while running if "ENABLED" but not "PER"
+            NetworkThread*  network = nullptr;  //< valid while running if "ENABLED" but not "PER"
+            SimThread*      sim     = nullptr;  //< valid while running if "ENABLED" but not "PER"
+            TaskThread*     task    = nullptr;  //< valid while running if "ENABLED" but not "PER"
+            ViewerThread*   viewer  = nullptr;  //< valid while running if "ENABLED" but not "PER"
+        } m_thread;
+
+        Desktop*                m_desktop   = nullptr;
         VulqanManager*          m_vulkan    = nullptr;
         time_point_t            m_startTime;
+        Stage                   m_stage     = Stage::Uninit;
     
         friend class Viewer;
         
-        DesktopGLFW&            desktop(glfw_k);
-        VulqanManager&          manager(vulqan_k);
-        
         void    _kill();
-        
-        
-        #if 0
-        static Viewer*          _add(ViewerPtr);
-        static bool             _contains(const Viewer*);
-        static void             _remove(Viewer*);
-        
-        void    cmd_delete_viewer(const AppDeleteViewerCommand&);
-        
-        
-        //  this is being called by viewer, deletion unnecessary
-        
-        static Tachyon::Param  params(const AppCreateInfo&);
-        
-
-        struct Common;
-        static Common&  common();
-        #endif
     };
 
     void     configure_standand_asset_path();

@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yt/keywords.hpp>
 #include <yt/application.hpp>
 #include <yv/VqUtils.hpp>
 #include <iostream>
@@ -14,8 +15,11 @@ using namespace yq::tachyon;
 int main(int argc, char* argv[])
 {
     AppCreateInfo aci;
-    aci.glfw      = false;
+    aci.headless        = true;
+    aci.platform        = NONE;
+    aci.thread.viewer   = DISABLED;
     Application vi(argc, argv, aci);
+    vi.start();
     auto data = vqEnumeratePhysicalDevices();
     std::cout << data.size() << " physical device(s)\n";
     for(const auto& dev : data){

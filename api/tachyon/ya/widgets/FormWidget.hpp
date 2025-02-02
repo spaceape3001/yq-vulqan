@@ -81,7 +81,7 @@ namespace yq::tachyon {
     template <SomeMini M, typename... Args>
     FormWidget::Adder   FormWidget::add_row(Args...args)
     {
-        M*  label   = create<M>(CHILD, args...);
+        M*  label   = create_child<M>(args...);
         if(!label){
             return Adder(nullptr, nullptr);
         }
@@ -94,7 +94,7 @@ namespace yq::tachyon {
         if(!m_label || !m_form)
             return false;
         
-        m_widget    = create<W>(CHILD, args...);
+        m_widget    = create_child<W>(args...);
         return true;
     }
 }

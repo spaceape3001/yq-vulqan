@@ -6,39 +6,31 @@
 
 #pragma once
 
+#define YQ_KEYWORD_OMIT_NONE
+
 #include <yq/keywords.hpp>
+#include <yt/api/StdThread.hpp>
 #include <yt/gfx/DataActivity.hpp>
+#include <yt/os/Platform.hpp>
 #include <yq/unit/declare.hpp>
 
 namespace yq::tachyon {
 
+    struct EveryTime;
+    struct EveryCount;
+
     // IF we define these in the toolbox, we'll derive the types
-    struct common_k {
-        consteval operator DataActivity() const noexcept { return DataActivity::COMMON; }
-    };
-    struct dynamic_k {
-        consteval operator DataActivity() const noexcept { return DataActivity::DYNAMIC; }
-    };
-    struct fixed_k {
-        consteval operator DataActivity() const noexcept { return DataActivity::FIXED; }
-    };
-    struct refresh_k {
-        consteval operator DataActivity() const noexcept { return DataActivity::REFRESH; }
-    };
-    struct static_k {
-        consteval operator DataActivity() const noexcept { return DataActivity::STATIC; }
-    };
-    struct shared_k {
-        consteval operator DataActivity() const noexcept { return DataActivity::SHARED; }
-    };
-    
     struct abort_k {};
     struct accept_k {};
     struct add_k {};
     struct addable_k {};
     struct adjust_k {};
     struct adjustable_k {};
-    struct app_k {};
+    
+    struct app_k {
+        consteval operator StdThread() const noexcept  { return StdThread::App; }
+    };
+
     struct calculate_k {};
     struct camera_k {};
     struct camera³_k {};
@@ -46,6 +38,11 @@ namespace yq::tachyon {
     struct child_k {};
     struct children_k {};
     struct close_k {};
+
+    struct common_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::COMMON; }
+    };
+    
     struct continue_k {};
     struct controller_k {};
     struct controllers_k {};
@@ -57,28 +54,48 @@ namespace yq::tachyon {
     struct direct_k{};
     struct disable_k {};
     struct domain_k {};
+
+    struct dynamic_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::DYNAMIC; }
+    };
+    
     struct emit_k {};
     struct enable_k {};
     struct enabled_k {};
     struct error_k {};
-    
-    struct EveryTime;
-    struct EveryCount;
-    
+
     struct every_k : public ::yq::every_k {
         static constexpr EveryTime    operator()(unit::Second);
         static constexpr EveryCount   operator()(unsigned);
     };
     
     struct failure_k {};
+
+    struct fixed_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::FIXED; }
+    };
+    
     struct for_k {};
     struct forward_k {};
-    struct glfw_k {};
+
+    struct game_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Game; }
+    };
+    
+    struct glfw_k {
+        consteval operator Platform() const noexcept { return Platform::GLFW; }
+    };
+    
     struct has_k {};
     struct hash_k {};
     struct heading_k {};
     struct inflatable_k {};
     struct info_k {};
+
+    struct io_k {
+        consteval operator StdThread() const noexcept  { return StdThread::IO; }
+    };
+    
     struct joystick_k {};
     struct keyboard_k {};
     struct l2d_k {};
@@ -97,13 +114,22 @@ namespace yq::tachyon {
     struct multipliable_k {};
     struct multiply_k {};
     struct nested_k {};
+
+    struct network_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Network; }
+    };
+    
     struct number_k {};
     
-    struct once_k : public ::yq::once_k {
+    struct none_k : public ::yq::none_k {
+        consteval operator Platform() const noexcept { return Platform::None; }
     };
+    
+    //struct once_k : public ::yq::once_k {};
     
     struct parent_k {};
     struct pause_k {};
+    struct per_k {};
     struct pitch_k {};
     struct probe_k {};
     struct proxy_k {};
@@ -111,6 +137,11 @@ namespace yq::tachyon {
     struct queue_k {};
     struct read_k {};
     struct rebind_k {};
+
+    struct refresh_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::REFRESH; }
+    };
+    
     struct reject_k {};
     struct rendered_k {};
     struct rendered³_k {};
@@ -124,16 +155,35 @@ namespace yq::tachyon {
     struct scene_k {};
     struct scene³_k {};
     struct settable_k {};
+
+    struct shared_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::SHARED; }
+    };
+    
     struct shutdown_k {};
+
+    struct sim_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Sim; }
+    };
+    
     struct spatial_k {};
     struct spatial³_k {};
     struct start_k {};
     struct startup_k {};
+
+    struct static_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::STATIC; }
+    };
+    
     struct stop_k {};
     struct table_k {};
     struct tachyon_k {};
-    struct task_k {};
     struct target_k {};
+
+    struct task_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Task; }
+    };
+    
     struct teardown_k {};
     struct top_k {};
     struct typed_k {};
@@ -141,7 +191,11 @@ namespace yq::tachyon {
     struct unlock_k {};
     struct unlocked_k {};
     struct value_k {};
-    struct viewer_k {};
+
+    struct viewer_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Viewer; }
+    };
+
     struct vulqan_k {};
     struct wait_k {};
     struct widget_k {};
@@ -194,12 +248,14 @@ namespace yq::tachyon {
     static constexpr fixed_k        FIXED;
     static constexpr for_k          FOR;
     static constexpr forward_k      FORWARD;
+    static constexpr game_k         GAME;
     static constexpr glfw_k         GLFW;
     static constexpr has_k          HAS;
     static constexpr hash_k         HASH;
     static constexpr heading_k      HEADING;
     static constexpr inflatable_k   INFLATABLE;
     static constexpr info_k         INFO;
+    static constexpr io_k           IO;
     static constexpr joystick_k     JOYSTICK;
     static constexpr keyboard_k     KEYBOARD;
     static constexpr l2d_k          L2D;
@@ -218,10 +274,13 @@ namespace yq::tachyon {
     static constexpr multipliable_k MULTIPLIABLE;
     static constexpr multiply_k     MULTIPLY;
     static constexpr nested_k       NESTED;
+    static constexpr network_k      NETWORK;
+    static constexpr none_k         NONE;
     static constexpr number_k       NUMBER;
-    static constexpr once_k         ONCE;
+    //static constexpr once_k         ONCE;
     static constexpr parent_k       PARENT;
     static constexpr pause_k        PAUSE;
+    static constexpr per_k          PER;
     static constexpr pitch_k        PITCH;
     static constexpr probe_k        PROBE;
     static constexpr proxy_k        PROXY;
@@ -245,6 +304,7 @@ namespace yq::tachyon {
     static constexpr settable_k     SETTABLE;
     static constexpr shared_k       SHARED;
     static constexpr shutdown_k     SHUTDOWN;
+    static constexpr sim_k          SIM;
     static constexpr spatial_k      SPATIAL;
     static constexpr spatial³_k     SPATIAL³;
     static constexpr start_k        START;

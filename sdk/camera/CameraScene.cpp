@@ -23,6 +23,8 @@
 using namespace yq;
 using namespace yq::tachyon;
 
+YQ_TACHYON_IMPLEMENT(CameraScene)
+
 const auto  NorthData = TetrahedronData<ColorVertex3D>{
     {{  0.,  1.,  0. }, color::White },
     {{ -1., -1., -1. }, color::Blue },
@@ -87,31 +89,31 @@ CameraScene::~CameraScene()
 {
 }
 
-yq::tachyon::Execution  CameraScene::setup(const yq::tachyon::Context&ctx)
+Execution  CameraScene::setup(const Context&ctx)
 {
     if(!m_init){
-        Triangle³*   tri    = create<Triangle³>(CHILD, TriData);
+        Triangle³*   tri    = create_child<Triangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
         
-        Rendered³*    dir     = create<Tetrahedron³>(CHILD, NorthData);
+        Rendered³*    dir     = create_child<Tetrahedron³>(NorthData);
         dir -> make_simple_spatial({0., 5., 0. });
 
-        dir     = create<Tetrahedron³>(CHILD, SouthData);
+        dir     = create_child<Tetrahedron³>(SouthData);
         dir -> make_simple_spatial({0., -5., 0. });
             
-        dir     = create<Tetrahedron³>(CHILD, EastData);
+        dir     = create_child<Tetrahedron³>(EastData);
         dir -> make_simple_spatial({5., 0., 0. });
 
-        dir     = create<Tetrahedron³>(CHILD, WestData);
+        dir     = create_child<Tetrahedron³>(WestData);
         dir -> make_simple_spatial({-5., 0., 0. });
         
-        dir     = create<Tetrahedron³>(CHILD, TopData);
+        dir     = create_child<Tetrahedron³>(TopData);
         dir -> make_simple_spatial({0., 0., 5. });
         
-        dir     = create<Tetrahedron³>(CHILD, BottomData);
+        dir     = create_child<Tetrahedron³>(BottomData);
         dir -> make_simple_spatial({0., 0., -5. });
             
-        Quadrilateral³* quad = create<Quadrilateral³>(CHILD, QuadData);
+        Quadrilateral³* quad = create_child<Quadrilateral³>(QuadData);
         quad->make_simple_spatial(
             { 0.5, 0.5, 0. },
             Quaternion3D(CCW, Z, (Radian) 45._deg ),
@@ -124,6 +126,6 @@ yq::tachyon::Execution  CameraScene::setup(const yq::tachyon::Context&ctx)
 void CameraScene::init_info()
 {
     auto w = writer<CameraScene>();
-    w.description("Camera Scene");
+    w.description("Camera SDK Example Scene");
 }
 

@@ -97,8 +97,10 @@ namespace yq::tachyon {
     Thread*                     Thread::s_sink      = nullptr;
     Thread::mutex_t             Thread::s_mutex;
     Thread::thread_map_t        Thread::s_threads;
+    Thread::sthread_map_t       Thread::s_sthreads;
     Thread::inbox_map_t         Thread::s_inboxes;
     std::vector<TachyonPtr>     Thread::s_misfits;
+
     
     void Thread::init_info()
     {
@@ -178,6 +180,16 @@ namespace yq::tachyon {
         retain(tp);
     }
 
+    void Thread::retain(TachyonPtr tp, StdThread st)
+    {
+        ThreadID    tid = standard(st);
+        if(tid){
+            retain(tp, tid);
+        } else {
+            retain(tp);
+        }
+    }
+
     void Thread::rethread(TachyonPtr tac, ThreadID tgt)
     {
         if(!tac)
@@ -198,6 +210,21 @@ namespace yq::tachyon {
             lock_t  _lock(th->m_mutex, true);
             th->m_creates.push_back(tac);
         }
+    }
+
+    ThreadID Thread::standard(StdThread st)
+    {
+        lock_t _lock(s_mutex, false);
+        auto itr = s_sthreads.find(st);
+        if(itr != s_sthreads.end())
+            return itr->second;
+        return {};
+    }
+
+    void Thread::standard(StdThread st, ThreadID tid)
+    {
+        lock_t _lock(s_mutex, true);
+        s_sthreads[st]  = tid;
     }
 
     bool Thread::valid(ThreadID tid)
@@ -278,6 +305,7 @@ namespace yq::tachyon {
         quit();
         m_thread.join();
     }
+
 
     void    Thread::owner(push_k, ThreadID) 
     {

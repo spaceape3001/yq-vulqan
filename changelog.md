@@ -2,7 +2,19 @@
 
 ## Upcoming
 
-* 
+* (camera example will be fixed...promise!)
+
+## 2025.02.02
+
+* Switched over most code to using the frame, with snapshots, etc
+* Multiple threads
+* Frame Inspector
+* Text label widget 
+* Form widget
+* Commands/events overhaul (there's a lot)
+* Spatials/scene overhaul
+* Spatial related interface/proxies/aspects
+* NOTE... camera example is non-operational (disabled for this tagging, hoping to fix soon)
 
 ## 2024.12.26
 

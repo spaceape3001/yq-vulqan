@@ -86,8 +86,9 @@ const Vertex2 vertices2[] = {
 };
 
 
-struct HelloTriangle : public Rendered {
-    YQ_OBJECT_DECLARE(HelloTriangle, Rendered)
+class HelloTriangle : public Rendered {
+    YQ_TACHYON_DECLARE(HelloTriangle, Rendered)
+public:
     
     struct MyUBO {
         //glm::mat4   model;
@@ -106,6 +107,7 @@ struct HelloTriangle : public Rendered {
         static VBO<Vertex>  verts(vertices);
     
         auto w = writer<HelloTriangle>();
+        w.description("Hello SDK Example Rendered");
         {
             auto& p = w.pipeline();
             p.shaders({ "sdk/hello/hello3.vert", "sdk/hello/hello2.frag" });
@@ -141,10 +143,11 @@ struct HelloTriangle : public Rendered {
 };
 
 
-YQ_OBJECT_IMPLEMENT(HelloTriangle)
+YQ_TACHYON_IMPLEMENT(HelloTriangle)
 
-struct HelloQuad : public Rendered {
-    YQ_OBJECT_DECLARE(HelloQuad, Rendered)
+class HelloQuad : public Rendered {
+    YQ_TACHYON_DECLARE(HelloQuad, Rendered)
+public:
 
     Ref<const Texture>  tex;
 
@@ -154,6 +157,8 @@ struct HelloQuad : public Rendered {
         //static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
 
         auto w = writer<HelloQuad>();
+        w.description("Hello SDK Example Quad");
+
         {
             auto& p = w.pipeline();
             p.shaders({ "sdk/hello/quad.vert", "sdk/hello/quad.frag" });
@@ -173,7 +178,7 @@ struct HelloQuad : public Rendered {
     }
 };
 
-YQ_OBJECT_IMPLEMENT(HelloQuad)
+YQ_TACHYON_IMPLEMENT(HelloQuad)
 
 struct HelloScene : public SimpleScene³ {
     YQ_TACHYON_DECLARE(HelloScene, SimpleScene³)
@@ -187,14 +192,14 @@ public:
 
     HelloScene() : SimpleScene³()
     {
-        start       = std::chrono::steady_clock::now();
-        triangle    = create<HelloTriangle>(CHILD);
+        start           = std::chrono::steady_clock::now();
+        triangle        = create_child<HelloTriangle>();
         
         Triangle³::Param p;
         p.position      = {0.,0.,0.1};
-        tri2            = create<Triangle³>(CHILD, TriData, p);
+        tri2            = create_child<Triangle³>(TriData, p);
         triSpatialID    = tri2 -> spatial();
-        quad            = create<HelloQuad>(CHILD);
+        quad            = create_child<HelloQuad>();
         
         //add_thing(tri2);
         //add_thing(triangle);
@@ -210,13 +215,20 @@ public:
         triangle->update(diff.count());
         return {};
     }
-    
+
+    static void init_info()
+    {
+        auto w = writer<HelloScene>();
+        w.description("Hello SDK Example Scene");
+    }
 };
 
 YQ_TACHYON_IMPLEMENT(HelloScene)
 
-struct HelloWidget : public Scene³Widget {
+class HelloWidget : public Scene³Widget {
     YQ_TACHYON_DECLARE(HelloWidget, Scene³Widget)
+public:
+
     HelloWidget()
     {
     }
@@ -224,6 +236,12 @@ struct HelloWidget : public Scene³Widget {
     Execution setup(const Context&) override
     {
         return {};
+    }
+    
+    static void init_info()
+    {
+        auto w = writer<HelloWidget>();
+        w.description("Hello SDK Example Widget");
     }
 };
 
@@ -245,10 +263,10 @@ int main(int argc, char* argv[])
     }
     #endif
 
-    writer<HelloTriangle>();
-    writer<HelloQuad>();
-
     AppCreateInfo        aci;
+    
+    aci.thread.sim      = true;
+    
     aci.view.title      = "Hello WORLD!";
     aci.view.resizable  = true;
     aci.view.size       = { 1920, 1080 };
@@ -271,14 +289,14 @@ int main(int argc, char* argv[])
     }
     #endif
 
-    app.finalize();
+    app.start();
     
-    HelloScene*     sc  = Tachyon::create<HelloScene>();
+    HelloScene*     sc  = Tachyon::create_on<HelloScene>(SIM);
     HelloWidget*    w   = Tachyon::create<HelloWidget>();
     w -> set_scene(sc->id());
     
     #ifdef WANT_FRAME_INSPECTOR
-    w -> create<FrameInspector>(CHILD);
+    w -> create_child<FrameInspector>();
     #endif
     
     //LoggerBox*  lb  = Tachyon::create<LoggerBox>();

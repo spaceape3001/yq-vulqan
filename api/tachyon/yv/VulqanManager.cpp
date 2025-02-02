@@ -159,7 +159,7 @@ namespace yq::tachyon {
             layers.properties.resize(count);
             vkEnumerateInstanceLayerProperties(&count, layers.properties.data());
             for(auto& v : layers.properties){
-tachyonInfo << "VulqanLayer " << v.layerName;            
+                tachyonInfo << "VulqanLayer " << v.layerName;            
                 layers.names.insert(v.layerName);
             }
         }
@@ -198,7 +198,7 @@ tachyonInfo << "VulqanLayer " << v.layerName;
             }
         }
 
-        if(aci.glfw){
+        if(aci.platform == GLFW){
             g.extensions.requested = vqGlfwRequiredExtensions();
         }
         if(want_debug){

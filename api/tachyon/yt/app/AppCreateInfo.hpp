@@ -8,9 +8,13 @@
 
 #include <yq/core/Required.hpp>
 #include <yq/macro/debugrel.hpp>
+#include <yq/typedef/filesystem_path.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>
+#include <yt/os/Platform.hpp>
+#include <yt/keywords.hpp>
 
 #include <optional>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -20,16 +24,14 @@ namespace yq::tachyon {
         Required        req     = Required::NO;
     };
     
-    enum class ViewerThreadPolicy {
-    
+    enum class ThreadPolicy {
         //! Viewers go on main thread
-        Main,
-        //! Viewers go on a single viewer thread
         Single,
         //! Viewers go onto seperate individual threads
         Individual
     };
 
+    using thread_spec_t    = std::variant<bool,disabled_k,enabled_k,per_k,StdThread>;
 
     //! Info for initialization
     struct AppCreateInfo {
@@ -39,21 +41,38 @@ namespace yq::tachyon {
         //! Application version number
         uint32_t                    app_version             = 0;
         
-        //! Enable for GLFW support
-        bool                        glfw                    = true;
-
-        //! Set to enable running w/o viewers
         bool                        headless                = false;
+ 
+        /*! Primary Platform
+            
+            The primary platform is the one that we'll create viewer windows from.
+        */
+        Platform                    platform                = GLFW;
         
-        bool                        imgui                   = true;
-
-        //! Want the task-engine
-        bool                        tasking                 = false;
+        //! Other platforms desired (joysticks, keyboards, other things not accounted for in the primary platform)
+        std::set<Platform>          platforms;
+        
+        //! Can be specific, or directories (not recursive)
+        path_vector_t               plugins;
+        
+        /*
+            Specify the standard threads.  When supported, the PER will be enabled with ONE dedicated 
+            thread per major object (which, for the viewer thread is the Viewer)
+        */
+        struct {
+            thread_spec_t game        = DISABLED;
+            thread_spec_t io          = DISABLED;
+            thread_spec_t network     = DISABLED;
+            thread_spec_t sim         = DISABLED;
+            thread_spec_t task        = DISABLED;
+            thread_spec_t viewer      = ENABLED;
+        } thread;
         
         //! Used for app-created viewers
         ViewerCreateInfo            view;
 
-        ViewerThreadPolicy          vthreads                = ViewerThreadPolicy::Single;
+        //! Viewer thread policy
+        ThreadPolicy                vthreads                = ThreadPolicy::Single;
 
         //! Set to enable vulkan
         bool                        vulkan                  = true;

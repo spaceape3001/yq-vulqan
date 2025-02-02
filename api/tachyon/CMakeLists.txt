@@ -42,9 +42,6 @@ add_library(${PROJECT_NAME} SHARED
 
     yt/app/Application.cpp
     yt/app/Viewer.cpp
-    yt/app/AppThread.cpp
-    yt/app/TaskThread.cpp
-    yt/app/ViewerThread.cpp
 
     yt/config/build.cpp
 
@@ -523,6 +520,14 @@ add_library(${PROJECT_NAME} SHARED
 
     ya/spatials/GeoSpatial3.cpp
     ya/spatials/SimpleSpatial3.cpp
+
+    ya/threads/AppThread.cpp
+    ya/threads/GameThread.cpp
+    ya/threads/IOThread.cpp
+    ya/threads/NetworkThread.cpp
+    ya/threads/SimThread.cpp
+    ya/threads/TaskThread.cpp
+    ya/threads/ViewerThread.cpp
 
     ya/triggers/AndTrigger.cpp
     ya/triggers/KeyPressTrigger.cpp

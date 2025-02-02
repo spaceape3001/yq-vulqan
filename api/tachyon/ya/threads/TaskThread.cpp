@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/app/TaskThread.hpp>
+#include <ya/threads/TaskThread.hpp>
 
 #include <yt/api/Thread.hpp>
 #include <yt/api/ThreadData.hpp>

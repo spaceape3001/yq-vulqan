@@ -112,7 +112,7 @@ namespace yq::tachyon {
         if(!c)
             return false;
             
-        CursorGLFW* cc  = create<CursorGLFW>(CHILD, c);
+        CursorGLFW* cc  = create_child<CursorGLFW>(c);
         m_cursors[cc->id()] = cc;
         m_stdCursors[stdC]  = cc->id();
         return true;
@@ -133,7 +133,7 @@ namespace yq::tachyon {
         if(m_joysticks[jid])
             return false;
         
-        m_joysticks[jid]    = create<JoystickGLFW>(CHILD, jid);
+        m_joysticks[jid]    = create_child<JoystickGLFW>(jid);
         return true;
     }
     
@@ -152,7 +152,7 @@ namespace yq::tachyon {
         MonitorID   id  = MonitorGLFW::monitor(m);
         if(id || m_monitors.contains(id))
             return false;
-        MonitorGLFW*    mm  = create<MonitorGLFW>(CHILD, m);
+        MonitorGLFW*    mm  = create_child<MonitorGLFW>(m);
         m_monitors[mm->id()]    = mm;
         return true;
     }
@@ -175,7 +175,7 @@ namespace yq::tachyon {
             glfwSetJoystickCallback( callback_joystick );
         }
         if(m_control(C::Keyboard)){
-            m_keyboard      = create<KeyboardGLFW>(CHILD);
+            m_keyboard      = create_child<KeyboardGLFW>();
         }
         if(m_control(C::Monitor)){
             _install(MONITOR, ALL);
@@ -183,7 +183,7 @@ namespace yq::tachyon {
             glfwSetMonitorCallback( callback_monitor );
         }
         if(m_control(C::Mouse)){
-            m_mouse         = create<MouseGLFW>(CHILD);
+            m_mouse         = create_child<MouseGLFW>();
         }
         if(m_control(C::Window)){
             // this one might not be necessary
@@ -252,7 +252,7 @@ namespace yq::tachyon {
             return nullptr;
         }
         
-        WindowGLFW* w       = create<WindowGLFW>(CHILD, this, ww, vci);
+        WindowGLFW* w       = create_child<WindowGLFW>(this, ww, vci);
         m_windows[w->id()]  = w;
         return w;
     }

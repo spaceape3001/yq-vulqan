@@ -326,6 +326,7 @@ YQ_TACHYON_IMPLEMENT(CameraScene3DWidget)
 int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
+    aci.threads          |= GAME;
     aci.view.title        = "Cameras!";
     aci.view.resizable    = false;
     aci.view.size         = { 1920, 1080 };

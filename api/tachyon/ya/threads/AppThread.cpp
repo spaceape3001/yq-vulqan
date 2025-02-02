@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/app/AppThread.hpp>
+#include <ya/threads/AppThread.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>

@@ -318,7 +318,20 @@ namespace yq::tachyon {
                 return REJECT;
         }
         
+        #ifdef __GNUC__
+            /*
+                The return below falsely triggers an "maybe-uninitialized" warning.
+            */
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"   
+        #endif
+
         return {};
+
+        #ifdef __GNUC__
+        #pragma GCC diagnostic pop
+        #endif
+
     }
 
     const Size2I&   Viewer::aspect() const

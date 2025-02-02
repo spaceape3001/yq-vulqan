@@ -23,8 +23,8 @@ namespace yq::tachyon {
     template <typename C>
     void     И::init_info(TachyonInfo::Writer<C>& w)
     {
-        w.slot(&И::on_spatial_command);
-        w.slot(&И::on_spatial_event);
+        w.slot(UNSAFE, &И::on_spatial_command);
+        w.slot(UNSAFE, &И::on_spatial_event);
     }
 }
 

@@ -9,6 +9,7 @@
 #include <yt/api/Tachyon.hpp>
 #include <ya/commands/SpatialCommand.hpp>
 #include <ya/events/SpatialEvent.hpp>
+#include <yt/logging.hpp>
 
 namespace yq::tachyon {
 

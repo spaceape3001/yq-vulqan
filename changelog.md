@@ -2,7 +2,9 @@
 
 ## Upcoming
 
-* (camera example will be fixed...promise!)
+## 2025.02.02B
+
+* Camera SDK example fixed (note, compatible with the toolbox tag 2025.02.02)
 
 ## 2025.02.02
 

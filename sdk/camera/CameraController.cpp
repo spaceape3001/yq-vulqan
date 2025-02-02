@@ -27,7 +27,6 @@ CameraController::~CameraController()
 
 void CameraController::on_key_press(const KeyPressEvent& evt)
 {
-    //yInfo() << "CameraController::on_key_press(" << evt.key().key() << ")";
     switch(evt.key()){
     case KeyCode::UpArrow:
         send(new PitchBy({.target=m_camera}, 10._deg));

@@ -17,6 +17,7 @@
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
+#include <yt/logging.hpp>
 
 namespace yq::tachyon {
     AOrientation³::AOrientation³()

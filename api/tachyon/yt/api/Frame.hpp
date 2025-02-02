@@ -433,26 +433,12 @@ namespace yq::tachyon {
     template <typename C>
     C*      Frame::proxy(TachyonID tid) const
     {
-    #if 0
-        if constexpr (is_interface_v<C>){
-            for(Proxy* p : proxies(tid)){
-                if(p -> interface(INFO) == &meta<C>()){
-                    return static_cast<typename C::MyProxy*>(p);
-                }
-            }
-            return nullptr;
-        } 
-    #endif
-
-        // other type, or non-existent, try the other way
         for(Proxy* p : proxies(tid)){
             if(C* c = dynamic_cast<C*>(p)){
                 return c;
             }
         }
 
-yInfo() << "Frame...no proxy found";
-    
         return nullptr;
     }
 }

@@ -24,7 +24,7 @@ namespace yq::tachyon {
     
         This is the root of an object that'll latch onto a spatial description.
     */
-    class И : protected Tachyon::Helper {
+    class И : public virtual Tachyon::Helper {
     public:
     
         virtual uint8_t dimensions(count_k) const = 0;

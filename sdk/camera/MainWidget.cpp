@@ -149,7 +149,7 @@ Execution    MainWidget::setup(const Context& ctx)
                 Quaternion3D(HPR, (Radian) 0._deg, (Radian) 180._deg, (Radian) 0._deg)
             );
             cam->set_near(.1);
-            cam->set_far(20.);
+            cam->set_far(30.);
             m_camera    = *cam;
             set_camera(cam->id());
         }

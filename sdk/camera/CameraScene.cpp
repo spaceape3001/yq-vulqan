@@ -7,10 +7,12 @@
 #include "CameraScene.hpp"
 
 #include <yq/color/colors.hpp>
+#include <yq/shape/AxBox2.hpp>
 #include <yq/shape/QuadrilateralData.hpp>
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/TriangleData.hpp>
 
+#include <ya/rendereds/ImageQuad3.hpp>
 #include <ya/rendereds/Quadrilateral3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
 #include <ya/rendereds/Tetrahedron3.hpp>
@@ -92,6 +94,25 @@ CameraScene::~CameraScene()
 Execution  CameraScene::setup(const Context&ctx)
 {
     if(!m_init){
+        
+        ImageQuad³* iq  = create_child<ImageQuad³>(
+            AxBox2D(Vector2D(-10, -10), Vector2D(10, 10)), 
+            "sdk/camera/IMG_4706.JPG");
+        iq->make_simple_spatial(
+            { 0., 0., -15. },
+            Quaternion3D(CCW, X, (Radian) 180._deg)
+        );
+        
+        iq  = create_child<ImageQuad³>(
+            AxBox2D(Vector2D(-10, -10), Vector2D(10, 10)), 
+            "sdk/camera/IMG_0582.JPG");
+        iq->make_simple_spatial(
+            { 0., 0., 15. },
+            Quaternion3D(IDENTITY)
+        );        
+
+
+
         Triangle³*   tri    = create_child<Triangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
         
@@ -112,14 +133,13 @@ Execution  CameraScene::setup(const Context&ctx)
         
         dir     = create_child<Tetrahedron³>(BottomData);
         dir -> make_simple_spatial({0., 0., -5. });
-            
+        
         Quadrilateral³* quad = create_child<Quadrilateral³>(QuadData);
         quad->make_simple_spatial(
             { 0.5, 0.5, 0. },
             Quaternion3D(CCW, Z, (Radian) 45._deg ),
             Vector3D(ALL, 0.5)
         );
-        
         m_init  = true;
     }
     return SimpleScene³::setup(ctx);

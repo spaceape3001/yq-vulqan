@@ -15,6 +15,27 @@ namespace yq::tachyon {
     class KeyRepeatEvent;
     class KeyReleaseEvent;
 
+    /*! \brief Primitive 3D space controller
+    
+        This allows for a camera (or object) to be moved in 3D space 
+        using the keyboard.  (Well, these are what are supposed to be 
+        going on, some flukes in the first cut)
+        
+        Key | Role
+        ----+------
+        W/S | Forward/Backward (relative)
+        A/D | Left/Right (relative)
+        Q/E | Up/Down (relative)
+        U/O | +- Z
+        J/L | +- Y
+        I/K | += X
+        
+        num pad
+        
+        2/8 | Pitch
+        4/6 | Yaw
+        7/9 | Roll
+    */
     class Space³Controller : public Controller {
         YQ_TACHYON_DECLARE(Space³Controller, Controller);
     public:

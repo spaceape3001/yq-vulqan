@@ -34,7 +34,9 @@ namespace yq::tachyon {
         Business of a controller is to translate events/posts/commands into 
         commands for some recipient object.  (ie, a camera controller)
         
-        
+        Two ways to hook this up...
+        1) Snooping on the recipient
+        2) Subscribing to the event producer
     */
     class Controller : public Tachyon {
         YQ_TACHYON_INFO(ControllerInfo)

@@ -27,6 +27,7 @@ namespace yq::tachyon {
         TypedID                 parent;
         TypedID                 self;
         std::vector<TypedID>    children;
+        std::string             name;
         bool                    started     = false;
         bool                    running     = false;
         bool                    paused      = false;

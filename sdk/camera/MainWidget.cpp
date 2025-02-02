@@ -6,12 +6,12 @@
 
 #include "MainWidget.hpp"
 #include "CameraScene.hpp"
-#include "CameraController.hpp"
 #include "SpaceCameraRemote.hpp"
 
 #include <ya/cameras/SpaceCamera.hpp>
 #include <ya/commands/controller/ListenCommand.hpp>
 #include <ya/commands/ui/CloseCommand.hpp>
+#include <ya/controllers/Space3Controller.hpp>
 #include <ya/widgets/FrameInspector.hpp>
 #include <yt/api/Frame.hpp>
 #include <yt/app/Viewer.hpp>
@@ -160,7 +160,7 @@ Execution    MainWidget::setup(const Context& ctx)
             return WAIT;
 
         if(!m_controller)
-            m_controller    = create_on<CameraController>(APP, m_camera);
+            m_controller    = create_on<Space³Controller>(APP, m_camera);
         if(!m_inspector){
             m_inspector     = create_child<FrameInspector>();
             m_inspector -> cmd_hide();

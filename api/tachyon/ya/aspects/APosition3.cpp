@@ -150,14 +150,14 @@ namespace yq::tachyon {
     {
         if(cmd.target() != typed())
             return;
-        position(ADD, X, cmd.Δy());
+        position(ADD, Y, cmd.Δy());
     }
     
     void        APosition³::on_add_positionZ(const AddPositionᶻ&cmd)
     {
         if(cmd.target() != typed())
             return;
-        position(ADD, X, cmd.Δz());
+        position(ADD, Z, cmd.Δz());
     }
     
     void        APosition³::on_multiply_position(const MultiplyPosition&cmd)

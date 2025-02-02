@@ -35,6 +35,7 @@ namespace yq::tachyon {
     private:
         TachyonID           m_tachyon;
         const TachyonInfo*  m_info          = nullptr;
+        const TachyonInfo*  m_parInfo       = nullptr;
         
         POrientation³*  m_proxy;
         Quaternion3D    m_orientation;

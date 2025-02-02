@@ -24,7 +24,10 @@ namespace yq::tachyon {
 
     void    Orientation³Control::imgui(ViContext& ctx) 
     {
-        if(ImGui::Begin("Orientation")){
+        if(!m_proxy)
+            return ;
+            
+        if(ImGui::Begin("Orientation³")){
             
         }
         ImGui::End();
@@ -64,7 +67,7 @@ namespace yq::tachyon {
             assert(obj);
             if(!obj)
                 return {};
-                
+            
             m_info      = &obj->metaInfo();
         }
             

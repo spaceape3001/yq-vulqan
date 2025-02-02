@@ -347,6 +347,8 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/commands/widget/SetViewer.cpp
 
+    ya/controllers/Space3Controller.cpp
+
     ya/controls/Orientation3Control.cpp
 
     ya/desktops/glfw/CursorGLFW.cpp

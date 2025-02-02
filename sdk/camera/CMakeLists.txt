@@ -5,7 +5,6 @@
 ################################################################################
 
 add_executable(camera 
-    CameraController.cpp
     CameraScene.cpp
     SpaceCameraRemote.cpp
     MainWidget.cpp

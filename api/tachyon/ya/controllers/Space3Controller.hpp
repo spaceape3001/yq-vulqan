@@ -67,31 +67,30 @@ namespace yq::tachyon {
         //  YAW is λ (trying to avoid confusion in code that already has greek in it)
     
         //  These go into "move by" commands
-        KeyData         m_uP    = {  1., 0. };
-        KeyData         m_uN    = { -1., 0. };
-        KeyData         m_wP    = {  1., 0. };
-        KeyData         m_wN    = { -1., 0. };
-        KeyData         m_vP    = {  1., 0. };
-        KeyData         m_vN    = { -1., 0. };
+        KeyData         m_uP    = {  1.,  0.5 };
+        KeyData         m_uN    = { -1., -0.5 };
+        KeyData         m_wP    = {  1.,  0.5 };
+        KeyData         m_wN    = { -1., -0.5 };
+        KeyData         m_vP    = {  1.,  0.5 };
+        KeyData         m_vN    = { -1., -0.5 };
     
         //  Go into add-shift position commands
-        KeyData         m_xP    = {  1., 0. };
-        KeyData         m_xN    = { -1., 0. };
-        KeyData         m_yP    = {  1., 0. };
-        KeyData         m_yN    = { -1., 0. };
-        KeyData         m_zP    = {  1., 0. };
-        KeyData         m_zN    = { -1., 0. };
+        KeyData         m_xP    = {  1.,  0.5 };
+        KeyData         m_xN    = { -1., -0.5 };
+        KeyData         m_yP    = {  1.,  0.5 };
+        KeyData         m_yN    = { -1., -0.5 };
+        KeyData         m_zP    = {  1.,  0.5 };
+        KeyData         m_zN    = { -1., -0.5 };
         
         //  Go into rotate commands
-        KeyData         m_φP    = {  5., 0. };
-        KeyData         m_φN    = { -5., 0. };
-        KeyData         m_θP    = {  5., 0. };
-        KeyData         m_θN    = { -5., 0. };
-        KeyData         m_λP    = {  5., 0. };
-        KeyData         m_λN    = { -5., 0. };
+        KeyData         m_φP    = {  5.,  2.5 };
+        KeyData         m_φN    = { -5., -2.5 };
+        KeyData         m_θP    = {  5.,  2.5 };
+        KeyData         m_θN    = { -5., -2.5 };
+        KeyData         m_λP    = {  5.,  2.5 };
+        KeyData         m_λN    = { -5., -2.5 };
         
         TypedID         m_target;
-        double          m_switchDir = 1.;
     };
 }
 

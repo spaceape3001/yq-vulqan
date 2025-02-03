@@ -22,25 +22,52 @@ namespace yq::tachyon {
     {
     }
 
+
     void    Orientation³Control::imgui(ViContext& ctx) 
     {
-        if(!m_proxy)
-            return ;
+        //if(!m_proxy)
+            //return ;
             
-        if(ImGui::Begin("Orientation³")){
-            
+        if(m_float){
+            if(ImGui::BeginChild("Orientation³")){
+                imgui_content();
+                ImGui::EndChild();
+            }
+        } else {
+            ImGui::BeginGroup();
+            imgui_content();
+            ImGui::EndGroup();
         }
-        ImGui::End();
+    }
+
+    void    Orientation³Control::imgui_content()
+    {
+        const Frame*  frame = Frame::current();
+        if(!frame)
+            return;
         
+        POrientation³* proxy     = frame -> proxy<POrientation³>(m_tachyon);
+        if(!proxy)
+            return;
+        
+        Quaternion3D orientation   = proxy->orientation();
+        Degree heading       = proxy->heading();
+        Degree pitch         = proxy->pitch();
+        Degree roll          = proxy->roll();
+
+        bool    changed = false;
+    
+        changed = ImGui::InputDouble("Heading", &heading.value) || changed;
+        changed = ImGui::InputDouble("Pitch", &pitch.value) || changed;
+        changed = ImGui::InputDouble("Roll", &roll.value) || changed;
+            
+        if(changed){
+            proxy -> orientation(SET, HPR, heading, pitch, roll);
+        }
     }
 
     void    Orientation³Control::reset()
     {
-        m_proxy         = nullptr;
-        m_orientation   = IDENTITY;
-        m_heading       = Degree(ZERO);
-        m_pitch         = Degree(ZERO);
-        m_roll          = Degree(ZERO);
     }
     
     void        Orientation³Control::set_tachyon(TachyonID tid)
@@ -54,27 +81,6 @@ namespace yq::tachyon {
 
     Execution   Orientation³Control::tick(const Context&) 
     {
-        const Frame*  frame = Frame::current();
-        if(!frame)
-            return {};
-        
-        m_proxy     = frame -> proxy<POrientation³>(m_tachyon);
-        if(!m_proxy)
-            return {};
-        
-        if(!m_info){
-            Tachyon*    obj = frame->object(m_tachyon);
-            assert(obj);
-            if(!obj)
-                return {};
-            
-            m_info      = &obj->metaInfo();
-        }
-            
-        m_orientation   = m_proxy->orientation();
-        m_heading       = m_proxy->heading();
-        m_pitch         = m_proxy->pitch();
-        m_roll          = m_proxy->roll();
         return {};
     }
     

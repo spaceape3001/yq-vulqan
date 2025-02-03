@@ -95,44 +95,83 @@ Execution  CameraScene::setup(const Context&ctx)
 {
     if(!m_init){
         
+        //  Bottom box (so +Z)
         ImageQuad³* iq  = create_child<ImageQuad³>(
-            AxBox2D(Vector2D(-10, -10), Vector2D(10, 10)), 
-            "sdk/camera/IMG_4706.JPG");
-        iq->make_simple_spatial(
-            { 0., 0., -15. },
-            Quaternion3D(CCW, X, (Radian) 180._deg)
-        );
-        
-        iq  = create_child<ImageQuad³>(
-            AxBox2D(Vector2D(-10, -10), Vector2D(10, 10)), 
-            "sdk/camera/IMG_0582.JPG");
+            AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
+            "sdk/camera/DOWN.JPG");
         iq->make_simple_spatial(
             { 0., 0., 15. },
             Quaternion3D(IDENTITY)
+        );
+        
+        //  Top box (so -Z)
+        iq  = create_child<ImageQuad³>(
+            AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
+            "sdk/camera/UP.JPG");
+        iq->make_simple_spatial(
+            { 0., 0., -15. },
+            Quaternion3D(CCW, X, (Radian) 180._deg)
         );        
 
+        //  North box (so +X)
+        iq  = create_child<ImageQuad³>(
+            AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
+            "sdk/camera/NORTH.JPG");
+        iq->make_simple_spatial(
+            { 15., 0., 0. },
+            Quaternion3D(CCW, Y, 90._deg) * Quaternion3D(CCW, Z, 90._deg)
+        );        
+        
+        //  South box (so -X)
+        iq  = create_child<ImageQuad³>(
+            AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
+            "sdk/camera/SOUTH.JPG");
+        iq->make_simple_spatial(
+            { -15., 0., 0. },
+            Quaternion3D(CCW, Y, -90._deg) * Quaternion3D(CCW, Z,  -90._deg)
+        );        
+    
+        //  East box (so +Y)
+        iq  = create_child<ImageQuad³>(
+            AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
+            "sdk/camera/EAST.JPG");
+        iq->make_simple_spatial(
+            { 0., 15., 0. },
+            Quaternion3D(CCW, X, -90._deg) * Quaternion3D(CCW, Z, 180._deg )
+        );        
+        
+        //  West box (so -Y)
+        iq  = create_child<ImageQuad³>(
+            AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
+            "sdk/camera/WEST.JPG");
+        iq->make_simple_spatial(
+            { 0., -15., 0. },
+            Quaternion3D(CCW, X, 90._deg)
+        );   
 
 
         Triangle³*   tri    = create_child<Triangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
-        
-        Rendered³*    dir     = create_child<Tetrahedron³>(NorthData);
-        dir -> make_simple_spatial({0., 5., 0. });
 
+      
+        Rendered³*    dir     = create_child<Tetrahedron³>(NorthData);
+        dir -> make_simple_spatial({15., 0., 0. });
+
+        // south
         dir     = create_child<Tetrahedron³>(SouthData);
-        dir -> make_simple_spatial({0., -5., 0. });
+        dir -> make_simple_spatial({-15., 0., 0. });
             
         dir     = create_child<Tetrahedron³>(EastData);
-        dir -> make_simple_spatial({5., 0., 0. });
+        dir -> make_simple_spatial({0., 15., 0. });
 
         dir     = create_child<Tetrahedron³>(WestData);
-        dir -> make_simple_spatial({-5., 0., 0. });
+        dir -> make_simple_spatial({0., -15., 0. });
         
         dir     = create_child<Tetrahedron³>(TopData);
-        dir -> make_simple_spatial({0., 0., 5. });
+        dir -> make_simple_spatial({0., 0., -15. });
         
         dir     = create_child<Tetrahedron³>(BottomData);
-        dir -> make_simple_spatial({0., 0., -5. });
+        dir -> make_simple_spatial({0., 0., 15. });
         
         Quadrilateral³* quad = create_child<Quadrilateral³>(QuadData);
         quad->make_simple_spatial(
@@ -140,6 +179,7 @@ Execution  CameraScene::setup(const Context&ctx)
             Quaternion3D(CCW, Z, (Radian) 45._deg ),
             Vector3D(ALL, 0.5)
         );
+        
         m_init  = true;
     }
     return SimpleScene³::setup(ctx);

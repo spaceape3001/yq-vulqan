@@ -145,8 +145,9 @@ Execution    MainWidget::setup(const Context& ctx)
         if(!m_camera){
             SpaceCamera* cam    = create_on<SpaceCamera>(SIM);
             cam->make_simple_spatial(
-                Vector3D(-10, 0, -5.),
-                Quaternion3D(HPR, (Radian) 0._deg, (Radian) 180._deg, (Radian) 0._deg)
+                ZERO, IDENTITY, ONE
+                //Vector3D(-10, 0, -5.),
+                //Quaternion3D(HPR, (Radian) 0._deg, (Radian) 180._deg, (Radian) 0._deg)
             );
             cam->set_near(.1);
             cam->set_far(30.);

@@ -9,6 +9,7 @@
 #include <yt/ui/Widget.hpp>
 
 namespace yq::tachyon {
+    class Orientation³Control;
 }
 
 using namespace yq;
@@ -29,8 +30,10 @@ public:
     static void init_info();
 
 private:
-    TypedID     m_camera;
-    TypedID     m_spatial;
-    bool        m_init  = false;
+    TypedID                 m_camera;
+    TypedID                 m_spatial;
+    TypedID                 m_position;
+    Orientation³Control*    m_orientation = nullptr;
+    bool                    m_init  = false;
 };
 

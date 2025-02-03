@@ -37,10 +37,13 @@ namespace yq::tachyon {
         const TachyonInfo*  m_info          = nullptr;
         const TachyonInfo*  m_parInfo       = nullptr;
         
-        POrientation³*  m_proxy;
-        Quaternion3D    m_orientation;
-        unit::Degree    m_heading;
-        unit::Degree    m_pitch;
-        unit::Degree    m_roll;
+        //POrientation³*  m_proxy;
+        //Quaternion3D    m_orientation;
+        //unit::Degree    m_heading;
+        //unit::Degree    m_pitch;
+        //unit::Degree    m_roll;
+        bool            m_float = false;
+        
+        void    imgui_content();
     };
 }

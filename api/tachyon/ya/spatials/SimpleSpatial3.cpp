@@ -102,7 +102,7 @@ namespace yq::tachyon {
         Vector3D    pos2 = T2 * m_position;
         
         sn.local2domain = Tensor44D(
-            T1.xx, T1.xy, T1.xz, m_position.z,
+            T1.xx, T1.xy, T1.xz, m_position.x,
             T1.yx, T1.yy, T1.yz, m_position.y,
             T1.zx, T1.zy, T1.zz, m_position.z,
             0., 0., 0., 1.

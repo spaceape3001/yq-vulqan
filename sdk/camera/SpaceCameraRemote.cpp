@@ -10,6 +10,7 @@
 #include <yt/3D/Spatial3.hpp>
 #include <yt/3D/Spatial3Data.hpp>
 #include <yt/api/Frame.hpp>
+#include <ya/controls/Orientation3Control.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/logging.hpp>
@@ -45,6 +46,7 @@ Execution SpaceCameraRemote::setup(const Context&ctx)
             if(!sn->spatial)
                 return WAIT;
 
+
             Types   t   = frame->types(sn->spatial);
             if(!t)
                 return WAIT;
@@ -52,7 +54,8 @@ Execution SpaceCameraRemote::setup(const Context&ctx)
             if(!t(Type::Spatial³))
                 return ABORT;
                 
-            m_spatial   = TypedID(sn->spatial.id, t);
+            m_spatial           = TypedID(sn->spatial.id, t);
+            m_orientation       = create_child<Orientation³Control>(m_spatial);
         }
         
         m_init  = true;
@@ -141,6 +144,10 @@ void    SpaceCameraRemote::imgui(ViContext&u)
         
     if(!ImGui::Begin("Space Camera Remote"))
         return ;
+        
+    if(m_orientation)
+        m_orientation->imgui(u);
+        
     Vector3D        position    = pos->position();
     if(ImGui::InputDouble3("Position", &position))
         pos->position(SET, position);

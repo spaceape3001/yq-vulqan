@@ -37,6 +37,9 @@ namespace yq::tachyon {
         const TachyonInfo*  m_info          = nullptr;
         const TachyonInfo*  m_parInfo       = nullptr;
         
+        unit::Degree        m_step          = 1._deg;
+        unit::Degree        m_stepFast      = 10._deg;
+        
         //POrientation³*  m_proxy;
         //Quaternion3D    m_orientation;
         //unit::Degree    m_heading;

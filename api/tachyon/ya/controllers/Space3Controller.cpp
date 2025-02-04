@@ -69,23 +69,26 @@ namespace yq::tachyon {
         case KeyCode::L:
             send(new AddPositionʸ({.target=m_target}, m_yN.press ));
             break;
+            
         case KeyCode::Kp2:
             send(new PitchBy({.target=m_target}, unit::Degree(m_θN.press) ));
             break;
         case KeyCode::Kp8:
             send(new PitchBy({.target=m_target}, unit::Degree(m_θP.press) ));
             break;
+            
         case KeyCode::Kp7:
             send(new RollBy({.target=m_target}, unit::Degree(m_φN.press) ));
             break;
         case KeyCode::Kp9:
             send(new RollBy({.target=m_target}, unit::Degree(m_φP.press) ));
             break;
+            
         case KeyCode::Kp4:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λP.press) ));
+            send(new YawBy({.target=m_target}, unit::Degree(m_λN.press) ));
             break;
         case KeyCode::Kp6:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λN.press) ));
+            send(new YawBy({.target=m_target}, unit::Degree(m_λP.press) ));
             break;
         default:
             break;

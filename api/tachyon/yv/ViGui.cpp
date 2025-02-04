@@ -296,7 +296,7 @@ namespace yq::tachyon {
         
         vkUpdateDescriptorSets(m_viz->device(), 1, &descWrite, 0, nullptr);
         
-        fonts.SetTexID(m_font.descriptor);
+        fonts.SetTexID((uint64_t) m_font.descriptor);
         
         return true;
     }

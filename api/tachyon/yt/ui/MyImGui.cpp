@@ -130,6 +130,7 @@ namespace ImGui {
 
     //  ============================================
     //  https://github.com/ocornut/imgui/issues/2649
+    #if 0
     bool SpinScaler(const char* label, ImGuiDataType data_type, void* data_ptr, const void* step, const void* step_fast, const char* format, ImGuiInputTextFlags flags)
     {
         ImGuiWindow* window = GetCurrentWindow();
@@ -153,7 +154,7 @@ namespace ImGui {
         if ((flags & (ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_CharsScientific)) == 0)
             flags |= ImGuiInputTextFlags_CharsDecimal;
         flags |= ImGuiInputTextFlags_AutoSelectAll;
-        flags |= ImGuiInputTextFlags_NoMarkEdited;  // We call MarkItemEdited() ourselve by comparing the actual data rather than the string.
+        //flags |= ImGuiInputTextFlags_NoMarkEdited;  // We call MarkItemEdited() ourselve by comparing the actual data rather than the string.
 
         if (step != NULL)
         {
@@ -244,6 +245,7 @@ namespace ImGui {
         flags |= ImGuiInputTextFlags_CharsScientific;
         return SpinScaler(label, ImGuiDataType_Double, (void*)v, (void*)(step>0.0 ? &step : NULL), (void*)(step_fast>0.0 ? &step_fast : NULL), format, flags);
     }
+    #endif
 
     void    Text(bool f)
     {

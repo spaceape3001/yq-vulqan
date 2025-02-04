@@ -9,6 +9,7 @@
 #include <ya/proxies/POrientation3.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/ControlInfoWriter.hpp>
+#include <yq/vector/Quaternion3.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Orientation³Control)
 
@@ -34,9 +35,11 @@ namespace yq::tachyon {
                 ImGui::EndChild();
             }
         } else {
+            ImGui::Separator();
             ImGui::BeginGroup();
             imgui_content();
             ImGui::EndGroup();
+            ImGui::Separator();
         }
     }
 
@@ -54,15 +57,70 @@ namespace yq::tachyon {
         Degree heading       = proxy->heading();
         Degree pitch         = proxy->pitch();
         Degree roll          = proxy->roll();
-
-        bool    changed = false;
-    
-        changed = ImGui::InputDouble("Heading", &heading.value) || changed;
-        changed = ImGui::InputDouble("Pitch", &pitch.value) || changed;
-        changed = ImGui::InputDouble("Roll", &roll.value) || changed;
+        
+        if(ImGui::BeginTable("HPR", 3)){
+            ImGui::TableSetupColumn("Hdg");
+            ImGui::TableSetupColumn("Pitch");
+            ImGui::TableSetupColumn("Roll");
+            ImGui::TableHeadersRow();
             
-        if(changed){
-            proxy -> orientation(SET, HPR, heading, pitch, roll);
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            if(ImGui::ArrowButton("+Yaw", ImGuiDir_Up)){
+                proxy->orientation(ROTATE,YAW,m_stepFast);
+            }
+            ImGui::TableNextColumn();
+            if(ImGui::ArrowButton("+Pitch", ImGuiDir_Up)){
+                proxy->orientation(ROTATE,PITCH,m_stepFast);
+            }
+            ImGui::TableNextColumn();
+            if(ImGui::ArrowButton("+Roll", ImGuiDir_Up)){
+                proxy->orientation(ROTATE,ROLL,m_stepFast);
+            }
+
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            //if(ImGui::SpinDouble("", &heading, m_step, m_stepFast, "%.2f")){
+            if(ImGui::InputDouble("", &heading)){
+                proxy->orientation(SET, HEADING, heading);
+            }
+            ImGui::TableNextColumn();
+            //if(ImGui::SpinDouble("", &pitch, m_step, m_stepFast, "%.2f")){
+            if(ImGui::InputDouble("", &pitch)){
+                proxy->orientation(SET, PITCH, pitch);
+            }
+            ImGui::TableNextColumn();
+            //if(ImGui::SpinDouble("", &roll, m_step, m_stepFast, "%.2f")){
+            if(ImGui::InputDouble("", &roll)){
+                proxy->orientation(SET, ROLL, roll);
+            }
+
+            
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            if(ImGui::ArrowButton("-Yaw", ImGuiDir_Down)){
+                proxy->orientation(ROTATE,YAW,-m_stepFast);
+            }
+            ImGui::TableNextColumn();
+            if(ImGui::ArrowButton("-Pitch", ImGuiDir_Down)){
+                proxy->orientation(ROTATE,PITCH,-m_stepFast);
+            }
+            ImGui::TableNextColumn();
+            if(ImGui::ArrowButton("-Roll", ImGuiDir_Down)){
+                proxy->orientation(ROTATE,ROLL,-m_stepFast);
+            }
+            
+            
+            ImGui::EndTable();
+        }
+            
+        if(ImGui::InputDouble4("", &orientation)){
+            if(orientation.length²() <= 1e-12){
+                orientation = IDENTITY;
+            } else {
+                orientation = ~orientation;
+            }
+            proxy -> orientation(SET, orientation);
         }
     }
 

@@ -2,6 +2,9 @@
 
 ## Upcoming
 
+* Fixed matrices in spatial
+* Fixed the projection matrix in space camera so it starts as pointing due north (unless reorientated) with a right-handed coordinate system of North-East-Down.
+
 ## 2025.02.02B
 
 * Camera SDK example fixed (note, compatible with the toolbox tag 2025.02.02)

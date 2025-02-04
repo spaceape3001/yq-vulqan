@@ -64,7 +64,7 @@ namespace ImGui {
     bool    InputDouble2(const char* label, yq::Vector2D*, const char* format = "%.3lf", ImGuiInputTextFlags flags = 0);
     bool    InputDouble3(const char* label, yq::Vector3D*, const char* format = "%.3lf", ImGuiInputTextFlags flags = 0);
     bool    InputDouble4(const char* label, yq::Vector4D*, const char* format = "%.3fl", ImGuiInputTextFlags flags = 0);
-    bool    InputDouble4(const char* label, yq::Quaternion3D*, const char* format = "%.3fl", ImGuiInputTextFlags flags = 0);
+    bool    InputDouble4(const char* label, yq::Quaternion3D*, const char* format = "%.4fl", ImGuiInputTextFlags flags = 0);
     
     template <typename DIM>
     bool    InputDouble(const char* label, yq::MKS<double,DIM>* v, yq::MKS<double,DIM> step = { 0.0 }, yq::MKS<double,DIM> step_fast = { 0.0 }, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
@@ -102,6 +102,8 @@ namespace ImGui {
     }
     
     
+    #if 0
+    
     //  ============================================
     //  The following four are taken from https://github.com/ocornut/imgui/issues/2649
 	IMGUI_API bool SpinScaler(const char* label, ImGuiDataType data_type, void* data_ptr, const void* step, const void* step_fast, const char* format, ImGuiInputTextFlags flags);
@@ -111,16 +113,17 @@ namespace ImGui {
     //  ============================================
     
     template <typename DIM>
-	bool SpinDouble(const char* label, yq::MKS<double,DIM>* v, yq::MKS<double,DIM> step = yq::ZERO, yq::MKS<double,DIM>* step_fast = yq::ZERO, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
+	bool SpinDouble(const char* label, yq::MKS<double,DIM>* v, yq::MKS<double,DIM> step = yq::ZERO, yq::MKS<double,DIM> step_fast = yq::ZERO, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
     {
         return SpinDouble(label, (double*) v, step.value, step_fast.value, format, flags);
     }
 
     template <typename DIM, double K>
-	bool SpinDouble(const char* label, yq::SCALED<double,DIM,K>* v, yq::SCALED<double,DIM,K> step = yq::ZERO, yq::SCALED<double,DIM,K>* step_fast = yq::ZERO, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
+	bool SpinDouble(const char* label, yq::SCALED<double,DIM,K>* v, yq::SCALED<double,DIM,K> step = yq::ZERO, yq::SCALED<double,DIM,K> step_fast = yq::ZERO, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)
     {
         return SpinDouble(label, (double*) v, step.value, step_fast.value, format, flags);
     }
+    #endif
     
     void    TextUnformatted(std::string_view);
     

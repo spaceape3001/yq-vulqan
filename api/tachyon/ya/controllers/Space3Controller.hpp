@@ -83,11 +83,11 @@ namespace yq::tachyon {
         KeyData         m_zN    = { -1., -0.5 };
         
         //  Go into rotate commands
-        KeyData         m_φP    = {  5.,  2.5 };
+        KeyData         m_φP    = {  5.,  2.5 };    // ROLL
         KeyData         m_φN    = { -5., -2.5 };
-        KeyData         m_θP    = {  5.,  2.5 };
+        KeyData         m_θP    = {  5.,  2.5 };    // PITCH
         KeyData         m_θN    = { -5., -2.5 };
-        KeyData         m_λP    = {  5.,  2.5 };
+        KeyData         m_λP    = {  5.,  2.5 };    // YAW
         KeyData         m_λN    = { -5., -2.5 };
         
         TypedID         m_target;

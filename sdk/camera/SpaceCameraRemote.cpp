@@ -145,30 +145,31 @@ void    SpaceCameraRemote::imgui(ViContext&u)
     if(!ImGui::Begin("Space Camera Remote"))
         return ;
         
-    if(m_orientation)
-        m_orientation->imgui(u);
         
     Vector3D        position    = pos->position();
-    if(ImGui::InputDouble3("Position", &position))
+    if(ImGui::InputDouble3("", &position))
         pos->position(SET, position);
-    
-    Quaternion3D    orient      = ori->orientation();
-    if(ImGui::InputDouble4("Orientation", &orient))
-        ori->orientation(SET, orient);
-    
-    if(ImGui::Button("+ roll"))
-        ori->orientation(ROTATE, ROLL, 10._deg);
-    if(ImGui::Button("- roll"))
-        ori->orientation(ROTATE, ROLL, -10._deg);
 
-    if(ImGui::Button("+ pitch"))
-        ori->orientation(ROTATE, PITCH, 10._deg);
-    if(ImGui::Button("- pitch"))
-        ori->orientation(ROTATE, PITCH, -10._deg);
-    if(ImGui::Button("+ yaw"))
-        ori->orientation(ROTATE, YAW, 10._deg);
-    if(ImGui::Button("- yaw"))
-        ori->orientation(ROTATE, YAW, -10._deg);
+    if(m_orientation)
+        m_orientation->imgui(u);
+    
+    //Quaternion3D    orient      = ori->orientation();
+    //if(ImGui::InputDouble4("Orientation", &orient))
+        //ori->orientation(SET, orient);
+    
+    //if(ImGui::Button("+ roll"))
+        //ori->orientation(ROTATE, ROLL, 10._deg);
+    //if(ImGui::Button("- roll"))
+        //ori->orientation(ROTATE, ROLL, -10._deg);
+
+    //if(ImGui::Button("+ pitch"))
+        //ori->orientation(ROTATE, PITCH, 10._deg);
+    //if(ImGui::Button("- pitch"))
+        //ori->orientation(ROTATE, PITCH, -10._deg);
+    //if(ImGui::Button("+ yaw"))
+        //ori->orientation(ROTATE, YAW, 10._deg);
+    //if(ImGui::Button("- yaw"))
+        //ori->orientation(ROTATE, YAW, -10._deg);
         
     ImGui::End();
 }

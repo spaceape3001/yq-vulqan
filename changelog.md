@@ -2,6 +2,7 @@
 
 ## Upcoming
 
+* Billboard Renders
 * Fixed matrices in spatial/camera/orienation.  Starts pointing due (+X) with a right-handed coordinate system.
 * Upgrade ImGui to v1.91.8
 * Added some more push buffers for rendered objects

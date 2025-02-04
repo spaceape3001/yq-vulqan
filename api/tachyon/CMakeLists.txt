@@ -485,6 +485,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/proxies/PSize2.cpp
     ya/proxies/PSize3.cpp
 
+    ya/rendereds/Billboard3.cpp
     ya/rendereds/ImageQuad3.cpp
     ya/rendereds/Quadrilateral3.cpp
     ya/rendereds/Tetrahedron3.cpp

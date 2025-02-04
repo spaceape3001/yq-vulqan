@@ -53,7 +53,7 @@ namespace yq::tachyon {
         } else {
             ctx.view44      = IDENTITY;
         }
-        ctx.view            = glm::dmat4(ctx.projection44);
+        ctx.view            = glm::dmat4(ctx.view44);
     }
 
     void    AbstractSceneWidgetHelper::_push(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
@@ -64,6 +64,11 @@ namespace yq::tachyon {
                 _push_full(pb, ctx, static_cast<const Rendered³Snap&>(sn));
             } else {
                 _push_view(pb, ctx, sn);
+            }
+            break;
+        case PushConfigType::MVP:
+            if(sn.self(Type::Rendered³)){
+                _push_mvp(pb, ctx, static_cast<const Rendered³Snap&>(sn));
             }
             break;
         case PushConfigType::View:

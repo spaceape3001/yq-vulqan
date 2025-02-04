@@ -12,6 +12,7 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/TriangleData.hpp>
 
+#include <ya/rendereds/Billboard3.hpp>
 #include <ya/rendereds/ImageQuad3.hpp>
 #include <ya/rendereds/Quadrilateral3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
@@ -148,7 +149,15 @@ Execution  CameraScene::setup(const Context&ctx)
             { 0., -15., 0. },
             Quaternion3D(CCW, X, 90._deg) 
         );   
-
+        
+        //  Something in the NE corner
+        Billboard³* bq  = create_child<Billboard³>(
+            AxBox2D(Vector2D(-1, -1), Vector2D(1, 1)), 
+            "sdk/camera/swirl.png"
+        );
+        bq->make_simple_spatial(
+            { 14., 14., 0. }
+        );
 
         Triangle³*   tri    = create_child<Triangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));

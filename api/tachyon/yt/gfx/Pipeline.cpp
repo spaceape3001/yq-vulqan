@@ -141,6 +141,7 @@ namespace yq::tachyon {
             break;
         case PushConfigType::MVP:
             m_push.size     = sizeof(StdPushDataMVP);
+            break;
         case PushConfigType::ViewProj:
             m_push.size     = sizeof(StdPushDataViewProj);
             break;

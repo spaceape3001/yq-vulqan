@@ -96,15 +96,14 @@ namespace yq::tachyon {
     {
         Spatial³::snap(sn);
 
-        Tensor33D   T       = tensor(m_orientation);
-        Tensor33D   T1   = T * diagonal(m_scale);
-        Tensor33D   T2   = diagonal(1./m_scale.x, 1./m_scale.y, 1./m_scale.z) * T;
+        Tensor33D   T    = tensor(m_orientation) * diagonal(m_scale);
+        Tensor33D   T2   = inverse(T);
         Vector3D    pos2 = T2 * m_position;
         
         sn.local2domain = Tensor44D(
-            T1.xx, T1.xy, T1.xz, m_position.x,
-            T1.yx, T1.yy, T1.yz, m_position.y,
-            T1.zx, T1.zy, T1.zz, m_position.z,
+            T.xx, T.xy, T.xz, m_position.x,
+            T.yx, T.yy, T.yz, m_position.y,
+            T.zx, T.zy, T.zz, m_position.z,
             0., 0., 0., 1.
         );
         

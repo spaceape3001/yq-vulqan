@@ -68,7 +68,7 @@ namespace yq::tachyon {
 
     void            AOrientation³::orientation(rotate_k, const Quaternion3D& Q)
     {
-        orientation(SET, Q * m_orientation);
+        orientation(SET, m_orientation * Q);
     }
     
     void            AOrientation³::orientation(rotate_k, const unit::Radian3D& Q) 
@@ -88,7 +88,7 @@ namespace yq::tachyon {
     
     void            AOrientation³::orientation(rotate_k, yaw_k, Radian r)
     {
-        orientation(ROTATE, Quaternion3D(CCW, Z, -r));
+        orientation(ROTATE, Quaternion3D(CCW, Z, r));
     }
 
     // --- COMMANDS

@@ -146,18 +146,19 @@ Execution  CameraScene::setup(const Context&ctx)
             "sdk/camera/WEST.JPG");
         iq->make_simple_spatial(
             { 0., -15., 0. },
-            Quaternion3D(CCW, X, 90._deg)
+            Quaternion3D(CCW, X, 90._deg) 
         );   
 
 
         Triangle³*   tri    = create_child<Triangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
 
-      
+
+        // north BLUE
         Rendered³*    dir     = create_child<Tetrahedron³>(NorthData);
         dir -> make_simple_spatial({15., 0., 0. });
 
-        // south
+        // south YELLOW
         dir     = create_child<Tetrahedron³>(SouthData);
         dir -> make_simple_spatial({-15., 0., 0. });
             
@@ -170,6 +171,7 @@ Execution  CameraScene::setup(const Context&ctx)
         dir     = create_child<Tetrahedron³>(TopData);
         dir -> make_simple_spatial({0., 0., -15. });
         
+        // MAGENTA
         dir     = create_child<Tetrahedron³>(BottomData);
         dir -> make_simple_spatial({0., 0., 15. });
         

@@ -34,10 +34,10 @@ namespace yq::tachyon {
     {
         switch(evt.key()){
         case KeyCode::A:
-            send(new MoveByʸ({.target=m_target}, m_vP.press ));
+            send(new MoveByʸ({.target=m_target}, m_vN.press ));
             break;
         case KeyCode::D:
-            send(new MoveByʸ({.target=m_target}, m_vN.press ));
+            send(new MoveByʸ({.target=m_target}, m_vP.press ));
             break;
         case KeyCode::W:
             send(new MoveByˣ({.target=m_target}, m_uP.press ));
@@ -46,16 +46,16 @@ namespace yq::tachyon {
             send(new MoveByˣ({.target=m_target}, m_uN.press ));
             break;
         case KeyCode::Q:
-            send(new MoveByᶻ({.target=m_target}, m_wP.press ));
-            break;
-        case KeyCode::E:
             send(new MoveByᶻ({.target=m_target}, m_wN.press ));
             break;
+        case KeyCode::E:
+            send(new MoveByᶻ({.target=m_target}, m_wP.press ));
+            break;
         case KeyCode::U:
-            send(new AddPositionᶻ({.target=m_target}, m_zP.press ));
+            send(new AddPositionᶻ({.target=m_target}, m_zN.press ));
             break;
         case KeyCode::O:
-            send(new AddPositionᶻ({.target=m_target}, m_zN.press ));
+            send(new AddPositionᶻ({.target=m_target}, m_zP.press ));
             break;
         case KeyCode::I:
             send(new AddPositionˣ({.target=m_target}, m_xP.press ));
@@ -64,10 +64,10 @@ namespace yq::tachyon {
             send(new AddPositionˣ({.target=m_target}, m_xN.press ));
             break;
         case KeyCode::J:
-            send(new AddPositionʸ({.target=m_target}, m_yP.press ));
+            send(new AddPositionʸ({.target=m_target}, m_yN.press ));
             break;
         case KeyCode::L:
-            send(new AddPositionʸ({.target=m_target}, m_yN.press ));
+            send(new AddPositionʸ({.target=m_target}, m_yP.press ));
             break;
             
         case KeyCode::Kp2:
@@ -99,10 +99,10 @@ namespace yq::tachyon {
     {
         switch(evt.key()){
         case KeyCode::A:
-            send(new MoveByʸ({.target=m_target}, m_vP.repeat ));
+            send(new MoveByʸ({.target=m_target}, m_vN.repeat ));
             break;
         case KeyCode::D:
-            send(new MoveByʸ({.target=m_target}, m_vN.repeat ));
+            send(new MoveByʸ({.target=m_target}, m_vP.repeat ));
             break;
         case KeyCode::W:
             send(new MoveByˣ({.target=m_target}, m_uP.repeat ));
@@ -111,22 +111,22 @@ namespace yq::tachyon {
             send(new MoveByˣ({.target=m_target}, m_uN.repeat ));
             break;
         case KeyCode::Q:
-            send(new MoveByᶻ({.target=m_target}, m_wP.repeat ));
-            break;
-        case KeyCode::E:
             send(new MoveByᶻ({.target=m_target}, m_wN.repeat ));
             break;
-        case KeyCode::U:
-            send(new AddPositionᶻ({.target=m_target}, m_zP.repeat ));
+        case KeyCode::E:
+            send(new MoveByᶻ({.target=m_target}, m_wP.repeat ));
             break;
-        case KeyCode::O:
+        case KeyCode::U:
             send(new AddPositionᶻ({.target=m_target}, m_zN.repeat ));
             break;
+        case KeyCode::O:
+            send(new AddPositionᶻ({.target=m_target}, m_zP.repeat ));
+            break;
         case KeyCode::I:
-            send(new AddPositionˣ({.target=m_target}, m_xP.repeat ));
+            send(new AddPositionˣ({.target=m_target}, m_xN.repeat ));
             break;
         case KeyCode::K:
-            send(new AddPositionˣ({.target=m_target}, m_xN.repeat ));
+            send(new AddPositionˣ({.target=m_target}, m_xP.repeat ));
             break;
         case KeyCode::J:
             send(new AddPositionʸ({.target=m_target}, m_yP.repeat ));
@@ -147,10 +147,10 @@ namespace yq::tachyon {
             send(new RollBy({.target=m_target}, unit::Degree(m_φP.repeat) ));
             break;
         case KeyCode::Kp4:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λP.repeat) ));
+            send(new YawBy({.target=m_target}, unit::Degree(m_λN.repeat) ));
             break;
         case KeyCode::Kp6:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λN.repeat) ));
+            send(new YawBy({.target=m_target}, unit::Degree(m_λP.repeat) ));
             break;
         default:
             break;

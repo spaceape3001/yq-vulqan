@@ -2,8 +2,9 @@
 
 ## Upcoming
 
-* Fixed matrices in spatial
-* Fixed the projection matrix in space camera so it starts as pointing due north (unless reorientated) with a right-handed coordinate system of North-East-Down.
+* Fixed matrices in spatial/camera/orienation.  Starts pointing due (+X) with a right-handed coordinate system.
+* Upgrade ImGui to v1.91.8
+* Added some more push buffers for rendered objects
 
 ## 2025.02.02B
 

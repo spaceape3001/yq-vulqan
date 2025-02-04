@@ -137,7 +137,15 @@ namespace yq::tachyon {
         switch(v){
         case PushConfigType::Full:
         case PushConfigType::View:
-            m_push.size  = sizeof(StdPushData);
+            m_push.size     = sizeof(StdPushData);
+            break;
+        case PushConfigType::MVP:
+            m_push.size     = sizeof(StdPushDataMVP);
+        case PushConfigType::ViewProj:
+            m_push.size     = sizeof(StdPushDataViewProj);
+            break;
+        case PushConfigType::View64Proj:
+            m_push.size     = sizeof(StdPushDataView64Proj);
             break;
         default:
             m_push.size   = 0;
@@ -153,6 +161,11 @@ namespace yq::tachyon {
     void  Pipeline::push_none()
     {
         push(PushConfigType::None);
+    }
+    
+    void  Pipeline::push_mvp()
+    {
+        push(PushConfigType::MVP);
     }
     
     void  Pipeline::push_view()

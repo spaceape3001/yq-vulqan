@@ -67,7 +67,7 @@ namespace yq::tachyon {
         
         _cam_matrix(ctx, id(CAMERA³));
         
-        ctx.w2e44       = ctx.projection * ctx.view;
+        ctx.w2e44       = ctx.projection44 * ctx.view44;
         ctx.w2e         = ctx.w2e44;
         auto r2 = auto_reset(u.world2eye, ctx.w2e);
         
@@ -81,9 +81,6 @@ namespace yq::tachyon {
                 
             //  we'll eventually process this... (LATER)
         }
-        
-        StdPushData     stdpush;
-        stdpush.time    = u.time;
         
         m_rendereds.resize(scene->rendereds.size());
         size_t  k   = 0;

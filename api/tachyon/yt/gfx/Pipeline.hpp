@@ -251,8 +251,9 @@ namespace yq::tachyon {
         void  push_full();
         void  push_none();
         void  push_view();
+        void  push_viewproj();
+        void  push_mvp();
 
-        
         const auto& shaders() const { return m_shaders; }
         const auto& index_buffers() const { return m_indexBuffers; }
         const auto& storage_buffers() const { return m_storageBuffers; }

@@ -19,8 +19,15 @@ namespace yq::tachyon {
         None        = 0,
         //! Full model->screen matrix requested
         Full,
-        //! Partial world->screen matrix requested
+        //! Separate Model-view-projection matrix... otherwise the same
+        MVP,
+        //! Partial view & projection (combined matrix) requested
         View,
+        //! View & projection matrix requested (kept separate)
+        ViewProj,
+        //! View & projection matrix requested (kept separate -- view as 64-bit doubles)
+        //! \note DUE TO SIZE, the MODEL MATRIX CANNOT BE LOADED INTO THIS PUSH CONSTANT
+        View64Proj,
         //! Custom push data
         Custom
     };

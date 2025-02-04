@@ -133,16 +133,11 @@ namespace yq::tachyon {
         VkPushConstantRange push{};
         if(m_config->m_push.type != PushConfigType::None){
             push.offset     = 0;
-            switch(m_config->m_push.type){
-            case PushConfigType::Full:
-            case PushConfigType::View:
-                push.size   = sizeof(StdPushData);
-                break;
-            case PushConfigType::Custom:
-                push.size   = m_config->m_push.size;
-                break;
-            default:
-                break;
+            push.size       = m_config->m_push.size;
+            
+            if(push.size > MAX_PUSH){
+                vizWarning << "Push size EXCEEDS " << MAX_PUSH << " maximum, shrinking size to fit!";
+                push.size   = MAX_PUSH;
             }
             
             if(push.size != 0){

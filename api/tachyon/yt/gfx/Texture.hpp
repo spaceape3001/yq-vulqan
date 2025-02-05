@@ -59,25 +59,39 @@ namespace yq::tachyon {
     class Texture : public UniqueID, public RefCount {
     public:
     
-        //! Image
-        const RasterCPtr            image;
+        /*! Image(s)
+        
+            When there are multiple images, it'll imply multiple layers.  
+            
+            \note While image sizes SHOULD MATCH, non-matching Images will be RESIZED/RESCALED to the largest image size. 
+        */
+        const std::vector<RasterCPtr>   images;
 
         //! Sampler info
-        const SamplerCPtr           sampler;
+        const SamplerCPtr               sampler;
         
         //! View information
-        const TextureInfo           info;
+        const TextureInfo               info;
 
         static TextureCPtr  load(std::string_view);
-        static TextureCPtr  load(std::string_view, const SamplerCPtr& _sampler);
         static TextureCPtr  load(std::string_view, const TextureInfo& texInfo);
         static TextureCPtr  load(std::string_view, const TextureInfo2& texInfo);
         static TextureCPtr  load(std::string_view, const SamplerCPtr& _sampler, const TextureInfo& texInfo = {});
+
+        static TextureCPtr  load(std::initializer_list<std::string_view>);
+        static TextureCPtr  load(std::initializer_list<std::string_view>, const TextureInfo& texInfo);
+        static TextureCPtr  load(std::initializer_list<std::string_view>, const TextureInfo2& texInfo);
+        static TextureCPtr  load(std::initializer_list<std::string_view>, const SamplerCPtr& _sampler, const TextureInfo& texInfo = {});
 
         Texture(RasterCPtr);
         Texture(RasterCPtr, const SamplerCPtr& _sampler, const TextureInfo& texInfo={});
         Texture(RasterCPtr, const TextureInfo& texInfo);
         Texture(RasterCPtr, const TextureInfo2& texInfo);
+        
+        Texture(std::vector<RasterCPtr>&&);
+        Texture(std::vector<RasterCPtr>&&, const SamplerCPtr& _sampler, const TextureInfo& texInfo={});
+        Texture(std::vector<RasterCPtr>&&, const TextureInfo& texInfo);
+        Texture(std::vector<RasterCPtr>&&, const TextureInfo2& texInfo);
         
     private:
         ~Texture();

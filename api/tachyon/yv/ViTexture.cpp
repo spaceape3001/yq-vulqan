@@ -26,6 +26,7 @@ namespace yq::tachyon {
         using texture_existing                  = error_db::entry<"Texture already created">;
         using texture_image_null_pointer        = error_db::entry<"Texture's image is a null pointer">;
         using texture_sampler_null_pointer      = error_db::entry<"Texture's sampler is a null pointer">;
+        using texture_no_images                 = error_db::entry<"Texture's without images">;
         using texture_null_pointer              = error_db::entry<"Texture is a null pointer">;
     }
 
@@ -63,16 +64,30 @@ namespace yq::tachyon {
     {
         m_viz   = &viz;
         
-        if(!tex.image){
-            vizWarning << "ViTexture() -- image is NULL!";
-            return errors::texture_image_null_pointer();
+        if(tex.images.empty()){
+            vizWarning << "ViTexture() -- no images!";
+            return errors::texture_no_images();
         }
+        
         if(!tex.sampler){
             vizWarning << "ViTexture() -- sampler is NULL!";
             return errors::texture_sampler_null_pointer();
         }
 
-        ViImageCPtr img  = viz.image_create(*tex.image);
+        ViImageCPtr img; 
+        if(tex.images.size() > 1){
+            //try {
+                img = new ViImage(viz, tex.images);
+            //}
+            //catch(...)
+            //{
+                //img = nullptr;
+            //}
+            if(!img.valid())
+                img = nullptr;
+        } else {
+            img = viz.image_create(*tex.images[0]);
+        }
         if(!img){
             vizWarning << "ViTexture() -- cannot import image!";
             return errors::texture_bad_image();

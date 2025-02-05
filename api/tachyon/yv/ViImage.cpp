@@ -464,6 +464,16 @@ namespace yq::tachyon {
             }
         }
     }
+
+    ViImage::ViImage(ViVisualizer&viz, std::span<const RasterCPtr> images)
+    {
+        if(viz.device()){
+            if(_init(viz, images) != std::error_code()){
+                _kill();
+                _wipe();
+            }
+        }
+    }
     
 
     ViImage::~ViImage()
@@ -568,6 +578,11 @@ namespace yq::tachyon {
         return {};
     }
         
+    std::error_code ViImage::_init(ViVisualizer&, const std::span<const RasterCPtr>&)
+    {
+        return errors::todo();
+    }
+
     void ViImage::_kill()
     {
         if(m_image && m_allocation){

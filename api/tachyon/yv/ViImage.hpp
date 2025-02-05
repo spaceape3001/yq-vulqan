@@ -14,7 +14,7 @@
 #include <vk_mem_alloc.h>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
-
+#include <span>
 
 namespace yq::tachyon {
     class ViVisualizer;
@@ -26,6 +26,7 @@ namespace yq::tachyon {
     
         ViImage();
         ViImage(ViVisualizer&, const Raster&);
+        ViImage(ViVisualizer&, std::span<const RasterCPtr>);
         
         //! Creates temporary (that isn't ID'd), can be written to
         ViImage(ViVisualizer&, const RasterInfo&, VkImageUsageFlags flags={});
@@ -56,6 +57,7 @@ namespace yq::tachyon {
         ViImage& operator=(ViImage&&) = delete;
         
         std::error_code _init(ViVisualizer&, const Raster&);
+        std::error_code _init(ViVisualizer&, const std::span<const RasterCPtr>&);
         std::error_code _init(ViVisualizer&, const RasterInfo&, VkImageUsageFlags flags);
         void            _wipe();
         void            _kill();

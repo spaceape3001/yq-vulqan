@@ -63,7 +63,8 @@ namespace yq::tachyon {
         
             When there are multiple images, it'll imply multiple layers.  
             
-            \note While image sizes SHOULD MATCH, non-matching Images will be RESIZED/RESCALED to the largest image size. 
+            \note While image sizes SHOULD MATCH, non-matching Images 
+            will be RESIZED/RESCALED to the largest image size. 
         */
         const std::vector<RasterCPtr>   images;
 
@@ -82,6 +83,11 @@ namespace yq::tachyon {
         static TextureCPtr  load(std::initializer_list<std::string_view>, const TextureInfo& texInfo);
         static TextureCPtr  load(std::initializer_list<std::string_view>, const TextureInfo2& texInfo);
         static TextureCPtr  load(std::initializer_list<std::string_view>, const SamplerCPtr& _sampler, const TextureInfo& texInfo = {});
+
+        static TextureCPtr  load(std::span<const std::string_view>);
+        static TextureCPtr  load(std::span<const std::string_view>, const TextureInfo& texInfo);
+        static TextureCPtr  load(std::span<const std::string_view>, const TextureInfo2& texInfo);
+        static TextureCPtr  load(std::span<const std::string_view>, const SamplerCPtr& _sampler, const TextureInfo& texInfo = {});
 
         Texture(RasterCPtr);
         Texture(RasterCPtr, const SamplerCPtr& _sampler, const TextureInfo& texInfo={});

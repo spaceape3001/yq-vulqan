@@ -488,6 +488,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/rendereds/Billboard3.cpp
     ya/rendereds/ImageQuad3.cpp
     ya/rendereds/Quadrilateral3.cpp
+    ya/rendereds/SkyBox3.cpp
     ya/rendereds/Tetrahedron3.cpp
     ya/rendereds/Triangle3.cpp
 

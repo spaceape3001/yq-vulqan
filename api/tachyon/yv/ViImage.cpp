@@ -11,6 +11,7 @@
 #include <yv/VqStructs.hpp>
 #include <yv/ViBuffer.hpp>
 #include <yv/ViVisualizer.hpp>
+#include <yq/shape/Size4.hxx>
 
 namespace yq::tachyon {
     namespace errors {
@@ -19,6 +20,7 @@ namespace yq::tachyon {
         using image_existing                    = error_db::entry<"Image already created">;
         using image_cant_create_temporary       = error_db::entry<"Unable to create temporary image">;
         using image_empty                       = error_db::entry<"Image is empty">;
+        using image_incompatible_images         = error_db::entry<"Images are incompatible to be layered">;
         using image_view_cant_create            = error_db::entry<"Unable to create image view">;
     }
     
@@ -445,10 +447,10 @@ namespace yq::tachyon {
     {
     }
     
-    ViImage::ViImage(ViVisualizer&viz, const Raster&img)
+    ViImage::ViImage(ViVisualizer&viz, const Raster&img, VkImageLayout desiredLayout)
     {
         if(viz.device()){
-            if(_init(viz, img) != std::error_code()){
+            if(_init(viz, img, desiredLayout) != std::error_code()){
                 _kill();
                 _wipe();
             }
@@ -508,7 +510,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img)
+    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img, VkImageLayout desiredLayout)
     {
         ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
         if(!local->valid())
@@ -556,7 +558,7 @@ namespace yq::tachyon {
             VkImageMemoryBarrier imb2 = imb;
 
             imb2.oldLayout          = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb2.newLayout          = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            imb2.newLayout          = desiredLayout;
 
             imb2.srcAccessMask      = VK_ACCESS_TRANSFER_WRITE_BIT;
             imb2.dstAccessMask      = VK_ACCESS_SHADER_READ_BIT;
@@ -578,9 +580,134 @@ namespace yq::tachyon {
         return {};
     }
         
-    std::error_code ViImage::_init(ViVisualizer&, const std::span<const RasterCPtr>&)
+    std::error_code ViImage::_init(ViVisualizer&viz, const std::span<const RasterCPtr>&imgs)
     {
-        return errors::todo();
+        //  check for nulls
+        for(const RasterCPtr& img : imgs){
+            if(!img){
+                vizWarning << "ViImage: null image submitted";
+                return errors::null_pointer();
+            }
+        }
+    
+        // check for compatible characteristics
+        RasterInfo      info = imgs[0]->info;
+        //bool            diffSize    = false;
+        for(const RasterCPtr& img : imgs){
+            //if(info.size != img->info.size)
+                //diffSize    = true;
+        
+            info.size   = info.size.emax(img->info.size);
+            if(info.type != img->info.type){
+                vizWarning << "ViImage: Image type mismatch";
+                return errors::image_incompatible_images();
+            }
+            if(info.arrayLayers != 1){
+                vizWarning << "ViImage: This is already a layered image";
+                return errors::image_incompatible_images();
+            }
+        }
+        
+        info.arrayLayers    = imgs.size();
+        
+        //  Load the images
+        std::vector<ViImagePtr>    images;
+        for(const RasterCPtr& img : imgs){
+            ViImagePtr  local = new ViImage(viz, *img, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+            if(!local->valid())
+                return errors::insufficient_gpu_memory();
+            images.push_back(local);
+        }
+    
+        // Create our destination image
+        std::error_code ec = _init(viz, info, VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT);
+        if(ec != std::error_code()){
+            return ec;
+        }
+
+        auto uploadTask = [&](VkCommandBuffer cmd){
+            //  And now we blit....
+            VkImageSubresourceRange range;
+            range.aspectMask        = VK_IMAGE_ASPECT_COLOR_BIT;
+            range.baseMipLevel      = 0;
+            range.levelCount        = 1;
+            range.baseArrayLayer    = 0;
+            range.layerCount        = (uint32_t) images.size();
+
+            VqImageMemoryBarrier imb;
+            imb.oldLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb.newLayout           = VK_IMAGE_LAYOUT_GENERAL;
+            imb.image               = m_image;
+            imb.subresourceRange    = range;
+            imb.srcAccessMask       = 0;
+            imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
+            
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+            
+            //std::vector<VkImageMemoryBarrier>   imbs;
+            
+            
+            for(size_t n=0;n<images.size();++n){
+                const Raster&   ras = *(imgs[n]);
+                const ViImage&  img = *images[n];
+                if(ras.info.size == info.size){
+                    VkImageCopy     creg;
+                    
+                    creg.srcSubresource.aspectMask      = VK_IMAGE_ASPECT_COLOR_BIT;
+                    creg.srcSubresource.mipLevel        = 0;
+                    creg.srcSubresource.baseArrayLayer  = 0;
+                    creg.srcSubresource.layerCount      = 1;
+                    creg.srcOffset      = { 0, 0, 0 };
+
+                    creg.dstSubresource.aspectMask      = VK_IMAGE_ASPECT_COLOR_BIT;
+                    creg.dstSubresource.mipLevel        = 0;
+                    creg.dstSubresource.baseArrayLayer  = n;
+                    creg.dstSubresource.layerCount      = 1;
+                    creg.dstOffset      = { 0, 0, 0 };
+                    creg.extent         = { (uint32_t) info.size.x, (uint32_t) info.size.y, (uint32_t) info.size.z };
+                    
+                    vkCmdCopyImage(cmd, img.image(), VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, m_image, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 1, &creg);
+                } else {
+                    VkImageBlit     blit;
+                    
+                    blit.srcSubresource.aspectMask      = VK_IMAGE_ASPECT_COLOR_BIT;
+                    blit.srcSubresource.mipLevel        = 0;
+                    blit.srcSubresource.baseArrayLayer  = 0;
+                    blit.srcSubresource.layerCount      = 1;
+                    blit.srcOffsets[0]      = { 0, 0, 0 };
+                    blit.srcOffsets[1]      = { (int32_t) ras.info.size.x, (int32_t) ras.info.size.y, (int32_t) ras.info.size.z };
+                    blit.dstSubresource.aspectMask      = VK_IMAGE_ASPECT_COLOR_BIT;
+                    blit.dstSubresource.mipLevel        = 0;
+                    blit.dstSubresource.baseArrayLayer  = n;
+                    blit.dstSubresource.layerCount      = 1;
+                    blit.dstOffsets[0]      = { 0, 0, 0 };
+                    blit.dstOffsets[1]      = { (int32_t) info.size.x, (int32_t) info.size.y, (int32_t) info.size.z };
+                    
+                    vkCmdBlitImage(cmd, img.image(), VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, m_image, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 1, &blit, VK_FILTER_LINEAR);
+                }
+            }
+                
+            VkImageMemoryBarrier imb2 = imb;
+
+            imb2.oldLayout          = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb2.newLayout          = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+            imb2.srcAccessMask      = VK_ACCESS_TRANSFER_WRITE_BIT;
+            imb2.dstAccessMask      = VK_ACCESS_SHADER_READ_BIT;
+
+            //barrier the image into the shader readable layout
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
+        };
+            
+        if(viz.transfer_queue_valid()){
+            ec = viz.transfer_queue_task(uploadTask);
+        } else {
+            ec = viz.graphic_queue_task(uploadTask);
+        }
+
+        if(ec != std::error_code())
+            return ec;
+        return {};
     }
 
     void ViImage::_kill()

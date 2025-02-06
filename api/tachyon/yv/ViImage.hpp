@@ -25,7 +25,7 @@ namespace yq::tachyon {
         static size_t       format_bytes(VkFormat);
     
         ViImage();
-        ViImage(ViVisualizer&, const Raster&);
+        ViImage(ViVisualizer&, const Raster&, VkImageLayout desiredLayout=VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
         ViImage(ViVisualizer&, std::span<const RasterCPtr>);
         
         //! Creates temporary (that isn't ID'd), can be written to
@@ -56,7 +56,7 @@ namespace yq::tachyon {
         ViImage& operator=(const ViImage&) = delete;
         ViImage& operator=(ViImage&&) = delete;
         
-        std::error_code _init(ViVisualizer&, const Raster&);
+        std::error_code _init(ViVisualizer&, const Raster&, VkImageLayout desiredLayout=VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
         std::error_code _init(ViVisualizer&, const std::span<const RasterCPtr>&);
         std::error_code _init(ViVisualizer&, const RasterInfo&, VkImageUsageFlags flags);
         void            _wipe();

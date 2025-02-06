@@ -12,9 +12,12 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/TriangleData.hpp>
 
+#include <ya/cameras/SpaceCamera.hpp>
+
 #include <ya/rendereds/Billboard3.hpp>
 #include <ya/rendereds/ImageQuad3.hpp>
 #include <ya/rendereds/Quadrilateral3.hpp>
+#include <ya/rendereds/SkyBox3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
 #include <ya/rendereds/Tetrahedron3.hpp>
 
@@ -22,6 +25,7 @@
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
+#include <yq/typedef/string_initlists.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;
@@ -95,16 +99,40 @@ CameraScene::~CameraScene()
 Execution  CameraScene::setup(const Context&ctx)
 {
     if(!m_init){
+
+        //SpaceCamera*   sc  = create_child<SpaceCamera>();
+        //sc->set_near(0.001);
+        //sc->set_far(2.000);
+        
+        SkyBox³::Param  p;
+        //p.camera    = sc->id();
+        
+        SkyBox³* sky     = create_child<SkyBox³>(
+            string_view_initializer_list_t{ 
+                "sdk/camera/NORTH.JPG",
+                "sdk/camera/SOUTH.JPG",
+                "sdk/camera/EAST.JPG",
+                "sdk/camera/WEST.JPG",
+                "sdk/camera/DOWN.JPG",
+                "sdk/camera/UP.JPG" 
+            },
+            p
+        );
         
         //  Bottom box (so +Z)
-        ImageQuad³* iq  = create_child<ImageQuad³>(
+        ImageQuad³* iq  = nullptr;
+        
+        #if 0
+        iq = create_child<ImageQuad³>(
             AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
             "sdk/camera/DOWN.JPG");
         iq->make_simple_spatial(
             { 0., 0., 15. },
             Quaternion3D(IDENTITY)
         );
+        #endif
         
+        #if 0
         //  Top box (so -Z)
         iq  = create_child<ImageQuad³>(
             AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
@@ -113,7 +141,9 @@ Execution  CameraScene::setup(const Context&ctx)
             { 0., 0., -15. },
             Quaternion3D(CCW, X, (Radian) 180._deg)
         );        
+        #endif
 
+        #if 0
         //  North box (so +X)
         iq  = create_child<ImageQuad³>(
             AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
@@ -122,7 +152,9 @@ Execution  CameraScene::setup(const Context&ctx)
             { 15., 0., 0. },
             Quaternion3D(CCW, Y, 90._deg) * Quaternion3D(CCW, Z, 90._deg)
         );        
+        #endif
         
+        #if 0
         //  South box (so -X)
         iq  = create_child<ImageQuad³>(
             AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
@@ -131,7 +163,9 @@ Execution  CameraScene::setup(const Context&ctx)
             { -15., 0., 0. },
             Quaternion3D(CCW, Y, -90._deg) * Quaternion3D(CCW, Z,  -90._deg)
         );        
+        #endif
     
+        #if 0
         //  East box (so +Y)
         iq  = create_child<ImageQuad³>(
             AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
@@ -140,7 +174,9 @@ Execution  CameraScene::setup(const Context&ctx)
             { 0., 15., 0. },
             Quaternion3D(CCW, X, -90._deg) * Quaternion3D(CCW, Z, 180._deg )
         );        
+        #endif
         
+        #if 0
         //  West box (so -Y)
         iq  = create_child<ImageQuad³>(
             AxBox2D(Vector2D(-15, -15), Vector2D(15, 15)), 
@@ -149,6 +185,7 @@ Execution  CameraScene::setup(const Context&ctx)
             { 0., -15., 0. },
             Quaternion3D(CCW, X, 90._deg) 
         );   
+        #endif
         
         //  Something in the NE corner
         Billboard³* bq  = create_child<Billboard³>(

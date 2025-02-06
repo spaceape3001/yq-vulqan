@@ -36,26 +36,29 @@ namespace yq::tachyon {
 
     void    AbstractSceneWidgetHelper::_cam_matrix(PushContext&ctx, Camera³ID cam)
     {
-        const Camera³Snap*  camera  = ctx.frame.snap(cam);
-        if(!camera){
-            ctx.view44          = IDENTITY;
-            ctx.projection44    = IDENTITY;
-            ctx.projection      = glm::dmat4(ctx.projection44);
-            return;
-        }
-        
-        ctx.projection44    = camera -> projection;
+        _cam_matrix(ctx.view44, ctx.projection44, ctx.frame, cam);
         ctx.projection      = glm::dmat4(ctx.projection44);
-        
-        const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(camera -> spatial));
-        if(s³){
-            ctx.view44      = s³ -> domain2local;
-        } else {
-            ctx.view44      = IDENTITY;
-        }
         ctx.view            = glm::dmat4(ctx.view44);
     }
 
+    void    AbstractSceneWidgetHelper::_cam_matrix(Tensor44D& view, Tensor44D& proj, const Frame& frame, Camera³ID cam)
+    {
+        const Camera³Snap*  camera  = frame.snap(cam);
+        if(!camera){
+            view            = IDENTITY;
+            proj            = IDENTITY;
+            return;
+        }
+        
+        proj        = camera->projection;
+        const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial));
+        if(s³){
+            view      = s³ -> domain2local;
+        } else {
+            view      = IDENTITY;
+        }
+    }
+    
     void    AbstractSceneWidgetHelper::_push(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
     {
         switch(sn.pipeline->push().type){
@@ -119,8 +122,16 @@ namespace yq::tachyon {
     
         StdPushDataMVP&    pd  = *pb.create_single<StdPushDataMVP>();
         pd.time         = ctx.time;
-        pd.view         = ctx.view;
-        pd.projection   = ctx.projection;
+        
+        if(sn.camera){  
+            Tensor44D   V, P;
+            _cam_matrix(V, P, ctx.frame, sn.camera);
+            pd.view         = glm::dmat4(V);
+            pd.projection   = glm::dmat4(P);
+        } else {
+            pd.view         = ctx.view;
+            pd.projection   = ctx.projection;
+        }
         pd.gamma        = m_gamma;
         
         //  gamma/colors/etc
@@ -141,22 +152,36 @@ namespace yq::tachyon {
         pd.matrix       = ctx.w2e;
     }
 
-    void    AbstractSceneWidgetHelper::_push_viewproj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&)
+    void    AbstractSceneWidgetHelper::_push_viewproj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap& sn)
     {
         StdPushDataViewProj&    pd  = *pb.create_single<StdPushDataViewProj>();
         pd.time         = ctx.time;
         pd.gamma        = m_gamma;
-        pd.view         = ctx.view;
-        pd.projection   = ctx.projection;
+        if(sn.self(Type::Rendered³) && static_cast<const Rendered³Snap&>(sn).camera){
+            Tensor44D   V, P;
+            _cam_matrix(V, P, ctx.frame, static_cast<const Rendered³Snap&>(sn).camera);
+            pd.view         = glm::dmat4(V);
+            pd.projection   = glm::dmat4(P);
+        } else {
+            pd.view         = ctx.view;
+            pd.projection   = ctx.projection;
+        }
     }
     
-    void    AbstractSceneWidgetHelper::_push_view64proj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&)
+    void    AbstractSceneWidgetHelper::_push_view64proj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
     {
         StdPushDataView64Proj&    pd  = *pb.create_single<StdPushDataView64Proj>();
         pd.time         = ctx.time;
         pd.gamma        = m_gamma;
-        pd.view         = ctx.view44;
-        pd.projection   = ctx.projection;
+        if(sn.self(Type::Rendered³) && static_cast<const Rendered³Snap&>(sn).camera){
+            Tensor44D   V, P;
+            _cam_matrix(V, P, ctx.frame, static_cast<const Rendered³Snap&>(sn).camera);
+            pd.view         = V;
+            pd.projection   = glm::dmat4(P);
+        } else {
+            pd.view         = ctx.view;
+            pd.projection   = ctx.projection;
+        }
     }
 
     SceneID     AbstractSceneWidgetHelper::id(scene_k) const

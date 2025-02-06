@@ -38,7 +38,7 @@ namespace yq::tachyon {
     
     /////////////////////////////////////////////////////////////////////////////
 
-    Rendered³::Rendered³(const Param&p) : Rendered(p)
+    Rendered³::Rendered³(const Param&p) : Rendered(p), m_camera(p.camera)
     {
         if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
             make_simple_spatial(p.position, p.orientation, p.scale);
@@ -69,66 +69,12 @@ namespace yq::tachyon {
         mark();
     }
  
-#if 0
-    Tensor44D   Rendered³::calc_local() const
-    {
-        return m_space.local2parent();
-    }
-
-    glm::dmat4  Rendered³::model2world() const
-    {
-        Tensor44D       T   = calc_local();
-        //for(const Rendered³* p = m_parent; p; p = p -> m_parent)
-            //T   = p->calc_local() * T;
-        return T;
-    }
-
-    void        Rendered³::set_bounds(const AxBox3D&v)
-    {
-        m_bounds    = v;
-    }
-
-    void        Rendered³::set_heading(Radian hdg)
-    {
-        m_space.orientation  = rotor_z(hdg);
-    }
-
-    void        Rendered³::set_hpr(Radian hdg, Radian pitch, Radian roll)
-    {
-        m_space.orientation  = yq::hpr(hdg, pitch, roll);
-    }
-
-    void        Rendered³::set_orientation(const Quaternion3D&v)
-    {
-        m_space.orientation   = v;
-    }
-
-    void        Rendered³::set_position(const Vector3D&v)
-    {
-        m_space.position      = v;
-    }
-    
-    void        Rendered³::set_scaling(double v)
-    {
-        m_space.scale        = { v, v, v };
-    }
-
-    void        Rendered³::set_scale(const Vector3D&v)
-    {
-        m_space.scale         = v;
-    }
-
-    void        Rendered³::set_space(const SimpleSpace&v)
-    {
-        m_space = v;
-    }
-#endif
-
     void    Rendered³::snap(Rendered³Snap&sn) const
     {
         ③::snap(sn);
         Rendered::snap(sn);
         sn.bounds       = m_bounds;
+        sn.camera       = m_camera;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,10 +85,6 @@ namespace yq::tachyon {
         auto w   = writer<Rendered³>();
         ③::init_info(w);
         w.description("Rendered in 3D");
-        //w.property("pos", &Rendered³::position).setter(&Rendered³::set_position);
-        //w.property("scale", &Rendered³::scale).setter(&Rendered³::set_scale);
-        //w.property("ori", &Rendered³::orientation).setter(&Rendered³::set_orientation);
-        //w.property("bounds", &Rendered³::bounds).setter(&Rendered³::set_bounds);
     }
 }
 

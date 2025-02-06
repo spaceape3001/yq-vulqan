@@ -12,6 +12,7 @@
 #include <yt/3D/3DData.hpp>
 #include <yt/scene/RenderedData.hpp>
 #include <yt/typedef/bounds3.hpp>
+#include <yt/typedef/camera3.hpp>
 #include <yt/typedef/rendered3.hpp>
 #include <yt/typedef/spatial3.hpp>
 #include <yq/tensor/Tensor44.hpp>
@@ -26,6 +27,8 @@ namespace yq::tachyon {
         //! Override to the view*model matrix (used for billboarding & other effects)  
         bool            vm_override     = false;
         
+        Camera³ID       camera;         // this can override the view/projection matrix (optional)
+
         Rendered³Snap();
         ~Rendered³Snap();
     };

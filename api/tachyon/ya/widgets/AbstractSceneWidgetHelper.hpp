@@ -52,6 +52,9 @@ namespace yq::tachyon {
         
         void    _cam_matrix(PushContext&, Camera³ID cam);
         
+        void    _cam_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, Camera³ID cam);
+        
+        
         void    _push(PushBuffer&, const PushContext&, const RenderedSnap&);
         void    _push_mvp(PushBuffer&, const PushContext&, const Rendered³Snap&);
         void    _push_full(PushBuffer&, const PushContext&, const Rendered³Snap&);

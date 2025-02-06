@@ -18,7 +18,8 @@
 
 namespace yq::tachyon {
 
-    /*! \brief A quadrilateral, taking in four points */
+    /*! \brief An image "billboard" that'll always face the camera
+    */
     class Billboard³ : public Rendered³ {
         YQ_TACHYON_DECLARE(Billboard³, Rendered³)
     private:

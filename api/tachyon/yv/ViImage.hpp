@@ -22,17 +22,30 @@ namespace yq::tachyon {
     class ViImage : public RefCount {
     public:
     
+        struct Param {
+            VkImageLayout           layout  = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            VkImageUsageFlags       usage   = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+            VmaMemoryUsage          memory  = VMA_MEMORY_USAGE_GPU_ONLY;
+            VkAccessFlags           access  = VK_ACCESS_SHADER_READ_BIT;
+            VkPipelineStageFlagBits stages  = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+            VkImageAspectFlags      aspect  = VK_IMAGE_ASPECT_COLOR_BIT;
+            VkImageCreateFlags      flags   = 0;
+            
+            Param(){}
+            ~Param(){}
+        };
+    
         static size_t       format_bytes(VkFormat);
     
         ViImage();
-        ViImage(ViVisualizer&, const Raster&, VkImageLayout desiredLayout=VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-        ViImage(ViVisualizer&, std::span<const RasterCPtr>);
+        ViImage(ViVisualizer&, const Raster&, const Param& p = Param());
+        ViImage(ViVisualizer&, std::span<const RasterCPtr>, const Param& p = Param());
         
         //! Creates temporary (that isn't ID'd), can be written to
-        ViImage(ViVisualizer&, const RasterInfo&, VkImageUsageFlags flags={});
+        ViImage(ViVisualizer&, const RasterInfo&, const Param& p = Param());
         ~ViImage();
         
-        std::error_code     init(ViVisualizer&, const Raster&);
+        std::error_code     init(ViVisualizer&, const Raster&, const Param& p = Param());
         void                kill();
         
         bool                consistent() const;
@@ -56,9 +69,9 @@ namespace yq::tachyon {
         ViImage& operator=(const ViImage&) = delete;
         ViImage& operator=(ViImage&&) = delete;
         
-        std::error_code _init(ViVisualizer&, const Raster&, VkImageLayout desiredLayout=VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-        std::error_code _init(ViVisualizer&, const std::span<const RasterCPtr>&);
-        std::error_code _init(ViVisualizer&, const RasterInfo&, VkImageUsageFlags flags);
+        std::error_code _init(ViVisualizer&, const Raster&, const Param&);
+        std::error_code _init(ViVisualizer&, const std::span<const RasterCPtr>&, const Param&);
+        std::error_code _init(ViVisualizer&, const RasterInfo&, const Param&);
         void            _wipe();
         void            _kill();
     };

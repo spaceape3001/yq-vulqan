@@ -60,7 +60,9 @@ namespace yq::tachyon {
         ViImagePtr  temp;
         if(vix.desired && (vix.desired != vix.format)){
             info.format = (DataFormat) vix.desired;
-            temp    = new ViImage(viz, info, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT);
+            ViImage::Param p4;
+            p4.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+            temp    = new ViImage(viz, info, p4);
             if(!temp->valid())
                 return errors::image_cant_create_temporary();
         }
@@ -447,30 +449,30 @@ namespace yq::tachyon {
     {
     }
     
-    ViImage::ViImage(ViVisualizer&viz, const Raster&img, VkImageLayout desiredLayout)
+    ViImage::ViImage(ViVisualizer&viz, const Raster&img, const Param& p)
     {
         if(viz.device()){
-            if(_init(viz, img, desiredLayout) != std::error_code()){
+            if(_init(viz, img, p) != std::error_code()){
                 _kill();
                 _wipe();
             }
         }
     }
     
-    ViImage::ViImage(ViVisualizer&viz, const RasterInfo& info, VkImageUsageFlags usage)
+    ViImage::ViImage(ViVisualizer&viz, const RasterInfo& info, const Param& p)
     {
         if(viz.device()){
-            if(_init(viz, info, usage) != std::error_code()){
+            if(_init(viz, info, p) != std::error_code()){
                 _kill();
                 _wipe();
             }
         }
     }
 
-    ViImage::ViImage(ViVisualizer&viz, std::span<const RasterCPtr> images)
+    ViImage::ViImage(ViVisualizer&viz, std::span<const RasterCPtr> images, const Param& p)
     {
         if(viz.device()){
-            if(_init(viz, images) != std::error_code()){
+            if(_init(viz, images, p) != std::error_code()){
                 _kill();
                 _wipe();
             }
@@ -483,7 +485,7 @@ namespace yq::tachyon {
         kill();
     }
 
-    std::error_code ViImage::_init(ViVisualizer&viz, const RasterInfo& info, VkImageUsageFlags usage)
+    std::error_code ViImage::_init(ViVisualizer&viz, const RasterInfo& info, const Param& p)
     {
         m_viz                   = &viz;
         m_info                  = info;
@@ -497,12 +499,13 @@ namespace yq::tachyon {
         imgInfo.arrayLayers     = m_info.arrayLayers;
         imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
         imgInfo.format          = (VkFormat) m_info.format.value();
-        imgInfo.usage           = usage;
+        imgInfo.usage           = p.usage;
         imgInfo.tiling          = (VkImageTiling) m_info.tiling.value();
         imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
+        imgInfo.flags           = p.flags;
        
         VmaAllocationCreateInfo diai  = {};
-        diai.usage    = VMA_MEMORY_USAGE_GPU_ONLY;
+        diai.usage              = p.memory;
 
         if(vmaCreateImage(viz.allocator(), &imgInfo, &diai, &m_image, &m_allocation, nullptr) != VK_SUCCESS){
             return errors::insufficient_gpu_memory();
@@ -510,20 +513,21 @@ namespace yq::tachyon {
         return {};
     }
 
-    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img, VkImageLayout desiredLayout)
+    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img, const Param& p)
     {
-        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_ONLY});
+        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_TO_GPU});
         if(!local->valid())
             return errors::insufficient_gpu_memory();
 
-        std::error_code ec = _init(viz, img.info, VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT);
+
+        std::error_code ec = _init(viz, img.info, p);
         if(ec != std::error_code()){
             return ec;
         }
             
         auto uploadTask = [&](VkCommandBuffer cmd){
             VkImageSubresourceRange range;
-            range.aspectMask        = VK_IMAGE_ASPECT_COLOR_BIT;
+            range.aspectMask        = p.aspect;
             range.baseMipLevel      = 0;
             range.levelCount        = 1;
             range.baseArrayLayer    = 0;
@@ -544,7 +548,7 @@ namespace yq::tachyon {
             creg.bufferRowLength    = 0;
             creg.bufferImageHeight  = 0;
 
-            creg.imageSubresource.aspectMask        = VK_IMAGE_ASPECT_COLOR_BIT;
+            creg.imageSubresource.aspectMask        = p.aspect;
             creg.imageSubresource.mipLevel          = 0;
             creg.imageSubresource.baseArrayLayer    = 0;
             creg.imageSubresource.layerCount        = 1;
@@ -558,13 +562,13 @@ namespace yq::tachyon {
             VkImageMemoryBarrier imb2 = imb;
 
             imb2.oldLayout          = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb2.newLayout          = desiredLayout;
+            imb2.newLayout          = p.layout;
 
             imb2.srcAccessMask      = VK_ACCESS_TRANSFER_WRITE_BIT;
-            imb2.dstAccessMask      = VK_ACCESS_SHADER_READ_BIT;
+            imb2.dstAccessMask      = p.access;
 
             //barrier the image into the shader readable layout
-            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, p.stages, 0, 0, nullptr, 0, nullptr, 1, &imb2);
         };
 
         if(viz.transfer_queue_valid()){
@@ -580,7 +584,7 @@ namespace yq::tachyon {
         return {};
     }
         
-    std::error_code ViImage::_init(ViVisualizer&viz, const std::span<const RasterCPtr>&imgs)
+    std::error_code ViImage::_init(ViVisualizer&viz, const std::span<const RasterCPtr>&imgs, const Param& p)
     {
         //  check for nulls
         for(const RasterCPtr& img : imgs){
@@ -613,43 +617,53 @@ namespace yq::tachyon {
         //  Load the images
         std::vector<ViImagePtr>    images;
         for(const RasterCPtr& img : imgs){
-            ViImagePtr  local = new ViImage(viz, *img, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+            Param p3;
+            p3.layout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            p3.usage  |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+        
+            ViImagePtr  local = new ViImage(viz, *img, p3);
             if(!local->valid())
                 return errors::insufficient_gpu_memory();
             images.push_back(local);
         }
     
         // Create our destination image
-        std::error_code ec = _init(viz, info, VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT);
+        Param p2 = p;
+        p2.usage    = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+        p2.flags   |= VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
+        p2.layout   = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+        
+        std::error_code ec = _init(viz, info, p2 );
         if(ec != std::error_code()){
             return ec;
         }
 
-        auto uploadTask = [&](VkCommandBuffer cmd){
-            //  And now we blit....
-            VkImageSubresourceRange range;
-            range.aspectMask        = VK_IMAGE_ASPECT_COLOR_BIT;
-            range.baseMipLevel      = 0;
-            range.levelCount        = 1;
-            range.baseArrayLayer    = 0;
-            range.layerCount        = (uint32_t) images.size();
+        auto compositeTask = [&](VkCommandBuffer cmd){
+vizInfo << "ViImage::init() ... starting composite task";        
+            std::vector<VkImageMemoryBarrier>   imbs;
+            for(size_t n=0;n<images.size();++n){
+                VqImageMemoryBarrier imb;
+                imb.oldLayout                       = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+                imb.newLayout                       = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+                imb.image                           = images[n]->image();
+                imb.subresourceRange.aspectMask     = p.aspect;
+                imb.subresourceRange.baseMipLevel   = 0;
+                imb.subresourceRange.levelCount     = 1;
+                imb.subresourceRange.baseArrayLayer = 0;
+                imb.subresourceRange.layerCount     = 1;
+                imb.srcAccessMask                   = 0; // VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
+                imb.dstAccessMask                   = 0; // VK_ACCESS_MEMORY_READ_BIT;
+                imbs.push_back(imb);
+            }
 
-            VqImageMemoryBarrier imb;
-            imb.oldLayout           = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb.newLayout           = VK_IMAGE_LAYOUT_GENERAL;
-            imb.image               = m_image;
-            imb.subresourceRange    = range;
-            imb.srcAccessMask       = 0;
-            imb.dstAccessMask       = VK_ACCESS_TRANSFER_WRITE_BIT;
-            
-            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
-            
-            //std::vector<VkImageMemoryBarrier>   imbs;
-            
-            
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, 0, 0, nullptr, 0, nullptr, imbs.size(), imbs.data());
+
+vizInfo << "ViImage::init() ... onto blit";        
+        
             for(size_t n=0;n<images.size();++n){
                 const Raster&   ras = *(imgs[n]);
                 const ViImage&  img = *images[n];
+                /*
                 if(ras.info.size == info.size){
                     VkImageCopy     creg;
                     
@@ -666,45 +680,48 @@ namespace yq::tachyon {
                     creg.dstOffset      = { 0, 0, 0 };
                     creg.extent         = { (uint32_t) info.size.x, (uint32_t) info.size.y, (uint32_t) info.size.z };
                     
-                    vkCmdCopyImage(cmd, img.image(), VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, m_image, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 1, &creg);
+                    vkCmdCopyImage(cmd, img.image(), VK_IMAGE_LAYOUT_GENERAL, m_image, VK_IMAGE_LAYOUT_GENERAL, 1, &creg);
                 } else {
+                */
                     VkImageBlit     blit;
                     
-                    blit.srcSubresource.aspectMask      = VK_IMAGE_ASPECT_COLOR_BIT;
+                    blit.srcSubresource.aspectMask      = p.aspect;
                     blit.srcSubresource.mipLevel        = 0;
                     blit.srcSubresource.baseArrayLayer  = 0;
                     blit.srcSubresource.layerCount      = 1;
                     blit.srcOffsets[0]      = { 0, 0, 0 };
                     blit.srcOffsets[1]      = { (int32_t) ras.info.size.x, (int32_t) ras.info.size.y, (int32_t) ras.info.size.z };
-                    blit.dstSubresource.aspectMask      = VK_IMAGE_ASPECT_COLOR_BIT;
+                    blit.dstSubresource.aspectMask      = p.aspect;
                     blit.dstSubresource.mipLevel        = 0;
                     blit.dstSubresource.baseArrayLayer  = n;
                     blit.dstSubresource.layerCount      = 1;
                     blit.dstOffsets[0]      = { 0, 0, 0 };
                     blit.dstOffsets[1]      = { (int32_t) info.size.x, (int32_t) info.size.y, (int32_t) info.size.z };
                     
-                    vkCmdBlitImage(cmd, img.image(), VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, m_image, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 1, &blit, VK_FILTER_LINEAR);
-                }
+                    vkCmdBlitImage(cmd, img.image(), VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &blit, VK_FILTER_LINEAR);
+                //}
+                //break;
             }
-                
-            VkImageMemoryBarrier imb2 = imb;
 
-            imb2.oldLayout          = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            imb2.newLayout          = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+vizInfo << "ViImage::init() ... blits are done";        
 
-            imb2.srcAccessMask      = VK_ACCESS_TRANSFER_WRITE_BIT;
-            imb2.dstAccessMask      = VK_ACCESS_SHADER_READ_BIT;
-
-            //barrier the image into the shader readable layout
-            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb2);
+            VqImageMemoryBarrier imb;
+            imb.oldLayout                       = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+            imb.newLayout                       = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            imb.image                           = m_image;
+            imb.subresourceRange.aspectMask     = p.aspect;
+            imb.subresourceRange.baseMipLevel   = 0;
+            imb.subresourceRange.levelCount     = 1;
+            imb.subresourceRange.baseArrayLayer = 0;
+            imb.subresourceRange.layerCount     = (uint32_t) images.size();
+            imb.srcAccessMask                   = 0;
+            imb.dstAccessMask                   = 0;
+            
+            vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+vizInfo << "ViImage::init() ... finishing composite task";        
         };
             
-        if(viz.transfer_queue_valid()){
-            ec = viz.transfer_queue_task(uploadTask);
-        } else {
-            ec = viz.graphic_queue_task(uploadTask);
-        }
-
+        ec = viz.graphic_queue_task(compositeTask);
         if(ec != std::error_code())
             return ec;
         return {};
@@ -728,14 +745,14 @@ namespace yq::tachyon {
     }
     
     
-    std::error_code ViImage::init(ViVisualizer&viz, const Raster&img)
+    std::error_code ViImage::init(ViVisualizer&viz, const Raster&img, const Param&p)
     {
         if(m_viz){
             if(!consistent())
                 return errors::image_bad_state();
             return errors::image_existing();
         }
-        std::error_code ec  = _init(viz, img);
+        std::error_code ec  = _init(viz, img, p);
         if(ec != std::error_code()){
             _kill();
             _wipe();

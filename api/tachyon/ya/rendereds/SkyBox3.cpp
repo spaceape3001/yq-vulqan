@@ -77,6 +77,7 @@ namespace yq::tachyon {
         TextureInfo     texInfo;
         texInfo.imageViewType   = ImageViewType::Cube;
         m_texture       = Texture::load(imageSpec, texInfo);
+        //m_texture       = Texture::load(images[0], texInfo);
     }
     
     SkyBox³::~SkyBox³()

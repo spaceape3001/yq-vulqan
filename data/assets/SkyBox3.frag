@@ -6,5 +6,5 @@ layout(binding = 0) uniform samplerCube texSampler;
 
 void main() 
 {
-    outColor = (0.5+0.5*vec4(inPosition, 1.)) * texture(texSampler, inPosition);
+    outColor = (0.75+0.25*vec4(inPosition, 1.)) * texture(texSampler, inPosition);
 }

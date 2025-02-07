@@ -103,8 +103,8 @@ namespace yq::tachyon {
         KeyData         m_λP    = {  5.,  2.5 };    // YAW
         KeyData         m_λN    = { -5., -2.5 };
         
-        AxisData        m_θ     = { 0., 0.1 };
-        AxisData        m_λ     = { 0., 0.1 };
+        AxisData        m_θ     = { 0., -0.1 };     // joystick/pitch (gain is negative to get the axis/direction to match)
+        AxisData        m_λ     = { 0.,  0.1 };
         
         TypedID         m_target;
         bool            m_joyLockout = false;

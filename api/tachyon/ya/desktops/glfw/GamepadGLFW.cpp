@@ -125,8 +125,6 @@ namespace yq::tachyon {
                         float del  = x - a.value;
                         a.value = x;
                         a.raw   = f;
-yInfo() << "GamepadGLFW::tick() .. axis " << n << " is " << f << " or " << x << ". zero is " << a.zero;
-                        
                         send(new GamepadAxisEvent({.source=*this}, n, x, del));
                         mark();
                     }

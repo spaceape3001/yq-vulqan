@@ -201,10 +201,10 @@ namespace yq::tachyon {
     {
         if(!m_joyLockout){
             if(m_θ.input){
-                send(new PitchBy({.target=m_target}, unit::Degree(m_θ.gain*ctx.Δwall.value) ));
+                send(new PitchBy({.target=m_target}, unit::Degree(m_θ.input*m_θ.gain*ctx.Δwall.value) ));
             }
             if(m_λ.input){
-                send(new YawBy({.target=m_target}, unit::Degree(m_θ.gain*ctx.Δwall.value) ));
+                send(new YawBy({.target=m_target}, unit::Degree(m_λ.input*m_λ.gain*ctx.Δwall.value) ));
             }
         }
         return {};

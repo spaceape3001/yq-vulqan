@@ -12,6 +12,7 @@
 
 namespace yq::tachyon {
     struct GamepadSnap : public TachyonSnap {
+        std::string             name, guid;
         std::vector<float>      axes;
         std::vector<bool>       buttons;
         std::vector<HatState>   hats;

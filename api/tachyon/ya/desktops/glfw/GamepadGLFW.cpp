@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/desktops/glfw/JoystickGLFW.hpp>
-#include <yt/os/JoystickInfoWriter.hpp>
-#include <ya/commands/joystick/JoystickZeroCommand.hpp>
+#include <ya/desktops/glfw/GamepadGLFW.hpp>
+#include <yt/os/GamepadInfoWriter.hpp>
+#include <ya/commands/gamepad/GamepadZeroCommand.hpp>
 #include <ya/desktops/glfw/glfw.hpp>
-#include <ya/events/joystick/JoystickAxisEvent.hpp>
-#include <ya/events/joystick/JoystickHatEvent.hpp>
-#include <ya/events/joystick/JoystickPressEvent.hpp>
-#include <ya/events/joystick/JoystickReleaseEvent.hpp>
-#include <ya/events/joystick/JoystickZeroEvent.hpp>
+#include <ya/events/gamepad/GamepadAxisEvent.hpp>
+#include <ya/events/gamepad/GamepadHatEvent.hpp>
+#include <ya/events/gamepad/GamepadPressEvent.hpp>
+#include <ya/events/gamepad/GamepadReleaseEvent.hpp>
+#include <ya/events/gamepad/GamepadZeroEvent.hpp>
 #include <yt/logging.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::JoystickGLFW)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::GamepadGLFW)
 
 namespace yq::tachyon {
-    JoystickGLFW::JoystickGLFW(int jid, const Param&p) : Joystick(p), m_joystick(jid)
+    GamepadGLFW::GamepadGLFW(int jid, const Param&p) : Gamepad(p), m_joystick(jid)
     {
     }
     
-    JoystickGLFW::~JoystickGLFW()
+    GamepadGLFW::~GamepadGLFW()
     {
     }
 
-    void    JoystickGLFW::disconnecting()
+    void    GamepadGLFW::disconnecting()
     {
     }
 
-    void      JoystickGLFW::on_zero_command(const JoystickZeroCommand& cmd)
+    void      GamepadGLFW::on_zero_command(const GamepadZeroCommand& cmd)
     {
         if(cmd.target() != id())
             return ;
         m_rezero    = true;
     }
 
-    Execution JoystickGLFW::setup(const Context&ctx)
+    Execution GamepadGLFW::setup(const Context&ctx)
     {
         if(!m_init){
             glfwSetJoystickUserPointer(m_joystick, this);
@@ -69,12 +69,12 @@ namespace yq::tachyon {
             
             m_init = true;
         }
-        return Joystick::setup(ctx);
+        return Gamepad::setup(ctx);
     }
 
-    void      JoystickGLFW::snap(JoystickSnap&sn) const
+    void      GamepadGLFW::snap(GamepadSnap&sn) const
     {
-        Joystick::snap(sn);
+        Gamepad::snap(sn);
         sn.name = m_name;
         sn.guid = m_guid;
         sn.axes.reserve(m_axes.size());
@@ -84,25 +84,25 @@ namespace yq::tachyon {
         sn.hats     = m_hats;
     }
     
-    Execution JoystickGLFW::teardown(const Context&ctx)
+    Execution GamepadGLFW::teardown(const Context&ctx)
     {
         if(m_init){
             glfwSetJoystickUserPointer(m_joystick, nullptr);
             m_init  = false;
         }
-        return Joystick::teardown(ctx);
+        return Gamepad::teardown(ctx);
     }
 
-    float   JoystickGLFW::Axis::operator()(float x) const
+    float   GamepadGLFW::Axis::operator()(float x) const
     {
         if(x >= zero){
-            return (x - zero) / (1.0 - zero);
+            return (x-zero) / (1.0 - zero);
         } else {
-            return (x - zero) / (zero + 1.0);
+            return (x-zero) / (zero + 1.0);
         }
     }
 
-    Execution JoystickGLFW::tick(const Context&ctx) 
+    Execution GamepadGLFW::tick(const Context&ctx) 
     {
         int count   = 0;
         if(const float* axes = glfwGetJoystickAxes(m_joystick, &count); axes && (count == (int) m_axes.size())){
@@ -111,9 +111,9 @@ namespace yq::tachyon {
                     Axis&   a   = m_axes[n];
                     a.zero  = a.raw = axes[n];
                     a.value = 0.;
-                    send(new JoystickAxisEvent({.source=*this}, n, 0., 0.));
+                    send(new GamepadAxisEvent({.source=*this}, n, 0., 0.));
                 }
-                send(new JoystickZeroEvent({.source=*this}));
+                send(new GamepadZeroEvent({.source=*this}));
                 mark();
                 m_rezero    = false;
             } else {
@@ -125,8 +125,9 @@ namespace yq::tachyon {
                         float del  = x - a.value;
                         a.value = x;
                         a.raw   = f;
+yInfo() << "GamepadGLFW::tick() .. axis " << n << " is " << f << " or " << x << ". zero is " << a.zero;
                         
-                        send(new JoystickAxisEvent({.source=*this}, n, x, del));
+                        send(new GamepadAxisEvent({.source=*this}, n, x, del));
                         mark();
                     }
                 }
@@ -139,9 +140,9 @@ namespace yq::tachyon {
                 if(st != m_buttons[n]){
                     m_buttons[n] = st;
                     if(st){
-                        send(new JoystickPressEvent({.source=*this}, n));
+                        send(new GamepadPressEvent({.source=*this}, n));
                     } else {
-                        send(new JoystickReleaseEvent({.source=*this}, n));
+                        send(new GamepadReleaseEvent({.source=*this}, n));
                     }
                     mark();
                 }
@@ -153,7 +154,7 @@ namespace yq::tachyon {
                 HatState    st  = (HatState) p[n];
                 if(st != m_hats[n]){
                     m_hats[n]   = st;
-                    send(new JoystickHatEvent({.source=this}, n, st));
+                    send(new GamepadHatEvent({.source=this}, n, st));
                     mark();
                 }
             }
@@ -162,10 +163,10 @@ namespace yq::tachyon {
         return {};
     }
     
-    void JoystickGLFW::init_info()
+    void GamepadGLFW::init_info()
     {
-        auto w = writer<JoystickGLFW>();
-        w.description("GLFW Joystick");
-        w.slot(&JoystickGLFW::on_zero_command);
+        auto w = writer<GamepadGLFW>();
+        w.description("GLFW Gamepad");
+        w.slot(&GamepadGLFW::on_zero_command);
     }
 }

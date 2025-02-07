@@ -176,6 +176,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/CameraCommand.cpp
     ya/commands/ControllerCommand.cpp
     ya/commands/EmptyCommand.cpp
+    ya/commands/GamepadCommand.cpp
     ya/commands/GLFWCommand.cpp
     ya/commands/JoystickCommand.cpp
     ya/commands/MouseCaptureCommand.cpp
@@ -214,6 +215,10 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/controller/ListenCommand.cpp
     ya/commands/controller/UncontrolCommand.cpp
     ya/commands/controller/UnlistenCommand.cpp
+
+    ya/commands/gamepad/GamepadZeroCommand.cpp
+
+    ya/commands/joystick/JoystickZeroCommand.cpp
 
     ya/commands/sim/ResumeCommand.cpp
     ya/commands/sim/PauseCommand.cpp
@@ -355,6 +360,7 @@ add_library(${PROJECT_NAME} SHARED
 
     ya/desktops/glfw/CursorGLFW.cpp
     ya/desktops/glfw/DesktopGLFW.cpp
+    ya/desktops/glfw/GamepadGLFW.cpp
     ya/desktops/glfw/JoystickGLFW.cpp
     ya/desktops/glfw/KeyboardGLFW.cpp
     ya/desktops/glfw/MonitorGLFW.cpp
@@ -414,6 +420,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/gamepad/GamepadHatEvent.cpp
     ya/events/gamepad/GamepadPressEvent.cpp
     ya/events/gamepad/GamepadReleaseEvent.cpp
+    ya/events/gamepad/GamepadZeroEvent.cpp
 
     ya/events/joystick/JoystickAxisEvent.cpp
     ya/events/joystick/JoystickConnectEvent.cpp
@@ -421,6 +428,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/joystick/JoystickHatEvent.cpp
     ya/events/joystick/JoystickPressEvent.cpp
     ya/events/joystick/JoystickReleaseEvent.cpp
+    ya/events/joystick/JoystickZeroEvent.cpp
     
     ya/events/spatial/MaxSize1Event.cpp
     ya/events/spatial/MaxSize2Event.cpp

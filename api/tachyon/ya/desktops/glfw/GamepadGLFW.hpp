@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <yt/os/Joystick.hpp>
+#include <yt/os/Gamepad.hpp>
 #include <yt/os/HatState.hpp>
 
 namespace yq::tachyon {
 
-    class JoystickZeroCommand;
+    class GamepadZeroCommand;
     
-    class JoystickGLFW : public Joystick {
-        YQ_TACHYON_DECLARE(JoystickGLFW, Joystick)
+    class GamepadGLFW : public Gamepad {
+        YQ_TACHYON_DECLARE(GamepadGLFW, Gamepad)
     public:
-        JoystickGLFW(int, const Param&p = Param());
-        ~JoystickGLFW();
+        GamepadGLFW(int, const Param&p = Param());
+        ~GamepadGLFW();
         
         static void init_info();
         
@@ -30,9 +30,9 @@ namespace yq::tachyon {
         void    disconnecting();
         
     protected:
-        void        snap(JoystickSnap&) const;
+        void        snap(GamepadSnap&) const;
         
-        void        on_zero_command(const JoystickZeroCommand&);
+        void        on_zero_command(const GamepadZeroCommand&);
 
     private:
         const int                       m_joystick;

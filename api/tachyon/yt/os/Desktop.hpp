@@ -82,7 +82,7 @@ namespace yq::tachyon {
         
         virtual CursorID    cursor(StdCursor) const { return {}; }
         
-        virtual bool        is_running() const { return false; }
+        //virtual bool        is_running() const { return false; }
 
         bool    does(cursor_k) const;
         bool    does(joystick_k) const;

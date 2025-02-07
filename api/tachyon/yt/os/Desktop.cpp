@@ -46,6 +46,7 @@ namespace yq::tachyon {
 
     Desktop::Param::Param()
     {
+        control = ALL;
     }
 
     Desktop::Desktop(const AppCreateInfo& aci, const Param& p) : Manager(p), m_control(p.control)

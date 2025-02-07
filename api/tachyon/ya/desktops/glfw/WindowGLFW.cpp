@@ -25,6 +25,8 @@
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/UnfloatCommand.hpp>
 #include <yt/os/KeyCode.hpp>
+#include <ya/events/GamepadEvent.hpp>
+#include <ya/events/JoystickEvent.hpp>
 #include <ya/events/KeyCharacterEvent.hpp>
 #include <ya/events/KeyPressEvent.hpp>
 #include <ya/events/KeyReleaseEvent.hpp>
@@ -398,6 +400,10 @@ namespace yq::tachyon {
             return pa;
         if(dynamic_cast<const CloseRequest*>(&pp))
             return MG::General;
+        if(dynamic_cast<const GamepadEvent*>(&pp))
+            return MG::General;
+        if(dynamic_cast<const JoystickEvent*>(&pp))
+            return MG::General;
         return {};
     }
 
@@ -741,20 +747,17 @@ namespace yq::tachyon {
         sn.time             = glfwGetTime();
     }
 
-#if 0
     Execution WindowGLFW::tick(const Context&ctx) 
     {
-        //Window::tick(ctx);
-        //if(m_stage == Stage::Destruct){
-            //send(new WindowDestroyEvent(this));
-            //return DELETE;
-        //}
-        
-        //  TODO
-        
-        return {};
+        if(m_desktop){
+            if(glfwGetWindowAttrib(m_window, GLFW_FOCUSED)){
+                m_desktop->m_focus      = *this;
+            } else if(m_desktop->m_focus == id()){
+                m_desktop->m_focus      = {};
+            }
+        }
+        return {};  // TODO: throw a rate limit here... 10-100ms? (well, once we honor it)
     }
-#endif
 
     std::string         WindowGLFW::title(read_k) const
     {

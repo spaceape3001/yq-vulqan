@@ -136,6 +136,7 @@ namespace yq::tachyon {
         std::monostate,     //< Default/unspecified, processing will commence
         accept_k,           //< Unconditionally accept this post
         reject_k,           //< Unconditionally reject this post
+        TachyonID,          //< Accept & forward to this tachyon
         MG,                 //< Accept & forward this post to the given groups
         MGF                 //< Accept & forward this post to the specified group
     >;
@@ -228,6 +229,8 @@ namespace yq::tachyon {
             it's good to have meta/ID/name tuple there.
         */
         Ident               ident() const;
+        
+        bool                kaput() const;
         
         //! Inbound mail to this tachyon
         //! \note Can be used to self-mail commands

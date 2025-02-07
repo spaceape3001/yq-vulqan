@@ -5,7 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Space3Controller.hpp"
+#include <yt/api/Context.hpp>
 #include <yt/api/ControllerInfoWriter.hpp>
+#include <ya/commands/gamepad/GamepadZeroCommand.hpp>
 #include <ya/commands/spatial/AddPositionX.hpp>
 #include <ya/commands/spatial/AddPositionY.hpp>
 #include <ya/commands/spatial/AddPositionZ.hpp>
@@ -17,6 +19,10 @@
 #include <ya/commands/spatial/YawBy.hpp>
 #include <ya/events/KeyPressEvent.hpp>
 #include <ya/events/KeyRepeatEvent.hpp>
+#include <ya/events/gamepad/GamepadAxisEvent.hpp>
+#include <ya/events/gamepad/GamepadPressEvent.hpp>
+#include <ya/events/gamepad/GamepadZeroEvent.hpp>
+#include <yt/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Space³Controller)
 
@@ -30,6 +36,35 @@ namespace yq::tachyon {
     {
     }
     
+    void    Space³Controller::on_gamepad_axis(const GamepadAxisEvent&evt)
+    {
+        switch(evt.axis()){
+        case 0:
+            m_λ.input   = evt.value();
+            break;
+        case 1:
+            m_θ.input   = evt.value();
+            break;
+        default:
+            break;
+        }
+    }
+
+    void    Space³Controller::on_gamepad_press(const GamepadPressEvent&evt)
+    {
+        if(evt.button() == 9){  // currently hardwired
+            m_joyLockout    = true;
+            send(new GamepadZeroCommand({.target=evt.source()})); 
+        }
+    }
+
+    void    Space³Controller::on_gamepad_zero(const GamepadZeroEvent&evt)
+    {
+        m_θ.input       = 0.;
+        m_λ.input       = 0.;
+        m_joyLockout    = false;
+    }
+
     void    Space³Controller::on_key_press(const KeyPressEvent&evt)
     {
         switch(evt.key()){
@@ -161,11 +196,27 @@ namespace yq::tachyon {
     {
         m_target = t;
     }
+
+    Execution   Space³Controller::tick(const Context& ctx)
+    {
+        if(!m_joyLockout){
+            if(m_θ.input){
+                send(new PitchBy({.target=m_target}, unit::Degree(m_θ.gain*ctx.Δwall.value) ));
+            }
+            if(m_λ.input){
+                send(new YawBy({.target=m_target}, unit::Degree(m_θ.gain*ctx.Δwall.value) ));
+            }
+        }
+        return {};
+    }
     
     void Space³Controller::init_info()
     {
         auto w = writer<Space³Controller>();
         w.description("Controller for 3D spatials");
+        w.slot(&Space³Controller::on_gamepad_axis);
+        w.slot(&Space³Controller::on_gamepad_press);
+        w.slot(&Space³Controller::on_gamepad_zero);
         w.slot(&Space³Controller::on_key_press);
         w.slot(&Space³Controller::on_key_repeat);
     }

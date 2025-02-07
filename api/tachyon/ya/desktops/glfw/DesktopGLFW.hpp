@@ -22,8 +22,6 @@ namespace yq::tachyon {
         DesktopGLFW(const AppCreateInfo&, const Param& p=Param());
         ~DesktopGLFW();
         
-        virtual Execution tick(const Context&) override;
-
         static void init_info();
 
         virtual CursorID    cursor(StdCursor) const override;
@@ -32,23 +30,19 @@ namespace yq::tachyon {
         virtual Window*     create(window_k, const ViewerCreateInfo&) override;
         WindowGLFW*         create_window(const ViewerCreateInfo&);
         
-        virtual bool        is_running() const override;
+        //virtual bool        is_running() const override;
 
     protected:
         virtual PostAdvice  advise(const Post&) const override;
 
+        Execution    tick(const Context&) override;
+        Execution    setup(const Context&) override;
+        Execution    teardown(const Context&) override;
+
     private:
-        enum class Stage {
-            Uninit      = 0,
-            Init,
-            Running,
-            Dead
-        };
         friend class WindowGLFW;
+        friend class JoystickGLFW;
         
-        
-        Execution    _tick(const Context&);
-        Execution    _start(const Context&);
         
         static DesktopGLFW*     s_desktop;
         static void callback_joystick(int jid, int event);
@@ -58,18 +52,18 @@ namespace yq::tachyon {
         
         //! Joysticks (number comes from GLFW)
         glfw_joystick_array     m_joysticks;
-        glfw_joystick_array     m_gamepads;
+        glfw_gamepad_array      m_gamepads;
         glfw_cursor_map         m_cursors;
         std_cursor_lookup       m_stdCursors;
         glfw_window_map         m_windows;
         KeyboardGLFW*           m_keyboard  = nullptr;
+        TypedID                 m_focus;
         
         //! Primary monitor
         MonitorGLFW*            m_monitor   = nullptr;
         glfw_monitor_map        m_monitors;
         MouseGLFW*              m_mouse     = nullptr;
-        ControlFlags            m_control;
-        Stage                   m_stage     = Stage::Uninit;
+        bool                    m_init      = false;
         
         // TRUE if an insertion occured
         void _install(cursor_k, all_k);

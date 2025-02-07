@@ -7,6 +7,7 @@
 #include <yq/core/ThreadId.hpp>
 #include <yt/logging.hpp>
 #include <yt/app/Application.hpp>
+#include <yt/api/Frame.hpp>
 #include <yt/api/Context.hpp>
 #include <yt/os/DesktopInfoWriter.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>
@@ -14,12 +15,16 @@
 #include <ya/desktops/glfw/CursorGLFW.hpp>
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
 #include <ya/desktops/glfw/ExceptionGLFW.hpp>
+#include <ya/desktops/glfw/GamepadGLFW.hpp>
 #include <ya/desktops/glfw/JoystickGLFW.hpp>
 #include <ya/desktops/glfw/KeyboardGLFW.hpp>
 #include <ya/desktops/glfw/MouseGLFW.hpp>
 #include <ya/desktops/glfw/MonitorGLFW.hpp>
 #include <ya/desktops/glfw/WindowGLFW.hpp>
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
+
+#include <ya/events/gamepad/GamepadConnectEvent.hpp>
+#include <ya/events/gamepad/GamepadDisconnectEvent.hpp>
 
 #include <ya/events/joystick/JoystickConnectEvent.hpp>
 #include <ya/events/joystick/JoystickDisconnectEvent.hpp>
@@ -78,12 +83,12 @@ namespace yq::tachyon {
         }
         
         m_joysticks.fill(nullptr);
+        m_gamepads.fill(nullptr);
         
         glfwLogging(0, nullptr);
         glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
         glfwInit();
         
-        m_stage = Stage::Init;
         s_desktop   = this;
     }
     
@@ -133,22 +138,44 @@ namespace yq::tachyon {
             _install(JOYSTICK, j);
     }
 
+    static bool isReceiver(int jid)
+    {
+        const char* z   = glfwGetJoystickName(jid);
+        if(!z)
+            return false;
+            
+        return static_cast<bool>(strstr(z, "Receiver"));
+    }
+
     bool DesktopGLFW::_install(joystick_k, int jid, bool sendEvent)
     {
         if((jid < 0) || (jid >=  kCntGLFWJoysticks))
             return false;
         if(!glfwJoystickPresent(jid))
             return false;
-        if(m_joysticks[jid])
+
+        if(m_joysticks[jid] || m_gamepads[jid])
+            return false;
+        if(isReceiver(jid))
             return false;
         
         //  GAMEPAD distinction... 
         
-        JoystickGLFW*j      = create_child<JoystickGLFW>(jid);
-        j->subscribe(id());
-        m_joysticks[jid]    = j;
-        if(sendEvent){
-            
+        if(glfwJoystickIsGamepad(jid)){
+            GamepadGLFW*j      = create_child<GamepadGLFW>(jid);
+            j->subscribe(id());
+            m_gamepads[jid]    = j;
+            if(sendEvent){
+                
+            }
+        } else {
+        
+            JoystickGLFW*j      = create_child<JoystickGLFW>(jid);
+            j->subscribe(id());
+            m_joysticks[jid]    = j;
+            if(sendEvent){
+                
+            }
         }
         
         return true;
@@ -182,39 +209,6 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    Execution    DesktopGLFW::_start(const Context& ctx)
-    {
-        if(m_control(C::Cursor)){
-            _install(CURSOR, ALL);
-        }
-        if(m_control(C::Joystick)){
-            _install(JOYSTICK, ALL);
-            glfwSetJoystickCallback( callback_joystick );
-        }
-        if(m_control(C::Keyboard)){
-            m_keyboard      = create_child<KeyboardGLFW>();
-        }
-        if(m_control(C::Monitor)){
-            _install(MONITOR, ALL);
-            m_monitor   = MonitorGLFW::monitor(PTR, glfwGetPrimaryMonitor());
-            glfwSetMonitorCallback( callback_monitor );
-        }
-        if(m_control(C::Mouse)){
-            m_mouse         = create_child<MouseGLFW>();
-        }
-        if(m_control(C::Window)){
-            // this one might not be necessary
-        }
-        
-        m_stage = Stage::Running;
-        return {};
-    }
-    
-    Execution    DesktopGLFW::_tick(const Context& ctx)
-    {
-        glfwPollEvents();
-        return {};
-    }
 
     void DesktopGLFW::_uninstall(joystick_k, int jid)
     {
@@ -239,8 +233,10 @@ namespace yq::tachyon {
         if(!unspecified(pa))
             return pa;
     
+        if(dynamic_cast<const GamepadEvent*>(&pp) && m_focus)
+            return m_focus;
         if(dynamic_cast<const JoystickEvent*>(&pp))
-            return MG::General;
+            return m_focus;
         
         return {};
     }
@@ -303,25 +299,63 @@ namespace yq::tachyon {
         return {};
     }
 
-    bool      DesktopGLFW::is_running() const 
-    { 
-        return m_stage == Stage::Running;
+
+    Execution    DesktopGLFW::setup(const Context& ctx)
+    {
+        if(!m_init){
+            glfwInfo << "DesktopGLFW::setup() Checking sub-things .. control is " << m_control.value();
+            if(m_control(C::Cursor)){
+                _install(CURSOR, ALL);
+            }
+            if(m_control(C::Joystick)){
+                glfwInfo << "Checking joysticks";
+                _install(JOYSTICK, ALL);
+                glfwSetJoystickCallback( callback_joystick );
+            }
+            if(m_control(C::Keyboard)){
+                m_keyboard      = create_child<KeyboardGLFW>();
+            }
+            if(m_control(C::Monitor)){
+                _install(MONITOR, ALL);
+                m_monitor   = MonitorGLFW::monitor(PTR, glfwGetPrimaryMonitor());
+                glfwSetMonitorCallback( callback_monitor );
+            }
+            if(m_control(C::Mouse)){
+                m_mouse         = create_child<MouseGLFW>();
+            }
+            if(m_control(C::Window)){
+                // this one might not be necessary
+            }
+            m_init = true;
+        }
+        return Desktop::setup(ctx);
+    }
+
+    Execution    DesktopGLFW::teardown(const Context& ctx)
+    {
+        if(m_init){
+            bool    torn    = true;
+            const Frame*    f   = Frame::current();
+            if(f){
+                f->foreach<Tachyon>(PTR, children(), [&](Tachyon* t) {
+                    if(!t)
+                        return;
+                    if(!t->dying())
+                        t->cmd_teardown();
+                    if(!t->kaput())
+                        torn    = false;
+                });
+            }
+            if(!torn)
+                return WAIT;
+        }
+        return Desktop::teardown(ctx);
     }
     
-    Execution DesktopGLFW::tick(const Context& ctx)
+    Execution    DesktopGLFW::tick(const Context& ctx)
     {
-        Desktop::tick(ctx);
-        switch(m_stage){
-        case Stage::Uninit:
-            return ERROR;
-        case Stage::Init:
-            return _start(ctx);
-        case Stage::Running:
-            return _tick(ctx);
-        case Stage::Dead:
-        default:
-            return ERROR;
-        }
+        glfwPollEvents();
+        return {};
     }
 
     void DesktopGLFW::init_info()

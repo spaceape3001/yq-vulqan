@@ -14,6 +14,9 @@ namespace yq::tachyon {
     class KeyPressEvent;
     class KeyRepeatEvent;
     class KeyReleaseEvent;
+    class GamepadAxisEvent;
+    class GamepadPressEvent;
+    class GamepadZeroEvent;
 
     /*! \brief Primitive 3D space controller
     
@@ -53,13 +56,23 @@ namespace yq::tachyon {
 
         void    on_key_press(const KeyPressEvent&);
         void    on_key_repeat(const KeyRepeatEvent&);
-    
+        void    on_gamepad_axis(const GamepadAxisEvent&);
+        void    on_gamepad_press(const GamepadPressEvent&);
+        void    on_gamepad_zero(const GamepadZeroEvent&);
+        
+        Execution   tick(const Context&);
+        
     private:
     
     
         struct KeyData {
             double press;
             double repeat;
+        };
+        
+        struct AxisData {
+            double  input   = 0;
+            double  gain    = 0.;
         };
     
         //  ROLL is φ
@@ -90,7 +103,11 @@ namespace yq::tachyon {
         KeyData         m_λP    = {  5.,  2.5 };    // YAW
         KeyData         m_λN    = { -5., -2.5 };
         
+        AxisData        m_θ     = { 0., 0.1 };
+        AxisData        m_λ     = { 0., 0.1 };
+        
         TypedID         m_target;
+        bool            m_joyLockout = false;
     };
 }
 

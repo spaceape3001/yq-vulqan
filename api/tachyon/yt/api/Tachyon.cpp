@@ -560,11 +560,18 @@ namespace yq::tachyon {
                     continue;
                 }
                 
+                
                 data->inbound.push_back({pp, InPost::State::Accepted });
+
+                if(auto p = std::get_if<TachyonID>(&pa)){
+                    data->outbound.push_back({*p, pp});
+                } 
+                
                 MGF mgf = groups(pa);
                 if(mgf != MGF{}){
                     data->outbound.push_back({mgf, pp});
                 }
+                
                 dispatch(pp);
             }
         }
@@ -685,6 +692,11 @@ namespace yq::tachyon {
     Tachyon::Ident               Tachyon::ident() const
     {
         return { metaInfo().name(), m_name, (uint64_t) id() };
+    }
+
+    bool Tachyon::kaput() const
+    {
+        return m_stage == Stage::Kaput;
     }
 
     bool Tachyon::in_tick() const

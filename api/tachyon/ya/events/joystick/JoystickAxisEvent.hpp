@@ -14,19 +14,26 @@ namespace yq::tachyon {
     public:
         static void init_info();
     
-        struct Param : public JoystickEvent::Param {
-        };
-    
-        JoystickAxisEvent(Joystick, size_t axis, float value, float delta, const Param& p={});
-        ~JoystickAxisEvent();
+        JoystickAxisEvent(const Header&, size_t axis, float value, float delta);
         
         size_t  axis() const { return m_axis; }
         float   value() const { return m_value; }
         float   delta() const { return m_delta; }
+
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        JoystickAxisEvent(const JoystickAxisEvent&, const Header&);
+        ~JoystickAxisEvent();
         
     private:
         size_t      m_axis;
         float       m_value;
         float       m_delta;
+        
+        JoystickAxisEvent(const JoystickAxisEvent&) = delete;
+        JoystickAxisEvent(JoystickAxisEvent&&) = delete;
+        JoystickAxisEvent& operator=(const JoystickAxisEvent&) = delete;
+        JoystickAxisEvent& operator=(JoystickAxisEvent&&) = delete;
     };
 }

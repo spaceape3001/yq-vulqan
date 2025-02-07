@@ -36,6 +36,8 @@
 #include <yt/os/CursorData.hpp>
 #include <yt/os/Desktop.hpp>
 #include <yt/os/DesktopData.hpp>
+#include <yt/os/Gamepad.hpp>
+#include <yt/os/GamepadData.hpp>
 #include <yt/os/Joystick.hpp>
 #include <yt/os/JoystickData.hpp>
 #include <yt/os/Keyboard.hpp>
@@ -162,6 +164,8 @@ namespace yq::tachyon {
             m_desktops.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Editor))
             //m_editors.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Gamepad))
+            m_gamepads.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Joystick))
             m_joysticks.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Keyboard))
@@ -231,6 +235,11 @@ namespace yq::tachyon {
         return m_editors.has(id);
     }
     #endif
+
+    bool Frame::contains(GamepadID id) const
+    {
+        return m_gamepads.has(id);
+    }
 
     bool Frame::contains(JoystickID id) const
     {
@@ -367,14 +376,19 @@ namespace yq::tachyon {
         return m_desktops.count();
     }
     
-    size_t Frame::count(keyboard_k) const
+    size_t Frame::count(gamepad_k) const
     {
-        return m_keyboards.count();
+        return m_gamepads.count();
     }
-    
+
     size_t Frame::count(joystick_k) const
     {
         return m_joysticks.count();
+    }
+    
+    size_t Frame::count(keyboard_k) const
+    {
+        return m_keyboards.count();
     }
     
     size_t Frame::count(light_k) const
@@ -494,6 +508,11 @@ namespace yq::tachyon {
     }
     #endif
 
+    const GamepadData*                  Frame::data(GamepadID id) const
+    {
+        return m_gamepads.data(id);
+    }
+
     const JoystickData*                 Frame::data(JoystickID id) const
     {
         return m_joysticks.data(id);
@@ -609,6 +628,11 @@ namespace yq::tachyon {
         return m_desktops.ids;
     }
     
+    const std::set<GamepadID>&          Frame::ids(gamepad_k) const
+    {
+        return m_gamepads.ids;
+    }
+
     const std::set<JoystickID>&         Frame::ids(joystick_k) const
     {
         return m_joysticks.ids;
@@ -727,6 +751,11 @@ namespace yq::tachyon {
     Desktop*                            Frame::object(DesktopID id) const
     {
         return m_desktops.pointer(id);
+    }
+
+    Gamepad*                            Frame::object(GamepadID id) const
+    {
+        return m_gamepads.pointer(id);
     }
 
     Joystick*                           Frame::object(JoystickID id) const
@@ -959,6 +988,11 @@ namespace yq::tachyon {
     const DesktopSnap*                 Frame::snap(DesktopID id) const
     {
         return m_desktops.snap(id);
+    }
+
+    const GamepadSnap*                 Frame::snap(GamepadID id) const
+    {
+        return m_gamepads.snap(id);
     }
 
     const JoystickSnap*                Frame::snap(JoystickID id) const

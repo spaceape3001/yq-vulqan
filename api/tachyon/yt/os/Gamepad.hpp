@@ -9,25 +9,25 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yt/api/Tachyon.hpp>
-#include <yt/typedef/joystick.hpp>
+#include <yt/typedef/gamepad.hpp>
 
 namespace yq::tachyon {
 
-    class Joystick;
+    class Gamepad;
     
-    /*! \brief Joystick Information
+    /*! \brief Gamepad Information
     
         Information for joysticks.
     */
-    class JoystickInfo : public TachyonInfo {
+    class GamepadInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
 
         //! Gets all joystick informations
-        static const std::vector<const JoystickInfo*>&    all();
+        static const std::vector<const GamepadInfo*>&    all();
         
         //! Standard constructor for the camera information
-        JoystickInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        GamepadInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -41,33 +41,33 @@ namespace yq::tachyon {
 
     /*! \brief A joystick
     */
-    class Joystick : public Tachyon {
-        YQ_TACHYON_INFO(JoystickInfo);
-        YQ_TACHYON_DATA(JoystickData)
-        YQ_TACHYON_SNAP(JoystickSnap)
-        YQ_TACHYON_DECLARE(Joystick, Tachyon)
+    class Gamepad : public Tachyon {
+        YQ_TACHYON_INFO(GamepadInfo);
+        YQ_TACHYON_DATA(GamepadData)
+        YQ_TACHYON_SNAP(GamepadSnap)
+        YQ_TACHYON_DECLARE(Gamepad, Tachyon)
     public:    
     
         /*
             We *MIGHT* want to divide up the camera into position, 
             lens, etc... or that's a later development on a dedicated
-            camera.  (class DynamicJoystick, StandardJoystick, etc???)
+            camera.  (class DynamicGamepad, StandardGamepad, etc???)
         */
     
 
         static void init_info();
 
-        JoystickID            id() const { return JoystickID(UniqueID::id()); }
+        GamepadID            id() const { return GamepadID(UniqueID::id()); }
 
     protected:
     
-        void        snap(JoystickSnap&) const;
+        void        snap(GamepadSnap&) const;
 
         //! Default constructor
-        Joystick(const Param&p = {});
+        Gamepad(const Param&p = {});
         
         //! Default destructor
-        ~Joystick();
+        ~Gamepad();
     };
 
 }

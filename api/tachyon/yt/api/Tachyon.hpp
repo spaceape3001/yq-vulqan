@@ -317,6 +317,12 @@ namespace yq::tachyon {
         
         bool            paused() const;
 
+        //! Initiates the teardown/destruction process
+        void            cmd_destroy() { teardown(); }
+
+        //! Initiates the teardown/destruction process
+        void            cmd_teardown() { teardown(); }
+
     protected:
 
 

@@ -29,8 +29,10 @@ namespace yq::tachyon {
     
     static constexpr const int   kCntGLFWJoysticks   = GLFW_JOYSTICK_LAST + 1;
     class JoystickGLFW;
+    class GamepadGLFW;
     using glfw_joystick_map     = std::map<JoystickID, JoystickGLFW*>;
     using glfw_joystick_array   = std::array<JoystickGLFW*, kCntGLFWJoysticks>;
+    using glfw_gamepad_array    = std::array<GamepadGLFW*, kCntGLFWJoysticks>;
     
     class KeyboardGLFW;
     class MonitorGLFW;

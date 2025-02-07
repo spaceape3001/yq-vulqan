@@ -4,46 +4,46 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/os/Joystick.hpp>
-#include <yt/os/JoystickData.hpp>
-#include <yt/os/JoystickInfoWriter.hpp>
+#include <yt/os/Gamepad.hpp>
+#include <yt/os/GamepadData.hpp>
+#include <yt/os/GamepadInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
-    struct JoystickInfo::Repo {
-        std::vector<const JoystickInfo*> all;
+    struct GamepadInfo::Repo {
+        std::vector<const GamepadInfo*> all;
     };
     
-    JoystickInfo::Repo& JoystickInfo::repo()
+    GamepadInfo::Repo& GamepadInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const JoystickInfo*>&    JoystickInfo::all()
+    const std::vector<const GamepadInfo*>&    GamepadInfo::all()
     {
         return repo().all;
     }
 
-    JoystickInfo::JoystickInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    GamepadInfo::GamepadInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Joystick);
+        set(Type::Gamepad);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Joystick::Joystick(const Param& p) : Tachyon(p)
+    Gamepad::Gamepad(const Param& p) : Tachyon(p)
     {
     }
 
-    Joystick::~Joystick()
+    Gamepad::~Gamepad()
     {
     }
 
-    void Joystick::snap(JoystickSnap& sn) const
+    void Gamepad::snap(GamepadSnap& sn) const
     {
         Tachyon::snap(sn);
     }
@@ -51,11 +51,11 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Joystick::init_info()
+    void Gamepad::init_info()
     {
-        auto w   = writer<Joystick>();
+        auto w   = writer<Gamepad>();
         w.abstract();
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Joystick)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Gamepad)

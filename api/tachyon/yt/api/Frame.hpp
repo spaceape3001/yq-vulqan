@@ -20,6 +20,7 @@
 #include <yt/typedef/cursor.hpp>
 #include <yt/typedef/desktop.hpp>
 #include <yt/typedef/frame.hpp>
+#include <yt/typedef/gamepad.hpp>
 #include <yt/typedef/joystick.hpp>
 #include <yt/typedef/keyboard.hpp>
 #include <yt/typedef/light.hpp>
@@ -78,6 +79,7 @@ namespace yq::tachyon {
         bool contains(CursorID) const;
         bool contains(DesktopID) const;
         //bool contains(EditorID) const;
+        bool contains(GamepadID) const;
         bool contains(JoystickID) const;
         bool contains(KeyboardID) const;
         bool contains(LightID) const;
@@ -103,8 +105,9 @@ namespace yq::tachyon {
         size_t count(controller_k) const;
         size_t count(cursor_k) const;
         size_t count(desktop_k) const;
-        size_t count(keyboard_k) const;
+        size_t count(gamepad_k) const;
         size_t count(joystick_k) const;
+        size_t count(keyboard_k) const;
         size_t count(light_k) const;
         size_t count(light³_k) const;
         size_t count(manager_k) const;
@@ -131,6 +134,7 @@ namespace yq::tachyon {
         const CursorData*                   data(CursorID) const;
         const DesktopData*                  data(DesktopID) const;
         //const EditorData*                   data(EditorID) const;
+        const GamepadData*                  data(GamepadID) const;
         const JoystickData*                 data(JoystickID) const;
         const KeyboardData*                 data(KeyboardID) const;
         const LightData*                    data(LightID) const;
@@ -162,6 +166,7 @@ namespace yq::tachyon {
         const std::set<ControllerID>&       ids(controller_k) const;
         const std::set<CursorID>&           ids(cursor_k) const;
         const std::set<DesktopID>&          ids(desktop_k) const;
+        const std::set<GamepadID>&          ids(gamepad_k) const;
         const std::set<JoystickID>&         ids(joystick_k) const;
         const std::set<KeyboardID>&         ids(keyboard_k) const;
         const std::set<LightID>&            ids(light_k) const;
@@ -199,6 +204,8 @@ namespace yq::tachyon {
         Desktop*                            object(DesktopID) const;
 
         //Editor*                             object(EditorID) const;
+        
+        Gamepad*                            object(GamepadID) const;
 
         //! Joystick pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -300,6 +307,7 @@ namespace yq::tachyon {
         const CursorSnap*                   snap(CursorID) const;
         const DesktopSnap*                  snap(DesktopID) const;
         //const EditorSnap*                   snap(EditorID) const;
+        const GamepadSnap*                  snap(GamepadID) const;
         const JoystickSnap*                 snap(JoystickID) const;
         const KeyboardSnap*                 snap(KeyboardID) const;
         const LightSnap*                    snap(LightID) const;
@@ -335,6 +343,7 @@ namespace yq::tachyon {
 
         static std::atomic<uint64_t>    s_lastId;
 
+        // triple template argument to avoid the header includes for smarter
         template <typename T, typename D, typename S> 
         struct Container {
             using tachyon_k     = T;
@@ -370,6 +379,7 @@ namespace yq::tachyon {
         Container<Cursor, CursorData, CursorSnap>               m_cursors;
         Container<Desktop, DesktopData, DesktopSnap>            m_desktops;
         //Container<Editor, EditorData, EditorSnap>               m_editors;
+        Container<Gamepad, GamepadData, GamepadSnap>            m_gamepads;
         Container<Joystick, JoystickData, JoystickSnap>         m_joysticks;
         Container<Keyboard, KeyboardData, KeyboardSnap>         m_keyboards;
         Container<Light, LightData, LightSnap>                  m_lights;

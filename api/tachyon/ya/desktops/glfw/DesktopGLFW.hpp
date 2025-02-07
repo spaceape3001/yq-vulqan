@@ -34,6 +34,9 @@ namespace yq::tachyon {
         
         virtual bool        is_running() const override;
 
+    protected:
+        virtual PostAdvice  advise(const Post&) const override;
+
     private:
         enum class Stage {
             Uninit      = 0,
@@ -55,6 +58,7 @@ namespace yq::tachyon {
         
         //! Joysticks (number comes from GLFW)
         glfw_joystick_array     m_joysticks;
+        glfw_joystick_array     m_gamepads;
         glfw_cursor_map         m_cursors;
         std_cursor_lookup       m_stdCursors;
         glfw_window_map         m_windows;
@@ -71,7 +75,7 @@ namespace yq::tachyon {
         void _install(cursor_k, all_k);
         bool _install(cursor_k, StdCursor, int);
         void _install(joystick_k, all_k);
-        bool _install(joystick_k, int);
+        bool _install(joystick_k, int, bool sendEvent=false);
         void _install(monitor_k, all_k);
         bool _install(monitor_k, GLFWmonitor*);
         

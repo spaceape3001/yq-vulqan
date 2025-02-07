@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/JoystickDisconnectEvent.hpp>
+#include <ya/events/joystick/JoystickDisconnectEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -14,12 +14,21 @@ namespace yq::tachyon {
         w.description("Joystick Disconnection Event");
     }
 
-    JoystickDisconnectEvent::JoystickDisconnectEvent(Joystick j, const Param&p) : JoystickEvent(j,p)
+    JoystickDisconnectEvent::JoystickDisconnectEvent(const Header&h) : JoystickEvent(h)
     {
     }
     
+    JoystickDisconnectEvent::JoystickDisconnectEvent(const JoystickDisconnectEvent& cp, const Header&h) : JoystickEvent(cp, h)
+    {
+    }
+
     JoystickDisconnectEvent::~JoystickDisconnectEvent()
     {
+    }
+
+    PostCPtr    JoystickDisconnectEvent::clone(rebind_k, const Header& h) const 
+    {
+        return new JoystickDisconnectEvent(*this, h);
     }
 }
 

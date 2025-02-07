@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/JoystickConnectEvent.hpp>
+#include <ya/events/joystick/JoystickConnectEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -14,12 +14,21 @@ namespace yq::tachyon {
         w.description("Joystick Connection Event");
     }
 
-    JoystickConnectEvent::JoystickConnectEvent(Joystick j, const Param& p) : JoystickEvent(j, p)
+    JoystickConnectEvent::JoystickConnectEvent(const Header&h) : JoystickEvent(h)
     {
     }
     
+    JoystickConnectEvent::JoystickConnectEvent(const JoystickConnectEvent& cp, const Header&h) : JoystickEvent(cp, h)
+    {
+    }
+
     JoystickConnectEvent::~JoystickConnectEvent()
     {
+    }
+
+    PostCPtr    JoystickConnectEvent::clone(rebind_k, const Header&h) const
+    {
+        return new JoystickConnectEvent(*this, h);
     }
 }
 

@@ -70,6 +70,7 @@ add_library(${PROJECT_NAME} SHARED
     
     yt/os/Cursor.cpp
     yt/os/Desktop.cpp
+    yt/os/Gamepad.cpp
     yt/os/Joystick.cpp
     yt/os/Keyboard.cpp
     yt/os/KeyCode.cpp
@@ -362,14 +363,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/AppEvent.cpp
     ya/events/CameraEvent.cpp
     ya/events/EmptyEvent.cpp
+    ya/events/GamepadEvent.cpp
     ya/events/InputEvent.cpp
-    #ya/events/JoystickAxisEvent.cpp
-    #ya/events/JoystickConnectEvent.cpp
-    #ya/events/JoystickDisconnectEvent.cpp
-    #ya/events/JoystickEvent.cpp
-    #ya/events/JoystickHatEvent.cpp
-    #ya/events/JoystickPressEvent.cpp
-    #ya/events/JoystickReleaseEvent.cpp
+    ya/events/JoystickEvent.cpp
     ya/events/KeyboardEvent.cpp
     ya/events/KeyCharacterEvent.cpp
     ya/events/KeyPressEvent.cpp
@@ -410,6 +406,20 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/WindowEvent.cpp
     ya/events/WindowFrameBufferResizeEvent.cpp
     ya/events/WindowTitleEvent.cpp
+    
+    ya/events/gamepad/GamepadAxisEvent.cpp
+    ya/events/gamepad/GamepadConnectEvent.cpp
+    ya/events/gamepad/GamepadDisconnectEvent.cpp
+    ya/events/gamepad/GamepadHatEvent.cpp
+    ya/events/gamepad/GamepadPressEvent.cpp
+    ya/events/gamepad/GamepadReleaseEvent.cpp
+
+    ya/events/joystick/JoystickAxisEvent.cpp
+    ya/events/joystick/JoystickConnectEvent.cpp
+    ya/events/joystick/JoystickDisconnectEvent.cpp
+    ya/events/joystick/JoystickHatEvent.cpp
+    ya/events/joystick/JoystickPressEvent.cpp
+    ya/events/joystick/JoystickReleaseEvent.cpp
     
     ya/events/spatial/MaxSize1Event.cpp
     ya/events/spatial/MaxSize2Event.cpp

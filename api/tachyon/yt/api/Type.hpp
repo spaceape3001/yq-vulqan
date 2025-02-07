@@ -22,6 +22,7 @@ namespace yq::tachyon {
         Cursor,
         Desktop,
         Editor,
+        Gamepad,
         ImGui,
         Joystick,
         Keyboard,

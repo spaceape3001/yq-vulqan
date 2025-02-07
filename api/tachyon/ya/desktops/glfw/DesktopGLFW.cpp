@@ -21,6 +21,9 @@
 #include <ya/desktops/glfw/WindowGLFW.hpp>
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
 
+#include <ya/events/joystick/JoystickConnectEvent.hpp>
+#include <ya/events/joystick/JoystickDisconnectEvent.hpp>
+
 #include <yq/shape/Size2.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::DesktopGLFW)
@@ -47,8 +50,14 @@ namespace yq::tachyon {
     {
         if(!s_desktop)
             return;
-            
-        // TODO
+        if((unsigned) jid > kCntGLFWJoysticks)
+            return ;
+        
+        if(event == GLFW_CONNECTED){
+            s_desktop -> _install(JOYSTICK, jid);
+        } else {
+            s_desktop -> _uninstall(JOYSTICK, jid);
+        }
     }
     
     void DesktopGLFW::callback_monitor(GLFWmonitor* monitor, int event)
@@ -124,7 +133,7 @@ namespace yq::tachyon {
             _install(JOYSTICK, j);
     }
 
-    bool DesktopGLFW::_install(joystick_k, int jid)
+    bool DesktopGLFW::_install(joystick_k, int jid, bool sendEvent)
     {
         if((jid < 0) || (jid >=  kCntGLFWJoysticks))
             return false;
@@ -133,7 +142,15 @@ namespace yq::tachyon {
         if(m_joysticks[jid])
             return false;
         
-        m_joysticks[jid]    = create_child<JoystickGLFW>(jid);
+        //  GAMEPAD distinction... 
+        
+        JoystickGLFW*j      = create_child<JoystickGLFW>(jid);
+        j->subscribe(id());
+        m_joysticks[jid]    = j;
+        if(sendEvent){
+            
+        }
+        
         return true;
     }
     
@@ -199,12 +216,33 @@ namespace yq::tachyon {
         return {};
     }
 
-    void DesktopGLFW::_uninstall(joystick_k, int)
+    void DesktopGLFW::_uninstall(joystick_k, int jid)
     {
+        if((jid < 0) || (jid >=  kCntGLFWJoysticks))
+            return;
+        if(glfwJoystickPresent(jid))
+            return;
+        if(!m_joysticks[jid])
+            return;
+            
+        m_joysticks[jid] -> cmd_teardown();
+        m_joysticks[jid]    = nullptr;
     }
     
     void DesktopGLFW::_uninstall(monitor_k, GLFWmonitor*)
     {
+    }
+
+    PostAdvice  DesktopGLFW::advise(const Post& pp) const 
+    {
+        PostAdvice  pa  = Desktop::advise(pp);
+        if(!unspecified(pa))
+            return pa;
+    
+        if(dynamic_cast<const JoystickEvent*>(&pp))
+            return MG::General;
+        
+        return {};
     }
 
     Window*     DesktopGLFW::create(window_k, const ViewerCreateInfo& vci)

@@ -82,6 +82,8 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::Game; }
     };
     
+    struct gamepad_k {};
+    
     struct glfw_k {
         consteval operator Platform() const noexcept { return Platform::GLFW; }
     };
@@ -249,6 +251,7 @@ namespace yq::tachyon {
     static constexpr for_k          FOR;
     static constexpr forward_k      FORWARD;
     static constexpr game_k         GAME;
+    static constexpr gamepad_k      GAMEPAD;
     static constexpr glfw_k         GLFW;
     static constexpr has_k          HAS;
     static constexpr hash_k         HASH;

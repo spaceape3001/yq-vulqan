@@ -38,7 +38,7 @@
 
 #include <yt/msg/Response.hpp>
 
-#include <yt/os/JoystickHatState.hpp>
+#include <yt/os/HatState.hpp>
 #include <yt/os/MouseButton.hpp>
 #include <yt/os/MouseMode.hpp>
 #include <yt/os/Platform.hpp>
@@ -63,7 +63,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
-YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickHatState)
+YQ_TYPE_IMPLEMENT(yq::tachyon::HatState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)

@@ -11,7 +11,7 @@
 #include <yq/meta/InfoBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(JoystickHatState, ,
+    YQ_ENUM(HatState, ,
         Centered        = 0,
         Up              = 1,
         Right           = 2,
@@ -24,4 +24,4 @@ namespace yq::tachyon {
     )
 }
 
-YQ_TYPE_DECLARE(yq::tachyon::JoystickHatState)
+YQ_TYPE_DECLARE(yq::tachyon::HatState)

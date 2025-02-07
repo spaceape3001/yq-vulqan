@@ -7,16 +7,16 @@
 #pragma once
 
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/joystick.hpp>
 #include <yt/os/HatState.hpp>
+#include <yt/typedef/gamepad.hpp>
 
 namespace yq::tachyon {
-    struct JoystickSnap : public TachyonSnap {
+    struct GamepadSnap : public TachyonSnap {
         std::vector<float>      axes;
         std::vector<bool>       buttons;
         std::vector<HatState>   hats;
     };
     
-    struct JoystickData : public TachyonData {
+    struct GamepadData : public TachyonData {
     };
 }

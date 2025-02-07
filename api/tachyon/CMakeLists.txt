@@ -177,6 +177,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/ControllerCommand.cpp
     ya/commands/EmptyCommand.cpp
     ya/commands/GLFWCommand.cpp
+    ya/commands/JoystickCommand.cpp
     ya/commands/MouseCaptureCommand.cpp
     ya/commands/MouseCommand.cpp
     ya/commands/MouseDisableCommand.cpp

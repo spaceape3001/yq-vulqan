@@ -69,7 +69,7 @@ namespace yq::tachyon {
         void _install(cursor_k, all_k);
         bool _install(cursor_k, StdCursor, int);
         void _install(joystick_k, all_k);
-        bool _install(joystick_k, int, bool sendEvent=false);
+        bool _install(joystick_k, int);
         void _install(monitor_k, all_k);
         bool _install(monitor_k, GLFWmonitor*);
         

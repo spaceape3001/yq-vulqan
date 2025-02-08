@@ -27,8 +27,6 @@ namespace yq::tachyon {
         virtual Execution tick(const Context&);
         virtual Execution teardown(const Context&);
         
-        void    disconnecting();
-        
     protected:
         void        snap(GamepadSnap&) const;
         

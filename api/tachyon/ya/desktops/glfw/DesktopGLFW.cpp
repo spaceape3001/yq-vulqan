@@ -147,7 +147,7 @@ namespace yq::tachyon {
         return static_cast<bool>(strstr(z, "Receiver"));
     }
 
-    bool DesktopGLFW::_install(joystick_k, int jid, bool sendEvent)
+    bool DesktopGLFW::_install(joystick_k, int jid)
     {
         if((jid < 0) || (jid >=  kCntGLFWJoysticks))
             return false;
@@ -165,17 +165,13 @@ namespace yq::tachyon {
             GamepadGLFW*j      = create_child<GamepadGLFW>(jid);
             j->subscribe(id());
             m_gamepads[jid]    = j;
-            if(sendEvent){
-                
-            }
+            send(new GamepadConnectEvent({.source=*j}));
         } else {
         
             JoystickGLFW*j      = create_child<JoystickGLFW>(jid);
             j->subscribe(id());
             m_joysticks[jid]    = j;
-            if(sendEvent){
-                
-            }
+            send(new JoystickConnectEvent({.source=*j}));
         }
         
         return true;
@@ -216,11 +212,18 @@ namespace yq::tachyon {
             return;
         if(glfwJoystickPresent(jid))
             return;
-        if(!m_joysticks[jid])
-            return;
             
-        m_joysticks[jid] -> cmd_teardown();
-        m_joysticks[jid]    = nullptr;
+        if(m_joysticks[jid]){
+            send(new JoystickDisconnectEvent({.source=*m_joysticks[jid]}));
+            m_joysticks[jid] -> cmd_teardown();
+            m_joysticks[jid]    = nullptr;
+        }
+        
+        if(m_gamepads[jid]){
+            send(new GamepadDisconnectEvent({.source=*m_joysticks[jid]}));
+            m_gamepads[jid] -> cmd_teardown();
+            m_gamepads[jid] = nullptr;
+        }
     }
     
     void DesktopGLFW::_uninstall(monitor_k, GLFWmonitor*)

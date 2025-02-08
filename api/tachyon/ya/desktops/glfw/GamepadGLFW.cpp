@@ -26,10 +26,6 @@ namespace yq::tachyon {
     {
     }
 
-    void    GamepadGLFW::disconnecting()
-    {
-    }
-
     void      GamepadGLFW::on_zero_command(const GamepadZeroCommand& cmd)
     {
         if(cmd.target() != id())

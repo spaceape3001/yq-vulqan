@@ -26,10 +26,6 @@ namespace yq::tachyon {
     {
     }
 
-    void    JoystickGLFW::disconnecting()
-    {
-    }
-
     void      JoystickGLFW::on_zero_command(const JoystickZeroCommand& cmd)
     {
         if(cmd.target() != id())

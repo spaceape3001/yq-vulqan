@@ -20,6 +20,7 @@
 #include "frame_inspector/FrameInspectorControllers.hpp"
 #include "frame_inspector/FrameInspectorCursors.hpp"
 #include "frame_inspector/FrameInspectorDesktops.hpp"
+#include "frame_inspector/FrameInspectorGamepads.hpp"
 #include "frame_inspector/FrameInspectorHeader.hpp"
 #include "frame_inspector/FrameInspectorJoysticks.hpp"
 #include "frame_inspector/FrameInspectorKeyboards.hpp"
@@ -72,6 +73,7 @@ namespace yq::tachyon {
             m_panes.push_back(create_child<FrameInspectorControllers>());
             m_panes.push_back(create_child<FrameInspectorCursors>());
             m_panes.push_back(create_child<FrameInspectorDesktops>());
+            m_panes.push_back(create_child<FrameInspectorGamepads>());
             m_panes.push_back(create_child<FrameInspectorJoysticks>());
             m_panes.push_back(create_child<FrameInspectorKeyboards>());
             m_panes.push_back(create_child<FrameInspectorLights>());
@@ -222,6 +224,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorCamera³s)
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorControllers)
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorCursors)
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorDesktops)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorGamepads)
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorJoysticks)
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorKeyboards)
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FrameInspectorLights)

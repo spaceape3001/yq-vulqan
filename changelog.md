@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## Upcoming
+* Add Gamepad Introspection to the Frame Inspector
+
 ## 2025.02.08
 
 * Added joystick/gamepad support -- two distinct classes

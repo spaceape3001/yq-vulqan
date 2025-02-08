@@ -7,38 +7,38 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <yt/os/Joystick.hpp>
-#include <yt/os/JoystickData.hpp>
+#include <yt/os/Gamepad.hpp>
+#include <yt/os/GamepadData.hpp>
 #include <yq/stream/Text.hpp>
 
 namespace yq::tachyon {
-    class FrameInspectorJoysticks : public FrameInspectorTachyons {
-        YQ_TACHYON_DECLARE(FrameInspectorJoysticks, FrameInspectorTachyons)
+    class FrameInspectorGamepads : public FrameInspectorTachyons {
+        YQ_TACHYON_DECLARE(FrameInspectorGamepads, FrameInspectorTachyons)
     public:
     
-        FrameInspectorJoysticks() 
+        FrameInspectorGamepads() 
         {
         }
         
-        ~FrameInspectorJoysticks()
+        ~FrameInspectorGamepads()
         {
         }
         
-        uint64_t    count() const override { return m_frame->count(JOYSTICK); }
-        virtual const char* name() const override { return "Joystick"; }
+        uint64_t    count() const override { return m_frame->count(GAMEPAD); }
+        virtual const char* name() const override { return "Gamepad"; }
 
         using FrameInspectorTachyons::render;
         
-        void    render(joystick_k)
+        void    render(gamepad_k)
         {
-            const JoystickSnap*  snap    = static_cast<const JoystickSnap*>(m_snap);
+            const GamepadSnap*  snap    = static_cast<const GamepadSnap*>(m_snap);
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> JOYSTICK PROPERTIES <<<");
+                ImGui::TextUnformatted(">>> GAMEPAD PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
@@ -96,10 +96,10 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(JoystickID v : m_frame->ids(JOYSTICK)){
+            for(GamepadID v : m_frame->ids(GAMEPAD)){
                 if(!begin(v))
                     continue;
-                render(JOYSTICK);
+                render(GAMEPAD);
                 separator();
                 render(TACHYON);
                 end();

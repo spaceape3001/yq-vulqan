@@ -5,7 +5,7 @@
 * Added joystick/gamepad support -- two distinct classes
 * Billboard Renders
 * Fixed matrices in spatial/camera/orienation.  Starts pointing due (+X) with a right-handed coordinate system.
-* Upgrade ImGui to v1.91.8
+* Upgrade ImGui to v1.91.8 (so update your submodules!)
 * Added some more push buffers for rendered objects
 
 ## 2025.02.02B

@@ -33,6 +33,8 @@ namespace yq::tachyon {
 
     protected:
     
+        Execution setup(const Context&) override;
+    
     
     private:
     
@@ -41,5 +43,7 @@ namespace yq::tachyon {
         
         static void  _init(const AppCreateInfo&);
         static void  _kill();
+        
+        bool    m_init  = false;
     };
 }

@@ -306,12 +306,10 @@ namespace yq::tachyon {
     Execution    DesktopGLFW::setup(const Context& ctx)
     {
         if(!m_init){
-            glfwInfo << "DesktopGLFW::setup() Checking sub-things .. control is " << m_control.value();
             if(m_control(C::Cursor)){
                 _install(CURSOR, ALL);
             }
             if(m_control(C::Joystick)){
-                glfwInfo << "Checking joysticks";
                 _install(JOYSTICK, ALL);
                 glfwSetJoystickCallback( callback_joystick );
             }

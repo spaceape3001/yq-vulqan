@@ -8,8 +8,8 @@
 #include <yt/logging.hpp>
 #include <yt/app/AppCreateInfo.hpp>
 #include <yt/api/ManagerInfoWriter.hpp>
+#include <yv/VulqanGPU.hpp>
 #include <yv/VulqanManager.hpp>
-
 
 #include <yv/VqEnums.hpp>
 #include <yv/VqStructs.hpp>
@@ -365,6 +365,18 @@ namespace yq::tachyon {
     //{
         //// monitor connect/disconnect
     //}
+
+    Execution VulqanManager::setup(const Context&ctx)
+    {
+        if(!m_init){
+            Common& g   = common();
+            for(VkPhysicalDevice pd : vqEnumeratePhysicalDevices(g.instance)){
+                create_child<VulqanGPU>(pd);
+            }
+            m_init = true;
+        }
+        return Manager::setup(ctx);
+    }
     
     void VulqanManager::init_info()
     {

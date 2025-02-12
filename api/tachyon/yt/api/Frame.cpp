@@ -38,6 +38,8 @@
 #include <yt/os/DesktopData.hpp>
 #include <yt/os/Gamepad.hpp>
 #include <yt/os/GamepadData.hpp>
+#include <yt/os/GraphicsCard.hpp>
+#include <yt/os/GraphicsCardData.hpp>
 #include <yt/os/Joystick.hpp>
 #include <yt/os/JoystickData.hpp>
 #include <yt/os/Keyboard.hpp>
@@ -166,6 +168,8 @@ namespace yq::tachyon {
             //m_editors.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Gamepad))
             m_gamepads.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::GraphicsCard))
+            m_graphicsCards.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Joystick))
             m_joysticks.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Keyboard))
@@ -239,6 +243,11 @@ namespace yq::tachyon {
     bool Frame::contains(GamepadID id) const
     {
         return m_gamepads.has(id);
+    }
+
+    bool Frame::contains(GraphicsCardID id) const
+    {
+        return m_graphicsCards.has(id);
     }
 
     bool Frame::contains(JoystickID id) const
@@ -381,6 +390,11 @@ namespace yq::tachyon {
         return m_gamepads.count();
     }
 
+    size_t Frame::count(graphics_card_k) const
+    {
+        return m_graphicsCards.count();
+    }
+
     size_t Frame::count(joystick_k) const
     {
         return m_joysticks.count();
@@ -513,6 +527,11 @@ namespace yq::tachyon {
         return m_gamepads.data(id);
     }
 
+    const GraphicsCardData*             Frame::data(GraphicsCardID id) const
+    {
+        return m_graphicsCards.data(id);
+    }
+
     const JoystickData*                 Frame::data(JoystickID id) const
     {
         return m_joysticks.data(id);
@@ -631,6 +650,11 @@ namespace yq::tachyon {
     const std::set<GamepadID>&          Frame::ids(gamepad_k) const
     {
         return m_gamepads.ids;
+    }
+
+    const std::set<GraphicsCardID>&     Frame::ids(graphics_card_k) const
+    {
+        return m_graphicsCards.ids;
     }
 
     const std::set<JoystickID>&         Frame::ids(joystick_k) const
@@ -756,6 +780,11 @@ namespace yq::tachyon {
     Gamepad*                            Frame::object(GamepadID id) const
     {
         return m_gamepads.pointer(id);
+    }
+
+    GraphicsCard*                       Frame::object(GraphicsCardID id) const
+    {
+        return m_graphicsCards.pointer(id);
     }
 
     Joystick*                           Frame::object(JoystickID id) const
@@ -911,33 +940,35 @@ namespace yq::tachyon {
     void    Frame::report(Stream& out) const
     {
         out << "Report for Frame (" << m_number << ")\n"
-            << "  Origin:       " << (uint64_t) m_origin << "\n"
-            << "  Tick:         " << m_tick << "\n"
-            << "  Clock:        " << std::format("{:%Y%m%d %H:%M:%S.%Z}", m_wallclock) << "\n"
+            << "  Origin:        " << (uint64_t) m_origin << "\n"
+            << "  Tick:          " << m_tick << "\n"
+            << "  Clock:         " << std::format("{:%Y%m%d %H:%M:%S.%Z}", m_wallclock) << "\n"
             << "     - - - - - \n"
-            << "  Cameras:      " << count(CAMERA) << "\n"
-            << "  Camera³s:     " << count(CAMERA³) << "\n"
-            << "  Controllers:  " << count(CONTROLLER) << "\n"
-            << "  Cursors:      " << count(CURSOR) << "\n"
-            << "  Desktops:     " << count(DESKTOP) << "\n"
-            << "  Keyboards:    " << count(KEYBOARD) << "\n"
-            << "  Joysticks:    " << count(JOYSTICK) << "\n"
-            << "  Lights:       " << count(LIGHT) << "\n"
-            << "  Light³s:      " << count(LIGHT³) << "\n"
-            << "  Managers:     " << count(MANAGER) << "\n"
-            << "  Models:       " << count(MODEL) << "\n"
-            << "  Mouses:       " << count(MOUSE) << "\n"
-            << "  Rendereds:    " << count(RENDERED) << "\n"
-            << "  Rendered³s:   " << count(RENDERED³) << "\n"
-            << "  Scenes:       " << count(LIGHT) << "\n"
-            << "  Scene³s:      " << count(LIGHT³) << "\n"
-            << "  Spatials:     " << count(SPATIAL) << "\n"
-            << "  Spatial³s:    " << count(SPATIAL³) << "\n"
-            << "  Tachyons:     " << count(TACHYON) << "\n"
-            << "  Threads:      " << count(THREAD) << "\n"
-            << "  Viewers:      " << count(VIEWER) << "\n"
-            << "  Widgets:      " << count(WIDGET) << "\n"
-            << "  Windows:      " << count(WINDOW) << "\n"
+            << "  Cameras:       " << count(CAMERA) << "\n"
+            << "  Camera³s:      " << count(CAMERA³) << "\n"
+            << "  Controllers:   " << count(CONTROLLER) << "\n"
+            << "  Cursors:       " << count(CURSOR) << "\n"
+            << "  Desktops:      " << count(DESKTOP) << "\n"
+            << "  Gamepads:      " << count(GAMEPAD) << "\n"
+            << "  GraphicsCards: " << count(GRAPHICS_CARD) << "\n"
+            << "  Keyboards:     " << count(KEYBOARD) << "\n"
+            << "  Joysticks:     " << count(JOYSTICK) << "\n"
+            << "  Lights:        " << count(LIGHT) << "\n"
+            << "  Light³s:       " << count(LIGHT³) << "\n"
+            << "  Managers:      " << count(MANAGER) << "\n"
+            << "  Models:        " << count(MODEL) << "\n"
+            << "  Mouses:        " << count(MOUSE) << "\n"
+            << "  Rendereds:     " << count(RENDERED) << "\n"
+            << "  Rendered³s:    " << count(RENDERED³) << "\n"
+            << "  Scenes:        " << count(LIGHT) << "\n"
+            << "  Scene³s:       " << count(LIGHT³) << "\n"
+            << "  Spatials:      " << count(SPATIAL) << "\n"
+            << "  Spatial³s:     " << count(SPATIAL³) << "\n"
+            << "  Tachyons:      " << count(TACHYON) << "\n"
+            << "  Threads:       " << count(THREAD) << "\n"
+            << "  Viewers:       " << count(VIEWER) << "\n"
+            << "  Widgets:       " << count(WIDGET) << "\n"
+            << "  Windows:       " << count(WINDOW) << "\n"
         ;
     }
 
@@ -993,6 +1024,11 @@ namespace yq::tachyon {
     const GamepadSnap*                 Frame::snap(GamepadID id) const
     {
         return m_gamepads.snap(id);
+    }
+
+    const GraphicsCardSnap*            Frame::snap(GraphicsCardID id) const
+    {
+        return m_graphicsCards.snap(id);
     }
 
     const JoystickSnap*                Frame::snap(JoystickID id) const

@@ -23,6 +23,7 @@ namespace yq::tachyon {
         Desktop,
         Editor,
         Gamepad,
+        GraphicsCard,
         ImGui,
         Joystick,
         Keyboard,

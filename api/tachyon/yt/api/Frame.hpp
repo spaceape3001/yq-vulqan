@@ -21,6 +21,7 @@
 #include <yt/typedef/desktop.hpp>
 #include <yt/typedef/frame.hpp>
 #include <yt/typedef/gamepad.hpp>
+#include <yt/typedef/graphics_card.hpp>
 #include <yt/typedef/joystick.hpp>
 #include <yt/typedef/keyboard.hpp>
 #include <yt/typedef/light.hpp>
@@ -80,6 +81,7 @@ namespace yq::tachyon {
         bool contains(DesktopID) const;
         //bool contains(EditorID) const;
         bool contains(GamepadID) const;
+        bool contains(GraphicsCardID) const;
         bool contains(JoystickID) const;
         bool contains(KeyboardID) const;
         bool contains(LightID) const;
@@ -106,6 +108,7 @@ namespace yq::tachyon {
         size_t count(cursor_k) const;
         size_t count(desktop_k) const;
         size_t count(gamepad_k) const;
+        size_t count(graphics_card_k) const;
         size_t count(joystick_k) const;
         size_t count(keyboard_k) const;
         size_t count(light_k) const;
@@ -135,6 +138,7 @@ namespace yq::tachyon {
         const DesktopData*                  data(DesktopID) const;
         //const EditorData*                   data(EditorID) const;
         const GamepadData*                  data(GamepadID) const;
+        const GraphicsCardData*             data(GraphicsCardID) const;
         const JoystickData*                 data(JoystickID) const;
         const KeyboardData*                 data(KeyboardID) const;
         const LightData*                    data(LightID) const;
@@ -167,6 +171,7 @@ namespace yq::tachyon {
         const std::set<CursorID>&           ids(cursor_k) const;
         const std::set<DesktopID>&          ids(desktop_k) const;
         const std::set<GamepadID>&          ids(gamepad_k) const;
+        const std::set<GraphicsCardID>&     ids(graphics_card_k) const;
         const std::set<JoystickID>&         ids(joystick_k) const;
         const std::set<KeyboardID>&         ids(keyboard_k) const;
         const std::set<LightID>&            ids(light_k) const;
@@ -206,6 +211,8 @@ namespace yq::tachyon {
         //Editor*                             object(EditorID) const;
         
         Gamepad*                            object(GamepadID) const;
+
+        GraphicsCard*                       object(GraphicsCardID) const;
 
         //! Joystick pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -308,6 +315,7 @@ namespace yq::tachyon {
         const DesktopSnap*                  snap(DesktopID) const;
         //const EditorSnap*                   snap(EditorID) const;
         const GamepadSnap*                  snap(GamepadID) const;
+        const GraphicsCardSnap*             snap(GraphicsCardID) const;
         const JoystickSnap*                 snap(JoystickID) const;
         const KeyboardSnap*                 snap(KeyboardID) const;
         const LightSnap*                    snap(LightID) const;
@@ -368,37 +376,38 @@ namespace yq::tachyon {
         const time_point_t      m_wallclock;
         const uint64_t          m_tick;
         
-        static thread_local const Frame*                        s_current;
-        
-        std::unordered_map<uint64_t, ThreadID>                  m_owners;
-        std::unordered_map<uint64_t, Types>                     m_types;
-
-        Container<Camera, CameraData, CameraSnap>               m_cameras;
-        Container<Camera³, Camera³Data, Camera³Snap>            m_camera³s;
-        Container<Controller, ControllerData, ControllerSnap>   m_controllers;
-        Container<Cursor, CursorData, CursorSnap>               m_cursors;
-        Container<Desktop, DesktopData, DesktopSnap>            m_desktops;
-        //Container<Editor, EditorData, EditorSnap>               m_editors;
-        Container<Gamepad, GamepadData, GamepadSnap>            m_gamepads;
-        Container<Joystick, JoystickData, JoystickSnap>         m_joysticks;
-        Container<Keyboard, KeyboardData, KeyboardSnap>         m_keyboards;
-        Container<Light, LightData, LightSnap>                  m_lights;
-        Container<Light³, Light³Data, Light³Snap>               m_light³s;
-        Container<Manager, ManagerData, ManagerSnap>            m_managers;
-        Container<Model, ModelData, ModelSnap>                  m_models;
-        Container<Monitor, MonitorData, MonitorSnap>            m_monitors;
-        Container<Mouse, MouseData, MouseSnap>                  m_mouses;
-        Container<Rendered, RenderedData, RenderedSnap>         m_rendereds;
-        Container<Rendered³, Rendered³Data, Rendered³Snap>      m_rendered³s;
-        Container<Scene, SceneData, SceneSnap>                  m_scenes;
-        Container<Scene³, Scene³Data, Scene³Snap>               m_scene³s;
-        Container<Spatial, SpatialData, SpatialSnap>            m_spatials;
-        Container<Spatial³, Spatial³Data, Spatial³Snap>         m_spatial³s;
-        Container<Tachyon, TachyonData, TachyonSnap>            m_tachyons;
-        Container<Thread, ThreadData, ThreadSnap>               m_threads;
-        Container<Viewer, ViewerData, ViewerSnap>               m_viewers;
-        Container<Widget, WidgetData, WidgetSnap>               m_widgets;
-        Container<Window, WindowData, WindowSnap>               m_windows;
+        static thread_local const Frame*                            s_current;
+                                                                    
+        std::unordered_map<uint64_t, ThreadID>                      m_owners;
+        std::unordered_map<uint64_t, Types>                         m_types;
+                                                                    
+        Container<Camera, CameraData, CameraSnap>                   m_cameras;
+        Container<Camera³, Camera³Data, Camera³Snap>                m_camera³s;
+        Container<Controller, ControllerData, ControllerSnap>       m_controllers;
+        Container<Cursor, CursorData, CursorSnap>                   m_cursors;
+        Container<Desktop, DesktopData, DesktopSnap>                m_desktops;
+        //Container<Editor, EditorData, EditorSnap>                   m_editors;
+        Container<Gamepad, GamepadData, GamepadSnap>                m_gamepads;
+        Container<GraphicsCard, GraphicsCardData, GraphicsCardSnap> m_graphicsCards;
+        Container<Joystick, JoystickData, JoystickSnap>             m_joysticks;
+        Container<Keyboard, KeyboardData, KeyboardSnap>             m_keyboards;
+        Container<Light, LightData, LightSnap>                      m_lights;
+        Container<Light³, Light³Data, Light³Snap>                   m_light³s;
+        Container<Manager, ManagerData, ManagerSnap>                m_managers;
+        Container<Model, ModelData, ModelSnap>                      m_models;
+        Container<Monitor, MonitorData, MonitorSnap>                m_monitors;
+        Container<Mouse, MouseData, MouseSnap>                      m_mouses;
+        Container<Rendered, RenderedData, RenderedSnap>             m_rendereds;
+        Container<Rendered³, Rendered³Data, Rendered³Snap>          m_rendered³s;
+        Container<Scene, SceneData, SceneSnap>                      m_scenes;
+        Container<Scene³, Scene³Data, Scene³Snap>                   m_scene³s;
+        Container<Spatial, SpatialData, SpatialSnap>                m_spatials;
+        Container<Spatial³, Spatial³Data, Spatial³Snap>             m_spatial³s;
+        Container<Tachyon, TachyonData, TachyonSnap>                m_tachyons;
+        Container<Thread, ThreadData, ThreadSnap>                   m_threads;
+        Container<Viewer, ViewerData, ViewerSnap>                   m_viewers;
+        Container<Widget, WidgetData, WidgetSnap>                   m_widgets;
+        Container<Window, WindowData, WindowSnap>                   m_windows;
 
 
         friend class Thread;

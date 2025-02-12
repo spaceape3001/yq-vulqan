@@ -71,6 +71,7 @@ add_library(${PROJECT_NAME} SHARED
     yt/os/Cursor.cpp
     yt/os/Desktop.cpp
     yt/os/Gamepad.cpp
+    yt/os/GraphicsCard.cpp
     yt/os/Joystick.cpp
     yt/os/Keyboard.cpp
     yt/os/KeyCode.cpp
@@ -109,6 +110,7 @@ add_library(${PROJECT_NAME} SHARED
     #   Vulqan
     
     yv/vulqan.cpp
+    yv/VulqanGPU.cpp
     yv/VulqanManager.cpp
 
     # yv/VqEnumerations.cpp

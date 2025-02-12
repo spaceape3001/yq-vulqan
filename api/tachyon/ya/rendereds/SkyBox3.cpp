@@ -74,8 +74,12 @@ namespace yq::tachyon {
             images.push_back(images.back());
         std::span<const std::string_view>  imageSpec(images.begin(), images.begin()+6);
         
-        TextureInfo     texInfo;
-        texInfo.imageViewType   = ImageViewType::Cube;
+        TextureInfo2    texInfo;
+        texInfo.imageViewType       = ImageViewType::Cube;
+        texInfo.addressMode         = SamplerAddressModeUVW(ALL, SamplerAddressMode::ClampToEdge);
+        texInfo.compareOp           = CompareOp::Never;
+        texInfo.maxAnisotropy       = 1.0;
+        texInfo.layerCount          = 6;
         m_texture       = Texture::load(imageSpec, texInfo);
         //m_texture       = Texture::load(images[0], texInfo);
     }

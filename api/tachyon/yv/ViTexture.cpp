@@ -124,7 +124,6 @@ namespace yq::tachyon {
         
         if(texInfo.imageViewType){
             info.viewType   = (VkImageViewType) (*texInfo.imageViewType).value();
-vizInfo << "Set texture image view type to " << info.viewType;            
         } else {
             switch(imgInfo.type){
             case RasterType::Is1D:

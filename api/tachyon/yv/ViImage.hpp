@@ -56,6 +56,15 @@ namespace yq::tachyon {
         VmaAllocation       allocation() const { return m_allocation; }
         ViVisualizer*       visualizer() const { return m_viz; }
         const RasterInfo&   info() const { return m_info; }
+        
+        struct Respec {
+            VkAccessFlags           access  = 0;
+            VkImageLayout           layout  = VK_IMAGE_LAYOUT_UNDEFINED;
+            uint32_t                queue   = UINT32_MAX;
+            VkPipelineStageFlags    stages  = 0;
+        };
+    
+        void  barrier(VkCommandBuffer, const Respec&);
     
     private:
         ViVisualizer*       m_viz           = nullptr;
@@ -63,6 +72,15 @@ namespace yq::tachyon {
         VkImage             m_image         = nullptr;
         RasterInfo          m_info          = {};
         uint64_t            m_id            = 0;
+        
+        //  ownership/state
+        VkImageLayout           m_layout        = VK_IMAGE_LAYOUT_UNDEFINED;
+        VkAccessFlags           m_access        = 0;
+        VkPipelineStageFlags    m_stages        = VK_PIPELINE_STAGE_HOST_BIT;
+        uint32_t                m_queue         = 0;
+        uint32_t                m_layers        = 1;
+        uint32_t                m_mips          = 1;
+        VkImageAspectFlags      m_aspect        = VK_IMAGE_ASPECT_COLOR_BIT;
         
         ViImage(const ViImage&) = delete;
         ViImage(ViImage&&) = delete;

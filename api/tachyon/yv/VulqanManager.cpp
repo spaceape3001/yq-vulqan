@@ -37,6 +37,9 @@
 #define vulkanWarning       yWarning("vulkan")
 
 namespace yq::tachyon {
+    
+    static constexpr bool   kFilterMessagesOnce = true;
+    
     namespace {
         static constexpr const uint32_t kEngineVersion      = YQ_MAKE_VERSION(0, 0, 2);
         static constexpr const char*    szEngineName        = "YQ Tachyon";
@@ -52,7 +55,7 @@ namespace yq::tachyon {
             [[maybe_unused]] void*                      pUserData
         )
         {
-            {   // a simple little filter
+            if constexpr(kFilterMessagesOnce) {   // a simple little filter
                 using key_t = std::pair<uint64_t, int32_t>;
                 static std::set<key_t>  seen;
                 static tbb::spin_mutex  mutex;

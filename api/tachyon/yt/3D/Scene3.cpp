@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/3D/Scene3.hpp>
-#include <yt/3D/Scene3Bind.hpp>
 #include <yt/3D/Scene3Data.hpp>
 #include <yt/3D/Scene3InfoWriter.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
@@ -14,17 +13,6 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³)
 
 namespace yq::tachyon {
-    /////////////////////////////////////////////////////////////////////////////
-
-    Scene³Bind::Scene³Bind(const Scene³* v) : m_scene³(v?v->id():Scene³ID()) 
-    {
-    }
-    
-    Scene³Bind::Scene³Bind(TypedID v) : m_scene³(v(Type::Scene³) ? Scene³ID(v.id) : Scene³ID())
-    {
-    }
-
-    /////////////////////////////////////////////////////////////////////////////
 
     Scene³Data::Scene³Data() = default;
     Scene³Data::~Scene³Data() = default;

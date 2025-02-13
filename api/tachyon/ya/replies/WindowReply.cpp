@@ -11,18 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowReply)
 
 namespace yq::tachyon {
-    WindowReplyInfo::WindowReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
-        ReplyInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    WindowReply::WindowReply(const RequestCPtr& rq, ViewerID v, const Param& p) : Reply(rq, p), ViewerBind(v)
+    WindowReply::WindowReply(const Header&h, const RequestCPtr& rq) : Reply(h, rq)
     {
     }
     
-    WindowReply::WindowReply(const RequestCPtr& rq, const Viewer* v, const Param& p) : Reply(rq, p), ViewerBind(v)
+    WindowReply::WindowReply(const WindowReply& cp, const Header&h) : Reply(cp, h)
     {
     }
 

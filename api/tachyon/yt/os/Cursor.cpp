@@ -5,19 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/os/Cursor.hpp>
-#include <yt/os/CursorBind.hpp>
 #include <yt/os/CursorData.hpp>
 #include <yt/os/CursorInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
-
-    CursorBind::CursorBind(const Cursor* v) : m_cursor(v ? v->id() : CursorID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     struct CursorInfo::Repo {
         std::vector<const CursorInfo*> all;
@@ -52,19 +44,6 @@ namespace yq::tachyon {
     {
     }
 
-    PostAdvice    Cursor::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const CursorBind* p = dynamic_cast<const CursorBind*>(&pp)){
-            if(p->cursor() != id())
-                return REJECT;
-        }
-        return {};
-    }
-    
     void Cursor::snap(CursorSnap& sn) const
     {
         Tachyon::snap(sn);

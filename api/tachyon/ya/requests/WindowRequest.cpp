@@ -11,18 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowRequest)
 
 namespace yq::tachyon {
-    WindowRequestInfo::WindowRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl) :
-        RequestInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    WindowRequest::WindowRequest(WindowID v, const Param& p) : Request(p), WindowBind(v)
+    WindowRequest::WindowRequest(const Header&h) : Request(h)
     {
     }
     
-    WindowRequest::WindowRequest(const Window* v, const Param& p) : Request(p), WindowBind(v)
+    WindowRequest::WindowRequest(const WindowRequest& cp, const Header&h) : Request(cp, h)
     {
     }
 

@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/3D/Rendered3.hpp>
-#include <yt/3D/Rendered3Bind.hpp>
 #include <yt/3D/Rendered3InfoWriter.hpp>
 #include <ya/commands/SpatialCommand.hpp>
 #include <yq/vector/Quaternion3.hxx>
@@ -13,17 +12,6 @@
 #include <yt/3D/3DWriter.hxx>
 
 namespace yq::tachyon {
-
-    Rendered³Bind::Rendered³Bind(const Rendered³* v) : m_rendered³(v ? v->id() : Rendered³ID())
-    {
-    }
-    
-    Rendered³Bind::Rendered³Bind(TypedID v) : m_rendered³(v(Type::Rendered³)?Rendered³ID(v.id):Rendered³ID())
-    {
-    }
-
-    /////////////////////////////////////////////////////////////////////////////
-
     Rendered³Snap::Rendered³Snap() = default;
     Rendered³Snap::~Rendered³Snap() = default;
 

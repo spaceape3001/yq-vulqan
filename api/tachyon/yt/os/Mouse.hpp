@@ -57,8 +57,6 @@ namespace yq::tachyon {
     protected:
     
         void        snap(MouseSnap&) const;
-        //virtual void    receive(const post::PostCPtr&) override;
-        virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
         Mouse(const Param&p = {});

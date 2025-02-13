@@ -97,7 +97,7 @@
 
 #include <ya/replies/ui/CloseReply.hpp>
 
-#include <ya/requests/WindowRefreshRequest.hpp>
+#include <ya/requests/ui/RefreshRequest.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 
 #include <yv/ViContext.hpp>

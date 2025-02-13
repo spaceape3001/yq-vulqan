@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/3D/Camera3.hpp>
-#include <yt/3D/Camera3Bind.hpp>
 #include <yt/3D/Camera3Data.hpp>
 #include <yt/3D/Camera3InfoWriter.hpp>
 #include <ya/commands/camera/CameraSetScreen.hpp>
@@ -15,16 +14,6 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 
 namespace yq::tachyon {
-    Camera³Bind::Camera³Bind(const Camera³* v) : m_camera³(v?v->id():Camera³ID()) 
-    {
-    }
-    
-    Camera³Bind::Camera³Bind(TypedID t) : m_camera³(t(Type::Camera³) ? Camera³ID(t.id) : Camera³ID())
-    {
-    }
-
-    /////////////////////////////////////////////////////////////////////////////
-
     Camera³Info::Camera³Info(std::string_view name, CameraInfo& base, const std::source_location& sl) :
         CameraInfo(name, base, sl)
     {

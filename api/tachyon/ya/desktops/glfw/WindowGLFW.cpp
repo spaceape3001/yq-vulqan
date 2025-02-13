@@ -53,8 +53,8 @@
 #include <ya/events/ui/MaximizeEvent.hpp>
 #include <ya/events/ui/RestoreEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
-#include <ya/requests/WindowRefreshRequest.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
+#include <ya/requests/ui/RefreshRequest.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/math/utility.hpp>
 
@@ -293,7 +293,7 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
-        w->send(new WindowRefreshRequest(w));
+        w->send(new RefreshRequest({.source=w}));
     }
     
     void WindowGLFW::callback_window_scale(GLFWwindow* win, float xscale, float yscale)

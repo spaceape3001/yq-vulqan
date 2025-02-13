@@ -5,20 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/os/Mouse.hpp>
-#include <yt/os/MouseBind.hpp>
 #include <yt/os/MouseData.hpp>
 #include <yt/os/MouseInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
-
-    MouseBind::MouseBind(const Mouse* v) : m_mouse(v ? v->id() : MouseID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     struct MouseInfo::Repo {
         std::vector<const MouseInfo*> all;
     };
@@ -52,19 +43,6 @@ namespace yq::tachyon {
     {
     }
 
-    PostAdvice    Mouse::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const MouseBind* p = dynamic_cast<const MouseBind*>(&pp)){
-            if(p->mouse() != id())
-                return REJECT;
-        }
-        return {};
-    }
-    
     void Mouse::snap(MouseSnap& sn) const
     {
         Tachyon::snap(sn);

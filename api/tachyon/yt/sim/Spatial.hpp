@@ -53,7 +53,6 @@ namespace yq::tachyon {
         virtual ~Spatial();
         
         void snap(SpatialSnap&) const;
-        virtual PostAdvice  advise(const Post&) const override;
     
     private:
         SpatialID       m_domain;

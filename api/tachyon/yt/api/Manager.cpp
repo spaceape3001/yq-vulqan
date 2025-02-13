@@ -5,21 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/api/Manager.hpp>
-#include <yt/api/ManagerBind.hpp>
 #include <yt/api/ManagerData.hpp>
 #include <yt/api/ManagerInfoWriter.hpp>
 
 namespace yq::tachyon {
-    ManagerBind::ManagerBind(const Manager* v) : m_manager(v ? v->id() : ManagerID{})
-    {
-    }
-
-    ManagerBind::ManagerBind(TypedID v) : m_manager(v(Type::Manager) ? ManagerID(v.id) : ManagerID())
-    {
-    }
-
-    /////////////////////////////////////////////////////////////////////////////
-
     ManagerData::ManagerData() = default;
     ManagerData::~ManagerData() = default;
 

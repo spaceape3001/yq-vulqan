@@ -58,8 +58,6 @@ namespace yq::tachyon {
     protected:
     
         void        snap(MonitorSnap&) const;
-        //virtual void    receive(const post::PostCPtr&) override;
-        virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
         Monitor(const Param&p = {});

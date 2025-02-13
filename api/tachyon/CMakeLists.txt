@@ -354,8 +354,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/ui/ShowCommand.cpp
     ya/commands/ui/StartupCommand.cpp
     ya/commands/ui/UnfloatCommand.cpp
+
+    #ya/commands/viewer/SetWidgetCommand.cpp
     
     ya/commands/widget/SetViewer.cpp
+
 
     ya/controllers/Space3Controller.cpp
 
@@ -464,6 +467,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/ui/MaximizeEvent.cpp
     ya/events/ui/RestoreEvent.cpp
     ya/events/ui/ShowEvent.cpp
+    ya/events/ui/TitleEvent.cpp
     
     ya/interfaces/IMaxSize1.cpp
     ya/interfaces/IMaxSize2.cpp
@@ -524,7 +528,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/replies/UIReply.cpp
     ya/replies/ViewerCloseReply.cpp
     ya/replies/ViewerReply.cpp
-    ya/replies/ViewerWidgetReply.cpp
+    #ya/replies/ViewerWidgetReply.cpp
     ya/replies/WindowReply.cpp
     
     ya/replies/graphics_card/GetDeviceReply.cpp
@@ -539,14 +543,14 @@ add_library(${PROJECT_NAME} SHARED
     ya/requests/TachyonRequest.cpp
     ya/requests/UIRequest.cpp
     ya/requests/ViewerRequest.cpp
-    #ya/requests/ViewerWidgetRequest.cpp
     ya/requests/WidgetRequest.cpp
-    ya/requests/WindowRefreshRequest.cpp
+    #ya/requests/WindowRefreshRequest.cpp
     ya/requests/WindowRequest.cpp
     
     ya/requests/graphics_card/GetDeviceRequest.cpp
     
     ya/requests/ui/CloseRequest.cpp
+    ya/requests/ui/RefreshRequest.cpp
 
     ya/scenes/SimpleScene3.cpp
 

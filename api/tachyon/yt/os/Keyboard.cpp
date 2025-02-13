@@ -5,19 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/os/Keyboard.hpp>
-#include <yt/os/KeyboardBind.hpp>
 #include <yt/os/KeyboardData.hpp>
 #include <yt/os/KeyboardInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
-
-    KeyboardBind::KeyboardBind(const Keyboard* v) : m_keyboard(v ? v->id() : KeyboardID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     struct KeyboardInfo::Repo {
         std::vector<const KeyboardInfo*> all;
@@ -52,19 +44,6 @@ namespace yq::tachyon {
     {
     }
 
-    PostAdvice    Keyboard::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const KeyboardBind* p = dynamic_cast<const KeyboardBind*>(&pp)){
-            if(p->keyboard() != id())
-                return REJECT;
-        }
-        return {};
-    }
-    
     void Keyboard::snap(KeyboardSnap& sn) const
     {
         Tachyon::snap(sn);

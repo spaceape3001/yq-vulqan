@@ -94,9 +94,6 @@ namespace yq::tachyon {
     protected:
     
         void        snap(DesktopSnap&) const;
- 
-        //virtual void    receive(const post::PostCPtr&) override;
-        virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
         Desktop(const AppCreateInfo&, const Param&p);

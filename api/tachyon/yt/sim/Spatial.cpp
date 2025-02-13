@@ -6,19 +6,11 @@
 
 #include <yt/sim/Spatial.hpp>
 #include <yt/sim/SpatialData.hpp>
-#include <yt/sim/SpatialBind.hpp>
 #include <yt/sim/SpatialInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial)
 
 namespace yq::tachyon {
-
-    SpatialBind::SpatialBind(const Spatial* v) : m_spatial(v ? v->id() : SpatialID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     SpatialInfo::SpatialInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(zName, base, sl)
     {
@@ -36,19 +28,6 @@ namespace yq::tachyon {
         
     Spatial::~Spatial()
     {
-    }
-
-    PostAdvice    Spatial::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const SpatialBind* p = dynamic_cast<const SpatialBind*>(&pp)){
-            if(p->spatial() != id())
-                return REJECT;
-        }
-        return {};
     }
 
     void Spatial::snap(SpatialSnap&sn) const

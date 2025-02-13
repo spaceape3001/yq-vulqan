@@ -97,7 +97,6 @@ namespace yq::tachyon {
         Rendered(const Param&p);
         virtual ~Rendered();
 
-        virtual PostAdvice  advise(const Post&) const override;
         void snap(RenderedSnap&) const;
 
         //! Pipeline override

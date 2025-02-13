@@ -10,27 +10,23 @@
 #include <yt/app/ViewerBind.hpp>
 
 namespace yq::tachyon {
-    class WindowRequest;
-
-    class WindowReplyInfo : public ReplyInfo {
-    public:
-        WindowReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class WindowReply : public Reply, public ViewerBind {
-        YQ_OBJECT_INFO(WindowReplyInfo)
+    class WindowReply : public Reply {
         YQ_OBJECT_DECLARE(WindowReply, Reply)
     public:
     
-        struct Param : public Reply::Param {
-        };
-    
-        WindowReply(const RequestCPtr&, ViewerID, const Param& p = {});
-        WindowReply(const RequestCPtr&, const Viewer*, const Param& p = {});
+        static void init_info();
+
+    protected:
+        WindowReply(const Header&, const RequestCPtr&);
+        WindowReply(const WindowReply&, const Header&);
         virtual ~WindowReply();
         
-        static void init_info();
+    private:
+        WindowReply(const WindowReply&) = delete;
+        WindowReply(WindowReply&&) = delete;
+        
+        WindowReply& operator=(const WindowReply&) = delete;
+        WindowReply& operator=(WindowReply&&) = delete;
+        
     };
 }

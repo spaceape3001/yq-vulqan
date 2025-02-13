@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/scene/Scene.hpp>
-#include <yt/scene/SceneBind.hpp>
 #include <yt/scene/SceneData.hpp>
 #include <yt/scene/SceneInfoWriter.hpp>
 

@@ -37,5 +37,7 @@ namespace yq::tachyon {
     };
     
     struct RenderedData : public TachyonData {
+        RenderedData();
+        ~RenderedData();
     };
 }

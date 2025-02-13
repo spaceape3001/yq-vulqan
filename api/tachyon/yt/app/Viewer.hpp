@@ -387,7 +387,7 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  OLD CODE
 
-        void    widget_request(const ViewerWidgetRequestCPtr&);
+        //void    on_widget_request(const SetWidgetRequest&);
 
             //! Monitor (if fullscreen)
         //Monitor             monitor() const;

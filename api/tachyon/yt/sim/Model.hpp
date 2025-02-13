@@ -59,8 +59,6 @@ namespace yq::tachyon {
     protected:
     
         void        snap(ModelSnap&) const;
-        //virtual void    receive(const post::PostCPtr&) override;
-        virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
         Model(const Param&p = {});

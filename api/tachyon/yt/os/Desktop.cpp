@@ -5,19 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/os/Desktop.hpp>
-#include <yt/os/DesktopBind.hpp>
 #include <yt/os/DesktopData.hpp>
 #include <yt/os/DesktopInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
-
-    DesktopBind::DesktopBind(const Desktop* v) : m_desktop(v ? v->id() : DesktopID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     struct DesktopInfo::Repo {
         std::vector<const DesktopInfo*> all;
@@ -55,19 +47,6 @@ namespace yq::tachyon {
 
     Desktop::~Desktop()
     {
-    }
-
-    PostAdvice    Desktop::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Manager::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const DesktopBind* p = dynamic_cast<const DesktopBind*>(&pp)){
-            if(p->desktop() != id())
-                return REJECT;
-        }
-        return {};
     }
 
     bool    Desktop::does(cursor_k) const

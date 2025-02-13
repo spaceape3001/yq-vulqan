@@ -6,14 +6,15 @@
 
 #include <yt/msg/Post.hpp>
 #include <yt/scene/Rendered.hpp>
-#include <yt/scene/RenderedBind.hpp>
 #include <yt/scene/RenderedData.hpp>
 #include <yt/scene/RenderedInfoWriter.hpp>
 #include <yv/ViBuffer.hpp>
 #include <yv/ViTexture.hpp>
 
 namespace yq::tachyon {
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    RenderedData::RenderedData()    = default;
+    RenderedData::~RenderedData() = default;
 
     RenderedSnap::RenderedSnap()    = default;
     RenderedSnap::~RenderedSnap() = default;
@@ -60,19 +61,6 @@ namespace yq::tachyon {
     
     Rendered::~Rendered()
     {
-    }
-
-    PostAdvice    Rendered::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const RenderedBind* p = dynamic_cast<const RenderedBind*>(&pp)){
-            if(p->rendered() != id())
-                return REJECT;
-        }
-        return {};
     }
 
     const Pipeline* Rendered::pipeline() const

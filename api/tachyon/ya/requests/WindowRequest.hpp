@@ -7,27 +7,24 @@
 #pragma once
 
 #include <yt/msg/Request.hpp>
-#include <yt/os/WindowBind.hpp>
 
 namespace yq::tachyon {
-    class WindowRequestInfo : public RequestInfo {
-    public:
-        WindowRequestInfo(std::string_view zName, RequestInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class WindowRequest : public Request, public WindowBind {
-        YQ_OBJECT_INFO(WindowRequestInfo)
+    class WindowRequest : public Request {
         YQ_OBJECT_DECLARE(WindowRequest, Request)
     public:
     
-        struct Param : public Request::Param {
-        };
-    
-        WindowRequest(WindowID, const Param& p = {});
-        WindowRequest(const Window*, const Param& p = {});
-        virtual ~WindowRequest();
         static void init_info();
+    
+    protected:
+
+        WindowRequest(const Header&);
+        WindowRequest(const WindowRequest&, const Header&);
+        virtual ~WindowRequest();
+        
+    private:
+        WindowRequest(const WindowRequest&) = delete;
+        WindowRequest(WindowRequest&&) = delete;
+        WindowRequest& operator=(const WindowRequest&) = delete;
+        WindowRequest& operator=(WindowRequest&&) = delete;
     };
 }

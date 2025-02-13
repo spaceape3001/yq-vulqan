@@ -533,8 +533,5 @@ namespace yq::tachyon {
         }
 
     };
-
-    
-
 }
 

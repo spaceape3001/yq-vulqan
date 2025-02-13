@@ -12,6 +12,7 @@
 #include <yq/core/Tristate.hpp>
 #include <yt/gfx/CullMode.hpp>
 #include <yt/gfx/PolygonMode.hpp>
+#include <yt/gfx/Pipeline.hpp>
 #include <yv/typedef/vi_pipeline.hpp>
 #include <yv/typedef/vi_pipeline_layout.hpp>
 #include <yv/typedef/vi_render_pass.hpp>
@@ -90,12 +91,16 @@ namespace yq::tachyon {
         bool                consistent() const;
         VkPipeline          pipeline() const { return m_pipeline; }
         bool                valid() const;
+        VkPipeline          wireframe() const { return m_wireframe; }
         VkPipeline          wireframe_pipeline() const { return m_wireframe; }
         
         ViPipelineLayoutCPtr    layout() const;
         
         void                report(Stream&, const ViPipelineReportOptions& options={}) const;
         void                report(const char* cat="viz", LogPriority pri=LogPriority::Info, const ViPipelineReportOptions& options={}) const;
+
+        VkPipeline          pipeline(Pipeline::Variation) const;
+        VkPipeline          wireframe(Pipeline::Variation) const;
     
     private:
         std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options);
@@ -106,6 +111,14 @@ namespace yq::tachyon {
             Wireframe   = 0
         };
         
+        struct V {
+            VkPipeline      pipeline    = nullptr;
+            VkPipeline      wireframe   = nullptr;
+        };
+        
+        using VMap  = std::map<Pipeline::Variation, V>;
+        
+        VMap                    m_variations;
         ViVisualizer*           m_viz           = nullptr;
         ViPipelineLayoutCPtr    m_layout;
         VkPipeline              m_pipeline      = nullptr;

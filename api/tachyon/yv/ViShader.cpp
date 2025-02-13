@@ -43,6 +43,7 @@ namespace yq::tachyon {
     std::error_code     ViShader::_create(ViVisualizer&viz, const Shader&sh)
     {
         m_mask  = {};
+        m_stage = sh.type;
         switch(sh.type){
         case ShaderType::VERT:
             m_mask  = VK_SHADER_STAGE_VERTEX_BIT;

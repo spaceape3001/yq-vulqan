@@ -12,6 +12,7 @@
 #include <yv/typedef/vi_pipeline_layout.hpp>
 #include <yv/typedef/vi_shader.hpp>
 #include <yv/ViData.hpp>
+#include <yt/gfx/Pipeline.hpp>
 
 #include <vulkan/vulkan_core.h>
 
@@ -31,6 +32,8 @@ namespace yq::tachyon {
     struct ViPipelineLayoutReportOptions {
         std::string_view    message;
     };
+    
+    class ViPipeline;
     
     
     /*! \brief Pipeline Layouts
@@ -61,7 +64,16 @@ namespace yq::tachyon {
         
         void                report(Stream&, const ViPipelineLayoutReportOptions& options={}) const;
 
+        struct V {
+            const Pipeline::VariationData*                  define      = nullptr;
+            std::vector<ViShaderCPtr>                       shaders;
+            std::vector<VkPipelineShaderStageCreateInfo>    shaderInfo;
+        };
+        
+        const V*            variation(Pipeline::Variation) const;
+
     private:
+        friend class ViPipeline;
     
         bool            _import_shaders();
     
@@ -72,6 +84,10 @@ namespace yq::tachyon {
             Push
         };
         
+
+        using VMap  = std::map<Pipeline::Variation, V>;
+        
+        VMap                                            m_variations;
         VkPipelineLayout                                m_pipelineLayout        = nullptr;
         VkShaderStageFlags                              m_shaderMask    = 0;
         std::vector<VkPipelineShaderStageCreateInfo>    m_shaderInfo;
@@ -81,6 +97,8 @@ namespace yq::tachyon {
         VkPipelineVertexInputStateCreateInfo            m_vertexCreateInfo{};
         std::vector<VkDynamicState>                     m_dynamicStates;
         Flags<S>                                        m_status = {};
+
+        
 
         ViPipelineLayout(const ViPipelineLayout&) = delete;
         ViPipelineLayout(ViPipelineLayout&&) = delete;

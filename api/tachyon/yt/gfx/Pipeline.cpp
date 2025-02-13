@@ -67,12 +67,20 @@ namespace yq::tachyon {
     
     void  Pipeline::color_blending(ColorBlend v)
     {
-        m_colorBlend = v;
+        if(m_variation){
+            m_variation -> colorBlend   = v;
+        } else {
+            m_colorBlend = v;
+        }
     }
 
     void  Pipeline::culling(CullMode v)
     {
-        m_cullMode  = v;
+        if(m_variation){
+            m_variation -> cullMode = v;
+        } else {
+            m_cullMode  = v;
+        }
     }
 
     void  Pipeline::dynamic_state(DynamicState ds)
@@ -89,12 +97,20 @@ namespace yq::tachyon {
     
     void  Pipeline::front(FrontFace v)
     {
-        m_frontFace  = v;
+        if(m_variation){
+            m_variation -> frontFace = v;
+        } else {
+            m_frontFace  = v;
+        }
     }
     
     void  Pipeline::line_width(float v)
     {
-        m_lineWidth = v;
+        if(m_variation){
+            m_variation -> lineWidth    = v;
+        } else {
+            m_lineWidth = v;
+        }
     }
 
     uint32_t    Pipeline::location_filter(uint32_t loc, uint32_t req)
@@ -123,7 +139,11 @@ namespace yq::tachyon {
     
     void  Pipeline::polygons(PolygonMode v)
     {
-        m_polygonMode = v;
+        if(m_variation){
+            m_variation -> polygonMode = v;
+        } else {
+            m_polygonMode = v;
+        }
     }
     
     void  Pipeline::primitive_restart(bool v)
@@ -176,13 +196,21 @@ namespace yq::tachyon {
 
     void  Pipeline::shader(ShaderSpec ss)
     {
-        m_shaders.push_back(ss);
+        if(m_variation){
+            m_variation -> shaders.push_back(ss);
+        } else
+            m_shaders.push_back(ss);
     }
     
     void  Pipeline::shaders(std::initializer_list<ShaderSpec> sss)
     {
-        for(ShaderSpec ss : sss)
-            m_shaders.push_back(ss);
+        if(m_variation){
+            for(ShaderSpec ss : sss)
+                m_variation->shaders.push_back(ss);
+        } else {
+            for(ShaderSpec ss : sss)
+                m_shaders.push_back(ss);
+        }
     }
 
     
@@ -201,6 +229,25 @@ namespace yq::tachyon {
     
     void  Pipeline::wireframe_permitted(bool v)
     {
+        if(m_variation){
+            m_variation -> wireframePermitted = v ? Tristate::YES : Tristate::NO;
+        }
         m_wireframePermitted    = v;
+    }
+
+        //! Creates/accesses the specified variation.
+    Pipeline::VariationData*    Pipeline::variation(Variation v)
+    {
+        if(v == Variation::Invalid)
+            return nullptr;
+        if(v == Variation::Default)
+            return nullptr;
+        m_variation = &m_variations[v];
+        return m_variation;
+    }
+
+    void    Pipeline::variation(reset_k)
+    {
+        m_variation = nullptr;
     }
 }

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yt/typedef/shader.hpp>
+#include <yt/gfx/ShaderType.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <system_error>
@@ -35,11 +36,13 @@ namespace yq::tachyon {
         
         std::error_code         create(ViVisualizer&, const Shader&);
         void                    kill();
+        ShaderType              stage() const { return m_stage; }
         
     private:
         ViVisualizer*           m_viz       = nullptr;
         VkShaderModule          m_shader    = nullptr;
         VkShaderStageFlagBits   m_mask      = {};
+        ShaderType              m_stage;
         
         ViShader(const ViShader&) = delete;
         ViShader(ViShader&&) = delete;

@@ -150,6 +150,7 @@ namespace yq::tachyon {
     struct rendered_k {};
     struct rendered³_k {};
     struct request_k {};
+    struct reset_k {};
     struct resume_k {};
     struct roll_k {};
     struct root_k {};
@@ -299,6 +300,7 @@ namespace yq::tachyon {
     static constexpr rendered_k         RENDERED;
     static constexpr rendered³_k        RENDERED³;
     static constexpr request_k          REQUEST;
+    static constexpr reset_k            RESET;
     static constexpr resume_k           RESUME;
     static constexpr roll_k             ROLL;
     static constexpr root_k             ROOT;

@@ -38,7 +38,7 @@
 
 namespace yq::tachyon {
     
-    static constexpr bool   kFilterMessagesOnce = true;
+    static constexpr bool   kFilterMessagesOnce = false;
     
     namespace {
         static constexpr const uint32_t kEngineVersion      = YQ_MAKE_VERSION(0, 0, 2);

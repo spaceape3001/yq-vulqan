@@ -151,7 +151,7 @@ namespace yq::tachyon {
     }
     
 
-    void            ViRendered::_record(ViContext& u, const PushBuffer& pb) const
+    void            ViRendered::_record(ViContext& u, const PushBuffer& pb, Pipeline::Variation v) const
     {
         if constexpr (RENDERED_DEBUG_REPORT){
             //_debug_report();
@@ -169,11 +169,16 @@ namespace yq::tachyon {
         } else
             wireframe   = Tristate::NO;
 
-        VkPipeline      vkpipe      = (wireframe == Tristate::YES) ? m_pipeline->wireframe_pipeline() : m_pipeline->pipeline();
+        VkPipeline      vkpipe;
+        if(wireframe == Tristate::YES){
+            vkpipe  = m_pipeline->wireframe(v);
+        } else {
+            vkpipe  = m_pipeline->pipeline(v);
+        }
 
         if(!vkpipe){
             if(wireframe != Tristate::YES){
-                vizFirstWarning(this) << "ViRendered(" << hex(this) << ")::_record() with NULL pipeline, skipping.";
+                vizFirstWarning(this,v) << "ViRendered(" << hex(this) << ")::_record() with NULL pipeline(" << (int) v << "), skipping.";
                 static FirstSeen<const ViRendered*> s_first;
                 if(s_first(this)){
                     std::string rep;
@@ -287,10 +292,10 @@ namespace yq::tachyon {
         return m_layout;
     }
 
-    void    ViRendered::record(ViContext& ctx, const PushBuffer&pb) const
+    void    ViRendered::record(ViContext& ctx, const PushBuffer&pb, Pipeline::Variation v) const
     {
         if(valid() && m_pipeline)
-            _record(ctx, pb);
+            _record(ctx, pb, v);
     }
     
     void ViRendered::report(Stream& out, const ViRenderedReportOptions& options) const

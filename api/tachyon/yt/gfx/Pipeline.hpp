@@ -7,6 +7,9 @@
 #pragma once
 
 #include <yq/core/Flags.hpp>
+#include <yq/core/Tristate.hpp>
+
+#include <yt/keywords.hpp>
 
 #include <yt/gfx/DataActivity.hpp>
 #include <yt/gfx/ColorBlend.hpp>
@@ -50,8 +53,16 @@ namespace yq::tachyon {
     public:
 
         using role_t        = uint16_t;
+        using variation_t   = uint16_t;
 
-        //! Standard roles (can disobey below)
+        /*! \brief Standard roles (can disobey below)
+            
+            The Role is a variation in layouts; so the attributes,
+            buffers, etc can vary on a single rendered object.
+            (ie...below has the solid as one option, corners
+            as a second option, or textures as a third.)
+        */
+        //! 
         enum class Role : role_t {
             //! Invalid role (shouldn't ever get back)
             Invalid = (role_t) -1,
@@ -70,6 +81,19 @@ namespace yq::tachyon {
             
             //! First user-based index (nice & large for future compatibility)
             User = 1001
+        };
+    
+        //! Variation is a tweak to a pipeline while using the same layout 
+        //  (This will likely be remapped to subpasses... later)
+        enum class Variation : variation_t {
+            //! Invalid variation (shouldn't ever get back)
+            Invalid         = (variation_t) -1,
+            
+            //! Default variation... cannot be set
+            Default         = 0,
+            
+            //! First user-based index (nice & large for future compatibility)
+            User            = 1001
         };
     
         //! Handler to get a buffer from an object
@@ -175,24 +199,66 @@ namespace yq::tachyon {
         constexpr uint64_t      id() const { return m_id; }
 
         //  Building out the pipeline
+
         
+        //! Set the pipeline bind point
+        //! \note This can NOT be altered by a variation
         void  binding(PipelineBinding);
+        
+        //! Set color blending
+        //! \note Variation supported
         void  color_blending(ColorBlend);
+        
+        //! Set culling mode
+        //! \note Variation supported
         void  culling(CullMode);
+        
+        //! Set dynamic states
+        //! \note This can NOT be altered by a variation
         void  dynamic_state(DynamicState);
+
+        //! Set dynamic states
+        //! \note This can NOT be altered by a variation
         void  dynamic_states(std::initializer_list<DynamicState>);
+        
+        //! Set the front face
+        //! \note Variation supported
         void  front(FrontFace);
+        
+        //! Set the line width
+        //!
+        //! If left NaN, the default line width will be used.  
+        //! \note Variation supported
         void  line_width(float);
+        
+        //! Set the polygon mode
+        //! \note Variation supported
         void  polygons(PolygonMode);
+        
+        //! Enable primitive restarting
+        //! \note This can NOT be altered by a variation
         void  primitive_restart(bool);
+        
+        //! Set/change the shader
+        //! \note Variation supported
         void  shader(ShaderSpec);
+        
+        //! Set/change the shaders
+        //! \note Variation supported
         void  shaders(std::initializer_list<ShaderSpec>);
+        
+        //! Sets the pipeline's topology
+        //! \note This can NOT be altered by a variation
         void  topology(Topology);
+        
+        //! Permit wireframe mode
+        //! \note Variation supported
         void  wireframe_permitted(bool);
         
         /*! \brief Declares an index buffer 
         
             \note THIS routine assumes you're manually doing the import/record step
+            \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
@@ -201,6 +267,7 @@ namespace yq::tachyon {
         /*! \brief Declares a storage buffer
         
             \note THIS routine assumes you're manually doing the import/record step
+            \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
@@ -209,6 +276,7 @@ namespace yq::tachyon {
         /*! \brief Declares a storage buffer
         
             \note THIS routine assumes you're manually doing the import/record step
+            \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
@@ -217,6 +285,7 @@ namespace yq::tachyon {
         /*! \brief Declares a uniform buffer
         
             \note THIS routine assumes you're manually doing the import/record step
+            \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
@@ -225,6 +294,7 @@ namespace yq::tachyon {
         /*! \brief Declares a uniform buffer
         
             \note THIS routine assumes you're manually doing the import/record step
+            \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
@@ -233,6 +303,7 @@ namespace yq::tachyon {
         /*! \brief Declares a vertex buffer
         
             \note THIS routine assumes you're manually doing the import/record step
+            \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
@@ -241,18 +312,47 @@ namespace yq::tachyon {
         /*! \brief Declares a texture
         
             \note THIS routine assumes you're manually doing the import/record step
+            \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
         uint32_t    texture(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
 
+        /*! \brief Defines the push constant
+            \note This can NOT be altered by a variation
+        */
         template <typename T>
         void  push();
+
+        /*! \brief Defines the push constant
+            \note This can NOT be altered by a variation
+        */
         void  push(PushConfigType);
+
+        /*! \brief Defines the push constant
+            \note This can NOT be altered by a variation
+        */
         void  push_full();
+
+        /*! \brief Defines the push constant
+            \note This can NOT be altered by a variation
+        */
         void  push_none();
+
+        /*! \brief Defines the push constant
+            \note This can NOT be altered by a variation
+        */
         void  push_view();
+
+        /*! \brief Defines the push constant
+            \note This can NOT be altered by a variation
+        */
         void  push_viewproj();
+
+        /*! \brief Defines the push constant
+            \note This can NOT be altered by a variation
+        */
         void  push_mvp();
+
 
         const auto& shaders() const { return m_shaders; }
         const auto& index_buffers() const { return m_indexBuffers; }
@@ -264,6 +364,38 @@ namespace yq::tachyon {
 
         Pipeline(Role r = Role::Default);
 
+        struct VariationData {
+            //  Unspecified values inherit from default
+            
+            /*! \brief Shaders
+            
+                Specifying these will replace the main shaders.
+                
+                \note Any missing shader stages will be filled in by 
+                the main shaders.  No *NEW* shader stages may be 
+                added.
+            */
+            std::vector<ShaderSpec>     shaders;
+            std::optional<CullMode>     cullMode;
+            std::optional<FrontFace>    frontFace;
+            std::optional<float>        lineWidth;              //! If set, overrides default
+            std::optional<float>        lineWidthMultiplier;    //! If set and lineWidth isn't, scales default line width
+            std::optional<PolygonMode>  polygonMode;
+            std::optional<ColorBlend>   colorBlend;
+            Tristate                    wireframePermitted  = Tristate::INHERIT;
+        };
+
+        //! Creates/sets the variation for editing.
+        //! \note The above modifiers will switch to using the variation, so define default *FIRST*
+        //! \return pointer (if valid... null for default/invalid)
+        VariationData*    variation(Variation);
+
+        //! Resets the variation to default
+        void    variation(reset_k);
+
+        //! Finds/returns pointer (Note, this can get invalidated with map modifications)
+        const VariationData*            variation(ptr_k, Variation) const;
+
     protected:
         friend class ViData;
         friend class ViPipeline;
@@ -271,7 +403,7 @@ namespace yq::tachyon {
         friend class ViRendered;
 
         Pipeline(const CompoundInfo*, Role);
-
+        
 
         template <typename V>
         VBOMaker<V>                 vbo_(DataActivity da=DataActivity::UNSURE, uint32_t stages=0);
@@ -295,9 +427,15 @@ namespace yq::tachyon {
         const uint64_t                  m_id;
         const Role                      m_role;
         
+        
+        using VariationMap = std::map<Variation, VariationData>;
+        
 
         //! Locations used
         std::set<uint32_t>              m_locations;
+        
+        VariationMap                    m_variations;
+        VariationData*                  m_variation             = nullptr;
         
         PipelineBinding                 m_binding               = PipelineBinding::Graphics;
         CullMode                        m_cullMode              = CullMode::Back;

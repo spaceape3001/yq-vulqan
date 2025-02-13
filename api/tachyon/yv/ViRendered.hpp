@@ -59,7 +59,7 @@ namespace yq::tachyon {
         
         //! Publishes descriptor changes
         void    descriptors();
-        void    record(ViContext&, const PushBuffer&) const;
+        void    record(ViContext&, const PushBuffer&, Pipeline::Variation v=Pipeline::Variation::Default) const;
         
         bool    consistent() const;
         bool    valid() const;
@@ -91,6 +91,6 @@ namespace yq::tachyon {
         void            _kill();
         void            _update(ViContext& u, const RenderedSnap&);
         void            _descriptors();
-        void            _record(ViContext&, const PushBuffer&) const;
+        void            _record(ViContext&, const PushBuffer&, Pipeline::Variation) const;
     };
 }

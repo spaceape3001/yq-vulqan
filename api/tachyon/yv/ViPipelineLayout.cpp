@@ -56,6 +56,10 @@ namespace yq::tachyon {
         m_shaders.reserve(m_config->m_shaders.size());
         m_shaderInfo.reserve(m_config->m_shaders.size());
         
+        using ShaderMap = std::map<ShaderType, ViShaderCPtr>;
+        
+        ShaderMap  defShaders;
+        
         for(auto& s : m_config->m_shaders){
             ShaderCPtr  sh  = Shader::decode(s);
             if(!sh){
@@ -69,6 +73,8 @@ namespace yq::tachyon {
                 return false;
             }
             
+            defShaders[xvs->stage()] = xvs;
+            
             VqPipelineShaderStageCreateInfo stage;
             stage.stage     = xvs->mask();
             stage.pName     = "main";
@@ -76,6 +82,36 @@ namespace yq::tachyon {
             m_shaderInfo.push_back(stage);
             m_shaderMask   |= xvs->mask();
             m_shaders.push_back(xvs);
+        }
+        
+        for(auto& itr : m_variations){
+            ShaderMap   shaders;
+            V&          vd   = itr.second;
+            for(auto& s : vd.define->shaders){
+                ShaderCPtr  sh  = Shader::decode(s);
+                if(!sh){
+                    vizWarning << "Unable to decode a shader on this pipeline layout";
+                    return false;
+                }
+                
+                ViShaderCPtr    xvs = m_viz -> shader_create(*sh);
+                if(!xvs || !xvs->valid()){
+                    vizWarning << "Unable to load shader on this pipeline layout into vulkan ";
+                    return false;
+                }
+                
+                m_shaderMask   |= xvs->mask();
+                shaders[xvs->stage()]   = xvs;
+            }
+            
+            for(auto& j : shaders){
+                VqPipelineShaderStageCreateInfo stage;
+                stage.stage     = j.second->mask();
+                stage.pName     = "main";
+                stage.module    = j.second->shader_module();
+                vd.shaderInfo.push_back(stage);
+                vd.shaders.push_back(j.second);
+            }
         }
         
         return true;
@@ -87,6 +123,12 @@ namespace yq::tachyon {
 
         m_viz       = &viz;
         m_config    = cfg;
+        
+        // First, the variations
+        for(auto itr : m_config->m_variations){
+            m_variations[itr.first].define = &itr.second;
+        }
+        
         if(!_import_shaders()){
             return errors::pipeline_layout_bad_shaders();
         }

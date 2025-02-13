@@ -81,6 +81,8 @@ namespace yq::tachyon {
         m_status    = {};
         
         VqGraphicsPipelineCreateInfo pipelineInfo;
+        
+        //  TODO... subpass support
 
         const auto&   shaders = pLay->shader_infos();
         if(!shaders.empty()){
@@ -300,8 +302,9 @@ namespace yq::tachyon {
             return errors::pipeline_cant_create();
         }
             
+        pipelineInfo.flags  = VK_PIPELINE_CREATE_DERIVATIVE_BIT;
+        
         if(m_status(S::Wireframe)){
-            pipelineInfo.flags  = VK_PIPELINE_CREATE_DERIVATIVE_BIT;
             pipelineInfo.basePipelineHandle = m_pipeline;
             pipelineInfo.basePipelineIndex  = -1;
             rasterizer.polygonMode  = VK_POLYGON_MODE_LINE;
@@ -313,11 +316,91 @@ namespace yq::tachyon {
             }
         }
         
+        for(auto& i : m_layout->m_variations){
+            auto& me = m_variations[i.first];
+            pipelineInfo.basePipelineHandle = m_pipeline;
+            if(!i.second.shaders.empty()){
+                pipelineInfo.stageCount = (uint32_t) i.second.shaderInfo.size();
+                pipelineInfo.pStages    = i.second.shaderInfo.data();
+            }
+
+            ColorBlend   colorBlending   = i.second.define->colorBlend ? *(i.second.define->colorBlend) : cfg->color_blending();
+            switch(colorBlending){
+            case ColorBlend::Additive:
+                pipelineInfo.pColorBlendState   = &colorBlend_additive;
+                break;
+            case ColorBlend::AlphaBlend:
+                pipelineInfo.pColorBlendState   = &colorBlend_alphaBlend;
+                break;
+            case ColorBlend::Disabled:
+            default:
+                pipelineInfo.pColorBlendState   = &colorBlend_disabled;
+                break;
+            }
+            
+            if(i.second.define->cullMode){
+                rasterizer.cullMode                 = (VkCullModeFlags) (*(i.second.define->cullMode)).value();
+            } else {
+                rasterizer.cullMode                 = (VkCullModeFlags) cfg->culling().value();
+            }
+
+            if(i.second.define->lineWidth){
+                rasterizer.lineWidth                = *(i.second.define->lineWidth);
+            } else if(i.second.define->lineWidthMultiplier){
+                rasterizer.lineWidth                = lineWidth * *(i.second.define->lineWidthMultiplier);
+            } else {
+                rasterizer.lineWidth                = lineWidth;
+            }
+            
+            if(i.second.define->frontFace){
+                rasterizer.frontFace                = (VkFrontFace) (*(i.second.define->frontFace)).value();
+            } else {
+                rasterizer.frontFace                = (VkFrontFace) cfg->front().value();
+            }
+
+            if(i.second.define->polygonMode){
+                PolygonMode pm  = *(i.second.define->polygonMode);
+                if(pm == PolygonMode::Auto){
+                    rasterizer.polygonMode          = (VkPolygonMode) polyMode.value();
+                } else {
+                    rasterizer.polygonMode          = (VkPolygonMode) pm.value();
+                }
+            } else {
+                rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
+            }
+
+            VkResult res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.pipeline);
+            if(res != VK_SUCCESS){
+                vizWarning << "ViPipeline: Pipeline create failed.  VkResult " << (int32_t) res;
+                return errors::pipeline_cant_create();
+            }
+            
+            if(rasterizer.polygonMode == VK_POLYGON_MODE_FILL){
+               rasterizer.polygonMode =  VK_POLYGON_MODE_LINE;
+               res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.wireframe);
+                if(res != VK_SUCCESS){
+                    vizWarning << "ViPipeline: Pipeline create failed.  VkResult " << (int32_t) res;
+                    return errors::pipeline_cant_create();
+                }
+            }
+        }
+        
+        
         return {};
     }
     
     void            ViPipeline::_kill()
     {
+        if(m_viz && m_viz->device()){
+            for(auto& i : m_variations){
+                if(i.second.wireframe)
+                    vkDestroyPipeline(m_viz->device(), i.second.wireframe, nullptr);
+                if(i.second.pipeline)
+                    vkDestroyPipeline(m_viz->device(), i.second.pipeline, nullptr);
+            }
+            m_variations.clear();
+        }
+    
         if(m_viz && m_viz->device() && m_wireframe){
             vkDestroyPipeline(m_viz->device(), m_wireframe, nullptr);
         }
@@ -385,12 +468,29 @@ namespace yq::tachyon {
         return m_layout;
     }
 
+    VkPipeline          ViPipeline::pipeline(Pipeline::Variation v) const
+    {
+        if(v == Pipeline::Variation::Default)
+            return m_pipeline;
+        if(v == Pipeline::Variation::Invalid)
+            return nullptr;
+        auto i = m_variations.find(v);
+        if(i != m_variations.end())
+            return i->second.pipeline;
+        return nullptr;
+    }
+
     void ViPipeline::report(Stream& out, const ViPipelineReportOptions& options) const
     {
         out << "Report for ViPipeline[" << hex(this) << "] " << options.message << "\n";
         out << "    VkPipeline (graphics):      [" << hex(m_pipeline) << "]\n";
         out << "    VkPipeline (wireframe):     [" << hex(m_wireframe) << "]\n";
         out << "    Bind Point:                 " << to_string_view(m_binding) << '\n';
+        
+        for(auto& i : m_variations){
+            out << "    VkPipeline (graphics):      [" << hex(i.second.pipeline) << "] {" << (int) i.first << "}\n";
+            out << "    VkPipeline (wireframe):     [" << hex(i.second.wireframe) << "] {" << (int) i.first << "}\n";
+        }
         
         if(!m_layout){
             out << "    Pipeline Layout:        [ missing ]\n";
@@ -419,5 +519,17 @@ namespace yq::tachyon {
     bool            ViPipeline::valid() const
     {
         return m_viz && m_viz->device() && m_layout && m_pipeline && (m_wireframe || !m_status(S::Wireframe));
+    }
+
+    VkPipeline          ViPipeline::wireframe(Pipeline::Variation v) const
+    {
+        if(v == Pipeline::Variation::Default)
+            return m_wireframe;
+        if(v == Pipeline::Variation::Invalid)
+            return nullptr;
+        auto i = m_variations.find(v);
+        if(i != m_variations.end())
+            return i->second.wireframe;
+        return nullptr;
     }
 }

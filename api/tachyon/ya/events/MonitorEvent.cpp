@@ -11,15 +11,11 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorEvent)
 
 namespace yq::tachyon {
     
-    MonitorEventInfo::MonitorEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
+    MonitorEvent::MonitorEvent(const Header& h) : Event(h)
     {
-        set(Flag::MONITOR);
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    MonitorEvent::MonitorEvent(Monitor m, const Param& p) : Event(p), m_monitor(m)
+    
+    MonitorEvent::MonitorEvent(const MonitorEvent& cp, const Header& h) : Event(cp, h)
     {
     }
     

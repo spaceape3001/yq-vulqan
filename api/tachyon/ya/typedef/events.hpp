@@ -48,14 +48,13 @@ namespace yq::tachyon {
     class MouseReleaseEvent;
     class MouseScrollEvent;
     class TachyonEvent;
+    class TitleEvent;
     class ViewerCloseEvent;
     class ViewerEvent;
     class VulqanEvent;
     class WidgetEvent;
-    class WindowDestroyEvent;
     class WindowEvent;
     class WindowFrameBufferResizeEvent;
-    class WindowTitleEvent;
 
     using JoystickAxisEventCPtr         = Ref<const class JoystickAxisEvent>;
     using JoystickConnectEventCPtr      = Ref<const class JoystickConnectEvent>;

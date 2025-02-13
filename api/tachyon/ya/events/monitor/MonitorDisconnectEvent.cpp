@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/MonitorDisconnectEvent.hpp>
+#include <ya/events/monitor/MonitorDisconnectEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -14,12 +14,21 @@ namespace yq::tachyon {
         w.description("Monitor Disconnection Event");
     }
 
-    MonitorDisconnectEvent::MonitorDisconnectEvent(Monitor m, const Param&p) : MonitorEvent(m, p)
+    MonitorDisconnectEvent::MonitorDisconnectEvent(const Header&h) : MonitorEvent(h)
     {
     }
     
+    MonitorDisconnectEvent::MonitorDisconnectEvent(const MonitorDisconnectEvent& cp, const Header&h) : MonitorEvent(cp, h)
+    {
+    }
+
     MonitorDisconnectEvent::~MonitorDisconnectEvent()
     {
+    }
+
+    PostCPtr    MonitorDisconnectEvent::clone(rebind_k, const Header&h) const
+    {
+        return new MonitorDisconnectEvent(*this, h);
     }
 }
 

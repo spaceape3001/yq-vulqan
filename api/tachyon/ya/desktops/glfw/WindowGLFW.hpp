@@ -24,6 +24,7 @@ namespace yq::tachyon {
     class DesktopGLFW;
     class ViewerCreateInfo;
     class WindowDestroyCommand;
+    class AspectCommand;
     class AttentionCommand;
     class FocusCommand;
     class FloatCommand;
@@ -108,7 +109,7 @@ namespace yq::tachyon {
         Stage               m_stage     = Stage::Preinit;
         
         
-        void    on_aspect_command(const WindowAspectCommand&);
+        void    on_aspect_command(const AspectCommand&);
         void    on_attention_command(const AttentionCommand&);
         void    on_cursor_capture_command(const WindowCursorCaptureCommand&);
         void    on_cursor_disable_command(const WindowCursorDisableCommand&);

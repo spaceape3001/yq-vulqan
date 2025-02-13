@@ -8,13 +8,13 @@
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
 #include <yt/logging.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
-#include <ya/commands/WindowAspectCommand.hpp>
 #include <ya/commands/WindowCursorCaptureCommand.hpp>
 #include <ya/commands/WindowCursorDisableCommand.hpp>
 #include <ya/commands/WindowCursorHideCommand.hpp>
 #include <ya/commands/WindowCursorNormalCommand.hpp>
 #include <ya/commands/WindowDestroyCommand.hpp>
 #include <ya/commands/WindowTitleCommand.hpp>
+#include <ya/commands/ui/AspectCommand.hpp>
 #include <ya/commands/ui/AttentionCommand.hpp>
 #include <ya/commands/ui/FloatCommand.hpp>
 #include <ya/commands/ui/FocusCommand.hpp>
@@ -43,9 +43,7 @@
 #include <ya/events/WindowCursorDisableEvent.hpp>
 #include <ya/events/WindowCursorHideEvent.hpp>
 #include <ya/events/WindowCursorNormalEvent.hpp>
-#include <ya/events/WindowDestroyEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
-#include <ya/events/WindowTitleEvent.hpp>
 #include <ya/events/ui/DefocusEvent.hpp>
 #include <ya/events/ui/FocusEvent.hpp>
 #include <ya/events/ui/HideEvent.hpp>
@@ -53,6 +51,7 @@
 #include <ya/events/ui/MaximizeEvent.hpp>
 #include <ya/events/ui/RestoreEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
+#include <ya/events/ui/TitleEvent.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 #include <ya/requests/ui/RefreshRequest.hpp>
 #include <yq/trait/numbers.hpp>
@@ -518,8 +517,10 @@ namespace yq::tachyon {
         return ret;
     }
 
-    void    WindowGLFW::on_aspect_command(const WindowAspectCommand&cmd)
+    void    WindowGLFW::on_aspect_command(const AspectCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         if(m_aspect == cmd.aspect())
             return ;
     
@@ -647,7 +648,7 @@ namespace yq::tachyon {
     void    WindowGLFW::on_title_command(const WindowTitleCommand&cmd)
     {
         glfwSetWindowTitle(m_window, cmd.title().c_str());
-        send(new WindowTitleEvent(this, cmd.title()));
+        send(new TitleEvent({.source=this}, cmd.title()));
         mark();
     }
     

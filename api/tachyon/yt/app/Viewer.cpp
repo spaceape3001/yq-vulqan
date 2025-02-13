@@ -24,13 +24,11 @@
 #include <yt/ui/WidgetData.hpp>
 
 #include <ya/commands/SpatialCommand.hpp>
-#include <ya/commands/ViewerAspectCommand.hpp>
 #include <ya/commands/ViewerCursorCaptureCommand.hpp>
 #include <ya/commands/ViewerCursorDisableCommand.hpp>
 #include <ya/commands/ViewerCursorHideCommand.hpp>
 #include <ya/commands/ViewerCursorNormalCommand.hpp>
 #include <ya/commands/ViewerTitleCommand.hpp>
-#include <ya/commands/WindowAspectCommand.hpp>
 #include <ya/commands/WindowCursorCaptureCommand.hpp>
 #include <ya/commands/WindowCursorDisableCommand.hpp>
 #include <ya/commands/WindowCursorHideCommand.hpp>
@@ -44,6 +42,7 @@
 #include <ya/commands/spatial/SetPosition2.hpp>
 #include <ya/commands/spatial/SetSize2.hpp>
 
+#include <ya/commands/ui/AspectCommand.hpp>
 #include <ya/commands/ui/AttentionCommand.hpp>
 #include <ya/commands/ui/CloseCommand.hpp>
 #include <ya/commands/ui/FloatCommand.hpp>
@@ -73,8 +72,6 @@
 #include <ya/events/MousePressEvent.hpp>
 #include <ya/events/MouseReleaseEvent.hpp>
 #include <ya/events/ViewerCloseEvent.hpp>
-#include <ya/events/ViewerDestroyEvent.hpp>
-#include <ya/events/WindowDestroyEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
 
 #include <ya/events/spatial/Position2Event.hpp>
@@ -158,8 +155,9 @@ namespace yq::tachyon {
         
         w.description("Tachyon Viewer");
         w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
-        w.slot(&Viewer::on_attention_command);
 
+        w.slot(&Viewer::on_aspect_command);
+        w.slot(&Viewer::on_attention_command);
         w.slot(&Viewer::on_close_command);
         w.slot(&Viewer::on_close_request);
         w.slot(&Viewer::on_close_reply);
@@ -196,7 +194,6 @@ namespace yq::tachyon {
         //w.slot(&Viewer::on_show_event);
         w.slot(&Viewer::on_unfloat_command);
 
-        w.slot(&Viewer::on_viewer_aspect_command);
         w.slot(&Viewer::on_viewer_title_command);
         
         w.slot(&Viewer::on_window_fb_resize_event);
@@ -549,6 +546,13 @@ namespace yq::tachyon {
         return m_state.window.flags(WindowFlag::Visible);
     }
     
+    void    Viewer::on_aspect_command(const AspectCommand& cmd)
+    {
+        if(!dying() && (cmd.target() == id())){
+            send(cmd.clone(REBIND, {.target=m_window}));
+        }
+    }
+
     void    Viewer::on_attention_command(const AttentionCommand& cmd)
     {
         if(!dying() && (cmd.target() == id())){
@@ -790,13 +794,6 @@ namespace yq::tachyon {
     }
 
 
-    void    Viewer::on_viewer_aspect_command(const ViewerAspectCommand& cmd)
-    {
-        if(!dying()){
-            send(new WindowAspectCommand(WindowID(m_window.id), cmd.aspect()));
-        }
-    }
-
 
     void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
     {
@@ -818,7 +815,7 @@ namespace yq::tachyon {
 
     void    Viewer::set_aspect(const Size2I& sz)
     {
-        mail(new ViewerAspectCommand(this, sz));
+        mail(new AspectCommand({.target=this}, sz));
     }
     
     void    Viewer::set_aspect(int w, int h)

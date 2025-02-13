@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/MonitorConnectEvent.hpp>
+#include <ya/events/monitor/MonitorConnectEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
@@ -14,12 +14,21 @@ namespace yq::tachyon {
         w.description("Monitor Connection Event");
     }
 
-    MonitorConnectEvent::MonitorConnectEvent(Monitor m, const Param& p) : MonitorEvent(m, p)
+    MonitorConnectEvent::MonitorConnectEvent(const Header&h) : MonitorEvent(h)
+    {
+    }
+    
+    MonitorConnectEvent::MonitorConnectEvent(const MonitorConnectEvent& cp, const Header&h) : MonitorEvent(cp, h)
     {
     }
     
     MonitorConnectEvent::~MonitorConnectEvent()
     {
+    }
+
+    PostCPtr    MonitorConnectEvent::clone(rebind_k, const Header&h) const 
+    {
+        return new MonitorConnectEvent(*this, h);
     }
 }
 

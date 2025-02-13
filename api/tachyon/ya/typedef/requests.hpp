@@ -16,11 +16,11 @@ namespace yq::tachyon {
     class CloseRequest;
     class TachyonRequest;
     class ViewerRequest;
-    class ViewerWidgetRequest;
+    class SetWidgetRequest;
     class WindowRequest;
-    class WindowRefreshRequest;
+    class RefreshRequest;
 
     using CloseRequestCPtr          = Ref<const CloseRequest>;
-    using ViewerWidgetRequestCPtr   = Ref<const ViewerWidgetRequest>;
-    using WindowRefreshRequestCPtr  = Ref<const WindowRefreshRequest>;
+    using SetWidgetRequestCPtr      = Ref<const SetWidgetRequest>;
+    using SetRefreshRequestCPtr     = Ref<const RefreshRequest>;
 }

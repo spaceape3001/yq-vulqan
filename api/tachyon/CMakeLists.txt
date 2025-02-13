@@ -343,6 +343,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/tachyon/UnsnoopCommand.cpp
     ya/commands/tachyon/UnsubscribeCommand.cpp
     
+    ya/commands/ui/AspectCommand.cpp
     ya/commands/ui/AttentionCommand.cpp
     ya/commands/ui/CloseCommand.cpp
     ya/commands/ui/FloatCommand.cpp
@@ -385,8 +386,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/KeyReleaseEvent.cpp
     ya/events/KeyRepeatEvent.cpp
     #ya/events/MonitorConnectEvent.cpp
-    #ya/events/MonitorDisconnectEvent.cpp
-    #ya/events/MonitorEvent.cpp
+    ya/events/MonitorEvent.cpp
     ya/events/MouseCaptureEvent.cpp
     ya/events/MouseDisableEvent.cpp
     ya/events/MouseDropEvent.cpp
@@ -406,7 +406,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/ThreadAddTachyonEvent.cpp
     ya/events/UIEvent.cpp
     ya/events/ViewerCloseEvent.cpp
-    ya/events/ViewerDestroyEvent.cpp
     ya/events/ViewerEvent.cpp
     ya/events/VulqanEvent.cpp
     ya/events/WidgetEvent.cpp
@@ -415,10 +414,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/WindowCursorDisableEvent.cpp
     ya/events/WindowCursorHideEvent.cpp
     ya/events/WindowCursorNormalEvent.cpp
-    ya/events/WindowDestroyEvent.cpp
     ya/events/WindowEvent.cpp
     ya/events/WindowFrameBufferResizeEvent.cpp
-    ya/events/WindowTitleEvent.cpp
     
     ya/events/gamepad/GamepadAxisEvent.cpp
     ya/events/gamepad/GamepadConnectEvent.cpp
@@ -436,6 +433,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/joystick/JoystickReleaseEvent.cpp
     ya/events/joystick/JoystickZeroEvent.cpp
     
+    ya/events/monitor/MonitorConnectEvent.cpp
+    ya/events/monitor/MonitorDisconnectEvent.cpp
+
     ya/events/spatial/MaxSize1Event.cpp
     ya/events/spatial/MaxSize2Event.cpp
     ya/events/spatial/MaxSize3Event.cpp

@@ -54,6 +54,7 @@ namespace yq::tachyon {
     struct ViContext;
     class GLFWManager;
     
+    class AspectCommand;
     class AttentionCommand;
     class CloseCommand;
     class CloseReply;
@@ -348,6 +349,7 @@ namespace yq::tachyon {
         Execution    update(const Context&);
         
 
+        void    on_aspect_command(const AspectCommand&);
         void    on_attention_command(const AttentionCommand&);
         void    on_close_command(const CloseCommand&);
         void    on_close_request(const CloseRequestCPtr&);
@@ -378,7 +380,6 @@ namespace yq::tachyon {
         void    on_spatial_command(const SpatialCommand&);
         void    on_unfloat_command(const UnfloatCommand&);
 
-        void    on_viewer_aspect_command(const ViewerAspectCommand&);
         void    on_viewer_title_command(const ViewerTitleCommand&);
 
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);

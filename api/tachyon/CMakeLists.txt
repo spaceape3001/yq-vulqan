@@ -181,6 +181,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/GamepadCommand.cpp
     ya/commands/GLFWCommand.cpp
     ya/commands/JoystickCommand.cpp
+    ya/commands/LightCommand.cpp
     ya/commands/MouseCaptureCommand.cpp
     ya/commands/MouseCommand.cpp
     ya/commands/MouseDisableCommand.cpp
@@ -516,6 +517,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/replies/AnyReply.cpp
     ya/replies/AppReply.cpp
     ya/replies/CameraReply.cpp
+    ya/replies/GraphicsCardReply.cpp
     ya/replies/EmptyReply.cpp
     ya/replies/StringReply.cpp
     ya/replies/TachyonReply.cpp
@@ -525,11 +527,14 @@ add_library(${PROJECT_NAME} SHARED
     ya/replies/ViewerWidgetReply.cpp
     ya/replies/WindowReply.cpp
     
+    ya/replies/graphics_card/GetDeviceReply.cpp
+    
     ya/replies/ui/CloseReply.cpp
     
     ya/requests/AppRequest.cpp
     ya/requests/CameraRequest.cpp
     ya/requests/EmptyRequest.cpp
+    ya/requests/GraphicsCardRequest.cpp
     ya/requests/SimRequest.cpp
     ya/requests/TachyonRequest.cpp
     ya/requests/UIRequest.cpp
@@ -538,6 +543,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/requests/WidgetRequest.cpp
     ya/requests/WindowRefreshRequest.cpp
     ya/requests/WindowRequest.cpp
+    
+    ya/requests/graphics_card/GetDeviceRequest.cpp
     
     ya/requests/ui/CloseRequest.cpp
 

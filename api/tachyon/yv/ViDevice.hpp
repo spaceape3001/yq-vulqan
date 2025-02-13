@@ -12,6 +12,8 @@
 #include <vk_mem_alloc.h>
 
 namespace yq::tachyon {
+    struct ViewerCreateInfo;
+
     /*
 
         On observation that *NOTHING* in the vkCreateDevice() call relies on 
@@ -32,6 +34,8 @@ namespace yq::tachyon {
         ~ViDevice();
         
         void        cleanup();
+        
+        void        init(VkPhysicalDevice, const ViewerCreateInfo&);
         
     private:
         VkDevice            m_device;

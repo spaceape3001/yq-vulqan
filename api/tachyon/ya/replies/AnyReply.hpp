@@ -17,17 +17,25 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(AnyReply, Reply)
     public:
     
-        using Reply::Param;
-        
-        AnyReply(const RequestCPtr&, const Any& val, const Param&p={});
-        AnyReply(const RequestCPtr&, Any&& val, const Param&p={});
-        ~AnyReply();
-    
+        AnyReply(const Header&, const RequestCPtr&, const Any& val);
+        AnyReply(const Header&, const RequestCPtr&, Any&& val);
         const Any&    value() const { return m_value; }
     
         static void init_info();
+        
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        
+        AnyReply(const AnyReply&, const Header&);
+        virtual ~AnyReply();
     
     private:
         Any     m_value;
+        
+        AnyReply(const AnyReply&) = delete;
+        AnyReply(AnyReply&&) = delete;
+        AnyReply& operator=(const AnyReply&) = delete;
+        AnyReply& operator=(AnyReply&&) = delete;
     };
 }

@@ -7,31 +7,24 @@
 #pragma once
 
 #include <yt/msg/Reply.hpp>
-#include <yt/scene/CameraBind.hpp>
 
 namespace yq::tachyon {
-    class Camera;
-    class CameraRequest;
-
-    class CameraReplyInfo : public ReplyInfo {
-    public:
-        CameraReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class CameraReply : public Reply, public CameraBind {
-        YQ_OBJECT_INFO(CameraReplyInfo)
+    class CameraReply : public Reply {
         YQ_OBJECT_DECLARE(CameraReply, Reply)
     public:
+
+        static void init_info();
     
-        struct Param : public Reply::Param {
-        };
+    protected:
     
-        CameraReply(const RequestCPtr&, CameraID, const Param& p = {});
-        CameraReply(const RequestCPtr&, const Camera*, const Param& p = {});
+        CameraReply(const Header&, const RequestCPtr&);
+        CameraReply(const CameraReply&, const Header&);
         virtual ~CameraReply();
         
-        static void init_info();
+    private:
+        CameraReply(const CameraReply&) = delete;
+        CameraReply(CameraReply&&) = delete;
+        CameraReply& operator=(const CameraReply&) = delete;
+        CameraReply& operator=(CameraReply&&) = delete;
     };
 }

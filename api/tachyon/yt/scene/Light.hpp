@@ -56,7 +56,6 @@ namespace yq::tachyon {
     
         void        snap(LightSnap&) const;
         void        finalize(LightData&) const;
-        virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
         Light(const Param&p = {});

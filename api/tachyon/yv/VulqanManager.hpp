@@ -26,7 +26,7 @@ namespace yq::tachyon {
         
         static uint32_t         vulkan_api();
     
-        VulqanManager(const AppCreateInfo&);
+        VulqanManager();
         ~VulqanManager();
         
         static void init_info();
@@ -41,9 +41,9 @@ namespace yq::tachyon {
         struct Common;
         static Common&  common();
         
-        static void  _init(const AppCreateInfo&);
+        static void  _init();
         static void  _kill();
         
-        bool    m_init  = false;
+        bool                    m_init  = false;
     };
 }

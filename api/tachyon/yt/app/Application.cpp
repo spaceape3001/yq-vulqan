@@ -209,6 +209,7 @@ namespace yq::tachyon {
         Meta::freeze();
             
         m_thread.app       = new AppThread(this);
+        m_thread.app -> tick();
         for(StdThread st : StdThread::all_values())
             Thread::standard(st, m_thread.app->id());
         
@@ -216,6 +217,8 @@ namespace yq::tachyon {
         switch(m_cInfo.platform){
         case Platform::GLFW:
             m_desktop       = Tachyon::create<DesktopGLFW>(m_cInfo);
+            m_thread.app -> tick();
+            m_thread.app -> tick();
             
             //  connections...?
             
@@ -242,7 +245,10 @@ namespace yq::tachyon {
         }
         
         if(m_cInfo.vulkan){
-            m_vulkan    = Tachyon::create<VulqanManager>(m_cInfo);
+            m_vulkan    = Tachyon::create<VulqanManager>();
+            m_thread.app -> tick();
+            m_thread.app -> tick();
+            m_thread.app -> tick();
         }
         
         if(is_single(m_cInfo.thread.game)){
@@ -307,6 +313,12 @@ namespace yq::tachyon {
         
         for(Thread* t : m_threads)
             t->start();
+            
+        if(m_vulkan && m_thread.viewer){
+            m_vulkan->owner(PUSH, m_thread.viewer->id());
+            m_thread.app -> tick();
+            m_thread.app -> tick();
+        }
         
         m_stage = Stage::Started;
         return true;

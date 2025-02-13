@@ -83,9 +83,6 @@ namespace yq::tachyon {
         void        finalize(CameraData&) const;
         
         
-        //virtual void    receive(const post::PostCPtr&) override;
-        virtual PostAdvice  advise(const Post&) const override;
-
         //! Default constructor
         Camera(const Param&p = {});
         

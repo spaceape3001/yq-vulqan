@@ -60,7 +60,7 @@ namespace yq::tachyon {
     
     void Camera³::on_set_screen(const CameraSetScreen& cmd)
     {
-        if(cmd.camera() == id()){
+        if(cmd.target() == id()){
             m_screen        = cmd.screen();
             mark();
         }

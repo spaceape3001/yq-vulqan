@@ -19,17 +19,22 @@ namespace yq::tachyon {
     protected:
     };
 
-    class ViewerRequest : public Request, public ViewerBind {
+    class ViewerRequest : public Request {
         YQ_OBJECT_INFO(ViewerRequestInfo)
         YQ_OBJECT_DECLARE(ViewerRequest, Request)
     public:
     
-        struct Param : public Request::Param {
-        };
-    
-        ViewerRequest(ViewerID, const Param& p = {});
-        ViewerRequest(const Viewer*, const Param& p = {});
-        virtual ~ViewerRequest();
         static void init_info();
+
+    protected:
+        ViewerRequest(const Header&);
+        ViewerRequest(const ViewerRequest&, const Header&);
+        virtual ~ViewerRequest();
+
+    private:
+        ViewerRequest(const ViewerRequest&) = delete;
+        ViewerRequest(ViewerRequest&&) = delete;
+        ViewerRequest& operator=(const ViewerRequest&) = delete;
+        ViewerRequest& operator=(ViewerRequest&&) = delete;
     };
 }

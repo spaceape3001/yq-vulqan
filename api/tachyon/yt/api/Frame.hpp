@@ -159,6 +159,8 @@ namespace yq::tachyon {
         const WidgetData*                   data(WidgetID) const;
         const WindowData*                   data(WindowID) const;
         
+        GraphicsCardID                      first(graphics_card_k) const;
+        
         template <typename C, typename Pred>
         void        foreach(ptr_k, std::span<const TypedID> ids, Pred&& pred) const;
         
@@ -369,6 +371,7 @@ namespace yq::tachyon {
             T*          pointer(uint64_t) const;
             bool        has(uint64_t) const;
             size_t      count() const;
+            ID<T>       first() const;
         };
     
         const ThreadID          m_origin;

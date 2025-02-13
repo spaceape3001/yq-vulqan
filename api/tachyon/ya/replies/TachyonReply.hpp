@@ -7,31 +7,23 @@
 #pragma once
 
 #include <yt/msg/Reply.hpp>
-#include <yt/api/TachyonBind.hpp>
 
 namespace yq::tachyon {
-    class Tachyon;
-    class TachyonRequest;
-
-    class TachyonReplyInfo : public ReplyInfo {
-    public:
-        TachyonReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class TachyonReply : public Reply, public TachyonBind {
-        YQ_OBJECT_INFO(TachyonReplyInfo)
+    class TachyonReply : public Reply {
         YQ_OBJECT_DECLARE(TachyonReply, Reply)
     public:
     
-        struct Param : public Reply::Param {
-        };
-    
-        TachyonReply(const RequestCPtr&, TachyonID, const Param& p = {});
-        TachyonReply(const RequestCPtr&, const Tachyon*, const Param& p = {});
+        static void init_info();
+
+    protected:
+        TachyonReply(const Header&, const RequestCPtr&);
+        TachyonReply(const TachyonReply&, const Header&);
         virtual ~TachyonReply();
         
-        static void init_info();
+    private:
+        TachyonReply(const TachyonReply&) = delete;
+        TachyonReply(TachyonReply&&) = delete;
+        TachyonReply& operator=(const TachyonReply&) = delete;
+        TachyonReply& operator=(TachyonReply&&) = delete;
     };
 }

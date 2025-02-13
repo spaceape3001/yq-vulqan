@@ -91,6 +91,14 @@ namespace yq::tachyon {
     }
 
     template <typename T, typename D, typename S>
+    ID<T>   Frame::Container<T,D,S>::first() const
+    {
+        if(ids.empty())
+            return {};
+        return ID<T>(*ids.begin());
+    }
+
+    template <typename T, typename D, typename S>
     bool    Frame::Container<T,D,S>::has(uint64_t n) const
     {
         return datas.contains(n);
@@ -620,6 +628,11 @@ namespace yq::tachyon {
     const WindowData*                   Frame::data(WindowID id) const
     {
         return m_windows.data(id);
+    }
+
+    GraphicsCardID                      Frame::first(graphics_card_k) const
+    {
+        return m_graphicsCards.first();
     }
 
     const std::set<CameraID>&           Frame::ids(camera_k) const

@@ -1,6 +1,8 @@
 # CHANGE LOG
 
 ## Upcoming
+* Pipeline variation support
+* SkyBox render object
 * Add Gamepad Introspection to the Frame Inspector
 
 ## 2025.02.08

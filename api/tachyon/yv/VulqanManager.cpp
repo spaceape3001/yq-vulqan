@@ -7,6 +7,7 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/app/AppCreateInfo.hpp>
+#include <yt/app/Application.hpp>
 #include <yt/api/ManagerInfoWriter.hpp>
 #include <yv/VulqanGPU.hpp>
 #include <yv/VulqanManager.hpp>
@@ -170,8 +171,13 @@ namespace yq::tachyon {
 
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    void  VulqanManager::_init(const AppCreateInfo& aci)
+    void  VulqanManager::_init()
     {
+        const Application*  app = Application::app();
+        if(!app)
+            throw VulqanException("VulganManager: Application has not been initialized!");
+        const AppCreateInfo& aci    = app->app_info();
+    
         Common& g   = common();
         
         g.vulkan_api       = aci.vulkan_api;
@@ -335,7 +341,7 @@ namespace yq::tachyon {
     }
 
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    VulqanManager::VulqanManager(const AppCreateInfo& appInfo)
+    VulqanManager::VulqanManager()
     {
         if(yq::thread::id())    // not the main thread...
             throw VulqanException("Vulqan can only be initialized in the main thread!");
@@ -344,7 +350,7 @@ namespace yq::tachyon {
         if(g.claimed.test_and_set())
             throw VulqanException("Vulqan can only have one instance!");
         
-        _init(appInfo);
+        _init();
 
         g.manager   = this;
         tachyonDebug << "Vulqan initialized";

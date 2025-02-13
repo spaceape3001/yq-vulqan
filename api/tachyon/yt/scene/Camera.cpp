@@ -5,19 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/scene/Camera.hpp>
-#include <yt/scene/CameraBind.hpp>
 #include <yt/scene/CameraData.hpp>
 #include <yt/scene/CameraInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
-
-    CameraBind::CameraBind(const Camera* v) : m_camera(v ? v->id() : CameraID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     struct CameraInfo::Repo {
         std::vector<const CameraInfo*> all;
@@ -53,19 +45,6 @@ namespace yq::tachyon {
     {
     }
 
-    PostAdvice    Camera::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const CameraBind* p = dynamic_cast<const CameraBind*>(&pp)){
-            if(p->camera() != id())
-                return REJECT;
-        }
-        return {};
-    }
-    
     void Camera::finalize(CameraData& d) const
     {
         Tachyon::finalize(d);

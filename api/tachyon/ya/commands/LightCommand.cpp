@@ -4,31 +4,31 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/CameraCommand.hpp>
+#include <ya/commands/LightCommand.hpp>
 
 #include <yt/msg/CommandInfoWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LightCommand)
 
 namespace yq::tachyon {
-    CameraCommand::CameraCommand(const Header&h) : Command(h)
+    LightCommand::LightCommand(const Header&h) : Command(h)
     {
     }
 
-    CameraCommand::CameraCommand(const CameraCommand& cp, const Header& h) : Command(cp, h)
+    LightCommand::LightCommand(const LightCommand& cp, const Header& h) : Command(cp, h)
     {
         // DEPRECATED
     }
     
-    CameraCommand::~CameraCommand()
+    LightCommand::~LightCommand()
     {
     }
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void CameraCommand::init_info()
+    void LightCommand::init_info()
     {
-        auto w = writer<CameraCommand>();
-        w.description("Camera command base class");
+        auto w = writer<LightCommand>();
+        w.description("Light command base class");
     }
 }

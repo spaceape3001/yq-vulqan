@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/requests/ViewerRequest.hpp>
-
 #include <yt/msg/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerRequest)
@@ -18,11 +17,11 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ViewerRequest::ViewerRequest(ViewerID v, const Param& p) : Request(p), ViewerBind(v)
+    ViewerRequest::ViewerRequest(const Header&h) : Request(h)
     {
     }
     
-    ViewerRequest::ViewerRequest(const Viewer* v, const Param& p) : Request(p), ViewerBind(v)
+    ViewerRequest::ViewerRequest(const ViewerRequest& cp, const Header& h) : Request(cp, h)
     {
     }
 

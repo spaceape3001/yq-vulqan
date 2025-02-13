@@ -14,8 +14,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(CameraSetScreen, CameraCommand)
     public:
     
-        CameraSetScreen(CameraID, const Rectangle2D&, const Header& h = {});
-        virtual ~CameraSetScreen();
+        CameraSetScreen(const Header&, const Rectangle2D&);
         
         static void init_info();
         
@@ -28,7 +27,18 @@ namespace yq::tachyon {
         double          width() const { return m_screen.size.x; }
         double          height() const { return m_screen.size.y; }
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        CameraSetScreen(const CameraSetScreen&, const Header&);
+        virtual ~CameraSetScreen();
+    
     private:
-        const Rectangle2D m_screen;
+        Rectangle2D m_screen;
+        
+        CameraSetScreen(const CameraSetScreen&) = delete;
+        CameraSetScreen(CameraSetScreen&&) = delete;
+        CameraSetScreen& operator=(const CameraSetScreen&) = delete;
+        CameraSetScreen& operator=(CameraSetScreen&&) = delete;
     };
 }

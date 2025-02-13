@@ -5,20 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/scene/Light.hpp>
-#include <yt/scene/LightBind.hpp>
 #include <yt/scene/LightData.hpp>
 #include <yt/scene/LightInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
-
-    LightBind::LightBind(const Light* v) : m_light(v ? v->id() : LightID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     struct LightInfo::Repo {
         std::vector<const LightInfo*> all;
     };
@@ -52,19 +43,6 @@ namespace yq::tachyon {
     {
     }
 
-    PostAdvice    Light::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const LightBind* p = dynamic_cast<const LightBind*>(&pp)){
-            if(p->light() != id())
-                return REJECT;
-        }
-        return {};
-    }
-    
     void Light::finalize(LightData&d) const
     {
         Tachyon::finalize(d);

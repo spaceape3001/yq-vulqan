@@ -11,18 +11,12 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraReply)
 
 namespace yq::tachyon {
-    CameraReplyInfo::CameraReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
-        ReplyInfo(zName, base, sl)
-    {
-    }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    CameraReply::CameraReply(const RequestCPtr& rq, CameraID v, const Param& p) : Reply(rq, p), CameraBind(v)
+    CameraReply::CameraReply(const Header&h, const RequestCPtr& rq) : Reply(h, rq)
     {
     }
     
-    CameraReply::CameraReply(const RequestCPtr& rq, const Camera* v, const Param& p) : Reply(rq, p), CameraBind(v)
+    CameraReply::CameraReply(const CameraReply& cp, const Header& h) : Reply(cp, h)
     {
     }
 

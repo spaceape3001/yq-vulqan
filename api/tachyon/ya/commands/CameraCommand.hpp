@@ -7,31 +7,25 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yt/scene/CameraBind.hpp>
 
 namespace yq::tachyon {
     class Camera;
 
-    class CameraCommandInfo : public CommandInfo {
-    public:
-        CameraCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class CameraCommand : public Command, public CameraBind {
-        YQ_OBJECT_INFO(CameraCommandInfo)
+    class CameraCommand : public Command {
         YQ_OBJECT_DECLARE(CameraCommand, Command)
     public:
-    
-        struct Param : public Command::Param {
-        };
-    
+
+        static void init_info();
+
+    protected:
         CameraCommand(const Header&);
-        CameraCommand(const Camera*, const Header& h = {});
-        CameraCommand(CameraID, const Header& h = {});
+        CameraCommand(const CameraCommand&, const Header& h);
         virtual ~CameraCommand();
         
-        static void init_info();
+    private:
+        CameraCommand(const CameraCommand&) = delete;
+        CameraCommand(CameraCommand&&) = delete;
+        CameraCommand& operator=(const CameraCommand&) = delete;
+        CameraCommand& operator=(CameraCommand&&) = delete;
     };
 }

@@ -23,6 +23,7 @@ namespace yq::tachyon {
     class ShowCommand;
     //class StartupCommand;
     class SetViewer;
+    class TitleCommand;
 
     class WidgetInfo : public TachyonInfo {
     public:
@@ -166,6 +167,7 @@ namespace yq::tachyon {
         
         void    on_set_viewer(const SetViewer&);
         void    on_show_command(const ShowCommand&);
+        void    on_title_command(const TitleCommand&);
         
         
         #if 0

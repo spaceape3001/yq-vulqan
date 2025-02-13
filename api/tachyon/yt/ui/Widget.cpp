@@ -17,6 +17,7 @@
 #include <ya/commands/ui/HideCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/StartupCommand.hpp>
+#include <ya/commands/ui/TitleCommand.hpp>
 #include <ya/commands/widget/SetViewer.hpp>
 #include <ya/events/ui/HideEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
@@ -63,6 +64,7 @@ namespace yq::tachyon {
         w.description("Widget base class");
         w.slot(&Widget::on_close_request);
         w.slot(&Widget::on_close_command);
+        w.slot(&Widget::on_title_command);
         w.slot(&Widget::on_set_viewer);
     }
 
@@ -212,6 +214,15 @@ namespace yq::tachyon {
         if(!m_flags(F::Visible)){
             m_flags |= F::Visible;
             send(new ShowEvent({.source=*this}));
+        }
+    }
+
+    void    Widget::on_title_command(const TitleCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        if(m_viewer){
+            send(cmd.clone(REBIND, {.target=m_viewer}));
         }
     }
 

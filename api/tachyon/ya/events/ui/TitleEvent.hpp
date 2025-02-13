@@ -17,7 +17,7 @@ namespace yq::tachyon {
 
         static void init_info();
         
-        std::string_view    title() const { return m_title; }
+        const std::string&    title() const { return m_title; }
 
     protected:
         TitleEvent(const TitleEvent&, const Header&);

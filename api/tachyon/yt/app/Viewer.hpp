@@ -79,14 +79,10 @@ namespace yq::tachyon {
     class ShowEvent;
     class Size²Event;
     class SpatialCommand;
+    class TitleCommand;
     class UnfloatCommand;
     
     struct ViewerInitData;
-    
-    class ViewerInfo : public TachyonInfo {
-    public:
-        ViewerInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
-    };
     
     
     /*! \brief Vulkan Window
@@ -97,7 +93,6 @@ namespace yq::tachyon {
         root widget for the viewer.
     */
     class Viewer : public Tachyon {
-        YQ_TACHYON_INFO(ViewerInfo)
         YQ_TACHYON_DATA(ViewerData)
         YQ_TACHYON_SNAP(ViewerSnap)
         YQ_TACHYON_DECLARE(Viewer, Tachyon)
@@ -378,9 +373,8 @@ namespace yq::tachyon {
         void    on_size_event(const Size²Event&);
         void    on_show_command(const ShowCommand&);
         void    on_spatial_command(const SpatialCommand&);
+        void    on_title_command(const TitleCommand&);
         void    on_unfloat_command(const UnfloatCommand&);
-
-        void    on_viewer_title_command(const ViewerTitleCommand&);
 
         void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
         

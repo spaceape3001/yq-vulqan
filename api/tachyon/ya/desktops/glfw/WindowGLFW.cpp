@@ -13,7 +13,6 @@
 #include <ya/commands/WindowCursorHideCommand.hpp>
 #include <ya/commands/WindowCursorNormalCommand.hpp>
 #include <ya/commands/WindowDestroyCommand.hpp>
-#include <ya/commands/WindowTitleCommand.hpp>
 #include <ya/commands/ui/AspectCommand.hpp>
 #include <ya/commands/ui/AttentionCommand.hpp>
 #include <ya/commands/ui/FloatCommand.hpp>
@@ -23,6 +22,7 @@
 #include <ya/commands/ui/MaximizeCommand.hpp>
 #include <ya/commands/ui/RestoreCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
+#include <ya/commands/ui/TitleCommand.hpp>
 #include <ya/commands/ui/UnfloatCommand.hpp>
 #include <yt/os/KeyCode.hpp>
 #include <ya/events/GamepadEvent.hpp>
@@ -645,8 +645,10 @@ namespace yq::tachyon {
         mark();
     }
 
-    void    WindowGLFW::on_title_command(const WindowTitleCommand&cmd)
+    void    WindowGLFW::on_title_command(const TitleCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         glfwSetWindowTitle(m_window, cmd.title().c_str());
         send(new TitleEvent({.source=this}, cmd.title()));
         mark();

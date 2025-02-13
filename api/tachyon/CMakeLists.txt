@@ -193,22 +193,18 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/TachyonCommand.cpp
     ya/commands/ThreadCommand.cpp
     ya/commands/UICommand.cpp
-    ya/commands/ViewerAspectCommand.cpp
     ya/commands/ViewerCommand.cpp
     ya/commands/ViewerCursorCaptureCommand.cpp
     ya/commands/ViewerCursorDisableCommand.cpp
     ya/commands/ViewerCursorHideCommand.cpp
     ya/commands/ViewerCursorNormalCommand.cpp
-    ya/commands/ViewerTitleCommand.cpp
     ya/commands/WidgetCommand.cpp
-    ya/commands/WindowAspectCommand.cpp
     ya/commands/WindowCommand.cpp
     ya/commands/WindowCursorCaptureCommand.cpp
     ya/commands/WindowCursorDisableCommand.cpp
     ya/commands/WindowCursorHideCommand.cpp
     ya/commands/WindowCursorNormalCommand.cpp
     ya/commands/WindowDestroyCommand.cpp
-    ya/commands/WindowTitleCommand.cpp
     
     ya/commands/camera/CameraSetScreen.cpp
 
@@ -354,6 +350,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/ui/RestoreCommand.cpp
     ya/commands/ui/ShowCommand.cpp
     ya/commands/ui/StartupCommand.cpp
+    ya/commands/ui/TitleCommand.cpp
     ya/commands/ui/UnfloatCommand.cpp
 
     #ya/commands/viewer/SetWidgetCommand.cpp

@@ -265,6 +265,12 @@ namespace yq::tachyon {
             }
         }
         
+        void    type(Type t)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> set(t);
+            }
+        }
         
     private:
         TachyonInfo* m_meta;

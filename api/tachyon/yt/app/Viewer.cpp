@@ -28,13 +28,11 @@
 #include <ya/commands/ViewerCursorDisableCommand.hpp>
 #include <ya/commands/ViewerCursorHideCommand.hpp>
 #include <ya/commands/ViewerCursorNormalCommand.hpp>
-#include <ya/commands/ViewerTitleCommand.hpp>
 #include <ya/commands/WindowCursorCaptureCommand.hpp>
 #include <ya/commands/WindowCursorDisableCommand.hpp>
 #include <ya/commands/WindowCursorHideCommand.hpp>
 #include <ya/commands/WindowCursorNormalCommand.hpp>
 #include <ya/commands/WindowDestroyCommand.hpp>
-#include <ya/commands/WindowTitleCommand.hpp>
 
 #include <ya/commands/sim/PauseCommand.hpp>
 #include <ya/commands/sim/ResumeCommand.hpp>
@@ -53,6 +51,7 @@
 #include <ya/commands/ui/RestoreCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/StartupCommand.hpp>
+#include <ya/commands/ui/TitleCommand.hpp>
 #include <ya/commands/ui/UnfloatCommand.hpp>
 
 #include <ya/commands/tachyon/DestroyCommand.hpp>
@@ -137,13 +136,6 @@ namespace yq::tachyon {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ViewerInfo::ViewerInfo(std::string_view szName, TachyonInfo& base, const std::source_location& sl) :
-        TachyonInfo(szName, base, sl)
-    {
-        set(Type::Viewer);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     std::atomic<int>        Viewer::s_count{0};
     std::atomic<unsigned>   Viewer::s_lastNumber{0};
@@ -155,6 +147,7 @@ namespace yq::tachyon {
         
         w.description("Tachyon Viewer");
         w.property("ticks", &Viewer::ticks).description("Total number of ticks so far");
+        w.type(Type::Viewer);
 
         w.slot(&Viewer::on_aspect_command);
         w.slot(&Viewer::on_attention_command);
@@ -192,9 +185,9 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_size_event);
         w.slot(&Viewer::on_show_command);
         //w.slot(&Viewer::on_show_event);
+        w.slot(&Viewer::on_title_command);
         w.slot(&Viewer::on_unfloat_command);
 
-        w.slot(&Viewer::on_viewer_title_command);
         
         w.slot(&Viewer::on_window_fb_resize_event);
     }
@@ -786,6 +779,13 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_title_command(const TitleCommand&cmd)
+    {
+        if(!dying() && (cmd.target() == id())){
+            send(cmd.clone(REBIND, {.target=m_window}));
+        }
+    }
+    
     void    Viewer::on_unfloat_command(const UnfloatCommand&cmd)
     {
         if(!dying() && (cmd.target() == id())){
@@ -794,14 +794,6 @@ namespace yq::tachyon {
     }
 
 
-
-    void    Viewer::on_viewer_title_command(const ViewerTitleCommand&cmd)
-    {
-        if(!dying()){
-            send(new WindowTitleCommand(WindowID(m_window.id), cmd.title()));
-        }
-    }
-    
     void    Viewer::on_window_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
     {
     }
@@ -855,7 +847,7 @@ namespace yq::tachyon {
 
     void    Viewer::set_title(std::string_view kTitle)
     {
-        mail(new ViewerTitleCommand(this, kTitle));
+        mail(new TitleCommand({.target=this}, kTitle));
     }
 
     Execution   Viewer::setup(const Context&ctx) 

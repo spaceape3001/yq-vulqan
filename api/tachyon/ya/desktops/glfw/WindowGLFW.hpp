@@ -33,6 +33,7 @@ namespace yq::tachyon {
     class MaximizeCommand;
     class RestoreCommand;
     class ShowCommand;
+    class TitleCommand;
     class UnfloatCommand;
 
     class WindowGLFW : public Window, 
@@ -123,7 +124,7 @@ namespace yq::tachyon {
         void    on_maximize_command(const MaximizeCommand&);
         void    on_restore_command(const RestoreCommand&);
         void    on_show_command(const ShowCommand&);
-        void    on_title_command(const WindowTitleCommand&);
+        void    on_title_command(const TitleCommand&);
         void    on_unfloat_command(const UnfloatCommand&);
         
         ModifierKeys        modifiers(read_k) const;

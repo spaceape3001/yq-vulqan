@@ -10,6 +10,8 @@
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/ControlInfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
+#include <yq/util/Safety.hpp>
+#include <yt/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Orientation³Control)
 

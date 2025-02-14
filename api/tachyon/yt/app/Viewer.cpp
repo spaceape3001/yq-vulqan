@@ -404,7 +404,6 @@ namespace yq::tachyon {
         Widget*w        = frame->object((WidgetID) m_widget);
         if(!w)
             return std::error_code();
-            
         
         std::filesystem::path   snapshot;
         if(auto p = std::get_if<std::filesystem::path>(&u.snapshot)){
@@ -435,6 +434,7 @@ namespace yq::tachyon {
                     m_imgui -> record(u);
             }
         });
+
         auto end   = std::chrono::high_resolution_clock::now();
         m_drawTime          = (end-start).count();
         if(ec != std::error_code())
@@ -451,6 +451,7 @@ namespace yq::tachyon {
                 viewerError << "Viewer" << ident() << "::draw() snapshot failed ... " << p->message();
             }
         }
+
         return ec;
     }
 
@@ -848,9 +849,8 @@ namespace yq::tachyon {
 
         if(m_imgui)
             m_imgui->tick(m_state);
-        
+
         if(running() && is_visible() && (!is_iconified()) && (all(m_state.window.pixels) != 0)){
-            
             draw(); // HACK (for now)
         } else {
             #if 0
@@ -868,6 +868,7 @@ namespace yq::tachyon {
             }
             #endif
         }
+
         m_cleanup.sweep();
         ++m_ticks;
         return {};

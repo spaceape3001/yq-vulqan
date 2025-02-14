@@ -478,6 +478,9 @@ namespace yq::tachyon {
                     break;
 
                 const TachyonData*  td  = curFrame->data(TachyonID(t.id));
+                if(!td)         // shouldn't ever fire
+                    break;
+                    
                 if((td->owner != m_owner) && !tac->m_flags(F::DifferentThread)){
                     tac->mail(new RethreadCommand({.target = *tac}, m_owner));
                     break;

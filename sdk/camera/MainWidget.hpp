@@ -47,11 +47,11 @@ private:
         CameraID            id;
     };
 
-    std::vector<Cam>    m_cameras;
-    TypedID             m_camera;
-    TypedID             m_scene;
-    TypedID             m_controller;
-    FrameInspector*     m_inspector     = nullptr;
-    SpaceCameraRemote*  m_remote        = nullptr;
-    bool                m_init          = false;
+    std::vector<Cam>        m_cameras;
+    TypedID                 m_camera;
+    TypedID                 m_scene;
+    TypedID                 m_controller;
+    Ref<FrameInspector>     m_inspector;
+    Ref<SpaceCameraRemote>  m_remote;
+    bool                    m_init          = false;
 };

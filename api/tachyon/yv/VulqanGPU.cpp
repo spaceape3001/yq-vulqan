@@ -10,6 +10,7 @@
 #include <yt/os/GraphicsCardInfoWriter.hpp>
 #include <yv/ViDevice.hpp>
 #include <yv/ViLogging.hpp>
+#include <ya/requests/graphics_card/GetDeviceRequest.hpp>
 #include "VqUtils.hpp"
 
 namespace yq::tachyon {
@@ -59,6 +60,10 @@ namespace yq::tachyon {
     {
     }
 
+    void      VulqanGPU::on_get_device_request(const GetDeviceRequest&req)
+    {
+    }
+
     Execution VulqanGPU::setup(const Context&ctx) 
     {
         return GraphicsCard::setup(ctx);
@@ -75,6 +80,7 @@ namespace yq::tachyon {
     {
         auto w = writer<VulqanGPU>();
         w.description("Vulkan GPU");
+        w.slot(&VulqanGPU::on_get_device_request);
     }
 }
 

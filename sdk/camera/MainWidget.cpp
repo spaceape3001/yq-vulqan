@@ -59,6 +59,7 @@ void    MainWidget::imgui(ViContext&ctx)
 {
     if(!m_init)
         return ;
+
     
     if(ImGui::BeginMainMenuBar()){
         if(ImGui::BeginMenu("Camera")){
@@ -95,21 +96,26 @@ void    MainWidget::imgui(ViContext&ctx)
             
             #endif
         
-            bool    f   = m_inspector->visible();
-            if(ImGui::Checkbox("Frame Inspector", &f)){
-                if(f){
-                    m_inspector -> cmd_show();
-                } else {
-                    m_inspector -> cmd_hide();
+            bool    f;
+            if(m_inspector){
+                f = m_inspector->visible();
+                if(ImGui::Checkbox("Frame Inspector", &f)){
+                    if(f){
+                        m_inspector -> cmd_show();
+                    } else {
+                        m_inspector -> cmd_hide();
+                    }
                 }
             }
 
-            f           = m_remote->visible();
-            if(ImGui::Checkbox("Remote", &f)){
-                if(f){
-                    m_remote -> cmd_show();
-                } else {
-                    m_remote -> cmd_hide();
+            if(m_remote){
+                f           = m_remote->visible();
+                if(ImGui::Checkbox("Remote", &f)){
+                    if(f){
+                        m_remote -> cmd_show();
+                    } else {
+                        m_remote -> cmd_hide();
+                    }
                 }
             }
 
@@ -123,6 +129,7 @@ void    MainWidget::imgui(ViContext&ctx)
      
         ImGui::EndMainMenuBar();
     }
+
     
     Widget::imgui(ctx);
 }
@@ -177,6 +184,7 @@ Execution    MainWidget::setup(const Context& ctx)
             return WAIT;
         
         send(new ListenCommand({.target=m_controller}, TypedID(vid, Type::Viewer)));
+    yInfo() << "MainWidget::started successfully";
         m_init = true;
     }
     return Widget::setup(ctx);

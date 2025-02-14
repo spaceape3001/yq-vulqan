@@ -30,10 +30,10 @@ public:
     static void init_info();
 
 private:
-    TypedID                 m_camera;
-    TypedID                 m_spatial;
-    TypedID                 m_position;
-    Orientation³Control*    m_orientation = nullptr;
-    bool                    m_init  = false;
+    TypedID                     m_camera;
+    TypedID                     m_spatial;
+    TypedID                     m_position;
+    Ref<Orientation³Control>    m_orientation;
+    bool                        m_init  = false;
 };
 

@@ -1,6 +1,8 @@
 # CHANGE LOG
 
-## Upcoming
+## 2025.02.14
+
+* Cleanup on commands, events, requests, & replies (consolidation, brought up to current standards, and removal of the old binders)
 * Pipeline variation support
 * SkyBox render object
 * Add Gamepad Introspection to the Frame Inspector

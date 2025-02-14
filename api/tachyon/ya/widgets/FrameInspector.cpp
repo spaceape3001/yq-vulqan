@@ -102,6 +102,8 @@ namespace yq::tachyon {
                 p->m_inspector  = this;
             }
             
+            yInfo() << "FrameInspector started successfully";
+            
             m_init  = true;
         }
         return Widget::setup(ctx);

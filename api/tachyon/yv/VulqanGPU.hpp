@@ -12,6 +12,7 @@
 
 namespace yq::tachyon {
     class AppCreateInfo;
+    class GetDeviceRequest;
 
     class VulqanGPU : public GraphicsCard {
         YQ_TACHYON_DECLARE(VulqanGPU, GraphicsCard)
@@ -31,6 +32,9 @@ namespace yq::tachyon {
         Execution setup(const Context&) override;
         
         void snap(GraphicsCardSnap&) const;
+        
+    protected:
+        void        on_get_device_request(const GetDeviceRequest&);
         
     private:
     

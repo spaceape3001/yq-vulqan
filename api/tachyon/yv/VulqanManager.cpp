@@ -295,23 +295,27 @@ namespace yq::tachyon {
         if(want_debug){
             // Get the function pointer (required for any extensions)
             auto vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT) vkGetInstanceProcAddr(g.instance, "vkCreateDebugReportCallbackEXT");
-            VqDebugReportCallbackCreateInfoEXT debug_report_ci;
-            debug_report_ci.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
-            debug_report_ci.pfnCallback = vqDebuggingCallback;
-            debug_report_ci.pUserData = nullptr;
-            vkCreateDebugReportCallbackEXT(g.instance, &debug_report_ci, nullptr, &g.debug);
+            if(vkCreateDebugReportCallbackEXT){
+                VqDebugReportCallbackCreateInfoEXT debug_report_ci;
+                debug_report_ci.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+                debug_report_ci.pfnCallback = vqDebuggingCallback;
+                debug_report_ci.pUserData = nullptr;
+                vkCreateDebugReportCallbackEXT(g.instance, &debug_report_ci, nullptr, &g.debug);
+            }
         }
     }
     
     void  VulqanManager::_kill()
     {
         Common& g   = common();
-        if(g.debug){
-            auto vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(g.instance, "vkDestroyDebugReportCallbackEXT");
-            if(vkDestroyDebugReportCallbackEXT)
-                vkDestroyDebugReportCallbackEXT(g.instance, g.debug, nullptr);
-        }
         if(g.instance){
+            if(g.debug){
+                auto vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(g.instance, "vkDestroyDebugReportCallbackEXT");
+                if(vkDestroyDebugReportCallbackEXT)
+                    vkDestroyDebugReportCallbackEXT(g.instance, nullptr, nullptr);
+                g.debug = nullptr;
+            }
+            
             vkDestroyInstance(g.instance, nullptr);
             g.instance  = nullptr;
         }

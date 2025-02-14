@@ -17,6 +17,7 @@
 
 #include <ya/proxies/POrientation3.hpp>
 #include <ya/proxies/PPosition3.hpp>
+#include <yq/util/Safety.hpp>
 
 YQ_TACHYON_IMPLEMENT(SpaceCameraRemote)
 
@@ -106,8 +107,6 @@ Execution SpaceCameraRemote::setup(const Context&ctx)
 
                 if(InputDouble4("orientation", &orient) || changed)
                     cam->set_orientation( ~orient);
-                
-            
             
                 double          n   = cam->near();
                 if(InputDouble("Near", &n))
@@ -134,17 +133,17 @@ void    SpaceCameraRemote::imgui(ViContext&u)
     const Frame*    frame   = Frame::current();
     if(!frame)
         return ;
-        
+
     PPosition³*pos        = frame->proxy<PPosition³>(m_spatial);
     if(!pos)
         return;
+
     POrientation³*ori     = frame->proxy<POrientation³>(m_spatial);
     if(!ori)
         return;
         
     if(!ImGui::Begin("Space Camera Remote"))
         return ;
-        
         
     Vector3D        position    = pos->position();
     if(ImGui::InputDouble3("", &position))

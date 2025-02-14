@@ -14,13 +14,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(KeyReleaseEvent, KeyboardEvent)
     public:
     
-        struct Param : public KeyboardEvent::Param {
-            int             scan        = 0;
-            KeyCode         key         = KeyCode::Unknown;
-        };
-    
-        KeyReleaseEvent(Window*, const Param&);
-        KeyReleaseEvent(WindowID, const Param&);
+        KeyReleaseEvent(const Header&, ModifierKeys, int, KeyCode);
         
         //! Scan code from the operating system (no interpretation)
         int                 scan() const { return m_scan; }
@@ -28,14 +22,21 @@ namespace yq::tachyon {
         //! Our internal keycode
         KeyCode             key() const { return m_key; }
         
-        virtual ~KeyReleaseEvent();
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
         static void init_info();
+
+    protected:
+        KeyReleaseEvent(const KeyReleaseEvent&, const Header&);
+        virtual ~KeyReleaseEvent();
         
     private:
-    
-        //! 
-        const int             m_scan;
-        const KeyCode         m_key;
+        int             m_scan;
+        KeyCode         m_key;
+        
+        KeyReleaseEvent(const KeyReleaseEvent&) = delete;
+        KeyReleaseEvent(KeyReleaseEvent&&) = delete;
+        KeyReleaseEvent& operator=(const KeyReleaseEvent&) = delete;
+        KeyReleaseEvent& operator=(KeyReleaseEvent&&) = delete;
     };
 }

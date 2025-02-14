@@ -4,21 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/MouseMoveEvent.hpp>
+#include <ya/events/mouse/MouseMoveEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
 
-    MouseMoveEvent::MouseMoveEvent(Window* w, const Param& p) : MouseEvent(w, p)
+    MouseMoveEvent::MouseMoveEvent(const Header& h, ModifierKeys mk, const Vector2D& pos, MouseButtons btns) :
+        MouseEvent(h, mk, pos, btns)
     {
     }
     
-    MouseMoveEvent::MouseMoveEvent(WindowID w, const Param& p) : MouseEvent(w, p)
+    MouseMoveEvent::MouseMoveEvent(const MouseMoveEvent& cp, const Header& h) : MouseEvent(cp, h)
+    {
+    }
+    
+    MouseMoveEvent::~MouseMoveEvent()
     {
     }
 
-    MouseMoveEvent::~MouseMoveEvent()
+    PostCPtr    MouseMoveEvent::clone(rebind_k, const Header&h) const
     {
+        return new MouseMoveEvent(*this, h);
     }
 
     void MouseMoveEvent::init_info()

@@ -7,31 +7,27 @@
 #pragma once
 
 #include <yt/msg/Reply.hpp>
-#include <yt/app/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class Viewer;
     class ViewerRequest;
 
-    class ViewerReplyInfo : public ReplyInfo {
-    public:
-        ViewerReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class ViewerReply : public Reply, public ViewerBind {
-        YQ_OBJECT_INFO(ViewerReplyInfo)
+    class ViewerReply : public Reply {
         YQ_OBJECT_DECLARE(ViewerReply, Reply)
     public:
+
+        static void init_info();
+
+    protected:
     
-        struct Param : public Reply::Param {
-        };
-    
-        ViewerReply(const RequestCPtr&, ViewerID, const Param& p = {});
-        ViewerReply(const RequestCPtr&, const Viewer*, const Param& p = {});
+        ViewerReply(const Header&, const RequestCPtr&);
+        ViewerReply(const ViewerReply&, const Header&);
         virtual ~ViewerReply();
         
-        static void init_info();
+    private:
+        ViewerReply(const ViewerReply&) = delete;
+        ViewerReply(ViewerReply&&) = delete;
+        ViewerReply& operator=(const ViewerReply&) = delete;
+        ViewerReply& operator=(ViewerReply&&) = delete;
     };
 }

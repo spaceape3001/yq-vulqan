@@ -4,21 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/MouseLeaveEvent.hpp>
+#include <ya/events/mouse/MouseLeaveEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
 
-    MouseLeaveEvent::MouseLeaveEvent(Window* w, const Param& p) : MouseEvent(w, p)
+    MouseLeaveEvent::MouseLeaveEvent(const Header& h, ModifierKeys mk, const Vector2D& pos, MouseButtons btns) :
+        MouseEvent(h, mk, pos, btns)
     {
     }
     
-    MouseLeaveEvent::MouseLeaveEvent(WindowID w, const Param& p) : MouseEvent(w, p)
+    MouseLeaveEvent::MouseLeaveEvent(const MouseLeaveEvent& cp, const Header& h) : MouseEvent(cp, h)
     {
     }
     
     MouseLeaveEvent::~MouseLeaveEvent()
     {
+    }
+
+    PostCPtr    MouseLeaveEvent::clone(rebind_k, const Header&h) const
+    {
+        return new MouseLeaveEvent(*this, h);
     }
 
     void MouseLeaveEvent::init_info()

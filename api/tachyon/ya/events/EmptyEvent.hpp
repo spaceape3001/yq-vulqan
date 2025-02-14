@@ -15,12 +15,19 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(EmptyEvent, Event)
     public:
         
-        //  contributing nothing extra....
-        using Event::Param;
-        
-        EmptyEvent(const Param& p = {});
+        EmptyEvent(const Header&);
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+        static void init_info();
+
+    protected:
+
+        EmptyEvent(const EmptyEvent&, const Header&);
         ~EmptyEvent();
         
-        static void init_info();
+    private:
+        EmptyEvent(const EmptyEvent&) = delete;
+        EmptyEvent(EmptyEvent&&) = delete;
+        EmptyEvent& operator=(const EmptyEvent&) = delete;
+        EmptyEvent& operator=(EmptyEvent&&) = delete;
     };
 }

@@ -27,23 +27,23 @@
 #include <yt/os/KeyCode.hpp>
 #include <ya/events/GamepadEvent.hpp>
 #include <ya/events/JoystickEvent.hpp>
-#include <ya/events/KeyCharacterEvent.hpp>
-#include <ya/events/KeyPressEvent.hpp>
-#include <ya/events/KeyReleaseEvent.hpp>
-#include <ya/events/KeyRepeatEvent.hpp>
-#include <ya/events/MouseDropEvent.hpp>
-#include <ya/events/MouseEnterEvent.hpp>
-#include <ya/events/MouseLeaveEvent.hpp>
-#include <ya/events/MouseMoveEvent.hpp>
-#include <ya/events/MousePressEvent.hpp>
-#include <ya/events/MouseReleaseEvent.hpp>
-#include <ya/events/MouseScrollEvent.hpp>
 #include <ya/events/WindowAspectEvent.hpp>
 #include <ya/events/WindowCursorCaptureEvent.hpp>
 #include <ya/events/WindowCursorDisableEvent.hpp>
 #include <ya/events/WindowCursorHideEvent.hpp>
 #include <ya/events/WindowCursorNormalEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
+#include <ya/events/keyboard/KeyCharacterEvent.hpp>
+#include <ya/events/keyboard/KeyPressEvent.hpp>
+#include <ya/events/keyboard/KeyReleaseEvent.hpp>
+#include <ya/events/keyboard/KeyRepeatEvent.hpp>
+#include <ya/events/mouse/MouseDropEvent.hpp>
+#include <ya/events/mouse/MouseEnterEvent.hpp>
+#include <ya/events/mouse/MouseLeaveEvent.hpp>
+#include <ya/events/mouse/MouseMoveEvent.hpp>
+#include <ya/events/mouse/MousePressEvent.hpp>
+#include <ya/events/mouse/MouseReleaseEvent.hpp>
+#include <ya/events/mouse/MouseScrollEvent.hpp>
 #include <ya/events/ui/DefocusEvent.hpp>
 #include <ya/events/ui/FocusEvent.hpp>
 #include <ya/events/ui/HideEvent.hpp>
@@ -70,10 +70,7 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
-        KeyCharacterEvent::Param    p;
-        p.modifiers = w->modifiers(READ);
-        p.code      = codepoint;
-        w->send(new KeyCharacterEvent(w, p));
+        w->send(new KeyCharacterEvent({.source=w}, w->modifiers(READ), codepoint));
         w->mark();
     }
     
@@ -84,17 +81,9 @@ namespace yq::tachyon {
             return ;
             
         if(entered){
-            MouseEnterEvent::Param p;
-            p.modifiers = w->modifiers(READ);
-            p.buttons   = w->buttons(READ);
-            p.position  = w->mouse(READ);
-            w->send(new MouseEnterEvent(w, p));
+            w->send(new MouseEnterEvent({.source=w}, w->modifiers(READ), w->mouse(READ), w->buttons(READ)));
         } else {
-            MouseLeaveEvent::Param p;
-            p.modifiers = w->modifiers(READ);
-            p.buttons   = w->buttons(READ);
-            p.position  = w->mouse(READ);
-            w->send(new MouseLeaveEvent(w, p));
+            w->send(new MouseLeaveEvent({.source=w}, w->modifiers(READ), w->mouse(READ), w->buttons(READ)));
         }
         w->mark();
     }
@@ -105,11 +94,7 @@ namespace yq::tachyon {
         if(!w)
             return ;
 
-        MouseMoveEvent::Param p;
-        p.modifiers = w->modifiers(READ);
-        p.buttons   = w->buttons(READ);
-        p.position  = { xpos, ypos };
-        w->send(new MouseMoveEvent(w, p));
+        w->send(new MouseMoveEvent({.source=w}, w->modifiers(READ), Vector2D(xpos, ypos), w->buttons(READ)));
         w->mark();
     }
     
@@ -130,11 +115,7 @@ namespace yq::tachyon {
             copy.push_back(std::string(paths[i]));
         }
         
-        MouseDropEvent::Param p;
-        p.modifiers = w->modifiers(READ);
-        p.buttons   = w->buttons(READ);
-        p.position  = w->mouse(READ);
-        w->send(new MouseDropEvent(w, std::move(copy), p));
+        w->send(new MouseDropEvent({.source=w}, w->modifiers(READ), w->mouse(READ), w->buttons(READ), std::move(copy)));
         w->mark();
     }
     
@@ -155,31 +136,13 @@ namespace yq::tachyon {
 
         switch(action){
         case GLFW_PRESS:
-            {
-                KeyPressEvent::Param    p;
-                p.modifiers     = w->modifiers(READ);
-                p.scan          = scancode;
-                p.key           = keycode_glfw(key);
-                w->send(new KeyPressEvent(w,p));
-            }
+            w->send(new KeyPressEvent({.source=w}, w->modifiers(READ), scancode, keycode_glfw(key)));
             break;
         case GLFW_RELEASE:
-            {
-                KeyReleaseEvent::Param    p;
-                p.modifiers     = w->modifiers(READ);
-                p.scan          = scancode;
-                p.key           = keycode_glfw(key);
-                w->send(new KeyReleaseEvent(w,p));
-            }
+            w->send(new KeyReleaseEvent({.source=w}, w->modifiers(READ), scancode, keycode_glfw(key)));
             break;
         case GLFW_REPEAT:
-            {
-                KeyRepeatEvent::Param    p;
-                p.modifiers     = w->modifiers(READ);
-                p.scan          = scancode;
-                p.key           = keycode_glfw(key);
-                w->send(new KeyRepeatEvent(w,p));
-            }
+            w->send(new KeyRepeatEvent({.source=w}, w->modifiers(READ), scancode, keycode_glfw(key)));
             break;
         default:
             break;
@@ -194,19 +157,9 @@ namespace yq::tachyon {
             return ;
         
         if(action == GLFW_PRESS){
-            MousePressEvent::Param p;
-            p.modifiers = w->modifiers(READ);
-            p.buttons   = w->buttons(READ);
-            p.position  = w->mouse(READ);
-            p.button    = MouseButton(button);
-            w->send(new MousePressEvent(w, p));
+            w->send(new MousePressEvent({.source=w}, w->modifiers(READ), w->mouse(READ), w->buttons(READ), MouseButton(button)));
         } else {
-            MouseReleaseEvent::Param p;
-            p.modifiers = w->modifiers(READ);
-            p.buttons   = w->buttons(READ);
-            p.position  = w->mouse(READ);
-            p.button    = MouseButton(button);
-            w->send(new MouseReleaseEvent(w, p));
+            w->send(new MouseReleaseEvent({.source=w}, w->modifiers(READ), w->mouse(READ), w->buttons(READ), MouseButton(button)));
         }
         w->mark();
     }
@@ -217,11 +170,9 @@ namespace yq::tachyon {
         if(!w)
             return ;
 
-        MouseScrollEvent::Param p;
-        p.modifiers = w->modifiers(READ);
-        p.buttons   = w->buttons(READ);
-        p.delta     = { xoffset, yoffset };
-        w->send(new MouseScrollEvent(w, p));
+        w->send(new MouseScrollEvent({.source=w}, 
+            w->modifiers(READ), w->mouse(READ), w->buttons(READ), Vector2D(xoffset, yoffset)
+        ));
         w->mark();
     }
     

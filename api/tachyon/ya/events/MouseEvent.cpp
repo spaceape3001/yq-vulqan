@@ -11,20 +11,14 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseEvent)
 
 namespace yq::tachyon {
-    
-    MouseEventInfo::MouseEventInfo(std::string_view zName, InputEventInfo& base, const std::source_location& sl) :
-        InputEventInfo(zName, base, sl)
-    {
-        set(Flag::MOUSE);
-    }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    MouseEvent::MouseEvent(Window* w, const Param& p) : InputEvent(w, p), m_position(p.position), m_buttons(p.buttons)
+    MouseEvent::MouseEvent(const Header& h, ModifierKeys mk, const Vector2D& pos, MouseButtons btns) : 
+        InputEvent(h, mk), m_position(pos), m_buttons(btns)
     {
     }
     
-    MouseEvent::MouseEvent(WindowID w, const Param& p) : InputEvent(w, p), m_position(p.position), m_buttons(p.buttons)
+    MouseEvent::MouseEvent(const MouseEvent& cp, const Header&h) : 
+        InputEvent(cp, h), m_position(cp.m_position), m_buttons(cp.m_buttons)
     {
     }
     
@@ -55,8 +49,8 @@ namespace yq::tachyon {
         w.description("Mouse event base class");
         w.property("x", &MouseEvent::x).description("Mouse (cursor) X position").tag(kTag_Log);
         w.property("y", &MouseEvent::y).description("Mouse (cursor) Y position").tag(kTag_Log);
-        w.property("position", &MouseEvent::position).description("Mouse (cursor) position");
-        w.property("buttons", &MouseEvent::buttons).description("Currently pressed mouse buttons");
+        w.property("position", &MouseEvent::m_position).description("Mouse (cursor) position").tag(kTag_Save);
+        w.property("buttons", &MouseEvent::m_buttons).description("Currently pressed mouse buttons").tag(kTag_Save);
         w.property("left", &MouseEvent::left_button).description("State of Mouse's left button").tag(kTag_Log);
         w.property("middle", &MouseEvent::middle_button).description("State of Mouse's button button").tag(kTag_Log);
         w.property("right", &MouseEvent::right_button).description("State of Mouse's right button").tag(kTag_Log);

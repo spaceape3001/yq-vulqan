@@ -27,6 +27,5 @@ namespace yq::tachyon {
         
         WindowReply& operator=(const WindowReply&) = delete;
         WindowReply& operator=(WindowReply&&) = delete;
-        
     };
 }

@@ -16,21 +16,24 @@ namespace yq::tachyon {
     class StringReply : public Reply {
         YQ_OBJECT_DECLARE(StringReply, Reply)
     public:
-    
-        using text_t    = std::variant<std::monostate, const char*, std::string_view, std::string>;
         
-        using Reply::Param;
-        
-        StringReply(const RequestCPtr&, std::string&&, const Param& p = {});
-        StringReply(const RequestCPtr&, const char*, const Param& p = {});
-        StringReply(const RequestCPtr&, std::string_view, const Param& p = {});
-        ~StringReply(){}
-    
+        StringReply(const Header&, const RequestCPtr&, std::string_view);
         const std::string&    text() const { return m_text; }
-        
         static void init_info();
+
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+    
+        StringReply(const StringReply&, const Header&);
+        ~StringReply();
     
     private:
         std::string     m_text;
+        
+        StringReply(const StringReply&) = delete;
+        StringReply(StringReply&&) = delete;
+        StringReply& operator=(const StringReply&) = delete;
+        StringReply& operator=(StringReply&&) = delete;
     };
 }

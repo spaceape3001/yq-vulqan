@@ -13,12 +13,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(MousePressEvent, MouseEvent)
     public:
     
-        struct Param : public MouseEvent::Param {
-            MouseButton     button;
-        };
-    
-        MousePressEvent(Window*, const Param&);
-        MousePressEvent(WindowID, const Param&);
+        MousePressEvent(const Header&, ModifierKeys, const Vector2D&, MouseButtons, MouseButton);
         
         //! Scan code from the operating system (no interpretation)
         MouseButton         button() const { return m_button; }
@@ -26,13 +21,21 @@ namespace yq::tachyon {
         bool    left() const;
         bool    right() const;
         bool    middle() const;
-
-        virtual ~MousePressEvent();
         
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
         static void init_info();
         
+    protected:
+        MousePressEvent(const MousePressEvent&, const Header&);
+        virtual ~MousePressEvent();
+        
     private:
-    
-        const MouseButton m_button;
+        MouseButton m_button;
+        
+        MousePressEvent(const MousePressEvent&) = delete;
+        MousePressEvent(MousePressEvent&&) = delete;
+        MousePressEvent& operator=(const MousePressEvent&) = delete;
+        MousePressEvent& operator=(MousePressEvent&&) = delete;
+        
     };
 }

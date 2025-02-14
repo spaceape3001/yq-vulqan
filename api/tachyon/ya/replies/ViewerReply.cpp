@@ -11,18 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerReply)
 
 namespace yq::tachyon {
-    ViewerReplyInfo::ViewerReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
-        ReplyInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ViewerReply::ViewerReply(const RequestCPtr& rq, ViewerID v, const Param& p) : Reply(rq, p), ViewerBind(v)
+    ViewerReply::ViewerReply(const Header&h, const RequestCPtr& rq) : Reply(h, rq)
     {
     }
     
-    ViewerReply::ViewerReply(const RequestCPtr& rq, const Viewer* v, const Param& p) : Reply(rq, p), ViewerBind(v)
+    ViewerReply::ViewerReply(const ViewerReply&cp, const Header&h) : Reply(cp, h)
     {
     }
 

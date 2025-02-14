@@ -4,23 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/MouseDropEvent.hpp>
+#include <ya/events/mouse/MouseDropEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
 
-    MouseDropEvent::MouseDropEvent(Window* w, std::vector<std::string>&& _paths, const Param& p) : 
-        MouseEvent(w, p), m_paths(std::move(_paths))
+    MouseDropEvent::MouseDropEvent(const Header& h, ModifierKeys mk, const Vector2D& pos, MouseButtons btns, std::vector<std::string>&& _paths) :
+        MouseEvent(h, mk, pos, btns), m_paths(std::move(_paths))
     {
     }
     
-    MouseDropEvent::MouseDropEvent(WindowID w, std::vector<std::string>&& _paths, const Param& p) : 
-        MouseEvent(w, p), m_paths(std::move(_paths))
+    MouseDropEvent::MouseDropEvent(const MouseDropEvent& cp, const Header& h) : MouseEvent(cp, h), m_paths(cp.m_paths)
     {
     }
 
     MouseDropEvent::~MouseDropEvent()
     {
+    }
+
+    PostCPtr    MouseDropEvent::clone(rebind_k, const Header& h) const 
+    {
+        return new MouseDropEvent(*this, h);
     }
 
     void MouseDropEvent::init_info()

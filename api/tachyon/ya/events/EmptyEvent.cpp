@@ -9,12 +9,21 @@
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
-    EmptyEvent::EmptyEvent(const Param& p) : Event(p) 
+    EmptyEvent::EmptyEvent(const Header& h) : Event(h) 
     {
     }
     
+    EmptyEvent::EmptyEvent(const EmptyEvent& cp, const Header& h) : Event(cp, h) 
+    {
+    }
+
     EmptyEvent::~EmptyEvent()
     {
+    }
+
+    PostCPtr    EmptyEvent::clone(rebind_k, const Header& h) const
+    {
+        return new EmptyEvent(*this, h);
     }
     
     void EmptyEvent::init_info()

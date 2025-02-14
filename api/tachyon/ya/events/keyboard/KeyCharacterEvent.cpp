@@ -4,16 +4,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/KeyCharacterEvent.hpp>
+#include <ya/events/keyboard/KeyCharacterEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
 
-    KeyCharacterEvent::KeyCharacterEvent(WindowID w, const Param& p) : KeyboardEvent(w, p), m_code(p.code)
+    KeyCharacterEvent::KeyCharacterEvent(const Header&h, ModifierKeys mk, char32_t ch) : 
+        KeyboardEvent(h, mk), m_code(ch)
     {
     }
     
-    KeyCharacterEvent::KeyCharacterEvent(Window* w, const Param& p) : KeyboardEvent(w, p), m_code(p.code)
+    KeyCharacterEvent::KeyCharacterEvent(const KeyCharacterEvent& cp, const Header& h) : 
+        KeyboardEvent(cp, h), m_code(cp.m_code)
     {
     }
     
@@ -22,11 +24,16 @@ namespace yq::tachyon {
     {
     }
     
+    PostCPtr    KeyCharacterEvent::clone(rebind_k, const Header&h) const
+    {
+        return new KeyCharacterEvent(*this, h);
+    }
+
     void KeyCharacterEvent::init_info()
     {
         auto w = writer<KeyCharacterEvent>();
         w.description("Key Character Event");
-        w.property("code", &KeyCharacterEvent::code).tag(kTag_Log);
+        w.property("code", &KeyCharacterEvent::m_code).tag(kTag_Log).tag(kTag_Save);
     }
 }
 

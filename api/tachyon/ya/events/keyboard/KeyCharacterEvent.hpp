@@ -18,20 +18,24 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(KeyCharacterEvent, KeyboardEvent)
     public:
     
-        struct Param : public KeyboardEvent::Param {
-            char32_t    code    = 0;
-        };
-    
-        KeyCharacterEvent(Window*, const Param&);
-        KeyCharacterEvent(WindowID, const Param&);
+        KeyCharacterEvent(const Header&, ModifierKeys, char32_t);
         
         char32_t        code() const { return m_code; }
         
-        virtual ~KeyCharacterEvent();
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
         static void init_info();
+
+    protected:
+        KeyCharacterEvent(const KeyCharacterEvent&, const Header&);
+        virtual ~KeyCharacterEvent();
         
     private:
-        const char32_t  m_code;
+        char32_t  m_code;
+        
+        KeyCharacterEvent(const KeyCharacterEvent&) = delete;
+        KeyCharacterEvent(KeyCharacterEvent&&) = delete;
+        KeyCharacterEvent& operator=(const KeyCharacterEvent&) = delete;
+        KeyCharacterEvent& operator=(KeyCharacterEvent&&) = delete;
     };
 }

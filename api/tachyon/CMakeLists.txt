@@ -378,24 +378,14 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/InputEvent.cpp
     ya/events/JoystickEvent.cpp
     ya/events/KeyboardEvent.cpp
-    ya/events/KeyCharacterEvent.cpp
-    ya/events/KeyPressEvent.cpp
-    ya/events/KeyReleaseEvent.cpp
-    ya/events/KeyRepeatEvent.cpp
     #ya/events/MonitorConnectEvent.cpp
     ya/events/MonitorEvent.cpp
     ya/events/MouseCaptureEvent.cpp
     ya/events/MouseDisableEvent.cpp
-    ya/events/MouseDropEvent.cpp
-    ya/events/MouseEnterEvent.cpp
     ya/events/MouseEvent.cpp
     ya/events/MouseHideEvent.cpp
-    ya/events/MouseLeaveEvent.cpp
-    ya/events/MouseMoveEvent.cpp
     ya/events/MouseNormalEvent.cpp
-    ya/events/MousePressEvent.cpp
-    ya/events/MouseReleaseEvent.cpp
-    ya/events/MouseScrollEvent.cpp
+    ya/events/OSEvent.cpp
     ya/events/SimEvent.cpp
     ya/events/SpatialEvent.cpp
     ya/events/TachyonEvent.cpp
@@ -429,9 +419,22 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/joystick/JoystickPressEvent.cpp
     ya/events/joystick/JoystickReleaseEvent.cpp
     ya/events/joystick/JoystickZeroEvent.cpp
+
+    ya/events/keyboard/KeyCharacterEvent.cpp
+    ya/events/keyboard/KeyPressEvent.cpp
+    ya/events/keyboard/KeyReleaseEvent.cpp
+    ya/events/keyboard/KeyRepeatEvent.cpp
     
     ya/events/monitor/MonitorConnectEvent.cpp
     ya/events/monitor/MonitorDisconnectEvent.cpp
+
+    ya/events/mouse/MouseDropEvent.cpp
+    ya/events/mouse/MouseEnterEvent.cpp
+    ya/events/mouse/MouseLeaveEvent.cpp
+    ya/events/mouse/MouseMoveEvent.cpp
+    ya/events/mouse/MousePressEvent.cpp
+    ya/events/mouse/MouseReleaseEvent.cpp
+    ya/events/mouse/MouseScrollEvent.cpp
 
     ya/events/spatial/MaxSize1Event.cpp
     ya/events/spatial/MaxSize2Event.cpp
@@ -523,7 +526,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/replies/StringReply.cpp
     ya/replies/TachyonReply.cpp
     ya/replies/UIReply.cpp
-    ya/replies/ViewerCloseReply.cpp
     ya/replies/ViewerReply.cpp
     #ya/replies/ViewerWidgetReply.cpp
     ya/replies/WindowReply.cpp

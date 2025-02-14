@@ -17,8 +17,8 @@
 #include <ya/commands/spatial/PitchBy.hpp>
 #include <ya/commands/spatial/RollBy.hpp>
 #include <ya/commands/spatial/YawBy.hpp>
-#include <ya/events/KeyPressEvent.hpp>
-#include <ya/events/KeyRepeatEvent.hpp>
+#include <ya/events/keyboard/KeyPressEvent.hpp>
+#include <ya/events/keyboard/KeyRepeatEvent.hpp>
 #include <ya/events/gamepad/GamepadAxisEvent.hpp>
 #include <ya/events/gamepad/GamepadPressEvent.hpp>
 #include <ya/events/gamepad/GamepadZeroEvent.hpp>

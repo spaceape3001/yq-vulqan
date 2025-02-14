@@ -10,20 +10,12 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::InputEvent)
 
 namespace yq::tachyon {
-    
-    InputEventInfo::InputEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
-    {
-        set(Flag::INPUT);
-    }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    InputEvent::InputEvent(WindowID v, const Param&p) : Event(p), WindowBind(v), m_modifiers(p.modifiers)
+    InputEvent::InputEvent(const Header&h, ModifierKeys mk) : Event(h), m_modifiers(mk)
     {
     }
     
-    InputEvent::InputEvent(const Window*v, const Param&p) : Event(p), WindowBind(v), m_modifiers(p.modifiers)
+    InputEvent::InputEvent(const InputEvent& cp, const Header&h) : Event(cp, h), m_modifiers(cp.m_modifiers)
     {
     }
 
@@ -113,6 +105,7 @@ namespace yq::tachyon {
     {
         auto w = writer<InputEvent>();
         w.description("Input event base class");
+        w.property("modifiers", &InputEvent::m_modifiers).description("Modifier Keys").tag(kTag_Save);
         w.property("alt", &InputEvent::alt).description("Either alt key was down").tag(kTag_Log);
         w.property("alt_left", &InputEvent::alt_left).description("Left alt key was down");
         w.property("alt_right", &InputEvent::alt_right).description("Right alt key was down");

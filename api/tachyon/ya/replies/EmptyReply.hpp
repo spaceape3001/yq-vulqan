@@ -15,12 +15,20 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(EmptyReply, Reply)
     public:
         
-        //  contributing nothing extra....
-        using Reply::Param;
-        
-        EmptyReply(const RequestCPtr&, const Param& p = {});
-        ~EmptyReply();
+        EmptyReply(const Header&, const RequestCPtr&);
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
         static void init_info();
+
+    protected:
+
+        EmptyReply(const EmptyReply&, const Header&);
+        ~EmptyReply();
+    
+    private:
+        EmptyReply(const EmptyReply&) = delete;
+        EmptyReply(EmptyReply&&) = delete;
+        EmptyReply& operator=(const EmptyReply&) = delete;
+        EmptyReply& operator=(EmptyReply&&) = delete;
     };
 }

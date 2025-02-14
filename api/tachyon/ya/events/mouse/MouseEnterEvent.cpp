@@ -4,21 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/MouseEnterEvent.hpp>
+#include <ya/events/mouse/MouseEnterEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
 
-    MouseEnterEvent::MouseEnterEvent(Window* w, const Param& p) : MouseEvent(w, p)
+    MouseEnterEvent::MouseEnterEvent(const Header& h, ModifierKeys mk, const Vector2D& pos, MouseButtons btns) :
+        MouseEvent(h, mk, pos, btns)
     {
     }
     
-    MouseEnterEvent::MouseEnterEvent(WindowID w, const Param& p) : MouseEvent(w, p)
+    MouseEnterEvent::MouseEnterEvent(const MouseEnterEvent& cp, const Header& h) : MouseEvent(cp, h)
+    {
+    }
+    
+    MouseEnterEvent::~MouseEnterEvent()
     {
     }
 
-    MouseEnterEvent::~MouseEnterEvent()
+    PostCPtr    MouseEnterEvent::clone(rebind_k, const Header&h) const
     {
+        return new MouseEnterEvent(*this, h);
     }
 
     void MouseEnterEvent::init_info()

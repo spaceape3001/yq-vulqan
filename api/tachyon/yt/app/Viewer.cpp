@@ -61,17 +61,19 @@
 
 #include <ya/commands/widget/SetViewer.hpp>
 
-#include <ya/events/KeyCharacterEvent.hpp>
-#include <ya/events/KeyPressEvent.hpp>
-#include <ya/events/KeyReleaseEvent.hpp>
-#include <ya/events/MouseMoveEvent.hpp>
-#include <ya/events/MousePressEvent.hpp>
-#include <ya/events/MouseReleaseEvent.hpp>
-#include <ya/events/MouseMoveEvent.hpp>
-#include <ya/events/MousePressEvent.hpp>
-#include <ya/events/MouseReleaseEvent.hpp>
 #include <ya/events/ViewerCloseEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
+
+#include <ya/events/keyboard/KeyCharacterEvent.hpp>
+#include <ya/events/keyboard/KeyPressEvent.hpp>
+#include <ya/events/keyboard/KeyReleaseEvent.hpp>
+
+#include <ya/events/mouse/MouseMoveEvent.hpp>
+#include <ya/events/mouse/MousePressEvent.hpp>
+#include <ya/events/mouse/MouseReleaseEvent.hpp>
+#include <ya/events/mouse/MouseMoveEvent.hpp>
+#include <ya/events/mouse/MousePressEvent.hpp>
+#include <ya/events/mouse/MouseReleaseEvent.hpp>
 
 #include <ya/events/spatial/Position2Event.hpp>
 #include <ya/events/spatial/Size2Event.hpp>
@@ -87,9 +89,6 @@
 #include <ya/events/ui/ShowEvent.hpp>
 
 #include <ya/desktops/glfw/WindowGLFW.hpp>
-
-
-#include <ya/replies/ViewerCloseReply.hpp>
 
 #include <ya/replies/ui/CloseReply.hpp>
 
@@ -584,13 +583,13 @@ namespace yq::tachyon {
             return;
 
         if(dying()){
-            send(new ViewerCloseReply(req, this, Response::Busy));
+            send(new CloseReply({.source=this, .target=req->source()}, req, Response::Busy));
             return ;
         }
 
         if(m_closeRequest){
             if(m_closeRequest->id() != req->id()){
-                send(new ViewerCloseReply(req, this, Response::Busy));
+                send(new CloseReply({.source=this, .target=req->source()}, req, Response::Busy));
             }
             return ;
         }

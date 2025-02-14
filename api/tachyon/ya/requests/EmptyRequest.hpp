@@ -15,12 +15,18 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(EmptyRequest, Request)
     public:
         
-        //  contributing nothing extra....
-        using Request::Param;
-        
-        EmptyRequest(const Param& p = {});
+        EmptyRequest(const Header&h);
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+        static void init_info();
+
+    protected:
+        EmptyRequest(const EmptyRequest&, const Header&h);
         ~EmptyRequest();
         
-        static void init_info();
+    private:
+        EmptyRequest(const EmptyRequest&) = delete;
+        EmptyRequest(EmptyRequest&&) = delete;
+        EmptyRequest& operator=(const EmptyRequest&) = delete;
+        EmptyRequest& operator=(EmptyRequest&&) = delete;
     };
 }

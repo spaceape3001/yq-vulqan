@@ -11,34 +11,17 @@
 #include <yt/os/WindowBind.hpp>
 
 namespace yq::tachyon {
-    class InputEventInfo : public EventInfo {
-    public:
-        InputEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-    
-    class Window;
 
     /*! \brief Input event 
     
         This is a common base class for keyboard/mouse events since 
         they both need modifier keys & are attached to windows.
     */
-    class InputEvent : public Event, public WindowBind {
-        YQ_OBJECT_INFO(InputEventInfo)
+    class InputEvent : public Event {
         YQ_OBJECT_DECLARE(InputEvent, Event)
     public:
     
         static void init_info();
-    
-        struct Param : public Event::Param {
-            ModifierKeys    modifiers   = {};
-        };
-    
-        //  EVENT TODO
-    
-        virtual ~InputEvent();
         
         ModifierKeys        modifiers() const { return m_modifiers; }
         
@@ -64,12 +47,17 @@ namespace yq::tachyon {
         bool    super_left() const;
         bool    super_right() const;
         
-        
     protected:
-        InputEvent(WindowID, const Param&);
-        InputEvent(const Window*, const Param&);
+        InputEvent(const Header&, ModifierKeys);
+        InputEvent(const InputEvent&, const Header&);
+        virtual ~InputEvent();
 
     private:
-        const ModifierKeys    m_modifiers;
+        ModifierKeys    m_modifiers;
+        
+        InputEvent(const InputEvent&) = delete;
+        InputEvent(InputEvent&&) = delete;
+        InputEvent& operator=(const InputEvent&) = delete;
+        InputEvent& operator=(InputEvent&&) = delete;
     };
 }

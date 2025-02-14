@@ -12,29 +12,22 @@ namespace yq::tachyon {
     class Window;
     class Viewer;
 
-    class KeyboardEventInfo : public InputEventInfo {
-    public:
-        KeyboardEventInfo(std::string_view zName, InputEventInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
 
     class KeyboardEvent : public InputEvent {
-        YQ_OBJECT_INFO(KeyboardEventInfo)
         YQ_OBJECT_DECLARE(KeyboardEvent, InputEvent)
-        
-        template <typename> friend class Ref;
     public:
     
-        struct Param : public InputEvent::Param {
-        };
-
         static void init_info();
 
     protected:
-        KeyboardEvent(WindowID, const Param& p);
-        KeyboardEvent(Window*, const Param& p);
+        KeyboardEvent(const Header&, ModifierKeys);
+        KeyboardEvent(const KeyboardEvent&, const Header&);
         virtual ~KeyboardEvent();
+        
+    private:
+        KeyboardEvent(const KeyboardEvent&) = delete;
+        KeyboardEvent(KeyboardEvent&&) = delete;
+        KeyboardEvent& operator=(const KeyboardEvent&) = delete;
+        KeyboardEvent& operator=(KeyboardEvent&&) = delete;
     };
 }

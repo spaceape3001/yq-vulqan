@@ -8,7 +8,6 @@
 
 #include <yt/msg/Event.hpp>
 #include <yt/os/ModifierKey.hpp>
-#include <yt/os/WindowBind.hpp>
 
 namespace yq::tachyon {
 

@@ -27,12 +27,11 @@
 #include <yt/os/KeyCode.hpp>
 #include <ya/events/GamepadEvent.hpp>
 #include <ya/events/JoystickEvent.hpp>
-#include <ya/events/WindowAspectEvent.hpp>
-#include <ya/events/WindowCursorCaptureEvent.hpp>
-#include <ya/events/WindowCursorDisableEvent.hpp>
-#include <ya/events/WindowCursorHideEvent.hpp>
-#include <ya/events/WindowCursorNormalEvent.hpp>
 #include <ya/events/WindowFrameBufferResizeEvent.hpp>
+#include <ya/events/cursor/CursorCaptureEvent.hpp>
+#include <ya/events/cursor/CursorDisableEvent.hpp>
+#include <ya/events/cursor/CursorHideEvent.hpp>
+#include <ya/events/cursor/CursorNormalEvent.hpp>
 #include <ya/events/keyboard/KeyCharacterEvent.hpp>
 #include <ya/events/keyboard/KeyPressEvent.hpp>
 #include <ya/events/keyboard/KeyReleaseEvent.hpp>
@@ -44,6 +43,7 @@
 #include <ya/events/mouse/MousePressEvent.hpp>
 #include <ya/events/mouse/MouseReleaseEvent.hpp>
 #include <ya/events/mouse/MouseScrollEvent.hpp>
+#include <ya/events/ui/AspectEvent.hpp>
 #include <ya/events/ui/DefocusEvent.hpp>
 #include <ya/events/ui/FocusEvent.hpp>
 #include <ya/events/ui/HideEvent.hpp>
@@ -476,7 +476,7 @@ namespace yq::tachyon {
             return ;
     
         glfwSetWindowAspectRatio(m_window, cmd.width(), cmd.height());
-        send(new WindowAspectEvent(this, cmd.aspect()));
+        send(new AspectEvent({.source=this}, cmd.aspect()));
         mark();
     }
 
@@ -494,7 +494,7 @@ namespace yq::tachyon {
             return;
         m_mouseMode = MouseMode::Captured;
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
-        send(new WindowCursorCaptureEvent(this));
+        send(new CursorCaptureEvent({.source=this}));
         mark();
     }
     
@@ -504,7 +504,7 @@ namespace yq::tachyon {
             return ;
         m_mouseMode = MouseMode::Disabled;
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        send(new WindowCursorDisableEvent(this));
+        send(new CursorDisableEvent({.source=this}));
         mark();
     }
     
@@ -514,7 +514,7 @@ namespace yq::tachyon {
             return ;
         m_mouseMode = MouseMode::Hidden;
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-        send(new WindowCursorHideEvent(this));
+        send(new CursorHideEvent({.source=this}));
         mark();
     }
     
@@ -524,7 +524,7 @@ namespace yq::tachyon {
             return ;
         m_mouseMode = MouseMode::Normal;
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        send(new WindowCursorNormalEvent(this));
+        send(new CursorNormalEvent({.source=this}));
         mark();
     }
 

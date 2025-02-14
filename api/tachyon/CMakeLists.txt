@@ -373,18 +373,14 @@ add_library(${PROJECT_NAME} SHARED
 
     ya/events/AppEvent.cpp
     ya/events/CameraEvent.cpp
+    ya/events/CursorEvent.cpp
     ya/events/EmptyEvent.cpp
     ya/events/GamepadEvent.cpp
     ya/events/InputEvent.cpp
     ya/events/JoystickEvent.cpp
     ya/events/KeyboardEvent.cpp
-    #ya/events/MonitorConnectEvent.cpp
     ya/events/MonitorEvent.cpp
-    ya/events/MouseCaptureEvent.cpp
-    ya/events/MouseDisableEvent.cpp
     ya/events/MouseEvent.cpp
-    ya/events/MouseHideEvent.cpp
-    ya/events/MouseNormalEvent.cpp
     ya/events/OSEvent.cpp
     ya/events/SimEvent.cpp
     ya/events/SpatialEvent.cpp
@@ -396,13 +392,13 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/ViewerEvent.cpp
     ya/events/VulqanEvent.cpp
     ya/events/WidgetEvent.cpp
-    ya/events/WindowAspectEvent.cpp
-    ya/events/WindowCursorCaptureEvent.cpp
-    ya/events/WindowCursorDisableEvent.cpp
-    ya/events/WindowCursorHideEvent.cpp
-    ya/events/WindowCursorNormalEvent.cpp
     ya/events/WindowEvent.cpp
     ya/events/WindowFrameBufferResizeEvent.cpp
+    
+    ya/events/cursor/CursorCaptureEvent.cpp
+    ya/events/cursor/CursorDisableEvent.cpp
+    ya/events/cursor/CursorHideEvent.cpp
+    ya/events/cursor/CursorNormalEvent.cpp
     
     ya/events/gamepad/GamepadAxisEvent.cpp
     ya/events/gamepad/GamepadConnectEvent.cpp
@@ -460,6 +456,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/tachyon/DestroyEvent.cpp
     ya/events/tachyon/DirtyEvent.cpp
     
+    ya/events/ui/AspectEvent.cpp
     ya/events/ui/DefocusEvent.cpp
     ya/events/ui/FocusEvent.cpp
     ya/events/ui/HideEvent.cpp

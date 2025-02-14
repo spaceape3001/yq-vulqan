@@ -13,6 +13,7 @@
 #include <yv/VulqanManager.hpp>
 
 #include <ya/threads/AppThread.hpp>
+#include <ya/threads/AudioThread.hpp>
 #include <ya/threads/GameThread.hpp>
 #include <ya/threads/IOThread.hpp>
 #include <ya/threads/NetworkThread.hpp>
@@ -251,6 +252,12 @@ namespace yq::tachyon {
             m_thread.app -> tick();
         }
         
+        if(is_single(m_cInfo.thread.audio)){
+            m_thread.audio     = new AudioThread;
+            m_threads.push_back(m_thread.game.ptr());
+            Thread::standard(AUDIO, m_thread.audio->id());
+        }
+
         if(is_single(m_cInfo.thread.game)){
             m_thread.game       = new GameThread;
             m_threads.push_back(m_thread.game.ptr());
@@ -287,6 +294,10 @@ namespace yq::tachyon {
             Thread::standard(VIEWER, m_thread.viewer->id());
         }
         
+        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.audio)){
+            Thread::standard(AUDIO, Thread::standard(*p));
+        }
+        
         if(auto p = std::get_if<StdThread>(&m_cInfo.thread.game)){
             Thread::standard(GAME, Thread::standard(*p));
         }
@@ -314,6 +325,8 @@ namespace yq::tachyon {
         for(Thread* t : m_threads)
             t->start();
             
+        m_thread.app -> tick();
+        
         if(m_vulkan && m_thread.viewer){
             m_vulkan->owner(PUSH, m_thread.viewer->id());
             m_thread.app -> tick();

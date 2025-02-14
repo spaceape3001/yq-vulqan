@@ -1,11 +1,16 @@
 # CHANGE LOG
 
+
 ## 2025.02.14
 
+* Added Audio Thread
 * Cleanup on commands, events, requests, & replies (consolidation, brought up to current standards, and removal of the old binders)
 * Pipeline variation support
 * SkyBox render object
 * Add Gamepad Introspection to the Frame Inspector
+
+### Known Issues
+* Seems to be a retention issue on creating widgets sometimes vanishing.  Solution is to keep a ref-pointer, though this may stall shutdown/quit.
 
 ## 2025.02.08
 

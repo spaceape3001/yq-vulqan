@@ -30,6 +30,10 @@ namespace yq::tachyon {
     struct app_k {
         consteval operator StdThread() const noexcept  { return StdThread::App; }
     };
+    
+    struct audio_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Audio; }
+    };
 
     struct calculate_k {};
     struct camera_k {};
@@ -224,6 +228,7 @@ namespace yq::tachyon {
     static constexpr adjust_k           ADJUST;
     static constexpr adjustable_k       ADJUSTABLE;
     static constexpr app_k              APP;
+    static constexpr audio_k            AUDIO;
     static constexpr calculate_k        CALCULATE;
     static constexpr camera_k           CAMERA;
     static constexpr camera³_k          CAMERA³;

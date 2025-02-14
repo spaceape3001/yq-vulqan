@@ -22,6 +22,9 @@ namespace yq::tachyon {
         // Application/OS/Input
         App     = 0,
         
+        // Audio thread
+        Audio,
+        
         // Game thread
         Game,
         

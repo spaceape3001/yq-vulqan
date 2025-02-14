@@ -22,6 +22,7 @@
 
 namespace yq::tachyon {
     class AppThread;
+    class AudioThread;
     class Desktop;
     class DesktopGLFW;
     class GameThread;
@@ -114,6 +115,7 @@ namespace yq::tachyon {
         
         struct {
             Ref<AppThread>      app;        //< valid while running
+            Ref<AudioThread>    audio;      //< valid while running if "ENABLED" but not "PER"
             Ref<GameThread>     game;       //< valid while running if "ENABLED" but not "PER"
             Ref<IOThread>       io;         //< valid while running if "ENABLED" but not "PER"
             Ref<NetworkThread>  network;    //< valid while running if "ENABLED" but not "PER"

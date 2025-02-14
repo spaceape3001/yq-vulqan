@@ -549,6 +549,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/spatials/SimpleSpatial3.cpp
 
     ya/threads/AppThread.cpp
+    ya/threads/AudioThread.cpp
     ya/threads/GameThread.cpp
     ya/threads/IOThread.cpp
     ya/threads/NetworkThread.cpp

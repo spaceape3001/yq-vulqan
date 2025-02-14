@@ -60,6 +60,7 @@ namespace yq::tachyon {
             thread per major object (which, for the viewer thread is the Viewer)
         */
         struct {
+            thread_spec_t audio       = DISABLED;
             thread_spec_t game        = DISABLED;
             thread_spec_t io          = DISABLED;
             thread_spec_t network     = DISABLED;

@@ -386,14 +386,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/SpatialEvent.cpp
     ya/events/TachyonEvent.cpp
     ya/events/ThreadEvent.cpp
-    ya/events/ThreadAddTachyonEvent.cpp
     ya/events/UIEvent.cpp
-    ya/events/ViewerCloseEvent.cpp
     ya/events/ViewerEvent.cpp
     ya/events/VulqanEvent.cpp
     ya/events/WidgetEvent.cpp
     ya/events/WindowEvent.cpp
-    ya/events/WindowFrameBufferResizeEvent.cpp
     
     ya/events/cursor/CursorCaptureEvent.cpp
     ya/events/cursor/CursorDisableEvent.cpp
@@ -456,8 +453,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/tachyon/DestroyEvent.cpp
     ya/events/tachyon/DirtyEvent.cpp
     
+    ya/events/thread/ThreadAddTachyonEvent.cpp
+
     ya/events/ui/AspectEvent.cpp
     ya/events/ui/DefocusEvent.cpp
+    ya/events/ui/CloseEvent.cpp
     ya/events/ui/FocusEvent.cpp
     ya/events/ui/HideEvent.cpp
     ya/events/ui/IconifyEvent.cpp
@@ -466,6 +466,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/ui/ShowEvent.cpp
     ya/events/ui/TitleEvent.cpp
     
+    ya/events/window/FramebufferResizeEvent.cpp
+
     ya/interfaces/IMaxSize1.cpp
     ya/interfaces/IMaxSize2.cpp
     ya/interfaces/IMaxSize3.cpp

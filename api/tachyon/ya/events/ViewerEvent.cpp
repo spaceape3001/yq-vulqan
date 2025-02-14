@@ -11,18 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerEvent)
 
 namespace yq::tachyon {
-    ViewerEventInfo::ViewerEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ViewerEvent::ViewerEvent(Viewer* v, const Param& p) : Event(p), ViewerBind(v)
+    ViewerEvent::ViewerEvent(const Header&h) : Event(h)
     {
     }
     
-    ViewerEvent::ViewerEvent(ViewerID v, const Param& p) : Event(p), ViewerBind(v)
+    ViewerEvent::ViewerEvent(const ViewerEvent& cp, const Header&h) : Event(cp, h)
     {
     }
     

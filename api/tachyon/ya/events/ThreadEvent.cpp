@@ -11,18 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadEvent)
 
 namespace yq::tachyon {
-    ThreadEventInfo::ThreadEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ThreadEvent::ThreadEvent(const Thread* v, const Param& p) : Event(p), ThreadBind(v)
+    ThreadEvent::ThreadEvent(const Header&h) : Event(h)
     {
     }
     
-    ThreadEvent::ThreadEvent(ThreadID v, const Param& p) : Event(p), ThreadBind(v)
+    ThreadEvent::ThreadEvent(const ThreadEvent& cp, const Header&h) : Event(cp, h)
     {
     }
 

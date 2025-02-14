@@ -81,6 +81,7 @@ namespace yq::tachyon {
     class SpatialCommand;
     class TitleCommand;
     class UnfloatCommand;
+    class FramebufferResizeEvent;
     
     struct ViewerInitData;
     
@@ -355,6 +356,7 @@ namespace yq::tachyon {
         void    on_cursor_normal_command(const ViewerCursorNormalCommand&);
         void    on_defocus_event(const DefocusEvent&);
         void    on_destroy_event(const DestroyEvent&);
+        void    on_fb_resize_event(const FramebufferResizeEvent&);
         void    on_focus_command(const FocusCommand&);
         void    on_focus_event(const FocusEvent&);
         void    on_float_command(const FloatCommand&);
@@ -376,7 +378,6 @@ namespace yq::tachyon {
         void    on_title_command(const TitleCommand&);
         void    on_unfloat_command(const UnfloatCommand&);
 
-        void    on_window_fb_resize_event(const WindowFrameBufferResizeEvent&);
         
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

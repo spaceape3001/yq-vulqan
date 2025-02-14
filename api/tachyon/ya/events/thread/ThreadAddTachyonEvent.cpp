@@ -4,26 +4,31 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/events/ThreadAddTachyonEvent.hpp>
+#include <ya/events/thread/ThreadAddTachyonEvent.hpp>
 #include <yt/msg/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadAddTachyonEvent)
 
 namespace yq::tachyon {
-    ThreadAddTachyonEvent::ThreadAddTachyonEvent(Thread*t, TypedID tac, const Param&p) : 
-        ThreadEvent(t, p), m_tachyon(tac)
+    ThreadAddTachyonEvent::ThreadAddTachyonEvent(const Header& h, TypedID tac) : 
+        ThreadEvent(h), m_tachyon(tac)
     {
     }
     
-    ThreadAddTachyonEvent::ThreadAddTachyonEvent(ThreadID t, TypedID tac, const Param& p) : 
-        ThreadEvent(t, p), m_tachyon(tac)
+    ThreadAddTachyonEvent::ThreadAddTachyonEvent(const ThreadAddTachyonEvent& cp, const Header& h) : 
+        ThreadEvent(cp, h), m_tachyon(cp.m_tachyon)
     {
     }
-    
+
     ThreadAddTachyonEvent::~ThreadAddTachyonEvent()
     {
     }
         
+    PostCPtr    ThreadAddTachyonEvent::clone(rebind_k, const Header& h) const 
+    {
+        return new ThreadAddTachyonEvent(*this, h);
+    }
+
     void ThreadAddTachyonEvent::init_info()
     {
         auto w = writer<ThreadAddTachyonEvent>();

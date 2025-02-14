@@ -8,14 +8,13 @@
 #include <yt/api/Frame.hpp>
 #include <yt/api/FrameBuilder.hpp>
 #include <yt/api/Thread.hpp>
-#include <yt/api/ThreadBind.hpp>
 #include <yt/api/ThreadData.hpp>
 #include <yt/api/ThreadInfoWriter.hpp>
 
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yt/logging.hpp>
-#include <ya/events/ThreadAddTachyonEvent.hpp>
+#include <ya/events/thread/ThreadAddTachyonEvent.hpp>
 
 namespace yq::tachyon {
     using namespace std::chrono_literals;
@@ -52,16 +51,6 @@ namespace yq::tachyon {
         std::set<TachyonID>      pushed;     //!< Acknowledgement to being pushed (so delete from sender)
     };
     
-
-// ------------------------------------------------------------------------
-
-    ThreadBind::ThreadBind(const Thread* v) : m_thread( v ? v->id() : ThreadID{} )
-    {
-    }
-
-    ThreadBind::ThreadBind(TypedID v) : m_thread( v(Type::Thread) ? ThreadID(v.id) : ThreadID())
-    {
-    }
 
 // ------------------------------------------------------------------------
 
@@ -445,7 +434,7 @@ namespace yq::tachyon {
             }
             subscribe(in->id(), MG::Tachyon);
             d.arrived.insert(in->id());
-            send(new ThreadAddTachyonEvent(this, in.ptr()));
+            send(new ThreadAddTachyonEvent({.source=this}, in.ptr()));
         }
         
         for(auto  in : inbox.pushed){
@@ -471,7 +460,7 @@ namespace yq::tachyon {
             tp->subscribe(id(), MG::Thread);
             subscribe(tp->id(), MG::Tachyon);
             d.created.insert(tp->id());
-            send(new ThreadAddTachyonEvent(this, tp.ptr()));
+            send(new ThreadAddTachyonEvent({.source=this}, tp.ptr()));
             c.object        = std::move(tp);
         }
         

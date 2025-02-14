@@ -7,38 +7,24 @@
 #pragma once
 
 #include <yt/msg/Event.hpp>
-#include <yt/ui/WidgetBind.hpp>
 
 namespace yq::tachyon {
-    class Widget;
-    
-    class WidgetEventInfo : public EventInfo {
-    public:
-        WidgetEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-
     class WidgetEvent : public Event {
-        YQ_OBJECT_INFO(WidgetEventInfo)
         YQ_OBJECT_DECLARE(WidgetEvent, Event)
     public:
     
-        struct Param : public Event::Param {
-        };
-    
-        //  EVENT TODO
-    
-        WidgetEvent(Widget*, const Param& p={});
-        virtual ~WidgetEvent();
-        
-        Widget*     widget() const { return m_widget; }
-        
         static void init_info();
-        
+
+    protected:
+        WidgetEvent(const Header&);
+        WidgetEvent(const WidgetEvent&, const Header&);
+        virtual ~WidgetEvent();
+
     private:
-        Widget*     m_widget;
+        WidgetEvent(const WidgetEvent&) = delete;
+        WidgetEvent(WidgetEvent&&) = delete;
+        WidgetEvent& operator=(const WidgetEvent&) = delete;
+        WidgetEvent& operator=(WidgetEvent&&) = delete;
     };
 
 }

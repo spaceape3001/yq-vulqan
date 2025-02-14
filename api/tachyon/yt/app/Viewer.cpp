@@ -61,9 +61,6 @@
 
 #include <ya/commands/widget/SetViewer.hpp>
 
-#include <ya/events/ViewerCloseEvent.hpp>
-#include <ya/events/WindowFrameBufferResizeEvent.hpp>
-
 #include <ya/events/keyboard/KeyCharacterEvent.hpp>
 #include <ya/events/keyboard/KeyPressEvent.hpp>
 #include <ya/events/keyboard/KeyReleaseEvent.hpp>
@@ -83,10 +80,13 @@
 
 #include <ya/events/tachyon/DestroyEvent.hpp>
 
+#include <ya/events/ui/CloseEvent.hpp>
 #include <ya/events/ui/DefocusEvent.hpp>
 #include <ya/events/ui/FocusEvent.hpp>
 #include <ya/events/ui/HideEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
+
+#include <ya/events/window/FramebufferResizeEvent.hpp>
 
 #include <ya/desktops/glfw/WindowGLFW.hpp>
 
@@ -161,6 +161,7 @@ namespace yq::tachyon {
 
         w.slot(&Viewer::on_defocus_event);
         w.slot(&Viewer::on_destroy_event);
+        w.slot(&Viewer::on_fb_resize_event);
         w.slot(&Viewer::on_float_command);
         w.slot(&Viewer::on_focus_command);
         w.slot(&Viewer::on_focus_event);
@@ -188,7 +189,6 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_unfloat_command);
 
         
-        w.slot(&Viewer::on_window_fb_resize_event);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -646,6 +646,11 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_fb_resize_event(const FramebufferResizeEvent&evt)
+    {
+        // TODO
+    }
+    
     void    Viewer::on_float_command(const FloatCommand& cmd)
     {
         if(!dying() && (cmd.target() == id())){
@@ -681,7 +686,7 @@ namespace yq::tachyon {
                 m_stage     = Stage::Kaput;
                 
                 send(new WindowDestroyCommand(WindowID(m_window.id)));
-                send(new ViewerCloseEvent(this));
+                send(new CloseEvent({.source=this}));
 
                 _sweepwait();
                 m_imgui     = {};
@@ -793,10 +798,6 @@ namespace yq::tachyon {
     }
 
 
-    void    Viewer::on_window_fb_resize_event(const WindowFrameBufferResizeEvent&evt)
-    {
-    }
-    
     void    Viewer::on_size_event(const Size²Event&evt)
     {
         if(evt.source() == m_window){

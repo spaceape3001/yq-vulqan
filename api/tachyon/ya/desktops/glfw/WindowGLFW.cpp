@@ -27,7 +27,6 @@
 #include <yt/os/KeyCode.hpp>
 #include <ya/events/GamepadEvent.hpp>
 #include <ya/events/JoystickEvent.hpp>
-#include <ya/events/WindowFrameBufferResizeEvent.hpp>
 #include <ya/events/cursor/CursorCaptureEvent.hpp>
 #include <ya/events/cursor/CursorDisableEvent.hpp>
 #include <ya/events/cursor/CursorHideEvent.hpp>
@@ -52,6 +51,7 @@
 #include <ya/events/ui/RestoreEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
 #include <ya/events/ui/TitleEvent.hpp>
+#include <ya/events/window/FramebufferResizeEvent.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 #include <ya/requests/ui/RefreshRequest.hpp>
 #include <yq/trait/numbers.hpp>
@@ -124,7 +124,7 @@ namespace yq::tachyon {
         WindowGLFW *w  = _window(win);
         if(!w)
             return ;
-        w->send(new WindowFrameBufferResizeEvent(w, Size2I( width, height)));
+        w->send(new FramebufferResizeEvent({.source=w}, Size2I( width, height)));
         w->mark();
     }
     

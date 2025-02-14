@@ -11,6 +11,7 @@
 
 ### Known Issues
 * Seems to be a retention issue on creating widgets sometimes vanishing.  Solution is to keep a ref-pointer, though this may stall shutdown/quit.
+* Hello Triangle will exit with segmentation fault (debug-side only)
 
 ## 2025.02.08
 

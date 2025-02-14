@@ -23,9 +23,12 @@ struct GLFWwindow;
 namespace yq::tachyon {
     class DesktopGLFW;
     class ViewerCreateInfo;
-    class WindowDestroyCommand;
     class AspectCommand;
     class AttentionCommand;
+    class CursorCaptureCommand;
+    class CursorDisableCommand;
+    class CursorHideCommand;
+    class CursorNormalCommand;
     class FocusCommand;
     class FloatCommand;
     class HideCommand;
@@ -112,11 +115,10 @@ namespace yq::tachyon {
         
         void    on_aspect_command(const AspectCommand&);
         void    on_attention_command(const AttentionCommand&);
-        void    on_cursor_capture_command(const WindowCursorCaptureCommand&);
-        void    on_cursor_disable_command(const WindowCursorDisableCommand&);
-        void    on_cursor_hide_command(const WindowCursorHideCommand&);
-        void    on_cursor_normal_command(const WindowCursorNormalCommand&);
-        void    on_destroy_command(const WindowDestroyCommand&);
+        void    on_cursor_capture_command(const CursorCaptureCommand&);
+        void    on_cursor_disable_command(const CursorDisableCommand&);
+        void    on_cursor_hide_command(const CursorHideCommand&);
+        void    on_cursor_normal_command(const CursorNormalCommand&);
         void    on_float_command(const FloatCommand&);
         void    on_focus_command(const FocusCommand&);
         void    on_hide_command(const HideCommand&);

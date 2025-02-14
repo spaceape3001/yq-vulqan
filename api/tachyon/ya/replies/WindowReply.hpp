@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yt/msg/Reply.hpp>
-#include <yt/app/ViewerBind.hpp>
 
 namespace yq::tachyon {
     class WindowReply : public Reply {

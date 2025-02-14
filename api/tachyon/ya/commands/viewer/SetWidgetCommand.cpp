@@ -4,31 +4,36 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/requests/ViewerWidgetRequest.hpp>
-#include <yt/api/CommandInfoWriter.hpp>
-#include <yq/tachyon/widget/Widget.hpp>
+#include <ya/commands/viewer/SetWidgetCommand.hpp>
+#include <yt/msg/CommandInfoWriter.hpp>
+#include <yt/ui/Widget.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerWidgetRequest)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetWidgetCommand)
 
 namespace yq::tachyon {
 
-    ViewerWidgetRequest::ViewerWidgetRequest(ViewerID v, WidgetPtr w, const Param& p) : ViewerRequest(v, p), m_widget(w)
+    SetWidgetCommand::SetWidgetCommand(const Header&h, WidgetPtr w) : ViewerCommand(h), m_widget(w)
     {
     }
     
-    ViewerWidgetRequest::ViewerWidgetRequest(const Viewer* v, WidgetPtr w, const Param& p) : ViewerRequest(v, p), m_widget(w)
+    SetWidgetCommand::SetWidgetCommand(const SetWidgetCommand& cp, const Header&h) : ViewerCommand(cp, h), m_widget(cp.m_widget)
     {
     }
 
-    ViewerWidgetRequest::~ViewerWidgetRequest()
+    SetWidgetCommand::~SetWidgetCommand()
     {
     }
-    
+        
+    PostCPtr    SetWidgetCommand::clone(rebind_k, const Header&h) const 
+    {
+        return new SetWidgetCommand(*this, h);
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerWidgetRequest::init_info()
+    void SetWidgetCommand::init_info()
     {
-        auto w = writer<ViewerWidgetRequest>();
-        w.description("Viewer Widget Request");
+        auto w = writer<SetWidgetCommand>();
+        w.description("Viewer Widget Command");
     }
 }

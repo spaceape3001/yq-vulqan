@@ -8,11 +8,10 @@
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
 #include <yt/logging.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
-#include <ya/commands/WindowCursorCaptureCommand.hpp>
-#include <ya/commands/WindowCursorDisableCommand.hpp>
-#include <ya/commands/WindowCursorHideCommand.hpp>
-#include <ya/commands/WindowCursorNormalCommand.hpp>
-#include <ya/commands/WindowDestroyCommand.hpp>
+#include <ya/commands/cursor/CursorCaptureCommand.hpp>
+#include <ya/commands/cursor/CursorDisableCommand.hpp>
+#include <ya/commands/cursor/CursorHideCommand.hpp>
+#include <ya/commands/cursor/CursorNormalCommand.hpp>
 #include <ya/commands/ui/AspectCommand.hpp>
 #include <ya/commands/ui/AttentionCommand.hpp>
 #include <ya/commands/ui/FloatCommand.hpp>
@@ -488,8 +487,10 @@ namespace yq::tachyon {
         glfwRequestWindowAttention(m_window);
     }
 
-    void    WindowGLFW::on_cursor_capture_command(const WindowCursorCaptureCommand&)
+    void    WindowGLFW::on_cursor_capture_command(const CursorCaptureCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         if(m_mouseMode == MouseMode::Captured)
             return;
         m_mouseMode = MouseMode::Captured;
@@ -498,8 +499,10 @@ namespace yq::tachyon {
         mark();
     }
     
-    void    WindowGLFW::on_cursor_disable_command(const WindowCursorDisableCommand&)
+    void    WindowGLFW::on_cursor_disable_command(const CursorDisableCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         if(m_mouseMode == MouseMode::Disabled)
             return ;
         m_mouseMode = MouseMode::Disabled;
@@ -508,8 +511,10 @@ namespace yq::tachyon {
         mark();
     }
     
-    void    WindowGLFW::on_cursor_hide_command(const WindowCursorHideCommand&)
+    void    WindowGLFW::on_cursor_hide_command(const CursorHideCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         if(m_mouseMode == MouseMode::Hidden)
             return ;
         m_mouseMode = MouseMode::Hidden;
@@ -518,8 +523,10 @@ namespace yq::tachyon {
         mark();
     }
     
-    void    WindowGLFW::on_cursor_normal_command(const WindowCursorNormalCommand&)
+    void    WindowGLFW::on_cursor_normal_command(const CursorNormalCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
         if(m_mouseMode == MouseMode::Normal)
             return ;
         m_mouseMode = MouseMode::Normal;
@@ -527,12 +534,7 @@ namespace yq::tachyon {
         send(new CursorNormalEvent({.source=this}));
         mark();
     }
-
-    void    WindowGLFW::on_destroy_command(const WindowDestroyCommand& cmd)
-    {
-        m_stage = Stage::Destruct;
-    }
-
+    
     void    WindowGLFW::on_float_command(const FloatCommand&cmd)
     {
         if(cmd.target() != id())
@@ -739,7 +741,6 @@ namespace yq::tachyon {
         w.slot(&WindowGLFW::on_cursor_disable_command);
         w.slot(&WindowGLFW::on_cursor_hide_command);
         w.slot(&WindowGLFW::on_cursor_normal_command);
-        w.slot(&WindowGLFW::on_destroy_command);
         w.slot(&WindowGLFW::on_float_command);
         w.slot(&WindowGLFW::on_focus_command);
         w.slot(&WindowGLFW::on_hide_command);

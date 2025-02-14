@@ -7,28 +7,24 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yt/app/ViewerBind.hpp>
 
 namespace yq::tachyon {
-    class MouseCommandInfo : public CommandInfo {
-    public:
-        MouseCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class MouseCommand : public Command, public ViewerBind {
-        YQ_OBJECT_INFO(MouseCommandInfo)
+    class MouseCommand : public Command {
         YQ_OBJECT_DECLARE(MouseCommand, Command)
     public:
+
+        static void init_info();
+
+    protected:
     
-        struct Param : public Command::Param {
-        };
-    
-        MouseCommand(const Viewer*, const Param& p = {});
-        MouseCommand(ViewerID, const Param& p = {});
+        MouseCommand(const Header&);
+        MouseCommand(const MouseCommand&, const Header&);
         virtual ~MouseCommand();
         
-        static void init_info();
+    private:
+        MouseCommand(const MouseCommand&) = delete;
+        MouseCommand(MouseCommand&&) = delete;
+        MouseCommand& operator=(const MouseCommand&) = delete;
+        MouseCommand& operator=(MouseCommand&&) = delete;
     };
 }

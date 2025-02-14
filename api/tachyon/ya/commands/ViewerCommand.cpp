@@ -11,21 +11,14 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCommand)
 
 namespace yq::tachyon {
-    ViewerCommandInfo::ViewerCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
-        CommandInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ViewerCommand::ViewerCommand(const Viewer* v, const Param& p) : Command(p), ViewerBind(v)
+    ViewerCommand::ViewerCommand(const Header&h) : Command(h)
     {
     }
     
-    ViewerCommand::ViewerCommand(ViewerID v, const Param& p) : Command(p), ViewerBind(v)
+    ViewerCommand::ViewerCommand(const ViewerCommand& cp, const Header&h) : Command(cp, h)
     {
     }
-    
+
 
     ViewerCommand::~ViewerCommand()
     {

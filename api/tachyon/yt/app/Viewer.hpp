@@ -59,6 +59,7 @@ namespace yq::tachyon {
     class CloseCommand;
     class CloseReply;
     class CloseRequest;
+    class CursorCommand;
     class DefocusEvent;
     class DestroyEvent;
     class FloatCommand;
@@ -350,10 +351,7 @@ namespace yq::tachyon {
         void    on_close_command(const CloseCommand&);
         void    on_close_request(const CloseRequestCPtr&);
         void    on_close_reply(const CloseReply&);
-        void    on_cursor_capture_command(const ViewerCursorCaptureCommand&);
-        void    on_cursor_disable_command(const ViewerCursorDisableCommand&);
-        void    on_cursor_hide_command(const ViewerCursorHideCommand&);
-        void    on_cursor_normal_command(const ViewerCursorNormalCommand&);
+        void    on_cursor_command(const CursorCommand&);
         void    on_defocus_event(const DefocusEvent&);
         void    on_destroy_event(const DestroyEvent&);
         void    on_fb_resize_event(const FramebufferResizeEvent&);

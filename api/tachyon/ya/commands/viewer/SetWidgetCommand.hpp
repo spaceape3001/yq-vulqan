@@ -6,30 +6,36 @@
 
 #pragma once
 
-#include <ya/requests/ViewerRequest.hpp>
+#include <ya/commands/ViewerCommand.hpp>
 #include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {
-    class ViewerWidgetRequest : public ViewerRequest {
-        YQ_OBJECT_DECLARE(ViewerWidgetRequest, ViewerRequest)
+    class SetWidgetCommand : public ViewerCommand {
+        YQ_OBJECT_DECLARE(SetWidgetCommand, ViewerCommand)
     public:
     
-        struct Param : public ViewerRequest::Param {
-        };
-        
         /*
             Since this is transferring an actual object, don't think we need to go widget IDs
         */
     
-        ViewerWidgetRequest(ViewerID, WidgetPtr, const Param& p = {});
-        ViewerWidgetRequest(const Viewer*, WidgetPtr, const Param& p = {});
-        virtual ~ViewerWidgetRequest();
+        SetWidgetCommand(const Header&, WidgetPtr);
         
         static void init_info();
         
         const WidgetPtr&    widget() const { return m_widget; }
-        
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+    
+        SetWidgetCommand(const SetWidgetCommand&, const Header&);
+        virtual ~SetWidgetCommand();
+
     private:
         WidgetPtr   m_widget;
+        
+        SetWidgetCommand(const SetWidgetCommand&) = delete;
+        SetWidgetCommand(SetWidgetCommand&&) = delete;
+        SetWidgetCommand& operator=(const SetWidgetCommand&) = delete;
+        SetWidgetCommand& operator=(SetWidgetCommand&&) = delete;
     };
 }

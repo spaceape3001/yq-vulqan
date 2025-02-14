@@ -11,18 +11,11 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseCommand)
 
 namespace yq::tachyon {
-    MouseCommandInfo::MouseCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
-        CommandInfo(zName, base, sl)
+    MouseCommand::MouseCommand(const Header&h) : Command(h)
     {
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    MouseCommand::MouseCommand(const Viewer* v, const Param& p) : Command(p), ViewerBind(v)
-    {
-    }
-    
-    MouseCommand::MouseCommand(ViewerID v, const Param& p) : Command(p), ViewerBind(v)
+    MouseCommand::MouseCommand(const MouseCommand& cp, const Header&h) : Command(cp, h)
     {
     }
 

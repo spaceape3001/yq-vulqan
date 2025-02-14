@@ -177,16 +177,13 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/AppDeleteViewerCommand.cpp
     ya/commands/CameraCommand.cpp
     ya/commands/ControllerCommand.cpp
+    ya/commands/CursorCommand.cpp
     ya/commands/EmptyCommand.cpp
     ya/commands/GamepadCommand.cpp
     ya/commands/GLFWCommand.cpp
     ya/commands/JoystickCommand.cpp
     ya/commands/LightCommand.cpp
-    ya/commands/MouseCaptureCommand.cpp
     ya/commands/MouseCommand.cpp
-    ya/commands/MouseDisableCommand.cpp
-    ya/commands/MouseHideCommand.cpp
-    ya/commands/MouseNormalCommand.cpp
     #ya/commands/SetParentCommand.cpp
     ya/commands/SimCommand.cpp
     ya/commands/SpatialCommand.cpp
@@ -194,17 +191,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/ThreadCommand.cpp
     ya/commands/UICommand.cpp
     ya/commands/ViewerCommand.cpp
-    ya/commands/ViewerCursorCaptureCommand.cpp
-    ya/commands/ViewerCursorDisableCommand.cpp
-    ya/commands/ViewerCursorHideCommand.cpp
-    ya/commands/ViewerCursorNormalCommand.cpp
     ya/commands/WidgetCommand.cpp
     ya/commands/WindowCommand.cpp
-    ya/commands/WindowCursorCaptureCommand.cpp
-    ya/commands/WindowCursorDisableCommand.cpp
-    ya/commands/WindowCursorHideCommand.cpp
-    ya/commands/WindowCursorNormalCommand.cpp
-    ya/commands/WindowDestroyCommand.cpp
     
     ya/commands/camera/CameraSetScreen.cpp
 
@@ -214,6 +202,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/controller/ListenCommand.cpp
     ya/commands/controller/UncontrolCommand.cpp
     ya/commands/controller/UnlistenCommand.cpp
+
+    ya/commands/cursor/CursorCaptureCommand.cpp
+    ya/commands/cursor/CursorDisableCommand.cpp
+    ya/commands/cursor/CursorHideCommand.cpp
+    ya/commands/cursor/CursorNormalCommand.cpp
 
     ya/commands/gamepad/GamepadZeroCommand.cpp
 
@@ -353,7 +346,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/ui/TitleCommand.cpp
     ya/commands/ui/UnfloatCommand.cpp
 
-    #ya/commands/viewer/SetWidgetCommand.cpp
+    ya/commands/viewer/SetWidgetCommand.cpp
     
     ya/commands/widget/SetViewer.cpp
 

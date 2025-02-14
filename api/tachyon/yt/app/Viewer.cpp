@@ -14,7 +14,6 @@
 #include <yt/api/Frame.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/api/Thread.hpp>
-#include <yt/app/ViewerBind.hpp>
 #include <yt/app/ViewerData.hpp>
 #include <yt/app/ViewerException.hpp>
 #include <yt/gfx/Raster.hpp>
@@ -24,15 +23,11 @@
 #include <yt/ui/WidgetData.hpp>
 
 #include <ya/commands/SpatialCommand.hpp>
-#include <ya/commands/ViewerCursorCaptureCommand.hpp>
-#include <ya/commands/ViewerCursorDisableCommand.hpp>
-#include <ya/commands/ViewerCursorHideCommand.hpp>
-#include <ya/commands/ViewerCursorNormalCommand.hpp>
-#include <ya/commands/WindowCursorCaptureCommand.hpp>
-#include <ya/commands/WindowCursorDisableCommand.hpp>
-#include <ya/commands/WindowCursorHideCommand.hpp>
-#include <ya/commands/WindowCursorNormalCommand.hpp>
-#include <ya/commands/WindowDestroyCommand.hpp>
+
+#include <ya/commands/cursor/CursorCaptureCommand.hpp>
+#include <ya/commands/cursor/CursorDisableCommand.hpp>
+#include <ya/commands/cursor/CursorHideCommand.hpp>
+#include <ya/commands/cursor/CursorNormalCommand.hpp>
 
 #include <ya/commands/sim/PauseCommand.hpp>
 #include <ya/commands/sim/ResumeCommand.hpp>
@@ -126,16 +121,6 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
 
 namespace yq::tachyon {
 
-    ViewerBind::ViewerBind(const Viewer* v) : m_viewer(v ? v->id() : ViewerID{}) 
-    {
-    }
-
-    ViewerBind::ViewerBind(TypedID v) : m_viewer( v(Type::Viewer) ? ViewerID(v.id) : ViewerID())
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     std::atomic<int>        Viewer::s_count{0};
     std::atomic<unsigned>   Viewer::s_lastNumber{0};
 
@@ -153,12 +138,7 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_close_command);
         w.slot(&Viewer::on_close_request);
         w.slot(&Viewer::on_close_reply);
-
-        w.slot(&Viewer::on_cursor_capture_command);
-        w.slot(&Viewer::on_cursor_disable_command);
-        w.slot(&Viewer::on_cursor_hide_command);
-        w.slot(&Viewer::on_cursor_normal_command);
-
+        w.slot(&Viewer::on_cursor_command);
         w.slot(&Viewer::on_defocus_event);
         w.slot(&Viewer::on_destroy_event);
         w.slot(&Viewer::on_fb_resize_event);
@@ -294,18 +274,9 @@ namespace yq::tachyon {
         const TypedID&   tgt = pp.target();
         if(tgt(Type::Viewer) && tgt.id != id().id)
             return REJECT;
-    
-        if(const WindowBind*   wb  = dynamic_cast<const WindowBind*>(&pp)){
-            if(wb -> window() != m_window)
-                return REJECT;
-            if(dynamic_cast<const InputEvent*>(&pp)){
-                return MG::Widget;
-            }
-        }
-        if(const ViewerBind* vb = dynamic_cast<const ViewerBind*>(&pp)){
-            if(vb -> viewer() != id())
-                return REJECT;
-        }
+
+        if(dynamic_cast<const InputEvent*>(&pp))
+            return MG::Widget;
         
         #ifdef __GNUC__
             /*
@@ -345,22 +316,22 @@ namespace yq::tachyon {
 
     void    Viewer::cmd_cursor_capture()
     {
-        mail(new ViewerCursorCaptureCommand(this));
+        mail(new CursorCaptureCommand({.source=this, .target=this}));
     }
     
     void    Viewer::cmd_cursor_disable()
     {
-        mail(new ViewerCursorDisableCommand(this));
+        mail(new CursorDisableCommand({.source=this, .target=this}));
     }
     
     void    Viewer::cmd_cursor_hide()
     {
-        mail(new ViewerCursorHideCommand(this));
+        mail(new CursorHideCommand({.source=this, .target=this}));
     }
     
     void    Viewer::cmd_cursor_normal()
     {
-        mail(new ViewerCursorNormalCommand(this));
+        mail(new CursorNormalCommand({.source=this, .target=this}));
     }
 
     void    Viewer::cmd_float()
@@ -557,8 +528,6 @@ namespace yq::tachyon {
         if(!dying() && (cmd.target() == id())){
             send(new HideCommand({.target=m_window}));
             teardown();
-            
-            //m_stage = Stage::Closing;
         }
     }
 
@@ -598,31 +567,10 @@ namespace yq::tachyon {
         send(req->clone(REBIND, {.target=m_widget}));
     }
     
-    void    Viewer::on_cursor_capture_command(const ViewerCursorCaptureCommand&)
+    void    Viewer::on_cursor_command(const CursorCommand&cmd)
     {
-        if(!dying()){
-            send(new WindowCursorCaptureCommand(WindowID(m_window.id)));
-        }
-    }
-    
-    void    Viewer::on_cursor_disable_command(const ViewerCursorDisableCommand&)
-    {
-        if(!dying()){
-            send(new WindowCursorDisableCommand(WindowID(m_window.id)));
-        }
-    }
-    
-    void    Viewer::on_cursor_hide_command(const ViewerCursorHideCommand&)
-    {
-        if(!dying()){
-            send(new WindowCursorHideCommand(WindowID(m_window.id)));
-        }
-    }
-    
-    void    Viewer::on_cursor_normal_command(const ViewerCursorNormalCommand&)
-    {
-        if(!dying()){
-            send(new WindowCursorNormalCommand(WindowID(m_window.id)));
+        if(!dying() && (cmd.target() == id())){
+            send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
 
@@ -685,7 +633,7 @@ namespace yq::tachyon {
             if(evt.source() == m_window){
                 m_stage     = Stage::Kaput;
                 
-                send(new WindowDestroyCommand(WindowID(m_window.id)));
+                send(new DestroyCommand({.source=this, .target=m_window}));
                 send(new CloseEvent({.source=this}));
 
                 _sweepwait();

@@ -63,7 +63,6 @@ namespace yq::tachyon {
         virtual Execution        tick(const Context&) override;
 
         void                snap(ControllerSnap&) const;
-        virtual PostAdvice  advise(const Post&) const override;
 
         Controller(const Param& p={});
 

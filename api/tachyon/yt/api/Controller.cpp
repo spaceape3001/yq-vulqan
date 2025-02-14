@@ -6,7 +6,6 @@
 
 #include <yt/api/Controller.hpp>
 #include <yt/api/ControllerInfoWriter.hpp>
-#include <yt/api/ControllerBind.hpp>
 #include <yt/api/ControllerData.hpp>
 #include <yt/api/ID.hpp>
 #include <ya/commands/controller/ControlCommand.hpp>
@@ -23,16 +22,6 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Controller);
 
 namespace yq::tachyon {
-    ControllerBind::ControllerBind(Controller* v) : m_controller(v ? v -> id() : ControllerID()) 
-    {
-    }
-
-    ControllerBind::ControllerBind(TypedID v) : m_controller(v(Type::Controller) ? ControllerID(v.id) : ControllerID())
-    {
-    }
-
-    /////////////////////////////////////////////////////////////////////////////
-
     ControllerData::ControllerData() = default;
     ControllerData::~ControllerData() = default;
 
@@ -61,19 +50,6 @@ namespace yq::tachyon {
     
     Controller::~Controller()
     {
-    }
-
-    PostAdvice    Controller::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const ControllerBind* p = dynamic_cast<const ControllerBind*>(&pp)){
-            if(p->controller() != id())
-                return REJECT;
-        }
-        return {};
     }
 
     void  Controller::cmd_control(TypedID t)

@@ -6,7 +6,6 @@
 
 #include <yt/ui/Widget.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
-#include <yt/ui/WidgetBind.hpp>
 #include <yt/ui/WidgetData.hpp>
 
 #include <yt/logging.hpp>
@@ -30,12 +29,6 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 
 namespace yq::tachyon {
-    WidgetBind::WidgetBind(const Widget* v) : m_widget(v ? v->id() : WidgetID{}) 
-    {
-    }
-    /////////////////////////
-
-
     WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(zName, base, sl)
     {
@@ -81,11 +74,6 @@ namespace yq::tachyon {
         PostAdvice  pa  = Tachyon::advise(pp);
         if(!unspecified(pa))
             return pa;
-        
-        if(const WidgetBind* p = dynamic_cast<const WidgetBind*>(&pp)){
-            if(p->widget() != id())
-                return REJECT;
-        }
         return {};
     }
 

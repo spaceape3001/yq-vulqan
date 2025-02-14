@@ -65,8 +65,6 @@ namespace yq::tachyon {
     protected:
     
         void        snap(WindowSnap&) const;
-        //virtual void    receive(const post::PostCPtr&) override;
-        virtual PostAdvice  advise(const Post&) const override;
 
         //! Default constructor
         Window(const ViewerCreateInfo&, const Param&p = {});

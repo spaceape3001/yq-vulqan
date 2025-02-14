@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/os/Window.hpp>
-#include <yt/os/WindowBind.hpp>
 #include <yt/os/WindowData.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
@@ -13,13 +12,6 @@
 #include <ya/commands/ui/ShowCommand.hpp>
 
 namespace yq::tachyon {
-
-    WindowBind::WindowBind(const Window* v) : m_window(v ? v->id() : WindowID{})
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     struct WindowInfo::Repo {
         std::vector<const WindowInfo*> all;
@@ -52,19 +44,6 @@ namespace yq::tachyon {
 
     Window::~Window()
     {
-    }
-
-    PostAdvice    Window::advise(const Post&pp) const
-    {
-        PostAdvice  pa  = Tachyon::advise(pp);
-        if(!unspecified(pa))
-            return pa;
-        
-        if(const WindowBind* p = dynamic_cast<const WindowBind*>(&pp)){
-            if(p->window() != id())
-                return REJECT;
-        }
-        return {};
     }
     
     void Window::cmd_hide()

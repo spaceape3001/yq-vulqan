@@ -7,28 +7,24 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yt/os/WindowBind.hpp>
 
 namespace yq::tachyon {
-    class WindowCommandInfo : public CommandInfo {
-    public:
-        WindowCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
-
-    class WindowCommand : public Command, public WindowBind {
-        YQ_OBJECT_INFO(WindowCommandInfo)
+    class WindowCommand : public Command {
         YQ_OBJECT_DECLARE(WindowCommand, Command)
     public:
     
-        struct Param : public Command::Param {
-        };
-    
-        WindowCommand(const Window*, const Param& p = {});
-        WindowCommand(WindowID, const Param& p = {});
-        virtual ~WindowCommand();
-        
         static void init_info();
+
+    protected:
+    
+        WindowCommand(const Header&);
+        WindowCommand(const WindowCommand&, const Header&);
+        virtual ~WindowCommand();
+    
+    private:    
+        WindowCommand(const WindowCommand&) = delete;
+        WindowCommand(WindowCommand&&) = delete;
+        WindowCommand& operator=(const WindowCommand&) = delete;
+        WindowCommand& operator=(WindowCommand&&) = delete;
     };
 }

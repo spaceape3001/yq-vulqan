@@ -11,21 +11,14 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowCommand)
 
 namespace yq::tachyon {
-    WindowCommandInfo::WindowCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
-        CommandInfo(zName, base, sl)
-    {
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    WindowCommand::WindowCommand(const Window* v, const Param& p) : Command(p), WindowBind(v)
+    WindowCommand::WindowCommand(const Header&h) : Command(h)
     {
     }
     
-    WindowCommand::WindowCommand(WindowID v, const Param& p) : Command(p), WindowBind(v)
+    WindowCommand::WindowCommand(const WindowCommand& cp, const Header&h) : Command(cp, h)
     {
     }
-
+    
     WindowCommand::~WindowCommand()
     {
     }

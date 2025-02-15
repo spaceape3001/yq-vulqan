@@ -87,6 +87,11 @@ namespace yq::tachyon {
         SimpleSpatial³::orientation(SET, Q);
     }
     
+    void    SimpleSpatial³::set_position(const Vector3D& v)
+    {
+        SimpleSpatial³::position(SET, v);
+    }
+
     void    SimpleSpatial³::set_scale(const Vector3D& v)
     {
         SimpleSpatial³::scale(SET, v);

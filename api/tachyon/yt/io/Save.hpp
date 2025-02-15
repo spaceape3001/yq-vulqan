@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <vector>
 #include <yt/keywords.hpp>
+//#include <tbb/spin_rw_mutex.h>
 
 namespace yq {
     class Object;
@@ -21,8 +22,10 @@ namespace yq::tachyon {
 
     class Delegate;
     class DelegateInfo;
+    class Resource;
     class Tachyon;
     class TachyonInfo;
+    class Thread;
         
     class SaveAsset;
     class SaveDelegate;
@@ -50,10 +53,29 @@ namespace yq::tachyon {
 
         Save();
         ~Save();
+        
+        SaveAsset*              insert(const Asset&);
+        SaveDelegate*           insert(const Delegate&);
+        SaveObject*             insert(const Object&);
+        SaveResource*           insert(const Resource&);
+        SaveThread*             insert(const Thread&);
+        SaveTachyon*            insert(const Tachyon&);
     
     private:
         std::map<uint64_t, SaveObject*>     m_objects;
         std::map<std::string, Any, IgCase>  m_variables;
+        //mutable tbb::spin_rw_mutex          m_mutex;
+        
+        SaveObject*             saver(const Object&);
+        
+        static SaveObject*      save_asset(Save&, const Object&);
+        static SaveObject*      save_delegate(Save&, const Object&);
+        static SaveObject*      save_object(Save&, const Object&);
+        static SaveObject*      save_nullptr(Save&, const Object&);
+        static SaveObject*      save_resource(Save&, const Object&);
+        static SaveObject*      save_tachyon(Save&, const Object&);
+        static SaveObject*      save_thread(Save&, const Object&);
+        static SaveObject*      samk(Save&, const Object&);
     };
 }
 

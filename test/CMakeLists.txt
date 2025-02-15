@@ -12,4 +12,5 @@ endmacro()
 
 vulqan_test(shader_load)
 # vulqan_test(task_engine)
+vulqan_test(tsxfile)
 

@@ -8,23 +8,25 @@
 #include <yq/xml/XmlUtils.hpp>
 #include <yt/errors.hpp>
 #include <yq/strings.hpp>
+#include <yt/io/Save.hpp>
 
 namespace yq::tachyon {
-
-    ///////////////////////////////////////////////////////////////////////
-
-    std::error_code  SaveXML::load_xml(const std::filesystem::path&)
+    SaveXML::SaveXML()
+    {
+    }
+    
+    SaveXML::~SaveXML()
+    {
+    }
+    
+    std::error_code    SaveXML::read(const XmlDocument&, std::string_view fname) 
     {
         return errors::todo();
     }
     
-    
-    ///////////////////////////////////////////////////////////////////////
-    
-    std::error_code  SaveXML::save_xml(const std::filesystem::path&) const
+    std::error_code    SaveXML::write(XmlDocument&) const 
     {
         return errors::todo();
     }
-
 }
 

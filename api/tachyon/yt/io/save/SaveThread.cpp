@@ -8,7 +8,7 @@
 #include <yt/api/Thread.hpp>
 
 namespace yq::tachyon {
-    SaveThread::SaveThread(Save& save, const Thread& tac) : SaveTachyon(save, tac, tac.id())
+    SaveThread::SaveThread(Save& save, const Thread& tac) : SaveTachyon(save, tac)
     {
     }
     

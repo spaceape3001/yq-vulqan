@@ -77,6 +77,7 @@ add_library(${PROJECT_NAME} SHARED
     yt/io/save/SaveObject.cpp
     yt/io/save/SaveResource.cpp
     yt/io/save/SaveTachyon.cpp
+    yt/io/save/SaveThread.cpp
 
     yt/msg/Command.cpp
     yt/msg/Event.cpp
@@ -479,7 +480,7 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/events/window/FramebufferResizeEvent.cpp
     
-    #ya/formats/SaveXML.cpp
+    ya/formats/SaveXML.cpp
 
     ya/interfaces/IMaxSize1.cpp
     ya/interfaces/IMaxSize2.cpp

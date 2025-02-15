@@ -88,6 +88,16 @@ namespace yq::tachyon {
         }
     }
 
+    const MetaLookup<AssetProperty>&    TachyonInfo::assets(bool all) const
+    {
+        return all ? m_assets.all : m_assets.local;
+    }
+
+    const MetaLookup<DelegateProperty>&    TachyonInfo::delegates(bool all) const
+    {
+        return all ? m_delegates.all : m_delegates.local;
+    }
+
     TachyonInfo::dispatch_span_t     TachyonInfo::dispatches(const PostInfo* pi) const
     {
         if(!pi)
@@ -124,6 +134,11 @@ namespace yq::tachyon {
         }
     }
 
+    const MetaLookup<InterfaceInfo>&    TachyonInfo::interfaces(bool all) const
+    {
+        return all ? m_interfaces.all : m_interfaces.local;
+    }
+
     void    TachyonInfo::sweep_impl() 
     {   
         ObjectInfo::sweep_impl();
@@ -131,16 +146,24 @@ namespace yq::tachyon {
         m_dispatch.clear();
         m_dispatches.ranked.clear();
         m_interfaces.all.clear();
+        m_delegates.all.clear();
+        m_assets.all.clear();
         
         std::vector<PBXEntry>   ranked;
         
         for(const PBXDispatch* fn : m_dispatches.defined){
             _add(ranked, fn, 0);
         }
+
+        m_interfaces.all += m_interfaces.local;
+        m_assets.all += m_assets.local;
+        m_delegates.all += m_delegates.local;
         
         const TachyonInfo*  tibase = dynamic_cast<const TachyonInfo*>(base());
         if(tibase){
             m_interfaces.all   += tibase->m_interfaces.all;
+            m_assets.all += tibase->m_assets.all;
+            m_delegates.all += tibase->m_delegates.all;
             
             unsigned int depth  = 1;
             
@@ -151,7 +174,6 @@ namespace yq::tachyon {
             }
         }
         
-        m_interfaces.all += m_interfaces.local;
 
         if(!ranked.empty()){
             std::stable_sort(ranked.begin(), ranked.end());
@@ -845,7 +867,7 @@ namespace yq::tachyon {
         snap.running    = m_stage == Stage::Running;
         snap.paused     = m_stage == Stage::Paused;
         snap.teardown   = m_stage >= Stage::Teardown;
-        for(const InterfaceInfo* ii : metaInfo().interfaces().all){
+        for(const InterfaceInfo* ii : metaInfo().interfaces(ALL).all){
             Proxy*  p   = ii->proxy(const_cast<Tachyon*>(this));
             if(!p)
                 continue;

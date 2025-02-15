@@ -42,6 +42,14 @@ add_library(${PROJECT_NAME} SHARED
     yt/api/Tachyon.cpp
     yt/api/Thread.cpp
     yt/api/TypedID.cpp
+    
+    yt/api/meta/AssetGetter.cpp
+    yt/api/meta/AssetProperty.cpp
+    yt/api/meta/AssetSetter.cpp
+    yt/api/meta/DelegateGetter.cpp
+    yt/api/meta/DelegateProperty.cpp
+    yt/api/meta/DelegateSetter.cpp
+    yt/api/meta/ResourceInfo.cpp
 
     yt/app/Application.cpp
     yt/app/Viewer.cpp
@@ -62,6 +70,12 @@ add_library(${PROJECT_NAME} SHARED
     yt/io/GLSLShader.cpp
     yt/io/SamplerInfoFile.cpp
     yt/io/STBImage.cpp
+    #yt/io/Save.cpp
+    
+    yt/io/save/SaveAsset.cpp
+    yt/io/save/SaveDelegate.cpp
+    yt/io/save/SaveObject.cpp
+    yt/io/save/SaveTachyon.cpp
 
     yt/msg/Command.cpp
     yt/msg/Event.cpp
@@ -464,7 +478,7 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/events/window/FramebufferResizeEvent.cpp
     
-    ya/formats/Save.cpp
+    #ya/formats/SaveXML.cpp
 
     ya/interfaces/IMaxSize1.cpp
     ya/interfaces/IMaxSize2.cpp

@@ -31,6 +31,8 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::App; }
     };
     
+    struct asset_k {};
+    
     struct audio_k {
         consteval operator StdThread() const noexcept  { return StdThread::Audio; }
     };
@@ -53,6 +55,7 @@ namespace yq::tachyon {
     struct create_k {};
     struct cursor_k {};
     struct d2l_k    {};
+    struct delegate_k {};
     struct delete_k {};
     struct desktop_k {};
     struct direct_k{};
@@ -133,6 +136,7 @@ namespace yq::tachyon {
         consteval operator Platform() const noexcept { return Platform::None; }
     };
     
+    struct object_k {};
     //struct once_k : public ::yq::once_k {};
     
     struct parent_k {};
@@ -228,6 +232,7 @@ namespace yq::tachyon {
     static constexpr adjust_k           ADJUST;
     static constexpr adjustable_k       ADJUSTABLE;
     static constexpr app_k              APP;
+    static constexpr asset_k            ASSET;
     static constexpr audio_k            AUDIO;
     static constexpr calculate_k        CALCULATE;
     static constexpr camera_k           CAMERA;
@@ -243,6 +248,7 @@ namespace yq::tachyon {
     static constexpr create_k           CREATE;
     static constexpr cursor_k           CURSOR;
     static constexpr d2l_k              D2L;
+    static constexpr delegate_k         DELEGATE;
     static constexpr delete_k           DELETE;
     static constexpr desktop_k          DESKTOP;
     static constexpr direct_k           DIRECT;
@@ -289,6 +295,7 @@ namespace yq::tachyon {
     static constexpr network_k          NETWORK;
     static constexpr none_k             NONE;
     static constexpr number_k           NUMBER;
+    static constexpr object_k           OBJECT;
     //static constexpr once_k             ONCE;
     static constexpr parent_k           PARENT;
     static constexpr pause_k            PAUSE;

@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/formats/Save.hpp>
+#include "SaveXML.hpp"
+#include <yq/xml/XmlUtils.hpp>
 #include <yt/errors.hpp>
 #include <yq/strings.hpp>
-#include <yq/xml/XmlUtils.hpp>
 
 namespace yq::tachyon {
 
     ///////////////////////////////////////////////////////////////////////
 
-    std::error_code  Save::load_xml(const std::filesystem::path&)
+    std::error_code  SaveXML::load_xml(const std::filesystem::path&)
     {
         return errors::todo();
     }
@@ -21,9 +21,10 @@ namespace yq::tachyon {
     
     ///////////////////////////////////////////////////////////////////////
     
-    std::error_code  Save::save_xml(const std::filesystem::path&) const
+    std::error_code  SaveXML::save_xml(const std::filesystem::path&) const
     {
         return errors::todo();
     }
 
 }
+

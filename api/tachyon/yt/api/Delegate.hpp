@@ -8,11 +8,11 @@
 
 #include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
+#include <yq/core/UniqueID.hpp>
 #include <yq/meta/ObjectInfo.hpp>
+#include <yt/typedef/delegate.hpp>
 
 namespace yq::tachyon {
-    class Delegate;
-
     class DelegateInfo : public ObjectInfo {
     public:
         template <typename C> class Writer;
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         the frame.  (Configuration exposure for save/load TBD.)
         
     */
-    class Delegate : public Object, public RefCount {
+    class Delegate : public Object, public RefCount, public UniqueID {
         YQ_OBJECT_INFO(DelegateInfo)
         YQ_OBJECT_DECLARE(Delegate, Object)
     public:

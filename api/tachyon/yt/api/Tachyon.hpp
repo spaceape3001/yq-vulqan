@@ -55,11 +55,10 @@ namespace yq::tachyon {
     
     /// TACHYON INFO
 
+    class AssetProperty;
     struct TachyonData;
     struct TachyonSnap;
-    struct DelegateProperty;
-    struct DelegateGetter;
-    struct DelegateSetter;
+    class DelegateProperty;
     
     class TachyonInfo : public ObjectInfo {
     public:
@@ -67,6 +66,7 @@ namespace yq::tachyon {
         using InterfaceLUC  = MetaLookup<InterfaceInfo>;
         using DispatchMM    = std::unordered_multimap<const PostInfo*, const PBXDispatch*>;
         using DelegateLUC   = MetaLookup<DelegateProperty>;
+        using AssetLUC      = MetaLookup<AssetProperty>;
         
         template <typename C> class Writer;
 
@@ -74,7 +74,24 @@ namespace yq::tachyon {
         
         Types       types() const { return m_types; }
     
-        const InterfaceLUC& interfaces() const { return m_interfaces.all; }
+        const MetaLookup<InterfaceInfo>&    interfaces(bool all=false) const;
+
+        const MetaLookup<InterfaceInfo>&    interfaces(all_k) const { return m_interfaces.all; }
+        
+        const MetaLookup<InterfaceInfo>&    interfaces(local_k) const { return m_interfaces.local; }
+
+        const MetaLookup<AssetProperty>&    assets(bool all=false) const;
+
+        const MetaLookup<AssetProperty>&    assets(all_k) const { return m_assets.all; }
+        
+        const MetaLookup<AssetProperty>&    assets(local_k) const { return m_assets.local; }
+
+        const MetaLookup<DelegateProperty>&    delegates(bool all=false) const;
+
+        const MetaLookup<DelegateProperty>&    delegates(all_k) const { return m_delegates.all; }
+        
+        const MetaLookup<DelegateProperty>&    delegates(local_k) const { return m_delegates.local; }
+
 
         using dispatch_vec_t    = std::vector<const PBXDispatch*>;
         using dispatch_span_t   = std::span<const PBXDispatch*>;
@@ -97,6 +114,8 @@ namespace yq::tachyon {
     private:
         friend class Tachyon;
         friend class Thread;
+        friend class AssetProperty;
+        friend class DelegateProperty;
         
         virtual TachyonSnapPtr   create_snap(const Tachyon&) const = 0;
         virtual TachyonDataPtr   create_data() const = 0;
@@ -108,6 +127,9 @@ namespace yq::tachyon {
         struct {
             DelegateLUC     all, local;
         }   m_delegates;
+        struct {
+            AssetLUC        all, local;
+        }   m_assets;
         struct {
             dispatch_vec_t  defined, ranked;
         }                       m_dispatches;

@@ -10,6 +10,7 @@
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
 #include <yt/3D/3DWriter.hxx>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     Rendered³Snap::Rendered³Snap() = default;
@@ -73,7 +74,12 @@ namespace yq::tachyon {
         auto w   = writer<Rendered³>();
         ③::init_info(w);
         w.description("Rendered in 3D");
+
+        auto wt = writer<Rendered³ID>();
+        wt.description("3D Rendered Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Rendered³)
+YQ_TYPE_IMPLEMENT(yq::tachyon::Rendered³ID)

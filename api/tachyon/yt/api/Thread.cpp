@@ -15,6 +15,7 @@
 #include <yq/stream/Logger.hpp>
 #include <yt/logging.hpp>
 #include <ya/events/thread/ThreadAddTachyonEvent.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     using namespace std::chrono_literals;
@@ -95,6 +96,10 @@ namespace yq::tachyon {
     {
         auto w = writer<Thread>();
         w.description("Thread of execution");
+        
+        auto wt = writer<ThreadID>();
+        wt.description("Thread Identifier");
+        wt.set(Meta::Flag::ID);
     }
 
     std::vector<ThreadPtr>   Thread::all()
@@ -517,3 +522,4 @@ namespace yq::tachyon {
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Thread)
+YQ_TYPE_IMPLEMENT(yq::tachyon::ThreadID)

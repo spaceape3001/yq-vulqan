@@ -9,6 +9,7 @@
 #include <yt/os/MonitorData.hpp>
 #include <yt/os/MonitorInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     struct MonitorInfo::Repo {
@@ -61,7 +62,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Monitor>();
         w.abstract();
+        w.description("A monitor, the thing that glows in the dark");
+
+        auto wt = writer<MonitorID>();
+        wt.description("Monitor Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Monitor)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MonitorID)

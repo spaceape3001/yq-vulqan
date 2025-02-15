@@ -10,6 +10,7 @@
 #include <yt/msg/Post.hpp>
 #include <ya/commands/ui/HideCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -68,7 +69,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Window>();
         w.abstract();
+        w.description("OS/GUI Window, on the desktop");
+
+        auto wt = writer<WindowID>();
+        wt.description("Window Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Window)
+YQ_TYPE_IMPLEMENT(yq::tachyon::WindowID)

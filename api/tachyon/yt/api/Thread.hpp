@@ -159,3 +159,6 @@ namespace yq::tachyon {
         time_point_t                    m_lastFrameReport{};
     };
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::ThreadID)
+

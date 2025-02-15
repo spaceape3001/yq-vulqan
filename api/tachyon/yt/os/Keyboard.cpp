@@ -8,6 +8,7 @@
 #include <yt/os/KeyboardData.hpp>
 #include <yt/os/KeyboardInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -56,7 +57,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Keyboard>();
         w.abstract();
+        w.description("A keyboard, the instrument to hit thy forehead on.");
+
+        auto wt = writer<KeyboardID>();
+        wt.description("Keyboard Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Keyboard)
+YQ_TYPE_IMPLEMENT(yq::tachyon::KeyboardID)

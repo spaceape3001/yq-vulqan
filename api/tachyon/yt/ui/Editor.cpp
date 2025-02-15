@@ -7,8 +7,10 @@
 #include <yt/ui/Editor.hpp>
 #include <yt/ui/EditorInfoWriter.hpp>
 #include <yt/ui/MyImGui.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Editor)
+YQ_TYPE_IMPLEMENT(yq::tachyon::EditorID)
 
 namespace yq::tachyon {
     EditorInfo::EditorInfo(std::string_view n, WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
@@ -40,5 +42,9 @@ namespace yq::tachyon {
     {
         auto w = writer<Editor>();
         w.description("Editor base");
+
+        auto wt = writer<EditorID>();
+        wt.description("Editor Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }

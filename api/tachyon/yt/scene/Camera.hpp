@@ -98,3 +98,4 @@ namespace yq::tachyon {
         //Rectangle2D     screen;
     //};
 }
+YQ_TYPE_DECLARE(yq::tachyon::CameraID)

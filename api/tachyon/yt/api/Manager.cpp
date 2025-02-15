@@ -7,6 +7,7 @@
 #include <yt/api/Manager.hpp>
 #include <yt/api/ManagerData.hpp>
 #include <yt/api/ManagerInfoWriter.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     ManagerData::ManagerData() = default;
@@ -39,8 +40,13 @@ namespace yq::tachyon {
     void Manager::init_info()
     {
         auto w = writer<Manager>();
-        w.description("Manager abstract base class");
+        w.description("Manager abstract base class, tries to be bossy");
+
+        auto wt = writer<ManagerID>();
+        wt.description("Manager Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Manager)
+YQ_TYPE_IMPLEMENT(yq::tachyon::ManagerID)

@@ -6,9 +6,10 @@
 
 #pragma once
 
-namespace yq::tag {
-    static constexpr const int  PRIMARY     = 1000;
-    static constexpr const int  SECONDARY   = 1001;
+namespace yq::tachyon {
+    //! Use this to make a property listable by a logger
+    static constexpr const int kTag_Log     = 2000;
     
-    static constexpr const int  POSITION    = 1002;
+    //! Use this to capture state-save-data
+    static constexpr const int kTag_Save    = 2001;
 }

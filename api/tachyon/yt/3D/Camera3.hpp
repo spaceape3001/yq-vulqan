@@ -71,3 +71,6 @@ namespace yq::tachyon {
         void    on_set_screen(const CameraSetScreen&);
     };
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::Camera³ID)
+

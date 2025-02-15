@@ -9,8 +9,10 @@
 #include <yt/3D/Scene3InfoWriter.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
+#include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³)
+YQ_TYPE_IMPLEMENT(yq::tachyon::Scene³ID)
 
 namespace yq::tachyon {
 
@@ -64,5 +66,9 @@ namespace yq::tachyon {
         auto w = writer<Scene³>();
         ③::init_info(w);
         w.description("Scene in 3D");
+
+        auto wt = writer<Scene³ID>();
+        wt.description("3D Scene Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }

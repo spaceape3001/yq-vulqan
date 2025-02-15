@@ -7,8 +7,10 @@
 #include <yt/scene/Scene.hpp>
 #include <yt/scene/SceneData.hpp>
 #include <yt/scene/SceneInfoWriter.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene);
+YQ_TYPE_IMPLEMENT(yq::tachyon::SceneID)
 
 namespace yq::tachyon {
 
@@ -45,6 +47,10 @@ namespace yq::tachyon {
     {
         auto w = writer<Scene>();
         w.description("Scene");
+
+        auto wt = writer<SceneID>();
+        wt.description("Scene Identifier");
+        wt.set(Meta::Flag::ID);
     }
 
 }

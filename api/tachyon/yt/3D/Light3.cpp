@@ -9,8 +9,10 @@
 #include <yt/3D/Light3InfoWriter.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
+#include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Light³)
+YQ_TYPE_IMPLEMENT(yq::tachyon::Light³ID)
 
 namespace yq::tachyon {
     Light³Info::Light³Info(std::string_view name, LightInfo& base, const std::source_location& sl) :
@@ -52,5 +54,9 @@ namespace yq::tachyon {
         auto w = writer<Light³>();
         ③::init_info(w);
         w.description("Light in 3D");
+
+        auto wt = writer<Light³ID>();
+        wt.description("3D Light Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }

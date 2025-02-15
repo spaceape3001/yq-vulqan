@@ -8,6 +8,7 @@
 #include <yt/os/CursorData.hpp>
 #include <yt/os/CursorInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -56,7 +57,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Cursor>();
         w.abstract();
+        w.description("Cursor, thing that can spin");
+
+        auto wt = writer<CursorID>();
+        wt.description("Cursor Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Cursor)
+YQ_TYPE_IMPLEMENT(yq::tachyon::CursorID)

@@ -8,6 +8,7 @@
 #include <yt/sim/ModelData.hpp>
 #include <yt/sim/ModelInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     struct ModelInfo::Repo {
@@ -56,7 +57,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Model>();
         w.abstract();
+        w.description("Model base");
+
+        auto wt = writer<ModelID>();
+        wt.description("Model Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Model)
+YQ_TYPE_IMPLEMENT(yq::tachyon::ModelID)

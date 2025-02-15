@@ -10,6 +10,7 @@
 #include <yt/scene/RenderedInfoWriter.hpp>
 #include <yv/ViBuffer.hpp>
 #include <yv/ViTexture.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -197,7 +198,12 @@ namespace yq::tachyon {
     {
         auto w = writer<Rendered>();
         w.description("Render object base");
+
+        auto wt = writer<RenderedID>();
+        wt.description("Rendered Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)
+YQ_TYPE_IMPLEMENT(yq::tachyon::RenderedID)

@@ -34,6 +34,7 @@
 #include <yq/core/ThreadId.hpp>
 #include <yt/logging.hpp>
 #include <yq/stream/Text.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -1290,6 +1291,10 @@ namespace yq::tachyon {
         w.slot(&Tachyon::on_unsnoop_command);
         w.slot(&Tachyon::on_unsubscribe_command);
         w.property("name", &Tachyon::name);
+        
+        auto wt = writer<TachyonID>();
+        wt.description("Unique Tachyon Identifier");
+        wt.set(Meta::Flag::ID);
     }
 
 
@@ -1302,6 +1307,7 @@ namespace yq::tachyon {
         str << "}";
         return str;
     }
+    
 }
 
 std::ostringstream& operator<<(std::ostringstream&str, const yq::tachyon::Tachyon::Ident& i)
@@ -1315,3 +1321,4 @@ std::ostringstream& operator<<(std::ostringstream&str, const yq::tachyon::Tachyo
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Tachyon)
+YQ_TYPE_IMPLEMENT(yq::tachyon::TachyonID)

@@ -9,6 +9,7 @@
 #include <yt/api/Type.hpp>
 #include <yt/api/ID.hpp>
 #include <yt/typedef/tachyon.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <compare>
 #include <cstdint>
 
@@ -71,5 +72,9 @@ namespace yq::tachyon {
             }
         }
     };
+    
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::TypedID)
+
 

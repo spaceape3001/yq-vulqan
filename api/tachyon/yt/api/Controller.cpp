@@ -18,8 +18,10 @@
 #include <ya/commands/tachyon/SubscribeCommand.hpp>
 #include <ya/commands/tachyon/UnsnoopCommand.hpp>
 #include <ya/commands/tachyon/UnsubscribeCommand.hpp>
+#include <yq/meta/Init.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Controller);
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Controller);
+YQ_TYPE_IMPLEMENT(yq::tachyon::ControllerID)
 
 namespace yq::tachyon {
     ControllerData::ControllerData() = default;
@@ -147,5 +149,9 @@ namespace yq::tachyon {
         w.slot(&Controller::on_listen_command);
         w.slot(&Controller::on_uncontrol_command);
         w.slot(&Controller::on_unlisten_command);
+        
+        auto wt = writer<ControllerID>();
+        wt.description("Controller Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }

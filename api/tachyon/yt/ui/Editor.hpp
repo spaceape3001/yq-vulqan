@@ -46,6 +46,8 @@ namespace yq::tachyon {
         //! Override to fill in IMGUI content
         virtual void    content_(ViContext&){}
         
+        EditorID        id() const { return EditorID{ UniqueID::id() }; }
+        
         //! This editor override calls the above two, don't need to override later unless doing something way different
         virtual void    imgui(ViContext&) override;
         
@@ -69,3 +71,4 @@ namespace yq::tachyon {
         Editor();
     };
 }
+YQ_TYPE_DECLARE(yq::tachyon::EditorID)

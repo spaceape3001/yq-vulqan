@@ -8,6 +8,7 @@
 #include <yt/os/DesktopData.hpp>
 #include <yt/os/DesktopInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -92,7 +93,12 @@ namespace yq::tachyon {
     {
         auto w   = writer<Desktop>();
         w.abstract();
+
+        auto wt = writer<DesktopID>();
+        wt.description("Desktop Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Desktop)
+YQ_TYPE_IMPLEMENT(yq::tachyon::DesktopID)

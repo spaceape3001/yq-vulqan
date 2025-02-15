@@ -57,12 +57,16 @@ namespace yq::tachyon {
 
     struct TachyonData;
     struct TachyonSnap;
+    struct DelegateProperty;
+    struct DelegateGetter;
+    struct DelegateSetter;
     
     class TachyonInfo : public ObjectInfo {
     public:
     
         using InterfaceLUC  = MetaLookup<InterfaceInfo>;
         using DispatchMM    = std::unordered_multimap<const PostInfo*, const PBXDispatch*>;
+        using DelegateLUC   = MetaLookup<DelegateProperty>;
         
         template <typename C> class Writer;
 
@@ -102,11 +106,16 @@ namespace yq::tachyon {
             InterfaceLUC    all, local;
         }                       m_interfaces;
         struct {
+            DelegateLUC     all, local;
+        }   m_delegates;
+        struct {
             dispatch_vec_t  defined, ranked;
         }                       m_dispatches;
         dispatch_map_t          m_dispatch;
         Types                   m_types;
         Execution               m_execution;
+        
+        //  delegates
         
         void    add_interface(const InterfaceInfo*);
         void    add_dispatch(const PBXDispatch*);
@@ -707,5 +716,7 @@ namespace yq::tachyon {
     };
     
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::TachyonID)
 
 std::ostringstream& operator<<(std::ostringstream&, const yq::tachyon::Tachyon::Ident&);

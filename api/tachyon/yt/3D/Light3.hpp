@@ -60,3 +60,5 @@ namespace yq::tachyon {
         using Tachyon::send;
     };
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::Light³ID)

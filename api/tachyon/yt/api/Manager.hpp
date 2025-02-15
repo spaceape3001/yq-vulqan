@@ -33,5 +33,9 @@ namespace yq::tachyon {
 
         Manager(const Param& p = {});
         ~Manager();
+        
+        ManagerID id() const { return { UniqueID::id()}; }
     };
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::ManagerID)

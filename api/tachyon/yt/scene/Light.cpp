@@ -8,6 +8,7 @@
 #include <yt/scene/LightData.hpp>
 #include <yt/scene/LightInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     struct LightInfo::Repo {
@@ -60,7 +61,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Light>();
         w.abstract();
+        w.description("Light, illumination");
+
+        auto wt = writer<LightID>();
+        wt.description("Light Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Light)
+YQ_TYPE_IMPLEMENT(yq::tachyon::LightID)

@@ -8,6 +8,7 @@
 #include <yt/os/GraphicsCardData.hpp>
 #include <yt/os/GraphicsCardInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -56,7 +57,12 @@ namespace yq::tachyon {
     {
         auto w   = writer<GraphicsCard>();
         w.abstract();
+
+        auto wt = writer<GraphicsCardID>();
+        wt.description("Graphics Card Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GraphicsCard)
+YQ_TYPE_IMPLEMENT(yq::tachyon::GraphicsCardID)

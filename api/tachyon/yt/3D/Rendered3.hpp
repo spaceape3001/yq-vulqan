@@ -57,7 +57,7 @@ namespace yq::tachyon {
 
         static void init_info();
 
-        using Rendered::id;
+        Rendered³ID id() const { return Rendered³ID(UniqueID::id()); }
 
     protected:
         
@@ -79,3 +79,4 @@ namespace yq::tachyon {
     };
 
 }
+YQ_TYPE_DECLARE(yq::tachyon::Rendered³ID)

@@ -10,8 +10,10 @@
 #include <ya/commands/camera/CameraSetScreen.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
+#include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
+YQ_TYPE_IMPLEMENT(yq::tachyon::Camera³ID)
 
 namespace yq::tachyon {
     Camera³Info::Camera³Info(std::string_view name, CameraInfo& base, const std::source_location& sl) :
@@ -68,5 +70,9 @@ namespace yq::tachyon {
         ③::init_info(w);
         w.description("Camera in 3D");
         w.slot(&Camera³::on_set_screen);
+        
+        auto wt = writer<Camera³ID>();
+        wt.description("3D Camera Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }

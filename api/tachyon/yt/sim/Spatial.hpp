@@ -58,3 +58,4 @@ namespace yq::tachyon {
         SpatialID       m_domain;
     };
 }
+YQ_TYPE_DECLARE(yq::tachyon::SpatialID)

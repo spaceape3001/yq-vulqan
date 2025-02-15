@@ -27,6 +27,7 @@
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
+YQ_TYPE_IMPLEMENT(yq::tachyon::WidgetID)
 
 namespace yq::tachyon {
     WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
@@ -59,6 +60,10 @@ namespace yq::tachyon {
         w.slot(&Widget::on_close_command);
         w.slot(&Widget::on_title_command);
         w.slot(&Widget::on_set_viewer);
+
+        auto wt = writer<WidgetID>();
+        wt.description("Widget Identifier");
+        wt.set(Meta::Flag::ID);
     }
 
     Widget::Widget() : Tachyon(), m_windowID(fmt_hex(UniqueID::id()))

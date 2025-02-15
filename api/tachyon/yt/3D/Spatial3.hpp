@@ -45,3 +45,5 @@ namespace yq::tachyon {
         void        snap(Spatial³Snap&) const;
     };
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::Spatial³ID)

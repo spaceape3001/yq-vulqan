@@ -8,6 +8,7 @@
 #include <yt/scene/CameraData.hpp>
 #include <yt/scene/CameraInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
@@ -62,7 +63,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Camera>();
         w.abstract();
+        w.description("A camera, a viewpoint");
+
+        auto wt = writer<CameraID>();
+        wt.description("Camera Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera)
+YQ_TYPE_IMPLEMENT(yq::tachyon::CameraID)

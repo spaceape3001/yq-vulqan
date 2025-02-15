@@ -104,5 +104,6 @@ namespace yq::tachyon {
         ControlFlags const  m_control;
         
     };
-
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::DesktopID)

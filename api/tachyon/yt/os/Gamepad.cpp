@@ -8,6 +8,7 @@
 #include <yt/os/GamepadData.hpp>
 #include <yt/os/GamepadInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     struct GamepadInfo::Repo {
@@ -55,7 +56,12 @@ namespace yq::tachyon {
     {
         auto w   = writer<Gamepad>();
         w.abstract();
+
+        auto wt = writer<GamepadID>();
+        wt.description("Gamepad Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Gamepad)
+YQ_TYPE_IMPLEMENT(yq::tachyon::GamepadID)

@@ -42,6 +42,8 @@ namespace yq::tachyon {
         virtual ~Scene();
         
         static void init_info();
+        
+        SceneID id() const { return SceneID{ UniqueID::id()}; }
 
     protected:
         
@@ -50,3 +52,4 @@ namespace yq::tachyon {
 
     };
 }
+YQ_TYPE_DECLARE(yq::tachyon::SceneID)

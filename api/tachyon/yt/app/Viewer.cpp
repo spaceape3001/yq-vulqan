@@ -106,6 +106,7 @@
 #include <yq/text/format.hpp>
 #include <yq/util/AutoReset.hpp>
 #include <yq/vector/Vector2.hpp>
+#include <yq/meta/Init.hpp>
 
 #define viewerAlert                 yAlert("viewer")
 #define viewerCritical              yCritical("viewer")
@@ -117,7 +118,8 @@
 #define viewerNotice                yNotice("viewer")
 #define viewerWarning               yWarning("viewer")
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Viewer)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Viewer)
+YQ_TYPE_IMPLEMENT(yq::tachyon::ViewerID)
 
 namespace yq::tachyon {
 
@@ -168,6 +170,9 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_title_command);
         w.slot(&Viewer::on_unfloat_command);
 
+        auto wt = writer<ViewerID>();
+        wt.description("Viewer Identifier");
+        wt.set(Meta::Flag::ID);
         
     }
 

@@ -9,55 +9,58 @@
 #include <yt/api/ID.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/sim/N.hpp>
-#include <yt/typedef/spatial3.hpp>
-#include <yq/typedef/tensor44.hpp>
-#include <yq/vector/Quaternion3.hpp>
-#include <yq/vector/Vector3.hpp>
+//#include <yt/typedef/spatial.hpp>
+//#include <yt/typedef/spatial2.hpp>
+//#include <yq/typedef/tensor44.hpp>
+//#include <yq/vector/Quaternion2.hpp>
+//#include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
 
-    struct ③Data;
-    struct ③Snap;
+    struct ②Data;
+    struct ②Snap;
 
 #ifdef NAN
 #undef NAN
 #endif
 
 
-    /*! \brief A base class for 3D objects that need spatial information
+    /*! \brief A base class for 2D objects that need spatial information
     
         \note We *CAN'T* derive from tachyon/delegate or we'll get that
         infamous diamond pattern.
     */
-    class ③ : public И {
+    class ② : public И {
     public:
 
-        virtual uint8_t dimensions(count_k) const override final { return 3; }
+        virtual uint8_t dimensions(count_k) const override final { return 2; }
 
+#if 0
         struct SimpleParam {
-            Vector3D        position        = NAN;
-            Quaternion3D    orientation     = NAN;
-            Vector3D        scale           = NAN;
+            Vector2D        position        = NAN;
+            Quaternion2D    orientation     = NAN;
+            Vector2D        scale           = NAN;
         };
     
 
         //! Creates/sets a position (NOTE NOT THREAD SAFE!)
         //! Returns empty if one was not made (ie, we're not a tachyon)
         Spatial³ID    make_simple_spatial(
-            const Vector3D& position,
-            const Quaternion3D& orientation=IDENTITY,
-            const Vector3D& scale=ONE
+            const Vector2D& position,
+            const Quaternion2D& orientation=IDENTITY,
+            const Vector2D& scale=ONE
         );
+#endif
     
         template <typename C>
         static void     init_info(TachyonInfo::Writer<C>&);
     
     protected:
 
-        ③();
-        virtual ~③();
+        ②();
+        virtual ~②();
         
-        void    snap(③Snap&) const;
-        void    finalize(③Data&) const;
+        void    snap(②Snap&) const;
+        void    finalize(②Data&) const;
     };
 }

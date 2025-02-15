@@ -8,6 +8,7 @@
 #include <yt/os/MouseData.hpp>
 #include <yt/os/MouseInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     struct MouseInfo::Repo {
@@ -55,7 +56,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Mouse>();
         w.abstract();
+        w.description("Mouse Periphial");
+
+        auto wt = writer<MouseID>();
+        wt.description("Mouse Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mouse)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MouseID)

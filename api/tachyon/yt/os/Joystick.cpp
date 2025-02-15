@@ -8,6 +8,7 @@
 #include <yt/os/JoystickData.hpp>
 #include <yt/os/JoystickInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
+#include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
     struct JoystickInfo::Repo {
@@ -55,7 +56,13 @@ namespace yq::tachyon {
     {
         auto w   = writer<Joystick>();
         w.abstract();
+        w.description("Joystick!");
+
+        auto wt = writer<JoystickID>();
+        wt.description("Joystick Identifier");
+        wt.set(Meta::Flag::ID);
     }
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Joystick)
+YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickID)

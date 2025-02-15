@@ -39,6 +39,7 @@ add_library(${PROJECT_NAME} SHARED
     yt/api/InterfaceInfo.cpp
     yt/api/Manager.cpp
     yt/api/Proxy.cpp
+    yt/api/Resource.cpp
     yt/api/Tachyon.cpp
     yt/api/Thread.cpp
     yt/api/TypedID.cpp
@@ -49,7 +50,6 @@ add_library(${PROJECT_NAME} SHARED
     yt/api/meta/DelegateGetter.cpp
     yt/api/meta/DelegateProperty.cpp
     yt/api/meta/DelegateSetter.cpp
-    yt/api/meta/ResourceInfo.cpp
 
     yt/app/Application.cpp
     yt/app/Viewer.cpp
@@ -70,11 +70,12 @@ add_library(${PROJECT_NAME} SHARED
     yt/io/GLSLShader.cpp
     yt/io/SamplerInfoFile.cpp
     yt/io/STBImage.cpp
-    #yt/io/Save.cpp
+    yt/io/Save.cpp
     
     yt/io/save/SaveAsset.cpp
     yt/io/save/SaveDelegate.cpp
     yt/io/save/SaveObject.cpp
+    yt/io/save/SaveResource.cpp
     yt/io/save/SaveTachyon.cpp
 
     yt/msg/Command.cpp

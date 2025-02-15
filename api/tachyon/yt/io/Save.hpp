@@ -23,53 +23,37 @@ namespace yq::tachyon {
     class DelegateInfo;
     class Tachyon;
     class TachyonInfo;
-    
-    
+        
+    class SaveAsset;
+    class SaveDelegate;
+    class SaveObject;
+    class SaveResource;
+    class SaveTachyon;
+    class SaveThread;
 
-    struct SaveAsset : public SaveObject {
-        const AssetInfo*            assetInfo       = nullptr;
-        std::filesystem::path       assetFile;
-    };
-
-    struct SaveDelegate : public SaveObject {
-        const DelegateInfo*         delegateInfo    = nullptr;
-    };
 
     class Save {
     public:
-        struct object_t {
-            std::vector<property_t> properties;
-        };
 
-        struct asset_t : public object_t {    // for loadable assets
-            const AssetInfo*        info    = nullptr;
-            std::filesystem::path   path;   // TBD
-        };
+        SaveAsset*              asset(uint64_t);
+        const SaveAsset*        asset(uint64_t) const;
+        SaveDelegate*           delegate(uint64_t);
+        const SaveDelegate*     delegate(uint64_t) const;
+        SaveObject*             object(uint64_t);
+        const SaveObject*       object(uint64_t) const;
+        SaveResource*           resource(uint64_t);
+        const SaveResource*     resource(uint64_t) const;
+        SaveTachyon*            tachyon(uint64_t);
+        const SaveTachyon*      tachyon(uint64_t) const;
+        SaveThread*             thread(uint64_t);
+        const SaveThread*       thread(uint64_t) const;
+
+        Save();
+        ~Save();
     
-        
-        struct delegate_t : public object_t {
-            const DelegateInfo*     info    = nullptr;
-        };
-        
-        struct tachyon_t : public object_t {
-            const TachyonInfo*      info    = nullptr;
-            uint64_t                id      = 0ULL;
-            std::vector<asset_t>    assets;
-            std::vector<tachyon_t>  children;
-            std::vector<delegate_t> delegates;
-        };
-        
-        struct thread_t : public tachyon_t {
-            std::vector<tachyon_t>  tachyons;
-        };
-        
-        
-        
-        void    extract(asset_k, asset_t&, const Asset&);
-        void    extract(delegate_k, delegate_t&, const Delegate&);
-        void    extract(object_k, object_t&, const Object&);
-        void    extract(tachyon_k, tachyon_t&, const Tachyon&, bool skipChildren=false);
-        void    extract(thread_k, thread_t&, const Thread&);
+    private:
+        std::map<uint64_t, SaveObject*>     m_objects;
+        std::map<std::string, Any, IgCase>  m_variables;
     };
 }
 

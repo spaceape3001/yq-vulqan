@@ -7,6 +7,7 @@
 #include "AssetProperty.hpp"
 #include <yq/asset/Asset.hpp>
 #include <yt/api/Tachyon.hpp>
+#include <yt/api/Resource.hpp>
 #include <yt/api/meta/AssetGetter.hpp>
 #include <yt/api/meta/AssetSetter.hpp>
 #include <yt/logging.hpp>
@@ -22,6 +23,11 @@ namespace yq::tachyon {
             if(ti->m_assets.local.keys.has(zName))
                 tachyonCritical << "AssetProperty::AssetProperty(" << parent->name() << "." << zName << ") -- duplicate detected!";
             ti->m_assets.local << this;
+        }
+        if(ResourceInfo* ri = dynamic_cast<ResourceInfo*>(parent)){
+            if(ri->m_assets.local.keys.has(zName))
+                tachyonCritical << "AssetProperty::AssetProperty(" << parent->name() << "." << zName << ") -- duplicate detected!";
+            ri->m_assets.local << this;
         }
     }
 

@@ -14,11 +14,13 @@ namespace yq::tachyon {
     
     class SaveDelegate : public SaveObject {
     public:
-        SaveDelegate(const Delegate&);
-        SaveDelegate(std::string_view, uint64_t);
+        SaveDelegate(Save&, const Delegate&);
+        SaveDelegate(Save&, std::string_view, uint64_t);
         
         const DelegateInfo* info() const;
         virtual bool    valid() const override;
+
+        virtual bool        isDelegate() const { return true; }
     protected:
         virtual ~SaveDelegate();
     };

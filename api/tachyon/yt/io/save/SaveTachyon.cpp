@@ -8,11 +8,11 @@
 #include <yt/api/Tachyon.hpp>
 
 namespace yq::tachyon {
-    SaveTachyon::SaveTachyon(const Tachyon& tac) : SaveObject(tac, tac.id())
+    SaveTachyon::SaveTachyon(Save& save, const Tachyon& tac) : SaveObject(save, tac, tac.id())
     {
     }
     
-    SaveTachyon::SaveTachyon(std::string_view k, uint64_t i) : SaveObject(k, i)
+    SaveTachyon::SaveTachyon(Save& save, std::string_view k, uint64_t i) : SaveObject(save, k, i)
     {
     }
     

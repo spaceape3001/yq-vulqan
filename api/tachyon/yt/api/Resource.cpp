@@ -4,8 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ResourceInfo.hpp"
-#include "AssetProperty.hpp"
+#include "Resource.hpp"
+#include "ResourceInfoWriter.hpp"
+#include <yt/api/meta/AssetProperty.hpp>
 
 namespace yq::tachyon {
     ResourceInfo::ResourceInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) : 
@@ -22,4 +23,26 @@ namespace yq::tachyon {
             m_assets.all += p->m_assets.all;
         }
     }
+
+    Resource::Resource()
+    {
+    }
+    
+    Resource::Resource(const std::filesystem::path& fp) : Asset(fp)
+    {
+    }
+    
+    Resource::~Resource()
+    {
+    }
+    
+
+    void Resource::init_info()
+    {
+        auto w = writer<Resource>();
+        w.description("Tachyon Resource");
+    }
+
 }
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Resource)

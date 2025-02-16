@@ -18,8 +18,9 @@ namespace yq::tachyon {
         SaveThread(Save&, std::string_view, uint64_t);
         
         const ThreadInfo* info() const;
-        virtual bool    isThread() const { return true; }
-        virtual bool    valid() const override;
+        virtual bool        isThread() const { return true; }
+        virtual bool        valid() const override;
+        virtual SaveType    saveType() const override { return SaveType::Thread; }
         
     protected:
         virtual ~SaveThread();

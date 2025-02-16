@@ -18,13 +18,14 @@
 #include <ya/commands/spatial/SetSizeX.hpp>
 #include <ya/commands/spatial/SetSizeY.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
+#include <yt/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
     void ASize²::init_info(TachyonInfo::Writer<C>&w)
     {
         w.template interface<ISize²>();
-        w.property(UNSAFE, "size", &ASize²::m_size);
+        w.property(UNSAFE, "size", &ASize²::m_size).tag(kTag_Save);
 
         w.slot(UNSAFE, &ASize²::on_set_size2);
         w.slot(UNSAFE, &ASize²::on_set_sizeX);

@@ -7,7 +7,6 @@
 #include "SaveObject.hpp"
 #include <yq/core/Object.hpp>
 #include <yq/meta/PropertyInfo.hpp>
-#include <yt/keywords.hpp>
 #include <yt/tags.hpp>
 
 namespace yq::tachyon {
@@ -34,6 +33,11 @@ namespace yq::tachyon {
     {
     }
     
+    size_t      SaveObject::count(property_k) const
+    {
+        return m_properties.size();
+    }
+
     bool        SaveObject::valid() const
     {
         return m_info && m_id;

@@ -15,13 +15,14 @@
 #include <ya/commands/spatial/SetPitch.hpp>
 #include <ya/commands/spatial/SetRoll.hpp>
 #include <ya/commands/spatial/YawBy.hpp>
+#include <yt/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
     void AOrientation³::init_info(TachyonInfo::Writer<C>& w)
     {
         w.template interface<IOrientation³>();
-        w.property(UNSAFE, "orientation", &AOrientation³::m_orientation);
+        w.property(UNSAFE, "orientation", &AOrientation³::m_orientation).tag(kTag_Save);
         
         w.slot(UNSAFE, &AOrientation³::on_pitch_by);
         w.slot(UNSAFE, &AOrientation³::on_roll_by);

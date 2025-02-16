@@ -30,14 +30,17 @@
 #include <yq/process/PluginLoader.hpp>
 //#include <yq/post/boxes/SimpleBox.hpp>
 #include <yt/config/build.hpp>
+#include <filesystem>
 
 namespace yq::tachyon {
 
-    static AppCreateInfo    _update(const AppCreateInfo& aci, std::string_view appName)
+    static AppCreateInfo    _update(const AppCreateInfo& aci)
     {
         AppCreateInfo   ret = aci;
-        
-        
+        if(ret.app_name.empty()){
+            std::filesystem::path   pth(BasicApp::app_name());
+            ret.app_name    = pth.stem().string();
+        }
         return ret;
     }
     
@@ -50,10 +53,18 @@ namespace yq::tachyon {
         s_done = true;
     }
 
+
     Application*    Application::s_app  = nullptr;
 
+    std::string_view     Application::app_name()
+    {
+        if(s_app)
+            return s_app->m_cInfo.app_name;
+        return "";
+    }
+
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv), m_cInfo(_update(aci, app_name()))
+        BasicApp(argc, argv), m_cInfo(_update(aci))
     {
         if(!is_main_thread()){
             throw AppException("Applications must only be used on the main thread!");

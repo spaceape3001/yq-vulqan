@@ -15,13 +15,14 @@
 #include <ya/commands/spatial/SetScale1.hpp>
 #include <ya/commands/spatial/SetScaleX.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
+#include <yt/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
     void AScale¹::init_info(TachyonInfo::Writer<C>&w)
     {
         w.template interface<IScale¹>();
-        w.property(UNSAFE, "scale", &AScale¹::m_scale);
+        w.property(UNSAFE, "scale", &AScale¹::m_scale).tag(kTag_Save);
 
         w.slot(UNSAFE, &AScale¹::on_set_scale1);
         w.slot(UNSAFE, &AScale¹::on_set_scaleX);

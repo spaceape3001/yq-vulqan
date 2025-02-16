@@ -21,13 +21,14 @@
 #include <ya/commands/spatial/SetMinSizeY.hpp>
 #include <ya/commands/spatial/SetMinSizeZ.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
+#include <yt/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
     void AMinSize³::init_info(TachyonInfo::Writer<C>&w)
     {
         w.template interface<IMinSize³>();
-        w.property(UNSAFE, "min_size", &AMinSize³::m_min_size);
+        w.property(UNSAFE, "min_size", &AMinSize³::m_min_size).tag(kTag_Save);
 
         w.slot(UNSAFE, &AMinSize³::on_set_min_size3);
         w.slot(UNSAFE, &AMinSize³::on_set_min_sizeX);

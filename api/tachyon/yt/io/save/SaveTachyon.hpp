@@ -14,6 +14,8 @@ namespace yq::tachyon {
     class Save;
     class AssetProperty;
     class DelegateProperty;
+    class SaveAsset;
+    class SaveDelegate;
     
     class SaveTachyon : public SaveObject {
     public:
@@ -23,22 +25,27 @@ namespace yq::tachyon {
         const TachyonInfo*  info() const;
         virtual bool        valid() const override;
         virtual bool        isTachyon() const { return true; }
+        virtual SaveType    saveType() const override { return SaveType::Tachyon; }
+
+        struct asset_t {
+            const AssetProperty*    info        = nullptr;
+            SaveAsset*              asset       = nullptr;
+        };
+        
+        struct delegate_t {
+            const DelegateProperty* info        = nullptr;
+            SaveDelegate*           delegate    = nullptr;
+        };
+
+        const std::vector<asset_t>& assets() const { return m_assets; }
+        const std::vector<delegate_t>& delegates() const { return m_delegates; }
     
     protected:
         virtual ~SaveTachyon();
         
     private:
-        struct asset_t {
-            const AssetProperty*    info    = nullptr;
-            uint64_t                asset   = 0;
-        };
-        
-        struct delegate_t {
-            const DelegateProperty* info    = nullptr;
-            uint64_t                asset   = 0;
-        };
         
         std::vector<asset_t>        m_assets;
-        std::vector<delegate_t>     m_delgates;
+        std::vector<delegate_t>     m_delegates;
     };
 }

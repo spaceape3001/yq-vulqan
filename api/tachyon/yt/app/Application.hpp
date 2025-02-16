@@ -56,6 +56,8 @@ namespace yq::tachyon {
 
         //! Global application, if any
         static Application*         app() { return s_app; }
+        
+        static std::string_view     app_name();
 
         /*! \brief Constructor
         
@@ -66,7 +68,7 @@ namespace yq::tachyon {
         Application(int argc, char* argv[], const AppCreateInfo& aci=AppCreateInfo());
         ~Application();
         
-
+        
         const AppCreateInfo&        app_info() const { return m_cInfo; }
         
         //! Creates a viewer with widget (note, application owns it)

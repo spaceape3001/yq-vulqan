@@ -15,13 +15,14 @@
 #include <ya/commands/spatial/SetPosition1.hpp>
 #include <ya/commands/spatial/SetPositionX.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
+#include <yt/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
     void APosition¹::init_info(TachyonInfo::Writer<C>& w)
     {
         w.template interface<IPosition¹>();
-        w.property(UNSAFE, "position", &APosition¹::m_position);
+        w.property(UNSAFE, "position", &APosition¹::m_position).tag(kTag_Save);
 
         w.slot(UNSAFE, &APosition¹::on_set_position1);
         w.slot(UNSAFE, &APosition¹::on_set_positionX);

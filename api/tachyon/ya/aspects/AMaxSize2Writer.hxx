@@ -18,13 +18,14 @@
 #include <ya/commands/spatial/SetMaxSizeX.hpp>
 #include <ya/commands/spatial/SetMaxSizeY.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
+#include <yt/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
     void AMaxSize²::init_info(TachyonInfo::Writer<C>&w)
     {
         w.template interface<IMaxSize²>();
-        w.property(UNSAFE, "max_size", &AMaxSize²::m_max_size);
+        w.property(UNSAFE, "max_size", &AMaxSize²::m_max_size).tag(kTag_Save);
 
         w.slot(UNSAFE, &AMaxSize²::on_set_max_size2);
         w.slot(UNSAFE, &AMaxSize²::on_set_max_sizeX);

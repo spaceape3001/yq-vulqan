@@ -28,6 +28,7 @@ namespace yq::tachyon {
         const std::filesystem::path&    filepath() const { return m_filepath; }
         
         virtual bool        isAsset() const override { return true; }
+        virtual SaveType    saveType() const override { return SaveType::Asset; }
 
     protected:
         virtual ~SaveAsset();

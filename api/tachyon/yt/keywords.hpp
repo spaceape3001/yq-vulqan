@@ -144,6 +144,7 @@ namespace yq::tachyon {
     struct per_k {};
     struct pitch_k {};
     struct probe_k {};
+    struct property_k {};
     struct proxy_k {};
     struct ptr_k {};
     struct queue_k {};
@@ -159,6 +160,7 @@ namespace yq::tachyon {
     struct rendered³_k {};
     struct request_k {};
     struct reset_k {};
+    struct resource_k {};
     struct resume_k {};
     struct roll_k {};
     struct root_k {};
@@ -204,6 +206,7 @@ namespace yq::tachyon {
     struct unlock_k {};
     struct unlocked_k {};
     struct value_k {};
+    struct variable_k {};
 
     struct viewer_k {
         consteval operator StdThread() const noexcept  { return StdThread::Viewer; }
@@ -302,6 +305,7 @@ namespace yq::tachyon {
     static constexpr per_k              PER;
     static constexpr pitch_k            PITCH;
     static constexpr probe_k            PROBE;
+    static constexpr property_k         PROPERTY;
     static constexpr proxy_k            PROXY;
     static constexpr ptr_k              PTR;
     static constexpr queue_k            QUEUE;
@@ -313,6 +317,7 @@ namespace yq::tachyon {
     static constexpr rendered³_k        RENDERED³;
     static constexpr request_k          REQUEST;
     static constexpr reset_k            RESET;
+    static constexpr resource_k         RESOURCE;
     static constexpr resume_k           RESUME;
     static constexpr roll_k             ROLL;
     static constexpr root_k             ROOT;
@@ -342,6 +347,7 @@ namespace yq::tachyon {
     static constexpr unlock_k           UNLOCK;
     static constexpr unlocked_k         UNLOCKED;
     static constexpr value_k            VALUE;
+    static constexpr variable_k         VARIABLE;
     static constexpr viewer_k           VIEWER;
     static constexpr vulqan_k           VULQAN;
     static constexpr wait_k             WAIT;

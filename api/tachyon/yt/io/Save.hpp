@@ -60,11 +60,35 @@ namespace yq::tachyon {
         SaveResource*           insert(const Resource&);
         SaveThread*             insert(const Thread&);
         SaveTachyon*            insert(const Tachyon&);
+        
+        //! Let us know what the asset paths are (used for saving)
+        void    add_asset_path(const std::filesystem::path&);
+        
+        size_t                  count(object_k) const;
+        
+        //! Finishes the save for saving (whatever needs to be done)
+        void    bake() { _bake(); }
+        
+    
+        std::filesystem::path    relativize(const std::filesystem::path&) const;
+    
+        using ObjectMap     = std::map<uint64_t, SaveObject*>;
+        using VariableMap   = std::map<std::string, Any, IgCase>;
+        
+        const ObjectMap&    objects() const { return m_objects; }
+        const VariableMap&  variables() const { return m_variables; }
     
     private:
-        std::map<uint64_t, SaveObject*>     m_objects;
-        std::map<std::string, Any, IgCase>  m_variables;
+        ObjectMap                           m_objects;
+        VariableMap                         m_variables;
+        std::vector<std::filesystem::path>  m_assetPath;
+        bool                                m_prepped   = false;
         //mutable tbb::spin_rw_mutex          m_mutex;
+
+        //! Prepares the save for saving (call before insert/add-asset-path)
+        void    _prep();
+        
+        void    _bake();
         
         SaveObject*             saver(const Object&);
         

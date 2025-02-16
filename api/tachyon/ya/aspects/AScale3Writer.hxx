@@ -21,13 +21,14 @@
 #include <ya/commands/spatial/SetScaleY.hpp>
 #include <ya/commands/spatial/SetScaleZ.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
+#include <yt/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
     void AScale³::init_info(TachyonInfo::Writer<C>&w)
     {
         w.template interface<IScale³>();
-        w.property(UNSAFE, "scale", &AScale³::m_scale);
+        w.property(UNSAFE, "scale", &AScale³::m_scale).tag(kTag_Save);
         
         w.slot(UNSAFE, &AScale³::on_set_scale3);
         w.slot(UNSAFE, &AScale³::on_set_scaleX);

@@ -21,6 +21,9 @@ namespace yq::tachyon {
         virtual bool    valid() const override;
 
         virtual bool        isDelegate() const { return true; }
+
+        virtual SaveType    saveType() const override { return SaveType::Delegate; }
+        
     protected:
         virtual ~SaveDelegate();
     };

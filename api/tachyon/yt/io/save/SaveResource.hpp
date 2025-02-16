@@ -24,6 +24,8 @@ namespace yq::tachyon {
         virtual bool        isResource() const override { return true; }
         virtual bool        valid() const override;
 
+        virtual SaveType    saveType() const override { return SaveType::Resource; }
+
     protected:
         virtual ~SaveResource();
 

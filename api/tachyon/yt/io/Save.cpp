@@ -18,9 +18,20 @@
 #include <yt/io/save/SaveResource.hpp>
 #include <yt/io/save/SaveTachyon.hpp>
 #include <yt/io/save/SaveThread.hpp>
+#include <yq/asset/Asset.hpp>
+#include <yq/file/FileResolver.hpp>
 #include <tbb/spin_rw_mutex.h>
 
 namespace yq::tachyon {
+    static bool has_dotdot(const std::filesystem::path& fp)
+    {
+        for(auto& i : fp){
+            if(i == "..")
+                return true;
+        }
+        return false;
+    }
+
     SaveObject* Save::samk(Save&save, const Object& obj)
     {
         typedef SaveObject* (*FN)(Save&, const Object&);
@@ -122,6 +133,25 @@ namespace yq::tachyon {
         m_objects.clear();
     }
 
+    void    Save::_bake()
+    {
+        //  currently nothing...but here nonetheless
+    }
+
+    void    Save::_prep()
+    {
+        if(m_prepped)
+            return;
+        m_assetPath = Asset::resolver().paths();
+        m_prepped   = true;
+    }
+
+    void    Save::add_asset_path(const std::filesystem::path&fp)
+    {
+        _prep();
+        m_assetPath.push_back(fp);
+    }
+
     SaveAsset*              Save::asset(uint64_t i)
     {
         SaveObject* obj = object(i);
@@ -138,6 +168,11 @@ namespace yq::tachyon {
         return nullptr;
     }
     
+    size_t                  Save::count(object_k) const
+    {
+        return m_objects.size();
+    }
+
     SaveDelegate*           Save::delegate(uint64_t i)
     {
         SaveObject* obj = object(i);
@@ -184,18 +219,6 @@ namespace yq::tachyon {
         return dynamic_cast<SaveThread*>(saver(th));
     }
 
-    SaveObject*             Save::saver(const Object& obj)
-    {
-        const UniqueID* uuid = dynamic_cast<const UniqueID*>(&obj);
-        if(!uuid)
-            return nullptr;
-        
-        auto [itr, ins]    = m_objects.emplace(uuid->id(), nullptr);
-        if(ins)
-            itr->second = samk(*this, obj);
-        return itr->second;
-    }
-
     SaveObject*             Save::object(uint64_t i)
     {
         auto itr = m_objects.find(i);
@@ -210,6 +233,16 @@ namespace yq::tachyon {
         if(itr != m_objects.end())
             return itr->second;
         return nullptr;
+    }
+
+    std::filesystem::path    Save::relativize(const std::filesystem::path&fp) const
+    {
+        for(const std::filesystem::path& dir : m_assetPath){
+            std::filesystem::path rfile = fp.lexically_relative(dir);
+            if(!has_dotdot(rfile))
+                return rfile;
+        }
+        return fp;
     }
     
     SaveResource*           Save::resource(uint64_t i)
@@ -226,6 +259,21 @@ namespace yq::tachyon {
         if(obj -> isResource())
             return static_cast<const SaveResource*>(obj);
         return nullptr;
+    }
+
+    SaveObject*             Save::saver(const Object& obj)
+    {
+        _prep();
+        const UniqueID* uuid = dynamic_cast<const UniqueID*>(&obj);
+        if(!uuid)
+            return nullptr;
+        
+        auto [itr, ins]    = m_objects.emplace(uuid->id(), nullptr);
+        if(ins){
+            itr->second = samk(*this, obj);
+            itr->second->m_remapId  = m_objects.size();
+        }
+        return itr->second;
     }
     
     SaveTachyon*            Save::tachyon(uint64_t i)

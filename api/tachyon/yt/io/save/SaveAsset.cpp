@@ -14,8 +14,8 @@ namespace yq::tachyon {
     {
     }
     
-    SaveAsset::SaveAsset(Save&save, std::string_view k, uint64_t i, const std::filesystem::path& fp) : 
-        SaveObject(save, k, i), m_filepath(fp)
+    SaveAsset::SaveAsset(Save&save, const AssetInfo* info, uint64_t i, const std::filesystem::path& fp) : 
+        SaveObject(save, info, i), m_filepath(fp)
     {
     }
     

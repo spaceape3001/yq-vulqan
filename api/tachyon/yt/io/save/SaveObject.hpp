@@ -30,7 +30,6 @@ namespace yq::tachyon {
         Object,
         Asset,
         Delegate,
-        Resource,
         Tachyon,
         Thread
     };
@@ -38,7 +37,7 @@ namespace yq::tachyon {
     class SaveObject  {
     public:
         SaveObject(Save&, const Object&, uint64_t);
-        SaveObject(Save&, std::string_view, uint64_t);
+        SaveObject(Save&, const ObjectInfo*, uint64_t);
         
         uint64_t            id() const { return m_id; };
         const ObjectInfo*   info() const { return m_info; }
@@ -49,7 +48,6 @@ namespace yq::tachyon {
         
         virtual bool        isAsset() const { return false; }
         virtual bool        isDelegate() const { return false; }
-        virtual bool        isResource() const { return false; }
         virtual bool        isTachyon() const { return false; }
         virtual bool        isThread() const { return false; }
         virtual SaveType    saveType() const { return SaveType::Object; }

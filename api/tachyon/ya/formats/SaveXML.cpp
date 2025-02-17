@@ -5,20 +5,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SaveXML.hpp"
+#include <yq/asset/Asset.hpp>
 #include <yq/xml/XmlUtils.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/io/Save.hpp>
 #include <yt/io/save/SaveAsset.hpp>
 #include <yt/io/save/SaveDelegate.hpp>
-#include <yt/io/save/SaveResource.hpp>
 #include <yt/io/save/SaveTachyon.hpp>
 #include <yt/io/save/SaveThread.hpp>
 #include <yq/text/format.hpp>
 #include <yt/app/Application.hpp>
 #include <yt/api/Delegate.hpp>
-#include <yt/api/Resource.hpp>
 #include <yt/api/Thread.hpp>
+#include <yt/api/meta/AssetProperty.hpp>
+#include <yt/api/meta/DelegateProperty.hpp>
 
 namespace yq::tachyon {
     static constexpr const char*    szApplication   = "application";
@@ -27,12 +28,12 @@ namespace yq::tachyon {
     static constexpr const char*    szDelegate      = "delegate";
     static constexpr const char*    szDelegates     = "delegates";
     static constexpr const char*    szClass         = "class";
+    static constexpr const char*    szFile          = "file";
     static constexpr const char*    szFormat        = "format";
     static constexpr const char*    szId            = "id";
     static constexpr const char*    szName          = "name";
     static constexpr const char*    szObject        = "object";
     static constexpr const char*    szProperty      = "property";
-    static constexpr const char*    szResource      = "resource";
     static constexpr const char*    szRoot          = "tsx";
     static constexpr const char*    szTachyon       = "tachyon";
     static constexpr const char*    szThread        = "thread";
@@ -42,6 +43,15 @@ namespace yq::tachyon {
 
     namespace errors {
         using missing_root_element          = error_db::entry<"TSX is missing root element">;
+        using missing_type_attribute        = error_db::entry<"TSX is missing type attribute">;
+        using invalid_type_attribute        = error_db::entry<"TSX has an invalid type attribute">;
+        using missing_name_attribute        = error_db::entry<"TSX is missing name attribute">;
+        using missing_class_attribute       = error_db::entry<"TSX is missing class attribute">;
+        using invalid_class_attribute       = error_db::entry<"TSX has an invalid class attribute">;
+        using not_asset_class               = error_db::entry<"TSX class attribute is not an asset">;
+        using not_delegate_class            = error_db::entry<"TSX class attribute is not a delegate">;
+        using not_tachyon_class             = error_db::entry<"TSX class attribute is not a tachyon">;
+        using not_thread_class              = error_db::entry<"TSX class attribute is not a thread">;
     }
 
     SaveXML::SaveXML()
@@ -56,9 +66,13 @@ namespace yq::tachyon {
     
     std::error_code    SaveXML::read(const XmlDocument&doc, std::string_view fname) 
     {
+        if(!save)
+            save    = std::make_shared<Save>();
+    
         const XmlNode*  root    = doc.first_node(szRoot);
         if(!root){
             tachyonError << "TSX cannot find root element in " << fname;
+            return errors::xml_no_root_element();
             return errors::missing_root_element();
         }
         
@@ -79,10 +93,6 @@ namespace yq::tachyon {
                 std::error_code ec = read(*data, OBJECT);
                 if(ec != std::error_code())
                     return ec;
-            } else if(data->name() == szResource){
-                std::error_code ec = read(*data, RESOURCE);
-                if(ec != std::error_code())
-                    return ec;
             } else if(data->name() == szTachyon){
                 std::error_code ec = read(*data, TACHYON);
                 if(ec != std::error_code())
@@ -94,41 +104,119 @@ namespace yq::tachyon {
             }
         }
     
-        return errors::todo();
+        return {};
     }
 
     std::error_code    SaveXML::read(const XmlNode&xml, asset_k)
     {
+        std::filesystem::path   fp(x_string(xml));
+    
+        const XmlAttribute* xclass  = xml.first_attribute(szClass);
+        if(!xclass)
+            return errors::missing_class_attribute();
+        
+        const ObjectInfo*   cinfo   = ObjectInfo::find(to_string(xclass));
+        if(!cinfo)
+            return errors::invalid_class_attribute();
+        
+        const AssetInfo*  tinfo   = dynamic_cast<const AssetInfo*>(cinfo);
+        if(!tinfo)
+            return errors::not_asset_class();
+        SaveAsset*    st  = save->create(tinfo, fp);
+
         return errors::todo();
     }
     
     std::error_code    SaveXML::read(const XmlNode&xml, delegate_k)
     {
+        const XmlAttribute* xclass  = xml.first_attribute(szClass);
+        if(!xclass)
+            return errors::missing_class_attribute();
+        
+        const ObjectInfo*   cinfo   = ObjectInfo::find(to_string(xclass));
+        if(!cinfo)
+            return errors::invalid_class_attribute();
+        
+        const DelegateInfo*  tinfo   = dynamic_cast<const DelegateInfo*>(cinfo);
+        if(!tinfo)
+            return errors::not_tachyon_class();
+        SaveDelegate*    st  = save->create(tinfo);
+        
         return errors::todo();
     }
     
     std::error_code    SaveXML::read(const XmlNode&xml, object_k)
     {
-        return errors::todo();
-    }
-    
-    std::error_code    SaveXML::read(const XmlNode&xml, resource_k)
-    {
+        const XmlAttribute* xclass  = xml.first_attribute(szClass);
+        if(!xclass)
+            return errors::missing_class_attribute();
+        
+        const ObjectInfo*   cinfo   = ObjectInfo::find(to_string(xclass));
+        if(!cinfo)
+            return errors::invalid_class_attribute();
+
+        SaveObject*    st  = save->create(cinfo);
+
         return errors::todo();
     }
     
     std::error_code    SaveXML::read(const XmlNode&xml, tachyon_k)
     {
+        const XmlAttribute* xclass  = xml.first_attribute(szClass);
+        if(!xclass)
+            return errors::missing_class_attribute();
+        
+        const ObjectInfo*   cinfo   = ObjectInfo::find(to_string(xclass));
+        if(!cinfo)
+            return errors::invalid_class_attribute();
+        
+        const TachyonInfo*  tinfo   = dynamic_cast<const TachyonInfo*>(cinfo);
+        if(!tinfo)
+            return errors::not_tachyon_class();
+        SaveTachyon*    st  = save->create(tinfo);
+        
+        
         return errors::todo();
     }
     
     std::error_code    SaveXML::read(const XmlNode&xml, thread_k)
     {
+        const XmlAttribute* xclass  = xml.first_attribute(szClass);
+        if(!xclass)
+            return errors::missing_class_attribute();
+        
+        const ObjectInfo*   cinfo   = ObjectInfo::find(to_string(xclass));
+        if(!cinfo)
+            return errors::invalid_class_attribute();
+        
+        const ThreadInfo*  tinfo   = dynamic_cast<const ThreadInfo*>(cinfo);
+        if(!tinfo)
+            return errors::not_tachyon_class();
+        SaveThread*    st  = save->create(tinfo);
+
         return errors::todo();
     }
     
     std::error_code    SaveXML::read(const XmlNode&xml, variable_k)
     {
+        const XmlAttribute*     xname   = xml.first_attribute(szName);
+        if(!xname)
+            return errors::missing_name_attribute();
+    
+        const XmlAttribute* xa  = xml.first_attribute(szType);
+        if(!xa)
+            return errors::missing_type_attribute();
+        const TypeInfo* type    = TypeInfo::find(xa->value());
+        if(!type)
+            return errors::invalid_type_attribute();
+        if(type->can_write_and_parse()){
+            Any             value;
+            std::error_code ec = value.parse(*type, x_string(xml));
+            if(ec != std::error_code())
+                return ec;
+            save->add_variable(x_string(*xname), std::move(value));
+            return {};
+        }
         return errors::todo();
     }
     
@@ -168,9 +256,6 @@ namespace yq::tachyon {
             case SaveType::Object:
                 write(*(root.create_element(szObject)), OBJECT, *itr.second);
                 break;
-            case SaveType::Resource:
-                write(*(root.create_element(szResource)), RESOURCE, static_cast<const SaveResource&>(*itr.second));
-                break;
             case SaveType::Tachyon:
                 write(*(root.create_element(szTachyon)), TACHYON, static_cast<const SaveTachyon&>(*itr.second));
                 break;
@@ -185,7 +270,7 @@ namespace yq::tachyon {
 
     void    SaveXML::write(XmlNode& xml, asset_k,    const SaveAsset& obj) const
     {
-        write(xml, OBJECT, obj);
+        write_x(xml, obj.filepath().string());
     }
     
     void    SaveXML::write(XmlNode& xml, delegate_k, const SaveDelegate& obj) const
@@ -217,14 +302,20 @@ namespace yq::tachyon {
         }
     }
     
-    void    SaveXML::write(XmlNode& xml, resource_k, const SaveResource& obj) const
-    {
-        write(xml, ASSET, obj);
-    }
-    
     void    SaveXML::write(XmlNode& xml, tachyon_k,  const SaveTachyon& obj) const
     {
         write(xml, OBJECT, obj);
+        for(auto& p : obj.assets()){
+            XmlNode&    prop    = *(xml.create_element(szAsset));
+            prop.create_attribute(szName, p.info->name());
+            write_x(prop, p.asset->remap());
+        }
+
+        for(auto& p : obj.delegates()){
+            XmlNode&    prop    = *(xml.create_element(szDelegate));
+            prop.create_attribute(szName, p.info->name());
+            write_x(prop, p.delegate->remap());
+        }
     }
     
     void    SaveXML::write(XmlNode& xml, thread_k,   const SaveThread& obj) const

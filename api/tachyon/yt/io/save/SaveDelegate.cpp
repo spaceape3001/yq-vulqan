@@ -12,7 +12,7 @@ namespace yq::tachyon {
     {
     }
     
-    SaveDelegate::SaveDelegate(Save& save, std::string_view k, uint64_t i) : SaveObject(save, k, i)
+    SaveDelegate::SaveDelegate(Save& save, const DelegateInfo*info, uint64_t i) : SaveObject(save, info, i)
     {
     }
     

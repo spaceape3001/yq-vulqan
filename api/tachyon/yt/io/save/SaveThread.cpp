@@ -12,7 +12,7 @@ namespace yq::tachyon {
     {
     }
     
-    SaveThread::SaveThread(Save&save, std::string_view k, uint64_t i) : SaveTachyon(save, k, i)
+    SaveThread::SaveThread(Save&save, const ThreadInfo* info, uint64_t i) : SaveTachyon(save, info, i)
     {
     }
     

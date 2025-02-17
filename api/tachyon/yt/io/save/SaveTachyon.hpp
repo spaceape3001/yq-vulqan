@@ -20,7 +20,7 @@ namespace yq::tachyon {
     class SaveTachyon : public SaveObject {
     public:
         SaveTachyon(Save&, const Tachyon&);
-        SaveTachyon(Save&, std::string_view, uint64_t);
+        SaveTachyon(Save&, const TachyonInfo*, uint64_t);
         
         const TachyonInfo*  info() const;
         virtual bool        valid() const override;

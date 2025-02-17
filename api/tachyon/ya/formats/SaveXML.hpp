@@ -14,7 +14,6 @@ namespace yq::tachyon {
     class SaveAsset;
     class SaveDelegate;
     class SaveObject;
-    class SaveResource;
     class SaveTachyon;
     class SaveThread;
 
@@ -37,14 +36,12 @@ namespace yq::tachyon {
         void        write(XmlNode&, asset_k,    const SaveAsset&) const;
         void        write(XmlNode&, delegate_k, const SaveDelegate&) const;
         void        write(XmlNode&, object_k,   const SaveObject&) const;
-        void        write(XmlNode&, resource_k, const SaveResource&) const;
         void        write(XmlNode&, tachyon_k,  const SaveTachyon&) const;
         void        write(XmlNode&, thread_k,   const SaveThread&) const;
         
         std::error_code    read(const XmlNode&, asset_k);
         std::error_code    read(const XmlNode&, delegate_k);
         std::error_code    read(const XmlNode&, object_k);
-        std::error_code    read(const XmlNode&, resource_k);
         std::error_code    read(const XmlNode&, tachyon_k);
         std::error_code    read(const XmlNode&, thread_k);
         std::error_code    read(const XmlNode&, variable_k);

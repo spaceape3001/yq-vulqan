@@ -20,7 +20,7 @@ namespace yq::tachyon {
     class SaveAsset : public SaveObject {
     public:
         SaveAsset(Save&, const Asset&);
-        SaveAsset(Save&, std::string_view, uint64_t, const std::filesystem::path&);
+        SaveAsset(Save&, const AssetInfo*, uint64_t, const std::filesystem::path&);
         
         const AssetInfo* info() const;
         virtual bool    valid() const override;

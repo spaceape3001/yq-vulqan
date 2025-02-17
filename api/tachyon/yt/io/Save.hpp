@@ -13,6 +13,7 @@
 
 namespace yq {
     class Object;
+    class ObjectInfo;
     class PropertyInfo;
     class Asset;
     class AssetInfo;
@@ -26,11 +27,11 @@ namespace yq::tachyon {
     class Tachyon;
     class TachyonInfo;
     class Thread;
+    class ThreadInfo;
         
     class SaveAsset;
     class SaveDelegate;
     class SaveObject;
-    class SaveResource;
     class SaveTachyon;
     class SaveThread;
 
@@ -44,8 +45,6 @@ namespace yq::tachyon {
         const SaveDelegate*     delegate(uint64_t) const;
         SaveObject*             object(uint64_t);
         const SaveObject*       object(uint64_t) const;
-        SaveResource*           resource(uint64_t);
-        const SaveResource*     resource(uint64_t) const;
         SaveTachyon*            tachyon(uint64_t);
         const SaveTachyon*      tachyon(uint64_t) const;
         SaveThread*             thread(uint64_t);
@@ -57,9 +56,14 @@ namespace yq::tachyon {
         SaveAsset*              insert(const Asset&);
         SaveDelegate*           insert(const Delegate&);
         SaveObject*             insert(const Object&);
-        SaveResource*           insert(const Resource&);
         SaveThread*             insert(const Thread&);
         SaveTachyon*            insert(const Tachyon&);
+        
+        SaveAsset*              create(const AssetInfo*, const std::filesystem::path&);
+        SaveDelegate*           create(const DelegateInfo*);
+        SaveObject*             create(const ObjectInfo*);
+        SaveTachyon*            create(const TachyonInfo*);
+        SaveThread*             create(const ThreadInfo*);
         
         //! Let us know what the asset paths are (used for saving)
         void    add_asset_path(const std::filesystem::path&);
@@ -77,6 +81,8 @@ namespace yq::tachyon {
         
         const ObjectMap&    objects() const { return m_objects; }
         const VariableMap&  variables() const { return m_variables; }
+    
+        void    add_variable(const std::string&, Any&&);
     
     private:
         ObjectMap                           m_objects;
@@ -96,7 +102,6 @@ namespace yq::tachyon {
         static SaveObject*      save_delegate(Save&, const Object&);
         static SaveObject*      save_object(Save&, const Object&);
         static SaveObject*      save_nullptr(Save&, const Object&);
-        static SaveObject*      save_resource(Save&, const Object&);
         static SaveObject*      save_tachyon(Save&, const Object&);
         static SaveObject*      save_thread(Save&, const Object&);
         static SaveObject*      samk(Save&, const Object&);

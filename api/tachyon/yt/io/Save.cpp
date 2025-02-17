@@ -6,7 +6,6 @@
 
 #include "Save.hpp"
 #include <yt/api/Delegate.hpp>
-#include <yt/api/Resource.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/api/Thread.hpp>
 #include <yt/tags.hpp>
@@ -15,7 +14,6 @@
 #include <yt/io/save/SaveAsset.hpp>
 #include <yt/io/save/SaveDelegate.hpp>
 #include <yt/io/save/SaveObject.hpp>
-#include <yt/io/save/SaveResource.hpp>
 #include <yt/io/save/SaveTachyon.hpp>
 #include <yt/io/save/SaveThread.hpp>
 #include <yq/asset/Asset.hpp>
@@ -50,11 +48,7 @@ namespace yq::tachyon {
         
         if(!fn){
             if(dynamic_cast<const Asset*>(&obj)){
-                if(dynamic_cast<const Resource*>(&obj)){
-                    fn  = &Save::save_resource;
-                } else {
-                    fn  = &Save::save_asset;
-                }
+                fn  = &Save::save_asset;
             } 
             
             if(dynamic_cast<const Delegate*>(&obj)){
@@ -104,11 +98,6 @@ namespace yq::tachyon {
         return new SaveObject(save, obj, dynamic_cast<const UniqueID&>(obj).id());
     }
     
-    SaveObject* Save::save_resource(Save&save, const Object&obj)
-    {
-        return new SaveResource(save, dynamic_cast<const Resource&>(obj));
-    }
-    
     SaveObject* Save::save_tachyon(Save&save, const Object&obj)
     {
         return new SaveTachyon(save, dynamic_cast<const Tachyon&>(obj));
@@ -152,6 +141,11 @@ namespace yq::tachyon {
         m_assetPath.push_back(fp);
     }
 
+    void    Save::add_variable(const std::string& k, Any&&v)
+    {
+        m_variables[k] = std::move(v);
+    }
+
     SaveAsset*              Save::asset(uint64_t i)
     {
         SaveObject* obj = object(i);
@@ -171,6 +165,46 @@ namespace yq::tachyon {
     size_t                  Save::count(object_k) const
     {
         return m_objects.size();
+    }
+
+    SaveAsset*              Save::create(const AssetInfo*info, const std::filesystem::path& fp)
+    {
+        uint64_t id = 1+m_objects.size();
+        SaveAsset* ret = new SaveAsset(*this, info, id, fp);
+        m_objects[id]   = ret;
+        return ret;
+    }
+    
+    SaveDelegate*           Save::create(const DelegateInfo*info)
+    {
+        uint64_t id = 1+m_objects.size();
+        SaveDelegate* ret = new SaveDelegate(*this, info, id);
+        m_objects[id]   = ret;
+        return ret;
+    }
+    
+    SaveObject*             Save::create(const ObjectInfo* info)
+    {
+        uint64_t id = 1+m_objects.size();
+        SaveObject* ret = new SaveObject(*this, info, id);
+        m_objects[id]   = ret;
+        return ret;
+    }
+    
+    SaveTachyon*            Save::create(const TachyonInfo* info)
+    {
+        uint64_t id = 1+m_objects.size();
+        SaveTachyon* ret = new SaveTachyon(*this, info, id);
+        m_objects[id]   = ret;
+        return ret;
+    }
+    
+    SaveThread*             Save::create(const ThreadInfo* info)
+    {
+        uint64_t id = 1+m_objects.size();
+        SaveThread* ret = new SaveThread(*this, info, id);
+        m_objects[id]   = ret;
+        return ret;
     }
 
     SaveDelegate*           Save::delegate(uint64_t i)
@@ -202,11 +236,6 @@ namespace yq::tachyon {
     SaveObject*    Save::insert(const Object& obj)
     {
         return saver(obj);
-    }
-    
-    SaveResource*    Save::insert(const Resource& res)
-    {
-        return dynamic_cast<SaveResource*>(saver(res));
     }
     
     SaveTachyon*    Save::insert(const Tachyon& tac)
@@ -245,22 +274,6 @@ namespace yq::tachyon {
         return fp;
     }
     
-    SaveResource*           Save::resource(uint64_t i)
-    {
-        SaveObject* obj = object(i);
-        if(obj -> isResource())
-            return static_cast<SaveResource*>(obj);
-        return nullptr;
-    }
-    
-    const SaveResource*     Save::resource(uint64_t i) const
-    {
-        const SaveObject* obj = object(i);
-        if(obj -> isResource())
-            return static_cast<const SaveResource*>(obj);
-        return nullptr;
-    }
-
     SaveObject*             Save::saver(const Object& obj)
     {
         _prep();

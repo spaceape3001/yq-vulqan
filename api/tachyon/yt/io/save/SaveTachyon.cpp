@@ -30,7 +30,7 @@ namespace yq::tachyon {
         }
     }
     
-    SaveTachyon::SaveTachyon(Save& save, std::string_view k, uint64_t i) : SaveObject(save, k, i)
+    SaveTachyon::SaveTachyon(Save& save, const TachyonInfo* info, uint64_t i) : SaveObject(save, info, i)
     {
     }
     

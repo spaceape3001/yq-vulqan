@@ -24,7 +24,7 @@ namespace yq::tachyon {
         }
     }
     
-    SaveObject::SaveObject(Save& save, std::string_view kType, uint64_t i) : m_save(save), m_info(ObjectInfo::find(kType)), m_id(i)
+    SaveObject::SaveObject(Save& save, const ObjectInfo* kType, uint64_t i) : m_save(save), m_info(kType), m_id(i)
     {
         
     }

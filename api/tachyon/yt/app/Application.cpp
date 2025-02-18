@@ -222,8 +222,11 @@ namespace yq::tachyon {
             
         m_thread.app       = new AppThread(this);
         m_thread.app -> tick();
-        for(StdThread st : StdThread::all_values())
-            Thread::standard(st, m_thread.app->id());
+        Thread::standard(StdThread::App, m_thread.app->id(), true);
+        for(StdThread st : StdThread::all_values()){
+            if( st != StdThread::App)
+                Thread::standard(st, m_thread.app->id());
+        }
         
         
         switch(m_cInfo.platform){
@@ -266,43 +269,43 @@ namespace yq::tachyon {
         if(is_single(m_cInfo.thread.audio)){
             m_thread.audio     = new AudioThread;
             m_threads.push_back(m_thread.game.ptr());
-            Thread::standard(AUDIO, m_thread.audio->id());
+            Thread::standard(AUDIO, m_thread.audio->id(), true);
         }
 
         if(is_single(m_cInfo.thread.game)){
             m_thread.game       = new GameThread;
             m_threads.push_back(m_thread.game.ptr());
-            Thread::standard(GAME, m_thread.game->id());
+            Thread::standard(GAME, m_thread.game->id(), true);
         }
         
         if(is_single(m_cInfo.thread.io)){
             m_thread.io    = new IOThread;
             m_threads.push_back(m_thread.io.ptr());
-            Thread::standard(IO, m_thread.io->id());
+            Thread::standard(IO, m_thread.io->id(), true);
         }
         
         if(is_single(m_cInfo.thread.network)){
             m_thread.network  = new NetworkThread;
             m_threads.push_back(m_thread.network.ptr());
-            Thread::standard(NETWORK, m_thread.network->id());
+            Thread::standard(NETWORK, m_thread.network->id(), true);
         }
         
         if(is_single(m_cInfo.thread.sim)){
             m_thread.sim = new SimThread;
             m_threads.push_back(m_thread.sim.ptr());
-            Thread::standard(SIM, m_thread.sim->id());
+            Thread::standard(SIM, m_thread.sim->id(), true);
         }
 
         if(is_single(m_cInfo.thread.task)){
             m_thread.task  = new TaskThread;
             m_threads.push_back(m_thread.task.ptr());
-            Thread::standard(TASK, m_thread.task->id());
+            Thread::standard(TASK, m_thread.task->id(), true);
         }
 
         if(is_single(m_cInfo.thread.viewer)){
             m_thread.viewer  = new ViewerThread;
             m_threads.push_back(m_thread.viewer.ptr());
-            Thread::standard(VIEWER, m_thread.viewer->id());
+            Thread::standard(VIEWER, m_thread.viewer->id(), true);
         }
         
         if(auto p = std::get_if<StdThread>(&m_cInfo.thread.audio)){

@@ -15,6 +15,14 @@
 namespace yq::tachyon {
     SaveTachyon::SaveTachyon(Save& save, const Tachyon& tac) : SaveObject(save, tac, tac.id())
     {
+        m_parent    = tac.parent();
+        
+        auto maybe  = save.std_thread(tac.owner());
+        if(maybe){
+            m_owner = *maybe;
+        } else
+            m_owner = tac.owner();
+        
         for(const AssetProperty* aprops : tac.metaInfo().assets(ALL).all){
             AssetCPtr   asset   = aprops->get(&tac);
             if(!asset)

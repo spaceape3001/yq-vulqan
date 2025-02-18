@@ -133,6 +133,7 @@ namespace yq::tachyon {
             return;
         m_assetPath = Asset::resolver().paths();
         m_prepped   = true;
+        m_threads   = Thread::standard_thread_reverse_map();
     }
 
     void    Save::add_asset_path(const std::filesystem::path&fp)
@@ -149,7 +150,7 @@ namespace yq::tachyon {
     SaveAsset*              Save::asset(uint64_t i)
     {
         SaveObject* obj = object(i);
-        if(obj -> isAsset())
+        if(obj && obj -> isAsset())
             return static_cast<SaveAsset*>(obj);
         return nullptr;
     }
@@ -157,9 +158,13 @@ namespace yq::tachyon {
     const SaveAsset*        Save::asset(uint64_t i) const
     {
         const SaveObject* obj = object(i);
-        if(obj -> isAsset())
+        if(obj && obj -> isAsset())
             return static_cast<const SaveAsset*>(obj);
         return nullptr;
+    }
+
+    void    Save::build()
+    {
     }
     
     size_t                  Save::count(object_k) const
@@ -210,7 +215,7 @@ namespace yq::tachyon {
     SaveDelegate*           Save::delegate(uint64_t i)
     {
         SaveObject* obj = object(i);
-        if(obj -> isDelegate())
+        if(obj && obj -> isDelegate())
             return static_cast<SaveDelegate*>(obj);
         return nullptr;
     }
@@ -218,7 +223,7 @@ namespace yq::tachyon {
     const SaveDelegate*     Save::delegate(uint64_t i) const
     {
         const SaveObject* obj = object(i);
-        if(obj -> isDelegate())
+        if(obj && obj -> isDelegate())
             return static_cast<const SaveDelegate*>(obj);
         return nullptr;
     }
@@ -288,11 +293,19 @@ namespace yq::tachyon {
         }
         return itr->second;
     }
+
+    std::optional<StdThread>    Save::std_thread(ThreadID id) const
+    {
+        auto i = m_threads.find(id);
+        if(i!=m_threads.end())
+            return i->second;
+        return {};
+    }
     
     SaveTachyon*            Save::tachyon(uint64_t i)
     {
         SaveObject* obj = object(i);
-        if(obj -> isTachyon())
+        if(obj && obj -> isTachyon())
             return static_cast<SaveTachyon*>(obj);
         return nullptr;
     }
@@ -300,7 +313,7 @@ namespace yq::tachyon {
     const SaveTachyon*      Save::tachyon(uint64_t i) const
     {
         const SaveObject* obj = object(i);
-        if(obj -> isTachyon())
+        if(obj && obj -> isTachyon())
             return static_cast<const SaveTachyon*>(obj);
         return nullptr;
     }
@@ -308,7 +321,7 @@ namespace yq::tachyon {
     SaveThread*             Save::thread(uint64_t i)
     {
         SaveObject* obj = object(i);
-        if(obj -> isThread())
+        if(obj && obj -> isThread())
             return static_cast<SaveThread*>(obj);
         return nullptr;
     }
@@ -316,7 +329,7 @@ namespace yq::tachyon {
     const SaveThread*       Save::thread(uint64_t i) const
     {
         const SaveObject* obj = object(i);
-        if(obj -> isThread())
+        if(obj && obj -> isThread())
             return static_cast<const SaveThread*>(obj);
         return nullptr;
     }

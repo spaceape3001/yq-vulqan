@@ -14,6 +14,7 @@
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yt/logging.hpp>
+#include <ya/commands/thread/ScheduleCommand.hpp>
 #include <ya/events/thread/ThreadAddTachyonEvent.hpp>
 #include <yq/meta/Init.hpp>
 
@@ -89,6 +90,7 @@ namespace yq::tachyon {
     Thread::thread_map_t        Thread::s_threads;
     Thread::sthread_map_t       Thread::s_sthreads;
     Thread::inbox_map_t         Thread::s_inboxes;
+    StdThreadRevMap             Thread::s_rthreads;
     std::vector<TachyonPtr>     Thread::s_misfits;
 
     
@@ -96,6 +98,7 @@ namespace yq::tachyon {
     {
         auto w = writer<Thread>();
         w.description("Thread of execution");
+        w.slot(&Thread::on_schedule_command);
         
         auto wt = writer<ThreadID>();
         wt.description("Thread Identifier");
@@ -215,10 +218,18 @@ namespace yq::tachyon {
         return {};
     }
 
-    void Thread::standard(StdThread st, ThreadID tid)
+    void Thread::standard(StdThread st, ThreadID tid, bool mapRev)
     {
         lock_t _lock(s_mutex, true);
         s_sthreads[st]  = tid;
+        if(mapRev)
+            s_rthreads[tid] = st;
+    }
+
+    StdThreadRevMap  Thread::standard_thread_reverse_map()
+    {
+        lock_t _lock(s_mutex, false);
+        return s_rthreads;
     }
 
     bool Thread::valid(ThreadID tid)
@@ -300,6 +311,15 @@ namespace yq::tachyon {
         m_thread.join();
     }
 
+
+    void Thread::on_schedule_command(const ScheduleCommand&cmd)
+    {
+        auto& tachyons  = cmd.tachyons();
+        if(tachyons.empty())
+            return ;
+        lock_t  _lock(m_mutex, true);
+        m_creates.insert(m_creates.end(), tachyons.begin(), tachyons.end());
+    }
 
     void    Thread::owner(push_k, ThreadID) 
     {

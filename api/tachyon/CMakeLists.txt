@@ -349,6 +349,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/tachyon/UnsnoopCommand.cpp
     ya/commands/tachyon/UnsubscribeCommand.cpp
     
+    ya/commands/thread/ScheduleCommand.cpp
+    
     ya/commands/ui/AspectCommand.cpp
     ya/commands/ui/AttentionCommand.cpp
     ya/commands/ui/CloseCommand.cpp

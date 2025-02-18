@@ -33,6 +33,7 @@ namespace yq::tachyon {
     static constexpr const char*    szId            = "id";
     static constexpr const char*    szName          = "name";
     static constexpr const char*    szObject        = "object";
+    static constexpr const char*    szParent        = "parent";
     static constexpr const char*    szProperty      = "property";
     static constexpr const char*    szRoot          = "tsx";
     static constexpr const char*    szTachyon       = "tachyon";
@@ -305,6 +306,18 @@ namespace yq::tachyon {
     void    SaveXML::write(XmlNode& xml, tachyon_k,  const SaveTachyon& obj) const
     {
         write(xml, OBJECT, obj);
+        
+        if(const SaveTachyon* parent   = save->tachyon(obj.parent())){
+            write_attribute(xml, szParent, parent->remap());
+        }
+        
+        if(auto p = std::get_if<uint64_t>(&obj.owner()); const SaveThread*th = save->thread(*p)){
+            write_attribute(xml, szThread, th->remap());
+        }
+        if(auto p = std::get_if<StdThread>(&obj.owner())){
+            write_attribute(xml, szThread, *p);
+        }
+        
         for(auto& p : obj.assets()){
             XmlNode&    prop    = *(xml.create_element(szAsset));
             prop.create_attribute(szName, p.info->name());

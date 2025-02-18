@@ -25,6 +25,7 @@ namespace yq::tachyon {
     };
     
     struct ThreadFrame;
+    class ScheduleCommand;
 
     /*! \brief Thread of something in the application
     
@@ -37,6 +38,7 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(ThreadSnap)
         YQ_TACHYON_DECLARE(Thread, Tachyon)
     public:
+    
     
         static void init_info();
         
@@ -82,6 +84,8 @@ namespace yq::tachyon {
         
         virtual void    shutdown();
         
+        static StdThreadRevMap  standard_thread_reverse_map();
+        
     protected:
         virtual Execution   tick(const Context&) override final;
         
@@ -108,7 +112,7 @@ namespace yq::tachyon {
         friend class Tachyon;
 
         friend class Application;
-        static void     standard(StdThread, ThreadID);
+        static void     standard(StdThread, ThreadID, bool mapRev=false);
         static ThreadID standard(StdThread);
         
         static void retain(TachyonPtr);
@@ -144,6 +148,7 @@ namespace yq::tachyon {
         static thread_map_t             s_threads;
         static sthread_map_t            s_sthreads;
         static inbox_map_t              s_inboxes;
+        static StdThreadRevMap          s_rthreads;
         static std::vector<TachyonPtr>  s_misfits;
         
         bool                            m_quit{ false };
@@ -157,6 +162,8 @@ namespace yq::tachyon {
         uint64_t                        m_tick      = 0ULL;
         time_point_t                    m_lastTickTime;
         time_point_t                    m_lastFrameReport{};
+        
+        void on_schedule_command(const ScheduleCommand&);
     };
 }
 

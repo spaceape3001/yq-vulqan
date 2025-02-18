@@ -10,6 +10,7 @@
 #include <vector>
 #include <yt/keywords.hpp>
 //#include <tbb/spin_rw_mutex.h>
+#include <yt/api/StdThread.hpp>
 
 namespace yq {
     class Object;
@@ -84,11 +85,16 @@ namespace yq::tachyon {
     
         void    add_variable(const std::string&, Any&&);
     
+        std::optional<StdThread>   std_thread(ThreadID) const;
+        
+        void    build();
+    
     private:
         ObjectMap                           m_objects;
         VariableMap                         m_variables;
         std::vector<std::filesystem::path>  m_assetPath;
         bool                                m_prepped   = false;
+        StdThreadRevMap                     m_threads;
         //mutable tbb::spin_rw_mutex          m_mutex;
 
         //! Prepares the save for saving (call before insert/add-asset-path)

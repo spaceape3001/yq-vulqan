@@ -26,7 +26,7 @@ namespace yq::tachyon {
         ~RethreadCommand();
 
     private:
-        const ThreadID  m_thread;
+        ThreadID  m_thread;
 
         RethreadCommand(const RethreadCommand&) = delete;
         RethreadCommand(RethreadCommand&&) = delete;

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yt/io/save/SaveObject.hpp>
+#include <yt/api/StdThread.hpp>
 
 namespace yq::tachyon {
     class Tachyon;
@@ -37,14 +38,22 @@ namespace yq::tachyon {
             SaveDelegate*           delegate    = nullptr;
         };
 
-        const std::vector<asset_t>& assets() const { return m_assets; }
-        const std::vector<delegate_t>& delegates() const { return m_delegates; }
+        const std::vector<asset_t>&     assets() const { return m_assets; }
+        const std::vector<delegate_t>&  delegates() const { return m_delegates; }
+
+        using owner_spec_t = std::variant<std::monostate, uint64_t, StdThread>;
+        
+        uint64_t                parent() const { return m_parent; }
+        const owner_spec_t&     owner() const { return m_owner; }
     
     protected:
         virtual ~SaveTachyon();
         
     private:
         
+        
+        uint64_t                    m_parent = 0;
+        owner_spec_t                m_owner;
         std::vector<asset_t>        m_assets;
         std::vector<delegate_t>     m_delegates;
     };

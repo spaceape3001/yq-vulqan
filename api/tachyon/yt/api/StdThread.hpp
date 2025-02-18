@@ -9,6 +9,7 @@
 #include <yq/core/Enum.hpp>
 #include <yq/core/Flag.hpp>
 #include <yq/meta/InfoBinder.hpp>
+#include <yt/typedef/thread.hpp>
 
 namespace yq::tachyon {
     /*! \brief Standard threads
@@ -45,6 +46,7 @@ namespace yq::tachyon {
     )
     
     using StdThreadFlags    = Flag<StdThread>;
+    using StdThreadRevMap   = std::map<ThreadID, StdThread>;
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::StdThread)

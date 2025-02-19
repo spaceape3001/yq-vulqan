@@ -26,6 +26,7 @@ namespace yq::tachyon {
     
     struct ThreadFrame;
     class ScheduleCommand;
+    class SaveRequest;
 
     /*! \brief Thread of something in the application
     
@@ -164,6 +165,7 @@ namespace yq::tachyon {
         time_point_t                    m_lastFrameReport{};
         
         void on_schedule_command(const ScheduleCommand&);
+        void on_save_request(const SaveRequest&);
     };
 }
 

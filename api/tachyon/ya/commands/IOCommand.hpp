@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yt/msg/Command.hpp>
+#include <yt/typedef/spatial.hpp>
+
+namespace yq::tachyon {
+
+    //! Instructs an object to set it's position
+    class IOCommand : public Command {
+        YQ_OBJECT_DECLARE(IOCommand, Command)
+    public:
+    
+        static void init_info();
+
+    protected:
+        IOCommand(const Header&);
+        IOCommand(const IOCommand&, const Header&);
+        ~IOCommand();
+        
+    private:
+        IOCommand(const IOCommand&) = delete;
+        IOCommand(IOCommand&&) = delete;
+        IOCommand& operator=(const IOCommand&) = delete;
+        IOCommand& operator=(IOCommand&&) = delete;
+    };
+}

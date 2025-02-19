@@ -16,6 +16,8 @@
 #include <yt/logging.hpp>
 #include <ya/commands/thread/ScheduleCommand.hpp>
 #include <ya/events/thread/ThreadAddTachyonEvent.hpp>
+#include <ya/replies/io/SaveReply.hpp>
+#include <ya/requests/io/SaveRequest.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
@@ -99,6 +101,7 @@ namespace yq::tachyon {
         auto w = writer<Thread>();
         w.description("Thread of execution");
         w.slot(&Thread::on_schedule_command);
+        w.slot(&Thread::on_save_request);
         
         auto wt = writer<ThreadID>();
         wt.description("Thread Identifier");
@@ -311,9 +314,19 @@ namespace yq::tachyon {
         m_thread.join();
     }
 
+    void Thread::on_save_request(const SaveRequest&req)
+    {
+        if(req.target() != id())
+            return ;
+
+        //  TODO
+    }
 
     void Thread::on_schedule_command(const ScheduleCommand&cmd)
     {
+        if(cmd.target() != id())
+            return ;
+            
         auto& tachyons  = cmd.tachyons();
         if(tachyons.empty())
             return ;

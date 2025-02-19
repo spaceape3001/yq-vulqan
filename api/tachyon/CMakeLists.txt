@@ -198,6 +198,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/EmptyCommand.cpp
     ya/commands/GamepadCommand.cpp
     ya/commands/GLFWCommand.cpp
+    ya/commands/IOCommand.cpp
     ya/commands/JoystickCommand.cpp
     ya/commands/LightCommand.cpp
     ya/commands/MouseCommand.cpp
@@ -389,6 +390,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/EmptyEvent.cpp
     ya/events/GamepadEvent.cpp
     ya/events/InputEvent.cpp
+    ya/events/IOEvent.cpp
     ya/events/JoystickEvent.cpp
     ya/events/KeyboardEvent.cpp
     ya/events/MonitorEvent.cpp
@@ -534,8 +536,10 @@ add_library(${PROJECT_NAME} SHARED
     ya/replies/AnyReply.cpp
     ya/replies/AppReply.cpp
     ya/replies/CameraReply.cpp
-    ya/replies/GraphicsCardReply.cpp
     ya/replies/EmptyReply.cpp
+    ya/replies/GraphicsCardReply.cpp
+    ya/replies/IOReply.cpp
+    ya/replies/SimReply.cpp
     ya/replies/StringReply.cpp
     ya/replies/TachyonReply.cpp
     ya/replies/UIReply.cpp
@@ -545,12 +549,15 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/replies/graphics_card/GetDeviceReply.cpp
     
+    ya/replies/io/SaveReply.cpp
+    
     ya/replies/ui/CloseReply.cpp
     
     ya/requests/AppRequest.cpp
     ya/requests/CameraRequest.cpp
     ya/requests/EmptyRequest.cpp
     ya/requests/GraphicsCardRequest.cpp
+    ya/requests/IORequest.cpp
     ya/requests/SimRequest.cpp
     ya/requests/TachyonRequest.cpp
     ya/requests/UIRequest.cpp
@@ -560,6 +567,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/requests/WindowRequest.cpp
     
     ya/requests/graphics_card/GetDeviceRequest.cpp
+    
+    ya/requests/io/SaveRequest.cpp
     
     ya/requests/ui/CloseRequest.cpp
     ya/requests/ui/RefreshRequest.cpp

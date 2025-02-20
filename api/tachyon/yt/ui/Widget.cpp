@@ -89,20 +89,14 @@ namespace yq::tachyon {
 
     void    Widget::close(accept_k)
     {
-        PostID  pId;
-        if(m_closeRequest)
-            pId = m_closeRequest -> id();
-        send(new CloseReply({.cause=pId, .target=m_viewer}, m_closeRequest, Response::QaPla));
-        mail(new CloseCommand({.cause=pId, .target=*this}));
+        send(new CloseReply({.cause=m_closeRequest, .target=m_viewer}, m_closeRequest, Response::QaPla));
+        mail(new CloseCommand({.cause=m_closeRequest, .target=*this}));
         m_closeRequest = {};
     }
     
     void    Widget::close(reject_k)
     {
-        PostID  pId;
-        if(m_closeRequest)
-            pId = m_closeRequest -> id();
-        send(new CloseReply({.cause=pId, .target=m_viewer}, m_closeRequest, Response::Rejected));
+        send(new CloseReply({.cause=m_closeRequest, .target=m_viewer}, m_closeRequest, Response::Rejected));
         m_closeRequest = {};
     }
 

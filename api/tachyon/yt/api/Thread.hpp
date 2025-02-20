@@ -27,6 +27,8 @@ namespace yq::tachyon {
     struct ThreadFrame;
     class ScheduleCommand;
     class SaveRequest;
+    class SaveCommand;
+    class SaveReply;
 
     /*! \brief Thread of something in the application
     
@@ -87,6 +89,8 @@ namespace yq::tachyon {
         
         static StdThreadRevMap  standard_thread_reverse_map();
         
+        static ThreadID standard(StdThread);
+
     protected:
         virtual Execution   tick(const Context&) override final;
         
@@ -114,7 +118,6 @@ namespace yq::tachyon {
 
         friend class Application;
         static void     standard(StdThread, ThreadID, bool mapRev=false);
-        static ThreadID standard(StdThread);
         
         static void retain(TachyonPtr);
         static void retain(TachyonPtr, ThreadID);
@@ -165,7 +168,12 @@ namespace yq::tachyon {
         time_point_t                    m_lastFrameReport{};
         
         void on_schedule_command(const ScheduleCommand&);
-        void on_save_request(const SaveRequest&);
+        void on_save_command(const Ref<const SaveCommand>&);
+        void on_save_reply(const SaveReply&);
+        void on_save_request(const Ref<const SaveRequest>&);
+        
+        template <typename Pred>
+        void    foreach_child(TachyonID, Pred&&) const;
     };
 }
 

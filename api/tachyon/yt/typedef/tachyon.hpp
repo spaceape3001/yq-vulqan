@@ -9,6 +9,7 @@
 #include <concepts>
 #include <cstdint>
 #include <tuple>
+#include <set>
 #include <string>
 #include <string_view>
 #include <variant>
@@ -31,6 +32,8 @@ namespace yq::tachyon {
 
     template <class> class ID;
     using TachyonID = ID<Tachyon>;
+    
+    using TachyonIDSet  = std::set<TachyonID>;
     
     struct TachyonData;
     using TachyonDataPtr    = Ref<TachyonData>;

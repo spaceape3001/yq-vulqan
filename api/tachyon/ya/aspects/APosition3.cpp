@@ -21,7 +21,8 @@
 #include <ya/commands/spatial/SetPositionY.hpp>
 #include <ya/commands/spatial/SetPositionZ.hpp>
 #include <ya/events/spatial/Position3Event.hpp>
-
+#include <yt/logging.hpp>
+#include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
     APosition³::APosition³()
@@ -39,6 +40,7 @@ namespace yq::tachyon {
 
     void        APosition³::position(set_k, const Vector3D& sz) 
     {
+tachyonInfo << "APosition³::position(SET, " << sz << ")";
         m_position  =    sz;
         mark();
         position(EMIT);

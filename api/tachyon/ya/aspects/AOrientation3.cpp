@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yt/logging.hpp>
 #include <ya/aspects/AOrientation3.hpp>
 #include <ya/commands/spatial/PitchBy.hpp>
 #include <ya/commands/spatial/RollBy.hpp>
@@ -17,7 +18,6 @@
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
-#include <yt/logging.hpp>
 
 namespace yq::tachyon {
     AOrientation³::AOrientation³()
@@ -35,6 +35,7 @@ namespace yq::tachyon {
 
     void            AOrientation³::orientation(set_k, const Quaternion3D& Q) 
     {
+tachyonInfo << "AOrientation³::orientation(SET, " << Q << ")";
         double  q   = Q.length²();
         if(q < 1e-6)
             return ;

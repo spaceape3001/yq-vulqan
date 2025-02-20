@@ -49,7 +49,7 @@ namespace yq::tachyon {
         const time_point_t& time() const { return m_time; }
         
         struct Header {
-            PostID          cause;
+            PostCPtr        cause;
             TypedID         source;
             TypedID         target;
             time_point_t    time;       //< If set, overrides the system/copy time
@@ -77,7 +77,7 @@ namespace yq::tachyon {
         //! Source of the post (event, from, etc) -- try to be honest :)
         const TypedID&      source() const { return m_source; }
         
-        PostID              cause() const { return m_cause; }
+        const PostCPtr&     cause() const { return m_cause; }
         
         bool    claim() const;
         bool    claimed() const;
@@ -96,7 +96,7 @@ namespace yq::tachyon {
         friend class Tachyon;
     
         const uint64_t              m_id;
-        PostID                      m_cause;
+        PostCPtr                    m_cause;
         TypedID                     m_source;
         TypedID                     m_target;
         time_point_t                m_time;

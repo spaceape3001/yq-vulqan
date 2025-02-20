@@ -40,6 +40,7 @@ namespace yq::tachyon {
 
     void    И::on_spatial_command(const SpatialCommand&cmd)
     {
+        tachyonInfo << "И::on_spatial_command(" << cmd.metaInfo().name() << ")";
         if(!m_spatial)
             return;
 

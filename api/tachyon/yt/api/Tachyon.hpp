@@ -239,6 +239,28 @@ namespace yq::tachyon {
             std::string_view    metaName;
             std::string_view    tacName;
             uint64_t            id  = 0;
+            
+            friend std::ostringstream& operator<<(std::ostringstream& out, const Ident& me)
+            {
+                me.write(out);
+                return out;
+            }
+            
+            friend log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& out, const Ident& me)
+            {
+                me.write(out);
+                return out;
+            }
+
+            friend Stream& operator<<(Stream& out, const Ident& me)
+            {
+                me.write(out);
+                return out;
+            }
+
+            void write(std::ostringstream&) const;
+            void write(log4cpp::CategoryStream&) const;
+            void write(Stream&) const;
         };
         
         static void         init_info();
@@ -724,8 +746,6 @@ namespace yq::tachyon {
         return tp.ptr();
     }
 
-    Stream& operator<<(Stream&, const Tachyon::Ident&);
-    
     class Tachyon::Helper {
     protected:
         Helper();
@@ -740,5 +760,3 @@ namespace yq::tachyon {
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::TachyonID)
-
-std::ostringstream& operator<<(std::ostringstream&, const yq::tachyon::Tachyon::Ident&);

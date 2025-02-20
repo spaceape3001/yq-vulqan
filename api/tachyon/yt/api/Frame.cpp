@@ -216,6 +216,14 @@ namespace yq::tachyon {
             m_windows.insert(t, tac.data.ptr(), tac.snap.ptr());
     }
 
+    std::span<const TypedID>    Frame::children(TachyonID tac) const
+    {
+        const TachyonSnap*  sn  = snap(tac);
+        if(!sn)
+            return {};
+        return sn->children;
+    }
+
     bool Frame::contains(CameraID id) const
     {
         return m_cameras.has(id);

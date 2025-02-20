@@ -11,9 +11,12 @@
 #include <yt/api/ThreadData.hpp>
 #include <yt/api/ThreadInfoWriter.hpp>
 
+#include <yt/io/Save.hpp>
+#include <ya/formats/SaveXML.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yt/logging.hpp>
+#include <ya/commands/io/SaveCommand.hpp>
 #include <ya/commands/thread/ScheduleCommand.hpp>
 #include <ya/events/thread/ThreadAddTachyonEvent.hpp>
 #include <ya/replies/io/SaveReply.hpp>
@@ -101,6 +104,8 @@ namespace yq::tachyon {
         auto w = writer<Thread>();
         w.description("Thread of execution");
         w.slot(&Thread::on_schedule_command);
+        w.slot(&Thread::on_save_command);
+        w.slot(&Thread::on_save_reply);
         w.slot(&Thread::on_save_request);
         
         auto wt = writer<ThreadID>();
@@ -314,12 +319,85 @@ namespace yq::tachyon {
         m_thread.join();
     }
 
-    void Thread::on_save_request(const SaveRequest&req)
+    void Thread::on_save_command(const Ref<const SaveCommand>& cmd)
     {
-        if(req.target() != id())
+        if(!cmd)
+            return;
+tachyonInfo << ident() << "::on_save_command(" << cmd->filepath() << ")";
+        if(cmd->target() != id())
             return ;
+        send(new SaveRequest({.cause=cmd, .source=*this, .target=cmd->target()}, *cmd), cmd->target());
+    }
+    
+    void Thread::on_save_reply(const SaveReply& rep)
+    {
+tachyonInfo << ident() << "::on_save_reply()";
+        if(rep.target() != id())
+            return;
+        if(!rep.request())
+            return;
+            
+        PostCPtr   pp   = rep.request()->cause();
+        if(!pp){
+            tachyonInfo << "Save reply's request missing a cause, save aborted.";
+            return;
+        }
+        const SaveCommand* cmd  = dynamic_cast<const SaveCommand*>(pp.ptr());
+        if(!cmd){
+            tachyonInfo << "Save request had no command triggering it, save aborted.";
+            return ;
+        }
+            
+        if(cmd->filepath().empty()){
+            tachyonInfo << "Save command has no filepath, aborting";
+            return;
+        }
+            
+        SaveXML sxml;
+        sxml.save   = rep.save();
+        std::error_code ec = sxml.save_to(cmd->filepath());
+        if(ec != std::error_code()){
+            tachyonError << "Unable to save file: " << cmd->filepath() << " due to " << ec.message();
+        }
+    }
 
-        //  TODO
+    void Thread::on_save_request(const Ref<const SaveRequest>& req)
+    {
+tachyonInfo << ident() << "::on_save_request()";
+        if(!req)
+            return;
+        if(req->target() != id())
+            return ;
+            
+        SaveSPtr        save    = std::make_shared<Save>();
+        
+        TachyonIDSet    tachyons    = req->tachyons();
+        bool            selective   = !tachyons.empty();
+        
+        if(req->do_children() && selective){
+            const Frame*    frame   = Frame::current();
+            if(frame){  // *SHOULD* be present
+                for(TachyonID t : req->tachyons()){
+                    frame->foreach(CHILD, RECURSIVE, t, [&](TypedID tid){
+                        tachyons.insert(t);
+                    });
+                }
+            }
+        }
+        
+        if(req->do_thread() || tachyons.contains(id())){
+            save->insert(*this);
+        }
+        
+        for(auto& itr : m_objects){
+            if(selective && !tachyons.contains(itr.first))
+                continue;
+            if(!itr.second.object)
+                continue;
+            save->insert(*(itr.second.object));
+        }
+            
+        send(new SaveReply({.source=*this, .target=req->source()}, req, std::move(save)));
     }
 
     void Thread::on_schedule_command(const ScheduleCommand&cmd)

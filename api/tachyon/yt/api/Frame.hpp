@@ -74,6 +74,8 @@ namespace yq::tachyon {
     
         using proxy_span_t  = std::span<Proxy* const>;
 
+        std::span<const TypedID>    children(TachyonID) const;
+        
         bool contains(CameraID) const;
         bool contains(Camera³ID) const;
         bool contains(ControllerID) const;
@@ -166,6 +168,12 @@ namespace yq::tachyon {
         
         template <typename C, typename Pred>
         void        foreach(ref_k, std::span<const TypedID> ids, Pred&& pred) const;
+        
+        template <typename Pred>
+        void        foreach(child_k, TachyonID, Pred&& pred) const;
+
+        template <typename Pred>
+        void        foreach(child_k, recursive_k, TachyonID, Pred&& pred) const;
 
         const std::set<CameraID>&           ids(camera_k) const;
         const std::set<Camera³ID>&          ids(camera³_k) const;
@@ -429,6 +437,23 @@ namespace yq::tachyon {
         Frame& operator=(const Frame&) = delete;
         Frame& operator=(Frame&&) = delete;
     };
+
+    template <typename Pred>
+    void    Frame::foreach(child_k, TachyonID tac, Pred&& pred) const
+    {
+        for(TypedID typed : children(tac)){
+            pred(typed);
+        }
+    }
+
+    template <typename Pred>
+    void    Frame::foreach(child_k, recursive_k, TachyonID tac, Pred&& pred) const
+    {
+        for(TypedID typed : children(tac)){
+            pred(typed);
+            foreach(CHILD, RECURSIVE, typed, pred);
+        }
+    }
 
     template <typename C, typename Pred>
     void    Frame::foreach(ptr_k, std::span<const TypedID> ids, Pred&& pred) const

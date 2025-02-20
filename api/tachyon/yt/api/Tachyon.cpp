@@ -1221,6 +1221,11 @@ namespace yq::tachyon {
 
     void Tachyon::tx(TachyonID tid, PostCPtr pp)
     {
+        if(tid == id()){
+            mail(pp);
+            return ;
+        }
+            
         const Frame*  curFrame = Frame::current();
         assert(curFrame);
         if(!curFrame)
@@ -1298,6 +1303,35 @@ namespace yq::tachyon {
             t->mail(pp);
     }
 
+    // ---- TACHYON IDENT
+
+    void Tachyon::Ident::write(std::ostringstream& str) const
+    {
+        str << "{" << metaName << ":" << id;
+        if(!tacName.empty()){
+            str<<":\"" << tacName << "\"";
+        }
+        str << "}";
+    }
+
+    void Tachyon::Ident::write(log4cpp::CategoryStream& str) const
+    {
+        str << "{" << metaName << ":" << id;
+        if(!tacName.empty()){
+            str<<":\"" << tacName << "\"";
+        }
+        str << "}";
+    }
+
+    void Tachyon::Ident::write(Stream& str) const
+    {
+        str << "{" << metaName << ":" << id;
+        if(!tacName.empty()){
+            str<<":\"" << tacName << "\"";
+        }
+        str << "}";
+    }
+
     // ---- INFO AT THE END ---
     void Tachyon::init_info()
     {
@@ -1319,28 +1353,8 @@ namespace yq::tachyon {
         wt.set(Meta::Flag::ID);
     }
 
-
-    Stream& operator<<(Stream&str, const Tachyon::Ident& i)
-    {
-        str << "{" << i.metaName << ":" << i.id;
-        if(!i.tacName.empty()){
-            str<<":\"" << i.tacName << "\"";
-        }
-        str << "}";
-        return str;
-    }
-    
 }
 
-std::ostringstream& operator<<(std::ostringstream&str, const yq::tachyon::Tachyon::Ident& i)
-{
-    str << "{" << i.metaName << ":" << i.id;
-    if(!i.tacName.empty()){
-        str<<":\"" << i.tacName << "\"";
-    }
-    str << "}";
-    return str;
-}
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Tachyon)
 YQ_TYPE_IMPLEMENT(yq::tachyon::TachyonID)

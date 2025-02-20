@@ -311,8 +311,10 @@ namespace yq::tachyon {
             write_attribute(xml, szParent, parent->remap());
         }
         
-        if(auto p = std::get_if<uint64_t>(&obj.owner()); const SaveThread*th = save->thread(*p)){
-            write_attribute(xml, szThread, th->remap());
+        if(auto p = std::get_if<uint64_t>(&obj.owner())){
+            if(const SaveThread*th = save->thread(*p)){
+                write_attribute(xml, szThread, th->remap());
+            }
         }
         if(auto p = std::get_if<StdThread>(&obj.owner())){
             write_attribute(xml, szThread, *p);

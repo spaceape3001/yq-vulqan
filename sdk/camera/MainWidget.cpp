@@ -10,6 +10,7 @@
 
 #include <ya/cameras/SpaceCamera.hpp>
 #include <ya/commands/controller/ListenCommand.hpp>
+#include <ya/commands/io/SaveCommand.hpp>
 #include <ya/commands/ui/CloseCommand.hpp>
 #include <ya/controllers/Space3Controller.hpp>
 #include <ya/widgets/FrameInspector.hpp>
@@ -117,6 +118,17 @@ void    MainWidget::imgui(ViContext&ctx)
                         m_remote -> cmd_hide();
                     }
                 }
+            }
+
+            ImGui::Separator();
+            if(ImGui::MenuItem("Save")){
+                Post::Header    hdr;
+                hdr.source      = *this;
+                hdr.target      = (StdThread) SIM;
+                
+                yInfo() << "Sending save command";
+                
+                send(new SaveCommand(hdr, std::filesystem::path("camera.tsx")), hdr.target);
             }
 
             ImGui::Separator();

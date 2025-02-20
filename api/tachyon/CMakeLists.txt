@@ -228,6 +228,8 @@ add_library(${PROJECT_NAME} SHARED
 
     ya/commands/gamepad/GamepadZeroCommand.cpp
 
+    ya/commands/io/SaveCommand.cpp
+
     ya/commands/joystick/JoystickZeroCommand.cpp
 
     ya/commands/sim/ResumeCommand.cpp

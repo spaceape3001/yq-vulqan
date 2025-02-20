@@ -48,7 +48,7 @@ namespace yq::tachyon {
     Scene³::~Scene³()
     {
     }
-    
+
     void Scene³::finalize(Scene³Data& d) const
     {
         ③::finalize(d);

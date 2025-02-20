@@ -7,10 +7,12 @@
 #include <yt/3D/Camera3.hpp>
 #include <yt/3D/Camera3Data.hpp>
 #include <yt/3D/Camera3InfoWriter.hpp>
+#include <ya/commands/SpatialCommand.hpp>
 #include <ya/commands/camera/CameraSetScreen.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
+#include <yt/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Camera³ID)
@@ -43,6 +45,7 @@ namespace yq::tachyon {
     {
     }
     
+
     void Camera³::finalize(Camera³Data&d) const
     {
         ③::finalize(d);
@@ -56,7 +59,7 @@ namespace yq::tachyon {
             mark();
         }
     }
-
+    
     void Camera³::snap(Camera³Snap& sn) const
     {
         ③::snap(sn);

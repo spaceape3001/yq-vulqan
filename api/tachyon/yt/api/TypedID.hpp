@@ -10,6 +10,7 @@
 #include <yt/api/ID.hpp>
 #include <yt/typedef/tachyon.hpp>
 #include <yq/meta/InfoBinder.hpp>
+#include <yt/api/StdThread.hpp>
 #include <compare>
 #include <cstdint>
 
@@ -23,6 +24,8 @@ namespace yq::tachyon {
         constexpr TypedID() noexcept {}
         TypedID(const Tachyon&);
         TypedID(const Tachyon*);
+        
+        TypedID(StdThread);
         
         /*! \brief Constructor
         

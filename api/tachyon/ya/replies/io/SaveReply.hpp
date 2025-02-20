@@ -15,6 +15,7 @@ namespace yq::tachyon {
     public:
     
         SaveReply(const Header&, const RequestCPtr&, SaveSPtr&&);
+        SaveReply(const Header&, const RequestCPtr&, const SaveSPtr&);
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         static void  init_info();

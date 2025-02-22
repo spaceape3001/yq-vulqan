@@ -35,7 +35,6 @@ namespace yq::tachyon {
 
     void            AOrientation³::orientation(set_k, const Quaternion3D& Q) 
     {
-tachyonInfo << "AOrientation³::orientation(SET, " << Q << ")";
         double  q   = Q.length²();
         if(q < 1e-6)
             return ;

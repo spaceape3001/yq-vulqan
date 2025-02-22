@@ -40,7 +40,6 @@ namespace yq::tachyon {
 
     void        APosition³::position(set_k, const Vector3D& sz) 
     {
-tachyonInfo << "APosition³::position(SET, " << sz << ")";
         m_position  =    sz;
         mark();
         position(EMIT);

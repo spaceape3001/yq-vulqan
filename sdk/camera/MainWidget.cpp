@@ -196,7 +196,6 @@ Execution    MainWidget::setup(const Context& ctx)
             return WAIT;
         
         send(new ListenCommand({.target=m_controller}, TypedID(vid, Type::Viewer)));
-    yInfo() << "MainWidget::started successfully";
         m_init = true;
     }
     return Widget::setup(ctx);

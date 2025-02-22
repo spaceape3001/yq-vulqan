@@ -38,7 +38,6 @@ namespace yq::tachyon {
     
     void    Space³Controller::on_gamepad_axis(const GamepadAxisEvent&evt)
     {
-yInfo() << ident() << "::on_gamepad_axis(" << evt.axis() << ")";
         switch(evt.axis()){
         case 0:
             m_λ.input   = evt.value();
@@ -68,7 +67,6 @@ yInfo() << ident() << "::on_gamepad_axis(" << evt.axis() << ")";
 
     void    Space³Controller::on_key_press(const KeyPressEvent&evt)
     {
-yInfo() << ident() << "::on_key_press(" << evt.key() << ") with target " << m_target.id;
         switch(evt.key()){
         case KeyCode::A:
             send(new MoveByʸ({.target=m_target}, m_vN.press ));

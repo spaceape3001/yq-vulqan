@@ -126,11 +126,11 @@ namespace yq::tachyon {
         const PostInfo* ppi = fn->post();
         assert(ppi);
         ranked.push_back({depth, ppi, fn});
-        for(const ObjectInfo* derv : ppi->deriveds(true).all){
+        for(const ObjectInfo* derv : ppi->deriveds(ALL).all){
             const PostInfo* ppd = static_cast<const PostInfo*>(derv);   // should *NEVER* be wrong given the inheritance
-            if(!ppd->is_abstract()){
+            //if(!ppd->is_abstract()){
                 ranked.push_back({depth, ppd, fn});
-            }
+            //}
         }
     }
 
@@ -142,7 +142,7 @@ namespace yq::tachyon {
     void    TachyonInfo::sweep_impl() 
     {   
         ObjectInfo::sweep_impl();
-        
+
         m_dispatch.clear();
         m_dispatches.ranked.clear();
         m_interfaces.all.clear();
@@ -195,7 +195,9 @@ namespace yq::tachyon {
                 m_dispatches.ranked[n]   = r.fn;
             }
             
-            m_dispatch[pi] = std::span(&m_dispatches.ranked[nC], ranked.size()-nC);
+            if(pi){
+                m_dispatch[pi] = std::span(&m_dispatches.ranked[nC], ranked.size()-nC);
+            }
         }
     }
 
@@ -686,7 +688,7 @@ namespace yq::tachyon {
             if(fn->dispatch(this, pp))
                 return ;
         }
-
+        
         unhandled(pp);
     }
 
@@ -1221,10 +1223,12 @@ namespace yq::tachyon {
 
     void Tachyon::tx(TachyonID tid, PostCPtr pp)
     {
+        #if 0
         if(tid == id()){
             mail(pp);
             return ;
         }
+        #endif
             
         const Frame*  curFrame = Frame::current();
         assert(curFrame);

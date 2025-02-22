@@ -9,7 +9,6 @@
 #include <yt/3D/3D.hpp>
 #include <yt/scene/Camera.hpp>
 #include <yt/typedef/camera3.hpp>
-#include <yt/typedef/spatial3.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
@@ -56,7 +55,7 @@ namespace yq::tachyon {
     
     protected:
         Camera³(const Param&);
-        ~Camera³();
+        virtual ~Camera³();
         
         void finalize(Camera³Data&) const;
         void snap(Camera³Snap&) const;

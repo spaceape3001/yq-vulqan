@@ -110,7 +110,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Save::Save()
+    Save::Save(SaveOptions opts) : m_options(opts)
     {
     }
     

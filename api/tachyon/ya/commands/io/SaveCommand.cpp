@@ -16,12 +16,12 @@ namespace yq::tachyon {
     }
 
     SaveCommand::SaveCommand(const Header&h, const std::filesystem::path& fp, const Param& p) : 
-        IOCommand(h), m_filepath(fp), m_tachyons(p.tachyons), m_thread(p.thread), m_doChildren(p.do_children)
+        IOCommand(h), m_filepath(fp), m_tachyons(p.tachyons), m_thread(p.thread), m_options(p.options)
     {
     }
 
     SaveCommand::SaveCommand(const SaveCommand& cp, const Header& h) : IOCommand(cp, h), 
-        m_filepath(cp.m_filepath), m_tachyons(cp.m_tachyons), m_thread(cp.m_thread), m_doChildren(cp.m_doChildren)
+        m_filepath(cp.m_filepath), m_tachyons(cp.m_tachyons), m_thread(cp.m_thread), m_options(cp.m_options)
     {
     }
     

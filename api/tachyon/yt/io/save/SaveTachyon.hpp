@@ -45,6 +45,14 @@ namespace yq::tachyon {
         
         uint64_t                parent() const { return m_parent; }
         const owner_spec_t&     owner() const { return m_owner; }
+        
+        using SaveObject::append;
+        
+        void        append(asset_t);
+        void        append(delegate_t);
+        
+        void    set_parent(uint64_t);
+        void    set_owner(owner_spec_t);
     
     protected:
         virtual ~SaveTachyon();

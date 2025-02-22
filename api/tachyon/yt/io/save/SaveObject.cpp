@@ -28,9 +28,19 @@ namespace yq::tachyon {
     {
         
     }
-    
+
     SaveObject::~SaveObject()
     {
+    }
+
+    void    SaveObject::append(const SaveProperty& sp) 
+    {
+        m_properties.push_back(sp);
+    }
+    
+    void    SaveObject::append(SaveProperty&&sp)
+    {
+        m_properties.push_back(std::move(sp));
     }
     
     size_t      SaveObject::count(property_k) const

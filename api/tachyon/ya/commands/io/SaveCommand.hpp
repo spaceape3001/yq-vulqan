@@ -10,6 +10,7 @@
 #include <yt/typedef/tachyon.hpp>
 #include <yt/api/StdThread.hpp>
 #include <yt/api/TypedID.hpp>
+#include <yt/typedef/save.hpp>
 #include <filesystem>
 
 namespace yq::tachyon {
@@ -17,7 +18,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(SaveCommand, IOCommand)
     public:
         struct Param {
-            bool                    do_children  = true;
+            SaveOptions             options;
             TachyonIDSet            tachyons;   //< Tachyons to save (leave blank for all)
             TypedID                 thread;     //< Thread to save from
         };
@@ -32,7 +33,7 @@ namespace yq::tachyon {
         
         TypedID     thread() const { return m_thread; }
         const TachyonIDSet& tachyons() const { return m_tachyons; }
-        bool                do_children() const { return m_doChildren; }
+        SaveOptions         options() const { return m_options; }
 
     protected:
         SaveCommand(const SaveCommand&, const Header&);
@@ -42,7 +43,7 @@ namespace yq::tachyon {
         std::filesystem::path       m_filepath;
         TachyonIDSet                m_tachyons;
         TypedID                     m_thread;
-        bool                        m_doChildren;
+        SaveOptions                 m_options;
 
         SaveCommand(const SaveCommand&) = delete;
         SaveCommand(SaveCommand&&) = delete;

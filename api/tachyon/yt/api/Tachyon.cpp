@@ -88,9 +88,19 @@ namespace yq::tachyon {
         }
     }
 
+    const AssetProperty*                TachyonInfo::asset(std::string_view sv) const
+    {
+        return m_assets.all.find(sv);
+    }
+
     const MetaLookup<AssetProperty>&    TachyonInfo::assets(bool all) const
     {
         return all ? m_assets.all : m_assets.local;
+    }
+
+    const DelegateProperty*             TachyonInfo::delegate(std::string_view sv) const
+    {
+        return m_delegates.all.find(sv);
     }
 
     const MetaLookup<DelegateProperty>&    TachyonInfo::delegates(bool all) const

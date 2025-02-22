@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <vector>
 #include <yt/keywords.hpp>
+#include <yt/typedef/save.hpp>
 //#include <tbb/spin_rw_mutex.h>
 #include <yt/api/StdThread.hpp>
 
@@ -39,6 +40,8 @@ namespace yq::tachyon {
 
     class Save {
     public:
+        
+    
 
         SaveAsset*              asset(uint64_t);
         const SaveAsset*        asset(uint64_t) const;
@@ -51,7 +54,7 @@ namespace yq::tachyon {
         SaveThread*             thread(uint64_t);
         const SaveThread*       thread(uint64_t) const;
 
-        Save();
+        Save(SaveOptions opts={});
         ~Save();
         
         SaveAsset*              insert(const Asset&);
@@ -88,13 +91,17 @@ namespace yq::tachyon {
         std::optional<StdThread>   std_thread(ThreadID) const;
         
         void    build();
+        
+        bool    record_owners() const { return !m_options(SaveOption::SkipOwnership); }
+        bool    option(SaveOption so) const { return m_options(so); }
     
     private:
         ObjectMap                           m_objects;
         VariableMap                         m_variables;
         std::vector<std::filesystem::path>  m_assetPath;
-        bool                                m_prepped   = false;
         StdThreadRevMap                     m_threads;
+        SaveOptions                         m_options = {};
+        bool                                m_prepped   = false;
         //mutable tbb::spin_rw_mutex          m_mutex;
 
         //! Prepares the save for saving (call before insert/add-asset-path)

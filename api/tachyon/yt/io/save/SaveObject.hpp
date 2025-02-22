@@ -58,6 +58,9 @@ namespace yq::tachyon {
         
         const PropertyVector&   properties() const { return m_properties; }
         
+        void    append(const SaveProperty&);
+        void    append(SaveProperty&&);
+        
     protected:
         virtual ~SaveObject();
         friend class Save;

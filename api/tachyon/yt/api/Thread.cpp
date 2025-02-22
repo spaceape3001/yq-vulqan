@@ -369,12 +369,12 @@ tachyonInfo << ident() << "::on_save_request()";
         if(req->target() != id())
             return ;
             
-        SaveSPtr        save    = std::make_shared<Save>();
+        SaveSPtr        save    = std::make_shared<Save>(req->options());
         
         TachyonIDSet    tachyons    = req->tachyons();
         bool            selective   = !tachyons.empty();
         
-        if(req->do_children() && selective){
+        if(selective && !req->option(SaveOption::SkipChildren)){
             const Frame*    frame   = Frame::current();
             if(frame){  // *SHOULD* be present
                 for(TachyonID t : req->tachyons()){
@@ -385,7 +385,7 @@ tachyonInfo << ident() << "::on_save_request()";
             }
         }
         
-        if(req->do_thread() || tachyons.contains(id())){
+        if(req->option(SaveOption::DoThreads) || tachyons.contains(id())){
             save->insert(*this);
         }
         

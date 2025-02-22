@@ -10,6 +10,10 @@
 #include <yt/typedef/save.hpp>
 #include <yt/keywords.hpp>
 
+namespace yq {
+    class TypeInfo;
+}
+
 namespace yq::tachyon {
     class SaveAsset;
     class SaveDelegate;
@@ -17,6 +21,8 @@ namespace yq::tachyon {
     class SaveTachyon;
     class SaveThread;
 
+    /*! \brief IO driver for reading/writing the Tachyon Save XML (TSX) files
+    */
     class SaveXML : public XmlFile {
     public:
 
@@ -39,11 +45,20 @@ namespace yq::tachyon {
         void        write(XmlNode&, tachyon_k,  const SaveTachyon&) const;
         void        write(XmlNode&, thread_k,   const SaveThread&) const;
         
+        void        write(XmlNode&, const Any&) const;
+        
         std::error_code    read(const XmlNode&, asset_k);
         std::error_code    read(const XmlNode&, delegate_k);
         std::error_code    read(const XmlNode&, object_k);
         std::error_code    read(const XmlNode&, tachyon_k);
         std::error_code    read(const XmlNode&, thread_k);
         std::error_code    read(const XmlNode&, variable_k);
+        
+        std::error_code    read(Any&, const XmlNode&, const TypeInfo&);
+        std::error_code    read(SaveAsset&,     asset_k, const XmlNode&);
+        std::error_code    read(SaveDelegate&,  delegate_k, const XmlNode&);
+        std::error_code    read(SaveObject&,    object_k, const XmlNode&);
+        std::error_code    read(SaveTachyon&,   tachyon_k, const XmlNode&);
+        std::error_code    read(SaveThread&,    thread_k, const XmlNode&);
     };
 }

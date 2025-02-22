@@ -85,6 +85,9 @@ namespace yq::tachyon {
         const MetaLookup<AssetProperty>&    assets(all_k) const { return m_assets.all; }
         
         const MetaLookup<AssetProperty>&    assets(local_k) const { return m_assets.local; }
+        
+        //! Finds the asset property (ALL is assumed)
+        const AssetProperty*                asset(std::string_view) const;
 
         const MetaLookup<DelegateProperty>&    delegates(bool all=false) const;
 
@@ -92,6 +95,8 @@ namespace yq::tachyon {
         
         const MetaLookup<DelegateProperty>&    delegates(local_k) const { return m_delegates.local; }
 
+        //! Finds the delegate property (ALL is assumed)
+        const DelegateProperty*             delegate(std::string_view) const;
 
         using dispatch_vec_t    = std::vector<const PBXDispatch*>;
         using dispatch_span_t   = std::span<const PBXDispatch*>;

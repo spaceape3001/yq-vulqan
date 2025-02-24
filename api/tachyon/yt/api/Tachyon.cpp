@@ -22,6 +22,7 @@
 //#include <ya/commands/tachyonProxyCommand.hpp>
 #include <ya/commands/tachyon/RemoveChildCommand.hpp>
 #include <ya/commands/tachyon/RethreadCommand.hpp>
+#include <ya/commands/tachyon/SetNameCommand.hpp>
 #include <ya/commands/tachyon/SetParentCommand.hpp>
 #include <ya/commands/tachyon/SnoopCommand.hpp>
 #include <ya/commands/tachyon/SubscribeCommand.hpp>
@@ -34,11 +35,13 @@
 #include <ya/events/tachyon/ChildRemoveEvent.hpp>
 #include <ya/events/tachyon/DestroyEvent.hpp>
 #include <ya/events/tachyon/DirtyEvent.hpp>
+#include <ya/events/tachyon/NameChangeEvent.hpp>
 #include <ya/events/tachyon/ParentChangeEvent.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yt/logging.hpp>
+#include <yt/tags.hpp>
 #include <yq/stream/Text.hpp>
 #include <yq/meta/Init.hpp>
 
@@ -837,6 +840,20 @@ namespace yq::tachyon {
             Thread::rethread(this, cmd.thread());
     }
 
+    void    Tachyon::on_set_name_command(const SetNameCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        if(cmd.name() == m_name)
+            return;
+            
+        std::string old = cmd.name();
+        std::swap(old,m_name);
+        
+        send(new NameChangeEvent({.source=*this}, std::move(old), m_name));
+        mark();
+    }
+
     void    Tachyon::on_set_parent_command(const SetParentCommand&cmd)
     {
         if(cmd.target() != id())
@@ -1434,12 +1451,13 @@ namespace yq::tachyon {
         w.slot(&Tachyon::on_remove_child_command);
         w.slot(&Tachyon::on_resume_command);
         w.slot(&Tachyon::on_rethread_command);
+        w.slot(&Tachyon::on_set_name_command);
         w.slot(&Tachyon::on_set_parent_command);
         w.slot(&Tachyon::on_snoop_command);
         w.slot(&Tachyon::on_subscribe_command);
         w.slot(&Tachyon::on_unsnoop_command);
         w.slot(&Tachyon::on_unsubscribe_command);
-        w.property("name", &Tachyon::name);
+        w.property("name", &Tachyon::name).tag(kTag_Save);
         
         auto wt = writer<TachyonID>();
         wt.description("Unique Tachyon Identifier");

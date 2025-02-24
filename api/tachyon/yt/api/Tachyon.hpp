@@ -41,20 +41,21 @@ namespace yq::tachyon {
     class PBXDispatch;
     struct StartupContext;
     struct Context;
-    class TachyonProxyCommand;
+    class AddChildCommand;
     class DestroyCommand;
     class DestroyEvent;
-    class TachyonDeleteCommand;
     class RethreadCommand;
-    class SnoopCommand;
-    class SubscribeCommand;
     class UnsnoopCommand;
     class UnsubscribeCommand;
     class PauseCommand;
     class RemoveChildCommand;
     class ResumeCommand;
+    class SetNameCommand;
     class SetParentCommand;
-    class AddChildCommand;
+    class SnoopCommand;
+    class SubscribeCommand;
+    //class TachyonDeleteCommand;
+    //class TachyonProxyCommand;
     
     /// TACHYON INFO
 
@@ -670,6 +671,7 @@ namespace yq::tachyon {
         void    on_remove_child_command(const RemoveChildCommand&);
         void    on_resume_command(const ResumeCommand&);
         void    on_rethread_command(const RethreadCommand&);
+        void    on_set_name_command(const SetNameCommand&);
         void    on_set_parent_command(const SetParentCommand&);
         void    on_snoop_command(const SnoopCommand&);
         void    on_subscribe_command(const SubscribeCommand&);

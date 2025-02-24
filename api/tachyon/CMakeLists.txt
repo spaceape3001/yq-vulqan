@@ -349,6 +349,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/tachyon/DestroyCommand.cpp
     ya/commands/tachyon/RemoveChildCommand.cpp
     ya/commands/tachyon/RethreadCommand.cpp
+    ya/commands/tachyon/SetNameCommand.cpp
     ya/commands/tachyon/SetParentCommand.cpp
     ya/commands/tachyon/SnoopCommand.cpp
     ya/commands/tachyon/SubscribeCommand.cpp
@@ -473,6 +474,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/tachyon/ChildRemoveEvent.cpp
     ya/events/tachyon/DestroyEvent.cpp
     ya/events/tachyon/DirtyEvent.cpp
+    ya/events/tachyon/NameChangeEvent.cpp
     ya/events/tachyon/ParentChangeEvent.cpp
     
     ya/events/thread/ThreadAddTachyonEvent.cpp

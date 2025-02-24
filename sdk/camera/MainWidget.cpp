@@ -6,7 +6,6 @@
 
 #include "MainWidget.hpp"
 #include "CameraScene.hpp"
-#include "SpaceCameraRemote.hpp"
 
 #include <ya/cameras/SpaceCamera.hpp>
 #include <ya/commands/controller/ListenCommand.hpp>
@@ -14,6 +13,7 @@
 #include <ya/commands/ui/CloseCommand.hpp>
 #include <ya/controllers/Space3Controller.hpp>
 #include <ya/widgets/FrameInspector.hpp>
+#include <ya/widgets/SpaceCameraRemote.hpp>
 #include <yt/api/Frame.hpp>
 #include <yt/app/Viewer.hpp>
 #include <yt/ui/MyImGui.hpp>

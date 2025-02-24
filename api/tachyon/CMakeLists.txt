@@ -611,6 +611,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/widgets/ImGuiDemoWidget.cpp
     #ya/widgets/LabelWidget.cpp
     ya/widgets/Scene3Widget.cpp
+    ya/widgets/SpaceCameraRemote.cpp
     ya/widgets/StackedWidget.cpp
     ya/widgets/TextArea.cpp
 )

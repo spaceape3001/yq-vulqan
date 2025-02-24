@@ -14,15 +14,12 @@ namespace yq::tachyon {
     class SpaceCamera;
     class CameraInfo;
     class FrameInspector;
+    class SpaceCameraRemote;
 }
 
 using namespace yq;
 using namespace yq::tachyon;
 
-
-class CameraScene;
-class CameraController;
-class SpaceCameraRemote;
 
 /*! \brief Main camera app widget
     

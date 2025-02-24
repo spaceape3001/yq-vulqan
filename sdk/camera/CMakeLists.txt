@@ -6,7 +6,6 @@
 
 add_executable(camera 
     CameraScene.cpp
-    SpaceCameraRemote.cpp
     MainWidget.cpp
     main.cpp
 )

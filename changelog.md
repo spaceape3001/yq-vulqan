@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Fixed bug in posts not binding to derived/base classes if they're marked abstract (which will always be the case with the current minimum header argument)
-* (pending) Save/load of tachyons to XML format
+* Save/load of tachyons to XML format
 
 ## 2025.02.14
 

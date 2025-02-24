@@ -10,8 +10,13 @@
 #include <vector>
 #include <yt/keywords.hpp>
 #include <yt/typedef/save.hpp>
+#include <yt/typedef/tachyon.hpp>
+#include <yt/typedef/thread.hpp>
+#include <yt/api/ID.hpp>
+#include <yq/core/Ref.hpp>
 //#include <tbb/spin_rw_mutex.h>
 #include <yt/api/StdThread.hpp>
+#include <yq/typedef/string_maps.hpp>
 
 namespace yq {
     class Object;
@@ -37,12 +42,15 @@ namespace yq::tachyon {
     class SaveTachyon;
     class SaveThread;
 
+    struct ReincarnationConfig {
+        TachyonID           parent;     //!< Used to force a parent (owner check auto-disabled)
+        string_any_map_t    variables;  //!< Used to override anything in the save
+        ThreadSpec          owner;      //!< Set to override threads (if scheduling)
+    };
 
     class Save {
     public:
         
-    
-
         SaveAsset*              asset(uint64_t);
         const SaveAsset*        asset(uint64_t) const;
         SaveDelegate*           delegate(uint64_t);
@@ -59,13 +67,13 @@ namespace yq::tachyon {
         
         SaveAsset*              insert(const Asset&);
         SaveDelegate*           insert(const Delegate&);
-        SaveObject*             insert(const Object&);
+        //SaveObject*             insert(const Object&); // disabled until we've got a supported path
         SaveThread*             insert(const Thread&);
         SaveTachyon*            insert(const Tachyon&);
         
         SaveAsset*              create(const AssetInfo*, const std::filesystem::path&);
         SaveDelegate*           create(const DelegateInfo*);
-        SaveObject*             create(const ObjectInfo*);
+        //SaveObject*             create(const ObjectInfo*); // disabled until we've got a supported path
         SaveTachyon*            create(const TachyonInfo*);
         SaveThread*             create(const ThreadInfo*);
         
@@ -81,10 +89,9 @@ namespace yq::tachyon {
         std::filesystem::path    relativize(const std::filesystem::path&) const;
     
         using ObjectMap     = std::map<uint64_t, SaveObject*>;
-        using VariableMap   = std::map<std::string, Any, IgCase>;
         
-        const ObjectMap&    objects() const { return m_objects; }
-        const VariableMap&  variables() const { return m_variables; }
+        const ObjectMap&            objects() const { return m_objects; }
+        const string_any_map_t&     variables() const { return m_variables; }
     
         void    add_variable(const std::string&, Any&&);
     
@@ -94,10 +101,21 @@ namespace yq::tachyon {
         
         bool    record_owners() const { return !m_options(SaveOption::SkipOwnership); }
         bool    option(SaveOption so) const { return m_options(so); }
-    
+        
+        /*! \brief Executes the save to create new tachyons
+        
+            \note This one does not schedule the tachyons onto any threads... that's left 
+            to the caller
+        */
+        std::error_code         execute(TachyonPtrVector&, const ReincarnationConfig&cfg={}) const;
+        
+        /*! \brief Executes the save to create & schedule new tachyons
+        */
+        std::error_code         execute(schedule_k, const ReincarnationConfig&cfg={}) const;
+        
     private:
         ObjectMap                           m_objects;
-        VariableMap                         m_variables;
+        string_any_map_t                    m_variables;
         std::vector<std::filesystem::path>  m_assetPath;
         StdThreadRevMap                     m_threads;
         SaveOptions                         m_options = {};
@@ -118,6 +136,8 @@ namespace yq::tachyon {
         static SaveObject*      save_tachyon(Save&, const Object&);
         static SaveObject*      save_thread(Save&, const Object&);
         static SaveObject*      samk(Save&, const Object&);
+        
+        struct Reincarnator;
     };
 }
 

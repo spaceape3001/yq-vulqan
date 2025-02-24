@@ -19,10 +19,10 @@ namespace yq::tachyon {
     class ScheduleCommand : public ThreadCommand {
         YQ_OBJECT_DECLARE(ScheduleCommand, ThreadCommand)
     public:
-        ScheduleCommand(const Header&, const std::vector<TachyonPtr>&);
-        ScheduleCommand(const Header&, std::vector<TachyonPtr>&&);
-
-        const std::vector<TachyonPtr>&  tachyons() const { return m_tachyons; }
+        ScheduleCommand(const Header&, const TachyonPtrVector&);
+        ScheduleCommand(const Header&, TachyonPtrVector&&);
+        
+        const TachyonPtrVector&  tachyons() const { return m_tachyons; }
         
         static void init_info();
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         ~ScheduleCommand();
 
     private:
-        std::vector<TachyonPtr> m_tachyons;
+        TachyonPtrVector    m_tachyons;
 
         ScheduleCommand(const ScheduleCommand&) = delete;
         ScheduleCommand(ScheduleCommand&&) = delete;

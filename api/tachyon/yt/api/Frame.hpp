@@ -72,6 +72,8 @@ namespace yq::tachyon {
         //! \note This may be null, so check!
         static const Frame*     current() { return s_current; }
     
+        static TypedID  resolve(TachyonSpec);
+    
         using proxy_span_t  = std::span<Proxy* const>;
 
         std::span<const TypedID>    children(TachyonID) const;

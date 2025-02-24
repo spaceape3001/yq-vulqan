@@ -345,8 +345,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/SetSizeZ.cpp
     ya/commands/spatial/YawBy.cpp
     
+    ya/commands/tachyon/AddChildCommand.cpp
     ya/commands/tachyon/DestroyCommand.cpp
+    ya/commands/tachyon/RemoveChildCommand.cpp
     ya/commands/tachyon/RethreadCommand.cpp
+    ya/commands/tachyon/SetParentCommand.cpp
     ya/commands/tachyon/SnoopCommand.cpp
     ya/commands/tachyon/SubscribeCommand.cpp
     ya/commands/tachyon/UnsnoopCommand.cpp
@@ -466,8 +469,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/sim/ResumeEvent.cpp
     ya/events/sim/TickEvent.cpp
     
+    ya/events/tachyon/ChildAddEvent.cpp
+    ya/events/tachyon/ChildRemoveEvent.cpp
     ya/events/tachyon/DestroyEvent.cpp
     ya/events/tachyon/DirtyEvent.cpp
+    ya/events/tachyon/ParentChangeEvent.cpp
     
     ya/events/thread/ThreadAddTachyonEvent.cpp
 

@@ -51,7 +51,10 @@ namespace yq::tachyon {
     class UnsnoopCommand;
     class UnsubscribeCommand;
     class PauseCommand;
+    class RemoveChildCommand;
     class ResumeCommand;
+    class SetParentCommand;
+    class AddChildCommand;
     
     /// TACHYON INFO
 
@@ -270,6 +273,7 @@ namespace yq::tachyon {
         
         static void         init_info();
         
+        
         const std::vector<TypedID>& children() const { return m_children; }
         
         bool                dying() const;
@@ -297,6 +301,9 @@ namespace yq::tachyon {
         //! Inbound mail to this tachyon
         void                mail(std::span<PostCPtr const>);
         
+        //! Inbound to a specific tachyon (bypasses send) and requires recipient to be on the current frame
+        static void         mail(TachyonID, const PostCPtr&);
+        
         //! Our name
         const std::string&  name() const { return m_name; }
         
@@ -317,6 +324,9 @@ namespace yq::tachyon {
         //Tachyon*            root(ptr_k, const Frame&) const;
         
         bool                running() const;
+
+        //! Sets parent on next tick (with implied add/remove child) 
+        void                set_parent(TachyonSpec);
         
         //! \note NOT thread-safe (yet)
         //! Subscribes the given listener to OUR posts
@@ -383,6 +393,12 @@ namespace yq::tachyon {
 
         //! Initiates the teardown/destruction process
         void            cmd_teardown() { teardown(); }
+
+        //! called by the save/load API (assumed thread-safe)
+        void    load_set_parent(TypedID);
+
+        //! called by the save/load API (assumed thread-safe)
+        void    load_add_child(TypedID);
 
     protected:
 
@@ -647,11 +663,14 @@ namespace yq::tachyon {
         
 //        void    on_proxy_command(const TachyonProxyCommand&);
         
+        void    on_add_child_command(const AddChildCommand&);
         void    on_destroy_command(const DestroyCommand&);
         void    on_destroy_event(const DestroyEvent&);
         void    on_pause_command(const PauseCommand&);
+        void    on_remove_child_command(const RemoveChildCommand&);
         void    on_resume_command(const ResumeCommand&);
         void    on_rethread_command(const RethreadCommand&);
+        void    on_set_parent_command(const SetParentCommand&);
         void    on_snoop_command(const SnoopCommand&);
         void    on_subscribe_command(const SubscribeCommand&);
         void    on_unsnoop_command(const UnsnoopCommand&);

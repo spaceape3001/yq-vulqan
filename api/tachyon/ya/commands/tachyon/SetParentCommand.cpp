@@ -4,12 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/SetParentCommand.hpp>
+#include <ya/commands/tachyon/SetParentCommand.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 
 namespace yq::tachyon {
-    SetParentCommand::SetParentCommand(TachyonID tac, TachyonID parentID, const Param& p) :
-        Command(p), TachyonBind(tac), m_parent(parentID)
+    SetParentCommand::SetParentCommand(const Header& h, TachyonSpec par) : TachyonCommand(h), m_parent(par)
+    {
+    }
+    
+    SetParentCommand::SetParentCommand(const SetParentCommand& cp, const Header& h) : TachyonCommand(cp, h), m_parent(cp.m_parent)
     {
     }
     
@@ -17,6 +20,11 @@ namespace yq::tachyon {
     {
     }
         
+    PostCPtr    SetParentCommand::clone(rebind_k, const Header& h) const 
+    {
+        return new SetParentCommand(*this, h);
+    }
+
     void SetParentCommand::init_info()
     {
         auto w = writer<SetParentCommand>();
@@ -24,4 +32,4 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(SetParentCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetParentCommand)

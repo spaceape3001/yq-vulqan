@@ -371,8 +371,11 @@ tachyonInfo << ident() << "::on_save_request()";
             
         SaveSPtr        save    = std::make_shared<Save>(req->options());
         
-        TachyonIDSet    tachyons    = req->tachyons();
+        TachyonIDSet    tachyons;
         bool            selective   = !tachyons.empty();
+        
+        if(tachyons.empty() || !req->option(SaveOption::OnlyChildren))
+            tachyons    = req->tachyons();
         
         if(selective && !req->option(SaveOption::SkipChildren)){
             const Frame*    frame   = Frame::current();

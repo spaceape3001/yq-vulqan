@@ -170,6 +170,8 @@ namespace yq::tachyon {
     struct scene_k {};
     struct scene³_k {};
     struct settable_k {};
+    
+    struct schedule_k {};
 
     struct shared_k {
         consteval operator DataActivity() const noexcept { return DataActivity::SHARED; }
@@ -326,6 +328,7 @@ namespace yq::tachyon {
     static constexpr scalable_k         SCALABLE;
     static constexpr scene_k            SCENE;
     static constexpr scene³_k           SCENE³;
+    static constexpr schedule_k         SCHEDULE;
     static constexpr settable_k         SETTABLE;
     static constexpr shared_k           SHARED;
     static constexpr shutdown_k         SHUTDOWN;

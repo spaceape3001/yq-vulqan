@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <vector>
+
 namespace yq {
     template <typename> class Ref;
 }
@@ -14,6 +16,8 @@ namespace yq::tachyon {
     class Thread;
     using ThreadPtr         = Ref<Thread>;
     using ThreadCPtr        = Ref<const Thread>;
+    
+    using ThreadPtrVector   = std::vector<ThreadPtr>;
     
     template <class> class ID;
     using ThreadID = ID<Thread>;

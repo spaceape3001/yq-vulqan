@@ -17,9 +17,12 @@
 
 #include <ya/commands/sim/PauseCommand.hpp>
 #include <ya/commands/sim/ResumeCommand.hpp>
+#include <ya/commands/tachyon/AddChildCommand.hpp>
 #include <ya/commands/tachyon/DestroyCommand.hpp>
 //#include <ya/commands/tachyonProxyCommand.hpp>
+#include <ya/commands/tachyon/RemoveChildCommand.hpp>
 #include <ya/commands/tachyon/RethreadCommand.hpp>
+#include <ya/commands/tachyon/SetParentCommand.hpp>
 #include <ya/commands/tachyon/SnoopCommand.hpp>
 #include <ya/commands/tachyon/SubscribeCommand.hpp>
 #include <ya/commands/tachyon/UnsnoopCommand.hpp>
@@ -27,8 +30,11 @@
 
 #include <ya/events/sim/PauseEvent.hpp>
 #include <ya/events/sim/ResumeEvent.hpp>
+#include <ya/events/tachyon/ChildAddEvent.hpp>
+#include <ya/events/tachyon/ChildRemoveEvent.hpp>
 #include <ya/events/tachyon/DestroyEvent.hpp>
 #include <ya/events/tachyon/DirtyEvent.hpp>
+#include <ya/events/tachyon/ParentChangeEvent.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
@@ -317,6 +323,17 @@ namespace yq::tachyon {
         Thread::retain(tp, st);
     }
 
+    void Tachyon::mail(TachyonID tid, const PostCPtr&pp)
+    {
+        const Frame* frame  = Frame::current();
+        if(!frame)
+            return;
+        Tachyon*  tac  = frame->object(tid);
+        if(!tac)
+            return ;
+        tac -> mail(pp);
+    }
+
 // ------------------------------------------------------------------------
 
 
@@ -342,9 +359,7 @@ namespace yq::tachyon {
     {
         m_children.push_back(tid);
         _subscribe(tid, MG::Children);
-        
-        // TODO: SEND EVENT HERE
-        
+        send(new ChildAddEvent({.source=*this}, tid));
         mark();
     }
     
@@ -367,9 +382,7 @@ namespace yq::tachyon {
         });
         if(cnt){
             _unsubscribe(tid, MG::Children);
-        
-            // TODO: SEND EVENT HERE
-
+            send(new ChildRemoveEvent({.source=*this}, child));
             mark();
         }
     }
@@ -721,14 +734,26 @@ namespace yq::tachyon {
         return { metaInfo().name(), m_name, (uint64_t) id() };
     }
 
+    bool Tachyon::in_tick() const
+    {
+        return m_thread == thread::id();
+    }
+
     bool Tachyon::kaput() const
     {
         return m_stage == Stage::Kaput;
     }
 
-    bool Tachyon::in_tick() const
+    void    Tachyon::load_add_child(TypedID tid)
     {
-        return m_thread == thread::id();
+        m_children.push_back(tid);
+        _subscribe(tid, MG::Children);
+    }
+
+    void    Tachyon::load_set_parent(TypedID tid)
+    {
+        m_parent    = tid;
+        _subscribe(tid, MG::Parent);
     }
 
     void        Tachyon::mail(const PostCPtr& pp)
@@ -751,15 +776,19 @@ namespace yq::tachyon {
         m_dirty    = true;
     }
 
+    void    Tachyon::on_add_child_command(const AddChildCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        TypedID child   = Frame::resolve(cmd.child());
+        if(!child)
+            return ;
+        _add_child(child);
+    }
+
     void    Tachyon::on_destroy_event(const DestroyEvent& evt)
     {
         std::erase(m_children, evt.source());
-    }
-
-    ThreadID    Tachyon::owner() const 
-    { 
-        TRLOCK
-        return m_owner; 
     }
 
     void    Tachyon::on_destroy_command(const DestroyCommand&cmd)
@@ -780,6 +809,16 @@ namespace yq::tachyon {
         stage_paused();
     }
     
+    void    Tachyon::on_remove_child_command(const RemoveChildCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        TypedID child   = Frame::resolve(cmd.child());
+        if(!child)
+            return ;
+        _del_child(child);
+    }
+
     void    Tachyon::on_resume_command(const ResumeCommand&cmd)
     {
         if(cmd.target() != id())
@@ -796,6 +835,32 @@ namespace yq::tachyon {
 
         if(cmd.thread() != m_owner)
             Thread::rethread(this, cmd.thread());
+    }
+
+    void    Tachyon::on_set_parent_command(const SetParentCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+            
+        TypedID par = Frame::resolve(cmd.parent());
+        if(par == m_parent)
+            return ;
+            
+        TypedID old = m_parent;
+        
+        if(m_parent){
+            _unsubscribe(m_parent, MG::Parent);
+            send(new RemoveChildCommand({.source=*this, .target=m_parent}, id(TYPED)), TARGET);
+        }
+        
+        m_parent    = par;
+        if(m_parent){
+            _subscribe(m_parent, MG::Parent);
+            send(new AddChildCommand({.source=*this, .target=m_parent}, id(TYPED)), TARGET);
+        }
+        
+        send(new ParentChangeEvent({.source=*this}, old, par));
+        mark();
     }
 
     void    Tachyon::on_snoop_command(const SnoopCommand&cmd)
@@ -826,6 +891,12 @@ namespace yq::tachyon {
         if(cmd.target() != id())
             return ;
         std::erase(m_snoop, cmd.listener());
+    }
+
+    ThreadID    Tachyon::owner() const 
+    { 
+        TRLOCK
+        return m_owner; 
     }
 
     void    Tachyon::owner(push_k, ThreadID tid)
@@ -865,7 +936,12 @@ namespace yq::tachyon {
         }
     }
 
-    Execution    Tachyon::setup(const Context&)
+    void  Tachyon::set_parent(TachyonSpec tid)
+    {
+        mail(new SetParentCommand({.target=*this}, Frame::resolve(tid)));
+    }
+
+    Execution  Tachyon::setup(const Context&)
     {
         return {};
     }
@@ -1351,11 +1427,14 @@ namespace yq::tachyon {
     {
         auto w = writer<Tachyon>();
         w.description("Tachyon Object");
+        w.slot(&Tachyon::on_add_child_command);
         w.slot(&Tachyon::on_destroy_command);
         w.slot(&Tachyon::on_destroy_event);
         w.slot(&Tachyon::on_pause_command);
+        w.slot(&Tachyon::on_remove_child_command);
         w.slot(&Tachyon::on_resume_command);
         w.slot(&Tachyon::on_rethread_command);
+        w.slot(&Tachyon::on_set_parent_command);
         w.slot(&Tachyon::on_snoop_command);
         w.slot(&Tachyon::on_subscribe_command);
         w.slot(&Tachyon::on_unsnoop_command);

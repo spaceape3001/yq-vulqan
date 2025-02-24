@@ -90,6 +90,10 @@ namespace yq::tachyon {
     void    Application::_kill()
     {
         if(m_stage == Stage::Started){
+            {
+                lock_t  lock(m_mutex);
+                m_stage = Stage::Shutdown;
+            }
             for(Thread*t : m_threads)
                 t->shutdown();
             for(Thread*t : m_threads)
@@ -349,5 +353,16 @@ namespace yq::tachyon {
         
         m_stage = Stage::Started;
         return true;
+    }
+
+    void    Application::start_thread(ThreadPtr th)
+    {
+        // This *might* be reentrant unsafe depending on if the thread does anything funny in their start...
+        lock_t  _lock(m_mutex);
+        if(m_stage != Stage::Started)
+            return;
+        m_thread.others.push_back(th);
+        m_threads.push_back(th.ptr());
+        th->start();
     }
 }

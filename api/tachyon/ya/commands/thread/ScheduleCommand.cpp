@@ -11,12 +11,12 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ScheduleCommand)
 
 namespace yq::tachyon {
-    ScheduleCommand::ScheduleCommand(const Header&h, const std::vector<TachyonPtr>&tacs) : 
+    ScheduleCommand::ScheduleCommand(const Header&h, const TachyonPtrVector&tacs) : 
         ThreadCommand(h), m_tachyons(tacs)
     {
     }
     
-    ScheduleCommand::ScheduleCommand(const Header&h, std::vector<TachyonPtr>&&tacs) : 
+    ScheduleCommand::ScheduleCommand(const Header&h, TachyonPtrVector&&tacs) : 
         ThreadCommand(h), m_tachyons(std::move(tacs))
     {
     }

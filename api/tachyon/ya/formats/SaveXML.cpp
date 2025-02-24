@@ -30,6 +30,7 @@ namespace yq::tachyon {
     static constexpr const char*    szDelegate      = "delegate";
     static constexpr const char*    szDelegates     = "delegates";
     static constexpr const char*    szClass         = "class";
+    static constexpr const char*    szChild         = "child";
     static constexpr const char*    szFile          = "file";
     static constexpr const char*    szFormat        = "format";
     static constexpr const char*    szId            = "id";
@@ -196,6 +197,13 @@ namespace yq::tachyon {
         std::error_code ec  = read(sv, OBJECT, xml);
         if(ec != std::error_code())
             return ec;
+        
+        for(const XmlNode* xc = xml.first_node(szChild); xc; xc=xc->next_sibling(szChild)){
+            uint64_x       idv = x_uint64(*xc);
+            if(!idv)
+                return idv.error();
+            
+        }
             
         for(const XmlNode* xc = xml.first_node(szAsset); xc; xc=xc->next_sibling(szAsset)){
             std::string     pn  = read_attribute(*xc, szName, x_string);
@@ -246,7 +254,7 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
             
-        return errors::todo();  // TODO
+        return {};  // TODO
     }
 
     std::error_code    SaveXML::read(const XmlNode&xml, asset_k)
@@ -287,6 +295,9 @@ namespace yq::tachyon {
     
     std::error_code    SaveXML::read(const XmlNode&xml, object_k)
     {
+        return errors::todo();  // We don't support full object save/load (yet)
+        
+    #if 0
         const XmlAttribute* xclass  = xml.first_attribute(szClass);
         if(!xclass)
             return errors::missing_class_attribute();
@@ -297,6 +308,7 @@ namespace yq::tachyon {
             return errors::invalid_class_attribute();
 
         return read(*(save->create(cinfo)), OBJECT, xml);
+    #endif
     }
     
     std::error_code    SaveXML::read(const XmlNode&xml, tachyon_k)
@@ -463,6 +475,13 @@ namespace yq::tachyon {
         if(auto p = std::get_if<StdThread>(&obj.owner())){
             write_attribute(xml, szOwner, *p);
         }
+
+        for(uint64_t i : obj.children()){
+            if(const SaveTachyon* tc = save->tachyon(i)){
+                write_child(xml, szChild, tc->remap());
+            }
+        }
+        
         
         for(auto& p : obj.assets()){
             XmlNode&    prop    = *(xml.create_element(szAsset));

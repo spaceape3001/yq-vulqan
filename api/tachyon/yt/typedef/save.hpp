@@ -23,7 +23,10 @@ namespace yq::tachyon {
         SkipOwnership,
         
         //! Skip children (if selective)
-        SkipChildren
+        SkipChildren,
+        
+        //! Want children, skip the listed
+        OnlyChildren
     };
     using SaveOptions   = Flags<SaveOption>;
     
@@ -37,6 +40,10 @@ namespace yq::tachyon {
     class SaveTachyon;
 
     using SaveSPtr  = std::shared_ptr<Save>;
+
+    class Reincarnation;
+    using ReincarnationSPtr = std::shared_ptr<Reincarnation>;
+    using ReincarnationUPtr = std::unique_ptr<Reincarnation>;
 }
 
 

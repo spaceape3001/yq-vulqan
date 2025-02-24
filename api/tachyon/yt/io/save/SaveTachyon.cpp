@@ -38,6 +38,9 @@ namespace yq::tachyon {
                 continue;
             m_delegates.push_back({dprops, save.insert(*delegate)});
         }
+        
+        for(TypedID tid : tac.children())
+            m_children.push_back(tid);
     }
     
     SaveTachyon::SaveTachyon(Save& save, const TachyonInfo* info, uint64_t i) : SaveObject(save, info, i)
@@ -54,6 +57,11 @@ namespace yq::tachyon {
             m_assets.push_back(v);
     }
     
+    void        SaveTachyon::append(child_k, uint64_t v)
+    {
+        m_children.push_back(v);
+    }
+
     void        SaveTachyon::append(delegate_t v)
     {
         if(v.info && v.delegate)

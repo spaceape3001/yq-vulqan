@@ -23,9 +23,12 @@ namespace yq {
 namespace yq::tachyon {
     class Tachyon;
     class TachyonInfo;
+    class TypedID;
     
     using TachyonPtr    = Ref<Tachyon>;
     using TachyonCPtr   = Ref<const Tachyon>;
+
+    using TachyonPtrVector  = std::vector<TachyonPtr>;
 
     template <class E>
     concept SomeTachyon = std::derived_from<E,Tachyon>;
@@ -47,5 +50,7 @@ namespace yq::tachyon {
 
     using name_spec     = std::variant<std::monostate, const char*, std::string_view, std::string>;
     using PostTarget    = std::variant<std::monostate, MG, MGF, TachyonID, target_k>;
+
+    using TachyonSpec  = std::variant<std::monostate, TachyonID, TypedID>;
 
 }

@@ -136,6 +136,20 @@ namespace yq::tachyon {
 
     std::atomic<uint64_t>      Frame::s_lastId{0};
     thread_local const Frame*  Frame::s_current = nullptr;
+
+    TypedID  Frame::resolve(TachyonSpec ts)
+    {
+        if(auto p = std::get_if<TypedID>(&ts))
+            return *p;
+        
+        if(auto p = std::get_if<TachyonID>(&ts)){
+            if(s_current)
+                return s_current -> typed(*p);
+        }
+        return {};
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
     
     Frame::Frame(ThreadID th, uint64_t ti) : m_origin(th), m_number(++s_lastId), m_wallclock(clock_t::now()), m_tick(ti)
     {

@@ -15,6 +15,7 @@
 #include <yt/typedef/viewer.hpp>
 #include <yt/typedef/widget.hpp>
 #include <yq/units.hpp>
+#include <tbb/spin_mutex.h>
 #include <memory>
 #include <set>
 #include <vector>
@@ -100,6 +101,9 @@ namespace yq::tachyon {
         //! When we first called "start()"
         const time_point_t&         start_time() const { return m_startTime; }
 
+        //! Used by save's reincarnation to start a thread
+        void                        start_thread(ThreadPtr);
+
     private:
 
         static Application*     s_app;
@@ -108,6 +112,7 @@ namespace yq::tachyon {
             Uninit,
             Started,
             InError,
+            Shutdown,
             Terminated
         };
         
@@ -124,10 +129,13 @@ namespace yq::tachyon {
             Ref<SimThread>      sim;        //< valid while running if "ENABLED" but not "PER"
             Ref<TaskThread>     task;       //< valid while running if "ENABLED" but not "PER"
             Ref<ViewerThread>   viewer;     //< valid while running if "ENABLED" but not "PER"
+            ThreadPtrVector     others;
         } m_thread;
         
+        using mutex_t       = tbb::spin_mutex;
+        using lock_t        = mutex_t::scoped_lock;
         
-
+        mutex_t                 m_mutex;
         Desktop*                m_desktop   = nullptr;
         VulqanManager*          m_vulkan    = nullptr;
         time_point_t            m_startTime;

@@ -50,7 +50,7 @@
 #include <yt/3D/Scene3InfoWriter.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <ya/widgets/Scene3Widget.hpp>
-#include <ya/utils/LoggerBox.hpp>
+#include <ya/utilities/LoggerBox.hpp>
 
 #ifdef WANT_FRAME_INSPECTOR
 #include <ya/widgets/FrameInspector.hpp>

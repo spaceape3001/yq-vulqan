@@ -614,7 +614,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/OrTrigger.cpp
     ya/triggers/PostTrigger.cpp
     
-    ya/utils/LoggerBox.cpp
+    ya/utilities/LoggerBox.cpp
 
     ya/widgets/AbstractSceneWidgetHelper.cpp
     ya/widgets/FormWidget.cpp

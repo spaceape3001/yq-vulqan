@@ -57,4 +57,8 @@ namespace yq::tachyon::errors {
     using vulkan_out_of_device_memory       = error_db::entry<"Out of device memory">;
     using vulkan_out_of_host_memory         = error_db::entry<"Out of host memory">;
     using vulkan_uninitialized              = error_db::entry<"Vulkan unavailable">;
+    
+    using not_object_looking_for            = error_db::entry<"This isn't the object we're looking for">;
+    using not_delegate_looking_for          = error_db::entry<"This isn't the delegate we're looking for">;
+    using not_asset_looking_for             = error_db::entry<"This isn't the asset we're looking for">;
 }

@@ -27,8 +27,6 @@ namespace yq::tachyon {
 
     AssetCPtr           AssetProperty::get(const Object*tac) const
     {
-        if(!tac)
-            return {};
         if(!m_getter)
             return {};
         return m_getter -> get(tac);
@@ -36,8 +34,6 @@ namespace yq::tachyon {
     
     std::error_code     AssetProperty::set(Object*tac, const AssetCPtr& ap) const
     {
-        if(!tac)
-            return errors::null_pointer();
         if(!m_setter)
             return errors::no_setter();
         return m_setter->set(tac, ap);

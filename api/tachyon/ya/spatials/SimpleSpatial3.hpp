@@ -64,9 +64,7 @@ namespace yq::tachyon {
         using AScale³::scale;
         using AOrientation³::orientation;
 
-
         static void init_info();
-        
         
     protected:
         void        snap(Spatial³Snap&) const;

@@ -22,8 +22,8 @@ namespace yq::tachyon {
         SaveAsset(Save&, const Asset&);
         SaveAsset(Save&, const AssetInfo*, uint64_t, const std::filesystem::path&);
         
-        const AssetInfo* info() const;
-        virtual bool    valid() const override;
+        const AssetInfo*    info() const;
+        virtual bool        valid() const override;
         
         const std::filesystem::path&    filepath() const { return m_filepath; }
         

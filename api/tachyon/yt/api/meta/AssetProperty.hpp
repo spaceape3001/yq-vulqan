@@ -8,7 +8,7 @@
 
 #include <yq/meta/Meta.hpp>
 #include <yq/meta/InfoBinder.hpp>
-#include <yq/typedef/asset.hpp>
+#include <yq/asset/Asset.hpp>
 
 namespace yq {
     class Object;
@@ -30,13 +30,13 @@ namespace yq::tachyon {
         using Meta::set;
     
         //! Our writer
-        template <typename T> class Writer;
+        template <SomeAsset> class Writer;
         
         //! Writer for statics
-        template <typename T> class VarW;
+        //template <SomeAsset> class VarW;
         
         //! Writer for dynamics
-        template <typename C, typename T> class PropW;
+        template <SomeObject, SomeAsset> class PropW;
 
         const AssetInfo&    asset() const { return m_asset; }
         

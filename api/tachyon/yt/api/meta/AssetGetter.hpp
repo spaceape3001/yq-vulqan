@@ -30,7 +30,7 @@ namespace yq::tachyon {
             \param[out] dst     Pointer to destination, assumed to be correct buffer.
             \param[in] obj      Pointer to the object, if used.  (Ignored on static properties.)
         */
-        virtual const AssetCPtr    get(const Object* obj) const = 0;
+        virtual AssetCPtr           get(const Object* obj) const = 0;
 
         /*! \brief Object/Type meta type expected for src
         

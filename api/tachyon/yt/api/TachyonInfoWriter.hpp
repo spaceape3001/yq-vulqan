@@ -12,6 +12,12 @@
 #include <yt/api/TachyonData.hpp>
 #include <yt/api/Interface.hpp>
 #include <yt/msg/Post.hpp>
+#include <yt/api/meta/AssetPropertyWriter.hpp>
+#include <yt/api/meta/DelegatePropertyWriter.hpp>
+#include <yt/api/meta/DynamicAssetGetter.hpp>
+#include <yt/api/meta/DynamicAssetSetter.hpp>
+#include <yt/api/meta/DynamicDelegateGetter.hpp>
+#include <yt/api/meta/DynamicDelegateSetter.hpp>
 
 namespace yq::tachyon {
 
@@ -176,6 +182,140 @@ namespace yq::tachyon {
         Writer(TachyonInfo& theInfo) : Writer(&theInfo)
         {
         }
+        
+        /*! \brief Declares interface support
+        
+            This declares that the specified tachyon implements/derives 
+            from the specified interface
+        */
+        template <Interface I>
+        void    interface()
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> add_interface(&meta<I>());
+            }
+        }
+        
+        /*! \brief Sets the default execution policy for ticks
+        
+            \note Though variable execution rate is currently unsupported in 
+            code, it'll be the general right way to define a starting execution 
+            policy.  (However, it'll be overridable.)
+        */
+        void    execution(Execution ex)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_execution = ex;
+            }
+        }
+        
+        /*! \brief Declares this to be a tachyon type (used for the typed id)
+        */
+        void    type(Type t)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> set(t);
+            }
+        }
+
+            //////////////////////////////////////////
+            ///     ASSETS
+        
+        template <typename C2, SomeAsset A>
+        AssetProperty::PropW<C,A> asset(std::string_view szName, Ref<const A> (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
+        {
+            assert(pointer);
+            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
+            new IPM_AssetGetter<C,C2,A>(ret, sl, pointer);
+            if(!isReadOnly)
+                new IPM_AssetSetter<C,C2,A>(ret, sl, pointer);
+            return AssetProperty::PropW<C,A>(ret);
+        }
+        
+        template <typename C2, SomeAsset A>
+        AssetProperty::Writer<A> asset(std::string_view szName, Ref<const A> (C2::*pointer), read_only_k, const std::source_location& sl=std::source_location::current())
+        {
+            return asset(szName, pointer, true, sl);
+        }
+
+        template <typename C2, SomeAsset A>
+        AssetProperty::PropW<C,A> asset(std::string_view szName, const Ref<const A> (C2::*pointer), const std::source_location& sl=std::source_location::current())
+        {
+            assert(pointer);
+            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
+            new IPM_AssetGetter<C,C2,A>(ret, sl, pointer);
+            return AssetProperty::PropW<C,A>(ret);
+        }
+        
+
+        template <typename C2, SomeAsset A>
+        AssetProperty::PropW<C,A> asset(std::string_view szName, Ref<const A> (C2::*function)() const, const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
+            new IFV_AssetGetter<C,C2,A>(ret, sl, function);
+            return AssetProperty::PropW<C,A>(ret);
+        }
+
+        template <typename C2, SomeAsset A>
+        AssetProperty::PropW<C,A> asset(std::string_view szName, const Ref<const A>& (C2::*function)() const, const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
+            new IFR_AssetGetter<C,C2,A>(ret, sl, function);
+            return AssetProperty::PropW<C,A>(ret);
+        }
+
+            //////////////////////////////////////////
+            ///     DELEGATES
+
+        template <typename C2, SomeDelegate A>
+        DelegateProperty::PropW<C,A> delegate(std::string_view szName, Ref<const A> (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
+        {
+            assert(pointer);
+            DelegateProperty*ret   = new DelegateProperty(szName, sl, meta<A>(), m_meta);
+            new IPM_DelegateGetter<C,C2,A>(ret, sl, pointer);
+            if(!isReadOnly)
+                new IPM_DelegateSetter<C,C2,A>(ret, sl, pointer);
+            return DelegateProperty::PropW<C,A>(ret);
+        }
+        
+        template <typename C2, SomeDelegate A>
+        DelegateProperty::Writer<A> delegate(std::string_view szName, Ref<const A> (C2::*pointer), read_only_k, const std::source_location& sl=std::source_location::current())
+        {
+            return delegate(szName, pointer, true, sl);
+        }
+
+        template <typename C2, SomeDelegate A>
+        DelegateProperty::PropW<C,A> delegate(std::string_view szName, const Ref<const A> (C2::*pointer), const std::source_location& sl=std::source_location::current())
+        {
+            assert(pointer);
+            DelegateProperty*ret   = new DelegateProperty(szName, sl, meta<A>(), m_meta);
+            new IPM_DelegateGetter<C,C2,A>(ret, sl, pointer);
+            return DelegateProperty::PropW<C,A>(ret);
+        }
+        
+
+        template <typename C2, SomeDelegate A>
+        DelegateProperty::PropW<C,A> delegate(std::string_view szName, Ref<const A> (C2::*function)() const, const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            DelegateProperty*ret   = new DelegateProperty(szName, sl, meta<A>(), m_meta);
+            new IFV_DelegateGetter<C,C2,A>(ret, sl, function);
+            return DelegateProperty::PropW<C,A>(ret);
+        }
+
+        template <typename C2, SomeDelegate A>
+        DelegateProperty::PropW<C,A> delegate(std::string_view szName, const Ref<const A>& (C2::*function)() const, const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            DelegateProperty*ret   = new DelegateProperty(szName, sl, meta<A>(), m_meta);
+            new IFR_DelegateGetter<C,C2,A>(ret, sl, function);
+            return DelegateProperty::PropW<C,A>(ret);
+        }
+
+            //////////////////////////////////////////
+            ///     SLOTS
 
         template <SomePost P, class C2=C>
         PBXDispatch::Writer    slot(void (C2::*fn)(const P&))
@@ -250,27 +390,8 @@ namespace yq::tachyon {
             return {};
         }
 
-        template <Interface I>
-        void    interface()
-        {
-            if(m_meta && Meta::thread_safe_write()){
-                m_meta -> add_interface(&meta<I>());
-            }
-        }
-        
-        void    execution(Execution ex)
-        {
-            if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_execution = ex;
-            }
-        }
-        
-        void    type(Type t)
-        {
-            if(m_meta && Meta::thread_safe_write()){
-                m_meta -> set(t);
-            }
-        }
+            /// INTERFACE
+
         
     private:
         TachyonInfo* m_meta;

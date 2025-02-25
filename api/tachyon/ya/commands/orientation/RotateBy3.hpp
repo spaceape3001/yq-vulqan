@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <ya/commands/SpatialCommand.hpp>
+#include <ya/commands/spatial/OrientationCommand.hpp>
 #include <yq/unit/declare.hpp>
 #include <yq/vector/Quaternion3.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class RotateBy³ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(RotateBy³, SpatialCommand)
+    class RotateBy³ : public OrientationCommand {
+        YQ_OBJECT_DECLARE(RotateBy³, OrientationCommand)
     public:
         RotateBy³(const Header&, const Quaternion3D&δ);
         RotateBy³(const Header&, const unit::Radian3D&δ);

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/spatial/YawBy.hpp>
+#include <ya/commands/orientation/YawBy.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::YawBy)
 
 namespace yq::tachyon {
     YawBy::YawBy(const Header&h, Radian θ) : 
-        SpatialCommand(h), m_θ(θ)
+        OrientationCommand(h), m_θ(θ)
     {
     }
 
     
-    YawBy::YawBy(const YawBy&cp, const Header&h) : SpatialCommand(cp, h), m_θ(cp.m_θ)
+    YawBy::YawBy(const YawBy&cp, const Header&h) : OrientationCommand(cp, h), m_θ(cp.m_θ)
     {
     }
     

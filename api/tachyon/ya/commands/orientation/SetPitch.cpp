@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/spatial/SetPitch.hpp>
+#include <ya/commands/orientation/SetPitch.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
@@ -12,17 +12,17 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPitch)
 
 namespace yq::tachyon {
     SetPitch::SetPitch(const Header&h) : 
-        SpatialCommand(h)
+        OrientationCommand(h)
     {
     }
     
     SetPitch::SetPitch(const Header&h, Radian θ) : 
-        SpatialCommand(h), m_θ(θ)
+        OrientationCommand(h), m_θ(θ)
     {
     }
 
     SetPitch::SetPitch(const SetPitch& cp, const Header&h) : 
-        SpatialCommand(cp, h), m_θ(cp.m_θ)
+        OrientationCommand(cp, h), m_θ(cp.m_θ)
     {
     }
 

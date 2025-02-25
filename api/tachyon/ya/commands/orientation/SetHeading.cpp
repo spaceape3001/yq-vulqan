@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/spatial/SetHeading.hpp>
+#include <ya/commands/orientation/SetHeading.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
@@ -12,17 +12,17 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetHeading)
 
 namespace yq::tachyon {
     SetHeading::SetHeading(const Header&h) : 
-        SpatialCommand(h)
+        OrientationCommand(h)
     {
     }
 
     SetHeading::SetHeading(const Header&h, Radian θ) : 
-        SpatialCommand(h), m_θ(θ)
+        OrientationCommand(h), m_θ(θ)
     {
     }
 
     
-    SetHeading::SetHeading(const SetHeading&cp, const Header&h) : SpatialCommand(cp, h), m_θ(cp.m_θ)
+    SetHeading::SetHeading(const SetHeading&cp, const Header&h) : OrientationCommand(cp, h), m_θ(cp.m_θ)
     {
     }
     

@@ -235,6 +235,15 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/sim/ResumeCommand.cpp
     ya/commands/sim/PauseCommand.cpp
 
+    ya/commands/orientation/PitchBy.cpp
+    ya/commands/orientation/RotateBy3.cpp
+    ya/commands/orientation/RollBy.cpp
+    ya/commands/orientation/SetHeading.cpp
+    ya/commands/orientation/SetOrientation3.cpp
+    ya/commands/orientation/SetPitch.cpp
+    ya/commands/orientation/SetRoll.cpp
+    ya/commands/orientation/YawBy.cpp
+
     ya/commands/position/AddPosition1.cpp
     ya/commands/position/AddPosition2.cpp
     ya/commands/position/AddPosition3.cpp
@@ -261,7 +270,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/position/SetPositionY.cpp
     ya/commands/position/SetPositionZ.cpp
 
+    ya/commands/spatial/OrientationCommand.cpp
     ya/commands/spatial/PositionCommand.cpp
+    
     ya/commands/spatial/AddMaxSize1.cpp
     ya/commands/spatial/AddMaxSize2.cpp
     ya/commands/spatial/AddMaxSize3.cpp
@@ -314,10 +325,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/MultiplySizeX.cpp
     ya/commands/spatial/MultiplySizeY.cpp
     ya/commands/spatial/MultiplySizeZ.cpp
-    ya/commands/spatial/PitchBy.cpp
-    ya/commands/spatial/RotateBy3.cpp
-    ya/commands/spatial/RollBy.cpp
-    ya/commands/spatial/SetHeading.cpp
     ya/commands/spatial/SetMaxSize1.cpp
     ya/commands/spatial/SetMaxSize2.cpp
     ya/commands/spatial/SetMaxSize3.cpp
@@ -330,9 +337,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/SetMinSizeX.cpp
     ya/commands/spatial/SetMinSizeY.cpp
     ya/commands/spatial/SetMinSizeZ.cpp
-    ya/commands/spatial/SetOrientation3.cpp
-    ya/commands/spatial/SetPitch.cpp
-    ya/commands/spatial/SetRoll.cpp
     ya/commands/spatial/SetScale1.cpp
     ya/commands/spatial/SetScale2.cpp
     ya/commands/spatial/SetScale3.cpp
@@ -345,7 +349,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/SetSizeX.cpp
     ya/commands/spatial/SetSizeY.cpp
     ya/commands/spatial/SetSizeZ.cpp
-    ya/commands/spatial/YawBy.cpp
     
     ya/commands/tachyon/AddChildCommand.cpp
     ya/commands/tachyon/DestroyCommand.cpp

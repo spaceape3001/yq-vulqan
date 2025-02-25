@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <ya/commands/SpatialCommand.hpp>
+#include <ya/commands/spatial/OrientationCommand.hpp>
 #include <yq/unit/declare.hpp>
 #include <yq/unit/MKS.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set roll (ie, around the local body X-axis) to given value
-    class SetRoll : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetRoll, SpatialCommand)
+    class SetRoll : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetRoll, OrientationCommand)
     public:
         SetRoll(const Header&, Radian θ);
     

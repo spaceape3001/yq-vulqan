@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <ya/commands/SpatialCommand.hpp>
+#include <ya/commands/spatial/OrientationCommand.hpp>
 #include <yq/unit/declare.hpp>
 #include <yq/unit/MKS.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to pitch (ie, around the local body Y-axis) by the given amount
-    class SetPitch : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetPitch, SpatialCommand)
+    class SetPitch : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetPitch, OrientationCommand)
     public:
         SetPitch(const Header&, Radian θ);
     

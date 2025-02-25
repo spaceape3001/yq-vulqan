@@ -43,7 +43,7 @@
 #include <yt/viewer.hpp>
 #include <yt/widget.hpp>
 
-#include <ya/commands/spatial/SetOrientation3.hpp>
+#include <ya/commands/orientation/SetOrientation3.hpp>
 #include <ya/rendereds/Triangle3.hpp>
 #include <yt/3D/Spatial3.hpp>
 #include <ya/scenes/SimpleScene3.hpp>

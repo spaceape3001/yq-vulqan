@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/spatial/RollBy.hpp>
+#include <ya/commands/orientation/RollBy.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::RollBy)
 
 namespace yq::tachyon {
     RollBy::RollBy(const Header&h, Radian θ) : 
-        SpatialCommand(h), m_θ(θ)
+        OrientationCommand(h), m_θ(θ)
     {
     }
     
     RollBy::RollBy(const RollBy& cp, const Header&h) : 
-        SpatialCommand(cp, h), m_θ(cp.m_θ)
+        OrientationCommand(cp, h), m_θ(cp.m_θ)
     {
     }
 

@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <ya/commands/SpatialCommand.hpp>
+#include <ya/commands/spatial/OrientationCommand.hpp>
 #include <yq/unit/declare.hpp>
 #include <yq/vector/Quaternion3.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SetOrientation³ : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetOrientation³, SpatialCommand)
+    class SetOrientation³ : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetOrientation³, OrientationCommand)
     public:
         SetOrientation³(const Header&, hpr_k, Radian hdg, Radian pitch, Radian roll);
         SetOrientation³(const Header&, const Quaternion3D&);

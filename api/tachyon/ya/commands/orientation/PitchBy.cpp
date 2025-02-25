@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/spatial/PitchBy.hpp>
+#include <ya/commands/orientation/PitchBy.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::PitchBy)
 
 namespace yq::tachyon {
     PitchBy::PitchBy(const Header&h, Radian θ) : 
-        SpatialCommand(h), m_θ(θ)
+        OrientationCommand(h), m_θ(θ)
     {
     }
     
     PitchBy::PitchBy(const PitchBy& cp, const Header&h) : 
-        SpatialCommand(cp, h), m_θ(cp.m_θ)
+        OrientationCommand(cp, h), m_θ(cp.m_θ)
     {
     }
 

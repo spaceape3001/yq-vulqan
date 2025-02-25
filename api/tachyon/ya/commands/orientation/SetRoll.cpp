@@ -4,24 +4,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/commands/spatial/SetRoll.hpp>
+#include <ya/commands/orientation/SetRoll.hpp>
 #include <yt/msg/CommandInfoWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetRoll)
 
 namespace yq::tachyon {
-    SetRoll::SetRoll(const Header& h) : SpatialCommand(h)
+    SetRoll::SetRoll(const Header& h) : OrientationCommand(h)
     {
     }
 
     SetRoll::SetRoll(const Header&h, Radian θ) : 
-        SpatialCommand(h), m_θ(θ)
+        OrientationCommand(h), m_θ(θ)
     {
     }
     
     SetRoll::SetRoll(const SetRoll& cp, const Header&h) : 
-        SpatialCommand(cp, h), m_θ(cp.m_θ)
+        OrientationCommand(cp, h), m_θ(cp.m_θ)
     {
     }
 

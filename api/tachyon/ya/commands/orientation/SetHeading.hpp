@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <ya/commands/SpatialCommand.hpp>
+#include <ya/commands/spatial/OrientationCommand.hpp>
 #include <yq/unit/declare.hpp>
 #include <yq/unit/MKS.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to yaw (ie, around the local body Z-axis) by the given amount
-    class SetHeading : public SpatialCommand {
-        YQ_OBJECT_DECLARE(SetHeading, SpatialCommand)
+    class SetHeading : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetHeading, OrientationCommand)
     public:
         SetHeading(const Header&, Radian θ);
     

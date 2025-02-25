@@ -14,9 +14,9 @@
 #include <ya/commands/position/MoveByX.hpp>
 #include <ya/commands/position/MoveByY.hpp>
 #include <ya/commands/position/MoveByZ.hpp>
-#include <ya/commands/spatial/PitchBy.hpp>
-#include <ya/commands/spatial/RollBy.hpp>
-#include <ya/commands/spatial/YawBy.hpp>
+#include <ya/commands/orientation/PitchBy.hpp>
+#include <ya/commands/orientation/RollBy.hpp>
+#include <ya/commands/orientation/YawBy.hpp>
 #include <ya/events/keyboard/KeyPressEvent.hpp>
 #include <ya/events/keyboard/KeyRepeatEvent.hpp>
 #include <ya/events/gamepad/GamepadAxisEvent.hpp>

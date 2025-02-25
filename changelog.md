@@ -1,8 +1,10 @@
 # CHANGE LOG
 
-## Upcoming
+## 2025.02.25
+
 * Fixed bug in posts not binding to derived/base classes if they're marked abstract (which will always be the case with the current minimum header argument)
 * Save/load of tachyons to XML format
+* Tachyons can have asset & delegate properties
 
 ## 2025.02.14
 

@@ -235,6 +235,33 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/sim/ResumeCommand.cpp
     ya/commands/sim/PauseCommand.cpp
 
+    ya/commands/position/AddPosition1.cpp
+    ya/commands/position/AddPosition2.cpp
+    ya/commands/position/AddPosition3.cpp
+    ya/commands/position/AddPositionX.cpp
+    ya/commands/position/AddPositionY.cpp
+    ya/commands/position/AddPositionZ.cpp
+    ya/commands/position/MoveBy1.cpp
+    ya/commands/position/MoveBy2.cpp
+    ya/commands/position/MoveBy3.cpp
+    ya/commands/position/MoveByX.cpp
+    ya/commands/position/MoveByY.cpp
+    ya/commands/position/MoveByZ.cpp
+    ya/commands/position/MultiplyPosition.cpp
+    ya/commands/position/MultiplyPosition1.cpp
+    ya/commands/position/MultiplyPosition2.cpp
+    ya/commands/position/MultiplyPosition3.cpp
+    ya/commands/position/MultiplyPositionX.cpp
+    ya/commands/position/MultiplyPositionY.cpp
+    ya/commands/position/MultiplyPositionZ.cpp
+    ya/commands/position/SetPosition1.cpp
+    ya/commands/position/SetPosition2.cpp
+    ya/commands/position/SetPosition3.cpp
+    ya/commands/position/SetPositionX.cpp
+    ya/commands/position/SetPositionY.cpp
+    ya/commands/position/SetPositionZ.cpp
+
+    ya/commands/spatial/PositionCommand.cpp
     ya/commands/spatial/AddMaxSize1.cpp
     ya/commands/spatial/AddMaxSize2.cpp
     ya/commands/spatial/AddMaxSize3.cpp
@@ -247,12 +274,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/AddMinSizeX.cpp
     ya/commands/spatial/AddMinSizeY.cpp
     ya/commands/spatial/AddMinSizeZ.cpp
-    ya/commands/spatial/AddPosition1.cpp
-    ya/commands/spatial/AddPosition2.cpp
-    ya/commands/spatial/AddPosition3.cpp
-    ya/commands/spatial/AddPositionX.cpp
-    ya/commands/spatial/AddPositionY.cpp
-    ya/commands/spatial/AddPositionZ.cpp
     ya/commands/spatial/AddScale1.cpp
     ya/commands/spatial/AddScale2.cpp
     ya/commands/spatial/AddScale3.cpp
@@ -265,12 +286,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/AddSizeX.cpp
     ya/commands/spatial/AddSizeY.cpp
     ya/commands/spatial/AddSizeZ.cpp
-    ya/commands/spatial/MoveBy1.cpp
-    ya/commands/spatial/MoveBy2.cpp
-    ya/commands/spatial/MoveBy3.cpp
-    ya/commands/spatial/MoveByX.cpp
-    ya/commands/spatial/MoveByY.cpp
-    ya/commands/spatial/MoveByZ.cpp
     ya/commands/spatial/MultiplyMaxSize.cpp
     ya/commands/spatial/MultiplyMaxSize1.cpp
     ya/commands/spatial/MultiplyMaxSize2.cpp
@@ -285,13 +300,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/MultiplyMinSizeX.cpp
     ya/commands/spatial/MultiplyMinSizeY.cpp
     ya/commands/spatial/MultiplyMinSizeZ.cpp
-    ya/commands/spatial/MultiplyPosition.cpp
-    ya/commands/spatial/MultiplyPosition1.cpp
-    ya/commands/spatial/MultiplyPosition2.cpp
-    ya/commands/spatial/MultiplyPosition3.cpp
-    ya/commands/spatial/MultiplyPositionX.cpp
-    ya/commands/spatial/MultiplyPositionY.cpp
-    ya/commands/spatial/MultiplyPositionZ.cpp
     ya/commands/spatial/MultiplyScale.cpp
     ya/commands/spatial/MultiplyScale1.cpp
     ya/commands/spatial/MultiplyScale2.cpp
@@ -324,12 +332,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/SetMinSizeZ.cpp
     ya/commands/spatial/SetOrientation3.cpp
     ya/commands/spatial/SetPitch.cpp
-    ya/commands/spatial/SetPosition1.cpp
-    ya/commands/spatial/SetPosition2.cpp
-    ya/commands/spatial/SetPosition3.cpp
-    ya/commands/spatial/SetPositionX.cpp
-    ya/commands/spatial/SetPositionY.cpp
-    ya/commands/spatial/SetPositionZ.cpp
     ya/commands/spatial/SetRoll.cpp
     ya/commands/spatial/SetScale1.cpp
     ya/commands/spatial/SetScale2.cpp

@@ -9,10 +9,10 @@
 #include <ya/aspects/AOrientation3Writer.hxx>
 #include <ya/aspects/APosition3Writer.hxx>
 #include <ya/aspects/AScale3Writer.hxx>
-#include <ya/commands/spatial/MoveBy3.hpp>
-#include <ya/commands/spatial/MoveByX.hpp>
-#include <ya/commands/spatial/MoveByY.hpp>
-#include <ya/commands/spatial/MoveByZ.hpp>
+#include <ya/commands/position/MoveBy3.hpp>
+#include <ya/commands/position/MoveByX.hpp>
+#include <ya/commands/position/MoveByY.hpp>
+#include <ya/commands/position/MoveByZ.hpp>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>

@@ -32,7 +32,7 @@
 #include <ya/commands/sim/PauseCommand.hpp>
 #include <ya/commands/sim/ResumeCommand.hpp>
 
-#include <ya/commands/spatial/SetPosition2.hpp>
+#include <ya/commands/position/SetPosition2.hpp>
 #include <ya/commands/spatial/SetSize2.hpp>
 
 #include <ya/commands/ui/AspectCommand.hpp>

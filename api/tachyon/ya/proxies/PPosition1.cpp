@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PPosition1.hpp>
-#include <ya/commands/spatial/AddPosition1.hpp>
-#include <ya/commands/spatial/AddPositionX.hpp>
-#include <ya/commands/spatial/MultiplyPosition.hpp>
-#include <ya/commands/spatial/MultiplyPosition1.hpp>
-#include <ya/commands/spatial/MultiplyPositionX.hpp>
-#include <ya/commands/spatial/SetPosition1.hpp>
-#include <ya/commands/spatial/SetPositionX.hpp>
+#include <ya/commands/position/AddPosition1.hpp>
+#include <ya/commands/position/AddPositionX.hpp>
+#include <ya/commands/position/MultiplyPosition.hpp>
+#include <ya/commands/position/MultiplyPosition1.hpp>
+#include <ya/commands/position/MultiplyPositionX.hpp>
+#include <ya/commands/position/SetPosition1.hpp>
+#include <ya/commands/position/SetPositionX.hpp>
 
 namespace yq::tachyon {
     PPosition¹::PPosition¹(const IPosition¹& i)

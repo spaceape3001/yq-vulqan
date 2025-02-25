@@ -7,16 +7,16 @@
 #pragma once
 
 #include <ya/aspects/APosition2.hpp>
-#include <ya/commands/spatial/AddPosition2.hpp>
-#include <ya/commands/spatial/AddPositionX.hpp>
-#include <ya/commands/spatial/AddPositionY.hpp>
-#include <ya/commands/spatial/MultiplyPosition.hpp>
-#include <ya/commands/spatial/MultiplyPosition2.hpp>
-#include <ya/commands/spatial/MultiplyPositionX.hpp>
-#include <ya/commands/spatial/MultiplyPositionY.hpp>
-#include <ya/commands/spatial/SetPosition2.hpp>
-#include <ya/commands/spatial/SetPositionX.hpp>
-#include <ya/commands/spatial/SetPositionY.hpp>
+#include <ya/commands/position/AddPosition2.hpp>
+#include <ya/commands/position/AddPositionX.hpp>
+#include <ya/commands/position/AddPositionY.hpp>
+#include <ya/commands/position/MultiplyPosition.hpp>
+#include <ya/commands/position/MultiplyPosition2.hpp>
+#include <ya/commands/position/MultiplyPositionX.hpp>
+#include <ya/commands/position/MultiplyPositionY.hpp>
+#include <ya/commands/position/SetPosition2.hpp>
+#include <ya/commands/position/SetPositionX.hpp>
+#include <ya/commands/position/SetPositionY.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 

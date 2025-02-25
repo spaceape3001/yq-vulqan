@@ -6,6 +6,9 @@
 * Save/load of tachyons to XML format
 * Tachyons can have asset & delegate properties
 
+### Known issues
+* Issue in closing not always closing the application.
+
 ## 2025.02.14
 
 * Added Audio Thread

@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/AMinSize3.hpp>
-#include <ya/commands/spatial/AddMinSize3.hpp>
-#include <ya/commands/spatial/AddMinSizeX.hpp>
-#include <ya/commands/spatial/AddMinSizeY.hpp>
-#include <ya/commands/spatial/AddMinSizeZ.hpp>
-#include <ya/commands/spatial/MultiplyMinSize.hpp>
-#include <ya/commands/spatial/MultiplyMinSize3.hpp>
-#include <ya/commands/spatial/MultiplyMinSizeX.hpp>
-#include <ya/commands/spatial/MultiplyMinSizeY.hpp>
-#include <ya/commands/spatial/MultiplyMinSizeZ.hpp>
-#include <ya/commands/spatial/SetMinSize3.hpp>
-#include <ya/commands/spatial/SetMinSizeX.hpp>
-#include <ya/commands/spatial/SetMinSizeY.hpp>
-#include <ya/commands/spatial/SetMinSizeZ.hpp>
+#include <ya/commands/size/AddMinSize3.hpp>
+#include <ya/commands/size/AddMinSizeX.hpp>
+#include <ya/commands/size/AddMinSizeY.hpp>
+#include <ya/commands/size/AddMinSizeZ.hpp>
+#include <ya/commands/size/MultiplyMinSize.hpp>
+#include <ya/commands/size/MultiplyMinSize3.hpp>
+#include <ya/commands/size/MultiplyMinSizeX.hpp>
+#include <ya/commands/size/MultiplyMinSizeY.hpp>
+#include <ya/commands/size/MultiplyMinSizeZ.hpp>
+#include <ya/commands/size/SetMinSize3.hpp>
+#include <ya/commands/size/SetMinSizeX.hpp>
+#include <ya/commands/size/SetMinSizeY.hpp>
+#include <ya/commands/size/SetMinSizeZ.hpp>
 #include <ya/events/spatial/Size3Event.hpp>
 
 

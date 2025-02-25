@@ -290,67 +290,69 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/scale/SetScaleY.cpp
     ya/commands/scale/SetScaleZ.cpp
 
+
+    ya/commands/size/AddMaxSize1.cpp
+    ya/commands/size/AddMaxSize2.cpp
+    ya/commands/size/AddMaxSize3.cpp
+    ya/commands/size/AddMaxSizeX.cpp
+    ya/commands/size/AddMaxSizeY.cpp
+    ya/commands/size/AddMaxSizeZ.cpp
+    ya/commands/size/AddMinSize1.cpp
+    ya/commands/size/AddMinSize2.cpp
+    ya/commands/size/AddMinSize3.cpp
+    ya/commands/size/AddMinSizeX.cpp
+    ya/commands/size/AddMinSizeY.cpp
+    ya/commands/size/AddMinSizeZ.cpp
+    ya/commands/size/AddSize1.cpp
+    ya/commands/size/AddSize2.cpp
+    ya/commands/size/AddSize3.cpp
+    ya/commands/size/AddSizeX.cpp
+    ya/commands/size/AddSizeY.cpp
+    ya/commands/size/AddSizeZ.cpp
+    ya/commands/size/MultiplyMaxSize.cpp
+    ya/commands/size/MultiplyMaxSize1.cpp
+    ya/commands/size/MultiplyMaxSize2.cpp
+    ya/commands/size/MultiplyMaxSize3.cpp
+    ya/commands/size/MultiplyMaxSizeX.cpp
+    ya/commands/size/MultiplyMaxSizeY.cpp
+    ya/commands/size/MultiplyMaxSizeZ.cpp
+    ya/commands/size/MultiplyMinSize.cpp
+    ya/commands/size/MultiplyMinSize1.cpp
+    ya/commands/size/MultiplyMinSize2.cpp
+    ya/commands/size/MultiplyMinSize3.cpp
+    ya/commands/size/MultiplyMinSizeX.cpp
+    ya/commands/size/MultiplyMinSizeY.cpp
+    ya/commands/size/MultiplyMinSizeZ.cpp
+    ya/commands/size/MultiplySize.cpp
+    ya/commands/size/MultiplySize1.cpp
+    ya/commands/size/MultiplySize2.cpp
+    ya/commands/size/MultiplySize3.cpp
+    ya/commands/size/MultiplySizeX.cpp
+    ya/commands/size/MultiplySizeY.cpp
+    ya/commands/size/MultiplySizeZ.cpp
+    ya/commands/size/SetMaxSize1.cpp
+    ya/commands/size/SetMaxSize2.cpp
+    ya/commands/size/SetMaxSize3.cpp
+    ya/commands/size/SetMaxSizeX.cpp
+    ya/commands/size/SetMaxSizeY.cpp
+    ya/commands/size/SetMaxSizeZ.cpp
+    ya/commands/size/SetMinSize1.cpp
+    ya/commands/size/SetMinSize2.cpp
+    ya/commands/size/SetMinSize3.cpp
+    ya/commands/size/SetMinSizeX.cpp
+    ya/commands/size/SetMinSizeY.cpp
+    ya/commands/size/SetMinSizeZ.cpp
+    ya/commands/size/SetSize1.cpp
+    ya/commands/size/SetSize2.cpp
+    ya/commands/size/SetSize3.cpp
+    ya/commands/size/SetSizeX.cpp
+    ya/commands/size/SetSizeY.cpp
+    ya/commands/size/SetSizeZ.cpp
+    
     ya/commands/spatial/OrientationCommand.cpp
     ya/commands/spatial/PositionCommand.cpp
     ya/commands/spatial/ScaleCommand.cpp
-    
-    ya/commands/spatial/AddMaxSize1.cpp
-    ya/commands/spatial/AddMaxSize2.cpp
-    ya/commands/spatial/AddMaxSize3.cpp
-    ya/commands/spatial/AddMaxSizeX.cpp
-    ya/commands/spatial/AddMaxSizeY.cpp
-    ya/commands/spatial/AddMaxSizeZ.cpp
-    ya/commands/spatial/AddMinSize1.cpp
-    ya/commands/spatial/AddMinSize2.cpp
-    ya/commands/spatial/AddMinSize3.cpp
-    ya/commands/spatial/AddMinSizeX.cpp
-    ya/commands/spatial/AddMinSizeY.cpp
-    ya/commands/spatial/AddMinSizeZ.cpp
-    ya/commands/spatial/AddSize1.cpp
-    ya/commands/spatial/AddSize2.cpp
-    ya/commands/spatial/AddSize3.cpp
-    ya/commands/spatial/AddSizeX.cpp
-    ya/commands/spatial/AddSizeY.cpp
-    ya/commands/spatial/AddSizeZ.cpp
-    ya/commands/spatial/MultiplyMaxSize.cpp
-    ya/commands/spatial/MultiplyMaxSize1.cpp
-    ya/commands/spatial/MultiplyMaxSize2.cpp
-    ya/commands/spatial/MultiplyMaxSize3.cpp
-    ya/commands/spatial/MultiplyMaxSizeX.cpp
-    ya/commands/spatial/MultiplyMaxSizeY.cpp
-    ya/commands/spatial/MultiplyMaxSizeZ.cpp
-    ya/commands/spatial/MultiplyMinSize.cpp
-    ya/commands/spatial/MultiplyMinSize1.cpp
-    ya/commands/spatial/MultiplyMinSize2.cpp
-    ya/commands/spatial/MultiplyMinSize3.cpp
-    ya/commands/spatial/MultiplyMinSizeX.cpp
-    ya/commands/spatial/MultiplyMinSizeY.cpp
-    ya/commands/spatial/MultiplyMinSizeZ.cpp
-    ya/commands/spatial/MultiplySize.cpp
-    ya/commands/spatial/MultiplySize1.cpp
-    ya/commands/spatial/MultiplySize2.cpp
-    ya/commands/spatial/MultiplySize3.cpp
-    ya/commands/spatial/MultiplySizeX.cpp
-    ya/commands/spatial/MultiplySizeY.cpp
-    ya/commands/spatial/MultiplySizeZ.cpp
-    ya/commands/spatial/SetMaxSize1.cpp
-    ya/commands/spatial/SetMaxSize2.cpp
-    ya/commands/spatial/SetMaxSize3.cpp
-    ya/commands/spatial/SetMaxSizeX.cpp
-    ya/commands/spatial/SetMaxSizeY.cpp
-    ya/commands/spatial/SetMaxSizeZ.cpp
-    ya/commands/spatial/SetMinSize1.cpp
-    ya/commands/spatial/SetMinSize2.cpp
-    ya/commands/spatial/SetMinSize3.cpp
-    ya/commands/spatial/SetMinSizeX.cpp
-    ya/commands/spatial/SetMinSizeY.cpp
-    ya/commands/spatial/SetMinSizeZ.cpp
-    ya/commands/spatial/SetSize1.cpp
-    ya/commands/spatial/SetSize2.cpp
-    ya/commands/spatial/SetSize3.cpp
-    ya/commands/spatial/SetSizeX.cpp
-    ya/commands/spatial/SetSizeY.cpp
-    ya/commands/spatial/SetSizeZ.cpp
+    ya/commands/spatial/SizeCommand.cpp
     
     ya/commands/tachyon/AddChildCommand.cpp
     ya/commands/tachyon/DestroyCommand.cpp

@@ -7,16 +7,16 @@
 #pragma once
 
 #include <ya/aspects/AMinSize2.hpp>
-#include <ya/commands/spatial/AddMinSize2.hpp>
-#include <ya/commands/spatial/AddMinSizeX.hpp>
-#include <ya/commands/spatial/AddMinSizeY.hpp>
-#include <ya/commands/spatial/MultiplyMinSize.hpp>
-#include <ya/commands/spatial/MultiplyMinSize2.hpp>
-#include <ya/commands/spatial/MultiplyMinSizeX.hpp>
-#include <ya/commands/spatial/MultiplyMinSizeY.hpp>
-#include <ya/commands/spatial/SetMinSize2.hpp>
-#include <ya/commands/spatial/SetMinSizeX.hpp>
-#include <ya/commands/spatial/SetMinSizeY.hpp>
+#include <ya/commands/size/AddMinSize2.hpp>
+#include <ya/commands/size/AddMinSizeX.hpp>
+#include <ya/commands/size/AddMinSizeY.hpp>
+#include <ya/commands/size/MultiplyMinSize.hpp>
+#include <ya/commands/size/MultiplyMinSize2.hpp>
+#include <ya/commands/size/MultiplyMinSizeX.hpp>
+#include <ya/commands/size/MultiplyMinSizeY.hpp>
+#include <ya/commands/size/SetMinSize2.hpp>
+#include <ya/commands/size/SetMinSizeX.hpp>
+#include <ya/commands/size/SetMinSizeY.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 

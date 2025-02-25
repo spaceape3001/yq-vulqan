@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PSize3.hpp>
-#include <ya/commands/spatial/AddSize3.hpp>
-#include <ya/commands/spatial/AddSizeX.hpp>
-#include <ya/commands/spatial/AddSizeY.hpp>
-#include <ya/commands/spatial/AddSizeZ.hpp>
-#include <ya/commands/spatial/MultiplySize.hpp>
-#include <ya/commands/spatial/MultiplySize3.hpp>
-#include <ya/commands/spatial/MultiplySizeX.hpp>
-#include <ya/commands/spatial/MultiplySizeY.hpp>
-#include <ya/commands/spatial/MultiplySizeZ.hpp>
-#include <ya/commands/spatial/SetSize3.hpp>
-#include <ya/commands/spatial/SetSizeX.hpp>
-#include <ya/commands/spatial/SetSizeY.hpp>
-#include <ya/commands/spatial/SetSizeZ.hpp>
+#include <ya/commands/size/AddSize3.hpp>
+#include <ya/commands/size/AddSizeX.hpp>
+#include <ya/commands/size/AddSizeY.hpp>
+#include <ya/commands/size/AddSizeZ.hpp>
+#include <ya/commands/size/MultiplySize.hpp>
+#include <ya/commands/size/MultiplySize3.hpp>
+#include <ya/commands/size/MultiplySizeX.hpp>
+#include <ya/commands/size/MultiplySizeY.hpp>
+#include <ya/commands/size/MultiplySizeZ.hpp>
+#include <ya/commands/size/SetSize3.hpp>
+#include <ya/commands/size/SetSizeX.hpp>
+#include <ya/commands/size/SetSizeY.hpp>
+#include <ya/commands/size/SetSizeZ.hpp>
 
 namespace yq::tachyon {
     PSize³::PSize³(const ISize³& i) : m_size(i.size())

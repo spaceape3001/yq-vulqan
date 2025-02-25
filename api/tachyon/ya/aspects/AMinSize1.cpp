@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/AMinSize1.hpp>
-#include <ya/commands/spatial/AddMinSize1.hpp>
-#include <ya/commands/spatial/AddMinSizeX.hpp>
-#include <ya/commands/spatial/MultiplyMinSize.hpp>
-#include <ya/commands/spatial/MultiplyMinSize1.hpp>
-#include <ya/commands/spatial/MultiplyMinSizeX.hpp>
-#include <ya/commands/spatial/SetMinSize1.hpp>
-#include <ya/commands/spatial/SetMinSizeX.hpp>
+#include <ya/commands/size/AddMinSize1.hpp>
+#include <ya/commands/size/AddMinSizeX.hpp>
+#include <ya/commands/size/MultiplyMinSize.hpp>
+#include <ya/commands/size/MultiplyMinSize1.hpp>
+#include <ya/commands/size/MultiplyMinSizeX.hpp>
+#include <ya/commands/size/SetMinSize1.hpp>
+#include <ya/commands/size/SetMinSizeX.hpp>
 #include <ya/events/spatial/Size1Event.hpp>
 
 

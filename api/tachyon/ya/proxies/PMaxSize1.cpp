@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PMaxSize1.hpp>
-#include <ya/commands/spatial/AddMaxSize1.hpp>
-#include <ya/commands/spatial/AddMaxSizeX.hpp>
-#include <ya/commands/spatial/MultiplyMaxSize.hpp>
-#include <ya/commands/spatial/MultiplyMaxSize1.hpp>
-#include <ya/commands/spatial/MultiplyMaxSizeX.hpp>
-#include <ya/commands/spatial/SetMaxSize1.hpp>
-#include <ya/commands/spatial/SetMaxSizeX.hpp>
+#include <ya/commands/size/AddMaxSize1.hpp>
+#include <ya/commands/size/AddMaxSizeX.hpp>
+#include <ya/commands/size/MultiplyMaxSize.hpp>
+#include <ya/commands/size/MultiplyMaxSize1.hpp>
+#include <ya/commands/size/MultiplyMaxSizeX.hpp>
+#include <ya/commands/size/SetMaxSize1.hpp>
+#include <ya/commands/size/SetMaxSizeX.hpp>
 
 namespace yq::tachyon {
     PMaxSize¹::PMaxSize¹(const IMaxSize¹& i) : m_max_size(i.max_size())

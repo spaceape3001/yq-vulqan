@@ -7,16 +7,16 @@
 #pragma once
 
 #include <ya/aspects/AMaxSize2.hpp>
-#include <ya/commands/spatial/AddMaxSize2.hpp>
-#include <ya/commands/spatial/AddMaxSizeX.hpp>
-#include <ya/commands/spatial/AddMaxSizeY.hpp>
-#include <ya/commands/spatial/MultiplyMaxSize.hpp>
-#include <ya/commands/spatial/MultiplyMaxSize2.hpp>
-#include <ya/commands/spatial/MultiplyMaxSizeX.hpp>
-#include <ya/commands/spatial/MultiplyMaxSizeY.hpp>
-#include <ya/commands/spatial/SetMaxSize2.hpp>
-#include <ya/commands/spatial/SetMaxSizeX.hpp>
-#include <ya/commands/spatial/SetMaxSizeY.hpp>
+#include <ya/commands/size/AddMaxSize2.hpp>
+#include <ya/commands/size/AddMaxSizeX.hpp>
+#include <ya/commands/size/AddMaxSizeY.hpp>
+#include <ya/commands/size/MultiplyMaxSize.hpp>
+#include <ya/commands/size/MultiplyMaxSize2.hpp>
+#include <ya/commands/size/MultiplyMaxSizeX.hpp>
+#include <ya/commands/size/MultiplyMaxSizeY.hpp>
+#include <ya/commands/size/SetMaxSize2.hpp>
+#include <ya/commands/size/SetMaxSizeX.hpp>
+#include <ya/commands/size/SetMaxSizeY.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 

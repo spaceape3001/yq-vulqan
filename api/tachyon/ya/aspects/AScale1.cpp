@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/AScale1.hpp>
-#include <ya/commands/spatial/AddScale1.hpp>
-#include <ya/commands/spatial/AddScaleX.hpp>
-#include <ya/commands/spatial/MultiplyScale.hpp>
-#include <ya/commands/spatial/MultiplyScale1.hpp>
-#include <ya/commands/spatial/MultiplyScaleX.hpp>
-#include <ya/commands/spatial/SetScale1.hpp>
-#include <ya/commands/spatial/SetScaleX.hpp>
+#include <ya/commands/scale/AddScale1.hpp>
+#include <ya/commands/scale/AddScaleX.hpp>
+#include <ya/commands/scale/MultiplyScale.hpp>
+#include <ya/commands/scale/MultiplyScale1.hpp>
+#include <ya/commands/scale/MultiplyScaleX.hpp>
+#include <ya/commands/scale/SetScale1.hpp>
+#include <ya/commands/scale/SetScaleX.hpp>
 #include <ya/events/spatial/Scale1Event.hpp>
 
 

@@ -7,19 +7,19 @@
 #pragma once
 
 #include <ya/aspects/AScale3.hpp>
-#include <ya/commands/spatial/AddScale3.hpp>
-#include <ya/commands/spatial/AddScaleX.hpp>
-#include <ya/commands/spatial/AddScaleY.hpp>
-#include <ya/commands/spatial/AddScaleZ.hpp>
-#include <ya/commands/spatial/MultiplyScale.hpp>
-#include <ya/commands/spatial/MultiplyScale3.hpp>
-#include <ya/commands/spatial/MultiplyScaleX.hpp>
-#include <ya/commands/spatial/MultiplyScaleY.hpp>
-#include <ya/commands/spatial/MultiplyScaleZ.hpp>
-#include <ya/commands/spatial/SetScale3.hpp>
-#include <ya/commands/spatial/SetScaleX.hpp>
-#include <ya/commands/spatial/SetScaleY.hpp>
-#include <ya/commands/spatial/SetScaleZ.hpp>
+#include <ya/commands/scale/AddScale3.hpp>
+#include <ya/commands/scale/AddScaleX.hpp>
+#include <ya/commands/scale/AddScaleY.hpp>
+#include <ya/commands/scale/AddScaleZ.hpp>
+#include <ya/commands/scale/MultiplyScale.hpp>
+#include <ya/commands/scale/MultiplyScale3.hpp>
+#include <ya/commands/scale/MultiplyScaleX.hpp>
+#include <ya/commands/scale/MultiplyScaleY.hpp>
+#include <ya/commands/scale/MultiplyScaleZ.hpp>
+#include <ya/commands/scale/SetScale3.hpp>
+#include <ya/commands/scale/SetScaleX.hpp>
+#include <ya/commands/scale/SetScaleY.hpp>
+#include <ya/commands/scale/SetScaleZ.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 

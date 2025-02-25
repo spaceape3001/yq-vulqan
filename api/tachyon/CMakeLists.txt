@@ -270,8 +270,29 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/position/SetPositionY.cpp
     ya/commands/position/SetPositionZ.cpp
 
+    ya/commands/scale/AddScale1.cpp
+    ya/commands/scale/AddScale2.cpp
+    ya/commands/scale/AddScale3.cpp
+    ya/commands/scale/AddScaleX.cpp
+    ya/commands/scale/AddScaleY.cpp
+    ya/commands/scale/AddScaleZ.cpp
+    ya/commands/scale/MultiplyScale.cpp
+    ya/commands/scale/MultiplyScale1.cpp
+    ya/commands/scale/MultiplyScale2.cpp
+    ya/commands/scale/MultiplyScale3.cpp
+    ya/commands/scale/MultiplyScaleX.cpp
+    ya/commands/scale/MultiplyScaleY.cpp
+    ya/commands/scale/MultiplyScaleZ.cpp
+    ya/commands/scale/SetScale1.cpp
+    ya/commands/scale/SetScale2.cpp
+    ya/commands/scale/SetScale3.cpp
+    ya/commands/scale/SetScaleX.cpp
+    ya/commands/scale/SetScaleY.cpp
+    ya/commands/scale/SetScaleZ.cpp
+
     ya/commands/spatial/OrientationCommand.cpp
     ya/commands/spatial/PositionCommand.cpp
+    ya/commands/spatial/ScaleCommand.cpp
     
     ya/commands/spatial/AddMaxSize1.cpp
     ya/commands/spatial/AddMaxSize2.cpp
@@ -285,12 +306,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/AddMinSizeX.cpp
     ya/commands/spatial/AddMinSizeY.cpp
     ya/commands/spatial/AddMinSizeZ.cpp
-    ya/commands/spatial/AddScale1.cpp
-    ya/commands/spatial/AddScale2.cpp
-    ya/commands/spatial/AddScale3.cpp
-    ya/commands/spatial/AddScaleX.cpp
-    ya/commands/spatial/AddScaleY.cpp
-    ya/commands/spatial/AddScaleZ.cpp
     ya/commands/spatial/AddSize1.cpp
     ya/commands/spatial/AddSize2.cpp
     ya/commands/spatial/AddSize3.cpp
@@ -311,13 +326,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/MultiplyMinSizeX.cpp
     ya/commands/spatial/MultiplyMinSizeY.cpp
     ya/commands/spatial/MultiplyMinSizeZ.cpp
-    ya/commands/spatial/MultiplyScale.cpp
-    ya/commands/spatial/MultiplyScale1.cpp
-    ya/commands/spatial/MultiplyScale2.cpp
-    ya/commands/spatial/MultiplyScale3.cpp
-    ya/commands/spatial/MultiplyScaleX.cpp
-    ya/commands/spatial/MultiplyScaleY.cpp
-    ya/commands/spatial/MultiplyScaleZ.cpp
     ya/commands/spatial/MultiplySize.cpp
     ya/commands/spatial/MultiplySize1.cpp
     ya/commands/spatial/MultiplySize2.cpp
@@ -337,12 +345,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/spatial/SetMinSizeX.cpp
     ya/commands/spatial/SetMinSizeY.cpp
     ya/commands/spatial/SetMinSizeZ.cpp
-    ya/commands/spatial/SetScale1.cpp
-    ya/commands/spatial/SetScale2.cpp
-    ya/commands/spatial/SetScale3.cpp
-    ya/commands/spatial/SetScaleX.cpp
-    ya/commands/spatial/SetScaleY.cpp
-    ya/commands/spatial/SetScaleZ.cpp
     ya/commands/spatial/SetSize1.cpp
     ya/commands/spatial/SetSize2.cpp
     ya/commands/spatial/SetSize3.cpp

@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/AScale2.hpp>
-#include <ya/commands/spatial/AddScale2.hpp>
-#include <ya/commands/spatial/AddScaleX.hpp>
-#include <ya/commands/spatial/AddScaleY.hpp>
-#include <ya/commands/spatial/MultiplyScale.hpp>
-#include <ya/commands/spatial/MultiplyScale2.hpp>
-#include <ya/commands/spatial/MultiplyScaleX.hpp>
-#include <ya/commands/spatial/MultiplyScaleY.hpp>
-#include <ya/commands/spatial/SetScale2.hpp>
-#include <ya/commands/spatial/SetScaleX.hpp>
-#include <ya/commands/spatial/SetScaleY.hpp>
+#include <ya/commands/scale/AddScale2.hpp>
+#include <ya/commands/scale/AddScaleX.hpp>
+#include <ya/commands/scale/AddScaleY.hpp>
+#include <ya/commands/scale/MultiplyScale.hpp>
+#include <ya/commands/scale/MultiplyScale2.hpp>
+#include <ya/commands/scale/MultiplyScaleX.hpp>
+#include <ya/commands/scale/MultiplyScaleY.hpp>
+#include <ya/commands/scale/SetScale2.hpp>
+#include <ya/commands/scale/SetScaleX.hpp>
+#include <ya/commands/scale/SetScaleY.hpp>
 #include <ya/events/spatial/Scale2Event.hpp>
 
 namespace yq::tachyon {

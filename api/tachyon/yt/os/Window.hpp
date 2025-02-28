@@ -10,6 +10,7 @@
 #include <yq/math/glm.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/typedef/window.hpp>
+#include <yv/typedef/vi_surface.hpp>
 
 namespace yq::tachyon {
 
@@ -61,6 +62,8 @@ namespace yq::tachyon {
 
         void        cmd_show();
         void        cmd_hide();
+        
+        virtual ViSurfacePtr    create_surface() const;
 
     protected:
     

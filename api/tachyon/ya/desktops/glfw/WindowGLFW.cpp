@@ -59,6 +59,8 @@
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
 #include <ya/desktops/glfw/MonitorGLFW.hpp>
+#include <yv/VulqanManager.hpp>
+#include <yv/ViSurface.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 
@@ -376,6 +378,15 @@ namespace yq::tachyon {
         if(glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_8) == GLFW_PRESS)
             ret |= MouseButton::Button8;
         return ret;
+    }
+
+    ViSurfacePtr    WindowGLFW::create_surface() const 
+    {
+        VkSurfaceKHR    surface = nullptr;
+        VkResult    result = glfwCreateWindowSurface(VulqanManager::instance(), m_window, nullptr, &surface);
+        if(result != VK_SUCCESS)
+            return {};
+        return new ViSurface(surface);
     }
 
     WindowFlags         WindowGLFW::flags(read_k) const

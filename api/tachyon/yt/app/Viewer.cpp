@@ -602,6 +602,10 @@ namespace yq::tachyon {
 
     void    Viewer::on_fb_resize_event(const FramebufferResizeEvent&evt)
     {
+        if(evt.source() != m_window)
+            return;
+            
+        yInfo() << "Viewer framebuffer resize (" << evt.width() << ", " << evt.height() << ")";
         // TODO
     }
     
@@ -712,7 +716,8 @@ namespace yq::tachyon {
     void    Viewer::on_move_event(const Position²Event&evt)
     {
         if(evt.source() == m_window){
-            yInfo() << "Viewer moved (" << evt.x() << ", " << evt.y() << ")";
+            // yInfo() << "Viewer moved (" << evt.x() << ", " << evt.y() << ")";
+            // TODO (might not even matter TBH)
         }
     }
 

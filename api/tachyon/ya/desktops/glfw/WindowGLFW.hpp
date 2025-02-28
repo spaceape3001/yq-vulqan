@@ -53,6 +53,8 @@ namespace yq::tachyon {
         static WindowGLFW*  window(ptr_k, GLFWwindow*);
         static WindowID     window(GLFWwindow*);
  
+
+        virtual ViSurfacePtr    create_surface() const override;
  
         virtual Execution tick(const Context&) override;
         

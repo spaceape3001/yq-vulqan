@@ -35,14 +35,12 @@ namespace yq::tachyon {
         
         void        cleanup();
         
-        void        init(VkPhysicalDevice, const ViewerCreateInfo&);
-        
     private:
         VkDevice            m_device;
         VmaAllocator        m_allocator         = nullptr;
         Cleanup             m_cleanup;
         
-        void    _kill();
+        void                _kill();
     };
 }
 

@@ -11,6 +11,7 @@
 #include <ya/commands/ui/HideCommand.hpp>
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <yq/meta/Init.hpp>
+#include <yv/ViSurface.hpp>
 
 namespace yq::tachyon {
 
@@ -55,6 +56,11 @@ namespace yq::tachyon {
     void Window::cmd_show()
     {
         mail(new ShowCommand({.source=this, .target=this}));
+    }
+
+    ViSurfacePtr    Window::create_surface() const
+    {
+        return {};
     }
 
     void Window::snap(WindowSnap& sn) const

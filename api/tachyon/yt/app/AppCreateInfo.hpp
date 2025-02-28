@@ -12,6 +12,7 @@
 #include <yt/app/ViewerCreateInfo.hpp>
 #include <yt/os/Platform.hpp>
 #include <yt/keywords.hpp>
+#include <yv/VulqanCreateInfo.hpp>
 
 #include <optional>
 #include <set>
@@ -19,11 +20,6 @@
 #include <vector>
 
 namespace yq::tachyon {
-    struct NameRequired {
-        const char*     name    = nullptr;
-        Required        req     = Required::NO;
-    };
-    
     enum class ThreadPolicy {
         //! Viewers go on main thread
         Single,
@@ -73,26 +69,9 @@ namespace yq::tachyon {
         ViewerCreateInfo            view;
 
         //! Viewer thread policy
-        ThreadPolicy                vthreads                = ThreadPolicy::Single;
-
-        //! Set to enable vulkan
-        bool                        vulkan                  = true;
-            
-        //! Vulkan API version (zero will default to latest)
-        uint32_t                    vulkan_api              = 0;
-
-        //! Extra strict validation!
-        bool                        vulkan_best_practices   = true;
-            
-            
-        //! Desired extensions (taking optional & yes)
-        std::vector<NameRequired>   vulkan_extensions;
+        //ThreadPolicy                vthreads                = ThreadPolicy::Single;
         
-        //! Add KHRONOS validation layer
-        Required                    vulkan_validation      = YQ_DBGREL( Required::YES, Required::NO);
-            
-        //! Desired layers (taking optional & yes)
-        std::vector<NameRequired>   vulkan_layers;
+        VulqanCreateInfo            vulkan;
 
         
         AppCreateInfo() = default;

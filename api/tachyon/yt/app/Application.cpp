@@ -263,7 +263,7 @@ namespace yq::tachyon {
             }
         }
         
-        if(m_cInfo.vulkan){
+        if(m_cInfo.vulkan.enable){
             m_vulkan    = Tachyon::create<VulqanManager>();
             m_thread.app -> tick();
             m_thread.app -> tick();

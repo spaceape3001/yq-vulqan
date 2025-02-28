@@ -180,9 +180,9 @@ namespace yq::tachyon {
     
         Common& g   = common();
         
-        g.vulkan_api       = aci.vulkan_api;
+        g.vulkan_api       = aci.vulkan.api;
         if(!g.vulkan_api)
-            g.vulkan_api   = VK_API_VERSION_1_3;
+            g.vulkan_api   = VK_API_VERSION_1_4;
         
 
         g.enumerate_extensions();
@@ -193,16 +193,16 @@ namespace yq::tachyon {
         
         std::error_code     ec;
 
-        if(aci.vulkan_validation != Required::NO){
+        if(aci.vulkan.validation != Required::NO){
             if(g.add_layer(kValidationLayer)){
                 want_debug      = true;
                 g.validation    = true;
             } else {
                 {
-                    auto stream    = (aci.vulkan_validation == Required::YES) ? tachyonCritical : tachyonError;
+                    auto stream    = (aci.vulkan.validation == Required::YES) ? tachyonCritical : tachyonError;
                     stream << "Vulqan: Unable to find validation layer: " << kValidationLayer;
                 }
-                if(aci.vulkan_validation == Required::YES)
+                if(aci.vulkan.validation == Required::YES)
                     throw VulqanException("VulganManager: Required validation layer is unavailable!");
             }
         }
@@ -216,7 +216,7 @@ namespace yq::tachyon {
         }
 
 
-        for(auto& x : aci.vulkan_layers){
+        for(auto& x : aci.vulkan.layers){
             if(!x.name)
                 throw VulqanException("Vulqan: Specified layer name is a null pointer!");
             if(g.add_layer(x.name)){
@@ -232,7 +232,7 @@ namespace yq::tachyon {
             }
         }
 
-        for(auto& x : aci.vulkan_extensions){
+        for(auto& x : aci.vulkan.extensions){
             if(!x.name)
                 throw VulqanException("Vulqan: Specified extension name is a null pointer!");
             if(g.add_extension(x.name)){
@@ -274,7 +274,7 @@ namespace yq::tachyon {
         VqValidationFeaturesEXT features;
         createInfo.pNext  = &features;
         
-        if(aci.vulkan_best_practices && want_debug){
+        if(aci.vulkan.best_practices && want_debug){
             g.best_practices    = true;
             features.enabledValidationFeatureCount  = 1;
             features.pEnabledValidationFeatures     = enables;

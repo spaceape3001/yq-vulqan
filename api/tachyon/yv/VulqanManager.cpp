@@ -41,6 +41,12 @@ namespace yq::tachyon {
     
     static constexpr bool   kFilterMessagesOnce = false;
     
+    static constexpr std::initializer_list<NameRequired>    kStdExtensions = {
+    };
+    
+    static constexpr std::initializer_list<NameRequired>    kStdLayers = {
+    };
+    
     namespace {
         static constexpr const uint32_t kEngineVersion      = YQ_MAKE_VERSION(0, 0, 2);
         static constexpr const char*    szEngineName        = "YQ Tachyon";
@@ -112,6 +118,9 @@ namespace yq::tachyon {
         
         bool    add_extension(const char*);
         bool    add_layer(const char*);
+        
+        void    add_layer(const NameRequired&);
+        void    add_extension(const NameRequired&);
     };
     
     VulqanManager::Common& VulqanManager::common()
@@ -169,6 +178,40 @@ namespace yq::tachyon {
         }
     }
 
+    void  VulqanManager::Common::add_layer(const NameRequired&x)
+    {
+        if(!x.name)
+            throw VulqanException("Vulqan: Specified layer name is a null pointer!");
+        if(add_layer(x.name)){
+            tachyonInfo << "Vulqan: Enabling vulkan layer '" << x.name << "'";
+        } else {
+            {
+                auto stream    = (x.req == Required::YES) ? vqCritical : vqError;
+                stream << "Vulqan: Unable to find requested layer '" << x.name << "'";
+            }
+            if(x.req == Required::YES){
+                throw VulqanException("Vulqan: Vulkan API missing required layer!");
+            }
+        }
+    }
+    
+    void  VulqanManager::Common::add_extension(const NameRequired&x)
+    {
+        if(!x.name)
+            throw VulqanException("Vulqan: Specified extension name is a null pointer!");
+        if(add_extension(x.name)){
+            tachyonInfo << "Vulqan: Enabling vulkan extension '" << x.name << "'";
+        } else {
+            {
+                auto stream    = (x.req == Required::YES) ? vqCritical : vqError;
+                stream << "Vulqan: Unable to find requested extension '" << x.name << "'";
+            }
+            if(x.req == Required::YES){
+                throw VulqanException("Vulqan: Vulkan API missing required extension!");
+            }
+        }
+    }
+
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     void  VulqanManager::_init()
@@ -215,38 +258,15 @@ namespace yq::tachyon {
             g.extensions.requested.push_back("VK_EXT_debug_report");
         }
 
+        for(auto& x : kStdLayers)
+            g.add_layer(x);
+        for(auto& x : aci.vulkan.layers)
+            g.add_layer(x);
 
-        for(auto& x : aci.vulkan.layers){
-            if(!x.name)
-                throw VulqanException("Vulqan: Specified layer name is a null pointer!");
-            if(g.add_layer(x.name)){
-                tachyonInfo << "Vulqan: Enabling vulkan layer '" << x.name << "'";
-            } else {
-                {
-                    auto stream    = (x.req == Required::YES) ? vqCritical : vqError;
-                    stream << "Vulqan: Unable to find requested layer '" << x.name << "'";
-                }
-                if(x.req == Required::YES){
-                    throw VulqanException("Vulqan: Vulkan API missing required layer!");
-                }
-            }
-        }
-
-        for(auto& x : aci.vulkan.extensions){
-            if(!x.name)
-                throw VulqanException("Vulqan: Specified extension name is a null pointer!");
-            if(g.add_extension(x.name)){
-                tachyonInfo << "Vulqan: Enabling vulkan extension '" << x.name << "'";
-            } else {
-                {
-                    auto stream    = (x.req == Required::YES) ? vqCritical : vqError;
-                    stream << "Vulqan: Unable to find requested extension '" << x.name << "'";
-                }
-                if(x.req == Required::YES){
-                    throw VulqanException("Vulqan: Vulkan API missing required extension!");
-                }
-            }
-        }
+        for(auto& x : kStdExtensions)
+            g.add_extension(x);
+        for(auto& x : aci.vulkan.extensions)
+            g.add_extension(x);
 
             /*
                 Create our instance

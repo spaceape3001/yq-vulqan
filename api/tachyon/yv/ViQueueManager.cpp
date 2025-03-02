@@ -8,59 +8,13 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>
+#include <yv/VulqanCreateInfo.hpp>
 #include <yv/VqStructs.hpp>
 #include <yv/ViQueueTasker.hpp>
 #include <yv/ViVisualizer.hpp>
 
 namespace yq::tachyon {
-    bool    is_empty(const QueueSpec& qs)
-    {
-        if(std::get_if<std::monostate>(&qs) != nullptr)
-            return true;
-        if(std::get_if<optional_k>(&qs) != nullptr)
-            return false;
-        if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
-            return p->empty();
-        if(const uint32_t* p = std::get_if<uint32_t>(&qs))
-            return *p == 0;
-        if(const bool* p = std::get_if<bool>(&qs))
-            return !*p;
-        return true;
-    }
-
-    size_t  count(const QueueSpec& qs)
-    {
-        if( std::get_if<std::monostate>(&qs) != nullptr)
-            return 0;
-        if(std::get_if<optional_k>(&qs) != nullptr)
-            return 1;
-        if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
-            return p->size();
-        if(const uint32_t* p = std::get_if<uint32_t>(&qs))  
-            return *p;
-        if(const bool* p = std::get_if<bool>(&qs))
-            return *p ? 1 : 0;
-        return 0;
-    }
-
-    bool    is_required(const QueueSpec& qs)
-    {
-        if(std::get_if<std::monostate>(&qs) != nullptr)
-            return false;
-        if(std::get_if<optional_k>(&qs) != nullptr)
-            return false;
-        if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
-            return !p->empty();
-        if(const uint32_t* p = std::get_if<uint32_t>(&qs))
-            return *p != 0;
-        if(const bool* p = std::get_if<bool>(&qs))
-            return *p;
-        return false;
-    }
-
     namespace {
-
-
         const QueueSpec&   biggest(const ViewerCreateInfo& vci, Flags<ViQueueType> which)
         {
             size_t  g       = 0;

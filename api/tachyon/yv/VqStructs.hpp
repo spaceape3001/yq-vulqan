@@ -2980,6 +2980,13 @@ namespace yq::tachyon {
         }
     };
 
+    struct VqPhysicalDeviceVulkan14Features : public VkPhysicalDeviceVulkan14Features {
+        VqPhysicalDeviceVulkan14Features() : VkPhysicalDeviceVulkan14Features{} 
+        {
+            sType   = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_4_FEATURES;
+        }
+    };
+
     struct VqPhysicalDeviceVulkan13Properties : public VkPhysicalDeviceVulkan13Properties {
         VqPhysicalDeviceVulkan13Properties() : VkPhysicalDeviceVulkan13Properties{} 
         {

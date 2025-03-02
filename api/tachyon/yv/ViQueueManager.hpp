@@ -15,6 +15,7 @@
 
 namespace yq::tachyon {
     struct ViVisualizer;
+    struct VulqanCreateInfo;
     struct ViewerCreateInfo;
     
     class ViQueueManager : public RefCount {

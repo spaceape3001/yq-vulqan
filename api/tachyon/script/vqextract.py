@@ -12,7 +12,7 @@ import os, sys
 
 DONT    = ['KHR', 'NV', 'EXT', 'QCOM', 'MSFT', 'LUNARG', 'AMD', 'INTEL' ]
 
-OPT_STRUCTS = None # 'VqStructs'
+OPT_STRUCTS = 'VqStructs'
 OPT_ENUMS   = None # 'VqEnumerations'
 
 def underscoredToCapitalizedBits(this):
@@ -154,7 +154,7 @@ with open('/usr/include/vulkan/vulkan_core.h') as f:
             if b[2] != 'VkStructureType':
                 enums.append(Enum(b[2]))
                 mode    = Vulkan.mEnum
-                #print("enumeration %s detected (%s)" % (enums[-1].name, enums[-1].lead))
+                print("enumeration %s detected (%s)" % (enums[-1].name, enums[-1].lead))
         if l[0] == '}':
             mode    = Vulkan.mNone
         if (mode == Vulkan.mEnum) and ('=' in l):
@@ -183,6 +183,8 @@ def ekey(e):
 
 structs.sort(key=skey)
 enums.sort(key=ekey)
+
+print(structs)
 
 written = []
 
@@ -236,7 +238,7 @@ if OPT_ENUMS is not None:
 //  This header file is AUTO-GENERATED, changes will be CLOBBERED
 
 #include <string_view>
-#include <yq-toolbox/basic/Flags.hpp>
+#include <yq/core/Flags.hpp>
 
 namespace yq::tachyon {""")
         for e in enums:

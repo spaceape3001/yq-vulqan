@@ -10,12 +10,13 @@
 
 namespace yq::tachyon {
     enum class ViQueueType : uint8_t {
-        Auto,       //!< Not a real queue, simply means to auto-select
+        Auto,               //!< Not a real queue, simply means to auto-select
         Graphic,
-        Present,
+        Present,            //!< Generally a property to the graphic queue
         Compute,
         VideoEncode,
         VideoDecode,
+        OpticalFlow,
         Transfer
     };
 

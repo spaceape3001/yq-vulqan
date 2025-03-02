@@ -65,6 +65,7 @@ namespace yq::tachyon {
     class FloatCommand;
     class FocusCommand;
     class FocusEvent;
+    class GetDeviceReply;
     class HideCommand;
     class HideEvent;
     class IconifyCommand;
@@ -321,6 +322,12 @@ namespace yq::tachyon {
 
         const ViewerCreateInfo          m_createInfo;
         const unsigned                  m_number;
+        
+        enum class X : uint8_t {
+            Failure,
+            SentDevRequest,
+            DevReply
+        };
 
         Cleanup                         m_cleanup;
         std::atomic<unit::Second>       m_drawTime      = { 0. };
@@ -329,11 +336,14 @@ namespace yq::tachyon {
         //std::atomic<bool>               m_paused;
         ViewerState                     m_state;
         std::atomic<Stage>              m_stage         = { Stage::Preinit };
+        Flags<X>                        m_startup       = {};
         std::atomic<uint64_t>           m_ticks{0};
         std::unique_ptr<Visualizer>     m_viz;
         TypedID                         m_widget;
         Widget*                         m_widgetPtr = nullptr;  // temporary cheat
         TypedID                         m_window;
+        Window*                         m_windowPtr = nullptr;  // temporary cheat
+        TypedID                         m_graphicsCard;
         Size2I                          m_pixels    = {};
         bool                            m_zeroSize  = false;
 
@@ -358,6 +368,7 @@ namespace yq::tachyon {
         void    on_focus_command(const FocusCommand&);
         void    on_focus_event(const FocusEvent&);
         void    on_float_command(const FloatCommand&);
+        void    on_get_device_reply(const GetDeviceReply&);
         void    on_hide_event(const HideEvent&);
         void    on_hide_command(const HideCommand&);
         void    on_iconify_command(const IconifyCommand&);

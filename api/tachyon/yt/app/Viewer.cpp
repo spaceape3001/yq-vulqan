@@ -17,6 +17,7 @@
 #include <yt/app/ViewerData.hpp>
 #include <yt/app/ViewerException.hpp>
 #include <yt/gfx/Raster.hpp>
+#include <yt/os/GraphicsCard.hpp>
 #include <yt/os/Window.hpp>
 #include <yt/os/WindowData.hpp>
 #include <yt/ui/Widget.hpp>
@@ -85,12 +86,15 @@
 
 #include <ya/desktops/glfw/WindowGLFW.hpp>
 
+#include <ya/replies/graphics_card/GetDeviceReply.hpp>
 #include <ya/replies/ui/CloseReply.hpp>
 
+#include <ya/requests/graphics_card/GetDeviceRequest.hpp>
 #include <ya/requests/ui/RefreshRequest.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 
 #include <yv/ViContext.hpp>
+#include <yv/ViDevice.hpp>
 #include <yv/ViGui.hpp>
 #include <yv/Visualizer.hpp>
 
@@ -147,6 +151,7 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_float_command);
         w.slot(&Viewer::on_focus_command);
         w.slot(&Viewer::on_focus_event);
+        w.slot(&Viewer::on_get_device_reply);
         w.slot(&Viewer::on_hide_command);
         w.slot(&Viewer::on_hide_event);
         w.slot(&Viewer::on_iconify_command);
@@ -629,6 +634,43 @@ namespace yq::tachyon {
             m_imgui->on(evt);
         }
     }
+
+    void    Viewer::on_get_device_reply(const GetDeviceReply& rep)
+    {
+    
+        if(rep.target() != id())
+            return;
+
+        const Frame*    frame   = Frame::current();
+        if(!frame){
+            viewerCritical << "Viewer: Unable to get current frame, aborting the viewer";
+            m_startup |= X::Failure;
+            return ;
+        }
+        
+        const WindowSnap*   ws  = frame->snap((WindowID) m_window);
+        if(!ws){
+            viewerCritical << "Viewer: Unable to get window snap, aborting the viewer";
+            m_startup |= X::Failure;
+            return ;
+        }
+
+
+        ViDevicePtr     dev = rep.device();
+        if(!dev || !dev->valid()){
+            viewerCritical << "Viewer: Unable to get a valid device, aborting the viewer";
+            m_startup |= X::Failure;
+            return;
+        }
+        
+        
+        
+        viewerNotice << "Viewer: On Get Device activated... (" << dev->gpu_name() << ")... switch over is TODO";
+        
+        //  DO STUFF... (visualizer, imgui)
+        
+        m_startup |= X::DevReply;   // done
+    }
     
     void    Viewer::on_hide_command(const HideCommand& cmd)
     {
@@ -811,14 +853,39 @@ namespace yq::tachyon {
 
     Execution   Viewer::setup(const Context&ctx) 
     {
-        const Frame*    f   = Frame::current();
-        if(!f)
-            return WAIT;
-            
-        if(!f->snap((WindowID) m_window))
+        if(m_startup(X::Failure))
+            return ABORT;
+    
+        const Frame*    frame   = Frame::current();
+        if(!frame)
             return WAIT;
         
-        const WidgetSnap*  w    = f->snap((WidgetID) m_widget);
+        if(!m_graphicsCard){
+            GraphicsCardID  gid = frame->first(GRAPHICS_CARD);
+            if(!gid){
+                viewerDebug << "Viewer: Graphics Card not detected, waiting";
+                return WAIT;
+            }
+            
+            m_graphicsCard  = frame->typed(gid);
+            if(!m_graphicsCard) [[unlikely]]
+                return WAIT;
+        }
+
+        if(!frame->snap((WindowID) m_window))
+            return WAIT;
+
+        if(!m_startup(X::SentDevRequest)){
+            send(new GetDeviceRequest({.source=*this, .target=m_graphicsCard}), TARGET);
+            m_startup |= X::SentDevRequest;
+            return WAIT;
+        }
+        
+        if(!m_startup(X::DevReply))
+            return WAIT;
+        
+        
+        const WidgetSnap*  w    = frame->snap((WidgetID) m_widget);
         if(!w)
             return WAIT;
         

@@ -55,10 +55,12 @@ namespace yq::tachyon {
     
     VulqanGPU::~VulqanGPU()
     {
+        kill();
     }
 
     void    VulqanGPU::kill()
     {
+        m_device    = {};
     }
 
     void      VulqanGPU::on_get_device_request(const Ref<const GetDeviceRequest>&req)
@@ -90,6 +92,16 @@ namespace yq::tachyon {
         GraphicsCard::snap(sn);
         sn.name = m_name;
         sn.heap = m_heap;
+    }
+
+    Execution VulqanGPU::teardown(const Context&ctx) 
+    {
+        if(m_device){
+            vizNotice << "VulqanGPU(" << name() << "): destroying the logical device";
+            m_device  -> destroy();
+            m_device    = {};
+        }
+        return {};
     }
 
     void VulqanGPU::init_info()

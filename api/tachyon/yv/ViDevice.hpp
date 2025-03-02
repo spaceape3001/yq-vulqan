@@ -71,7 +71,10 @@ namespace yq::tachyon {
         ViDevice(VkPhysicalDevice, const VulqanCreateInfo&);
         ~ViDevice();
         
-        void        cleanup();
+        void                add_cleanup(cleanup_fn&&);
+        
+        void                cleanup();
+        void                destroy();
         
         std::error_code     init(VkPhysicalDevice, const VulqanCreateInfo&);
         

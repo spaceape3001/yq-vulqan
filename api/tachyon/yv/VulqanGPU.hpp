@@ -30,9 +30,10 @@ namespace yq::tachyon {
         VkPhysicalDevice    physical_device() const { return m_physical; }
         
         Execution setup(const Context&) override;
+        Execution teardown(const Context&) override;
         
         void snap(GraphicsCardSnap&) const;
-        
+       
     protected:
         void        on_get_device_request(const Ref<const GetDeviceRequest>&);
         

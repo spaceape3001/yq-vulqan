@@ -19,6 +19,7 @@
 #include <yt/typedef/raster.hpp>
 #include <yv/typedef/vi_buffer.hpp>
 #include <yv/typedef/vi_buffer_manager.hpp>
+#include <yv/typedef/vi_device.hpp>
 #include <yv/typedef/vi_image.hpp>
 #include <yv/typedef/vi_image_manager.hpp>
 #include <yv/typedef/vi_queue_tasker.hpp>
@@ -30,6 +31,7 @@
 #include <yv/typedef/vi_sampler_manager.hpp>
 #include <yv/typedef/vi_shader.hpp>
 #include <yv/typedef/vi_shader_manager.hpp>
+#include <yv/typedef/vi_surface.hpp>
 #include <yv/typedef/vi_swapchain.hpp>
 #include <yv/typedef/vi_texture.hpp>
 #include <yv/typedef/vi_texture_manager.hpp>
@@ -63,6 +65,7 @@ namespace yq::tachyon {
         uint32_t        queue   = 0;
     };
     
+    
     /*! \brief the Physical vulkan device adapter
         
         This is about transferreing resources to/from the device, 
@@ -83,6 +86,8 @@ namespace yq::tachyon {
             std::function<void(ViContext&)>     prerecord;
             std::function<void(ViContext&)>     record;
         };
+        
+        struct CreateData;
         
         
         //! Memory allocator
@@ -288,7 +293,7 @@ namespace yq::tachyon {
         GLFWwindow*                     _window() const { return m_window; }
 
         std::error_code                 wait_idle();
-
+        
 
     protected:
         ViVisualizer(Cleanup&);
@@ -303,6 +308,7 @@ namespace yq::tachyon {
         Cleanup&                            m_cleanup;                  // keep it one until performance bottlenecks
         Guarded<VkClearValue>               m_clearValue;
         ViQueueManager*                     m_computeQueue      = nullptr;
+        ViDevicePtr                         m_device2;
         VkDevice                            m_device            = nullptr;
         VkPhysicalDeviceFeatures            m_deviceFeatures;
         VkPhysicalDeviceProperties          m_deviceInfo;
@@ -331,6 +337,7 @@ namespace yq::tachyon {
         ViSamplerManagerUPtr                m_samplers;
         ViShaderManagerUPtr                 m_shaders;
         VkSurfaceKHR                        m_surface           = nullptr;
+        ViSurfacePtr                        m_surface2;
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
@@ -386,6 +393,9 @@ namespace yq::tachyon {
 
         std::error_code     _9_pipeline_manager_create();
         void                _9_pipeline_manager_kill();
+
+        std::error_code     _init(const CreateData&);
+        void                _kill();
 
         /*! Rebuilds the swapchain
         */

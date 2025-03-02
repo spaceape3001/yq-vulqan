@@ -25,6 +25,7 @@
 #include <yv/VqStructs.hpp>
 #include <yv/VqUtils.hpp>
 #include <yv/VulqanManager.hpp>
+#include <yv/ViDevice.hpp>
 #include <yv/ViManager.hpp>
 #include <yv/ViBuffer.hpp>
 #include <yv/ViImage.hpp>
@@ -35,8 +36,10 @@
 #include <yv/ViRenderPass.hpp>
 #include <yv/ViSampler.hpp>
 #include <yv/ViShader.hpp>
+#include <yv/ViSurface.hpp>
 #include <yv/ViSwapchain.hpp>
 #include <yv/ViTexture.hpp>
+#include <yv/ViVisualizer.hxx>
 
 #include <GLFW/glfw3.h>
 
@@ -403,6 +406,15 @@ namespace yq::tachyon {
     {
         m_pipelines     = {};
         vizDebug << "ViVisualizer: Destroyed the pipeline manager";
+    }
+
+    std::error_code     ViVisualizer::_init(const CreateData&)
+    {
+        return errors::todo(); // TODO
+    }
+    
+    void                ViVisualizer::_kill()
+    {
     }
 
     void                ViVisualizer::_rebuild_swapchain()

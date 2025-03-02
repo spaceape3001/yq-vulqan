@@ -402,8 +402,20 @@ namespace yq::tachyon {
         m_physical      = nullptr;
     }
         
+    void            ViDevice::add_cleanup(cleanup_fn&& fn)
+    {
+        m_cleanup.add(std::move(fn));
+    }
+
     void            ViDevice::cleanup()
     {
+        m_cleanup.sweep();
+    }
+
+    void            ViDevice::destroy()
+    {
+        cleanup();
+        _kill();
     }
 
     std::string_view    ViDevice::gpu_name() const

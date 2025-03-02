@@ -113,6 +113,9 @@ namespace yq::tachyon {
         Visualizer(const ViewerCreateInfo&, GLFWwindow*, Cleanup&);
         ~Visualizer();
         
+        std::error_code         init(const CreateData&);
+        void                    destroy();
+
     protected:
         //friend struct ViPipeline0;
         //friend struct ViRendered0;

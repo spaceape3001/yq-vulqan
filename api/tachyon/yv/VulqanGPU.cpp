@@ -11,6 +11,7 @@
 #include <yv/ViDevice.hpp>
 #include <yv/ViLogging.hpp>
 #include <ya/requests/graphics_card/GetDeviceRequest.hpp>
+#include <ya/replies/graphics_card/GetDeviceReply.hpp>
 #include "VqUtils.hpp"
 
 namespace yq::tachyon {
@@ -60,8 +61,23 @@ namespace yq::tachyon {
     {
     }
 
-    void      VulqanGPU::on_get_device_request(const GetDeviceRequest&req)
+    void      VulqanGPU::on_get_device_request(const Ref<const GetDeviceRequest>&req)
     {
+        if(!req)
+            return ;
+        if(req->target() != id())
+            return ;
+        
+        if(!m_device){
+            const AppCreateInfo& aci    = Application::app()->app_info();
+            m_device    = new ViDevice(m_physical, aci.vulkan);
+        }
+        
+        if(m_device->valid()){
+            send(new GetDeviceReply({.source=*this, .target=req->source()}, req, m_device), TARGET);
+        } else {
+            send(new GetDeviceReply({.source=*this, .target=req->source()}, req, Response::Failed), TARGET);
+        }
     }
 
     Execution VulqanGPU::setup(const Context&ctx) 

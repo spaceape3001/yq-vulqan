@@ -34,7 +34,7 @@ namespace yq::tachyon {
         void snap(GraphicsCardSnap&) const;
         
     protected:
-        void        on_get_device_request(const GetDeviceRequest&);
+        void        on_get_device_request(const Ref<const GetDeviceRequest>&);
         
     private:
     

@@ -13,10 +13,15 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::GetDeviceReply)
 namespace yq::tachyon {
 
     GetDeviceReply::GetDeviceReply(const Header& h, const RequestCPtr&req, ViDevicePtr dev) :
-        GraphicsCardReply(h, req), m_device(dev)
+        GraphicsCardReply(h, req), m_device(dev), m_response(Response::QaPla)
     {
     }
     
+    GetDeviceReply::GetDeviceReply(const Header& h, const RequestCPtr& req, Response r) : 
+        GraphicsCardReply(h, req), m_response(r)
+    {
+    }
+
     GetDeviceReply::GetDeviceReply(const GetDeviceReply&cp, const Header& h) : 
         GraphicsCardReply(cp, h), m_device(cp.m_device)
     {

@@ -100,6 +100,7 @@ namespace yq::tachyon {
     struct has_k {};
     struct hash_k {};
     struct heading_k {};
+    struct headless_k {};
     struct inflatable_k {};
     struct info_k {};
 
@@ -193,6 +194,7 @@ namespace yq::tachyon {
     };
     
     struct stop_k {};
+    struct sweep_k {};
     struct table_k {};
     struct tachyon_k {};
     struct target_k {};
@@ -276,6 +278,7 @@ namespace yq::tachyon {
     static constexpr has_k              HAS;
     static constexpr hash_k             HASH;
     static constexpr heading_k          HEADING;
+    static constexpr headless_k         HEADLESS;
     static constexpr inflatable_k       INFLATABLE;
     static constexpr info_k             INFO;
     static constexpr io_k               IO;
@@ -339,6 +342,7 @@ namespace yq::tachyon {
     static constexpr startup_k          STARTUP;
     static constexpr static_k           STATIC;
     static constexpr stop_k             STOP;
+    static constexpr sweep_k            SWEEP;
     static constexpr table_k            TABLE;
     static constexpr tachyon_k          TACHYON;
     static constexpr target_k           TARGET;

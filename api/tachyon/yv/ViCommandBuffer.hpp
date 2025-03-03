@@ -21,6 +21,7 @@ namespace yq::tachyon {
     public:
     
         ViCommandBuffer();
+        ViCommandBuffer(VkDevice, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         ViCommandBuffer(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         ~ViCommandBuffer();
     
@@ -30,16 +31,18 @@ namespace yq::tachyon {
         VkCommandPool   command_pool();
         bool            consistent() const;
         bool            valid() const;
-        ViVisualizer*   visualizer() const { return m_viz; }
+        //ViVisualizer*   visualizer() const { return m_viz; }
 
         VkCommandBuffer* command_buffer_ptr() { return &m_buffer; }
 
 
+        std::error_code init(VkDevice, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         std::error_code init(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         void            kill();
 
     private:
-        ViVisualizer*   m_viz       = nullptr;
+        //ViVisualizer*   m_viz       = nullptr;
+        VkDevice        m_device    = nullptr;
         VkCommandPool   m_pool      = nullptr;
         VkCommandBuffer m_buffer    = nullptr;
         
@@ -48,7 +51,7 @@ namespace yq::tachyon {
         ViCommandBuffer& operator=(const ViCommandBuffer&) = delete;
         ViCommandBuffer& operator=(ViCommandBuffer&&) = delete;
         
-        std::error_code _init(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl);
+        std::error_code _init(VkDevice, VkCommandPool, VqCommandBufferLevel lvl);
         void            _kill();
         void            _wipe();
     };

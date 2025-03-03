@@ -15,6 +15,7 @@
 #include <yq/typedef/rgba.hpp>
 
 #include <yt/config/vulqan.hpp>
+#include <yt/keywords.hpp>
 #include <yt/gfx/PresentMode.hpp>
 #include <yt/typedef/raster.hpp>
 #include <yv/typedef/vi_buffer.hpp>
@@ -100,8 +101,7 @@ namespace yq::tachyon {
         ViBufferManager*                buffer_manager() const;
         
         void                            cleanup(cleanup_fn&&);
-        Cleanup&                        cleanup_manager() const;
-        void                            cleanup_sweep();
+        void                            cleanup(sweep_k);
 
         RGBA4F                          clear_color() const;
 
@@ -297,6 +297,7 @@ namespace yq::tachyon {
 
     protected:
         ViVisualizer(Cleanup&);
+        ViVisualizer(const CreateData&);
         ~ViVisualizer();
 
         using mutex_t = tbb::spin_rw_mutex;
@@ -305,7 +306,7 @@ namespace yq::tachyon {
         
         VmaAllocator                        m_allocator         = nullptr;
         ViBufferManagerUPtr                 m_buffers;
-        Cleanup&                            m_cleanup;                  // keep it one until performance bottlenecks
+        Cleanup*                            m_cleanup           = nullptr; // keep it one until performance bottlenecks
         Guarded<VkClearValue>               m_clearValue;
         ViQueueManager*                     m_computeQueue      = nullptr;
         ViDevicePtr                         m_device2;
@@ -394,11 +395,12 @@ namespace yq::tachyon {
         std::error_code     _9_pipeline_manager_create();
         void                _9_pipeline_manager_kill();
 
-        std::error_code     _init(const CreateData&);
-        void                _kill();
-
         /*! Rebuilds the swapchain
         */
         void                _rebuild_swapchain();
+        
+    private:
+        std::error_code     _init(const CreateData&);
+        void                _kill();
     };
 }

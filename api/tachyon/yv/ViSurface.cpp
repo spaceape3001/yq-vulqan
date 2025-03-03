@@ -23,4 +23,9 @@ namespace yq::tachyon {
             return ;
         vkDestroySurfaceKHR(VulqanManager::instance(), m_surface, nullptr);
     }
+
+    bool    ViSurface::valid() const
+    {
+        return static_cast<bool>(m_surface);
+    }
 }

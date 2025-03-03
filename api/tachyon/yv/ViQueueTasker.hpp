@@ -12,14 +12,17 @@
 #include <yv/ViCommandBuffer.hpp>
 #include <yv/ViCommandPool.hpp>
 #include <yv/ViFence.hpp>
+#include <yv/typedef/vi_queue_id.hpp>
 
 namespace yq::tachyon {
     class ViVisualizer;
     class ViQueueManager;
+    class ViDevice;
     
     class ViQueueTasker : public RefCount {
     public:
         ViQueueTasker(ViVisualizer&, const ViQueueManager&, uint32_t queue=0);
+        ViQueueTasker(ViDevice&, ViQueueID);
         ~ViQueueTasker();
     
         std::error_code execute(queue_tasker_fn&&);
@@ -32,7 +35,9 @@ namespace yq::tachyon {
         bool            valid_queue() const;
     
     private:
-        ViVisualizer&   m_viz;
+        //ViDevice&       m_viz;
+        //ViVisualizer&   m_viz;
+        //ViQueueID       m_id;
         ViCommandPool   m_commandPool;
         ViCommandBuffer m_commandBuffer;
         ViFence         m_fence;

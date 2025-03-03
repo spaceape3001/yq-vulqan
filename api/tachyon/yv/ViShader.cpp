@@ -25,22 +25,26 @@ namespace yq::tachyon {
     {
     }
     
-    ViShader::ViShader(ViVisualizer& viz, const Shader& sh)
+    ViShader::ViShader(VkDevice dev, const Shader& sh)
     {
-        if(viz.device() && sh.payload.data() && sh.payload.bytes()){
-            std::error_code ec  = _create(viz, sh);
+        if(dev && sh.payload.data() && sh.payload.bytes()){
+            std::error_code ec  = _create(dev, sh);
             if(ec != std::error_code())
                 _wipe();
         }
         
     }
     
+    ViShader::ViShader(ViVisualizer& viz, const Shader& sh) : ViShader(viz.device(), sh)
+    {
+    }
+
     ViShader::~ViShader()
     {
         kill();
     }
 
-    std::error_code     ViShader::_create(ViVisualizer&viz, const Shader&sh)
+    std::error_code     ViShader::_create(VkDevice dev, const Shader&sh)
     {
         m_mask  = {};
         m_stage = sh.type;
@@ -76,62 +80,65 @@ namespace yq::tachyon {
         VqShaderModuleCreateInfo createInfo;
         createInfo.codeSize = sh.payload.bytes();
         createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
-        VkResult res = vkCreateShaderModule(viz.device(), &createInfo, nullptr, &m_shader);
+        VkResult res = vkCreateShaderModule(dev, &createInfo, nullptr, &m_shader);
         if(res != VK_SUCCESS){
             vizWarning << "vkCreateShaderModule(" << sh.type.key() << "): VkResult " << (int32_t) res;
             return errors::shader_cant_create();
         }
         
-        m_viz   = &viz;
+        m_device   = dev;
         return {};
     }
     
     void                ViShader::_kill()
     {
-        if(m_shader){
-            vkDestroyShaderModule(m_viz->device(), m_shader, nullptr);
+        if(m_shader && m_device){
+            vkDestroyShaderModule(m_device, m_shader, nullptr);
         }
     }
     
     void                ViShader::_wipe()
     {
         m_shader    = nullptr;
-        m_viz       = nullptr;
+        m_device    = nullptr;
         m_mask      = {};
     }
 
     bool  ViShader::consistent() const
     {
-        return m_viz ? (m_shader && m_viz->device()) : !m_shader;
+        return m_device ? static_cast<bool>(m_shader) : !m_shader;
     }
     
-    std::error_code         ViShader::create(ViVisualizer&viz, const Shader&sh)
+    std::error_code         ViShader::create(VkDevice dev, const Shader&sh)
     {
         if(m_shader)
-            return m_viz ? (std::error_code) errors::shader_existing() : (std::error_code) errors::shader_bad_state();
+            return m_device ? (std::error_code) errors::shader_existing() : (std::error_code) errors::shader_bad_state();
         if(!sh.payload.data() || !sh.payload.bytes())
             return errors::shader_empty();
-        if(!viz.device())
+        if(!dev)
             return errors::visualizer_uninitialized();
         
-        std::error_code ec  = _create(viz, sh);
+        std::error_code ec  = _create(dev, sh);
         if(ec != std::error_code()){
             _wipe();
         }
         return ec;
     }
     
+    std::error_code         ViShader::create(ViVisualizer&viz, const Shader&sh)
+    {
+        return create(viz.device(), sh);
+    }
+
     void                    ViShader::kill()
     {
-        if(valid()){
-            _kill();
-        }
+        _kill();
         _wipe();
     }
     
     
     bool  ViShader::valid() const
     {
-        return m_viz && m_shader && m_viz->device();
+        return m_device && m_shader;
     }
 }

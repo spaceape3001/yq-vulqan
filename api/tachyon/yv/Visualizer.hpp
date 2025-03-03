@@ -111,11 +111,10 @@ namespace yq::tachyon {
         #endif
         
         Visualizer(const ViewerCreateInfo&, GLFWwindow*, Cleanup&);
+        Visualizer(const CreateData&);
+        Visualizer();
         ~Visualizer();
         
-        std::error_code         init(const CreateData&);
-        void                    destroy();
-
     protected:
         //friend struct ViPipeline0;
         //friend struct ViRendered0;
@@ -154,11 +153,14 @@ namespace yq::tachyon {
             // eventually this will get smarter....
         std::unique_ptr<ViThread0>           m_thread;
 
+
     private:
         bool                                m_init                  = false;
 
         struct Execution;
 
+        std::error_code     _init(const CreateData&);
+        void                _kill();
     };
 
 }

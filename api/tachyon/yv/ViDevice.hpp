@@ -11,27 +11,15 @@
 #include <vulkan/vulkan_core.h>
 #include <vk_mem_alloc.h>
 #include <tbb/spin_rw_mutex.h>
+#include <yt/keywords.hpp>
 #include <yv/ViQueueType.hpp>
+#include <yv/typedef/vi_queue_id.hpp>
+#include <yv/typedef/vi_queue_tasker.hpp>
 #include <map>
 
 namespace yq::tachyon {
     struct VulqanCreateInfo;
     
-    struct ViQueueFamilyID {
-        uint32_t    index      = UINT32_MAX;
-        auto    operator<=>(const ViQueueFamilyID&) const = default;
-        bool    valid() const { return index != UINT32_MAX; }
-        bool    invalid() const { return index == UINT32_MAX; }
-    };
-
-    struct ViQueueID {  // TBH... 16 or even 8-bits might be enough here... spec is 32-bits though
-        ViQueueFamilyID     family;
-        uint32_t            sub     = 0;
-        
-        auto    operator<=>(const ViQueueID&) const = default;
-    };
-    
-
     /*
 
         On observation that *NOTHING* in the vkCreateDevice() call relies on 
@@ -71,9 +59,9 @@ namespace yq::tachyon {
         ViDevice(VkPhysicalDevice, const VulqanCreateInfo&);
         ~ViDevice();
         
-        void                add_cleanup(cleanup_fn&&);
+        void                cleanup(cleanup_fn&&);
+        void                cleanup(sweep_k);
         
-        void                cleanup();
         void                destroy();
         
         std::error_code     init(VkPhysicalDevice, const VulqanCreateInfo&);
@@ -83,6 +71,7 @@ namespace yq::tachyon {
         bool                is_queue_compute(ViQueueFamilyID) const;
         bool                is_queue_graphic(ViQueueFamilyID) const;
         bool                is_queue_optical(ViQueueFamilyID) const;
+        bool                is_queue_present_supported(ViQueueFamilyID, VkSurfaceKHR) const;
         bool                is_queue_sparse_binding(ViQueueFamilyID familyIdx) const;
         bool                is_queue_transfer(ViQueueFamilyID familyIdx) const;
         bool                is_queue_video_decode(ViQueueFamilyID familyIdx) const;
@@ -99,10 +88,30 @@ namespace yq::tachyon {
         //! Queue family for type (note, UINT32_MAX is invalid)
         ViQueueFamilyID     queue_family(ViQueueType) const;
         
+        
         std::string_view    gpu_name() const;
+        
+        VkDevice            device() const { return m_device; }
+        VkPhysicalDevice    physical() const { return m_physical; }
+        
+        std::error_code     queue_task(ViQueueID, queue_tasker_fn&&);
+        std::error_code     queue_task(ViQueueID, uint64_t timeout, queue_tasker_fn&&);
+
+        ViQueueTaskerPtr    queue_tasker(ViQueueID);
+        
+        bool                queue_valid(ViQueueID) const;
+        
+        //! Recommended Graphics Queue for tasks that aren't direct-display-related
+        ViQueueID           graphics_queue(headless_k) const;
+        ViQueueID           graphics_queue(uint32_t viewerId) const;
+        
+        std::error_code     wait_idle() const;
         
     private:
         struct QueueFamily;
+    
+        using mutex_t   = tbb::spin_rw_mutex;
+        using lock_t    = mutex_t::scoped_lock;
     
         VmaAllocator                            m_allocator                 = nullptr;
         Cleanup                                 m_cleanup;
@@ -112,6 +121,8 @@ namespace yq::tachyon {
         VkPhysicalDevice                        m_physical                  = nullptr;
         std::vector<QueueFamily>                m_queueFamilies;
         std::map<ViQueueType,ViQueueFamilyID>   m_queueType2Family;
+        std::map<ViQueueID, ViQueueTaskerPtr>   m_taskers;
+        mutable mutex_t                         m_taskerMutex;
 
         struct {
             bool        enabled             = false;

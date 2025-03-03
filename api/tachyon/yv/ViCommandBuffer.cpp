@@ -16,12 +16,17 @@ namespace yq::tachyon {
     {
     }
     
-    ViCommandBuffer::ViCommandBuffer(ViVisualizer& viz, VkCommandPool pool, VqCommandBufferLevel lvl)
+    ViCommandBuffer::ViCommandBuffer(VkDevice dev, VkCommandPool pool, VqCommandBufferLevel lvl)
     {
-        if(viz.device()){
-            if(_init(viz, pool, lvl) != std::error_code())
+        if(dev){
+            if(_init(dev, pool, lvl) != std::error_code())
                 _wipe();
         }
+    }
+
+    ViCommandBuffer::ViCommandBuffer(ViVisualizer& viz, VkCommandPool pool, VqCommandBufferLevel lvl) :
+        ViCommandBuffer(viz.device(), pool, lvl)
+    {
     }
 
     ViCommandBuffer::~ViCommandBuffer()
@@ -29,47 +34,52 @@ namespace yq::tachyon {
         kill();
     }
 
-    std::error_code ViCommandBuffer::_init(ViVisualizer& viz, VkCommandPool pool, VqCommandBufferLevel lvl)
+    std::error_code ViCommandBuffer::_init(VkDevice dev, VkCommandPool pool, VqCommandBufferLevel lvl)
     {
         VqCommandBufferAllocateInfo cbai;
         cbai.level                  = (VkCommandBufferLevel) lvl;
         cbai.commandBufferCount     = 1;
         cbai.commandPool            = pool;
-        VkResult res = vkAllocateCommandBuffers(viz.device(), &cbai,  &m_buffer);
+        VkResult res = vkAllocateCommandBuffers(dev, &cbai,  &m_buffer);
         if(res != VK_SUCCESS){
             vizWarning << "vkAllocateCommandBuffers(1): vkResult " << (int32_t) res;
             return errors::command_buffer_cant_create();
         }
         
-        m_viz   = &viz;
-        m_pool  = pool;
+        m_device    = dev;
+        m_pool      = pool;
         return {};
     }
     
     void            ViCommandBuffer::_kill()
     {
-        vkFreeCommandBuffers(m_viz->device(), m_pool, 1, &m_buffer);
+        vkFreeCommandBuffers(m_device, m_pool, 1, &m_buffer);
     }
     
     void            ViCommandBuffer::_wipe()
     {
-        m_viz       = nullptr;
+        m_device    = nullptr;
         m_pool      = nullptr;
         m_buffer    = nullptr;
     }
 
     std::error_code ViCommandBuffer::init(ViVisualizer&viz, VkCommandPool pool, VqCommandBufferLevel lvl)
     {
+        return init(viz.device(), pool, lvl);
+    }
+
+    std::error_code ViCommandBuffer::init(VkDevice dev, VkCommandPool pool, VqCommandBufferLevel lvl)
+    {
         if(!consistent())
             return errors::command_buffer_bad_state();
         if(m_buffer)
             return errors::command_buffer_existing();
-        if(!viz.device())
+        if(!dev)
             return errors::visualizer_uninitialized();
         if(!pool)
             return errors::command_pool_null_pointer();
         
-        std::error_code ec = _init(viz, pool, lvl);
+        std::error_code ec = _init(dev, pool, lvl);
         if(ec != std::error_code())
             _wipe();
         return ec;
@@ -85,11 +95,11 @@ namespace yq::tachyon {
 
     bool            ViCommandBuffer::consistent() const
     {
-        return m_viz ? (m_pool && m_buffer && m_viz->device()) : (!m_pool && !m_buffer);
+        return m_device ? (m_pool && m_buffer) : (!m_pool && !m_buffer);
     }
     
     bool            ViCommandBuffer::valid() const
     {
-        return m_viz && m_pool && m_buffer && m_viz->device();
+        return m_device && m_pool && m_buffer;
     }
 }

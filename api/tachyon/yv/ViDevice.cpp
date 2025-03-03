@@ -6,12 +6,15 @@
 
 #include <yv/ViDevice.hpp>
 #include <yv/VqUtils.hpp>
+#include <yv/ViQueueTasker.hpp>
 #include <yv/VulqanCreateInfo.hpp>
 #include <yv/VulqanManager.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 
 namespace yq::tachyon {
+
+    static constexpr const uint32_t kMinGraphicsQueues = 2; // so we can push the image loading to separate queue
 
     namespace errors {
         using device_existing                   = error_db::entry<"Device already created">;
@@ -65,30 +68,37 @@ namespace yq::tachyon {
     
     
     struct ViDevice::QueueFamily {
-        VkQueueFamilyProperties     props;
-        std::vector<float>          weights;
-        std::vector<VkQueue>        queues;
-        //std::vector<VkFence>        fences;
-        //std::vector<void*>          taskers;
-        uint32_t                    count   = 0;
+        VkQueueFamilyProperties         props;
+        std::vector<float>              weights;
+        std::vector<VkQueue>            queues;
+        ViQueueFamilyID                 family;
+        uint32_t                        count   = 0;
+
+        struct Extra {
+            uint32_t    min;
+            uint32_t    pre;
+        };
 
         //  fences...
         //  taskers...
         
-        void    configure(const QueueSpec& spec)
+        void    configure(const QueueSpec& spec, const Extra& extra=Extra{})
         {
+            for(uint32_t i=0;i<extra.pre;++i)
+                weights.push_back(1.);
             if(const std::vector<float>*p = std::get_if<std::vector<float>>(&spec)){
                 if(!p->empty())
-                    weights   = *p;
+                    weights.insert(weights.end(), p->begin(), p->end());
             }
-            if(const uint32_t* p = std::get_if<uint32_t>(&spec))
-                weights.resize(*p, 1.);
-            if(weights.empty())
+            if(const uint32_t* p = std::get_if<uint32_t>(&spec)){
+                for(uint32_t i=0;i<*p;++i)
+                    weights.push_back(1.);
+            }
+            while(weights.size() < extra.min + extra.pre)
                 weights.push_back(1.);
             count   = (uint32_t) weights.size();
             queues.resize(count, nullptr);
             //fences.resize(count, nullptr);
-            //taskers.resize(count, nullptr);
         }
     };
 
@@ -177,7 +187,8 @@ namespace yq::tachyon {
         
         for(size_t i=0;i<queues.size();++i){
             QueueFamily& Q  = m_queueFamilies[i];
-            Q.props = queues[i];
+            Q.family    = { (uint32_t) i };
+            Q.props     = queues[i];
             
             bool    isGraphic   = static_cast<bool>(Q.props.queueFlags & VK_QUEUE_GRAPHICS_BIT);
             bool    isCompute   = static_cast<bool>(Q.props.queueFlags & VK_QUEUE_COMPUTE_BIT);
@@ -189,9 +200,9 @@ namespace yq::tachyon {
             if(wantGraphic && isGraphic){
                 ViQueueFamilyID &graphicQueue = m_queueType2Family[ViQueueType::Graphic];
                 if(graphicQueue.invalid()){
-                    graphicQueue   = { (uint32_t) i };
-                    Q.configure(vci.graphics);
-                    queueFamilies.push_back(graphicQueue);
+                    graphicQueue   = Q.family;
+                    Q.configure(vci.graphics, {.min=1, .pre=1});
+                    queueFamilies.push_back(Q.family);
                     hasGraphic  = true;
                 }
             }
@@ -199,9 +210,9 @@ namespace yq::tachyon {
             if(wantCompute && isCompute && (!isGraphic)){
                 ViQueueFamilyID& computeQueue    = m_queueType2Family[ViQueueType::Compute];
                 if(computeQueue.invalid()){
-                    computeQueue    = { (uint32_t) i };
+                    computeQueue    = Q.family;
                     Q.configure(vci.compute);
-                    queueFamilies.push_back(computeQueue);
+                    queueFamilies.push_back(Q.family);
                     hasCompute  = true;
                 }
             }
@@ -209,9 +220,9 @@ namespace yq::tachyon {
             if(wantTransfer && isTransfer && !isGraphic && !isCompute && !isOptical && !isVEncode && !isVDecode){
                 ViQueueFamilyID& transferQueue  = m_queueType2Family[ViQueueType::Transfer];
                 if(transferQueue.invalid()){
-                    transferQueue   = { (uint32_t) i };
+                    transferQueue   = Q.family;
                     Q.configure(vci.transfer);
-                    queueFamilies.push_back(transferQueue);
+                    queueFamilies.push_back(Q.family);
                     hasTransfer = true;
                 }
             }
@@ -219,9 +230,9 @@ namespace yq::tachyon {
             if(wantVEncode && isVEncode){
                 ViQueueFamilyID& videoEncodeQueue = m_queueType2Family[ViQueueType::Transfer];
                 if(videoEncodeQueue.invalid()){
-                    videoEncodeQueue = { (uint32_t) i };
+                    videoEncodeQueue = Q.family;
                     Q.configure(vci.video_encode);
-                    queueFamilies.push_back(videoEncodeQueue);
+                    queueFamilies.push_back(Q.family);
                     hasVEncode  = true;
                 }
             }
@@ -229,9 +240,9 @@ namespace yq::tachyon {
             if(wantVDecode && isVDecode){
                 ViQueueFamilyID& videoEncodeQueue = m_queueType2Family[ViQueueType::Transfer];
                 if(videoEncodeQueue.invalid()){
-                    videoEncodeQueue = { (uint32_t) i };
+                    videoEncodeQueue = Q.family;
                     Q.configure(vci.video_encode);
-                    queueFamilies.push_back(videoEncodeQueue);
+                    queueFamilies.push_back(Q.family);
                     hasVDecode  = true;
                 }
             }
@@ -239,9 +250,9 @@ namespace yq::tachyon {
             if(wantOptical && isOptical){
                 ViQueueFamilyID& opticalQueue = m_queueType2Family[ViQueueType::OpticalFlow];
                 if(opticalQueue.invalid()){
-                    opticalQueue = { (uint32_t) i };
+                    opticalQueue = Q.family;
                     Q.configure(vci.optical_flow);
-                    queueFamilies.push_back(opticalQueue);
+                    queueFamilies.push_back(Q.family);
                     hasOptical  = true;
                 }
             }
@@ -375,12 +386,11 @@ namespace yq::tachyon {
         // --------------
         // GET THE QUEUES
 
-        for(size_t i=0;i<m_queueFamilies.size();++i){
-            QueueFamily& Q  = m_queueFamilies[i];   // need the index, hence this way
+        for(QueueFamily& Q : m_queueFamilies){
             if(!Q.count)
                 continue;
             for(uint32_t j=0;j<Q.queues.size();++j)
-                vkGetDeviceQueue(m_device, i, j, &Q.queues[j]);
+                vkGetDeviceQueue(m_device, Q.family.index, j, &Q.queues[j]);
         }
         
         // --------------
@@ -391,6 +401,7 @@ namespace yq::tachyon {
 
     void            ViDevice::_kill()
     {
+        cleanup(SWEEP);
         if(m_allocator){
             vmaDestroyAllocator(m_allocator);
             m_allocator = nullptr;
@@ -402,20 +413,34 @@ namespace yq::tachyon {
         m_physical      = nullptr;
     }
         
-    void            ViDevice::add_cleanup(cleanup_fn&& fn)
+    void            ViDevice::cleanup(cleanup_fn&& fn)
     {
         m_cleanup.add(std::move(fn));
     }
 
-    void            ViDevice::cleanup()
+    void            ViDevice::cleanup(sweep_k)
     {
         m_cleanup.sweep();
     }
 
     void            ViDevice::destroy()
     {
-        cleanup();
         _kill();
+    }
+
+    ViQueueID       ViDevice::graphics_queue(headless_k) const
+    {
+        //  hardcode for now....
+        return ViQueueID(queue_family(ViQueueType::Graphic), 0);
+    }
+
+    ViQueueID           ViDevice::graphics_queue(uint32_t viewerId) const
+    {
+        const QueueFamily*  qf  = _family(queue_family(ViQueueType::Graphic));
+        if(!qf)
+            return ViQueueID();
+        uint32_t    N   = qf->count - 1;
+        return ViQueueID( qf->family, 1+(viewerId%N));
     }
 
     std::string_view    ViDevice::gpu_name() const
@@ -446,6 +471,23 @@ namespace yq::tachyon {
     bool    ViDevice::is_queue_optical(ViQueueFamilyID family) const
     {
         return static_cast<bool>(queue_family_flags(family) & VK_QUEUE_OPTICAL_FLOW_BIT_NV);
+    }
+
+    bool    ViDevice::is_queue_present_supported(ViQueueFamilyID family, VkSurfaceKHR surf) const
+    {
+        if(!m_physical)
+            return false;
+        if(!surf)
+            return false;
+        const QueueFamily*  qf = _family(family);
+        if(!qf)
+            return false;
+        if(!qf->count)
+            return false;
+            
+        VkBool32    support;
+        vkGetPhysicalDeviceSurfaceSupportKHR(m_physical, family.index, surf, &support);
+        return static_cast<bool>(support);
     }
     
     bool    ViDevice::is_queue_sparse_binding(ViQueueFamilyID family) const
@@ -512,8 +554,72 @@ namespace yq::tachyon {
         return qf->props.queueFlags;
     }
 
+    std::error_code     ViDevice::queue_task(ViQueueID qid, queue_tasker_fn&& fn)
+    {
+        return queue_task(qid, DEFAULT_WAIT_TIMEOUT, std::move(fn));
+    }
+    
+    std::error_code     ViDevice::queue_task(ViQueueID qid, uint64_t timeout, queue_tasker_fn&&fn)
+    {
+        return errors::todo();
+    }
+
+    ViQueueTaskerPtr    ViDevice::queue_tasker(ViQueueID qid)
+    {
+        {
+            lock_t  _lock(m_taskerMutex, false);
+            auto i = m_taskers.find(qid);
+            if(i != m_taskers.end())
+                return i->second;
+        }
+        
+        if(!queue_valid(qid))
+            return {};
+        
+        ViQueueTaskerPtr    ret;
+        ViQueueTaskerPtr    p   = new ViQueueTasker(*this, qid);
+        
+        {
+            lock_t  _lock(m_taskerMutex, true);
+            auto [i,f] = m_taskers.insert({ qid, p });
+            if(f)
+                return p;
+            ret = i->second;
+        }
+        
+        return ret;
+    }
+
+    bool    ViDevice::queue_valid(ViQueueID qid) const
+    {
+        const QueueFamily* qf = _family(qid.family);
+        if(!qf) 
+            return false;
+        return qid.sub < qf->count;
+    }
+
     bool    ViDevice::valid() const
     {   
         return m_physical && m_device && m_allocator;
     }
+
+    std::error_code     ViDevice::wait_idle() const
+    {
+        if(!m_device)
+            return create_error<"null device">();
+
+        switch(vkDeviceWaitIdle(m_device)){
+        case VK_SUCCESS:
+            return {};
+        case VK_ERROR_OUT_OF_HOST_MEMORY:
+            return create_error<"out of host memory">();
+        case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+            return create_error<"out of device memory">();
+        case VK_ERROR_DEVICE_LOST:
+            return create_error<"device lost">();
+        default:
+            return create_error<"device wait failed">();
+        }
+    }
+
 }

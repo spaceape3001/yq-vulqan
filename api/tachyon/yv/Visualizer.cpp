@@ -45,6 +45,7 @@
 #include <yv/ViShader.hpp>
 #include <yv/ViSwapchain.hpp>
 #include <yv/ViTexture.hpp>
+#include <yv/VisualizerCreateData.hpp>
 //#include <yq/tachyon/vulqan/VulqanManager.hpp>
 
 
@@ -306,6 +307,15 @@ namespace yq::tachyon {
             //throw VulqanException("Unable to initialize");
     }
     
+    Visualizer::Visualizer(const CreateData& vcd) : ViVisualizer(vcd)
+    {
+        m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
+        
+        std::error_code     ec  = _init(vcd);
+        if(ec != std::error_code())
+            throw ec;
+    }
+    
     Visualizer::~Visualizer()
     {
         kill_visualizer();
@@ -390,38 +400,45 @@ namespace yq::tachyon {
     void                        Visualizer::_dtor()
     {
         vizInfo << "Visualizer::Destructor";
-        m_cleanup.sweep();
+        
+        if(m_cleanup)
+            m_cleanup->sweep();
         m_frames.clear();
         
         m_thread        = {};
     
         //  Generally in reverse order of initialization
 
-        m_cleanup.sweep();
+        if(m_cleanup)
+            m_cleanup->sweep();
         if(m_device)
             vkDeviceWaitIdle(m_device);
 
         _9_pipeline_manager_kill();
 
-        m_cleanup.sweep();
+        if(m_cleanup)
+            m_cleanup->sweep();
         if(m_device)
             vkDeviceWaitIdle(m_device);
 
         _8_swapchain_kill();
 
-        m_cleanup.sweep();
+        if(m_cleanup)
+            m_cleanup->sweep();
         if(m_device)
             vkDeviceWaitIdle(m_device);
 
         _7_render_pass_kill();
 
-        m_cleanup.sweep();
+        if(m_cleanup)
+            m_cleanup->sweep();
         if(m_device)
             vkDeviceWaitIdle(m_device);
 
         _6_manager_kill();
 
-        m_cleanup.sweep();
+        if(m_cleanup)
+            m_cleanup->sweep();
         if(m_device)
             vkDeviceWaitIdle(m_device);
 
@@ -455,6 +472,30 @@ namespace yq::tachyon {
             return ;
         _dtor();
         m_init  = false;
+    }
+
+        ///////////////////////////
+        
+    std::error_code     Visualizer::_init(const CreateData& vcd)
+    {
+        //  old hack....
+        m_descriptorCount   = std::max(MIN_DESCRIPTOR_COUNT, vcd.viewer.descriptors);
+
+        m_thread            = std::make_unique<ViThread0>(*this);
+
+        m_frames.reserve(vcd.viewer.frames_in_flight);
+        for(size_t i=0;i<vcd.viewer.frames_in_flight;++i)
+            m_frames.push_back(std::make_unique<ViFrame0>(*this));
+            
+        m_init  = true;
+        return std::error_code();
+    }
+    
+    void                Visualizer::_kill()
+    {
+        cleanup(SWEEP);
+        m_frames.clear();
+        m_thread        = {};
     }
 
 

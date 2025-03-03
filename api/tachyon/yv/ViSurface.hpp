@@ -24,6 +24,7 @@ namespace yq::tachyon {
         ~ViSurface();
         
         VkSurfaceKHR    surface() const { return m_surface; }
+        bool            valid() const;
     
     private:
         void    kill();

@@ -97,6 +97,7 @@
 #include <yv/ViDevice.hpp>
 #include <yv/ViGui.hpp>
 #include <yv/Visualizer.hpp>
+#include <yv/VisualizerCreateData.hpp>
 
 //#include <ya/replies/ViewerWidgetReply.hpp>
 //#include <ya/requests/ViewerWidgetRequest.hpp>
@@ -640,6 +641,9 @@ namespace yq::tachyon {
     
         if(rep.target() != id())
             return;
+            
+        //if(m_viz)
+            //return ;
 
         const Frame*    frame   = Frame::current();
         if(!frame){
@@ -654,18 +658,43 @@ namespace yq::tachyon {
             m_startup |= X::Failure;
             return ;
         }
+        
+        const Window* win   = frame->object((WindowID) m_window);
+        if(!win){
+            viewerCritical << "Viewer: Unable to get window, aborting the viewer";
+            m_startup |= X::Failure;
+            return ;
+        }
 
-
-        ViDevicePtr     dev = rep.device();
-        if(!dev || !dev->valid()){
+        Visualizer::CreateData      vcd{ m_createInfo };
+        vcd.device      = rep.device();
+        
+        if(!vcd.device || !vcd.device->valid()){
             viewerCritical << "Viewer: Unable to get a valid device, aborting the viewer";
             m_startup |= X::Failure;
             return;
         }
         
+        vcd.surface     = win -> create_surface();
+        if(!vcd.surface || !vcd.surface->valid()){
+            viewerCritical << "Viewer: Unable to get a valid surface, aborting the viewer";
+            m_startup |= X::Failure;
+            return;
+        }
         
+        vcd.pixels      = ws -> window.pixels;
+        vcd.number      = (uint32_t) m_number;
+
+        try {
+            std::unique_ptr<Visualizer> viz2    = std::make_unique<Visualizer>(vcd);
+        } 
+        catch(const std::error_code& ec)
+        {
+            viewerCritical << "Viewer: unable to create visualizer: " << ec.message();
+        }
         
-        viewerNotice << "Viewer: On Get Device activated... (" << dev->gpu_name() << ")... switch over is TODO";
+
+        viewerNotice << "Viewer: On Get Device activated... (" << vcd.device->gpu_name() << ")... switch over is TODO";
         
         //  DO STUFF... (visualizer, imgui)
         

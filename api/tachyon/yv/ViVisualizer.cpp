@@ -39,14 +39,24 @@
 #include <yv/ViSurface.hpp>
 #include <yv/ViSwapchain.hpp>
 #include <yv/ViTexture.hpp>
-#include <yv/ViVisualizer.hxx>
+#include <yv/VisualizerCreateData.hpp>
 
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
-    ViVisualizer::ViVisualizer(Cleanup& clean) : m_cleanup(clean)
+    ViVisualizer::ViVisualizer(Cleanup& clean) : m_cleanup(&clean)
     {
         m_presentMode   = PresentMode::Fifo;
+    }
+    
+    ViVisualizer::ViVisualizer(const CreateData& cfg) : m_device2(cfg.device), m_surface2(cfg.surface)
+    {
+        m_presentMode   = PresentMode::Fifo;
+        std::error_code ec  = _init(cfg);
+        if(ec != std::error_code()){
+            _kill();
+            throw ec;
+        }
     }
     
     ViVisualizer::~ViVisualizer()
@@ -408,15 +418,6 @@ namespace yq::tachyon {
         vizDebug << "ViVisualizer: Destroyed the pipeline manager";
     }
 
-    std::error_code     ViVisualizer::_init(const CreateData&)
-    {
-        return errors::todo(); // TODO
-    }
-    
-    void                ViVisualizer::_kill()
-    {
-    }
-
     void                ViVisualizer::_rebuild_swapchain()
     {
         ViSwapchainConfig   cfg;
@@ -434,6 +435,66 @@ namespace yq::tachyon {
         m_swapchain     = ViSwapchainCPtr(p);
         vizDebug << "ViVisualizer: Rebuilt the swapchain";
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    std::error_code     ViVisualizer::_init(const CreateData& vcd)
+    {
+        if(!m_device2 || !m_device2->valid())
+            return create_error<"null device">();
+        if(!m_surface2 || !m_surface2->valid())
+            return create_error<"null surface">();
+
+            //  If you're debugging the present queue... means it's fouled up.  
+            //  In order to break the surface dependency for the device, we
+            //  assumed that it's generally available on the graphic queue.
+            //  However, if that's not the case, then the vulkan create info
+            //  needs to have the relevant queue enabled *AND* it needs to be
+            //  set on the create data structure.
+        
+        ViQueueID   gQ   = m_device2->graphics_queue(vcd.number);
+        if(!m_device2->queue_valid(gQ))
+            return create_error<"no graphic queue">();
+        ViQueueFamilyID qf = vcd.present.valid() ? vcd.present : gQ.family;
+        if(!m_device2->is_queue_present_supported(qf, m_surface2->surface()))
+            return create_error<"queue does not have present support">();
+            
+            
+        std::error_code     ec;
+        ec  = _6_manager_init();
+        if(ec != std::error_code())
+            return ec;
+
+        return errors::todo();  // point of collapse, need to rebuild the visualizer to use new items
+
+        ec = _7_render_pass_create();
+        if(ec != std::error_code())
+            return ec;
+            
+        ec = _8_swapchain_create();
+        if(ec != std::error_code())
+            return ec;
+        ec = _9_pipeline_manager_create();
+        if(ec != std::error_code())
+            return ec;
+        return {};
+    }
+    
+    void                ViVisualizer::_kill()
+    {
+        if(!m_device2->valid())
+            return ;
+            
+        _9_pipeline_manager_kill();
+        m_device2->wait_idle();
+        _8_swapchain_kill();
+        m_device2->wait_idle();
+        _7_render_pass_kill();
+        m_device2->wait_idle();
+        _6_manager_kill();
+        m_device2->wait_idle();
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -470,17 +531,21 @@ namespace yq::tachyon {
 
     void              ViVisualizer::cleanup(cleanup_fn&& fn)
     {
-        m_cleanup.add(std::move(fn));
+        if(m_device2){
+            m_device2->cleanup(std::move(fn));
+        } else if(m_cleanup){
+            m_cleanup->add(std::move(fn));
+        } else {
+            fn();
+        }
     }
 
-    Cleanup&          ViVisualizer::cleanup_manager() const
+    void   ViVisualizer::cleanup(sweep_k)
     {
-        return *const_cast<Cleanup*>(&m_cleanup);
-    }
-
-    void   ViVisualizer::cleanup_sweep()
-    {
-        m_cleanup.sweep();
+        if(m_device2)
+            m_device2->cleanup(SWEEP);
+        if(m_cleanup)
+            m_cleanup->sweep();
     }
 
     RGBA4F ViVisualizer::clear_color() const

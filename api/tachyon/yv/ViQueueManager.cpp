@@ -146,7 +146,7 @@ namespace yq::tachyon {
             vkGetDeviceQueue(m_viz.device(), m_family, i, &m_queues[i]);
         m_taskers.resize(m_queues.size());
         for(uint32_t i=0;i<m_queues.size();++i){
-            m_taskers[i]    = new ViQueueTasker(m_viz, *this, i);
+            m_taskers[i]    = new ViQueueTasker(m_viz, *this, { i });
             if(!m_taskers[i]->valid()){
                 vizWarning << "Tasker " << i << " is not valid!";
             }

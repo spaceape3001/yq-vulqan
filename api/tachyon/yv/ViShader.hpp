@@ -17,13 +17,13 @@ namespace yq::tachyon {
     class ViVisualizer;
     class Shader;
     
-    //! Shader storage
-    //! \note the Client is expected to manually call create & destroy
+    //! Shader storage (this is the shader module)
     class ViShader : public RefCount {
     public:
         
         ViShader();
         ViShader(ViVisualizer&, const Shader&);
+        ViShader(VkDevice, const Shader&);
         ~ViShader();
         
         operator VkShaderModule() const { return m_shader; }
@@ -32,14 +32,15 @@ namespace yq::tachyon {
         VkShaderStageFlagBits   mask() const { return m_mask; }
         VkShaderModule          shader_module() const { return m_shader; }
         bool                    valid() const;
-        ViVisualizer*           visualizer() const { return m_viz; }
+        //ViVisualizer*           visualizer() const { return m_viz; }
         
         std::error_code         create(ViVisualizer&, const Shader&);
+        std::error_code         create(VkDevice, const Shader&);
         void                    kill();
         ShaderType              stage() const { return m_stage; }
         
     private:
-        ViVisualizer*           m_viz       = nullptr;
+        VkDevice                m_device    = nullptr;
         VkShaderModule          m_shader    = nullptr;
         VkShaderStageFlagBits   m_mask      = {};
         ShaderType              m_stage;
@@ -49,7 +50,7 @@ namespace yq::tachyon {
         ViShader& operator=(const ViShader&) = delete;
         ViShader& operator=(ViShader&&) = delete;
         
-        std::error_code     _create(ViVisualizer&, const Shader&);
+        std::error_code     _create(VkDevice, const Shader&);
         void                _kill();
         void                _wipe();
     };

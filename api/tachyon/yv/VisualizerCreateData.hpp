@@ -19,7 +19,7 @@ namespace yq::tachyon {
         ViDevicePtr             device;
         ViSurfacePtr            surface;
         Size2I                  pixels;
-        ViQueueFamilyID         present;    //!< States which queue family to use for present support (default is graphic)
+        ViQueueID               present;    //!< States which queue family to use for present support (default is graphic)
         uint32_t                number  = 0;
     };
 }

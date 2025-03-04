@@ -59,13 +59,11 @@ namespace yq::tachyon {
         
         if (m_capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
             m_extents = m_capabilities.currentExtent;
-        } else if(viz._window()){
+        } else {
             Size2I fb  = viz.framebuffer_size();
             m_extents = {};
             m_extents.width  = std::clamp((uint32_t) fb.x, m_capabilities.minImageExtent.width, m_capabilities.maxImageExtent.width);
             m_extents.height = std::clamp((uint32_t) fb.y, m_capabilities.minImageExtent.height, m_capabilities.maxImageExtent.height);
-        } else {
-            vizWarning << "ViSwapchain(): Cannot get extents.";
         }
         
         if(cfg.debug_echo_extents){
@@ -95,7 +93,7 @@ namespace yq::tachyon {
         swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
         swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
         
-        uint32_t queueFamilyIndices[] = {viz.graphic_queue_family(), viz.present_queue_family()};
+        uint32_t queueFamilyIndices[] = {viz.graphic_queue_family().index, viz.present_queue_family().index};
         if (viz.graphic_queue_family() != viz.present_queue_family()) {
             swapInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
             swapInfo.queueFamilyIndexCount = 2;

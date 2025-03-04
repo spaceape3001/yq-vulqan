@@ -31,7 +31,6 @@
 #include <yv/ViImage.hpp>
 #include <yv/ViPipeline.hpp>
 #include <yv/ViPipelineLayout.hpp>
-#include <yv/ViQueueManager.hpp>
 #include <yv/ViQueueTasker.hpp>
 #include <yv/ViRenderPass.hpp>
 #include <yv/ViSampler.hpp>
@@ -44,12 +43,14 @@
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {
-    ViVisualizer::ViVisualizer(Cleanup& clean) : m_cleanup(&clean)
-    {
-        m_presentMode   = PresentMode::Fifo;
+    VkInstance    ViVisualizer::instance() 
+    { 
+        return VulqanManager::instance(); 
     }
-    
-    ViVisualizer::ViVisualizer(const CreateData& cfg) : m_device2(cfg.device), m_surface2(cfg.surface)
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    ViVisualizer::ViVisualizer(const CreateData& cfg) : m_device(cfg.device), m_surface(cfg.surface)
     {
         m_presentMode   = PresentMode::Fifo;
         std::error_code ec  = _init(cfg);
@@ -64,69 +65,7 @@ namespace yq::tachyon {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-
-    std::error_code  ViVisualizer::_0_app_window_initialize(GLFWwindow* w)
-    {
-        m_instance    = VulqanManager::instance();
-        if(!m_instance)
-            return errors::vulkan_uninitialized();
-
-        m_window    = w;
-        if(!w)
-            return errors::vulkan_no_window_provided();
-     
-        glfwGetFramebufferSize(w, &m_frameBufferSize.x, &m_frameBufferSize.y);
-        return {};
-    }
-    
-    void             ViVisualizer::_0_app_window_kill()
-    {
-        m_instance      = nullptr;
-        m_window        = nullptr;
-    }
-
-    std::error_code  ViVisualizer::_1_gpu_select_initialize(InitData& iData)
-    {
-        m_physical                    = iData.viewer.device;
-        if(!m_physical){
-            m_physical  = vqFirstDevice();
-            if(!m_physical)
-                return errors::vulkan_no_physical_device();
-        }
-
-        VqPhysicalDeviceProperties2         prop2;
-        VqPhysicalDeviceMultiviewProperties multiProp;
-        
-        vkGetPhysicalDeviceFeatures(m_physical, &m_deviceFeatures);
-        vkGetPhysicalDeviceMemoryProperties(m_physical, &m_memoryInfo);
-
-        if(iData.viewer.multiview){
-            m_multiview.enabled  = true;
-            prop2.pNext     = &multiProp;
-            vizDebug << "ViVisualizer: Multiview enabled";
-        }
-
-        vkGetPhysicalDeviceProperties2(m_physical, &prop2);
-        m_deviceInfo    = prop2.properties;
-        if(iData.viewer.multiview){
-            m_multiview.maxViewCount        = multiProp.maxMultiviewViewCount;
-            m_multiview.maxInstanceIndex    = multiProp.maxMultiviewInstanceIndex;
-
-            //vizDebug << "ViVisualizer: Multiview max view count is " << m_multiview.maxViewCount;
-            //vizDebug << "ViVisualizer: Multiview max instance count is " << m_multiview.maxInstanceIndex;
-        }
-
-        vizDebug << "ViVisualizer: Using GPU/physical device " << gpu_name();
-
-        return {};
-    }
-    
-    void             ViVisualizer::_1_gpu_select_kill()
-    {
-        m_physical  = nullptr;
-        vizDebug << "ViVisualizer: GPU forgotten";
-    }
-
+#if 0
     std::error_code  ViVisualizer::_2_surface_initialize(InitData& iData)
     {
         //  passing in the create info in case we get smarter
@@ -341,6 +280,7 @@ namespace yq::tachyon {
         
         vizDebug << "ViVisualizer: Destroyed the allocator";
     }
+#endif
     
     std::error_code     ViVisualizer::_6_manager_init()
     {
@@ -360,7 +300,7 @@ namespace yq::tachyon {
         m_pipelineLayouts   = {};
         m_textures          = {};
         m_samplers          = {};
-        m_queues            = {};
+        //m_queues            = {};
         m_shaders           = {};
         m_buffers           = {};
         m_images            = {};
@@ -425,7 +365,7 @@ namespace yq::tachyon {
             cfg.old_swapchain = m_swapchain -> swapchain();
         ViSwapchainPtr  p   = new ViSwapchain;
 
-        vkDeviceWaitIdle(m_device);
+        m_device->wait_idle();
         
         std::error_code ec  = p -> init(*this, cfg);
         if(ec != std::error_code()){
@@ -440,10 +380,23 @@ namespace yq::tachyon {
 
     std::error_code     ViVisualizer::_init(const CreateData& vcd)
     {
-        if(!m_device2 || !m_device2->valid())
+        if(!m_device || !m_device->valid())
             return create_error<"null device">();
-        if(!m_surface2 || !m_surface2->valid())
+        if(!m_surface || !m_surface->valid())
             return create_error<"null surface">();
+
+        for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(physical(), surface()))
+            m_presentModes.insert((PresentMode::enum_t) pm);
+        m_presentMode           = m_presentModes.contains(vcd.viewer.pmode) ? vcd.viewer.pmode : PresentMode{ PresentMode::Fifo };
+
+        m_surfaceFormats        = vqGetPhysicalDeviceSurfaceFormatsKHR(physical(), surface());
+        
+        // right now, cheating on format & color space
+        m_surfaceFormat         = VK_FORMAT_B8G8R8A8_SRGB;
+        m_surfaceColorSpace     = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
+
+        set_clear_color(vcd.viewer.clear);
+            
 
             //  If you're debugging the present queue... means it's fouled up.  
             //  In order to break the surface dependency for the device, we
@@ -452,19 +405,36 @@ namespace yq::tachyon {
             //  needs to have the relevant queue enabled *AND* it needs to be
             //  set on the create data structure.
         
-        ViQueueID   gQ   = m_device2->graphics_queue(vcd.number);
-        if(!m_device2->queue_valid(gQ))
+        ViQueueID   gQ   = m_device->graphics_queue(vcd.number);
+        if(!m_device->is_queue_valid(gQ))
             return create_error<"no graphic queue">();
-        ViQueueFamilyID qf = vcd.present.valid() ? vcd.present : gQ.family;
-        if(!m_device2->is_queue_present_supported(qf, m_surface2->surface()))
+
+        ViQueueFamilyID qf = vcd.present.valid() ? vcd.present.family : gQ.family;
+        if(!m_device->is_queue_present_supported(qf, m_surface->surface()))
             return create_error<"queue does not have present support">();
             
+        m_computeQueue  = { m_device->queue_family(ViQueueType::Compute), 0 };
+        if(m_device->is_queue_valid(m_computeQueue))
+            m_flags |= X::Compute;
+        
+        m_transferQueue = { m_device->queue_family(ViQueueType::Transfer), 0 };
+        if(m_device->is_queue_valid(m_transferQueue))
+            m_flags |= X::Transfer;
+        
+        m_videoDecQueue = { m_device->queue_family(ViQueueType::VideoDecode), 0 };
+        if(m_device->is_queue_valid(m_videoDecQueue))
+            m_flags |= X::VideoDec;
+        m_videoEncQueue = { m_device->queue_family(ViQueueType::VideoEncode), 0 };
+        if(m_device->is_queue_valid(m_videoEncQueue))
+            m_flags |= X::VideoEnc;
             
         std::error_code     ec;
         ec  = _6_manager_init();
         if(ec != std::error_code())
             return ec;
-
+            
+        
+        //  SURFACE INFORMATION 
         return errors::todo();  // point of collapse, need to rebuild the visualizer to use new items
 
         ec = _7_render_pass_create();
@@ -482,21 +452,28 @@ namespace yq::tachyon {
     
     void                ViVisualizer::_kill()
     {
-        if(!m_device2->valid())
+        if(!m_device->valid())
             return ;
             
         _9_pipeline_manager_kill();
-        m_device2->wait_idle();
+        m_device->wait_idle();
         _8_swapchain_kill();
-        m_device2->wait_idle();
+        m_device->wait_idle();
         _7_render_pass_kill();
-        m_device2->wait_idle();
+        m_device->wait_idle();
         _6_manager_kill();
-        m_device2->wait_idle();
+        m_device->wait_idle();
     }
 
 
     ///////////////////////////////////////////////////////////////////////////
+
+    VmaAllocator ViVisualizer::allocator() const 
+    { 
+        if(m_device)
+            return m_device->allocator();
+        return nullptr;
+    }
 
     ViBufferCPtr ViVisualizer::buffer(uint64_t i) const
     {
@@ -531,10 +508,8 @@ namespace yq::tachyon {
 
     void              ViVisualizer::cleanup(cleanup_fn&& fn)
     {
-        if(m_device2){
-            m_device2->cleanup(std::move(fn));
-        } else if(m_cleanup){
-            m_cleanup->add(std::move(fn));
+        if(m_device){
+            m_device->cleanup(std::move(fn));
         } else {
             fn();
         }
@@ -542,10 +517,8 @@ namespace yq::tachyon {
 
     void   ViVisualizer::cleanup(sweep_k)
     {
-        if(m_device2)
-            m_device2->cleanup(SWEEP);
-        if(m_cleanup)
-            m_cleanup->sweep();
+        if(m_device)
+            m_device->cleanup(SWEEP);
     }
 
     RGBA4F ViVisualizer::clear_color() const
@@ -554,42 +527,30 @@ namespace yq::tachyon {
         return vqExtractRGBA4F(cv);
     }
 
-    VkQueue  ViVisualizer::compute_queue(uint32_t i) const
+    VkQueue  ViVisualizer::compute_queue() const
     {
-        return m_computeQueue ? m_computeQueue->queue(i) : nullptr;
+        if(m_device)
+            return m_device -> queue(m_computeQueue);
+        return nullptr;
     }
     
-    uint32_t  ViVisualizer::compute_queue_count() const
-    {
-        return m_computeQueue ? m_computeQueue->count() : 0;
-    }
-    
-    uint32_t  ViVisualizer::compute_queue_family() const
-    {
-        return m_computeQueue ? m_computeQueue->family() : UINT32_MAX;
-    }
-
-    ViQueueManager* ViVisualizer::compute_queue_manager() const 
-    { 
-        return m_computeQueue; 
-    }
-
     std::error_code ViVisualizer::compute_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
-        if(!m_computeQueue)
-            return errors::compute_queue_uninitialized();
-
-        ViQueueTaskerPtr     tasker  = m_computeQueue->tasker(opts.queue);
-        if(!tasker)
-            return errors::tasker_uninitialized();
-        return tasker->execute(opts.timeout, std::move(fn));
+        if(!m_device || !m_device->valid())
+            return errors::visualizer_uninitialized();
+        return m_device->queue_task(m_computeQueue, opts.timeout, std::move(fn));
     }
 
     bool    ViVisualizer::compute_queue_valid() const
     {
-        return m_computeQueue != nullptr;
+        return m_device && m_device->is_queue_valid(m_computeQueue);
+    }
+
+    VkDevice            ViVisualizer::device() const
+    {
+        return logical();
     }
 
 
@@ -611,7 +572,7 @@ namespace yq::tachyon {
     {
         for(VkFormat format : candidates){
             VkFormatProperties props;
-            vkGetPhysicalDeviceFormatProperties(m_physical, format, &props);
+            vkGetPhysicalDeviceFormatProperties(physical(), format, &props);
             
             switch(tiling){
             case VK_IMAGE_TILING_LINEAR:
@@ -632,51 +593,37 @@ namespace yq::tachyon {
 
     std::string_view    ViVisualizer::gpu_name() const
     {
-        return std::string_view(m_deviceInfo.deviceName, strnlen(m_deviceInfo.deviceName, VK_MAX_PHYSICAL_DEVICE_NAME_SIZE));
+        if(m_device)
+            return m_device->gpu_name();
+        return {};
     }
 
     VkPhysicalDeviceType    ViVisualizer::gpu_type() const
     {
-        return m_deviceInfo.deviceType;
+        if(m_device)
+            return m_device->gpu_type();
+        return {};
     }
 
-
-    VkQueue     ViVisualizer::graphic_queue(uint32_t i) const
+    VkQueue     ViVisualizer::graphic_queue() const
     {
-        return m_graphicsQueue ? m_graphicsQueue->queue(i) : nullptr;
+        if(m_device)
+            return m_device->queue(m_graphicsQueue);
+        return nullptr;
     }
     
-    uint32_t    ViVisualizer::graphic_queue_count() const
-    {
-        return m_graphicsQueue ? m_graphicsQueue->count() : 0;
-    }
-    
-    uint32_t    ViVisualizer::graphic_queue_family() const
-    {
-        return m_graphicsQueue ? m_graphicsQueue->family() : UINT32_MAX;
-    }
-    
-    ViQueueManager* ViVisualizer::graphic_queue_manager() const 
-    { 
-        return m_graphicsQueue; 
-    }
-
     bool        ViVisualizer::graphic_queue_valid() const
     {
-        return m_graphicsQueue != nullptr;
+        return m_device && m_device->is_queue_valid(m_graphicsQueue);
     }
 
     std::error_code ViVisualizer::graphic_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
-        if(!m_graphicsQueue)
-            return errors::graphics_queue_uninitialized();
-
-        ViQueueTaskerPtr     tasker  = m_graphicsQueue->tasker(opts.queue);
-        if(!tasker)
-            return errors::tasker_uninitialized();
-        return tasker->execute(opts.timeout, std::move(fn));
+        if(!m_device || !m_device->valid())
+            return errors::visualizer_uninitialized();
+        return m_device->queue_task(m_graphicsQueue, opts.timeout, std::move(fn));
     }
 
     ViImageCPtr     ViVisualizer::image(uint64_t i) const
@@ -732,39 +679,65 @@ namespace yq::tachyon {
         return m_images.get();
     }
 
+    VkDevice    ViVisualizer::logical() const
+    {
+        if(m_device)
+            return m_device->device();
+        return nullptr;
+    }
+
     uint32_t    ViVisualizer::max_memory_allocation_count() const  
     { 
-        return m_deviceInfo.limits.maxMemoryAllocationCount; 
+        if(m_device)
+            return m_device->max_memory_allocation_count();
+        return 0;
     }
     
     uint32_t    ViVisualizer::max_push_constants_size() const 
     { 
-        return m_deviceInfo.limits.maxPushConstantsSize; 
+        if(m_device)
+            return m_device->max_push_constants_size();
+        return 0;
     }
 
     float       ViVisualizer::max_sampler_anisotropy() const
     {
-        return m_deviceInfo.limits.maxSamplerAnisotropy;
+        if(m_device)
+            return m_device->max_sampler_anisotropy();
+        return 0.f;
     }
     
     uint32_t    ViVisualizer::max_viewports() const 
     { 
-        return m_deviceInfo.limits.maxViewports; 
+        if(m_device)
+            return m_device->max_viewports();
+        return 0;
     }
 
     bool         ViVisualizer::multiview_enabled() const
     {
-        return m_multiview.enabled;
+        return m_device && m_device->multiview_enabled();
     }
     
     uint32_t     ViVisualizer::multiview_max_instance_index() const
     {
-        return m_multiview.maxInstanceIndex;
+        if(m_device)
+            return m_device->multiview_max_instance_index();
+        return {};
     }
 
     uint32_t     ViVisualizer::multiview_max_view_count() const
     {
-        return m_multiview.maxViewCount;
+        if(m_device)
+            return m_device->multiview_max_view_count();
+        return {};
+    }
+
+    VkPhysicalDevice                ViVisualizer::physical() const 
+    { 
+        if(m_device)
+            return m_device->physical();
+        return nullptr;
     }
 
     ViPipelineCPtr                  ViVisualizer::pipeline(uint64_t i) const
@@ -846,42 +819,25 @@ namespace yq::tachyon {
         return m_presentModes;
     }
 
-    VkQueue      ViVisualizer::present_queue(uint32_t i) const
+    VkQueue      ViVisualizer::present_queue() const
     {
-        return m_presentQueue ? m_presentQueue->queue(i) : nullptr;
-    }
-    
-    uint32_t     ViVisualizer::present_queue_count() const
-    {
-        return m_presentQueue ? m_presentQueue->count() : 0;
-    }
-    
-    uint32_t     ViVisualizer::present_queue_family() const
-    {
-        return m_presentQueue ? m_presentQueue->family() : UINT32_MAX;
-    }
-
-    ViQueueManager* ViVisualizer::present_queue_manager() const 
-    { 
-        return m_presentQueue; 
+        if(m_device)
+            return m_device -> queue(m_presentQueue);
+        return nullptr;
     }
 
     std::error_code ViVisualizer::present_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
-        if(!m_presentQueue)
-            return errors::present_queue_uninitialized();
-
-        ViQueueTaskerPtr     tasker  = m_presentQueue->tasker(opts.queue);
-        if(!tasker)
-            return errors::tasker_uninitialized();
-        return tasker->execute(opts.timeout, std::move(fn));
+        if(!m_device || !m_device->valid())
+            return errors::visualizer_uninitialized();
+        return m_device->queue_task(m_presentQueue, opts.timeout, std::move(fn));
     }
 
     bool        ViVisualizer::present_queue_valid() const
     {
-        return m_presentQueue != nullptr;
+        return m_device && m_device->is_queue_valid( m_presentQueue );
     }
 
     VkRenderPass        ViVisualizer::render_pass() const
@@ -1010,10 +966,17 @@ namespace yq::tachyon {
         return m_presentModes.contains(pm);
     }
 
+    VkSurfaceKHR      ViVisualizer::surface() const 
+    { 
+        if(m_surface)
+            return m_surface -> surface();
+        return nullptr;
+    }
+
     VkSurfaceCapabilitiesKHR_x  ViVisualizer::surface_capabilities() const
     {
         VkSurfaceCapabilitiesKHR    ret;
-        if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physical, m_surface, &ret) != VK_SUCCESS)
+        if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical(), surface(), &ret) != VK_SUCCESS)
             return unexpected<"Unable to get surface capabilities">();
         return ret;
     }
@@ -1116,42 +1079,25 @@ namespace yq::tachyon {
         return m_textures.get(); 
     }
     
-    VkQueue     ViVisualizer::transfer_queue(uint32_t i) const
+    VkQueue     ViVisualizer::transfer_queue() const
     {
-        return m_transferQueue ? m_transferQueue->queue(i) : nullptr;
+        if(m_device)
+            return m_device->queue(m_transferQueue);
+        return nullptr;
     }
     
-    uint32_t    ViVisualizer::transfer_queue_count() const
-    {
-        return m_transferQueue ? m_transferQueue->count() : 0;
-    }
-    
-    uint32_t    ViVisualizer::transfer_queue_family() const
-    {
-        return m_transferQueue ? m_transferQueue->family() : UINT32_MAX;
-    }
-    
-    ViQueueManager* ViVisualizer::transfer_queue_manager() const 
-    { 
-        return m_transferQueue; 
-    }
-
     std::error_code ViVisualizer::transfer_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
-        if(!m_transferQueue)
-            return errors::transfer_queue_uninitialized();
-
-        ViQueueTaskerPtr     tasker  = m_transferQueue->tasker(opts.queue);
-        if(!tasker)
-            return errors::tasker_uninitialized();
-        return tasker->execute(opts.timeout, std::move(fn));
+        if(!m_device || !m_device->valid())
+            return errors::visualizer_uninitialized();
+        return m_device->queue_task(m_transferQueue, opts.timeout, std::move(fn));
     }
 
     bool    ViVisualizer::transfer_queue_valid() const
     {
-        return m_transferQueue != nullptr;
+        return m_device && m_device->is_queue_valid(m_transferQueue);
     }
 
     void    ViVisualizer::trigger_rebuild()
@@ -1160,85 +1106,52 @@ namespace yq::tachyon {
     }
 
 
-    VkQueue   ViVisualizer::video_decode_queue(uint32_t i) const
+    VkQueue   ViVisualizer::video_decode_queue() const
     {
-        return m_videoDecQueue ? m_videoDecQueue->queue(i) : nullptr;
+        if(m_device)
+            return m_device -> queue(m_videoDecQueue);
+        return nullptr;
     }
     
-    uint32_t  ViVisualizer::video_decode_queue_count() const
-    {
-        return m_videoDecQueue ? m_videoDecQueue->count() : 0;
-    }
-    
-    uint32_t  ViVisualizer::video_decode_queue_family() const
-    {
-        return m_videoDecQueue ? m_videoDecQueue->family() : UINT32_MAX;
-    }
-
-    ViQueueManager*  ViVisualizer::video_decode_queue_manager() const 
-    { 
-        return m_videoDecQueue; 
-    }
-
     std::error_code ViVisualizer::video_decode_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
-        if(!m_videoDecQueue)
-            return errors::video_decode_queue_uninitialized();
-
-        ViQueueTaskerPtr     tasker  = m_videoDecQueue->tasker(opts.queue);
-        if(!tasker)
-            return errors::tasker_uninitialized();
-        return tasker->execute(opts.timeout, std::move(fn));
+        if(!m_device || !m_device->valid())
+            return errors::visualizer_uninitialized();
+        return m_device->queue_task(m_videoDecQueue, opts.timeout, std::move(fn));
     }
 
     bool        ViVisualizer::video_decode_queue_valid() const
     {
-        return m_videoDecQueue != nullptr;
+        return m_device && m_device->is_queue_valid(m_videoDecQueue);
     }
 
-    VkQueue   ViVisualizer::video_encode_queue(uint32_t i) const
+    VkQueue   ViVisualizer::video_encode_queue() const
     {
-        return m_videoEncQueue ? m_videoEncQueue->queue(i) : nullptr;
+        if(m_device)
+            return m_device->queue(m_videoEncQueue);
+        return nullptr;
     }
     
-    uint32_t  ViVisualizer::video_encode_queue_count() const
-    {
-        return m_videoEncQueue ? m_videoEncQueue->count() : 0;
-    }
-
-    uint32_t  ViVisualizer::video_encode_queue_family() const
-    {
-        return m_videoEncQueue ? m_videoEncQueue->family() : UINT32_MAX;
-    }
-
-    ViQueueManager*  ViVisualizer::video_encode_queue_manager() const 
-    { 
-        return m_videoEncQueue; 
-    }
-
     std::error_code ViVisualizer::video_encode_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
-        if(!m_videoEncQueue)
-            return errors::video_encode_queue_uninitialized();
-
-        ViQueueTaskerPtr     tasker  = m_videoEncQueue->tasker(opts.queue);
-        if(!tasker)
-            return errors::tasker_uninitialized();
-        return tasker->execute(opts.timeout, std::move(fn));
+        if(!m_device || !m_device->valid())
+            return errors::visualizer_uninitialized();
+        return m_device->queue_task(m_videoEncQueue, opts.timeout, std::move(fn));
     }
 
     bool        ViVisualizer::video_encode_queue_valid() const
     {
-        return m_videoEncQueue != nullptr;
+        return m_device && m_device->is_queue_valid(m_videoEncQueue);
     }
 
     std::error_code                 ViVisualizer::wait_idle()
     {
-        vkDeviceWaitIdle(m_device);
-        return {};
+        if(m_device)
+            return m_device->wait_idle();
+        return errors::visualizer_uninitialized();
     }
 }

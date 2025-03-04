@@ -163,6 +163,8 @@ namespace yq::tachyon {
             vizWarning << "ViDevice(" << gpu_name() << "): Target API version mismatch, not everything will be supported";
         }
 
+        vkGetPhysicalDeviceMemoryProperties(pDev, &m_gpuMemory);
+
         // ---------------
         // SORT THE QUEUES
 
@@ -350,6 +352,7 @@ namespace yq::tachyon {
         
         vkGetPhysicalDeviceFeatures2(pDev, &v10features2);
         v10features = v10features2.features;
+        m_gpuFeatures   = v10features;
         if(vci.fill_non_solid && !v10features.fillModeNonSolid)
             vizWarning << "ViDevice(" << gpu_name() << "): GPU is unable to support fill mode non-solid!";
         if(!v10features.samplerAnisotropy)
@@ -447,6 +450,11 @@ namespace yq::tachyon {
     {
         return std::string_view(m_gpuProperties.deviceName);
     }
+
+    VkPhysicalDeviceType    ViDevice::gpu_type() const
+    {
+        return m_gpuProperties.deviceType;
+    }
     
     std::error_code     ViDevice::init(VkPhysicalDevice pDev, const VulqanCreateInfo& vci)
     {
@@ -500,6 +508,14 @@ namespace yq::tachyon {
         return static_cast<bool>(queue_family_flags(family) & VK_QUEUE_COMPUTE_BIT);
     }
     
+    bool    ViDevice::is_queue_valid(ViQueueID qid) const
+    {
+        const QueueFamily* qf = _family(qid.family);
+        if(!qf) 
+            return false;
+        return qid.sub < qf->count;
+    }
+
     bool    ViDevice::is_queue_video_decode(ViQueueFamilyID family) const
     {
         return static_cast<bool>(queue_family_flags(family) & VK_QUEUE_VIDEO_DECODE_BIT_KHR);
@@ -508,6 +524,41 @@ namespace yq::tachyon {
     bool    ViDevice::is_queue_video_encode(ViQueueFamilyID family) const
     {
         return static_cast<bool>(queue_family_flags(family) & VK_QUEUE_VIDEO_ENCODE_BIT_KHR);
+    }
+
+    uint32_t        ViDevice::max_memory_allocation_count() const
+    {
+        return m_gpuProperties.limits.maxMemoryAllocationCount; 
+    }
+    
+    uint32_t        ViDevice::max_push_constants_size() const
+    {
+        return m_gpuProperties.limits.maxPushConstantsSize; 
+    }
+    
+    float           ViDevice::max_sampler_anisotropy() const
+    {
+        return m_gpuProperties.limits.maxSamplerAnisotropy;
+    }
+    
+    uint32_t        ViDevice::max_viewports() const
+    {
+        return m_gpuProperties.limits.maxViewports; 
+    }
+
+    bool    ViDevice::multiview_enabled() const
+    {
+        return m_multiview.enabled;
+    }
+    
+    uint32_t    ViDevice::multiview_max_instance_index() const
+    {
+        return m_multiview.maxInstanceIndex;
+    }
+    
+    uint32_t    ViDevice::multiview_max_view_count() const
+    {
+        return m_multiview.maxViewCount;
     }
 
     VkQueue         ViDevice::queue(ViQueueFamilyID family, uint32_t subIdx) const
@@ -573,7 +624,7 @@ namespace yq::tachyon {
                 return i->second;
         }
         
-        if(!queue_valid(qid))
+        if(!is_queue_valid(qid))
             return {};
         
         ViQueueTaskerPtr    ret;
@@ -588,14 +639,6 @@ namespace yq::tachyon {
         }
         
         return ret;
-    }
-
-    bool    ViDevice::queue_valid(ViQueueID qid) const
-    {
-        const QueueFamily* qf = _family(qid.family);
-        if(!qf) 
-            return false;
-        return qid.sub < qf->count;
     }
 
     bool    ViDevice::valid() const

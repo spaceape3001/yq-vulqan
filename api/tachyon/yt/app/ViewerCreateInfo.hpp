@@ -58,35 +58,11 @@ namespace yq::tachyon {
             //!  Set if we want multiview capability (think STEREO/VR)
         bool                        multiview   = false;
             
-            //!  Set to alter graphic queue capability
-        QueueSpec                   graphic;
-
-            //!  Set to alter present queue capability
-        QueueSpec                   present;
-
-            //!  Set to enable compute queue capability
-        QueueSpec                   compute;
-        
-            //!  Set to enable transfer (DMA) queue capability
-        QueueSpec                   transfer;
-
-            //!  Set to enable video-decode queue capability
-        QueueSpec                   video_decode;
-        
-            //!  Set to enable video-encode queue capability
-        QueueSpec                   video_encode;
-
             //!     Set to get descriptors allocated
         uint32_t                    descriptors = 0;
         
-            //!  Amount to allocate in "chunks" on the GPU (Zero implies default...currently 256MiB)
-        size_t                      chunk_size  = 0;
-        
             //!  Number of frames in flight
         size_t                      frames_in_flight    = 2;
-        
-        //! Device extensions
-        std::vector<const char*>    extensions;
         
         ViewerCreateInfo(){}
     };

@@ -21,7 +21,6 @@ namespace yq::tachyon {
     
     class ViQueueTasker : public RefCount {
     public:
-        ViQueueTasker(ViVisualizer&, const ViQueueManager&, uint32_t queue=0);
         ViQueueTasker(ViDevice&, ViQueueID);
         ~ViQueueTasker();
     
@@ -35,9 +34,6 @@ namespace yq::tachyon {
         bool            valid_queue() const;
     
     private:
-        //ViDevice&       m_viz;
-        //ViVisualizer&   m_viz;
-        //ViQueueID       m_id;
         ViCommandPool   m_commandPool;
         ViCommandBuffer m_commandBuffer;
         ViFence         m_fence;

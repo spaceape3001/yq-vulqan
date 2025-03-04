@@ -23,6 +23,7 @@
 #include <yv/typedef/vi_device.hpp>
 #include <yv/typedef/vi_image.hpp>
 #include <yv/typedef/vi_image_manager.hpp>
+#include <yv/typedef/vi_queue_id.hpp>
 #include <yv/typedef/vi_queue_tasker.hpp>
 #include <yv/typedef/vi_pipeline.hpp>
 #include <yv/typedef/vi_pipeline_layout.hpp>
@@ -37,7 +38,6 @@
 #include <yv/typedef/vi_texture.hpp>
 #include <yv/typedef/vi_texture_manager.hpp>
 #include <yv/ViQueueType.hpp>
-
 #include <yv/vulqan.hpp>
 
 #include <tbb/spin_rw_mutex.h>
@@ -92,7 +92,7 @@ namespace yq::tachyon {
         
         
         //! Memory allocator
-        VmaAllocator                    allocator() const { return m_allocator; }
+        VmaAllocator                    allocator() const;
 
         ViBufferCPtr                    buffer(uint64_t) const;
         ViBufferCPtr                    buffer_create(const Buffer&);
@@ -105,17 +105,16 @@ namespace yq::tachyon {
 
         RGBA4F                          clear_color() const;
 
-        VkQueue                         compute_queue(uint32_t i=0) const;
-        uint32_t                        compute_queue_count() const;
-        uint32_t                        compute_queue_family() const;
-        ViQueueManager*                 compute_queue_manager() const;
+        VkQueue                         compute_queue() const;
+        ViQueueFamilyID                 compute_queue_family() const { return m_computeQueue.family; }
+        ViQueueID                       compute_queue_id() const { return m_computeQueue; }
         std::error_code                 compute_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
 
         virtual VkDescriptorPool        descriptor_pool() const = 0;
 
         //! Vulkan (logical) device
-        VkDevice                        device() const { return m_device; }
+        VkDevice         device() const;
         
         Expect<VkFormat>                find_depth_format() const;
         Expect<VkFormat>                find_supported_format(std::span<const VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
@@ -124,7 +123,7 @@ namespace yq::tachyon {
         Size2I                          framebuffer_size() const { return m_frameBufferSize; }
 
         //! Vulkan GPU (physical device)
-        VkPhysicalDevice                gpu() const { return m_physical; }
+        VkPhysicalDevice                gpu() const;
         
             //! Returns the name of the GPU/physical device
         std::string_view                gpu_name() const;
@@ -132,10 +131,9 @@ namespace yq::tachyon {
             //! Returns the type of the GPU/physical device
         VkPhysicalDeviceType            gpu_type() const;
 
-        VkQueue                         graphic_queue(uint32_t i=0) const;
-        uint32_t                        graphic_queue_count() const;
-        uint32_t                        graphic_queue_family() const;
-        ViQueueManager*                 graphic_queue_manager() const;
+        VkQueue                         graphic_queue() const;
+        ViQueueFamilyID                 graphic_queue_family() const { return m_graphicsQueue.family; }
+        ViQueueID                       graphic_queue_id() const { return m_graphicsQueue; }
         std::error_code                 graphic_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            graphic_queue_valid() const;
 
@@ -148,11 +146,11 @@ namespace yq::tachyon {
         ViImageManager*                 image_manager() const;
         
         //! Vulkan instance
-        VkInstance                      instance() const { return m_instance; }
+        static VkInstance               instance();
         
         //! Vulkan logical device
-        VkDevice                        logical() const { return m_device; }
-        
+        VkDevice                        logical() const;
+
         uint32_t                        max_memory_allocation_count() const;
         uint32_t                        max_push_constants_size() const;
         float                           max_sampler_anisotropy() const;
@@ -177,7 +175,7 @@ namespace yq::tachyon {
         uint32_t                        multiview_max_view_count() const;
 
         //! Vulkan physical device (gpu)
-        VkPhysicalDevice                physical() const { return m_physical; }
+        VkPhysicalDevice                physical() const;
         
         ViPipelineCPtr                  pipeline(uint64_t) const;
         ViPipelineCPtr                  pipeline_create(const Pipeline*);
@@ -194,10 +192,9 @@ namespace yq::tachyon {
         PresentMode                     present_mode() const;
         const std::set<PresentMode>&    present_modes_available() const;
 
-        VkQueue                         present_queue(uint32_t i=0) const;
-        uint32_t                        present_queue_count() const;
-        uint32_t                        present_queue_family() const;
-        ViQueueManager*                 present_queue_manager() const;
+        VkQueue                         present_queue() const;
+        ViQueueFamilyID                 present_queue_family() const { return m_presentQueue.family; }
+        ViQueueID                       present_queue_id() const { return m_presentQueue; }
         std::error_code                 present_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            present_queue_valid() const;
 
@@ -240,7 +237,7 @@ namespace yq::tachyon {
         bool                            supports_present(PresentMode) const;
 
         //! Vulkan surface
-        VkSurfaceKHR                    surface() const { return m_surface; }
+        VkSurfaceKHR                    surface() const;
 
         VkSurfaceCapabilitiesKHR_x      surface_capabilities() const;
 
@@ -264,10 +261,10 @@ namespace yq::tachyon {
         
         uint64_t                        tick() const { return m_tick; }
 
-        VkQueue                         transfer_queue(uint32_t i=0) const;
+        VkQueue                         transfer_queue() const;
         uint32_t                        transfer_queue_count() const;
-        uint32_t                        transfer_queue_family() const;
-        ViQueueManager*                 transfer_queue_manager() const;
+        ViQueueFamilyID                 transfer_queue_family() const;
+        ViQueueID                       transfer_queue_id() const { return m_transferQueue; }
         std::error_code                 transfer_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
         //! IF valid, means there's an asynchronous DMA transfer queue
@@ -275,113 +272,71 @@ namespace yq::tachyon {
 
         void                            trigger_rebuild();
 
-        VkQueue                         video_decode_queue(uint32_t i=0) const;
-        uint32_t                        video_decode_queue_count() const;
-        uint32_t                        video_decode_queue_family() const;
-        ViQueueManager*                 video_decode_queue_manager() const;
+        VkQueue                         video_decode_queue() const;
+        ViQueueFamilyID                 video_decode_queue_family() const;
+        ViQueueID                       video_decode_queue_id() const { return m_videoDecQueue; }
         std::error_code                 video_decode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_decode_queue_valid() const;
 
-        VkQueue                         video_encode_queue(uint32_t i=0) const;
-        uint32_t                        video_encode_queue_count() const;
-        uint32_t                        video_encode_queue_family() const;
-        ViQueueManager*                 video_encode_queue_manager() const;
+        VkQueue                         video_encode_queue() const;
+        ViQueueFamilyID                 video_encode_queue_family() const;
+        ViQueueID                       video_encode_queue_id() const { return m_videoEncQueue; }
         std::error_code                 video_encode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_encode_queue_valid() const;
-
-        //! Our window (underscore to demote)
-        GLFWwindow*                     _window() const { return m_window; }
 
         std::error_code                 wait_idle();
         
 
     protected:
-        ViVisualizer(Cleanup&);
         ViVisualizer(const CreateData&);
         ~ViVisualizer();
+        
+        enum class X {
+            Compute,
+            Transfer,
+            VideoEnc,
+            VideoDec
+        };
 
         using mutex_t = tbb::spin_rw_mutex;
 
         mutable tbb::spin_rw_mutex          m_mutex;
         
-        VmaAllocator                        m_allocator         = nullptr;
         ViBufferManagerUPtr                 m_buffers;
-        Cleanup*                            m_cleanup           = nullptr; // keep it one until performance bottlenecks
         Guarded<VkClearValue>               m_clearValue;
-        ViQueueManager*                     m_computeQueue      = nullptr;
-        ViDevicePtr                         m_device2;
-        VkDevice                            m_device            = nullptr;
-        VkPhysicalDeviceFeatures            m_deviceFeatures;
-        VkPhysicalDeviceProperties          m_deviceInfo;
+        ViQueueID                           m_computeQueue;
+        ViDevicePtr                         m_device;
+        //VkPhysicalDeviceFeatures            m_deviceFeatures;
+        //VkPhysicalDeviceProperties          m_deviceInfo;
+        Flags<X>                            m_flags;
         Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;
-        ViQueueManager*                     m_graphicsQueue     = nullptr;
+        ViQueueID                           m_graphicsQueue;
         ViImageManagerUPtr                  m_images;
-        VkInstance                          m_instance          = nullptr;
-        VkPhysicalDeviceMemoryProperties    m_memoryInfo;
-        struct {
-            bool        enabled             = false;
-            // KHR -- One greater than the maximum view index that can be used in a subpass.
-            uint32_t    maxViewCount        = 0;
-            // KHR -- maximum valid value of instance index allowed to be generated by a drawing command recorded within a subpass of a multiview render pass instance.
-            uint32_t    maxInstanceIndex    = 0;
-        }                                   m_multiview;
-        VkPhysicalDevice                    m_physical          = nullptr;
         ViPipelineLayoutManagerUPtr         m_pipelineLayouts;
         ViPipelineManagerUPtr               m_pipelines;        // temporary until relocated
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;
-        ViQueueManager*                     m_presentQueue      = nullptr;
-        std::vector<ViQueueManagerPtr>      m_queues;
+        ViQueueID                           m_presentQueue;
         std::atomic<bool>                   m_rebuildSwap       = { false };
         ViRenderPassCPtr                    m_renderPass;
         ViSamplerManagerUPtr                m_samplers;
         ViShaderManagerUPtr                 m_shaders;
-        VkSurfaceKHR                        m_surface           = nullptr;
-        ViSurfacePtr                        m_surface2;
+        ViSurfacePtr                        m_surface;
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
         ViSwapchainCPtr                     m_swapchain;
         ViTextureManagerUPtr                m_textures;
-        ViQueueManager*                     m_transferQueue     = nullptr;
-        ViQueueManager*                     m_videoDecQueue     = nullptr;
-        ViQueueManager*                     m_videoEncQueue     = nullptr;
-        GLFWwindow*                         m_window            = nullptr; //< DEPRECATED (will be removed for main thread divorce)
+        ViQueueID                           m_transferQueue;
+        ViQueueID                           m_videoDecQueue;
+        ViQueueID                           m_videoEncQueue;
         
         std::atomic<uint64_t>               m_tick{0ULL};     // Always monotomically incrementing
 
             // Temporary until moved to the frames
 
         //Flags<F>            m_flags           = {};
-        
-        //! Transitory data needed during initialization
-        struct InitData {
-            const ViewerCreateInfo&                 viewer;
-            std::vector<VkDeviceQueueCreateInfo>    queues;
-            std::vector<const char*>                extensions;
-            
-            InitData(const ViewerCreateInfo& v) : viewer(v) {}
-        };
-        
-        std::error_code     _0_app_window_initialize(GLFWwindow*);
-        void                _0_app_window_kill();
-        
-        std::error_code     _1_gpu_select_initialize(InitData&);
-        void                _1_gpu_select_kill();
-        
-        std::error_code     _2_surface_initialize(InitData&);
-        void                _2_surface_kill();
-        
-        std::error_code     _3_queues_create(InitData&);
-        void                _3_queues_fetch();   // post device creation
-        void                _3_queues_kill();
-        
-        std::error_code     _4_device_init(InitData&);
-        void                _4_device_kill();
-        
-        std::error_code     _5_allocator_init(InitData& iData);
-        void                _5_allocator_kill();
         
         std::error_code     _6_manager_init();
         void                _6_manager_kill();

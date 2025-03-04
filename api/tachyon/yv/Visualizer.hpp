@@ -110,7 +110,6 @@ namespace yq::tachyon {
         void                            update(ViContext&, const Scene0&);
         #endif
         
-        Visualizer(const ViewerCreateInfo&, GLFWwindow*, Cleanup&);
         Visualizer(const CreateData&);
         Visualizer();
         ~Visualizer();
@@ -122,12 +121,12 @@ namespace yq::tachyon {
 
         //virtual void                    prerecord(ViContext&){}
     
-        std::error_code             init_visualizer(const ViewerCreateInfo&, GLFWwindow*);
-        void                        kill_visualizer();
+        //std::error_code             init_visualizer(const ViewerCreateInfo&, GLFWwindow*);
+        //void                        kill_visualizer();
         
     
-        std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
-        void                        _dtor();
+        //std::error_code             _ctor(const ViewerCreateInfo&, GLFWwindow*);
+        //void                        _dtor();
 
         //std::error_code             _create(ViTexture&, const ViImage&, const Texture&);
         //void                        _destroy(ViTexture&);

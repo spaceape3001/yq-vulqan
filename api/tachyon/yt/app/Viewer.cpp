@@ -198,39 +198,8 @@ namespace yq::tachyon {
         subscribe(m_widget, {MG::Widget, MG::General});
         w->subscribe(id(), {MG::Viewer, MG::General});
         
-        
         m_widgetPtr     = w;
         _widget(w);
-        
-        // HACK (becase we know it's GLFW ATM)
-        WindowGLFW* w2  = static_cast<WindowGLFW*>(win);
-        GLFWwindow* gw  = w2 -> glfw();
-        m_pixels        = w2 -> framebuffer(READ);
-        try {
-            m_viz       = std::make_unique<Visualizer>(m_createInfo, gw, m_cleanup);
-        } 
-        catch(const std::exception& ex) {
-            tachyonCritical << ident() << " cannot create the visualizer.  " << ex.what();
-            throw;
-        }
-        catch(const std::error_code& ec){
-            tachyonCritical << ident() << " cannot create the visualizer.  " << ec.message();
-            throw;
-        }
-        
-        
-        if(m_createInfo.imgui || w->is_imgui()){
-            try {
-                m_imgui = std::make_unique<ViGui>(*m_viz);
-            }
-            catch(const std::exception& ex){
-                tachyonCritical << ident() << " cannot create imgui.  " << ex.what();
-            }
-            catch(const std::error_code& ec){
-                tachyonCritical << ident() << " cannot create imgui.  " << ec.message();
-                throw;
-            }
-        }
         
         ++s_count;
         tachyonInfo << "Viewer::Viewer(" << m_number << ") ID " << (uint64_t) id() << ", window=" 
@@ -665,6 +634,13 @@ namespace yq::tachyon {
             m_startup |= X::Failure;
             return ;
         }
+        
+        const Widget* wid   = frame->object((WidgetID) m_widget);
+        if(!wid){
+            viewerCritical << "Viewer: Unable to get widget, aborting the viewer";
+            m_startup |= X::Failure;
+            return ;
+        }
 
         Visualizer::CreateData      vcd{ m_createInfo };
         vcd.device      = rep.device();
@@ -686,19 +662,37 @@ namespace yq::tachyon {
         vcd.number      = (uint32_t) m_number;
 
         try {
-            std::unique_ptr<Visualizer> viz2    = std::make_unique<Visualizer>(vcd);
+            m_viz       = std::make_unique<Visualizer>(vcd);
         } 
+        catch(const std::exception& ex)
+        {
+            viewerCritical << "Viewer: unable to create visualizer: " << ex.what();
+            m_startup |= X::Failure;
+        }
         catch(const std::error_code& ec)
         {
             viewerCritical << "Viewer: unable to create visualizer: " << ec.message();
+            m_startup |= X::Failure;
         }
         
+        if(!m_viz)
+            return ;
 
-        viewerNotice << "Viewer: On Get Device activated... (" << vcd.device->gpu_name() << ")... switch over is TODO";
-        
-        //  DO STUFF... (visualizer, imgui)
-        
-        m_startup |= X::DevReply;   // done
+        if(m_createInfo.imgui || wid->is_imgui()){
+            try {
+                m_imgui = std::make_unique<ViGui>(*m_viz);
+            }
+            catch(const std::exception& ex){
+                m_startup |= X::Failure;
+                viewerCritical << "Viewer: cannot create imgui: " << ex.what();
+            }
+            catch(const std::error_code& ec){
+                m_startup |= X::Failure;
+                viewerCritical << "Viewer: cannot create imgui: " << ec.message();
+            }
+        }
+
+        m_startup |= X::DevReply;   
     }
     
     void    Viewer::on_hide_command(const HideCommand& cmd)
@@ -904,6 +898,10 @@ namespace yq::tachyon {
         if(!frame->snap((WindowID) m_window))
             return WAIT;
 
+        const WidgetSnap*  w    = frame->snap((WidgetID) m_widget);
+        if(!w)
+            return WAIT;
+
         if(!m_startup(X::SentDevRequest)){
             send(new GetDeviceRequest({.source=*this, .target=m_graphicsCard}), TARGET);
             m_startup |= X::SentDevRequest;
@@ -911,11 +909,6 @@ namespace yq::tachyon {
         }
         
         if(!m_startup(X::DevReply))
-            return WAIT;
-        
-        
-        const WidgetSnap*  w    = frame->snap((WidgetID) m_widget);
-        if(!w)
             return WAIT;
         
         if(!w->started)

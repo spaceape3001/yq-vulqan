@@ -148,7 +148,7 @@ add_library(${PROJECT_NAME} SHARED
     yv/ViImage.cpp
     yv/ViPipeline.cpp
     yv/ViPipelineLayout.cpp
-    yv/ViQueueManager.cpp
+    #yv/ViQueueManager.cpp
     yv/ViQueueTasker.cpp
     yv/ViRendered.cpp
     yv/ViRenderPass.cpp

@@ -39,7 +39,7 @@
 #include <yv/ViContext.hpp>
 #include <yv/ViImage.hpp>
 #include <yv/ViManager.hpp>
-#include <yv/ViQueueManager.hpp>
+//#include <yv/ViQueueManager.hpp>
 #include <yv/ViRendered.hpp>
 #include <yv/ViSampler.hpp>
 #include <yv/ViShader.hpp>
@@ -266,12 +266,12 @@ namespace yq::tachyon {
         poolInfo.flags                  = m_viz.command_pool_create_flags();
         
         if(m_viz.graphic_queue_valid()){
-            poolInfo.queueFamilyIndex   = m_viz.graphic_queue_family();
+            poolInfo.queueFamilyIndex   = m_viz.graphic_queue_family().index;
             if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_graphics) != VK_SUCCESS) 
                 throw create_error<"Failed to create a graphic command pool">();
         }
         if(m_viz.compute_queue_valid()){
-            poolInfo.queueFamilyIndex   = m_viz.compute_queue_family();
+            poolInfo.queueFamilyIndex   = m_viz.compute_queue_family().index;
             if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_compute) != VK_SUCCESS) 
                 throw create_error<"Failed to create a compute command pool">();
         }
@@ -297,16 +297,6 @@ namespace yq::tachyon {
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
 
-    Visualizer::Visualizer(const ViewerCreateInfo&vci, GLFWwindow*w, Cleanup& c)  : ViVisualizer(c)
-    {
-        m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
-        
-        std::error_code     ec  = init_visualizer(vci, w); // != std::error_code();
-        if(ec != std::error_code())
-            throw ec;
-            //throw VulqanException("Unable to initialize");
-    }
-    
     Visualizer::Visualizer(const CreateData& vcd) : ViVisualizer(vcd)
     {
         m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
@@ -318,11 +308,11 @@ namespace yq::tachyon {
     
     Visualizer::~Visualizer()
     {
-        kill_visualizer();
+        _kill();
     }
     
     
-
+#if 0
     std::error_code             Visualizer::_ctor(const ViewerCreateInfo&vci, GLFWwindow*w)
     {
         std::error_code ec;
@@ -411,36 +401,36 @@ namespace yq::tachyon {
 
         if(m_cleanup)
             m_cleanup->sweep();
-        if(m_device)
-            vkDeviceWaitIdle(m_device);
+        if(device())
+            vkDeviceWaitIdle(device());
 
         _9_pipeline_manager_kill();
 
         if(m_cleanup)
             m_cleanup->sweep();
-        if(m_device)
-            vkDeviceWaitIdle(m_device);
+        if(device())
+            vkDeviceWaitIdle(device());
 
         _8_swapchain_kill();
 
         if(m_cleanup)
             m_cleanup->sweep();
-        if(m_device)
-            vkDeviceWaitIdle(m_device);
+        if(device())
+            vkDeviceWaitIdle(device());
 
         _7_render_pass_kill();
 
         if(m_cleanup)
             m_cleanup->sweep();
-        if(m_device)
-            vkDeviceWaitIdle(m_device);
+        if(device())
+            vkDeviceWaitIdle(device());
 
         _6_manager_kill();
 
         if(m_cleanup)
             m_cleanup->sweep();
-        if(m_device)
-            vkDeviceWaitIdle(m_device);
+        if(device())
+            vkDeviceWaitIdle(device());
 
         _5_allocator_kill();
         _4_device_kill();
@@ -473,6 +463,7 @@ namespace yq::tachyon {
         _dtor();
         m_init  = false;
     }
+#endif
 
         ///////////////////////////
         
@@ -620,7 +611,7 @@ namespace yq::tachyon {
             snapshot.format = (VkFormat) (p->value());
         }
         
-        res = vkWaitForFences(m_device, 1, &f.m_fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
+        res = vkWaitForFences(device(), 1, &f.m_fence, VK_TRUE, kMaxWait);   // 100ms is 10Hz
         if(res == VK_TIMEOUT)
             return create_error<"Fence timeout">();
             
@@ -639,7 +630,7 @@ namespace yq::tachyon {
             return std::error_code();
         }
 
-        res    = vkAcquireNextImageKHR(m_device, m_swapchain->swapchain(), kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &m_frameImageIndex);
+        res    = vkAcquireNextImageKHR(device(), m_swapchain->swapchain(), kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &m_frameImageIndex);
         
         switch(res){
         case VK_TIMEOUT:
@@ -667,7 +658,7 @@ namespace yq::tachyon {
         if(fcn.prerecord)
             fcn.prerecord(u);
 
-        vkResetFences(m_device, 1, &f.m_fence);
+        vkResetFences(device(), 1, &f.m_fence);
         vkResetCommandBuffer(u.command_buffer, 0);
         
     
@@ -689,7 +680,7 @@ namespace yq::tachyon {
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores    = signalSemaphores;
 
-        if (vkQueueSubmit(m_graphicsQueue->queue(0), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
+        if (vkQueueSubmit(graphic_queue(), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
             return create_error<"Failed to submit draw command buffer">();
             
         VqPresentInfoKHR presentInfo;
@@ -702,7 +693,7 @@ namespace yq::tachyon {
         presentInfo.pSwapchains = swapchains;
         presentInfo.pImageIndices = &m_frameImageIndex;
         presentInfo.pResults = nullptr; // Optional
-        vkQueuePresentKHR(m_presentQueue->queue(0), &presentInfo);
+        vkQueuePresentKHR(present_queue(), &presentInfo);
         
         ++m_tick;
         return std::error_code();

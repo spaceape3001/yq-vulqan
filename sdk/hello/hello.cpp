@@ -271,7 +271,7 @@ int main(int argc, char* argv[])
     aci.view.resizable  = true;
     aci.view.size       = { 1920, 1080 };
     aci.view.clear      = { 0.f, 0.1f, 0.2f, 1.f };
-    aci.view.transfer   = OPTIONAL;
+    aci.vulkan.transfer   = OPTIONAL;
 
     #ifdef WANT_FRAME_INSPECTOR
     aci.view.imgui      = true;

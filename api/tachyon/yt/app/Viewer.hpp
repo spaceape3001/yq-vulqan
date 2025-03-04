@@ -342,9 +342,7 @@ namespace yq::tachyon {
         TypedID                         m_widget;
         Widget*                         m_widgetPtr = nullptr;  // temporary cheat
         TypedID                         m_window;
-        Window*                         m_windowPtr = nullptr;  // temporary cheat
         TypedID                         m_graphicsCard;
-        Size2I                          m_pixels    = {};
         bool                            m_zeroSize  = false;
 
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close

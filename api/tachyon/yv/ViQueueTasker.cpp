@@ -8,20 +8,11 @@
 #include <yt/errors.hpp>
 #include <yv/VqStructs.hpp>
 #include <yv/ViDevice.hpp>
-#include <yv/ViQueueManager.hpp>
 #include <yv/ViVisualizer.hpp>
 #include <utility>
 #include <exception>
 
 namespace yq::tachyon {
-    ViQueueTasker::ViQueueTasker(ViVisualizer&viz, const ViQueueManager& qm, uint32_t qn) : 
-        m_commandPool(viz.device(), { qm.family() }), 
-        m_commandBuffer(viz.device(), m_commandPool),
-        m_fence(viz.device()),
-        m_queue(qm.queue(qn))
-    {
-    }
-
     ViQueueTasker::ViQueueTasker(ViDevice& dev, ViQueueID qid) : 
         m_commandPool(dev.device(), qid.family ),
         m_commandBuffer(dev.device(), m_commandPool),

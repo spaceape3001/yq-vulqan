@@ -12,9 +12,23 @@
 #include <vk_mem_alloc.h>
 #include <tbb/spin_rw_mutex.h>
 #include <yt/keywords.hpp>
+#include <yt/typedef/raster.hpp>
 #include <yv/ViQueueType.hpp>
+#include <yv/typedef/vi_buffer.hpp>
+#include <yv/typedef/vi_buffer_manager.hpp>
+#include <yv/typedef/vi_image.hpp>
+#include <yv/typedef/vi_image_manager.hpp>
 #include <yv/typedef/vi_queue_id.hpp>
 #include <yv/typedef/vi_queue_tasker.hpp>
+#include <yv/typedef/vi_pipeline.hpp>
+#include <yv/typedef/vi_pipeline_layout.hpp>
+#include <yv/typedef/vi_pipeline_manager.hpp>
+#include <yv/typedef/vi_sampler.hpp>
+#include <yv/typedef/vi_sampler_manager.hpp>
+#include <yv/typedef/vi_shader.hpp>
+#include <yv/typedef/vi_shader_manager.hpp>
+#include <yv/typedef/vi_texture.hpp>
+#include <yv/typedef/vi_texture_manager.hpp>
 #include <map>
 
 namespace yq::tachyon {
@@ -59,36 +73,48 @@ namespace yq::tachyon {
         ViDevice(VkPhysicalDevice, const VulqanCreateInfo&);
         ~ViDevice();
         
-        void                cleanup(cleanup_fn&&);
-        void                cleanup(sweep_k);
-        
-        VkDevice            device() const { return m_device; }
-        void                destroy();
+        ViBufferCPtr                    buffer(uint64_t) const;
+        ViBufferCPtr                    buffer_create(const Buffer&);
+        void                            buffer_erase(uint64_t);
+        void                            buffer_erase(const Buffer&);
+        //ViBufferManager*                buffer_manager() const;
 
-        std::string_view    gpu_name() const;
+        void                            cleanup(cleanup_fn&&);
+        void                            cleanup(sweep_k);
+        
+        VkDevice                        device() const { return m_device; }
+        void                            destroy();
+
+        std::string_view                gpu_name() const;
 
             //! Returns the type of the GPU/physical device
         VkPhysicalDeviceType            gpu_type() const;
         
-        std::error_code     init(VkPhysicalDevice, const VulqanCreateInfo&);
-        
-        bool                valid() const;
-        
-        VmaAllocator        allocator() const { return m_allocator; }
-        
-        bool                is_queue_compute(ViQueueFamilyID) const;
-        bool                is_queue_graphic(ViQueueFamilyID) const;
-        bool                is_queue_optical(ViQueueFamilyID) const;
-        bool                is_queue_present_supported(ViQueueFamilyID, VkSurfaceKHR) const;
-        bool                is_queue_sparse_binding(ViQueueFamilyID familyIdx) const;
-        bool                is_queue_transfer(ViQueueFamilyID familyIdx) const;
-        bool                is_queue_video_decode(ViQueueFamilyID familyIdx) const;
-        bool                is_queue_video_encode(ViQueueFamilyID familyIdx) const;
+        //! Recommended Graphics Queue for tasks that aren't direct-display-related
+        ViQueueID                       graphics_queue(headless_k) const;
+        //! Recommended Graphics Queue for specified viewer
+        ViQueueID                       graphics_queue(uint32_t viewerId) const;
 
-        uint32_t            max_memory_allocation_count() const;
-        uint32_t            max_push_constants_size() const;
-        float               max_sampler_anisotropy() const;
-        uint32_t            max_viewports() const;
+        std::error_code                 init(VkPhysicalDevice, const VulqanCreateInfo&);
+        
+        bool                            valid() const;
+        
+        VmaAllocator                    allocator() const { return m_allocator; }
+        
+        bool                            is_queue_compute(ViQueueFamilyID) const;
+        bool                            is_queue_graphic(ViQueueFamilyID) const;
+        bool                            is_queue_optical(ViQueueFamilyID) const;
+        bool                            is_queue_present_supported(ViQueueFamilyID, VkSurfaceKHR) const;
+        bool                            is_queue_sparse_binding(ViQueueFamilyID familyIdx) const;
+        bool                            is_queue_transfer(ViQueueFamilyID familyIdx) const;
+        bool                            is_queue_valid(ViQueueID) const;
+        bool                            is_queue_video_decode(ViQueueFamilyID familyIdx) const;
+        bool                            is_queue_video_encode(ViQueueFamilyID familyIdx) const;
+
+        uint32_t                        max_memory_allocation_count() const;
+        uint32_t                        max_push_constants_size() const;
+        float                           max_sampler_anisotropy() const;
+        uint32_t                        max_viewports() const;
 
         //! TRUE if multiple views of the render-pass is enabled
         bool                            multiview_enabled() const;
@@ -108,33 +134,28 @@ namespace yq::tachyon {
         */
         uint32_t                        multiview_max_view_count() const;
 
-        VkPhysicalDevice    physical() const { return m_physical; }
+        VkPhysicalDevice                physical() const { return m_physical; }
 
-        VkQueue             queue(const ViQueueID&) const;
-        VkQueue             queue(ViQueueFamilyID familyIdx, uint32_t subIdx) const;
+        VkQueue                         queue(const ViQueueID&) const;
+        VkQueue                         queue(ViQueueFamilyID familyIdx, uint32_t subIdx) const;
 
-        uint32_t            queue_count(ViQueueFamilyID familyIdx) const;
+        uint32_t                        queue_count(ViQueueFamilyID familyIdx) const;
 
-        uint32_t            queue_family_count() const;
-        VkQueueFlags        queue_family_flags(ViQueueFamilyID familyIdx) const;
+        uint32_t                        queue_family_count() const;
+        VkQueueFlags                    queue_family_flags(ViQueueFamilyID familyIdx) const;
         
         //! Queue family for type (note, UINT32_MAX is invalid)
-        ViQueueFamilyID     queue_family(ViQueueType) const;
+        ViQueueFamilyID                 queue_family(ViQueueType) const;
         
         
         
-        std::error_code     queue_task(ViQueueID, queue_tasker_fn&&);
-        std::error_code     queue_task(ViQueueID, uint64_t timeout, queue_tasker_fn&&);
-
-        ViQueueTaskerPtr    queue_tasker(ViQueueID);
+        std::error_code                 queue_task(ViQueueID, queue_tasker_fn&&);
+        std::error_code                 queue_task(ViQueueID, uint64_t timeout, queue_tasker_fn&&);
+        ViQueueTaskerPtr                queue_tasker(ViQueueID);
         
-        bool                is_queue_valid(ViQueueID) const;
         
-        //! Recommended Graphics Queue for tasks that aren't direct-display-related
-        ViQueueID           graphics_queue(headless_k) const;
-        ViQueueID           graphics_queue(uint32_t viewerId) const;
         
-        std::error_code     wait_idle() const;
+        std::error_code                 wait_idle() const;
         
     private:
         struct QueueFamily;
@@ -143,6 +164,7 @@ namespace yq::tachyon {
         using lock_t    = mutex_t::scoped_lock;
     
         VmaAllocator                            m_allocator                 = nullptr;
+        ViBufferManagerUPtr                     m_buffers;
         Cleanup                                 m_cleanup;
         VkDevice                                m_device                    = nullptr;
         VkPhysicalDeviceFeatures                m_gpuFeatures;

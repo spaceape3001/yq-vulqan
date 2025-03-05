@@ -285,7 +285,6 @@ namespace yq::tachyon {
     std::error_code     ViVisualizer::_6_manager_init()
     {
         m_shaders           = std::make_unique<ViShaderManager>(*this);
-        m_buffers           = std::make_unique<ViBufferManager>(*this);
         m_images            = std::make_unique<ViImageManager>(*this);
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
         m_textures          = std::make_unique<ViTextureManager>(*this);
@@ -300,9 +299,7 @@ namespace yq::tachyon {
         m_pipelineLayouts   = {};
         m_textures          = {};
         m_samplers          = {};
-        //m_queues            = {};
         m_shaders           = {};
-        m_buffers           = {};
         m_images            = {};
         
         vizDebug << "ViVisualizer: Destroyed the managers";
@@ -480,34 +477,36 @@ namespace yq::tachyon {
 
     ViBufferCPtr ViVisualizer::buffer(uint64_t i) const
     {
-        if(!m_buffers)
+        if(!m_device)
             return {};
-        return m_buffers->get(i);
+        return m_device -> buffer(i);
     }
 
     ViBufferCPtr  ViVisualizer::buffer_create(const Buffer& buf)
     {
-        if(!m_buffers)
+        if(!m_device)
             return {};
-        return m_buffers->create(buf);
+        return m_device -> buffer_create(buf);
     }
     
     void  ViVisualizer::buffer_erase(uint64_t i)
     {
-        if(m_buffers){
-            m_buffers -> erase(i);
-        }
+        if(m_device)
+            m_device -> buffer_erase(i);
     }
     
     void  ViVisualizer::buffer_erase(const Buffer& buf)
     {
-        buffer_erase(buf.id());
+        if(m_device)
+            m_device -> buffer_erase(buf.id());
     }
 
+    #if 0
     ViBufferManager* ViVisualizer::buffer_manager() const 
     { 
         return m_buffers.get(); 
     }
+    #endif
 
     void              ViVisualizer::cleanup(cleanup_fn&& fn)
     {

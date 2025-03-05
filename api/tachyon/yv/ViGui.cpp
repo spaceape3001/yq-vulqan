@@ -327,7 +327,7 @@ namespace yq::tachyon {
             m_index.capacity.bytes     = cb;
             m_index.capacity.count     = cb / sizeof(ImDrawIdx);
             
-            m_index.buffer     = new ViBuffer(*m_viz, cb, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
+            m_index.buffer     = new ViBuffer(m_viz->device(REF), cb, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
             if(!m_index.buffer -> valid()){
                 vizWarning << "ViGui is unable to allocate index buffer!  (size demanded " << cb << ")";
                 return false;
@@ -395,7 +395,7 @@ namespace yq::tachyon {
             m_vertex.capacity.count     = cb / sizeof(ImDrawVert);
             
         
-            m_vertex.buffer     = new ViBuffer(*m_viz, cb, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
+            m_vertex.buffer     = new ViBuffer(m_viz->device(REF), cb, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
             if(!m_vertex.buffer -> valid()){
                 vizWarning << "ViGui is unable to allocate vertex buffer! (size demanded " << cb << ")";
                 return false;

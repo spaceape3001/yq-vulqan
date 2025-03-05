@@ -11,7 +11,7 @@
 #include <yt/logging.hpp>
 #include <yt/gfx/Buffer.hpp>
 #include <yv/VqStructs.hpp>
-#include <yv/ViVisualizer.hpp>
+#include <yv/ViDevice.hpp>
 
 namespace yq::tachyon {
     namespace errors {
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         kill();
     }
 
-    ViBuffer::ViBuffer(ViVisualizer&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
+    ViBuffer::ViBuffer(ViDevice&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
     {
         if(viz.device() && cb){
             if(_allocate(viz, cb, buf, vmu) != std::error_code()){
@@ -43,7 +43,7 @@ namespace yq::tachyon {
         }
     }
     
-    ViBuffer::ViBuffer(ViVisualizer&viz, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts)
+    ViBuffer::ViBuffer(ViDevice&viz, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts)
     {
         if(viz.device() && v.bytes()){
             if(_create(viz, v, buf, opts) != std::error_code()){
@@ -53,12 +53,12 @@ namespace yq::tachyon {
         }
     }
     
-    ViBuffer::ViBuffer(ViVisualizer&viz, const Buffer& v, const ViBufferOptions& opts) : 
+    ViBuffer::ViBuffer(ViDevice&viz, const Buffer& v, const ViBufferOptions& opts) : 
         ViBuffer(viz, v.memory, v.usage.value(), opts)
     {
     }
 
-    std::error_code ViBuffer::_allocate(ViVisualizer&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
+    std::error_code ViBuffer::_allocate(ViDevice&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
     {
         VqBufferCreateInfo  bufferInfo;
         bufferInfo.size         = (uint32_t) cb;
@@ -79,7 +79,7 @@ namespace yq::tachyon {
         return std::error_code();
     }
     
-    std::error_code ViBuffer::_create(ViVisualizer&viz, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts)
+    std::error_code ViBuffer::_create(ViDevice&viz, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts)
     {
         std::error_code     ec  = _allocate(viz, v.bytes(), buf, opts.usage);
         if(ec)
@@ -95,7 +95,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    std::error_code ViBuffer::_create(ViVisualizer&viz, const Buffer& v, const ViBufferOptions& opts)
+    std::error_code ViBuffer::_create(ViDevice&viz, const Buffer& v, const ViBufferOptions& opts)
     {
         return _create(viz, v.memory, v.usage.value(), opts);
     }
@@ -120,7 +120,7 @@ namespace yq::tachyon {
         m_data          = nullptr;
     }
 
-    std::error_code     ViBuffer::allocate(ViVisualizer&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
+    std::error_code     ViBuffer::allocate(ViDevice&viz, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu)
     {
         if(m_viz || m_buffer || m_allocation)
             return errors::buffer_existing();
@@ -142,7 +142,7 @@ namespace yq::tachyon {
         return m_viz ? (m_allocation && m_buffer && m_viz -> device()) : (!m_allocation && !m_buffer);
     }
 
-    std::error_code     ViBuffer::create(ViVisualizer&viz, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions&opts)
+    std::error_code     ViBuffer::create(ViDevice&viz, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions&opts)
     {
         if(m_viz || m_buffer || m_allocation)
             return errors::buffer_existing();
@@ -159,7 +159,7 @@ namespace yq::tachyon {
         return ec;
     }
     
-    std::error_code     ViBuffer::create(ViVisualizer&viz, const Buffer& v, const ViBufferOptions&opts)
+    std::error_code     ViBuffer::create(ViDevice&viz, const Buffer& v, const ViBufferOptions&opts)
     {
         if(m_viz || m_buffer || m_allocation)
             return errors::buffer_existing();

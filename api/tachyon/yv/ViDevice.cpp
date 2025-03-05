@@ -6,11 +6,14 @@
 
 #include <yv/ViDevice.hpp>
 #include <yv/VqUtils.hpp>
+#include <yv/ViManager.hpp>
+#include <yv/ViBuffer.hpp>
 #include <yv/ViQueueTasker.hpp>
 #include <yv/VulqanCreateInfo.hpp>
 #include <yv/VulqanManager.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
+#include <yt/gfx/Buffer.hpp>
 
 namespace yq::tachyon {
 
@@ -411,6 +414,13 @@ namespace yq::tachyon {
         }
         
         // --------------
+        //  MANAGERS
+        
+        m_buffers           = std::make_unique<ViBufferManager>(*this);
+        
+
+
+        // --------------
         // EVENTUALLY DO MORE....
         
         return {};
@@ -418,6 +428,8 @@ namespace yq::tachyon {
 
     void            ViDevice::_kill()
     {
+        m_buffers   = {};
+    
         cleanup(SWEEP);
         if(m_allocator){
             vmaDestroyAllocator(m_allocator);
@@ -430,6 +442,41 @@ namespace yq::tachyon {
         m_physical      = nullptr;
     }
         
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ViBufferCPtr ViDevice::buffer(uint64_t i) const
+    {
+        if(!m_buffers)
+            return {};
+        return m_buffers->get(i);
+    }
+
+    ViBufferCPtr  ViDevice::buffer_create(const Buffer& buf)
+    {
+        if(!m_buffers)
+            return {};
+        return m_buffers->create(buf);
+    }
+    
+    void  ViDevice::buffer_erase(uint64_t i)
+    {
+        if(m_buffers){
+            m_buffers -> erase(i);
+        }
+    }
+    
+    void  ViDevice::buffer_erase(const Buffer& buf)
+    {
+        buffer_erase(buf.id());
+    }
+
+/*
+    ViBufferManager* ViDevice::buffer_manager() const 
+    { 
+        return m_buffers.get(); 
+    }
+*/
+
     void            ViDevice::cleanup(cleanup_fn&& fn)
     {
         m_cleanup.add(std::move(fn));

@@ -73,7 +73,7 @@ namespace yq::tachyon {
         
 
         size_t      bytes       = bpp * cnt;
-        ViBufferPtr      local = new ViBuffer(viz, bytes, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VMA_MEMORY_USAGE_GPU_TO_CPU);
+        ViBufferPtr      local = new ViBuffer(viz.device(REF), bytes, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VMA_MEMORY_USAGE_GPU_TO_CPU);
         if(!local->valid())
             return errors::insufficient_gpu_memory();
         
@@ -557,7 +557,7 @@ namespace yq::tachyon {
 
     std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img, const Param& p)
     {
-        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_TO_GPU});
+        ViBufferPtr      local = new ViBuffer(viz.device(REF), img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_TO_GPU});
         if(!local->valid())
             return errors::insufficient_gpu_memory();
 

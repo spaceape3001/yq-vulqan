@@ -98,7 +98,6 @@ namespace yq::tachyon {
         ViBufferCPtr                    buffer_create(const Buffer&);
         void                            buffer_erase(uint64_t);
         void                            buffer_erase(const Buffer&);
-        ViBufferManager*                buffer_manager() const;
         
         void                            cleanup(cleanup_fn&&);
         void                            cleanup(sweep_k);
@@ -116,7 +115,7 @@ namespace yq::tachyon {
         //! Vulkan (logical) device
         VkDevice                        device() const;
         
-        const ViDevicePtr&              device(ref_k) const { return m_device; }  // temporary hack until we get everybody over....
+        ViDevice&                       device(ref_k) { return *m_device; }  // temporary hack until we get everybody over....
         
         Expect<VkFormat>                find_depth_format() const;
         Expect<VkFormat>                find_supported_format(std::span<const VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
@@ -304,7 +303,6 @@ namespace yq::tachyon {
 
         mutable tbb::spin_rw_mutex          m_mutex;
         
-        ViBufferManagerUPtr                 m_buffers;
         Guarded<VkClearValue>               m_clearValue;
         ViQueueID                           m_computeQueue;
         ViDevicePtr                         m_device;

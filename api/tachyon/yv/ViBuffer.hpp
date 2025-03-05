@@ -16,7 +16,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class ViVisualizer;
+    class ViDevice;
     class Buffer;
     
     struct ViBufferOptions {
@@ -28,9 +28,9 @@ namespace yq::tachyon {
     class ViBuffer : public RefCount {
     public:
         ViBuffer();
-        ViBuffer(ViVisualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
-        ViBuffer(ViVisualizer&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
-        ViBuffer(ViVisualizer&, const Buffer& v, const ViBufferOptions& opts = {});
+        ViBuffer(ViDevice&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
+        ViBuffer(ViDevice&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
+        ViBuffer(ViDevice&, const Buffer& v, const ViBufferOptions& opts = {});
         ~ViBuffer();
         
         operator VkBuffer() const { return m_buffer; }
@@ -43,14 +43,14 @@ namespace yq::tachyon {
         bool                mapped() const { return static_cast<bool>(m_data); }
         size_t              size() const { return m_size; }
         bool                valid() const;
-        ViVisualizer*       visualizer() const { return m_viz; }
+        ViDevice*       visualizer() const { return m_viz; }
         
         //! Count from the original buffer... (zero if unspecified)
         size_t              count() const { return m_count; }
 
-        std::error_code     allocate(ViVisualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
-        std::error_code     create(ViVisualizer&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
-        std::error_code     create(ViVisualizer&, const Buffer& v, const ViBufferOptions& opts = {});
+        std::error_code     allocate(ViDevice&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
+        std::error_code     create(ViDevice&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
+        std::error_code     create(ViDevice&, const Buffer& v, const ViBufferOptions& opts = {});
         void                kill();
         std::error_code     map();
         std::error_code     unmap();
@@ -62,13 +62,13 @@ namespace yq::tachyon {
         ViBuffer& operator=(const ViBuffer&) = delete;
         ViBuffer& operator=(ViBuffer&&) = delete;
     
-        std::error_code _allocate(ViVisualizer&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
-        std::error_code _create(ViVisualizer&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
-        std::error_code _create(ViVisualizer&, const Buffer& v, const ViBufferOptions& opts = {});
+        std::error_code _allocate(ViDevice&, size_t cb, VkBufferUsageFlags buf, VmaMemoryUsage vmu = VMA_MEMORY_USAGE_AUTO);
+        std::error_code _create(ViDevice&, const Memory& v, VkBufferUsageFlags buf, const ViBufferOptions& opts = {});
+        std::error_code _create(ViDevice&, const Buffer& v, const ViBufferOptions& opts = {});
         void            _kill();
         void            _wipe();
     
-        ViVisualizer*   m_viz        = nullptr;
+        ViDevice*   m_viz        = nullptr;
         VkBuffer        m_buffer     = nullptr;
         VmaAllocation   m_allocation = nullptr;
         void*           m_data       = nullptr;

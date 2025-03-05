@@ -11,6 +11,7 @@
 #include <yv/ViDevice.hpp>
 #include <yv/ViImage.hpp>
 #include <yv/ViManager.hpp>
+#include <yv/ViPipelineLayout.hpp>
 #include <yv/ViQueueTasker.hpp>
 #include <yv/ViSampler.hpp>
 #include <yv/ViShader.hpp>
@@ -21,6 +22,7 @@
 #include <yv/VqUtils.hpp>
 
 #include <yt/gfx/Buffer.hpp>
+#include <yt/gfx/Pipeline.hpp>
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/Sampler.hpp>
 #include <yt/gfx/Shader.hpp>
@@ -433,7 +435,7 @@ namespace yq::tachyon {
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
         m_images            = std::make_unique<ViImageManager>(*this);
         m_textures          = std::make_unique<ViTextureManager>(*this);
-
+        m_pipelineLayouts   = std::make_unique<ViPipelineLayoutManager>(*this);
 
         // --------------
         // EVENTUALLY DO MORE....
@@ -445,6 +447,7 @@ namespace yq::tachyon {
 
     void            ViDevice::_kill()
     {
+        m_pipelineLayouts   = {};
         m_textures          = {};
         m_samplers          = {};
         m_images            = {};
@@ -693,6 +696,44 @@ namespace yq::tachyon {
         return m_multiview.maxViewCount;
     }
 
+
+    ViPipelineLayoutCPtr            ViDevice::pipeline_layout(uint64_t i) const
+    {
+        if(!m_pipelineLayouts)
+            return {};
+        return m_pipelineLayouts -> get(i);
+    }
+    
+    ViPipelineLayoutCPtr            ViDevice::pipeline_layout_create(const Pipeline* pipe)
+    {
+        if(!m_pipelineLayouts)
+            return {};
+        if(!pipe)
+            return {};
+        return m_pipelineLayouts -> create(pipe);
+    }
+    
+    void                            ViDevice::pipeline_layout_erase(uint64_t i)
+    {
+        if(m_pipelineLayouts){
+            m_pipelineLayouts -> erase(i);
+        }
+    }
+    
+    void                            ViDevice::pipeline_layout_erase(const Pipeline* pipe)
+    {
+        if(pipe){
+            pipeline_layout_erase(pipe->id());
+        }
+    }
+    
+    #if 0
+    ViPipelineLayoutManager*        ViDevice::pipeline_layout_manager() const
+    {
+        return m_pipelineLayouts.get();
+    }
+    #endif
+    
     VkQueue         ViDevice::queue(ViQueueFamilyID family, uint32_t subIdx) const
     {
         const QueueFamily*  qf  = _family(family);

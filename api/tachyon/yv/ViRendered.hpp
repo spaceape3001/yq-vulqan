@@ -86,6 +86,7 @@ namespace yq::tachyon {
         ViPipelineLayoutCPtr    m_layout;
         ViPipelineCPtr          m_pipeline;
         Flags<S>                m_status = {};
+        ViVisualizer*           m_viz = nullptr;
 
         std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts);
         void            _kill();

@@ -142,6 +142,12 @@ namespace yq::tachyon {
         uint32_t                        multiview_max_view_count() const;
 
         VkPhysicalDevice                physical() const { return m_physical; }
+        
+        ViPipelineLayoutCPtr            pipeline_layout(uint64_t) const;
+        ViPipelineLayoutCPtr            pipeline_layout_create(const Pipeline*);
+        void                            pipeline_layout_erase(uint64_t);
+        void                            pipeline_layout_erase(const Pipeline*);
+        //ViPipelineLayoutManager*        pipeline_layout_manager() const;
 
         VkQueue                         queue(const ViQueueID&) const;
         VkQueue                         queue(ViQueueFamilyID familyIdx, uint32_t subIdx) const;
@@ -208,6 +214,7 @@ namespace yq::tachyon {
         ViQueueID                               m_headlessQueue;
         ViImageManagerUPtr                      m_images;
         VkPhysicalDevice                        m_physical                  = nullptr;
+        ViPipelineLayoutManagerUPtr             m_pipelineLayouts;
         std::vector<QueueFamily>                m_queueFamilies;
         std::map<ViQueueType,ViQueueFamilyID>   m_queueType2Family;
         ViSamplerManagerUPtr                    m_samplers;

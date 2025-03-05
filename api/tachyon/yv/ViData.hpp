@@ -23,10 +23,10 @@
 
 namespace yq::tachyon {
 
-    class ViVisualizer;
     struct ViBufferObject;
     struct ViTextureObject;
     struct RenderedSnap;
+    class ViDevice;
 
     struct ViDataOptions {
         enum class F : uint8_t {
@@ -89,14 +89,12 @@ namespace yq::tachyon {
         uint32_t                vertex_count() const;
         uint32_t                vertex_max_size() const;
         
-        ViVisualizer*           visualizer() const { return m_viz; }
-        
     protected:
 
         ViData();
         ~ViData();
 
-        std::error_code     _init_data(ViVisualizer&, const Pipeline*, const ViDataOptions& options);
+        std::error_code     _init_data(ViDevice&, const Pipeline*, const ViDataOptions& options);
         std::error_code     _init_data(const ViData&, const ViDataOptions& options);
         void                _kill_data();
         
@@ -199,7 +197,7 @@ namespace yq::tachyon {
         std::vector<VkExtent3D>             m_extents;          // PER TEXTURE
 
     protected:
-        ViVisualizer*       m_viz               = nullptr;
+        ViDevice*           m_device            = nullptr;
         const Pipeline*     m_config            = nullptr;
         std::vector<VkDescriptorSetLayoutBinding>   m_descriptorSetLayoutBindingVector;
     

@@ -280,11 +280,9 @@ namespace yq::tachyon {
         
         vizDebug << "ViVisualizer: Destroyed the allocator";
     }
-#endif
     
     std::error_code     ViVisualizer::_6_manager_init()
     {
-        m_pipelineLayouts   = std::make_unique<ViPipelineLayoutManager>(*this);
         
         vizDebug << "ViVisualizer: Created the managers";
         return {};
@@ -292,10 +290,10 @@ namespace yq::tachyon {
     
     void                ViVisualizer::_6_manager_kill()
     {
-        m_pipelineLayouts   = {};
         
         vizDebug << "ViVisualizer: Destroyed the managers";
     }
+#endif
 
     std::error_code     ViVisualizer::_7_render_pass_create()
     {
@@ -424,10 +422,6 @@ namespace yq::tachyon {
             m_flags |= X::VideoEnc;
             
         std::error_code     ec;
-        ec  = _6_manager_init();
-        if(ec != std::error_code())
-            return ec;
-            
 
         ec = _7_render_pass_create();
         if(ec != std::error_code())
@@ -452,8 +446,6 @@ namespace yq::tachyon {
         _8_swapchain_kill();
         m_device->wait_idle();
         _7_render_pass_kill();
-        m_device->wait_idle();
-        _6_manager_kill();
         m_device->wait_idle();
     }
 
@@ -757,39 +749,30 @@ namespace yq::tachyon {
 
     ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout(uint64_t i) const
     {
-        if(!m_pipelineLayouts)
+        if(!m_device)
             return {};
-        return m_pipelineLayouts -> get(i);
+        return m_device->pipeline_layout(i);
     }
     
     ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout_create(const Pipeline* pipe)
     {
-        if(!m_pipelineLayouts)
+        if(!m_device)
             return {};
-        if(!pipe)
-            return {};
-        return m_pipelineLayouts -> create(pipe);
+        return m_device->pipeline_layout_create(pipe);
     }
     
     void                            ViVisualizer::pipeline_layout_erase(uint64_t i)
     {
-        if(m_pipelineLayouts){
-            m_pipelineLayouts -> erase(i);
-        }
+        if(m_device)
+            m_device -> pipeline_layout_erase(i);
     }
     
     void                            ViVisualizer::pipeline_layout_erase(const Pipeline* pipe)
     {
-        if(pipe){
-            pipeline_layout_erase(pipe->id());
-        }
+        if(pipe && m_device)
+            m_device -> pipeline_layout_erase(pipe->id());
     }
     
-    ViPipelineLayoutManager*        ViVisualizer::pipeline_layout_manager() const
-    {
-        return m_pipelineLayouts.get();
-    }
-
     PresentMode  ViVisualizer::present_mode() const
     {
         return m_presentMode;

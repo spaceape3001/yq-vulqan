@@ -185,7 +185,6 @@ namespace yq::tachyon {
         ViPipelineLayoutCPtr            pipeline_layout_create(const Pipeline*);
         void                            pipeline_layout_erase(uint64_t);
         void                            pipeline_layout_erase(const Pipeline*);
-        ViPipelineLayoutManager*        pipeline_layout_manager() const;
 
         PresentMode                     present_mode() const;
         const std::set<PresentMode>&    present_modes_available() const;
@@ -304,7 +303,6 @@ namespace yq::tachyon {
         Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;
         ViQueueID                           m_graphicsQueue;
-        ViPipelineLayoutManagerUPtr         m_pipelineLayouts;
         ViPipelineManagerUPtr               m_pipelines;        // temporary until relocated
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;

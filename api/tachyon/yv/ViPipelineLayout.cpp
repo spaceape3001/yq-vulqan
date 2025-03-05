@@ -14,9 +14,10 @@
 #include <yt/gfx/Shader.hpp>
 #include <yv/VqEnums.hpp>
 #include <yv/VqStructs.hpp>
+#include <yv/ViDevice.hpp>
 #include <yv/ViLogging.hpp>
 #include <yv/ViShader.hpp>
-#include <yv/ViVisualizer.hpp>
+#include <yv/ViDevice.hpp>
 
 #include <yq/text/format.hpp>
 
@@ -34,7 +35,7 @@ namespace yq::tachyon {
     {
     }
     
-    ViPipelineLayout::ViPipelineLayout(ViVisualizer& viz, const Pipeline* cfg, const ViPipelineLayoutOptions& opts)
+    ViPipelineLayout::ViPipelineLayout(ViDevice& viz, const Pipeline* cfg, const ViPipelineLayoutOptions& opts)
     {
         if(viz.device() && cfg){
             std::error_code ec  = _init(viz, cfg, opts);
@@ -67,7 +68,7 @@ namespace yq::tachyon {
                 return false;
             }
             
-            ViShaderCPtr    xvs = m_viz -> shader_create(*sh);
+            ViShaderCPtr    xvs = m_device -> shader_create(*sh);
             if(!xvs || !xvs->valid()){
                 vizWarning << "Unable to load shader number " << (m_shaders.size()+1) << " on this pipeline layout into vulkan ";
                 return false;
@@ -94,7 +95,7 @@ namespace yq::tachyon {
                     return false;
                 }
                 
-                ViShaderCPtr    xvs = m_viz -> shader_create(*sh);
+                ViShaderCPtr    xvs = m_device -> shader_create(*sh);
                 if(!xvs || !xvs->valid()){
                     vizWarning << "Unable to load shader on this pipeline layout into vulkan ";
                     return false;
@@ -117,11 +118,11 @@ namespace yq::tachyon {
         return true;
     }
     
-    std::error_code ViPipelineLayout::_init(ViVisualizer&viz, const Pipeline* cfg, const ViPipelineLayoutOptions& opts)
+    std::error_code ViPipelineLayout::_init(ViDevice&viz, const Pipeline* cfg, const ViPipelineLayoutOptions& opts)
     {
         VqPipelineLayoutCreateInfo  pipelineLayoutInfo;
 
-        m_viz       = &viz;
+        m_device       = &viz;
         m_config    = cfg;
         
         // First, the variations
@@ -220,8 +221,8 @@ namespace yq::tachyon {
     
     void  ViPipelineLayout::_kill()
     {
-        if(m_viz && m_viz->device() && m_pipelineLayout){
-            vkDestroyPipelineLayout(m_viz->device(), m_pipelineLayout, nullptr);
+        if(m_device && m_device->device() && m_pipelineLayout){
+            vkDestroyPipelineLayout(m_device->device(), m_pipelineLayout, nullptr);
         }
         
         m_pipelineLayout = nullptr;
@@ -236,13 +237,13 @@ namespace yq::tachyon {
         m_shaderMask        = 0;
         m_vertexCreateInfo  = {};
         m_config            = {};
-        m_viz               = nullptr;
+        m_device               = nullptr;
     }
     
 
-    std::error_code ViPipelineLayout::init(ViVisualizer& viz, const Pipeline* cfg, const ViPipelineLayoutOptions& opts)
+    std::error_code ViPipelineLayout::init(ViDevice& viz, const Pipeline* cfg, const ViPipelineLayoutOptions& opts)
     {
-        if(m_viz){
+        if(m_device){
             if(!consistent()){
                 return errors::pipeline_layout_bad_state();
             }
@@ -267,7 +268,7 @@ namespace yq::tachyon {
     
     bool  ViPipelineLayout::consistent() const
     {
-        return m_viz ? (m_viz->device() && m_config && m_pipelineLayout) : (!m_config && !m_pipelineLayout);
+        return m_device ? (m_device->device() && m_config && m_pipelineLayout) : (!m_config && !m_pipelineLayout);
     }
     
     bool  ViPipelineLayout::push_enabled() const
@@ -304,7 +305,7 @@ namespace yq::tachyon {
 
     bool  ViPipelineLayout::valid() const
     {
-        return m_viz && m_viz->device() && m_config && m_pipelineLayout;
+        return m_device && m_device->device() && m_config && m_pipelineLayout;
     }
 
 }

@@ -24,7 +24,7 @@ namespace yq::tachyon {
     using ViPipelineManagerUPtr = std::unique_ptr<ViPipelineManager>;
     using ViPipelineManagerSPtr = std::shared_ptr<ViPipelineManager>;
 
-    template <typename V, typename A, typename ... Args> class ViManager;
-    using ViPipelineLayoutManager       = ViManager<const ViPipelineLayout, const Pipeline*>;
+    template <typename V, typename A, typename ... Args> class ViManager2;
+    using ViPipelineLayoutManager       = ViManager2<const ViPipelineLayout, const Pipeline*>;
     using ViPipelineLayoutManagerUPtr   = std::unique_ptr<ViPipelineLayoutManager>;
 }

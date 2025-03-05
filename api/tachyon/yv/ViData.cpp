@@ -13,6 +13,7 @@
 #include <yt/scene/RenderedData.hpp>
 #include <yv/VqStructs.hpp>
 #include <yv/ViBuffer.hpp>
+#include <yv/ViDevice.hpp>
 #include <yv/ViImage.hpp>
 #include <yv/ViLogging.hpp>
 #include <yv/ViTexture.hpp>
@@ -161,7 +162,7 @@ namespace yq::tachyon {
         layoutInfo.bindingCount = m_descriptorSetLayoutBindingVector.size();
         layoutInfo.pBindings    = m_descriptorSetLayoutBindingVector.data();
         layoutInfo.flags        = 0;
-        VkResult    res = vkCreateDescriptorSetLayout(m_viz->device(), &layoutInfo, nullptr, &m_descriptorLayout);
+        VkResult    res = vkCreateDescriptorSetLayout(m_device->device(), &layoutInfo, nullptr, &m_descriptorLayout);
         if(res != VK_SUCCESS){
             vizWarning << "Unable to create a descriptor set layout.  VkResult " << (int32_t) res;
             return false;
@@ -218,7 +219,7 @@ namespace yq::tachyon {
         allocInfo.descriptorPool        = opts.pool;
         allocInfo.descriptorSetCount    = 1;
         allocInfo.pSetLayouts           = &opts.layout;
-        VkResult    res = vkAllocateDescriptorSets(m_viz->device(), &allocInfo, m_descriptors.data());
+        VkResult    res = vkAllocateDescriptorSets(m_device->device(), &allocInfo, m_descriptors.data());
         if(res != VK_SUCCESS){
             vizWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
             return false;
@@ -490,9 +491,9 @@ namespace yq::tachyon {
         return success;
     }
 
-    std::error_code     ViData::_init_data(ViVisualizer&viz, const Pipeline* pipe, const ViDataOptions& opts)
+    std::error_code     ViData::_init_data(ViDevice&viz, const Pipeline* pipe, const ViDataOptions& opts)
     {
-        m_viz               = &viz;
+        m_device            = &viz;
         m_config            = pipe;
         m_object            = opts.object;
         if(opts.flags(ViDataOptions::F::StaticLayout)){
@@ -629,7 +630,7 @@ namespace yq::tachyon {
 
     std::error_code    ViData::_init_data(const ViData&vi, const ViDataOptions& opts)
     {
-        m_viz               = vi.m_viz;
+        m_device            = vi.m_device;
         m_config            = vi.m_config;
         m_object            = opts.object;
         if(m_object || opts.snap){
@@ -676,12 +677,12 @@ namespace yq::tachyon {
     
     void                ViData::_kill_data()
     {
-        if(m_viz && m_viz->device()){
+        if(m_device && m_device->device()){
             if(m_status(S::DescSets) && m_descriptorPool && !m_descriptors.empty()){
-                vkFreeDescriptorSets(m_viz->device(), m_descriptorPool, m_descriptors.size(), m_descriptors.data());
+                vkFreeDescriptorSets(m_device->device(), m_descriptorPool, m_descriptors.size(), m_descriptors.data());
             }
             if(m_status(S::DescLayout) && m_descriptorLayout){
-                vkDestroyDescriptorSetLayout(m_viz->device(), m_descriptorLayout, nullptr);
+                vkDestroyDescriptorSetLayout(m_device->device(), m_descriptorLayout, nullptr);
             }
         }
         
@@ -755,12 +756,12 @@ namespace yq::tachyon {
         if(m_dispatch.empty())
             return;
         
-        vkUpdateDescriptorSets(m_viz->device(), m_dispatch.size(), m_dispatch.data(), 0, nullptr);
+        vkUpdateDescriptorSets(m_device->device(), m_dispatch.size(), m_dispatch.data(), 0, nullptr);
     }
 
     bool    ViData::_set(BB& bb, uint32_t i, const Buffer& buf)
     {
-        return _set(bb, i, m_viz->buffer_create(buf), buf.id());
+        return _set(bb, i, m_device->buffer_create(buf), buf.id());
     }
 
     bool    ViData::_set(BB& bb, uint32_t i, const ViBufferCPtr& x, uint64_t id)
@@ -781,7 +782,7 @@ namespace yq::tachyon {
 
     bool    ViData::_set(TB&tb, uint32_t i, const Texture& tex)
     {
-        return _set(tb, i, m_viz->texture_create(tex), tex.id());
+        return _set(tb, i, m_device->texture_create(tex), tex.id());
     }
     
     bool    ViData::_set(TB&tb, uint32_t i, const ViTextureCPtr&x, uint64_t id)

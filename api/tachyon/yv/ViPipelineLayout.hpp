@@ -34,6 +34,7 @@ namespace yq::tachyon {
     };
     
     class ViPipeline;
+    class ViDevice;
     
     
     /*! \brief Pipeline Layouts
@@ -44,10 +45,10 @@ namespace yq::tachyon {
     public:
         
         ViPipelineLayout();
-        ViPipelineLayout(ViVisualizer&, const Pipeline*, const ViPipelineLayoutOptions& options={});
+        ViPipelineLayout(ViDevice&, const Pipeline*, const ViPipelineLayoutOptions& options={});
         ~ViPipelineLayout();
         
-        std::error_code init(ViVisualizer&, const Pipeline*, const ViPipelineLayoutOptions& options={});
+        std::error_code init(ViDevice&, const Pipeline*, const ViPipelineLayoutOptions& options={});
         void            kill();
         
         bool                consistent() const;
@@ -77,7 +78,7 @@ namespace yq::tachyon {
     
         bool            _import_shaders();
     
-        std::error_code _init(ViVisualizer&, const Pipeline*, const ViPipelineLayoutOptions& options);
+        std::error_code _init(ViDevice&, const Pipeline*, const ViPipelineLayoutOptions& options);
         void            _kill();
         
         enum class S : uint8_t {

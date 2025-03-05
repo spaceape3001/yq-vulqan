@@ -33,11 +33,6 @@ namespace yq::tachyon {
             }
         }
     }
-    
-    ViFence::ViFence(ViVisualizer&viz) : ViFence(viz.device())
-    {
-    }
-
 
     ViFence::~ViFence()
     {
@@ -108,11 +103,6 @@ namespace yq::tachyon {
         if(!dev)
             return errors::visualizer_uninitialized();
         return _init(dev);
-    }
-    
-    std::error_code ViFence::init(ViVisualizer&viz)
-    {
-        return init(viz.device());
     }
     
     bool            ViFence::consistent() const

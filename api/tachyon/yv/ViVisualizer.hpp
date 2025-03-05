@@ -114,7 +114,9 @@ namespace yq::tachyon {
         virtual VkDescriptorPool        descriptor_pool() const = 0;
 
         //! Vulkan (logical) device
-        VkDevice         device() const;
+        VkDevice                        device() const;
+        
+        const ViDevicePtr&              device(ref_k) const { return m_device; }  // temporary hack until we get everybody over....
         
         Expect<VkFormat>                find_depth_format() const;
         Expect<VkFormat>                find_supported_format(std::span<const VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;

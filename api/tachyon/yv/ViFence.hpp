@@ -11,13 +11,10 @@
 #include <yt/config/vulqan.hpp>
 
 namespace yq::tachyon {
-    class ViVisualizer;
-    
     class ViFence {
     public:
     
         ViFence();
-        ViFence(ViVisualizer&);
         ViFence(VkDevice);
         ~ViFence();
 
@@ -29,7 +26,6 @@ namespace yq::tachyon {
         bool            valid() const;
         //ViVisualizer*   visualizer() const { return m_viz; }
 
-        std::error_code init(ViVisualizer&);
         std::error_code init(VkDevice);
         void            kill();
         std::error_code reset();

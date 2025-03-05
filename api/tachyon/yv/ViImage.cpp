@@ -10,7 +10,8 @@
 #include <yt/gfx/Raster.hpp>
 #include <yv/VqStructs.hpp>
 #include <yv/ViBuffer.hpp>
-#include <yv/ViVisualizer.hpp>
+#include <yv/ViDevice.hpp>
+#include <yv/ViDevice.hpp>
 #include <yq/shape/Size4.hxx>
 
 namespace yq::tachyon {
@@ -24,7 +25,7 @@ namespace yq::tachyon {
         using image_view_cant_create            = error_db::entry<"Unable to create image view">;
     }
     
-    Expect<RasterPtr>   export_image(ViVisualizer& viz, VkImage img, const ViImageExport& vix)
+    Expect<RasterPtr>   export_image(ViDevice& viz, VkImage img, const ViImageExport& vix)
     {
         if(!img)
             return errors::null_pointer();
@@ -73,7 +74,7 @@ namespace yq::tachyon {
         
 
         size_t      bytes       = bpp * cnt;
-        ViBufferPtr      local = new ViBuffer(viz.device(REF), bytes, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VMA_MEMORY_USAGE_GPU_TO_CPU);
+        ViBufferPtr      local = new ViBuffer(viz, bytes, VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VMA_MEMORY_USAGE_GPU_TO_CPU);
         if(!local->valid())
             return errors::insufficient_gpu_memory();
         
@@ -125,11 +126,7 @@ namespace yq::tachyon {
             vkCmdCopyImageToBuffer(cmd, i2, lay, local->buffer(), 1, &creg);
         };
 
-        if(viz.transfer_queue_valid()){
-            ec = viz.transfer_queue_task(downloadTask);
-        } else {
-            ec = viz.graphic_queue_task(downloadTask);
-        }
+        ec  = viz.queue_task(viz.graphics_queue(HEADLESS), downloadTask);
 
         if(ec != std::error_code())
             return unexpected(ec);
@@ -449,7 +446,7 @@ namespace yq::tachyon {
     {
     }
     
-    ViImage::ViImage(ViVisualizer&viz, const Raster&img, const Param& p)
+    ViImage::ViImage(ViDevice&viz, const Raster&img, const Param& p)
     {
         if(viz.device()){
             if(_init(viz, img, p) != std::error_code()){
@@ -459,7 +456,7 @@ namespace yq::tachyon {
         }
     }
     
-    ViImage::ViImage(ViVisualizer&viz, const RasterInfo& info, const Param& p)
+    ViImage::ViImage(ViDevice&viz, const RasterInfo& info, const Param& p)
     {
         if(viz.device()){
             if(_init(viz, info, p) != std::error_code()){
@@ -469,7 +466,7 @@ namespace yq::tachyon {
         }
     }
 
-    ViImage::ViImage(ViVisualizer&viz, std::span<const RasterCPtr> images, const Param& p)
+    ViImage::ViImage(ViDevice&viz, std::span<const RasterCPtr> images, const Param& p)
     {
         if(viz.device()){
             if(_init(viz, images, p) != std::error_code()){
@@ -485,9 +482,9 @@ namespace yq::tachyon {
         kill();
     }
 
-    std::error_code ViImage::_init(ViVisualizer&viz, const RasterInfo& info, const Param& p)
+    std::error_code ViImage::_init(ViDevice&viz, const RasterInfo& info, const Param& p)
     {
-        m_viz                   = &viz;
+        m_device                = &viz;
         m_info                  = info;
         
         VqImageCreateInfo   imgInfo;
@@ -555,9 +552,9 @@ namespace yq::tachyon {
         m_stages    = newStages;
     }
 
-    std::error_code ViImage::_init(ViVisualizer& viz, const Raster& img, const Param& p)
+    std::error_code ViImage::_init(ViDevice& viz, const Raster& img, const Param& p)
     {
-        ViBufferPtr      local = new ViBuffer(viz.device(REF), img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_TO_GPU});
+        ViBufferPtr      local = new ViBuffer(viz, img.memory, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, {.usage=VMA_MEMORY_USAGE_CPU_TO_GPU});
         if(!local->valid())
             return errors::insufficient_gpu_memory();
 
@@ -591,13 +588,7 @@ namespace yq::tachyon {
         };
 
         // If we bring in mipping, we will most likely want to use the non-display graphics queue?
-
-        if(viz.transfer_queue_valid()){
-            ec = viz.transfer_queue_task(uploadTask);
-        } else {
-            ec = viz.graphic_queue_task(uploadTask);
-        }
-
+        ec = viz.queue_task(viz.graphics_queue(HEADLESS), uploadTask);
         if(ec != std::error_code())
             return ec;
             
@@ -605,7 +596,7 @@ namespace yq::tachyon {
         return {};
     }
         
-    std::error_code ViImage::_init(ViVisualizer&viz, const std::span<const RasterCPtr>&imgs, const Param& p)
+    std::error_code ViImage::_init(ViDevice&viz, const std::span<const RasterCPtr>&imgs, const Param& p)
     {
         //  check for nulls
         for(const RasterCPtr& img : imgs){
@@ -745,7 +736,7 @@ namespace yq::tachyon {
             vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
         };
             
-        ec = viz.graphic_queue_task(compositeTask);
+        ec = viz.queue_task(viz.graphics_queue(HEADLESS), compositeTask);
         if(ec != std::error_code())
             return ec;
         return {};
@@ -753,8 +744,8 @@ namespace yq::tachyon {
 
     void ViImage::_kill()
     {
-        if(m_image && m_allocation){
-            vmaDestroyImage(m_viz->allocator(), m_image, m_allocation);
+        if(m_device && m_image && m_allocation){
+            vmaDestroyImage(m_device->allocator(), m_image, m_allocation);
             m_image         = nullptr;
             m_allocation    = nullptr;
         }
@@ -762,16 +753,16 @@ namespace yq::tachyon {
     
     void ViImage::_wipe()
     {
-        m_viz           = nullptr;
+        m_device        = nullptr;
         m_image         = nullptr;
         m_allocation    = nullptr;
         m_info          = {};
     }
     
     
-    std::error_code ViImage::init(ViVisualizer&viz, const Raster&img, const Param&p)
+    std::error_code ViImage::init(ViDevice&viz, const Raster&img, const Param&p)
     {
-        if(m_viz){
+        if(m_device){
             if(!consistent())
                 return errors::image_bad_state();
             return errors::image_existing();
@@ -793,13 +784,13 @@ namespace yq::tachyon {
     
     bool            ViImage::consistent() const
     {
-        return m_viz ? (m_image && m_allocation && m_viz->device()) :
+        return m_device ? (m_image && m_allocation) :
             (!m_image && !m_allocation);
     }
     
     bool            ViImage::valid() const
     {
-        return m_viz && m_image && m_allocation && m_viz->device();
+        return m_device && m_image && m_allocation;
     }
         
 }

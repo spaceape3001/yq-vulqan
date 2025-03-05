@@ -17,7 +17,8 @@
 #include <span>
 
 namespace yq::tachyon {
-    class ViVisualizer;
+    class ViDevice;
+    class ViDevice;
 
     class ViImage : public RefCount {
     public:
@@ -38,14 +39,14 @@ namespace yq::tachyon {
         static size_t       format_bytes(VkFormat);
     
         ViImage();
-        ViImage(ViVisualizer&, const Raster&, const Param& p = Param());
-        ViImage(ViVisualizer&, std::span<const RasterCPtr>, const Param& p = Param());
+        ViImage(ViDevice&, const Raster&, const Param& p = Param());
+        ViImage(ViDevice&, std::span<const RasterCPtr>, const Param& p = Param());
         
         //! Creates temporary (that isn't ID'd), can be written to
-        ViImage(ViVisualizer&, const RasterInfo&, const Param& p = Param());
+        ViImage(ViDevice&, const RasterInfo&, const Param& p = Param());
         ~ViImage();
         
-        std::error_code     init(ViVisualizer&, const Raster&, const Param& p = Param());
+        std::error_code     init(ViDevice&, const Raster&, const Param& p = Param());
         void                kill();
         
         bool                consistent() const;
@@ -54,7 +55,6 @@ namespace yq::tachyon {
         operator VkImage() const { return m_image; }
         VkImage             image() const { return m_image; }
         VmaAllocation       allocation() const { return m_allocation; }
-        ViVisualizer*       visualizer() const { return m_viz; }
         const RasterInfo&   info() const { return m_info; }
         
         struct Respec {
@@ -67,7 +67,7 @@ namespace yq::tachyon {
         void  barrier(VkCommandBuffer, const Respec&);
     
     private:
-        ViVisualizer*       m_viz           = nullptr;
+        ViDevice*           m_device        = nullptr;
         VmaAllocation       m_allocation    = nullptr;
         VkImage             m_image         = nullptr;
         RasterInfo          m_info          = {};
@@ -87,9 +87,9 @@ namespace yq::tachyon {
         ViImage& operator=(const ViImage&) = delete;
         ViImage& operator=(ViImage&&) = delete;
         
-        std::error_code _init(ViVisualizer&, const Raster&, const Param&);
-        std::error_code _init(ViVisualizer&, const std::span<const RasterCPtr>&, const Param&);
-        std::error_code _init(ViVisualizer&, const RasterInfo&, const Param&);
+        std::error_code _init(ViDevice&, const Raster&, const Param&);
+        std::error_code _init(ViDevice&, const std::span<const RasterCPtr>&, const Param&);
+        std::error_code _init(ViDevice&, const RasterInfo&, const Param&);
         void            _wipe();
         void            _kill();
     };
@@ -102,5 +102,5 @@ namespace yq::tachyon {
         VkExtent3D      extent      = {};
     };
     
-    Expect<RasterPtr>   export_image(ViVisualizer&, VkImage, const ViImageExport& vix);
+    Expect<RasterPtr>   export_image(ViDevice&, VkImage, const ViImageExport& vix);
 }

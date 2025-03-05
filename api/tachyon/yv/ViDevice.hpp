@@ -72,6 +72,9 @@ namespace yq::tachyon {
 
         ViDevice(VkPhysicalDevice, const VulqanCreateInfo&);
         ~ViDevice();
+
+        VmaAllocator                    allocator() const { return m_allocator; }
+        
         
         ViBufferCPtr                    buffer(uint64_t) const;
         ViBufferCPtr                    buffer_create(const Buffer&);
@@ -91,15 +94,19 @@ namespace yq::tachyon {
         VkPhysicalDeviceType            gpu_type() const;
         
         //! Recommended Graphics Queue for tasks that aren't direct-display-related
-        ViQueueID                       graphics_queue(headless_k) const;
+        ViQueueID                       graphics_queue(headless_k) const { return m_headlessQueue; }
         //! Recommended Graphics Queue for specified viewer
         ViQueueID                       graphics_queue(uint32_t viewerId) const;
 
         std::error_code                 init(VkPhysicalDevice, const VulqanCreateInfo&);
         
-        bool                            valid() const;
-        
-        VmaAllocator                    allocator() const { return m_allocator; }
+        ViImageCPtr                     image(uint64_t) const;
+        ViImageCPtr                     image_create(const Raster&);
+        Expect<RasterPtr>               image_export(VkImage, const VkExtent2D&, VkFormat fmt = VK_FORMAT_R8G8B8A8_SRGB);
+        Expect<RasterPtr>               image_export(VkImage, const VkExtent3D&, VkFormat fmt = VK_FORMAT_R8G8B8A8_SRGB);
+        void                            image_erase(uint64_t);
+        void                            image_erase(const Raster&);
+        //ViImageManager*                 image_manager() const;
         
         bool                            is_queue_compute(ViQueueFamilyID) const;
         bool                            is_queue_graphic(ViQueueFamilyID) const;
@@ -147,8 +154,6 @@ namespace yq::tachyon {
         //! Queue family for type (note, UINT32_MAX is invalid)
         ViQueueFamilyID                 queue_family(ViQueueType) const;
         
-        
-        
         std::error_code                 queue_task(ViQueueID, queue_tasker_fn&&);
         std::error_code                 queue_task(ViQueueID, uint64_t timeout, queue_tasker_fn&&);
         ViQueueTaskerPtr                queue_tasker(ViQueueID);
@@ -178,6 +183,7 @@ namespace yq::tachyon {
         //ViShaderManager*                shader_manager() const;
         
         
+        bool                            valid() const;
         std::error_code                 wait_idle() const;
         
     private:
@@ -194,6 +200,8 @@ namespace yq::tachyon {
         VkPhysicalDeviceMemoryProperties        m_gpuMemory;
         std::string                             m_gpuName;
         VkPhysicalDeviceProperties              m_gpuProperties;
+        ViQueueID                               m_headlessQueue;
+        ViImageManagerUPtr                      m_images;
         VkPhysicalDevice                        m_physical                  = nullptr;
         std::vector<QueueFamily>                m_queueFamilies;
         std::map<ViQueueType,ViQueueFamilyID>   m_queueType2Family;

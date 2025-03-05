@@ -77,7 +77,7 @@ namespace yq::tachyon {
         ViImageCPtr img; 
         if(tex.images.size() > 1){
             //try {
-                img = new ViImage(viz, tex.images);
+                img = new ViImage(viz.device(REF), tex.images);
             //}
             //catch(...)
             //{

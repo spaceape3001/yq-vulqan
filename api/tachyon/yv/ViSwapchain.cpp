@@ -283,7 +283,7 @@ namespace yq::tachyon {
         if(i >= m_images.size())
             return errors::swapchain_image_out_of_range();
         
-        return export_image(*m_viz, m_images[i], ViImageExport{
+        return export_image(m_viz->device(REF), m_images[i], ViImageExport{
             .type       = VK_IMAGE_TYPE_2D,
             .src_layout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
             .format     = m_viz -> surface_format(),

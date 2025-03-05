@@ -284,7 +284,6 @@ namespace yq::tachyon {
     
     std::error_code     ViVisualizer::_6_manager_init()
     {
-        m_images            = std::make_unique<ViImageManager>(*this);
         m_textures          = std::make_unique<ViTextureManager>(*this);
         m_pipelineLayouts   = std::make_unique<ViPipelineLayoutManager>(*this);
         
@@ -296,7 +295,6 @@ namespace yq::tachyon {
     {
         m_pipelineLayouts   = {};
         m_textures          = {};
-        m_images            = {};
         
         vizDebug << "ViVisualizer: Destroyed the managers";
     }
@@ -626,55 +624,42 @@ namespace yq::tachyon {
 
     ViImageCPtr     ViVisualizer::image(uint64_t i) const
     {
-        if(!m_images)
+        if(!m_device)
             return {};
-        return m_images -> get(i);
+        return m_device->image(i);
     }
     
     ViImageCPtr     ViVisualizer::image_create(const Raster& img)
     {
-        if(!m_images)
+        if(!m_device)
             return {};
-        return m_images -> create(img);
+        return m_device->image_create(img);
     }
     
     void  ViVisualizer::image_erase(uint64_t i)
     {
-        if(m_images){
-            m_images -> erase(i);
-        }
+        if(m_device)
+            m_device -> image_erase(i);
     }
     
     void  ViVisualizer::image_erase(const Raster& img)
     {
-        image_erase(img.id());
+        if(m_device)
+            m_device -> image_erase(img.id());
     }
 
     Expect<RasterPtr>       ViVisualizer::image_export(VkImage img, const VkExtent2D&size, VkFormat fmt)
     {
-        return export_image(*this, img, ViImageExport{
-            .type       = VK_IMAGE_TYPE_2D,
-            .format     = fmt,
-            .extent     = VkExtent3D{
-                .width  = size.width,
-                .height = size.height,
-                .depth  = 1
-            }
-        });
+        if(!m_device)   
+            return {};
+        return m_device->image_export(img, size, fmt);
     }
     
     Expect<RasterPtr>       ViVisualizer::image_export(VkImage img, const VkExtent3D&size, VkFormat fmt)
     {
-        return export_image(*this, img, ViImageExport{
-            .type       = VK_IMAGE_TYPE_3D,
-            .format     = fmt,
-            .extent     = size
-        });
-    }
-
-    ViImageManager* ViVisualizer::image_manager() const
-    {
-        return m_images.get();
+        if(!m_device)   
+            return {};
+        return m_device->image_export(img, size, fmt);
     }
 
     VkDevice    ViVisualizer::logical() const

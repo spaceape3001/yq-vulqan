@@ -4,20 +4,26 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yv/ViDevice.hpp>
-#include <yv/VqUtils.hpp>
-#include <yv/ViManager.hpp>
+#include <yt/errors.hpp>
+#include <yt/logging.hpp>
+
 #include <yv/ViBuffer.hpp>
-#include <yt/gfx/Shader.hpp>
+#include <yv/ViDevice.hpp>
+#include <yv/ViImage.hpp>
+#include <yv/ViManager.hpp>
 #include <yv/ViQueueTasker.hpp>
 #include <yv/ViSampler.hpp>
 #include <yv/ViShader.hpp>
 #include <yv/VulqanCreateInfo.hpp>
 #include <yv/VulqanManager.hpp>
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+
+#include <yv/VqUtils.hpp>
+
 #include <yt/gfx/Buffer.hpp>
+#include <yt/gfx/Raster.hpp>
 #include <yt/gfx/Sampler.hpp>
+#include <yt/gfx/Shader.hpp>
+
 
 namespace yq::tachyon {
 
@@ -423,11 +429,13 @@ namespace yq::tachyon {
         m_buffers           = std::make_unique<ViBufferManager>(*this);
         m_shaders           = std::make_unique<ViShaderManager>(*this);
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
-        
+        m_images            = std::make_unique<ViImageManager>(*this);
 
 
         // --------------
         // EVENTUALLY DO MORE....
+        
+        m_headlessQueue     = ViQueueID(queue_family(ViQueueType::Graphic), 0);
         
         return {};
     }
@@ -435,6 +443,7 @@ namespace yq::tachyon {
     void            ViDevice::_kill()
     {
         m_samplers          = {};
+        m_images            = {};
         m_shaders           = {};
         m_buffers           = {};
     
@@ -500,12 +509,6 @@ namespace yq::tachyon {
         _kill();
     }
 
-    ViQueueID       ViDevice::graphics_queue(headless_k) const
-    {
-        //  hardcode for now....
-        return ViQueueID(queue_family(ViQueueType::Graphic), 0);
-    }
-
     ViQueueID           ViDevice::graphics_queue(uint32_t viewerId) const
     {
         const QueueFamily*  qf  = _family(queue_family(ViQueueType::Graphic));
@@ -524,7 +527,63 @@ namespace yq::tachyon {
     {
         return m_gpuProperties.deviceType;
     }
+
+
+    ViImageCPtr     ViDevice::image(uint64_t i) const
+    {
+        if(!m_images)
+            return {};
+        return m_images -> get(i);
+    }
     
+    ViImageCPtr     ViDevice::image_create(const Raster& img)
+    {
+        if(!m_images)
+            return {};
+        return m_images -> create(img);
+    }
+    
+    void  ViDevice::image_erase(uint64_t i)
+    {
+        if(m_images){
+            m_images -> erase(i);
+        }
+    }
+    
+    void  ViDevice::image_erase(const Raster& img)
+    {
+        image_erase(img.id());
+    }
+
+    Expect<RasterPtr>       ViDevice::image_export(VkImage img, const VkExtent2D&size, VkFormat fmt)
+    {
+        return export_image(*this, img, ViImageExport{
+            .type       = VK_IMAGE_TYPE_2D,
+            .format     = fmt,
+            .extent     = VkExtent3D{
+                .width  = size.width,
+                .height = size.height,
+                .depth  = 1
+            }
+        });
+    }
+    
+    Expect<RasterPtr>       ViDevice::image_export(VkImage img, const VkExtent3D&size, VkFormat fmt)
+    {
+        return export_image(*this, img, ViImageExport{
+            .type       = VK_IMAGE_TYPE_3D,
+            .format     = fmt,
+            .extent     = size
+        });
+    }
+
+#if 0
+    ViImageManager* ViDevice::image_manager() const
+    {
+        return m_images.get();
+    }
+#endif
+        
     std::error_code     ViDevice::init(VkPhysicalDevice pDev, const VulqanCreateInfo& vci)
     {
         if(m_device)

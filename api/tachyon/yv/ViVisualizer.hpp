@@ -21,7 +21,6 @@
 #include <yv/typedef/vi_buffer.hpp>
 #include <yv/typedef/vi_device.hpp>
 #include <yv/typedef/vi_image.hpp>
-#include <yv/typedef/vi_image_manager.hpp>
 #include <yv/typedef/vi_queue_id.hpp>
 #include <yv/typedef/vi_queue_tasker.hpp>
 #include <yv/typedef/vi_pipeline.hpp>
@@ -115,6 +114,7 @@ namespace yq::tachyon {
         VkDevice                        device() const;
         
         ViDevice&                       device(ref_k) { return *m_device; }  // temporary hack until we get everybody over....
+        ViDevice*                       device(ptr_k) { return m_device.ptr(); }  // temporary hack until we get everybody over....
         
         Expect<VkFormat>                find_depth_format() const;
         Expect<VkFormat>                find_supported_format(std::span<const VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
@@ -143,7 +143,6 @@ namespace yq::tachyon {
         Expect<RasterPtr>               image_export(VkImage, const VkExtent3D&, VkFormat fmt = VK_FORMAT_R8G8B8A8_SRGB);
         void                            image_erase(uint64_t);
         void                            image_erase(const Raster&);
-        ViImageManager*                 image_manager() const;
         
         //! Vulkan instance
         static VkInstance               instance();
@@ -307,7 +306,6 @@ namespace yq::tachyon {
         Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;
         ViQueueID                           m_graphicsQueue;
-        ViImageManagerUPtr                  m_images;
         ViPipelineLayoutManagerUPtr         m_pipelineLayouts;
         ViPipelineManagerUPtr               m_pipelines;        // temporary until relocated
         Guarded<PresentMode>                m_presentMode;

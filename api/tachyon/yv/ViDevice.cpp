@@ -15,6 +15,11 @@
 namespace yq::tachyon {
 
     static constexpr const uint32_t kMinGraphicsQueues = 2; // so we can push the image loading to separate queue
+    
+    static const char* kDeviceExtensions[] = {
+        "VK_KHR_swapchain"
+    };
+    
 
     namespace errors {
         using device_existing                   = error_db::entry<"Device already created">;
@@ -151,13 +156,15 @@ namespace yq::tachyon {
         }
 
         vkGetPhysicalDeviceProperties2(m_physical, &prop2);
-
+    
         if(vci.multiview){
             m_multiview.maxViewCount        = multiProp.maxMultiviewViewCount;
             m_multiview.maxInstanceIndex    = multiProp.maxMultiviewInstanceIndex;
         }
         
         m_gpuProperties = prop2.properties;
+
+        vizInfo << "ViDevice(" << gpu_name() << "): Creating device";
 
         if(vci.api && (m_gpuProperties.apiVersion < vci.api)){
             vizWarning << "ViDevice(" << gpu_name() << "): Target API version mismatch, not everything will be supported";
@@ -368,6 +375,9 @@ namespace yq::tachyon {
         deviceCreateInfo.pQueueCreateInfos        = queueCreateInfos.data();
         deviceCreateInfo.queueCreateInfoCount     = (uint32_t) queueCreateInfos.size();
         deviceCreateInfo.pEnabledFeatures         = &v10features;
+
+        deviceCreateInfo.enabledExtensionCount      = sizeof(kDeviceExtensions)/sizeof(kDeviceExtensions[0]);
+        deviceCreateInfo.ppEnabledExtensionNames    = kDeviceExtensions;
 
         VkResult        res = vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device);
         if(res != VK_SUCCESS){
@@ -612,7 +622,10 @@ namespace yq::tachyon {
     
     std::error_code     ViDevice::queue_task(ViQueueID qid, uint64_t timeout, queue_tasker_fn&&fn)
     {
-        return errors::todo();
+        ViQueueTaskerPtr    tasker  = queue_tasker(qid);
+        if(!tasker)
+            return create_error<"ViDevice::queue_task(): Invalid tasker queue">();
+        return tasker->execute(timeout, std::move(fn));
     }
 
     ViQueueTaskerPtr    ViDevice::queue_tasker(ViQueueID qid)

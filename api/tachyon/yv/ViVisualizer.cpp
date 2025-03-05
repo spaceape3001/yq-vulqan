@@ -405,13 +405,19 @@ namespace yq::tachyon {
             //  needs to have the relevant queue enabled *AND* it needs to be
             //  set on the create data structure.
         
-        ViQueueID   gQ   = m_device->graphics_queue(vcd.number);
-        if(!m_device->is_queue_valid(gQ))
+        m_graphicsQueue  = m_device->graphics_queue(vcd.number);
+        if(!m_device->is_queue_valid(m_graphicsQueue))
             return create_error<"no graphic queue">();
 
-        ViQueueFamilyID qf = vcd.present.valid() ? vcd.present.family : gQ.family;
-        if(!m_device->is_queue_present_supported(qf, m_surface->surface()))
-            return create_error<"queue does not have present support">();
+        if(vcd.present.valid()){
+            if(!m_device->is_queue_present_supported(vcd.present.family, m_surface->surface()))
+                return create_error<"queue does not have present support">();
+            m_presentQueue  = vcd.present;
+        } else {
+            if(!m_device->is_queue_present_supported(m_graphicsQueue.family, m_surface->surface()))
+                return create_error<"queue does not have present support">();
+            m_presentQueue  = m_graphicsQueue;
+        }
             
         m_computeQueue  = { m_device->queue_family(ViQueueType::Compute), 0 };
         if(m_device->is_queue_valid(m_computeQueue))
@@ -433,9 +439,6 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
             
-        
-        //  SURFACE INFORMATION 
-        return errors::todo();  // point of collapse, need to rebuild the visualizer to use new items
 
         ec = _7_render_pass_create();
         if(ec != std::error_code())

@@ -159,6 +159,7 @@ namespace yq::tachyon {
             extensions.properties.resize(count);
             vkEnumerateInstanceExtensionProperties(nullptr, &count, extensions.properties.data());
             for(auto& v : extensions.properties){
+                tachyonInfo << "Vulkan Extension " << v.extensionName;            
                 extensions.names.insert(v.extensionName);
             }
         }
@@ -172,7 +173,7 @@ namespace yq::tachyon {
             layers.properties.resize(count);
             vkEnumerateInstanceLayerProperties(&count, layers.properties.data());
             for(auto& v : layers.properties){
-                tachyonInfo << "VulqanLayer " << v.layerName;            
+                tachyonInfo << "Vulkan Layer " << v.layerName;            
                 layers.names.insert(v.layerName);
             }
         }
@@ -343,6 +344,11 @@ namespace yq::tachyon {
     }
     
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    std::span<const char*>   VulqanManager::extensions()
+    {
+        return common().extensions.requested;
+    }
 
     VulqanManager*   VulqanManager::manager()
     {

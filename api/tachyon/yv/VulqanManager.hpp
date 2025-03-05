@@ -25,6 +25,8 @@ namespace yq::tachyon {
         static bool             initialized();
         
         static uint32_t         vulkan_api();
+        
+        static std::span<const char*>   extensions();
     
         VulqanManager();
         ~VulqanManager();

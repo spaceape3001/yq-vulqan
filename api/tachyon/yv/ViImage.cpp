@@ -564,6 +564,7 @@ namespace yq::tachyon {
 
         std::error_code ec = _init(viz, img.info, p);
         if(ec != std::error_code()){
+        vizWarning << "ViImage: Unable to initialize: " << ec.message();
             return ec;
         }
             
@@ -588,6 +589,8 @@ namespace yq::tachyon {
 
             barrier(cmd, { .access = p.access, .layout = p.layout, .stages=p.stages });
         };
+
+        // If we bring in mipping, we will most likely want to use the non-display graphics queue?
 
         if(viz.transfer_queue_valid()){
             ec = viz.transfer_queue_task(uploadTask);

@@ -13,32 +13,31 @@
 #include <system_error>
 
 namespace yq::tachyon {
-    class ViVisualizer;
+    class ViDevice;
     
     class ViSampler : public RefCount {
     public:
     
-        static VkSamplerCreateInfo  vkInfo(ViVisualizer&, const SamplerInfo&);
+        static VkSamplerCreateInfo  vkInfo(ViDevice&, const SamplerInfo&);
     
         ViSampler();
-        ViSampler(ViVisualizer&, const Sampler&);
+        ViSampler(ViDevice&, const Sampler&);
         ~ViSampler();
         
         bool                    consistent() const;
         VkSampler               sampler() const { return m_sampler; }
         bool                    valid() const;
-        ViVisualizer*           visualizer() const { return m_viz; }
 
-        std::error_code         init(ViVisualizer&, const Sampler&);
+        std::error_code         init(ViDevice&, const Sampler&);
         void                    kill();
         const SamplerInfo&      info() const { return m_info; }
     
     private:
-        ViVisualizer*       m_viz       = nullptr;
+        VkDevice            m_device       = nullptr;
         VkSampler           m_sampler   = nullptr;
         SamplerInfo         m_info      = {};
 
-        std::error_code     _init(ViVisualizer&, const Sampler&);
+        std::error_code     _init(ViDevice&, const Sampler&);
         void                _kill();
         void                _wipe();
     };

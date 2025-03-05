@@ -285,7 +285,6 @@ namespace yq::tachyon {
     std::error_code     ViVisualizer::_6_manager_init()
     {
         m_images            = std::make_unique<ViImageManager>(*this);
-        m_samplers          = std::make_unique<ViSamplerManager>(*this);
         m_textures          = std::make_unique<ViTextureManager>(*this);
         m_pipelineLayouts   = std::make_unique<ViPipelineLayoutManager>(*this);
         
@@ -297,7 +296,6 @@ namespace yq::tachyon {
     {
         m_pipelineLayouts   = {};
         m_textures          = {};
-        m_samplers          = {};
         m_images            = {};
         
         vizDebug << "ViVisualizer: Destroyed the managers";
@@ -872,33 +870,28 @@ namespace yq::tachyon {
 
     ViSamplerCPtr     ViVisualizer::sampler(uint64_t i) const
     {
-        if(!m_samplers)
+        if(!m_device)
             return {};
-        return m_samplers -> get(i);
+        return m_device->sampler(i);
     }
     
     ViSamplerCPtr     ViVisualizer::sampler_create(const Sampler& sam)
     {
-        if(!m_samplers)
+        if(!m_device)
             return {};
-        return m_samplers -> create(sam);
+        return m_device->sampler_create(sam);
     }
     
     void  ViVisualizer::sampler_erase(uint64_t i)
     {
-        if(m_samplers){
-            m_samplers -> erase(i);
-        }
+        if(m_device)
+            m_device -> sampler_erase(i);
     }
     
     void  ViVisualizer::sampler_erase(const Sampler& sam)
     {
-        sampler_erase(sam.id());
-    }
-
-    ViSamplerManager* ViVisualizer::sampler_manager() const
-    {
-        return m_samplers.get();
+        if(m_device)
+            m_device -> sampler_erase(sam.id());
     }
 
     void        ViVisualizer::set_clear_color(const RGBA4F&i)

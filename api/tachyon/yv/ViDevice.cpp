@@ -10,12 +10,14 @@
 #include <yv/ViBuffer.hpp>
 #include <yt/gfx/Shader.hpp>
 #include <yv/ViQueueTasker.hpp>
+#include <yv/ViSampler.hpp>
 #include <yv/ViShader.hpp>
 #include <yv/VulqanCreateInfo.hpp>
 #include <yv/VulqanManager.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/gfx/Buffer.hpp>
+#include <yt/gfx/Sampler.hpp>
 
 namespace yq::tachyon {
 
@@ -420,6 +422,7 @@ namespace yq::tachyon {
         
         m_buffers           = std::make_unique<ViBufferManager>(*this);
         m_shaders           = std::make_unique<ViShaderManager>(*this);
+        m_samplers          = std::make_unique<ViSamplerManager>(*this);
         
 
 
@@ -431,8 +434,9 @@ namespace yq::tachyon {
 
     void            ViDevice::_kill()
     {
-        m_shaders   = {};
-        m_buffers   = {};
+        m_samplers          = {};
+        m_shaders           = {};
+        m_buffers           = {};
     
         cleanup(SWEEP);
         if(m_allocator){
@@ -709,6 +713,40 @@ namespace yq::tachyon {
         return ret;
     }
 
+
+    ViSamplerCPtr     ViDevice::sampler(uint64_t i) const
+    {
+        if(!m_samplers)
+            return {};
+        return m_samplers -> get(i);
+    }
+    
+    ViSamplerCPtr     ViDevice::sampler_create(const Sampler& sam)
+    {
+        if(!m_samplers)
+            return {};
+        return m_samplers -> create(sam);
+    }
+    
+    void  ViDevice::sampler_erase(uint64_t i)
+    {
+        if(m_samplers){
+            m_samplers -> erase(i);
+        }
+    }
+    
+    void  ViDevice::sampler_erase(const Sampler& sam)
+    {
+        sampler_erase(sam.id());
+    }
+
+#if 0
+    ViSamplerManager* ViDevice::sampler_manager() const
+    {
+        return m_samplers.get();
+    }
+#endif
+    
     ViShaderCPtr ViDevice::shader(uint64_t i) const
     {
         if(!m_shaders)

@@ -10,7 +10,7 @@
 #include <yt/logging.hpp>
 #include <yt/gfx/Sampler.hpp>
 #include <yv/VqStructs.hpp>
-#include <yv/ViVisualizer.hpp>
+#include <yv/ViDevice.hpp>
 
 #include <yv/ViLogging.hpp>
 
@@ -21,7 +21,7 @@ namespace yq::tachyon {
         using sampler_existing                  = error_db::entry<"Sampler already created">;
     }
 
-    VkSamplerCreateInfo  ViSampler::vkInfo(ViVisualizer& viz, const SamplerInfo& sami)
+    VkSamplerCreateInfo  ViSampler::vkInfo(ViDevice& viz, const SamplerInfo& sami)
     {
         VqSamplerCreateInfo     ret;
         ret.flags                   = (VkSamplerCreateFlags) sami.flags.value();
@@ -47,7 +47,7 @@ namespace yq::tachyon {
     {
     }
     
-    ViSampler::ViSampler(ViVisualizer& viz, const Sampler& sam)
+    ViSampler::ViSampler(ViDevice& viz, const Sampler& sam)
     {
         if(viz.device()){
             std::error_code ec  = _init(viz, sam);
@@ -63,17 +63,18 @@ namespace yq::tachyon {
         kill();
     }
 
-    std::error_code     ViSampler::_init(ViVisualizer&viz, const Sampler&sam)
+    std::error_code     ViSampler::_init(ViDevice&viz, const Sampler&sam)
     {
         VkSamplerCreateInfo sci = vkInfo(viz, sam.info);
+        
+        m_device    = viz.device();
 
-        VkResult res = vkCreateSampler(viz.device(), &sci, nullptr, &m_sampler);
+        VkResult res = vkCreateSampler(m_device, &sci, nullptr, &m_sampler);
         if(res != VK_SUCCESS){
             vizWarning << "vkCreateSampler(): VkResult " << (int32_t) res;
             return errors::sampler_cant_create();
         }
             
-        m_viz   = &viz;
         m_info  = sam.info;
         return {};
     }
@@ -81,26 +82,26 @@ namespace yq::tachyon {
     void                ViSampler::_kill()
     {
         if(m_sampler){
-            vkDestroySampler(m_viz->device(), m_sampler, nullptr);
+            vkDestroySampler(m_device, m_sampler, nullptr);
             m_sampler   = nullptr;
         }
     }
     
     void                ViSampler::_wipe()
     {
-        m_viz       = nullptr;
+        m_device    = nullptr;
         m_sampler   = nullptr;
         m_info      = {};
     }
     
     bool                ViSampler::consistent() const
     {
-        return m_viz ? (m_sampler && m_viz->device()) : !m_sampler;
+        return m_device ? static_cast<bool>(m_sampler) : !m_sampler;
     }
     
-    std::error_code     ViSampler::init(ViVisualizer& viz, const Sampler& sam)
+    std::error_code     ViSampler::init(ViDevice& viz, const Sampler& sam)
     {
-        if(m_viz){
+        if(m_device){
             if(!consistent()){
                 return errors::sampler_bad_state();
             }
@@ -124,6 +125,6 @@ namespace yq::tachyon {
     
     bool                ViSampler::valid() const
     {
-        return m_viz && m_sampler && m_viz->device();
+        return m_device && m_sampler;
     }
 }

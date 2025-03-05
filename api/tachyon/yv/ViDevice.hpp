@@ -153,6 +153,11 @@ namespace yq::tachyon {
         std::error_code                 queue_task(ViQueueID, uint64_t timeout, queue_tasker_fn&&);
         ViQueueTaskerPtr                queue_tasker(ViQueueID);
         
+        ViSamplerCPtr                   sampler(uint64_t) const;
+        ViSamplerCPtr                   sampler_create(const Sampler&);
+        void                            sampler_erase(uint64_t);
+        void                            sampler_erase(const Sampler&);
+        //ViSamplerManager*               sampler_manager() const;
 
         //! Finds the shader
         ViShaderCPtr                    shader(uint64_t) const;
@@ -192,6 +197,7 @@ namespace yq::tachyon {
         VkPhysicalDevice                        m_physical                  = nullptr;
         std::vector<QueueFamily>                m_queueFamilies;
         std::map<ViQueueType,ViQueueFamilyID>   m_queueType2Family;
+        ViSamplerManagerUPtr                    m_samplers;
         ViShaderManagerUPtr                     m_shaders;
         std::map<ViQueueID, ViQueueTaskerPtr>   m_taskers;
         mutable mutex_t                         m_taskerMutex;

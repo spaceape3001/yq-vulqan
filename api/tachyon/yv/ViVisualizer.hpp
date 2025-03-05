@@ -19,7 +19,6 @@
 #include <yt/gfx/PresentMode.hpp>
 #include <yt/typedef/raster.hpp>
 #include <yv/typedef/vi_buffer.hpp>
-#include <yv/typedef/vi_buffer_manager.hpp>
 #include <yv/typedef/vi_device.hpp>
 #include <yv/typedef/vi_image.hpp>
 #include <yv/typedef/vi_image_manager.hpp>
@@ -30,9 +29,7 @@
 #include <yv/typedef/vi_pipeline_manager.hpp>
 #include <yv/typedef/vi_render_pass.hpp>
 #include <yv/typedef/vi_sampler.hpp>
-#include <yv/typedef/vi_sampler_manager.hpp>
 #include <yv/typedef/vi_shader.hpp>
-#include <yv/typedef/vi_shader_manager.hpp>
 #include <yv/typedef/vi_surface.hpp>
 #include <yv/typedef/vi_swapchain.hpp>
 #include <yv/typedef/vi_texture.hpp>
@@ -57,6 +54,8 @@ namespace yq::tachyon {
     class ViQueueManager;
     struct ViContext;
     class Buffer;
+    class Sampler;
+    class Shader;
     
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
@@ -207,7 +206,6 @@ namespace yq::tachyon {
         ViSamplerCPtr                   sampler_create(const Sampler&);
         void                            sampler_erase(uint64_t);
         void                            sampler_erase(const Sampler&);
-        ViSamplerManager*               sampler_manager() const;
 
             //! Sets the background color
         void                            set_clear_color(const RGBA4F&);
@@ -317,7 +315,6 @@ namespace yq::tachyon {
         ViQueueID                           m_presentQueue;
         std::atomic<bool>                   m_rebuildSwap       = { false };
         ViRenderPassCPtr                    m_renderPass;
-        ViSamplerManagerUPtr                m_samplers;
         ViSurfacePtr                        m_surface;
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;

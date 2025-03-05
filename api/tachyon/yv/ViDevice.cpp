@@ -14,6 +14,7 @@
 #include <yv/ViQueueTasker.hpp>
 #include <yv/ViSampler.hpp>
 #include <yv/ViShader.hpp>
+#include <yv/ViTexture.hpp>
 #include <yv/VulqanCreateInfo.hpp>
 #include <yv/VulqanManager.hpp>
 
@@ -23,6 +24,7 @@
 #include <yt/gfx/Raster.hpp>
 #include <yt/gfx/Sampler.hpp>
 #include <yt/gfx/Shader.hpp>
+#include <yt/gfx/Texture.hpp>
 
 
 namespace yq::tachyon {
@@ -430,6 +432,7 @@ namespace yq::tachyon {
         m_shaders           = std::make_unique<ViShaderManager>(*this);
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
         m_images            = std::make_unique<ViImageManager>(*this);
+        m_textures          = std::make_unique<ViTextureManager>(*this);
 
 
         // --------------
@@ -442,6 +445,7 @@ namespace yq::tachyon {
 
     void            ViDevice::_kill()
     {
+        m_textures          = {};
         m_samplers          = {};
         m_images            = {};
         m_shaders           = {};
@@ -836,6 +840,40 @@ namespace yq::tachyon {
     ViShaderManager*  ViDevice::shader_manager() const 
     { 
         return m_shaders.get(); 
+    }
+#endif
+
+
+    ViTextureCPtr ViDevice::texture(uint64_t i) const
+    {
+        if(!m_textures)
+            return {};
+        return m_textures->get(i);
+    }
+
+    ViTextureCPtr  ViDevice::texture_create(const Texture& tex)
+    {
+        if(!m_textures)
+            return {};
+        return m_textures->create(tex);
+    }
+    
+    void  ViDevice::texture_erase(uint64_t i)
+    {
+        if(m_textures){
+            m_textures -> erase(i);
+        }
+    }
+    
+    void  ViDevice::texture_erase(const Texture& tex)
+    {
+        texture_erase(tex.id());
+    }
+
+#if 0
+    ViTextureManager* ViDevice::texture_manager() const 
+    { 
+        return m_textures.get(); 
     }
 #endif
 

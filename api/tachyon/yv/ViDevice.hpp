@@ -182,6 +182,11 @@ namespace yq::tachyon {
         //! Current shader manager (null if not initialized)
         //ViShaderManager*                shader_manager() const;
         
+        ViTextureCPtr                   texture(uint64_t) const;
+        ViTextureCPtr                   texture_create(const Texture&);
+        void                            texture_erase(uint64_t);
+        void                            texture_erase(const Texture&);
+        //ViTextureManager*               texture_manager() const;
         
         bool                            valid() const;
         std::error_code                 wait_idle() const;
@@ -209,6 +214,7 @@ namespace yq::tachyon {
         ViShaderManagerUPtr                     m_shaders;
         std::map<ViQueueID, ViQueueTaskerPtr>   m_taskers;
         mutable mutex_t                         m_taskerMutex;
+        ViTextureManagerUPtr                    m_textures;
 
         struct {
             bool        enabled             = false;

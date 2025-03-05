@@ -14,7 +14,7 @@
 #include <system_error>
 
 namespace yq::tachyon {
-    class ViVisualizer;
+    class ViDevice;
     struct TextureInfo;
     class Texture;
     
@@ -22,11 +22,11 @@ namespace yq::tachyon {
     public:
     
         ViTexture();
-        ViTexture(ViVisualizer&, const Texture&);
-        ViTexture(ViVisualizer&, const ViImageCPtr&, const ViSamplerCPtr&, const TextureInfo&);
+        ViTexture(ViDevice&, const Texture&);
+        ViTexture(ViDevice&, const ViImageCPtr&, const ViSamplerCPtr&, const TextureInfo&);
         ~ViTexture();
         
-        std::error_code     init(ViVisualizer&, const Texture&);
+        std::error_code     init(ViDevice&, const Texture&);
         void                kill();
     
         bool                consistent() const;
@@ -38,15 +38,15 @@ namespace yq::tachyon {
         bool                valid() const;
     
     private:
-        ViVisualizer*   m_viz           = nullptr;
+        ViDevice*       m_viz           = nullptr;
         ViImageCPtr     m_image;
         ViSamplerCPtr   m_sampler;
         VkImageView     m_imageView;
         VkExtent3D      m_extents;
         uint64_t        m_id            = 0;
 
-        std::error_code     _init(ViVisualizer&, const Texture&);
-        std::error_code     _init(ViVisualizer&, const ViImageCPtr&, const ViSamplerCPtr&, const TextureInfo&);
+        std::error_code     _init(ViDevice&, const Texture&);
+        std::error_code     _init(ViDevice&, const ViImageCPtr&, const ViSamplerCPtr&, const TextureInfo&);
         void                _kill();
     };
 

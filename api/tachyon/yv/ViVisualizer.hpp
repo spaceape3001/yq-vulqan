@@ -32,7 +32,6 @@
 #include <yv/typedef/vi_surface.hpp>
 #include <yv/typedef/vi_swapchain.hpp>
 #include <yv/typedef/vi_texture.hpp>
-#include <yv/typedef/vi_texture_manager.hpp>
 #include <yv/ViQueueType.hpp>
 #include <yv/vulqan.hpp>
 
@@ -252,7 +251,6 @@ namespace yq::tachyon {
         ViTextureCPtr                   texture_create(const Texture&);
         void                            texture_erase(uint64_t);
         void                            texture_erase(const Texture&);
-        ViTextureManager*               texture_manager() const;
         
         uint64_t                        tick() const { return m_tick; }
 
@@ -318,7 +316,6 @@ namespace yq::tachyon {
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
         ViSwapchainCPtr                     m_swapchain;
-        ViTextureManagerUPtr                m_textures;
         ViQueueID                           m_transferQueue;
         ViQueueID                           m_videoDecQueue;
         ViQueueID                           m_videoEncQueue;

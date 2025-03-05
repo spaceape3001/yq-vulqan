@@ -15,7 +15,7 @@
 #include <yv/ViImage.hpp>
 #include <yv/ViLogging.hpp>
 #include <yv/ViSampler.hpp>
-#include <yv/ViVisualizer.hpp>
+#include <yv/ViDevice.hpp>
 
 namespace yq::tachyon {
     namespace errors {
@@ -34,7 +34,7 @@ namespace yq::tachyon {
     {
     }
     
-    ViTexture::ViTexture(ViVisualizer&viz, const Texture&tex)
+    ViTexture::ViTexture(ViDevice&viz, const Texture&tex)
     {
         if(viz.device()){
             std::error_code ec  = _init(viz, tex);
@@ -45,7 +45,7 @@ namespace yq::tachyon {
         
     }
     
-    ViTexture::ViTexture(ViVisualizer& viz, const ViImageCPtr&img, const ViSamplerCPtr&sam, const TextureInfo& info)
+    ViTexture::ViTexture(ViDevice& viz, const ViImageCPtr&img, const ViSamplerCPtr&sam, const TextureInfo& info)
     {
         if(viz.device() && img && img->valid() && sam && sam->valid()){
             std::error_code ec  = _init(viz, img, sam, info);
@@ -60,7 +60,7 @@ namespace yq::tachyon {
         kill();
     }
     
-    std::error_code     ViTexture::_init(ViVisualizer&viz, const Texture&tex)
+    std::error_code     ViTexture::_init(ViDevice&viz, const Texture&tex)
     {
         m_viz   = &viz;
         
@@ -77,7 +77,7 @@ namespace yq::tachyon {
         ViImageCPtr img; 
         if(tex.images.size() > 1){
             //try {
-                img = new ViImage(viz.device(REF), tex.images);
+                img = new ViImage(viz, tex.images);
             //}
             //catch(...)
             //{
@@ -103,7 +103,7 @@ namespace yq::tachyon {
         return _init(viz, img, sampler, tex.info); 
     }
     
-    std::error_code     ViTexture::_init(ViVisualizer&viz, const ViImageCPtr& image, const ViSamplerCPtr& sampler, const TextureInfo& texInfo)
+    std::error_code     ViTexture::_init(ViDevice&viz, const ViImageCPtr& image, const ViSamplerCPtr& sampler, const TextureInfo& texInfo)
     {
         m_viz       = &viz;
 
@@ -207,7 +207,7 @@ namespace yq::tachyon {
         return m_imageView;
     }
     
-    std::error_code     ViTexture::init(ViVisualizer&viz, const Texture&tex)
+    std::error_code     ViTexture::init(ViDevice&viz, const Texture&tex)
     {
         if(m_viz){
             if(!consistent()){

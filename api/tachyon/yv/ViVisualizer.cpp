@@ -284,7 +284,6 @@ namespace yq::tachyon {
     
     std::error_code     ViVisualizer::_6_manager_init()
     {
-        m_textures          = std::make_unique<ViTextureManager>(*this);
         m_pipelineLayouts   = std::make_unique<ViPipelineLayoutManager>(*this);
         
         vizDebug << "ViVisualizer: Created the managers";
@@ -294,7 +293,6 @@ namespace yq::tachyon {
     void                ViVisualizer::_6_manager_kill()
     {
         m_pipelineLayouts   = {};
-        m_textures          = {};
         
         vizDebug << "ViVisualizer: Destroyed the managers";
     }
@@ -1023,35 +1021,30 @@ namespace yq::tachyon {
             
     ViTextureCPtr ViVisualizer::texture(uint64_t i) const
     {
-        if(!m_textures)
+        if(!m_device)
             return {};
-        return m_textures->get(i);
+        return m_device->texture(i);
     }
 
     ViTextureCPtr  ViVisualizer::texture_create(const Texture& tex)
     {
-        if(!m_textures)
+        if(!m_device)
             return {};
-        return m_textures->create(tex);
+        return m_device->texture_create(tex);
     }
     
     void  ViVisualizer::texture_erase(uint64_t i)
     {
-        if(m_textures){
-            m_textures -> erase(i);
-        }
+        if(m_device)
+            m_device->texture_erase(i);
     }
     
     void  ViVisualizer::texture_erase(const Texture& tex)
     {
-        texture_erase(tex.id());
+        if(m_device)
+            m_device->texture_erase(tex.id());
     }
 
-    ViTextureManager* ViVisualizer::texture_manager() const 
-    { 
-        return m_textures.get(); 
-    }
-    
     VkQueue     ViVisualizer::transfer_queue() const
     {
         if(m_device)

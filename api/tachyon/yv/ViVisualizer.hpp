@@ -230,9 +230,6 @@ namespace yq::tachyon {
 
         void                            shader_erase(uint64_t);
         void                            shader_erase(const Shader&);
-
-        //! Current shader manager (null if not initialized)
-        ViShaderManager*                shader_manager() const;
         
         bool                            supports_surface(VkFormat) const;
         bool                            supports_present(PresentMode) const;
@@ -321,7 +318,6 @@ namespace yq::tachyon {
         std::atomic<bool>                   m_rebuildSwap       = { false };
         ViRenderPassCPtr                    m_renderPass;
         ViSamplerManagerUPtr                m_samplers;
-        ViShaderManagerUPtr                 m_shaders;
         ViSurfacePtr                        m_surface;
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;

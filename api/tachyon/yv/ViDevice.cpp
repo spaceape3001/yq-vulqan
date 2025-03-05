@@ -8,7 +8,9 @@
 #include <yv/VqUtils.hpp>
 #include <yv/ViManager.hpp>
 #include <yv/ViBuffer.hpp>
+#include <yt/gfx/Shader.hpp>
 #include <yv/ViQueueTasker.hpp>
+#include <yv/ViShader.hpp>
 #include <yv/VulqanCreateInfo.hpp>
 #include <yv/VulqanManager.hpp>
 #include <yt/errors.hpp>
@@ -417,6 +419,7 @@ namespace yq::tachyon {
         //  MANAGERS
         
         m_buffers           = std::make_unique<ViBufferManager>(*this);
+        m_shaders           = std::make_unique<ViShaderManager>(*this);
         
 
 
@@ -428,6 +431,7 @@ namespace yq::tachyon {
 
     void            ViDevice::_kill()
     {
+        m_shaders   = {};
         m_buffers   = {};
     
         cleanup(SWEEP);
@@ -704,6 +708,39 @@ namespace yq::tachyon {
         
         return ret;
     }
+
+    ViShaderCPtr ViDevice::shader(uint64_t i) const
+    {
+        if(!m_shaders)
+            return {};
+        return m_shaders -> get(i);
+    }
+
+    ViShaderCPtr    ViDevice::shader_create(const Shader&sha)
+    {
+        if(!m_shaders)
+            return {};
+        return m_shaders->create(sha);
+    }
+
+    void  ViDevice::shader_erase(uint64_t i)
+    {
+        if(m_shaders){
+            m_shaders -> erase(i);
+        }
+    }
+    
+    void  ViDevice::shader_erase(const Shader& sha)
+    {
+        shader_erase(sha.id());
+    }
+
+#if 0
+    ViShaderManager*  ViDevice::shader_manager() const 
+    { 
+        return m_shaders.get(); 
+    }
+#endif
 
     bool    ViDevice::valid() const
     {   

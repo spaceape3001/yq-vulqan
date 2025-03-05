@@ -9,7 +9,7 @@
 #include <yt/logging.hpp>
 #include <yt/gfx/Shader.hpp>
 #include <yv/VqStructs.hpp>
-#include <yv/ViVisualizer.hpp>
+#include <yv/ViDevice.hpp>
 
 namespace yq::tachyon {
     namespace errors {
@@ -35,7 +35,7 @@ namespace yq::tachyon {
         
     }
     
-    ViShader::ViShader(ViVisualizer& viz, const Shader& sh) : ViShader(viz.device(), sh)
+    ViShader::ViShader(ViDevice& viz, const Shader& sh) : ViShader(viz.device(), sh)
     {
     }
 
@@ -125,7 +125,7 @@ namespace yq::tachyon {
         return ec;
     }
     
-    std::error_code         ViShader::create(ViVisualizer&viz, const Shader&sh)
+    std::error_code         ViShader::create(ViDevice&viz, const Shader&sh)
     {
         return create(viz.device(), sh);
     }

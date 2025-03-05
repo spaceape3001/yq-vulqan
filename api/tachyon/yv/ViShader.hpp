@@ -14,7 +14,7 @@
 #include <yq/core/Ref.hpp>
 
 namespace yq::tachyon {
-    class ViVisualizer;
+    class ViDevice;
     class Shader;
     
     //! Shader storage (this is the shader module)
@@ -22,7 +22,7 @@ namespace yq::tachyon {
     public:
         
         ViShader();
-        ViShader(ViVisualizer&, const Shader&);
+        ViShader(ViDevice&, const Shader&);
         ViShader(VkDevice, const Shader&);
         ~ViShader();
         
@@ -32,9 +32,9 @@ namespace yq::tachyon {
         VkShaderStageFlagBits   mask() const { return m_mask; }
         VkShaderModule          shader_module() const { return m_shader; }
         bool                    valid() const;
-        //ViVisualizer*           visualizer() const { return m_viz; }
+        //ViDevice*           visualizer() const { return m_viz; }
         
-        std::error_code         create(ViVisualizer&, const Shader&);
+        std::error_code         create(ViDevice&, const Shader&);
         std::error_code         create(VkDevice, const Shader&);
         void                    kill();
         ShaderType              stage() const { return m_stage; }

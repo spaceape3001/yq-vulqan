@@ -153,6 +153,24 @@ namespace yq::tachyon {
         std::error_code                 queue_task(ViQueueID, uint64_t timeout, queue_tasker_fn&&);
         ViQueueTaskerPtr                queue_tasker(ViQueueID);
         
+
+        //! Finds the shader
+        ViShaderCPtr                    shader(uint64_t) const;
+
+        /*! Creates the shader
+        
+            This imports the shader onto the GPU device.  
+            
+            \note Once imported, this shader cannot be removed and will persist 
+            to the end of the visualizer's lifespan.
+        */
+        ViShaderCPtr                    shader_create(const Shader&);
+
+        void                            shader_erase(uint64_t);
+        void                            shader_erase(const Shader&);
+
+        //! Current shader manager (null if not initialized)
+        //ViShaderManager*                shader_manager() const;
         
         
         std::error_code                 wait_idle() const;
@@ -174,6 +192,7 @@ namespace yq::tachyon {
         VkPhysicalDevice                        m_physical                  = nullptr;
         std::vector<QueueFamily>                m_queueFamilies;
         std::map<ViQueueType,ViQueueFamilyID>   m_queueType2Family;
+        ViShaderManagerUPtr                     m_shaders;
         std::map<ViQueueID, ViQueueTaskerPtr>   m_taskers;
         mutable mutex_t                         m_taskerMutex;
 

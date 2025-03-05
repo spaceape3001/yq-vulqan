@@ -284,7 +284,6 @@ namespace yq::tachyon {
     
     std::error_code     ViVisualizer::_6_manager_init()
     {
-        m_shaders           = std::make_unique<ViShaderManager>(*this);
         m_images            = std::make_unique<ViImageManager>(*this);
         m_samplers          = std::make_unique<ViSamplerManager>(*this);
         m_textures          = std::make_unique<ViTextureManager>(*this);
@@ -299,7 +298,6 @@ namespace yq::tachyon {
         m_pipelineLayouts   = {};
         m_textures          = {};
         m_samplers          = {};
-        m_shaders           = {};
         m_images            = {};
         
         vizDebug << "ViVisualizer: Destroyed the managers";
@@ -926,33 +924,28 @@ namespace yq::tachyon {
 
     ViShaderCPtr ViVisualizer::shader(uint64_t i) const
     {
-        if(!m_shaders)
+        if(!m_device)
             return {};
-        return m_shaders -> get(i);
+        return m_device->shader(i);
     }
 
     ViShaderCPtr    ViVisualizer::shader_create(const Shader&sha)
     {
-        if(!m_shaders)
+        if(!m_device)
             return {};
-        return m_shaders->create(sha);
+        return m_device->shader_create(sha);
     }
 
     void  ViVisualizer::shader_erase(uint64_t i)
     {
-        if(m_shaders){
-            m_shaders -> erase(i);
-        }
+        if(m_device)
+            m_device->shader_erase(i);
     }
     
     void  ViVisualizer::shader_erase(const Shader& sha)
     {
-        shader_erase(sha.id());
-    }
-
-    ViShaderManager*  ViVisualizer::shader_manager() const 
-    { 
-        return m_shaders.get(); 
+        if(m_device)
+            m_device->shader_erase(sha.id());
     }
 
     bool        ViVisualizer::supports_surface(VkFormat fmt) const

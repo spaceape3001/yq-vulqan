@@ -99,6 +99,10 @@ namespace yq::tachyon {
                 for(uint32_t i=0;i<*p;++i)
                     weights.push_back(1.);
             }
+            if(std::get_if<uint32_t>(&spec))
+                weights.push_back(1.);
+            if(std::get_if<optional_k>(&spec))
+                weights.push_back(1.);
             while(weights.size() < extra.min + extra.pre)
                 weights.push_back(1.);
             count   = (uint32_t) weights.size();

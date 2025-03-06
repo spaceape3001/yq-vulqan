@@ -338,6 +338,11 @@ namespace ImGui {
         Text("{%lf, %lf}", v.x, v.y );
     }
     
+    void    Text(const yq::Vector2F&v)
+    {
+        Text("{%f, %f}", v.x, v.y );
+    }
+
     void    Text(const yq::Vector3D&v)
     {
         Text("{%lf, %lf, %lf}", v.x, v.y, v.z);

@@ -72,6 +72,8 @@ namespace yq::tachyon {
         
         const AppCreateInfo&        app_info() const { return m_cInfo; }
         
+        const Desktop*              desktop() const { return m_desktop; }
+        
         //! Creates a viewer with widget (note, application owns it)
         ViewerID                    create(viewer_k, WidgetPtr);
         
@@ -96,13 +98,22 @@ namespace yq::tachyon {
             This "starts" the application by launching vulqan, the various threads, 
             initializing the platform, loading plugins, etc. 
         */
-        bool                        start();    // starts the threads
+        virtual bool    start();    // starts the threads
 
         //! When we first called "start()"
         const time_point_t&         start_time() const { return m_startTime; }
 
         //! Used by save's reincarnation to start a thread
         void                        start_thread(ThreadPtr);
+        
+        void                    stop() { _kill(); }
+
+        void                    tick(); // drives the app thread
+
+    protected:
+        AppCreateInfo           m_cInfo;
+        
+        virtual void            configure_vulqan() {}
 
     private:
 
@@ -116,7 +127,6 @@ namespace yq::tachyon {
             Terminated
         };
         
-        AppCreateInfo const     m_cInfo;
         std::vector<Desktop*>   m_desktops;
         std::vector<Thread*>    m_threads;
         

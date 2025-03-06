@@ -138,6 +138,7 @@ namespace ImGui {
     void    Text(const yq::Size2I&);
     void    Text(const yq::Tensor44D&);
     void    Text(const yq::Vector2D&);
+    void    Text(const yq::Vector2F&);
     void    Text(const yq::Vector3D&);
     void    Text(const yq::Vector4D&);
     void    Text(const glm::mat4&);

@@ -11,6 +11,7 @@ if("${PROJECT_NAME}" STREQUAL "")
 endif()
 
 include(local.cmake OPTIONAL)
+include(configure.cmake)
 
 if(NOT DEFINED Feature_SDK)
     SET(Feature_SDK ON)
@@ -44,14 +45,10 @@ if(NOT YOUR_QUILL_TOOLBOX)
     endif()
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 if(NOT YOUR_QUILL_VULQAN)
     SET(YOUR_QUILL_VULQAN ${CMAKE_CURRENT_LIST_DIR})
 endif()
-
-set(YQ_TACHYON_DATA_DIR "${CMAKE_CURRENT_LIST_DIR}/data" )
-
 
 add_subdirectory(3rd)
 add_subdirectory(api)

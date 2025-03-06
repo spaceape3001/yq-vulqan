@@ -31,6 +31,9 @@ namespace yq::tachyon {
     #endif
     
     struct MonitorSnap : public TachyonSnap /* , public MonitorState */ {
+        Size2MM     dimensions;
+        Size2D      size;
+        Vector2F    scale;
     };
     
     struct MonitorData : public TachyonData {

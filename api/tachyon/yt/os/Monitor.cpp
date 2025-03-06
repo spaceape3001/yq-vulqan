@@ -50,6 +50,21 @@ namespace yq::tachyon {
         return Size2MM( 100_mm, 100_mm );   // default is 10 cm x 10 cm
     }
 
+    Vector2D    Monitor::position() const
+    {
+        return Vector2D(0., 0.);
+    }
+    
+    Vector2F    Monitor::scale() const
+    {
+        return Vector2F(1.f, 1.f);
+    }
+    
+    Size2D      Monitor::size() const
+    {
+        return Size2D( 1024, 768 ); // suitable default
+    }
+
     void Monitor::snap(MonitorSnap& sn) const
     {
         Tachyon::snap(sn);

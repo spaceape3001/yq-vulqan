@@ -197,6 +197,9 @@ namespace yq::tachyon {
 
     bool        Application::start()
     {
+        if(m_stage == Stage::Started)
+            return true;
+    
         if(thread::id()){
             tachyonCritical << "Cannot start application from anything other than the main thread.";
             return false;
@@ -236,12 +239,11 @@ namespace yq::tachyon {
         switch(m_cInfo.platform){
         case Platform::GLFW:
             m_desktop       = Tachyon::create<DesktopGLFW>(m_cInfo);
-            m_thread.app -> tick();
-            m_thread.app -> tick();
-            
+            m_desktops.push_back(m_desktop);
+
+            tick(); tick(); tick(); tick(); tick(); 
             //  connections...?
             
-            m_desktops.push_back(m_desktop);
             break;
         case Platform::None:
             if(!m_cInfo.headless){
@@ -257,12 +259,15 @@ namespace yq::tachyon {
             switch(p){
             case Platform::GLFW:
                 Tachyon::create<DesktopGLFW>(m_cInfo);
+                tick(); tick();
                 break;
             default:
                 break;
             }
         }
         
+        configure_vulqan();
+
         if(m_cInfo.vulkan.enable){
             m_vulkan    = Tachyon::create<VulqanManager>();
             m_thread.app -> tick();
@@ -364,5 +369,11 @@ namespace yq::tachyon {
         m_thread.others.push_back(th);
         m_threads.push_back(th.ptr());
         th->start();
+    }
+
+    void    Application::tick()
+    {
+        if(m_thread.app)
+            m_thread.app -> tick();
     }
 }

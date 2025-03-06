@@ -32,6 +32,8 @@ namespace yq::tachyon {
         
         //virtual bool        is_running() const override;
 
+        virtual std::vector<const Monitor*>   monitors() const override;
+
     protected:
         virtual PostAdvice  advise(const Post&) const override;
 

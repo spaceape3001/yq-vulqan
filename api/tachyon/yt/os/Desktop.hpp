@@ -82,6 +82,8 @@ namespace yq::tachyon {
         
         virtual CursorID    cursor(StdCursor) const { return {}; }
         
+        virtual std::vector<const Monitor*>   monitors() const { return {}; }
+        
         //virtual bool        is_running() const { return false; }
 
         bool    does(cursor_k) const;

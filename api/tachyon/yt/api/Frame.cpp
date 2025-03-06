@@ -1096,6 +1096,11 @@ namespace yq::tachyon {
         return m_models.snap(id);
     }
 
+    const MonitorSnap*                 Frame::snap(MonitorID id) const
+    {
+        return m_monitors.snap(id);
+    }
+
     const MouseSnap*                   Frame::snap(MouseID id) const
     {
         return m_mouses.snap(id);

@@ -8,6 +8,7 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yt/os/Monitor.hpp>
+#include <yt/os/MonitorData.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorMonitors : public FrameInspectorTachyons {
@@ -29,6 +30,8 @@ namespace yq::tachyon {
 
         void    render(monitor_k)
         {
+            const MonitorSnap*  snap    = static_cast<const MonitorSnap*>(m_snap);
+
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted("------");
@@ -36,6 +39,25 @@ namespace yq::tachyon {
             if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(">>> MONITOR PROPERTIES <<<");
             }
+
+#if 0
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Scale");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->scale);
+            }
+#endif
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                ImGui::TextUnformatted("Size");
+            }
+            if(ImGui::TableNextColumn()){
+                ImGui::Text(snap->size);
+            }
+
         }
 
         void   render(ViContext&ctx) override

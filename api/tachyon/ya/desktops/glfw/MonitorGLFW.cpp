@@ -110,14 +110,17 @@ namespace yq::tachyon {
         return m_size;
     }
 
-    Vector2D    MonitorGLFW::scale() const 
+    Vector2F    MonitorGLFW::scale() const 
     {
-        return m_scale.cast<double>();
+        return m_scale;
     }
 
     void MonitorGLFW::snap(MonitorSnap&sn) const
     {
         Monitor::snap(sn);
+        sn.size             = m_size;
+        sn.scale            = m_scale;
+        sn.dimensions       = m_dimensions;
     }
 
     Execution MonitorGLFW::tick(const Context&ctx) 
@@ -154,6 +157,8 @@ namespace yq::tachyon {
         w.description("GLFW Monitor");
         w.execution(EVERY(5_s));
         w.interface<IPosition²>();
+        w.interface<ISize²>();
+        w.interface<IScale²>();
     }
 }
 

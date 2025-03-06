@@ -17,7 +17,7 @@ struct GLFWmonitor;
 struct GLFWvidmode;
 
 namespace yq::tachyon {
-    class MonitorGLFW : public Monitor, private IPosition², private ISize², private IScale² {
+    class MonitorGLFW : public Monitor {
         YQ_TACHYON_DECLARE(MonitorGLFW, Monitor);
     public:
         MonitorGLFW(GLFWmonitor*, const Param&p = {});
@@ -28,7 +28,7 @@ namespace yq::tachyon {
         virtual Size2MM     dimensions() const override;
         GLFWmonitor*        glfw() const { return m_monitor; }
         Vector2D            position() const override;
-        Vector2D            scale() const override;
+        Vector2F            scale() const override;
         Size2D              size() const override;
         void                snap(MonitorSnap&) const;
         virtual Execution   tick(const Context&) override;

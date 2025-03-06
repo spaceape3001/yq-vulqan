@@ -181,7 +181,8 @@ namespace yq::tachyon {
     {
         int             cnt = 0;
         GLFWmonitor**   ptr = glfwGetMonitors(&cnt);
-        if(!cnt || ptr)
+    yInfo() << "DesktopGLFW found " << cnt << " monitors";
+        if(!cnt || !ptr)
             return ;
         for(int i=0;i<cnt;++i)
             _install(MONITOR, ptr[i]);
@@ -192,6 +193,7 @@ namespace yq::tachyon {
         MonitorID   id  = MonitorGLFW::monitor(m);
         if(id || m_monitors.contains(id))
             return false;
+    yInfo() << "DesktopGLFW installing monitor";
         MonitorGLFW*    mm  = create_child<MonitorGLFW>(m);
         m_monitors[mm->id()]    = mm;
         return true;
@@ -302,6 +304,13 @@ namespace yq::tachyon {
         return {};
     }
 
+    std::vector<const Monitor*>   DesktopGLFW::monitors() const 
+    {
+        std::vector<const Monitor*> ret;
+        for(auto& itr : m_monitors)
+            ret.push_back(itr.second);
+        return ret;
+    }
 
     Execution    DesktopGLFW::setup(const Context& ctx)
     {
@@ -317,6 +326,7 @@ namespace yq::tachyon {
                 m_keyboard      = create_child<KeyboardGLFW>();
             }
             if(m_control(C::Monitor)){
+            glfwInfo << "Scanning for monitors";
                 _install(MONITOR, ALL);
                 m_monitor   = MonitorGLFW::monitor(PTR, glfwGetPrimaryMonitor());
                 glfwSetMonitorCallback( callback_monitor );

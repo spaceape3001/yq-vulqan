@@ -55,6 +55,10 @@ namespace yq::tachyon {
         //! Returns the approximate dimensions of the monitor, should *NEVER* change
         virtual Size2MM     dimensions() const;
 
+        virtual Size2D      size() const;
+        virtual Vector2D    position() const;
+        virtual Vector2F    scale() const;
+
     protected:
     
         void        snap(MonitorSnap&) const;

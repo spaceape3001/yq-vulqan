@@ -52,6 +52,8 @@ namespace yq::tachyon {
         
         using std_cursor_lookup = std::map<StdCursor, CursorID>;
         
+        struct WindowCreateSpec;
+        
         //! Joysticks (number comes from GLFW)
         glfw_joystick_array     m_joysticks;
         glfw_gamepad_array      m_gamepads;

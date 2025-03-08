@@ -11,6 +11,7 @@
 #include <yt/api/Tachyon.hpp>
 #include <yt/typedef/window.hpp>
 #include <yv/typedef/vi_surface.hpp>
+#include <yt/os/WindowMode.hpp>
 
 namespace yq::tachyon {
 
@@ -64,17 +65,20 @@ namespace yq::tachyon {
         void        cmd_hide();
         
         virtual ViSurfacePtr    create_surface() const;
+        
+        WindowMode      window_mode() const { return m_windowMode; }
 
     protected:
     
         void        snap(WindowSnap&) const;
 
         //! Default constructor
-        Window(const ViewerCreateInfo&, const Param&p = {});
+        Window(const ViewerCreateInfo&);
         
         //! Default destructor
         ~Window();
         
+        WindowMode          m_windowMode    = WindowMode::Normal;
     };
 
 }

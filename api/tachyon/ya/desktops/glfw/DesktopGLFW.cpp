@@ -251,38 +251,122 @@ namespace yq::tachyon {
         return create_window(vci);
     }
     
-    WindowGLFW*   DesktopGLFW::create_window(const ViewerCreateInfo& vci) 
-    {
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        glfwWindowHint(GLFW_FLOATING, vci.floating ? GLFW_TRUE : GLFW_FALSE);
-        glfwWindowHint(GLFW_DECORATED, vci.decorated ? GLFW_TRUE : GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, vci.resizable ? GLFW_TRUE : GLFW_FALSE);
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+    struct DesktopGLFW::WindowCreateSpec {
+        const ViewerCreateInfo& vci;
+        std::string             title;
+        GLFWmonitor*            monitor = nullptr;
+        int                     wx = 1920, wy = 1080, sx = 0, sy = 0;
+        int                     refresh     = 0;
+        bool                    floating, decorated, resizable, reposition = false;
+        bool                    iconified   = false;
+        bool                    maximized   = false;
         
-        int wx      = std::max(1,vci.size.width());
-        int wy      = std::max(1,vci.size.height());
-        
-        std::string     title   = vci.title;
-        if(title.empty())
-            title   = Application::app_name();
-        
-        GLFWmonitor*    m   = nullptr;
-        if(vci.monitor){
-            MonitorGLFW* mm   = _monitor(vci.monitor);
-            if(!mm){
-                glfwCritical << "Unable to find specified monitor.";
-                return nullptr;
+        WindowCreateSpec(const ViewerCreateInfo& _vci) : vci(_vci)
+        {
+        }
+            
+        bool configure(DesktopGLFW& desktop)
+        {
+            title   = vci.title;
+            floating    = vci.floating;
+            decorated   = vci.decorated;
+            resizable   = vci.resizable;
+            if(title.empty())
+                title   = Application::app_name();
+
+            if(vci.monitor){
+                MonitorGLFW* mm   = desktop._monitor(vci.monitor);
+                if(!mm){
+                    glfwCritical << "Unable to find specified monitor.";
+                    return false;
+                }
+                
+                monitor = mm->glfw();
+                if(!monitor){
+                    glfwCritical << "Unable to find specified monitor.";
+                    return false;
+                }
+            } else if((vci.wmode == WindowMode::Windowed) || (vci.wmode == WindowMode::Fullscreen)){
+                monitor = glfwGetPrimaryMonitor();
             }
             
-            m   = mm->glfw();
-            if(!m){
-                glfwCritical << "Unable to find specified monitor.";
-                return nullptr;
+            //  Get details
+
+            switch(vci.wmode){
+            case WindowMode::Normal:
+            case WindowMode::Iconified:
+            case WindowMode::Maximized:
+                wx      = std::max(1, vci.size.x);
+                wy      = std::max(1, vci.size.y);
+                if(vci.position){
+                    sx      = vci.position->x;
+                    sy      = vci.position->y;
+                    reposition  = true;
+                } 
+                break;
+            case WindowMode::Windowed:
+                glfwGetMonitorPos(monitor, &sx, &sy);
+                reposition  = true;
+                [[fallthrough]];
+            case WindowMode::Fullscreen:
+                {
+                    const GLFWvidmode*vm  = glfwGetVideoMode(monitor);
+                    wx      = vm->width;
+                    wy      = vm->height;
+                    refresh = vm->refreshRate;
+                }
+                break;
             }
+            
+            // enforce constraints
+            switch(vci.wmode){
+            case WindowMode::Normal:
+                monitor     = nullptr;
+                break;
+            case WindowMode::Iconified:
+                monitor     = nullptr;
+                iconified   = true;
+                break;
+            case WindowMode::Maximized:
+                monitor     = nullptr;
+                maximized   = true;
+                break;
+            case WindowMode::Windowed:
+                monitor     = nullptr;
+                resizable   = false;
+                decorated   = false;
+                refresh     = 0;
+                break;
+            case WindowMode::Fullscreen:
+                floating    = false;
+                resizable   = false;
+                decorated   = false;
+                break;
+            }
+
+            return true;
+        }
+    };
+    
+    
+    WindowGLFW*   DesktopGLFW::create_window(const ViewerCreateInfo& vci) 
+    {
+        WindowCreateSpec wcs(vci);
+        if(!wcs.configure(*this))
+            return nullptr;
+    
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        glfwWindowHint(GLFW_FLOATING, wcs.floating ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_DECORATED, wcs.decorated ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, wcs.resizable ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        
+        if(wcs.reposition){
+            glfwWindowHint(GLFW_POSITION_X, wcs.sx);
+            glfwWindowHint(GLFW_POSITION_Y, wcs.sy);
         }
     
-    
-        GLFWwindow* ww  = glfwCreateWindow(wx, wy, title.c_str(), m, nullptr);
+        GLFWwindow* ww  = glfwCreateWindow(wcs.wx, wcs.wy, wcs.title.c_str(), wcs.monitor, nullptr);
         if(!ww){
             const char* description = nullptr;
             glfwGetError(&description);
@@ -290,6 +374,11 @@ namespace yq::tachyon {
                 glfwCritical << "Unable to create GLFW window.  " << description;
             return nullptr;
         }
+        
+        if(wcs.iconified)
+            glfwIconifyWindow(ww);
+        if(wcs.maximized)
+            glfwMaximizeWindow(ww);
         
         WindowGLFW* w       = create_child<WindowGLFW>(this, ww, vci);
         m_windows[w->id()]  = w;

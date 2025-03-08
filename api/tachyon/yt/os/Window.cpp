@@ -12,6 +12,7 @@
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <yq/meta/Init.hpp>
 #include <yv/ViSurface.hpp>
+#include <yt/app/ViewerCreateInfo.hpp>
 
 namespace yq::tachyon {
 
@@ -40,7 +41,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Window::Window(const ViewerCreateInfo&, const Param& p) : Tachyon(p)
+    Window::Window(const ViewerCreateInfo& vci) : Tachyon(Param{.name=vci.title}), m_windowMode(vci.wmode)
     {
     }
 

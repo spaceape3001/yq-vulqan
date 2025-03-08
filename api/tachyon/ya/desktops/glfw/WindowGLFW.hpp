@@ -19,6 +19,7 @@
 #include <ya/typedef/commands.hpp>
 
 struct GLFWwindow;
+struct GLFWmonitor;
 
 namespace yq::tachyon {
     class DesktopGLFW;
@@ -45,15 +46,20 @@ namespace yq::tachyon {
     {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
     public:
-        WindowGLFW(DesktopGLFW*, GLFWwindow*, const ViewerCreateInfo&, const Param&p={});
+        WindowGLFW(DesktopGLFW*, GLFWwindow*, const ViewerCreateInfo&);
         ~WindowGLFW();
         
         static void init_info();
 
         static WindowGLFW*  window(ptr_k, GLFWwindow*);
         static WindowID     window(GLFWwindow*);
+        
+        struct CreateSpec {
+            Vector2I                    size;
+            std::optional<Vector2I>     position;
+            GLFWmonitor*                monitor     = nullptr;
+        };
  
-
         virtual ViSurfacePtr    create_surface() const override;
  
         virtual Execution tick(const Context&) override;

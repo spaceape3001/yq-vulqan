@@ -289,8 +289,8 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    WindowGLFW::WindowGLFW(DesktopGLFW* d, GLFWwindow* w, const ViewerCreateInfo & vci, const Param&p) : 
-        Window(vci, p), m_desktop(d), m_window(w)
+    WindowGLFW::WindowGLFW(DesktopGLFW* d, GLFWwindow* w, const ViewerCreateInfo & vci) : 
+        Window(vci), m_desktop(d), m_window(w)
     {
         assert(w && d);
         glfwSetWindowUserPointer(w, this);

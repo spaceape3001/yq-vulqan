@@ -53,8 +53,11 @@ bool RockApp::start()
     
     static const RGBA4F kColors[] = {
         { 0.02f, 0.00f, 0.00f, 1.f },
+        { 0.01f, 0.01f, 0.00f, 1.f },
         { 0.00f, 0.02f, 0.00f, 1.f },
-        { 0.00f, 0.00f, 0.02f, 1.f }
+        { 0.00f, 0.01f, 0.01f, 1.f },
+        { 0.00f, 0.00f, 0.02f, 1.f },
+        { 0.01f, 0.00f, 0.01f, 1.f }
     };
     static constexpr size_t nColors = sizeof(kColors)/sizeof(kColors[0]);
     
@@ -63,6 +66,7 @@ bool RockApp::start()
     ViewerCreateInfo        vci;
     vci.title           = "Rocks";
     vci.resizable       = false;
+    //vci.floating        = true;
     //vci.decorated       = false;
     size_t                  counter = 0;
     
@@ -76,8 +80,9 @@ bool RockApp::start()
     for(XWin& xw : m_windows){
 yInfo() << "Monitor> " << xw.pixels.x << "*" << xw.pixels.y << " " << xw.position.x << "," << xw.position.y;
 
-        //vci.monitor     = xw.monitor;
+        vci.monitor     = xw.monitor;
         vci.position        = iround(xw.position);
+        vci.wmode           = WindowMode::Windowed;
         //vci.size            = iround(xw.pixels*0.75);
         vci.clear           = kColors[(counter++) % nColors];
         
@@ -86,8 +91,6 @@ yInfo() << "Monitor> " << xw.pixels.x << "*" << xw.pixels.y << " " << xw.positio
         xw.widget   = w->id();
         xw.viewer   = create(VIEWER, vci, w);
         tick(); tick();
-        
-        break;
     }
     
     

@@ -21,7 +21,7 @@ namespace yq::tachyon {
         
         const AppCreateInfo& aci    = Application::app()->app_info();
         
-        vizInfo << "VulqanGPU(" << m_name << "): id=" << id().id;
+        vizInfo << "VulqanGPU(" << gpu_name() << "): id=" << id().id;
 
         //  approximate... might have some error
         vkGetPhysicalDeviceMemoryProperties(m_physical, &m_memoryInfo);
@@ -31,7 +31,7 @@ namespace yq::tachyon {
                 m_heap += m_memoryInfo.memoryHeaps[i].size;
         }
 
-        vizDebug << "VulqanGPU(" << m_name << "): heap=" << m_heap;
+        vizDebug << "VulqanGPU(" << gpu_name() << "): heap=" << m_heap;
 
         VqPhysicalDeviceProperties2         prop2;
         VqPhysicalDeviceMultiviewProperties multiProp;
@@ -42,7 +42,7 @@ namespace yq::tachyon {
         if(aci.view.multiview){
             m_multiview.enabled  = true;
             prop2.pNext     = &multiProp;
-            vizDebug << "VulqanGPU(" << m_name << "): Multiview enabled";
+            vizDebug << "VulqanGPU(" << gpu_name() << "): Multiview enabled";
         }
 
         vkGetPhysicalDeviceProperties2(m_physical, &prop2);
@@ -97,7 +97,7 @@ namespace yq::tachyon {
     Execution VulqanGPU::teardown(const Context&ctx) 
     {
         if(m_device){
-            vizNotice << "VulqanGPU(" << name() << "): destroying the logical device";
+            vizNotice << "VulqanGPU(" << gpu_name() << "): destroying the logical device";
             m_device  -> destroy();
             m_device    = {};
         }

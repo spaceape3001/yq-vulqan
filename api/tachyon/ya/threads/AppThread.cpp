@@ -49,7 +49,6 @@ namespace yq::tachyon {
     {
         if(evt.source()(Type::Viewer)){
             if(!--m_viewers){
-            yInfo() << "AppThread::on_destroy_event";
                 m_app -> shutting_down();
                 cmd_teardown();
             }

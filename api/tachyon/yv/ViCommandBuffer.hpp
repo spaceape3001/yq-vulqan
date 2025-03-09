@@ -28,23 +28,17 @@ namespace yq::tachyon {
         operator VkCommandBuffer() const { return m_buffer; }
         
         VkCommandBuffer command_buffer() const { return m_buffer; }
-        VkCommandPool   command_pool();
+        VkCommandPool   command_pool() const { return m_pool; }
         bool            consistent() const;
         bool            valid() const;
         //ViVisualizer*   visualizer() const { return m_viz; }
 
         VkCommandBuffer* command_buffer_ptr() { return &m_buffer; }
 
-        void            kill();
-
     private:
         ViDevice&       m_device;
         VkCommandPool   m_pool      = nullptr;
         VkCommandBuffer m_buffer    = nullptr;
-        
-        std::error_code _init(VkCommandPool, VqCommandBufferLevel lvl);
-        void            _kill();
-        void            _wipe();
     };
 
 }

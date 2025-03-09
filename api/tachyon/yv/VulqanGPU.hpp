@@ -33,6 +33,7 @@ namespace yq::tachyon {
         Execution teardown(const Context&) override;
         
         void snap(GraphicsCardSnap&) const;
+        std::string_view    gpu_name() const { return m_name; }
        
     protected:
         void        on_get_device_request(const Ref<const GetDeviceRequest>&);

@@ -331,9 +331,9 @@ namespace yq::tachyon {
         Common& g   = common();
         if(g.instance){
             if(g.debug){
-                auto vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(g.instance, "vkDestroyDebugReportCallbackEXT");
+                auto vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT) vkGetInstanceProcAddr(g.instance, "vkDestroyDebugReportCallbackEXT");
                 if(vkDestroyDebugReportCallbackEXT)
-                    vkDestroyDebugReportCallbackEXT(g.instance, nullptr, nullptr);
+                    vkDestroyDebugReportCallbackEXT(g.instance, g.debug, nullptr);
                 g.debug = nullptr;
             }
             

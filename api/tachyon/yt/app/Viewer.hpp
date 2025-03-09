@@ -222,6 +222,8 @@ namespace yq::tachyon {
 
         int                         width() const;
         
+        WindowMode                  window_mode() const;
+        
         bool                        zero_framebuffer() const;
 
         //  -----------------------------------------
@@ -300,12 +302,15 @@ namespace yq::tachyon {
             */
         void                set_widget(WidgetPtr);
 
+        using Tachyon::teardown;
+
         //! Our general "update()" that includes the visualizer
         virtual Execution   tick(const Context&) override;
         
     protected:
 
         virtual Execution   setup(const Context&) override;
+        virtual Execution   teardown(const Context&) override;
 
         virtual PostAdvice  advise(const Post&) const override;
         
@@ -326,7 +331,10 @@ namespace yq::tachyon {
         enum class X : uint8_t {
             Failure,
             SentDevRequest,
-            DevReply
+            DevReply,
+            HideCommand,
+            HideEvent,
+            DestroyCommand
         };
 
         Cleanup                         m_cleanup;
@@ -335,8 +343,8 @@ namespace yq::tachyon {
         std::unique_ptr<ViGui>          m_imgui;
         //std::atomic<bool>               m_paused;
         ViewerState                     m_state;
-        std::atomic<Stage>              m_stage         = { Stage::Preinit };
-        Flags<X>                        m_startup       = {};
+        //std::atomic<Stage>              m_stage         = { Stage::Preinit };
+        Flags<X>                        m_flags       = {};   //! Startup & shutdown
         std::atomic<uint64_t>           m_ticks{0};
         std::unique_ptr<Visualizer>     m_viz;
         TypedID                         m_widget;

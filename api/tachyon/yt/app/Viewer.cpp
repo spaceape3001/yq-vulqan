@@ -506,16 +506,15 @@ namespace yq::tachyon {
 
     void    Viewer::on_close_command(const CloseCommand& cmd)
     {
-        if(!dying() && (cmd.target() == id())){
-            send(new HideCommand({.target=m_window}));
+        if(!dying() && (cmd.target() == id()))
             teardown();
-        }
     }
 
     void    Viewer::on_close_reply(const CloseReply&rep)
     {
         if(rep.source() != m_widget)
             return ;
+
             
         if(m_closeRequest){
             send(new CloseReply({.source=rep.source(), .target=m_closeRequest->source()}, m_closeRequest, rep.response()));
@@ -525,12 +524,12 @@ namespace yq::tachyon {
 
     void    Viewer::on_close_request(const CloseRequestCPtr&req) 
     { 
-
         if(!req)
             return ;
-        
+
         if((req->target() != id()) && (req->source() != m_window))
             return;
+
 
         if(dying()){
             send(new CloseReply({.source=this, .target=req->source()}, req, Response::Busy));
@@ -617,28 +616,28 @@ namespace yq::tachyon {
         const Frame*    frame   = Frame::current();
         if(!frame){
             viewerCritical << "Viewer: Unable to get current frame, aborting the viewer";
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
             return ;
         }
         
         const WindowSnap*   ws  = frame->snap((WindowID) m_window);
         if(!ws){
             viewerCritical << "Viewer: Unable to get window snap, aborting the viewer";
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
             return ;
         }
         
         const Window* win   = frame->object((WindowID) m_window);
         if(!win){
             viewerCritical << "Viewer: Unable to get window, aborting the viewer";
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
             return ;
         }
         
         const Widget* wid   = frame->object((WidgetID) m_widget);
         if(!wid){
             viewerCritical << "Viewer: Unable to get widget, aborting the viewer";
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
             return ;
         }
 
@@ -647,14 +646,14 @@ namespace yq::tachyon {
         
         if(!vcd.device || !vcd.device->valid()){
             viewerCritical << "Viewer: Unable to get a valid device, aborting the viewer";
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
             return;
         }
         
         vcd.surface     = win -> create_surface();
         if(!vcd.surface || !vcd.surface->valid()){
             viewerCritical << "Viewer: Unable to get a valid surface, aborting the viewer";
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
             return;
         }
         
@@ -667,12 +666,12 @@ namespace yq::tachyon {
         catch(const std::exception& ex)
         {
             viewerCritical << "Viewer: unable to create visualizer: " << ex.what();
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
         }
         catch(const std::error_code& ec)
         {
             viewerCritical << "Viewer: unable to create visualizer: " << ec.message();
-            m_startup |= X::Failure;
+            m_flags |= X::Failure;
         }
         
         if(!m_viz)
@@ -683,16 +682,16 @@ namespace yq::tachyon {
                 m_imgui = std::make_unique<ViGui>(*m_viz);
             }
             catch(const std::exception& ex){
-                m_startup |= X::Failure;
+                m_flags |= X::Failure;
                 viewerCritical << "Viewer: cannot create imgui: " << ex.what();
             }
             catch(const std::error_code& ec){
-                m_startup |= X::Failure;
+                m_flags |= X::Failure;
                 viewerCritical << "Viewer: cannot create imgui: " << ec.message();
             }
         }
 
-        m_startup |= X::DevReply;   
+        m_flags |= X::DevReply;   
     }
     
     void    Viewer::on_hide_command(const HideCommand& cmd)
@@ -704,21 +703,8 @@ namespace yq::tachyon {
 
     void    Viewer::on_hide_event(const HideEvent& evt)
     {
-        if(dying()){
-            if(evt.source() == m_window){
-                m_stage     = Stage::Kaput;
-                
-                send(new DestroyCommand({.source=this, .target=m_window}));
-                send(new CloseEvent({.source=this}));
-
-                _sweepwait();
-                m_imgui     = {};
-                _sweepwait();
-                m_viz       = {};
-                _sweepwait();
-            }
-        } else {
-            //  DO NOTHING
+        if(dying() && (evt.source() == m_window)){
+            m_flags     |= X::HideEvent;
         }
     }
     
@@ -876,7 +862,7 @@ namespace yq::tachyon {
 
     Execution   Viewer::setup(const Context&ctx) 
     {
-        if(m_startup(X::Failure))
+        if(m_flags(X::Failure))
             return ABORT;
     
         const Frame*    frame   = Frame::current();
@@ -902,13 +888,13 @@ namespace yq::tachyon {
         if(!w)
             return WAIT;
 
-        if(!m_startup(X::SentDevRequest)){
+        if(!m_flags(X::SentDevRequest)){
             send(new GetDeviceRequest({.source=*this, .target=m_graphicsCard}), TARGET);
-            m_startup |= X::SentDevRequest;
+            m_flags |= X::SentDevRequest;
             return WAIT;
         }
         
-        if(!m_startup(X::DevReply))
+        if(!m_flags(X::DevReply))
             return WAIT;
         
         if(!w->started)
@@ -928,6 +914,40 @@ namespace yq::tachyon {
         sn.focus    = m_focus;
         //sn.paused   = m_paused;
         Tachyon::snap(sn);
+    }
+    
+    Execution   Viewer::teardown(const Context&ctx) 
+    {
+
+        if(is_visible() && (window_mode() != WindowMode::Fullscreen)){
+            if(!m_flags(X::HideCommand)){
+                m_flags |= X::HideCommand;
+                send(new HideCommand({.source=*this, .target=m_window}), TARGET);
+                return WAIT;
+            }
+        }
+    
+        m_cleanup.sweep();
+
+viewerInfo << "Viewer::teardown() -- sending destroy/close";
+
+
+        if(m_viz){
+            m_viz -> wait_idle();
+        }
+
+        if(m_imgui)
+            m_imgui = {};
+
+        if(m_viz){
+            m_viz -> wait_idle();
+            m_viz   = {};
+        }
+        
+        send(new DestroyCommand({.source=this, .target=m_window}));
+        send(new CloseEvent({.source=this}));
+
+        return {};
     }
 
     Execution   Viewer::tick(const Context&ctx) 
@@ -988,6 +1008,11 @@ namespace yq::tachyon {
     int Viewer::width() const
     {
         return m_state.window.area.x;
+    }
+
+    WindowMode  Viewer::window_mode() const
+    {   
+        return m_state.window.mode;
     }
 
     bool Viewer::zero_framebuffer() const

@@ -11,6 +11,7 @@
 #include <yt/os/ModifierKey.hpp>
 #include <yt/os/MouseButton.hpp>
 #include <yt/os/MouseMode.hpp>
+#include <yt/os/WindowMode.hpp>
 #include <ya/aspects/AMaxSize2.hpp>
 #include <ya/aspects/AMinSize2.hpp>
 #include <ya/aspects/APosition2.hpp>
@@ -119,7 +120,7 @@ namespace yq::tachyon {
         Size2I              m_minSize   = { -1, -1 };   // used to store the old values
         MouseMode           m_mouseMode = MouseMode::Normal;
         Stage               m_stage     = Stage::Preinit;
-        
+        WindowMode          m_windowMode;
         
         void    on_aspect_command(const AspectCommand&);
         void    on_attention_command(const AttentionCommand&);

@@ -14,9 +14,9 @@
 
 namespace yq::tachyon {
     ViQueueTasker::ViQueueTasker(ViDevice& dev, ViQueueID qid) : 
-        m_commandPool(dev.device(), qid.family ),
-        m_commandBuffer(dev.device(), m_commandPool),
-        m_fence(dev.device()),
+        m_commandPool(dev, qid.family ),
+        m_commandBuffer(dev, m_commandPool),
+        m_fence(dev),
         m_queue(dev.queue(qid))
     {
     }

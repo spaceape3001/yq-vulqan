@@ -32,7 +32,7 @@ namespace yq::tachyon {
         using Tachyon::Param;
 
         Manager(const Param& p = {});
-        ~Manager();
+        virtual ~Manager();
         
         ManagerID id() const { return { UniqueID::id()}; }
     };

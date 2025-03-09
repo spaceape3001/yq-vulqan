@@ -24,6 +24,8 @@ namespace yq::tachyon {
         
         virtual Execution subtick(const Context&) override;
         
+        virtual void run();
+        
     private:
         friend class Application;
         Application* const      m_app;

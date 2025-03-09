@@ -153,6 +153,8 @@ namespace yq::tachyon {
     
         friend class Viewer;
         
+        void    shutting_down();
+        
         void    _kill();
     };
 

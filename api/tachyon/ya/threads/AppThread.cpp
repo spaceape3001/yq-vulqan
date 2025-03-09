@@ -13,6 +13,7 @@
 #include <yt/api/Frame.hpp>
 #include <yt/api/ThreadData.hpp>
 #include <yt/api/ThreadInfoWriter.hpp>
+#include <yt/app/Application.hpp>
 #include <ya/events/tachyon/DestroyEvent.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
@@ -28,6 +29,12 @@ namespace yq::tachyon {
         Thread::s_current       = nullptr;
     }
     
+    void AppThread::run()
+    {
+        Thread::run();
+        
+    }
+
     void AppThread::shutdown()
     {
         /* TODO */
@@ -35,6 +42,8 @@ namespace yq::tachyon {
 
     Execution AppThread::subtick(const Context&ctx) 
     {
+        if(kaput())
+            quit();
         return {};
     }
 
@@ -42,7 +51,9 @@ namespace yq::tachyon {
     {
         if(evt.source()(Type::Viewer)){
             if(!--m_viewers){
-                quit();
+            yInfo() << "AppThread::on_destroy_event";
+                m_app -> shutting_down();
+                cmd_teardown();
             }
         }
     }

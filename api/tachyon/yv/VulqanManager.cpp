@@ -388,12 +388,6 @@ namespace yq::tachyon {
     
     VulqanManager::~VulqanManager()
     {
-        Common& g   = common();
-        if(g.manager != this)
-            return;
-            
-        _kill();
-        g.manager   = nullptr;
         tachyonDebug << "Vulqan destroyed";
     }
 
@@ -404,14 +398,41 @@ namespace yq::tachyon {
 
     Execution VulqanManager::setup(const Context&ctx)
     {
-        if(!m_init){
+        if(!m_flags(X::Init)){
             Common& g   = common();
             for(VkPhysicalDevice pd : vqEnumeratePhysicalDevices(g.instance)){
-                create_child<VulqanGPU>(pd);
+                m_devices.push_back(create_child<VulqanGPU>(pd));
             }
-            m_init = true;
+            m_flags |= X::Init;
         }
         return Manager::setup(ctx);
+    }
+
+    Execution VulqanManager::teardown(const Context&) 
+    {
+        if(m_flags(X::Killed))
+            return {};
+            
+        Common& g   = common();
+        if(g.manager != this)
+            return {};
+        
+        bool    survivors   = false;
+        
+        for(auto& i : m_devices){
+            if(!i->kaput()){
+                i->cmd_teardown();
+                survivors   = true;
+            }
+        }
+        
+        if(survivors)
+            return WAIT;
+        g.manager   = nullptr;
+        m_devices.clear();
+        _kill();
+        m_flags |= X::Killed;
+        return {};
     }
     
     void VulqanManager::init_info()

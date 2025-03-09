@@ -12,6 +12,7 @@
 #include <yt/api/ID.hpp>
 #include <yt/typedef/monitor.hpp>
 #include <yq/vector/Vector2.hpp>
+#include <yt/os/WindowMode.hpp>
 
 namespace yq::tachyon {
     enum class WindowFlag : uint8_t {
@@ -46,5 +47,6 @@ namespace yq::tachyon {
         Size2I                  pixels{};       //!< Frame buffer size in pixels
         Vector2D                scale{1.,1.};
         float                   opacity = 1.f;  //!< Opacity 
+        WindowMode              mode;
     };
 }

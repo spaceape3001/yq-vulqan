@@ -8,7 +8,8 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yv/VqStructs.hpp>
-#include <yv/ViVisualizer.hpp>
+#include <yv/ViDevice.hpp>
+#include <yq/core/Ref.hpp>
 
 namespace yq::tachyon {
     namespace errors {
@@ -21,16 +22,10 @@ namespace yq::tachyon {
         using fence_unknown                     = error_db::entry<"Unknown fence error">;
     }
 
-    ViFence::ViFence()
+    ViFence::ViFence(ViDevice& dev) : m_device(dev)
     {
-    }
-    
-    ViFence::ViFence(VkDevice dev)
-    {
-        if(dev){
-            if(_init(dev) != std::error_code()){
-                _wipe();
-            }
+        if(_init() != std::error_code()){
+            _wipe();
         }
     }
 
@@ -39,28 +34,27 @@ namespace yq::tachyon {
         kill();
     }
 
-    std::error_code ViFence::_init(VkDevice dev)
+    std::error_code ViFence::_init()
     {
         VqFenceCreateInfo   fci;
-        VkResult res = vkCreateFence(dev, &fci, nullptr, &m_fence);
+        VkResult res = vkCreateFence(m_device.device(), &fci, nullptr, &m_fence);
         if(res != VK_SUCCESS){
             vizWarning << "vkFenceCreate(1): vkResult " << (int64_t) res;
             m_fence = nullptr;
             return errors::fence_cant_create();
         }
         
-        m_device    = dev;
         return {};
     }
     
     void    ViFence::_kill()
     {
-        vkDestroyFence(m_device, m_fence, nullptr);
+        vkDestroyFence(m_device.device(), m_fence, nullptr);
     }
     
     std::error_code ViFence::_reset()
     {
-        switch(vkResetFences(m_device, 1, &m_fence)){
+        switch(vkResetFences(m_device.device(), 1, &m_fence)){
         case VK_SUCCESS:
             return {};
         case VK_ERROR_OUT_OF_DEVICE_MEMORY:
@@ -72,7 +66,7 @@ namespace yq::tachyon {
 
     std::error_code ViFence::_wait(uint64_t timeout)
     {
-        switch(vkWaitForFences(m_device, 1, &m_fence, VK_FALSE, timeout)){
+        switch(vkWaitForFences(m_device.device(), 1, &m_fence, VK_FALSE, timeout)){
         case VK_SUCCESS:
             return {};
         case VK_TIMEOUT:
@@ -90,24 +84,7 @@ namespace yq::tachyon {
 
     void    ViFence::_wipe()
     {
-        m_device    = nullptr;
         m_fence     = nullptr;
-    }
-
-    std::error_code ViFence::init(VkDevice dev)
-    {
-        if(!consistent())
-            return errors::fence_bad_state();
-        if(valid())
-            return errors::fence_existing();
-        if(!dev)
-            return errors::visualizer_uninitialized();
-        return _init(dev);
-    }
-    
-    bool            ViFence::consistent() const
-    {
-        return m_device ? static_cast<bool>(m_fence) : !m_fence;
     }
 
     void            ViFence::kill()
@@ -120,23 +97,17 @@ namespace yq::tachyon {
 
     std::error_code ViFence::reset()
     {
-        if(!valid()){
-            if(!consistent())
-                return errors::fence_bad_state();
+        if(!valid())
             return errors::fence_uninitialized();
-        }
         return _reset();
     }
     
     std::error_code ViFence::status() const
     {
-        if(!valid()){
-            if(!consistent())
-                return errors::fence_bad_state();
+        if(!valid())
             return errors::fence_uninitialized();
-        }
             
-        switch(vkGetFenceStatus(m_device, m_fence)){
+        switch(vkGetFenceStatus(m_device.device(), m_fence)){
         case VK_SUCCESS:
             return {};
         case VK_NOT_READY:
@@ -148,18 +119,10 @@ namespace yq::tachyon {
         }
     }
     
-    bool            ViFence::valid() const
-    {
-        return m_device && m_fence;
-    }
-    
     std::error_code ViFence::wait(uint64_t timeout)
     {
-        if(!valid()){
-            if(!consistent())
-                return errors::fence_bad_state();
+        if(!valid())
             return errors::fence_uninitialized();
-        }
         return _wait(timeout);
     }
 

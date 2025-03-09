@@ -8,6 +8,8 @@
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
+#include <yv/typedef/vi_device.hpp>
+#include <yq/core/Ref.hpp>
 
 namespace yq::tachyon {
     class ViVisualizer;
@@ -20,9 +22,7 @@ namespace yq::tachyon {
     class ViCommandBuffer {
     public:
     
-        ViCommandBuffer();
-        ViCommandBuffer(VkDevice, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
-        ViCommandBuffer(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
+        ViCommandBuffer(ViDevice&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         ~ViCommandBuffer();
     
         operator VkCommandBuffer() const { return m_buffer; }
@@ -35,23 +35,14 @@ namespace yq::tachyon {
 
         VkCommandBuffer* command_buffer_ptr() { return &m_buffer; }
 
-
-        std::error_code init(VkDevice, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
-        std::error_code init(ViVisualizer&, VkCommandPool, VqCommandBufferLevel lvl=VqCommandBufferLevel::Primary);
         void            kill();
 
     private:
-        //ViVisualizer*   m_viz       = nullptr;
-        VkDevice        m_device    = nullptr;
+        ViDevice&       m_device;
         VkCommandPool   m_pool      = nullptr;
         VkCommandBuffer m_buffer    = nullptr;
         
-        ViCommandBuffer(const ViCommandBuffer&) = delete;
-        ViCommandBuffer(ViCommandBuffer&&) = delete;
-        ViCommandBuffer& operator=(const ViCommandBuffer&) = delete;
-        ViCommandBuffer& operator=(ViCommandBuffer&&) = delete;
-        
-        std::error_code _init(VkDevice, VkCommandPool, VqCommandBufferLevel lvl);
+        std::error_code _init(VkCommandPool, VqCommandBufferLevel lvl);
         void            _kill();
         void            _wipe();
     };

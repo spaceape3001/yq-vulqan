@@ -15,6 +15,7 @@ namespace yq {
 
 namespace yq::tachyon {
     struct AppCreateInfo;
+    class VulqanGPU;
 
     class VulqanManager : public Manager {
         YQ_TACHYON_DECLARE(VulqanManager, Manager)
@@ -29,13 +30,14 @@ namespace yq::tachyon {
         static std::span<const char*>   extensions();
     
         VulqanManager();
-        ~VulqanManager();
+        virtual ~VulqanManager();
         
         static void init_info();
 
     protected:
     
         Execution setup(const Context&) override;
+        Execution teardown(const Context&) override;
     
     
     private:
@@ -46,6 +48,11 @@ namespace yq::tachyon {
         static void  _init();
         static void  _kill();
         
-        bool                    m_init  = false;
+        enum class X {
+            Init,
+            Killed
+        };
+        Flags<X>                    m_flags;
+        std::vector<Ref<VulqanGPU>> m_devices;
     };
 }

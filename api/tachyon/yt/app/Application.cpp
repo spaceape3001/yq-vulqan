@@ -360,6 +360,15 @@ namespace yq::tachyon {
         return true;
     }
 
+    void    Application::shutting_down()
+    {
+        //  this tells managers/threads to quit
+        if(m_vulkan)
+            m_vulkan->cmd_teardown();
+        if(m_desktop)
+            m_desktop->cmd_teardown();
+    }
+
     void    Application::start_thread(ThreadPtr th)
     {
         // This *might* be reentrant unsafe depending on if the thread does anything funny in their start...

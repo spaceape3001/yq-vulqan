@@ -55,6 +55,7 @@
 #include <ya/requests/ui/RefreshRequest.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/math/utility.hpp>
+#include <yt/app/ViewerCreateInfo.hpp>
 
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
@@ -289,6 +290,8 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        //  TODO... more on window modes...
+
     WindowGLFW::WindowGLFW(DesktopGLFW* d, GLFWwindow* w, const ViewerCreateInfo & vci) : 
         Window(vci), m_desktop(d), m_window(w)
     {
@@ -312,10 +315,11 @@ namespace yq::tachyon {
         glfwSetWindowRefreshCallback(w, callback_window_refresh);
         glfwSetWindowSizeCallback(w, callback_window_size);
      
-        m_position  = position(READ);
-        m_scale     = scale(READ);
-        m_size      = size(READ);
-        m_stage     = Stage::Running;
+        m_position      = position(READ);
+        m_scale         = scale(READ);
+        m_size          = size(READ);
+        m_stage         = Stage::Running;
+        m_windowMode    = vci.wmode;
     }
     
     WindowGLFW::~WindowGLFW()
@@ -567,10 +571,13 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return ;
-        if(!glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
+        if(!glfwGetWindowAttrib(m_window, GLFW_VISIBLE)){
+    glfwInfo << "WindowGLFW::on_hide_command() ... not visible";
             return ;
+        }
+    glfwInfo << "WindowGLFW::on_hide_command()";
         glfwHideWindow(m_window);
-        send(new HideEvent({.source=this}));
+        send(new HideEvent({.source=*this}));
         mark();
     }
     
@@ -710,8 +717,9 @@ namespace yq::tachyon {
         sn.window.position      = m_position;
         sn.window.scale         = m_scale;
         sn.window.title         = title(READ);
+        sn.window.mode          = m_windowMode;
 
-        sn.time             = glfwGetTime();
+        sn.time                 = glfwGetTime();
     }
 
     Execution WindowGLFW::tick(const Context&ctx) 

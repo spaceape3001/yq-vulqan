@@ -360,6 +360,8 @@ namespace yq::tachyon {
         glfwWindowHint(GLFW_DECORATED, wcs.decorated ? GLFW_TRUE : GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, wcs.resizable ? GLFW_TRUE : GLFW_FALSE);
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        if(wcs.refresh)
+            glfwWindowHint(GLFW_REFRESH_RATE, wcs.refresh);
         
         if(wcs.reposition){
             glfwWindowHint(GLFW_POSITION_X, wcs.sx);

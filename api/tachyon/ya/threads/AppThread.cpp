@@ -42,8 +42,6 @@ namespace yq::tachyon {
 
     Execution AppThread::subtick(const Context&ctx) 
     {
-        if(kaput())
-            quit();
         return {};
     }
 

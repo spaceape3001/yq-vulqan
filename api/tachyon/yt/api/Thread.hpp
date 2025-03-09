@@ -93,6 +93,7 @@ namespace yq::tachyon {
 
     protected:
         virtual Execution   tick(const Context&) override final;
+        virtual Execution   teardown(const Context&) override final;
         
         //! This is for derived classes, in the middle of tick
         virtual Execution   subtick(const Context&);

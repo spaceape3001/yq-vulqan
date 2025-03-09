@@ -453,6 +453,7 @@ namespace yq::tachyon {
         m_images            = {};
         m_shaders           = {};
         m_buffers           = {};
+        m_taskers.clear();
     
         cleanup(SWEEP);
         if(m_allocator){
@@ -460,6 +461,7 @@ namespace yq::tachyon {
             m_allocator = nullptr;
         }
         if(m_device){
+            vkDeviceWaitIdle(m_device);
             vkDestroyDevice(m_device, nullptr);
             m_device    = nullptr;
         }

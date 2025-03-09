@@ -571,11 +571,8 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return ;
-        if(!glfwGetWindowAttrib(m_window, GLFW_VISIBLE)){
-    glfwInfo << "WindowGLFW::on_hide_command() ... not visible";
+        if(!glfwGetWindowAttrib(m_window, GLFW_VISIBLE))
             return ;
-        }
-    glfwInfo << "WindowGLFW::on_hide_command()";
         glfwHideWindow(m_window);
         send(new HideEvent({.source=*this}));
         mark();

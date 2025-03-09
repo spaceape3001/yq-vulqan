@@ -454,8 +454,17 @@ tachyonInfo << ident() << "::on_save_request()";
         m_tasks.push_back(fn);
     }
 
+    Execution   Thread::teardown(const Context&ctx) 
+    {
+        return tick(ctx);
+    } 
+
     void    Thread::tick()
     {
+        if(kaput()){
+            m_quit  = true;
+            return ;
+        }
         thread_map_t        threads;
         {
             lock_t      _lock(s_mutex, false);

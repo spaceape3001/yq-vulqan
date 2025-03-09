@@ -89,6 +89,7 @@ namespace yq::tachyon {
 
     void    Application::_kill()
     {
+    yInfo() << "Application::_kill()";
         if(m_stage == Stage::Started){
             {
                 lock_t  lock(m_mutex);
@@ -362,6 +363,7 @@ namespace yq::tachyon {
 
     void    Application::shutting_down()
     {
+    yInfo() << "Application::shutting_down()";
         //  this tells managers/threads to quit
         if(m_vulkan)
             m_vulkan->cmd_teardown();

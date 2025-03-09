@@ -20,24 +20,23 @@ namespace yq::tachyon {
     
         static VkSamplerCreateInfo  vkInfo(ViDevice&, const SamplerInfo&);
     
-        ViSampler();
         ViSampler(ViDevice&, const Sampler&);
         ~ViSampler();
         
-        bool                    consistent() const;
+        //bool                    consistent() const;
         VkSampler               sampler() const { return m_sampler; }
-        bool                    valid() const;
+        bool                    valid() const { return static_cast<bool>(m_sampler); }
 
-        std::error_code         init(ViDevice&, const Sampler&);
+        //std::error_code         init(ViDevice&, const Sampler&);
         void                    kill();
         const SamplerInfo&      info() const { return m_info; }
     
     private:
-        VkDevice            m_device       = nullptr;
+        ViDevice&           m_device;
         VkSampler           m_sampler   = nullptr;
         SamplerInfo         m_info      = {};
 
-        std::error_code     _init(ViDevice&, const Sampler&);
+        std::error_code     _init(const Sampler&);
         void                _kill();
         void                _wipe();
     };

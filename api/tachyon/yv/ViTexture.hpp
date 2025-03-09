@@ -21,12 +21,11 @@ namespace yq::tachyon {
     class ViTexture : public RefCount {
     public:
     
-        ViTexture();
         ViTexture(ViDevice&, const Texture&);
         ViTexture(ViDevice&, const ViImageCPtr&, const ViSamplerCPtr&, const TextureInfo&);
         ~ViTexture();
         
-        std::error_code     init(ViDevice&, const Texture&);
+        //std::error_code     init(ViDevice&, const Texture&);
         void                kill();
     
         bool                consistent() const;
@@ -38,15 +37,15 @@ namespace yq::tachyon {
         bool                valid() const;
     
     private:
-        ViDevice*       m_viz           = nullptr;
+        ViDevice&       m_device;
         ViImageCPtr     m_image;
         ViSamplerCPtr   m_sampler;
         VkImageView     m_imageView;
         VkExtent3D      m_extents;
         uint64_t        m_id            = 0;
 
-        std::error_code     _init(ViDevice&, const Texture&);
-        std::error_code     _init(ViDevice&, const ViImageCPtr&, const ViSamplerCPtr&, const TextureInfo&);
+        std::error_code     _init(const Texture&);
+        std::error_code     _init(const ViImageCPtr&, const ViSamplerCPtr&, const TextureInfo&);
         void                _kill();
     };
 

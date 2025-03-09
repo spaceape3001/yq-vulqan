@@ -24,34 +24,22 @@ namespace yq::tachyon {
 
     ViFence::ViFence(ViDevice& dev) : m_device(dev)
     {
-        if(_init() != std::error_code()){
-            _wipe();
-        }
-    }
-
-    ViFence::~ViFence()
-    {
-        kill();
-    }
-
-    std::error_code ViFence::_init()
-    {
         VqFenceCreateInfo   fci;
         VkResult res = vkCreateFence(m_device.device(), &fci, nullptr, &m_fence);
         if(res != VK_SUCCESS){
             vizWarning << "vkFenceCreate(1): vkResult " << (int64_t) res;
             m_fence = nullptr;
-            return errors::fence_cant_create();
         }
-        
-        return {};
     }
-    
-    void    ViFence::_kill()
+
+    ViFence::~ViFence()
     {
-        vkDestroyFence(m_device.device(), m_fence, nullptr);
+        if(m_fence){
+            vkDestroyFence(m_device.device(), m_fence, nullptr);
+            m_fence = nullptr;
+        }
     }
-    
+
     std::error_code ViFence::_reset()
     {
         switch(vkResetFences(m_device.device(), 1, &m_fence)){
@@ -80,19 +68,6 @@ namespace yq::tachyon {
         default:
             return errors::fence_unknown();
         }
-    }
-
-    void    ViFence::_wipe()
-    {
-        m_fence     = nullptr;
-    }
-
-    void            ViFence::kill()
-    {
-        if(valid()){
-            _kill();
-        }
-        _wipe();
     }
 
     std::error_code ViFence::reset()

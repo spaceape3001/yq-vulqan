@@ -25,7 +25,6 @@ namespace yq::tachyon {
         std::error_code status() const;
         bool            valid() const { return static_cast<bool>(m_fence); }
 
-        void            kill();
         std::error_code reset();
         std::error_code wait(uint64_t timeout=DEFAULT_WAIT_TIMEOUT);
 
@@ -33,10 +32,7 @@ namespace yq::tachyon {
         ViDevice&       m_device;
         VkFence         m_fence     = nullptr;
         
-        std::error_code _init();
-        void            _kill();
         std::error_code _wait(uint64_t);
-        void            _wipe();
         std::error_code _reset();
     };
 }

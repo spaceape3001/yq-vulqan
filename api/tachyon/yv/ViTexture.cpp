@@ -30,40 +30,36 @@ namespace yq::tachyon {
         using texture_null_pointer              = error_db::entry<"Texture is a null pointer">;
     }
 
-    ViTexture::ViTexture()
+    ViTexture::ViTexture(ViDevice&dev, const Texture&tex) : m_device(dev)
     {
-    }
-    
-    ViTexture::ViTexture(ViDevice&viz, const Texture&tex)
-    {
-        if(viz.device()){
-            std::error_code ec  = _init(viz, tex);
-            if(ec != std::error_code()){
-                _kill();
-            }
+        assert(dev.device());
+        
+        std::error_code ec  = _init(tex);
+        if(ec != std::error_code()){
+            _kill();
         }
         
     }
     
-    ViTexture::ViTexture(ViDevice& viz, const ViImageCPtr&img, const ViSamplerCPtr&sam, const TextureInfo& info)
+    ViTexture::ViTexture(ViDevice& dev, const ViImageCPtr&img, const ViSamplerCPtr&sam, const TextureInfo& info) : 
+        m_device(dev)
     {
-        if(viz.device() && img && img->valid() && sam && sam->valid()){
-            std::error_code ec  = _init(viz, img, sam, info);
-            if(ec != std::error_code()){
-                _kill();
-            }
+        assert(dev.device() && img && img->valid() && sam && sam->valid());
+        
+        std::error_code ec  = _init(img, sam, info);
+        if(ec != std::error_code()){
+            _kill();
         }
     }
 
     ViTexture::~ViTexture()
     {
-        kill();
+        if(valid())
+            _kill();
     }
     
-    std::error_code     ViTexture::_init(ViDevice&viz, const Texture&tex)
+    std::error_code     ViTexture::_init(const Texture&tex)
     {
-        m_viz   = &viz;
-        
         if(tex.images.empty()){
             vizWarning << "ViTexture() -- no images!";
             return errors::texture_no_images();
@@ -77,7 +73,7 @@ namespace yq::tachyon {
         ViImageCPtr img; 
         if(tex.images.size() > 1){
             //try {
-                img = new ViImage(viz, tex.images);
+                img = new ViImage(m_device, tex.images);
             //}
             //catch(...)
             //{
@@ -86,27 +82,25 @@ namespace yq::tachyon {
             if(!img.valid())
                 img = nullptr;
         } else {
-            img = viz.image_create(*tex.images[0]);
+            img = m_device.image_create(*tex.images[0]);
         }
         if(!img){
             vizWarning << "ViTexture() -- cannot import image!";
             return errors::texture_bad_image();
         }
         
-        ViSamplerCPtr sampler  = viz.sampler_create(*tex.sampler);
+        ViSamplerCPtr sampler  = m_device.sampler_create(*tex.sampler);
         if(!sampler){
             vizWarning << "ViTexture() -- cannot import sampler!";
             return errors::texture_bad_sampler();
         }
         
         m_id        = tex.id();
-        return _init(viz, img, sampler, tex.info); 
+        return _init(img, sampler, tex.info); 
     }
     
-    std::error_code     ViTexture::_init(ViDevice&viz, const ViImageCPtr& image, const ViSamplerCPtr& sampler, const TextureInfo& texInfo)
+    std::error_code     ViTexture::_init(const ViImageCPtr& image, const ViSamplerCPtr& sampler, const TextureInfo& texInfo)
     {
-        m_viz       = &viz;
-
         m_image     = image;
         m_sampler   = sampler;
     
@@ -161,7 +155,7 @@ namespace yq::tachyon {
         info.subresourceRange.baseArrayLayer    = texInfo.baseArrayLayer;
         info.subresourceRange.layerCount        = texInfo.layerCount;
 
-        VkResult res = vkCreateImageView(viz.device(), &info, nullptr, &m_imageView);
+        VkResult res = vkCreateImageView(m_device.device(), &info, nullptr, &m_imageView);
         if(res != VK_SUCCESS){
             vizWarning << "ViTexture() -- cannot create image view.  VkResult " << (int32_t) res;
             return errors::texture_cant_create_image_view();
@@ -172,12 +166,11 @@ namespace yq::tachyon {
     
     void                ViTexture::_kill()
     {
-        if(m_viz && m_viz->device() && m_imageView){
-            vkDestroyImageView(m_viz->device(), m_imageView, nullptr);
+        if(m_device.device() && m_imageView){
+            vkDestroyImageView(m_device.device(), m_imageView, nullptr);
             m_imageView = nullptr;
         }
         
-        m_viz       = nullptr;
         m_imageView = nullptr;
         m_sampler   = {};
         m_image     = {};
@@ -186,8 +179,7 @@ namespace yq::tachyon {
 
     bool                ViTexture::consistent() const
     {
-        return m_viz ? (m_viz->device() && m_image && m_image->valid() && m_sampler && m_sampler->valid()) :
-            (!m_image && !m_sampler && !m_imageView);
+        return m_image ? (m_imageView && m_sampler) : (!m_sampler && !m_imageView);
     }
 
     VkExtent3D          ViTexture::extents() const
@@ -207,6 +199,7 @@ namespace yq::tachyon {
         return m_imageView;
     }
     
+    #if 0
     std::error_code     ViTexture::init(ViDevice&viz, const Texture&tex)
     {
         if(m_viz){
@@ -223,6 +216,7 @@ namespace yq::tachyon {
         }
         return ec;
     }
+    #endif
     
     void                ViTexture::kill()
     {
@@ -238,6 +232,6 @@ namespace yq::tachyon {
     
     bool                ViTexture::valid() const
     {
-        return m_viz && m_viz->device() && m_image && m_image->valid() && m_sampler && m_sampler -> valid();
+        return m_image && m_image->valid() && m_sampler && m_sampler -> valid();
     }
 }

@@ -43,18 +43,12 @@ namespace yq::tachyon {
         return ret;
     }
 
-    ViSampler::ViSampler()
+    ViSampler::ViSampler(ViDevice& viz, const Sampler& sam) : m_device(viz)
     {
-    }
-    
-    ViSampler::ViSampler(ViDevice& viz, const Sampler& sam)
-    {
-        if(viz.device()){
-            std::error_code ec  = _init(viz, sam);
-            if(ec != std::error_code()){
-                vizWarning << "unable to create a sampler: " << ec.message();
-                _wipe();
-            }
+        std::error_code ec  = _init(sam);
+        if(ec != std::error_code()){
+            vizWarning << "unable to create a sampler: " << ec.message();
+            _wipe();
         }
     }
     
@@ -63,13 +57,11 @@ namespace yq::tachyon {
         kill();
     }
 
-    std::error_code     ViSampler::_init(ViDevice&viz, const Sampler&sam)
+    std::error_code     ViSampler::_init(const Sampler&sam)
     {
-        VkSamplerCreateInfo sci = vkInfo(viz, sam.info);
+        VkSamplerCreateInfo sci = vkInfo(m_device, sam.info);
         
-        m_device    = viz.device();
-
-        VkResult res = vkCreateSampler(m_device, &sci, nullptr, &m_sampler);
+        VkResult res = vkCreateSampler(m_device.device(), &sci, nullptr, &m_sampler);
         if(res != VK_SUCCESS){
             vizWarning << "vkCreateSampler(): VkResult " << (int32_t) res;
             return errors::sampler_cant_create();
@@ -82,49 +74,22 @@ namespace yq::tachyon {
     void                ViSampler::_kill()
     {
         if(m_sampler){
-            vkDestroySampler(m_device, m_sampler, nullptr);
+            vkDestroySampler(m_device.device(), m_sampler, nullptr);
             m_sampler   = nullptr;
         }
     }
     
     void                ViSampler::_wipe()
     {
-        m_device    = nullptr;
         m_sampler   = nullptr;
         m_info      = {};
     }
-    
-    bool                ViSampler::consistent() const
-    {
-        return m_device ? static_cast<bool>(m_sampler) : !m_sampler;
-    }
-    
-    std::error_code     ViSampler::init(ViDevice& viz, const Sampler& sam)
-    {
-        if(m_device){
-            if(!consistent()){
-                return errors::sampler_bad_state();
-            }
-            return errors::sampler_existing();
-        }
-        
-        std::error_code ec  = _init(viz, sam);
-        if(ec != std::error_code()){
-            _wipe();
-        }
-        return ec;
-    }
-    
+
     void                ViSampler::kill()
     {
         if(valid()){
             _kill();
         }
         _wipe();
-    }
-    
-    bool                ViSampler::valid() const
-    {
-        return m_device && m_sampler;
     }
 }

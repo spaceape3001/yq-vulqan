@@ -4,6 +4,8 @@
 
 * Fixed bugs in closing/shutdown
 * Vulkan Device spun off so it can support multiple windows on same GPU
+* Better fullscreen support
+* Started new "rocks" SDK example (note, use alt+F4 on all windows to quit)
 
 ## 2025.02.25
 

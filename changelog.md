@@ -1,8 +1,9 @@
 # CHANGE LOG
 
-## Upcoming
+## 2025.03.09
 
-
+* Fixed bugs in closing/shutdown
+* Vulkan Device spun off so it can support multiple windows on same GPU
 
 ## 2025.02.25
 

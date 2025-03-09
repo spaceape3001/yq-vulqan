@@ -271,14 +271,12 @@ namespace yq::tachyon {
         }
 
         VqPipelineDynamicStateCreateInfo pdynci;
-        const auto& dynamicStates = m_layout->dynamic_states();
-        if(!dynamicStates.empty()){
-            pdynci.dynamicStateCount    = (uint32_t) dynamicStates.size();
-            pdynci.pDynamicStates       = dynamicStates.data();
-            pipelineInfo.pDynamicState  = &pdynci;
-        } else {
-            pipelineInfo.pDynamicState  = nullptr; // Optional   
-        }
+        std::vector<VkDynamicState> dynamicStates = m_layout->dynamic_states();
+        dynamicStates.push_back(VK_DYNAMIC_STATE_VIEWPORT);
+        
+        pdynci.dynamicStateCount    = (uint32_t) dynamicStates.size();
+        pdynci.pDynamicStates       = dynamicStates.data();
+        pipelineInfo.pDynamicState  = &pdynci;
 
         pipelineInfo.pMultisampleState      = &multisampling;
         pipelineInfo.pDepthStencilState     = nullptr; // Optional

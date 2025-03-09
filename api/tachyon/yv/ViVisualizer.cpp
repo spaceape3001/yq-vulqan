@@ -431,6 +431,7 @@ namespace yq::tachyon {
         ec = _8_swapchain_create();
         if(ec != std::error_code())
             return ec;
+            
         ec = _9_pipeline_manager_create();
         if(ec != std::error_code())
             return ec;

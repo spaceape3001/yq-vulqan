@@ -23,11 +23,9 @@ namespace yq::tachyon {
         ViSampler(ViDevice&, const Sampler&);
         ~ViSampler();
         
-        //bool                    consistent() const;
         VkSampler               sampler() const { return m_sampler; }
         bool                    valid() const { return static_cast<bool>(m_sampler); }
 
-        //std::error_code         init(ViDevice&, const Sampler&);
         void                    kill();
         const SamplerInfo&      info() const { return m_info; }
     

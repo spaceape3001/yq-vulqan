@@ -93,6 +93,8 @@ namespace yq::tachyon {
         //! Current viewer
         Viewer*             viewer              = nullptr;
         
+        VkViewport          viewport;
+        
         //! Current window
         //Window*             window              = nullptr;
         

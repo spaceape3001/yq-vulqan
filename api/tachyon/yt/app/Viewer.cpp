@@ -367,6 +367,13 @@ namespace yq::tachyon {
     std::error_code     Viewer::draw()
     {
         ViContext   u;
+        u.viewport  = { 
+            .x          = 0.f, .y=0.f,
+            .width      = (float) m_state.window.pixels.x,
+            .height     = (float) m_state.window.pixels.y,
+            .minDepth   = -1.,
+            .maxDepth   = 1.
+        };
         
         //  ENABLE to get the validation issue
         //  u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
@@ -408,6 +415,9 @@ namespace yq::tachyon {
                 }
             },
             .record = [&](ViContext& u){
+                if(u.command_buffer){
+                    vkCmdSetViewport(u.command_buffer, 0, 1, &u.viewport);
+                }
                 if(w)
                     w -> vulkan(u);
                 if(m_imgui)

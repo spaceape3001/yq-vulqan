@@ -8,10 +8,10 @@
 
 #include <variant>
 #include <vector>
-#include <yq/keywords.hpp>
+#include <yt/keywords.hpp>
 
 namespace yq::tachyon {
-    using QueueSpec   = std::variant<std::monostate, bool, optional_k, uint32_t, std::vector<float>>;
+    using QueueSpec   = std::variant<std::monostate, bool, optional_k, maximum_k, uint32_t, std::vector<float>>;
 
     size_t  count(const QueueSpec&);
     bool    is_empty(const QueueSpec&);

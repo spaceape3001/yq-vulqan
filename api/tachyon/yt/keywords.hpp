@@ -230,6 +230,13 @@ namespace yq::tachyon {
     #ifdef ERROR
         #undef ERROR
     #endif
+    #ifdef MAX
+    #undef MAX
+    #endif
+    
+    #ifdef MIN
+    #undef MIN
+    #endif
     
 
     static constexpr abort_k            ABORT;
@@ -290,7 +297,9 @@ namespace yq::tachyon {
     static constexpr lock_k             LOCK;
     static constexpr locked_k           LOCKED;
     static constexpr manager_k          MANAGER;
+    static constexpr maximum_k          MAX;
     static constexpr maximum_k          MAXIMUM;
+    static constexpr minimum_k          MIN;
     static constexpr minimum_k          MINIMUM;
     static constexpr mismatch_k         MISMATCH;
     static constexpr model_k            MODEL;

@@ -62,6 +62,7 @@ namespace yq::tachyon {
     
     ViVisualizer::~ViVisualizer()
     {
+        _kill();
     }
 
     ///////////////////////////////////////////////////////////////////////////

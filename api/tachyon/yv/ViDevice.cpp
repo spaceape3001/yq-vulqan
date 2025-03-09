@@ -49,6 +49,8 @@ namespace yq::tachyon {
             return true;
         if(std::get_if<optional_k>(&qs) != nullptr)
             return false;
+        if(std::get_if<maximum_k>(&qs) != nullptr)
+            return false;
         if(const std::vector<float>*p = std::get_if<std::vector<float>>(&qs))
             return p->empty();
         if(const uint32_t* p = std::get_if<uint32_t>(&qs))
@@ -106,22 +108,26 @@ namespace yq::tachyon {
         
         void    configure(const QueueSpec& spec, const Extra& extra=Extra{})
         {
-            for(uint32_t i=0;i<extra.pre;++i)
-                weights.push_back(1.);
-            if(const std::vector<float>*p = std::get_if<std::vector<float>>(&spec)){
-                if(!p->empty())
-                    weights.insert(weights.end(), p->begin(), p->end());
-            }
-            if(const uint32_t* p = std::get_if<uint32_t>(&spec)){
-                for(uint32_t i=0;i<*p;++i)
+            if(std::get_if<maximum_k>(&spec)){
+                weights.resize(props.queueCount, 1.);
+            } else {
+                for(uint32_t i=0;i<extra.pre;++i)
+                    weights.push_back(1.);
+                if(const std::vector<float>*p = std::get_if<std::vector<float>>(&spec)){
+                    if(!p->empty())
+                        weights.insert(weights.end(), p->begin(), p->end());
+                }
+                if(const uint32_t* p = std::get_if<uint32_t>(&spec)){
+                    for(uint32_t i=0;i<*p;++i)
+                        weights.push_back(1.);
+                }
+                if(std::get_if<uint32_t>(&spec))
+                    weights.push_back(1.);
+                if(std::get_if<optional_k>(&spec))
+                    weights.push_back(1.);
+                while(weights.size() < extra.min + extra.pre)
                     weights.push_back(1.);
             }
-            if(std::get_if<uint32_t>(&spec))
-                weights.push_back(1.);
-            if(std::get_if<optional_k>(&spec))
-                weights.push_back(1.);
-            while(weights.size() < extra.min + extra.pre)
-                weights.push_back(1.);
             count   = (uint32_t) weights.size();
             queues.resize(count, nullptr);
             //fences.resize(count, nullptr);

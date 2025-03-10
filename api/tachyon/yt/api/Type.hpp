@@ -33,8 +33,9 @@ namespace yq::tachyon {
         Model,
         Monitor,
         Mouse,
-        Rendered³,
         Rendered,
+        Rendered²,
+        Rendered³,
         Scene,
         Scene³,
         Spatial,
@@ -43,6 +44,9 @@ namespace yq::tachyon {
         Viewer,
         Visualizer,
         Widget,
+        Widget¹,
+        Widget²,
+        Widget³,
         Window
     };
     

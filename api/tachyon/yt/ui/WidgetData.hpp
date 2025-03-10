@@ -12,7 +12,7 @@
 
 namespace yq::tachyon {
     struct WidgetSnap : public TachyonSnap {
-        TypedID        viewer;
+        TypedID         viewer;
         virtual ~WidgetSnap();
     };
     

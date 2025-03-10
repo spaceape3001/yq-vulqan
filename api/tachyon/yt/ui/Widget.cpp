@@ -22,6 +22,7 @@
 #include <ya/events/ui/ShowEvent.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 #include <ya/replies/ui/CloseReply.hpp>
+#include <yt/ui/Layout.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
@@ -119,18 +120,6 @@ namespace yq::tachyon {
         frame->foreach<Widget>(PTR, children(), [&](Widget* w){
             if(w->visible()){
                 w->imgui(u);
-            }
-        });
-    }
-    
-    void    Widget::vulkan(ViContext&u)
-    {
-        const Frame*    frame   = Frame::current();
-        if(!frame)
-            return ;
-        frame->foreach<Widget>(PTR, children(), [&](Widget* w){
-            if(w->visible()){
-                w->vulkan(u);
             }
         });
     }
@@ -254,10 +243,33 @@ namespace yq::tachyon {
         return f->object(root());
     }
 
+    void    Widget::set_layout(LayoutPtr lay)
+    {
+        LayoutPtr   old = lay;
+        {
+            lock_t  _lock(m_mutex, true);
+            std::swap(m_layout, lay);
+        }
+    }
+
     void    Widget::snap(WidgetSnap& sn) const
     {
         Tachyon::snap(sn);
         sn.viewer   = m_viewer;
+    }
+
+    Execution  Widget::tick(const Context&ctx)
+    {
+        LayoutPtr   lay;
+        {
+            lock_t _lock(m_mutex, false);
+            lay = m_layout;
+        }
+        if(lay){
+            lay -> tick(*this, ctx);
+        }
+        
+        return {};
     }
 
     Viewer*         Widget::viewer(ptr_k)
@@ -296,6 +308,18 @@ namespace yq::tachyon {
         return m_flags(F::Visible);
     }
 
+    void    Widget::vulkan(ViContext&u)
+    {
+        const Frame*    frame   = Frame::current();
+        if(!frame)
+            return ;
+        frame->foreach<Widget>(PTR, children(), [&](Widget* w){
+            if(w->visible()){
+                w->vulkan(u);
+            }
+        });
+    }
+    
     Widget* Widget::widget_at(const Vector2D&) const
     {
         return const_cast<Widget*>(this);   // TODO 

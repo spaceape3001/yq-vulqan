@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename> class Ref;
+}
+
+namespace yq::tachyon {
+    class Layout;
+    using LayoutPtr      = Ref<Layout>;
+    using LayoutCPtr     = Ref<const Layout>;
+}

@@ -371,7 +371,7 @@ namespace yq::tachyon {
             .x          = 0.f, .y=0.f,
             .width      = (float) m_state.window.pixels.x,
             .height     = (float) m_state.window.pixels.y,
-            .minDepth   = -1.,
+            .minDepth   = 0.,
             .maxDepth   = 1.
         };
         

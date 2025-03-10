@@ -11,6 +11,7 @@
 #include <yt/api/Tachyon.hpp>
 #include <ya/typedef/commands.hpp>
 #include <ya/typedef/events.hpp>
+#include <yt/typedef/layout.hpp>
 #include <ya/typedef/replies.hpp>
 #include <ya/typedef/requests.hpp>
 #include <yt/typedef/viewer.hpp>
@@ -73,7 +74,7 @@ namespace yq::tachyon {
             through children, calling their methods recursively. 
         */
         virtual void    imgui(ViContext&);
-        
+
         /*! \brief Renders Vulkan content
         
             This routine is called by the viewer for our widget to
@@ -104,6 +105,8 @@ namespace yq::tachyon {
         //! Our root widget
         const Widget*   root(ptr_k) const;
         
+        void            set_layout(LayoutPtr);
+        
         ViewerID        viewer() const;
         
         //! Our viewer
@@ -122,8 +125,14 @@ namespace yq::tachyon {
         void        cmd_show();
         void        cmd_hide();
 
+        //! Dimension count to the widget (ie...add dimensions to allow for layout resizing)
+        virtual uint8_t dimensions(count_k) const { return 0; }
+
+        virtual Execution  tick(const Context&);
+
     protected:
         friend class Viewer;
+        friend class Layout;
         
         enum class F : uint8_t {
             //ClosePending,
@@ -195,7 +204,7 @@ namespace yq::tachyon {
         
     private:
         CloseRequestCPtr        m_closeRequest;
-        
+        LayoutPtr               m_layout;
     };
 
 }

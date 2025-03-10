@@ -22,8 +22,14 @@ add_library(${PROJECT_NAME} SHARED
     
     yt/enums.cpp
     yt/strings.cpp
+    
+    yt/1D/1D.cpp
+    yt/1D/Widget1.cpp
 
     yt/2D/2D.cpp
+    yt/2D/Layout2.cpp
+    yt/2D/Rendered2.cpp
+    yt/2D/Widget2.cpp
 
     yt/3D/3D.cpp
     yt/3D/Camera3.cpp
@@ -31,6 +37,7 @@ add_library(${PROJECT_NAME} SHARED
     yt/3D/Rendered3.cpp
     yt/3D/Scene3.cpp
     yt/3D/Spatial3.cpp
+    yt/3D/Widget3.cpp
 
     yt/api/Action.cpp
     yt/api/Controller.cpp
@@ -116,6 +123,7 @@ add_library(${PROJECT_NAME} SHARED
 
     yt/ui/Control.cpp
     #yt/ui/Editor.cpp
+    yt/ui/Layout.cpp
     yt/ui/Mini.cpp
     yt/ui/MyImGui.cpp
     yt/ui/Panel.cpp

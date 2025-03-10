@@ -39,7 +39,7 @@ namespace yq::tachyon {
         {
             Meta::Writer::options({Flag::VULKAN});
         }
-        
+
     private:
         WidgetInfo* m_meta;
     };

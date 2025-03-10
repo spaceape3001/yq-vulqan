@@ -4,30 +4,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Layout2.hpp"
-#include "Layout2InfoWriter.hpp"
+#include "Layout3.hpp"
+#include "Layout3InfoWriter.hpp"
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Layout²)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Layout³)
 
 namespace yq::tachyon {
-    Layout²Info::Layout²Info(std::string_view kName, LayoutInfo& pMeta, const std::source_location& sl) :
+    Layout³Info::Layout³Info(std::string_view kName, LayoutInfo& pMeta, const std::source_location& sl) :
         LayoutInfo(kName, pMeta, sl)
     {
-        set(Flag::D2);
+        set(Flag::D3);
     }
 
 ////////////////////////////////////////////////////////////////////////////////
-    void Layout²::init_info()
+    void Layout³::init_info()
     {
-        auto w = writer<Layout²>();
-        w.description("2D Layout");
+        auto w = writer<Layout³>();
+        w.description("3D Layout");
     }
         
-    Layout²::Layout²()
+    Layout³::Layout³()
     {
     }
     
-    Layout²::~Layout²()
+    Layout³::~Layout³()
     {
     }
 }

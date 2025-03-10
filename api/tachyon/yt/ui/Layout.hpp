@@ -28,7 +28,7 @@ namespace yq::tachyon {
             const Context&                          context;
             const WidgetSnap*                       widget      = nullptr;
             std::vector<const WidgetSnap*>          children;
-            std::set<WidgetID>                      added, removed, changed;
+            std::set<WidgetID>                      added, removed, changed, same;
         };
     
         static void init_info();

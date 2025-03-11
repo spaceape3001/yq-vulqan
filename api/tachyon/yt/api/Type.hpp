@@ -47,6 +47,7 @@ namespace yq::tachyon {
         Widget¹,
         Widget²,
         Widget³,
+        Widget⁴,
         Window
     };
     

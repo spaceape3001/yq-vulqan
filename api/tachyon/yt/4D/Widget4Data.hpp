@@ -7,15 +7,15 @@
 #pragma once
 
 #include <yt/ui/WidgetData.hpp>
-#include <yq/shape/AxBox2.hpp>
+#include <yq/shape/AxBox4.hpp>
 
 namespace yq::tachyon {
-    struct Widget²Snap : public WidgetSnap {
-        AxBox2D     bounds = ZERO;
-        virtual ~Widget²Snap();
+    struct Widget⁴Snap : public WidgetSnap {
+        AxBox4D     bounds;
+        virtual ~Widget⁴Snap();
     };
     
-    struct Widget²Data : public WidgetData {
-        virtual ~Widget²Data();
+    struct Widget⁴Data : public WidgetData {
+        virtual ~Widget⁴Data();
     };
 }

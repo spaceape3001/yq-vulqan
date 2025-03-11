@@ -4,51 +4,50 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Widget1.hpp"
-#include "Widget1InfoWriter.hpp"
+#include "Widget4.hpp"
+#include "Widget4InfoWriter.hpp"
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget¹)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget⁴)
 
 namespace yq::tachyon {
-    Widget¹Info::Widget¹Info(std::string_view kName, WidgetInfo& pInfo, const std::source_location& sl) :
+    Widget⁴Info::Widget⁴Info(std::string_view kName, WidgetInfo& pInfo, const std::source_location& sl) :
         WidgetInfo(kName, pInfo, sl)
     {
-        set(Flag::D1);
-        set(Type::Widget¹);
+        set(Flag::D4);
+        set(Type::Widget⁴);
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    Widget¹Data::~Widget¹Data()
+    Widget⁴Data::~Widget⁴Data()
     {
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    Widget¹Snap::~Widget¹Snap()
+    Widget⁴Snap::~Widget⁴Snap()
     {
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    Widget¹::Widget¹()
+    Widget⁴::Widget⁴()
     {
     }
     
-    Widget¹::~Widget¹()
+    Widget⁴::~Widget⁴()
     {
     }
 
-
-    void Widget¹::snap(Widget¹Snap& sn) const
+    void Widget⁴::snap(Widget⁴Snap& sn) const
     {
         Widget::snap(sn);
         sn.bounds   = m_bounds;
     }
 
-    void Widget¹::init_info()
+    void Widget⁴::init_info()
     {   
-        auto w = writer<Widget¹>();
-        w.description("Abstract 1D widget");
+        auto w = writer<Widget⁴>();
+        w.description("Abstract 4D widget");
     }
 }

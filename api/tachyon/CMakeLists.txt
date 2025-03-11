@@ -37,6 +37,8 @@ add_library(${PROJECT_NAME} SHARED
     yt/3D/Scene3.cpp
     yt/3D/Spatial3.cpp
     yt/3D/Widget3.cpp
+    
+    yt/4D/Widget4.cpp
 
     yt/api/Action.cpp
     yt/api/Controller.cpp

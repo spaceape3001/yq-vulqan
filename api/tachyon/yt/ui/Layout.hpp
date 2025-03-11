@@ -48,17 +48,11 @@ namespace yq::tachyon {
         
         //! Controls the vector/axis switching based on dimensional needs
         //  (note... this is *likely* to go into a helper base class)
-        Tensor44<Ax>  m_axis    = {
-            Ax::X,    Ax::X,    Ax::X,    Ax::X, 
-            Ax::None, Ax::Y,    Ax::Y,    Ax::Y,
-            Ax::None, Ax::None, Ax::Z,    Ax::Z,
-            Ax::None, Ax::None, Ax::None, Ax::W,
-        };
         
         AxBox1D     bounds1(const WidgetSnap&) const;
-        //AxBox2D     bounds2(const WidgetSnap&) const;
-        //AxBox3D     bounds3(const WidgetSnap&) const;
-        //AxBox4D     bounds4(const WidgetSnap&) const;
+        AxBox2D     bounds2(const WidgetSnap&) const;
+        AxBox3D     bounds3(const WidgetSnap&) const;
+        AxBox4D     bounds4(const WidgetSnap&) const;
 
     private:
         friend class Widget;

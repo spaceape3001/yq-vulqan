@@ -7,6 +7,7 @@
 #pragma once
 #include <yt/ui/Widget.hpp>
 #include <yt/typedef/widget1.hpp>
+#include <yq/shape/AxBox1.hpp>
 
 namespace yq::tachyon {
     
@@ -31,6 +32,11 @@ namespace yq::tachyon {
     protected:
         Widget¹();
         ~Widget¹();
+
+        void snap(Widget¹Snap&) const;
+
+    private:
+        AxBox1D     m_bounds = IDENTITY;
     };
 
 }

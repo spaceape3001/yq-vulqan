@@ -39,6 +39,12 @@ namespace yq::tachyon {
     {
     }
 
+    void Widget³::snap(Widget³Snap& sn) const
+    {
+        Widget::snap(sn);
+        sn.bounds   = m_bounds;
+    }
+
     void Widget³::init_info()
     {   
         auto w = writer<Widget³>();

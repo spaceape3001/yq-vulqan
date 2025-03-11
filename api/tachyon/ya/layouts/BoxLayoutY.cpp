@@ -18,14 +18,14 @@ namespace yq::tachyon {
     
     BoxLayoutʸ::BoxLayoutʸ()
     {
-        m_axis.xx   = Ax::X;
-        m_axis.xy   = Ax::Y;
-        m_axis.xz   = Ax::Y;
-        m_axis.xw   = Ax::Y;
+        m_dims.axis.xx   = Ax::X;
+        m_dims.axis.xy   = Ax::Y;
+        m_dims.axis.xz   = Ax::Y;
+        m_dims.axis.xw   = Ax::Y;
         
-        m_axis.yy   = Ax::X;
-        m_axis.yz   = Ax::X;
-        m_axis.yw   = Ax::X;
+        m_dims.axis.yy   = Ax::X;
+        m_dims.axis.yz   = Ax::X;
+        m_dims.axis.yw   = Ax::X;
     }
     
     BoxLayoutʸ::~BoxLayoutʸ()

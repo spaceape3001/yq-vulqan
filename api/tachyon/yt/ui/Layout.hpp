@@ -9,6 +9,9 @@
 #include <yt/api/Delegate.hpp>
 #include <yt/typedef/widget.hpp>
 #include <yt/api/ID.hpp>
+#include <yq/math/Ax.hpp>
+#include <yq/math/DimMapper.hpp>
+
 
 namespace yq::tachyon {
     class Context;
@@ -40,7 +43,23 @@ namespace yq::tachyon {
     protected:
         Layout();
         virtual ~Layout();
-    
+        
+        DimMapper   m_dims;
+        
+        //! Controls the vector/axis switching based on dimensional needs
+        //  (note... this is *likely* to go into a helper base class)
+        Tensor44<Ax>  m_axis    = {
+            Ax::X,    Ax::X,    Ax::X,    Ax::X, 
+            Ax::None, Ax::Y,    Ax::Y,    Ax::Y,
+            Ax::None, Ax::None, Ax::Z,    Ax::Z,
+            Ax::None, Ax::None, Ax::None, Ax::W,
+        };
+        
+        AxBox1D     bounds1(const WidgetSnap&) const;
+        //AxBox2D     bounds2(const WidgetSnap&) const;
+        //AxBox3D     bounds3(const WidgetSnap&) const;
+        //AxBox4D     bounds4(const WidgetSnap&) const;
+
     private:
         friend class Widget;
         

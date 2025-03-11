@@ -34,6 +34,12 @@ namespace yq::tachyon {
     {
     }
 
+#if 0
+    AxBox1D     Layout::bounds1(const WidgetSnap&) const
+    {
+    }
+#endif
+
     void    Layout::set_widget(WidgetID w)
     {
         m_widget    = w;

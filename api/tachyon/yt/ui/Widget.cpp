@@ -61,6 +61,7 @@ namespace yq::tachyon {
         w.slot(&Widget::on_close_command);
         w.slot(&Widget::on_title_command);
         w.slot(&Widget::on_set_viewer);
+        //w.delegate("layout", &Widget::m_layout);
 
         auto wt = writer<WidgetID>();
         wt.description("Widget Identifier");

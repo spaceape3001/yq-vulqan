@@ -7,9 +7,11 @@
 #pragma once
 
 #include <yt/ui/WidgetData.hpp>
+#include <yq/shape/AxBox2.hpp>
 
 namespace yq::tachyon {
     struct Widget²Snap : public WidgetSnap {
+        AxBox2D     bounds;
         virtual ~Widget²Snap();
     };
     

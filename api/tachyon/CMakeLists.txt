@@ -24,17 +24,14 @@ add_library(${PROJECT_NAME} SHARED
     yt/strings.cpp
     
     yt/1D/1D.cpp
-    yt/1D/Layout1.cpp
     yt/1D/Widget1.cpp
 
     yt/2D/2D.cpp
-    yt/2D/Layout2.cpp
     yt/2D/Rendered2.cpp
     yt/2D/Widget2.cpp
 
     yt/3D/3D.cpp
     yt/3D/Camera3.cpp
-    yt/3D/Layout3.cpp
     yt/3D/Light3.cpp
     yt/3D/Rendered3.cpp
     yt/3D/Scene3.cpp

@@ -64,6 +64,7 @@ namespace yq::tachyon {
             
         PushContext     ctx{ u, *frame };
         ctx.time        = u.time;
+        ctx.gamma       = m_gamma;
         
         camera_matrix(ctx, id(CAMERA³));
         

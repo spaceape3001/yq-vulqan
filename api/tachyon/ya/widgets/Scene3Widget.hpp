@@ -17,11 +17,10 @@
 #include <yt/typedef/scene3.hpp>
 #include <yt/typedef/push.hpp>
 #include <yv/typedef/vi_rendered.hpp>
-//#include <ya/widgets/AbstractSceneWidgetHelper.hpp>
 #include <yq/container/BasicBuffer.hpp>
 
 namespace yq::tachyon {
-    class Scene³Widget : public Widget /* , public AbstractSceneWidgetHelper */ {
+    class Scene³Widget : public Widget {
         YQ_TACHYON_DECLARE(Scene³Widget, Widget)
     public:
     

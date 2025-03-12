@@ -625,7 +625,7 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/utilities/LoggerBox.cpp
 
-    ya/widgets/AbstractSceneWidgetHelper.cpp
+    #ya/widgets/AbstractSceneWidgetHelper.cpp
     ya/widgets/FormWidget.cpp
     ya/widgets/FrameInspector.cpp
     ya/widgets/ImGuiDemoWidget.cpp

@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/typedef/vector2.hpp>
 #include <yt/keywords.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <ya/typedef/commands.hpp>
@@ -16,6 +15,14 @@
 #include <ya/typedef/requests.hpp>
 #include <yt/typedef/viewer.hpp>
 #include <yt/typedef/widget.hpp>
+#include <yt/typedef/camera3.hpp>
+#include <yq/typedef/tensor44.hpp>
+#include <yq/typedef/vector2.hpp>
+#include <yt/typedef/push.hpp>
+#include <yt/typedef/rendered.hpp>
+#include <yt/typedef/rendered3.hpp>
+#include <yq/color/RGBA.hpp>
+#include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
     struct ViContext;
@@ -25,6 +32,7 @@ namespace yq::tachyon {
     //class StartupCommand;
     class SetViewer;
     class TitleCommand;
+    class Frame;
 
     class WidgetInfo : public TachyonInfo {
     public:
@@ -202,10 +210,31 @@ namespace yq::tachyon {
         virtual void            on(const MouseScroll&) {}
         #endif
         
+        struct PushContext {
+            ViContext&      vi;
+            const Frame&    frame;
+            Tensor44D       view        = IDENTITY;
+            Tensor44D       projection  = IDENTITY;
+            RGBA4F          gamma       = { 1., 1., 1., 1. };
+            double          time        = 0.;
+        };
+        
+        static void camera_matrix(PushContext&, Camera³ID);
+        
+        static void camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, Camera³ID);
+        static void push_buffer(PushBuffer&, const PushContext&, const RenderedSnap&);
+        
     private:
+        struct R;
         CloseRequestCPtr        m_closeRequest;
         LayoutPtr               m_layout;
-    };
+        std::vector<R>          m_rendereds;
 
+        static void push_buffer_mvp(PushBuffer&, const PushContext&, const Rendered³Snap&);
+        static void push_buffer_full(PushBuffer&, const PushContext&, const Rendered³Snap&);
+        static void push_buffer_view(PushBuffer&, const PushContext&, const RenderedSnap&);
+        static void push_buffer_viewproj(PushBuffer&, const PushContext&, const RenderedSnap&);
+        static void push_buffer_view64proj(PushBuffer&, const PushContext&, const RenderedSnap&);
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::WidgetID)

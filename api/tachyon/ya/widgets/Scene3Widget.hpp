@@ -13,14 +13,15 @@
 #include <yt/typedef/camera.hpp>
 #include <yt/typedef/camera3.hpp>
 #include <yt/typedef/rendered3.hpp>
+#include <yt/typedef/scene.hpp>
 #include <yt/typedef/scene3.hpp>
 #include <yt/typedef/push.hpp>
 #include <yv/typedef/vi_rendered.hpp>
-#include <ya/widgets/AbstractSceneWidgetHelper.hpp>
+//#include <ya/widgets/AbstractSceneWidgetHelper.hpp>
 #include <yq/container/BasicBuffer.hpp>
 
 namespace yq::tachyon {
-    class Scene³Widget : public Widget, public AbstractSceneWidgetHelper {
+    class Scene³Widget : public Widget /* , public AbstractSceneWidgetHelper */ {
         YQ_TACHYON_DECLARE(Scene³Widget, Widget)
     public:
     
@@ -30,10 +31,11 @@ namespace yq::tachyon {
         ~Scene³Widget();
         
         using Widget::id;
-        using AbstractSceneWidgetHelper::id;
 
         CameraID    id(camera_k) const;
         Camera³ID   id(camera³_k) const;
+        SceneID     id(scene_k) const;
+        Scene³ID    id(scene³_k) const;
 
         virtual void    vulkan(ViContext&) override;
         virtual void    prerecord(ViContext&) override;
@@ -49,10 +51,13 @@ namespace yq::tachyon {
             PushBuffer      push;
         };
 
-        TypedID             m_camera;
-        std::vector<R>      m_rendereds;    // carried prerecord->vulkan
-        Tensor44D           m_view          = IDENTITY;
-        Tensor44D           m_projection    = IDENTITY;
+        TypedID                 m_camera;
+        std::vector<R>          m_rendereds;    // carried prerecord->vulkan
+        TypedID                 m_scene;
+        std::optional<RGB3F>    m_background;
+        Tristate                m_wireframe     = Tristate::INHERIT;
+        
+        RGBA4F                  m_gamma     = { 1., 1., 1., 1. };
     };
 }
 

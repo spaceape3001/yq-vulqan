@@ -26,6 +26,18 @@
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
+#include <optional>
+
+#include <yq/tensor/Tensor44.hxx>
+#include <yq/vector/Vector4.hxx>
+#include <yt/3D/Camera3.hpp>
+#include <yt/3D/Camera3Data.hpp>
+#include <yt/3D/Rendered3Data.hpp>
+#include <yt/3D/Spatial3.hpp>
+#include <yt/3D/Spatial3Data.hpp>
+#include <yv/ViContext.hpp>
+#include <yt/gfx/Pipeline.hpp>
+#include <yt/gfx/PushData.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 YQ_TYPE_IMPLEMENT(yq::tachyon::WidgetID)
@@ -52,6 +64,34 @@ namespace yq::tachyon {
 
 
     /////////////////////////
+    
+    struct Widget::R {
+    };
+
+    /////////////////////////
+
+    void Widget::camera_matrix(PushContext&ctx, Camera³ID cam)
+    {
+        camera_matrix(ctx.view, ctx.projection, ctx.frame, cam);
+    }
+
+    void Widget::camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame& frame, Camera³ID cam)
+    {
+        const Camera³Snap*  camera  = frame.snap(cam);
+        if(!camera){
+            view            = IDENTITY;
+            proj            = IDENTITY;
+            return;
+        }
+        
+        proj        = camera->projection;
+        const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial));
+        if(s³){
+            view      = s³ -> domain2local;
+        } else {
+            view      = IDENTITY;
+        }
+    }
 
     void Widget::init_info()
     {
@@ -67,6 +107,135 @@ namespace yq::tachyon {
         wt.description("Widget Identifier");
         wt.set(Meta::Flag::ID);
     }
+
+    void Widget::push_buffer(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
+    {
+        if(!sn.pipeline)
+            return ;
+            
+        switch(sn.pipeline->push().type){
+        case PushConfigType::Full:
+            if(sn.self(Type::Rendered³)){
+                push_buffer_full(pb, ctx, static_cast<const Rendered³Snap&>(sn));
+            } else {
+                push_buffer_view(pb, ctx, sn);
+            }
+            break;
+        case PushConfigType::MVP:
+            if(sn.self(Type::Rendered³)){
+                push_buffer_mvp(pb, ctx, static_cast<const Rendered³Snap&>(sn));
+            }
+            break;
+        case PushConfigType::View:
+            push_buffer_view(pb, ctx, sn);
+            break;
+        case PushConfigType::ViewProj:
+            push_buffer_viewproj(pb, ctx, sn);
+            break;
+        case PushConfigType::View64Proj:
+            push_buffer_view64proj(pb, ctx, sn);
+            break;
+        case PushConfigType::Custom:
+            pb  = sn.push;
+            break;
+        case PushConfigType::None:
+        default:
+            break;
+        }
+    }
+
+    void Widget::push_buffer_full(PushBuffer&pb, const PushContext&ctx, const Rendered³Snap& sn)
+    {
+        StdPushData&    pd  = *pb.create_single<StdPushData>();
+        pd.time         = ctx.time;
+        pd.gamma        = ctx.gamma;
+
+        const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
+        if(sn.vm_override){
+            if(s³){
+                Tensor44D   vm  = comingle(ctx.view, s³->local2domain, sn.vm_tensor);
+                pd.matrix   = glm::dmat4(ctx.projection * vm);
+            } else {
+                Tensor44D   vm  = comingle(ctx.view, Tensor44D(IDENTITY), sn.vm_tensor);
+                pd.matrix   = glm::dmat4(ctx.projection * vm);
+            }
+        } else {
+            if(s³){
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * s³->local2domain);
+            } else {
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view);
+            }
+        }
+    }
+    
+    void Widget::push_buffer_mvp(PushBuffer&pb, const PushContext&ctx, const Rendered³Snap&sn)
+    {
+        static constexpr glm::mat4  I44 = glm::dmat4(Tensor44D(IDENTITY));
+        StdPushDataMVP&    pd  = *pb.create_single<StdPushDataMVP>();
+        pd.time         = ctx.time;
+        pd.gamma        = ctx.gamma;
+        
+        if(sn.camera){  
+            Tensor44D   V, P;
+            camera_matrix(V, P, ctx.frame, sn.camera);
+            pd.view         = glm::dmat4(V);
+            pd.projection   = glm::dmat4(P);
+        } else {
+            pd.view         = glm::dmat4(ctx.view);
+            pd.projection   = glm::dmat4(ctx.projection);
+        }
+        
+        //  gamma/colors/etc
+        
+        const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
+        if(s³){
+            pd.model        = glm::dmat4(s³->local2domain);
+        } else {
+            pd.model        = I44;
+        }
+    }
+    
+    void Widget::push_buffer_view(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&)
+    {
+        StdPushData&    pd  = *pb.create_single<StdPushData>();
+        pd.time         = ctx.time;
+        pd.gamma        = ctx.gamma;
+        pd.matrix       = glm::dmat4(ctx.projection*ctx.view);
+    }
+    
+    void Widget::push_buffer_viewproj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
+    {
+        StdPushDataViewProj&    pd  = *pb.create_single<StdPushDataViewProj>();
+        pd.time         = ctx.time;
+        pd.gamma        = ctx.gamma;
+        if(sn.self(Type::Rendered³) && static_cast<const Rendered³Snap&>(sn).camera){
+            Tensor44D   V, P;
+            camera_matrix(V, P, ctx.frame, static_cast<const Rendered³Snap&>(sn).camera);
+            pd.view         = glm::dmat4(V);
+            pd.projection   = glm::dmat4(P);
+        } else {
+            pd.view         = glm::dmat4(ctx.view);
+            pd.projection   = glm::dmat4(ctx.projection);
+        }
+    }
+    
+    void Widget::push_buffer_view64proj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
+    {
+        StdPushDataView64Proj&    pd  = *pb.create_single<StdPushDataView64Proj>();
+        pd.time         = ctx.time;
+        pd.gamma        = ctx.gamma;
+        if(sn.self(Type::Rendered³) && static_cast<const Rendered³Snap&>(sn).camera){
+            Tensor44D   V, P;
+            camera_matrix(V, P, ctx.frame, static_cast<const Rendered³Snap&>(sn).camera);
+            pd.view         = glm::dmat4(V);
+            pd.projection   = glm::dmat4(P);
+        } else {
+            pd.view         = glm::dmat4(ctx.view);
+            pd.projection   = glm::dmat4(ctx.projection);
+        }
+    }
+
+    /////////////////////////
 
     Widget::Widget() : Tachyon(), m_windowID(fmt_hex(UniqueID::id()))
     {

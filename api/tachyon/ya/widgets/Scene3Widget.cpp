@@ -62,14 +62,14 @@ namespace yq::tachyon {
         if(!scene)
             return ;
             
-        PushContext     ctx{ u, *frame, *scene };
+        PushContext     ctx{ u, *frame };
         ctx.time        = u.time;
         
-        _cam_matrix(ctx, id(CAMERA³));
+        camera_matrix(ctx, id(CAMERA³));
         
-        ctx.w2e44       = ctx.projection44 * ctx.view44;
-        ctx.w2e         = ctx.w2e44;
-        auto r2 = auto_reset(u.world2eye, ctx.w2e);
+        //ctx.w2e44       = ctx.projection44 * ctx.view44;
+        //ctx.w2e         = ctx.w2e44;
+        //auto r2 = auto_reset(u.world2eye, ctx.w2e);
         
         // maybe a spatial -> matrix cache here???
         
@@ -101,7 +101,7 @@ namespace yq::tachyon {
                 
             R&  r  = m_rendereds[k++];
             r.vi    = rr;
-            _push(r.push, ctx, *sn);
+            push_buffer(r.push, ctx, *sn);
             rr->update(u, *sn);
             rr->descriptors();
         }
@@ -129,6 +129,24 @@ namespace yq::tachyon {
         }
     }
 
+
+
+    SceneID     Scene³Widget::id(scene_k) const
+    {
+        if(m_scene(Type::Scene)){
+            return { m_scene.id };
+        } else
+            return {};
+    }
+    
+    Scene³ID    Scene³Widget::id(scene³_k) const
+    {
+        if(m_scene(Type::Scene³)){
+            return { m_scene.id };
+        } else
+            return {};
+    }
+    
     void    Scene³Widget::prerecord(ViContext& u) 
     {
         _prerecord(u);

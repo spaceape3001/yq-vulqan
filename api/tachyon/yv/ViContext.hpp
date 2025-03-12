@@ -15,6 +15,8 @@
 #include <yt/typedef/pipeline.hpp>
 #include <yv/typedef/vi_pipeline_manager.hpp>
 #include <yt/typedef/raster.hpp>
+#include <yq/tensor/Tensor44.hpp>
+#include <yq/color/RGBA.hpp>
 #include <system_error>
 
 //namespace yq::engine { class Viewer; }
@@ -58,6 +60,8 @@ namespace yq::tachyon {
         //! Current frame thread
         ViFrameThread*      frame_thread        = nullptr;
         
+        RGBA4F              gamma               = { 1., 1., 1., 1. };
+        
         //! TRUE if we're in imgui mode
         bool                imgui               = false;
 
@@ -75,6 +79,8 @@ namespace yq::tachyon {
         //! Current pipeline manager
         ViPipelineManager*  pipelines           = nullptr;
         
+        Tensor44D           projection          = IDENTITY;
+        
         //! Grabs the previous frame's snapshot
         snapshot_t          snapshot;
         
@@ -87,22 +93,21 @@ namespace yq::tachyon {
         //! Current "time"
         double              time                = 0.;
         
-        //! Current visualizer (may become deprecated TBD?)
-        Visualizer*         viz                 = nullptr; 
+        
+        Tensor44D           view                = IDENTITY;
         
         //! Current viewer
         Viewer*             viewer              = nullptr;
         
         VkViewport          viewport;
         
+        //! Current visualizer (may become deprecated TBD?)
+        Visualizer*         viz                 = nullptr; 
+
         //! Current window
         //Window*             window              = nullptr;
         
         //! Set to override wireframe capability
         Tristate            wireframe           = Tristate::INHERIT;
-
-        //! Current world2eye transform
-        glm::dmat4          world2eye;
-
     };
 }

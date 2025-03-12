@@ -19,6 +19,8 @@
 #include <yv/typedef/vi_texture.hpp>
 
 namespace yq::tachyon {
+    class Pipeline;
+    
     struct RenderedSnap : public TachyonSnap {
         PushBuffer              push;
         std::vector<Buffered>   ibos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)

@@ -36,7 +36,6 @@ namespace yq::tachyon {
         SceneID     id(scene_k) const;
         Scene³ID    id(scene³_k) const;
 
-        virtual void    vulkan(ViContext&) override;
         virtual void    prerecord(ViContext&) override;
     
         void    set_camera(Camera³ID);
@@ -44,18 +43,12 @@ namespace yq::tachyon {
     
     private:
         void    _prerecord(ViContext&);
-
-        struct R {
-            ViRenderedPtr   vi;
-            PushBuffer      push;
-        };
+        using Widget::prerecord;
 
         TypedID                 m_camera;
-        std::vector<R>          m_rendereds;    // carried prerecord->vulkan
         TypedID                 m_scene;
         std::optional<RGB3F>    m_background;
         Tristate                m_wireframe     = Tristate::INHERIT;
-        
         RGBA4F                  m_gamma     = { 1., 1., 1., 1. };
     };
 }

@@ -38,6 +38,12 @@
 #include <yv/ViContext.hpp>
 #include <yt/gfx/Pipeline.hpp>
 #include <yt/gfx/PushData.hpp>
+#include <yq/container/BasicBuffer.hpp>
+#include <yv/ViRendered.hpp>
+#include <yq/util/AutoReset.hpp>
+#include <yt/scene/Rendered.hpp>
+#include <yv/Visualizer.hpp>
+#include <yv/Visualizer.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 YQ_TYPE_IMPLEMENT(yq::tachyon::WidgetID)
@@ -66,11 +72,13 @@ namespace yq::tachyon {
     /////////////////////////
     
     struct Widget::R {
+        ViRenderedPtr   vi;
+        PushBuffer      push;
     };
 
     /////////////////////////
 
-    void Widget::camera_matrix(PushContext&ctx, Camera³ID cam)
+    void Widget::camera_matrix(PreContext&ctx, Camera³ID cam)
     {
         camera_matrix(ctx.view, ctx.projection, ctx.frame, cam);
     }
@@ -108,7 +116,7 @@ namespace yq::tachyon {
         wt.set(Meta::Flag::ID);
     }
 
-    void Widget::push_buffer(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
+    void Widget::push_buffer(PushBuffer&pb, const PreContext&ctx, const RenderedSnap&sn)
     {
         if(!sn.pipeline)
             return ;
@@ -144,7 +152,7 @@ namespace yq::tachyon {
         }
     }
 
-    void Widget::push_buffer_full(PushBuffer&pb, const PushContext&ctx, const Rendered³Snap& sn)
+    void Widget::push_buffer_full(PushBuffer&pb, const PreContext&ctx, const Rendered³Snap& sn)
     {
         StdPushData&    pd  = *pb.create_single<StdPushData>();
         pd.time         = ctx.time;
@@ -168,7 +176,7 @@ namespace yq::tachyon {
         }
     }
     
-    void Widget::push_buffer_mvp(PushBuffer&pb, const PushContext&ctx, const Rendered³Snap&sn)
+    void Widget::push_buffer_mvp(PushBuffer&pb, const PreContext&ctx, const Rendered³Snap&sn)
     {
         static constexpr glm::mat4  I44 = glm::dmat4(Tensor44D(IDENTITY));
         StdPushDataMVP&    pd  = *pb.create_single<StdPushDataMVP>();
@@ -195,7 +203,7 @@ namespace yq::tachyon {
         }
     }
     
-    void Widget::push_buffer_view(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&)
+    void Widget::push_buffer_view(PushBuffer&pb, const PreContext&ctx, const RenderedSnap&)
     {
         StdPushData&    pd  = *pb.create_single<StdPushData>();
         pd.time         = ctx.time;
@@ -203,7 +211,7 @@ namespace yq::tachyon {
         pd.matrix       = glm::dmat4(ctx.projection*ctx.view);
     }
     
-    void Widget::push_buffer_viewproj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
+    void Widget::push_buffer_viewproj(PushBuffer&pb, const PreContext&ctx, const RenderedSnap&sn)
     {
         StdPushDataViewProj&    pd  = *pb.create_single<StdPushDataViewProj>();
         pd.time         = ctx.time;
@@ -219,7 +227,7 @@ namespace yq::tachyon {
         }
     }
     
-    void Widget::push_buffer_view64proj(PushBuffer&pb, const PushContext&ctx, const RenderedSnap&sn)
+    void Widget::push_buffer_view64proj(PushBuffer&pb, const PreContext&ctx, const RenderedSnap&sn)
     {
         StdPushDataView64Proj&    pd  = *pb.create_single<StdPushDataView64Proj>();
         pd.time         = ctx.time;
@@ -372,6 +380,26 @@ namespace yq::tachyon {
         }
     }
 
+    void        Widget::prerecord(const PreContext& ctx, RenderedID renID)
+    {
+        const RenderedSnap* sn  = ctx.frame.snap(renID);
+        if(!sn)
+            return;
+        
+        if(!sn->pipeline)
+            return;
+        
+        ViRenderedPtr  rr  = ctx.vi.frame0 -> create(sn);
+        if(!rr)
+            return;
+            
+        R&  r  = m_rendereds.emplace_back();
+        r.vi    = rr;
+        push_buffer(r.push, ctx, *sn);
+        rr->update(ctx.vi, *sn);
+        rr->descriptors();
+    }
+
     void            Widget::prerecord(ViContext& u)
     {
         const Frame*    frame   = Frame::current();
@@ -483,6 +511,15 @@ namespace yq::tachyon {
         const Frame*    frame   = Frame::current();
         if(!frame)
             return ;
+        
+        //  TODO set viewport (later...)
+        
+        auto w  = auto_reset(u.wireframe, m_wireframe);
+        for(const R& r : m_rendereds){
+            r.vi->record(u, r.push);
+        }
+        m_rendereds.clear();
+            
         frame->foreach<Widget>(PTR, children(), [&](Widget* w){
             if(w->visible()){
                 w->vulkan(u);

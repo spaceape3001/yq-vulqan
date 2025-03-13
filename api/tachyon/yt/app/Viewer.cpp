@@ -939,9 +939,6 @@ namespace yq::tachyon {
     
         m_cleanup.sweep();
 
-viewerInfo << "Viewer::teardown() -- sending destroy/close";
-
-
         if(m_viz){
             m_viz -> wait_idle();
         }

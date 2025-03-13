@@ -12,16 +12,10 @@
 #include <yt/3D/Scene3.hpp>
 #include <yt/3D/Scene3Data.hpp>
 #include <yt/api/Frame.hpp>
-#include <yt/gfx/PushData.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yv/ViContext.hpp>
-#include <yv/ViRendered.hpp>
-#include <yv/Visualizer.hpp>
-#include <yv/Visualizer.hxx>
 #include <yq/util/AutoReset.hpp>
-#include <yq/tensor/Tensor44.hxx>
 #include <yt/logging.hpp>
-#include <yq/vector/Vector4.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³Widget)
 
@@ -62,7 +56,7 @@ namespace yq::tachyon {
         if(!scene)
             return ;
             
-        PushContext     ctx{ u, *frame };
+        PreContext     ctx{ u, *frame };
         ctx.time        = u.time;
         ctx.gamma       = m_gamma;
         
@@ -83,32 +77,11 @@ namespace yq::tachyon {
             //  we'll eventually process this... (LATER)
         }
         
-        m_rendereds.resize(scene->rendereds.size());
-        size_t  k   = 0;
-        
         for(TypedID t : scene->rendereds){
             if(!t(Type::Rendered))
                 continue;
-            const RenderedSnap* sn  = frame->snap(RenderedID(t.id));
-            if(!sn)
-                continue;
-            
-            if(!sn->pipeline)
-                continue;
-            
-            ViRenderedPtr  rr  = u.frame0 -> create(sn);
-            if(!rr)
-                continue;
                 
-            R&  r  = m_rendereds[k++];
-            r.vi    = rr;
-            push_buffer(r.push, ctx, *sn);
-            rr->update(u, *sn);
-            rr->descriptors();
-        }
-        
-        if(k != m_rendereds.size()){
-            m_rendereds.erase(m_rendereds.begin()+k, m_rendereds.end());
+            prerecord(ctx, RenderedID(t.id));
         }
     }
 
@@ -152,17 +125,6 @@ namespace yq::tachyon {
     {
         _prerecord(u);
         Widget::prerecord(u);
-    }
-
-    void    Scene³Widget::vulkan(ViContext& u)
-    {
-        {
-            auto w  = auto_reset(u.wireframe, m_wireframe);
-            for(const R& r : m_rendereds)
-                r.vi->record(u, r.push);
-            m_rendereds.clear();
-        }
-        Widget::vulkan(u);
     }
 
     void    Scene³Widget::set_camera(Camera³ID cid)

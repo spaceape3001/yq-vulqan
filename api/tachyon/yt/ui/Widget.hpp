@@ -23,6 +23,7 @@
 #include <yt/typedef/rendered3.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq/tensor/Tensor44.hpp>
+#include <yq/core/Tristate.hpp>
 
 namespace yq::tachyon {
     struct ViContext;
@@ -210,7 +211,7 @@ namespace yq::tachyon {
         virtual void            on(const MouseScroll&) {}
         #endif
         
-        struct PushContext {
+        struct PreContext {
             ViContext&      vi;
             const Frame&    frame;
             Tensor44D       view        = IDENTITY;
@@ -219,22 +220,26 @@ namespace yq::tachyon {
             double          time        = 0.;
         };
         
-        static void camera_matrix(PushContext&, Camera³ID);
+        static void camera_matrix(PreContext&, Camera³ID);
         
         static void camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, Camera³ID);
-        static void push_buffer(PushBuffer&, const PushContext&, const RenderedSnap&);
+        static void push_buffer(PushBuffer&, const PreContext&, const RenderedSnap&);
+        
+        //! Used to push an item to the rendered vector *THIS PRERECORD* (it'll be cleared by the vulkan() call)
+        void        prerecord(const PreContext&, RenderedID);
         
     private:
         struct R;
         CloseRequestCPtr        m_closeRequest;
         LayoutPtr               m_layout;
         std::vector<R>          m_rendereds;
+        Tristate                m_wireframe     = Tristate::INHERIT;
 
-        static void push_buffer_mvp(PushBuffer&, const PushContext&, const Rendered³Snap&);
-        static void push_buffer_full(PushBuffer&, const PushContext&, const Rendered³Snap&);
-        static void push_buffer_view(PushBuffer&, const PushContext&, const RenderedSnap&);
-        static void push_buffer_viewproj(PushBuffer&, const PushContext&, const RenderedSnap&);
-        static void push_buffer_view64proj(PushBuffer&, const PushContext&, const RenderedSnap&);
+        static void push_buffer_mvp(PushBuffer&, const PreContext&, const Rendered³Snap&);
+        static void push_buffer_full(PushBuffer&, const PreContext&, const Rendered³Snap&);
+        static void push_buffer_view(PushBuffer&, const PreContext&, const RenderedSnap&);
+        static void push_buffer_viewproj(PushBuffer&, const PreContext&, const RenderedSnap&);
+        static void push_buffer_view64proj(PushBuffer&, const PreContext&, const RenderedSnap&);
     };
 }
 YQ_TYPE_DECLARE(yq::tachyon::WidgetID)

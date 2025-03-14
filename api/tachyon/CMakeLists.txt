@@ -221,6 +221,10 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/WidgetCommand.cpp
     ya/commands/WindowCommand.cpp
     
+    ya/commands/aabb/SetAABB1.cpp
+    ya/commands/aabb/SetAABB2.cpp
+    ya/commands/aabb/SetAABB3.cpp
+    
     ya/commands/camera/CameraSetScreen.cpp
 
     ya/commands/controller/ControlCommand.cpp
@@ -358,6 +362,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/size/SetSizeY.cpp
     ya/commands/size/SetSizeZ.cpp
     
+    ya/commands/spatial/AABBCommand.cpp
     ya/commands/spatial/OrientationCommand.cpp
     ya/commands/spatial/PositionCommand.cpp
     ya/commands/spatial/ScaleCommand.cpp

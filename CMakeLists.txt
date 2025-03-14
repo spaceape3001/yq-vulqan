@@ -59,11 +59,11 @@ if(${Build_UnitTests})
 endif()
 
 add_subdirectory(tool)
+add_subdirectory(exe)
 
 if(${Build_SDK})
     add_subdirectory(sdk)
 endif()
-add_subdirectory(exe)
 
 add_subdirectory(plugin)
 

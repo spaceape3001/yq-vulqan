@@ -18,6 +18,8 @@ namespace yq::tachyon {
         ImWidgetInfo(std::string_view, Widget²Info&, const std::source_location& sl = std::source_location::current());
     
     };
+    
+    class TitleCommand;
 
 
     /*! \brief A widget defined in ImGui that needs external 2D sizing
@@ -29,9 +31,6 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(ImWidget, Widget²)
     public:
         
-        ImWidget();
-        ~ImWidget();
-        
         static void init_info();
     
         //! The imgui wrapper
@@ -39,5 +38,23 @@ namespace yq::tachyon {
         
         //! Override this for content (begin/end are already taken care of)
         virtual void    imguix(ViContext&) = 0;
+        
+        void    set_title(std::string_view);
+        
+    protected:
+        ImWidget(std::string_view kTitle={});
+        ~ImWidget();
+        
+    private:
+        std::string     m_title;
+        
+        enum class X {
+            Open,
+            CloseTab
+        };
+        
+        Flags<X>        m_flags;
+        
+        void    on_title_command(const TitleCommand&);
     };
 }

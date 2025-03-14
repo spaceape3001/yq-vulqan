@@ -124,6 +124,7 @@ add_library(${PROJECT_NAME} SHARED
 
     yt/ui/Control.cpp
     #yt/ui/Editor.cpp
+    yt/ui/ImWidget.cpp
     yt/ui/Layout.cpp
     yt/ui/Mini.cpp
     yt/ui/MyImGui.cpp

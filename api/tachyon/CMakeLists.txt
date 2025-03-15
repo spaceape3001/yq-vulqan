@@ -190,6 +190,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/aspects/APosition1.cpp
     ya/aspects/APosition2.cpp
     ya/aspects/APosition3.cpp
+    ya/aspects/APosition4.cpp
     ya/aspects/AScale1.cpp
     ya/aspects/AScale2.cpp
     ya/aspects/AScale3.cpp
@@ -265,12 +266,16 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/position/AddPosition1.cpp
     ya/commands/position/AddPosition2.cpp
     ya/commands/position/AddPosition3.cpp
+    ya/commands/position/AddPosition4.cpp
+    ya/commands/position/AddPositionW.cpp
     ya/commands/position/AddPositionX.cpp
     ya/commands/position/AddPositionY.cpp
     ya/commands/position/AddPositionZ.cpp
     ya/commands/position/MoveBy1.cpp
     ya/commands/position/MoveBy2.cpp
     ya/commands/position/MoveBy3.cpp
+    ya/commands/position/MoveBy4.cpp
+    ya/commands/position/MoveByW.cpp
     ya/commands/position/MoveByX.cpp
     ya/commands/position/MoveByY.cpp
     ya/commands/position/MoveByZ.cpp
@@ -278,12 +283,16 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/position/MultiplyPosition1.cpp
     ya/commands/position/MultiplyPosition2.cpp
     ya/commands/position/MultiplyPosition3.cpp
+    ya/commands/position/MultiplyPosition4.cpp
+    ya/commands/position/MultiplyPositionW.cpp
     ya/commands/position/MultiplyPositionX.cpp
     ya/commands/position/MultiplyPositionY.cpp
     ya/commands/position/MultiplyPositionZ.cpp
     ya/commands/position/SetPosition1.cpp
     ya/commands/position/SetPosition2.cpp
     ya/commands/position/SetPosition3.cpp
+    ya/commands/position/SetPosition4.cpp
+    ya/commands/position/SetPositionW.cpp
     ya/commands/position/SetPositionX.cpp
     ya/commands/position/SetPositionY.cpp
     ya/commands/position/SetPositionZ.cpp
@@ -510,6 +519,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/spatial/Position1Event.cpp
     ya/events/spatial/Position2Event.cpp
     ya/events/spatial/Position3Event.cpp
+    ya/events/spatial/Position4Event.cpp
     ya/events/spatial/Orientation3Event.cpp
     ya/events/spatial/Scale1Event.cpp
     ya/events/spatial/Scale2Event.cpp
@@ -559,6 +569,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/interfaces/IPosition1.cpp
     ya/interfaces/IPosition2.cpp
     ya/interfaces/IPosition3.cpp
+    ya/interfaces/IPosition4.cpp
     ya/interfaces/IScale1.cpp
     ya/interfaces/IScale2.cpp
     ya/interfaces/IScale3.cpp
@@ -587,6 +598,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/proxies/PPosition1.cpp
     ya/proxies/PPosition2.cpp
     ya/proxies/PPosition3.cpp
+    ya/proxies/PPosition4.cpp
     ya/proxies/PScale1.cpp
     ya/proxies/PScale2.cpp
     ya/proxies/PScale3.cpp

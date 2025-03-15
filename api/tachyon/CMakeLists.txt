@@ -181,9 +181,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/aspects/AMaxSize1.cpp
     ya/aspects/AMaxSize2.cpp
     ya/aspects/AMaxSize3.cpp
+    ya/aspects/AMaxSize4.cpp
     ya/aspects/AMinSize1.cpp
     ya/aspects/AMinSize2.cpp
     ya/aspects/AMinSize3.cpp
+    ya/aspects/AMinSize4.cpp
     ya/aspects/AOrientation3.cpp
     ya/aspects/APosition1.cpp
     ya/aspects/APosition2.cpp
@@ -194,6 +196,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/aspects/ASize1.cpp
     ya/aspects/ASize2.cpp
     ya/aspects/ASize3.cpp
+    ya/aspects/ASize4.cpp
 
     ya/cameras/NullCamera.cpp
     ya/cameras/SpaceCamera.cpp
@@ -547,9 +550,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/interfaces/IMaxSize1.cpp
     ya/interfaces/IMaxSize2.cpp
     ya/interfaces/IMaxSize3.cpp
+    ya/interfaces/IMaxSize4.cpp
     ya/interfaces/IMinSize1.cpp
     ya/interfaces/IMinSize2.cpp
     ya/interfaces/IMinSize3.cpp
+    ya/interfaces/IMinSize4.cpp
     ya/interfaces/IOrientation3.cpp
     ya/interfaces/IPosition1.cpp
     ya/interfaces/IPosition2.cpp
@@ -560,6 +565,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/interfaces/ISize1.cpp
     ya/interfaces/ISize2.cpp
     ya/interfaces/ISize3.cpp
+    ya/interfaces/ISize4.cpp
 
     ya/messages/EmptyMessage.cpp
     
@@ -572,9 +578,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/proxies/PMaxSize1.cpp
     ya/proxies/PMaxSize2.cpp
     ya/proxies/PMaxSize3.cpp
+    ya/proxies/PMaxSize4.cpp
     ya/proxies/PMinSize1.cpp
     ya/proxies/PMinSize2.cpp
     ya/proxies/PMinSize3.cpp
+    ya/proxies/PMinSize4.cpp
     ya/proxies/POrientation3.cpp
     ya/proxies/PPosition1.cpp
     ya/proxies/PPosition2.cpp
@@ -585,6 +593,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/proxies/PSize1.cpp
     ya/proxies/PSize2.cpp
     ya/proxies/PSize3.cpp
+    ya/proxies/PSize4.cpp
 
     ya/rendereds/Billboard3.cpp
     ya/rendereds/ImageQuad3.cpp

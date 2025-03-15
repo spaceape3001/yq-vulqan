@@ -87,6 +87,13 @@ namespace yq::tachyon {
         }
     }
 
+    void        PMinSize⁴::min_size(set_k, w_k, double w) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetMinSizeʷ({.target=object()}, w));
+        }
+    }
+
     void        PMinSize⁴::min_size(add_k, const Vector4D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
@@ -112,6 +119,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddMinSizeᶻ({.target=object()}, Δz));
+        }
+    }
+
+    void        PMinSize⁴::min_size(add_k, w_k, double Δw) 
+    {
+        if(m_flags(F::Addable) && !m_flags(F::Disabled)){
+            mail(new AddMinSizeʷ({.target=object()}, Δw));
         }
     }
 
@@ -147,6 +161,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
             mail(new MultiplyMinSizeᶻ({.target=object()}, Δz));
+        }
+    }
+
+    void        PMinSize⁴::min_size(multiply_k, w_k, double Δw) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplyMinSizeʷ({.target=object()}, Δw));
         }
     }
 }

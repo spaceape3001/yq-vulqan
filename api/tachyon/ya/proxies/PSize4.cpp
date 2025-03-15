@@ -6,15 +6,18 @@
 
 #include <ya/proxies/PSize4.hpp>
 #include <ya/commands/size/AddSize4.hpp>
+#include <ya/commands/size/AddSizeW.hpp>
 #include <ya/commands/size/AddSizeX.hpp>
 #include <ya/commands/size/AddSizeY.hpp>
 #include <ya/commands/size/AddSizeZ.hpp>
 #include <ya/commands/size/MultiplySize.hpp>
 #include <ya/commands/size/MultiplySize4.hpp>
+#include <ya/commands/size/MultiplySizeW.hpp>
 #include <ya/commands/size/MultiplySizeX.hpp>
 #include <ya/commands/size/MultiplySizeY.hpp>
 #include <ya/commands/size/MultiplySizeZ.hpp>
 #include <ya/commands/size/SetSize4.hpp>
+#include <ya/commands/size/SetSizeW.hpp>
 #include <ya/commands/size/SetSizeX.hpp>
 #include <ya/commands/size/SetSizeY.hpp>
 #include <ya/commands/size/SetSizeZ.hpp>
@@ -84,6 +87,13 @@ namespace yq::tachyon {
         }
     }
 
+    void        PSize⁴::size(set_k, w_k, double w) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetSizeʷ({.target=object()}, w));
+        }
+    }
+
     void        PSize⁴::size(add_k, const Vector4D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
@@ -109,6 +119,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddSizeᶻ({.target=object()}, Δz));
+        }
+    }
+
+    void        PSize⁴::size(add_k, w_k, double Δw) 
+    {
+        if(m_flags(F::Addable) && !m_flags(F::Disabled)){
+            mail(new AddSizeʷ({.target=object()}, Δw));
         }
     }
 
@@ -144,6 +161,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
             mail(new MultiplySizeᶻ({.target=object()}, Δz));
+        }
+    }
+
+    void        PSize⁴::size(multiply_k, w_k, double Δw) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplySizeʷ({.target=object()}, Δw));
         }
     }
 }

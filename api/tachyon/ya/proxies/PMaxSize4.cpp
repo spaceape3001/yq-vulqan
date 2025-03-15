@@ -87,6 +87,13 @@ namespace yq::tachyon {
         }
     }
 
+    void        PMaxSize⁴::max_size(set_k, w_k, double w) 
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetMaxSizeʷ({.target=object()}, w));
+        }
+    }
+
     void        PMaxSize⁴::max_size(add_k, const Vector4D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
@@ -112,6 +119,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddMaxSizeᶻ({.target=object()}, Δz));
+        }
+    }
+
+    void        PMaxSize⁴::max_size(add_k, w_k, double Δw) 
+    {
+        if(m_flags(F::Addable) && !m_flags(F::Disabled)){
+            mail(new AddMaxSizeʷ({.target=object()}, Δw));
         }
     }
 
@@ -147,6 +161,13 @@ namespace yq::tachyon {
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
             mail(new MultiplyMaxSizeᶻ({.target=object()}, Δz));
+        }
+    }
+
+    void        PMaxSize⁴::max_size(multiply_k, w_k, double Δw) 
+    {
+        if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
+            mail(new MultiplyMaxSizeʷ({.target=object()}, Δw));
         }
     }
 }

@@ -22,6 +22,13 @@ namespace yq::tachyon {
         LayoutInfo(std::string_view, DelegateInfo&, const std::source_location& sl = std::source_location::current());
     };
 
+    /*! \brief Layout of items
+    
+        This is a layout of items (be it in 1, 2, 3, 4 dimensions).  
+        
+        
+        \note The first iteration is for widgets, however, want to be able to expand this to other types.
+    */
     class Layout : public Delegate {
         YQ_OBJECT_INFO(LayoutInfo)
         YQ_OBJECT_DECLARE(Layout, Delegate)

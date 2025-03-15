@@ -309,18 +309,24 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/size/AddMaxSize1.cpp
     ya/commands/size/AddMaxSize2.cpp
     ya/commands/size/AddMaxSize3.cpp
+    ya/commands/size/AddMaxSize4.cpp
+    ya/commands/size/AddMaxSizeW.cpp
     ya/commands/size/AddMaxSizeX.cpp
     ya/commands/size/AddMaxSizeY.cpp
     ya/commands/size/AddMaxSizeZ.cpp
     ya/commands/size/AddMinSize1.cpp
     ya/commands/size/AddMinSize2.cpp
     ya/commands/size/AddMinSize3.cpp
+    ya/commands/size/AddMinSize4.cpp
+    ya/commands/size/AddMinSizeW.cpp
     ya/commands/size/AddMinSizeX.cpp
     ya/commands/size/AddMinSizeY.cpp
     ya/commands/size/AddMinSizeZ.cpp
     ya/commands/size/AddSize1.cpp
     ya/commands/size/AddSize2.cpp
     ya/commands/size/AddSize3.cpp
+    ya/commands/size/AddSize4.cpp
+    ya/commands/size/AddSizeW.cpp
     ya/commands/size/AddSizeX.cpp
     ya/commands/size/AddSizeY.cpp
     ya/commands/size/AddSizeZ.cpp
@@ -328,6 +334,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/size/MultiplyMaxSize1.cpp
     ya/commands/size/MultiplyMaxSize2.cpp
     ya/commands/size/MultiplyMaxSize3.cpp
+    ya/commands/size/MultiplyMaxSize4.cpp
+    ya/commands/size/MultiplyMaxSizeW.cpp
     ya/commands/size/MultiplyMaxSizeX.cpp
     ya/commands/size/MultiplyMaxSizeY.cpp
     ya/commands/size/MultiplyMaxSizeZ.cpp
@@ -335,6 +343,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/size/MultiplyMinSize1.cpp
     ya/commands/size/MultiplyMinSize2.cpp
     ya/commands/size/MultiplyMinSize3.cpp
+    ya/commands/size/MultiplyMinSize4.cpp
+    ya/commands/size/MultiplyMinSizeW.cpp
     ya/commands/size/MultiplyMinSizeX.cpp
     ya/commands/size/MultiplyMinSizeY.cpp
     ya/commands/size/MultiplyMinSizeZ.cpp
@@ -342,24 +352,32 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/size/MultiplySize1.cpp
     ya/commands/size/MultiplySize2.cpp
     ya/commands/size/MultiplySize3.cpp
+    ya/commands/size/MultiplySize4.cpp
+    ya/commands/size/MultiplySizeW.cpp
     ya/commands/size/MultiplySizeX.cpp
     ya/commands/size/MultiplySizeY.cpp
     ya/commands/size/MultiplySizeZ.cpp
     ya/commands/size/SetMaxSize1.cpp
     ya/commands/size/SetMaxSize2.cpp
     ya/commands/size/SetMaxSize3.cpp
+    ya/commands/size/SetMaxSize4.cpp
+    ya/commands/size/SetMaxSizeW.cpp
     ya/commands/size/SetMaxSizeX.cpp
     ya/commands/size/SetMaxSizeY.cpp
     ya/commands/size/SetMaxSizeZ.cpp
     ya/commands/size/SetMinSize1.cpp
     ya/commands/size/SetMinSize2.cpp
     ya/commands/size/SetMinSize3.cpp
+    ya/commands/size/SetMinSize4.cpp
+    ya/commands/size/SetMinSizeW.cpp
     ya/commands/size/SetMinSizeX.cpp
     ya/commands/size/SetMinSizeY.cpp
     ya/commands/size/SetMinSizeZ.cpp
     ya/commands/size/SetSize1.cpp
     ya/commands/size/SetSize2.cpp
     ya/commands/size/SetSize3.cpp
+    ya/commands/size/SetSize4.cpp
+    ya/commands/size/SetSizeW.cpp
     ya/commands/size/SetSizeX.cpp
     ya/commands/size/SetSizeY.cpp
     ya/commands/size/SetSizeZ.cpp
@@ -481,9 +499,11 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/spatial/MaxSize1Event.cpp
     ya/events/spatial/MaxSize2Event.cpp
     ya/events/spatial/MaxSize3Event.cpp
+    ya/events/spatial/MaxSize4Event.cpp
     ya/events/spatial/MinSize1Event.cpp
     ya/events/spatial/MinSize2Event.cpp
     ya/events/spatial/MinSize3Event.cpp
+    ya/events/spatial/MinSize4Event.cpp
     ya/events/spatial/Position1Event.cpp
     ya/events/spatial/Position2Event.cpp
     ya/events/spatial/Position3Event.cpp
@@ -494,6 +514,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/spatial/Size1Event.cpp
     ya/events/spatial/Size2Event.cpp
     ya/events/spatial/Size3Event.cpp
+    ya/events/spatial/Size4Event.cpp
     
     ya/events/sim/PauseEvent.cpp
     ya/events/sim/ResumeEvent.cpp

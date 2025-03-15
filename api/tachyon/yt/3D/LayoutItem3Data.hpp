@@ -6,17 +6,21 @@
 
 #pragma once
 
-#include <yq/shape/AxBox2.hpp>
-#include <yq/shape/Size2.hpp>
+#include <yq/shape/AxBox3.hpp>
+#include <yq/shape/Size3.hpp>
 #include <yt/ui/SizePolicy.hpp>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace yq::tachyon {
-    struct Layout²Snap {
-        AxBox2D     aabb = ZERO;
-        Size2D      minsize = ZERO, maxsize = ZERO;
-        SizePolicy² sizing;
+    struct LayoutItem³Snap {
+        AxBox3D     aabb = ZERO;
+        Size3D      minsize = NAN, maxsize = NAN;
+        SizePolicy³ sizing;
         
-        virtual ~Layout²Snap(){}
+        virtual ~LayoutItem³Snap(){}
     };
 }
 

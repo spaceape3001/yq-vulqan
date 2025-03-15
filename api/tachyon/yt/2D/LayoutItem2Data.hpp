@@ -6,17 +6,17 @@
 
 #pragma once
 
-#include <yq/shape/AxBox4.hpp>
-#include <yq/shape/Size4.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/shape/Size2.hpp>
 #include <yt/ui/SizePolicy.hpp>
 
 namespace yq::tachyon {
-    struct Layout⁴Snap {
-        AxBox4D     aabb = ZERO;
-        Size4D      minsize = ZERO, maxsize = ZERO;
-        SizePolicy⁴ sizing;
+    struct LayoutItem²Snap {
+        AxBox2D     aabb = ZERO;
+        Size2D      minsize = ZERO, maxsize = ZERO;
+        SizePolicy² sizing;
         
-        virtual ~Layout⁴Snap(){}
+        virtual ~LayoutItem²Snap(){}
     };
 }
 

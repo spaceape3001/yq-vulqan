@@ -10,13 +10,19 @@
 #include <yq/shape/Size1.hpp>
 #include <yt/ui/SizePolicy.hpp>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace yq::tachyon {
-    struct Layout¹Snap {
-        AxBox1D     aabb = ZERO;
-        Size1D      minsize = ZERO, maxsize = ZERO;
+    struct LayoutItem¹Snap {
+        AxBox1D     aabb    = ZERO;
+        Size1D      minsize = NAN;
+        Size1D      maxsize = NAN;
+        Size1D      hint    = NAN;
         SizePolicy¹ sizing;
         
-        virtual ~Layout¹Snap(){}
+        virtual ~LayoutItem¹Snap(){}
     };
 }
 

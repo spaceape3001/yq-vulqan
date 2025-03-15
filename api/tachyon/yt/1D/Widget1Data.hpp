@@ -8,10 +8,10 @@
 
 #include <yt/ui/WidgetData.hpp>
 #include <yq/shape/AxBox1.hpp>
-#include <yt/1D/Layout1Data.hpp>
+#include <yt/1D/LayoutItem1Data.hpp>
 
 namespace yq::tachyon {
-    struct Widget¹Snap : public WidgetSnap, public Layout¹Snap {
+    struct Widget¹Snap : public WidgetSnap, public LayoutItem¹Snap {
         virtual ~Widget¹Snap();
     };
     

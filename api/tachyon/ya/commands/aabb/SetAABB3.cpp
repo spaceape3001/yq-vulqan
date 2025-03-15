@@ -33,11 +33,12 @@ namespace yq::tachyon {
     {
         auto w = writer<SetAABB³>();
         w.description("Set AABB Command");
-        w.property("lx", &SetAABB³::lx);
-        w.property("ly", &SetAABB³::ly);
-        w.property("lz", &SetAABB³::lz);
-        w.property("hx", &SetAABB³::hx);
-        w.property("hy", &SetAABB³::hy);
-        w.property("hz", &SetAABB³::hz);
+        w.property("lx", &SetAABB³::lx).tag(kTag_Log);
+        w.property("ly", &SetAABB³::ly).tag(kTag_Log);
+        w.property("lz", &SetAABB³::lz).tag(kTag_Log);
+        w.property("hx", &SetAABB³::hx).tag(kTag_Log);
+        w.property("hy", &SetAABB³::hy).tag(kTag_Log);
+        w.property("hz", &SetAABB³::hz).tag(kTag_Log);
+        w.property("aabb", &SetAABB³::m_aabb).tag(kTag_Save);
     }
 }

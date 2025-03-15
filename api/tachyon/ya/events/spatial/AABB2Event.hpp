@@ -17,14 +17,14 @@ namespace yq::tachyon {
     public:
         AABB²Event(const Header&, const AxBox2D&);
     
-        const AxBox2D&   aabb() const  { return m_bounds; }
+        const AxBox2D&   aabb() const  { return m_aabb; }
         
         static void init_info();
         
-        double  lx() const { return m_bounds.lo.x; }
-        double  ly() const { return m_bounds.lo.y; }
-        double  hx() const { return m_bounds.hi.x; }
-        double  hy() const { return m_bounds.hi.y; }
+        double  lx() const { return m_aabb.lo.x; }
+        double  ly() const { return m_aabb.lo.y; }
+        double  hx() const { return m_aabb.hi.x; }
+        double  hy() const { return m_aabb.hi.y; }
 
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         ~AABB²Event();
 
     private:
-        AxBox2D  m_bounds = ZERO;
+        AxBox2D  m_aabb = ZERO;
         
         AABB²Event(const AABB²Event&) = delete;
         AABB²Event(AABB²Event&&) = delete;

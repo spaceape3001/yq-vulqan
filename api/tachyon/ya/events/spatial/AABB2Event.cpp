@@ -16,12 +16,12 @@ namespace yq::tachyon {
     }
     
     AABB²Event::AABB²Event(const Header&h, const AxBox2D& v) : 
-        SpatialEvent(h), m_bounds(v)
+        SpatialEvent(h), m_aabb(v)
     {
     }
 
     AABB²Event::AABB²Event(const AABB²Event&cp, const Header&h) : 
-        SpatialEvent(cp, h), m_bounds(cp.m_bounds)
+        SpatialEvent(cp, h), m_aabb(cp.m_aabb)
     {
     }
 
@@ -37,11 +37,11 @@ namespace yq::tachyon {
     void AABB²Event::init_info()
     {
         auto w = writer<AABB²Event>();
-        w.description("AABB AABBd Event in 2D");
+        w.description("AABB Changed Event in 2D");
         w.property("lx", &AABB²Event::lx).tag(kTag_Log);
         w.property("ly", &AABB²Event::ly).tag(kTag_Log);
         w.property("hx", &AABB²Event::hx).tag(kTag_Log);
         w.property("hy", &AABB²Event::hy).tag(kTag_Log);
-        w.property("bounds", &AABB²Event::m_bounds).tag(kTag_Save);
+        w.property("aabb", &AABB²Event::m_aabb).tag(kTag_Save);
     }
 }

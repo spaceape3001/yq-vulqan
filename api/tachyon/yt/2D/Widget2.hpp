@@ -27,10 +27,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Widget², Widget)
     public:
 
-        Widget²ID   id() const { return Widget²ID(UniqueID::id()); }
-
-        const AxBox2D& aabb() const { return m_aabb; }
-        
+        Widget²ID       id() const { return Widget²ID(UniqueID::id()); }
+        const AxBox2D&  aabb() const { return m_aabb; }
         void            set_aabb(const AxBox2D&);
 
         static void init_info();

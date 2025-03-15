@@ -225,6 +225,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/commands/aabb/SetAABB1.cpp
     ya/commands/aabb/SetAABB2.cpp
     ya/commands/aabb/SetAABB3.cpp
+    ya/commands/aabb/SetAABB4.cpp
     
     ya/commands/camera/CameraSetScreen.cpp
 
@@ -476,6 +477,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/spatial/AABB1Event.cpp
     ya/events/spatial/AABB2Event.cpp
     ya/events/spatial/AABB3Event.cpp
+    ya/events/spatial/AABB4Event.cpp
     ya/events/spatial/MaxSize1Event.cpp
     ya/events/spatial/MaxSize2Event.cpp
     ya/events/spatial/MaxSize3Event.cpp

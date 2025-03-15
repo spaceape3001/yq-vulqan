@@ -7,41 +7,43 @@
 #pragma once
 
 #include <ya/events/SpatialEvent.hpp>
-#include <yq/shape/AxBox3.hpp>
+#include <yq/shape/AxBox4.hpp>
 
 namespace yq::tachyon {
 
-    //! Source moved in 3-Dimensions
-    class AABB³Event : public SpatialEvent {
-        YQ_OBJECT_DECLARE(AABB³Event, SpatialEvent)
+    //! Source moved in 4-Dimensions
+    class AABB⁴Event : public SpatialEvent {
+        YQ_OBJECT_DECLARE(AABB⁴Event, SpatialEvent)
     public:
-        AABB³Event(const Header&, const AxBox3D&);
+        AABB⁴Event(const Header&, const AxBox4D&);
     
-        const AxBox3D&   aabb() const  { return m_aabb; }
+        const AxBox4D&   aabb() const  { return m_aabb; }
         
         static void init_info();
         
         double  lx() const { return m_aabb.lo.x; }
         double  ly() const { return m_aabb.lo.y; }
         double  lz() const { return m_aabb.lo.z; }
+        double  lw() const { return m_aabb.lo.w; }
 
         double  hx() const { return m_aabb.hi.x; }
         double  hy() const { return m_aabb.hi.y; }
         double  hz() const { return m_aabb.hi.z; }
+        double  hw() const { return m_aabb.hi.w; }
 
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AABB³Event(const Header&);
-        AABB³Event(const AABB³Event&, const Header&);
-        ~AABB³Event();
+        AABB⁴Event(const Header&);
+        AABB⁴Event(const AABB⁴Event&, const Header&);
+        ~AABB⁴Event();
 
     private:
-        AxBox3D  m_aabb = ZERO;
+        AxBox4D  m_aabb = ZERO;
         
-        AABB³Event(const AABB³Event&) = delete;
-        AABB³Event(AABB³Event&&) = delete;
-        AABB³Event& operator=(const AABB³Event&) = delete;
-        AABB³Event& operator=(AABB³Event&&) = delete;
+        AABB⁴Event(const AABB⁴Event&) = delete;
+        AABB⁴Event(AABB⁴Event&&) = delete;
+        AABB⁴Event& operator=(const AABB⁴Event&) = delete;
+        AABB⁴Event& operator=(AABB⁴Event&&) = delete;
     };
 }

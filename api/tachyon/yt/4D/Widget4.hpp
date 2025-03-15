@@ -25,7 +25,9 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Widget⁴, Widget)
     public:
 
+        const AxBox4D& aabb() const { return m_aabb; }
         Widget⁴ID   id() const { return Widget⁴ID(UniqueID::id()); }
+        void            set_aabb(const AxBox4D&);
 
         static void init_info();
         
@@ -36,7 +38,7 @@ namespace yq::tachyon {
         void snap(Widget⁴Snap&) const;
 
     private:
-        AxBox4D     m_bounds = IDENTITY;
+        AxBox4D     m_aabb = IDENTITY;
     };
 
 }

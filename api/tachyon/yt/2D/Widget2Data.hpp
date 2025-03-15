@@ -11,7 +11,7 @@
 
 namespace yq::tachyon {
     struct Widget²Snap : public WidgetSnap {
-        AxBox2D     bounds = ZERO;
+        AxBox2D     aabb = ZERO;
         virtual ~Widget²Snap();
     };
     

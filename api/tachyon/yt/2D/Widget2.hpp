@@ -11,6 +11,8 @@
 
 namespace yq::tachyon {
     
+    class SetAABB²;
+    
     class Widget²Info : public WidgetInfo {
     public:
         template <typename> class Writer;
@@ -27,6 +29,10 @@ namespace yq::tachyon {
 
         Widget²ID   id() const { return Widget²ID(UniqueID::id()); }
 
+        const AxBox2D& aabb() const { return m_aabb; }
+        
+        void            set_aabb(const AxBox2D&);
+
         static void init_info();
         
     protected:
@@ -35,8 +41,13 @@ namespace yq::tachyon {
         
         void snap(Widget²Snap&) const;
         
+        //! Sub-class notification when the bounds changed
+        virtual void  aabb_changed(){}
+        
     private:
-        AxBox2D     m_bounds = IDENTITY;
+        AxBox2D     m_aabb = IDENTITY;
+
+        void on_set_aabb(const SetAABB²&);
     };
 
 }

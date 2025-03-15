@@ -45,16 +45,18 @@ namespace yq::tachyon {
         ImWidget(std::string_view kTitle={});
         ~ImWidget();
         
+        void    on_title_command(const TitleCommand&);
+        void    aabb_changed() override;
+
     private:
         std::string     m_title;
         
         enum class X {
+            SetPos,
             Open,
             CloseTab
         };
         
         Flags<X>        m_flags;
-        
-        void    on_title_command(const TitleCommand&);
     };
 }

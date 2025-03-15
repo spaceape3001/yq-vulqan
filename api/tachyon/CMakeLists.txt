@@ -473,6 +473,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/events/mouse/MouseReleaseEvent.cpp
     ya/events/mouse/MouseScrollEvent.cpp
 
+    ya/events/spatial/AABB1Event.cpp
+    ya/events/spatial/AABB2Event.cpp
+    ya/events/spatial/AABB3Event.cpp
     ya/events/spatial/MaxSize1Event.cpp
     ya/events/spatial/MaxSize2Event.cpp
     ya/events/spatial/MaxSize3Event.cpp

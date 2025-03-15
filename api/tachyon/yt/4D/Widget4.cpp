@@ -39,10 +39,15 @@ namespace yq::tachyon {
     {
     }
 
+    void Widget⁴::set_aabb(const AxBox4D&)
+    {
+        // TODO
+    }
+
     void Widget⁴::snap(Widget⁴Snap& sn) const
     {
         Widget::snap(sn);
-        sn.bounds   = m_bounds;
+        sn.aabb   = m_aabb;
     }
 
     void Widget⁴::init_info()

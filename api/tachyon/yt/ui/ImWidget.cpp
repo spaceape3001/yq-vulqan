@@ -9,6 +9,7 @@
 #include <ya/commands/ui/TitleCommand.hpp>
 #include <ya/events/ui/TitleEvent.hpp>
 #include <yt/ui/MyImGui.hpp>
+#include <yq/shape/AxBox2.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ImWidget);
 
@@ -30,12 +31,24 @@ namespace yq::tachyon {
     {
     }
 
+    void    ImWidget::aabb_changed() 
+    {
+        m_flags |= X::SetPos;
+    }
+
     //! The imgui wrapper
     void    ImWidget::imgui(ViContext& ctx) 
     {
-        //  Set position....
-        bool    fOpen   = true;
         ImGuiWindowFlags    flags   = 0;
+
+
+        //  Set position....
+        if(m_flags(X::SetPos)){
+            ImGui::SetNextWindowPos( (ImVec2) aabb().lo );
+            ImGui::SetNextWindowSize( (ImVec2) aabb().span() );
+        }
+        
+        bool    fOpen   = true;
         if(m_flags(X::CloseTab)){
             bool    state, old;
             state = old  = m_flags(X::Open);
@@ -54,8 +67,10 @@ namespace yq::tachyon {
         }
         if(fOpen)
             imguix(ctx);
+            
         ImGui::End();
     }
+
 
     void    ImWidget::set_title(std::string_view k)
     {

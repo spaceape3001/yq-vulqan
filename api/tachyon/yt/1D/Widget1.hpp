@@ -10,6 +10,7 @@
 #include <yq/shape/AxBox1.hpp>
 
 namespace yq::tachyon {
+    class SetAABB¹;
     
     class Widget¹Info : public WidgetInfo {
     public:
@@ -25,7 +26,9 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Widget¹, Widget)
     public:
 
-        Widget¹ID   id() const { return Widget¹ID(UniqueID::id()); }
+        const AxBox1D&  aabb() const { return m_aabb; }
+        Widget¹ID       id() const { return Widget¹ID(UniqueID::id()); }
+        void            set_aabb(const AxBox1D&);
 
         static void init_info();
         
@@ -35,8 +38,13 @@ namespace yq::tachyon {
 
         void snap(Widget¹Snap&) const;
 
+        //! Sub-class notification when the bounds changed
+        virtual void  aabb_changed(){}
+
     private:
-        AxBox1D     m_bounds = IDENTITY;
+        AxBox1D     m_aabb = IDENTITY;
+
+        void on_set_aabb(const SetAABB¹&);
     };
 
 }

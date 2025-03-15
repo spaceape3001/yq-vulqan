@@ -49,10 +49,10 @@ namespace yq::tachyon {
         //! Controls the vector/axis switching based on dimensional needs
         //  (note... this is *likely* to go into a helper base class)
         
-        AxBox1D     bounds1(const WidgetSnap&) const;
-        AxBox2D     bounds2(const WidgetSnap&) const;
-        AxBox3D     bounds3(const WidgetSnap&) const;
-        AxBox4D     bounds4(const WidgetSnap&) const;
+        AxBox1D     aabb1(const WidgetSnap&) const;
+        AxBox2D     aabb2(const WidgetSnap&) const;
+        AxBox3D     aabb3(const WidgetSnap&) const;
+        AxBox4D     aabb4(const WidgetSnap&) const;
 
     private:
         friend class Widget;

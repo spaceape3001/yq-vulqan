@@ -50,58 +50,58 @@ namespace yq::tachyon {
     {
     }
 
-    AxBox1D     Layout::bounds1(const WidgetSnap&sn) const
+    AxBox1D     Layout::aabb1(const WidgetSnap&sn) const
     {
         if(sn.self(Type::Widget¹)){
-            return m_dims.map1(static_cast<const Widget¹Snap&>(sn).bounds);
+            return m_dims.map1(static_cast<const Widget¹Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget²)){
-            return m_dims.map1(static_cast<const Widget²Snap&>(sn).bounds);
+            return m_dims.map1(static_cast<const Widget²Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget³)){
-            return m_dims.map1(static_cast<const Widget³Snap&>(sn).bounds);
+            return m_dims.map1(static_cast<const Widget³Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget⁴)){
-            return m_dims.map1(static_cast<const Widget⁴Snap&>(sn).bounds);
+            return m_dims.map1(static_cast<const Widget⁴Snap&>(sn).aabb);
         } else
             return AxBox1D(NAN);
     }
     
-    AxBox2D     Layout::bounds2(const WidgetSnap&sn) const
+    AxBox2D     Layout::aabb2(const WidgetSnap&sn) const
     {
         if(sn.self(Type::Widget¹)){
-            return m_dims.map2(static_cast<const Widget¹Snap&>(sn).bounds);
+            return m_dims.map2(static_cast<const Widget¹Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget²)){
-            return m_dims.map2(static_cast<const Widget²Snap&>(sn).bounds);
+            return m_dims.map2(static_cast<const Widget²Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget³)){
-            return m_dims.map2(static_cast<const Widget³Snap&>(sn).bounds);
+            return m_dims.map2(static_cast<const Widget³Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget⁴)){
-            return m_dims.map2(static_cast<const Widget⁴Snap&>(sn).bounds);
+            return m_dims.map2(static_cast<const Widget⁴Snap&>(sn).aabb);
         } else
             return AxBox2D(NAN);
     }
     
-    AxBox3D     Layout::bounds3(const WidgetSnap&sn) const
+    AxBox3D     Layout::aabb3(const WidgetSnap&sn) const
     {
         if(sn.self(Type::Widget¹)){
-            return m_dims.map3(static_cast<const Widget¹Snap&>(sn).bounds);
+            return m_dims.map3(static_cast<const Widget¹Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget²)){
-            return m_dims.map3(static_cast<const Widget²Snap&>(sn).bounds);
+            return m_dims.map3(static_cast<const Widget²Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget³)){
-            return m_dims.map3(static_cast<const Widget³Snap&>(sn).bounds);
+            return m_dims.map3(static_cast<const Widget³Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget⁴)){
-            return m_dims.map3(static_cast<const Widget⁴Snap&>(sn).bounds);
+            return m_dims.map3(static_cast<const Widget⁴Snap&>(sn).aabb);
         } else
             return AxBox3D(NAN);
     }
     
-    AxBox4D     Layout::bounds4(const WidgetSnap&sn) const
+    AxBox4D     Layout::aabb4(const WidgetSnap&sn) const
     {
         if(sn.self(Type::Widget¹)){
-            return m_dims.map4(static_cast<const Widget¹Snap&>(sn).bounds);
+            return m_dims.map4(static_cast<const Widget¹Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget²)){
-            return m_dims.map4(static_cast<const Widget²Snap&>(sn).bounds);
+            return m_dims.map4(static_cast<const Widget²Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget³)){
-            return m_dims.map4(static_cast<const Widget³Snap&>(sn).bounds);
+            return m_dims.map4(static_cast<const Widget³Snap&>(sn).aabb);
         } else if(sn.self(Type::Widget⁴)){
-            return m_dims.map4(static_cast<const Widget⁴Snap&>(sn).bounds);
+            return m_dims.map4(static_cast<const Widget⁴Snap&>(sn).aabb);
         } else
             return AxBox4D(NAN);
     }

@@ -7,6 +7,9 @@
 #include "Widget3.hpp"
 #include "Widget3InfoWriter.hpp"
 
+#include <ya/commands/aabb/SetAABB3.hpp>
+#include <ya/events/spatial/AABB3Event.hpp>
+
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget³)
 
 namespace yq::tachyon {
@@ -39,15 +42,33 @@ namespace yq::tachyon {
     {
     }
 
+    void Widget³::on_set_aabb(const SetAABB³&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        if(cmd.aabb() == m_aabb)
+            return ;
+            
+        m_aabb    = cmd.aabb();
+        send(new AABB³Event({.source=*this}, m_aabb));
+        aabb_changed();
+    }
+
+    void Widget³::set_aabb(const AxBox3D& box)
+    {
+        mail(new SetAABB³({.source=*this, .target=*this}, box));
+    }
+
     void Widget³::snap(Widget³Snap& sn) const
     {
         Widget::snap(sn);
-        sn.bounds   = m_bounds;
+        sn.aabb   = m_aabb;
     }
 
     void Widget³::init_info()
     {   
         auto w = writer<Widget³>();
         w.description("Abstract 3D widget");
+        w.slot(&Widget³::on_set_aabb);
     }
 }

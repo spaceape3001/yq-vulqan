@@ -12,6 +12,7 @@
 #include <yt/api/StdThread.hpp>
 #include <yt/gfx/DataActivity.hpp>
 #include <yt/os/Platform.hpp>
+#include <yt/ui/SizePolicy.hpp>
 #include <yq/unit/declare.hpp>
 
 namespace yq::tachyon {
@@ -80,6 +81,7 @@ namespace yq::tachyon {
 
     struct fixed_k {
         consteval operator DataActivity() const noexcept { return DataActivity::FIXED; }
+        consteval operator SizePolicy() const noexcept { return kSizePolicy_Fixed; }
     };
     
     struct for_k {};
@@ -116,8 +118,12 @@ namespace yq::tachyon {
     struct lock_k {};
     struct locked_k {};
     struct manager_k {};
-    struct maximum_k {};
-    struct minimum_k {};
+    struct maximum_k {
+        consteval operator SizePolicy() const noexcept { return kSizePolicy_Maximum; }
+    };
+    struct minimum_k {
+        consteval operator SizePolicy() const noexcept { return kSizePolicy_Minimum; }
+    };
     struct mismatch_k {};
     struct model_k {};
     struct moveable_k {};

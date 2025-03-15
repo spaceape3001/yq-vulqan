@@ -6,16 +6,18 @@
 
 #pragma once
 
-#include <yt/ui/WidgetData.hpp>
 #include <yq/shape/AxBox1.hpp>
-#include <yt/1D/Layout1Data.hpp>
+#include <yq/shape/Size1.hpp>
+#include <yt/ui/SizePolicy.hpp>
 
 namespace yq::tachyon {
-    struct Widget¹Snap : public WidgetSnap, public Layout¹Snap {
-        virtual ~Widget¹Snap();
-    };
-    
-    struct Widget¹Data : public WidgetData {
-        virtual ~Widget¹Data();
+    struct Layout¹Snap {
+        AxBox1D     aabb = ZERO;
+        Size1D      minsize = ZERO, maxsize = ZERO;
+        SizePolicy¹ sizing;
+        
+        virtual ~Layout¹Snap(){}
     };
 }
+
+

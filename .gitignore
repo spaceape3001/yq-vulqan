@@ -17,6 +17,7 @@ Release
 
 # Temporaries
 *.bck
+*~
 
 #  Old code dies here
 _dep

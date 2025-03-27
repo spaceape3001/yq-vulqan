@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yv/ViPipeline.hpp>
+#include <yq/container/set_utils.hpp>
+#include <yq/container/vector_utils.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Text.hpp>
 #include <yq/trait/has_nan.hpp>
@@ -271,8 +273,9 @@ namespace yq::tachyon {
         }
 
         VqPipelineDynamicStateCreateInfo pdynci;
-        std::vector<VkDynamicState> dynamicStates = m_layout->dynamic_states();
-        dynamicStates.push_back(VK_DYNAMIC_STATE_VIEWPORT);
+        std::set<VkDynamicState> dynamicStatesSet = make_set(m_layout->dynamic_states());
+        dynamicStatesSet.insert(VK_DYNAMIC_STATE_VIEWPORT);
+        std::vector<VkDynamicState> dynamicStates = make_vector(dynamicStatesSet);
         
         pdynci.dynamicStateCount    = (uint32_t) dynamicStates.size();
         pdynci.pDynamicStates       = dynamicStates.data();

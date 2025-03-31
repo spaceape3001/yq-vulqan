@@ -177,6 +177,8 @@ add_library(${PROJECT_NAME} SHARED
 
     ya/accessors/StringFunction.cpp
     ya/accessors/StringValue.cpp
+    
+    ya/actions/NullAction.cpp
 
     ya/aspects/AMaxSize1.cpp
     ya/aspects/AMaxSize2.cpp
@@ -628,6 +630,8 @@ add_library(${PROJECT_NAME} SHARED
     #ya/replies/ViewerWidgetReply.cpp
     ya/replies/WindowReply.cpp
     
+    ya/replies/app/BrowseOpenReply.cpp
+    
     ya/replies/graphics_card/GetDeviceReply.cpp
     
     ya/replies/io/SaveReply.cpp
@@ -646,6 +650,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/requests/WidgetRequest.cpp
     #ya/requests/WindowRefreshRequest.cpp
     ya/requests/WindowRequest.cpp
+    
+    ya/requests/app/BrowseOpenRequest.cpp
     
     ya/requests/graphics_card/GetDeviceRequest.cpp
     
@@ -679,6 +685,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/utilities/LoggerBox.cpp
 
     #ya/widgets/AbstractSceneWidgetHelper.cpp
+    ya/widgets/AppWidget.cpp
     ya/widgets/FormWidget.cpp
     ya/widgets/FrameInspector.cpp
     ya/widgets/ImGuiDemoWidget.cpp

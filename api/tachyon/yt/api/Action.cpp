@@ -26,11 +26,6 @@ namespace yq::tachyon {
     {
     }
 
-    bool Action::configure(/* TBD */) 
-    {
-        return true;
-    }
-
     void Action::init_info()
     {
         auto w = writer<Action>();

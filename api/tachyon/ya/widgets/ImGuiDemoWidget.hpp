@@ -13,7 +13,7 @@ namespace yq::tachyon {
     //!
     //! This shows the ImGui demo as a widget
     class ImGuiDemoWidget : public Widget {
-        YQ_TACHYON_DECLARE(ImGuiDemoWidget, Widget)
+        YQ_WIDGET_DECLARE(ImGuiDemoWidget, Widget)
     public:
     
         //! Default constructor

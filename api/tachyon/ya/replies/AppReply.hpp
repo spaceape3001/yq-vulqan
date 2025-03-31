@@ -23,10 +23,8 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(AppReply, Reply)
     public:
     
-        struct Param : public Reply::Param {
-        };
-    
-        AppReply(const RequestCPtr&, const Param& p = {});
+        AppReply(const Header& h, const RequestCPtr&);
+        AppReply(const AppReply&, const Header& h);
         virtual ~AppReply();
         
         static void init_info();

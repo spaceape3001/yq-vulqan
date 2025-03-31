@@ -12,7 +12,7 @@
 
 namespace yq::tachyon {
     class CompositeWidget : public Widget {
-        YQ_TACHYON_DECLARE(CompositeWidget, Widget)
+        YQ_WIDGET_DECLARE(CompositeWidget, Widget)
     public:
     
         CompositeWidget();

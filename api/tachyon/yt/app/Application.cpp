@@ -226,8 +226,14 @@ namespace yq::tachyon {
         }
         
         Meta::freeze();
-            
-        m_thread.app       = new AppThread(this);
+        
+        if(m_cInfo.thread.app){
+            m_thread.app       = m_cInfo.thread.app(this);
+            if(!m_thread.app)   
+                return false;
+        } else {
+            m_thread.app       = new AppThread(this);
+        }
         m_thread.app -> tick();
         Thread::standard(StdThread::App, m_thread.app->id(), true);
         for(StdThread st : StdThread::all_values()){

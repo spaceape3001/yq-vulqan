@@ -18,10 +18,15 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    AppReply::AppReply(const RequestCPtr& rq, const Param& p) : Reply(rq, p)
+    AppReply::AppReply(const Header& h, const RequestCPtr& rq) : Reply(h, rq)
     {
     }
-    
+
+    AppReply::AppReply(const AppReply& cp, const Header& h) : Reply(cp, h)
+    {
+    }
+
+
     AppReply::~AppReply()
     {
     }

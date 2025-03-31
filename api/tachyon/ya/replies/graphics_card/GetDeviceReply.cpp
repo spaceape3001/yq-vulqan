@@ -23,7 +23,7 @@ namespace yq::tachyon {
     }
 
     GetDeviceReply::GetDeviceReply(const GetDeviceReply&cp, const Header& h) : 
-        GraphicsCardReply(cp, h), m_device(cp.m_device)
+        GraphicsCardReply(cp, h), m_device(cp.m_device), m_response(cp.m_response)
     {
     }
     

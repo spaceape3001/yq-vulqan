@@ -17,7 +17,6 @@ namespace yq::tachyon {
 
     CameraCommand::CameraCommand(const CameraCommand& cp, const Header& h) : Command(cp, h)
     {
-        // DEPRECATED
     }
     
     CameraCommand::~CameraCommand()

@@ -18,6 +18,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <functional>
 
 namespace yq::tachyon {
     enum class ThreadPolicy {
@@ -26,8 +27,13 @@ namespace yq::tachyon {
         //! Viewers go onto seperate individual threads
         Individual
     };
+    
+    class AppThread;
+    class Application;
+    
+    using AppCreateThreadFN     = std::function<Ref<AppThread>(Application*)>;
 
-    using thread_spec_t    = std::variant<bool,disabled_k,enabled_k,per_k,StdThread>;
+    using thread_spec_t         = std::variant<bool,disabled_k,enabled_k,per_k,StdThread>;
 
     //! Info for initialization
     struct AppCreateInfo {
@@ -56,6 +62,7 @@ namespace yq::tachyon {
             thread per major object (which, for the viewer thread is the Viewer)
         */
         struct {
+            AppCreateThreadFN   app     = {};
             thread_spec_t audio       = DISABLED;
             thread_spec_t game        = DISABLED;
             thread_spec_t io          = DISABLED;

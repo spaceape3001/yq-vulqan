@@ -29,15 +29,22 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(ActionInfo)
         YQ_OBJECT_DECLARE(Action, Delegate)
     public:
+        
+        struct Payload;
+    
         Action();
         ~Action();
         
         static void init_info();
         
-        //  somehow...here...?  or action info... more likely
-        // virtual CommandCPtr action(const PostCPtr&) const = 0;
-        
-        // Assuming we go this route
-        virtual bool configure(/* TBD */) override;
+        //! Our action (TRUE if successful)
+        virtual bool  action(Payload&) const = 0;
+    };
+    
+    struct Action::Payload {
+        std::vector<PostCPtr>   outbound;   //!< Outbound posts that result from this action
+        std::vector<PostCPtr>   inbound;    //!< Inbound posts that triggered this action
+        std::vector<Any>        pargs;      //!< Positional arguments (0...1...2...etc)
+        string_any_map_t        nargs;      //!< Named arguments
     };
 }

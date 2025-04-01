@@ -8,3 +8,6 @@
 	path = 3rd/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = remote/v1.90.3
+[submodule "3rd/ImGuiFileDialog"]
+	path = 3rd/ImGuiFileDialog
+	url = https://github.com/aiekick/ImGuiFileDialog.git

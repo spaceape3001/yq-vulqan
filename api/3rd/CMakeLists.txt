@@ -29,7 +29,7 @@ add_library(${PROJECT_NAME} SHARED
     #imgui/freetype/imgui_freetype.cpp
 #        ${widgets_dir}/dear_widgets.cpp
     ImGuiColorTextEdit/TextEditor.cpp
-    ImGuiFileDialog/ImGuiFileDialog.cpp
+    #ImGuiFileDialog/ImGuiFileDialog.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

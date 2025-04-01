@@ -718,7 +718,6 @@ target_link_libraries(${PROJECT_NAME}
 PUBLIC 
     yq_asset
     yq_color
-    yq_gui3rd
     yq_imgui 
     yq_keyv
     yq_process

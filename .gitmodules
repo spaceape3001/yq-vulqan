@@ -11,3 +11,6 @@
 [submodule "3rd/ImGuiFileDialog"]
 	path = 3rd/ImGuiFileDialog
 	url = https://github.com/aiekick/ImGuiFileDialog.git
+[submodule "3rd/ImGuiColorTextEdit"]
+	path = 3rd/ImGuiColorTextEdit
+	url = https://github.com/spaceape3001/ImGuiColorTextEdit.git

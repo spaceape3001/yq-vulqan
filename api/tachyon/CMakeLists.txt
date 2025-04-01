@@ -718,14 +718,15 @@ target_link_libraries(${PROJECT_NAME}
 PUBLIC 
     yq_asset
     yq_color
-    yq_imgui 
     yq_keyv
     yq_process
     yq_raster
-    yq_stb 
     yq_text
-    yq_vma
     yq_xml
+
+    ImGui
+    STBImage 
+    VulkanMemoryAllocator
 
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 

@@ -9,7 +9,7 @@ find_package(Freetype REQUIRED)
 set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
-add_library(yq_imgui SHARED
+add_library(ImGui SHARED
     imgui/imgui.cpp
     imgui/imgui.h
     imgui/imgui_demo.cpp
@@ -21,14 +21,14 @@ add_library(yq_imgui SHARED
     imgui/misc/freetype/imgui_freetype.cpp
 )
 
-target_include_directories(yq_imgui
+target_include_directories(ImGui
     PUBLIC 
         ${CMAKE_CURRENT_LIST_DIR}/imgui
     PRIVATE
         ${FREETYPE_INCLUDE_DIRS}
 )
 
-target_compile_definitions(yq_imgui
+target_compile_definitions(ImGui
     PUBLIC
         GLFW_INCLUDE_VULKAN=1
         IMGUI_USE_WCHAR32=1 
@@ -39,17 +39,17 @@ target_compile_definitions(yq_imgui
         DONT_DEFINE_AGAIN__STB_IMAGE_RESIZE_IMPLEMENTATION=1
 )
 
-target_link_libraries(yq_imgui
+target_link_libraries(ImGui
     PUBLIC  
-        yq_stb
+        STBImage
         ${FREETYPE_LIBRARIES}
     PRIVATE
         ${GLFW3_LIBRARY}
 )
 
-target_compile_options(yq_imgui  PRIVATE 
+target_compile_options(ImGui  PRIVATE 
     -w
 )
 
 
-LinkTest(yq_imgui)
+LinkTest(ImGui)

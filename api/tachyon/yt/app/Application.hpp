@@ -130,6 +130,9 @@ namespace yq::tachyon {
         std::vector<Desktop*>   m_desktops;
         std::vector<Thread*>    m_threads;
         
+        using ViewerThreadVec   = std::vector<Ref<ViewerThread>>;
+        using ThreadRefPtrVec   = std::vector<Ref<Thread>>;
+        
         struct {
             Ref<AppThread>      app;        //< valid while running
             Ref<AudioThread>    audio;      //< valid while running if "ENABLED" but not "PER"
@@ -139,8 +142,16 @@ namespace yq::tachyon {
             Ref<SimThread>      sim;        //< valid while running if "ENABLED" but not "PER"
             Ref<TaskThread>     task;       //< valid while running if "ENABLED" but not "PER"
             Ref<ViewerThread>   viewer;     //< valid while running if "ENABLED" but not "PER"
-            ThreadPtrVector     others;
+            ViewerThreadVec     viewers;
+            ThreadRefPtrVec     others;
         } m_thread;
+        
+        template <typename T>
+        bool    _start(StdThread, Ref<T>&, const thread_spec_t<T>&, std::string_view);
+
+        template <typename T>
+        void    _stdthread(StdThread, const thread_spec_t<T>&);
+        void    _stdthread(StdThread, const thread_enabler_t&);
         
         using mutex_t       = tbb::spin_mutex;
         using lock_t        = mutex_t::scoped_lock;

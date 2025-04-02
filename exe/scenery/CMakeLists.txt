@@ -7,7 +7,8 @@
 project(scenery)
 
 add_executable(${PROJECT_NAME}
-    MainWidget.cpp
+    main.cpp
+    SceneryMW.cpp
     ScenePane.cpp
 )
 

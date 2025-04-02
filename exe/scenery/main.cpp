@@ -5,26 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yt/application.hpp>
-#include "MainWidget.hpp"
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include "SceneryMW.hpp"
 #include <iostream>
-
-YQ_TACHYON_IMPLEMENT(MainWidget)
-
-MainWidget::MainWidget()
-{
-}
-
-MainWidget::~MainWidget()
-{
-}
-
-void MainWidget::init_info()
-{
-    auto w = writer<MainWidget>();
-    w.description("The main widget");
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
@@ -40,7 +22,7 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     app.start();
     
-    MainWidget*     w   = Widget::create<MainWidget>();
+    SceneryMW*     w   = Widget::create<SceneryMW>();
     app.run(w);
     return 0;
 }

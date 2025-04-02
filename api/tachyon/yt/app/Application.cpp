@@ -106,6 +106,38 @@ namespace yq::tachyon {
         }
     }
 
+    template <typename T>
+    bool    Application::_start(StdThread st, Ref<T>& ptr, const thread_spec_t<T>& spec, std::string_view kName)
+    {
+        if(is_single(spec.enable)){
+            if(spec.create){
+                ptr = (spec.create)(this);
+                if(!ptr){
+                    tachyonCritical << "Unable to create " << kName << " thread";
+                    return false;
+                }
+            } else {
+                ptr = new T;
+            }
+            m_threads.push_back(ptr.ptr());
+            Thread::standard(st, ptr->id(), true);
+        }
+        return true;
+    }
+    
+    void    Application::_stdthread(StdThread st, const thread_enabler_t& spec)
+    {
+        if(auto p = std::get_if<StdThread>(&spec)){
+            Thread::standard(st, Thread::standard(*p));
+        }
+    }
+
+    template <typename T>
+    void    Application::_stdthread(StdThread st, const thread_spec_t<T>& spec)
+    {
+        _stdthread(st, spec.enable);
+    }
+
     ViewerID                    Application::create(viewer_k, WidgetPtr w)
     {
         return create(VIEWER, m_cInfo.view, w);
@@ -150,10 +182,22 @@ namespace yq::tachyon {
         ThreadID        vt;
         if(m_thread.viewer){
             vt  = m_thread.viewer->id();
-        } else if(std::get_if<per_k>(&m_cInfo.thread.viewer)){
-            ViewerThread*   tt  = new ViewerThread;
-            tt -> start();
-            m_threads.push_back(tt);
+        } else if(std::get_if<per_k>(&m_cInfo.thread.viewer.enable)){
+            do {
+                Ref<ViewerThread>   tt;
+                if(m_cInfo.thread.viewer.create){
+                    tt  = (m_cInfo.thread.viewer.create)(this);
+                    if(!tt){
+                        tachyonCritical << "Unable to create viewer thread (it'll default to app-thread)!";
+                        break;
+                    }
+                } else 
+                    tt = new ViewerThread;
+                m_thread.viewers.push_back(tt);
+                tt -> start();
+                vt = tt->id();
+                m_threads.push_back(tt);
+            } while(false);
         } else {
             vt      = Thread::standard(VIEWER);
         }
@@ -186,13 +230,19 @@ namespace yq::tachyon {
         run(r);
     }
 
-    bool        is_single(const thread_spec_t& ts)
+    bool        is_single(const thread_enabler_t& ts)
     {
         if(std::get_if<enabled_k>(&ts))
             return true;
         if(auto p = std::get_if<bool>(&ts))
             return *p;
         return false;
+    }
+
+    template <typename T>
+    bool        is_single(const thread_spec_t<T>& ts)
+    {
+        return is_single(ts.enable);
     }
 
     bool        Application::start()
@@ -229,8 +279,10 @@ namespace yq::tachyon {
         
         if(m_cInfo.thread.app){
             m_thread.app       = m_cInfo.thread.app(this);
-            if(!m_thread.app)   
+            if(!m_thread.app){
+                tachyonCritical << "Unable to create app thread.";
                 return false;
+            }
         } else {
             m_thread.app       = new AppThread(this);
         }
@@ -280,76 +332,29 @@ namespace yq::tachyon {
             m_thread.app -> tick();
             m_thread.app -> tick();
         }
-        
-        if(is_single(m_cInfo.thread.audio)){
-            m_thread.audio     = new AudioThread;
-            m_threads.push_back(m_thread.game.ptr());
-            Thread::standard(AUDIO, m_thread.audio->id(), true);
-        }
 
-        if(is_single(m_cInfo.thread.game)){
-            m_thread.game       = new GameThread;
-            m_threads.push_back(m_thread.game.ptr());
-            Thread::standard(GAME, m_thread.game->id(), true);
-        }
-        
-        if(is_single(m_cInfo.thread.io)){
-            m_thread.io    = new IOThread;
-            m_threads.push_back(m_thread.io.ptr());
-            Thread::standard(IO, m_thread.io->id(), true);
-        }
-        
-        if(is_single(m_cInfo.thread.network)){
-            m_thread.network  = new NetworkThread;
-            m_threads.push_back(m_thread.network.ptr());
-            Thread::standard(NETWORK, m_thread.network->id(), true);
-        }
-        
-        if(is_single(m_cInfo.thread.sim)){
-            m_thread.sim = new SimThread;
-            m_threads.push_back(m_thread.sim.ptr());
-            Thread::standard(SIM, m_thread.sim->id(), true);
-        }
+        if(!_start(AUDIO, m_thread.audio, m_cInfo.thread.audio, "audio"))
+            return false;
+        if(!_start(GAME, m_thread.game, m_cInfo.thread.game, "game"))
+            return false;
+        if(!_start(IO, m_thread.io, m_cInfo.thread.io, "io"))
+            return false;
+        if(!_start(NETWORK, m_thread.network, m_cInfo.thread.network, "network"))
+            return false;
+        if(!_start(SIM, m_thread.sim, m_cInfo.thread.sim, "sim"))
+            return false;
+        if(!_start(TASK, m_thread.task, m_cInfo.thread.task, "task"))
+            return false;
+        if(!_start(VIEWER, m_thread.viewer, m_cInfo.thread.viewer, "viewer"))
+            return false;
 
-        if(is_single(m_cInfo.thread.task)){
-            m_thread.task  = new TaskThread;
-            m_threads.push_back(m_thread.task.ptr());
-            Thread::standard(TASK, m_thread.task->id(), true);
-        }
-
-        if(is_single(m_cInfo.thread.viewer)){
-            m_thread.viewer  = new ViewerThread;
-            m_threads.push_back(m_thread.viewer.ptr());
-            Thread::standard(VIEWER, m_thread.viewer->id(), true);
-        }
-        
-        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.audio)){
-            Thread::standard(AUDIO, Thread::standard(*p));
-        }
-        
-        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.game)){
-            Thread::standard(GAME, Thread::standard(*p));
-        }
-
-        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.io)){
-            Thread::standard(IO, Thread::standard(*p));
-        }
-
-        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.network)){
-            Thread::standard(NETWORK, Thread::standard(*p));
-        }
-
-        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.sim)){
-            Thread::standard(SIM, Thread::standard(*p));
-        }
-
-        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.task)){
-            Thread::standard(TASK, Thread::standard(*p));
-        }
-
-        if(auto p = std::get_if<StdThread>(&m_cInfo.thread.viewer)){
-            Thread::standard(VIEWER, Thread::standard(*p));
-        }
+        _stdthread(AUDIO,   m_cInfo.thread.audio);
+        _stdthread(GAME,    m_cInfo.thread.game);
+        _stdthread(IO,      m_cInfo.thread.io);
+        _stdthread(NETWORK, m_cInfo.thread.network);
+        _stdthread(SIM,     m_cInfo.thread.sim);
+        _stdthread(TASK,    m_cInfo.thread.task);
+        _stdthread(VIEWER,  m_cInfo.thread.viewer);
         
         for(Thread* t : m_threads)
             t->start();

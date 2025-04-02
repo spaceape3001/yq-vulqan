@@ -6,17 +6,20 @@
 
 #pragma once
 
-#include <yt/ui/Widget.hpp>
+#include <ya/widgets/AppWidget.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;
 
-class MainWidget : public Widget {
-    YQ_TACHYON_DECLARE(MainWidget, Widget)
+class SceneryMW : public AppWidget {
+    YQ_TACHYON_DECLARE(SceneryMW, AppWidget)
 public:
 
-    MainWidget();
-    ~MainWidget();
+    SceneryMW();
+    ~SceneryMW();
     
+    bool    menubar(enabled_k) const override { return true; }
+    void    menubar(ViContext&) override;
+
     static void init_info();
 };

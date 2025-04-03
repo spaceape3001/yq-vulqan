@@ -630,7 +630,8 @@ add_library(${PROJECT_NAME} SHARED
     #ya/replies/ViewerWidgetReply.cpp
     ya/replies/WindowReply.cpp
     
-    ya/replies/app/BrowseOpenReply.cpp
+    ya/replies/app/OpenFileReply.cpp
+    ya/replies/app/SaveFileReply.cpp
     
     ya/replies/graphics_card/GetDeviceReply.cpp
     
@@ -651,7 +652,8 @@ add_library(${PROJECT_NAME} SHARED
     #ya/requests/WindowRefreshRequest.cpp
     ya/requests/WindowRequest.cpp
     
-    ya/requests/app/BrowseOpenRequest.cpp
+    ya/requests/app/OpenFileRequest.cpp
+    ya/requests/app/SaveFileRequest.cpp
     
     ya/requests/graphics_card/GetDeviceRequest.cpp
     

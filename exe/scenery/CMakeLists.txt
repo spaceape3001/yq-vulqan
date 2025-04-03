@@ -15,6 +15,8 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC
         yq_tachyon 
+    PRIVATE
+        ImGuiFileDialog
 )
 
 

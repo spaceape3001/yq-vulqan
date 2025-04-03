@@ -10,6 +10,9 @@
 
 namespace yq::tachyon {
 
+    struct AppMenu;
+    struct AppItem;
+
     class AppWidgetInfo : public WidgetInfo {
     public:
         template <typename C>  struct Writer;
@@ -18,7 +21,10 @@ namespace yq::tachyon {
 
         //! TRUE if this has/needs a menu bar
         bool        menu_bar() const { return has(Flag::MENU_BAR); }
-        
+
+    private:
+        using ItemGenerator = std::function<AppItem()>;
+        std::vector<ItemGenerator> m_items;
     };
 
     /*! \brief A typical "main" imgui-based widget for an application
@@ -49,11 +55,16 @@ namespace yq::tachyon {
         virtual void        content(ViContext&){}
         virtual void        imgui(ViContext&) override;
         
+        struct Menu;
+        struct MenuItem;
+       
     protected:
         //  Action/menus
         
         
     private:
         //  menus
+        std::vector<AppItem*>   m_items;
+        std::vector<AppItem*>   m_menuBar;
     };
 }

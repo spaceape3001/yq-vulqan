@@ -7,6 +7,7 @@
 #include <yt/ui/Widget.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yt/ui/WidgetData.hpp>
+#include <yt/ui/UIElement.hpp>
 
 #include <yt/logging.hpp>
 #include <yt/api/Frame.hpp>
@@ -44,6 +45,8 @@
 #include <yt/scene/Rendered.hpp>
 #include <yv/Visualizer.hpp>
 #include <yv/Visualizer.hxx>
+#include <ya/uis/UIItems.hpp>
+#include <yq/util/AutoReset.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 YQ_TYPE_IMPLEMENT(yq::tachyon::WidgetID)
@@ -291,6 +294,12 @@ namespace yq::tachyon {
 
     void    Widget::imgui(ViContext& u)
     {
+        imgui(CHILDREN, u);
+    }
+
+    //! Calls the imgui on all children
+    void    Widget::imgui(children_k, ViContext&u)
+    {
         const Frame*    frame   = Frame::current();
         if(!frame)
             return ;
@@ -301,7 +310,18 @@ namespace yq::tachyon {
             }
         });
     }
+
     
+    //! Calls the render on all UIElement elements
+    void    Widget::imgui(ui_k, ViContext&u)
+    {
+        if(m_ui){
+            auto wid        = auto_reset(UIElement::s_widget, this);
+            auto ctx        = auto_reset(UIElement::s_context, &u);
+            m_ui -> render();
+        }
+    }
+
     const char*     Widget::imgui_id() const
     {
         return m_windowID.c_str();

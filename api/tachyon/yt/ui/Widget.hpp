@@ -43,11 +43,17 @@ namespace yq::tachyon {
     class SetViewer;
     class TitleCommand;
     class Frame;
+    class UIElement;
+    class UIItems;
+    class UIElementWriter;
 
     class WidgetInfo : public TachyonInfo {
     public:
         template <typename C> class Writer;
         WidgetInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+    private:
+        friend class UIElementWriter;
+        UIItems*                m_ui    = nullptr;
     };
     
     /*! \brief Root something that's drawwable & interactable
@@ -92,6 +98,12 @@ namespace yq::tachyon {
             through children, calling their methods recursively. 
         */
         virtual void    imgui(ViContext&);
+        
+        //! Calls the imgui on all children
+        void    imgui(children_k, ViContext&);
+
+        //! Calls the render on all UIElement elements
+        void    imgui(ui_k, ViContext&);
 
         /*! \brief Renders Vulkan content
         
@@ -178,6 +190,8 @@ namespace yq::tachyon {
         
         FFlags                  m_flags = { F::Visible, F::AutoRender };
 
+        //! Setup the UIElement from meta
+        void                    setup_ui();
         
         //! Called before record, this is the opportunity to 
         //! pass descriptor sets to the graphics card.
@@ -238,11 +252,15 @@ namespace yq::tachyon {
         void        prerecord(const PreContext&, RenderedID);
         
     private:
+        friend class UIElementWriter;
+    
         struct R;
-        CloseRequestCPtr        m_closeRequest;
-        LayoutPtr               m_layout;
-        std::vector<R>          m_rendereds;
-        Tristate                m_wireframe     = Tristate::INHERIT;
+        CloseRequestCPtr            m_closeRequest;
+        LayoutPtr                   m_layout;
+        std::vector<R>              m_rendereds;
+        std::unique_ptr<UIItems>    m_ui;
+        Tristate                    m_wireframe     = Tristate::INHERIT;
+
 
         static void push_buffer_mvp(PushBuffer&, const PreContext&, const Rendered³Snap&);
         static void push_buffer_full(PushBuffer&, const PreContext&, const Rendered³Snap&);

@@ -130,6 +130,8 @@ add_library(${PROJECT_NAME} SHARED
     yt/ui/MyImGui.cpp
     yt/ui/Panel.cpp
     #yt/ui/Tool.cpp
+    yt/ui/UIElement.cpp
+    yt/ui/UIElementWriter.cpp
     yt/ui/Undo.cpp
     yt/ui/Widget.cpp
 
@@ -683,6 +685,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/NotTrigger.cpp
     ya/triggers/OrTrigger.cpp
     ya/triggers/PostTrigger.cpp
+    
+    ya/uis/UIItems.cpp
     
     ya/utilities/LoggerBox.cpp
 

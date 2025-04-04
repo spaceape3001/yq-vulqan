@@ -254,6 +254,12 @@ namespace yq::tachyon {
     
     Widget::~Widget()
     {
+        _kill();
+    }
+
+    void    Widget::_kill()
+    {
+        m_uimap.clear();
         if(m_ui){
             delete m_ui;
             m_ui        = nullptr;

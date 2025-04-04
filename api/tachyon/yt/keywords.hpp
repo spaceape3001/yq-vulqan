@@ -27,6 +27,7 @@ namespace yq::tachyon {
     struct addable_k {};
     struct adjust_k {};
     struct adjustable_k {};
+    struct align_k {};
     
     struct app_k {
         consteval operator StdThread() const noexcept  { return StdThread::App; }
@@ -60,8 +61,10 @@ namespace yq::tachyon {
     struct delegate_k {};
     struct delete_k {};
     struct desktop_k {};
+    struct dialog_k {};
     struct direct_k{};
     struct disable_k {};
+    struct dock_k {};
     struct domain_k {};
 
     struct dynamic_k {
@@ -149,6 +152,7 @@ namespace yq::tachyon {
     
     struct object_k {};
     //struct once_k : public ::yq::once_k {};
+    struct open_k {};
     
     struct parent_k {};
     struct pause_k {};
@@ -206,6 +210,7 @@ namespace yq::tachyon {
     };
     
     struct stop_k {};
+    struct stretch_k {};
     struct sweep_k {};
     struct table_k {};
     struct tachyon_k {};
@@ -258,6 +263,7 @@ namespace yq::tachyon {
     static constexpr const addable_k            ADDABLE;
     static constexpr const adjust_k             ADJUST;
     static constexpr const adjustable_k         ADJUSTABLE;
+    static constexpr const align_k              ALIGN;
     static constexpr const app_k                APP;
     static constexpr const asset_k              ASSET;
     static constexpr const audio_k              AUDIO;
@@ -278,8 +284,10 @@ namespace yq::tachyon {
     static constexpr const delegate_k           DELEGATE;
     static constexpr const delete_k             DELETE;
     static constexpr const desktop_k            DESKTOP;
+    static constexpr const dialog_k             DIALOG;
     static constexpr const direct_k             DIRECT;
     static constexpr const disable_k            DISABLE;
+    static constexpr const dock_k               DOCK;
     static constexpr const domain_k             DOMAIN;
     static constexpr const dynamic_k            DYNAMIC;
     static constexpr const emit_k               EMIT;
@@ -330,6 +338,7 @@ namespace yq::tachyon {
     static constexpr const number_k             NUMBER;
     static constexpr const object_k             OBJECT;
     //static constexpr const once_k               ONCE;
+    static constexpr const open_k               OPEN;
     static constexpr const parent_k             PARENT;
     static constexpr const pause_k              PAUSE;
     static constexpr const per_k                PER;
@@ -368,6 +377,7 @@ namespace yq::tachyon {
     static constexpr const startup_k            STARTUP;
     static constexpr const static_k             STATIC;
     static constexpr const stop_k               STOP;
+    static constexpr const stretch_k            STRETCH;
     static constexpr const sweep_k              SWEEP;
     static constexpr const table_k              TABLE;
     static constexpr const tachyon_k            TACHYON;

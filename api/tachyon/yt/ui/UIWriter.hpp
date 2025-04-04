@@ -8,6 +8,7 @@
 
 #include <variant>
 #include <yt/keywords.hpp>
+#include <yt/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class WidgetInfo;
@@ -35,6 +36,13 @@ namespace yq::tachyon {
         UIWriter    menubar(main_k);
         
         void        menuitem(std::string_view, std::string_view scut="");
+        
+        void        menuitem(dialog_k, std::string_view, std::string_view scut=""); //< TBD
+        void        menuitem(dock_k, std::string_view, std::string_view scut=""); //< TBD
+        void        menuitem(open_k, std::string_view, std::string_view scut=""); //< TBD
+        void        menuitem(widget_k, std::string_view, std::string_view scut=""); //< TBD
+        
+        UIWriter    right(align_k);
         
         UIWriter    operator<<(UIElement*);
 

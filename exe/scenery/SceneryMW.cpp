@@ -100,6 +100,7 @@ void SceneryMW::init_info()
     auto window = mb.menu("Window");
 
     auto help = mb.menu("Help");
-
-    auto debug = mb.menu("Debug");
+    
+    auto ral    = mb.right(ALIGN);
+    auto debug  = ral.menu("Debug");
 }

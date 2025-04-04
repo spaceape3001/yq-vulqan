@@ -268,6 +268,8 @@ namespace yq::tachyon {
         UIItems*                        m_ui            = nullptr;
         UIMMap                          m_uimap;    //< for cross-linking
         Tristate                        m_wireframe     = Tristate::INHERIT;
+        
+        void    _kill();
 
 
         static void push_buffer_mvp(PushBuffer&, const PreContext&, const Rendered³Snap&);

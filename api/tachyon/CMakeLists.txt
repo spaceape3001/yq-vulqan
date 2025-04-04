@@ -689,6 +689,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/Menu.cpp
     ya/uis/MenuBar.cpp
     ya/uis/MenuItem.cpp
+    ya/uis/RightAlign.cpp
     ya/uis/UIItems.cpp
     
     ya/utilities/LoggerBox.cpp

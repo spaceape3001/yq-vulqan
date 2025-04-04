@@ -12,6 +12,7 @@
 #include <ya/uis/Menu.hpp>
 #include <ya/uis/MenuBar.hpp>
 #include <ya/uis/MenuItem.hpp>
+#include <ya/uis/RightAlign.hpp>
 
 namespace yq::tachyon {
     UIWriter::UIWriter() = default;
@@ -102,6 +103,11 @@ namespace yq::tachyon {
         if(kName.empty())
             return ;
         *this << new MenuItem(kName, scut);
+    }
+
+    UIWriter    UIWriter::right(align_k)
+    {
+        return *this << new RightAlign;
     }
 }
 

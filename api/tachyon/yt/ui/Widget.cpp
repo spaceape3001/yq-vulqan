@@ -254,6 +254,10 @@ namespace yq::tachyon {
     
     Widget::~Widget()
     {
+        if(m_ui){
+            delete m_ui;
+            m_ui        = nullptr;
+        }
     }
 
     PostAdvice    Widget::advise(const Post&pp) const
@@ -318,7 +322,7 @@ namespace yq::tachyon {
         if(m_ui){
             auto wid        = auto_reset(UIElement::s_widget, this);
             auto ctx        = auto_reset(UIElement::s_context, &u);
-            m_ui -> render();
+            m_ui -> draw();
         }
     }
 
@@ -468,6 +472,18 @@ namespace yq::tachyon {
             lock_t  _lock(m_mutex, true);
             std::swap(m_layout, lay);
         }
+    }
+
+    Execution       Widget::setup(const Context& ctx)
+    {
+        if(!m_ui){
+            const WidgetInfo&   wi  = metaInfo();
+            if(wi.m_ui){
+                auto wid        = auto_reset(UIElement::s_widget, this);
+                m_ui            = wi.m_ui->clone();
+            }
+        }
+        return Tachyon::setup(ctx);
     }
 
     void    Widget::snap(WidgetSnap& sn) const

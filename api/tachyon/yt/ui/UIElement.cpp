@@ -29,4 +29,9 @@ namespace yq::tachyon {
     {
     }
     
+    void    UIElement::draw()
+    {
+        // eventually want to capture sizes (optional)
+        render();
+    }
 }

@@ -131,7 +131,7 @@ add_library(${PROJECT_NAME} SHARED
     yt/ui/Panel.cpp
     #yt/ui/Tool.cpp
     yt/ui/UIElement.cpp
-    yt/ui/UIElementWriter.cpp
+    yt/ui/UIWriter.cpp
     yt/ui/Undo.cpp
     yt/ui/Widget.cpp
 
@@ -686,6 +686,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/OrTrigger.cpp
     ya/triggers/PostTrigger.cpp
     
+    ya/uis/Menu.cpp
+    ya/uis/MenuBar.cpp
+    ya/uis/MenuItem.cpp
     ya/uis/UIItems.cpp
     
     ya/utilities/LoggerBox.cpp

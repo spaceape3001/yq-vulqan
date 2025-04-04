@@ -44,6 +44,11 @@ namespace yq::tachyon {
     {
         return new UIItems(*this);
     }
+
+    void    UIItems::content() 
+    {
+        render(ITEMS);
+    }
     
     bool    UIItems::empty() const
     {
@@ -52,10 +57,15 @@ namespace yq::tachyon {
     
     void    UIItems::render() 
     {
-        for(UIElement* ui : m_items)
-            ui->render();
+        render(ITEMS);
     }
     
+    void    UIItems::render(items_k) 
+    {
+        for(UIElement* ui : m_items)
+            ui->draw();
+    }
+
     size_t  UIItems::size() const
     {
         return m_items.size();

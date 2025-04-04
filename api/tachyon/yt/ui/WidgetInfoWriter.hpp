@@ -9,18 +9,18 @@
 #include <yt/ui/Widget.hpp>
 #include <yt/ui/WidgetData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
-#include <yt/ui/UIElementWriter.hpp>
+#include <yt/ui/UIWriter.hpp>
 
 namespace yq::tachyon {
 
     /*! \brief Writer of widget information
     */
     template <typename C>
-    class WidgetInfo::Writer : public TachyonInfo::Writer<C>, public UIElementWriter {
+    class WidgetInfo::Writer : public TachyonInfo::Writer<C>, public UIWriter {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(WidgetInfo* widgetInfo) : TachyonInfo::Writer<C>(widgetInfo), UIElementWriter(*widgetInfo), m_meta(widgetInfo)
+        Writer(WidgetInfo* widgetInfo) : TachyonInfo::Writer<C>(widgetInfo), UIWriter(*widgetInfo), m_meta(widgetInfo)
         {
         }
         

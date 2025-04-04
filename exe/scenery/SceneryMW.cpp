@@ -22,6 +22,12 @@ SceneryMW::~SceneryMW()
 {
 }
 
+void    SceneryMW::imgui(ViContext&u) 
+{
+    Widget::imgui(UI,u);
+}
+
+#if 0
 void SceneryMW::content(ViContext& u) 
 {   
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
@@ -70,11 +76,30 @@ void SceneryMW::menubar(ViContext&u)
         ImGui::EndMenu();
     }
 }
+#endif
+
 
 void SceneryMW::init_info()
 {
     auto w = writer<SceneryMW>();
     w.description("The main widget");
     w.imgui();
-    w.menubar();
+    
+    auto mb = w.menubar(MAIN);
+    
+    auto file = mb.menu("File");
+    file.menuitem("Open", "Ctrl+O");
+    file.menuitem("Save", "Ctrl+S");
+    
+    auto edit = mb.menu("Edit");
+    edit.menuitem("Copy", "Ctrl+C");
+    edit.menuitem("Paste", "Ctrl+V");
+
+    auto view = mb.menu("View");
+    
+    auto window = mb.menu("Window");
+
+    auto help = mb.menu("Help");
+
+    auto debug = mb.menu("Debug");
 }

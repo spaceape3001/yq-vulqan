@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <ya/widgets/AppWidget.hpp>
+#include <yt/ui/Widget.hpp>
 
 namespace yq::tachyon {
     class OpenFileRequest;
@@ -16,16 +16,18 @@ namespace yq::tachyon {
 using namespace yq;
 using namespace yq::tachyon;
 
-class SceneryMW : public AppWidget {
-    YQ_TACHYON_DECLARE(SceneryMW, AppWidget)
+class SceneryMW : public Widget {
+    YQ_TACHYON_DECLARE(SceneryMW, Widget)
 public:
 
     SceneryMW();
     ~SceneryMW();
     
-    bool    menubar(enabled_k) const override { return true; }
-    void    menubar(ViContext&) override;
-    void    content(ViContext&) override;
+    //bool    menubar(enabled_k) const override { return true; }
+    //void    menubar(ViContext&) override;
+    using Widget::imgui;
+    void    imgui(ViContext&) override;
+    
 
     static void init_info();
 };

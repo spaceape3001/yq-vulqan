@@ -45,14 +45,15 @@ namespace yq::tachyon {
     class Frame;
     class UIElement;
     class UIItems;
-    class UIElementWriter;
+    class UIWriter;
 
     class WidgetInfo : public TachyonInfo {
     public:
         template <typename C> class Writer;
         WidgetInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
     private:
-        friend class UIElementWriter;
+        friend class UIWriter;
+        friend class Widget;
         UIItems*                m_ui    = nullptr;
     };
     
@@ -158,11 +159,12 @@ namespace yq::tachyon {
         //! Dimension count to the widget (ie...add dimensions to allow for layout resizing)
         virtual uint8_t dimensions(count_k) const { return 0; }
 
-        virtual Execution  tick(const Context&);
 
     protected:
         friend class Viewer;
         friend class Layout;
+        friend class UIElement;
+        friend class UIWriter;
         
         enum class F : uint8_t {
             //ClosePending,
@@ -170,6 +172,16 @@ namespace yq::tachyon {
             AutoRender
         };
         using FFlags = Flags<F>;
+
+        //! Our viewer
+        TypedID                 m_viewer;
+        
+        //! A string ID for ImGui
+        const std::string       m_windowID;
+        
+        FFlags                  m_flags = { F::Visible, F::AutoRender };
+
+        virtual PostAdvice      advise(const Post&) const override;
         
         //bool                    started() const;
 
@@ -179,36 +191,30 @@ namespace yq::tachyon {
         void                    close(reject_k);
         
         
-        //! Our viewer
-        TypedID                 m_viewer;
-        
-        //! A string ID for ImGui
-        const std::string       m_windowID;
-        
+
         //! A string ID for ImGui
         virtual const char*     imgui_id() const;
         
-        FFlags                  m_flags = { F::Visible, F::AutoRender };
-
-        //! Setup the UIElement from meta
-        void                    setup_ui();
+        void                    on_close_command(const CloseCommand&);
+        void                    on_close_request(const CloseRequestCPtr&);
         
+        void                    on_hide_command(const HideCommand&);
+        
+        void                    on_set_viewer(const SetViewer&);
+        void                    on_show_command(const ShowCommand&);
+        void                    on_title_command(const TitleCommand&);
+
         //! Called before record, this is the opportunity to 
         //! pass descriptor sets to the graphics card.
         virtual void            prerecord(ViContext&);
 
-        virtual PostAdvice      advise(const Post&) const override;
+
+        virtual Execution       setup(const Context&);
         
         void                    snap(WidgetSnap&) const;
-        
-        void    on_close_command(const CloseCommand&);
-        void    on_close_request(const CloseRequestCPtr&);
-        
-        void    on_hide_command(const HideCommand&);
-        
-        void    on_set_viewer(const SetViewer&);
-        void    on_show_command(const ShowCommand&);
-        void    on_title_command(const TitleCommand&);
+
+        virtual Execution       tick(const Context&);
+
         
         
         #if 0
@@ -252,14 +258,16 @@ namespace yq::tachyon {
         void        prerecord(const PreContext&, RenderedID);
         
     private:
-        friend class UIElementWriter;
+    
+        using UIMMap = std::multimap<uint64_t,UIElement*>;
     
         struct R;
-        CloseRequestCPtr            m_closeRequest;
-        LayoutPtr                   m_layout;
-        std::vector<R>              m_rendereds;
-        std::unique_ptr<UIItems>    m_ui;
-        Tristate                    m_wireframe     = Tristate::INHERIT;
+        CloseRequestCPtr                m_closeRequest;
+        LayoutPtr                       m_layout;
+        std::vector<R>                  m_rendereds;
+        UIItems*                        m_ui            = nullptr;
+        UIMMap                          m_uimap;    //< for cross-linking
+        Tristate                        m_wireframe     = Tristate::INHERIT;
 
 
         static void push_buffer_mvp(PushBuffer&, const PreContext&, const Rendered³Snap&);

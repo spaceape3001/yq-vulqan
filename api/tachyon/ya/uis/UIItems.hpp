@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yt/keywords.hpp>
 #include <yt/ui/UIElement.hpp>
 #include <vector>
 
@@ -31,8 +32,17 @@ namespace yq::tachyon {
         const std::vector<UIElement*>& items() const { return m_items; }
         
         virtual UIItems*    clone() const override;
+        
+    protected:
+        //! Default render for items is to render subitems
         virtual void        render() override;
-
+        
+        //! Default content for items is to render subitems
+        virtual void        content() override;
+        
+        //! Calls the children
+        void    render(items_k);
+        
     private:
         std::vector<UIElement*>    m_items;
     };

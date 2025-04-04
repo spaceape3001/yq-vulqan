@@ -111,6 +111,7 @@ namespace yq::tachyon {
     struct io_k {
         consteval operator StdThread() const noexcept  { return StdThread::IO; }
     };
+    struct items_k {};
     
     struct joystick_k {};
     struct keyboard_k {};
@@ -119,6 +120,7 @@ namespace yq::tachyon {
     struct light³_k {};
     struct lock_k {};
     struct locked_k {};
+    struct main_k {};
     struct manager_k {};
     struct maximum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Maximum; }
@@ -301,6 +303,7 @@ namespace yq::tachyon {
     static constexpr const inflatable_k         INFLATABLE;
     static constexpr const info_k               INFO;
     static constexpr const io_k                 IO;
+    static constexpr const items_k              ITEMS;
     static constexpr const joystick_k           JOYSTICK;
     static constexpr const keyboard_k           KEYBOARD;
     static constexpr const l2d_k                L2D;
@@ -308,6 +311,7 @@ namespace yq::tachyon {
     static constexpr const light³_k             LIGHT³;
     static constexpr const lock_k               LOCK;
     static constexpr const locked_k             LOCKED;
+    static constexpr const main_k               MAIN;
     static constexpr const manager_k            MANAGER;
     static constexpr const maximum_k            MAX;
     static constexpr const maximum_k            MAXIMUM;

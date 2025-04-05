@@ -44,6 +44,7 @@ namespace yq::tachyon {
     struct calculate_k {};
     struct camera_k {};
     struct camera³_k {};
+    struct center_k {};
     struct changed_k {};
     struct child_k {};
     struct children_k {};
@@ -119,6 +120,7 @@ namespace yq::tachyon {
     struct joystick_k {};
     struct keyboard_k {};
     struct l2d_k {};
+    struct left_k {};
     struct light_k {};
     struct light³_k {};
     struct lock_k {};
@@ -179,6 +181,7 @@ namespace yq::tachyon {
     struct reset_k {};
     struct resource_k {};
     struct resume_k {};
+    struct right_k {};
     struct roll_k {};
     struct root_k {};
     struct rotatable_k {};
@@ -271,6 +274,7 @@ namespace yq::tachyon {
     static constexpr const calculate_k          CALCULATE;
     static constexpr const camera_k             CAMERA;
     static constexpr const camera³_k            CAMERA³;
+    static constexpr const center_k             CENTER, CENTRE;
     static constexpr const changed_k            CHANGED;
     static constexpr const child_k              CHILD;
     static constexpr const children_k           CHILDREN;
@@ -315,6 +319,7 @@ namespace yq::tachyon {
     static constexpr const joystick_k           JOYSTICK;
     static constexpr const keyboard_k           KEYBOARD;
     static constexpr const l2d_k                L2D;
+    static constexpr const left_k               LEFT;
     static constexpr const light_k              LIGHT;
     static constexpr const light³_k             LIGHT³;
     static constexpr const lock_k               LOCK;
@@ -359,6 +364,7 @@ namespace yq::tachyon {
     static constexpr const reset_k              RESET;
     static constexpr const resource_k           RESOURCE;
     static constexpr const resume_k             RESUME;
+    static constexpr const right_k              RIGHT;
     static constexpr const roll_k               ROLL;
     static constexpr const root_k               ROOT;
     static constexpr const rotatable_k          ROTATABLE;

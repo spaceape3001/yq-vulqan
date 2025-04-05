@@ -8,11 +8,12 @@
 #include "Widget.hpp"
 #include "UIElement.hpp"
 
-#include <ya/uis/UIItems.hpp>
+#include <ya/uis/CenterAlign.hpp>
 #include <ya/uis/Menu.hpp>
 #include <ya/uis/MenuBar.hpp>
 #include <ya/uis/MenuItem.hpp>
 #include <ya/uis/RightAlign.hpp>
+#include <ya/uis/UIItems.hpp>
 
 namespace yq::tachyon {
     UIWriter::UIWriter() = default;
@@ -79,6 +80,11 @@ namespace yq::tachyon {
         if(!items)      // this isn't an error as there will be non-items elements
             return UIWriter();
         return UIWriter(*items);
+    }
+
+    UIWriter    UIWriter::center(align_k)
+    {
+        return *this << new CenterAlign;
     }
 
     UIWriter    UIWriter::menu(std::string_view name)

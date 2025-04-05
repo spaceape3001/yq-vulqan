@@ -30,6 +30,8 @@ namespace yq::tachyon {
         UIWriter& operator=(const UIWriter&);
         UIWriter& operator=(UIWriter&&);
 
+        UIWriter    center(align_k);
+
         UIWriter    menu(std::string_view);
 
         UIWriter    menubar();

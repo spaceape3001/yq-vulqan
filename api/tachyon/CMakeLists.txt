@@ -686,6 +686,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/OrTrigger.cpp
     ya/triggers/PostTrigger.cpp
     
+    ya/uis/CenterAlign.cpp
     ya/uis/Menu.cpp
     ya/uis/MenuBar.cpp
     ya/uis/MenuItem.cpp

@@ -11,13 +11,13 @@
 #include <string>
 
 namespace yq::tachyon {
-    class MenuItem : public UIElement {
+    class UIMenuItem : public UIElement {
     public:
-        MenuItem(std::string_view kName, std::string_view kShortcut="");
-        MenuItem(const MenuItem&);
-        ~MenuItem();
+        UIMenuItem(std::string_view kName, std::string_view kShortcut="");
+        UIMenuItem(const UIMenuItem&);
+        ~UIMenuItem();
 
-        virtual MenuItem*       clone() const override;
+        virtual UIMenuItem*       clone() const override;
         
     protected:
         virtual void            render() override;

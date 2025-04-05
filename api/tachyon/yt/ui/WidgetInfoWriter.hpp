@@ -29,6 +29,8 @@ namespace yq::tachyon {
         {
         }
 
+        using UIWriter::label;
+
         //! Annotates that this widget will render IMGUI content
         void    imgui()
         {

@@ -23,6 +23,7 @@ namespace yq::tachyon {
         UIWriter(Widget&);
         UIWriter(WidgetInfo&);
         UIWriter(UIItems&);
+        UIWriter(UIElement&);
         ~UIWriter();
         
         UIWriter(const UIWriter&);
@@ -31,27 +32,31 @@ namespace yq::tachyon {
         UIWriter& operator=(UIWriter&&);
 
         UIWriter    center(align_k);
+        
+        UIWriter    label(std::string_view);
 
         UIWriter    menu(std::string_view);
 
         UIWriter    menubar();
         UIWriter    menubar(main_k);
         
-        void        menuitem(std::string_view, std::string_view scut="");
+        UIWriter    menuitem(std::string_view, std::string_view scut="");
         
-        void        menuitem(dialog_k, std::string_view, std::string_view scut=""); //< TBD
-        void        menuitem(dock_k, std::string_view, std::string_view scut=""); //< TBD
-        void        menuitem(open_k, std::string_view, std::string_view scut=""); //< TBD
-        void        menuitem(widget_k, std::string_view, std::string_view scut=""); //< TBD
+        UIWriter    menuitem(dialog_k, std::string_view, std::string_view scut=""); //< TBD
+        UIWriter    menuitem(dock_k, std::string_view, std::string_view scut=""); //< TBD
+        UIWriter    menuitem(open_k, std::string_view, std::string_view scut=""); //< TBD
+        UIWriter    menuitem(widget_k, std::string_view, std::string_view scut=""); //< TBD
         
         UIWriter    right(align_k);
         
         UIWriter    operator<<(UIElement*);
+        
+        bool        addable() const;
 
     protected:
         bool        add(UIElement*);
 
     private:
-        std::variant<std::monostate, UIItems*, Widget*, WidgetInfo*>     m_owner;
+        std::variant<std::monostate, UIItems*, UIElement*, Widget*, WidgetInfo*>     m_owner;
     };
 }

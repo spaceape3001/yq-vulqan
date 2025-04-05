@@ -35,6 +35,7 @@ namespace yq::tachyon {
         static Widget&  widget();
         
         enum class F : uint8_t {
+            // LIMITED event select here ???
         };
         
         Flags<F>        m_flags;

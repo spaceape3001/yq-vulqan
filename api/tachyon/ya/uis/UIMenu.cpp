@@ -4,28 +4,28 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Menu.hpp"
+#include "UIMenu.hpp"
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    Menu::Menu(std::string_view kv) : m_name(kv)
+    UIMenu::UIMenu(std::string_view kv) : m_name(kv)
     {
     }
     
-    Menu::Menu(const Menu&cp) : UIItems(cp), m_name(cp.m_name)
+    UIMenu::UIMenu(const UIMenu&cp) : UIItems(cp), m_name(cp.m_name)
     {
     }
     
-    Menu::~Menu()
+    UIMenu::~UIMenu()
     {
     }
     
-    Menu*     Menu::clone() const 
+    UIMenu*     UIMenu::clone() const 
     {
-        return new Menu(*this);
+        return new UIMenu(*this);
     }
 
-    void        Menu::render() 
+    void        UIMenu::render() 
     {
         if(ImGui::BeginMenu(m_name.c_str())){
             content();

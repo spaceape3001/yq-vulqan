@@ -85,22 +85,20 @@ void SceneryMW::init_info()
     w.description("The main widget");
     w.imgui();
     
-    auto mb = w.menubar(MAIN);
+    auto mmb        = w.menubar(MAIN);
     
-    auto file = mb.menu("File");
+    auto file       = mmb.menu("File");
+    auto edit       = mmb.menu("Edit");
+    auto view       = mmb.menu("View");
+    auto window     = mmb.menu("Window");
+    auto help       = mmb.menu("Help");
+    auto debug      = mmb.menu("Debug");
+
     file.menuitem("Open", "Ctrl+O");
     file.menuitem("Save", "Ctrl+S");
-    
-    auto edit = mb.menu("Edit");
+
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
 
-    auto view = mb.menu("View");
-    
-    auto window = mb.menu("Window");
-
-    auto help = mb.menu("Help");
-    
-    auto ral    = mb.right(ALIGN);
-    auto debug  = ral.menu("Debug");
+    w.label("FooBar");
 }

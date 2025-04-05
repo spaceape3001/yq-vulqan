@@ -686,12 +686,13 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/OrTrigger.cpp
     ya/triggers/PostTrigger.cpp
     
-    ya/uis/CenterAlign.cpp
-    ya/uis/Menu.cpp
-    ya/uis/MenuBar.cpp
-    ya/uis/MenuItem.cpp
-    ya/uis/RightAlign.cpp
+    ya/uis/UICenterAlign.cpp
     ya/uis/UIItems.cpp
+    ya/uis/UIMenu.cpp
+    ya/uis/UIMenuBar.cpp
+    ya/uis/UIMenuItem.cpp
+    ya/uis/UIRightAlign.cpp
+    ya/uis/UITextLabel.cpp
     
     ya/utilities/LoggerBox.cpp
 

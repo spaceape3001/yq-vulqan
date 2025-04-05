@@ -4,32 +4,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MenuBar.hpp"
+#include "UIMenuBar.hpp"
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    MenuBar::MenuBar() : m_isMain(false)
+    UIMenuBar::UIMenuBar() : m_isMain(false)
     {
     }
     
-    MenuBar::MenuBar(main_k) : m_isMain(true)
+    UIMenuBar::UIMenuBar(main_k) : m_isMain(true)
     {
     }
 
-    MenuBar::MenuBar(const MenuBar&cp) : UIItems(cp), m_isMain(cp.m_isMain)
+    UIMenuBar::UIMenuBar(const UIMenuBar&cp) : UIItems(cp), m_isMain(cp.m_isMain)
     {
     }
     
-    MenuBar::~MenuBar()
+    UIMenuBar::~UIMenuBar()
     {
     }
 
-    MenuBar*    MenuBar::clone() const
+    UIMenuBar*    UIMenuBar::clone() const
     {
-        return new MenuBar(*this);
+        return new UIMenuBar(*this);
     }
    
-    void        MenuBar::render() 
+    void        UIMenuBar::render() 
     {
         if(m_isMain){
             if(ImGui::BeginMainMenuBar()){

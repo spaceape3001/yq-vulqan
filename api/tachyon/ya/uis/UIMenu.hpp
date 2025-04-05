@@ -7,22 +7,21 @@
 #pragma once
 
 #include <ya/uis/UIItems.hpp>
+#include <yt/keywords.hpp>
 
 namespace yq::tachyon {
-    class RightAlign : public UIItems {
+    class UIMenu : public UIItems {
     public:
-    
-        RightAlign();
-        RightAlign(const RightAlign&);
-        ~RightAlign();
+        UIMenu(std::string_view);
+        UIMenu(const UIMenu&);
+        virtual ~UIMenu();
         
-        RightAlign* clone() const;
-        
+        virtual UIMenu*     clone() const override;
+
     protected:
-        using UIItems::render;
-        void        render();
-        
+        virtual void        render() override;
+
     private:
-        float  m_width = -1;
+        std::string     m_name;
     };
 }

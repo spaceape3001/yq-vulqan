@@ -7,22 +7,22 @@
 #pragma once
 
 #include <ya/uis/UIItems.hpp>
+#include <yt/keywords.hpp>
 
 namespace yq::tachyon {
-    class CenterAlign : public UIItems {
+    class UIMenuBar : public UIItems {
     public:
-    
-        CenterAlign();
-        CenterAlign(const CenterAlign&);
-        ~CenterAlign();
+        UIMenuBar();
+        UIMenuBar(main_k);
+        UIMenuBar(const UIMenuBar&);
+        virtual ~UIMenuBar();
         
-        CenterAlign* clone() const;
-        
+        virtual UIMenuBar*     clone() const override;
+
     protected:
-        using UIItems::render;
-        void        render();
-        
+        virtual void        render() override;
+
     private:
-        float  m_width = -1;
+        bool    m_isMain;
     };
 }

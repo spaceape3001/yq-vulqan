@@ -8,12 +8,13 @@
 #include "Widget.hpp"
 #include "UIElement.hpp"
 
-#include <ya/uis/CenterAlign.hpp>
-#include <ya/uis/Menu.hpp>
-#include <ya/uis/MenuBar.hpp>
-#include <ya/uis/MenuItem.hpp>
-#include <ya/uis/RightAlign.hpp>
+#include <ya/uis/UICenterAlign.hpp>
 #include <ya/uis/UIItems.hpp>
+#include <ya/uis/UIMenu.hpp>
+#include <ya/uis/UIMenuBar.hpp>
+#include <ya/uis/UIMenuItem.hpp>
+#include <ya/uis/UIRightAlign.hpp>
+#include <ya/uis/UITextLabel.hpp>
 
 namespace yq::tachyon {
     UIWriter::UIWriter() = default;
@@ -31,6 +32,10 @@ namespace yq::tachyon {
     }
     
     UIWriter::UIWriter(UIItems& ui) : m_owner(&ui)
+    {
+    }
+
+    UIWriter::UIWriter(UIElement& ui) : m_owner(&ui)
     {
     }
     
@@ -72,6 +77,17 @@ namespace yq::tachyon {
         return false;
     }
 
+    bool        UIWriter::addable() const
+    {
+        if(auto p = std::get_if<Widget*>(&m_owner))
+            return static_cast<bool>(*p);
+        if(auto p = std::get_if<WidgetInfo*>(&m_owner))
+            return static_cast<bool>(*p);
+        if(auto p = std::get_if<UIItems*>(&m_owner))
+            return static_cast<bool>(*p);
+        return false;
+    }
+    
     UIWriter    UIWriter::operator<<(UIElement* ui)
     {
         if(!add(ui))    // this *likely* means a bad input/state
@@ -84,36 +100,57 @@ namespace yq::tachyon {
 
     UIWriter    UIWriter::center(align_k)
     {
-        return *this << new CenterAlign;
+        if(!addable())
+            return {};
+        return *this << new UICenterAlign;
+    }
+
+    UIWriter   UIWriter::label(std::string_view kText)
+    {
+        if(!addable())
+            return {};
+        if(kText.empty())
+            return {};
+        return *this << new UITextLabel(kText);
     }
 
     UIWriter    UIWriter::menu(std::string_view name)
     {
+        if(!addable())
+            return {};
         if(name.empty())
             return {};
-        return *this << new Menu(name);
+        return *this << new UIMenu(name);
     }
 
     UIWriter    UIWriter::menubar()
     {
-        return *this << new MenuBar;
+        if(!addable())
+            return {};
+        return *this << new UIMenuBar;
     }
     
     UIWriter    UIWriter::menubar(main_k)
     {
-        return *this << new MenuBar(MAIN);
+        if(!addable())
+            return {};
+        return *this << new UIMenuBar(MAIN);
     }
 
-    void        UIWriter::menuitem(std::string_view kName, std::string_view scut)
+    UIWriter     UIWriter::menuitem(std::string_view kName, std::string_view scut)
     {
+        if(!addable())
+            return {};
         if(kName.empty())
-            return ;
-        *this << new MenuItem(kName, scut);
+            return {};
+        return *this << new UIMenuItem(kName, scut);
     }
 
     UIWriter    UIWriter::right(align_k)
     {
-        return *this << new RightAlign;
+        if(!addable())
+            return {};
+        return *this << new UIRightAlign;
     }
 }
 

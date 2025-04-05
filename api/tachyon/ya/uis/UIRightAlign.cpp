@@ -4,35 +4,33 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CenterAlign.hpp"
+#include "UIRightAlign.hpp"
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    CenterAlign::CenterAlign()
+    UIRightAlign::UIRightAlign()
     {
     }
     
-    CenterAlign::CenterAlign(const CenterAlign& cp) : UIItems(cp)
+    UIRightAlign::UIRightAlign(const UIRightAlign& cp) : UIItems(cp)
     {
     }
     
-    CenterAlign::~CenterAlign()
+    UIRightAlign::~UIRightAlign()
     {
     }
     
-    CenterAlign* CenterAlign::clone() const
+    UIRightAlign* UIRightAlign::clone() const
     {
-        return new CenterAlign(*this);
+        return new UIRightAlign(*this);
     }
 
-    void        CenterAlign::render()
+    void        UIRightAlign::render()
     {
         if(m_width > 0)
             ImGui::Dummy({ m_width, 1 });
-        Vector2F    b   = ImGui::GetCursorPos();
         content();
         Vector2F    c   = ImGui::GetCursorPos();
-        float       x   = 0.5*(b.x+c.x);
-        m_width        += ImGui::GetWindowWidth()*0.5 - x;
+        m_width        += ImGui::GetWindowWidth() - c.x;
     }
 }

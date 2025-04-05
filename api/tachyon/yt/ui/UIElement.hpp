@@ -8,7 +8,6 @@
 
 #include <concepts>
 #include <yq/core/Flags.hpp>
-#include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
     struct ViContext;
@@ -36,8 +35,6 @@ namespace yq::tachyon {
         static Widget&  widget();
         
         enum class F : uint8_t {
-            AlwaysMeasure,
-            MeasureNext
         };
         
         Flags<F>        m_flags;
@@ -46,8 +43,6 @@ namespace yq::tachyon {
         friend class Widget;
         static thread_local Widget*     s_widget;
         static thread_local ViContext*  s_context;
-        
-        Vector2F        m_start, m_end;
     };
     
     template <typename T>

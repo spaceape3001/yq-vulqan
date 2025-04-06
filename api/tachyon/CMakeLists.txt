@@ -687,7 +687,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/PostTrigger.cpp
     
     ya/uis/UICenterAlign.cpp
-    ya/uis/UIItems.cpp
+    ya/uis/UIElements.cpp
     ya/uis/UIMenu.cpp
     ya/uis/UIMenuBar.cpp
     ya/uis/UIMenuItem.cpp

@@ -14,24 +14,24 @@ namespace yq::tachyon {
 
     //! An item with a collection of subitems
     //! \note This class takes OWNERSHIP of the pointers
-    class UIItems : public UIElement {
+    class UIElements : public UIElement {
     public:
     
-        UIItems();
+        UIElements();
         
         /*! \brief Copy constructor that CLONES all sub-items
         */
-        UIItems(const UIItems&);
-        virtual ~UIItems();
+        UIElements(const UIElements&);
+        virtual ~UIElements();
     
         void    append(UIElement*);
         bool    empty() const;
         size_t  size() const;
-        UIItems&    operator<<(UIElement*);
+        UIElements&    operator<<(UIElement*);
         
         const std::vector<UIElement*>& items() const { return m_items; }
         
-        virtual UIItems*    clone() const override;
+        virtual UIElements*    clone() const override;
         
     protected:
         //! Default render for items is to render subitems

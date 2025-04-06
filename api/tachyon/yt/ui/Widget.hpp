@@ -44,7 +44,7 @@ namespace yq::tachyon {
     class TitleCommand;
     class Frame;
     class UIElement;
-    class UIItems;
+    class UIElements;
     class UIWriter;
 
     class WidgetInfo : public TachyonInfo {
@@ -54,7 +54,7 @@ namespace yq::tachyon {
     private:
         friend class UIWriter;
         friend class Widget;
-        UIItems*                m_ui    = nullptr;
+        UIElements*                m_ui    = nullptr;
     };
     
     /*! \brief Root something that's drawwable & interactable
@@ -265,7 +265,7 @@ namespace yq::tachyon {
         CloseRequestCPtr                m_closeRequest;
         LayoutPtr                       m_layout;
         std::vector<R>                  m_rendereds;
-        UIItems*                        m_ui            = nullptr;
+        UIElements*                     m_ui            = nullptr;
         UIMMap                          m_uimap;    //< for cross-linking
         Tristate                        m_wireframe     = Tristate::INHERIT;
         

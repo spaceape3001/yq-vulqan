@@ -16,7 +16,7 @@ namespace yq::tachyon {
     {
     }
 
-    UIMenuBar::UIMenuBar(const UIMenuBar&cp) : UIItems(cp), m_isMain(cp.m_isMain)
+    UIMenuBar::UIMenuBar(const UIMenuBar&cp) : UIElements(cp), m_isMain(cp.m_isMain)
     {
     }
     

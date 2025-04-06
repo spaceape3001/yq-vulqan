@@ -6,14 +6,23 @@
 
 #pragma once
 
-#include <ya/uis/UIItems.hpp>
+#include <ya/uis/UIElements.hpp>
 #include <yt/keywords.hpp>
 
 namespace yq::tachyon {
-    class UIMenuBar : public UIItems {
+
+    /*! \brief It's a menu bar
+    */
+    class UIMenuBar : public UIElements {
     public:
+    
+        //! Constructs a regular menu bar
         UIMenuBar();
+        
+        //! Constructs a "main" menu bar (for the main window)
         UIMenuBar(main_k);
+        
+        //! Copy constructor
         UIMenuBar(const UIMenuBar&);
         virtual ~UIMenuBar();
         

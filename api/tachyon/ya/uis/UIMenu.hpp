@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <ya/uis/UIItems.hpp>
+#include <ya/uis/UIElements.hpp>
 #include <yt/keywords.hpp>
 
 namespace yq::tachyon {
-    class UIMenu : public UIItems {
+    class UIMenu : public UIElements {
     public:
         UIMenu(std::string_view);
         UIMenu(const UIMenu&);

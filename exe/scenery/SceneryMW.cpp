@@ -100,5 +100,4 @@ void SceneryMW::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
 
-    w.label("FooBar");
 }

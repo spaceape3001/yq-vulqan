@@ -24,4 +24,12 @@ namespace yq::tachyon {
 
     template <class P>
     concept SomePost        = std::derived_from<P,Post>;
+    
+    template <SomePost P>
+    struct post_k {
+        using ThePost = P;
+    };
+    
+    template <SomePost P=Post>
+    static constexpr const post_k<P>    POST;
 }

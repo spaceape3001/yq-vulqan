@@ -12,7 +12,7 @@ namespace yq::tachyon {
     {
     }
     
-    UIMenu::UIMenu(const UIMenu&cp) : UIItems(cp), m_name(cp.m_name)
+    UIMenu::UIMenu(const UIMenu&cp) : UIElements(cp), m_name(cp.m_name)
     {
     }
     

@@ -12,7 +12,7 @@ namespace yq::tachyon {
     {
     }
     
-    UIRightAlign::UIRightAlign(const UIRightAlign& cp) : UIItems(cp)
+    UIRightAlign::UIRightAlign(const UIRightAlign& cp) : UIElements(cp)
     {
     }
     

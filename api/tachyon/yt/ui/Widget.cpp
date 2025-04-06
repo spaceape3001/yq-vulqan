@@ -45,7 +45,7 @@
 #include <yt/scene/Rendered.hpp>
 #include <yv/Visualizer.hpp>
 #include <yv/Visualizer.hxx>
-#include <ya/uis/UIItems.hpp>
+#include <ya/uis/UIElements.hpp>
 #include <yq/util/AutoReset.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)

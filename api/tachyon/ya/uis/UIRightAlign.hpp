@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <ya/uis/UIItems.hpp>
+#include <ya/uis/UIElements.hpp>
 
 namespace yq::tachyon {
-    class UIRightAlign : public UIItems {
+    class UIRightAlign : public UIElements {
     public:
     
         UIRightAlign();
@@ -19,7 +19,7 @@ namespace yq::tachyon {
         UIRightAlign* clone() const;
         
     protected:
-        using UIItems::render;
+        using UIElements::render;
         void        render();
         
     private:

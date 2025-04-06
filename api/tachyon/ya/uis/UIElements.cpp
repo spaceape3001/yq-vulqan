@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIItems.hpp"
+#include "UIElements.hpp"
 
 namespace yq::tachyon {
-    UIItems::UIItems()
+    UIElements::UIElements()
     {
     }
     
-    UIItems::UIItems(const UIItems& cp)
+    UIElements::UIElements(const UIElements& cp)
     {
         for(UIElement* ui : cp.m_items){
             UIElement* ui2 = ui -> clone();
@@ -20,53 +20,53 @@ namespace yq::tachyon {
         }
     }
     
-    UIItems::~UIItems()
+    UIElements::~UIElements()
     {
         for(UIElement* ui : m_items)
             delete ui;
         m_items.clear();
     }
 
-    UIItems&    UIItems::operator<<(UIElement*p)
+    UIElements&    UIElements::operator<<(UIElement*p)
     {
         append(p);
         return *this;
     }
 
-    void    UIItems::append(UIElement*p)
+    void    UIElements::append(UIElement*p)
     {
         if(!p)
             return;
         m_items.push_back(p);
     }
 
-    UIItems*     UIItems::clone() const 
+    UIElements*     UIElements::clone() const 
     {
-        return new UIItems(*this);
+        return new UIElements(*this);
     }
 
-    void    UIItems::content() 
+    void    UIElements::content() 
     {
         render(ITEMS);
     }
     
-    bool    UIItems::empty() const
+    bool    UIElements::empty() const
     {
         return m_items.empty();
     }
     
-    void    UIItems::render() 
+    void    UIElements::render() 
     {
         render(ITEMS);
     }
     
-    void    UIItems::render(items_k) 
+    void    UIElements::render(items_k) 
     {
         for(UIElement* ui : m_items)
             ui->draw();
     }
 
-    size_t  UIItems::size() const
+    size_t  UIElements::size() const
     {
         return m_items.size();
     }

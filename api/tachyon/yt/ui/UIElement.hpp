@@ -24,15 +24,18 @@ namespace yq::tachyon {
         //! Shouldn't generally be overriden aside from one/two instances
         virtual void    draw();
         
+        ////! Spawn off any root ui elements (ie, dialogs, docks, windows, etc)
+        //virtual std::vector<UIElement*> spawn();
+        
     protected:
 
         virtual void    render() = 0;
 
-        //! Called if there's an if-show/perform test inside render
+        //! Called if there's an if-show/perform test inside render, or similar encapsulation
         virtual void    content() {}
         
         //! Valid during clone & render
-        static Widget&  widget();
+        static Widget*  widget();
         
         enum class F : uint8_t {
             // LIMITED event select here ???

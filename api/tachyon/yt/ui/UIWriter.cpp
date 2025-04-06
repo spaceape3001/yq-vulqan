@@ -9,7 +9,7 @@
 #include "UIElement.hpp"
 
 #include <ya/uis/UICenterAlign.hpp>
-#include <ya/uis/UIItems.hpp>
+#include <ya/uis/UIElements.hpp>
 #include <ya/uis/UIMenu.hpp>
 #include <ya/uis/UIMenuBar.hpp>
 #include <ya/uis/UIMenuItem.hpp>
@@ -31,7 +31,7 @@ namespace yq::tachyon {
     {
     }
     
-    UIWriter::UIWriter(UIItems& ui) : m_owner(&ui)
+    UIWriter::UIWriter(UIElements& ui) : m_owner(&ui)
     {
     }
 
@@ -52,7 +52,7 @@ namespace yq::tachyon {
             Widget* w   = *p;
             if(w){
                 if(!w->m_ui)
-                    w->m_ui = new UIItems();
+                    w->m_ui = new UIElements();
                 w->m_ui->append(ui);
                 return true;
             }
@@ -61,12 +61,12 @@ namespace yq::tachyon {
             WidgetInfo* w   = *p;
             if(w){
                 if(!w->m_ui)
-                    w->m_ui = new UIItems;
+                    w->m_ui = new UIElements;
                 w->m_ui->append(ui);
                 return true;
             }
         }
-        if(auto p = std::get_if<UIItems*>(&m_owner)){
+        if(auto p = std::get_if<UIElements*>(&m_owner)){
             if(*p){
                 (*p) -> append(ui);
                 return true;
@@ -83,7 +83,7 @@ namespace yq::tachyon {
             return static_cast<bool>(*p);
         if(auto p = std::get_if<WidgetInfo*>(&m_owner))
             return static_cast<bool>(*p);
-        if(auto p = std::get_if<UIItems*>(&m_owner))
+        if(auto p = std::get_if<UIElements*>(&m_owner))
             return static_cast<bool>(*p);
         return false;
     }
@@ -92,7 +92,7 @@ namespace yq::tachyon {
     {
         if(!add(ui))    // this *likely* means a bad input/state
             return UIWriter();
-        UIItems*    items   = dynamic_cast<UIItems*>(ui);
+        UIElements*    items   = dynamic_cast<UIElements*>(ui);
         if(!items)      // this isn't an error as there will be non-items elements
             return UIWriter();
         return UIWriter(*items);

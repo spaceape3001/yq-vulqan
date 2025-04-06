@@ -12,10 +12,9 @@ namespace yq::tachyon {
     thread_local Widget*     UIElement::s_widget       = nullptr;
     thread_local ViContext*  UIElement::s_context    = nullptr;
 
-    Widget&  UIElement::widget()
+    Widget*  UIElement::widget()
     {
-        assert(s_widget);
-        return *s_widget;
+        return s_widget;
     }
 
     UIElement::UIElement()

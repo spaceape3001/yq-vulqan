@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <ya/uis/UIItems.hpp>
+#include <ya/uis/UIElements.hpp>
 
 namespace yq::tachyon {
-    class UICenterAlign : public UIItems {
+    class UICenterAlign : public UIElements {
     public:
     
         UICenterAlign();
@@ -19,7 +19,7 @@ namespace yq::tachyon {
         UICenterAlign* clone() const;
         
     protected:
-        using UIItems::render;
+        using UIElements::render;
         void        render();
         
     private:

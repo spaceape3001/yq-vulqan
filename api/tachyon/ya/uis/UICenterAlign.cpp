@@ -12,7 +12,7 @@ namespace yq::tachyon {
     {
     }
     
-    UICenterAlign::UICenterAlign(const UICenterAlign& cp) : UIItems(cp)
+    UICenterAlign::UICenterAlign(const UICenterAlign& cp) : UIElements(cp)
     {
     }
     

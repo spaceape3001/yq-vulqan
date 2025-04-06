@@ -18,6 +18,8 @@ namespace yq::tachyon {
         
         virtual UIMenu*     clone() const override;
 
+        virtual const char*   title() const override;
+
     protected:
         virtual void        render() override;
 

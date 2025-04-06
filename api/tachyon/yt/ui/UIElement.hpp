@@ -27,6 +27,9 @@ namespace yq::tachyon {
         ////! Spawn off any root ui elements (ie, dialogs, docks, windows, etc)
         //virtual std::vector<UIElement*> spawn();
         
+        //! Our element's "title" (may be null)
+        virtual const char*   title() const { return nullptr; }
+        
     protected:
 
         virtual void    render() = 0;

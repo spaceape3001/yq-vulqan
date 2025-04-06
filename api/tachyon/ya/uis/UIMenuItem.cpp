@@ -32,4 +32,9 @@ namespace yq::tachyon {
             content();
         }
     }
+
+    const char*   UIMenuItem::title() const 
+    {
+        return m_name.c_str();
+    }
 }

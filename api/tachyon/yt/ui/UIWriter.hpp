@@ -32,7 +32,11 @@ namespace yq::tachyon {
         UIWriter& operator=(const UIWriter&);
         UIWriter& operator=(UIWriter&&);
 
+        //! The contents will be centered (as best as it can do)
         UIWriter    center(align_k);
+        
+        //! The contents within will all be placed same line
+        UIWriter    hbox();
         
         UIWriter    label(std::string_view);
 

@@ -10,6 +10,7 @@
 
 #include <ya/uis/UICenterAlign.hpp>
 #include <ya/uis/UIElements.hpp>
+#include <ya/uis/UIHBox.hpp>
 #include <ya/uis/UIMenu.hpp>
 #include <ya/uis/UIMenuBar.hpp>
 #include <ya/uis/UIMenuItem.hpp>
@@ -103,6 +104,13 @@ namespace yq::tachyon {
         if(!addable())
             return {};
         return *this << new UICenterAlign;
+    }
+
+    UIWriter   UIWriter::hbox()
+    {
+        if(!addable())
+            return {};
+        return *this << new UIHBox;
     }
 
     UIWriter   UIWriter::label(std::string_view kText)

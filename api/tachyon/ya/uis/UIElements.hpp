@@ -41,9 +41,8 @@ namespace yq::tachyon {
         virtual void        content() override;
         
         //! Calls the children
-        void    render(items_k);
+        virtual void        render(items_k);
         
-    private:
         std::vector<UIElement*>    m_items;
     };
 }

@@ -6,29 +6,29 @@
 
 #pragma once
 
-#include <ya/uis/UIMenuItem.hpp>
+#include <ya/uis/UIButton.hpp>
 #include <yt/msg/Post.hpp>
 
 namespace yq::tachyon {
     template <SomePost P>
-    class UIMenuItem_Post : public UIMenuItem {
+    class UIButton_Post : public UIButton {
     public:
     
-        UIMenuItem_Post(std::string_view name, std::string_view scut={}) : UIMenuItem(name, scut)
+        UIButton_Post(std::string_view text, const Vector2F& size) : UIButton(text, size)
         {
         }
         
-        UIMenuItem_Post(const UIMenuItem_Post&cp) : UIMenuItem(cp)
+        UIButton_Post(const UIButton_Post&cp) : UIButton(cp)
         {
         }
         
-        ~UIMenuItem_Post()
+        ~UIButton_Post()
         {
         }
        
-        UIMenuItem_Post*     clone() const
+        UIButton_Post*     clone() const
         {
-            return new UIMenuItem_Post(*this);
+            return new UIButton_Post(*this);
         }
  
     protected:

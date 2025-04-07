@@ -38,6 +38,18 @@ namespace yq::tachyon {
         UIWriter    button(std::string_view);
         UIWriter    button(std::string_view, const Vector2F& size);
 
+        template <SomePost P>
+        UIWriter    button(std::string_view, post_k<P>);
+
+        template <SomePost P>
+        UIWriter    button(std::string_view, const Vector2F& size, post_k<P>);
+
+        template <SomeWidget W>
+        UIWriter    button(std::string_view, void (W::*)());
+
+        template <SomeWidget W>
+        UIWriter    button(std::string_view, const Vector2F& size, void (W::*)());
+
         //! The contents will be centered (as best as it can do)
         UIWriter    center(align_k);
         

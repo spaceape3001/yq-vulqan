@@ -20,6 +20,7 @@ namespace yq::tachyon {
         
         UIWindow*   clone() const;
         
+        using UIElements::render;
         void        render();
         virtual const char*   title() const override;
 

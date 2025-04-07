@@ -26,10 +26,30 @@ namespace yq::tachyon {
         return new UIToolBar(*this);
     }
 
+    bool    UIToolBar::do_horizontal() const
+    {
+        return undefined(m_orientation) || horizontal(m_orientation);
+    }
+
     void    UIToolBar::orientation(set_k, horzvert_t hv)
     {
-        if(undefined(hv) || horizontal(hv)){
-        } else if(vertical(hv)){
+        m_orientation   = hv;
+        if(do_horizontal()){
+        } else {
         }
+    }
+
+    void    UIToolBar::render(items_k)
+    {
+        if(do_horizontal()){
+            for(UIElement* ui : m_items){
+                ImGui::SameLine();
+                ui->draw();
+            }
+        } else {
+            for(UIElement* ui : m_items)
+                ui->draw();
+        }
+    
     }
 }

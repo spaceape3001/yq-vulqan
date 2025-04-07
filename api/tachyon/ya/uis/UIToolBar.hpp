@@ -18,9 +18,16 @@ namespace yq::tachyon {
         
         UIToolBar*  clone() const;
         
+        using UIWindow::render;
+        
+        
+        void    render(items_k) override;
+        
         void    orientation(set_k, horzvert_t);
         
     private:
+        bool    do_horizontal() const;
+    
         horzvert_t  m_orientation;
     };
 }

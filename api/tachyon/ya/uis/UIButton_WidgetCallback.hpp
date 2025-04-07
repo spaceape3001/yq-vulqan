@@ -6,37 +6,37 @@
 
 #pragma once
 
-#include <ya/uis/UIMenuItem.hpp>
+#include <ya/uis/UIButton.hpp>
 #include <yt/ui/Widget.hpp>
 
 namespace yq::tachyon {
     template <SomeWidget W>
-    class UIMenuItem_WidgetCallback : public UIMenuItem {
+    class UIButton_WidgetCallback : public UIButton {
     public:
     
         typedef void (W::*FN)();
     
-        UIMenuItem_WidgetCallback(std::string_view kName, FN fn) : UIMenuItem(kName), m_function(fn)
+        UIButton_WidgetCallback(std::string_view text, FN fn) : UIButton(text), m_function(fn)
         {
             assert(m_function);
         }
         
-        UIMenuItem_WidgetCallback(std::string_view kName, std::string_view sCut, FN fn) : UIMenuItem(kName, sCut), m_function(fn)
+        UIButton_WidgetCallback(std::string_view text, const Vector2F& size, FN fn) : UIButton(text, size), m_function(fn)
         {
             assert(m_function);
         }
-        
-        UIMenuItem_WidgetCallback(const UIMenuItem_WidgetCallback&cp) : UIMenuItem(cp), m_function(cp.m_function)
+
+        UIButton_WidgetCallback(const UIButton_WidgetCallback&cp) : UIButton(cp), m_function(cp.m_function)
         {
         }
         
-        ~UIMenuItem_WidgetCallback()
+        ~UIButton_WidgetCallback()
         {
         }
 
-        virtual UIMenuItem_WidgetCallback*     clone() const 
+        virtual UIButton_WidgetCallback*     clone() const 
         {
-            return new UIMenuItem_WidgetCallback(*this);
+            return new UIButton_WidgetCallback(*this);
         }
     
     protected:

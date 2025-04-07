@@ -91,6 +91,8 @@ namespace yq::tachyon {
     
     struct for_k {};
     struct forward_k {};
+    
+    struct flags_k {};
 
     struct game_k {
         consteval operator StdThread() const noexcept  { return StdThread::Game; }
@@ -304,6 +306,7 @@ namespace yq::tachyon {
     static constexpr const every_k              EVERY;
     static constexpr const failure_k            FAILURE;
     static constexpr const fixed_k              FIXED;
+    static constexpr const flags_k              FLAGS;
     static constexpr const for_k                FOR;
     static constexpr const forward_k            FORWARD;
     static constexpr const game_k               GAME;

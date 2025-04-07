@@ -10,7 +10,9 @@
 #include <yt/keywords.hpp>
 #include <yt/typedef/post.hpp>
 #include <yt/typedef/widget.hpp>
+#include <yt/typedef/uimisc.hpp>
 #include <yt/ui/UIFlags.hpp>
+#include <yq/typedef/vector2.hpp>
 
 namespace yq::tachyon {
     class WidgetInfo;
@@ -32,6 +34,9 @@ namespace yq::tachyon {
         UIWriter(UIWriter&&);
         UIWriter& operator=(const UIWriter&);
         UIWriter& operator=(UIWriter&&);
+
+        UIWriter    button(std::string_view);
+        UIWriter    button(std::string_view, const Vector2F& size);
 
         //! The contents will be centered (as best as it can do)
         UIWriter    center(align_k);
@@ -89,6 +94,8 @@ namespace yq::tachyon {
         */
         UIWriter    right(align_k);
         
+        
+        UIWriter    toolbar(horzvert_t, std::string_view kName={});
         
         UIWriter    window(std::string_view kName={}, UIFlags flags={});
         

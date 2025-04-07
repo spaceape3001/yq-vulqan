@@ -132,6 +132,7 @@ add_library(${PROJECT_NAME} SHARED
     #yt/ui/Tool.cpp
     yt/ui/UIElement.cpp
     yt/ui/UIFlags.cpp
+    yt/ui/UIUtils.cpp
     yt/ui/UIWriter.cpp
     yt/ui/Undo.cpp
     yt/ui/Widget.cpp
@@ -687,6 +688,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/OrTrigger.cpp
     ya/triggers/PostTrigger.cpp
     
+    ya/uis/UIButton.cpp
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp
     ya/uis/UIHBox.cpp
@@ -695,6 +697,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIMenuItem.cpp
     ya/uis/UIRightAlign.cpp
     ya/uis/UITextLabel.cpp
+    ya/uis/UIToolBar.cpp
     ya/uis/UIWindow.cpp
     
     ya/utilities/LoggerBox.cpp

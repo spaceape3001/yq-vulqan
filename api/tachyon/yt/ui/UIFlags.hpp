@@ -34,12 +34,14 @@ namespace yq::tachyon {
         CharsHexadecimal,
         CharsScientific,
         CharsUppercase,
+        Closeable,
         CtrlEnterForNewLine,
         DisplayEmptyRefVal,
         EnterReturnsTrue,
         EscapeClearsAll,
         FrameStyle,
         HorizontalScrollBar,
+        Invisible,
         MenuBar,
         NavFlattened,
         NoBackground,
@@ -67,6 +69,8 @@ namespace yq::tachyon {
         ReadOnly,
         ResizeX,
         ResizeY,
+        SetPosition,
+        SetPositionOnce,
         UnsavedDocument
     };
     

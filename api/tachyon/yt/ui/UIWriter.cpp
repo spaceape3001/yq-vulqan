@@ -8,6 +8,7 @@
 #include "Widget.hpp"
 #include "UIElement.hpp"
 
+#include <ya/uis/UIButton.hpp>
 #include <ya/uis/UICenterAlign.hpp>
 #include <ya/uis/UIElements.hpp>
 #include <ya/uis/UIHBox.hpp>
@@ -16,6 +17,7 @@
 #include <ya/uis/UIMenuItem.hpp>
 #include <ya/uis/UIRightAlign.hpp>
 #include <ya/uis/UITextLabel.hpp>
+#include <ya/uis/UIToolBar.hpp>
 #include <ya/uis/UIWindow.hpp>
 
 namespace yq::tachyon {
@@ -100,6 +102,20 @@ namespace yq::tachyon {
         return UIWriter(*items);
     }
 
+    UIWriter    UIWriter::button(std::string_view text)
+    {
+        if(!addable())
+            return {};
+        return *this << new UIButton(text);
+    }
+    
+    UIWriter    UIWriter::button(std::string_view text, const Vector2F& size)
+    {
+        if(!addable())
+            return {};
+        return *this << new UIButton(text, size);
+    }
+
     UIWriter    UIWriter::center(align_k)
     {
         if(!addable())
@@ -153,6 +169,13 @@ namespace yq::tachyon {
         if(kName.empty())
             return {};
         return *this << new UIMenuItem(kName, scut);
+    }
+
+    UIWriter    UIWriter::toolbar(horzvert_t hv, std::string_view kName)
+    {
+        if(!addable())
+            return {};
+        return *this << new UIToolBar(hv, kName);
     }
 
     UIWriter    UIWriter::right(align_k)

@@ -18,6 +18,7 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
+#include <yt/ui/UIFlags.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \
@@ -38,6 +39,9 @@
     extend the ImGUI input controls to what we need.
 */
 namespace ImGui {
+    using yq::tachyon::UIFlag;
+    using yq::tachyon::UIFlags;
+
     bool    Checkbox(const char*, bool&);
     bool    DragDouble(const char* label, double*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
     bool    DragDouble(const char* label, double&, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
@@ -143,6 +147,9 @@ namespace ImGui {
     void    Text(const yq::Vector4D&);
     void    Text(const glm::mat4&);
     void    Text(const glm::dmat4&);
-    
-}
 
+    ImGuiChildFlags_  ChildFlag(UIFlag flag);
+    ImGuiChildFlags   ChildFlags(UIFlags flag);
+    ImGuiWindowFlags_ WindowFlag(UIFlag flag);
+    ImGuiWindowFlags  WindowFlags(UIFlags flag);
+}

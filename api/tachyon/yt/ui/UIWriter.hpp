@@ -10,6 +10,7 @@
 #include <yt/keywords.hpp>
 #include <yt/typedef/post.hpp>
 #include <yt/typedef/widget.hpp>
+#include <yt/ui/UIFlags.hpp>
 
 namespace yq::tachyon {
     class WidgetInfo;
@@ -87,6 +88,11 @@ namespace yq::tachyon {
             an items collection that gets created.
         */
         UIWriter    right(align_k);
+        
+        
+        UIWriter    window(std::string_view kName={}, UIFlags flags={});
+        
+        
         
         UIWriter    operator<<(UIElement*);
         

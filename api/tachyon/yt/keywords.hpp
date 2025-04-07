@@ -109,6 +109,7 @@ namespace yq::tachyon {
     struct heading_k {};
     struct headless_k {};
     struct height_k {};
+    struct horizontal_k {};
     struct inflatable_k {};
     struct info_k {};
 
@@ -232,6 +233,8 @@ namespace yq::tachyon {
     struct unlocked_k {};
     struct value_k {};
     struct variable_k {};
+    
+    struct vertical_k {};
 
     struct viewer_k {
         consteval operator StdThread() const noexcept  { return StdThread::Viewer; }
@@ -312,6 +315,7 @@ namespace yq::tachyon {
     static constexpr const heading_k            HEADING;
     static constexpr const headless_k           HEADLESS;
     static constexpr const height_k             HEIGHT;
+    static constexpr const horizontal_k         HORIZONTAL, HORZ;
     static constexpr const inflatable_k         INFLATABLE;
     static constexpr const info_k               INFO;
     static constexpr const io_k                 IO;
@@ -398,6 +402,7 @@ namespace yq::tachyon {
     static constexpr const unlocked_k           UNLOCKED;
     static constexpr const value_k              VALUE;
     static constexpr const variable_k           VARIABLE;
+    static constexpr const vertical_k           VERTICAL, VERT;
     static constexpr const viewer_k             VIEWER;
     static constexpr const vulqan_k             VULQAN;
     static constexpr const wait_k               WAIT;

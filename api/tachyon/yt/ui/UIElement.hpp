@@ -8,10 +8,13 @@
 
 #include <concepts>
 #include <yq/core/Flags.hpp>
+#include <variant>
 
 namespace yq::tachyon {
     struct ViContext;
     class Widget;
+    class WidgetInfo;
+    class Viewer;
 
     class UIElement {
     public:
@@ -50,6 +53,7 @@ namespace yq::tachyon {
         friend class Widget;
         static thread_local Widget*     s_widget;
         static thread_local ViContext*  s_context;
+        
     };
     
     template <typename T>

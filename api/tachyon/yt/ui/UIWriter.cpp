@@ -16,6 +16,7 @@
 #include <ya/uis/UIMenuItem.hpp>
 #include <ya/uis/UIRightAlign.hpp>
 #include <ya/uis/UITextLabel.hpp>
+#include <ya/uis/UIWindow.hpp>
 
 namespace yq::tachyon {
     UIWriter::UIWriter() = default;
@@ -159,6 +160,13 @@ namespace yq::tachyon {
         if(!addable())
             return {};
         return *this << new UIRightAlign;
+    }
+
+    UIWriter    UIWriter::window(std::string_view kName, UIFlags flags)
+    {
+        if(!addable())
+            return {};
+        return *this << new UIWindow(kName, flags);
     }
 }
 

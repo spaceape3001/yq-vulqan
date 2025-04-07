@@ -393,7 +393,6 @@ namespace yq::tachyon {
             
             m_vertex.capacity.bytes     = cb;
             m_vertex.capacity.count     = cb / sizeof(ImDrawVert);
-            
         
             m_vertex.buffer     = new ViBuffer(m_viz->device(REF), cb, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
             if(!m_vertex.buffer -> valid()){

@@ -75,6 +75,7 @@ namespace yq::tachyon {
         SetPositionOnce,
         SetSize,
         SetSizeOnce,
+        StretchToFull,      //!< Stretch to full size (toolbar is width)
         UnsavedDocument,
         Vertical
     };

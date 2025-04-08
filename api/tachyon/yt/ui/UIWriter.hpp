@@ -88,6 +88,9 @@ namespace yq::tachyon {
         UIWriter    hbox();
         
         UIWriter    label(std::string_view);
+        
+        //! Call if it's a main window widget
+        UIWriter    main(app_k, UIFlags flags={});
 
         UIWriter    menu(std::string_view);
 

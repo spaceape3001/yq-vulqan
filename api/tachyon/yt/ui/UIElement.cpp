@@ -76,4 +76,22 @@ namespace yq::tachyon {
         return m_parent;
     }
 
+    UIElement*  UIElement::root()
+    {
+        UIElement*  p   = this;
+        while(p->m_parent){
+            p = p->m_parent;
+        }
+        return p;
+    }
+    
+    const UIElement* UIElement::root() const
+    {
+        const UIElement*  p   = this;
+        while(p->m_parent){
+            p = p->m_parent;
+        }
+        return p;
+    }
+
 }

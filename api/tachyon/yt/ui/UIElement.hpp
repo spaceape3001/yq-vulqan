@@ -62,6 +62,9 @@ namespace yq::tachyon {
         
         UIElement*  parent();
         const UIElement*  parent() const;
+        
+        UIElement*  root();
+        const UIElement* root() const;
 
     protected:
         friend class Widget;

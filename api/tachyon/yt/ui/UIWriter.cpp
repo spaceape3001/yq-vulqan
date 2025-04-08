@@ -8,6 +8,7 @@
 #include "Widget.hpp"
 #include "UIElement.hpp"
 
+#include <ya/uis/UIAppMain.hpp>
 #include <ya/uis/UIButton.hpp>
 #include <ya/uis/UICenterAlign.hpp>
 #include <ya/uis/UIElements.hpp>
@@ -56,7 +57,7 @@ namespace yq::tachyon {
             Widget* w   = *p;
             if(w){
                 if(!w->m_ui)
-                    w->m_ui = new UIElements();
+                    w->m_ui = new UIElements;
                 w->m_ui->append(ui);
                 return true;
             }
@@ -156,6 +157,26 @@ namespace yq::tachyon {
         if(kText.empty())
             return {};
         return *this << new UITextLabel(kText);
+    }
+
+    UIWriter    UIWriter::main(app_k, UIFlags flags)
+    {
+        if(auto p = std::get_if<Widget*>(&m_owner)){
+            Widget* w   = *p;
+            if(w && !w->m_ui){
+                w->m_ui = new UIAppMain(flags);
+                return UIWriter(*(w->m_ui));
+            }
+        }
+        if(auto p = std::get_if<WidgetInfo*>(&m_owner)){
+            WidgetInfo* w   = *p;
+            if(w && !w->m_ui){
+                w->m_ui = new UIAppMain(flags);
+                return UIWriter(*(w->m_ui));
+            }
+        }
+    
+        return {};
     }
 
     UIWriter    UIWriter::menu(std::string_view name)

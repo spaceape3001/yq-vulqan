@@ -689,6 +689,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/triggers/OrTrigger.cpp
     ya/triggers/PostTrigger.cpp
     
+    ya/uis/UIAppMain.cpp
     ya/uis/UIButton.cpp
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp

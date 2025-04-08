@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class UIRightAlign : public UIElements {
     public:
     
-        UIRightAlign();
+        UIRightAlign(UIFlags flags={});
         UIRightAlign(const UIRightAlign&);
         ~UIRightAlign();
         

@@ -8,11 +8,11 @@
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    UIMenuBar::UIMenuBar() : m_isMain(false)
+    UIMenuBar::UIMenuBar(UIFlags flags) : UIElements(flags), m_isMain(false)
     {
     }
     
-    UIMenuBar::UIMenuBar(main_k) : m_isMain(true)
+    UIMenuBar::UIMenuBar(main_k, UIFlags flags) : UIElements(flags), m_isMain(true)
     {
     }
 

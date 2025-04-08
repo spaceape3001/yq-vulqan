@@ -34,12 +34,12 @@ namespace yq::tachyon {
         {
         }
 
+    protected:
         virtual UIButton_WidgetCallback*     clone() const 
         {
             return new UIButton_WidgetCallback(*this);
         }
     
-    protected:
         //  Letting the menu item handle render
         
         void    triggered() override

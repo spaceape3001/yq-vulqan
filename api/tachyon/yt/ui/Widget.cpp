@@ -21,6 +21,7 @@
 #include <ya/commands/widget/SetViewer.hpp>
 #include <ya/events/ui/HideEvent.hpp>
 #include <ya/events/ui/ShowEvent.hpp>
+#include <ya/events/window/FramebufferResizeEvent.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 #include <ya/replies/ui/CloseReply.hpp>
 #include <yt/ui/Layout.hpp>
@@ -110,6 +111,7 @@ namespace yq::tachyon {
         w.description("Widget base class");
         w.slot(&Widget::on_close_request);
         w.slot(&Widget::on_close_command);
+        w.slot(&Widget::on_fb_resize_event);
         w.slot(&Widget::on_title_command);
         w.slot(&Widget::on_set_viewer);
         //w.delegate("layout", &Widget::m_layout);
@@ -302,6 +304,13 @@ namespace yq::tachyon {
         mail(new ShowCommand({.target=*this}));
     }
 
+    double  Widget::height() const
+    {
+        if(m_flags(F::HasSize))
+            return m_size.y;
+        return -1.;
+    }
+    
     void    Widget::imgui(ViContext& u)
     {
         imgui(CHILDREN, u);
@@ -371,6 +380,15 @@ namespace yq::tachyon {
         
         m_closeRequest  = req;
         close(REQUEST);
+    }
+
+    void    Widget::on_fb_resize_event(const FramebufferResizeEvent&evt)
+    {
+        if(evt.target() != id())
+            return ;
+        
+        m_size      = Size2D(evt.size());
+        m_flags |= F::HasSize;
     }
 
     void    Widget::on_hide_command(const HideCommand& cmd)
@@ -486,7 +504,7 @@ namespace yq::tachyon {
             const WidgetInfo&   wi  = metaInfo();
             if(wi.m_ui){
                 auto wid        = auto_reset(UIElement::s_widget, this);
-                m_ui            = wi.m_ui->clone();
+                m_ui            = wi.m_ui->copy();
             }
         }
         return Tachyon::setup(ctx);
@@ -569,6 +587,13 @@ namespace yq::tachyon {
         });
     }
     
+    double  Widget::width() const
+    {
+        if(m_flags(F::HasSize))
+            return m_size.x;
+        return -1.;
+    }
+
     Widget* Widget::widget_at(const Vector2D&) const
     {
         return const_cast<Widget*>(this);   // TODO 

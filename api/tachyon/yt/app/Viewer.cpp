@@ -588,9 +588,9 @@ namespace yq::tachyon {
     {
         if(evt.source() != m_window)
             return;
-            
-        yInfo() << "Viewer framebuffer resize (" << evt.width() << ", " << evt.height() << ")";
-        // TODO
+        if(!dying()){
+            send(evt.clone(REBIND, {.target=m_widget}));
+        }
     }
     
     void    Viewer::on_float_command(const FloatCommand& cmd)

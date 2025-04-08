@@ -12,7 +12,7 @@
 namespace yq::tachyon {
     class UIMenu : public UIElements {
     public:
-        UIMenu(std::string_view);
+        UIMenu(std::string_view, UIFlags flags={});
         UIMenu(const UIMenu&);
         virtual ~UIMenu();
         

@@ -26,12 +26,12 @@ namespace yq::tachyon {
         {
         }
        
+    protected:
         UIButton_Post*     clone() const
         {
             return new UIButton_Post(*this);
         }
  
-    protected:
         virtual void        triggered() override
         {
             Widget& w = widget();

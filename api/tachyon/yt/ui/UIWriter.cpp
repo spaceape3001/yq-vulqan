@@ -72,6 +72,7 @@ namespace yq::tachyon {
         }
         if(auto p = std::get_if<UIElements*>(&m_owner)){
             if(*p){
+                ui -> m_parent    = *p;
                 (*p) -> append(ui);
                 return true;
             }
@@ -101,6 +102,24 @@ namespace yq::tachyon {
             return UIWriter();
         return UIWriter(*items);
     }
+
+    UIWriter::operator UIElement*()
+    {
+        return element();
+    }
+
+
+    UIElement*  UIWriter::element()
+    {
+        if(auto p = std::get_if<UIElements*>(&m_owner))
+            return *p;
+        if(auto p = std::get_if<UIElement*>(&m_owner))
+            return *p;
+        return nullptr;
+    }
+
+    //  ------------------------------------------------------------------------
+    //  ELEMENT CREATORS
 
     UIWriter    UIWriter::button(std::string_view text)
     {
@@ -171,11 +190,11 @@ namespace yq::tachyon {
         return *this << new UIMenuItem(kName, scut);
     }
 
-    UIWriter    UIWriter::toolbar(horzvert_t hv, std::string_view kName)
+    UIWriter    UIWriter::toolbar(UIBorder b, std::string_view kName, UIFlags flags)
     {
         if(!addable())
             return {};
-        return *this << new UIToolBar(hv, kName);
+        return *this << new UIToolBar(b, kName, flags);
     }
 
     UIWriter    UIWriter::right(align_k)

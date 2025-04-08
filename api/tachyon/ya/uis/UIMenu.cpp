@@ -8,7 +8,7 @@
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    UIMenu::UIMenu(std::string_view kv) : m_name(kv)
+    UIMenu::UIMenu(std::string_view kv, UIFlags flags) : UIElements(flags), m_name(kv)
     {
     }
     

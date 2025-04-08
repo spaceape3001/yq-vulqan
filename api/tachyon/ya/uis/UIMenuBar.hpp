@@ -17,18 +17,17 @@ namespace yq::tachyon {
     public:
     
         //! Constructs a regular menu bar
-        UIMenuBar();
+        UIMenuBar(UIFlags flags={});
         
         //! Constructs a "main" menu bar (for the main window)
-        UIMenuBar(main_k);
+        UIMenuBar(main_k, UIFlags flags={});
         
         //! Copy constructor
         UIMenuBar(const UIMenuBar&);
         virtual ~UIMenuBar();
         
-        virtual UIMenuBar*     clone() const override;
-
     protected:
+        virtual UIMenuBar*  clone() const override;
         virtual void        render() override;
 
     private:

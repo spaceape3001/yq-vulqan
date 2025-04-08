@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIFlags.hpp"
-#include "MyImGui.hpp"
+#include <yt/ui/MyImGui.hpp>
 
 namespace ImGui {
     ImGuiChildFlags_  ChildFlag(UIFlag flag)

@@ -13,14 +13,11 @@ namespace yq::tachyon {
     //! A line of non-wrapping UI elements
     class UIHBox : public UIElements {
     public:
-        UIHBox();
+        UIHBox(UIFlags flags={});
         UIHBox(const UIHBox&);
         ~UIHBox();
         
         UIHBox*     clone() const;
         
-    protected:
-    
-        void    render(items_k) override;
     };
 }

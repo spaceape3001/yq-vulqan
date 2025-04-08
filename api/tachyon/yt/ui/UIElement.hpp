@@ -7,8 +7,9 @@
 #pragma once
 
 #include <concepts>
-#include <yq/core/Flags.hpp>
 #include <variant>
+#include <yt/enum/UIFlags.hpp>
+#include <yt/keywords.hpp>
 
 namespace yq::tachyon {
     struct ViContext;
@@ -16,15 +17,35 @@ namespace yq::tachyon {
     class WidgetInfo;
     class Viewer;
 
+    /*! \brief (ImGui) UI Element
+    
+        This is the imgui infrastructure.
+        
+        While the widget will still support ImGui, that's really a heavyweight option.  
+        These are lighter weight alternatives, designed to encompass a single feature 
+        point of ImGui (ie, menu item, button, etc), and are compositable via the 
+        UIElements sub-class.
+    */
     class UIElement {
     public:
-        UIElement();
+        UIElement(UIFlags flags={});
         UIElement(const UIElement&);
         virtual ~UIElement();
         
-        virtual UIElement*     clone() const = 0;
+        /*! \brief Clones the element
         
-        //! Shouldn't generally be overriden aside from one/two instances
+            For all elements that are specified during the widget info *MUST* implement 
+            this.
+        */
+        UIElement*     copy() const;
+
+        /*! \brief "Draws" the element 
+        
+            \note MOST UIElements should override render() instead
+            
+            This "draw()" is here to allow for metrics to be taken of the render()
+            process (or, measuring before/after positions).
+        */
         virtual void    draw();
         
         ////! Spawn off any root ui elements (ie, dialogs, docks, windows, etc)
@@ -32,28 +53,55 @@ namespace yq::tachyon {
         
         //! Our element's "title" (may be null)
         virtual const char*   title() const { return nullptr; }
-        
-    protected:
 
+        UIFlags     flags() const noexcept { return m_flags; }
+        void        flag(set_k, UIFlag);
+        void        flag(set_k, UIFlags);
+        void        flag(clear_k, UIFlag);
+        void        flag(clear_k, UIFlags);
+        
+        UIElement*  parent();
+        const UIElement*  parent() const;
+
+    protected:
+        friend class Widget;
+        friend class UIWriter;
+        friend class UIElements;
+
+        /*! \brief Clones the element
+        
+            For all elements that are specified during the widget info *MUST* implement 
+            this.
+        */
+        virtual UIElement*     clone() const = 0;
+        
+
+        /*! \brief RENDER/DRAW the element as a whole
+        
+            This is the first hook for rendering/drawing the ImGui content; this is what 
+            is normally overriden.
+        */
         virtual void    render() = 0;
 
         //! Called if there's an if-show/perform test inside render, or similar encapsulation
         virtual void    content() {}
         
-        //! Valid during clone & render
+        //! Called when we've been triggered by a user event (ie, mouse clicked)
+        //! \note Your state (if it's not-singular) should be at least protected-accessible
+        virtual void    triggered() {}
+
+        virtual void    update(flags_k){}
+        
+        //! Valid during clone & draw/render/content/triggered (check for NULL)
         static Widget*  widget();
         
-        enum class F : uint8_t {
-            // LIMITED event select here ???
-        };
+        UIFlags         m_flags;
         
-        Flags<F>        m_flags;
+        UIElement*      m_parent = nullptr;
         
     private:
-        friend class Widget;
         static thread_local Widget*     s_widget;
         static thread_local ViContext*  s_context;
-        
     };
     
     template <typename T>

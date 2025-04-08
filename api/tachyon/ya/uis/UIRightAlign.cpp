@@ -8,7 +8,7 @@
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    UIRightAlign::UIRightAlign()
+    UIRightAlign::UIRightAlign(UIFlags flags) : UIElements(flags)
     {
     }
     

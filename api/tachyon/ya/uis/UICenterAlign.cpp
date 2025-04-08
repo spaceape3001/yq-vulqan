@@ -8,7 +8,7 @@
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    UICenterAlign::UICenterAlign()
+    UICenterAlign::UICenterAlign(UIFlags flags) : UIElements(flags)
     {
     }
     

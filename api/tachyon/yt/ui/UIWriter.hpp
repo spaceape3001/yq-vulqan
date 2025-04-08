@@ -11,7 +11,8 @@
 #include <yt/typedef/post.hpp>
 #include <yt/typedef/widget.hpp>
 #include <yt/typedef/uimisc.hpp>
-#include <yt/ui/UIFlags.hpp>
+#include <yt/enum/UIBorder.hpp>
+#include <yt/enum/UIFlags.hpp>
 #include <yq/typedef/vector2.hpp>
 
 namespace yq::tachyon {
@@ -35,6 +36,35 @@ namespace yq::tachyon {
         UIWriter& operator=(const UIWriter&);
         UIWriter& operator=(UIWriter&&);
 
+        ////////////////////////////////
+        // Informational/Administration
+        ////////////////////////////////
+
+        /*! \brief Can we add widgets?
+            
+            This is True if we're pointing to something that can be added to, like
+            a valid widget, widget info, or uielements; false otherwise
+        */
+        
+        bool        addable() const;
+
+        //! Current element being added onto (note may be NULL)
+        UIElement*  element();
+
+        operator UIElement*();
+
+        /*! Appends to the container
+        
+            \note This operator takes OWNERSHIP for the pointer
+            and may delete it!  (Immediately if addable() is false.)
+        */
+        UIWriter    operator<<(UIElement*);
+
+
+        ////////////////////////////////
+        // Element Creation Helpers
+        ////////////////////////////////
+
         UIWriter    button(std::string_view);
         UIWriter    button(std::string_view, const Vector2F& size);
 
@@ -52,6 +82,7 @@ namespace yq::tachyon {
 
         //! The contents will be centered (as best as it can do)
         UIWriter    center(align_k);
+        
         
         //! The contents within will all be placed same line
         UIWriter    hbox();
@@ -106,17 +137,11 @@ namespace yq::tachyon {
         */
         UIWriter    right(align_k);
         
-        
-        UIWriter    toolbar(horzvert_t, std::string_view kName={});
+        UIWriter    toolbar(UIBorder, std::string_view kName, UIFlags flags={});
         
         UIWriter    window(std::string_view kName={}, UIFlags flags={});
         
         
-        
-        UIWriter    operator<<(UIElement*);
-        
-        bool        addable() const;
-
     protected:
         bool        add(UIElement*);
 

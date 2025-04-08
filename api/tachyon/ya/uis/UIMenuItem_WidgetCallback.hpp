@@ -16,12 +16,14 @@ namespace yq::tachyon {
     
         typedef void (W::*FN)();
     
-        UIMenuItem_WidgetCallback(std::string_view kName, FN fn) : UIMenuItem(kName), m_function(fn)
+        UIMenuItem_WidgetCallback(std::string_view kName, UIFlags flags, FN fn) : 
+            UIMenuItem(kName, "", flags), m_function(fn)
         {
             assert(m_function);
         }
         
-        UIMenuItem_WidgetCallback(std::string_view kName, std::string_view sCut, FN fn) : UIMenuItem(kName, sCut), m_function(fn)
+        UIMenuItem_WidgetCallback(std::string_view kName, std::string_view sCut, UIFlags flags, FN fn) : 
+            UIMenuItem(kName, sCut, flags), m_function(fn)
         {
             assert(m_function);
         }

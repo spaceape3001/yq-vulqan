@@ -13,10 +13,12 @@
 namespace yq::tachyon {
     class UITextLabel : public UIElement {
     public:
-        UITextLabel(std::string_view kString);
+        UITextLabel(std::string_view kString, UIFlags flags={});
         UITextLabel(const UITextLabel&);
         virtual ~UITextLabel();
         void    render() override;
+        
+    protected:
         UITextLabel*  clone() const override;
     private:
         std::string     m_text;

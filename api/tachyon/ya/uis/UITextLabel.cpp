@@ -8,7 +8,8 @@
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    UITextLabel::UITextLabel(std::string_view kString) : m_text(kString)
+    UITextLabel::UITextLabel(std::string_view kString, UIFlags flags) : 
+        UIElement(flags), m_text(kString)
     {
     }
     

@@ -17,7 +17,7 @@ namespace yq::tachyon {
     class UIElements : public UIElement {
     public:
     
-        UIElements();
+        UIElements(UIFlags flags={});
         
         /*! \brief Copy constructor that CLONES all sub-items
         */
@@ -31,9 +31,11 @@ namespace yq::tachyon {
         
         const std::vector<UIElement*>& items() const { return m_items; }
         
-        virtual UIElements*    clone() const override;
+        UIElements* copy() const;
         
     protected:
+        virtual UIElements*    clone() const override;
+
         //! Default render for items is to render subitems
         virtual void        render() override;
         

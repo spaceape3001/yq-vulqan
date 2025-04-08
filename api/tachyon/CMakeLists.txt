@@ -63,6 +63,8 @@ add_library(${PROJECT_NAME} SHARED
 
     yt/config/build.cpp
 
+    yt/enum/UIFlags.cpp
+
     # font/Font.cpp      # Issue/TODO
 
     yt/gfx/Buffer.cpp
@@ -131,7 +133,6 @@ add_library(${PROJECT_NAME} SHARED
     yt/ui/Panel.cpp
     #yt/ui/Tool.cpp
     yt/ui/UIElement.cpp
-    yt/ui/UIFlags.cpp
     yt/ui/UIUtils.cpp
     yt/ui/UIWriter.cpp
     yt/ui/Undo.cpp

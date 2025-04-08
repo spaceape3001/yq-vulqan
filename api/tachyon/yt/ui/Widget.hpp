@@ -24,6 +24,8 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/tensor/Tensor44.hpp>
 #include <yq/core/Tristate.hpp>
+#include <yq/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
 
 //   A macro rename
 
@@ -46,6 +48,7 @@ namespace yq::tachyon {
     class UIElement;
     class UIElements;
     class UIWriter;
+    class FramebufferResizeEvent;
 
     class WidgetInfo : public TachyonInfo {
     public:
@@ -80,8 +83,7 @@ namespace yq::tachyon {
             This will be automatic, first tick.  Visibility will 
             not be gained until startup occurs.
         */
-    
-    
+
         static void init_info();
     
         //! Default constructor
@@ -89,6 +91,14 @@ namespace yq::tachyon {
         
         //! Default destructor
         virtual ~Widget();
+
+        void        cmd_hide();
+        void        cmd_show();
+
+        //! Dimension count to the widget (ie...add dimensions to allow for layout resizing)
+        virtual uint8_t dimensions(count_k) const { return 0; }
+
+        double      height() const;
 
         /*! \brief Renders ImGui content
         
@@ -106,15 +116,6 @@ namespace yq::tachyon {
         //! Calls the render on all UIElement elements
         void    imgui(ui_k, ViContext&);
 
-        /*! \brief Renders Vulkan content
-        
-            This routine is called by the viewer for our widget to
-            properly render Vulkan content.  The context 
-            is all the extra information that may or may
-            not be needed.  Default implementation iterates
-            through children, calling their methods recursively.
-        */
-        virtual void    vulkan(ViContext&);
 
         WidgetID   id() const { return WidgetID(UniqueID::id()); }
 
@@ -146,19 +147,24 @@ namespace yq::tachyon {
         //! Our viewer
         const Viewer*   viewer(ptr_k) const ;
         
-        virtual Widget* widget_at(const Vector2D&) const;
-        
         //! TRUE if we're attached (either as a child-widget or to a viewer)
         bool    attached() const;
 
-        bool        visible() const;
+        bool            visible() const;
 
-        void        cmd_show();
-        void        cmd_hide();
+        /*! \brief Renders Vulkan content
+        
+            This routine is called by the viewer for our widget to
+            properly render Vulkan content.  The context 
+            is all the extra information that may or may
+            not be needed.  Default implementation iterates
+            through children, calling their methods recursively.
+        */
+        virtual void    vulkan(ViContext&);
 
-        //! Dimension count to the widget (ie...add dimensions to allow for layout resizing)
-        virtual uint8_t dimensions(count_k) const { return 0; }
-
+        virtual Widget* widget_at(const Vector2D&) const;
+        
+        double          width() const;
 
     protected:
         friend class Viewer;
@@ -169,7 +175,9 @@ namespace yq::tachyon {
         enum class F : uint8_t {
             //ClosePending,
             Visible,
-            AutoRender
+            AutoRender,
+            HasSize,
+            HasPosition
         };
         using FFlags = Flags<F>;
 
@@ -197,6 +205,8 @@ namespace yq::tachyon {
         
         void                    on_close_command(const CloseCommand&);
         void                    on_close_request(const CloseRequestCPtr&);
+        
+        void                    on_fb_resize_event(const FramebufferResizeEvent&);
         
         void                    on_hide_command(const HideCommand&);
         
@@ -268,6 +278,8 @@ namespace yq::tachyon {
         UIElements*                     m_ui            = nullptr;
         UIMMap                          m_uimap;    //< for cross-linking
         Tristate                        m_wireframe     = Tristate::INHERIT;
+        Vector2D                        m_position      = { 0., 0. };
+        Size2D                          m_size          = { -1, -1 };   // unknown sizing
         
         void    _kill();
 

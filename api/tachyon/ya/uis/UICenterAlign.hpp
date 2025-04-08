@@ -12,15 +12,15 @@ namespace yq::tachyon {
     class UICenterAlign : public UIElements {
     public:
     
-        UICenterAlign();
+        UICenterAlign(UIFlags flags={});
         UICenterAlign(const UICenterAlign&);
         ~UICenterAlign();
         
-        UICenterAlign* clone() const;
         
     protected:
         using UIElements::render;
-        void        render();
+        void            render() override;
+        UICenterAlign*  clone() const;
         
     private:
         float  m_width = -1;

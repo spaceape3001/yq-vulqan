@@ -9,7 +9,7 @@
 
 namespace yq::tachyon {
     UIWindow::UIWindow(std::string_view zTitle, UIFlags flags) : 
-        m_title(zTitle), m_flags(flags), 
+        m_title(zTitle), 
         m_imFlags(ImGui::WindowFlags(flags))
     {
     }
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         m_title(cp.m_title),
         m_pivot(cp.m_pivot),
         m_position(cp.m_position),
-        m_flags(cp.m_flags), m_imFlags(cp.m_imFlags)
+        m_imFlags(cp.m_imFlags)
     {
     }
     
@@ -31,18 +31,6 @@ namespace yq::tachyon {
         return new UIWindow(*this);
     }
 
-    void    UIWindow::flag(set_k, UIFlag f)
-    {
-        m_flags.set(f);
-        update(FLAGS);
-    }
-    
-    void    UIWindow::flag(clear_k, UIFlag f)
-    {
-        m_flags.clear(f);
-        update(FLAGS);
-    }
-    
     void        UIWindow::render()
     {
         if(m_flags(UIFlag::Invisible))
@@ -52,6 +40,10 @@ namespace yq::tachyon {
         if(m_flags.any({UIFlag::SetPosition, UIFlag::SetPositionOnce})){
             ImGui::SetNextWindowPos(m_position, 0, m_pivot);
             m_flags -= UIFlag::SetPositionOnce;
+        }
+        if(m_flags.any({UIFlag::SetSize, UIFlag::SetSizeOnce})){
+            ImGui::SetNextWindowSize({m_size.x, m_size.y});
+            m_flags -= UIFlag::SetSizeOnce;
         }
         if(ImGui::Begin(m_title.c_str(), m_flags(UIFlag::Closeable) ? &open : nullptr, m_imFlags)){
             content();

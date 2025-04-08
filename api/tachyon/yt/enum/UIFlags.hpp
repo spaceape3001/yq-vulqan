@@ -40,6 +40,7 @@ namespace yq::tachyon {
         EnterReturnsTrue,
         EscapeClearsAll,
         FrameStyle,
+        Horizontal,
         HorizontalScrollBar,
         Invisible,
         MenuBar,
@@ -69,9 +70,13 @@ namespace yq::tachyon {
         ReadOnly,
         ResizeX,
         ResizeY,
+        Reverse,
         SetPosition,
         SetPositionOnce,
-        UnsavedDocument
+        SetSize,
+        SetSizeOnce,
+        UnsavedDocument,
+        Vertical
     };
     
     using UIFlags = Flags<UIFlag,uint128_t>;

@@ -8,7 +8,8 @@
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    UIMenuItem::UIMenuItem(std::string_view kName, std::string_view kShortcut) : m_name(kName), m_shortcut(kShortcut)
+    UIMenuItem::UIMenuItem(std::string_view kName, std::string_view kShortcut, UIFlags flags) : 
+        UIElement(flags), m_name(kName), m_shortcut(kShortcut)
     {
     }
     

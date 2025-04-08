@@ -166,6 +166,8 @@ namespace yq::tachyon {
         ImGui::SetCurrentContext(m_context);
         
         ImGuiIO& io = ImGui::GetIO();
+        io.IniFilename              = nullptr;  // Disable INI settings (to file)
+        
         io.BackendRendererName      = "yq::tachyon::ViGui";
         io.BackendRendererUserData  = this;
         io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;  // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.

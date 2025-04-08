@@ -19,8 +19,9 @@ namespace yq::tachyon {
         virtual ~UIButton();
         void            render();
         virtual void    triggered();
-        UIButton*       clone() const;
         const char*     title() const;
+    protected:
+        UIButton*       clone() const;
     private:
         std::string     m_text;
         Vector2F        m_size;

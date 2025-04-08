@@ -18,7 +18,7 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
-#include <yt/ui/UIFlags.hpp>
+#include <yt/enum/UIFlags.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \

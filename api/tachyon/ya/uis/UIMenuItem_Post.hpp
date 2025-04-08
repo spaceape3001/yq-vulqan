@@ -14,7 +14,7 @@ namespace yq::tachyon {
     class UIMenuItem_Post : public UIMenuItem {
     public:
     
-        UIMenuItem_Post(std::string_view name, std::string_view scut={}) : UIMenuItem(name, scut)
+        UIMenuItem_Post(std::string_view name, std::string_view scut={}, UIFlags flags={}) : UIMenuItem(name, scut, flags)
         {
         }
         

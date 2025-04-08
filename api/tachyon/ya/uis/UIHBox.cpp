@@ -8,7 +8,7 @@
 #include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
-    UIHBox::UIHBox()
+    UIHBox::UIHBox(UIFlags flags) : UIElements(flags|UIFlag::Horizontal)
     {
     }
     
@@ -23,16 +23,6 @@ namespace yq::tachyon {
     UIHBox* UIHBox::clone() const
     {
         return new UIHBox(*this);
-    }
-
-    void    UIHBox::render(items_k) 
-    {
-        for(UIElement* ui : m_items){
-            if(!ui) [[unlikely]]
-                continue;
-            ImGui::SameLine();
-            ui->draw();
-        }
     }
 }
 

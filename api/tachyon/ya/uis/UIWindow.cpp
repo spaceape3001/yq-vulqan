@@ -10,6 +10,7 @@
 
 namespace yq::tachyon {
     UIWindow::UIWindow(std::string_view zTitle, UIFlags flags) : 
+        UIElements(flags),
         m_title(zTitle), 
         m_imFlags(ImGui::WindowFlags(flags))
     {

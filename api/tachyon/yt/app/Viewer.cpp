@@ -404,6 +404,7 @@ namespace yq::tachyon {
         //auto r3 = auto_reset(u.window, static_cast<Window*>(this));
         if(w && m_imgui){
             w -> m_size = { u.viewport.width, u.viewport.height };
+            w -> m_flags |= Widget::F::HasSize;
             m_imgui -> draw(u, w);
         }
         std::error_code ec = m_viz->draw(u, {

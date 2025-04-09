@@ -16,7 +16,7 @@ namespace yq::tachyon {
     */
     class UIWindow : public UIElements {
     public:
-        UIWindow(std::string_view, UIFlags flags={ UIFlag::NoSavedSettings });
+        UIWindow(std::string_view, UIFlags flags={});
         UIWindow(const UIWindow&);
         ~UIWindow();
         

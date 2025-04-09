@@ -13,7 +13,7 @@ namespace yq::tachyon {
     {
     }
     
-    UIElements::UIElements(const UIElements& cp)
+    UIElements::UIElements(const UIElements& cp) : UIElement(cp)
     {
         for(UIElement* ui : cp.m_items){
             UIElement* ui2 = ui -> copy();

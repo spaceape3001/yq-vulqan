@@ -137,16 +137,16 @@ namespace yq::tachyon {
             }
         }
 
-        static constexpr const UIFlags  kToolBarFlags   = { UIFlag::NoDecoration, UIFlag::NoMove, UIFlag::SetSize, UIFlag::SetPosition, UIFlag::AlwaysAutoResize };
+        static constexpr const UIFlags  kToolBarFlags   = { UIFlag::NoDecoration, UIFlag::NoMove, UIFlag::SetPosition, UIFlag::AlwaysAutoResize };
     }
 
     
-    UIToolBar::UIToolBar(UICardinal b, std::string_view title, UIFlags flags) : UIToolBar(pivot_for(b), title, add_flags(b) | flags)
+    UIToolBar::UIToolBar(UICardinal b, std::string_view title, UIFlags flags) : UIToolBar(pivot_for(b), title, UIFlags(add_flags(b) | flags))
     {
     }
 
     UIToolBar::UIToolBar(Vector2F piv, std::string_view title, UIFlags flags) :
-        UIWindow(title, flags | kToolBarFlags)
+        UIWindow(title, UIFlags(flags | kToolBarFlags))
     {
         pivot(SET, piv);
     }
@@ -169,6 +169,7 @@ namespace yq::tachyon {
     {
         m_pivot     = vec;
         Vector2F    pointing    = m_pivot - Vector2F(0.5, 0.5);
+
         if(abs(pointing.y) > abs(pointing.x)){
             m_flags.set(UIFlag::Horizontal);
         } else if(abs(pointing.x) > abs(pointing.y)){
@@ -187,13 +188,15 @@ namespace yq::tachyon {
         AxBox2F box = parent() -> viewport(CONTENT).inflate(-edge);
         m_position  = box.project(m_pivot).emax(0.);
         
+        #if 0
         if(m_flags(UIFlag::Horizontal)){
             m_size  = Size2F( sty.toolbar.length(m_actualSize.x), sty.toolbar.thickness());
         } else {
             m_size  = Size2F( sty.toolbar.thickness(), sty.toolbar.length(m_actualSize.y));
         }
+        #endif
         
-    uiInfo << "UIToolBar::render(): " << m_size << " @ " << m_position << " {" << m_pivot << "} in " << box << " edge=" << edge;
+        //uiInfo << "UIToolBar::render(): " << m_size << " @ " << m_position << " {" << m_pivot << "} in " << box << " edge=" << edge << " imflags=" << m_imFlags;
 
         UIWindow::render();
     }

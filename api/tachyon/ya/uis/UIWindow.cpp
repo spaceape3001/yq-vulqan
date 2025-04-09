@@ -6,6 +6,7 @@
 
 #include "UIWindow.hpp"
 #include <yt/ui/MyImGui.hpp>
+#include <yq/shape/AxBox2.hpp>
 
 namespace yq::tachyon {
     UIWindow::UIWindow(std::string_view zTitle, UIFlags flags) : 
@@ -18,6 +19,7 @@ namespace yq::tachyon {
         m_title(cp.m_title),
         m_pivot(cp.m_pivot),
         m_position(cp.m_position),
+        m_size(cp.m_size),
         m_imFlags(cp.m_imFlags)
     {
     }
@@ -47,6 +49,9 @@ namespace yq::tachyon {
         }
         if(ImGui::Begin(m_title.c_str(), m_flags(UIFlag::Closeable) ? &open : nullptr, m_imFlags)){
             content();
+            
+            m_actualPos     = ImGui::GetWindowPos();
+            m_actualSize    = ImGui::GetWindowSize();
         }
         ImGui::End();
         if(!open){
@@ -63,5 +68,10 @@ namespace yq::tachyon {
     void    UIWindow::update(flags_k)
     {
         m_imFlags   = ImGui::WindowFlags(m_flags);
+    }
+
+    AxBox2F UIWindow::viewport() const
+    {
+        return AxBox2F(UNION, m_actualPos, m_actualPos + m_actualSize );
     }
 }

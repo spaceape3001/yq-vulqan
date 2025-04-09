@@ -9,6 +9,7 @@
 #include <ya/uis/UIElements.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yq/shape/Size2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
     /*! \brief Base class to "windows" within ImGui
@@ -24,11 +25,18 @@ namespace yq::tachyon {
         void        render();
         virtual const char*   title() const override;
 
+        using UIElements::viewport;
+        virtual AxBox2F viewport() const override;
+
+        const Vector2F&    pivot() const { return m_pivot; }
+
     protected:
         std::string         m_title;
         Vector2F            m_pivot     = { 0., 0. };
         Vector2F            m_position  = { 0., 0. };
         Size2F              m_size      = { 0., 0. };
+        Vector2F            m_actualPos;    //!< Measured position
+        Vector2F            m_actualSize;   //!< Measured size
         ImGuiWindowFlags    m_imFlags = ImGuiWindowFlags_None;
         
         UIWindow*           clone() const;

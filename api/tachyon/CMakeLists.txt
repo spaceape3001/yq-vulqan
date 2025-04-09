@@ -63,6 +63,7 @@ add_library(${PROJECT_NAME} SHARED
 
     yt/config/build.cpp
 
+    yt/enum/UICardinal.cpp
     yt/enum/UIFlags.cpp
 
     # font/Font.cpp      # Issue/TODO
@@ -739,6 +740,7 @@ PUBLIC
     yq_asset
     yq_color
     yq_keyv
+    yq_math
     yq_process
     yq_raster
     yq_text

@@ -211,11 +211,18 @@ namespace yq::tachyon {
         return *this << new UIMenuItem(kName, scut);
     }
 
-    UIWriter    UIWriter::toolbar(UIBorder b, std::string_view kName, UIFlags flags)
+    UIWriter    UIWriter::toolbar(UICardinal b, std::string_view kName, UIFlags flags)
     {
         if(!addable())
             return {};
         return *this << new UIToolBar(b, kName, flags);
+    }
+
+    UIWriter    UIWriter::toolbar(const Vector2F& pos, std::string_view kName, UIFlags flags)
+    {
+        if(!addable())
+            return {};
+        return *this << new UIToolBar(pos, kName, flags);
     }
 
     UIWriter    UIWriter::right(align_k)

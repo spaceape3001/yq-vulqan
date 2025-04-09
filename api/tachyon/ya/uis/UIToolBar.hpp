@@ -8,30 +8,24 @@
 
 #include <ya/uis/UIWindow.hpp>
 #include <yt/typedef/uimisc.hpp>
-#include <yt/enum/UIBorder.hpp>
+#include <yt/enum/UICardinal.hpp>
 
 namespace yq::tachyon {
     class UIToolBar : public UIWindow {
     public:
-        UIToolBar(UIBorder, std::string_view, UIFlags flags={});
+        UIToolBar(UICardinal, std::string_view, UIFlags flags={});
+        UIToolBar(Vector2F, std::string_view, UIFlags flags={});
         UIToolBar(const UIToolBar&);
         ~UIToolBar();
-        
-        void    orientation(set_k, horzvert_t);
+
+        float       thickness() const;
+        void        pivot(set_k, Vector2F);
 
     protected:
         UIToolBar*  clone() const;
-        
         void        render() override;
         
     private:
-        
-        static UIFlags  flags_for(UIBorder);
-        
-        UIBorder    m_border;
-    
-        bool    do_horizontal() const;
-    
-        horzvert_t  m_orientation;
+        unsigned    m_number       = 0;    // An inward creep of rows/columns
     };
 }

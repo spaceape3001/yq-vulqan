@@ -10,12 +10,14 @@
 #include <variant>
 #include <yt/enum/UIFlags.hpp>
 #include <yt/keywords.hpp>
+#include <yq/typedef/axbox2.hpp>
 
 namespace yq::tachyon {
     struct ViContext;
     class Widget;
     class WidgetInfo;
     class Viewer;
+    struct UIStyle;
 
     /*! \brief (ImGui) UI Element
     
@@ -66,6 +68,12 @@ namespace yq::tachyon {
         UIElement*  root();
         const UIElement* root() const;
 
+        //! Viewport in window/viewer coordinates
+        virtual AxBox2F viewport() const;
+
+        //! Viewport for content
+        virtual AxBox2F viewport(content_k) const;
+
     protected:
         friend class Widget;
         friend class UIWriter;
@@ -98,6 +106,8 @@ namespace yq::tachyon {
         //! Valid during clone & draw/render/content/triggered (check for NULL)
         static Widget*  widget();
         
+        static const UIStyle& style();
+        
         UIFlags         m_flags;
         
         UIElement*      m_parent = nullptr;
@@ -105,6 +115,7 @@ namespace yq::tachyon {
     private:
         static thread_local Widget*     s_widget;
         static thread_local ViContext*  s_context;
+        static UIStyle                  s_style;
     };
     
     template <typename T>

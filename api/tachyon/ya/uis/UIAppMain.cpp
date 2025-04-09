@@ -5,6 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIAppMain.hpp"
+#include "UIMenuBar.hpp"
+#include "UIToolBar.hpp"
+#include <yt/ui/Widget.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/shape/AxBox2.hxx>
+#include <yt/ui/MyImGui.hpp>
 
 namespace yq::tachyon {
     UIAppMain::UIAppMain(UIFlags flags) : UIElements(flags)
@@ -13,6 +19,12 @@ namespace yq::tachyon {
     
     UIAppMain::UIAppMain(const UIAppMain& cp) : UIElements(cp)
     {
+        for(UIElement* ui : m_items){
+            if(dynamic_cast<UIMenuBar*>(ui))
+                m_status |= S::MenuBar;
+            if(dynamic_cast<UIToolBar*>(ui))
+                m_status |= S::ToolBar;
+        }
     }
     
     UIAppMain::~UIAppMain()
@@ -22,5 +34,25 @@ namespace yq::tachyon {
     UIAppMain* UIAppMain::clone() const
     {
         return new UIAppMain(*this);
+    }
+
+    AxBox2F UIAppMain::viewport() const 
+    {
+        const Widget*w  = widget();
+        if(!w)
+            return ZERO;
+        return AxBox2F( ZERO, { (float) w->width(), (float) w->height() });
+    }
+
+    AxBox2F UIAppMain::viewport(content_k) const 
+    {
+        const Widget*w  = widget();
+        if(!w)
+            return ZERO;
+
+        float   mb  = 0.;
+        if(m_status(S::MenuBar))
+            mb += ImGui::GetFrameHeight();
+        return AxBox2F( { 0., mb }, { (float) w->width(), (float) w->height() });
     }
 }

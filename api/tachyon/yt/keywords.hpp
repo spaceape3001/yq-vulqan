@@ -54,6 +54,8 @@ namespace yq::tachyon {
         consteval operator DataActivity() const noexcept { return DataActivity::COMMON; }
     };
     
+    struct content_k {};
+    
     struct continue_k {};
     struct controller_k {};
     struct controllers_k {};
@@ -285,6 +287,7 @@ namespace yq::tachyon {
     static constexpr const children_k           CHILDREN;
     static constexpr const close_k              CLOSE;
     static constexpr const common_k             COMMON;
+    static constexpr const content_k            CONTENT;
     static constexpr const continue_k           CONTINUE;
     static constexpr const controller_k         CONTROLLER;
     static constexpr const controllers_k        CONTROLLERS;

@@ -11,7 +11,7 @@
 #include <yt/typedef/post.hpp>
 #include <yt/typedef/widget.hpp>
 #include <yt/typedef/uimisc.hpp>
-#include <yt/enum/UIBorder.hpp>
+#include <yt/enum/UICardinal.hpp>
 #include <yt/enum/UIFlags.hpp>
 #include <yq/typedef/vector2.hpp>
 
@@ -140,7 +140,8 @@ namespace yq::tachyon {
         */
         UIWriter    right(align_k);
         
-        UIWriter    toolbar(UIBorder, std::string_view kName, UIFlags flags={});
+        UIWriter    toolbar(UICardinal, std::string_view kName, UIFlags flags={});
+        UIWriter    toolbar(const Vector2F&, std::string_view kName, UIFlags flags={});
         
         UIWriter    window(std::string_view kName={}, UIFlags flags={});
         

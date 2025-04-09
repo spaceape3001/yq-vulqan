@@ -403,6 +403,7 @@ namespace yq::tachyon {
         auto r2 = auto_reset(u.viewer, this);
         //auto r3 = auto_reset(u.window, static_cast<Window*>(this));
         if(w && m_imgui){
+            w -> m_size = { u.viewport.width, u.viewport.height };
             m_imgui -> draw(u, w);
         }
         std::error_code ec = m_viz->draw(u, {
@@ -589,7 +590,7 @@ namespace yq::tachyon {
         if(evt.source() != m_window)
             return;
         if(!dying()){
-            send(evt.clone(REBIND, {.target=m_widget}));
+            //send(evt.clone(REBIND, {.target=m_widget}));
         }
     }
     

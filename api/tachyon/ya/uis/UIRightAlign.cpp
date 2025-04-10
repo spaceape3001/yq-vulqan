@@ -6,6 +6,7 @@
 
 #include "UIRightAlign.hpp"
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
 
 namespace yq::tachyon {
     UIRightAlign::UIRightAlign(UIFlags flags) : UIElements(flags)

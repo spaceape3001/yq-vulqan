@@ -12,6 +12,7 @@ namespace yq::tachyon {
     /*! \brief Presents a "classic" application UI (toolbars, docks, etc)
     */
     class UIAppMain : public UIElements {
+        YQ_OBJECT_DECLARE(UIAppMain, UIElements)
     public:
         UIAppMain(UIFlags flags={});
         UIAppMain(const UIAppMain&);
@@ -19,6 +20,8 @@ namespace yq::tachyon {
         
         virtual AxBox2F viewport() const override;
         virtual AxBox2F viewport(content_k) const override;
+
+        static void init_info();
 
     protected:
         UIAppMain* clone() const;

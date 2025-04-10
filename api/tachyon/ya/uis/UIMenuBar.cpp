@@ -6,6 +6,7 @@
 
 #include "UIMenuBar.hpp"
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
 
 namespace yq::tachyon {
     UIMenuBar::UIMenuBar(UIFlags flags) : UIElements(flags), m_isMain(false)

@@ -7,8 +7,17 @@
 #include "UIButton.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/logging.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIButton)
 
 namespace yq::tachyon {
+    void UIButton::init_info()
+    {
+        auto w = writer<UIButton>();
+        w.description("UI Button");
+    }
+    
     UIButton::UIButton(std::string_view text, const Vector2F& size) : m_text(text), m_size(size)
     {
     }

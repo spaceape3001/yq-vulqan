@@ -15,6 +15,7 @@ namespace yq::tachyon {
     //! An item with a collection of subitems
     //! \note This class takes OWNERSHIP of the pointers
     class UIElements : public UIElement {
+        YQ_OBJECT_DECLARE(UIElements, UIElement)
     public:
     
         UIElements(UIFlags flags={});
@@ -32,6 +33,8 @@ namespace yq::tachyon {
         const std::vector<UIElement*>& items() const { return m_items; }
         
         UIElements* copy() const;
+        
+        static void init_info();
         
     protected:
         virtual UIElements*    clone() const override;

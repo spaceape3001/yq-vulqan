@@ -6,6 +6,7 @@
 
 #include "UIHBox.hpp"
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
 
 namespace yq::tachyon {
     UIHBox::UIHBox(UIFlags flags) : UIElements(flags|UIFlag::Horizontal)

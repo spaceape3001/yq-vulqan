@@ -15,6 +15,7 @@ namespace yq::tachyon {
     /*! \brief Base class to "windows" within ImGui
     */
     class UIWindow : public UIElements {
+        YQ_OBJECT_DECLARE(UIWindow, UIElements)
     public:
         UIWindow(std::string_view, UIFlags flags={});
         UIWindow(const UIWindow&);
@@ -29,6 +30,8 @@ namespace yq::tachyon {
         virtual AxBox2F viewport() const override;
 
         const Vector2F&    pivot() const { return m_pivot; }
+        
+        static void init_info();
 
     protected:
         std::string         m_title;

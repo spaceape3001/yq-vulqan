@@ -10,6 +10,7 @@
 #include <yq/shape/AxBox2.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yt/logging.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 #include <yq/shape/Size2.hxx>
@@ -19,6 +20,8 @@ namespace yq {
     // not sure why it wasn't instantiating this constructor, forcing it
     template AxBox2<float>::AxBox2(union_k, const Vector2F&, const Vector2F&);
 }
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIToolBar)
 
 namespace yq::tachyon {
     namespace {
@@ -140,6 +143,17 @@ namespace yq::tachyon {
         static constexpr const UIFlags  kToolBarFlags   = { UIFlag::NoDecoration, UIFlag::NoMove, UIFlag::SetPosition, UIFlag::AlwaysAutoResize };
     }
 
+    void UIToolBar::init_info()
+    {
+        auto w = writer<UIToolBar>();
+        w.description("UI Tool Bar");
+        
+        w.property("pivot", &UIToolBar::pivot_get)
+            .setter(&UIToolBar::pivot_set)
+            .description("Pivot point for the tool bar (in screen normalized coordinates)")
+        ;
+    }
+
     
     UIToolBar::UIToolBar(UICardinal b, std::string_view title, UIFlags flags) : UIToolBar(pivot_for(b), title, UIFlags(add_flags(b) | flags))
     {
@@ -176,6 +190,16 @@ namespace yq::tachyon {
             m_flags.clear(UIFlag::Horizontal);
         }
         update(FLAGS);
+    }
+
+    Vector2F    UIToolBar::pivot_get() const
+    {
+        return m_pivot;
+    }
+    
+    void        UIToolBar::pivot_set(const Vector2F& vec)
+    {
+        pivot(SET, vec);
     }
 
     void    UIToolBar::render() 

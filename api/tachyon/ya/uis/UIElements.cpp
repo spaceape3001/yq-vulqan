@@ -7,8 +7,17 @@
 #include "UIElements.hpp"
 #include <yq/container/reverse.hpp>
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElements)
 
 namespace yq::tachyon {
+    void UIElements::init_info() 
+    {
+        auto w = writer<UIElements>();
+        w.description("Collection of child UI elements");
+    }
+
     UIElements::UIElements(UIFlags flags) : UIElement(flags)
     {
     }

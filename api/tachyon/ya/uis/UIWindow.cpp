@@ -7,8 +7,19 @@
 #include "UIWindow.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yq/shape/AxBox2.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
+#include <yq/shape/AxBox2.hxx>
+#include <yq/vector/Vector2.hxx>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIWindow)
 
 namespace yq::tachyon {
+    void UIWindow::init_info()
+    {
+        auto w = writer<UIWindow>();
+        w.description("\"Window\" in ImGui (not to be confused with the OS/Desktop Window)");
+    }
+
     UIWindow::UIWindow(std::string_view zTitle, UIFlags flags) : 
         UIElements(flags),
         m_title(zTitle), 

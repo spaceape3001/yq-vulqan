@@ -6,8 +6,17 @@
 
 #include "UITextLabel.hpp"
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UITextLabel)
 
 namespace yq::tachyon {
+    void UITextLabel::init_info()
+    {
+        auto w = writer<UITextLabel>();
+        w.description("UI Text Label");
+    }
+
     UITextLabel::UITextLabel(std::string_view kString, UIFlags flags) : 
         UIElement(flags), m_text(kString)
     {

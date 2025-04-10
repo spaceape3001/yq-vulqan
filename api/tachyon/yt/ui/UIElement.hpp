@@ -11,6 +11,7 @@
 #include <yt/enum/UIFlags.hpp>
 #include <yt/keywords.hpp>
 #include <yq/typedef/axbox2.hpp>
+#include <yq/core/Object.hpp>
 
 namespace yq::tachyon {
     struct ViContext;
@@ -18,6 +19,14 @@ namespace yq::tachyon {
     class WidgetInfo;
     class Viewer;
     struct UIStyle;
+    class UIElement;
+    
+    class UIElementInfo : public ObjectInfo {
+    public:
+        template <typename> class Writer;
+        UIElementInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+    };
+
 
     /*! \brief (ImGui) UI Element
     
@@ -27,8 +36,13 @@ namespace yq::tachyon {
         These are lighter weight alternatives, designed to encompass a single feature 
         point of ImGui (ie, menu item, button, etc), and are compositable via the 
         UIElements sub-class.
+        
+        \note Concession is that we'll need meta-attributes/methods for UI scripting, 
+        so the object is being added.
     */
-    class UIElement {
+    class UIElement : public Object {
+        YQ_OBJECT_INFO(UIElementInfo)
+        YQ_OBJECT_DECLARE(UIElement, Object)
     public:
         UIElement(UIFlags flags={});
         UIElement(const UIElement&);
@@ -73,6 +87,8 @@ namespace yq::tachyon {
 
         //! Viewport for content
         virtual AxBox2F viewport(content_k) const;
+        
+        static void init_info();
 
     protected:
         friend class Widget;

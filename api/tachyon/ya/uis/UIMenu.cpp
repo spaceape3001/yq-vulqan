@@ -6,6 +6,7 @@
 
 #include "UIMenu.hpp"
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
 
 namespace yq::tachyon {
     UIMenu::UIMenu(std::string_view kv, UIFlags flags) : UIElements(flags), m_name(kv)

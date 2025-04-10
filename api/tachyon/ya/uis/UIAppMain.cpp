@@ -11,8 +11,17 @@
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/AxBox2.hxx>
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIAppMain)
 
 namespace yq::tachyon {
+    void UIAppMain::init_info()
+    {
+        auto w = writer<UIAppMain>();
+        w.description("Main Application UI framework");
+    }
+
     UIAppMain::UIAppMain(UIFlags flags) : UIElements(flags)
     {
     }

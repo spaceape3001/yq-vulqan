@@ -6,6 +6,7 @@
 
 #include "UICenterAlign.hpp"
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIElementInfoWriter.hpp>
 
 namespace yq::tachyon {
     UICenterAlign::UICenterAlign(UIFlags flags) : UIElements(flags)

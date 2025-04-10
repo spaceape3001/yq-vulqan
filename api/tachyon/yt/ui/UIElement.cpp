@@ -5,10 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElement.hpp"
+#include "UIElementInfoWriter.hpp"
 #include <cassert>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIStyle.hpp>
 #include <yq/shape/AxBox2.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElement)
 
 namespace yq::tachyon {
     float UIDim::operator()() const
@@ -32,9 +35,22 @@ namespace yq::tachyon {
 
     ////////////////////////////
 
+    UIElementInfo::UIElementInfo(std::string_view theName, ObjectInfo& pmeta, const std::source_location& sl) : 
+        ObjectInfo(theName, pmeta, sl)
+    {
+    }
+
+    ////////////////////////////
+
     thread_local Widget*     UIElement::s_widget     = nullptr;
     thread_local ViContext*  UIElement::s_context    = nullptr;
     UIStyle                  UIElement::s_style;
+
+    void UIElement::init_info()
+    {
+        auto w = writer<UIElement>();
+        w.description("Basic UI Element");
+    }
 
     const UIStyle& UIElement::style()
     {

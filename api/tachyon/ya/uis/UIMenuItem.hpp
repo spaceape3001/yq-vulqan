@@ -12,12 +12,15 @@
 
 namespace yq::tachyon {
     class UIMenuItem : public UIElement {
+        YQ_OBJECT_DECLARE(UIMenuItem, UIElement)
     public:
         UIMenuItem(std::string_view kName, std::string_view kShortcut="", UIFlags flags={});
         UIMenuItem(const UIMenuItem&);
         ~UIMenuItem();
 
         virtual const char*   title() const override;
+        
+        static void init_info();
         
     protected:
         virtual UIMenuItem*       clone() const override;

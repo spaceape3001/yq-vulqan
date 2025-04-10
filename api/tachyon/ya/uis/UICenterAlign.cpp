@@ -5,10 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UICenterAlign.hpp"
+#include "UICenterAlignWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
 
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UICenterAlign)
+
 namespace yq::tachyon {
+    void UICenterAlign::init_info()
+    {
+        auto w = writer<UICenterAlign>();
+        w.description("UI Element that centers its contents");
+    }
+
     UICenterAlign::UICenterAlign(UIFlags flags) : UIElements(flags)
     {
     }
@@ -36,4 +45,20 @@ namespace yq::tachyon {
         float       x   = 0.5*(b.x+c.x);
         m_width        += ImGui::GetWindowWidth()*0.5 - x;
     }
+
+    ////////////////////////////
+
+    UICenterAlignWriter::UICenterAlignWriter() = default;
+    UICenterAlignWriter::UICenterAlignWriter(const UICenterAlignWriter&) = default;
+    UICenterAlignWriter::~UICenterAlignWriter() = default;
+
+    UICenterAlign* UICenterAlignWriter::element()
+    {
+        return static_cast<UICenterAlign*>(m_ui);
+    }
+    
+    UICenterAlignWriter::UICenterAlignWriter(UICenterAlign* ui) : UIElementsWriter(ui)
+    {
+    }
+
 }

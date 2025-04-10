@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElement.hpp"
+#include "UIElementWriter.hpp"
 #include "UIElementInfoWriter.hpp"
 #include <cassert>
 #include <yt/ui/MyImGui.hpp>
@@ -152,5 +153,36 @@ namespace yq::tachyon {
     AxBox2F UIElement::viewport(content_k) const
     {
         return viewport();
+    }
+
+    ////////////////////////////
+    UIElementWriter::UIElementWriter(UIElement* ui) : m_ui(ui) {}
+
+    UIElementWriter::UIElementWriter() = default;
+    UIElementWriter::UIElementWriter(const UIElementWriter&) = default;
+    UIElementWriter::~UIElementWriter() = default;
+
+    void  UIElementWriter::flag(set_k, UIFlag v)
+    {
+        if(m_ui)
+            m_ui->flag(SET, v);
+    }
+    
+    void  UIElementWriter::flag(set_k, UIFlags v)
+    {
+        if(m_ui)
+            m_ui->flag(SET, v);
+    }
+    
+    void  UIElementWriter::flag(clear_k, UIFlag v)
+    {
+        if(m_ui)
+            m_ui->flag(CLEAR, v);
+    }
+    
+    void  UIElementWriter::flag(clear_k, UIFlags v)
+    {
+        if(m_ui)
+            m_ui->flag(CLEAR, v);
     }
 }

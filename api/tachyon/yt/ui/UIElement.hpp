@@ -12,6 +12,7 @@
 #include <yt/keywords.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
+#include <yt/typedef/uielement.hpp>
 
 namespace yq::tachyon {
     struct ViContext;
@@ -20,6 +21,7 @@ namespace yq::tachyon {
     class Viewer;
     struct UIStyle;
     class UIElement;
+    class UIElementWriter;
     
     class UIElementInfo : public ObjectInfo {
     public:
@@ -44,6 +46,9 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(UIElementInfo)
         YQ_OBJECT_DECLARE(UIElement, Object)
     public:
+    
+        using Writer = UIElementWriter;
+    
         UIElement(UIFlags flags={});
         UIElement(const UIElement&);
         virtual ~UIElement();
@@ -134,6 +139,4 @@ namespace yq::tachyon {
         static UIStyle                  s_style;
     };
     
-    template <typename T>
-    concept SomeUIElement  = std::derived_from<T,UIElement>;
 }

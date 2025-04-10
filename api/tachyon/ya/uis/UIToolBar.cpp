@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIToolBar.hpp"
+#include "UIToolBarWriter.hpp"
 #include <yt/ui/UIUtils.hpp>
 #include <yt/ui/UIStyle.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -228,5 +229,21 @@ namespace yq::tachyon {
     float   UIToolBar::thickness() const
     {
         return style().toolbar.thickness();
+    }
+
+
+    ////////////////////////////
+
+    UIToolBarWriter::UIToolBarWriter() = default;
+    UIToolBarWriter::UIToolBarWriter(const UIToolBarWriter&) = default;
+    UIToolBarWriter::~UIToolBarWriter() = default;
+
+    UIToolBar* UIToolBarWriter::element()
+    {
+        return static_cast<UIToolBar*>(m_ui);
+    }
+    
+    UIToolBarWriter::UIToolBarWriter(UIToolBar* ui) : UIWindowWriter(ui)
+    {
     }
 }

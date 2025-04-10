@@ -11,10 +11,17 @@
 
 namespace yq::tachyon {
 
+    class UIMenuBarWriter;
+
     /*! \brief It's a menu bar
     */
     class UIMenuBar : public UIElements {
+        YQ_OBJECT_DECLARE(UIMenuBar, UIElements)
     public:
+    
+        using Writer = UIMenuBarWriter;
+    
+        static void init_info();
     
         //! Constructs a regular menu bar
         UIMenuBar(UIFlags flags={});

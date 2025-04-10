@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIWindow.hpp"
+#include "UIWindowWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
@@ -86,4 +87,20 @@ namespace yq::tachyon {
     {
         return AxBox2F(UNION, m_actualPos, m_actualPos + m_actualSize );
     }
+
+    ////////////////////////////
+
+    UIWindowWriter::UIWindowWriter() = default;
+    UIWindowWriter::UIWindowWriter(const UIWindowWriter&) = default;
+    UIWindowWriter::~UIWindowWriter() = default;
+
+    UIWindow* UIWindowWriter::element()
+    {
+        return static_cast<UIWindow*>(m_ui);
+    }
+    
+    UIWindowWriter::UIWindowWriter(UIWindow* ui) : UIElementsWriter(ui)
+    {
+    }
+
 }

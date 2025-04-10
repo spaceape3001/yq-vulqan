@@ -12,11 +12,15 @@
 
 namespace yq::tachyon {
 
+    class UIElementsWriter;
+
     //! An item with a collection of subitems
     //! \note This class takes OWNERSHIP of the pointers
     class UIElements : public UIElement {
         YQ_OBJECT_DECLARE(UIElements, UIElement)
     public:
+
+        using Writer = UIElementsWriter;
     
         UIElements(UIFlags flags={});
         
@@ -49,5 +53,7 @@ namespace yq::tachyon {
         virtual void        render(items_k);
         
         std::vector<UIElement*>    m_items;
+        
+        friend class UIElementsWriter;
     };
 }

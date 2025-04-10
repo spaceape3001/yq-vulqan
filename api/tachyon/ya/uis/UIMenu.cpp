@@ -5,10 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIMenu.hpp"
+#include "UIMenuWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
 
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIMenu)
+
 namespace yq::tachyon {
+    void UIMenu::init_info()
+    {
+        auto w = writer<UIMenu>();
+        w.description("Menu UI Element (ie collection of items)");
+    }
+
     UIMenu::UIMenu(std::string_view kv, UIFlags flags) : UIElements(flags), m_name(kv)
     {
     }
@@ -37,5 +46,20 @@ namespace yq::tachyon {
     const char*   UIMenu::title() const 
     {
         return m_name.c_str();
+    }
+
+    ////////////////////////////
+
+    UIMenuWriter::UIMenuWriter() = default;
+    UIMenuWriter::UIMenuWriter(const UIMenuWriter&) = default;
+    UIMenuWriter::~UIMenuWriter() = default;
+
+    UIMenu* UIMenuWriter::element()
+    {
+        return static_cast<UIMenu*>(m_ui);
+    }
+    
+    UIMenuWriter::UIMenuWriter(UIMenu* ui) : UIElementsWriter(ui)
+    {
     }
 }

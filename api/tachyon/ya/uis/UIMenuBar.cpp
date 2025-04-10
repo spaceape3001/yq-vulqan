@@ -5,10 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIMenuBar.hpp"
+#include "UIMenuBarWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
 
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIMenuBar)
+
 namespace yq::tachyon {
+    void UIMenuBar::init_info()
+    {
+        auto w = writer<UIMenuBar>();
+        w.description("Menu Bar UI Element");
+    }
+    
     UIMenuBar::UIMenuBar(UIFlags flags) : UIElements(flags), m_isMain(false)
     {
     }
@@ -43,5 +52,20 @@ namespace yq::tachyon {
                 ImGui::EndMenuBar();
             }
         }
+    }
+
+    ////////////////////////////
+
+    UIMenuBarWriter::UIMenuBarWriter() = default;
+    UIMenuBarWriter::UIMenuBarWriter(const UIMenuBarWriter&) = default;
+    UIMenuBarWriter::~UIMenuBarWriter() = default;
+
+    UIMenuBar* UIMenuBarWriter::element()
+    {
+        return static_cast<UIMenuBar*>(m_ui);
+    }
+    
+    UIMenuBarWriter::UIMenuBarWriter(UIMenuBar* ui) : UIElementsWriter(ui)
+    {
     }
 }

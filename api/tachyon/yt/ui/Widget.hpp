@@ -45,6 +45,8 @@ namespace yq::tachyon {
     class SetViewer;
     class TitleCommand;
     class Frame;
+    class UIAppMainWriter;
+    class UIElementsWriter;
     class UIElement;
     class UIElements;
     class UIWriter;
@@ -57,7 +59,9 @@ namespace yq::tachyon {
     private:
         friend class UIWriter;
         friend class Widget;
-        UIElements*                m_ui    = nullptr;
+        friend class UIAppMainWriter;
+        friend class UIElementsWriter;
+        UIElement*      m_ui    = nullptr;
     };
     
     /*! \brief Root something that's drawwable & interactable
@@ -169,7 +173,9 @@ namespace yq::tachyon {
     protected:
         friend class Viewer;
         friend class Layout;
+        friend class UIAppMainWriter;
         friend class UIElement;
+        friend class UIElementsWriter;
         friend class UIWriter;
         
         enum class F : uint8_t {
@@ -275,7 +281,7 @@ namespace yq::tachyon {
         CloseRequestCPtr                m_closeRequest;
         LayoutPtr                       m_layout;
         std::vector<R>                  m_rendereds;
-        UIElements*                     m_ui            = nullptr;
+        UIElement*                      m_ui            = nullptr;
         UIMMap                          m_uimap;    //< for cross-linking
         Tristate                        m_wireframe     = Tristate::INHERIT;
         Vector2D                        m_position      = { 0., 0. };

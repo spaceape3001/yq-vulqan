@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIButton.hpp"
+#include "UIButtonWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/logging.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
@@ -51,4 +52,20 @@ namespace yq::tachyon {
     {
         return m_text.c_str();
     }
+
+    ////////////////////////////
+    
+    UIButtonWriter::UIButtonWriter() = default;
+    UIButtonWriter::UIButtonWriter(const UIButtonWriter&) = default;
+    UIButtonWriter::~UIButtonWriter() = default;
+    
+    UIButton* UIButtonWriter::element()
+    {
+        return static_cast<UIButton*>(m_ui);
+    }
+    
+    UIButtonWriter::UIButtonWriter(UIButton* ui) : UIElementWriter(ui)
+    {
+    }
+
 }

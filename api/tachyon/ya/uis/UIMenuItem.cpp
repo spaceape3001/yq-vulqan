@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIMenuItem.hpp"
+#include "UIMenuItemWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
 
@@ -46,5 +47,21 @@ namespace yq::tachyon {
     const char*   UIMenuItem::title() const 
     {
         return m_name.c_str();
+    }
+
+
+    ////////////////////////////
+
+    UIMenuItemWriter::UIMenuItemWriter() = default;
+    UIMenuItemWriter::UIMenuItemWriter(const UIMenuItemWriter&) = default;
+    UIMenuItemWriter::~UIMenuItemWriter() = default;
+
+    UIMenuItem* UIMenuItemWriter::element()
+    {
+        return static_cast<UIMenuItem*>(m_ui);
+    }
+    
+    UIMenuItemWriter::UIMenuItemWriter(UIMenuItem* ui) : UIElementWriter(ui)
+    {
     }
 }

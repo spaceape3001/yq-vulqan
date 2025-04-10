@@ -12,9 +12,13 @@
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
+    class UIButtonWriter;
+    
     class UIButton : public UIElement {
         YQ_OBJECT_DECLARE(UIButton, UIElement)
     public:
+        using Writer = UIButtonWriter;
+
         UIButton(std::string_view, const Vector2F& size=ZERO);
         UIButton(const UIButton&);
         virtual ~UIButton();

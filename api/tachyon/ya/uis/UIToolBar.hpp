@@ -11,9 +11,13 @@
 #include <yt/enum/UICardinal.hpp>
 
 namespace yq::tachyon {
+    class UIToolBarWriter;
+    
     class UIToolBar : public UIWindow {
         YQ_OBJECT_DECLARE(UIToolBar, UIWindow)
     public:
+        using Writer = UIToolBarWriter;
+
         UIToolBar(UICardinal, std::string_view, UIFlags flags={});
         UIToolBar(Vector2F, std::string_view, UIFlags flags={});
         UIToolBar(const UIToolBar&);

@@ -5,9 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElements.hpp"
+#include "UIElementsWriter.hpp"
 #include <yq/container/reverse.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
+#include <yt/ui/Widget.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElements)
 
@@ -118,5 +120,64 @@ namespace yq::tachyon {
     size_t  UIElements::size() const
     {
         return m_items.size();
+    }
+
+    ////////////////////////////
+
+    UIElements*   UIElementsWriter::attach(Widget* w)
+    {
+        if(!w)
+            return nullptr;
+        if(w->m_ui)
+            return dynamic_cast<UIElements*>(w->m_ui);
+        UIElements*ret   = new UIElements;
+        w->m_ui = ret;
+        return ret;
+    }
+    
+    UIElements*   UIElementsWriter::attach(WidgetInfo*w)
+    {
+        if(!w)
+            return nullptr;
+        if(w->m_ui)
+            return dynamic_cast<UIElements*>(w->m_ui);
+        UIElements*ret   = new UIElements;
+        w->m_ui = ret;
+        return ret;
+    }
+
+
+    UIElementsWriter::UIElementsWriter() = default;
+    UIElementsWriter::UIElementsWriter(const UIElementsWriter&) = default;
+    UIElementsWriter::~UIElementsWriter() = default;
+    
+    UIElementsWriter::UIElementsWriter(UIElements* elem) : UIElementWriter(elem)
+    {
+    }
+
+    UIElementsWriter::UIElementsWriter(Widget*w) : UIElementWriter(attach(w))
+    {
+    }
+    
+    UIElementsWriter::UIElementsWriter(WidgetInfo* w) : UIElementWriter(attach(w))
+    {
+    }
+    
+
+    bool        UIElementsWriter::add(UIElement*elem)
+    {
+        if(elem && m_ui){
+            static_cast<UIElements*>(m_ui) -> m_items.push_back(elem);
+            return true;
+        } else {
+            if(elem)
+                delete(elem);
+            return false;
+        }
+    }
+
+    UIElements*     UIElementsWriter::element()
+    {
+        return static_cast<UIElements*>(m_ui);
     }
 }

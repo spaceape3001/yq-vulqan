@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UITextLabel.hpp"
+#include "UITextLabelWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
 
@@ -40,5 +41,20 @@ namespace yq::tachyon {
         if(!m_text.empty()){
             ImGui::TextUnformatted(m_text.c_str());
         }
+    }
+
+    ////////////////////////////
+
+    UITextLabelWriter::UITextLabelWriter() = default;
+    UITextLabelWriter::UITextLabelWriter(const UITextLabelWriter&) = default;
+    UITextLabelWriter::~UITextLabelWriter() = default;
+
+    UITextLabel* UITextLabelWriter::element()
+    {
+        return static_cast<UITextLabel*>(m_ui);
+    }
+    
+    UITextLabelWriter::UITextLabelWriter(UITextLabel* ui) : UIElementWriter(ui)
+    {
     }
 }

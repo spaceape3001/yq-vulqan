@@ -10,8 +10,13 @@
 #include <yt/ui/WidgetData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/ui/UIWriter.hpp>
+#include <ya/uis/UIAppMainWriter.hpp>
+#include <yt/typedef/uielement.hpp>
 
 namespace yq::tachyon {
+
+    class UIElementsWriter;
+    class UIAppMainWriter;
 
     /*! \brief Writer of widget information
     */
@@ -37,6 +42,33 @@ namespace yq::tachyon {
             Meta::Writer::options({Flag::IMGUI});
         }
         
+        UIElementsWriter imgui(ui_k)
+        {
+            imgui();
+            return UIElementsWriter(m_meta);
+        }
+        
+        UIAppMainWriter imgui(ui_k, app_k)
+        {
+            imgui();
+            return UIAppMainWriter(m_meta);
+        }
+        
+        template <SomeUIElement U>
+        typename U::Writer    imgui(ui_k, U* ui)
+        {
+            if(!ui)
+                return {};
+            if(!m_meta){
+                delete ui;
+                return {};
+            }
+            
+            imgui();
+            m_meta -> m_ui = ui;
+            return typename U::Writer(ui);
+        }
+
         //! Annotates that this widget will render Vulkan content
         void    vulkan()
         {

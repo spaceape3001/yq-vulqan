@@ -8,12 +8,16 @@
 
 namespace yq::tachyon {
     class UIToolBar;
+    class UIAppMainWriter;
 
     /*! \brief Presents a "classic" application UI (toolbars, docks, etc)
     */
     class UIAppMain : public UIElements {
         YQ_OBJECT_DECLARE(UIAppMain, UIElements)
     public:
+        
+        using Writer = UIAppMainWriter;
+    
         UIAppMain(UIFlags flags={});
         UIAppMain(const UIAppMain&);
         ~UIAppMain();

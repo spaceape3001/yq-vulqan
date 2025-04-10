@@ -12,15 +12,18 @@
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
+    class UIWindowWriter;
+    
     /*! \brief Base class to "windows" within ImGui
     */
     class UIWindow : public UIElements {
         YQ_OBJECT_DECLARE(UIWindow, UIElements)
     public:
+        using Writer = UIWindowWriter;
+
         UIWindow(std::string_view, UIFlags flags={});
         UIWindow(const UIWindow&);
         ~UIWindow();
-        
         
         using UIElements::render;
         void        render();

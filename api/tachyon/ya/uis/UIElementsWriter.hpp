@@ -39,7 +39,13 @@ namespace yq::tachyon {
         UIElementsWriter(const UIElementsWriter&);
         ~UIElementsWriter();
         
-        UIElements*     element();
+        UIElements*             element();
+        
+        /*! Appends a new UI element (no checking if it's the right spot to go, no new writer)
+            \note This routine assumes ownership, may delete the item 
+            prior to return.
+        */
+        UIElementsWriter&       operator<<(UIElement*);
         
         /////////////////////////////////////////////
         // Element Creation Helpers

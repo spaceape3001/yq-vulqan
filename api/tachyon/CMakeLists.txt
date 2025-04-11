@@ -699,6 +699,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIMenuBar.cpp
     ya/uis/UIMenuItem.cpp
     ya/uis/UIRightAlign.cpp
+    ya/uis/UISpacer.cpp
     ya/uis/UITextLabel.cpp
     ya/uis/UIToolBar.cpp
     ya/uis/UIWindow.cpp

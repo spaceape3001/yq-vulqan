@@ -1,5 +1,13 @@
 # CHANGE LOG
 
+## 2025.04.11
+
+* Basic ImGui UI framework
+* Updated submodules
+* Dynamic States filtering in pipeline creation (to make sure it's listed once)
+* Dynamic viewports for pipelines
+* Rocks is now in separate repo. 
+
 ## 2025.03.09
 
 * Fixed bugs in closing/shutdown

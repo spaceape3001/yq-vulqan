@@ -9,3 +9,5 @@
 #include <yt/ui/UIWriters.hpp>
 #include <ya/uis/UIElementsWriter.hxx>
 #include <ya/uis/UIMenuWriter.hxx>
+#include <ya/uis/UIMenuBarWriter.hxx>
+

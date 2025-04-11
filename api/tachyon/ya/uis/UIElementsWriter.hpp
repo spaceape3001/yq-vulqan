@@ -70,7 +70,6 @@ namespace yq::tachyon {
 
         UIMenuWriter            menu(std::string_view);
 
-        UIMenuBarWriter         menubar();
 
         /*! \brief  Right align the contents
         
@@ -78,9 +77,6 @@ namespace yq::tachyon {
             an items collection that gets created.
         */
         UIRightAlignWriter      right(align_k);
-        
-        UIToolBarWriter         toolbar(UICardinal, std::string_view kName);
-        UIToolBarWriter         toolbar(const Vector2F&, std::string_view kName);
         
     protected:
     

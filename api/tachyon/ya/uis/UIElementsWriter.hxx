@@ -30,7 +30,6 @@ namespace yq::tachyon {
         return make<UIButton_WidgetCallback<W>>(text, fn);
     }
     
-
     template <SomeWidget W>
     UIButtonWriter    UIElementsWriter::button(std::string_view text, const Size2F& size, void (W::*fn)())
     {

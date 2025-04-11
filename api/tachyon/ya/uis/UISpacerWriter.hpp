@@ -19,6 +19,5 @@ namespace yq::tachyon {
         
         UISpacer* element();
         
-    protected:
     };
 }

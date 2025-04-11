@@ -19,5 +19,11 @@ namespace yq::tachyon {
         ~UIToolBarWriter();
         
         UIToolBar*  element();
+
+        /////////////////////////////////////////////
+        // Element Creation Helpers
+        /////////////////////////////////////////////
+
+        // We'll have some tool button things....
     };
 }

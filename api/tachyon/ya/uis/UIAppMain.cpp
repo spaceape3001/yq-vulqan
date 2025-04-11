@@ -65,7 +65,4 @@ namespace yq::tachyon {
             mb += ImGui::GetFrameHeight();
         return AxBox2F( { 0., mb }, { (float) w->width(), (float) w->height() });
     }
-
-    ////////////////////////////
-    
 }

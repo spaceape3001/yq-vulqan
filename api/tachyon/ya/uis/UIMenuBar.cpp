@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIMenuBar.hpp"
-#include "UIMenuBarWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
 
@@ -52,20 +51,5 @@ namespace yq::tachyon {
                 ImGui::EndMenuBar();
             }
         }
-    }
-
-    ////////////////////////////
-
-    UIMenuBarWriter::UIMenuBarWriter() = default;
-    UIMenuBarWriter::UIMenuBarWriter(const UIMenuBarWriter&) = default;
-    UIMenuBarWriter::~UIMenuBarWriter() = default;
-
-    UIMenuBar* UIMenuBarWriter::element()
-    {
-        return static_cast<UIMenuBar*>(m_ui);
-    }
-    
-    UIMenuBarWriter::UIMenuBarWriter(UIMenuBar* ui) : UIElementsWriter(ui)
-    {
     }
 }

@@ -706,6 +706,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UISpacer.cpp
     ya/uis/UITextLabel.cpp
     ya/uis/UIToolBar.cpp
+    ya/uis/UIToolBarWriter.cpp
     ya/uis/UIWindow.cpp
     ya/uis/UIWindowWriter.cpp
     

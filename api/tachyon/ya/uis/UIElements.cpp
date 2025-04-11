@@ -119,7 +119,4 @@ namespace yq::tachyon {
     {
         return m_items.size();
     }
-
-    ////////////////////////////
-
 }

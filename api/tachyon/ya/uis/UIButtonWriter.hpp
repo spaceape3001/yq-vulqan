@@ -18,7 +18,5 @@ namespace yq::tachyon {
         ~UIButtonWriter();
         
         UIButton* element();
-        
-    protected:
     };
 }

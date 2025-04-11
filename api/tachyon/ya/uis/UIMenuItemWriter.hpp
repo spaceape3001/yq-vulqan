@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <yt/ui/UIElementWriter.hpp>
 
 namespace yq::tachyon {
@@ -21,10 +23,5 @@ namespace yq::tachyon {
         ~UIMenuItemWriter();
         
         UIMenuItem*  element();
-
-        /////////////////////////////////////////////
-        // Element Creation Helpers
-        /////////////////////////////////////////////
-
     };
 }

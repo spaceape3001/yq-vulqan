@@ -120,23 +120,8 @@ namespace yq::tachyon {
         return make<UIMenu>(name);
     }
 
-    UIMenuBarWriter         UIElementsWriter::menubar()
-    {
-        return make<UIMenuBar>();
-    }
-
     UIRightAlignWriter      UIElementsWriter::right(align_k)
     {
         return make<UIRightAlign>();
-    }
-    
-    UIToolBarWriter         UIElementsWriter::toolbar(UICardinal dir, std::string_view kName)
-    {
-        return make<UIToolBar>(dir, kName);
-    }
-    
-    UIToolBarWriter         UIElementsWriter::toolbar(const Vector2F& dir, std::string_view kName)
-    {
-        return make<UIToolBar>(dir, kName);
     }
 }

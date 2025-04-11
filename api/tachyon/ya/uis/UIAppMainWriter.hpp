@@ -29,10 +29,11 @@ namespace yq::tachyon {
         // Element Creation Helpers
         /////////////////////////////////////////////
 
-        using UIElementsWriter::menubar;
-        UIMenuBarWriter         menubar(main_k);
-        
-        UIWindowWriter    window(std::string_view kName={});
+        UIMenuBarWriter     menubar();
+        UIMenuBarWriter     menubar(main_k);
+        UIToolBarWriter     toolbar(UICardinal, std::string_view kName);
+        UIToolBarWriter     toolbar(const Vector2F&, std::string_view kName);
+        UIWindowWriter      window(std::string_view kName={});
 
     private:
         static UIAppMain*   attach(Widget*);

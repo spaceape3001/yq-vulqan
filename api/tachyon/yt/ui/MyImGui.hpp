@@ -9,9 +9,9 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/math/glm.hpp>
+#include <yq/shape/Size2.hpp>
 #include <yq/typedef/quaternion3.hpp>
 #include <yq/typedef/rectangle2.hpp>
-#include <yq/typedef/size2.hpp>
 #include <yq/typedef/tensor44.hpp>
 #include <yq/units.hpp>
 #include <yq/vector/Vector1.hpp>
@@ -24,7 +24,11 @@
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \
         constexpr operator yq::Vector2D() const { return { x, y }; }                        \
         constexpr ImVec2(const yq::Vector2F& v) : x(v.x), y(v.y) {}                         \
-        constexpr operator yq::Vector2F() const { return { x, y }; }
+        constexpr operator yq::Vector2F() const { return { x, y }; }                        \
+        constexpr ImVec2(const yq::Size2D& v) : x((float) v.x), y((float) v.y) {}           \
+        constexpr operator yq::Size2D() const { return { x, y }; }                          \
+        constexpr ImVec2(const yq::Size2F& v) : x(v.x), y(v.y) {}                           \
+        constexpr operator yq::Size2F() const { return { x, y }; }
 
 #define IM_VEC4_CLASS_EXTRA                                                                                         \
         constexpr ImVec4(const yq::Vector4D& v) : x((float) v.x), y((float) v.y), z((float) v.z), w((float) v.w) {} \

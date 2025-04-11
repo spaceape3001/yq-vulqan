@@ -68,46 +68,4 @@ namespace yq::tachyon {
 
     ////////////////////////////
     
-    UIAppMain*   UIAppMainWriter::attach(Widget* w)
-    {
-        if(!w)
-            return nullptr;
-        if(w->m_ui)
-            return dynamic_cast<UIAppMain*>(w->m_ui);
-        UIAppMain*ret   = new UIAppMain;
-        w->m_ui = ret;
-        return ret;
-    }
-    
-    UIAppMain*   UIAppMainWriter::attach(WidgetInfo*w)
-    {
-        if(!w)
-            return nullptr;
-        if(w->m_ui)
-            return dynamic_cast<UIAppMain*>(w->m_ui);
-        UIAppMain*ret   = new UIAppMain;
-        w->m_ui = ret;
-        return ret;
-    }
-
-    UIAppMainWriter::UIAppMainWriter() = default;
-    UIAppMainWriter::UIAppMainWriter(const UIAppMainWriter&) = default;
-    UIAppMainWriter::~UIAppMainWriter() = default;
-    
-    UIAppMainWriter::UIAppMainWriter(Widget* w) : UIElementsWriter(attach(w))
-    {
-    }
-    
-    UIAppMainWriter::UIAppMainWriter(WidgetInfo* wi) : UIElementsWriter(attach(wi))
-    {
-    }
-
-    UIAppMain* UIAppMainWriter::element()
-    {
-        return static_cast<UIAppMain*>(m_ui);
-    }
-    
-    UIAppMainWriter::UIAppMainWriter(UIAppMain* ui) : UIElementsWriter(ui)
-    {
-    }
 }

@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <ya/uis/UIElementsWriter.hpp>
 
 namespace yq::tachyon {
@@ -20,5 +22,10 @@ namespace yq::tachyon {
         ~UIWindowWriter();
         
         UIWindow*  element();
+
+        /////////////////////////////////////////////
+        // Element Creation Helpers
+        /////////////////////////////////////////////
+
     };
 }

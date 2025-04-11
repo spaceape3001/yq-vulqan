@@ -9,7 +9,7 @@
 #include <yt/ui/UIElement.hpp>
 #include <string_view>
 #include <string>
-#include <yq/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
     class UIButtonWriter;
@@ -19,7 +19,7 @@ namespace yq::tachyon {
     public:
         using Writer = UIButtonWriter;
 
-        UIButton(std::string_view, const Vector2F& size=ZERO);
+        UIButton(std::string_view, const Size2F& size=ZERO);
         UIButton(const UIButton&);
         virtual ~UIButton();
         void            render();
@@ -31,6 +31,6 @@ namespace yq::tachyon {
         UIButton*       clone() const;
     private:
         std::string     m_text;
-        Vector2F        m_size;
+        Size2F          m_size;
     };
 }

@@ -17,6 +17,7 @@
 #include <ya/uis/UIMenuBarWriter.hpp>
 #include <ya/uis/UIMenuItemWriter.hpp>
 #include <ya/uis/UIRightAlignWriter.hpp>
+#include <ya/uis/UISpacerWriter.hpp>
 #include <ya/uis/UITextLabelWriter.hpp>
 #include <ya/uis/UIToolBarWriter.hpp>
 #include <ya/uis/UIWindowWriter.hpp>

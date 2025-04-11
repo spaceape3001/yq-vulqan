@@ -14,7 +14,7 @@ namespace yq::tachyon {
     class UIButton_Post : public UIButton {
     public:
     
-        UIButton_Post(std::string_view text, const Vector2F& size) : UIButton(text, size)
+        UIButton_Post(std::string_view text, const Size2F& size) : UIButton(text, size)
         {
         }
         

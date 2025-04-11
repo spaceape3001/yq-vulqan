@@ -17,9 +17,11 @@ namespace yq::tachyon {
     {
         auto w = writer<UIButton>();
         w.description("UI Button");
+        w.property("size", &UIButton::m_size);
+        w.property("text", &UIButton::m_text);
     }
     
-    UIButton::UIButton(std::string_view text, const Vector2F& size) : m_text(text), m_size(size)
+    UIButton::UIButton(std::string_view text, const Size2F& size) : m_text(text), m_size(size)
     {
     }
     

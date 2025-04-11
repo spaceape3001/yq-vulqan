@@ -21,7 +21,7 @@ namespace yq::tachyon {
             assert(m_function);
         }
         
-        UIButton_WidgetCallback(std::string_view text, const Vector2F& size, FN fn) : UIButton(text, size), m_function(fn)
+        UIButton_WidgetCallback(std::string_view text, const Size2F& size, FN fn) : UIButton(text, size), m_function(fn)
         {
             assert(m_function);
         }

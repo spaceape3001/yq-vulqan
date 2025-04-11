@@ -9,7 +9,6 @@
 #include <yt/ui/Widget.hpp>
 #include <yt/ui/WidgetData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
-#include <yt/ui/UIWriter.hpp>
 #include <ya/uis/UIAppMainWriter.hpp>
 #include <yt/typedef/uielement.hpp>
 
@@ -21,11 +20,11 @@ namespace yq::tachyon {
     /*! \brief Writer of widget information
     */
     template <typename C>
-    class WidgetInfo::Writer : public TachyonInfo::Writer<C>, public UIWriter {
+    class WidgetInfo::Writer : public TachyonInfo::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(WidgetInfo* widgetInfo) : TachyonInfo::Writer<C>(widgetInfo), UIWriter(*widgetInfo), m_meta(widgetInfo)
+        Writer(WidgetInfo* widgetInfo) : TachyonInfo::Writer<C>(widgetInfo), m_meta(widgetInfo)
         {
         }
         
@@ -33,8 +32,6 @@ namespace yq::tachyon {
         Writer(WidgetInfo& widgetInfo) : Writer(&widgetInfo)
         {
         }
-
-        using UIWriter::label;
 
         //! Annotates that this widget will render IMGUI content
         void    imgui()
@@ -68,6 +65,9 @@ namespace yq::tachyon {
             m_meta -> m_ui = ui;
             return typename U::Writer(ui);
         }
+        
+        //! Loads the specified UI file, instantiates it (TODO)
+        void    imgui(ui_k, std::string_view);
 
         //! Annotates that this widget will render Vulkan content
         void    vulkan()

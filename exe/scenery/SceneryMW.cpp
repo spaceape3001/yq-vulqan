@@ -10,6 +10,7 @@
 #include <ya/widgets/AppWidgetInfoWriter.hpp>
 #include <iostream>
 #include <yt/ui/MyImGui.hpp>
+#include <yt/ui/UIWriters.hxx>
 #include <ImGuiFileDialog.h>
 
 YQ_TACHYON_IMPLEMENT(SceneryMW)
@@ -81,11 +82,11 @@ void SceneryMW::menubar(ViContext&u)
 
 void SceneryMW::init_info()
 {
-    auto w = writer<SceneryMW>();
+    auto w          = writer<SceneryMW>();
     w.description("The main widget");
-    w.imgui();
+    auto app        = w.imgui(UI, APP);
     
-    auto mmb        = w.menubar(MAIN);
+    auto mmb        = app.menubar(MAIN);
     
     auto file       = mmb.menu("File");
     auto edit       = mmb.menu("Edit");

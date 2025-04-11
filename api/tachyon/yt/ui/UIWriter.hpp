@@ -18,7 +18,7 @@
 namespace yq::tachyon {
     class WidgetInfo;
     class Widget;
-    class UIElement;
+    class UI;
     class UIElements;
     
     class UIWriter {
@@ -28,7 +28,7 @@ namespace yq::tachyon {
         UIWriter(Widget&);
         UIWriter(WidgetInfo&);
         UIWriter(UIElements&);
-        UIWriter(UIElement&);
+        UIWriter(UI&);
         ~UIWriter();
         
         UIWriter(const UIWriter&);
@@ -49,16 +49,16 @@ namespace yq::tachyon {
         bool        addable() const;
 
         //! Current element being added onto (note may be NULL)
-        UIElement*  element();
+        UI*  element();
 
-        operator UIElement*();
+        operator UI*();
 
         /*! Appends to the container
         
             \note This operator takes OWNERSHIP for the pointer
             and may delete it!  (Immediately if addable() is false.)
         */
-        UIWriter    operator<<(UIElement*);
+        UIWriter    operator<<(UI*);
 
 
         ////////////////////////////////
@@ -140,16 +140,16 @@ namespace yq::tachyon {
         */
         UIWriter    right(align_k);
         
-        UIWriter    toolbar(UICardinal, std::string_view kName, UIFlags flags={});
-        UIWriter    toolbar(const Vector2F&, std::string_view kName, UIFlags flags={});
+        UIWriter    toolbar(UICardinal, std::string_view kName);
+        UIWriter    toolbar(const Vector2F&, std::string_view kName);
         
-        UIWriter    window(std::string_view kName={}, UIFlags flags={});
+        UIWriter    window(std::string_view kName={});
         
         
     protected:
-        bool        add(UIElement*);
+        bool        add(UI*);
 
     private:
-        std::variant<std::monostate, UIElements*, UIElement*, Widget*, WidgetInfo*>     m_owner;
+        std::variant<std::monostate, UIElements*, UI*, Widget*, WidgetInfo*>     m_owner;
     };
 }

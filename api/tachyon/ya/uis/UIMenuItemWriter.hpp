@@ -21,5 +21,10 @@ namespace yq::tachyon {
         ~UIMenuItemWriter();
         
         UIMenuItem*  element();
+
+        /////////////////////////////////////////////
+        // Element Creation Helpers
+        /////////////////////////////////////////////
+
     };
 }

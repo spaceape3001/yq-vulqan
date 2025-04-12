@@ -4,6 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <cstdint>
+
+static_assert(sizeof(void*) == sizeof(uint64_t), "Breakage means ImGui textures will break (and we want text, right?)");
+
 #include <yt/ui/MyImGui.hpp>
 #include "imgui_internal.h"
 #include <yq/core/Any.hpp>

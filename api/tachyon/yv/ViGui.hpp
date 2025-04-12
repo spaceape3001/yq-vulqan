@@ -88,6 +88,8 @@ namespace yq::tachyon {
         
         void    tick(const ViewerState&);
         
+        ImTextureID texture(const TextureCPtr&);
+        
         
     private:
     
@@ -102,10 +104,12 @@ namespace yq::tachyon {
         struct G;
         static G&           global();
     
-        ViVisualizer*           m_viz       = nullptr;
-        ImGuiContext*           m_context   = nullptr;
+        ViVisualizer*           m_viz               = nullptr;
+        ImGuiContext*           m_context           = nullptr;
         ViPipelineCPtr          m_pipeline;
         ViPipelineLayoutCPtr    m_pipelineLayout;
+        VkDescriptorPool        m_descriptorPool    = nullptr;
+        VkDescriptorSetLayout   m_descriptorLayout  = nullptr;
         //! Forced updates
         UpdateFlags             m_update    = {};
         ModifierKeys            m_modifiers;
@@ -116,10 +120,17 @@ namespace yq::tachyon {
         
         struct T {
             VkDescriptorSet     descriptor  = nullptr;
-            VkDescriptorPool    descPool    = nullptr;
             RasterCPtr          image;
             TextureCPtr         texture;
-        }  m_font;
+        };
+        
+        T                       m_font;
+        
+        bool    _init(T&);
+        bool    _init(T&,const TextureCPtr&);
+        bool    _update(T&);
+        bool    _update(T&, const TextureCPtr&);
+        void    _kill(T&);
         
         struct Z {
             size_t          count   = 0;
@@ -137,6 +148,9 @@ namespace yq::tachyon {
             ViBufferPtr             buffer;
             std::vector<ImDrawIdx>  data;
         }                   m_index;
+        
+        //! Other textures....
+        std::map<uint64_t, T>       m_textures;
         
         bool            _font_update();
         const ImFont*   _font_load(const std::filesystem::path&, float pixel_size=0);

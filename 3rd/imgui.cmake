@@ -33,6 +33,7 @@ target_compile_definitions(ImGui
         GLFW_INCLUDE_VULKAN=1
         IMGUI_USE_WCHAR32=1 
         IMGUI_ENABLE_FREETYPE=1
+        ImTextureID=void*
     PRIVATE 
         VK_ENABLE_BETA_EXTENSIONS=1
         DONT_DEFINE_AGAIN__STB_IMAGE_IMPLEMENTATION=1

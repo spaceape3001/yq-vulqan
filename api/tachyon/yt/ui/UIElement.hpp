@@ -12,6 +12,7 @@
 #include <yt/keywords.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
+#include <yt/typedef/texture.hpp>
 #include <yt/typedef/uielement.hpp>
 
 namespace yq::tachyon {
@@ -100,6 +101,13 @@ namespace yq::tachyon {
         friend class UIWriter;
         friend class UIElements;
 
+        enum class S : uint8_t {
+            LoadFailed,
+            TextureIdFailed,
+            MenuBar,
+            ToolBar
+        };
+
         /*! \brief Clones the element
         
             For all elements that are specified during the widget info *MUST* implement 
@@ -113,25 +121,31 @@ namespace yq::tachyon {
             This is the first hook for rendering/drawing the ImGui content; this is what 
             is normally overriden.
         */
-        virtual void    render() = 0;
+        virtual void            render() {}
 
         //! Called if there's an if-show/perform test inside render, or similar encapsulation
-        virtual void    content() {}
+        virtual void            content() {}
         
         //! Called when we've been triggered by a user event (ie, mouse clicked)
         //! \note Your state (if it's not-singular) should be at least protected-accessible
-        virtual void    triggered() {}
+        virtual void            triggered() {}
 
-        virtual void    update(flags_k){}
+        virtual void            update(flags_k){}
         
         //! Valid during clone & draw/render/content/triggered (check for NULL)
-        static Widget*  widget();
+        static Widget*          widget();
         
-        static const UIStyle& style();
+        //! Installs the specified texture, returns its ImGui texture ID
+        static ImTextureID      install(const TextureCPtr&);
         
-        UIFlags         m_flags;
+        static const UIStyle&   style();
         
-        UIElement*      m_parent = nullptr;
+        UIFlags                 m_flags;
+        
+        UIElement*              m_parent = nullptr;
+        
+        //! Our status (note this is NEVER copied on copy construction)
+        Flags<S>                m_status = {};
         
     private:
         static thread_local Widget*     s_widget;

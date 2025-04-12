@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
     struct UIDim {
@@ -34,5 +35,9 @@ namespace yq::tachyon {
             //! Extra spacing between stacked toolbars (ie... 0...1...2)
             UIDim   padding     = { 0., -1., -1. };
         } toolbar;
+        
+        struct {
+            Size2F  min_size    = { 10, 10 };
+        } image;
     };
 }

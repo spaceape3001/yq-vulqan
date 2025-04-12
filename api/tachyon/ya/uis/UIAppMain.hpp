@@ -31,12 +31,6 @@ namespace yq::tachyon {
         UIAppMain* clone() const;
         
     private:
-        enum class S : uint8_t {
-            MenuBar,
-            ToolBar
-        };
-        
         std::vector<UIToolBar*> m_toolbars;
-        Flags<S>                m_status = {};
     };
 }

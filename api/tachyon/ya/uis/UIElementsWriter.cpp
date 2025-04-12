@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElementsWriter.hpp"
+#include <ya/uis/UIAssetImage.hpp>
+#include <ya/uis/UIAssetImageWriter.hpp>
 #include <ya/uis/UIButton.hpp>
 #include <ya/uis/UIButtonWriter.hpp>
 #include <ya/uis/UICenterAlign.hpp>
@@ -114,6 +116,16 @@ namespace yq::tachyon {
     {
         return make<UIHBox>();
     }
+
+    UIAssetImageWriter      UIElementsWriter::image(std::string_view path)
+    {
+        return make<UIAssetImage>(path);
+    }
+    
+    UIAssetImageWriter      UIElementsWriter::image(std::string_view path, const Size2F&sz)
+    {
+        return make<UIAssetImage>(path, sz);
+    }
     
     UITextLabelWriter       UIElementsWriter::label(std::string_view text)
     {
@@ -128,5 +140,10 @@ namespace yq::tachyon {
     UIRightAlignWriter      UIElementsWriter::right(align_k)
     {
         return make<UIRightAlign>();
+    }
+
+    UISpacerWriter          UIElementsWriter::spacer(const Size2F& sz)
+    {
+        return make<UISpacer>(sz);
     }
 }

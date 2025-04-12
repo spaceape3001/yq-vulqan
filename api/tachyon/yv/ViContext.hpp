@@ -27,6 +27,7 @@ namespace yq::tachyon {
     class ViFrame;
     class ViThread;
     class ViFrameThread;
+    class ViGui;
 
     /*! \brief Mutable set of parameters that'll pass through
     
@@ -58,8 +59,8 @@ namespace yq::tachyon {
         //! Current frame thread
         ViFrameThread*      frame_thread        = nullptr;
         
-        //! TRUE if we're in imgui mode
-        bool                imgui               = false;
+        //! SET if we're in imgui mode
+        ViGui*              imgui               = nullptr;
 
         //! Current pipeline 
         VkPipeline          pipeline            = nullptr;  // last pipeline set

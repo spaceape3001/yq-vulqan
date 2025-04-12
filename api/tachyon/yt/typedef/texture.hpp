@@ -19,5 +19,5 @@ namespace yq::tachyon {
 
     template <class> class ID;
     
-    using TextureID = ID<Texture>;
+    using TextureID     = ID<Texture>;
 }

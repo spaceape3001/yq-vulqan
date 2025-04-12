@@ -158,89 +158,6 @@ namespace yq::tachyon {
         _kill();
     }
 
-    bool    ViGui::_init(const Options& options)
-    {
-        G&  g   = global();
-
-        m_context   = ImGui::CreateContext();
-        ImGui::SetCurrentContext(m_context);
-        
-        ImGuiIO& io = ImGui::GetIO();
-        io.IniFilename              = nullptr;  // Disable INI settings (to file)
-        
-        io.BackendRendererName      = "yq::tachyon::ViGui";
-        io.BackendRendererUserData  = this;
-        io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;  // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
-        
-        io.BackendPlatformUserData  = this;
-        io.BackendPlatformName      = "yq::tachyon::ViGui";
-
-        m_pipeline                  = m_viz -> pipeline_create(g.pipeline);
-        if(!m_pipeline){
-            imguiWarning << "Unable to create pipeline!";
-            return false;
-        }
-        
-        m_pipelineLayout            = m_pipeline -> layout();
-        
-        //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);
-        
-        VkDescriptorSetLayout   descLay = m_pipelineLayout -> descriptor_set_layout();
-        m_font.descPool         = m_viz->descriptor_pool();
-
-        VqDescriptorSetAllocateInfo allocInfo;
-        allocInfo.descriptorPool        = m_font.descPool;
-        allocInfo.descriptorSetCount    = 1;
-        allocInfo.pSetLayouts           = &descLay;
-        
-        VkResult    res = vkAllocateDescriptorSets(m_viz->device(), &allocInfo, &m_font.descriptor);
-        if(res != VK_SUCCESS){
-            imguiWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
-            return false;
-        }
-        
-        io.Fonts->AddFontDefault();
-        
-        io.Fonts->Build();
-        if(!io.Fonts->IsBuilt()){
-            imguiWarning << "Fonts are NOT built, there's going to be problems.";
-        }
-
-        _font_update();
-        return true;
-    }
-    
-    void    ViGui::_kill()
-    {
-        if(m_font.descriptor){
-            vkFreeDescriptorSets(m_viz->device(), m_font.descPool, 1, &m_font.descriptor);
-        }
-        
-        m_font.descriptor       = nullptr;
-        m_font.descPool         = nullptr;
-        m_font.texture          = {};
-        m_font.image            = {};
-        
-        m_pipeline              = {};
-        m_pipelineLayout        = {};
-        m_viz                   = nullptr;
-
-        if(m_context){
-            ImGui::SetCurrentContext(m_context);
-            //ImGui_ImplGlfw_Shutdown();
-            ImGuiIO& io = ImGui::GetIO();
-            io.BackendRendererName      = nullptr;
-            io.BackendRendererUserData  = nullptr;
-            io.BackendPlatformName      = nullptr;
-            io.BackendPlatformUserData  = nullptr;
-
-            io.BackendFlags            &= ~(ImGuiBackendFlags_RendererHasVtxOffset);
-
-            ImGui::DestroyContext(m_context);
-            m_context           = nullptr;
-        }
-    }
-
     const ImFont*   ViGui::_font_load(const std::filesystem::path& fp, float pixel_size)
     {
         if(fp.empty())
@@ -279,10 +196,6 @@ namespace yq::tachyon {
         
         ViTextureCPtr       tex     = m_viz -> texture_create(*m_font.texture);
         
-        //m_font.sampler      = m_viz->sampler_create(*g.font.sampler);
-        //TextureCPtr tex = Texture::load("sdk/hello/flowers-512.png", g.font.sampler, g.font.texInfo);
-        //m_font.texture  = m_viz->texture_create(*tex);
-        
         VkDescriptorImageInfo   descImgInfo {
             .sampler        = tex->sampler(),
             .imageView      = tex->image_view(),
@@ -298,7 +211,7 @@ namespace yq::tachyon {
         
         vkUpdateDescriptorSets(m_viz->device(), 1, &descWrite, 0, nullptr);
         
-        fonts.SetTexID((uint64_t) m_font.descriptor);
+        fonts.SetTexID(m_font.descriptor);
         
         return true;
     }
@@ -436,6 +349,138 @@ namespace yq::tachyon {
         return true;
     }
 
+    bool    ViGui::_init(const Options& options)
+    {
+        G&  g   = global();
+
+        m_context   = ImGui::CreateContext();
+        ImGui::SetCurrentContext(m_context);
+        
+        ImGuiIO& io = ImGui::GetIO();
+        io.IniFilename              = nullptr;  // Disable INI settings (to file)
+        
+        io.BackendRendererName      = "yq::tachyon::ViGui";
+        io.BackendRendererUserData  = this;
+        io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;  // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
+        
+        io.BackendPlatformUserData  = this;
+        io.BackendPlatformName      = "yq::tachyon::ViGui";
+
+        m_pipeline                  = m_viz -> pipeline_create(g.pipeline);
+        if(!m_pipeline){
+            imguiWarning << "Unable to create pipeline!";
+            return false;
+        }
+        
+        m_pipelineLayout            = m_pipeline -> layout();
+        m_descriptorPool            = m_viz->descriptor_pool();;
+        
+        //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);
+        
+        m_descriptorLayout          = m_pipelineLayout -> descriptor_set_layout();
+        if(!_init(m_font))
+            return false;
+
+        io.Fonts->AddFontDefault();
+        
+        io.Fonts->Build();
+        if(!io.Fonts->IsBuilt()){
+            imguiWarning << "Fonts are NOT built, there's going to be problems.";
+        }
+
+        _font_update();
+        return true;
+    }
+
+    bool    ViGui::_init(T& t)
+    {
+        VqDescriptorSetAllocateInfo allocInfo;
+        allocInfo.descriptorPool        = m_descriptorPool;
+        allocInfo.descriptorSetCount    = 1;
+        allocInfo.pSetLayouts           = &m_descriptorLayout;
+        
+        VkResult    res = vkAllocateDescriptorSets(m_viz->device(), &allocInfo, &t.descriptor);
+        if(res != VK_SUCCESS){
+            imguiWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
+            return false;
+        }
+        return true;
+    }
+
+    bool    ViGui::_init(T& t, const TextureCPtr& tex)
+    {
+        if(!_init(t))
+            return false;
+        t.texture       = tex;
+        return _update(t);
+    }
+    
+    void    ViGui::_kill()
+    {
+        for(auto& itr : m_textures)
+            _kill(itr.second);
+        m_textures.clear();
+        _kill(m_font);
+        
+        m_pipeline              = {};
+        m_pipelineLayout        = {};
+        m_viz                   = nullptr;
+
+        if(m_context){
+            ImGui::SetCurrentContext(m_context);
+            //ImGui_ImplGlfw_Shutdown();
+            ImGuiIO& io = ImGui::GetIO();
+            io.BackendRendererName      = nullptr;
+            io.BackendRendererUserData  = nullptr;
+            io.BackendPlatformName      = nullptr;
+            io.BackendPlatformUserData  = nullptr;
+
+            io.BackendFlags            &= ~(ImGuiBackendFlags_RendererHasVtxOffset);
+
+            ImGui::DestroyContext(m_context);
+            m_context           = nullptr;
+        }
+    }
+    
+    void    ViGui::_kill(T& t)
+    {
+        if(t.descriptor){
+            vkFreeDescriptorSets(m_viz->device(), m_descriptorPool, 1, &t.descriptor);
+            t.descriptor        = nullptr;
+        }
+        t = {};
+    }
+
+    bool    ViGui::_update(T&t)
+    {
+        ViTextureCPtr  vtex = m_viz -> texture_create(*t.texture);
+        if(!vtex)
+            return false;
+        
+        VkDescriptorImageInfo   descImgInfo {
+            .sampler        = vtex->sampler(),
+            .imageView      = vtex->image_view(),
+            .imageLayout    = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        };
+
+        VqWriteDescriptorSet    descWrite;
+        descWrite.dstSet            = t.descriptor;
+        descWrite.dstBinding        = 0;
+        descWrite.descriptorCount   = 1;
+        descWrite.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+        descWrite.pImageInfo        = &descImgInfo;
+        
+        vkUpdateDescriptorSets(m_viz->device(), 1, &descWrite, 0, nullptr);
+        return true;
+    }
+
+    bool    ViGui::_update(T&t, const TextureCPtr& tex)
+    {
+        if(t.texture)
+            m_viz -> texture_erase(t.texture->id());
+        return _update(t);
+    }
+
     void    ViGui::_write_csv(const ImDrawData&dd, std::string_view pfx)
     {
         std::string     vfile = std::string(pfx) + "vertex.csv";
@@ -479,7 +524,7 @@ namespace yq::tachyon {
         if(!w)
             return ;
             
-        auto r = auto_reset(u.imgui, true);
+        auto r = auto_reset(u.imgui, this);
         ImGui::SetCurrentContext(m_context);
         
         //  Do updates here...
@@ -618,6 +663,20 @@ namespace yq::tachyon {
     //  Restore the scissors to back to a full viewport
         VkRect2D scissor = { { 0, 0 }, { (uint32_t)fb_width, (uint32_t)fb_height } };
         vkCmdSetScissor(u.command_buffer, 0, 1, &scissor);
+    }
+
+    ImTextureID ViGui::texture(const TextureCPtr&tex)
+    {
+        if(!tex)
+            return nullptr;
+        auto itr = m_textures.find(tex->id());
+        if(itr != m_textures.end())
+            return itr->second.descriptor;
+        T   tmp;
+        if(!_init(tmp, tex))
+            return nullptr;
+        m_textures[tex->id()] = tmp;
+        return tmp.descriptor;
     }
 
     void    ViGui::update(UpdateFlags flags)

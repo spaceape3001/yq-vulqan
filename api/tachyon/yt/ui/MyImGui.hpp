@@ -19,6 +19,8 @@
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
 #include <yt/enum/UIFlags.hpp>
+#include <yt/typedef/texture.hpp>
+#include <yt/api/ID.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \

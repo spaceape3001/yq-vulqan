@@ -19,9 +19,11 @@ namespace yq::tachyon {
     class UIElements;
     class Widget;
     class WidgetInfo;
+    class UIAssetImageWriter;
     class UIButtonWriter;
     class UICenterAlignWriter;
     class UIHBoxWriter;
+    class UIImageWriter;
     class UITextLabelWriter;
     class UIMenuWriter;
     class UIMenuBarWriter;
@@ -72,6 +74,12 @@ namespace yq::tachyon {
         //! The contents within will all be placed same line
         UIHBoxWriter            hbox();
         
+        //! Will display the specified image/texture (using the asset-system)
+        UIAssetImageWriter      image(std::string_view);
+        
+        //! Will display the specified image/texture (using the asset-system) using this FIXED size
+        UIAssetImageWriter      image(std::string_view, const Size2F&);
+        
         UITextLabelWriter       label(std::string_view);
 
         UIMenuWriter            menu(std::string_view);
@@ -83,6 +91,8 @@ namespace yq::tachyon {
             an items collection that gets created.
         */
         UIRightAlignWriter      right(align_k);
+        
+        UISpacerWriter          spacer(const Size2F&);
         
     protected:
     

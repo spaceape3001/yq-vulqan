@@ -614,6 +614,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/proxies/PSize2.cpp
     ya/proxies/PSize3.cpp
     ya/proxies/PSize4.cpp
+    
+    ya/rasters/PatternRasters.cpp
+    ya/rasters/DebugRasters.cpp
 
     ya/rendereds/Billboard3.cpp
     ya/rendereds/ImageQuad3.cpp
@@ -692,11 +695,13 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/uis/UIAppMain.cpp
     ya/uis/UIAppMainWriter.cpp
+    ya/uis/UIAssetImage.cpp
     ya/uis/UIButton.cpp
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp
     ya/uis/UIElementsWriter.cpp
     ya/uis/UIHBox.cpp
+    ya/uis/UIImage.cpp
     ya/uis/UIMenu.cpp
     ya/uis/UIMenuWriter.cpp
     ya/uis/UIMenuBar.cpp

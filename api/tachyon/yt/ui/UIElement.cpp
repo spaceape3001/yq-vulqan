@@ -8,8 +8,11 @@
 #include "UIElementWriter.hpp"
 #include "UIElementInfoWriter.hpp"
 #include <cassert>
+#include <yt/gfx/Texture.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIStyle.hpp>
+#include <yv/ViGui.hpp>
+#include <yv/ViContext.hpp>
 #include <yq/shape/AxBox2.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElement)
@@ -51,6 +54,15 @@ namespace yq::tachyon {
     {
         auto w = writer<UIElement>();
         w.description("Basic UI Element");
+    }
+
+    ImTextureID    UIElement::install(const TextureCPtr& tex)
+    {
+        if(!s_context)
+            return nullptr;
+        if(!s_context->imgui)
+            return nullptr;
+        return s_context->imgui->texture(tex);
     }
 
     const UIStyle& UIElement::style()

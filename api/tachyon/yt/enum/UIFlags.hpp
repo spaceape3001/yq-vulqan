@@ -39,9 +39,11 @@ namespace yq::tachyon {
         DisplayEmptyRefVal,
         EnterReturnsTrue,
         EscapeClearsAll,
+        ForceImageSize,             //!< Force the image size to specified (no resizing to accommodate)
         FrameStyle,
         Horizontal,
         HorizontalScrollBar,
+        IgnoreSourceAspectRatio,    //!< Ignore the source image's aspect ratio
         Invisible,
         MenuBar,
         NavFlattened,

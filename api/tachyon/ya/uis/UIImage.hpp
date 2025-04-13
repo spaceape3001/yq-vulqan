@@ -12,6 +12,7 @@
 namespace yq::tachyon {
     class UIImageWriter;
 
+    //! Anything image related derives from this
     class UIImage : public UIElement {
         YQ_OBJECT_DECLARE(UIImage, UIElement)
     public:
@@ -29,5 +30,8 @@ namespace yq::tachyon {
     protected:
         
         //  helpers here....
+        
+        static TextureCPtr      texture(std::string_view);
+
     };
 }

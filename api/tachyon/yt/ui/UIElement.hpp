@@ -16,6 +16,7 @@
 #include <yt/typedef/uielement.hpp>
 
 namespace yq::tachyon {
+    class Action;
     struct ViContext;
     class Widget;
     class WidgetInfo;
@@ -96,10 +97,16 @@ namespace yq::tachyon {
         
         static void init_info();
 
+        //! Unique binding if not zero
+        uint64_t            binding() const { return m_bId; }
+        
+        //! User assigned ID (may or may not be unique)
+        const std::string&    uid() const { return m_uId; }
+
     protected:
         friend class Widget;
-        friend class UIWriter;
         friend class UIElements;
+        friend class UIElementWriter;
 
         enum class S : uint8_t {
             LoadFailed,
@@ -128,7 +135,8 @@ namespace yq::tachyon {
         
         //! Called when we've been triggered by a user event (ie, mouse clicked)
         //! \note Your state (if it's not-singular) should be at least protected-accessible
-        virtual void            triggered() {}
+        //! UIElement default will call every registered action
+        virtual void            triggered();
 
         virtual void            update(flags_k){}
         
@@ -147,10 +155,21 @@ namespace yq::tachyon {
         //! Our status (note this is NEVER copied on copy construction)
         Flags<S>                m_status = {};
         
+        //! Binding ID (dynamic & unique to binding)
+        uint64_t                m_bId   = 0;
+        
+        //! User specified ID
+        std::string             m_uId;
+        
+        //! Actions to take when triggered (if this is such an element)
+        std::vector<Action*>    m_actions;
+        
     private:
         static thread_local Widget*     s_widget;
         static thread_local ViContext*  s_context;
         static UIStyle                  s_style;
+        
+        
     };
     
 }

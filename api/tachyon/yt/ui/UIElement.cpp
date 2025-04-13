@@ -5,15 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElement.hpp"
-#include "UIElementWriter.hpp"
 #include "UIElementInfoWriter.hpp"
 #include <cassert>
+#include <yt/api/Action.hpp>
 #include <yt/gfx/Texture.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIStyle.hpp>
+#include <yt/ui/Widget.hpp>
 #include <yv/ViGui.hpp>
 #include <yv/ViContext.hpp>
 #include <yq/shape/AxBox2.hpp>
+#include <yq/core/Any.hpp>
+#include <yt/msg/Post.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElement)
 
@@ -82,12 +85,29 @@ namespace yq::tachyon {
     {
     }
     
-    UIElement::UIElement(const UIElement& cp) : m_flags(cp.m_flags)
+    UIElement::UIElement(const UIElement& cp) : m_flags(cp.m_flags), m_bId(cp.m_bId), m_uId(cp.m_uId)
     {
+        for(const Action*act : cp.m_actions){
+            if(!act)
+                continue;
+            Action* a   = act->copy();
+            if(a)
+                m_actions.push_back(a);
+        }
+
+        Widget* w = widget();
+        if(w)
+            w->_insert(this);
     }
     
     UIElement::~UIElement()
     {
+        for(const Action* act : m_actions)
+            delete act;
+        m_actions.clear();
+
+        Widget* w = widget();
+        w->_erase(this);
     }
     
     UIElement*     UIElement::copy() const
@@ -155,6 +175,20 @@ namespace yq::tachyon {
         return p;
     }
 
+    void    UIElement::triggered()
+    {
+        if(!m_actions.empty()){
+            Action::Payload   data;
+            data.uielem     = this;
+            data.source     = widget();
+            for(Action* a : m_actions){
+                if(!a)  [[unlikely]]
+                    continue;
+                a->action(data);
+            }
+        }
+    }
+
     AxBox2F UIElement::viewport() const
     {
         if(m_parent)
@@ -165,36 +199,5 @@ namespace yq::tachyon {
     AxBox2F UIElement::viewport(content_k) const
     {
         return viewport();
-    }
-
-    ////////////////////////////
-    UIElementWriter::UIElementWriter(UIElement* ui) : m_ui(ui) {}
-
-    UIElementWriter::UIElementWriter() = default;
-    UIElementWriter::UIElementWriter(const UIElementWriter&) = default;
-    UIElementWriter::~UIElementWriter() = default;
-
-    void  UIElementWriter::flag(set_k, UIFlag v)
-    {
-        if(m_ui)
-            m_ui->flag(SET, v);
-    }
-    
-    void  UIElementWriter::flag(set_k, UIFlags v)
-    {
-        if(m_ui)
-            m_ui->flag(SET, v);
-    }
-    
-    void  UIElementWriter::flag(clear_k, UIFlag v)
-    {
-        if(m_ui)
-            m_ui->flag(CLEAR, v);
-    }
-    
-    void  UIElementWriter::flag(clear_k, UIFlags v)
-    {
-        if(m_ui)
-            m_ui->flag(CLEAR, v);
     }
 }

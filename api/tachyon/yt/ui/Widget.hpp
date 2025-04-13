@@ -183,7 +183,8 @@ namespace yq::tachyon {
             Visible,
             AutoRender,
             HasSize,
-            HasPosition
+            HasPosition,
+            IsViewport  // treat position & size as viewport, set it
         };
         using FFlags = Flags<F>;
 
@@ -275,19 +276,27 @@ namespace yq::tachyon {
         
     private:
     
-        using UIMMap = std::multimap<uint64_t,UIElement*>;
+        using BIDMap = std::multimap<uint64_t,UIElement*>;
+        using UIDMap = std::multimap<std::string,UIElement*,IgCase>;
     
         struct R;
         CloseRequestCPtr                m_closeRequest;
         LayoutPtr                       m_layout;
         std::vector<R>                  m_rendereds;
         UIElement*                      m_ui            = nullptr;
-        UIMMap                          m_uimap;    //< for cross-linking
+        UIDMap                          m_uids;    //< for cross-linking
+        BIDMap                          m_bids;
         Tristate                        m_wireframe     = Tristate::INHERIT;
         Vector2D                        m_position      = { 0., 0. };
         Size2D                          m_size          = { -1, -1 };   // unknown sizing
         
         void    _kill();
+        void    _erase(UIElement*);
+        void    _insert(UIElement*);
+        bool    _has_uid(const UIElement*) const;
+        bool    _has_bid(const UIElement*) const;
+        void    _erase_bid(UIElement*);
+        void    _erase_uid(UIElement*);
 
 
         static void push_buffer_mvp(PushBuffer&, const PreContext&, const Rendered³Snap&);

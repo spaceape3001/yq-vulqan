@@ -134,6 +134,7 @@ add_library(${PROJECT_NAME} SHARED
     yt/ui/Panel.cpp
     #yt/ui/Tool.cpp
     yt/ui/UIElement.cpp
+    yt/ui/UIElementWriter.cpp
     yt/ui/UIUtils.cpp
     #yt/ui/UIWriter.cpp
     yt/ui/Undo.cpp
@@ -185,6 +186,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/accessors/StringValue.cpp
     
     ya/actions/NullAction.cpp
+    ya/actions/PostAction.cpp
 
     ya/aspects/AMaxSize1.cpp
     ya/aspects/AMaxSize2.cpp

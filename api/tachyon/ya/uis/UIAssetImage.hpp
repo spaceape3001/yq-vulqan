@@ -32,8 +32,6 @@ namespace yq::tachyon {
     
     private:
     
-        static TextureCPtr  load(std::string_view);
-    
         void    load();
     
         TextureCPtr     m_texture;

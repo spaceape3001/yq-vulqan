@@ -259,9 +259,82 @@ namespace yq::tachyon {
         _kill();
     }
 
+    void    Widget::_erase(UIElement* ui)
+    {
+        if(ui->binding())
+            _erase_bid(ui);
+        if(!ui->uid().empty())
+            _erase_uid(ui);
+    }
+
+    void    Widget::_erase_bid(UIElement* ui)
+    {
+        if(!ui->binding())
+            return ;
+        auto r = m_bids.equal_range(ui->binding());
+        for(auto itr=r.first; itr != r.second; ++itr){
+            if(itr->second == ui){
+                m_bids.erase(itr);
+                break;
+            }
+        }
+    }
+    
+    void    Widget::_erase_uid(UIElement* ui)
+    {
+        if(ui->uid().empty())
+            return ;
+        auto r = m_uids.equal_range(ui->uid());
+        for(auto itr=r.first; itr != r.second; ++itr){
+            if(itr->second == ui){
+                m_uids.erase(itr);
+                break;
+            }
+        }
+    }
+    
+    bool    Widget::_has_bid(const UIElement*ui) const
+    {
+        if(!ui)
+            return false;
+        if(!ui->binding())
+            return false;
+        auto r = m_bids.equal_range(ui->binding());
+        for(auto itr = r.first; itr != r.second; ++itr){
+            if(itr->second == ui)
+                return true;
+        }
+        return false;
+    }
+
+    bool    Widget::_has_uid(const UIElement*ui) const
+    {
+        if(!ui)
+            return false;
+        if(ui->uid().empty())
+            return false;
+        auto r = m_uids.equal_range(ui->uid());
+        for(auto itr = r.first; itr != r.second; ++itr){
+            if(itr->second == ui)
+                return true;
+        }
+        return false;
+    }
+    
+    void    Widget::_insert(UIElement* ui)
+    {
+        if(ui->binding() && !_has_bid(ui)){
+            m_bids.emplace( ui->binding(), ui );
+        }
+        if(!ui->uid().empty() && !_has_uid(ui)){
+            m_uids.emplace( ui->uid(), ui );
+        }
+    }
+
     void    Widget::_kill()
     {
-        m_uimap.clear();
+        m_uids.clear();
+        m_bids.clear();
         if(m_ui){
             delete m_ui;
             m_ui        = nullptr;

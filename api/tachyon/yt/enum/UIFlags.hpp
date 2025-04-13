@@ -45,6 +45,7 @@ namespace yq::tachyon {
         HorizontalScrollBar,
         IgnoreSourceAspectRatio,    //!< Ignore the source image's aspect ratio
         Invisible,
+        IsButton,                   //!< TRUE to set to a button
         MenuBar,
         NavFlattened,
         NoBackground,

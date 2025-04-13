@@ -22,8 +22,22 @@ namespace yq::tachyon {
     {
     }
     
+    Action::Action(const Action& cp)
+    {
+    }
+
     Action::~Action()
     {
+    }
+
+    Action* Action::copy() const
+    {
+        return clone();
+    }
+        
+    Action* Action::clone() const
+    {
+        return nullptr;
     }
 
     void Action::init_info()

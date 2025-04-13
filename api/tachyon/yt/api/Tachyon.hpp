@@ -326,6 +326,12 @@ namespace yq::tachyon {
         
         bool                running() const;
 
+        /*! \brief SENDS a post
+        
+            \note Preferred method to send post
+        */
+        void                send(const PostCPtr&, PostTarget dst=MG::General);
+
         //! Sets parent on next tick (with implied add/remove child) 
         void                set_parent(TachyonSpec);
         
@@ -526,11 +532,6 @@ namespace yq::tachyon {
         */
         virtual PostAdvice  advise(const Post&) const;
 
-        /*! \brief SENDS a post
-        
-            \note Preferred method to send post
-        */
-        void            send(const PostCPtr&, PostTarget dst=MG::General);
 
         /*! \brief DIRECTLY HANDLES the specified post
         

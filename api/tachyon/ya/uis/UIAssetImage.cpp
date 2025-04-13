@@ -24,18 +24,6 @@ namespace yq::tachyon {
         w.description("Image loaded from an asset");
     }
 
-    TextureCPtr  UIAssetImage::load(std::string_view pth)
-    {
-        TextureCPtr  tex = Texture::load(pth);
-        if(tex)
-            return tex;
-uiInfo << "Unable to load '" << pth << "' as a texture, trying raster";
-        RasterCPtr   ras = Raster::load(pth);
-        if(ras)
-            return new Texture(ras);
-uiInfo << "Unable to load '" << pth << "' as a raster image (sorry)";
-        return {};
-    }
 
     /////////////////////
 
@@ -87,7 +75,7 @@ uiInfo << "Unable to load '" << pth << "' as a raster image (sorry)";
 
     void UIAssetImage::load()
     {
-        m_texture = load(m_texturePath);
+        m_texture = texture(m_texturePath);
         if(!m_texture || (m_texture->images.size() != 1)){
             m_status       |= S::LoadFailed;
             m_texture       = new Texture(debug::raster_missing());

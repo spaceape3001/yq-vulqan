@@ -7,11 +7,12 @@
 #pragma once
 
 #include <yt/api/Delegate.hpp>
-#include <yt/typedef/command.hpp>
 #include <yt/typedef/post.hpp>
 
 namespace yq::tachyon {
     class Action;
+    class Tachyon;
+    class UIElement;
     
     class ActionInfo : public DelegateInfo {
     public:
@@ -33,18 +34,26 @@ namespace yq::tachyon {
         struct Payload;
     
         Action();
+        Action(const Action&);
         ~Action();
         
         static void init_info();
         
         //! Our action (TRUE if successful)
         virtual bool  action(Payload&) const = 0;
+        
+        //! Not everything can be copied/cloned
+        Action* copy() const;
+        
+    protected:
+        virtual Action* clone() const;
     };
     
     struct Action::Payload {
-        std::vector<PostCPtr>   outbound;   //!< Outbound posts that result from this action
-        std::vector<PostCPtr>   inbound;    //!< Inbound posts that triggered this action
-        std::vector<Any>        pargs;      //!< Positional arguments (0...1...2...etc)
-        string_any_map_t        nargs;      //!< Named arguments
+        std::vector<PostCPtr>   posts;                  //!< Posts that triggered this action
+        std::vector<Any>        pargs;                  //!< Positional arguments (0...1...2...etc)
+        string_any_map_t        nargs;                  //!< Named arguments
+        Tachyon*                source      = nullptr;  //!< Sender for post reasons (or callback)
+        UIElement*              uielem      = nullptr;  //!< UI element making the call (if any)
     };
 }

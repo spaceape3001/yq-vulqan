@@ -377,6 +377,14 @@ namespace yq::tachyon {
         mail(new ShowCommand({.target=*this}));
     }
 
+    UIElement*      Widget::element(first_k, uint64_t bid) const
+    {
+        auto r = m_bids.equal_range(bid);
+        if(r.first == r.second)
+            return nullptr;
+        return r.first->second;
+    }
+
     double  Widget::height() const
     {
         if(m_flags(F::HasSize))

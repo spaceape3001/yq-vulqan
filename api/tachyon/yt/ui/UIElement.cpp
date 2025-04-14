@@ -139,6 +139,19 @@ namespace yq::tachyon {
         w->_erase(this);
     }
     
+    uint64_t       UIElement::binding(create_k)
+    {
+        if(!m_bId){
+            static std::atomic<uint64_t> s_nextId{1};
+            m_bId   = s_nextId++;
+
+            Widget* w = widget();
+            if(w)
+                w->_insert(this);
+        }
+        return m_bId;
+    }
+
     UIElement*     UIElement::copy() const
     {
         UIElement* ret  = clone();

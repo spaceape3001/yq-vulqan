@@ -85,7 +85,7 @@ namespace yq::tachyon {
     };
     
     struct failure_k {};
-
+    struct first_k {};
     struct fixed_k {
         consteval operator DataActivity() const noexcept { return DataActivity::FIXED; }
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Fixed; }
@@ -308,6 +308,7 @@ namespace yq::tachyon {
     static constexpr const error_k              ERROR;
     static constexpr const every_k              EVERY;
     static constexpr const failure_k            FAILURE;
+    static constexpr const first_k              FIRST;
     static constexpr const fixed_k              FIXED;
     static constexpr const flags_k              FLAGS;
     static constexpr const for_k                FOR;

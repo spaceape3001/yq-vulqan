@@ -169,6 +169,8 @@ namespace yq::tachyon {
         virtual Widget* widget_at(const Vector2D&) const;
         
         double          width() const;
+        
+        UIElement*      element(first_k, uint64_t) const;
 
     protected:
         friend class Viewer;
@@ -273,6 +275,10 @@ namespace yq::tachyon {
         
         //! Used to push an item to the rendered vector *THIS PRERECORD* (it'll be cleared by the vulkan() call)
         void        prerecord(const PreContext&, RenderedID);
+        
+        //! Implementation in widget
+        //template <typename Pred>
+        //T           forall(ui_k, uint64_t, std::function<T(UIElement*)>);
         
     private:
     

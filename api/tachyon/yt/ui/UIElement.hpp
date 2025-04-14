@@ -100,6 +100,8 @@ namespace yq::tachyon {
         //! Unique binding if not zero
         uint64_t            binding() const { return m_bId; }
         
+        uint64_t            binding(create_k);
+        
         //! User assigned ID (may or may not be unique)
         const std::string&    uid() const { return m_uId; }
 

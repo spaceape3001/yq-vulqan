@@ -14,6 +14,8 @@
 namespace yq::tachyon {
     class UIButtonWriter;
     
+    /*! \brief Simple Text Button
+    */
     class UIButton : public UIElement {
         YQ_OBJECT_DECLARE(UIButton, UIElement)
     public:
@@ -23,7 +25,6 @@ namespace yq::tachyon {
         UIButton(const UIButton&);
         virtual ~UIButton();
         void            render();
-        virtual void    triggered();
         const char*     title() const;
         
         static void init_info();

@@ -27,7 +27,9 @@ namespace yq::tachyon {
         {
         }
         
-        ~StdCallbackAction();
+        ~StdCallbackAction()
+        {
+        }
     
         virtual bool  action(Payload& pp) const override
         {

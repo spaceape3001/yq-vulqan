@@ -9,6 +9,7 @@
 #include <cassert>
 #include <yt/api/Action.hpp>
 #include <yt/gfx/Texture.hpp>
+#include <yt/gfx/Raster.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIStyle.hpp>
 #include <yt/ui/Widget.hpp>
@@ -17,6 +18,9 @@
 #include <yq/shape/AxBox2.hpp>
 #include <yq/core/Any.hpp>
 #include <yt/msg/Post.hpp>
+#include <filesystem>
+#include <ya/rasters/DebugRasters.hpp>
+#include <yt/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElement)
 
@@ -53,6 +57,12 @@ namespace yq::tachyon {
     thread_local ViContext*  UIElement::s_context    = nullptr;
     UIStyle                  UIElement::s_style;
 
+    std::string      UIElement::alternative(std::string_view sv)
+    {
+        std::filesystem::path   path(sv);
+        return path.filename().stem().string();
+    }
+
     void UIElement::init_info()
     {
         auto w = writer<UIElement>();
@@ -68,9 +78,28 @@ namespace yq::tachyon {
         return s_context->imgui->texture(tex);
     }
 
+    TextureCPtr    UIElement::missing_texture()
+    {
+        static TextureCPtr  s_ret   = new Texture(debug::raster_missing());
+        return s_ret;
+    }
+
     const UIStyle& UIElement::style()
     {
         return s_style;
+    }
+
+    TextureCPtr      UIElement::texture(std::string_view path)
+    {
+        TextureCPtr  tex = Texture::load(path);
+        if(tex)
+            return tex;
+        uiInfo << "Unable to load '" << path << "' as a texture, trying raster";
+        RasterCPtr   ras = Raster::load(path);
+        if(ras)
+            return new Texture(ras);
+        uiInfo << "Unable to load '" << path << "' as a raster image (sorry)";
+        return {};
     }
 
     Widget*  UIElement::widget()

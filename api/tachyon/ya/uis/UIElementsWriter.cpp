@@ -5,8 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElementsWriter.hpp"
-#include <ya/uis/UIAssetImage.hpp>
-#include <ya/uis/UIAssetImageWriter.hpp>
 #include <ya/uis/UIButton.hpp>
 #include <ya/uis/UIButtonWriter.hpp>
 #include <ya/uis/UICenterAlign.hpp>
@@ -14,6 +12,8 @@
 #include <ya/uis/UIElements.hpp>
 #include <ya/uis/UIHBox.hpp>
 #include <ya/uis/UIHBoxWriter.hpp>
+#include <ya/uis/UIImage.hpp>
+#include <ya/uis/UIImageWriter.hpp>
 #include <ya/uis/UIMenu.hpp>
 #include <ya/uis/UIMenuWriter.hpp>
 #include <ya/uis/UIMenuBar.hpp>
@@ -117,14 +117,14 @@ namespace yq::tachyon {
         return make<UIHBox>();
     }
 
-    UIAssetImageWriter      UIElementsWriter::image(std::string_view path)
+    UIImageWriter           UIElementsWriter::image(std::string_view path)
     {
-        return make<UIAssetImage>(path);
+        return make<UIImage>(path);
     }
     
-    UIAssetImageWriter      UIElementsWriter::image(std::string_view path, const Size2F&sz)
+    UIImageWriter           UIElementsWriter::image(std::string_view path, const Size2F&sz)
     {
-        return make<UIAssetImage>(path, sz);
+        return make<UIImage>(path, sz);
     }
     
     UITextLabelWriter       UIElementsWriter::label(std::string_view text)

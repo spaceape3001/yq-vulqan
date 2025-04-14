@@ -40,7 +40,7 @@ namespace yq::tachyon {
     {
         const char* shortcut    = m_shortcut.empty() ? nullptr : m_shortcut.c_str();
         if(ImGui::MenuItem(m_name.c_str(), shortcut)){
-            content();
+            triggered();
         }
     }
 

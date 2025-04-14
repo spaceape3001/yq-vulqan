@@ -146,6 +146,14 @@ namespace yq::tachyon {
         //! Installs the specified texture, returns its ImGui texture ID
         static ImTextureID      install(const TextureCPtr&);
         
+        //! Used to load a texture
+        static TextureCPtr      texture(std::string_view);
+        
+        //! Creates an alternative from the given name (using filesystem path to parse)
+        static std::string      alternative(std::string_view);
+
+        static TextureCPtr      missing_texture();
+
         static const UIStyle&   style();
         
         UIFlags                 m_flags;

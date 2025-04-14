@@ -38,6 +38,9 @@ namespace yq::tachyon {
         UIElementWriter flag(set_k, UIFlags);
         UIElementWriter flag(clear_k, UIFlag);
         UIElementWriter flag(clear_k, UIFlags);
+        
+        //! Sets the UID (user defined ID)
+        UIElementWriter uid(std::string_view);
 
     protected:
         UIElement*      m_ui    = nullptr;

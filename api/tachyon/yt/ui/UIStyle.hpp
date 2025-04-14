@@ -39,7 +39,7 @@ namespace yq::tachyon {
         } toolbar;
         
         struct {
-            Size2F  min_size    = { 10, 10 };
+            Size2F  def_size    = { 24, 24 };
         } image;
     };
 }

@@ -8,7 +8,4 @@
 
 #include <yt/ui/UIWriters.hpp>
 #include <yt/ui/UIElementWriter.hxx>
-#include <ya/uis/UIElementsWriter.hxx>
-#include <ya/uis/UIMenuWriter.hxx>
-#include <ya/uis/UIMenuBarWriter.hxx>
 

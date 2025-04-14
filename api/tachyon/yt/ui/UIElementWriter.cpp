@@ -54,4 +54,11 @@ namespace yq::tachyon {
             m_ui->flag(CLEAR, v);
         return *this;
     }
+
+    UIElementWriter UIElementWriter::uid(std::string_view k)
+    {
+        if(m_ui)
+            m_ui -> m_uId   = std::string(k);
+        return *this;
+    }
 }

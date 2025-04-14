@@ -29,7 +29,6 @@ namespace yq::tachyon {
     protected:
         virtual UIMenuItem*       clone() const override;
         virtual void  render() override;
-        virtual void  triggered() { content(); }
 
     private:
         std::string     m_name;

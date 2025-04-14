@@ -185,6 +185,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/accessors/StringFunction.cpp
     ya/accessors/StringValue.cpp
     
+    ya/actions/CallbackAction.cpp
     ya/actions/NullAction.cpp
     ya/actions/PostAction.cpp
 
@@ -697,7 +698,7 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/uis/UIAppMain.cpp
     ya/uis/UIAppMainWriter.cpp
-    ya/uis/UIAssetImage.cpp
+    #ya/uis/UIAssetImage.cpp
     ya/uis/UIButton.cpp
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp

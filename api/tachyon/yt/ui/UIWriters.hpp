@@ -9,7 +9,6 @@
 #include <yt/ui/UIElementWriter.hpp>
 
 #include <ya/uis/UIAppMainWriter.hpp>
-#include <ya/uis/UIAssetImageWriter.hpp>
 #include <ya/uis/UIButtonWriter.hpp>
 #include <ya/uis/UICenterAlignWriter.hpp>
 #include <ya/uis/UIElementsWriter.hpp>

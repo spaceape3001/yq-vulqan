@@ -56,18 +56,6 @@ namespace yq::tachyon {
         UIButtonWriter          button(std::string_view);
         UIButtonWriter          button(std::string_view, const Size2F& size);
 
-        template <SomePost P>
-        UIButtonWriter          button(std::string_view, post_k<P>);
-
-        template <SomePost P>
-        UIButtonWriter          button(std::string_view, const Size2F& size, post_k<P>);
-
-        template <SomeWidget W>
-        UIButtonWriter          button(std::string_view, void (W::*)());
-
-        template <SomeWidget W>
-        UIButtonWriter          button(std::string_view, const Size2F& size, void (W::*)());
-
         //! The contents will be centered (as best as it can do)
         UICenterAlignWriter     center(align_k);
         
@@ -75,10 +63,10 @@ namespace yq::tachyon {
         UIHBoxWriter            hbox();
         
         //! Will display the specified image/texture (using the asset-system)
-        UIAssetImageWriter      image(std::string_view);
+        UIImageWriter           image(std::string_view);
         
         //! Will display the specified image/texture (using the asset-system) using this FIXED size
-        UIAssetImageWriter      image(std::string_view, const Size2F&);
+        UIImageWriter           image(std::string_view, const Size2F&);
         
         UITextLabelWriter       label(std::string_view);
 

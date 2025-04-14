@@ -40,11 +40,6 @@ namespace yq::tachyon {
         }
     }
     
-    void            UIButton::triggered()
-    {
-        content();
-    }
-    
     UIButton*       UIButton::clone() const
     {
         return new UIButton(*this);

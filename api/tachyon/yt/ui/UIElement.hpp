@@ -90,10 +90,10 @@ namespace yq::tachyon {
         const UIElement* root() const;
 
         //! Viewport in window/viewer coordinates
-        virtual AxBox2F viewport() const;
+        virtual AxBox2F     viewport() const;
 
-        //! Viewport for content
-        virtual AxBox2F viewport(content_k) const;
+        //! Viewport for content in screen coordinates
+        virtual AxBox2F     viewport(content_k) const;
         
         static void init_info();
 

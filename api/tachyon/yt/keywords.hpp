@@ -74,6 +74,8 @@ namespace yq::tachyon {
         consteval operator DataActivity() const noexcept { return DataActivity::DYNAMIC; }
     };
     
+    struct east_k {};
+    
     struct emit_k {};
     struct enable_k {};
     struct enabled_k {};
@@ -157,6 +159,8 @@ namespace yq::tachyon {
         consteval operator Platform() const noexcept { return Platform::None; }
     };
     
+    struct north_k {};
+    
     struct object_k {};
     //struct once_k : public ::yq::once_k {};
     struct open_k {};
@@ -208,6 +212,8 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::Sim; }
     };
     
+    struct south_k {};
+    
     struct spatial_k {};
     struct spatial³_k {};
     struct start_k {};
@@ -246,6 +252,8 @@ namespace yq::tachyon {
 
     struct vulqan_k {};
     struct wait_k {};
+    
+    struct west_k {};
     struct widget_k {};
     struct window_k {};
     struct write_k {};
@@ -302,6 +310,7 @@ namespace yq::tachyon {
     static constexpr const dock_k               DOCK;
     static constexpr const domain_k             DOMAIN;
     static constexpr const dynamic_k            DYNAMIC;
+    static constexpr const east_k               EAST;
     static constexpr const emit_k               EMIT;
     static constexpr const enable_k             ENABLE;
     static constexpr const enabled_k            ENABLED;
@@ -388,6 +397,7 @@ namespace yq::tachyon {
     static constexpr const shared_k             SHARED;
     static constexpr const shutdown_k           SHUTDOWN;
     static constexpr const sim_k                SIM;
+    static constexpr const south_k              SOUTH;
     static constexpr const spatial_k            SPATIAL;
     static constexpr const spatial³_k           SPATIAL³;
     static constexpr const start_k              START;

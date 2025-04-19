@@ -698,8 +698,8 @@ add_library(${PROJECT_NAME} SHARED
     
     ya/uis/UIAppMain.cpp
     ya/uis/UIAppMainWriter.cpp
-    #ya/uis/UIAssetImage.cpp
     ya/uis/UIButton.cpp
+    ya/uis/UICallback.cpp
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp
     ya/uis/UIElementsWriter.cpp

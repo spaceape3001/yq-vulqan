@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## Upcoming
+
+* Global font scaling set to 1.25; which makes it readable but with artifacts on my monitor.  Will need to make this a setting and do it properly (with a font load)
+
 ## 2025.04.11
 
 * Basic ImGui UI framework

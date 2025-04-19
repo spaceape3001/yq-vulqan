@@ -56,6 +56,9 @@ namespace yq::tachyon {
         UIButtonWriter          button(std::string_view);
         UIButtonWriter          button(std::string_view, const Size2F& size);
 
+        template <SomeWidget W>
+        UIElementWriter         callback(void (W::*)());
+
         //! The contents will be centered (as best as it can do)
         UICenterAlignWriter     center(align_k);
         

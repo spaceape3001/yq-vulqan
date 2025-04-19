@@ -38,12 +38,12 @@ namespace yq::tachyon {
 
     protected:
         std::string         m_title;
-        Vector2F            m_pivot     = { 0., 0. };
-        Vector2F            m_position  = { 0., 0. };
-        Size2F              m_size      = { 0., 0. };
-        Vector2F            m_actualPos;    //!< Measured position
-        Vector2F            m_actualSize;   //!< Measured size
-        ImGuiWindowFlags    m_imFlags = ImGuiWindowFlags_None;
+        Vector2F            m_pivot         = { 0., 0. };
+        Vector2F            m_position      = { 0., 0. };
+        Size2F              m_size          = { 0., 0. };
+        Vector2F            m_actualPos     = ZERO;
+        Vector2F            m_actualSize    = ZERO;
+        ImGuiWindowFlags    m_imFlags       = ImGuiWindowFlags_None;
         
         UIWindow*           clone() const;
 

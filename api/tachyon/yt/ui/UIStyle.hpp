@@ -35,7 +35,7 @@ namespace yq::tachyon {
             //! Extra spacing between stacked toolbars (ie... 0...1...2)
             UIDim   padding     = { 0., -1., -1. };
             
-            Size2F  icons       = { 24., 24. };
+            UIDim   icons       = { 3., 10., 256. };
         } toolbar;
         
         struct {

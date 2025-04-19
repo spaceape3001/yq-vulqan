@@ -9,3 +9,4 @@
 #include <yt/ui/UIWriters.hpp>
 #include <yt/ui/UIElementWriter.hxx>
 
+#include <ya/uis/UIElementsWriter.hxx>

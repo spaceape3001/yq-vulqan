@@ -381,6 +381,8 @@ namespace yq::tachyon {
         if(!_init(m_font))
             return false;
 
+        // Current hack to upscale fonts (need to load it)
+        io.FontGlobalScale = 1.25f;
         io.Fonts->AddFontDefault();
         
         io.Fonts->Build();

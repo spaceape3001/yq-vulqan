@@ -13,6 +13,7 @@
 #include <ya/uis/UICenterAlignWriter.hpp>
 #include <ya/uis/UIElementsWriter.hpp>
 #include <ya/uis/UIHLineWriter.hpp>
+#include <ya/uis/UILayoutWriter.hpp>
 #include <ya/uis/UIImageWriter.hpp>
 #include <ya/uis/UIMenuWriter.hpp>
 #include <ya/uis/UIMenuBarWriter.hpp>

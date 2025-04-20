@@ -136,7 +136,8 @@ namespace yq::tachyon {
         m_actions.clear();
 
         Widget* w = widget();
-        w->_erase(this);
+        if(w)
+            w->_erase(this);
     }
     
     uint64_t       UIElement::binding(create_k)

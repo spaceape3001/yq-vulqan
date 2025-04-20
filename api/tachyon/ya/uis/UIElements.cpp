@@ -52,7 +52,12 @@ namespace yq::tachyon {
     {
         if(!p)
             return;
-        m_items.push_back(p);
+        if(is_accept(acceptable(p))){
+            m_items.push_back(p);
+            postadd(p);
+        } else {
+            delete p;
+        }
     }
 
     UIElements*     UIElements::clone() const 

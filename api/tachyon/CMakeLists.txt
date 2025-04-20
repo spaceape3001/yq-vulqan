@@ -703,8 +703,10 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp
     ya/uis/UIElementsWriter.cpp
+    ya/uis/UIHBox.cpp
     ya/uis/UIHLine.cpp
     ya/uis/UIImage.cpp
+    ya/uis/UILayout.cpp
     ya/uis/UIMenu.cpp
     ya/uis/UIMenuWriter.cpp
     ya/uis/UIMenuBar.cpp
@@ -717,6 +719,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIToolBarWriter.cpp
     ya/uis/UIWindow.cpp
     ya/uis/UIWindowWriter.cpp
+    ya/uis/UIVBox.cpp
     
     ya/utilities/LoggerBox.cpp
 

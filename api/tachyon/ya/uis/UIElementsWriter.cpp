@@ -76,8 +76,9 @@ namespace yq::tachyon {
 
     bool        UIElementsWriter::add(UIElement*elem)
     {
-        if(elem && m_ui){
-            static_cast<UIElements*>(m_ui) -> m_items.push_back(elem);
+        UIElements* ui  = element();
+        if(elem && ui && is_accept(ui->acceptable(elem))){
+            ui -> m_items.push_back(elem);
             return true;
         } else {
             if(elem)

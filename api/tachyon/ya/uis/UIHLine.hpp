@@ -10,20 +10,20 @@
 
 namespace yq::tachyon {
 
-    class UIHBoxWriter;
+    class UIHLineWriter;
 
     //! A line of non-wrapping UI elements
-    class UIHBox : public UIElements {
-        YQ_OBJECT_DECLARE(UIHBox, UIElements)
+    class UIHLine : public UIElements {
+        YQ_OBJECT_DECLARE(UIHLine, UIElements)
     public:
     
-        using Writer = UIHBoxWriter;
+        using Writer = UIHLineWriter;
         
-        UIHBox(UIFlags flags={});
-        UIHBox(const UIHBox&);
-        ~UIHBox();
+        UIHLine(UIFlags flags={});
+        UIHLine(const UIHLine&);
+        ~UIHLine();
         
-        UIHBox*     clone() const;
+        UIHLine*     clone() const;
         
         static void init_info();
     };

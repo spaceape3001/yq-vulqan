@@ -19,10 +19,10 @@ namespace yq::tachyon {
     {
         if(!w)
             return nullptr;
-        if(w->m_ui)
-            return dynamic_cast<UIAppMain*>(w->m_ui);
+        if(w->m_ui.root)
+            return dynamic_cast<UIAppMain*>(w->m_ui.root);
         UIAppMain*ret   = new UIAppMain;
-        w->m_ui = ret;
+        w->m_ui.root = ret;
         return ret;
     }
     

@@ -12,6 +12,7 @@
 #include <yt/api/StdThread.hpp>
 #include <yt/gfx/DataActivity.hpp>
 #include <yt/os/Platform.hpp>
+#include <yt/enum/UICardinal.hpp>
 #include <yt/ui/SizePolicy.hpp>
 #include <yq/unit/declare.hpp>
 
@@ -44,7 +45,9 @@ namespace yq::tachyon {
     struct calculate_k {};
     struct camera_k {};
     struct camera³_k {};
-    struct center_k {};
+    struct center_k {
+        consteval operator UICardinal() const noexcept { return UICardinal::Center; }
+    };
     struct changed_k {};
     struct child_k {};
     struct children_k {};
@@ -74,7 +77,9 @@ namespace yq::tachyon {
         consteval operator DataActivity() const noexcept { return DataActivity::DYNAMIC; }
     };
     
-    struct east_k {};
+    struct east_k {
+        consteval operator UICardinal() const noexcept { return UICardinal::East; }
+    };
     
     struct emit_k {};
     struct enable_k {};
@@ -127,6 +132,7 @@ namespace yq::tachyon {
     struct joystick_k {};
     struct keyboard_k {};
     struct l2d_k {};
+    struct layout_k {};
     struct left_k {};
     struct light_k {};
     struct light³_k {};
@@ -159,7 +165,9 @@ namespace yq::tachyon {
         consteval operator Platform() const noexcept { return Platform::None; }
     };
     
-    struct north_k {};
+    struct north_k {
+        consteval operator UICardinal() const noexcept { return UICardinal::North; }
+    };
     
     struct object_k {};
     //struct once_k : public ::yq::once_k {};
@@ -212,7 +220,9 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::Sim; }
     };
     
-    struct south_k {};
+    struct south_k {
+        consteval operator UICardinal() const noexcept { return UICardinal::South; }
+    };
     
     struct spatial_k {};
     struct spatial³_k {};
@@ -253,7 +263,9 @@ namespace yq::tachyon {
     struct vulqan_k {};
     struct wait_k {};
     
-    struct west_k {};
+    struct west_k {
+        consteval operator UICardinal() const noexcept { return UICardinal::West; }
+    };
     struct widget_k {};
     struct window_k {};
     struct write_k {};
@@ -339,6 +351,7 @@ namespace yq::tachyon {
     static constexpr const joystick_k           JOYSTICK;
     static constexpr const keyboard_k           KEYBOARD;
     static constexpr const l2d_k                L2D;
+    static constexpr const layout_k             LAYOUT;
     static constexpr const left_k               LEFT;
     static constexpr const light_k              LIGHT;
     static constexpr const light³_k             LIGHT³;
@@ -360,6 +373,7 @@ namespace yq::tachyon {
     static constexpr const nested_k             NESTED;
     static constexpr const network_k            NETWORK;
     static constexpr const none_k               NONE;
+    static constexpr const north_k              NORTH;
     static constexpr const number_k             NUMBER;
     static constexpr const object_k             OBJECT;
     //static constexpr const once_k               ONCE;
@@ -423,6 +437,7 @@ namespace yq::tachyon {
     static constexpr const viewer_k             VIEWER;
     static constexpr const vulqan_k             VULQAN;
     static constexpr const wait_k               WAIT;
+    static constexpr const west_k               WEST;
     static constexpr const widget_k             WIDGET;
     static constexpr const window_k             WINDOW;
     static constexpr const write_k              WRITE;

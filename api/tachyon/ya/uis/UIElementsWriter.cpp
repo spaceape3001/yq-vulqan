@@ -10,8 +10,8 @@
 #include <ya/uis/UICenterAlign.hpp>
 #include <ya/uis/UICenterAlignWriter.hpp>
 #include <ya/uis/UIElements.hpp>
-#include <ya/uis/UIHBox.hpp>
-#include <ya/uis/UIHBoxWriter.hpp>
+#include <ya/uis/UIHLine.hpp>
+#include <ya/uis/UIHLineWriter.hpp>
 #include <ya/uis/UIImage.hpp>
 #include <ya/uis/UIImageWriter.hpp>
 #include <ya/uis/UIMenu.hpp>
@@ -33,10 +33,10 @@ namespace yq::tachyon {
     {
         if(!w)
             return nullptr;
-        if(w->m_ui)
-            return dynamic_cast<UIElements*>(w->m_ui);
+        if(w->m_ui.root)
+            return dynamic_cast<UIElements*>(w->m_ui.root);
         UIElements*ret   = new UIElements;
-        w->m_ui = ret;
+        w->m_ui.root = ret;
         return ret;
     }
     
@@ -112,9 +112,9 @@ namespace yq::tachyon {
         return make<UICenterAlign>();
     }
     
-    UIHBoxWriter            UIElementsWriter::hbox()
+    UIHLineWriter            UIElementsWriter::hline()
     {
-        return make<UIHBox>();
+        return make<UIHLine>();
     }
 
     UIImageWriter           UIElementsWriter::image(std::string_view path)

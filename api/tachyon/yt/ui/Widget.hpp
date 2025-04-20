@@ -141,7 +141,7 @@ namespace yq::tachyon {
         //! Our root widget
         const Widget*   root(ptr_k) const;
         
-        void            set_layout(LayoutPtr);
+        //void            set_layout(LayoutPtr);
         
         ViewerID        viewer() const;
         
@@ -232,7 +232,8 @@ namespace yq::tachyon {
         
         void                    snap(WidgetSnap&) const;
 
-        virtual Execution       tick(const Context&);
+        // currently not needed (but maybe... later)
+        //virtual Execution       tick(const Context&);
 
         
         
@@ -286,15 +287,18 @@ namespace yq::tachyon {
         using UIDMap = std::multimap<std::string,UIElement*,IgCase>;
     
         struct R;
-        CloseRequestCPtr                m_closeRequest;
-        LayoutPtr                       m_layout;
-        std::vector<R>                  m_rendereds;
-        UIElement*                      m_ui            = nullptr;
-        UIDMap                          m_uids;    //< for cross-linking
-        BIDMap                          m_bids;
-        Tristate                        m_wireframe     = Tristate::INHERIT;
-        Vector2D                        m_position      = { 0., 0. };
-        Size2D                          m_size          = { -1, -1 };   // unknown sizing
+        CloseRequestCPtr    m_closeRequest;
+        std::vector<R>      m_rendereds;
+        Tristate            m_wireframe     = Tristate::INHERIT;
+        Vector2D            m_position      = { 0., 0. };
+        Size2D              m_size          = { -1, -1 };   // unknown sizing
+        
+        struct {
+            UIElement*      root    = nullptr;
+            UIDMap          uids;
+            BIDMap          bids;
+        }   m_ui;
+        
         
         void    _kill();
         void    _erase(UIElement*);

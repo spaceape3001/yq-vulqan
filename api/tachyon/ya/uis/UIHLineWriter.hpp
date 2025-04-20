@@ -9,15 +9,15 @@
 #include <ya/uis/UIElementsWriter.hpp>
 
 namespace yq::tachyon {
-    class UIHBox;
+    class UIHLine;
     
-    class UIHBoxWriter : public UIElementsWriter {
+    class UIHLineWriter : public UIElementsWriter {
     public:
-        UIHBoxWriter();
-        UIHBoxWriter(UIHBox*);
-        UIHBoxWriter(const UIHBoxWriter&);
-        ~UIHBoxWriter();
+        UIHLineWriter();
+        UIHLineWriter(UIHLine*);
+        UIHLineWriter(const UIHLineWriter&);
+        ~UIHLineWriter();
         
-        UIHBox*  element();
+        UIHLine*  element();
     };
 }

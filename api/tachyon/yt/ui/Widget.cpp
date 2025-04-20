@@ -271,10 +271,10 @@ namespace yq::tachyon {
     {
         if(!ui->binding())
             return ;
-        auto r = m_bids.equal_range(ui->binding());
+        auto r = m_ui.bids.equal_range(ui->binding());
         for(auto itr=r.first; itr != r.second; ++itr){
             if(itr->second == ui){
-                m_bids.erase(itr);
+                m_ui.bids.erase(itr);
                 break;
             }
         }
@@ -284,10 +284,10 @@ namespace yq::tachyon {
     {
         if(ui->uid().empty())
             return ;
-        auto r = m_uids.equal_range(ui->uid());
+        auto r = m_ui.uids.equal_range(ui->uid());
         for(auto itr=r.first; itr != r.second; ++itr){
             if(itr->second == ui){
-                m_uids.erase(itr);
+                m_ui.uids.erase(itr);
                 break;
             }
         }
@@ -299,7 +299,7 @@ namespace yq::tachyon {
             return false;
         if(!ui->binding())
             return false;
-        auto r = m_bids.equal_range(ui->binding());
+        auto r = m_ui.bids.equal_range(ui->binding());
         for(auto itr = r.first; itr != r.second; ++itr){
             if(itr->second == ui)
                 return true;
@@ -313,7 +313,7 @@ namespace yq::tachyon {
             return false;
         if(ui->uid().empty())
             return false;
-        auto r = m_uids.equal_range(ui->uid());
+        auto r = m_ui.uids.equal_range(ui->uid());
         for(auto itr = r.first; itr != r.second; ++itr){
             if(itr->second == ui)
                 return true;
@@ -324,20 +324,20 @@ namespace yq::tachyon {
     void    Widget::_insert(UIElement* ui)
     {
         if(ui->binding() && !_has_bid(ui)){
-            m_bids.emplace( ui->binding(), ui );
+            m_ui.bids.emplace( ui->binding(), ui );
         }
         if(!ui->uid().empty() && !_has_uid(ui)){
-            m_uids.emplace( ui->uid(), ui );
+            m_ui.uids.emplace( ui->uid(), ui );
         }
     }
 
     void    Widget::_kill()
     {
-        m_uids.clear();
-        m_bids.clear();
-        if(m_ui){
-            delete m_ui;
-            m_ui        = nullptr;
+        m_ui.uids.clear();
+        m_ui.bids.clear();
+        if(m_ui.root){
+            delete m_ui.root;
+            m_ui.root        = nullptr;
         }
     }
 
@@ -379,7 +379,7 @@ namespace yq::tachyon {
 
     UIElement*      Widget::element(first_k, uint64_t bid) const
     {
-        auto r = m_bids.equal_range(bid);
+        auto r = m_ui.bids.equal_range(bid);
         if(r.first == r.second)
             return nullptr;
         return r.first->second;
@@ -415,10 +415,10 @@ namespace yq::tachyon {
     //! Calls the render on all UIElement elements
     void    Widget::imgui(ui_k, ViContext&u)
     {
-        if(m_ui){
+        if(m_ui.root){
             auto wid        = auto_reset(UIElement::s_widget, this);
             auto ctx        = auto_reset(UIElement::s_context, &u);
-            m_ui -> draw();
+            m_ui.root -> draw();
         }
     }
 
@@ -570,22 +570,13 @@ namespace yq::tachyon {
         return f->object(root());
     }
 
-    void    Widget::set_layout(LayoutPtr lay)
-    {
-        LayoutPtr   old = lay;
-        {
-            lock_t  _lock(m_mutex, true);
-            std::swap(m_layout, lay);
-        }
-    }
-
     Execution       Widget::setup(const Context& ctx)
     {
-        if(!m_ui){
+        if(!m_ui.root){
             const WidgetInfo&   wi  = metaInfo();
             if(wi.m_ui){
                 auto wid        = auto_reset(UIElement::s_widget, this);
-                m_ui            = wi.m_ui->copy();
+                m_ui.root       = wi.m_ui->copy();
             }
         }
         return Tachyon::setup(ctx);
@@ -597,19 +588,12 @@ namespace yq::tachyon {
         sn.viewer   = m_viewer;
     }
 
+#if 0
     Execution  Widget::tick(const Context&ctx)
     {
-        LayoutPtr   lay;
-        {
-            lock_t _lock(m_mutex, false);
-            lay = m_layout;
-        }
-        if(lay){
-            lay -> tick(*this, ctx);
-        }
-        
         return {};
     }
+#endif
 
     Viewer*         Widget::viewer(ptr_k)
     {

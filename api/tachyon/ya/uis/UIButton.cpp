@@ -21,7 +21,7 @@ namespace yq::tachyon {
         w.property("text", &UIButton::m_text);
     }
     
-    UIButton::UIButton(std::string_view text, const Size2F& size) : m_text(text), m_size(size)
+    UIButton::UIButton(std::string_view text, const Size2F& size, UIFlags flags) : UIElement(flags), m_text(text), m_size(size)
     {
     }
     

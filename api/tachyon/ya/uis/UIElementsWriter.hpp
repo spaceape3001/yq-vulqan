@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class UIAssetImageWriter;
     class UIButtonWriter;
     class UICenterAlignWriter;
-    class UIHBoxWriter;
+    class UIHLineWriter;
     class UIImageWriter;
     class UITextLabelWriter;
     class UIMenuWriter;
@@ -63,7 +63,7 @@ namespace yq::tachyon {
         UICenterAlignWriter     center(align_k);
         
         //! The contents within will all be placed same line
-        UIHBoxWriter            hbox();
+        UIHLineWriter           hline();
         
         //! Will display the specified image/texture (using the asset-system)
         UIImageWriter           image(std::string_view);

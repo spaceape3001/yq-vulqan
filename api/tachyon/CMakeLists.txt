@@ -128,7 +128,7 @@ add_library(${PROJECT_NAME} SHARED
     yt/ui/Control.cpp
     #yt/ui/Editor.cpp
     yt/ui/ImWidget.cpp
-    yt/ui/Layout.cpp
+    #yt/ui/Layout.cpp
     yt/ui/Mini.cpp
     yt/ui/MyImGui.cpp
     yt/ui/Panel.cpp
@@ -703,8 +703,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp
     ya/uis/UIElementsWriter.cpp
-    ya/uis/UIHBox.cpp
+    ya/uis/UIHLine.cpp
     ya/uis/UIImage.cpp
+    ya/uis/UILayout.cpp
     ya/uis/UIMenu.cpp
     ya/uis/UIMenuWriter.cpp
     ya/uis/UIMenuBar.cpp

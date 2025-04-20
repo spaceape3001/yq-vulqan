@@ -21,7 +21,7 @@ namespace yq::tachyon {
     public:
         using Writer = UIButtonWriter;
 
-        UIButton(std::string_view, const Size2F& size=ZERO);
+        UIButton(std::string_view, const Size2F& size=ZERO, UIFlags flags={});
         UIButton(const UIButton&);
         virtual ~UIButton();
         void            render();

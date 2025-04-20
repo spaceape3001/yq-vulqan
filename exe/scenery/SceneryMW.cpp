@@ -87,6 +87,7 @@ void SceneryMW::init_info()
     auto app        = w.imgui(UI, APP);
     
     auto mmb        = app.menubar(MAIN);
+    mmb.uid("mmb");
     
     auto file       = mmb.menu("File");
     auto edit       = mmb.menu("Edit");
@@ -101,4 +102,9 @@ void SceneryMW::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
 
+    auto etb        = app.toolbar(EAST,  "east");
+    auto wtb        = app.toolbar(WEST,  "west");
+    auto ntb        = app.toolbar(NORTH, "north");
+    auto stb        = app.toolbar(SOUTH, "south");
+    
 }

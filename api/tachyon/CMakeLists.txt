@@ -705,7 +705,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIElementsWriter.cpp
     ya/uis/UIHLine.cpp
     ya/uis/UIImage.cpp
-    ya/uis/UILayout.cpp
     ya/uis/UIMenu.cpp
     ya/uis/UIMenuWriter.cpp
     ya/uis/UIMenuBar.cpp

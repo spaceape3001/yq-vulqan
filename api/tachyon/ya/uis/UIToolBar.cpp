@@ -210,7 +210,8 @@ namespace yq::tachyon {
         const auto& sty = style();
         float   edge    = sty.toolbar.inset() + m_number * (sty.toolbar.thickness() + sty.toolbar.padding());
         AxBox2F box = parent() -> viewport(CONTENT).inflate(-edge);
-        m_position  = box.project(m_pivot).emax(0.);
+        
+        position(SET, NEXT, box.project(m_pivot).emax(0.));
         
         #if 0
         if(m_flags(UIFlag::Horizontal)){

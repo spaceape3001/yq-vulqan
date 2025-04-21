@@ -24,6 +24,7 @@ namespace yq::tachyon {
     // IF we define these in the toolbox, we'll derive the types
     struct abort_k {};
     struct accept_k {};
+    struct actual_k {};
     struct add_k {};
     struct addable_k {};
     struct adjust_k {};
@@ -158,6 +159,7 @@ namespace yq::tachyon {
     struct network_k {
         consteval operator StdThread() const noexcept  { return StdThread::Network; }
     };
+    struct next_k {};
     
     struct number_k {};
     
@@ -226,6 +228,7 @@ namespace yq::tachyon {
     
     struct spatial_k {};
     struct spatial³_k {};
+    struct specification_k {};
     struct start_k {};
     struct startup_k {};
 
@@ -251,6 +254,7 @@ namespace yq::tachyon {
     struct ui_k {};
     struct unlock_k {};
     struct unlocked_k {};
+    struct use_k {};
     struct value_k {};
     struct variable_k {};
     
@@ -289,6 +293,7 @@ namespace yq::tachyon {
 
     static constexpr const abort_k              ABORT;
     static constexpr const accept_k             ACCEPT;
+    static constexpr const actual_k             ACTUAL;
     static constexpr const add_k                ADD;
     static constexpr const addable_k            ADDABLE;
     static constexpr const adjust_k             ADJUST;
@@ -298,7 +303,7 @@ namespace yq::tachyon {
     static constexpr const asset_k              ASSET;
     static constexpr const audio_k              AUDIO;
     static constexpr const bar_k                BAR;
-    static constexpr const calculate_k          CALCULATE;
+    static constexpr const calculate_k          CALC, CALCULATE;
     static constexpr const camera_k             CAMERA;
     static constexpr const camera³_k            CAMERA³;
     static constexpr const center_k             CENTER, CENTRE;
@@ -372,6 +377,7 @@ namespace yq::tachyon {
     static constexpr const multiply_k           MULTIPLY;
     static constexpr const nested_k             NESTED;
     static constexpr const network_k            NETWORK;
+    static constexpr const next_k               NEXT;
     static constexpr const none_k               NONE;
     static constexpr const north_k              NORTH;
     static constexpr const number_k             NUMBER;
@@ -414,6 +420,7 @@ namespace yq::tachyon {
     static constexpr const south_k              SOUTH;
     static constexpr const spatial_k            SPATIAL;
     static constexpr const spatial³_k           SPATIAL³;
+    static constexpr const specification_k      SPEC, SPECIFICATION;
     static constexpr const start_k              START;
     static constexpr const startup_k            STARTUP;
     static constexpr const static_k             STATIC;
@@ -431,6 +438,7 @@ namespace yq::tachyon {
     static constexpr const ui_k                 UI;
     static constexpr const unlock_k             UNLOCK;
     static constexpr const unlocked_k           UNLOCKED;
+    static constexpr const use_k                USE;
     static constexpr const value_k              VALUE;
     static constexpr const variable_k           VARIABLE;
     static constexpr const vertical_k           VERTICAL, VERT;

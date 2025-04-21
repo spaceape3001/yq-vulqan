@@ -10,6 +10,8 @@
 #include <ya/uis/UICenterAlign.hpp>
 #include <ya/uis/UICenterAlignWriter.hpp>
 #include <ya/uis/UIElements.hpp>
+#include <ya/uis/UIHBox.hpp>
+#include <ya/uis/UIHBoxWriter.hpp>
 #include <ya/uis/UIHLine.hpp>
 #include <ya/uis/UIHLineWriter.hpp>
 #include <ya/uis/UIImage.hpp>
@@ -79,6 +81,7 @@ namespace yq::tachyon {
         UIElements* ui  = element();
         if(elem && ui && is_accept(ui->acceptable(elem))){
             ui -> m_items.push_back(elem);
+            ui -> postadd(elem);
             return true;
         } else {
             if(elem)
@@ -111,6 +114,11 @@ namespace yq::tachyon {
     UICenterAlignWriter     UIElementsWriter::center(align_k)
     {
         return make<UICenterAlign>();
+    }
+
+    UIHBoxWriter            UIElementsWriter::hbox()
+    {
+        return make<UIHBox>();
     }
     
     UIHLineWriter            UIElementsWriter::hline()

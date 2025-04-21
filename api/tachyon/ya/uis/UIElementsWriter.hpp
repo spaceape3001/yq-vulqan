@@ -9,11 +9,13 @@
 #include <yt/ui/UIElementWriter.hpp>
 #include <yt/enum/UICardinal.hpp>
 #include <yt/typedef/post.hpp>
+#include <yt/typedef/uielement.hpp>
 #include <yt/typedef/widget.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
 #include <yt/keywords.hpp>
 #include <string_view>
+#include <functional>
 
 namespace yq::tachyon {
     class UIElements;
@@ -22,6 +24,7 @@ namespace yq::tachyon {
     class UIAssetImageWriter;
     class UIButtonWriter;
     class UICenterAlignWriter;
+    class UIHBoxWriter;
     class UIHLineWriter;
     class UIImageWriter;
     class UITextLabelWriter;
@@ -61,6 +64,11 @@ namespace yq::tachyon {
 
         //! The contents will be centered (as best as it can do)
         UICenterAlignWriter     center(align_k);
+        
+        template <SomeUIElement U, SomeWidget W>
+        UIElementWriter         generate(std::function<U*(W&)>&&);
+        
+        UIHBoxWriter            hbox();
         
         //! The contents within will all be placed same line
         UIHLineWriter           hline();

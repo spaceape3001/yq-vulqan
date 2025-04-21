@@ -79,9 +79,9 @@ namespace yq::tachyon {
 
         UIFlags     flags() const noexcept { return m_flags; }
         void        flag(set_k, UIFlag);
-        void        flag(set_k, UIFlags);
+        void        flags(set_k, UIFlags);
         void        flag(clear_k, UIFlag);
-        void        flag(clear_k, UIFlags);
+        void        flags(clear_k, UIFlags);
         
         UIElement*  parent();
         const UIElement*  parent() const;
@@ -110,11 +110,32 @@ namespace yq::tachyon {
         friend class UIElements;
         friend class UIElementWriter;
 
+        //! Parameter (specified, calculated, vs actual)
+        template <typename T>
+        struct P {
+            //! User specified
+            T   spec    = {};
+            
+            //! Calculated (dynamic)
+            T   calc    = {};
+            
+            //! Next one to be used
+            T   next    = {};
+            
+            //! Actual measured value
+            T   actual  = {};
+            
+            P() = default;
+            P(T v) : spec(v), calc(v), next(v), actual(v) {}
+            P(T s, T c, T n, T a) : spec(s), calc(c), next(n), actual(a) {}
+        };
+
         enum class S : uint8_t {
             LoadFailed,
             TextureIdFailed,
             MenuBar,
-            ToolBar
+            ToolBar,
+            NotFirst
         };
 
         /*! \brief Clones the element

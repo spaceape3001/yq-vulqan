@@ -172,19 +172,19 @@ namespace yq::tachyon {
         update(FLAGS);
     }
     
-    void    UIElement::flag(clear_k, UIFlags f)
-    {
-        m_flags.clear(f);
-        update(FLAGS);
-    }
-
     void    UIElement::flag(set_k, UIFlag f)
     {
         m_flags.set(f);
         update(FLAGS);
     }
     
-    void    UIElement::flag(set_k, UIFlags f)
+    void    UIElement::flags(clear_k, UIFlags f)
+    {
+        m_flags.clear(f);
+        update(FLAGS);
+    }
+
+    void    UIElement::flags(set_k, UIFlags f)
     {
         m_flags.set(f);
         update(FLAGS);

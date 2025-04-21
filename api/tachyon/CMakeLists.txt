@@ -703,10 +703,12 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp
     ya/uis/UIElementsWriter.cpp
+    ya/uis/UIGenerator.cpp
     ya/uis/UIHBox.cpp
     ya/uis/UIHLine.cpp
     ya/uis/UIImage.cpp
     ya/uis/UILayout.cpp
+    ya/uis/UILayoutWriter.cpp
     ya/uis/UIMenu.cpp
     ya/uis/UIMenuWriter.cpp
     ya/uis/UIMenuBar.cpp

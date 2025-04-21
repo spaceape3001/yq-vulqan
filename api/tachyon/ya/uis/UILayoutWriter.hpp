@@ -10,6 +10,8 @@
 
 namespace yq::tachyon {
     class UILayout;
+    class UIWindowWriter;
+    
     class UILayoutWriter : public UIElementsWriter {
     public:
         UILayoutWriter();
@@ -18,5 +20,7 @@ namespace yq::tachyon {
         ~UILayoutWriter();
         
         UILayout* element();
+
+        UIWindowWriter      window(std::string_view kName={});
     };
 }

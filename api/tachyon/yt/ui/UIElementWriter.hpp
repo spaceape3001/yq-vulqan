@@ -34,10 +34,11 @@ namespace yq::tachyon {
         template <SomeTachyon T>
         UIElementWriter action(void (T::*)());
 
-        UIElementWriter flag(set_k, UIFlag);
-        UIElementWriter flag(set_k, UIFlags);
         UIElementWriter flag(clear_k, UIFlag);
-        UIElementWriter flag(clear_k, UIFlags);
+        UIElementWriter flag(set_k, UIFlag);
+
+        UIElementWriter flags(clear_k, UIFlags);
+        UIElementWriter flags(set_k, UIFlags);
         
         //! Sets the UID (user defined ID)
         UIElementWriter uid(std::string_view);

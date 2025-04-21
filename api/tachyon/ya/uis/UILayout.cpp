@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UILayout.hpp"
-#include "UILayoutWriter.hpp"
 #include <yt/ui/MyImGui.hpp>
 #include <yt/logging.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
@@ -35,20 +34,4 @@ namespace yq::tachyon {
     {
         return new UILayout(*this);
     }
-    
-    ////////////////////////////
-    
-    UILayoutWriter::UILayoutWriter() = default;
-    UILayoutWriter::UILayoutWriter(const UILayoutWriter&) = default;
-    UILayoutWriter::~UILayoutWriter() = default;
-    
-    UILayout* UILayoutWriter::element()
-    {
-        return static_cast<UILayout*>(m_ui);
-    }
-    
-    UILayoutWriter::UILayoutWriter(UILayout* ui) : UIElementsWriter(ui)
-    {
-    }
-
 }

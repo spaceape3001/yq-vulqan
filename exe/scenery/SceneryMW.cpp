@@ -107,4 +107,13 @@ void SceneryMW::init_info()
     auto ntb        = app.toolbar(NORTH, "north");
     auto stb        = app.toolbar(SOUTH, "south");
     
+    auto hbx        = app.hbox();
+    auto h1         = hbx.window();
+    h1.width(200);
+    h1.label("Hello");
+    auto h2         = hbx.window();
+    h2.label("World");
+    auto h3         = hbx.window();
+    h3.label("Goodbye");
+    
 }

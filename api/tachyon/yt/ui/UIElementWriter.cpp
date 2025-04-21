@@ -27,20 +27,6 @@ namespace yq::tachyon {
         return *this;
     }
 
-    UIElementWriter  UIElementWriter::flag(set_k, UIFlag v)
-    {
-        if(m_ui)
-            m_ui->flag(SET, v);
-        return *this;
-    }
-    
-    UIElementWriter  UIElementWriter::flag(set_k, UIFlags v)
-    {
-        if(m_ui)
-            m_ui->flag(SET, v);
-        return *this;
-    }
-    
     UIElementWriter  UIElementWriter::flag(clear_k, UIFlag v)
     {
         if(m_ui)
@@ -48,13 +34,27 @@ namespace yq::tachyon {
         return *this;
     }
     
-    UIElementWriter  UIElementWriter::flag(clear_k, UIFlags v)
+    UIElementWriter  UIElementWriter::flag(set_k, UIFlag v)
     {
         if(m_ui)
-            m_ui->flag(CLEAR, v);
+            m_ui->flag(SET, v);
+        return *this;
+    }
+    
+    UIElementWriter  UIElementWriter::flags(clear_k, UIFlags v)
+    {
+        if(m_ui)
+            m_ui->flags(CLEAR, v);
         return *this;
     }
 
+    UIElementWriter  UIElementWriter::flags(set_k, UIFlags v)
+    {
+        if(m_ui)
+            m_ui->flags(SET, v);
+        return *this;
+    }
+    
     UIElementWriter UIElementWriter::uid(std::string_view k)
     {
         if(m_ui)

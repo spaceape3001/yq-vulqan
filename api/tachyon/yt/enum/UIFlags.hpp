@@ -46,6 +46,7 @@ namespace yq::tachyon {
         IgnoreSourceAspectRatio,    //!< Ignore the source image's aspect ratio
         Invisible,
         IsButton,                   //!< TRUE to set to a button
+        IsChild,                    //!< TRUE to use begin/end child instead of raw begin/end
         MenuBar,
         NavFlattened,
         NoBackground,

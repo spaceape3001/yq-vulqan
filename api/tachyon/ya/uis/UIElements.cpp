@@ -28,6 +28,7 @@ namespace yq::tachyon {
             UIElement* ui2 = ui -> copy();
             if(ui2){
                 ui2->m_parent   = this;
+                ui2->m_flags |= ui->m_flags;
                 m_items.push_back(ui2);
             }
         }

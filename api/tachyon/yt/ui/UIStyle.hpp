@@ -41,5 +41,9 @@ namespace yq::tachyon {
         struct {
             Size2F  def_size    = { 24, 24 };
         } image;
+        
+        struct {
+            UIDim   min_size    = { 2., 20., -1. };
+        } window;
     };
 }

@@ -23,4 +23,5 @@
 #include <ya/uis/UISpacerWriter.hpp>
 #include <ya/uis/UITextLabelWriter.hpp>
 #include <ya/uis/UIToolBarWriter.hpp>
+#include <ya/uis/UIVBoxWriter.hpp>
 #include <ya/uis/UIWindowWriter.hpp>

@@ -33,6 +33,7 @@ namespace yq::tachyon {
     class UIRightAlignWriter;
     class UISpacerWriter;
     class UIToolBarWriter;
+    class UIVBoxWriter;
     
     class UIElementsWriter : public UIElementWriter {
     public:
@@ -93,6 +94,8 @@ namespace yq::tachyon {
         
         UISpacerWriter          spacer(const Size2F&);
         
+        UIVBoxWriter            vbox();
+
     protected:
     
         /*! \brief Adds item to the elements

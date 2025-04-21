@@ -75,8 +75,6 @@ namespace yq::tachyon {
         float per = std::max(excess / (float) cnt, style().window.min_size());
         float x   = box.lo.x;
 
-        size_t n = 1;
-
         for(UIElement* e : m_items){
             UIWindow*win  = dynamic_cast<UIWindow*>(e);
             if(!win)

@@ -28,6 +28,8 @@
 #include <ya/uis/UITextLabelWriter.hpp>
 #include <ya/uis/UIToolBar.hpp>
 #include <ya/uis/UIToolBarWriter.hpp>
+#include <ya/uis/UIVBox.hpp>
+#include <ya/uis/UIVBoxWriter.hpp>
 #include <yt/ui/Widget.hpp>
 
 namespace yq::tachyon {
@@ -154,5 +156,10 @@ namespace yq::tachyon {
     UISpacerWriter          UIElementsWriter::spacer(const Size2F& sz)
     {
         return make<UISpacer>(sz);
+    }
+
+    UIVBoxWriter            UIElementsWriter::vbox()
+    {
+        return make<UIVBox>();
     }
 }

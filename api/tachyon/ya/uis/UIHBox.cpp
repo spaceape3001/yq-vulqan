@@ -89,8 +89,7 @@ namespace yq::tachyon {
             
             win -> position(SET, NEXT, { x, box.lo.y });
             win -> size(SET, NEXT, { w, box.hi.y - box.lo.y });
-
-            //uiInfo << "UIBox::render() window " << (n++) << " is " << win->size(NEXT) << " @ " << win->position(NEXT);
+            
 
             win->draw();
             x += w;

@@ -10,12 +10,15 @@
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
-#include <yq/shape/AxBox2.hxx>
-#include <yq/shape/Size2.hxx>
-#include <yq/vector/Vector2.hxx>
+#include <yt/logging.hpp>
+
 #include <yq/text/format.hpp>
 #include <yt/ui/UIStyle.hpp>
 #include <atomic>
+
+#include <yq/shape/AxBox2.hxx>
+#include <yq/shape/Size2.hxx>
+#include <yq/vector/Vector2.hxx>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIWindow)
 
@@ -40,6 +43,10 @@ namespace yq::tachyon {
     UIWindow::UIWindow(const UIWindow& cp) : UIElements(cp), 
         m_title(cp.m_title),
         m_pivot(cp.m_pivot),
+        m_x(cp.m_x),
+        m_y(cp.m_y),
+        m_w(cp.m_w),
+        m_h(cp.m_h),
         m_imFlags(cp.m_imFlags),
         m_chFlags(cp.m_chFlags)
     {
@@ -182,7 +189,7 @@ namespace yq::tachyon {
                 m_y.next    = nanF;
                 m_flags -= UIFlag::SetPositionOnce;
             }
-            if(m_flags.any({UIFlag::SetSize, UIFlag::SetSizeOnce}) && !isChild){
+            if(m_flags.any({UIFlag::SetSize, UIFlag::SetSizeOnce})){
                 ImGui::SetNextWindowSize({ width(USE), height(USE) });
                 m_h.next    = nanF;
                 m_w.next    = nanF;
@@ -253,13 +260,13 @@ namespace yq::tachyon {
     {
         m_w.next    = v.x;
         m_h.next    = v.y;
+        m_flags |= UIFlag::SetSizeOnce;
     }
     
     void        UIWindow::size(set_k, specification_k, Size2F v)
     {
         m_w.spec    = v.x;
         m_h.spec    = v.y;
-        m_flags |= UIFlag::SetSizeOnce;
     }
 
     const char*   UIWindow::title() const 

@@ -72,12 +72,6 @@ namespace yq::tachyon {
     {
     }
     
-    UIElementsWriter& UIElementsWriter::operator<<(UIElement* elem)
-    {
-        add(elem);
-        return *this;
-    }
-
     bool        UIElementsWriter::add(UIElement*elem)
     {
         UIElements* ui  = element();

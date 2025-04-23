@@ -47,11 +47,30 @@ namespace yq::tachyon {
         
         UIElements*             element();
         
-        /*! Appends a new UI element (no checking if it's the right spot to go, no new writer)
-            \note This routine assumes ownership, may delete the item 
-            prior to return.
+        /*! Appends a UI element
+            \note This routine assumes ownership, may delete the item prior to return.
         */
-        UIElementsWriter&       operator<<(UIElement*);
+        template <SomeUIElement U>
+        typename U::Writer     operator<<(U* elem)
+        {
+            if(add(elem)){
+                return typename U::Writer(elem);
+            } else {
+                return typename U::Writer();
+            }
+        }
+        
+        //! Creates a new UI element, appending it to the list
+        template <SomeUIElement U, typename ... Args>
+        typename U::Writer make(Args... args)
+        {
+            U*  ret = new U(std::forward<Args>(args)...);
+            if(add(ret)){
+                return typename U::Writer(ret);
+            } else {
+                return typename U::Writer();
+            }
+        }
         
         /////////////////////////////////////////////
         // Element Creation Helpers
@@ -104,17 +123,6 @@ namespace yq::tachyon {
             prior to return (which is why it'll return false).
         */
         bool    add(UIElement*);
-        
-        template <typename U, typename ... Args>
-        typename U::Writer make(Args... args)
-        {
-            U*  ret = new U(std::forward<Args>(args)...);
-            if(add(ret)){
-                return typename U::Writer(ret);
-            } else {
-                return typename U::Writer();
-            }
-        }
         
     private:
         static UIElements*      attach(Widget*);

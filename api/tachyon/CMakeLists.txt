@@ -121,10 +121,6 @@ add_library(${PROJECT_NAME} SHARED
     yt/sim/N.cpp
     yt/sim/Spatial.cpp
 
-    # possibly being removed.... TBD (IIRC, tachyon replaced its usefulness)
-    #sim/Task.cpp
-    #sim/TaskEngine.cpp
-
     yt/ui/Control.cpp
     #yt/ui/Editor.cpp
     yt/ui/ImWidget.cpp

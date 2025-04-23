@@ -24,6 +24,12 @@
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElement)
 
+/*
+    Point of consideration...moving UI elements between 
+    widgets/viewers, especially when those widgets/viewers
+    might be in separate threads.
+*/
+
 namespace yq::tachyon {
     float UIDim::operator()() const
     {

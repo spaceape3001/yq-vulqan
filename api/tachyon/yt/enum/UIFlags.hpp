@@ -81,7 +81,9 @@ namespace yq::tachyon {
         SetSizeOnce,
         StretchToFull,      //!< Stretch to full size (toolbar is width)
         UnsavedDocument,
-        Vertical
+        Vertical,
+        
+        Transparent = NoBackground
     };
     
     using UIFlags = Flags<UIFlag,uint128_t>;

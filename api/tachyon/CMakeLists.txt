@@ -695,6 +695,8 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIAppMain.cpp
     ya/uis/UIAppMainWriter.cpp
     ya/uis/UIButton.cpp
+    ya/uis/UIButtonBar.cpp
+    ya/uis/UIButtonBarWriter.cpp
     ya/uis/UICallback.cpp
     ya/uis/UICenterAlign.cpp
     ya/uis/UIElements.cpp
@@ -713,8 +715,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIRightAlign.cpp
     ya/uis/UISpacer.cpp
     ya/uis/UITextLabel.cpp
-    ya/uis/UIToolBar.cpp
-    ya/uis/UIToolBarWriter.cpp
     ya/uis/UIWindow.cpp
     ya/uis/UIWindowWriter.cpp
     ya/uis/UIVBox.cpp

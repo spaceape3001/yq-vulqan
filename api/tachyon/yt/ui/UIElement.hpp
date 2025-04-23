@@ -12,6 +12,7 @@
 #include <yt/keywords.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
+#include <yq/core/Tristate.hpp>
 #include <yt/typedef/texture.hpp>
 #include <yt/typedef/uielement.hpp>
 
@@ -83,6 +84,15 @@ namespace yq::tachyon {
         void        flag(clear_k, UIFlag);
         void        flags(clear_k, UIFlags);
         
+        //! Checks to see if the UI element is or is derived from specified type (or is a generator)
+        virtual Tristate is(const UIElementInfo& baseInfo) const;
+        
+        template <SomeUIElement U>
+        Tristate is() const
+        {
+            return is(meta<U>());
+        }
+
         UIElement*  parent();
         const UIElement*  parent() const;
         

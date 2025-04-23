@@ -25,8 +25,8 @@ namespace yq::tachyon {
         static void init_info();
         
     protected:
-        void    render() override;
-        void   postadd(UIElement*) override;
-        virtual YesNo           acceptable(UIElement*);
+        void                render() override;
+        void                postadd(UIElement*) override;
+        virtual YesNo       acceptable(UIElement*) override;
     };
 }

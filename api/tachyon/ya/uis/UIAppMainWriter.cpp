@@ -8,8 +8,8 @@
 #include <ya/uis/UIAppMain.hpp>
 #include <ya/uis/UIMenuBar.hpp>
 #include <ya/uis/UIMenuBarWriter.hpp>
-#include <ya/uis/UIToolBar.hpp>
-#include <ya/uis/UIToolBarWriter.hpp>
+#include <ya/uis/UIButtonBar.hpp>
+#include <ya/uis/UIButtonBarWriter.hpp>
 #include <ya/uis/UIWindow.hpp>
 #include <ya/uis/UIWindowWriter.hpp>
 #include <yt/ui/Widget.hpp>
@@ -72,14 +72,14 @@ namespace yq::tachyon {
         return make<UIMenuBar>(MAIN);
     }
 
-    UIToolBarWriter   UIAppMainWriter::toolbar(UICardinal dir, std::string_view kName)
+    UIButtonBarWriter   UIAppMainWriter::toolbar(UICardinal dir, std::string_view kName)
     {
-        return make<UIToolBar>(dir, kName);
+        return make<UIButtonBar>(dir, kName);
     }
     
-    UIToolBarWriter   UIAppMainWriter::toolbar(const Vector2F& dir, std::string_view kName)
+    UIButtonBarWriter   UIAppMainWriter::toolbar(const Vector2F& dir, std::string_view kName)
     {
-        return make<UIToolBar>(dir, kName);
+        return make<UIButtonBar>(dir, kName);
     }
 
     UIWindowWriter    UIAppMainWriter::window(std::string_view kName)

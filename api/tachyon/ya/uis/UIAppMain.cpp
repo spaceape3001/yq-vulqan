@@ -6,7 +6,7 @@
 
 #include "UIAppMain.hpp"
 #include "UIMenuBar.hpp"
-#include "UIToolBar.hpp"
+#include "UIButtonBar.hpp"
 #include <yt/ui/Widget.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/AxBox2.hxx>
@@ -32,7 +32,7 @@ namespace yq::tachyon {
         for(UIElement* ui : m_items){
             if(dynamic_cast<UIMenuBar*>(ui))
                 m_status |= S::MenuBar;
-            if(dynamic_cast<UIToolBar*>(ui))
+            if(dynamic_cast<UIButtonBar*>(ui))
                 m_status |= S::ToolBar;
         }
     }

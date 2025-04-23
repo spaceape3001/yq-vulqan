@@ -18,5 +18,9 @@ namespace yq::tachyon {
         UIGenerator(UIFlags flags={});
         ~UIGenerator();
         static void init_info();
+        
+        virtual Tristate is(const UIElementInfo& baseInfo) const override;
+
+        virtual const UIElementInfo*    ui_info() const { return nullptr; }
     };
 }

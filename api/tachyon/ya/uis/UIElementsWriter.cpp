@@ -26,8 +26,8 @@
 #include <ya/uis/UISpacerWriter.hpp>
 #include <ya/uis/UITextLabel.hpp>
 #include <ya/uis/UITextLabelWriter.hpp>
-#include <ya/uis/UIToolBar.hpp>
-#include <ya/uis/UIToolBarWriter.hpp>
+#include <ya/uis/UIButtonBar.hpp>
+#include <ya/uis/UIButtonBarWriter.hpp>
 #include <ya/uis/UIVBox.hpp>
 #include <ya/uis/UIVBoxWriter.hpp>
 #include <yt/ui/Widget.hpp>

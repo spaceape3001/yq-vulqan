@@ -20,13 +20,13 @@ namespace yq::tachyon {
         UIVBox(const UIVBox&);
         virtual ~UIVBox();
         
-        UIVBox* clone() const;
+        UIVBox* clone() const override;
         
         static void init_info();
         
     protected:
         void    render() override;
         void   postadd(UIElement*) override;
-        virtual YesNo           acceptable(UIElement*);
+        virtual YesNo   acceptable(UIElement*) override;
     };
 }

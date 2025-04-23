@@ -10,6 +10,7 @@
 
 #include <ya/uis/UIAppMainWriter.hpp>
 #include <ya/uis/UIButtonWriter.hpp>
+#include <ya/uis/UIButtonBarWriter.hpp>
 #include <ya/uis/UICenterAlignWriter.hpp>
 #include <ya/uis/UIElementsWriter.hpp>
 #include <ya/uis/UIHBoxWriter.hpp>
@@ -22,6 +23,5 @@
 #include <ya/uis/UIRightAlignWriter.hpp>
 #include <ya/uis/UISpacerWriter.hpp>
 #include <ya/uis/UITextLabelWriter.hpp>
-#include <ya/uis/UIToolBarWriter.hpp>
 #include <ya/uis/UIVBoxWriter.hpp>
 #include <ya/uis/UIWindowWriter.hpp>

@@ -196,6 +196,11 @@ namespace yq::tachyon {
         update(FLAGS);
     }
 
+    Tristate    UIElement::is(const UIElementInfo& baseInfo) const
+    {
+        return (metaInfo().is_base(baseInfo) || metaInfo().is_this(baseInfo)) ? Tristate::YES : Tristate::NO;
+    }
+
     UIElement*  UIElement::parent()
     {
         return m_parent; 

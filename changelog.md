@@ -3,6 +3,7 @@
 ## Upcoming
 
 * Global font scaling set to 1.25; which makes it readable but with artifacts on my monitor.  Will need to make this a setting and do it properly (with a font load)
+* Toolbar renamed to button bar (might be further renamed, but wanted it separate to "tools")
 
 ## 2025.04.11
 

@@ -120,16 +120,8 @@ namespace yq::tachyon {
     {
     }
     
-    UIElement::UIElement(const UIElement& cp) : m_flags(cp.m_flags), m_bId(cp.m_bId), m_uId(cp.m_uId)
+    UIElement::UIElement(const UIElement& cp) : m_flags(cp.m_flags), m_bId(cp.m_bId), m_uId(cp.m_uId), m_actions(cp.m_actions)
     {
-        for(const Action*act : cp.m_actions){
-            if(!act)
-                continue;
-            Action* a   = act->copy();
-            if(a)
-                m_actions.push_back(a);
-        }
-
         Widget* w = widget();
         if(w)
             w->_insert(this);
@@ -137,10 +129,7 @@ namespace yq::tachyon {
     
     UIElement::~UIElement()
     {
-        for(const Action* act : m_actions)
-            delete act;
         m_actions.clear();
-
         Widget* w = widget();
         if(w)
             w->_erase(this);
@@ -172,6 +161,11 @@ namespace yq::tachyon {
         render();
     }
 
+    bool    UIElement::flag(UIFlag v) const 
+    { 
+        return m_flags(v); 
+    }
+
     void    UIElement::flag(clear_k, UIFlag f)
     {
         m_flags.clear(f);
@@ -184,6 +178,11 @@ namespace yq::tachyon {
         update(FLAGS);
     }
     
+    void    UIElement::flag(set_k, UIFlag f, bool v)
+    {
+        m_flags.set(f, v);
+    }
+
     void    UIElement::flags(clear_k, UIFlags f)
     {
         m_flags.clear(f);
@@ -193,6 +192,12 @@ namespace yq::tachyon {
     void    UIElement::flags(set_k, UIFlags f)
     {
         m_flags.set(f);
+        update(FLAGS);
+    }
+
+    void        UIElement::flag(toggle_k, UIFlag f)
+    {
+        m_flags.toggle(f);
         update(FLAGS);
     }
 
@@ -235,7 +240,7 @@ namespace yq::tachyon {
             Action::Payload   data;
             data.uielem     = this;
             data.source     = widget();
-            for(Action* a : m_actions){
+            for(auto& a : m_actions){
                 if(!a)  [[unlikely]]
                     continue;
                 a->action(data);

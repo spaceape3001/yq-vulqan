@@ -21,11 +21,13 @@
 #include <yt/typedef/push.hpp>
 #include <yt/typedef/rendered.hpp>
 #include <yt/typedef/rendered3.hpp>
+#include <yt/typedef/uielement.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq/tensor/Tensor44.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/shape/Size2.hpp>
+#include <functional>
 
 //   A macro rename
 
@@ -171,7 +173,27 @@ namespace yq::tachyon {
         double          width() const;
         
         UIElement*      element(first_k, uint64_t) const;
+        
+        /*! Calls your visitor with all UI elements with given binding ID
+        
+            This method should take in a single UIElement (by reference or pointer).
+            I had wanted fancier, but the compiler was being a pain.
+            
+            \return Your result (if not void AND the first element that returns non-default)
+        */
+        template <typename Pred>
+        auto    for_elements(uint64_t, Pred&&) const;
+        
+        /*! Calls your visitor with all UI elements with given UID
 
+            This method should take in a single UIElement (by reference or pointer).
+            I had wanted fancier, but the compiler was being a pain.
+
+            \return Your result (if not void AND the first element that returns non-default)
+        */
+        template <typename Pred>
+        auto    for_elements(const std::string&, Pred&&) const;
+        
     protected:
         friend class Viewer;
         friend class Layout;
@@ -314,6 +336,9 @@ namespace yq::tachyon {
         static void push_buffer_view(PushBuffer&, const PreContext&, const RenderedSnap&);
         static void push_buffer_viewproj(PushBuffer&, const PreContext&, const RenderedSnap&);
         static void push_buffer_view64proj(PushBuffer&, const PreContext&, const RenderedSnap&);
+        
+        template <typename Pred>
+        static auto apply_ui(UIElement*, Pred&);
     };
 }
 YQ_TYPE_DECLARE(yq::tachyon::WidgetID)

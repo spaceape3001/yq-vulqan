@@ -13,11 +13,11 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
+#include <yt/typedef/action.hpp>
 #include <yt/typedef/texture.hpp>
 #include <yt/typedef/uielement.hpp>
 
 namespace yq::tachyon {
-    class Action;
     struct ViContext;
     class Widget;
     class WidgetInfo;
@@ -25,6 +25,7 @@ namespace yq::tachyon {
     struct UIStyle;
     class UIElement;
     class UIElementWriter;
+    class UIGenerator;
     
     class UIElementInfo : public ObjectInfo {
     public:
@@ -56,12 +57,12 @@ namespace yq::tachyon {
         UIElement(const UIElement&);
         virtual ~UIElement();
         
-        /*! \brief Clones the element
+        /*! \brief Copies the element
         
-            For all elements that are specified during the widget info *MUST* implement 
-            this.
+            \note Do *NOT* override this lightly (it's virtual for the generator's benefit).  
+                Most likely, you want to override the clone() method.
         */
-        UIElement*     copy() const;
+        virtual UIElement* copy() const;
 
         /*! \brief "Draws" the element 
         
@@ -83,6 +84,11 @@ namespace yq::tachyon {
         void        flags(set_k, UIFlags);
         void        flag(clear_k, UIFlag);
         void        flags(clear_k, UIFlags);
+        void        flag(set_k, UIFlag, bool);
+        
+        void        flag(toggle_k, UIFlag);
+        
+        bool        flag(UIFlag v) const;
         
         //! Checks to see if the UI element is or is derived from specified type (or is a generator)
         virtual Tristate is(const UIElementInfo& baseInfo) const;
@@ -115,8 +121,20 @@ namespace yq::tachyon {
         //! User assigned ID (may or may not be unique)
         const std::string&    uid() const { return m_uId; }
 
+        /*! \brief Current widget being processed (NULL if this isn't true)
+        
+            \note This is TLS data, so it'll be valid (or not) for the duration 
+            of you being called, however, do not RETAIN this pointer!
+        */
+
+        static Widget*          widget();
+
+        //! UI Element style
+        static const UIStyle&   style();
+
     protected:
         friend class Widget;
+        friend class UIGenerator;
         friend class UIElements;
         friend class UIElementWriter;
 
@@ -173,8 +191,6 @@ namespace yq::tachyon {
 
         virtual void            update(flags_k){}
         
-        //! Valid during clone & draw/render/content/triggered (check for NULL)
-        static Widget*          widget();
         
         //! Installs the specified texture, returns its ImGui texture ID
         static ImTextureID      install(const TextureCPtr&);
@@ -187,7 +203,6 @@ namespace yq::tachyon {
 
         static TextureCPtr      missing_texture();
 
-        static const UIStyle&   style();
         
         UIFlags                 m_flags;
         
@@ -203,14 +218,12 @@ namespace yq::tachyon {
         std::string             m_uId;
         
         //! Actions to take when triggered (if this is such an element)
-        std::vector<Action*>    m_actions;
+        std::vector<ActionCPtr> m_actions;
         
     private:
         static thread_local Widget*     s_widget;
         static thread_local ViContext*  s_context;
         static UIStyle                  s_style;
-        
-        
     };
     
 }

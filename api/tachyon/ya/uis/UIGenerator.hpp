@@ -19,6 +19,8 @@ namespace yq::tachyon {
         ~UIGenerator();
         static void init_info();
         
+        UIElement* copy() const override final;
+        
         virtual Tristate is(const UIElementInfo& baseInfo) const override;
 
         virtual const UIElementInfo*    ui_info() const { return nullptr; }

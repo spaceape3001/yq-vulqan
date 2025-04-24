@@ -6,6 +6,9 @@
 
 #include "UIGenerator.hpp"
 #include <yt/ui/UIElementInfoWriter.hpp>
+#include <yq/container/vector_utils.hpp>
+#include <yq/core/Ref.hpp>
+#include <yt/api/Action.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIGenerator)
 
@@ -16,6 +19,21 @@ namespace yq::tachyon {
     
     UIGenerator::~UIGenerator()
     {
+    }
+
+    UIElement* UIGenerator::copy() const 
+    {
+        UIElement*  ret = clone();
+        if(!ret)
+            return nullptr;
+        ret -> m_actions       += m_actions;
+        ret -> m_flags         |= m_flags;
+        if(!ret->m_bId)
+            ret -> m_bId        = m_bId;
+        if(ret->m_uId.empty())
+            ret -> m_uId        = m_uId;
+        ret -> update(FLAGS);
+        return ret;
     }
     
     Tristate UIGenerator::is(const UIElementInfo& baseInfo) const 

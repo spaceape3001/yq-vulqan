@@ -8,11 +8,11 @@
 
 #include <yt/enum/UIFlags.hpp>
 #include <yt/keywords.hpp>
+#include <yt/typedef/action.hpp>
 #include <yt/typedef/post.hpp>
 #include <yt/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
-    class Action;
     class UIElement;
     
     class UIElementWriter {
@@ -26,13 +26,19 @@ namespace yq::tachyon {
         UIElement*      element() { return m_ui; }
         operator UIElement*() { return m_ui; }
 
-        //! Passes in pointer (note, the framework takes ownership)
-        UIElementWriter action(Action*);
+        //! Passes in pointer
+        UIElementWriter action(ActionCPtr);
         
         template <SomePost P>
         UIElementWriter action(post_k<P>);
         template <SomeTachyon T>
         UIElementWriter action(void (T::*)());
+        
+        UIElementWriter action(visible_k, UIElement*);
+        UIElementWriter action(visible_k, UIElementWriter&);
+        //UIElementWriter action(visible_k, std::initializer_list<UIElement*>);
+        //UIElementWriter action(visible_k, std::initializer_list<UIElementWriter&>);
+        UIElementWriter action(visible_k, const std::string&);
 
         UIElementWriter flag(clear_k, UIFlag);
         UIElementWriter flag(set_k, UIFlag);

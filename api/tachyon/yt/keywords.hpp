@@ -248,6 +248,7 @@ namespace yq::tachyon {
     };
     
     struct teardown_k {};
+    struct toggle_k {};
     struct top_k {};
     struct typed_k {};
     struct types_k {};
@@ -263,6 +264,7 @@ namespace yq::tachyon {
     struct viewer_k {
         consteval operator StdThread() const noexcept  { return StdThread::Viewer; }
     };
+    struct visible_k {};
 
     struct vulqan_k {};
     struct wait_k {};
@@ -432,6 +434,7 @@ namespace yq::tachyon {
     static constexpr const target_k             TARGET;
     static constexpr const task_k               TASK;
     static constexpr const teardown_k           TEARDOWN;
+    static constexpr const toggle_k             TOGGLE;
     static constexpr const top_k                TOP;
     static constexpr const typed_k              TYPED;
     static constexpr const types_k              TYPES;
@@ -443,6 +446,7 @@ namespace yq::tachyon {
     static constexpr const variable_k           VARIABLE;
     static constexpr const vertical_k           VERTICAL, VERT;
     static constexpr const viewer_k             VIEWER;
+    static constexpr const visible_k            VISIBLE;
     static constexpr const vulqan_k             VULQAN;
     static constexpr const wait_k               WAIT;
     static constexpr const west_k               WEST;

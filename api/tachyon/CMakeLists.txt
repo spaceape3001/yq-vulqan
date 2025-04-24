@@ -184,6 +184,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/actions/CallbackAction.cpp
     ya/actions/NullAction.cpp
     ya/actions/PostAction.cpp
+    ya/actions/VisibleUIAction.cpp
 
     ya/aspects/AMaxSize1.cpp
     ya/aspects/AMaxSize2.cpp

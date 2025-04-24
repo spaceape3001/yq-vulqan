@@ -29,10 +29,7 @@ namespace yq::tachyon {
             W*  w   = dynamic_cast<W*>(widget());
             if(!w)
                 return nullptr;
-            U* u = m_create(w);
-            if(u && flags())
-                u -> flags(SET, flags());
-            return u;
+            return m_create(w);
         }
 
         virtual const UIElementInfo*    ui_info() const override

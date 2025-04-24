@@ -47,6 +47,7 @@ namespace yq::tachyon {
         Invisible,
         IsButton,                   //!< TRUE to set to a button
         IsChild,                    //!< TRUE to use begin/end child instead of raw begin/end
+        IsTristate,                 //!< TRUE if we're tristate (instead of boolean)
         MenuBar,
         NavFlattened,
         NoBackground,

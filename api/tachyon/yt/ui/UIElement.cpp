@@ -236,14 +236,19 @@ namespace yq::tachyon {
 
     void    UIElement::triggered()
     {
+        Action::Payload payload;
+        triggered(payload);
+    }
+
+    void    UIElement::triggered(Action::Payload& payload)
+    {
         if(!m_actions.empty()){
-            Action::Payload   data;
-            data.uielem     = this;
-            data.source     = widget();
+            payload.uielem     = this;
+            payload.source     = widget();
             for(auto& a : m_actions){
                 if(!a)  [[unlikely]]
                     continue;
-                a->action(data);
+                a->action(payload);
             }
         }
     }

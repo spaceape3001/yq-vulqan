@@ -13,6 +13,7 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
+#include <yt/api/Action.hpp>
 #include <yt/typedef/action.hpp>
 #include <yt/typedef/texture.hpp>
 #include <yt/typedef/uielement.hpp>
@@ -163,7 +164,8 @@ namespace yq::tachyon {
             TextureIdFailed,
             MenuBar,
             ToolBar,
-            NotFirst
+            NotFirst,
+            HasAccessor
         };
 
         /*! \brief Clones the element
@@ -188,6 +190,7 @@ namespace yq::tachyon {
         //! \note Your state (if it's not-singular) should be at least protected-accessible
         //! UIElement default will call every registered action
         virtual void            triggered();
+        void                    triggered(Action::Payload& payload);
 
         virtual void            update(flags_k){}
         

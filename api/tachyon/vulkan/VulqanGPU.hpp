@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/os/GraphicsCard.hpp>
+#include <tachyon/os/GraphicsCard.hpp>
 #include <tachyon/vulkan/vulqan.hpp>
 #include <tachyon/typedef/vi_device.hpp>
 

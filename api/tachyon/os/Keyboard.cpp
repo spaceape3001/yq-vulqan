@@ -4,47 +4,48 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/os/Gamepad.hpp>
-#include <yt/os/GamepadData.hpp>
-#include <yt/os/GamepadInfoWriter.hpp>
+#include <tachyon/os/Keyboard.hpp>
+#include <tachyon/os/KeyboardData.hpp>
+#include <tachyon/os/KeyboardInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-    struct GamepadInfo::Repo {
-        std::vector<const GamepadInfo*> all;
+
+    struct KeyboardInfo::Repo {
+        std::vector<const KeyboardInfo*> all;
     };
     
-    GamepadInfo::Repo& GamepadInfo::repo()
+    KeyboardInfo::Repo& KeyboardInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const GamepadInfo*>&    GamepadInfo::all()
+    const std::vector<const KeyboardInfo*>&    KeyboardInfo::all()
     {
         return repo().all;
     }
 
-    GamepadInfo::GamepadInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    KeyboardInfo::KeyboardInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Gamepad);
+        set(Type::Keyboard);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Gamepad::Gamepad(const Param& p) : Tachyon(p)
+    Keyboard::Keyboard(const Param& p) : Tachyon(p)
     {
     }
 
-    Gamepad::~Gamepad()
+    Keyboard::~Keyboard()
     {
     }
 
-    void Gamepad::snap(GamepadSnap& sn) const
+    void Keyboard::snap(KeyboardSnap& sn) const
     {
         Tachyon::snap(sn);
     }
@@ -52,16 +53,17 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Gamepad::init_info()
+    void Keyboard::init_info()
     {
-        auto w   = writer<Gamepad>();
+        auto w   = writer<Keyboard>();
         w.abstract();
+        w.description("A keyboard, the instrument to hit thy forehead on.");
 
-        auto wt = writer<GamepadID>();
-        wt.description("Gamepad Identifier");
+        auto wt = writer<KeyboardID>();
+        wt.description("Keyboard Identifier");
         wt.set(Meta::Flag::ID);
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Gamepad)
-YQ_TYPE_IMPLEMENT(yq::tachyon::GamepadID)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Keyboard)
+YQ_TYPE_IMPLEMENT(yq::tachyon::KeyboardID)

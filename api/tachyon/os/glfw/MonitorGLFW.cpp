@@ -8,7 +8,7 @@
 #include <ya/events/spatial/Position2Event.hpp>
 #include <ya/events/spatial/Scale2Event.hpp>
 #include <ya/events/spatial/Size2Event.hpp>
-#include <yt/os/MonitorInfoWriter.hpp>
+#include <tachyon/os/MonitorInfoWriter.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

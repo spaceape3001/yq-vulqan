@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/keywords.hpp>
-#include <yt/os/StdCursor.hpp>
+#include <tachyon/os/StdCursor.hpp>
 #include <variant>
 
 namespace yq {

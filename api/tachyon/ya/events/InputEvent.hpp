@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Event.hpp>
-#include <yt/os/ModifierKey.hpp>
+#include <tachyon/os/ModifierKey.hpp>
 
 namespace yq::tachyon {
 

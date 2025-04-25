@@ -4,47 +4,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/os/Joystick.hpp>
-#include <yt/os/JoystickData.hpp>
-#include <yt/os/JoystickInfoWriter.hpp>
+#include <tachyon/os/Mouse.hpp>
+#include <tachyon/os/MouseData.hpp>
+#include <tachyon/os/MouseInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-    struct JoystickInfo::Repo {
-        std::vector<const JoystickInfo*> all;
+    struct MouseInfo::Repo {
+        std::vector<const MouseInfo*> all;
     };
     
-    JoystickInfo::Repo& JoystickInfo::repo()
+    MouseInfo::Repo& MouseInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const JoystickInfo*>&    JoystickInfo::all()
+    const std::vector<const MouseInfo*>&    MouseInfo::all()
     {
         return repo().all;
     }
 
-    JoystickInfo::JoystickInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    MouseInfo::MouseInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Joystick);
+        set(Type::Mouse);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Joystick::Joystick(const Param& p) : Tachyon(p)
+    Mouse::Mouse(const Param& p) : Tachyon(p)
     {
     }
 
-    Joystick::~Joystick()
+    Mouse::~Mouse()
     {
     }
 
-    void Joystick::snap(JoystickSnap& sn) const
+    void Mouse::snap(MouseSnap& sn) const
     {
         Tachyon::snap(sn);
     }
@@ -52,17 +52,17 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Joystick::init_info()
+    void Mouse::init_info()
     {
-        auto w   = writer<Joystick>();
+        auto w   = writer<Mouse>();
         w.abstract();
-        w.description("Joystick!");
+        w.description("Mouse Periphial");
 
-        auto wt = writer<JoystickID>();
-        wt.description("Joystick Identifier");
+        auto wt = writer<MouseID>();
+        wt.description("Mouse Identifier");
         wt.set(Meta::Flag::ID);
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Joystick)
-YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickID)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Mouse)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MouseID)

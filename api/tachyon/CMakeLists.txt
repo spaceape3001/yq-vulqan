@@ -30,6 +30,19 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
+    os/Cursor.cpp
+    os/Desktop.cpp
+    os/Gamepad.cpp
+    os/GraphicsCard.cpp
+    os/Joystick.cpp
+    os/Keyboard.cpp
+    os/KeyCode.cpp
+    os/ModifierKey.cpp
+    os/Monitor.cpp
+    os/Mouse.cpp
+    os/VideoMode.cpp
+    os/Window.cpp
+
     os/glfw/CursorGLFW.cpp
     os/glfw/DesktopGLFW.cpp
     os/glfw/GamepadGLFW.cpp
@@ -147,18 +160,6 @@ add_library(${PROJECT_NAME} SHARED
     yt/msg/Request.cpp
     yt/msg/Trigger.cpp
     
-    yt/os/Cursor.cpp
-    yt/os/Desktop.cpp
-    yt/os/Gamepad.cpp
-    yt/os/GraphicsCard.cpp
-    yt/os/Joystick.cpp
-    yt/os/Keyboard.cpp
-    yt/os/KeyCode.cpp
-    yt/os/ModifierKey.cpp
-    yt/os/Monitor.cpp
-    yt/os/Mouse.cpp
-    yt/os/VideoMode.cpp
-    yt/os/Window.cpp
 
     yt/scene/Camera.cpp
     yt/scene/Light.cpp

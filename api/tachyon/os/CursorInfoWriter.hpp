@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yt/os/Desktop.hpp>
-#include <yt/os/DesktopData.hpp>
-#include <yt/api/ManagerInfoWriter.hpp>
+#include <tachyon/os/Cursor.hpp>
+#include <tachyon/os/CursorData.hpp>
+#include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class DesktopInfo::Writer : public ManagerInfo::Writer<C> {
+    class CursorInfo::Writer : public TachyonInfo::Writer<C> {
     public:
-        Writer(DesktopInfo* lightInfo) : ManagerInfo::Writer<C>(lightInfo)
+        Writer(CursorInfo* cursorInfo) : TachyonInfo::Writer<C>(cursorInfo)
         {
         }
         
-        Writer(DesktopInfo& lightInfo) : Writer(&lightInfo)
+        Writer(CursorInfo& cursorInfo) : Writer(&cursorInfo)
         {
         }
     };

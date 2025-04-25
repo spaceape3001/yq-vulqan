@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/os/MouseButton.hpp>
-#include <yt/os/MouseMode.hpp>
+#include <tachyon/os/MouseButton.hpp>
+#include <tachyon/os/MouseMode.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {

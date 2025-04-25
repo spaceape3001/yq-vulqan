@@ -12,7 +12,7 @@
 #include <yt/api/ID.hpp>
 #include <tachyon/typedef/monitor.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <yt/os/WindowMode.hpp>
+#include <tachyon/os/WindowMode.hpp>
 
 namespace yq::tachyon {
     enum class WindowFlag : uint8_t {

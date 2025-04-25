@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/os/Mouse.hpp>
-#include <yt/os/MouseData.hpp>
+#include <tachyon/os/Mouse.hpp>
+#include <tachyon/os/MouseData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {

@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/os/GraphicsCard.hpp>
-#include <yt/os/GraphicsCardData.hpp>
-#include <yt/os/GraphicsCardInfoWriter.hpp>
+#include <tachyon/os/GraphicsCard.hpp>
+#include <tachyon/os/GraphicsCardData.hpp>
+#include <tachyon/os/GraphicsCardInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 

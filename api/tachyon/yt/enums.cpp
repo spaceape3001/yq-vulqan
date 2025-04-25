@@ -38,10 +38,10 @@
 
 #include <yt/msg/Response.hpp>
 
-#include <yt/os/HatState.hpp>
-#include <yt/os/MouseButton.hpp>
-#include <yt/os/MouseMode.hpp>
-#include <yt/os/Platform.hpp>
+#include <tachyon/os/HatState.hpp>
+#include <tachyon/os/MouseButton.hpp>
+#include <tachyon/os/MouseMode.hpp>
+#include <tachyon/os/Platform.hpp>
 
 #include <yq/meta/Init.hpp>
 

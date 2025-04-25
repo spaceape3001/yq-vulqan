@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yt/os/KeyboardState.hpp>
-#include <yt/os/MouseState.hpp>
-#include <yt/os/WindowState.hpp>
+#include <tachyon/os/KeyboardState.hpp>
+#include <tachyon/os/MouseState.hpp>
+#include <tachyon/os/WindowState.hpp>
 #include <yt/api/TachyonData.hpp>
 #include <tachyon/typedef/window.hpp>
 

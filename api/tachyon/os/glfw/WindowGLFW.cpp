@@ -7,7 +7,7 @@
 #include <tachyon/os/glfw/WindowGLFW.hpp>
 #include <tachyon/os/glfw/LoggingGLFW.hpp>
 #include <yt/logging.hpp>
-#include <yt/os/WindowInfoWriter.hpp>
+#include <tachyon/os/WindowInfoWriter.hpp>
 #include <ya/commands/cursor/CursorCaptureCommand.hpp>
 #include <ya/commands/cursor/CursorDisableCommand.hpp>
 #include <ya/commands/cursor/CursorHideCommand.hpp>
@@ -23,7 +23,7 @@
 #include <ya/commands/ui/ShowCommand.hpp>
 #include <ya/commands/ui/TitleCommand.hpp>
 #include <ya/commands/ui/UnfloatCommand.hpp>
-#include <yt/os/KeyCode.hpp>
+#include <tachyon/os/KeyCode.hpp>
 #include <ya/events/GamepadEvent.hpp>
 #include <ya/events/JoystickEvent.hpp>
 #include <ya/events/cursor/CursorCaptureEvent.hpp>

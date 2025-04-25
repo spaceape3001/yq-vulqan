@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/os/Joystick.hpp>
-#include <yt/os/HatState.hpp>
+#include <tachyon/os/Joystick.hpp>
+#include <tachyon/os/HatState.hpp>
 
 namespace yq::tachyon {
 

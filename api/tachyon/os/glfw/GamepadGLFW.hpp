@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/os/Gamepad.hpp>
-#include <yt/os/HatState.hpp>
+#include <tachyon/os/Gamepad.hpp>
+#include <tachyon/os/HatState.hpp>
 
 namespace yq::tachyon {
 

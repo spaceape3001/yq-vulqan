@@ -7,7 +7,7 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <yt/os/Mouse.hpp>
+#include <tachyon/os/Mouse.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorMouses : public FrameInspectorTachyons {

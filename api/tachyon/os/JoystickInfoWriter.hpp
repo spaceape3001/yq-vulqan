@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/os/Joystick.hpp>
-#include <yt/os/JoystickData.hpp>
+#include <tachyon/os/Joystick.hpp>
+#include <tachyon/os/JoystickData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {

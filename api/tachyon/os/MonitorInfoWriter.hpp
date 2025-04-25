@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yt/os/GraphicsCard.hpp>
-#include <yt/os/GraphicsCardData.hpp>
+#include <tachyon/os/Monitor.hpp>
+#include <tachyon/os/MonitorData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class GraphicsCardInfo::Writer : public TachyonInfo::Writer<C> {
+    class MonitorInfo::Writer : public TachyonInfo::Writer<C> {
     public:
-        Writer(GraphicsCardInfo* keyboardInfo) : TachyonInfo::Writer<C>(keyboardInfo)
+        Writer(MonitorInfo* monitorInfo) : TachyonInfo::Writer<C>(monitorInfo)
         {
         }
         
-        Writer(GraphicsCardInfo& keyboardInfo) : Writer(&keyboardInfo)
+        Writer(MonitorInfo& monitorInfo) : Writer(&monitorInfo)
         {
         }
     };

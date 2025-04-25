@@ -12,7 +12,7 @@
 
 #include <yt/api/ID.hpp>
 #include <tachyon/gfx/PresentMode.hpp>
-#include <yt/os/WindowMode.hpp>
+#include <tachyon/os/WindowMode.hpp>
 #include <tachyon/typedef/monitor.hpp>
 #include <tachyon/typedef/queue_spec.hpp>
 

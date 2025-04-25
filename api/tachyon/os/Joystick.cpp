@@ -4,48 +4,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/os/Keyboard.hpp>
-#include <yt/os/KeyboardData.hpp>
-#include <yt/os/KeyboardInfoWriter.hpp>
+#include <tachyon/os/Joystick.hpp>
+#include <tachyon/os/JoystickData.hpp>
+#include <tachyon/os/JoystickInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-
-    struct KeyboardInfo::Repo {
-        std::vector<const KeyboardInfo*> all;
+    struct JoystickInfo::Repo {
+        std::vector<const JoystickInfo*> all;
     };
     
-    KeyboardInfo::Repo& KeyboardInfo::repo()
+    JoystickInfo::Repo& JoystickInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const KeyboardInfo*>&    KeyboardInfo::all()
+    const std::vector<const JoystickInfo*>&    JoystickInfo::all()
     {
         return repo().all;
     }
 
-    KeyboardInfo::KeyboardInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    JoystickInfo::JoystickInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Keyboard);
+        set(Type::Joystick);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Keyboard::Keyboard(const Param& p) : Tachyon(p)
+    Joystick::Joystick(const Param& p) : Tachyon(p)
     {
     }
 
-    Keyboard::~Keyboard()
+    Joystick::~Joystick()
     {
     }
 
-    void Keyboard::snap(KeyboardSnap& sn) const
+    void Joystick::snap(JoystickSnap& sn) const
     {
         Tachyon::snap(sn);
     }
@@ -53,17 +52,17 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Keyboard::init_info()
+    void Joystick::init_info()
     {
-        auto w   = writer<Keyboard>();
+        auto w   = writer<Joystick>();
         w.abstract();
-        w.description("A keyboard, the instrument to hit thy forehead on.");
+        w.description("Joystick!");
 
-        auto wt = writer<KeyboardID>();
-        wt.description("Keyboard Identifier");
+        auto wt = writer<JoystickID>();
+        wt.description("Joystick Identifier");
         wt.set(Meta::Flag::ID);
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Keyboard)
-YQ_TYPE_IMPLEMENT(yq::tachyon::KeyboardID)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Joystick)
+YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickID)

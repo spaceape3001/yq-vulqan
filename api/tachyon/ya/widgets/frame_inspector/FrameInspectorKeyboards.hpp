@@ -7,7 +7,7 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <yt/os/Keyboard.hpp>
+#include <tachyon/os/Keyboard.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorKeyboards : public FrameInspectorTachyons {

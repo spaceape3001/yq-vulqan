@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/os/Window.hpp>
-#include <yt/os/WindowData.hpp>
+#include <tachyon/os/Window.hpp>
+#include <tachyon/os/WindowData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {

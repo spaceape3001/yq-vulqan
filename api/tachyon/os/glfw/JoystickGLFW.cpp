@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/os/glfw/JoystickGLFW.hpp>
-#include <yt/os/JoystickInfoWriter.hpp>
+#include <tachyon/os/JoystickInfoWriter.hpp>
 #include <ya/commands/joystick/JoystickZeroCommand.hpp>
 #include <tachyon/os/glfw/glfw.hpp>
 #include <ya/events/joystick/JoystickAxisEvent.hpp>

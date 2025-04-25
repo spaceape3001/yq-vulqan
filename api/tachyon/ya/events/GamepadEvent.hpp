@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Event.hpp>
-#include <yt/os/Gamepad.hpp>
+#include <tachyon/os/Gamepad.hpp>
 
 namespace yq::tachyon {
     class GamepadEvent : public Event {

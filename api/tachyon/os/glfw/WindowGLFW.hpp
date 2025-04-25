@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yt/os/Window.hpp>
-#include <yt/os/WindowState.hpp>
-#include <yt/os/ModifierKey.hpp>
-#include <yt/os/MouseButton.hpp>
-#include <yt/os/MouseMode.hpp>
-#include <yt/os/WindowMode.hpp>
+#include <tachyon/os/Window.hpp>
+#include <tachyon/os/WindowState.hpp>
+#include <tachyon/os/ModifierKey.hpp>
+#include <tachyon/os/MouseButton.hpp>
+#include <tachyon/os/MouseMode.hpp>
+#include <tachyon/os/WindowMode.hpp>
 #include <ya/aspects/AMaxSize2.hpp>
 #include <ya/aspects/AMinSize2.hpp>
 #include <ya/aspects/APosition2.hpp>

@@ -11,7 +11,7 @@
 #include <yt/api/Tachyon.hpp>
 #include <tachyon/typedef/window.hpp>
 #include <tachyon/typedef/vi_surface.hpp>
-#include <yt/os/WindowMode.hpp>
+#include <tachyon/os/WindowMode.hpp>
 
 namespace yq::tachyon {
 

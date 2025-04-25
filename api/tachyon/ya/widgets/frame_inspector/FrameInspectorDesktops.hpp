@@ -7,7 +7,7 @@
 #pragma once
 
 #include "FrameInspectorManagers.hpp"
-#include <yt/os/Desktop.hpp>
+#include <tachyon/os/Desktop.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorDesktops : public FrameInspectorManagers {

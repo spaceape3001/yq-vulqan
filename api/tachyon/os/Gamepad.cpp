@@ -4,48 +4,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/os/Cursor.hpp>
-#include <yt/os/CursorData.hpp>
-#include <yt/os/CursorInfoWriter.hpp>
+#include <tachyon/os/Gamepad.hpp>
+#include <tachyon/os/GamepadData.hpp>
+#include <tachyon/os/GamepadInfoWriter.hpp>
 #include <yt/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-
-    struct CursorInfo::Repo {
-        std::vector<const CursorInfo*> all;
+    struct GamepadInfo::Repo {
+        std::vector<const GamepadInfo*> all;
     };
     
-    CursorInfo::Repo& CursorInfo::repo()
+    GamepadInfo::Repo& GamepadInfo::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const CursorInfo*>&    CursorInfo::all()
+    const std::vector<const GamepadInfo*>&    GamepadInfo::all()
     {
         return repo().all;
     }
 
-    CursorInfo::CursorInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
+    GamepadInfo::GamepadInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
         TachyonInfo(name, base, sl)
     {
-        set(Type::Cursor);
+        set(Type::Gamepad);
         repo().all.push_back(this);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Cursor::Cursor(const Param& p) : Tachyon(p)
+    Gamepad::Gamepad(const Param& p) : Tachyon(p)
     {
     }
 
-    Cursor::~Cursor()
+    Gamepad::~Gamepad()
     {
     }
 
-    void Cursor::snap(CursorSnap& sn) const
+    void Gamepad::snap(GamepadSnap& sn) const
     {
         Tachyon::snap(sn);
     }
@@ -53,17 +52,16 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void Cursor::init_info()
+    void Gamepad::init_info()
     {
-        auto w   = writer<Cursor>();
+        auto w   = writer<Gamepad>();
         w.abstract();
-        w.description("Cursor, thing that can spin");
 
-        auto wt = writer<CursorID>();
-        wt.description("Cursor Identifier");
+        auto wt = writer<GamepadID>();
+        wt.description("Gamepad Identifier");
         wt.set(Meta::Flag::ID);
     }
 }
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Cursor)
-YQ_TYPE_IMPLEMENT(yq::tachyon::CursorID)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Gamepad)
+YQ_TYPE_IMPLEMENT(yq::tachyon::GamepadID)

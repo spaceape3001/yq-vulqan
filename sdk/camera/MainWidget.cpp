@@ -7,7 +7,7 @@
 #include "MainWidget.hpp"
 #include "CameraScene.hpp"
 
-#include <ya/cameras/SpaceCamera.hpp>
+#include <tachyon/camera/SpaceCamera.hpp>
 #include <tachyon/command/controller/ListenCommand.hpp>
 #include <tachyon/command/io/SaveCommand.hpp>
 #include <tachyon/command/ui/CloseCommand.hpp>

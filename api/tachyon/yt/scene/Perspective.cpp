@@ -6,7 +6,7 @@
 
 #include <yt/scene/Perspective.hpp>
 
-#include <ya/cameras/NullCamera.hpp>
+#include <tachyon/camera/NullCamera.hpp>
 
 namespace yq::tachyon {
     Perspective0::Perspective0()

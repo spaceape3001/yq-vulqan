@@ -19,6 +19,10 @@ add_library(${PROJECT_NAME} SHARED
 
     #   ALPHABETICAL
     
+    camera/NullCamera.cpp
+    camera/SpaceCamera.cpp
+    camera/TargetCamera.cpp
+
     command/AddChildCommand.cpp
     command/AppCommand.cpp
     command/AppDeleteViewerCommand.cpp
@@ -612,9 +616,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/aspects/ASize3.cpp
     ya/aspects/ASize4.cpp
 
-    ya/cameras/NullCamera.cpp
-    ya/cameras/SpaceCamera.cpp
-    ya/cameras/TargetCamera.cpp
 
 
 

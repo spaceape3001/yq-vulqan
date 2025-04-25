@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/cameras/NullCamera.hpp>
+#include <tachyon/camera/NullCamera.hpp>
 #include <yt/scene/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {

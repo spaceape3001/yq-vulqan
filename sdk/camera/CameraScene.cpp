@@ -12,7 +12,7 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/TriangleData.hpp>
 
-#include <ya/cameras/SpaceCamera.hpp>
+#include <tachyon/camera/SpaceCamera.hpp>
 
 #include <ya/rendereds/Billboard3.hpp>
 #include <ya/rendereds/ImageQuad3.hpp>

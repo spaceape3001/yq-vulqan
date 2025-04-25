@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/os/Desktop.hpp>
-#include <tachyon/glfw/glfw.hpp>
+#include <tachyon/os/glfw/glfw.hpp>
 #include <array>
 #include <vector>
 

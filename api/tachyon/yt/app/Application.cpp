@@ -21,7 +21,7 @@
 #include <ya/threads/TaskThread.hpp>
 #include <ya/threads/ViewerThread.hpp>
 
-#include <tachyon/glfw/DesktopGLFW.hpp>
+#include <tachyon/os/glfw/DesktopGLFW.hpp>
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/ThreadId.hpp>

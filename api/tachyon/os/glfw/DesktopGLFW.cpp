@@ -12,16 +12,16 @@
 #include <yt/os/DesktopInfoWriter.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>
 
-#include <tachyon/glfw/CursorGLFW.hpp>
-#include <tachyon/glfw/DesktopGLFW.hpp>
-#include <tachyon/glfw/ExceptionGLFW.hpp>
-#include <tachyon/glfw/GamepadGLFW.hpp>
-#include <tachyon/glfw/JoystickGLFW.hpp>
-#include <tachyon/glfw/KeyboardGLFW.hpp>
-#include <tachyon/glfw/MouseGLFW.hpp>
-#include <tachyon/glfw/MonitorGLFW.hpp>
-#include <tachyon/glfw/WindowGLFW.hpp>
-#include <tachyon/glfw/LoggingGLFW.hpp>
+#include <tachyon/os/glfw/CursorGLFW.hpp>
+#include <tachyon/os/glfw/DesktopGLFW.hpp>
+#include <tachyon/os/glfw/ExceptionGLFW.hpp>
+#include <tachyon/os/glfw/GamepadGLFW.hpp>
+#include <tachyon/os/glfw/JoystickGLFW.hpp>
+#include <tachyon/os/glfw/KeyboardGLFW.hpp>
+#include <tachyon/os/glfw/MouseGLFW.hpp>
+#include <tachyon/os/glfw/MonitorGLFW.hpp>
+#include <tachyon/os/glfw/WindowGLFW.hpp>
+#include <tachyon/os/glfw/LoggingGLFW.hpp>
 
 #include <ya/events/gamepad/GamepadConnectEvent.hpp>
 #include <ya/events/gamepad/GamepadDisconnectEvent.hpp>

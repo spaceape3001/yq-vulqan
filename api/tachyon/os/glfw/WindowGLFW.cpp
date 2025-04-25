@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/glfw/WindowGLFW.hpp>
-#include <tachyon/glfw/LoggingGLFW.hpp>
+#include <tachyon/os/glfw/WindowGLFW.hpp>
+#include <tachyon/os/glfw/LoggingGLFW.hpp>
 #include <yt/logging.hpp>
 #include <yt/os/WindowInfoWriter.hpp>
 #include <ya/commands/cursor/CursorCaptureCommand.hpp>
@@ -57,9 +57,9 @@
 #include <yq/math/utility.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>
 
-#include <tachyon/glfw/DesktopGLFW.hpp>
-#include <tachyon/glfw/LoggingGLFW.hpp>
-#include <tachyon/glfw/MonitorGLFW.hpp>
+#include <tachyon/os/glfw/DesktopGLFW.hpp>
+#include <tachyon/os/glfw/LoggingGLFW.hpp>
+#include <tachyon/os/glfw/MonitorGLFW.hpp>
 #include <tachyon/vulkan/VulqanManager.hpp>
 #include <tachyon/vulkan/ViSurface.hpp>
 

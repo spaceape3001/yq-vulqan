@@ -30,14 +30,14 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
-    glfw/CursorGLFW.cpp
-    glfw/DesktopGLFW.cpp
-    glfw/GamepadGLFW.cpp
-    glfw/JoystickGLFW.cpp
-    glfw/KeyboardGLFW.cpp
-    glfw/MonitorGLFW.cpp
-    glfw/MouseGLFW.cpp
-    glfw/WindowGLFW.cpp
+    os/glfw/CursorGLFW.cpp
+    os/glfw/DesktopGLFW.cpp
+    os/glfw/GamepadGLFW.cpp
+    os/glfw/JoystickGLFW.cpp
+    os/glfw/KeyboardGLFW.cpp
+    os/glfw/MonitorGLFW.cpp
+    os/glfw/MouseGLFW.cpp
+    os/glfw/WindowGLFW.cpp
     
     vulkan/vulqan.cpp
     vulkan/VulqanGPU.cpp

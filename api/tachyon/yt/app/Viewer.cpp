@@ -84,7 +84,7 @@
 
 #include <ya/events/window/FramebufferResizeEvent.hpp>
 
-#include <tachyon/glfw/WindowGLFW.hpp>
+#include <tachyon/os/glfw/WindowGLFW.hpp>
 
 #include <ya/replies/graphics_card/GetDeviceReply.hpp>
 #include <ya/replies/ui/CloseReply.hpp>

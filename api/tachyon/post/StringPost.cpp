@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/posts/StringPost.hpp>
+#include <tachyon/post/StringPost.hpp>
 #include <tachyon/api/PostInfoWriter.hpp>
 
 namespace yq::tachyon {

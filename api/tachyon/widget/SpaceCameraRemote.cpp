@@ -10,7 +10,7 @@
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/api/Spatial3Data.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <ya/controls/Orientation3Control.hpp>
+#include <tachyon/control/Orientation3Control.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>

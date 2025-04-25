@@ -342,6 +342,8 @@ add_library(${PROJECT_NAME} SHARED
 
     config/build.cpp
 
+    control/Orientation3Control.cpp
+
     controller/Space3Controller.cpp
 
     enum/Cardinal.cpp
@@ -502,6 +504,7 @@ add_library(${PROJECT_NAME} SHARED
 
     message/EmptyMessage.cpp
 
+    mini/TextLabel.cpp
     
 
     os/Cursor.cpp
@@ -526,6 +529,10 @@ add_library(${PROJECT_NAME} SHARED
     os/glfw/MouseGLFW.cpp
     os/glfw/WindowGLFW.cpp
 
+    post/AnyPost.cpp
+    post/EmptyPost.cpp
+    post/StringPost.cpp
+
     proxy/PMaxSize1.cpp
     proxy/PMaxSize2.cpp
     proxy/PMaxSize3.cpp
@@ -546,6 +553,9 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PSize2.cpp
     proxy/PSize3.cpp
     proxy/PSize4.cpp
+    
+    raster/PatternRasters.cpp
+    raster/DebugRasters.cpp
 
     rendered/Billboard3.cpp
     rendered/ImageQuad3.cpp
@@ -701,38 +711,6 @@ add_library(${PROJECT_NAME} SHARED
     widget/SpaceCameraRemote.cpp
     widget/StackedWidget.cpp
     widget/TextArea.cpp
-    
-
-
-    # font/Font.cpp      # Issue/TODO
-
-
-
-
-
-
-    #######################################################
-    #   Assets (Yes, the above will use some of these)
-
-
-    ya/controls/Orientation3Control.cpp
-
-
-
-    
-    ya/minis/TextLabel.cpp
-
-    ya/posts/AnyPost.cpp
-    ya/posts/EmptyPost.cpp
-    ya/posts/StringPost.cpp
-
-    
-    ya/rasters/PatternRasters.cpp
-    ya/rasters/DebugRasters.cpp
-
-
-
-    
 )
 
 target_compile_definitions(${PROJECT_NAME} 
@@ -748,7 +726,6 @@ target_compile_definitions(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
 PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}
     ${VULQAN_API_DIR}
 )
 

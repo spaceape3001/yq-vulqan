@@ -6,7 +6,7 @@
 
 #include <tachyon/widget/FormWidget.hpp>
 #include <tachyon/widget/FrameInspector.hpp>
-#include <ya/minis/TextLabel.hpp>
+#include <tachyon/mini/TextLabel.hpp>
 #include <yq/text/format.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>

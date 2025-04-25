@@ -19,7 +19,7 @@
 #include <yq/core/Any.hpp>
 #include <tachyon/api/Post.hpp>
 #include <filesystem>
-#include <ya/rasters/DebugRasters.hpp>
+#include <tachyon/raster/DebugRasters.hpp>
 #include <tachyon/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElement)

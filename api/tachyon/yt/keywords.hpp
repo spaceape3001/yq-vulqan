@@ -12,7 +12,7 @@
 #include <yt/api/StdThread.hpp>
 #include <yt/gfx/DataActivity.hpp>
 #include <yt/os/Platform.hpp>
-#include <yt/enum/UICardinal.hpp>
+#include <tachyon/enum/Cardinal.hpp>
 #include <yt/ui/SizePolicy.hpp>
 #include <yq/unit/declare.hpp>
 
@@ -47,7 +47,7 @@ namespace yq::tachyon {
     struct camera_k {};
     struct camera³_k {};
     struct center_k {
-        consteval operator UICardinal() const noexcept { return UICardinal::Center; }
+        consteval operator Cardinal() const noexcept { return Cardinal::Center; }
     };
     struct changed_k {};
     struct child_k {};
@@ -79,7 +79,7 @@ namespace yq::tachyon {
     };
     
     struct east_k {
-        consteval operator UICardinal() const noexcept { return UICardinal::East; }
+        consteval operator Cardinal() const noexcept { return Cardinal::East; }
     };
     
     struct emit_k {};
@@ -168,7 +168,7 @@ namespace yq::tachyon {
     };
     
     struct north_k {
-        consteval operator UICardinal() const noexcept { return UICardinal::North; }
+        consteval operator Cardinal() const noexcept { return Cardinal::North; }
     };
     
     struct object_k {};
@@ -223,7 +223,7 @@ namespace yq::tachyon {
     };
     
     struct south_k {
-        consteval operator UICardinal() const noexcept { return UICardinal::South; }
+        consteval operator Cardinal() const noexcept { return Cardinal::South; }
     };
     
     struct spatial_k {};
@@ -270,7 +270,7 @@ namespace yq::tachyon {
     struct wait_k {};
     
     struct west_k {
-        consteval operator UICardinal() const noexcept { return UICardinal::West; }
+        consteval operator Cardinal() const noexcept { return Cardinal::West; }
     };
     struct widget_k {};
     struct window_k {};

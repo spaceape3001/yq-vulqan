@@ -8,7 +8,7 @@
 
 #include <ya/uis/UIWindow.hpp>
 #include <tachyon/typedef/uimisc.hpp>
-#include <yt/enum/UICardinal.hpp>
+#include <tachyon/enum/Cardinal.hpp>
 
 namespace yq::tachyon {
     class UIButtonBarWriter;
@@ -18,7 +18,7 @@ namespace yq::tachyon {
     public:
         using Writer = UIButtonBarWriter;
 
-        UIButtonBar(UICardinal, std::string_view, UIFlags flags={});
+        UIButtonBar(Cardinal, std::string_view, UIFlags flags={});
         UIButtonBar(Vector2F, std::string_view, UIFlags flags={});
         UIButtonBar(const UIButtonBar&);
         ~UIButtonBar();

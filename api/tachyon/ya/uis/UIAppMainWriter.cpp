@@ -62,7 +62,7 @@ namespace yq::tachyon {
     // Element Creation Helpers
     /////////////////////////////////////////////
 
-    UIButtonBarWriter   UIAppMainWriter::buttonbar(UICardinal dir, std::string_view kName)
+    UIButtonBarWriter   UIAppMainWriter::buttonbar(Cardinal dir, std::string_view kName)
     {
         return make<UIButtonBar>(dir, kName);
     }

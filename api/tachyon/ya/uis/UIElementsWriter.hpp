@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/ui/UIElementWriter.hpp>
-#include <yt/enum/UICardinal.hpp>
+#include <tachyon/enum/Cardinal.hpp>
 #include <tachyon/typedef/post.hpp>
 #include <tachyon/typedef/uielement.hpp>
 #include <tachyon/typedef/widget.hpp>

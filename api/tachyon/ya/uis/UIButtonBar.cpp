@@ -26,27 +26,27 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::UIButtonBar)
 namespace yq::tachyon {
     namespace {
         /*
-            bool    truth_table(UICardinal v)
+            bool    truth_table(Cardinal v)
             {
                 switch(v){
-                case UICardinal::Unknown:
-                case UICardinal::Center:
-                case UICardinal::NW:
-                case UICardinal::NNW:
-                case UICardinal::North:
-                case UICardinal::NNE:
-                case UICardinal::NE:
-                case UICardinal::ENE:
-                case UICardinal::East:
-                case UICardinal::ESE:
-                case UICardinal::SE:
-                case UICardinal::SSE:
-                case UICardinal::South:
-                case UICardinal::SSW:
-                case UICardinal::SW:
-                case UICardinal::WSW:
-                case UICardinal::West:
-                case UICardinal::WNW:
+                case Cardinal::Unknown:
+                case Cardinal::Center:
+                case Cardinal::NW:
+                case Cardinal::NNW:
+                case Cardinal::North:
+                case Cardinal::NNE:
+                case Cardinal::NE:
+                case Cardinal::ENE:
+                case Cardinal::East:
+                case Cardinal::ESE:
+                case Cardinal::SE:
+                case Cardinal::SSE:
+                case Cardinal::South:
+                case Cardinal::SSW:
+                case Cardinal::SW:
+                case Cardinal::WSW:
+                case Cardinal::West:
+                case Cardinal::WNW:
                 default:
                     return false;
                 }
@@ -54,86 +54,86 @@ namespace yq::tachyon {
         */
 
      
-        constexpr Vector2F    pivot_for(UICardinal v)
+        constexpr Vector2F    pivot_for(Cardinal v)
         {
             switch(v){
-            case UICardinal::Unknown:
-            case UICardinal::Center:
+            case Cardinal::Unknown:
+            case Cardinal::Center:
                 return { 0., 0. };
-            case UICardinal::NW:
-            case UICardinal::NNW:
+            case Cardinal::NW:
+            case Cardinal::NNW:
                 return { 0., 0. };
-            case UICardinal::North:
+            case Cardinal::North:
                 return { 0.5, 0. };
-            case UICardinal::NNE:
+            case Cardinal::NNE:
                 return { 1.0, 0. };
-            case UICardinal::NE:
+            case Cardinal::NE:
                 return { 0.0, 0. };
-            case UICardinal::ENE:
+            case Cardinal::ENE:
                 return { 1.0, 0. };
-            case UICardinal::East:
+            case Cardinal::East:
                 return { 1.0, 0.5 };
-            case UICardinal::ESE:
+            case Cardinal::ESE:
                 return { 1.0, 1.0 };
-            case UICardinal::SE:
+            case Cardinal::SE:
                 return ZERO;
-            case UICardinal::SSE:
+            case Cardinal::SSE:
                 return { 1.0, 1.0 };
-            case UICardinal::South:
+            case Cardinal::South:
                 return { 0.5, 1.0 };
-            case UICardinal::SSW:
+            case Cardinal::SSW:
                 return { 0.0, 1.0 };
-            case UICardinal::SW:
+            case Cardinal::SW:
                 return ZERO;
-            case UICardinal::WSW:
+            case Cardinal::WSW:
                 return { 0.0, 1.0 };
-            case UICardinal::West:
+            case Cardinal::West:
                 return { 0.0, 0.5 };
-            case UICardinal::WNW:
+            case Cardinal::WNW:
                 return { 0.0, 0.0 };
             default:
                 return ZERO;
             }
         }
      
-        UIFlags add_flags(UICardinal v)
+        UIFlags add_flags(Cardinal v)
         {
             switch(v){
-            case UICardinal::Unknown:
+            case Cardinal::Unknown:
                 return {};
-            case UICardinal::Center:
+            case Cardinal::Center:
                 return {};
-            case UICardinal::NW:
+            case Cardinal::NW:
                 return {};
-            case UICardinal::NNW:
+            case Cardinal::NNW:
                 return UIFlag::Horizontal;
-            case UICardinal::North:
+            case Cardinal::North:
                 return UIFlag::Horizontal;
-            case UICardinal::NNE:
+            case Cardinal::NNE:
                 return UIFlag::Horizontal;
-            case UICardinal::NE:
+            case Cardinal::NE:
                 return {};
-            case UICardinal::ENE:
+            case Cardinal::ENE:
                 return {};
-            case UICardinal::East:
+            case Cardinal::East:
                 return {};
-            case UICardinal::ESE:
+            case Cardinal::ESE:
                 return {};
-            case UICardinal::SE:
+            case Cardinal::SE:
                 return {};
-            case UICardinal::SSE:
+            case Cardinal::SSE:
                 return UIFlag::Horizontal;
-            case UICardinal::South:
+            case Cardinal::South:
                 return UIFlag::Horizontal;
-            case UICardinal::SSW:
+            case Cardinal::SSW:
                 return UIFlag::Horizontal;
-            case UICardinal::SW:
+            case Cardinal::SW:
                 return UIFlag::Horizontal;
-            case UICardinal::WSW:
+            case Cardinal::WSW:
                 return {};
-            case UICardinal::West:
+            case Cardinal::West:
                 return {};
-            case UICardinal::WNW:
+            case Cardinal::WNW:
                 return {};
             default:
                 return {};
@@ -155,7 +155,7 @@ namespace yq::tachyon {
     }
 
     
-    UIButtonBar::UIButtonBar(UICardinal b, std::string_view title, UIFlags flags) : UIButtonBar(pivot_for(b), title, UIFlags(add_flags(b) | flags))
+    UIButtonBar::UIButtonBar(Cardinal b, std::string_view title, UIFlags flags) : UIButtonBar(pivot_for(b), title, UIFlags(add_flags(b) | flags))
     {
     }
 

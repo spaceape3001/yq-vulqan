@@ -16,6 +16,57 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
+
+    #   ALPHABETICAL
+    
+    enum/Cardinal.cpp
+
+    glfw/CursorGLFW.cpp
+    glfw/DesktopGLFW.cpp
+    glfw/GamepadGLFW.cpp
+    glfw/JoystickGLFW.cpp
+    glfw/KeyboardGLFW.cpp
+    glfw/MonitorGLFW.cpp
+    glfw/MouseGLFW.cpp
+    glfw/WindowGLFW.cpp
+    
+    vulkan/vulqan.cpp
+    vulkan/VulqanGPU.cpp
+    vulkan/VulqanManager.cpp
+
+    # vulkan/VqEnumerations.cpp
+    vulkan/VqEnums.cpp
+    vulkan/VqLogging.cpp
+    vulkan/VqUtils.cpp
+
+    vulkan/ViBuffer.cpp
+    vulkan/ViCommandBuffer.cpp
+    vulkan/ViCommandBufferVector.cpp
+    vulkan/ViCommandPool.cpp
+    vulkan/ViContext.cpp
+    vulkan/ViData.cpp
+    vulkan/ViDevice.cpp
+    vulkan/ViFence.cpp
+    vulkan/ViFrame.cpp
+    vulkan/ViGui.cpp
+    vulkan/ViImage.cpp
+    vulkan/ViPipeline.cpp
+    vulkan/ViPipelineLayout.cpp
+    #vulkan/ViQueueManager.cpp
+    vulkan/ViQueueTasker.cpp
+    vulkan/ViRendered.cpp
+    vulkan/ViRenderPass.cpp
+    vulkan/ViSampler.cpp
+    vulkan/ViShader.cpp
+    vulkan/ViSurface.cpp
+    vulkan/ViSwapchain.cpp
+    vulkan/ViTexture.cpp
+    vulkan/ViTasker.cpp
+    vulkan/ViThread.cpp
+    vulkan/ViVisualizer.cpp
+    vulkan/Visualizer.cpp
+        
+    
     
     #######################################################
     #   Core First
@@ -63,7 +114,6 @@ add_library(${PROJECT_NAME} SHARED
 
     yt/config/build.cpp
 
-    yt/enum/UICardinal.cpp
     yt/enum/UIFlags.cpp
 
     # font/Font.cpp      # Issue/TODO
@@ -139,42 +189,7 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Vulqan
     
-    vulkan/vulqan.cpp
-    vulkan/VulqanGPU.cpp
-    vulkan/VulqanManager.cpp
 
-    # vulkan/VqEnumerations.cpp
-    vulkan/VqEnums.cpp
-    vulkan/VqLogging.cpp
-    vulkan/VqUtils.cpp
-
-    vulkan/ViBuffer.cpp
-    vulkan/ViCommandBuffer.cpp
-    vulkan/ViCommandBufferVector.cpp
-    vulkan/ViCommandPool.cpp
-    vulkan/ViContext.cpp
-    vulkan/ViData.cpp
-    vulkan/ViDevice.cpp
-    vulkan/ViFence.cpp
-    vulkan/ViFrame.cpp
-    vulkan/ViGui.cpp
-    vulkan/ViImage.cpp
-    vulkan/ViPipeline.cpp
-    vulkan/ViPipelineLayout.cpp
-    #vulkan/ViQueueManager.cpp
-    vulkan/ViQueueTasker.cpp
-    vulkan/ViRendered.cpp
-    vulkan/ViRenderPass.cpp
-    vulkan/ViSampler.cpp
-    vulkan/ViShader.cpp
-    vulkan/ViSurface.cpp
-    vulkan/ViSwapchain.cpp
-    vulkan/ViTexture.cpp
-    vulkan/ViTasker.cpp
-    vulkan/ViThread.cpp
-    vulkan/ViVisualizer.cpp
-    vulkan/Visualizer.cpp
-    
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
@@ -444,14 +459,6 @@ add_library(${PROJECT_NAME} SHARED
 
     ya/controls/Orientation3Control.cpp
 
-    glfw/CursorGLFW.cpp
-    glfw/DesktopGLFW.cpp
-    glfw/GamepadGLFW.cpp
-    glfw/JoystickGLFW.cpp
-    glfw/KeyboardGLFW.cpp
-    glfw/MonitorGLFW.cpp
-    glfw/MouseGLFW.cpp
-    glfw/WindowGLFW.cpp
 
     ya/events/AppEvent.cpp
     ya/events/CameraEvent.cpp

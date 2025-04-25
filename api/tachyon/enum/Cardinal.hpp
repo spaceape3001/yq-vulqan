@@ -10,7 +10,7 @@
 namespace yq::tachyon {
 
     //! General cardinal directions..
-    enum class UICardinal {
+    enum class Cardinal {
         Unknown,    //!< Unknown cardinal direction
         Center,     //!< Center of the area
         NW,         //!< Northwest corner (exactly)
@@ -31,13 +31,13 @@ namespace yq::tachyon {
         WNW         //!< West by Northwest
     };
     
-    bool    is_north(UICardinal);
-    bool    is_south(UICardinal);
-    bool    is_east(UICardinal);
-    bool    is_west(UICardinal);
+    bool    is_north(Cardinal);
+    bool    is_south(Cardinal);
+    bool    is_east(Cardinal);
+    bool    is_west(Cardinal);
     
-    std::string_view    key_for(UICardinal);
-    std::string_view    pretty_for(UICardinal);
+    std::string_view    key_for(Cardinal);
+    std::string_view    pretty_for(Cardinal);
 }
 
 

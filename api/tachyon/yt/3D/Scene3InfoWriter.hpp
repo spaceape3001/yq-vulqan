@@ -8,7 +8,7 @@
 
 #include <yt/3D/Scene3.hpp>
 #include <yt/3D/Scene3Data.hpp>
-#include <yt/scene/SceneInfoWriter.hpp>
+#include <tachyon/api/SceneInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

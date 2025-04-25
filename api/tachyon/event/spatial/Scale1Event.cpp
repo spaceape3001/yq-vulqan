@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/event/spatial/Scale1Event.hpp>
-#include <tachyon/msg/EventInfoWriter.hpp>
+#include <tachyon/api/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale¹Event)
 

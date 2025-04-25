@@ -7,7 +7,7 @@
 #include <tachyon/os/Gamepad.hpp>
 #include <tachyon/os/GamepadData.hpp>
 #include <tachyon/os/GamepadInfoWriter.hpp>
-#include <tachyon/msg/Post.hpp>
+#include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

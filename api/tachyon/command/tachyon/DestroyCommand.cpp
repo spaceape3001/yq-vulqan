@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/tachyon/DestroyCommand.hpp>
-#include <tachyon/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::DestroyCommand)
 

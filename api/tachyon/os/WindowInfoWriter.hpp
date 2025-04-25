@@ -8,7 +8,7 @@
 
 #include <tachyon/os/Window.hpp>
 #include <tachyon/os/WindowData.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -9,7 +9,7 @@
 #include <yt/3D/Camera3InfoWriter.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
 #include <tachyon/command/camera/CameraSetScreen.hpp>
-#include <ya/spatials/SimpleSpatial3.hpp>
+#include <tachyon/spatial/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 #include <yt/logging.hpp>

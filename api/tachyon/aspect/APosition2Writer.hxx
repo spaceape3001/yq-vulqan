@@ -17,7 +17,7 @@
 #include <tachyon/command/position/SetPosition2.hpp>
 #include <tachyon/command/position/SetPositionX.hpp>
 #include <tachyon/command/position/SetPositionY.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 
 namespace yq::tachyon {

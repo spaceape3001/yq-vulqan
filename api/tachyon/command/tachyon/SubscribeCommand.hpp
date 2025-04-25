@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/msg/MG.hpp>
+#include <tachyon/api/MG.hpp>
 #include <tachyon/command/TachyonCommand.hpp>
-#include <yt/api/TypedID.hpp>
+#include <tachyon/api/TypedID.hpp>
 #include <tachyon/typedef/thread.hpp>
 
 namespace yq::tachyon {

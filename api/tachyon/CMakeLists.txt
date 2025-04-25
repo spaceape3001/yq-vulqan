@@ -18,10 +18,46 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME} SHARED
     #   ALPHABETICAL
 
+    accessor/StringFunction.cpp
+    accessor/StringValue.cpp
+
     action/CallbackAction.cpp
     action/NullAction.cpp
     action/PostAction.cpp
     action/VisibleUIAction.cpp
+
+    api/Action.cpp
+
+    api/Camera.cpp
+    api/Command.cpp
+    api/Controller.cpp
+    api/Delegate.cpp
+    api/Event.cpp
+    api/Frame.cpp
+    api/InterfaceInfo.cpp
+    api/Light.cpp    
+    api/Manager.cpp
+    api/Message.cpp
+    api/Perspective.cpp
+    api/Post.cpp
+    api/Proxy.cpp
+    api/Rendered.cpp
+    #api/Rendered2.cpp
+    api/Reply.cpp
+    api/Request.cpp
+    api/Scene.cpp
+    #api/Scene2.cpppp
+    api/Tachyon.cpp
+    api/Thread.cpp
+    api/TypedID.cpp
+    api/Trigger.cpp
+    
+    api/meta/AssetGetter.cpp
+    api/meta/AssetProperty.cpp
+    api/meta/AssetSetter.cpp
+    api/meta/DelegateGetter.cpp
+    api/meta/DelegateProperty.cpp
+    api/meta/DelegateSetter.cpp
 
     app/Application.cpp
     app/Viewer.cpp
@@ -281,6 +317,8 @@ add_library(${PROJECT_NAME} SHARED
 
     config/build.cpp
 
+    controller/Space3Controller.cpp
+
     enum/Cardinal.cpp
     enum/UIFlags.cpp
 
@@ -437,13 +475,8 @@ add_library(${PROJECT_NAME} SHARED
     io/save/SaveThread.cpp
     io/save/SaveXML.cpp
 
-    msg/Command.cpp
-    msg/Event.cpp
-    msg/Message.cpp
-    msg/Post.cpp
-    msg/Reply.cpp
-    msg/Request.cpp
-    msg/Trigger.cpp
+    message/EmptyMessage.cpp
+
     
 
     os/Cursor.cpp
@@ -541,7 +574,12 @@ add_library(${PROJECT_NAME} SHARED
     
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp
+
+    scene/SimpleScene3.cpp
     
+    spatial/GeoSpatial3.cpp
+    spatial/SimpleSpatial3.cpp
+
     thread/AppThread.cpp
     thread/AudioThread.cpp
     thread/GameThread.cpp
@@ -662,38 +700,12 @@ add_library(${PROJECT_NAME} SHARED
     
     yt/4D/Widget4.cpp
 
-    yt/api/Action.cpp
-    yt/api/Controller.cpp
-    yt/api/Delegate.cpp
-    yt/api/Frame.cpp
-    yt/api/InterfaceInfo.cpp
-    yt/api/Manager.cpp
-    yt/api/Proxy.cpp
-    yt/api/Tachyon.cpp
-    yt/api/Thread.cpp
-    yt/api/TypedID.cpp
-    
-    yt/api/meta/AssetGetter.cpp
-    yt/api/meta/AssetProperty.cpp
-    yt/api/meta/AssetSetter.cpp
-    yt/api/meta/DelegateGetter.cpp
-    yt/api/meta/DelegateProperty.cpp
-    yt/api/meta/DelegateSetter.cpp
-
-
 
 
     # font/Font.cpp      # Issue/TODO
 
 
 
-    yt/scene/Camera.cpp
-    yt/scene/Light.cpp
-    yt/scene/Perspective.cpp
-    yt/scene/Rendered.cpp
-    #yt/scene/Rendered2.cpp
-    yt/scene/Scene.cpp
-    #yt/scene/Scene2.cpp
 
     yt/sim/Model.cpp
     yt/sim/N.cpp
@@ -714,27 +726,15 @@ add_library(${PROJECT_NAME} SHARED
     yt/ui/Undo.cpp
     yt/ui/Widget.cpp
 
-    #######################################################
-    #   Vulqan
-    
 
     #######################################################
     #   Assets (Yes, the above will use some of these)
 
-    ya/accessors/StringFunction.cpp
-    ya/accessors/StringValue.cpp
-    
-
-
-
-
-    ya/controllers/Space3Controller.cpp
 
     ya/controls/Orientation3Control.cpp
 
 
 
-    ya/messages/EmptyMessage.cpp
     
     ya/minis/TextLabel.cpp
 
@@ -746,10 +746,7 @@ add_library(${PROJECT_NAME} SHARED
     ya/rasters/PatternRasters.cpp
     ya/rasters/DebugRasters.cpp
 
-    ya/scenes/SimpleScene3.cpp
 
-    ya/spatials/GeoSpatial3.cpp
-    ya/spatials/SimpleSpatial3.cpp
 
     
 )

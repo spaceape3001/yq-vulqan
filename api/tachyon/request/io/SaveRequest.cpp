@@ -6,7 +6,7 @@
 
 #include <tachyon/request/io/SaveRequest.hpp>
 #include <tachyon/command/io/SaveCommand.hpp>
-#include <tachyon/msg/RequestInfoWriter.hpp>
+#include <tachyon/api/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveRequest)
 

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/request/ViewerRequest.hpp>
-#include <tachyon/msg/RequestInfoWriter.hpp>
+#include <tachyon/api/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerRequest)
 

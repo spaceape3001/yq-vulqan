@@ -10,7 +10,7 @@
 #include <yt/logging.hpp>
 #include <tachyon/gfx/Buffer.hpp>
 #include <tachyon/gfx/Texture.hpp>
-#include <yt/scene/RenderedData.hpp>
+#include <tachyon/api/RenderedData.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViBuffer.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>

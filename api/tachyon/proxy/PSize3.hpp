@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/api/Proxy.hpp>
+#include <tachyon/api/Proxy.hpp>
 #include <tachyon/interface/ISize3.hpp>
 
 namespace yq::tachyon {

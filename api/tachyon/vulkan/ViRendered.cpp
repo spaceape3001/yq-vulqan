@@ -16,8 +16,8 @@
 #include <yt/3D/Rendered3Data.hpp>
 #include <tachyon/gfx/PushData.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
-#include <yt/scene/Rendered.hpp>
-#include <yt/scene/RenderedData.hpp>
+#include <tachyon/api/Rendered.hpp>
+#include <tachyon/api/RenderedData.hpp>
 #include <tachyon/vulkan/VqEnums.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
 #include <tachyon/vulkan/ViLogging.hpp>

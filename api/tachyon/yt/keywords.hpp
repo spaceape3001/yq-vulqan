@@ -9,7 +9,7 @@
 #define YQ_KEYWORD_OMIT_NONE
 
 #include <yq/keywords.hpp>
-#include <yt/api/StdThread.hpp>
+#include <tachyon/api/StdThread.hpp>
 #include <tachyon/gfx/DataActivity.hpp>
 #include <tachyon/os/Platform.hpp>
 #include <tachyon/enum/Cardinal.hpp>

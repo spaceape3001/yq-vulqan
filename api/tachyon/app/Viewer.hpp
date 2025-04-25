@@ -13,14 +13,14 @@
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
 #include <yt/keywords.hpp>
-#include <yt/api/Thread.hpp>
+#include <tachyon/api/Thread.hpp>
 #include <tachyon/app/ViewerState.hpp>
 #include <tachyon/app/ViewerCreateInfo.hpp>
 
-#include <ya/typedef/commands.hpp>
-#include <ya/typedef/events.hpp>
-#include <ya/typedef/replies.hpp>
-#include <ya/typedef/requests.hpp>
+#include <tachyon/typedef/commands.hpp>
+#include <tachyon/typedef/events.hpp>
+#include <tachyon/typedef/replies.hpp>
+#include <tachyon/typedef/requests.hpp>
 
 #include <tachyon/typedef/request.hpp>
 #include <tachyon/typedef/viewer.hpp>

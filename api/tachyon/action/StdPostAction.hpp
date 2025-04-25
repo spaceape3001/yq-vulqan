@@ -7,8 +7,8 @@
 #pragma once
 
 #include <tachyon/action/PostAction.hpp>
-#include <tachyon/msg/Post.hpp>
-#include <yt/api/Tachyon.hpp>
+#include <tachyon/api/Post.hpp>
+#include <tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
     template <SomePost P>

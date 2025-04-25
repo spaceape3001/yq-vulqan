@@ -6,7 +6,7 @@
 
 #include <tachyon/interface/IMaxSize4.hpp>
 
-#include <yt/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceInfoWriter.hpp>
 #include <tachyon/proxy/PMaxSize4.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMaxSize⁴)

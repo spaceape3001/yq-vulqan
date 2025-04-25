@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/interface/IOrientation3.hpp>
-#include <yt/api/Tachyon.hpp>
+#include <tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 

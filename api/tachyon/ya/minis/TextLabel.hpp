@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yt/ui/Mini.hpp>
-#include <ya/accessors/StringValue.hpp>
-#include <ya/accessors/TypedFunction.hpp>
+#include <tachyon/accessor/StringValue.hpp>
+#include <tachyon/accessor/TypedFunction.hpp>
 #include <yq/text/format.hpp>
 
 namespace yq::tachyon {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/api/Exception.hpp>
+#include <tachyon/api/Exception.hpp>
 
 namespace yq::tachyon {
     class ViewerException : public Exception {

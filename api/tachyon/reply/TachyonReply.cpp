@@ -6,7 +6,7 @@
 
 #include <tachyon/reply/TachyonReply.hpp>
 
-#include <tachyon/msg/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonReply)
 

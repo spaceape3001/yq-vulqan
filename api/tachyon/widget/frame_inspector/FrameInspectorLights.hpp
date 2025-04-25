@@ -7,7 +7,7 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <yt/scene/Light.hpp>
+#include <tachyon/api/Light.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorLights : public FrameInspectorTachyons {

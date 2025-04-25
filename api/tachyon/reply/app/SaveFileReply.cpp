@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/reply/app/SaveFileReply.hpp>
-#include <tachyon/msg/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveFileReply)
 

@@ -8,7 +8,7 @@
 
 #include <yt/3D/Camera3.hpp>
 #include <yt/3D/Camera3Data.hpp>
-#include <yt/scene/CameraInfoWriter.hpp>
+#include <tachyon/api/CameraInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

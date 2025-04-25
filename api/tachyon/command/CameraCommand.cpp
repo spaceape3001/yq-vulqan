@@ -6,7 +6,7 @@
 
 #include <tachyon/command/CameraCommand.hpp>
 
-#include <tachyon/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraCommand)
 

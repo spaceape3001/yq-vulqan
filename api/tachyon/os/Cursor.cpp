@@ -7,7 +7,7 @@
 #include <tachyon/os/Cursor.hpp>
 #include <tachyon/os/CursorData.hpp>
 #include <tachyon/os/CursorInfoWriter.hpp>
-#include <tachyon/msg/Post.hpp>
+#include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

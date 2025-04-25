@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/request/ui/RefreshRequest.hpp>
-#include <tachyon/msg/RequestInfoWriter.hpp>
+#include <tachyon/api/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::RefreshRequest)
 

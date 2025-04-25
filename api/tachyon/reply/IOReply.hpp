@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/msg/Reply.hpp>
+#include <tachyon/api/Reply.hpp>
 
 namespace yq::tachyon {
     class IOReply : public Reply {

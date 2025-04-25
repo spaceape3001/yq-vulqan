@@ -8,9 +8,9 @@
 
 #include <yt/ui/Widget.hpp>
 #include <tachyon/widget/FrameInspector.hpp>
-#include <yt/api/Tachyon.hpp>
-#include <yt/api/Thread.hpp>
-#include <yt/api/InterfaceInfo.hpp>
+#include <tachyon/api/Tachyon.hpp>
+#include <tachyon/api/Thread.hpp>
+#include <tachyon/api/InterfaceInfo.hpp>
 #include <yq/unit/literals.hpp>
 #include <yq/text/join.hpp>
 

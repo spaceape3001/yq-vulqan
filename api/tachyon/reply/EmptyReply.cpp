@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/reply/EmptyReply.hpp>
-#include <tachyon/msg/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyInfoWriter.hpp>
 
 namespace yq::tachyon {
     EmptyReply::EmptyReply(const Header&h, const RequestCPtr& rq) : Reply(h, rq) 

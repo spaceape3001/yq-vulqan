@@ -6,7 +6,7 @@
 
 #include <yt/ui/Mini.hpp>
 #include <yt/ui/MiniInfoWriter.hpp>
-#include <yt/api/Accessor.hpp>
+#include <tachyon/api/Accessor.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mini)
 

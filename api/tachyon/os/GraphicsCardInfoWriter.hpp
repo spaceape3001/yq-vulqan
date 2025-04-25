@@ -8,7 +8,7 @@
 
 #include <tachyon/os/GraphicsCard.hpp>
 #include <tachyon/os/GraphicsCardData.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

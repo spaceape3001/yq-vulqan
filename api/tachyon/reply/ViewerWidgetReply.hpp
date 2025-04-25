@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/msg/Response.hpp> 
+#include <tachyon/api/Response.hpp> 
 #include <tachyon/reply/ViewerReply.hpp>
-#include <ya/typedef/requests.hpp>
+#include <tachyon/typedef/requests.hpp>
 
 namespace yq::tachyon {
     class ViewerWidgetReply : public ViewerReply {

@@ -7,7 +7,7 @@
 #include <tachyon/os/Window.hpp>
 #include <tachyon/os/WindowData.hpp>
 #include <tachyon/os/WindowInfoWriter.hpp>
-#include <tachyon/msg/Post.hpp>
+#include <tachyon/api/Post.hpp>
 #include <tachyon/command/ui/HideCommand.hpp>
 #include <tachyon/command/ui/ShowCommand.hpp>
 #include <yq/meta/Init.hpp>

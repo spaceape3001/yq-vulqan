@@ -8,7 +8,7 @@
 
 #include <tachyon/os/Joystick.hpp>
 #include <tachyon/os/JoystickData.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

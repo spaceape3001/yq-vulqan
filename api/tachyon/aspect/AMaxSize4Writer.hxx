@@ -20,7 +20,7 @@
 #include <tachyon/command/size/SetMaxSizeX.hpp>
 #include <tachyon/command/size/SetMaxSizeY.hpp>
 #include <tachyon/command/size/SetMaxSizeZ.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 
 namespace yq::tachyon {

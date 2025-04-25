@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/reply/graphics_card/GetDeviceReply.hpp>
-#include <tachyon/msg/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyInfoWriter.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GetDeviceReply)

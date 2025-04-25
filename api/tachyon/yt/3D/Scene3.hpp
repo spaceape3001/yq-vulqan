@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/3D/3D.hpp>
-#include <yt/scene/Scene.hpp>
+#include <tachyon/api/Scene.hpp>
 #include <tachyon/typedef/scene3.hpp>
 #include <tachyon/typedef/spatial3.hpp>
 #include <yq/vector/Quaternion3.hpp>

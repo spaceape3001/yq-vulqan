@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/event/joystick/JoystickZeroEvent.hpp>
-#include <tachyon/msg/EventInfoWriter.hpp>
+#include <tachyon/api/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickZeroEvent::init_info()

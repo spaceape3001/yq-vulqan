@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <yt/api/StdThread.hpp>
+#include <tachyon/api/StdThread.hpp>
 
 #include <tachyon/gfx/BorderColor.hpp>
 #include <tachyon/gfx/BufferUsage.hpp>
@@ -36,7 +36,7 @@
 #include <tachyon/gfx/Topology.hpp>
 #include <tachyon/gfx/VertexInputRate.hpp>
 
-#include <tachyon/msg/Response.hpp>
+#include <tachyon/api/Response.hpp>
 
 #include <tachyon/os/HatState.hpp>
 #include <tachyon/os/MouseButton.hpp>

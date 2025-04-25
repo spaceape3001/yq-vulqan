@@ -8,7 +8,7 @@
 
 #include <yt/sim/Model.hpp>
 #include <yt/sim/ModelData.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/api/TachyonData.hpp>
+#include <tachyon/api/TachyonData.hpp>
 #include <tachyon/typedef/graphics_card.hpp>
 
 namespace yq::tachyon {

@@ -14,7 +14,7 @@
 #include <tachyon/command/size/MultiplyMaxSizeX.hpp>
 #include <tachyon/command/size/SetMaxSize1.hpp>
 #include <tachyon/command/size/SetMaxSizeX.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 
 namespace yq::tachyon {

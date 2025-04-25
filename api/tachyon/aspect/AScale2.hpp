@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/interface/IScale2.hpp>
-#include <yt/api/Tachyon.hpp>
+#include <tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/orientation/RotateBy3.hpp>
-#include <tachyon/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>

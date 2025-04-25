@@ -20,7 +20,7 @@
 #include <tachyon/command/scale/SetScaleX.hpp>
 #include <tachyon/command/scale/SetScaleY.hpp>
 #include <tachyon/command/scale/SetScaleZ.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 
 namespace yq::tachyon {

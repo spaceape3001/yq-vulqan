@@ -9,7 +9,7 @@
 #include <yq/stream/Logger.hpp>
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 #include <tachyon/command/tachyon/SnoopCommand.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::LoggerBox)

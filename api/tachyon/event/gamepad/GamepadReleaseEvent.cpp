@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/event/gamepad/GamepadReleaseEvent.hpp>
-#include <tachyon/msg/EventInfoWriter.hpp>
+#include <tachyon/api/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void GamepadReleaseEvent::init_info()

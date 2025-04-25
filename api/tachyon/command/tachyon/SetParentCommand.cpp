@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/tachyon/SetParentCommand.hpp>
-#include <tachyon/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 
 namespace yq::tachyon {
     SetParentCommand::SetParentCommand(const Header& h, TachyonSpec par) : TachyonCommand(h), m_parent(par)

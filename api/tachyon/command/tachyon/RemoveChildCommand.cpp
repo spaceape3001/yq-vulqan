@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/tachyon/RemoveChildCommand.hpp>
-#include <tachyon/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 
 namespace yq::tachyon {
     RemoveChildCommand::RemoveChildCommand(const Header& h, TachyonSpec par) : TachyonCommand(h), m_child(par)

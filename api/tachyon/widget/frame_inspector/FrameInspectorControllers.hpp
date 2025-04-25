@@ -7,8 +7,8 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <yt/api/Controller.hpp>
-#include <yt/api/ControllerData.hpp>
+#include <tachyon/api/Controller.hpp>
+#include <tachyon/api/ControllerData.hpp>
 #include <tachyon/command/controller/DisableCommand.hpp>
 #include <tachyon/command/controller/EnableCommand.hpp>
 

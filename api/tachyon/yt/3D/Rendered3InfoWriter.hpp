@@ -10,7 +10,7 @@
 #include <yq/shape/Sphere3.hpp>
 #include <yt/3D/Rendered3.hpp>
 #include <yt/3D/Rendered3Data.hpp>
-#include <yt/scene/RenderedInfoWriter.hpp>
+#include <tachyon/api/RenderedInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

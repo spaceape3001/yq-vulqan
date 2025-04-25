@@ -7,9 +7,9 @@
 #include <tachyon/thread/ViewerThread.hpp>
 
 #include <yt/logging.hpp>
-#include <yt/api/Thread.hpp>
-#include <yt/api/ThreadData.hpp>
-#include <yt/api/ThreadInfoWriter.hpp>
+#include <tachyon/api/Thread.hpp>
+#include <tachyon/api/ThreadData.hpp>
+#include <tachyon/api/ThreadInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ViewerThread)
 

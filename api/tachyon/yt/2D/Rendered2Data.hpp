@@ -10,7 +10,7 @@
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Circle2.hpp>
 #include <yt/2D/2DData.hpp>
-#include <yt/scene/RenderedData.hpp>
+#include <tachyon/api/RenderedData.hpp>
 #include <tachyon/typedef/bounds2.hpp>
 #include <tachyon/typedef/rendered2.hpp>
 #include <tachyon/typedef/spatial2.hpp>

@@ -9,7 +9,7 @@
 //#include <yq/math/SimpleSpace.hpp>
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
-#include <yt/scene/Rendered.hpp>
+#include <tachyon/api/Rendered.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yt/3D/3D.hpp>

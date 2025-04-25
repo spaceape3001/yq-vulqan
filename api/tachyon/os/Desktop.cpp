@@ -7,7 +7,7 @@
 #include <tachyon/os/Desktop.hpp>
 #include <tachyon/os/DesktopData.hpp>
 #include <tachyon/os/DesktopInfoWriter.hpp>
-#include <tachyon/msg/Post.hpp>
+#include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

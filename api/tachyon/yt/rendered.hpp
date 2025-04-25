@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <yt/scene/Rendered.hpp>
-#include <yt/scene/RenderedInfoWriter.hpp>
+#include <tachyon/api/Rendered.hpp>
+#include <tachyon/api/RenderedInfoWriter.hpp>

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/viewer/SetWidgetCommand.hpp>
-#include <tachyon/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 #include <yt/ui/Widget.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetWidgetCommand)

@@ -9,7 +9,7 @@
 #include <yt/ui/MyImGui.hpp>
 #include <yt/logging.hpp>
 #include <yt/ui/UIElementInfoWriter.hpp>
-#include <tachyon/msg/Post.hpp>
+#include <tachyon/api/Post.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICheckBox)
 

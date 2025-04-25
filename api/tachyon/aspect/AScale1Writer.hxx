@@ -14,7 +14,7 @@
 #include <tachyon/command/scale/MultiplyScaleX.hpp>
 #include <tachyon/command/scale/SetScale1.hpp>
 #include <tachyon/command/scale/SetScaleX.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 
 namespace yq::tachyon {

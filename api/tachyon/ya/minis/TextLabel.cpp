@@ -7,7 +7,7 @@
 #include <ya/minis/TextLabel.hpp>
 #include <yt/ui/MiniInfoWriter.hpp>
 #include <yt/ui/MyImGui.hpp>
-#include <ya/accessors/StringFunction.hpp>
+#include <tachyon/accessor/StringFunction.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::TextLabel)
 

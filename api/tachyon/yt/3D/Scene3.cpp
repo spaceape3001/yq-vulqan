@@ -7,7 +7,7 @@
 #include <yt/3D/Scene3.hpp>
 #include <yt/3D/Scene3Data.hpp>
 #include <yt/3D/Scene3InfoWriter.hpp>
-#include <ya/spatials/SimpleSpatial3.hpp>
+#include <tachyon/spatial/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 

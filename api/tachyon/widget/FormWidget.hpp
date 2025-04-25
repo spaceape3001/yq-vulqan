@@ -8,7 +8,7 @@
 
 #include <yt/ui/Mini.hpp>
 #include <yt/ui/Widget.hpp>
-#include <ya/typedef/accessors.hpp>
+#include <tachyon/typedef/accessors.hpp>
 #include <functional>
 
 namespace yq::tachyon {

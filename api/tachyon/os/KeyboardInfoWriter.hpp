@@ -8,7 +8,7 @@
 
 #include <tachyon/os/Keyboard.hpp>
 #include <tachyon/os/KeyboardData.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

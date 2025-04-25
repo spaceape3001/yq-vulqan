@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/msg/Request.hpp>
+#include <tachyon/api/Request.hpp>
 #include <tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {

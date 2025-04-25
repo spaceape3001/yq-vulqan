@@ -6,7 +6,7 @@
 
 #include <tachyon/interface/IMinSize3.hpp>
 
-#include <yt/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceInfoWriter.hpp>
 #include <tachyon/proxy/PMinSize3.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMinSize³)

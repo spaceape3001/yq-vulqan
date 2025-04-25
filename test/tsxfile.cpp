@@ -8,7 +8,7 @@
 #include <yq/core/Logging.hpp>
 #include <yt/application.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
-#include <ya/spatials/SimpleSpatial3.hpp>
+#include <tachyon/spatial/SimpleSpatial3.hpp>
 #include <tachyon/io/Save.hpp>
 #include <tachyon/io/save/SaveXML.hpp>
 #include <tachyon/io/save/SaveTachyon.hpp>

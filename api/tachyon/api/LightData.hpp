@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <tachyon/api/TachyonData.hpp>
+#include <tachyon/typedef/light.hpp>
+
+namespace yq::tachyon {
+    struct LightSnap : public TachyonSnap {
+    };
+    
+    struct LightData : public TachyonData {
+    };
+}

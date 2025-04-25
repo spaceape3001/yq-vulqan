@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/posts/EmptyPost.hpp>
-#include <tachyon/msg/PostInfoWriter.hpp>
+#include <tachyon/api/PostInfoWriter.hpp>
 
 namespace yq::tachyon {
     EmptyPost::EmptyPost(const Header&h) : Post(h) 

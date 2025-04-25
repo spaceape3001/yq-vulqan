@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/event/ThreadEvent.hpp>
-#include <yt/api/TypedID.hpp>
+#include <tachyon/api/TypedID.hpp>
 
 namespace yq::tachyon {
     class ThreadAddTachyonEvent : public ThreadEvent {

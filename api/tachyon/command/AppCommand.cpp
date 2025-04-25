@@ -6,7 +6,7 @@
 
 #include <tachyon/command/AppCommand.hpp>
 
-#include <tachyon/msg/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppCommand)
 

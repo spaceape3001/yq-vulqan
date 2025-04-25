@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yt/keywords.hpp>
-#include <yt/api/Tachyon.hpp>
-#include <ya/typedef/commands.hpp>
-#include <ya/typedef/events.hpp>
+#include <tachyon/api/Tachyon.hpp>
+#include <tachyon/typedef/commands.hpp>
+#include <tachyon/typedef/events.hpp>
 #include <tachyon/typedef/layout.hpp>
-#include <ya/typedef/replies.hpp>
-#include <ya/typedef/requests.hpp>
+#include <tachyon/typedef/replies.hpp>
+#include <tachyon/typedef/requests.hpp>
 #include <tachyon/typedef/viewer.hpp>
 #include <tachyon/typedef/widget.hpp>
 #include <tachyon/typedef/camera3.hpp>

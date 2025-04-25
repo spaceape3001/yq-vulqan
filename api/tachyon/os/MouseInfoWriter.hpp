@@ -8,7 +8,7 @@
 
 #include <tachyon/os/Mouse.hpp>
 #include <tachyon/os/MouseData.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

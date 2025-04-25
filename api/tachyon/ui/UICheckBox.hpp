@@ -11,7 +11,7 @@
 #include <string>
 #include <yq/shape/Size2.hpp>
 #include <variant>
-#include <ya/typedef/accessors.hpp>
+#include <tachyon/typedef/accessors.hpp>
 
 namespace yq::tachyon {
     class UICheckBoxWriter;

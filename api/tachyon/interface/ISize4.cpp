@@ -6,7 +6,7 @@
 
 #include <tachyon/interface/ISize4.hpp>
 
-#include <yt/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceInfoWriter.hpp>
 #include <tachyon/proxy/PSize4.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::ISize⁴)

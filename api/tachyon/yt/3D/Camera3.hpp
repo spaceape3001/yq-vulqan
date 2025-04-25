@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/3D/3D.hpp>
-#include <yt/scene/Camera.hpp>
+#include <tachyon/api/Camera.hpp>
 #include <tachyon/typedef/camera3.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Quaternion3.hpp>

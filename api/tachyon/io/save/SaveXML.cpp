@@ -18,10 +18,10 @@
 #include <yq/text/format.hpp>
 #include <yq/text/parse.hpp>
 #include <tachyon/app/Application.hpp>
-#include <yt/api/Delegate.hpp>
-#include <yt/api/Thread.hpp>
-#include <yt/api/meta/AssetProperty.hpp>
-#include <yt/api/meta/DelegateProperty.hpp>
+#include <tachyon/api/Delegate.hpp>
+#include <tachyon/api/Thread.hpp>
+#include <tachyon/api/meta/AssetProperty.hpp>
+#include <tachyon/api/meta/DelegateProperty.hpp>
 
 namespace yq::tachyon {
     static constexpr const char*    szApplication   = "application";

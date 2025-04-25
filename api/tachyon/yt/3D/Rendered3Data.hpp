@@ -10,7 +10,7 @@
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
 #include <yt/3D/3DData.hpp>
-#include <yt/scene/RenderedData.hpp>
+#include <tachyon/api/RenderedData.hpp>
 #include <tachyon/typedef/bounds3.hpp>
 #include <tachyon/typedef/camera3.hpp>
 #include <tachyon/typedef/rendered3.hpp>

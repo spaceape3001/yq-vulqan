@@ -30,9 +30,9 @@
 #include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/ImageViewInfo.hpp>
-#include <yt/scene/Perspective.hpp>
-#include <yt/scene/RenderedData.hpp>
-#include <yt/scene/Scene.hpp>
+#include <tachyon/api/Perspective.hpp>
+#include <tachyon/api/RenderedData.hpp>
+#include <tachyon/api/Scene.hpp>
 #include <tachyon/vulkan/VulqanException.hpp>
 #include <tachyon/vulkan/VqUtils.hpp>
 #include <tachyon/vulkan/ViBuffer.hpp>

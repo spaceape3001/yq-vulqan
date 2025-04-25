@@ -13,10 +13,10 @@
 #include <yq/typedef/filesystem_path.hpp>
 
 #include <yt/ui/MyImGui.hpp>
-#include <yt/api/Tachyon.hpp>
+#include <tachyon/api/Tachyon.hpp>
 #include <tachyon/os/ModifierKey.hpp>
 #include <tachyon/typedef/buffer.hpp>
-#include <ya/typedef/events.hpp>
+#include <tachyon/typedef/events.hpp>
 #include <tachyon/typedef/pipeline.hpp>
 #include <tachyon/typedef/vi_buffer.hpp>
 #include <tachyon/typedef/vi_pipeline.hpp>

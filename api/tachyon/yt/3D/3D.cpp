@@ -7,7 +7,7 @@
 #include <yt/3D/3D.hpp>
 #include <yt/3D/3DData.hpp>
 #include <yq/tensor/Tensor44.hpp>
-#include <ya/spatials/SimpleSpatial3.hpp>
+#include <tachyon/spatial/SimpleSpatial3.hpp>
 
 namespace yq::tachyon {
     ③Data::③Data()

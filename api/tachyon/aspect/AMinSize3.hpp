@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/interface/IMinSize3.hpp>
-#include <yt/api/Tachyon.hpp>
+#include <tachyon/api/Tachyon.hpp>
 
 #ifdef NAN
 #undef NAN

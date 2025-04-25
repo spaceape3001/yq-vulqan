@@ -6,7 +6,7 @@
 
 #include <tachyon/trigger/AndTrigger.hpp>
 #include <yq/container/initlist_utils.hpp>
-#include <tachyon/msg/TriggerInfoWriter.hpp>
+#include <tachyon/api/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AndTrigger)
 

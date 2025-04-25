@@ -7,7 +7,7 @@
 #include <yt/2D/2D.hpp>
 #include <yt/2D/2DData.hpp>
 #include <yq/tensor/Tensor44.hpp>
-//#include <ya/spatials/SimpleSpatial2.hpp>
+//#include <tachyon/spatial/SimpleSpatial2.hpp>
 
 namespace yq::tachyon {
     ②Data::②Data()

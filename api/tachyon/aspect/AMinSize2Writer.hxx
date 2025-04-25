@@ -17,7 +17,7 @@
 #include <tachyon/command/size/SetMinSize2.hpp>
 #include <tachyon/command/size/SetMinSizeX.hpp>
 #include <tachyon/command/size/SetMinSizeY.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 
 namespace yq::tachyon {

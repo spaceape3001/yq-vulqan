@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/msg/Reply.hpp>
+#include <tachyon/api/Reply.hpp>
 #include <string>
 #include <string_view>
 

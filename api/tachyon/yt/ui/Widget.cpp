@@ -10,7 +10,7 @@
 #include <yt/ui/UIElement.hpp>
 
 #include <yt/logging.hpp>
-#include <yt/api/Frame.hpp>
+#include <tachyon/api/Frame.hpp>
 #include <tachyon/app/Viewer.hpp>
 #include <tachyon/command/tachyon/DestroyCommand.hpp>
 #include <tachyon/command/ui/CloseCommand.hpp>
@@ -43,7 +43,7 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <tachyon/vulkan/ViRendered.hpp>
 #include <yq/util/AutoReset.hpp>
-#include <yt/scene/Rendered.hpp>
+#include <tachyon/api/Rendered.hpp>
 #include <tachyon/vulkan/Visualizer.hpp>
 #include <tachyon/vulkan/Visualizer.hxx>
 #include <tachyon/ui/UIElements.hpp>

@@ -17,7 +17,7 @@
 #include <tachyon/aspect/APosition2.hpp>
 #include <tachyon/aspect/ASize2.hpp>
 #include <tachyon/aspect/AScale2.hpp>
-#include <ya/typedef/commands.hpp>
+#include <tachyon/typedef/commands.hpp>
 
 struct GLFWwindow;
 struct GLFWmonitor;

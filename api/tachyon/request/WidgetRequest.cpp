@@ -6,7 +6,7 @@
 
 #include <tachyon/request/WidgetRequest.hpp>
 
-#include <tachyon/msg/RequestInfoWriter.hpp>
+#include <tachyon/api/RequestInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WidgetRequest)
 

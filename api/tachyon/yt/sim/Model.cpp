@@ -7,7 +7,7 @@
 #include <yt/sim/Model.hpp>
 #include <yt/sim/ModelData.hpp>
 #include <yt/sim/ModelInfoWriter.hpp>
-#include <tachyon/msg/Post.hpp>
+#include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

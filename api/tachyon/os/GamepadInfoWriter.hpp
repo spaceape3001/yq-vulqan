@@ -8,7 +8,7 @@
 
 #include <tachyon/os/Gamepad.hpp>
 #include <tachyon/os/GamepadData.hpp>
-#include <yt/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

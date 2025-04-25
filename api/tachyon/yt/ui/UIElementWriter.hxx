@@ -7,8 +7,8 @@
 #include "UIElementWriter.hpp"
 #include <tachyon/action/StdCallbackAction.hpp>
 #include <tachyon/action/StdPostAction.hpp>
-#include <tachyon/msg/Post.hpp>
-#include <yt/api/Tachyon.hpp>
+#include <tachyon/api/Post.hpp>
+#include <tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
     

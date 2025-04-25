@@ -9,7 +9,7 @@
 #include <yq/shape/AxBox2.hpp>
 #include <yt/2D/Rendered2.hpp>
 #include <yt/2D/Rendered2Data.hpp>
-#include <yt/scene/RenderedInfoWriter.hpp>
+#include <tachyon/api/RenderedInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

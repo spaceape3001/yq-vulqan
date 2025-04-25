@@ -7,7 +7,7 @@
 #include <tachyon/os/GraphicsCard.hpp>
 #include <tachyon/os/GraphicsCardData.hpp>
 #include <tachyon/os/GraphicsCardInfoWriter.hpp>
-#include <tachyon/msg/Post.hpp>
+#include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

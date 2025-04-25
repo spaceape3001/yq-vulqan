@@ -7,7 +7,7 @@
 #include "SkyBox3.hpp"
 #include <yt/logging.hpp>
 #include <tachyon/gfx/Shader.hpp>
-#include <yt/3D/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3InfoWriter.hpp>
 
 namespace yq::tachyon {
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/3D/Spatial3.hpp>
+#include <tachyon/api/Spatial3.hpp>
 #include <tachyon/aspect/AOrientation3.hpp>
 #include <tachyon/aspect/APosition3.hpp>
 #include <tachyon/aspect/AScale3.hpp>

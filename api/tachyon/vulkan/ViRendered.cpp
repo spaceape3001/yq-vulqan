@@ -12,8 +12,8 @@
 #include <yq/stream/Text.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
-#include <yt/3D/Rendered3.hpp>
-#include <yt/3D/Rendered3Data.hpp>
+#include <tachyon/api/Rendered3.hpp>
+#include <tachyon/api/Rendered3Data.hpp>
 #include <tachyon/gfx/PushData.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/api/Rendered.hpp>

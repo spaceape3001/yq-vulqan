@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/widget/Scene3Widget.hpp>
-#include <yt/3D/Camera3.hpp>
-#include <yt/3D/Camera3Data.hpp>
-#include <yt/3D/Rendered3.hpp>
-#include <yt/3D/Rendered3Data.hpp>
-#include <yt/3D/Scene3.hpp>
-#include <yt/3D/Scene3Data.hpp>
+#include <tachyon/api/Camera3.hpp>
+#include <tachyon/api/Camera3Data.hpp>
+#include <tachyon/api/Rendered3.hpp>
+#include <tachyon/api/Rendered3Data.hpp>
+#include <tachyon/api/Scene3.hpp>
+#include <tachyon/api/Scene3Data.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <tachyon/vulkan/ViContext.hpp>

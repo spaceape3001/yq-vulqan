@@ -21,7 +21,7 @@
 #include <tachyon/rendered/Triangle3.hpp>
 #include <tachyon/rendered/Tetrahedron3.hpp>
 
-#include <yt/3D/Scene3InfoWriter.hpp>
+#include <tachyon/api/Scene3InfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>

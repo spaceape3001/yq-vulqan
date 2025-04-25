@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/3D/Camera3.hpp>
+#include <tachyon/api/Camera3.hpp>
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/units.hpp>
 

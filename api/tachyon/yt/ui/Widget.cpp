@@ -24,7 +24,7 @@
 #include <tachyon/event/window/FramebufferResizeEvent.hpp>
 #include <tachyon/request/ui/CloseRequest.hpp>
 #include <tachyon/reply/ui/CloseReply.hpp>
-#include <yt/ui/Layout.hpp>
+//#include <yt/ui/Layout.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/meta/Init.hpp>
@@ -32,11 +32,11 @@
 
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/vector/Vector4.hxx>
-#include <yt/3D/Camera3.hpp>
-#include <yt/3D/Camera3Data.hpp>
-#include <yt/3D/Rendered3Data.hpp>
-#include <yt/3D/Spatial3.hpp>
-#include <yt/3D/Spatial3Data.hpp>
+#include <tachyon/api/Camera3.hpp>
+#include <tachyon/api/Camera3Data.hpp>
+#include <tachyon/api/Rendered3Data.hpp>
+#include <tachyon/api/Spatial3.hpp>
+#include <tachyon/api/Spatial3Data.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/PushData.hpp>

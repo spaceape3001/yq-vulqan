@@ -18,16 +18,16 @@
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/api/ThreadData.hpp>
 
-#include <yt/3D/Camera3.hpp>
-#include <yt/3D/Camera3Data.hpp>
-#include <yt/3D/Light3.hpp>
-#include <yt/3D/Light3Data.hpp>
-#include <yt/3D/Rendered3.hpp>
-#include <yt/3D/Rendered3Data.hpp>
-#include <yt/3D/Scene3.hpp>
-#include <yt/3D/Scene3Data.hpp>
-#include <yt/3D/Spatial3.hpp>
-#include <yt/3D/Spatial3Data.hpp>
+#include <tachyon/api/Camera3.hpp>
+#include <tachyon/api/Camera3Data.hpp>
+#include <tachyon/api/Light3.hpp>
+#include <tachyon/api/Light3Data.hpp>
+#include <tachyon/api/Rendered3.hpp>
+#include <tachyon/api/Rendered3Data.hpp>
+#include <tachyon/api/Scene3.hpp>
+#include <tachyon/api/Scene3Data.hpp>
+#include <tachyon/api/Spatial3.hpp>
+#include <tachyon/api/Spatial3Data.hpp>
 
 #include <tachyon/app/Viewer.hpp>
 #include <tachyon/app/ViewerData.hpp>
@@ -65,10 +65,10 @@
 #include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
 
-#include <yt/sim/Model.hpp>
-#include <yt/sim/ModelData.hpp>
-#include <yt/sim/Spatial.hpp>
-#include <yt/sim/SpatialData.hpp>
+#include <tachyon/api/Model.hpp>
+#include <tachyon/api/ModelData.hpp>
+#include <tachyon/api/Spatial.hpp>
+#include <tachyon/api/SpatialData.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yt/logging.hpp>

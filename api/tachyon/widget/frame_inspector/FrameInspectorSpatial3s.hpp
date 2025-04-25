@@ -7,8 +7,8 @@
 #pragma once
 
 #include "FrameInspectorSpatials.hpp"
-#include <yt/3D/Spatial3.hpp>
-#include <yt/3D/Spatial3Data.hpp>
+#include <tachyon/api/Spatial3.hpp>
+#include <tachyon/api/Spatial3Data.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorSpatial³s : public FrameInspectorSpatials {

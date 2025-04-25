@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/spatial/SimpleSpatial3.hpp>
-#include <yt/3D/Spatial3InfoWriter.hpp>
+#include <tachyon/api/Spatial3InfoWriter.hpp>
 #include <tachyon/aspect/AOrientation3Writer.hxx>
 #include <tachyon/aspect/APosition3Writer.hxx>
 #include <tachyon/aspect/AScale3Writer.hxx>

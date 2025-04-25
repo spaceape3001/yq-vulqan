@@ -10,7 +10,7 @@
 #include <yq/shape/shape_utils.hpp>
 
 #include <tachyon/gfx/Shader.hpp>
-#include <yt/3D/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3InfoWriter.hpp>
 
 #include <yq/vector/Vector3.hxx>
 

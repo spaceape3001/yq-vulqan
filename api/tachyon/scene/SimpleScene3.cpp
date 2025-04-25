@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/scene/SimpleScene3.hpp>
-#include <yt/3D/Scene3InfoWriter.hpp>
+#include <tachyon/api/Scene3InfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SimpleScene³)
 

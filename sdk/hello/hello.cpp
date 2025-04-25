@@ -45,9 +45,9 @@
 
 #include <tachyon/command/orientation/SetOrientation3.hpp>
 #include <tachyon/rendered/Triangle3.hpp>
-#include <yt/3D/Spatial3.hpp>
+#include <tachyon/api/Spatial3.hpp>
 #include <tachyon/scene/SimpleScene3.hpp>
-#include <yt/3D/Scene3InfoWriter.hpp>
+#include <tachyon/api/Scene3InfoWriter.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <tachyon/widget/Scene3Widget.hpp>
 #include <tachyon/utility/LoggerBox.hpp>

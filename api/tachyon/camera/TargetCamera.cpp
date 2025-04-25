@@ -16,7 +16,7 @@
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector3.hxx>
-#include <yt/3D/Camera3InfoWriter.hpp>
+#include <tachyon/api/Camera3InfoWriter.hpp>
 
 namespace yq::tachyon {
     TargetCamera::TargetCamera(const Param&p) : Camera(p),

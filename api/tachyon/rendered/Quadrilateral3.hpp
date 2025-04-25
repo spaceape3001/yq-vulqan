@@ -8,7 +8,7 @@
 
 #include <tachyon/data/ColorVertexData.hpp>
 #include <tachyon/gfx/VBO.hpp>
-#include <yt/3D/Rendered3.hpp>
+#include <tachyon/api/Rendered3.hpp>
 #include <array>
 
 namespace yq {

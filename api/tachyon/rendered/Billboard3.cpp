@@ -9,7 +9,7 @@
 #include <yq/shape/AxBox2.hpp>
 
 #include <tachyon/gfx/Shader.hpp>
-#include <yt/3D/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3InfoWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 

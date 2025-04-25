@@ -7,9 +7,9 @@
 #pragma once
 
 #include "FrameInspectorRendereds.hpp"
-#include <yt/3D/Rendered3.hpp>
-#include <yt/3D/Rendered3Data.hpp>
-#include <yt/sim/Spatial.hpp>
+#include <tachyon/api/Rendered3.hpp>
+#include <tachyon/api/Rendered3Data.hpp>
+#include <tachyon/api/Spatial.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorRendered³s : public FrameInspectorRendereds {

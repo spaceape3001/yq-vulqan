@@ -26,9 +26,13 @@ add_library(${PROJECT_NAME} SHARED
     action/PostAction.cpp
     action/VisibleUIAction.cpp
 
-    api/Action.cpp
 
+    api/1D.cpp
+    api/2D.cpp
+    api/3D.cpp
+    api/Action.cpp
     api/Camera.cpp
+    api/Camera3.cpp
     api/Command.cpp
     api/Controller.cpp
     api/Delegate.cpp
@@ -36,17 +40,24 @@ add_library(${PROJECT_NAME} SHARED
     api/Frame.cpp
     api/InterfaceInfo.cpp
     api/Light.cpp    
+    api/Light3.cpp
     api/Manager.cpp
     api/Message.cpp
+    api/Model.cpp
+    api/N.cpp
     api/Perspective.cpp
     api/Post.cpp
     api/Proxy.cpp
     api/Rendered.cpp
-    #api/Rendered2.cpp
+    api/Rendered2.cpp
+    api/Rendered3.cpp
     api/Reply.cpp
     api/Request.cpp
     api/Scene.cpp
-    #api/Scene2.cpppp
+    #api/Scene2.cpp
+    api/Scene3.cpp
+    api/Spatial.cpp
+    api/Spatial3.cpp
     api/Tachyon.cpp
     api/Thread.cpp
     api/TypedID.cpp
@@ -683,22 +694,8 @@ add_library(${PROJECT_NAME} SHARED
     yt/enums.cpp
     yt/strings.cpp
     
-    yt/1D/1D.cpp
-    yt/1D/Widget1.cpp
 
-    yt/2D/2D.cpp
-    yt/2D/Rendered2.cpp
-    yt/2D/Widget2.cpp
 
-    yt/3D/3D.cpp
-    yt/3D/Camera3.cpp
-    yt/3D/Light3.cpp
-    yt/3D/Rendered3.cpp
-    yt/3D/Scene3.cpp
-    yt/3D/Spatial3.cpp
-    yt/3D/Widget3.cpp
-    
-    yt/4D/Widget4.cpp
 
 
 
@@ -707,14 +704,8 @@ add_library(${PROJECT_NAME} SHARED
 
 
 
-    yt/sim/Model.cpp
-    yt/sim/N.cpp
-    yt/sim/Spatial.cpp
-
     yt/ui/Control.cpp
     #yt/ui/Editor.cpp
-    yt/ui/ImWidget.cpp
-    #yt/ui/Layout.cpp
     yt/ui/Mini.cpp
     yt/ui/MyImGui.cpp
     yt/ui/Panel.cpp

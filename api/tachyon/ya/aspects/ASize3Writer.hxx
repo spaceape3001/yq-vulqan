@@ -7,19 +7,19 @@
 #pragma once
 
 #include <ya/aspects/ASize3.hpp>
-#include <ya/commands/size/AddSize3.hpp>
-#include <ya/commands/size/AddSizeX.hpp>
-#include <ya/commands/size/AddSizeY.hpp>
-#include <ya/commands/size/AddSizeZ.hpp>
-#include <ya/commands/size/MultiplySize.hpp>
-#include <ya/commands/size/MultiplySize3.hpp>
-#include <ya/commands/size/MultiplySizeX.hpp>
-#include <ya/commands/size/MultiplySizeY.hpp>
-#include <ya/commands/size/MultiplySizeZ.hpp>
-#include <ya/commands/size/SetSize3.hpp>
-#include <ya/commands/size/SetSizeX.hpp>
-#include <ya/commands/size/SetSizeY.hpp>
-#include <ya/commands/size/SetSizeZ.hpp>
+#include <tachyon/command/size/AddSize3.hpp>
+#include <tachyon/command/size/AddSizeX.hpp>
+#include <tachyon/command/size/AddSizeY.hpp>
+#include <tachyon/command/size/AddSizeZ.hpp>
+#include <tachyon/command/size/MultiplySize.hpp>
+#include <tachyon/command/size/MultiplySize3.hpp>
+#include <tachyon/command/size/MultiplySizeX.hpp>
+#include <tachyon/command/size/MultiplySizeY.hpp>
+#include <tachyon/command/size/MultiplySizeZ.hpp>
+#include <tachyon/command/size/SetSize3.hpp>
+#include <tachyon/command/size/SetSizeX.hpp>
+#include <tachyon/command/size/SetSizeY.hpp>
+#include <tachyon/command/size/SetSizeZ.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 

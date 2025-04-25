@@ -20,7 +20,7 @@
 #include <yq/vector/Quaternion3.hxx>
 
 #include <yt/3D/Camera3InfoWriter.hpp>
-//#include <ya/commands/CameraPitchCommand.hpp>
+//#include <tachyon/command/CameraPitchCommand.hpp>
 
 namespace yq::tachyon {
     SpaceCamera::SpaceCamera(const Param&p) : Camera³(p),

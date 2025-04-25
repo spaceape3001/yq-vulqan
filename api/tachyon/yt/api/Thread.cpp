@@ -16,11 +16,11 @@
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yt/logging.hpp>
-#include <ya/commands/io/SaveCommand.hpp>
-#include <ya/commands/thread/ScheduleCommand.hpp>
-#include <ya/events/thread/ThreadAddTachyonEvent.hpp>
-#include <ya/replies/io/SaveReply.hpp>
-#include <ya/requests/io/SaveRequest.hpp>
+#include <tachyon/command/io/SaveCommand.hpp>
+#include <tachyon/command/thread/ScheduleCommand.hpp>
+#include <tachyon/event/thread/ThreadAddTachyonEvent.hpp>
+#include <tachyon/reply/io/SaveReply.hpp>
+#include <tachyon/request/io/SaveRequest.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

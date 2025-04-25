@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/POrientation3.hpp>
-#include <ya/commands/orientation/RollBy.hpp>
-#include <ya/commands/orientation/PitchBy.hpp>
-#include <ya/commands/orientation/RotateBy3.hpp>
-#include <ya/commands/orientation/SetHeading.hpp>
-#include <ya/commands/orientation/SetOrientation3.hpp>
-#include <ya/commands/orientation/SetPitch.hpp>
-#include <ya/commands/orientation/SetRoll.hpp>
-#include <ya/commands/orientation/YawBy.hpp>
+#include <tachyon/command/orientation/RollBy.hpp>
+#include <tachyon/command/orientation/PitchBy.hpp>
+#include <tachyon/command/orientation/RotateBy3.hpp>
+#include <tachyon/command/orientation/SetHeading.hpp>
+#include <tachyon/command/orientation/SetOrientation3.hpp>
+#include <tachyon/command/orientation/SetPitch.hpp>
+#include <tachyon/command/orientation/SetRoll.hpp>
+#include <tachyon/command/orientation/YawBy.hpp>
 #include <yq/vector/Quaternion3.hxx>
 
 namespace yq::tachyon {

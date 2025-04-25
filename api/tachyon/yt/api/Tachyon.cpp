@@ -15,28 +15,28 @@
 
 #include <tachyon/msg/Post.hpp>
 
-#include <ya/commands/sim/PauseCommand.hpp>
-#include <ya/commands/sim/ResumeCommand.hpp>
-#include <ya/commands/tachyon/AddChildCommand.hpp>
-#include <ya/commands/tachyon/DestroyCommand.hpp>
-//#include <ya/commands/tachyonProxyCommand.hpp>
-#include <ya/commands/tachyon/RemoveChildCommand.hpp>
-#include <ya/commands/tachyon/RethreadCommand.hpp>
-#include <ya/commands/tachyon/SetNameCommand.hpp>
-#include <ya/commands/tachyon/SetParentCommand.hpp>
-#include <ya/commands/tachyon/SnoopCommand.hpp>
-#include <ya/commands/tachyon/SubscribeCommand.hpp>
-#include <ya/commands/tachyon/UnsnoopCommand.hpp>
-#include <ya/commands/tachyon/UnsubscribeCommand.hpp>
+#include <tachyon/command/sim/PauseCommand.hpp>
+#include <tachyon/command/sim/ResumeCommand.hpp>
+#include <tachyon/command/tachyon/AddChildCommand.hpp>
+#include <tachyon/command/tachyon/DestroyCommand.hpp>
+//#include <tachyon/command/tachyonProxyCommand.hpp>
+#include <tachyon/command/tachyon/RemoveChildCommand.hpp>
+#include <tachyon/command/tachyon/RethreadCommand.hpp>
+#include <tachyon/command/tachyon/SetNameCommand.hpp>
+#include <tachyon/command/tachyon/SetParentCommand.hpp>
+#include <tachyon/command/tachyon/SnoopCommand.hpp>
+#include <tachyon/command/tachyon/SubscribeCommand.hpp>
+#include <tachyon/command/tachyon/UnsnoopCommand.hpp>
+#include <tachyon/command/tachyon/UnsubscribeCommand.hpp>
 
-#include <ya/events/sim/PauseEvent.hpp>
-#include <ya/events/sim/ResumeEvent.hpp>
-#include <ya/events/tachyon/ChildAddEvent.hpp>
-#include <ya/events/tachyon/ChildRemoveEvent.hpp>
-#include <ya/events/tachyon/DestroyEvent.hpp>
-#include <ya/events/tachyon/DirtyEvent.hpp>
-#include <ya/events/tachyon/NameChangeEvent.hpp>
-#include <ya/events/tachyon/ParentChangeEvent.hpp>
+#include <tachyon/event/sim/PauseEvent.hpp>
+#include <tachyon/event/sim/ResumeEvent.hpp>
+#include <tachyon/event/tachyon/ChildAddEvent.hpp>
+#include <tachyon/event/tachyon/ChildRemoveEvent.hpp>
+#include <tachyon/event/tachyon/DestroyEvent.hpp>
+#include <tachyon/event/tachyon/DirtyEvent.hpp>
+#include <tachyon/event/tachyon/NameChangeEvent.hpp>
+#include <tachyon/event/tachyon/ParentChangeEvent.hpp>
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>

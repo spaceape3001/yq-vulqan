@@ -5,17 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/AScale2.hpp>
-#include <ya/commands/scale/AddScale2.hpp>
-#include <ya/commands/scale/AddScaleX.hpp>
-#include <ya/commands/scale/AddScaleY.hpp>
-#include <ya/commands/scale/MultiplyScale.hpp>
-#include <ya/commands/scale/MultiplyScale2.hpp>
-#include <ya/commands/scale/MultiplyScaleX.hpp>
-#include <ya/commands/scale/MultiplyScaleY.hpp>
-#include <ya/commands/scale/SetScale2.hpp>
-#include <ya/commands/scale/SetScaleX.hpp>
-#include <ya/commands/scale/SetScaleY.hpp>
-#include <ya/events/spatial/Scale2Event.hpp>
+#include <tachyon/command/scale/AddScale2.hpp>
+#include <tachyon/command/scale/AddScaleX.hpp>
+#include <tachyon/command/scale/AddScaleY.hpp>
+#include <tachyon/command/scale/MultiplyScale.hpp>
+#include <tachyon/command/scale/MultiplyScale2.hpp>
+#include <tachyon/command/scale/MultiplyScaleX.hpp>
+#include <tachyon/command/scale/MultiplyScaleY.hpp>
+#include <tachyon/command/scale/SetScale2.hpp>
+#include <tachyon/command/scale/SetScaleX.hpp>
+#include <tachyon/command/scale/SetScaleY.hpp>
+#include <tachyon/event/spatial/Scale2Event.hpp>
 
 namespace yq::tachyon {
     AScale²::AScale²()

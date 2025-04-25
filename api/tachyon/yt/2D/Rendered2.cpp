@@ -6,7 +6,7 @@
 
 #include <yt/2D/Rendered2.hpp>
 #include <yt/2D/Rendered2InfoWriter.hpp>
-#include <ya/commands/SpatialCommand.hpp>
+#include <tachyon/command/SpatialCommand.hpp>
 #include <yq/tensor/Tensor44.hxx>
 #include <yt/2D/2DWriter.hxx>
 #include <yq/meta/Init.hpp>

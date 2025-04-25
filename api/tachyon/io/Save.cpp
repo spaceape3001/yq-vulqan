@@ -22,8 +22,8 @@
 #include <tachyon/io/save/SaveThread.hpp>
 #include <yq/asset/Asset.hpp>
 #include <yq/file/FileResolver.hpp>
-#include <ya/commands/tachyon/SetParentCommand.hpp>
-#include <ya/commands/thread/ScheduleCommand.hpp>
+#include <tachyon/command/tachyon/SetParentCommand.hpp>
+#include <tachyon/command/thread/ScheduleCommand.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <yt/errors.hpp>
 

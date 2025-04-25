@@ -8,9 +8,9 @@
 #include "CameraScene.hpp"
 
 #include <ya/cameras/SpaceCamera.hpp>
-#include <ya/commands/controller/ListenCommand.hpp>
-#include <ya/commands/io/SaveCommand.hpp>
-#include <ya/commands/ui/CloseCommand.hpp>
+#include <tachyon/command/controller/ListenCommand.hpp>
+#include <tachyon/command/io/SaveCommand.hpp>
+#include <tachyon/command/ui/CloseCommand.hpp>
 #include <ya/controllers/Space3Controller.hpp>
 #include <ya/widgets/FrameInspector.hpp>
 #include <ya/widgets/SpaceCameraRemote.hpp>

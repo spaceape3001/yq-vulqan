@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PScale2.hpp>
-#include <ya/commands/scale/AddScale2.hpp>
-#include <ya/commands/scale/AddScaleX.hpp>
-#include <ya/commands/scale/AddScaleY.hpp>
-#include <ya/commands/scale/MultiplyScale.hpp>
-#include <ya/commands/scale/MultiplyScale2.hpp>
-#include <ya/commands/scale/MultiplyScaleX.hpp>
-#include <ya/commands/scale/MultiplyScaleY.hpp>
-#include <ya/commands/scale/SetScale2.hpp>
-#include <ya/commands/scale/SetScaleX.hpp>
-#include <ya/commands/scale/SetScaleY.hpp>
+#include <tachyon/command/scale/AddScale2.hpp>
+#include <tachyon/command/scale/AddScaleX.hpp>
+#include <tachyon/command/scale/AddScaleY.hpp>
+#include <tachyon/command/scale/MultiplyScale.hpp>
+#include <tachyon/command/scale/MultiplyScale2.hpp>
+#include <tachyon/command/scale/MultiplyScaleX.hpp>
+#include <tachyon/command/scale/MultiplyScaleY.hpp>
+#include <tachyon/command/scale/SetScale2.hpp>
+#include <tachyon/command/scale/SetScaleX.hpp>
+#include <tachyon/command/scale/SetScaleY.hpp>
 
 namespace yq::tachyon {
     PScale²::PScale²(const IScale²& i) : m_scale(i.scale())

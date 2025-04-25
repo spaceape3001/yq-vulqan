@@ -8,8 +8,8 @@
 #include <tachyon/os/WindowData.hpp>
 #include <tachyon/os/WindowInfoWriter.hpp>
 #include <tachyon/msg/Post.hpp>
-#include <ya/commands/ui/HideCommand.hpp>
-#include <ya/commands/ui/ShowCommand.hpp>
+#include <tachyon/command/ui/HideCommand.hpp>
+#include <tachyon/command/ui/ShowCommand.hpp>
 #include <yq/meta/Init.hpp>
 #include <tachyon/vulkan/ViSurface.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>

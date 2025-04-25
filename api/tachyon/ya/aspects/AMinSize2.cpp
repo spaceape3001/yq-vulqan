@@ -5,17 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/AMinSize2.hpp>
-#include <ya/commands/size/AddMinSize2.hpp>
-#include <ya/commands/size/AddMinSizeX.hpp>
-#include <ya/commands/size/AddMinSizeY.hpp>
-#include <ya/commands/size/MultiplyMinSize.hpp>
-#include <ya/commands/size/MultiplyMinSize2.hpp>
-#include <ya/commands/size/MultiplyMinSizeX.hpp>
-#include <ya/commands/size/MultiplyMinSizeY.hpp>
-#include <ya/commands/size/SetMinSize2.hpp>
-#include <ya/commands/size/SetMinSizeX.hpp>
-#include <ya/commands/size/SetMinSizeY.hpp>
-#include <ya/events/spatial/Size2Event.hpp>
+#include <tachyon/command/size/AddMinSize2.hpp>
+#include <tachyon/command/size/AddMinSizeX.hpp>
+#include <tachyon/command/size/AddMinSizeY.hpp>
+#include <tachyon/command/size/MultiplyMinSize.hpp>
+#include <tachyon/command/size/MultiplyMinSize2.hpp>
+#include <tachyon/command/size/MultiplyMinSizeX.hpp>
+#include <tachyon/command/size/MultiplyMinSizeY.hpp>
+#include <tachyon/command/size/SetMinSize2.hpp>
+#include <tachyon/command/size/SetMinSizeX.hpp>
+#include <tachyon/command/size/SetMinSizeY.hpp>
+#include <tachyon/event/spatial/Size2Event.hpp>
 
 
 namespace yq::tachyon {

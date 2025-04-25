@@ -19,8 +19,347 @@ add_library(${PROJECT_NAME} SHARED
 
     #   ALPHABETICAL
     
+    command/AddChildCommand.cpp
+    command/AppCommand.cpp
+    command/AppDeleteViewerCommand.cpp
+    command/CameraCommand.cpp
+    command/ControllerCommand.cpp
+    command/CursorCommand.cpp
+    command/EmptyCommand.cpp
+    command/GamepadCommand.cpp
+    command/GLFWCommand.cpp
+    command/IOCommand.cpp
+    command/JoystickCommand.cpp
+    command/LightCommand.cpp
+    command/MouseCommand.cpp
+    #command/SetParentCommand.cpp
+    command/SimCommand.cpp
+    command/SpatialCommand.cpp
+    command/TachyonCommand.cpp
+    command/ThreadCommand.cpp
+    command/UICommand.cpp
+    command/ViewerCommand.cpp
+    command/WidgetCommand.cpp
+    command/WindowCommand.cpp
+    
+    command/aabb/SetAABB1.cpp
+    command/aabb/SetAABB2.cpp
+    command/aabb/SetAABB3.cpp
+    command/aabb/SetAABB4.cpp
+    
+    command/camera/CameraSetScreen.cpp
+
+    command/controller/ControlCommand.cpp
+    command/controller/DisableCommand.cpp
+    command/controller/EnableCommand.cpp
+    command/controller/ListenCommand.cpp
+    command/controller/UncontrolCommand.cpp
+    command/controller/UnlistenCommand.cpp
+
+    command/cursor/CursorCaptureCommand.cpp
+    command/cursor/CursorDisableCommand.cpp
+    command/cursor/CursorHideCommand.cpp
+    command/cursor/CursorNormalCommand.cpp
+
+    command/gamepad/GamepadZeroCommand.cpp
+
+    command/io/SaveCommand.cpp
+
+    command/joystick/JoystickZeroCommand.cpp
+
+    command/sim/ResumeCommand.cpp
+    command/sim/PauseCommand.cpp
+
+    command/orientation/PitchBy.cpp
+    command/orientation/RotateBy3.cpp
+    command/orientation/RollBy.cpp
+    command/orientation/SetHeading.cpp
+    command/orientation/SetOrientation3.cpp
+    command/orientation/SetPitch.cpp
+    command/orientation/SetRoll.cpp
+    command/orientation/YawBy.cpp
+
+    command/position/AddPosition1.cpp
+    command/position/AddPosition2.cpp
+    command/position/AddPosition3.cpp
+    command/position/AddPosition4.cpp
+    command/position/AddPositionW.cpp
+    command/position/AddPositionX.cpp
+    command/position/AddPositionY.cpp
+    command/position/AddPositionZ.cpp
+    command/position/MoveBy1.cpp
+    command/position/MoveBy2.cpp
+    command/position/MoveBy3.cpp
+    command/position/MoveBy4.cpp
+    command/position/MoveByW.cpp
+    command/position/MoveByX.cpp
+    command/position/MoveByY.cpp
+    command/position/MoveByZ.cpp
+    command/position/MultiplyPosition.cpp
+    command/position/MultiplyPosition1.cpp
+    command/position/MultiplyPosition2.cpp
+    command/position/MultiplyPosition3.cpp
+    command/position/MultiplyPosition4.cpp
+    command/position/MultiplyPositionW.cpp
+    command/position/MultiplyPositionX.cpp
+    command/position/MultiplyPositionY.cpp
+    command/position/MultiplyPositionZ.cpp
+    command/position/SetPosition1.cpp
+    command/position/SetPosition2.cpp
+    command/position/SetPosition3.cpp
+    command/position/SetPosition4.cpp
+    command/position/SetPositionW.cpp
+    command/position/SetPositionX.cpp
+    command/position/SetPositionY.cpp
+    command/position/SetPositionZ.cpp
+
+    command/scale/AddScale1.cpp
+    command/scale/AddScale2.cpp
+    command/scale/AddScale3.cpp
+    command/scale/AddScaleX.cpp
+    command/scale/AddScaleY.cpp
+    command/scale/AddScaleZ.cpp
+    command/scale/MultiplyScale.cpp
+    command/scale/MultiplyScale1.cpp
+    command/scale/MultiplyScale2.cpp
+    command/scale/MultiplyScale3.cpp
+    command/scale/MultiplyScaleX.cpp
+    command/scale/MultiplyScaleY.cpp
+    command/scale/MultiplyScaleZ.cpp
+    command/scale/SetScale1.cpp
+    command/scale/SetScale2.cpp
+    command/scale/SetScale3.cpp
+    command/scale/SetScaleX.cpp
+    command/scale/SetScaleY.cpp
+    command/scale/SetScaleZ.cpp
+
+
+    command/size/AddMaxSize1.cpp
+    command/size/AddMaxSize2.cpp
+    command/size/AddMaxSize3.cpp
+    command/size/AddMaxSize4.cpp
+    command/size/AddMaxSizeW.cpp
+    command/size/AddMaxSizeX.cpp
+    command/size/AddMaxSizeY.cpp
+    command/size/AddMaxSizeZ.cpp
+    command/size/AddMinSize1.cpp
+    command/size/AddMinSize2.cpp
+    command/size/AddMinSize3.cpp
+    command/size/AddMinSize4.cpp
+    command/size/AddMinSizeW.cpp
+    command/size/AddMinSizeX.cpp
+    command/size/AddMinSizeY.cpp
+    command/size/AddMinSizeZ.cpp
+    command/size/AddSize1.cpp
+    command/size/AddSize2.cpp
+    command/size/AddSize3.cpp
+    command/size/AddSize4.cpp
+    command/size/AddSizeW.cpp
+    command/size/AddSizeX.cpp
+    command/size/AddSizeY.cpp
+    command/size/AddSizeZ.cpp
+    command/size/MultiplyMaxSize.cpp
+    command/size/MultiplyMaxSize1.cpp
+    command/size/MultiplyMaxSize2.cpp
+    command/size/MultiplyMaxSize3.cpp
+    command/size/MultiplyMaxSize4.cpp
+    command/size/MultiplyMaxSizeW.cpp
+    command/size/MultiplyMaxSizeX.cpp
+    command/size/MultiplyMaxSizeY.cpp
+    command/size/MultiplyMaxSizeZ.cpp
+    command/size/MultiplyMinSize.cpp
+    command/size/MultiplyMinSize1.cpp
+    command/size/MultiplyMinSize2.cpp
+    command/size/MultiplyMinSize3.cpp
+    command/size/MultiplyMinSize4.cpp
+    command/size/MultiplyMinSizeW.cpp
+    command/size/MultiplyMinSizeX.cpp
+    command/size/MultiplyMinSizeY.cpp
+    command/size/MultiplyMinSizeZ.cpp
+    command/size/MultiplySize.cpp
+    command/size/MultiplySize1.cpp
+    command/size/MultiplySize2.cpp
+    command/size/MultiplySize3.cpp
+    command/size/MultiplySize4.cpp
+    command/size/MultiplySizeW.cpp
+    command/size/MultiplySizeX.cpp
+    command/size/MultiplySizeY.cpp
+    command/size/MultiplySizeZ.cpp
+    command/size/SetMaxSize1.cpp
+    command/size/SetMaxSize2.cpp
+    command/size/SetMaxSize3.cpp
+    command/size/SetMaxSize4.cpp
+    command/size/SetMaxSizeW.cpp
+    command/size/SetMaxSizeX.cpp
+    command/size/SetMaxSizeY.cpp
+    command/size/SetMaxSizeZ.cpp
+    command/size/SetMinSize1.cpp
+    command/size/SetMinSize2.cpp
+    command/size/SetMinSize3.cpp
+    command/size/SetMinSize4.cpp
+    command/size/SetMinSizeW.cpp
+    command/size/SetMinSizeX.cpp
+    command/size/SetMinSizeY.cpp
+    command/size/SetMinSizeZ.cpp
+    command/size/SetSize1.cpp
+    command/size/SetSize2.cpp
+    command/size/SetSize3.cpp
+    command/size/SetSize4.cpp
+    command/size/SetSizeW.cpp
+    command/size/SetSizeX.cpp
+    command/size/SetSizeY.cpp
+    command/size/SetSizeZ.cpp
+    
+    command/spatial/AABBCommand.cpp
+    command/spatial/OrientationCommand.cpp
+    command/spatial/PositionCommand.cpp
+    command/spatial/ScaleCommand.cpp
+    command/spatial/SizeCommand.cpp
+    
+    command/tachyon/AddChildCommand.cpp
+    command/tachyon/DestroyCommand.cpp
+    command/tachyon/RemoveChildCommand.cpp
+    command/tachyon/RethreadCommand.cpp
+    command/tachyon/SetNameCommand.cpp
+    command/tachyon/SetParentCommand.cpp
+    command/tachyon/SnoopCommand.cpp
+    command/tachyon/SubscribeCommand.cpp
+    command/tachyon/UnsnoopCommand.cpp
+    command/tachyon/UnsubscribeCommand.cpp
+    
+    command/thread/ScheduleCommand.cpp
+    
+    command/ui/AspectCommand.cpp
+    command/ui/AttentionCommand.cpp
+    command/ui/CloseCommand.cpp
+    command/ui/FloatCommand.cpp
+    command/ui/FocusCommand.cpp
+    command/ui/HideCommand.cpp
+    command/ui/IconifyCommand.cpp
+    command/ui/MaximizeCommand.cpp
+    command/ui/RestoreCommand.cpp
+    command/ui/ShowCommand.cpp
+    command/ui/StartupCommand.cpp
+    command/ui/TitleCommand.cpp
+    command/ui/UnfloatCommand.cpp
+
+    command/viewer/SetWidgetCommand.cpp
+    
+    command/widget/SetViewer.cpp
+
     enum/Cardinal.cpp
 
+
+    event/AppEvent.cpp
+    event/CameraEvent.cpp
+    event/CursorEvent.cpp
+    event/EmptyEvent.cpp
+    event/GamepadEvent.cpp
+    event/InputEvent.cpp
+    event/IOEvent.cpp
+    event/JoystickEvent.cpp
+    event/KeyboardEvent.cpp
+    event/MonitorEvent.cpp
+    event/MouseEvent.cpp
+    event/OSEvent.cpp
+    event/SimEvent.cpp
+    event/SpatialEvent.cpp
+    event/TachyonEvent.cpp
+    event/ThreadEvent.cpp
+    event/UIEvent.cpp
+    event/ViewerEvent.cpp
+    event/VulqanEvent.cpp
+    event/WidgetEvent.cpp
+    event/WindowEvent.cpp
+    
+    event/cursor/CursorCaptureEvent.cpp
+    event/cursor/CursorDisableEvent.cpp
+    event/cursor/CursorHideEvent.cpp
+    event/cursor/CursorNormalEvent.cpp
+    
+    event/gamepad/GamepadAxisEvent.cpp
+    event/gamepad/GamepadConnectEvent.cpp
+    event/gamepad/GamepadDisconnectEvent.cpp
+    event/gamepad/GamepadHatEvent.cpp
+    event/gamepad/GamepadPressEvent.cpp
+    event/gamepad/GamepadReleaseEvent.cpp
+    event/gamepad/GamepadZeroEvent.cpp
+
+    event/joystick/JoystickAxisEvent.cpp
+    event/joystick/JoystickConnectEvent.cpp
+    event/joystick/JoystickDisconnectEvent.cpp
+    event/joystick/JoystickHatEvent.cpp
+    event/joystick/JoystickPressEvent.cpp
+    event/joystick/JoystickReleaseEvent.cpp
+    event/joystick/JoystickZeroEvent.cpp
+
+    event/keyboard/KeyCharacterEvent.cpp
+    event/keyboard/KeyPressEvent.cpp
+    event/keyboard/KeyReleaseEvent.cpp
+    event/keyboard/KeyRepeatEvent.cpp
+    
+    event/monitor/MonitorConnectEvent.cpp
+    event/monitor/MonitorDisconnectEvent.cpp
+
+    event/mouse/MouseDropEvent.cpp
+    event/mouse/MouseEnterEvent.cpp
+    event/mouse/MouseLeaveEvent.cpp
+    event/mouse/MouseMoveEvent.cpp
+    event/mouse/MousePressEvent.cpp
+    event/mouse/MouseReleaseEvent.cpp
+    event/mouse/MouseScrollEvent.cpp
+
+    event/spatial/AABB1Event.cpp
+    event/spatial/AABB2Event.cpp
+    event/spatial/AABB3Event.cpp
+    event/spatial/AABB4Event.cpp
+    event/spatial/MaxSize1Event.cpp
+    event/spatial/MaxSize2Event.cpp
+    event/spatial/MaxSize3Event.cpp
+    event/spatial/MaxSize4Event.cpp
+    event/spatial/MinSize1Event.cpp
+    event/spatial/MinSize2Event.cpp
+    event/spatial/MinSize3Event.cpp
+    event/spatial/MinSize4Event.cpp
+    event/spatial/Position1Event.cpp
+    event/spatial/Position2Event.cpp
+    event/spatial/Position3Event.cpp
+    event/spatial/Position4Event.cpp
+    event/spatial/Orientation3Event.cpp
+    event/spatial/Scale1Event.cpp
+    event/spatial/Scale2Event.cpp
+    event/spatial/Scale3Event.cpp
+    event/spatial/Size1Event.cpp
+    event/spatial/Size2Event.cpp
+    event/spatial/Size3Event.cpp
+    event/spatial/Size4Event.cpp
+    
+    event/sim/PauseEvent.cpp
+    event/sim/ResumeEvent.cpp
+    event/sim/TickEvent.cpp
+    
+    event/tachyon/ChildAddEvent.cpp
+    event/tachyon/ChildRemoveEvent.cpp
+    event/tachyon/DestroyEvent.cpp
+    event/tachyon/DirtyEvent.cpp
+    event/tachyon/NameChangeEvent.cpp
+    event/tachyon/ParentChangeEvent.cpp
+    
+    event/thread/ThreadAddTachyonEvent.cpp
+
+    event/ui/AspectEvent.cpp
+    event/ui/DefocusEvent.cpp
+    event/ui/CloseEvent.cpp
+    event/ui/FocusEvent.cpp
+    event/ui/HideEvent.cpp
+    event/ui/IconifyEvent.cpp
+    event/ui/MaximizeEvent.cpp
+    event/ui/RestoreEvent.cpp
+    event/ui/ShowEvent.cpp
+    event/ui/TitleEvent.cpp
+    
+    event/window/FramebufferResizeEvent.cpp
+    
     gfx/Buffer.cpp
     gfx/Pipeline.cpp
     gfx/PipelineUtils.cpp
@@ -72,6 +411,53 @@ add_library(${PROJECT_NAME} SHARED
     os/glfw/MonitorGLFW.cpp
     os/glfw/MouseGLFW.cpp
     os/glfw/WindowGLFW.cpp
+
+
+    reply/AnyReply.cpp
+    reply/AppReply.cpp
+    reply/CameraReply.cpp
+    reply/EmptyReply.cpp
+    reply/GraphicsCardReply.cpp
+    reply/IOReply.cpp
+    reply/SimReply.cpp
+    reply/StringReply.cpp
+    reply/TachyonReply.cpp
+    reply/UIReply.cpp
+    reply/ViewerReply.cpp
+    #reply/ViewerWidgetReply.cpp
+    reply/WindowReply.cpp
+    
+    reply/app/OpenFileReply.cpp
+    reply/app/SaveFileReply.cpp
+    
+    reply/graphics_card/GetDeviceReply.cpp
+    
+    reply/io/SaveReply.cpp
+    
+    reply/ui/CloseReply.cpp
+    
+    request/AppRequest.cpp
+    request/CameraRequest.cpp
+    request/EmptyRequest.cpp
+    request/GraphicsCardRequest.cpp
+    request/IORequest.cpp
+    request/SimRequest.cpp
+    request/TachyonRequest.cpp
+    request/UIRequest.cpp
+    request/ViewerRequest.cpp
+    request/WidgetRequest.cpp
+    #request/WindowRefreshRequest.cpp
+    request/WindowRequest.cpp
+    
+    request/app/OpenFileRequest.cpp
+    request/app/SaveFileRequest.cpp
+    
+    request/graphics_card/GetDeviceRequest.cpp
+    
+    request/io/SaveRequest.cpp
+    
+    request/ui/CloseRequest.cpp
+    request/ui/RefreshRequest.cpp
     
     vulkan/vulqan.cpp
     vulkan/VulqanGPU.cpp
@@ -230,233 +616,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/cameras/SpaceCamera.cpp
     ya/cameras/TargetCamera.cpp
 
-    ya/commands/AddChildCommand.cpp
-    ya/commands/AppCommand.cpp
-    ya/commands/AppDeleteViewerCommand.cpp
-    ya/commands/CameraCommand.cpp
-    ya/commands/ControllerCommand.cpp
-    ya/commands/CursorCommand.cpp
-    ya/commands/EmptyCommand.cpp
-    ya/commands/GamepadCommand.cpp
-    ya/commands/GLFWCommand.cpp
-    ya/commands/IOCommand.cpp
-    ya/commands/JoystickCommand.cpp
-    ya/commands/LightCommand.cpp
-    ya/commands/MouseCommand.cpp
-    #ya/commands/SetParentCommand.cpp
-    ya/commands/SimCommand.cpp
-    ya/commands/SpatialCommand.cpp
-    ya/commands/TachyonCommand.cpp
-    ya/commands/ThreadCommand.cpp
-    ya/commands/UICommand.cpp
-    ya/commands/ViewerCommand.cpp
-    ya/commands/WidgetCommand.cpp
-    ya/commands/WindowCommand.cpp
-    
-    ya/commands/aabb/SetAABB1.cpp
-    ya/commands/aabb/SetAABB2.cpp
-    ya/commands/aabb/SetAABB3.cpp
-    ya/commands/aabb/SetAABB4.cpp
-    
-    ya/commands/camera/CameraSetScreen.cpp
-
-    ya/commands/controller/ControlCommand.cpp
-    ya/commands/controller/DisableCommand.cpp
-    ya/commands/controller/EnableCommand.cpp
-    ya/commands/controller/ListenCommand.cpp
-    ya/commands/controller/UncontrolCommand.cpp
-    ya/commands/controller/UnlistenCommand.cpp
-
-    ya/commands/cursor/CursorCaptureCommand.cpp
-    ya/commands/cursor/CursorDisableCommand.cpp
-    ya/commands/cursor/CursorHideCommand.cpp
-    ya/commands/cursor/CursorNormalCommand.cpp
-
-    ya/commands/gamepad/GamepadZeroCommand.cpp
-
-    ya/commands/io/SaveCommand.cpp
-
-    ya/commands/joystick/JoystickZeroCommand.cpp
-
-    ya/commands/sim/ResumeCommand.cpp
-    ya/commands/sim/PauseCommand.cpp
-
-    ya/commands/orientation/PitchBy.cpp
-    ya/commands/orientation/RotateBy3.cpp
-    ya/commands/orientation/RollBy.cpp
-    ya/commands/orientation/SetHeading.cpp
-    ya/commands/orientation/SetOrientation3.cpp
-    ya/commands/orientation/SetPitch.cpp
-    ya/commands/orientation/SetRoll.cpp
-    ya/commands/orientation/YawBy.cpp
-
-    ya/commands/position/AddPosition1.cpp
-    ya/commands/position/AddPosition2.cpp
-    ya/commands/position/AddPosition3.cpp
-    ya/commands/position/AddPosition4.cpp
-    ya/commands/position/AddPositionW.cpp
-    ya/commands/position/AddPositionX.cpp
-    ya/commands/position/AddPositionY.cpp
-    ya/commands/position/AddPositionZ.cpp
-    ya/commands/position/MoveBy1.cpp
-    ya/commands/position/MoveBy2.cpp
-    ya/commands/position/MoveBy3.cpp
-    ya/commands/position/MoveBy4.cpp
-    ya/commands/position/MoveByW.cpp
-    ya/commands/position/MoveByX.cpp
-    ya/commands/position/MoveByY.cpp
-    ya/commands/position/MoveByZ.cpp
-    ya/commands/position/MultiplyPosition.cpp
-    ya/commands/position/MultiplyPosition1.cpp
-    ya/commands/position/MultiplyPosition2.cpp
-    ya/commands/position/MultiplyPosition3.cpp
-    ya/commands/position/MultiplyPosition4.cpp
-    ya/commands/position/MultiplyPositionW.cpp
-    ya/commands/position/MultiplyPositionX.cpp
-    ya/commands/position/MultiplyPositionY.cpp
-    ya/commands/position/MultiplyPositionZ.cpp
-    ya/commands/position/SetPosition1.cpp
-    ya/commands/position/SetPosition2.cpp
-    ya/commands/position/SetPosition3.cpp
-    ya/commands/position/SetPosition4.cpp
-    ya/commands/position/SetPositionW.cpp
-    ya/commands/position/SetPositionX.cpp
-    ya/commands/position/SetPositionY.cpp
-    ya/commands/position/SetPositionZ.cpp
-
-    ya/commands/scale/AddScale1.cpp
-    ya/commands/scale/AddScale2.cpp
-    ya/commands/scale/AddScale3.cpp
-    ya/commands/scale/AddScaleX.cpp
-    ya/commands/scale/AddScaleY.cpp
-    ya/commands/scale/AddScaleZ.cpp
-    ya/commands/scale/MultiplyScale.cpp
-    ya/commands/scale/MultiplyScale1.cpp
-    ya/commands/scale/MultiplyScale2.cpp
-    ya/commands/scale/MultiplyScale3.cpp
-    ya/commands/scale/MultiplyScaleX.cpp
-    ya/commands/scale/MultiplyScaleY.cpp
-    ya/commands/scale/MultiplyScaleZ.cpp
-    ya/commands/scale/SetScale1.cpp
-    ya/commands/scale/SetScale2.cpp
-    ya/commands/scale/SetScale3.cpp
-    ya/commands/scale/SetScaleX.cpp
-    ya/commands/scale/SetScaleY.cpp
-    ya/commands/scale/SetScaleZ.cpp
-
-
-    ya/commands/size/AddMaxSize1.cpp
-    ya/commands/size/AddMaxSize2.cpp
-    ya/commands/size/AddMaxSize3.cpp
-    ya/commands/size/AddMaxSize4.cpp
-    ya/commands/size/AddMaxSizeW.cpp
-    ya/commands/size/AddMaxSizeX.cpp
-    ya/commands/size/AddMaxSizeY.cpp
-    ya/commands/size/AddMaxSizeZ.cpp
-    ya/commands/size/AddMinSize1.cpp
-    ya/commands/size/AddMinSize2.cpp
-    ya/commands/size/AddMinSize3.cpp
-    ya/commands/size/AddMinSize4.cpp
-    ya/commands/size/AddMinSizeW.cpp
-    ya/commands/size/AddMinSizeX.cpp
-    ya/commands/size/AddMinSizeY.cpp
-    ya/commands/size/AddMinSizeZ.cpp
-    ya/commands/size/AddSize1.cpp
-    ya/commands/size/AddSize2.cpp
-    ya/commands/size/AddSize3.cpp
-    ya/commands/size/AddSize4.cpp
-    ya/commands/size/AddSizeW.cpp
-    ya/commands/size/AddSizeX.cpp
-    ya/commands/size/AddSizeY.cpp
-    ya/commands/size/AddSizeZ.cpp
-    ya/commands/size/MultiplyMaxSize.cpp
-    ya/commands/size/MultiplyMaxSize1.cpp
-    ya/commands/size/MultiplyMaxSize2.cpp
-    ya/commands/size/MultiplyMaxSize3.cpp
-    ya/commands/size/MultiplyMaxSize4.cpp
-    ya/commands/size/MultiplyMaxSizeW.cpp
-    ya/commands/size/MultiplyMaxSizeX.cpp
-    ya/commands/size/MultiplyMaxSizeY.cpp
-    ya/commands/size/MultiplyMaxSizeZ.cpp
-    ya/commands/size/MultiplyMinSize.cpp
-    ya/commands/size/MultiplyMinSize1.cpp
-    ya/commands/size/MultiplyMinSize2.cpp
-    ya/commands/size/MultiplyMinSize3.cpp
-    ya/commands/size/MultiplyMinSize4.cpp
-    ya/commands/size/MultiplyMinSizeW.cpp
-    ya/commands/size/MultiplyMinSizeX.cpp
-    ya/commands/size/MultiplyMinSizeY.cpp
-    ya/commands/size/MultiplyMinSizeZ.cpp
-    ya/commands/size/MultiplySize.cpp
-    ya/commands/size/MultiplySize1.cpp
-    ya/commands/size/MultiplySize2.cpp
-    ya/commands/size/MultiplySize3.cpp
-    ya/commands/size/MultiplySize4.cpp
-    ya/commands/size/MultiplySizeW.cpp
-    ya/commands/size/MultiplySizeX.cpp
-    ya/commands/size/MultiplySizeY.cpp
-    ya/commands/size/MultiplySizeZ.cpp
-    ya/commands/size/SetMaxSize1.cpp
-    ya/commands/size/SetMaxSize2.cpp
-    ya/commands/size/SetMaxSize3.cpp
-    ya/commands/size/SetMaxSize4.cpp
-    ya/commands/size/SetMaxSizeW.cpp
-    ya/commands/size/SetMaxSizeX.cpp
-    ya/commands/size/SetMaxSizeY.cpp
-    ya/commands/size/SetMaxSizeZ.cpp
-    ya/commands/size/SetMinSize1.cpp
-    ya/commands/size/SetMinSize2.cpp
-    ya/commands/size/SetMinSize3.cpp
-    ya/commands/size/SetMinSize4.cpp
-    ya/commands/size/SetMinSizeW.cpp
-    ya/commands/size/SetMinSizeX.cpp
-    ya/commands/size/SetMinSizeY.cpp
-    ya/commands/size/SetMinSizeZ.cpp
-    ya/commands/size/SetSize1.cpp
-    ya/commands/size/SetSize2.cpp
-    ya/commands/size/SetSize3.cpp
-    ya/commands/size/SetSize4.cpp
-    ya/commands/size/SetSizeW.cpp
-    ya/commands/size/SetSizeX.cpp
-    ya/commands/size/SetSizeY.cpp
-    ya/commands/size/SetSizeZ.cpp
-    
-    ya/commands/spatial/AABBCommand.cpp
-    ya/commands/spatial/OrientationCommand.cpp
-    ya/commands/spatial/PositionCommand.cpp
-    ya/commands/spatial/ScaleCommand.cpp
-    ya/commands/spatial/SizeCommand.cpp
-    
-    ya/commands/tachyon/AddChildCommand.cpp
-    ya/commands/tachyon/DestroyCommand.cpp
-    ya/commands/tachyon/RemoveChildCommand.cpp
-    ya/commands/tachyon/RethreadCommand.cpp
-    ya/commands/tachyon/SetNameCommand.cpp
-    ya/commands/tachyon/SetParentCommand.cpp
-    ya/commands/tachyon/SnoopCommand.cpp
-    ya/commands/tachyon/SubscribeCommand.cpp
-    ya/commands/tachyon/UnsnoopCommand.cpp
-    ya/commands/tachyon/UnsubscribeCommand.cpp
-    
-    ya/commands/thread/ScheduleCommand.cpp
-    
-    ya/commands/ui/AspectCommand.cpp
-    ya/commands/ui/AttentionCommand.cpp
-    ya/commands/ui/CloseCommand.cpp
-    ya/commands/ui/FloatCommand.cpp
-    ya/commands/ui/FocusCommand.cpp
-    ya/commands/ui/HideCommand.cpp
-    ya/commands/ui/IconifyCommand.cpp
-    ya/commands/ui/MaximizeCommand.cpp
-    ya/commands/ui/RestoreCommand.cpp
-    ya/commands/ui/ShowCommand.cpp
-    ya/commands/ui/StartupCommand.cpp
-    ya/commands/ui/TitleCommand.cpp
-    ya/commands/ui/UnfloatCommand.cpp
-
-    ya/commands/viewer/SetWidgetCommand.cpp
-    
-    ya/commands/widget/SetViewer.cpp
 
 
     ya/controllers/Space3Controller.cpp
@@ -464,115 +623,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/controls/Orientation3Control.cpp
 
 
-    ya/events/AppEvent.cpp
-    ya/events/CameraEvent.cpp
-    ya/events/CursorEvent.cpp
-    ya/events/EmptyEvent.cpp
-    ya/events/GamepadEvent.cpp
-    ya/events/InputEvent.cpp
-    ya/events/IOEvent.cpp
-    ya/events/JoystickEvent.cpp
-    ya/events/KeyboardEvent.cpp
-    ya/events/MonitorEvent.cpp
-    ya/events/MouseEvent.cpp
-    ya/events/OSEvent.cpp
-    ya/events/SimEvent.cpp
-    ya/events/SpatialEvent.cpp
-    ya/events/TachyonEvent.cpp
-    ya/events/ThreadEvent.cpp
-    ya/events/UIEvent.cpp
-    ya/events/ViewerEvent.cpp
-    ya/events/VulqanEvent.cpp
-    ya/events/WidgetEvent.cpp
-    ya/events/WindowEvent.cpp
-    
-    ya/events/cursor/CursorCaptureEvent.cpp
-    ya/events/cursor/CursorDisableEvent.cpp
-    ya/events/cursor/CursorHideEvent.cpp
-    ya/events/cursor/CursorNormalEvent.cpp
-    
-    ya/events/gamepad/GamepadAxisEvent.cpp
-    ya/events/gamepad/GamepadConnectEvent.cpp
-    ya/events/gamepad/GamepadDisconnectEvent.cpp
-    ya/events/gamepad/GamepadHatEvent.cpp
-    ya/events/gamepad/GamepadPressEvent.cpp
-    ya/events/gamepad/GamepadReleaseEvent.cpp
-    ya/events/gamepad/GamepadZeroEvent.cpp
-
-    ya/events/joystick/JoystickAxisEvent.cpp
-    ya/events/joystick/JoystickConnectEvent.cpp
-    ya/events/joystick/JoystickDisconnectEvent.cpp
-    ya/events/joystick/JoystickHatEvent.cpp
-    ya/events/joystick/JoystickPressEvent.cpp
-    ya/events/joystick/JoystickReleaseEvent.cpp
-    ya/events/joystick/JoystickZeroEvent.cpp
-
-    ya/events/keyboard/KeyCharacterEvent.cpp
-    ya/events/keyboard/KeyPressEvent.cpp
-    ya/events/keyboard/KeyReleaseEvent.cpp
-    ya/events/keyboard/KeyRepeatEvent.cpp
-    
-    ya/events/monitor/MonitorConnectEvent.cpp
-    ya/events/monitor/MonitorDisconnectEvent.cpp
-
-    ya/events/mouse/MouseDropEvent.cpp
-    ya/events/mouse/MouseEnterEvent.cpp
-    ya/events/mouse/MouseLeaveEvent.cpp
-    ya/events/mouse/MouseMoveEvent.cpp
-    ya/events/mouse/MousePressEvent.cpp
-    ya/events/mouse/MouseReleaseEvent.cpp
-    ya/events/mouse/MouseScrollEvent.cpp
-
-    ya/events/spatial/AABB1Event.cpp
-    ya/events/spatial/AABB2Event.cpp
-    ya/events/spatial/AABB3Event.cpp
-    ya/events/spatial/AABB4Event.cpp
-    ya/events/spatial/MaxSize1Event.cpp
-    ya/events/spatial/MaxSize2Event.cpp
-    ya/events/spatial/MaxSize3Event.cpp
-    ya/events/spatial/MaxSize4Event.cpp
-    ya/events/spatial/MinSize1Event.cpp
-    ya/events/spatial/MinSize2Event.cpp
-    ya/events/spatial/MinSize3Event.cpp
-    ya/events/spatial/MinSize4Event.cpp
-    ya/events/spatial/Position1Event.cpp
-    ya/events/spatial/Position2Event.cpp
-    ya/events/spatial/Position3Event.cpp
-    ya/events/spatial/Position4Event.cpp
-    ya/events/spatial/Orientation3Event.cpp
-    ya/events/spatial/Scale1Event.cpp
-    ya/events/spatial/Scale2Event.cpp
-    ya/events/spatial/Scale3Event.cpp
-    ya/events/spatial/Size1Event.cpp
-    ya/events/spatial/Size2Event.cpp
-    ya/events/spatial/Size3Event.cpp
-    ya/events/spatial/Size4Event.cpp
-    
-    ya/events/sim/PauseEvent.cpp
-    ya/events/sim/ResumeEvent.cpp
-    ya/events/sim/TickEvent.cpp
-    
-    ya/events/tachyon/ChildAddEvent.cpp
-    ya/events/tachyon/ChildRemoveEvent.cpp
-    ya/events/tachyon/DestroyEvent.cpp
-    ya/events/tachyon/DirtyEvent.cpp
-    ya/events/tachyon/NameChangeEvent.cpp
-    ya/events/tachyon/ParentChangeEvent.cpp
-    
-    ya/events/thread/ThreadAddTachyonEvent.cpp
-
-    ya/events/ui/AspectEvent.cpp
-    ya/events/ui/DefocusEvent.cpp
-    ya/events/ui/CloseEvent.cpp
-    ya/events/ui/FocusEvent.cpp
-    ya/events/ui/HideEvent.cpp
-    ya/events/ui/IconifyEvent.cpp
-    ya/events/ui/MaximizeEvent.cpp
-    ya/events/ui/RestoreEvent.cpp
-    ya/events/ui/ShowEvent.cpp
-    ya/events/ui/TitleEvent.cpp
-    
-    ya/events/window/FramebufferResizeEvent.cpp
 
     ya/interfaces/IMaxSize1.cpp
     ya/interfaces/IMaxSize2.cpp
@@ -633,52 +683,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/rendereds/SkyBox3.cpp
     ya/rendereds/Tetrahedron3.cpp
     ya/rendereds/Triangle3.cpp
-
-    ya/replies/AnyReply.cpp
-    ya/replies/AppReply.cpp
-    ya/replies/CameraReply.cpp
-    ya/replies/EmptyReply.cpp
-    ya/replies/GraphicsCardReply.cpp
-    ya/replies/IOReply.cpp
-    ya/replies/SimReply.cpp
-    ya/replies/StringReply.cpp
-    ya/replies/TachyonReply.cpp
-    ya/replies/UIReply.cpp
-    ya/replies/ViewerReply.cpp
-    #ya/replies/ViewerWidgetReply.cpp
-    ya/replies/WindowReply.cpp
-    
-    ya/replies/app/OpenFileReply.cpp
-    ya/replies/app/SaveFileReply.cpp
-    
-    ya/replies/graphics_card/GetDeviceReply.cpp
-    
-    ya/replies/io/SaveReply.cpp
-    
-    ya/replies/ui/CloseReply.cpp
-    
-    ya/requests/AppRequest.cpp
-    ya/requests/CameraRequest.cpp
-    ya/requests/EmptyRequest.cpp
-    ya/requests/GraphicsCardRequest.cpp
-    ya/requests/IORequest.cpp
-    ya/requests/SimRequest.cpp
-    ya/requests/TachyonRequest.cpp
-    ya/requests/UIRequest.cpp
-    ya/requests/ViewerRequest.cpp
-    ya/requests/WidgetRequest.cpp
-    #ya/requests/WindowRefreshRequest.cpp
-    ya/requests/WindowRequest.cpp
-    
-    ya/requests/app/OpenFileRequest.cpp
-    ya/requests/app/SaveFileRequest.cpp
-    
-    ya/requests/graphics_card/GetDeviceRequest.cpp
-    
-    ya/requests/io/SaveRequest.cpp
-    
-    ya/requests/ui/CloseRequest.cpp
-    ya/requests/ui/RefreshRequest.cpp
 
     ya/scenes/SimpleScene3.cpp
 

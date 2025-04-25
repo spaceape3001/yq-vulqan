@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PMaxSize1.hpp>
-#include <ya/commands/size/AddMaxSize1.hpp>
-#include <ya/commands/size/AddMaxSizeX.hpp>
-#include <ya/commands/size/MultiplyMaxSize.hpp>
-#include <ya/commands/size/MultiplyMaxSize1.hpp>
-#include <ya/commands/size/MultiplyMaxSizeX.hpp>
-#include <ya/commands/size/SetMaxSize1.hpp>
-#include <ya/commands/size/SetMaxSizeX.hpp>
+#include <tachyon/command/size/AddMaxSize1.hpp>
+#include <tachyon/command/size/AddMaxSizeX.hpp>
+#include <tachyon/command/size/MultiplyMaxSize.hpp>
+#include <tachyon/command/size/MultiplyMaxSize1.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeX.hpp>
+#include <tachyon/command/size/SetMaxSize1.hpp>
+#include <tachyon/command/size/SetMaxSizeX.hpp>
 
 namespace yq::tachyon {
     PMaxSize¹::PMaxSize¹(const IMaxSize¹& i) : m_max_size(i.max_size())

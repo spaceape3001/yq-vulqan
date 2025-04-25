@@ -7,16 +7,16 @@
 #pragma once
 
 #include <ya/aspects/AMaxSize2.hpp>
-#include <ya/commands/size/AddMaxSize2.hpp>
-#include <ya/commands/size/AddMaxSizeX.hpp>
-#include <ya/commands/size/AddMaxSizeY.hpp>
-#include <ya/commands/size/MultiplyMaxSize.hpp>
-#include <ya/commands/size/MultiplyMaxSize2.hpp>
-#include <ya/commands/size/MultiplyMaxSizeX.hpp>
-#include <ya/commands/size/MultiplyMaxSizeY.hpp>
-#include <ya/commands/size/SetMaxSize2.hpp>
-#include <ya/commands/size/SetMaxSizeX.hpp>
-#include <ya/commands/size/SetMaxSizeY.hpp>
+#include <tachyon/command/size/AddMaxSize2.hpp>
+#include <tachyon/command/size/AddMaxSizeX.hpp>
+#include <tachyon/command/size/AddMaxSizeY.hpp>
+#include <tachyon/command/size/MultiplyMaxSize.hpp>
+#include <tachyon/command/size/MultiplyMaxSize2.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeX.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeY.hpp>
+#include <tachyon/command/size/SetMaxSize2.hpp>
+#include <tachyon/command/size/SetMaxSizeX.hpp>
+#include <tachyon/command/size/SetMaxSizeY.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 

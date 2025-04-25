@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PSize1.hpp>
-#include <ya/commands/size/AddSize1.hpp>
-#include <ya/commands/size/AddSizeX.hpp>
-#include <ya/commands/size/MultiplySize.hpp>
-#include <ya/commands/size/MultiplySize1.hpp>
-#include <ya/commands/size/MultiplySizeX.hpp>
-#include <ya/commands/size/SetSize1.hpp>
-#include <ya/commands/size/SetSizeX.hpp>
+#include <tachyon/command/size/AddSize1.hpp>
+#include <tachyon/command/size/AddSizeX.hpp>
+#include <tachyon/command/size/MultiplySize.hpp>
+#include <tachyon/command/size/MultiplySize1.hpp>
+#include <tachyon/command/size/MultiplySizeX.hpp>
+#include <tachyon/command/size/SetSize1.hpp>
+#include <tachyon/command/size/SetSizeX.hpp>
 
 namespace yq::tachyon {
     PSize¹::PSize¹(const ISize¹& i) : m_size(i.size())

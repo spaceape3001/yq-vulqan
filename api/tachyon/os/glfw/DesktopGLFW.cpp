@@ -23,11 +23,11 @@
 #include <tachyon/os/glfw/WindowGLFW.hpp>
 #include <tachyon/os/glfw/LoggingGLFW.hpp>
 
-#include <ya/events/gamepad/GamepadConnectEvent.hpp>
-#include <ya/events/gamepad/GamepadDisconnectEvent.hpp>
+#include <tachyon/event/gamepad/GamepadConnectEvent.hpp>
+#include <tachyon/event/gamepad/GamepadDisconnectEvent.hpp>
 
-#include <ya/events/joystick/JoystickConnectEvent.hpp>
-#include <ya/events/joystick/JoystickDisconnectEvent.hpp>
+#include <tachyon/event/joystick/JoystickConnectEvent.hpp>
+#include <tachyon/event/joystick/JoystickDisconnectEvent.hpp>
 
 #include <yq/shape/Size2.hxx>
 

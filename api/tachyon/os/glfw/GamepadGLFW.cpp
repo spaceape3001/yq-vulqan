@@ -6,13 +6,13 @@
 
 #include <tachyon/os/glfw/GamepadGLFW.hpp>
 #include <tachyon/os/GamepadInfoWriter.hpp>
-#include <ya/commands/gamepad/GamepadZeroCommand.hpp>
+#include <tachyon/command/gamepad/GamepadZeroCommand.hpp>
 #include <tachyon/os/glfw/glfw.hpp>
-#include <ya/events/gamepad/GamepadAxisEvent.hpp>
-#include <ya/events/gamepad/GamepadHatEvent.hpp>
-#include <ya/events/gamepad/GamepadPressEvent.hpp>
-#include <ya/events/gamepad/GamepadReleaseEvent.hpp>
-#include <ya/events/gamepad/GamepadZeroEvent.hpp>
+#include <tachyon/event/gamepad/GamepadAxisEvent.hpp>
+#include <tachyon/event/gamepad/GamepadHatEvent.hpp>
+#include <tachyon/event/gamepad/GamepadPressEvent.hpp>
+#include <tachyon/event/gamepad/GamepadReleaseEvent.hpp>
+#include <tachyon/event/gamepad/GamepadZeroEvent.hpp>
 #include <yt/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GamepadGLFW)

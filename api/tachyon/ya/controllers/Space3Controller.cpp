@@ -7,21 +7,21 @@
 #include "Space3Controller.hpp"
 #include <yt/api/Context.hpp>
 #include <yt/api/ControllerInfoWriter.hpp>
-#include <ya/commands/gamepad/GamepadZeroCommand.hpp>
-#include <ya/commands/position/AddPositionX.hpp>
-#include <ya/commands/position/AddPositionY.hpp>
-#include <ya/commands/position/AddPositionZ.hpp>
-#include <ya/commands/position/MoveByX.hpp>
-#include <ya/commands/position/MoveByY.hpp>
-#include <ya/commands/position/MoveByZ.hpp>
-#include <ya/commands/orientation/PitchBy.hpp>
-#include <ya/commands/orientation/RollBy.hpp>
-#include <ya/commands/orientation/YawBy.hpp>
-#include <ya/events/keyboard/KeyPressEvent.hpp>
-#include <ya/events/keyboard/KeyRepeatEvent.hpp>
-#include <ya/events/gamepad/GamepadAxisEvent.hpp>
-#include <ya/events/gamepad/GamepadPressEvent.hpp>
-#include <ya/events/gamepad/GamepadZeroEvent.hpp>
+#include <tachyon/command/gamepad/GamepadZeroCommand.hpp>
+#include <tachyon/command/position/AddPositionX.hpp>
+#include <tachyon/command/position/AddPositionY.hpp>
+#include <tachyon/command/position/AddPositionZ.hpp>
+#include <tachyon/command/position/MoveByX.hpp>
+#include <tachyon/command/position/MoveByY.hpp>
+#include <tachyon/command/position/MoveByZ.hpp>
+#include <tachyon/command/orientation/PitchBy.hpp>
+#include <tachyon/command/orientation/RollBy.hpp>
+#include <tachyon/command/orientation/YawBy.hpp>
+#include <tachyon/event/keyboard/KeyPressEvent.hpp>
+#include <tachyon/event/keyboard/KeyRepeatEvent.hpp>
+#include <tachyon/event/gamepad/GamepadAxisEvent.hpp>
+#include <tachyon/event/gamepad/GamepadPressEvent.hpp>
+#include <tachyon/event/gamepad/GamepadZeroEvent.hpp>
 #include <yt/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Space³Controller)

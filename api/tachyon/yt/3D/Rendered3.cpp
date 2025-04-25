@@ -6,7 +6,7 @@
 
 #include <yt/3D/Rendered3.hpp>
 #include <yt/3D/Rendered3InfoWriter.hpp>
-#include <ya/commands/SpatialCommand.hpp>
+#include <tachyon/command/SpatialCommand.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
 #include <yt/3D/3DWriter.hxx>

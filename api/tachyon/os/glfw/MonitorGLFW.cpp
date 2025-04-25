@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/os/glfw/MonitorGLFW.hpp>
-#include <ya/events/spatial/Position2Event.hpp>
-#include <ya/events/spatial/Scale2Event.hpp>
-#include <ya/events/spatial/Size2Event.hpp>
+#include <tachyon/event/spatial/Position2Event.hpp>
+#include <tachyon/event/spatial/Scale2Event.hpp>
+#include <tachyon/event/spatial/Size2Event.hpp>
 #include <tachyon/os/MonitorInfoWriter.hpp>
 #include <GLFW/glfw3.h>
 

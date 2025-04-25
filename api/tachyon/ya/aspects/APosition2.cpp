@@ -5,17 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/APosition2.hpp>
-#include <ya/commands/position/AddPosition2.hpp>
-#include <ya/commands/position/AddPositionX.hpp>
-#include <ya/commands/position/AddPositionY.hpp>
-#include <ya/commands/position/MultiplyPosition.hpp>
-#include <ya/commands/position/MultiplyPosition2.hpp>
-#include <ya/commands/position/MultiplyPositionX.hpp>
-#include <ya/commands/position/MultiplyPositionY.hpp>
-#include <ya/commands/position/SetPosition2.hpp>
-#include <ya/commands/position/SetPositionX.hpp>
-#include <ya/commands/position/SetPositionY.hpp>
-#include <ya/events/spatial/Position2Event.hpp>
+#include <tachyon/command/position/AddPosition2.hpp>
+#include <tachyon/command/position/AddPositionX.hpp>
+#include <tachyon/command/position/AddPositionY.hpp>
+#include <tachyon/command/position/MultiplyPosition.hpp>
+#include <tachyon/command/position/MultiplyPosition2.hpp>
+#include <tachyon/command/position/MultiplyPositionX.hpp>
+#include <tachyon/command/position/MultiplyPositionY.hpp>
+#include <tachyon/command/position/SetPosition2.hpp>
+#include <tachyon/command/position/SetPositionX.hpp>
+#include <tachyon/command/position/SetPositionY.hpp>
+#include <tachyon/event/spatial/Position2Event.hpp>
 
 namespace yq::tachyon {
     APosition²::APosition²()

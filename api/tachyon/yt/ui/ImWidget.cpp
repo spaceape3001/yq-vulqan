@@ -6,8 +6,8 @@
 
 #include "ImWidget.hpp"
 #include "ImWidgetInfoWriter.hpp"
-#include <ya/commands/ui/TitleCommand.hpp>
-#include <ya/events/ui/TitleEvent.hpp>
+#include <tachyon/command/ui/TitleCommand.hpp>
+#include <tachyon/event/ui/TitleEvent.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yq/shape/AxBox2.hxx>
 

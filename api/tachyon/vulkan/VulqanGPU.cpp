@@ -10,8 +10,8 @@
 #include <tachyon/os/GraphicsCardInfoWriter.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>
 #include <tachyon/vulkan/ViLogging.hpp>
-#include <ya/requests/graphics_card/GetDeviceRequest.hpp>
-#include <ya/replies/graphics_card/GetDeviceReply.hpp>
+#include <tachyon/request/graphics_card/GetDeviceRequest.hpp>
+#include <tachyon/reply/graphics_card/GetDeviceReply.hpp>
 #include "VqUtils.hpp"
 
 namespace yq::tachyon {

@@ -14,7 +14,7 @@
 #include <yt/api/ThreadData.hpp>
 #include <yt/api/ThreadInfoWriter.hpp>
 #include <yt/app/Application.hpp>
-#include <ya/events/tachyon/DestroyEvent.hpp>
+#include <tachyon/event/tachyon/DestroyEvent.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
 

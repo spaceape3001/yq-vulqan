@@ -16,8 +16,8 @@
 
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/sim/N.hpp>
-#include <ya/events/SpatialEvent.hpp>
-#include <ya/commands/SpatialCommand.hpp>
+#include <tachyon/event/SpatialEvent.hpp>
+#include <tachyon/command/SpatialCommand.hpp>
 
 namespace yq::tachyon {
     template <typename C>

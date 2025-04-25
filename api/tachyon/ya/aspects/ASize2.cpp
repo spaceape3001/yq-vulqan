@@ -5,17 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/ASize2.hpp>
-#include <ya/commands/size/AddSize2.hpp>
-#include <ya/commands/size/AddSizeX.hpp>
-#include <ya/commands/size/AddSizeY.hpp>
-#include <ya/commands/size/MultiplySize.hpp>
-#include <ya/commands/size/MultiplySize2.hpp>
-#include <ya/commands/size/MultiplySizeX.hpp>
-#include <ya/commands/size/MultiplySizeY.hpp>
-#include <ya/commands/size/SetSize2.hpp>
-#include <ya/commands/size/SetSizeX.hpp>
-#include <ya/commands/size/SetSizeY.hpp>
-#include <ya/events/spatial/Size2Event.hpp>
+#include <tachyon/command/size/AddSize2.hpp>
+#include <tachyon/command/size/AddSizeX.hpp>
+#include <tachyon/command/size/AddSizeY.hpp>
+#include <tachyon/command/size/MultiplySize.hpp>
+#include <tachyon/command/size/MultiplySize2.hpp>
+#include <tachyon/command/size/MultiplySizeX.hpp>
+#include <tachyon/command/size/MultiplySizeY.hpp>
+#include <tachyon/command/size/SetSize2.hpp>
+#include <tachyon/command/size/SetSizeX.hpp>
+#include <tachyon/command/size/SetSizeY.hpp>
+#include <tachyon/event/spatial/Size2Event.hpp>
 
 
 namespace yq::tachyon {

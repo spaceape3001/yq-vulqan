@@ -8,16 +8,16 @@
 #include <yt/api/ControllerInfoWriter.hpp>
 #include <yt/api/ControllerData.hpp>
 #include <yt/api/ID.hpp>
-#include <ya/commands/controller/ControlCommand.hpp>
-#include <ya/commands/controller/DisableCommand.hpp>
-#include <ya/commands/controller/EnableCommand.hpp>
-#include <ya/commands/controller/ListenCommand.hpp>
-#include <ya/commands/controller/UncontrolCommand.hpp>
-#include <ya/commands/controller/UnlistenCommand.hpp>
-#include <ya/commands/tachyon/SnoopCommand.hpp>
-#include <ya/commands/tachyon/SubscribeCommand.hpp>
-#include <ya/commands/tachyon/UnsnoopCommand.hpp>
-#include <ya/commands/tachyon/UnsubscribeCommand.hpp>
+#include <tachyon/command/controller/ControlCommand.hpp>
+#include <tachyon/command/controller/DisableCommand.hpp>
+#include <tachyon/command/controller/EnableCommand.hpp>
+#include <tachyon/command/controller/ListenCommand.hpp>
+#include <tachyon/command/controller/UncontrolCommand.hpp>
+#include <tachyon/command/controller/UnlistenCommand.hpp>
+#include <tachyon/command/tachyon/SnoopCommand.hpp>
+#include <tachyon/command/tachyon/SubscribeCommand.hpp>
+#include <tachyon/command/tachyon/UnsnoopCommand.hpp>
+#include <tachyon/command/tachyon/UnsubscribeCommand.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Controller);

@@ -5,20 +5,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/AScale3.hpp>
-#include <ya/commands/scale/AddScale3.hpp>
-#include <ya/commands/scale/AddScaleX.hpp>
-#include <ya/commands/scale/AddScaleY.hpp>
-#include <ya/commands/scale/AddScaleZ.hpp>
-#include <ya/commands/scale/MultiplyScale.hpp>
-#include <ya/commands/scale/MultiplyScale3.hpp>
-#include <ya/commands/scale/MultiplyScaleX.hpp>
-#include <ya/commands/scale/MultiplyScaleY.hpp>
-#include <ya/commands/scale/MultiplyScaleZ.hpp>
-#include <ya/commands/scale/SetScale3.hpp>
-#include <ya/commands/scale/SetScaleX.hpp>
-#include <ya/commands/scale/SetScaleY.hpp>
-#include <ya/commands/scale/SetScaleZ.hpp>
-#include <ya/events/spatial/Scale3Event.hpp>
+#include <tachyon/command/scale/AddScale3.hpp>
+#include <tachyon/command/scale/AddScaleX.hpp>
+#include <tachyon/command/scale/AddScaleY.hpp>
+#include <tachyon/command/scale/AddScaleZ.hpp>
+#include <tachyon/command/scale/MultiplyScale.hpp>
+#include <tachyon/command/scale/MultiplyScale3.hpp>
+#include <tachyon/command/scale/MultiplyScaleX.hpp>
+#include <tachyon/command/scale/MultiplyScaleY.hpp>
+#include <tachyon/command/scale/MultiplyScaleZ.hpp>
+#include <tachyon/command/scale/SetScale3.hpp>
+#include <tachyon/command/scale/SetScaleX.hpp>
+#include <tachyon/command/scale/SetScaleY.hpp>
+#include <tachyon/command/scale/SetScaleZ.hpp>
+#include <tachyon/event/spatial/Scale3Event.hpp>
 
 
 namespace yq::tachyon {

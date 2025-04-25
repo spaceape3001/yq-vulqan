@@ -7,8 +7,8 @@
 #include "Widget3.hpp"
 #include "Widget3InfoWriter.hpp"
 
-#include <ya/commands/aabb/SetAABB3.hpp>
-#include <ya/events/spatial/AABB3Event.hpp>
+#include <tachyon/command/aabb/SetAABB3.hpp>
+#include <tachyon/event/spatial/AABB3Event.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget³)
 

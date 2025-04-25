@@ -7,7 +7,7 @@
 #include <yt/3D/Light3.hpp>
 #include <yt/3D/Light3Data.hpp>
 #include <yt/3D/Light3InfoWriter.hpp>
-#include <ya/commands/SpatialCommand.hpp>
+#include <tachyon/command/SpatialCommand.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
 #include <yq/meta/Init.hpp>

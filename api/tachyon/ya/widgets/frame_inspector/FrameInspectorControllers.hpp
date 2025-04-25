@@ -9,8 +9,8 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yt/api/Controller.hpp>
 #include <yt/api/ControllerData.hpp>
-#include <ya/commands/controller/DisableCommand.hpp>
-#include <ya/commands/controller/EnableCommand.hpp>
+#include <tachyon/command/controller/DisableCommand.hpp>
+#include <tachyon/command/controller/EnableCommand.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorControllers : public FrameInspectorTachyons {

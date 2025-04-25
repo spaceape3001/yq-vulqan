@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/proxies/PPosition3.hpp>
-#include <ya/commands/position/AddPosition3.hpp>
-#include <ya/commands/position/AddPositionX.hpp>
-#include <ya/commands/position/AddPositionY.hpp>
-#include <ya/commands/position/AddPositionZ.hpp>
-#include <ya/commands/position/MultiplyPosition.hpp>
-#include <ya/commands/position/MultiplyPosition3.hpp>
-#include <ya/commands/position/MultiplyPositionX.hpp>
-#include <ya/commands/position/MultiplyPositionY.hpp>
-#include <ya/commands/position/MultiplyPositionZ.hpp>
-#include <ya/commands/position/SetPosition3.hpp>
-#include <ya/commands/position/SetPositionX.hpp>
-#include <ya/commands/position/SetPositionY.hpp>
-#include <ya/commands/position/SetPositionZ.hpp>
+#include <tachyon/command/position/AddPosition3.hpp>
+#include <tachyon/command/position/AddPositionX.hpp>
+#include <tachyon/command/position/AddPositionY.hpp>
+#include <tachyon/command/position/AddPositionZ.hpp>
+#include <tachyon/command/position/MultiplyPosition.hpp>
+#include <tachyon/command/position/MultiplyPosition3.hpp>
+#include <tachyon/command/position/MultiplyPositionX.hpp>
+#include <tachyon/command/position/MultiplyPositionY.hpp>
+#include <tachyon/command/position/MultiplyPositionZ.hpp>
+#include <tachyon/command/position/SetPosition3.hpp>
+#include <tachyon/command/position/SetPositionX.hpp>
+#include <tachyon/command/position/SetPositionY.hpp>
+#include <tachyon/command/position/SetPositionZ.hpp>
 
 namespace yq::tachyon {
     PPosition³::PPosition³(const IPosition³& i) : m_position(i.position())

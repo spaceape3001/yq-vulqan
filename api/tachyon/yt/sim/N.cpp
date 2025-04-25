@@ -7,8 +7,8 @@
 #include <yt/sim/N.hpp>
 #include <yt/sim/NData.hpp>
 #include <yt/api/Tachyon.hpp>
-#include <ya/commands/SpatialCommand.hpp>
-#include <ya/events/SpatialEvent.hpp>
+#include <tachyon/command/SpatialCommand.hpp>
+#include <tachyon/event/SpatialEvent.hpp>
 #include <yt/logging.hpp>
 
 namespace yq::tachyon {

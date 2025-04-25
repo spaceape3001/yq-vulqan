@@ -7,8 +7,8 @@
 #include <yt/3D/Camera3.hpp>
 #include <yt/3D/Camera3Data.hpp>
 #include <yt/3D/Camera3InfoWriter.hpp>
-#include <ya/commands/SpatialCommand.hpp>
-#include <ya/commands/camera/CameraSetScreen.hpp>
+#include <tachyon/command/SpatialCommand.hpp>
+#include <tachyon/command/camera/CameraSetScreen.hpp>
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/3DWriter.hxx>
 #include <yq/meta/Init.hpp>

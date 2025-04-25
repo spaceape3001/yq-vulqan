@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/aspects/APosition1.hpp>
-#include <ya/commands/position/AddPosition1.hpp>
-#include <ya/commands/position/AddPositionX.hpp>
-#include <ya/commands/position/MultiplyPosition.hpp>
-#include <ya/commands/position/MultiplyPosition1.hpp>
-#include <ya/commands/position/MultiplyPositionX.hpp>
-#include <ya/commands/position/SetPosition1.hpp>
-#include <ya/commands/position/SetPositionX.hpp>
-#include <ya/events/spatial/Position1Event.hpp>
+#include <tachyon/command/position/AddPosition1.hpp>
+#include <tachyon/command/position/AddPositionX.hpp>
+#include <tachyon/command/position/MultiplyPosition.hpp>
+#include <tachyon/command/position/MultiplyPosition1.hpp>
+#include <tachyon/command/position/MultiplyPositionX.hpp>
+#include <tachyon/command/position/SetPosition1.hpp>
+#include <tachyon/command/position/SetPositionX.hpp>
+#include <tachyon/event/spatial/Position1Event.hpp>
 
 namespace yq::tachyon {
     APosition¹::APosition¹()

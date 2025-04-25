@@ -7,13 +7,13 @@
 #pragma once
 
 #include <ya/aspects/AMinSize1.hpp>
-#include <ya/commands/size/AddMinSize1.hpp>
-#include <ya/commands/size/AddMinSizeX.hpp>
-#include <ya/commands/size/MultiplyMinSize.hpp>
-#include <ya/commands/size/MultiplyMinSize1.hpp>
-#include <ya/commands/size/MultiplyMinSizeX.hpp>
-#include <ya/commands/size/SetMinSize1.hpp>
-#include <ya/commands/size/SetMinSizeX.hpp>
+#include <tachyon/command/size/AddMinSize1.hpp>
+#include <tachyon/command/size/AddMinSizeX.hpp>
+#include <tachyon/command/size/MultiplyMinSize.hpp>
+#include <tachyon/command/size/MultiplyMinSize1.hpp>
+#include <tachyon/command/size/MultiplyMinSizeX.hpp>
+#include <tachyon/command/size/SetMinSize1.hpp>
+#include <tachyon/command/size/SetMinSizeX.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/tags.hpp>
 

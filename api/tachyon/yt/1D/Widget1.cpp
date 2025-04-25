@@ -7,8 +7,8 @@
 #include "Widget1.hpp"
 #include "Widget1InfoWriter.hpp"
 
-#include <ya/commands/aabb/SetAABB1.hpp>
-#include <ya/events/spatial/AABB1Event.hpp>
+#include <tachyon/command/aabb/SetAABB1.hpp>
+#include <tachyon/event/spatial/AABB1Event.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget¹)
 

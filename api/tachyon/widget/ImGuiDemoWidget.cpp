@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/widget/ImGuiDemoWidget.hpp>
-#include <yt/ui/MyImGui.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     ImGuiDemoWidget::ImGuiDemoWidget()

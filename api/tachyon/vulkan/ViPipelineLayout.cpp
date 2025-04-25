@@ -7,8 +7,8 @@
 #include <tachyon/vulkan/ViPipelineLayout.hpp>
 #include <yq/keywords.hpp>
 #include <yq/core/StreamOps.hpp>
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/PushData.hpp>
 #include <tachyon/gfx/Shader.hpp>

@@ -8,7 +8,7 @@
 
 #include <log4cpp/CategoryStream.hh>
 #include <yq/core/Logging.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <yq/text/format.hpp>
 #include <yq/trait/is_pointer.hpp>
 

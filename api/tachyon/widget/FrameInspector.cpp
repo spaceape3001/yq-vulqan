@@ -8,10 +8,10 @@
 #include <tachyon/widget/FrameInspector.hpp>
 #include <ya/minis/TextLabel.hpp>
 #include <yq/text/format.hpp>
-#include <yt/ui/MyImGui.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 #include "imgui_internal.h"
 

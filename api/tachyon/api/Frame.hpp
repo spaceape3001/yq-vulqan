@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yt/keywords.hpp>
+#include <tachyon/keywords.hpp>
 #include <tachyon/api/ID.hpp>
 #include <tachyon/api/Type.hpp>
 #include <tachyon/api/TypedID.hpp>
@@ -43,7 +43,7 @@
 #include <tachyon/typedef/widget.hpp>
 #include <tachyon/typedef/window.hpp>
 
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 #include <chrono>
 #include <functional>

@@ -21,7 +21,7 @@
 #include <tachyon/command/scale/SetScaleY.hpp>
 #include <tachyon/command/scale/SetScaleZ.hpp>
 #include <tachyon/api/TachyonInfoWriter.hpp>
-#include <yt/tags.hpp>
+#include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

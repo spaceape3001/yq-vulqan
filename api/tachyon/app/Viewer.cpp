@@ -7,7 +7,7 @@
 #include <tachyon/app/Viewer.hpp>
 
 #include <log4cpp/CategoryStream.hh>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 #include <tachyon/app/Application.hpp>
 #include <tachyon/api/Context.hpp>
@@ -20,8 +20,8 @@
 #include <tachyon/os/GraphicsCard.hpp>
 #include <tachyon/os/Window.hpp>
 #include <tachyon/os/WindowData.hpp>
-#include <yt/ui/Widget.hpp>
-#include <yt/ui/WidgetData.hpp>
+#include <tachyon/api/Widget.hpp>
+#include <tachyon/api/WidgetData.hpp>
 
 #include <tachyon/command/SpatialCommand.hpp>
 

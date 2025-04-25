@@ -15,7 +15,7 @@
 #include <tachyon/command/orientation/SetPitch.hpp>
 #include <tachyon/command/orientation/SetRoll.hpp>
 #include <tachyon/command/orientation/YawBy.hpp>
-#include <yt/tags.hpp>
+#include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -16,8 +16,8 @@
 #include <yq/vector/Vector2.hxx>
 
 #include <yq/shape/shape_utils.hpp>
-#include <yt/ui/MyImGui.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 
     //  for debugging
 #include <yq/color/colors.hpp>

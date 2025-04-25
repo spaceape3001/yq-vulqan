@@ -6,9 +6,9 @@
 
 #include "UISpacer.hpp"
 #include "UISpacerWriter.hpp"
-#include <yt/ui/MyImGui.hpp>
-#include <yt/logging.hpp>
-#include <yt/ui/UIElementInfoWriter.hpp>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/api/UIElementInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UISpacer)
 

@@ -22,7 +22,7 @@
 #include <tachyon/event/gamepad/GamepadAxisEvent.hpp>
 #include <tachyon/event/gamepad/GamepadPressEvent.hpp>
 #include <tachyon/event/gamepad/GamepadZeroEvent.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Space³Controller)
 

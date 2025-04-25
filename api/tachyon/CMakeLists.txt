@@ -18,6 +18,10 @@ find_package(Vulkan REQUIRED)
 add_library(${PROJECT_NAME} SHARED
     #   ALPHABETICAL
 
+    MyImGui.cpp
+    enums.cpp
+    strings.cpp
+
     accessor/StringFunction.cpp
     accessor/StringValue.cpp
 
@@ -34,8 +38,10 @@ add_library(${PROJECT_NAME} SHARED
     api/Camera.cpp
     api/Camera3.cpp
     api/Command.cpp
+    api/Control.cpp
     api/Controller.cpp
     api/Delegate.cpp
+    #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
     api/InterfaceInfo.cpp
@@ -43,8 +49,10 @@ add_library(${PROJECT_NAME} SHARED
     api/Light3.cpp
     api/Manager.cpp
     api/Message.cpp
+    api/Mini.cpp
     api/Model.cpp
     api/N.cpp
+    api/Panel.cpp
     api/Perspective.cpp
     api/Post.cpp
     api/Proxy.cpp
@@ -60,8 +68,14 @@ add_library(${PROJECT_NAME} SHARED
     api/Spatial3.cpp
     api/Tachyon.cpp
     api/Thread.cpp
-    api/TypedID.cpp
+    #api/Tool.cpp
     api/Trigger.cpp
+    api/TypedID.cpp
+    api/UIElement.cpp
+    api/UIElementWriter.cpp
+    api/UIUtils.cpp
+    api/Undo.cpp
+    api/Widget.cpp
     
     api/meta/AssetGetter.cpp
     api/meta/AssetProperty.cpp
@@ -688,15 +702,6 @@ add_library(${PROJECT_NAME} SHARED
     widget/StackedWidget.cpp
     widget/TextArea.cpp
     
-    #######################################################
-    #   Core First
-    
-    yt/enums.cpp
-    yt/strings.cpp
-    
-
-
-
 
 
     # font/Font.cpp      # Issue/TODO
@@ -704,18 +709,6 @@ add_library(${PROJECT_NAME} SHARED
 
 
 
-    yt/ui/Control.cpp
-    #yt/ui/Editor.cpp
-    yt/ui/Mini.cpp
-    yt/ui/MyImGui.cpp
-    yt/ui/Panel.cpp
-    #yt/ui/Tool.cpp
-    yt/ui/UIElement.cpp
-    yt/ui/UIElementWriter.cpp
-    yt/ui/UIUtils.cpp
-    #yt/ui/UIWriter.cpp
-    yt/ui/Undo.cpp
-    yt/ui/Widget.cpp
 
 
     #######################################################

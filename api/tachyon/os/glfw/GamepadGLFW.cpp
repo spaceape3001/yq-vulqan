@@ -13,7 +13,7 @@
 #include <tachyon/event/gamepad/GamepadPressEvent.hpp>
 #include <tachyon/event/gamepad/GamepadReleaseEvent.hpp>
 #include <tachyon/event/gamepad/GamepadZeroEvent.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GamepadGLFW)
 

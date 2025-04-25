@@ -24,7 +24,7 @@
 #include <tachyon/command/position/SetPositionY.hpp>
 #include <tachyon/command/position/SetPositionZ.hpp>
 #include <tachyon/event/spatial/Position4Event.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <yq/vector/Vector4.hxx>
 
 namespace yq::tachyon {

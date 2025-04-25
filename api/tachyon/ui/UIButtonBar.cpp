@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIButtonBar.hpp"
-#include <yt/ui/UIUtils.hpp>
-#include <yt/ui/UIStyle.hpp>
+#include <tachyon/api/UIUtils.hpp>
+#include <tachyon/api/UIStyle.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <yt/logging.hpp>
-#include <yt/ui/UIElementInfoWriter.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/api/UIElementInfoWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 #include <yq/shape/Size2.hxx>

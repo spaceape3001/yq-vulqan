@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ScenePane.hpp"
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(ScenePane)
 

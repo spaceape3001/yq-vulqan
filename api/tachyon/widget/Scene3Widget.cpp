@@ -12,10 +12,10 @@
 #include <tachyon/api/Scene3.hpp>
 #include <tachyon/api/Scene3Data.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
 #include <yq/util/AutoReset.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³Widget)
 

@@ -6,8 +6,8 @@
 
 #include <tachyon/vulkan/ViData.hpp>
 
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Buffer.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/api/RenderedData.hpp>

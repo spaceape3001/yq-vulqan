@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/logging.hpp>
-#include <yt/ui/Widget.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/api/Widget.hpp>
 #include <tachyon/app/AppException.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/app/Viewer.hpp>

@@ -17,7 +17,7 @@
 #include <yq/text/format.hpp>
 #include <yq/util/AutoReset.hpp>
 
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/api/TachyonInfoWriter.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
@@ -25,7 +25,7 @@
 #include <tachyon/gfx/Sampler.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gfx/Texture.hpp>
-#include <yt/ui/Widget.hpp>
+#include <tachyon/api/Widget.hpp>
 #include <tachyon/app/ViewerState.hpp>
 #include <tachyon/event/keyboard/KeyCharacterEvent.hpp>
 #include <tachyon/event/keyboard/KeyPressEvent.hpp>

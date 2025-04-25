@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/widget/StackedWidget.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     Widget*         StackedWidget::active() 

@@ -6,8 +6,8 @@
 
 #include <tachyon/vulkan/ViTexture.hpp>
 
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/RasterInfo.hpp>
 #include <tachyon/gfx/Texture.hpp>

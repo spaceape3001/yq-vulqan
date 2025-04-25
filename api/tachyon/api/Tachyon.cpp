@@ -40,8 +40,8 @@
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
-#include <yt/logging.hpp>
-#include <yt/tags.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/tags.hpp>
 #include <yq/stream/Text.hpp>
 #include <yq/meta/Init.hpp>
 

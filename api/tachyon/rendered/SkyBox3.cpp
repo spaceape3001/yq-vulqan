@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SkyBox3.hpp"
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/api/Rendered3InfoWriter.hpp>
 

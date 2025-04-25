@@ -13,7 +13,7 @@
 #include <tachyon/event/joystick/JoystickPressEvent.hpp>
 #include <tachyon/event/joystick/JoystickReleaseEvent.hpp>
 #include <tachyon/event/joystick/JoystickZeroEvent.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::JoystickGLFW)
 

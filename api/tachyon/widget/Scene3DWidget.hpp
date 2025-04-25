@@ -8,7 +8,7 @@
 
 #include <tachyon/api/Perspective.hpp>
 #include <tachyon/api/Scene.hpp>
-#include <yt/ui/Widget.hpp>
+#include <tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {
 

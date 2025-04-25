@@ -25,8 +25,8 @@
 #include <yq/core/ErrorDB.hpp>
 #include <yq/util/AutoReset.hpp>
 
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/ImageViewInfo.hpp>

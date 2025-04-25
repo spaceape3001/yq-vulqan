@@ -12,7 +12,7 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
 #include <tachyon/utility/LoggerBox.hpp>
-#include <yt/application.hpp>
+#include <tachyon/application.hpp>
 
 #include "MainWidget.hpp"
 

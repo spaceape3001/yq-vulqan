@@ -11,8 +11,8 @@
 #include <yq/text/basic.hpp>
 #include <yq/text/join.hpp>
 
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/gfx/Buffer.hpp>

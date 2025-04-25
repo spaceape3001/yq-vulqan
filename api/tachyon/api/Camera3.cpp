@@ -12,7 +12,7 @@
 #include <tachyon/spatial/SimpleSpatial3.hpp>
 #include <tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Camera³ID)

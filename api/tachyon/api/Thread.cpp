@@ -15,7 +15,7 @@
 #include <tachyon/io/save/SaveXML.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/command/io/SaveCommand.hpp>
 #include <tachyon/command/thread/ScheduleCommand.hpp>
 #include <tachyon/event/thread/ThreadAddTachyonEvent.hpp>

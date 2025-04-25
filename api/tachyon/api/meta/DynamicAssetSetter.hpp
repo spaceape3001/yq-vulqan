@@ -8,7 +8,7 @@
 
 #include <tachyon/api/meta/AssetSetter.hpp>
 #include <yq/asset/Asset.hpp>
-#include <yt/errors.hpp>
+#include <tachyon/errors.hpp>
 
 namespace yq::tachyon {
     template <SomeObject O, SomeAsset A>

@@ -7,11 +7,11 @@
 #include <ya/controls/Orientation3Control.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/proxy/POrientation3.hpp>
-#include <yt/ui/MyImGui.hpp>
-#include <yt/ui/ControlInfoWriter.hpp>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/api/ControlInfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/util/Safety.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Orientation³Control)
 

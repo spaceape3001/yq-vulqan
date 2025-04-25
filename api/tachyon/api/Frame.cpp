@@ -51,10 +51,10 @@
 #include <tachyon/os/Window.hpp>
 #include <tachyon/os/WindowData.hpp>
 
-//#include <yt/ui/Editor.hpp>
-//#include <yt/ui/EditorData.hpp>
-#include <yt/ui/Widget.hpp>
-#include <yt/ui/WidgetData.hpp>
+//#include <tachyon/api/Editor.hpp>
+//#include <tachyon/api/EditorData.hpp>
+#include <tachyon/api/Widget.hpp>
+#include <tachyon/api/WidgetData.hpp>
 
 #include <tachyon/api/Camera.hpp>
 #include <tachyon/api/CameraData.hpp>
@@ -71,7 +71,7 @@
 #include <tachyon/api/SpatialData.hpp>
 
 #include <yq/core/StreamOps.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 namespace yq::tachyon {
 

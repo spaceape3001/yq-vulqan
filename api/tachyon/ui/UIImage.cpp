@@ -6,13 +6,13 @@
 
 #include "UIImage.hpp"
 #include "UIImageWriter.hpp"
-#include <yt/ui/UIElementInfoWriter.hpp>
+#include <tachyon/api/UIElementInfoWriter.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/Texture.hpp>
-#include <yt/logging.hpp>
-#include <yt/ui/UIStyle.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/api/UIStyle.hpp>
 #include <yq/text/format.hpp>
-#include <yt/ui/MyImGui.hpp>
+#include <tachyon/MyImGui.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIImage)
 

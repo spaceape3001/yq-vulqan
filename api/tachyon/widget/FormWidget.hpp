@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yt/ui/Mini.hpp>
-#include <yt/ui/Widget.hpp>
+#include <tachyon/api/Mini.hpp>
+#include <tachyon/api/Widget.hpp>
 #include <tachyon/typedef/accessors.hpp>
 #include <functional>
 

@@ -10,11 +10,11 @@
 #include <tachyon/ui/UIWindow.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Size2.hpp>
-#include <yt/ui/UIElementInfoWriter.hpp>
+#include <tachyon/api/UIElementInfoWriter.hpp>
 #include <yq/trait/has_nan.hpp>
-#include <yt/ui/UIStyle.hpp>
+#include <tachyon/api/UIStyle.hpp>
 
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <yq/vector/Vector2.hxx>
 #include <yq/shape/Size2.hxx>
 

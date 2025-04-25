@@ -15,7 +15,7 @@
 #include <tachyon/command/scale/SetScale1.hpp>
 #include <tachyon/command/scale/SetScaleX.hpp>
 #include <tachyon/api/TachyonInfoWriter.hpp>
-#include <yt/tags.hpp>
+#include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -6,8 +6,8 @@
 
 #include <tachyon/vulkan/ViSwapchain.hpp>
 
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/ImageViewInfo.hpp>
 #include <tachyon/vulkan/VqLogging.hpp>

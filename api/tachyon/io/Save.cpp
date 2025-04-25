@@ -12,7 +12,7 @@
 #include <tachyon/api/meta/AssetProperty.hpp>
 #include <tachyon/api/meta/DelegateProperty.hpp>
 #include <tachyon/app/Application.hpp>
-#include <yt/tags.hpp>
+#include <tachyon/tags.hpp>
 #include <yq/meta/ObjectInfo.hpp>
 #include <yq/meta/PropertyInfo.hpp>
 #include <tachyon/io/save/SaveAsset.hpp>
@@ -25,7 +25,7 @@
 #include <tachyon/command/tachyon/SetParentCommand.hpp>
 #include <tachyon/command/thread/ScheduleCommand.hpp>
 #include <tbb/spin_rw_mutex.h>
-#include <yt/errors.hpp>
+#include <tachyon/errors.hpp>
 
 namespace yq::tachyon {
     static bool has_dotdot(const std::filesystem::path& fp)

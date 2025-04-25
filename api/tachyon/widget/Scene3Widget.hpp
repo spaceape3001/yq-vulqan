@@ -9,7 +9,7 @@
 #include <yq/color/RGB.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/tensor/Tensor44.hpp>
-#include <yt/ui/Widget.hpp>
+#include <tachyon/api/Widget.hpp>
 #include <tachyon/typedef/camera.hpp>
 #include <tachyon/typedef/camera3.hpp>
 #include <tachyon/typedef/rendered3.hpp>

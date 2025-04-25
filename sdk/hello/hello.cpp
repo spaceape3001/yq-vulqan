@@ -35,20 +35,20 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <yt/application.hpp>
-#include <yt/buffer.hpp>
-#include <yt/rendered.hpp>
-#include <yt/shader.hpp>
-#include <yt/texture.hpp>
-#include <yt/viewer.hpp>
-#include <yt/widget.hpp>
+#include <tachyon/application.hpp>
+#include <tachyon/buffer.hpp>
+#include <tachyon/rendered.hpp>
+#include <tachyon/shader.hpp>
+#include <tachyon/texture.hpp>
+#include <tachyon/viewer.hpp>
+#include <tachyon/widget.hpp>
 
 #include <tachyon/command/orientation/SetOrientation3.hpp>
 #include <tachyon/rendered/Triangle3.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/scene/SimpleScene3.hpp>
 #include <tachyon/api/Scene3InfoWriter.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/widget/Scene3Widget.hpp>
 #include <tachyon/utility/LoggerBox.hpp>
 

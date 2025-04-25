@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/ui/Widget.hpp>
+#include <tachyon/api/Widget.hpp>
 #include <tachyon/widget/FrameInspector.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/Thread.hpp>

@@ -11,7 +11,7 @@
 #include <yq/math/glm_types.hpp>
 #include <yq/trait/member_offset.hpp>
 
-#include <yt/keywords.hpp>
+#include <tachyon/keywords.hpp>
 #include <tachyon/gfx/SBO.hpp>
 #include <tachyon/gfx/UBO.hpp>
 #include <tachyon/gfx/VBO.hpp>

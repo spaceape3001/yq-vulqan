@@ -10,7 +10,7 @@
 #include <yq/asset/AssetIO.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/text/format.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 namespace yq::tachyon {

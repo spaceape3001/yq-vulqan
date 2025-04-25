@@ -7,7 +7,7 @@
 #include <tachyon/api/Post.hpp>
 #include <tachyon/api/PostInfoWriter.hpp>
 #include <sstream>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Post)
 

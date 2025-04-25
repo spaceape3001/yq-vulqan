@@ -16,10 +16,10 @@
 #include <tachyon/widget/SpaceCameraRemote.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/app/Viewer.hpp>
-#include <yt/ui/MyImGui.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 #include <yq/text/match.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/logging.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;

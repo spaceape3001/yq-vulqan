@@ -8,7 +8,7 @@
 
 #include <tachyon/api/meta/DelegateSetter.hpp>
 #include <tachyon/api/Delegate.hpp>
-#include <yt/errors.hpp>
+#include <tachyon/errors.hpp>
 
 namespace yq::tachyon {
     template <SomeObject O, SomeDelegate A>

@@ -9,8 +9,8 @@
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/meta/AssetGetter.hpp>
 #include <tachyon/api/meta/AssetSetter.hpp>
-#include <yt/logging.hpp>
-#include <yt/errors.hpp>
+#include <tachyon/logging.hpp>
+#include <tachyon/errors.hpp>
 
 namespace yq::tachyon {
     AssetProperty::AssetProperty(std::string_view zName, const std::source_location& sl, const AssetInfo& theAsset, ObjectInfo* parent) :

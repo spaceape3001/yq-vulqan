@@ -6,8 +6,8 @@
 
 #include "UIHLine.hpp"
 #include "UIHLineWriter.hpp"
-#include <yt/ui/MyImGui.hpp>
-#include <yt/ui/UIElementInfoWriter.hpp>
+#include <tachyon/MyImGui.hpp>
+#include <tachyon/api/UIElementInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIHLine)
 

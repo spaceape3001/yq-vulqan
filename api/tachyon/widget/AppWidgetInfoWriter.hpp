@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/widget/AppWidget.hpp>
-#include <yt/ui/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of editor information

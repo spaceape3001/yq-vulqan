@@ -7,8 +7,8 @@
 #include <tachyon/vulkan/ViBuffer.hpp>
 
 #include <yq/core/Memory.hpp>
-#include <yt/errors.hpp>
-#include <yt/logging.hpp>
+#include <tachyon/errors.hpp>
+#include <tachyon/logging.hpp>
 #include <tachyon/gfx/Buffer.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>

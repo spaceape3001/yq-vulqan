@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/ui/Mini.hpp>
+#include <tachyon/api/Mini.hpp>
 #include <tachyon/accessor/StringValue.hpp>
 #include <tachyon/accessor/TypedFunction.hpp>
 #include <yq/text/format.hpp>

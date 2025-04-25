@@ -8,10 +8,10 @@
 #include <yq/core/Any.hpp>
 #include <yq/core/Result.hpp>
 #include <tachyon/api/ActionInfoWriter.hpp>
-#include <yt/ui/UIElement.hpp>
-#include <yt/ui/Widget.hpp>
-#include <yt/ui/Widget.hxx>
-#include <yt/logging.hpp>
+#include <tachyon/api/UIElement.hpp>
+#include <tachyon/api/Widget.hpp>
+#include <tachyon/api/Widget.hxx>
+#include <tachyon/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VisibleUIAction)
 

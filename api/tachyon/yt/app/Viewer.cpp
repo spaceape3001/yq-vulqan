@@ -93,11 +93,11 @@
 #include <ya/requests/ui/RefreshRequest.hpp>
 #include <ya/requests/ui/CloseRequest.hpp>
 
-#include <yv/ViContext.hpp>
-#include <yv/ViDevice.hpp>
-#include <yv/ViGui.hpp>
-#include <yv/Visualizer.hpp>
-#include <yv/VisualizerCreateData.hpp>
+#include <tachyon/vulkan/ViContext.hpp>
+#include <tachyon/vulkan/ViDevice.hpp>
+#include <tachyon/vulkan/ViGui.hpp>
+#include <tachyon/vulkan/Visualizer.hpp>
+#include <tachyon/vulkan/VisualizerCreateData.hpp>
 
 //#include <ya/replies/ViewerWidgetReply.hpp>
 //#include <ya/requests/ViewerWidgetRequest.hpp>

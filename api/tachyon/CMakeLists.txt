@@ -139,41 +139,41 @@ add_library(${PROJECT_NAME} SHARED
     #######################################################
     #   Vulqan
     
-    yv/vulqan.cpp
-    yv/VulqanGPU.cpp
-    yv/VulqanManager.cpp
+    vulkan/vulqan.cpp
+    vulkan/VulqanGPU.cpp
+    vulkan/VulqanManager.cpp
 
-    # yv/VqEnumerations.cpp
-    yv/VqEnums.cpp
-    yv/VqLogging.cpp
-    yv/VqUtils.cpp
+    # vulkan/VqEnumerations.cpp
+    vulkan/VqEnums.cpp
+    vulkan/VqLogging.cpp
+    vulkan/VqUtils.cpp
 
-    yv/ViBuffer.cpp
-    yv/ViCommandBuffer.cpp
-    yv/ViCommandBufferVector.cpp
-    yv/ViCommandPool.cpp
-    yv/ViContext.cpp
-    yv/ViData.cpp
-    yv/ViDevice.cpp
-    yv/ViFence.cpp
-    yv/ViFrame.cpp
-    yv/ViGui.cpp
-    yv/ViImage.cpp
-    yv/ViPipeline.cpp
-    yv/ViPipelineLayout.cpp
-    #yv/ViQueueManager.cpp
-    yv/ViQueueTasker.cpp
-    yv/ViRendered.cpp
-    yv/ViRenderPass.cpp
-    yv/ViSampler.cpp
-    yv/ViShader.cpp
-    yv/ViSurface.cpp
-    yv/ViSwapchain.cpp
-    yv/ViTexture.cpp
-    yv/ViTasker.cpp
-    yv/ViThread.cpp
-    yv/ViVisualizer.cpp
-    yv/Visualizer.cpp
+    vulkan/ViBuffer.cpp
+    vulkan/ViCommandBuffer.cpp
+    vulkan/ViCommandBufferVector.cpp
+    vulkan/ViCommandPool.cpp
+    vulkan/ViContext.cpp
+    vulkan/ViData.cpp
+    vulkan/ViDevice.cpp
+    vulkan/ViFence.cpp
+    vulkan/ViFrame.cpp
+    vulkan/ViGui.cpp
+    vulkan/ViImage.cpp
+    vulkan/ViPipeline.cpp
+    vulkan/ViPipelineLayout.cpp
+    #vulkan/ViQueueManager.cpp
+    vulkan/ViQueueTasker.cpp
+    vulkan/ViRendered.cpp
+    vulkan/ViRenderPass.cpp
+    vulkan/ViSampler.cpp
+    vulkan/ViShader.cpp
+    vulkan/ViSurface.cpp
+    vulkan/ViSwapchain.cpp
+    vulkan/ViTexture.cpp
+    vulkan/ViTasker.cpp
+    vulkan/ViThread.cpp
+    vulkan/ViVisualizer.cpp
+    vulkan/Visualizer.cpp
     
     #######################################################
     #   Assets (Yes, the above will use some of these)

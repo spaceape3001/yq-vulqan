@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/widgets/Scene3DWidget.hpp>
-#include <yv/ViContext.hpp>
-#include <yv/Visualizer.hpp>
+#include <tachyon/vulkan/ViContext.hpp>
+#include <tachyon/vulkan/Visualizer.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 
 namespace yq::tachyon {

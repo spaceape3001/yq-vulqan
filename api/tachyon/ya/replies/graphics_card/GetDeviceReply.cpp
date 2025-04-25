@@ -6,7 +6,7 @@
 
 #include <ya/replies/graphics_card/GetDeviceReply.hpp>
 #include <yt/msg/ReplyInfoWriter.hpp>
-#include <yv/ViDevice.hpp>
+#include <tachyon/vulkan/ViDevice.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GetDeviceReply)
 

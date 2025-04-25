@@ -37,15 +37,15 @@
 #include <yt/3D/Rendered3Data.hpp>
 #include <yt/3D/Spatial3.hpp>
 #include <yt/3D/Spatial3Data.hpp>
-#include <yv/ViContext.hpp>
+#include <tachyon/vulkan/ViContext.hpp>
 #include <yt/gfx/Pipeline.hpp>
 #include <yt/gfx/PushData.hpp>
 #include <yq/container/BasicBuffer.hpp>
-#include <yv/ViRendered.hpp>
+#include <tachyon/vulkan/ViRendered.hpp>
 #include <yq/util/AutoReset.hpp>
 #include <yt/scene/Rendered.hpp>
-#include <yv/Visualizer.hpp>
-#include <yv/Visualizer.hxx>
+#include <tachyon/vulkan/Visualizer.hpp>
+#include <tachyon/vulkan/Visualizer.hxx>
 #include <ya/uis/UIElements.hpp>
 #include <yq/util/AutoReset.hpp>
 

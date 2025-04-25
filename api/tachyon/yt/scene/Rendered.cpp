@@ -8,8 +8,8 @@
 #include <yt/scene/Rendered.hpp>
 #include <yt/scene/RenderedData.hpp>
 #include <yt/scene/RenderedInfoWriter.hpp>
-#include <yv/ViBuffer.hpp>
-#include <yv/ViTexture.hpp>
+#include <tachyon/vulkan/ViBuffer.hpp>
+#include <tachyon/vulkan/ViTexture.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

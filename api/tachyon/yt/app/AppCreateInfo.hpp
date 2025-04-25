@@ -12,7 +12,7 @@
 #include <yt/app/ViewerCreateInfo.hpp>
 #include <yt/os/Platform.hpp>
 #include <yt/keywords.hpp>
-#include <yv/VulqanCreateInfo.hpp>
+#include <tachyon/vulkan/VulqanCreateInfo.hpp>
 
 #include <optional>
 #include <set>

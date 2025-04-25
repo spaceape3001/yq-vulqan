@@ -10,7 +10,7 @@
 #include <yt/app/Application.hpp>
 #include <yt/app/Viewer.hpp>
 #include <yt/os/Window.hpp>
-#include <yv/VulqanManager.hpp>
+#include <tachyon/vulkan/VulqanManager.hpp>
 
 #include <ya/threads/AppThread.hpp>
 #include <ya/threads/AudioThread.hpp>

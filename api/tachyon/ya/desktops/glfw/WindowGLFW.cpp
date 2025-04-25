@@ -60,8 +60,8 @@
 #include <ya/desktops/glfw/DesktopGLFW.hpp>
 #include <ya/desktops/glfw/LoggingGLFW.hpp>
 #include <ya/desktops/glfw/MonitorGLFW.hpp>
-#include <yv/VulqanManager.hpp>
-#include <yv/ViSurface.hpp>
+#include <tachyon/vulkan/VulqanManager.hpp>
+#include <tachyon/vulkan/ViSurface.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 

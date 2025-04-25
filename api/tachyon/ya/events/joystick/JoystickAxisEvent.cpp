@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/events/joystick/JoystickAxisEvent.hpp>
-#include <yt/msg/EventInfoWriter.hpp>
+#include <tachyon/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickAxisEvent::init_info()

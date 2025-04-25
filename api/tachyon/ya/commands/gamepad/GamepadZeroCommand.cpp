@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/commands/gamepad/GamepadZeroCommand.hpp>
-#include <yt/msg/CommandInfoWriter.hpp>
+#include <tachyon/msg/CommandInfoWriter.hpp>
 
 namespace yq::tachyon {
     void GamepadZeroCommand::init_info()

@@ -36,7 +36,7 @@
 #include <tachyon/gfx/Topology.hpp>
 #include <tachyon/gfx/VertexInputRate.hpp>
 
-#include <yt/msg/Response.hpp>
+#include <tachyon/msg/Response.hpp>
 
 #include <tachyon/os/HatState.hpp>
 #include <tachyon/os/MouseButton.hpp>

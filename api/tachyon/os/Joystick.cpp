@@ -7,7 +7,7 @@
 #include <tachyon/os/Joystick.hpp>
 #include <tachyon/os/JoystickData.hpp>
 #include <tachyon/os/JoystickInfoWriter.hpp>
-#include <yt/msg/Post.hpp>
+#include <tachyon/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

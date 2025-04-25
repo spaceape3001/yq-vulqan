@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/events/keyboard/KeyReleaseEvent.hpp>
-#include <yt/msg/EventInfoWriter.hpp>
+#include <tachyon/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
 

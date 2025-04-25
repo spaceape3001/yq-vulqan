@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/events/spatial/MaxSize4Event.hpp>
-#include <yt/msg/EventInfoWriter.hpp>
+#include <tachyon/msg/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MaxSize⁴Event)
 

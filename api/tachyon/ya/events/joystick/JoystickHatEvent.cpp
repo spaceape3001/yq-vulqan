@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/events/joystick/JoystickHatEvent.hpp>
-#include <yt/msg/EventInfoWriter.hpp>
+#include <tachyon/msg/EventInfoWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickHatEvent::init_info()

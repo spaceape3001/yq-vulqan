@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/events/ui/IconifyEvent.hpp>
-#include <yt/msg/EventInfoWriter.hpp>
+#include <tachyon/msg/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::IconifyEvent)
 

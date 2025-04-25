@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/msg/Command.hpp>
+#include <tachyon/msg/Command.hpp>
 
 namespace yq::tachyon {
     class MouseCommand : public Command {

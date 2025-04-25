@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/commands/scale/MultiplyScale2.hpp>
-#include <yt/msg/CommandInfoWriter.hpp>
+#include <tachyon/msg/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyScale²)
 

@@ -6,7 +6,7 @@
 
 #include <ya/events/ThreadEvent.hpp>
 
-#include <yt/msg/EventInfoWriter.hpp>
+#include <tachyon/msg/EventInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadEvent)
 

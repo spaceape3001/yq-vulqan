@@ -7,7 +7,7 @@
 #include <tachyon/os/Mouse.hpp>
 #include <tachyon/os/MouseData.hpp>
 #include <tachyon/os/MouseInfoWriter.hpp>
-#include <yt/msg/Post.hpp>
+#include <tachyon/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

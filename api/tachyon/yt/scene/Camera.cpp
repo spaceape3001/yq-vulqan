@@ -7,7 +7,7 @@
 #include <yt/scene/Camera.hpp>
 #include <yt/scene/CameraData.hpp>
 #include <yt/scene/CameraInfoWriter.hpp>
-#include <yt/msg/Post.hpp>
+#include <tachyon/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

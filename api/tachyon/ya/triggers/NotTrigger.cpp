@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/triggers/NotTrigger.hpp>
-#include <yt/msg/Post.hpp>
-#include <yt/msg/TriggerInfoWriter.hpp>
+#include <tachyon/msg/Post.hpp>
+#include <tachyon/msg/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NotTrigger)
 

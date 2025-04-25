@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/commands/size/SetMinSize4.hpp>
-#include <yt/msg/CommandInfoWriter.hpp>
+#include <tachyon/msg/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMinSize⁴)
 

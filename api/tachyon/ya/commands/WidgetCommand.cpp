@@ -6,7 +6,7 @@
 
 #include <ya/commands/WidgetCommand.hpp>
 
-#include <yt/msg/CommandInfoWriter.hpp>
+#include <tachyon/msg/CommandInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::WidgetCommand)
 

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/events/spatial/Orientation3Event.hpp>
-#include <yt/msg/EventInfoWriter.hpp>
+#include <tachyon/msg/EventInfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Orientation³Event)

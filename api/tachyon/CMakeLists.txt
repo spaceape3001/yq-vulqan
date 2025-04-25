@@ -30,6 +30,26 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
+    io/GLSLShader.cpp
+    io/SamplerInfoFile.cpp
+    io/STBImage.cpp
+    io/Save.cpp
+    
+    io/save/SaveAsset.cpp
+    io/save/SaveDelegate.cpp
+    io/save/SaveObject.cpp
+    io/save/SaveTachyon.cpp
+    io/save/SaveThread.cpp
+
+    msg/Command.cpp
+    msg/Event.cpp
+    msg/Message.cpp
+    msg/Post.cpp
+    msg/Reply.cpp
+    msg/Request.cpp
+    msg/Trigger.cpp
+    
+
     os/Cursor.cpp
     os/Desktop.cpp
     os/Gamepad.cpp
@@ -141,25 +161,6 @@ add_library(${PROJECT_NAME} SHARED
     # font/Font.cpp      # Issue/TODO
 
 
-    yt/io/GLSLShader.cpp
-    yt/io/SamplerInfoFile.cpp
-    yt/io/STBImage.cpp
-    yt/io/Save.cpp
-    
-    yt/io/save/SaveAsset.cpp
-    yt/io/save/SaveDelegate.cpp
-    yt/io/save/SaveObject.cpp
-    yt/io/save/SaveTachyon.cpp
-    yt/io/save/SaveThread.cpp
-
-    yt/msg/Command.cpp
-    yt/msg/Event.cpp
-    yt/msg/Message.cpp
-    yt/msg/Post.cpp
-    yt/msg/Reply.cpp
-    yt/msg/Request.cpp
-    yt/msg/Trigger.cpp
-    
 
     yt/scene/Camera.cpp
     yt/scene/Light.cpp

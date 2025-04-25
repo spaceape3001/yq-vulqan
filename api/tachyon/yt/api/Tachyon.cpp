@@ -13,7 +13,7 @@
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <yt/api/Thread.hpp>
 
-#include <yt/msg/Post.hpp>
+#include <tachyon/msg/Post.hpp>
 
 #include <ya/commands/sim/PauseCommand.hpp>
 #include <ya/commands/sim/ResumeCommand.hpp>

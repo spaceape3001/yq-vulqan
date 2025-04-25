@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <ya/triggers/KeyPressTrigger.hpp>
-#include <yt/msg/TriggerInfoWriter.hpp>
+#include <tachyon/msg/TriggerInfoWriter.hpp>
 #include <ya/events/keyboard/KeyPressEvent.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyPressTrigger)

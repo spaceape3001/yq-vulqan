@@ -7,7 +7,7 @@
 #include <yt/scene/Light.hpp>
 #include <yt/scene/LightData.hpp>
 #include <yt/scene/LightInfoWriter.hpp>
-#include <yt/msg/Post.hpp>
+#include <tachyon/msg/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

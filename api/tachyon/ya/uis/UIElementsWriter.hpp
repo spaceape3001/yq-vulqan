@@ -24,6 +24,7 @@ namespace yq::tachyon {
     class UIAssetImageWriter;
     class UIButtonWriter;
     class UICenterAlignWriter;
+    class UICheckBoxWriter;
     class UIHBoxWriter;
     class UIHLineWriter;
     class UIImageWriter;
@@ -79,11 +80,31 @@ namespace yq::tachyon {
         UIButtonWriter          button(std::string_view);
         UIButtonWriter          button(std::string_view, const Size2F& size);
 
+        //! Creates a callback UI Element
+        //!
+        //! This allows for a specific bit of your-widget code to be called
+        //! at the "right" point in the UI chain
         template <SomeWidget W>
         UIElementWriter         callback(void (W::*)());
 
         //! The contents will be centered (as best as it can do)
         UICenterAlignWriter     center(align_k);
+        
+        /*! \brief Create a checkbox that stores its value
+        
+            This will create a checkbox (UICheckBox_Simple) that will store its
+            value internally.  Actions can be attached to get triggered when
+            its value is changed.
+        */
+        UICheckBoxWriter        checkbox(std::string_view, bool value=false);
+        UICheckBoxWriter        checkbox(std::string_view, visible_k, UIElement*);
+        UICheckBoxWriter        checkbox(std::string_view, visible_k, UIElementWriter&);
+        UICheckBoxWriter        checkbox(visible_k, UIElement*);
+        UICheckBoxWriter        checkbox(visible_k, UIElementWriter&);
+
+        template <SomeWidget W>
+        UICheckBoxWriter        checkbox(std::string_view, bool W::*);
+
         
         template <SomeUIElement U, SomeWidget W>
         UIElementWriter         generate(std::function<U*(W&)>&&);

@@ -63,6 +63,8 @@ namespace yq::tachyon {
             UIWindow*win  = dynamic_cast<UIWindow*>(e);
             if(!win)
                 continue;
+            if(win->flag(UIFlag::Invisible))
+                continue;
         
             float   w   = win->width(SPEC);
             if(is_nan(w) || (w <= 0.)){
@@ -78,6 +80,8 @@ namespace yq::tachyon {
         for(UIElement* e : m_items){
             UIWindow*win  = dynamic_cast<UIWindow*>(e);
             if(!win)
+                continue;
+            if(win->flag(UIFlag::Invisible))
                 continue;
 
             float   w   = win->width(SPEC);

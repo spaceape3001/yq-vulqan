@@ -9,6 +9,9 @@
 #include <ya/uis/UIButtonWriter.hpp>
 #include <ya/uis/UICenterAlign.hpp>
 #include <ya/uis/UICenterAlignWriter.hpp>
+#include <ya/uis/UICheckBox_Simple.hpp>
+#include <ya/uis/UICheckBox_Visible.hpp>
+#include <ya/uis/UICheckBoxWriter.hpp>
 #include <ya/uis/UIElements.hpp>
 #include <ya/uis/UIHBox.hpp>
 #include <ya/uis/UIHBoxWriter.hpp>
@@ -110,6 +113,38 @@ namespace yq::tachyon {
     UICenterAlignWriter     UIElementsWriter::center(align_k)
     {
         return make<UICenterAlign>();
+    }
+
+    UICheckBoxWriter        UIElementsWriter::checkbox(std::string_view text, bool value)
+    {
+        return make<UICheckBox_Simple>(text, value);
+    }
+
+    UICheckBoxWriter        UIElementsWriter::checkbox(std::string_view text, visible_k, UIElement* uielem)
+    {
+        if(!uielem)
+            return {};
+        return make<UICheckBox_Visible>(text, uielem->binding(CREATE));
+    }
+    
+    UICheckBoxWriter        UIElementsWriter::checkbox(std::string_view text, visible_k, UIElementWriter& uielem)
+    {
+        return checkbox(text, VISIBLE, uielem.element());
+    }
+
+    UICheckBoxWriter        UIElementsWriter::checkbox(visible_k, UIElement* uielem)
+    {
+        if(!uielem)
+            return {};
+        std::string_view    text;
+        if(const char* title   = uielem->title())
+            text    = title;
+        return make<UICheckBox_Visible>(text, uielem->binding(CREATE));
+    }
+    
+    UICheckBoxWriter        UIElementsWriter::checkbox(visible_k, UIElementWriter& elem)
+    {
+        return checkbox(VISIBLE, elem.element());
     }
 
     UIHBoxWriter            UIElementsWriter::hbox()

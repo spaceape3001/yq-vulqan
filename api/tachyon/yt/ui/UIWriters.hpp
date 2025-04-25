@@ -12,6 +12,7 @@
 #include <ya/uis/UIButtonWriter.hpp>
 #include <ya/uis/UIButtonBarWriter.hpp>
 #include <ya/uis/UICenterAlignWriter.hpp>
+#include <ya/uis/UICheckBoxWriter.hpp>
 #include <ya/uis/UIElementsWriter.hpp>
 #include <ya/uis/UIHBoxWriter.hpp>
 #include <ya/uis/UIHLineWriter.hpp>

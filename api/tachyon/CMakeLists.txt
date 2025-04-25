@@ -700,6 +700,9 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIButtonBarWriter.cpp
     ya/uis/UICallback.cpp
     ya/uis/UICenterAlign.cpp
+    ya/uis/UICheckBox.cpp
+    ya/uis/UICheckBox_Simple.cpp
+    ya/uis/UICheckBox_Visible.cpp
     ya/uis/UIElements.cpp
     ya/uis/UIElementsWriter.cpp
     ya/uis/UIGenerator.cpp

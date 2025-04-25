@@ -11,8 +11,8 @@
 #include <yq/vector/Vector2.hpp>
 
 #include <yt/3D/Rendered3.hpp>
-#include <yt/gfx/Texture.hpp>
-#include <yt/gfx/VBO.hpp>
+#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/gfx/VBO.hpp>
 
 #include <array>
 

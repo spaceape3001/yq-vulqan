@@ -13,8 +13,8 @@
 #include <yq/asset/AssetInfoWriter.hpp>
 #include <yq/asset/AssetIO.hpp>
 
-#include <yt/gfx/PipelineUtils.hpp>
-#include <yt/gfx/Raster.hpp>
+#include <tachyon/gfx/PipelineUtils.hpp>
+#include <tachyon/gfx/Raster.hpp>
 #include <yq/raster/Pixels.hxx>
 
 namespace yq::tachyon {

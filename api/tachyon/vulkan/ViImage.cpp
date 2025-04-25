@@ -7,7 +7,7 @@
 #include <tachyon/vulkan/ViImage.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
-#include <yt/gfx/Raster.hpp>
+#include <tachyon/gfx/Raster.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViBuffer.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>

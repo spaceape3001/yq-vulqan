@@ -7,7 +7,7 @@
 #include <tachyon/vulkan/ViShader.hpp>
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
-#include <yt/gfx/Shader.hpp>
+#include <tachyon/gfx/Shader.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>
 

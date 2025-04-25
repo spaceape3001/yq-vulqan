@@ -38,8 +38,8 @@
 #include <yt/3D/Spatial3.hpp>
 #include <yt/3D/Spatial3Data.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
-#include <yt/gfx/Pipeline.hpp>
-#include <yt/gfx/PushData.hpp>
+#include <tachyon/gfx/Pipeline.hpp>
+#include <tachyon/gfx/PushData.hpp>
 #include <yq/container/BasicBuffer.hpp>
 #include <tachyon/vulkan/ViRendered.hpp>
 #include <yq/util/AutoReset.hpp>

@@ -16,7 +16,7 @@
 #include <yt/api/Thread.hpp>
 #include <yt/app/ViewerData.hpp>
 #include <yt/app/ViewerException.hpp>
-#include <yt/gfx/Raster.hpp>
+#include <tachyon/gfx/Raster.hpp>
 #include <yt/os/GraphicsCard.hpp>
 #include <yt/os/Window.hpp>
 #include <yt/os/WindowData.hpp>

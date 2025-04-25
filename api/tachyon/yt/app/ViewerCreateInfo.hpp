@@ -11,7 +11,7 @@
 #include <yq/vector/Vector2.hpp>
 
 #include <yt/api/ID.hpp>
-#include <yt/gfx/PresentMode.hpp>
+#include <tachyon/gfx/PresentMode.hpp>
 #include <yt/os/WindowMode.hpp>
 #include <tachyon/typedef/monitor.hpp>
 #include <tachyon/typedef/queue_spec.hpp>

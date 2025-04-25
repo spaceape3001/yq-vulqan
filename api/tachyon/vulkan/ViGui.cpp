@@ -19,12 +19,12 @@
 
 #include <yt/logging.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
-#include <yt/gfx/Raster.hpp>
-#include <yt/gfx/Pipeline.hpp>
-#include <yt/gfx/PipelineWriter.hpp>
-#include <yt/gfx/Sampler.hpp>
-#include <yt/gfx/Shader.hpp>
-#include <yt/gfx/Texture.hpp>
+#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/gfx/Pipeline.hpp>
+#include <tachyon/gfx/PipelineWriter.hpp>
+#include <tachyon/gfx/Sampler.hpp>
+#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/gfx/Texture.hpp>
 #include <yt/ui/Widget.hpp>
 #include <yt/app/ViewerState.hpp>
 #include <ya/events/keyboard/KeyCharacterEvent.hpp>

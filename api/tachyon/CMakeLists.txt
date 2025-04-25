@@ -21,6 +21,15 @@ add_library(${PROJECT_NAME} SHARED
     
     enum/Cardinal.cpp
 
+    gfx/Buffer.cpp
+    gfx/Pipeline.cpp
+    gfx/PipelineUtils.cpp
+    gfx/Raster.cpp
+    gfx/RenderPass.cpp
+    gfx/Sampler.cpp
+    gfx/Shader.cpp
+    gfx/Texture.cpp
+
     glfw/CursorGLFW.cpp
     glfw/DesktopGLFW.cpp
     glfw/GamepadGLFW.cpp
@@ -118,14 +127,6 @@ add_library(${PROJECT_NAME} SHARED
 
     # font/Font.cpp      # Issue/TODO
 
-    yt/gfx/Buffer.cpp
-    yt/gfx/Pipeline.cpp
-    yt/gfx/PipelineUtils.cpp
-    yt/gfx/Raster.cpp
-    yt/gfx/RenderPass.cpp
-    yt/gfx/Sampler.cpp
-    yt/gfx/Shader.cpp
-    yt/gfx/Texture.cpp
 
     yt/io/GLSLShader.cpp
     yt/io/SamplerInfoFile.cpp

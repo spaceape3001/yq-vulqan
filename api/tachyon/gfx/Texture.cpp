@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <yt/gfx/Raster.hpp>
-#include <yt/gfx/Sampler.hpp>
-#include <yt/gfx/Texture.hpp>
+#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/gfx/Sampler.hpp>
+#include <tachyon/gfx/Texture.hpp>
 
 namespace yq::tachyon {
     TextureCPtr  Texture::load(std::string_view pp)

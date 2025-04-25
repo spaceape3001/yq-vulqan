@@ -10,7 +10,7 @@
 
 #include <yq/keywords.hpp>
 #include <yt/api/StdThread.hpp>
-#include <yt/gfx/DataActivity.hpp>
+#include <tachyon/gfx/DataActivity.hpp>
 #include <yt/os/Platform.hpp>
 #include <tachyon/enum/Cardinal.hpp>
 #include <yt/ui/SizePolicy.hpp>

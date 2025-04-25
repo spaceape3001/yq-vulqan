@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/gfx/BufferObject.hpp>
+#include <tachyon/gfx/BufferObject.hpp>
 
 namespace yq::tachyon {
 
@@ -18,30 +18,30 @@ namespace yq::tachyon {
         it lives elsewhere.
     */
     template <typename T>
-    struct SBO : public UniformBuffer {
-        SBO(){}
-        ~SBO(){}
+    struct UBO : public UniformBuffer {
+        UBO(){}
+        ~UBO(){}
         
-        // Only create by SBO
+        // Only create by UBO
         struct RefProxy {
-            SBO*        ubo;
-            SBO&    operator, (const T& value)
+            UBO*        ubo;
+            UBO&    operator, (const T& value)
             {
                 ubo->UniformBuffer::update(Memory(REF1, value));
                 return *ubo;
             }
-            SBO&    operator, (const T* value)
+            UBO&    operator, (const T* value)
             {
                 ubo->UniformBuffer::update(Memory(REF1, *value));
                 return *ubo;
             }
-            SBO&    operator, (T&& value) = delete;
+            UBO&    operator, (T&& value) = delete;
         };
         
-        // Only create by SBO
+        // Only create by UBO
         struct CopyProxy {
-            SBO*    ubo;
-            SBO&    operator, (const T& value)
+            UBO*    ubo;
+            UBO&    operator, (const T& value)
             {
                 ubo->UniformBuffer::update(Memory(COPY1, value));
                 return *ubo;
@@ -65,11 +65,11 @@ namespace yq::tachyon {
         Call "update" after modification.  (note, a copy in will trigger the update)
     */
     template <typename T>
-    struct SB1 : public UniformBuffer {
+    struct UB1 : public UniformBuffer {
         T               data        = {};
         
-        SB1(){}
-        ~SB1(){}
+        UB1(){}
+        ~UB1(){}
         
         //! Copies the data into a buffer, prepped for the GPU
         void        update()
@@ -77,22 +77,22 @@ namespace yq::tachyon {
             UniformBuffer::update(Memory(COPY1, data));
         }
         
-        SB1& operator=(const SB1&) = default;
-        SB1& operator=(const SBO<T>&cp)
+        UB1& operator=(const UB1&) = default;
+        UB1& operator=(const UBO<T>&cp)
         {
             data    = {};
             UniformBuffer::buffer   = cp.UniformBuffer::buffer;
             return *this;
         }
         
-        SB1& operator=(const T& data_)
+        UB1& operator=(const T& data_)
         {
             data    = data_;
             update();
             return *this;
         }
         
-        SB1& operator=(T&& data_)
+        UB1& operator=(T&& data_)
         {
             data    = std::move(data_);
             update();

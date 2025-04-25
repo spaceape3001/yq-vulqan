@@ -11,18 +11,18 @@
 
 #include <yt/keywords.hpp>
 
-#include <yt/gfx/DataActivity.hpp>
-#include <yt/gfx/ColorBlend.hpp>
-#include <yt/gfx/CullMode.hpp>
-#include <yt/gfx/DataFormat.hpp>
-#include <yt/gfx/DynamicState.hpp>
-#include <yt/gfx/FrontFace.hpp>
-#include <yt/gfx/IndexType.hpp>
-#include <yt/gfx/PipelineBinding.hpp>
-#include <yt/gfx/PolygonMode.hpp>
-#include <yt/gfx/PushConfigType.hpp>
-#include <yt/gfx/Topology.hpp>
-#include <yt/gfx/VertexInputRate.hpp>
+#include <tachyon/gfx/DataActivity.hpp>
+#include <tachyon/gfx/ColorBlend.hpp>
+#include <tachyon/gfx/CullMode.hpp>
+#include <tachyon/gfx/DataFormat.hpp>
+#include <tachyon/gfx/DynamicState.hpp>
+#include <tachyon/gfx/FrontFace.hpp>
+#include <tachyon/gfx/IndexType.hpp>
+#include <tachyon/gfx/PipelineBinding.hpp>
+#include <tachyon/gfx/PolygonMode.hpp>
+#include <tachyon/gfx/PushConfigType.hpp>
+#include <tachyon/gfx/Topology.hpp>
+#include <tachyon/gfx/VertexInputRate.hpp>
 
 #include <tachyon/typedef/buffer.hpp>
 #include <tachyon/typedef/pipeline.hpp>

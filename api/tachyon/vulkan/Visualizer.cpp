@@ -28,8 +28,8 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>
-#include <yt/gfx/Raster.hpp>
-#include <yt/gfx/ImageViewInfo.hpp>
+#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/gfx/ImageViewInfo.hpp>
 #include <yt/scene/Perspective.hpp>
 #include <yt/scene/RenderedData.hpp>
 #include <yt/scene/Scene.hpp>

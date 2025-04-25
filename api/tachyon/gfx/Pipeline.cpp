@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yt/gfx/Pipeline.hpp>
+#include <tachyon/gfx/Pipeline.hpp>
 #include <yq/meta/CompoundInfo.hpp>
-#include <yt/gfx/Shader.hpp>
-#include <yt/gfx/PushData.hpp>
+#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/gfx/PushData.hpp>
 #include <atomic>
 
 namespace yq::tachyon {

@@ -7,8 +7,8 @@
 #include "UIImage.hpp"
 #include "UIImageWriter.hpp"
 #include <yt/ui/UIElementInfoWriter.hpp>
-#include <yt/gfx/Raster.hpp>
-#include <yt/gfx/Texture.hpp>
+#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/gfx/Texture.hpp>
 #include <yt/logging.hpp>
 #include <yt/ui/UIStyle.hpp>
 #include <yq/text/format.hpp>

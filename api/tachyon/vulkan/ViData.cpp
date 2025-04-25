@@ -8,8 +8,8 @@
 
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
-#include <yt/gfx/Buffer.hpp>
-#include <yt/gfx/Texture.hpp>
+#include <tachyon/gfx/Buffer.hpp>
+#include <tachyon/gfx/Texture.hpp>
 #include <yt/scene/RenderedData.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViBuffer.hpp>

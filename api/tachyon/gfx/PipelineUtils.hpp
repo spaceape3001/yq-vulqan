@@ -9,8 +9,8 @@
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/meta/Meta.hpp>
 //#include <yq/tachyon/preamble.hpp>
-#include <yt/gfx/DataFormat.hpp>
-#include <yt/gfx/IndexType.hpp>
+#include <tachyon/gfx/DataFormat.hpp>
+#include <tachyon/gfx/IndexType.hpp>
 #include <span>
 
 namespace yq::tachyon {

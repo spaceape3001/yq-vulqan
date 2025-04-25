@@ -11,7 +11,7 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/text/format.hpp>
 #include <yt/logging.hpp>
-#include <yt/gfx/Shader.hpp>
+#include <tachyon/gfx/Shader.hpp>
 
 namespace yq::tachyon {
     TypedAssetFactory<Shader>&  Shader::cache()

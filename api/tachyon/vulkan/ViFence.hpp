@@ -8,7 +8,7 @@
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
-#include <yt/config/vulqan.hpp>
+#include <tachyon/config/vulqan.hpp>
 
 namespace yq::tachyon {
     class ViDevice;

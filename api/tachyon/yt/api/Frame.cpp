@@ -29,8 +29,8 @@
 #include <yt/3D/Spatial3.hpp>
 #include <yt/3D/Spatial3Data.hpp>
 
-#include <yt/app/Viewer.hpp>
-#include <yt/app/ViewerData.hpp>
+#include <tachyon/app/Viewer.hpp>
+#include <tachyon/app/ViewerData.hpp>
 
 #include <tachyon/os/Cursor.hpp>
 #include <tachyon/os/CursorData.hpp>

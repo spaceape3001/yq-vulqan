@@ -12,7 +12,7 @@
 #include <tachyon/command/ui/ShowCommand.hpp>
 #include <yq/meta/Init.hpp>
 #include <tachyon/vulkan/ViSurface.hpp>
-#include <yt/app/ViewerCreateInfo.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 
 namespace yq::tachyon {
 

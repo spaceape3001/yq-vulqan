@@ -18,7 +18,7 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
-#include <yt/enum/UIFlags.hpp>
+#include <tachyon/enum/UIFlags.hpp>
 #include <tachyon/typedef/texture.hpp>
 #include <yt/api/ID.hpp>
 

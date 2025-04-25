@@ -14,7 +14,7 @@
 #include <yt/errors.hpp>
 #include <yt/logging.hpp>
 #include <tachyon/gfx/Raster.hpp>
-#include <yt/app/ViewerCreateInfo.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/gfx/Buffer.hpp>
 #include <tachyon/gfx/Pipeline.hpp>
 #include <tachyon/gfx/Sampler.hpp>

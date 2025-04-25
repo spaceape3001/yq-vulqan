@@ -10,7 +10,7 @@
 
 #include <tachyon/vulkan/ViDevice.hpp>
 #include <tachyon/vulkan/ViSurface.hpp>
-#include <yt/app/ViewerCreateInfo.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 #include <tachyon/typedef/vi_queue_id.hpp>
 
 namespace yq::tachyon {

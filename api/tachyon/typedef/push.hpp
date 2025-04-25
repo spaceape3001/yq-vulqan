@@ -7,7 +7,7 @@
 #pragma once
 
 #include <cstddef>
-#include <yt/config/vulqan.hpp>
+#include <tachyon/config/vulqan.hpp>
 
 namespace yq {
     template <size_t> class BasicBuffer;

@@ -16,13 +16,16 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
+    #   ALPHABETICAL
 
     action/CallbackAction.cpp
     action/NullAction.cpp
     action/PostAction.cpp
     action/VisibleUIAction.cpp
 
-    #   ALPHABETICAL
+    app/Application.cpp
+    app/Viewer.cpp
+
     aspect/AMaxSize1.cpp
     aspect/AMaxSize2.cpp
     aspect/AMaxSize3.cpp
@@ -276,7 +279,10 @@ add_library(${PROJECT_NAME} SHARED
     
     command/widget/SetViewer.cpp
 
+    config/build.cpp
+
     enum/Cardinal.cpp
+    enum/UIFlags.cpp
 
 
     event/AppEvent.cpp
@@ -553,6 +559,36 @@ add_library(${PROJECT_NAME} SHARED
     trigger/OrTrigger.cpp
     trigger/PostTrigger.cpp
     
+    ui/UIAppMain.cpp
+    ui/UIAppMainWriter.cpp
+    ui/UIButton.cpp
+    ui/UIButtonBar.cpp
+    ui/UIButtonBarWriter.cpp
+    ui/UICallback.cpp
+    ui/UICenterAlign.cpp
+    ui/UICheckBox.cpp
+    ui/UICheckBox_Simple.cpp
+    ui/UICheckBox_Visible.cpp
+    ui/UIElements.cpp
+    ui/UIElementsWriter.cpp
+    ui/UIGenerator.cpp
+    ui/UIHBox.cpp
+    ui/UIHLine.cpp
+    ui/UIImage.cpp
+    ui/UILayout.cpp
+    ui/UILayoutWriter.cpp
+    ui/UIMenu.cpp
+    ui/UIMenuWriter.cpp
+    ui/UIMenuBar.cpp
+    ui/UIMenuBarWriter.cpp
+    ui/UIMenuItem.cpp
+    ui/UIRightAlign.cpp
+    ui/UISpacer.cpp
+    ui/UITextLabel.cpp
+    ui/UIWindow.cpp
+    ui/UIWindowWriter.cpp
+    ui/UIVBox.cpp
+    
     utility/LoggerBox.cpp
 
     vulkan/vulqan.cpp
@@ -644,12 +680,8 @@ add_library(${PROJECT_NAME} SHARED
     yt/api/meta/DelegateProperty.cpp
     yt/api/meta/DelegateSetter.cpp
 
-    yt/app/Application.cpp
-    yt/app/Viewer.cpp
 
-    yt/config/build.cpp
 
-    yt/enum/UIFlags.cpp
 
     # font/Font.cpp      # Issue/TODO
 
@@ -719,35 +751,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/spatials/GeoSpatial3.cpp
     ya/spatials/SimpleSpatial3.cpp
 
-    ya/uis/UIAppMain.cpp
-    ya/uis/UIAppMainWriter.cpp
-    ya/uis/UIButton.cpp
-    ya/uis/UIButtonBar.cpp
-    ya/uis/UIButtonBarWriter.cpp
-    ya/uis/UICallback.cpp
-    ya/uis/UICenterAlign.cpp
-    ya/uis/UICheckBox.cpp
-    ya/uis/UICheckBox_Simple.cpp
-    ya/uis/UICheckBox_Visible.cpp
-    ya/uis/UIElements.cpp
-    ya/uis/UIElementsWriter.cpp
-    ya/uis/UIGenerator.cpp
-    ya/uis/UIHBox.cpp
-    ya/uis/UIHLine.cpp
-    ya/uis/UIImage.cpp
-    ya/uis/UILayout.cpp
-    ya/uis/UILayoutWriter.cpp
-    ya/uis/UIMenu.cpp
-    ya/uis/UIMenuWriter.cpp
-    ya/uis/UIMenuBar.cpp
-    ya/uis/UIMenuBarWriter.cpp
-    ya/uis/UIMenuItem.cpp
-    ya/uis/UIRightAlign.cpp
-    ya/uis/UISpacer.cpp
-    ya/uis/UITextLabel.cpp
-    ya/uis/UIWindow.cpp
-    ya/uis/UIWindowWriter.cpp
-    ya/uis/UIVBox.cpp
     
 )
 

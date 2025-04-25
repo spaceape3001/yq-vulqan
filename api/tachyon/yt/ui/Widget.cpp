@@ -11,7 +11,7 @@
 
 #include <yt/logging.hpp>
 #include <yt/api/Frame.hpp>
-#include <yt/app/Viewer.hpp>
+#include <tachyon/app/Viewer.hpp>
 #include <tachyon/command/tachyon/DestroyCommand.hpp>
 #include <tachyon/command/ui/CloseCommand.hpp>
 #include <tachyon/command/ui/HideCommand.hpp>
@@ -46,7 +46,7 @@
 #include <yt/scene/Rendered.hpp>
 #include <tachyon/vulkan/Visualizer.hpp>
 #include <tachyon/vulkan/Visualizer.hxx>
-#include <ya/uis/UIElements.hpp>
+#include <tachyon/ui/UIElements.hpp>
 #include <yq/util/AutoReset.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)

@@ -15,7 +15,7 @@
 #include <tachyon/widget/FrameInspector.hpp>
 #include <tachyon/widget/SpaceCameraRemote.hpp>
 #include <yt/api/Frame.hpp>
-#include <yt/app/Viewer.hpp>
+#include <tachyon/app/Viewer.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
 #include <yq/text/match.hpp>

@@ -6,11 +6,11 @@
 
 #include <yq/core/ThreadId.hpp>
 #include <yt/logging.hpp>
-#include <yt/app/Application.hpp>
+#include <tachyon/app/Application.hpp>
 #include <yt/api/Frame.hpp>
 #include <yt/api/Context.hpp>
 #include <tachyon/os/DesktopInfoWriter.hpp>
-#include <yt/app/ViewerCreateInfo.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 
 #include <tachyon/os/glfw/CursorGLFW.hpp>
 #include <tachyon/os/glfw/DesktopGLFW.hpp>

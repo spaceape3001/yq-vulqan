@@ -55,7 +55,7 @@
 #include <tachyon/request/ui/RefreshRequest.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/math/utility.hpp>
-#include <yt/app/ViewerCreateInfo.hpp>
+#include <tachyon/app/ViewerCreateInfo.hpp>
 
 #include <tachyon/os/glfw/DesktopGLFW.hpp>
 #include <tachyon/os/glfw/LoggingGLFW.hpp>

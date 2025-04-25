@@ -6,9 +6,9 @@
 
 #include <ya/spatials/SimpleSpatial3.hpp>
 #include <yt/3D/Spatial3InfoWriter.hpp>
-#include <ya/aspects/AOrientation3Writer.hxx>
-#include <ya/aspects/APosition3Writer.hxx>
-#include <ya/aspects/AScale3Writer.hxx>
+#include <tachyon/aspect/AOrientation3Writer.hxx>
+#include <tachyon/aspect/APosition3Writer.hxx>
+#include <tachyon/aspect/AScale3Writer.hxx>
 #include <tachyon/command/position/MoveBy3.hpp>
 #include <tachyon/command/position/MoveByX.hpp>
 #include <tachyon/command/position/MoveByY.hpp>

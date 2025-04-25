@@ -12,14 +12,14 @@
 #include <tachyon/os/Window.hpp>
 #include <tachyon/vulkan/VulqanManager.hpp>
 
-#include <ya/threads/AppThread.hpp>
-#include <ya/threads/AudioThread.hpp>
-#include <ya/threads/GameThread.hpp>
-#include <ya/threads/IOThread.hpp>
-#include <ya/threads/NetworkThread.hpp>
-#include <ya/threads/SimThread.hpp>
-#include <ya/threads/TaskThread.hpp>
-#include <ya/threads/ViewerThread.hpp>
+#include <tachyon/thread/AppThread.hpp>
+#include <tachyon/thread/AudioThread.hpp>
+#include <tachyon/thread/GameThread.hpp>
+#include <tachyon/thread/IOThread.hpp>
+#include <tachyon/thread/NetworkThread.hpp>
+#include <tachyon/thread/SimThread.hpp>
+#include <tachyon/thread/TaskThread.hpp>
+#include <tachyon/thread/ViewerThread.hpp>
 
 #include <tachyon/os/glfw/DesktopGLFW.hpp>
 

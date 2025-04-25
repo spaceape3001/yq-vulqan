@@ -11,7 +11,7 @@
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
-#include <ya/utilities/LoggerBox.hpp>
+#include <tachyon/utility/LoggerBox.hpp>
 #include <yt/application.hpp>
 
 #include "MainWidget.hpp"

@@ -12,8 +12,8 @@
 #include <tachyon/command/io/SaveCommand.hpp>
 #include <tachyon/command/ui/CloseCommand.hpp>
 #include <ya/controllers/Space3Controller.hpp>
-#include <ya/widgets/FrameInspector.hpp>
-#include <ya/widgets/SpaceCameraRemote.hpp>
+#include <tachyon/widget/FrameInspector.hpp>
+#include <tachyon/widget/SpaceCameraRemote.hpp>
 #include <yt/api/Frame.hpp>
 #include <yt/app/Viewer.hpp>
 #include <yt/ui/MyImGui.hpp>

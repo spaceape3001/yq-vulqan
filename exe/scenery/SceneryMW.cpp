@@ -7,7 +7,7 @@
 #include <yt/application.hpp>
 #include "SceneryMW.hpp"
 #include <tachyon/request/app/OpenFileRequest.hpp>
-#include <ya/widgets/AppWidgetInfoWriter.hpp>
+#include <tachyon/widget/AppWidgetInfoWriter.hpp>
 #include <iostream>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/UIWriters.hxx>

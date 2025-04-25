@@ -19,7 +19,7 @@
 #include <yt/ui/MyImGui.hpp>
 #include <yt/viewer.hpp>
 #include <yt/widget.hpp>
-#include <ya/widgets/TextArea.hpp>
+#include <tachyon/widget/TextArea.hpp>
 
 #include <iostream>
 #include <TextEditor.h>

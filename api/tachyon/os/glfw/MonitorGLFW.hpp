@@ -7,9 +7,9 @@
 #pragma once
 
 #include <tachyon/os/Monitor.hpp>
-#include <ya/interfaces/IPosition2.hpp>
-#include <ya/interfaces/IScale2.hpp>
-#include <ya/interfaces/ISize2.hpp>
+#include <tachyon/interface/IPosition2.hpp>
+#include <tachyon/interface/IScale2.hpp>
+#include <tachyon/interface/ISize2.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/shape/Size2.hpp>
 

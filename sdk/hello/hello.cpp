@@ -44,16 +44,16 @@
 #include <yt/widget.hpp>
 
 #include <tachyon/command/orientation/SetOrientation3.hpp>
-#include <ya/rendereds/Triangle3.hpp>
+#include <tachyon/rendered/Triangle3.hpp>
 #include <yt/3D/Spatial3.hpp>
 #include <ya/scenes/SimpleScene3.hpp>
 #include <yt/3D/Scene3InfoWriter.hpp>
 #include <yt/ui/WidgetInfoWriter.hpp>
-#include <ya/widgets/Scene3Widget.hpp>
-#include <ya/utilities/LoggerBox.hpp>
+#include <tachyon/widget/Scene3Widget.hpp>
+#include <tachyon/utility/LoggerBox.hpp>
 
 #ifdef WANT_FRAME_INSPECTOR
-#include <ya/widgets/FrameInspector.hpp>
+#include <tachyon/widget/FrameInspector.hpp>
 #endif
 
 #include <iostream>

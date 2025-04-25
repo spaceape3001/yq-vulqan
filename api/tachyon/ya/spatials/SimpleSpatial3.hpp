@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yt/3D/Spatial3.hpp>
-#include <ya/aspects/AOrientation3.hpp>
-#include <ya/aspects/APosition3.hpp>
-#include <ya/aspects/AScale3.hpp>
+#include <tachyon/aspect/AOrientation3.hpp>
+#include <tachyon/aspect/APosition3.hpp>
+#include <tachyon/aspect/AScale3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 

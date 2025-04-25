@@ -6,7 +6,7 @@
 
 #include <ya/controls/Orientation3Control.hpp>
 #include <yt/api/Frame.hpp>
-#include <ya/proxies/POrientation3.hpp>
+#include <tachyon/proxy/POrientation3.hpp>
 #include <yt/ui/MyImGui.hpp>
 #include <yt/ui/ControlInfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>

@@ -17,8 +17,33 @@ find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
 
+    action/CallbackAction.cpp
+    action/NullAction.cpp
+    action/PostAction.cpp
+    action/VisibleUIAction.cpp
+
     #   ALPHABETICAL
-    
+    aspect/AMaxSize1.cpp
+    aspect/AMaxSize2.cpp
+    aspect/AMaxSize3.cpp
+    aspect/AMaxSize4.cpp
+    aspect/AMinSize1.cpp
+    aspect/AMinSize2.cpp
+    aspect/AMinSize3.cpp
+    aspect/AMinSize4.cpp
+    aspect/AOrientation3.cpp
+    aspect/APosition1.cpp
+    aspect/APosition2.cpp
+    aspect/APosition3.cpp
+    aspect/APosition4.cpp
+    aspect/AScale1.cpp
+    aspect/AScale2.cpp
+    aspect/AScale3.cpp
+    aspect/ASize1.cpp
+    aspect/ASize2.cpp
+    aspect/ASize3.cpp
+    aspect/ASize4.cpp
+        
     camera/NullCamera.cpp
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
@@ -373,6 +398,27 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
+    interface/IMaxSize1.cpp
+    interface/IMaxSize2.cpp
+    interface/IMaxSize3.cpp
+    interface/IMaxSize4.cpp
+    interface/IMinSize1.cpp
+    interface/IMinSize2.cpp
+    interface/IMinSize3.cpp
+    interface/IMinSize4.cpp
+    interface/IOrientation3.cpp
+    interface/IPosition1.cpp
+    interface/IPosition2.cpp
+    interface/IPosition3.cpp
+    interface/IPosition4.cpp
+    interface/IScale1.cpp
+    interface/IScale2.cpp
+    interface/IScale3.cpp
+    interface/ISize1.cpp
+    interface/ISize2.cpp
+    interface/ISize3.cpp
+    interface/ISize4.cpp
+    
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
@@ -416,6 +462,33 @@ add_library(${PROJECT_NAME} SHARED
     os/glfw/MouseGLFW.cpp
     os/glfw/WindowGLFW.cpp
 
+    proxy/PMaxSize1.cpp
+    proxy/PMaxSize2.cpp
+    proxy/PMaxSize3.cpp
+    proxy/PMaxSize4.cpp
+    proxy/PMinSize1.cpp
+    proxy/PMinSize2.cpp
+    proxy/PMinSize3.cpp
+    proxy/PMinSize4.cpp
+    proxy/POrientation3.cpp
+    proxy/PPosition1.cpp
+    proxy/PPosition2.cpp
+    proxy/PPosition3.cpp
+    proxy/PPosition4.cpp
+    proxy/PScale1.cpp
+    proxy/PScale2.cpp
+    proxy/PScale3.cpp
+    proxy/PSize1.cpp
+    proxy/PSize2.cpp
+    proxy/PSize3.cpp
+    proxy/PSize4.cpp
+
+    rendered/Billboard3.cpp
+    rendered/ImageQuad3.cpp
+    rendered/Quadrilateral3.cpp
+    rendered/SkyBox3.cpp
+    rendered/Tetrahedron3.cpp
+    rendered/Triangle3.cpp
 
     reply/AnyReply.cpp
     reply/AppReply.cpp
@@ -463,6 +536,25 @@ add_library(${PROJECT_NAME} SHARED
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp
     
+    thread/AppThread.cpp
+    thread/AudioThread.cpp
+    thread/GameThread.cpp
+    thread/IOThread.cpp
+    thread/NetworkThread.cpp
+    thread/SimThread.cpp
+    thread/TaskThread.cpp
+    thread/ViewerThread.cpp
+
+    trigger/AndTrigger.cpp
+    trigger/KeyPressTrigger.cpp
+    trigger/NandTrigger.cpp
+    trigger/NorTrigger.cpp
+    trigger/NotTrigger.cpp
+    trigger/OrTrigger.cpp
+    trigger/PostTrigger.cpp
+    
+    utility/LoggerBox.cpp
+
     vulkan/vulqan.cpp
     vulkan/VulqanGPU.cpp
     vulkan/VulqanManager.cpp
@@ -500,6 +592,16 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/Visualizer.cpp
         
     
+    #widget/AbstractSceneWidgetHelper.cpp
+    widget/AppWidget.cpp
+    widget/FormWidget.cpp
+    widget/FrameInspector.cpp
+    widget/ImGuiDemoWidget.cpp
+    #widget/LabelWidget.cpp
+    widget/Scene3Widget.cpp
+    widget/SpaceCameraRemote.cpp
+    widget/StackedWidget.cpp
+    widget/TextArea.cpp
     
     #######################################################
     #   Core First
@@ -590,31 +692,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/accessors/StringFunction.cpp
     ya/accessors/StringValue.cpp
     
-    ya/actions/CallbackAction.cpp
-    ya/actions/NullAction.cpp
-    ya/actions/PostAction.cpp
-    ya/actions/VisibleUIAction.cpp
-
-    ya/aspects/AMaxSize1.cpp
-    ya/aspects/AMaxSize2.cpp
-    ya/aspects/AMaxSize3.cpp
-    ya/aspects/AMaxSize4.cpp
-    ya/aspects/AMinSize1.cpp
-    ya/aspects/AMinSize2.cpp
-    ya/aspects/AMinSize3.cpp
-    ya/aspects/AMinSize4.cpp
-    ya/aspects/AOrientation3.cpp
-    ya/aspects/APosition1.cpp
-    ya/aspects/APosition2.cpp
-    ya/aspects/APosition3.cpp
-    ya/aspects/APosition4.cpp
-    ya/aspects/AScale1.cpp
-    ya/aspects/AScale2.cpp
-    ya/aspects/AScale3.cpp
-    ya/aspects/ASize1.cpp
-    ya/aspects/ASize2.cpp
-    ya/aspects/ASize3.cpp
-    ya/aspects/ASize4.cpp
 
 
 
@@ -625,27 +702,6 @@ add_library(${PROJECT_NAME} SHARED
 
 
 
-    ya/interfaces/IMaxSize1.cpp
-    ya/interfaces/IMaxSize2.cpp
-    ya/interfaces/IMaxSize3.cpp
-    ya/interfaces/IMaxSize4.cpp
-    ya/interfaces/IMinSize1.cpp
-    ya/interfaces/IMinSize2.cpp
-    ya/interfaces/IMinSize3.cpp
-    ya/interfaces/IMinSize4.cpp
-    ya/interfaces/IOrientation3.cpp
-    ya/interfaces/IPosition1.cpp
-    ya/interfaces/IPosition2.cpp
-    ya/interfaces/IPosition3.cpp
-    ya/interfaces/IPosition4.cpp
-    ya/interfaces/IScale1.cpp
-    ya/interfaces/IScale2.cpp
-    ya/interfaces/IScale3.cpp
-    ya/interfaces/ISize1.cpp
-    ya/interfaces/ISize2.cpp
-    ya/interfaces/ISize3.cpp
-    ya/interfaces/ISize4.cpp
-
     ya/messages/EmptyMessage.cpp
     
     ya/minis/TextLabel.cpp
@@ -654,59 +710,15 @@ add_library(${PROJECT_NAME} SHARED
     ya/posts/EmptyPost.cpp
     ya/posts/StringPost.cpp
 
-    ya/proxies/PMaxSize1.cpp
-    ya/proxies/PMaxSize2.cpp
-    ya/proxies/PMaxSize3.cpp
-    ya/proxies/PMaxSize4.cpp
-    ya/proxies/PMinSize1.cpp
-    ya/proxies/PMinSize2.cpp
-    ya/proxies/PMinSize3.cpp
-    ya/proxies/PMinSize4.cpp
-    ya/proxies/POrientation3.cpp
-    ya/proxies/PPosition1.cpp
-    ya/proxies/PPosition2.cpp
-    ya/proxies/PPosition3.cpp
-    ya/proxies/PPosition4.cpp
-    ya/proxies/PScale1.cpp
-    ya/proxies/PScale2.cpp
-    ya/proxies/PScale3.cpp
-    ya/proxies/PSize1.cpp
-    ya/proxies/PSize2.cpp
-    ya/proxies/PSize3.cpp
-    ya/proxies/PSize4.cpp
     
     ya/rasters/PatternRasters.cpp
     ya/rasters/DebugRasters.cpp
-
-    ya/rendereds/Billboard3.cpp
-    ya/rendereds/ImageQuad3.cpp
-    ya/rendereds/Quadrilateral3.cpp
-    ya/rendereds/SkyBox3.cpp
-    ya/rendereds/Tetrahedron3.cpp
-    ya/rendereds/Triangle3.cpp
 
     ya/scenes/SimpleScene3.cpp
 
     ya/spatials/GeoSpatial3.cpp
     ya/spatials/SimpleSpatial3.cpp
 
-    ya/threads/AppThread.cpp
-    ya/threads/AudioThread.cpp
-    ya/threads/GameThread.cpp
-    ya/threads/IOThread.cpp
-    ya/threads/NetworkThread.cpp
-    ya/threads/SimThread.cpp
-    ya/threads/TaskThread.cpp
-    ya/threads/ViewerThread.cpp
-
-    ya/triggers/AndTrigger.cpp
-    ya/triggers/KeyPressTrigger.cpp
-    ya/triggers/NandTrigger.cpp
-    ya/triggers/NorTrigger.cpp
-    ya/triggers/NotTrigger.cpp
-    ya/triggers/OrTrigger.cpp
-    ya/triggers/PostTrigger.cpp
-    
     ya/uis/UIAppMain.cpp
     ya/uis/UIAppMainWriter.cpp
     ya/uis/UIButton.cpp
@@ -737,18 +749,6 @@ add_library(${PROJECT_NAME} SHARED
     ya/uis/UIWindowWriter.cpp
     ya/uis/UIVBox.cpp
     
-    ya/utilities/LoggerBox.cpp
-
-    #ya/widgets/AbstractSceneWidgetHelper.cpp
-    ya/widgets/AppWidget.cpp
-    ya/widgets/FormWidget.cpp
-    ya/widgets/FrameInspector.cpp
-    ya/widgets/ImGuiDemoWidget.cpp
-    #ya/widgets/LabelWidget.cpp
-    ya/widgets/Scene3Widget.cpp
-    ya/widgets/SpaceCameraRemote.cpp
-    ya/widgets/StackedWidget.cpp
-    ya/widgets/TextArea.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} 

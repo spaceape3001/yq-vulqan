@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElementWriter.hpp"
-#include <ya/actions/StdCallbackAction.hpp>
-#include <ya/actions/StdPostAction.hpp>
+#include <tachyon/action/StdCallbackAction.hpp>
+#include <tachyon/action/StdPostAction.hpp>
 #include <tachyon/msg/Post.hpp>
 #include <yt/api/Tachyon.hpp>
 

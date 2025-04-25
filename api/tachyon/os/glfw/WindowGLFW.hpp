@@ -12,11 +12,11 @@
 #include <tachyon/os/MouseButton.hpp>
 #include <tachyon/os/MouseMode.hpp>
 #include <tachyon/os/WindowMode.hpp>
-#include <ya/aspects/AMaxSize2.hpp>
-#include <ya/aspects/AMinSize2.hpp>
-#include <ya/aspects/APosition2.hpp>
-#include <ya/aspects/ASize2.hpp>
-#include <ya/aspects/AScale2.hpp>
+#include <tachyon/aspect/AMaxSize2.hpp>
+#include <tachyon/aspect/AMinSize2.hpp>
+#include <tachyon/aspect/APosition2.hpp>
+#include <tachyon/aspect/ASize2.hpp>
+#include <tachyon/aspect/AScale2.hpp>
 #include <ya/typedef/commands.hpp>
 
 struct GLFWwindow;

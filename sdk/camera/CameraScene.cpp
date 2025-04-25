@@ -14,12 +14,12 @@
 
 #include <tachyon/camera/SpaceCamera.hpp>
 
-#include <ya/rendereds/Billboard3.hpp>
-#include <ya/rendereds/ImageQuad3.hpp>
-#include <ya/rendereds/Quadrilateral3.hpp>
-#include <ya/rendereds/SkyBox3.hpp>
-#include <ya/rendereds/Triangle3.hpp>
-#include <ya/rendereds/Tetrahedron3.hpp>
+#include <tachyon/rendered/Billboard3.hpp>
+#include <tachyon/rendered/ImageQuad3.hpp>
+#include <tachyon/rendered/Quadrilateral3.hpp>
+#include <tachyon/rendered/SkyBox3.hpp>
+#include <tachyon/rendered/Triangle3.hpp>
+#include <tachyon/rendered/Tetrahedron3.hpp>
 
 #include <yt/3D/Scene3InfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>

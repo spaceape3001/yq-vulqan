@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/desktops/glfw/JoystickGLFW.hpp>
+#include <tachyon/glfw/JoystickGLFW.hpp>
 #include <yt/os/JoystickInfoWriter.hpp>
 #include <ya/commands/joystick/JoystickZeroCommand.hpp>
-#include <ya/desktops/glfw/glfw.hpp>
+#include <tachyon/glfw/glfw.hpp>
 #include <ya/events/joystick/JoystickAxisEvent.hpp>
 #include <ya/events/joystick/JoystickHatEvent.hpp>
 #include <ya/events/joystick/JoystickPressEvent.hpp>

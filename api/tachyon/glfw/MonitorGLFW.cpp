@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/desktops/glfw/MonitorGLFW.hpp>
+#include <tachyon/glfw/MonitorGLFW.hpp>
 #include <ya/events/spatial/Position2Event.hpp>
 #include <ya/events/spatial/Scale2Event.hpp>
 #include <ya/events/spatial/Size2Event.hpp>

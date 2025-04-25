@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/os/Keyboard.hpp>
-#include <ya/desktops/glfw/glfw.hpp>
+#include <tachyon/glfw/glfw.hpp>
 
 namespace yq::tachyon {
     class KeyboardGLFW : public Keyboard {

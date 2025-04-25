@@ -444,14 +444,14 @@ add_library(${PROJECT_NAME} SHARED
 
     ya/controls/Orientation3Control.cpp
 
-    ya/desktops/glfw/CursorGLFW.cpp
-    ya/desktops/glfw/DesktopGLFW.cpp
-    ya/desktops/glfw/GamepadGLFW.cpp
-    ya/desktops/glfw/JoystickGLFW.cpp
-    ya/desktops/glfw/KeyboardGLFW.cpp
-    ya/desktops/glfw/MonitorGLFW.cpp
-    ya/desktops/glfw/MouseGLFW.cpp
-    ya/desktops/glfw/WindowGLFW.cpp
+    glfw/CursorGLFW.cpp
+    glfw/DesktopGLFW.cpp
+    glfw/GamepadGLFW.cpp
+    glfw/JoystickGLFW.cpp
+    glfw/KeyboardGLFW.cpp
+    glfw/MonitorGLFW.cpp
+    glfw/MouseGLFW.cpp
+    glfw/WindowGLFW.cpp
 
     ya/events/AppEvent.cpp
     ya/events/CameraEvent.cpp

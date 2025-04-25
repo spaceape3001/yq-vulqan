@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <ya/desktops/glfw/GamepadGLFW.hpp>
+#include <tachyon/glfw/GamepadGLFW.hpp>
 #include <yt/os/GamepadInfoWriter.hpp>
 #include <ya/commands/gamepad/GamepadZeroCommand.hpp>
-#include <ya/desktops/glfw/glfw.hpp>
+#include <tachyon/glfw/glfw.hpp>
 #include <ya/events/gamepad/GamepadAxisEvent.hpp>
 #include <ya/events/gamepad/GamepadHatEvent.hpp>
 #include <ya/events/gamepad/GamepadPressEvent.hpp>

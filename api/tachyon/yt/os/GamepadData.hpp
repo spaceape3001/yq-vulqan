@@ -8,7 +8,7 @@
 
 #include <yt/api/TachyonData.hpp>
 #include <yt/os/HatState.hpp>
-#include <yt/typedef/gamepad.hpp>
+#include <tachyon/typedef/gamepad.hpp>
 
 namespace yq::tachyon {
     struct GamepadSnap : public TachyonSnap {

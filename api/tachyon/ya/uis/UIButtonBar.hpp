@@ -7,7 +7,7 @@
 #pragma once
 
 #include <ya/uis/UIWindow.hpp>
-#include <yt/typedef/uimisc.hpp>
+#include <tachyon/typedef/uimisc.hpp>
 #include <yt/enum/UICardinal.hpp>
 
 namespace yq::tachyon {

@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yt/ui/Widget.hpp>
-#include <yt/typedef/accessor.hpp>
-#include <yt/typedef/mini.hpp>
+#include <tachyon/typedef/accessor.hpp>
+#include <tachyon/typedef/mini.hpp>
 
 namespace yq::tachyon {
 

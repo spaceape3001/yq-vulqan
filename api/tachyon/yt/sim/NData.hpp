@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/api/ID.hpp>
-#include <yt/typedef/spatial.hpp>
+#include <tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/model.hpp>
+#include <tachyon/typedef/model.hpp>
 
 namespace yq::tachyon {
     struct ModelSnap : public TachyonSnap {

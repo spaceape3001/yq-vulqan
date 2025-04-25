@@ -9,8 +9,8 @@
 #include <yt/api/ID.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/sim/N.hpp>
-//#include <yt/typedef/spatial.hpp>
-//#include <yt/typedef/spatial2.hpp>
+//#include <tachyon/typedef/spatial.hpp>
+//#include <tachyon/typedef/spatial2.hpp>
 //#include <yq/typedef/tensor44.hpp>
 //#include <yq/vector/Quaternion2.hpp>
 //#include <yq/vector/Vector2.hpp>

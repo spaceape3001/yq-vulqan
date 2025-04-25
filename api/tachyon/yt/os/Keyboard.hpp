@@ -9,7 +9,7 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yt/api/Tachyon.hpp>
-#include <yt/typedef/keyboard.hpp>
+#include <tachyon/typedef/keyboard.hpp>
 
 namespace yq::tachyon {
 

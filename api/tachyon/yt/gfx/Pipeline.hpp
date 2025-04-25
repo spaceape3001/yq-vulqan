@@ -24,11 +24,11 @@
 #include <yt/gfx/Topology.hpp>
 #include <yt/gfx/VertexInputRate.hpp>
 
-#include <yt/typedef/buffer.hpp>
-#include <yt/typedef/pipeline.hpp>
-#include <yt/typedef/push.hpp>
-#include <yt/typedef/shader.hpp>
-#include <yt/typedef/texture.hpp>
+#include <tachyon/typedef/buffer.hpp>
+#include <tachyon/typedef/pipeline.hpp>
+#include <tachyon/typedef/push.hpp>
+#include <tachyon/typedef/shader.hpp>
+#include <tachyon/typedef/texture.hpp>
 
 #include <set>
 #include <variant>

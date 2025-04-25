@@ -10,7 +10,7 @@
 #include <yt/api/TypedID.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/keywords.hpp>
-#include <yt/typedef/spatial.hpp>
+#include <tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 

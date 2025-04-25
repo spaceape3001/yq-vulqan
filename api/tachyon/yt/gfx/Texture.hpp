@@ -15,9 +15,9 @@
 #include <yt/gfx/ImageViewCreateFlags.hpp>
 #include <yt/gfx/ImageViewType.hpp>
 #include <yt/gfx/SamplerInfo.hpp>
-#include <yt/typedef/raster.hpp>
-#include <yt/typedef/sampler.hpp>
-#include <yt/typedef/texture.hpp>
+#include <tachyon/typedef/raster.hpp>
+#include <tachyon/typedef/sampler.hpp>
+#include <tachyon/typedef/texture.hpp>
 #include <optional>
 
 namespace yq::tachyon {

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Post.hpp>
-#include <yt/typedef/message.hpp>
+#include <tachyon/typedef/message.hpp>
 
 namespace yq::tachyon {
     class MessageInfo : public PostInfo {

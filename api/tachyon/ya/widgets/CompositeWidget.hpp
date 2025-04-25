@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yt/ui/Widget.hpp>
-#include <yt/typedef/camera.hpp>
-#include <yt/typedef/scene.hpp>
+#include <tachyon/typedef/camera.hpp>
+#include <tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
     class CompositeWidget : public Widget {

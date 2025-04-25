@@ -12,7 +12,7 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yt/scene/Camera.hpp>
-#include <yt/typedef/camera.hpp>
+#include <tachyon/typedef/camera.hpp>
 #include <optional>
 
 namespace yq::tachyon {

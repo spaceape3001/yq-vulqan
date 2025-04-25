@@ -11,12 +11,12 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <yt/gfx/Buffer.hpp>
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/buffer.hpp>
-#include <yt/typedef/push.hpp>
-#include <yt/typedef/rendered.hpp>
-#include <yt/typedef/texture.hpp>
-#include <yv/typedef/vi_buffer.hpp>
-#include <yv/typedef/vi_texture.hpp>
+#include <tachyon/typedef/buffer.hpp>
+#include <tachyon/typedef/push.hpp>
+#include <tachyon/typedef/rendered.hpp>
+#include <tachyon/typedef/texture.hpp>
+#include <tachyon/typedef/vi_buffer.hpp>
+#include <tachyon/typedef/vi_texture.hpp>
 
 namespace yq::tachyon {
     class Pipeline;

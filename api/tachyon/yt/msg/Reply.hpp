@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yt/msg/Post.hpp>
-#include <yt/typedef/reply.hpp>
-#include <yt/typedef/request.hpp>
+#include <tachyon/typedef/reply.hpp>
+#include <tachyon/typedef/request.hpp>
 
 namespace yq::tachyon {
     class ReplyInfo : public PostInfo {

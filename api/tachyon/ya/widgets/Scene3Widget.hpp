@@ -10,13 +10,13 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/tensor/Tensor44.hpp>
 #include <yt/ui/Widget.hpp>
-#include <yt/typedef/camera.hpp>
-#include <yt/typedef/camera3.hpp>
-#include <yt/typedef/rendered3.hpp>
-#include <yt/typedef/scene.hpp>
-#include <yt/typedef/scene3.hpp>
-#include <yt/typedef/push.hpp>
-#include <yv/typedef/vi_rendered.hpp>
+#include <tachyon/typedef/camera.hpp>
+#include <tachyon/typedef/camera3.hpp>
+#include <tachyon/typedef/rendered3.hpp>
+#include <tachyon/typedef/scene.hpp>
+#include <tachyon/typedef/scene3.hpp>
+#include <tachyon/typedef/push.hpp>
+#include <tachyon/typedef/vi_rendered.hpp>
 #include <yq/container/BasicBuffer.hpp>
 
 namespace yq::tachyon {

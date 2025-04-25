@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yv/typedef/vi_queue_tasker.hpp>
+#include <tachyon/typedef/vi_queue_tasker.hpp>
 
 #include <yq/core/Ref.hpp>
 #include <yv/ViCommandBuffer.hpp>
 #include <yv/ViCommandPool.hpp>
 #include <yv/ViFence.hpp>
-#include <yv/typedef/vi_queue_id.hpp>
+#include <tachyon/typedef/vi_queue_id.hpp>
 
 namespace yq::tachyon {
     class ViVisualizer;

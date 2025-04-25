@@ -22,13 +22,13 @@
 #include <ya/typedef/replies.hpp>
 #include <ya/typedef/requests.hpp>
 
-#include <yt/typedef/request.hpp>
-#include <yt/typedef/viewer.hpp>
-#include <yt/typedef/widget.hpp>
-#include <yt/typedef/window.hpp>
+#include <tachyon/typedef/request.hpp>
+#include <tachyon/typedef/viewer.hpp>
+#include <tachyon/typedef/widget.hpp>
+#include <tachyon/typedef/window.hpp>
 
-#include <yv/typedef/vigui.hpp>
-#include <yv/typedef/visualizer.hpp>
+#include <tachyon/typedef/vigui.hpp>
+#include <tachyon/typedef/visualizer.hpp>
 
 //#include <yv/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>

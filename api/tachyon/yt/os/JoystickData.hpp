@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/joystick.hpp>
+#include <tachyon/typedef/joystick.hpp>
 #include <yt/os/HatState.hpp>
 
 namespace yq::tachyon {

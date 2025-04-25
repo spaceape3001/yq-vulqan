@@ -8,8 +8,8 @@
 
 #include <yt/api/TachyonData.hpp>
 #include <yt/api/ID.hpp>
-#include <yt/typedef/viewer.hpp>
-#include <yt/typedef/window.hpp>
+#include <tachyon/typedef/viewer.hpp>
+#include <tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
     struct ViewerSnap : public TachyonSnap {

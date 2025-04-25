@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/typedef/raster.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <yq/typedef/rgb.hpp>
 #include <yq/typedef/rgba.hpp>
 

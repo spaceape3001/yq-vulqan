@@ -10,7 +10,7 @@
 #include <yt/os/MouseState.hpp>
 #include <yt/os/WindowState.hpp>
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/window.hpp>
+#include <tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
     struct WindowSnap : public TachyonSnap {

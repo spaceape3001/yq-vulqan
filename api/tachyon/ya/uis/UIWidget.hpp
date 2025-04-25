@@ -7,7 +7,7 @@
 #pragma once
 
 #include <ya/uis/UIWindow.hpp>
-#include <yt/typedef/widget.hpp>
+#include <tachyon/typedef/widget.hpp>
 #include <yt/api/ID.hpp>
 
 namespace yq::tachyon {

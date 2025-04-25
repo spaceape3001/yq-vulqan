@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/typedef/clock.hpp>
+#include <tachyon/typedef/clock.hpp>
 #include <yq/unit/MKS.hpp>
 
 namespace yq::tachyon {

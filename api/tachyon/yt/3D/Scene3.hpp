@@ -8,8 +8,8 @@
 
 #include <yt/3D/3D.hpp>
 #include <yt/scene/Scene.hpp>
-#include <yt/typedef/scene3.hpp>
-#include <yt/typedef/spatial3.hpp>
+#include <tachyon/typedef/scene3.hpp>
+#include <tachyon/typedef/spatial3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 

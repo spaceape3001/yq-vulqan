@@ -7,7 +7,7 @@
 #pragma once
 
 #include <ya/commands/ViewerCommand.hpp>
-#include <yt/typedef/widget.hpp>
+#include <tachyon/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class SetWidgetCommand : public ViewerCommand {

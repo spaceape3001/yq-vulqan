@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/typedef/sampler.hpp>
+#include <tachyon/typedef/sampler.hpp>
 #include <yq/asset/Asset.hpp>
 #include <yt/gfx/SamplerInfo.hpp>
 

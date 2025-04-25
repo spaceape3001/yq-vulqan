@@ -8,9 +8,9 @@
 
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
-#include <yv/typedef/vi_pipeline.hpp>
-#include <yv/typedef/vi_pipeline_layout.hpp>
-#include <yv/typedef/vi_shader.hpp>
+#include <tachyon/typedef/vi_pipeline.hpp>
+#include <tachyon/typedef/vi_pipeline_layout.hpp>
+#include <tachyon/typedef/vi_shader.hpp>
 #include <yv/ViData.hpp>
 #include <yt/gfx/Pipeline.hpp>
 

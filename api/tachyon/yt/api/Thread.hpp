@@ -8,8 +8,8 @@
 
 #include <yq/units.hpp>
 #include <yt/api/Tachyon.hpp>
-#include <yt/typedef/clock.hpp>
-#include <yt/typedef/thread.hpp>
+#include <tachyon/typedef/clock.hpp>
+#include <tachyon/typedef/thread.hpp>
 #include <functional>
 #include <thread>
 

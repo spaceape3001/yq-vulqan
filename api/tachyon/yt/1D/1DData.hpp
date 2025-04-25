@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/sim/NData.hpp>
-#include <yt/typedef/spatial2.hpp>
+#include <tachyon/typedef/spatial2.hpp>
 
 namespace yq::tachyon {
     struct ①Snap : public ИSnap {

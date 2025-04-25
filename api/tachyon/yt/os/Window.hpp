@@ -9,8 +9,8 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yt/api/Tachyon.hpp>
-#include <yt/typedef/window.hpp>
-#include <yv/typedef/vi_surface.hpp>
+#include <tachyon/typedef/window.hpp>
+#include <tachyon/typedef/vi_surface.hpp>
 #include <yt/os/WindowMode.hpp>
 
 namespace yq::tachyon {

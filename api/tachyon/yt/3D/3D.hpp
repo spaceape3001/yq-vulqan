@@ -9,7 +9,7 @@
 #include <yt/api/ID.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/sim/N.hpp>
-#include <yt/typedef/spatial3.hpp>
+#include <tachyon/typedef/spatial3.hpp>
 #include <yq/typedef/tensor44.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>

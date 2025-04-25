@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
-#include <yv/typedef/vi_surface.hpp>
+#include <tachyon/typedef/vi_surface.hpp>
 #include <yv/vulqan.hpp>
 
 namespace yq::tachyon {

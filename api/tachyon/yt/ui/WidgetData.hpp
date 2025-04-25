@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/widget.hpp>
-#include <yt/typedef/viewer.hpp>
+#include <tachyon/typedef/widget.hpp>
+#include <tachyon/typedef/viewer.hpp>
 
 namespace yq::tachyon {
     struct WidgetSnap : public TachyonSnap {

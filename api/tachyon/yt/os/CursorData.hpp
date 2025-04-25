@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/cursor.hpp>
+#include <tachyon/typedef/cursor.hpp>
 
 namespace yq::tachyon {
     struct CursorSnap : public TachyonSnap {

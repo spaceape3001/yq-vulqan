@@ -7,7 +7,7 @@
 #pragma once
 
 #include <ya/commands/ControllerCommand.hpp>
-#include <yt/typedef/tachyon.hpp>
+#include <tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class ControlCommand : public ControllerCommand {

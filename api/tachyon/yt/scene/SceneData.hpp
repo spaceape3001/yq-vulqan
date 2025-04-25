@@ -8,7 +8,7 @@
 
 #include <yt/api/TachyonData.hpp>
 #include <yt/api/TypedID.hpp>
-#include <yt/typedef/scene.hpp>
+#include <tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
     struct SceneSnap : public TachyonSnap {

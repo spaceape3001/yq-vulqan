@@ -10,7 +10,7 @@
 #include <yt/ui/WidgetData.hpp>
 #include <yt/api/TachyonInfoWriter.hpp>
 #include <ya/uis/UIAppMainWriter.hpp>
-#include <yt/typedef/uielement.hpp>
+#include <tachyon/typedef/uielement.hpp>
 
 namespace yq::tachyon {
 

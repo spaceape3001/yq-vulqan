@@ -11,7 +11,7 @@
 #include <yv/ViDevice.hpp>
 #include <yv/ViSurface.hpp>
 #include <yt/app/ViewerCreateInfo.hpp>
-#include <yv/typedef/vi_queue_id.hpp>
+#include <tachyon/typedef/vi_queue_id.hpp>
 
 namespace yq::tachyon {
     struct ViVisualizer::CreateData {

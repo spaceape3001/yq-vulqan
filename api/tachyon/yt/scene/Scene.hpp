@@ -9,7 +9,7 @@
 #include <yq/color/RGB.hpp>
 #include <yt/api/Tachyon.hpp>
 #include <yt/scene/Rendered.hpp>
-#include <yt/typedef/scene.hpp>
+#include <tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
     /*! \brief Frame of things to be rendered

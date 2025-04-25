@@ -8,7 +8,7 @@
 
 #include <yt/os/GraphicsCard.hpp>
 #include <yv/vulqan.hpp>
-#include <yv/typedef/vi_device.hpp>
+#include <tachyon/typedef/vi_device.hpp>
 
 namespace yq::tachyon {
     class AppCreateInfo;

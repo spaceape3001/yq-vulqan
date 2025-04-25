@@ -13,7 +13,7 @@
 #include <yq/vector/Vector2.hpp>
 #include <yt/api/TachyonData.hpp>
 #include <yt/os/VideoMode.hpp>
-#include <yt/typedef/monitor.hpp>
+#include <tachyon/typedef/monitor.hpp>
 
 namespace yq::tachyon {
 

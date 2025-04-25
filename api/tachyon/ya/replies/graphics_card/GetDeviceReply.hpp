@@ -8,7 +8,7 @@
 
 #include <yt/msg/Response.hpp> 
 #include <ya/replies/GraphicsCardReply.hpp>
-#include <yv/typedef/vi_device.hpp>
+#include <tachyon/typedef/vi_device.hpp>
 #include <yt/msg/Response.hpp>
 
 namespace yq::tachyon {

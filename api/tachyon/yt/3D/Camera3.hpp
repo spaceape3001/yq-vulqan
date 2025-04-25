@@ -8,7 +8,7 @@
 
 #include <yt/3D/3D.hpp>
 #include <yt/scene/Camera.hpp>
-#include <yt/typedef/camera3.hpp>
+#include <tachyon/typedef/camera3.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>

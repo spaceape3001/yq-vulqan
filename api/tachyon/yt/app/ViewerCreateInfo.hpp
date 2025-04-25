@@ -13,8 +13,8 @@
 #include <yt/api/ID.hpp>
 #include <yt/gfx/PresentMode.hpp>
 #include <yt/os/WindowMode.hpp>
-#include <yt/typedef/monitor.hpp>
-#include <yv/typedef/queue_spec.hpp>
+#include <tachyon/typedef/monitor.hpp>
+#include <tachyon/typedef/queue_spec.hpp>
 
 //#include <vulkan/vulkan_core.h>
 #include <variant>

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/api/TachyonData.hpp>
-#include <yt/typedef/camera.hpp>
+#include <tachyon/typedef/camera.hpp>
 
 namespace yq::tachyon {
     struct CameraSnap : public TachyonSnap {

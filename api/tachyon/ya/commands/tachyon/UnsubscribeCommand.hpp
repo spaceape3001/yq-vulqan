@@ -9,7 +9,7 @@
 #include <yt/msg/MG.hpp>
 #include <ya/commands/TachyonCommand.hpp>
 #include <yt/api/TypedID.hpp>
-#include <yt/typedef/thread.hpp>
+#include <tachyon/typedef/thread.hpp>
 
 namespace yq::tachyon {
     class UnsubscribeCommand : public TachyonCommand {

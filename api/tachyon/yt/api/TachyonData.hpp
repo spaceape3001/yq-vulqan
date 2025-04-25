@@ -12,9 +12,9 @@
 #include <yt/api/ID.hpp>
 #include <yt/msg/MG.hpp>
 #include <yt/api/TypedID.hpp>
-#include <yt/typedef/post.hpp>
-#include <yt/typedef/tachyon.hpp>
-#include <yt/typedef/thread.hpp>
+#include <tachyon/typedef/post.hpp>
+#include <tachyon/typedef/tachyon.hpp>
+#include <tachyon/typedef/thread.hpp>
 #include <vector>
 
 namespace yq::tachyon {

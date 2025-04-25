@@ -8,7 +8,7 @@
 
 #include <system_error>
 #include <vulkan/vulkan_core.h>
-#include <yv/typedef/vi_device.hpp>
+#include <tachyon/typedef/vi_device.hpp>
 #include <yq/core/Ref.hpp>
 
 namespace yq::tachyon {

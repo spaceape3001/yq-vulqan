@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Event.hpp>
-#include <yt/typedef/monitor.hpp>
+#include <tachyon/typedef/monitor.hpp>
 
 namespace yq::tachyon {
     class MonitorEvent : public Event {

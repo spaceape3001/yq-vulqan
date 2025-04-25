@@ -7,7 +7,7 @@
 #pragma once
 
 #include <ya/commands/ControllerCommand.hpp>
-#include <yt/typedef/tachyon.hpp>
+#include <tachyon/typedef/tachyon.hpp>
 #include <yt/api/TypedID.hpp>
 
 namespace yq::tachyon {

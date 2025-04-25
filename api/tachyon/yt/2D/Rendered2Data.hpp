@@ -11,9 +11,9 @@
 #include <yq/shape/Circle2.hpp>
 #include <yt/2D/2DData.hpp>
 #include <yt/scene/RenderedData.hpp>
-#include <yt/typedef/bounds2.hpp>
-#include <yt/typedef/rendered2.hpp>
-#include <yt/typedef/spatial2.hpp>
+#include <tachyon/typedef/bounds2.hpp>
+#include <tachyon/typedef/rendered2.hpp>
+#include <tachyon/typedef/spatial2.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

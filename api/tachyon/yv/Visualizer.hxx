@@ -10,10 +10,10 @@
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
 //#include <tachyon/image/Image.hpp>
-#include <yt/typedef/pipeline.hpp>
-#include <yt/typedef/rendered.hpp>
-#include <yv/typedef/vi_rendered.hpp>
-#include <yv/typedef/vi_rendered_manager.hpp>
+#include <tachyon/typedef/pipeline.hpp>
+#include <tachyon/typedef/rendered.hpp>
+#include <tachyon/typedef/vi_rendered.hpp>
+#include <tachyon/typedef/vi_rendered_manager.hpp>
 #include <yv/ViQueueType.hpp>
 
 #include <vulkan/vulkan_core.h>

@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yt/ui/UIElement.hpp>
-#include <yt/typedef/texture.hpp>
-#include <yt/typedef/raster.hpp>
+#include <tachyon/typedef/texture.hpp>
+#include <tachyon/typedef/raster.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/core/Ref.hpp>
 

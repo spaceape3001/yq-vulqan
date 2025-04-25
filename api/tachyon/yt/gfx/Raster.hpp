@@ -10,7 +10,7 @@
 #include <yq/core/Memory.hpp>
 #include <yq/raster/forward.hpp>
 #include <yt/gfx/RasterInfo.hpp>
-#include <yt/typedef/raster.hpp>
+#include <tachyon/typedef/raster.hpp>
 
 namespace yq::tachyon {
     class Buffer;

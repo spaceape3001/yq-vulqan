@@ -11,10 +11,10 @@
 #include <yq/shape/Sphere3.hpp>
 #include <yt/3D/3DData.hpp>
 #include <yt/scene/RenderedData.hpp>
-#include <yt/typedef/bounds3.hpp>
-#include <yt/typedef/camera3.hpp>
-#include <yt/typedef/rendered3.hpp>
-#include <yt/typedef/spatial3.hpp>
+#include <tachyon/typedef/bounds3.hpp>
+#include <tachyon/typedef/camera3.hpp>
+#include <tachyon/typedef/rendered3.hpp>
+#include <tachyon/typedef/spatial3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

@@ -14,9 +14,9 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yt/api/Action.hpp>
-#include <yt/typedef/action.hpp>
-#include <yt/typedef/texture.hpp>
-#include <yt/typedef/uielement.hpp>
+#include <tachyon/typedef/action.hpp>
+#include <tachyon/typedef/texture.hpp>
+#include <tachyon/typedef/uielement.hpp>
 
 namespace yq::tachyon {
     struct ViContext;

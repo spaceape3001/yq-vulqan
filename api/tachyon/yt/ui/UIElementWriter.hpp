@@ -8,9 +8,9 @@
 
 #include <yt/enum/UIFlags.hpp>
 #include <yt/keywords.hpp>
-#include <yt/typedef/action.hpp>
-#include <yt/typedef/post.hpp>
-#include <yt/typedef/tachyon.hpp>
+#include <tachyon/typedef/action.hpp>
+#include <tachyon/typedef/post.hpp>
+#include <tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class UIElement;

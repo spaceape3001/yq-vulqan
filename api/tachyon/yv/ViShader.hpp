@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yt/typedef/shader.hpp>
+#include <tachyon/typedef/shader.hpp>
 #include <yt/gfx/ShaderType.hpp>
 
 #include <vulkan/vulkan_core.h>

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/msg/Command.hpp>
-#include <yt/typedef/spatial.hpp>
+#include <tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 

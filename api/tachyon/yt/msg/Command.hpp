@@ -8,7 +8,7 @@
 
 #include <yt/api/TypedID.hpp>
 #include <yt/msg/Post.hpp>
-#include <yt/typedef/command.hpp>
+#include <tachyon/typedef/command.hpp>
 
 namespace yq::tachyon {
     class CommandInfo : public PostInfo {

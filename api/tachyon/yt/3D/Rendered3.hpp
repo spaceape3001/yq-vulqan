@@ -13,10 +13,10 @@
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yt/3D/3D.hpp>
-#include <yt/typedef/bounds3.hpp>
-#include <yt/typedef/camera3.hpp>
-#include <yt/typedef/rendered3.hpp>
-#include <yt/typedef/spatial3.hpp>
+#include <tachyon/typedef/bounds3.hpp>
+#include <tachyon/typedef/camera3.hpp>
+#include <tachyon/typedef/rendered3.hpp>
+#include <tachyon/typedef/spatial3.hpp>
 
 namespace yq::tachyon {
         

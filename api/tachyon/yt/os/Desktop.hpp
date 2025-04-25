@@ -9,13 +9,13 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yt/api/Manager.hpp>
-#include <yt/typedef/cursor.hpp>
-#include <yt/typedef/desktop.hpp>
-#include <yt/typedef/joystick.hpp>
-#include <yt/typedef/keyboard.hpp>
-#include <yt/typedef/monitor.hpp>
-#include <yt/typedef/mouse.hpp>
-#include <yt/typedef/window.hpp>
+#include <tachyon/typedef/cursor.hpp>
+#include <tachyon/typedef/desktop.hpp>
+#include <tachyon/typedef/joystick.hpp>
+#include <tachyon/typedef/keyboard.hpp>
+#include <tachyon/typedef/monitor.hpp>
+#include <tachyon/typedef/mouse.hpp>
+#include <tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
 

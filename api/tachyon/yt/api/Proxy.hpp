@@ -9,9 +9,9 @@
 #include <cstdint>
 #include <functional>
 #include <yt/keywords.hpp>
-#include <yt/typedef/proxy.hpp>
-#include <yt/typedef/post.hpp>
-#include <yt/typedef/tachyon.hpp>
+#include <tachyon/typedef/proxy.hpp>
+#include <tachyon/typedef/post.hpp>
+#include <tachyon/typedef/tachyon.hpp>
 #include <yt/api/Type.hpp>
 
 namespace yq::tachyon {

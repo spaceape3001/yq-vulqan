@@ -9,7 +9,7 @@
 #include <system_error>
 #include <vulkan/vulkan_core.h>
 #include <yq/core/Flags.hpp>
-#include <yv/typedef/vi_queue_id.hpp>
+#include <tachyon/typedef/vi_queue_id.hpp>
 
 namespace yq::tachyon {
     class ViDevice;

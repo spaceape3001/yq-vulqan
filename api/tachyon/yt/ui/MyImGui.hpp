@@ -19,7 +19,7 @@
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
 #include <yt/enum/UIFlags.hpp>
-#include <yt/typedef/texture.hpp>
+#include <tachyon/typedef/texture.hpp>
 #include <yt/api/ID.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \

@@ -6,7 +6,7 @@
 
 #pragma once
 #include <yt/ui/Widget.hpp>
-#include <yt/typedef/widget4.hpp>
+#include <tachyon/typedef/widget4.hpp>
 #include <yq/shape/AxBox4.hpp>
 
 namespace yq::tachyon {

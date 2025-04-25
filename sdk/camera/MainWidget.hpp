@@ -7,8 +7,8 @@
 #pragma once
 
 #include <ya/widgets/Scene3Widget.hpp>
-#include <yt/typedef/scene3.hpp>
-#include <yt/typedef/camera3.hpp>
+#include <tachyon/typedef/scene3.hpp>
+#include <tachyon/typedef/camera3.hpp>
 
 namespace yq::tachyon {
     class SpaceCamera;

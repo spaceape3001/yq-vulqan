@@ -12,7 +12,7 @@
 #include <yt/keywords.hpp>
 #include <optional>
 #include <vector>
-#include <yv/typedef/queue_spec.hpp>
+#include <tachyon/typedef/queue_spec.hpp>
 
 namespace yq::tachyon {
 

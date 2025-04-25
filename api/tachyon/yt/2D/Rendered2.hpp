@@ -12,9 +12,9 @@
 #include <yt/scene/Rendered.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yt/2D/2D.hpp>
-#include <yt/typedef/bounds2.hpp>
-#include <yt/typedef/rendered2.hpp>
-#include <yt/typedef/spatial2.hpp>
+#include <tachyon/typedef/bounds2.hpp>
+#include <tachyon/typedef/rendered2.hpp>
+#include <tachyon/typedef/spatial2.hpp>
 
 namespace yq::tachyon {
         

@@ -8,9 +8,9 @@
 
 #include <yt/ui/UIElementWriter.hpp>
 #include <yt/enum/UICardinal.hpp>
-#include <yt/typedef/post.hpp>
-#include <yt/typedef/uielement.hpp>
-#include <yt/typedef/widget.hpp>
+#include <tachyon/typedef/post.hpp>
+#include <tachyon/typedef/uielement.hpp>
+#include <tachyon/typedef/widget.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
 #include <yt/keywords.hpp>

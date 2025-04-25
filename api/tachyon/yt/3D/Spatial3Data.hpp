@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yt/sim/SpatialData.hpp>
-#include <yt/typedef/spatial3.hpp>
+#include <tachyon/typedef/spatial3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

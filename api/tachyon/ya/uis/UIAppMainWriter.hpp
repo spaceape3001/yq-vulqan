@@ -14,6 +14,8 @@ namespace yq::tachyon {
     class WidgetInfo;
     class UIWindowWriter;
     
+    /*! \brief Writer for the main application
+    */
     class UIAppMainWriter : public UIElementsWriter {
     public:
         UIAppMainWriter();
@@ -31,8 +33,8 @@ namespace yq::tachyon {
 
         UIMenuBarWriter     menubar();
         UIMenuBarWriter     menubar(main_k);
-        UIButtonBarWriter     toolbar(UICardinal, std::string_view kName);
-        UIButtonBarWriter     toolbar(const Vector2F&, std::string_view kName);
+        UIButtonBarWriter   buttonbar(UICardinal, std::string_view kName);
+        UIButtonBarWriter   buttonbar(const Vector2F&, std::string_view kName);
         UIWindowWriter      window(std::string_view kName={});
 
     private:

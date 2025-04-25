@@ -102,10 +102,10 @@ void SceneryMW::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
 
-    auto etb        = app.toolbar(EAST,  "east");
-    auto wtb        = app.toolbar(WEST,  "west");
-    auto ntb        = app.toolbar(NORTH, "north");
-    auto stb        = app.toolbar(SOUTH, "south");
+    auto etb        = app.buttonbar(EAST,  "east");
+    auto wtb        = app.buttonbar(WEST,  "west");
+    auto ntb        = app.buttonbar(NORTH, "north");
+    auto stb        = app.buttonbar(SOUTH, "south");
     
     auto hbx        = app.vbox();
     auto h1         = hbx.window();

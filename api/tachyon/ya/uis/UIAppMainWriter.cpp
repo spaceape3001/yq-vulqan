@@ -62,6 +62,16 @@ namespace yq::tachyon {
     // Element Creation Helpers
     /////////////////////////////////////////////
 
+    UIButtonBarWriter   UIAppMainWriter::buttonbar(UICardinal dir, std::string_view kName)
+    {
+        return make<UIButtonBar>(dir, kName);
+    }
+    
+    UIButtonBarWriter   UIAppMainWriter::buttonbar(const Vector2F& dir, std::string_view kName)
+    {
+        return make<UIButtonBar>(dir, kName);
+    }
+
     UIMenuBarWriter     UIAppMainWriter::menubar()
     {
         return make<UIMenuBar>();
@@ -71,17 +81,6 @@ namespace yq::tachyon {
     {
         return make<UIMenuBar>(MAIN);
     }
-
-    UIButtonBarWriter   UIAppMainWriter::toolbar(UICardinal dir, std::string_view kName)
-    {
-        return make<UIButtonBar>(dir, kName);
-    }
-    
-    UIButtonBarWriter   UIAppMainWriter::toolbar(const Vector2F& dir, std::string_view kName)
-    {
-        return make<UIButtonBar>(dir, kName);
-    }
-
     UIWindowWriter    UIAppMainWriter::window(std::string_view kName)
     {
         return make<UIWindow>(kName);

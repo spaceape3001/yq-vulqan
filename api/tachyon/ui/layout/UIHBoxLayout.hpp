@@ -9,18 +9,18 @@
 #include <tachyon/ui/UILayout.hpp>
 
 namespace yq::tachyon {
-    class UIHBoxWriter;
+    class UIHBoxLayoutWriter;
 
     //! Tool meant for laying out WINDOWS!  (It'll reject otherwise)
-    class UIHBox : public UILayout {
-        YQ_OBJECT_DECLARE(UIHBox, UILayout)
+    class UIHBoxLayout : public UILayout {
+        YQ_OBJECT_DECLARE(UIHBoxLayout, UILayout)
     public:
-        using Writer = UIHBoxWriter;
-        UIHBox(UIFlags flags={});
-        UIHBox(const UIHBox&);
-        virtual ~UIHBox();
+        using Writer = UIHBoxLayoutWriter;
+        UIHBoxLayout(UIFlags flags={});
+        UIHBoxLayout(const UIHBoxLayout&);
+        virtual ~UIHBoxLayout();
         
-        UIHBox* clone() const;
+        UIHBoxLayout* clone() const;
         
         static void init_info();
         

@@ -9,14 +9,14 @@
 #include <tachyon/ui/UILayoutWriter.hpp>
 
 namespace yq::tachyon {
-    class UIVBox;
-    class UIVBoxWriter : public UILayoutWriter {
+    class UIHBoxLayout;
+    class UIHBoxLayoutWriter : public UILayoutWriter {
     public:
-        UIVBoxWriter();
-        UIVBoxWriter(UIVBox*);
-        UIVBoxWriter(const UIVBoxWriter&);
-        ~UIVBoxWriter();
+        UIHBoxLayoutWriter();
+        UIHBoxLayoutWriter(UIHBoxLayout*);
+        UIHBoxLayoutWriter(const UIHBoxLayoutWriter&);
+        ~UIHBoxLayoutWriter();
         
-        UIVBox* element();
+        UIHBoxLayout* element();
     };
 }

@@ -13,8 +13,8 @@
 #include <tachyon/ui/UICheckBox_Visible.hpp>
 #include <tachyon/ui/UICheckBoxWriter.hpp>
 #include <tachyon/ui/UIElements.hpp>
-#include <tachyon/ui/UIHBox.hpp>
-#include <tachyon/ui/UIHBoxWriter.hpp>
+#include <tachyon/ui/layout/UIHBoxLayout.hpp>
+#include <tachyon/ui/layout/UIHBoxLayoutWriter.hpp>
 #include <tachyon/ui/UIHLine.hpp>
 #include <tachyon/ui/UIHLineWriter.hpp>
 #include <tachyon/ui/UIImage.hpp>
@@ -31,8 +31,8 @@
 #include <tachyon/ui/UITextLabelWriter.hpp>
 #include <tachyon/ui/UIButtonBar.hpp>
 #include <tachyon/ui/UIButtonBarWriter.hpp>
-#include <tachyon/ui/UIVBox.hpp>
-#include <tachyon/ui/UIVBoxWriter.hpp>
+#include <tachyon/ui/layout/UIVBoxLayout.hpp>
+#include <tachyon/ui/layout/UIVBoxLayoutWriter.hpp>
 #include <tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {
@@ -147,9 +147,9 @@ namespace yq::tachyon {
         return checkbox(VISIBLE, elem.element());
     }
 
-    UIHBoxWriter            UIElementsWriter::hbox()
+    UIHBoxLayoutWriter            UIElementsWriter::hbox()
     {
-        return make<UIHBox>();
+        return make<UIHBoxLayout>();
     }
     
     UIHLineWriter            UIElementsWriter::hline()
@@ -187,8 +187,8 @@ namespace yq::tachyon {
         return make<UISpacer>(sz);
     }
 
-    UIVBoxWriter            UIElementsWriter::vbox()
+    UIVBoxLayoutWriter            UIElementsWriter::vbox()
     {
-        return make<UIVBox>();
+        return make<UIVBoxLayout>();
     }
 }

@@ -58,7 +58,7 @@ namespace yq::tachyon {
     
     UIButton* UIButtonWriter::element()
     {
-        return static_cast<UIButton*>(m_ui);
+        return dynamic_cast<UIButton*>(m_ui);
     }
     
     UIButtonWriter::UIButtonWriter(UIButton* ui) : UIElementWriter(ui)

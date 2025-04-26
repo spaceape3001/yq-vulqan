@@ -51,7 +51,7 @@ namespace yq::tachyon {
 
     UIAppMain* UIAppMainWriter::element()
     {
-        return static_cast<UIAppMain*>(m_ui);
+        return dynamic_cast<UIAppMain*>(m_ui);
     }
     
     UIAppMainWriter::UIAppMainWriter(UIAppMain* ui) : UIElementsWriter(ui)

@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIVBox.hpp"
-#include "UIVBoxWriter.hpp"
+#include "UIVBoxLayout.hpp"
+#include "UIVBoxLayoutWriter.hpp"
 #include <tachyon/ui/UIGenerator.hpp>
 #include <tachyon/ui/UIWindow.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -18,38 +18,38 @@
 #include <yq/vector/Vector2.hxx>
 #include <yq/shape/Size2.hxx>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::UIVBox)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIVBoxLayout)
 
 namespace yq {
     template Size2<float>::Size2(const Vector2F&);
 }
 
 namespace yq::tachyon {
-    UIVBox::UIVBox(UIFlags flags) : UILayout(flags)
+    UIVBoxLayout::UIVBoxLayout(UIFlags flags) : UILayout(flags)
     {
     }
     
-    UIVBox::UIVBox(const UIVBox& cp) : UILayout(cp)
+    UIVBoxLayout::UIVBoxLayout(const UIVBoxLayout& cp) : UILayout(cp)
     {
     }
     
-    UIVBox::~UIVBox()
+    UIVBoxLayout::~UIVBoxLayout()
     {
     }
         
-    UIVBox* UIVBox::clone() const
+    UIVBoxLayout* UIVBoxLayout::clone() const
     {
-        return new UIVBox(*this);
+        return new UIVBoxLayout(*this);
     }
 
-    void    UIVBox::postadd(UIElement* elem) 
+    void    UIVBoxLayout::postadd(UIElement* elem) 
     {
         //elem->flag(SET, UIFlag::AutoResizeX);
         //elem->flag(SET, UIFlag::ResizeX);
         elem->flag(SET, UIFlag::NoDecoration);
     }
         
-    void    UIVBox::render() 
+    void    UIVBoxLayout::render() 
     {
         if(m_flags(UIFlag::Invisible))
             return ;
@@ -102,29 +102,29 @@ namespace yq::tachyon {
         }
     }
 
-    YesNo UIVBox::acceptable(UIElement* elem)
+    YesNo UIVBoxLayout::acceptable(UIElement* elem)
     {
         return dynamic_cast<UIWindow*>(elem) || dynamic_cast<UIGenerator*>(elem);
     }
     
-    void UIVBox::init_info()
+    void UIVBoxLayout::init_info()
     {
-        auto w = writer<UIVBox>();
+        auto w = writer<UIVBoxLayout>();
         w.description("Vertical Box UI Layout");
     }
         
     ////////////////////////////
     
-    UIVBoxWriter::UIVBoxWriter() = default;
-    UIVBoxWriter::UIVBoxWriter(const UIVBoxWriter&) = default;
-    UIVBoxWriter::~UIVBoxWriter() = default;
+    UIVBoxLayoutWriter::UIVBoxLayoutWriter() = default;
+    UIVBoxLayoutWriter::UIVBoxLayoutWriter(const UIVBoxLayoutWriter&) = default;
+    UIVBoxLayoutWriter::~UIVBoxLayoutWriter() = default;
     
-    UIVBox* UIVBoxWriter::element()
+    UIVBoxLayout* UIVBoxLayoutWriter::element()
     {
-        return static_cast<UIVBox*>(m_ui);
+        return static_cast<UIVBoxLayout*>(m_ui);
     }
     
-    UIVBoxWriter::UIVBoxWriter(UIVBox* ui) : UILayoutWriter(ui)
+    UIVBoxLayoutWriter::UIVBoxLayoutWriter(UIVBoxLayout* ui) : UILayoutWriter(ui)
     {
     }
 

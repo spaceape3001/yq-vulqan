@@ -643,10 +643,11 @@ add_library(${PROJECT_NAME} SHARED
     ui/UICheckBox.cpp
     ui/UICheckBox_Simple.cpp
     ui/UICheckBox_Visible.cpp
+    ui/UIDock.cpp
+    ui/UIDocker.cpp
     ui/UIElements.cpp
     ui/UIElementsWriter.cpp
     ui/UIGenerator.cpp
-    ui/UIHBox.cpp
     ui/UIHLine.cpp
     ui/UIImage.cpp
     ui/UILayout.cpp
@@ -661,7 +662,9 @@ add_library(${PROJECT_NAME} SHARED
     ui/UITextLabel.cpp
     ui/UIWindow.cpp
     ui/UIWindowWriter.cpp
-    ui/UIVBox.cpp
+
+    ui/layout/UIHBoxLayout.cpp
+    ui/layout/UIVBoxLayout.cpp
     
     utility/LoggerBox.cpp
 

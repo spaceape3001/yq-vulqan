@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIHBox.hpp"
-#include "UIHBoxWriter.hpp"
+#include "UIHBoxLayout.hpp"
+#include "UIHBoxLayoutWriter.hpp"
 #include <tachyon/ui/UIGenerator.hpp>
 #include <tachyon/ui/UIWindow.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -18,38 +18,38 @@
 #include <yq/vector/Vector2.hxx>
 #include <yq/shape/Size2.hxx>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::UIHBox)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIHBoxLayout)
 
 namespace yq {
     template Size2<float>::Size2(const Vector2F&);
 }
 
 namespace yq::tachyon {
-    UIHBox::UIHBox(UIFlags flags) : UILayout(flags)
+    UIHBoxLayout::UIHBoxLayout(UIFlags flags) : UILayout(flags)
     {
     }
     
-    UIHBox::UIHBox(const UIHBox& cp) : UILayout(cp)
+    UIHBoxLayout::UIHBoxLayout(const UIHBoxLayout& cp) : UILayout(cp)
     {
     }
     
-    UIHBox::~UIHBox()
+    UIHBoxLayout::~UIHBoxLayout()
     {
     }
         
-    UIHBox* UIHBox::clone() const
+    UIHBoxLayout* UIHBoxLayout::clone() const
     {
-        return new UIHBox(*this);
+        return new UIHBoxLayout(*this);
     }
 
-    void    UIHBox::postadd(UIElement* elem) 
+    void    UIHBoxLayout::postadd(UIElement* elem) 
     {
         //elem->flag(SET, UIFlag::AutoResizeX);
         //elem->flag(SET, UIFlag::ResizeX);
         elem->flag(SET, UIFlag::NoDecoration);
     }
         
-    void    UIHBox::render() 
+    void    UIHBoxLayout::render() 
     {
         if(m_flags(UIFlag::Invisible))
             return ;
@@ -102,29 +102,29 @@ namespace yq::tachyon {
         }
     }
 
-    YesNo UIHBox::acceptable(UIElement* elem)
+    YesNo UIHBoxLayout::acceptable(UIElement* elem)
     {
         return dynamic_cast<UIWindow*>(elem) || dynamic_cast<UIGenerator*>(elem);
     }
     
-    void UIHBox::init_info()
+    void UIHBoxLayout::init_info()
     {
-        auto w = writer<UIHBox>();
+        auto w = writer<UIHBoxLayout>();
         w.description("Horizontal Box UI Layout");
     }
         
     ////////////////////////////
     
-    UIHBoxWriter::UIHBoxWriter() = default;
-    UIHBoxWriter::UIHBoxWriter(const UIHBoxWriter&) = default;
-    UIHBoxWriter::~UIHBoxWriter() = default;
+    UIHBoxLayoutWriter::UIHBoxLayoutWriter() = default;
+    UIHBoxLayoutWriter::UIHBoxLayoutWriter(const UIHBoxLayoutWriter&) = default;
+    UIHBoxLayoutWriter::~UIHBoxLayoutWriter() = default;
     
-    UIHBox* UIHBoxWriter::element()
+    UIHBoxLayout* UIHBoxLayoutWriter::element()
     {
-        return static_cast<UIHBox*>(m_ui);
+        return static_cast<UIHBoxLayout*>(m_ui);
     }
     
-    UIHBoxWriter::UIHBoxWriter(UIHBox* ui) : UILayoutWriter(ui)
+    UIHBoxLayoutWriter::UIHBoxLayoutWriter(UIHBoxLayout* ui) : UILayoutWriter(ui)
     {
     }
 

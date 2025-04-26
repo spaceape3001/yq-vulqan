@@ -14,7 +14,7 @@
 #include <tachyon/ui/UICenterAlignWriter.hpp>
 #include <tachyon/ui/UICheckBoxWriter.hpp>
 #include <tachyon/ui/UIElementsWriter.hpp>
-#include <tachyon/ui/UIHBoxWriter.hpp>
+#include <tachyon/ui/layout/UIHBoxLayoutWriter.hpp>
 #include <tachyon/ui/UIHLineWriter.hpp>
 #include <tachyon/ui/UILayoutWriter.hpp>
 #include <tachyon/ui/UIImageWriter.hpp>
@@ -24,5 +24,5 @@
 #include <tachyon/ui/UIRightAlignWriter.hpp>
 #include <tachyon/ui/UISpacerWriter.hpp>
 #include <tachyon/ui/UITextLabelWriter.hpp>
-#include <tachyon/ui/UIVBoxWriter.hpp>
+#include <tachyon/ui/layout/UIVBoxLayoutWriter.hpp>
 #include <tachyon/ui/UIWindowWriter.hpp>

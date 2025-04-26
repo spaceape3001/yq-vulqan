@@ -13,6 +13,7 @@ namespace yq::tachyon {
     class Action;
     class Tachyon;
     class UIElement;
+    class Payload;
     
     class ActionInfo : public DelegateInfo {
     public:
@@ -30,8 +31,6 @@ namespace yq::tachyon {
         YQ_OBJECT_INFO(ActionInfo)
         YQ_OBJECT_DECLARE(Action, Delegate)
     public:
-        
-        struct Payload;
     
         Action();
         Action(const Action&);
@@ -47,13 +46,5 @@ namespace yq::tachyon {
         
     protected:
         virtual Action* clone() const;
-    };
-    
-    struct Action::Payload {
-        std::vector<PostCPtr>   posts;                  //!< Posts that triggered this action
-        std::vector<Any>        pargs;                  //!< Positional arguments (0...1...2...etc)
-        string_any_map_t        nargs;                  //!< Named arguments
-        Tachyon*                source      = nullptr;  //!< Sender for post reasons (or callback)
-        UIElement*              uielem      = nullptr;  //!< UI element making the call (if any)
     };
 }

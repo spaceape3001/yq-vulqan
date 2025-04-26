@@ -13,6 +13,7 @@
 #include <yq/typedef/string_maps.hpp>
 #include <yq/text/IgCase.hpp>
 #include <tachyon/keywords.hpp>
+#include <yq/core/Any.hpp>
 
 namespace yq {
     class Any;
@@ -37,7 +38,8 @@ namespace yq::tachyon {
         UIElement*              uielem  = nullptr;  //!< UI element making the call (if any)
     
             //  Sigh... wanted these to not exist so it's POD style of a structure, however, 
-            //  it's slightly *TOO* complicated for htat
+            //  it's slightly *TOO* complicated for that (and... as it'll likely be stacked...POD 
+            //  isn't as required/useful).
     
         Payload();
         Payload(const Payload&);
@@ -53,5 +55,20 @@ namespace yq::tachyon {
         bool        argument(has_k, uint32_t) const;
         bool        parameter(has_k, uint32_t) const;
         bool        parameter(has_k, const std::string&) const;
+        
+        Payload& operator<<(const Any&);
+        Payload& operator<<(Any&&);
+
+        template <typename T>
+        Payload& operator<<(const T&v)
+        {
+            return operator<<(Any(v));
+        }
+        
+        template <typename T>
+        Payload& operator<<(T&&v)
+        {
+            return operator<<(Any(std::move(v)));
+        }
      };
 }

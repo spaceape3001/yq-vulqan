@@ -9,7 +9,7 @@
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>
 #include <tachyon/api/UIElementInfoWriter.hpp>
-#include <tachyon/api/Post.hpp>
+#include <tachyon/api/Payload.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICheckBox)
 
@@ -44,8 +44,8 @@ namespace yq::tachyon {
         if(ImGui::Checkbox(m_text.c_str(), &value)){
             set(value);
             if(!m_actions.empty()){
-                Action::Payload payload;
-                payload.pargs.push_back(Any(value));
+                Payload payload;
+                payload << value;
                 UIElement::triggered(payload);
             }
         }

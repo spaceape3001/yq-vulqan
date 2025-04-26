@@ -7,12 +7,13 @@
 #include "UIElement.hpp"
 #include "UIElementInfoWriter.hpp"
 #include <cassert>
-#include <tachyon/api/Action.hpp>
-#include <tachyon/gfx/Texture.hpp>
-#include <tachyon/gfx/Raster.hpp>
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/api/Action.hpp>
+#include <tachyon/api/Payload.hpp>
 #include <tachyon/api/UIStyle.hpp>
 #include <tachyon/api/Widget.hpp>
+#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/gfx/Raster.hpp>
 #include <tachyon/vulkan/ViGui.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -236,11 +237,11 @@ namespace yq::tachyon {
 
     void    UIElement::triggered()
     {
-        Action::Payload payload;
+        Payload payload;
         triggered(payload);
     }
 
-    void    UIElement::triggered(Action::Payload& payload)
+    void    UIElement::triggered(Payload& payload)
     {
         if(!m_actions.empty()){
             payload.uielem     = this;

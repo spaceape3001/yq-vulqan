@@ -8,6 +8,7 @@
 #include <yq/core/Any.hpp>
 #include <yq/core/Result.hpp>
 #include <tachyon/api/ActionInfoWriter.hpp>
+#include <tachyon/api/Payload.hpp>
 #include <tachyon/api/UIElement.hpp>
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/api/Widget.hxx>
@@ -61,12 +62,13 @@ namespace yq::tachyon {
         
     bool  VisibleUIAction::action(Payload&pay) const 
     {
-        if(pay.pargs.empty())
+        if(!pay.argument(HAS, 0))
             return act(A::Toggle);
             
         A   a;
         
-        a = pay.pargs[0].as<Tristate>([&](Tristate x){
+        const Any&  arg = pay.argument(0);
+        a = arg.as<Tristate>([&](Tristate x){
             switch(x){
             case Tristate::YES:
                 return A::Show;
@@ -80,13 +82,13 @@ namespace yq::tachyon {
         });
         
         if(a == A::None){
-            a   = pay.pargs[0].as<bool>([&](bool x){
+            a   = arg.as<bool>([&](bool x){
                 return x ? A::Show : A::Hide;
             });
         }
         
         if(a == A::None){
-            a   = pay.pargs[0].as<int>([&](int x){
+            a   = arg.as<int>([&](int x){
                 return x ? A::Show : A::Hide;
             });
         }

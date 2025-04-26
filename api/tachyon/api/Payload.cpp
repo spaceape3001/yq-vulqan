@@ -23,6 +23,18 @@ namespace yq::tachyon {
     }
 
 
+    Payload& Payload::operator<<(const Any&v)
+    {
+        arguments.push_back(v);
+        return *this;
+    }
+    
+    Payload& Payload::operator<<(Any&&v)
+    {
+        arguments.push_back(std::move(v));
+        return *this;
+    }
+
     const Any&  Payload::argument(uint32_t k) const
     {
         if(k >= arguments.size())

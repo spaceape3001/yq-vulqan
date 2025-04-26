@@ -53,6 +53,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Model.cpp
     api/N.cpp
     api/Panel.cpp
+    api/Payload.cpp
     api/Perspective.cpp
     api/Post.cpp
     api/Proxy.cpp

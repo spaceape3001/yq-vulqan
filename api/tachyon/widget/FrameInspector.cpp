@@ -50,6 +50,9 @@ namespace yq::tachyon {
     
     FrameInspector::~FrameInspector()
     {
+        for(Pane*&p : m_panes)
+            p   = nullptr;
+        m_panes.clear();
     }
 
     template <typename Pred>
@@ -142,7 +145,10 @@ namespace yq::tachyon {
 
                     bool    treeOpen = false;
                     guard([&](){
-                        treeOpen    = ImGui::TreeNodeEx(p->name(), ImGuiTreeNodeFlags_NoTreePushOnOpen);
+                    
+                        // Right now, this is (SOMETIMES) crashing with a pure-virtual exception (TBD)
+                        const char* myName = p->name();
+                        treeOpen    = ImGui::TreeNodeEx(myName, ImGuiTreeNodeFlags_NoTreePushOnOpen);
                     });
 
                     ImGui::TableNextColumn();

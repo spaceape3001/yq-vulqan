@@ -618,7 +618,6 @@ namespace yq::tachyon {
     
         _carve(m_index);
         _carve(m_storage);
-        _carve(m_texture);
         _carve(m_uniform);
         _carve(m_vertex);
         _carve(m_texture);
@@ -663,9 +662,10 @@ namespace yq::tachyon {
         m_uniform.import_stats(vi.m_uniform);
         m_texture.import_stats(vi.m_texture);
 
+        m_pointers.resize(vi.m_vertex.end_buf());
+
         _carve(m_index);
         _carve(m_storage);
-        _carve(m_texture);
         _carve(m_uniform);
         _carve(m_vertex);
         _carve(m_texture);

@@ -57,6 +57,7 @@ namespace yq::tachyon {
         virtual uint64_t    count() const { return 0; }
         virtual bool        countable() const { return false; }
         virtual void        render(ViContext&)  = 0;
+        virtual ~Pane() {  }
         
     protected:
         const Frame*        m_frame = nullptr;

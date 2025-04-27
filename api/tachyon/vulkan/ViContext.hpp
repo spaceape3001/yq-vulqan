@@ -16,6 +16,7 @@
 #include <tachyon/typedef/vi_pipeline_manager.hpp>
 #include <tachyon/typedef/raster.hpp>
 #include <system_error>
+#include <variant>
 
 //namespace yq::engine { class Viewer; }
 namespace yq::tachyon {

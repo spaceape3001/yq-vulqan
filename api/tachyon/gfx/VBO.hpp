@@ -8,6 +8,7 @@
 
 #include <tachyon/gfx/BufferObject.hpp>
 #include <yq/container/vector_utils.hpp>
+#include <yq/trait/is_trivial.hpp>
 
 namespace yq::tachyon {
     
@@ -16,7 +17,7 @@ namespace yq::tachyon {
     */
     template <typename T, BufferUsage::enum_t BUF>
     struct ABO : public BufferObject<BUF> {
-        static_assert(std::is_trivial_v<T>, "T should be trivial");
+        static_assert(is_trivial<T>, "T should be trivial");
     
         ABO(){}
         ~ABO(){}
@@ -73,7 +74,7 @@ namespace yq::tachyon {
     */
     template <typename T, BufferUsage::enum_t BUF>
     struct AB1 : public BufferObject<BUF> {
-        static_assert(std::is_trivial_v<T>, "T should be trivial");
+        static_assert(is_trivial<T>, "T should be trivial");
 
         std::vector<T>      data;
         

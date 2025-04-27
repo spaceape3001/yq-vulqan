@@ -8,6 +8,7 @@
 
 #include <tachyon/action/CallbackAction.hpp>
 #include <tachyon/api/Tachyon.hpp>
+#include <tachyon/api/Payload.hpp>
 
 namespace yq::tachyon {
 

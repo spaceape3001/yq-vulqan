@@ -53,7 +53,7 @@ namespace yq::tachyon {
             if(const unsigned char* p = glfwGetJoystickButtons(m_joystick, &count); p && count){
                 m_buttons.reserve(count);
                 for(int n=0;n<count;++n){
-                    m_buttons.push_back(m_buttons[n] == GLFW_PRESS);
+                    m_buttons.push_back(p[n] == GLFW_PRESS);
                 }
             }
             if(const unsigned char* p = glfwGetJoystickHats(m_joystick, &count); p && count){

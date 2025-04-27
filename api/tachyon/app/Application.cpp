@@ -49,7 +49,8 @@ namespace yq::tachyon {
         static bool s_done  = false;
         if(s_done)
             return;
-        Asset::resolver_add_paths(build::data_directory());
+            
+        Asset::resolver_add_paths(default_data_directory());
         s_done = true;
     }
 

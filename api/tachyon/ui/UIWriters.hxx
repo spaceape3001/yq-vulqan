@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/UIWriters.hpp>
-#include <tachyon/api/UIElementWriter.hxx>
+#include <tachyon/ui/UIWriters.hpp>
+#include <tachyon/ui/UIElementWriter.hxx>
 
 #include <tachyon/ui/UIElementsWriter.hxx>

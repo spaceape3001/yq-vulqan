@@ -7,7 +7,7 @@
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/api/WidgetData.hpp>
-#include <tachyon/api/UIElement.hpp>
+#include <tachyon/ui/UIElement.hpp>
 
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Frame.hpp>

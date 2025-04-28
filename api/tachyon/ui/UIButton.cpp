@@ -8,7 +8,7 @@
 #include "UIButtonWriter.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/api/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIButton)
 

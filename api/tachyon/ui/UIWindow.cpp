@@ -9,11 +9,11 @@
 #include <yq/math/utility.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Size2.hpp>
-#include <tachyon/api/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementInfoWriter.hpp>
 #include <tachyon/logging.hpp>
 
 #include <yq/text/format.hpp>
-#include <tachyon/api/UIStyle.hpp>
+#include <tachyon/ui/UIStyle.hpp>
 #include <atomic>
 
 #include <yq/shape/AxBox2.hxx>

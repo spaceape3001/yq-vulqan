@@ -6,11 +6,11 @@
 
 #include "UIImage.hpp"
 #include "UIImageWriter.hpp"
-#include <tachyon/api/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementInfoWriter.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/api/UIStyle.hpp>
+#include <tachyon/ui/UIStyle.hpp>
 #include <yq/text/format.hpp>
 #include <tachyon/MyImGui.hpp>
 

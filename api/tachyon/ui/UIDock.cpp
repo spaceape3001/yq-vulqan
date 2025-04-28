@@ -6,7 +6,7 @@
 
 #include "UIDock.hpp"
 #include "UIDockWriter.hpp"
-#include <tachyon/api/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIDock)
 

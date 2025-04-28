@@ -9,7 +9,7 @@
 #include <yq/core/Result.hpp>
 #include <tachyon/api/ActionInfoWriter.hpp>
 #include <tachyon/api/Payload.hpp>
-#include <tachyon/api/UIElement.hpp>
+#include <tachyon/ui/UIElement.hpp>
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/api/Widget.hxx>
 #include <tachyon/logging.hpp>

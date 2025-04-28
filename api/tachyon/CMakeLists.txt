@@ -72,9 +72,6 @@ add_library(${PROJECT_NAME} SHARED
     #api/Tool.cpp
     api/Trigger.cpp
     api/TypedID.cpp
-    api/UIElement.cpp
-    api/UIElementWriter.cpp
-    api/UIUtils.cpp
     api/Undo.cpp
     api/Widget.cpp
     
@@ -639,16 +636,16 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIButtonBar.cpp
     ui/UIButtonBarWriter.cpp
     ui/UICallback.cpp
-    ui/UICenterAlign.cpp
     ui/UICheckBox.cpp
     ui/UICheckBox_Simple.cpp
     ui/UICheckBox_Visible.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp
+    ui/UIElement.cpp
+    ui/UIElementWriter.cpp
     ui/UIElements.cpp
     ui/UIElementsWriter.cpp
     ui/UIGenerator.cpp
-    ui/UIHLine.cpp
     ui/UIImage.cpp
     ui/UILayout.cpp
     ui/UILayoutWriter.cpp
@@ -657,11 +654,15 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIMenuBar.cpp
     ui/UIMenuBarWriter.cpp
     ui/UIMenuItem.cpp
-    ui/UIRightAlign.cpp
     ui/UISpacer.cpp
     ui/UITextLabel.cpp
+    ui/UIUtils.cpp
     ui/UIWindow.cpp
     ui/UIWindowWriter.cpp
+
+    ui/align/UICenterAlign.cpp
+    ui/align/UIHLine.cpp
+    ui/align/UIRightAlign.cpp
 
     ui/layout/UIHBoxLayout.cpp
     ui/layout/UIVBoxLayout.cpp

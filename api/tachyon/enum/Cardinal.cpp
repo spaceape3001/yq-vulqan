@@ -5,8 +5,69 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Cardinal.hpp"
+#include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
+    bool    is_edge(Cardinal v)
+    {
+        switch(v){
+        case Cardinal::Unknown:
+        case Cardinal::Center:
+            return false;
+        case Cardinal::NW:
+        case Cardinal::NNW:
+        case Cardinal::North:
+        case Cardinal::NNE:
+        case Cardinal::NE:
+        case Cardinal::ENE:
+        case Cardinal::East:
+        case Cardinal::ESE:
+        case Cardinal::SE:
+        case Cardinal::SSE:
+        case Cardinal::South:
+        case Cardinal::SSW:
+        case Cardinal::SW:
+        case Cardinal::WSW:
+        case Cardinal::West:
+        case Cardinal::WNW:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    bool    is_horizontal(Cardinal v)
+    {
+        switch(v){
+        case Cardinal::Unknown:
+        case Cardinal::Center:
+            return false;
+        case Cardinal::NW:
+        case Cardinal::NNW:
+        case Cardinal::North:
+        case Cardinal::NNE:
+        case Cardinal::NE:
+            return true;
+        case Cardinal::ENE:
+        case Cardinal::East:
+        case Cardinal::ESE:
+            return false;
+        case Cardinal::SE:
+        case Cardinal::SSE:
+        case Cardinal::South:
+        case Cardinal::SSW:
+        case Cardinal::SW:
+            return true;
+        case Cardinal::WSW:
+        case Cardinal::West:
+            return false;
+        case Cardinal::WNW:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     bool    is_north(Cardinal v)
     {
         switch(v){
@@ -26,6 +87,7 @@ namespace yq::tachyon {
         case Cardinal::SSE:
         case Cardinal::South:
         case Cardinal::SSW:
+        case Cardinal::SW:
         case Cardinal::WSW:
         case Cardinal::West:
             return false;
@@ -54,6 +116,7 @@ namespace yq::tachyon {
         case Cardinal::SSE:
         case Cardinal::South:
         case Cardinal::SSW:
+        case Cardinal::SW:
         case Cardinal::WSW:
             return true;
         case Cardinal::West:
@@ -82,6 +145,7 @@ namespace yq::tachyon {
             return true;
         case Cardinal::South:
         case Cardinal::SSW:
+        case Cardinal::SW:
         case Cardinal::WSW:
         case Cardinal::West:
         case Cardinal::WNW:
@@ -109,6 +173,7 @@ namespace yq::tachyon {
         case Cardinal::SSE:
         case Cardinal::South:
             return false;
+        case Cardinal::SW:
         case Cardinal::SSW:
         case Cardinal::WSW:
         case Cardinal::West:
@@ -119,6 +184,38 @@ namespace yq::tachyon {
         }
     }
     
+    bool                is_vertical(Cardinal v)
+    {
+        switch(v){
+        case Cardinal::Unknown:
+        case Cardinal::Center:
+            return false;
+        case Cardinal::NW:
+            return true;
+        case Cardinal::NNW:
+        case Cardinal::North:
+        case Cardinal::NNE:
+            return false;
+        case Cardinal::NE:
+        case Cardinal::ENE:
+        case Cardinal::East:
+        case Cardinal::ESE:
+        case Cardinal::SE:
+            return true;
+        case Cardinal::SSE:
+        case Cardinal::South:
+        case Cardinal::SSW:
+            return false;
+        case Cardinal::SW:
+        case Cardinal::WSW:
+        case Cardinal::West:
+        case Cardinal::WNW:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     std::string_view    key_for(Cardinal v)
     {
         switch(v){
@@ -150,6 +247,8 @@ namespace yq::tachyon {
             return "South";
         case Cardinal::SSW:
             return "SSW";
+        case Cardinal::SW:
+            return "SW";
         case Cardinal::WSW:
             return "WSW";
         case Cardinal::West:
@@ -192,6 +291,8 @@ namespace yq::tachyon {
             return "South";
         case Cardinal::SSW:
             return "South by Southwest";
+        case Cardinal::SW:
+            return "Southwest";
         case Cardinal::WSW:
             return "West by Southwest";
         case Cardinal::West:

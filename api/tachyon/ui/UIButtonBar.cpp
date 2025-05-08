@@ -11,6 +11,7 @@
 #include <yq/vector/Vector2.hpp>
 #include <tachyon/logging.hpp>
 #include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIUtils.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 #include <yq/shape/Size2.hxx>
@@ -53,49 +54,7 @@ namespace yq::tachyon {
             }
         */
 
-     
-        constexpr Vector2F    pivot_for(Cardinal v)
-        {
-            switch(v){
-            case Cardinal::Unknown:
-            case Cardinal::Center:
-                return { 0., 0. };
-            case Cardinal::NW:
-            case Cardinal::NNW:
-                return { 0., 0. };
-            case Cardinal::North:
-                return { 0.5, 0. };
-            case Cardinal::NNE:
-                return { 1.0, 0. };
-            case Cardinal::NE:
-                return { 0.0, 0. };
-            case Cardinal::ENE:
-                return { 1.0, 0. };
-            case Cardinal::East:
-                return { 1.0, 0.5 };
-            case Cardinal::ESE:
-                return { 1.0, 1.0 };
-            case Cardinal::SE:
-                return ZERO;
-            case Cardinal::SSE:
-                return { 1.0, 1.0 };
-            case Cardinal::South:
-                return { 0.5, 1.0 };
-            case Cardinal::SSW:
-                return { 0.0, 1.0 };
-            case Cardinal::SW:
-                return ZERO;
-            case Cardinal::WSW:
-                return { 0.0, 1.0 };
-            case Cardinal::West:
-                return { 0.0, 0.5 };
-            case Cardinal::WNW:
-                return { 0.0, 0.0 };
-            default:
-                return ZERO;
-            }
-        }
-     
+
         UIFlags add_flags(Cardinal v)
         {
             switch(v){

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/application.hpp>
-#include "SceneryMW.hpp"
+#include "SceneEditor.hpp"
 #include <iostream>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     app.start();
     
-    SceneryMW*     w   = Widget::create<SceneryMW>();
+    SceneEditor*     w   = Widget::create<SceneEditor>();
     app.run(w);
     return 0;
 }

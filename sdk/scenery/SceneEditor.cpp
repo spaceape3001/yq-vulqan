@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/application.hpp>
-#include "SceneryMW.hpp"
+#include "SceneEditor.hpp"
 #include <tachyon/request/app/OpenFileRequest.hpp>
 #include <tachyon/widget/AppWidgetInfoWriter.hpp>
 #include <iostream>
@@ -13,23 +13,23 @@
 #include <tachyon/ui/UIWriters.hxx>
 #include <ImGuiFileDialog.h>
 
-YQ_TACHYON_IMPLEMENT(SceneryMW)
+YQ_TACHYON_IMPLEMENT(SceneEditor)
 
-SceneryMW::SceneryMW()
+SceneEditor::SceneEditor()
 {
 }
 
-SceneryMW::~SceneryMW()
+SceneEditor::~SceneEditor()
 {
 }
 
-void    SceneryMW::imgui(ViContext&u) 
+void    SceneEditor::imgui(ViContext&u) 
 {
     Widget::imgui(UI,u);
 }
 
 #if 0
-void SceneryMW::content(ViContext& u) 
+void SceneEditor::content(ViContext& u) 
 {   
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
         if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
@@ -43,7 +43,7 @@ void SceneryMW::content(ViContext& u)
     }
 }
 
-void SceneryMW::menubar(ViContext&u) 
+void SceneEditor::menubar(ViContext&u) 
 {
     if(ImGui::BeginMenu("File")){
         if(ImGui::MenuItem("Open", "Ctrl+O")){
@@ -80,9 +80,9 @@ void SceneryMW::menubar(ViContext&u)
 #endif
 
 
-void SceneryMW::init_info()
+void SceneEditor::init_info()
 {
-    auto w          = writer<SceneryMW>();
+    auto w          = writer<SceneEditor>();
     w.description("The main widget");
     auto app        = w.imgui(UI, APP);
     

@@ -16,12 +16,12 @@ namespace yq::tachyon {
 using namespace yq;
 using namespace yq::tachyon;
 
-class SceneryMW : public Widget {
-    YQ_TACHYON_DECLARE(SceneryMW, Widget)
+class SceneEditor : public Widget {
+    YQ_TACHYON_DECLARE(SceneEditor, Widget)
 public:
 
-    SceneryMW();
-    ~SceneryMW();
+    SceneEditor();
+    ~SceneEditor();
     
     //bool    menubar(enabled_k) const override { return true; }
     //void    menubar(ViContext&) override;

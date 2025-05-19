@@ -8,7 +8,7 @@ project(scenery)
 
 add_executable(${PROJECT_NAME}
     main.cpp
-    SceneryMW.cpp
+    SceneEditor.cpp
     ScenePane.cpp
 )
 

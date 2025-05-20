@@ -38,6 +38,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Action.cpp
     api/Camera.cpp
     api/Camera3.cpp
+    api/CameraTweak.cpp
     api/Command.cpp
     api/Control.cpp
     api/Controller.cpp
@@ -108,6 +109,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize4.cpp
         
     camera/NullCamera.cpp
+    camera/OriginCameraTweak.cpp
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
 

@@ -25,13 +25,12 @@ namespace yq::tachyon {
 
         static void init_info();
         
-    private:
+    protected:
         struct Layer {
             CameraID    camera;
             SceneID     scene;
         };
-        
+    
         std::vector<Layer>  m_layers;
-        
     };
 }

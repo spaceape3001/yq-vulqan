@@ -9,6 +9,8 @@
 #include <tachyon/api/CameraTweak.hpp>
 
 namespace yq::tachyon {
+
+    //! Camera tweak to ensure that the camera is always at the origin
     class OriginCameraTweak : public CameraTweak {
     public:
         OriginCameraTweak();

@@ -10,6 +10,7 @@
 #include <tachyon/ui/UIElement.hpp>
 
 #include <tachyon/logging.hpp>
+#include <tachyon/api/CameraTweak.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/app/Viewer.hpp>
 #include <tachyon/command/tachyon/DestroyCommand.hpp>
@@ -82,26 +83,29 @@ namespace yq::tachyon {
 
     /////////////////////////
 
-    void Widget::camera_matrix(PreContext&ctx, Camera³ID cam)
+    void Widget::camera_matrix(PreContext&ctx, Camera³ID cam, std::span<const CameraTweakCPtr> tweaks)
     {
-        camera_matrix(ctx.view, ctx.projection, ctx.frame, cam);
+        camera_matrix(ctx.view, ctx.projection, ctx.frame, cam, tweaks);
     }
 
-    void Widget::camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame& frame, Camera³ID cam)
+    void Widget::camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame& frame, Camera³ID cam, std::span<const CameraTweakCPtr> tweaks)
     {
         const Camera³Snap*  camera  = frame.snap(cam);
-        if(!camera){
+        if(camera){
+            proj        = camera->projection;
+            const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial));
+            if(s³){
+                view      = s³ -> domain2local;
+            } else {
+                view      = IDENTITY;
+            }
+        } else {
             view            = IDENTITY;
             proj            = IDENTITY;
-            return;
         }
-        
-        proj        = camera->projection;
-        const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial));
-        if(s³){
-            view      = s³ -> domain2local;
-        } else {
-            view      = IDENTITY;
+        for(auto& t : tweaks){
+            if(t)
+                t -> camera_tweak(view, proj);
         }
     }
 

@@ -87,10 +87,10 @@ namespace yq::tachyon {
         Camera(const Param&p = {});
         
         //! Default destructor
-        ~Camera();
+        virtual ~Camera();
         
     };
-
+    
     /*! \brief Camera parameters
     */
     //struct Camera::Values {

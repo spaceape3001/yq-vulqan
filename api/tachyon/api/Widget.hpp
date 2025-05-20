@@ -15,6 +15,7 @@
 #include <tachyon/typedef/requests.hpp>
 #include <tachyon/typedef/viewer.hpp>
 #include <tachyon/typedef/widget.hpp>
+#include <tachyon/typedef/camera.hpp>
 #include <tachyon/typedef/camera3.hpp>
 #include <yq/typedef/tensor44.hpp>
 #include <yq/typedef/vector2.hpp>
@@ -291,9 +292,9 @@ namespace yq::tachyon {
             double          time        = 0.;
         };
         
-        static void camera_matrix(PreContext&, Camera³ID);
+        static void camera_matrix(PreContext&, Camera³ID, std::span<const CameraTweakCPtr> tweaks={});
         
-        static void camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, Camera³ID);
+        static void camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, Camera³ID, std::span<const CameraTweakCPtr> tweaks={});
         static void push_buffer(PushBuffer&, const PreContext&, const RenderedSnap&);
         
         //! Used to push an item to the rendered vector *THIS PRERECORD* (it'll be cleared by the vulkan() call)

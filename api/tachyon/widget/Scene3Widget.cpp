@@ -59,7 +59,7 @@ namespace yq::tachyon {
         PreContext     ctx{ u, *frame };
         ctx.time        = u.time;
         ctx.gamma       = m_gamma;
-        
+
         camera_matrix(ctx, id(CAMERA³));
         
         //ctx.w2e44       = ctx.projection44 * ctx.view44;

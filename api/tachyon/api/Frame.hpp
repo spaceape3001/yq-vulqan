@@ -36,6 +36,7 @@
 #include <tachyon/typedef/scene.hpp>
 #include <tachyon/typedef/scene3.hpp>
 #include <tachyon/typedef/spatial.hpp>
+#include <tachyon/typedef/spatial2.hpp>
 #include <tachyon/typedef/spatial3.hpp>
 #include <tachyon/typedef/tachyon.hpp>
 #include <tachyon/typedef/thread.hpp>
@@ -99,6 +100,7 @@ namespace yq::tachyon {
         bool contains(SceneID) const;
         bool contains(Scene³ID) const;
         bool contains(SpatialID) const;
+        bool contains(Spatial²ID) const;
         bool contains(Spatial³ID) const;
         bool contains(TachyonID) const;
         bool contains(ThreadID) const;
@@ -126,6 +128,7 @@ namespace yq::tachyon {
         size_t count(scene_k) const;
         size_t count(scene³_k) const;
         size_t count(spatial_k) const;
+        size_t count(spatial²_k) const;
         size_t count(spatial³_k) const;
         size_t count(tachyon_k) const;
         size_t count(thread_k) const;
@@ -156,6 +159,7 @@ namespace yq::tachyon {
         const SceneData*                    data(SceneID) const;
         const Scene³Data*                   data(Scene³ID) const;
         const SpatialData*                  data(SpatialID) const;
+        const Spatial²Data*                 data(Spatial²ID) const;
         const Spatial³Data*                 data(Spatial³ID) const;
         const TachyonData*                  data(TachyonID) const;
         const ThreadData*                   data(ThreadID) const;
@@ -197,6 +201,7 @@ namespace yq::tachyon {
         const std::set<SceneID>&            ids(scene_k) const;
         const std::set<Scene³ID>&           ids(scene³_k) const;
         const std::set<SpatialID>&          ids(spatial_k) const;
+        const std::set<Spatial²ID>&         ids(spatial²_k) const;
         const std::set<Spatial³ID>&         ids(spatial³_k) const;
         const std::set<TachyonID>&          ids(tachyon_k) const;
         const std::set<ThreadID>&           ids(thread_k) const;
@@ -262,6 +267,7 @@ namespace yq::tachyon {
         Scene³*                             object(Scene³ID) const;
 
         Spatial*                            object(SpatialID) const;
+        Spatial²*                           object(Spatial²ID) const;
         Spatial³*                           object(Spatial³ID) const;
 
         //! Tachyon pointer
@@ -341,6 +347,7 @@ namespace yq::tachyon {
         const SceneSnap*                    snap(SceneID) const;
         const Scene³Snap*                   snap(Scene³ID) const;
         const SpatialSnap*                  snap(SpatialID) const;
+        const Spatial²Snap*                 snap(Spatial²ID) const;
         const Spatial³Snap*                 snap(Spatial³ID) const;
         const TachyonSnap*                  snap(TachyonID) const;
         const ThreadSnap*                   snap(ThreadID) const;
@@ -415,6 +422,7 @@ namespace yq::tachyon {
         Container<Scene, SceneData, SceneSnap>                      m_scenes;
         Container<Scene³, Scene³Data, Scene³Snap>                   m_scene³s;
         Container<Spatial, SpatialData, SpatialSnap>                m_spatials;
+        Container<Spatial², Spatial²Data, Spatial²Snap>             m_spatial²s;
         Container<Spatial³, Spatial³Data, Spatial³Snap>             m_spatial³s;
         Container<Tachyon, TachyonData, TachyonSnap>                m_tachyons;
         Container<Thread, ThreadData, ThreadSnap>                   m_threads;

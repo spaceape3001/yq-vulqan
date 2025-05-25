@@ -161,6 +161,7 @@ namespace yq::tachyon {
     };
     
     struct spatial_k {};
+    struct spatial²_k {};
     struct spatial³_k {};
 
     struct static_k {
@@ -272,6 +273,7 @@ namespace yq::tachyon {
     static constexpr const sim_k                SIM;
     static constexpr const south_k              SOUTH;
     static constexpr const spatial_k            SPATIAL;
+    static constexpr const spatial²_k           SPATIAL²;
     static constexpr const spatial³_k           SPATIAL³;
     static constexpr const static_k             STATIC;
     static constexpr const sweep_k              SWEEP;

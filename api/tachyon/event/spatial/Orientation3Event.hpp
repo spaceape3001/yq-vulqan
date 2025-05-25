@@ -11,7 +11,7 @@
 
 namespace yq::tachyon {
 
-    //! Source moved in 3-Dimensions
+    //! Source rotated in 3-Dimensions
     class Orientation³Event : public SpatialEvent {
         YQ_OBJECT_DECLARE(Orientation³Event, SpatialEvent)
     public:

@@ -26,7 +26,7 @@ namespace yq::tachyon {
         //!  Basic orientation in the 3D space
         Quaternion3D    orientation() const override { return m_orientation; }
 
-        double          orientation(w_k) const { return m_orientation.x; }
+        double          orientation(w_k) const { return m_orientation.w; }
         double          orientation(x_k) const { return m_orientation.x; }
         double          orientation(y_k) const { return m_orientation.y; }
         double          orientation(z_k) const { return m_orientation.z; }

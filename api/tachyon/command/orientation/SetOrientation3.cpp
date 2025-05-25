@@ -39,7 +39,7 @@ namespace yq::tachyon {
     void SetOrientation³::init_info()
     {
         auto w = writer<SetOrientation³>();
-        w.description("Set Position Command");
+        w.description("Set Orientation Command");
         w.property("w", &SetOrientation³::w);
         w.property("x", &SetOrientation³::x);
         w.property("y", &SetOrientation³::y);

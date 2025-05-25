@@ -39,6 +39,7 @@ namespace yq::tachyon {
         Scene,
         Scene³,
         Spatial,
+        Spatial²,
         Spatial³,
         Thread,
         Viewer,

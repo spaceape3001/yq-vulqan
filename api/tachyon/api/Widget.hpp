@@ -286,10 +286,11 @@ namespace yq::tachyon {
         struct PreContext {
             ViContext&      vi;
             const Frame&    frame;
-            Tensor44D       view        = IDENTITY;
-            Tensor44D       projection  = IDENTITY;
-            RGBA4F          gamma       = { 1., 1., 1., 1. };
-            double          time        = 0.;
+            Tensor44D       view            = IDENTITY;
+            Tensor44D       projection      = IDENTITY;
+            Tensor44D       domain          = IDENTITY;  //! An additional multiplier for world space (ie, models are in a local domain)
+            RGBA4F          gamma           = { 1., 1., 1., 1. };
+            double          time            = 0.;
         };
         
         static void camera_matrix(PreContext&, Camera³ID, std::span<const CameraTweakCPtr> tweaks={});

@@ -36,6 +36,8 @@
 #include <tachyon/api/Camera3.hpp>
 #include <tachyon/api/Camera3Data.hpp>
 #include <tachyon/api/Rendered3Data.hpp>
+#include <tachyon/api/Spatial2.hpp>
+#include <tachyon/api/Spatial2Data.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/api/Spatial3Data.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
@@ -93,11 +95,10 @@ namespace yq::tachyon {
         const Camera³Snap*  camera  = frame.snap(cam);
         if(camera){
             proj        = camera->projection;
-            const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial));
-            if(s³){
-                view      = s³ -> domain2local;
+            if(const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial))){
+                view        = s³ -> domain2local;
             } else {
-                view      = IDENTITY;
+                view        = IDENTITY;
             }
         } else {
             view            = IDENTITY;
@@ -166,28 +167,29 @@ namespace yq::tachyon {
         StdPushData&    pd  = *pb.create_single<StdPushData>();
         pd.time         = ctx.time;
         pd.gamma        = ctx.gamma;
+        
+        //  TODO... 
 
         const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
         if(sn.vm_override){
             if(s³){
-                Tensor44D   vm  = comingle(ctx.view, s³->local2domain, sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, ctx.domain * s³->local2domain, sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             } else {
-                Tensor44D   vm  = comingle(ctx.view, Tensor44D(IDENTITY), sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, ctx.domain, sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             }
         } else {
             if(s³){
-                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * s³->local2domain);
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * s³->local2domain);
             } else {
-                pd.matrix   = glm::dmat4(ctx.projection * ctx.view);
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain);
             }
         }
     }
     
     void Widget::push_buffer_mvp(PushBuffer&pb, const PreContext&ctx, const Rendered³Snap&sn)
     {
-        static constexpr glm::mat4  I44 = glm::dmat4(Tensor44D(IDENTITY));
         StdPushDataMVP&    pd  = *pb.create_single<StdPushDataMVP>();
         pd.time         = ctx.time;
         pd.gamma        = ctx.gamma;
@@ -206,9 +208,9 @@ namespace yq::tachyon {
         
         const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
         if(s³){
-            pd.model        = glm::dmat4(s³->local2domain);
+            pd.model        = glm::dmat4(ctx.domain * s³->local2domain);
         } else {
-            pd.model        = I44;
+            pd.model        = glm::dmat4(ctx.domain);
         }
     }
     

@@ -68,6 +68,7 @@ add_library(${PROJECT_NAME} SHARED
     #api/Scene2.cpp
     api/Scene3.cpp
     api/Spatial.cpp
+    api/Spatial2.cpp
     api/Spatial3.cpp
     api/Tachyon.cpp
     api/Thread.cpp
@@ -95,6 +96,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/AMinSize2.cpp
     aspect/AMinSize3.cpp
     aspect/AMinSize4.cpp
+    aspect/AOrientation2.cpp
     aspect/AOrientation3.cpp
     aspect/APosition1.cpp
     aspect/APosition2.cpp
@@ -165,9 +167,11 @@ add_library(${PROJECT_NAME} SHARED
     command/sim/PauseCommand.cpp
 
     command/orientation/PitchBy.cpp
+    command/orientation/RotateBy2.cpp
     command/orientation/RotateBy3.cpp
     command/orientation/RollBy.cpp
     command/orientation/SetHeading.cpp
+    command/orientation/SetOrientation2.cpp
     command/orientation/SetOrientation3.cpp
     command/orientation/SetPitch.cpp
     command/orientation/SetRoll.cpp
@@ -426,6 +430,7 @@ add_library(${PROJECT_NAME} SHARED
     event/spatial/Position2Event.cpp
     event/spatial/Position3Event.cpp
     event/spatial/Position4Event.cpp
+    event/spatial/Orientation2Event.cpp
     event/spatial/Orientation3Event.cpp
     event/spatial/Scale1Event.cpp
     event/spatial/Scale2Event.cpp
@@ -478,6 +483,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/IMinSize2.cpp
     interface/IMinSize3.cpp
     interface/IMinSize4.cpp
+    interface/IOrientation2.cpp
     interface/IOrientation3.cpp
     interface/IPosition1.cpp
     interface/IPosition2.cpp
@@ -542,6 +548,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PMinSize2.cpp
     proxy/PMinSize3.cpp
     proxy/PMinSize4.cpp
+    proxy/POrientation2.cpp
     proxy/POrientation3.cpp
     proxy/PPosition1.cpp
     proxy/PPosition2.cpp
@@ -614,6 +621,7 @@ add_library(${PROJECT_NAME} SHARED
     scene/SimpleScene3.cpp
     
     spatial/GeoSpatial3.cpp
+    spatial/SimpleSpatial2.cpp
     spatial/SimpleSpatial3.cpp
 
     thread/AppThread.cpp

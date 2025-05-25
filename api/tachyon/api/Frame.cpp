@@ -26,6 +26,8 @@
 #include <tachyon/api/Rendered3Data.hpp>
 #include <tachyon/api/Scene3.hpp>
 #include <tachyon/api/Scene3Data.hpp>
+#include <tachyon/api/Spatial2.hpp>
+#include <tachyon/api/Spatial2Data.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/api/Spatial3Data.hpp>
 
@@ -218,6 +220,8 @@ namespace yq::tachyon {
             m_scene³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Spatial))
             m_spatials.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Spatial²))
+            m_spatial²s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Spatial³))
             m_spatial³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Thread))
@@ -343,6 +347,11 @@ namespace yq::tachyon {
     bool Frame::contains(SpatialID id) const
     {
         return m_spatials.has(id);
+    }
+
+    bool Frame::contains(Spatial²ID id) const
+    {
+        return m_spatial²s.has(id);
     }
 
     bool Frame::contains(Spatial³ID id) const
@@ -490,6 +499,11 @@ namespace yq::tachyon {
         return m_spatials.count();
     }
     
+    size_t Frame::count(spatial²_k) const
+    {
+        return m_spatial²s.count();
+    }
+
     size_t Frame::count(spatial³_k) const
     {
         return m_spatial³s.count();
@@ -620,6 +634,11 @@ namespace yq::tachyon {
     const SpatialData*                 Frame::data(SpatialID id) const
     {
         return m_spatials.data(id);
+    }
+
+    const Spatial²Data*                Frame::data(Spatial²ID id) const
+    {
+        return m_spatial²s.data(id);
     }
 
     const Spatial³Data*                Frame::data(Spatial³ID id) const
@@ -757,11 +776,16 @@ namespace yq::tachyon {
         return m_spatials.ids;
     }
     
+    const std::set<Spatial²ID>&         Frame::ids(spatial²_k) const
+    {
+        return m_spatial²s.ids;
+    }
+    
     const std::set<Spatial³ID>&         Frame::ids(spatial³_k) const
     {
         return m_spatial³s.ids;
     }
-    
+
     const std::set<TachyonID>&          Frame::ids(tachyon_k) const
     {
         return m_tachyons.ids;
@@ -882,6 +906,11 @@ namespace yq::tachyon {
         return m_spatials.pointer(id);
     }
 
+    Spatial²*                             Frame::object(Spatial²ID id) const
+    {
+        return m_spatial²s.pointer(id);
+    }
+
     Spatial³*                             Frame::object(Spatial³ID id) const
     {
         return m_spatial³s.pointer(id);
@@ -998,6 +1027,7 @@ namespace yq::tachyon {
             << "  Scenes:        " << count(LIGHT) << "\n"
             << "  Scene³s:       " << count(LIGHT³) << "\n"
             << "  Spatials:      " << count(SPATIAL) << "\n"
+            << "  Spatial²s:     " << count(SPATIAL²) << "\n"
             << "  Spatial³s:     " << count(SPATIAL³) << "\n"
             << "  Tachyons:      " << count(TACHYON) << "\n"
             << "  Threads:       " << count(THREAD) << "\n"
@@ -1129,6 +1159,11 @@ namespace yq::tachyon {
     const SpatialSnap*                   Frame::snap(SpatialID id) const
     {
         return m_spatials.snap(id);
+    }
+
+    const Spatial²Snap*                   Frame::snap(Spatial²ID id) const
+    {
+        return m_spatial²s.snap(id);
     }
 
     const Spatial³Snap*                   Frame::snap(Spatial³ID id) const

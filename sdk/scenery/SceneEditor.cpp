@@ -103,17 +103,21 @@ void SceneEditor::init_info()
     edit.menuitem("Paste", "Ctrl+V");
 
     auto etb        = app.buttonbar(EAST,  "east");
+    etb.button("E");
     auto wtb        = app.buttonbar(WEST,  "west");
+    wtb.button("W");
     auto ntb        = app.buttonbar(NORTH, "north");
+    ntb.button("N");
     auto stb        = app.buttonbar(SOUTH, "south");
+    stb.button("S");
     
-    auto hbx        = app.vbox();
-    auto h1         = hbx.window();
-    h1.height(200);
-    h1.label("Hello");
-    auto h2         = hbx.window();
-    h2.label("World");
-    auto h3         = hbx.window();
-    h3.label("Goodbye");
+    //auto hbx        = app.vbox();
+    //auto h1         = hbx.window();
+    //h1.height(200);
+    //h1.label("Hello");
+    //auto h2         = hbx.window();
+    //h2.label("World");
+    //auto h3         = hbx.window();
+    //h3.label("Goodbye");
     
 }

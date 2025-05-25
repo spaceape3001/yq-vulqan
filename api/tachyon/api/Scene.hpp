@@ -7,22 +7,12 @@
 #pragma once
 
 #include <yq/color/RGB.hpp>
+#include <yq/color/RGBA.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
-    /*! \brief Frame of things to be rendered
-    
-        This will include lighting (eventually) & rendered objects.
-    */
-    struct Scene0 {
-        std::vector<RenderedPtr>    things;
-        std::optional<RGB3F>        background;
-        // eventually things like lights, background/layers/materials/etc will go here
-        double                      utime   = 0.; // for the push constant
-    };
-    
     class SceneInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
@@ -31,6 +21,10 @@ namespace yq::tachyon {
         ~SceneInfo();
     };
     
+    /*! \brief Frame of things to be rendered
+    
+        This will include lighting (eventually) & rendered objects.
+    */
     class Scene : public Tachyon {
         YQ_TACHYON_INFO(SceneInfo)
         YQ_TACHYON_DATA(SceneData)
@@ -45,11 +39,15 @@ namespace yq::tachyon {
         
         SceneID id() const { return SceneID{ UniqueID::id()}; }
 
+        const RGBA4F&   bgcolor() const { return m_bgcolor; }
+        virtual void    set_bgcolor(const RGBA4F&); // override to check/reject color sets
+
     protected:
         
         void    snap(SceneSnap&) const;
         void    finalize(SceneData&) const;
 
+        RGBA4F  m_bgcolor = { 0., 0., 0., -1. };
     };
 }
 YQ_TYPE_DECLARE(yq::tachyon::SceneID)

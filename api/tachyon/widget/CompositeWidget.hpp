@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/api/Widget.hpp>
-#include <tachyon/typedef/camera.hpp>
+#include <tachyon/typedef/camera3.hpp>
 #include <tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
@@ -17,20 +17,25 @@ namespace yq::tachyon {
     
         CompositeWidget();
         ~CompositeWidget();
-        
-        int   add_layer(CameraID, SceneID);
 
-        virtual void    vulkan(ViContext&) override;
         virtual void    prerecord(ViContext&) override;
 
         static void init_info();
         
     protected:
+        using camera_tweaks_t   = std::vector<CameraTweakCPtr>;
+    
         struct Layer {
-            CameraID    camera;
-            SceneID     scene;
+            Camera³ID       camera;
+            SceneID         scene;
+            camera_tweaks_t tweaks;  //< Set for tweaking the camera
+            RGBA4F          gamma     = { 1., 1., 1., 1. };
         };
     
         std::vector<Layer>  m_layers;
+        RGBA4F              m_bgcolor   = { 0., 0., 0., 1. };
+
+        void    _prerecord(ViContext&, const Layer&);
+        using Widget::prerecord;
     };
 }

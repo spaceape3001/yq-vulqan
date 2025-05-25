@@ -36,6 +36,7 @@ namespace yq::tachyon {
     void Scene::snap(SceneSnap&sn) const
     {
         Tachyon::snap(sn);
+        sn.bgcolor  = m_bgcolor;
     }
     
     void Scene::finalize(SceneData&data) const
@@ -43,10 +44,16 @@ namespace yq::tachyon {
         Tachyon::finalize(data);
     }
 
+    void Scene::set_bgcolor(const RGBA4F&v)
+    {
+        m_bgcolor = v;
+    }
+
     void Scene::init_info()
     {
         auto w = writer<Scene>();
         w.description("Scene");
+        w.property("bgcolor", &Scene::m_bgcolor);
 
         auto wt = writer<SceneID>();
         wt.description("Scene Identifier");

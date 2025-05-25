@@ -52,9 +52,11 @@ namespace yq::tachyon {
         if(!u.frame0)
             return ;
     
-        const Scene³Snap*   scene   = frame -> snap(id(SCENE³));
+        const SceneSnap*   scene   = frame -> snap(id(SCENE));
         if(!scene)
             return ;
+        if(scene->bgcolor.alpha >= 0.)
+            u.clear     = scene->bgcolor;
             
         PreContext     ctx{ u, *frame };
         ctx.time        = u.time;

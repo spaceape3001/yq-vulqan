@@ -562,7 +562,7 @@ namespace yq::tachyon {
         renderPassInfo.renderArea.extent = m_swapchain->extents();
 
         renderPassInfo.clearValueCount = 1;
-        VkClearValue                cv  = m_clearValue;
+        VkClearValue                cv  = (u.clear.alpha >= 0) ? vqClearValue(u.clear) : (VkClearValue) m_clearValue;
         renderPassInfo.pClearValues = &cv;
         vkCmdBeginRenderPass(u.command_buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 

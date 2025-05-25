@@ -7,6 +7,7 @@
 #pragma once
 //#include <yq/tachyon/preamble.hpp>
 #include <vulkan/vulkan_core.h>
+#include <yq/color/RGBA.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/math/glm.hpp>
@@ -44,6 +45,8 @@ namespace yq::tachyon {
         ~ViContext();
         
         //  If modified, restore before return (or...make copy, use copy)
+        
+        RGBA4F              clear               = { 0., 0., 0., -1. };
         
         //! Current command buffer
         VkCommandBuffer     command_buffer      = nullptr;

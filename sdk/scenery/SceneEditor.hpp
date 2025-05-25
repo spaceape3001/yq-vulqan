@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
+#include <tachyon/widget/CompositeWidget.hpp>
 
 namespace yq::tachyon {
     class OpenFileRequest;
@@ -16,8 +16,8 @@ namespace yq::tachyon {
 using namespace yq;
 using namespace yq::tachyon;
 
-class SceneEditor : public Widget {
-    YQ_TACHYON_DECLARE(SceneEditor, Widget)
+class SceneEditor : public CompositeWidget {
+    YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
 public:
 
     SceneEditor();

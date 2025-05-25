@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     aci.thread.sim          = true;
     aci.view.title        = "Scenery Editor";
     aci.view.size         = { 1920, 1080 };
-    aci.view.clear        = { 0.1f, 0.1f, 0.2f, 1.f };
+    aci.view.clear        = { 0.0f, 0.0f, 0.0f, 1.f };
     aci.view.imgui        = true;
     aci.view.resizable    = true;
     

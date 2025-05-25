@@ -42,8 +42,8 @@ namespace yq::tachyon {
         /////////////////////////////////////////////
 
         UIMenuBarWriter     menubar();
-        UIButtonBarWriter   buttonbar(Cardinal, std::string_view kName);
-        UIButtonBarWriter   buttonbar(const Vector2F&, std::string_view kName);
+        UIToolBarWriter   toolbar(Cardinal, std::string_view kName);
+        UIToolBarWriter   toolbar(const Vector2F&, std::string_view kName);
 
     };
 }

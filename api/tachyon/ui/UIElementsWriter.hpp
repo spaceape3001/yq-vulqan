@@ -33,7 +33,7 @@ namespace yq::tachyon {
     class UIMenuBarWriter;
     class UIRightAlignWriter;
     class UISpacerWriter;
-    class UIButtonBarWriter;
+    class UIToolBarWriter;
     class UIVBoxLayoutWriter;
     
     class UIElementsWriter : public UIElementWriter {

@@ -102,13 +102,13 @@ void SceneEditor::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
 
-    auto etb        = app.buttonbar(EAST,  "east");
+    auto etb        = app.toolbar(EAST,  "east");
     etb.button("E");
-    auto wtb        = app.buttonbar(WEST,  "west");
+    auto wtb        = app.toolbar(WEST,  "west");
     wtb.button("W");
-    auto ntb        = app.buttonbar(NORTH, "north");
+    auto ntb        = app.toolbar(NORTH, "north");
     ntb.button("N");
-    auto stb        = app.buttonbar(SOUTH, "south");
+    auto stb        = app.toolbar(SOUTH, "south");
     stb.button("S");
     
     //auto hbx        = app.vbox();

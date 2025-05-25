@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIButtonBar.hpp"
+#include "UIToolBar.hpp"
 #include <tachyon/ui/UIUtils.hpp>
 #include <tachyon/ui/UIStyle.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -22,7 +22,7 @@ namespace yq {
     template AxBox2<float>::AxBox2(union_k, const Vector2F&, const Vector2F&);
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::UIButtonBar)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIToolBar)
 
 namespace yq::tachyon {
     namespace {
@@ -102,43 +102,43 @@ namespace yq::tachyon {
         static constexpr const UIFlags  kToolBarFlags   = { UIFlag::NoDecoration, UIFlag::NoMove, UIFlag::SetPosition, UIFlag::AlwaysAutoResize };
     }
 
-    void UIButtonBar::init_info()
+    void UIToolBar::init_info()
     {
-        auto w = writer<UIButtonBar>();
+        auto w = writer<UIToolBar>();
         w.description("UI Tool Bar");
         
-        w.property("pivot", &UIButtonBar::pivot_get)
-            .setter(&UIButtonBar::pivot_set)
+        w.property("pivot", &UIToolBar::pivot_get)
+            .setter(&UIToolBar::pivot_set)
             .description("Pivot point for the tool bar (in screen normalized coordinates)")
         ;
     }
 
     
-    UIButtonBar::UIButtonBar(Cardinal b, std::string_view title, UIFlags flags) : UIButtonBar(pivot_for(b), title, UIFlags(add_flags(b) | flags))
+    UIToolBar::UIToolBar(Cardinal b, std::string_view title, UIFlags flags) : UIToolBar(pivot_for(b), title, UIFlags(add_flags(b) | flags))
     {
     }
 
-    UIButtonBar::UIButtonBar(Vector2F piv, std::string_view title, UIFlags flags) :
+    UIToolBar::UIToolBar(Vector2F piv, std::string_view title, UIFlags flags) :
         UIWindow(title, UIFlags(flags | kToolBarFlags))
     {
         pivot(SET, piv);
     }
     
 
-    UIButtonBar::UIButtonBar(const UIButtonBar& cp) : UIWindow(cp)
+    UIToolBar::UIToolBar(const UIToolBar& cp) : UIWindow(cp)
     {
     }
     
-    UIButtonBar::~UIButtonBar()
+    UIToolBar::~UIToolBar()
     {
     }
     
-    UIButtonBar*  UIButtonBar::clone() const
+    UIToolBar*  UIToolBar::clone() const
     {
-        return new UIButtonBar(*this);
+        return new UIToolBar(*this);
     }
 
-    void     UIButtonBar::pivot(set_k, Vector2F vec)
+    void     UIToolBar::pivot(set_k, Vector2F vec)
     {
         m_pivot     = vec;
         Vector2F    pointing    = m_pivot - Vector2F(0.5, 0.5);
@@ -151,17 +151,17 @@ namespace yq::tachyon {
         update(FLAGS);
     }
 
-    Vector2F    UIButtonBar::pivot_get() const
+    Vector2F    UIToolBar::pivot_get() const
     {
         return m_pivot;
     }
     
-    void        UIButtonBar::pivot_set(const Vector2F& vec)
+    void        UIToolBar::pivot_set(const Vector2F& vec)
     {
         pivot(SET, vec);
     }
 
-    void    UIButtonBar::render() 
+    void    UIToolBar::render() 
     {
         if(m_flags(UIFlag::Invisible))
             return ;
@@ -180,12 +180,12 @@ namespace yq::tachyon {
         }
         #endif
         
-        //uiInfo << "UIButtonBar::render(): " << m_size << " @ " << m_position << " {" << m_pivot << "} in " << box << " edge=" << edge << " imflags=" << m_imFlags;
+        //uiInfo << "UIToolBar::render(): " << m_size << " @ " << m_position << " {" << m_pivot << "} in " << box << " edge=" << edge << " imflags=" << m_imFlags;
 
         UIWindow::render();
     }
 
-    float   UIButtonBar::thickness() const
+    float   UIToolBar::thickness() const
     {
         return style().toolbar.thickness();
     }

@@ -644,8 +644,6 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIAppMain.cpp
     ui/UIAppMainWriter.cpp
     ui/UIButton.cpp
-    ui/UIButtonBar.cpp
-    ui/UIButtonBarWriter.cpp
     ui/UICallback.cpp
     ui/UICheckBox.cpp
     ui/UICheckBox_Simple.cpp
@@ -667,6 +665,8 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIMenuItem.cpp
     ui/UISpacer.cpp
     ui/UITextLabel.cpp
+    ui/UIToolBar.cpp
+    ui/UIToolBarWriter.cpp
     ui/UIUtils.cpp
     ui/UIWindow.cpp
     ui/UIWindowWriter.cpp

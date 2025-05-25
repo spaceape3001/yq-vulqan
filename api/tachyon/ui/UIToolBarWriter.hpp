@@ -9,16 +9,16 @@
 #include <tachyon/ui/UIWindowWriter.hpp>
 
 namespace yq::tachyon {
-    class UIButtonBar;
+    class UIToolBar;
     
-    class UIButtonBarWriter : public UIWindowWriter {
+    class UIToolBarWriter : public UIWindowWriter {
     public:
-        UIButtonBarWriter();
-        UIButtonBarWriter(UIButtonBar*);
-        UIButtonBarWriter(const UIButtonBarWriter&);
-        ~UIButtonBarWriter();
+        UIToolBarWriter();
+        UIToolBarWriter(UIToolBar*);
+        UIToolBarWriter(const UIToolBarWriter&);
+        ~UIToolBarWriter();
         
-        UIButtonBar*  element();
+        UIToolBar*  element();
 
         /////////////////////////////////////////////
         // Element Creation Helpers

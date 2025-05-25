@@ -7,8 +7,8 @@
 #include "UIElementsWriter.hpp"
 #include <tachyon/ui/UIButton.hpp>
 #include <tachyon/ui/UIButtonWriter.hpp>
-#include <tachyon/ui/UIButtonBar.hpp>
-#include <tachyon/ui/UIButtonBarWriter.hpp>
+#include <tachyon/ui/UIToolBar.hpp>
+#include <tachyon/ui/UIToolBarWriter.hpp>
 #include <tachyon/ui/UICheckBox_Simple.hpp>
 #include <tachyon/ui/UICheckBox_Visible.hpp>
 #include <tachyon/ui/UICheckBoxWriter.hpp>

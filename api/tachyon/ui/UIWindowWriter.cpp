@@ -7,8 +7,8 @@
 #include "UIWindowWriter.hpp"
 #include <tachyon/ui/UIMenuBar.hpp>
 #include <tachyon/ui/UIMenuBarWriter.hpp>
-#include <tachyon/ui/UIButtonBar.hpp>
-#include <tachyon/ui/UIButtonBarWriter.hpp>
+#include <tachyon/ui/UIToolBar.hpp>
+#include <tachyon/ui/UIToolBarWriter.hpp>
 #include <tachyon/ui/UIWindow.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
@@ -92,14 +92,14 @@ namespace yq::tachyon {
         // Element Creation Helpers
         /////////////////////////////////////////////
 
-    UIButtonBarWriter     UIWindowWriter::buttonbar(Cardinal dir, std::string_view kName)
+    UIToolBarWriter     UIWindowWriter::toolbar(Cardinal dir, std::string_view kName)
     {
-        return make<UIButtonBar>(dir, kName);
+        return make<UIToolBar>(dir, kName);
     }
     
-    UIButtonBarWriter     UIWindowWriter::buttonbar(const Vector2F& dir, std::string_view kName)
+    UIToolBarWriter     UIWindowWriter::toolbar(const Vector2F& dir, std::string_view kName)
     {
-        return make<UIButtonBar>(dir, kName);
+        return make<UIToolBar>(dir, kName);
     }
 
     UIMenuBarWriter     UIWindowWriter::menubar()

@@ -10,7 +10,7 @@
 
 #include <tachyon/ui/UIAppMainWriter.hpp>
 #include <tachyon/ui/UIButtonWriter.hpp>
-#include <tachyon/ui/UIButtonBarWriter.hpp>
+#include <tachyon/ui/UIToolBarWriter.hpp>
 #include <tachyon/ui/UICheckBoxWriter.hpp>
 #include <tachyon/ui/UIElementsWriter.hpp>
 #include <tachyon/ui/UILayoutWriter.hpp>

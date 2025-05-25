@@ -11,17 +11,17 @@
 #include <tachyon/enum/Cardinal.hpp>
 
 namespace yq::tachyon {
-    class UIButtonBarWriter;
+    class UIToolBarWriter;
     
-    class UIButtonBar : public UIWindow {
-        YQ_OBJECT_DECLARE(UIButtonBar, UIWindow)
+    class UIToolBar : public UIWindow {
+        YQ_OBJECT_DECLARE(UIToolBar, UIWindow)
     public:
-        using Writer = UIButtonBarWriter;
+        using Writer = UIToolBarWriter;
 
-        UIButtonBar(Cardinal, std::string_view, UIFlags flags={});
-        UIButtonBar(Vector2F, std::string_view, UIFlags flags={});
-        UIButtonBar(const UIButtonBar&);
-        ~UIButtonBar();
+        UIToolBar(Cardinal, std::string_view, UIFlags flags={});
+        UIToolBar(Vector2F, std::string_view, UIFlags flags={});
+        UIToolBar(const UIToolBar&);
+        ~UIToolBar();
 
         float       thickness() const;
         void        pivot(set_k, Vector2F);
@@ -29,7 +29,7 @@ namespace yq::tachyon {
         static void init_info();
 
     protected:
-        UIButtonBar*  clone() const;
+        UIToolBar*  clone() const;
         void        render() override;
         
     private:

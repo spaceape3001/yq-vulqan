@@ -7,7 +7,7 @@
 #include <tachyon/ui/UIElements.hpp>
 
 namespace yq::tachyon {
-    class UIButtonBar;
+    class UIToolBar;
     class UIAppMainWriter;
 
     /*! \brief Presents a "classic" application UI (toolbars, docks, etc)
@@ -31,6 +31,6 @@ namespace yq::tachyon {
         UIAppMain* clone() const;
         
     private:
-        std::vector<UIButtonBar*> m_toolbars;
+        std::vector<UIToolBar*> m_toolbars;
     };
 }

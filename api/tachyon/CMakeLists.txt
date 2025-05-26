@@ -624,7 +624,7 @@ add_library(${PROJECT_NAME} SHARED
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp
 
-    scene/SimpleScene3.cpp
+    scene/SimpleScene.cpp
     
     spatial/GeoSpatial3.cpp
     spatial/SimpleSpatial2.cpp

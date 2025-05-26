@@ -46,12 +46,12 @@ void SceneEditor::content(ViContext& u)
 void SceneEditor::menubar(ViContext&u) 
 {
     if(ImGui::BeginMenu("File")){
-        if(ImGui::MenuItem("Open", "Ctrl+O")){
+        if(ImGui::MenuItem("Import", "Ctrl+O")){
             IGFD::FileDialogConfig config;
             config.path = ".";
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp", config);        
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".tsx", config);        
         }
-        if(ImGui::MenuItem("Save", "Ctrl+S")){
+        if(ImGui::MenuItem("Export", "Ctrl+S")){
             //on_save_file(u);
         }
         ImGui::EndMenu();
@@ -96,8 +96,8 @@ void SceneEditor::init_info()
     auto help       = mmb.menu("Help");
     auto debug      = mmb.menu("Debug");
 
-    file.menuitem("Open", "Ctrl+O");
-    file.menuitem("Save", "Ctrl+S");
+    file.menuitem("Import", "Ctrl+O");
+    file.menuitem("Export", "Ctrl+S");
 
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");

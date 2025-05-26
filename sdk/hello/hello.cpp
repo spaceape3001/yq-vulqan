@@ -46,7 +46,7 @@
 #include <tachyon/command/orientation/SetOrientation3.hpp>
 #include <tachyon/rendered/Triangle3.hpp>
 #include <tachyon/api/Spatial3.hpp>
-#include <tachyon/scene/SimpleScene3.hpp>
+#include <tachyon/scene/SimpleScene.hpp>
 #include <tachyon/api/Scene3InfoWriter.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/widget/SceneWidget.hpp>
@@ -180,8 +180,8 @@ public:
 
 YQ_TACHYON_IMPLEMENT(HelloQuad)
 
-struct HelloScene : public SimpleScene³ {
-    YQ_TACHYON_DECLARE(HelloScene, SimpleScene³)
+struct HelloScene : public SimpleScene {
+    YQ_TACHYON_DECLARE(HelloScene, SimpleScene)
 public:
 
     Ref<HelloTriangle>      triangle;
@@ -190,7 +190,7 @@ public:
     timepoint_t             start;
     TypedID                 triSpatialID;
 
-    HelloScene() : SimpleScene³()
+    HelloScene() 
     {
         start           = std::chrono::steady_clock::now();
         triangle        = create_child<HelloTriangle>();
@@ -208,7 +208,7 @@ public:
     
     Execution tick(const Context& ctx)
     {
-        SimpleScene³::tick(ctx);
+        SimpleScene::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
         send(new SetOrientation³({.target=triSpatialID}, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);

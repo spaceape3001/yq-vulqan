@@ -88,7 +88,7 @@ const auto QuadData = QuadrilateralData<ColorVertex2D> {
     { {-0.5, -1.0}, color::Red }
 };
 
-CameraScene::CameraScene() : SimpleScene³()
+CameraScene::CameraScene() 
 {
 }
 
@@ -230,7 +230,7 @@ Execution  CameraScene::setup(const Context&ctx)
         
         m_init  = true;
     }
-    return SimpleScene³::setup(ctx);
+    return SimpleScene::setup(ctx);
 }
     
 void CameraScene::init_info()

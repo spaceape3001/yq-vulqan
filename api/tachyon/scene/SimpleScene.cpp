@@ -10,7 +10,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SimpleScene)
 
 namespace yq::tachyon {
-    SimpleScene::SimpleScene() : Scene({})
+    SimpleScene::SimpleScene()
     {
     }
     

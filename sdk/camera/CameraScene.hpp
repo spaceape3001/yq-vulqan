@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <tachyon/scene/SimpleScene3.hpp>
+#include <tachyon/scene/SimpleScene.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;
 
-class CameraScene : public yq::tachyon::SimpleScene³ {
-    YQ_TACHYON_DECLARE(CameraScene, SimpleScene³)
+class CameraScene : public yq::tachyon::SimpleScene {
+    YQ_TACHYON_DECLARE(CameraScene, SimpleScene)
 public:
 
     CameraScene();

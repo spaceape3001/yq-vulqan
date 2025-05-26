@@ -4,76 +4,127 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/application.hpp>
 #include "SceneEditor.hpp"
-#include <tachyon/request/app/OpenFileRequest.hpp>
-#include <tachyon/widget/AppWidgetInfoWriter.hpp>
-#include <iostream>
+
+#include <tachyon/application.hpp>
 #include <tachyon/MyImGui.hpp>
+
 #include <tachyon/api/Frame.hpp>
+
 #include <tachyon/camera/SpaceCamera.hpp>
-#include <tachyon/ui/UIWindow.hpp>
-#include <tachyon/ui/UIWriters.hxx>
-#include <ImGuiFileDialog.h>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/gfx/Texture.hpp>
+
+#include <tachyon/request/app/OpenFileRequest.hpp>
+
 #include <tachyon/scene/HUDScene.hpp>
 #include <tachyon/scene/BackgroundScene.hpp>
 #include <tachyon/scene/ForegroundScene.hpp>
+
 #include <tachyon/tweak/OriginCameraTweak.hpp>
 
-YQ_TACHYON_IMPLEMENT(SceneEditor)
+#include <tachyon/ui/UIStyle.hpp>
+#include <tachyon/ui/UIWindow.hpp>
+#include <tachyon/ui/UIWriters.hxx>
+#include <tachyon/ui/UIElementInfoWriter.hpp>
+
+#include <tachyon/widget/AppWidgetInfoWriter.hpp>
+
+#include <ImGuiFileDialog.h>
+
+#include <iostream>
 
 
-class SceneEditor::UIScenes : public UIWindow {
-    YQ_OBJECT_DECLARE(UIScenes, UIWindow)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class SceneEditor::UIScenes : public UIElement {
+    YQ_OBJECT_DECLARE(UIScenes, UIElement)
 public:
+
     static void init_info()
     {
         auto w = writer<UIScenes>();
-        w.description("Scene panel for the scene editor");
+        w.description("Scene Editor's Scene Table");
     }
-    
-    UIScenes(UIFlags flags={}) : UIWindow("Scenes", flags)
-    {
-    }
-    
-    UIScenes(const UIScenes& cp) : UIWindow(cp)
-    {
-        m_editor    = dynamic_cast<SceneEditor*>(widget());
-        //  /opt/open_icons/icons/png/32x32/emblems/emblem-art.png 
-    }
-    
 
-    void content()
+    UIScenes(UIFlags flags={}) : UIElement(flags)
     {
-        UIWindow::content();
+    }
+    
+    UIScenes(const UIScenes& cp) : UIElement(cp)
+    {
+    }
+    
+    virtual UIScenes*   clone() const 
+    {
+        return new UIScenes(*this);
+    }
+    
+    void    render() override
+    {
+        UIElement::render();
         
+        float   sz  = ImGui::GetFrameHeight() * 0.9;
         
-        if(!m_editor)
-            return;
+        Size2F      imgBtnSize    = { sz, sz };
         
+        if(!m_invisible)
+            m_invisible = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-p000-general.png"));
+        if(!m_editing)
+            m_editing   = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-e001-direction-right.png"));
+        if(!m_visible)
+            m_visible   = install(texture("sdk/scenery/eyeball48.png"));
         
-        
-        
-        if(ImGui::BeginTable("Table", 4)){
+        SceneEditor*    editor  = dynamic_cast<SceneEditor*>(widget());
+        if(!editor)
+            return ;
+            
+        if(ImGui::BeginTable("Scenes", 4)){
             ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("ID");
-            }
+            ImGui::TableNextColumn();
+            ImGui::TableNextColumn();
             if(ImGui::TableNextColumn()){
                 ImGui::Text("Name");
             }
             if(ImGui::TableNextColumn()){
                 ImGui::Text("Type");
             }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("Visible");
-            }
-        
-            for(const Entry& e : m_editor->m_scenes){
+
+            for(Entry& e : editor->m_scenes){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn()){
-                    ImGui::TextUnformatted(to_string_view(e.scene.id));
+                    if(&e == editor->m_editing){
+                        if(m_editing){
+                            ImGui::Image(m_editing, imgBtnSize);
+                        } else {
+                            ImGui::TextUnformatted("E");
+                        }
+                    } else {
+                        if(e.flags(E::Invisible)){
+                            if(m_invisible ? ImGui::ImageButton(e.invisBtn.c_str(), m_invisible, imgBtnSize) : ImGui::Button(e.invisBtn2.c_str())){
+                                e.flags -= E::Invisible;
+                                editor->m_flags |= F::Stale;
+                            }
+                        } else {
+                            if(m_visible ? ImGui::ImageButton(e.visBtn.c_str(), m_visible, imgBtnSize) : ImGui::Button(e.visBtn2.c_str())){
+                                e.flags |= E::Invisible;
+                                editor->m_flags |= F::Stale;
+                            }
+                        }
+                    }
+                }
+                
+                if(ImGui::TableNextColumn()){
+                    if(&e == editor->m_editing){
+                        ImGui::TextUnformatted(to_string_view(e.scene.id));
+                    } else {
+                        if(ImGui::Button(e.editBtn.c_str())){
+                            if(e.flags(E::Invisible)){
+                                e.flags -= E::Invisible;
+                                editor->m_flags |= F::Stale;
+                            }
+                            editor->m_editing = &e;
+                        }
+                    }
                 }
                 if(ImGui::TableNextColumn()){
                     ImGui::TextUnformatted(e.name);
@@ -83,23 +134,29 @@ public:
                 }
                 ImGui::TableNextColumn();
             }
-        
             ImGui::EndTable();
         }
     }
     
-    UIScenes*  clone() const
+    void    header()
     {
-        return new UIScenes(*this);
     }
     
-    SceneEditor*    m_editor    = nullptr;
+    void    row(const Entry& e)
+    {
+   }
+   
+   ImTextureID      m_invisible;
+   ImTextureID      m_visible;
+   ImTextureID      m_editing;
 };
 
-YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenes);
-
+YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenes)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+YQ_TACHYON_IMPLEMENT(SceneEditor)
 
 SceneEditor::EFlags       SceneEditor::flags_for(const SceneInfo& sc)
 {
@@ -130,8 +187,8 @@ void SceneEditor::init_info()
     auto debug      = mmb.menu("Debug");
 
 
-    file.menuitem("Import", "Ctrl+O");
-    file.menuitem("Export", "Ctrl+S");
+    file.menuitem("Import", "Ctrl+O").action(&SceneEditor::cmd_file_import);
+    file.menuitem("Export", "Ctrl+S").action(&SceneEditor::cmd_file_export);
 
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
@@ -139,7 +196,7 @@ void SceneEditor::init_info()
     auto cscene     = edit.menu("Create Scene");
     cscene.menuitem("Background").action(&SceneEditor::cmd_new_back_scene);
     cscene.menuitem("Foreground").action(&SceneEditor::cmd_new_fore_scene);
-    cscene.menuitem("HUD").action(&SceneEditor::cmd_new_hud_scene);
+    // cscene.menuitem("HUD").action(&SceneEditor::cmd_new_hud_scene);
     cscene.menuitem("Simple").action(&SceneEditor::cmd_new_simple_scene);
 
 
@@ -152,18 +209,12 @@ void SceneEditor::init_info()
     auto stb        = app.toolbar(SOUTH, "south");
     stb.button("S");
     
-    auto scenepanel    = app << new UIScenes;
+    
+    auto scenepanel    = app.window("Scenes");
+    scenepanel.flags(SET, { UIFlag::AlwaysAutoResize });
+    scenepanel << new UIScenes;
+
     view.menuitem("Scenes").action(VISIBLE, scenepanel);
-    
-    //auto hbx        = app.vbox();
-    //auto h1         = hbx.window();
-    //h1.height(200);
-    //h1.label("Hello");
-    //auto h2         = hbx.window();
-    //h2.label("World");
-    //auto h3         = hbx.window();
-    //h3.label("Goodbye");
-    
 }
 
 
@@ -179,7 +230,7 @@ SceneEditor::~SceneEditor()
 
 SceneEditor::Entry*                  SceneEditor::_add(const Scene& sc)
 {
-    Entry*  ret = entry(sc.id());
+    Entry*  ret = _entry(sc.id());
     if(ret)
         return ret;
         
@@ -189,6 +240,11 @@ SceneEditor::Entry*                  SceneEditor::_add(const Scene& sc)
         
     Entry   en;
     en.scene        = sc.id();
+    en.visBtn       = std::format("{}##VISIBLE{}", en.scene.id, en.scene.id);
+    en.visBtn2      = std::format("V##VISIBLE{}", en.scene.id);
+    en.invisBtn     = std::format("{}##INVISIBLE{}", en.scene.id, en.scene.id);
+    en.invisBtn2    = std::format("I##INVISIBLE{}", en.scene.id);
+    en.editBtn      = std::format("{}##EDIT{}", en.scene.id, en.scene.id);
     en.info         = static_cast<const SceneInfo*>(&sc.metaInfo());
     en.name         = sc.name();
     if(en.name.empty())
@@ -197,10 +253,28 @@ SceneEditor::Entry*                  SceneEditor::_add(const Scene& sc)
     m_scenes.push_back(en);
 
     if(edit){
-        m_editing   = entry(edit);
+        m_editing   = _entry(edit);
     } else if(!m_editing)
         m_editing   = &m_scenes.back();
+        
+    m_flags |= F::Stale;
     return &m_scenes.back();
+}
+
+SceneEditor::Entry*                  SceneEditor::_entry(SceneID sc)
+{
+    for(auto& e : m_scenes)
+        if(e.scene == sc)
+            return &e;
+    return nullptr;
+}
+
+const SceneEditor::Entry*            SceneEditor::_entry(SceneID sc) const
+{
+    for(auto& e : m_scenes)
+        if(e.scene == sc)
+            return &e;
+    return nullptr;
 }
 
 void    SceneEditor::_rebuild()
@@ -211,7 +285,7 @@ void    SceneEditor::_rebuild()
     
     m_layers.clear();
     for(const Entry& e : m_scenes){
-        if(e.flags(E::Invisible))
+        if(e.flags(E::Invisible) && (m_editing != &e))
             continue;
         CLayer  lay;
         lay.scene   = e.scene;
@@ -223,6 +297,7 @@ void    SceneEditor::_rebuild()
             lay.tweaks.push_back(s_originFix);
         m_layers.push_back(lay);
     }
+    m_flags -= F::Stale;
 }
 
 void    SceneEditor::create_scene(const SceneInfo&info)
@@ -231,7 +306,33 @@ void    SceneEditor::create_scene(const SceneInfo&info)
     if(!sc)
         return;
     _add(*sc);
-    _rebuild();
+}
+
+void    SceneEditor::cmd_export(std::string_view fp)
+{
+    tachyonInfo << "TODO exporting (" << fp << ")";
+}
+
+void    SceneEditor::cmd_import(std::string_view fp)
+{
+    tachyonInfo << "TODO importing (" << fp << ")";
+}
+
+void    SceneEditor::cmd_file_export()
+{
+    IGFD::FileDialogConfig config;
+    config.path = ".";
+    config.flags |= ImGuiFileDialogFlags_ConfirmOverwrite;
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Save", ".tsx", config);        
+    m_fileMode  = FileMode::Export;
+}
+
+void    SceneEditor::cmd_file_import()
+{
+    IGFD::FileDialogConfig config;
+    config.path = ".";
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Open", ".tsx", config);        
+    m_fileMode  = FileMode::Import;
 }
 
 void    SceneEditor::cmd_new_back_scene()
@@ -254,77 +355,40 @@ void    SceneEditor::cmd_new_simple_scene()
     create_scene(meta<SimpleScene>());
 }
 
-SceneEditor::Entry*                  SceneEditor::entry(SceneID sc)
-{
-    for(auto& e : m_scenes)
-        if(e.scene == sc)
-            return &e;
-    return nullptr;
-}
-
-const SceneEditor::Entry*            SceneEditor::entry(SceneID sc) const
-{
-    for(auto& e : m_scenes)
-        if(e.scene == sc)
-            return &e;
-    return nullptr;
-}
-
 void    SceneEditor::imgui(ViContext&u) 
 {
     Widget::imgui(UI,u);
-}
+    
 
-#if 0
-void SceneEditor::content(ViContext& u) 
-{   
-    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
-        if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
-            std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-          // action
+    if(m_fileMode != FileMode::None){
+        ImVec2  minSize = { (float)(0.5 * width()), (float)(0.5 * height()) };
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, minSize)) {
+            if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
+                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                
+                switch(m_fileMode){
+                case FileMode::None:
+                    break;
+                case FileMode::Import:
+                    cmd_import(filePathName);
+                    break;
+                case FileMode::Export:
+                    cmd_export(filePathName);
+                    break;
+                }
+            }
+            ImGuiFileDialog::Instance()->Close();
         }
-        
-        // close
-        ImGuiFileDialog::Instance()->Close();
     }
 }
 
-void SceneEditor::menubar(ViContext&u) 
+void    SceneEditor::prerecord(ViContext&u) 
 {
-    if(ImGui::BeginMenu("File")){
-        if(ImGui::MenuItem("Import", "Ctrl+O")){
-            IGFD::FileDialogConfig config;
-            config.path = ".";
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".tsx", config);        
-        }
-        if(ImGui::MenuItem("Export", "Ctrl+S")){
-            //on_save_file(u);
-        }
-        ImGui::EndMenu();
-    }
-    if(ImGui::BeginMenu("Edit")){
-        if(ImGui::MenuItem("Copy", "Ctrl+C")){
-        }
-        if(ImGui::MenuItem("Paste", "Ctrl+V")){
-            
-        }
-        ImGui::EndMenu();
-    }
-    if(ImGui::BeginMenu("View")){
-        ImGui::EndMenu();
-    }
-    if(ImGui::BeginMenu("Window")){
-        ImGui::EndMenu();
-    }
-    if(ImGui::BeginMenu("Help")){
-        ImGui::EndMenu();
-    }
-    if(ImGui::BeginMenu("Debug")){
-        ImGui::EndMenu();
-    }
+    if(m_flags(F::Stale))
+        _rebuild();
+    CompositeWidget::prerecord(u);
 }
-#endif
 
 Execution   SceneEditor::setup(const Context&ctx) 
 {
@@ -336,3 +400,25 @@ Execution   SceneEditor::setup(const Context&ctx)
     }
     return Widget::setup(ctx);
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int main(int argc, char* argv[])
+{
+    AppCreateInfo        aci;
+    aci.thread.sim        = true;
+    aci.view.title        = "Scenery Editor";
+    aci.view.size         = { 1920, 1080 };
+    aci.view.clear        = { 0.0f, 0.0f, 0.0f, 1.f };
+    aci.view.imgui        = true;
+    aci.view.resizable    = true;
+    
+    Application app(argc, argv, aci);
+    app.start();
+    
+    SceneEditor*     w   = Widget::create<SceneEditor>();
+    app.run(w);
+    return 0;
+}
+

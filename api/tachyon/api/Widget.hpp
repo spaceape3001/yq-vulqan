@@ -305,7 +305,7 @@ namespace yq::tachyon {
         //! Implementation in widget
         //template <typename Pred>
         //T           forall(ui_k, uint64_t, std::function<T(UIElement*)>);
-        
+
     private:
     
         using BIDMap = std::multimap<uint64_t,UIElement*>;

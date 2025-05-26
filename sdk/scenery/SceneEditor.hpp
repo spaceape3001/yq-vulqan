@@ -14,6 +14,10 @@ namespace yq::tachyon {
     class SceneInfo;
 }
 
+namespace IGFD { class FileDialog; }
+
+class SceneTable;
+
 using namespace yq;
 using namespace yq::tachyon;
 
@@ -30,51 +34,79 @@ public:
     void    imgui(ViContext&) override;
     
     static void init_info();
+
+
+    enum class FileMode {
+        None,
+        Import,
+        Export
+    };
     
     enum class E {
+        Selected,
         Invisible,
         OriginFix,
         HUD
+    };
+    
+    enum class F {
+        Stale
     };
     
     using EFlags    = Flags<E>;
     
     static EFlags       flags_for(const SceneInfo&);
     
-    struct Entry {
-        SceneID             scene;
-        const SceneInfo*    info    = nullptr;
-        std::string         name;
-        std::string         filepath;
-        RGBA4F              gamma  = { 0., 0., 0., -1.};
-        EFlags              flags;
-    };
-    
-    std::vector<Entry>      m_scenes;
-    Entry*                  m_editing   = nullptr;
-    
-    Entry*                  entry(SceneID);
-    const Entry*            entry(SceneID) const;
-    
-    Entry*                  _add(const Scene&);
     
     
-    struct {
-        CameraID            space;
-        CameraID            hud;
-    }   m_camera;
     
     void    create_scene(const SceneInfo&);
-    void    add_scene(SceneCPtr);
+
+    void    cmd_export(std::string_view);
+    void    cmd_import(std::string_view);
+
+    void    cmd_file_import();
+    void    cmd_file_export();
 
     void    cmd_new_back_scene();
     void    cmd_new_fore_scene();
     void    cmd_new_hud_scene();
     void    cmd_new_simple_scene();
     
-    class UIScenes;
-    
     virtual Execution   setup(const Context&) override;
     
-    void    _rebuild();
+    virtual void    prerecord(ViContext&) override;
+    
+    //void    ui_scene_table();
+    
+    class UIScenes;
+    
+    
+private:
+    struct Entry {
+        SceneID             scene;
+        const SceneInfo*    info    = nullptr;
+        std::string         name;
+        std::string         visBtn, visBtn2, invisBtn, invisBtn2, editBtn;
+        std::string         filepath;
+        RGBA4F              gamma  = { 0., 0., 0., -1.};
+        EFlags              flags;
+    };
+    
+    struct {
+        CameraID            space;
+        CameraID            hud;
+
+    }                       m_camera;
+    Entry*                  m_editing   = nullptr;
+    std::vector<Entry>      m_scenes;
+    FileMode                m_fileMode  = FileMode::None;
+    Flags<F>                m_flags;
+    //IGFD::FileDialog*       m_importDialog = nullptr;
+    //IGFD::FileDialog*       m_exportDialog = nullptr;
+
+    Entry*                  _add(const Scene&);
+    Entry*                  _entry(SceneID);
+    const Entry*            _entry(SceneID) const;
+    void                    _rebuild();
 };

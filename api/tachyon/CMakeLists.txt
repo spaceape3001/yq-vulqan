@@ -730,7 +730,7 @@ add_library(${PROJECT_NAME} SHARED
     widget/FrameInspector.cpp
     widget/ImGuiDemoWidget.cpp
     #widget/LabelWidget.cpp
-    widget/Scene3Widget.cpp
+    widget/SceneWidget.cpp
     widget/SpaceCameraRemote.cpp
     widget/StackedWidget.cpp
     widget/TextArea.cpp

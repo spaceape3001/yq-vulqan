@@ -49,7 +49,7 @@
 #include <tachyon/scene/SimpleScene3.hpp>
 #include <tachyon/api/Scene3InfoWriter.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>
-#include <tachyon/widget/Scene3Widget.hpp>
+#include <tachyon/widget/SceneWidget.hpp>
 #include <tachyon/utility/LoggerBox.hpp>
 
 #ifdef WANT_FRAME_INSPECTOR
@@ -225,8 +225,8 @@ public:
 
 YQ_TACHYON_IMPLEMENT(HelloScene)
 
-class HelloWidget : public Scene³Widget {
-    YQ_TACHYON_DECLARE(HelloWidget, Scene³Widget)
+class HelloWidget : public SceneWidget {
+    YQ_TACHYON_DECLARE(HelloWidget, SceneWidget)
 public:
 
     HelloWidget()

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/widget/Scene3Widget.hpp>
+#include <tachyon/widget/SceneWidget.hpp>
 #include <tachyon/typedef/scene3.hpp>
 #include <tachyon/typedef/camera3.hpp>
 
@@ -24,8 +24,8 @@ using namespace yq::tachyon;
 /*! \brief Main camera app widget
     
 */
-class MainWidget : public Scene³Widget {
-    YQ_TACHYON_DECLARE(MainWidget, Scene³Widget)
+class MainWidget : public SceneWidget {
+    YQ_TACHYON_DECLARE(MainWidget, SceneWidget)
 public:
 
     MainWidget();

@@ -17,17 +17,18 @@
 #include <tachyon/typedef/widget.hpp>
 #include <tachyon/typedef/camera.hpp>
 #include <tachyon/typedef/camera3.hpp>
-#include <yq/typedef/tensor44.hpp>
-#include <yq/typedef/vector2.hpp>
 #include <tachyon/typedef/push.hpp>
 #include <tachyon/typedef/rendered.hpp>
 #include <tachyon/typedef/rendered3.hpp>
 #include <tachyon/typedef/uielement.hpp>
+
+
 #include <yq/color/RGBA.hpp>
-#include <yq/tensor/Tensor44.hpp>
 #include <yq/core/Tristate.hpp>
-#include <yq/vector/Vector2.hpp>
 #include <yq/shape/Size2.hpp>
+#include <yq/tensor/Tensor44.hpp>
+#include <yq/vector/Vector2.hpp>
+
 #include <functional>
 
 //   A macro rename
@@ -293,9 +294,9 @@ namespace yq::tachyon {
             double          time            = 0.;
         };
         
-        static void camera_matrix(PreContext&, Camera³ID, std::span<const CameraTweakCPtr> tweaks={});
+        static void camera_matrix(PreContext&, CameraID, std::span<const CameraTweakCPtr> tweaks={});
         
-        static void camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, Camera³ID, std::span<const CameraTweakCPtr> tweaks={});
+        static void camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, CameraID, std::span<const CameraTweakCPtr> tweaks={});
         static void push_buffer(PushBuffer&, const PreContext&, const RenderedSnap&);
         
         //! Used to push an item to the rendered vector *THIS PRERECORD* (it'll be cleared by the vulkan() call)

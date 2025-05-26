@@ -85,14 +85,14 @@ namespace yq::tachyon {
 
     /////////////////////////
 
-    void Widget::camera_matrix(PreContext&ctx, Camera³ID cam, std::span<const CameraTweakCPtr> tweaks)
+    void Widget::camera_matrix(PreContext&ctx, CameraID cam, std::span<const CameraTweakCPtr> tweaks)
     {
         camera_matrix(ctx.view, ctx.projection, ctx.frame, cam, tweaks);
     }
 
-    void Widget::camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame& frame, Camera³ID cam, std::span<const CameraTweakCPtr> tweaks)
+    void Widget::camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame& frame, CameraID cam, std::span<const CameraTweakCPtr> tweaks)
     {
-        const Camera³Snap*  camera  = frame.snap(cam);
+        const Camera³Snap*  camera  = dynamic_cast<const Camera³Snap*>(frame.snap(cam));
         if(camera){
             proj        = camera->projection;
             if(const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial))){

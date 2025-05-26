@@ -4,20 +4,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/widget/Scene3Widget.hpp>
-#include <tachyon/api/Camera3.hpp>
-#include <tachyon/api/Camera3Data.hpp>
-#include <tachyon/api/Rendered3.hpp>
-#include <tachyon/api/Rendered3Data.hpp>
-#include <tachyon/api/Scene3.hpp>
-#include <tachyon/api/Scene3Data.hpp>
+#include "SceneWidget.hpp"
+#include <tachyon/api/Camera.hpp>
+#include <tachyon/api/Rendered.hpp>
+#include <tachyon/api/Scene.hpp>
+#include <tachyon/api/SceneData.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
 #include <yq/util/AutoReset.hpp>
 #include <tachyon/logging.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³Widget)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::SceneWidget)
 
 /*
     Musings on the rendered... may need the concept of a 
@@ -27,22 +25,22 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³Widget)
 */
 
 namespace yq::tachyon {
-    void Scene³Widget::init_info()
+    void SceneWidget::init_info()
     {
-        auto w = writer<Scene³Widget>();
+        auto w = writer<SceneWidget>();
         w.description("3D Scene Widget v2");
         w.vulkan();
     }
     
-    Scene³Widget::Scene³Widget() : Widget()
+    SceneWidget::SceneWidget() : Widget()
     {
     }
     
-    Scene³Widget::~Scene³Widget()
+    SceneWidget::~SceneWidget()
     {
     }
 
-    void    Scene³Widget::_prerecord(ViContext& u)
+    void    SceneWidget::_prerecord(ViContext& u)
     {
         //  We'll move these into a sub-style of widget
     
@@ -62,7 +60,7 @@ namespace yq::tachyon {
         ctx.time        = u.time;
         ctx.gamma       = m_gamma;
 
-        camera_matrix(ctx, id(CAMERA³));
+        camera_matrix(ctx, id(CAMERA));
         
         //ctx.w2e44       = ctx.projection44 * ctx.view44;
         //ctx.w2e         = ctx.w2e44;
@@ -87,7 +85,7 @@ namespace yq::tachyon {
         }
     }
 
-    CameraID    Scene³Widget::id(camera_k) const 
+    CameraID    SceneWidget::id(camera_k) const 
     { 
         if(m_camera(Type::Camera)){
             return { m_camera.id }; 
@@ -96,18 +94,7 @@ namespace yq::tachyon {
         }
     }
     
-    Camera³ID   Scene³Widget::id(camera³_k) const 
-    { 
-        if(m_camera(Type::Camera³)){
-            return { m_camera.id }; 
-        } else {
-            return {};
-        }
-    }
-
-
-
-    SceneID     Scene³Widget::id(scene_k) const
+    SceneID     SceneWidget::id(scene_k) const
     {
         if(m_scene(Type::Scene)){
             return { m_scene.id };
@@ -115,27 +102,19 @@ namespace yq::tachyon {
             return {};
     }
     
-    Scene³ID    Scene³Widget::id(scene³_k) const
-    {
-        if(m_scene(Type::Scene³)){
-            return { m_scene.id };
-        } else
-            return {};
-    }
-    
-    void    Scene³Widget::prerecord(ViContext& u) 
+    void    SceneWidget::prerecord(ViContext& u) 
     {
         _prerecord(u);
         Widget::prerecord(u);
     }
 
-    void    Scene³Widget::set_camera(Camera³ID cid)
+    void    SceneWidget::set_camera(CameraID cid)
     {
-        m_camera        = TypedID(cid.id, meta<Camera³>().types());
+        m_camera        = TypedID(cid.id, meta<Camera>().types());
     }
     
-    void    Scene³Widget::set_scene(Scene³ID sid)
+    void    SceneWidget::set_scene(SceneID sid)
     {
-        m_scene         = TypedID(sid.id, meta<Scene³>().types());
+        m_scene         = TypedID(sid.id, meta<Scene>().types());
     }
 }

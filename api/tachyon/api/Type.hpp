@@ -24,6 +24,7 @@ namespace yq::tachyon {
         Editor,
         Gamepad,
         GraphicsCard,
+        Group,
         ImGui,
         Joystick,
         Keyboard,

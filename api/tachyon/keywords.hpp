@@ -91,6 +91,8 @@ namespace yq::tachyon {
     
     struct graphics_card_k {};
     
+    struct group_k {};
+    
     struct headless_k {};
 
     struct io_k {
@@ -236,8 +238,9 @@ namespace yq::tachyon {
     static constexpr const fixed_k              FIXED;
     static constexpr const game_k               GAME;
     static constexpr const gamepad_k            GAMEPAD;
-    static constexpr const graphics_card_k      GRAPHICS_CARD;
     static constexpr const glfw_k               GLFW;
+    static constexpr const graphics_card_k      GRAPHICS_CARD;
+    static constexpr const group_k              GROUP;
     static constexpr const headless_k           HEADLESS;
     static constexpr const io_k                 IO;
     static constexpr const joystick_k           JOYSTICK;

@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <tachyon/api/Scene.hpp>
+#include <tachyon/scene/SimpleScene.hpp>
 
 namespace yq::tachyon {
-    class HUDScene : public Scene {
-        YQ_TACHYON_DECLARE(HUDScene, Scene)
+    class HUDScene : public SimpleScene {
+        YQ_TACHYON_DECLARE(HUDScene, SimpleScene)
     public:
         HUDScene();
-        ~HudScene();
+        ~HUDScene();
         static void init_info();
     };
 }

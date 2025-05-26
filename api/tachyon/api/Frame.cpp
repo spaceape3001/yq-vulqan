@@ -20,6 +20,9 @@
 
 #include <tachyon/api/Camera3.hpp>
 #include <tachyon/api/Camera3Data.hpp>
+#include <tachyon/api/Group.hpp>
+#include <tachyon/api/GroupData.hpp>
+
 #include <tachyon/api/Layer.hpp>
 #include <tachyon/api/LayerData.hpp>
 #include <tachyon/api/Light3.hpp>
@@ -114,6 +117,7 @@ namespace yq::tachyon {
         objects[p->id()]      = static_cast<T*>(p);
         datas[p->id()]        = static_cast<const data_k*>(d);
         snaps[p->id()]        = static_cast<const snap_t*>(s);
+        names.insert({p->name(), p->id()});
         ids.insert(ID<T>(p->id()));
     }
     
@@ -196,6 +200,8 @@ namespace yq::tachyon {
             m_gamepads.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::GraphicsCard))
             m_graphicsCards.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Group))
+            m_groups.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Joystick))
             m_joysticks.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Keyboard))
@@ -288,6 +294,11 @@ namespace yq::tachyon {
         return m_graphicsCards.has(id);
     }
 
+    bool Frame::contains(GroupID id) const
+    {
+        return m_groups.has(id);
+    }
+    
     bool Frame::contains(JoystickID id) const
     {
         return m_joysticks.has(id);
@@ -443,6 +454,11 @@ namespace yq::tachyon {
         return m_graphicsCards.count();
     }
 
+    size_t Frame::count(group_k) const
+    {
+        return m_groups.count();
+    }
+
     size_t Frame::count(joystick_k) const
     {
         return m_joysticks.count();
@@ -590,6 +606,11 @@ namespace yq::tachyon {
         return m_graphicsCards.data(id);
     }
 
+    const GroupData*                    Frame::data(GroupID id) const
+    {
+        return m_groups.data(id);
+    }
+
     const JoystickData*                 Frame::data(JoystickID id) const
     {
         return m_joysticks.data(id);
@@ -730,6 +751,11 @@ namespace yq::tachyon {
         return m_graphicsCards.ids;
     }
 
+    const std::set<GroupID>&            Frame::ids(group_k) const
+    {
+        return m_groups.ids;
+    }
+
     const std::set<JoystickID>&         Frame::ids(joystick_k) const
     {
         return m_joysticks.ids;
@@ -868,6 +894,11 @@ namespace yq::tachyon {
     GraphicsCard*                       Frame::object(GraphicsCardID id) const
     {
         return m_graphicsCards.pointer(id);
+    }
+
+    Group*                              Frame::object(GroupID id) const
+    {
+        return m_groups.pointer(id);
     }
 
     Joystick*                           Frame::object(JoystickID id) const
@@ -1044,6 +1075,7 @@ namespace yq::tachyon {
             << "  Desktops:      " << count(DESKTOP) << "\n"
             << "  Gamepads:      " << count(GAMEPAD) << "\n"
             << "  GraphicsCards: " << count(GRAPHICS_CARD) << "\n"
+            << "  Groups:        " << count(GROUP) << "\n"
             << "  Keyboards:     " << count(KEYBOARD) << "\n"
             << "  Joysticks:     " << count(JOYSTICK) << "\n"
             << "  Layers:        " << count(LAYER) << "\n"
@@ -1124,6 +1156,11 @@ namespace yq::tachyon {
     const GraphicsCardSnap*            Frame::snap(GraphicsCardID id) const
     {
         return m_graphicsCards.snap(id);
+    }
+
+    const GroupSnap*                   Frame::snap(GroupID id) const
+    {
+        return m_groups.snap(id);
     }
 
     const JoystickSnap*                Frame::snap(JoystickID id) const

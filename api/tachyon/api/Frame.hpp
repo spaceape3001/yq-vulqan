@@ -22,6 +22,7 @@
 #include <tachyon/typedef/frame.hpp>
 #include <tachyon/typedef/gamepad.hpp>
 #include <tachyon/typedef/graphics_card.hpp>
+#include <tachyon/typedef/group.hpp>
 #include <tachyon/typedef/joystick.hpp>
 #include <tachyon/typedef/keyboard.hpp>
 #include <tachyon/typedef/layer.hpp>
@@ -70,6 +71,8 @@ namespace yq::tachyon {
     class Frame : public RefCount {
     public:
     
+        using KeyToIDMap    = std::multimap<std::string,uint64_t,IgCase>;
+    
         //! Returns the current "published" frame for this thread 
         //! \note This may be null, so check!
         static const Frame*     current() { return s_current; }
@@ -88,6 +91,7 @@ namespace yq::tachyon {
         //bool contains(EditorID) const;
         bool contains(GamepadID) const;
         bool contains(GraphicsCardID) const;
+        bool contains(GroupID) const;
         bool contains(JoystickID) const;
         bool contains(KeyboardID) const;
         bool contains(LayerID) const;
@@ -117,6 +121,7 @@ namespace yq::tachyon {
         size_t count(desktop_k) const;
         size_t count(gamepad_k) const;
         size_t count(graphics_card_k) const;
+        size_t count(group_k) const;
         size_t count(joystick_k) const;
         size_t count(keyboard_k) const;
         size_t count(layer_k) const;
@@ -149,6 +154,7 @@ namespace yq::tachyon {
         //const EditorData*                   data(EditorID) const;
         const GamepadData*                  data(GamepadID) const;
         const GraphicsCardData*             data(GraphicsCardID) const;
+        const GroupData*                    data(GroupID) const;
         const JoystickData*                 data(JoystickID) const;
         const KeyboardData*                 data(KeyboardID) const;
         const LayerData*                    data(LayerID) const;
@@ -184,7 +190,7 @@ namespace yq::tachyon {
 
         template <typename Pred>
         void        foreach(child_k, recursive_k, TachyonID, Pred&& pred) const;
-
+        
         const std::set<CameraID>&           ids(camera_k) const;
         const std::set<Camera³ID>&          ids(camera³_k) const;
         const std::set<ControllerID>&       ids(controller_k) const;
@@ -192,6 +198,7 @@ namespace yq::tachyon {
         const std::set<DesktopID>&          ids(desktop_k) const;
         const std::set<GamepadID>&          ids(gamepad_k) const;
         const std::set<GraphicsCardID>&     ids(graphics_card_k) const;
+        const std::set<GroupID>&            ids(group_k) const;
         const std::set<JoystickID>&         ids(joystick_k) const;
         const std::set<KeyboardID>&         ids(keyboard_k) const;
         const std::set<LayerID>&            ids(layer_k) const;
@@ -235,6 +242,10 @@ namespace yq::tachyon {
         Gamepad*                            object(GamepadID) const;
 
         GraphicsCard*                       object(GraphicsCardID) const;
+
+        //! Group pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Group*                              object(GroupID) const;
 
         //! Joystick pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -343,6 +354,7 @@ namespace yq::tachyon {
         //const EditorSnap*                   snap(EditorID) const;
         const GamepadSnap*                  snap(GamepadID) const;
         const GraphicsCardSnap*             snap(GraphicsCardID) const;
+        const GroupSnap*                    snap(GroupID) const;
         const JoystickSnap*                 snap(JoystickID) const;
         const KeyboardSnap*                 snap(KeyboardID) const;
         const LayerSnap*                    snap(LayerID) const;
@@ -390,6 +402,7 @@ namespace yq::tachyon {
             std::unordered_map<uint64_t, Ref<T>>        objects;
             std::unordered_map<uint64_t, Ref<const D>>  datas;
             std::unordered_map<uint64_t, Ref<const S>>  snaps;
+            std::multimap<std::string,uint64_t,IgCase>  names;
             std::set<ID<T>>                             ids;
             
             void        insert(Tachyon*, const TachyonData*, const TachyonSnap*);
@@ -419,6 +432,7 @@ namespace yq::tachyon {
         //Container<Editor, EditorData, EditorSnap>                   m_editors;
         Container<Gamepad, GamepadData, GamepadSnap>                m_gamepads;
         Container<GraphicsCard, GraphicsCardData, GraphicsCardSnap> m_graphicsCards;
+        Container<Group, GroupData, GroupSnap>                      m_groups;
         Container<Joystick, JoystickData, JoystickSnap>             m_joysticks;
         Container<Keyboard, KeyboardData, KeyboardSnap>             m_keyboards;
         Container<Layer, LayerData, LayerSnap>                      m_layers;

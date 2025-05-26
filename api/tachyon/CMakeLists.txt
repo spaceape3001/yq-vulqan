@@ -664,6 +664,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIElements.cpp
     ui/UIElementsWriter.cpp
     ui/UIGenerator.cpp
+    ui/UIGroup.cpp
     ui/UIImage.cpp
     ui/UILayout.cpp
     ui/UILayoutWriter.cpp

@@ -111,6 +111,9 @@ void SceneEditor::init_info()
     auto stb        = app.toolbar(SOUTH, "south");
     stb.button("S");
     
+    auto panel  = app.window("Scenes");
+    panel.callback(&SceneEditor::scene_panel);
+    
     //auto hbx        = app.vbox();
     //auto h1         = hbx.window();
     //h1.height(200);
@@ -121,3 +124,8 @@ void SceneEditor::init_info()
     //h3.label("Goodbye");
     
 }
+
+void SceneEditor::scene_panel()
+{
+}
+

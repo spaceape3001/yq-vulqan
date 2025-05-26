@@ -28,6 +28,17 @@ public:
     using Widget::imgui;
     void    imgui(ViContext&) override;
     
+    void    scene_panel();
 
     static void init_info();
+    
+    struct Entry {
+        SceneID         scene;
+        std::string     name, type;
+        std::string     filepath;
+        CameraID        camera;
+        RGBA4F          gamma;
+    };
+    
+    std::vector<Entry>      m_scenes;
 };

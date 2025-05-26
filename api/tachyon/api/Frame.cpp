@@ -20,6 +20,8 @@
 
 #include <tachyon/api/Camera3.hpp>
 #include <tachyon/api/Camera3Data.hpp>
+#include <tachyon/api/Layer.hpp>
+#include <tachyon/api/LayerData.hpp>
 #include <tachyon/api/Light3.hpp>
 #include <tachyon/api/Light3Data.hpp>
 #include <tachyon/api/Rendered3.hpp>
@@ -198,6 +200,8 @@ namespace yq::tachyon {
             m_joysticks.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Keyboard))
             m_keyboards.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Layer))
+            m_layers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Light))
             m_lights.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Light³))
@@ -292,6 +296,11 @@ namespace yq::tachyon {
     bool Frame::contains(KeyboardID id) const
     {
         return m_keyboards.has(id);
+    }
+
+    bool Frame::contains(LayerID id) const
+    {
+        return m_layers.has(id);
     }
 
     bool Frame::contains(LightID id) const
@@ -449,6 +458,11 @@ namespace yq::tachyon {
         return m_lights.count();
     }
     
+    size_t Frame::count(layer_k) const
+    {
+        return m_layers.count();
+    }
+
     size_t Frame::count(light³_k) const
     {
         return m_light³s.count();
@@ -591,6 +605,11 @@ namespace yq::tachyon {
         return m_lights.data(id);
     }
 
+    const LayerData*                    Frame::data(LayerID id) const
+    {
+        return m_layers.data(id);
+    }
+
     const Light³Data*                   Frame::data(Light³ID id) const
     {
         return m_light³s.data(id);
@@ -721,11 +740,16 @@ namespace yq::tachyon {
         return m_keyboards.ids;
     }
     
+    const std::set<LayerID>&            Frame::ids(layer_k) const
+    {
+        return m_layers.ids;
+    }
+    
     const std::set<LightID>&            Frame::ids(light_k) const
     {
         return m_lights.ids;
     }
-    
+
     const std::set<Light³ID>&           Frame::ids(light³_k) const
     {
         return m_light³s.ids;
@@ -859,6 +883,11 @@ namespace yq::tachyon {
     Light*                              Frame::object(LightID id) const
     {
         return m_lights.pointer(id);
+    }
+
+    Layer*                              Frame::object(LayerID id) const
+    {
+        return m_layers.pointer(id);
     }
 
     Light³*                             Frame::object(Light³ID id) const
@@ -1017,6 +1046,7 @@ namespace yq::tachyon {
             << "  GraphicsCards: " << count(GRAPHICS_CARD) << "\n"
             << "  Keyboards:     " << count(KEYBOARD) << "\n"
             << "  Joysticks:     " << count(JOYSTICK) << "\n"
+            << "  Layers:        " << count(LAYER) << "\n"
             << "  Lights:        " << count(LIGHT) << "\n"
             << "  Light³s:       " << count(LIGHT³) << "\n"
             << "  Managers:      " << count(MANAGER) << "\n"
@@ -1024,8 +1054,8 @@ namespace yq::tachyon {
             << "  Mouses:        " << count(MOUSE) << "\n"
             << "  Rendereds:     " << count(RENDERED) << "\n"
             << "  Rendered³s:    " << count(RENDERED³) << "\n"
-            << "  Scenes:        " << count(LIGHT) << "\n"
-            << "  Scene³s:       " << count(LIGHT³) << "\n"
+            << "  Scenes:        " << count(SCENE) << "\n"
+            << "  Scene³s:       " << count(SCENE³) << "\n"
             << "  Spatials:      " << count(SPATIAL) << "\n"
             << "  Spatial²s:     " << count(SPATIAL²) << "\n"
             << "  Spatial³s:     " << count(SPATIAL³) << "\n"
@@ -1104,6 +1134,11 @@ namespace yq::tachyon {
     const KeyboardSnap*                Frame::snap(KeyboardID id) const
     {
         return m_keyboards.snap(id);
+    }
+
+    const LayerSnap*                   Frame::snap(LayerID id) const
+    {
+        return m_layers.snap(id);
     }
 
     const LightSnap*                   Frame::snap(LightID id) const

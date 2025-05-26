@@ -24,6 +24,7 @@
 #include <tachyon/typedef/graphics_card.hpp>
 #include <tachyon/typedef/joystick.hpp>
 #include <tachyon/typedef/keyboard.hpp>
+#include <tachyon/typedef/layer.hpp>
 #include <tachyon/typedef/light.hpp>
 #include <tachyon/typedef/light3.hpp>
 #include <tachyon/typedef/manager.hpp>
@@ -89,6 +90,7 @@ namespace yq::tachyon {
         bool contains(GraphicsCardID) const;
         bool contains(JoystickID) const;
         bool contains(KeyboardID) const;
+        bool contains(LayerID) const;
         bool contains(LightID) const;
         bool contains(Light³ID) const;
         bool contains(ManagerID) const;
@@ -117,6 +119,7 @@ namespace yq::tachyon {
         size_t count(graphics_card_k) const;
         size_t count(joystick_k) const;
         size_t count(keyboard_k) const;
+        size_t count(layer_k) const;
         size_t count(light_k) const;
         size_t count(light³_k) const;
         size_t count(manager_k) const;
@@ -148,6 +151,7 @@ namespace yq::tachyon {
         const GraphicsCardData*             data(GraphicsCardID) const;
         const JoystickData*                 data(JoystickID) const;
         const KeyboardData*                 data(KeyboardID) const;
+        const LayerData*                    data(LayerID) const;
         const LightData*                    data(LightID) const;
         const Light³Data*                   data(Light³ID) const;
         const ManagerData*                  data(ManagerID) const;
@@ -190,6 +194,7 @@ namespace yq::tachyon {
         const std::set<GraphicsCardID>&     ids(graphics_card_k) const;
         const std::set<JoystickID>&         ids(joystick_k) const;
         const std::set<KeyboardID>&         ids(keyboard_k) const;
+        const std::set<LayerID>&            ids(layer_k) const;
         const std::set<LightID>&            ids(light_k) const;
         const std::set<Light³ID>&           ids(light³_k) const;
         const std::set<ManagerID>&          ids(manager_k) const;
@@ -238,6 +243,10 @@ namespace yq::tachyon {
         //! Keyboard pointer
         //! \note WARNING this will break thread-safety guarantees
         Keyboard*                           object(KeyboardID) const;
+
+        //! Layer pointer
+        //! \note WARNING this will break thread-safety guarantees
+        Layer*                              object(LayerID) const;
 
         //! Light pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -336,6 +345,7 @@ namespace yq::tachyon {
         const GraphicsCardSnap*             snap(GraphicsCardID) const;
         const JoystickSnap*                 snap(JoystickID) const;
         const KeyboardSnap*                 snap(KeyboardID) const;
+        const LayerSnap*                    snap(LayerID) const;
         const LightSnap*                    snap(LightID) const;
         const Light³Snap*                   snap(Light³ID) const;
         const ManagerSnap*                  snap(ManagerID) const;
@@ -411,6 +421,7 @@ namespace yq::tachyon {
         Container<GraphicsCard, GraphicsCardData, GraphicsCardSnap> m_graphicsCards;
         Container<Joystick, JoystickData, JoystickSnap>             m_joysticks;
         Container<Keyboard, KeyboardData, KeyboardSnap>             m_keyboards;
+        Container<Layer, LayerData, LayerSnap>                      m_layers;
         Container<Light, LightData, LightSnap>                      m_lights;
         Container<Light³, Light³Data, Light³Snap>                   m_light³s;
         Container<Manager, ManagerData, ManagerSnap>                m_managers;

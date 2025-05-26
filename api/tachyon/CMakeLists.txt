@@ -47,6 +47,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Event.cpp
     api/Frame.cpp
     api/InterfaceInfo.cpp
+    api/Layer.cpp
     api/Light.cpp    
     api/Light3.cpp
     api/Manager.cpp
@@ -318,6 +319,7 @@ add_library(${PROJECT_NAME} SHARED
     command/tachyon/DestroyCommand.cpp
     command/tachyon/RemoveChildCommand.cpp
     command/tachyon/RethreadCommand.cpp
+    command/tachyon/SetAttributeCommand.cpp
     command/tachyon/SetNameCommand.cpp
     command/tachyon/SetParentCommand.cpp
     command/tachyon/SnoopCommand.cpp
@@ -508,6 +510,10 @@ add_library(${PROJECT_NAME} SHARED
     io/save/SaveTachyon.cpp
     io/save/SaveThread.cpp
     io/save/SaveXML.cpp
+    
+    layer/BackgroundLayer.cpp
+    layer/ForegroundLayer.cpp
+    layer/HUDLayer.cpp
 
     message/EmptyMessage.cpp
 

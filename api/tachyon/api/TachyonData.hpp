@@ -22,6 +22,13 @@ namespace yq::tachyon {
     
     struct TachyonSnap : public RefCount {
         std::vector<Proxy*>     proxies;
+                
+        //! Program attributes
+        AttrIDMap               progattrs;
+        
+        //! User attributes
+        AttrKeyMap              userattrs;
+
         uint64_t                revision    = 0ULL;
         unit::Second            time        = 0.;
         TypedID                 parent;

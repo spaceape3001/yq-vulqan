@@ -8,6 +8,7 @@
 
 #include <concepts>
 #include <cstdint>
+#include <map>
 #include <tuple>
 #include <set>
 #include <string>
@@ -18,6 +19,8 @@
 
 namespace yq { 
     template <typename> class Ref;
+    class Any;
+    struct IgCase;
 }
 
 namespace yq::tachyon {
@@ -53,4 +56,9 @@ namespace yq::tachyon {
 
     using TachyonSpec  = std::variant<std::monostate, TachyonID, TypedID>;
 
+    //! Application defined custom attributes
+    using AttrIDMap         = std::map<int,Any>;
+    
+    //! User defined custom attributes
+    using AttrKeyMap        = std::map<std::string,Any,IgCase>;
 }

@@ -100,6 +100,7 @@ namespace yq::tachyon {
     struct joystick_k {};
     struct keyboard_k {};
     struct l2d_k {};
+    struct layer_k {};
     struct layout_k {};
     struct light_k {};
     struct light³_k {};
@@ -242,6 +243,7 @@ namespace yq::tachyon {
     static constexpr const joystick_k           JOYSTICK;
     static constexpr const keyboard_k           KEYBOARD;
     static constexpr const l2d_k                L2D;
+    static constexpr const layer_k              LAYER;
     static constexpr const layout_k             LAYOUT;
     static constexpr const light_k              LIGHT;
     static constexpr const light³_k             LIGHT³;

@@ -50,6 +50,7 @@ namespace yq::tachyon {
     class PauseCommand;
     class RemoveChildCommand;
     class ResumeCommand;
+    class SetAttributeCommand;
     class SetNameCommand;
     class SetParentCommand;
     class SnoopCommand;
@@ -274,10 +275,16 @@ namespace yq::tachyon {
         
         static void         init_info();
         
+        Any                 attribute(int) const;
+        Any                 attribute(const std::string&) const;
+        
         
         const std::vector<TypedID>& children() const { return m_children; }
         
         bool                dying() const;
+        
+        bool                has_attribute(int) const;
+        bool                has_attribute(const std::string&) const;
         
         // Mail this post to the given tachyon...
         //static void         mail(TachyonID, const PostCPtr&);
@@ -406,6 +413,28 @@ namespace yq::tachyon {
 
         //! called by the save/load API (assumed thread-safe)
         void    load_add_child(TypedID);
+        
+        const AttrIDMap&    prog_attributes() const { return m_progAttrs; }
+        const AttrKeyMap&   user_attributes() const { return m_userAttrs; }
+
+        //! Replaces/sets all the prog attributes
+        //! \note Callers need to assure thread-safety (ie... loading from disk)
+        void    load_attributes(const AttrIDMap&);
+        
+        //! Replaces/sets all the prog attributes
+        //! \note Callers need to assure thread-safety (ie... loading from disk)
+        void    load_attributes(AttrIDMap&&);
+
+        //! Replaces/sets all the user attributes
+        //! \note Callers need to assure thread-safety (ie... loading from disk)
+        void    load_attributes(const AttrKeyMap&);
+
+        //! Replaces/sets all the user attributes
+        //! \note Callers need to assure thread-safety (ie... loading from disk)
+        void    load_attributes(AttrKeyMap&&);
+        
+        void    set_attribute(int, const Any&);
+        void    set_attribute(std::string_view, const Any&);
 
     protected:
 
@@ -616,6 +645,8 @@ namespace yq::tachyon {
         TachyonData*                m_data          = nullptr;
         const Context*              m_context       = nullptr;
         std::atomic<unsigned int>   m_thread        = kInvalidThread;
+        AttrIDMap                   m_progAttrs;
+        AttrKeyMap                  m_userAttrs;
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
         std::string                 m_name;
@@ -672,6 +703,7 @@ namespace yq::tachyon {
         void    on_remove_child_command(const RemoveChildCommand&);
         void    on_resume_command(const ResumeCommand&);
         void    on_rethread_command(const RethreadCommand&);
+        void    on_set_attribute_command(const SetAttributeCommand&);
         void    on_set_name_command(const SetNameCommand&);
         void    on_set_parent_command(const SetParentCommand&);
         void    on_snoop_command(const SnoopCommand&);

@@ -402,6 +402,13 @@ namespace yq::tachyon {
         {
         }
         
+        std::error_code load_attributes(Tachyon* tac, const SaveTachyon& sv)
+        {
+            tac -> load_attributes(sv.prog_attributes());
+            tac -> load_attributes(sv.user_attributes());
+            return {};
+        }
+        
         std::error_code load_properties(Object* obj, const SaveObject& sv)
         {
             std::error_code ec;
@@ -642,10 +649,16 @@ namespace yq::tachyon {
                 ec = load_properties(itr.second.tachyon.ptr(), *itr.second.save);
                 if(ec != std::error_code())
                     return ec;
+                ec = load_attributes(itr.second.tachyon.ptr(), *itr.second.save);
+                if(ec != std::error_code())
+                    return ec;
             }
             
             for(auto& itr : m_threads){
                 ec = load_properties(itr.second.thread.ptr(), *itr.second.save);
+                if(ec != std::error_code())
+                    return ec;
+                ec = load_attributes(itr.second.thread.ptr(), *itr.second.save);
                 if(ec != std::error_code())
                     return ec;
             }

@@ -41,6 +41,9 @@ namespace yq::tachyon {
         
         for(TypedID tid : tac.children())
             m_children.push_back(tid);
+            
+        m_progAttrs = tac.prog_attributes();
+        m_userAttrs = tac.user_attributes();
     }
     
     SaveTachyon::SaveTachyon(Save& save, const TachyonInfo* info, uint64_t i) : SaveObject(save, info, i)
@@ -66,6 +69,16 @@ namespace yq::tachyon {
     {
         if(v.info && v.delegate)
             m_delegates.push_back(v);
+    }
+
+    Any&               SaveTachyon::create_attribute(int k)
+    {
+        return m_progAttrs[k];
+    }
+    
+    Any&               SaveTachyon::create_attribute(const std::string&k)
+    {
+        return m_userAttrs[k];
     }
 
     const TachyonInfo* SaveTachyon::info() const

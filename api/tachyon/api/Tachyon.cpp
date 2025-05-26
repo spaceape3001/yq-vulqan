@@ -22,6 +22,7 @@
 //#include <tachyon/command/tachyonProxyCommand.hpp>
 #include <tachyon/command/tachyon/RemoveChildCommand.hpp>
 #include <tachyon/command/tachyon/RethreadCommand.hpp>
+#include <tachyon/command/tachyon/SetAttributeCommand.hpp>
 #include <tachyon/command/tachyon/SetNameCommand.hpp>
 #include <tachyon/command/tachyon/SetParentCommand.hpp>
 #include <tachyon/command/tachyon/SnoopCommand.hpp>
@@ -38,6 +39,7 @@
 #include <tachyon/event/tachyon/NameChangeEvent.hpp>
 #include <tachyon/event/tachyon/ParentChangeEvent.hpp>
 
+#include <yq/core/Any.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <tachyon/logging.hpp>
@@ -487,6 +489,23 @@ namespace yq::tachyon {
     {
         return {};
     }
+
+    Any     Tachyon::attribute(int k) const
+    {
+        auto i = m_progAttrs.find(k);
+        if(i != m_progAttrs.end())
+            return i->second;
+        return Any();
+    }
+    
+    Any     Tachyon::attribute(const std::string& k) const
+    {
+        auto i = m_userAttrs.find(k);
+        if(i != m_userAttrs.end())
+            return i->second;
+        return Any();
+    }
+
     
     bool    Tachyon::check_parent_thread()
     {
@@ -727,6 +746,16 @@ namespace yq::tachyon {
     {
     }
 
+    bool                Tachyon::has_attribute(int k) const
+    {
+        return m_progAttrs.contains(k);
+    }
+    
+    bool                Tachyon::has_attribute(const std::string& k) const
+    {
+        return m_userAttrs.contains(k);
+    }
+
     TypedID             Tachyon::id(typed_k) const
     {
         return TypedID(*this);
@@ -751,6 +780,26 @@ namespace yq::tachyon {
     {
         m_children.push_back(tid);
         _subscribe(tid, MG::Children);
+    }
+
+    void  Tachyon::load_attributes(const AttrIDMap& attrs)
+    {
+        m_progAttrs = attrs;
+    }
+    
+    void  Tachyon::load_attributes(AttrIDMap&& attrs)
+    {
+        m_progAttrs = std::move(attrs);
+    }
+
+    void  Tachyon::load_attributes(const AttrKeyMap& attrs)
+    {
+        m_userAttrs = attrs;
+    }
+
+    void  Tachyon::load_attributes(AttrKeyMap&& attrs)
+    {
+        m_userAttrs = std::move(attrs);
     }
 
     void    Tachyon::load_set_parent(TypedID tid)
@@ -838,6 +887,17 @@ namespace yq::tachyon {
 
         if(cmd.thread() != m_owner)
             Thread::rethread(this, cmd.thread());
+    }
+
+    void    Tachyon::on_set_attribute_command(const SetAttributeCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        
+        if(auto p = std::get_if<int>(&cmd.key()))
+            m_progAttrs[*p] = cmd.value();
+        if(auto p = std::get_if<std::string>(&cmd.key()))
+            m_userAttrs[*p] = cmd.value();
     }
 
     void    Tachyon::on_set_name_command(const SetNameCommand& cmd)
@@ -953,6 +1013,16 @@ namespace yq::tachyon {
         }
     }
 
+    void  Tachyon::set_attribute(int k, const Any& v)
+    {
+        mail(new SetAttributeCommand({.target=*this}, k, v));
+    }
+    
+    void  Tachyon::set_attribute(std::string_view k, const Any&v)
+    {
+        mail(new SetAttributeCommand({.target=*this}, std::string(k), v));
+    }
+
     void  Tachyon::set_parent(TachyonSpec tid)
     {
         mail(new SetParentCommand({.target=*this}, Frame::resolve(tid)));
@@ -972,6 +1042,10 @@ namespace yq::tachyon {
         snap.running    = m_stage == Stage::Running;
         snap.paused     = m_stage == Stage::Paused;
         snap.teardown   = m_stage >= Stage::Teardown;
+        
+        snap.userattrs  = m_userAttrs;
+        snap.progattrs  = m_progAttrs;
+        
         for(const InterfaceInfo* ii : metaInfo().interfaces(ALL).all){
             Proxy*  p   = ii->proxy(const_cast<Tachyon*>(this));
             if(!p)
@@ -1451,6 +1525,7 @@ namespace yq::tachyon {
         w.slot(&Tachyon::on_remove_child_command);
         w.slot(&Tachyon::on_resume_command);
         w.slot(&Tachyon::on_rethread_command);
+        w.slot(&Tachyon::on_set_attribute_command);
         w.slot(&Tachyon::on_set_name_command);
         w.slot(&Tachyon::on_set_parent_command);
         w.slot(&Tachyon::on_snoop_command);

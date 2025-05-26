@@ -27,6 +27,7 @@ namespace yq::tachyon {
         ImGui,
         Joystick,
         Keyboard,
+        Layer,
         Light,
         Light³,
         Manager,

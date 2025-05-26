@@ -8,6 +8,7 @@
 
 #include <tachyon/io/save/SaveObject.hpp>
 #include <tachyon/api/StdThread.hpp>
+#include <tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class Tachyon;
@@ -57,6 +58,12 @@ namespace yq::tachyon {
         void    set_parent(uint64_t);
         void    set_owner(owner_spec_t);
     
+        const AttrIDMap&            prog_attributes() const { return m_progAttrs; }
+        const AttrKeyMap&           user_attributes() const { return m_userAttrs; }
+        
+        Any&                        create_attribute(int);
+        Any&                        create_attribute(const std::string&);
+    
     protected:
         virtual ~SaveTachyon();
         
@@ -68,5 +75,7 @@ namespace yq::tachyon {
         std::vector<asset_t>        m_assets;
         std::vector<delegate_t>     m_delegates;
         std::vector<uint64_t>       m_children;
+        AttrIDMap                   m_progAttrs;
+        AttrKeyMap                  m_userAttrs;
     };
 }

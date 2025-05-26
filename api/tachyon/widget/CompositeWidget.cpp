@@ -29,7 +29,7 @@ namespace yq::tachyon {
     {
     }
 
-    void    CompositeWidget::_prerecord(ViContext& u, const Layer& lay)
+    void    CompositeWidget::_prerecord(ViContext& u, const CLayer& lay)
     {
         //  We'll move these into a sub-style of widget
     
@@ -77,7 +77,7 @@ namespace yq::tachyon {
         
     void    CompositeWidget::prerecord(ViContext& ctx) 
     {
-        for(const Layer& lay : m_layers)
+        for(const CLayer& lay : m_layers)
             _prerecord(ctx, lay);
         Widget::prerecord(ctx);
     }

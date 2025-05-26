@@ -112,9 +112,9 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize4.cpp
         
     camera/NullCamera.cpp
-    camera/OriginCameraTweak.cpp
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
+
 
     command/AddChildCommand.cpp
     command/AppCommand.cpp
@@ -624,9 +624,9 @@ add_library(${PROJECT_NAME} SHARED
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp
 
-    scene/BackgroundScene.hpp
-    scene/ForegroundScene.hpp
-    scene/HUDScene.hpp
+    scene/BackgroundScene.cpp
+    scene/ForegroundScene.cpp
+    scene/HUDScene.cpp
     scene/SimpleScene.cpp
     
     spatial/GeoSpatial3.cpp
@@ -649,6 +649,8 @@ add_library(${PROJECT_NAME} SHARED
     trigger/NotTrigger.cpp
     trigger/OrTrigger.cpp
     trigger/PostTrigger.cpp
+
+    tweak/OriginCameraTweak.cpp
     
     ui/UIAppMain.cpp
     ui/UIAppMainWriter.cpp

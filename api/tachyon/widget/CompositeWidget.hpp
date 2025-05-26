@@ -25,17 +25,17 @@ namespace yq::tachyon {
     protected:
         using camera_tweaks_t   = std::vector<CameraTweakCPtr>;
     
-        struct Layer {
-            Camera³ID       camera;
+        struct CLayer {
+            CameraID        camera;
             SceneID         scene;
             camera_tweaks_t tweaks;  //< Set for tweaking the camera
             RGBA4F          gamma     = { 1., 1., 1., 1. };
         };
     
-        std::vector<Layer>  m_layers;
+        std::vector<CLayer> m_layers;
         RGBA4F              m_bgcolor   = { 0., 0., 0., 1. };
 
-        void    _prerecord(ViContext&, const Layer&);
+        void    _prerecord(ViContext&, const CLayer&);
         using Widget::prerecord;
     };
 }

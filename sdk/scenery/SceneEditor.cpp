@@ -192,7 +192,7 @@ void SceneEditor::init_info()
     auto help       = mmb.menu("Help");
     auto debug      = mmb.menu("Debug");
 
-
+    file.menuitem("New").action(&SceneEditor::cmd_file_new);
     file.menuitem("Open", "Ctrl+O").action(&SceneEditor::cmd_file_open);
     file.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
     file.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
@@ -358,6 +358,13 @@ void    SceneEditor::create_scene(const SceneInfo&info)
     if(!sc)
         return;
     _add(*sc);
+}
+
+void    SceneEditor::cmd_file_new()
+{
+    _clear();
+    m_filepath.clear();
+    _title();
 }
 
 void    SceneEditor::cmd_file_open()

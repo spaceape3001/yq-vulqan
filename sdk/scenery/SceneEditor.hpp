@@ -68,6 +68,7 @@ public:
     void    cmd_file_open();
     void    cmd_file_save();
     void    cmd_file_save_as();
+    void    cmd_file_new();
 
     void    cmd_new_back_scene();
     void    cmd_new_fore_scene();

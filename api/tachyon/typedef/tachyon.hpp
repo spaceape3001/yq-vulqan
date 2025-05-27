@@ -52,7 +52,7 @@ namespace yq::tachyon {
     struct TachyonContext;
 
     using name_spec     = std::variant<std::monostate, const char*, std::string_view, std::string>;
-    using PostTarget    = std::variant<std::monostate, MG, MGF, TachyonID, target_k>;
+    using PostTarget    = std::variant<std::monostate, MG, MGF, TachyonID, StdThread, target_k>;
 
     using TachyonSpec  = std::variant<std::monostate, TachyonID, TypedID>;
 

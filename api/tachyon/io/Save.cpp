@@ -724,7 +724,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    std::error_code         Save::execute(schedule_k, const ReincarnationConfig& config) const
+    std::error_code         Save::execute(schedule_k, const ReincarnationConfig& config, TachyonIDSet* pIDs) const
     {
         Reincarnator    exec(*this, config, true);
         std::error_code ec  = exec.build();
@@ -746,7 +746,11 @@ namespace yq::tachyon {
             
             TachyonPtrVector    tachyons;
             exec.extract(tachyons);
-                
+            if(pIDs){
+                for(TachyonPtr& tp : tachyons)
+                    pIDs->insert(tp->id());
+            }
+            
             for(auto & itr : exec.m_tachyons){
                 if(itr.second.nullpar){
                     itr.second.tachyon->set_parent(config.parent);
@@ -763,6 +767,11 @@ namespace yq::tachyon {
                 
             TachyonPtrVector    tachyons;
             exec.extract(tachyons);
+            if(pIDs){
+                for(TachyonPtr& tp : tachyons)
+                    pIDs->insert(tp->id());
+            }
+
             Tachyon::mail(owner, new ScheduleCommand({.target=ownerT}, std::move(tachyons)));
             return {};
         } else if(auto p = std::get_if<ThreadID>(&config.owner)){
@@ -770,6 +779,11 @@ namespace yq::tachyon {
             TachyonPtrVector    tachyons;
             TypedID         ownerT( owner.id, Type::Thread );
             exec.extract(tachyons);
+            if(pIDs){
+                for(TachyonPtr& tp : tachyons)
+                    pIDs->insert(tp->id());
+            }
+
             Tachyon::mail(owner, new ScheduleCommand({.target=ownerT}, std::move(tachyons)));
             return {};
         } else {

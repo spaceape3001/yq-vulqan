@@ -499,6 +499,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/ISize3.cpp
     interface/ISize4.cpp
     
+    io/FileIOManager.cpp
     io/GLSLShader.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
@@ -597,7 +598,9 @@ add_library(${PROJECT_NAME} SHARED
     
     reply/graphics_card/GetDeviceReply.cpp
     
+    reply/io/LoadTSXReply.cpp
     reply/io/SaveReply.cpp
+    reply/io/SaveTSXReply.cpp
     
     reply/ui/CloseReply.cpp
     
@@ -619,7 +622,9 @@ add_library(${PROJECT_NAME} SHARED
     
     request/graphics_card/GetDeviceRequest.cpp
     
+    request/io/LoadTSXRequest.cpp
     request/io/SaveRequest.cpp
+    request/io/SaveTSXRequest.cpp
     
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp

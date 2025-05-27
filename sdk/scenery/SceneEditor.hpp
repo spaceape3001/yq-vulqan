@@ -12,6 +12,8 @@ namespace yq::tachyon {
     class OpenFileRequest;
     class SaveFileRequest;
     class SceneInfo;
+    class SaveTSXReply;
+    class LoadTSXReply;
 }
 
 namespace IGFD { class FileDialog; }
@@ -38,8 +40,8 @@ public:
 
     enum class FileMode {
         None,
-        Import,
-        Export
+        Open,
+        Save
     };
     
     enum class E {
@@ -62,11 +64,10 @@ public:
     
     void    create_scene(const SceneInfo&);
 
-    void    cmd_export(std::string_view);
-    void    cmd_import(std::string_view);
 
-    void    cmd_file_import();
-    void    cmd_file_export();
+    void    cmd_file_open();
+    void    cmd_file_save();
+    void    cmd_file_save_as();
 
     void    cmd_new_back_scene();
     void    cmd_new_fore_scene();
@@ -74,13 +75,13 @@ public:
     void    cmd_new_simple_scene();
     
     virtual Execution   setup(const Context&) override;
+    virtual Execution   teardown(const Context&) override;
     
     virtual void    prerecord(ViContext&) override;
     
     //void    ui_scene_table();
     
     class UIScenes;
-    
     
 private:
     struct Entry {
@@ -102,11 +103,21 @@ private:
     std::vector<Entry>      m_scenes;
     FileMode                m_fileMode  = FileMode::None;
     Flags<F>                m_flags;
+    TypedID                 m_fileIO;
+    std::filesystem::path   m_filepath;
     //IGFD::FileDialog*       m_importDialog = nullptr;
     //IGFD::FileDialog*       m_exportDialog = nullptr;
 
     Entry*                  _add(const Scene&);
+    void                    _clear();
     Entry*                  _entry(SceneID);
     const Entry*            _entry(SceneID) const;
     void                    _rebuild();
+    void                    _title();
+
+    void    _open(const std::filesystem::path&);
+    void    _save(const std::filesystem::path&);
+    
+    void    on_load_tsx_reply(const LoadTSXReply&);
+    void    on_save_tsx_reply(const SaveTSXReply&);
 };

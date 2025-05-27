@@ -301,17 +301,30 @@ namespace yq::tachyon {
         }
         return {};
     }
+
+    void Tachyon::mail(StdThread tid, const PostCPtr&pp)
+    {
+        mail(Thread::standard(tid), pp);
+    }
     
+    void Tachyon::mail(TachyonID tid, const PostCPtr&pp)
+    {
+        if(!pp)
+            return ;
+            
+        const Frame* frame  = Frame::current();
+        if(!frame)
+            return;
+        Tachyon*  tac  = frame->object(tid);
+        if(!tac)
+            return ;
+        tac -> mail(pp);
+    }
+
     bool Tachyon::rejecting(const PostAdvice&pa)
     {
         return static_cast<bool>(std::get_if<reject_k>(&pa));
     }
-
-    bool Tachyon::unspecified(const PostAdvice&pa) 
-    {
-        return static_cast<bool>(std::get_if<std::monostate>(&pa));
-    }
-
 
     void Tachyon::retain(TachyonPtr tp)
     {
@@ -328,19 +341,12 @@ namespace yq::tachyon {
         Thread::retain(tp, st);
     }
 
-    void Tachyon::mail(TachyonID tid, const PostCPtr&pp)
+    bool Tachyon::unspecified(const PostAdvice&pa) 
     {
-        const Frame* frame  = Frame::current();
-        if(!frame)
-            return;
-        Tachyon*  tac  = frame->object(tid);
-        if(!tac)
-            return ;
-        tac -> mail(pp);
+        return static_cast<bool>(std::get_if<std::monostate>(&pa));
     }
 
 // ------------------------------------------------------------------------
-
 
     Tachyon::Tachyon(const Param& p) : Tachyon(INIT, p)
     {
@@ -629,6 +635,10 @@ namespace yq::tachyon {
                     data->outbound.push_back({*p, pp});
                 } 
                 
+                if(auto p = std::get_if<StdThread>(&pa)){
+                    data->outbound.push_back({*p, pp});
+                } 
+
                 MGF mgf = groups(pa);
                 if(mgf != MGF{}){
                     data->outbound.push_back({mgf, pp});
@@ -684,6 +694,13 @@ namespace yq::tachyon {
             if(auto p = std::get_if<TachyonID>(&out.to)){
                 if(sent.insert(*p).second){
                     tx(*p, out.post);
+                }
+            }
+            
+            if(auto p = std::get_if<StdThread>(&out.to)){
+                ThreadID    tid = Thread::standard(*p);
+                if(sent.insert(tid).second){
+                    tx(tid, out.post);
                 }
             }
         }
@@ -1429,6 +1446,11 @@ namespace yq::tachyon {
         if(!t)
             return ;
         t->mail(posts);
+    }
+
+    TypedID             Tachyon::typed_id() const
+    {
+        return TypedID(*this);
     }
 
     void Tachyon::unhandled(const PostCPtr&)

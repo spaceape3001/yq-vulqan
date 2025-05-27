@@ -10,11 +10,20 @@
 #include <tachyon/MyImGui.hpp>
 
 #include <tachyon/api/Frame.hpp>
+#include <tachyon/app/Viewer.hpp>
 
 #include <tachyon/camera/SpaceCamera.hpp>
+#include <tachyon/command/ui/TitleCommand.hpp>
 #include <tachyon/gfx/Texture.hpp>
 
+#include <tachyon/io/FileIOManager.hpp>
 #include <tachyon/request/app/OpenFileRequest.hpp>
+
+#include <tachyon/reply/io/LoadTSXReply.hpp>
+#include <tachyon/reply/io/SaveTSXReply.hpp>
+
+#include <tachyon/request/io/LoadTSXRequest.hpp>
+#include <tachyon/request/io/SaveTSXRequest.hpp>
 
 #include <tachyon/scene/HUDScene.hpp>
 #include <tachyon/scene/BackgroundScene.hpp>
@@ -33,6 +42,7 @@
 
 #include <iostream>
 
+TypedID     gFileIO;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -94,7 +104,7 @@ public:
                 if(ImGui::TableNextColumn()){
                     if(&e == editor->m_editing){
                         if(m_editing){
-                            ImGui::Image(m_editing, imgBtnSize);
+                            ImGui::ImageWithBg(m_editing, imgBtnSize);
                         } else {
                             ImGui::TextUnformatted("E");
                         }
@@ -137,18 +147,10 @@ public:
             ImGui::EndTable();
         }
     }
-    
-    void    header()
-    {
-    }
-    
-    void    row(const Entry& e)
-    {
-   }
    
-   ImTextureID      m_invisible;
-   ImTextureID      m_visible;
-   ImTextureID      m_editing;
+    ImTextureID      m_invisible;
+    ImTextureID      m_visible;
+    ImTextureID      m_editing;
 };
 
 YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenes)
@@ -173,6 +175,10 @@ SceneEditor::EFlags       SceneEditor::flags_for(const SceneInfo& sc)
 void SceneEditor::init_info()
 {
     auto w          = writer<SceneEditor>();
+    
+    w.slot(&SceneEditor::on_load_tsx_reply);
+    w.slot(&SceneEditor::on_save_tsx_reply);
+    
     w.description("The main widget");
     auto app        = w.imgui(UI, APP);
     
@@ -187,8 +193,9 @@ void SceneEditor::init_info()
     auto debug      = mmb.menu("Debug");
 
 
-    file.menuitem("Import", "Ctrl+O").action(&SceneEditor::cmd_file_import);
-    file.menuitem("Export", "Ctrl+S").action(&SceneEditor::cmd_file_export);
+    file.menuitem("Open", "Ctrl+O").action(&SceneEditor::cmd_file_open);
+    file.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
+    file.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
 
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
@@ -261,6 +268,25 @@ SceneEditor::Entry*                  SceneEditor::_add(const Scene& sc)
     return &m_scenes.back();
 }
 
+void                    SceneEditor::_clear()
+{
+    m_layers.clear();
+    if(m_scenes.empty())
+        return;
+
+    const Frame* frame  = Frame::current();
+    if(!frame)
+        return ;
+
+    for(auto& e : m_scenes){
+        Scene*    sc  = frame->object(e.scene);
+        if(sc)
+            sc -> cmd_teardown();
+    }
+    m_scenes.clear();
+}
+
+
 SceneEditor::Entry*                  SceneEditor::_entry(SceneID sc)
 {
     for(auto& e : m_scenes)
@@ -275,6 +301,11 @@ const SceneEditor::Entry*            SceneEditor::_entry(SceneID sc) const
         if(e.scene == sc)
             return &e;
     return nullptr;
+}
+
+void    SceneEditor::_open(const std::filesystem::path& fp)
+{
+    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, SIM));
 }
 
 void    SceneEditor::_rebuild()
@@ -300,6 +331,27 @@ void    SceneEditor::_rebuild()
     m_flags -= F::Stale;
 }
 
+void    SceneEditor::_title()
+{
+    std::string     newTitle;
+    if(m_filepath.empty()){
+        newTitle        = "Scenery Editor";
+    } else {
+        newTitle        = std::format("{} - {} - Scenery Editor", m_filepath.filename().string(), m_filepath.parent_path().string());
+    }
+    send(new TitleCommand({.source=*this, .target=TypedID(viewer().id, Type::Viewer)}, newTitle));
+}
+
+
+void    SceneEditor::_save(const std::filesystem::path& fp)
+{
+    TachyonIDSet        tacs;
+    for(const Entry& e : m_scenes)
+        tacs.insert(e.scene);
+    send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, SIM, { SaveOption::SkipOwnership }));
+}
+
+
 void    SceneEditor::create_scene(const SceneInfo&info)
 {
     Scene*  sc  = Tachyon::create_on<Scene>(SIM, info);
@@ -308,31 +360,30 @@ void    SceneEditor::create_scene(const SceneInfo&info)
     _add(*sc);
 }
 
-void    SceneEditor::cmd_export(std::string_view fp)
+void    SceneEditor::cmd_file_open()
 {
-    tachyonInfo << "TODO exporting (" << fp << ")";
+    IGFD::FileDialogConfig config;
+    config.path = ".";
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Open", ".tsx", config);        
+    m_fileMode  = FileMode::Open;
 }
 
-void    SceneEditor::cmd_import(std::string_view fp)
+void    SceneEditor::cmd_file_save()
 {
-    tachyonInfo << "TODO importing (" << fp << ")";
+    if(m_filepath.empty()){
+        cmd_file_save_as();
+    } else {
+        _save(m_filepath);
+    }
 }
 
-void    SceneEditor::cmd_file_export()
+void    SceneEditor::cmd_file_save_as()
 {
     IGFD::FileDialogConfig config;
     config.path = ".";
     config.flags |= ImGuiFileDialogFlags_ConfirmOverwrite;
     ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Save", ".tsx", config);        
-    m_fileMode  = FileMode::Export;
-}
-
-void    SceneEditor::cmd_file_import()
-{
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Open", ".tsx", config);        
-    m_fileMode  = FileMode::Import;
+    m_fileMode  = FileMode::Save;
 }
 
 void    SceneEditor::cmd_new_back_scene()
@@ -370,16 +421,57 @@ void    SceneEditor::imgui(ViContext&u)
                 switch(m_fileMode){
                 case FileMode::None:
                     break;
-                case FileMode::Import:
-                    cmd_import(filePathName);
+                case FileMode::Open:
+                    _open(filePathName);
                     break;
-                case FileMode::Export:
-                    cmd_export(filePathName);
+                case FileMode::Save:
+                    _save(filePathName);
                     break;
                 }
             }
             ImGuiFileDialog::Instance()->Close();
         }
+    }
+}
+
+void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
+{
+    if(rep.response() != Response::QaPla)
+        return ;
+    
+    const LoadTSXRequest* req = dynamic_cast<const LoadTSXRequest*>(rep.request());
+    if(!req)
+        return ;
+    
+    if(rep.tachyons().empty())
+        return;
+    
+    _clear();
+    
+    const Frame*    frame   = Frame::current();
+    for(auto id : rep.tachyons()){
+        const Scene*    sc  = dynamic_cast<const Scene*>(frame->object(id));
+        if(!sc)
+            continue;
+        _add(*sc);
+    }
+    
+    m_filepath  = req->filepath();
+    _title();
+}
+
+void    SceneEditor::on_save_tsx_reply(const SaveTSXReply&rep)
+{
+    if(rep.response() != Response::QaPla)
+        return ;
+
+    const SaveTSXRequest* req   = dynamic_cast<const SaveTSXRequest*>(rep.request());
+    if(!req)
+        return ;
+
+    if(req->filepath() != m_filepath){
+        m_filepath  = req->filepath();
+        _title();
     }
 }
 
@@ -393,12 +485,18 @@ void    SceneEditor::prerecord(ViContext&u)
 Execution   SceneEditor::setup(const Context&ctx) 
 {
     if(!m_camera.space){
-        m_camera.space  = Tachyon::create_on<SpaceCamera>(SIM) -> id();
+        m_camera.space  = create_child_on<SpaceCamera>(SIM) -> id();
     }
     if(!m_camera.hud){
         //  TODO
     }
     return Widget::setup(ctx);
+}
+
+Execution   SceneEditor::teardown(const Context&ctx) 
+{
+    _clear();       // eventually to have ref counting....
+    return CompositeWidget::teardown(ctx);
 }
 
 
@@ -407,17 +505,20 @@ Execution   SceneEditor::setup(const Context&ctx)
 int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
-    aci.thread.sim        = true;
-    aci.view.title        = "Scenery Editor";
-    aci.view.size         = { 1920, 1080 };
-    aci.view.clear        = { 0.0f, 0.0f, 0.0f, 1.f };
-    aci.view.imgui        = true;
-    aci.view.resizable    = true;
+    aci.thread.io           = true;
+    aci.thread.sim          = true;
+    aci.view.title          = "Scenery Editor";
+    aci.view.size           = { 1920, 1080 };
+    aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };
+    aci.view.imgui          = true;
+    aci.view.resizable      = true;
     
     Application app(argc, argv, aci);
     app.start();
     
-    SceneEditor*     w   = Widget::create<SceneEditor>();
+    gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();
+    
+    SceneEditor* w      = Widget::create<SceneEditor>();
     app.run(w);
     return 0;
 }

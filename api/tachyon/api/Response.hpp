@@ -28,6 +28,7 @@ namespace yq::tachyon {
         
         //! Generic failure
         Failed          = -1,
+        Failure         = Failed,
         
         //! General rejection
         Rejected        = -2,
@@ -40,6 +41,12 @@ namespace yq::tachyon {
         
         //! Sent us a null pointer
         NullPointer     = -5,
+        
+        //! An argument is invalid
+        InvalidArg      = -6,
+        
+        //! An IO error occured
+        IOError         = -7,
         
         // Busy/Processing
         Busy            = 1,

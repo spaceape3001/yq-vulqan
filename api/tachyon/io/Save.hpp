@@ -111,7 +111,7 @@ namespace yq::tachyon {
         
         /*! \brief Executes the save to create & schedule new tachyons
         */
-        std::error_code         execute(schedule_k, const ReincarnationConfig&cfg={}) const;
+        std::error_code         execute(schedule_k, const ReincarnationConfig&cfg={}, TachyonIDSet* pIDs=nullptr) const;
         
     private:
         ObjectMap                           m_objects;

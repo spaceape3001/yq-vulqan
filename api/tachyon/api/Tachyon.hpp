@@ -178,6 +178,7 @@ namespace yq::tachyon {
         accept_k,           //< Unconditionally accept this post
         reject_k,           //< Unconditionally reject this post
         TachyonID,          //< Accept & forward to this tachyon
+        StdThread,          //< Accept & forward directly to this thread
         MG,                 //< Accept & forward this post to the given groups
         MGF                 //< Accept & forward this post to the specified group
     >;
@@ -312,6 +313,9 @@ namespace yq::tachyon {
         //! Inbound to a specific tachyon (bypasses send) and requires recipient to be on the current frame
         static void         mail(TachyonID, const PostCPtr&);
         
+        //! Inbound to a specific tachyon (bypasses send) and requires recipient to be on the current frame
+        static void         mail(StdThread, const PostCPtr&);
+
         //! Our name
         const std::string&  name() const { return m_name; }
         
@@ -345,6 +349,9 @@ namespace yq::tachyon {
         //! \note NOT thread-safe (yet)
         //! Subscribes the given listener to OUR posts
         void                subscribe(TachyonID listener, MGF grp=MG::General);
+
+        TypedID             typed_id() const;
+
         //! \note NOT thread-safe (yet)
         //! Unsubscribes the given listener from OUR posts
         void                unsubscribe(TachyonID listener, MGF grp=ALL);
@@ -357,18 +364,6 @@ namespace yq::tachyon {
         template <SomeTachyon T, typename ... Args>
         static T*   create(Args&&...);
     
-        //! Creates a tachyon in the sim/game-thread
-        template <SomeTachyon T, typename ... Args>
-        static T*   create_on(StdThread, Args&&...);
-
-        //! Creates a tachyon in the sim/game-thread
-        template <SomeTachyon T, typename ... Args>
-        static T*   create_on(ThreadID, Args&&...);
-
-        //! Creates a "child" tachyon to the given tachyon
-        template <SomeTachyon T, typename ... Args>
-        T*          create_child(Args&&...);
-
         /*! \brief Creates a tachyon using its meta information
             
             \note THIS CAN RETURN NULL!  (So chack)
@@ -376,6 +371,15 @@ namespace yq::tachyon {
         template <SomeTachyon T>
         static T*   create(const typename T::MyInfo&);
 
+
+        //! Creates a tachyon in the sim/game-thread
+        template <SomeTachyon T, typename ... Args>
+        static T*   create_on(StdThread, Args&&...);
+
+        //! Creates a tachyon in the sim/game-thread
+        template <SomeTachyon T, typename ... Args>
+        static T*   create_on(ThreadID, Args&&...);
+        
         //! Creates a tachyon on the Application thread (caution here)
         template <SomeTachyon T>
         static T*   create_on(StdThread, const typename T::MyInfo&);
@@ -384,12 +388,33 @@ namespace yq::tachyon {
         template <SomeTachyon T>
         static T*   create_on(ThreadID, const typename T::MyInfo&);
 
-        //template <SomeTachyon T>
-        //static T*   create(const typename T::MyInfo&, std::span<const Any> args);
+        //! Creates a "child" tachyon to the given tachyon
+        template <SomeTachyon T, typename ... Args>
+        T*          create_child(Args&&...);
 
         //! Creates a "child" tachyon using the given meta information
         template <SomeTachyon T>
         T*          create_child(const typename T::MyInfo&);
+
+        //! Creates a "child" tachyon to the given tachyon
+        template <SomeTachyon T, typename ... Args>
+        T*          create_child_on(ThreadID, Args&&...);
+
+        //! Creates a "child" tachyon to the given tachyon
+        template <SomeTachyon T, typename ... Args>
+        T*          create_child_on(StdThread, Args&&...);
+
+        //! Creates a "child" tachyon using the given meta information
+        template <SomeTachyon T>
+        T*          create_child_on(StdThread, const typename T::MyInfo&);
+
+        template <SomeTachyon T>
+        T*          create_child_on(ThreadID, const typename T::MyInfo&);
+
+
+        //template <SomeTachyon T>
+        //static T*   create(const typename T::MyInfo&, std::span<const Any> args);
+
 
         //template <SomeTachyon T>
         //T*          create(child_t, const typename T::MyInfo&, std::span<const Any> args);
@@ -799,6 +824,51 @@ namespace yq::tachyon {
         Ref<T> tp = static_cast<T*>(info.create());
         if(tp){
             retain(tp);
+            tp->_set_parent(*this);
+            _add_child(*tp);
+        }
+        return tp.ptr();
+    }
+
+    template <SomeTachyon T, typename ... Args>
+    T*  Tachyon::create_child_on(ThreadID st, Args&&... args)
+    {
+        Ref<T>   tp  = new T(std::forward<decltype(args)>(args)...);
+        retain(tp, st);
+        tp->_set_parent(*this);
+        _add_child(*tp);
+        return tp.ptr();
+    }
+
+    template <SomeTachyon T, typename ... Args>
+    T*  Tachyon::create_child_on(StdThread st, Args&&... args)
+    {
+        Ref<T>   tp  = new T(std::forward<decltype(args)>(args)...);
+        retain(tp, st);
+        tp->_set_parent(*this);
+        _add_child(*tp);
+        return tp.ptr();
+    }
+
+
+    template <SomeTachyon T>
+    T*   Tachyon::create_child_on(ThreadID st, const typename T::MyInfo& info)
+    {
+        Ref<T> tp = static_cast<T*>(info.create());
+        if(tp){
+            retain(tp, st);
+            tp->_set_parent(*this);
+            _add_child(*tp);
+        }
+        return tp.ptr();
+    }
+
+    template <SomeTachyon T>
+    T*   Tachyon::create_child_on(StdThread st, const typename T::MyInfo& info)
+    {
+        Ref<T> tp = static_cast<T*>(info.create());
+        if(tp){
+            retain(tp, st);
             tp->_set_parent(*this);
             _add_child(*tp);
         }

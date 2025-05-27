@@ -77,7 +77,7 @@ namespace yq::tachyon {
         //! Source of the post (event, from, etc) -- try to be honest :)
         const TypedID&      source() const { return m_source; }
         
-        const PostCPtr&     cause() const { return m_cause; }
+        const Post*        cause() const { return m_cause.ptr(); }
         
         bool    claim() const;
         bool    claimed() const;

@@ -10,6 +10,7 @@
 #include <yq/core/Ref.hpp>
 #include <tachyon/keywords.hpp>
 #include <tachyon/app/AppCreateInfo.hpp>
+#include <tachyon/app/VulqanConfig.hpp>
 #include <tachyon/typedef/application.hpp>
 #include <tachyon/typedef/clock.hpp>
 #include <tachyon/typedef/viewer.hpp>
@@ -20,6 +21,10 @@
 #include <set>
 #include <vector>
 #include <atomic>
+
+namespace yq {
+    class Settings;
+}
 
 namespace yq::tachyon {
     class AppThread;
@@ -72,6 +77,9 @@ namespace yq::tachyon {
         
         const AppCreateInfo&        app_info() const { return m_cInfo; }
         
+        //! This is the dynamic settings from the installed configuration file
+        const VulqanConfig&         config() const { return m_config; }
+        
         const Desktop*              desktop() const { return m_desktop; }
         
         //! Creates a viewer with widget (note, application owns it)
@@ -109,6 +117,7 @@ namespace yq::tachyon {
         void                    stop() { _kill(); }
 
         void                    tick(); // drives the app thread
+        void                    vulqan_libraries(load_k);
 
     protected:
         AppCreateInfo           m_cInfo;
@@ -156,11 +165,12 @@ namespace yq::tachyon {
         using mutex_t       = tbb::spin_mutex;
         using lock_t        = mutex_t::scoped_lock;
         
-        mutex_t                 m_mutex;
-        Desktop*                m_desktop   = nullptr;
-        VulqanManager*          m_vulkan    = nullptr;
-        time_point_t            m_startTime;
-        Stage                   m_stage     = Stage::Uninit;
+        mutex_t                     m_mutex;
+        Desktop*                    m_desktop   = nullptr;
+        VulqanManager*              m_vulkan    = nullptr;
+        time_point_t                m_startTime;
+        Stage                       m_stage     = Stage::Uninit;
+        VulqanConfig                m_config;
     
         friend class Viewer;
         

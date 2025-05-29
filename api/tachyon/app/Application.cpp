@@ -9,8 +9,11 @@
 #include <tachyon/app/AppException.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/app/Viewer.hpp>
+
+#include <tachyon/config/build.hpp>
+
 #include <tachyon/os/Window.hpp>
-#include <tachyon/vulkan/VulqanManager.hpp>
+#include <tachyon/os/glfw/DesktopGLFW.hpp>
 
 #include <tachyon/thread/AppThread.hpp>
 #include <tachyon/thread/AudioThread.hpp>
@@ -21,15 +24,16 @@
 #include <tachyon/thread/TaskThread.hpp>
 #include <tachyon/thread/ViewerThread.hpp>
 
-#include <tachyon/os/glfw/DesktopGLFW.hpp>
+#include <tachyon/vulkan/VulqanManager.hpp>
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/meta/Init.hpp>
+#include <yq/process/OSUtils.hpp>
 #include <yq/process/PluginLoader.hpp>
 //#include <yq/post/boxes/SimpleBox.hpp>
-#include <tachyon/config/build.hpp>
+
 #include <filesystem>
 
 namespace yq::tachyon {
@@ -65,7 +69,7 @@ namespace yq::tachyon {
     }
 
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv), m_cInfo(_update(aci))
+        BasicApp(argc, argv), m_cInfo(_update(aci)), m_config("vulqan.cfg")
     {
         if(!is_main_thread()){
             throw AppException("Applications must only be used on the main thread!");
@@ -396,5 +400,21 @@ namespace yq::tachyon {
     {
         if(m_thread.app)
             m_thread.app -> tick();
+    }
+
+    void                    Application::vulqan_libraries(load_k)
+    {
+        for(std::string_view p : m_config.data_paths()){
+            Asset::resolver_add_paths(p);
+        }
+        for(std::string_view l : m_config.vulqan_libraries()){
+            std::string     libName = os::expected_shared_library_name(l);
+            // TODO ... make this use the proper lib/app directory
+            if(load_plugin(libName)){
+                tachyonNotice << "Loaded vulqan library: " << libName;
+            } else {
+                tachyonWarning << "Failed to load vulqan library: " << libName;
+            }
+        }
     }
 }

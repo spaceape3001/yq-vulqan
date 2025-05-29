@@ -21,5 +21,7 @@ if(PROJECT_IS_TOP_LEVEL)
     include(yq-toolbox/standard.cmake)
 endif()
 
+vulqan_data(data)
+
 #   If this fails, means the toolbox wasn't included/used
 YQRepo()

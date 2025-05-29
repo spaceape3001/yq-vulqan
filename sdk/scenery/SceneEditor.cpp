@@ -38,6 +38,9 @@
 
 #include <tachyon/widget/AppWidgetInfoWriter.hpp>
 
+#include <yq/asset/Asset.hpp>
+#include <yq/file/FileResolver.hpp>
+
 #include <ImGuiFileDialog.h>
 
 #include <iostream>
@@ -521,6 +524,13 @@ int main(int argc, char* argv[])
     aci.view.resizable      = true;
     
     Application app(argc, argv, aci);
+    Meta::init();
+    app.vulqan_libraries(LOAD);
+    Meta::init();
+    
+    for(const std::filesystem::path& pth : Asset::resolver().paths())
+        yInfo() << "asset path> " << pth;
+    
     app.start();
     
     gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();

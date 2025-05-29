@@ -88,6 +88,7 @@ add_library(${PROJECT_NAME} SHARED
 
     app/Application.cpp
     app/Viewer.cpp
+    app/VulqanConfig.cpp
 
     aspect/AMaxSize1.cpp
     aspect/AMaxSize2.cpp

@@ -37,6 +37,8 @@ namespace yq::tachyon {
         UIElements(flags),
         m_title(zTitle)
     {
+        m_w.minimum = m_w.maximum = -1;
+        m_h.minimum = m_h.maximum = -1;
         update(FLAGS);
     }
     
@@ -196,6 +198,7 @@ namespace yq::tachyon {
             }
             if(m_flags.any({UIFlag::SetSize, UIFlag::SetSizeOnce})){
                 ImGui::SetNextWindowSize({ width(USE), height(USE) });
+                ImGui::SetNextWindowSizeConstraints( { m_w.minimum, m_h.minimum }, {m_w.maximum, m_h.maximum});
                 m_h.next    = nanF;
                 m_w.next    = nanF;
                 m_flags -= UIFlag::SetSizeOnce;
@@ -219,7 +222,7 @@ namespace yq::tachyon {
         } else {
             ImGui::End();
         }
-        
+
         if(!open){
             m_flags |= UIFlag::Invisible;  
             closing();
@@ -328,10 +331,10 @@ namespace yq::tachyon {
     float       UIWindow::width(use_k) const
     {
         float w = std::max(antinan({ m_w.next, m_w.calc, m_w.spec, m_w.actual }, 0.f), style().window.min_size());
-        if(m_w.maximum > 0.)
-            w   = std::min(m_w.maximum, w);
-        if(m_w.minimum > 0.)
-            w   = std::min(m_w.minimum, w);
+        if((m_w.maximum > 0.) && (w>m_w.maximum))
+            w   = m_w.maximum;
+        if((m_w.minimum > 0.) && (w<m_w.minimum))
+            w   = m_w.minimum;
         return w;
     }
     

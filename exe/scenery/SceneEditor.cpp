@@ -75,27 +75,27 @@ struct SceneEditor::CameraEntry {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class SceneEditor::UICameras : public UIElement {
-    YQ_OBJECT_DECLARE(UICameras, UIElement)
+class SceneEditor::UICamerasTable : public UIElement {
+    YQ_OBJECT_DECLARE(UICamerasTable, UIElement)
 public:
 
     static void init_info()
     {
-        auto w = writer<UICameras>();
+        auto w = writer<UICamerasTable>();
         w.description("Scene Editor's Camera Table");
     }
 
-    UICameras(UIFlags flags={}) : UIElement(flags)
+    UICamerasTable(UIFlags flags={}) : UIElement(flags)
     {
     }
     
-    UICameras(const UICameras& cp) : UIElement(cp)
+    UICamerasTable(const UICamerasTable& cp) : UIElement(cp)
     {
     }
     
-    virtual UICameras*   clone() const 
+    virtual UICamerasTable*   clone() const 
     {
-        return new UICameras(*this);
+        return new UICamerasTable(*this);
     }
     
     const char*    title() const override
@@ -109,7 +109,7 @@ public:
     }
 };
 
-YQ_OBJECT_IMPLEMENT(SceneEditor::UICameras)
+YQ_OBJECT_IMPLEMENT(SceneEditor::UICamerasTable)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,13 +143,8 @@ public:
         AxBox2F box = parent() -> viewport(CONTENT);
         position(SET, NEXT, box.ll());
         height(SET, NEXT, box.height());
-        m_w.spec        = 0.25 * box.width();
         m_w.minimum     = 0.10 * box.width();
-        m_w.maximum     = 0.50 * box.width();
-        width(SET, NEXT, width(ACTUAL));
-yInfo() << "UIControlPanel widths... parent = " << box.width() << " next=" << m_w.next << " actual=" 
-            << m_w.actual << " min=" << m_w.minimum << " max=" << m_w.maximum 
-            << " calc=" << m_w.calc << " spec=" << m_w.spec;
+        m_w.maximum     = 0.80 * box.width();
         UIWindow::render();
     }
 };
@@ -158,27 +153,27 @@ YQ_OBJECT_IMPLEMENT(SceneEditor::UIControlPanel)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class SceneEditor::UIScenes : public UIElement {
-    YQ_OBJECT_DECLARE(UIScenes, UIElement)
+class SceneEditor::UIScenesTable : public UIElement {
+    YQ_OBJECT_DECLARE(UIScenesTable, UIElement)
 public:
 
     static void init_info()
     {
-        auto w = writer<UIScenes>();
+        auto w = writer<UIScenesTable>();
         w.description("Scene Editor's Scene Table");
     }
 
-    UIScenes(UIFlags flags={}) : UIElement(flags)
+    UIScenesTable(UIFlags flags={}) : UIElement(flags)
     {
     }
     
-    UIScenes(const UIScenes& cp) : UIElement(cp)
+    UIScenesTable(const UIScenesTable& cp) : UIElement(cp)
     {
     }
     
-    virtual UIScenes*   clone() const 
+    virtual UIScenesTable*   clone() const 
     {
-        return new UIScenes(*this);
+        return new UIScenesTable(*this);
     }
     
     virtual const char* title() const override
@@ -188,8 +183,6 @@ public:
     
     void    content() override
     {
-        UIElement::content();
-        
         const Frame*    frame   = Frame::current();
         if(!frame)
             return ;
@@ -291,7 +284,7 @@ public:
     ImTextureID      m_editing;
 };
 
-YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenes)
+YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenesTable)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -480,14 +473,14 @@ void SceneEditor::init_info()
     
     auto controlpanel   = app << new UIControlPanel;
     auto tree           = controlpanel << new UISimpleTree;
-    tree << new UICameras;
-    tree << new UIScenes;
+    tree << new UICamerasTable;
+    tree << new UIScenesTable;
     tree << new UIShapePalette;
     
     #if 0
     auto scenes         = app.window("Scenes");
     scenes.flags(SET, { UIFlag::AlwaysAutoResize });
-    scenes << new UIScenes;
+    scenes << new UIScenesTable;
 
     auto shapep       = app.window("Shape Palette");
     shapep.flags(SET, { UIFlag::AlwaysAutoResize });
@@ -495,7 +488,7 @@ void SceneEditor::init_info()
     
     auto cameras        = app.window("Cameras");
     cameras.flags(SET, {UIFlag::AlwaysAutoResize});
-    cameras << new UICameras;
+    cameras << new UICamerasTable;
 
     view.menuitem("Cameras").action(VISIBLE, cameras);
     view.menuitem("Scenes").action(VISIBLE, scenes);

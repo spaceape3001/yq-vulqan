@@ -86,9 +86,9 @@ public:
     //void    ui_scene_table();
 
     class UICameraAddMenu;
-    class UICameras;
+    class UICamerasTable;
     class UICameraPalette;
-    class UIScenes;
+    class UIScenesTable;
     class UIShapePalette;
     class UISceneAddMenu;
     class UIControlPanel;

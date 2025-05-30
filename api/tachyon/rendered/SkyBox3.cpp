@@ -51,6 +51,9 @@ namespace yq::tachyon {
     void SkyBox³::init_info()
     {
         auto w = writer<SkyBox³>();
+        w.category("Background");
+        w.description("Sky Box in 3D");
+        
         {
             auto& p = w.pipeline();
             p.shaders({ "assets/SkyBox3.vert", "assets/SkyBox3.frag" });
@@ -60,6 +63,7 @@ namespace yq::tachyon {
             p.front(FrontFace::CounterClockwise);
             p.texture(&SkyBox³::m_texture, DataActivity::FIXED);
             p.push_mvp();
+            
         }
     }
 

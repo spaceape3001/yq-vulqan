@@ -10,6 +10,8 @@
 #include <tachyon/MyImGui.hpp>
 
 #include <tachyon/api/Frame.hpp>
+#include <tachyon/api/Rendered.hpp>
+#include <tachyon/api/SceneData.hpp>
 #include <tachyon/app/Viewer.hpp>
 
 #include <tachyon/camera/SpaceCamera.hpp>
@@ -40,12 +42,27 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/file/FileResolver.hpp>
+#include <yq/text/match.hpp>
 
 #include <ImGuiFileDialog.h>
 
 #include <iostream>
 
 TypedID     gFileIO;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct SceneEditor::Entry {
+    SceneID             scene;
+    const SceneInfo*    info    = nullptr;
+    std::string         sid;    // ID for selectable
+    std::string         stype;
+    std::string         visBtn, visBtn2, invisBtn, invisBtn2;
+    std::string         filepath;
+    RGBA4F              gamma  = { 0., 0., 0., -1.};
+    EFlags              flags;
+};
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,6 +93,10 @@ public:
     {
         UIElement::render();
         
+        const Frame*    frame   = Frame::current();
+        if(!frame)
+            return ;
+
         float   sz  = ImGui::GetFrameHeight() * 0.9;
         
         Size2F      imgBtnSize    = { sz, sz };
@@ -96,16 +117,22 @@ public:
             ImGui::TableNextColumn();
             ImGui::TableNextColumn();
             if(ImGui::TableNextColumn()){
-                ImGui::Text("Name");
+                ImGui::Text("Type");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("Type");
+                ImGui::Text("Name");
             }
 
             for(Entry& e : editor->m_scenes){
+                bool    isEdit  = &e == editor->m_editing;
+                bool    wantEdit    = false;
+                const SceneSnap*    ss  = frame->snap(e.scene);
+                if(!ss)
+                    continue;
+                
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn()){
-                    if(&e == editor->m_editing){
+                    if(isEdit){
                         if(m_editing){
                             ImGui::ImageWithBg(m_editing, imgBtnSize);
                         } else {
@@ -127,25 +154,36 @@ public:
                 }
                 
                 if(ImGui::TableNextColumn()){
-                    if(&e == editor->m_editing){
-                        ImGui::TextUnformatted(to_string_view(e.scene.id));
-                    } else {
-                        if(ImGui::Button(e.editBtn.c_str())){
-                            if(e.flags(E::Invisible)){
-                                e.flags -= E::Invisible;
-                                editor->m_flags |= F::Stale;
-                            }
-                            editor->m_editing = &e;
-                        }
+                    if(ImGui::Selectable(e.sid.c_str(), isEdit) && !isEdit){
+                        wantEdit    = true;
                     }
                 }
                 if(ImGui::TableNextColumn()){
-                    ImGui::TextUnformatted(e.name);
+                    if(ImGui::Selectable(e.stype.c_str(), isEdit) && !isEdit){
+                        wantEdit    = true;
+                    }
                 }
                 if(ImGui::TableNextColumn()){
-                    ImGui::TextUnformatted(e.info->stem());
+                
+                    std::string sname;
+                    if(ss->name.empty()){
+                        sname   = std::format("{}##{}.SELECT", e.info->stem(), e.scene.id); 
+                    } else
+                       sname = std::format("{}##{}.SELECT", ss->name, e.scene.id); 
+
+                    if(ImGui::Selectable(sname.c_str(), isEdit) && !isEdit){
+                        wantEdit    = true;
+                    }
                 }
-                ImGui::TableNextColumn();
+                
+                if(wantEdit){
+                    if(e.flags(E::Invisible)){
+                        e.flags -= E::Invisible;
+                        editor->m_flags |= F::Stale;
+                    }
+                    editor->m_editing = &e;
+                }
+                
             }
             ImGui::EndTable();
         }
@@ -160,6 +198,124 @@ YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenes)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+// UIShapes
+class SceneEditor::UIShapePalette : public UIElement {
+    YQ_OBJECT_DECLARE(UIShapePalette, UIElement)
+public:
+
+    struct Row {
+        std::string_view    iconfile;
+        TextureCPtr         icon;
+        ImTextureID         tex;
+        std::string         label;
+        std::string         description;
+        const RenderedInfo* info        = nullptr;
+    };
+
+
+    static void init_info()
+    {
+        auto w = writer<UIShapePalette>();
+        w.description("Table of available shapes/rendereds");
+    }
+
+    std::vector<Row>    m_rows;
+    const RenderedInfo* m_selected  = nullptr;
+
+    UIShapePalette(UIFlags flags={})
+    {
+    }
+    
+    UIShapePalette(const UIShapePalette& cp) : UIElement(cp), m_rows(cp.m_rows)
+    {
+    }
+    
+    virtual UIShapePalette* clone() const override 
+    {
+        return new UIShapePalette(*this); 
+    }
+    
+    virtual void render() override
+    {
+        if(m_rows.empty())
+            define_rows();
+        if(ImGui::BeginTable("RenderedTypes", 3)){
+            //ImGui::TableNextRow();
+            //ImGui::TableNextColumn();
+            //ImGui::TextUnformatted("icon");
+            ////  might get fancy with dynamic rendering... (later)
+            //ImGui::TableNextColumn();
+            //ImGui::TextUnformatted("name");
+            
+            Size2F     iconSize = style().icon.def_size;    //< TODO Actual size 
+            
+            std::string_view    cat;
+            for(auto& r : m_rows){
+                if(!is_similar(cat, r.info->category())){
+                    cat = r.info->category();
+                    ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
+                    ImGui::TableNextColumn();
+                    if(ImGui::TableNextColumn())
+                        ImGui::TextUnformatted(cat);
+                }
+                
+                ImGui::TableNextRow();
+                if(ImGui::TableNextColumn() && r.tex){
+                    ImGui::Image(r.tex, iconSize);
+                }
+                if(ImGui::TableNextColumn()){
+                    if(ImGui::Selectable(r.label.c_str(), r.info == m_selected)){
+                        m_selected  = r.info;
+                    }
+                }
+                if(ImGui::TableNextColumn()){
+                    if(ImGui::Selectable(r.description.c_str(), r.info == m_selected)){
+                        m_selected  = r.info;
+                    }
+                }
+            }
+            
+            
+            ImGui::EndTable();
+        }
+    }
+    
+    void        define_rows()
+    {
+        for(const RenderedInfo* info : RenderedInfo::all()){
+            if(!info)
+                continue;
+            if(info->is_abstract())
+                continue;
+            Row     r;
+            r.iconfile  = info->icon(BIGGER,48);
+            if(r.iconfile.empty())
+                r.iconfile  = info->icon(SMALLER,48);
+            if(r.iconfile.empty())
+                r.iconfile  = style().icon.unknown;
+            r.icon  = Texture::load(r.iconfile);
+            r.tex   = install(r.icon);
+            r.info  = info;
+            
+            r.label         = std::format("{}##{}", info->stem(), info->name());
+            r.description   = std::format("{}##{}", info->description(), info->stem());
+            m_rows.push_back(r);
+        }
+        
+        std::stable_sort(m_rows.begin(), m_rows.end(), [](const Row& a, const Row&b){
+            Compare cmp = compare_igCase(a.info->category(), b.info->category());
+            if(cmp != Compare::EQUAL)
+                return is_less(cmp);
+            return is_less_igCase(a.label, b.label);
+        });
+    }
+    
+};
+
+YQ_OBJECT_IMPLEMENT(SceneEditor::UIShapePalette);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 YQ_TACHYON_IMPLEMENT(SceneEditor)
 
@@ -225,6 +381,10 @@ void SceneEditor::init_info()
     scenepanel << new UIScenes;
 
     view.menuitem("Scenes").action(VISIBLE, scenepanel);
+    
+    auto toolbox      = app.window("Shape Palette");
+    toolbox.flags(SET, { UIFlag::AlwaysAutoResize });
+    toolbox << new UIShapePalette;
 }
 
 
@@ -254,11 +414,9 @@ SceneEditor::Entry*                  SceneEditor::_add(const Scene& sc)
     en.visBtn2      = std::format("V##VISIBLE{}", en.scene.id);
     en.invisBtn     = std::format("{}##INVISIBLE{}", en.scene.id, en.scene.id);
     en.invisBtn2    = std::format("I##INVISIBLE{}", en.scene.id);
-    en.editBtn      = std::format("{}##EDIT{}", en.scene.id, en.scene.id);
     en.info         = static_cast<const SceneInfo*>(&sc.metaInfo());
-    en.name         = sc.name();
-    if(en.name.empty())
-        en.name     = std::string(en.info -> stem());
+    en.sid          = std::format("{}##{}.SELECT_ID", en.scene.id, en.scene.id);
+    en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), en.scene.id);
     en.flags        = flags_for(*en.info);
     m_scenes.push_back(en);
 

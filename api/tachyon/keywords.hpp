@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_KEYWORD_OMIT_MAX
+#define YQ_KEYWORD_OMIT_MIN
 #define YQ_KEYWORD_OMIT_NONE
 
 #include <yq/keywords.hpp>
@@ -107,10 +109,10 @@ namespace yq::tachyon {
     struct light_k {};
     struct light³_k {};
     struct manager_k {};
-    struct maximum_k {
+    struct maximum_k : public ::yq::maximum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Maximum; }
     };
-    struct minimum_k {
+    struct minimum_k : public ::yq::minimum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Minimum; }
     };
     struct model_k {};

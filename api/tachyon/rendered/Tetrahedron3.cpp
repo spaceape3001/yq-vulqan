@@ -21,6 +21,8 @@ namespace yq::tachyon {
         static IBO<uint16_t>    indices(kIndices);
     
         auto w = writer<Tetrahedron³>();
+        w.description("Tetrahedron in 3D");
+        w.category("Shape");
         {
             auto& p = w.pipeline();
             

@@ -74,6 +74,7 @@ namespace yq::tachyon {
         auto w   = writer<Rendered²>();
         ②::init_info(w);
         w.description("Rendered in 2D");
+        w.abstract();
 
         auto wt = writer<Rendered²ID>();
         wt.description("2D Rendered Identifier");

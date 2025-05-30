@@ -38,6 +38,13 @@ namespace yq::tachyon {
             return *static_cast<Pipeline::Typed<C>*>(m_meta->create_pipeline(r, create_pipeline));
         }
         
+        Writer& category(std::string_view k)
+        {
+            if(m_meta && Meta::thread_safe_write())
+                m_meta -> m_category = k;
+            return *this;
+        }
+        
         //! Returns a reference to the given meta (warning, may seg fault if it's NULL)
         const RenderedInfo& meta() const { return *m_meta; }
 

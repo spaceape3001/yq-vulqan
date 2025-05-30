@@ -21,6 +21,21 @@ namespace yq::tachyon {
     RenderedSnap::~RenderedSnap() = default;
 
 
+    struct RenderedInfo::Repo {
+        std::vector<const RenderedInfo*>    all;
+    };
+    
+    RenderedInfo::Repo& RenderedInfo::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
+    const std::vector<const RenderedInfo*>& RenderedInfo::all()
+    {
+        return repo().all;
+    }
+
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     RenderedInfo::RenderedInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
@@ -28,6 +43,7 @@ namespace yq::tachyon {
     {
         set(Flag::RENDERED);
         set(Type::Rendered);
+        repo().all.push_back(this);
     }
 
     const Pipeline*    RenderedInfo::pipeline(Pipeline::Role r) const
@@ -198,6 +214,8 @@ namespace yq::tachyon {
     {
         auto w = writer<Rendered>();
         w.description("Render object base");
+        w.icon(48, "openicon/icons/png/48x48/actions/format-stroke-color.png");
+        w.abstract();
 
         auto wt = writer<RenderedID>();
         wt.description("Rendered Identifier");

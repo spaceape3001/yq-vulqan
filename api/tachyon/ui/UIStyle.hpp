@@ -45,5 +45,11 @@ namespace yq::tachyon {
         struct {
             UIDim   min_size    = { 2., 20., -1. };
         } window;
+        
+        struct {
+            Size2F  def_size    = { 24, 24 };
+            
+            std::string_view    unknown     = "openicon/icons/png/48x48/places/nuvola-style/file-important.png";
+        } icon;
     };
 }

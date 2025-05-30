@@ -74,6 +74,7 @@ namespace yq::tachyon {
         auto w   = writer<Rendered³>();
         ③::init_info(w);
         w.description("Rendered in 3D");
+        w.abstract();
 
         auto wt = writer<Rendered³ID>();
         wt.description("3D Rendered Identifier");

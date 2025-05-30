@@ -19,7 +19,7 @@ namespace yq::tachyon {
     void Triangle³::init_info()
     {
         auto w = writer<Triangle³>();
-        w.description("Triangle in three dimensions");
+        w.description("Triangle in 3D");
         
         {
             auto& p = w.pipeline();

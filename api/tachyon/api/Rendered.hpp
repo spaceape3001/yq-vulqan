@@ -32,10 +32,19 @@ namespace yq::tachyon {
         //! Default is the FIRST pipeline defined
         const Pipeline* default_pipeline() const { return m_default; }
         
+        static const std::vector<const RenderedInfo*>& all();
+        
+        //! Category (might move upward if useful)
+        std::string_view category() const { return m_category; }
+        
     private:
+        struct Repo;
+        static Repo& repo();
+    
         using PipelineHash  = std::unordered_map<Pipeline::Role, Pipeline*>;
         PipelineHash    m_pipelines;
         const Pipeline* m_default   = nullptr;
+        std::string_view    m_category;
         
         Pipeline*       create_pipeline(Pipeline::Role, std::function<Pipeline*(Pipeline::Role)>);
     };

@@ -83,17 +83,10 @@ public:
     //void    ui_scene_table();
     
     class UIScenes;
+    class UIShapePalette;
     
 private:
-    struct Entry {
-        SceneID             scene;
-        const SceneInfo*    info    = nullptr;
-        std::string         name;
-        std::string         visBtn, visBtn2, invisBtn, invisBtn2, editBtn;
-        std::string         filepath;
-        RGBA4F              gamma  = { 0., 0., 0., -1.};
-        EFlags              flags;
-    };
+    struct Entry;
     
     struct {
         CameraID            space;

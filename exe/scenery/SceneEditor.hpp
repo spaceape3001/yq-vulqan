@@ -14,6 +14,7 @@ namespace yq::tachyon {
     class SceneInfo;
     class SaveTSXReply;
     class LoadTSXReply;
+    class CameraInfo;
 }
 
 namespace IGFD { class FileDialog; }
@@ -61,7 +62,6 @@ public:
     
     
     
-    
     void    create_scene(const SceneInfo&);
 
 
@@ -75,39 +75,49 @@ public:
     void    cmd_new_hud_scene();
     void    cmd_new_simple_scene();
     
+    void    cmd_add_scene(const SceneInfo&);
+    void    cmd_add_camera(const CameraInfo&);
+    
     virtual Execution   setup(const Context&) override;
     virtual Execution   teardown(const Context&) override;
     
     virtual void    prerecord(ViContext&) override;
     
     //void    ui_scene_table();
-    
+
+    class UICameraAddMenu;
+    class UICameras;
+    class UICameraPalette;
     class UIScenes;
     class UIShapePalette;
+    class UISceneAddMenu;
+    class UIControlPanel;
     
 private:
-    struct Entry;
+    struct SceneEntry;
+    struct CameraEntry;
     
     struct {
         CameraID            space;
         CameraID            hud;
 
-    }                       m_camera;
-    Entry*                  m_editing   = nullptr;
-    std::vector<Entry>      m_scenes;
-    FileMode                m_fileMode  = FileMode::None;
-    Flags<F>                m_flags;
-    TypedID                 m_fileIO;
-    std::filesystem::path   m_filepath;
+    }                           m_camera;
+    SceneEntry*                 m_editing   = nullptr;
+    std::vector<SceneEntry>     m_scenes;
+    std::vector<CameraEntry>    m_cameras;
+    FileMode                    m_fileMode  = FileMode::None;
+    Flags<F>                    m_flags;
+    TypedID                     m_fileIO;
+    std::filesystem::path       m_filepath;
     //IGFD::FileDialog*       m_importDialog = nullptr;
     //IGFD::FileDialog*       m_exportDialog = nullptr;
 
-    Entry*                  _add(const Scene&);
-    void                    _clear();
-    Entry*                  _entry(SceneID);
-    const Entry*            _entry(SceneID) const;
-    void                    _rebuild();
-    void                    _title();
+    SceneEntry*                 _add(const Scene&);
+    void                        _clear();
+    SceneEntry*                 _entry(SceneID);
+    const SceneEntry*           _entry(SceneID) const;
+    void                        _rebuild();
+    void                        _title();
 
     void    _open(const std::filesystem::path&);
     void    _save(const std::filesystem::path&);

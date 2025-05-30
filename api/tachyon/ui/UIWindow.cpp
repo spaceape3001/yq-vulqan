@@ -88,7 +88,12 @@ namespace yq::tachyon {
     
     float       UIWindow::height(use_k) const
     {
-        return std::max(antinan({ m_h.next, m_h.calc, m_h.spec, m_h.actual }, 0.f), style().window.min_size());
+        float   h   = std::max(antinan({ m_h.next, m_h.calc, m_h.spec, m_h.actual }, 0.f), style().window.min_size());
+        if(m_h.maximum > 0.)
+            h   = std::min(h, m_h.maximum);
+        if(m_h.minimum > 0.)
+            h   = std::max(h, m_h.minimum);
+        return h;
     }
     
     void        UIWindow::height(set_k, calculate_k, float v)
@@ -322,7 +327,12 @@ namespace yq::tachyon {
     
     float       UIWindow::width(use_k) const
     {
-        return std::max(antinan({ m_w.next, m_w.calc, m_w.spec, m_w.actual }, 0.f), style().window.min_size());
+        float w = std::max(antinan({ m_w.next, m_w.calc, m_w.spec, m_w.actual }, 0.f), style().window.min_size());
+        if(m_w.maximum > 0.)
+            w   = std::min(m_w.maximum, w);
+        if(m_w.minimum > 0.)
+            w   = std::min(m_w.minimum, w);
+        return w;
     }
     
     void        UIWindow::width(set_k, calculate_k, float v)

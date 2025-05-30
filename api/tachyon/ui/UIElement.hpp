@@ -154,6 +154,12 @@ namespace yq::tachyon {
             //! Actual measured value
             T   actual  = {};
             
+            //! Minimum permissible value
+            T   minimum = {};
+            
+            //! Maximum permissible value
+            T   maximum = {};
+            
             P() = default;
             P(T v) : spec(v), calc(v), next(v), actual(v) {}
             P(T s, T c, T n, T a) : spec(s), calc(c), next(n), actual(a) {}

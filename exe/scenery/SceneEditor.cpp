@@ -33,6 +33,7 @@
 
 #include <tachyon/tweak/OriginCameraTweak.hpp>
 
+#include <tachyon/ui/UISimpleTree.hpp>
 #include <tachyon/ui/UIStyle.hpp>
 #include <tachyon/ui/UIWindow.hpp>
 #include <tachyon/ui/UIWriters.hxx>
@@ -42,18 +43,22 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/file/FileResolver.hpp>
+#include <yq/shape/AxBox2.hpp>
 #include <yq/text/match.hpp>
 
 #include <ImGuiFileDialog.h>
 
 #include <iostream>
 
+#include <yq/shape/AxBox2.hxx>
+
 TypedID     gFileIO;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct SceneEditor::Entry {
+struct SceneEditor::SceneEntry {
     SceneID             scene;
+    CameraID            camera;
     const SceneInfo*    info    = nullptr;
     std::string         sid;    // ID for selectable
     std::string         stype;
@@ -63,6 +68,93 @@ struct SceneEditor::Entry {
     EFlags              flags;
 };
 
+struct SceneEditor::CameraEntry {
+    CameraID            camera;
+    const CameraInfo*   info    = nullptr;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class SceneEditor::UICameras : public UIElement {
+    YQ_OBJECT_DECLARE(UICameras, UIElement)
+public:
+
+    static void init_info()
+    {
+        auto w = writer<UICameras>();
+        w.description("Scene Editor's Camera Table");
+    }
+
+    UICameras(UIFlags flags={}) : UIElement(flags)
+    {
+    }
+    
+    UICameras(const UICameras& cp) : UIElement(cp)
+    {
+    }
+    
+    virtual UICameras*   clone() const 
+    {
+        return new UICameras(*this);
+    }
+    
+    const char*    title() const override
+    {
+        return "Cameras";
+    }
+    
+    void    content() override
+    {
+        ImGui::TextUnformatted("Cameras!");
+    }
+};
+
+YQ_OBJECT_IMPLEMENT(SceneEditor::UICameras)
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class SceneEditor::UIControlPanel : public UIWindow {
+    YQ_OBJECT_DECLARE(UIControlPanel, UIWindow)
+
+public:
+
+    static void init_info()
+    {
+        auto w = writer<UIControlPanel>();
+        w.description("Scene Editor's Control Panel");
+    }
+
+    UIControlPanel(UIFlags flags={}) : UIWindow("Control Panel", flags)
+    {
+    }
+    
+    UIControlPanel(const UIControlPanel& cp) : UIWindow(cp)
+    {
+    }
+    
+    virtual UIControlPanel*   clone() const 
+    {
+        return new UIControlPanel(*this);
+    }
+    
+    void    render() override
+    {
+        AxBox2F box = parent() -> viewport(CONTENT);
+        position(SET, NEXT, box.ll());
+        height(SET, NEXT, box.height());
+        m_w.spec        = 0.25 * box.width();
+        m_w.minimum     = 0.10 * box.width();
+        m_w.maximum     = 0.50 * box.width();
+        width(SET, NEXT, width(ACTUAL));
+yInfo() << "UIControlPanel widths... parent = " << box.width() << " next=" << m_w.next << " actual=" 
+            << m_w.actual << " min=" << m_w.minimum << " max=" << m_w.maximum 
+            << " calc=" << m_w.calc << " spec=" << m_w.spec;
+        UIWindow::render();
+    }
+};
+
+YQ_OBJECT_IMPLEMENT(SceneEditor::UIControlPanel)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -89,9 +181,14 @@ public:
         return new UIScenes(*this);
     }
     
-    void    render() override
+    virtual const char* title() const override
     {
-        UIElement::render();
+        return "Scenes";
+    }
+    
+    void    content() override
+    {
+        UIElement::content();
         
         const Frame*    frame   = Frame::current();
         if(!frame)
@@ -123,7 +220,7 @@ public:
                 ImGui::Text("Name");
             }
 
-            for(Entry& e : editor->m_scenes){
+            for(SceneEntry& e : editor->m_scenes){
                 bool    isEdit  = &e == editor->m_editing;
                 bool    wantEdit    = false;
                 const SceneSnap*    ss  = frame->snap(e.scene);
@@ -236,6 +333,11 @@ public:
         return new UIShapePalette(*this); 
     }
     
+    virtual const char* title() const override
+    {
+        return "Shape Palette";
+    }
+    
     virtual void render() override
     {
         if(m_rows.empty())
@@ -338,6 +440,7 @@ void SceneEditor::init_info()
     w.slot(&SceneEditor::on_load_tsx_reply);
     w.slot(&SceneEditor::on_save_tsx_reply);
     
+    
     w.description("The main widget");
     auto app        = w.imgui(UI, APP);
     
@@ -375,16 +478,30 @@ void SceneEditor::init_info()
     auto stb        = app.toolbar(SOUTH, "south");
     stb.button("S");
     
+    auto controlpanel   = app << new UIControlPanel;
+    auto tree           = controlpanel << new UISimpleTree;
+    tree << new UICameras;
+    tree << new UIScenes;
+    tree << new UIShapePalette;
     
-    auto scenepanel    = app.window("Scenes");
-    scenepanel.flags(SET, { UIFlag::AlwaysAutoResize });
-    scenepanel << new UIScenes;
+    #if 0
+    auto scenes         = app.window("Scenes");
+    scenes.flags(SET, { UIFlag::AlwaysAutoResize });
+    scenes << new UIScenes;
 
-    view.menuitem("Scenes").action(VISIBLE, scenepanel);
+    auto shapep       = app.window("Shape Palette");
+    shapep.flags(SET, { UIFlag::AlwaysAutoResize });
+    shapep << new UIShapePalette;
     
-    auto toolbox      = app.window("Shape Palette");
-    toolbox.flags(SET, { UIFlag::AlwaysAutoResize });
-    toolbox << new UIShapePalette;
+    auto cameras        = app.window("Cameras");
+    cameras.flags(SET, {UIFlag::AlwaysAutoResize});
+    cameras << new UICameras;
+
+    view.menuitem("Cameras").action(VISIBLE, cameras);
+    view.menuitem("Scenes").action(VISIBLE, scenes);
+    view.menuitem("Shape Palette").action(VISIBLE, shapep);
+    #endif
+    
 }
 
 
@@ -398,9 +515,9 @@ SceneEditor::~SceneEditor()
 {
 }
 
-SceneEditor::Entry*                  SceneEditor::_add(const Scene& sc)
+SceneEditor::SceneEntry*                  SceneEditor::_add(const Scene& sc)
 {
-    Entry*  ret = _entry(sc.id());
+    SceneEntry*  ret = _entry(sc.id());
     if(ret)
         return ret;
         
@@ -408,7 +525,7 @@ SceneEditor::Entry*                  SceneEditor::_add(const Scene& sc)
     if(m_editing)
         edit        = m_editing -> scene;
         
-    Entry   en;
+    SceneEntry   en;
     en.scene        = sc.id();
     en.visBtn       = std::format("{}##VISIBLE{}", en.scene.id, en.scene.id);
     en.visBtn2      = std::format("V##VISIBLE{}", en.scene.id);
@@ -448,7 +565,7 @@ void                    SceneEditor::_clear()
 }
 
 
-SceneEditor::Entry*                  SceneEditor::_entry(SceneID sc)
+SceneEditor::SceneEntry*                  SceneEditor::_entry(SceneID sc)
 {
     for(auto& e : m_scenes)
         if(e.scene == sc)
@@ -456,7 +573,7 @@ SceneEditor::Entry*                  SceneEditor::_entry(SceneID sc)
     return nullptr;
 }
 
-const SceneEditor::Entry*            SceneEditor::_entry(SceneID sc) const
+const SceneEditor::SceneEntry*            SceneEditor::_entry(SceneID sc) const
 {
     for(auto& e : m_scenes)
         if(e.scene == sc)
@@ -476,7 +593,7 @@ void    SceneEditor::_rebuild()
     //const Frame*    frame   = Frame::current();
     
     m_layers.clear();
-    for(const Entry& e : m_scenes){
+    for(const SceneEntry& e : m_scenes){
         if(e.flags(E::Invisible) && (m_editing != &e))
             continue;
         CLayer  lay;
@@ -507,7 +624,7 @@ void    SceneEditor::_title()
 void    SceneEditor::_save(const std::filesystem::path& fp)
 {
     TachyonIDSet        tacs;
-    for(const Entry& e : m_scenes)
+    for(const SceneEntry& e : m_scenes)
         tacs.insert(e.scene);
     send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, SIM, { SaveOption::SkipOwnership }));
 }

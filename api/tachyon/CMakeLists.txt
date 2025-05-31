@@ -681,6 +681,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIMenuBar.cpp
     ui/UIMenuBarWriter.cpp
     ui/UIMenuItem.cpp
+    ui/UISection.cpp
     ui/UISimpleTree.cpp
     ui/UISpacer.cpp
     ui/UITextLabel.cpp

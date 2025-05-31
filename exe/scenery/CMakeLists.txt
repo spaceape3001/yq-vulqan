@@ -8,6 +8,8 @@ project(scenery)
 
 add_executable(${PROJECT_NAME}
     SceneEditor.cpp
+    UIControlPanel.cpp
+    UIShapePalette.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

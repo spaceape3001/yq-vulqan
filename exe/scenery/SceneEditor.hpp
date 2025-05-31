@@ -89,9 +89,10 @@ public:
     class UICamerasTable;
     class UICameraPalette;
     class UIScenesTable;
-    class UIShapePalette;
     class UISceneAddMenu;
-    class UIControlPanel;
+    
+    class UICameraCreateMenu;
+    class UISceneCreateMenu;
     
 private:
     struct SceneEntry;

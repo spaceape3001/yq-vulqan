@@ -132,6 +132,8 @@ namespace yq::tachyon {
         */
         UIRightAlignWriter      right(align_k);
         
+        UIElementsWriter        section(std::string_view);
+        
         UISpacerWriter          spacer(const Size2F&);
         
         UIVBoxLayoutWriter            vbox();

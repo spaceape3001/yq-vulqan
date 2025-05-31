@@ -19,6 +19,7 @@
 #include <tachyon/ui/UIMenuWriter.hpp>
 #include <tachyon/ui/UIMenuBar.hpp>
 #include <tachyon/ui/UIMenuBarWriter.hpp>
+#include <tachyon/ui/UISection.hpp>
 #include <tachyon/ui/UISpacer.hpp>
 #include <tachyon/ui/UISpacerWriter.hpp>
 #include <tachyon/ui/UITextLabel.hpp>
@@ -183,6 +184,11 @@ namespace yq::tachyon {
     UIRightAlignWriter      UIElementsWriter::right(align_k)
     {
         return make<UIRightAlign>();
+    }
+
+    UIElementsWriter        UIElementsWriter::section(std::string_view sz)
+    {
+        return make<UISection>(sz);
     }
 
     UISpacerWriter          UIElementsWriter::spacer(const Size2F& sz)

@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SceneEditor.hpp"
+#include "UIControlPanel.hpp"
+#include "UIShapePalette.hpp"
 
 #include <tachyon/application.hpp>
 #include <tachyon/MyImGui.hpp>
@@ -33,6 +35,8 @@
 
 #include <tachyon/tweak/OriginCameraTweak.hpp>
 
+#include <tachyon/ui/UIMenuBar.hpp>
+#include <tachyon/ui/UISection.hpp>
 #include <tachyon/ui/UISimpleTree.hpp>
 #include <tachyon/ui/UIStyle.hpp>
 #include <tachyon/ui/UIWindow.hpp>
@@ -43,14 +47,11 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/file/FileResolver.hpp>
-#include <yq/shape/AxBox2.hpp>
-#include <yq/text/match.hpp>
 
 #include <ImGuiFileDialog.h>
 
 #include <iostream>
 
-#include <yq/shape/AxBox2.hxx>
 
 TypedID     gFileIO;
 
@@ -103,7 +104,7 @@ public:
         return "Cameras";
     }
     
-    void    content() override
+    void    render() override
     {
         ImGui::TextUnformatted("Cameras!");
     }
@@ -112,44 +113,6 @@ public:
 YQ_OBJECT_IMPLEMENT(SceneEditor::UICamerasTable)
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class SceneEditor::UIControlPanel : public UIWindow {
-    YQ_OBJECT_DECLARE(UIControlPanel, UIWindow)
-
-public:
-
-    static void init_info()
-    {
-        auto w = writer<UIControlPanel>();
-        w.description("Scene Editor's Control Panel");
-    }
-
-    UIControlPanel(UIFlags flags={}) : UIWindow("Control Panel", flags)
-    {
-    }
-    
-    UIControlPanel(const UIControlPanel& cp) : UIWindow(cp)
-    {
-    }
-    
-    virtual UIControlPanel*   clone() const 
-    {
-        return new UIControlPanel(*this);
-    }
-    
-    void    render() override
-    {
-        AxBox2F box = parent() -> viewport(CONTENT);
-        position(SET, NEXT, box.ll());
-        height(SET, NEXT, box.height());
-        m_w.minimum     = 0.10 * box.width();
-        m_w.maximum     = 0.80 * box.width();
-        UIWindow::render();
-    }
-};
-
-YQ_OBJECT_IMPLEMENT(SceneEditor::UIControlPanel)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -181,11 +144,12 @@ public:
         return "Scenes";
     }
     
-    void    content() override
+    void    render() override
     {
         const Frame*    frame   = Frame::current();
-        if(!frame)
+        if(!frame){
             return ;
+        }
 
         float   sz  = ImGui::GetFrameHeight() * 0.9;
         
@@ -286,129 +250,6 @@ public:
 
 YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenesTable)
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// UIShapes
-class SceneEditor::UIShapePalette : public UIElement {
-    YQ_OBJECT_DECLARE(UIShapePalette, UIElement)
-public:
-
-    struct Row {
-        std::string_view    iconfile;
-        TextureCPtr         icon;
-        ImTextureID         tex;
-        std::string         label;
-        std::string         description;
-        const RenderedInfo* info        = nullptr;
-    };
-
-
-    static void init_info()
-    {
-        auto w = writer<UIShapePalette>();
-        w.description("Table of available shapes/rendereds");
-    }
-
-    std::vector<Row>    m_rows;
-    const RenderedInfo* m_selected  = nullptr;
-
-    UIShapePalette(UIFlags flags={})
-    {
-    }
-    
-    UIShapePalette(const UIShapePalette& cp) : UIElement(cp), m_rows(cp.m_rows)
-    {
-    }
-    
-    virtual UIShapePalette* clone() const override 
-    {
-        return new UIShapePalette(*this); 
-    }
-    
-    virtual const char* title() const override
-    {
-        return "Shape Palette";
-    }
-    
-    virtual void render() override
-    {
-        if(m_rows.empty())
-            define_rows();
-        if(ImGui::BeginTable("RenderedTypes", 3)){
-            //ImGui::TableNextRow();
-            //ImGui::TableNextColumn();
-            //ImGui::TextUnformatted("icon");
-            ////  might get fancy with dynamic rendering... (later)
-            //ImGui::TableNextColumn();
-            //ImGui::TextUnformatted("name");
-            
-            Size2F     iconSize = style().icon.def_size;    //< TODO Actual size 
-            
-            std::string_view    cat;
-            for(auto& r : m_rows){
-                if(!is_similar(cat, r.info->category())){
-                    cat = r.info->category();
-                    ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
-                    ImGui::TableNextColumn();
-                    if(ImGui::TableNextColumn())
-                        ImGui::TextUnformatted(cat);
-                }
-                
-                ImGui::TableNextRow();
-                if(ImGui::TableNextColumn() && r.tex){
-                    ImGui::Image(r.tex, iconSize);
-                }
-                if(ImGui::TableNextColumn()){
-                    if(ImGui::Selectable(r.label.c_str(), r.info == m_selected)){
-                        m_selected  = r.info;
-                    }
-                }
-                if(ImGui::TableNextColumn()){
-                    if(ImGui::Selectable(r.description.c_str(), r.info == m_selected)){
-                        m_selected  = r.info;
-                    }
-                }
-            }
-            
-            
-            ImGui::EndTable();
-        }
-    }
-    
-    void        define_rows()
-    {
-        for(const RenderedInfo* info : RenderedInfo::all()){
-            if(!info)
-                continue;
-            if(info->is_abstract())
-                continue;
-            Row     r;
-            r.iconfile  = info->icon(BIGGER,48);
-            if(r.iconfile.empty())
-                r.iconfile  = info->icon(SMALLER,48);
-            if(r.iconfile.empty())
-                r.iconfile  = style().icon.unknown;
-            r.icon  = Texture::load(r.iconfile);
-            r.tex   = install(r.icon);
-            r.info  = info;
-            
-            r.label         = std::format("{}##{}", info->stem(), info->name());
-            r.description   = std::format("{}##{}", info->description(), info->stem());
-            m_rows.push_back(r);
-        }
-        
-        std::stable_sort(m_rows.begin(), m_rows.end(), [](const Row& a, const Row&b){
-            Compare cmp = compare_igCase(a.info->category(), b.info->category());
-            if(cmp != Compare::EQUAL)
-                return is_less(cmp);
-            return is_less_igCase(a.label, b.label);
-        });
-    }
-    
-};
-
-YQ_OBJECT_IMPLEMENT(SceneEditor::UIShapePalette);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -471,11 +312,33 @@ void SceneEditor::init_info()
     auto stb        = app.toolbar(SOUTH, "south");
     stb.button("S");
     
-    auto controlpanel   = app << new UIControlPanel;
-    auto tree           = controlpanel << new UISimpleTree;
-    tree << new UICamerasTable;
-    tree << new UIScenesTable;
-    tree << new UIShapePalette;
+    auto controlpanel   = app.make<UIControlPanel>();
+    {
+        auto tree = controlpanel.make<UISimpleTree>();
+        {
+            auto section    = tree.section("Cameras");
+            auto menus      = section.hline();
+            auto add        = menus.menu("Add");    // switch to a new thing
+            add.menuitem("Foo");
+            
+            section.make<UICamerasTable>();
+        }
+        {
+            auto section    = tree.section("Scenes");
+            //auto menus      = section.make<UIMenuBar>();
+            //auto add        = menus.menu("Add");    // switch to a new thing
+            //add.menuitem("Bar");
+
+            section.make<UIScenesTable>();
+        }
+        {
+            auto section    = tree.section("Shape Palette");
+            section.make<UIShapePalette>();
+        }
+        //tree << new UICamerasTable;
+        //tree << new UIScenesTable;
+        //tree << new UIShapePalette;
+    }
     
     #if 0
     auto scenes         = app.window("Scenes");

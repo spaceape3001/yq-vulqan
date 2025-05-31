@@ -6,11 +6,11 @@
 
 #include "SceneEditor.hpp"
 #include "UIControlPanel.hpp"
-#include "UIShapePalette.hpp"
 
 #include <tachyon/application.hpp>
 #include <tachyon/MyImGui.hpp>
 
+#include <tachyon/api/Camera.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/SceneData.hpp>
@@ -21,6 +21,9 @@
 #include <tachyon/gfx/Texture.hpp>
 
 #include <tachyon/io/FileIOManager.hpp>
+
+#include <tachyon/panel/UIBuildableInfoList.hpp>
+
 #include <tachyon/request/app/OpenFileRequest.hpp>
 
 #include <tachyon/reply/io/LoadTSXReply.hpp>
@@ -324,6 +327,10 @@ void SceneEditor::init_info()
             section.make<UICamerasTable>();
         }
         {
+            auto section    = tree.section("Camera Palette");
+            section.make<UIBuildableInfoList<Camera>>();
+        }
+        {
             auto section    = tree.section("Scenes");
             //auto menus      = section.make<UIMenuBar>();
             //auto add        = menus.menu("Add");    // switch to a new thing
@@ -333,11 +340,11 @@ void SceneEditor::init_info()
         }
         {
             auto section    = tree.section("Shape Palette");
-            section.make<UIShapePalette>();
+            section.make<UIBuildableInfoList<Rendered>>();
         }
         //tree << new UICamerasTable;
         //tree << new UIScenesTable;
-        //tree << new UIShapePalette;
+        //tree << new UIRenderedInfoPalette;
     }
     
     #if 0
@@ -347,7 +354,7 @@ void SceneEditor::init_info()
 
     auto shapep       = app.window("Shape Palette");
     shapep.flags(SET, { UIFlag::AlwaysAutoResize });
-    shapep << new UIShapePalette;
+    shapep << new UIRenderedInfoPalette;
     
     auto cameras        = app.window("Cameras");
     cameras.flags(SET, {UIFlag::AlwaysAutoResize});

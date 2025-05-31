@@ -70,10 +70,26 @@ namespace yq::tachyon {
 // ------------------------------------------------------------------------
 
 
+    struct TachyonInfo::Repo {
+        std::vector<const TachyonInfo*> all;
+    };
+
+    TachyonInfo::Repo& TachyonInfo::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
+    const std::vector<const TachyonInfo*>&    TachyonInfo::all()
+    {
+        return repo().all;
+    }
+
     TachyonInfo::TachyonInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::TACHYON);
+        repo().all.push_back(this);
     }
 
     TachyonInfo::~TachyonInfo()

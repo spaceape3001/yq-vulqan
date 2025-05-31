@@ -115,6 +115,8 @@ namespace yq::tachyon {
         //! Category (might move upward if useful)
         std::string_view category() const { return m_category; }
 
+        static const std::vector<const TachyonInfo*>&    all();
+
     protected:
     
         //! Destructor that should never fire
@@ -129,6 +131,9 @@ namespace yq::tachyon {
         friend class Thread;
         friend class AssetProperty;
         friend class DelegateProperty;
+        
+        struct Repo;
+        static Repo& repo();
         
         virtual TachyonSnapPtr   create_snap(const Tachyon&) const = 0;
         virtual TachyonDataPtr   create_data() const = 0;

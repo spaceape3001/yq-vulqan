@@ -34,7 +34,6 @@ namespace yq::tachyon {
         
         static const std::vector<const RenderedInfo*>& all();
         
-        
     private:
         struct Repo;
         static Repo& repo();

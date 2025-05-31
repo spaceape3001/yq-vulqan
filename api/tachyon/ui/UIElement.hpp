@@ -171,7 +171,8 @@ namespace yq::tachyon {
             MenuBar,
             ToolBar,
             NotFirst,
-            HasAccessor
+            HasAccessor,
+            NotStale
         };
 
         /*! \brief Clones the element

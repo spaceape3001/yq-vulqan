@@ -543,6 +543,9 @@ add_library(${PROJECT_NAME} SHARED
     os/glfw/MonitorGLFW.cpp
     os/glfw/MouseGLFW.cpp
     os/glfw/WindowGLFW.cpp
+    
+    panel/UIConcreteInfoList.cpp
+    panel/UIInfoList.cpp
 
     post/AnyPost.cpp
     post/EmptyPost.cpp

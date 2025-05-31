@@ -183,6 +183,17 @@ namespace yq::tachyon {
         {
         }
         
+        /*! \brief "Category" used for editors
+        
+            Fast way of categorizing things
+        */
+        Writer& category(std::string_view k)
+        {
+            if(m_meta && Meta::thread_safe_write())
+                m_meta -> m_category = k;
+            return *this;
+        }
+        
         /*! \brief Declares interface support
         
             This declares that the specified tachyon implements/derives 

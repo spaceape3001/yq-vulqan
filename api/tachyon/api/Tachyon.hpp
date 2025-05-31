@@ -112,6 +112,9 @@ namespace yq::tachyon {
         void                report(Stream&) const;
         void                report(const char* cat="viz", LogPriority pri=LogPriority::Info) const;
 
+        //! Category (might move upward if useful)
+        std::string_view category() const { return m_category; }
+
     protected:
     
         //! Destructor that should never fire
@@ -146,6 +149,7 @@ namespace yq::tachyon {
         dispatch_map_t          m_dispatch;
         Types                   m_types;
         Execution               m_execution;
+        std::string_view        m_category;     // shouldn't have to move this upward, but might.... (later)
         
         //  delegates
         

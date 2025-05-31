@@ -34,8 +34,6 @@ namespace yq::tachyon {
         
         static const std::vector<const RenderedInfo*>& all();
         
-        //! Category (might move upward if useful)
-        std::string_view category() const { return m_category; }
         
     private:
         struct Repo;
@@ -44,7 +42,6 @@ namespace yq::tachyon {
         using PipelineHash  = std::unordered_map<Pipeline::Role, Pipeline*>;
         PipelineHash    m_pipelines;
         const Pipeline* m_default   = nullptr;
-        std::string_view    m_category;
         
         Pipeline*       create_pipeline(Pipeline::Role, std::function<Pipeline*(Pipeline::Role)>);
     };

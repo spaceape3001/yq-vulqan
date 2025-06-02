@@ -14,6 +14,7 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
 #include <tachyon/typedef/action.hpp>
+#include <tachyon/typedef/post.hpp>
 #include <tachyon/typedef/texture.hpp>
 #include <tachyon/typedef/uielement.hpp>
 
@@ -138,6 +139,8 @@ namespace yq::tachyon {
 
         //! UI Element style
         static const UIStyle&   style();
+        
+        bool                    readonly() const;
 
     protected:
         friend class Widget;
@@ -219,6 +222,7 @@ namespace yq::tachyon {
 
         static TextureCPtr      missing_texture();
 
+        static void             send(const PostCPtr&);
         
         UIFlags                 m_flags;
         

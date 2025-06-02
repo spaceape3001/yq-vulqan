@@ -109,6 +109,12 @@ namespace yq::tachyon {
         return s_ret;
     }
 
+    void           UIElement::send(const PostCPtr& pp)
+    {
+        if(s_widget)
+            s_widget -> send(pp, TARGET);
+    }
+
     const UIStyle& UIElement::style()
     {
         return s_style;
@@ -233,6 +239,11 @@ namespace yq::tachyon {
     const UIElement*  UIElement::parent() const
     {
         return m_parent;
+    }
+
+    bool        UIElement::readonly() const
+    {
+        return m_flags(UIFlag::ReadOnly);
     }
 
     UIElement*  UIElement::root()

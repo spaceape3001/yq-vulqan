@@ -353,6 +353,8 @@ add_library(${PROJECT_NAME} SHARED
     control/Orientation3Control.cpp
 
     controller/Space3Controller.cpp
+    
+    edit/TachyonUI.cpp
 
     enum/Cardinal.cpp
     enum/UIFlags.cpp

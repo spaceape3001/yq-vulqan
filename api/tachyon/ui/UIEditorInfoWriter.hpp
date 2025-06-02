@@ -11,6 +11,33 @@
 #include <tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
+
+    struct UIEditorInfo::Field {
+        std::string_view        label;
+        FieldExecutor*          executor    = nullptr;
+    };
+    
+    class UIEditorInfo::FieldExecutor {
+    public:
+        virtual void execute(UIEditor*edit) = 0;
+    };
+
+    template <SomeUIEditor C> 
+    class UIEditorInfo::BoundFieldExecutor : public FieldExecutor {
+    public:
+        typedef void (C::*FN)();
+    
+        BoundFieldExecutor(FN fn) : m_function(fn) {}
+    
+        virtual void execute(UIEditor* edit)
+        {
+            (static_cast<C*>(edit)->*m_function)();
+        }
+        
+    private:
+        FN  m_function;
+    };
+    
     
     /*! \brief Writer of trigger information
     */
@@ -31,6 +58,14 @@ namespace yq::tachyon {
         {
             if(m_meta && Meta::thread_safe_write()){
                 m_meta -> m_edits.push_back(&meta<T>());
+            }
+            return *this;
+        }
+        
+        Writer& field(std::string_view label, void (C::*fn)())
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_fields.push_back({ label, new BoundFieldExecutor<C>(fn) });
             }
             return *this;
         }

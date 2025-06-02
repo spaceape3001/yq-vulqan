@@ -8,6 +8,8 @@
 #include "UIEditorWriter.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>
+#include <tachyon/api/Frame.hpp>
+#include <tachyon/ui/UIStyle.hpp>
 #include <tachyon/ui/UIEditorInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIEditor)
@@ -47,6 +49,39 @@ namespace yq::tachyon {
     
     UIEditor::~UIEditor()
     {
+    }
+
+    bool    UIEditor::bind(TypedID tac)
+    {
+        m_bind      = tac;
+        return true;
+    }
+    
+    void    UIEditor::render()
+    {
+        const Frame*    frame   = Frame::current();
+        if(!frame)
+            return;
+        m_snap          = frame->snap(m_bind);
+        if(!m_snap)
+            return ;
+            
+        std::string     table   = std::format("Editor{}{}", metaInfo().name(), m_bind.id );
+        
+        if(ImGui::BeginTable(table.c_str(), 2)){
+            ImGui::TableSetupColumn("Key",   ImGuiTableColumnFlags_WidthFixed, style().table.keycol());
+            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch, 1.0);
+            for(auto& f : metaInfo().m_fields){
+                ImGui::TableNextRow();
+                if(ImGui::TableNextColumn())
+                    ImGui::TextUnformatted(f.label);
+                if(ImGui::TableNextColumn())
+                    f.executor->execute(this);
+            }
+        
+            ImGui::EndTable();
+        }
+        
     }
 
     ////////////////////////////

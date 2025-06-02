@@ -51,5 +51,9 @@ namespace yq::tachyon {
             
             std::string_view    unknown     = "openicon/icons/png/48x48/places/nuvola-style/file-important.png";
         } icon;
+        
+        struct {
+            UIDim   keycol      = { 20, 100., -1 };
+        } table;
     };
 }

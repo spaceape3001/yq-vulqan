@@ -637,6 +637,7 @@ add_library(${PROJECT_NAME} SHARED
     request/ui/RefreshRequest.cpp
 
     scene/BackgroundScene.cpp
+    scene/CompositeScene.cpp
     scene/ForegroundScene.cpp
     scene/HUDScene.cpp
     scene/SimpleScene.cpp

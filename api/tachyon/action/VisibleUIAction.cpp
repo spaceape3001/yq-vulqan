@@ -67,7 +67,7 @@ namespace yq::tachyon {
             
         A   a;
         
-        const Any&  arg = pay.argument(0);
+        const Any&  arg = pay.argument(FIRST, 0);
         a = arg.as<Tristate>([&](Tristate x){
             switch(x){
             case Tristate::YES:

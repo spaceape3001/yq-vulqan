@@ -35,14 +35,32 @@ namespace yq::tachyon {
         return *this;
     }
 
-    const Any&  Payload::argument(uint32_t k) const
+    const Any&  Payload::argument(first_k, uint32_t k) const
     {
         if(k >= arguments.size())
             return badref();
         return arguments[k];
     }
+
+    bool    Payload::argument(has_k, uint32_t k) const
+    {
+        return k < arguments.size();
+    }
+
+    const Meta* Payload::meta(first_k, uint32_t k) const
+    {
+        auto i = metas.find(k);
+        if(i!=metas.end())
+            return i->second;
+        return nullptr;
+    }
+
+    bool        Payload::meta(has_k, uint32_t k) const
+    {
+        return metas.contains(k);
+    }
     
-    const Any&  Payload::parameter(uint32_t k) const
+    const Any&  Payload::parameter(first_k, uint32_t k) const
     {
         auto i = mapped.find(k);
         if(i != mapped.end())
@@ -50,17 +68,12 @@ namespace yq::tachyon {
         return badref();
     }
     
-    const Any&  Payload::parameter(const std::string& k) const
+    const Any&  Payload::parameter(first_k, const std::string& k) const
     {
         auto i = named.find(k);
         if(i != named.end())
             return i->second;
         return badref();
-    }
-    
-    bool    Payload::argument(has_k, uint32_t k) const
-    {
-        return k < arguments.size();
     }
     
     bool    Payload::parameter(has_k, uint32_t k) const

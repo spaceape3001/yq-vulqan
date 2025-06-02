@@ -418,6 +418,8 @@ add_library(${PROJECT_NAME} SHARED
     event/mouse/MouseReleaseEvent.cpp
     event/mouse/MouseScrollEvent.cpp
 
+    event/panel/InfoSelectionChangedEvent.cpp
+
     event/spatial/AABB1Event.cpp
     event/spatial/AABB2Event.cpp
     event/spatial/AABB3Event.cpp

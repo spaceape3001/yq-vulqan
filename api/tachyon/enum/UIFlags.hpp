@@ -37,6 +37,7 @@ namespace yq::tachyon {
         Closeable,
         CtrlEnterForNewLine,
         DisplayEmptyRefVal,
+        EmitSignal,                 //!< Emit signal on changes/other (whether selection or what not)
         EnterReturnsTrue,
         EscapeClearsAll,
         ForceImageSize,             //!< Force the image size to specified (no resizing to accommodate)
@@ -72,7 +73,7 @@ namespace yq::tachyon {
         NoUndoRedo,
         ParseEmptyRefVal,
         Password,
-        ReadOnly,
+        ReadOnly,               //!< Set to disable editing (currently advisory)
         ResizeX,
         ResizeY,
         Reverse,
@@ -80,7 +81,7 @@ namespace yq::tachyon {
         SetPositionOnce,
         SetSize,
         SetSizeOnce,
-        StretchToFull,      //!< Stretch to full size (toolbar is width)
+        StretchToFull,          //!< Stretch to full size (toolbar is width)
         UnsavedDocument,
         Vertical,
         

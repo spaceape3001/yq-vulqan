@@ -53,9 +53,27 @@ namespace yq::tachyon {
 
     ////////////////////////////
 
+    struct UIElementInfo::Repo {
+        std::vector<const UIElementInfo*>   all;
+    };
+    
+    UIElementInfo::Repo& UIElementInfo::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
+    const std::vector<const UIElementInfo*>& UIElementInfo::all()
+    {
+        return repo().all;
+    }
+
+    ////////////////////////////
+
     UIElementInfo::UIElementInfo(std::string_view theName, ObjectInfo& pmeta, const std::source_location& sl) : 
         ObjectInfo(theName, pmeta, sl)
     {
+        repo().all.push_back(this);
     }
 
     ////////////////////////////

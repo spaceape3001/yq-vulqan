@@ -32,6 +32,12 @@ namespace yq::tachyon {
     public:
         template <typename> class Writer;
         UIElementInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        
+        static const std::vector<const UIElementInfo*>& all();
+        
+    private:
+        struct Repo;
+        static Repo& repo();
     };
 
 

@@ -673,6 +673,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UICheckBox_Visible.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp
+    ui/UIEditor.cpp
     ui/UIElement.cpp
     ui/UIElementWriter.cpp
     ui/UIElements.cpp

@@ -18,6 +18,9 @@
 
 #include <tachyon/camera/SpaceCamera.hpp>
 #include <tachyon/command/ui/TitleCommand.hpp>
+
+#include <tachyon/event/panel/InfoSelectionChangedEvent.hpp>
+
 #include <tachyon/gfx/Texture.hpp>
 
 #include <tachyon/io/FileIOManager.hpp>
@@ -328,7 +331,8 @@ void SceneEditor::init_info()
         }
         {
             auto section    = tree.section("Camera Palette");
-            section.make<UIBuildableInfoList<Camera>>();
+            auto p = section.make<UIBuildableInfoList<Camera>>();
+            p.flag(SET, UIFlag::EmitSignal);
         }
         {
             auto section    = tree.section("Scenes");
@@ -340,7 +344,8 @@ void SceneEditor::init_info()
         }
         {
             auto section    = tree.section("Shape Palette");
-            section.make<UIBuildableInfoList<Rendered>>();
+            auto p = section.make<UIBuildableInfoList<Rendered>>();
+            p.flag(SET, UIFlag::EmitSignal);
         }
         //tree << new UICamerasTable;
         //tree << new UIScenesTable;
@@ -581,6 +586,15 @@ void    SceneEditor::imgui(ViContext&u)
         }
     }
 }
+
+void    SceneEditor::on_info_selection_changed_event(const InfoSelectionChangedEvent&evt)
+{
+    if(const CameraInfo* p = dynamic_cast<const CameraInfo*>(evt.info()))
+        m_selection.cameraInfo      = p;
+    if(const RenderedInfo* p = dynamic_cast<const RenderedInfo*>(evt.info()))
+        m_selection.renderedInfo    = p;
+}
+
 
 void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
 {

@@ -9,17 +9,17 @@
 #include <tachyon/widget/CompositeWidget.hpp>
 
 namespace yq::tachyon {
-    class OpenFileRequest;
-    class SaveFileRequest;
-    class SceneInfo;
-    class SaveTSXReply;
-    class LoadTSXReply;
     class CameraInfo;
+    class InfoSelectionChangedEvent;
+    class LoadTSXReply;
+    class OpenFileRequest;
+    class RenderedInfo;
+    class SaveFileRequest;
+    class SaveTSXReply;
+    class SceneInfo;
 }
 
 namespace IGFD { class FileDialog; }
-
-class SceneTable;
 
 using namespace yq;
 using namespace yq::tachyon;
@@ -75,6 +75,8 @@ public:
     void    cmd_new_hud_scene();
     void    cmd_new_simple_scene();
     
+    void    cmd_create_rendered();
+    
     void    cmd_add_scene(const SceneInfo&);
     void    cmd_add_camera(const CameraInfo&);
     
@@ -101,8 +103,14 @@ private:
     struct {
         CameraID            space;
         CameraID            hud;
-
     }                           m_camera;
+    
+    struct {
+        const CameraInfo*       cameraInfo    = nullptr;
+        const RenderedInfo*     renderedInfo  = nullptr;
+        const SceneInfo*        sceneInfo     = nullptr;
+    }   m_selection;
+    
     SceneEntry*                 m_editing   = nullptr;
     std::vector<SceneEntry>     m_scenes;
     std::vector<CameraEntry>    m_cameras;
@@ -125,4 +133,5 @@ private:
     
     void    on_load_tsx_reply(const LoadTSXReply&);
     void    on_save_tsx_reply(const SaveTSXReply&);
+    void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);
 };

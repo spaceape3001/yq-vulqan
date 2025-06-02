@@ -7,6 +7,8 @@
 #include "UIInfoList.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/Rendered.hpp>
+#include <tachyon/api/Widget.hpp>
+#include <tachyon/event/panel/InfoSelectionChangedEvent.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementInfoWriter.hpp>
 #include <tachyon/ui/UIStyle.hpp>
@@ -72,6 +74,8 @@ namespace yq::tachyon {
             
             std::string_view    cat;
             for(auto& r : m_rows){
+                bool        doSelect    = false;
+            
                 if(!is_similar(cat, r.info->category())){
                     cat = r.info->category();
                     ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
@@ -89,12 +93,19 @@ namespace yq::tachyon {
                 }
                 if(ImGui::TableNextColumn()){
                     if(ImGui::Selectable(r.label.c_str(), r.info == m_selected)){
-                        m_selected  = r.info;
+                        doSelect        = true;
                     }
                 }
                 if(ImGui::TableNextColumn()){
                     if(ImGui::Selectable(r.description.c_str(), r.info == m_selected)){
-                        m_selected  = r.info;
+                        doSelect        = true;
+                    }
+                }
+                
+                if(doSelect && (m_selected != r.info)){
+                    m_selected  = r.info;
+                    if(m_flags(UIFlag::EmitSignal) && widget()){
+                        widget() -> mail(new InfoSelectionChangedEvent({.source=widget(), .target=widget()}, m_selected));
                     }
                 }
             }

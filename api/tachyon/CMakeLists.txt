@@ -370,6 +370,7 @@ add_library(${PROJECT_NAME} SHARED
     event/MonitorEvent.cpp
     event/MouseEvent.cpp
     event/OSEvent.cpp
+    event/PanelEvent.cpp
     event/SimEvent.cpp
     event/SpatialEvent.cpp
     event/TachyonEvent.cpp

@@ -6,6 +6,7 @@
 
 #include "SceneEditor.hpp"
 #include "UIControlPanel.hpp"
+#include "InspectorUI.hpp"
 
 #include <tachyon/application.hpp>
 #include <tachyon/MyImGui.hpp>
@@ -320,56 +321,74 @@ void SceneEditor::init_info()
     
     auto controlpanel   = app.make<UIControlPanel>();
     {
-        auto tree = controlpanel.make<UISimpleTree>();
+        auto tree       = controlpanel.make<UISimpleTree>();
         {
-            auto section    = tree.section("Cameras");
-            auto menus      = section.hline();
-            auto add        = menus.menu("Add");    // switch to a new thing
-            add.menuitem("Foo");
+            auto cameras    = tree.section("Cameras");
+            auto ctree      = cameras.make<UISimpleTree>();
             
-            section.make<UICamerasTable>();
+            {
+                auto section    = ctree.section("Available");
+                auto p          = section.make<UIBuildableInfoList<Camera>>();
+                p.flag(SET, UIFlag::EmitSignal);
+            }
+            {
+                auto section    = ctree.section("Current");
+                auto menus      = section.hline();
+                auto add        = menus.menu("Add");
+                add.menuitem("Foo");
+                auto ctable     = section.make<UICamerasTable>();
+                ctable.uid("CameraTable");
+            }
+            {
+                auto section    = ctree.section("Properties");
+                auto i          = section.make<InspectorUI>();
+                i.uid("CameraInspector");
+            }
         }
+    
         {
-            auto section    = tree.section("Camera Palette");
-            auto p = section.make<UIBuildableInfoList<Camera>>();
-            p.flag(SET, UIFlag::EmitSignal);
+            auto scenes         = tree.section("Scenes");
+            auto stree          = scenes.make<UISimpleTree>();
+            
+            {
+                auto section    = stree.section("Current");
+                auto menus      = section.hline();
+                auto add        = menus.menu("Add");
+                add.menuitem("Foo");
+                auto stable     = section.make<UIScenesTable>();
+                stable.uid("SceneTable");
+            }
+            {
+                auto section    = stree.section("Properties");
+                auto i          = section.make<InspectorUI>();
+                i.uid("SceneInspector");
+            }
         }
-        {
-            auto section    = tree.section("Scenes");
-            //auto menus      = section.make<UIMenuBar>();
-            //auto add        = menus.menu("Add");    // switch to a new thing
-            //add.menuitem("Bar");
 
-            section.make<UIScenesTable>();
-        }
+
         {
-            auto section    = tree.section("Shape Palette");
-            auto p = section.make<UIBuildableInfoList<Rendered>>();
-            p.flag(SET, UIFlag::EmitSignal);
+            auto rendereds      = tree.section("Rendereds");
+            auto rtree          = rendereds.make<UISimpleTree>();
+        
+            {
+                auto section    = rtree.section("Available");
+                auto p          = section.make<UIBuildableInfoList<Rendered>>();
+                p.flag(SET, UIFlag::EmitSignal);
+            }
+            
+            {
+                auto section    = rtree.section("Current");
+                //  TODO
+            }
+
+        
+            {
+                auto section    = rtree.section("Properties");
+                auto i          = section.make<InspectorUI>();
+                i.uid("RenderedInspector");
+            }
         }
-        //tree << new UICamerasTable;
-        //tree << new UIScenesTable;
-        //tree << new UIRenderedInfoPalette;
     }
-    
-    #if 0
-    auto scenes         = app.window("Scenes");
-    scenes.flags(SET, { UIFlag::AlwaysAutoResize });
-    scenes << new UIScenesTable;
-
-    auto shapep       = app.window("Shape Palette");
-    shapep.flags(SET, { UIFlag::AlwaysAutoResize });
-    shapep << new UIRenderedInfoPalette;
-    
-    auto cameras        = app.window("Cameras");
-    cameras.flags(SET, {UIFlag::AlwaysAutoResize});
-    cameras << new UICamerasTable;
-
-    view.menuitem("Cameras").action(VISIBLE, cameras);
-    view.menuitem("Scenes").action(VISIBLE, scenes);
-    view.menuitem("Shape Palette").action(VISIBLE, shapep);
-    #endif
-    
 }
 
 

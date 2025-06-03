@@ -11,7 +11,7 @@
 #include <tachyon/ui/UIAppMainWriter.hpp>
 #include <tachyon/ui/UIButtonWriter.hpp>
 #include <tachyon/ui/UICheckBoxWriter.hpp>
-#include <tachyon/ui/UIEditor.hpp>
+#include <tachyon/ui/UIEditorWriter.hpp>
 #include <tachyon/ui/UIElementsWriter.hpp>
 #include <tachyon/ui/UIGroupWriter.hpp>
 #include <tachyon/ui/UILayoutWriter.hpp>

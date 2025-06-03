@@ -582,6 +582,7 @@ add_library(${PROJECT_NAME} SHARED
     raster/DebugRasters.cpp
 
     rendered/Billboard3.cpp
+    rendered/ColorTriangle3.cpp
     rendered/ImageQuad3.cpp
     rendered/Quadrilateral3.cpp
     rendered/SkyBox3.cpp

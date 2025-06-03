@@ -41,9 +41,7 @@ namespace yq::tachyon {
                 itemTitle   = p;
             std::string     id  = std::format("{}##TREENODE{}", itemTitle, ++n);
             if(ImGui::TreeNode(id.c_str())){
-                ImGui::Indent();
                 e->draw();
-                ImGui::Unindent();
                 ImGui::TreePop();
             }
         }

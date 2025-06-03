@@ -7,6 +7,7 @@
 project(scenery)
 
 add_executable(${PROJECT_NAME}
+    InspectorUI.cpp
     SceneEditor.cpp
     UIControlPanel.cpp
 )

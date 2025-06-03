@@ -55,5 +55,9 @@ namespace yq::tachyon {
         struct {
             UIDim   keycol      = { 20, 100., -1 };
         } table;
+        
+        struct {
+            UIDim   indent      = { 2., 5, 50. };
+        } tree;
     };
 }

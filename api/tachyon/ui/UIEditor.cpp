@@ -43,7 +43,7 @@ namespace yq::tachyon {
     {
     }
     
-    UIEditor::UIEditor(const UIEditor& cp) : UIElements(cp)
+    UIEditor::UIEditor(const UIEditor& cp) : UIElements(cp), m_bind(cp.m_bind), m_snap(nullptr)
     {
     }
     

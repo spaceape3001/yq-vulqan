@@ -11,15 +11,15 @@
 using yq::tachyon::UIWindow;
 using yq::tachyon::UIFlags;
 
-class UIControlPanel : public UIWindow {
-    YQ_OBJECT_DECLARE(UIControlPanel, UIWindow)
+class ControlPanelUI : public UIWindow {
+    YQ_OBJECT_DECLARE(ControlPanelUI, UIWindow)
 
 public:
     static void init_info();
-    UIControlPanel(UIFlags flags={});
-    UIControlPanel(const UIControlPanel& cp);
+    ControlPanelUI(UIFlags flags={});
+    ControlPanelUI(const ControlPanelUI& cp);
     
-    virtual UIControlPanel*   clone() const;
+    virtual ControlPanelUI*   clone() const;
     void    render() override;
     
 private:

@@ -7,9 +7,12 @@
 project(scenery)
 
 add_executable(${PROJECT_NAME}
+    CameraTableUI.cpp
+    ControlPanelUI.cpp
     InspectorUI.cpp
+    RenderedTableUI.cpp
     SceneEditor.cpp
-    UIControlPanel.cpp
+    SceneTableUI.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

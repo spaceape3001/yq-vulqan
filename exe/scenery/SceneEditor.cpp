@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SceneEditor.hpp"
-#include "UIControlPanel.hpp"
+#include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
 
 #include <tachyon/application.hpp>
@@ -319,7 +319,7 @@ void SceneEditor::init_info()
     auto stb        = app.toolbar(SOUTH, "south");
     stb.button("S");
     
-    auto controlpanel   = app.make<UIControlPanel>();
+    auto controlpanel   = app.make<ControlPanelUI>();
     {
         auto tree       = controlpanel.make<UISimpleTree>();
         {

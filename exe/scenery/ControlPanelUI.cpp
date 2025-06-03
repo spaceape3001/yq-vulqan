@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIControlPanel.hpp"
+#include "ControlPanelUI.hpp"
 #include <tachyon/ui/UIElementInfoWriter.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/AxBox2.hxx>
@@ -12,26 +12,26 @@
 using namespace yq;
 using namespace yq::tachyon;
 
-void UIControlPanel::init_info()
+void ControlPanelUI::init_info()
 {
-    auto w = writer<UIControlPanel>();
+    auto w = writer<ControlPanelUI>();
     w.description("Scene Editor's Control Panel");
 }
 
-UIControlPanel::UIControlPanel(UIFlags flags) : UIWindow("Control Panel", flags)
+ControlPanelUI::ControlPanelUI(UIFlags flags) : UIWindow("Control Panel", flags)
 {
 }
 
-UIControlPanel::UIControlPanel(const UIControlPanel& cp) : UIWindow(cp)
+ControlPanelUI::ControlPanelUI(const ControlPanelUI& cp) : UIWindow(cp)
 {
 }
 
-UIControlPanel*   UIControlPanel::clone() const 
+ControlPanelUI*   ControlPanelUI::clone() const 
 {
-    return new UIControlPanel(*this);
+    return new ControlPanelUI(*this);
 }
 
-void    UIControlPanel::render() 
+void    ControlPanelUI::render() 
 {
     AxBox2F box = parent() -> viewport(CONTENT);
     position(SET, NEXT, box.ll());
@@ -41,4 +41,4 @@ void    UIControlPanel::render()
     UIWindow::render();
 }
 
-YQ_OBJECT_IMPLEMENT(UIControlPanel)
+YQ_OBJECT_IMPLEMENT(ControlPanelUI)

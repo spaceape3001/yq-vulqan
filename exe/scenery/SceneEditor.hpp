@@ -89,13 +89,9 @@ public:
 
     class CameraAddMenuUI;
     class CameraTableUI;
+    class SceneAddMenuUI;
     class ScenesTableUI;
     class RenderedTableUI;
-    
-    class UISceneAddMenu;
-    
-    class UICameraCreateMenu;
-    class UISceneCreateMenu;
     
 private:
     struct SceneEntry;
@@ -119,6 +115,8 @@ private:
     struct {
         const SceneInfo*            info     = nullptr;
         SceneID                     selected;
+        std::vector<SceneEntry>     table;
+        SceneEntry*                 editing = nullptr;
     }                           m_scene;
 
     struct {

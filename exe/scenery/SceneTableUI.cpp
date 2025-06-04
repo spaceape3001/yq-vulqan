@@ -67,7 +67,6 @@ void    SceneEditor::ScenesTableUI::render()
         return;
         
     if(ImGui::BeginTable("Scenes", 5)){
-        ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
         ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, sz*1.2);
         ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthStretch, 0.1);
         ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch, 0.3);

@@ -14,10 +14,26 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::SceneID)
 
 namespace yq::tachyon {
 
+    struct SceneInfo::Repo {
+        std::vector<const SceneInfo*> all;
+    };
+    
+    SceneInfo::Repo& SceneInfo::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
+    const std::vector<const SceneInfo*>&    SceneInfo::all()
+    {
+        return repo().all;
+    }
+
     SceneInfo::SceneInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) :
         TachyonInfo(name, base, sl)
     {
         set(Type::Scene);
+        repo().all.push_back(this);
     }
     
     SceneInfo::~SceneInfo()

@@ -90,10 +90,14 @@ namespace yq::tachyon {
     {
         if(m_flags(UIFlag::Reverse)){
             if(m_flags(UIFlag::Horizontal)){
+                bool first = true;
                 for(UIElement* ui : reverse(m_items)){
                     if(!ui) [[unlikely]]
                         continue;
-                    ImGui::SameLine();
+                    if(first){
+                        first = false;
+                    } else
+                        ImGui::SameLine();
                     ui->draw();
                 }
             } else {
@@ -105,10 +109,14 @@ namespace yq::tachyon {
             }
         } else {
             if(m_flags(UIFlag::Horizontal)){
+                bool first = true;
                 for(UIElement* ui : m_items){
                     if(!ui) [[unlikely]]
                         continue;
-                    ImGui::SameLine();
+                    if(first){
+                        first = false;
+                    } else
+                        ImGui::SameLine();
                     ui->draw();
                 }
             } else {

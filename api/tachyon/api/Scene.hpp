@@ -17,8 +17,14 @@ namespace yq::tachyon {
     public:
         template <typename C> struct Writer;
         SceneInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+
+        //! Gets all camera informations
+        static const std::vector<const SceneInfo*>&    all();
+
     protected:
         ~SceneInfo();
+        struct Repo;
+        static Repo& repo();
     };
     
     /*! \brief Frame of things to be rendered

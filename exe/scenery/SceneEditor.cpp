@@ -4,11 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "CameraAddMenuUI.hpp"
 #include "CameraEntry.hpp"
 #include "CameraTableUI.hpp"
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
 #include "RenderedEntry.hpp"
+#include "SceneAddMenuUI.hpp"
 #include "SceneEditor.hpp"
 #include "SceneEntry.hpp"
 #include "SceneTableUI.hpp"
@@ -60,16 +62,6 @@
 
 #include <iostream>
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 YQ_TACHYON_IMPLEMENT(SceneEditor)
 
@@ -135,8 +127,9 @@ void SceneEditor::init_info()
         auto tree       = controlpanel.make<UISimpleTree>();
         {
             auto cameras    = tree.section("Cameras");
+            auto add        = cameras.make<CameraAddMenuUI>("Add/Create##AddCameraUI");
+
             auto ctree      = cameras.make<UISimpleTree>();
-            
             {
                 auto section    = ctree.section("Available");
                 auto p          = section.make<UIBuildableInfoList<Camera>>();
@@ -144,9 +137,6 @@ void SceneEditor::init_info()
             }
             {
                 auto section    = ctree.section("Current");
-                auto menus      = section.hline();
-                auto add        = menus.menu("Add");
-                add.menuitem("Foo");
                 auto ctable     = section.make<CameraTableUI>();
                 ctable.uid("CameraTable");
             }
@@ -159,13 +149,12 @@ void SceneEditor::init_info()
     
         {
             auto scenes         = tree.section("Scenes");
+            auto add            = scenes.make<SceneAddMenuUI>("Add/Create##AddSceneUI");
             auto stree          = scenes.make<UISimpleTree>();
             
             {
                 auto section    = stree.section("Current");
                 auto menus      = section.hline();
-                auto add        = menus.menu("Add");
-                add.menuitem("Foo");
                 auto stable     = section.make<ScenesTableUI>();
                 stable.uid("SceneTable");
             }

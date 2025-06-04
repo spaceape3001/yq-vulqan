@@ -7,11 +7,12 @@
 project(scenery)
 
 add_executable(${PROJECT_NAME}
-    #CameraAddMenuUI.cpp
+    CameraAddMenuUI.cpp
     CameraTableUI.cpp
     ControlPanelUI.cpp
     InspectorUI.cpp
     RenderedTableUI.cpp
+    SceneAddMenuUI.cpp
     SceneEditor.cpp
     SceneTableUI.cpp
     

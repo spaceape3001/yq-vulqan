@@ -87,10 +87,11 @@ public:
     
     //void    ui_scene_table();
 
-    class UICameraAddMenu;
+    class CameraAddMenuUI;
     class CameraTableUI;
-    class UICameraPalette;
     class ScenesTableUI;
+    class RenderedTableUI;
+    
     class UISceneAddMenu;
     
     class UICameraCreateMenu;
@@ -99,22 +100,34 @@ public:
 private:
     struct SceneEntry;
     struct CameraEntry;
-    struct RenderEntry;
+    struct RenderedEntry;
     
     struct {
-        CameraID            space;
-        CameraID            hud;
+        CameraID                    space;
+        CameraID                    hud;
+        
+        //! Current selected (available)
+        const CameraInfo*           info  = nullptr;
+        
+        //! All entries
+        std::vector<CameraEntry>    table;
+
+        //! For the table
+        CameraID                    selected;
     }                           m_camera;
     
     struct {
-        const CameraInfo*       cameraInfo    = nullptr;
-        const RenderedInfo*     renderedInfo  = nullptr;
-        const SceneInfo*        sceneInfo     = nullptr;
-    }   m_selection;
+        const SceneInfo*            info     = nullptr;
+        SceneID                     selected;
+    }                           m_scene;
+
+    struct {
+        const RenderedInfo*         info     = nullptr;
+        std::vector<RenderedEntry>  entries;
+    }                           m_rendered;
     
     SceneEntry*                 m_editing   = nullptr;
     std::vector<SceneEntry>     m_scenes;
-    std::vector<CameraEntry>    m_cameras;
     FileMode                    m_fileMode  = FileMode::None;
     Flags<F>                    m_flags;
     TypedID                     m_fileIO;
@@ -136,3 +149,5 @@ private:
     void    on_save_tsx_reply(const SaveTSXReply&);
     void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);
 };
+
+extern TypedID     gFileIO;

@@ -8,11 +8,11 @@
 #include "CameraTableUI.hpp"
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
+#include "RenderedEntry.hpp"
 #include "SceneEditor.hpp"
 #include "SceneEntry.hpp"
 #include "SceneTableUI.hpp"
 
-#include <tachyon/application.hpp>
 #include <tachyon/MyImGui.hpp>
 
 #include <tachyon/api/Camera.hpp>
@@ -28,7 +28,6 @@
 
 #include <tachyon/gfx/Texture.hpp>
 
-#include <tachyon/io/FileIOManager.hpp>
 
 #include <tachyon/panel/UIBuildableInfoList.hpp>
 
@@ -56,15 +55,11 @@
 
 #include <tachyon/widget/AppWidgetInfoWriter.hpp>
 
-#include <yq/asset/Asset.hpp>
-#include <yq/file/FileResolver.hpp>
 
 #include <ImGuiFileDialog.h>
 
 #include <iostream>
 
-
-TypedID     gFileIO;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -425,9 +420,11 @@ void    SceneEditor::imgui(ViContext&u)
 void    SceneEditor::on_info_selection_changed_event(const InfoSelectionChangedEvent&evt)
 {
     if(const CameraInfo* p = dynamic_cast<const CameraInfo*>(evt.info()))
-        m_selection.cameraInfo      = p;
+        m_camera.info       = p;
     if(const RenderedInfo* p = dynamic_cast<const RenderedInfo*>(evt.info()))
-        m_selection.renderedInfo    = p;
+        m_rendered.info     = p;
+    if(const SceneInfo* p = dynamic_cast<const SceneInfo*>(evt.info()))
+        m_scene.info        = p;
 }
 
 
@@ -496,34 +493,4 @@ Execution   SceneEditor::teardown(const Context&ctx)
     return CompositeWidget::teardown(ctx);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int main(int argc, char* argv[])
-{
-    AppCreateInfo        aci;
-    aci.thread.io           = true;
-    aci.thread.sim          = true;
-    aci.view.title          = "Scenery Editor";
-    aci.view.size           = { 1920, 1080 };
-    aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };
-    aci.view.imgui          = true;
-    aci.view.resizable      = true;
-    
-    Application app(argc, argv, aci);
-    Meta::init();
-    app.vulqan_libraries(LOAD);
-    Meta::init();
-    
-    for(const std::filesystem::path& pth : Asset::resolver().paths())
-        yInfo() << "asset path> " << pth;
-    
-    app.start();
-    
-    gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();
-    
-    SceneEditor* w      = Widget::create<SceneEditor>();
-    app.run(w);
-    return 0;
-}
 

@@ -4,9 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SceneEditor.hpp"
+#include "CameraEntry.hpp"
+#include "CameraTableUI.hpp"
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
+#include "SceneEditor.hpp"
+#include "SceneEntry.hpp"
+#include "SceneTableUI.hpp"
 
 #include <tachyon/application.hpp>
 #include <tachyon/MyImGui.hpp>
@@ -64,198 +68,10 @@ TypedID     gFileIO;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct SceneEditor::SceneEntry {
-    SceneID             scene;
-    CameraID            camera;
-    const SceneInfo*    info    = nullptr;
-    std::string         sid;    // ID for selectable
-    std::string         stype;
-    std::string         visBtn, visBtn2, invisBtn, invisBtn2;
-    std::string         filepath;
-    RGBA4F              gamma  = { 0., 0., 0., -1.};
-    EFlags              flags;
-};
-
-struct SceneEditor::CameraEntry {
-    CameraID            camera;
-    const CameraInfo*   info    = nullptr;
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class SceneEditor::UICamerasTable : public UIElement {
-    YQ_OBJECT_DECLARE(UICamerasTable, UIElement)
-public:
-
-    static void init_info()
-    {
-        auto w = writer<UICamerasTable>();
-        w.description("Scene Editor's Camera Table");
-    }
-
-    UICamerasTable(UIFlags flags={}) : UIElement(flags)
-    {
-    }
-    
-    UICamerasTable(const UICamerasTable& cp) : UIElement(cp)
-    {
-    }
-    
-    virtual UICamerasTable*   clone() const 
-    {
-        return new UICamerasTable(*this);
-    }
-    
-    const char*    title() const override
-    {
-        return "Cameras";
-    }
-    
-    void    render() override
-    {
-        ImGui::TextUnformatted("Cameras!");
-    }
-};
-
-YQ_OBJECT_IMPLEMENT(SceneEditor::UICamerasTable)
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class SceneEditor::UIScenesTable : public UIElement {
-    YQ_OBJECT_DECLARE(UIScenesTable, UIElement)
-public:
-
-    static void init_info()
-    {
-        auto w = writer<UIScenesTable>();
-        w.description("Scene Editor's Scene Table");
-    }
-
-    UIScenesTable(UIFlags flags={}) : UIElement(flags)
-    {
-    }
-    
-    UIScenesTable(const UIScenesTable& cp) : UIElement(cp)
-    {
-    }
-    
-    virtual UIScenesTable*   clone() const 
-    {
-        return new UIScenesTable(*this);
-    }
-    
-    virtual const char* title() const override
-    {
-        return "Scenes";
-    }
-    
-    void    render() override
-    {
-        const Frame*    frame   = Frame::current();
-        if(!frame){
-            return ;
-        }
-
-        float   sz  = ImGui::GetFrameHeight() * 0.9;
-        
-        Size2F      imgBtnSize    = { sz, sz };
-        
-        if(!m_invisible)
-            m_invisible = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-p000-general.png"));
-        if(!m_editing)
-            m_editing   = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-e001-direction-right.png"));
-        if(!m_visible)
-            m_visible   = install(texture("sdk/scenery/eyeball48.png"));
-        
-        SceneEditor*    editor  = dynamic_cast<SceneEditor*>(widget());
-        if(!editor)
-            return ;
-            
-        if(ImGui::BeginTable("Scenes", 4)){
-            ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
-            ImGui::TableNextColumn();
-            ImGui::TableNextColumn();
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("Type");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("Name");
-            }
-
-            for(SceneEntry& e : editor->m_scenes){
-                bool    isEdit  = &e == editor->m_editing;
-                bool    wantEdit    = false;
-                const SceneSnap*    ss  = frame->snap(e.scene);
-                if(!ss)
-                    continue;
-                
-                ImGui::TableNextRow();
-                if(ImGui::TableNextColumn()){
-                    if(isEdit){
-                        if(m_editing){
-                            ImGui::ImageWithBg(m_editing, imgBtnSize);
-                        } else {
-                            ImGui::TextUnformatted("E");
-                        }
-                    } else {
-                        if(e.flags(E::Invisible)){
-                            if(m_invisible ? ImGui::ImageButton(e.invisBtn.c_str(), m_invisible, imgBtnSize) : ImGui::Button(e.invisBtn2.c_str())){
-                                e.flags -= E::Invisible;
-                                editor->m_flags |= F::Stale;
-                            }
-                        } else {
-                            if(m_visible ? ImGui::ImageButton(e.visBtn.c_str(), m_visible, imgBtnSize) : ImGui::Button(e.visBtn2.c_str())){
-                                e.flags |= E::Invisible;
-                                editor->m_flags |= F::Stale;
-                            }
-                        }
-                    }
-                }
-                
-                if(ImGui::TableNextColumn()){
-                    if(ImGui::Selectable(e.sid.c_str(), isEdit) && !isEdit){
-                        wantEdit    = true;
-                    }
-                }
-                if(ImGui::TableNextColumn()){
-                    if(ImGui::Selectable(e.stype.c_str(), isEdit) && !isEdit){
-                        wantEdit    = true;
-                    }
-                }
-                if(ImGui::TableNextColumn()){
-                
-                    std::string sname;
-                    if(ss->name.empty()){
-                        sname   = std::format("{}##{}.SELECT", e.info->stem(), e.scene.id); 
-                    } else
-                       sname = std::format("{}##{}.SELECT", ss->name, e.scene.id); 
-
-                    if(ImGui::Selectable(sname.c_str(), isEdit) && !isEdit){
-                        wantEdit    = true;
-                    }
-                }
-                
-                if(wantEdit){
-                    if(e.flags(E::Invisible)){
-                        e.flags -= E::Invisible;
-                        editor->m_flags |= F::Stale;
-                    }
-                    editor->m_editing = &e;
-                }
-                
-            }
-            ImGui::EndTable();
-        }
-    }
-   
-    ImTextureID      m_invisible;
-    ImTextureID      m_visible;
-    ImTextureID      m_editing;
-};
-
-YQ_OBJECT_IMPLEMENT(SceneEditor::UIScenesTable)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,7 +152,7 @@ void SceneEditor::init_info()
                 auto menus      = section.hline();
                 auto add        = menus.menu("Add");
                 add.menuitem("Foo");
-                auto ctable     = section.make<UICamerasTable>();
+                auto ctable     = section.make<CameraTableUI>();
                 ctable.uid("CameraTable");
             }
             {
@@ -355,7 +171,7 @@ void SceneEditor::init_info()
                 auto menus      = section.hline();
                 auto add        = menus.menu("Add");
                 add.menuitem("Foo");
-                auto stable     = section.make<UIScenesTable>();
+                auto stable     = section.make<ScenesTableUI>();
                 stable.uid("SceneTable");
             }
             {

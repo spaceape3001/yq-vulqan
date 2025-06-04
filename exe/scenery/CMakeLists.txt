@@ -10,7 +10,7 @@ add_executable(${PROJECT_NAME}
     CameraTableUI.cpp
     ControlPanelUI.cpp
     InspectorUI.cpp
-    RenderedTableUI.cpp
+    #RenderedTableUI.cpp
     SceneEditor.cpp
     SceneTableUI.cpp
 )

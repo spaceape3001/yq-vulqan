@@ -88,9 +88,9 @@ public:
     //void    ui_scene_table();
 
     class UICameraAddMenu;
-    class UICamerasTable;
+    class CameraTableUI;
     class UICameraPalette;
-    class UIScenesTable;
+    class ScenesTableUI;
     class UISceneAddMenu;
     
     class UICameraCreateMenu;
@@ -99,6 +99,7 @@ public:
 private:
     struct SceneEntry;
     struct CameraEntry;
+    struct RenderEntry;
     
     struct {
         CameraID            space;

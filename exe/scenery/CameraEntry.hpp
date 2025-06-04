@@ -6,11 +6,9 @@
 
 #pragma once
 
-using namespace yq;
-using namespace yq::tachyon;
+#include "SceneEditor.hpp"
 
-class RenderedTableUI : public UIElement {
-    YQ_OBJECT_DECLARE(RenderedTableUI)
-public:
-    
+struct SceneEditor::CameraEntry {
+    CameraID            camera;
+    const CameraInfo*   info    = nullptr;
 };

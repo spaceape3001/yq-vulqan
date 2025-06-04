@@ -63,7 +63,7 @@ void    SceneEditor::ScenesTableUI::render()
     if(!editor)
         return ;
         
-    if(editor->m_scenes.empty())
+    if(editor->m_scene.table.empty())
         return;
         
     if(ImGui::BeginTable("Scenes", 5)){
@@ -74,8 +74,8 @@ void    SceneEditor::ScenesTableUI::render()
         ImGui::TableSetupColumn("Camera", ImGuiTableColumnFlags_WidthStretch, 0.2);
         ImGui::TableHeadersRow();
 
-        for(SceneEntry& e : editor->m_scenes){
-            bool    isEdit  = &e == editor->m_editing;
+        for(SceneEntry& e : editor->m_scene.table){
+            bool    isEdit  = &e == editor->m_scene.editing;
             bool    wantEdit    = false;
             const SceneSnap*    ss  = frame->snap(e.scene);
             if(!ss)
@@ -132,7 +132,7 @@ void    SceneEditor::ScenesTableUI::render()
                     e.flags -= E::Invisible;
                     editor->m_flags |= F::Stale;
                 }
-                editor->m_editing = &e;
+                editor->m_scene.editing = &e;
             }
 
             if(ImGui::TableNextColumn()){

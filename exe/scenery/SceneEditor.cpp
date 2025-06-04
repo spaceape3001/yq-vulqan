@@ -209,8 +209,8 @@ SceneEditor::SceneEntry*                  SceneEditor::_add(const Scene& sc)
         return ret;
         
     SceneID edit;       // used to preserve editing
-    if(m_editing)
-        edit        = m_editing -> scene;
+    if(m_scene.editing)
+        edit        = m_scene.editing -> scene;
         
     SceneEntry   en;
     en.scene        = sc.id();
@@ -222,39 +222,44 @@ SceneEditor::SceneEntry*                  SceneEditor::_add(const Scene& sc)
     en.sid          = std::format("{}##{}.SELECT_ID", en.scene.id, en.scene.id);
     en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), en.scene.id);
     en.flags        = flags_for(*en.info);
-    m_scenes.push_back(en);
+    m_scene.table.push_back(en);
 
     if(edit){
-        m_editing   = _entry(edit);
-    } else if(!m_editing)
-        m_editing   = &m_scenes.back();
+        m_scene.editing   = _entry(edit);
+    } else if(!m_scene.editing)
+        m_scene.editing   = &m_scene.table.back();
         
     m_flags |= F::Stale;
-    return &m_scenes.back();
+    return &m_scene.table.back();
 }
 
 void                    SceneEditor::_clear()
 {
     m_layers.clear();
-    if(m_scenes.empty())
+    if(m_scene.table.empty())
         return;
 
     const Frame* frame  = Frame::current();
     if(!frame)
         return ;
 
-    for(auto& e : m_scenes){
+    for(auto& e : m_scene.table){
         Scene*    sc  = frame->object(e.scene);
         if(sc)
             sc -> cmd_teardown();
     }
-    m_scenes.clear();
+    for(auto& e : m_camera.table){
+        Camera*    sc  = frame->object(e.camera);
+        if(sc)
+            sc -> cmd_teardown();
+    }
+    m_scene.table.clear();
 }
 
 
 SceneEditor::SceneEntry*                  SceneEditor::_entry(SceneID sc)
 {
-    for(auto& e : m_scenes)
+    for(auto& e : m_scene.table)
         if(e.scene == sc)
             return &e;
     return nullptr;
@@ -262,7 +267,7 @@ SceneEditor::SceneEntry*                  SceneEditor::_entry(SceneID sc)
 
 const SceneEditor::SceneEntry*            SceneEditor::_entry(SceneID sc) const
 {
-    for(auto& e : m_scenes)
+    for(auto& e : m_scene.table)
         if(e.scene == sc)
             return &e;
     return nullptr;
@@ -280,8 +285,8 @@ void    SceneEditor::_rebuild()
     //const Frame*    frame   = Frame::current();
     
     m_layers.clear();
-    for(const SceneEntry& e : m_scenes){
-        if(e.flags(E::Invisible) && (m_editing != &e))
+    for(const SceneEntry& e : m_scene.table){
+        if(e.flags(E::Invisible) && (m_scene.editing != &e))
             continue;
         CLayer  lay;
         lay.scene   = e.scene;
@@ -311,7 +316,9 @@ void    SceneEditor::_title()
 void    SceneEditor::_save(const std::filesystem::path& fp)
 {
     TachyonIDSet        tacs;
-    for(const SceneEntry& e : m_scenes)
+    for(const CameraEntry& e : m_camera.table)
+        tacs.insert(e.camera);
+    for(const SceneEntry& e : m_scene.table)
         tacs.insert(e.scene);
     send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, SIM, { SaveOption::SkipOwnership }));
 }
@@ -433,10 +440,13 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
     
     const Frame*    frame   = Frame::current();
     for(auto id : rep.tachyons()){
-        const Scene*    sc  = dynamic_cast<const Scene*>(frame->object(id));
-        if(!sc)
-            continue;
-        _add(*sc);
+        const Tachyon* t    = frame->object(id);
+        if(const Camera* ca = dynamic_cast<const Camera*>(t)){
+            //  todo
+        }
+        if(const Scene*  sc  = dynamic_cast<const Scene*>(t)){
+            _add(*sc);
+        }
     }
     
     m_filepath  = req->filepath();
@@ -468,7 +478,7 @@ void    SceneEditor::prerecord(ViContext&u)
 Execution   SceneEditor::setup(const Context&ctx) 
 {
     if(!m_camera.space){
-        m_camera.space  = create_child_on<SpaceCamera>(SIM) -> id();
+        m_camera.space  = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO }) -> id();
     }
     if(!m_camera.hud){
         //  TODO

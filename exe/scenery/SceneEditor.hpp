@@ -124,8 +124,8 @@ private:
         std::vector<RenderedEntry>  entries;
     }                           m_rendered;
     
-    SceneEntry*                 m_editing   = nullptr;
-    std::vector<SceneEntry>     m_scenes;
+    //SceneEntry*                 m_editing   = nullptr;
+    //std::vector<SceneEntry>     m_scenes;
     FileMode                    m_fileMode  = FileMode::None;
     Flags<F>                    m_flags;
     TypedID                     m_fileIO;

@@ -175,6 +175,7 @@ namespace yq::tachyon {
         double          width() const;
         
         UIElement*      element(first_k, uint64_t) const;
+        UIElement*      element(first_k, const std::string&) const;
         
         /*! Calls your visitor with all UI elements with given binding ID
         

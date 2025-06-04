@@ -44,18 +44,17 @@ const char* SceneEditor::ScenesTableUI::title() const
 void    SceneEditor::ScenesTableUI::render() 
 {
     const Frame*    frame   = Frame::current();
-    if(!frame){
+    if(!frame)
         return ;
-    }
 
     float   sz  = ImGui::GetFrameHeight() * 0.9;
     
     Size2F      imgBtnSize    = { sz, sz };
     
-    if(!m_invisible)
-        m_invisible = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-p000-general.png"));
     if(!m_editing)
         m_editing   = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-e001-direction-right.png"));
+    if(!m_invisible)
+        m_invisible = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-p000-general.png"));
     if(!m_visible)
         m_visible   = install(texture("sdk/scenery/eyeball48.png"));
     
@@ -63,7 +62,7 @@ void    SceneEditor::ScenesTableUI::render()
     if(!editor)
         return ;
         
-    if(editor->m_scene.table.empty())
+    if(editor->m_scene.entries.empty())
         return;
         
     if(ImGui::BeginTable("Scenes", 5)){
@@ -74,7 +73,7 @@ void    SceneEditor::ScenesTableUI::render()
         ImGui::TableSetupColumn("Camera", ImGuiTableColumnFlags_WidthStretch, 0.2);
         ImGui::TableHeadersRow();
 
-        for(SceneEntry& e : editor->m_scene.table){
+        for(SceneEntry& e : editor->m_scene.entries){
             bool    isEdit  = &e == editor->m_scene.editing;
             bool    wantEdit    = false;
             const SceneSnap*    ss  = frame->snap(e.scene);
@@ -126,19 +125,15 @@ void    SceneEditor::ScenesTableUI::render()
                     wantEdit    = true;
                 }
             }
-            
-            if(wantEdit){
-                if(e.flags(E::Invisible)){
-                    e.flags -= E::Invisible;
-                    editor->m_flags |= F::Stale;
-                }
-                editor->m_scene.editing = &e;
-            }
 
             if(ImGui::TableNextColumn()){
                 //  TODO.....
             }
             
+            
+            if(wantEdit){
+                editor->_activate(e.scene);
+            }
         }
         ImGui::EndTable();
     }

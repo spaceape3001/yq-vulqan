@@ -390,11 +390,11 @@ namespace yq::tachyon {
         static T*   create_on(ThreadID, Args&&...);
         
         //! Creates a tachyon on the Application thread (caution here)
-        template <SomeTachyon T>
+        template <SomeTachyon T=Tachyon>
         static T*   create_on(StdThread, const typename T::MyInfo&);
 
         //! Creates a tachyon on the Application thread (caution here)
-        template <SomeTachyon T>
+        template <SomeTachyon T=Tachyon>
         static T*   create_on(ThreadID, const typename T::MyInfo&);
 
         //! Creates a "child" tachyon to the given tachyon
@@ -402,7 +402,7 @@ namespace yq::tachyon {
         T*          create_child(Args&&...);
 
         //! Creates a "child" tachyon using the given meta information
-        template <SomeTachyon T>
+        template <SomeTachyon T=Tachyon>
         T*          create_child(const typename T::MyInfo&);
 
         //! Creates a "child" tachyon to the given tachyon
@@ -414,10 +414,10 @@ namespace yq::tachyon {
         T*          create_child_on(StdThread, Args&&...);
 
         //! Creates a "child" tachyon using the given meta information
-        template <SomeTachyon T>
+        template <SomeTachyon T=Tachyon>
         T*          create_child_on(StdThread, const typename T::MyInfo&);
 
-        template <SomeTachyon T>
+        template <SomeTachyon T=Tachyon>
         T*          create_child_on(ThreadID, const typename T::MyInfo&);
 
 

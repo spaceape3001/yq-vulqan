@@ -385,10 +385,18 @@ namespace yq::tachyon {
 
     UIElement*      Widget::element(first_k, uint64_t bid) const
     {
-        auto r = m_ui.bids.equal_range(bid);
-        if(r.first == r.second)
-            return nullptr;
-        return r.first->second;
+        auto itr = m_ui.bids.find(bid);
+        if(itr != m_ui.bids.end())
+            return itr->second;
+        return nullptr;
+    }
+
+    UIElement*      Widget::element(first_k, const std::string& k) const
+    {
+        auto itr = m_ui.uids.find(k);
+        if(itr != m_ui.uids.end())
+            return itr->second;
+        return nullptr;
     }
 
     double  Widget::height() const

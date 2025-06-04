@@ -4,39 +4,39 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CameraAddMenuUI.hpp"
+#include "RenderedAddMenuUI.hpp"
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/Camera.hpp>
+#include <tachyon/api/Rendered.hpp>
 #include <tachyon/ui/UIElementInfoWriter.hpp>
 #include <yq/text/match.hpp>
 
-struct SceneEditor::CameraAddMenuUI::Item {
+struct SceneEditor::RenderedAddMenuUI::Item {
     std::string         title;
-    const CameraInfo*   info    = nullptr;
+    const RenderedInfo*   info    = nullptr;
 };
 
-void SceneEditor::CameraAddMenuUI::init_info()
+void SceneEditor::RenderedAddMenuUI::init_info()
 {
-    auto w = writer<CameraAddMenuUI>();
-    w.description("Scene Editor's Add Camera Menu UI");
+    auto w = writer<RenderedAddMenuUI>();
+    w.description("Scene Editor's Add Rendered Menu UI");
 }
 
-SceneEditor::CameraAddMenuUI::CameraAddMenuUI(std::string_view title, UIFlags flags) : UIMenu(title, flags)
-{
-}
-
-SceneEditor::CameraAddMenuUI::CameraAddMenuUI(const CameraAddMenuUI& cp) : UIMenu(cp)
+SceneEditor::RenderedAddMenuUI::RenderedAddMenuUI(std::string_view title, UIFlags flags) : UIMenu(title, flags)
 {
 }
 
-SceneEditor::CameraAddMenuUI::~CameraAddMenuUI()
+SceneEditor::RenderedAddMenuUI::RenderedAddMenuUI(const RenderedAddMenuUI& cp) : UIMenu(cp)
 {
 }
 
-void    SceneEditor::CameraAddMenuUI::build_menu()
+SceneEditor::RenderedAddMenuUI::~RenderedAddMenuUI()
+{
+}
+
+void    SceneEditor::RenderedAddMenuUI::build_menu()
 {
     m_items.clear();
-    for(const CameraInfo* ci : CameraInfo::all()){
+    for(const RenderedInfo* ci : RenderedInfo::all()){
         if(!ci)
             continue;
         if(ci->is_abstract())
@@ -48,12 +48,12 @@ void    SceneEditor::CameraAddMenuUI::build_menu()
     });
 }
 
-SceneEditor::CameraAddMenuUI* SceneEditor::CameraAddMenuUI::clone() const 
+SceneEditor::RenderedAddMenuUI* SceneEditor::RenderedAddMenuUI::clone() const 
 {
-    return new CameraAddMenuUI(*this);
+    return new RenderedAddMenuUI(*this);
 }
 
-void SceneEditor::CameraAddMenuUI::content() 
+void SceneEditor::RenderedAddMenuUI::content() 
 {
     if(m_items.empty())
         build_menu();
@@ -61,10 +61,10 @@ void SceneEditor::CameraAddMenuUI::content()
         if(ImGui::MenuItem(i.title.c_str())){
             SceneEditor*    editor  = dynamic_cast<SceneEditor*>(widget());
             if(editor && i.info)
-                editor -> create_camera(*i.info);
+                editor -> create_rendered(*i.info);
         }
     }
 }
 
 
-YQ_OBJECT_IMPLEMENT(SceneEditor::CameraAddMenuUI)
+YQ_OBJECT_IMPLEMENT(SceneEditor::RenderedAddMenuUI)

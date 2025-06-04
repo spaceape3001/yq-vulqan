@@ -9,6 +9,7 @@
 #include "CameraTableUI.hpp"
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
+#include "RenderedAddMenuUI.hpp"
 #include "RenderedEntry.hpp"
 #include "SceneAddMenuUI.hpp"
 #include "SceneEditor.hpp"
@@ -20,6 +21,7 @@
 #include <tachyon/api/Camera.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/Rendered.hpp>
+#include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/app/Viewer.hpp>
 
@@ -65,6 +67,12 @@
 
 YQ_TACHYON_IMPLEMENT(SceneEditor)
 
+SceneEditor::EFlags       SceneEditor::flags_for(const CameraInfo& sc)
+{
+    EFlags  ret = {};
+    return ret;
+}
+
 SceneEditor::EFlags       SceneEditor::flags_for(const SceneInfo& sc)
 {
     EFlags  ret = {};
@@ -106,21 +114,23 @@ void SceneEditor::init_info()
     edit.menuitem("Copy", "Ctrl+C");
     edit.menuitem("Paste", "Ctrl+V");
 
+#if 0
     auto cscene     = edit.menu("Create Scene");
     cscene.menuitem("Background").action(&SceneEditor::cmd_new_back_scene);
     cscene.menuitem("Foreground").action(&SceneEditor::cmd_new_fore_scene);
     // cscene.menuitem("HUD").action(&SceneEditor::cmd_new_hud_scene);
     cscene.menuitem("Simple").action(&SceneEditor::cmd_new_simple_scene);
+#endif
 
-
-    auto etb        = app.toolbar(EAST,  "east");
-    etb.button("E");
-    auto wtb        = app.toolbar(WEST,  "west");
-    wtb.button("W");
-    auto ntb        = app.toolbar(NORTH, "north");
-    ntb.button("N");
-    auto stb        = app.toolbar(SOUTH, "south");
-    stb.button("S");
+    // (these were samples while getting it working
+    //auto etb        = app.toolbar(EAST,  "east");
+    //etb.button("E");
+    //auto wtb        = app.toolbar(WEST,  "west");
+    //wtb.button("W");
+    //auto ntb        = app.toolbar(NORTH, "north");
+    //ntb.button("N");
+    //auto stb        = app.toolbar(SOUTH, "south");
+    //stb.button("S");
     
     auto controlpanel   = app.make<ControlPanelUI>();
     {
@@ -137,8 +147,8 @@ void SceneEditor::init_info()
             }
             {
                 auto section    = ctree.section("Current");
-                auto ctable     = section.make<CameraTableUI>();
-                ctable.uid("CameraTable");
+                auto centries     = section.make<CameraTableUI>();
+                centries.uid("CameraTable");
             }
             {
                 auto section    = ctree.section("Properties");
@@ -155,8 +165,8 @@ void SceneEditor::init_info()
             {
                 auto section    = stree.section("Current");
                 auto menus      = section.hline();
-                auto stable     = section.make<ScenesTableUI>();
-                stable.uid("SceneTable");
+                auto sentries     = section.make<ScenesTableUI>();
+                sentries.uid("SceneTable");
             }
             {
                 auto section    = stree.section("Properties");
@@ -168,6 +178,7 @@ void SceneEditor::init_info()
 
         {
             auto rendereds      = tree.section("Rendereds");
+            auto add            = rendereds.make<RenderedAddMenuUI>("Add/Create##AddRenderedUI");
             auto rtree          = rendereds.make<UISimpleTree>();
         
             {
@@ -202,6 +213,70 @@ SceneEditor::~SceneEditor()
 {
 }
 
+void    SceneEditor::_activate(CameraID ca)
+{
+    CameraEntry* e   = _entry(ca);
+    if(!e)  
+        return ;
+    m_camera.editing    = e;
+    m_camera.selected   = ca;
+    if(m_camera.properties)
+        m_camera.properties->bind(TypedID(ca.id, Type::Camera));
+}
+
+void    SceneEditor::_activate(RenderedID re)
+{
+    m_rendered.selected = re;
+    if(m_rendered.properties)
+        m_rendered.properties->bind(TypedID(re.id, Type::Rendered));
+}
+
+void    SceneEditor::_activate(SceneID sc)
+{
+    SceneEntry* e   = _entry(sc);
+    if(!e)  
+        return ;
+
+    if(e->flags(E::Invisible)){
+        e->flags -= E::Invisible;
+        m_flags |= F::Stale;
+    }
+    
+    m_scene.selected    = sc;
+    m_scene.editing     = e;
+    if(m_scene.properties)
+        m_scene.properties -> bind(TypedID(sc.id, Type::Scene));
+}
+
+SceneEditor::CameraEntry*                  SceneEditor::_add(const Camera& sc)
+{
+    CameraEntry*  ret = _entry(sc.id());
+    if(ret)
+        return ret;
+        
+    CameraID edit;       // used to preserve editing
+    if(m_camera.editing)
+        edit        = m_camera.editing -> camera;
+        
+    CameraEntry   en;
+    en.camera       = sc.id();
+    en.info         = static_cast<const CameraInfo*>(&sc.metaInfo());
+    en.sid          = std::format("{}##{}.SELECT_ID", en.camera.id, en.camera.id);
+    en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), en.camera.id);
+    en.flags        = flags_for(*en.info);
+    m_camera.entries.push_back(en);
+
+    if(edit){
+        m_camera.editing   = _entry(edit);
+    } else if(!m_scene.editing){
+        m_camera.editing   = &m_camera.entries.back();
+        m_camera.selected   = sc.id();
+    }
+        
+    m_flags |= F::Stale;
+    return &m_camera.entries.back();
+}
+
 SceneEditor::SceneEntry*                  SceneEditor::_add(const Scene& sc)
 {
     SceneEntry*  ret = _entry(sc.id());
@@ -222,44 +297,61 @@ SceneEditor::SceneEntry*                  SceneEditor::_add(const Scene& sc)
     en.sid          = std::format("{}##{}.SELECT_ID", en.scene.id, en.scene.id);
     en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), en.scene.id);
     en.flags        = flags_for(*en.info);
-    m_scene.table.push_back(en);
+    m_scene.entries.push_back(en);
 
     if(edit){
         m_scene.editing   = _entry(edit);
-    } else if(!m_scene.editing)
-        m_scene.editing   = &m_scene.table.back();
+    } else if(!m_scene.editing){
+        m_scene.editing   = &m_scene.entries.back();
+        m_scene.selected    = sc.id();
+    }
         
     m_flags |= F::Stale;
-    return &m_scene.table.back();
+    return &m_scene.entries.back();
 }
 
 void                    SceneEditor::_clear()
 {
     m_layers.clear();
-    if(m_scene.table.empty())
+    if(m_scene.entries.empty())
         return;
 
     const Frame* frame  = Frame::current();
     if(!frame)
         return ;
 
-    for(auto& e : m_scene.table){
+    for(auto& e : m_scene.entries){
         Scene*    sc  = frame->object(e.scene);
         if(sc)
             sc -> cmd_teardown();
     }
-    for(auto& e : m_camera.table){
+    for(auto& e : m_camera.entries){
         Camera*    sc  = frame->object(e.camera);
         if(sc)
             sc -> cmd_teardown();
     }
-    m_scene.table.clear();
+    m_scene.entries.clear();
 }
 
+SceneEditor::CameraEntry*                 SceneEditor::_entry(CameraID ca)
+{
+    for(auto& e : m_camera.entries)
+        if(e.camera == ca)
+            return &e;
+    return nullptr;
+}
+
+const SceneEditor::CameraEntry*           SceneEditor::_entry(CameraID ca) const
+{
+    for(auto& e : m_camera.entries)
+        if(e.camera == ca)
+            return &e;
+    return nullptr;
+}
 
 SceneEditor::SceneEntry*                  SceneEditor::_entry(SceneID sc)
 {
-    for(auto& e : m_scene.table)
+    for(auto& e : m_scene.entries)
         if(e.scene == sc)
             return &e;
     return nullptr;
@@ -267,7 +359,7 @@ SceneEditor::SceneEntry*                  SceneEditor::_entry(SceneID sc)
 
 const SceneEditor::SceneEntry*            SceneEditor::_entry(SceneID sc) const
 {
-    for(auto& e : m_scene.table)
+    for(auto& e : m_scene.entries)
         if(e.scene == sc)
             return &e;
     return nullptr;
@@ -285,7 +377,7 @@ void    SceneEditor::_rebuild()
     //const Frame*    frame   = Frame::current();
     
     m_layers.clear();
-    for(const SceneEntry& e : m_scene.table){
+    for(const SceneEntry& e : m_scene.entries){
         if(e.flags(E::Invisible) && (m_scene.editing != &e))
             continue;
         CLayer  lay;
@@ -316,21 +408,13 @@ void    SceneEditor::_title()
 void    SceneEditor::_save(const std::filesystem::path& fp)
 {
     TachyonIDSet        tacs;
-    for(const CameraEntry& e : m_camera.table)
+    for(const CameraEntry& e : m_camera.entries)
         tacs.insert(e.camera);
-    for(const SceneEntry& e : m_scene.table)
+    for(const SceneEntry& e : m_scene.entries)
         tacs.insert(e.scene);
     send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, SIM, { SaveOption::SkipOwnership }));
 }
 
-
-void    SceneEditor::create_scene(const SceneInfo&info)
-{
-    Scene*  sc  = Tachyon::create_on<Scene>(SIM, info);
-    if(!sc)
-        return;
-    _add(*sc);
-}
 
 void    SceneEditor::cmd_file_new()
 {
@@ -383,6 +467,41 @@ void    SceneEditor::cmd_new_hud_scene()
 void    SceneEditor::cmd_new_simple_scene()
 {
     create_scene(meta<SimpleScene>());
+}
+
+void    SceneEditor::create_rendered(const RenderedInfo& info)
+{
+    const Frame*  frame = Frame::current();
+    if(!frame)
+        return;
+    
+    Scene*    sc  = frame->object( m_scene.selected);
+    if(!sc)
+        return ;
+    
+    Rendered*   re  = sc->create_child<Rendered>(info);
+    if(!re)
+        return ;
+    
+    //  add & activate.... (later)
+}
+
+void    SceneEditor::create_camera(const CameraInfo& info)
+{
+    Camera* sc = Tachyon::create_on<Camera>(SIM, info);
+    if(!sc)
+        return;
+    _add(*sc);
+    _activate(sc->id());
+}
+
+void    SceneEditor::create_scene(const SceneInfo&info)
+{
+    Scene*  sc  = Tachyon::create_on<Scene>(SIM, info);
+    if(!sc)
+        return;
+    _add(*sc);
+    _activate(sc->id());
 }
 
 void    SceneEditor::imgui(ViContext&u) 
@@ -478,12 +597,26 @@ void    SceneEditor::prerecord(ViContext&u)
 Execution   SceneEditor::setup(const Context&ctx) 
 {
     if(!m_camera.space){
-        m_camera.space  = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO }) -> id();
+        Camera* c   = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO });
+        m_camera.space  = c -> id();
+        _add(*c);
     }
     if(!m_camera.hud){
         //  TODO
     }
-    return Widget::setup(ctx);
+    
+    Execution ret = Widget::setup(ctx);
+    
+    if(!m_camera.properties)
+        m_camera.properties  = static_cast<InspectorUI*>(element(FIRST, "CameraInspector"));
+    if(!m_rendered.properties)
+        m_rendered.properties   = static_cast<InspectorUI*>(element(FIRST, "RenderedInspector"));
+    if(!m_scene.properties)
+        m_scene.properties  = static_cast<InspectorUI*>(element(FIRST, "SceneInspector"));
+    
+    //  some ui detection here...
+    
+    return ret;
 }
 
 Execution   SceneEditor::teardown(const Context&ctx) 

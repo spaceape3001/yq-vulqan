@@ -25,8 +25,8 @@ public:
     virtual const char* title() const override;
     void    render() override;
    
-    ImTextureID      m_invisible;
-    ImTextureID      m_visible;
-    ImTextureID      m_editing;
+    ImTextureID      m_invisible    = nullptr;
+    ImTextureID      m_visible      = nullptr;
+    ImTextureID      m_editing      = nullptr;
 };
 

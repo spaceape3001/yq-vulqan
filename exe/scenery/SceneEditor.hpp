@@ -24,6 +24,8 @@ namespace IGFD { class FileDialog; }
 using namespace yq;
 using namespace yq::tachyon;
 
+class InspectorUI;
+
 class SceneEditor : public CompositeWidget {
     YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
 public:
@@ -59,9 +61,12 @@ public:
     using EFlags    = Flags<E>;
     
     static EFlags       flags_for(const SceneInfo&);
+    static EFlags       flags_for(const CameraInfo&);
     
     
     
+    void    create_camera(const CameraInfo&);
+    void    create_rendered(const RenderedInfo&);
     void    create_scene(const SceneInfo&);
 
 
@@ -85,13 +90,14 @@ public:
     
     virtual void    prerecord(ViContext&) override;
     
-    //void    ui_scene_table();
+    //void    ui_scene_entries();
 
     class CameraAddMenuUI;
     class CameraTableUI;
     class SceneAddMenuUI;
     class ScenesTableUI;
     class RenderedTableUI;
+    class RenderedAddMenuUI;
     
 private:
     struct SceneEntry;
@@ -106,22 +112,27 @@ private:
         const CameraInfo*           info  = nullptr;
         
         //! All entries
-        std::vector<CameraEntry>    table;
+        std::vector<CameraEntry>    entries;
 
-        //! For the table
+        //! For the entries
         CameraID                    selected;
+        CameraEntry*                editing     = nullptr;
+        InspectorUI*                properties  = nullptr;
     }                           m_camera;
     
     struct {
-        const SceneInfo*            info     = nullptr;
+        const SceneInfo*            info        = nullptr;
         SceneID                     selected;
-        std::vector<SceneEntry>     table;
-        SceneEntry*                 editing = nullptr;
+        std::vector<SceneEntry>     entries;
+        SceneEntry*                 editing     = nullptr;
+        InspectorUI*                properties  = nullptr;
     }                           m_scene;
 
     struct {
         const RenderedInfo*         info     = nullptr;
         std::vector<RenderedEntry>  entries;
+        RenderedID                  selected;
+        InspectorUI*                properties  = nullptr;
     }                           m_rendered;
     
     //SceneEntry*                 m_editing   = nullptr;
@@ -133,10 +144,20 @@ private:
     //IGFD::FileDialog*       m_importDialog = nullptr;
     //IGFD::FileDialog*       m_exportDialog = nullptr;
 
+    void                        _activate(CameraID);
+    void                        _activate(SceneID);
+    void                        _activate(RenderedID);
+
     SceneEntry*                 _add(const Scene&);
+    CameraEntry*                _add(const Camera&);
+    
     void                        _clear();
     SceneEntry*                 _entry(SceneID);
     const SceneEntry*           _entry(SceneID) const;
+
+    CameraEntry*                 _entry(CameraID);
+    const CameraEntry*           _entry(CameraID) const;
+
     void                        _rebuild();
     void                        _title();
 

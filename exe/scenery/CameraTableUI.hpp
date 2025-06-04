@@ -21,6 +21,8 @@ public:
     const char*    title() const override;
     
     void    render() override;
+
+    ImTextureID      m_editing = nullptr;
 };
 
 

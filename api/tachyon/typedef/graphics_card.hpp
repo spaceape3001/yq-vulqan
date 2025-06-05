@@ -25,4 +25,5 @@ namespace yq::tachyon {
 
     template <class> class ID;
     using GraphicsCardID = ID<GraphicsCard>;
+    class GraphicsCardInfo;
 }

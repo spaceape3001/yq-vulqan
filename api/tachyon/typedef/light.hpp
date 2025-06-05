@@ -25,4 +25,6 @@ namespace yq::tachyon {
 
     template <class> class ID;
     using LightID = ID<Light>;
+    
+    class LightInfo;
 }

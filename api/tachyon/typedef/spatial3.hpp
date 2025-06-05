@@ -25,4 +25,6 @@ namespace yq::tachyon {
 
     template <class> class ID;
     using Spatial³ID = ID<Spatial³>;
+
+    class Spatial³Info;
 }

@@ -25,4 +25,6 @@ namespace yq::tachyon {
 
     template <class> class ID;
     using GamepadID = ID<Gamepad>;
+    
+    class GamepadInfo;
 }

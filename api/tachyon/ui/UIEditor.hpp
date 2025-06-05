@@ -28,6 +28,8 @@ namespace yq::tachyon {
         //! List of classes this thing will edit
         const std::vector<const TachyonInfo*>& edits() const { return m_edits; }
         
+        bool    has_fields() const;
+        
         static const std::vector<const UIEditorInfo*>& all();
         
         //  TODO... need a tree of recommendeds... (or similar)

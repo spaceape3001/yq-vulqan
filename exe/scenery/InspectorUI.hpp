@@ -26,7 +26,19 @@ public:
     virtual void render() override;
 
 private:
+    struct Info;
     struct Repo;
     static Repo& repo();
+    
+    //  Eventually cache (but not now)
+    
+    void    _clear();
+    
+    void    _render(TypedID);
+    
+    std::map<TachyonID, std::vector<UIEditor*>>  m_panels;
+    
+    std::span<UIEditor*>    _panels(TypedID);
+    
 };
 

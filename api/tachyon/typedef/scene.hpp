@@ -25,4 +25,5 @@ namespace yq::tachyon {
 
     template <class> class ID;
     using SceneID = ID<Scene>;
+    class SceneInfo;
 }

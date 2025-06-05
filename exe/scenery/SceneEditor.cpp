@@ -469,23 +469,6 @@ void    SceneEditor::cmd_new_simple_scene()
     create_scene(meta<SimpleScene>());
 }
 
-void    SceneEditor::create_rendered(const RenderedInfo& info)
-{
-    const Frame*  frame = Frame::current();
-    if(!frame)
-        return;
-    
-    Scene*    sc  = frame->object( m_scene.selected);
-    if(!sc)
-        return ;
-    
-    Rendered*   re  = sc->create_child<Rendered>(info);
-    if(!re)
-        return ;
-    
-    //  add & activate.... (later)
-}
-
 void    SceneEditor::create_camera(const CameraInfo& info)
 {
     Camera* sc = Tachyon::create_on<Camera>(SIM, info);
@@ -493,6 +476,31 @@ void    SceneEditor::create_camera(const CameraInfo& info)
         return;
     _add(*sc);
     _activate(sc->id());
+}
+
+void    SceneEditor::create_rendered(const RenderedInfo& info)
+{
+    const Frame*  frame = Frame::current();
+    if(!frame){
+    yInfo() << "SceneEditor's create_rendered(" << info.name() << ") no frame";
+        return;
+    }
+    
+    Scene*    sc  = frame->object( m_scene.selected);
+    if(!sc){
+    yInfo() << "SceneEditor's create_rendered(" << info.name() << ") no scene";
+        return ;
+    }
+    
+    Rendered*   re  = sc->create_child<Rendered>(info);
+    if(!re){
+    yInfo() << "SceneEditor's create_rendered(" << info.name() << ") unable to create";
+        return ;
+    }
+    
+    _activate(re->id());
+    
+    //  add & activate.... (later)
 }
 
 void    SceneEditor::create_scene(const SceneInfo&info)
@@ -596,15 +604,6 @@ void    SceneEditor::prerecord(ViContext&u)
 
 Execution   SceneEditor::setup(const Context&ctx) 
 {
-    if(!m_camera.space){
-        Camera* c   = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO });
-        m_camera.space  = c -> id();
-        _add(*c);
-    }
-    if(!m_camera.hud){
-        //  TODO
-    }
-    
     Execution ret = Widget::setup(ctx);
     
     if(!m_camera.properties)
@@ -614,7 +613,15 @@ Execution   SceneEditor::setup(const Context&ctx)
     if(!m_scene.properties)
         m_scene.properties  = static_cast<InspectorUI*>(element(FIRST, "SceneInspector"));
     
-    //  some ui detection here...
+    if(!m_camera.space){
+        Camera* c   = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO });
+        m_camera.space  = c -> id();
+        _add(*c);
+        _activate(c->id());
+    }
+    if(!m_camera.hud){
+        //  TODO
+    }
     
     return ret;
 }

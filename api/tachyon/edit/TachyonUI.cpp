@@ -22,6 +22,7 @@ namespace yq::tachyon {
         w.field("Name", &TachyonUI::name);
         w.field("Type", &TachyonUI::type);
         w.field("ID", &TachyonUI::id);
+        w.edits<Tachyon>();
     }
 
     TachyonUI::TachyonUI(UIFlags flags) : UIEditor(flags)

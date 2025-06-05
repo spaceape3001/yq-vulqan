@@ -60,7 +60,7 @@ void    SceneEditor::CameraTableUI::render()
         return;
         
     if(ImGui::BeginTable("Cameras", 4)){
-        ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, sz*1.2);
+        ImGui::TableSetupColumn("Editing", ImGuiTableColumnFlags_WidthFixed|ImGuiTableColumnFlags_NoHeaderLabel, sz*1.2);
         ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthStretch, 0.1);
         ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch, 0.3);
         ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch, 0.4);

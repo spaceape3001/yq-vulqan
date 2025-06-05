@@ -861,6 +861,230 @@ namespace yq::tachyon {
         return m_windows.ids;
     }
 
+    const CameraInfo*                   Frame::info(CameraID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const Camera³Info*                  Frame::info(Camera³ID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const ControllerInfo*               Frame::info(ControllerID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const CursorInfo*                   Frame::info(CursorID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const DesktopInfo*                  Frame::info(DesktopID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const GamepadInfo*                  Frame::info(GamepadID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const GraphicsCardInfo*             Frame::info(GraphicsCardID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const GroupInfo*                    Frame::info(GroupID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const JoystickInfo*                 Frame::info(JoystickID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const KeyboardInfo*                 Frame::info(KeyboardID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const LayerInfo*                    Frame::info(LayerID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const LightInfo*                    Frame::info(LightID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const Light³Info*                   Frame::info(Light³ID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const ManagerInfo*                  Frame::info(ManagerID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const ModelInfo*                    Frame::info(ModelID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const MouseInfo*                    Frame::info(MouseID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const RenderedInfo*                 Frame::info(RenderedID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const Rendered³Info*                Frame::info(Rendered³ID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const SceneInfo*                    Frame::info(SceneID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const Scene³Info*                   Frame::info(Scene³ID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const SpatialInfo*                  Frame::info(SpatialID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const Spatial²Info*                 Frame::info(Spatial²ID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const Spatial³Info*                 Frame::info(Spatial³ID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const TachyonInfo*                  Frame::info(TachyonID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const ThreadInfo*                   Frame::info(ThreadID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const TachyonInfo*                  Frame::info(ViewerID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const WidgetInfo*                   Frame::info(WidgetID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
+    const WindowInfo*                   Frame::info(WindowID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
     Camera*                             Frame::object(CameraID id) const
     {
         return m_cameras.pointer(id);

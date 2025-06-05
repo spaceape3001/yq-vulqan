@@ -26,4 +26,6 @@ namespace yq::tachyon {
     template <class> class ID;
     
     using ManagerID = ID<Manager>;
+    
+    class ManagerInfo;
 }

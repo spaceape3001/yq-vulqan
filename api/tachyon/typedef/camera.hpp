@@ -28,4 +28,6 @@ namespace yq::tachyon {
     
     class CameraTweak;
     using CameraTweakCPtr   = Ref<CameraTweak>;
+    
+    class CameraInfo;
 }

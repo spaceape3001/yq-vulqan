@@ -26,4 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     
     using RenderedID = ID<Rendered>;
+    class RenderedInfo;
 }

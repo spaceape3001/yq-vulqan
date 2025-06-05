@@ -25,10 +25,22 @@ namespace yq::tachyon {
         return s_repo;
     }
     
+    const std::vector<const UIEditorInfo*>& UIEditorInfo::all()
+    {
+        return repo().all;
+    }
+
     UIEditorInfo::UIEditorInfo(std::string_view name, UIElements::MyInfo&base, const std::source_location& sl) :
         UIElements::MyInfo(name, base, sl)
     {
+tachyonInfo << "UIEditorInfo(" << name << ")";
         repo().all.push_back(this);
+    }
+
+
+    bool    UIEditorInfo::has_fields() const
+    {
+        return !m_fields.empty();
     }
 
     ////////////////////////////
@@ -37,6 +49,7 @@ namespace yq::tachyon {
     {
         auto w = writer<UIEditor>();
         w.description("UI Editor");
+        w.abstract();
     }
     
     UIEditor::UIEditor(UIFlags flags) : UIElements(flags)

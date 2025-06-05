@@ -111,11 +111,13 @@ private:
         //! Current selected (available)
         const CameraInfo*           info  = nullptr;
         
-        //! All entries
+        //! All entries (might move to camera table UI)
         std::vector<CameraEntry>    entries;
 
         //! For the entries
         CameraID                    selected;
+        
+        //! Current "editing" ... will be deprecated/removed (use selected instead)
         CameraEntry*                editing     = nullptr;
         InspectorUI*                properties  = nullptr;
     }                           m_camera;
@@ -124,6 +126,8 @@ private:
         const SceneInfo*            info        = nullptr;
         SceneID                     selected;
         std::vector<SceneEntry>     entries;
+
+        //! Current "editing" ... will be deprecated/removed (use selected instead)
         SceneEntry*                 editing     = nullptr;
         InspectorUI*                properties  = nullptr;
     }                           m_scene;

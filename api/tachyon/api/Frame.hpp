@@ -221,6 +221,34 @@ namespace yq::tachyon {
         const std::set<WidgetID>&           ids(widget_k) const;
         const std::set<WindowID>&           ids(window_k) const;
 
+        const CameraInfo*                   info(CameraID) const;
+        const Camera³Info*                  info(Camera³ID) const;
+        const ControllerInfo*               info(ControllerID) const;
+        const CursorInfo*                   info(CursorID) const;
+        const DesktopInfo*                  info(DesktopID) const;
+        const GamepadInfo*                  info(GamepadID) const;
+        const GraphicsCardInfo*             info(GraphicsCardID) const;
+        const GroupInfo*                    info(GroupID) const;
+        const JoystickInfo*                 info(JoystickID) const;
+        const KeyboardInfo*                 info(KeyboardID) const;
+        const LayerInfo*                    info(LayerID) const;
+        const LightInfo*                    info(LightID) const;
+        const Light³Info*                   info(Light³ID) const;
+        const ManagerInfo*                  info(ManagerID) const;
+        const ModelInfo*                    info(ModelID) const;
+        const MouseInfo*                    info(MouseID) const;
+        const RenderedInfo*                 info(RenderedID) const;
+        const Rendered³Info*                info(Rendered³ID) const;
+        const SceneInfo*                    info(SceneID) const;
+        const Scene³Info*                   info(Scene³ID) const;
+        const SpatialInfo*                  info(SpatialID) const;
+        const Spatial²Info*                 info(Spatial²ID) const;
+        const Spatial³Info*                 info(Spatial³ID) const;
+        const TachyonInfo*                  info(TachyonID) const;
+        const ThreadInfo*                   info(ThreadID) const;
+        const TachyonInfo*                  info(ViewerID) const;
+        const WidgetInfo*                   info(WidgetID) const;
+        const WindowInfo*                   info(WindowID) const;
         
         //! Camera pointer
         //! \note WARNING this will break thread-safety guarantees

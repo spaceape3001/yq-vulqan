@@ -36,4 +36,6 @@ namespace yq::tachyon {
     
     template <SomeWidget W=Widget>
     static constexpr const make_widget_k<W>    MAKE;
+    
+    class WidgetInfo;
 }

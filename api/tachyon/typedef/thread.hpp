@@ -29,4 +29,6 @@ namespace yq::tachyon {
     struct ThreadData;
     using ThreadDataPtr     = Ref<ThreadData>;
     using ThreadDataCPtr    = Ref<const ThreadData>;
+    
+    class ThreadInfo;
 }

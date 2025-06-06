@@ -939,10 +939,10 @@ namespace yq::tachyon {
             return ;
         if(cmd.name() == m_name)
             return;
-            
+    
         std::string old = cmd.name();
-        std::swap(old,m_name);
-        
+        std::swap(old, m_name);
+
         send(new NameChangeEvent({.source=*this}, std::move(old), m_name));
         mark();
     }
@@ -1075,6 +1075,7 @@ namespace yq::tachyon {
         snap.running    = m_stage == Stage::Running;
         snap.paused     = m_stage == Stage::Paused;
         snap.teardown   = m_stage >= Stage::Teardown;
+        snap.name       = m_name;
         
         snap.userattrs  = m_userAttrs;
         snap.progattrs  = m_progAttrs;

@@ -69,7 +69,7 @@ tachyonInfo << "UIEditorInfo(" << name << ")";
         m_bind      = tac;
         return true;
     }
-    
+
     void    UIEditor::render()
     {
         const Frame*    frame   = Frame::current();
@@ -80,10 +80,16 @@ tachyonInfo << "UIEditorInfo(" << name << ")";
             return ;
             
         std::string     table   = std::format("Editor{}{}", metaInfo().name(), m_bind.id );
+        auto& sty = style();
         
-        if(ImGui::BeginTable(table.c_str(), 2)){
-            ImGui::TableSetupColumn("Key",   ImGuiTableColumnFlags_WidthFixed, style().table.keycol());
-            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch, 1.0);
+        if(ImGui::BeginTable(table.c_str(), 2, ImGuiTableFlags_NoHostExtendX | ImGuiTableFlags_NoPadOuterX)){
+            float x = ImGui::GetCursorPosX();
+            float w = ImGui::GetWindowWidth();
+            float kw    = std::max(sty.table.keycol()-x, sty.table.keycol.min);
+            float vw    = std::max(sty.table.valcol.min, w-x);
+            
+            ImGui::TableSetupColumn("Key",   ImGuiTableColumnFlags_WidthFixed, kw);
+            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, vw);
             for(auto& f : metaInfo().m_fields){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn())

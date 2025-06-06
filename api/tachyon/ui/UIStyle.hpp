@@ -53,11 +53,15 @@ namespace yq::tachyon {
         } icon;
         
         struct {
-            UIDim   keycol      = { 20, 100., -1 };
+            UIDim   keycol  = { 10, 50., -1 };
+            
+            struct {
+                float   min    = 100.;
+            } valcol;
         } table;
         
         struct {
-            UIDim   indent      = { 2., 5, 50. };
+            UIDim   indent                  = { 2., 5, 50. };
         } tree;
     };
 }

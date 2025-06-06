@@ -68,7 +68,7 @@ namespace yq::tachyon {
         //! 
         virtual bool    bind(TypedID);
         virtual void    render();
-        
+       
     protected:
         virtual UIEditor*       clone() const = 0;
         
@@ -77,6 +77,6 @@ namespace yq::tachyon {
         
     private:
         TypedID                 m_bind;
-        const TachyonSnap*      m_snap  = nullptr;
+        const TachyonSnap*      m_snap      = nullptr;
     };
 }

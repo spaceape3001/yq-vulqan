@@ -4,9 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <tachyon/tags.hpp>
 #include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/api/SceneInfoWriter.hpp>
+#include <tachyon/command/color/SetBgColorCommand.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene);
@@ -60,16 +62,26 @@ namespace yq::tachyon {
         Tachyon::finalize(data);
     }
 
+    void Scene::on_set_bg_color(const SetBgColorCommand&cmd)
+    {
+        if(cmd.target() == id()){
+            m_bgcolor = cmd.bgcolor();
+            mark();
+        }
+    }
+
     void Scene::set_bgcolor(const RGBA4F&v)
     {
         m_bgcolor = v;
+        mark();
     }
 
     void Scene::init_info()
     {
         auto w = writer<Scene>();
         w.description("Scene");
-        w.property("bgcolor", &Scene::m_bgcolor);
+        w.property("bgcolor", &Scene::bgcolor).setter(&Scene::set_bgcolor).tag(kTag_Save);
+        w.slot(&Scene::on_set_bg_color);
 
         auto wt = writer<SceneID>();
         wt.description("Scene Identifier");

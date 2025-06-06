@@ -11,6 +11,8 @@
 #include <yq/math/glm.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/typedef/quaternion3.hpp>
+#include <yq/typedef/rgb.hpp>
+#include <yq/typedef/rgba.hpp>
 #include <yq/typedef/rectangle2.hpp>
 #include <yq/typedef/tensor44.hpp>
 #include <yq/units.hpp>
@@ -70,6 +72,9 @@ namespace ImGui {
     bool    DragDouble2(const char* label, yq::Vector2D*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
     bool    DragDouble3(const char* label, yq::Vector3D*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
     bool    DragDouble4(const char* label, yq::Vector4D*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
+
+    bool    ColorEdit(const char* label, yq::RGB3F&, ImGuiColorEditFlags flags=0);
+    bool    ColorEdit(const char* label, yq::RGBA4F&, ImGuiColorEditFlags flags=0);
 
     bool    InputDouble2(const char* label, yq::Vector2D*, const char* format = "%.3lf", ImGuiInputTextFlags flags = 0);
     bool    InputDouble3(const char* label, yq::Vector3D*, const char* format = "%.3lf", ImGuiInputTextFlags flags = 0);

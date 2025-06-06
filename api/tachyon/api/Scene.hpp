@@ -13,6 +13,8 @@
 #include <tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
+    class SetBgColorCommand;
+    
     class SceneInfo : public TachyonInfo {
     public:
         template <typename C> struct Writer;
@@ -54,6 +56,8 @@ namespace yq::tachyon {
         void    finalize(SceneData&) const;
 
         RGBA4F  m_bgcolor = { 0., 0., 0., -1. };
+        
+        void    on_set_bg_color(const SetBgColorCommand&);
     };
 }
 YQ_TYPE_DECLARE(yq::tachyon::SceneID)

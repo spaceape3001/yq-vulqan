@@ -25,6 +25,16 @@ namespace ImGui {
         return Checkbox(z, &v);
     }
 
+    bool    ColorEdit(const char* label, yq::RGB3F&v, ImGuiColorEditFlags flags)
+    {
+        return ColorEdit3(label, &v.red, flags);
+    }
+    
+    bool    ColorEdit(const char* label, yq::RGBA4F&v, ImGuiColorEditFlags flags)
+    {
+        return ColorEdit4(label, &v.red, flags);
+    }
+
     bool    DragDouble(const char* label, double*v, float v_speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
     {
         return DragScalar(label, ImGuiDataType_Double, v, v_speed, &v_min, &v_max, format, flags);

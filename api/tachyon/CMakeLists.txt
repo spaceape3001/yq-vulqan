@@ -116,11 +116,11 @@ add_library(${PROJECT_NAME} SHARED
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
 
-
     command/AddChildCommand.cpp
     command/AppCommand.cpp
     command/AppDeleteViewerCommand.cpp
     command/CameraCommand.cpp
+    command/ColorCommand.cpp
     command/ControllerCommand.cpp
     command/CursorCommand.cpp
     command/EmptyCommand.cpp
@@ -130,7 +130,7 @@ add_library(${PROJECT_NAME} SHARED
     command/JoystickCommand.cpp
     command/LightCommand.cpp
     command/MouseCommand.cpp
-    #command/SetParentCommand.cpp
+    command/SceneCommand.cpp
     command/SimCommand.cpp
     command/SpatialCommand.cpp
     command/TachyonCommand.cpp
@@ -146,6 +146,8 @@ add_library(${PROJECT_NAME} SHARED
     command/aabb/SetAABB4.cpp
     
     command/camera/CameraSetScreen.cpp
+
+    command/color/SetBgColorCommand.cpp
 
     command/controller/ControlCommand.cpp
     command/controller/DisableCommand.cpp
@@ -354,6 +356,7 @@ add_library(${PROJECT_NAME} SHARED
 
     controller/Space3Controller.cpp
     
+    edit/SceneUI.cpp
     edit/TachyonUI.cpp
 
     enum/Cardinal.cpp

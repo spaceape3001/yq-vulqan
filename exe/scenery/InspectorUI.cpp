@@ -58,7 +58,7 @@ struct InspectorUI::Repo {
         
         std::stable_sort(edits.begin(), edits.end(), [](const HET& a, const HET& b){
             if(a.hops != b.hops)    // want high hops first
-                return b.hops > a.hops;
+                return b.hops < a.hops;
             return is_less_igCase(a.editor->stem(), b.editor->stem());
         });
 

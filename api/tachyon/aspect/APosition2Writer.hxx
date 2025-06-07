@@ -7,16 +7,16 @@
 #pragma once
 
 #include <tachyon/aspect/APosition2.hpp>
-#include <tachyon/command/position/AddPosition2.hpp>
-#include <tachyon/command/position/AddPositionX.hpp>
-#include <tachyon/command/position/AddPositionY.hpp>
-#include <tachyon/command/position/MultiplyPosition.hpp>
-#include <tachyon/command/position/MultiplyPosition2.hpp>
-#include <tachyon/command/position/MultiplyPositionX.hpp>
-#include <tachyon/command/position/MultiplyPositionY.hpp>
-#include <tachyon/command/position/SetPosition2.hpp>
-#include <tachyon/command/position/SetPositionX.hpp>
-#include <tachyon/command/position/SetPositionY.hpp>
+#include <tachyon/command/position/AddPosition2Command.hpp>
+#include <tachyon/command/position/AddPositionXCommand.hpp>
+#include <tachyon/command/position/AddPositionYCommand.hpp>
+#include <tachyon/command/position/MultiplyPositionCommand.hpp>
+#include <tachyon/command/position/MultiplyPosition2Command.hpp>
+#include <tachyon/command/position/MultiplyPositionXCommand.hpp>
+#include <tachyon/command/position/MultiplyPositionYCommand.hpp>
+#include <tachyon/command/position/SetPosition2Command.hpp>
+#include <tachyon/command/position/SetPositionXCommand.hpp>
+#include <tachyon/command/position/SetPositionYCommand.hpp>
 #include <tachyon/api/TachyonInfoWriter.hpp>
 #include <tachyon/tags.hpp>
 

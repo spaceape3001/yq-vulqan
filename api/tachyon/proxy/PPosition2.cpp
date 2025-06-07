@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/proxy/PPosition2.hpp>
-#include <tachyon/command/position/AddPosition2.hpp>
-#include <tachyon/command/position/AddPositionX.hpp>
-#include <tachyon/command/position/AddPositionY.hpp>
-#include <tachyon/command/position/MultiplyPosition.hpp>
-#include <tachyon/command/position/MultiplyPosition2.hpp>
-#include <tachyon/command/position/MultiplyPositionX.hpp>
-#include <tachyon/command/position/MultiplyPositionY.hpp>
-#include <tachyon/command/position/SetPosition2.hpp>
-#include <tachyon/command/position/SetPositionX.hpp>
-#include <tachyon/command/position/SetPositionY.hpp>
+#include <tachyon/command/position/AddPosition2Command.hpp>
+#include <tachyon/command/position/AddPositionXCommand.hpp>
+#include <tachyon/command/position/AddPositionYCommand.hpp>
+#include <tachyon/command/position/MultiplyPositionCommand.hpp>
+#include <tachyon/command/position/MultiplyPosition2Command.hpp>
+#include <tachyon/command/position/MultiplyPositionXCommand.hpp>
+#include <tachyon/command/position/MultiplyPositionYCommand.hpp>
+#include <tachyon/command/position/SetPosition2Command.hpp>
+#include <tachyon/command/position/SetPositionXCommand.hpp>
+#include <tachyon/command/position/SetPositionYCommand.hpp>
 
 namespace yq::tachyon {
     PPosition²::PPosition²(const IPosition²& i) : m_position(i.position())
@@ -52,42 +52,42 @@ namespace yq::tachyon {
     void        PPosition²::position(set_k, const Vector2D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPosition²({.target=object()}, v));
+            mail(new SetPosition²Command({.target=object()}, v));
         }
     }
 
     void        PPosition²::position(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionˣ({.target=object()}, x));
+            mail(new SetPositionˣCommand({.target=object()}, x));
         }
     }
     
     void        PPosition²::position(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionʸ({.target=object()}, y));
+            mail(new SetPositionʸCommand({.target=object()}, y));
         }
     }
 
     void        PPosition²::position(add_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPosition²({.target=object()}, Δ));
+            mail(new AddPosition²Command({.target=object()}, Δ));
         }
     }
 
     void        PPosition²::position(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPositionˣ({.target=object()}, Δx));
+            mail(new AddPositionˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PPosition²::position(add_k, y_k, double Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPositionʸ({.target=object()}, Δy));
+            mail(new AddPositionʸCommand({.target=object()}, Δy));
         }
     }
 
@@ -101,21 +101,21 @@ namespace yq::tachyon {
     void        PPosition²::position(multiply_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPosition²({.target=object()}, Δ));
+            mail(new MultiplyPosition²Command({.target=object()}, Δ));
         }
     }
 
     void        PPosition²::position(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPositionˣ({.target=object()}, Δx));
+            mail(new MultiplyPositionˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PPosition²::position(multiply_k, y_k, double Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPositionʸ({.target=object()}, Δy));
+            mail(new MultiplyPositionʸCommand({.target=object()}, Δy));
         }
     }
 }

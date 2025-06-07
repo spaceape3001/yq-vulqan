@@ -33,7 +33,7 @@
 #include <tachyon/command/sim/PauseCommand.hpp>
 #include <tachyon/command/sim/ResumeCommand.hpp>
 
-#include <tachyon/command/position/SetPosition2.hpp>
+#include <tachyon/command/position/SetPosition2Command.hpp>
 #include <tachyon/command/size/SetSize2.hpp>
 
 #include <tachyon/command/ui/AspectCommand.hpp>
@@ -849,7 +849,7 @@ namespace yq::tachyon {
 
     void    Viewer::set_position(const Vector2D&v)
     {
-        send(new SetPosition²({.source=this, .target=m_window}, v));
+        send(new SetPosition²Command({.source=this, .target=m_window}, v));
     }
 
     void    Viewer::set_position(double x, double y)

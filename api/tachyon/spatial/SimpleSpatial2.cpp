@@ -9,9 +9,9 @@
 #include <tachyon/aspect/AOrientation2Writer.hxx>
 #include <tachyon/aspect/APosition2Writer.hxx>
 #include <tachyon/aspect/AScale2Writer.hxx>
-#include <tachyon/command/position/MoveBy2.hpp>
-#include <tachyon/command/position/MoveByX.hpp>
-#include <tachyon/command/position/MoveByY.hpp>
+#include <tachyon/command/position/MoveBy2Command.hpp>
+#include <tachyon/command/position/MoveByXCommand.hpp>
+#include <tachyon/command/position/MoveByYCommand.hpp>
 #include <yq/tensor/Tensor22.hxx>
 #include <yq/vector/Vector2.hxx>
 #include <yq/vector/Spinor2.hxx>
@@ -49,7 +49,7 @@ namespace yq::tachyon {
         SimpleSpatial²::scale(MULTIPLY, δZ);
     }
 
-    void    SimpleSpatial²::on_move²(const MoveBy²& cmd)
+    void    SimpleSpatial²::on_move²(const MoveBy²Command& cmd)
     {
         if(cmd.target() != id())
             return;
@@ -57,7 +57,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * scale(REF).emul(cmd.Δ()));
     }
     
-    void    SimpleSpatial²::on_moveˣ(const MoveByˣ& cmd)
+    void    SimpleSpatial²::on_moveˣ(const MoveByˣCommand& cmd)
     {
         if(cmd.target() != id())
             return;
@@ -65,7 +65,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector2D(X, scale(X) * cmd.Δx()));
     }
     
-    void    SimpleSpatial²::on_moveʸ(const MoveByʸ& cmd)
+    void    SimpleSpatial²::on_moveʸ(const MoveByʸCommand& cmd)
     {
         if(cmd.target() != id())
             return;

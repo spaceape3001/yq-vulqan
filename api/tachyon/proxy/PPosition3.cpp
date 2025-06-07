@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/proxy/PPosition3.hpp>
-#include <tachyon/command/position/AddPosition3.hpp>
-#include <tachyon/command/position/AddPositionX.hpp>
-#include <tachyon/command/position/AddPositionY.hpp>
-#include <tachyon/command/position/AddPositionZ.hpp>
-#include <tachyon/command/position/MultiplyPosition.hpp>
-#include <tachyon/command/position/MultiplyPosition3.hpp>
-#include <tachyon/command/position/MultiplyPositionX.hpp>
-#include <tachyon/command/position/MultiplyPositionY.hpp>
-#include <tachyon/command/position/MultiplyPositionZ.hpp>
-#include <tachyon/command/position/SetPosition3.hpp>
-#include <tachyon/command/position/SetPositionX.hpp>
-#include <tachyon/command/position/SetPositionY.hpp>
-#include <tachyon/command/position/SetPositionZ.hpp>
+#include <tachyon/command/position/AddPosition3Command.hpp>
+#include <tachyon/command/position/AddPositionXCommand.hpp>
+#include <tachyon/command/position/AddPositionYCommand.hpp>
+#include <tachyon/command/position/AddPositionZCommand.hpp>
+#include <tachyon/command/position/MultiplyPositionCommand.hpp>
+#include <tachyon/command/position/MultiplyPosition3Command.hpp>
+#include <tachyon/command/position/MultiplyPositionXCommand.hpp>
+#include <tachyon/command/position/MultiplyPositionYCommand.hpp>
+#include <tachyon/command/position/MultiplyPositionZCommand.hpp>
+#include <tachyon/command/position/SetPosition3Command.hpp>
+#include <tachyon/command/position/SetPositionXCommand.hpp>
+#include <tachyon/command/position/SetPositionYCommand.hpp>
+#include <tachyon/command/position/SetPositionZCommand.hpp>
 
 namespace yq::tachyon {
     PPosition³::PPosition³(const IPosition³& i) : m_position(i.position())
@@ -59,56 +59,56 @@ namespace yq::tachyon {
     void        PPosition³::position(set_k, const Vector3D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPosition³({.target=object()}, v));
+            mail(new SetPosition³Command({.target=object()}, v));
         }
     }
 
     void        PPosition³::position(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionˣ({.target=object()}, x));
+            mail(new SetPositionˣCommand({.target=object()}, x));
         }
     }
     
     void        PPosition³::position(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionʸ({.target=object()}, y));
+            mail(new SetPositionʸCommand({.target=object()}, y));
         }
     }
     
     void        PPosition³::position(set_k, z_k, double z) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPositionᶻ({.target=object()}, z));
+            mail(new SetPositionᶻCommand({.target=object()}, z));
         }
     }
 
     void        PPosition³::position(add_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPosition³({.target=object()}, Δ));
+            mail(new AddPosition³Command({.target=object()}, Δ));
         }
     }
 
     void        PPosition³::position(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPositionˣ({.target=object()}, Δx));
+            mail(new AddPositionˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PPosition³::position(add_k, y_k, double Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPositionʸ({.target=object()}, Δy));
+            mail(new AddPositionʸCommand({.target=object()}, Δy));
         }
     }
 
     void        PPosition³::position(add_k, z_k, double Δz) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPositionᶻ({.target=object()}, Δz));
+            mail(new AddPositionᶻCommand({.target=object()}, Δz));
         }
     }
 
@@ -122,28 +122,28 @@ namespace yq::tachyon {
     void        PPosition³::position(multiply_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPosition³({.target=object()}, Δ));
+            mail(new MultiplyPosition³Command({.target=object()}, Δ));
         }
     }
 
     void        PPosition³::position(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPositionˣ({.target=object()}, Δx));
+            mail(new MultiplyPositionˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PPosition³::position(multiply_k, y_k, double Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPositionʸ({.target=object()}, Δy));
+            mail(new MultiplyPositionʸCommand({.target=object()}, Δy));
         }
     }
 
     void        PPosition³::position(multiply_k, z_k, double Δz) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPositionᶻ({.target=object()}, Δz));
+            mail(new MultiplyPositionᶻCommand({.target=object()}, Δz));
         }
     }
 }

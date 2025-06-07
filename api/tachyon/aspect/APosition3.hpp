@@ -11,19 +11,19 @@
 
 namespace yq::tachyon {
 
-    class AddPosition³;
-    class AddPositionˣ;
-    class AddPositionʸ;
-    class AddPositionᶻ;
+    class AddPosition³Command;
+    class AddPositionˣCommand;
+    class AddPositionʸCommand;
+    class AddPositionᶻCommand;
     class MultiplyPosition;   // here due to copy & paste, however
-    class MultiplyPosition³;  // might go for it (later)
-    class MultiplyPositionˣ;
-    class MultiplyPositionʸ;
-    class MultiplyPositionᶻ;
-    class SetPosition³;
-    class SetPositionˣ;
-    class SetPositionʸ;
-    class SetPositionᶻ;
+    class MultiplyPosition³Command;  // might go for it (later)
+    class MultiplyPositionˣCommand;
+    class MultiplyPositionʸCommand;
+    class MultiplyPositionᶻCommand;
+    class SetPosition³Command;
+    class SetPositionˣCommand;
+    class SetPositionʸCommand;
+    class SetPositionᶻCommand;
 
     class APosition³ : public IPosition³, public virtual Tachyon::Helper {
     public:
@@ -73,20 +73,20 @@ namespace yq::tachyon {
         void        position(emit_k);
 
     private:
-        void        on_set_position3(const SetPosition³&);
-        void        on_set_positionX(const SetPositionˣ&);
-        void        on_set_positionY(const SetPositionʸ&);
-        void        on_set_positionZ(const SetPositionᶻ&);
+        void        on_set_position3(const SetPosition³Command&);
+        void        on_set_positionX(const SetPositionˣCommand&);
+        void        on_set_positionY(const SetPositionʸCommand&);
+        void        on_set_positionZ(const SetPositionᶻCommand&);
 
-        void        on_add_position3(const AddPosition³&);
-        void        on_add_positionX(const AddPositionˣ&);
-        void        on_add_positionY(const AddPositionʸ&);
-        void        on_add_positionZ(const AddPositionᶻ&);
+        void        on_add_position3(const AddPosition³Command&);
+        void        on_add_positionX(const AddPositionˣCommand&);
+        void        on_add_positionY(const AddPositionʸCommand&);
+        void        on_add_positionZ(const AddPositionᶻCommand&);
         
         void        on_multiply_position(const MultiplyPosition&);
-        void        on_multiply_position3(const MultiplyPosition³&);
-        void        on_multiply_positionX(const MultiplyPositionˣ&);
-        void        on_multiply_positionY(const MultiplyPositionʸ&);
-        void        on_multiply_positionZ(const MultiplyPositionᶻ&);
+        void        on_multiply_position3(const MultiplyPosition³Command&);
+        void        on_multiply_positionX(const MultiplyPositionˣCommand&);
+        void        on_multiply_positionY(const MultiplyPositionʸCommand&);
+        void        on_multiply_positionZ(const MultiplyPositionᶻCommand&);
     };
 }

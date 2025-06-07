@@ -24,11 +24,11 @@ namespace yq::tachyon {
 
     inline ColorVertex2D::operator ColorVertexData() const
     {
-        return { (glm::dvec3) xy(position, 0.), rgba((RGB3F) color, 1.f) };
+        return { glm::vec3(position.x, position.y, 0.), rgba((RGB3F) color, 1.f) };
     }
 
     inline ColorVertex3D::operator ColorVertexData() const
     {
-        return { (glm::dvec3) position, rgba((RGB3F) color, 1.f) };
+        return { glm::vec3(position.x, position.y, position.z), rgba((RGB3F) color, 1.f) };
     }
 }

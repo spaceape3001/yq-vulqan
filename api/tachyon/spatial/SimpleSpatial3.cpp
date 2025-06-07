@@ -9,10 +9,10 @@
 #include <tachyon/aspect/AOrientation3Writer.hxx>
 #include <tachyon/aspect/APosition3Writer.hxx>
 #include <tachyon/aspect/AScale3Writer.hxx>
-#include <tachyon/command/position/MoveBy3.hpp>
-#include <tachyon/command/position/MoveByX.hpp>
-#include <tachyon/command/position/MoveByY.hpp>
-#include <tachyon/command/position/MoveByZ.hpp>
+#include <tachyon/command/position/MoveBy3Command.hpp>
+#include <tachyon/command/position/MoveByXCommand.hpp>
+#include <tachyon/command/position/MoveByYCommand.hpp>
+#include <tachyon/command/position/MoveByZCommand.hpp>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
@@ -50,7 +50,7 @@ namespace yq::tachyon {
         SimpleSpatial³::scale(MULTIPLY, δZ);
     }
 
-    void    SimpleSpatial³::on_move³(const MoveBy³& cmd)
+    void    SimpleSpatial³::on_move³(const MoveBy³Command& cmd)
     {
         if(cmd.target() != id())
             return;
@@ -58,7 +58,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * scale(REF).emul(cmd.Δ()));
     }
     
-    void    SimpleSpatial³::on_moveˣ(const MoveByˣ& cmd)
+    void    SimpleSpatial³::on_moveˣ(const MoveByˣCommand& cmd)
     {
         if(cmd.target() != id())
             return;
@@ -66,7 +66,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector3D(X, scale(X) * cmd.Δx()));
     }
     
-    void    SimpleSpatial³::on_moveʸ(const MoveByʸ& cmd)
+    void    SimpleSpatial³::on_moveʸ(const MoveByʸCommand& cmd)
     {
         if(cmd.target() != id())
             return;
@@ -74,7 +74,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector3D(Y, scale(Y) * cmd.Δy()));
     }
     
-    void    SimpleSpatial³::on_moveᶻ(const MoveByᶻ&cmd)
+    void    SimpleSpatial³::on_moveᶻ(const MoveByᶻCommand&cmd)
     {
         if(cmd.target() != id())
             return;

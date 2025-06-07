@@ -8,6 +8,7 @@
 
 #include <yq/color/RGBA.hpp>
 #include <yq/color/RGB.hpp>
+#include <yq/core/Tristate.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/typedef/quaternion3.hpp>

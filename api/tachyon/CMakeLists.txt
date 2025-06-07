@@ -131,6 +131,7 @@ add_library(${PROJECT_NAME} SHARED
     command/LightCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
+    command/ShapeCommand.cpp
     command/SimCommand.cpp
     command/SpatialCommand.cpp
     command/TachyonCommand.cpp
@@ -181,39 +182,39 @@ add_library(${PROJECT_NAME} SHARED
     command/orientation/SetRoll.cpp
     command/orientation/YawBy.cpp
 
-    command/position/AddPosition1.cpp
-    command/position/AddPosition2.cpp
-    command/position/AddPosition3.cpp
-    command/position/AddPosition4.cpp
-    command/position/AddPositionW.cpp
-    command/position/AddPositionX.cpp
-    command/position/AddPositionY.cpp
-    command/position/AddPositionZ.cpp
-    command/position/MoveBy1.cpp
-    command/position/MoveBy2.cpp
-    command/position/MoveBy3.cpp
-    command/position/MoveBy4.cpp
-    command/position/MoveByW.cpp
-    command/position/MoveByX.cpp
-    command/position/MoveByY.cpp
-    command/position/MoveByZ.cpp
-    command/position/MultiplyPosition.cpp
-    command/position/MultiplyPosition1.cpp
-    command/position/MultiplyPosition2.cpp
-    command/position/MultiplyPosition3.cpp
-    command/position/MultiplyPosition4.cpp
-    command/position/MultiplyPositionW.cpp
-    command/position/MultiplyPositionX.cpp
-    command/position/MultiplyPositionY.cpp
-    command/position/MultiplyPositionZ.cpp
-    command/position/SetPosition1.cpp
-    command/position/SetPosition2.cpp
-    command/position/SetPosition3.cpp
-    command/position/SetPosition4.cpp
-    command/position/SetPositionW.cpp
-    command/position/SetPositionX.cpp
-    command/position/SetPositionY.cpp
-    command/position/SetPositionZ.cpp
+    command/position/AddPosition1Command.cpp
+    command/position/AddPosition2Command.cpp
+    command/position/AddPosition3Command.cpp
+    command/position/AddPosition4Command.cpp
+    command/position/AddPositionWCommand.cpp
+    command/position/AddPositionXCommand.cpp
+    command/position/AddPositionYCommand.cpp
+    command/position/AddPositionZCommand.cpp
+    command/position/MoveBy1Command.cpp
+    command/position/MoveBy2Command.cpp
+    command/position/MoveBy3Command.cpp
+    command/position/MoveBy4Command.cpp
+    command/position/MoveByWCommand.cpp
+    command/position/MoveByXCommand.cpp
+    command/position/MoveByYCommand.cpp
+    command/position/MoveByZCommand.cpp
+    command/position/MultiplyPositionCommand.cpp
+    command/position/MultiplyPosition1Command.cpp
+    command/position/MultiplyPosition2Command.cpp
+    command/position/MultiplyPosition3Command.cpp
+    command/position/MultiplyPosition4Command.cpp
+    command/position/MultiplyPositionWCommand.cpp
+    command/position/MultiplyPositionXCommand.cpp
+    command/position/MultiplyPositionYCommand.cpp
+    command/position/MultiplyPositionZCommand.cpp
+    command/position/SetPosition1Command.cpp
+    command/position/SetPosition2Command.cpp
+    command/position/SetPosition3Command.cpp
+    command/position/SetPosition4Command.cpp
+    command/position/SetPositionWCommand.cpp
+    command/position/SetPositionXCommand.cpp
+    command/position/SetPositionYCommand.cpp
+    command/position/SetPositionZCommand.cpp
 
     command/scale/AddScale1.cpp
     command/scale/AddScale2.cpp
@@ -356,7 +357,10 @@ add_library(${PROJECT_NAME} SHARED
 
     controller/Space3Controller.cpp
     
+    edit/ColorTriangle3UI.cpp
     edit/SceneUI.cpp
+    edit/SimpleSpatial3UI.cpp
+    edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp
 
     enum/Cardinal.cpp

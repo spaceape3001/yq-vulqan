@@ -21,6 +21,7 @@
 #include <tachyon/api/Camera.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/Rendered.hpp>
+#include <tachyon/api/Rendered3.hpp>
 #include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/app/Viewer.hpp>
@@ -46,6 +47,8 @@
 #include <tachyon/scene/HUDScene.hpp>
 #include <tachyon/scene/BackgroundScene.hpp>
 #include <tachyon/scene/ForegroundScene.hpp>
+
+#include <tachyon/spatial/SimpleSpatial3.hpp>
 
 #include <tachyon/tweak/OriginCameraTweak.hpp>
 
@@ -497,6 +500,13 @@ void    SceneEditor::create_rendered(const RenderedInfo& info)
     yInfo() << "SceneEditor's create_rendered(" << info.name() << ") unable to create";
         return ;
     }
+    
+    Rendered³*  r3  = dynamic_cast<Rendered³*>(re);
+    if(r3){
+        //  eventually an option...
+        r3->create_child<SimpleSpatial³>();
+    }
+    
     
     _activate(re->id());
     

@@ -11,13 +11,13 @@
 
 namespace yq::tachyon {
 
-    class AddPosition¹;
-    class AddPositionˣ;
+    class AddPosition¹Command;
+    class AddPositionˣCommand;
     class MultiplyPosition;
-    class MultiplyPosition¹;
-    class MultiplyPositionˣ;
-    class SetPosition¹;
-    class SetPositionˣ;
+    class MultiplyPosition¹Command;
+    class MultiplyPositionˣCommand;
+    class SetPosition¹Command;
+    class SetPositionˣCommand;
 
     class APosition¹ : public IPosition¹, public virtual Tachyon::Helper {
     public:
@@ -59,15 +59,15 @@ namespace yq::tachyon {
         void            position(emit_k);
         
     private:
-        void        on_set_position1(const SetPosition¹&);
-        void        on_set_positionX(const SetPositionˣ&);
+        void        on_set_position1(const SetPosition¹Command&);
+        void        on_set_positionX(const SetPositionˣCommand&);
 
-        void        on_add_position1(const AddPosition¹&);
-        void        on_add_positionX(const AddPositionˣ&);
+        void        on_add_position1(const AddPosition¹Command&);
+        void        on_add_positionX(const AddPositionˣCommand&);
         
         void        on_multiply_position(const MultiplyPosition&);
-        void        on_multiply_position1(const MultiplyPosition¹&);
-        void        on_multiply_positionX(const MultiplyPositionˣ&);
+        void        on_multiply_position1(const MultiplyPosition¹Command&);
+        void        on_multiply_positionX(const MultiplyPositionˣCommand&);
 
     };
 

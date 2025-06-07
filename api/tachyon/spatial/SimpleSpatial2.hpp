@@ -23,9 +23,9 @@ namespace yq::tachyon {
     class SetOrientation²;
     class YawBy;
     
-    class MoveBy²;
-    class MoveByˣ;
-    class MoveByʸ;
+    class MoveBy²Command;
+    class MoveByˣCommand;
+    class MoveByʸCommand;
 
     class SimpleSpatial² : public Spatial², public APosition², public AScale², public AOrientation² {
         YQ_TACHYON_DECLARE(SimpleSpatial², Spatial²);
@@ -64,9 +64,9 @@ namespace yq::tachyon {
     protected:
         void        snap(Spatial²Snap&) const;
         
-        void    on_move²(const MoveBy²&);
-        void    on_moveˣ(const MoveByˣ&);
-        void    on_moveʸ(const MoveByʸ&);
+        void    on_move²(const MoveBy²Command&);
+        void    on_moveˣ(const MoveByˣCommand&);
+        void    on_moveʸ(const MoveByʸCommand&);
 
     private:
         

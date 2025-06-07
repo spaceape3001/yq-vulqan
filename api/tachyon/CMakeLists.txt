@@ -216,25 +216,25 @@ add_library(${PROJECT_NAME} SHARED
     command/position/SetPositionYCommand.cpp
     command/position/SetPositionZCommand.cpp
 
-    command/scale/AddScale1.cpp
-    command/scale/AddScale2.cpp
-    command/scale/AddScale3.cpp
-    command/scale/AddScaleX.cpp
-    command/scale/AddScaleY.cpp
-    command/scale/AddScaleZ.cpp
-    command/scale/MultiplyScale.cpp
-    command/scale/MultiplyScale1.cpp
-    command/scale/MultiplyScale2.cpp
-    command/scale/MultiplyScale3.cpp
-    command/scale/MultiplyScaleX.cpp
-    command/scale/MultiplyScaleY.cpp
-    command/scale/MultiplyScaleZ.cpp
-    command/scale/SetScale1.cpp
-    command/scale/SetScale2.cpp
-    command/scale/SetScale3.cpp
-    command/scale/SetScaleX.cpp
-    command/scale/SetScaleY.cpp
-    command/scale/SetScaleZ.cpp
+    command/scale/AddScale1Command.cpp
+    command/scale/AddScale2Command.cpp
+    command/scale/AddScale3Command.cpp
+    command/scale/AddScaleXCommand.cpp
+    command/scale/AddScaleYCommand.cpp
+    command/scale/AddScaleZCommand.cpp
+    command/scale/MultiplyScaleCommand.cpp
+    command/scale/MultiplyScale1Command.cpp
+    command/scale/MultiplyScale2Command.cpp
+    command/scale/MultiplyScale3Command.cpp
+    command/scale/MultiplyScaleXCommand.cpp
+    command/scale/MultiplyScaleYCommand.cpp
+    command/scale/MultiplyScaleZCommand.cpp
+    command/scale/SetScale1Command.cpp
+    command/scale/SetScale2Command.cpp
+    command/scale/SetScale3Command.cpp
+    command/scale/SetScaleXCommand.cpp
+    command/scale/SetScaleYCommand.cpp
+    command/scale/SetScaleZCommand.cpp
 
 
     command/size/AddMaxSize1Command.cpp

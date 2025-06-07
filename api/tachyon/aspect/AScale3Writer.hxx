@@ -7,19 +7,19 @@
 #pragma once
 
 #include <tachyon/aspect/AScale3.hpp>
-#include <tachyon/command/scale/AddScale3.hpp>
-#include <tachyon/command/scale/AddScaleX.hpp>
-#include <tachyon/command/scale/AddScaleY.hpp>
-#include <tachyon/command/scale/AddScaleZ.hpp>
-#include <tachyon/command/scale/MultiplyScale.hpp>
-#include <tachyon/command/scale/MultiplyScale3.hpp>
-#include <tachyon/command/scale/MultiplyScaleX.hpp>
-#include <tachyon/command/scale/MultiplyScaleY.hpp>
-#include <tachyon/command/scale/MultiplyScaleZ.hpp>
-#include <tachyon/command/scale/SetScale3.hpp>
-#include <tachyon/command/scale/SetScaleX.hpp>
-#include <tachyon/command/scale/SetScaleY.hpp>
-#include <tachyon/command/scale/SetScaleZ.hpp>
+#include <tachyon/command/scale/AddScale3Command.hpp>
+#include <tachyon/command/scale/AddScaleXCommand.hpp>
+#include <tachyon/command/scale/AddScaleYCommand.hpp>
+#include <tachyon/command/scale/AddScaleZCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleCommand.hpp>
+#include <tachyon/command/scale/MultiplyScale3Command.hpp>
+#include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleYCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleZCommand.hpp>
+#include <tachyon/command/scale/SetScale3Command.hpp>
+#include <tachyon/command/scale/SetScaleXCommand.hpp>
+#include <tachyon/command/scale/SetScaleYCommand.hpp>
+#include <tachyon/command/scale/SetScaleZCommand.hpp>
 #include <tachyon/api/TachyonInfoWriter.hpp>
 #include <tachyon/tags.hpp>
 

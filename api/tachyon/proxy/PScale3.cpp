@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/proxy/PScale3.hpp>
-#include <tachyon/command/scale/AddScale3.hpp>
-#include <tachyon/command/scale/AddScaleX.hpp>
-#include <tachyon/command/scale/AddScaleY.hpp>
-#include <tachyon/command/scale/AddScaleZ.hpp>
-#include <tachyon/command/scale/MultiplyScale.hpp>
-#include <tachyon/command/scale/MultiplyScale3.hpp>
-#include <tachyon/command/scale/MultiplyScaleX.hpp>
-#include <tachyon/command/scale/MultiplyScaleY.hpp>
-#include <tachyon/command/scale/MultiplyScaleZ.hpp>
-#include <tachyon/command/scale/SetScale3.hpp>
-#include <tachyon/command/scale/SetScaleX.hpp>
-#include <tachyon/command/scale/SetScaleY.hpp>
-#include <tachyon/command/scale/SetScaleZ.hpp>
+#include <tachyon/command/scale/AddScale3Command.hpp>
+#include <tachyon/command/scale/AddScaleXCommand.hpp>
+#include <tachyon/command/scale/AddScaleYCommand.hpp>
+#include <tachyon/command/scale/AddScaleZCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleCommand.hpp>
+#include <tachyon/command/scale/MultiplyScale3Command.hpp>
+#include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleYCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleZCommand.hpp>
+#include <tachyon/command/scale/SetScale3Command.hpp>
+#include <tachyon/command/scale/SetScaleXCommand.hpp>
+#include <tachyon/command/scale/SetScaleYCommand.hpp>
+#include <tachyon/command/scale/SetScaleZCommand.hpp>
 
 namespace yq::tachyon {
     PScale³::PScale³(const IScale³& i) : m_scale(i.scale())
@@ -59,91 +59,91 @@ namespace yq::tachyon {
     void        PScale³::scale(set_k, const Vector3D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetScale³({.target=object()}, v));
+            mail(new SetScale³Command({.target=object()}, v));
         }
     }
 
     void        PScale³::scale(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetScaleˣ({.target=object()}, x));
+            mail(new SetScaleˣCommand({.target=object()}, x));
         }
     }
     
     void        PScale³::scale(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetScaleʸ({.target=object()}, y));
+            mail(new SetScaleʸCommand({.target=object()}, y));
         }
     }
     
     void        PScale³::scale(set_k, z_k, double z) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetScaleᶻ({.target=object()}, z));
+            mail(new SetScaleᶻCommand({.target=object()}, z));
         }
     }
 
     void        PScale³::scale(add_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddScale³({.target=object()}, Δ));
+            mail(new AddScale³Command({.target=object()}, Δ));
         }
     }
 
     void        PScale³::scale(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddScaleˣ({.target=object()}, Δx));
+            mail(new AddScaleˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PScale³::scale(add_k, y_k, double Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddScaleʸ({.target=object()}, Δy));
+            mail(new AddScaleʸCommand({.target=object()}, Δy));
         }
     }
 
     void        PScale³::scale(add_k, z_k, double Δz) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddScaleᶻ({.target=object()}, Δz));
+            mail(new AddScaleᶻCommand({.target=object()}, Δz));
         }
     }
 
     void        PScale³::scale(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScale({.target=object()}, Δ));
+            mail(new MultiplyScaleCommand({.target=object()}, Δ));
         }
     }
 
     void        PScale³::scale(multiply_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScale³({.target=object()}, Δ));
+            mail(new MultiplyScale³Command({.target=object()}, Δ));
         }
     }
 
     void        PScale³::scale(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScaleˣ({.target=object()}, Δx));
+            mail(new MultiplyScaleˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PScale³::scale(multiply_k, y_k, double Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScaleʸ({.target=object()}, Δy));
+            mail(new MultiplyScaleʸCommand({.target=object()}, Δy));
         }
     }
 
     void        PScale³::scale(multiply_k, z_k, double Δz) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScaleᶻ({.target=object()}, Δz));
+            mail(new MultiplyScaleᶻCommand({.target=object()}, Δz));
         }
     }
 }

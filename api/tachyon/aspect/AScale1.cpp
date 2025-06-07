@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/aspect/AScale1.hpp>
-#include <tachyon/command/scale/AddScale1.hpp>
-#include <tachyon/command/scale/AddScaleX.hpp>
-#include <tachyon/command/scale/MultiplyScale.hpp>
-#include <tachyon/command/scale/MultiplyScale1.hpp>
-#include <tachyon/command/scale/MultiplyScaleX.hpp>
-#include <tachyon/command/scale/SetScale1.hpp>
-#include <tachyon/command/scale/SetScaleX.hpp>
+#include <tachyon/command/scale/AddScale1Command.hpp>
+#include <tachyon/command/scale/AddScaleXCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleCommand.hpp>
+#include <tachyon/command/scale/MultiplyScale1Command.hpp>
+#include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
+#include <tachyon/command/scale/SetScale1Command.hpp>
+#include <tachyon/command/scale/SetScaleXCommand.hpp>
 #include <tachyon/event/spatial/Scale1Event.hpp>
 
 
@@ -66,49 +66,49 @@ namespace yq::tachyon {
         scale(SET, Vector1D( m_scale.x*v));
     }
     
-    void        AScale¹::on_set_scale1(const SetScale¹&cmd)
+    void        AScale¹::on_set_scale1(const SetScale¹Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(SET, cmd.scale());
     }
     
-    void        AScale¹::on_set_scaleX(const SetScaleˣ&cmd)
+    void        AScale¹::on_set_scaleX(const SetScaleˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(SET, X, cmd.x());
     }
     
-    void        AScale¹::on_add_scale1(const AddScale¹&cmd)
+    void        AScale¹::on_add_scale1(const AddScale¹Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(ADD, cmd.Δ());
     }
     
-    void        AScale¹::on_add_scaleX(const AddScaleˣ&cmd)
+    void        AScale¹::on_add_scaleX(const AddScaleˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(ADD, X, cmd.Δx());
     }
     
-    void        AScale¹::on_multiply_scale(const MultiplyScale&cmd)
+    void        AScale¹::on_multiply_scale(const MultiplyScaleCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(MULTIPLY, cmd.δ());
     }
     
-    void        AScale¹::on_multiply_scale1(const MultiplyScale¹&cmd)
+    void        AScale¹::on_multiply_scale1(const MultiplyScale¹Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(MULTIPLY, cmd.δ());
     }
     
-    void        AScale¹::on_multiply_scaleX(const MultiplyScaleˣ&cmd)
+    void        AScale¹::on_multiply_scaleX(const MultiplyScaleˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

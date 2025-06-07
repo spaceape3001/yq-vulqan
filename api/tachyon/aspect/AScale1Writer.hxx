@@ -7,13 +7,13 @@
 #pragma once
 
 #include <tachyon/aspect/AScale1.hpp>
-#include <tachyon/command/scale/AddScale1.hpp>
-#include <tachyon/command/scale/AddScaleX.hpp>
-#include <tachyon/command/scale/MultiplyScale.hpp>
-#include <tachyon/command/scale/MultiplyScale1.hpp>
-#include <tachyon/command/scale/MultiplyScaleX.hpp>
-#include <tachyon/command/scale/SetScale1.hpp>
-#include <tachyon/command/scale/SetScaleX.hpp>
+#include <tachyon/command/scale/AddScale1Command.hpp>
+#include <tachyon/command/scale/AddScaleXCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleCommand.hpp>
+#include <tachyon/command/scale/MultiplyScale1Command.hpp>
+#include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
+#include <tachyon/command/scale/SetScale1Command.hpp>
+#include <tachyon/command/scale/SetScaleXCommand.hpp>
 #include <tachyon/api/TachyonInfoWriter.hpp>
 #include <tachyon/tags.hpp>
 

@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/proxy/PScale1.hpp>
-#include <tachyon/command/scale/AddScale1.hpp>
-#include <tachyon/command/scale/AddScaleX.hpp>
-#include <tachyon/command/scale/MultiplyScale.hpp>
-#include <tachyon/command/scale/MultiplyScale1.hpp>
-#include <tachyon/command/scale/MultiplyScaleX.hpp>
-#include <tachyon/command/scale/SetScale1.hpp>
-#include <tachyon/command/scale/SetScaleX.hpp>
+#include <tachyon/command/scale/AddScale1Command.hpp>
+#include <tachyon/command/scale/AddScaleXCommand.hpp>
+#include <tachyon/command/scale/MultiplyScaleCommand.hpp>
+#include <tachyon/command/scale/MultiplyScale1Command.hpp>
+#include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
+#include <tachyon/command/scale/SetScale1Command.hpp>
+#include <tachyon/command/scale/SetScaleXCommand.hpp>
 
 namespace yq::tachyon {
     PScale¹::PScale¹(const IScale¹& i) : m_scale(i.scale())
@@ -53,49 +53,49 @@ namespace yq::tachyon {
     void        PScale¹::scale(set_k, const Vector1D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetScale¹({.target=object()}, v));
+            mail(new SetScale¹Command({.target=object()}, v));
         }
     }
 
     void        PScale¹::scale(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetScaleˣ({.target=object()}, x));
+            mail(new SetScaleˣCommand({.target=object()}, x));
         }
     }
     
     void        PScale¹::scale(add_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddScale¹({.target=object()}, Δ));
+            mail(new AddScale¹Command({.target=object()}, Δ));
         }
     }
 
     void        PScale¹::scale(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddScaleˣ({.target=object()}, Δx));
+            mail(new AddScaleˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PScale¹::scale(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScale({.target=object()}, Δ));
+            mail(new MultiplyScaleCommand({.target=object()}, Δ));
         }
     }
 
     void        PScale¹::scale(multiply_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScale¹({.target=object()}, Δ));
+            mail(new MultiplyScale¹Command({.target=object()}, Δ));
         }
     }
 
     void        PScale¹::scale(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyScaleˣ({.target=object()}, Δx));
+            mail(new MultiplyScaleˣCommand({.target=object()}, Δx));
         }
     }
 }

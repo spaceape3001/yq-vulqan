@@ -11,16 +11,16 @@
 
 namespace yq::tachyon {
 
-    class AddScale²;
-    class AddScaleˣ;
-    class AddScaleʸ;
-    class MultiplyScale;
-    class MultiplyScale²;
-    class MultiplyScaleˣ;
-    class MultiplyScaleʸ;
-    class SetScale²;
-    class SetScaleˣ;
-    class SetScaleʸ;
+    class AddScale²Command;
+    class AddScaleˣCommand;
+    class AddScaleʸCommand;
+    class MultiplyScaleCommand;
+    class MultiplyScale²Command;
+    class MultiplyScaleˣCommand;
+    class MultiplyScaleʸCommand;
+    class SetScale²Command;
+    class SetScaleˣCommand;
+    class SetScaleʸCommand;
 
     class AScale² : public IScale², public virtual Tachyon::Helper {
     public:
@@ -66,18 +66,18 @@ namespace yq::tachyon {
         void            scale(emit_k);
         
     private:
-        void        on_set_scale2(const SetScale²&);
-        void        on_set_scaleX(const SetScaleˣ&);
-        void        on_set_scaleY(const SetScaleʸ&);
+        void        on_set_scale2(const SetScale²Command&);
+        void        on_set_scaleX(const SetScaleˣCommand&);
+        void        on_set_scaleY(const SetScaleʸCommand&);
 
-        void        on_add_scale2(const AddScale²&);
-        void        on_add_scaleX(const AddScaleˣ&);
-        void        on_add_scaleY(const AddScaleʸ&);
+        void        on_add_scale2(const AddScale²Command&);
+        void        on_add_scaleX(const AddScaleˣCommand&);
+        void        on_add_scaleY(const AddScaleʸCommand&);
         
-        void        on_multiply_scale(const MultiplyScale&);
-        void        on_multiply_scale2(const MultiplyScale²&);
-        void        on_multiply_scaleX(const MultiplyScaleˣ&);
-        void        on_multiply_scaleY(const MultiplyScaleʸ&);
+        void        on_multiply_scale(const MultiplyScaleCommand&);
+        void        on_multiply_scale2(const MultiplyScale²Command&);
+        void        on_multiply_scaleX(const MultiplyScaleˣCommand&);
+        void        on_multiply_scaleY(const MultiplyScaleʸCommand&);
     };
 
 }

@@ -11,13 +11,13 @@
 
 namespace yq::tachyon {
 
-    class AddScale¹;
-    class AddScaleˣ;
-    class MultiplyScale;
-    class MultiplyScale¹;
-    class MultiplyScaleˣ;
-    class SetScale¹;
-    class SetScaleˣ;
+    class AddScale¹Command;
+    class AddScaleˣCommand;
+    class MultiplyScaleCommand;
+    class MultiplyScale¹Command;
+    class MultiplyScaleˣCommand;
+    class SetScale¹Command;
+    class SetScaleˣCommand;
 
     class AScale¹ : public IScale¹, public virtual Tachyon::Helper {
     public:
@@ -59,15 +59,15 @@ namespace yq::tachyon {
         void            scale(emit_k);
         
     private:
-        void        on_set_scale1(const SetScale¹&);
-        void        on_set_scaleX(const SetScaleˣ&);
+        void        on_set_scale1(const SetScale¹Command&);
+        void        on_set_scaleX(const SetScaleˣCommand&);
 
-        void        on_add_scale1(const AddScale¹&);
-        void        on_add_scaleX(const AddScaleˣ&);
+        void        on_add_scale1(const AddScale¹Command&);
+        void        on_add_scaleX(const AddScaleˣCommand&);
         
-        void        on_multiply_scale(const MultiplyScale&);
-        void        on_multiply_scale1(const MultiplyScale¹&);
-        void        on_multiply_scaleX(const MultiplyScaleˣ&);
+        void        on_multiply_scale(const MultiplyScaleCommand&);
+        void        on_multiply_scale1(const MultiplyScale¹Command&);
+        void        on_multiply_scaleX(const MultiplyScaleˣCommand&);
 
     };
 

@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/proxy/POrientation3.hpp>
-#include <tachyon/command/orientation/RollBy.hpp>
-#include <tachyon/command/orientation/PitchBy.hpp>
-#include <tachyon/command/orientation/RotateBy3.hpp>
-#include <tachyon/command/orientation/SetHeading.hpp>
-#include <tachyon/command/orientation/SetOrientation3.hpp>
-#include <tachyon/command/orientation/SetPitch.hpp>
-#include <tachyon/command/orientation/SetRoll.hpp>
-#include <tachyon/command/orientation/YawBy.hpp>
+#include <tachyon/command/orientation/RollByCommand.hpp>
+#include <tachyon/command/orientation/PitchByCommand.hpp>
+#include <tachyon/command/orientation/RotateBy3Command.hpp>
+#include <tachyon/command/orientation/SetHeadingCommand.hpp>
+#include <tachyon/command/orientation/SetOrientation3Command.hpp>
+#include <tachyon/command/orientation/SetPitchCommand.hpp>
+#include <tachyon/command/orientation/SetRollCommand.hpp>
+#include <tachyon/command/orientation/YawByCommand.hpp>
 #include <yq/vector/Quaternion3.hxx>
 
 namespace yq::tachyon {
@@ -53,70 +53,70 @@ namespace yq::tachyon {
     void            POrientation³::orientation(set_k, const Quaternion3D& Q)
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetOrientation³({.target=object()}, Q));
+            mail(new SetOrientation³Command({.target=object()}, Q));
         }
     }
     
     void            POrientation³::orientation(set_k, hpr_k, Radian h, Radian p, Radian r)
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetOrientation³({.target=object()}, HPR, h, p, r));
+            mail(new SetOrientation³Command({.target=object()}, HPR, h, p, r));
         }
     }
     
     void            POrientation³::orientation(set_k, heading_k, Radian θ) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetHeading({.target=object()}, θ));
+            mail(new SetHeadingCommand({.target=object()}, θ));
         }
     }
     
     void            POrientation³::orientation(set_k, pitch_k, Radian θ) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetPitch({.target=object()}, θ));
+            mail(new SetPitchCommand({.target=object()}, θ));
         }
     }
     
     void            POrientation³::orientation(set_k, roll_k, Radian θ) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetRoll({.target=object()}, θ));
+            mail(new SetRollCommand({.target=object()}, θ));
         }
     }
 
     void            POrientation³::orientation(rotate_k, const Quaternion3D& Q)
     {
         if(m_flags(F::Rotatable) && !m_flags(F::Disabled)){
-            mail(new RotateBy³({.target=object()}, Q));
+            mail(new RotateBy³Command({.target=object()}, Q));
         }
     }
     
     void            POrientation³::orientation(rotate_k, const unit::Radian3D& R)
     {
         if(m_flags(F::Rotatable) && !m_flags(F::Disabled)){
-            mail(new RotateBy³({.target=object()}, R));
+            mail(new RotateBy³Command({.target=object()}, R));
         }
     }
     
     void            POrientation³::orientation(rotate_k, pitch_k, Radian θ)
     {
         if(m_flags(F::Rotatable) && !m_flags(F::Disabled)){
-            mail(new PitchBy({.target=object()}, θ));
+            mail(new PitchByCommand({.target=object()}, θ));
         }
     }
     
     void            POrientation³::orientation(rotate_k, roll_k, Radian θ)
     {
         if(m_flags(F::Rotatable) && !m_flags(F::Disabled)){
-            mail(new RollBy({.target=object()}, θ));
+            mail(new RollByCommand({.target=object()}, θ));
         }
     }
     
     void            POrientation³::orientation(rotate_k, yaw_k, Radian θ)
     {
         if(m_flags(F::Rotatable) && !m_flags(F::Disabled)){
-            mail(new YawBy({.target=object()}, θ));
+            mail(new YawByCommand({.target=object()}, θ));
         }
     }
     

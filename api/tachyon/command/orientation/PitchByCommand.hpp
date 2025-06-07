@@ -12,11 +12,11 @@
 
 namespace yq::tachyon {
 
-    //! Instructs an object to roll (ie, around the local body X-axis) by the given amount
-    class RollBy : public OrientationCommand {
-        YQ_OBJECT_DECLARE(RollBy, OrientationCommand)
+    //! Instructs an object to pitch (ie, around the local body Y-axis) by the given amount
+    class PitchByCommand : public OrientationCommand {
+        YQ_OBJECT_DECLARE(PitchByCommand, OrientationCommand)
     public:
-        RollBy(const Header&, Radian θ);
+        PitchByCommand(const Header&, Radian θ);
     
         static void init_info();
         
@@ -25,15 +25,15 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        RollBy(const RollBy&, const Header&);
-        ~RollBy();
-    
+        PitchByCommand(const PitchByCommand&, const Header&);
+        ~PitchByCommand();
+        
     private:
         Radian const  m_θ;
         
-        RollBy(const RollBy&) = delete;
-        RollBy(RollBy&&) = delete;
-        RollBy& operator=(const RollBy&) = delete;
-        RollBy& operator=(RollBy&&) = delete;
+        PitchByCommand(const PitchByCommand&);
+        PitchByCommand(PitchByCommand&&);
+        PitchByCommand& operator=(const PitchByCommand&);
+        PitchByCommand& operator=(PitchByCommand&&);
     };
 }

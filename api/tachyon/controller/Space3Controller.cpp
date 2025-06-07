@@ -14,9 +14,9 @@
 #include <tachyon/command/position/MoveByXCommand.hpp>
 #include <tachyon/command/position/MoveByYCommand.hpp>
 #include <tachyon/command/position/MoveByZCommand.hpp>
-#include <tachyon/command/orientation/PitchBy.hpp>
-#include <tachyon/command/orientation/RollBy.hpp>
-#include <tachyon/command/orientation/YawBy.hpp>
+#include <tachyon/command/orientation/PitchByCommand.hpp>
+#include <tachyon/command/orientation/RollByCommand.hpp>
+#include <tachyon/command/orientation/YawByCommand.hpp>
 #include <tachyon/event/keyboard/KeyPressEvent.hpp>
 #include <tachyon/event/keyboard/KeyRepeatEvent.hpp>
 #include <tachyon/event/gamepad/GamepadAxisEvent.hpp>
@@ -106,24 +106,24 @@ namespace yq::tachyon {
             break;
             
         case KeyCode::Kp2:
-            send(new PitchBy({.target=m_target}, unit::Degree(m_θN.press) ));
+            send(new PitchByCommand({.target=m_target}, unit::Degree(m_θN.press) ));
             break;
         case KeyCode::Kp8:
-            send(new PitchBy({.target=m_target}, unit::Degree(m_θP.press) ));
+            send(new PitchByCommand({.target=m_target}, unit::Degree(m_θP.press) ));
             break;
             
         case KeyCode::Kp7:
-            send(new RollBy({.target=m_target}, unit::Degree(m_φN.press) ));
+            send(new RollByCommand({.target=m_target}, unit::Degree(m_φN.press) ));
             break;
         case KeyCode::Kp9:
-            send(new RollBy({.target=m_target}, unit::Degree(m_φP.press) ));
+            send(new RollByCommand({.target=m_target}, unit::Degree(m_φP.press) ));
             break;
             
         case KeyCode::Kp4:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λN.press) ));
+            send(new YawByCommand({.target=m_target}, unit::Degree(m_λN.press) ));
             break;
         case KeyCode::Kp6:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λP.press) ));
+            send(new YawByCommand({.target=m_target}, unit::Degree(m_λP.press) ));
             break;
         default:
             break;
@@ -170,22 +170,22 @@ namespace yq::tachyon {
             send(new AddPositionʸCommand({.target=m_target}, m_yN.repeat ));
             break;
         case KeyCode::Kp2:
-            send(new PitchBy({.target=m_target}, unit::Degree(m_θN.repeat) ));
+            send(new PitchByCommand({.target=m_target}, unit::Degree(m_θN.repeat) ));
             break;
         case KeyCode::Kp8:
-            send(new PitchBy({.target=m_target}, unit::Degree(m_θP.repeat) ));
+            send(new PitchByCommand({.target=m_target}, unit::Degree(m_θP.repeat) ));
             break;
         case KeyCode::Kp7:
-            send(new RollBy({.target=m_target}, unit::Degree(m_φN.repeat) ));
+            send(new RollByCommand({.target=m_target}, unit::Degree(m_φN.repeat) ));
             break;
         case KeyCode::Kp9:
-            send(new RollBy({.target=m_target}, unit::Degree(m_φP.repeat) ));
+            send(new RollByCommand({.target=m_target}, unit::Degree(m_φP.repeat) ));
             break;
         case KeyCode::Kp4:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λN.repeat) ));
+            send(new YawByCommand({.target=m_target}, unit::Degree(m_λN.repeat) ));
             break;
         case KeyCode::Kp6:
-            send(new YawBy({.target=m_target}, unit::Degree(m_λP.repeat) ));
+            send(new YawByCommand({.target=m_target}, unit::Degree(m_λP.repeat) ));
             break;
         default:
             break;
@@ -201,10 +201,10 @@ namespace yq::tachyon {
     {
         if(!m_joyLockout){
             if(m_θ.input){
-                send(new PitchBy({.target=m_target}, unit::Degree(m_θ.input*m_θ.gain*ctx.Δwall.value) ));
+                send(new PitchByCommand({.target=m_target}, unit::Degree(m_θ.input*m_θ.gain*ctx.Δwall.value) ));
             }
             if(m_λ.input){
-                send(new YawBy({.target=m_target}, unit::Degree(m_λ.input*m_λ.gain*ctx.Δwall.value) ));
+                send(new YawByCommand({.target=m_target}, unit::Degree(m_λ.input*m_λ.gain*ctx.Δwall.value) ));
             }
         }
         return {};

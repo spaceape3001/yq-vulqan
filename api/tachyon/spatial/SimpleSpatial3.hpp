@@ -18,14 +18,14 @@
 #endif
 
 namespace yq::tachyon {
-    class PitchBy;
-    class RollBy;
-    class RotateBy³;
-    class SetHeading;
-    class SetOrientation³;
-    class SetPitch;
-    class SetRoll;
-    class YawBy;
+    class PitchByCommand;
+    class RollByCommand;
+    class RotateBy³Command;
+    class SetHeadingCommand;
+    class SetOrientation³Command;
+    class SetPitchCommand;
+    class SetRollCommand;
+    class YawByCommand;
     
     class MoveBy³Command;
     class MoveByˣCommand;

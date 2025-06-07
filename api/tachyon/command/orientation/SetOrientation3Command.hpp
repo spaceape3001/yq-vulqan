@@ -13,11 +13,11 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SetOrientation³ : public OrientationCommand {
-        YQ_OBJECT_DECLARE(SetOrientation³, OrientationCommand)
+    class SetOrientation³Command : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetOrientation³Command, OrientationCommand)
     public:
-        SetOrientation³(const Header&, hpr_k, Radian hdg, Radian pitch, Radian roll);
-        SetOrientation³(const Header&, const Quaternion3D&);
+        SetOrientation³Command(const Header&, hpr_k, Radian hdg, Radian pitch, Radian roll);
+        SetOrientation³Command(const Header&, const Quaternion3D&);
     
         const Quaternion3D&   orientation() const  { return m_orientation; }
         
@@ -32,15 +32,15 @@ namespace yq::tachyon {
 
     protected:
 
-        SetOrientation³(const SetOrientation³&, const Header&);
-        ~SetOrientation³();
+        SetOrientation³Command(const SetOrientation³Command&, const Header&);
+        ~SetOrientation³Command();
         
     private:
         Quaternion3D const  m_orientation;
         
-        SetOrientation³(const SetOrientation³&) = delete;
-        SetOrientation³(SetOrientation³&&) = delete;
-        SetOrientation³& operator=(const SetOrientation³&) = delete;
-        SetOrientation³& operator=(SetOrientation³&&) = delete;
+        SetOrientation³Command(const SetOrientation³Command&) = delete;
+        SetOrientation³Command(SetOrientation³Command&&) = delete;
+        SetOrientation³Command& operator=(const SetOrientation³Command&) = delete;
+        SetOrientation³Command& operator=(SetOrientation³Command&&) = delete;
     };
 }

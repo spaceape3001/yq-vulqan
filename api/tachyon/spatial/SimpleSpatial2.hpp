@@ -18,10 +18,10 @@
 #endif
 
 namespace yq::tachyon {
-    class RotateBy²;
-    class SetHeading;
-    class SetOrientation²;
-    class YawBy;
+    class RotateBy²Command;
+    class SetHeadingCommand;
+    class SetOrientation²Command;
+    class YawByCommand;
     
     class MoveBy²Command;
     class MoveByˣCommand;

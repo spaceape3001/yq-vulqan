@@ -43,7 +43,7 @@
 #include <tachyon/viewer.hpp>
 #include <tachyon/widget.hpp>
 
-#include <tachyon/command/orientation/SetOrientation3.hpp>
+#include <tachyon/command/orientation/SetOrientation3Command.hpp>
 #include <tachyon/rendered/Triangle3.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/scene/SimpleScene.hpp>
@@ -211,7 +211,7 @@ public:
         SimpleScene::tick(ctx);
         timepoint_t n   = std::chrono::steady_clock::now();
         std::chrono::duration<double>  diff    = start - n;
-        send(new SetOrientation³({.target=triSpatialID}, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
+        send(new SetOrientation³Command({.target=triSpatialID}, HPR, Degree(diff.count()), ZERO, ZERO), triSpatialID);
         triangle->update(diff.count());
         return {};
     }

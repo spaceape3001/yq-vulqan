@@ -13,11 +13,11 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SetOrientation² : public OrientationCommand {
-        YQ_OBJECT_DECLARE(SetOrientation², OrientationCommand)
+    class SetOrientation²Command : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetOrientation²Command, OrientationCommand)
     public:
-        SetOrientation²(const Header&, hpr_k, Radian hdg);
-        SetOrientation²(const Header&, const Spinor2D&);
+        SetOrientation²Command(const Header&, hpr_k, Radian hdg);
+        SetOrientation²Command(const Header&, const Spinor2D&);
     
         const Spinor2D&   orientation() const  { return m_orientation; }
         
@@ -30,15 +30,15 @@ namespace yq::tachyon {
 
     protected:
 
-        SetOrientation²(const SetOrientation²&, const Header&);
-        ~SetOrientation²();
+        SetOrientation²Command(const SetOrientation²Command&, const Header&);
+        ~SetOrientation²Command();
         
     private:
         Spinor2D const  m_orientation;
         
-        SetOrientation²(const SetOrientation²&) = delete;
-        SetOrientation²(SetOrientation²&&) = delete;
-        SetOrientation²& operator=(const SetOrientation²&) = delete;
-        SetOrientation²& operator=(SetOrientation²&&) = delete;
+        SetOrientation²Command(const SetOrientation²Command&) = delete;
+        SetOrientation²Command(SetOrientation²Command&&) = delete;
+        SetOrientation²Command& operator=(const SetOrientation²Command&) = delete;
+        SetOrientation²Command& operator=(SetOrientation²Command&&) = delete;
     };
 }

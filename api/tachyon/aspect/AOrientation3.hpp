@@ -11,14 +11,14 @@
 
 namespace yq::tachyon {
 
-    class PitchBy;
-    class RollBy;
-    class RotateBy³;
-    class SetHeading;
-    class SetOrientation³;
-    class SetPitch;
-    class SetRoll;
-    class YawBy;
+    class PitchByCommand;
+    class RollByCommand;
+    class RotateBy³Command;
+    class SetHeadingCommand;
+    class SetOrientation³Command;
+    class SetPitchCommand;
+    class SetRollCommand;
+    class YawByCommand;
 
     class AOrientation³ : public IOrientation³, public virtual Tachyon::Helper {
     public:
@@ -65,13 +65,13 @@ namespace yq::tachyon {
         void        orientation(emit_k);
 
     private:
-        void on_pitch_by(const PitchBy&);
-        void on_roll_by(const RollBy&);
-        void on_rotate_by(const RotateBy³&);
-        void on_set_heading(const SetHeading&);
-        void on_set_orientation³(const SetOrientation³&);
-        void on_set_pitch(const SetPitch&);
-        void on_set_roll(const SetRoll&);
-        void on_yaw_by(const YawBy&);
+        void on_pitch_by(const PitchByCommand&);
+        void on_roll_by(const RollByCommand&);
+        void on_rotate_by(const RotateBy³Command&);
+        void on_set_heading(const SetHeadingCommand&);
+        void on_set_orientation³(const SetOrientation³Command&);
+        void on_set_pitch(const SetPitchCommand&);
+        void on_set_roll(const SetRollCommand&);
+        void on_yaw_by(const YawByCommand&);
     };
 }

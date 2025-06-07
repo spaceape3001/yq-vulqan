@@ -171,16 +171,16 @@ add_library(${PROJECT_NAME} SHARED
     command/sim/ResumeCommand.cpp
     command/sim/PauseCommand.cpp
 
-    command/orientation/PitchBy.cpp
-    command/orientation/RotateBy2.cpp
-    command/orientation/RotateBy3.cpp
-    command/orientation/RollBy.cpp
-    command/orientation/SetHeading.cpp
-    command/orientation/SetOrientation2.cpp
-    command/orientation/SetOrientation3.cpp
-    command/orientation/SetPitch.cpp
-    command/orientation/SetRoll.cpp
-    command/orientation/YawBy.cpp
+    command/orientation/PitchByCommand.cpp
+    command/orientation/RotateBy2Command.cpp
+    command/orientation/RotateBy3Command.cpp
+    command/orientation/RollByCommand.cpp
+    command/orientation/SetHeadingCommand.cpp
+    command/orientation/SetOrientation2Command.cpp
+    command/orientation/SetOrientation3Command.cpp
+    command/orientation/SetPitchCommand.cpp
+    command/orientation/SetRollCommand.cpp
+    command/orientation/YawByCommand.cpp
 
     command/position/AddPosition1Command.cpp
     command/position/AddPosition2Command.cpp

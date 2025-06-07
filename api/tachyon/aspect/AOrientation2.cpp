@@ -6,10 +6,10 @@
 
 #include <tachyon/logging.hpp>
 #include <tachyon/aspect/AOrientation2.hpp>
-#include <tachyon/command/orientation/RotateBy2.hpp>
-#include <tachyon/command/orientation/SetHeading.hpp>
-#include <tachyon/command/orientation/SetOrientation2.hpp>
-#include <tachyon/command/orientation/YawBy.hpp>
+#include <tachyon/command/orientation/RotateBy2Command.hpp>
+#include <tachyon/command/orientation/SetHeadingCommand.hpp>
+#include <tachyon/command/orientation/SetOrientation2Command.hpp>
+#include <tachyon/command/orientation/YawByCommand.hpp>
 #include <tachyon/event/spatial/Orientation2Event.hpp>
 #include <yq/vector/Spinor2.hxx>
 #include "AOrientation2Writer.hxx"
@@ -60,28 +60,28 @@ namespace yq::tachyon {
 
     // --- COMMANDS
 
-    void AOrientation²::on_rotate_by(const RotateBy²&cmd)
+    void AOrientation²::on_rotate_by(const RotateBy²Command&cmd)
     {
         if(cmd.target() != typed())
             return ;
         orientation(ROTATE, cmd.δ());
     }
     
-    void AOrientation²::on_set_heading(const SetHeading&cmd)
+    void AOrientation²::on_set_heading(const SetHeadingCommand&cmd)
     {
         if(cmd.target() != typed())
             return ;
         orientation(SET, HEADING, cmd.θ());
     }
     
-    void AOrientation²::on_set_orientation²(const SetOrientation²&cmd)
+    void AOrientation²::on_set_orientation²(const SetOrientation²Command&cmd)
     {
         if(cmd.target() != typed())
             return ;
         orientation(SET, cmd.orientation());
     }
     
-    void AOrientation²::on_yaw_by(const YawBy&cmd)
+    void AOrientation²::on_yaw_by(const YawByCommand&cmd)
     {
         if(cmd.target() != typed())
             return ;

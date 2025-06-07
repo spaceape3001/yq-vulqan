@@ -13,10 +13,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to pitch (ie, around the local body Y-axis) by the given amount
-    class SetPitch : public OrientationCommand {
-        YQ_OBJECT_DECLARE(SetPitch, OrientationCommand)
+    class SetPitchCommand : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetPitchCommand, OrientationCommand)
     public:
-        SetPitch(const Header&, Radian θ);
+        SetPitchCommand(const Header&, Radian θ);
     
         static void init_info();
         
@@ -25,16 +25,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetPitch(const Header&);
-        SetPitch(const SetPitch&, const Header&);
-        ~SetPitch();
+        SetPitchCommand(const Header&);
+        SetPitchCommand(const SetPitchCommand&, const Header&);
+        ~SetPitchCommand();
         
     private:
         Radian m_θ;
         
-        SetPitch(const SetPitch&);
-        SetPitch(SetPitch&&);
-        SetPitch& operator=(const SetPitch&);
-        SetPitch& operator=(SetPitch&&);
+        SetPitchCommand(const SetPitchCommand&);
+        SetPitchCommand(SetPitchCommand&&);
+        SetPitchCommand& operator=(const SetPitchCommand&);
+        SetPitchCommand& operator=(SetPitchCommand&&);
     };
 }

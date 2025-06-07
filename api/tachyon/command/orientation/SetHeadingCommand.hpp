@@ -13,10 +13,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to yaw (ie, around the local body Z-axis) by the given amount
-    class YawBy : public OrientationCommand {
-        YQ_OBJECT_DECLARE(YawBy, OrientationCommand)
+    class SetHeadingCommand : public OrientationCommand {
+        YQ_OBJECT_DECLARE(SetHeadingCommand, OrientationCommand)
     public:
-        YawBy(const Header&, Radian θ);
+        SetHeadingCommand(const Header&, Radian θ);
     
         static void init_info();
         
@@ -24,15 +24,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        YawBy(const YawBy&, const Header&);
+        SetHeadingCommand(const SetHeadingCommand&, const Header&);
+        SetHeadingCommand(const Header&);
         
     private:
-        Radian  m_θ;
+        Radian  m_θ = ZERO;
 
-        ~YawBy();
-        YawBy(YawBy&&) = delete;
-        YawBy(const YawBy&) = delete;
-        YawBy& operator=(const YawBy&) = delete;
-        YawBy& operator=(YawBy&&) = delete;
+        ~SetHeadingCommand();
+        SetHeadingCommand(SetHeadingCommand&&) = delete;
+        SetHeadingCommand(const SetHeadingCommand&) = delete;
+        SetHeadingCommand& operator=(const SetHeadingCommand&) = delete;
+        SetHeadingCommand& operator=(SetHeadingCommand&&) = delete;
     };
 }

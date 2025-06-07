@@ -13,11 +13,11 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class RotateBy² : public OrientationCommand {
-        YQ_OBJECT_DECLARE(RotateBy², OrientationCommand)
+    class RotateBy²Command : public OrientationCommand {
+        YQ_OBJECT_DECLARE(RotateBy²Command, OrientationCommand)
     public:
-        RotateBy²(const Header&, const Spinor2D&δ);
-        RotateBy²(const Header&, Radian δ);
+        RotateBy²Command(const Header&, const Spinor2D&δ);
+        RotateBy²Command(const Header&, Radian δ);
     
         const Spinor2D&   δ() const  { return m_δ; }
         
@@ -29,15 +29,15 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
     protected:
-        RotateBy²(const RotateBy²&, const Header&);
-        ~RotateBy²();
+        RotateBy²Command(const RotateBy²Command&, const Header&);
+        ~RotateBy²Command();
         
     private:
         Spinor2D const  m_δ;
         
-        RotateBy²(const RotateBy²&) = delete;
-        RotateBy²(RotateBy²&&) = delete;
-        RotateBy²& operator=(const RotateBy²&) = delete;
-        RotateBy²& operator=(RotateBy²&&) = delete;
+        RotateBy²Command(const RotateBy²Command&) = delete;
+        RotateBy²Command(RotateBy²Command&&) = delete;
+        RotateBy²Command& operator=(const RotateBy²Command&) = delete;
+        RotateBy²Command& operator=(RotateBy²Command&&) = delete;
     };
 }

@@ -7,14 +7,14 @@
 #pragma once
 
 #include <tachyon/aspect/AOrientation3.hpp>
-#include <tachyon/command/orientation/PitchBy.hpp>
-#include <tachyon/command/orientation/RollBy.hpp>
-#include <tachyon/command/orientation/RotateBy3.hpp>
-#include <tachyon/command/orientation/SetHeading.hpp>
-#include <tachyon/command/orientation/SetOrientation3.hpp>
-#include <tachyon/command/orientation/SetPitch.hpp>
-#include <tachyon/command/orientation/SetRoll.hpp>
-#include <tachyon/command/orientation/YawBy.hpp>
+#include <tachyon/command/orientation/PitchByCommand.hpp>
+#include <tachyon/command/orientation/RollByCommand.hpp>
+#include <tachyon/command/orientation/RotateBy3Command.hpp>
+#include <tachyon/command/orientation/SetHeadingCommand.hpp>
+#include <tachyon/command/orientation/SetOrientation3Command.hpp>
+#include <tachyon/command/orientation/SetPitchCommand.hpp>
+#include <tachyon/command/orientation/SetRollCommand.hpp>
+#include <tachyon/command/orientation/YawByCommand.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {

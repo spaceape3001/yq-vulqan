@@ -11,10 +11,10 @@
 
 namespace yq::tachyon {
 
-    class RotateBy²;
-    class SetHeading;
-    class SetOrientation²;
-    class YawBy;
+    class RotateBy²Command;
+    class SetHeadingCommand;
+    class SetOrientation²Command;
+    class YawByCommand;
 
     class AOrientation² : public IOrientation², public virtual Tachyon::Helper {
     public:
@@ -53,9 +53,9 @@ namespace yq::tachyon {
         void        orientation(emit_k);
 
     private:
-        void on_rotate_by(const RotateBy²&);
-        void on_set_heading(const SetHeading&);
-        void on_set_orientation²(const SetOrientation²&);
-        void on_yaw_by(const YawBy&);
+        void on_rotate_by(const RotateBy²Command&);
+        void on_set_heading(const SetHeadingCommand&);
+        void on_set_orientation²(const SetOrientation²Command&);
+        void on_yaw_by(const YawByCommand&);
     };
 }

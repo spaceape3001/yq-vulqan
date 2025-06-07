@@ -132,7 +132,7 @@ namespace yq::tachyon {
     void        PPosition⁴::position(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyPosition({.target=object()}, Δ));
+            mail(new MultiplyPositionCommand({.target=object()}, Δ));
         }
     }
 

@@ -15,13 +15,13 @@
 
 namespace yq::tachyon {
 
-    class AddMaxSize¹;
-    class AddMaxSizeˣ;
+    class AddMaxSize¹Command;
+    class AddMaxSizeˣCommand;
     class MultiplyMaxSize;
-    class MultiplyMaxSize¹;
-    class MultiplyMaxSizeˣ;
-    class SetMaxSize¹;
-    class SetMaxSizeˣ;
+    class MultiplyMaxSize¹Command;
+    class MultiplyMaxSizeˣCommand;
+    class SetMaxSize¹Command;
+    class SetMaxSizeˣCommand;
 
     class AMaxSize¹ : public IMaxSize¹, public virtual Tachyon::Helper {
     public:
@@ -61,14 +61,14 @@ namespace yq::tachyon {
         void        max_size(emit_k);
         
     private:
-        void        on_set_max_size1(const SetMaxSize¹&);
-        void        on_set_max_sizeX(const SetMaxSizeˣ&);
+        void        on_set_max_size1(const SetMaxSize¹Command&);
+        void        on_set_max_sizeX(const SetMaxSizeˣCommand&);
 
-        void        on_add_max_size1(const AddMaxSize¹&);
-        void        on_add_max_sizeX(const AddMaxSizeˣ&);
+        void        on_add_max_size1(const AddMaxSize¹Command&);
+        void        on_add_max_sizeX(const AddMaxSizeˣCommand&);
         
         void        on_multiply_max_size(const MultiplyMaxSize&);
-        void        on_multiply_max_size1(const MultiplyMaxSize¹&);
-        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣ&);
+        void        on_multiply_max_size1(const MultiplyMaxSize¹Command&);
+        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣCommand&);
     };
 }

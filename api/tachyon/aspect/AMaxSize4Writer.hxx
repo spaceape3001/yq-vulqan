@@ -7,19 +7,19 @@
 #pragma once
 
 #include <tachyon/aspect/AMaxSize4.hpp>
-#include <tachyon/command/size/AddMaxSize4.hpp>
-#include <tachyon/command/size/AddMaxSizeX.hpp>
-#include <tachyon/command/size/AddMaxSizeY.hpp>
-#include <tachyon/command/size/AddMaxSizeZ.hpp>
-#include <tachyon/command/size/MultiplyMaxSize.hpp>
-#include <tachyon/command/size/MultiplyMaxSize4.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeX.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeY.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeZ.hpp>
-#include <tachyon/command/size/SetMaxSize4.hpp>
-#include <tachyon/command/size/SetMaxSizeX.hpp>
-#include <tachyon/command/size/SetMaxSizeY.hpp>
-#include <tachyon/command/size/SetMaxSizeZ.hpp>
+#include <tachyon/command/size/AddMaxSize4Command.hpp>
+#include <tachyon/command/size/AddMaxSizeXCommand.hpp>
+#include <tachyon/command/size/AddMaxSizeYCommand.hpp>
+#include <tachyon/command/size/AddMaxSizeZCommand.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeCommand.hpp>
+#include <tachyon/command/size/MultiplyMaxSize4Command.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeZCommand.hpp>
+#include <tachyon/command/size/SetMaxSize4Command.hpp>
+#include <tachyon/command/size/SetMaxSizeXCommand.hpp>
+#include <tachyon/command/size/SetMaxSizeYCommand.hpp>
+#include <tachyon/command/size/SetMaxSizeZCommand.hpp>
 #include <tachyon/api/TachyonInfoWriter.hpp>
 #include <tachyon/tags.hpp>
 

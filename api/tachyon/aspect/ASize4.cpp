@@ -5,22 +5,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/aspect/ASize4.hpp>
-#include <tachyon/command/size/AddSize4.hpp>
-#include <tachyon/command/size/AddSizeW.hpp>
-#include <tachyon/command/size/AddSizeX.hpp>
-#include <tachyon/command/size/AddSizeY.hpp>
-#include <tachyon/command/size/AddSizeZ.hpp>
-#include <tachyon/command/size/MultiplySize.hpp>
-#include <tachyon/command/size/MultiplySize4.hpp>
-#include <tachyon/command/size/MultiplySizeW.hpp>
-#include <tachyon/command/size/MultiplySizeX.hpp>
-#include <tachyon/command/size/MultiplySizeY.hpp>
-#include <tachyon/command/size/MultiplySizeZ.hpp>
-#include <tachyon/command/size/SetSize4.hpp>
-#include <tachyon/command/size/SetSizeW.hpp>
-#include <tachyon/command/size/SetSizeX.hpp>
-#include <tachyon/command/size/SetSizeY.hpp>
-#include <tachyon/command/size/SetSizeZ.hpp>
+#include <tachyon/command/size/AddSize4Command.hpp>
+#include <tachyon/command/size/AddSizeWCommand.hpp>
+#include <tachyon/command/size/AddSizeXCommand.hpp>
+#include <tachyon/command/size/AddSizeYCommand.hpp>
+#include <tachyon/command/size/AddSizeZCommand.hpp>
+#include <tachyon/command/size/MultiplySizeCommand.hpp>
+#include <tachyon/command/size/MultiplySize4Command.hpp>
+#include <tachyon/command/size/MultiplySizeWCommand.hpp>
+#include <tachyon/command/size/MultiplySizeXCommand.hpp>
+#include <tachyon/command/size/MultiplySizeYCommand.hpp>
+#include <tachyon/command/size/MultiplySizeZCommand.hpp>
+#include <tachyon/command/size/SetSize4Command.hpp>
+#include <tachyon/command/size/SetSizeWCommand.hpp>
+#include <tachyon/command/size/SetSizeXCommand.hpp>
+#include <tachyon/command/size/SetSizeYCommand.hpp>
+#include <tachyon/command/size/SetSizeZCommand.hpp>
 #include <tachyon/event/spatial/Size4Event.hpp>
 
 
@@ -120,70 +120,70 @@ namespace yq::tachyon {
         size(SET, Size4D( m_size.x, m_size.y, m_size.z, m_size.w*v ));
     }
 
-    void        ASize⁴::on_set_size4(const SetSize⁴&cmd)
+    void        ASize⁴::on_set_size4(const SetSize⁴Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, cmd.size());
     }
     
-    void        ASize⁴::on_set_sizeW(const SetSizeʷ&cmd)
+    void        ASize⁴::on_set_sizeW(const SetSizeʷCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, W, cmd.w());
     }
     
-    void        ASize⁴::on_set_sizeX(const SetSizeˣ&cmd)
+    void        ASize⁴::on_set_sizeX(const SetSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, X, cmd.x());
     }
     
-    void        ASize⁴::on_set_sizeY(const SetSizeʸ&cmd)
+    void        ASize⁴::on_set_sizeY(const SetSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, Y, cmd.y());
     }
     
-    void        ASize⁴::on_set_sizeZ(const SetSizeᶻ&cmd)
+    void        ASize⁴::on_set_sizeZ(const SetSizeᶻCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, Z, cmd.z());
     }
 
-    void        ASize⁴::on_add_size4(const AddSize⁴&cmd)
+    void        ASize⁴::on_add_size4(const AddSize⁴Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, cmd.Δ());
     }
     
-    void        ASize⁴::on_add_sizeW(const AddSizeʷ&cmd)
+    void        ASize⁴::on_add_sizeW(const AddSizeʷCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, W, cmd.Δw());
     }
     
-    void        ASize⁴::on_add_sizeX(const AddSizeˣ&cmd)
+    void        ASize⁴::on_add_sizeX(const AddSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δx());
     }
     
-    void        ASize⁴::on_add_sizeY(const AddSizeʸ&cmd)
+    void        ASize⁴::on_add_sizeY(const AddSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δy());
     }
     
-    void        ASize⁴::on_add_sizeZ(const AddSizeᶻ&cmd)
+    void        ASize⁴::on_add_sizeZ(const AddSizeᶻCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -197,35 +197,35 @@ namespace yq::tachyon {
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize⁴::on_multiply_size4(const MultiplySize⁴&cmd)
+    void        ASize⁴::on_multiply_size4(const MultiplySize⁴Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize⁴::on_multiply_sizeW(const MultiplySizeʷ&cmd)
+    void        ASize⁴::on_multiply_sizeW(const MultiplySizeʷCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, W, cmd.δw());
     }
     
-    void        ASize⁴::on_multiply_sizeX(const MultiplySizeˣ&cmd)
+    void        ASize⁴::on_multiply_sizeX(const MultiplySizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, X, cmd.δx());
     }
     
-    void        ASize⁴::on_multiply_sizeY(const MultiplySizeʸ&cmd)
+    void        ASize⁴::on_multiply_sizeY(const MultiplySizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, Y, cmd.δy());
     }
     
-    void        ASize⁴::on_multiply_sizeZ(const MultiplySizeᶻ&cmd)
+    void        ASize⁴::on_multiply_sizeZ(const MultiplySizeᶻCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

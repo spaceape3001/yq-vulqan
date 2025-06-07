@@ -11,22 +11,22 @@
 
 namespace yq::tachyon {
 
-    class AddSize⁴;
-    class AddSizeʷ;
-    class AddSizeˣ;
-    class AddSizeʸ;
-    class AddSizeᶻ;
+    class AddSize⁴Command;
+    class AddSizeʷCommand;
+    class AddSizeˣCommand;
+    class AddSizeʸCommand;
+    class AddSizeᶻCommand;
     class MultiplySize;
-    class MultiplySize⁴;
-    class MultiplySizeʷ;
-    class MultiplySizeˣ;
-    class MultiplySizeʸ;
-    class MultiplySizeᶻ;
-    class SetSize⁴;
-    class SetSizeʷ;
-    class SetSizeˣ;
-    class SetSizeʸ;
-    class SetSizeᶻ;
+    class MultiplySize⁴Command;
+    class MultiplySizeʷCommand;
+    class MultiplySizeˣCommand;
+    class MultiplySizeʸCommand;
+    class MultiplySizeᶻCommand;
+    class SetSize⁴Command;
+    class SetSizeʷCommand;
+    class SetSizeˣCommand;
+    class SetSizeʸCommand;
+    class SetSizeᶻCommand;
 
     class ASize⁴ : public ISize⁴, public virtual Tachyon::Helper {
     public:
@@ -80,24 +80,24 @@ namespace yq::tachyon {
         void        size(emit_k);
         
     private:
-        void        on_set_size4(const SetSize⁴&);
-        void        on_set_sizeW(const SetSizeʷ&);
-        void        on_set_sizeX(const SetSizeˣ&);
-        void        on_set_sizeY(const SetSizeʸ&);
-        void        on_set_sizeZ(const SetSizeᶻ&);
+        void        on_set_size4(const SetSize⁴Command&);
+        void        on_set_sizeW(const SetSizeʷCommand&);
+        void        on_set_sizeX(const SetSizeˣCommand&);
+        void        on_set_sizeY(const SetSizeʸCommand&);
+        void        on_set_sizeZ(const SetSizeᶻCommand&);
 
-        void        on_add_size4(const AddSize⁴&);
-        void        on_add_sizeW(const AddSizeʷ&);
-        void        on_add_sizeX(const AddSizeˣ&);
-        void        on_add_sizeY(const AddSizeʸ&);
-        void        on_add_sizeZ(const AddSizeᶻ&);
+        void        on_add_size4(const AddSize⁴Command&);
+        void        on_add_sizeW(const AddSizeʷCommand&);
+        void        on_add_sizeX(const AddSizeˣCommand&);
+        void        on_add_sizeY(const AddSizeʸCommand&);
+        void        on_add_sizeZ(const AddSizeᶻCommand&);
         
         void        on_multiply_size(const MultiplySize&);
-        void        on_multiply_size4(const MultiplySize⁴&);
-        void        on_multiply_sizeW(const MultiplySizeʷ&);
-        void        on_multiply_sizeX(const MultiplySizeˣ&);
-        void        on_multiply_sizeY(const MultiplySizeʸ&);
-        void        on_multiply_sizeZ(const MultiplySizeᶻ&);
+        void        on_multiply_size4(const MultiplySize⁴Command&);
+        void        on_multiply_sizeW(const MultiplySizeʷCommand&);
+        void        on_multiply_sizeX(const MultiplySizeˣCommand&);
+        void        on_multiply_sizeY(const MultiplySizeʸCommand&);
+        void        on_multiply_sizeZ(const MultiplySizeᶻCommand&);
 
     };
 

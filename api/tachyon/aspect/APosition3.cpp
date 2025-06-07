@@ -161,7 +161,7 @@ namespace yq::tachyon {
         position(ADD, Z, cmd.Δz());
     }
     
-    void        APosition³::on_multiply_position(const MultiplyPosition&cmd)
+    void        APosition³::on_multiply_position(const MultiplyPositionCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

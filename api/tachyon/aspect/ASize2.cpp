@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/aspect/ASize2.hpp>
-#include <tachyon/command/size/AddSize2.hpp>
-#include <tachyon/command/size/AddSizeX.hpp>
-#include <tachyon/command/size/AddSizeY.hpp>
-#include <tachyon/command/size/MultiplySize.hpp>
-#include <tachyon/command/size/MultiplySize2.hpp>
-#include <tachyon/command/size/MultiplySizeX.hpp>
-#include <tachyon/command/size/MultiplySizeY.hpp>
-#include <tachyon/command/size/SetSize2.hpp>
-#include <tachyon/command/size/SetSizeX.hpp>
-#include <tachyon/command/size/SetSizeY.hpp>
+#include <tachyon/command/size/AddSize2Command.hpp>
+#include <tachyon/command/size/AddSizeXCommand.hpp>
+#include <tachyon/command/size/AddSizeYCommand.hpp>
+#include <tachyon/command/size/MultiplySizeCommand.hpp>
+#include <tachyon/command/size/MultiplySize2Command.hpp>
+#include <tachyon/command/size/MultiplySizeXCommand.hpp>
+#include <tachyon/command/size/MultiplySizeYCommand.hpp>
+#include <tachyon/command/size/SetSize2Command.hpp>
+#include <tachyon/command/size/SetSizeXCommand.hpp>
+#include <tachyon/command/size/SetSizeYCommand.hpp>
 #include <tachyon/event/spatial/Size2Event.hpp>
 
 
@@ -84,42 +84,42 @@ namespace yq::tachyon {
         size(SET, Size2D( m_size.x, m_size.y*v ));
     }
     
-    void        ASize²::on_set_size2(const SetSize²&cmd)
+    void        ASize²::on_set_size2(const SetSize²Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, cmd.size());
     }
     
-    void        ASize²::on_set_sizeX(const SetSizeˣ&cmd)
+    void        ASize²::on_set_sizeX(const SetSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, X, cmd.x());
     }
     
-    void        ASize²::on_set_sizeY(const SetSizeʸ&cmd)
+    void        ASize²::on_set_sizeY(const SetSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, Y, cmd.y());
     }
     
-    void        ASize²::on_add_size2(const AddSize²&cmd)
+    void        ASize²::on_add_size2(const AddSize²Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, cmd.Δ());
     }
     
-    void        ASize²::on_add_sizeX(const AddSizeˣ&cmd)
+    void        ASize²::on_add_sizeX(const AddSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δx());
     }
     
-    void        ASize²::on_add_sizeY(const AddSizeʸ&cmd)
+    void        ASize²::on_add_sizeY(const AddSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -133,21 +133,21 @@ namespace yq::tachyon {
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize²::on_multiply_size2(const MultiplySize²&cmd)
+    void        ASize²::on_multiply_size2(const MultiplySize²Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize²::on_multiply_sizeX(const MultiplySizeˣ&cmd)
+    void        ASize²::on_multiply_sizeX(const MultiplySizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, X, cmd.δx());
     }
     
-    void        ASize²::on_multiply_sizeY(const MultiplySizeʸ&cmd)
+    void        ASize²::on_multiply_sizeY(const MultiplySizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

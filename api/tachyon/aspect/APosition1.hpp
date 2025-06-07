@@ -13,7 +13,7 @@ namespace yq::tachyon {
 
     class AddPosition¹Command;
     class AddPositionˣCommand;
-    class MultiplyPosition;
+    class MultiplyPositionCommand;
     class MultiplyPosition¹Command;
     class MultiplyPositionˣCommand;
     class SetPosition¹Command;
@@ -65,7 +65,7 @@ namespace yq::tachyon {
         void        on_add_position1(const AddPosition¹Command&);
         void        on_add_positionX(const AddPositionˣCommand&);
         
-        void        on_multiply_position(const MultiplyPosition&);
+        void        on_multiply_position(const MultiplyPositionCommand&);
         void        on_multiply_position1(const MultiplyPosition¹Command&);
         void        on_multiply_positionX(const MultiplyPositionˣCommand&);
 

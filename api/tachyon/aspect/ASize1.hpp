@@ -11,13 +11,13 @@
 
 namespace yq::tachyon {
 
-    class AddSize¹;
-    class AddSizeˣ;
+    class AddSize¹Command;
+    class AddSizeˣCommand;
     class MultiplySize;
-    class MultiplySize¹;
-    class MultiplySizeˣ;
-    class SetSize¹;
-    class SetSizeˣ;
+    class MultiplySize¹Command;
+    class MultiplySizeˣCommand;
+    class SetSize¹Command;
+    class SetSizeˣCommand;
 
     class ASize¹ : public ISize¹, public virtual Tachyon::Helper {
     public:
@@ -57,14 +57,14 @@ namespace yq::tachyon {
         void        size(emit_k);
         
     private:
-        void        on_set_size1(const SetSize¹&);
-        void        on_set_sizeX(const SetSizeˣ&);
+        void        on_set_size1(const SetSize¹Command&);
+        void        on_set_sizeX(const SetSizeˣCommand&);
 
-        void        on_add_size1(const AddSize¹&);
-        void        on_add_sizeX(const AddSizeˣ&);
+        void        on_add_size1(const AddSize¹Command&);
+        void        on_add_sizeX(const AddSizeˣCommand&);
         
         void        on_multiply_size(const MultiplySize&);
-        void        on_multiply_size1(const MultiplySize¹&);
-        void        on_multiply_sizeX(const MultiplySizeˣ&);
+        void        on_multiply_size1(const MultiplySize¹Command&);
+        void        on_multiply_sizeX(const MultiplySizeˣCommand&);
     };
 }

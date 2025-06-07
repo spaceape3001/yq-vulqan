@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/aspect/AMinSize2.hpp>
-#include <tachyon/command/size/AddMinSize2.hpp>
-#include <tachyon/command/size/AddMinSizeX.hpp>
-#include <tachyon/command/size/AddMinSizeY.hpp>
-#include <tachyon/command/size/MultiplyMinSize.hpp>
-#include <tachyon/command/size/MultiplyMinSize2.hpp>
-#include <tachyon/command/size/MultiplyMinSizeX.hpp>
-#include <tachyon/command/size/MultiplyMinSizeY.hpp>
-#include <tachyon/command/size/SetMinSize2.hpp>
-#include <tachyon/command/size/SetMinSizeX.hpp>
-#include <tachyon/command/size/SetMinSizeY.hpp>
+#include <tachyon/command/size/AddMinSize2Command.hpp>
+#include <tachyon/command/size/AddMinSizeXCommand.hpp>
+#include <tachyon/command/size/AddMinSizeYCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSizeCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSize2Command.hpp>
+#include <tachyon/command/size/MultiplyMinSizeXCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSizeYCommand.hpp>
+#include <tachyon/command/size/SetMinSize2Command.hpp>
+#include <tachyon/command/size/SetMinSizeXCommand.hpp>
+#include <tachyon/command/size/SetMinSizeYCommand.hpp>
 #include <tachyon/event/spatial/Size2Event.hpp>
 
 
@@ -84,42 +84,42 @@ namespace yq::tachyon {
         min_size(SET, Size2D( m_min_size.x, m_min_size.y*v ));
     }
     
-    void        AMinSize²::on_set_min_size2(const SetMinSize²&cmd)
+    void        AMinSize²::on_set_min_size2(const SetMinSize²Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, cmd.size());
     }
     
-    void        AMinSize²::on_set_min_sizeX(const SetMinSizeˣ&cmd)
+    void        AMinSize²::on_set_min_sizeX(const SetMinSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, X, cmd.x());
     }
     
-    void        AMinSize²::on_set_min_sizeY(const SetMinSizeʸ&cmd)
+    void        AMinSize²::on_set_min_sizeY(const SetMinSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, Y, cmd.y());
     }
     
-    void        AMinSize²::on_add_min_size2(const AddMinSize²&cmd)
+    void        AMinSize²::on_add_min_size2(const AddMinSize²Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, cmd.Δ());
     }
     
-    void        AMinSize²::on_add_min_sizeX(const AddMinSizeˣ&cmd)
+    void        AMinSize²::on_add_min_sizeX(const AddMinSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, X, cmd.Δx());
     }
     
-    void        AMinSize²::on_add_min_sizeY(const AddMinSizeʸ&cmd)
+    void        AMinSize²::on_add_min_sizeY(const AddMinSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -133,21 +133,21 @@ namespace yq::tachyon {
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize²::on_multiply_min_size2(const MultiplyMinSize²&cmd)
+    void        AMinSize²::on_multiply_min_size2(const MultiplyMinSize²Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize²::on_multiply_min_sizeX(const MultiplyMinSizeˣ&cmd)
+    void        AMinSize²::on_multiply_min_sizeX(const MultiplyMinSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, X, cmd.δx());
     }
     
-    void        AMinSize²::on_multiply_min_sizeY(const MultiplyMinSizeʸ&cmd)
+    void        AMinSize²::on_multiply_min_sizeY(const MultiplyMinSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

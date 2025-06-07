@@ -14,7 +14,7 @@ namespace yq::tachyon {
     class AddPosition²Command;
     class AddPositionˣCommand;
     class AddPositionʸCommand;
-    class MultiplyPosition;
+    class MultiplyPositionCommand;
     class MultiplyPosition²Command;
     class MultiplyPositionˣCommand;
     class MultiplyPositionʸCommand;
@@ -74,7 +74,7 @@ namespace yq::tachyon {
         void        on_add_positionX(const AddPositionˣCommand&);
         void        on_add_positionY(const AddPositionʸCommand&);
         
-        void        on_multiply_position(const MultiplyPosition&);
+        void        on_multiply_position(const MultiplyPositionCommand&);
         void        on_multiply_position2(const MultiplyPosition²Command&);
         void        on_multiply_positionX(const MultiplyPositionˣCommand&);
         void        on_multiply_positionY(const MultiplyPositionʸCommand&);

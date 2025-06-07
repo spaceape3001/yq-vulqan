@@ -15,13 +15,13 @@
 
 namespace yq::tachyon {
 
-    class AddMinSize¹;
-    class AddMinSizeˣ;
+    class AddMinSize¹Command;
+    class AddMinSizeˣCommand;
     class MultiplyMinSize;
-    class MultiplyMinSize¹;
-    class MultiplyMinSizeˣ;
-    class SetMinSize¹;
-    class SetMinSizeˣ;
+    class MultiplyMinSize¹Command;
+    class MultiplyMinSizeˣCommand;
+    class SetMinSize¹Command;
+    class SetMinSizeˣCommand;
 
     class AMinSize¹ : public IMinSize¹, public virtual Tachyon::Helper {
     public:
@@ -61,14 +61,14 @@ namespace yq::tachyon {
         void        min_size(emit_k);
         
     private:
-        void        on_set_min_size1(const SetMinSize¹&);
-        void        on_set_min_sizeX(const SetMinSizeˣ&);
+        void        on_set_min_size1(const SetMinSize¹Command&);
+        void        on_set_min_sizeX(const SetMinSizeˣCommand&);
 
-        void        on_add_min_size1(const AddMinSize¹&);
-        void        on_add_min_sizeX(const AddMinSizeˣ&);
+        void        on_add_min_size1(const AddMinSize¹Command&);
+        void        on_add_min_sizeX(const AddMinSizeˣCommand&);
         
         void        on_multiply_min_size(const MultiplyMinSize&);
-        void        on_multiply_min_size1(const MultiplyMinSize¹&);
-        void        on_multiply_min_sizeX(const MultiplyMinSizeˣ&);
+        void        on_multiply_min_size1(const MultiplyMinSize¹Command&);
+        void        on_multiply_min_sizeX(const MultiplyMinSizeˣCommand&);
     };
 }

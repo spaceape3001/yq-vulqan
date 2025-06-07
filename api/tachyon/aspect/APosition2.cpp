@@ -125,7 +125,7 @@ namespace yq::tachyon {
         position(ADD, X, cmd.Δy());
     }
     
-    void        APosition²::on_multiply_position(const MultiplyPosition&cmd)
+    void        APosition²::on_multiply_position(const MultiplyPositionCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

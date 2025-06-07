@@ -34,7 +34,7 @@
 #include <tachyon/command/sim/ResumeCommand.hpp>
 
 #include <tachyon/command/position/SetPosition2Command.hpp>
-#include <tachyon/command/size/SetSize2.hpp>
+#include <tachyon/command/size/SetSize2Command.hpp>
 
 #include <tachyon/command/ui/AspectCommand.hpp>
 #include <tachyon/command/ui/AttentionCommand.hpp>
@@ -859,7 +859,7 @@ namespace yq::tachyon {
 
     void    Viewer::set_size(const Size2D&sz)
     {
-        send(new SetSize²({.source=this, .target=m_window}, sz));
+        send(new SetSize²Command({.source=this, .target=m_window}, sz));
     }
     
     void    Viewer::set_size(double w, double h)

@@ -94,7 +94,7 @@ namespace yq::tachyon {
         position(ADD, X, cmd.Δx());
     }
     
-    void        APosition¹::on_multiply_position(const MultiplyPosition&cmd)
+    void        APosition¹::on_multiply_position(const MultiplyPositionCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

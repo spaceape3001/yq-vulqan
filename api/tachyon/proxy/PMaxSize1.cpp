@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/proxy/PMaxSize1.hpp>
-#include <tachyon/command/size/AddMaxSize1.hpp>
-#include <tachyon/command/size/AddMaxSizeX.hpp>
-#include <tachyon/command/size/MultiplyMaxSize.hpp>
-#include <tachyon/command/size/MultiplyMaxSize1.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeX.hpp>
-#include <tachyon/command/size/SetMaxSize1.hpp>
-#include <tachyon/command/size/SetMaxSizeX.hpp>
+#include <tachyon/command/size/AddMaxSize1Command.hpp>
+#include <tachyon/command/size/AddMaxSizeXCommand.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeCommand.hpp>
+#include <tachyon/command/size/MultiplyMaxSize1Command.hpp>
+#include <tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
+#include <tachyon/command/size/SetMaxSize1Command.hpp>
+#include <tachyon/command/size/SetMaxSizeXCommand.hpp>
 
 namespace yq::tachyon {
     PMaxSize¹::PMaxSize¹(const IMaxSize¹& i) : m_max_size(i.max_size())
@@ -53,28 +53,28 @@ namespace yq::tachyon {
     void        PMaxSize¹::max_size(set_k, const Size1D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSize¹({.target=object()}, v));
+            mail(new SetMaxSize¹Command({.target=object()}, v));
         }
     }
 
     void        PMaxSize¹::max_size(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSizeˣ({.target=object()}, x));
+            mail(new SetMaxSizeˣCommand({.target=object()}, x));
         }
     }
     
     void        PMaxSize¹::max_size(add_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSize¹({.target=object()}, Δ));
+            mail(new AddMaxSize¹Command({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize¹::max_size(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSizeˣ({.target=object()}, Δx));
+            mail(new AddMaxSizeˣCommand({.target=object()}, Δx));
         }
     }
 
@@ -88,14 +88,14 @@ namespace yq::tachyon {
     void        PMaxSize¹::max_size(multiply_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSize¹({.target=object()}, Δ));
+            mail(new MultiplyMaxSize¹Command({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize¹::max_size(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSizeˣ({.target=object()}, Δx));
+            mail(new MultiplyMaxSizeˣCommand({.target=object()}, Δx));
         }
     }
 }

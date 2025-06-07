@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/aspect/ASize3.hpp>
-#include <tachyon/command/size/AddSize3.hpp>
-#include <tachyon/command/size/AddSizeX.hpp>
-#include <tachyon/command/size/AddSizeY.hpp>
-#include <tachyon/command/size/AddSizeZ.hpp>
-#include <tachyon/command/size/MultiplySize.hpp>
-#include <tachyon/command/size/MultiplySize3.hpp>
-#include <tachyon/command/size/MultiplySizeX.hpp>
-#include <tachyon/command/size/MultiplySizeY.hpp>
-#include <tachyon/command/size/MultiplySizeZ.hpp>
-#include <tachyon/command/size/SetSize3.hpp>
-#include <tachyon/command/size/SetSizeX.hpp>
-#include <tachyon/command/size/SetSizeY.hpp>
-#include <tachyon/command/size/SetSizeZ.hpp>
+#include <tachyon/command/size/AddSize3Command.hpp>
+#include <tachyon/command/size/AddSizeXCommand.hpp>
+#include <tachyon/command/size/AddSizeYCommand.hpp>
+#include <tachyon/command/size/AddSizeZCommand.hpp>
+#include <tachyon/command/size/MultiplySizeCommand.hpp>
+#include <tachyon/command/size/MultiplySize3Command.hpp>
+#include <tachyon/command/size/MultiplySizeXCommand.hpp>
+#include <tachyon/command/size/MultiplySizeYCommand.hpp>
+#include <tachyon/command/size/MultiplySizeZCommand.hpp>
+#include <tachyon/command/size/SetSize3Command.hpp>
+#include <tachyon/command/size/SetSizeXCommand.hpp>
+#include <tachyon/command/size/SetSizeYCommand.hpp>
+#include <tachyon/command/size/SetSizeZCommand.hpp>
 #include <tachyon/event/spatial/Size3Event.hpp>
 
 
@@ -102,56 +102,56 @@ namespace yq::tachyon {
         size(SET, Size3D( m_size.x, m_size.y, m_size.z*v ));
     }
     
-    void        ASize³::on_set_size3(const SetSize³&cmd)
+    void        ASize³::on_set_size3(const SetSize³Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, cmd.size());
     }
     
-    void        ASize³::on_set_sizeX(const SetSizeˣ&cmd)
+    void        ASize³::on_set_sizeX(const SetSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, X, cmd.x());
     }
     
-    void        ASize³::on_set_sizeY(const SetSizeʸ&cmd)
+    void        ASize³::on_set_sizeY(const SetSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, Y, cmd.y());
     }
     
-    void        ASize³::on_set_sizeZ(const SetSizeᶻ&cmd)
+    void        ASize³::on_set_sizeZ(const SetSizeᶻCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, Z, cmd.z());
     }
 
-    void        ASize³::on_add_size3(const AddSize³&cmd)
+    void        ASize³::on_add_size3(const AddSize³Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, cmd.Δ());
     }
     
-    void        ASize³::on_add_sizeX(const AddSizeˣ&cmd)
+    void        ASize³::on_add_sizeX(const AddSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δx());
     }
     
-    void        ASize³::on_add_sizeY(const AddSizeʸ&cmd)
+    void        ASize³::on_add_sizeY(const AddSizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δy());
     }
     
-    void        ASize³::on_add_sizeZ(const AddSizeᶻ&cmd)
+    void        ASize³::on_add_sizeZ(const AddSizeᶻCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -165,28 +165,28 @@ namespace yq::tachyon {
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize³::on_multiply_size3(const MultiplySize³&cmd)
+    void        ASize³::on_multiply_size3(const MultiplySize³Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize³::on_multiply_sizeX(const MultiplySizeˣ&cmd)
+    void        ASize³::on_multiply_sizeX(const MultiplySizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, X, cmd.δx());
     }
     
-    void        ASize³::on_multiply_sizeY(const MultiplySizeʸ&cmd)
+    void        ASize³::on_multiply_sizeY(const MultiplySizeʸCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, Y, cmd.δy());
     }
     
-    void        ASize³::on_multiply_sizeZ(const MultiplySizeᶻ&cmd)
+    void        ASize³::on_multiply_sizeZ(const MultiplySizeᶻCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/proxy/PMinSize2.hpp>
-#include <tachyon/command/size/AddMinSize2.hpp>
-#include <tachyon/command/size/AddMinSizeX.hpp>
-#include <tachyon/command/size/AddMinSizeY.hpp>
-#include <tachyon/command/size/MultiplyMinSize.hpp>
-#include <tachyon/command/size/MultiplyMinSize2.hpp>
-#include <tachyon/command/size/MultiplyMinSizeX.hpp>
-#include <tachyon/command/size/MultiplyMinSizeY.hpp>
-#include <tachyon/command/size/SetMinSize2.hpp>
-#include <tachyon/command/size/SetMinSizeX.hpp>
-#include <tachyon/command/size/SetMinSizeY.hpp>
+#include <tachyon/command/size/AddMinSize2Command.hpp>
+#include <tachyon/command/size/AddMinSizeXCommand.hpp>
+#include <tachyon/command/size/AddMinSizeYCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSizeCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSize2Command.hpp>
+#include <tachyon/command/size/MultiplyMinSizeXCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSizeYCommand.hpp>
+#include <tachyon/command/size/SetMinSize2Command.hpp>
+#include <tachyon/command/size/SetMinSizeXCommand.hpp>
+#include <tachyon/command/size/SetMinSizeYCommand.hpp>
 
 namespace yq::tachyon {
     PMinSize²::PMinSize²(const IMinSize²& i) : m_min_size(i.min_size())
@@ -56,42 +56,42 @@ namespace yq::tachyon {
     void        PMinSize²::min_size(set_k, const Size2D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMinSize²({.target=object()}, v));
+            mail(new SetMinSize²Command({.target=object()}, v));
         }
     }
 
     void        PMinSize²::min_size(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMinSizeˣ({.target=object()}, x));
+            mail(new SetMinSizeˣCommand({.target=object()}, x));
         }
     }
     
     void        PMinSize²::min_size(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMinSizeʸ({.target=object()}, y));
+            mail(new SetMinSizeʸCommand({.target=object()}, y));
         }
     }
     
     void        PMinSize²::min_size(add_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMinSize²({.target=object()}, Δ));
+            mail(new AddMinSize²Command({.target=object()}, Δ));
         }
     }
 
     void        PMinSize²::min_size(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMinSizeˣ({.target=object()}, Δx));
+            mail(new AddMinSizeˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PMinSize²::min_size(add_k, y_k, double Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMinSizeʸ({.target=object()}, Δy));
+            mail(new AddMinSizeʸCommand({.target=object()}, Δy));
         }
     }
 
@@ -105,21 +105,21 @@ namespace yq::tachyon {
     void        PMinSize²::min_size(multiply_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMinSize²({.target=object()}, Δ));
+            mail(new MultiplyMinSize²Command({.target=object()}, Δ));
         }
     }
 
     void        PMinSize²::min_size(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMinSizeˣ({.target=object()}, Δx));
+            mail(new MultiplyMinSizeˣCommand({.target=object()}, Δx));
         }
     }
 
     void        PMinSize²::min_size(multiply_k, y_k, double Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMinSizeʸ({.target=object()}, Δy));
+            mail(new MultiplyMinSizeʸCommand({.target=object()}, Δy));
         }
     }
 }

@@ -15,16 +15,16 @@
 
 namespace yq::tachyon {
 
-    class AddMaxSize²;
-    class AddMaxSizeˣ;
-    class AddMaxSizeʸ;
+    class AddMaxSize²Command;
+    class AddMaxSizeˣCommand;
+    class AddMaxSizeʸCommand;
     class MultiplyMaxSize;
-    class MultiplyMaxSize²;
-    class MultiplyMaxSizeˣ;
-    class MultiplyMaxSizeʸ;
-    class SetMaxSize²;
-    class SetMaxSizeˣ;
-    class SetMaxSizeʸ;
+    class MultiplyMaxSize²Command;
+    class MultiplyMaxSizeˣCommand;
+    class MultiplyMaxSizeʸCommand;
+    class SetMaxSize²Command;
+    class SetMaxSizeˣCommand;
+    class SetMaxSizeʸCommand;
 
     class AMaxSize² : public IMaxSize², public virtual Tachyon::Helper {
     public:
@@ -69,18 +69,18 @@ namespace yq::tachyon {
         void        max_size(emit_k);
         
     private:
-        void        on_set_max_size2(const SetMaxSize²&);
-        void        on_set_max_sizeX(const SetMaxSizeˣ&);
-        void        on_set_max_sizeY(const SetMaxSizeʸ&);
+        void        on_set_max_size2(const SetMaxSize²Command&);
+        void        on_set_max_sizeX(const SetMaxSizeˣCommand&);
+        void        on_set_max_sizeY(const SetMaxSizeʸCommand&);
 
-        void        on_add_max_size2(const AddMaxSize²&);
-        void        on_add_max_sizeX(const AddMaxSizeˣ&);
-        void        on_add_max_sizeY(const AddMaxSizeʸ&);
+        void        on_add_max_size2(const AddMaxSize²Command&);
+        void        on_add_max_sizeX(const AddMaxSizeˣCommand&);
+        void        on_add_max_sizeY(const AddMaxSizeʸCommand&);
         
         void        on_multiply_max_size(const MultiplyMaxSize&);
-        void        on_multiply_max_size2(const MultiplyMaxSize²&);
-        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣ&);
-        void        on_multiply_max_sizeY(const MultiplyMaxSizeʸ&);
+        void        on_multiply_max_size2(const MultiplyMaxSize²Command&);
+        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣCommand&);
+        void        on_multiply_max_sizeY(const MultiplyMaxSizeʸCommand&);
     };
 
 }

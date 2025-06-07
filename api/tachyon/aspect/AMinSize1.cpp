@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/aspect/AMinSize1.hpp>
-#include <tachyon/command/size/AddMinSize1.hpp>
-#include <tachyon/command/size/AddMinSizeX.hpp>
-#include <tachyon/command/size/MultiplyMinSize.hpp>
-#include <tachyon/command/size/MultiplyMinSize1.hpp>
-#include <tachyon/command/size/MultiplyMinSizeX.hpp>
-#include <tachyon/command/size/SetMinSize1.hpp>
-#include <tachyon/command/size/SetMinSizeX.hpp>
+#include <tachyon/command/size/AddMinSize1Command.hpp>
+#include <tachyon/command/size/AddMinSizeXCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSizeCommand.hpp>
+#include <tachyon/command/size/MultiplyMinSize1Command.hpp>
+#include <tachyon/command/size/MultiplyMinSizeXCommand.hpp>
+#include <tachyon/command/size/SetMinSize1Command.hpp>
+#include <tachyon/command/size/SetMinSizeXCommand.hpp>
 #include <tachyon/event/spatial/Size1Event.hpp>
 
 
@@ -66,28 +66,28 @@ namespace yq::tachyon {
         min_size(SET, Size1D( m_min_size.x*v));
     }
     
-    void        AMinSize¹::on_set_min_size1(const SetMinSize¹&cmd)
+    void        AMinSize¹::on_set_min_size1(const SetMinSize¹Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, cmd.size());
     }
     
-    void        AMinSize¹::on_set_min_sizeX(const SetMinSizeˣ&cmd)
+    void        AMinSize¹::on_set_min_sizeX(const SetMinSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, X, cmd.x());
     }
     
-    void        AMinSize¹::on_add_min_size1(const AddMinSize¹&cmd)
+    void        AMinSize¹::on_add_min_size1(const AddMinSize¹Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, cmd.Δ());
     }
     
-    void        AMinSize¹::on_add_min_sizeX(const AddMinSizeˣ&cmd)
+    void        AMinSize¹::on_add_min_sizeX(const AddMinSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -101,14 +101,14 @@ namespace yq::tachyon {
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize¹::on_multiply_min_size1(const MultiplyMinSize¹&cmd)
+    void        AMinSize¹::on_multiply_min_size1(const MultiplyMinSize¹Command&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize¹::on_multiply_min_sizeX(const MultiplyMinSizeˣ&cmd)
+    void        AMinSize¹::on_multiply_min_sizeX(const MultiplyMinSizeˣCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

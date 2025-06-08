@@ -44,6 +44,15 @@ namespace yq::tachyon {
     concept is_proxied    = requires {
         { T::MyProxy };
     };
+    
+    template <typename T>
+    struct is_interface : public std::false_type {};
+    
+    template <Interface I>
+    struct is_interface<I> : public std::true_type {};
+    
+    template <typename T>
+    static constexpr const bool is_interface_v  = is_interface<T>::value;
 }
 
 namespace yq {

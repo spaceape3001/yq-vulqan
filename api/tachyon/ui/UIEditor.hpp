@@ -15,6 +15,7 @@ namespace yq::tachyon {
     class UIEditorWriter;
     class TachyonInfo;
     class UIEditor;
+    class InterfaceInfo;
     
     template <typename C>
     concept SomeUIEditor = std::derived_from<C,UIEditor>;
@@ -26,7 +27,8 @@ namespace yq::tachyon {
         UIEditorInfo(std::string_view, UIElements::MyInfo&, const std::source_location& sl = std::source_location::current());
     
         //! List of classes this thing will edit
-        const std::vector<const TachyonInfo*>& edits() const { return m_edits; }
+        const std::vector<const TachyonInfo*>& edits(tachyon_k) const { return m_editTachyons; }
+        const std::vector<const InterfaceInfo*>& edits(proxy_k) const { return m_editIProxies; }
         
         bool    has_fields() const;
         
@@ -43,8 +45,9 @@ namespace yq::tachyon {
         class FieldExecutor;
         template <SomeUIEditor C> struct BoundFieldExecutor;
     
-        std::vector<const TachyonInfo*> m_edits;
-        std::vector<Field>              m_fields;
+        std::vector<const TachyonInfo*>     m_editTachyons;
+        std::vector<const InterfaceInfo*>   m_editIProxies;
+        std::vector<Field>                  m_fields;
     };
     
     /*! \brief ImGui Editor Panel for a tachyon object

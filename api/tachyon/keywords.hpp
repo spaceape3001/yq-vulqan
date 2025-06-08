@@ -98,6 +98,7 @@ namespace yq::tachyon {
     struct headless_k {};
 
     struct indent_k {};
+    struct interface_k {};
     struct io_k {
         consteval operator StdThread() const noexcept  { return StdThread::IO; }
     };
@@ -246,6 +247,7 @@ namespace yq::tachyon {
     static constexpr const group_k              GROUP;
     static constexpr const headless_k           HEADLESS;
     static constexpr const indent_k             INDENT;
+    static constexpr const interface_k          INTERFACE;
     static constexpr const io_k                 IO;
     static constexpr const joystick_k           JOYSTICK;
     static constexpr const keyboard_k           KEYBOARD;

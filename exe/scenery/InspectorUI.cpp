@@ -35,10 +35,13 @@ struct InspectorUI::Repo {
         }
 
         struct HET {
-            int                 hops    = 0;
-            const UIEditorInfo* editor  = nullptr;
-            const TachyonInfo*  tachyon = nullptr;
+            int                     hops    = 0;
+            const UIEditorInfo*     editor  = nullptr;
         };
+        
+        auto&   ifaces      = ti.interfaces(ALL);
+        
+        static constexpr const int      kProxyHops   = -20;
         
         std::vector<HET>        edits;
         for(const UIEditorInfo* ui : UIEditorInfo::all()){
@@ -46,13 +49,22 @@ struct InspectorUI::Repo {
                 continue;
             if(ui->is_abstract())
                 continue;
-            for(const TachyonInfo* t2 : ui->edits()){
+                
+            for(const TachyonInfo* t2 : ui->edits(TACHYON)){
                 if(!t2)
                     continue;
                 int h   = t2->hops_to_derived(ti);
                 if(h < 0)
                     continue;
-                edits.push_back({ h, ui, t2 });
+                edits.push_back({ h, ui  });
+            }
+            
+            for(const InterfaceInfo* i2 : ui->edits(PROXY)){
+                if(!i2)
+                    continue;
+                if(!ifaces.contains(i2))
+                    continue;
+                edits.push_back({ kProxyHops, ui  });
             }
         }
         

@@ -9,6 +9,8 @@
 #include <tachyon/ui/UIEditor.hpp>
 #include <tachyon/ui/UIElementInfoWriter.hpp>   // this will change if elements derives....
 #include <tachyon/api/Tachyon.hpp>
+#include <tachyon/typedef/proxy.hpp>
+#include <type_traits>
 
 namespace yq::tachyon {
 
@@ -53,11 +55,18 @@ namespace yq::tachyon {
         {
         }
         
-        template <SomeTachyon T>
+        template <class T>
         Writer&     edits()
         {
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_edits.push_back(&meta<T>());
+                if constexpr (std::is_base_of_v<Tachyon,T>){
+                    m_meta -> m_editTachyons.push_back(&meta<T>());
+                }
+                if constexpr (std::is_base_of_v<Proxy,T>){
+                    if constexpr (is_interface_v<T>){
+                        m_meta -> m_editIProxies.push_back(&meta<T>());
+                    }
+                }
             }
             return *this;
         }

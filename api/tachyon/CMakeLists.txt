@@ -149,6 +149,7 @@ add_library(${PROJECT_NAME} SHARED
     command/camera/CameraSetScreen.cpp
 
     command/color/SetBgColorCommand.cpp
+    command/color/SetVertexColorCommand.cpp
 
     command/controller/ControlCommand.cpp
     command/controller/DisableCommand.cpp
@@ -215,6 +216,7 @@ add_library(${PROJECT_NAME} SHARED
     command/position/SetPositionXCommand.cpp
     command/position/SetPositionYCommand.cpp
     command/position/SetPositionZCommand.cpp
+    command/position/SetVertexPosition3Command.cpp
 
     command/scale/AddScale1Command.cpp
     command/scale/AddScale2Command.cpp
@@ -235,7 +237,6 @@ add_library(${PROJECT_NAME} SHARED
     command/scale/SetScaleXCommand.cpp
     command/scale/SetScaleYCommand.cpp
     command/scale/SetScaleZCommand.cpp
-
 
     command/size/AddMaxSize1Command.cpp
     command/size/AddMaxSize2Command.cpp
@@ -358,6 +359,11 @@ add_library(${PROJECT_NAME} SHARED
     controller/Space3Controller.cpp
     
     edit/ColorTriangle3UI.cpp
+    edit/Orientation3UI.cpp
+    edit/Position2UI.cpp
+    edit/Position3UI.cpp
+    edit/Position4UI.cpp
+    edit/Scale3UI.cpp
     edit/SceneUI.cpp
     edit/SimpleSpatial3UI.cpp
     edit/SkyBox3UI.cpp

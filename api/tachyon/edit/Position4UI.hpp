@@ -9,15 +9,15 @@
 #include <tachyon/ui/UIEditor.hpp>
 
 namespace yq::tachyon {
-    class SimpleSpatial³UI : public UIEditor {
-        YQ_OBJECT_DECLARE(SimpleSpatial³UI, UIEditor)
+    class Position⁴UI : public UIEditor {
+        YQ_OBJECT_DECLARE(Position⁴UI, UIEditor)
     public:
-        SimpleSpatial³UI(UIFlags flags={});
-        SimpleSpatial³UI(const SimpleSpatial³UI&);
+        Position⁴UI(UIFlags flags={});
+        Position⁴UI(const Position⁴UI&);
         
-        virtual SimpleSpatial³UI* clone() const;
+        virtual Position⁴UI* clone() const;
         
-        //  eventually the parent spatial?
+        void    position();
         
         static void init_info();
     };

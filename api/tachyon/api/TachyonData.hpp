@@ -13,6 +13,7 @@
 #include <tachyon/api/MG.hpp>
 #include <tachyon/api/TypedID.hpp>
 #include <tachyon/typedef/post.hpp>
+#include <tachyon/typedef/proxy.hpp>
 #include <tachyon/typedef/tachyon.hpp>
 #include <tachyon/typedef/thread.hpp>
 #include <vector>
@@ -44,6 +45,18 @@ namespace yq::tachyon {
         virtual ~TachyonSnap();
         
         constexpr uint64_t id() const { return self.id; }
+        
+        template <SomeProxy P>
+        P*      proxy() const
+        {
+            for(Proxy* pp : proxies){
+                if(P* p = dynamic_cast<P*>(pp))
+                    return p;
+            }
+            return nullptr;
+        }
+        
+        
     };
 
     struct InPost {

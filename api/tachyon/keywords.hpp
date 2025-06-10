@@ -30,6 +30,8 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::App; }
     };
     
+    struct append_k {};
+    struct appendable_k {};
     
     struct audio_k {
         consteval operator StdThread() const noexcept  { return StdThread::Audio; }
@@ -42,6 +44,8 @@ namespace yq::tachyon {
     struct center_k {
         consteval operator Cardinal() const noexcept { return Cardinal::Center; }
     };
+
+    struct color_k {};
 
     struct common_k {
         consteval operator DataActivity() const noexcept { return DataActivity::COMMON; }
@@ -69,6 +73,10 @@ namespace yq::tachyon {
     };
     
     struct emit_k {};
+
+    struct erasable_k {};
+    
+    struct erase_k {};
 
     struct every_k : public ::yq::every_k {
         static constexpr EveryTime    operator()(unit::Second);
@@ -98,6 +106,8 @@ namespace yq::tachyon {
     struct headless_k {};
 
     struct indent_k {};
+    struct insert_k {};
+    struct insertable_k {};
     struct interface_k {};
     struct io_k {
         consteval operator StdThread() const noexcept  { return StdThread::IO; }
@@ -135,7 +145,7 @@ namespace yq::tachyon {
     
     //struct once_k : public ::yq::once_k {};
     
-    
+    struct point_k {};
     struct popup_k {};
     struct probe_k {};
     struct proxy_k {};
@@ -184,6 +194,8 @@ namespace yq::tachyon {
     };
     
     struct teardown_k {};
+    struct tex_k {};
+    struct texture_k {};
     struct ui_k {};
     
 
@@ -217,11 +229,14 @@ namespace yq::tachyon {
 
     static constexpr const align_k              ALIGN;
     static constexpr const app_k                APP;
+    static constexpr const append_k             APPEND;
+    static constexpr const appendable_k         APPENDABLE;
     static constexpr const audio_k              AUDIO;
     static constexpr const bar_k                BAR;
     static constexpr const camera_k             CAMERA;
     static constexpr const camera³_k            CAMERA³;
     static constexpr const center_k             CENTER, CENTRE;
+    static constexpr const color_k              COLOR;
     static constexpr const common_k             COMMON;
     static constexpr const content_k            CONTENT;
     static constexpr const controller_k         CONTROLLER;
@@ -237,6 +252,8 @@ namespace yq::tachyon {
     static constexpr const domain_k             DOMAIN;
     static constexpr const dynamic_k            DYNAMIC;
     static constexpr const east_k               EAST;
+    static constexpr const erasable_k           ERASABLE;
+    static constexpr const erase_k              ERASE;
     static constexpr const emit_k               EMIT;
     static constexpr const every_k              EVERY;
     static constexpr const fixed_k              FIXED;
@@ -247,6 +264,8 @@ namespace yq::tachyon {
     static constexpr const group_k              GROUP;
     static constexpr const headless_k           HEADLESS;
     static constexpr const indent_k             INDENT;
+    static constexpr const insert_k             INSERT;
+    static constexpr const insertable_k         INSERTABLE;
     static constexpr const interface_k          INTERFACE;
     static constexpr const io_k                 IO;
     static constexpr const joystick_k           JOYSTICK;
@@ -268,6 +287,7 @@ namespace yq::tachyon {
     static constexpr const none_k               NONE;
     static constexpr const north_k              NORTH;
     //static constexpr const once_k               ONCE;
+    static constexpr const point_k              POINT;
     static constexpr const popup_k              POPUP;
     static constexpr const probe_k              PROBE;
     static constexpr const proxy_k              PROXY;
@@ -292,6 +312,8 @@ namespace yq::tachyon {
     static constexpr const tachyon_k            TACHYON;
     static constexpr const task_k               TASK;
     static constexpr const teardown_k           TEARDOWN;
+    static constexpr const tex_k                TEX;
+    static constexpr const texture_k            TEXTURE;
     static constexpr const ui_k                 UI;
     static constexpr const viewer_k             VIEWER;
     static constexpr const vulqan_k             VULQAN;

@@ -6,22 +6,27 @@
 
 #pragma once
 
-#include <tachyon/command/ColorCommand.hpp>
+#include <tachyon/command/VertexCommand.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {
-    class SetVertexColorCommand : public ColorCommand {
-        YQ_OBJECT_DECLARE(SetVertexColorCommand, ColorCommand)
+    class SetVertexColorCommand : public VertexCommand {
+        YQ_OBJECT_DECLARE(SetVertexColorCommand, VertexCommand)
     public:
-        SetVertexColorCommand(const Header&, unsigned, const RGBA4F&);
+        SetVertexColorCommand(const Header&, size_t, const RGBA4F&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        const RGBA4F&   bgcolor() const { return m_bgColor; }
-        void            set_bgcolor(const RGBA4F&);
+        const RGBA4F&   color() const { return m_color; }
+        void            set_color(const RGBA4F&);
+        
+        float           red() const { return m_color.red; }
+        float           green() const { return m_color.green; }
+        float           blue() const { return m_color.blue; }
+        float           alpha() const { return m_color.alpha; }
         
         //! Number relevant to the shape (ie, for triangles it's 1...2...3)
-        unsigned        vertex() const { return m_vertex; }
-        void            set_vertex(unsigned);
+        size_t          vertex() const { return m_vertex; }
+        void            set_vertex(size_t);
 
         static void init_info();
 
@@ -31,8 +36,8 @@ namespace yq::tachyon {
         
     private:
     
-        RGBA4F      m_bgColor;
-        unsigned    m_vertex;
+        RGBA4F      m_color;
+        size_t      m_vertex;
 
         SetVertexColorCommand(const SetVertexColorCommand&) = delete;
         SetVertexColorCommand(SetVertexColorCommand&&) = delete;

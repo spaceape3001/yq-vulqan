@@ -137,6 +137,7 @@ add_library(${PROJECT_NAME} SHARED
     command/TachyonCommand.cpp
     command/ThreadCommand.cpp
     command/UICommand.cpp
+    command/VertexCommand.cpp
     command/ViewerCommand.cpp
     command/WidgetCommand.cpp
     command/WindowCommand.cpp
@@ -149,7 +150,6 @@ add_library(${PROJECT_NAME} SHARED
     command/camera/CameraSetScreen.cpp
 
     command/color/SetBgColorCommand.cpp
-    command/color/SetVertexColorCommand.cpp
 
     command/controller/ControlCommand.cpp
     command/controller/DisableCommand.cpp
@@ -348,6 +348,18 @@ add_library(${PROJECT_NAME} SHARED
     command/ui/TitleCommand.cpp
     command/ui/UnfloatCommand.cpp
 
+    command/vertex/AppendVertex3Command.cpp
+    command/vertex/EraseVertexCommand.cpp
+    command/vertex/InsertVertex3Command.cpp
+    command/vertex/SetVertex3Command.cpp
+    command/vertex/SetVertexColorCommand.cpp
+    command/vertex/SetVertexNormal2Command.cpp
+    command/vertex/SetVertexNormal3Command.cpp
+    command/vertex/SetVertexPoint2Command.cpp
+    command/vertex/SetVertexPoint3Command.cpp
+    command/vertex/SetVertexUVCommand.cpp
+    command/vertex/SetVertexUVWCommand.cpp
+
     command/viewer/SetWidgetCommand.cpp
     
     command/widget/SetViewer.cpp
@@ -357,6 +369,8 @@ add_library(${PROJECT_NAME} SHARED
     control/Orientation3Control.cpp
 
     controller/Space3Controller.cpp
+    
+    data/Vertex3.cpp
     
     edit/ColorTriangle3UI.cpp
     edit/Orientation3UI.cpp
@@ -517,6 +531,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/ISize2.cpp
     interface/ISize3.cpp
     interface/ISize4.cpp
+    interface/IVertices3.cpp
     
     io/FileIOManager.cpp
     io/GLSLShader.cpp
@@ -590,6 +605,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PSize2.cpp
     proxy/PSize3.cpp
     proxy/PSize4.cpp
+    proxy/PVertices3.cpp
     
     raster/PatternRasters.cpp
     raster/DebugRasters.cpp

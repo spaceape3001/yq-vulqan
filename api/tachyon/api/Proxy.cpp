@@ -16,6 +16,11 @@ namespace yq::tachyon {
     {
     }
 
+    bool    Proxy::disabled() const
+    {
+        return m_flags(F::Disabled);
+    }
+
     void    Proxy::mail(const PostCPtr& pp)
     {
         if(m_tachyon && pp){

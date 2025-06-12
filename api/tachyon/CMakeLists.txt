@@ -90,6 +90,7 @@ add_library(${PROJECT_NAME} SHARED
     app/Viewer.cpp
     app/VulqanConfig.cpp
 
+    aspect/AColor.cpp
     aspect/AMaxSize1.cpp
     aspect/AMaxSize2.cpp
     aspect/AMaxSize3.cpp
@@ -150,6 +151,7 @@ add_library(${PROJECT_NAME} SHARED
     command/camera/CameraSetScreen.cpp
 
     command/color/SetBgColorCommand.cpp
+    command/color/SetColorCommand.cpp
 
     command/controller/ControlCommand.cpp
     command/controller/DisableCommand.cpp
@@ -389,6 +391,7 @@ add_library(${PROJECT_NAME} SHARED
 
     event/AppEvent.cpp
     event/CameraEvent.cpp
+    event/ColorEvent.cpp
     event/CursorEvent.cpp
     event/EmptyEvent.cpp
     event/GamepadEvent.cpp
@@ -409,6 +412,8 @@ add_library(${PROJECT_NAME} SHARED
     event/VulqanEvent.cpp
     event/WidgetEvent.cpp
     event/WindowEvent.cpp
+    
+    event/color/ColorChangeEvent.cpp
     
     event/cursor/CursorCaptureEvent.cpp
     event/cursor/CursorDisableEvent.cpp
@@ -510,6 +515,7 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
+    interface/IColor.cpp
     interface/IMaxSize1.cpp
     interface/IMaxSize2.cpp
     interface/IMaxSize3.cpp
@@ -584,6 +590,7 @@ add_library(${PROJECT_NAME} SHARED
     post/EmptyPost.cpp
     post/StringPost.cpp
 
+    proxy/PColor.cpp
     proxy/PMaxSize1.cpp
     proxy/PMaxSize2.cpp
     proxy/PMaxSize3.cpp

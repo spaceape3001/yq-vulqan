@@ -20,6 +20,12 @@ namespace yq::tachyon {
         
         constexpr bool operator==(const Vertex³&) const noexcept = default;
     };
+    
+    struct ColorVertex2D;
+    struct ColorVertex3D;
+    
+    Vertex³     vertex³(const ColorVertex2D&);
+    Vertex³     vertex³(const ColorVertex3D&);
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::Vertex³)

@@ -21,7 +21,8 @@ namespace yq::tachyon {
     
     class UIEditorInfo::FieldExecutor {
     public:
-        virtual void execute(UIEditor*edit) = 0;
+        virtual bool    iterable() const = 0;
+        virtual void    execute(UIEditor*edit) = 0;
     };
 
     template <SomeUIEditor C> 
@@ -31,7 +32,9 @@ namespace yq::tachyon {
     
         BoundFieldExecutor(FN fn) : m_function(fn) {}
     
-        virtual void execute(UIEditor* edit)
+        virtual bool    iterable() const { return false; }
+
+        virtual void    execute(UIEditor* edit)
         {
             (static_cast<C*>(edit)->*m_function)();
         }
@@ -78,6 +81,13 @@ namespace yq::tachyon {
             }
             return *this;
         }
+        
+        // TODO...
+        Writer& field(std::string_view labelFormat, 
+            uint64_t (C::*countFN)() const,
+            void (C::*fn)(uint64_t)
+        );
+        
 
     private:
         UIEditorInfo* m_meta;

@@ -185,6 +185,8 @@ namespace yq::tachyon {
         consteval operator DataActivity() const noexcept { return DataActivity::STATIC; }
     };
     
+    struct swapable_k {};
+    
     struct sweep_k {};
     struct table_k {};
     struct tachyon_k {};
@@ -307,6 +309,7 @@ namespace yq::tachyon {
     static constexpr const spatial²_k           SPATIAL²;
     static constexpr const spatial³_k           SPATIAL³;
     static constexpr const static_k             STATIC;
+    static constexpr const swapable_k           SWAPABLE;
     static constexpr const sweep_k              SWEEP;
     static constexpr const table_k              TABLE;
     static constexpr const tachyon_k            TACHYON;

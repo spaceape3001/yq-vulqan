@@ -32,6 +32,7 @@ namespace yq::tachyon {
         virtual bool        vertices(insertable_k) const { return false; }
         virtual bool        vertices(settable_k) const { return false; }
         virtual bool        vertices(erasable_k) const { return false; }
+        virtual bool        vertices(swapable_k) const { return false; }
         virtual bool        vertices(color_k) const { return false; }
         virtual bool        vertices(tex_k) const { return false; }
         virtual bool        vertices(normal_k) const { return false; }

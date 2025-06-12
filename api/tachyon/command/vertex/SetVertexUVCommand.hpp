@@ -16,7 +16,7 @@ namespace yq::tachyon {
         SetVertexUVCommand(const Header&, size_t, const UV2F&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        const UV2F&     uvw() const { return m_uv; }
+        const UV2F&     uv() const { return m_uv; }
         float           u() const { return m_uv.u; }
         float           v() const { return m_uv.v; }
         

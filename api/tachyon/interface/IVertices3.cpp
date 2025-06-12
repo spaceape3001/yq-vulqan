@@ -23,7 +23,7 @@ namespace yq::tachyon {
         return Vertex³{ vertex(n, POINT), vertex(n, TEX), vertex(n, COLOR), vertex(n, NORMAL) };
     }
     
-    RGBA4F      IVertices³::vertex(size_t, color_k) const
+    RGBA4F      IVertices³::vertex(size_t n, color_k) const
     {
         return {};
     }

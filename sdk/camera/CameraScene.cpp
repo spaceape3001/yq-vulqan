@@ -18,7 +18,7 @@
 #include <tachyon/rendered/ImageQuad3.hpp>
 #include <tachyon/rendered/Quadrilateral3.hpp>
 #include <tachyon/rendered/SkyBox3.hpp>
-#include <tachyon/rendered/Triangle3.hpp>
+#include <tachyon/rendered/ColorTriangle3.hpp>
 #include <tachyon/rendered/Tetrahedron3.hpp>
 
 #include <tachyon/api/Scene3InfoWriter.hpp>
@@ -196,7 +196,7 @@ Execution  CameraScene::setup(const Context&ctx)
             { 14., 14., 0. }
         );
 
-        Triangle³*   tri    = create_child<Triangle³>(TriData);
+        Triangle³*   tri    = create_child<ColorTriangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
 
 

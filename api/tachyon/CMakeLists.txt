@@ -378,7 +378,7 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
-    #edit/ColorTriangle3UI.cpp
+    edit/DrawModeUI.cpp
     edit/Orientation3UI.cpp
     edit/Position2UI.cpp
     edit/Position3UI.cpp
@@ -625,7 +625,6 @@ add_library(${PROJECT_NAME} SHARED
 
     rendered/AbstractShape3.cpp
     rendered/Billboard3.cpp
-    #rendered/ColorTriangle3.cpp
     rendered/ImageQuad3.cpp
     rendered/Quadrilateral3.cpp
     rendered/SkyBox3.cpp

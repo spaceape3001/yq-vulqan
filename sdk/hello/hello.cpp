@@ -44,7 +44,7 @@
 #include <tachyon/widget.hpp>
 
 #include <tachyon/command/orientation/SetOrientation3Command.hpp>
-#include <tachyon/rendered/ColorTriangle3.hpp>
+#include <tachyon/rendered/Triangle3.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/scene/SimpleScene.hpp>
 #include <tachyon/api/Scene3InfoWriter.hpp>

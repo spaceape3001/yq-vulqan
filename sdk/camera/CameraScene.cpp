@@ -18,7 +18,7 @@
 #include <tachyon/rendered/ImageQuad3.hpp>
 #include <tachyon/rendered/Quadrilateral3.hpp>
 #include <tachyon/rendered/SkyBox3.hpp>
-#include <tachyon/rendered/ColorTriangle3.hpp>
+#include <tachyon/rendered/Triangle3.hpp>
 #include <tachyon/rendered/Tetrahedron3.hpp>
 
 #include <tachyon/api/Scene3InfoWriter.hpp>

@@ -13,6 +13,7 @@ namespace yq::tachyon {
     YQ_ENUM(DrawMode, , 
         Auto,
         Color,
+        BiColor,    // bi color (with grayscale texture)
         Gradient,   // nice between corners
         Texture
     )

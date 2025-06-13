@@ -418,6 +418,7 @@ add_library(${PROJECT_NAME} SHARED
     event/WidgetEvent.cpp
     event/WindowEvent.cpp
     
+    event/color/BgColorChangeEvent.cpp
     event/color/ColorChangeEvent.cpp
     
     event/cursor/CursorCaptureEvent.cpp
@@ -520,6 +521,7 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
+    interface/IBgColor.cpp
     interface/IColor.cpp
     interface/IDrawMode.cpp
     interface/IMaxSize1.cpp
@@ -596,6 +598,7 @@ add_library(${PROJECT_NAME} SHARED
     post/EmptyPost.cpp
     post/StringPost.cpp
 
+    proxy/PBgColor.cpp
     proxy/PColor.cpp
     proxy/PDrawMode.cpp
     proxy/PMaxSize1.cpp

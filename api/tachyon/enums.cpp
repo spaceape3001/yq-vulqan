@@ -14,6 +14,7 @@
 #include <tachyon/gfx/CullMode.hpp>
 #include <tachyon/gfx/DataActivity.hpp>
 #include <tachyon/gfx/DataFormat.hpp>
+#include <tachyon/gfx/DrawMode.hpp>
 #include <tachyon/gfx/DynamicState.hpp>
 #include <tachyon/gfx/FrontFace.hpp>
 #include <tachyon/gfx/ImageAspect.hpp>
@@ -36,6 +37,7 @@
 #include <tachyon/gfx/Topology.hpp>
 #include <tachyon/gfx/VertexInputRate.hpp>
 
+
 #include <tachyon/api/Response.hpp>
 
 #include <tachyon/os/HatState.hpp>
@@ -53,6 +55,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ComponentSwizzle)
 YQ_TYPE_IMPLEMENT(yq::tachyon::CullMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DataActivity)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DataFormat)
+YQ_TYPE_IMPLEMENT(yq::tachyon::DrawMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DynamicState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::FrontFace)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageAspect)

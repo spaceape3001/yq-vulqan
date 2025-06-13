@@ -30,6 +30,11 @@ namespace yq::tachyon {
             return *this;
         }
         
+        bool valid() const 
+        { 
+            return buffer.valid(); 
+        }
+        
         
     protected:
         BufferObject(){}

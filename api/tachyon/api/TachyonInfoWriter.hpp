@@ -232,7 +232,7 @@ namespace yq::tachyon {
             //////////////////////////////////////////
             ///     ASSETS
         
-        template <typename C2, SomeAsset A>
+        template <SomeAsset A, typename C2=C>
         AssetProperty::PropW<C,A> asset(std::string_view szName, Ref<const A> (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
@@ -243,13 +243,13 @@ namespace yq::tachyon {
             return AssetProperty::PropW<C,A>(ret);
         }
         
-        template <typename C2, SomeAsset A>
+        template <SomeAsset A, typename C2=C>
         AssetProperty::Writer<A> asset(std::string_view szName, Ref<const A> (C2::*pointer), read_only_k, const std::source_location& sl=std::source_location::current())
         {
             return asset(szName, pointer, true, sl);
         }
 
-        template <typename C2, SomeAsset A>
+        template <SomeAsset A, typename C2=C>
         AssetProperty::PropW<C,A> asset(std::string_view szName, const Ref<const A> (C2::*pointer), const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
@@ -257,9 +257,8 @@ namespace yq::tachyon {
             new IPM_AssetGetter<C,C2,A>(ret, sl, pointer);
             return AssetProperty::PropW<C,A>(ret);
         }
-        
 
-        template <typename C2, SomeAsset A>
+        template <SomeAsset A, typename C2=C>
         AssetProperty::PropW<C,A> asset(std::string_view szName, Ref<const A> (C2::*function)() const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
@@ -268,7 +267,7 @@ namespace yq::tachyon {
             return AssetProperty::PropW<C,A>(ret);
         }
 
-        template <typename C2, SomeAsset A>
+        template <SomeAsset A, typename C2=C>
         AssetProperty::PropW<C,A> asset(std::string_view szName, const Ref<const A>& (C2::*function)() const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);

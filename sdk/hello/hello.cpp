@@ -197,7 +197,7 @@ public:
         
         Triangle³::Param p;
         p.position      = {0.,0.,0.1};
-        tri2            = create_child<ColorTriangle³>(TriData, p);
+        tri2            = create_child<Triangle³>(TriData, p);
         triSpatialID    = tri2 -> spatial();
         quad            = create_child<HelloQuad>();
         

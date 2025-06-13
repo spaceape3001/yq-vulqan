@@ -25,7 +25,7 @@ namespace yq::tachyon {
         
     protected:
 
-        RGBA4F    m_color = {};
+        RGBA4F    m_color = { 0., 0., 0., -1.};
 
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

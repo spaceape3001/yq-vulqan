@@ -11,6 +11,9 @@
 #include <tachyon/data/Vertex3.hpp>
 #include <tachyon/gfx/VBO.hpp>
 #include <tachyon/interface/IVertices3.hpp>
+#include <tachyon/aspect/AColor.hpp>
+#include <tachyon/aspect/AVertices3.hpp>
+#include <tachyon/rendered/AbstractShape3.hpp>
 
 #include <array>
 
@@ -28,136 +31,105 @@ namespace yq::tachyon {
 
     /*! \brief Triangle for three dimensions
     */
-    class Triangle³ : public Rendered³, protected IVertices³  {
-        YQ_TACHYON_DECLARE(Triangle³, Rendered³)
+    class Triangle³ : public AbstractShape³, public AVertices³<3> {
+        YQ_TACHYON_DECLARE(Triangle³, AbstractShape³)
     public:
     
-        size_t              vertices(count_k) const final { return 3; }
-        size_t              vertices(maximum_k) const final { return 3; }
-        size_t              vertices(minimum_k) const final { return 3; }
-        bool                vertices(appendable_k) const override final { return false; }
-        bool                vertices(insertable_k) const override final { return false; }
-        bool                vertices(erasable_k) const override final { return false; }
-        bool                vertices(normal_k) const override final { return false; }
+        using MyVertices  = AVertices³<3>;
         
-        virtual bool        vertices(disabled_k) const override { return false; }
-        virtual bool        vertices(settable_k) const override { return false; }
-        virtual bool        vertices(color_k) const override { return false; }
-        virtual bool        vertices(tex_k) const override { return false; }
+        using ADrawMode::draw_mode;
         
-        const Vector3D&     point1() const { return m_vertex1.point; }
-        const Vector3D&     point2() const { return m_vertex2.point; }
-        const Vector3D&     point3() const { return m_vertex3.point; }
-        
-        void                set_point1(const Vector3D&);
-        void                set_point2(const Vector3D&);
-        void                set_point3(const Vector3D&);
-        
-        double              x1() const { return m_vertex1.point.x; }
-        double              x2() const { return m_vertex2.point.x; }
-        double              x3() const { return m_vertex3.point.x; }
-        double              y1() const { return m_vertex1.point.y; }
-        double              y2() const { return m_vertex2.point.y; }
-        double              y3() const { return m_vertex3.point.y; }
-        double              z1() const { return m_vertex1.point.z; }
-        double              z2() const { return m_vertex2.point.z; }
-        double              z3() const { return m_vertex3.point.z; }
-        
-        const RGBA4F&       color1() const { return m_vertex1.color; }
-        const RGBA4F&       color2() const { return m_vertex2.color; }
-        const RGBA4F&       color3() const { return m_vertex3.color; }
-        
-        void                set_color1(const RGBA4F&);
-        void                set_color2(const RGBA4F&);
-        void                set_color3(const RGBA4F&);
+        DrawMode            draw_mode(use_k) const override;
 
-        float               red1() const { return m_vertex1.color.red; }
-        float               red2() const { return m_vertex2.color.red; }
-        float               red3() const { return m_vertex3.color.red; }
+        const Vertex³&      vertex1() const { return m_vertices[0]; }
+        const Vector3D&     point1() const { return vertex1().point; }
+        const RGBA4F&       color1() const { return vertex1().color; }
+        const UV2F&         uv1() const { return vertex1().uv; }
         
-        float               green1() const { return m_vertex1.color.green; }
-        float               green2() const { return m_vertex2.color.green; }
-        float               green3() const { return m_vertex3.color.green; }
+        double              x1() const { return point1().x; }
+        double              y1() const { return point1().y; }
+        double              z1() const { return point1().z; }
 
-        float               blue1() const { return m_vertex1.color.blue; }
-        float               blue2() const { return m_vertex2.color.blue; }
-        float               blue3() const { return m_vertex3.color.blue; }
-        
+        float               red1() const { return color1().red; }
+        float               green1() const { return color1().green; }
+        float               blue1() const { return color1().blue; }
+        float               alpha1() const { return color1().alpha; }
 
-        const UV2F&         uv1() const { return m_vertex1.uv; }
-        const UV2F&         uv2() const { return m_vertex2.uv; }
-        const UV2F&         uv3() const { return m_vertex3.uv; }
-        
-        void                set_uv1(const UV2F&);
-        void                set_uv2(const UV2F&);
-        void                set_uv3(const UV2F&);
-        
-        float               u1() const { return m_vertex1.uv.u; }
-        float               u2() const { return m_vertex2.uv.u; }
-        float               u3() const { return m_vertex3.uv.u; }
-
-        float               v1() const { return m_vertex1.uv.v; }
-        float               v2() const { return m_vertex2.uv.v; }
-        float               v3() const { return m_vertex3.uv.v; }
-
-        static void         init_info();
-        
-        //  Might consider references (later) ?
-        
-        virtual Vertex³     vertex(size_t) const override;
-        virtual Vector3D    vertex(size_t, point_k) const override;
-        virtual RGBA4F      vertex(size_t, color_k) const override;
-        virtual UV2F        vertex(size_t, tex_k) const override;
-        virtual void        vertex(size_t, set_k, const Vertex³&) override;
-        virtual void        vertex(size_t, set_k, const Vector3D&) override;
-        virtual void        vertex(size_t, set_k, color_k, const RGBA4F&) override;
-        virtual void        vertex(size_t, set_k, tex_k, const UV2F&) override;
-
-        const Vertex³&      vertex1() const { return m_vertex1; }
-        const Vertex³&      vertex2() const { return m_vertex2; }
-        const Vertex³&      vertex3() const { return m_vertex3; }
+        float               u1() const { return uv1().u; }
+        float               v1() const { return uv1().v; }
 
         void                set_vertex1(const Vertex³&);
-        void                set_vertex2(const Vertex³&);
-        void                set_vertex3(const Vertex³&);
+        void                set_point1(const Vector3D&);
+        void                set_color1(const RGBA4F&);
+        void                set_uv1(const UV2F&);
+
+        const Vertex³&      vertex2() const { return m_vertices[1]; }
+        const Vector3D&     point2() const { return vertex2().point; }
+        const RGBA4F&       color2() const { return vertex2().color; }
+        const UV2F&         uv2() const { return vertex2().uv; }
         
-        Execution           setup(const Context&) override;
-        Execution           tick(const Context&) override;
+        double              x2() const { return point2().x; }
+        double              y2() const { return point2().y; }
+        double              z2() const { return point2().z; }
 
-    protected:
-        Vertex³             m_vertex1{};
-        Vertex³             m_vertex2{};
-        Vertex³             m_vertex3{};
+        float               red2() const { return color2().red; }
+        float               green2() const { return color2().green; }
+        float               blue2() const { return color2().blue; }
+        float               alpha2() const { return color2().alpha; }
 
+        float               u2() const { return uv2().u; }
+        float               v2() const { return uv2().v; }
+
+        void                set_vertex2(const Vertex³&);
+        void                set_point2(const Vector3D&);
+        void                set_color2(const RGBA4F&);
+        void                set_uv2(const UV2F&);
+
+
+        const Vertex³&      vertex3() const { return m_vertices[2]; }
+        const Vector3D&     point3() const { return vertex3().point; }
+        const RGBA4F&       color3() const { return vertex3().color; }
+        const UV2F&         uv3() const { return vertex3().uv; }
+        
+        double              x3() const { return point3().x; }
+        double              y3() const { return point3().y; }
+        double              z3() const { return point3().z; }
+
+        float               red3() const { return color3().red; }
+        float               green3() const { return color3().green; }
+        float               blue3() const { return color3().blue; }
+        float               alpha3() const { return color3().alpha; }
+
+        float               u3() const { return uv3().u; }
+        float               v3() const { return uv3().v; }
+
+        void                set_vertex3(const Vertex³&);
+        void                set_point3(const Vector3D&);
+        void                set_color3(const RGBA4F&);
+        void                set_uv3(const UV2F&);
+
+        static void         init_info();
+
+        Triangle³(const TriangleData<ColorVertex3D>&, const Param& p={});
+        Triangle³(const TriangleData<ColorVertex2D>&, const Param& p={});
         Triangle³(const Vertex³&, const Vertex³&, const Vertex³&, const Param&p = {});
         Triangle³(const Param&p = {});
         ~Triangle³();
 
+    protected:
+        Vertex³&      vertex1() { return m_vertices[0]; }
+        Vertex³&      vertex2() { return m_vertices[1]; }
+        Vertex³&      vertex3() { return m_vertices[2]; }
+
+        static const Vertex³ kDefVertex1;
+        static const Vertex³ kDefVertex2;
+        static const Vertex³ kDefVertex3;
+
+
+        virtual void    rebuild() override;
         
-        //enum class V {
-            //Point,
-            //Color,
-            //UV
-        //};
-        
-        //using VFlags    = Flags<V,uint8_t>;
-
-        virtual void    rebuild(){}
-
-        void on_set_vertex_point(const SetVertexPoint³Command&);
-        void on_set_vertex_color(const SetVertexColorCommand&);
-        void on_set_vertex_uv(const SetVertexUVCommand&);
-        void on_set_vertex_data(const SetVertex³Command&);
-        
-        static void create_properties(color_k, Rendered³Info::Writer<Triangle³>&);
-        static void create_properties(tex_k, Rendered³Info::Writer<Triangle³>&);
-
-    private:
-
-        bool            m_dirty = false;
-
-        void    _check();
-
-        VB1<ColorVertexData>    m_vertex;
+        void        rebuild_solid();
+        void        rebuild_gradient();
+        void        rebuild_textured();
     };
 }

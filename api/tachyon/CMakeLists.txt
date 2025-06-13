@@ -91,6 +91,7 @@ add_library(${PROJECT_NAME} SHARED
     app/VulqanConfig.cpp
 
     aspect/AColor.cpp
+    aspect/ADrawMode.cpp
     aspect/AMaxSize1.cpp
     aspect/AMaxSize2.cpp
     aspect/AMaxSize3.cpp
@@ -112,6 +113,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize2.cpp
     aspect/ASize3.cpp
     aspect/ASize4.cpp
+    aspect/AVertices3.cpp
         
     camera/NullCamera.cpp
     camera/SpaceCamera.cpp
@@ -239,6 +241,8 @@ add_library(${PROJECT_NAME} SHARED
     command/scale/SetScaleXCommand.cpp
     command/scale/SetScaleYCommand.cpp
     command/scale/SetScaleZCommand.cpp
+
+    command/shape/SetDrawModeCommand.cpp
 
     command/size/AddMaxSize1Command.cpp
     command/size/AddMaxSize2Command.cpp
@@ -374,7 +378,7 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
-    edit/ColorTriangle3UI.cpp
+    #edit/ColorTriangle3UI.cpp
     edit/Orientation3UI.cpp
     edit/Position2UI.cpp
     edit/Position3UI.cpp
@@ -516,6 +520,7 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Texture.cpp
 
     interface/IColor.cpp
+    interface/IDrawMode.cpp
     interface/IMaxSize1.cpp
     interface/IMaxSize2.cpp
     interface/IMaxSize3.cpp
@@ -591,6 +596,7 @@ add_library(${PROJECT_NAME} SHARED
     post/StringPost.cpp
 
     proxy/PColor.cpp
+    proxy/PDrawMode.cpp
     proxy/PMaxSize1.cpp
     proxy/PMaxSize2.cpp
     proxy/PMaxSize3.cpp
@@ -617,8 +623,9 @@ add_library(${PROJECT_NAME} SHARED
     raster/PatternRasters.cpp
     raster/DebugRasters.cpp
 
+    rendered/AbstractShape3.cpp
     rendered/Billboard3.cpp
-    rendered/ColorTriangle3.cpp
+    #rendered/ColorTriangle3.cpp
     rendered/ImageQuad3.cpp
     rendered/Quadrilateral3.cpp
     rendered/SkyBox3.cpp

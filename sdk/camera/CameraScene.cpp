@@ -196,7 +196,7 @@ Execution  CameraScene::setup(const Context&ctx)
             { 14., 14., 0. }
         );
 
-        Triangle³*   tri    = create_child<ColorTriangle³>(TriData);
+        Triangle³*   tri    = create_child<Triangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
 
 

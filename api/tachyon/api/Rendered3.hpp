@@ -58,7 +58,7 @@ namespace yq::tachyon {
         static void init_info();
 
         Rendered³ID id() const { return Rendered³ID(UniqueID::id()); }
-
+        
     protected:
         
         Rendered³(const Param&);

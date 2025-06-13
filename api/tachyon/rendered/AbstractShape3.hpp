@@ -27,6 +27,9 @@ namespace yq::tachyon {
         };
         
         static void init_info();
+
+        using AColor::color;
+        virtual bool    color(settable_k) const { return true; }
     
         using ADrawMode::draw_mode;
         

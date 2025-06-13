@@ -378,6 +378,7 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
+    edit/ColorUI.cpp
     edit/DrawModeUI.cpp
     edit/Orientation3UI.cpp
     edit/Position2UI.cpp

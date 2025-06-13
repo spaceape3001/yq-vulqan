@@ -42,8 +42,7 @@ namespace yq::tachyon {
         
     void    PDrawMode::draw_mode(set_k, DrawMode v) 
     {
-        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+        if(m_flags(F::Settable) && !m_flags(F::Disabled))
             mail(new SetDrawModeCommand({.target=object()}, v));
-        }
     }
 }

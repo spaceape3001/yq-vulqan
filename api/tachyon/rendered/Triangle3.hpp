@@ -109,6 +109,7 @@ namespace yq::tachyon {
         void                set_uv3(const UV2F&);
 
         static void         init_info();
+        
 
         Triangle³(const TriangleData<ColorVertex3D>&, const Param& p={});
         Triangle³(const TriangleData<ColorVertex2D>&, const Param& p={});
@@ -125,6 +126,11 @@ namespace yq::tachyon {
         static const Vertex³ kDefVertex2;
         static const Vertex³ kDefVertex3;
 
+        //PostAdvice     advise(const Post&p) const
+        //{
+            //info_log_post(p);
+            //return AbstractShape³::advise(p);
+        //}
 
         virtual void    rebuild() override;
         

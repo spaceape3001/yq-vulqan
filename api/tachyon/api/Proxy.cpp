@@ -4,8 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <tachyon/api/Post.hpp>
 #include <tachyon/api/Proxy.hpp>
 #include <tachyon/api/Tachyon.hpp>
+#include <tachyon/logging.hpp>
 
 namespace yq::tachyon {
     Proxy::Proxy()
@@ -23,9 +25,17 @@ namespace yq::tachyon {
 
     void    Proxy::mail(const PostCPtr& pp)
     {
-        if(m_tachyon && pp){
-            m_tachyon -> mail(pp);
+        if(!pp){
+            tachyonWarning << "Proxy::mail() -- null post pointer!";
+            return;
         }
+        
+        if(!m_tachyon){
+            tachyonWarning << "Proxy::mail({" << pp->metaInfo().name() << ":" << pp->id() << "}) -- null tachyon";
+            return ;
+        }
+        
+        m_tachyon -> mail(pp);
     }
 
     TypedID   Proxy::object() const

@@ -47,6 +47,8 @@
 #include <yq/stream/Text.hpp>
 #include <yq/meta/Init.hpp>
 
+#define TACHYON_HELPER_MAIL_REPORT_FAILURE  1
+
 namespace yq::tachyon {
 
     struct Mail;
@@ -799,6 +801,11 @@ namespace yq::tachyon {
         return { metaInfo().name(), m_name, (uint64_t) id() };
     }
 
+    void Tachyon::info_log_post(const Post& p) const
+    {
+        tachyonInfo << "Post {" << p.metaInfo().name() << ":" << p.id() << "} Received by " << ident();
+    }
+
     bool Tachyon::in_tick() const
     {
         return m_thread == thread::id();
@@ -1511,16 +1518,32 @@ namespace yq::tachyon {
 
     void            Tachyon::Helper::send(PostCPtr pp, PostTarget tgt)
     {
+        if(!pp)
+            return;
+    
         Tachyon*t   = dynamic_cast<Tachyon*>(this);
-        if(t)
+        if(t){
             t->send(pp, tgt);
+        } else {
+            #if TACHYON_HELPER_MAIL_REPORT_FAILURE
+            tachyonInfo << "Helper unable to send {" << pp->metaInfo().name() << ":" << pp->id() << "} due to not getting the tachyon";
+            #endif
+        }
     }
     
     void            Tachyon::Helper::mail(PostCPtr pp)
     {
+        if(!pp)
+            return;
+
         Tachyon*t   = dynamic_cast<Tachyon*>(this);
-        if(t)
+        if(t){
             t->mail(pp);
+        } else {
+            #if TACHYON_HELPER_MAIL_REPORT_FAILURE
+            tachyonInfo << "Helper unable to mail {" << pp->metaInfo().name() << ":" << pp->id() << "} due to not getting the tachyon";
+            #endif
+        }
     }
 
     // ---- TACHYON IDENT

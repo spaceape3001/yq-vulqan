@@ -595,6 +595,8 @@ namespace yq::tachyon {
         */
         virtual PostAdvice  advise(const Post&) const;
 
+        void    info_log_post(const Post&) const;
+
 
         /*! \brief DIRECTLY HANDLES the specified post
         

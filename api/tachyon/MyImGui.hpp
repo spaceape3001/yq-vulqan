@@ -8,6 +8,7 @@
 
 #include <yq/color/RGBA.hpp>
 #include <yq/color/RGB.hpp>
+#include <yq/core/Enum.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/shape/Size2.hpp>
@@ -42,6 +43,11 @@
         constexpr operator yq::Vector4F() const { return { x, y, z, w }; }
 
 #include "imgui.h"
+
+namespace yq {
+}
+namespace yq::tachyon {
+}
 
 /*
     This header file is covered by GPL-v3 (unless otherwise noted) and is used to 
@@ -164,4 +170,19 @@ namespace ImGui {
     ImGuiChildFlags   ChildFlags(UIFlags flag);
     ImGuiWindowFlags_ WindowFlag(UIFlag flag);
     ImGuiWindowFlags  WindowFlags(UIFlags flag);
+    
+    
+    bool    Combo(const char*, int&, const yq::EnumDef&, ImGuiComboFlags flags=0);
+    
+    template <typename E>
+    bool    Combo(const char* label, yq::EnumImpl<E>& e, ImGuiComboFlags flags=0)
+    {
+        int v   = e.value();
+        bool f = Combo(label, v, *E::staticEnumInfo(), flags);
+        if(f && v != e.value()){
+            e   = (typename E::enum_t) v;
+            return true;
+        } else
+            return false;
+    }
 }

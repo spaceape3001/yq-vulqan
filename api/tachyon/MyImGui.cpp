@@ -20,9 +20,37 @@ static_assert(sizeof(void*) == sizeof(uint64_t), "Breakage means ImGui textures 
 thread_local ImGuiContext* MyImGuiTLS   = nullptr;
 
 namespace ImGui {
-    bool Checkbox(const char*z, bool&v)
+    bool    Checkbox(const char*z, bool&v)
     {
         return Checkbox(z, &v);
+    }
+    
+    bool    Combo(const char* label, int&v, const yq::EnumDef& edef, ImGuiComboFlags flags)
+    {
+        ImGuiContext& g = *GImGui;
+
+        bool    value_changed   = false;
+        std::string key(edef.key_of(v));
+        if(!BeginCombo(label, key.c_str(), flags))
+            return false;
+        for(auto& itr : edef.name2val()){
+            std::string la(itr.first);
+            PushID(la.c_str());
+            bool    item_selected   = v == itr.second;
+            if(Selectable(la.c_str(), item_selected)){
+                if(v != itr.second){
+                    v       = itr.second;
+                    value_changed   = true;
+                }
+            }
+            if(item_selected)
+                SetItemDefaultFocus();
+            PopID();
+        }
+        EndCombo();
+        if (value_changed)
+            MarkItemEdited(g.LastItemData.ID);
+        return value_changed;
     }
 
     bool    ColorEdit(const char* label, yq::RGB3F&v, ImGuiColorEditFlags flags)

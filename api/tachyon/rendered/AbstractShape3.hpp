@@ -32,6 +32,7 @@ namespace yq::tachyon {
         
         // override for actual auto-detection
         virtual DrawMode    draw_mode(use_k) const { return draw_mode(); }
+        virtual bool        draw_mode(settable_k) const { return true; }
     
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;

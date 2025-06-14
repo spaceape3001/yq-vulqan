@@ -70,6 +70,7 @@ namespace yq::tachyon {
     {
         m_drawMode  = p.draw_mode;
         m_color     = p.color;
+        m_bgcolor   = p.bgcolor;
         if((m_drawMode == DrawMode::Auto) && (m_color.alpha >= 0.))
             m_drawMode  = DrawMode::Color;
     }

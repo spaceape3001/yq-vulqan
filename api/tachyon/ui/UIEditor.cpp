@@ -81,15 +81,16 @@ tachyonInfo << "UIEditorInfo(" << name << ")";
             
         std::string     table   = std::format("##Editor{}{}", metaInfo().name(), m_bind.id );
         auto& sty = style();
+
+        float w = ImGui::GetWindowWidth();
         
-        if(ImGui::BeginTable(table.c_str(), 2, ImGuiTableFlags_NoHostExtendX | ImGuiTableFlags_NoPadOuterX)){
+        if(ImGui::BeginTable(table.c_str(), 2)){
             float x = ImGui::GetCursorPosX();
-            float w = ImGui::GetWindowWidth();
             float kw    = std::max(sty.table.keycol()-x, sty.table.keycol.min);
             float vw    = std::max(sty.table.valcol.min, w-x);
             
             ImGui::TableSetupColumn("Key",   ImGuiTableColumnFlags_WidthFixed, kw);
-            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch, vw);
+            ImGui::TableSetupColumn("Value" /*, ImGuiTableColumnFlags_WidthFixed, vw */);
             
             for(auto& f : metaInfo().m_fields){
                 ImGui::TableNextRow();
@@ -104,6 +105,7 @@ tachyonInfo << "UIEditorInfo(" << name << ")";
             
             ImGui::EndTable();
         }
+        
     }
 
     ////////////////////////////

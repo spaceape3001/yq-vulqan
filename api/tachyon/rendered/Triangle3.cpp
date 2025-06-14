@@ -80,8 +80,8 @@ namespace yq::tachyon {
 
         {
             auto& p = w.pipeline(Pipeline::Role::SolidColor);
-            p.shader("assets/shape3/gradient.vert");
-            p.shader("assets/shape3/gradient.frag");
+            p.shader("assets/shape3/color.vert");
+            p.shader("assets/shape3/color.frag");
 
             p.vertex(_vertexS(), DataActivity::DYNAMIC)
                 .attribute(&VertexS::position)

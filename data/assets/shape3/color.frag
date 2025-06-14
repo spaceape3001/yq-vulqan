@@ -4,8 +4,10 @@ layout(binding = 0) uniform uniform_t {
     vec4    color;
 } u;
 
+layout(location = 0) out vec4 outColor;
+
 void main() {
-    outColor = fragColor;
+    outColor = u.color;
 }
 
 

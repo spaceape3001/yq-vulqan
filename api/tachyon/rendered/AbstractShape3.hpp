@@ -23,7 +23,8 @@ namespace yq::tachyon {
     public:
 
         struct Param : public Rendered³::Param {
-            RGBA4F      color       = { 0., 0., 0., -1. };
+            RGBA4F      bgcolor     = kDefBgColor;
+            RGBA4F      color       = kDefColor;
             DrawMode    draw_mode   = DrawMode::Auto;
         };
         

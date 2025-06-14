@@ -182,8 +182,9 @@ Execution    MainWidget::setup(const Context& ctx)
         if(!m_controller)
             m_controller    = create_on<Space³Controller>(APP, m_camera);
         if(!m_inspector){
-            m_inspector     = create_child<FrameInspector>();
-            m_inspector -> cmd_hide();
+            // temporary disable
+            //m_inspector     = create_child<FrameInspector>();
+            //m_inspector -> cmd_hide();
         }
         if(!m_remote)
             m_remote        = create_child<SpaceCameraRemote>(m_camera);

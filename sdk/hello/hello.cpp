@@ -199,6 +199,7 @@ public:
         p.position      = {0.,0.,0.1};
         tri2            = create_child<Triangle³>(TriData, p);
         triSpatialID    = tri2 -> spatial();
+        tri2 -> draw_mode(SET, DrawMode::Gradient);
         quad            = create_child<HelloQuad>();
         
         //add_thing(tri2);

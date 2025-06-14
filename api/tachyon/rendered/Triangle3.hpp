@@ -134,7 +134,8 @@ namespace yq::tachyon {
 
         virtual void    rebuild() override;
         
-        void        rebuild_solid();
+        void        rebuild_bicolor();
+        void        rebuild_color();
         void        rebuild_gradient();
         void        rebuild_textured();
     };

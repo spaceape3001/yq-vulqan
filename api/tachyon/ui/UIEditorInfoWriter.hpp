@@ -15,7 +15,7 @@
 namespace yq::tachyon {
 
     struct UIEditorInfo::Field {
-        std::string_view        label;
+        std::string             label;
         FieldExecutor*          executor    = nullptr;
     };
     
@@ -77,7 +77,7 @@ namespace yq::tachyon {
         Writer& field(std::string_view label, void (C::*fn)())
         {
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_fields.push_back({ label, new BoundFieldExecutor<C>(fn) });
+                m_meta -> m_fields.push_back({ std::string(label), new BoundFieldExecutor<C>(fn) });
             }
             return *this;
         }

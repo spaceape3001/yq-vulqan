@@ -175,8 +175,13 @@ void InspectorUI::_render(TypedID tid)
     if(!sn)
         return;
         
+    std::string id  = std::format("tachyon{}", tid.id);
+    ImGui::PushID(id.c_str());
+        
     for(UIEditor* ui : _panels(tid)){
+        ImGui::PushID(ui);
         ui->draw();
+        ImGui::PopID();
     }
     
     for(TypedID c : sn->children){
@@ -198,6 +203,8 @@ void InspectorUI::_render(TypedID tid)
             ImGui::TreePop();
         }
     }
+    
+    ImGui::PopID();
 }
 
 

@@ -79,7 +79,7 @@ tachyonInfo << "UIEditorInfo(" << name << ")";
         if(!m_snap)
             return ;
             
-        std::string     table   = std::format("Editor{}{}", metaInfo().name(), m_bind.id );
+        std::string     table   = std::format("##Editor{}{}", metaInfo().name(), m_bind.id );
         auto& sty = style();
         
         if(ImGui::BeginTable(table.c_str(), 2, ImGuiTableFlags_NoHostExtendX | ImGuiTableFlags_NoPadOuterX)){
@@ -89,18 +89,21 @@ tachyonInfo << "UIEditorInfo(" << name << ")";
             float vw    = std::max(sty.table.valcol.min, w-x);
             
             ImGui::TableSetupColumn("Key",   ImGuiTableColumnFlags_WidthFixed, kw);
-            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, vw);
+            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch, vw);
+            
             for(auto& f : metaInfo().m_fields){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn())
                     ImGui::TextUnformatted(f.label);
-                if(ImGui::TableNextColumn())
+                if(ImGui::TableNextColumn()){
+                    ImGui::PushID(f.label.c_str());
                     f.executor->execute(this);
+                    ImGui::PopID();
+                }
             }
-        
+            
             ImGui::EndTable();
         }
-        
     }
 
     ////////////////////////////

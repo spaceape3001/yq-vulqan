@@ -37,65 +37,67 @@ namespace yq::tachyon {
         AVertices³<3>::init_info(w);
         
         w.property("vertex1", &Triangle³::vertex1).setter(&Triangle³::set_vertex1);
-        w.property("vertex2", &Triangle³::vertex2).setter(&Triangle³::set_vertex2);
-        w.property("vertex3", &Triangle³::vertex3).setter(&Triangle³::set_vertex3);
-
         w.property("point1", &Triangle³::point1).setter(&Triangle³::set_point1).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("point2", &Triangle³::point2).setter(&Triangle³::set_point2).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("point3", &Triangle³::point3).setter(&Triangle³::set_point3).tag({kTag_Save, kTag_Log, kTag_Print});
-        
         w.property("x1", &Triangle³::x1);
-        w.property("x2", &Triangle³::x2);
-        w.property("x3", &Triangle³::x3);
-        
         w.property("y1", &Triangle³::y1);
-        w.property("y2", &Triangle³::y2);
-        w.property("y3", &Triangle³::y3);
-
         w.property("z1", &Triangle³::z1);
-        w.property("z2", &Triangle³::z2);
-        w.property("z3", &Triangle³::z3);
-
         w.property("color1", &Triangle³::color1).setter(&Triangle³::set_color1).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("color2", &Triangle³::color2).setter(&Triangle³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("color3", &Triangle³::color3).setter(&Triangle³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
-        
         w.property("red1", &Triangle³::red1);
-        w.property("red2", &Triangle³::red2);
-        w.property("red3", &Triangle³::red3);
-        
         w.property("green1", &Triangle³::green1);
-        w.property("green2", &Triangle³::green2);
-        w.property("green3", &Triangle³::green3);
-
         w.property("blue1", &Triangle³::blue1);
-        w.property("blue2", &Triangle³::blue2);
-        w.property("blue3", &Triangle³::blue3);
-
         w.property("alpha1", &Triangle³::alpha1);
-        w.property("alpha2", &Triangle³::alpha2);
-        w.property("alpha3", &Triangle³::alpha3);
-                
         w.property("uv1", &Triangle³::uv1).setter(&Triangle³::set_uv1).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("uv2", &Triangle³::uv2).setter(&Triangle³::set_uv2).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("uv3", &Triangle³::uv3).setter(&Triangle³::set_uv3).tag({kTag_Save, kTag_Log, kTag_Print});
-        
         w.property("u1", &Triangle³::u1);
-        w.property("u2", &Triangle³::u2);
-        w.property("u3", &Triangle³::u3);
-        
         w.property("v1", &Triangle³::v1);
+        
+        w.property("vertex2", &Triangle³::vertex2).setter(&Triangle³::set_vertex2);
+        w.property("point2", &Triangle³::point2).setter(&Triangle³::set_point2).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("x2", &Triangle³::x2);
+        w.property("y2", &Triangle³::y2);
+        w.property("z2", &Triangle³::z2);
+        w.property("color2", &Triangle³::color2).setter(&Triangle³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("red2", &Triangle³::red2);
+        w.property("green2", &Triangle³::green2);
+        w.property("blue2", &Triangle³::blue2);
+        w.property("alpha2", &Triangle³::alpha2);
+        w.property("uv2", &Triangle³::uv2).setter(&Triangle³::set_uv2).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("u2", &Triangle³::u2);
         w.property("v2", &Triangle³::v2);
+
+        w.property("vertex3", &Triangle³::vertex3).setter(&Triangle³::set_vertex3);
+        w.property("point3", &Triangle³::point3).setter(&Triangle³::set_point3).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("x3", &Triangle³::x3);
+        w.property("y3", &Triangle³::y3);
+        w.property("z3", &Triangle³::z3);
+        w.property("color3", &Triangle³::color3).setter(&Triangle³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("red3", &Triangle³::red3);
+        w.property("green3", &Triangle³::green3);
+        w.property("blue3", &Triangle³::blue3);
+        w.property("alpha3", &Triangle³::alpha3);
+        w.property("uv3", &Triangle³::uv3).setter(&Triangle³::set_uv3).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("u3", &Triangle³::u3);
         w.property("v3", &Triangle³::v3);
 
+        {
+            auto& p = w.pipeline(Pipeline::Role::SolidColor);
+            p.shader("assets/shape3/gradient.vert");
+            p.shader("assets/shape3/gradient.frag");
+
+            p.vertex(_vertexS(), DataActivity::DYNAMIC)
+                .attribute(&VertexS::position)
+            ;
+            p.uniform(_uniformS(), DataActivity::DYNAMIC);
+            
+            p.push_full();
+        }
 
 
         {
             auto& p = w.pipeline(Pipeline::Role::ColorCorner);
-            p.shader("assets/GradientShape3.vert");
-            p.shader("assets/GradientShape3.frag");
+            p.shader("assets/shape3/gradient.vert");
+            p.shader("assets/shape3/gradient.frag");
 
-            p.vertex(_vertexC(), DataActivity::FIXED)
+            p.vertex(_vertexC(), DataActivity::DYNAMIC)
                 .attribute(&VertexC::position)
                 .attribute(&VertexC::color)
             ;
@@ -251,21 +253,34 @@ namespace yq::tachyon {
     void    Triangle³::rebuild() 
     {
         switch(draw_mode(USE)){
-        case DrawMode::Color:
-            rebuild_solid();
-            break;
         case DrawMode::Auto:
+            rebuild_gradient();
+            break;
+        case DrawMode::BiColor:
+            rebuild_bicolor();
+            break;
+        case DrawMode::Color:
+            rebuild_color();
+            break;
         case DrawMode::Gradient:
             rebuild_gradient();
             break;
         case DrawMode::Texture:
             rebuild_textured();
             break;
+        default:
+            rebuild_color();
+            break;
         }
     }
-        
-    void    Triangle³::rebuild_solid()
+
+    void    Triangle³::rebuild_bicolor()
     {
+    }
+        
+    void    Triangle³::rebuild_color()
+    {
+tachyonInfo << "Triangle³::rebuild_color()";
         set_pipeline(Pipeline::Role::SolidColor);
         m_vertexS   = {
             vs(vertex1()), vs(vertex2()), vs(vertex3())

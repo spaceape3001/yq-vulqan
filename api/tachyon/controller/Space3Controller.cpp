@@ -33,7 +33,36 @@ namespace yq::tachyon {
     }
 
     Space³Controller::Space³Controller(TypedID t, const Param&p) : 
-        Controller(p), m_keyboardEnable(p.keyboard), m_gamepadEnable(p.gamepad)
+        Controller(p),
+        m_uP(  p.slinear,  p.slinear*p.rlinear ),
+        m_uN( -p.slinear, -p.slinear*p.rlinear ),
+        m_wP(  p.slinear,  p.slinear*p.rlinear ),
+        m_wN( -p.slinear, -p.slinear*p.rlinear ),
+        m_vP(  p.slinear,  p.slinear*p.rlinear ),
+        m_vN( -p.slinear, -p.slinear*p.rlinear ),
+
+        m_xP(  p.slinear,  p.slinear*p.rlinear ),
+        m_xN( -p.slinear, -p.slinear*p.rlinear ),
+        m_yP(  p.slinear,  p.slinear*p.rlinear ),
+        m_yN( -p.slinear, -p.slinear*p.rlinear ),
+        m_zP(  p.slinear,  p.slinear*p.rlinear ),
+        m_zN( -p.slinear, -p.slinear*p.rlinear ),
+
+        m_φP(  p.sangle,  p.sangle*p.rangle ),    // ROLL
+        m_φN( -p.sangle, -p.sangle*p.rangle ),
+        m_θP(  p.sangle,  p.sangle*p.rangle ),    // PITCH
+        m_θN( -p.sangle, -p.sangle*p.rangle ),
+        m_λP(  p.sangle,  p.sangle*p.rangle ),    // YAW
+        m_λN( -p.sangle, -p.sangle*p.rangle ),
+
+        m_θ( 0., -p.gangle ),     // joystick/pitch(gain is negative to get the axis/direction to match)
+        m_λ( 0.,  p.gangle ),
+        m_φ( 0.,  p.gangle ),
+        m_u( 0.,  p.glinear ),
+        m_v( 0.,  p.glinear ),
+        m_w( 0.,  p.glinear ),
+
+         m_keyboardEnable(p.keyboard), m_gamepadEnable(p.gamepad)
     {
         if(t){
             set_target(t);

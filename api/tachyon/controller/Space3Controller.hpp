@@ -22,7 +22,7 @@ namespace yq::tachyon {
     /*! \brief Primitive 3D space controller
     
         This allows for a camera (or object) to be moved in 3D space 
-        using the keyboard.  (Well, these are what are supposed to be 
+        using the keyboard & gamepad.  (Well, these are what are supposed to be 
         going on, some flukes in the first cut)
         
         Key | Role
@@ -39,15 +39,46 @@ namespace yq::tachyon {
         2/8 | Pitch
         4/6 | Yaw
         7/9 | Roll
+        
+        Gamepad
+        -------
+        
+        Left Joystick -- translation
+        Right Joystick -- orientation
+        Tap Joystick buttons to zero-stop all motion
+        Left button (high) -- change translation mode (ie axises)
+        Right button (high) -- change orientation mode (ie HPR)
+        
+        \note This is intended as a fast implementation thing, to give an initial control.
+        Recommendation is to transition to a better controller.
     */
     class Space³Controller : public Controller {
         YQ_TACHYON_DECLARE(Space³Controller, Controller);
     public:
     
+        struct AxisData {
+            double  input;
+            double  gain;
+        };
+        
+        struct KeyData {
+            double  press;
+            double  repeat;
+        };
+    
         struct Param : public Controller::Param {
-            bool    keyboard    = true;
-            bool    gamepad     = true;
+            bool        keyboard    = true;
+            bool        gamepad     = true;
             
+            double      sangle      = 5.00; // amount to step angles
+            double      slinear     = 1.00; // amount to step distances
+            
+            double      rangle      = 0.50; // fraction of steps to repeated angle keypresses
+            double      rlinear     = 0.50; // fraction of steps to repeated linear keypresses
+
+            double      gangle      = 0.10; // angle gains on gamepad
+            double      glinear     = 0.01; // linear gains on gamepad
+
             Param(){}
         };
     
@@ -74,17 +105,6 @@ namespace yq::tachyon {
         
     private:
     
-    
-        struct KeyData {
-            double press;
-            double repeat;
-        };
-        
-        struct AxisData {
-            double  input   = 0;
-            double  gain    = 0.;
-        };
-        
         enum class Mode {
             HP,
             PR,
@@ -100,35 +120,35 @@ namespace yq::tachyon {
         //  YAW is λ (trying to avoid confusion in code that already has greek in it)
     
         //  These go into "move by" commands
-        KeyData         m_uP    = {  1.,  0.5 };
-        KeyData         m_uN    = { -1., -0.5 };
-        KeyData         m_wP    = {  1.,  0.5 };
-        KeyData         m_wN    = { -1., -0.5 };
-        KeyData         m_vP    = {  1.,  0.5 };
-        KeyData         m_vN    = { -1., -0.5 };
+        KeyData         m_uP;
+        KeyData         m_uN;
+        KeyData         m_wP;
+        KeyData         m_wN;
+        KeyData         m_vP;
+        KeyData         m_vN;
     
         //  Go into add-shift position commands
-        KeyData         m_xP    = {  1.,  0.5 };
-        KeyData         m_xN    = { -1., -0.5 };
-        KeyData         m_yP    = {  1.,  0.5 };
-        KeyData         m_yN    = { -1., -0.5 };
-        KeyData         m_zP    = {  1.,  0.5 };
-        KeyData         m_zN    = { -1., -0.5 };
+        KeyData         m_xP;
+        KeyData         m_xN;
+        KeyData         m_yP;
+        KeyData         m_yN;
+        KeyData         m_zP;
+        KeyData         m_zN;
         
         //  Go into rotate commands
-        KeyData         m_φP    = {  5.,  2.5 };    // ROLL
-        KeyData         m_φN    = { -5., -2.5 };
-        KeyData         m_θP    = {  5.,  2.5 };    // PITCH
-        KeyData         m_θN    = { -5., -2.5 };
-        KeyData         m_λP    = {  5.,  2.5 };    // YAW
-        KeyData         m_λN    = { -5., -2.5 };
+        KeyData         m_φP;    // ROLL
+        KeyData         m_φN;
+        KeyData         m_θP;    // PITCH
+        KeyData         m_θN;
+        KeyData         m_λP;    // YAW
+        KeyData         m_λN;
         
-        AxisData        m_θ     = { 0., -0.1 };     // joystick/pitch (gain is negative to get the axis/direction to match)
-        AxisData        m_λ     = { 0.,  0.1 };
-        AxisData        m_φ     = { 0.,  0.1 };
-        AxisData        m_u     = { 0.,  0.1 };
-        AxisData        m_v     = { 0.,  0.1 };
-        AxisData        m_w     = { 0.,  0.1 };
+        AxisData        m_θ;     // joystick/pitch (gain is negative to get the axis/direction to match)
+        AxisData        m_λ;
+        AxisData        m_φ;
+        AxisData        m_u;
+        AxisData        m_v;
+        AxisData        m_w;
         
         Mode            m_modeLeft      = Mode::UV;
         Mode            m_modeRight     = Mode::HP;

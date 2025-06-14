@@ -44,6 +44,11 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(ControllerSnap)
         YQ_TACHYON_DECLARE(Controller, Tachyon)
     public:
+
+        struct Param : public Tachyon::Param {
+            bool        enabled = true;
+            Param(){}
+        };
     
         ~Controller();
         
@@ -66,12 +71,17 @@ namespace yq::tachyon {
 
         Controller(const Param& p={});
 
+        void            _control(TypedID);
+        void            _uncontrol(TypedID);
+        void            _uncontrol(all_k);
+        void            _listen(TypedID);
+        void            _unlisten(TypedID);
+
     private:
         
-        std::set<TachyonID> m_controlled;
-        std::set<TachyonID> m_listening;
+        std::set<TypedID>   m_controlled;
+        std::set<TypedID>   m_listening;
         bool                m_enabled   = true;
-        bool                m_destroyed = false;
         
         void    on_control_command(const ControlCommand&);
         void    on_disable_command(const DisableCommand&);

@@ -48,6 +48,7 @@ namespace yq::tachyon {
     //class StartupCommand;
     class SetViewer;
     class TitleCommand;
+    class ViewerCommand;
     class Frame;
     class UIAppMainWriter;
     class UIElementsWriter;
@@ -247,6 +248,7 @@ namespace yq::tachyon {
         void                    on_set_viewer(const SetViewer&);
         void                    on_show_command(const ShowCommand&);
         void                    on_title_command(const TitleCommand&);
+        void                    on_viewer_command(const ViewerCommand&);
 
         //! Called before record, this is the opportunity to 
         //! pass descriptor sets to the graphics card.

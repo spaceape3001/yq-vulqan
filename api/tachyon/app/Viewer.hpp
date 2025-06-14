@@ -70,6 +70,10 @@ namespace yq::tachyon {
     class HideEvent;
     class IconifyCommand;
     class IconifyEvent;
+    class ImGuiDisableKeyboardCommand;
+    class ImGuiEnableKeyboardCommand;
+    class ImGuiDisableMouseCommand;
+    class ImGuiEnableMouseCommand;
     class MaximizeCommand;
     class MaximizeEvent;
     class PauseCommand;
@@ -334,7 +338,10 @@ namespace yq::tachyon {
             DevReply,
             HideCommand,
             HideEvent,
-            DestroyCommand
+            DestroyCommand,
+            
+            NoImGuiKeyboard,
+            NoImGuiMouse
         };
 
         Cleanup                         m_cleanup;
@@ -378,6 +385,10 @@ namespace yq::tachyon {
         void    on_hide_event(const HideEvent&);
         void    on_hide_command(const HideCommand&);
         void    on_iconify_command(const IconifyCommand&);
+        void    on_imgui_disable_keyboard_command(const ImGuiDisableKeyboardCommand&);
+        void    on_imgui_enable_keyboard_command(const ImGuiEnableKeyboardCommand&);
+        void    on_imgui_disable_mouse_command(const ImGuiDisableMouseCommand&);
+        void    on_imgui_enable_mouse_command(const ImGuiEnableMouseCommand&);
         void    on_key_character_event(const KeyCharacterEvent&);
         void    on_key_press_event(const KeyPressEvent&);
         void    on_key_release_event(const KeyReleaseEvent&);

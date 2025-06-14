@@ -40,21 +40,16 @@ namespace yq::tachyon {
         constexpr operator TachyonID() const noexcept { return { id }; }
         constexpr operator uint64_t() const noexcept { return id; }
         
-        constexpr bool operator()(Type t) const { return types(t); }
+        constexpr bool operator()(Type t) const noexcept { return types(t); }
         
-        constexpr auto    operator<=>(TypedID rhs) const
-        {
-            return id <=> rhs.id;
-        } 
-
         template <typename T>
-        auto    operator<=>(ID<T> _id) const
+        auto    operator<=>(ID<T> _id) const noexcept
         {
             return id <=> _id.id;
         } 
         
         template <typename T>
-        friend auto operator<=>(ID<T> _id, const TypedID& t)
+        friend auto operator<=>(ID<T> _id, const TypedID& t) noexcept
         {
             return _id.id <=> t.id;
         }

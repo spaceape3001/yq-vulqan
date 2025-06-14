@@ -56,6 +56,10 @@
 #include <tachyon/command/tachyon/UnsubscribeCommand.hpp>
 
 #include <tachyon/command/widget/SetViewer.hpp>
+#include <tachyon/command/viewer/ImGuiDisableKeyboardCommand.hpp>
+#include <tachyon/command/viewer/ImGuiEnableKeyboardCommand.hpp>
+#include <tachyon/command/viewer/ImGuiDisableMouseCommand.hpp>
+#include <tachyon/command/viewer/ImGuiEnableMouseCommand.hpp>
 
 #include <tachyon/event/keyboard/KeyCharacterEvent.hpp>
 #include <tachyon/event/keyboard/KeyPressEvent.hpp>
@@ -156,6 +160,10 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_hide_command);
         w.slot(&Viewer::on_hide_event);
         w.slot(&Viewer::on_iconify_command);
+        w.slot(&Viewer::on_imgui_disable_keyboard_command);
+        w.slot(&Viewer::on_imgui_enable_keyboard_command);
+        w.slot(&Viewer::on_imgui_disable_mouse_command);
+        w.slot(&Viewer::on_imgui_enable_mouse_command);
         
         w.slot(&Viewer::on_key_character_event);
         w.slot(&Viewer::on_key_press_event);
@@ -726,24 +734,48 @@ namespace yq::tachyon {
             send(cmd.clone(REBIND, {.target=m_window}));
         }
     }
+
+    void    Viewer::on_imgui_disable_keyboard_command(const ImGuiDisableKeyboardCommand&cmd)
+    {
+        if(cmd.target() == id())
+            m_flags.set(X::NoImGuiKeyboard);
+    }
+    
+    void    Viewer::on_imgui_enable_keyboard_command(const ImGuiEnableKeyboardCommand&cmd)
+    {
+        if(cmd.target() == id())
+            m_flags.clear(X::NoImGuiKeyboard);
+    }
+    
+    void    Viewer::on_imgui_disable_mouse_command(const ImGuiDisableMouseCommand&cmd)
+    {
+        if(cmd.target() == id())
+            m_flags.set(X::NoImGuiMouse);
+    }
+    
+    void    Viewer::on_imgui_enable_mouse_command(const ImGuiEnableMouseCommand&cmd)
+    {
+        if(cmd.target() == id())
+            m_flags.clear(X::NoImGuiMouse);
+    }
     
     void    Viewer::on_key_character_event(const KeyCharacterEvent&evt)
     {
-        if(m_imgui){
+        if(m_imgui && !m_flags(X::NoImGuiKeyboard)){
             m_imgui->on(evt);
         }
     }
 
     void    Viewer::on_key_press_event(const KeyPressEvent&evt)
     {
-        if(m_imgui){
+        if(m_imgui && !m_flags(X::NoImGuiKeyboard)){
             m_imgui->on(evt);
         }
     }
     
     void    Viewer::on_key_release_event(const KeyReleaseEvent&evt)
     {
-        if(m_imgui){
+        if(m_imgui && !m_flags(X::NoImGuiKeyboard)){
             m_imgui->on(evt);
         }
     }
@@ -757,21 +789,21 @@ namespace yq::tachyon {
     
     void    Viewer::on_mouse_move_event(const MouseMoveEvent&evt)
     {
-        if(m_imgui){
+        if(m_imgui && !m_flags(X::NoImGuiMouse)){
             m_imgui->on(evt);
         }
     }
 
     void    Viewer::on_mouse_press_event(const MousePressEvent&evt)
     {
-        if(m_imgui){
+        if(m_imgui && !m_flags(X::NoImGuiMouse)){
             m_imgui->on(evt);
         }
     }
     
     void    Viewer::on_mouse_release_event(const MouseReleaseEvent&evt)
     {
-        if(m_imgui){
+        if(m_imgui && !m_flags(X::NoImGuiMouse)){
             m_imgui->on(evt);
         }
     }

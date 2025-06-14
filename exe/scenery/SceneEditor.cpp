@@ -27,7 +27,9 @@
 #include <tachyon/app/Viewer.hpp>
 
 #include <tachyon/camera/SpaceCamera.hpp>
+#include <tachyon/command/controller/ListenCommand.hpp>
 #include <tachyon/command/ui/TitleCommand.hpp>
+#include <tachyon/controller/Space3Controller.hpp>
 
 #include <tachyon/event/panel/InfoSelectionChangedEvent.hpp>
 
@@ -388,7 +390,7 @@ void    SceneEditor::_rebuild()
         if(e.flags(E::HUD)){
             lay.camera  = m_camera.hud;
         } else
-            lay.camera  = m_camera.space;
+            lay.camera  = (CameraID) m_camera.space;
         if(e.flags(E::OriginFix))
             lay.tweaks.push_back(s_originFix);
         m_layers.push_back(lay);
@@ -614,6 +616,42 @@ void    SceneEditor::prerecord(ViContext&u)
 
 Execution   SceneEditor::setup(const Context&ctx) 
 {
+    const Frame*    curFrame    = Frame::current();
+    if(!curFrame)
+        return WAIT;
+
+    if(!m_camera.space){
+        Camera* c   = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO });
+        m_camera.space  = *c;
+    }
+
+    if(!m_camera.hud){
+        //  TODO
+    }
+    
+    Camera* cam   = curFrame->object((CameraID) m_camera.space);
+    if(!cam)
+        return WAIT;
+    
+    if(!m_controller){ 
+        Space³Controller::Param p;
+        p.keyboard      = false;
+        Space³Controller* sc    = create_on<Space³Controller>(SIM, m_camera.space, p);
+        m_controller            = *sc;
+    }
+    
+    if(!curFrame->contains(m_controller))
+        return WAIT;
+        
+    if(!m_controllerInit){
+        TachyonID    vid    = viewer();
+        if(!curFrame->contains(vid))
+            return WAIT;
+            
+        send(new ListenCommand({.target=m_controller}, TypedID(vid, Type::Viewer)));
+        m_controllerInit = true;
+    }
+
     Execution ret = Widget::setup(ctx);
     
     if(!m_camera.properties)
@@ -622,15 +660,10 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_rendered.properties   = static_cast<InspectorUI*>(element(FIRST, "RenderedInspector"));
     if(!m_scene.properties)
         m_scene.properties  = static_cast<InspectorUI*>(element(FIRST, "SceneInspector"));
-    
-    if(!m_camera.space){
-        Camera* c   = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO });
-        m_camera.space  = c -> id();
-        _add(*c);
-        _activate(c->id());
-    }
-    if(!m_camera.hud){
-        //  TODO
+        
+    {
+        _add(*cam);
+        _activate(cam->id());
     }
     
     return ret;

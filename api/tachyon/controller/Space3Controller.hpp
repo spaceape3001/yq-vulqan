@@ -17,6 +17,7 @@ namespace yq::tachyon {
     class GamepadAxisEvent;
     class GamepadPressEvent;
     class GamepadZeroEvent;
+    class SetTargetCommand;
 
     /*! \brief Primitive 3D space controller
     
@@ -43,7 +44,15 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Space³Controller, Controller);
     public:
     
-        Space³Controller(TypedID);
+        struct Param : public Controller::Param {
+            bool    keyboard    = true;
+            bool    gamepad     = true;
+            
+            Param(){}
+        };
+    
+        Space³Controller(const Param&p={});
+        Space³Controller(TypedID tgt, const Param&p={});
         ~Space³Controller();
     
         void    set_target(TypedID);
@@ -59,6 +68,7 @@ namespace yq::tachyon {
         void    on_gamepad_axis(const GamepadAxisEvent&);
         void    on_gamepad_press(const GamepadPressEvent&);
         void    on_gamepad_zero(const GamepadZeroEvent&);
+        void    on_set_target_command(const SetTargetCommand&);
         
         Execution   tick(const Context&);
         
@@ -73,6 +83,16 @@ namespace yq::tachyon {
         struct AxisData {
             double  input   = 0;
             double  gain    = 0.;
+        };
+        
+        enum class Mode {
+            HP,
+            PR,
+            RH,
+            
+            UV,
+            VW,
+            WU
         };
     
         //  ROLL is φ
@@ -105,9 +125,18 @@ namespace yq::tachyon {
         
         AxisData        m_θ     = { 0., -0.1 };     // joystick/pitch (gain is negative to get the axis/direction to match)
         AxisData        m_λ     = { 0.,  0.1 };
+        AxisData        m_φ     = { 0.,  0.1 };
+        AxisData        m_u     = { 0.,  0.1 };
+        AxisData        m_v     = { 0.,  0.1 };
+        AxisData        m_w     = { 0.,  0.1 };
+        
+        Mode            m_modeLeft      = Mode::UV;
+        Mode            m_modeRight     = Mode::HP;
         
         TypedID         m_target;
-        bool            m_joyLockout = false;
+        bool            m_joyLockout        = false;
+        bool            m_keyboardEnable    = true;
+        bool            m_gamepadEnable     = true;
     };
 }
 

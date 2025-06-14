@@ -46,12 +46,56 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    Controller::Controller(const Param& p) : Tachyon(p)
+    Controller::Controller(const Param& p) : Tachyon(p), m_enabled(p.enabled)
     {
     }
     
     Controller::~Controller()
     {
+    }
+
+    void Controller::_control(TypedID tid)
+    {
+        m_controlled.insert(tid);
+        subscribe(tid, MG::Controlled);
+        send(new SubscribeCommand({.target=tid}, *this, MG::Controller));
+        mark();
+    }
+
+    void Controller::_listen(TypedID tid)
+    {
+        m_listening.insert(tid);
+        send(new SnoopCommand({.target=tid}, *this));
+        mark();
+    }
+    
+    void Controller::_uncontrol(all_k)
+    {
+        if(m_controlled.empty())
+            return;
+            
+        for(TypedID tid : m_controlled){
+            unsubscribe(tid, MG::Controlled);
+            send(new UnsubscribeCommand({.target=tid}, *this, MG::Controller));
+        }
+        
+        m_controlled.clear();
+        mark();
+    }
+
+    void Controller::_uncontrol(TypedID tid)
+    {
+        m_controlled.erase(tid);
+        unsubscribe(tid, MG::Controlled);
+        send(new UnsubscribeCommand({.target=tid}, *this, MG::Controller));
+        mark();
+    }
+
+    void Controller::_unlisten(TypedID tid)
+    {
+        m_listening.erase(tid);
+        send(new UnsnoopCommand({.target=tid}, *this));
+        mark();
     }
 
     void  Controller::cmd_control(TypedID t)
@@ -86,44 +130,46 @@ namespace yq::tachyon {
 
     void Controller::on_control_command(const ControlCommand&cmd)
     {
-        m_controlled.insert(cmd.tachyon());
-        subscribe(cmd.tachyon(), MG::Controlled);
-        send(new SubscribeCommand({.target=cmd.tachyon()}, *this, MG::Controller));
-        mark();
+        if(cmd.target() != id())
+            return ;
+        _control(cmd.tachyon());
     }
-
-    void Controller::on_disable_command(const DisableCommand&)
+    
+    void Controller::on_disable_command(const DisableCommand& cmd)
     {
+        if(cmd.target() != id())
+            return ;
         m_enabled    = false;
         mark();
     }
     
-    void Controller::on_enable_command(const EnableCommand&)
+    void Controller::on_enable_command(const EnableCommand& cmd)
     {
+        if(cmd.target() != id())
+            return ;
         m_enabled    = true;
         mark();
     }
 
     void Controller::on_listen_command(const ListenCommand& cmd)
     {
-        m_listening.insert(cmd.tachyon());
-        send(new SnoopCommand({.target=cmd.tachyon()}, *this));
-        mark();
+        if(cmd.target() != id())
+            return;
+        _listen(cmd.tachyon());
     }
 
     void Controller::on_uncontrol_command(const UncontrolCommand& cmd)
     {
-        m_controlled.erase(cmd.tachyon());
-        unsubscribe(cmd.tachyon(), MG::Controlled);
-        send(new UnsubscribeCommand({.target=cmd.tachyon()}, *this, MG::Controller));
-        mark();
+        if(cmd.target() != id())
+            return;
+        _uncontrol(cmd.tachyon());
     }
 
     void Controller::on_unlisten_command(const UnlistenCommand& cmd)
     {
-        m_listening.erase(cmd.tachyon());
-        send(new UnsnoopCommand({.target=cmd.tachyon()}, *this));
-        mark();
+        if(cmd.target() != id())
+            return;
+        _unlisten(cmd.tachyon());
     }
 
     void Controller::snap(ControllerSnap&sn) const

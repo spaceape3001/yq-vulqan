@@ -30,7 +30,7 @@ namespace yq::tachyon {
     protected:
         UIAppMain* clone() const;
         
-    private:
-        std::vector<UIToolBar*> m_toolbars;
+    //private:
+        //std::vector<UIToolBar*> m_toolbars;
     };
 }

@@ -160,6 +160,7 @@ add_library(${PROJECT_NAME} SHARED
     command/controller/DisableCommand.cpp
     command/controller/EnableCommand.cpp
     command/controller/ListenCommand.cpp
+    command/controller/SetTargetCommand.cpp
     command/controller/UncontrolCommand.cpp
     command/controller/UnlistenCommand.cpp
 
@@ -367,6 +368,10 @@ add_library(${PROJECT_NAME} SHARED
     command/vertex/SetVertexUVCommand.cpp
     command/vertex/SetVertexUVWCommand.cpp
 
+    command/viewer/ImGuiDisableKeyboardCommand.cpp
+    command/viewer/ImGuiEnableKeyboardCommand.cpp
+    command/viewer/ImGuiDisableMouseCommand.cpp
+    command/viewer/ImGuiEnableMouseCommand.cpp
     command/viewer/SetWidgetCommand.cpp
     
     command/widget/SetViewer.cpp

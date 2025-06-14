@@ -7,6 +7,7 @@
 #pragma once
 
 #include <tachyon/widget/CompositeWidget.hpp>
+#include <tachyon/typedef/controller.hpp>
 
 namespace yq::tachyon {
     class CameraInfo;
@@ -105,7 +106,7 @@ private:
     struct RenderedEntry;
     
     struct {
-        CameraID                    space;
+        TypedID                     space;
         CameraID                    hud;
         
         //! Current selected (available)
@@ -147,6 +148,8 @@ private:
     std::filesystem::path       m_filepath;
     //IGFD::FileDialog*       m_importDialog = nullptr;
     //IGFD::FileDialog*       m_exportDialog = nullptr;
+    TypedID                     m_controller;
+    bool                        m_controllerInit  = false;
 
     void                        _activate(CameraID);
     void                        _activate(SceneID);

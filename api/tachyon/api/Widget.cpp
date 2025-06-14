@@ -13,6 +13,7 @@
 #include <tachyon/api/CameraTweak.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/app/Viewer.hpp>
+#include <tachyon/command/ViewerCommand.hpp>
 #include <tachyon/command/tachyon/DestroyCommand.hpp>
 #include <tachyon/command/ui/CloseCommand.hpp>
 #include <tachyon/command/ui/HideCommand.hpp>
@@ -119,6 +120,7 @@ namespace yq::tachyon {
         w.slot(&Widget::on_fb_resize_event);
         w.slot(&Widget::on_title_command);
         w.slot(&Widget::on_set_viewer);
+        w.slot(&Widget::on_viewer_command);
         //w.delegate("layout", &Widget::m_layout);
 
         auto wt = writer<WidgetID>();
@@ -523,6 +525,15 @@ namespace yq::tachyon {
         }
     }
 
+    void    Widget::on_viewer_command(const ViewerCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        if(m_viewer){
+            send(cmd.clone(REBIND, {.target=m_viewer}));
+        }
+    }
+
     void        Widget::prerecord(const PreContext& ctx, RenderedID renID)
     {
         const RenderedSnap* sn  = ctx.frame.snap(renID);
@@ -679,10 +690,5 @@ namespace yq::tachyon {
     }
     
     
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  EVENT PROCESSING (BELOW, one "section" per event type
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

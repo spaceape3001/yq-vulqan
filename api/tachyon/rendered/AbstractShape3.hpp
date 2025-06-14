@@ -7,6 +7,7 @@
 #pragma once
 
 #include <tachyon/api/Rendered3.hpp>
+#include <tachyon/aspect/ABgColor.hpp>
 #include <tachyon/aspect/AColor.hpp>
 #include <tachyon/aspect/ADrawMode.hpp>
 #include <tachyon/gfx/UBO.hpp>
@@ -17,7 +18,7 @@
 namespace yq::tachyon {
     struct Vertex³;
 
-    class AbstractShape³ : public Rendered³, public AColor, public ADrawMode {
+    class AbstractShape³ : public Rendered³, public ABgColor, public AColor, public ADrawMode {
         YQ_TACHYON_DECLARE(AbstractShape³, Rendered³)
     public:
 
@@ -28,14 +29,15 @@ namespace yq::tachyon {
         
         static void init_info();
 
+        using ABgColor::bgcolor;
+        virtual bool    bgcolor(settable_k) const { return true; }
+    
         using AColor::color;
         virtual bool    color(settable_k) const { return true; }
-    
+
         using ADrawMode::draw_mode;
-        
-        // override for actual auto-detection
-        virtual DrawMode    draw_mode(use_k) const { return draw_mode(); }
         virtual bool        draw_mode(settable_k) const { return true; }
+        virtual DrawMode    draw_mode(use_k) const { return draw_mode(); }
     
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;

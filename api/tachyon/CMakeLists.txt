@@ -90,6 +90,7 @@ add_library(${PROJECT_NAME} SHARED
     app/Viewer.cpp
     app/VulqanConfig.cpp
 
+    aspect/ABgColor.cpp
     aspect/AColor.cpp
     aspect/ADrawMode.cpp
     aspect/AMaxSize1.cpp
@@ -378,6 +379,7 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
+    edit/BgColorUI.cpp
     edit/ColorUI.cpp
     edit/DrawModeUI.cpp
     edit/Orientation3UI.cpp

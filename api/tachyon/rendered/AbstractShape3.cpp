@@ -6,8 +6,9 @@
 
 #include "AbstractShape3.hpp"
 #include <tachyon/api/Rendered3InfoWriter.hpp>
-#include <tachyon/aspect/ADrawModeWriter.hxx>
+#include <tachyon/aspect/ABgColorWriter.hxx>
 #include <tachyon/aspect/AColorWriter.hxx>
+#include <tachyon/aspect/ADrawModeWriter.hxx>
 #include <tachyon/data/Vertex3.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/logging.hpp>
@@ -20,9 +21,14 @@ namespace yq::tachyon {
         auto w = writer<AbstractShape³>();
         w.abstract();
         w.description("Abstract 3D shape");
+
+        w.interface<IBgColor>();
+        ABgColor::init_info(w);
+
         w.interface<IColor>();
-        w.interface<IDrawMode>();
         AColor::init_info(w);
+
+        w.interface<IDrawMode>();
         ADrawMode::init_info(w);
          //w.asset("texture", &AbstractShape³::m_texture); // pending issue with the meta writer :(
     }

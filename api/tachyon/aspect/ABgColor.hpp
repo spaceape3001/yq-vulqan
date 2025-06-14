@@ -25,8 +25,9 @@ namespace yq::tachyon {
         virtual void    bgcolor(set_k, const RGBA4F&);
         
     protected:
-
-        RGBA4F    m_bgcolor = { 0., 0., 0., -1.};
+    
+        static constexpr const RGBA4F kDefBgColor = {0., 0., 0., 1.};
+        RGBA4F    m_bgcolor     = kDefBgColor;
 
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

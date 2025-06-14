@@ -19,7 +19,7 @@ namespace yq::tachyon {
         auto w = writer<ColorUI>();
         w.description("UIEditor for Color");
         w.edits<PColor>();
-        w.field("Color", &ColorUI::color);
+        w.field("Primary Color", &ColorUI::color);
     }
     
     ColorUI::ColorUI(UIFlags flags)

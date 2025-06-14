@@ -621,8 +621,13 @@ Execution   SceneEditor::setup(const Context&ctx)
         return WAIT;
 
     if(!m_camera.space){
-        Camera* c   = create_child_on<SpaceCamera>(SIM, SpaceCamera::Param{ .position=ZERO });
-        m_camera.space  = *c;
+        SpaceCamera::Param p;
+        p.near      = 0.1;
+        p.far       = 60.;
+        p.position  = ZERO;
+        
+        Camera* cam     = create_child_on<SpaceCamera>(SIM, p);
+        m_camera.space  = *cam;
     }
 
     if(!m_camera.hud){

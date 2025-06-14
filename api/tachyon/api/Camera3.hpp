@@ -45,6 +45,8 @@ namespace yq::tachyon {
             Vector3D        position        = NAN;
             Quaternion3D    orientation     = NAN;
             Vector3D        scale           = NAN;
+            
+            Param(){}
         };
     
         static void init_info();

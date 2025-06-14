@@ -200,25 +200,28 @@ Execution  CameraScene::setup(const Context&ctx)
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
 
 
+        Tetrahedron³::Param t4p;
+        t4p.draw_mode = DrawMode::Gradient;
+
         // north BLUE
-        Rendered³*    dir     = create_child<Tetrahedron³>(NorthData);
+        Rendered³*    dir     = create_child<Tetrahedron³>(NorthData, t4p);
         dir -> make_simple_spatial({15., 0., 0. });
 
         // south YELLOW
-        dir     = create_child<Tetrahedron³>(SouthData);
+        dir     = create_child<Tetrahedron³>(SouthData, t4p);
         dir -> make_simple_spatial({-15., 0., 0. });
             
-        dir     = create_child<Tetrahedron³>(EastData);
+        dir     = create_child<Tetrahedron³>(EastData, t4p);
         dir -> make_simple_spatial({0., 15., 0. });
 
-        dir     = create_child<Tetrahedron³>(WestData);
+        dir     = create_child<Tetrahedron³>(WestData, t4p);
         dir -> make_simple_spatial({0., -15., 0. });
         
-        dir     = create_child<Tetrahedron³>(TopData);
+        dir     = create_child<Tetrahedron³>(TopData, t4p);
         dir -> make_simple_spatial({0., 0., -15. });
         
         // MAGENTA
-        dir     = create_child<Tetrahedron³>(BottomData);
+        dir     = create_child<Tetrahedron³>(BottomData, t4p);
         dir -> make_simple_spatial({0., 0., 15. });
         
         Quadrilateral³* quad = create_child<Quadrilateral³>(QuadData);

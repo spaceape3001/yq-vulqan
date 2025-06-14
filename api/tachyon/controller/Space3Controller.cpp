@@ -47,7 +47,8 @@ namespace yq::tachyon {
     void    Space³Controller::on_gamepad_axis(const GamepadAxisEvent&evt)
     {
         if(enabled() && m_gamepadEnable){
-tachyonInfo << "Space³Controller::on_gamepad_axis(" << evt.axis() << " -> " << evt.value() << ")";
+            // used when needing to know axis mappings
+            // tachyonInfo << "Space³Controller::on_gamepad_axis(" << evt.axis() << " -> " << evt.value() << ")";
             switch(evt.axis()){
             case 0:
                 switch(m_modeLeft){
@@ -146,7 +147,8 @@ tachyonInfo << "Space³Controller::on_gamepad_axis(" << evt.axis() << " -> " << 
     void    Space³Controller::on_gamepad_press(const GamepadPressEvent&evt)
     {
         if(enabled() && m_gamepadEnable){
-tachyonInfo << "Space³Controller::on_gamepad_press(" << evt.button() << ")";
+            // used when needing to know button mappings
+            // tachyonInfo << "Space³Controller::on_gamepad_press(" << evt.button() << ")";
 
             bool    modeChange  = false;
 

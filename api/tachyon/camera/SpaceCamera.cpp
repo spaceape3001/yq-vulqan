@@ -24,9 +24,9 @@
 
 namespace yq::tachyon {
     SpaceCamera::SpaceCamera(const Param&p) : Camera³(p),
-        m_fov(70_deg),
-        m_near(0.1),
-        m_far(10.)
+        m_fov(p.fov),
+        m_near(p.near),
+        m_far(p.far)
     {
     }
     
@@ -121,6 +121,9 @@ namespace yq::tachyon {
     {
         auto w = writer<SpaceCamera>();
         w.description("3D Space camera (fov with near/far plane)");
+        w.property("fov", &SpaceCamera::m_fov);
+        w.property("far", &SpaceCamera::m_far);
+        w.property("near", &SpaceCamera::m_near);
     }
 }
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SpaceCamera)

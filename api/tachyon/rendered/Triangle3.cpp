@@ -16,12 +16,6 @@
 
 #include <yq/vector/Vector3.hxx>
 
-
-#include <tachyon/command/vertex/SetVertex3Command.hpp>
-#include <tachyon/command/vertex/SetVertexColorCommand.hpp>
-#include <tachyon/command/vertex/SetVertexPoint3Command.hpp>
-#include <tachyon/command/vertex/SetVertexUVCommand.hpp>
-
 #include <tachyon/aspect/AVertices3.hxx>
 #include <tachyon/aspect/AVertices3Writer.hxx>
 
@@ -32,8 +26,8 @@ namespace yq::tachyon {
     {
         auto w = writer<Triangle³>();
         w.description("Triangle in 3D");
-        w.interface<IVertices³>();
-        
+        w.category("Shape");
+
         AVertices³<3>::init_info(w);
         
         w.property("vertex1", &Triangle³::vertex1).setter(&Triangle³::set_vertex1);

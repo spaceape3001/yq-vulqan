@@ -6,12 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Rendered3.hpp>
 #include <tachyon/data/ColorVertexData.hpp>
 #include <tachyon/data/Vertex3.hpp>
-#include <tachyon/gfx/VBO.hpp>
-#include <tachyon/interface/IVertices3.hpp>
-#include <tachyon/aspect/AColor.hpp>
 #include <tachyon/aspect/AVertices3.hpp>
 #include <tachyon/rendered/AbstractShape3.hpp>
 

@@ -23,12 +23,20 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(SpaceCamera, Camera³)
     public:
     
+        struct Param : public Camera³::Param {
+            Degree  fov     = 70_deg;
+            double  near    = 0.1;
+            double  far     = 60.0;
+            
+            Param(){}
+        };
+    
         //! \brief World to screen matrix
         //! This routine returns the relevant world to screen projection matrix
         //glm::dmat4  world2screen(const Values&) const override;
         
         //! Default constructor
-        SpaceCamera(const Param&p = {});
+        SpaceCamera(const Param&p = Param());
         
         //! Default destructor
         ~SpaceCamera();

@@ -5,7 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/rendered/Tetrahedron3.hpp>
+#include <tachyon/logging.hpp>
 
+#include <yq/color/colors.hpp>
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
@@ -13,8 +15,37 @@
 #include <tachyon/api/Rendered3InfoWriter.hpp>
 
 #include <yq/vector/Vector3.hxx>
+#include <tachyon/aspect/AVertices3.hxx>
+#include <tachyon/aspect/AVertices3Writer.hxx>
+
+#include <tachyon/gfx/Texture.hpp>
 
 namespace yq::tachyon {
+    const Vertex³ Tetrahedron³::kDefVertex1{
+        .point  = ZERO,
+        .uv     = ZERO,
+        .color  = (RGBA4F) color::White
+    };
+
+    const Vertex³ Tetrahedron³::kDefVertex2{
+        .point  = X,
+        .uv     = U,
+        .color  = (RGBA4F) color::Red
+    };
+
+    const Vertex³ Tetrahedron³::kDefVertex3{
+        .point  = Y,
+        .uv     = V,
+        .color  = (RGBA4F) color::Green
+    };
+
+    const Vertex³ Tetrahedron³::kDefVertex4{
+        .point  = Z,
+        .uv     = { 1., 1. },
+        .color  = (RGBA4F) color::Blue
+    };
+
+
     void Tetrahedron³::init_info()
     {
         static const uint16_t   kIndices[] = { 1, 2, 3, 0, 3, 2, 0, 1, 3, 0, 2, 1 };
@@ -23,29 +54,285 @@ namespace yq::tachyon {
         auto w = writer<Tetrahedron³>();
         w.description("Tetrahedron in 3D");
         w.category("Shape");
-        {
-            auto& p = w.pipeline();
-            
-            p.shader("assets/colored.vert");
-            p.shader("assets/colored.frag");
 
-            p.vertex(&Tetrahedron³::m_vertex, DataActivity::FIXED)
-                .attribute(&ColorVertexData::position)
-                .attribute(&ColorVertexData::color)
-            ;
+        AVertices³<4>::init_info(w);
+
+        w.property("vertex1", &Tetrahedron³::vertex1).setter(&Tetrahedron³::set_vertex1);
+        w.property("point1", &Tetrahedron³::point1).setter(&Tetrahedron³::set_point1).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("x1", &Tetrahedron³::x1);
+        w.property("y1", &Tetrahedron³::y1);
+        w.property("z1", &Tetrahedron³::z1);
+        w.property("color1", &Tetrahedron³::color1).setter(&Tetrahedron³::set_color1).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("red1", &Tetrahedron³::red1);
+        w.property("green1", &Tetrahedron³::green1);
+        w.property("blue1", &Tetrahedron³::blue1);
+        w.property("alpha1", &Tetrahedron³::alpha1);
+        w.property("uv1", &Tetrahedron³::uv1).setter(&Tetrahedron³::set_uv1).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("u1", &Tetrahedron³::u1);
+        w.property("v1", &Tetrahedron³::v1);
+        
+        w.property("vertex2", &Tetrahedron³::vertex2).setter(&Tetrahedron³::set_vertex2);
+        w.property("point2", &Tetrahedron³::point2).setter(&Tetrahedron³::set_point2).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("x2", &Tetrahedron³::x2);
+        w.property("y2", &Tetrahedron³::y2);
+        w.property("z2", &Tetrahedron³::z2);
+        w.property("color2", &Tetrahedron³::color2).setter(&Tetrahedron³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("red2", &Tetrahedron³::red2);
+        w.property("green2", &Tetrahedron³::green2);
+        w.property("blue2", &Tetrahedron³::blue2);
+        w.property("alpha2", &Tetrahedron³::alpha2);
+        w.property("uv2", &Tetrahedron³::uv2).setter(&Tetrahedron³::set_uv2).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("u2", &Tetrahedron³::u2);
+        w.property("v2", &Tetrahedron³::v2);
+
+        w.property("vertex3", &Tetrahedron³::vertex3).setter(&Tetrahedron³::set_vertex3);
+        w.property("point3", &Tetrahedron³::point3).setter(&Tetrahedron³::set_point3).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("x3", &Tetrahedron³::x3);
+        w.property("y3", &Tetrahedron³::y3);
+        w.property("z3", &Tetrahedron³::z3);
+        w.property("color3", &Tetrahedron³::color3).setter(&Tetrahedron³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("red3", &Tetrahedron³::red3);
+        w.property("green3", &Tetrahedron³::green3);
+        w.property("blue3", &Tetrahedron³::blue3);
+        w.property("alpha3", &Tetrahedron³::alpha3);
+        w.property("uv3", &Tetrahedron³::uv3).setter(&Tetrahedron³::set_uv3).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("u3", &Tetrahedron³::u3);
+        w.property("v3", &Tetrahedron³::v3);
+
+        w.property("vertex4", &Tetrahedron³::vertex4).setter(&Tetrahedron³::set_vertex4);
+        w.property("point4", &Tetrahedron³::point4).setter(&Tetrahedron³::set_point4).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("x4", &Tetrahedron³::x4);
+        w.property("y4", &Tetrahedron³::y4);
+        w.property("z4", &Tetrahedron³::z4);
+        w.property("color4", &Tetrahedron³::color4).setter(&Tetrahedron³::set_color4).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("red4", &Tetrahedron³::red4);
+        w.property("green4", &Tetrahedron³::green4);
+        w.property("blue4", &Tetrahedron³::blue4);
+        w.property("alpha4", &Tetrahedron³::alpha4);
+        w.property("uv4", &Tetrahedron³::uv4).setter(&Tetrahedron³::set_uv4).tag({kTag_Save, kTag_Log, kTag_Print});
+        w.property("u4", &Tetrahedron³::u4);
+        w.property("v4", &Tetrahedron³::v4);
+
+
+        {
+            auto& p = w.pipeline(Pipeline::Role::SolidColor);
             
+            p.shader("assets/shape3/color.vert");
+            p.shader("assets/shape3/color.frag");
+
+            p.vertex(_vertexS(), DataActivity::DYNAMIC)
+                .attribute(&VertexS::position)
+            ;
+
+            p.uniform(_uniformS(), DataActivity::DYNAMIC);
+            p.index(indices, DataActivity::COMMON);
+            p.push_full();
+        }
+
+        {
+            auto& p = w.pipeline(Pipeline::Role::ColorCorner);
+            
+            p.shader("assets/shape3/gradient.vert");
+            p.shader("assets/shape3/gradient.frag");
+
+            p.vertex(_vertexC(), DataActivity::DYNAMIC)
+                .attribute(&VertexC::position)
+                .attribute(&VertexC::color)
+            ;
+
+            p.uniform(_uniformS(), DataActivity::DYNAMIC);
             p.index(indices, DataActivity::COMMON);
             p.push_full();
         }
     }
 
-    Tetrahedron³::Tetrahedron³(const TetrahedronData<ColorVertex3D>&tri, const Param& p) : Rendered³(p)
+    Tetrahedron³::Tetrahedron³(const Vertex³&a, const Vertex³&b, const Vertex³&c, const Vertex³&d, const Param&p) : 
+        AbstractShape³(p)
     {
-        m_vertex    = { tri.a, tri.b, tri.c, tri.d};
+        m_vertices[0] = a;
+        m_vertices[1] = b;
+        m_vertices[2] = c;
+        m_vertices[3] = d;
+        
+        rebuild();
     }
-    
+  
+    Tetrahedron³::Tetrahedron³(const TetrahedronData<ColorVertex3D>&data, const Param& p) : 
+        Tetrahedron³(vertex³(data.a), vertex³(data.b), vertex³(data.c), vertex³(data.d), p)
+    {
+    }
+
+    Tetrahedron³::Tetrahedron³(const Param&p) : Tetrahedron³(kDefVertex1, kDefVertex2, kDefVertex3, kDefVertex4, p)
+    {
+    }
+
     Tetrahedron³::~Tetrahedron³()
     {
+    }
+
+    DrawMode    Tetrahedron³::draw_mode(use_k) const 
+    {
+        DrawMode    dm  = draw_mode();
+        if(dm != DrawMode::Auto)
+            return dm;
+        if(m_texture.valid())
+            return DrawMode::Texture;
+        if((alpha1() >= 0.) || (alpha2() >= 0.) || (alpha3() >= 0.))
+            return DrawMode::Gradient;
+        return DrawMode::Color;
+    }
+
+    void Tetrahedron³::set_color1(const RGBA4F&v)
+    {
+        vertex1().color = v;
+        mark();
+    }
+    
+    void Tetrahedron³::set_color2(const RGBA4F&v)
+    {
+        vertex2().color = v;
+        mark();
+    }
+    
+    void Tetrahedron³::set_color3(const RGBA4F&v)
+    {
+        vertex3().color = v;
+        mark();
+    }
+
+    void Tetrahedron³::set_color4(const RGBA4F&v)
+    {
+        vertex4().color = v;
+        mark();
+    }
+
+    void Tetrahedron³::set_point1(const Vector3D& v)
+    {
+        vertex1().point = v;
+        mark();
+    }
+    
+    void Tetrahedron³::set_point2(const Vector3D& v)
+    {
+        vertex2().point = v;
+        mark();
+    }
+    
+    void Tetrahedron³::set_point3(const Vector3D& v)
+    {
+        vertex3().point = v;
+        mark();
+    }
+
+    void Tetrahedron³::set_point4(const Vector3D& v)
+    {
+        vertex4().point = v;
+        mark();
+    }
+
+    void    Tetrahedron³::set_uv1(const UV2F&v)
+    {
+        vertex1().uv = v;
+        mark();
+    }
+    
+    void    Tetrahedron³::set_uv2(const UV2F&v)
+    {
+        vertex2().uv = v;
+        mark();
+    }
+    
+    void    Tetrahedron³::set_uv3(const UV2F&v)
+    {
+        vertex3().uv = v;
+        mark();
+    }
+
+    void    Tetrahedron³::set_uv4(const UV2F&v)
+    {
+        vertex4().uv = v;
+        mark();
+    }
+
+    void    Tetrahedron³::set_vertex1(const Vertex³&v)
+    {
+        vertex1() = v;
+        mark();
+    }
+    
+    void    Tetrahedron³::set_vertex2(const Vertex³&v)
+    {
+        vertex2() = v;
+        mark();
+    }
+    
+    void    Tetrahedron³::set_vertex3(const Vertex³&v)
+    {
+        vertex3() = v;
+        mark();
+    }
+
+    void    Tetrahedron³::set_vertex4(const Vertex³&v)
+    {
+        vertex4() = v;
+        mark();
+    }
+
+    void    Tetrahedron³::rebuild() 
+    {
+        switch(draw_mode(USE)){
+        case DrawMode::Auto:
+            rebuild_gradient();
+            break;
+        case DrawMode::BiColor:
+            rebuild_bicolor();
+            break;
+        case DrawMode::Color:
+            rebuild_color();
+            break;
+        case DrawMode::Gradient:
+            rebuild_gradient();
+            break;
+        case DrawMode::Texture:
+            rebuild_textured();
+            break;
+        default:
+            rebuild_color();
+            break;
+        }
+    }
+
+    void    Tetrahedron³::rebuild_bicolor()
+    {
+    }
+        
+    void    Tetrahedron³::rebuild_color()
+    {
+tachyonInfo << "Tetrahedron³::rebuild_color()";
+        set_pipeline(Pipeline::Role::SolidColor);
+        m_vertexS   = {
+            vs(vertex1()), vs(vertex2()), vs(vertex3()), vs(vertex4())
+        };
+        m_uniformS  = {
+            .color  = m_color
+        };
+    }
+    
+    void    Tetrahedron³::rebuild_gradient()
+    {
+tachyonInfo << "Tetrahedron³::rebuild_gradient()";
+        set_pipeline(Pipeline::Role::ColorCorner);
+        m_vertexC = {
+            vc(vertex1()), vc(vertex2()), vc(vertex3()), vc(vertex4())
+        };
+    }
+    
+    void    Tetrahedron³::rebuild_textured()
+    {
+        set_pipeline(Pipeline::Role::Textured);
+        m_vertexT = {
+            vt(vertex1()), vt(vertex2()), vt(vertex3()), vt(vertex4())
+        };
     }
 }
 

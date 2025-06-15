@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
         virtual void        vertex(append_k, const Vertex³&) override;
         virtual void        vertex(size_t, set_k, const Vertex³&) override;
-        virtual void        vertex(size_t, set_k, const Vector3D&) override;
+        virtual void        vertex(size_t, set_k, point_k, const Vector3D&) override;
         virtual void        vertex(size_t, set_k, color_k, const RGBA4F&) override;
         virtual void        vertex(size_t, set_k, tex_k, const UV2F&) override;
         virtual void        vertex(size_t, set_k, normal_k, const Vector3F&) override;

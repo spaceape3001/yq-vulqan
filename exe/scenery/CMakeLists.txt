@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME}
     SceneAddMenuUI.cpp
     SceneEditor.cpp
     SceneTableUI.cpp
+    SpatialAddMenuUI.cpp
     
     main.cpp
 )

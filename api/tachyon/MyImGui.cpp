@@ -10,8 +10,11 @@ static_assert(sizeof(void*) == sizeof(uint64_t), "Breakage means ImGui textures 
 
 #include <tachyon/MyImGui.hpp>
 #include "imgui_internal.h"
+#include <yq/color/RGB.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq/core/Any.hpp>
 #include <yq/math/glm.hpp>
+#include <yq/math/UV.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/tensor/Tensor44.hpp>
@@ -136,6 +139,16 @@ namespace ImGui {
     bool    InputDouble4(const char* label, yq::Quaternion3D*v, const char* format, ImGuiInputTextFlags flags)
     {
         return InputScalarN(label, ImGuiDataType_Double, v, 4, NULL, NULL, format, flags);
+    }
+
+    bool    InputFloat2(const char* label, yq::UV2F*v, const char* format, ImGuiInputTextFlags flags)
+    {
+        return InputScalarN(label, ImGuiDataType_Float, v, 2, NULL, NULL, format, flags);
+    }
+
+    bool    InputFloat3(const char* label, yq::Vector3F*v, const char* format, ImGuiInputTextFlags flags)
+    {
+        return InputScalarN(label, ImGuiDataType_Float, v, 3, NULL, NULL, format, flags);
     }
 
     // Taken from https://github.com/ocornut/imgui/issues/1537

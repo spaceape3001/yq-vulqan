@@ -396,6 +396,7 @@ add_library(${PROJECT_NAME} SHARED
     edit/SimpleSpatial3UI.cpp
     edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp
+    edit/Vertices3UI.cpp
 
     enum/Cardinal.cpp
     enum/UIFlags.cpp

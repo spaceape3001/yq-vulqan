@@ -74,7 +74,7 @@ namespace yq::tachyon {
     }
 
     template <size_t N>
-    void        AVertices³<N>::vertex(size_t n, set_k, const Vector3D&v)
+    void        AVertices³<N>::vertex(size_t n, set_k, point_k, const Vector3D&v)
     {
         if(vertices(SETTABLE) && n && (n<=m_vertices.size()))
             m_vertices[n-1].point   = v;
@@ -172,7 +172,7 @@ namespace yq::tachyon {
     {
         if(cmd.target() != typed()) 
             return ;
-        vertex(cmd.vertex(), SET, cmd.point());
+        vertex(cmd.vertex(), SET, POINT, cmd.point());
     }
     
     template <size_t N>

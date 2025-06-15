@@ -18,6 +18,7 @@ namespace yq::tachyon {
     class SaveFileRequest;
     class SaveTSXReply;
     class SceneInfo;
+    class SpatialInfo;
 }
 
 namespace IGFD { class FileDialog; }
@@ -69,6 +70,7 @@ public:
     void    create_camera(const CameraInfo&);
     void    create_rendered(const RenderedInfo&);
     void    create_scene(const SceneInfo&);
+    void    create_spatial(const SpatialInfo&);
 
 
     void    cmd_file_open();
@@ -99,6 +101,7 @@ public:
     class ScenesTableUI;
     class RenderedTableUI;
     class RenderedAddMenuUI;
+    class SpatialAddMenuUI;
     
 private:
     struct SceneEntry;

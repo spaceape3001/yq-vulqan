@@ -40,7 +40,7 @@ namespace yq::tachyon {
     
     void        IVertices³::vertex(size_t n, set_k, const Vertex³& v)
     {
-        vertex(n, SET, v.point);
+        vertex(n, SET, POINT, v.point);
         vertex(n, SET, COLOR, v.color);
         vertex(n, SET, TEX, v.uv);
         vertex(n, SET, NORMAL, v.normal);

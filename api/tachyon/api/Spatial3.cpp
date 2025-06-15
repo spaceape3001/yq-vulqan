@@ -45,6 +45,7 @@ namespace yq::tachyon {
     {
         auto w = writer<Spatial³>();
         w.description("Spatial in 3 Dimensions");
+        w.abstract();
 
         auto wt = writer<Spatial³ID>();
         wt.description("Spatial³ Identifier");

@@ -15,6 +15,7 @@
 #include "SceneEditor.hpp"
 #include "SceneEntry.hpp"
 #include "SceneTableUI.hpp"
+#include "SpatialAddMenuUI.hpp"
 
 #include <tachyon/MyImGui.hpp>
 
@@ -200,6 +201,7 @@ void SceneEditor::init_info()
         
             {
                 auto section    = rtree.section("Properties");
+                auto add        = section.make<SpatialAddMenuUI>("Add/Create##AddSpatialUI");
                 auto i          = section.make<InspectorUI>();
                 i.uid("RenderedInspector");
             }
@@ -506,9 +508,10 @@ void    SceneEditor::create_rendered(const RenderedInfo& info)
     Rendered³*  r3  = dynamic_cast<Rendered³*>(re);
     if(r3){
         //  eventually an option...
-        r3->create_child<SimpleSpatial³>();
+        Spatial*    sp   = r3->create_child<SimpleSpatial³>();
+        if(sp)
+            r3->set_spatial(*sp);
     }
-    
     
     _activate(re->id());
     
@@ -522,6 +525,27 @@ void    SceneEditor::create_scene(const SceneInfo&info)
         return;
     _add(*sc);
     _activate(sc->id());
+}
+
+void    SceneEditor::create_spatial(const SpatialInfo& info)
+{
+    const Frame*  frame = Frame::current();
+    if(!frame){
+    yInfo() << "SceneEditor's create_spatial(" << info.name() << ") no frame";
+        return;
+    }
+    
+    Rendered³*   re  = frame->object((Rendered³ID) m_rendered.selected);
+    if(!re){
+    yInfo() << "SceneEditor's create_spatial(" << info.name() << ") no rendered";
+        return ;
+    }
+    
+    Spatial*    sp  = re->create_child<Spatial>(info);
+    if(sp && !re->spatial())
+        re->set_spatial(*sp);
+    
+    //  TODO
 }
 
 void    SceneEditor::imgui(ViContext&u) 

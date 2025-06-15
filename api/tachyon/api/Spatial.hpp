@@ -19,8 +19,13 @@ namespace yq::tachyon {
 
         SpatialInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl=std::source_location::current());
     
+        //! Gets all spatial informations
+        static const std::vector<const SpatialInfo*>&    all();
+
     protected:
         ~SpatialInfo();
+        struct Repo;
+        static Repo& repo();
     };
 
 

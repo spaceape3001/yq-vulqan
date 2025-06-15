@@ -17,6 +17,8 @@
 #include <yq/typedef/rgba.hpp>
 #include <yq/typedef/rectangle2.hpp>
 #include <yq/typedef/tensor44.hpp>
+#include <yq/typedef/uv.hpp>
+#include <yq/typedef/uvw.hpp>
 #include <yq/units.hpp>
 #include <yq/vector/Vector1.hpp>
 #include <yq/vector/Vector2.hpp>
@@ -85,8 +87,11 @@ namespace ImGui {
 
     bool    InputDouble2(const char* label, yq::Vector2D*, const char* format = "%.3lf", ImGuiInputTextFlags flags = 0);
     bool    InputDouble3(const char* label, yq::Vector3D*, const char* format = "%.3lf", ImGuiInputTextFlags flags = 0);
-    bool    InputDouble4(const char* label, yq::Vector4D*, const char* format = "%.3fl", ImGuiInputTextFlags flags = 0);
-    bool    InputDouble4(const char* label, yq::Quaternion3D*, const char* format = "%.4fl", ImGuiInputTextFlags flags = 0);
+    bool    InputDouble4(const char* label, yq::Vector4D*, const char* format = "%.3lf", ImGuiInputTextFlags flags = 0);
+    bool    InputDouble4(const char* label, yq::Quaternion3D*, const char* format = "%.4lf", ImGuiInputTextFlags flags = 0);
+    
+    bool    InputFloat2(const char* label, yq::UV2F*, const char* format="%.3f", ImGuiInputTextFlags flags = 0);
+    bool    InputFloat3(const char* label, yq::Vector3F*, const char* format="%.3f", ImGuiInputTextFlags flags = 0);
     
     template <typename DIM>
     bool    InputDouble(const char* label, yq::MKS<double,DIM>* v, yq::MKS<double,DIM> step = { 0.0 }, yq::MKS<double,DIM> step_fast = { 0.0 }, const char* format = "%.6f", ImGuiInputTextFlags flags = 0)

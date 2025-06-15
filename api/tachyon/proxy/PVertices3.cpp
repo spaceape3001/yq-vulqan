@@ -185,7 +185,7 @@ namespace yq::tachyon {
         }
     }
     
-    void        PVertices³::vertex(size_t n, set_k, const Vector3D& v) 
+    void        PVertices³::vertex(size_t n, set_k, point_k, const Vector3D& v) 
     { 
         if(m_pflags(P::Settable) && !m_flags(F::Disabled)){
             mail(new SetVertexPoint³Command({.target=object()}, n, v));

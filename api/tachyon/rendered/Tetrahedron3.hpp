@@ -32,6 +32,11 @@ namespace yq::tachyon {
         using ADrawMode::draw_mode;
         
         DrawMode            draw_mode(use_k) const override;
+        
+        using MyVertices::vertices;
+        virtual bool        vertices(color_k) const { return true; }
+        virtual bool        vertices(tex_k) const { return true; }
+        
 
         const Vertex³&      vertex1() const { return m_vertices[0]; }
         const Vector3D&     point1() const { return vertex1().point; }

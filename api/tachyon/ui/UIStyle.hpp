@@ -58,6 +58,8 @@ namespace yq::tachyon {
             struct {
                 float   min    = 100.;
             } valcol;
+            
+            UIDim   idcol   = { 2, 25, -1 };
         } table;
         
         struct {

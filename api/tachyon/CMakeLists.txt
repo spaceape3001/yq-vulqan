@@ -246,6 +246,9 @@ add_library(${PROJECT_NAME} SHARED
     edit/BgColorUI.cpp
     edit/ColorUI.cpp
     edit/DrawModeUI.cpp
+    edit/FarPlaneUI.cpp
+    edit/FieldOfViewUI.cpp
+    edit/NearPlaneUI.cpp
     edit/Orientation3UI.cpp
     edit/Position2UI.cpp
     edit/Position3UI.cpp

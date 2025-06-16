@@ -151,7 +151,10 @@ add_library(${PROJECT_NAME} SHARED
     command/aabb/SetAABB3.cpp
     command/aabb/SetAABB4.cpp
     
-    command/camera/CameraSetScreen.cpp
+    command/camera/CameraSetFarPlaneCommand.cpp
+    command/camera/CameraSetFOVCommand.cpp
+    command/camera/CameraSetNearPlaneCommand.cpp
+    command/camera/CameraSetScreenCommand.cpp
 
     command/color/SetBgColorCommand.cpp
     command/color/SetColorCommand.cpp
@@ -222,7 +225,6 @@ add_library(${PROJECT_NAME} SHARED
     command/position/SetPositionXCommand.cpp
     command/position/SetPositionYCommand.cpp
     command/position/SetPositionZCommand.cpp
-    command/position/SetVertexPosition3Command.cpp
 
     command/scale/AddScale1Command.cpp
     command/scale/AddScale2Command.cpp

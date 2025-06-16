@@ -8,7 +8,7 @@
 #include <tachyon/api/Camera3Data.hpp>
 #include <tachyon/api/Camera3InfoWriter.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
-#include <tachyon/command/camera/CameraSetScreen.hpp>
+#include <tachyon/command/camera/CameraSetScreenCommand.hpp>
 #include <tachyon/spatial/SimpleSpatial3.hpp>
 #include <tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
@@ -52,7 +52,7 @@ namespace yq::tachyon {
         Camera::finalize(d);
     }
     
-    void Camera³::on_set_screen(const CameraSetScreen& cmd)
+    void Camera³::on_set_screen(const CameraSetScreenCommand& cmd)
     {
         if(cmd.target() == id()){
             m_screen        = cmd.screen();

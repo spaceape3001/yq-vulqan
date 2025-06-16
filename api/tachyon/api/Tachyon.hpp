@@ -172,8 +172,35 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(__VA_ARGS__)                          \
         template <typename T> friend class Fixer;
         
+    #define YQ_TACHYON_BASE(...)    YQ_OBJECT_BASE(__VA_ARGS__)
+    #define YQ_TACHYON_DECLARE_BASELESS(...)                    \
+        YQ_OBJECT_DECLARE_BASELESS(__VA_ARGS__)                 \
+        template <typename T> friend class Fixer;
+
     #define YQ_TACHYON_IMPLEMENT(...)                           \
         YQ_OBJECT_IMPLEMENT(__VA_ARGS__)
+
+/*! \brief Force a info binding declaration
+
+    This is useful when there's a diamond pattern forming, to resolve that YES, this 
+    is a known meta-tachyon
+*/
+    #define YQ_TACHYON_FORCE(...)                                   \
+        namespace yq {                                                      \
+            template <>                                                     \
+            struct InfoBinder<__VA_ARGS__>  : public std::true_type {       \
+                using Info = typename __VA_ARGS__::MyInfo;                  \
+                static constexpr const bool Defined         = true;         \
+                static constexpr const bool IsObject        = true;         \
+                static constexpr const bool IsType          = false;        \
+                static constexpr const bool IsCompound      = true;         \
+                static constexpr const bool IsInterface     = false;        \
+                static constexpr const bool IsProxy         = false;        \
+                static constexpr const bool IsTachyon       = true;         \
+                static const Info&   bind() { return edit(); }          \
+                static Info&         edit()  { return const_cast<Info&>(__VA_ARGS__::staticMetaInfo()); } \
+            };                                                              \
+        } 
 
     class Frame;
     struct OutPost;

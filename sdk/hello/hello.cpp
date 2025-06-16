@@ -44,7 +44,7 @@
 #include <tachyon/widget.hpp>
 
 #include <tachyon/command/orientation/SetOrientation3Command.hpp>
-#include <tachyon/rendered/Triangle3.hpp>
+#include <tachyon/rendered/GradTriangle3.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/scene/SimpleScene.hpp>
 #include <tachyon/api/Scene3InfoWriter.hpp>
@@ -195,10 +195,9 @@ public:
         start           = std::chrono::steady_clock::now();
         triangle        = create_child<HelloTriangle>();
         
-        Triangle³::Param p;
+        GradTriangle³::Param p;
         p.position      = {0.,0.,0.1};
-        p.draw_mode     = DrawMode::Gradient;
-        tri2            = create_child<Triangle³>(TriData, p);
+        tri2            = create_child<GradTriangle³>(TriData, p);
         triSpatialID    = tri2 -> spatial();
         quad            = create_child<HelloQuad>();
         

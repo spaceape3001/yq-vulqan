@@ -52,9 +52,6 @@ namespace yq::tachyon {
         virtual void        vertex(size_t, insert_k, const Vertex³&) {}
         virtual void        vertex(size_t, erase_k) {}
         
-        IVertices³();
-        virtual ~IVertices³();
-        
         static void init_info();
     };
 }

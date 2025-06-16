@@ -63,7 +63,7 @@ namespace yq {
         static constexpr const bool IsObject        = false;
         static constexpr const bool IsCompound      = true;
         static constexpr const bool IsType          = false;
-        static constexpr const bool IsTachyon       = true;
+        static constexpr const bool IsTachyon       = false;
         static constexpr const bool IsInterface     = true;
         static const Info& bind() { return I::staticMetaInfo(); } 
         static Info&       edit() { return const_cast<Info&>(I::staticMetaInfo()); }

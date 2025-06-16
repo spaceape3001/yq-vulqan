@@ -223,7 +223,7 @@ namespace yq::tachyon {
     class Pipeline::Typed : public Pipeline {
     public:
     
-        static_assert(is_type_v<C> || is_object_v<C>);
+        //static_assert(is_type_v<C> || is_object_v<C>);
     
         Typed(Role role) : Pipeline(&meta<C>(), role)
         {

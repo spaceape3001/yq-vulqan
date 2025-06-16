@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <tachyon/logging.hpp>
 #include <tachyon/api/Post.hpp>
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
@@ -121,6 +122,8 @@ namespace yq::tachyon {
             const Pipeline*   p   = metaInfo().pipeline(role);
             if(p){
                 m_pipeline  = p;
+            } else {
+                tachyonWarning << ident() << "::set_pipeline( " << (uint16_t) role << ") cannot find selected pipeline";
             }
         }
         mark();

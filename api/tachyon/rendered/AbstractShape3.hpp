@@ -7,39 +7,21 @@
 #pragma once
 
 #include <tachyon/api/Rendered3.hpp>
-#include <tachyon/aspect/ABgColor.hpp>
-#include <tachyon/aspect/AColor.hpp>
-#include <tachyon/aspect/ADrawMode.hpp>
-#include <tachyon/gfx/UBO.hpp>
-#include <tachyon/gfx/VBO.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
-#include <tachyon/typedef/texture.hpp>
 
 namespace yq::tachyon {
     struct Vertex³;
 
-    class AbstractShape³ : public Rendered³, public ABgColor, public AColor, public ADrawMode {
+    class AbstractShape³ : public Rendered³ {
         YQ_TACHYON_DECLARE(AbstractShape³, Rendered³)
     public:
 
         struct Param : public Rendered³::Param {
-            RGBA4F      bgcolor     = kDefBgColor;
-            RGBA4F      color       = kDefColor;
-            DrawMode    draw_mode   = DrawMode::Auto;
+            //RGBA4F      bgcolor     = kDefBgColor;
+            //RGBA4F      color       = kDefColor;
         };
         
         static void init_info();
 
-        using ABgColor::bgcolor;
-        virtual bool    bgcolor(settable_k) const { return true; }
-    
-        using AColor::color;
-        virtual bool    color(settable_k) const { return true; }
-
-        using ADrawMode::draw_mode;
-        virtual bool        draw_mode(settable_k) const { return true; }
-        virtual DrawMode    draw_mode(use_k) const { return draw_mode(); }
-    
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;
 
@@ -77,6 +59,7 @@ namespace yq::tachyon {
         static VertexT  vt(const Vertex³&);
         static VertexS  vs(const Vertex³&);
         
+        #if 0
         //  We're going to add variations as necessary, but try to reuse them... 
         
         VB1<VertexC>    m_vertexC;
@@ -86,13 +69,7 @@ namespace yq::tachyon {
         
         UB1<UBS>        m_uniformS;
         TextureCPtr     m_texture;
-        
-        static auto _vertexC() { return &AbstractShape³::m_vertexC; }
-        static auto _vertexCT() { return &AbstractShape³::m_vertexCT; }
-        static auto _vertexT() { return &AbstractShape³::m_vertexT; }
-        static auto _vertexS() { return &AbstractShape³::m_vertexS; }
-        static auto _uniformS() { return &AbstractShape³::m_uniformS; }
-        static auto _texture()  { return &AbstractShape³::m_texture; }
+        #endif
         
         //template <typename C>
         //requires std::is_base_of<C,AbstractShape³>

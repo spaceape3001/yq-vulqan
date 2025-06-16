@@ -45,7 +45,4 @@ namespace yq::tachyon {
         vertex(n, SET, TEX, v.uv);
         vertex(n, SET, NORMAL, v.normal);
     }
-
-    IVertices³::IVertices³() = default;
-    IVertices³::~IVertices³() = default;
 }

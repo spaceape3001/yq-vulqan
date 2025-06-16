@@ -21,16 +21,6 @@ namespace yq::tachyon {
         auto w = writer<AbstractShape³>();
         w.abstract();
         w.description("Abstract 3D shape");
-
-        w.interface<IBgColor>();
-        ABgColor::init_info(w);
-
-        w.interface<IColor>();
-        AColor::init_info(w);
-
-        w.interface<IDrawMode>();
-        ADrawMode::init_info(w);
-         //w.asset("texture", &AbstractShape³::m_texture); // pending issue with the meta writer :(
     }
     
     AbstractShape³::VertexC  AbstractShape³::vc(const Vertex³&v)
@@ -68,11 +58,6 @@ namespace yq::tachyon {
 
     AbstractShape³::AbstractShape³(const Param& p) : Rendered³(p)
     {
-        m_drawMode  = p.draw_mode;
-        m_color     = p.color;
-        m_bgcolor   = p.bgcolor;
-        if((m_drawMode == DrawMode::Auto) && (m_color.alpha >= 0.))
-            m_drawMode  = DrawMode::Color;
     }
     
     AbstractShape³::~AbstractShape³()

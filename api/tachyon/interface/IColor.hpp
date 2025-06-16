@@ -14,8 +14,8 @@ namespace yq::tachyon {
     class PColor;
     
     class IColor {
-        YQ_INTERFACE_DECLARE(IColor, PColor)
     public:
+        YQ_INTERFACE_DECLARE(IColor, PColor)
     
         virtual RGBA4F  color() const = 0;
 

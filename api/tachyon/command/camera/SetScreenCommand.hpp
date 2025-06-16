@@ -10,11 +10,11 @@
 #include <yq/shape/Rectangle2.hpp>
 
 namespace yq::tachyon {
-    class CameraSetScreenCommand : public CameraCommand {
-        YQ_OBJECT_DECLARE(CameraSetScreenCommand, CameraCommand)
+    class SetScreenCommand : public CameraCommand {
+        YQ_OBJECT_DECLARE(SetScreenCommand, CameraCommand)
     public:
     
-        CameraSetScreenCommand(const Header&, const Rectangle2D&);
+        SetScreenCommand(const Header&, const Rectangle2D&);
         
         static void init_info();
         
@@ -30,15 +30,15 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        CameraSetScreenCommand(const CameraSetScreenCommand&, const Header&);
-        virtual ~CameraSetScreenCommand();
+        SetScreenCommand(const SetScreenCommand&, const Header&);
+        virtual ~SetScreenCommand();
     
     private:
         Rectangle2D m_screen;
         
-        CameraSetScreenCommand(const CameraSetScreenCommand&) = delete;
-        CameraSetScreenCommand(CameraSetScreenCommand&&) = delete;
-        CameraSetScreenCommand& operator=(const CameraSetScreenCommand&) = delete;
-        CameraSetScreenCommand& operator=(CameraSetScreenCommand&&) = delete;
+        SetScreenCommand(const SetScreenCommand&) = delete;
+        SetScreenCommand(SetScreenCommand&&) = delete;
+        SetScreenCommand& operator=(const SetScreenCommand&) = delete;
+        SetScreenCommand& operator=(SetScreenCommand&&) = delete;
     };
 }

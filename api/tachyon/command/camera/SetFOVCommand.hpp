@@ -10,11 +10,11 @@
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
-    class CameraSetFOVCommand : public CameraCommand {
-        YQ_OBJECT_DECLARE(CameraSetFOVCommand, CameraCommand)
+    class SetFOVCommand : public CameraCommand {
+        YQ_OBJECT_DECLARE(SetFOVCommand, CameraCommand)
     public:
     
-        CameraSetFOVCommand(const Header&, unit::Degree);
+        SetFOVCommand(const Header&, unit::Degree);
         
         static void init_info();
         
@@ -23,15 +23,15 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        CameraSetFOVCommand(const CameraSetFOVCommand&, const Header&);
-        virtual ~CameraSetFOVCommand();
+        SetFOVCommand(const SetFOVCommand&, const Header&);
+        virtual ~SetFOVCommand();
     
     private:
         unit::Degree m_fov;
         
-        CameraSetFOVCommand(const CameraSetFOVCommand&) = delete;
-        CameraSetFOVCommand(CameraSetFOVCommand&&) = delete;
-        CameraSetFOVCommand& operator=(const CameraSetFOVCommand&) = delete;
-        CameraSetFOVCommand& operator=(CameraSetFOVCommand&&) = delete;
+        SetFOVCommand(const SetFOVCommand&) = delete;
+        SetFOVCommand(SetFOVCommand&&) = delete;
+        SetFOVCommand& operator=(const SetFOVCommand&) = delete;
+        SetFOVCommand& operator=(SetFOVCommand&&) = delete;
     };
 }

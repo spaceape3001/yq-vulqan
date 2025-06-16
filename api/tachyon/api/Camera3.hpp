@@ -19,7 +19,7 @@
 
 namespace yq::tachyon {
     
-    class CameraSetScreenCommand;
+    class SetScreenCommand;
     class SpatialCommand;
 
     class Camera³Info : public CameraInfo {
@@ -70,7 +70,7 @@ namespace yq::tachyon {
         using Camera::id;
         
     private:
-        void    on_set_screen(const CameraSetScreenCommand&);
+        void    on_set_screen(const SetScreenCommand&);
     };
 }
 

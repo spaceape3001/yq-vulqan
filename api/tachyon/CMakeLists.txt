@@ -93,6 +93,8 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ABgColor.cpp
     aspect/AColor.cpp
     aspect/ADrawMode.cpp
+    aspect/AFarPlane.cpp
+    aspect/AFieldOfView.cpp
     aspect/AMaxSize1.cpp
     aspect/AMaxSize2.cpp
     aspect/AMaxSize3.cpp
@@ -101,6 +103,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/AMinSize2.cpp
     aspect/AMinSize3.cpp
     aspect/AMinSize4.cpp
+    aspect/ANearPlane.cpp
     aspect/AOrientation2.cpp
     aspect/AOrientation3.cpp
     aspect/APosition1.cpp
@@ -349,6 +352,9 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
+    interface/IFarPlane.cpp
+    interface/IFieldOfView.cpp
+    interface/INearPlane.cpp
     interface/interfaces.cpp
     
     io/FileIOManager.cpp
@@ -398,6 +404,8 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PBgColor.cpp
     proxy/PColor.cpp
     proxy/PDrawMode.cpp
+    proxy/PFarPlane.cpp
+    proxy/PFieldOfView.cpp
     proxy/PMaxSize1.cpp
     proxy/PMaxSize2.cpp
     proxy/PMaxSize3.cpp
@@ -406,6 +414,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PMinSize2.cpp
     proxy/PMinSize3.cpp
     proxy/PMinSize4.cpp
+    proxy/PNearPlane.cpp
     proxy/POrientation2.cpp
     proxy/POrientation3.cpp
     proxy/PPosition1.cpp

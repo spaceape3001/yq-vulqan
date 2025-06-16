@@ -20,14 +20,17 @@
 #include <yq/vector/Quaternion3.hxx>
 
 #include <tachyon/api/Camera3InfoWriter.hpp>
+#include <tachyon/aspect/AFarPlaneWriter.hxx>
+#include <tachyon/aspect/AFieldOfViewWriter.hxx>
+#include <tachyon/aspect/ANearPlaneWriter.hxx>
 //#include <tachyon/command/CameraPitchCommand.hpp>
 
 namespace yq::tachyon {
-    SpaceCamera::SpaceCamera(const Param&p) : Camera³(p),
-        m_fov(p.fov),
-        m_near(p.near),
-        m_far(p.far)
+    SpaceCamera::SpaceCamera(const Param&p) : Camera³(p)
     {
+        m_fov   = p.fov;
+        m_near  = p.near;
+        m_far   = p.far;
     }
     
     SpaceCamera::~SpaceCamera()
@@ -121,9 +124,10 @@ namespace yq::tachyon {
     {
         auto w = writer<SpaceCamera>();
         w.description("3D Space camera (fov with near/far plane)");
-        w.property("fov", &SpaceCamera::m_fov);
-        w.property("far", &SpaceCamera::m_far);
-        w.property("near", &SpaceCamera::m_near);
+        
+        AFieldOfView::init_info(w);
+        AFarPlane::init_info(w);
+        ANearPlane::init_info(w);
     }
 }
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SpaceCamera)

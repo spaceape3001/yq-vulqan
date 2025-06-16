@@ -7,21 +7,24 @@
 #pragma once
 
 #include <tachyon/api/Camera3.hpp>
+#include <tachyon/aspect/AFarPlane.hpp>
+#include <tachyon/aspect/AFieldOfView.hpp>
+#include <tachyon/aspect/ANearPlane.hpp>
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
-
-    class CameraPitchCommand;
 
     /*! \brief Camera in 3D space
     
         This is a simple camera that has a near plane, a far plane, and
         a POV angle.
     */
-    class SpaceCamera : public Camera³ {
+    class SpaceCamera : public Camera³, public AFieldOfView, public AFarPlane, public ANearPlane {
         YQ_TACHYON_DECLARE(SpaceCamera, Camera³)
     public:
+    
+        using AFieldOfView::field_of_view;
     
         struct Param : public Camera³::Param {
             Degree  fov     = 70_deg;
@@ -30,6 +33,8 @@ namespace yq::tachyon {
             
             Param(){}
         };
+        
+        virtual bool field_of_view(settable_k) const override { return true; }
     
         //! \brief World to screen matrix
         //! This routine returns the relevant world to screen projection matrix
@@ -66,12 +71,7 @@ namespace yq::tachyon {
         
     protected:
         void    snap(Camera³Snap&) const;
-
-    private:
-        Degree         m_fov;
-        double         m_near;
-        double         m_far;
-        
-        void           pitch_command(const CameraPitchCommand&);
     };
 }
+
+YQ_TACHYON_FORCE(yq::tachyon::SpaceCamera)

@@ -6,7 +6,7 @@
 
 // Auto-generated file
 
-#include "CameraSetFOVCommand.ipp"
-#include "CameraSetFarPlaneCommand.ipp"
-#include "CameraSetNearPlaneCommand.ipp"
-#include "CameraSetScreenCommand.ipp"
+#include "SetFOVCommand.ipp"
+#include "SetFarPlaneCommand.ipp"
+#include "SetNearPlaneCommand.ipp"
+#include "SetScreenCommand.ipp"

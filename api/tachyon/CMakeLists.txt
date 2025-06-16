@@ -151,10 +151,7 @@ add_library(${PROJECT_NAME} SHARED
     command/aabb/SetAABB3.cpp
     command/aabb/SetAABB4.cpp
     
-    command/camera/CameraSetFarPlaneCommand.cpp
-    command/camera/CameraSetFOVCommand.cpp
-    command/camera/CameraSetNearPlaneCommand.cpp
-    command/camera/CameraSetScreenCommand.cpp
+    command/camera/camera_commands.cpp
 
     command/color/SetBgColorCommand.cpp
     command/color/SetColorCommand.cpp
@@ -181,148 +178,15 @@ add_library(${PROJECT_NAME} SHARED
     command/sim/ResumeCommand.cpp
     command/sim/PauseCommand.cpp
 
-    command/orientation/PitchByCommand.cpp
-    command/orientation/RotateBy2Command.cpp
-    command/orientation/RotateBy3Command.cpp
-    command/orientation/RollByCommand.cpp
-    command/orientation/SetHeadingCommand.cpp
-    command/orientation/SetOrientation2Command.cpp
-    command/orientation/SetOrientation3Command.cpp
-    command/orientation/SetPitchCommand.cpp
-    command/orientation/SetRollCommand.cpp
-    command/orientation/YawByCommand.cpp
+    command/orientation/orientation_commands.cpp
 
-    command/position/AddPosition1Command.cpp
-    command/position/AddPosition2Command.cpp
-    command/position/AddPosition3Command.cpp
-    command/position/AddPosition4Command.cpp
-    command/position/AddPositionWCommand.cpp
-    command/position/AddPositionXCommand.cpp
-    command/position/AddPositionYCommand.cpp
-    command/position/AddPositionZCommand.cpp
-    command/position/MoveBy1Command.cpp
-    command/position/MoveBy2Command.cpp
-    command/position/MoveBy3Command.cpp
-    command/position/MoveBy4Command.cpp
-    command/position/MoveByWCommand.cpp
-    command/position/MoveByXCommand.cpp
-    command/position/MoveByYCommand.cpp
-    command/position/MoveByZCommand.cpp
-    command/position/MultiplyPositionCommand.cpp
-    command/position/MultiplyPosition1Command.cpp
-    command/position/MultiplyPosition2Command.cpp
-    command/position/MultiplyPosition3Command.cpp
-    command/position/MultiplyPosition4Command.cpp
-    command/position/MultiplyPositionWCommand.cpp
-    command/position/MultiplyPositionXCommand.cpp
-    command/position/MultiplyPositionYCommand.cpp
-    command/position/MultiplyPositionZCommand.cpp
-    command/position/SetPosition1Command.cpp
-    command/position/SetPosition2Command.cpp
-    command/position/SetPosition3Command.cpp
-    command/position/SetPosition4Command.cpp
-    command/position/SetPositionWCommand.cpp
-    command/position/SetPositionXCommand.cpp
-    command/position/SetPositionYCommand.cpp
-    command/position/SetPositionZCommand.cpp
+    command/position/position_commands.cpp
 
-    command/scale/AddScale1Command.cpp
-    command/scale/AddScale2Command.cpp
-    command/scale/AddScale3Command.cpp
-    command/scale/AddScaleXCommand.cpp
-    command/scale/AddScaleYCommand.cpp
-    command/scale/AddScaleZCommand.cpp
-    command/scale/MultiplyScaleCommand.cpp
-    command/scale/MultiplyScale1Command.cpp
-    command/scale/MultiplyScale2Command.cpp
-    command/scale/MultiplyScale3Command.cpp
-    command/scale/MultiplyScaleXCommand.cpp
-    command/scale/MultiplyScaleYCommand.cpp
-    command/scale/MultiplyScaleZCommand.cpp
-    command/scale/SetScale1Command.cpp
-    command/scale/SetScale2Command.cpp
-    command/scale/SetScale3Command.cpp
-    command/scale/SetScaleXCommand.cpp
-    command/scale/SetScaleYCommand.cpp
-    command/scale/SetScaleZCommand.cpp
+    command/scale/scale_commands.cpp
 
     command/shape/SetDrawModeCommand.cpp
 
-    command/size/AddMaxSize1Command.cpp
-    command/size/AddMaxSize2Command.cpp
-    command/size/AddMaxSize3Command.cpp
-    command/size/AddMaxSize4Command.cpp
-    command/size/AddMaxSizeWCommand.cpp
-    command/size/AddMaxSizeXCommand.cpp
-    command/size/AddMaxSizeYCommand.cpp
-    command/size/AddMaxSizeZCommand.cpp
-    command/size/AddMinSize1Command.cpp
-    command/size/AddMinSize2Command.cpp
-    command/size/AddMinSize3Command.cpp
-    command/size/AddMinSize4Command.cpp
-    command/size/AddMinSizeWCommand.cpp
-    command/size/AddMinSizeXCommand.cpp
-    command/size/AddMinSizeYCommand.cpp
-    command/size/AddMinSizeZCommand.cpp
-    command/size/AddSize1Command.cpp
-    command/size/AddSize2Command.cpp
-    command/size/AddSize3Command.cpp
-    command/size/AddSize4Command.cpp
-    command/size/AddSizeWCommand.cpp
-    command/size/AddSizeXCommand.cpp
-    command/size/AddSizeYCommand.cpp
-    command/size/AddSizeZCommand.cpp
-    command/size/MultiplyMaxSizeCommand.cpp
-    command/size/MultiplyMaxSize1Command.cpp
-    command/size/MultiplyMaxSize2Command.cpp
-    command/size/MultiplyMaxSize3Command.cpp
-    command/size/MultiplyMaxSize4Command.cpp
-    command/size/MultiplyMaxSizeWCommand.cpp
-    command/size/MultiplyMaxSizeXCommand.cpp
-    command/size/MultiplyMaxSizeYCommand.cpp
-    command/size/MultiplyMaxSizeZCommand.cpp
-    command/size/MultiplyMinSizeCommand.cpp
-    command/size/MultiplyMinSize1Command.cpp
-    command/size/MultiplyMinSize2Command.cpp
-    command/size/MultiplyMinSize3Command.cpp
-    command/size/MultiplyMinSize4Command.cpp
-    command/size/MultiplyMinSizeWCommand.cpp
-    command/size/MultiplyMinSizeXCommand.cpp
-    command/size/MultiplyMinSizeYCommand.cpp
-    command/size/MultiplyMinSizeZCommand.cpp
-    command/size/MultiplySizeCommand.cpp
-    command/size/MultiplySize1Command.cpp
-    command/size/MultiplySize2Command.cpp
-    command/size/MultiplySize3Command.cpp
-    command/size/MultiplySize4Command.cpp
-    command/size/MultiplySizeWCommand.cpp
-    command/size/MultiplySizeXCommand.cpp
-    command/size/MultiplySizeYCommand.cpp
-    command/size/MultiplySizeZCommand.cpp
-    command/size/SetMaxSize1Command.cpp
-    command/size/SetMaxSize2Command.cpp
-    command/size/SetMaxSize3Command.cpp
-    command/size/SetMaxSize4Command.cpp
-    command/size/SetMaxSizeWCommand.cpp
-    command/size/SetMaxSizeXCommand.cpp
-    command/size/SetMaxSizeYCommand.cpp
-    command/size/SetMaxSizeZCommand.cpp
-    command/size/SetMinSize1Command.cpp
-    command/size/SetMinSize2Command.cpp
-    command/size/SetMinSize3Command.cpp
-    command/size/SetMinSize4Command.cpp
-    command/size/SetMinSizeWCommand.cpp
-    command/size/SetMinSizeXCommand.cpp
-    command/size/SetMinSizeYCommand.cpp
-    command/size/SetMinSizeZCommand.cpp
-    command/size/SetSize1Command.cpp
-    command/size/SetSize2Command.cpp
-    command/size/SetSize3Command.cpp
-    command/size/SetSize4Command.cpp
-    command/size/SetSizeWCommand.cpp
-    command/size/SetSizeXCommand.cpp
-    command/size/SetSizeYCommand.cpp
-    command/size/SetSizeZCommand.cpp
+    command/size/size_commands.cpp
     
     command/spatial/AABBCommand.cpp
     command/spatial/OrientationCommand.cpp
@@ -358,17 +222,7 @@ add_library(${PROJECT_NAME} SHARED
     command/ui/TitleCommand.cpp
     command/ui/UnfloatCommand.cpp
 
-    command/vertex/AppendVertex3Command.cpp
-    command/vertex/EraseVertexCommand.cpp
-    command/vertex/InsertVertex3Command.cpp
-    command/vertex/SetVertex3Command.cpp
-    command/vertex/SetVertexColorCommand.cpp
-    command/vertex/SetVertexNormal2Command.cpp
-    command/vertex/SetVertexNormal3Command.cpp
-    command/vertex/SetVertexPoint2Command.cpp
-    command/vertex/SetVertexPoint3Command.cpp
-    command/vertex/SetVertexUVCommand.cpp
-    command/vertex/SetVertexUVWCommand.cpp
+    command/vertex/vertex_commands.cpp
 
     command/viewer/ImGuiDisableKeyboardCommand.cpp
     command/viewer/ImGuiEnableKeyboardCommand.cpp
@@ -436,21 +290,9 @@ add_library(${PROJECT_NAME} SHARED
     event/cursor/CursorHideEvent.cpp
     event/cursor/CursorNormalEvent.cpp
     
-    event/gamepad/GamepadAxisEvent.cpp
-    event/gamepad/GamepadConnectEvent.cpp
-    event/gamepad/GamepadDisconnectEvent.cpp
-    event/gamepad/GamepadHatEvent.cpp
-    event/gamepad/GamepadPressEvent.cpp
-    event/gamepad/GamepadReleaseEvent.cpp
-    event/gamepad/GamepadZeroEvent.cpp
+    event/gamepad/gamepad_events.cpp
 
-    event/joystick/JoystickAxisEvent.cpp
-    event/joystick/JoystickConnectEvent.cpp
-    event/joystick/JoystickDisconnectEvent.cpp
-    event/joystick/JoystickHatEvent.cpp
-    event/joystick/JoystickPressEvent.cpp
-    event/joystick/JoystickReleaseEvent.cpp
-    event/joystick/JoystickZeroEvent.cpp
+    event/joystick/joystick_events.cpp
 
     event/keyboard/KeyCharacterEvent.cpp
     event/keyboard/KeyPressEvent.cpp
@@ -470,31 +312,7 @@ add_library(${PROJECT_NAME} SHARED
 
     event/panel/InfoSelectionChangedEvent.cpp
 
-    event/spatial/AABB1Event.cpp
-    event/spatial/AABB2Event.cpp
-    event/spatial/AABB3Event.cpp
-    event/spatial/AABB4Event.cpp
-    event/spatial/MaxSize1Event.cpp
-    event/spatial/MaxSize2Event.cpp
-    event/spatial/MaxSize3Event.cpp
-    event/spatial/MaxSize4Event.cpp
-    event/spatial/MinSize1Event.cpp
-    event/spatial/MinSize2Event.cpp
-    event/spatial/MinSize3Event.cpp
-    event/spatial/MinSize4Event.cpp
-    event/spatial/Position1Event.cpp
-    event/spatial/Position2Event.cpp
-    event/spatial/Position3Event.cpp
-    event/spatial/Position4Event.cpp
-    event/spatial/Orientation2Event.cpp
-    event/spatial/Orientation3Event.cpp
-    event/spatial/Scale1Event.cpp
-    event/spatial/Scale2Event.cpp
-    event/spatial/Scale3Event.cpp
-    event/spatial/Size1Event.cpp
-    event/spatial/Size2Event.cpp
-    event/spatial/Size3Event.cpp
-    event/spatial/Size4Event.cpp
+    event/spatial/spatial_events.cpp
     
     event/sim/PauseEvent.cpp
     event/sim/ResumeEvent.cpp
@@ -531,31 +349,7 @@ add_library(${PROJECT_NAME} SHARED
     gfx/Shader.cpp
     gfx/Texture.cpp
 
-    interface/IBgColor.cpp
-    interface/IColor.cpp
-    interface/IDrawMode.cpp
-    interface/IMaxSize1.cpp
-    interface/IMaxSize2.cpp
-    interface/IMaxSize3.cpp
-    interface/IMaxSize4.cpp
-    interface/IMinSize1.cpp
-    interface/IMinSize2.cpp
-    interface/IMinSize3.cpp
-    interface/IMinSize4.cpp
-    interface/IOrientation2.cpp
-    interface/IOrientation3.cpp
-    interface/IPosition1.cpp
-    interface/IPosition2.cpp
-    interface/IPosition3.cpp
-    interface/IPosition4.cpp
-    interface/IScale1.cpp
-    interface/IScale2.cpp
-    interface/IScale3.cpp
-    interface/ISize1.cpp
-    interface/ISize2.cpp
-    interface/ISize3.cpp
-    interface/ISize4.cpp
-    interface/IVertices3.cpp
+    interface/interfaces.cpp
     
     io/FileIOManager.cpp
     io/GLSLShader.cpp
@@ -592,14 +386,7 @@ add_library(${PROJECT_NAME} SHARED
     os/VideoMode.cpp
     os/Window.cpp
 
-    os/glfw/CursorGLFW.cpp
-    os/glfw/DesktopGLFW.cpp
-    os/glfw/GamepadGLFW.cpp
-    os/glfw/JoystickGLFW.cpp
-    os/glfw/KeyboardGLFW.cpp
-    os/glfw/MonitorGLFW.cpp
-    os/glfw/MouseGLFW.cpp
-    os/glfw/WindowGLFW.cpp
+    os/glfw/glfw.cpp
     
     panel/UIConcreteInfoList.cpp
     panel/UIInfoList.cpp
@@ -718,13 +505,7 @@ add_library(${PROJECT_NAME} SHARED
     thread/TaskThread.cpp
     thread/ViewerThread.cpp
 
-    trigger/AndTrigger.cpp
-    trigger/KeyPressTrigger.cpp
-    trigger/NandTrigger.cpp
-    trigger/NorTrigger.cpp
-    trigger/NotTrigger.cpp
-    trigger/OrTrigger.cpp
-    trigger/PostTrigger.cpp
+    trigger/triggers.cpp
 
     tweak/OriginCameraTweak.cpp
     

@@ -121,7 +121,7 @@ namespace yq::tachyon {
         }
 
         if(ImGui::Begin("FrameInspector")){
-            ImGui::ToggleButton("Track", &m_track);
+            ImGui::ToggleSlider("Track", &m_track);
             if(!m_frame){
                 ImGui::Text("Missing frame");
             } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_NoClip))){

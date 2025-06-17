@@ -147,7 +147,7 @@ namespace yq::tachyon {
             return ;
             
         Vector3D        position    = pos->position();
-        if(ImGui::InputDouble3("", &position))
+        if(ImGui::InputDouble("", position))
             pos->position(SET, position);
 
         if(m_orientation)

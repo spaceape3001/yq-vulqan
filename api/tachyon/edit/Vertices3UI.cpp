@@ -84,21 +84,21 @@ namespace yq::tachyon {
                 if(ImGui::TableNextColumn()){
                     std::string id = std::format("##Vertex{}.{}", bound().id, n);
                     Vector3D    v   = p->vertex(n, POINT);
-                    if(ImGui::InputDouble3(id.c_str(), &v)){
+                    if(ImGui::InputDouble(id.c_str(), v, {.format="%.3lf"})){
                         p->vertex(n, SET, POINT, v);
                     }
                 }
                 if(texs && ImGui::TableNextColumn()){
                     std::string id = std::format("##TexUV{}.{}", bound().id, n);
                     UV2F        v   = p->vertex(n, TEX);
-                    if(ImGui::InputFloat2(id.c_str(), &v)){
+                    if(ImGui::InputFloat(id.c_str(), v)){
                         p->vertex(n, SET, TEX, v);
                     }
                 }
                 if(normals && ImGui::TableNextColumn()){
                     std::string id = std::format("##Normal{}.{}", bound().id, n);
                     Vector3F    v   = p->vertex(n, NORMAL);
-                    if(ImGui::InputFloat3(id.c_str(), &v)){
+                    if(ImGui::InputFloat(id.c_str(), v)){
                         p->vertex(n, SET, NORMAL, v);
                     }
                 }

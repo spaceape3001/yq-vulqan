@@ -42,7 +42,7 @@ namespace yq::tachyon {
             return ;
             
         double    v   = p->near_plane();
-        if(ImGui::InputDouble("##near", &v))
+        if(ImGui::InputDouble("##near", v))
             p -> near_plane(SET, v);
     }
 }

@@ -49,7 +49,7 @@ namespace yq::tachyon {
                 bool    f   = snap->enabled;
                 std::string id  = "Enable";
                 id += to_string_view(m_tachyon->id().id);
-                ImGui::ToggleButton(id.c_str(), &f);
+                ImGui::ToggleSlider(id.c_str(), &f);
                 if(f != snap->enabled){
                     if(f){
                         send(new EnableCommand({.target=*m_tachyon}));

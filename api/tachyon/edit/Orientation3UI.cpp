@@ -111,7 +111,7 @@ namespace yq::tachyon {
             
         Quaternion3D    q   = proxy->orientation();
         
-        if(ImGui::InputDouble4("##orientation", &q)){
+        if(ImGui::InputDouble("##orientation", q)){
             if(q.length²() <= 1e-12){
                 q = IDENTITY;
             } else {

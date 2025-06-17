@@ -116,7 +116,7 @@ namespace yq::tachyon {
             ImGui::EndTable();
         }
             
-        if(ImGui::InputDouble4("##orientation", &orientation)){
+        if(ImGui::InputDouble("##orientation", orientation)){
             if(orientation.length²() <= 1e-12){
                 orientation = IDENTITY;
             } else {

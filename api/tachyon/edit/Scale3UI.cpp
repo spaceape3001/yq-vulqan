@@ -41,7 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Vector3D    v   = p->scale();
-        if(ImGui::InputDouble3("##scale", &v))
+        if(ImGui::InputDouble("##scale", v))
             p -> scale(SET, v);
     }
 }

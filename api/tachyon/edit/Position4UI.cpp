@@ -41,7 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Vector4D    v   = p->position();
-        if(ImGui::InputDouble("##position", v))
+        if(ImGui::Input("##position", v))
             p -> position(SET, v);
     }
 }

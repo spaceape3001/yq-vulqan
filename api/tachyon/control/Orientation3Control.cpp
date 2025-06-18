@@ -83,17 +83,17 @@ namespace yq::tachyon {
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
             //if(ImGui::SpinDouble("", &heading, m_step, m_stepFast, "%.2f")){
-            if(ImGui::InputDouble("##heading", &heading)){
+            if(ImGui::Input("##heading", heading)){
                 proxy->orientation(SET, HEADING, heading);
             }
             ImGui::TableNextColumn();
             //if(ImGui::SpinDouble("", &pitch, m_step, m_stepFast, "%.2f")){
-            if(ImGui::InputDouble("##pitch", &pitch)){
+            if(ImGui::Input("##pitch", pitch)){
                 proxy->orientation(SET, PITCH, pitch);
             }
             ImGui::TableNextColumn();
             //if(ImGui::SpinDouble("", &roll, m_step, m_stepFast, "%.2f")){
-            if(ImGui::InputDouble("##roll", &roll)){
+            if(ImGui::Input("##roll", roll)){
                 proxy->orientation(SET, ROLL, roll);
             }
 
@@ -116,7 +116,7 @@ namespace yq::tachyon {
             ImGui::EndTable();
         }
             
-        if(ImGui::InputDouble("##orientation", orientation)){
+        if(ImGui::Input("##orientation", orientation)){
             if(orientation.length²() <= 1e-12){
                 orientation = IDENTITY;
             } else {

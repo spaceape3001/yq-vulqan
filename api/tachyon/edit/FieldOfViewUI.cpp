@@ -42,7 +42,7 @@ namespace yq::tachyon {
             return ;
             
         unit::Degree    v   = p->field_of_view();
-        if(ImGui::InputDouble("##fov", v))
+        if(ImGui::Input("##fov", v))
             p -> field_of_view(SET, v);
     }
 }

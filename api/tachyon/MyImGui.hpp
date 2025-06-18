@@ -16,6 +16,9 @@
 #include <yq/typedef/rgb.hpp>
 #include <yq/typedef/rgba.hpp>
 #include <yq/typedef/rectangle2.hpp>
+#include <yq/typedef/size2.hpp>
+#include <yq/typedef/size3.hpp>
+#include <yq/typedef/size4.hpp>
 #include <yq/typedef/tensor44.hpp>
 #include <yq/typedef/uv.hpp>
 #include <yq/typedef/uvw.hpp>
@@ -145,20 +148,18 @@ namespace ImGui {
         double                      min     = 0.;
         float                       speed   = 1.0f;
     };
-    
-    bool    DragDouble(const char* label, double*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
-    bool    DragDouble(const char* label, double&, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
 
-    bool    DragDouble(const char* label, double*, const DragDoubleOptions& options={});
-    bool    DragDouble(const char* label, double&, const DragDoubleOptions& options={});
+    bool    Drag(const char* label, double*, const DragDoubleOptions& options);
+    bool    Drag(const char* label, double&, const DragDoubleOptions& options={});
 
-    bool    DragDouble2(const char* label, double v[2], float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
-    bool    DragDouble3(const char* label, double v[3], float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
-    bool    DragDouble4(const char* label, double v[4], float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
+    bool    Drag(const char* label, yq::Vector2D&, const DragDoubleOptions& options={});
+    bool    Drag(const char* label, yq::Vector3D&, const DragDoubleOptions& options={});
+    bool    Drag(const char* label, yq::Vector4D&, const DragDoubleOptions& options={});
 
-    bool    DragDouble2(const char* label, yq::Vector2D*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
-    bool    DragDouble3(const char* label, yq::Vector3D*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
-    bool    DragDouble4(const char* label, yq::Vector4D*, float speed, double v_min=0.0, double v_max=0.0, const char* format="%.3lf", ImGuiSliderFlags flags=0);
+    bool    Drag2(const char* label, double v[2], const DragDoubleOptions& options={});
+    bool    Drag3(const char* label, double v[3], const DragDoubleOptions& options={});
+    bool    Drag4(const char* label, double v[4], const DragDoubleOptions& options={});
+
 
     ///////////////////////////
     //  INPUTS (DOUBLES)
@@ -171,6 +172,8 @@ namespace ImGui {
     struct InputDoubleOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.6lf";
+        double                      max         = 0.;
+        double                      min         = 0.;
         double                      step        = 0.;
         double                      step_fast   = 0.;
     };
@@ -178,156 +181,111 @@ namespace ImGui {
     struct InputDoubleQuatOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.8lf";
+        double                      max         = 1.;
+        double                      min         = -1.;
         double                      step        = 0.;
         double                      step_fast   = 0.;
+
+        constexpr operator InputDoubleOptions() const noexcept
+        {
+            return { flags, format, max, min, step, step_fast };
+        }
     };
     
     template <typename DIM>
     struct InputDoubleMKSOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.6lf";
+        yq::MKS<double,DIM>         max         = { 0. };
+        yq::MKS<double,DIM>         min         = { 0. };
         yq::MKS<double,DIM>         step        = { 0. };
         yq::MKS<double,DIM>         step_fast   = { 0. };
+
+        constexpr operator InputDoubleOptions() const noexcept
+        {
+            return { flags, format, max.value, min.value, step.value, step_fast.value };
+        }
     };
 
     template <typename DIM, double K>
     struct InputDoubleScaledOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.6lf";
+        yq::SCALED<double,DIM,K>    max         = { 0. };
+        yq::SCALED<double,DIM,K>    min         = { 0. };
         yq::SCALED<double,DIM,K>    step        = { 0. };
         yq::SCALED<double,DIM,K>    step_fast   = { 0. };
+
+        constexpr operator InputDoubleOptions() const noexcept
+        {
+            return { flags, format, max.value, min.value, step.value, step_fast.value };
+        }
     };
 
-    bool    InputDouble(const char* label, double* v, const InputDoubleOptions& options);
-    bool    InputDouble(const char* label, double& v, const InputDoubleOptions& options={});
+    bool    Input(const char* label, double* v, const InputDoubleOptions& options={});
+    bool    Input(const char* label, double& v, const InputDoubleOptions& options={});
 
-    bool    InputDouble(const char* label, yq::UV2D*, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::UV2D&, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::Vector2D*, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::Vector3D*, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::Vector4D*, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::Quaternion3D*, const InputDoubleQuatOptions& options={});
-    
-    bool    InputDouble(const char* label, yq::Vector2D&, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::Vector3D&, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::Vector4D&, const InputDoubleOptions& options={});
-    bool    InputDouble(const char* label, yq::Quaternion3D&, const InputDoubleQuatOptions& options={});
+    bool    Input(const char* label, yq::Quaternion3D&, const InputDoubleQuatOptions& options={});
+    bool    Input(const char* label, yq::Size2D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::Size3D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::Size4D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::UV2D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::UVW3D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::Vector2D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::Vector3D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::Vector4D&, const InputDoubleOptions& options={});
 
-    bool    InputDouble2(const char* label, double v[2], const InputDoubleOptions& options={});
-    bool    InputDouble3(const char* label, double v[3], const InputDoubleOptions& options={});
-    bool    InputDouble4(const char* label, double v[4], const InputDoubleOptions& options={});
-
+    bool    Input2(const char* label, double v[2], const InputDoubleOptions& options={});
+    bool    Input3(const char* label, double v[3], const InputDoubleOptions& options={});
+    bool    Input4(const char* label, double v[4], const InputDoubleOptions& options={});
 
     template <typename DIM>
-    bool    InputDouble(const char* label, yq::MKS<double,DIM>* v, const InputDoubleMKSOptions<DIM>&options={})
+    bool    Input(const char* label, yq::MKS<double,DIM>& v, const InputDoubleMKSOptions<DIM>&options={})
     {
-        return InputDouble(label, &v->value, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
+        return Input(label, &v.value, (InputDoubleOptions) options);
     }
 
     template <typename DIM>
-    bool    InputDouble(const char* label, yq::MKS<double,DIM>& v, const InputDoubleMKSOptions<DIM>&options={})
+    bool    Input(const char* label, yq::Vector2<yq::MKS<double,DIM>>& v, const InputDoubleMKSOptions<DIM>&options={})
     {
-        return InputDouble(label, &v.value, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
+        return Input2(label, (double*) &v, (InputDoubleOptions) options);
     }
 
     template <typename DIM>
-    bool    InputDouble(const char* label, yq::Vector2<yq::MKS<double,DIM>>* v, const InputDoubleMKSOptions<DIM>&options={})
+    bool    Input(const char* label, yq::Vector3<yq::MKS<double,DIM>>& v, const InputDoubleMKSOptions<DIM>&options={})
     {
-        return InputDouble2(label, (double*) v, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
+        return Input3(label, (double*) &v, (InputDoubleOptions) options);
     }
 
     template <typename DIM>
-    bool    InputDouble(const char* label, yq::Vector2<yq::MKS<double,DIM>>& v, const InputDoubleMKSOptions<DIM>&options={})
+    bool    Input(const char* label, yq::Vector4<yq::MKS<double,DIM>>& v, const InputDoubleMKSOptions<DIM>&options={})
     {
-        return InputDouble2(label, (double*) &v, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
-    }
-
-    template <typename DIM>
-    bool    InputDouble(const char* label, yq::Vector3<yq::MKS<double,DIM>>* v, const InputDoubleMKSOptions<DIM>&options={})
-    {
-        return InputDouble3(label, (double*) v, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
-    }
-
-    template <typename DIM>
-    bool    InputDouble(const char* label, yq::Vector3<yq::MKS<double,DIM>>& v, const InputDoubleMKSOptions<DIM>&options={})
-    {
-        return InputDouble3(label, (double*) &v, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
-    }
-
-    template <typename DIM>
-    bool    InputDouble(const char* label, yq::Vector4<yq::MKS<double,DIM>>* v, const InputDoubleMKSOptions<DIM>&options={})
-    {
-        return InputDouble4(label, (double*) v, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
-    }
-
-    template <typename DIM>
-    bool    InputDouble(const char* label, yq::Vector4<yq::MKS<double,DIM>>& v, const InputDoubleMKSOptions<DIM>&options={})
-    {
-        return InputDouble4(label, (double*) &v, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
+        return Input4(label, (double*) &v, (InputDoubleOptions) options);
     }
 
     template <typename DIM, double K>
-    bool    InputDouble(const char* label, yq::SCALED<double,DIM,K>* v, const InputDoubleScaledOptions<DIM,K>& options={})
+    bool    Input(const char* label, yq::SCALED<double,DIM,K>& v, const InputDoubleScaledOptions<DIM,K>& options={})
     {
-        return InputDouble(label, &v->value, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
+        return Input(label, &v.value, (InputDoubleOptions) options);
     }
 
     template <typename DIM, double K>
-    bool    InputDouble(const char* label, yq::SCALED<double,DIM,K>& v, const InputDoubleScaledOptions<DIM,K>& options={})
+    bool    Input(const char* label, yq::Vector2<yq::SCALED<double,DIM,K>>& v, const InputDoubleScaledOptions<DIM,K>& options={})
     {
-        return InputDouble(label, &v.value, InputDoubleOptions{
-            .flags      = options.flags,
-            .format     = options.format,
-            .step       = options.step.value,
-            .step_fast  = options.step_fast.value
-        });
+        return Input2(label, (double*) &v, (InputDoubleOptions) options);
     }
 
+    template <typename DIM, double K>
+    bool    Input(const char* label, yq::Vector3<yq::SCALED<double,DIM,K>>& v, const InputDoubleScaledOptions<DIM,K>& options={})
+    {
+        return Input3(label, (double*) &v, (InputDoubleOptions) options);
+    }
+
+    template <typename DIM, double K>
+    bool    Input(const char* label, yq::Vector4<yq::SCALED<double,DIM,K>>& v, const InputDoubleScaledOptions<DIM,K>& options={})
+    {
+        return Input4(label, (double*) &v, (InputDoubleOptions) options);
+    }
 
     ///////////////////////////
     //  INPUTS (FLOATS)
@@ -343,6 +301,8 @@ namespace ImGui {
     struct InputFloatOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.3f";
+        float                       max         = 0.;
+        float                       min         = 0.;
         float                       step        = 0.;
         float                       step_fast   = 0.;
     };
@@ -350,46 +310,169 @@ namespace ImGui {
     struct InputFloatQuatOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.4f";
+        float                       max         = 1.;
+        float                       min         = -1.;
         float                       step        = 0.;
         float                       step_fast   = 0.;
+        
+        constexpr operator InputFloatOptions() const noexcept
+        {
+            return { flags, format, max, min, step, step_fast };
+        }
     };
     
     template <typename DIM>
     struct InputFloatMKSOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.3f";
+        yq::MKS<float,DIM>          max         = { 0.f };
+        yq::MKS<float,DIM>          min         = { 0.f };
         yq::MKS<float,DIM>          step        = { 0.f };
         yq::MKS<float,DIM>          step_fast   = { 0.f };
+
+        constexpr operator InputFloatOptions() const noexcept
+        {
+            return { flags, format, max.value, min.value, step.value, step_fast.value };
+        }
     };
 
     template <typename DIM, double K>
     struct InputFloatScaledOptions {
         ImGuiInputTextFlags         flags       = 0;
         const char*                 format      = "%.3f";
+        yq::MKS<float,DIM>          max         = { 0.f };
+        yq::MKS<float,DIM>          min         = { 0.f };
         yq::SCALED<float,DIM,K>     step        = { 0.f };
         yq::SCALED<float,DIM,K>     step_fast   = { 0.f };
+
+        constexpr operator InputFloatOptions() const noexcept
+        {
+            return { flags, format, max.value, min.value, step.value, step_fast.value };
+        }
     };
 
-    bool    InputFloat(const char* label, float*, const InputFloatOptions& options);  
-    bool    InputFloat(const char* label, float&, const InputFloatOptions& options={});
+    bool    Input(const char* label, float*, const InputFloatOptions& options);  
+    bool    Input(const char* label, float&, const InputFloatOptions& options={});
 
-    bool    InputFloat2(const char* label, float[2], const InputFloatOptions& options);  
-    bool    InputFloat3(const char* label, float[3], const InputFloatOptions& options);  
-    bool    InputFloat4(const char* label, float[4], const InputFloatOptions& options);  
+    bool    Input2(const char* label, float[2], const InputFloatOptions& options);  
+    bool    Input3(const char* label, float[3], const InputFloatOptions& options);  
+    bool    Input4(const char* label, float[4], const InputFloatOptions& options);  
 
-    bool    InputFloat(const char* label, yq::UV2F*, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Vector2F*, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Vector3F*, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Vector4F*, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Quaternion3F*, const InputFloatQuatOptions& options={});
+    bool    Input(const char* label, yq::RGB3F&, const InputFloatQuatOptions& options={});
+    bool    Input(const char* label, yq::RGBA4F&, const InputFloatQuatOptions& options={});
+    bool    Input(const char* label, yq::Quaternion3F&, const InputFloatQuatOptions& options={});
+    bool    Input(const char* label, yq::Size2F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::Size3F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::Size4F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::UV2F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::UVW3F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::Vector2F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::Vector3F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::Vector4F&, const InputFloatOptions& options={});
 
-    bool    InputFloat(const char* label, yq::UV2F&, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Vector2F&, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Vector3F&, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Vector4F&, const InputFloatOptions& options={});
-    bool    InputFloat(const char* label, yq::Quaternion3F&, const InputFloatQuatOptions& options={});
 
+    template <typename DIM>
+    bool    Input(const char* label, yq::MKS<float,DIM>& v, const InputFloatMKSOptions<DIM>&options={})
+    {
+        return Input(label, &v.value, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .max        = options.max.value,
+            .min        = options.min.value,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
+
+    template <typename DIM>
+    bool    Input(const char* label, yq::Vector2<yq::MKS<float,DIM>>& v, const InputFloatMKSOptions<DIM>&options={})
+    {
+        return Input2(label, (float*) &v, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .max        = options.max.value,
+            .min        = options.min.value,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
+
+    template <typename DIM>
+    bool    Input(const char* label, yq::Vector3<yq::MKS<float,DIM>>& v, const InputFloatMKSOptions<DIM>&options={})
+    {
+        return Input3(label, (float*) &v, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .max        = options.max.value,
+            .min        = options.min.value,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
+
+    template <typename DIM>
+    bool    Input(const char* label, yq::Vector4<yq::MKS<float,DIM>>& v, const InputFloatMKSOptions<DIM>&options={})
+    {
+        return Input4(label, (float*) &v, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .max        = options.max.value,
+            .min        = options.min.value,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
+
+    template <typename DIM, double K>
+    bool    Input(const char* label, yq::SCALED<float,DIM,K>& v, const InputFloatScaledOptions<DIM,K>& options={})
+    {
+        return Input(label, &v.value, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .max        = options.max.value,
+            .min        = options.min.value,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
     
+    template <typename DIM, double K>
+    bool    Input(const char* label, yq::Vector2<yq::SCALED<float,DIM,K>>& v, const InputFloatScaledOptions<DIM,K>& options={})
+    {
+        return Input2(label, (float*) &v, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
+
+    template <typename DIM, double K>
+    bool    Input(const char* label, yq::Vector3<yq::SCALED<float,DIM,K>>& v, const InputFloatScaledOptions<DIM,K>& options={})
+    {
+        return Input3(label, (float*) &v, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .max        = options.max.value,
+            .min        = options.min.value,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
+
+    template <typename DIM, double K>
+    bool    Input(const char* label, yq::Vector4<yq::SCALED<float,DIM,K>>& v, const InputFloatScaledOptions<DIM,K>& options={})
+    {
+        return Input4(label, (float*) &v, InputFloatOptions{
+            .flags      = options.flags,
+            .format     = options.format,
+            .max        = options.max.value,
+            .min        = options.min.value,
+            .step       = options.step.value,
+            .step_fast  = options.step_fast.value
+        });
+    }
+
     #if 0
     ///////////////////////////
     //  SPINNERS (DISABLED)

@@ -17,8 +17,13 @@ static_assert(sizeof(void*) == sizeof(uint64_t), "Breakage means ImGui textures 
 #include <yq/math/UV.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/shape/Size2.hpp>
+#include <yq/shape/Size3.hpp>
+#include <yq/shape/Size4.hpp>
 #include <yq/tensor/Tensor44.hpp>
+#include <yq/vector/Quaternion3.hpp>
+#include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
+#include <yq/vector/Vector4.hpp>
 
 thread_local ImGuiContext* MyImGuiTLS   = nullptr;
 
@@ -75,67 +80,53 @@ namespace ImGui {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    bool    DragDouble(const char* label, double* v, const DragDoubleOptions& options)
+    bool    Drag(const char* label, double*v, const DragDoubleOptions& options)
     {
         return DragScalar(label, ImGuiDataType_Double, v, options.speed, &options.min, &options.max, options.format, options.flags );
     }
     
-    bool    DragDouble(const char* label, double& v, const DragDoubleOptions& options)
+    bool    Drag(const char* label, double&v, const DragDoubleOptions& options)
     {
         return DragScalar(label, ImGuiDataType_Double, &v, options.speed, &options.min, &options.max, options.format, options.flags );
     }
+    
 
-    bool    DragDouble(const char* label, double*v, float v_speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
+    bool    Drag(const char* label, yq::Vector2D&v, const DragDoubleOptions& options)
     {
-        return DragScalar(label, ImGuiDataType_Double, v, v_speed, &v_min, &v_max, format, flags);
+        return Drag2(label, (double*) &v, options);
     }
     
-    bool    DragDouble(const char* label, double&v, float v_speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
+    bool    Drag(const char* label, yq::Vector3D&v, const DragDoubleOptions& options)
     {
-        return DragScalar(label, ImGuiDataType_Double, &v, v_speed, &v_min, &v_max, format, flags);
+        return Drag3(label, (double*) &v, options);
     }
     
-    bool    DragDouble2(const char* label, double v[2], float v_speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
+    bool    Drag(const char* label, yq::Vector4D&v, const DragDoubleOptions& options)
     {
-        return DragScalarN(label, ImGuiDataType_Double, v, 2, v_speed, &v_min, &v_max, format, flags);
+        return Drag4(label, (double*) &v, options);
     }
 
-    bool    DragDouble2(const char* label, yq::Vector2D*v, float speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
+    bool    Drag2(const char* label, double v[2], const DragDoubleOptions& options)
     {
-        return DragDouble2(label, (double*) v, speed, v_min, v_max, format, flags);
+        return DragScalarN(label, ImGuiDataType_Double, v, 2, options.speed, &options.min, &options.max, options.format, options.flags);
     }
     
-    bool    DragDouble3(const char* label, double v[3], float v_speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
+    bool    Drag3(const char* label, double v[3], const DragDoubleOptions& options)
     {
-        return DragScalarN(label, ImGuiDataType_Double, v, 3, v_speed, &v_min, &v_max, format, flags);
+        return DragScalarN(label, ImGuiDataType_Double, v, 3, options.speed, &options.min, &options.max, options.format, options.flags);
     }
     
-    bool    DragDouble3(const char* label, yq::Vector3D*v, float speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
+    bool    Drag4(const char* label, double v[4], const DragDoubleOptions& options)
     {
-        return DragDouble3(label, (double*) v, speed, v_min, v_max, format, flags);
+        return DragScalarN(label, ImGuiDataType_Double, v, 4, options.speed, &options.min, &options.max, options.format, options.flags);
     }
-    
-    bool    DragDouble4(const char* label, double v[4], float v_speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
-    {
-        return DragScalarN(label, ImGuiDataType_Double, v, 4, v_speed, &v_min, &v_max, format, flags);
-    }
-    
-    bool    DragDouble4(const char* label, yq::Vector4D*v, float speed, double v_min, double v_max, const char* format, ImGuiSliderFlags flags)
-    {
-        return DragDouble4(label, (double*) v, speed, v_min, v_max, format, flags);
-    }
+
 
     ////////////////////////////////////////////////////////////////////////////
+    //  INPUT (DOUBLES)
     
     namespace {
         const void* stepptr(const InputDoubleOptions& options)
-        {
-            if(options.step > 0.)
-                return &options.step;
-            return nullptr;
-        }
-
-        const void* stepptr(const InputDoubleQuatOptions& options)
         {
             if(options.step > 0.)
                 return &options.step;
@@ -148,102 +139,94 @@ namespace ImGui {
                 return &options.step_fast;
             return nullptr;
         }
-
-        const void* stepfastptr(const InputDoubleQuatOptions& options)
-        {
-            if(options.step_fast > 0.)
-                return &options.step_fast;
-            return nullptr;
-        }
     }
 
-    bool    InputDouble(const char* label, double* v, const InputDoubleOptions& options)
+    bool    Input(const char* label, double* v, const InputDoubleOptions& options)
     {   
         return InputDouble(label, v, options.step, options.step_fast, options.format, options.flags);
     }
     
-    bool    InputDouble(const char* label, double& v, const InputDoubleOptions& options)
+    bool    Input(const char* label, double& v, const InputDoubleOptions& options)
     {
         return InputDouble(label, &v, options.step, options.step_fast, options.format, options.flags);
     }
 
-    bool    InputDouble(const char* label, yq::UV2D*v, const InputDoubleOptions& options)
+    bool    Input(const char* label, yq::RGB3F& v, const InputFloatQuatOptions& options)
     {
-        return InputDouble2(label, (double*) v, options);
+        return Input3(label, (float*) &v, options);
     }
     
-    bool    InputDouble(const char* label, yq::UV2D&v, const InputDoubleOptions& options)
+    bool    Input(const char* label, yq::RGBA4F& v, const InputFloatQuatOptions& options)
     {
-        return InputDouble2(label, (double*) &v, options);
+        return Input4(label, (float*) &v, options);
     }
 
-    bool    InputDouble(const char* label, yq::Vector2D* v, const InputDoubleOptions& options)
+    bool    Input(const char* label, yq::Size2D&v, const InputDoubleOptions& options)
     {
-        return InputDouble2(label, (double*) v, options);
+        return Input2(label, (double*) &v, options);
     }
     
-    bool    InputDouble(const char* label, yq::Vector2D& v, const InputDoubleOptions& options)
+    bool    Input(const char* label, yq::Size3D&v, const InputDoubleOptions& options)
     {
-        return InputDouble2(label, (double*) &v, options);
-    }
-    
-    bool    InputDouble(const char* label, yq::Vector3D* v, const InputDoubleOptions& options)
-    {
-        return InputDouble3(label, (double*) v, options);
-    }
-    
-    bool    InputDouble(const char* label, yq::Vector3D& v, const InputDoubleOptions& options)
-    {
-        return InputDouble3(label, (double*) &v, options);
-    }
-    
-    bool    InputDouble(const char* label, yq::Vector4D* v, const InputDoubleOptions& options)
-    {
-        return InputDouble4(label, (double*) v, options);
+        return Input3(label, (double*) &v, options);
     }
 
-    bool    InputDouble(const char* label, yq::Vector4D& v, const InputDoubleOptions& options)
+    bool    Input(const char* label, yq::Size4D&v, const InputDoubleOptions& options)
     {
-        return InputDouble4(label, (double*) &v, options);
-    }
-    
-    bool    InputDouble(const char* label, yq::Quaternion3D*v, const InputDoubleQuatOptions& options)
-    {
-        return InputScalarN(label, ImGuiDataType_Double, v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
-    }
-    
-    bool    InputDouble(const char* label, yq::Quaternion3D&v, const InputDoubleQuatOptions& options)
-    {
-        return InputScalarN(label, ImGuiDataType_Double, &v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
+        return Input4(label, (double*) &v, options);
     }
 
-    bool    InputDouble2(const char* label, double v[2], const InputDoubleOptions& options)
+    bool    Input(const char* label, yq::UV2D&v, const InputDoubleOptions& options)
+    {
+        return Input2(label, (double*) &v, options);
+    }
+    
+    bool    Input(const char* label, yq::UVW3D&v, const InputDoubleOptions& options)
+    {
+        return Input3(label, (double*) &v, options);
+    }
+    
+    bool    Input(const char* label, yq::Vector2D& v, const InputDoubleOptions& options)
+    {
+        return Input2(label, (double*) &v, options);
+    }
+    
+    bool    Input(const char* label, yq::Vector3D& v, const InputDoubleOptions& options)
+    {
+        return Input3(label, (double*) &v, options);
+    }
+    
+    bool    Input(const char* label, yq::Vector4D& v, const InputDoubleOptions& options)
+    {
+        return Input4(label, (double*) &v, options);
+    }
+    
+    bool    Input(const char* label, yq::Quaternion3D&v, const InputDoubleQuatOptions& options)
+    {
+        return Input4(label, (double*) &v, (InputDoubleOptions) options);
+    }
+
+    bool    Input2(const char* label, double v[2], const InputDoubleOptions& options)
     {
         return InputScalarN(label, ImGuiDataType_Double, v, 2, stepptr(options), stepfastptr(options), options.format, options.flags);
     }
     
-    bool    InputDouble3(const char* label, double v[3], const InputDoubleOptions& options)
+    bool    Input3(const char* label, double v[3], const InputDoubleOptions& options)
     {
         return InputScalarN(label, ImGuiDataType_Double, v, 3, stepptr(options), stepfastptr(options), options.format, options.flags);
     }
     
-    bool    InputDouble4(const char* label, double v[4], const InputDoubleOptions& options)
+    bool    Input4(const char* label, double v[4], const InputDoubleOptions& options)
     {
         return InputScalarN(label, ImGuiDataType_Double, v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////
-
+    //  INPUT (FLOATS)
+    
     namespace {
         const void* stepptr(const InputFloatOptions& options)
-        {
-            if(options.step > 0.)
-                return &options.step;
-            return nullptr;
-        }
-
-        const void* stepptr(const InputFloatQuatOptions& options)
         {
             if(options.step > 0.)
                 return &options.step;
@@ -256,87 +239,74 @@ namespace ImGui {
                 return &options.step_fast;
             return nullptr;
         }
-
-        const void* stepfastptr(const InputFloatQuatOptions& options)
-        {
-            if(options.step_fast > 0.)
-                return &options.step_fast;
-            return nullptr;
-        }
     }
-    
-    
-    bool    InputFloat(const char* label, float*v, const InputFloatOptions& options)
+        
+    bool    Input(const char* label, float* v, const InputFloatOptions& options)
     {
         return InputFloat(label, v, options.step, options.step_fast, options.format, options.flags);
     }
-    
-    bool    InputFloat(const char* label, float&v, const InputFloatOptions& options)
+
+    bool    Input(const char* label, float&v, const InputFloatOptions& options)
     {
         return InputFloat(label, &v, options.step, options.step_fast, options.format, options.flags);
     }
 
-    bool    InputFloat(const char* label, yq::UV2F*v, const InputFloatOptions& options)
+    bool    Input(const char* label, yq::Size2F&v, const InputFloatOptions& options)
     {
-        return InputFloat2(label, (float*) v, options);
-    }
-    
-    bool    InputFloat(const char* label, yq::UV2F&v, const InputFloatOptions& options)
-    {
-        return InputFloat2(label, (float*) &v, options);
+        return Input2(label, (float*) &v, options);
     }
 
-    bool    InputFloat(const char* label, yq::Vector2F*v, const InputFloatOptions& options)
+    bool    Input(const char* label, yq::Size3F&v, const InputFloatOptions& options)
     {
-        return InputFloat2(label, (float*) v, options);
-    }
-    
-    bool    InputFloat(const char* label, yq::Vector2F&v, const InputFloatOptions& options)
-    {
-        return InputFloat2(label, (float*) &v, options);
+        return Input3(label, (float*) &v, options);
     }
 
-    bool    InputFloat(const char* label, yq::Vector3F*v, const InputFloatOptions& options)
+    bool    Input(const char* label, yq::Size4F&v, const InputFloatOptions& options)
     {
-        return InputFloat3(label, (float*) v, options);
-    }
-    
-    bool    InputFloat(const char* label, yq::Vector3F&v, const InputFloatOptions& options)
-    {
-        return InputFloat3(label, (float*) &v, options);
+        return Input4(label, (float*) &v, options);
     }
 
-    bool    InputFloat(const char* label, yq::Vector4F*v, const InputFloatOptions& options)
+    bool    Input(const char* label, yq::UV2F&v, const InputFloatOptions& options)
     {
-        return InputFloat4(label, (float*) v, options);
-    }
-    
-    bool    InputFloat(const char* label, yq::Vector4F&v, const InputFloatOptions& options)
-    {
-        return InputFloat4(label, (float*) &v, options);
+        return Input2(label, (float*) &v, options);
     }
 
-    bool    InputFloat(const char* label, yq::Quaternion3F*v, const InputFloatQuatOptions& options)
+    bool    Input(const char* label, yq::UVW3F&v, const InputFloatOptions& options)
     {
-        return InputScalarN(label, ImGuiDataType_Float, (float*) v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
+        return Input3(label, (float*) &v, options);
+    }
+
+    bool    Input(const char* label, yq::Vector2F&v, const InputFloatOptions& options)
+    {
+        return Input2(label, (float*) &v, options);
+    }
+
+    bool    Input(const char* label, yq::Vector3F&v, const InputFloatOptions& options)
+    {
+        return Input3(label, (float*) &v, options);
+    }
+
+    bool    Input(const char* label, yq::Vector4F&v, const InputFloatOptions& options)
+    {
+        return Input4(label, (float*) &v, options);
+    }
+
+    bool    Input(const char* label, yq::Quaternion3F&v, const InputFloatQuatOptions& options)
+    {
+        return Input4(label, (float*) &v, (InputFloatOptions) options);
     }
     
-    bool    InputFloat(const char* label, yq::Quaternion3F&v, const InputFloatQuatOptions& options)
-    {
-        return InputScalarN(label, ImGuiDataType_Float, (float*) &v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
-    }
-    
-    bool    InputFloat2(const char* label, float v[2], const InputFloatOptions& options)  
+    bool    Input2(const char* label, float v[2], const InputFloatOptions& options)  
     {
         return InputScalarN(label, ImGuiDataType_Float, v, 2, stepptr(options), stepfastptr(options), options.format, options.flags);
     }
     
-    bool    InputFloat3(const char* label, float v[3], const InputFloatOptions& options) 
+    bool    Input3(const char* label, float v[3], const InputFloatOptions& options) 
     {
         return InputScalarN(label, ImGuiDataType_Float, v, 3, stepptr(options), stepfastptr(options), options.format, options.flags);
     }
 
-    bool    InputFloat4(const char* label, float v[4], const InputFloatOptions& options)  
+    bool    Input4(const char* label, float v[4], const InputFloatOptions& options)  
     {
         return InputScalarN(label, ImGuiDataType_Float, v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
     }

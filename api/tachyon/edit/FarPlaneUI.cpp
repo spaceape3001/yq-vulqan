@@ -42,7 +42,7 @@ namespace yq::tachyon {
             return ;
             
         double    v   = p->far_plane();
-        if(ImGui::InputDouble("##far", v))
+        if(ImGui::Input("##far", v))
             p -> far_plane(SET, v);
     }
 }

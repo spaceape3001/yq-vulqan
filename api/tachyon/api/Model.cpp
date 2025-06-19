@@ -62,6 +62,8 @@ namespace yq::tachyon {
         auto wt = writer<ModelID>();
         wt.description("Model Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Model>);
+        wt.casts<TachyonID>();
     }
 }
 

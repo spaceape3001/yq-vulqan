@@ -10,5 +10,6 @@
 
 namespace yq::tachyon {
     //! Use this to make a property listable by a logger
-    static constexpr const int kTag_Log     = 2000;
+    static constexpr const int kTag_Log         = 2000;
+    static constexpr const int kTag_TachyonID   = 2001;
 }

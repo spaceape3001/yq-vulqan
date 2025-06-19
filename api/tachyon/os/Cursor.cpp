@@ -62,6 +62,8 @@ namespace yq::tachyon {
         auto wt = writer<CursorID>();
         wt.description("Cursor Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Cursor>);
+        wt.casts<TachyonID>();
     }
 }
 

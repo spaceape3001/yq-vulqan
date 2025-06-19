@@ -97,6 +97,8 @@ namespace yq::tachyon {
         auto wt = writer<DesktopID>();
         wt.description("Desktop Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Desktop>);
+        wt.casts<TachyonID>();
     }
 }
 

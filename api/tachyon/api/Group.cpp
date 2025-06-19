@@ -52,6 +52,8 @@ namespace yq::tachyon {
         auto wt = writer<GroupID>();
         wt.description("Group Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Group>);
+        wt.casts<TachyonID>();
     }
 
 }

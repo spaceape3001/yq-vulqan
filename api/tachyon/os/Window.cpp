@@ -81,6 +81,8 @@ namespace yq::tachyon {
         auto wt = writer<WindowID>();
         wt.description("Window Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Window>);
+        wt.casts<TachyonID>();
     }
 }
 

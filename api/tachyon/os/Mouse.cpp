@@ -61,6 +61,8 @@ namespace yq::tachyon {
         auto wt = writer<MouseID>();
         wt.description("Mouse Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Mouse>);
+        wt.casts<TachyonID>();
     }
 }
 

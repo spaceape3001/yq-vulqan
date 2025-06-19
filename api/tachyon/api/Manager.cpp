@@ -45,6 +45,8 @@ namespace yq::tachyon {
         auto wt = writer<ManagerID>();
         wt.description("Manager Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Manager>);
+        wt.casts<TachyonID>();
     }
 }
 

@@ -1599,6 +1599,7 @@ namespace yq::tachyon {
         auto wt = writer<TachyonID>();
         wt.description("Unique Tachyon Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Tachyon>);
     }
 
 }

@@ -22,8 +22,9 @@ namespace yq::tachyon {
     class Save;
 
     struct SaveProperty {
-        const PropertyInfo*         info    = nullptr;
+        const PropertyInfo*         info        = nullptr;
         Any                         value;
+        bool                        isTachID    = false;
     };
     
     enum class SaveType {

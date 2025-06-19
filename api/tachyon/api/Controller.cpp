@@ -199,5 +199,7 @@ namespace yq::tachyon {
         auto wt = writer<ControllerID>();
         wt.description("Controller Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Controller>);
+        wt.casts<TachyonID>();
     }
 }

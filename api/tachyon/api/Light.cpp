@@ -66,6 +66,8 @@ namespace yq::tachyon {
         auto wt = writer<LightID>();
         wt.description("Light Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Light>);
+        wt.casts<TachyonID>();
     }
 }
 

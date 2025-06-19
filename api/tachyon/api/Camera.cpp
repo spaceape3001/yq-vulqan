@@ -68,6 +68,8 @@ namespace yq::tachyon {
         auto wt = writer<CameraID>();
         wt.description("Camera Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Camera>);
+        wt.casts<TachyonID>();
     }
 }
 

@@ -20,7 +20,7 @@ namespace yq::tachyon {
             any_x   val = pi->get(&obj);
             if(!val)
                 continue;
-            m_properties.push_back({ pi, std::move(*val) });
+            m_properties.push_back({ pi, std::move(*val), pi->tagged(kTag_TachyonID) });
         }
     }
     

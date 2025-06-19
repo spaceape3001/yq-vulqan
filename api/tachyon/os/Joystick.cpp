@@ -61,6 +61,8 @@ namespace yq::tachyon {
         auto wt = writer<JoystickID>();
         wt.description("Joystick Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Joystick>);
+        wt.casts<TachyonID>();
     }
 }
 

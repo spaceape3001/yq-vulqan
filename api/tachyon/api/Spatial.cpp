@@ -67,5 +67,7 @@ namespace yq::tachyon {
         auto wt = writer<SpatialID>();
         wt.description("Spatial Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Spatial>);
+        wt.casts<TachyonID>();
     }
 }

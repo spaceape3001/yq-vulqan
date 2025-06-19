@@ -58,6 +58,8 @@ namespace yq::tachyon {
         auto wt = writer<LayerID>();
         wt.description("Layer Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Layer>);
+        wt.casts<TachyonID>();
     }
 
 }

@@ -82,6 +82,8 @@ namespace yq::tachyon {
         auto wt = writer<MonitorID>();
         wt.description("Monitor Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Monitor>);
+        wt.casts<TachyonID>();
     }
 }
 

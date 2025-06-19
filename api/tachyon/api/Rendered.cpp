@@ -223,6 +223,8 @@ namespace yq::tachyon {
         auto wt = writer<RenderedID>();
         wt.description("Rendered Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Rendered>);
+        wt.casts<TachyonID>();
     }
 }
 

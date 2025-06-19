@@ -31,4 +31,11 @@ namespace yq::tachyon {
         requires (!std::derived_from<T,T2>)
         explicit constexpr operator ID<T2>() const noexcept { return { id }; }
     };
+    
+    template <typename T>
+    ID<T>   construct_id(uint64_t i) 
+    {
+        return { i };
+    }
+    
 }

@@ -27,6 +27,8 @@ namespace yq::tachyon {
     {
         auto w = writer<TypedID>();
         w.description("Typed Identifier");
+        w.set(Meta::Flag::ID);
+        w.casts<TachyonID>();
     }
     
     YQ_INVOKE( reg_typedid(); )

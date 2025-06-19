@@ -86,6 +86,8 @@ namespace yq::tachyon {
         auto wt = writer<SceneID>();
         wt.description("Scene Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Scene>);
+        wt.casts<TachyonID>();
     }
 
 }

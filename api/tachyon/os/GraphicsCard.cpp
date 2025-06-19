@@ -61,6 +61,8 @@ namespace yq::tachyon {
         auto wt = writer<GraphicsCardID>();
         wt.description("Graphics Card Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<GraphicsCard>);
+        wt.casts<TachyonID>();
     }
 }
 

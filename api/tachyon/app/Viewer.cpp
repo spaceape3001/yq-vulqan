@@ -187,7 +187,8 @@ namespace yq::tachyon {
         auto wt = writer<ViewerID>();
         wt.description("Viewer Identifier");
         wt.set(Meta::Flag::ID);
-        
+        wt.constructor(construct_id<Viewer>);
+        wt.casts<TachyonID>();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

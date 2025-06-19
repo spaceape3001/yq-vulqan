@@ -60,6 +60,8 @@ namespace yq::tachyon {
         auto wt = writer<GamepadID>();
         wt.description("Gamepad Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Gamepad>);
+        wt.casts<TachyonID>();
     }
 }
 

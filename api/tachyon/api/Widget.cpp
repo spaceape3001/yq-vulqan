@@ -126,6 +126,8 @@ namespace yq::tachyon {
         auto wt = writer<WidgetID>();
         wt.description("Widget Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Widget>);
+        wt.casts<TachyonID>();
     }
 
     void Widget::push_buffer(PushBuffer&pb, const PreContext&ctx, const RenderedSnap&sn)

@@ -111,6 +111,8 @@ namespace yq::tachyon {
         auto wt = writer<ThreadID>();
         wt.description("Thread Identifier");
         wt.set(Meta::Flag::ID);
+        wt.constructor(construct_id<Thread>);
+        wt.casts<TachyonID>();
     }
 
     std::vector<ThreadPtr>   Thread::all()

@@ -33,7 +33,7 @@ namespace yq::tachyon {
     UIEditorInfo::UIEditorInfo(std::string_view name, UIElements::MyInfo&base, const std::source_location& sl) :
         UIElements::MyInfo(name, base, sl)
     {
-tachyonInfo << "UIEditorInfo(" << name << ")";
+//tachyonInfo << "UIEditorInfo(" << name << ")";
         repo().all.push_back(this);
     }
 

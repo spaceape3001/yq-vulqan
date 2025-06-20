@@ -30,8 +30,8 @@ void    create_spatial()
     g_spatial -> set_position(Vector3D(1, 2, 3));
     g_spatial -> set_orientation(k_quat);
     g_spatial -> set_scale(Vector3D(1., -0.5, 3.0));
+    g_spatial -> set_domain(*g_spatial);
 }
-
 
 void    write_simple_spatial()
 {
@@ -45,7 +45,7 @@ void    write_simple_spatial()
     
     expect(tac != nullptr);
     if(tac){
-        expect(tac->count(PROPERTY) == 3);
+        expect(tac->count(PROPERTY) == 4);
     }
     
     std::error_code ec  = sxml.save_to("simple.tsx");
@@ -89,6 +89,7 @@ void    recreate_simple_spatial()
     expect(true == is_close(tol, ss3->position(), 1., 2., 3. ));
     expect(true == is_close(tol, ss3->orientation(), ~k_quat));
     expect(true == is_close(tol, ss3->scale(), 1.0, -0.5, 3.0));
+    expect(ss3->domain() == ss3->id());
 }
 
 int main(int argc, char* argv[])

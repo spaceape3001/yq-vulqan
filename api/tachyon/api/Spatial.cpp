@@ -4,7 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Spatial.hpp>
+#include "Spatial.hpp"
+
+#include <tachyon/tags.hpp>
 #include <tachyon/api/SpatialData.hpp>
 #include <tachyon/api/SpatialInfoWriter.hpp>
 #include <yq/meta/Init.hpp>
@@ -50,6 +52,11 @@ namespace yq::tachyon {
     {
     }
 
+    void Spatial::set_domain(TypedID m)
+    {
+        m_domain    = m;
+    }
+
     void Spatial::snap(SpatialSnap&sn) const
     {
         Tachyon::snap(sn);
@@ -63,6 +70,7 @@ namespace yq::tachyon {
         auto w = writer<Spatial>();
         w.description("Spatial Delegate");
         w.abstract();
+        w.property("domain", &Spatial::m_domain).tag({kTag_TachyonID, kTag_Save});
 
         auto wt = writer<SpatialID>();
         wt.description("Spatial Identifier");

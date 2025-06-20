@@ -43,15 +43,17 @@ namespace yq::tachyon {
         virtual uint8_t dimensions(count_k) const = 0;
     
         // For a geodetic based spatial, this domain would be the planet
-        SpatialID       domain() const { return m_domain; }
+        TypedID         domain() const { return m_domain; }
         
         SpatialID       id() const { return SpatialID(UniqueID::id()); }
 
         static void init_info();
         
         struct Param : public Tachyon::Param {
-            SpatialID   domain;
+            TypedID     domain;
         };
+        
+        void            set_domain(TypedID);
     
     protected:
         Spatial(const Param&);
@@ -60,7 +62,7 @@ namespace yq::tachyon {
         void snap(SpatialSnap&) const;
     
     private:
-        SpatialID       m_domain;
+        TypedID         m_domain;
     };
 }
 YQ_TYPE_DECLARE(yq::tachyon::SpatialID)

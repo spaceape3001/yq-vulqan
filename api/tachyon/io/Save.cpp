@@ -350,16 +350,17 @@ namespace yq::tachyon {
     namespace errors {
         using namespace ::yq::errors;
         
-        using bad_asset         = error_db::entry<"Save unable to create asset">;
-        using bad_delegate      = error_db::entry<"Save unable to create delegate">;
-        using bad_tachyon       = error_db::entry<"Save unable to create tachyon">;
-        using bad_thread        = error_db::entry<"Save unable to create thread">;
-        using bad_parent        = error_db::entry<"Save unable to associate tachyon's parent">;
-        using bad_owner         = error_db::entry<"Save unable to associate tachyon's owner">;
-        using null_application  = error_db::entry<"Application not found">;
-        using null_frame        = error_db::entry<"Requested frame not found">;
-        using null_owner        = error_db::entry<"Requested owner not found">;
-        using null_parent       = error_db::entry<"Requested parent not found">;
+        using bad_asset             = error_db::entry<"Save unable to create asset">;
+        using bad_delegate          = error_db::entry<"Save unable to create delegate">;
+        using bad_tachyon           = error_db::entry<"Save unable to create tachyon">;
+        using bad_thread            = error_db::entry<"Save unable to create thread">;
+        using bad_parent            = error_db::entry<"Save unable to associate tachyon's parent">;
+        using bad_owner             = error_db::entry<"Save unable to associate tachyon's owner">;
+        using invalid_id_property   = error_db::entry<"Bad ID property">;
+        using null_application      = error_db::entry<"Application not found">;
+        using null_frame            = error_db::entry<"Requested frame not found">;
+        using null_owner            = error_db::entry<"Requested owner not found">;
+        using null_parent           = error_db::entry<"Requested parent not found">;
     }
 
     struct Save::Reincarnator {
@@ -397,6 +398,15 @@ namespace yq::tachyon {
         std::vector<TachyonID>                  m_topChild; //!< Top level child to what was passed in
         bool                                    m_threading;
         
+        Tachyon*      tachyon_ptr(uint64_t i)
+        {
+            auto itr = m_tachyons.find(i);
+            if(itr != m_tachyons.end())
+                return itr->second.tachyon.ptr();
+            return nullptr;
+        }
+        
+        
         Reincarnator(const Save& save, const ReincarnationConfig& cfg, bool threading) : 
             m_save(save), m_config(cfg), m_threading(threading)
         {
@@ -404,6 +414,7 @@ namespace yq::tachyon {
         
         std::error_code load_attributes(Tachyon* tac, const SaveTachyon& sv)
         {
+            //  TODO ... prog & user attributes with tachyon IDs
             tac -> load_attributes(sv.prog_attributes());
             tac -> load_attributes(sv.user_attributes());
             return {};
@@ -422,7 +433,22 @@ namespace yq::tachyon {
                 if(!p.info)
                     continue;
                 remaining.erase(p.info);
-                ec = p.info->set(obj, p.value);
+                
+                if(p.isTachID){
+                    uint64_t    id      = p.value.value<uint64_t>();
+                    if(p.info->type().id() == meta<TypedID>().id()){
+                        const Tachyon* t    = tachyon_ptr(id);
+                        if(!t)
+                            return errors::invalid_id_property();
+                        ec  = p.info->set(obj, Any(TypedID(*t)));
+                    } else {
+                        any_x       value   = p.info->type().construct(id);
+                        if(!value)
+                            return errors::invalid_id_property();
+                        ec  = p.info->set(obj, *value);
+                    }
+                } else 
+                    ec = p.info->set(obj, p.value);
                 if(ec != std::error_code())
                     return ec;
             }

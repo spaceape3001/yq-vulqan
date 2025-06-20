@@ -5,23 +5,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SaveXML.hpp"
-#include <yq/asset/Asset.hpp>
-#include <yq/xml/XmlUtils.hpp>
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
+#include <tachyon/tags.hpp>
+#include <tachyon/api/Delegate.hpp>
+#include <tachyon/api/Thread.hpp>
+#include <tachyon/api/meta/AssetProperty.hpp>
+#include <tachyon/api/meta/DelegateProperty.hpp>
+#include <tachyon/app/Application.hpp>
 #include <tachyon/io/Save.hpp>
 #include <tachyon/io/save/SaveAsset.hpp>
 #include <tachyon/io/save/SaveDelegate.hpp>
 #include <tachyon/io/save/SaveTachyon.hpp>
 #include <tachyon/io/save/SaveThread.hpp>
+
+#include <yq/asset/Asset.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/format.hpp>
 #include <yq/text/parse.hpp>
-#include <tachyon/app/Application.hpp>
-#include <tachyon/api/Delegate.hpp>
-#include <tachyon/api/Thread.hpp>
-#include <tachyon/api/meta/AssetProperty.hpp>
-#include <tachyon/api/meta/DelegateProperty.hpp>
+#include <yq/xml/XmlUtils.hpp>
 
 namespace yq::tachyon {
     static constexpr const char*    szApplication   = "application";
@@ -66,6 +68,7 @@ namespace yq::tachyon {
         using not_delegate_class            = error_db::entry<"TSX class attribute is not a delegate">;
         using not_tachyon_class             = error_db::entry<"TSX class attribute is not a tachyon">;
         using not_thread_class              = error_db::entry<"TSX class attribute is not a thread">;
+        using invalid_id_property           = error_db::entry<"TSX property attribute has a bad ID">;
     }
 
     SaveXML::SaveXML()
@@ -148,21 +151,28 @@ namespace yq::tachyon {
             prop.info = sv.info()->property(pn);
             if(!prop.info)
                 return errors::invalid_prop_name_attribute();
-            
-            const TypeInfo* ti  = nullptr;
-            std::string     tn  = read_attribute(*xc, szType, x_string);
-            if(tn.empty()){
-                ti      = &prop.info->type();
-            } else {
-                ti      = TypeInfo::find(tn);
-            }
-            if(!ti)
-                return errors::invalid_prop_type_attribute();
                 
-            std::error_code     ec  = read(prop.value, *xc, *ti);
-            if(ec != std::error_code())
-                return ec;
-            
+            if(prop.info->tagged(kTag_TachyonID)){
+                uint64_x    idx = x_uint64(*xc);
+                if(!idx)
+                    continue;
+                prop.value      = Any(*idx);
+                prop.isTachID   = true;
+            } else {
+                const TypeInfo* ti  = nullptr;
+                std::string     tn  = read_attribute(*xc, szType, x_string);
+                if(tn.empty()){
+                    ti      = &prop.info->type();
+                } else {
+                    ti      = TypeInfo::find(tn);
+                }
+                if(!ti)
+                    return errors::invalid_prop_type_attribute();
+                    
+                std::error_code     ec  = read(prop.value, *xc, *ti);
+                if(ec != std::error_code())
+                    return ec;
+            }
             sv.append(std::move(prop));
         }
         return {};
@@ -333,9 +343,6 @@ namespace yq::tachyon {
     
     std::error_code    SaveXML::read(const XmlNode&xml, object_k)
     {
-        return errors::todo();  // We don't support full object save/load (yet)
-        
-    #if 0
         const XmlAttribute* xclass  = xml.first_attribute(szClass);
         if(!xclass)
             return errors::missing_class_attribute();
@@ -345,6 +352,9 @@ namespace yq::tachyon {
         if(!cinfo)
             return errors::invalid_class_attribute();
 
+        return errors::todo();  // We don't support full arbitrary object save/load (yet)
+
+    #if 0
         return read(*(save->create(cinfo)), OBJECT, xml);
     #endif
     }
@@ -471,18 +481,31 @@ namespace yq::tachyon {
     {
         xml.create_attribute(szClass, obj.info()->name());
         for(auto& p : obj.properties()){
-            const TypeInfo& type    = p.value.type();
-            bool    same            = type.id() == p.info->type().id();
-            if(same && p.info->is_default(p.value)) // not regurgitating default values
-                continue;
+            if(p.isTachID){
+                TachyonID       tacID   = p.value.value<TachyonID>();
+                if(!tacID)
+                    continue;
+                const SaveTachyon* tac   = save->tachyon(tacID);
+                if(!tac)
+                    continue;
+                
+                XmlNode& prop   = *(xml.create_element(szProperty));
+                prop.create_attribute(szName, p.info->name());
+                write_x(prop, tac->remap());
+            } else {
+                const TypeInfo& type    = p.value.type();
+                bool    same            = type.id() == p.info->type().id();
+                if(same && p.info->is_default(p.value)) // not regurgitating default values
+                    continue;
 
-            XmlNode& prop   = *(xml.create_element(szProperty));
-            prop.create_attribute(szName, p.info->name());
-            if(!same){
-                prop.create_attribute(szType, type.name());
+                XmlNode& prop   = *(xml.create_element(szProperty));
+                prop.create_attribute(szName, p.info->name());
+                if(!same){
+                    prop.create_attribute(szType, type.name());
+                }
+                
+                write(prop, p.value);
             }
-            
-            write(prop, p.value);
         }
     }
 

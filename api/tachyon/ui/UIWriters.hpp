@@ -13,6 +13,7 @@
 #include <tachyon/ui/UICheckBoxWriter.hpp>
 #include <tachyon/ui/UIEditorWriter.hpp>
 #include <tachyon/ui/UIElementsWriter.hpp>
+#include <tachyon/ui/UIFormWriter.hpp>
 #include <tachyon/ui/UIGroupWriter.hpp>
 #include <tachyon/ui/UILayoutWriter.hpp>
 #include <tachyon/ui/UIImageWriter.hpp>

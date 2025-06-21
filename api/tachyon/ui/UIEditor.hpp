@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/api/TypedID.hpp>
-#include <tachyon/ui/UIElements.hpp>
+#include <tachyon/ui/UIForm.hpp>
 #include <tachyon/typedef/tachyon.hpp>
 #include <yq/shape/Size2.hpp>
 
@@ -20,17 +20,15 @@ namespace yq::tachyon {
     template <typename C>
     concept SomeUIEditor = std::derived_from<C,UIEditor>;
     
-    class UIEditorInfo : public UIElements::MyInfo {    // using this syntax in case UIElements gets a dedicated info object
+    class UIEditorInfo : public UIFormInfo { 
     public:
         template <typename> class Writer;
         
-        UIEditorInfo(std::string_view, UIElements::MyInfo&, const std::source_location& sl = std::source_location::current());
+        UIEditorInfo(std::string_view, UIFormInfo&, const std::source_location& sl = std::source_location::current());
     
         //! List of classes this thing will edit
         const std::vector<const TachyonInfo*>& edits(tachyon_k) const { return m_editTachyons; }
         const std::vector<const InterfaceInfo*>& edits(proxy_k) const { return m_editIProxies; }
-        
-        bool    has_fields() const;
         
         static const std::vector<const UIEditorInfo*>& all();
         
@@ -41,13 +39,8 @@ namespace yq::tachyon {
         struct Repo;
         static Repo& repo();
         
-        struct Field;
-        class FieldExecutor;
-        template <SomeUIEditor C> struct BoundFieldExecutor;
-    
         std::vector<const TachyonInfo*>     m_editTachyons;
         std::vector<const InterfaceInfo*>   m_editIProxies;
-        std::vector<Field>                  m_fields;
     };
     
     /*! \brief ImGui Editor Panel for a tachyon object
@@ -55,9 +48,9 @@ namespace yq::tachyon {
         \note The constructor *WON'T* have a specific tachyon, do that 
         configuration upon bind.
     */
-    class UIEditor : public UIElements {
+    class UIEditor : public UIForm {
         YQ_OBJECT_INFO(UIEditorInfo)
-        YQ_OBJECT_DECLARE(UIEditor, UIElements)
+        YQ_OBJECT_DECLARE(UIEditor, UIForm)
     public:
         using Writer = UIEditorWriter;
 

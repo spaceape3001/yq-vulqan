@@ -30,16 +30,10 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    UIEditorInfo::UIEditorInfo(std::string_view name, UIElements::MyInfo&base, const std::source_location& sl) :
-        UIElements::MyInfo(name, base, sl)
+    UIEditorInfo::UIEditorInfo(std::string_view name, UIFormInfo&base, const std::source_location& sl) :
+        UIFormInfo(name, base, sl)
     {
         repo().all.push_back(this);
-    }
-
-
-    bool    UIEditorInfo::has_fields() const
-    {
-        return !m_fields.empty();
     }
 
     ////////////////////////////
@@ -51,11 +45,11 @@ namespace yq::tachyon {
         w.abstract();
     }
     
-    UIEditor::UIEditor(UIFlags flags) : UIElements(flags)
+    UIEditor::UIEditor(UIFlags flags) : UIForm(flags)
     {
     }
     
-    UIEditor::UIEditor(const UIEditor& cp) : UIElements(cp), m_bind(cp.m_bind), m_snap(nullptr)
+    UIEditor::UIEditor(const UIEditor& cp) : UIForm(cp), m_bind(cp.m_bind), m_snap(nullptr)
     {
     }
     
@@ -77,34 +71,8 @@ namespace yq::tachyon {
         m_snap          = frame->snap(m_bind);
         if(!m_snap)
             return ;
-            
-        std::string     table   = std::format("##Editor{}{}", metaInfo().name(), m_bind.id );
-        auto& sty = style();
-
-        float w = ImGui::GetWindowWidth();
         
-        if(ImGui::BeginTable(table.c_str(), 2)){
-            float x = ImGui::GetCursorPosX();
-            float kw    = std::max(sty.table.keycol()-x, sty.table.keycol.min);
-            float vw    = std::max(sty.table.valcol.min, w-x);
-            
-            ImGui::TableSetupColumn("Key",   ImGuiTableColumnFlags_WidthFixed, kw);
-            ImGui::TableSetupColumn("Value" /*, ImGuiTableColumnFlags_WidthFixed, vw */);
-            
-            for(auto& f : metaInfo().m_fields){
-                ImGui::TableNextRow();
-                if(ImGui::TableNextColumn())
-                    ImGui::TextUnformatted(f.label);
-                if(ImGui::TableNextColumn()){
-                    ImGui::PushID(f.label.c_str());
-                    f.executor->execute(this);
-                    ImGui::PopID();
-                }
-            }
-            
-            ImGui::EndTable();
-        }
-        
+        UIForm::render();
     }
 
     ////////////////////////////
@@ -118,7 +86,7 @@ namespace yq::tachyon {
         return dynamic_cast<UIEditor*>(m_ui);
     }
     
-    UIEditorWriter::UIEditorWriter(UIEditor* ui) : UIElementsWriter(ui)
+    UIEditorWriter::UIEditorWriter(UIEditor* ui) : UIFormWriter(ui)
     {
     }
 

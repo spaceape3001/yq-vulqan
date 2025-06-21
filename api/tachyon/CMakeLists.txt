@@ -535,6 +535,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIElementWriter.cpp
     ui/UIElements.cpp
     ui/UIElementsWriter.cpp
+    ui/UIForm.cpp
     ui/UIGenerator.cpp
     ui/UIGroup.cpp
     ui/UIImage.cpp

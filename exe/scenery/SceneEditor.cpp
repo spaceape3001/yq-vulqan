@@ -4,25 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CameraAddMenuUI.hpp"
 #include "CameraEntry.hpp"
 #include "CameraTableUI.hpp"
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
-#include "LightAddMenuUI.hpp"
 #include "MetricsUI.hpp"
-#include "RenderedAddMenuUI.hpp"
 #include "RenderedEntry.hpp"
-#include "SceneAddMenuUI.hpp"
 #include "SceneEditor.hpp"
 #include "SceneEntry.hpp"
 #include "SceneTableUI.hpp"
-#include "SpatialAddMenuUI.hpp"
 
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/parameters.hpp>
 
 #include <tachyon/api/Camera.hpp>
 #include <tachyon/api/Frame.hpp>
+#include <tachyon/api/Light.hpp>
+#include <tachyon/api/Model.hpp>
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/Rendered3.hpp>
 #include <tachyon/api/Scene.hpp>
@@ -38,6 +36,7 @@
 
 #include <tachyon/gfx/Texture.hpp>
 
+#include <tachyon/menu/CreateMenuUI.hpp>
 
 #include <tachyon/panel/UIBuildableInfoList.hpp>
 
@@ -84,11 +83,11 @@ SceneEditor::EFlags       SceneEditor::flags_for(const CameraInfo& sc)
 SceneEditor::EFlags       SceneEditor::flags_for(const SceneInfo& sc)
 {
     EFlags  ret = {};
-    if(sc.is_base(meta<HUDScene>()) || sc.is_this(meta<HUDScene>()))
+    if(sc.is_this<HUDScene>())
         ret |= E::HUD;
-    if(sc.is_base(meta<BackgroundScene>()) || sc.is_this(meta<BackgroundScene>()))
+    if(sc.is_this<BackgroundScene>())
         ret |= E::OriginFix;
-    if(sc.is_base(meta<ForegroundScene>()) || sc.is_this(meta<ForegroundScene>()))
+    if(sc.is_this<ForegroundScene>())
         ret |= E::OriginFix;
     return ret;
 }
@@ -129,15 +128,16 @@ void SceneEditor::init_info()
     auto scene_menu         = mmb.menu("Scene");
     auto light_menu         = mmb.menu("Light");
     auto rendered_menu      = mmb.menu("Rendered");
+    auto model_menu         = mmb.menu("Model");
     auto window_menu        = mmb.menu("Window");
     auto help_menu          = mmb.menu("Help");
     auto debug_menu         = mmb.menu("Debug");
 
     /////////////////////////////////
     //  MENU ITEMS
-
-    camera_menu.make<CameraAddMenuUI>("Add/Create##AddCameraUI");
     
+    (camera_menu << new CreateMenuUI("Add/Create##AddCameraUI", meta<Camera>())).action(&SceneEditor::create_payload);
+
     edit_menu.menuitem("Copy", "Ctrl+C");
     edit_menu.menuitem("Paste", "Ctrl+V");
 
@@ -146,41 +146,20 @@ void SceneEditor::init_info()
     file_menu.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
     file_menu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
 
-    light_menu.make<LightAddMenuUI>("Add/Create##AddLightUI");
+    (light_menu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::create_payload);
 
-    scene_menu.make<SceneAddMenuUI>("Add/Create##AddSceneUI");
-    
-    rendered_menu.make<RenderedAddMenuUI>("Add/Create##AddRenderedUI");
+    (model_menu << new CreateMenuUI("Add/Create##AddModelUI", meta<Model>())).action(&SceneEditor::create_payload);
+
+    (rendered_menu << new CreateMenuUI("Add/Create##AddRenderedUI", meta<Rendered>())).action(&SceneEditor::create_payload);
+
+    (scene_menu << new CreateMenuUI("Add/Create##AddSceneUI", meta<Scene>())).action(&SceneEditor::create_payload);
     
     view_menu.checkbox(VISIBLE, controlpanel);
 
 
-    //  Toolbars/Floaters
 
+    //////////////////////////////
 
-
-    //  Menutems
-
-
-
-#if 0
-    auto cscene     = edit.menu("Create Scene");
-    cscene.menuitem("Background").action(&SceneEditor::cmd_new_back_scene);
-    cscene.menuitem("Foreground").action(&SceneEditor::cmd_new_fore_scene);
-    // cscene.menuitem("HUD").action(&SceneEditor::cmd_new_hud_scene);
-    cscene.menuitem("Simple").action(&SceneEditor::cmd_new_simple_scene);
-#endif
-
-    // (these were samples while getting it working
-    //auto etb        = app.toolbar(EAST,  "east");
-    //etb.button("E");
-    //auto wtb        = app.toolbar(WEST,  "west");
-    //wtb.button("W");
-    //auto ntb        = app.toolbar(NORTH, "north");
-    //ntb.button("N");
-    //auto stb        = app.toolbar(SOUTH, "south");
-    //stb.button("S");
-    
     {
         {
             {
@@ -236,7 +215,7 @@ void SceneEditor::init_info()
         
             {
                 auto section    = rtree.section("Properties");
-                auto add        = section.make<SpatialAddMenuUI>("Add/Create##AddSpatialUI");
+                //auto add        = section.make<SpatialAddMenuUI>("Add/Create##AddSpatialUI");
                 auto i          = section.make<InspectorUI>();
                 i.uid("RenderedInspector");
             }
@@ -491,58 +470,86 @@ void    SceneEditor::cmd_file_save_as()
     m_fileMode  = FileMode::Save;
 }
 
-void    SceneEditor::cmd_new_back_scene()
-{
-    create_scene(meta<BackgroundScene>());
-}
-
-void    SceneEditor::cmd_new_fore_scene()
-{
-    create_scene(meta<ForegroundScene>());
-}
-
-void    SceneEditor::cmd_new_hud_scene()
-{
-    create_scene(meta<HUDScene>());
-}
-
-void    SceneEditor::cmd_new_simple_scene()
-{
-    create_scene(meta<SimpleScene>());
-}
-
-void    SceneEditor::create_camera(const CameraInfo& info)
+TypedID    SceneEditor::create(const CameraInfo& info)
 {
     Camera* sc = Tachyon::create_on<Camera>(SIM, info);
     if(!sc)
-        return;
+        return {};
+        
     _add(*sc);
     _activate(sc->id());
+    return *sc;
+    //return sc->id();
 }
 
-void    SceneEditor::create_light(const LightInfo& info)
-{
-    // TODO
-}
-
-void    SceneEditor::create_rendered(const RenderedInfo& info)
+#if 0
+void    SceneEditor::create(const LightInfo& info)
 {
     const Frame*  frame = Frame::current();
     if(!frame){
-    yInfo() << "SceneEditor's create_rendered(" << info.name() << ") no frame";
+    yInfo() << "SceneEditor's create_light(" << info.name() << ") no frame";
         return;
     }
     
     Scene*    sc  = frame->object( m_scene.selected);
     if(!sc){
-    yInfo() << "SceneEditor's create_rendered(" << info.name() << ") no scene";
+    yInfo() << "SceneEditor's create_light(" << info.name() << ") no scene";
         return ;
+    }
+
+    Light*      li   = sc->create_child<Light>(info);
+    if(!li){
+    yInfo() << "SceneEditor's create_light(" << info.name() << ") unable to create";
+        return ;
+    }
+    
+    //  TODO (More)
+    
+}
+
+void    SceneEditor::create(const ModelInfo&info)
+{
+    const Frame*  frame = Frame::current();
+    if(!frame){
+    yInfo() << "SceneEditor's create_model(" << info.name() << ") no frame";
+        return;
+    }
+    
+    Scene*    sc  = frame->object( m_scene.selected);
+    if(!sc){
+    yInfo() << "SceneEditor's create_model(" << info.name() << ") no scene";
+        return ;
+    }
+
+    Model*      mo   = sc->create_child<Model>(info);
+    if(!mo){
+    yInfo() << "SceneEditor's create_model(" << info.name() << ") unable to create";
+        return ;
+    }
+    
+    //  TODO (More)
+    
+}
+#endif
+
+TypedID    SceneEditor::create(const RenderedInfo& info)
+{
+    const Frame*  frame = Frame::current();
+    if(!frame){
+    yInfo() << "SceneEditor's create_rendered(" << info.name() << ") no frame";
+        return {};
+    }
+    
+    Scene*    sc  = frame->object( m_scene.selected);
+    if(!sc){
+    yInfo() << "SceneEditor's create_rendered(" << info.name() << ") no scene";
+        return {};
     }
     
     Rendered*   re  = sc->create_child<Rendered>(info);
     if(!re){
     yInfo() << "SceneEditor's create_rendered(" << info.name() << ") unable to create";
-        return ;
+        return {} ;
     }
     
     Rendered³*  r3  = dynamic_cast<Rendered³*>(re);
@@ -554,20 +561,22 @@ void    SceneEditor::create_rendered(const RenderedInfo& info)
     }
     
     _activate(re->id());
-    
+    return *re;
     //  add & activate.... (later)
 }
 
-void    SceneEditor::create_scene(const SceneInfo&info)
+TypedID    SceneEditor::create(const SceneInfo&info)
 {
     Scene*  sc  = Tachyon::create_on<Scene>(SIM, info);
     if(!sc)
-        return;
+        return {};
     _add(*sc);
     _activate(sc->id());
+    return *sc;
 }
 
-void    SceneEditor::create_spatial(const SpatialInfo& info)
+#if 0
+void    SceneEditor::create(const SpatialInfo& info)
 {
     const Frame*  frame = Frame::current();
     if(!frame){
@@ -587,6 +596,24 @@ void    SceneEditor::create_spatial(const SpatialInfo& info)
     
     //  TODO
 }
+#endif
+
+void    SceneEditor::create_payload(const Payload& payload)
+{
+    auto r  = payload.metas.equal_range(kParam_CreateInfo);
+    for(auto itr = r.first; itr != r.second; ++itr){
+        if(const CameraInfo* ci = dynamic_cast<const CameraInfo*>(itr->second)){
+            create(*ci);
+        }
+        if(const RenderedInfo* ri = dynamic_cast<const RenderedInfo*>(itr->second)){
+            create(*ri);
+        }
+        if(const SceneInfo* si = dynamic_cast<const SceneInfo*>(itr->second)){
+            create(*si);
+        }
+    }
+}
+
 
 void    SceneEditor::imgui(ViContext&u) 
 {

@@ -8,18 +8,21 @@
 
 #include <tachyon/widget/CompositeWidget.hpp>
 #include <tachyon/typedef/controller.hpp>
+#include <tachyon/typedef/camera.hpp>
+#include <tachyon/typedef/light.hpp>
+#include <tachyon/typedef/model.hpp>
+#include <tachyon/typedef/rendered.hpp>
+#include <tachyon/typedef/scene.hpp>
+#include <tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {
-    class CameraInfo;
     class InfoSelectionChangedEvent;
     class LightInfo;
     class LoadTSXReply;
     class OpenFileRequest;
-    class RenderedInfo;
     class SaveFileRequest;
     class SaveTSXReply;
-    class SceneInfo;
-    class SpatialInfo;
+    struct Payload;
 }
 
 namespace IGFD { class FileDialog; }
@@ -66,13 +69,34 @@ public:
     static EFlags       flags_for(const SceneInfo&);
     static EFlags       flags_for(const CameraInfo&);
     
+    /*
+    CameraID    _create(const CameraInfo&);
+    LightID     _create(const LightInfo&);
+    ModelID     _create(const ModelInfo&);
+    RenderedID  _create(const RenderedInfo&);
+    SceneID     _create(const SceneInfo&);
+    SpatialID   _create(const SpatialInfo&);
     
+    SpatialID   _create(Camera³ID, const SpatialInfo&);
+    SpatialID   _create(Light³ID, const SpatialInfo&);
+    //SpatialID   _create(Model³ID, const SpatialInfo&);
+    SpatialID   _create(Rendered³ID, const SpatialInfo&);
+
+    */
     
-    void    create_camera(const CameraInfo&);
-    void    create_light(const LightInfo&);
-    void    create_rendered(const RenderedInfo&);
-    void    create_scene(const SceneInfo&);
-    void    create_spatial(const SpatialInfo&);
+    void        create_payload(const Payload&);
+    
+    TypedID    create(const CameraInfo&);
+    //LightID     create(const LightInfo&);
+    //ModelID     create(const ModelInfo&);
+    TypedID  create(const RenderedInfo&);
+    TypedID     create(const SceneInfo&);
+    //SpatialID   create(const SpatialInfo&);
+    
+    //SpatialID   create(Camera³ID, const SpatialInfo&);
+    //SpatialID   create(Light³ID, const SpatialInfo&);
+    //SpatialID   create(Model³ID, const SpatialInfo&);
+    //SpatialID   create(Rendered³ID, const SpatialInfo&);
 
 
     void    cmd_file_open();
@@ -80,13 +104,6 @@ public:
     void    cmd_file_save_as();
     void    cmd_file_new();
 
-    void    cmd_new_back_scene();
-    void    cmd_new_fore_scene();
-    void    cmd_new_hud_scene();
-    void    cmd_new_simple_scene();
-    
-    void    cmd_create_rendered();
-    
     void    cmd_add_scene(const SceneInfo&);
     void    cmd_add_camera(const CameraInfo&);
     
@@ -97,14 +114,9 @@ public:
     
     //void    ui_scene_entries();
 
-    class CameraAddMenuUI;
     class CameraTableUI;
-    class LightAddMenuUI;
-    class SceneAddMenuUI;
     class ScenesTableUI;
     class RenderedTableUI;
-    class RenderedAddMenuUI;
-    class SpatialAddMenuUI;
     
 private:
     struct SceneEntry;

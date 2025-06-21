@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElementWriter.hpp"
+#include <tachyon/action/PayloadCallbackAction.hpp>
 #include <tachyon/action/StdCallbackAction.hpp>
 #include <tachyon/action/StdPostAction.hpp>
 #include <tachyon/api/Post.hpp>
@@ -23,6 +24,13 @@ namespace yq::tachyon {
     UIElementWriter        UIElementWriter::action(void (T::* fn)())
     {
         action(new StdCallbackAction<T>(fn));
+        return *this;
+    }
+
+    template <SomeTachyon T>
+    UIElementWriter        UIElementWriter::action(void (T::* fn)(const Payload&))
+    {
+        action(new PayloadCallbackAction<T>(fn));
         return *this;
     }
 }

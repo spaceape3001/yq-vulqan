@@ -376,6 +376,8 @@ add_library(${PROJECT_NAME} SHARED
     layer/BackgroundLayer.cpp
     layer/ForegroundLayer.cpp
     layer/HUDLayer.cpp
+    
+    menu/CreateMenuUI.cpp
 
     message/EmptyMessage.cpp
 

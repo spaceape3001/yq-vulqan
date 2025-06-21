@@ -14,6 +14,7 @@
 
 namespace yq::tachyon {
     class UIElement;
+    struct Payload;
     
     class UIElementWriter {
     public:
@@ -33,6 +34,8 @@ namespace yq::tachyon {
         UIElementWriter action(post_k<P>);
         template <SomeTachyon T>
         UIElementWriter action(void (T::*)());
+        template <SomeTachyon T>
+        UIElementWriter action(void (T::*)(const Payload&));
         
         UIElementWriter action(visible_k, UIElement*);
         UIElementWriter action(visible_k, UIElementWriter&);

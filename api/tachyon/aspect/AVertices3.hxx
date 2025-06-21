@@ -61,52 +61,66 @@ namespace yq::tachyon {
     void        AVertices³<N>::vertex(append_k, const Vertex³&v)
     {
         if constexpr (!IsFixed){
-            if(vertices(APPENDABLE))
+            if(vertices(APPENDABLE)){
                 m_vertices.push_back(v);
+                mark();
+            }
         }
     }
 
     template <size_t N>
     void        AVertices³<N>::vertex(size_t n, set_k, const Vertex³&v)
     {
-        if(vertices(SETTABLE) && n && (n<=m_vertices.size()))
+        if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1] = v;
+            mark();
+        }
     }
 
     template <size_t N>
     void        AVertices³<N>::vertex(size_t n, set_k, point_k, const Vector3D&v)
     {
-        if(vertices(SETTABLE) && n && (n<=m_vertices.size()))
+        if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].point   = v;
+            mark();
+        }
     }
 
     template <size_t N>
     void        AVertices³<N>::vertex(size_t n, set_k, color_k, const RGBA4F&v)
     {
-        if(vertices(SETTABLE) && n && (n<=m_vertices.size()))
+        if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].color = v;
+            mark();
+        }
     }
 
     template <size_t N>
     void        AVertices³<N>::vertex(size_t n, set_k, tex_k, const UV2F& v)
     {
-        if(vertices(SETTABLE) && n && (n<=m_vertices.size()))
+        if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].uv = v;
+            mark();
+        }
     }
 
     template <size_t N>
     void        AVertices³<N>::vertex(size_t n, set_k, normal_k, const Vector3F& v)
     {
-        if(vertices(SETTABLE) && n && (n<=m_vertices.size()))
+        if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].normal = v;
+            mark();
+        }
     }
 
     template <size_t N>
     void        AVertices³<N>::vertex(size_t n, insert_k, const Vertex³& v)
     {
         if constexpr (!IsFixed){
-            if(vertices(INSERTABLE) && n && (n<=m_vertices.size()))
+            if(vertices(INSERTABLE) && n && (n<=m_vertices.size())){
                 m_vertices.insert(m_vertices.begin()+n-1, v);
+                mark();
+            }
         }
     }
 
@@ -114,8 +128,10 @@ namespace yq::tachyon {
     void        AVertices³<N>::vertex(size_t n, erase_k)
     {
         if constexpr (!IsFixed){
-            if(vertices(ERASABLE) && n && (n<=m_vertices.size()))
+            if(vertices(ERASABLE) && n && (n<=m_vertices.size())){
                 m_vertices.erase(m_vertices.begin()+n-1);
+                mark();
+            }
         }
     }
 

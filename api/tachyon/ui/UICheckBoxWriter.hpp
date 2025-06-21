@@ -19,10 +19,12 @@ namespace yq::tachyon {
         ~UICheckBoxWriter();
         
         UICheckBox* element();
+
+        //UICheckBoxWriter&   checked();
         
-        UICheckBoxWriter&   state(bool);
+        //UICheckBoxWriter&   state(bool);
         //UICheckBoxWriter&   state(Tristate);
-        UICheckBoxWriter&   state(BooleanAccessorUPtr&&);
+        //UICheckBoxWriter&   state(BooleanAccessorUPtr&&);
         //UICheckBoxWriter&   state(TristateAccessorUPtr&&);
     };
 }

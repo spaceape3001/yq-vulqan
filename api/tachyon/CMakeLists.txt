@@ -396,7 +396,8 @@ add_library(${PROJECT_NAME} SHARED
     os/Window.cpp
 
     os/glfw/glfw.cpp
-    
+
+    panel/FrameMetricsUI.cpp
     panel/UIConcreteInfoList.cpp
     panel/UIInfoList.cpp
 
@@ -434,7 +435,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PVertices3.cpp
     
     raster/PatternRasters.cpp
-    raster/DebugRasters.cpp
+    raster/DebugRasters.cpp 
 
     rendered/AbstractShape3.cpp
     rendered/Billboard3.cpp

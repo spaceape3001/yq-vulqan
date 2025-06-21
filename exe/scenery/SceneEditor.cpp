@@ -9,6 +9,8 @@
 #include "CameraTableUI.hpp"
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
+#include "LightAddMenuUI.hpp"
+#include "MetricsUI.hpp"
 #include "RenderedAddMenuUI.hpp"
 #include "RenderedEntry.hpp"
 #include "SceneAddMenuUI.hpp"
@@ -105,20 +107,61 @@ void SceneEditor::init_info()
     auto mmb        = app.menubar(MAIN);
     mmb.uid("mmb");
     
-    auto file       = mmb.menu("File");
-    auto edit       = mmb.menu("Edit");
-    auto view       = mmb.menu("View");
-    auto window     = mmb.menu("Window");
-    auto help       = mmb.menu("Help");
-    auto debug      = mmb.menu("Debug");
+    /////////////////////////////////
+    //  CONTROL PANEL
+    
+    auto controlpanel       = app.make<ControlPanelUI>();
+    auto cp_tree            = controlpanel.make<UISimpleTree>();
+    
+    auto cp_metrics         = cp_tree.section("Metrics");
+    cp_metrics.make<MetricsUI>();
+    
+    auto cp_cameras         = cp_tree.section("Cameras");
+    auto cp_camtree         = cp_cameras.make<UISimpleTree>();
 
-    file.menuitem("New").action(&SceneEditor::cmd_file_new);
-    file.menuitem("Open", "Ctrl+O").action(&SceneEditor::cmd_file_open);
-    file.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
-    file.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
+    /////////////////////////////////
+    //  MENUS
+    
+    auto file_menu          = mmb.menu("File");
+    auto edit_menu          = mmb.menu("Edit");
+    auto view_menu          = mmb.menu("View");
+    auto camera_menu        = mmb.menu("Camera");
+    auto scene_menu         = mmb.menu("Scene");
+    auto light_menu         = mmb.menu("Light");
+    auto rendered_menu      = mmb.menu("Rendered");
+    auto window_menu        = mmb.menu("Window");
+    auto help_menu          = mmb.menu("Help");
+    auto debug_menu         = mmb.menu("Debug");
 
-    edit.menuitem("Copy", "Ctrl+C");
-    edit.menuitem("Paste", "Ctrl+V");
+    /////////////////////////////////
+    //  MENU ITEMS
+
+    camera_menu.make<CameraAddMenuUI>("Add/Create##AddCameraUI");
+    
+    edit_menu.menuitem("Copy", "Ctrl+C");
+    edit_menu.menuitem("Paste", "Ctrl+V");
+
+    file_menu.menuitem("New").action(&SceneEditor::cmd_file_new);
+    file_menu.menuitem("Open", "Ctrl+O").action(&SceneEditor::cmd_file_open);
+    file_menu.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
+    file_menu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
+
+    light_menu.make<LightAddMenuUI>("Add/Create##AddLightUI");
+
+    scene_menu.make<SceneAddMenuUI>("Add/Create##AddSceneUI");
+    
+    rendered_menu.make<RenderedAddMenuUI>("Add/Create##AddRenderedUI");
+    
+    view_menu.checkbox(VISIBLE, controlpanel);
+
+
+    //  Toolbars/Floaters
+
+
+
+    //  Menutems
+
+
 
 #if 0
     auto cscene     = edit.menu("Create Scene");
@@ -138,34 +181,27 @@ void SceneEditor::init_info()
     //auto stb        = app.toolbar(SOUTH, "south");
     //stb.button("S");
     
-    auto controlpanel   = app.make<ControlPanelUI>();
     {
-        auto tree       = controlpanel.make<UISimpleTree>();
         {
-            auto cameras    = tree.section("Cameras");
-            auto add        = cameras.make<CameraAddMenuUI>("Add/Create##AddCameraUI");
-
-            auto ctree      = cameras.make<UISimpleTree>();
             {
-                auto section    = ctree.section("Available");
+                auto section    = cp_camtree.section("Available");
                 auto p          = section.make<UIBuildableInfoList<Camera>>();
                 p.flag(SET, UIFlag::EmitSignal);
             }
             {
-                auto section    = ctree.section("Current");
+                auto section    = cp_camtree.section("Current");
                 auto centries     = section.make<CameraTableUI>();
                 centries.uid("CameraTable");
             }
             {
-                auto section    = ctree.section("Properties");
+                auto section    = cp_camtree.section("Properties");
                 auto i          = section.make<InspectorUI>();
                 i.uid("CameraInspector");
             }
         }
     
         {
-            auto scenes         = tree.section("Scenes");
-            auto add            = scenes.make<SceneAddMenuUI>("Add/Create##AddSceneUI");
+            auto scenes         = cp_tree.section("Scenes");
             auto stree          = scenes.make<UISimpleTree>();
             
             {
@@ -183,8 +219,7 @@ void SceneEditor::init_info()
 
 
         {
-            auto rendereds      = tree.section("Rendereds");
-            auto add            = rendereds.make<RenderedAddMenuUI>("Add/Create##AddRenderedUI");
+            auto rendereds      = cp_tree.section("Rendereds");
             auto rtree          = rendereds.make<UISimpleTree>();
         
             {
@@ -483,6 +518,11 @@ void    SceneEditor::create_camera(const CameraInfo& info)
         return;
     _add(*sc);
     _activate(sc->id());
+}
+
+void    SceneEditor::create_light(const LightInfo& info)
+{
+    // TODO
 }
 
 void    SceneEditor::create_rendered(const RenderedInfo& info)

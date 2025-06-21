@@ -12,6 +12,7 @@
 namespace yq::tachyon {
     class CameraInfo;
     class InfoSelectionChangedEvent;
+    class LightInfo;
     class LoadTSXReply;
     class OpenFileRequest;
     class RenderedInfo;
@@ -68,6 +69,7 @@ public:
     
     
     void    create_camera(const CameraInfo&);
+    void    create_light(const LightInfo&);
     void    create_rendered(const RenderedInfo&);
     void    create_scene(const SceneInfo&);
     void    create_spatial(const SpatialInfo&);
@@ -97,6 +99,7 @@ public:
 
     class CameraAddMenuUI;
     class CameraTableUI;
+    class LightAddMenuUI;
     class SceneAddMenuUI;
     class ScenesTableUI;
     class RenderedTableUI;

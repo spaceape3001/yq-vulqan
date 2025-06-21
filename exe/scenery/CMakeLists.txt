@@ -11,6 +11,8 @@ add_executable(${PROJECT_NAME}
     CameraTableUI.cpp
     ControlPanelUI.cpp
     InspectorUI.cpp
+    LightAddMenuUI.cpp
+    MetricsUI.cpp
     RenderedAddMenuUI.cpp
     RenderedTableUI.cpp
     SceneAddMenuUI.cpp

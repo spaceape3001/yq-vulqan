@@ -14,6 +14,12 @@
 #include "CameraSelectEvent.hpp"
 #include "CameraTableUI.hpp"
 
+#include "LightSelectEvent.hpp"
+#include "LightTableUI.hpp"
+
+#include "ModelSelectEvent.hpp"
+#include "ModelTableUI.hpp"
+
 #include "RenderedSelectEvent.hpp"
 #include "RenderedTableUI.hpp"
 
@@ -137,11 +143,11 @@ void SceneEditor::init_info()
     //cp_controllers.section("Properties").make<InspectorUI>().uid("ControllerInspector");
 
     cp_lights.section("Available").make<UIBuildableInfoList<Light>>().flag(SET, UIFlag::EmitSignal).uid("LightAvailable");
-    //cp_lights.section("Current").make<LightTableUI>().uid("LightTable");
+    cp_lights.section("Current").make<LightTableUI>().uid("LightTable");
     cp_lights.section("Properties").make<InspectorUI>().uid("LightInspector");
 
     cp_models.section("Available").make<UIBuildableInfoList<Model>>().flag(SET, UIFlag::EmitSignal).uid("ModelAvailable");
-    //cp_models.section("Current").make<ModelTableUI>().uid("ModelTable");
+    cp_models.section("Current").make<ModelTableUI>().uid("ModelTable");
     cp_models.section("Properties").make<InspectorUI>().uid("ModelInspector");
 
     //cp_physics.section("Available").make<UIBuildableInfoList<Physics>>().flag(SET, UIFlag::EmitSignal).uid("PhysicsAvailable");
@@ -595,6 +601,11 @@ void    SceneEditor::on_info_selection_changed_event(const InfoSelectionChangedE
         m_scene.info        = p;
 }
 
+void    SceneEditor::on_light_select_event(const LightSelectEvent&evt)
+{
+    if(m_light.properties)
+        m_light.properties->bind(TypedID(evt.light().id, Type::Light));
+}
 
 void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
 {
@@ -703,6 +714,14 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_camera.properties     = static_cast<InspectorUI*>(element(FIRST, "CameraInspector"));
     if(!m_camera.table)
         m_camera.table          = static_cast<CameraTableUI*>(element(FIRST, "CameraTable"));
+    if(!m_light.properties)
+        m_light.properties      = static_cast<InspectorUI*>(element(FIRST, "LightInspector"));
+    if(!m_light.table)
+        m_light.table           = static_cast<LightTableUI*>(element(FIRST, "LightTable"));
+    if(!m_model.properties)
+        m_model.properties      = static_cast<InspectorUI*>(element(FIRST, "ModelInspector"));
+    if(!m_model.table)
+        m_model.table           = static_cast<ModelTableUI*>(element(FIRST, "ModelTable"));
     if(!m_rendered.properties)
         m_rendered.properties   = static_cast<InspectorUI*>(element(FIRST, "RenderedInspector"));
     if(!m_rendered.table)

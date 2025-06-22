@@ -111,14 +111,11 @@ public:
     //SpatialID   create(Rendered³ID, const SpatialInfo&);
 
     void    action_create_camera(const Payload&);
-    void    action_create_camera_spatial(const Payload&);
     void    action_create_light(const Payload&);
-    void    action_create_light_spatial(const Payload&);
     void    action_create_model(const Payload&);
-    void    action_create_model_spatial(const Payload&);
     void    action_create_physics(const Payload&);          // TODO....
     void    action_create_rendered(const Payload&);
-    void    action_create_rendered_spatial(const Payload&);
+    void    action_create_spatial(const Payload&);
     void    action_create_scene(const Payload&);
 
     void    cmd_file_open();
@@ -142,12 +139,33 @@ private:
     struct SceneEntry;
     
     struct {
-        TypedID             space;
-        TypedID             hud;
-        CameraTableUI*      table       = nullptr;
-        InspectorUI*        properties  = nullptr;
-        const CameraInfo*   info        = nullptr;
-    }                           m_camera;
+        TypedID                 space;
+        TypedID                 hud;
+        CameraTableUI*          table       = nullptr;
+        InspectorUI*            properties  = nullptr;
+        const CameraInfo*       info        = nullptr;
+    } m_camera;
+    
+    struct {
+        const LightInfo*        info        = nullptr;
+        LightTableUI*           table       = nullptr;
+        LightID                 selected;
+        InspectorUI*            properties  = nullptr;
+    } m_light;
+
+    struct {
+        const ModelInfo*        info        = nullptr;
+        ModelTableUI*           table       = nullptr;
+        ModelID                 selected;
+        InspectorUI*            properties  = nullptr;
+    } m_model;
+
+    struct {
+        const RenderedInfo*     info        = nullptr;
+        RenderedTableUI*        table       = nullptr;
+        RenderedID              selected;
+        InspectorUI*            properties  = nullptr;
+    } m_rendered;
     
     struct {
         const SceneInfo*            info        = nullptr;
@@ -157,23 +175,17 @@ private:
         //! Current "editing" ... will be deprecated/removed (use selected instead)
         SceneEntry*                 editing     = nullptr;
         InspectorUI*                properties  = nullptr;
-    }                           m_scene;
+    } m_scene;
 
     struct {
-        const RenderedInfo*         info        = nullptr;
-        RenderedTableUI*            table       = nullptr;
-        RenderedID                  selected;
-        InspectorUI*                properties  = nullptr;
-    }                           m_rendered;
-    
-    //SceneEntry*                 m_editing   = nullptr;
-    //std::vector<SceneEntry>     m_scenes;
+        const SpatialInfo*          info        = nullptr;
+        TypedID                     context;
+    } m_spatial;
+
     FileMode                    m_fileMode  = FileMode::None;
     Flags<F>                    m_flags;
     TypedID                     m_fileIO;
     std::filesystem::path       m_filepath;
-    //IGFD::FileDialog*       m_importDialog = nullptr;
-    //IGFD::FileDialog*       m_exportDialog = nullptr;
     TypedID                     m_controller;
     bool                        m_controllerInit  = false;
 
@@ -187,9 +199,6 @@ private:
     SceneEntry*                 _entry(SceneID);
     const SceneEntry*           _entry(SceneID) const;
 
-    //CameraEntry*                 _entry(CameraID);
-    //const CameraEntry*           _entry(CameraID) const;
-
     void                        _rebuild();
     void                        _title();
 
@@ -197,10 +206,11 @@ private:
     void    _save(const std::filesystem::path&);
     
     void    on_camera_select_event(const CameraSelectEvent&);
-    void    on_rendered_select_event(const RenderedSelectEvent&);
-    void    on_load_tsx_reply(const LoadTSXReply&);
-    void    on_save_tsx_reply(const SaveTSXReply&);
     void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);
+    void    on_light_select_event(const LightSelectEvent&);
+    void    on_load_tsx_reply(const LoadTSXReply&);
+    void    on_rendered_select_event(const RenderedSelectEvent&);
+    void    on_save_tsx_reply(const SaveTSXReply&);
 };
 
 extern TypedID     gFileIO;

@@ -7,13 +7,15 @@
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
 #include "MetricsUI.hpp"
-#include "RenderedEntry.hpp"
 #include "SceneEditor.hpp"
 #include "SceneEntry.hpp"
 #include "SceneTableUI.hpp"
 
-#include "camera/CameraSelectEvent.hpp"
-#include "camera/CameraTableUI.hpp"
+#include "CameraSelectEvent.hpp"
+#include "CameraTableUI.hpp"
+
+#include "RenderedSelectEvent.hpp"
+#include "RenderedTableUI.hpp"
 
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/parameters.hpp>
@@ -97,10 +99,11 @@ void SceneEditor::init_info()
 {
     auto w          = writer<SceneEditor>();
     
-    w.slot(&SceneEditor::on_load_tsx_reply);
-    w.slot(&SceneEditor::on_save_tsx_reply);
     w.slot(&SceneEditor::on_camera_select_event);
+    w.slot(&SceneEditor::on_load_tsx_reply);
     w.slot(&SceneEditor::on_info_selection_changed_event);
+    w.slot(&SceneEditor::on_rendered_select_event);
+    w.slot(&SceneEditor::on_save_tsx_reply);
     
     w.description("The main widget");
     auto app        = w.imgui(UI, APP);
@@ -114,11 +117,48 @@ void SceneEditor::init_info()
     auto controlpanel       = app.make<ControlPanelUI>();
     auto cp_tree            = controlpanel.make<UISimpleTree>();
     
-    auto cp_metrics         = cp_tree.section("Metrics");
-    cp_metrics.make<MetricsUI>();
+    cp_tree.section("Metrics").make<MetricsUI>();
     
-    auto cp_cameras         = cp_tree.section("Cameras");
-    auto cp_camtree         = cp_cameras.make<UISimpleTree>();
+    auto cp_cameras         = cp_tree.section("Cameras").make<UISimpleTree>();
+    auto cp_controllers     = cp_tree.section("Controllers").make<UISimpleTree>();
+    auto cp_lights          = cp_tree.section("Lights").make<UISimpleTree>();
+    auto cp_models          = cp_tree.section("Models").make<UISimpleTree>();
+    //auto cp_physics         = cp_tree.section("Physics").make<UISimpleTree>();
+    auto cp_rendereds       = cp_tree.section("Rendereds").make<UISimpleTree>();
+    auto cp_scenes          = cp_tree.section("Scenes").make<UISimpleTree>();
+    auto cp_spatials        = cp_tree.section("Spatials").make<UISimpleTree>();
+
+    cp_cameras.section("Available").make<UIBuildableInfoList<Camera>>().flag(SET, UIFlag::EmitSignal).uid("CameraAvailable");
+    cp_cameras.section("Current").make<CameraTableUI>().uid("CameraTable");
+    cp_cameras.section("Properties").make<InspectorUI>().uid("CameraInspector");
+    
+    cp_controllers.section("Available").make<UIBuildableInfoList<Controller>>().flag(SET, UIFlag::EmitSignal).uid("ControllerAvailable");
+    //cp_controllers.section("Current").make<ControllerTableUI>().uid("ControllerTable");
+    //cp_controllers.section("Properties").make<InspectorUI>().uid("ControllerInspector");
+
+    cp_lights.section("Available").make<UIBuildableInfoList<Light>>().flag(SET, UIFlag::EmitSignal).uid("LightAvailable");
+    //cp_lights.section("Current").make<LightTableUI>().uid("LightTable");
+    cp_lights.section("Properties").make<InspectorUI>().uid("LightInspector");
+
+    cp_models.section("Available").make<UIBuildableInfoList<Model>>().flag(SET, UIFlag::EmitSignal).uid("ModelAvailable");
+    //cp_models.section("Current").make<ModelTableUI>().uid("ModelTable");
+    cp_models.section("Properties").make<InspectorUI>().uid("ModelInspector");
+
+    //cp_physics.section("Available").make<UIBuildableInfoList<Physics>>().flag(SET, UIFlag::EmitSignal).uid("PhysicsAvailable");
+    //cp_physics.section("Current").make<PhysicsTableUI>().uid("PhysicsTable");
+    //cp_physics.section("Properties").make<InspectorUI>().uid("PhysicsInspector");
+
+    cp_rendereds.section("Available").make<UIBuildableInfoList<Rendered>>().flag(SET, UIFlag::EmitSignal).uid("RenderedAvailable");
+    cp_rendereds.section("Current").make<RenderedTableUI>().uid("RenderedTable");
+    cp_rendereds.section("Properties").make<InspectorUI>().uid("RenderedInspector");
+
+    cp_scenes.section("Available").make<UIBuildableInfoList<Scene>>().flag(SET, UIFlag::EmitSignal).uid("SceneAvailable");
+    cp_scenes.section("Current").make<ScenesTableUI>().uid("SceneTable");
+    cp_scenes.section("Properties").make<InspectorUI>().uid("SceneInspector");
+
+    cp_spatials.section("Available").make<UIBuildableInfoList<Spatial>>().flag(SET, UIFlag::EmitSignal).uid("SpatialAvailable");
+    //cp_spatials.section("Current").make<SpatialTableUI>().uid("SpatialTable");
+    //cp_spatials.section("Properties").make<InspectorUI>().uid("SpatialInspector");
 
     /////////////////////////////////
     //  MENUS
@@ -127,10 +167,12 @@ void SceneEditor::init_info()
     auto edit_menu          = mmb.menu("Edit");
     auto view_menu          = mmb.menu("View");
     auto camera_menu        = mmb.menu("Camera");
+    //auto controller_menu    = mmb.menu("Controller");
     auto scene_menu         = mmb.menu("Scene");
     auto light_menu         = mmb.menu("Light");
     auto rendered_menu      = mmb.menu("Rendered");
     auto model_menu         = mmb.menu("Model");
+    //auto physics_menu       = mmb.menu("Physics");
     auto window_menu        = mmb.menu("Window");
     auto help_menu          = mmb.menu("Help");
     auto debug_menu         = mmb.menu("Debug");
@@ -159,70 +201,6 @@ void SceneEditor::init_info()
     view_menu.checkbox(VISIBLE, controlpanel);
 
 
-
-    //////////////////////////////
-
-    {
-        {
-            {
-                auto section    = cp_camtree.section("Available");
-                auto p          = section.make<UIBuildableInfoList<Camera>>();
-                p.flag(SET, UIFlag::EmitSignal);
-            }
-            {
-                auto section    = cp_camtree.section("Current");
-                auto centries     = section.make<CameraTableUI>();
-                centries.uid("CameraTable");
-            }
-            {
-                auto section    = cp_camtree.section("Properties");
-                auto i          = section.make<InspectorUI>();
-                i.uid("CameraInspector");
-            }
-        }
-    
-        {
-            auto scenes         = cp_tree.section("Scenes");
-            auto stree          = scenes.make<UISimpleTree>();
-            
-            {
-                auto section    = stree.section("Current");
-                auto menus      = section.hline();
-                auto sentries     = section.make<ScenesTableUI>();
-                sentries.uid("SceneTable");
-            }
-            {
-                auto section    = stree.section("Properties");
-                auto i          = section.make<InspectorUI>();
-                i.uid("SceneInspector");
-            }
-        }
-
-
-        {
-            auto rendereds      = cp_tree.section("Rendereds");
-            auto rtree          = rendereds.make<UISimpleTree>();
-        
-            {
-                auto section    = rtree.section("Available");
-                auto p          = section.make<UIBuildableInfoList<Rendered>>();
-                p.flag(SET, UIFlag::EmitSignal);
-            }
-            
-            {
-                auto section    = rtree.section("Current");
-                //  TODO
-            }
-
-        
-            {
-                auto section    = rtree.section("Properties");
-                //auto add        = section.make<SpatialAddMenuUI>("Add/Create##AddSpatialUI");
-                auto i          = section.make<InspectorUI>();
-                i.uid("RenderedInspector");
-            }
-        }
-    }
 }
 
 
@@ -247,9 +225,11 @@ void    SceneEditor::_activate(CameraID ca)
 
 void    SceneEditor::_activate(RenderedID re)
 {
-    m_rendered.selected = re;
-    if(m_rendered.properties)
-        m_rendered.properties->bind(TypedID(re.id, Type::Rendered));
+    if(m_rendered.table && !m_rendered.table->selected()){
+        m_rendered.table->set_selected(re);
+        if(m_rendered.properties) // the set-selected *SHOULD* be working, but it isn't
+            m_rendered.properties->bind(TypedID(re.id, Type::Camera));
+    }
 }
 
 void    SceneEditor::_activate(SceneID sc)
@@ -645,6 +625,13 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
     _title();
 }
 
+void    SceneEditor::on_rendered_select_event(const RenderedSelectEvent&evt)
+{
+    if(m_rendered.properties)
+        m_rendered.properties->bind(TypedID(evt.rendered().id, Type::Rendered));
+}
+
+
 void    SceneEditor::on_save_tsx_reply(const SaveTSXReply&rep)
 {
     if(rep.response() != Response::QaPla)
@@ -718,6 +705,8 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_camera.table          = static_cast<CameraTableUI*>(element(FIRST, "CameraTable"));
     if(!m_rendered.properties)
         m_rendered.properties   = static_cast<InspectorUI*>(element(FIRST, "RenderedInspector"));
+    if(!m_rendered.table)
+        m_rendered.table        = static_cast<RenderedTableUI*>(element(FIRST, "RenderedTable"));
     if(!m_scene.properties)
         m_scene.properties      = static_cast<InspectorUI*>(element(FIRST, "SceneInspector"));
         

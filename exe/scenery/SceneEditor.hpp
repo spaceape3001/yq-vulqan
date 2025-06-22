@@ -33,6 +33,16 @@ using namespace yq::tachyon;
 class InspectorUI;
 class CameraTableUI;
 class CameraSelectEvent;
+class LightTableUI;
+class LightSelectEvent;
+class ModelTableUI;
+class ModelSelectEvent;
+class PhysicsTableUI;
+class PhysicsSelectEvent;
+class RenderedTableUI;
+class RenderedSelectEvent;
+//class SceneTableUI;
+//class SceneSelectEvent;
 
 class SceneEditor : public CompositeWidget {
     YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
@@ -88,10 +98,10 @@ public:
     
     void        create_payload(const Payload&);
     
-    TypedID    create(const CameraInfo&);
+    TypedID     create(const CameraInfo&);
     //LightID     create(const LightInfo&);
     //ModelID     create(const ModelInfo&);
-    TypedID  create(const RenderedInfo&);
+    TypedID     create(const RenderedInfo&);
     TypedID     create(const SceneInfo&);
     //SpatialID   create(const SpatialInfo&);
     
@@ -100,6 +110,16 @@ public:
     //SpatialID   create(Model³ID, const SpatialInfo&);
     //SpatialID   create(Rendered³ID, const SpatialInfo&);
 
+    void    action_create_camera(const Payload&);
+    void    action_create_camera_spatial(const Payload&);
+    void    action_create_light(const Payload&);
+    void    action_create_light_spatial(const Payload&);
+    void    action_create_model(const Payload&);
+    void    action_create_model_spatial(const Payload&);
+    void    action_create_physics(const Payload&);          // TODO....
+    void    action_create_rendered(const Payload&);
+    void    action_create_rendered_spatial(const Payload&);
+    void    action_create_scene(const Payload&);
 
     void    cmd_file_open();
     void    cmd_file_save();
@@ -117,11 +137,9 @@ public:
     //void    ui_scene_entries();
 
     class ScenesTableUI;
-    class RenderedTableUI;
     
 private:
     struct SceneEntry;
-    struct RenderedEntry;
     
     struct {
         TypedID             space;
@@ -142,8 +160,8 @@ private:
     }                           m_scene;
 
     struct {
-        const RenderedInfo*         info     = nullptr;
-        std::vector<RenderedEntry>  entries;
+        const RenderedInfo*         info        = nullptr;
+        RenderedTableUI*            table       = nullptr;
         RenderedID                  selected;
         InspectorUI*                properties  = nullptr;
     }                           m_rendered;
@@ -179,6 +197,7 @@ private:
     void    _save(const std::filesystem::path&);
     
     void    on_camera_select_event(const CameraSelectEvent&);
+    void    on_rendered_select_event(const RenderedSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);
     void    on_save_tsx_reply(const SaveTSXReply&);
     void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);

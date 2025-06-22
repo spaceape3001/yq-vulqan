@@ -103,6 +103,12 @@ namespace yq::tachyon {
         return s_context->imgui->texture(tex);
     }
 
+    void           UIElement::mail(const PostCPtr& pp)
+    {
+        if(s_widget)
+            s_widget -> mail(pp);
+    }
+
     TextureCPtr    UIElement::missing_texture()
     {
         static TextureCPtr  s_ret   = new Texture(debug::raster_missing());
@@ -241,6 +247,11 @@ namespace yq::tachyon {
         return m_parent;
     }
 
+    Payload     UIElement::payload()
+    {   
+        return Payload({ .source=widget(), .uielem=this });
+    }
+
     bool        UIElement::readonly() const
     {
         return m_flags(UIFlag::ReadOnly);
@@ -273,13 +284,27 @@ namespace yq::tachyon {
     void    UIElement::triggered(Payload& payload)
     {
         if(!m_actions.empty()){
-            payload.uielem     = this;
-            payload.source     = widget();
+            payload.m_uielem     = this;
+            payload.m_source     = widget();
             for(auto& a : m_actions){
                 if(!a)  [[unlikely]]
                     continue;
                 a->action(payload);
             }
+        }
+    }
+
+    void    UIElement::triggered(Payload&& payload)
+    {
+        if(!m_actions.empty()){
+            payload.m_uielem     = this;
+            payload.m_source     = widget();
+            for(auto& a : m_actions){
+                if(!a)  [[unlikely]]
+                    continue;
+                a->action(payload);
+            }
+            payload             = {};
         }
     }
 

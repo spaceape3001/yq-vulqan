@@ -34,9 +34,9 @@ namespace yq::tachyon {
         
         virtual bool  action(Payload& pp) const
         {
-            if(!pp.source)
+            if(!pp.source())
                 return false;
-            pp.source->send(new P({.source=*pp.source}));
+            pp.source()->send(new P({.source=*pp.source()}));
             return true;
         }
     };

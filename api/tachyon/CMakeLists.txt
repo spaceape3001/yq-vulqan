@@ -130,6 +130,7 @@ add_library(${PROJECT_NAME} SHARED
     command/ColorCommand.cpp
     command/ControllerCommand.cpp
     command/CursorCommand.cpp
+    command/EditorCommand.cpp
     command/EmptyCommand.cpp
     command/GamepadCommand.cpp
     command/GLFWCommand.cpp
@@ -268,6 +269,7 @@ add_library(${PROJECT_NAME} SHARED
     event/CameraEvent.cpp
     event/ColorEvent.cpp
     event/CursorEvent.cpp
+    event/EditorEvent.cpp
     event/EmptyEvent.cpp
     event/GamepadEvent.cpp
     event/InputEvent.cpp
@@ -454,6 +456,7 @@ add_library(${PROJECT_NAME} SHARED
     reply/AnyReply.cpp
     reply/AppReply.cpp
     reply/CameraReply.cpp
+    reply/EditorReply.cpp
     reply/EmptyReply.cpp
     reply/GraphicsCardReply.cpp
     reply/IOReply.cpp
@@ -478,6 +481,7 @@ add_library(${PROJECT_NAME} SHARED
     
     request/AppRequest.cpp
     request/CameraRequest.cpp
+    request/EditorRequest.cpp
     request/EmptyRequest.cpp
     request/GraphicsCardRequest.cpp
     request/IORequest.cpp

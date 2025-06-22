@@ -31,6 +31,7 @@ using namespace yq;
 using namespace yq::tachyon;
 
 class InspectorUI;
+class CameraTableUI;
 
 class SceneEditor : public CompositeWidget {
     YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
@@ -114,31 +115,19 @@ public:
     
     //void    ui_scene_entries();
 
-    class CameraTableUI;
     class ScenesTableUI;
     class RenderedTableUI;
     
 private:
     struct SceneEntry;
-    struct CameraEntry;
     struct RenderedEntry;
     
     struct {
-        TypedID                     space;
-        CameraID                    hud;
-        
-        //! Current selected (available)
-        const CameraInfo*           info  = nullptr;
-        
-        //! All entries (might move to camera table UI)
-        std::vector<CameraEntry>    entries;
-
-        //! For the entries
-        CameraID                    selected;
-        
-        //! Current "editing" ... will be deprecated/removed (use selected instead)
-        CameraEntry*                editing     = nullptr;
-        InspectorUI*                properties  = nullptr;
+        TypedID             space;
+        TypedID             hud;
+        CameraTableUI*      table       = nullptr;
+        InspectorUI*        properties  = nullptr;
+        const CameraInfo*   info        = nullptr;
     }                           m_camera;
     
     struct {
@@ -174,14 +163,13 @@ private:
     void                        _activate(RenderedID);
 
     SceneEntry*                 _add(const Scene&);
-    CameraEntry*                _add(const Camera&);
     
     void                        _clear();
     SceneEntry*                 _entry(SceneID);
     const SceneEntry*           _entry(SceneID) const;
 
-    CameraEntry*                 _entry(CameraID);
-    const CameraEntry*           _entry(CameraID) const;
+    //CameraEntry*                 _entry(CameraID);
+    //const CameraEntry*           _entry(CameraID) const;
 
     void                        _rebuild();
     void                        _title();

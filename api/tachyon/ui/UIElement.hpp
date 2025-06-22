@@ -207,6 +207,7 @@ namespace yq::tachyon {
         //! UIElement default will call every registered action
         virtual void            triggered();
         void                    triggered(Payload& payload);
+        void                    triggered(Payload&& payload);
 
         virtual void            update(flags_k){}
         
@@ -222,7 +223,12 @@ namespace yq::tachyon {
 
         static TextureCPtr      missing_texture();
 
+        //! Sends to our widget
+        static void             mail(const PostCPtr&);
         static void             send(const PostCPtr&);
+        
+        //! Payload generator
+        Payload                 payload();
         
         UIFlags                 m_flags;
         

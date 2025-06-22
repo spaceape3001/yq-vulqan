@@ -59,9 +59,7 @@ namespace yq::tachyon {
         
         for(const Item& i : m_items){
             if(ImGui::MenuItem(i.title.c_str())){
-                Payload     data;
-                data.metas.insert({m_param, i.info});
-                triggered(data);
+                triggered(Payload().append(m_param, i.info));
             }
         }
     }

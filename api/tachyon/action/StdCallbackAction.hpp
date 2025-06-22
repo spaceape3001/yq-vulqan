@@ -36,7 +36,7 @@ namespace yq::tachyon {
         {
             if(!m_function)
                 return false;
-            T*  t   = dynamic_cast<T*>(pp.source);
+            T*  t   = dynamic_cast<T*>(pp.source());
             if(!t)
                 return false;
             (t->*m_function)();

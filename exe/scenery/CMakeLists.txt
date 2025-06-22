@@ -7,7 +7,6 @@
 project(scenery)
 
 add_executable(${PROJECT_NAME}
-    CameraTableUI.cpp
     ControlPanelUI.cpp
     InspectorUI.cpp
     MetricsUI.cpp
@@ -16,6 +15,9 @@ add_executable(${PROJECT_NAME}
     SceneTableUI.cpp
     
     main.cpp
+    
+    camera/CameraTableUI.cpp
+    camera/CameraSelectEvent.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

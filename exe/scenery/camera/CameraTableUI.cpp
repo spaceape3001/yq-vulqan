@@ -104,10 +104,8 @@ void    CameraTableUI::render()
                 }
             }
             
-            if(wantEdit){
-                mail(new CameraSelectEvent({}, e.camera));
-                m_selected  = e.camera;
-            }
+            if(wantEdit)
+                set_selected(e.camera);
         }
         ImGui::EndTable();
     }
@@ -116,6 +114,7 @@ void    CameraTableUI::render()
 void CameraTableUI::set_selected(CameraID ca)
 {
     m_selected  = ca;
+    mail(new CameraSelectEvent({}, ca));
 }
 
 const char*    CameraTableUI::title() const 
@@ -129,8 +128,9 @@ void           CameraTableUI::update_table(const Frame& frame)
     
     for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
         if(!cameras.contains(itr->camera)){
-            if(itr->camera == m_selected)
-                m_selected  = {};
+            if(itr->camera == m_selected){
+                set_selected({});
+            }
             itr = m_rows.erase(itr);
             continue;
         }
@@ -148,7 +148,7 @@ void           CameraTableUI::update_table(const Frame& frame)
         m_rows.push_back(en);
         
         if(!m_selected)
-            m_selected  = c;
+            set_selected(c);
     }
     
 }

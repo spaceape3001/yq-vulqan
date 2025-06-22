@@ -12,6 +12,7 @@
 #include "SceneEntry.hpp"
 #include "SceneTableUI.hpp"
 
+#include "camera/CameraSelectEvent.hpp"
 #include "camera/CameraTableUI.hpp"
 
 #include <tachyon/MyImGui.hpp>
@@ -98,7 +99,8 @@ void SceneEditor::init_info()
     
     w.slot(&SceneEditor::on_load_tsx_reply);
     w.slot(&SceneEditor::on_save_tsx_reply);
-    
+    w.slot(&SceneEditor::on_camera_select_event);
+    w.slot(&SceneEditor::on_info_selection_changed_event);
     
     w.description("The main widget");
     auto app        = w.imgui(UI, APP);
@@ -236,10 +238,11 @@ SceneEditor::~SceneEditor()
 
 void    SceneEditor::_activate(CameraID ca)
 {
-    if(m_camera.table && !m_camera.table->selected())
+    if(m_camera.table && !m_camera.table->selected()){
         m_camera.table->set_selected(ca);
-    if(m_camera.properties)
-        m_camera.properties->bind(TypedID(ca.id, Type::Camera));
+        if(m_camera.properties) // the set-selected *SHOULD* be working, but it isn't
+            m_camera.properties->bind(TypedID(ca.id, Type::Camera));
+    }
 }
 
 void    SceneEditor::_activate(RenderedID re)
@@ -594,6 +597,13 @@ void    SceneEditor::imgui(ViContext&u)
         }
     }
 }
+
+void    SceneEditor::on_camera_select_event(const CameraSelectEvent&evt)
+{
+    if(m_camera.properties)
+        m_camera.properties->bind(TypedID(evt.camera().id, Type::Camera));
+}
+
 
 void    SceneEditor::on_info_selection_changed_event(const InfoSelectionChangedEvent&evt)
 {

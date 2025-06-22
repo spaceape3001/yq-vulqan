@@ -36,6 +36,8 @@ private:
 
     struct Row;
     
+    
+    void            changed_select();
     void            update_table(const Frame&);
 
     ImTextureID         m_editing = nullptr;

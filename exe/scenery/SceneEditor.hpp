@@ -32,6 +32,7 @@ using namespace yq::tachyon;
 
 class InspectorUI;
 class CameraTableUI;
+class CameraSelectEvent;
 
 class SceneEditor : public CompositeWidget {
     YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
@@ -177,6 +178,7 @@ private:
     void    _open(const std::filesystem::path&);
     void    _save(const std::filesystem::path&);
     
+    void    on_camera_select_event(const CameraSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);
     void    on_save_tsx_reply(const SaveTSXReply&);
     void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);

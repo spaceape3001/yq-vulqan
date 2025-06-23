@@ -28,6 +28,12 @@ namespace yq::tachyon {
         // Audio thread
         Audio,
         
+        // Auxillary thread
+        Auxillary,
+        
+        // Editor thread
+        Editor,
+        
         // Game thread
         Game,
         

@@ -19,6 +19,7 @@ namespace yq::tachyon {
     class Tachyon; 
     class SpatialCommand;
     class SpatialEvent;
+    class SetSpatialCommand;
 
     /*! \brief General N-dimensional object/presence 
     
@@ -35,6 +36,8 @@ namespace yq::tachyon {
         //  \note Not thread safe
         void            set_spatial(TypedID);
 
+        void            set_spatial(SpatialID);
+
         template <typename C>
         static void     init_info(TachyonInfo::Writer<C>&);
 
@@ -49,7 +52,7 @@ namespace yq::tachyon {
         
         void            on_spatial_command(const SpatialCommand&);
         void            on_spatial_event(const SpatialEvent&);
-        
+        void            on_set_spatial_command(const SetSpatialCommand&);
         
         TypedID        m_spatial;
     };

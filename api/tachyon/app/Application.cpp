@@ -17,6 +17,8 @@
 
 #include <tachyon/thread/AppThread.hpp>
 #include <tachyon/thread/AudioThread.hpp>
+#include <tachyon/thread/AuxillaryThread.hpp>
+#include <tachyon/thread/EditorThread.hpp>
 #include <tachyon/thread/GameThread.hpp>
 #include <tachyon/thread/IOThread.hpp>
 #include <tachyon/thread/NetworkThread.hpp>
@@ -340,7 +342,11 @@ namespace yq::tachyon {
 
         if(!_start(AUDIO, m_thread.audio, m_cInfo.thread.audio, "audio"))
             return false;
+        if(!_start(AUXILLARY, m_thread.auxillary, m_cInfo.thread.auxillary, "auxillary"))
+            return false;
         if(!_start(GAME, m_thread.game, m_cInfo.thread.game, "game"))
+            return false;
+        if(!_start(EDITOR, m_thread.editor, m_cInfo.thread.editor, "editor"))
             return false;
         if(!_start(IO, m_thread.io, m_cInfo.thread.io, "io"))
             return false;
@@ -353,13 +359,15 @@ namespace yq::tachyon {
         if(!_start(VIEWER, m_thread.viewer, m_cInfo.thread.viewer, "viewer"))
             return false;
 
-        _stdthread(AUDIO,   m_cInfo.thread.audio);
-        _stdthread(GAME,    m_cInfo.thread.game);
-        _stdthread(IO,      m_cInfo.thread.io);
-        _stdthread(NETWORK, m_cInfo.thread.network);
-        _stdthread(SIM,     m_cInfo.thread.sim);
-        _stdthread(TASK,    m_cInfo.thread.task);
-        _stdthread(VIEWER,  m_cInfo.thread.viewer);
+        _stdthread(AUDIO,       m_cInfo.thread.audio);
+        _stdthread(AUXILLARY,   m_cInfo.thread.auxillary);
+        _stdthread(EDITOR,      m_cInfo.thread.editor);
+        _stdthread(GAME,        m_cInfo.thread.game);
+        _stdthread(IO,          m_cInfo.thread.io);
+        _stdthread(NETWORK,     m_cInfo.thread.network);
+        _stdthread(SIM,         m_cInfo.thread.sim);
+        _stdthread(TASK,        m_cInfo.thread.task);
+        _stdthread(VIEWER,      m_cInfo.thread.viewer);
         
         for(Thread* t : m_threads)
             t->start();

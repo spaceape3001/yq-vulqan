@@ -4,50 +4,49 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "LightTableUI.hpp"
-#include "LightSelectEvent.hpp"
+#include "ControllerTableUI.hpp"
+#include "event/ControllerSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/Light.hpp>
-#include <tachyon/api/LightData.hpp>
+#include <tachyon/api/Controller.hpp>
+#include <tachyon/api/ControllerData.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementInfoWriter.hpp>
 
 
-struct LightTableUI::Row {
-    LightID            light;
-    const LightInfo*   info        = nullptr;
+struct ControllerTableUI::Row {
+    ControllerID            controller;
+    const ControllerInfo*   info        = nullptr;
     std::string        sid;        // ID for selectable
     std::string        stype;
 };
 
-void LightTableUI::init_info()
+void ControllerTableUI::init_info()
 {
-    auto w = writer<LightTableUI>();
-    w.description("Scene Editor's Light Table");
+    auto w = writer<ControllerTableUI>();
+    w.description("Scene Editor's Controller Table");
 }
 
-LightTableUI::LightTableUI(UIFlags flags) : UIElement(flags)
-{
-}
-
-LightTableUI::LightTableUI(const LightTableUI& cp) : UIElement(cp)
+ControllerTableUI::ControllerTableUI(UIFlags flags) : UIElement(flags)
 {
 }
 
-LightTableUI*   LightTableUI::clone() const 
+ControllerTableUI::ControllerTableUI(const ControllerTableUI& cp) : UIElement(cp)
 {
-    return new LightTableUI(*this);
+}
+
+ControllerTableUI*   ControllerTableUI::clone() const 
+{
+    return new ControllerTableUI(*this);
 }
 
 
-void    LightTableUI::render() 
+void    ControllerTableUI::render() 
 {
     const Frame*    frame   = Frame::current();
     if(!frame)
         return ;
-    update_table(*frame);
 
     float   sz  = ImGui::GetFrameHeight() * 0.9;
     
@@ -56,7 +55,7 @@ void    LightTableUI::render()
     if(!m_editing)
         m_editing = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-e001-direction-right.png"));
         
-    if(ImGui::BeginTable("Lights", 4)){
+    if(ImGui::BeginTable("Controllers", 4)){
         ImGui::TableSetupColumn("Editing", ImGuiTableColumnFlags_WidthFixed|ImGuiTableColumnFlags_NoHeaderLabel, sz*1.2);
         ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthStretch, 0.1);
         ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch, 0.3);
@@ -64,9 +63,9 @@ void    LightTableUI::render()
         ImGui::TableHeadersRow();
 
         for(Row& e : m_rows){
-            bool    isEdit  = (e.light == m_selected);
+            bool    isEdit  = (e.controller == m_selected);
             bool    wantEdit    = false;
-            const LightSnap*    ss  = frame->snap(e.light);
+            const ControllerSnap*    ss  = frame->snap(e.controller);
             if(!ss)
                 continue;
 
@@ -95,9 +94,9 @@ void    LightTableUI::render()
             if(ImGui::TableNextColumn()){
                 std::string sname;
                 if(ss->name.empty()){
-                    sname   = std::format("(no-name)##{}.SELECT", e.light.id); 
+                    sname   = std::format("(no-name)##{}.SELECT", e.controller.id); 
                 } else
-                   sname = std::format("{}##{}.SELECT", ss->name, e.light.id); 
+                   sname = std::format("{}##{}.SELECT", ss->name, e.controller.id); 
 
                 if(ImGui::Selectable(sname.c_str(), isEdit) && !isEdit){
                     wantEdit    = true;
@@ -105,46 +104,46 @@ void    LightTableUI::render()
             }
             
             if(wantEdit)
-                set_selected(e.light);
+                set_selected(e.controller);
         }
         ImGui::EndTable();
     }
 }
 
-void LightTableUI::set_selected(LightID ca)
+void ControllerTableUI::set_selected(ControllerID ca)
 {
     m_selected  = ca;
-    mail(new LightSelectEvent({}, ca));
+    mail(new ControllerSelectEvent({}, ca));
 }
 
-const char*    LightTableUI::title() const 
+void           ControllerTableUI::tick()
 {
-    return "Lights";
-}
-
-void           LightTableUI::update_table(const Frame& frame)
-{
-    std::set<LightID>  lights = frame.ids(LIGHT);
+    UIElement::tick();
+    const Frame* frame = Frame::current();
+    if(!frame)
+        return;
+        
+    std::set<ControllerID>  controllers = frame->ids(CONTROLLER);
     
     for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
-        if(!lights.contains(itr->light)){
-            if(itr->light == m_selected){
+        if(!controllers.contains(itr->controller)){
+            if(itr->controller == m_selected){
                 set_selected({});
             }
             itr = m_rows.erase(itr);
             continue;
         }
         
-        lights.erase(itr->light);
+        controllers.erase(itr->controller);
         ++itr;
     }
     
-    for(LightID c : lights){
+    for(ControllerID c : controllers){
         Row   en;
-        en.light       = c;
-        en.info         = frame.info(c);
-        en.sid          = std::format("{}##{}.SELECT_ID", en.light.id, en.light.id);
-        en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), en.light.id);
+        en.controller       = c;
+        en.info         = frame->info(c);
+        en.sid          = std::format("{}##{}.SELECT_ID", c.id, c.id);
+        en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), c.id);
         m_rows.push_back(en);
         
         if(!m_selected)
@@ -153,4 +152,9 @@ void           LightTableUI::update_table(const Frame& frame)
     
 }
 
-YQ_OBJECT_IMPLEMENT(LightTableUI)
+
+const char*    ControllerTableUI::title() const 
+{
+    return "Controllers";
+}
+YQ_OBJECT_IMPLEMENT(ControllerTableUI)

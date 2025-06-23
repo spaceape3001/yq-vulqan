@@ -64,11 +64,11 @@ namespace yq::tachyon {
         //! 
         virtual bool    bind(TypedID);
         virtual void    render();
+        TypedID         bound() const { return m_bind; }
        
     protected:
         virtual UIEditor*       clone() const = 0;
         
-        TypedID                 bound() const { return m_bind; }
         const TachyonSnap*      snap() const { return m_snap; }
         
     private:

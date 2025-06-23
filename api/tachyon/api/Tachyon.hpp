@@ -379,8 +379,12 @@ namespace yq::tachyon {
         */
         void                send(const PostCPtr&, PostTarget dst=MG::General);
 
+        //! Sets name on next tick
+        void                set_name(std::string_view);
+
         //! Sets parent on next tick (with implied add/remove child) 
         void                set_parent(TachyonSpec);
+        
         
         //! \note NOT thread-safe (yet)
         //! Subscribes the given listener to OUR posts

@@ -4,50 +4,49 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "RenderedTableUI.hpp"
-#include "RenderedSelectEvent.hpp"
+#include "LightTableUI.hpp"
+#include "event/LightSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/Rendered.hpp>
-#include <tachyon/api/RenderedData.hpp>
+#include <tachyon/api/Light.hpp>
+#include <tachyon/api/LightData.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementInfoWriter.hpp>
 
 
-struct RenderedTableUI::Row {
-    RenderedID              rendered;
-    const RenderedInfo*     info        = nullptr;
-    std::string             sid;        // ID for selectable
-    std::string             stype;
+struct LightTableUI::Row {
+    LightID            light;
+    const LightInfo*   info        = nullptr;
+    std::string        sid;        // ID for selectable
+    std::string        stype;
 };
 
-void RenderedTableUI::init_info()
+void LightTableUI::init_info()
 {
-    auto w = writer<RenderedTableUI>();
-    w.description("Scene Editor's Rendered Table");
+    auto w = writer<LightTableUI>();
+    w.description("Scene Editor's Light Table");
 }
 
-RenderedTableUI::RenderedTableUI(UIFlags flags) : UIElement(flags)
-{
-}
-
-RenderedTableUI::RenderedTableUI(const RenderedTableUI& cp) : UIElement(cp)
+LightTableUI::LightTableUI(UIFlags flags) : UIElement(flags)
 {
 }
 
-RenderedTableUI*   RenderedTableUI::clone() const 
+LightTableUI::LightTableUI(const LightTableUI& cp) : UIElement(cp)
 {
-    return new RenderedTableUI(*this);
+}
+
+LightTableUI*   LightTableUI::clone() const 
+{
+    return new LightTableUI(*this);
 }
 
 
-void    RenderedTableUI::render() 
+void    LightTableUI::render() 
 {
     const Frame*    frame   = Frame::current();
     if(!frame)
         return ;
-    update_table(*frame);
 
     float   sz  = ImGui::GetFrameHeight() * 0.9;
     
@@ -56,7 +55,7 @@ void    RenderedTableUI::render()
     if(!m_editing)
         m_editing = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-e001-direction-right.png"));
         
-    if(ImGui::BeginTable("Rendereds", 4)){
+    if(ImGui::BeginTable("Lights", 4)){
         ImGui::TableSetupColumn("Editing", ImGuiTableColumnFlags_WidthFixed|ImGuiTableColumnFlags_NoHeaderLabel, sz*1.2);
         ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthStretch, 0.1);
         ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch, 0.3);
@@ -64,9 +63,9 @@ void    RenderedTableUI::render()
         ImGui::TableHeadersRow();
 
         for(Row& e : m_rows){
-            bool    isEdit  = (e.rendered == m_selected);
+            bool    isEdit  = (e.light == m_selected);
             bool    wantEdit    = false;
-            const RenderedSnap*    ss  = frame->snap(e.rendered);
+            const LightSnap*    ss  = frame->snap(e.light);
             if(!ss)
                 continue;
 
@@ -95,9 +94,9 @@ void    RenderedTableUI::render()
             if(ImGui::TableNextColumn()){
                 std::string sname;
                 if(ss->name.empty()){
-                    sname   = std::format("(no-name)##{}.SELECT", e.rendered.id); 
+                    sname   = std::format("(no-name)##{}.SELECT", e.light.id); 
                 } else
-                   sname = std::format("{}##{}.SELECT", ss->name, e.rendered.id); 
+                   sname = std::format("{}##{}.SELECT", ss->name, e.light.id); 
 
                 if(ImGui::Selectable(sname.c_str(), isEdit) && !isEdit){
                     wantEdit    = true;
@@ -105,46 +104,46 @@ void    RenderedTableUI::render()
             }
             
             if(wantEdit)
-                set_selected(e.rendered);
+                set_selected(e.light);
         }
         ImGui::EndTable();
     }
 }
 
-void RenderedTableUI::set_selected(RenderedID ca)
+void LightTableUI::set_selected(LightID ca)
 {
     m_selected  = ca;
-    mail(new RenderedSelectEvent({}, ca));
+    mail(new LightSelectEvent({}, ca));
 }
 
-const char*    RenderedTableUI::title() const 
+void           LightTableUI::tick()
 {
-    return "Rendereds";
-}
-
-void           RenderedTableUI::update_table(const Frame& frame)
-{
-    std::set<RenderedID>  rendereds = frame.ids(RENDERED);
+    UIElement::tick();
+    const Frame* frame = Frame::current();
+    if(!frame)
+        return;
+    
+    std::set<LightID>  lights = frame->ids(LIGHT);
     
     for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
-        if(!rendereds.contains(itr->rendered)){
-            if(itr->rendered == m_selected){
+        if(!lights.contains(itr->light)){
+            if(itr->light == m_selected){
                 set_selected({});
             }
             itr = m_rows.erase(itr);
             continue;
         }
         
-        rendereds.erase(itr->rendered);
+        lights.erase(itr->light);
         ++itr;
     }
     
-    for(RenderedID c : rendereds){
+    for(LightID c : lights){
         Row   en;
-        en.rendered       = c;
-        en.info         = frame.info(c);
-        en.sid          = std::format("{}##{}.SELECT_ID", en.rendered.id, en.rendered.id);
-        en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), en.rendered.id);
+        en.light        = c;
+        en.info         = frame->info(c);
+        en.sid          = std::format("{}##{}.SELECT_ID", c.id, c.id);
+        en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), c.id);
         m_rows.push_back(en);
         
         if(!m_selected)
@@ -153,4 +152,11 @@ void           RenderedTableUI::update_table(const Frame& frame)
     
 }
 
-YQ_OBJECT_IMPLEMENT(RenderedTableUI)
+const char*    LightTableUI::title() const 
+{
+    return "Lights";
+}
+
+
+
+YQ_OBJECT_IMPLEMENT(LightTableUI)

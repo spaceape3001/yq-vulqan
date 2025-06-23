@@ -17,6 +17,7 @@ TypedID     gFileIO;
 int main(int argc, char* argv[])
 {
     AppCreateInfo        aci;
+    aci.thread.auxillary    = true;
     aci.thread.io           = true;
     aci.thread.sim          = true;
     aci.view.title          = "Scenery Editor";

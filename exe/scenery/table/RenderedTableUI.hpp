@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/ui/UIElement.hpp>
-#include <tachyon/api/Camera.hpp>
+#include <tachyon/typedef/rendered.hpp>
 
 namespace yq::tachyon{
     class Frame;
@@ -16,32 +16,33 @@ namespace yq::tachyon{
 using namespace yq;
 using namespace yq::tachyon;
 
-class CameraTableUI : public UIElement {
-    YQ_OBJECT_DECLARE(CameraTableUI, UIElement)
+class RenderedTableUI : public UIElement {
+    YQ_OBJECT_DECLARE(RenderedTableUI, UIElement)
 public:
     static void init_info();
     
-    CameraTableUI(UIFlags flags={});
-    CameraTableUI(const CameraTableUI& cp);
+    RenderedTableUI(UIFlags flags={});
+    RenderedTableUI(const RenderedTableUI& cp);
     
-    virtual CameraTableUI*   clone() const;
+    virtual RenderedTableUI*   clone() const;
     const char*    title() const override;
     
     void    render() override;
 
-    CameraID        selected() const { return m_selected; }
-    void            set_selected(CameraID);
+    RenderedID        selected() const { return m_selected; }
+    void                set_selected(RenderedID);
+
+    void            tick() override;
 
 private:
 
     struct Row;
     
     
-    void            changed_select();
-    void            update_table(const Frame&);
+    void                changed_select();
 
     ImTextureID         m_editing = nullptr;
-    CameraID            m_selected;
+    RenderedID          m_selected;
     std::vector<Row>    m_rows;
 };
 

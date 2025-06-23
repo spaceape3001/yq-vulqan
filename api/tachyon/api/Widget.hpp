@@ -260,7 +260,7 @@ namespace yq::tachyon {
         void                    snap(WidgetSnap&) const;
 
         // currently not needed (but maybe... later)
-        //virtual Execution       tick(const Context&);
+        virtual Execution       tick(const Context&);
 
         
         

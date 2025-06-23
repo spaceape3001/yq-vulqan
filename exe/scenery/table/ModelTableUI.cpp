@@ -4,50 +4,49 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CameraTableUI.hpp"
-#include "CameraSelectEvent.hpp"
+#include "ModelTableUI.hpp"
+#include "event/ModelSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/Camera.hpp>
-#include <tachyon/api/CameraData.hpp>
+#include <tachyon/api/Model.hpp>
+#include <tachyon/api/ModelData.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementInfoWriter.hpp>
 
 
-struct CameraTableUI::Row {
-    CameraID            camera;
-    const CameraInfo*   info        = nullptr;
-    std::string         sid;        // ID for selectable
-    std::string         stype;
+struct ModelTableUI::Row {
+    ModelID            model;
+    const ModelInfo*   info        = nullptr;
+    std::string        sid;        // ID for selectable
+    std::string        stype;
 };
 
-void CameraTableUI::init_info()
+void ModelTableUI::init_info()
 {
-    auto w = writer<CameraTableUI>();
-    w.description("Scene Editor's Camera Table");
+    auto w = writer<ModelTableUI>();
+    w.description("Scene Editor's Model Table");
 }
 
-CameraTableUI::CameraTableUI(UIFlags flags) : UIElement(flags)
-{
-}
-
-CameraTableUI::CameraTableUI(const CameraTableUI& cp) : UIElement(cp)
+ModelTableUI::ModelTableUI(UIFlags flags) : UIElement(flags)
 {
 }
 
-CameraTableUI*   CameraTableUI::clone() const 
+ModelTableUI::ModelTableUI(const ModelTableUI& cp) : UIElement(cp)
 {
-    return new CameraTableUI(*this);
+}
+
+ModelTableUI*   ModelTableUI::clone() const 
+{
+    return new ModelTableUI(*this);
 }
 
 
-void    CameraTableUI::render() 
+void    ModelTableUI::render() 
 {
     const Frame*    frame   = Frame::current();
     if(!frame)
         return ;
-    update_table(*frame);
 
     float   sz  = ImGui::GetFrameHeight() * 0.9;
     
@@ -56,7 +55,7 @@ void    CameraTableUI::render()
     if(!m_editing)
         m_editing = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-e001-direction-right.png"));
         
-    if(ImGui::BeginTable("Cameras", 4)){
+    if(ImGui::BeginTable("Models", 4)){
         ImGui::TableSetupColumn("Editing", ImGuiTableColumnFlags_WidthFixed|ImGuiTableColumnFlags_NoHeaderLabel, sz*1.2);
         ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthStretch, 0.1);
         ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch, 0.3);
@@ -64,9 +63,9 @@ void    CameraTableUI::render()
         ImGui::TableHeadersRow();
 
         for(Row& e : m_rows){
-            bool    isEdit  = (e.camera == m_selected);
+            bool    isEdit  = (e.model == m_selected);
             bool    wantEdit    = false;
-            const CameraSnap*    ss  = frame->snap(e.camera);
+            const ModelSnap*    ss  = frame->snap(e.model);
             if(!ss)
                 continue;
 
@@ -95,9 +94,9 @@ void    CameraTableUI::render()
             if(ImGui::TableNextColumn()){
                 std::string sname;
                 if(ss->name.empty()){
-                    sname   = std::format("(no-name)##{}.SELECT", e.camera.id); 
+                    sname   = std::format("(no-name)##{}.SELECT", e.model.id); 
                 } else
-                   sname = std::format("{}##{}.SELECT", ss->name, e.camera.id); 
+                   sname = std::format("{}##{}.SELECT", ss->name, e.model.id); 
 
                 if(ImGui::Selectable(sname.c_str(), isEdit) && !isEdit){
                     wantEdit    = true;
@@ -105,46 +104,46 @@ void    CameraTableUI::render()
             }
             
             if(wantEdit)
-                set_selected(e.camera);
+                set_selected(e.model);
         }
         ImGui::EndTable();
     }
 }
 
-void CameraTableUI::set_selected(CameraID ca)
+void ModelTableUI::set_selected(ModelID ca)
 {
     m_selected  = ca;
-    mail(new CameraSelectEvent({}, ca));
+    mail(new ModelSelectEvent({}, ca));
 }
 
-const char*    CameraTableUI::title() const 
+void           ModelTableUI::tick()
 {
-    return "Cameras";
-}
-
-void           CameraTableUI::update_table(const Frame& frame)
-{
-    std::set<CameraID>  cameras = frame.ids(CAMERA);
+    UIElement::tick();
+    const Frame* frame = Frame::current();
+    if(!frame)
+        return;
+        
+    std::set<ModelID>  models = frame->ids(MODEL);
     
     for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
-        if(!cameras.contains(itr->camera)){
-            if(itr->camera == m_selected){
+        if(!models.contains(itr->model)){
+            if(itr->model == m_selected){
                 set_selected({});
             }
             itr = m_rows.erase(itr);
             continue;
         }
         
-        cameras.erase(itr->camera);
+        models.erase(itr->model);
         ++itr;
     }
     
-    for(CameraID c : cameras){
+    for(ModelID c : models){
         Row   en;
-        en.camera       = c;
-        en.info         = frame.info(c);
-        en.sid          = std::format("{}##{}.SELECT_ID", en.camera.id, en.camera.id);
-        en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), en.camera.id);
+        en.model        = c;
+        en.info         = frame->info(c);
+        en.sid          = std::format("{}##{}.SELECT_ID", c.id, c.id);
+        en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), c.id);
         m_rows.push_back(en);
         
         if(!m_selected)
@@ -153,4 +152,9 @@ void           CameraTableUI::update_table(const Frame& frame)
     
 }
 
-YQ_OBJECT_IMPLEMENT(CameraTableUI)
+const char*    ModelTableUI::title() const 
+{
+    return "Models";
+}
+
+YQ_OBJECT_IMPLEMENT(ModelTableUI)

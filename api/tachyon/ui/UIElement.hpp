@@ -211,6 +211,11 @@ namespace yq::tachyon {
 
         virtual void            update(flags_k){}
         
+        //! Called on Widget ticks
+        //! \note One *CANNOT* install ImGui textures/call-ImGui here (as there's no valid ImGui context)
+        //! However frames & widget are valid (for data queries & message sending)
+        virtual void            tick(){}
+        
         
         //! Installs the specified texture, returns its ImGui texture ID
         static ImTextureID      install(const TextureCPtr&);
@@ -248,7 +253,7 @@ namespace yq::tachyon {
         
     private:
         static thread_local Widget*     s_widget;
-        static thread_local ViContext*  s_context;
+        static thread_local ViContext*  s_viContext;
         static UIStyle                  s_style;
     };
     

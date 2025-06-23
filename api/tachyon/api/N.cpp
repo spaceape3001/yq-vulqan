@@ -4,10 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/N.hpp>
+#include "N.hpp"
+#include <tachyon/api/Frame.hpp>
 #include <tachyon/api/NData.hpp>
+#include <tachyon/api/Spatial.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
+#include <tachyon/command/generic/SetSpatialCommand.hpp>
 #include <tachyon/event/SpatialEvent.hpp>
 #include <tachyon/logging.hpp>
 
@@ -54,12 +57,46 @@ namespace yq::tachyon {
         send(evt.clone(REBIND, {.source=typed()}));
     }
 
+    void    И::on_set_spatial_command(const SetSpatialCommand&cmd)
+    {
+        if(cmd.target() != typed())
+            return ;
+        set_spatial(cmd.spatial());
+        mark();
+    }
+
     void    И::set_spatial(TypedID sid)
     {
-        if(sid(Type::Spatial)){
-            m_spatial   = sid;
-            // TODO (subscribe spatial to us)
-            mark();
+        if(sid == m_spatial)
+            return;
+        if(m_spatial){
+            // TODO (unsubscribe old spatial)
+        }
+
+        m_spatial   = sid;
+        if(m_spatial){
+            // TODO (subscribe new spatial to us)
+        }
+        mark();
+    }
+
+    void    И::set_spatial(SpatialID sid)
+    {
+        if(sid == m_spatial)
+            return ;
+    
+        if(sid){
+            if(const Frame* f  = Frame::current()){
+                TypedID tid = f->typed(sid);
+                if(tid){
+                    set_spatial(tid);
+                }
+            } else {
+                //  assume....
+                set_spatial(TypedID( sid.id, Type::Spatial ));
+            }
+        } else {
+            set_spatial(TypedID{});
         }
     }
 

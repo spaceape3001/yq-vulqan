@@ -56,7 +56,7 @@ void    SceneEditor::ScenesTableUI::render()
     if(!m_invisible)
         m_invisible = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-p000-general.png"));
     if(!m_visible)
-        m_visible   = install(texture("sdk/scenery/eyeball48.png"));
+        m_visible   = install(texture("exe/scenery/eyeball48.png"));
     
     SceneEditor*    editor  = dynamic_cast<SceneEditor*>(widget());
     if(!editor)

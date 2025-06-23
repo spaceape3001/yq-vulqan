@@ -18,6 +18,7 @@
 #include <tachyon/api/N.hpp>
 #include <tachyon/event/SpatialEvent.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
+#include <tachyon/command/generic/SetSpatialCommand.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
@@ -26,6 +27,7 @@ namespace yq::tachyon {
     {
         w.slot(UNSAFE, &И::on_spatial_command);
         w.slot(UNSAFE, &И::on_spatial_event);
+        w.slot(UNSAFE, &И::on_set_spatial_command);
         w.property(UNSAFE, "spatial", &И::m_spatial).tag({kTag_Save, kTag_TachyonID});
     }
 }

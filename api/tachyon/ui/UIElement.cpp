@@ -79,7 +79,7 @@ namespace yq::tachyon {
     ////////////////////////////
 
     thread_local Widget*     UIElement::s_widget     = nullptr;
-    thread_local ViContext*  UIElement::s_context    = nullptr;
+    thread_local ViContext*  UIElement::s_viContext    = nullptr;
     UIStyle                  UIElement::s_style;
 
     std::string      UIElement::alternative(std::string_view sv)
@@ -96,11 +96,11 @@ namespace yq::tachyon {
 
     ImTextureID    UIElement::install(const TextureCPtr& tex)
     {
-        if(!s_context)
+        if(!s_viContext)
             return nullptr;
-        if(!s_context->imgui)
+        if(!s_viContext->imgui)
             return nullptr;
-        return s_context->imgui->texture(tex);
+        return s_viContext->imgui->texture(tex);
     }
 
     void           UIElement::mail(const PostCPtr& pp)

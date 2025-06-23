@@ -54,6 +54,8 @@ namespace yq::tachyon {
         //! Default content for items is to render subitems
         virtual void            content() override;
         
+        virtual void            tick() override;
+
         //! Calls the children
         virtual void            render(items_k);
         

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/ui/UIElement.hpp>
-#include <tachyon/api/Light.hpp>
+#include <tachyon/typedef/controller.hpp>
 
 namespace yq::tachyon{
     class Frame;
@@ -16,21 +16,23 @@ namespace yq::tachyon{
 using namespace yq;
 using namespace yq::tachyon;
 
-class LightTableUI : public UIElement {
-    YQ_OBJECT_DECLARE(LightTableUI, UIElement)
+class ControllerTableUI : public UIElement {
+    YQ_OBJECT_DECLARE(ControllerTableUI, UIElement)
 public:
     static void init_info();
     
-    LightTableUI(UIFlags flags={});
-    LightTableUI(const LightTableUI& cp);
+    ControllerTableUI(UIFlags flags={});
+    ControllerTableUI(const ControllerTableUI& cp);
     
-    virtual LightTableUI*   clone() const;
+    virtual ControllerTableUI*   clone() const;
     const char*    title() const override;
     
     void    render() override;
 
-    LightID         selected() const { return m_selected; }
-    void            set_selected(LightID);
+    ControllerID         selected() const { return m_selected; }
+    void            set_selected(ControllerID);
+
+    void            tick() override;
 
 private:
 
@@ -38,10 +40,9 @@ private:
     
     
     void            changed_select();
-    void            update_table(const Frame&);
 
     ImTextureID         m_editing = nullptr;
-    LightID             m_selected;
+    ControllerID        m_selected;
     std::vector<Row>    m_rows;
 };
 

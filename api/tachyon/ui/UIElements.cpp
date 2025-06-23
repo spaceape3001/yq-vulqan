@@ -133,4 +133,10 @@ namespace yq::tachyon {
     {
         return m_items.size();
     }
+
+    void    UIElements::tick() 
+    {
+        for(UIElement* ui : m_items)
+            ui -> tick();
+    }
 }

@@ -143,16 +143,18 @@ namespace yq::tachyon {
         using ThreadRefPtrVec   = std::vector<Ref<Thread>>;
         
         struct {
-            Ref<AppThread>      app;        //< valid while running
-            Ref<AudioThread>    audio;      //< valid while running if "ENABLED" but not "PER"
-            Ref<GameThread>     game;       //< valid while running if "ENABLED" but not "PER"
-            Ref<IOThread>       io;         //< valid while running if "ENABLED" but not "PER"
-            Ref<NetworkThread>  network;    //< valid while running if "ENABLED" but not "PER"
-            Ref<SimThread>      sim;        //< valid while running if "ENABLED" but not "PER"
-            Ref<TaskThread>     task;       //< valid while running if "ENABLED" but not "PER"
-            Ref<ViewerThread>   viewer;     //< valid while running if "ENABLED" but not "PER"
-            ViewerThreadVec     viewers;
-            ThreadRefPtrVec     others;
+            Ref<AppThread>          app;        //< valid while running
+            Ref<AudioThread>        audio;      //< valid while running if "ENABLED" but not "PER"
+            Ref<AuxillaryThread>    auxillary;  //< valid while running if "ENABLED" but not "PER"
+            Ref<EditorThread>       editor;     //< valid while running if "ENABLED" but not "PER"
+            Ref<GameThread>         game;       //< valid while running if "ENABLED" but not "PER"
+            Ref<IOThread>           io;         //< valid while running if "ENABLED" but not "PER"
+            Ref<NetworkThread>      network;    //< valid while running if "ENABLED" but not "PER"
+            Ref<SimThread>          sim;        //< valid while running if "ENABLED" but not "PER"
+            Ref<TaskThread>         task;       //< valid while running if "ENABLED" but not "PER"
+            Ref<ViewerThread>       viewer;     //< valid while running if "ENABLED" but not "PER"
+            ViewerThreadVec         viewers;
+            ThreadRefPtrVec         others;
         } m_thread;
         
         template <typename T>

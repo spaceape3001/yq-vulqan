@@ -37,6 +37,10 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::Audio; }
     };
 
+    struct auxillary_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Auxillary; }
+    };
+
     struct bar_k {};
 
     struct camera_k {};
@@ -70,6 +74,10 @@ namespace yq::tachyon {
     
     struct east_k {
         consteval operator Cardinal() const noexcept { return Cardinal::East; }
+    };
+    
+    struct editor_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Editor; }
     };
     
     struct emit_k {};
@@ -234,6 +242,7 @@ namespace yq::tachyon {
     static constexpr const append_k             APPEND;
     static constexpr const appendable_k         APPENDABLE;
     static constexpr const audio_k              AUDIO;
+    static constexpr const auxillary_k          AUX, AUXILLARY;
     static constexpr const bar_k                BAR;
     static constexpr const camera_k             CAMERA;
     static constexpr const camera³_k            CAMERA³;
@@ -254,6 +263,7 @@ namespace yq::tachyon {
     static constexpr const domain_k             DOMAIN;
     static constexpr const dynamic_k            DYNAMIC;
     static constexpr const east_k               EAST;
+    static constexpr const editor_k             EDITOR;
     static constexpr const erasable_k           ERASABLE;
     static constexpr const erase_k              ERASE;
     static constexpr const emit_k               EMIT;

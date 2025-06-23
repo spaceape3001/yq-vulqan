@@ -174,6 +174,8 @@ add_library(${PROJECT_NAME} SHARED
     command/cursor/CursorNormalCommand.cpp
 
     command/gamepad/GamepadZeroCommand.cpp
+    
+    command/generic/SetSpatialCommand.cpp
 
     command/io/SaveCommand.cpp
 
@@ -517,6 +519,8 @@ add_library(${PROJECT_NAME} SHARED
 
     thread/AppThread.cpp
     thread/AudioThread.cpp
+    thread/AuxillaryThread.cpp
+    thread/EditorThread.cpp
     thread/GameThread.cpp
     thread/IOThread.cpp
     thread/NetworkThread.cpp

@@ -435,7 +435,7 @@ namespace yq::tachyon {
     {
         if(m_ui.root){
             auto wid        = auto_reset(UIElement::s_widget, this);
-            auto ctx        = auto_reset(UIElement::s_context, &u);
+            auto ctx        = auto_reset(UIElement::s_viContext, &u);
             m_ui.root -> draw();
         }
     }
@@ -606,6 +606,12 @@ namespace yq::tachyon {
                 m_ui.root       = wi.m_ui->copy();
             }
         }
+        if(m_ui.root){
+            auto wid        = auto_reset(UIElement::s_widget, this);
+            //auto ctx        = auto_reset(UIElement::s_viContext, &u);
+            m_ui.root -> tick();
+        }
+        
         return Tachyon::setup(ctx);
     }
 
@@ -615,12 +621,16 @@ namespace yq::tachyon {
         sn.viewer   = m_viewer;
     }
 
-#if 0
     Execution  Widget::tick(const Context&ctx)
     {
+        if(m_ui.root){
+            auto wid        = auto_reset(UIElement::s_widget, this);
+            //auto ctx        = auto_reset(UIElement::s_viContext, &u);
+            m_ui.root -> tick();
+        }
+
         return {};
     }
-#endif
 
     Viewer*         Widget::viewer(ptr_k)
     {

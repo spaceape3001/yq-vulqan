@@ -1063,6 +1063,11 @@ namespace yq::tachyon {
         mail(new SetAttributeCommand({.target=*this}, std::string(k), v));
     }
 
+    void Tachyon::set_name(std::string_view k)
+    {
+        mail(new SetNameCommand({.target=*this}, std::string(k)));
+    }
+
     void  Tachyon::set_parent(TachyonSpec tid)
     {
         mail(new SetParentCommand({.target=*this}, Frame::resolve(tid)));

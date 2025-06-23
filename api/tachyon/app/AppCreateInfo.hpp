@@ -31,6 +31,8 @@ namespace yq::tachyon {
     class AppThread;
     class Application;
     class AudioThread;
+    class AuxillaryThread;
+    class EditorThread;
     class GameThread;
     class IOThread;
     class NetworkThread;
@@ -87,6 +89,8 @@ namespace yq::tachyon {
         struct {
             AppCreateThreadFN                   app         = {};
             thread_spec_t<AudioThread>          audio       = DISABLED;
+            thread_spec_t<AuxillaryThread>      auxillary   = DISABLED;
+            thread_spec_t<EditorThread>         editor      = DISABLED;
             thread_spec_t<GameThread>           game        = DISABLED;
             thread_spec_t<IOThread>             io          = DISABLED;
             thread_spec_t<NetworkThread>        network     = DISABLED;

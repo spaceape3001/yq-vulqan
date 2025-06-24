@@ -170,16 +170,17 @@ private:
     } m_rendered;
     
     struct {
-        const SceneInfo*            info        = nullptr;
-        SceneID                     selected;
-        InspectorUI*                properties  = nullptr;
-        SceneTableUI*               table       = nullptr;
-        bool                        rebuild     = false;
+        const SceneInfo*        info        = nullptr;
+        SceneID                 selected;
+        TypedID                 simple;     //!< The default simple scene
+        InspectorUI*            properties  = nullptr;
+        SceneTableUI*           table       = nullptr;
+        bool                    rebuild     = false;
     } m_scene;
 
     struct {
-        const SpatialInfo*          info        = nullptr;
-        TypedID                     context;
+        const SpatialInfo*      info        = nullptr;
+        TypedID                 context;
     } m_spatial;
 
     FileMode                    m_fileMode  = FileMode::None;

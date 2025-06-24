@@ -76,6 +76,7 @@
 #include <tachyon/scene/HUDScene.hpp>
 #include <tachyon/scene/BackgroundScene.hpp>
 #include <tachyon/scene/ForegroundScene.hpp>
+#include <tachyon/scene/SimpleScene.hpp>
 
 #include <tachyon/spatial/SimpleSpatial3.hpp>
 
@@ -162,7 +163,7 @@ void SceneEditor::init_info()
     cp_cameras.section("Available").make<UIBuildableInfoList<Camera>>().flag(SET, UIFlag::EmitSignal).uid("CameraAvailable");
     cp_cameras.section("Current").make<CameraTableUI>().uid("CameraTable");
     auto cpp_cameras      = cp_cameras.section("Properties");
-    (cpp_cameras << new CreateMenuUI("Add/Create Spatial##AddCameraSpatialUI", meta<Spatial>()));
+    (cpp_cameras << new CreateMenuUI("Add/Create Spatial##AddCameraSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_camera_spatial);
     cpp_cameras.make<InspectorUI>().uid("CameraInspector");
     
     cp_controllers.section("Available").make<UIBuildableInfoList<Controller>>().flag(SET, UIFlag::EmitSignal).uid("ControllerAvailable");
@@ -173,7 +174,7 @@ void SceneEditor::init_info()
     cp_lights.section("Available").make<UIBuildableInfoList<Light>>().flag(SET, UIFlag::EmitSignal).uid("LightAvailable");
     cp_lights.section("Current").make<LightTableUI>().uid("LightTable");
     auto cpp_lights    = cp_lights.section("Properties");
-    (cpp_lights << new CreateMenuUI("Add/Create Spatial##AddLightSpatialUI", meta<Spatial>()));
+    (cpp_lights << new CreateMenuUI("Add/Create Spatial##AddLightSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_light_spatial);
     cpp_lights.make<InspectorUI>().uid("LightInspector");
 #endif
 
@@ -192,7 +193,7 @@ void SceneEditor::init_info()
     cp_rendereds.section("Available").make<UIBuildableInfoList<Rendered>>().flag(SET, UIFlag::EmitSignal).uid("RenderedAvailable");
     cp_rendereds.section("Current").make<RenderedTableUI>().uid("RenderedTable");
     auto rendered_props = cp_rendereds.section("Properties");
-    (rendered_props << new CreateMenuUI("Add/Create Spatial##AddRenderedSpatialUI", meta<Spatial>()));
+    (rendered_props << new CreateMenuUI("Add/Create Spatial##AddRenderedSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_rendered_spatial);
     rendered_props.make<InspectorUI>().uid("RenderedInspector");
 
     cp_scenes.section("Available").make<UIBuildableInfoList<Scene>>().flag(SET, UIFlag::EmitSignal).uid("SceneAvailable");
@@ -894,6 +895,11 @@ Execution   SceneEditor::setup(const Context&ctx)
         return WAIT;
 
         // Editor's default cameras/controllers go onto the auxillary thread
+    if(!m_scene.simple){
+        Scene*  scene   = create_child_on<SimpleScene>(AUX);
+        scene->set_name("SceneEditor Default Scene");
+        m_scene.simple  = *scene;
+    }
 
     if(!m_camera.space){
         SpaceCamera::Param p;
@@ -962,7 +968,7 @@ Execution   SceneEditor::setup(const Context&ctx)
     if(!m_scene.properties)
         m_scene.properties      = static_cast<InspectorUI*>(element(FIRST, "SceneInspector"));
     if(!m_scene.table)
-        m_scene.table          = static_cast<SceneTableUI*>(element(FIRST, "SceneTable"));
+        m_scene.table           = static_cast<SceneTableUI*>(element(FIRST, "SceneTable"));
         
     _activate((CameraID) m_camera.space );
     

@@ -16,6 +16,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::ViewerThread)
 namespace yq::tachyon {
     ViewerThread::ViewerThread(const Param&p) : Thread(p)
     {
+        m_name  = "VIZ";
     }
     
     ViewerThread::~ViewerThread()

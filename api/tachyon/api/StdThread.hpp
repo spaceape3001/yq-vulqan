@@ -31,8 +31,8 @@ namespace yq::tachyon {
         // Auxillary thread
         Auxillary,
         
-        // Editor thread
-        Editor,
+        // Edit thread (for an editor's usage)
+        Edit,
         
         // Game thread
         Game,

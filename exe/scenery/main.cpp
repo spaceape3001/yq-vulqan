@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     AppCreateInfo        aci;
     aci.thread.auxillary    = true;
     aci.thread.io           = true;
-    aci.thread.sim          = true;
+    aci.thread.edit         = true;
     aci.view.title          = "Scenery Editor";
     aci.view.size           = { 1920, 1080 };
     aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };

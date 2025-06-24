@@ -100,6 +100,51 @@
 
 YQ_TACHYON_IMPLEMENT(SceneEditor)
 
+void     SceneEditor::clear_edit_thread()
+{
+    clear_thread(Thread::standard(EDIT));
+}
+
+void     SceneEditor::clear_aux_thread()
+{
+    clear_thread(Thread::standard(AUX));
+}
+
+void     SceneEditor::clear_thread(ThreadID owner)
+{
+    const Frame* frame  = Frame::current();
+    if(!frame)
+        return ;
+
+    auto zap = [&](TachyonID id){
+        const TachyonData*  data    = frame->data(id);
+        if(!data)
+            return;
+        if(data->owner != owner)
+            return;
+        Tachyon*    tac = frame->object(id);
+        if(!tac)
+            return;
+        tac -> cmd_teardown();
+    };
+    
+    for(CameraID c : frame->ids(CAMERA))
+        zap(c);
+    for(ControllerID c : frame->ids(CONTROLLER))
+        zap(c);
+    for(LightID c : frame->ids(LIGHT))
+        zap(c);
+    for(ModelID c : frame->ids(MODEL))
+        zap(c);
+    for(RenderedID c : frame->ids(RENDERED))
+        zap(c);
+    for(SceneID c : frame->ids(SCENE))
+        zap(c);
+    for(SpatialID c : frame->ids(SPATIAL))
+        zap(c);
+}
+
+
 SceneEditor::EFlags       SceneEditor::flags_for(const CameraInfo& sc)
 {
     EFlags  ret = {};
@@ -331,7 +376,7 @@ void    SceneEditor::_activate(SceneID id)
 
 CameraID        SceneEditor::_create(const CameraInfo& info)
 {
-    Camera* res = Tachyon::create_on<Camera>(SIM, info);
+    Camera* res = Tachyon::create_on<Camera>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create camera (" << info.stem() << ") due to instantiation problem";
         return {};
@@ -361,7 +406,7 @@ SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialInfo& info)
         return {};
     }
     
-    Spatial*   res  = parent->create_child_on<Spatial>(SIM, info);
+    Spatial*   res  = parent->create_child_on<Spatial>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create spatial (" << info.stem() << ") due to instantiation problem";
         return {};
@@ -374,7 +419,7 @@ SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialInfo& info)
 
 ControllerID    SceneEditor::_create(const ControllerInfo& info)
 {
-    Controller* res = Tachyon::create_on<Controller>(SIM, info);
+    Controller* res = Tachyon::create_on<Controller>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create controller (" << info.stem() << ")";
         return {};
@@ -390,7 +435,7 @@ LightID         SceneEditor::_create(const LightInfo& info)
         return {};
     }
     
-    Light*    res  = parent->create_child_on<Light>(SIM, info);
+    Light*    res  = parent->create_child_on<Light>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create light (" << info.stem() << ") due to instantiation problem";
         return {};
@@ -420,7 +465,7 @@ SpatialID       SceneEditor::_create(Light³ID pid, const SpatialInfo& info)
         return {};
     }
     
-    Spatial*    res  = parent->create_child_on<Spatial>(SIM, info);
+    Spatial*    res  = parent->create_child_on<Spatial>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create spatial (" << info.stem() << ") due to instantiation problem";
         return {};
@@ -433,7 +478,7 @@ SpatialID       SceneEditor::_create(Light³ID pid, const SpatialInfo& info)
 
 ModelID         SceneEditor::_create(const ModelInfo& info)
 {
-    Model* res = Tachyon::create_on<Model>(SIM, info);
+    Model* res = Tachyon::create_on<Model>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create model (" << info.stem() << ") due to instantiation problem";
         return {};
@@ -449,7 +494,7 @@ RenderedID      SceneEditor::_create(const RenderedInfo& info)
         return {};
     }
     
-    Rendered*    res  = parent->create_child_on<Rendered>(SIM, info);
+    Rendered*    res  = parent->create_child_on<Rendered>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create rendered (" << info.stem() << ") due to instantiation problem";
         return {};
@@ -479,7 +524,7 @@ SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialInfo& info)
         return {};
     }
     
-    Spatial*    res  = parent->create_child_on<Spatial>(SIM, info);
+    Spatial*    res  = parent->create_child_on<Spatial>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create spatial (" << info.stem() << ") due to instantiation problem";
         return {};
@@ -492,47 +537,12 @@ SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialInfo& info)
 
 SceneID         SceneEditor::_create(const SceneInfo& info)
 {
-    Scene* res = Tachyon::create_on<Scene>(SIM, info);
+    Scene* res = Tachyon::create_on<Scene>(EDIT, info);
     if(!res){
         yNotice() << "Unable to create scene (" << info.stem() << ") due to instantiation problem";
         return {};
     }
     return res->id();
-}
-
-static void     clearSimThread()
-{
-    const Frame* frame  = Frame::current();
-    if(!frame)
-        return ;
-
-    ThreadID        simThread   = Thread::standard(SIM);
-    auto zap = [&](TachyonID id){
-        const TachyonData*  data    = frame->data(id);
-        if(!data)
-            return;
-        if(data->owner != simThread)
-            return;
-        Tachyon*    tac = frame->object(id);
-        if(!tac)
-            return;
-        tac -> cmd_teardown();
-    };
-    
-    for(CameraID c : frame->ids(CAMERA))
-        zap(c);
-    for(ControllerID c : frame->ids(CONTROLLER))
-        zap(c);
-    for(LightID c : frame->ids(LIGHT))
-        zap(c);
-    for(ModelID c : frame->ids(MODEL))
-        zap(c);
-    for(RenderedID c : frame->ids(RENDERED))
-        zap(c);
-    for(SceneID c : frame->ids(SCENE))
-        zap(c);
-    for(SpatialID c : frame->ids(SPATIAL))
-        zap(c);
 }
 
 void                    SceneEditor::_clear()
@@ -542,14 +552,13 @@ void                    SceneEditor::_clear()
         return ;
 
     m_layers.clear();
-
-    clearSimThread();
+    clear_edit_thread();
 }
 
 
 void    SceneEditor::_open(const std::filesystem::path& fp)
 {
-    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, SIM, clearSimThread));
+    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, EDIT, SceneEditor::clear_edit_thread));
 }
 
 void    SceneEditor::_rebuild()
@@ -599,7 +608,7 @@ void    SceneEditor::_save(const std::filesystem::path& fp)
     const Frame* frame  = Frame::current();
     if(!frame)
         return ;
-    send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, SIM, { SaveOption::SkipOwnership }));
+    send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, EDIT, { SaveOption::SkipOwnership }));
 }
 
 void    SceneEditor::action_create_camera(const Payload& pay)
@@ -896,7 +905,7 @@ Execution   SceneEditor::setup(const Context&ctx)
 
         // Editor's default cameras/controllers go onto the auxillary thread
     if(!m_scene.simple){
-        Scene*  scene   = create_child_on<SimpleScene>(AUX);
+        Scene*  scene   = create_on<SimpleScene>(AUX);
         scene->set_name("SceneEditor Default Scene");
         m_scene.simple  = *scene;
     }
@@ -907,7 +916,7 @@ Execution   SceneEditor::setup(const Context&ctx)
         p.far       = 60.;
         p.position  = ZERO;
         
-        Camera* cam     = create_child_on<SpaceCamera>(AUX, p);
+        Camera* cam     = create_on<SpaceCamera>(AUX, p);
         cam->set_name("SceneEditor Space Camera");
         m_camera.space  = *cam;
     }
@@ -915,7 +924,7 @@ Execution   SceneEditor::setup(const Context&ctx)
     if(!m_camera.hud){
         // exact choice TBD (not yet created)
         NullCamera::Param p;
-        Camera* cam     = create_child_on<NullCamera>(AUX, p);
+        Camera* cam     = create_on<NullCamera>(AUX, p);
         cam->set_name("SceneEditor HUD Camera");
         m_camera.hud    = *cam;
     }

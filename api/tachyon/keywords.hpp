@@ -76,8 +76,8 @@ namespace yq::tachyon {
         consteval operator Cardinal() const noexcept { return Cardinal::East; }
     };
     
-    struct editor_k {
-        consteval operator StdThread() const noexcept  { return StdThread::Editor; }
+    struct edit_k {
+        consteval operator StdThread() const noexcept  { return StdThread::Edit; }
     };
     
     struct emit_k {};
@@ -263,7 +263,7 @@ namespace yq::tachyon {
     static constexpr const domain_k             DOMAIN;
     static constexpr const dynamic_k            DYNAMIC;
     static constexpr const east_k               EAST;
-    static constexpr const editor_k             EDITOR;
+    static constexpr const edit_k               EDIT;
     static constexpr const erasable_k           ERASABLE;
     static constexpr const erase_k              ERASE;
     static constexpr const emit_k               EMIT;

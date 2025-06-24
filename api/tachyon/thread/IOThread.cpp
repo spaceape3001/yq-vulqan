@@ -15,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::IOThread)
 namespace yq::tachyon {
     IOThread::IOThread(const Param&p) : Thread(p)
     {
+        m_name  = "IO";
     }
     
     IOThread::~IOThread()

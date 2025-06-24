@@ -22,6 +22,7 @@ namespace yq::tachyon {
     AppThread::AppThread(Application* app, const Param&p) : Thread(p), m_app(app)
     {
         Thread::s_current       = this;
+        m_name  = "APP";
     }
     
     AppThread::~AppThread()

@@ -15,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::NetworkThread)
 namespace yq::tachyon {
     NetworkThread::NetworkThread(const Param&p) : Thread(p)
     {
+        m_name  = "NET";
     }
     
     NetworkThread::~NetworkThread()

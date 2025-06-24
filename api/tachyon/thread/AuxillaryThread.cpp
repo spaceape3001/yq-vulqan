@@ -15,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::AuxillaryThread)
 namespace yq::tachyon {
     AuxillaryThread::AuxillaryThread(const Param&p) : Thread(p)
     {
+        m_name = "AUX";
     }
     
     AuxillaryThread::~AuxillaryThread()

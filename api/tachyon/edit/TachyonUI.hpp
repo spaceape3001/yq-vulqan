@@ -23,5 +23,6 @@ namespace yq::tachyon {
         void    id();
         void    type();
         void    name();
+        void    thread();
     };
 }

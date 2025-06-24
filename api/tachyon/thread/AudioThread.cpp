@@ -15,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::AudioThread)
 namespace yq::tachyon {
     AudioThread::AudioThread(const Param&p) : Thread(p)
     {
+        m_name  = "AUDIO";
     }
     
     AudioThread::~AudioThread()

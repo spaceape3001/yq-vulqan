@@ -15,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::GameThread)
 namespace yq::tachyon {
     GameThread::GameThread(const Param&p) : Thread(p)
     {
+        m_name  = "GAME";
     }
     
     GameThread::~GameThread()

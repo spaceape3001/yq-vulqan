@@ -716,7 +716,9 @@ namespace yq::tachyon {
         AttrKeyMap                  m_userAttrs;
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
+    protected:
         std::string                 m_name;
+    private:
         uint64_t                    m_cycle         = 0;
         Stage                       m_stage         = Stage::Preinit;
         bool                        m_dirty         = false;

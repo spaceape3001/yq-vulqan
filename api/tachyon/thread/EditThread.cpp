@@ -4,31 +4,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/thread/EditorThread.hpp>
+#include <tachyon/thread/EditThread.hpp>
 
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/api/ThreadData.hpp>
 #include <tachyon/api/ThreadInfoWriter.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::EditorThread)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::EditThread)
 
 namespace yq::tachyon {
-    EditorThread::EditorThread(const Param&p) : Thread(p)
+    EditThread::EditThread(const Param&p) : Thread(p)
+    {
+        m_name    = "EDIT";
+    }
+    
+    EditThread::~EditThread()
     {
     }
     
-    EditorThread::~EditorThread()
-    {
-    }
-    
-    void EditorThread::shutdown()
+    void EditThread::shutdown()
     {
         quit();
     }
     
-    void EditorThread::init_info()
+    void EditThread::init_info()
     {
-        auto w = writer<EditorThread>();
-        w.description("Editor Thread");
+        auto w = writer<EditThread>();
+        w.description("Edit Thread");
     }
 }

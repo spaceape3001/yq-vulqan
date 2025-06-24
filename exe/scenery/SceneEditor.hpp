@@ -57,6 +57,10 @@ class SceneEditor : public CompositeWidget {
     YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
 public:
 
+    static void     clear_edit_thread();
+    static void     clear_aux_thread();
+    static void     clear_thread(ThreadID);
+
     enum class FileMode {
         None,
         Open,

@@ -31,6 +31,7 @@ namespace yq::tachyon {
     class AudioThread;
     class Desktop;
     class DesktopGLFW;
+    class EditThread;
     class GameThread;
     class IOThread;
     class Manager;
@@ -146,7 +147,7 @@ namespace yq::tachyon {
             Ref<AppThread>          app;        //< valid while running
             Ref<AudioThread>        audio;      //< valid while running if "ENABLED" but not "PER"
             Ref<AuxillaryThread>    auxillary;  //< valid while running if "ENABLED" but not "PER"
-            Ref<EditorThread>       editor;     //< valid while running if "ENABLED" but not "PER"
+            Ref<EditThread>         edit;     //< valid while running if "ENABLED" but not "PER"
             Ref<GameThread>         game;       //< valid while running if "ENABLED" but not "PER"
             Ref<IOThread>           io;         //< valid while running if "ENABLED" but not "PER"
             Ref<NetworkThread>      network;    //< valid while running if "ENABLED" but not "PER"

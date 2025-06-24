@@ -15,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::TaskThread)
 namespace yq::tachyon {
     TaskThread::TaskThread(const Param&p) : Thread(p)
     {
+        m_name  = "TASK";
     }
     
     TaskThread::~TaskThread()

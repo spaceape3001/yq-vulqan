@@ -18,7 +18,7 @@
 #include <tachyon/thread/AppThread.hpp>
 #include <tachyon/thread/AudioThread.hpp>
 #include <tachyon/thread/AuxillaryThread.hpp>
-#include <tachyon/thread/EditorThread.hpp>
+#include <tachyon/thread/EditThread.hpp>
 #include <tachyon/thread/GameThread.hpp>
 #include <tachyon/thread/IOThread.hpp>
 #include <tachyon/thread/NetworkThread.hpp>
@@ -346,7 +346,7 @@ namespace yq::tachyon {
             return false;
         if(!_start(GAME, m_thread.game, m_cInfo.thread.game, "game"))
             return false;
-        if(!_start(EDITOR, m_thread.editor, m_cInfo.thread.editor, "editor"))
+        if(!_start(EDIT, m_thread.edit, m_cInfo.thread.edit, "edit"))
             return false;
         if(!_start(IO, m_thread.io, m_cInfo.thread.io, "io"))
             return false;
@@ -361,7 +361,7 @@ namespace yq::tachyon {
 
         _stdthread(AUDIO,       m_cInfo.thread.audio);
         _stdthread(AUXILLARY,   m_cInfo.thread.auxillary);
-        _stdthread(EDITOR,      m_cInfo.thread.editor);
+        _stdthread(EDIT,        m_cInfo.thread.edit);
         _stdthread(GAME,        m_cInfo.thread.game);
         _stdthread(IO,          m_cInfo.thread.io);
         _stdthread(NETWORK,     m_cInfo.thread.network);

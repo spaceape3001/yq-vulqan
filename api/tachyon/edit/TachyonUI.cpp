@@ -9,9 +9,12 @@
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/TachyonData.hpp>
+#include <tachyon/api/Thread.hpp>
+#include <tachyon/api/ThreadData.hpp>
 #include <tachyon/command/tachyon/SetNameCommand.hpp>
 #include <tachyon/ui/UIEditorInfoWriter.hpp>
 #include <tachyon/logging.hpp>
+#include <format>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonUI)
 
@@ -23,6 +26,7 @@ namespace yq::tachyon {
         w.field("Name", &TachyonUI::name);
         w.field("Type", &TachyonUI::type);
         w.field("ID", &TachyonUI::id);
+        w.field("Thread", &TachyonUI::thread);
         w.edits<Tachyon>();
     }
 
@@ -76,5 +80,25 @@ namespace yq::tachyon {
                 send(new SetNameCommand({.target=sn->self}, std::string(text)));
             }
         }
+    }
+    
+    void    TachyonUI::thread()
+    {
+        const Frame*    frame = Frame::current();
+        if(!frame)
+            return;
+        const TachyonData*  tach    = frame->data(bound());
+        if(!tach)
+            return;
+        
+        std::string     text;    
+        if(const ThreadSnap*   th = frame->snap(tach->owner)){
+            if(!th->name.empty())
+                text    = std::format("{} [{}]", th->name, tach->owner.id);
+        }
+        
+        if(text.empty())
+            text    = std::format("[{}]", tach->owner.id);
+        ImGui::TextUnformatted(text);
     }
 }

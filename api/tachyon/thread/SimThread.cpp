@@ -15,6 +15,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::SimThread)
 namespace yq::tachyon {
     SimThread::SimThread(const Param&p) : Thread(p)
     {
+        m_name  = "SIM";
     }
     
     SimThread::~SimThread()

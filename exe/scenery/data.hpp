@@ -104,3 +104,4 @@ const SceneSnap*        snapshot(scene_k);
 const Scene³Snap*       snapshot(scene³_k);
 
 TypedID                 typed_for(TachyonID);
+

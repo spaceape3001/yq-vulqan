@@ -481,6 +481,8 @@ add_library(${PROJECT_NAME} SHARED
     
     reply/ui/CloseReply.cpp
     
+    reply/viewer/ViewerScreenshotReply.cpp
+    
     request/AppRequest.cpp
     request/CameraRequest.cpp
     request/EditorRequest.cpp
@@ -506,6 +508,8 @@ add_library(${PROJECT_NAME} SHARED
     
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp
+    
+    request/viewer/ViewerScreenshotRequest.cpp
 
     scene/BackgroundScene.cpp
     scene/CompositeScene.cpp

@@ -25,6 +25,7 @@ namespace yq::tachyon {
     class OpenFileRequest;
     class SaveFileRequest;
     class SaveTSXReply;
+    class ViewerScreenshotReply;
     struct Payload;
 }
 
@@ -101,10 +102,9 @@ public:
     void                cmd_file_save();
     void                cmd_file_save_as();
     void                cmd_file_new();
-
-    void                cmd_add_scene(const SceneInfo&);
-    void                cmd_add_camera(const CameraInfo&);
     
+    void                cmd_screenshot();
+
     CameraID            selected(camera_k) const { return m_camera.selected; }
     ControllerID        selected(controller_k) const { return m_controller.selected; }
     LightID             selected(light_k) const { return m_light.selected; }
@@ -227,6 +227,7 @@ private:
     void    on_scene_remove_event(const SceneRemoveEvent&);
     void    on_scene_select_event(const SceneSelectEvent&);
     void    on_scene_visibility_event(const SceneVisibilityEvent&);
+    void    on_viewer_screenshot_reply(const ViewerScreenshotReply&);
 };
 
 extern TypedID     gFileIO;

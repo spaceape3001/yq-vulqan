@@ -92,10 +92,12 @@
 
 #include <tachyon/reply/graphics_card/GetDeviceReply.hpp>
 #include <tachyon/reply/ui/CloseReply.hpp>
+#include <tachyon/reply/viewer/ViewerScreenshotReply.hpp>
 
 #include <tachyon/request/graphics_card/GetDeviceRequest.hpp>
 #include <tachyon/request/ui/RefreshRequest.hpp>
 #include <tachyon/request/ui/CloseRequest.hpp>
+#include <tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 
 #include <tachyon/vulkan/ViContext.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>
@@ -183,6 +185,7 @@ namespace yq::tachyon {
         //w.slot(&Viewer::on_show_event);
         w.slot(&Viewer::on_title_command);
         w.slot(&Viewer::on_unfloat_command);
+        w.slot(&Viewer::on_viewer_screenshot_request);
 
         auto wt = writer<ViewerID>();
         wt.description("Viewer Identifier");
@@ -386,7 +389,23 @@ namespace yq::tachyon {
         
         //  ENABLE to get the validation issue
         //  u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
-        return draw(u);
+        
+        if(!m_screenshotRequests.empty()){
+            u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
+        }
+        
+        std::error_code ec = draw(u);
+
+        if(!m_screenshotRequests.empty()){
+            if(auto p = std::get_if<RasterPtr>(&u.snapshot)){
+                for(auto& req : m_screenshotRequests){
+                    send(new ViewerScreenshotReply({ .target=req->source() }, req, Response::QaPla, *p));
+                }
+                m_screenshotRequests.clear();
+            }
+        }
+        
+        return ec;
     }
 
     std::error_code     Viewer::draw(ViContext& u)
@@ -903,6 +922,13 @@ namespace yq::tachyon {
     void    Viewer::set_title(std::string_view kTitle)
     {
         mail(new TitleCommand({.target=this}, kTitle));
+    }
+
+    void    Viewer::on_viewer_screenshot_request(const ViewerScreenshotRequestCPtr&req)
+    {
+        if(req && (req->target() == id())){
+            m_screenshotRequests.push_back(req);
+        }
     }
 
     Execution   Viewer::setup(const Context&ctx) 

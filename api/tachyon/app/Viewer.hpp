@@ -344,21 +344,22 @@ namespace yq::tachyon {
             NoImGuiMouse
         };
 
-        Cleanup                         m_cleanup;
-        std::atomic<unit::Second>       m_drawTime      = { 0. };
-        TypedID                         m_focus         = {};
-        std::unique_ptr<ViGui>          m_imgui;
+        Cleanup                                 m_cleanup;
+        std::atomic<unit::Second>               m_drawTime      = { 0. };
+        TypedID                                 m_focus         = {};
+        std::unique_ptr<ViGui>                  m_imgui;
         //std::atomic<bool>               m_paused;
-        ViewerState                     m_state;
+        ViewerState                                 m_state;
         //std::atomic<Stage>              m_stage         = { Stage::Preinit };
-        Flags<X>                        m_flags       = {};   //! Startup & shutdown
-        std::atomic<uint64_t>           m_ticks{0};
-        std::unique_ptr<Visualizer>     m_viz;
-        TypedID                         m_widget;
-        Widget*                         m_widgetPtr = nullptr;  // temporary cheat
-        TypedID                         m_window;
-        TypedID                         m_graphicsCard;
-        bool                            m_zeroSize  = false;
+        Flags<X>                                    m_flags       = {};   //! Startup & shutdown
+        std::atomic<uint64_t>                       m_ticks{0};
+        std::unique_ptr<Visualizer>                 m_viz;
+        TypedID                                     m_widget;
+        Widget*                                     m_widgetPtr = nullptr;  // temporary cheat
+        TypedID                                     m_window;
+        TypedID                                     m_graphicsCard;
+        bool                                        m_zeroSize  = false;
+        std::vector<ViewerScreenshotRequestCPtr>    m_screenshotRequests;
 
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close
         RequestCPtr                     m_closeRequest;
@@ -403,6 +404,7 @@ namespace yq::tachyon {
         void    on_spatial_command(const SpatialCommand&);
         void    on_title_command(const TitleCommand&);
         void    on_unfloat_command(const UnfloatCommand&);
+        void    on_viewer_screenshot_request(const ViewerScreenshotRequestCPtr&);
 
         
 

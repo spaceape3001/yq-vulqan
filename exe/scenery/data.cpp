@@ -20,6 +20,7 @@
 #include <tachyon/api/Spatial.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/ui/UIElement.hpp>
+#include <format>
 
 using namespace yq;
 using namespace yq::tachyon;

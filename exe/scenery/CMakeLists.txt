@@ -30,6 +30,7 @@ add_executable(${PROJECT_NAME}
     table/SceneTableUI.cpp
 
     data.cpp
+    utils.cpp
     main.cpp
     
 )

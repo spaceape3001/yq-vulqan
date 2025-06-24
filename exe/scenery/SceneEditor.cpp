@@ -29,6 +29,7 @@
 #include "table/SceneTableUI.hpp"
 
 #include "data.hpp"
+#include "utils.hpp"
 
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/parameters.hpp>
@@ -55,6 +56,7 @@
 
 #include <tachyon/event/panel/InfoSelectionChangedEvent.hpp>
 
+#include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/Texture.hpp>
 
 #include <tachyon/menu/CreateMenuUI.hpp>
@@ -65,9 +67,11 @@
 
 #include <tachyon/reply/io/LoadTSXReply.hpp>
 #include <tachyon/reply/io/SaveTSXReply.hpp>
+#include <tachyon/reply/viewer/ViewerScreenshotReply.hpp>
 
 #include <tachyon/request/io/LoadTSXRequest.hpp>
 #include <tachyon/request/io/SaveTSXRequest.hpp>
+#include <tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 
 #include <tachyon/scene/HUDScene.hpp>
 #include <tachyon/scene/BackgroundScene.hpp>
@@ -128,6 +132,7 @@ void SceneEditor::init_info()
     w.slot(&SceneEditor::on_scene_remove_event);
     w.slot(&SceneEditor::on_scene_select_event);
     w.slot(&SceneEditor::on_scene_visibility_event);
+    w.slot(&SceneEditor::on_viewer_screenshot_reply);
     
     
     w.description("The main widget");
@@ -231,6 +236,7 @@ void SceneEditor::init_info()
     file_menu.menuitem("Open", "Ctrl+O").action(&SceneEditor::cmd_file_open);
     file_menu.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
     file_menu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
+    file_menu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
 
     //(light_menu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::create_payload);
 
@@ -746,6 +752,13 @@ void    SceneEditor::cmd_file_save_as()
     m_fileMode  = FileMode::Save;
 }
 
+void    SceneEditor::cmd_screenshot()
+{
+    ViewerID        viewID  = viewer();
+    TypedID         view(viewID.id, Type::Viewer);
+    send(new ViewerScreenshotRequest({.target=view}));
+}
+
 void    SceneEditor::imgui(ViContext&u) 
 {
     Widget::imgui(UI,u);
@@ -857,6 +870,13 @@ void    SceneEditor::on_scene_select_event(const SceneSelectEvent&evt)
 void    SceneEditor::on_scene_visibility_event(const SceneVisibilityEvent&)
 {
     m_scene.rebuild = true;
+}
+
+void    SceneEditor::on_viewer_screenshot_reply(const ViewerScreenshotReply& rep)
+{
+    std::string     filename    = std::format("screenshot-{}.png", iso8601basic_now());
+    if(rep.raster())
+        rep.raster() -> save_to(filename);
 }
 
 

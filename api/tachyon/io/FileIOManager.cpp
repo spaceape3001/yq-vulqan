@@ -68,6 +68,9 @@ namespace yq::tachyon {
         ReincarnationConfig config;
         config.owner    = req->thread();
         
+        if(req->prep())
+            req->prep()();
+        
         TachyonIDSet        tachs;
         ec = sxml.save -> execute(SCHEDULE, config, &tachs);
         if(ec != std::error_code()){

@@ -493,13 +493,11 @@ SceneID         SceneEditor::_create(const SceneInfo& info)
     return res->id();
 }
 
-void                    SceneEditor::_clear()
+static void     clearSimThread()
 {
     const Frame* frame  = Frame::current();
     if(!frame)
         return ;
-
-    m_layers.clear();
 
     ThreadID        simThread   = Thread::standard(SIM);
     auto zap = [&](TachyonID id){
@@ -530,10 +528,21 @@ void                    SceneEditor::_clear()
         zap(c);
 }
 
+void                    SceneEditor::_clear()
+{
+    const Frame* frame  = Frame::current();
+    if(!frame)
+        return ;
+
+    m_layers.clear();
+
+    clearSimThread();
+}
+
 
 void    SceneEditor::_open(const std::filesystem::path& fp)
 {
-    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, SIM));
+    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, SIM, clearSimThread));
 }
 
 void    SceneEditor::_rebuild()
@@ -799,12 +808,6 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
     const LoadTSXRequest* req = dynamic_cast<const LoadTSXRequest*>(rep.request());
     if(!req)
         return ;
-    
-    if(rep.tachyons().empty())
-        return;
-    
-    //_clear();
-    //  todo... bring tachyons over...
     
     m_filepath  = req->filepath();
     _title();

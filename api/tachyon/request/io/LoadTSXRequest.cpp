@@ -16,13 +16,13 @@ namespace yq::tachyon {
         w.description("Load/Import TSX Request");
     }
     
-    LoadTSXRequest::LoadTSXRequest(const Header&h, const std::filesystem::path&fp, ThreadSpec th) : 
-        IORequest(h), m_filepath(fp), m_thread(th)
+    LoadTSXRequest::LoadTSXRequest(const Header&h, const std::filesystem::path&fp, ThreadSpec th, PrepFN&& prepFN) : 
+        IORequest(h), m_filepath(fp), m_thread(th), m_prep(std::move(prepFN))
     {
     }
     
     LoadTSXRequest::LoadTSXRequest(const LoadTSXRequest&cp, const Header&h) : 
-        IORequest(cp, h), m_filepath(cp.m_filepath), m_thread(cp.m_thread)
+        IORequest(cp, h), m_filepath(cp.m_filepath), m_thread(cp.m_thread), m_prep(cp.m_prep)
     {
     }
     

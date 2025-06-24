@@ -62,7 +62,7 @@ namespace yq::tachyon {
 
     protected:
         
-        Vector3D    m_position = ONE;
+        Vector3D    m_position = ZERO;
 
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

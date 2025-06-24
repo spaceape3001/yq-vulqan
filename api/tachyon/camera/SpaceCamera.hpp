@@ -35,6 +35,8 @@ namespace yq::tachyon {
         };
         
         virtual bool field_of_view(settable_k) const override { return true; }
+        virtual bool near_plane(settable_k) const override { return true; }
+        virtual bool far_plane(settable_k) const override { return true; }
     
         //! \brief World to screen matrix
         //! This routine returns the relevant world to screen projection matrix

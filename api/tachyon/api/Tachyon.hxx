@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include "Tachyon.hpp"
+#include <tachyon/api/Tachyon.hpp>
+#include <tachyon/api/AsyncTask.hxx>
 
 namespace yq::tachyon {
 
@@ -136,5 +137,20 @@ namespace yq::tachyon {
             _add_child(*tp);
         }
         return tp.ptr();
+    }
+
+    ////////////////////////////////////////////
+    //  Child-tachyon creates
+
+    template <typename Pred>
+    auto    Tachyon::tasker(StdThread th, Pred&& pred)
+    {
+        return async_task(th, this, std::move(pred));
+    }
+    
+    template <typename Pred>
+    auto    Tachyon::tasker(ThreadID th,  Pred&& pred)
+    {
+        return async_task(th, this, std::move(pred));
     }
 }

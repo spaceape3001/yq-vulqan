@@ -679,6 +679,16 @@ namespace yq::tachyon {
         
 
         void teardown();
+        
+        //! An asynchronous task on the given thread
+        //! \return Future of the appropriate type
+        template <typename Pred>
+        auto    tasker(StdThread, Pred&&);
+        
+        //! An asynchronous task on the given thread
+        //! \return Future of the appropriate type
+        template <typename Pred>
+        auto    tasker(ThreadID,  Pred&&);
 
     private:
         friend class Proxy;

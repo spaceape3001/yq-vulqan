@@ -10,6 +10,7 @@
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/typedef/clock.hpp>
 #include <tachyon/typedef/thread.hpp>
+#include <tachyon/typedef/async_task.hpp>
 #include <functional>
 #include <thread>
 
@@ -78,10 +79,12 @@ namespace yq::tachyon {
         //  This is the thread's tick
         virtual void    tick();
         
-        using task_fn   = std::function<void()>;
+        
+        //  nixing for the async task (allows for futures)
+        //using task_fn   = std::function<void()>;
         
         //! Adds a run-once task to the queue (ran on the next tick)
-        void            task(task_fn&&);
+        //void            task(task_fn&&);
         
         virtual void    owner(push_k, ThreadID) override final;
         
@@ -90,6 +93,9 @@ namespace yq::tachyon {
         static StdThreadRevMap  standard_thread_reverse_map();
         
         static ThreadID standard(StdThread);
+        
+        static void     schedule(ThreadID,  AsyncTaskUPtr&&);
+        static void     schedule(StdThread, AsyncTaskUPtr&&);
 
     protected:
         virtual Execution   tick(const Context&) override final;
@@ -162,7 +168,7 @@ namespace yq::tachyon {
         std::map<TachyonID, Control>    m_objects;
         std::vector<TachyonPtr>         m_creates;  //!< Objects that were created (will be handled next tick)
         std::vector<PP>                 m_pushing;
-        std::vector<task_fn>            m_tasks;
+        std::vector<AsyncTaskUPtr>      m_tasks;    //< Tasks... ONLY accessed in the tick()...
         std::thread                     m_thread;
         uint64_t                        m_tick      = 0ULL;
         time_point_t                    m_lastTickTime;

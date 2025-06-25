@@ -11,6 +11,7 @@
 #include <tachyon/api/ThreadData.hpp>
 #include <tachyon/api/ThreadInfoWriter.hpp>
 
+#include <tachyon/api/AsyncTask.hpp>
 #include <tachyon/io/Save.hpp>
 #include <tachyon/io/save/SaveXML.hpp>
 #include <yq/core/ThreadId.hpp>
@@ -43,19 +44,20 @@ namespace yq::tachyon {
     };
     
     struct Thread::Control {
-        TachyonPtr              object;
-        TachyonSnapCPtr         snap;
-        TachyonThreadState      state       = TachyonThreadState::Normal;
-        ThreadID                pushed;     // thread being pushed to
+        TachyonPtr                  object;
+        TachyonSnapCPtr             snap;
+        TachyonThreadState          state           = TachyonThreadState::Normal;
+        ThreadID                    pushed;     // thread being pushed to
         //XMode                   mode        = XMode::Stop;
-        unsigned int            deleteIn    = 0;    // gives X ticks to real removal
-        bool                    ticked      = false;
+        unsigned int                deleteIn        = 0;    // gives X ticks to real removal
+        bool                        ticked          = false;
     };
     
     struct Thread::Inbox {
-        std::vector<TachyonPtr>  push;       //!< Tachyons being pushed to us
-        std::vector<TachyonID>   deletes;    //!< Tachyons to delete
-        std::set<TachyonID>      pushed;     //!< Acknowledgement to being pushed (so delete from sender)
+        std::vector<TachyonPtr>     push;       //!< Tachyons being pushed to us
+        std::vector<TachyonID>      deletes;    //!< Tachyons to delete
+        std::set<TachyonID>         pushed;     //!< Acknowledgement to being pushed (so delete from sender)
+        std::vector<AsyncTaskUPtr>  tasks;     //!< Tasks that are desired
     };
     
 
@@ -98,7 +100,6 @@ namespace yq::tachyon {
     StdThreadRevMap             Thread::s_rthreads;
     std::vector<TachyonPtr>     Thread::s_misfits;
 
-    
     void Thread::init_info()
     {
         auto w = writer<Thread>();
@@ -219,6 +220,24 @@ namespace yq::tachyon {
         }
     }
 
+    void     Thread::schedule(ThreadID th,  AsyncTaskUPtr&&at)
+    {
+        if(!th)
+            return;
+        
+        {
+            lock_t    _lock(s_mutex, true);
+            auto itr    = s_inboxes.find(th);
+            if(itr != s_inboxes.end())
+                itr->second.tasks.push_back(std::move(at));
+        }
+    }
+    
+    void     Thread::schedule(StdThread st, AsyncTaskUPtr&&at)
+    {
+        schedule(standard(st), std::move(at));
+    }
+
     ThreadID Thread::standard(StdThread st)
     {
         lock_t _lock(s_mutex, false);
@@ -325,7 +344,7 @@ namespace yq::tachyon {
     {
         if(!cmd)
             return;
-tachyonInfo << ident() << "::on_save_command(" << cmd->filepath() << ")";
+
         if(cmd->target() != id())
             return ;
         send(new SaveRequest({.cause=cmd, .source=*this, .target=cmd->target()}, *cmd), cmd->target());
@@ -333,7 +352,6 @@ tachyonInfo << ident() << "::on_save_command(" << cmd->filepath() << ")";
     
     void Thread::on_save_reply(const SaveReply& rep)
     {
-tachyonInfo << ident() << "::on_save_reply()";
         if(rep.target() != id())
             return;
         if(!rep.request())
@@ -365,7 +383,6 @@ tachyonInfo << ident() << "::on_save_reply()";
 
     void Thread::on_save_request(const Ref<const SaveRequest>& req)
     {
-tachyonInfo << ident() << "::on_save_request()";
         if(!req)
             return;
         if(req->target() != id())
@@ -448,13 +465,13 @@ tachyonInfo << ident() << "::on_save_request()";
         return {};
     }
 
-    void    Thread::task(task_fn&&fn)
-    {
-        if(!fn)
-            return ;
-        lock_t _lock(m_mutex, true);
-        m_tasks.push_back(fn);
-    }
+    //void    Thread::task(task_fn&&fn)
+    //{
+        //if(!fn)
+            //return ;
+        //lock_t _lock(m_mutex, true);
+        //m_tasks.push_back(fn);
+    //}
 
     Execution   Thread::teardown(const Context&ctx) 
     {
@@ -584,6 +601,7 @@ tachyonInfo << ident() << "::on_save_request()";
             lock_t  _lock(m_mutex, true);
             std::swap(m_creates, creates);
         }
+
         for(TachyonPtr& tp : creates){
             Control&    c   = m_objects[tp->id()];
             tp->m_owner     = id();
@@ -596,20 +614,49 @@ tachyonInfo << ident() << "::on_save_request()";
         
         //  TODO: Some multithreadedness... 
         //  NOTE: For multithreading, don't forget to set Frame::s_current!
-        {
-            std::vector<task_fn>            tasks;
-            {
-                lock_t _lock(m_mutex, true);
-                std::swap(tasks, m_tasks);
+
+        //  Doing the tasks....
+        for(AsyncTaskUPtr& at : inbox.tasks)
+            m_tasks.push_back(std::move(at));
+            
+        if(!m_tasks.empty()){
+            auto itr    = m_tasks.begin();
+            for(;itr != m_tasks.end();++itr){
+                // we're eventually going to have a time-out exceed check...
+
+                AsyncTaskUPtr&  at  = *itr;
+                if(!at) 
+                    continue;
+                at->execute();
             }
-            for(task_fn& fn : tasks)
-                fn();
+            
+            if(itr != m_tasks.begin()){     // ie... made progress
+                if(itr == m_tasks.end()){   // all done
+                    m_tasks.clear();
+                } else {                    // partial
+                    m_tasks.erase(m_tasks.begin(), itr);
+                }
+            }
         }
+
+        //{
+            //std::vector<task_fn>            tasks;
+            //{
+            //}
+            //for(task_fn& fn : tasks)
+                //fn();
+        //}
         
         Execution ex = subtick(ctx);
+        
         for(auto itr = m_objects.begin(); itr != m_objects.end(); ++itr){
             execute(itr->second, ctx);
         }
+        
+        //  And tasking....
+        
+        
+        
         
         std::vector<PP> pushing;
         {

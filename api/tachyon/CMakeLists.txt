@@ -138,6 +138,7 @@ add_library(${PROJECT_NAME} SHARED
     command/JoystickCommand.cpp
     command/LightCommand.cpp
     command/MouseCommand.cpp
+    command/RenderedCommand.cpp
     command/SceneCommand.cpp
     command/ShapeCommand.cpp
     command/SimCommand.cpp
@@ -180,6 +181,8 @@ add_library(${PROJECT_NAME} SHARED
     command/io/SaveCommand.cpp
 
     command/joystick/JoystickZeroCommand.cpp
+
+    command/rendered/SetWireframeCommand.cpp
 
     command/sim/ResumeCommand.cpp
     command/sim/PauseCommand.cpp
@@ -256,6 +259,7 @@ add_library(${PROJECT_NAME} SHARED
     edit/Position2UI.cpp
     edit/Position3UI.cpp
     edit/Position4UI.cpp
+    edit/RenderedUI.cpp
     edit/Scale3UI.cpp
     edit/SceneUI.cpp
     edit/SimpleSpatial3UI.cpp

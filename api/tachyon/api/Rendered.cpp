@@ -9,6 +9,7 @@
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
 #include <tachyon/api/RenderedInfoWriter.hpp>
+#include <tachyon/command/rendered/SetWireframeCommand.hpp>
 #include <tachyon/vulkan/ViBuffer.hpp>
 #include <tachyon/vulkan/ViTexture.hpp>
 #include <yq/meta/Init.hpp>
@@ -79,6 +80,13 @@ namespace yq::tachyon {
     
     Rendered::~Rendered()
     {
+    }
+
+    void    Rendered::on_set_wireframe_command(const SetWireframeCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        set_wireframe(cmd.wireframe());
     }
 
     const Pipeline* Rendered::pipeline() const
@@ -219,6 +227,7 @@ namespace yq::tachyon {
         w.description("Render object base");
         w.icon(48, "openicon/icons/png/48x48/actions/format-stroke-color.png");
         w.abstract();
+        w.slot(&Rendered::on_set_wireframe_command);
 
         auto wt = writer<RenderedID>();
         wt.description("Rendered Identifier");

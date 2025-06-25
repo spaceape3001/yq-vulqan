@@ -19,6 +19,8 @@
 
 namespace yq::tachyon {
 
+    class SetWireframeCommand;
+
     //! Information to a rendered object
     class RenderedInfo : public TachyonInfo {
     public:
@@ -111,10 +113,13 @@ namespace yq::tachyon {
         //Draw            m_draw; 
 
         //! Wireframe mode
-        Tristate        m_wireframe;
+        Tristate        m_wireframe = Tristate::INHERIT;
         
         //! Culling flag (UNIVERSAL)
         Tristate        m_culled    = Tristate::INHERIT;
+        
+    private:
+        void    on_set_wireframe_command(const SetWireframeCommand&);
     };
     
 }

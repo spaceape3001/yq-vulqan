@@ -17,6 +17,7 @@
 #include <tachyon/typedef/rendered3.hpp>
 #include <tachyon/typedef/scene.hpp>
 #include <tachyon/typedef/spatial.hpp>
+#include <yq/core/Future.hpp>
 
 namespace yq::tachyon {
     class InfoSelectionChangedEvent;
@@ -192,7 +193,10 @@ private:
     std::filesystem::path       m_filepath;
     bool                        m_defaultInit   = false;
 
-    void            _default(std::string_view pp="exe/scenery/default.tsx");
+    //! Loads (but not schedule) the given TSX file
+    static Expect<TachyonPtrVector>     _load(const std::filesystem::path&);
+    void                                _default();
+    Expect<TachyonPtrVector>            _default_load(std::string_view pp="exe/scenery/default.tsx");
 
     void            _activate(SceneID);
     void            _activate(CameraID);
@@ -200,6 +204,8 @@ private:
     void            _activate(LightID);
     void            _activate(ModelID);
     void            _activate(RenderedID);
+
+    void            _load(StdThread, const std::filesystem::path&);
 
     CameraID        _create(const CameraInfo&);
     SpatialID       _create(camera_k, const SpatialInfo&);
@@ -213,6 +219,9 @@ private:
     SpatialID       _create(rendered_k, const SpatialInfo&);
     SpatialID       _create(Rendered³ID, const SpatialInfo&);
     SceneID         _create(const SceneInfo&);
+    
+    void            _schedule(StdThread, TachyonPtrVector&&);
+    void            _schedule(ThreadID, TachyonPtrVector&&);
 
     void    _clear();
 
@@ -235,6 +244,8 @@ private:
     void    on_scene_select_event(const SceneSelectEvent&);
     void    on_scene_visibility_event(const SceneVisibilityEvent&);
     void    on_viewer_screenshot_reply(const ViewerScreenshotReply&);
+    
+    Future<void>        m_defaultLoad;
 };
 
 extern TypedID     gFileIO;

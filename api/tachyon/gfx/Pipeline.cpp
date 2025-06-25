@@ -35,6 +35,8 @@ namespace yq::tachyon {
     Pipeline::Pipeline(const CompoundInfo* cinfo, Role r) : 
         m_compound(cinfo), m_id(_make_id()), m_role(r)
     {
+        m_dynamicStates.insert(DynamicState::Viewport);
+        m_dynamicStates.insert(DynamicState::Scissor);
     }
     
     Pipeline::~Pipeline()

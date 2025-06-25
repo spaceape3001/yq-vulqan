@@ -447,6 +447,8 @@ namespace yq::tachyon {
             .record = [&](ViContext& u){
                 if(u.command_buffer){
                     vkCmdSetViewport(u.command_buffer, 0, 1, &u.viewport);
+                    VkRect2D    scissor{{0,0}, { (uint32_t) m_state.window.pixels.x, (uint32_t) m_state.window.pixels.y }};
+                    vkCmdSetScissor(u.command_buffer, 0, 1, &scissor);
                 }
                 if(w)
                     w -> vulkan(u);

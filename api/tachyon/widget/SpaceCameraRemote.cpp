@@ -18,6 +18,7 @@
 #include <tachyon/proxy/POrientation3.hpp>
 #include <tachyon/proxy/PPosition3.hpp>
 #include <yq/util/Safety.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SpaceCameraRemote)
 

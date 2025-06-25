@@ -14,6 +14,7 @@
 #include <tachyon/widget/ImGuiDemoWidget.hpp>
 
 #include <iostream>
+#include <tachyon/api/Tachyon.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

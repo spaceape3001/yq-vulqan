@@ -11,6 +11,7 @@
 #include <yq/asset/Asset.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/file/FileResolver.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 TypedID     gFileIO;
 

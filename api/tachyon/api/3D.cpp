@@ -8,6 +8,7 @@
 #include <tachyon/api/3DData.hpp>
 #include <yq/tensor/Tensor44.hpp>
 #include <tachyon/spatial/SimpleSpatial3.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 namespace yq::tachyon {
     ③Data::③Data()

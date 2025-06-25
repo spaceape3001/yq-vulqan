@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/widget/FormWidget.hpp>
+#include <tachyon/api/Tachyon.hxx>
 #include <tachyon/mini/TextLabel.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/WidgetInfoWriter.hpp>

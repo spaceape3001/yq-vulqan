@@ -665,3 +665,6 @@ PUBLIC
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
 )
+
+LinkTest(${PROJECT_NAME})
+

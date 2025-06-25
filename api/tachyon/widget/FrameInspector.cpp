@@ -12,6 +12,7 @@
 #include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/logging.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 #include "imgui_internal.h"
 
@@ -42,6 +43,7 @@
 #include "frame_inspector/FrameInspectorViewers.hpp"
 #include "frame_inspector/FrameInspectorWidgets.hpp"
 #include "frame_inspector/FrameInspectorWindows.hpp"
+
 
 namespace yq::tachyon {
     FrameInspector::FrameInspector()

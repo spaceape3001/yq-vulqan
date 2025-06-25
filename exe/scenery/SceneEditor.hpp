@@ -190,7 +190,9 @@ private:
     FileMode                    m_fileMode  = FileMode::None;
     TypedID                     m_fileIO;
     std::filesystem::path       m_filepath;
+    bool                        m_defaultInit   = false;
 
+    void            _default(std::string_view pp="exe/scenery/default.tsx");
 
     void            _activate(SceneID);
     void            _activate(CameraID);

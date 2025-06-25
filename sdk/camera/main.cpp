@@ -15,6 +15,7 @@
 #include <tachyon/application.hpp>
 
 #include "MainWidget.hpp"
+#include <tachyon/api/Tachyon.hxx>
 
 #include <chrono>
 

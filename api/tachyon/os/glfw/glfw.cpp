@@ -6,6 +6,8 @@
 
 // Auto-generated file
 
+#include <tachyon/api/Tachyon.hxx>
+
 #include "CursorGLFW.ipp"
 #include "DesktopGLFW.ipp"
 #include "GamepadGLFW.ipp"

@@ -20,6 +20,7 @@
 #include <tachyon/api/WidgetInfoWriter.hpp>
 #include <yq/text/match.hpp>
 #include <tachyon/logging.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

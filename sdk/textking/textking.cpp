@@ -20,6 +20,7 @@
 #include <tachyon/viewer.hpp>
 #include <tachyon/widget.hpp>
 #include <tachyon/widget/TextArea.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 #include <iostream>
 #include <TextEditor.h>

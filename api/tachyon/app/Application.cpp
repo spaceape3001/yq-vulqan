@@ -6,6 +6,8 @@
 
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Widget.hpp>
+#include <tachyon/api/Tachyon.hxx>
+
 #include <tachyon/app/AppException.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/app/Viewer.hpp>

@@ -51,6 +51,7 @@
 #include <tachyon/camera/SpaceCamera.hpp>
 #include <tachyon/command/controller/ListenCommand.hpp>
 #include <tachyon/command/generic/SetSpatialCommand.hpp>
+#include <tachyon/command/thread/ScheduleCommand.hpp>
 #include <tachyon/command/ui/TitleCommand.hpp>
 #include <tachyon/controller/Space3Controller.hpp>
 
@@ -58,6 +59,9 @@
 
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/Texture.hpp>
+
+#include <tachyon/io/Save.hpp>
+#include <tachyon/io/save/SaveXML.hpp>
 
 #include <tachyon/menu/CreateMenuUI.hpp>
 
@@ -97,6 +101,7 @@
 
 #include <iostream>
 
+#include <tachyon/api/Tachyon.hxx>
 
 YQ_TACHYON_IMPLEMENT(SceneEditor)
 
@@ -897,18 +902,68 @@ void    SceneEditor::prerecord(ViContext&u)
     CompositeWidget::prerecord(u);
 }
 
+void        SceneEditor::_default(std::string_view pp)
+{
+    std::error_code ec;
+    std::filesystem::path   deftsx  = Asset::resolve(pp);
+    if(deftsx.empty())
+        return;
+    if(!std::filesystem::exists(deftsx, ec))
+        return;
+    
+    SaveXML sxml;
+    ec  = sxml.load(deftsx);
+    if(ec != std::error_code())
+        return;
+    
+    TachyonPtrVector    tachyons;
+    ec   = sxml.save->execute(tachyons);
+    if(ec != std::error_code())
+        return;
+        
+    for(TachyonPtr& tp : tachyons){
+        if(dynamic_cast<SpaceCamera*>(tp.ptr()))
+            m_camera.space  = *tp;
+        if(dynamic_cast<SimpleScene*>(tp.ptr()))
+            m_scene.simple  = *tp;
+        if(dynamic_cast<Light*>(tp.ptr())){
+            //  check for ownership, or place in simple scene
+        }
+        if(dynamic_cast<Rendered*>(tp.ptr())){
+            //  check for ownership, or place in simple scene
+        }
+        //if(dynamic_cast<const HUDCamera*>(tp.ptr()))
+        //    m_camera.hud    = *tp;
+            
+        // ditto for anything we want to look out for...
+    }
+    
+    if(!m_scene.simple){
+    }
+    
+    ThreadID        owner   = Thread::standard(AUX);
+    TypedID         ownerT( owner.id, Type::Thread );
+    mail(owner, new ScheduleCommand({.target=ownerT}, std::move(tachyons)));
+}
+
 Execution   SceneEditor::setup(const Context&ctx) 
 {
     const Frame*    curFrame    = Frame::current();
     if(!curFrame)
         return WAIT;
-
+        
         // Editor's default cameras/controllers go onto the auxillary thread
     if(!m_scene.simple){
         Scene*  scene   = create_on<SimpleScene>(AUX);
         scene->set_name("SceneEditor Default Scene");
         m_scene.simple  = *scene;
     }
+
+    if(!m_defaultInit){
+        _default();
+        m_defaultInit   = true;
+    }
+    
 
     if(!m_camera.space){
         SpaceCamera::Param p;

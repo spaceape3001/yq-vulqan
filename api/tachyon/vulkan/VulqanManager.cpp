@@ -24,6 +24,8 @@
 #include <yq/macro/make_version.hpp>
 #include <yq/typedef/string_sets.hpp>
 
+#include <tachyon/api/Tachyon.hxx>
+
 #include <atomic>
 
 

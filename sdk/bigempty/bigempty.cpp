@@ -7,6 +7,7 @@
 #include <tachyon/application.hpp>
 #include <tachyon/viewer.hpp>
 #include <tachyon/widget.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

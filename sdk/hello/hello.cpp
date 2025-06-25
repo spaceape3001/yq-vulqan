@@ -51,6 +51,7 @@
 #include <tachyon/api/WidgetInfoWriter.hpp>
 #include <tachyon/widget/SceneWidget.hpp>
 #include <tachyon/utility/LoggerBox.hpp>
+#include <tachyon/api/Tachyon.hxx>
 
 #ifdef WANT_FRAME_INSPECTOR
 #include <tachyon/widget/FrameInspector.hpp>

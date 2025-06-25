@@ -85,6 +85,9 @@ namespace ImGui {
     #endif
 
     bool    Checkbox(const char*, bool&);
+    
+    //! It'll cycle yes/no/maybe
+    bool    Checkbox(const char*, yq::Tristate&);
 
     ///////////////////////////
     //  COLOR EDITS

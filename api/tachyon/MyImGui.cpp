@@ -35,6 +35,30 @@ namespace ImGui {
         return Checkbox(z, &v);
     }
     
+    bool    Checkbox(const char*label, yq::Tristate&v)
+    {
+        using yq::Tristate;
+    
+        bool    checked   = v == Tristate::Yes;
+        
+        ImGui::PushItemFlag(ImGuiItemFlags_MixedValue, v == Tristate::Maybe);
+        bool    ret     = Checkbox(label, &checked);
+        ImGui::PopItemFlag();
+        if(ret){
+            switch(v){
+            case Tristate::Yes:
+                v = Tristate::No;
+                break;
+            case Tristate::No:
+                v   = Tristate::Maybe;
+                break;
+            case Tristate::Maybe:
+                v   = Tristate::Yes;
+                break;
+            }
+        }
+        return ret;
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 

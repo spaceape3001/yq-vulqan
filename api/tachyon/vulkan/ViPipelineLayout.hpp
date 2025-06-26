@@ -72,6 +72,8 @@ namespace yq::tachyon {
         };
         
         const V*            variation(Pipeline::Variation) const;
+        
+        uint64_t            id() const { return m_id; }
 
     private:
         friend class ViPipeline;
@@ -98,7 +100,7 @@ namespace yq::tachyon {
         VkPipelineVertexInputStateCreateInfo            m_vertexCreateInfo{};
         std::vector<VkDynamicState>                     m_dynamicStates;
         Flags<S>                                        m_status = {};
-
+        uint64_t                                        m_id        = 0;
         
 
         ViPipelineLayout(const ViPipelineLayout&) = delete;

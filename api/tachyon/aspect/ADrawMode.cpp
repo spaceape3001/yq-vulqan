@@ -14,7 +14,7 @@ namespace yq::tachyon {
 
     void    ADrawMode::draw_mode(set_k, DrawMode v)
     {
-        m_drawMode = v;
+        m_drawMode = v;       
         mark();
     }
 

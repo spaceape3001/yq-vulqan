@@ -449,10 +449,10 @@ add_library(${PROJECT_NAME} SHARED
 
     rendered/AbstractShape3.cpp
     rendered/Billboard3.cpp
-    rendered/ColorTetrahedron3.cpp
-    rendered/ColorTriangle3.cpp
-    rendered/GradTetrahedron3.cpp
-    rendered/GradTriangle3.cpp
+    #rendered/ColorTetrahedron3.cpp
+    #rendered/ColorTriangle3.cpp
+    #rendered/GradTetrahedron3.cpp
+    #rendered/GradTriangle3.cpp
     rendered/ImageQuad3.cpp
     rendered/Quadrilateral3.cpp
     rendered/SkyBox3.cpp
@@ -607,6 +607,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViPipeline.cpp
     vulkan/ViPipelineLayout.cpp
     #vulkan/ViQueueManager.cpp
+    vulkan/ViRenderedCache.cpp
     vulkan/ViQueueTasker.cpp
     vulkan/ViRendered.cpp
     vulkan/ViRenderPass.cpp

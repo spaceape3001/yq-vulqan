@@ -147,7 +147,12 @@ namespace yq::tachyon {
     {
         if(!m_rendereds)
             return {};
-        return m_rendereds -> create(obj);
+        if(!obj->pipeline)
+            return {};
+        ViRenderedPtr ret =  m_rendereds -> create(obj);
+        if(ret->pipeline_id() != obj->pipeline->id())
+            ret     = m_rendereds -> recreate(obj);
+        return ret;
     }
 
     

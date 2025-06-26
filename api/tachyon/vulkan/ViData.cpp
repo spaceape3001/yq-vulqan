@@ -853,7 +853,7 @@ namespace yq::tachyon {
 
         if(auto p = std::get_if<BufferCPtr>(&buf)){
             if(!*p){
-                vizWarning << "ViData -- failed to update from a null buffer";
+                vizFirstWarning(this) << "ViData -- failed to update from a null (cbuffer) buffer";
                 return false;
             }
             
@@ -862,7 +862,7 @@ namespace yq::tachyon {
         
         if(auto p = std::get_if<ViBufferCPtr>(&buf)){
             if(!*p){
-                vizWarning << "ViData -- failed to update from a null buffer";
+                vizFirstWarning(this) << "ViData -- failed to update from a null (vibuffer) buffer";
                 return false;
             }
 

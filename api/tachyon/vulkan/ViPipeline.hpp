@@ -86,6 +86,8 @@ namespace yq::tachyon {
         std::error_code     init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
         std::error_code     init(ViVisualizer&, const Pipeline*, const ViPipelineOptions& options={});
         void                kill();
+        
+        uint64_t            id() const { return m_id; }
 
         VkPipelineBindPoint bind_point() const { return m_binding; }
         bool                consistent() const;
@@ -125,6 +127,7 @@ namespace yq::tachyon {
         VkPipeline              m_wireframe     = nullptr;
         VkPipelineBindPoint     m_binding       = VK_PIPELINE_BIND_POINT_GRAPHICS;
         Flags<S>                m_status        = {};
+        uint64_t                m_id            = 0;
         
         ViPipeline(const ViPipeline&) = delete;
         ViPipeline(ViPipeline&&) = delete;

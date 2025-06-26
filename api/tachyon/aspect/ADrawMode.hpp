@@ -24,7 +24,9 @@ namespace yq::tachyon {
         
     protected:
 
-        DrawMode    m_drawMode = DrawMode::Auto;
+        static constexpr const DrawMode     kDefDrawMode    = DrawMode::Auto;
+
+        DrawMode    m_drawMode  = kDefDrawMode;
 
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

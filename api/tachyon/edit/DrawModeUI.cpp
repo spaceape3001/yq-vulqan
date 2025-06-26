@@ -6,7 +6,6 @@
 
 #include "DrawModeUI.hpp"
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/logging.hpp>
 #include <tachyon/api/TachyonData.hpp>
 #include <tachyon/ui/UIEditorInfoWriter.hpp>
 #include <tachyon/proxy/PDrawMode.hpp>

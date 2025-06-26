@@ -124,6 +124,7 @@ namespace yq::tachyon {
 
         m_device       = &viz;
         m_config    = cfg;
+        m_id            = cfg -> id();
         
         // First, the variations
         for(auto itr : m_config->m_variations){

@@ -81,6 +81,7 @@ namespace yq::tachyon {
         m_layout    = pLay;
         m_binding   = (VkPipelineBindPoint) cfg->binding().value();
         m_status    = {};
+        m_id        = pLay -> id();
         
         VqGraphicsPipelineCreateInfo pipelineInfo;
         

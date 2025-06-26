@@ -54,7 +54,6 @@ namespace yq::tachyon {
         auto w = writer<Tetrahedron³>();
         w.description("Tetrahedron in 3D");
         w.category("Shape");
-        w.abstract();
 
         AVertices³<4>::init_info(w);
 
@@ -83,7 +82,6 @@ namespace yq::tachyon {
         w.property("z3", &Tetrahedron³::z3);
         w.property("z4", &Tetrahedron³::z4);
 
-#if 0
         w.property("color1", &Tetrahedron³::color1).setter(&Tetrahedron³::set_color1).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color2", &Tetrahedron³::color2).setter(&Tetrahedron³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color3", &Tetrahedron³::color3).setter(&Tetrahedron³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
@@ -124,22 +122,18 @@ namespace yq::tachyon {
         w.property("v3", &Tetrahedron³::v3);
         w.property("v4", &Tetrahedron³::v4);
 
-#endif
-
-
-#if 0
         {
             auto& p = w.pipeline(Pipeline::Role::SolidColor);
             
             p.shader("assets/shape3/color.vert");
             p.shader("assets/shape3/color.frag");
 
-            p.vertex(_vertexS(), DataActivity::DYNAMIC)
+            p.vertex(&Tetrahedron³::m_vertexS, DataActivity::DYNAMIC)
                 .attribute(&VertexS::position)
             ;
 
-            p.uniform(_uniformS(), DataActivity::DYNAMIC);
-            p.index(indices, DataActivity::COMMON);
+            p.uniform(&Tetrahedron³::m_uniformS, DataActivity::DYNAMIC);
+            p.index(Tetrahedron³::s_indices, DataActivity::COMMON);
             p.push_full();
         }
 
@@ -149,16 +143,15 @@ namespace yq::tachyon {
             p.shader("assets/shape3/gradient.vert");
             p.shader("assets/shape3/gradient.frag");
 
-            p.vertex(_vertexC(), DataActivity::DYNAMIC)
+            p.vertex(&Tetrahedron³::m_vertexC, DataActivity::DYNAMIC)
                 .attribute(&VertexC::position)
                 .attribute(&VertexC::color)
             ;
 
-            p.uniform(_uniformS(), DataActivity::DYNAMIC);
-            p.index(indices, DataActivity::COMMON);
+            //p.uniform(_uniformS(), DataActivity::DYNAMIC);
+            p.index(Tetrahedron³::s_indices, DataActivity::COMMON);
             p.push_full();
         }
-#endif
     }
 
     Tetrahedron³::Tetrahedron³(const Vertex³&a, const Vertex³&b, const Vertex³&c, const Vertex³&d, const Param&p) : 
@@ -183,7 +176,6 @@ namespace yq::tachyon {
     {
     }
 
-#if 0
     void Tetrahedron³::set_color1(const RGBA4F&v)
     {
         vertex1().color = v;
@@ -207,7 +199,6 @@ namespace yq::tachyon {
         vertex4().color = v;
         mark();
     }
-#endif
 
     void Tetrahedron³::set_point1(const Vector3D& v)
     {
@@ -233,7 +224,6 @@ namespace yq::tachyon {
         mark();
     }
 
-#if 0
     void    Tetrahedron³::set_uv1(const UV2F&v)
     {
         vertex1().uv = v;
@@ -257,7 +247,6 @@ namespace yq::tachyon {
         vertex4().uv = v;
         mark();
     }
-#endif
 
     void    Tetrahedron³::set_vertex1(const Vertex³&v)
     {
@@ -283,10 +272,24 @@ namespace yq::tachyon {
         mark();
     }
 
-#if 0        
+    void    Tetrahedron³::rebuild() 
+    {
+        switch(draw_mode()){
+        case DrawMode::Color:
+            rebuild_color();
+            break;
+        case DrawMode::Gradient:
+            rebuild_gradient();
+            break;
+        case DrawMode::Auto:
+        default:
+            rebuild_gradient(); // texture will auto-switch....
+            break;
+        }
+    }
+
     void    Tetrahedron³::rebuild_color()
     {
-tachyonInfo << "Tetrahedron³::rebuild_color()";
         set_pipeline(Pipeline::Role::SolidColor);
         m_vertexS   = {
             vs(vertex1()), vs(vertex2()), vs(vertex3()), vs(vertex4())
@@ -298,7 +301,6 @@ tachyonInfo << "Tetrahedron³::rebuild_color()";
     
     void    Tetrahedron³::rebuild_gradient()
     {
-tachyonInfo << "Tetrahedron³::rebuild_gradient()";
         set_pipeline(Pipeline::Role::ColorCorner);
         m_vertexC = {
             vc(vertex1()), vc(vertex2()), vc(vertex3()), vc(vertex4())
@@ -312,7 +314,6 @@ tachyonInfo << "Tetrahedron³::rebuild_gradient()";
             vt(vertex1()), vt(vertex2()), vt(vertex3()), vt(vertex4())
         };
     }
-#endif
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Tetrahedron³)

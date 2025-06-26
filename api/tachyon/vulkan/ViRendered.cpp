@@ -91,6 +91,8 @@ namespace yq::tachyon {
             return errors::rendered_bad_pipeline();
         }
         
+        m_pipelineId    = m_pipeline -> id();
+        
         ViDataOptions       dataOptions;
         
         if(ren.wireframe == Tristate::YES){

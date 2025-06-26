@@ -95,6 +95,34 @@ namespace yq::tachyon {
             return ret;
         }
         
+        v_ref_t recreate(const A& asset)
+        {
+            uint64_t    idv = get_id(asset);
+            v_ref_t    ret, p;
+            if constexpr (sizeof...(Args) != 0){
+                ret = p = _create(asset, indices_gen<ARG_COUNT>());
+            }
+            
+            if constexpr (sizeof...(Args) == 0){
+                ret = p = new V(m_viz, asset);
+            }
+
+            if(!p->valid())
+                return {};
+            
+            {
+                mutex_t::scoped_lock _lock(m_mutex, true);
+                auto    j   = m_hash.find(idv);
+                if(j != m_hash.end()){
+                    std::swap(p, j->second);
+                } else
+                    m_hash[idv] = p;
+            }
+            
+            return ret;
+        }
+        
+        
         bool            empty() const
         {
             mutex_t::scoped_lock _lock(m_mutex, false);

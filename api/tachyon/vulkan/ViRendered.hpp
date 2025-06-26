@@ -64,6 +64,8 @@ namespace yq::tachyon {
         bool    consistent() const;
         bool    valid() const;
     
+        uint64_t    pipeline_id() const { return m_pipelineId; }
+    
         ViPipelineCPtr          pipeline() const;
         ViPipelineLayoutCPtr    pipeline_layout() const;
         
@@ -82,9 +84,10 @@ namespace yq::tachyon {
             Wireframe
         };
     
-        uint64_t                m_id;
+        uint64_t                m_id            = 0;
         ViPipelineLayoutCPtr    m_layout;
         ViPipelineCPtr          m_pipeline;
+        uint64_t                m_pipelineId    = 0;
         Flags<S>                m_status = {};
         ViVisualizer*           m_viz = nullptr;
 

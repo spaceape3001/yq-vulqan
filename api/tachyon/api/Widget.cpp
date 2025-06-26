@@ -548,12 +548,20 @@ namespace yq::tachyon {
         ViRenderedPtr  rr  = ctx.vi.frame0 -> create(sn);
         if(!rr)
             return;
+
+        #if 0
+            //  useful for when troubleshooting rendering issues
+        if(yFirstSeen(rr.ptr()))
+            rr -> debug_report();
+        #endif
             
         R&  r  = m_rendereds.emplace_back();
         r.vi    = rr;
         push_buffer(r.push, ctx, *sn);
         rr->update(ctx.vi, *sn);
         rr->descriptors();
+
+        
     }
 
     void            Widget::prerecord(ViContext& u)

@@ -11,6 +11,12 @@
 #include <tachyon/typedef/command.hpp>
 
 namespace yq::tachyon {
+
+    /*
+        Might have a softer "directive" version, more for grander requests... like 
+        a "go to" X directive (ie...an order)
+    */
+
     class CommandInfo : public PostInfo {
     public:
         template <typename C> class Writer;

@@ -10,6 +10,7 @@
 #include <tachyon/aspect/AVertices3.hpp>
 #include <tachyon/rendered/AbstractShape3.hpp>
 #include <tachyon/gfx/VBO.hpp>
+#include <tachyon/gfx/UBO.hpp>
 
 #include <array>
 
@@ -31,7 +32,8 @@ namespace yq::tachyon {
         using MyVertices  = AVertices³<4>;
         
         using MyVertices::vertices;
-        virtual bool    vertices(settable_k) const override { return true; }
+        virtual bool        vertices(settable_k) const override { return true; }
+        virtual bool        vertices(color_k) const { return true; }
 
         const Vertex³&      vertex1() const { return m_vertices[0]; }
         const Vertex³&      vertex2() const { return m_vertices[1]; }
@@ -68,7 +70,6 @@ namespace yq::tachyon {
         double              z3() const { return point3().z; }
         double              z4() const { return point4().z; }
 
-#if 0
         const RGBA4F&       color1() const { return vertex1().color; }
         const RGBA4F&       color2() const { return vertex2().color; }
         const RGBA4F&       color3() const { return vertex3().color; }
@@ -120,7 +121,6 @@ namespace yq::tachyon {
         void                set_uv2(const UV2F&);
         void                set_uv3(const UV2F&);
         void                set_uv4(const UV2F&);
-#endif
 
         //! Constructor taking in the data
         Tetrahedron³(const TetrahedronData<ColorVertex3D>&, const Param& p={});
@@ -144,10 +144,22 @@ namespace yq::tachyon {
         static const Vertex³ kDefVertex3;
         static const Vertex³ kDefVertex4;
 
-        virtual void    rebuild() {};
+        virtual void    rebuild();
+
+        void    rebuild_color();
+        void    rebuild_gradient();
+        void    rebuild_textured();
 
         static const uint16_t   s_kIndices[];
         static IBO<uint16_t>    s_indices;
+
+        VB1<VertexC>    m_vertexC;
+        VB1<VertexCT>   m_vertexCT;
+        VB1<VertexT>    m_vertexT;
+        VB1<VertexS>    m_vertexS;
+
+        UB1<UBS>        m_uniformS;
+        TextureCPtr     m_texture;
     };
 }
 

@@ -7,23 +7,36 @@
 #pragma once
 
 #include <tachyon/api/Rendered3.hpp>
+#include <tachyon/aspect/ADrawMode.hpp>
+#include <tachyon/aspect/AColor.hpp>
+#include <tachyon/aspect/ABgColor.hpp>
 
 namespace yq::tachyon {
     struct Vertex³;
 
-    class AbstractShape³ : public Rendered³ {
+    class AbstractShape³ : public Rendered³, public ADrawMode, public AColor, public ABgColor {
         YQ_TACHYON_DECLARE(AbstractShape³, Rendered³)
     public:
 
         struct Param : public Rendered³::Param {
-            //RGBA4F      bgcolor     = kDefBgColor;
-            //RGBA4F      color       = kDefColor;
+            RGBA4F      bgcolor     = kDefBgColor;
+            RGBA4F      color       = kDefColor;
+            DrawMode    draw_mode   = kDefDrawMode;
         };
         
         static void init_info();
 
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;
+
+        using ADrawMode::draw_mode;
+        virtual bool    draw_mode(settable_k) const override { return true; }
+        
+        using AColor::color;
+        virtual bool    color(settable_k) const override { return true; }
+        
+        using ABgColor::bgcolor;
+        virtual bool    bgcolor(settable_k) const override { return true; }
 
     protected:
     
@@ -79,3 +92,5 @@ namespace yq::tachyon {
         virtual void    rebuild(){}
     };
 }
+
+YQ_TACHYON_FORCE(yq::tachyon::AbstractShape³)

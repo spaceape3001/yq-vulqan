@@ -39,6 +39,16 @@ namespace yq::tachyon {
             m_pflags |= P::Tex;
         if(i.vertices(NORMAL))
             m_pflags |= P::Normal;
+        if(i.vertices(POINT))
+            m_pflags |= P::Point;
+        if(i.vertices(SETTABLE, COLOR))
+            m_pflags |= P::SettableColor;
+        if(i.vertices(SETTABLE, POINT))
+            m_pflags |= P::SettablePoint;
+        if(i.vertices(SETTABLE, NORMAL))
+            m_pflags |= P::SettableNormal;
+        if(i.vertices(SETTABLE, TEX))
+            m_pflags |= P::SettableTex;
             
         if(!m_count)
             return ;
@@ -116,17 +126,42 @@ namespace yq::tachyon {
     {
         return m_pflags(P::Color);
     }
-    
-    bool        PVertices³::vertices(tex_k) const
+
+    bool        PVertices³::vertices(point_k) const 
     {
-        return m_pflags(P::Tex);
+        return m_pflags(P::Point);
     }
     
     bool        PVertices³::vertices(normal_k) const
     {
         return m_pflags(P::Normal);
     }
+    
+    bool        PVertices³::vertices(tex_k) const
+    {
+        return m_pflags(P::Tex);
+    }
 
+    bool        PVertices³::vertices(settable_k, color_k) const 
+    {
+        return m_pflags(P::SettableColor);
+    }
+    
+    bool        PVertices³::vertices(settable_k, normal_k) const 
+    {
+        return m_pflags(P::SettableNormal);
+    }
+    
+    bool        PVertices³::vertices(settable_k, point_k) const 
+    {
+        return m_pflags(P::SettablePoint);
+    }
+    
+    bool        PVertices³::vertices(settable_k, tex_k) const 
+    {
+        return m_pflags(P::SettableTex);
+    }
+    
     Vertex³      PVertices³::vertex(size_t n) const
     {
         Vertex³  ret;
@@ -187,28 +222,28 @@ namespace yq::tachyon {
     
     void        PVertices³::vertex(size_t n, set_k, point_k, const Vector3D& v) 
     { 
-        if(m_pflags(P::Settable) && !m_flags(F::Disabled)){
+        if(m_pflags(P::Settable) && m_pflags(P::Point) && m_pflags(P::SettablePoint) && !m_flags(F::Disabled)){
             mail(new SetVertexPoint³Command({.target=object()}, n, v));
         }
     }
     
     void        PVertices³::vertex(size_t n, set_k, color_k, const RGBA4F&v) 
     { 
-        if(m_pflags(P::Settable) && m_pflags(P::Color) && !m_flags(F::Disabled)){
+        if(m_pflags(P::Settable) && m_pflags(P::Color) && m_pflags(P::SettableColor) && !m_flags(F::Disabled)){
             mail(new SetVertexColorCommand({.target=object()}, n, v));
         }
     }
     
     void        PVertices³::vertex(size_t n, set_k, tex_k, const UV2F& v) 
     { 
-        if(m_pflags(P::Settable) && m_pflags(P::Tex) && !m_flags(F::Disabled)){
+        if(m_pflags(P::Settable) && m_pflags(P::Tex) && m_pflags(P::SettableTex) && !m_flags(F::Disabled)){
             mail(new SetVertexUVCommand({.target=object()}, n, v));
         }
     }
     
     void        PVertices³::vertex(size_t n, set_k, normal_k, const Vector3F& v) 
     { 
-        if(m_pflags(P::Settable) && m_pflags(P::Normal) && !m_flags(F::Disabled)){
+        if(m_pflags(P::Settable) && m_pflags(P::Normal) && m_pflags(P::SettableNormal) && !m_flags(F::Disabled)){
             mail(new SetVertexNormal³Command({.target=object()}, n, v));
         }
     }

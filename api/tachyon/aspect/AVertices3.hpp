@@ -81,6 +81,7 @@ namespace yq::tachyon {
         virtual bool        vertices(color_k) const { return false; }
         virtual bool        vertices(tex_k) const { return false; }
         virtual bool        vertices(normal_k) const { return false; }
+        virtual bool        vertices(point_k) const { return true; }
 
         virtual Vertex³     vertex(size_t) const;
         virtual Vector3D    vertex(size_t, point_k) const;

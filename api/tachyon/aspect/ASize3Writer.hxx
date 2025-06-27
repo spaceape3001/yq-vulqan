@@ -28,7 +28,7 @@ namespace yq::tachyon {
     void ASize³::init_info(TachyonInfo::Writer<C>&w)
     {
         w.template interface<ISize³>();
-        w.property(UNSAFE, "size", &ASize³::m_size).tag(kTag_Save);
+        w.property(UNSAFE, "size", &ASize³::m_size).tag({kTag_Save, kTag_Log});
 
         w.slot(UNSAFE, &ASize³::on_set_size3);
         w.slot(UNSAFE, &ASize³::on_set_sizeX);

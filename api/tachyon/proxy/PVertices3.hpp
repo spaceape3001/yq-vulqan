@@ -30,8 +30,14 @@ namespace yq::tachyon {
         virtual bool        vertices(settable_k) const override;
         virtual bool        vertices(erasable_k) const override;
         virtual bool        vertices(color_k) const override;
-        virtual bool        vertices(tex_k) const override;
         virtual bool        vertices(normal_k) const override;
+        virtual bool        vertices(point_k) const override;
+        virtual bool        vertices(tex_k) const override;
+
+        virtual bool        vertices(settable_k, color_k) const override;
+        virtual bool        vertices(settable_k, normal_k) const override;
+        virtual bool        vertices(settable_k, point_k) const override;
+        virtual bool        vertices(settable_k, tex_k) const override;
 
         virtual Vertex³     vertex(size_t) const override;
         virtual Vector3D    vertex(size_t, point_k) const override;
@@ -65,7 +71,12 @@ namespace yq::tachyon {
             Erasable,
             Color,
             Tex,
-            Normal
+            Normal,
+            Point,
+            SettablePoint,
+            SettableColor,
+            SettableTex,
+            SettableNormal
         };
         
         Flags<P>    m_pflags = {};

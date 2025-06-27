@@ -61,8 +61,10 @@ namespace yq::tachyon {
         const Size3D&   size(ref_k) const { return m_size; }
 
     protected:
+    
+        static constexpr const Size3D   kDefSize    = ONE;
 
-        Size3D      m_size = ONE;
+        Size3D      m_size = kDefSize;
         
         template <typename C>
         static void init_info(TachyonInfo::Writer<C>&);

@@ -43,7 +43,6 @@ namespace yq::tachyon {
         if(!p)
             return ;
         
-        bool    settable    = p->vertices(SETTABLE);
         //bool    erasable    = p->vertices(ERASABLE);
         //bool    insertable  = p->vertices(INSERTABLE);
         //bool    appendable  = p->vertices(APPENDABLE);
@@ -63,6 +62,22 @@ namespace yq::tachyon {
             ++numCols;
         if(normals)
             ++numCols;
+            
+        ImGui::InputDoubleOptions  vertOpts{.format="%.3lf"};
+        ImGui::InputFloatOptions   uvOpts;
+        ImGui::InputFloatOptions   normalOpts;
+        ImGuiColorEditFlags colorFlags  = 0;
+        
+        
+        if(!p->vertices(SETTABLE, POINT))
+            vertOpts.flags |= ImGuiInputTextFlags_ReadOnly;
+        if(!p->vertices(SETTABLE, TEX))
+            uvOpts.flags |= ImGuiInputTextFlags_ReadOnly;
+        if(!p->vertices(SETTABLE, NORMAL))
+            normalOpts.flags |= ImGuiInputTextFlags_ReadOnly;
+        if(!p->vertices(SETTABLE, COLOR)){
+            colorFlags |= ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoPicker;
+        }
             
         std::string     tableId = std::format("##Vertices³UI{}", bound().id);
         if(ImGui::BeginTable(tableId.c_str(), numCols)){
@@ -84,28 +99,28 @@ namespace yq::tachyon {
                 if(ImGui::TableNextColumn()){
                     std::string id = std::format("##Vertex{}.{}", bound().id, n);
                     Vector3D    v   = p->vertex(n, POINT);
-                    if(ImGui::Input(id.c_str(), v, {.format="%.3lf"})){
+                    if(ImGui::Input(id.c_str(), v, vertOpts)){
                         p->vertex(n, SET, POINT, v);
                     }
                 }
                 if(texs && ImGui::TableNextColumn()){
                     std::string id = std::format("##TexUV{}.{}", bound().id, n);
                     UV2F        v   = p->vertex(n, TEX);
-                    if(ImGui::Input(id.c_str(), v)){
+                    if(ImGui::Input(id.c_str(), v, uvOpts)){
                         p->vertex(n, SET, TEX, v);
                     }
                 }
                 if(normals && ImGui::TableNextColumn()){
                     std::string id = std::format("##Normal{}.{}", bound().id, n);
                     Vector3F    v   = p->vertex(n, NORMAL);
-                    if(ImGui::Input(id.c_str(), v)){
+                    if(ImGui::Input(id.c_str(), v, normalOpts)){
                         p->vertex(n, SET, NORMAL, v);
                     }
                 }
                 if(color && ImGui::TableNextColumn()){
                     std::string id = std::format("##Color{}.{}", bound().id, n);
                     RGBA4F  v   = p->vertex(n, COLOR);
-                    if(ImGui::ColorEdit(id.c_str(), v)){
+                    if(ImGui::ColorEdit(id.c_str(), v, colorFlags)){
                         p->vertex(n, SET, COLOR, v);
                     }
                 }

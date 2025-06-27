@@ -539,6 +539,26 @@ namespace yq::tachyon {
     }
     
 
+    void    ViGui::prerecord(ViContext&u)
+    {
+        update();
+        
+        #if IMGUI_VERSION_NUM >= 19200
+        ImGui::SetCurrentContext(m_context);
+        const ImDrawData*   drawData    = ImGui::GetDrawData();
+        if(!drawData)
+            return ;
+
+        if (draw_data->Textures != nullptr){
+            for (ImTextureData* tex : *draw_data->Textures){
+                if (tex->Status != ImTextureStatus_OK){
+                    // UPDATE (later)
+                }
+            }
+        }
+        #endif
+    }
+
     void    ViGui::record(ViContext&u)
     {
         ImGui::SetCurrentContext(m_context);
@@ -646,7 +666,11 @@ namespace yq::tachyon {
                 if constexpr (sizeof(ImTextureID) < sizeof(VkDescriptorSet)) {
                     desc_set    = m_font.descriptor;
                 } else {
+        #if IMGUI_VERSION_NUM >= 19200
+                    desc_set    = (VkDescriptorSet) cmd.TexRef._TexID;
+        #else
                     desc_set    = (VkDescriptorSet) cmd.TextureId;
+        #endif
                 }
                 
                 if(!desc_set){

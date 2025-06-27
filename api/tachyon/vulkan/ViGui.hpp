@@ -81,6 +81,8 @@ namespace yq::tachyon {
         void    draw(ViContext&, Widget*);
         
         void    record(ViContext&);
+
+        void    prerecord(ViContext&);
         
         bool    valid() const;
         

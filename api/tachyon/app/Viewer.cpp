@@ -441,7 +441,7 @@ namespace yq::tachyon {
                     w -> prerecord(u);
                 }
                 if(m_imgui){
-                    m_imgui -> update();
+                    m_imgui -> prerecord(u);
                 }
             },
             .record = [&](ViContext& u){

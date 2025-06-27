@@ -57,7 +57,7 @@ namespace yq::tachyon {
             }
             catch(...)
             {
-                m_promise.set(std::make_exception_ptr(Exception("Unexpected exception was thrown")));
+                m_promise.set(std::make_exception_ptr(std::exception("Unexpected exception was thrown")));
             }
             #endif
             
@@ -117,7 +117,7 @@ namespace yq::tachyon {
             }
             catch(...)
             {
-                m_promise.set(std::make_exception_ptr(Exception("Unexpected exception was thrown")));
+                m_promise.set(std::make_exception_ptr(std::exception("Unexpected exception was thrown")));
             }
             #endif
             

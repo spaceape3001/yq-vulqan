@@ -1022,6 +1022,11 @@ namespace yq::tachyon {
         mail(new RethreadCommand({.target=*this}, tid));
     }
 
+    void    Tachyon::owner(push_k, StdThread st)
+    {
+        owner(PUSH, Thread::standard(st));
+    }
+
     bool    Tachyon::paused() const
     {
         return m_stage == Stage::Paused;

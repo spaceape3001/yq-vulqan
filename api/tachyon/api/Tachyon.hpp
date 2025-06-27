@@ -361,6 +361,8 @@ namespace yq::tachyon {
         //! Virtual so derived classes can push children as well
         virtual void        owner(push_k, ThreadID);
         
+        void                owner(push_k, StdThread);
+
         //! Our parent
         TypedID             parent() const { return m_parent; }
         

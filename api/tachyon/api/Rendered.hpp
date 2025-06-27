@@ -99,6 +99,9 @@ namespace yq::tachyon {
         
         RenderedID      id() const { return RenderedID(UniqueID::id()); }
 
+        //! Generic "rebuild" the vertex, index, buffers (and the like)
+        virtual void    rebuild(){}
+
     protected:
 
         Rendered(const Param&p);

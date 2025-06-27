@@ -120,9 +120,9 @@ namespace yq::tachyon {
     {
         Ref<T> tp = static_cast<T*>(info.create());
         if(tp){
-            retain(tp, st);
             tp->_set_parent(*this);
             _add_child(*tp);
+            retain(tp, st);
         }
         return tp.ptr();
     }
@@ -132,9 +132,9 @@ namespace yq::tachyon {
     {
         Ref<T> tp = static_cast<T*>(info.create());
         if(tp){
-            retain(tp, st);
             tp->_set_parent(*this);
             _add_child(*tp);
+            retain(tp, st);
         }
         return tp.ptr();
     }

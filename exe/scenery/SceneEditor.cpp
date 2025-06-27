@@ -524,11 +524,15 @@ RenderedID      SceneEditor::_create(const RenderedInfo& info)
         return {};
     }
     
-    Rendered*    res  = parent->create_child_on<Rendered>(EDIT, info);
+    Rendered*    res  = Tachyon::create<Rendered>(info);
     if(!res){
         yNotice() << "Unable to create rendered (" << info.stem() << ") due to instantiation problem";
         return {};
     }
+ 
+    res -> rebuild();
+    res -> set_parent(*parent);
+    res -> owner(PUSH, EDIT);
     return res->id();
 }
 

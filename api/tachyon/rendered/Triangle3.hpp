@@ -13,8 +13,6 @@
 #include <tachyon/gfx/VBO.hpp>
 #include <tachyon/gfx/UBO.hpp>
 
-#include <array>
-
 namespace yq {
     template <typename> struct TriangleData;
 }
@@ -59,6 +57,7 @@ namespace yq::tachyon {
         double              z2() const { return point2().z; }
         double              z3() const { return point3().z; }
 
+#if 0
         const RGBA4F&       color1() const { return vertex1().color; }
         const RGBA4F&       color2() const { return vertex2().color; }
         const RGBA4F&       color3() const { return vertex3().color; }
@@ -100,6 +99,7 @@ namespace yq::tachyon {
         void                set_uv1(const UV2F&);
         void                set_uv2(const UV2F&);
         void                set_uv3(const UV2F&);
+#endif
 
         static void         init_info();
         
@@ -119,6 +119,7 @@ namespace yq::tachyon {
         static const Vertex³ kDefVertex2;
         static const Vertex³ kDefVertex3;
 
+#if 0
         virtual void    rebuild();
 
         void    rebuild_color();
@@ -132,6 +133,7 @@ namespace yq::tachyon {
 
         UB1<UBS>        m_uniformS;
         TextureCPtr     m_texture;
+#endif
     };
 }
 

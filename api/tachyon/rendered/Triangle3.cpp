@@ -25,6 +25,7 @@ namespace yq::tachyon {
         auto w = writer<Triangle³>();
         w.description("Triangle in 3D");
         w.category("Shape");
+        w.abstract();
 
         AVertices³<3>::init_info(w);
 
@@ -48,6 +49,7 @@ namespace yq::tachyon {
         w.property("z2", &Triangle³::z2);
         w.property("z3", &Triangle³::z3);
 
+#if 0
         w.property("color1", &Triangle³::color1).setter(&Triangle³::set_color1).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color2", &Triangle³::color2).setter(&Triangle³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color3", &Triangle³::color3).setter(&Triangle³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
@@ -106,6 +108,7 @@ namespace yq::tachyon {
             
             p.push_full();
         }
+#endif
     }
     
     const Vertex³ Triangle³::kDefVertex1{
@@ -155,6 +158,7 @@ namespace yq::tachyon {
     {
     }
 
+#if 0
     void Triangle³::set_color1(const RGBA4F&v)
     {
         vertex1().color = v;
@@ -172,6 +176,7 @@ namespace yq::tachyon {
         vertex3().color = v;
         mark();
     }
+#endif
 
     void Triangle³::set_point1(const Vector3D& v)
     {
@@ -191,6 +196,7 @@ namespace yq::tachyon {
         mark();
     }
 
+#if 0
     void    Triangle³::set_uv1(const UV2F&v)
     {
         vertex1().uv = v;
@@ -208,6 +214,7 @@ namespace yq::tachyon {
         vertex3().uv = v;
         mark();
     }
+#endif
 
     void    Triangle³::set_vertex1(const Vertex³&v)
     {
@@ -226,6 +233,8 @@ namespace yq::tachyon {
         vertex3() = v;
         mark();
     }
+    
+#if 0    
 
     void    Triangle³::rebuild() 
     {
@@ -269,6 +278,7 @@ namespace yq::tachyon {
             vt(vertex1()), vt(vertex2()), vt(vertex3())
         };
     }
+#endif
 
 }
 

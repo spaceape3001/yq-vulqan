@@ -21,9 +21,9 @@ namespace yq::tachyon {
         auto w = writer<AbstractShape³>();
         w.abstract();
         w.description("Abstract 3D shape");
-        ADrawMode::init_info(w);
-        AColor::init_info(w);
-        ABgColor::init_info(w);
+        //ADrawMode::init_info(w);
+        //AColor::init_info(w);
+        //ABgColor::init_info(w);
     }
     
     AbstractShape³::VertexC  AbstractShape³::vc(const Vertex³&v)
@@ -61,10 +61,10 @@ namespace yq::tachyon {
 
     AbstractShape³::AbstractShape³(const Param& p) : Rendered³(p)
     {
-        m_color     = p.color;
-        m_bgcolor   = p.bgcolor;
-        m_drawMode  = p.draw_mode;
-        mark();
+        //m_color     = p.color;
+        //m_bgcolor   = p.bgcolor;
+        //m_drawMode  = p.draw_mode;
+        //mark();
     }
     
     AbstractShape³::~AbstractShape³()

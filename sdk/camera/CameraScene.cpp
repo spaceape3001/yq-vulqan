@@ -15,11 +15,11 @@
 #include <tachyon/camera/SpaceCamera.hpp>
 
 #include <tachyon/rendered/Billboard3.hpp>
+#include <tachyon/rendered/GradTetrahedron3.hpp>
 #include <tachyon/rendered/ImageQuad3.hpp>
 #include <tachyon/rendered/Quadrilateral3.hpp>
 #include <tachyon/rendered/SkyBox3.hpp>
-#include <tachyon/rendered/Triangle3.hpp>
-#include <tachyon/rendered/Tetrahedron3.hpp>
+#include <tachyon/rendered/GradTriangle3.hpp>
 
 #include <tachyon/api/Scene3InfoWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
@@ -197,31 +197,31 @@ Execution  CameraScene::setup(const Context&ctx)
             { 14., 14., 0. }
         );
 
-        Triangle³*   tri    = create_child<Triangle³>(TriData);
+        Triangle³*   tri    = create_child<GradTriangle³>(TriData);
         tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
 
 
-        Tetrahedron³::Param t4p;
+        GradTetrahedron³::Param t4p;
 
         // north BLUE
-        Rendered³*    dir     = create_child<Tetrahedron³>(NorthData, t4p);
+        Rendered³*    dir     = create_child<GradTetrahedron³>(NorthData, t4p);
         dir -> make_simple_spatial({15., 0., 0. });
 
         // south YELLOW
-        dir     = create_child<Tetrahedron³>(SouthData, t4p);
+        dir     = create_child<GradTetrahedron³>(SouthData, t4p);
         dir -> make_simple_spatial({-15., 0., 0. });
             
-        dir     = create_child<Tetrahedron³>(EastData, t4p);
+        dir     = create_child<GradTetrahedron³>(EastData, t4p);
         dir -> make_simple_spatial({0., 15., 0. });
 
-        dir     = create_child<Tetrahedron³>(WestData, t4p);
+        dir     = create_child<GradTetrahedron³>(WestData, t4p);
         dir -> make_simple_spatial({0., -15., 0. });
         
-        dir     = create_child<Tetrahedron³>(TopData, t4p);
+        dir     = create_child<GradTetrahedron³>(TopData, t4p);
         dir -> make_simple_spatial({0., 0., -15. });
         
         // MAGENTA
-        dir     = create_child<Tetrahedron³>(BottomData, t4p);
+        dir     = create_child<GradTetrahedron³>(BottomData, t4p);
         dir -> make_simple_spatial({0., 0., 15. });
         
         Quadrilateral³* quad = create_child<Quadrilateral³>(QuadData);

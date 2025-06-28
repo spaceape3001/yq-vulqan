@@ -375,6 +375,8 @@ add_library(${PROJECT_NAME} SHARED
     io/STBImage.cpp
     io/Save.cpp
     
+    io/Wavefront.cpp
+    
     io/save/SaveAsset.cpp
     io/save/SaveDelegate.cpp
     io/save/SaveObject.cpp

@@ -449,14 +449,19 @@ add_library(${PROJECT_NAME} SHARED
     
     raster/PatternRasters.cpp
     raster/DebugRasters.cpp 
+    
+        #   TODO... unify the color/grad in a way that makes sense (and won't be terribly confusing)
 
     rendered/AbstractShape3.cpp
     rendered/Billboard3.cpp
     rendered/Box3.cpp
     rendered/ColorBox3.cpp
+    rendered/ColorDiamond3.cpp
     rendered/ColorTetrahedron3.cpp
     rendered/ColorTriangle3.cpp
+    rendered/Diamond3.cpp
     rendered/GradBox3.cpp
+    rendered/GradDiamond3.cpp
     rendered/GradTetrahedron3.cpp
     rendered/GradTriangle3.cpp
     rendered/ImageQuad3.cpp

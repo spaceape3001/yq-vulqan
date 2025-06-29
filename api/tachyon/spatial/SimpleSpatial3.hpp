@@ -32,6 +32,12 @@ namespace yq::tachyon {
     class MoveByʸCommand;
     class MoveByᶻCommand;
 
+    /*! \brief Simple 3D Spatial
+    
+        This is a simple 3D spatial that has a position, scale, & orientation.
+        
+        \note The resulting coordinate system is north-east-down!
+    */
     class SimpleSpatial³ : public Spatial³, public APosition³, public AScale³, public AOrientation³ {
         YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
     public:

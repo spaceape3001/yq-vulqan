@@ -18,7 +18,10 @@ namespace yq::tachyon {
     /*! \brief Camera in 3D space
     
         This is a simple camera that has a near plane, a far plane, and
-        a POV angle.
+        a POV angle. 
+        
+        \note Combining this with a simple spatial yields a NORTH-EAST-DOWN
+        perspective!
     */
     class SpaceCamera : public Camera³, public AFieldOfView, public AFarPlane, public ANearPlane {
         YQ_TACHYON_DECLARE(SpaceCamera, Camera³)

@@ -34,7 +34,7 @@ namespace yq::tachyon {
         static Ref<const Shader>    decode(const ShaderSpec&, const AssetLoadOptions&);
         
         //! Gets the name to the specified shader
-        static std::string_view     name(const ShaderSpec&);
+        static std::string          name(const ShaderSpec&);
         
         //! Size of the compiled shader 
         virtual size_t      data_size() const override;

@@ -45,15 +45,15 @@ namespace yq::tachyon {
         return cache().load(pp, options);
     }
 
-    std::string_view     Shader::name(const ShaderSpec&ss)
+    std::string       Shader::name(const ShaderSpec&ss)
     {
         if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
             if(!*ptr)
                 return "(null)";
-            auto& fp = (*ptr) -> filepath();
-            if(fp.empty())
-                return to_string_view((*ptr) -> id());
-            return fp.c_str();
+            auto& url = (*ptr) -> url();
+            if(url.empty())
+                return to_string((*ptr) -> id());
+            return to_string(url);
         } else if(const std::string* ptr = std::get_if<std::string>(&ss)){
             return *ptr; 
         } else 

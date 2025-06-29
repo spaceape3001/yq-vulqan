@@ -17,3 +17,6 @@
 [submodule "3rd/tinygltf"]
 	path = 3rd/tinygltf
 	url = https://github.com/syoyo/tinygltf.git
+[submodule "3rd/tinyobj"]
+	path = 3rd/tinyobj
+	url = https://github.com/tinyobjloader/tinyobjloader.git

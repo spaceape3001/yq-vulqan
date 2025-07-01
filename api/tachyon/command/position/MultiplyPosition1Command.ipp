@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/position/MultiplyPosition1Command.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyPosition¹Command)
 

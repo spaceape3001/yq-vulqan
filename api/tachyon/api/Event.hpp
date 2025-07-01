@@ -12,15 +12,15 @@
 
 namespace yq::tachyon {
 
-    class EventInfo : public PostMeta {
+    class EventMeta : public PostMeta {
     public:
         template <typename C> class Writer;
 
-        EventInfo(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
+        EventMeta(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
     };
 
     class Event : public Post {
-        YQ_OBJECT_INFO(EventInfo)
+        YQ_OBJECT_INFO(EventMeta)
         YQ_OBJECT_DECLARE(Event, Post)
     public:
     

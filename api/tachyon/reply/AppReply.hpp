@@ -11,15 +11,15 @@
 namespace yq::tachyon {
     class AppRequest;
 
-    class AppReplyInfo : public ReplyInfo {
+    class AppReplyMeta : public ReplyMeta {
     public:
-        AppReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl=std::source_location::current());
+        AppReplyMeta(std::string_view zName, ReplyMeta& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
     class AppReply : public Reply {
-        YQ_OBJECT_INFO(AppReplyInfo)
+        YQ_OBJECT_INFO(AppReplyMeta)
         YQ_OBJECT_DECLARE(AppReply, Reply)
     public:
     

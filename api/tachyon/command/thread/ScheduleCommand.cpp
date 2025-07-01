@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/thread/ScheduleCommand.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 #include <tachyon/api/Tachyon.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ScheduleCommand)

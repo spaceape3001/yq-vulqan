@@ -9,15 +9,15 @@
 #include <tachyon/api/Command.hpp>
 
 namespace yq::tachyon {
-    class GLFWCommandInfo : public CommandInfo {
+    class GLFWCommandMeta : public CommandMeta {
     public:
-        GLFWCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
+        GLFWCommandMeta(std::string_view zName, CommandMeta& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
     class GLFWCommand : public Command {
-        YQ_OBJECT_INFO(GLFWCommandInfo)
+        YQ_OBJECT_INFO(GLFWCommandMeta)
         YQ_OBJECT_DECLARE(GLFWCommand, Command)
     public:
     

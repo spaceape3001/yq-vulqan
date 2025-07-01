@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Reply.hpp>
-#include <tachyon/api/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyMetaWriter.hpp>
 #include <tachyon/api/Request.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Reply)
 
 namespace yq::tachyon {
-    ReplyInfo::ReplyInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+    ReplyMeta::ReplyMeta(std::string_view zName, PostMeta& base, const std::source_location& sl) :
         PostMeta(zName, base, sl)
     {
         set(Flag::REPLY);

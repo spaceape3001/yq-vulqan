@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/request/EmptyRequest.hpp>
-#include <tachyon/api/RequestInfoWriter.hpp>
+#include <tachyon/api/RequestMetaWriter.hpp>
 
 namespace yq::tachyon {
     EmptyRequest::EmptyRequest(const Header& h) : Request(h) 

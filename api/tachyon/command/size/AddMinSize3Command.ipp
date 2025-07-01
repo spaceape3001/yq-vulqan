@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/size/AddMinSize3Command.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMinSize³Command)
 

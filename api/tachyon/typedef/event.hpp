@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Event;
-    class EventInfo;
+    class EventMeta;
     using EventPtr           = Ref<Event>;
     using EventCPtr          = Ref<const Event>;
 

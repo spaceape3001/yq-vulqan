@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Event.hpp>
-#include <tachyon/api/EventInfoWriter.hpp>
+#include <tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Event)
 
 namespace yq::tachyon {
-    EventInfo::EventInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+    EventMeta::EventMeta(std::string_view zName, PostMeta& base, const std::source_location& sl) :
         PostMeta(zName, base, sl)
     {
         set(Flag::EVENT);

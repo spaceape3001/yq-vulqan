@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/ui/RestoreCommand.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::RestoreCommand)
 

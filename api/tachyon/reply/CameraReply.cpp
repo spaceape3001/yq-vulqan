@@ -6,7 +6,7 @@
 
 #include <tachyon/reply/CameraReply.hpp>
 
-#include <tachyon/api/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraReply)
 

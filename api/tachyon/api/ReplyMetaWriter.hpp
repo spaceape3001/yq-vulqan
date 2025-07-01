@@ -6,27 +6,27 @@
 
 #pragma once
 
-#include <tachyon/api/Event.hpp>
+#include <tachyon/api/Reply.hpp>
 #include <tachyon/api/PostMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of event information
     */
     template <typename C>
-    class EventInfo::Writer : public PostMeta::Writer<C> {
+    class ReplyMeta::Writer : public PostMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(EventInfo* eventInfo) : PostMeta::Writer<C>(eventInfo), m_meta(eventInfo)
+        Writer(ReplyMeta* pInfo) : PostMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
         //! Constructor of widget info (this is used by the writer<T>() methods)
-        Writer(EventInfo& eventInfo) : Writer(&eventInfo)
+        Writer(ReplyMeta& pInfo) : Writer(&pInfo)
         {
         }
 
     private:
-        EventInfo* m_meta;
+        ReplyMeta* m_meta;
     };
 }

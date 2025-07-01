@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/event/spatial/MinSize1Event.hpp>
-#include <tachyon/api/EventInfoWriter.hpp>
+#include <tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MinSize¹Event)
 

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/event/spatial/Orientation2Event.hpp>
-#include <tachyon/api/EventInfoWriter.hpp>
+#include <tachyon/api/EventMetaWriter.hpp>
 #include <yq/vector/Spinor2.hxx>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Orientation²Event)

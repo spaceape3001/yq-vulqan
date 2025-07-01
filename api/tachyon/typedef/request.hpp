@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Request;
-    class RequestInfo;
+    class RequestMeta;
     using RequestPtr    = Ref<Request>;
     using RequestCPtr   = Ref<const Request>;
 

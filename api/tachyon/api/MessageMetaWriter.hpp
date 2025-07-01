@@ -13,20 +13,20 @@ namespace yq::tachyon {
     /*! \brief Writer of event information
     */
     template <typename C>
-    class MessageInfo::Writer : public PostMeta::Writer<C> {
+    class MessageMeta::Writer : public PostMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(MessageInfo* msgInfo) : PostMeta::Writer<C>(msgInfo), m_meta(msgInfo)
+        Writer(MessageMeta* msgInfo) : PostMeta::Writer<C>(msgInfo), m_meta(msgInfo)
         {
         }
         
         //! Constructor of widget info (this is used by the writer<T>() methods)
-        Writer(MessageInfo& msgInfo) : Writer(&msgInfo)
+        Writer(MessageMeta& msgInfo) : Writer(&msgInfo)
         {
         }
 
     private:
-        MessageInfo* m_meta;
+        MessageMeta* m_meta;
     };
 }

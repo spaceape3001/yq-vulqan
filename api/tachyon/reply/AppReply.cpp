@@ -6,13 +6,13 @@
 
 #include <tachyon/reply/AppReply.hpp>
 
-#include <tachyon/api/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppReply)
 
 namespace yq::tachyon {
-    AppReplyInfo::AppReplyInfo(std::string_view zName, ReplyInfo& base, const std::source_location& sl) :
-        ReplyInfo(zName, base, sl)
+    AppReplyMeta::AppReplyMeta(std::string_view zName, ReplyMeta& base, const std::source_location& sl) :
+        ReplyMeta(zName, base, sl)
     {
     }
 

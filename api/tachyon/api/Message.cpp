@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Message.hpp>
-#include <tachyon/api/MessageInfoWriter.hpp>
+#include <tachyon/api/MessageMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Message)
 
 namespace yq::tachyon {
-    MessageInfo::MessageInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+    MessageMeta::MessageMeta(std::string_view zName, PostMeta& base, const std::source_location& sl) :
         PostMeta(zName, base, sl)
     {
         set(Flag::MESSAGE);

@@ -10,11 +10,11 @@
 #include <tachyon/typedef/message.hpp>
 
 namespace yq::tachyon {
-    class MessageInfo : public PostMeta {
+    class MessageMeta : public PostMeta {
     public:
         template <typename C> class Writer;
 
-        MessageInfo(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
+        MessageMeta(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
     /*! \brief Light weight message
@@ -23,7 +23,7 @@ namespace yq::tachyon {
         the Message class is "generic", though it may morph.
     */
     class Message : public Post {
-        YQ_OBJECT_INFO(MessageInfo)
+        YQ_OBJECT_INFO(MessageMeta)
         YQ_OBJECT_DECLARE(Message, Post)
     public:
     

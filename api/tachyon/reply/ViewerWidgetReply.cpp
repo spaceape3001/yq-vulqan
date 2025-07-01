@@ -6,7 +6,7 @@
 
 #include <tachyon/reply/ViewerWidgetReply.hpp>
 #include <tachyon/request/ViewerWidgetRequest.hpp>
-#include <tachyon/api/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerWidgetReply)
 

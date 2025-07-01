@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/request/CameraRequest.hpp>
-#include <tachyon/api/RequestInfoWriter.hpp>
+#include <tachyon/api/RequestMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraRequest)
 

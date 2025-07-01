@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/orientation/SetHeadingCommand.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetHeadingCommand)

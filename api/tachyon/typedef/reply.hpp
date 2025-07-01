@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Reply;
-    class ReplyInfo;
+    class ReplyMeta;
     using ReplyPtr           = Ref<Reply>;
     using ReplyCPtr          = Ref<const Reply>;
 

@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Request.hpp>
-#include <tachyon/api/RequestInfoWriter.hpp>
+#include <tachyon/api/RequestMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Request)
 
 namespace yq::tachyon {
-    RequestInfo::RequestInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+    RequestMeta::RequestMeta(std::string_view zName, PostMeta& base, const std::source_location& sl) :
         PostMeta(zName, base, sl)
     {
         set(Flag::REQUEST);

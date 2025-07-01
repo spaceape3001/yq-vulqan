@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Command.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Command)
 
 namespace yq::tachyon {
-    CommandInfo::CommandInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+    CommandMeta::CommandMeta(std::string_view zName, PostMeta& base, const std::source_location& sl) :
         PostMeta(zName, base, sl)
     {
         set(Flag::COMMAND);

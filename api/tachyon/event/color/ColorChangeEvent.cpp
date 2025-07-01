@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/event/color/ColorChangeEvent.hpp>
-#include <tachyon/api/EventInfoWriter.hpp>
+#include <tachyon/api/EventMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ColorChangeEvent)

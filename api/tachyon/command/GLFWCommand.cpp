@@ -6,13 +6,13 @@
 
 #include <tachyon/command/GLFWCommand.hpp>
 
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWCommand)
 
 namespace yq::tachyon {
-    GLFWCommandInfo::GLFWCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
-        CommandInfo(zName, base, sl)
+    GLFWCommandMeta::GLFWCommandMeta(std::string_view zName, CommandMeta& base, const std::source_location& sl) :
+        CommandMeta(zName, base, sl)
     {
     }
 

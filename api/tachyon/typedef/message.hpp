@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Message;
-    class MessageInfo;
+    class MessageMeta;
     using MessagePtr           = Ref<Message>;
     using MessageCPtr          = Ref<const Message>;
 

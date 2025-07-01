@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/reply/io/SaveReply.hpp>
-#include <tachyon/api/ReplyInfoWriter.hpp>
+#include <tachyon/api/ReplyMetaWriter.hpp>
 #include <tachyon/io/Save.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveReply)

@@ -9,15 +9,15 @@
 #include <tachyon/api/Event.hpp>
 
 namespace yq::tachyon {
-    class VulqanEventInfo : public EventInfo {
+    class VulqanEventMeta : public EventMeta {
     public:
-        VulqanEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl=std::source_location::current());
+        VulqanEventMeta(std::string_view zName, EventMeta& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
     class VulqanEvent : public Event {
-        YQ_OBJECT_INFO(VulqanEventInfo)
+        YQ_OBJECT_INFO(VulqanEventMeta)
         YQ_OBJECT_DECLARE(VulqanEvent, Event)
     public:
     

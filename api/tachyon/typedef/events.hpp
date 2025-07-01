@@ -21,7 +21,7 @@ namespace yq::tachyon {
     class JoystickAxisEvent;
     class JoystickConnectEvent;
     class JoystickDisconnectEvent;
-    class JoystickEventInfo;
+    class JoystickEventMeta;
     class JoystickEvent;
     class JoystickHatEvent;
     class JoystickPressEvent;
@@ -33,7 +33,7 @@ namespace yq::tachyon {
     class KeyRepeatEvent;
     class MonitorConnectEvent;
     class MonitorDisconnectEvent;
-    class MonitorEventInfo;
+    class MonitorEventMeta;
     class MonitorEvent;
     class MouseCaptureEvent;
     class MouseDisableEvent;

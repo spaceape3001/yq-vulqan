@@ -11,15 +11,15 @@
 #include <tachyon/typedef/request.hpp>
 
 namespace yq::tachyon {
-    class ReplyInfo : public PostMeta {
+    class ReplyMeta : public PostMeta {
     public:
         template <typename C> class Writer;
 
-        ReplyInfo(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
+        ReplyMeta(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
     };
 
     class Reply : public Post {
-        YQ_OBJECT_INFO(ReplyInfo)
+        YQ_OBJECT_INFO(ReplyMeta)
         YQ_OBJECT_DECLARE(Reply, Post)
         template <class> friend class Ref;
     public:

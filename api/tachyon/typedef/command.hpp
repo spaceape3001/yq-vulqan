@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Command;
-    class CommandInfo;
+    class CommandMeta;
     using CommandPtr           = Ref<Command>;
     using CommandCPtr          = Ref<const Command>;
 

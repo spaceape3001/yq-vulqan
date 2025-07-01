@@ -7,13 +7,13 @@
 
 #include <tachyon/event/VulqanEvent.hpp>
 
-#include <tachyon/api/EventInfoWriter.hpp>
+#include <tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VulqanEvent)
 
 namespace yq::tachyon {
-    VulqanEventInfo::VulqanEventInfo(std::string_view zName, EventInfo& base, const std::source_location& sl) :
-        EventInfo(zName, base, sl)
+    VulqanEventMeta::VulqanEventMeta(std::string_view zName, EventMeta& base, const std::source_location& sl) :
+        EventMeta(zName, base, sl)
     {
         set(Flag::VULKAN);
     }

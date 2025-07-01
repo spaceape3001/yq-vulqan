@@ -6,13 +6,13 @@
 
 #include <tachyon/command/AppCommand.hpp>
 
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppCommand)
 
 namespace yq::tachyon {
-    AppCommandInfo::AppCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl) :
-        CommandInfo(zName, base, sl)
+    AppCommandMeta::AppCommandMeta(std::string_view zName, CommandMeta& base, const std::source_location& sl) :
+        CommandMeta(zName, base, sl)
     {
     }
 

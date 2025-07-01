@@ -6,7 +6,7 @@
 
 #include <tachyon/command/camera/SetScreenCommand.hpp>
 #include <yq/shape/Rectangle2.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetScreenCommand)
 

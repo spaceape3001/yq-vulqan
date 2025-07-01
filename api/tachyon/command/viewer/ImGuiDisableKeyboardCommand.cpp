@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/command/viewer/ImGuiDisableKeyboardCommand.hpp>
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 #include <tachyon/api/Widget.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ImGuiDisableKeyboardCommand)

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/message/EmptyMessage.hpp>
-#include <tachyon/api/MessageInfoWriter.hpp>
+#include <tachyon/api/MessageMetaWriter.hpp>
 
 namespace yq::tachyon {
     EmptyMessage::EmptyMessage(const Param& p) : Message(p) 

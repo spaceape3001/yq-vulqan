@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SetWireframeCommand.hpp"
-#include <tachyon/api/CommandInfoWriter.hpp>
+#include <tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {
     SetWireframeCommand::SetWireframeCommand(const Header& h, Tristate v) : RenderedCommand(h), m_wireframe(v)

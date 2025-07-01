@@ -9,15 +9,15 @@
 #include <tachyon/api/Command.hpp>
 
 namespace yq::tachyon {
-    class AppCommandInfo : public CommandInfo {
+    class AppCommandMeta : public CommandMeta {
     public:
-        AppCommandInfo(std::string_view zName, CommandInfo& base, const std::source_location& sl=std::source_location::current());
+        AppCommandMeta(std::string_view zName, CommandMeta& base, const std::source_location& sl=std::source_location::current());
         
     protected:
     };
 
     class AppCommand : public Command {
-        YQ_OBJECT_INFO(AppCommandInfo)
+        YQ_OBJECT_INFO(AppCommandMeta)
         YQ_OBJECT_DECLARE(AppCommand, Command)
     public:
 

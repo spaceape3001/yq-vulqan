@@ -11,8 +11,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Reply)
 
 namespace yq::tachyon {
-    ReplyInfo::ReplyInfo(std::string_view zName, PostInfo& base, const std::source_location& sl) :
-        PostInfo(zName, base, sl)
+    ReplyInfo::ReplyInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+        PostMeta(zName, base, sl)
     {
         set(Flag::REPLY);
     }

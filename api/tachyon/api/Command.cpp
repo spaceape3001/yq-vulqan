@@ -10,8 +10,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Command)
 
 namespace yq::tachyon {
-    CommandInfo::CommandInfo(std::string_view zName, PostInfo& base, const std::source_location& sl) :
-        PostInfo(zName, base, sl)
+    CommandInfo::CommandInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+        PostMeta(zName, base, sl)
     {
         set(Flag::COMMAND);
     }

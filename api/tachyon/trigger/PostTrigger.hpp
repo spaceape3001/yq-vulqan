@@ -19,11 +19,11 @@ namespace yq::tachyon {
     
         using Param = Trigger::Param;
     
-        PostTrigger(const PostInfo& post, const Param& p = {});
+        PostTrigger(const PostMeta& post, const Param& p = {});
 
         ~PostTrigger();
         Result match(const Post&) const override;
-        virtual const PostInfo&     post_info() const { return m_info; }
+        virtual const PostMeta&     post_info() const { return m_info; }
 
         static void init_info();
 
@@ -31,7 +31,7 @@ namespace yq::tachyon {
         class By;
 
     private:
-        const PostInfo&     m_info;
+        const PostMeta&     m_info;
     };
     
     template <SomePost P>

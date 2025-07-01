@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::PostTrigger)
 
 namespace yq::tachyon {
-    PostTrigger::PostTrigger(const PostInfo& post, const Param& p) : Trigger(p), m_info(post)
+    PostTrigger::PostTrigger(const PostMeta& post, const Param& p) : Trigger(p), m_info(post)
     {
     }
     

@@ -18,7 +18,7 @@ namespace yq::tachyon {
         KeyPressTrigger(KeyCode, ModifierKeys::Checker chk={}, const Param& p=Param());
         ~KeyPressTrigger();
         
-        virtual const PostInfo&     post_info() const override;
+        virtual const PostMeta&     post_info() const override;
         virtual Result              match(const Post&) const override;
         
         static void init_info();

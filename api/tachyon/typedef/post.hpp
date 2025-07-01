@@ -16,7 +16,7 @@ namespace yq::tachyon {
     template <class> class ID;
 
     class Post;
-    class PostInfo;
+    class PostMeta;
     using PostPtr           = Ref<Post>;
     using PostCPtr          = Ref<const Post>;
     

@@ -69,7 +69,7 @@ namespace yq::tachyon {
     public:
     
         using InterfaceLUC  = MetaLookup<InterfaceInfo>;
-        using DispatchMM    = std::unordered_multimap<const PostInfo*, const PBXDispatch*>;
+        using DispatchMM    = std::unordered_multimap<const PostMeta*, const PBXDispatch*>;
         using DelegateLUC   = MetaLookup<DelegateProperty>;
         using AssetLUC      = MetaLookup<AssetProperty>;
         
@@ -105,9 +105,9 @@ namespace yq::tachyon {
 
         using dispatch_vec_t    = std::vector<const PBXDispatch*>;
         using dispatch_span_t   = std::span<const PBXDispatch*>;
-        using dispatch_map_t    = std::unordered_map<const PostInfo*, dispatch_span_t>;
+        using dispatch_map_t    = std::unordered_map<const PostMeta*, dispatch_span_t>;
 
-        dispatch_span_t     dispatches(const PostInfo*) const;
+        dispatch_span_t     dispatches(const PostMeta*) const;
         
         void                report(Stream&) const;
         void                report(const char* cat="viz", LogPriority pri=LogPriority::Info) const;

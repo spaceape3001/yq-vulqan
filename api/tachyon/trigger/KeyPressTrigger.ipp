@@ -28,7 +28,7 @@ namespace yq::tachyon {
         return (evt->key() == m_key) && m_modifiers(evt->modifiers());
     }
     
-    const PostInfo&     KeyPressTrigger::post_info() const 
+    const PostMeta&     KeyPressTrigger::post_info() const 
     {
         return meta<KeyPressEvent>();
     }

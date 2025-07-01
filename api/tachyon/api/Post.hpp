@@ -17,11 +17,11 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq::tachyon {
-    class PostInfo : public ObjectInfo {
+    class PostMeta : public ObjectInfo {
     public:
         template <typename C> class Writer;
 
-        PostInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        PostMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
     };
     
     /*! \brief Light weight message, which can be an event, an input, a command, a request, etc.
@@ -30,7 +30,7 @@ namespace yq::tachyon {
         listener via the mailer.
     */
     class Post : public Object, public RefCount {
-        YQ_OBJECT_INFO(PostInfo)
+        YQ_OBJECT_INFO(PostMeta)
         YQ_OBJECT_DECLARE(Post, Object)
     public:
     

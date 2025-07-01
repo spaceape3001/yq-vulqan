@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/post/AnyPost.hpp>
-#include <tachyon/api/PostInfoWriter.hpp>
+#include <tachyon/api/PostMetaWriter.hpp>
 
 namespace yq::tachyon {
     AnyPost::AnyPost(const Any& val, const Header&h) : Post(h), m_value(val)

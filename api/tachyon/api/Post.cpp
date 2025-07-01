@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Post.hpp>
-#include <tachyon/api/PostInfoWriter.hpp>
+#include <tachyon/api/PostMetaWriter.hpp>
 #include <sstream>
 #include <tachyon/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Post)
 
 namespace yq::tachyon {
-    PostInfo::PostInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
+    PostMeta::PostMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::POST);

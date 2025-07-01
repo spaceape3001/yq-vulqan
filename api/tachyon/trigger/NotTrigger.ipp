@@ -28,7 +28,7 @@ namespace yq::tachyon {
         return m_original -> triggered(pp);
     }
 
-    const PostInfo&     NotTrigger::post_info() const 
+    const PostMeta&     NotTrigger::post_info() const 
     {
         if(!m_original)
             return meta<Post>();

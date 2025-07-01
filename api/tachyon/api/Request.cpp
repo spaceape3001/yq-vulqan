@@ -10,8 +10,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Request)
 
 namespace yq::tachyon {
-    RequestInfo::RequestInfo(std::string_view zName, PostInfo& base, const std::source_location& sl) :
-        PostInfo(zName, base, sl)
+    RequestInfo::RequestInfo(std::string_view zName, PostMeta& base, const std::source_location& sl) :
+        PostMeta(zName, base, sl)
     {
         set(Flag::REQUEST);
     }

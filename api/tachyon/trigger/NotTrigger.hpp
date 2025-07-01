@@ -24,7 +24,7 @@ namespace yq::tachyon {
         ~NotTrigger();
 
         Result              match(const Post&) const override;
-        const PostInfo&     post_info() const override;
+        const PostMeta&     post_info() const override;
         
         static void init_info();
     

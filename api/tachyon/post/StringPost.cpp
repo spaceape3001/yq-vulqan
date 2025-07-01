@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/post/StringPost.hpp>
-#include <tachyon/api/PostInfoWriter.hpp>
+#include <tachyon/api/PostMetaWriter.hpp>
 
 namespace yq::tachyon {
     StringPost::StringPost(std::string&&k, const Header&h) : Post(h), m_text(std::move(k))

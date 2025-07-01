@@ -17,11 +17,11 @@ namespace yq::tachyon {
         a "go to" X directive (ie...an order)
     */
 
-    class CommandInfo : public PostInfo {
+    class CommandInfo : public PostMeta {
     public:
         template <typename C> class Writer;
 
-        CommandInfo(std::string_view zName, PostInfo& base, const std::source_location& sl=std::source_location::current());
+        CommandInfo(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
     };
 
     class Command : public Post {

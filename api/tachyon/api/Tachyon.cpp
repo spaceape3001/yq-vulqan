@@ -137,7 +137,7 @@ namespace yq::tachyon {
         return all ? m_delegates.all : m_delegates.local;
     }
 
-    TachyonMeta::dispatch_span_t     TachyonMeta::dispatches(const PostInfo* pi) const
+    TachyonMeta::dispatch_span_t     TachyonMeta::dispatches(const PostMeta* pi) const
     {
         if(!pi)
             return {};
@@ -149,7 +149,7 @@ namespace yq::tachyon {
     
     struct PBXEntry {
         unsigned            depth   = 0;
-        const PostInfo*     info    = nullptr;
+        const PostMeta*     info    = nullptr;
         const PBXDispatch*  fn      = nullptr;
         
         bool operator<(const PBXEntry& b) const
@@ -162,11 +162,11 @@ namespace yq::tachyon {
     
     static void     _add(std::vector<PBXEntry>&ranked, const PBXDispatch* fn, unsigned int depth)
     {
-        const PostInfo* ppi = fn->post();
+        const PostMeta* ppi = fn->post();
         assert(ppi);
         ranked.push_back({depth, ppi, fn});
         for(const ObjectInfo* derv : ppi->deriveds(ALL).all){
-            const PostInfo* ppd = static_cast<const PostInfo*>(derv);   // should *NEVER* be wrong given the inheritance
+            const PostMeta* ppd = static_cast<const PostMeta*>(derv);   // should *NEVER* be wrong given the inheritance
             //if(!ppd->is_abstract()){
                 ranked.push_back({depth, ppd, fn});
             //}
@@ -218,7 +218,7 @@ namespace yq::tachyon {
             std::stable_sort(ranked.begin(), ranked.end());
             m_dispatches.ranked.resize(ranked.size(), nullptr);
 
-            const PostInfo* pi  = nullptr;
+            const PostMeta* pi  = nullptr;
             size_t          nC  = 0;
             
             for(size_t n=0;n<ranked.size();++n){

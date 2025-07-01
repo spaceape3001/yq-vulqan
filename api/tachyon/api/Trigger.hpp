@@ -68,7 +68,7 @@ namespace yq::tachyon {
         bool                        mismatch_policy() const { return m_mismatch; }
         
         //! Return your relevant post info (default is post... absolutely generic)
-        virtual const PostInfo&     post_info() const;
+        virtual const PostMeta&     post_info() const;
         
         bool                        triggered(const Post&) const;
 

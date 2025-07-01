@@ -11,11 +11,11 @@
 #include <tachyon/typedef/request.hpp>
 
 namespace yq::tachyon {
-    class ReplyInfo : public PostInfo {
+    class ReplyInfo : public PostMeta {
     public:
         template <typename C> class Writer;
 
-        ReplyInfo(std::string_view zName, PostInfo& base, const std::source_location& sl=std::source_location::current());
+        ReplyInfo(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
     };
 
     class Reply : public Post {

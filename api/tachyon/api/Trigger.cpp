@@ -37,7 +37,7 @@ namespace yq::tachyon {
         }
     }
 
-    const PostInfo&     Trigger::post_info() const
+    const PostMeta&     Trigger::post_info() const
     {
         return meta<Post>();
     }

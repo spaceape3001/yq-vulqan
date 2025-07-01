@@ -25,14 +25,14 @@ namespace yq::tachyon {
     public:
         class Writer;
 
-        const PostInfo*     post() const { return m_post; }
+        const PostMeta*     post() const { return m_post; }
     
             //! Lets us know the syntax being invoked
         virtual const char* debug_string() const = 0;
         std::string_view    name() const { return m_name; }
         
     protected:
-        const PostInfo*     m_post          = nullptr;
+        const PostMeta*     m_post          = nullptr;
         std::string_view    m_name;
         
         friend class Tachyon;

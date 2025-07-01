@@ -12,11 +12,11 @@
 
 namespace yq::tachyon {
 
-    class RequestInfo : public PostInfo {
+    class RequestInfo : public PostMeta {
     public:
         template <typename C> class Writer;
 
-        RequestInfo(std::string_view zName, PostInfo& base, const std::source_location& sl=std::source_location::current());
+        RequestInfo(std::string_view zName, PostMeta& base, const std::source_location& sl=std::source_location::current());
     };
 
     class Request : public Post {

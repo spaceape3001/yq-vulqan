@@ -7,17 +7,17 @@
 #pragma once
 
 #include <tachyon/api/Message.hpp>
-#include <tachyon/api/PostInfoWriter.hpp>
+#include <tachyon/api/PostMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of event information
     */
     template <typename C>
-    class MessageInfo::Writer : public PostInfo::Writer<C> {
+    class MessageInfo::Writer : public PostMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(MessageInfo* msgInfo) : PostInfo::Writer<C>(msgInfo), m_meta(msgInfo)
+        Writer(MessageInfo* msgInfo) : PostMeta::Writer<C>(msgInfo), m_meta(msgInfo)
         {
         }
         

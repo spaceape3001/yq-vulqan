@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/os/glfw/GamepadGLFW.hpp>
-#include <tachyon/os/GamepadInfoWriter.hpp>
+#include <tachyon/os/GamepadMetaWriter.hpp>
 #include <tachyon/command/gamepad/GamepadZeroCommand.hpp>
 #include <tachyon/os/glfw/glfw.hpp>
 #include <tachyon/event/gamepad/GamepadAxisEvent.hpp>

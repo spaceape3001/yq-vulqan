@@ -32,7 +32,7 @@ namespace yq::tachyon {
             return m_create(w);
         }
 
-        virtual const UIElementInfo*    ui_info() const override
+        virtual const UIElementMeta*    ui_info() const override
         { 
             return &meta<U>();
         }

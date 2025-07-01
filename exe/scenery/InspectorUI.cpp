@@ -140,7 +140,7 @@ std::span<UIEditor*>    InspectorUI::_panels(TypedID tid)
     const Frame*   frame    = Frame::current();
     
     //  alright, generating...
-    const TachyonMeta*  tac = frame->info((TachyonID) tid);
+    const TachyonMeta*  tac = frame->meta((TachyonID) tid);
     if(!tac)
         return {};
         
@@ -188,7 +188,7 @@ void InspectorUI::_render(TypedID tid)
         const TachyonSnap*  cs  = frame->snap((TachyonID) c);
         if(!cs)
             continue;
-        const TachyonMeta*  ci  = frame->info((TachyonID) c);
+        const TachyonMeta*  ci  = frame->meta((TachyonID) c);
         if(!ci)
             continue;
             
@@ -222,7 +222,7 @@ bool InspectorUI::bind(TypedID tid)
     if(!frame)
         return false;
         
-    const TachyonMeta*  tac = frame->info((TachyonID) tid);
+    const TachyonMeta*  tac = frame->meta((TachyonID) tid);
     if(!tac)
         return false;
 

@@ -7,27 +7,27 @@
 #include <yq/shape/Size2.hpp>
 #include <tachyon/os/Monitor.hpp>
 #include <tachyon/os/MonitorData.hpp>
-#include <tachyon/os/MonitorInfoWriter.hpp>
+#include <tachyon/os/MonitorMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-    struct MonitorInfo::Repo {
-        std::vector<const MonitorInfo*> all;
+    struct MonitorMeta::Repo {
+        std::vector<const MonitorMeta*> all;
     };
     
-    MonitorInfo::Repo& MonitorInfo::repo()
+    MonitorMeta::Repo& MonitorMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const MonitorInfo*>&    MonitorInfo::all()
+    const std::vector<const MonitorMeta*>&    MonitorMeta::all()
     {
         return repo().all;
     }
 
-    MonitorInfo::MonitorInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    MonitorMeta::MonitorMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Monitor);

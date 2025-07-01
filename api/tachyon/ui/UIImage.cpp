@@ -6,7 +6,7 @@
 
 #include "UIImage.hpp"
 #include "UIImageWriter.hpp"
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <tachyon/gfx/Raster.hpp>
 #include <tachyon/gfx/Texture.hpp>
 #include <tachyon/logging.hpp>

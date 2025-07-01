@@ -20,11 +20,11 @@ namespace yq::tachyon {
     template <typename C>
     concept SomeUIEditor = std::derived_from<C,UIEditor>;
     
-    class UIEditorMeta : public UIFormInfo { 
+    class UIEditorMeta : public UIFormMeta { 
     public:
         template <typename> class Writer;
         
-        UIEditorMeta(std::string_view, UIFormInfo&, const std::source_location& sl = std::source_location::current());
+        UIEditorMeta(std::string_view, UIFormMeta&, const std::source_location& sl = std::source_location::current());
     
         //! List of classes this thing will edit
         const std::vector<const TachyonMeta*>& edits(tachyon_k) const { return m_editTachyons; }

@@ -10,7 +10,7 @@
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/event/panel/InfoSelectionChangedEvent.hpp>
 #include <tachyon/gfx/Texture.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <tachyon/ui/UIStyle.hpp>
 #include <yq/text/match.hpp>
 

@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     using KeyboardID = ID<Keyboard>;
     
-    class KeyboardInfo;
+    class KeyboardMeta;
 }

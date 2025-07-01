@@ -7,7 +7,7 @@
 #include "UISimpleTree.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <format>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UISimpleTree)

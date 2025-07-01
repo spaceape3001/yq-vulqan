@@ -7,26 +7,26 @@
 #pragma once
 
 #include <tachyon/ui/UIForm.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>   // this will change if elements derives....
+#include <tachyon/ui/UIElementMetaWriter.hpp>   // this will change if elements derives....
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/typedef/proxy.hpp>
 #include <type_traits>
 
 namespace yq::tachyon {
 
-    struct UIFormInfo::Field {
+    struct UIFormMeta::Field {
         std::string             label;
         FieldExecutor*          executor    = nullptr;
     };
     
-    class UIFormInfo::FieldExecutor {
+    class UIFormMeta::FieldExecutor {
     public:
         virtual bool    iterable() const = 0;
         virtual void    execute(UIForm*edit) = 0;
     };
 
     template <SomeUIForm C> 
-    class UIFormInfo::BoundFieldExecutor : public FieldExecutor {
+    class UIFormMeta::BoundFieldExecutor : public FieldExecutor {
     public:
         typedef void (C::*FN)();
     
@@ -47,14 +47,14 @@ namespace yq::tachyon {
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class UIFormInfo::Writer : public UIElements::MyInfo::Writer<C> {
+    class UIFormMeta::Writer : public UIElements::MyInfo::Writer<C> {
     public:
     
-        Writer(UIFormInfo* pInfo) : UIElements::MyInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(UIFormMeta* pInfo) : UIElements::MyInfo::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
-        Writer(UIFormInfo& pInfo) : Writer(&pInfo)
+        Writer(UIFormMeta& pInfo) : Writer(&pInfo)
         {
         }
         
@@ -74,6 +74,6 @@ namespace yq::tachyon {
         
 
     private:
-        UIFormInfo* m_meta;
+        UIFormMeta* m_meta;
     };
 }

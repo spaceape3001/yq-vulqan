@@ -7,7 +7,7 @@
 #include "UICenterAlign.hpp"
 #include "UICenterAlignWriter.hpp"
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICenterAlign)
 

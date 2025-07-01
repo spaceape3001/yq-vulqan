@@ -9,7 +9,7 @@
 #include <yq/math/utility.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Size2.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <tachyon/logging.hpp>
 
 #include <yq/text/format.hpp>

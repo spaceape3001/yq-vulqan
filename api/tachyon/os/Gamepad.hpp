@@ -19,15 +19,15 @@ namespace yq::tachyon {
     
         Information for joysticks.
     */
-    class GamepadInfo : public TachyonMeta {
+    class GamepadMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
         //! Gets all joystick informations
-        static const std::vector<const GamepadInfo*>&    all();
+        static const std::vector<const GamepadMeta*>&    all();
         
         //! Standard constructor for the camera information
-        GamepadInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        GamepadMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -42,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief A joystick
     */
     class Gamepad : public Tachyon {
-        YQ_TACHYON_INFO(GamepadInfo);
+        YQ_TACHYON_INFO(GamepadMeta);
         YQ_TACHYON_DATA(GamepadData)
         YQ_TACHYON_SNAP(GamepadSnap)
         YQ_TACHYON_DECLARE(Gamepad, Tachyon)

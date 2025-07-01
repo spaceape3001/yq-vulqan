@@ -6,28 +6,28 @@
 
 #include <tachyon/os/Desktop.hpp>
 #include <tachyon/os/DesktopData.hpp>
-#include <tachyon/os/DesktopInfoWriter.hpp>
+#include <tachyon/os/DesktopMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
-    struct DesktopInfo::Repo {
-        std::vector<const DesktopInfo*> all;
+    struct DesktopMeta::Repo {
+        std::vector<const DesktopMeta*> all;
     };
     
-    DesktopInfo::Repo& DesktopInfo::repo()
+    DesktopMeta::Repo& DesktopMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const DesktopInfo*>&    DesktopInfo::all()
+    const std::vector<const DesktopMeta*>&    DesktopMeta::all()
     {
         return repo().all;
     }
 
-    DesktopInfo::DesktopInfo(std::string_view name, ManagerMeta& base, const std::source_location& sl) : 
+    DesktopMeta::DesktopMeta(std::string_view name, ManagerMeta& base, const std::source_location& sl) : 
         ManagerMeta(name, base, sl)
     {
         set(Type::Desktop);

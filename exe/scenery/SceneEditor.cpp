@@ -92,7 +92,7 @@
 #include <tachyon/ui/UIStyle.hpp>
 #include <tachyon/ui/UIWindow.hpp>
 #include <tachyon/ui/UIWriters.hxx>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 
 #include <tachyon/widget/AppWidgetMetaWriter.hpp>
 

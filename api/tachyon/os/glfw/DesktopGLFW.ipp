@@ -9,7 +9,7 @@
 #include <tachyon/app/Application.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/Context.hpp>
-#include <tachyon/os/DesktopInfoWriter.hpp>
+#include <tachyon/os/DesktopMetaWriter.hpp>
 #include <tachyon/app/ViewerCreateInfo.hpp>
 
 #include <tachyon/os/glfw/CursorGLFW.hpp>

@@ -20,15 +20,15 @@ namespace yq::tachyon {
     
         Information for monitors.
     */
-    class MonitorInfo : public TachyonMeta {
+    class MonitorMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
         //! Gets all camera informations
-        static const std::vector<const MonitorInfo*>&    all();
+        static const std::vector<const MonitorMeta*>&    all();
         
         //! Standard constructor for the camera information
-        MonitorInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        MonitorMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -39,7 +39,7 @@ namespace yq::tachyon {
     /*! \brief It's a monitor
     */
     class Monitor : public Tachyon {
-        YQ_TACHYON_INFO(MonitorInfo);
+        YQ_TACHYON_INFO(MonitorMeta);
         YQ_TACHYON_DATA(MonitorData)
         YQ_TACHYON_SNAP(MonitorSnap)
         YQ_TACHYON_DECLARE(Monitor, Tachyon)

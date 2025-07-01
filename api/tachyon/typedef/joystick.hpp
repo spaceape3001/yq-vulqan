@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     using JoystickID = ID<Joystick>;
     
-    class JoystickInfo;
+    class JoystickMeta;
 }

@@ -12,7 +12,7 @@
 #include <tachyon/api/ModelData.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/gfx/Texture.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 
 
 struct ModelTableUI::Row {
@@ -141,7 +141,7 @@ void           ModelTableUI::tick()
     for(ModelID c : models){
         Row   en;
         en.model        = c;
-        en.info         = frame->info(c);
+        en.info         = frame->meta(c);
         en.sid          = std::format("{}##{}.SELECT_ID", c.id, c.id);
         en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), c.id);
         m_rows.push_back(en);

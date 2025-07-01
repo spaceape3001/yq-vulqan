@@ -12,7 +12,7 @@
 #include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/gfx/Texture.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 
 
 void SceneEditor::ScenesTableUI::init_info()

@@ -28,15 +28,15 @@ namespace yq::tachyon {
     
         Information for desktops
     */
-    class DesktopInfo : public ManagerMeta {
+    class DesktopMeta : public ManagerMeta {
     public:
         template <typename C> struct Writer;
 
         //! Gets all desktop informations
-        static const std::vector<const DesktopInfo*>&    all();
+        static const std::vector<const DesktopMeta*>&    all();
         
         //! Standard constructor for the desktop information
-        DesktopInfo(std::string_view, ManagerMeta&, const std::source_location& sl = std::source_location::current());
+        DesktopMeta(std::string_view, ManagerMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -50,7 +50,7 @@ namespace yq::tachyon {
         This is any user desktop, whether direct or via an abstraction library.  (ie, this is *OUR* abstraction)
     */
     class Desktop : public Manager {
-        YQ_TACHYON_INFO(DesktopInfo);
+        YQ_TACHYON_INFO(DesktopMeta);
         YQ_TACHYON_DATA(DesktopData)
         YQ_TACHYON_SNAP(DesktopSnap)
         YQ_TACHYON_DECLARE(Desktop, Manager)

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UICheckBox_Visible.hpp"
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <tachyon/api/Widget.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICheckBox_Visible)

@@ -11,7 +11,7 @@
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/AxBox2.hxx>
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include "UIAppMainWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIAppMain)

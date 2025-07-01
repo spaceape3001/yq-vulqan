@@ -29,12 +29,12 @@ namespace yq::tachyon {
     class UIGenerator;
     struct Payload;
     
-    class UIElementInfo : public ObjectInfo {
+    class UIElementMeta : public ObjectInfo {
     public:
         template <typename> class Writer;
-        UIElementInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        UIElementMeta(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
         
-        static const std::vector<const UIElementInfo*>& all();
+        static const std::vector<const UIElementMeta*>& all();
         
     private:
         struct Repo;
@@ -55,7 +55,7 @@ namespace yq::tachyon {
         so the object is being added.
     */
     class UIElement : public Object {
-        YQ_OBJECT_INFO(UIElementInfo)
+        YQ_OBJECT_INFO(UIElementMeta)
         YQ_OBJECT_DECLARE(UIElement, Object)
     public:
     
@@ -99,7 +99,7 @@ namespace yq::tachyon {
         bool        flag(UIFlag v) const;
         
         //! Checks to see if the UI element is or is derived from specified type (or is a generator)
-        virtual Tristate is(const UIElementInfo& baseInfo) const;
+        virtual Tristate is(const UIElementMeta& baseInfo) const;
         
         template <SomeUIElement U>
         Tristate is() const

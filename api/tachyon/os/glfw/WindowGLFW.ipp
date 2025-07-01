@@ -7,7 +7,7 @@
 #include <tachyon/os/glfw/WindowGLFW.hpp>
 #include <tachyon/os/glfw/LoggingGLFW.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/os/WindowInfoWriter.hpp>
+#include <tachyon/os/WindowMetaWriter.hpp>
 #include <tachyon/command/cursor/CursorCaptureCommand.hpp>
 #include <tachyon/command/cursor/CursorDisableCommand.hpp>
 #include <tachyon/command/cursor/CursorHideCommand.hpp>

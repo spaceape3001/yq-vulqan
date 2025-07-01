@@ -6,28 +6,28 @@
 
 #include <tachyon/os/Cursor.hpp>
 #include <tachyon/os/CursorData.hpp>
-#include <tachyon/os/CursorInfoWriter.hpp>
+#include <tachyon/os/CursorMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
-    struct CursorInfo::Repo {
-        std::vector<const CursorInfo*> all;
+    struct CursorMeta::Repo {
+        std::vector<const CursorMeta*> all;
     };
     
-    CursorInfo::Repo& CursorInfo::repo()
+    CursorMeta::Repo& CursorMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const CursorInfo*>&    CursorInfo::all()
+    const std::vector<const CursorMeta*>&    CursorMeta::all()
     {
         return repo().all;
     }
 
-    CursorInfo::CursorInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    CursorMeta::CursorMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Cursor);

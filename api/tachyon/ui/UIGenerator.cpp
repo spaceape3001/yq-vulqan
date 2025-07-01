@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIGenerator.hpp"
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/container/vector_utils.hpp>
 #include <yq/core/Ref.hpp>
 #include <tachyon/api/Action.hpp>
@@ -36,12 +36,12 @@ namespace yq::tachyon {
         return ret;
     }
     
-    Tristate UIGenerator::is(const UIElementInfo& baseInfo) const 
+    Tristate UIGenerator::is(const UIElementMeta& baseInfo) const 
     {
         if(UIElement::is(baseInfo) == Tristate::YES)
             return Tristate::YES;
         
-        const UIElementInfo*    genInfo = ui_info();
+        const UIElementMeta*    genInfo = ui_info();
         if(!genInfo)
             return Tristate::Indeterminant;
         

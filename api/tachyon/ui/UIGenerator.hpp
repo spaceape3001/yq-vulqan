@@ -21,8 +21,8 @@ namespace yq::tachyon {
         
         UIElement* copy() const override final;
         
-        virtual Tristate is(const UIElementInfo& baseInfo) const override;
+        virtual Tristate is(const UIElementMeta& baseInfo) const override;
 
-        virtual const UIElementInfo*    ui_info() const { return nullptr; }
+        virtual const UIElementMeta*    ui_info() const { return nullptr; }
     };
 }

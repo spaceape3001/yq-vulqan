@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/os/Window.hpp>
-#include <tachyon/os/WindowData.hpp>
+#include <tachyon/os/Joystick.hpp>
+#include <tachyon/os/JoystickData.hpp>
 #include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class WindowInfo::Writer : public TachyonMeta::Writer<C> {
+    class JoystickMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(WindowInfo* windowInfo) : TachyonMeta::Writer<C>(windowInfo)
+        Writer(JoystickMeta* joystickInfo) : TachyonMeta::Writer<C>(joystickInfo)
         {
         }
         
-        Writer(WindowInfo& windowInfo) : Writer(&windowInfo)
+        Writer(JoystickMeta& joystickInfo) : Writer(&joystickInfo)
         {
         }
     };

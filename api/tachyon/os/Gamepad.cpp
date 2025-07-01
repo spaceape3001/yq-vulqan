@@ -6,27 +6,27 @@
 
 #include <tachyon/os/Gamepad.hpp>
 #include <tachyon/os/GamepadData.hpp>
-#include <tachyon/os/GamepadInfoWriter.hpp>
+#include <tachyon/os/GamepadMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-    struct GamepadInfo::Repo {
-        std::vector<const GamepadInfo*> all;
+    struct GamepadMeta::Repo {
+        std::vector<const GamepadMeta*> all;
     };
     
-    GamepadInfo::Repo& GamepadInfo::repo()
+    GamepadMeta::Repo& GamepadMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const GamepadInfo*>&    GamepadInfo::all()
+    const std::vector<const GamepadMeta*>&    GamepadMeta::all()
     {
         return repo().all;
     }
 
-    GamepadInfo::GamepadInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    GamepadMeta::GamepadMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Gamepad);

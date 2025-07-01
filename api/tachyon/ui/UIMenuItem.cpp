@@ -7,7 +7,7 @@
 #include "UIMenuItem.hpp"
 #include "UIMenuItemWriter.hpp"
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIMenuItem)
 

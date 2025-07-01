@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/os/GraphicsCard.hpp>
-#include <tachyon/os/GraphicsCardData.hpp>
+#include <tachyon/os/Cursor.hpp>
+#include <tachyon/os/CursorData.hpp>
 #include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class GraphicsCardInfo::Writer : public TachyonMeta::Writer<C> {
+    class CursorMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(GraphicsCardInfo* keyboardInfo) : TachyonMeta::Writer<C>(keyboardInfo)
+        Writer(CursorMeta* cursorInfo) : TachyonMeta::Writer<C>(cursorInfo)
         {
         }
         
-        Writer(GraphicsCardInfo& keyboardInfo) : Writer(&keyboardInfo)
+        Writer(CursorMeta& cursorInfo) : Writer(&cursorInfo)
         {
         }
     };

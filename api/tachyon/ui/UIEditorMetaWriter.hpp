@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/ui/UIEditor.hpp>
-#include <tachyon/ui/UIFormInfoWriter.hpp>   // this will change if elements derives....
+#include <tachyon/ui/UIFormMetaWriter.hpp>   // this will change if elements derives....
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/typedef/proxy.hpp>
 #include <type_traits>
@@ -17,10 +17,10 @@ namespace yq::tachyon {
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class UIEditorMeta::Writer : public UIFormInfo::Writer<C> {
+    class UIEditorMeta::Writer : public UIFormMeta::Writer<C> {
     public:
     
-        Writer(UIEditorMeta* pInfo) : UIFormInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(UIEditorMeta* pInfo) : UIFormMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         

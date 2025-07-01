@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIConcreteInfoList.hpp"
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElement.hpp"
-#include "UIElementInfoWriter.hpp"
+#include "UIElementMetaWriter.hpp"
 #include <cassert>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/Action.hpp>
@@ -53,24 +53,24 @@ namespace yq::tachyon {
 
     ////////////////////////////
 
-    struct UIElementInfo::Repo {
-        std::vector<const UIElementInfo*>   all;
+    struct UIElementMeta::Repo {
+        std::vector<const UIElementMeta*>   all;
     };
     
-    UIElementInfo::Repo& UIElementInfo::repo()
+    UIElementMeta::Repo& UIElementMeta::repo()
     {
         static Repo s_repo;
         return s_repo;
     }
 
-    const std::vector<const UIElementInfo*>& UIElementInfo::all()
+    const std::vector<const UIElementMeta*>& UIElementMeta::all()
     {
         return repo().all;
     }
 
     ////////////////////////////
 
-    UIElementInfo::UIElementInfo(std::string_view theName, ObjectInfo& pmeta, const std::source_location& sl) : 
+    UIElementMeta::UIElementMeta(std::string_view theName, ObjectInfo& pmeta, const std::source_location& sl) : 
         ObjectInfo(theName, pmeta, sl)
     {
         repo().all.push_back(this);
@@ -232,7 +232,7 @@ namespace yq::tachyon {
         update(FLAGS);
     }
 
-    Tristate    UIElement::is(const UIElementInfo& baseInfo) const
+    Tristate    UIElement::is(const UIElementMeta& baseInfo) const
     {
         return (metaInfo().is_base(baseInfo) || metaInfo().is_this(baseInfo)) ? Tristate::YES : Tristate::NO;
     }

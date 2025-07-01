@@ -31,7 +31,7 @@ namespace yq::tachyon {
     template <class> class ID;
     using CursorID = ID<Cursor>;
     
-    class CursorInfo;
+    class CursorMeta;
 
     using cursor_spec       = std::variant<std::monostate, disabled_k, StdCursor, CursorID>; // TODO... raster image
 }

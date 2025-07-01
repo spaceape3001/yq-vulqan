@@ -10,7 +10,7 @@
 #include <tachyon/ui/UIWindow.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Size2.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <tachyon/ui/UIStyle.hpp>
 

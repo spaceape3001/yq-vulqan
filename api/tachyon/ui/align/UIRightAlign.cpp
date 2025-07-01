@@ -7,7 +7,7 @@
 #include "UIRightAlign.hpp"
 #include "UIRightAlignWriter.hpp"
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIRightAlign)
 

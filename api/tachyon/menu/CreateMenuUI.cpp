@@ -9,7 +9,7 @@
 #include <tachyon/parameters.hpp>
 #include <tachyon/api/Payload.hpp>
 #include <tachyon/api/Tachyon.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/text/match.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CreateMenuUI)

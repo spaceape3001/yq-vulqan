@@ -9,7 +9,7 @@
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/api/ThreadData.hpp>
-#include <tachyon/ui/UIFormInfoWriter.hpp>
+#include <tachyon/ui/UIFormMetaWriter.hpp>
 
 namespace yq::tachyon {
     void FrameMetricsUI::init_info()

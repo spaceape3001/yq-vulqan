@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     using MouseID = ID<Mouse>;
     
-    class MouseInfo;
+    class MouseMeta;
 }

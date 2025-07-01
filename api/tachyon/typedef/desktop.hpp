@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     using DesktopID = ID<Desktop>;
     
-    class DesktopInfo;
+    class DesktopMeta;
 }

@@ -30,8 +30,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    UIEditorMeta::UIEditorMeta(std::string_view name, UIFormInfo&base, const std::source_location& sl) :
-        UIFormInfo(name, base, sl)
+    UIEditorMeta::UIEditorMeta(std::string_view name, UIFormMeta&base, const std::source_location& sl) :
+        UIFormMeta(name, base, sl)
     {
         repo().all.push_back(this);
     }

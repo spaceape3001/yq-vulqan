@@ -7,7 +7,7 @@
 #include "VulqanGPU.hpp"
 #include <tachyon/app/Application.hpp>
 #include <tachyon/app/AppCreateInfo.hpp>
-#include <tachyon/os/GraphicsCardInfoWriter.hpp>
+#include <tachyon/os/GraphicsCardMetaWriter.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>
 #include <tachyon/vulkan/ViLogging.hpp>
 #include <tachyon/request/graphics_card/GetDeviceRequest.hpp>

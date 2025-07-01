@@ -6,28 +6,28 @@
 
 #include <tachyon/os/Keyboard.hpp>
 #include <tachyon/os/KeyboardData.hpp>
-#include <tachyon/os/KeyboardInfoWriter.hpp>
+#include <tachyon/os/KeyboardMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
-    struct KeyboardInfo::Repo {
-        std::vector<const KeyboardInfo*> all;
+    struct KeyboardMeta::Repo {
+        std::vector<const KeyboardMeta*> all;
     };
     
-    KeyboardInfo::Repo& KeyboardInfo::repo()
+    KeyboardMeta::Repo& KeyboardMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const KeyboardInfo*>&    KeyboardInfo::all()
+    const std::vector<const KeyboardMeta*>&    KeyboardMeta::all()
     {
         return repo().all;
     }
 
-    KeyboardInfo::KeyboardInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    KeyboardMeta::KeyboardMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Keyboard);

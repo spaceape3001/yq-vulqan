@@ -14,18 +14,18 @@ namespace yq::tachyon {
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class UIElementInfo::Writer : public ObjectInfo::Writer<C> {
+    class UIElementMeta::Writer : public ObjectInfo::Writer<C> {
     public:
     
-        Writer(UIElementInfo* pInfo) : ObjectInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(UIElementMeta* pInfo) : ObjectInfo::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
-        Writer(UIElementInfo& pInfo) : Writer(&pInfo)
+        Writer(UIElementMeta& pInfo) : Writer(&pInfo)
         {
         }
 
     private:
-        UIElementInfo* m_meta;
+        UIElementMeta* m_meta;
     };
 }

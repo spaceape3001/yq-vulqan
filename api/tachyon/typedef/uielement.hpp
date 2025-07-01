@@ -10,7 +10,7 @@
 
 namespace yq::tachyon {
     class UIElement;
-    class UIElementInfo;
+    class UIElementMeta;
     template <typename T>
     concept SomeUIElement  = std::derived_from<T,UIElement>;
 }

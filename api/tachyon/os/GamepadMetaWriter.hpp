@@ -12,13 +12,13 @@
 
 namespace yq::tachyon {
     template <typename C>
-    class GamepadInfo::Writer : public TachyonMeta::Writer<C> {
+    class GamepadMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(GamepadInfo* gamepadInfo) : TachyonMeta::Writer<C>(gamepadInfo)
+        Writer(GamepadMeta* gamepadInfo) : TachyonMeta::Writer<C>(gamepadInfo)
         {
         }
         
-        Writer(GamepadInfo& gamepadInfo) : Writer(&gamepadInfo)
+        Writer(GamepadMeta& gamepadInfo) : Writer(&gamepadInfo)
         {
         }
     };

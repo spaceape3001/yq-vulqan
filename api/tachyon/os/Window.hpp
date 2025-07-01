@@ -22,15 +22,15 @@ namespace yq::tachyon {
     
         Information for windows.
     */
-    class WindowInfo : public TachyonMeta {
+    class WindowMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
         //! Gets all window informations
-        static const std::vector<const WindowInfo*>&    all();
+        static const std::vector<const WindowMeta*>&    all();
         
         //! Standard constructor for the camera information
-        WindowInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        WindowMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -51,7 +51,7 @@ namespace yq::tachyon {
         (even *if* it's thread-unsafe).
     */
     class Window : public Tachyon {
-        YQ_TACHYON_INFO(WindowInfo);
+        YQ_TACHYON_INFO(WindowMeta);
         YQ_TACHYON_DATA(WindowData)
         YQ_TACHYON_SNAP(WindowSnap)
         YQ_TACHYON_DECLARE(Window, Tachyon)

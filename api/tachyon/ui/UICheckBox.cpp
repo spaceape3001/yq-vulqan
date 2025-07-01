@@ -8,7 +8,7 @@
 #include "UICheckBoxWriter.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 #include <tachyon/api/Payload.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICheckBox)

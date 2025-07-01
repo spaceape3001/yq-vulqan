@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/os/glfw/MouseGLFW.hpp>
-#include <tachyon/os/MouseInfoWriter.hpp>
+#include <tachyon/os/MouseMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::MouseGLFW)
 

@@ -6,7 +6,7 @@
 
 #include <tachyon/os/Window.hpp>
 #include <tachyon/os/WindowData.hpp>
-#include <tachyon/os/WindowInfoWriter.hpp>
+#include <tachyon/os/WindowMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <tachyon/command/ui/HideCommand.hpp>
 #include <tachyon/command/ui/ShowCommand.hpp>
@@ -16,22 +16,22 @@
 
 namespace yq::tachyon {
 
-    struct WindowInfo::Repo {
-        std::vector<const WindowInfo*> all;
+    struct WindowMeta::Repo {
+        std::vector<const WindowMeta*> all;
     };
     
-    WindowInfo::Repo& WindowInfo::repo()
+    WindowMeta::Repo& WindowMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const WindowInfo*>&    WindowInfo::all()
+    const std::vector<const WindowMeta*>&    WindowMeta::all()
     {
         return repo().all;
     }
 
-    WindowInfo::WindowInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    WindowMeta::WindowMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Window);

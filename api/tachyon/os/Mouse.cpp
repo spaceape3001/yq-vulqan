@@ -6,27 +6,27 @@
 
 #include <tachyon/os/Mouse.hpp>
 #include <tachyon/os/MouseData.hpp>
-#include <tachyon/os/MouseInfoWriter.hpp>
+#include <tachyon/os/MouseMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-    struct MouseInfo::Repo {
-        std::vector<const MouseInfo*> all;
+    struct MouseMeta::Repo {
+        std::vector<const MouseMeta*> all;
     };
     
-    MouseInfo::Repo& MouseInfo::repo()
+    MouseMeta::Repo& MouseMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const MouseInfo*>&    MouseInfo::all()
+    const std::vector<const MouseMeta*>&    MouseMeta::all()
     {
         return repo().all;
     }
 
-    MouseInfo::MouseInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    MouseMeta::MouseMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Mouse);

@@ -17,7 +17,7 @@
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/gfx/Texture.hpp>
-#include <tachyon/ui/UIElementInfoWriter.hpp>
+#include <tachyon/ui/UIElementMetaWriter.hpp>
 
 
 struct SceneTableUI::Row {
@@ -41,7 +41,7 @@ namespace {
         if(!frame)
             return "(error)";
             
-        const CameraMeta*   info    = frame->info(cam);
+        const CameraMeta*   info    = frame->meta(cam);
         const CameraSnap*   snap    = frame->snap(cam);
         
         if(!snap->name.empty()){
@@ -239,7 +239,7 @@ void           SceneTableUI::tick()
     for(SceneID c : scenes){
         Row   en;
         en.scene       = c;
-        en.info         = frame->info(c);
+        en.info         = frame->meta(c);
         en.sid          = std::format("{}##{}.SELECT_ID", c.id, c.id);
         en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), c.id);
         en.visBtn       = std::format("{}##VISIBLE{}", c.id, c.id);

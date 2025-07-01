@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/os/Mouse.hpp>
-#include <tachyon/os/MouseData.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
+#include <tachyon/os/Desktop.hpp>
+#include <tachyon/os/DesktopData.hpp>
+#include <tachyon/api/ManagerMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class MouseInfo::Writer : public TachyonMeta::Writer<C> {
+    class DesktopMeta::Writer : public ManagerMeta::Writer<C> {
     public:
-        Writer(MouseInfo* mouseInfo) : TachyonMeta::Writer<C>(mouseInfo)
+        Writer(DesktopMeta* lightInfo) : ManagerMeta::Writer<C>(lightInfo)
         {
         }
         
-        Writer(MouseInfo& mouseInfo) : Writer(&mouseInfo)
+        Writer(DesktopMeta& lightInfo) : Writer(&lightInfo)
         {
         }
     };

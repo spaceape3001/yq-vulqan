@@ -12,13 +12,13 @@
 
 namespace yq::tachyon {
     template <typename C>
-    class MonitorInfo::Writer : public TachyonMeta::Writer<C> {
+    class MonitorMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(MonitorInfo* monitorInfo) : TachyonMeta::Writer<C>(monitorInfo)
+        Writer(MonitorMeta* monitorInfo) : TachyonMeta::Writer<C>(monitorInfo)
         {
         }
         
-        Writer(MonitorInfo& monitorInfo) : Writer(&monitorInfo)
+        Writer(MonitorMeta& monitorInfo) : Writer(&monitorInfo)
         {
         }
     };

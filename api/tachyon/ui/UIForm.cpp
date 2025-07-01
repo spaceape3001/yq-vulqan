@@ -10,18 +10,18 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/ui/UIStyle.hpp>
-#include <tachyon/ui/UIFormInfoWriter.hpp>
+#include <tachyon/ui/UIFormMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIForm)
 
 namespace yq::tachyon {
-    UIFormInfo::UIFormInfo(std::string_view name, UIElements::MyInfo&base, const std::source_location& sl) :
+    UIFormMeta::UIFormMeta(std::string_view name, UIElements::MyInfo&base, const std::source_location& sl) :
         UIElements::MyInfo(name, base, sl)
     {
     }
 
 
-    bool    UIFormInfo::has_fields() const
+    bool    UIFormMeta::has_fields() const
     {
         return !m_fields.empty();
     }

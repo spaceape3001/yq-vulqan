@@ -8,13 +8,13 @@
 
 #include <tachyon/api/Light.hpp>
 #include <tachyon/api/LightData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class LightInfo::Writer : public TachyonInfo::Writer<C> {
+    class LightInfo::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(LightInfo* lightInfo) : TachyonInfo::Writer<C>(lightInfo)
+        Writer(LightInfo* lightInfo) : TachyonMeta::Writer<C>(lightInfo)
         {
         }
         

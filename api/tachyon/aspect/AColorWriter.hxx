@@ -8,12 +8,12 @@
 
 #include <tachyon/aspect/AColor.hpp>
 #include <tachyon/command/color/SetColorCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AColor::init_info(TachyonInfo::Writer<C>&w)
+    void AColor::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<AColor>();
         w.property(UNSAFE, "color", &AColor::m_color).def_value(kDefColor).tag(kTag_Save);

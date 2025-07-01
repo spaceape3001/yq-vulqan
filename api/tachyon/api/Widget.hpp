@@ -57,10 +57,10 @@ namespace yq::tachyon {
     class UIWriter;
     class FramebufferResizeEvent;
 
-    class WidgetInfo : public TachyonInfo {
+    class WidgetInfo : public TachyonMeta {
     public:
         template <typename C> class Writer;
-        WidgetInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        WidgetInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
         friend class UIWriter;
         friend class Widget;

@@ -57,7 +57,7 @@ namespace yq::tachyon {
         Quaternion3D    m_orientation = IDENTITY;
 
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         AOrientation³();
         virtual ~AOrientation³();

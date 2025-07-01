@@ -8,13 +8,13 @@
 
 #include <tachyon/os/GraphicsCard.hpp>
 #include <tachyon/os/GraphicsCardData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class GraphicsCardInfo::Writer : public TachyonInfo::Writer<C> {
+    class GraphicsCardInfo::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(GraphicsCardInfo* keyboardInfo) : TachyonInfo::Writer<C>(keyboardInfo)
+        Writer(GraphicsCardInfo* keyboardInfo) : TachyonMeta::Writer<C>(keyboardInfo)
         {
         }
         

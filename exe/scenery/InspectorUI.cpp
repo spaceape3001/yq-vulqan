@@ -17,15 +17,15 @@
 YQ_OBJECT_IMPLEMENT(InspectorUI)
 
 struct InspectorUI::Info {
-    const TachyonInfo*                  tac = nullptr;
+    const TachyonMeta*                  tac = nullptr;
     std::vector<const UIEditorInfo*>    panels;
 };
 
 struct InspectorUI::Repo {
-    std::unordered_map<const TachyonInfo*, const Info*> editors;
+    std::unordered_map<const TachyonMeta*, const Info*> editors;
     mutable tbb::spin_rw_mutex                          mutex;
     
-    const Info*       info(const TachyonInfo& ti)
+    const Info*       info(const TachyonMeta& ti)
     {
         {
             tbb::spin_rw_mutex::scoped_lock _lock(mutex, false);
@@ -50,7 +50,7 @@ struct InspectorUI::Repo {
             if(ui->is_abstract())
                 continue;
                 
-            for(const TachyonInfo* t2 : ui->edits(TACHYON)){
+            for(const TachyonMeta* t2 : ui->edits(TACHYON)){
                 if(!t2)
                     continue;
                 int h   = t2->hops_to_derived(ti);
@@ -92,7 +92,7 @@ struct InspectorUI::Repo {
     }
     
     
-    const std::vector<const UIEditorInfo*>& panels(const TachyonInfo& ti)
+    const std::vector<const UIEditorInfo*>& panels(const TachyonMeta& ti)
     {
         return info(ti) -> panels;
     }
@@ -140,7 +140,7 @@ std::span<UIEditor*>    InspectorUI::_panels(TypedID tid)
     const Frame*   frame    = Frame::current();
     
     //  alright, generating...
-    const TachyonInfo*  tac = frame->info((TachyonID) tid);
+    const TachyonMeta*  tac = frame->info((TachyonID) tid);
     if(!tac)
         return {};
         
@@ -188,7 +188,7 @@ void InspectorUI::_render(TypedID tid)
         const TachyonSnap*  cs  = frame->snap((TachyonID) c);
         if(!cs)
             continue;
-        const TachyonInfo*  ci  = frame->info((TachyonID) c);
+        const TachyonMeta*  ci  = frame->info((TachyonID) c);
         if(!ci)
             continue;
             
@@ -222,7 +222,7 @@ bool InspectorUI::bind(TypedID tid)
     if(!frame)
         return false;
         
-    const TachyonInfo*  tac = frame->info((TachyonID) tid);
+    const TachyonMeta*  tac = frame->info((TachyonID) tid);
     if(!tac)
         return false;
 

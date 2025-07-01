@@ -20,12 +20,12 @@
 #include <tachyon/command/scale/SetScaleXCommand.hpp>
 #include <tachyon/command/scale/SetScaleYCommand.hpp>
 #include <tachyon/command/scale/SetScaleZCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AScale³::init_info(TachyonInfo::Writer<C>&w)
+    void AScale³::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IScale³>();
         w.property(UNSAFE, "scale", &AScale³::m_scale).tag(kTag_Save);

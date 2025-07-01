@@ -61,7 +61,7 @@ namespace yq::tachyon {
         Size2D      m_max_size = NAN;
         
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         AMaxSize²();
         virtual ~AMaxSize²();

@@ -27,8 +27,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    GraphicsCardInfo::GraphicsCardInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    GraphicsCardInfo::GraphicsCardInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+        TachyonMeta(name, base, sl)
     {
         set(Type::GraphicsCard);
         repo().all.push_back(this);

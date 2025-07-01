@@ -34,7 +34,7 @@ namespace yq::tachyon {
         
     private:
         TachyonID           m_tachyon;
-        const TachyonInfo*  m_info          = nullptr;
+        const TachyonMeta*  m_info          = nullptr;
         
         PPosition³*     m_proxy;
         Vector3D        m_position;

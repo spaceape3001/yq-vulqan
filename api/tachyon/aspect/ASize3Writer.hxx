@@ -20,12 +20,12 @@
 #include <tachyon/command/size/SetSizeXCommand.hpp>
 #include <tachyon/command/size/SetSizeYCommand.hpp>
 #include <tachyon/command/size/SetSizeZCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void ASize³::init_info(TachyonInfo::Writer<C>&w)
+    void ASize³::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ISize³>();
         w.property(UNSAFE, "size", &ASize³::m_size).tag({kTag_Save, kTag_Log});

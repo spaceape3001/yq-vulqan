@@ -15,10 +15,10 @@
 namespace yq::tachyon {
     class SetBgColorCommand;
     
-    class SceneInfo : public TachyonInfo {
+    class SceneInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
-        SceneInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        SceneInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
 
         //! Gets all scene informations
         static const std::vector<const SceneInfo*>&    all();

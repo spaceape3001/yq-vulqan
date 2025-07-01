@@ -26,8 +26,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    JoystickInfo::JoystickInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    JoystickInfo::JoystickInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+        TachyonMeta(name, base, sl)
     {
         set(Type::Joystick);
         repo().all.push_back(this);

@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         Information for cameras.
     */
-    class CameraInfo : public TachyonInfo {
+    class CameraInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
@@ -27,7 +27,7 @@ namespace yq::tachyon {
         static const std::vector<const CameraInfo*>&    all();
         
         //! Standard constructor for the camera information
-        CameraInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        CameraInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
         
     private:
     

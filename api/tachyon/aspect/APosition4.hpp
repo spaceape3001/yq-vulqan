@@ -72,7 +72,7 @@ namespace yq::tachyon {
         Vector4D    m_position = ONE;
 
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         APosition⁴();
         virtual ~APosition⁴();

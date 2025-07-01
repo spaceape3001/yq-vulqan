@@ -19,7 +19,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void     ②::init_info(TachyonInfo::Writer<C>&w)
+    void     ②::init_info(TachyonMeta::Writer<C>&w)
     {
         И::init_info(w);
     }

@@ -45,7 +45,7 @@ namespace yq::tachyon {
         Spinor2D    m_orientation = IDENTITY;
 
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         AOrientation²();
         virtual ~AOrientation²();

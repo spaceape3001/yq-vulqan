@@ -17,12 +17,12 @@
 #include <tachyon/command/size/SetMaxSize2Command.hpp>
 #include <tachyon/command/size/SetMaxSizeXCommand.hpp>
 #include <tachyon/command/size/SetMaxSizeYCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AMaxSize²::init_info(TachyonInfo::Writer<C>&w)
+    void AMaxSize²::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMaxSize²>();
         w.property(UNSAFE, "max_size", &AMaxSize²::m_max_size).tag(kTag_Save);

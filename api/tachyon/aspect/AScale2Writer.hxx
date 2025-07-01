@@ -17,12 +17,12 @@
 #include <tachyon/command/scale/SetScale2Command.hpp>
 #include <tachyon/command/scale/SetScaleXCommand.hpp>
 #include <tachyon/command/scale/SetScaleYCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AScale²::init_info(TachyonInfo::Writer<C>&w)
+    void AScale²::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IScale²>();
         w.property(UNSAFE, "scale", &AScale²::m_scale).tag(kTag_Save);

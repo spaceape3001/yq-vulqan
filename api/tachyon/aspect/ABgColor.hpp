@@ -30,7 +30,7 @@ namespace yq::tachyon {
         RGBA4F    m_bgcolor     = kDefBgColor;
 
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         ABgColor();
         virtual ~ABgColor();

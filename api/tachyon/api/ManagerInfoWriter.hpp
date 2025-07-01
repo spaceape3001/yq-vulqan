@@ -8,17 +8,17 @@
 
 #include <tachyon/api/Manager.hpp>
 #include <tachyon/api/ManagerData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of manager information
     */
     template <typename C>
-    class ManagerInfo::Writer : public TachyonInfo::Writer<C> {
+    class ManagerInfo::Writer : public TachyonMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(ManagerInfo* managerInfo) : TachyonInfo::Writer<C>(managerInfo), m_meta(managerInfo)
+        Writer(ManagerInfo* managerInfo) : TachyonMeta::Writer<C>(managerInfo), m_meta(managerInfo)
         {
         }
         

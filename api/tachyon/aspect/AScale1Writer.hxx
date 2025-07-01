@@ -14,12 +14,12 @@
 #include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
 #include <tachyon/command/scale/SetScale1Command.hpp>
 #include <tachyon/command/scale/SetScaleXCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AScale¹::init_info(TachyonInfo::Writer<C>&w)
+    void AScale¹::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IScale¹>();
         w.property(UNSAFE, "scale", &AScale¹::m_scale).tag(kTag_Save);

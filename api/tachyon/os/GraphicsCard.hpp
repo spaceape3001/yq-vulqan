@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         Information for keyboards.
     */
-    class GraphicsCardInfo : public TachyonInfo {
+    class GraphicsCardInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
@@ -27,7 +27,7 @@ namespace yq::tachyon {
         static const std::vector<const GraphicsCardInfo*>&    all();
         
         //! Standard constructor for the camera information
-        GraphicsCardInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        GraphicsCardInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"

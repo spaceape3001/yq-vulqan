@@ -26,8 +26,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    GamepadInfo::GamepadInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    GamepadInfo::GamepadInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+        TachyonMeta(name, base, sl)
     {
         set(Type::Gamepad);
         repo().all.push_back(this);

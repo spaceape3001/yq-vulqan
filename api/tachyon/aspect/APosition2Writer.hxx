@@ -17,12 +17,12 @@
 #include <tachyon/command/position/SetPosition2Command.hpp>
 #include <tachyon/command/position/SetPositionXCommand.hpp>
 #include <tachyon/command/position/SetPositionYCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void APosition²::init_info(TachyonInfo::Writer<C>& w)
+    void APosition²::init_info(TachyonMeta::Writer<C>& w)
     {
         w.template interface<IPosition²>();
         w.property(UNSAFE, "position", &APosition²::m_position).tag(kTag_Save);

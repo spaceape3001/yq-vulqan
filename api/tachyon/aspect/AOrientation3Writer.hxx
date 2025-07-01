@@ -19,7 +19,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AOrientation³::init_info(TachyonInfo::Writer<C>& w)
+    void AOrientation³::init_info(TachyonMeta::Writer<C>& w)
     {
         w.template interface<IOrientation³>();
         w.property(UNSAFE, "orientation", &AOrientation³::m_orientation).tag(kTag_Save);

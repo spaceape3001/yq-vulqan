@@ -113,6 +113,6 @@ namespace yq::tachyon {
         void    on_set_vertex_uv_command(const SetVertexUVCommand&);
 
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
     };
 }

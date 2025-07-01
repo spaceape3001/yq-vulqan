@@ -10,7 +10,7 @@
 #include <tachyon/api/Proxy.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/TachyonData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/api/Thread.hpp>
 
 #include <tachyon/api/Post.hpp>
@@ -72,72 +72,72 @@ namespace yq::tachyon {
 // ------------------------------------------------------------------------
 
 
-    struct TachyonInfo::Repo {
-        std::vector<const TachyonInfo*> all;
+    struct TachyonMeta::Repo {
+        std::vector<const TachyonMeta*> all;
     };
 
-    TachyonInfo::Repo& TachyonInfo::repo()
+    TachyonMeta::Repo& TachyonMeta::repo()
     {
         static Repo s_repo;
         return s_repo;
     }
 
-    const std::vector<const TachyonInfo*>&    TachyonInfo::all()
+    const std::vector<const TachyonMeta*>&    TachyonMeta::all()
     {
         return repo().all;
     }
 
-    TachyonInfo::TachyonInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
+    TachyonMeta::TachyonMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::TACHYON);
         repo().all.push_back(this);
     }
 
-    TachyonInfo::~TachyonInfo()
+    TachyonMeta::~TachyonMeta()
     {
     }
 
-    void    TachyonInfo::set(Type t)
+    void    TachyonMeta::set(Type t)
     {
         m_types |= t;
     }
 
-    void    TachyonInfo::add_dispatch(const PBXDispatch*pbx)
+    void    TachyonMeta::add_dispatch(const PBXDispatch*pbx)
     {
         if(thread_safe_write()){
             m_dispatches.defined.push_back(pbx);
         }
     }
 
-    void    TachyonInfo::add_interface(const InterfaceInfo* ii)
+    void    TachyonMeta::add_interface(const InterfaceInfo* ii)
     {
         if(thread_safe_write()){
             m_interfaces.local << ii;
         }
     }
 
-    const AssetProperty*                TachyonInfo::asset(std::string_view sv) const
+    const AssetProperty*                TachyonMeta::asset(std::string_view sv) const
     {
         return m_assets.all.find(sv);
     }
 
-    const MetaLookup<AssetProperty>&    TachyonInfo::assets(bool all) const
+    const MetaLookup<AssetProperty>&    TachyonMeta::assets(bool all) const
     {
         return all ? m_assets.all : m_assets.local;
     }
 
-    const DelegateProperty*             TachyonInfo::delegate(std::string_view sv) const
+    const DelegateProperty*             TachyonMeta::delegate(std::string_view sv) const
     {
         return m_delegates.all.find(sv);
     }
 
-    const MetaLookup<DelegateProperty>&    TachyonInfo::delegates(bool all) const
+    const MetaLookup<DelegateProperty>&    TachyonMeta::delegates(bool all) const
     {
         return all ? m_delegates.all : m_delegates.local;
     }
 
-    TachyonInfo::dispatch_span_t     TachyonInfo::dispatches(const PostInfo* pi) const
+    TachyonMeta::dispatch_span_t     TachyonMeta::dispatches(const PostInfo* pi) const
     {
         if(!pi)
             return {};
@@ -173,12 +173,12 @@ namespace yq::tachyon {
         }
     }
 
-    const MetaLookup<InterfaceInfo>&    TachyonInfo::interfaces(bool all) const
+    const MetaLookup<InterfaceInfo>&    TachyonMeta::interfaces(bool all) const
     {
         return all ? m_interfaces.all : m_interfaces.local;
     }
 
-    void    TachyonInfo::sweep_impl() 
+    void    TachyonMeta::sweep_impl() 
     {   
         ObjectInfo::sweep_impl();
 
@@ -198,7 +198,7 @@ namespace yq::tachyon {
         m_assets.all += m_assets.local;
         m_delegates.all += m_delegates.local;
         
-        const TachyonInfo*  tibase = dynamic_cast<const TachyonInfo*>(base());
+        const TachyonMeta*  tibase = dynamic_cast<const TachyonMeta*>(base());
         if(tibase){
             m_interfaces.all   += tibase->m_interfaces.all;
             m_assets.all += tibase->m_assets.all;
@@ -206,7 +206,7 @@ namespace yq::tachyon {
             
             unsigned int depth  = 1;
             
-            for(; tibase; tibase = dynamic_cast<const TachyonInfo*>(tibase->base())){
+            for(; tibase; tibase = dynamic_cast<const TachyonMeta*>(tibase->base())){
                 for(const PBXDispatch* fn : tibase->m_dispatches.defined){
                     _add(ranked, fn, depth);
                 }
@@ -240,9 +240,9 @@ namespace yq::tachyon {
         }
     }
 
-    void    TachyonInfo::report(Stream& out) const
+    void    TachyonMeta::report(Stream& out) const
     {
-        out << "Report for TachyonInfo[" << name() << "]\n";
+        out << "Report for TachyonMeta[" << name() << "]\n";
         out << "    ID              : " << id() << "\n";
         out << "    Description     : " << description() << "\n";
         out << "    Base            : " << base()->name() << "\n";
@@ -278,7 +278,7 @@ namespace yq::tachyon {
         }
     }
     
-    void    TachyonInfo::report(const char* cat, LogPriority pri) const
+    void    TachyonMeta::report(const char* cat, LogPriority pri) const
     {
         std::string     text;
         {

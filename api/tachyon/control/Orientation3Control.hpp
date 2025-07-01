@@ -34,8 +34,8 @@ namespace yq::tachyon {
         
     private:
         TachyonID           m_tachyon;
-        const TachyonInfo*  m_info          = nullptr;
-        const TachyonInfo*  m_parInfo       = nullptr;
+        const TachyonMeta*  m_info          = nullptr;
+        const TachyonMeta*  m_parInfo       = nullptr;
         
         unit::Degree        m_step          = 1._deg;
         unit::Degree        m_stepFast      = 10._deg;

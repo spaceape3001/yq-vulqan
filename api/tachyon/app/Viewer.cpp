@@ -12,7 +12,7 @@
 #include <tachyon/app/Application.hpp>
 #include <tachyon/api/Context.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/app/ViewerData.hpp>
 #include <tachyon/app/ViewerException.hpp>
@@ -108,7 +108,7 @@
 //#include <tachyon/reply/ViewerWidgetReply.hpp>
 //#include <tachyon/request/ViewerWidgetRequest.hpp>
 
-//#include <tachyon/api/TachyonInfoWriter.hpp>
+//#include <tachyon/api/TachyonMetaWriter.hpp>
 
 #include <yq/errors.hpp>
 #include <yq/core/ErrorDB.hpp>

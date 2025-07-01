@@ -14,8 +14,8 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::GroupID)
 
 namespace yq::tachyon {
 
-    GroupInfo::GroupInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) :
-        TachyonInfo(name, base, sl)
+    GroupInfo::GroupInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
+        TachyonMeta(name, base, sl)
     {
         set(Type::Group);
     }

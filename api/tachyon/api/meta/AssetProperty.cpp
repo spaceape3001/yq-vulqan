@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
         assert(parent);
         
-        if(TachyonInfo* ti = dynamic_cast<TachyonInfo*>(parent)){
+        if(TachyonMeta* ti = dynamic_cast<TachyonMeta*>(parent)){
             if(ti->m_assets.local.keys.has(zName))
                 tachyonCritical << "AssetProperty::AssetProperty(" << parent->name() << "." << zName << ") -- duplicate detected!";
             ti->m_assets.local << this;

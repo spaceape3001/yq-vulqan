@@ -8,12 +8,12 @@
 
 #include <tachyon/aspect/ADrawMode.hpp>
 #include <tachyon/command/shape/SetDrawModeCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void ADrawMode::init_info(TachyonInfo::Writer<C>&w)
+    void ADrawMode::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ADrawMode>();
         w.property(UNSAFE, "draw_mode", &ADrawMode::m_drawMode).

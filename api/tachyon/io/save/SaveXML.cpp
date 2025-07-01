@@ -370,7 +370,7 @@ namespace yq::tachyon {
         if(!cinfo)
             return errors::invalid_class_attribute();
         
-        const TachyonInfo*  tinfo   = dynamic_cast<const TachyonInfo*>(cinfo);
+        const TachyonMeta*  tinfo   = dynamic_cast<const TachyonMeta*>(cinfo);
         if(!tinfo)
             return errors::not_tachyon_class();
         return read(*(save->create(tinfo)), TACHYON, xml);

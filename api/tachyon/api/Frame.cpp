@@ -1045,7 +1045,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const TachyonInfo*                  Frame::info(TachyonID id) const
+    const TachyonMeta*                  Frame::info(TachyonID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1061,7 +1061,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const TachyonInfo*                  Frame::info(ViewerID id) const
+    const TachyonMeta*                  Frame::info(ViewerID id) const
     {
         auto obj = object(id);
         if(obj)

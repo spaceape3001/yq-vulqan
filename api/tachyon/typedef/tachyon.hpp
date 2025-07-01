@@ -25,7 +25,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Tachyon;
-    class TachyonInfo;
+    class TachyonMeta;
     class TypedID;
     
     using TachyonPtr    = Ref<Tachyon>;

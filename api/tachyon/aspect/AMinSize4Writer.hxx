@@ -23,12 +23,12 @@
 #include <tachyon/command/size/SetMinSizeXCommand.hpp>
 #include <tachyon/command/size/SetMinSizeYCommand.hpp>
 #include <tachyon/command/size/SetMinSizeZCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AMinSize⁴::init_info(TachyonInfo::Writer<C>&w)
+    void AMinSize⁴::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMinSize⁴>();
         w.property(UNSAFE, "min_size", &AMinSize⁴::m_min_size).tag(kTag_Save);

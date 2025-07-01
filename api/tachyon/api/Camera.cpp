@@ -27,8 +27,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    CameraInfo::CameraInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    CameraInfo::CameraInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+        TachyonMeta(name, base, sl)
     {
         set(Flag::CAMERA);
         set(Type::Camera);

@@ -20,12 +20,12 @@
 #include <tachyon/command/position/SetPositionXCommand.hpp>
 #include <tachyon/command/position/SetPositionYCommand.hpp>
 #include <tachyon/command/position/SetPositionZCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void APosition³::init_info(TachyonInfo::Writer<C>& w)
+    void APosition³::init_info(TachyonMeta::Writer<C>& w)
     {
         w.template interface<IPosition³>();
         w.property(UNSAFE, "position", &APosition³::m_position).tag(kTag_Save);

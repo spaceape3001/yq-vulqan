@@ -205,7 +205,7 @@ namespace yq::tachyon {
     }
     #endif
     
-    SaveTachyon*            Save::create(const TachyonInfo* info)
+    SaveTachyon*            Save::create(const TachyonMeta* info)
     {
         uint64_t id = 1+m_objects.size();
         SaveTachyon* ret = new SaveTachyon(*this, info, id);

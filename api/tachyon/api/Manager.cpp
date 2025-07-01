@@ -15,8 +15,8 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    ManagerInfo::ManagerInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
-        TachyonInfo(zName, base, sl)
+    ManagerInfo::ManagerInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
+        TachyonMeta(zName, base, sl)
     {
         set(Flag::MANAGER);
         set(Type::Manager);

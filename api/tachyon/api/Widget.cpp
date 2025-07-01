@@ -57,8 +57,8 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 YQ_TYPE_IMPLEMENT(yq::tachyon::WidgetID)
 
 namespace yq::tachyon {
-    WidgetInfo::WidgetInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl) :
-        TachyonInfo(zName, base, sl)
+    WidgetInfo::WidgetInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
+        TachyonMeta(zName, base, sl)
     {
         set(Flag::WIDGET);
         set(Type::Widget);

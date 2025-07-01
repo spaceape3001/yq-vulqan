@@ -27,8 +27,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    CursorInfo::CursorInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    CursorInfo::CursorInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+        TachyonMeta(name, base, sl)
     {
         set(Type::Cursor);
         repo().all.push_back(this);

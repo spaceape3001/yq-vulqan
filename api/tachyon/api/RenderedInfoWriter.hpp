@@ -9,16 +9,16 @@
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
 #include <tachyon/gfx/PipelineWriter.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     
     /*! \brief Writer of information for rendered information
     */
     template <typename C>
-    class RenderedInfo::Writer : public TachyonInfo::Writer<C> {
+    class RenderedInfo::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(RenderedInfo* renderInfo) : TachyonInfo::Writer<C>(renderInfo), m_meta(renderInfo)
+        Writer(RenderedInfo* renderInfo) : TachyonMeta::Writer<C>(renderInfo), m_meta(renderInfo)
         {
         }
         

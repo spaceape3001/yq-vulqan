@@ -29,7 +29,7 @@ namespace yq::tachyon {
         DrawMode    m_drawMode  = kDefDrawMode;
 
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         ADrawMode();
         virtual ~ADrawMode();

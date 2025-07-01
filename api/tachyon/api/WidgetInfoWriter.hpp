@@ -8,7 +8,7 @@
 
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/api/WidgetData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/ui/UIAppMainWriter.hpp>
 #include <tachyon/typedef/uielement.hpp>
 
@@ -20,11 +20,11 @@ namespace yq::tachyon {
     /*! \brief Writer of widget information
     */
     template <typename C>
-    class WidgetInfo::Writer : public TachyonInfo::Writer<C> {
+    class WidgetInfo::Writer : public TachyonMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(WidgetInfo* widgetInfo) : TachyonInfo::Writer<C>(widgetInfo), m_meta(widgetInfo)
+        Writer(WidgetInfo* widgetInfo) : TachyonMeta::Writer<C>(widgetInfo), m_meta(widgetInfo)
         {
         }
         

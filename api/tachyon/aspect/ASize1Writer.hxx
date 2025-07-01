@@ -14,12 +14,12 @@
 #include <tachyon/command/size/MultiplySizeXCommand.hpp>
 #include <tachyon/command/size/SetSize1Command.hpp>
 #include <tachyon/command/size/SetSizeXCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void ASize¹::init_info(TachyonInfo::Writer<C>&w)
+    void ASize¹::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ISize¹>();
         w.property(UNSAFE, "size", &ASize¹::m_size).tag(kTag_Save);

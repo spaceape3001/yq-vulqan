@@ -65,7 +65,7 @@ namespace yq::tachyon {
     struct TachyonSnap;
     class DelegateProperty;
     
-    class TachyonInfo : public ObjectInfo {
+    class TachyonMeta : public ObjectInfo {
     public:
     
         using InterfaceLUC  = MetaLookup<InterfaceInfo>;
@@ -75,7 +75,7 @@ namespace yq::tachyon {
         
         template <typename C> class Writer;
 
-        TachyonInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        TachyonMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
         
         Types       types() const { return m_types; }
     
@@ -115,12 +115,12 @@ namespace yq::tachyon {
         //! Category (might move upward if useful)
         std::string_view category() const { return m_category; }
 
-        static const std::vector<const TachyonInfo*>&    all();
+        static const std::vector<const TachyonMeta*>&    all();
 
     protected:
     
         //! Destructor that should never fire
-        virtual ~TachyonInfo();
+        virtual ~TachyonMeta();
         
         virtual void    sweep_impl() override;
         using ObjectInfo::set;
@@ -270,7 +270,7 @@ namespace yq::tachyon {
     private:
         YQ_TACHYON_DATA(TachyonData)
         YQ_TACHYON_FIXER(Fixer)
-        YQ_TACHYON_INFO(TachyonInfo)
+        YQ_TACHYON_INFO(TachyonMeta)
         YQ_TACHYON_SNAP(TachyonSnap)
         
         YQ_TACHYON_DECLARE(Tachyon, Object)

@@ -26,8 +26,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    MouseInfo::MouseInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    MouseInfo::MouseInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+        TachyonMeta(name, base, sl)
     {
         set(Type::Mouse);
         repo().all.push_back(this);

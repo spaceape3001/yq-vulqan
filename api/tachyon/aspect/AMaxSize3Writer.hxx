@@ -20,12 +20,12 @@
 #include <tachyon/command/size/SetMaxSizeXCommand.hpp>
 #include <tachyon/command/size/SetMaxSizeYCommand.hpp>
 #include <tachyon/command/size/SetMaxSizeZCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AMaxSize³::init_info(TachyonInfo::Writer<C>&w)
+    void AMaxSize³::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMinSize³>();
         w.property(UNSAFE, "max_size", &AMaxSize³::m_max_size).tag(kTag_Save);

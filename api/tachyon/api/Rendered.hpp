@@ -22,12 +22,12 @@ namespace yq::tachyon {
     class SetWireframeCommand;
 
     //! Information to a rendered object
-    class RenderedInfo : public TachyonInfo {
+    class RenderedInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
         
         //! Standard constructor
-        RenderedInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        RenderedInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
         
         const Pipeline* pipeline(Pipeline::Role r=Pipeline::Role::Default) const;
         

@@ -8,13 +8,13 @@
 
 #include <tachyon/os/Cursor.hpp>
 #include <tachyon/os/CursorData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class CursorInfo::Writer : public TachyonInfo::Writer<C> {
+    class CursorInfo::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(CursorInfo* cursorInfo) : TachyonInfo::Writer<C>(cursorInfo)
+        Writer(CursorInfo* cursorInfo) : TachyonMeta::Writer<C>(cursorInfo)
         {
         }
         

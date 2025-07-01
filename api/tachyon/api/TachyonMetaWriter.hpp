@@ -170,16 +170,16 @@ namespace yq::tachyon {
     /*! \brief Writer of manager information
     */
     template <typename C>
-    class TachyonInfo::Writer : public ObjectInfo::Writer<C> {
+    class TachyonMeta::Writer : public ObjectInfo::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(TachyonInfo* theInfo) : ObjectInfo::Writer<C>(theInfo), m_meta(theInfo)
+        Writer(TachyonMeta* theInfo) : ObjectInfo::Writer<C>(theInfo), m_meta(theInfo)
         {
         }
         
         //! Constructor of widget info (this is used by the writer<T>() methods)
-        Writer(TachyonInfo& theInfo) : Writer(&theInfo)
+        Writer(TachyonMeta& theInfo) : Writer(&theInfo)
         {
         }
         
@@ -404,7 +404,7 @@ namespace yq::tachyon {
 
         
     private:
-        TachyonInfo* m_meta;
+        TachyonMeta* m_meta;
     };
 
 

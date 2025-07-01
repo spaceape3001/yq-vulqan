@@ -11,11 +11,11 @@
 
 namespace yq::tachyon {
 
-    class ManagerInfo : public TachyonInfo {
+    class ManagerInfo : public TachyonMeta {
     public:
         template <typename C> class Writer;
 
-        ManagerInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl=std::source_location::current());
+        ManagerInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
     };
 
     /*! \brief Manager of something in the application

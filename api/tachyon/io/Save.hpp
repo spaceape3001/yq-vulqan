@@ -32,7 +32,7 @@ namespace yq::tachyon {
     class DelegateInfo;
     class Resource;
     class Tachyon;
-    class TachyonInfo;
+    class TachyonMeta;
     class Thread;
     class ThreadInfo;
         
@@ -74,7 +74,7 @@ namespace yq::tachyon {
         SaveAsset*              create(const AssetMeta*, const std::filesystem::path&);
         SaveDelegate*           create(const DelegateInfo*);
         //SaveObject*             create(const ObjectInfo*); // disabled until we've got a supported path
-        SaveTachyon*            create(const TachyonInfo*);
+        SaveTachyon*            create(const TachyonMeta*);
         SaveThread*             create(const ThreadInfo*);
         
         //! Let us know what the asset paths are (used for saving)

@@ -17,7 +17,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::CreateMenuUI)
 namespace yq::tachyon {
     struct CreateMenuUI::Item {
         std::string             title;
-        const TachyonInfo*      info    = nullptr;
+        const TachyonMeta*      info    = nullptr;
     };
 
     void CreateMenuUI::init_info()
@@ -26,11 +26,11 @@ namespace yq::tachyon {
         w.description("UI Menu for creating things");
     }
 
-    CreateMenuUI::CreateMenuUI(std::string_view kMenuName, const TachyonInfo& base, UIFlags flags) : CreateMenuUI(kMenuName, kParam_CreateInfo, base, flags)
+    CreateMenuUI::CreateMenuUI(std::string_view kMenuName, const TachyonMeta& base, UIFlags flags) : CreateMenuUI(kMenuName, kParam_CreateInfo, base, flags)
     {
     }
     
-    CreateMenuUI::CreateMenuUI(std::string_view kMenuName, uint32_t param, const TachyonInfo&base, UIFlags flags) : 
+    CreateMenuUI::CreateMenuUI(std::string_view kMenuName, uint32_t param, const TachyonMeta&base, UIFlags flags) : 
         UIMenu(kMenuName, flags), m_base(base), m_param(param)
     {
     }
@@ -66,7 +66,7 @@ namespace yq::tachyon {
 
     void CreateMenuUI::build_menu()
     {
-        for(const TachyonInfo* ti : TachyonInfo::all()){
+        for(const TachyonMeta* ti : TachyonMeta::all()){
             assert(ti);
             if(!ti) [[unlikely]]
                 continue;

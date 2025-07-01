@@ -21,7 +21,7 @@ namespace yq::tachyon {
         ImTextureID         tex;
         std::string         label;
         std::string         description;
-        const TachyonInfo*  info        = nullptr;
+        const TachyonMeta*  info        = nullptr;
     };
 
     void UIInfoList::init_info()
@@ -56,7 +56,7 @@ namespace yq::tachyon {
             m_status |= S::NotStale;
         }
 
-        if(ImGui::BeginTable("TachyonInfoTypes", 3)){
+        if(ImGui::BeginTable("TachyonMetaTypes", 3)){
         
             //ImGui::TableNextRow();
             //ImGui::TableNextColumn();
@@ -117,7 +117,7 @@ namespace yq::tachyon {
 
     void        UIInfoList::define_rows()
     {
-        for(const TachyonInfo* info : get_infos()){
+        for(const TachyonMeta* info : get_infos()){
             if(!info)
                 continue;
             Row     r;

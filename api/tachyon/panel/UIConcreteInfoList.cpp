@@ -15,12 +15,12 @@ namespace yq::tachyon {
         w.description("UI List of Infos aren't abstract");
     }
 
-    UIConcreteInfoList::UIConcreteInfoList(const TachyonInfo* info, UIFlags flags) : UIInfoList({}, flags), m_base(info)
+    UIConcreteInfoList::UIConcreteInfoList(const TachyonMeta* info, UIFlags flags) : UIInfoList({}, flags), m_base(info)
     {
         assert(info);
     }
     
-    UIConcreteInfoList::UIConcreteInfoList(std::string_view szTitle, const TachyonInfo* info, UIFlags flags) :
+    UIConcreteInfoList::UIConcreteInfoList(std::string_view szTitle, const TachyonMeta* info, UIFlags flags) :
         UIInfoList(szTitle, flags), m_base(info)
     {
         assert(info);
@@ -39,10 +39,10 @@ namespace yq::tachyon {
         return new UIConcreteInfoList(*this);
     }
     
-    std::vector<const TachyonInfo*> UIConcreteInfoList::get_infos() const
+    std::vector<const TachyonMeta*> UIConcreteInfoList::get_infos() const
     {
-        std::vector<const TachyonInfo*> ret;
-        for(const TachyonInfo* ti : TachyonInfo::all()){
+        std::vector<const TachyonMeta*> ret;
+        for(const TachyonMeta* ti : TachyonMeta::all()){
             if(!ti)
                 continue;
             if(ti->is_abstract())

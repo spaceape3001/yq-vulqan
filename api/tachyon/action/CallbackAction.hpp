@@ -10,7 +10,7 @@
 
 namespace yq::tachyon {
     
-    class TachyonInfo;
+    class TachyonMeta;
 
     /*! \brief Direct callback action on a tachyon
     

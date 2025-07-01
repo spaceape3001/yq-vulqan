@@ -14,12 +14,12 @@
 #include <tachyon/command/size/MultiplyMinSizeXCommand.hpp>
 #include <tachyon/command/size/SetMinSize1Command.hpp>
 #include <tachyon/command/size/SetMinSizeXCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void AMinSize¹::init_info(TachyonInfo::Writer<C>&w)
+    void AMinSize¹::init_info(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMinSize¹>();
         w.property(UNSAFE, "min_size", &AMinSize¹::m_min_size).tag(kTag_Save);

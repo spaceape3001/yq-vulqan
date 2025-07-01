@@ -8,13 +8,13 @@
 
 #include <tachyon/api/Group.hpp>
 #include <tachyon/api/GroupData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class GroupInfo::Writer : public TachyonInfo::Writer<C> {
+    class GroupInfo::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(GroupInfo* layerInfo) : TachyonInfo::Writer<C>(layerInfo)
+        Writer(GroupInfo* layerInfo) : TachyonMeta::Writer<C>(layerInfo)
         {
         }
         

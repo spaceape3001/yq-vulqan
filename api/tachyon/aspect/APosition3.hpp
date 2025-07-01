@@ -65,7 +65,7 @@ namespace yq::tachyon {
         Vector3D    m_position = ZERO;
 
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         APosition³();
         virtual ~APosition³();

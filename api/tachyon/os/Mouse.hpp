@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         Information for mouses.
     */
-    class MouseInfo : public TachyonInfo {
+    class MouseInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
@@ -27,7 +27,7 @@ namespace yq::tachyon {
         static const std::vector<const MouseInfo*>&    all();
         
         //! Standard constructor for the camera information
-        MouseInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        MouseInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"

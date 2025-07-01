@@ -15,16 +15,16 @@ namespace yq::tachyon {
     
         static void init_info();
     
-        UIConcreteInfoList(const TachyonInfo*, UIFlags={});
-        UIConcreteInfoList(std::string_view, const TachyonInfo*, UIFlags={});
+        UIConcreteInfoList(const TachyonMeta*, UIFlags={});
+        UIConcreteInfoList(std::string_view, const TachyonMeta*, UIFlags={});
         UIConcreteInfoList(const UIConcreteInfoList&);
         ~UIConcreteInfoList();
         virtual UIConcreteInfoList* clone() const override;
         
     protected:
-        virtual std::vector<const TachyonInfo*> get_infos() const;
+        virtual std::vector<const TachyonMeta*> get_infos() const;
     
     private:
-        const TachyonInfo*  m_base  = nullptr;
+        const TachyonMeta*  m_base  = nullptr;
     };
 }

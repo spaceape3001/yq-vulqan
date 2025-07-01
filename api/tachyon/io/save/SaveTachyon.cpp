@@ -46,7 +46,7 @@ namespace yq::tachyon {
         m_userAttrs = tac.user_attributes();
     }
     
-    SaveTachyon::SaveTachyon(Save& save, const TachyonInfo* info, uint64_t i) : SaveObject(save, info, i)
+    SaveTachyon::SaveTachyon(Save& save, const TachyonMeta* info, uint64_t i) : SaveObject(save, info, i)
     {
     }
     
@@ -81,9 +81,9 @@ namespace yq::tachyon {
         return m_userAttrs[k];
     }
 
-    const TachyonInfo* SaveTachyon::info() const
+    const TachyonMeta* SaveTachyon::info() const
     {
-        return dynamic_cast<const TachyonInfo*>(SaveObject::info());
+        return dynamic_cast<const TachyonMeta*>(SaveObject::info());
     }
 
     void    SaveTachyon::set_parent(uint64_t n)

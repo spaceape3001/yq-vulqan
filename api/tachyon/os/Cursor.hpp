@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         Information for cursors.
     */
-    class CursorInfo : public TachyonInfo {
+    class CursorInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
@@ -27,7 +27,7 @@ namespace yq::tachyon {
         static const std::vector<const CursorInfo*>&    all();
         
         //! Standard constructor for the camera information
-        CursorInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        CursorInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"

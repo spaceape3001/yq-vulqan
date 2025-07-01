@@ -76,7 +76,7 @@ namespace yq::tachyon {
         Size4D      m_max_size = NAN;
         
         template <typename C>
-        static void init_info(TachyonInfo::Writer<C>&);
+        static void init_info(TachyonMeta::Writer<C>&);
         
         AMaxSize⁴();
         virtual ~AMaxSize⁴();

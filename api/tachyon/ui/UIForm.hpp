@@ -13,7 +13,7 @@
 
 namespace yq::tachyon {
     class UIFormWriter;
-    class TachyonInfo;
+    class TachyonMeta;
     class UIForm;
     class InterfaceInfo;
     

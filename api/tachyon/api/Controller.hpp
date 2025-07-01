@@ -19,11 +19,11 @@ namespace yq::tachyon {
     class UncontrolCommand;
     class UnlistenCommand;
 
-    class ControllerInfo : public TachyonInfo {
+    class ControllerInfo : public TachyonMeta {
     public:
         template <typename C> class Writer;
 
-        ControllerInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl=std::source_location::current());
+        ControllerInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
     
     protected:
         virtual ~ControllerInfo();

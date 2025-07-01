@@ -53,7 +53,7 @@ namespace yq::tachyon {
 #endif
     
         template <typename C>
-        static void     init_info(TachyonInfo::Writer<C>&);
+        static void     init_info(TachyonMeta::Writer<C>&);
     
     protected:
 

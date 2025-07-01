@@ -20,7 +20,7 @@ namespace yq::tachyon {
     
         Information for monitors.
     */
-    class MonitorInfo : public TachyonInfo {
+    class MonitorInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
@@ -28,7 +28,7 @@ namespace yq::tachyon {
         static const std::vector<const MonitorInfo*>&    all();
         
         //! Standard constructor for the camera information
-        MonitorInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        MonitorInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"

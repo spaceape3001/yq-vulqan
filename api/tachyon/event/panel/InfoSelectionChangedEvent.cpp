@@ -11,7 +11,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::InfoSelectionChangedEvent)
 
 namespace yq::tachyon {
 
-    InfoSelectionChangedEvent::InfoSelectionChangedEvent(const Header&h, const TachyonInfo* info) : 
+    InfoSelectionChangedEvent::InfoSelectionChangedEvent(const Header&h, const TachyonMeta* info) : 
         PanelEvent(h), m_info(info)
     {
     }

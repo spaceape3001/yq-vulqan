@@ -12,7 +12,7 @@
 
 namespace yq::tachyon {
     class Tachyon;
-    class TachyonInfo;
+    class TachyonMeta;
     class Save;
     class AssetProperty;
     class DelegateProperty;
@@ -22,9 +22,9 @@ namespace yq::tachyon {
     class SaveTachyon : public SaveObject {
     public:
         SaveTachyon(Save&, const Tachyon&);
-        SaveTachyon(Save&, const TachyonInfo*, uint64_t);
+        SaveTachyon(Save&, const TachyonMeta*, uint64_t);
         
-        const TachyonInfo*  info() const;
+        const TachyonMeta*  info() const;
         virtual bool        valid() const override;
         virtual bool        isTachyon() const { return true; }
         virtual SaveType    saveType() const override { return SaveType::Tachyon; }

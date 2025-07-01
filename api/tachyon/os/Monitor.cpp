@@ -27,8 +27,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    MonitorInfo::MonitorInfo(std::string_view name, TachyonInfo& base, const std::source_location& sl) : 
-        TachyonInfo(name, base, sl)
+    MonitorInfo::MonitorInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+        TachyonMeta(name, base, sl)
     {
         set(Type::Monitor);
         repo().all.push_back(this);

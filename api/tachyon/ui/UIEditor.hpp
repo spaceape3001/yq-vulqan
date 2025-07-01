@@ -13,7 +13,7 @@
 
 namespace yq::tachyon {
     class UIEditorWriter;
-    class TachyonInfo;
+    class TachyonMeta;
     class UIEditor;
     class InterfaceInfo;
     
@@ -27,7 +27,7 @@ namespace yq::tachyon {
         UIEditorInfo(std::string_view, UIFormInfo&, const std::source_location& sl = std::source_location::current());
     
         //! List of classes this thing will edit
-        const std::vector<const TachyonInfo*>& edits(tachyon_k) const { return m_editTachyons; }
+        const std::vector<const TachyonMeta*>& edits(tachyon_k) const { return m_editTachyons; }
         const std::vector<const InterfaceInfo*>& edits(proxy_k) const { return m_editIProxies; }
         
         static const std::vector<const UIEditorInfo*>& all();
@@ -39,7 +39,7 @@ namespace yq::tachyon {
         struct Repo;
         static Repo& repo();
         
-        std::vector<const TachyonInfo*>     m_editTachyons;
+        std::vector<const TachyonMeta*>     m_editTachyons;
         std::vector<const InterfaceInfo*>   m_editIProxies;
     };
     

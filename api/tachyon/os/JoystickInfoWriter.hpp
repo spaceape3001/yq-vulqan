@@ -8,13 +8,13 @@
 
 #include <tachyon/os/Joystick.hpp>
 #include <tachyon/os/JoystickData.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class JoystickInfo::Writer : public TachyonInfo::Writer<C> {
+    class JoystickInfo::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(JoystickInfo* joystickInfo) : TachyonInfo::Writer<C>(joystickInfo)
+        Writer(JoystickInfo* joystickInfo) : TachyonMeta::Writer<C>(joystickInfo)
         {
         }
         

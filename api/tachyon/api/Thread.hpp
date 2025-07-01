@@ -18,11 +18,11 @@ namespace yq::tachyon {
     class AppThread;
     class Application;
 
-    class ThreadInfo : public TachyonInfo {
+    class ThreadInfo : public TachyonMeta {
     public:
         template <typename C> class Writer;
 
-        ThreadInfo(std::string_view zName, TachyonInfo& base, const std::source_location& sl=std::source_location::current());
+        ThreadInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
     struct ThreadFrame;

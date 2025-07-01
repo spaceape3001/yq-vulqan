@@ -14,12 +14,12 @@
 #include <tachyon/command/position/MultiplyPositionXCommand.hpp>
 #include <tachyon/command/position/SetPosition1Command.hpp>
 #include <tachyon/command/position/SetPositionXCommand.hpp>
-#include <tachyon/api/TachyonInfoWriter.hpp>
+#include <tachyon/api/TachyonMetaWriter.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void APosition¹::init_info(TachyonInfo::Writer<C>& w)
+    void APosition¹::init_info(TachyonMeta::Writer<C>& w)
     {
         w.template interface<IPosition¹>();
         w.property(UNSAFE, "position", &APosition¹::m_position).tag(kTag_Save);

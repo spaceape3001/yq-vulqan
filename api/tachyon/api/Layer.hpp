@@ -13,10 +13,10 @@
 #include <tachyon/typedef/layer.hpp>
 
 namespace yq::tachyon {
-    class LayerInfo : public TachyonInfo {
+    class LayerInfo : public TachyonMeta {
     public:
         template <typename C> struct Writer;
-        LayerInfo(std::string_view, TachyonInfo&, const std::source_location& sl = std::source_location::current());
+        LayerInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     protected:
         ~LayerInfo();
     };

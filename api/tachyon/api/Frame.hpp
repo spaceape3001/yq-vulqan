@@ -244,9 +244,9 @@ namespace yq::tachyon {
         const SpatialInfo*                  info(SpatialID) const;
         const Spatial²Info*                 info(Spatial²ID) const;
         const Spatial³Info*                 info(Spatial³ID) const;
-        const TachyonInfo*                  info(TachyonID) const;
+        const TachyonMeta*                  info(TachyonID) const;
         const ThreadInfo*                   info(ThreadID) const;
-        const TachyonInfo*                  info(ViewerID) const;
+        const TachyonMeta*                  info(ViewerID) const;
         const WidgetInfo*                   info(WidgetID) const;
         const WindowInfo*                   info(WindowID) const;
         

@@ -15,12 +15,12 @@ namespace yq::tachyon {
 
     /*! \brief Control information
     */
-    class ControlInfo : public WidgetInfo {
+    class ControlInfo : public WidgetMeta {
     public:
         
         template <typename C>  struct Writer;
         
-        ControlInfo(std::string_view, WidgetInfo&, const std::source_location& sl = std::source_location::current());
+        ControlInfo(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
         
         const std::vector<const InterfaceInfo*>& interfaces() const { return m_interfaces; }
     

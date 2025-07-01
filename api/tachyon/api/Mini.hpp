@@ -16,14 +16,14 @@ namespace yq::tachyon {
 
     /*! \brief Mini information
     */
-    class MiniInfo : public WidgetInfo {
+    class MiniInfo : public WidgetMeta {
     public:
         
         template <typename C>  struct Writer;
         
-        MiniInfo(std::string_view, WidgetInfo&, const std::source_location& sl = std::source_location::current());
+        MiniInfo(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
         
-        using WidgetInfo::types;
+        using WidgetMeta::types;
         const std::vector<const TypeInfo*>& types(data_k) const { return m_dataTypes; }
     
         //static std::span<const MiniInfo*>   all();

@@ -11,8 +11,8 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mini)
 
 namespace yq::tachyon {
-    MiniInfo::MiniInfo(std::string_view zName, WidgetInfo& base, const std::source_location& sl) :
-        WidgetInfo(zName, base, sl)
+    MiniInfo::MiniInfo(std::string_view zName, WidgetMeta& base, const std::source_location& sl) :
+        WidgetMeta(zName, base, sl)
     {
     }
 

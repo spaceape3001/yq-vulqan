@@ -247,7 +247,7 @@ namespace yq::tachyon {
         const TachyonMeta*                  info(TachyonID) const;
         const ThreadInfo*                   info(ThreadID) const;
         const TachyonMeta*                  info(ViewerID) const;
-        const WidgetInfo*                   info(WidgetID) const;
+        const WidgetMeta*                   info(WidgetID) const;
         const WindowInfo*                   info(WindowID) const;
         
         //! Camera pointer

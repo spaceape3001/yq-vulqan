@@ -11,7 +11,7 @@
 namespace yq::tachyon {
     class UIAppMain;
     class Widget;
-    class WidgetInfo;
+    class WidgetMeta;
     class UIWindowWriter;
     
     /*! \brief Writer for the main application
@@ -21,7 +21,7 @@ namespace yq::tachyon {
         UIAppMainWriter();
         UIAppMainWriter(UIAppMain*);
         UIAppMainWriter(Widget*);
-        UIAppMainWriter(WidgetInfo*);
+        UIAppMainWriter(WidgetMeta*);
         UIAppMainWriter(const UIAppMainWriter&);
         ~UIAppMainWriter();
         
@@ -39,6 +39,6 @@ namespace yq::tachyon {
 
     private:
         static UIAppMain*   attach(Widget*);
-        static UIAppMain*   attach(WidgetInfo*);
+        static UIAppMain*   attach(WidgetMeta*);
     };
 }

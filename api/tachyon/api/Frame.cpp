@@ -1069,7 +1069,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const WidgetInfo*                   Frame::info(WidgetID id) const
+    const WidgetMeta*                   Frame::info(WidgetID id) const
     {
         auto obj = object(id);
         if(obj)

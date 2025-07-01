@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Widget.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/api/WidgetData.hpp>
 #include <tachyon/ui/UIElement.hpp>
 
@@ -57,7 +57,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 YQ_TYPE_IMPLEMENT(yq::tachyon::WidgetID)
 
 namespace yq::tachyon {
-    WidgetInfo::WidgetInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
+    WidgetMeta::WidgetMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(zName, base, sl)
     {
         set(Flag::WIDGET);
@@ -608,7 +608,7 @@ namespace yq::tachyon {
     Execution       Widget::setup(const Context& ctx)
     {
         if(!m_ui.root){
-            const WidgetInfo&   wi  = metaInfo();
+            const WidgetMeta&   wi  = metaInfo();
             if(wi.m_ui){
                 auto wid        = auto_reset(UIElement::s_widget, this);
                 m_ui.root       = wi.m_ui->copy();

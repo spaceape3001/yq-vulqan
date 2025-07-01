@@ -7,16 +7,16 @@
 #pragma once
 
 #include <tachyon/api/Control.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of control information
     */
     template <typename C>
-    class ControlInfo::Writer : public WidgetInfo::Writer<C> {
+    class ControlInfo::Writer : public WidgetMeta::Writer<C> {
     public:
     
-        Writer(ControlInfo* editorInfo) : WidgetInfo::Writer<C>(editorInfo), m_meta(editorInfo)
+        Writer(ControlInfo* editorInfo) : WidgetMeta::Writer<C>(editorInfo), m_meta(editorInfo)
         {
         }
         

@@ -26,7 +26,7 @@ namespace yq::tachyon {
         return ret;
     }
     
-    UIAppMain*   UIAppMainWriter::attach(WidgetInfo*w)
+    UIAppMain*   UIAppMainWriter::attach(WidgetMeta*w)
     {
         if(!w)
             return nullptr;
@@ -45,7 +45,7 @@ namespace yq::tachyon {
     {
     }
     
-    UIAppMainWriter::UIAppMainWriter(WidgetInfo* wi) : UIElementsWriter(attach(wi))
+    UIAppMainWriter::UIAppMainWriter(WidgetMeta* wi) : UIElementsWriter(attach(wi))
     {
     }
 

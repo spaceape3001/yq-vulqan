@@ -11,7 +11,7 @@
 #include <tachyon/api/Spatial3Data.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/control/Orientation3Control.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>
 

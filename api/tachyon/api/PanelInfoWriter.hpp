@@ -7,16 +7,16 @@
 #pragma once
 
 #include <tachyon/api/Panel.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of panel information
     */
     template <typename C>
-    class PanelInfo::Writer : public WidgetInfo::Writer<C> {
+    class PanelInfo::Writer : public WidgetMeta::Writer<C> {
     public:
     
-        Writer(PanelInfo* panelInfo) : WidgetInfo::Writer<C>(panelInfo), m_meta(panelInfo)
+        Writer(PanelInfo* panelInfo) : WidgetMeta::Writer<C>(panelInfo), m_meta(panelInfo)
         {
         }
         

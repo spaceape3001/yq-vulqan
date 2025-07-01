@@ -51,7 +51,7 @@ namespace yq::tachyon {
         return ret;
     }
     
-    UIElements*   UIElementsWriter::attach(WidgetInfo*w)
+    UIElements*   UIElementsWriter::attach(WidgetMeta*w)
     {
         if(!w)
             return nullptr;
@@ -75,7 +75,7 @@ namespace yq::tachyon {
     {
     }
     
-    UIElementsWriter::UIElementsWriter(WidgetInfo* w) : UIElementWriter(attach(w))
+    UIElementsWriter::UIElementsWriter(WidgetMeta* w) : UIElementWriter(attach(w))
     {
     }
     

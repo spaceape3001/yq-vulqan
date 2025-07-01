@@ -48,7 +48,7 @@
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/scene/SimpleScene.hpp>
 #include <tachyon/api/Scene3InfoWriter.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/widget/SceneWidget.hpp>
 #include <tachyon/utility/LoggerBox.hpp>
 #include <tachyon/api/Tachyon.hxx>

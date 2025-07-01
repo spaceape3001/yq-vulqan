@@ -20,7 +20,7 @@
 namespace yq::tachyon {
     class UIElements;
     class Widget;
-    class WidgetInfo;
+    class WidgetMeta;
     class UIAssetImageWriter;
     class UIButtonWriter;
     class UICenterAlignWriter;
@@ -41,7 +41,7 @@ namespace yq::tachyon {
         
         UIElementsWriter();
         UIElementsWriter(Widget*);
-        UIElementsWriter(WidgetInfo*);
+        UIElementsWriter(WidgetMeta*);
         UIElementsWriter(UIElements*);
         UIElementsWriter(const UIElementsWriter&);
         ~UIElementsWriter();
@@ -149,6 +149,6 @@ namespace yq::tachyon {
         
     private:
         static UIElements*      attach(Widget*);
-        static UIElements*      attach(WidgetInfo*);
+        static UIElements*      attach(WidgetMeta*);
     };
 }

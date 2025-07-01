@@ -12,11 +12,11 @@ namespace yq::tachyon {
 
     /*! \brief Mini information
     */
-    class PanelInfo : public WidgetInfo {
+    class PanelInfo : public WidgetMeta {
     public:
         template <typename C>  struct Writer;
         
-        PanelInfo(std::string_view, WidgetInfo&, const std::source_location& sl = std::source_location::current());
+        PanelInfo(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
     };
 
     /*! "Panel" widgets

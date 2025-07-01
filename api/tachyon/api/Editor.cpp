@@ -13,7 +13,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Editor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::EditorID)
 
 namespace yq::tachyon {
-    EditorInfo::EditorInfo(std::string_view n, WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
+    EditorInfo::EditorInfo(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
     {
         set(Flag::EDITOR);
     }

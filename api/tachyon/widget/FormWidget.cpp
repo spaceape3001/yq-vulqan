@@ -8,7 +8,7 @@
 #include <tachyon/api/Tachyon.hxx>
 #include <tachyon/mini/TextLabel.hpp>
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FormWidget)
 

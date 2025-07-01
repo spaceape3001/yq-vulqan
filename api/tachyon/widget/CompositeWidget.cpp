@@ -13,7 +13,7 @@
 #include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
 #include <yq/util/AutoReset.hpp>
 #include <tachyon/logging.hpp>

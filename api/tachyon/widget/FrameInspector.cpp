@@ -9,7 +9,7 @@
 #include <tachyon/mini/TextLabel.hpp>
 #include <yq/text/format.hpp>
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Tachyon.hxx>

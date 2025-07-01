@@ -11,7 +11,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Panel)
 
 namespace yq::tachyon {
-    PanelInfo::PanelInfo(std::string_view n, WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
+    PanelInfo::PanelInfo(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
     {
     }
 

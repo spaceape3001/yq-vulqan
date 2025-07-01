@@ -10,7 +10,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Control)
 
 namespace yq::tachyon {
-    ControlInfo::ControlInfo(std::string_view n, WidgetInfo& base, const std::source_location& sl) : WidgetInfo(n, base, sl)
+    ControlInfo::ControlInfo(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
     {
     }
 

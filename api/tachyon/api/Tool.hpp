@@ -14,7 +14,7 @@ namespace yq::tachyon {
         template <class> class Writer;
         ToolInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
     
-        //  const WidgetInfo*   widget() const;
+        //  const WidgetMeta*   widget() const;
     };
     
     

@@ -13,11 +13,11 @@ namespace yq::tachyon {
     struct AppMenu;
     struct AppItem;
 
-    class AppWidgetInfo : public WidgetInfo {
+    class AppWidgetMeta : public WidgetMeta {
     public:
         template <typename C>  struct Writer;
 
-        AppWidgetInfo(std::string_view zName, WidgetInfo& base, const std::source_location& sl=std::source_location::current());
+        AppWidgetMeta(std::string_view zName, WidgetMeta& base, const std::source_location& sl=std::source_location::current());
 
         //! TRUE if this has/needs a menu bar
         bool        menu_bar() const { return has(Flag::MENU_BAR); }
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         a toolbar, a status bar, etc...
     */
     class AppWidget : public Widget {
-        YQ_WIDGET_INFO(AppWidgetInfo)
+        YQ_WIDGET_INFO(AppWidgetMeta)
         YQ_WIDGET_DECLARE(AppWidget, Widget)
     public:
     

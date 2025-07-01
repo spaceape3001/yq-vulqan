@@ -7,4 +7,4 @@
 #pragma once
 
 #include <tachyon/api/Widget.hpp>
-#include <tachyon/api/WidgetInfoWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>

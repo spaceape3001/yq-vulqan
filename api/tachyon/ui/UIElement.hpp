@@ -21,7 +21,7 @@
 namespace yq::tachyon {
     struct ViContext;
     class Widget;
-    class WidgetInfo;
+    class WidgetMeta;
     class Viewer;
     struct UIStyle;
     class UIElement;

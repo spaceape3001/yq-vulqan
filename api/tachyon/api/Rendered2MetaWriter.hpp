@@ -13,14 +13,14 @@
 
 namespace yq::tachyon {
     template <typename C>
-    class Rendered²Info::Writer : public RenderedMeta::Writer<C> {
+    class Rendered²Meta::Writer : public RenderedMeta::Writer<C> {
     public:
-        Writer(Rendered²Info* renderInfo) : RenderedMeta::Writer<C>(renderInfo)
+        Writer(Rendered²Meta* renderInfo) : RenderedMeta::Writer<C>(renderInfo)
         {
             RenderedMeta::Writer<C>::_2d();
         }
         
-        Writer(Rendered²Info& renderInfo) : Writer(&renderInfo)
+        Writer(Rendered²Meta& renderInfo) : Writer(&renderInfo)
         {
         }
     };

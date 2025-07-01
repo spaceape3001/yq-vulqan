@@ -17,6 +17,6 @@ namespace yq::tachyon {
         
         virtual SkyBox³UI* clone() const;
         
-        static void init_info();
+        static void init_meta();
     };
 }

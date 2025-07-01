@@ -10,7 +10,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ForegroundLayer)
 
 namespace yq::tachyon {
-    void ForegroundLayer::init_info()
+    void ForegroundLayer::init_meta()
     {
         auto w = writer<ForegroundLayer>();
         w.description("Foreground Layer");

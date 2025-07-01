@@ -33,7 +33,7 @@ namespace yq::tachyon {
         return new AddMinSize⁴Command(*this, h);
     }
     
-    void AddMinSize⁴Command::init_info()
+    void AddMinSize⁴Command::init_meta()
     {
         auto w = writer<AddMinSize⁴Command>();
         w.description("AddMin Size Command");

@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Orientation³UI)
 
 namespace yq::tachyon {
-    void Orientation³UI::init_info()
+    void Orientation³UI::init_meta()
     {
         auto w = writer<Orientation³UI>();
         w.description("UIEditor for Orientation³");

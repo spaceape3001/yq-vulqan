@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::ISize¹)
 
 namespace yq::tachyon {
-    void    ISize¹::init_info()
+    void    ISize¹::init_meta()
     {
         auto w = writer<ISize¹>();
         w.description("1D Size");

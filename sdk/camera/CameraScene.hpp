@@ -20,7 +20,7 @@ public:
     
     Execution  setup(const Context&) override;
     
-    static void init_info();
+    static void init_meta();
     
 private:
     bool    m_init = false;

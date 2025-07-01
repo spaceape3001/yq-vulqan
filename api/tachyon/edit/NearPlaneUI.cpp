@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NearPlaneUI)
 
 namespace yq::tachyon {
-    void NearPlaneUI::init_info()
+    void NearPlaneUI::init_meta()
     {
         auto w = writer<NearPlaneUI>();
         w.description("UIEditor for NearPlane");

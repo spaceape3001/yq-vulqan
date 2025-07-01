@@ -17,7 +17,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(KeyboardEvent, InputEvent)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         KeyboardEvent(const Header&, ModifierKeys);

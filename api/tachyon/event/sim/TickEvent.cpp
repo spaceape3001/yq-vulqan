@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void TickEvent::init_info()
+    void TickEvent::init_meta()
     {
         auto w = writer<TickEvent>();
         w.description("Tick Event");

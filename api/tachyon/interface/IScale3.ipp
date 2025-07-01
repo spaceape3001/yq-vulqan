@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale³)
 
 namespace yq::tachyon {
-    void    IScale³::init_info()
+    void    IScale³::init_meta()
     {
         auto w = writer<IScale³>();
         w.description("3D Scale");

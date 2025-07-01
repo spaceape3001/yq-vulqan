@@ -48,7 +48,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Light, Tachyon)
     public:    
     
-        static void init_info();
+        static void init_meta();
 
         LightID            id() const { return LightID(UniqueID::id()); }
 

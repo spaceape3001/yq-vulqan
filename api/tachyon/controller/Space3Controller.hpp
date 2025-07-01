@@ -88,7 +88,7 @@ namespace yq::tachyon {
     
         void    set_target(TypedID);
     
-        static void init_info();
+        static void init_meta();
         
         TypedID target() const { return m_target; }
         

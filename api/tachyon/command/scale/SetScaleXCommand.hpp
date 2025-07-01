@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         SetScaleˣCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  x() const { return m_x; }
         

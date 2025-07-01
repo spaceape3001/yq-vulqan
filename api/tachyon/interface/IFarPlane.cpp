@@ -14,7 +14,7 @@ namespace yq::tachyon {
     IFarPlane::IFarPlane() = default;
     IFarPlane::~IFarPlane() = default;
 
-    void IFarPlane::init_info()
+    void IFarPlane::init_meta()
     {
         auto w = writer<IFarPlane>();
         w.description("Far Plane Interface");

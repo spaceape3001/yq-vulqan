@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class JoystickReleaseEvent : public JoystickEvent {
         YQ_OBJECT_DECLARE(JoystickReleaseEvent, JoystickEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         JoystickReleaseEvent(const Header&, size_t);
         ~JoystickReleaseEvent();

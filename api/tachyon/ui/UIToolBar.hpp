@@ -26,7 +26,7 @@ namespace yq::tachyon {
         float       thickness() const;
         void        pivot(set_k, Vector2F);
         
-        static void init_info();
+        static void init_meta();
 
     protected:
         UIToolBar*  clone() const;

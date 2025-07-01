@@ -52,7 +52,7 @@ namespace yq::tachyon {
         return Tristate::NO;
     }
 
-    void UIGenerator::init_info()
+    void UIGenerator::init_meta()
     {
         auto w = writer<UIGenerator>();
         w.description("UI Element Generator");

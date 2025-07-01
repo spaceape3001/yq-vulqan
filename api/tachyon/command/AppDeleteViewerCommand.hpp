@@ -18,7 +18,7 @@ namespace yq::tachyon {
         AppDeleteViewerCommand(Viewer*);
         virtual ~AppDeleteViewerCommand();
         
-        static void init_info();
+        static void init_meta();
     
         Viewer* viewer() const { return m_viewer; }
     

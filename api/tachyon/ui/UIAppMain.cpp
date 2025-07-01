@@ -17,7 +17,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIAppMain)
 
 namespace yq::tachyon {
-    void UIAppMain::init_info()
+    void UIAppMain::init_meta()
     {
         auto w = writer<UIAppMain>();
         w.description("Main Application UI framework");

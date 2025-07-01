@@ -39,6 +39,6 @@ namespace yq::tachyon {
         virtual bool        position(addable_k) const { return false; }
         virtual bool        position(multipliable_k) const { return false; }
 
-        static void init_info();
+        static void init_meta();
     };
 }

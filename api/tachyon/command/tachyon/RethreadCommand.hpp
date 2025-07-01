@@ -17,7 +17,7 @@ namespace yq::tachyon {
 
         constexpr ThreadID  thread() const { return m_thread; }
         
-        static void init_info();
+        static void init_meta();
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
     protected:

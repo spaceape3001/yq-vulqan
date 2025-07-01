@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void GamepadEvent::init_info()
+    void GamepadEvent::init_meta()
     {
         auto w = writer<GamepadEvent>();
         w.description("Gamepad event base class");

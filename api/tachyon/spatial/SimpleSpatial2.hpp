@@ -59,7 +59,7 @@ namespace yq::tachyon {
         using AScale²::scale;
         using AOrientation²::orientation;
 
-        static void init_info();
+        static void init_meta();
         
     protected:
         void        snap(Spatial²Snap&) const;

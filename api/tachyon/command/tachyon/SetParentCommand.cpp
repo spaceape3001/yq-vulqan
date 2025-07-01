@@ -25,7 +25,7 @@ namespace yq::tachyon {
         return new SetParentCommand(*this, h);
     }
 
-    void SetParentCommand::init_info()
+    void SetParentCommand::init_meta()
     {
         auto w = writer<SetParentCommand>();
         w.description("Set Parent Command");

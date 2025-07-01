@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         SetPositionᶻCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  z() const { return m_z; }
         

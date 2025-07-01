@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class JoystickZeroCommand : public JoystickCommand {
         YQ_OBJECT_DECLARE(JoystickZeroCommand, JoystickCommand);
     public:
-        static void init_info();
+        static void init_meta();
     
         JoystickZeroCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

@@ -31,7 +31,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void ImGuiDisableMouseCommand::init_info()
+    void ImGuiDisableMouseCommand::init_meta()
     {
         auto w = writer<ImGuiDisableMouseCommand>();
         w.description("Viewer Disable ImGui Mouse Control Command");

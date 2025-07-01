@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class ViewerEvent : public Event {
         YQ_OBJECT_DECLARE(ViewerEvent, Event)
     public:
-        static void init_info();
+        static void init_meta();
     
     protected:
         ViewerEvent(const Header&);

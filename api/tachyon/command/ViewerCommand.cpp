@@ -26,7 +26,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerCommand::init_info()
+    void ViewerCommand::init_meta()
     {
         auto w = writer<ViewerCommand>();
         w.description("Viewer command base class");

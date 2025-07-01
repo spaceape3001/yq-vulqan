@@ -6,7 +6,7 @@
 
 #include <tachyon/api/Light3.hpp>
 #include <tachyon/api/Light3Data.hpp>
-#include <tachyon/api/Light3InfoWriter.hpp>
+#include <tachyon/api/Light3MetaWriter.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
 #include <tachyon/spatial/SimpleSpatial3.hpp>
 #include <tachyon/api/3DWriter.hxx>
@@ -16,13 +16,13 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Light³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Light³ID)
 
 namespace yq::tachyon {
-    Light³Info::Light³Info(std::string_view name, LightMeta& base, const std::source_location& sl) :
+    Light³Meta::Light³Meta(std::string_view name, LightMeta& base, const std::source_location& sl) :
         LightMeta(name, base, sl)
     {
         set(Type::Light³);
     }
 
-    Light³Info::~Light³Info()
+    Light³Meta::~Light³Meta()
     {
     }
     
@@ -51,10 +51,10 @@ namespace yq::tachyon {
         Light::snap(sn);
     }
     
-    void Light³::init_info()
+    void Light³::init_meta()
     {
         auto w = writer<Light³>();
-        ③::init_info(w);
+        ③::init_meta(w);
         w.description("Light in 3D");
 
         auto wt = writer<Light³ID>();

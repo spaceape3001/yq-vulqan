@@ -82,7 +82,7 @@ namespace yq::tachyon {
         Widget::prerecord(ctx);
     }
 
-    void CompositeWidget::init_info()
+    void CompositeWidget::init_meta()
     {
         auto w = writer<CompositeWidget>();
         w.description("Composite widget using multiple scenes/cameras");

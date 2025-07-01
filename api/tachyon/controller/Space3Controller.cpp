@@ -420,7 +420,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    void Space³Controller::init_info()
+    void Space³Controller::init_meta()
     {
         auto w = writer<Space³Controller>();
         w.description("Controller for 3D spatials");

@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void AuxillaryThread::init_info()
+    void AuxillaryThread::init_meta()
     {
         auto w = writer<AuxillaryThread>();
         w.description("Auxillary Thread");

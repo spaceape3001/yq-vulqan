@@ -43,7 +43,7 @@ namespace yq::tachyon {
         virtual bool        size(addable_k) const { return false; }
         virtual bool        size(multipliable_k) const { return false; }
 
-        static void init_info();
+        static void init_meta();
     };
 }
 

@@ -49,7 +49,7 @@ namespace yq::tachyon {
         Tachyon::finalize(data);
     }
 
-    void Layer::init_info()
+    void Layer::init_meta()
     {
         auto w = writer<Layer>();
         w.description("Layer");

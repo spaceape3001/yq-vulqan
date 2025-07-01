@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void SimThread::init_info()
+    void SimThread::init_meta()
     {
         auto w = writer<SimThread>();
         w.description("Sim Thread");

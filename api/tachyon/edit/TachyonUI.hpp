@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class TachyonUI : public UIEditor {
         YQ_OBJECT_DECLARE(TachyonUI, UIEditor)
     public:
-        static void init_info();
+        static void init_meta();
     
         TachyonUI(UIFlags flags={});
         TachyonUI(const TachyonUI&);

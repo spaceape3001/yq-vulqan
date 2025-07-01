@@ -7,7 +7,7 @@
 #include "ColorDiamond3.hpp"
 #include <tachyon/logging.hpp>
 #include <tachyon/aspect/AColor.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/aspect/AColorWriter.hxx>
 
@@ -15,11 +15,11 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ColorDiamond³)
 
 namespace yq::tachyon {
-    void ColorDiamond³::init_info()
+    void ColorDiamond³::init_meta()
     {
         auto w = writer<ColorDiamond³>();
         w.description("Simple 3D Color Diamond");
-        AColor::init_info(w);
+        AColor::init_meta(w);
         
         auto& p = w.pipeline();
         p.shader("assets/shape3/color.vert");

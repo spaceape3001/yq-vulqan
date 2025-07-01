@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void DestroyCommand::init_info()
+    void DestroyCommand::init_meta()
     {
         auto w = writer<DestroyCommand>();
         w.description("Destroy Command");

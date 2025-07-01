@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void IOCommand::init_info()
+    void IOCommand::init_meta()
     {
         auto w = writer<IOCommand>();
         w.abstract();

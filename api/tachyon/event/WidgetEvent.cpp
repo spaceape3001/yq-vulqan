@@ -24,7 +24,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void WidgetEvent::init_info()
+    void WidgetEvent::init_meta()
     {
         auto w = writer<WidgetEvent>();
         w.description("WidgetEvent base class");

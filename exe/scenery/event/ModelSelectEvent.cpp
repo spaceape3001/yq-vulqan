@@ -28,7 +28,7 @@ PostCPtr    ModelSelectEvent::clone(rebind_k, const Header&h) const
     return new ModelSelectEvent(*this, h);
 }
 
-void ModelSelectEvent::init_info()
+void ModelSelectEvent::init_meta()
 {
     auto w = writer<ModelSelectEvent>();
     w.description("Model Selection Event");

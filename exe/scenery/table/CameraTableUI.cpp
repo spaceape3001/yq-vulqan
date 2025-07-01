@@ -22,7 +22,7 @@ struct CameraTableUI::Row {
     std::string         stype;
 };
 
-void CameraTableUI::init_info()
+void CameraTableUI::init_meta()
 {
     auto w = writer<CameraTableUI>();
     w.description("Scene Editor's Camera Table");

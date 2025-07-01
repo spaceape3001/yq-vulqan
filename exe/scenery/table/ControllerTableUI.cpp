@@ -22,7 +22,7 @@ struct ControllerTableUI::Row {
     std::string        stype;
 };
 
-void ControllerTableUI::init_info()
+void ControllerTableUI::init_meta()
 {
     auto w = writer<ControllerTableUI>();
     w.description("Scene Editor's Controller Table");

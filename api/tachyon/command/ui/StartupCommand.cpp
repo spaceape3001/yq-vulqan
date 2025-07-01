@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void StartupCommand::init_info()
+    void StartupCommand::init_meta()
     {
         auto w = writer<StartupCommand>();
         w.description("Startup Command");

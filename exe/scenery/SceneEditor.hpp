@@ -75,7 +75,7 @@ public:
         HUD
     };
     
-    static void             init_info();
+    static void             init_meta();
 
     SceneEditor();
     ~SceneEditor();

@@ -32,7 +32,7 @@ namespace yq::tachyon {
         VulqanManager();
         virtual ~VulqanManager();
         
-        static void init_info();
+        static void init_meta();
 
     protected:
     

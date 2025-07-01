@@ -32,7 +32,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void NameChangeEvent::init_info()
+    void NameChangeEvent::init_meta()
     {
         auto w = writer<NameChangeEvent>();
         w.description("NameChange Event");

@@ -104,7 +104,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    void VulqanGPU::init_info()
+    void VulqanGPU::init_meta()
     {
         auto w = writer<VulqanGPU>();
         w.description("Vulkan GPU");

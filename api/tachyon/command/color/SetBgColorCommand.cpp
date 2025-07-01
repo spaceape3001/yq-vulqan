@@ -37,7 +37,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetBgColorCommand::init_info()
+    void SetBgColorCommand::init_meta()
     {
         auto w = writer<SetBgColorCommand>();
         w.description("SetBgColor Command");

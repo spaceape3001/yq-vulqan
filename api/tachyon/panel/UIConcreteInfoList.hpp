@@ -13,7 +13,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(UIConcreteInfoList, UIInfoList)
     public:
     
-        static void init_info();
+        static void init_meta();
     
         UIConcreteInfoList(const TachyonMeta*, UIFlags={});
         UIConcreteInfoList(std::string_view, const TachyonMeta*, UIFlags={});

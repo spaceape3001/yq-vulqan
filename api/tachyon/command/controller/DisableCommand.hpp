@@ -15,7 +15,7 @@ namespace yq::tachyon {
     
         DisableCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void init_info();
+        static void init_meta();
         
     protected:
         DisableCommand(const DisableCommand&, const Header&);

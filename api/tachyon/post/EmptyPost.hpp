@@ -18,7 +18,7 @@ namespace yq::tachyon {
         EmptyPost(const Header&p={});
         ~EmptyPost();
         
-        static void init_info();
+        static void init_meta();
     
     protected:
         EmptyPost(const EmptyPost&, const Header&);

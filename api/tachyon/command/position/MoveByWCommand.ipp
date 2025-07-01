@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MoveByʷCommand(*this, h);
     }
 
-    void MoveByʷCommand::init_info()
+    void MoveByʷCommand::init_meta()
     {
         auto w = writer<MoveByʷCommand>();
         w.description("Position MoveBy Command in X");

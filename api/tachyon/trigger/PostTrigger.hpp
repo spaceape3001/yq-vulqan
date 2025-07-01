@@ -25,7 +25,7 @@ namespace yq::tachyon {
         Result match(const Post&) const override;
         virtual const PostMeta&     post_info() const { return m_info; }
 
-        static void init_info();
+        static void init_meta();
 
         template <SomePost P>
         class By;

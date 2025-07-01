@@ -19,7 +19,7 @@ namespace yq::tachyon {
         TypedID    tachyon() const { return m_tachyon; }
 
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void init_info();
+        static void init_meta();
         
     protected:
         UnlistenCommand(const UnlistenCommand&, const Header&);

@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     using Spatial²ID = ID<Spatial²>;
 
-    class Spatial²Info;
+    class Spatial²Meta;
 }

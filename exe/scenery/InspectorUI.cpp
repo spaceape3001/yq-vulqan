@@ -104,7 +104,7 @@ InspectorUI::Repo& InspectorUI::repo()
     return s_repo;
 }
 
-void InspectorUI::init_info()
+void InspectorUI::init_meta()
 {
     auto w = writer<InspectorUI>();
     w.description("Inspector UI");

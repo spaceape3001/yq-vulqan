@@ -27,6 +27,6 @@ namespace yq::tachyon {
         IDrawMode();
         virtual ~IDrawMode();
         
-        static void init_info();
+        static void init_meta();
     };
 }

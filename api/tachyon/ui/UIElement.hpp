@@ -119,7 +119,7 @@ namespace yq::tachyon {
         //! Viewport for content in screen coordinates
         virtual AxBox2F     viewport(content_k) const;
         
-        static void init_info();
+        static void init_meta();
 
         //! Unique binding if not zero
         uint64_t            binding() const { return m_bId; }

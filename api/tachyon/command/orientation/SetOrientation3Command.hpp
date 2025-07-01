@@ -21,7 +21,7 @@ namespace yq::tachyon {
     
         const Quaternion3D&   orientation() const  { return m_orientation; }
         
-        static void init_info();
+        static void init_meta();
         
         double  w() const { return m_orientation.w; }
         double  x() const { return m_orientation.x; }

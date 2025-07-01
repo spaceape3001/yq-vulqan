@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void AspectEvent::init_info()
+    void AspectEvent::init_meta()
     {
         auto w = writer<AspectEvent>();
         w.description("Aspect Event");

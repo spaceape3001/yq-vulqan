@@ -35,7 +35,7 @@ namespace yq::tachyon {
 
         const Vector2F&    pivot() const { return m_pivot; }
         
-        static void init_info();
+        static void init_meta();
         
         float       height() const;
         float       height(actual_k) const;

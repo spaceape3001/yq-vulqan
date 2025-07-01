@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new CloseReply(*this, h);
     }
     
-    void CloseReply::init_info()
+    void CloseReply::init_meta()
     {
         auto w = writer<CloseReply>();
         w.description("Close Reply");

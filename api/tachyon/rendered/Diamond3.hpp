@@ -66,7 +66,7 @@ namespace yq::tachyon {
         Diamond³(const Size3D& sz=kDefSize, const Param& p = Param());
         Diamond³(const AxBox3D& bx, const Param& p = Param());
         
-        static void init_info();
+        static void init_meta();
 
     protected:
 

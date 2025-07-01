@@ -22,7 +22,7 @@ class MetricsUI : public UIForm {
     YQ_OBJECT_DECLARE(MetricsUI, UIForm)
 public:
 
-    static void init_info();
+    static void init_meta();
 
     MetricsUI(UIFlags flags={});
     MetricsUI(const MetricsUI&);

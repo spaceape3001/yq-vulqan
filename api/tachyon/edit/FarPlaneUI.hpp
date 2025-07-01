@@ -19,6 +19,6 @@ namespace yq::tachyon {
         
         void    far();
         
-        static void init_info();
+        static void init_meta();
     };
 }

@@ -38,7 +38,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Message::init_info()
+    void Message::init_meta()
     {
         auto w = writer<Message>();
         w.description("Abstract Message Class");

@@ -48,7 +48,7 @@ namespace yq::tachyon {
         //  TODO... we'll put anything about multiple viewports here (ie, VR)
     
 
-        static void init_info();
+        static void init_meta();
 
         MonitorID            id() const { return MonitorID(UniqueID::id()); }
 

@@ -33,7 +33,7 @@ namespace yq::tachyon {
         return meta<KeyPressEvent>();
     }
         
-    void KeyPressTrigger::init_info()
+    void KeyPressTrigger::init_meta()
     {
         auto w = writer<KeyPressTrigger>();
         w.description("Triggers on a key press");

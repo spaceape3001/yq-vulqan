@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveTSXRequest)
 
 namespace yq::tachyon {
-    void SaveTSXRequest::init_info()
+    void SaveTSXRequest::init_meta()
     {
         auto w = writer<SaveTSXRequest>();
         w.description("Save tachyons to TSX file");

@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void EditThread::init_info()
+    void EditThread::init_meta()
     {
         auto w = writer<EditThread>();
         w.description("Edit Thread");

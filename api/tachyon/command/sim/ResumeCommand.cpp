@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ResumeCommand::init_info()
+    void ResumeCommand::init_meta()
     {
         auto w = writer<ResumeCommand>();
         w.description("Resume Command");

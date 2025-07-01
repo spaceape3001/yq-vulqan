@@ -19,7 +19,7 @@ namespace yq::tachyon {
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         SetParentCommand(const SetParentCommand&, const Header&);

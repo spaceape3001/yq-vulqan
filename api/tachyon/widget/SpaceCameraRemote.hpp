@@ -23,7 +23,7 @@ namespace yq::tachyon {
         Execution setup(const Context&) override;
         void    imgui(ViContext&) override;
         
-        static void init_info();
+        static void init_meta();
 
     private:
         TypedID                     m_camera;

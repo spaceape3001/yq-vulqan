@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICenterAlign)
 
 namespace yq::tachyon {
-    void UICenterAlign::init_info()
+    void UICenterAlign::init_meta()
     {
         auto w = writer<UICenterAlign>();
         w.description("UI Element that centers its contents");

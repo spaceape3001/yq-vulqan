@@ -27,7 +27,7 @@ namespace yq::tachyon {
         bool    right_button() const;
         bool    middle_button() const;
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         MouseEvent(const Header&, ModifierKeys, const Vector2D&, MouseButtons);

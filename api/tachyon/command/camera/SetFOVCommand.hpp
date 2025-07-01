@@ -16,7 +16,7 @@ namespace yq::tachyon {
     
         SetFOVCommand(const Header&, unit::Degree);
         
-        static void init_info();
+        static void init_meta();
         
         unit::Degree        fov() const { return m_fov; }
         

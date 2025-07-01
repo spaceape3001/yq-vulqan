@@ -36,7 +36,7 @@ namespace yq::tachyon {
         
         UIImage* clone() const;
         
-        static void init_info();
+        static void init_meta();
         
     protected:
     

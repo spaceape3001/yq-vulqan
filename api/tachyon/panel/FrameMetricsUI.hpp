@@ -18,7 +18,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(FrameMetricsUI, UIForm)
     public:
     
-        static void init_info();
+        static void init_meta();
     
         FrameMetricsUI(UIFlags flags={});
         FrameMetricsUI(const FrameMetricsUI&);

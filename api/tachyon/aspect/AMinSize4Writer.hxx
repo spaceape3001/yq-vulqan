@@ -28,7 +28,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AMinSize⁴::init_info(TachyonMeta::Writer<C>&w)
+    void AMinSize⁴::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMinSize⁴>();
         w.property(UNSAFE, "min_size", &AMinSize⁴::m_min_size).tag(kTag_Save);

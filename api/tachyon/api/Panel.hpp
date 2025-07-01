@@ -29,6 +29,6 @@ namespace yq::tachyon {
     public:
         Panel();
         virtual ~Panel();
-        static void init_info();
+        static void init_meta();
     };
 }

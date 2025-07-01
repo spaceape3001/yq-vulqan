@@ -30,7 +30,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void CursorNormalEvent::init_info()
+    void CursorNormalEvent::init_meta()
     {
         auto w = writer<CursorNormalEvent>();
         w.description("Cursor Normal Event");

@@ -29,7 +29,7 @@ namespace yq::tachyon {
         
         virtual size_t                  data_size() const override { return 0ULL; }
         
-        static void init_info();
+        static void init_meta();
     
     private:
         AssetFactory&       factory() const override;

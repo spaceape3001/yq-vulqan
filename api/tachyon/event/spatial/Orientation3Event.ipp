@@ -50,7 +50,7 @@ namespace yq::tachyon {
         return m_orientation.angle(ZYX, X);
     }
 
-    void Orientation³Event::init_info()
+    void Orientation³Event::init_meta()
     {
         auto w = writer<Orientation³Event>();
         w.description("Position Orientation Event in 3D");

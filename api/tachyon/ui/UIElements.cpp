@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIElements)
 
 namespace yq::tachyon {
-    void UIElements::init_info() 
+    void UIElements::init_meta() 
     {
         auto w = writer<UIElements>();
         w.description("Collection of child UI elements");

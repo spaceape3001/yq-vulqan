@@ -42,7 +42,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetVertexColorCommand::init_info()
+    void SetVertexColorCommand::init_meta()
     {
         auto w = writer<SetVertexColorCommand>();
         w.description("Set Vertex Color Command");

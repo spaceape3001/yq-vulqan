@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void NetworkThread::init_info()
+    void NetworkThread::init_meta()
     {
         auto w = writer<NetworkThread>();
         w.description("Network Thread");

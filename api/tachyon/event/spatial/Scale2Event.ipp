@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new Scale²Event(*this, h);
     }
    
-    void Scale²Event::init_info()
+    void Scale²Event::init_meta()
     {
         auto w = writer<Scale²Event>();
         w.description("Scaled Event in 2D");

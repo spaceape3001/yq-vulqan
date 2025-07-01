@@ -21,7 +21,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(SceneWidget, Widget)
     public:
     
-        static void init_info();
+        static void init_meta();
     
         SceneWidget();
         ~SceneWidget();

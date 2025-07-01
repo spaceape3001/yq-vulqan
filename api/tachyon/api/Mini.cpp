@@ -39,7 +39,7 @@ namespace yq::tachyon {
         m_accessor  = std::move(mv);
     }
 
-    void Mini::init_info()
+    void Mini::init_meta()
     {
         auto w = writer<Mini>();
         w.description("Mini widget base class");

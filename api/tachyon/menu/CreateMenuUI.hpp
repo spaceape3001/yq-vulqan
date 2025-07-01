@@ -14,7 +14,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(CreateMenuUI, UIMenu)
     public:
 
-        static void init_info();
+        static void init_meta();
 
         CreateMenuUI(std::string_view kMenuName, const TachyonMeta&, UIFlags flags={});
         CreateMenuUI(std::string_view kMenuName, uint32_t, const TachyonMeta&, UIFlags flags={});

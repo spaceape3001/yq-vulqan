@@ -18,18 +18,18 @@
 #endif
 
 namespace yq::tachyon {
-    class Light³Info : public LightMeta {
+    class Light³Meta : public LightMeta {
     public:
     
         template <typename> class Writer;
         
-        Light³Info(std::string_view, LightMeta&, const std::source_location& sl = std::source_location::current());
+        Light³Meta(std::string_view, LightMeta&, const std::source_location& sl = std::source_location::current());
     protected:
-        ~Light³Info();
+        ~Light³Meta();
     };
     
     class Light³ : public Light, public ③ {
-        YQ_TACHYON_INFO(Light³Info)
+        YQ_TACHYON_INFO(Light³Meta)
         YQ_TACHYON_SNAP(Light³Snap)
         YQ_TACHYON_DATA(Light³Data)
         YQ_TACHYON_DECLARE(Light³, Light)
@@ -43,7 +43,7 @@ namespace yq::tachyon {
             Vector3D        scale           = NAN;
         };
     
-        static void init_info();
+        static void init_meta();
     
         Light³ID id() const { return Light³ID(UniqueID::id()); }
         

@@ -21,7 +21,7 @@
 #include <tachyon/rendered/SkyBox3.hpp>
 #include <tachyon/rendered/GradTriangle3.hpp>
 
-#include <tachyon/api/Scene3InfoWriter.hpp>
+#include <tachyon/api/Scene3MetaWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
@@ -236,7 +236,7 @@ Execution  CameraScene::setup(const Context&ctx)
     return SimpleScene::setup(ctx);
 }
     
-void CameraScene::init_info()
+void CameraScene::init_meta()
 {
     auto w = writer<CameraScene>();
     w.description("Camera SDK Example Scene");

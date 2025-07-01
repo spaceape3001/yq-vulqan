@@ -25,7 +25,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AScale³::init_info(TachyonMeta::Writer<C>&w)
+    void AScale³::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IScale³>();
         w.property(UNSAFE, "scale", &AScale³::m_scale).tag(kTag_Save);

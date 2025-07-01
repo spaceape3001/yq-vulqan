@@ -15,7 +15,7 @@ namespace yq::tachyon {
         ParentChangeEvent(const Header&, TypedID from, TypedID to);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
         TypedID     from() const { return m_from; }
         TypedID     to() const { return m_to; }

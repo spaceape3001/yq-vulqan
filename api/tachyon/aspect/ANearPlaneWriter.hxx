@@ -13,7 +13,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void ANearPlane::init_info(TachyonMeta::Writer<C>&w)
+    void ANearPlane::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ANearPlane>();
         w.property(UNSAFE, "near", &ANearPlane::m_near).def_value(kDefNearPlane).tag(kTag_Save);

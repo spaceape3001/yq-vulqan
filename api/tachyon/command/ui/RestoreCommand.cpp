@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void RestoreCommand::init_info()
+    void RestoreCommand::init_meta()
     {
         auto w = writer<RestoreCommand>();
         w.description("Restore Command");

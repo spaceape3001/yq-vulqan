@@ -23,7 +23,7 @@ namespace yq::tachyon {
     
     }
     
-    void CallbackAction::init_info()
+    void CallbackAction::init_meta()
     {
         auto w = writer<CallbackAction>();
         w.description("Action that makes a callbac");

@@ -28,7 +28,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerWidgetReply::init_info()
+    void ViewerWidgetReply::init_meta()
     {
         auto w = writer<ViewerWidgetReply>();
         w.description("Viewer Widget Reply");

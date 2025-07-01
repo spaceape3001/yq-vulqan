@@ -31,7 +31,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void FramebufferResizeEvent::init_info()
+    void FramebufferResizeEvent::init_meta()
     {
         auto w = writer<FramebufferResizeEvent>();
         w.description("Window Framebuffer Resize Event");

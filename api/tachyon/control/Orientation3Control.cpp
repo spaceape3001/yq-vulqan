@@ -144,7 +144,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    void Orientation³Control::init_info()
+    void Orientation³Control::init_meta()
     {
         auto w = writer<Orientation³Control>();
         w.imgui();

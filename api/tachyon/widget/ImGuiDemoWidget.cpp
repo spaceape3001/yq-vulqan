@@ -22,7 +22,7 @@ namespace yq::tachyon {
         ImGui::ShowDemoWindow();
     }
     
-    void ImGuiDemoWidget::init_info()
+    void ImGuiDemoWidget::init_meta()
     {
         auto w = writer<ImGuiDemoWidget>();
         w.description("Widget using the imgui demo");

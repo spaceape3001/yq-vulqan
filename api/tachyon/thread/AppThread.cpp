@@ -58,7 +58,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void AppThread::init_info()
+    void AppThread::init_meta()
     {
         auto w = writer<AppThread>();
         w.description("Application Thread");

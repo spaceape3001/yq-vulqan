@@ -47,7 +47,7 @@ namespace yq::tachyon {
         
         SpatialID       id() const { return SpatialID(UniqueID::id()); }
 
-        static void init_info();
+        static void init_meta();
         
         struct Param : public Tachyon::Param {
             TypedID     domain;

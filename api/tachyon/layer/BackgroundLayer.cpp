@@ -10,7 +10,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::BackgroundLayer)
 
 namespace yq::tachyon {
-    void BackgroundLayer::init_info()
+    void BackgroundLayer::init_meta()
     {
         auto w = writer<BackgroundLayer>();
         w.description("Background Layer");

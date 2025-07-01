@@ -157,7 +157,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    void GamepadGLFW::init_info()
+    void GamepadGLFW::init_meta()
     {
         auto w = writer<GamepadGLFW>();
         w.description("GLFW Gamepad");

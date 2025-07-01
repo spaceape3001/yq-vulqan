@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIMenuBar)
 
 namespace yq::tachyon {
-    void UIMenuBar::init_info()
+    void UIMenuBar::init_meta()
     {
         auto w = writer<UIMenuBar>();
         w.description("Menu Bar UI Element");

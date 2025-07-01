@@ -39,7 +39,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Delegate, Object)
     public:
     
-        static void init_info();
+        static void init_meta();
         
         virtual bool configure(/* TBD */) { return true; }
         

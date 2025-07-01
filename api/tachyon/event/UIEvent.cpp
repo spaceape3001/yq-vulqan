@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void UIEvent::init_info()
+    void UIEvent::init_meta()
     {
         auto w = writer<UIEvent>();
         w.abstract();

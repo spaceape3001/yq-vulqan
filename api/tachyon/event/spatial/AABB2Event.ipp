@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new AABB²Event(*this, h);
     }
    
-    void AABB²Event::init_info()
+    void AABB²Event::init_meta()
     {
         auto w = writer<AABB²Event>();
         w.description("AABB Changed Event in 2D");

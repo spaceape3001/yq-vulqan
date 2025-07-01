@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIMenuItem)
 
 namespace yq::tachyon {
-    void UIMenuItem::init_info()
+    void UIMenuItem::init_meta()
     {   
         auto w = writer<UIMenuItem>();
         w.description("UI Menu Item");

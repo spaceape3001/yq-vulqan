@@ -24,7 +24,7 @@ namespace yq::tachyon {
     {
     }
     
-    void Tool::init_info()
+    void Tool::init_meta()
     {
         auto w = writer<Tool>();
         w.description("Tool base");

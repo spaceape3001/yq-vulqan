@@ -19,6 +19,6 @@ namespace yq::tachyon {
         
         void    color();
         
-        static void init_info();
+        static void init_meta();
     };
 }

@@ -19,6 +19,6 @@ namespace yq::tachyon {
         
         void    vertices();
         
-        static void init_info();
+        static void init_meta();
     };
 }

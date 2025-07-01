@@ -16,7 +16,7 @@ namespace yq::tachyon {
     public:
         SetSizeʸCommand(const Header&, double);
     
-        static void init_info();
+        static void init_meta();
         
         double  y() const { return m_y; }
         

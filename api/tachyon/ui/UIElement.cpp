@@ -88,7 +88,7 @@ namespace yq::tachyon {
         return path.filename().stem().string();
     }
 
-    void UIElement::init_info()
+    void UIElement::init_meta()
     {
         auto w = writer<UIElement>();
         w.description("Basic UI Element");

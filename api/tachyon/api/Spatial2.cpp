@@ -6,20 +6,20 @@
 
 #include <tachyon/api/Spatial2.hpp>
 #include <tachyon/api/Spatial2Data.hpp>
-#include <tachyon/api/Spatial2InfoWriter.hpp>
+#include <tachyon/api/Spatial2MetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial²);
 YQ_TYPE_IMPLEMENT(yq::tachyon::Spatial²ID)
 
 namespace yq::tachyon {
-    Spatial²Info::Spatial²Info(std::string_view zName, SpatialMeta& base, const std::source_location& sl)
+    Spatial²Meta::Spatial²Meta(std::string_view zName, SpatialMeta& base, const std::source_location& sl)
         : SpatialMeta(zName, base, sl)
     {
         set(Type::Spatial²);
     }
 
-    Spatial²Info::~Spatial²Info()
+    Spatial²Meta::~Spatial²Meta()
     {
     }
     
@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Spatial²::init_info()
+    void Spatial²::init_meta()
     {
         auto w = writer<Spatial²>();
         w.description("Spatial in 2 Dimensions");

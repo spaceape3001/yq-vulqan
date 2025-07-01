@@ -26,7 +26,7 @@ namespace yq::tachyon {
         Result              match(const Post&) const override;
         const PostMeta&     post_info() const override;
         
-        static void init_info();
+        static void init_meta();
     
     private:
         TriggerCPtr m_original;

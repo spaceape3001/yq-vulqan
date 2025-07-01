@@ -19,7 +19,7 @@ namespace yq::tachyon {
         const RGBA4F&   bgcolor() const { return m_bgColor; }
         void            set_bgcolor(const RGBA4F&);
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         SetBgColorCommand(const SetBgColorCommand&, const Header&);

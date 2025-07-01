@@ -28,7 +28,7 @@ PostCPtr    SceneVisibilityEvent::clone(rebind_k, const Header&h) const
     return new SceneVisibilityEvent(*this, h);
 }
 
-void SceneVisibilityEvent::init_info()
+void SceneVisibilityEvent::init_meta()
 {
     auto w = writer<SceneVisibilityEvent>();
     w.description("Scene Visibilityion Event");

@@ -47,7 +47,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Cursor, Tachyon)
     public:    
     
-        static void init_info();
+        static void init_meta();
 
         CursorID            id() const { return CursorID(UniqueID::id()); }
 

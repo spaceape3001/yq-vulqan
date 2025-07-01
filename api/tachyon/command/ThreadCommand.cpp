@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void ThreadCommand::init_info()
+    void ThreadCommand::init_meta()
     {
         auto w = writer<ThreadCommand>();
         w.abstract();

@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UITextLabel)
 
 namespace yq::tachyon {
-    void UITextLabel::init_info()
+    void UITextLabel::init_meta()
     {
         auto w = writer<UITextLabel>();
         w.description("UI Text Label");

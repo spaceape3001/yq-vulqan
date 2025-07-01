@@ -20,7 +20,7 @@ namespace yq::tachyon {
         const TachyonMeta*      info    = nullptr;
     };
 
-    void CreateMenuUI::init_info()
+    void CreateMenuUI::init_meta()
     {
         auto w = writer<CreateMenuUI>();
         w.description("UI Menu for creating things");

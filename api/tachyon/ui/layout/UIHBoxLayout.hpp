@@ -22,7 +22,7 @@ namespace yq::tachyon {
         
         UIHBoxLayout* clone() const;
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         void                render() override;

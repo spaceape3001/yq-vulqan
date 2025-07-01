@@ -310,7 +310,7 @@ namespace yq::tachyon {
             void write(Stream&) const;
         };
         
-        static void         init_info();
+        static void         init_meta();
         
         Any                 attribute(int) const;
         Any                 attribute(const std::string&) const;

@@ -16,7 +16,7 @@ namespace yq::tachyon {
     public:
         CursorGLFW(GLFWcursor*, const Param&p = Param());
         ~CursorGLFW();
-        static void init_info();
+        static void init_meta();
         
         GLFWcursor* glfw() const { return m_cursor; }
         

@@ -13,7 +13,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void ABgColor::init_info(TachyonMeta::Writer<C>&w)
+    void ABgColor::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ABgColor>();
         w.property(UNSAFE, "bgcolor", &ABgColor::m_bgcolor).def_value(kDefBgColor).tag(kTag_Save);

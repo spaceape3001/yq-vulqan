@@ -51,7 +51,7 @@ namespace yq::tachyon {
         Vector1D    m_scale = ONE;
 
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         AScale¹();
         virtual ~AScale¹();

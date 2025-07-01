@@ -16,7 +16,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(SimCommand, Command)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         SimCommand(const Header&);

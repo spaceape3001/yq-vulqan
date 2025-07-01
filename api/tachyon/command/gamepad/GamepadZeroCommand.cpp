@@ -8,7 +8,7 @@
 #include <tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadZeroCommand::init_info()
+    void GamepadZeroCommand::init_meta()
     {
         auto w = writer<GamepadZeroCommand>();
         w.description("Gamepad Zeroion Command");

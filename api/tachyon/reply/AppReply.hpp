@@ -27,6 +27,6 @@ namespace yq::tachyon {
         AppReply(const AppReply&, const Header& h);
         virtual ~AppReply();
         
-        static void init_info();
+        static void init_meta();
     };
 }

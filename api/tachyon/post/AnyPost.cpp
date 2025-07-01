@@ -24,7 +24,7 @@ namespace yq::tachyon {
     {
     }
 
-    void AnyPost::init_info()
+    void AnyPost::init_meta()
     {
         auto w = writer<AnyPost>();
         w.description("Any Post");

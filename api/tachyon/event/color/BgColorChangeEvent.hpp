@@ -16,7 +16,7 @@ namespace yq::tachyon {
         BgColorChangeEvent(const Header&, const RGBA4F&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const RGBA4F& bgcolor() const { return m_bgcolor; }
         void            set_bgcolor(const RGBA4F&);

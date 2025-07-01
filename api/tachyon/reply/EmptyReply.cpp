@@ -25,7 +25,7 @@ namespace yq::tachyon {
     {
     }
     
-    void EmptyReply::init_info()
+    void EmptyReply::init_meta()
     {
         auto w = writer<EmptyReply>();
         w.description("Empty Reply");

@@ -176,7 +176,7 @@ namespace yq::tachyon {
     }
 
 
-    void SpaceCameraRemote::init_info()
+    void SpaceCameraRemote::init_meta()
     {
         auto w = writer<SpaceCameraRemote>();
         w.description("Space Camera Remote");

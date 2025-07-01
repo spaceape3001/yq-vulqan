@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void GameThread::init_info()
+    void GameThread::init_meta()
     {
         auto w = writer<GameThread>();
         w.description("Game Thread");

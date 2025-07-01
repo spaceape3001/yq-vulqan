@@ -23,7 +23,7 @@ namespace yq::tachyon {
         return pp.metaInfo().is_this(m_info);
     }
 
-    void PostTrigger::init_info()
+    void PostTrigger::init_meta()
     {
         auto w = writer<PostTrigger>();
         w.description("Post Trigger (ie, detects if the post is same/derived-from the specified class)");

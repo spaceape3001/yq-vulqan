@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ScaleCommand::init_info()
+    void ScaleCommand::init_meta()
     {
         auto w = writer<ScaleCommand>();
         w.description("Scale Command");

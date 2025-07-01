@@ -23,6 +23,6 @@ namespace yq::tachyon {
         
         UIDocker* clone() const override;
         
-        static void init_info();
+        static void init_meta();
     };
 }

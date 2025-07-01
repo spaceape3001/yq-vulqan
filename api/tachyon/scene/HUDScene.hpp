@@ -14,6 +14,6 @@ namespace yq::tachyon {
     public:
         HUDScene();
         ~HUDScene();
-        static void init_info();
+        static void init_meta();
     };
 }

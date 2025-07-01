@@ -27,7 +27,7 @@ namespace yq::tachyon {
         return new MouseMoveEvent(*this, h);
     }
 
-    void MouseMoveEvent::init_info()
+    void MouseMoveEvent::init_meta()
     {
         auto w = writer<MouseMoveEvent>();
         w.description("Mouse Move Event");

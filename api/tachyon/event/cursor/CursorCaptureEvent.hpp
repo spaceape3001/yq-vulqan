@@ -18,7 +18,7 @@ namespace yq::tachyon {
     
         CursorCaptureEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void init_info();
+        static void init_meta();
     
     protected:
         CursorCaptureEvent(const CursorCaptureEvent&, const Header&);

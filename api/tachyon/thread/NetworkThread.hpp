@@ -18,7 +18,7 @@ namespace yq::tachyon {
         NetworkThread(const Param&p = Param{});
         ~NetworkThread();
         
-        static void init_info();
+        static void init_meta();
 
     private:
         friend class Application;

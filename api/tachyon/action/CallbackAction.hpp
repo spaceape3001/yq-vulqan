@@ -23,6 +23,6 @@ namespace yq::tachyon {
         CallbackAction(const CallbackAction&);
         ~CallbackAction();
         
-        static void init_info();
+        static void init_meta();
     };
 }

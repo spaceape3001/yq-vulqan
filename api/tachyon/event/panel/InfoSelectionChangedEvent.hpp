@@ -17,7 +17,7 @@ namespace yq::tachyon {
         InfoSelectionChangedEvent(const Header&, const TachyonMeta*);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const TachyonMeta*  info() const { return m_info; }
 

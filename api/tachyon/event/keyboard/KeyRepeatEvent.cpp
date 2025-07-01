@@ -27,7 +27,7 @@ namespace yq::tachyon {
         return new KeyRepeatEvent(*this, h);
     }
 
-    void KeyRepeatEvent::init_info()
+    void KeyRepeatEvent::init_meta()
     {
         auto w = writer<KeyRepeatEvent>();
         w.description("Key Repeat Event");

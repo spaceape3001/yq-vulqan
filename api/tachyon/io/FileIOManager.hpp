@@ -16,7 +16,7 @@ namespace yq::tachyon {
     class FileIOManager : public Manager {
         YQ_TACHYON_DECLARE(FileIOManager, Manager)
     public:
-        static void init_info();
+        static void init_meta();
     
         FileIOManager();
         virtual ~FileIOManager();

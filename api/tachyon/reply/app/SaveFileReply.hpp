@@ -24,7 +24,7 @@ namespace yq::tachyon {
         Response    response() const { return m_response; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void  init_info();
+        static void  init_meta();
         
     protected:
         SaveFileReply(const SaveFileReply&, const Header&);

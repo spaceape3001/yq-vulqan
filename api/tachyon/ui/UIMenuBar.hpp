@@ -21,7 +21,7 @@ namespace yq::tachyon {
     
         using Writer = UIMenuBarWriter;
     
-        static void init_info();
+        static void init_meta();
     
         //! Constructs a regular menu bar
         UIMenuBar(UIFlags flags={});

@@ -76,7 +76,7 @@ namespace yq::tachyon {
         mark();
     }
 
-    void Scene::init_info()
+    void Scene::init_meta()
     {
         auto w = writer<Scene>();
         w.description("Scene");

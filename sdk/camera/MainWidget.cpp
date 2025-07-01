@@ -27,7 +27,7 @@ using namespace yq::tachyon;
 
 YQ_TACHYON_IMPLEMENT(MainWidget)
 
-void MainWidget::init_info()
+void MainWidget::init_meta()
 {
     auto w = writer<MainWidget>();
     w.description("Camera SDK Example Main Widget");

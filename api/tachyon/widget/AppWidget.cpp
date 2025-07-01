@@ -16,7 +16,7 @@ namespace yq::tachyon {
     
     ////////////////////
 
-    void AppWidget::init_info()
+    void AppWidget::init_meta()
     {
         auto w = writer<AppWidget>();
         w.description("Application Widget");

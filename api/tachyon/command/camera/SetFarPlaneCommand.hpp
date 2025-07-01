@@ -16,7 +16,7 @@ namespace yq::tachyon {
     
         SetFarPlaneCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  far() const { return m_far; }
         

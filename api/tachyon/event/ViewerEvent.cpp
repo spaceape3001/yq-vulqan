@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerEvent::init_info()
+    void ViewerEvent::init_meta()
     {
         auto w = writer<ViewerEvent>();
         w.description("Viewer event base class");

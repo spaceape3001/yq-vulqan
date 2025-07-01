@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ResumeEvent::init_info()
+    void ResumeEvent::init_meta()
     {
         auto w = writer<ResumeEvent>();
         w.description("Resume Event");

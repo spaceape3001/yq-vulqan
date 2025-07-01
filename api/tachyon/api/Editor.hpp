@@ -60,7 +60,7 @@ namespace yq::tachyon {
         //! Default destructor
         virtual ~Editor();
         
-        static void init_info();
+        static void init_meta();
         
     protected:
 

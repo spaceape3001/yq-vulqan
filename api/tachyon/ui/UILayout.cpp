@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UILayout)
 
 namespace yq::tachyon {
-    void UILayout::init_info()
+    void UILayout::init_meta()
     {
         auto w = writer<UILayout>();
         w.description("UI Layout");

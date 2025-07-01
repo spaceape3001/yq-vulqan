@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ControllerCommand::init_info()
+    void ControllerCommand::init_meta()
     {
         auto w = writer<ControllerCommand>();
         w.description("Controller command base class");

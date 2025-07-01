@@ -31,7 +31,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetWidgetCommand::init_info()
+    void SetWidgetCommand::init_meta()
     {
         auto w = writer<SetWidgetCommand>();
         w.description("Viewer Widget Command");

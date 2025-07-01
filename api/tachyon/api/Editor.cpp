@@ -38,7 +38,7 @@ namespace yq::tachyon {
         content_(u);
     }
     
-    void Editor::init_info()
+    void Editor::init_meta()
     {
         auto w = writer<Editor>();
         w.description("Editor base");

@@ -21,6 +21,6 @@ namespace yq::tachyon {
         CompositeScene();
         ~CompositeScene();
         
-        static void init_info();
+        static void init_meta();
     };
 }

@@ -16,7 +16,7 @@ namespace yq::tachyon {
     
         SetNearPlaneCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  near() const { return m_near; }
         

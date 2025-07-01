@@ -26,7 +26,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void CameraReply::init_info()
+    void CameraReply::init_meta()
     {
         auto w = writer<CameraReply>();
         w.description("Camera reply base class");

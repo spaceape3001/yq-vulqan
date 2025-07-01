@@ -7,7 +7,7 @@
 #include "Diamond3.hpp"
 
 #include <tachyon/logging.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 #include <tachyon/aspect/AVertices3.hxx>
@@ -34,12 +34,12 @@ namespace yq::tachyon {
     };
     IBO<uint16_t>    Diamond³::s_indices(s_kIndices);
 
-    void Diamond³::init_info()
+    void Diamond³::init_meta()
     {
         auto w = writer<Diamond³>();
         w.description("3D diamond render object");
-        MyVertices::init_info(w);
-        ASize³::init_info(w);
+        MyVertices::init_meta(w);
+        ASize³::init_meta(w);
         w.abstract();
         
         w.property("point_east", &Diamond³::point_east);

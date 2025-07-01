@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void SceneCommand::init_info()
+    void SceneCommand::init_meta()
     {
         auto w = writer<SceneCommand>();
         w.abstract();

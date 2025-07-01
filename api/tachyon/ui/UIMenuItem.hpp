@@ -24,7 +24,7 @@ namespace yq::tachyon {
 
         virtual const char*   title() const override;
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         virtual UIMenuItem*       clone() const override;

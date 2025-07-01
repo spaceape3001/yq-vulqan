@@ -35,7 +35,7 @@ namespace yq::tachyon {
         return new SetHeadingCommand(*this, h); 
     }
     
-    void SetHeadingCommand::init_info()
+    void SetHeadingCommand::init_meta()
     {
         auto w = writer<SetHeadingCommand>();
         w.description("Set Heading Command");

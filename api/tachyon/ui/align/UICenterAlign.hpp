@@ -21,7 +21,7 @@ namespace yq::tachyon {
         UICenterAlign(const UICenterAlign&);
         ~UICenterAlign();
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         using UIElements::render;

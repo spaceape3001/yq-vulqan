@@ -26,7 +26,7 @@ namespace yq::tachyon {
         return new EmptyEvent(*this, h);
     }
     
-    void EmptyEvent::init_info()
+    void EmptyEvent::init_meta()
     {
         auto w = writer<EmptyEvent>();
         w.description("Empty Event");

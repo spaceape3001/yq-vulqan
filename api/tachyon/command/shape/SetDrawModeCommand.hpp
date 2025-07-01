@@ -16,7 +16,7 @@ namespace yq::tachyon {
         SetDrawModeCommand(const Header&, DrawMode);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         DrawMode        draw_mode() const { return m_drawMode; }
         void            set_draw_mode(DrawMode);

@@ -15,7 +15,7 @@
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
 
-void SceneEditor::ScenesTableUI::init_info()
+void SceneEditor::ScenesTableUI::init_meta()
 {
     auto w = writer<ScenesTableUI>();
     w.description("Scene Editor's Scene Table");

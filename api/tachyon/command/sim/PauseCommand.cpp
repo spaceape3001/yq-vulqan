@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void PauseCommand::init_info()
+    void PauseCommand::init_meta()
     {
         auto w = writer<PauseCommand>();
         w.description("Pause Command");

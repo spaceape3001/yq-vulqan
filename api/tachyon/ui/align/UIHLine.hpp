@@ -25,6 +25,6 @@ namespace yq::tachyon {
         
         UIHLine*     clone() const;
         
-        static void init_info();
+        static void init_meta();
     };
 }

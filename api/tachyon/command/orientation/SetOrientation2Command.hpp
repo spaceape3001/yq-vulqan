@@ -21,7 +21,7 @@ namespace yq::tachyon {
     
         const Spinor2D&   orientation() const  { return m_orientation; }
         
-        static void init_info();
+        static void init_meta();
         
         double  a() const { return m_orientation.a; }
         double  xy() const { return m_orientation.xy; }

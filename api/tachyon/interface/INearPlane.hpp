@@ -26,6 +26,6 @@ namespace yq::tachyon {
         INearPlane();
         virtual ~INearPlane();
         
-        static void init_info();
+        static void init_meta();
     };
 }

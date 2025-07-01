@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
     }
     
-    void MouseGLFW::init_info()
+    void MouseGLFW::init_meta()
     {
         auto w = writer<MouseGLFW>();
         w.description("GLFW Mouse");

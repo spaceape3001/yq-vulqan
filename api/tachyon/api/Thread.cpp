@@ -100,7 +100,7 @@ namespace yq::tachyon {
     StdThreadRevMap             Thread::s_rthreads;
     std::vector<TachyonPtr>     Thread::s_misfits;
 
-    void Thread::init_info()
+    void Thread::init_meta()
     {
         auto w = writer<Thread>();
         w.description("Thread of execution");

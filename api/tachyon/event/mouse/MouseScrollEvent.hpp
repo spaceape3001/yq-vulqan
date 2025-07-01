@@ -14,7 +14,7 @@ namespace yq::tachyon {
     public:
         MouseScrollEvent(const Header&, ModifierKeys, const Vector2D&, MouseButtons, const Vector2D& delta);
         
-        static void init_info();
+        static void init_meta();
         
         const Vector2D& delta() const { return m_delta; }
         double          delta_x() const { return m_delta.x; }

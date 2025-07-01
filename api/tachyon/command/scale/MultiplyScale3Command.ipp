@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MultiplyScale³Command(*this, h);
     }
     
-    void MultiplyScale³Command::init_info()
+    void MultiplyScale³Command::init_meta()
     {
         auto w = writer<MultiplyScale³Command>();
         w.description("Multiply Scale Command");

@@ -47,7 +47,7 @@ namespace yq::tachyon {
         float           u() const { return m_data.uv.u; }
         float           v() const { return m_data.uv.v; }
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         AppendVertex³Command(const AppendVertex³Command&, const Header&);

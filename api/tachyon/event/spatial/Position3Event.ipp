@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new Position³Event(*this, h);
     }
    
-    void Position³Event::init_info()
+    void Position³Event::init_meta()
     {
         auto w = writer<Position³Event>();
         w.description("Position Positiond Event in 3D");

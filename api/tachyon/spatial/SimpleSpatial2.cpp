@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/spatial/SimpleSpatial2.hpp>
-#include <tachyon/api/Spatial2InfoWriter.hpp>
+#include <tachyon/api/Spatial2MetaWriter.hpp>
 #include <tachyon/aspect/AOrientation2Writer.hxx>
 #include <tachyon/aspect/APosition2Writer.hxx>
 #include <tachyon/aspect/AScale2Writer.hxx>
@@ -111,13 +111,13 @@ namespace yq::tachyon {
         );
     }
 
-    void SimpleSpatial²::init_info()
+    void SimpleSpatial²::init_meta()
     {
         auto w = writer<SimpleSpatial²>();
         
-        APosition²::init_info(w);
-        AScale²::init_info(w);
-        AOrientation²::init_info(w);
+        APosition²::init_meta(w);
+        AScale²::init_meta(w);
+        AOrientation²::init_meta(w);
         
         w.slot(&SimpleSpatial²::on_move²);
         w.slot(&SimpleSpatial²::on_moveˣ);

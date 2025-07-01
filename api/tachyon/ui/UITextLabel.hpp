@@ -21,7 +21,7 @@ namespace yq::tachyon {
         virtual ~UITextLabel();
         void    render() override;
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         UITextLabel*  clone() const override;

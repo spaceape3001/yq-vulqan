@@ -24,7 +24,7 @@ namespace yq::tachyon {
         return new UIDocker(*this);
     }
     
-    void UIDocker::init_info()
+    void UIDocker::init_meta()
     {
         auto w = writer<UIDocker>();
         w.description("Dockering UI Element");

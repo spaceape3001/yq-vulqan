@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MinSize⁴Event(*this, h);
     }
    
-    void MinSize⁴Event::init_info()
+    void MinSize⁴Event::init_meta()
     {
         auto w = writer<MinSize⁴Event>();
         w.description("Min Size Event in 4D");

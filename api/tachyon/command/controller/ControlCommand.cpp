@@ -32,7 +32,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ControlCommand::init_info()
+    void ControlCommand::init_meta()
     {
         auto w = writer<ControlCommand>();
         w.description("Control Command");

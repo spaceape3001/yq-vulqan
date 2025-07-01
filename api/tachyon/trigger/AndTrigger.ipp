@@ -36,7 +36,7 @@ namespace yq::tachyon {
         return true;
     }
     
-    void AndTrigger::init_info()
+    void AndTrigger::init_meta()
     {
         auto w = writer<AndTrigger>();
         w.description("An OR post trigger based on other triggers");

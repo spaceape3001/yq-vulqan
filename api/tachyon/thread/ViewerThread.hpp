@@ -27,7 +27,7 @@ namespace yq::tachyon {
     
         ViewerThread(const Param&p = Param());
         ~ViewerThread();
-        static void init_info();
+        static void init_meta();
         
     private:
         friend class Application;

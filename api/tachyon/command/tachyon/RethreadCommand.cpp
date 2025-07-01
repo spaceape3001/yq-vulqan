@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new RethreadCommand(*this, h);
     }
     
-    void RethreadCommand::init_info()
+    void RethreadCommand::init_meta()
     {
         auto w = writer<RethreadCommand>();
         w.description("Rethread Command");

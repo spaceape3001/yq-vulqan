@@ -8,14 +8,14 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/tags.hpp>
 
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
 
 namespace yq::tachyon {
-    void GradTriangle³::init_info()
+    void GradTriangle³::init_meta()
     {
         auto w = writer<GradTriangle³>(UNSAFE);
         w.description("Gradient Triangle in 3D");

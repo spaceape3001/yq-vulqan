@@ -19,7 +19,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void APosition¹::init_info(TachyonMeta::Writer<C>& w)
+    void APosition¹::init_meta(TachyonMeta::Writer<C>& w)
     {
         w.template interface<IPosition¹>();
         w.property(UNSAFE, "position", &APosition¹::m_position).tag(kTag_Save);

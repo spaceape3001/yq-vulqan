@@ -32,7 +32,7 @@ namespace yq::tachyon {
         m_state = v;
     }
 
-    void UICheckBox_Simple::init_info()
+    void UICheckBox_Simple::init_meta()
     {
         auto w = writer<UICheckBox_Simple>();
         w.description("Simple Stateful UI Checkbox");

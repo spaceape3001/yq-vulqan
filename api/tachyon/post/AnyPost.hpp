@@ -22,7 +22,7 @@ namespace yq::tachyon {
     
         const Any&    value() const { return m_value; }
         
-        static void init_info();
+        static void init_meta();
     
     protected:
         ~AnyPost();

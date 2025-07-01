@@ -17,7 +17,7 @@ namespace yq::tachyon {
 
         const std::string&    title() const { return m_title; }
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         TitleCommand(const TitleCommand&, const Header&);

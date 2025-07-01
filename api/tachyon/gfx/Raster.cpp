@@ -309,7 +309,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
     
-    void    Raster::init_info()
+    void    Raster::init_meta()
     {
         auto w = writer<Raster>();
         w.description("Raster Image Asset");

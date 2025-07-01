@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class HUDLayer : public Layer {
         YQ_TACHYON_DECLARE(HUDLayer, Layer)
     public:
-        static void init_info();
+        static void init_meta();
         HUDLayer();
         ~HUDLayer();
     };

@@ -14,7 +14,7 @@ namespace yq::tachyon {
     IColor::IColor() = default;
     IColor::~IColor() = default;
 
-    void IColor::init_info()
+    void IColor::init_meta()
     {
         auto w = writer<IColor>();
         w.description("Color (RGBA-float) Interface");

@@ -24,6 +24,6 @@ namespace yq::tachyon {
         NullCamera(const Param&p={});
         ~NullCamera();
         
-        static void init_info();
+        static void init_meta();
     };
 }

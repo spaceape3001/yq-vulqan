@@ -23,7 +23,7 @@ public:
     PostCPtr    clone(rebind_k, const Header&) const override;
 
     SceneID        scene() const { return m_scene; }
-    static void init_info();
+    static void init_meta();
 private:
     SceneID        m_scene;
 };

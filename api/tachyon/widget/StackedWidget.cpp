@@ -48,7 +48,7 @@ namespace yq::tachyon {
     StackedWidget::StackedWidget() = default;
     StackedWidget::~StackedWidget() = default;
     
-    void StackedWidget::init_info()
+    void StackedWidget::init_meta()
     {
         auto w = writer<StackedWidget>();
         w.description("Stacked, as in one widget at a time");

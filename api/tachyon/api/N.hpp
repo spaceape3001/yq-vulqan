@@ -39,7 +39,7 @@ namespace yq::tachyon {
         void            set_spatial(SpatialID);
 
         template <typename C>
-        static void     init_info(TachyonMeta::Writer<C>&);
+        static void     init_meta(TachyonMeta::Writer<C>&);
 
     protected:
         И();

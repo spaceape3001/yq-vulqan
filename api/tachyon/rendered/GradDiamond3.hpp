@@ -14,7 +14,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(GradDiamond³, Diamond³)
     public:
     
-        static void init_info();
+        static void init_meta();
         
         GradDiamond³(const Param& p={});
         GradDiamond³(const Size3D&sz, const Param& p={});

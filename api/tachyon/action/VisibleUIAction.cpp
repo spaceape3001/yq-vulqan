@@ -98,7 +98,7 @@ namespace yq::tachyon {
         return false;
     }
     
-    void VisibleUIAction::init_info()
+    void VisibleUIAction::init_meta()
     {
         auto w = writer<VisibleUIAction>();
         w.description("Visible UI Action");

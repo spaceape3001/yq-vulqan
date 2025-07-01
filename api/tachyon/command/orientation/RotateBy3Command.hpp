@@ -21,7 +21,7 @@ namespace yq::tachyon {
     
         const Quaternion3D&   δ() const  { return m_δ; }
         
-        static void init_info();
+        static void init_meta();
         
         double δw() const { return m_δ.w; }
         double δx() const { return m_δ.x; }

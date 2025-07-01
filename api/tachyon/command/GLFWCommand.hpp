@@ -27,6 +27,6 @@ namespace yq::tachyon {
         GLFWCommand(const Param& p = {});
         virtual ~GLFWCommand();
         
-        static void init_info();
+        static void init_meta();
     };
 }

@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void ColorEvent::init_info()
+    void ColorEvent::init_meta()
     {
         auto w = writer<ColorEvent>();
         w.abstract();

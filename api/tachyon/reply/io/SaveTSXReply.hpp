@@ -16,7 +16,7 @@ namespace yq::tachyon {
         SaveTSXReply(const Header&, const RequestCPtr&, Response);
         Response     response() const { return m_response; }
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void  init_info();
+        static void  init_meta();
 
     protected:
         SaveTSXReply(const SaveTSXReply&, const Header&);

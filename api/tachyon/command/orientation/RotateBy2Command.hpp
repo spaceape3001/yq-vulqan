@@ -21,7 +21,7 @@ namespace yq::tachyon {
     
         const Spinor2D&   δ() const  { return m_δ; }
         
-        static void init_info();
+        static void init_meta();
         
         double δa() const { return m_δ.a; }
         double δxy() const { return m_δ.xy; }

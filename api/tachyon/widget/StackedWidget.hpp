@@ -42,7 +42,7 @@ namespace yq::tachyon {
         //! Default destructor
         ~StackedWidget();
         
-        static void init_info();
+        static void init_meta();
     
     private:
         size_t          m_active    = 0;

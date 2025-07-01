@@ -48,7 +48,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(GraphicsCard, Tachyon)
     public:    
     
-        static void init_info();
+        static void init_meta();
 
         GraphicsCardID            id() const { return GraphicsCardID(UniqueID::id()); }
 

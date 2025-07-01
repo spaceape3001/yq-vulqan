@@ -25,6 +25,6 @@ namespace yq::tachyon {
         //! Imgui render
         virtual void    imgui(ViContext&) override;
         
-        static void init_info();
+        static void init_meta();
     };
 }

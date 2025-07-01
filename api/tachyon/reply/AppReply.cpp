@@ -33,7 +33,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void AppReply::init_info()
+    void AppReply::init_meta()
     {
         auto w = writer<AppReply>();
         w.description("App reply base class");

@@ -28,7 +28,7 @@ namespace yq::tachyon {
         ~NandTrigger();
         Result match(const Post&) const override;
     
-        static void init_info();
+        static void init_meta();
 
     private:
         std::vector<TriggerCPtr> m_triggers;

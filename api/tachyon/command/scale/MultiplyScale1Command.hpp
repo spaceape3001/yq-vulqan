@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         const Vector1D&   δ() const  { return m_δ; }
         
-        static void init_info();
+        static void init_meta();
         
         double  δx() const { return m_δ.x; }
         

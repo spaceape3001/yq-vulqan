@@ -42,7 +42,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetVertexNormal²Command::init_info()
+    void SetVertexNormal²Command::init_meta()
     {
         auto w = writer<SetVertexNormal²Command>();
         w.description("Set Vertex 2D Normal Command");

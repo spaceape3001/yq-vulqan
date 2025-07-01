@@ -30,7 +30,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void CursorHideCommand::init_info()
+    void CursorHideCommand::init_meta()
     {
         auto w = writer<CursorHideCommand>();
         w.description("Cursor Hide Command");

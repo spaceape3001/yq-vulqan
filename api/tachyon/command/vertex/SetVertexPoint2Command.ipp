@@ -42,7 +42,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetVertexPoint²Command::init_info()
+    void SetVertexPoint²Command::init_meta()
     {
         auto w = writer<SetVertexPoint²Command>();
         w.description("Set Vertex 2D Point Command");

@@ -25,7 +25,7 @@ namespace yq::tachyon {
         virtual AxBox2F viewport() const override;
         virtual AxBox2F viewport(content_k) const override;
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         UIAppMain* clone() const;

@@ -28,7 +28,7 @@ namespace yq::tachyon {
 
     ////////////////////////////
 
-    void UIForm::init_info()
+    void UIForm::init_meta()
     {
         auto w = writer<UIForm>();
         w.description("UI Form");

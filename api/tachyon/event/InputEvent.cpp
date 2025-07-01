@@ -101,7 +101,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void InputEvent::init_info()
+    void InputEvent::init_meta()
     {
         auto w = writer<InputEvent>();
         w.description("Input event base class");

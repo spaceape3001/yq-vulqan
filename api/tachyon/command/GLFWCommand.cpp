@@ -28,7 +28,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void GLFWCommand::init_info()
+    void GLFWCommand::init_meta()
     {
         auto w = writer<GLFWCommand>();
         w.description("GLFW command base class");

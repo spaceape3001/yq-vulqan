@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new SetSize⁴Command(*this, h);
     }
     
-    void SetSize⁴Command::init_info()
+    void SetSize⁴Command::init_meta()
     {
         auto w = writer<SetSize⁴Command>();
         w.description("Set Size Command in 4D");

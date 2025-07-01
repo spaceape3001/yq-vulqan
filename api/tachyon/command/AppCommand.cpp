@@ -32,7 +32,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void AppCommand::init_info()
+    void AppCommand::init_meta()
     {
         auto w = writer<AppCommand>();
         w.description("App command base class");

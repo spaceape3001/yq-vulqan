@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new AddPosition²Command(*this, h);
     }
 
-    void AddPosition²Command::init_info()
+    void AddPosition²Command::init_meta()
     {
         auto w = writer<AddPosition²Command>();
         w.description("Position AddPosition Command in 2D");

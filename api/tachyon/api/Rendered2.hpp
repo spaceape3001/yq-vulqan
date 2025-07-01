@@ -20,11 +20,11 @@ namespace yq::tachyon {
         
     /*! \brief Information for the render2D object
     */
-    class Rendered²Info : public RenderedMeta {
+    class Rendered²Meta : public RenderedMeta {
     public:
         template <typename C> struct Writer;
 
-        Rendered²Info(std::string_view, RenderedMeta&, const std::source_location& sl = std::source_location::current());
+        Rendered²Meta(std::string_view, RenderedMeta&, const std::source_location& sl = std::source_location::current());
     };
 
     /*! \brief Something that's rendered with a defined position, size, etc
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         \note ONCE it's here, it's considered "fixed" into abstract graphical units.
     */
     class Rendered² : public Rendered, public ② {
-        YQ_TACHYON_INFO(Rendered²Info);
+        YQ_TACHYON_INFO(Rendered²Meta);
         YQ_TACHYON_DATA(Rendered²Data);
         YQ_TACHYON_SNAP(Rendered²Snap);
         YQ_TACHYON_DECLARE(Rendered², Rendered)
@@ -52,7 +52,7 @@ namespace yq::tachyon {
     
         using Rendered::mark;
 
-        static void init_info();
+        static void init_meta();
 
         Rendered²ID id() const { return Rendered²ID(UniqueID::id()); }
 

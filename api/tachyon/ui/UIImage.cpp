@@ -18,7 +18,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::UIImage)
 
 namespace yq::tachyon {
 
-    void UIImage::init_info()
+    void UIImage::init_meta()
     {
         auto w = writer<UIImage>();
         w.description("UI Image Element");

@@ -33,7 +33,7 @@ namespace yq::tachyon {
         return new AddSize³Command(*this, h);
     }
     
-    void AddSize³Command::init_info()
+    void AddSize³Command::init_meta()
     {
         auto w = writer<AddSize³Command>();
         w.description("Add Size Command");

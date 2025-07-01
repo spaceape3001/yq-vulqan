@@ -20,7 +20,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(InputEvent, Event)
     public:
     
-        static void init_info();
+        static void init_meta();
         
         ModifierKeys        modifiers() const { return m_modifiers; }
         

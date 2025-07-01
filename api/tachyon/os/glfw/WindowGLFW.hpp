@@ -50,7 +50,7 @@ namespace yq::tachyon {
         WindowGLFW(DesktopGLFW*, GLFWwindow*, const ViewerCreateInfo&);
         ~WindowGLFW();
         
-        static void init_info();
+        static void init_meta();
 
         static WindowGLFW*  window(ptr_k, GLFWwindow*);
         static WindowID     window(GLFWwindow*);

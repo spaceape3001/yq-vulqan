@@ -16,7 +16,7 @@ namespace yq::tachyon {
     
         SetScreenCommand(const Header&, const Rectangle2D&);
         
-        static void init_info();
+        static void init_meta();
         
         const Rectangle2D&  screen() const { return m_screen; }
         

@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(GraphicsCardReply, Reply)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         GraphicsCardReply(const Header&, const RequestCPtr&);

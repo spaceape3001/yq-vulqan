@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new Size⁴Event(*this, h);
     }
    
-    void Size⁴Event::init_info()
+    void Size⁴Event::init_meta()
     {
         auto w = writer<Size⁴Event>();
         w.description("Size Event in 4D");

@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         const AxBox4D&   aabb() const  { return m_aabb; }
         
-        static void init_info();
+        static void init_meta();
         
         double  lx() const { return m_aabb.lo.x; }
         double  ly() const { return m_aabb.lo.y; }

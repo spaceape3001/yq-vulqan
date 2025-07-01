@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AbstractShape3.hpp"
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/aspect/ABgColorWriter.hxx>
 #include <tachyon/aspect/AColorWriter.hxx>
 #include <tachyon/aspect/ADrawModeWriter.hxx>
@@ -16,14 +16,14 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AbstractShape³)
 
 namespace yq::tachyon {
-    void AbstractShape³::init_info()
+    void AbstractShape³::init_meta()
     {
         auto w = writer<AbstractShape³>();
         w.abstract();
         w.description("Abstract 3D shape");
-        //ADrawMode::init_info(w);
-        //AColor::init_info(w);
-        //ABgColor::init_info(w);
+        //ADrawMode::init_meta(w);
+        //AColor::init_meta(w);
+        //ABgColor::init_meta(w);
     }
     
     AbstractShape³::VertexC  AbstractShape³::vc(const Vertex³&v)

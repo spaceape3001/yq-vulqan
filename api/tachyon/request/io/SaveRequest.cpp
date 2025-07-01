@@ -47,7 +47,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SaveRequest::init_info()
+    void SaveRequest::init_meta()
     {
         auto w = writer<SaveRequest>();
         w.description("Device Request");

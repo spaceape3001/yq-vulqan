@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void HideCommand::init_info()
+    void HideCommand::init_meta()
     {
         auto w = writer<HideCommand>();
         w.description("Hide Command");

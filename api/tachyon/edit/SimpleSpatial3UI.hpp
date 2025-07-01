@@ -19,6 +19,6 @@ namespace yq::tachyon {
         
         //  eventually the parent spatial?
         
-        static void init_info();
+        static void init_meta();
     };
 }

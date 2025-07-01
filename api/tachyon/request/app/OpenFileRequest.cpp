@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void OpenFileRequest::init_info()
+    void OpenFileRequest::init_meta()
     {
         auto w = writer<OpenFileRequest>();
         w.description("Browse to Open Request");

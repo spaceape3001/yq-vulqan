@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ThreadEvent::init_info()
+    void ThreadEvent::init_meta()
     {
         auto w = writer<ThreadEvent>();
         w.description("Thread event base class");

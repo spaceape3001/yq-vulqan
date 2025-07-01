@@ -31,7 +31,7 @@ namespace yq::tachyon {
         return new ViewerScreenshotReply(*this, h);
     }
     
-    void ViewerScreenshotReply::init_info()
+    void ViewerScreenshotReply::init_meta()
     {
         auto w = writer<ViewerScreenshotReply>();
         w.description("ViewerScreenshot Reply");

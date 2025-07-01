@@ -38,7 +38,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Command::init_info()
+    void Command::init_meta()
     {
         auto w = writer<Command>();
         w.description("Abstract Command Class");

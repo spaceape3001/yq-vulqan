@@ -14,7 +14,7 @@ namespace yq::tachyon {
     class LoadTSXReply : public IOReply {
         YQ_OBJECT_DECLARE(LoadTSXReply, IOReply)
     public:
-        static void  init_info();
+        static void  init_meta();
         
         LoadTSXReply(const Header&, const RequestCPtr&, Response);
         LoadTSXReply(const Header&, const RequestCPtr&, const TachyonIDSet&);

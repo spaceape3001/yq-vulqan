@@ -28,7 +28,7 @@ PostCPtr    RenderedSelectEvent::clone(rebind_k, const Header&h) const
     return new RenderedSelectEvent(*this, h);
 }
 
-void RenderedSelectEvent::init_info()
+void RenderedSelectEvent::init_meta()
 {
     auto w = writer<RenderedSelectEvent>();
     w.description("Rendered Selection Event");

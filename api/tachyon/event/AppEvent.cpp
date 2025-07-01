@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void AppEvent::init_info()
+    void AppEvent::init_meta()
     {
         auto w = writer<AppEvent>();
         w.abstract();

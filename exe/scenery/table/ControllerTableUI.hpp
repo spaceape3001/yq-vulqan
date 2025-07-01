@@ -19,7 +19,7 @@ using namespace yq::tachyon;
 class ControllerTableUI : public UIElement {
     YQ_OBJECT_DECLARE(ControllerTableUI, UIElement)
 public:
-    static void init_info();
+    static void init_meta();
     
     ControllerTableUI(UIFlags flags={});
     ControllerTableUI(const ControllerTableUI& cp);

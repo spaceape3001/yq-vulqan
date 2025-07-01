@@ -23,7 +23,7 @@ namespace yq::tachyon {
         SaveRequest(const Header&, const SaveCommand&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const TachyonIDSet&     tachyons() const { return m_tachyons; }
         

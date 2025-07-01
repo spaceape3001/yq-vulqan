@@ -30,7 +30,7 @@ namespace yq::tachyon {
         return new PitchByCommand(*this, h);
     }
     
-    void PitchByCommand::init_info()
+    void PitchByCommand::init_meta()
     {
         auto w = writer<PitchByCommand>();
         w.description("Pitch By Command");

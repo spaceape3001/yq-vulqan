@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void MouseCommand::init_info()
+    void MouseCommand::init_meta()
     {
         auto w = writer<MouseCommand>();
         w.description("Mouse command base class");

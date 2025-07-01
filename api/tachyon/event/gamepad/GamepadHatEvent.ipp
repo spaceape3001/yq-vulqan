@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadHatEvent::init_info()
+    void GamepadHatEvent::init_meta()
     {
         auto w = writer<GamepadHatEvent>();
         w.description("Gamepad Hat Event");

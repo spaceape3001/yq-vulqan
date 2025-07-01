@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void WindowRequest::init_info()
+    void WindowRequest::init_meta()
     {
         auto w = writer<WindowRequest>();
         w.description("Window request base class");

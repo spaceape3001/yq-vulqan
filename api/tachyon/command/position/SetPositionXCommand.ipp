@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new SetPositionˣCommand(*this, h);
     }
     
-    void SetPositionˣCommand::init_info()
+    void SetPositionˣCommand::init_meta()
     {
         auto w = writer<SetPositionˣCommand>();
         w.description("Set Position Command");

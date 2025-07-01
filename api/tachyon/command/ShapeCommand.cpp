@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void ShapeCommand::init_info()
+    void ShapeCommand::init_meta()
     {
         auto w = writer<ShapeCommand>();
         w.abstract();

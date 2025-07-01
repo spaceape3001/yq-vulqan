@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         MultiplyPositionᶻCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  δz() const { return m_δz; }
         

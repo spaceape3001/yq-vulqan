@@ -27,7 +27,7 @@ namespace yq::tachyon {
         return new MouseDropEvent(*this, h);
     }
 
-    void MouseDropEvent::init_info()
+    void MouseDropEvent::init_meta()
     {
         auto w = writer<MouseDropEvent>();
         w.description("Mouse Drop Event");

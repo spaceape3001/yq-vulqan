@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void EditorReply::init_info()
+    void EditorReply::init_meta()
     {
         auto w = writer<EditorReply>();
         w.description("Editor reply base class");

@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MultiplyMinSizeʷCommand(*this, h);
     }
 
-    void MultiplyMinSizeʷCommand::init_info()
+    void MultiplyMinSizeʷCommand::init_meta()
     {
         auto w = writer<MultiplyMinSizeʷCommand>();
         w.description("MultiplyMin Size Command");

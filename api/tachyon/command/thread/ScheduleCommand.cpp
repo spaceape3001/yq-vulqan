@@ -35,7 +35,7 @@ namespace yq::tachyon {
         return new ScheduleCommand(*this, h);
     }
     
-    void ScheduleCommand::init_info()
+    void ScheduleCommand::init_meta()
     {
         auto w = writer<ScheduleCommand>();
         w.description("Schedule Command");

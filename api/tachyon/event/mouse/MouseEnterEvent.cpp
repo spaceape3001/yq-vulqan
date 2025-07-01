@@ -27,7 +27,7 @@ namespace yq::tachyon {
         return new MouseEnterEvent(*this, h);
     }
 
-    void MouseEnterEvent::init_info()
+    void MouseEnterEvent::init_meta()
     {
         auto w = writer<MouseEnterEvent>();
         w.description("Mouse Enter Event");

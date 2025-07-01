@@ -16,7 +16,7 @@ namespace yq::tachyon {
         ColorChangeEvent(const Header&, const RGBA4F&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const RGBA4F& color() const { return m_color; }
         void            set_color(const RGBA4F&);

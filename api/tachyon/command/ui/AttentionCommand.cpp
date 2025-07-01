@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void AttentionCommand::init_info()
+    void AttentionCommand::init_meta()
     {
         auto w = writer<AttentionCommand>();
         w.description("Attention Command");

@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SimpleSpatial³UI)
 
 namespace yq::tachyon {
-    void SimpleSpatial³UI::init_info()
+    void SimpleSpatial³UI::init_meta()
     {
         auto w = writer<SimpleSpatial³UI>();
         w.description("UIEditor for SimpleSpatial³");

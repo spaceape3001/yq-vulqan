@@ -36,7 +36,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SaveCommand::init_info()
+    void SaveCommand::init_meta()
     {
         auto w = writer<SaveCommand>();
         w.description("Save Command");

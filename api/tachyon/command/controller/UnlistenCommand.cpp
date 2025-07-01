@@ -32,7 +32,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void UnlistenCommand::init_info()
+    void UnlistenCommand::init_meta()
     {
         auto w = writer<UnlistenCommand>();
         w.description("Unlisten Command");

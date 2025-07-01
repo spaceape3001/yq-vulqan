@@ -9,13 +9,13 @@
 #include <yq/shape/AxBox2.hpp>
 
 #include <tachyon/gfx/Shader.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 
 namespace yq::tachyon {
 
-    void ImageQuad³::init_info()
+    void ImageQuad³::init_meta()
     {
         auto w = writer<ImageQuad³>();
         {

@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void JoystickZeroEvent::init_info()
+    void JoystickZeroEvent::init_meta()
     {
         auto w = writer<JoystickZeroEvent>();
         w.description("Joystick Zeroion Event");

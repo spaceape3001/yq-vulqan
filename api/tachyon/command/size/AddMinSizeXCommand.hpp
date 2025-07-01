@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         AddMinSizeˣCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  Δx() const { return m_Δx; }
         

@@ -20,7 +20,7 @@ namespace yq::tachyon {
     
         ImGuiEnableKeyboardCommand(const Header&);
         
-        static void init_info();
+        static void init_meta();
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 

@@ -14,6 +14,6 @@ namespace yq::tachyon {
     public:
         ForegroundScene();
         ~ForegroundScene();
-        static void init_info();
+        static void init_meta();
     };
 }

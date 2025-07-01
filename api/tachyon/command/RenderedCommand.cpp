@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void RenderedCommand::init_info()
+    void RenderedCommand::init_meta()
     {
         auto w = writer<RenderedCommand>();
         w.abstract();

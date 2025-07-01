@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void CameraCommand::init_info()
+    void CameraCommand::init_meta()
     {
         auto w = writer<CameraCommand>();
         w.description("Camera command base class");

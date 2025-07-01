@@ -34,7 +34,7 @@ public:
     void        imgui(ViContext&) override;
     Execution   setup(const Context& ctx) override;
     
-    static void init_info();
+    static void init_meta();
     
 private:
     

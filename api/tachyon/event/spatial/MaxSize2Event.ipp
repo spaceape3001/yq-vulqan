@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MaxSize²Event(*this, h);
     }
    
-    void MaxSize²Event::init_info()
+    void MaxSize²Event::init_meta()
     {
         auto w = writer<MaxSize²Event>();
         w.description("Max Size Event in 2D");

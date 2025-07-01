@@ -14,7 +14,7 @@ namespace yq::tachyon {
     public:
     
         MouseDropEvent(const Header&, ModifierKeys, const Vector2D&, MouseButtons, std::vector<std::string>&&);
-        static void init_info();
+        static void init_meta();
         
         const std::vector<std::string>& paths() const { return m_paths; }
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

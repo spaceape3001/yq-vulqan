@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Rendered2.hpp>
-#include <tachyon/api/Rendered2InfoWriter.hpp>
+#include <tachyon/api/Rendered2MetaWriter.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
 #include <yq/tensor/Tensor44.hxx>
 #include <tachyon/api/2DWriter.hxx>
@@ -17,7 +17,7 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    Rendered²Info::Rendered²Info(std::string_view name, RenderedMeta& base, const std::source_location& sl) : 
+    Rendered²Meta::Rendered²Meta(std::string_view name, RenderedMeta& base, const std::source_location& sl) : 
         RenderedMeta(name, base, sl)
     {
         //set(Flag::RENDER2D);
@@ -69,10 +69,10 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void    Rendered²::init_info()
+    void    Rendered²::init_meta()
     {
         auto w   = writer<Rendered²>();
-        ②::init_info(w);
+        ②::init_meta(w);
         w.description("Rendered in 2D");
         w.abstract();
 

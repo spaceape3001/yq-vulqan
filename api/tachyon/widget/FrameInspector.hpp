@@ -22,7 +22,7 @@ namespace yq::tachyon {
         
         Execution setup(const Context&) override;
         
-        static void init_info();
+        static void init_meta();
         
         class Pane;
 

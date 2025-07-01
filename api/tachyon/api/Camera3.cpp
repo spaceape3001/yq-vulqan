@@ -6,7 +6,7 @@
 
 #include <tachyon/api/Camera3.hpp>
 #include <tachyon/api/Camera3Data.hpp>
-#include <tachyon/api/Camera3InfoWriter.hpp>
+#include <tachyon/api/Camera3MetaWriter.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
 #include <tachyon/command/camera/SetScreenCommand.hpp>
 #include <tachyon/spatial/SimpleSpatial3.hpp>
@@ -18,13 +18,13 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Camera³ID)
 
 namespace yq::tachyon {
-    Camera³Info::Camera³Info(std::string_view name, CameraMeta& base, const std::source_location& sl) :
+    Camera³Meta::Camera³Meta(std::string_view name, CameraMeta& base, const std::source_location& sl) :
         CameraMeta(name, base, sl)
     {
         set(Type::Camera³);
     }
 
-    Camera³Info::~Camera³Info()
+    Camera³Meta::~Camera³Meta()
     {
     }
     
@@ -67,10 +67,10 @@ namespace yq::tachyon {
         sn.screen   = m_screen;
     }
 
-    void Camera³::init_info()
+    void Camera³::init_meta()
     {
         auto w = writer<Camera³>();
-        ③::init_info(w);
+        ③::init_meta(w);
         w.description("Camera in 3D");
         w.slot(&Camera³::on_set_screen);
         w.abstract();

@@ -27,7 +27,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    void UIWindow::init_info()
+    void UIWindow::init_meta()
     {
         auto w = writer<UIWindow>();
         w.description("\"Window\" in ImGui (not to be confused with the OS/Desktop Window)");

@@ -151,7 +151,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    void MonitorGLFW::MonitorGLFW::init_info()
+    void MonitorGLFW::MonitorGLFW::init_meta()
     {
         auto w = writer<MonitorGLFW>();
         w.description("GLFW Monitor");

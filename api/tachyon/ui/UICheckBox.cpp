@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICheckBox)
 
 namespace yq::tachyon {
-    void UICheckBox::init_info()
+    void UICheckBox::init_meta()
     {
         auto w = writer<UICheckBox>();
         w.description("UI CheckBox");

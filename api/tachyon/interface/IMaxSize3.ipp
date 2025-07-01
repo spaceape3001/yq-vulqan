@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMaxSize³)
 
 namespace yq::tachyon {
-    void    IMaxSize³::init_info()
+    void    IMaxSize³::init_meta()
     {
         auto w = writer<IMaxSize³>();
         w.description("3D Size");

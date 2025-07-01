@@ -18,7 +18,7 @@ namespace yq::tachyon {
         IOThread(const Param&p = Param{});
         ~IOThread();
         
-        static void init_info();
+        static void init_meta();
 
     private:
         friend class Application;

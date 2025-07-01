@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new SetAABB²(*this, h);
     }
 
-    void SetAABB²::init_info()
+    void SetAABB²::init_meta()
     {
         auto w = writer<SetAABB²>();
         w.description("Set AABB Command");

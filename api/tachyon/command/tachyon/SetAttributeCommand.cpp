@@ -35,7 +35,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetAttributeCommand::init_info()
+    void SetAttributeCommand::init_meta()
     {
         auto w = writer<SetAttributeCommand>();
         w.description("Set Attribute Command");

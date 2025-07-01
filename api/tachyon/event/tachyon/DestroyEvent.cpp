@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void DestroyEvent::init_info()
+    void DestroyEvent::init_meta()
     {
         auto w = writer<DestroyEvent>();
         w.description("Destroy Event");

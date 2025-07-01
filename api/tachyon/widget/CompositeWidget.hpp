@@ -20,7 +20,7 @@ namespace yq::tachyon {
 
         virtual void    prerecord(ViContext&) override;
 
-        static void init_info();
+        static void init_meta();
         
     protected:
         using camera_tweaks_t   = std::vector<CameraTweakCPtr>;

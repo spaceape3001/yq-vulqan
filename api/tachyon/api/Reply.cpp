@@ -43,7 +43,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Reply::init_info()
+    void Reply::init_meta()
     {
         auto w = writer<Reply>();
         w.description("Abstract Reply Class");

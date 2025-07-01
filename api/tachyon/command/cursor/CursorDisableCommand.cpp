@@ -30,7 +30,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void CursorDisableCommand::init_info()
+    void CursorDisableCommand::init_meta()
     {
         auto w = writer<CursorDisableCommand>();
         w.description("Cursor Disable Command");

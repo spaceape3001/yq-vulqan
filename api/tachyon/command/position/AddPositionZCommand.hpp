@@ -16,7 +16,7 @@ namespace yq::tachyon {
     public:
         AddPositionᶻCommand(const Header&, double Δz);
     
-        static void init_info();
+        static void init_meta();
         
         double  Δz() const { return m_Δz; }
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

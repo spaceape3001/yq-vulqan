@@ -30,7 +30,7 @@ namespace yq::tachyon {
         return new YawByCommand(*this, h); 
     }
     
-    void YawByCommand::init_info()
+    void YawByCommand::init_meta()
     {
         auto w = writer<YawByCommand>();
         w.description("Yaw By Command");

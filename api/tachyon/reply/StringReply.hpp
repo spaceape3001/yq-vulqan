@@ -19,7 +19,7 @@ namespace yq::tachyon {
         
         StringReply(const Header&, const RequestCPtr&, std::string_view);
         const std::string&    text() const { return m_text; }
-        static void init_info();
+        static void init_meta();
 
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 

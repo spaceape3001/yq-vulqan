@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadReleaseEvent::init_info()
+    void GamepadReleaseEvent::init_meta()
     {
         auto w = writer<GamepadReleaseEvent>();
         w.description("Gamepad Release Event");

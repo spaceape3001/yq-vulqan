@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void SpatialCommand::init_info()
+    void SpatialCommand::init_meta()
     {
         auto w = writer<SpatialCommand>();
         w.abstract();

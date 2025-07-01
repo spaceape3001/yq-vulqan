@@ -24,7 +24,7 @@ namespace yq::tachyon {
             //DrawMode    draw_mode   = kDefDrawMode;
         };
         
-        static void init_info();
+        static void init_meta();
 
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;

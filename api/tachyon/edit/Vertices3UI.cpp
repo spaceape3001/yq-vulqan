@@ -16,7 +16,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Vertices³UI)
 
 namespace yq::tachyon {
-    void Vertices³UI::init_info()
+    void Vertices³UI::init_meta()
     {
         auto w = writer<Vertices³UI>();
         w.description("UIEditor for Vertices³");

@@ -7,7 +7,7 @@
 #include "SkyBox3.hpp"
 #include <tachyon/logging.hpp>
 #include <tachyon/gfx/Shader.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 
 namespace yq::tachyon {
 
@@ -48,7 +48,7 @@ namespace yq::tachyon {
     };
 
 
-    void SkyBox³::init_info()
+    void SkyBox³::init_meta()
     {
         auto w = writer<SkyBox³>();
         w.category("Background");

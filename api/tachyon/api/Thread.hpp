@@ -44,7 +44,7 @@ namespace yq::tachyon {
     public:
     
     
-        static void init_info();
+        static void init_meta();
         
         //  Might be NULL...
         static Thread*      current() { return s_current; }

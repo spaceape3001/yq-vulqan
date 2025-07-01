@@ -16,7 +16,7 @@ namespace yq::tachyon {
     public:
         AddPositionˣCommand(const Header&, double Δx);
     
-        static void init_info();
+        static void init_meta();
         
         double  Δx() const { return m_Δx; }
 

@@ -27,7 +27,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Message, Post)
     public:
     
-        static void init_info();
+        static void init_meta();
     
         struct Param {}; //< DEPRECATED
     

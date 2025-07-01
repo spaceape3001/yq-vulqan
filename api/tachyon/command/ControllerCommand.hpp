@@ -13,7 +13,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(ControllerCommand, Command)
     public:
     
-        static void init_info();
+        static void init_meta();
     
     protected:
         ControllerCommand(const Header&);

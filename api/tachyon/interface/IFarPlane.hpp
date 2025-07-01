@@ -26,6 +26,6 @@ namespace yq::tachyon {
         IFarPlane();
         virtual ~IFarPlane();
         
-        static void init_info();
+        static void init_meta();
     };
 }

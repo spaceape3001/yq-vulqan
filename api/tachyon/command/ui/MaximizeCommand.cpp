@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void MaximizeCommand::init_info()
+    void MaximizeCommand::init_meta()
     {
         auto w = writer<MaximizeCommand>();
         w.description("Maximize Command");

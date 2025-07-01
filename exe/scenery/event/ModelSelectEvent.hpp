@@ -23,7 +23,7 @@ public:
     PostCPtr    clone(rebind_k, const Header&) const override;
 
     ModelID        model() const { return m_model; }
-    static void init_info();
+    static void init_meta();
 private:
     ModelID        m_model;
 };

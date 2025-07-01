@@ -24,7 +24,7 @@ namespace yq::tachyon {
         
         void imgui(ViContext&) override;
         
-        static void init_info();
+        static void init_meta();
         
         class Adder;
         

@@ -27,6 +27,6 @@ namespace yq::tachyon {
         IFieldOfView();
         virtual ~IFieldOfView();
         
-        static void init_info();
+        static void init_meta();
     };
 }

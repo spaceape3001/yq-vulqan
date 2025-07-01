@@ -21,7 +21,7 @@ namespace yq::tachyon {
         void    hpr();
         void    quaternion();
         
-        static void init_info();
+        static void init_meta();
 
         unit::Degree        m_stepFast      = 10._deg;
     };

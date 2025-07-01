@@ -31,7 +31,7 @@ namespace yq::tachyon {
         }
     }
     
-    void SimpleScene::init_info()
+    void SimpleScene::init_meta()
     {   
         auto w = writer<SimpleScene>();
         w.description("Simple Scene, using child/parenting");

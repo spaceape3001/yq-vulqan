@@ -35,7 +35,7 @@ namespace yq::tachyon {
         return new SaveFileReply(*this, h);
     }
     
-    void SaveFileReply::init_info()
+    void SaveFileReply::init_meta()
     {
         auto w = writer<SaveFileReply>();
         w.description("SaveFile Reply");

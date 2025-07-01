@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
     }
     
-    void KeyboardGLFW::init_info()
+    void KeyboardGLFW::init_meta()
     {
         auto w = writer<KeyboardGLFW>();
         w.description("GLFW Keyboard");

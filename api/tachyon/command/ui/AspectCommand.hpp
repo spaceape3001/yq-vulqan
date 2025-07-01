@@ -16,7 +16,7 @@ namespace yq::tachyon {
         AspectCommand(const Header&, const Size2I&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
         const Size2I& aspect() const { return m_aspect; }
         int width() const { return m_aspect.x; }

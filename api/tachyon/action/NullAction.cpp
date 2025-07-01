@@ -23,7 +23,7 @@ namespace yq::tachyon {
         return true;
     }
         
-    void NullAction::init_info()
+    void NullAction::init_meta()
     {
         auto w = writer<NullAction>();
         w.description("Null Action");

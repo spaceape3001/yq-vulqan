@@ -14,7 +14,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(TachyonCommand, Command)
     public:
     
-        static void init_info();
+        static void init_meta();
     
     protected:
         TachyonCommand(const Header&);

@@ -101,7 +101,7 @@ namespace yq::tachyon {
         void                set_uv3(const UV2F&);
 #endif
 
-        static void         init_info();
+        static void         init_meta();
         
 
         Triangle³(const TriangleData<ColorVertex3D>&, const Param& p={});

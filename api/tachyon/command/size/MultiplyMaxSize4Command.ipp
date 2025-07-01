@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MultiplyMaxSize⁴Command(*this, h);
     }
     
-    void MultiplyMaxSize⁴Command::init_info()
+    void MultiplyMaxSize⁴Command::init_meta()
     {
         auto w = writer<MultiplyMaxSize⁴Command>();
         w.description("MultiplyMax Size Command");

@@ -24,7 +24,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerRequest::init_info()
+    void ViewerRequest::init_meta()
     {
         auto w = writer<ViewerRequest>();
         w.description("Viewer request base class");

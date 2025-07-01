@@ -15,6 +15,6 @@ namespace yq::tachyon {
     public:
         KeyboardGLFW(const Param&p={});
         ~KeyboardGLFW();
-        static void init_info();
+        static void init_meta();
     };
 }

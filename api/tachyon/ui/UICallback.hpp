@@ -18,6 +18,6 @@ namespace yq::tachyon {
         UICallback(UIFlags flags={});
         UICallback(const UICallback&);
         virtual ~UICallback();
-        static void init_info();
+        static void init_meta();
     };
 }

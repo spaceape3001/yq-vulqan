@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void GraphicsCardRequest::init_info()
+    void GraphicsCardRequest::init_meta()
     {
         auto w = writer<GraphicsCardRequest>();
         w.abstract();

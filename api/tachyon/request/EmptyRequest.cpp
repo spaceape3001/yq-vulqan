@@ -25,7 +25,7 @@ namespace yq::tachyon {
         return new EmptyRequest(*this, h);
     }
     
-    void EmptyRequest::init_info()
+    void EmptyRequest::init_meta()
     {
         auto w = writer<EmptyRequest>();
         w.description("Empty Request");

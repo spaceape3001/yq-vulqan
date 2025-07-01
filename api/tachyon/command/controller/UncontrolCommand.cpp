@@ -32,7 +32,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void UncontrolCommand::init_info()
+    void UncontrolCommand::init_meta()
     {
         auto w = writer<UncontrolCommand>();
         w.description("Uncontrol Command");

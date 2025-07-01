@@ -20,6 +20,6 @@ namespace yq::tachyon {
         
         UIDock* clone() const override;
         
-        static void init_info();
+        static void init_meta();
     };
 }

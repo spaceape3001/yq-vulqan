@@ -29,7 +29,7 @@ namespace yq::tachyon {
         double    m_near = kDefNearPlane;
 
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         ANearPlane();
         virtual ~ANearPlane();

@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::LoadTSXRequest)
 
 namespace yq::tachyon {
-    void LoadTSXRequest::init_info()
+    void LoadTSXRequest::init_meta()
     {
         auto w = writer<LoadTSXRequest>();
         w.description("Load/Import TSX Request");

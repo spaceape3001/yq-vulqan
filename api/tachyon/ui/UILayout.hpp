@@ -25,7 +25,7 @@ namespace yq::tachyon {
         UILayout(const UILayout&);
         virtual ~UILayout();
         
-        static void init_info();
+        static void init_meta();
     protected:
         UILayout*       clone() const;
     };

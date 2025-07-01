@@ -42,7 +42,7 @@ namespace yq::tachyon {
         return m_button == MouseButton::Right;
     }
     
-    void MouseReleaseEvent::init_info()
+    void MouseReleaseEvent::init_meta()
     {
         auto w = writer<MouseReleaseEvent>();
         w.description("Mouse Release Event");

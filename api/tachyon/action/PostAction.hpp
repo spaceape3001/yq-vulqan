@@ -15,6 +15,6 @@ namespace yq::tachyon {
         PostAction();
         PostAction(const PostAction&);
         ~PostAction();
-        static void init_info();
+        static void init_meta();
     };
 }

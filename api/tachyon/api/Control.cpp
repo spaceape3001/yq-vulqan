@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void Control::init_info()
+    void Control::init_meta()
     {
         auto w = writer<Control>();
         w.description("Control base");

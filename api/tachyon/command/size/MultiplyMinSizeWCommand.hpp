@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         MultiplyMinSizeʷCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  δw() const { return m_δw; }
         

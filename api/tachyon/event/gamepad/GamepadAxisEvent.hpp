@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class GamepadAxisEvent : public GamepadEvent {
         YQ_OBJECT_DECLARE(GamepadAxisEvent, GamepadEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         GamepadAxisEvent(const Header&, size_t axis, float value, float delta);
         

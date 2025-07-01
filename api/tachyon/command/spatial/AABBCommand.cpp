@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void AABBCommand::init_info()
+    void AABBCommand::init_meta()
     {
         auto w = writer<AABBCommand>();
         w.description("AABB Command");

@@ -43,7 +43,7 @@ namespace yq::tachyon {
         Scene(const Param&p={});
         virtual ~Scene();
         
-        static void init_info();
+        static void init_meta();
         
         SceneID id() const { return SceneID{ UniqueID::id()}; }
 

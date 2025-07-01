@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SizeCommand::init_info()
+    void SizeCommand::init_meta()
     {
         auto w = writer<SizeCommand>();
         w.description("Size Command");

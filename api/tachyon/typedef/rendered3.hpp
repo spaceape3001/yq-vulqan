@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     
     using Rendered³ID = ID<Rendered³>;
-    class Rendered³Info;
+    class Rendered³Meta;
 }

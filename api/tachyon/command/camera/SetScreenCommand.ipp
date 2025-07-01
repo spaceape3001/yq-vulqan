@@ -31,7 +31,7 @@ namespace yq::tachyon {
         return new SetScreenCommand(*this, h);
     }
 
-    void SetScreenCommand::init_info()
+    void SetScreenCommand::init_meta()
     {
         auto w = writer<SetScreenCommand>();
         w.description("Sets a camera's screen rectangle");

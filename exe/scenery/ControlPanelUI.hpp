@@ -15,7 +15,7 @@ class ControlPanelUI : public UIWindow {
     YQ_OBJECT_DECLARE(ControlPanelUI, UIWindow)
 
 public:
-    static void init_info();
+    static void init_meta();
     ControlPanelUI(UIFlags flags={});
     ControlPanelUI(const ControlPanelUI& cp);
     

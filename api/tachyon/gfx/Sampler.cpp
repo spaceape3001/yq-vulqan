@@ -39,7 +39,7 @@ namespace yq::tachyon {
         return cache();
     }
 
-    void    Sampler::init_info()
+    void    Sampler::init_meta()
     {
         auto w = writer<Sampler>();
         w.description("Sampler Asset");

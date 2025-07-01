@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(UIReply, Reply)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         UIReply(const Header&, const RequestCPtr&);

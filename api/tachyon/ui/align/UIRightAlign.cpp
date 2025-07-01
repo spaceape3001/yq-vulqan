@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIRightAlign)
 
 namespace yq::tachyon {
-    void UIRightAlign::init_info()
+    void UIRightAlign::init_meta()
     {
         auto w = writer<UIRightAlign>();
         w.description("Right Alignment UI Element");

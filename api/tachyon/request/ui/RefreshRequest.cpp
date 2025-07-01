@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void RefreshRequest::init_info()
+    void RefreshRequest::init_meta()
     {
         auto w = writer<RefreshRequest>();
         w.description("Refresh Request");

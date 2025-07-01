@@ -40,7 +40,7 @@ namespace yq::tachyon {
         
         UIElements* copy() const;
         
-        static void init_info();
+        static void init_meta();
         
     protected:
     

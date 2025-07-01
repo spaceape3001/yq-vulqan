@@ -20,7 +20,7 @@ namespace yq::tachyon {
         bool                get() const;
         void                set(bool);
         
-        static void init_info();
+        static void init_meta();
     private:
         uint64_t    m_uiElementID   = 0;
     };

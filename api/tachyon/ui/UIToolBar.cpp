@@ -102,7 +102,7 @@ namespace yq::tachyon {
         static constexpr const UIFlags  kToolBarFlags   = { UIFlag::NoDecoration, UIFlag::NoMove, UIFlag::SetPosition, UIFlag::AlwaysAutoResize };
     }
 
-    void UIToolBar::init_info()
+    void UIToolBar::init_meta()
     {
         auto w = writer<UIToolBar>();
         w.description("UI Tool Bar");

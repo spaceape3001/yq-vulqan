@@ -869,7 +869,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const Camera³Info*                  Frame::meta(Camera³ID id) const
+    const Camera³Meta*                  Frame::meta(Camera³ID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -957,7 +957,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const Light³Info*                   Frame::meta(Light³ID id) const
+    const Light³Meta*                   Frame::meta(Light³ID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -997,7 +997,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const Rendered³Info*                Frame::meta(Rendered³ID id) const
+    const Rendered³Meta*                Frame::meta(Rendered³ID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1013,7 +1013,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const Scene³Info*                   Frame::meta(Scene³ID id) const
+    const Scene³Meta*                   Frame::meta(Scene³ID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1029,7 +1029,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const Spatial²Info*                 Frame::meta(Spatial²ID id) const
+    const Spatial²Meta*                 Frame::meta(Spatial²ID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1037,7 +1037,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const Spatial³Info*                 Frame::meta(Spatial³ID id) const
+    const Spatial³Meta*                 Frame::meta(Spatial³ID id) const
     {
         auto obj = object(id);
         if(obj)

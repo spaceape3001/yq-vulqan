@@ -27,7 +27,7 @@ namespace yq::tachyon {
         void            render();
         const char*     title() const;
         
-        static void init_info();
+        static void init_meta();
     protected:
         UIButton*       clone() const;
     private:

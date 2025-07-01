@@ -21,7 +21,7 @@ namespace yq::tachyon {
         virtual const PostMeta&     post_info() const override;
         virtual Result              match(const Post&) const override;
         
-        static void init_info();
+        static void init_meta();
 
     private:
         KeyCode                 m_key;

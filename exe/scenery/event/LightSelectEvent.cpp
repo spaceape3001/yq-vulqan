@@ -28,7 +28,7 @@ PostCPtr    LightSelectEvent::clone(rebind_k, const Header&h) const
     return new LightSelectEvent(*this, h);
 }
 
-void LightSelectEvent::init_info()
+void LightSelectEvent::init_meta()
 {
     auto w = writer<LightSelectEvent>();
     w.description("Light Selection Event");

@@ -9,13 +9,13 @@
 #include <yq/shape/AxBox2.hpp>
 
 #include <tachyon/gfx/Shader.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 
 namespace yq::tachyon {
 
-    void Billboard³::init_info()
+    void Billboard³::init_meta()
     {
         auto w = writer<Billboard³>();
         {

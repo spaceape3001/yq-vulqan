@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerScreenshotRequest::init_info()
+    void ViewerScreenshotRequest::init_meta()
     {
         auto w = writer<ViewerScreenshotRequest>();
         w.description("ViewerScreenshot Request");

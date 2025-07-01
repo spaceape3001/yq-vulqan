@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void DirtyEvent::init_info()
+    void DirtyEvent::init_meta()
     {
         auto w = writer<DirtyEvent>();
         w.description("Dirty Event");

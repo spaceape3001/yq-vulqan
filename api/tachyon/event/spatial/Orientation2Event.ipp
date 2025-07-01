@@ -40,7 +40,7 @@ namespace yq::tachyon {
         return m_orientation.angle();
     }
     
-    void Orientation²Event::init_info()
+    void Orientation²Event::init_meta()
     {
         auto w = writer<Orientation²Event>();
         w.description("Orientation Event in 2D");

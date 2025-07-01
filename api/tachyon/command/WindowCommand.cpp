@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void WindowCommand::init_info()
+    void WindowCommand::init_meta()
     {
         auto w = writer<WindowCommand>();
         w.description("Window command base class");

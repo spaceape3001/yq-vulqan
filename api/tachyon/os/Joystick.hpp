@@ -55,7 +55,7 @@ namespace yq::tachyon {
         */
     
 
-        static void init_info();
+        static void init_meta();
 
         JoystickID            id() const { return JoystickID(UniqueID::id()); }
 

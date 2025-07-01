@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
     }
     
-    void ForegroundScene::init_info()
+    void ForegroundScene::init_meta()
     {
         auto w = writer<ForegroundScene>();
         w.description("Foreground Scene");

@@ -27,6 +27,6 @@ namespace yq::tachyon {
         IColor();
         virtual ~IColor();
         
-        static void init_info();
+        static void init_meta();
     };
 }

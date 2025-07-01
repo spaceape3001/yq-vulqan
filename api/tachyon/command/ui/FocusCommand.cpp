@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void FocusCommand::init_info()
+    void FocusCommand::init_meta()
     {
         auto w = writer<FocusCommand>();
         w.description("Focus Command");

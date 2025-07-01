@@ -17,7 +17,7 @@ namespace yq::tachyon {
         
         TypedID  viewer() const { return m_viewer; }
         
-        static void init_info();
+        static void init_meta();
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 

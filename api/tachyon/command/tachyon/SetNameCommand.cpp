@@ -36,7 +36,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetNameCommand::init_info()
+    void SetNameCommand::init_meta()
     {
         auto w = writer<SetNameCommand>();
         w.description("SetName Command");

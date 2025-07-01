@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class GamepadZeroCommand : public GamepadCommand {
         YQ_OBJECT_DECLARE(GamepadZeroCommand, GamepadCommand);
     public:
-        static void init_info();
+        static void init_meta();
     
         GamepadZeroCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

@@ -29,7 +29,7 @@ namespace yq::tachyon {
         unit::Degree    m_fov = kDefFieldOfView;
 
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         AFieldOfView();
         virtual ~AFieldOfView();

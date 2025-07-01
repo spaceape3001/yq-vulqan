@@ -57,7 +57,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void AppendVertex³Command::init_info()
+    void AppendVertex³Command::init_meta()
     {
         auto w = writer<AppendVertex³Command>();
         w.description("Append Vertex 3D Command");

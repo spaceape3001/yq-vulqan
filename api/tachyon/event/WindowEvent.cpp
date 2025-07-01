@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void WindowEvent::init_info()
+    void WindowEvent::init_meta()
     {
         auto w = writer<WindowEvent>();
         w.description("Window event base class");

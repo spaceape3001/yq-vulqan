@@ -19,7 +19,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AMaxSize¹::init_info(TachyonMeta::Writer<C>&w)
+    void AMaxSize¹::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMaxSize¹>();
         w.property(UNSAFE, "max_size", &AMaxSize¹::m_max_size).tag(kTag_Save);

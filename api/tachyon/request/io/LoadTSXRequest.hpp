@@ -15,7 +15,7 @@ namespace yq::tachyon {
     class LoadTSXRequest : public IORequest {
         YQ_OBJECT_DECLARE(LoadTSXRequest, IORequest)
     public:
-        static void init_info();
+        static void init_meta();
         
         using PrepFN    = std::function<void()>;
         

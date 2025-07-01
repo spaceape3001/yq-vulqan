@@ -15,7 +15,7 @@ namespace yq::tachyon {
         DefocusEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         DefocusEvent(const DefocusEvent&, const Header&);

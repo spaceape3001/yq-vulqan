@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         SetScaleʸCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  y() const { return m_y; }
         

@@ -36,7 +36,7 @@ namespace yq::tachyon {
         return new SetOrientation²Command(*this, h);
     }
 
-    void SetOrientation²Command::init_info()
+    void SetOrientation²Command::init_meta()
     {
         auto w = writer<SetOrientation²Command>();
         w.description("Set Orientation Command");

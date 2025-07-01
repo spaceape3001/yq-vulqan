@@ -23,7 +23,7 @@ public:
     PostCPtr    clone(rebind_k, const Header&) const override;
 
     LightID        light() const { return m_light; }
-    static void init_info();
+    static void init_meta();
 private:
     LightID        m_light;
 };

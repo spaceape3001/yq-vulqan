@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(EditorRequest, Request)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         EditorRequest(const Header&);

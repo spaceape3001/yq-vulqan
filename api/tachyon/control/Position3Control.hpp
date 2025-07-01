@@ -30,7 +30,7 @@ namespace yq::tachyon {
         //! Resets the values (but not the tachyon ID)
         void    reset();
         
-        static void init_info();
+        static void init_meta();
         
     private:
         TachyonID           m_tachyon;

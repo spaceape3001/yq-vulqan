@@ -12,7 +12,7 @@
 #include <tachyon/ui/UIFormMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void FrameMetricsUI::init_info()
+    void FrameMetricsUI::init_meta()
     {
         auto w = writer<FrameMetricsUI>();
         w.description("FrameMetrics UI");

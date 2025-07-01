@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMaxSize⁴)
 
 namespace yq::tachyon {
-    void    IMaxSize⁴::init_info()
+    void    IMaxSize⁴::init_meta()
     {
         auto w = writer<IMaxSize⁴>();
         w.description("4D Size");

@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void TaskThread::init_info()
+    void TaskThread::init_meta()
     {
         auto w = writer<TaskThread>();
         w.description("Task Thread");

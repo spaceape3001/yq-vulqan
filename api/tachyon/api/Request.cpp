@@ -38,7 +38,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Request::init_info()
+    void Request::init_meta()
     {
         auto w = writer<Request>();
         w.description("Abstract Request Class");

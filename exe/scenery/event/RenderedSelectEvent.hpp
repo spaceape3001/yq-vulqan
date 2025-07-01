@@ -23,7 +23,7 @@ public:
     PostCPtr    clone(rebind_k, const Header&) const override;
 
     RenderedID        rendered() const { return m_rendered; }
-    static void init_info();
+    static void init_meta();
 private:
     RenderedID        m_rendered;
 };

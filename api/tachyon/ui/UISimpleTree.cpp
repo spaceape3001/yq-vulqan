@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UISimpleTree)
 
 namespace yq::tachyon {
-    void UISimpleTree::init_info()
+    void UISimpleTree::init_meta()
     {
         auto w = writer<UISimpleTree>();
         w.description("Simple tree of elements");

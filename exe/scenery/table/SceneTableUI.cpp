@@ -53,7 +53,7 @@ namespace {
 }
 
 
-void SceneTableUI::init_info()
+void SceneTableUI::init_meta()
 {
     auto w = writer<SceneTableUI>();
     w.description("Scene Editor's Scene Table");

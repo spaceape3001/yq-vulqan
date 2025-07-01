@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(CameraRequest, Request)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         CameraRequest(const Header&);

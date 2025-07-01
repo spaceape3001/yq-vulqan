@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IVertices³)
 
 namespace yq::tachyon {
-    void IVertices³::init_info()
+    void IVertices³::init_meta()
     {
         auto w = writer<IVertices³>();
         w.description("3D Vertices");

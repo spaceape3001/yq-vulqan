@@ -86,7 +86,7 @@ namespace yq::tachyon {
         
         bool    valid() const;
         
-        static void init_info();
+        static void init_meta();
         
         void    tick(const ViewerState&);
         

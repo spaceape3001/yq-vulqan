@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new AABB⁴Event(*this, h);
     }
    
-    void AABB⁴Event::init_info()
+    void AABB⁴Event::init_meta()
     {
         auto w = writer<AABB⁴Event>();
         w.description("AABB Changed Event in 4D");

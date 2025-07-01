@@ -60,7 +60,7 @@ namespace yq::tachyon {
         void            position(emit_k);
         
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         APosition²();
         virtual ~APosition²();

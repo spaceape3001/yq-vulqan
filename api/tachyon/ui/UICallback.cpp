@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void UICallback::init_info()
+    void UICallback::init_meta()
     {
         auto w = writer<UICallback>();
         w.description("Callback UI Element");

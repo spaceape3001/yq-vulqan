@@ -30,7 +30,7 @@ namespace yq::tachyon {
         return new RollByCommand(*this, h);
     }
     
-    void RollByCommand::init_info()
+    void RollByCommand::init_meta()
     {
         auto w = writer<RollByCommand>();
         w.description("Roll By Command");

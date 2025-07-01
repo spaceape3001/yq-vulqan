@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void DisableCommand::init_info()
+    void DisableCommand::init_meta()
     {
         auto w = writer<DisableCommand>();
         w.description("Disable Command");

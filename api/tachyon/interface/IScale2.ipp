@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale²)
 
 namespace yq::tachyon {
-    void    IScale²::init_info()
+    void    IScale²::init_meta()
     {
         auto w = writer<IScale²>();
         w.description("2D Scale");

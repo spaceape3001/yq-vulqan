@@ -135,7 +135,7 @@ namespace yq::tachyon {
     public:
     
     
-        static void init_info();
+        static void init_meta();
     
         /*! \brief Creates the viewer
         

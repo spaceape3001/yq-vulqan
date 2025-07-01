@@ -28,7 +28,7 @@ PostCPtr    SceneSelectEvent::clone(rebind_k, const Header&h) const
     return new SceneSelectEvent(*this, h);
 }
 
-void SceneSelectEvent::init_info()
+void SceneSelectEvent::init_meta()
 {
     auto w = writer<SceneSelectEvent>();
     w.description("Scene Selection Event");

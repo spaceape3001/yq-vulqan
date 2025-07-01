@@ -184,7 +184,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    void Controller::init_info()
+    void Controller::init_meta()
     {
         auto w = writer<Controller>();
         w.abstract();

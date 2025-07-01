@@ -30,7 +30,7 @@ namespace yq::tachyon {
         return new SetFOVCommand(*this, h);
     }
 
-    void SetFOVCommand::init_info()
+    void SetFOVCommand::init_meta()
     {
         auto w = writer<SetFOVCommand>();
         w.description("Sets a camera's Field of View");

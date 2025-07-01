@@ -15,7 +15,7 @@ class InspectorUI : public UIEditor {
     YQ_OBJECT_DECLARE(InspectorUI, UIEditor)
 public:
 
-    static void init_info();
+    static void init_meta();
 
     InspectorUI(UIFlags flags={});
     InspectorUI(const InspectorUI&);

@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::FieldOfViewUI)
 
 namespace yq::tachyon {
-    void FieldOfViewUI::init_info()
+    void FieldOfViewUI::init_meta()
     {
         auto w = writer<FieldOfViewUI>();
         w.description("UIEditor for FieldOfView");

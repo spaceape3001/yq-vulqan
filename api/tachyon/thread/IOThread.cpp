@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void IOThread::init_info()
+    void IOThread::init_meta()
     {
         auto w = writer<IOThread>();
         w.description("IO Thread");

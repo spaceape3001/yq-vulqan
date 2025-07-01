@@ -64,7 +64,7 @@ namespace yq::tachyon {
         //! Post identifier (executable-unique)
         PostID  id() const { return { m_id }; }
         
-        static void init_info();
+        static void init_meta();
         
         //! Allows for a new post with the specified "bind" ID
         //! \note This can return NULL if not valid or not implemented for that post type

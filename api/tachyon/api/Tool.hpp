@@ -29,7 +29,7 @@ namespace yq::tachyon {
         
         //  Tool TODO
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         Tool();

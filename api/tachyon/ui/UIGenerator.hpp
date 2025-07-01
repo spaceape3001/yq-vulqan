@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         UIGenerator(UIFlags flags={});
         ~UIGenerator();
-        static void init_info();
+        static void init_meta();
         
         UIElement* copy() const override final;
         

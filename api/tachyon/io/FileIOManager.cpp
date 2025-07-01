@@ -24,7 +24,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FileIOManager)
 
 namespace yq::tachyon {
-    void FileIOManager::init_info()
+    void FileIOManager::init_meta()
     {
         auto    w   = writer<FileIOManager>();
         w.description("Manager of file I/O");

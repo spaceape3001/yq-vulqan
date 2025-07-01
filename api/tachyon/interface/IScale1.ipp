@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale¹)
 
 namespace yq::tachyon {
-    void    IScale¹::init_info()
+    void    IScale¹::init_meta()
     {
         auto w = writer<IScale¹>();
         w.description("1D Scale");

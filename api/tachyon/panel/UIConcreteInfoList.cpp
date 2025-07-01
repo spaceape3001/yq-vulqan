@@ -9,7 +9,7 @@
 #include <tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
-    void UIConcreteInfoList::init_info()
+    void UIConcreteInfoList::init_meta()
     {
         auto w = writer<UIConcreteInfoList>();
         w.description("UI List of Infos aren't abstract");

@@ -8,18 +8,18 @@
 #include <tachyon/logging.hpp>
 
 #include <tachyon/gfx/Shader.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <tachyon/aspect/AColorWriter.hxx>
 
 namespace yq::tachyon {
-    void ColorTetrahedron³::init_info()
+    void ColorTetrahedron³::init_meta()
     {
         auto w = writer<ColorTetrahedron³>();
         w.description("Color Tetrahedron in 3D");
         w.category("Shape");
         
-        AColor::init_info(w);
+        AColor::init_meta(w);
 
         auto& p = w.pipeline();
         

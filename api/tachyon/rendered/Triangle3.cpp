@@ -11,7 +11,7 @@
 #include <yq/shape/TriangleData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
@@ -20,14 +20,14 @@
 #include <tachyon/aspect/AVertices3Writer.hxx>
 
 namespace yq::tachyon {
-    void Triangle³::init_info()
+    void Triangle³::init_meta()
     {
         auto w = writer<Triangle³>();
         w.description("Triangle in 3D");
         w.category("Shape");
         w.abstract();
 
-        AVertices³<3>::init_info(w);
+        AVertices³<3>::init_meta(w);
 
         w.property("vertex1", &Triangle³::vertex1).setter(&Triangle³::set_vertex1);
         w.property("vertex2", &Triangle³::vertex2).setter(&Triangle³::set_vertex2);

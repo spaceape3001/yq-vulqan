@@ -23,7 +23,7 @@ namespace yq::tachyon {
             return "Header";
         }
 
-        static void init_info()
+        static void init_meta()
         {
         }
         

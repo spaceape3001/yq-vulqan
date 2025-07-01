@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::FarPlaneUI)
 
 namespace yq::tachyon {
-    void FarPlaneUI::init_info()
+    void FarPlaneUI::init_meta()
     {
         auto w = writer<FarPlaneUI>();
         w.description("UIEditor for FarPlane");

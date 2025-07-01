@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UISection)
 
 namespace yq::tachyon {
-    void UISection::init_info()
+    void UISection::init_meta()
     {
         auto w = writer<UISection>();
         w.description("UI Section");

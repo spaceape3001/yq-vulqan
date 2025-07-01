@@ -22,7 +22,7 @@ struct LightTableUI::Row {
     std::string        stype;
 };
 
-void LightTableUI::init_info()
+void LightTableUI::init_meta()
 {
     auto w = writer<LightTableUI>();
     w.description("Scene Editor's Light Table");

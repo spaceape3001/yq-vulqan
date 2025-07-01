@@ -15,7 +15,7 @@ namespace yq::tachyon {
         OrientationCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         OrientationCommand(const OrientationCommand&, const Header&);

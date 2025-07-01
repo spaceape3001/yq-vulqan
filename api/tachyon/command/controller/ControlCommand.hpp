@@ -15,7 +15,7 @@ namespace yq::tachyon {
     public:
         ControlCommand(const Header&, TypedID);
         
-        static void init_info();
+        static void init_meta();
         
         TypedID     tachyon() const { return m_tachyon; }
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void IconifyEvent::init_info()
+    void IconifyEvent::init_meta()
     {
         auto w = writer<IconifyEvent>();
         w.description("Iconify Event");

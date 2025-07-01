@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void WidgetCommand::init_info()
+    void WidgetCommand::init_meta()
     {
         auto w = writer<WidgetCommand>();
         w.description("Widget command base class");

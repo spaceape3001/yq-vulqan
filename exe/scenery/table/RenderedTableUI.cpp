@@ -22,7 +22,7 @@ struct RenderedTableUI::Row {
     std::string             stype;
 };
 
-void RenderedTableUI::init_info()
+void RenderedTableUI::init_meta()
 {
     auto w = writer<RenderedTableUI>();
     w.description("Scene Editor's Rendered Table");

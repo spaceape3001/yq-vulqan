@@ -35,7 +35,7 @@ namespace yq::tachyon {
         return new OpenFileReply(*this, h);
     }
     
-    void OpenFileReply::init_info()
+    void OpenFileReply::init_meta()
     {
         auto w = writer<OpenFileReply>();
         w.description("OpenFile Reply");

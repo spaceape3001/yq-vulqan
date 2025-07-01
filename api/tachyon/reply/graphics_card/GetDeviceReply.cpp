@@ -41,7 +41,7 @@ namespace yq::tachyon {
         return m_device; 
     }
 
-    void GetDeviceReply::init_info()
+    void GetDeviceReply::init_meta()
     {
         auto w = writer<GetDeviceReply>();
         w.description("GetDevice Reply");

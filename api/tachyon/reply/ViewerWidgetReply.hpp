@@ -24,7 +24,7 @@ namespace yq::tachyon {
         
         Response     response() const { return m_response; }
         
-        static void  init_info();
+        static void  init_meta();
         
     private:
         Response     m_response;

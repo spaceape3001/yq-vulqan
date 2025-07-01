@@ -38,7 +38,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Event::init_info()
+    void Event::init_meta()
     {
         auto w = writer<Event>();
         w.description("Abstract Event Class");

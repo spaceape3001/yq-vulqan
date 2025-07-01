@@ -15,7 +15,7 @@ namespace yq::tachyon {
         RestoreEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         RestoreEvent(const RestoreEvent&, const Header&);

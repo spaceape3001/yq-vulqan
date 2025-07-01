@@ -16,7 +16,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(GradTriangle³, Triangle³)
     public:
 
-        static void         init_info();
+        static void         init_meta();
         
         GradTriangle³(const TriangleData<ColorVertex3D>&, const Param& p={});
         GradTriangle³(const TriangleData<ColorVertex2D>&, const Param& p={});

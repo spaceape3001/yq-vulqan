@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class GamepadDisconnectEvent : public GamepadEvent {
         YQ_OBJECT_DECLARE(GamepadDisconnectEvent, GamepadEvent);
     public:
-        static void init_info();
+        static void init_meta();
         
         GamepadDisconnectEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

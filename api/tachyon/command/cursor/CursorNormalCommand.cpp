@@ -30,7 +30,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void CursorNormalCommand::init_info()
+    void CursorNormalCommand::init_meta()
     {
         auto w = writer<CursorNormalCommand>();
         w.description("Cursor Normal Command");

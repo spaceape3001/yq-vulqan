@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void TachyonReply::init_info()
+    void TachyonReply::init_meta()
     {
         auto w = writer<TachyonReply>();
         w.description("Tachyon reply base class");

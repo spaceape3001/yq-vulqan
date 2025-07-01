@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SkyBox³UI)
 
 namespace yq::tachyon {
-    void SkyBox³UI::init_info()
+    void SkyBox³UI::init_meta()
     {
         auto w = writer<SkyBox³UI>();
         w.description("UIEditor for SkyBox³");

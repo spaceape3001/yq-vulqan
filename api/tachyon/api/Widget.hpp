@@ -93,7 +93,7 @@ namespace yq::tachyon {
             not be gained until startup occurs.
         */
 
-        static void init_info();
+        static void init_meta();
     
         //! Default constructor
         Widget();

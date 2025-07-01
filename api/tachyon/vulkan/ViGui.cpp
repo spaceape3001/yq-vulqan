@@ -852,7 +852,7 @@ namespace yq::tachyon {
     
 
     ///////////////////////////////////
-    //void ViGui::init_info()
+    //void ViGui::init_meta()
     //{
         //auto w = writer<ViGui>();
         //w.description("ImGui Visualization");

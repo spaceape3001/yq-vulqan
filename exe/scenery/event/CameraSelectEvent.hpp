@@ -23,7 +23,7 @@ public:
     PostCPtr    clone(rebind_k, const Header&) const override;
 
     CameraID        camera() const { return m_camera; }
-    static void init_info();
+    static void init_meta();
 private:
     CameraID        m_camera;
 };

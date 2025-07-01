@@ -20,7 +20,7 @@ namespace yq::tachyon {
         int width() const { return m_aspect.x; }
         int height() const { return m_aspect.y; }
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         AspectEvent(const AspectEvent&, const Header&);

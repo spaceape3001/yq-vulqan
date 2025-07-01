@@ -18,7 +18,7 @@ namespace yq::tachyon {
     public:
         RollByCommand(const Header&, Radian θ);
     
-        static void init_info();
+        static void init_meta();
         
         Radian  θ() const { return m_θ; }
         

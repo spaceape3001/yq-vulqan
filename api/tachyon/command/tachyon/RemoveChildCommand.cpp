@@ -26,7 +26,7 @@ namespace yq::tachyon {
         return new RemoveChildCommand(*this, h);
     }
 
-    void RemoveChildCommand::init_info()
+    void RemoveChildCommand::init_meta()
     {
         auto w = writer<RemoveChildCommand>();
         w.description("Set Parent Command");

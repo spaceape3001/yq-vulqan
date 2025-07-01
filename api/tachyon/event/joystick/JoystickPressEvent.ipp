@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void JoystickPressEvent::init_info()
+    void JoystickPressEvent::init_meta()
     {
         auto w = writer<JoystickPressEvent>();
         w.description("Joystick Press Event");

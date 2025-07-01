@@ -32,7 +32,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetSpatialCommand::init_info()
+    void SetSpatialCommand::init_meta()
     {
         auto w = writer<SetSpatialCommand>();
         w.description("SetSpatial Command");

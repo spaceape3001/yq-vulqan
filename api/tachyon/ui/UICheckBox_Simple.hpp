@@ -20,7 +20,7 @@ namespace yq::tachyon {
         bool    get() const override { return m_state; }
         void    set(bool) override;
         
-        static void init_info();
+        static void init_meta();
     private:
         bool    m_state = false;
     };

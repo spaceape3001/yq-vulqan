@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Position⁴UI)
 
 namespace yq::tachyon {
-    void Position⁴UI::init_info()
+    void Position⁴UI::init_meta()
     {
         auto w = writer<Position⁴UI>();
         w.description("UIEditor for Position⁴");

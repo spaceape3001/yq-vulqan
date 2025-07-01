@@ -13,7 +13,7 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::FormWidget)
 
 namespace yq::tachyon {
-    void FormWidget::init_info()
+    void FormWidget::init_meta()
     {
         auto w = writer<FormWidget>();
         w.description("Form Widget");

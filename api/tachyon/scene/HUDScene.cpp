@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
     }
     
-    void HUDScene::init_info()
+    void HUDScene::init_meta()
     {
         auto w = writer<HUDScene>();
         w.description("HUD Scene");

@@ -28,7 +28,7 @@ namespace yq::tachyon {
         return new MouseScrollEvent(*this, h);
     }
 
-    void MouseScrollEvent::init_info()
+    void MouseScrollEvent::init_meta()
     {
         auto w = writer<MouseScrollEvent>();
         w.description("Mouse Scroll Event");

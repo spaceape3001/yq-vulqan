@@ -24,7 +24,7 @@ namespace yq::tachyon {
         const TachyonMeta*  info        = nullptr;
     };
 
-    void UIInfoList::init_info()
+    void UIInfoList::init_meta()
     {
         auto w = writer<UIInfoList>();
         w.description("Table of tachyon infos");

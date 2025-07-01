@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new SetScale²Command(*this, h);
     }
     
-    void SetScale²Command::init_info()
+    void SetScale²Command::init_meta()
     {
         auto w = writer<SetScale²Command>();
         w.description("Set Scale Command");

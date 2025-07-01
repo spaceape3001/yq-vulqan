@@ -13,7 +13,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AFarPlane::init_info(TachyonMeta::Writer<C>&w)
+    void AFarPlane::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<AFarPlane>();
         w.property(UNSAFE, "far", &AFarPlane::m_far).def_value(kDefFarPlane).tag(kTag_Save);

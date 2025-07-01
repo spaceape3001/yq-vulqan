@@ -25,7 +25,7 @@ namespace yq::tachyon {
         VulqanGPU(VkPhysicalDevice);
         ~VulqanGPU();
         
-        static void init_info();
+        static void init_meta();
         
         VkPhysicalDevice    physical_device() const { return m_physical; }
         

@@ -36,7 +36,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetDrawModeCommand::init_info()
+    void SetDrawModeCommand::init_meta()
     {
         auto w = writer<SetDrawModeCommand>();
         w.description("SetDrawMode Command");

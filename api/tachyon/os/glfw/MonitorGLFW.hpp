@@ -22,7 +22,7 @@ namespace yq::tachyon {
     public:
         MonitorGLFW(GLFWmonitor*, const Param&p = {});
         ~MonitorGLFW();
-        static void init_info();
+        static void init_meta();
         
         
         virtual Size2MM     dimensions() const override;

@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void MonitorEvent::init_info()
+    void MonitorEvent::init_meta()
     {
         auto w = writer<MonitorEvent>();
         w.description("Monitor event base class");

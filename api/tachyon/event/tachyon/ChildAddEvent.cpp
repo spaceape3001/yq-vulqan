@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ChildAddEvent::init_info()
+    void ChildAddEvent::init_meta()
     {
         auto w = writer<ChildAddEvent>();
         w.description("ChildAdd Event");

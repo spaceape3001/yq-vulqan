@@ -65,7 +65,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void Spatial::init_info()
+    void Spatial::init_meta()
     {
         auto w = writer<Spatial>();
         w.description("Spatial Delegate");

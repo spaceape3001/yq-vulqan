@@ -30,7 +30,7 @@ namespace yq::tachyon {
         template <class> friend class Ref;
     public:
    
-        static void init_info();
+        static void init_meta();
         
         struct Param {}; //< DEPRECATED
         

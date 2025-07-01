@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MultiplyPosition¹Command(*this, h);
     }
 
-    void MultiplyPosition¹Command::init_info()
+    void MultiplyPosition¹Command::init_meta()
     {
         auto w = writer<MultiplyPosition¹Command>();
         w.description("Multiply Position Command");

@@ -33,7 +33,7 @@ namespace yq::tachyon {
         return new AddPosition¹Command(*this, h);
     }
 
-    void AddPosition¹Command::init_info()
+    void AddPosition¹Command::init_meta()
     {
         auto w = writer<AddPosition¹Command>();
         w.description("Position AddPosition Command in 1D");

@@ -62,7 +62,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetVertex³Command::init_info()
+    void SetVertex³Command::init_meta()
     {
         auto w = writer<SetVertex³Command>();
         w.description("Set Vertex 3D Command");

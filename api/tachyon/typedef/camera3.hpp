@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     using Camera³ID = ID<Camera³>;
 
-    class Camera³Info;
+    class Camera³Meta;
 }

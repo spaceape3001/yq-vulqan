@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new SetRollCommand(*this, h);
     }
     
-    void SetRollCommand::init_info()
+    void SetRollCommand::init_meta()
     {
         auto w = writer<SetRollCommand>();
         w.description("Set Roll Command");

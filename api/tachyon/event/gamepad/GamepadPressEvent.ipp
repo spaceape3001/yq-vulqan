@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadPressEvent::init_info()
+    void GamepadPressEvent::init_meta()
     {
         auto w = writer<GamepadPressEvent>();
         w.description("Gamepad Press Event");

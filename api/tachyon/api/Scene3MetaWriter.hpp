@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/api/Light3.hpp>
-#include <tachyon/api/Light3Data.hpp>
-#include <tachyon/api/LightMetaWriter.hpp>
+#include <tachyon/api/Scene3.hpp>
+#include <tachyon/api/Scene3Data.hpp>
+#include <tachyon/api/SceneMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class Light³Info::Writer : public LightMeta::Writer<C> {
+    class Scene³Meta::Writer : public SceneMeta::Writer<C> {
     public:
-        Writer(Light³Info* lightInfo) : LightMeta::Writer<C>(lightInfo)
+        Writer(Scene³Meta* sceneInfo) : SceneMeta::Writer<C>(sceneInfo)
         {
         }
         
-        Writer(Light³Info& lightInfo) : Writer(&lightInfo)
+        Writer(Scene³Meta& sceneInfo) : Writer(&sceneInfo)
         {
         }
     };

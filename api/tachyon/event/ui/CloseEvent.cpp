@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void CloseEvent::init_info()
+    void CloseEvent::init_meta()
     {
         auto w = writer<CloseEvent>();
         w.description("Close Event");

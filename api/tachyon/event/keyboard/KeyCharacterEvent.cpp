@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new KeyCharacterEvent(*this, h);
     }
 
-    void KeyCharacterEvent::init_info()
+    void KeyCharacterEvent::init_meta()
     {
         auto w = writer<KeyCharacterEvent>();
         w.description("Key Character Event");

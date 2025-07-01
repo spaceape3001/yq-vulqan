@@ -12,7 +12,7 @@
 #include <yq/shape/shape_utils.hpp>
 
 #include <tachyon/gfx/Shader.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/vector/Vector3.hxx>
 #include <tachyon/aspect/AVertices3.hxx>
@@ -49,14 +49,14 @@ namespace yq::tachyon {
     IBO<uint16_t>    Tetrahedron³::s_indices(s_kIndices);
 
 
-    void Tetrahedron³::init_info()
+    void Tetrahedron³::init_meta()
     {
         auto w = writer<Tetrahedron³>();
         w.description("Tetrahedron in 3D");
         w.category("Shape");
         w.abstract();
 
-        AVertices³<4>::init_info(w);
+        AVertices³<4>::init_meta(w);
 
         w.property("vertex1", &Tetrahedron³::vertex1).setter(&Tetrahedron³::set_vertex1);
         w.property("vertex2", &Tetrahedron³::vertex2).setter(&Tetrahedron³::set_vertex2);

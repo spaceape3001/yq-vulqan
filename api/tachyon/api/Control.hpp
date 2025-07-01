@@ -39,7 +39,7 @@ namespace yq::tachyon {
         //! Default destructor
         virtual ~Control();
         
-        static void init_info();
+        static void init_meta();
         
     protected:
     

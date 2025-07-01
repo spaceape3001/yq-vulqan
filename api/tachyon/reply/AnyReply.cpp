@@ -30,7 +30,7 @@ namespace yq::tachyon {
         return new AnyReply(*this, h);
     }
 
-    void AnyReply::init_info()
+    void AnyReply::init_meta()
     {
         auto w = writer<AnyReply>();
         w.description("Any Reply");

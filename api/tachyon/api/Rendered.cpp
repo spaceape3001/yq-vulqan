@@ -221,7 +221,7 @@ namespace yq::tachyon {
         }
     }
 
-    void Rendered::init_info()
+    void Rendered::init_meta()
     {
         auto w = writer<Rendered>();
         w.description("Render object base");

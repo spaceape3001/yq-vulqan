@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void JoystickDisconnectEvent::init_info()
+    void JoystickDisconnectEvent::init_meta()
     {
         auto w = writer<JoystickDisconnectEvent>();
         w.description("Joystick Disconnection Event");

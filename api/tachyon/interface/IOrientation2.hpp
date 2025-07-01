@@ -32,6 +32,6 @@ namespace yq::tachyon {
 
         virtual void            orientation(rotate_k, yaw_k, Radian){}
 
-        static void init_info();
+        static void init_meta();
     };
 }

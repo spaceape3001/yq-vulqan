@@ -15,7 +15,7 @@ namespace yq::tachyon {
         NameChangeEvent(const Header&, std::string&&, std::string_view);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         std::string_view    old_name() const { return m_old; }
         std::string_view    new_name() const { return m_new; }

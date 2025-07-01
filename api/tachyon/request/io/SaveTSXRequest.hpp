@@ -16,7 +16,7 @@ namespace yq::tachyon {
     class SaveTSXRequest : public IORequest {
         YQ_OBJECT_DECLARE(SaveTSXRequest, IORequest)
     public:
-        static void init_info();
+        static void init_meta();
         
         SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, SaveOptions opts={});
         SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, const TachyonIDSet&, SaveOptions opts={});

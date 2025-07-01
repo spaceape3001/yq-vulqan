@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadAxisEvent::init_info()
+    void GamepadAxisEvent::init_meta()
     {
         auto w = writer<GamepadAxisEvent>();
         w.description("Gamepad Axis Event");

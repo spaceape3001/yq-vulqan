@@ -14,7 +14,7 @@ namespace yq::tachyon {
     class UISection : public UIElements {
         YQ_OBJECT_DECLARE(UISection, UIElements)
     public:
-        static void init_info();
+        static void init_meta();
         UISection(std::string_view, UIFlags={});
         UISection(const UISection&);
         ~UISection();

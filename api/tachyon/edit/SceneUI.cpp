@@ -17,7 +17,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SceneUI)
 
 namespace yq::tachyon {
     
-    void SceneUI::init_info()
+    void SceneUI::init_meta()
     {
         auto w = writer<SceneUI>();
         w.field("Background Color", &SceneUI::bgcolor);

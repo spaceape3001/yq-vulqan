@@ -29,7 +29,7 @@ namespace yq::tachyon {
     {
     }
 
-    void NullCamera::init_info()
+    void NullCamera::init_meta()
     {
         auto w = writer<NullCamera>();
         w.description("Null camera, (Identity transform)");

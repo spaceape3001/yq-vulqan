@@ -20,7 +20,7 @@ namespace yq::tachyon {
 
         constexpr TypedID     listener() const { return m_listener; }
         
-        static void init_info();
+        static void init_meta();
     
     protected:
         SnoopCommand(const SnoopCommand&, const Header&);

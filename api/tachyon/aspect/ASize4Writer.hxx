@@ -28,7 +28,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void ASize⁴::init_info(TachyonMeta::Writer<C>&w)
+    void ASize⁴::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ISize⁴>();
         w.property(UNSAFE, "size", &ASize⁴::m_size).tag(kTag_Save);

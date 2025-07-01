@@ -13,7 +13,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(TachyonReply, Reply)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         TachyonReply(const Header&, const RequestCPtr&);

@@ -16,7 +16,7 @@ namespace yq::tachyon {
         SetSpatialCommand(const Header&, TypedID);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         TypedID spatial() const { return m_spatial; }
 

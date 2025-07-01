@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void MaximizeEvent::init_info()
+    void MaximizeEvent::init_meta()
     {
         auto w = writer<MaximizeEvent>();
         w.description("Maximize Event");

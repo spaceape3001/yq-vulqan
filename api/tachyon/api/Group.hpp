@@ -33,7 +33,7 @@ namespace yq::tachyon {
         Group(const Param&p={});
         virtual ~Group();
         
-        static void init_info();
+        static void init_meta();
         
         GroupID id() const { return GroupID{ UniqueID::id()}; }
 

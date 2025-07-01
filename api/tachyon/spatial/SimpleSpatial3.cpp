@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/spatial/SimpleSpatial3.hpp>
-#include <tachyon/api/Spatial3InfoWriter.hpp>
+#include <tachyon/api/Spatial3MetaWriter.hpp>
 #include <tachyon/aspect/AOrientation3Writer.hxx>
 #include <tachyon/aspect/APosition3Writer.hxx>
 #include <tachyon/aspect/AScale3Writer.hxx>
@@ -120,13 +120,13 @@ namespace yq::tachyon {
         );
     }
 
-    void SimpleSpatial³::init_info()
+    void SimpleSpatial³::init_meta()
     {
         auto w = writer<SimpleSpatial³>();
         
-        APosition³::init_info(w);
-        AScale³::init_info(w);
-        AOrientation³::init_info(w);
+        APosition³::init_meta(w);
+        AScale³::init_meta(w);
+        AOrientation³::init_meta(w);
         
         w.slot(&SimpleSpatial³::on_move³);
         w.slot(&SimpleSpatial³::on_moveˣ);

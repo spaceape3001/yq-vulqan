@@ -14,6 +14,6 @@ namespace yq::tachyon {
     public:
         MouseGLFW(const Param&p = Param());
         ~MouseGLFW();
-        static void init_info();
+        static void init_meta();
     };
 }

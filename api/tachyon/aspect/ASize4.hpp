@@ -72,7 +72,7 @@ namespace yq::tachyon {
         Size4D      m_size = ONE;
         
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         ASize⁴();
         virtual ~ASize⁴();

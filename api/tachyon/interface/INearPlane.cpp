@@ -14,7 +14,7 @@ namespace yq::tachyon {
     INearPlane::INearPlane() = default;
     INearPlane::~INearPlane() = default;
 
-    void INearPlane::init_info()
+    void INearPlane::init_meta()
     {
         auto w = writer<INearPlane>();
         w.description("Near Plane Interface");

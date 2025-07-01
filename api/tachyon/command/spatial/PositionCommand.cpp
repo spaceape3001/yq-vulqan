@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void PositionCommand::init_info()
+    void PositionCommand::init_meta()
     {
         auto w = writer<PositionCommand>();
         w.description("Position Command");

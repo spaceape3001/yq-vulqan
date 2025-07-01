@@ -52,7 +52,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Model, Tachyon)
     public:    
     
-        static void init_info();
+        static void init_meta();
 
         ModelID            id() const { return ModelID(UniqueID::id()); }
 

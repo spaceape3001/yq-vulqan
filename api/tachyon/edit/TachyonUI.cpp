@@ -20,7 +20,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonUI)
 
 namespace yq::tachyon {
     
-    void TachyonUI::init_info()
+    void TachyonUI::init_meta()
     {
         auto w = writer<TachyonUI>();
         w.field("Name", &TachyonUI::name);

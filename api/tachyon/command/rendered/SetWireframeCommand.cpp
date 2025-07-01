@@ -26,7 +26,7 @@ namespace yq::tachyon {
         return new SetWireframeCommand(*this, h);
     }
 
-    void SetWireframeCommand::init_info()
+    void SetWireframeCommand::init_meta()
     {
         auto w = writer<SetWireframeCommand>();
         w.description("Set Wireframe Command");

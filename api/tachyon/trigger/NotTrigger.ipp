@@ -35,7 +35,7 @@ namespace yq::tachyon {
         return m_original->post_info();
     }
 
-    void NotTrigger::init_info()
+    void NotTrigger::init_meta()
     {
         auto w = writer<NotTrigger>();
         w.description("NOT post trigger (ie, negates the given trigger's test)");

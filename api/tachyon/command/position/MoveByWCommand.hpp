@@ -16,7 +16,7 @@ namespace yq::tachyon {
     public:
         MoveByʷCommand(const Header&, double Δw);
     
-        static void init_info();
+        static void init_meta();
         
         double  Δw() const { return m_Δw; }
 

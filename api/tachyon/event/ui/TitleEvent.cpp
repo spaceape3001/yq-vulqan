@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void TitleEvent::init_info()
+    void TitleEvent::init_meta()
     {
         auto w = writer<TitleEvent>();
         w.description("Title Event");

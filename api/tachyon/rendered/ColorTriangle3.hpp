@@ -24,7 +24,7 @@ namespace yq::tachyon {
             Param(){}
         };
 
-        static void         init_info();
+        static void         init_meta();
         
         using AColor::color;
         virtual bool    color(settable_k) const override { return true; }

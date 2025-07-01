@@ -36,7 +36,7 @@ namespace yq::tachyon {
         Action(const Action&);
         ~Action();
         
-        static void init_info();
+        static void init_meta();
         
         //! Our action (TRUE if successful)
         virtual bool  action(Payload&) const = 0;

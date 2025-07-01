@@ -18,18 +18,18 @@
 #endif
 
 namespace yq::tachyon {
-    class Scene³Info : public SceneMeta {
+    class Scene³Meta : public SceneMeta {
     public:
     
         template <typename> class Writer;
         
-        Scene³Info(std::string_view, SceneMeta&, const std::source_location& sl = std::source_location::current());
+        Scene³Meta(std::string_view, SceneMeta&, const std::source_location& sl = std::source_location::current());
     protected:
-        ~Scene³Info();
+        ~Scene³Meta();
     };
     
     class Scene³ : public Scene, public ③ {
-        YQ_TACHYON_INFO(Scene³Info)
+        YQ_TACHYON_INFO(Scene³Meta)
         YQ_TACHYON_SNAP(Scene³Snap)
         YQ_TACHYON_DATA(Scene³Data)
         YQ_TACHYON_DECLARE(Scene³, Scene)
@@ -43,7 +43,7 @@ namespace yq::tachyon {
             Vector3D        scale           = NAN;
         };
     
-        static void init_info();
+        static void init_meta();
     
         Scene³ID id() const { return Scene³ID(UniqueID::id()); }
     

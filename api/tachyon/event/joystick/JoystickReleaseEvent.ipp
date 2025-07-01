@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void JoystickReleaseEvent::init_info()
+    void JoystickReleaseEvent::init_meta()
     {
         auto w = writer<JoystickReleaseEvent>();
         w.description("Joystick Release Event");

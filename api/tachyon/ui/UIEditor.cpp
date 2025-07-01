@@ -38,7 +38,7 @@ namespace yq::tachyon {
 
     ////////////////////////////
 
-    void UIEditor::init_info()
+    void UIEditor::init_meta()
     {
         auto w = writer<UIEditor>();
         w.description("UI Editor");

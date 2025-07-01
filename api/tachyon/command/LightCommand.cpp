@@ -26,7 +26,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void LightCommand::init_info()
+    void LightCommand::init_meta()
     {
         auto w = writer<LightCommand>();
         w.description("Light command base class");

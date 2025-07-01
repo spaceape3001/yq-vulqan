@@ -27,7 +27,7 @@ namespace yq::tachyon {
         return new MouseLeaveEvent(*this, h);
     }
 
-    void MouseLeaveEvent::init_info()
+    void MouseLeaveEvent::init_meta()
     {
         auto w = writer<MouseLeaveEvent>();
         w.description("Mouse Leave Event");

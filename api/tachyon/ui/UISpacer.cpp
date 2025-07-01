@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UISpacer)
 
 namespace yq::tachyon {
-    void UISpacer::init_info()
+    void UISpacer::init_meta()
     {
         auto w = writer<UISpacer>();
         w.description("UI Spacer");

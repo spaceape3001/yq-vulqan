@@ -19,7 +19,7 @@ using namespace yq::tachyon;
 class CameraTableUI : public UIElement {
     YQ_OBJECT_DECLARE(CameraTableUI, UIElement)
 public:
-    static void init_info();
+    static void init_meta();
     
     CameraTableUI(UIFlags flags={});
     CameraTableUI(const CameraTableUI& cp);

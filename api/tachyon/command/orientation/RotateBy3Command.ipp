@@ -37,7 +37,7 @@ namespace yq::tachyon {
         return new RotateBy³Command(*this, h);
     }
 
-    void RotateBy³Command::init_info()
+    void RotateBy³Command::init_meta()
     {
         auto w = writer<RotateBy³Command>();
         w.description("Position RotateBy Command in 3D");

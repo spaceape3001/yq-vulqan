@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void TachyonRequest::init_info()
+    void TachyonRequest::init_meta()
     {
         auto w = writer<TachyonRequest>();
         w.abstract();

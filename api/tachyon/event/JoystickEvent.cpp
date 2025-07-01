@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void JoystickEvent::init_info()
+    void JoystickEvent::init_meta()
     {
         auto w = writer<JoystickEvent>();
         w.description("Joystick event base class");

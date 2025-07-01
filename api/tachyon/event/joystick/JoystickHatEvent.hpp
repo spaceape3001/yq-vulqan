@@ -13,7 +13,7 @@ namespace yq::tachyon {
     class JoystickHatEvent : public JoystickEvent {
         YQ_OBJECT_DECLARE(JoystickHatEvent, JoystickEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         HatState    state() const { return m_state; }
         size_t      hat() const { return m_hat; }

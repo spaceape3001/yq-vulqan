@@ -61,7 +61,7 @@ namespace yq::tachyon {
         Size2D      m_min_size = NAN;
         
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         AMinSize²();
         virtual ~AMinSize²();

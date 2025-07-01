@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void IORequest::init_info()
+    void IORequest::init_meta()
     {
         auto w = writer<IORequest>();
         w.abstract();

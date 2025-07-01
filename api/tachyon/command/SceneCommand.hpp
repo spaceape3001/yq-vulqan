@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(SceneCommand, Command)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         SceneCommand(const Header&);

@@ -19,6 +19,6 @@ namespace yq::tachyon {
         
         void    near();
         
-        static void init_info();
+        static void init_meta();
     };
 }

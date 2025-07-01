@@ -58,7 +58,7 @@ namespace yq::tachyon {
         UIEditor(const UIEditor&);
         virtual ~UIEditor();
         
-        static void init_info();
+        static void init_meta();
         
         //! Binds to this tachyon ID (use the frame for details)
         //! 

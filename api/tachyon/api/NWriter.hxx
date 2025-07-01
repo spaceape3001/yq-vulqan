@@ -23,7 +23,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void     И::init_info(TachyonMeta::Writer<C>& w)
+    void     И::init_meta(TachyonMeta::Writer<C>& w)
     {
         w.slot(UNSAFE, &И::on_spatial_command);
         w.slot(UNSAFE, &И::on_spatial_event);

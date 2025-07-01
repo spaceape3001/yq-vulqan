@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void SimEvent::init_info()
+    void SimEvent::init_meta()
     {
         auto w = writer<SimEvent>();
         w.abstract();

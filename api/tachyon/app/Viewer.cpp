@@ -138,7 +138,7 @@ namespace yq::tachyon {
     std::atomic<unsigned>   Viewer::s_lastNumber{0};
 
 
-    void Viewer::init_info()
+    void Viewer::init_meta()
     {
         auto w = writer<Viewer>();
         

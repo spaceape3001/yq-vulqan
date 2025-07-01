@@ -134,7 +134,7 @@ namespace yq::tachyon {
         ~Tetrahedron³();
         
         //! Internal use, initializes the tetrahedron meta information
-        static void init_info();
+        static void init_meta();
         
     protected:
         Vertex³&      vertex1() { return m_vertices[0]; }

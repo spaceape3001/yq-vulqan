@@ -24,7 +24,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void WindowReply::init_info()
+    void WindowReply::init_meta()
     {
         auto w = writer<WindowReply>();
         w.description("Window reply base class");

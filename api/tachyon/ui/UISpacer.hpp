@@ -25,7 +25,7 @@ namespace yq::tachyon {
         UISpacer(const UISpacer&);
         ~UISpacer();
         
-        static void init_info();
+        static void init_meta();
         
         UISpacer* clone() const;
         

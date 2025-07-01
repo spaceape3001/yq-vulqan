@@ -13,7 +13,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AFieldOfView::init_info(TachyonMeta::Writer<C>&w)
+    void AFieldOfView::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<AFieldOfView>();
         w.property(UNSAFE, "fov", &AFieldOfView::m_fov).def_value(kDefFieldOfView).tag(kTag_Save);

@@ -14,7 +14,7 @@ namespace yq::tachyon {
     IFieldOfView::IFieldOfView() = default;
     IFieldOfView::~IFieldOfView() = default;
 
-    void IFieldOfView::init_info()
+    void IFieldOfView::init_meta()
     {
         auto w = writer<IFieldOfView>();
         w.description("Field of View Interface");

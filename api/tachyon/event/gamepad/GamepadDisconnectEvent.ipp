@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadDisconnectEvent::init_info()
+    void GamepadDisconnectEvent::init_meta()
     {
         auto w = writer<GamepadDisconnectEvent>();
         w.description("Gamepad Disconnection Event");

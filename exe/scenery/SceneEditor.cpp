@@ -193,7 +193,7 @@ SceneEditor::EFlags       SceneEditor::flags_for(const SceneMeta& sc)
     return ret;
 }
 
-void SceneEditor::init_info()
+void SceneEditor::init_meta()
 {
     auto w          = writer<SceneEditor>();
     

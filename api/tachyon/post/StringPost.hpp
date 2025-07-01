@@ -23,7 +23,7 @@ namespace yq::tachyon {
     
         const std::string&    text() const { return m_text; }
         
-        static void init_info();
+        static void init_meta();
     
     protected:
         StringPost(const StringPost&, const Header&);

@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ColorUI)
 
 namespace yq::tachyon {
-    void ColorUI::init_info()
+    void ColorUI::init_meta()
     {
         auto w = writer<ColorUI>();
         w.description("UIEditor for Color");

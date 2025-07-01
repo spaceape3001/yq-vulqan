@@ -73,7 +73,7 @@ namespace yq::tachyon {
             Param();
         };
 
-        static void init_info();
+        static void init_meta();
 
         DesktopID           id() const { return DesktopID(UniqueID::id()); }
 

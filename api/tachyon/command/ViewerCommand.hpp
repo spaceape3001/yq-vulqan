@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(ViewerCommand, Command)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         ViewerCommand(const Header&);

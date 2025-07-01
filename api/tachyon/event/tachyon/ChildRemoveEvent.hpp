@@ -15,7 +15,7 @@ namespace yq::tachyon {
         ChildRemoveEvent(const Header&, TypedID);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
         TypedID child() const { return m_child; }
 

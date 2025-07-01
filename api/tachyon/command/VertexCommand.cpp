@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void VertexCommand::init_info()
+    void VertexCommand::init_meta()
     {
         auto w = writer<VertexCommand>();
         w.abstract();

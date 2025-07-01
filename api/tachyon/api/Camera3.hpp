@@ -22,18 +22,18 @@ namespace yq::tachyon {
     class SetScreenCommand;
     class SpatialCommand;
 
-    class Camera³Info : public CameraMeta {
+    class Camera³Meta : public CameraMeta {
     public:
     
         template <typename> class Writer;
         
-        Camera³Info(std::string_view, CameraMeta&, const std::source_location& sl = std::source_location::current());
+        Camera³Meta(std::string_view, CameraMeta&, const std::source_location& sl = std::source_location::current());
     protected:
-        ~Camera³Info();
+        ~Camera³Meta();
     };
     
     class Camera³ : public Camera, public ③ {
-        YQ_TACHYON_INFO(Camera³Info)
+        YQ_TACHYON_INFO(Camera³Meta)
         YQ_TACHYON_SNAP(Camera³Snap)
         YQ_TACHYON_DATA(Camera³Data)
         YQ_TACHYON_DECLARE(Camera³, Camera)
@@ -49,7 +49,7 @@ namespace yq::tachyon {
             Param(){}
         };
     
-        static void init_info();
+        static void init_meta();
     
         Camera³ID id() const { return Camera³ID(UniqueID::id()); }
 

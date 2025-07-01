@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void MonitorConnectEvent::init_info()
+    void MonitorConnectEvent::init_meta()
     {
         auto w = writer<MonitorConnectEvent>();
         w.description("Monitor Connection Event");

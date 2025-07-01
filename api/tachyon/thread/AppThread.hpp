@@ -18,7 +18,7 @@ namespace yq::tachyon {
     public:
         AppThread(Application*, const Param&p ={});
         ~AppThread();
-        static void init_info();
+        static void init_meta();
         
         using Thread::tick;
         

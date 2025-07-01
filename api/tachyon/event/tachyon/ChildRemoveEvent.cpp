@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ChildRemoveEvent::init_info()
+    void ChildRemoveEvent::init_meta()
     {
         auto w = writer<ChildRemoveEvent>();
         w.description("ChildRemove Event");

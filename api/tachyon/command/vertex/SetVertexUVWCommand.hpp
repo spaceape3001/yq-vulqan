@@ -27,7 +27,7 @@ namespace yq::tachyon {
         size_t          vertex() const { return m_vertex; }
         void            set_vertex(size_t);
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         SetVertexUVWCommand(const SetVertexUVWCommand&, const Header&);

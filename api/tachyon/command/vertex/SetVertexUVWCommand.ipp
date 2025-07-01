@@ -42,7 +42,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetVertexUVWCommand::init_info()
+    void SetVertexUVWCommand::init_meta()
     {
         auto w = writer<SetVertexUVWCommand>();
         w.description("Set Vertex UVW Command");

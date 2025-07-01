@@ -31,7 +31,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void ImGuiEnableKeyboardCommand::init_info()
+    void ImGuiEnableKeyboardCommand::init_meta()
     {
         auto w = writer<ImGuiEnableKeyboardCommand>();
         w.description("Viewer Enable ImGui Keyboard Control Command");

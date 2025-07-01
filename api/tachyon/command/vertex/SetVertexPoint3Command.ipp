@@ -42,7 +42,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetVertexPoint³Command::init_info()
+    void SetVertexPoint³Command::init_meta()
     {
         auto w = writer<SetVertexPoint³Command>();
         w.description("Set Vertex 3D Point Command");

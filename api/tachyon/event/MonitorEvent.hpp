@@ -14,7 +14,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(MonitorEvent, Event)
     public:
     
-        static void init_info();
+        static void init_meta();
     
     protected:
         MonitorEvent(const Header&);

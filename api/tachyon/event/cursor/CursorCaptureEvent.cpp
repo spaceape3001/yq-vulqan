@@ -30,7 +30,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void CursorCaptureEvent::init_info()
+    void CursorCaptureEvent::init_meta()
     {
         auto w = writer<CursorCaptureEvent>();
         w.description("Cursor Capture Event");

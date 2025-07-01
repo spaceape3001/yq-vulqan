@@ -30,7 +30,7 @@ namespace yq::tachyon {
         RGBA4F    m_color = kDefColor;
 
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         AColor();
         virtual ~AColor();

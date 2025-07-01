@@ -72,7 +72,7 @@ namespace yq::tachyon {
         
         bool                        triggered(const Post&) const;
 
-        static void init_info();
+        static void init_meta();
 
 
     protected:

@@ -26,7 +26,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void EditorCommand::init_info()
+    void EditorCommand::init_meta()
     {
         auto w = writer<EditorCommand>();
         w.description("Editor command base class");

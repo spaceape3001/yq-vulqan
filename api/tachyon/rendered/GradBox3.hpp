@@ -14,7 +14,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(GradBox³, Box³)
     public:
     
-        static void init_info();
+        static void init_meta();
         
         GradBox³(const Param& p={});
         GradBox³(const Size3D&sz, const Param& p={});

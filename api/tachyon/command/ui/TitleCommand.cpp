@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void TitleCommand::init_info()
+    void TitleCommand::init_meta()
     {
         auto w = writer<TitleCommand>();
         w.description("Title Command");

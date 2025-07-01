@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new UnsubscribeCommand(*this, h);
     }
     
-    void UnsubscribeCommand::init_info()
+    void UnsubscribeCommand::init_meta()
     {
         auto w = writer<UnsubscribeCommand>();
         w.description("Unsubscribe Command");

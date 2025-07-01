@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new SubscribeCommand(*this, h);
     }
 
-    void SubscribeCommand::init_info()
+    void SubscribeCommand::init_meta()
     {
         auto w = writer<SubscribeCommand>();
         w.description("Subscribe Command");

@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class GamepadConnectEvent : public GamepadEvent {
         YQ_OBJECT_DECLARE(GamepadConnectEvent, GamepadEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         GamepadConnectEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

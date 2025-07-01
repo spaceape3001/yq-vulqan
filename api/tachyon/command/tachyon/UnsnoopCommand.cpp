@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new UnsnoopCommand(*this, h);
     }
 
-    void UnsnoopCommand::init_info()
+    void UnsnoopCommand::init_meta()
     {
         auto w = writer<UnsnoopCommand>();
         w.description("Unsnoop Command");

@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void UIReply::init_info()
+    void UIReply::init_meta()
     {
         auto w = writer<UIReply>();
         w.abstract();

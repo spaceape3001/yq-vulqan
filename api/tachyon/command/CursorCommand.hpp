@@ -16,7 +16,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(CursorCommand, Command)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         CursorCommand(const Header&);

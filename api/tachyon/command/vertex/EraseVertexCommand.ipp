@@ -37,7 +37,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void EraseVertexCommand::init_info()
+    void EraseVertexCommand::init_meta()
     {
         auto w = writer<EraseVertexCommand>();
         w.description("Erase Vertex 3D Command");

@@ -29,7 +29,7 @@ namespace yq::tachyon {
         Billboard³(const AxBox2D&, std::string_view szImage, const Param& p={});
         ~Billboard³();
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         void        snap(Rendered³Snap& sn) const;

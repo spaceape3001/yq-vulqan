@@ -43,7 +43,7 @@ namespace yq::tachyon {
     }
 
 
-    void MousePressEvent::init_info()
+    void MousePressEvent::init_meta()
     {
         auto w = writer<MousePressEvent>();
         w.description("Mouse Press Event");

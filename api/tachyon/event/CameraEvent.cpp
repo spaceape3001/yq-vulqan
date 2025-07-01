@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void CameraEvent::init_info()
+    void CameraEvent::init_meta()
     {
         auto w = writer<CameraEvent>();
         w.abstract();

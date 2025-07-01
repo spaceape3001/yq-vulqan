@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class JoystickDisconnectEvent : public JoystickEvent {
         YQ_OBJECT_DECLARE(JoystickDisconnectEvent, JoystickEvent);
     public:
-        static void init_info();
+        static void init_meta();
         
         JoystickDisconnectEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

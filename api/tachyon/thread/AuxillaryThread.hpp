@@ -18,7 +18,7 @@ namespace yq::tachyon {
         AuxillaryThread(const Param&p = Param{});
         ~AuxillaryThread();
         
-        static void init_info();
+        static void init_meta();
 
     private:
         friend class Application;

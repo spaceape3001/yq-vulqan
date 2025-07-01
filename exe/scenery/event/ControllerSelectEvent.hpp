@@ -23,7 +23,7 @@ public:
     PostCPtr    clone(rebind_k, const Header&) const override;
 
     ControllerID        controller() const { return m_controller; }
-    static void init_info();
+    static void init_meta();
 private:
     ControllerID        m_controller;
 };

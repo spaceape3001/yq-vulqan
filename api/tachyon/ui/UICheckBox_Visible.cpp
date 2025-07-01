@@ -52,7 +52,7 @@ namespace yq::tachyon {
         elem -> flag(SET, UIFlag::Invisible, !v);
     }
     
-    void UICheckBox_Visible::init_info()
+    void UICheckBox_Visible::init_meta()
     {
         auto w = writer<UICheckBox_Visible>();
         w.description("UI Element Visibility Checkbox");

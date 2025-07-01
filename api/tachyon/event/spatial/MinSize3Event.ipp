@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MinSize³Event(*this, h);
     }
    
-    void MinSize³Event::init_info()
+    void MinSize³Event::init_meta()
     {
         auto w = writer<MinSize³Event>();
         w.description("Min Size Event in 3D");

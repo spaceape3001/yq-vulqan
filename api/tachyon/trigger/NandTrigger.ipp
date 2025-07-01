@@ -36,7 +36,7 @@ namespace yq::tachyon {
         return false;
     }
     
-    void NandTrigger::init_info()
+    void NandTrigger::init_meta()
     {
         auto w = writer<NandTrigger>();
         w.description("An OR post trigger based on other triggers");

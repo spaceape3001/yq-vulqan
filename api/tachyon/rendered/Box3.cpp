@@ -7,7 +7,7 @@
 #include "Box3.hpp"
 
 #include <tachyon/logging.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 
@@ -33,12 +33,12 @@ namespace yq::tachyon {
     };
     IBO<uint16_t>    Box³::s_indices(s_kIndices);
 
-    void Box³::init_info()
+    void Box³::init_meta()
     {
         auto w = writer<Box³>();
         w.description("3D Box render object");
-        MyVertices::init_info(w);
-        ASize³::init_info(w);
+        MyVertices::init_meta(w);
+        ASize³::init_meta(w);
         w.abstract();
         
         w.property("point_bsw", &Box³::point_bsw);

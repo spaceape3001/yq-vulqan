@@ -48,7 +48,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Keyboard, Tachyon)
     public:    
     
-        static void init_info();
+        static void init_meta();
 
         KeyboardID            id() const { return KeyboardID(UniqueID::id()); }
 

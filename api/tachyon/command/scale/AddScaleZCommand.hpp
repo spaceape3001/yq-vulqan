@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         AddScaleᶻCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  Δz() const { return m_Δz; }
         

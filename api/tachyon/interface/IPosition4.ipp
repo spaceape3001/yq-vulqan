@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition⁴)
 
 namespace yq::tachyon {
-    void    IPosition⁴::init_info()
+    void    IPosition⁴::init_meta()
     {
         auto w = writer<IPosition⁴>();
         w.description("4D Position");

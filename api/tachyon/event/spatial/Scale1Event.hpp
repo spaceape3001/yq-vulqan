@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         const Vector1D&   scale() const  { return m_scale; }
         
-        static void init_info();
+        static void init_meta();
         
         double  x() const { return m_scale.x; }
 

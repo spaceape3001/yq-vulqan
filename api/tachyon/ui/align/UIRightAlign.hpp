@@ -17,7 +17,7 @@ namespace yq::tachyon {
     
         using Writer = UIRightAlignWriter;
     
-        static void init_info();
+        static void init_meta();
     
         UIRightAlign(UIFlags flags={});
         UIRightAlign(const UIRightAlign&);

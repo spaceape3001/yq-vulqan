@@ -30,7 +30,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void CursorDisableEvent::init_info()
+    void CursorDisableEvent::init_meta()
     {
         auto w = writer<CursorDisableEvent>();
         w.description("Cursor Disable Event");

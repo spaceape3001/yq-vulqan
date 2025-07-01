@@ -514,7 +514,7 @@ namespace yq::widget {
         }
     }
     
-    void    TextArea::init_info()
+    void    TextArea::init_meta()
     {
         auto w = writer<TextArea>();
         w.imgui();

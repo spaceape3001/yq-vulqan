@@ -11,12 +11,12 @@
 #include <yq/shape/shape_utils.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 
 namespace yq::tachyon {
-    void Quadrilateral³::init_info()
+    void Quadrilateral³::init_meta()
     {
         static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
     

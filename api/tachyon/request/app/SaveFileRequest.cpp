@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SaveFileRequest::init_info()
+    void SaveFileRequest::init_meta()
     {
         auto w = writer<SaveFileRequest>();
         w.description("Browse to Save Request");

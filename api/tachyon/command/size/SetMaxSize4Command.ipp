@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new SetMaxSize⁴Command(*this, h);
     }
     
-    void SetMaxSize⁴Command::init_info()
+    void SetMaxSize⁴Command::init_meta()
     {
         auto w = writer<SetMaxSize⁴Command>();
         w.description("SetMax Size Command in 4D");

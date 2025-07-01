@@ -37,7 +37,7 @@ namespace yq::tachyon {
         ~GradTetrahedron³();
         
         //! Internal use, initializes the tetrahedron meta information
-        static void init_info();
+        static void init_meta();
 
         const RGBA4F&       color1() const { return vertex1().color; }
         const RGBA4F&       color2() const { return vertex2().color; }

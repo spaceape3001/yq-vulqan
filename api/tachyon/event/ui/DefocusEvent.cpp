@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void DefocusEvent::init_info()
+    void DefocusEvent::init_meta()
     {
         auto w = writer<DefocusEvent>();
         w.description("Defocus Event");

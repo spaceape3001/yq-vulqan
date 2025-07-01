@@ -24,7 +24,7 @@ namespace yq::tachyon {
         
         const TachyonPtrVector&  tachyons() const { return m_tachyons; }
         
-        static void init_info();
+        static void init_meta();
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
     protected:

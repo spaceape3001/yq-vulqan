@@ -15,7 +15,7 @@ namespace yq::tachyon {
         RestoreCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         RestoreCommand(const RestoreCommand&, const Header&);

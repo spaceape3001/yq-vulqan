@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         const Vector3D&   position() const  { return m_position; }
         
-        static void init_info();
+        static void init_meta();
         
         double  x() const { return m_position.x; }
         double  y() const { return m_position.y; }

@@ -37,7 +37,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ColorChangeEvent::init_info()
+    void ColorChangeEvent::init_meta()
     {
         auto w = writer<ColorChangeEvent>();
         w.description("Color Change Event");

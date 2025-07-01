@@ -33,7 +33,7 @@ namespace yq::tachyon {
         return new AddScale³Command(*this, h);
     }
     
-    void AddScale³Command::init_info()
+    void AddScale³Command::init_meta()
     {
         auto w = writer<AddScale³Command>();
         w.description("Add Scale Command");

@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MoveBy⁴Command(*this, h);
     }
    
-    void MoveBy⁴Command::init_info()
+    void MoveBy⁴Command::init_meta()
     {
         auto w = writer<MoveBy⁴Command>();
         w.description("Position MoveBy Command in 4D");

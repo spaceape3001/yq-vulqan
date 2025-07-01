@@ -22,7 +22,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void APosition²::init_info(TachyonMeta::Writer<C>& w)
+    void APosition²::init_meta(TachyonMeta::Writer<C>& w)
     {
         w.template interface<IPosition²>();
         w.property(UNSAFE, "position", &APosition²::m_position).tag(kTag_Save);

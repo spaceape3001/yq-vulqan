@@ -28,7 +28,7 @@ PostCPtr    ControllerSelectEvent::clone(rebind_k, const Header&h) const
     return new ControllerSelectEvent(*this, h);
 }
 
-void ControllerSelectEvent::init_info()
+void ControllerSelectEvent::init_meta()
 {
     auto w = writer<ControllerSelectEvent>();
     w.description("Controller Selection Event");

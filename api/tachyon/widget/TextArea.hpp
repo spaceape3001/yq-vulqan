@@ -217,7 +217,7 @@ namespace yq {
 
             template <typename T> struct Frame;
           
-            static void init_info();
+            static void init_meta();
           
         private:
         

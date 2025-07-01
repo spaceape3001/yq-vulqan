@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void RestoreEvent::init_info()
+    void RestoreEvent::init_meta()
     {
         auto w = writer<RestoreEvent>();
         w.description("Restore Event");

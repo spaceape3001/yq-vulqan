@@ -27,7 +27,7 @@ namespace yq::tachyon {
         
         virtual bool  action(Payload&) const override;
         
-        static void init_info();
+        static void init_meta();
     
     private:
         spec_t          m_spec;

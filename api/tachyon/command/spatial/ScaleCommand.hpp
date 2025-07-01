@@ -15,7 +15,7 @@ namespace yq::tachyon {
         ScaleCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
 
     protected:
         ScaleCommand(const ScaleCommand&, const Header&);

@@ -18,7 +18,7 @@ namespace yq::tachyon {
         GameThread(const Param&p = Param{});
         ~GameThread();
         
-        static void init_info();
+        static void init_meta();
 
     private:
         friend class Application;

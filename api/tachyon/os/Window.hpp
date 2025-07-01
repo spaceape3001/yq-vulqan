@@ -57,7 +57,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Window, Tachyon)
     public:    
     
-        static void init_info();
+        static void init_meta();
 
         WindowID    id() const { return WindowID(UniqueID::id()); }
 

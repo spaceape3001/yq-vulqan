@@ -13,7 +13,7 @@ namespace yq::tachyon {
     class GamepadHatEvent : public GamepadEvent {
         YQ_OBJECT_DECLARE(GamepadHatEvent, GamepadEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         HatState    state() const { return m_state; }
         size_t      hat() const { return m_hat; }

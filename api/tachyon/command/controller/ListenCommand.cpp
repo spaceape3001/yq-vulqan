@@ -32,7 +32,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void ListenCommand::init_info()
+    void ListenCommand::init_meta()
     {
         auto w = writer<ListenCommand>();
         w.description("Listen Command");

@@ -28,7 +28,7 @@ PostCPtr    CameraSelectEvent::clone(rebind_k, const Header&h) const
     return new CameraSelectEvent(*this, h);
 }
 
-void CameraSelectEvent::init_info()
+void CameraSelectEvent::init_meta()
 {
     auto w = writer<CameraSelectEvent>();
     w.description("Camera Selection Event");

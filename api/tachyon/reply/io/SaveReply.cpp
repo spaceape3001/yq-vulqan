@@ -35,7 +35,7 @@ namespace yq::tachyon {
         return new SaveReply(*this, h);
     }
     
-    void SaveReply::init_info()
+    void SaveReply::init_meta()
     {
         auto w = writer<SaveReply>();
         w.description("Save Reply");

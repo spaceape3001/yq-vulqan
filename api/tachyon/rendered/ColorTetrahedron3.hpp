@@ -46,7 +46,7 @@ namespace yq::tachyon {
         ~ColorTetrahedron³();
         
         //! Internal use, initializes the tetrahedron meta information
-        static void init_info();
+        static void init_meta();
         
     protected:
         virtual void    rebuild() override;

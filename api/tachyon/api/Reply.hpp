@@ -26,7 +26,7 @@ namespace yq::tachyon {
         
         const Request*  request() const;
         
-        static void init_info();
+        static void init_meta();
         
         struct Param {};        //< DEPRECATED
         

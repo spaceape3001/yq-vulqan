@@ -26,7 +26,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void IOReply::init_info()
+    void IOReply::init_meta()
     {
         auto w = writer<IOReply>();
         w.description("IO reply base class");

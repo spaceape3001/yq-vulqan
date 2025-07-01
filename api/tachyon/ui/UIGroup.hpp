@@ -24,6 +24,6 @@ namespace yq::tachyon {
 
         virtual void    render() override;
         
-        static void init_info();
+        static void init_meta();
     };
 }

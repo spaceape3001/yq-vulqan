@@ -158,7 +158,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    void JoystickGLFW::init_info()
+    void JoystickGLFW::init_meta()
     {
         auto w = writer<JoystickGLFW>();
         w.description("GLFW Joystick");

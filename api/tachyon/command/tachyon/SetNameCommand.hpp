@@ -16,7 +16,7 @@ namespace yq::tachyon {
         SetNameCommand(const Header&, std::string_view);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const std::string&  name() const { return m_name; }
 

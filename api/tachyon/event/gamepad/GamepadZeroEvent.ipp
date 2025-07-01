@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadZeroEvent::init_info()
+    void GamepadZeroEvent::init_meta()
     {
         auto w = writer<GamepadZeroEvent>();
         w.description("Gamepad Zeroion Event");

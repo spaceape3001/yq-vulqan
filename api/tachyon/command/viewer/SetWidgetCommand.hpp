@@ -20,7 +20,7 @@ namespace yq::tachyon {
     
         SetWidgetCommand(const Header&, WidgetPtr);
         
-        static void init_info();
+        static void init_meta();
         
         const WidgetPtr&    widget() const { return m_widget; }
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

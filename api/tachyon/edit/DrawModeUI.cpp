@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::DrawModeUI)
 
 namespace yq::tachyon {
-    void DrawModeUI::init_info()
+    void DrawModeUI::init_meta()
     {
         auto w = writer<DrawModeUI>();
         w.description("UIEditor for Draw Mode");

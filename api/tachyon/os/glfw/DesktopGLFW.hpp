@@ -22,7 +22,7 @@ namespace yq::tachyon {
         DesktopGLFW(const AppCreateInfo&, const Param& p=Param());
         ~DesktopGLFW();
         
-        static void init_info();
+        static void init_meta();
 
         virtual CursorID    cursor(StdCursor) const override;
 

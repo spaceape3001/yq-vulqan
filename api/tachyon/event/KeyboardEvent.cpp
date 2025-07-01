@@ -26,7 +26,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void KeyboardEvent::init_info()
+    void KeyboardEvent::init_meta()
     {
         {
             auto w = writer<KeyboardEvent>();

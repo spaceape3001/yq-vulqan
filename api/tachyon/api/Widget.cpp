@@ -111,7 +111,7 @@ namespace yq::tachyon {
         }
     }
 
-    void Widget::init_info()
+    void Widget::init_meta()
     {
         auto w = writer<Widget>();
         w.description("Widget base class");

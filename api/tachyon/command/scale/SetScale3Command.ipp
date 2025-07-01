@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new SetScale³Command(*this, h);
     }
     
-    void SetScale³Command::init_info()
+    void SetScale³Command::init_meta()
     {
         auto w = writer<SetScale³Command>();
         w.description("Set Scale Command");

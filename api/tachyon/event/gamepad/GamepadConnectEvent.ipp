@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void GamepadConnectEvent::init_info()
+    void GamepadConnectEvent::init_meta()
     {
         auto w = writer<GamepadConnectEvent>();
         w.description("Gamepad Connection Event");

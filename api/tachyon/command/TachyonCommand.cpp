@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void TachyonCommand::init_info()
+    void TachyonCommand::init_meta()
     {
         auto w = writer<TachyonCommand>();
         w.description("Tachyon command base class");

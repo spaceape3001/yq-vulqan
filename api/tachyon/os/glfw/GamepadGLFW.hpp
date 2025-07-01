@@ -19,7 +19,7 @@ namespace yq::tachyon {
         GamepadGLFW(int, const Param&p = Param());
         ~GamepadGLFW();
         
-        static void init_info();
+        static void init_meta();
         
         int glfw() const { return m_joystick; }
         

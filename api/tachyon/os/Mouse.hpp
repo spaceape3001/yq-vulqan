@@ -50,7 +50,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Mouse, Tachyon)
     public:    
     
-        static void init_info();
+        static void init_meta();
 
         MouseID            id() const { return MouseID(UniqueID::id()); }
 

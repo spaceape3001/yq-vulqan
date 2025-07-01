@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void UnfloatCommand::init_info()
+    void UnfloatCommand::init_meta()
     {
         auto w = writer<UnfloatCommand>();
         w.description("Unfloat Command");

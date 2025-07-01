@@ -19,7 +19,7 @@ using namespace yq::tachyon;
 class RenderedTableUI : public UIElement {
     YQ_OBJECT_DECLARE(RenderedTableUI, UIElement)
 public:
-    static void init_info();
+    static void init_meta();
     
     RenderedTableUI(UIFlags flags={});
     RenderedTableUI(const RenderedTableUI& cp);

@@ -15,7 +15,7 @@ namespace yq::tachyon {
     
         WidgetCommand(const Header&);
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         WidgetCommand(const WidgetCommand&, const Header&);

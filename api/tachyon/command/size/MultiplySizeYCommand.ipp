@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new MultiplySizeʸCommand(*this, h);
     }
     
-    void MultiplySizeʸCommand::init_info()
+    void MultiplySizeʸCommand::init_meta()
     {
         auto w = writer<MultiplySizeʸCommand>();
         w.description("Multiply Size Command");

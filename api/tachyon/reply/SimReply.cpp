@@ -26,7 +26,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void SimReply::init_info()
+    void SimReply::init_meta()
     {
         auto w = writer<SimReply>();
         w.description("Sim reply base class");

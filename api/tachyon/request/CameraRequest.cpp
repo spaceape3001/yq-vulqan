@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void CameraRequest::init_info()
+    void CameraRequest::init_meta()
     {
         auto w = writer<CameraRequest>();
         w.abstract();

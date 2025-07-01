@@ -22,7 +22,7 @@ namespace yq::tachyon {
         constexpr TypedID       listener() const { return m_listener; }
         constexpr MGF           groups() const { return m_groups; }
         
-        static void init_info();
+        static void init_meta();
     protected:
         SubscribeCommand(const SubscribeCommand&, const Header&);
         ~SubscribeCommand();

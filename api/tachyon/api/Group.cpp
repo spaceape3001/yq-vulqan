@@ -44,7 +44,7 @@ namespace yq::tachyon {
         Tachyon::finalize(data);
     }
 
-    void Group::init_info()
+    void Group::init_meta()
     {
         auto w = writer<Group>();
         w.description("Group");

@@ -16,7 +16,7 @@ namespace yq::tachyon {
         MouseEnterEvent(const Header&, ModifierKeys, const Vector2D&, MouseButtons);
 
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void init_info();
+        static void init_meta();
 
     protected:
         MouseEnterEvent(const MouseEnterEvent&, const Header&);

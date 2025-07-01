@@ -22,7 +22,7 @@ struct ModelTableUI::Row {
     std::string        stype;
 };
 
-void ModelTableUI::init_info()
+void ModelTableUI::init_meta()
 {
     auto w = writer<ModelTableUI>();
     w.description("Scene Editor's Model Table");

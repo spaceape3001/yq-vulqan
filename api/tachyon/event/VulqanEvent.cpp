@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void VulqanEvent::init_info()
+    void VulqanEvent::init_meta()
     {
         auto w = writer<VulqanEvent>();
         w.description("Vulqan event base class");

@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void PanelEvent::init_info()
+    void PanelEvent::init_meta()
     {
         auto w = writer<PanelEvent>();
         w.abstract();

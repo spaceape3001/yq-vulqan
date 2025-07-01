@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void EditorEvent::init_info()
+    void EditorEvent::init_meta()
     {
         auto w = writer<EditorEvent>();
         w.description("Editor event base class");

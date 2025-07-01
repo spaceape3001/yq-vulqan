@@ -14,7 +14,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::BgColorUI)
 
 namespace yq::tachyon {
-    void BgColorUI::init_info()
+    void BgColorUI::init_meta()
     {
         auto w = writer<BgColorUI>();
         w.description("UIEditor for BgColor");

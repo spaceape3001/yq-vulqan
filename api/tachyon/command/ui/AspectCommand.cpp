@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void AspectCommand::init_info()
+    void AspectCommand::init_meta()
     {
         auto w = writer<AspectCommand>();
         w.description("Aspect Command");

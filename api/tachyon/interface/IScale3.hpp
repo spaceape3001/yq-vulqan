@@ -42,6 +42,6 @@ namespace yq::tachyon {
         virtual bool        scale(addable_k) const { return false; }
         virtual bool        scale(multipliable_k) const { return false; }
 
-        static void init_info();
+        static void init_meta();
     };
 }

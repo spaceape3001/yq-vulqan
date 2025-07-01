@@ -29,7 +29,7 @@ namespace yq::tachyon {
         double    m_far = kDefFarPlane;
 
         template <typename C>
-        static void init_info(TachyonMeta::Writer<C>&);
+        static void init_meta(TachyonMeta::Writer<C>&);
         
         AFarPlane();
         virtual ~AFarPlane();

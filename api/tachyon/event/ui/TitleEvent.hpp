@@ -15,7 +15,7 @@ namespace yq::tachyon {
         TitleEvent(const Header&, std::string_view szNewTitle);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const std::string&    title() const { return m_title; }
 

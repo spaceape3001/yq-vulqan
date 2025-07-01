@@ -25,7 +25,7 @@ namespace yq::tachyon {
         Quadrilateral³(const QuadrilateralData<ColorVertex2D>&, const Param& p={});
         ~Quadrilateral³();
         
-        static void init_info();
+        static void init_meta();
         
     private:
         VB1<ColorVertexData>    m_vertex;

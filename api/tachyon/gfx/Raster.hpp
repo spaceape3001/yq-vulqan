@@ -54,7 +54,7 @@ namespace yq::tachyon {
         //! Converts to a pixmap (NOTE, this *CAN* fail, check result)
         PixmapSPtr  to_pixmap() const;
         
-        static void init_info();
+        static void init_meta();
         
 
     private:

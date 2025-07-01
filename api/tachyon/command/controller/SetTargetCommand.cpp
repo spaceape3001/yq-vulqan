@@ -32,7 +32,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetTargetCommand::init_info()
+    void SetTargetCommand::init_meta()
     {
         auto w = writer<SetTargetCommand>();
         w.description("Set Target Command");

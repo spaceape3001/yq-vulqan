@@ -23,7 +23,7 @@ namespace yq::tachyon {
     
     }
     
-    void PostAction::init_info()
+    void PostAction::init_meta()
     {
         auto w = writer<PostAction>();
         w.description("Action that sends a post");

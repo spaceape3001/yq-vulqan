@@ -37,7 +37,7 @@ namespace yq::tachyon {
     }
     */
     
-    void Panel::init_info()
+    void Panel::init_meta()
     {
         auto w = writer<Panel>();
         w.description("Panel base");

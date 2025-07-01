@@ -107,7 +107,7 @@ namespace yq::tachyon {
         return dynamic_cast<UIWindow*>(elem) || dynamic_cast<UIGenerator*>(elem);
     }
     
-    void UIVBoxLayout::init_info()
+    void UIVBoxLayout::init_meta()
     {
         auto w = writer<UIVBoxLayout>();
         w.description("Vertical Box UI Layout");

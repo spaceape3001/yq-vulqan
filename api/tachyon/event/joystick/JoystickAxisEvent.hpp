@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class JoystickAxisEvent : public JoystickEvent {
         YQ_OBJECT_DECLARE(JoystickAxisEvent, JoystickEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         JoystickAxisEvent(const Header&, size_t axis, float value, float delta);
         

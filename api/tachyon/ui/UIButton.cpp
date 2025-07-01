@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIButton)
 
 namespace yq::tachyon {
-    void UIButton::init_info()
+    void UIButton::init_meta()
     {
         auto w = writer<UIButton>();
         w.description("UI Button");

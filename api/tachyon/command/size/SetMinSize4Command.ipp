@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new SetMinSize⁴Command(*this, h);
     }
     
-    void SetMinSize⁴Command::init_info()
+    void SetMinSize⁴Command::init_meta()
     {
         auto w = writer<SetMinSize⁴Command>();
         w.description("SetMin Size Command in 4D");

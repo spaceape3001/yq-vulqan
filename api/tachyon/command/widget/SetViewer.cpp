@@ -27,7 +27,7 @@ namespace yq::tachyon {
         return new SetViewer(*this, h);
     }
 
-    void SetViewer::init_info()
+    void SetViewer::init_meta()
     {
         auto w = writer<SetViewer>();
         w.description("Set Viewer Command");

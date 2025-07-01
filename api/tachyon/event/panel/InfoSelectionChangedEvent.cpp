@@ -32,7 +32,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void InfoSelectionChangedEvent::init_info()
+    void InfoSelectionChangedEvent::init_meta()
     {
         auto w = writer<InfoSelectionChangedEvent>();
         w.description("Info Selection Changed Event");

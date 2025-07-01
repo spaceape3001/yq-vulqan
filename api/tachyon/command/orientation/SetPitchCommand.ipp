@@ -35,7 +35,7 @@ namespace yq::tachyon {
         return new SetPitchCommand(*this, h);
     }
     
-    void SetPitchCommand::init_info()
+    void SetPitchCommand::init_meta()
     {
         auto w = writer<SetPitchCommand>();
         w.description("Set Pitch Command");

@@ -30,7 +30,7 @@ namespace yq::tachyon {
         return new SetFarPlaneCommand(*this, h);
     }
 
-    void SetFarPlaneCommand::init_info()
+    void SetFarPlaneCommand::init_meta()
     {
         auto w = writer<SetFarPlaneCommand>();
         w.description("Sets a camera's Far Plane");

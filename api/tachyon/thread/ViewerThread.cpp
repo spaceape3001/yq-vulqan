@@ -29,7 +29,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerThread::init_info()
+    void ViewerThread::init_meta()
     {
         auto w = writer<ViewerThread>();
         w.description("Viewer Thread");

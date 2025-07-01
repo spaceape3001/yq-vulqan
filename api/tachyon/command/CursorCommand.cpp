@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void CursorCommand::init_info()
+    void CursorCommand::init_meta()
     {
         auto w = writer<CursorCommand>();
         w.abstract();

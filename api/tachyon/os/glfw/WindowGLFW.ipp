@@ -746,7 +746,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void WindowGLFW::init_info()
+    void WindowGLFW::init_meta()
     {
         auto w = writer<WindowGLFW>();
         w.description("GLFW Window");

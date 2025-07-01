@@ -72,7 +72,7 @@ namespace yq::tachyon {
         //! Sets the field-of-view angle
         void                    set_fov(Degree);
         
-        static void init_info();
+        static void init_meta();
         
     protected:
         void    snap(Camera³Snap&) const;

@@ -27,7 +27,7 @@ namespace yq::tachyon {
         quit();
     }
     
-    void AudioThread::init_info()
+    void AudioThread::init_meta()
     {
         auto w = writer<AudioThread>();
         w.description("Audio Thread");

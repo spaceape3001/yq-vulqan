@@ -32,7 +32,7 @@ PostCPtr    SceneRemoveEvent::clone(rebind_k, const Header&h) const
     return new SceneRemoveEvent(*this, h);
 }
 
-void SceneRemoveEvent::init_info()
+void SceneRemoveEvent::init_meta()
 {
     auto w = writer<SceneRemoveEvent>();
     w.description("Scene Removeion Event");

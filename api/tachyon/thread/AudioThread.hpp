@@ -18,7 +18,7 @@ namespace yq::tachyon {
         AudioThread(const Param&p = Param{});
         ~AudioThread();
         
-        static void init_info();
+        static void init_meta();
 
     private:
         friend class Application;

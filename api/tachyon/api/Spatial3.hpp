@@ -13,20 +13,20 @@
 namespace yq::tachyon {
     class Spatial³;
     
-    class Spatial³Info : public SpatialMeta {
+    class Spatial³Meta : public SpatialMeta {
     public:
     
         template <typename C> class Writer;
 
-        Spatial³Info(std::string_view zName, SpatialMeta& base, const std::source_location& sl=std::source_location::current());
+        Spatial³Meta(std::string_view zName, SpatialMeta& base, const std::source_location& sl=std::source_location::current());
     
     protected:
-        ~Spatial³Info();
+        ~Spatial³Meta();
     
     };
     
     class Spatial³ : public Spatial {
-        YQ_TACHYON_INFO(Spatial³Info)
+        YQ_TACHYON_INFO(Spatial³Meta)
         YQ_TACHYON_SNAP(Spatial³Snap)
         YQ_TACHYON_DATA(Spatial³Data)
         YQ_TACHYON_DECLARE(Spatial³, Spatial)
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         
         Spatial³ID id() const { return Spatial³ID(UniqueID::id()); }
 
-        static void init_info();
+        static void init_meta();
         
     protected:
         Spatial³(const Param&);

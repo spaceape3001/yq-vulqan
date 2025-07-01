@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void CloseCommand::init_info()
+    void CloseCommand::init_meta()
     {
         auto w = writer<CloseCommand>();
         w.description("Close Command");

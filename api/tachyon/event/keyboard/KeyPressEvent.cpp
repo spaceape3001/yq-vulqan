@@ -28,7 +28,7 @@ namespace yq::tachyon {
         return new KeyPressEvent(*this, h);
     }
     
-    void KeyPressEvent::init_info()
+    void KeyPressEvent::init_meta()
     {
         auto w = writer<KeyPressEvent>();
         w.description("Key Press Event");

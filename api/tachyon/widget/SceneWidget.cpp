@@ -25,7 +25,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::SceneWidget)
 */
 
 namespace yq::tachyon {
-    void SceneWidget::init_info()
+    void SceneWidget::init_meta()
     {
         auto w = writer<SceneWidget>();
         w.description("3D Scene Widget v2");

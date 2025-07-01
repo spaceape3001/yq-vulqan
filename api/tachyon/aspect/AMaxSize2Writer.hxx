@@ -22,7 +22,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AMaxSize²::init_info(TachyonMeta::Writer<C>&w)
+    void AMaxSize²::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMaxSize²>();
         w.property(UNSAFE, "max_size", &AMaxSize²::m_max_size).tag(kTag_Save);

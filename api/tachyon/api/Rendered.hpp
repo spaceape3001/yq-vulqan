@@ -95,7 +95,7 @@ namespace yq::tachyon {
         //! Returns the role of the current pipeline
         Pipeline::Role  role() const;
         
-        static void init_info();
+        static void init_meta();
         
         RenderedID      id() const { return RenderedID(UniqueID::id()); }
 

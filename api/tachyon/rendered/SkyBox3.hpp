@@ -37,7 +37,7 @@ namespace yq::tachyon {
         SkyBox³(std::initializer_list<std::string_view> szImages, const Param& p={});
         ~SkyBox³();
         
-        static void init_info();
+        static void init_meta();
         
     private:
 

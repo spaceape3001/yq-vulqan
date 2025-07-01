@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void PauseEvent::init_info()
+    void PauseEvent::init_meta()
     {
         auto w = writer<PauseEvent>();
         w.description("Pause Event");

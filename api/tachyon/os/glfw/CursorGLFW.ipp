@@ -19,7 +19,7 @@ namespace yq::tachyon {
     {
     }
     
-    void CursorGLFW::init_info()
+    void CursorGLFW::init_meta()
     {
         auto w = writer<CursorGLFW>();
         w.description("GLFW Cursor");

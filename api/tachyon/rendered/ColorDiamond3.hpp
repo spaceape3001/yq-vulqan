@@ -23,7 +23,7 @@ namespace yq::tachyon {
             Param(){}
         };
         
-        static void init_info();
+        static void init_meta();
         
         ColorDiamond³(const Param& p={});
         ColorDiamond³(const Size3D&sz, const Param& p={});

@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void FocusEvent::init_info()
+    void FocusEvent::init_meta()
     {
         auto w = writer<FocusEvent>();
         w.description("Focus Event");

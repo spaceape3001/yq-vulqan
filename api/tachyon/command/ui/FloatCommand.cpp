@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void FloatCommand::init_info()
+    void FloatCommand::init_meta()
     {
         auto w = writer<FloatCommand>();
         w.description("Float Command");

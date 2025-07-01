@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(ColorEvent, Event)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         ColorEvent(const Header&);

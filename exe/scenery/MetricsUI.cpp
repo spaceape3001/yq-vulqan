@@ -11,7 +11,7 @@
 #include <tachyon/api/ThreadData.hpp>
 #include <tachyon/ui/UIFormMetaWriter.hpp>
 
-void MetricsUI::init_info()
+void MetricsUI::init_meta()
 {
     auto w = writer<MetricsUI>();
     w.description("Metrics UI");

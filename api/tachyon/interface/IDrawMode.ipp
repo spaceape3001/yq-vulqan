@@ -14,7 +14,7 @@ namespace yq::tachyon {
     IDrawMode::IDrawMode() = default;
     IDrawMode::~IDrawMode() = default;
 
-    void IDrawMode::init_info()
+    void IDrawMode::init_meta()
     {
         auto w = writer<IDrawMode>();
         w.description("DrawMode Interface");

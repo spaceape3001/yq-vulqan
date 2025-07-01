@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new SetSize³Command(*this, h);
     }
     
-    void SetSize³Command::init_info()
+    void SetSize³Command::init_meta()
     {
         auto w = writer<SetSize³Command>();
         w.description("Set Size Command in 3D");

@@ -82,7 +82,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    void    Shader::init_info()
+    void    Shader::init_meta()
     {
         auto ti = writer<Shader>();
         ti.description("Shader Asset");

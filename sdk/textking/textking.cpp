@@ -168,7 +168,7 @@ void    N2Editor::imgui(ViContext&u)
 class TextKing : public Widget {
     YQ_OBJECT_DECLARE(TextKing, Widget)
 public:
-    static void init_info()
+    static void init_meta()
     {
         auto w = writer<TextKing>();
         w.imgui();

@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return true;
     }
     
-    void NorTrigger::init_info()
+    void NorTrigger::init_meta()
     {
         auto w = writer<NorTrigger>();
         w.description("An NOR post trigger based on other triggers");

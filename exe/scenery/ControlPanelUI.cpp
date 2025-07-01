@@ -12,7 +12,7 @@
 using namespace yq;
 using namespace yq::tachyon;
 
-void ControlPanelUI::init_info()
+void ControlPanelUI::init_meta()
 {
     auto w = writer<ControlPanelUI>();
     w.description("Scene Editor's Control Panel");

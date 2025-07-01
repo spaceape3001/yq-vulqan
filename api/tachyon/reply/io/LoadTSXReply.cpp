@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::LoadTSXReply)
 
 namespace yq::tachyon {
-    void  LoadTSXReply::init_info()
+    void  LoadTSXReply::init_meta()
     {
         auto w = writer<LoadTSXReply>();
         w.description("TSX Load Reply");

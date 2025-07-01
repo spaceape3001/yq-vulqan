@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         const Size1D&   size() const  { return m_size; }
         
-        static void init_info();
+        static void init_meta();
         
         double  x() const { return m_size.x; }
         

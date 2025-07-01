@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new SnoopCommand(*this, h);
     }
     
-    void SnoopCommand::init_info()
+    void SnoopCommand::init_meta()
     {
         auto w = writer<SnoopCommand>();
         w.description("Snoop Command");

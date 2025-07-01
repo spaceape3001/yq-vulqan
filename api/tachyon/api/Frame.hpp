@@ -222,7 +222,7 @@ namespace yq::tachyon {
         const std::set<WindowID>&           ids(window_k) const;
 
         const CameraMeta*                   meta(CameraID) const;
-        const Camera³Info*                  meta(Camera³ID) const;
+        const Camera³Meta*                  meta(Camera³ID) const;
         const ControllerMeta*               meta(ControllerID) const;
         const CursorMeta*                   meta(CursorID) const;
         const DesktopMeta*                  meta(DesktopID) const;
@@ -233,17 +233,17 @@ namespace yq::tachyon {
         const KeyboardMeta*                 meta(KeyboardID) const;
         const LayerMeta*                    meta(LayerID) const;
         const LightMeta*                    meta(LightID) const;
-        const Light³Info*                   meta(Light³ID) const;
+        const Light³Meta*                   meta(Light³ID) const;
         const ManagerMeta*                  meta(ManagerID) const;
         const ModelMeta*                    meta(ModelID) const;
         const MouseMeta*                    meta(MouseID) const;
         const RenderedMeta*                 meta(RenderedID) const;
-        const Rendered³Info*                meta(Rendered³ID) const;
+        const Rendered³Meta*                meta(Rendered³ID) const;
         const SceneMeta*                    meta(SceneID) const;
-        const Scene³Info*                   meta(Scene³ID) const;
+        const Scene³Meta*                   meta(Scene³ID) const;
         const SpatialMeta*                  meta(SpatialID) const;
-        const Spatial²Info*                 meta(Spatial²ID) const;
-        const Spatial³Info*                 meta(Spatial³ID) const;
+        const Spatial²Meta*                 meta(Spatial²ID) const;
+        const Spatial³Meta*                 meta(Spatial³ID) const;
         const TachyonMeta*                  meta(TachyonID) const;
         const ThreadMeta*                   meta(ThreadID) const;
         const TachyonMeta*                  meta(ViewerID) const;

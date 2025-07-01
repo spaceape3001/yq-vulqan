@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIHLine)
 
 namespace yq::tachyon {
-    void UIHLine::init_info()
+    void UIHLine::init_meta()
     {
         auto w = writer<UIHLine>();
         w.description("Horizontal line of UI elements");

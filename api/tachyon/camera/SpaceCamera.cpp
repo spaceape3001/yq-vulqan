@@ -19,7 +19,7 @@
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/vector/Quaternion3.hxx>
 
-#include <tachyon/api/Camera3InfoWriter.hpp>
+#include <tachyon/api/Camera3MetaWriter.hpp>
 #include <tachyon/aspect/AFarPlaneWriter.hxx>
 #include <tachyon/aspect/AFieldOfViewWriter.hxx>
 #include <tachyon/aspect/ANearPlaneWriter.hxx>
@@ -120,14 +120,14 @@ namespace yq::tachyon {
         //sn.projection   = Tensor44D(projection_matrix(m_screen));
     }
 
-    void SpaceCamera::init_info()
+    void SpaceCamera::init_meta()
     {
         auto w = writer<SpaceCamera>();
         w.description("3D Space camera (fov with near/far plane)");
         
-        AFieldOfView::init_info(w);
-        AFarPlane::init_info(w);
-        ANearPlane::init_info(w);
+        AFieldOfView::init_meta(w);
+        AFarPlane::init_meta(w);
+        ANearPlane::init_meta(w);
     }
 }
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SpaceCamera)

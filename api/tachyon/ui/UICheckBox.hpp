@@ -32,7 +32,7 @@ namespace yq::tachyon {
         
         bool                    checked() const;
         
-        static void init_info();
+        static void init_meta();
     
     protected:
         virtual UICheckBox*     clone() const = 0;

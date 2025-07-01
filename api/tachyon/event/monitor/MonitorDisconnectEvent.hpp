@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class MonitorDisconnectEvent : public MonitorEvent {
         YQ_OBJECT_DECLARE(MonitorDisconnectEvent, MonitorEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         MonitorDisconnectEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

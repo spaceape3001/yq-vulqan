@@ -19,6 +19,6 @@ namespace yq::tachyon {
         
         void    fov();
         
-        static void init_info();
+        static void init_meta();
     };
 }

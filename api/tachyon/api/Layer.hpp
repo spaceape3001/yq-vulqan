@@ -33,7 +33,7 @@ namespace yq::tachyon {
         Layer(const Param&p={});
         virtual ~Layer();
         
-        static void init_info();
+        static void init_meta();
         
         LayerID id() const { return LayerID{ UniqueID::id()}; }
         

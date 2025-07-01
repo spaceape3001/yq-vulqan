@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new Scale³Event(*this, h);
     }
    
-    void Scale³Event::init_info()
+    void Scale³Event::init_meta()
     {
         auto w = writer<Scale³Event>();
         w.description("Scaled Event in 3D");

@@ -31,7 +31,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ParentChangeEvent::init_info()
+    void ParentChangeEvent::init_meta()
     {
         auto w = writer<ParentChangeEvent>();
         w.description("ParentChange Event");

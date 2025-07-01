@@ -58,7 +58,7 @@ namespace yq::tachyon {
         return false;
     }
 
-    void Trigger::init_info()
+    void Trigger::init_meta()
     {
         auto w = writer<Trigger>();
         w.description("Abstract Post Trigger");

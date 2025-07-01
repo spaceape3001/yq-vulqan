@@ -23,7 +23,7 @@ namespace yq::tachyon {
         bool    middle() const;
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void init_info();
+        static void init_meta();
         
     protected:
         MousePressEvent(const MousePressEvent&, const Header&);

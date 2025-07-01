@@ -20,7 +20,7 @@ namespace yq::tachyon {
         TypedID    target() const { return m_target; }
 
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void init_info();
+        static void init_meta();
         
     protected:
         SetTargetCommand(const SetTargetCommand&, const Header&);

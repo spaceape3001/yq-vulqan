@@ -1586,7 +1586,7 @@ namespace yq::tachyon {
     }
 
     // ---- INFO AT THE END ---
-    void Tachyon::init_info()
+    void Tachyon::init_meta()
     {
         auto w = writer<Tachyon>();
         w.description("Tachyon Object");

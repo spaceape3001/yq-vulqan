@@ -43,7 +43,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void MouseEvent::init_info()
+    void MouseEvent::init_meta()
     {
         auto w = writer<MouseEvent>();
         w.description("Mouse event base class");

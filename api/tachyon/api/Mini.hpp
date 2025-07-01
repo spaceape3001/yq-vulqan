@@ -48,7 +48,7 @@ namespace yq::tachyon {
     
         Mini();
         virtual ~Mini();
-        static void init_info();
+        static void init_meta();
         
         /*! \brief Sets the accessor
         

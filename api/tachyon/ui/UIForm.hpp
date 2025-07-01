@@ -54,7 +54,7 @@ namespace yq::tachyon {
         UIForm(const UIForm&);
         virtual ~UIForm();
         
-        static void init_info();
+        static void init_meta();
         
         virtual void    render();
        

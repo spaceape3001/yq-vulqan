@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void WidgetRequest::init_info()
+    void WidgetRequest::init_meta()
     {
         auto w = writer<WidgetRequest>();
         w.description("Widget request base class");

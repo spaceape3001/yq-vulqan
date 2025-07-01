@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void OrientationCommand::init_info()
+    void OrientationCommand::init_meta()
     {
         auto w = writer<OrientationCommand>();
         w.description("Orientation Command");

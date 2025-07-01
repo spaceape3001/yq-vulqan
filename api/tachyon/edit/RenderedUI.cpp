@@ -18,7 +18,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::RenderedUI)
 
 namespace yq::tachyon {
     
-    void RenderedUI::init_info()
+    void RenderedUI::init_meta()
     {
         auto w = writer<RenderedUI>();
         w.field("Wireframe", &RenderedUI::wireframe);

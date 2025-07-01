@@ -40,7 +40,7 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    void Action::init_info()
+    void Action::init_meta()
     {
         auto w = writer<Action>();
         w.description("Tachyon Action (Abstract Base Class)");

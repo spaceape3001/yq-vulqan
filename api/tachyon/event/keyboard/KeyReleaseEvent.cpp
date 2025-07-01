@@ -28,7 +28,7 @@ namespace yq::tachyon {
         return new KeyReleaseEvent(*this, h);
     }
     
-    void KeyReleaseEvent::init_info()
+    void KeyReleaseEvent::init_meta()
     {
         auto w = writer<KeyReleaseEvent>();
         w.description("Key Release Event");

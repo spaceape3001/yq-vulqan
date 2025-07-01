@@ -20,7 +20,7 @@ using namespace yq::tachyon;
 class SceneTableUI : public UIElement {
     YQ_OBJECT_DECLARE(SceneTableUI, UIElement)
 public:
-    static void init_info();
+    static void init_meta();
     
     SceneTableUI(UIFlags flags={});
     SceneTableUI(const SceneTableUI& cp);

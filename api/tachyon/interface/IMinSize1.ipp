@@ -12,7 +12,7 @@
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMinSize¹)
 
 namespace yq::tachyon {
-    void    IMinSize¹::init_info()
+    void    IMinSize¹::init_meta()
     {
         auto w = writer<IMinSize¹>();
         w.description("1D Size");

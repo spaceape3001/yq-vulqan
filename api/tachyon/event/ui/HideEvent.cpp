@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void HideEvent::init_info()
+    void HideEvent::init_meta()
     {
         auto w = writer<HideEvent>();
         w.description("Hide Event");

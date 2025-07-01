@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class UISimpleTree : public UIElements {
         YQ_OBJECT_DECLARE(UISimpleTree, UIElements)
     public:
-        static void init_info();
+        static void init_meta();
         UISimpleTree(UIFlags flags={});
         UISimpleTree(const UISimpleTree&);
         virtual UISimpleTree* clone() const override;

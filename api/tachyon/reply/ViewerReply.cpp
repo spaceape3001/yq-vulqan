@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void ViewerReply::init_info()
+    void ViewerReply::init_meta()
     {
         auto w = writer<ViewerReply>();
         w.description("Viewer reply base class");

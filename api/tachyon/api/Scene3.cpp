@@ -6,7 +6,7 @@
 
 #include <tachyon/api/Scene3.hpp>
 #include <tachyon/api/Scene3Data.hpp>
-#include <tachyon/api/Scene3InfoWriter.hpp>
+#include <tachyon/api/Scene3MetaWriter.hpp>
 #include <tachyon/spatial/SimpleSpatial3.hpp>
 #include <tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
@@ -21,13 +21,13 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    Scene³Info::Scene³Info(std::string_view name, SceneMeta& base, const std::source_location& sl) :
+    Scene³Meta::Scene³Meta(std::string_view name, SceneMeta& base, const std::source_location& sl) :
         SceneMeta(name, base, sl)
     {
         set(Type::Scene³);
     }
 
-    Scene³Info::~Scene³Info()
+    Scene³Meta::~Scene³Meta()
     {
     }
     
@@ -61,10 +61,10 @@ namespace yq::tachyon {
         Scene::snap(sn);
     }
     
-    void Scene³::init_info()
+    void Scene³::init_meta()
     {
         auto w = writer<Scene³>();
-        ③::init_info(w);
+        ③::init_meta(w);
         w.description("Scene in 3D");
 
         auto wt = writer<Scene³ID>();

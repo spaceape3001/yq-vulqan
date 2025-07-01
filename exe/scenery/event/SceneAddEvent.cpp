@@ -32,7 +32,7 @@ PostCPtr    SceneAddEvent::clone(rebind_k, const Header&h) const
     return new SceneAddEvent(*this, h);
 }
 
-void SceneAddEvent::init_info()
+void SceneAddEvent::init_meta()
 {
     auto w = writer<SceneAddEvent>();
     w.description("Scene Addion Event");

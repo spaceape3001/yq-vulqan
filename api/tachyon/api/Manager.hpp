@@ -27,7 +27,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Manager, Tachyon)
     public:
     
-        static void init_info();
+        static void init_meta();
 
         using Tachyon::Param;
 

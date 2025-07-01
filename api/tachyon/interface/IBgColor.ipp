@@ -14,7 +14,7 @@ namespace yq::tachyon {
     IBgColor::IBgColor() = default;
     IBgColor::~IBgColor() = default;
 
-    void IBgColor::init_info()
+    void IBgColor::init_meta()
     {
         auto w = writer<IBgColor>();
         w.description("Background/Secondary Color (RGBA-float) Interface");

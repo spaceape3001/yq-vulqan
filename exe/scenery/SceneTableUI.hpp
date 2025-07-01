@@ -17,7 +17,7 @@ class SceneEditor::ScenesTableUI : public UIElement {
     YQ_OBJECT_DECLARE(ScenesTableUI, UIElement)
 public:
 
-    static void init_info();
+    static void init_meta();
 
     ScenesTableUI(UIFlags flags={});
     ScenesTableUI(const ScenesTableUI& cp);

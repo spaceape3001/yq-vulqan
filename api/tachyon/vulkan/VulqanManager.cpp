@@ -437,7 +437,7 @@ namespace yq::tachyon {
         return {};
     }
     
-    void VulqanManager::init_info()
+    void VulqanManager::init_meta()
     {
         auto w = writer<VulqanManager>();
         w.abstract();   // prohibit creation outside of main

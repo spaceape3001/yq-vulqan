@@ -24,7 +24,7 @@ namespace yq::tachyon {
         return new UIDock(*this);
     }
     
-    void UIDock::init_info()
+    void UIDock::init_meta()
     {
         auto w = writer<UIDock>();
         w.description("Docking UI Element");

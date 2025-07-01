@@ -19,7 +19,7 @@ using namespace yq::tachyon;
 class LightTableUI : public UIElement {
     YQ_OBJECT_DECLARE(LightTableUI, UIElement)
 public:
-    static void init_info();
+    static void init_meta();
     
     LightTableUI(UIFlags flags={});
     LightTableUI(const LightTableUI& cp);

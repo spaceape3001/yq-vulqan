@@ -16,7 +16,7 @@ namespace yq::tachyon {
     
         FramebufferResizeEvent(const Header&, const Size2I&);
         
-        static void init_info();
+        static void init_meta();
         
         const Size2I& size() const { return m_size; }
         double width() const { return m_size.x; }

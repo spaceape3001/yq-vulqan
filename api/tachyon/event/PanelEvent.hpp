@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(PanelEvent, Event)
     public:
     
-        static void init_info();
+        static void init_meta();
 
     protected:
         PanelEvent(const Header&);

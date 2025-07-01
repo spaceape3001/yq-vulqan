@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class MonitorConnectEvent : public MonitorEvent {
         YQ_OBJECT_DECLARE(MonitorConnectEvent, MonitorEvent);
     public:
-        static void init_info();
+        static void init_meta();
         
         MonitorConnectEvent(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

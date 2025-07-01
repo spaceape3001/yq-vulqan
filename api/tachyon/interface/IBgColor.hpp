@@ -29,6 +29,6 @@ namespace yq::tachyon {
         IBgColor();
         virtual ~IBgColor();
         
-        static void init_info();
+        static void init_meta();
     };
 }

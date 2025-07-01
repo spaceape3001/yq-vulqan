@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveTSXReply)
 
 namespace yq::tachyon {
-    void  SaveTSXReply::init_info()
+    void  SaveTSXReply::init_meta()
     {
         auto w = writer<SaveTSXReply>();
         w.description("TSX Save Reply");

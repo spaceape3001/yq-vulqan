@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void SpatialEvent::init_info()
+    void SpatialEvent::init_meta()
     {
         auto w = writer<SpatialEvent>();
         w.abstract();

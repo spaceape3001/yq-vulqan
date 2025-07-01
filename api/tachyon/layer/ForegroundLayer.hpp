@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class ForegroundLayer : public Layer {
         YQ_TACHYON_DECLARE(ForegroundLayer, Layer)
     public:
-        static void init_info();
+        static void init_meta();
         ForegroundLayer();
         ~ForegroundLayer();
     };

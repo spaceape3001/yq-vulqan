@@ -15,7 +15,7 @@ namespace yq::tachyon {
     
         SimpleScene();
         ~SimpleScene();
-        static void init_info();
+        static void init_meta();
         
     protected:
         void    snap(SceneSnap&) const;

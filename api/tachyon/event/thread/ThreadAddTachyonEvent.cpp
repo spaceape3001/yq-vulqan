@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new ThreadAddTachyonEvent(*this, h);
     }
 
-    void ThreadAddTachyonEvent::init_info()
+    void ThreadAddTachyonEvent::init_meta()
     {
         auto w = writer<ThreadAddTachyonEvent>();
         w.description("Thread Added a Tachyon Event");

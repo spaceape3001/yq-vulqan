@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void ColorCommand::init_info()
+    void ColorCommand::init_meta()
     {
         auto w = writer<ColorCommand>();
         w.abstract();

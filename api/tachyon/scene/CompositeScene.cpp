@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
     }
         
-    void CompositeScene::init_info()
+    void CompositeScene::init_meta()
     {
         auto w = writer<CompositeScene>();
         w.description("Composite Scene");

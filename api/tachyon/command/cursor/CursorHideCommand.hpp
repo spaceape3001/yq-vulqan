@@ -14,7 +14,7 @@ namespace yq::tachyon {
     public:
         CursorHideCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
-        static void init_info();
+        static void init_meta();
         
     protected:
         CursorHideCommand(const CursorHideCommand&, const Header&);

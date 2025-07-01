@@ -21,7 +21,7 @@ namespace yq::tachyon {
         SetAttributeCommand(const Header&, key_spec_t, Any&&);        
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const key_spec_t&   key() const { return m_key; }
         const Any&          value() const { return m_value; }

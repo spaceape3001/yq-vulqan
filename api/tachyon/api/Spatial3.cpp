@@ -6,20 +6,20 @@
 
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/api/Spatial3Data.hpp>
-#include <tachyon/api/Spatial3InfoWriter.hpp>
+#include <tachyon/api/Spatial3MetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial³);
 YQ_TYPE_IMPLEMENT(yq::tachyon::Spatial³ID)
 
 namespace yq::tachyon {
-    Spatial³Info::Spatial³Info(std::string_view zName, SpatialMeta& base, const std::source_location& sl)
+    Spatial³Meta::Spatial³Meta(std::string_view zName, SpatialMeta& base, const std::source_location& sl)
         : SpatialMeta(zName, base, sl)
     {
         set(Type::Spatial³);
     }
 
-    Spatial³Info::~Spatial³Info()
+    Spatial³Meta::~Spatial³Meta()
     {
     }
     
@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Spatial³::init_info()
+    void Spatial³::init_meta()
     {
         auto w = writer<Spatial³>();
         w.description("Spatial in 3 Dimensions");

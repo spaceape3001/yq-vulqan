@@ -29,7 +29,7 @@ namespace yq::tachyon {
         return new AddMaxSizeʷCommand(*this, h);
     }
 
-    void AddMaxSizeʷCommand::init_info()
+    void AddMaxSizeʷCommand::init_meta()
     {
         auto w = writer<AddMaxSizeʷCommand>();
         w.description("AddMax Size Command in X");

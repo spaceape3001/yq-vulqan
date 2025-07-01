@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void GetDeviceRequest::init_info()
+    void GetDeviceRequest::init_meta()
     {
         auto w = writer<GetDeviceRequest>();
         w.description("Device Request");

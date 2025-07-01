@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class GamepadPressEvent : public GamepadEvent {
         YQ_OBJECT_DECLARE(GamepadPressEvent, GamepadEvent);
     public:
-        static void init_info();
+        static void init_meta();
     
         GamepadPressEvent(const Header&, size_t);
 

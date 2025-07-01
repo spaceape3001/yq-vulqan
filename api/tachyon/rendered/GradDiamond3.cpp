@@ -7,13 +7,13 @@
 #include "GradDiamond3.hpp"
 
 #include <tachyon/tags.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GradDiamond³)
 
 namespace yq::tachyon {
-    void GradDiamond³::init_info()
+    void GradDiamond³::init_meta()
     {
         auto w = writer<GradDiamond³>();
         w.description("3D Gradient Diamond");

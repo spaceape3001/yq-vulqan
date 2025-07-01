@@ -27,7 +27,7 @@ namespace yq::tachyon {
         SaveCommand(const Header&, const std::filesystem::path&, const Param& p);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
-        static void init_info();
+        static void init_meta();
         
         const std::filesystem::path& filepath() const { return m_filepath; }
         

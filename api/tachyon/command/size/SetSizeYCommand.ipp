@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new SetSizeʸCommand(*this, h);
     }
     
-    void SetSizeʸCommand::init_info()
+    void SetSizeʸCommand::init_meta()
     {
         auto w = writer<SetSizeʸCommand>();
         w.description("Set Size Command in Y");

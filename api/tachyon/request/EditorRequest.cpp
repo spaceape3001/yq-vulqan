@@ -24,7 +24,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void EditorRequest::init_info()
+    void EditorRequest::init_meta()
     {
         auto w = writer<EditorRequest>();
         w.description("Editor request base class");

@@ -53,7 +53,7 @@ namespace yq::tachyon {
         ~Controller();
         
         ControllerID      id() const { return ControllerID(UniqueID::id()); }
-        static void init_info();
+        static void init_meta();
         
         bool        enabled() const { return m_enabled; }
         

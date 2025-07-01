@@ -8,7 +8,7 @@
 #include <tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void JoystickZeroCommand::init_info()
+    void JoystickZeroCommand::init_meta()
     {
         auto w = writer<JoystickZeroCommand>();
         w.description("Joystick Zeroion Command");

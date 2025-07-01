@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return new AABB¹Event(*this, h);
     }
    
-    void AABB¹Event::init_info()
+    void AABB¹Event::init_meta()
     {
         auto w = writer<AABB¹Event>();
         w.description("AABB Changed Event in 1D");

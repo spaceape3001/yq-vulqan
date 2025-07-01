@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Rendered3.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/command/SpatialCommand.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
@@ -18,7 +18,7 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    Rendered³Info::Rendered³Info(std::string_view name, RenderedMeta& base, const std::source_location& sl) : 
+    Rendered³Meta::Rendered³Meta(std::string_view name, RenderedMeta& base, const std::source_location& sl) : 
         RenderedMeta(name, base, sl)
     {
         set(Flag::RENDER3D);
@@ -69,10 +69,10 @@ namespace yq::tachyon {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void    Rendered³::init_info()
+    void    Rendered³::init_meta()
     {
         auto w   = writer<Rendered³>();
-        ③::init_info(w);
+        ③::init_meta(w);
         w.description("Rendered in 3D");
         w.abstract();
 

@@ -17,7 +17,7 @@ namespace yq::tachyon {
     public:
         AddMaxSizeʷCommand(const Header&, double);
         
-        static void init_info();
+        static void init_meta();
         
         double  Δw() const { return m_Δw; }
         

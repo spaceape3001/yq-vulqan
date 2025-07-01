@@ -37,7 +37,7 @@ namespace yq::tachyon {
         YQ_WIDGET_DECLARE(AppWidget, Widget)
     public:
     
-        static void init_info();
+        static void init_meta();
         
         AppWidget();
         ~AppWidget();

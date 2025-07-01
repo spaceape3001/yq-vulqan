@@ -21,7 +21,7 @@
 namespace yq::tachyon {
     template <size_t N>
         template <typename C>
-    void AVertices³<N>::init_info(TachyonMeta::Writer<C>& w)
+    void AVertices³<N>::init_meta(TachyonMeta::Writer<C>& w)
     {
         w.template interface<AVertices³<N>>();
         w.slot(UNSAFE, &AVertices³<N>::on_append_vertex_command);

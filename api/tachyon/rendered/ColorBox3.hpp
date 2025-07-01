@@ -23,7 +23,7 @@ namespace yq::tachyon {
             Param(){}
         };
         
-        static void init_info();
+        static void init_meta();
         
         ColorBox³(const Param& p={});
         ColorBox³(const Size3D&sz, const Param& p={});

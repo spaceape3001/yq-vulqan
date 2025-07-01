@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void CloseRequest::init_info()
+    void CloseRequest::init_meta()
     {
         auto w = writer<CloseRequest>();
         w.description("Close Request");

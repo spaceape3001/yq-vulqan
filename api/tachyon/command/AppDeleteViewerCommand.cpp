@@ -21,7 +21,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void AppDeleteViewerCommand::init_info()
+    void AppDeleteViewerCommand::init_meta()
     {
         auto w = writer<AppDeleteViewerCommand>();
         w.description("App Delete Viewer Command");

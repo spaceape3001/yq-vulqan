@@ -30,7 +30,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    void IconifyCommand::init_info()
+    void IconifyCommand::init_meta()
     {
         auto w = writer<IconifyCommand>();
         w.description("Iconify Command");

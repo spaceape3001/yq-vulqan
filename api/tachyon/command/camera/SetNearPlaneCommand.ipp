@@ -30,7 +30,7 @@ namespace yq::tachyon {
         return new SetNearPlaneCommand(*this, h);
     }
 
-    void SetNearPlaneCommand::init_info()
+    void SetNearPlaneCommand::init_meta()
     {
         auto w = writer<SetNearPlaneCommand>();
         w.description("Sets a camera's Near Plane");

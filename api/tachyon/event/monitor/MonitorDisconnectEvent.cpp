@@ -8,7 +8,7 @@
 #include <tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void MonitorDisconnectEvent::init_info()
+    void MonitorDisconnectEvent::init_meta()
     {
         auto w = writer<MonitorDisconnectEvent>();
         w.description("Monitor Disconnection Event");

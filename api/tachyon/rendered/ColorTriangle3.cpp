@@ -6,19 +6,19 @@
 
 #include "ColorTriangle3.hpp"
 #include <tachyon/logging.hpp>
-#include <tachyon/api/Rendered3InfoWriter.hpp>
+#include <tachyon/api/Rendered3MetaWriter.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <tachyon/aspect/AColorWriter.hxx>
 
 namespace yq::tachyon {
-    void ColorTriangle³::init_info()
+    void ColorTriangle³::init_meta()
     {
         auto w = writer<ColorTriangle³>();
         w.description("Color Triangle in 3D");
         w.category("Shape");
 
-        AColor::init_info(w);
+        AColor::init_meta(w);
 
         auto& p = w.pipeline();
         p.shader("assets/shape3/color.vert");

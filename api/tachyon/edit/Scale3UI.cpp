@@ -13,7 +13,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale³UI)
 
 namespace yq::tachyon {
-    void Scale³UI::init_info()
+    void Scale³UI::init_meta()
     {
         auto w = writer<Scale³UI>();
         w.description("UIEditor for Scale³");

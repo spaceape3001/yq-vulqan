@@ -73,7 +73,7 @@ namespace yq::tachyon {
         //! Returns the transform to go world -> screen space
         //virtual glm::dmat4  world2screen(const Values&) const = 0;
     
-        static void init_info();
+        static void init_meta();
 
         CameraID            id() const { return CameraID(UniqueID::id()); }
 

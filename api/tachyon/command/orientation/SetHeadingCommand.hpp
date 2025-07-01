@@ -18,7 +18,7 @@ namespace yq::tachyon {
     public:
         SetHeadingCommand(const Header&, Radian θ);
     
-        static void init_info();
+        static void init_meta();
         
         Radian  θ() const { return m_θ; }
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

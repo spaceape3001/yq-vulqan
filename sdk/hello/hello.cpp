@@ -47,7 +47,7 @@
 #include <tachyon/rendered/GradTriangle3.hpp>
 #include <tachyon/api/Spatial3.hpp>
 #include <tachyon/scene/SimpleScene.hpp>
-#include <tachyon/api/Scene3InfoWriter.hpp>
+#include <tachyon/api/Scene3MetaWriter.hpp>
 #include <tachyon/api/WidgetMetaWriter.hpp>
 #include <tachyon/widget/SceneWidget.hpp>
 #include <tachyon/utility/LoggerBox.hpp>
@@ -103,7 +103,7 @@ public:
     
     Warp                warp;
     
-    static void init_info()
+    static void init_meta()
     {
         static VBO<Vertex>  verts(vertices);
     
@@ -152,7 +152,7 @@ public:
 
     Ref<const Texture>  tex;
 
-    static void init_info()
+    static void init_meta()
     {
         static VBO<Vertex2>  verts(vertices2);
         //static IB1<uint16_t> kIndices({ 0, 1, 2, 2, 3, 0 });
@@ -217,7 +217,7 @@ public:
         return {};
     }
 
-    static void init_info()
+    static void init_meta()
     {
         auto w = writer<HelloScene>();
         w.description("Hello SDK Example Scene");
@@ -239,7 +239,7 @@ public:
         return {};
     }
     
-    static void init_info()
+    static void init_meta()
     {
         auto w = writer<HelloWidget>();
         w.description("Hello SDK Example Widget");

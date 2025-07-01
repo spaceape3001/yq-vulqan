@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void GamepadCommand::init_info()
+    void GamepadCommand::init_meta()
     {
         auto w = writer<GamepadCommand>();
         w.abstract();

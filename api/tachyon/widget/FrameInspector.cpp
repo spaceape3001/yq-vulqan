@@ -191,7 +191,7 @@ namespace yq::tachyon {
         }
     }
     
-    void FrameInspector::init_info()
+    void FrameInspector::init_meta()
     {
         auto w = writer<FrameInspector>();
         w.description("Frame Inspector");

@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
     }
     
-    void JoystickCommand::init_info()
+    void JoystickCommand::init_meta()
     {
         auto w = writer<JoystickCommand>();
         w.abstract();

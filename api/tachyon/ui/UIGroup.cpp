@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIGroup)
 
 namespace yq::tachyon {
-    void UIGroup::init_info()
+    void UIGroup::init_meta()
     {
         auto w = writer<UIGroup>();
         w.description("Group of UI Elements");

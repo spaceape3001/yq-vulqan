@@ -56,7 +56,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void Post::init_info()
+    void Post::init_meta()
     {
         auto w = writer<Post>();
         w.description("Abstract Post Base Class");

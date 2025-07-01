@@ -24,7 +24,7 @@ public:
     PostCPtr    clone(rebind_k, const Header&) const override;
 
     const std::set<SceneID>&        scenes() const { return m_scenes; }
-    static void init_info();
+    static void init_meta();
 private:
     std::set<SceneID>        m_scenes;
 };

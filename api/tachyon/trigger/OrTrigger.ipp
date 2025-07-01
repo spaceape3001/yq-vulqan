@@ -34,7 +34,7 @@ namespace yq::tachyon {
         return false;
     }
     
-    void OrTrigger::init_info()
+    void OrTrigger::init_meta()
     {
         auto w = writer<OrTrigger>();
         w.description("An OR post trigger based on other triggers");

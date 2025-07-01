@@ -16,7 +16,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(UIInfoList, UIElement)
     public:
 
-        static void init_info();
+        static void init_meta();
 
         UIInfoList(std::string_view szTitle={}, UIFlags flags={});
         

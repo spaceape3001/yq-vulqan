@@ -37,7 +37,7 @@ namespace yq::tachyon {
     {
     }
     
-    void Manager::init_info()
+    void Manager::init_meta()
     {
         auto w = writer<Manager>();
         w.description("Manager abstract base class, tries to be bossy");

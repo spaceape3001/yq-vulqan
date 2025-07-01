@@ -21,7 +21,7 @@ namespace yq::tachyon {
         AnyReply(const Header&, const RequestCPtr&, Any&& val);
         const Any&    value() const { return m_value; }
     
-        static void init_info();
+        static void init_meta();
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 

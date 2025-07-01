@@ -460,7 +460,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    void DesktopGLFW::init_info()
+    void DesktopGLFW::init_meta()
     {
         auto w = writer<DesktopGLFW>();
         w.description("GLFW Desktop");

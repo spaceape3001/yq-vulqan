@@ -35,7 +35,7 @@ namespace yq::tachyon {
         \note ONCE it's here, it's considered "fixed" into abstract graphical units.
     */
     class Rendered³ : public Rendered, public ③ {
-        YQ_TACHYON_INFO(Rendered³Meta);
+        YQ_TACHYON_META(Rendered³Meta);
         YQ_TACHYON_DATA(Rendered³Data);
         YQ_TACHYON_SNAP(Rendered³Snap);
         YQ_TACHYON_DECLARE(Rendered³, Rendered)

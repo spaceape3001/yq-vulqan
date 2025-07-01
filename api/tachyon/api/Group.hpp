@@ -24,7 +24,7 @@ namespace yq::tachyon {
     /*! \brief Group/Group of things (context provided by its parent)
     */
     class Group : public Tachyon {
-        YQ_TACHYON_INFO(GroupMeta)
+        YQ_TACHYON_META(GroupMeta)
         YQ_TACHYON_DATA(GroupData)
         YQ_TACHYON_SNAP(GroupSnap)
         YQ_TACHYON_DECLARE(Group, Tachyon)

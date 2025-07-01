@@ -58,7 +58,7 @@ namespace yq::tachyon {
         rendered (or puppet its spatial... that's an option too).
     */
     class Rendered : public Tachyon {
-        YQ_TACHYON_INFO(RenderedMeta)
+        YQ_TACHYON_META(RenderedMeta)
         YQ_TACHYON_DATA(RenderedData)
         YQ_TACHYON_SNAP(RenderedSnap)
         YQ_TACHYON_DECLARE(Rendered, Tachyon)

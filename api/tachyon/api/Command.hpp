@@ -25,7 +25,7 @@ namespace yq::tachyon {
     };
 
     class Command : public Post {
-        YQ_OBJECT_INFO(CommandMeta)
+        YQ_OBJECT_META(CommandMeta)
         YQ_OBJECT_DECLARE(Command, Post)
         template <class> friend class Ref;
     public:

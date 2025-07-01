@@ -21,7 +21,7 @@ namespace yq::tachyon {
     /*! \brief Manager of something in the application
     */
     class Manager : public Tachyon {
-        YQ_TACHYON_INFO(ManagerMeta)
+        YQ_TACHYON_META(ManagerMeta)
         YQ_TACHYON_DATA(ManagerData)
         YQ_TACHYON_SNAP(ManagerSnap)
         YQ_TACHYON_DECLARE(Manager, Tachyon)

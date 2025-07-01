@@ -20,7 +20,7 @@ namespace yq::tachyon {
     };
 
     class Event : public Post {
-        YQ_OBJECT_INFO(EventMeta)
+        YQ_OBJECT_META(EventMeta)
         YQ_OBJECT_DECLARE(Event, Post)
     public:
     

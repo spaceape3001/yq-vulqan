@@ -35,7 +35,7 @@ namespace yq::tachyon {
         
     */
     class Delegate : public Object, public RefCount, public UniqueID {
-        YQ_OBJECT_INFO(DelegateMeta)
+        YQ_OBJECT_META(DelegateMeta)
         YQ_OBJECT_DECLARE(Delegate, Object)
     public:
     

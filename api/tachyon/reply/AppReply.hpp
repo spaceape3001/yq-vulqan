@@ -19,7 +19,7 @@ namespace yq::tachyon {
     };
 
     class AppReply : public Reply {
-        YQ_OBJECT_INFO(AppReplyMeta)
+        YQ_OBJECT_META(AppReplyMeta)
         YQ_OBJECT_DECLARE(AppReply, Reply)
     public:
     

@@ -17,7 +17,7 @@ namespace yq::tachyon {
     };
 
     class AppCommand : public Command {
-        YQ_OBJECT_INFO(AppCommandMeta)
+        YQ_OBJECT_META(AppCommandMeta)
         YQ_OBJECT_DECLARE(AppCommand, Command)
     public:
 

@@ -55,7 +55,7 @@ namespace yq::tachyon {
         so the object is being added.
     */
     class UIElement : public Object {
-        YQ_OBJECT_INFO(UIElementMeta)
+        YQ_OBJECT_META(UIElementMeta)
         YQ_OBJECT_DECLARE(UIElement, Object)
     public:
     

@@ -19,7 +19,7 @@ namespace yq::tachyon {
     };
 
     class Reply : public Post {
-        YQ_OBJECT_INFO(ReplyMeta)
+        YQ_OBJECT_META(ReplyMeta)
         YQ_OBJECT_DECLARE(Reply, Post)
         template <class> friend class Ref;
     public:

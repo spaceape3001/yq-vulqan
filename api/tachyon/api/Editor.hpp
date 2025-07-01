@@ -33,7 +33,7 @@ namespace yq::tachyon {
     //!
     //! Meant to be a general base for an editor widget
     class Editor : public Widget {
-        YQ_TACHYON_INFO(EditorMeta)
+        YQ_TACHYON_META(EditorMeta)
         YQ_TACHYON_DECLARE(Editor, Widget)
     public:
     

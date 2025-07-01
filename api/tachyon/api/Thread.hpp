@@ -37,7 +37,7 @@ namespace yq::tachyon {
             is *NOT* supported.
     */
     class Thread : public Tachyon {
-        YQ_TACHYON_INFO(ThreadMeta)
+        YQ_TACHYON_META(ThreadMeta)
         YQ_TACHYON_DATA(ThreadData)
         YQ_TACHYON_SNAP(ThreadSnap)
         YQ_TACHYON_DECLARE(Thread, Tachyon)

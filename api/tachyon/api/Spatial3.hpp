@@ -26,7 +26,7 @@ namespace yq::tachyon {
     };
     
     class Spatial³ : public Spatial {
-        YQ_TACHYON_INFO(Spatial³Meta)
+        YQ_TACHYON_META(Spatial³Meta)
         YQ_TACHYON_SNAP(Spatial³Snap)
         YQ_TACHYON_DATA(Spatial³Data)
         YQ_TACHYON_DECLARE(Spatial³, Spatial)

@@ -29,7 +29,7 @@ namespace yq::tachyon {
     };
     
     class Scene³ : public Scene, public ③ {
-        YQ_TACHYON_INFO(Scene³Meta)
+        YQ_TACHYON_META(Scene³Meta)
         YQ_TACHYON_SNAP(Scene³Snap)
         YQ_TACHYON_DATA(Scene³Data)
         YQ_TACHYON_DECLARE(Scene³, Scene)

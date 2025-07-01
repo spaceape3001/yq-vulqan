@@ -49,7 +49,7 @@ namespace yq::tachyon {
         configuration upon bind.
     */
     class UIEditor : public UIForm {
-        YQ_OBJECT_INFO(UIEditorMeta)
+        YQ_OBJECT_META(UIEditorMeta)
         YQ_OBJECT_DECLARE(UIEditor, UIForm)
     public:
         using Writer = UIEditorWriter;

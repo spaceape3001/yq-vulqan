@@ -20,7 +20,7 @@ namespace yq::tachyon {
     };
 
     class Request : public Post {
-        YQ_OBJECT_INFO(RequestMeta)
+        YQ_OBJECT_META(RequestMeta)
         YQ_OBJECT_DECLARE(Request, Post)
     public:
     

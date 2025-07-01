@@ -46,7 +46,7 @@ namespace yq::tachyon {
         \note We're limited to three dimensions here
     */
     class Model : public Tachyon {
-        YQ_TACHYON_INFO(ModelMeta);
+        YQ_TACHYON_META(ModelMeta);
         YQ_TACHYON_DATA(ModelData)
         YQ_TACHYON_SNAP(ModelSnap)
         YQ_TACHYON_DECLARE(Model, Tachyon)

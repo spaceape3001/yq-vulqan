@@ -34,7 +34,7 @@ namespace yq::tachyon {
         This will include lighting (eventually) & rendered objects.
     */
     class Scene : public Tachyon {
-        YQ_TACHYON_INFO(SceneMeta)
+        YQ_TACHYON_META(SceneMeta)
         YQ_TACHYON_DATA(SceneData)
         YQ_TACHYON_SNAP(SceneSnap)
         YQ_TACHYON_DECLARE(Scene, Tachyon)

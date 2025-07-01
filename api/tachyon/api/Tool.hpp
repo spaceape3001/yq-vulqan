@@ -23,7 +23,7 @@ namespace yq::tachyon {
         A tool is supposed to be hooked to gesture recognition/commands.
     */
     class Tool : public Object {
-        YQ_OBJECT_INFO(ToolMeta)
+        YQ_OBJECT_META(ToolMeta)
         YQ_OBJECT_DECLARE(Tool, Object)
     public:
         

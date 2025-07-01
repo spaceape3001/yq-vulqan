@@ -34,7 +34,7 @@ namespace yq::tachyon {
         
     */
     class Spatial : public Tachyon {
-        YQ_TACHYON_INFO(SpatialMeta)
+        YQ_TACHYON_META(SpatialMeta)
         YQ_TACHYON_DATA(SpatialData)
         YQ_TACHYON_SNAP(SpatialSnap)
         YQ_TACHYON_DECLARE(Spatial, Tachyon)

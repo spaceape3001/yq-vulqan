@@ -33,7 +33,7 @@ namespace yq::tachyon {
     };
     
     class Camera³ : public Camera, public ③ {
-        YQ_TACHYON_INFO(Camera³Meta)
+        YQ_TACHYON_META(Camera³Meta)
         YQ_TACHYON_SNAP(Camera³Snap)
         YQ_TACHYON_DATA(Camera³Data)
         YQ_TACHYON_DECLARE(Camera³, Camera)

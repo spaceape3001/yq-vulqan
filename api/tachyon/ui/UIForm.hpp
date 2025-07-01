@@ -45,7 +45,7 @@ namespace yq::tachyon {
     /*! \brief ImGui Form Panel for anything
     */
     class UIForm : public UIElements {
-        YQ_OBJECT_INFO(UIFormMeta)
+        YQ_OBJECT_META(UIFormMeta)
         YQ_OBJECT_DECLARE(UIForm, UIElements)
     public:
         using Writer = UIFormWriter;

@@ -24,7 +24,7 @@ namespace yq::tachyon {
     /*! \brief Layer/Group of things (context provided by its parent)
     */
     class Layer : public Tachyon {
-        YQ_TACHYON_INFO(LayerMeta)
+        YQ_TACHYON_META(LayerMeta)
         YQ_TACHYON_DATA(LayerData)
         YQ_TACHYON_SNAP(LayerSnap)
         YQ_TACHYON_DECLARE(Layer, Tachyon)

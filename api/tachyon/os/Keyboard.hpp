@@ -42,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief A keyboard
     */
     class Keyboard : public Tachyon {
-        YQ_TACHYON_INFO(KeyboardMeta);
+        YQ_TACHYON_META(KeyboardMeta);
         YQ_TACHYON_DATA(KeyboardData)
         YQ_TACHYON_SNAP(KeyboardSnap)
         YQ_TACHYON_DECLARE(Keyboard, Tachyon)

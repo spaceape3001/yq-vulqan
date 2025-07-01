@@ -39,7 +39,7 @@ namespace yq::tachyon {
     /*! \brief It's a monitor
     */
     class Monitor : public Tachyon {
-        YQ_TACHYON_INFO(MonitorMeta);
+        YQ_TACHYON_META(MonitorMeta);
         YQ_TACHYON_DATA(MonitorData)
         YQ_TACHYON_SNAP(MonitorSnap)
         YQ_TACHYON_DECLARE(Monitor, Tachyon)

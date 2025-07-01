@@ -42,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief A keyboard
     */
     class GraphicsCard : public Tachyon {
-        YQ_TACHYON_INFO(GraphicsCardMeta);
+        YQ_TACHYON_META(GraphicsCardMeta);
         YQ_TACHYON_DATA(GraphicsCardData)
         YQ_TACHYON_SNAP(GraphicsCardSnap)
         YQ_TACHYON_DECLARE(GraphicsCard, Tachyon)

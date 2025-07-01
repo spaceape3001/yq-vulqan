@@ -32,7 +32,7 @@ namespace yq::tachyon {
     //!
     //! Meant to be a general base for an interface/proxy control (or similar)
     class Control : public Widget {
-        YQ_TACHYON_INFO(ControlMeta)
+        YQ_TACHYON_META(ControlMeta)
         YQ_TACHYON_DECLARE(Control, Widget)
     public:
         

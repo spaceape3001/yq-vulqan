@@ -44,7 +44,7 @@ namespace yq::tachyon {
         A mouse, presumably, controls a cursor (or other thing)
     */
     class Mouse : public Tachyon {
-        YQ_TACHYON_INFO(MouseMeta);
+        YQ_TACHYON_META(MouseMeta);
         YQ_TACHYON_DATA(MouseData)
         YQ_TACHYON_SNAP(MouseSnap)
         YQ_TACHYON_DECLARE(Mouse, Tachyon)

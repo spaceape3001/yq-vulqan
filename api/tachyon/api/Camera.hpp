@@ -49,7 +49,7 @@ namespace yq::tachyon {
         \note We're limited to three dimensions here
     */
     class Camera : public Tachyon {
-        YQ_TACHYON_INFO(CameraMeta);
+        YQ_TACHYON_META(CameraMeta);
         YQ_TACHYON_DATA(CameraData)
         YQ_TACHYON_SNAP(CameraSnap)
         YQ_TACHYON_DECLARE(Camera, Tachyon)

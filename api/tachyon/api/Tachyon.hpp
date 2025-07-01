@@ -164,7 +164,7 @@ namespace yq::tachyon {
     
     //  Call these *BEFORE* the declare
     #define YQ_TACHYON_DATA(...)        using MyData = __VA_ARGS__;
-    #define YQ_TACHYON_INFO(...)    YQ_OBJECT_INFO(__VA_ARGS__)
+    #define YQ_TACHYON_META(...)    YQ_OBJECT_META(__VA_ARGS__)
     #define YQ_TACHYON_FIXER(...)   YQ_OBJECT_FIXER(__VA_ARGS__)
     #define YQ_TACHYON_SNAP(...)        using MySnap = __VA_ARGS__;
 
@@ -270,7 +270,7 @@ namespace yq::tachyon {
     private:
         YQ_TACHYON_DATA(TachyonData)
         YQ_TACHYON_FIXER(Fixer)
-        YQ_TACHYON_INFO(TachyonMeta)
+        YQ_TACHYON_META(TachyonMeta)
         YQ_TACHYON_SNAP(TachyonSnap)
         
         YQ_TACHYON_DECLARE(Tachyon, Object)

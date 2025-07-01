@@ -41,7 +41,7 @@ namespace yq::tachyon {
         Cursor... that thing that generally moves with the mouse movement, ie the cross, the hand, etc
     */
     class Cursor : public Tachyon {
-        YQ_TACHYON_INFO(CursorMeta);
+        YQ_TACHYON_META(CursorMeta);
         YQ_TACHYON_DATA(CursorData)
         YQ_TACHYON_SNAP(CursorSnap)
         YQ_TACHYON_DECLARE(Cursor, Tachyon)

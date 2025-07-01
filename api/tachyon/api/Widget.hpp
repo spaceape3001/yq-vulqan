@@ -34,7 +34,7 @@
 //   A macro rename
 
 #define YQ_WIDGET_DATA(...)         YQ_TACHYON_DATA(__VA_ARGS__);
-#define YQ_WIDGET_INFO(...)         YQ_TACHYON_INFO(__VA_ARGS__)
+#define YQ_WIDGET_INFO(...)         YQ_TACHYON_META(__VA_ARGS__)
 #define YQ_WIDGET_FIXER(...)        YQ_TACHYON_FIXER(__VA_ARGS__)
 #define YQ_WIDGET_SNAP(...)         YQ_TACHYON_SNAP(__VA_ARGS__);
 #define YQ_WIDGET_DECLARE(...)      YQ_TACHYON_DECLARE(__VA_ARGS__)
@@ -80,7 +80,7 @@ namespace yq::tachyon {
         reduce overhead!)
     */
     class Widget : public Tachyon {    
-        YQ_TACHYON_INFO(WidgetMeta)
+        YQ_TACHYON_META(WidgetMeta)
         YQ_TACHYON_SNAP(WidgetSnap)
         YQ_TACHYON_DATA(WidgetData)
         YQ_TACHYON_DECLARE(Widget, Tachyon)

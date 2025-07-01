@@ -51,7 +51,7 @@ namespace yq::tachyon {
         (even *if* it's thread-unsafe).
     */
     class Window : public Tachyon {
-        YQ_TACHYON_INFO(WindowMeta);
+        YQ_TACHYON_META(WindowMeta);
         YQ_TACHYON_DATA(WindowData)
         YQ_TACHYON_SNAP(WindowSnap)
         YQ_TACHYON_DECLARE(Window, Tachyon)

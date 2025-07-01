@@ -42,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief A light
     */
     class Light : public Tachyon {
-        YQ_TACHYON_INFO(LightMeta);
+        YQ_TACHYON_META(LightMeta);
         YQ_TACHYON_DATA(LightData)
         YQ_TACHYON_SNAP(LightSnap)
         YQ_TACHYON_DECLARE(Light, Tachyon)

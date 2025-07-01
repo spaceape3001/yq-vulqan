@@ -50,7 +50,7 @@ namespace yq::tachyon {
         This is any user desktop, whether direct or via an abstraction library.  (ie, this is *OUR* abstraction)
     */
     class Desktop : public Manager {
-        YQ_TACHYON_INFO(DesktopMeta);
+        YQ_TACHYON_META(DesktopMeta);
         YQ_TACHYON_DATA(DesktopData)
         YQ_TACHYON_SNAP(DesktopSnap)
         YQ_TACHYON_DECLARE(Desktop, Manager)

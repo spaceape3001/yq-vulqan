@@ -42,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief A joystick
     */
     class Gamepad : public Tachyon {
-        YQ_TACHYON_INFO(GamepadMeta);
+        YQ_TACHYON_META(GamepadMeta);
         YQ_TACHYON_DATA(GamepadData)
         YQ_TACHYON_SNAP(GamepadSnap)
         YQ_TACHYON_DECLARE(Gamepad, Tachyon)

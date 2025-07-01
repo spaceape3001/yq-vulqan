@@ -17,7 +17,7 @@ namespace yq::tachyon {
     };
 
     class VulqanEvent : public Event {
-        YQ_OBJECT_INFO(VulqanEventMeta)
+        YQ_OBJECT_META(VulqanEventMeta)
         YQ_OBJECT_DECLARE(VulqanEvent, Event)
     public:
     

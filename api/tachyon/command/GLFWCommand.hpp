@@ -17,7 +17,7 @@ namespace yq::tachyon {
     };
 
     class GLFWCommand : public Command {
-        YQ_OBJECT_INFO(GLFWCommandMeta)
+        YQ_OBJECT_META(GLFWCommandMeta)
         YQ_OBJECT_DECLARE(GLFWCommand, Command)
     public:
     

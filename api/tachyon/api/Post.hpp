@@ -30,7 +30,7 @@ namespace yq::tachyon {
         listener via the mailer.
     */
     class Post : public Object, public RefCount {
-        YQ_OBJECT_INFO(PostMeta)
+        YQ_OBJECT_META(PostMeta)
         YQ_OBJECT_DECLARE(Post, Object)
     public:
     

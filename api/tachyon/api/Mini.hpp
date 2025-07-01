@@ -42,7 +42,7 @@ namespace yq::tachyon {
         These are widgets focused to a small, singular task (ie, display/edit one value).
     */
     class Mini : public Widget {
-        YQ_TACHYON_INFO(MiniMeta)
+        YQ_TACHYON_META(MiniMeta)
         YQ_TACHYON_DECLARE(Mini, Widget)
     public:
     

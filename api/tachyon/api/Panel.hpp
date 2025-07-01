@@ -24,7 +24,7 @@ namespace yq::tachyon {
         These are larger widgets that can float around, generally have a mission.
     */
     class Panel : public Widget {
-        YQ_TACHYON_INFO(PanelMeta)
+        YQ_TACHYON_META(PanelMeta)
         YQ_TACHYON_DECLARE(Panel, Widget)
     public:
         Panel();

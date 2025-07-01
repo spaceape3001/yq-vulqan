@@ -23,7 +23,7 @@ namespace yq::tachyon {
         the Message class is "generic", though it may morph.
     */
     class Message : public Post {
-        YQ_OBJECT_INFO(MessageMeta)
+        YQ_OBJECT_META(MessageMeta)
         YQ_OBJECT_DECLARE(Message, Post)
     public:
     

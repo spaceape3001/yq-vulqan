@@ -29,7 +29,7 @@ namespace yq::tachyon {
     };
     
     class Light³ : public Light, public ③ {
-        YQ_TACHYON_INFO(Light³Meta)
+        YQ_TACHYON_META(Light³Meta)
         YQ_TACHYON_SNAP(Light³Snap)
         YQ_TACHYON_DATA(Light³Data)
         YQ_TACHYON_DECLARE(Light³, Light)

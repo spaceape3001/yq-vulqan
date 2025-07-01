@@ -28,7 +28,7 @@ namespace yq::tachyon {
     };
 
     class Action : public Delegate {
-        YQ_OBJECT_INFO(ActionMeta)
+        YQ_OBJECT_META(ActionMeta)
         YQ_OBJECT_DECLARE(Action, Delegate)
     public:
     

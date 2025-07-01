@@ -42,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief A joystick
     */
     class Joystick : public Tachyon {
-        YQ_TACHYON_INFO(JoystickMeta);
+        YQ_TACHYON_META(JoystickMeta);
         YQ_TACHYON_DATA(JoystickData)
         YQ_TACHYON_SNAP(JoystickSnap)
         YQ_TACHYON_DECLARE(Joystick, Tachyon)

@@ -39,7 +39,7 @@ namespace yq::tachyon {
         2) Subscribing to the event producer
     */
     class Controller : public Tachyon {
-        YQ_TACHYON_INFO(ControllerMeta)
+        YQ_TACHYON_META(ControllerMeta)
         YQ_TACHYON_DATA(ControllerData)
         YQ_TACHYON_SNAP(ControllerSnap)
         YQ_TACHYON_DECLARE(Controller, Tachyon)

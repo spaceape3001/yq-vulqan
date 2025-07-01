@@ -39,7 +39,7 @@ namespace yq::tachyon {
     */
     class Trigger : public Delegate {
     private:
-        YQ_OBJECT_INFO(TriggerMeta)
+        YQ_OBJECT_META(TriggerMeta)
         YQ_OBJECT_DECLARE(Trigger, Delegate)
     public:
     

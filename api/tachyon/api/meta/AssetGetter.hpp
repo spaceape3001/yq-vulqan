@@ -12,7 +12,7 @@
 namespace yq {
     class AssetMeta;
     class Object;
-    class ObjectInfo;
+    class ObjectMeta;
 }
 
 namespace yq::tachyon {
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         
             \note This will be invalid() for static properties.
         */
-        virtual const ObjectInfo&    object() const = 0;
+        virtual const ObjectMeta&    object() const = 0;
         
         /*! \brief Object/Type for the data
         */

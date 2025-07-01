@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <concepts>
 
 namespace yq::tachyon {
@@ -57,7 +57,7 @@ namespace yq::tachyon {
 
 namespace yq {
     template <tachyon::Interface I>
-    struct InfoBinder<I> {
+    struct MetaBinder<I> {
         using Info = tachyon::InterfaceMeta;
         static constexpr const bool Defined         = true;
         static constexpr const bool IsObject        = false;

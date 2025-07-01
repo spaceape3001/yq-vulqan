@@ -12,7 +12,7 @@
 namespace yq {
     class Asset;
     class Object;
-    class ObjectInfo;
+    class ObjectMeta;
 }
 
 namespace yq::tachyon {
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         virtual const AssetMeta&        asset() const = 0;
         
         //! Object type for the setter
-        virtual const ObjectInfo&       object() const = 0;
+        virtual const ObjectMeta&       object() const = 0;
         
         //! Property info this belongs to
         const AssetProperty*            property() const;

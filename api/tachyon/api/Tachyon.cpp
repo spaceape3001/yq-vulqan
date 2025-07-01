@@ -87,8 +87,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    TachyonMeta::TachyonMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, base, sl)
+    TachyonMeta::TachyonMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(zName, base, sl)
     {
         set(Flag::TACHYON);
         repo().all.push_back(this);
@@ -165,7 +165,7 @@ namespace yq::tachyon {
         const PostMeta* ppi = fn->post();
         assert(ppi);
         ranked.push_back({depth, ppi, fn});
-        for(const ObjectInfo* derv : ppi->deriveds(ALL).all){
+        for(const ObjectMeta* derv : ppi->deriveds(ALL).all){
             const PostMeta* ppd = static_cast<const PostMeta*>(derv);   // should *NEVER* be wrong given the inheritance
             //if(!ppd->is_abstract()){
                 ranked.push_back({depth, ppd, fn});
@@ -180,7 +180,7 @@ namespace yq::tachyon {
 
     void    TachyonMeta::sweep_impl() 
     {   
-        ObjectInfo::sweep_impl();
+        ObjectMeta::sweep_impl();
 
         m_dispatch.clear();
         m_dispatches.ranked.clear();
@@ -248,12 +248,12 @@ namespace yq::tachyon {
         out << "    Base            : " << base()->name() << "\n";
 
         out << "  BASES\n";
-        for(const ObjectInfo* obj : bases(ALL).all){
+        for(const ObjectMeta* obj : bases(ALL).all){
             out << "    " << obj->name() << "\n";
         }
         
         out << "  DERIVES\n";
-        for(const ObjectInfo* obj : deriveds(ALL).all){
+        for(const ObjectMeta* obj : deriveds(ALL).all){
             out << "    " << obj->name() << "\n";
         }
 
@@ -268,12 +268,12 @@ namespace yq::tachyon {
         }
 
         out << "  METHODS\n";
-        for(const MethodInfo* obj : methods(ALL).all){
+        for(const MethodMeta* obj : methods(ALL).all){
             out << "    " << obj->name() << "\n";
         }
 
         out << "  PROPERTIES\n";
-        for(const PropertyInfo* prop : properties(ALL).all){
+        for(const PropertyMeta* prop : properties(ALL).all){
             out << "    " << prop->name() << "\n";
         }
     }

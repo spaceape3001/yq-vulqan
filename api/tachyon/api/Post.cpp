@@ -12,8 +12,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Post)
 
 namespace yq::tachyon {
-    PostMeta::PostMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, base, sl)
+    PostMeta::PostMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(zName, base, sl)
     {
         set(Flag::POST);
     }

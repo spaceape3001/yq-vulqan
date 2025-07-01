@@ -29,10 +29,10 @@ namespace yq::tachyon {
     class UIGenerator;
     struct Payload;
     
-    class UIElementMeta : public ObjectInfo {
+    class UIElementMeta : public ObjectMeta {
     public:
         template <typename> class Writer;
-        UIElementMeta(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        UIElementMeta(std::string_view, ObjectMeta&, const std::source_location& sl = std::source_location::current());
         
         static const std::vector<const UIElementMeta*>& all();
         

@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yq/meta/Meta.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/asset/Asset.hpp>
 
 namespace yq {
     class Object;
-    class ObjectInfo;
+    class ObjectMeta;
 }
 
 
@@ -57,7 +57,7 @@ namespace yq::tachyon {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        AssetProperty(std::string_view zName, const std::source_location& sl, const AssetMeta& type, ObjectInfo* parent);
+        AssetProperty(std::string_view zName, const std::source_location& sl, const AssetMeta& type, ObjectMeta* parent);
 
     private:
         const AssetSetter*      m_setter    = nullptr;

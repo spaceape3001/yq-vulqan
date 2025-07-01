@@ -50,7 +50,7 @@ namespace yq::tachyon {
     {
     }
     
-    const std::vector<const MethodInfo*>&   InterfaceMeta::methods() const
+    const std::vector<const MethodMeta*>&   InterfaceMeta::methods() const
     {
         return m_methods.all;
     }
@@ -61,7 +61,7 @@ namespace yq::tachyon {
     }
 
 
-    const PropertyInfo*                 InterfaceMeta::property(std::string_view k) const
+    const PropertyMeta*                 InterfaceMeta::property(std::string_view k) const
     {
         return m_properties.find(k);
     }
@@ -72,7 +72,7 @@ namespace yq::tachyon {
     }
     
 
-    const std::vector<const PropertyInfo*>&  InterfaceMeta::properties() const
+    const std::vector<const PropertyMeta*>&  InterfaceMeta::properties() const
     {
         return m_properties.all;
     }

@@ -314,7 +314,7 @@ namespace yq::tachyon {
             return errors::missing_class_attribute();
 
         std::string cname   = x_string(*xclass);
-        const ObjectInfo*   cinfo   = ObjectInfo::find(cname);
+        const ObjectMeta*   cinfo   = ObjectMeta::find(cname);
         if(!cinfo)
             return errors::invalid_class_attribute();
         
@@ -330,7 +330,7 @@ namespace yq::tachyon {
         if(!xclass)
             return errors::missing_class_attribute();
         std::string cname   = x_string(*xclass);
-        const ObjectInfo*   cinfo   = ObjectInfo::find(cname);
+        const ObjectMeta*   cinfo   = ObjectMeta::find(cname);
         if(!cinfo)
             return errors::invalid_class_attribute();
         
@@ -348,7 +348,7 @@ namespace yq::tachyon {
             return errors::missing_class_attribute();
         
         std::string cname   = x_string(*xclass);
-        const ObjectInfo*   cinfo   = ObjectInfo::find(cname);
+        const ObjectMeta*   cinfo   = ObjectMeta::find(cname);
         if(!cinfo)
             return errors::invalid_class_attribute();
 
@@ -366,7 +366,7 @@ namespace yq::tachyon {
             return errors::missing_class_attribute();
         
         std::string cname   = x_string(*xclass);
-        const ObjectInfo*   cinfo   = ObjectInfo::find(cname);
+        const ObjectMeta*   cinfo   = ObjectMeta::find(cname);
         if(!cinfo)
             return errors::invalid_class_attribute();
         
@@ -383,7 +383,7 @@ namespace yq::tachyon {
             return errors::missing_class_attribute();
         
         std::string cname   = x_string(*xclass);
-        const ObjectInfo*   cinfo   = ObjectInfo::find(cname);
+        const ObjectMeta*   cinfo   = ObjectMeta::find(cname);
         if(!cinfo)
             return errors::invalid_class_attribute();
         

@@ -10,8 +10,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Tool)
 
 namespace yq::tachyon {
-    ToolMeta::ToolMeta(std::string_view name, ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(name, base, sl)
+    ToolMeta::ToolMeta(std::string_view name, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(name, base, sl)
     {
         set(Flag::TOOL);
     }

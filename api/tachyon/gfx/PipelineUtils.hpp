@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/Meta.hpp>
 //#include <yq/tachyon/preamble.hpp>
 #include <tachyon/gfx/DataFormat.hpp>

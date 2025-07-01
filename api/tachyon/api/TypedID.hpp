@@ -9,7 +9,7 @@
 #include <tachyon/api/Type.hpp>
 #include <tachyon/api/ID.hpp>
 #include <tachyon/typedef/tachyon.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <tachyon/api/StdThread.hpp>
 #include <compare>
 #include <cstdint>

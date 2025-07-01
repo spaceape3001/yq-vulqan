@@ -35,7 +35,7 @@ namespace yq::tachyon {
         log << pi.stem() << "[" << pp->id() << "]";
         bool    f = true;
         
-        for(const PropertyInfo* prop : pi.properties(ALL).all){
+        for(const PropertyMeta* prop : pi.properties(ALL).all){
             // filter out properties
             if(prop->name() == "id")
                 continue;

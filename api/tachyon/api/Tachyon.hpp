@@ -65,7 +65,7 @@ namespace yq::tachyon {
     struct TachyonSnap;
     class DelegateProperty;
     
-    class TachyonMeta : public ObjectInfo {
+    class TachyonMeta : public ObjectMeta {
     public:
     
         using InterfaceLUC  = MetaLookup<InterfaceMeta>;
@@ -75,7 +75,7 @@ namespace yq::tachyon {
         
         template <typename C> class Writer;
 
-        TachyonMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        TachyonMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
         Types       types() const { return m_types; }
     
@@ -123,7 +123,7 @@ namespace yq::tachyon {
         virtual ~TachyonMeta();
         
         virtual void    sweep_impl() override;
-        using ObjectInfo::set;
+        using ObjectMeta::set;
         void    set(Type);
         
     private:
@@ -188,7 +188,7 @@ namespace yq::tachyon {
     #define YQ_TACHYON_FORCE(...)                                   \
         namespace yq {                                                      \
             template <>                                                     \
-            struct InfoBinder<__VA_ARGS__>  : public std::true_type {       \
+            struct MetaBinder<__VA_ARGS__>  : public std::true_type {       \
                 using Info = typename __VA_ARGS__::MyInfo;                  \
                 static constexpr const bool Defined         = true;         \
                 static constexpr const bool IsObject        = true;         \

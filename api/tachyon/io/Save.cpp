@@ -13,8 +13,8 @@
 #include <tachyon/api/meta/DelegateProperty.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/tags.hpp>
-#include <yq/meta/ObjectInfo.hpp>
-#include <yq/meta/PropertyInfo.hpp>
+#include <yq/meta/ObjectMeta.hpp>
+#include <yq/meta/PropertyMeta.hpp>
 #include <tachyon/io/save/SaveAsset.hpp>
 #include <tachyon/io/save/SaveDelegate.hpp>
 #include <tachyon/io/save/SaveObject.hpp>
@@ -196,7 +196,7 @@ namespace yq::tachyon {
     }
     
     #if 0
-    SaveObject*             Save::create(const ObjectInfo* info)
+    SaveObject*             Save::create(const ObjectMeta* info)
     {
         uint64_t id = 1+m_objects.size();
         SaveObject* ret = new SaveObject(*this, info, id);
@@ -423,8 +423,8 @@ namespace yq::tachyon {
         std::error_code load_properties(Object* obj, const SaveObject& sv)
         {
             std::error_code ec;
-            std::set<const PropertyInfo*>   remaining;
-            for(const PropertyInfo* pi : sv.info()->properties(ALL).all){
+            std::set<const PropertyMeta*>   remaining;
+            for(const PropertyMeta* pi : sv.info()->properties(ALL).all){
                 if(pi->tagged(kTag_Save) && pi->setter())
                     remaining.insert(pi);
             }
@@ -453,7 +453,7 @@ namespace yq::tachyon {
                     return ec;
             }
             
-            for(const PropertyInfo* pi : remaining){
+            for(const PropertyMeta* pi : remaining){
                 ec = pi->set(obj, DEFAULT);
                 if(ec != std::error_code())
                     return ec;

@@ -110,7 +110,7 @@ namespace yq::tachyon {
             ImGui::Text("%.*s {%ld}", (int) mn.size(), mn.data(), tid.id);
         }
         
-        void    meta_name(const ObjectInfo& objInfo)
+        void    meta_name(const ObjectMeta& objInfo)
         {
             std::string_view    mn  = objInfo.name();
             ImGui::Text("%.*s", (int) mn.size(), mn.data());
@@ -270,7 +270,7 @@ namespace yq::tachyon {
                     ImGui::Text(ii->properties(COUNT));
                     if(treeOpen && iff){
                         ImGui::Indent();
-                        for(const PropertyInfo* pi : ii->properties()){
+                        for(const PropertyMeta* pi : ii->properties()){
                             any_x   val = pi->get(iff);
                         
                             ImGui::TableNextRow();

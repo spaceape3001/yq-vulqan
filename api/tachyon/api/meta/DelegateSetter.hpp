@@ -11,7 +11,7 @@
 
 namespace yq {
     class Object;
-    class ObjectInfo;
+    class ObjectMeta;
 }
 
 namespace yq::tachyon {
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         virtual const DelegateMeta&     delegate() const = 0;
         
         //! Object type for the setter
-        virtual const ObjectInfo&       object() const = 0;
+        virtual const ObjectMeta&       object() const = 0;
         
         //! Property info this belongs to
         const DelegateProperty*         property() const;

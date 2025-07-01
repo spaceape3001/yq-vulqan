@@ -10,7 +10,7 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/units.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 
 #include <variant>
 

@@ -13,7 +13,7 @@
 #include <tachyon/errors.hpp>
 
 namespace yq::tachyon {
-    DelegateProperty::DelegateProperty(std::string_view zName, const std::source_location& sl, const DelegateMeta& theDelegate, ObjectInfo* parent) :
+    DelegateProperty::DelegateProperty(std::string_view zName, const std::source_location& sl, const DelegateMeta& theDelegate, ObjectMeta* parent) :
         Meta(zName, parent, sl), m_delegate(theDelegate)
     {
         assert(parent);

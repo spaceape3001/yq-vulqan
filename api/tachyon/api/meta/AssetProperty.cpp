@@ -13,7 +13,7 @@
 #include <tachyon/errors.hpp>
 
 namespace yq::tachyon {
-    AssetProperty::AssetProperty(std::string_view zName, const std::source_location& sl, const AssetMeta& theAsset, ObjectInfo* parent) :
+    AssetProperty::AssetProperty(std::string_view zName, const std::source_location& sl, const AssetMeta& theAsset, ObjectMeta* parent) :
         Meta(zName, parent, sl), m_asset(theAsset)
     {
         assert(parent);

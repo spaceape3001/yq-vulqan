@@ -6,13 +6,13 @@
 
 #include "SaveObject.hpp"
 #include <yq/core/Object.hpp>
-#include <yq/meta/PropertyInfo.hpp>
+#include <yq/meta/PropertyMeta.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {
     SaveObject::SaveObject(Save&save, const Object& obj, uint64_t i) : m_save(save), m_info(&obj.metaInfo()), m_id(i)
     {
-        for(const PropertyInfo* pi : m_info->properties(ALL).all){
+        for(const PropertyMeta* pi : m_info->properties(ALL).all){
             if(!pi->setter())   // it's read-only
                 continue;
             if(!pi->tagged(kTag_Save))
@@ -24,7 +24,7 @@ namespace yq::tachyon {
         }
     }
     
-    SaveObject::SaveObject(Save& save, const ObjectInfo* kType, uint64_t i) : m_save(save), m_info(kType), m_id(i)
+    SaveObject::SaveObject(Save& save, const ObjectMeta* kType, uint64_t i) : m_save(save), m_info(kType), m_id(i)
     {
         
     }

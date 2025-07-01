@@ -70,8 +70,8 @@ namespace yq::tachyon {
 
     ////////////////////////////
 
-    UIElementMeta::UIElementMeta(std::string_view theName, ObjectInfo& pmeta, const std::source_location& sl) : 
-        ObjectInfo(theName, pmeta, sl)
+    UIElementMeta::UIElementMeta(std::string_view theName, ObjectMeta& pmeta, const std::source_location& sl) : 
+        ObjectMeta(theName, pmeta, sl)
     {
         repo().all.push_back(this);
     }

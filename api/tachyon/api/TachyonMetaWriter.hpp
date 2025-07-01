@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/ArgDeducer.hpp>
-#include <yq/meta/MetaObjectInfoWriter.hpp>
+#include <yq/meta/MetaObjectMetaWriter.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/TachyonData.hpp>
 #include <tachyon/api/Interface.hpp>
@@ -170,11 +170,11 @@ namespace yq::tachyon {
     /*! \brief Writer of manager information
     */
     template <typename C>
-    class TachyonMeta::Writer : public ObjectInfo::Writer<C> {
+    class TachyonMeta::Writer : public ObjectMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(TachyonMeta* theInfo) : ObjectInfo::Writer<C>(theInfo), m_meta(theInfo)
+        Writer(TachyonMeta* theInfo) : ObjectMeta::Writer<C>(theInfo), m_meta(theInfo)
         {
         }
         

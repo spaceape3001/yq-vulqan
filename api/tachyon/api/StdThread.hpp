@@ -8,7 +8,7 @@
 
 #include <yq/core/Enum.hpp>
 #include <yq/core/Flag.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <tachyon/typedef/thread.hpp>
 #include <tachyon/api/ID.hpp>
 #include <variant>

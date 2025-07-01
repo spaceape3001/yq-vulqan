@@ -9,15 +9,15 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
-#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/ObjectMeta.hpp>
 #include <tachyon/typedef/delegate.hpp>
 
 namespace yq::tachyon {
-    class DelegateMeta : public ObjectInfo {
+    class DelegateMeta : public ObjectMeta {
     public:
         template <typename C> class Writer;
 
-        DelegateMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        DelegateMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
     protected:
         virtual ~DelegateMeta();
     };

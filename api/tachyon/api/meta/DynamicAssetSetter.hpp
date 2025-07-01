@@ -15,7 +15,7 @@ namespace yq::tachyon {
     class DynamicAssetSetter : public AssetSetter {
     public:
     
-        virtual const ObjectInfo&    object() const override { return meta<O>(); }
+        virtual const ObjectMeta&    object() const override { return meta<O>(); }
         virtual const AssetMeta&     asset() const override { return meta<A>(); }
     
     protected:

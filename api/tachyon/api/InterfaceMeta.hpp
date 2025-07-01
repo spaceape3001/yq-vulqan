@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/CompoundMeta.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/typedef/string_initlists.hpp>
 
@@ -16,8 +16,8 @@ namespace yq::tachyon {
     class Tachyon;
     
     class InterfaceMeta : public CompoundMeta {
-        using MethodLUC     = MetaLookup<MethodInfo>;
-        using PropertyLUC   = MetaLookup<PropertyInfo>;
+        using MethodLUC     = MetaLookup<MethodMeta>;
+        using PropertyLUC   = MetaLookup<PropertyMeta>;
     public:
 
         //! Helper for registering type information
@@ -40,17 +40,17 @@ namespace yq::tachyon {
         virtual const char*     generic() const override { return "Interface"; }
 
         //! List of methods for this type
-        const std::vector<const MethodInfo*>&   methods() const;
+        const std::vector<const MethodMeta*>&   methods() const;
         
         size_t      methods(count_k) const;
 
 
-        const PropertyInfo*                 property(std::string_view) const;
+        const PropertyMeta*                 property(std::string_view) const;
         
         size_t      properties(count_k) const;
 
         //! List of properties for this type
-        const std::vector<const PropertyInfo*>&  properties() const;
+        const std::vector<const PropertyMeta*>&  properties() const;
 
         PropertyLUC::equal_range_t              properties(std::string_view) const;
 

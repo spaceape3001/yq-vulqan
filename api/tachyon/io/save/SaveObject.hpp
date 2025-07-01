@@ -13,8 +13,8 @@
 
 namespace yq { 
     class Object; 
-    class ObjectInfo; 
-    class PropertyInfo;
+    class ObjectMeta; 
+    class PropertyMeta;
 }
 
 
@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class Save;
 
     struct SaveProperty {
-        const PropertyInfo*         info        = nullptr;
+        const PropertyMeta*         info        = nullptr;
         Any                         value;
         bool                        isTachID    = false;
     };
@@ -38,10 +38,10 @@ namespace yq::tachyon {
     class SaveObject  {
     public:
         SaveObject(Save&, const Object&, uint64_t);
-        SaveObject(Save&, const ObjectInfo*, uint64_t);
+        SaveObject(Save&, const ObjectMeta*, uint64_t);
         
         uint64_t            id() const { return m_id; };
-        const ObjectInfo*   info() const { return m_info; }
+        const ObjectMeta*   info() const { return m_info; }
         
         uint64_t            remap() const { return m_remapId; }
         
@@ -70,7 +70,7 @@ namespace yq::tachyon {
         friend class Save;
         
         Save&               m_save;
-        const ObjectInfo*   m_info              = nullptr;
+        const ObjectMeta*   m_info              = nullptr;
         uint64_t            m_id                = 0;
         uint64_t            m_remapId           = 0;
         PropertyVector      m_properties;

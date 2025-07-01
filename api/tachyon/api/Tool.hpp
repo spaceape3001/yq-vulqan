@@ -9,10 +9,10 @@
 #include <yq/core/Object.hpp>
 
 namespace yq::tachyon {
-    class ToolMeta : public ObjectInfo {
+    class ToolMeta : public ObjectMeta {
     public:
         template <class> class Writer;
-        ToolMeta(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        ToolMeta(std::string_view, ObjectMeta&, const std::source_location& sl = std::source_location::current());
     
         //  const WidgetMeta*   widget() const;
     };

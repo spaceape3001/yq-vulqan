@@ -11,7 +11,7 @@
 #include <yq/core/Logging.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/meta/Meta.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 #include <yq/process/PluginLoader.hpp>
 #include <yq/text/format.hpp>
 

@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yq/meta/Meta.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <tachyon/typedef/delegate.hpp>
 
 namespace yq { 
     class Object; 
-    class ObjectInfo;
+    class ObjectMeta;
 }
 
 namespace yq::tachyon {
@@ -55,7 +55,7 @@ namespace yq::tachyon {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        DelegateProperty(std::string_view zName, const std::source_location& sl, const DelegateMeta& type, ObjectInfo* parent);
+        DelegateProperty(std::string_view zName, const std::source_location& sl, const DelegateMeta& type, ObjectMeta* parent);
 
     private:
         const DelegateSetter*   m_setter    = nullptr;

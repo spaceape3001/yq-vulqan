@@ -12,7 +12,7 @@
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
 #include <unordered_map>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 
 
 namespace yq::tachyon {
@@ -94,7 +94,7 @@ namespace yq::tachyon {
         return std::span<const DataFormatData>(std::begin(sList), std::end(sList));
     }
 
-    unsigned int    data_binding(const TypeInfo& ti)
+    unsigned int    data_binding(const TypeMeta& ti)
     {
         static auto the_map     = make_binding_map();
         auto    i  = the_map.find(ti.id());
@@ -103,7 +103,7 @@ namespace yq::tachyon {
         return 0;
     }
 
-    DataFormat      data_format(const TypeInfo& ti)
+    DataFormat      data_format(const TypeMeta& ti)
     {
         static auto the_map     = make_data_map();
         auto    i  = the_map.find(ti.id());
@@ -117,7 +117,7 @@ namespace yq::tachyon {
         return (unsigned int)((cb + sizeof(Vector2D) - 1) / sizeof(Vector2D));
     }
 
-    IndexType       index_type(const TypeInfo&ti)
+    IndexType       index_type(const TypeMeta&ti)
     {
         static auto the_map     = make_index_type_map();
         auto    i  = the_map.find(ti.id());

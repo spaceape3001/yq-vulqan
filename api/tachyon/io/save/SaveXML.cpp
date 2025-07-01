@@ -159,12 +159,12 @@ namespace yq::tachyon {
                 prop.value      = Any(*idx);
                 prop.isTachID   = true;
             } else {
-                const TypeInfo* ti  = nullptr;
+                const TypeMeta* ti  = nullptr;
                 std::string     tn  = read_attribute(*xc, szType, x_string);
                 if(tn.empty()){
                     ti      = &prop.info->type();
                 } else {
-                    ti      = TypeInfo::find(tn);
+                    ti      = TypeMeta::find(tn);
                 }
                 if(!ti)
                     return errors::invalid_prop_type_attribute();
@@ -217,11 +217,11 @@ namespace yq::tachyon {
                 if(!idv)
                     return idv.error();
 
-                const TypeInfo* ti  = nullptr;
+                const TypeMeta* ti  = nullptr;
                 std::string     tn  = read_attribute(*xc, szType, x_string);
                 if(tn.empty())
                     return errors::invalid_tachyon_attribute();
-                ti      = TypeInfo::find(tn);
+                ti      = TypeMeta::find(tn);
                 if(!ti)
                     return errors::invalid_tachyon_attribute();
                 
@@ -231,11 +231,11 @@ namespace yq::tachyon {
 
             } else if(const XmlAttribute*xa = xml.first_attribute(szKey)){
                 std::string     k  = x_string(*xa);
-                const TypeInfo* ti  = nullptr;
+                const TypeMeta* ti  = nullptr;
                 std::string     tn  = read_attribute(*xc, szType, x_string);
                 if(tn.empty())
                     return errors::invalid_tachyon_attribute();
-                ti      = TypeInfo::find(tn);
+                ti      = TypeMeta::find(tn);
                 if(!ti)
                     return errors::invalid_tachyon_attribute();
                 
@@ -403,7 +403,7 @@ namespace yq::tachyon {
         const XmlAttribute* xa  = xml.first_attribute(szType);
         if(!xa)
             return errors::missing_type_attribute();
-        const TypeInfo* type    = TypeInfo::find(xa->value());
+        const TypeMeta* type    = TypeMeta::find(xa->value());
         if(!type)
             return errors::invalid_type_attribute();
         
@@ -416,7 +416,7 @@ namespace yq::tachyon {
 
     }
     
-    std::error_code    SaveXML::read(Any& value, const XmlNode&xml, const TypeInfo& type)
+    std::error_code    SaveXML::read(Any& value, const XmlNode&xml, const TypeMeta& type)
     {
         if(type.can_write_and_parse())
             return value.parse(type, x_string(xml));
@@ -437,7 +437,7 @@ namespace yq::tachyon {
         root.create_attribute(szApplication, Application::app_name());
         root.create_attribute(szFormat, to_string_view(kFormat));
         for(auto& itr : save->variables()){
-            const TypeInfo& type   = itr.second.type();
+            const TypeMeta& type   = itr.second.type();
             XmlNode&    var = *(root.create_element(szVariable));
             var.create_attribute(szName, itr.first);
             var.create_attribute(szType, type.name());
@@ -493,7 +493,7 @@ namespace yq::tachyon {
                 prop.create_attribute(szName, p.info->name());
                 write_x(prop, tac->remap());
             } else {
-                const TypeInfo& type    = p.value.type();
+                const TypeMeta& type    = p.value.type();
                 bool    same            = type.id() == p.info->type().id();
                 if(same && p.info->is_default(p.value)) // not regurgitating default values
                     continue;
@@ -511,7 +511,7 @@ namespace yq::tachyon {
 
     void    SaveXML::write(XmlNode&xml, const Any& value) const
     {
-        const TypeInfo& type    = value.type();
+        const TypeMeta& type    = value.type();
         if(type.can_write_and_parse()){
             write_x(xml, value.writable());
             return;

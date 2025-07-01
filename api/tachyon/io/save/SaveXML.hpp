@@ -11,7 +11,7 @@
 #include <tachyon/keywords.hpp>
 
 namespace yq {
-    class TypeInfo;
+    class TypeMeta;
 }
 
 namespace yq::tachyon {
@@ -54,7 +54,7 @@ namespace yq::tachyon {
         std::error_code    read(const XmlNode&, thread_k);
         std::error_code    read(const XmlNode&, variable_k);
         
-        std::error_code    read(Any&, const XmlNode&, const TypeInfo&);
+        std::error_code    read(Any&, const XmlNode&, const TypeMeta&);
         std::error_code    read(SaveAsset&,     asset_k, const XmlNode&);
         std::error_code    read(SaveDelegate&,  delegate_k, const XmlNode&);
         std::error_code    read(SaveObject&,    object_k, const XmlNode&);

@@ -93,7 +93,7 @@ namespace yq::tachyon {
             attr_impl(data_format<A>(), offset, min_binding<A>(), &meta<A>());
         }
         
-        void    attr_impl(DataFormat df, uint32_t offset, uint32_t bindReq, const TypeInfo* ti=nullptr)
+        void    attr_impl(DataFormat df, uint32_t offset, uint32_t bindReq, const TypeMeta* ti=nullptr)
         {
             if(!m_pipeline)
                 return ;

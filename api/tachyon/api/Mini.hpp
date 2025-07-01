@@ -12,7 +12,7 @@
 
 namespace yq::tachyon {
 
-    class TypeInfo;
+    class TypeMeta;
 
     /*! \brief Mini information
     */
@@ -24,17 +24,17 @@ namespace yq::tachyon {
         MiniMeta(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
         
         using WidgetMeta::types;
-        const std::vector<const TypeInfo*>& types(data_k) const { return m_dataTypes; }
+        const std::vector<const TypeMeta*>& types(data_k) const { return m_dataTypes; }
     
         //static std::span<const MiniMeta*>   all();
-        //static const MiniMeta*              view(const TypeInfo&);
-        //static const MiniMeta*              edit(const TypeInfo&);
+        //static const MiniMeta*              view(const TypeMeta&);
+        //static const MiniMeta*              edit(const TypeMeta&);
     
     private:
         struct Repo;
         static Repo& repo();
     
-        std::vector<const TypeInfo*>   m_dataTypes;
+        std::vector<const TypeMeta*>   m_dataTypes;
     };
 
     /*! "Small" focused widgets

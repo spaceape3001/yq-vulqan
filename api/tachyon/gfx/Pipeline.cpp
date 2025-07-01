@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/gfx/Pipeline.hpp>
-#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundMeta.hpp>
 #include <tachyon/gfx/Shader.hpp>
 #include <tachyon/gfx/PushData.hpp>
 #include <atomic>
@@ -32,7 +32,7 @@ namespace yq::tachyon {
     {
     }
 
-    Pipeline::Pipeline(const CompoundInfo* cinfo, Role r) : 
+    Pipeline::Pipeline(const CompoundMeta* cinfo, Role r) : 
         m_compound(cinfo), m_id(_make_id()), m_role(r)
     {
         m_dynamicStates.insert(DynamicState::Viewport);

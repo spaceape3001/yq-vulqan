@@ -34,8 +34,8 @@
 #include <variant>
 
 namespace yq {
-    class CompoundInfo;
-    class TypeInfo;
+    class CompoundMeta;
+    class TypeMeta;
 }
 
 namespace yq::tachyon {
@@ -109,7 +109,7 @@ namespace yq::tachyon {
         using fn_revision   = std::function<uint64_t(const void*)>; //< TODO: This MAY be obsolete given current designs (16 JAN 2025)
 
         struct attribute_t {
-            const TypeInfo* type    = nullptr;
+            const TypeMeta* type    = nullptr;
             uint32_t        location    = UINT32_MAX;
             uint32_t        offset      = 0;
             DataFormat      format;
@@ -180,7 +180,7 @@ namespace yq::tachyon {
         // Always good to call
         std::string_view        compound_name() const;
         // NULL is valid return result
-        constexpr const CompoundInfo*     compound_type() const { return m_compound; }
+        constexpr const CompoundMeta*     compound_type() const { return m_compound; }
         
         ColorBlend              color_blending() const { return m_colorBlend; }
         
@@ -402,7 +402,7 @@ namespace yq::tachyon {
         friend class ViPipelineLayout;
         friend class ViRendered;
 
-        Pipeline(const CompoundInfo*, Role);
+        Pipeline(const CompoundMeta*, Role);
         
 
         template <typename V>
@@ -423,7 +423,7 @@ namespace yq::tachyon {
         
         static uint64_t             _make_id();
         
-        const CompoundInfo* const       m_compound;
+        const CompoundMeta* const       m_compound;
         const uint64_t                  m_id;
         const Role                      m_role;
         

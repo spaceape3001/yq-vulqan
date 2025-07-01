@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/CompoundInfoDynamic.hpp>
+#include <yq/meta/CompoundMetaDynamic.hpp>
 #include <tachyon/api/InterfaceMeta.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <yq/core/DelayInit.hpp>
@@ -14,7 +14,7 @@
 
 namespace yq::tachyon {
     template <typename C>
-    class InterfaceMeta::Writer : public CompoundInfo::Dynamic<C> {
+    class InterfaceMeta::Writer : public CompoundMeta::Dynamic<C> {
     public:
     
         Writer&     abstract()
@@ -24,7 +24,7 @@ namespace yq::tachyon {
             return *this;
         }
         
-        Writer(InterfaceMeta* obj) : CompoundInfo::Dynamic<C>(obj) 
+        Writer(InterfaceMeta* obj) : CompoundMeta::Dynamic<C>(obj) 
         {
             assert(obj);
             if constexpr ( std::is_abstract_v<C> ){

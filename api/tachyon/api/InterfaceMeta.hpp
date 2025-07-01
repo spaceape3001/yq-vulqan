@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/typedef/string_initlists.hpp>
@@ -15,7 +15,7 @@ namespace yq::tachyon {
     class Proxy;
     class Tachyon;
     
-    class InterfaceMeta : public CompoundInfo {
+    class InterfaceMeta : public CompoundMeta {
         using MethodLUC     = MetaLookup<MethodInfo>;
         using PropertyLUC   = MetaLookup<PropertyInfo>;
     public:

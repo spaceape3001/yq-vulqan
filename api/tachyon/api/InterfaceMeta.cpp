@@ -40,7 +40,7 @@ namespace yq::tachyon {
 
     //  ------------------------------------------------------------------------------------------------------------
 
-    InterfaceMeta::InterfaceMeta(std::string_view zName, const std::source_location& sl) : CompoundInfo(zName, sl)
+    InterfaceMeta::InterfaceMeta(std::string_view zName, const std::source_location& sl) : CompoundMeta(zName, sl)
     {
         set(Flag::INTERFACE);
         repo().interfaces << this;
@@ -84,7 +84,7 @@ namespace yq::tachyon {
 
     void    InterfaceMeta::sweep_impl() 
     {
-        CompoundInfo::sweep_impl();
+        CompoundMeta::sweep_impl();
         gather(m_properties);
         gather(m_methods);
     }

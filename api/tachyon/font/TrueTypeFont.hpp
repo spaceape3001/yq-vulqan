@@ -10,7 +10,7 @@
 #include <tachyon/typedef/font.hpp>
 
 namespace yq::tachyon {
-    class TrueTypeFontInfo : public AssetInfo {
+    class TrueTypeFontInfo : public AssetMeta {
     public:
     
     };

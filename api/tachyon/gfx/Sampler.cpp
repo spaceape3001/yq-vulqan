@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/asset/AssetFactory.hpp>
-#include <yq/asset/AssetInfoWriter.hpp>
+#include <yq/asset/AssetMetaWriter.hpp>
 #include <tachyon/gfx/Sampler.hpp>
 
 namespace yq::tachyon {

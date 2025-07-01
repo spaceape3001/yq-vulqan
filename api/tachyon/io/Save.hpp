@@ -23,7 +23,7 @@ namespace yq {
     class ObjectInfo;
     class PropertyInfo;
     class Asset;
-    class AssetInfo;
+    class AssetMeta;
 }
 
 namespace yq::tachyon {
@@ -71,7 +71,7 @@ namespace yq::tachyon {
         SaveThread*             insert(const Thread&);
         SaveTachyon*            insert(const Tachyon&);
         
-        SaveAsset*              create(const AssetInfo*, const std::filesystem::path&);
+        SaveAsset*              create(const AssetMeta*, const std::filesystem::path&);
         SaveDelegate*           create(const DelegateInfo*);
         //SaveObject*             create(const ObjectInfo*); // disabled until we've got a supported path
         SaveTachyon*            create(const TachyonInfo*);

@@ -10,7 +10,7 @@
 #include <yq/typedef/float16.hpp>
 
 #include <yq/asset/AssetFactory.hpp>
-#include <yq/asset/AssetInfoWriter.hpp>
+#include <yq/asset/AssetMetaWriter.hpp>
 #include <yq/asset/AssetIO.hpp>
 
 #include <tachyon/gfx/PipelineUtils.hpp>

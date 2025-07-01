@@ -14,7 +14,7 @@ namespace yq::tachyon {
     {
     }
     
-    SaveAsset::SaveAsset(Save&save, const AssetInfo* info, uint64_t i, const std::filesystem::path& fp) : 
+    SaveAsset::SaveAsset(Save&save, const AssetMeta* info, uint64_t i, const std::filesystem::path& fp) : 
         SaveObject(save, info, i), m_filepath(fp)
     {
     }
@@ -23,9 +23,9 @@ namespace yq::tachyon {
     {
     }
 
-    const AssetInfo* SaveAsset::info() const
+    const AssetMeta* SaveAsset::info() const
     {
-        return dynamic_cast<const AssetInfo*>(SaveObject::info());
+        return dynamic_cast<const AssetMeta*>(SaveObject::info());
     }
 
     bool    SaveAsset::valid() const 

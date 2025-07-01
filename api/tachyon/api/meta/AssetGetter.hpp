@@ -10,7 +10,7 @@
 #include <yq/typedef/asset.hpp>
 
 namespace yq {
-    class AssetInfo;
+    class AssetMeta;
     class Object;
     class ObjectInfo;
 }
@@ -40,7 +40,7 @@ namespace yq::tachyon {
         
         /*! \brief Object/Type for the data
         */
-        virtual const AssetInfo&     asset() const = 0;
+        virtual const AssetMeta&     asset() const = 0;
         
         /*! \brief Property this is associated with.
         */

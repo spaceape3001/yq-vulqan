@@ -318,7 +318,7 @@ namespace yq::tachyon {
         if(!cinfo)
             return errors::invalid_class_attribute();
         
-        const AssetInfo*  tinfo   = dynamic_cast<const AssetInfo*>(cinfo);
+        const AssetMeta*  tinfo   = dynamic_cast<const AssetMeta*>(cinfo);
         if(!tinfo)
             return errors::not_asset_class();
         return read(*(save->create(tinfo, fp)), ASSET, xml);

@@ -33,7 +33,7 @@ namespace yq::tachyon {
         virtual std::error_code set(Object*obj, const AssetCPtr&) const = 0;
         
         //! Data type for the setter
-        virtual const AssetInfo&        asset() const = 0;
+        virtual const AssetMeta&        asset() const = 0;
         
         //! Object type for the setter
         virtual const ObjectInfo&       object() const = 0;

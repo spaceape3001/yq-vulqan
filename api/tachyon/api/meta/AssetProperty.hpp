@@ -38,7 +38,7 @@ namespace yq::tachyon {
         //! Writer for dynamics
         template <SomeObject, SomeAsset> class PropW;
 
-        const AssetInfo&    asset() const { return m_asset; }
+        const AssetMeta&    asset() const { return m_asset; }
         
         AssetCPtr           get(const Object*) const;
         std::error_code     set(Object*, const AssetCPtr&) const;
@@ -57,11 +57,11 @@ namespace yq::tachyon {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        AssetProperty(std::string_view zName, const std::source_location& sl, const AssetInfo& type, ObjectInfo* parent);
+        AssetProperty(std::string_view zName, const std::source_location& sl, const AssetMeta& type, ObjectInfo* parent);
 
     private:
         const AssetSetter*      m_setter    = nullptr;
         const AssetGetter*      m_getter    = nullptr;
-        const AssetInfo&        m_asset;
+        const AssetMeta&        m_asset;
     };
 }

@@ -15,7 +15,7 @@ namespace yq::tachyon {
     public:
     
         virtual const ObjectInfo&    object() const override { return meta<O>(); }
-        virtual const AssetInfo&     asset() const override { return meta<A>(); }
+        virtual const AssetMeta&     asset() const override { return meta<A>(); }
     
     protected:
         DynamicAssetGetter(AssetProperty* propInfo, const std::source_location& sl) : AssetGetter(propInfo, sl) 

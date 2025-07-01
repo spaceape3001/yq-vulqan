@@ -12,7 +12,7 @@
 struct ImFont;
 
 namespace yq::tachyon {
-    class FontInfo : public AssetInfo {
+    class FontInfo : public AssetMeta {
     public:
     };
 

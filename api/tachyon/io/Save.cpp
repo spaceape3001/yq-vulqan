@@ -179,7 +179,7 @@ namespace yq::tachyon {
         return m_objects.size();
     }
 
-    SaveAsset*              Save::create(const AssetInfo*info, const std::filesystem::path& fp)
+    SaveAsset*              Save::create(const AssetMeta*info, const std::filesystem::path& fp)
     {
         uint64_t id = 1+m_objects.size();
         SaveAsset* ret = new SaveAsset(*this, info, id, fp);

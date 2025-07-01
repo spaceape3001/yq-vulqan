@@ -11,7 +11,7 @@
 
 namespace yq {
     class Asset;
-    class AssetInfo;
+    class AssetMeta;
 }
 
 namespace yq::tachyon {
@@ -20,9 +20,9 @@ namespace yq::tachyon {
     class SaveAsset : public SaveObject {
     public:
         SaveAsset(Save&, const Asset&);
-        SaveAsset(Save&, const AssetInfo*, uint64_t, const std::filesystem::path&);
+        SaveAsset(Save&, const AssetMeta*, uint64_t, const std::filesystem::path&);
         
-        const AssetInfo*    info() const;
+        const AssetMeta*    info() const;
         virtual bool        valid() const override;
         
         const std::filesystem::path&    filepath() const { return m_filepath; }

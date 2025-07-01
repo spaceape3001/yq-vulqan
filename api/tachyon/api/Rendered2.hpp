@@ -20,11 +20,11 @@ namespace yq::tachyon {
         
     /*! \brief Information for the render2D object
     */
-    class Rendered²Info : public RenderedInfo {
+    class Rendered²Info : public RenderedMeta {
     public:
         template <typename C> struct Writer;
 
-        Rendered²Info(std::string_view, RenderedInfo&, const std::source_location& sl = std::source_location::current());
+        Rendered²Info(std::string_view, RenderedMeta&, const std::source_location& sl = std::source_location::current());
     };
 
     /*! \brief Something that's rendered with a defined position, size, etc

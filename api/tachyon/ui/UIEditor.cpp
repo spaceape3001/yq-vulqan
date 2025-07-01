@@ -10,27 +10,27 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/ui/UIStyle.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIEditor)
 
 namespace yq::tachyon {
-    struct UIEditorInfo::Repo {
-        std::vector<const UIEditorInfo*>    all;
+    struct UIEditorMeta::Repo {
+        std::vector<const UIEditorMeta*>    all;
     };
     
-    UIEditorInfo::Repo& UIEditorInfo::repo()
+    UIEditorMeta::Repo& UIEditorMeta::repo()
     {
         static Repo s_repo;
         return s_repo;
     }
     
-    const std::vector<const UIEditorInfo*>& UIEditorInfo::all()
+    const std::vector<const UIEditorMeta*>& UIEditorMeta::all()
     {
         return repo().all;
     }
 
-    UIEditorInfo::UIEditorInfo(std::string_view name, UIFormInfo&base, const std::source_location& sl) :
+    UIEditorMeta::UIEditorMeta(std::string_view name, UIFormInfo&base, const std::source_location& sl) :
         UIFormInfo(name, base, sl)
     {
         repo().all.push_back(this);

@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Delegate;
-    class DelegateInfo;
+    class DelegateMeta;
     using DelegatePtr           = Ref<Delegate>;
     using DelegateCPtr          = Ref<const Delegate>;
 

@@ -6,28 +6,28 @@
 
 #include <tachyon/api/Camera.hpp>
 #include <tachyon/api/CameraData.hpp>
-#include <tachyon/api/CameraInfoWriter.hpp>
+#include <tachyon/api/CameraMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
 
-    struct CameraInfo::Repo {
-        std::vector<const CameraInfo*> all;
+    struct CameraMeta::Repo {
+        std::vector<const CameraMeta*> all;
     };
     
-    CameraInfo::Repo& CameraInfo::repo()
+    CameraMeta::Repo& CameraMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const CameraInfo*>&    CameraInfo::all()
+    const std::vector<const CameraMeta*>&    CameraMeta::all()
     {
         return repo().all;
     }
 
-    CameraInfo::CameraInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    CameraMeta::CameraMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Flag::CAMERA);

@@ -7,7 +7,7 @@
 #include "Scale3UI.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/proxy/PScale3.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale³UI)

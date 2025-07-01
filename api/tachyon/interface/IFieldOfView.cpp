@@ -6,7 +6,7 @@
 
 #include "IFieldOfView.hpp"
 #include <tachyon/proxy/PFieldOfView.hpp>
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IFieldOfView)
 

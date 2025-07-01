@@ -17,14 +17,14 @@ namespace yq::tachyon {
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class UIEditorInfo::Writer : public UIFormInfo::Writer<C> {
+    class UIEditorMeta::Writer : public UIFormInfo::Writer<C> {
     public:
     
-        Writer(UIEditorInfo* pInfo) : UIFormInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(UIEditorMeta* pInfo) : UIFormInfo::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
-        Writer(UIEditorInfo& pInfo) : Writer(&pInfo)
+        Writer(UIEditorMeta& pInfo) : Writer(&pInfo)
         {
         }
         
@@ -45,6 +45,6 @@ namespace yq::tachyon {
         }
 
     private:
-        UIEditorInfo* m_meta;
+        UIEditorMeta* m_meta;
     };
 }

@@ -15,20 +15,20 @@ namespace yq::tachyon {
     class UIElement;
     class Payload;
     
-    class ActionInfo : public DelegateInfo {
+    class ActionMeta : public DelegateMeta {
     public:
         template <typename> class Writer;
         template <typename> class Fixer;
-        ActionInfo(std::string_view zName, DelegateInfo& base, const std::source_location& sl=std::source_location::current());
+        ActionMeta(std::string_view zName, DelegateMeta& base, const std::source_location& sl=std::source_location::current());
     
     protected:
-        ~ActionInfo();
+        ~ActionMeta();
         
         // virtual CommandCPtr execute(const Action*, const PostCPtr&) const { return {}; }
     };
 
     class Action : public Delegate {
-        YQ_OBJECT_INFO(ActionInfo)
+        YQ_OBJECT_INFO(ActionMeta)
         YQ_OBJECT_DECLARE(Action, Delegate)
     public:
     

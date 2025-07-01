@@ -19,14 +19,14 @@ namespace yq::tachyon {
     class UncontrolCommand;
     class UnlistenCommand;
 
-    class ControllerInfo : public TachyonMeta {
+    class ControllerMeta : public TachyonMeta {
     public:
         template <typename C> class Writer;
 
-        ControllerInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
+        ControllerMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
     
     protected:
-        virtual ~ControllerInfo();
+        virtual ~ControllerMeta();
     };
     
     /*! \brief Controller of Posts/Events/etc
@@ -39,7 +39,7 @@ namespace yq::tachyon {
         2) Subscribing to the event producer
     */
     class Controller : public Tachyon {
-        YQ_TACHYON_INFO(ControllerInfo)
+        YQ_TACHYON_INFO(ControllerMeta)
         YQ_TACHYON_DATA(ControllerData)
         YQ_TACHYON_SNAP(ControllerSnap)
         YQ_TACHYON_DECLARE(Controller, Tachyon)

@@ -6,21 +6,20 @@
 
 #pragma once
 
-#include <tachyon/api/Layer.hpp>
-#include <tachyon/api/LayerData.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
+#include <tachyon/api/Tool.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class LayerInfo::Writer : public TachyonMeta::Writer<C> {
+    class ToolMeta::Writer : public ObjectInfo::Writer<C> {
     public:
-        Writer(LayerInfo* layerInfo) : TachyonMeta::Writer<C>(layerInfo)
+        Writer(ToolMeta* manipInfo) : ObjectInfo::Writer<C>(manipInfo)
         {
         }
         
-        Writer(LayerInfo& layerInfo) : Writer(&layerInfo)
+        Writer(ToolMeta& manipInfo) : Writer(&manipInfo)
         {
         }
     };
-
+    
 }

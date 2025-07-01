@@ -17,7 +17,7 @@
 
 struct LightTableUI::Row {
     LightID            light;
-    const LightInfo*   info        = nullptr;
+    const LightMeta*   info        = nullptr;
     std::string        sid;        // ID for selectable
     std::string        stype;
 };

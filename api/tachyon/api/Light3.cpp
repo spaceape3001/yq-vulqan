@@ -16,8 +16,8 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Light³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Light³ID)
 
 namespace yq::tachyon {
-    Light³Info::Light³Info(std::string_view name, LightInfo& base, const std::source_location& sl) :
-        LightInfo(name, base, sl)
+    Light³Info::Light³Info(std::string_view name, LightMeta& base, const std::source_location& sl) :
+        LightMeta(name, base, sl)
     {
         set(Type::Light³);
     }

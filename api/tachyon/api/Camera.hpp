@@ -19,15 +19,15 @@ namespace yq::tachyon {
     
         Information for cameras.
     */
-    class CameraInfo : public TachyonMeta {
+    class CameraMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
         //! Gets all camera informations
-        static const std::vector<const CameraInfo*>&    all();
+        static const std::vector<const CameraMeta*>&    all();
         
         //! Standard constructor for the camera information
-        CameraInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        CameraMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
         
     private:
     
@@ -49,7 +49,7 @@ namespace yq::tachyon {
         \note We're limited to three dimensions here
     */
     class Camera : public Tachyon {
-        YQ_TACHYON_INFO(CameraInfo);
+        YQ_TACHYON_INFO(CameraMeta);
         YQ_TACHYON_DATA(CameraData)
         YQ_TACHYON_SNAP(CameraSnap)
         YQ_TACHYON_DECLARE(Camera, Tachyon)

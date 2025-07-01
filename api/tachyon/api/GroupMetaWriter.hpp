@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/api/Scene.hpp>
-#include <tachyon/api/SceneData.hpp>
+#include <tachyon/api/Group.hpp>
+#include <tachyon/api/GroupData.hpp>
 #include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class SceneInfo::Writer : public TachyonMeta::Writer<C> {
+    class GroupMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(SceneInfo* lightInfo) : TachyonMeta::Writer<C>(lightInfo)
+        Writer(GroupMeta* layerInfo) : TachyonMeta::Writer<C>(layerInfo)
         {
         }
         
-        Writer(SceneInfo& lightInfo) : Writer(&lightInfo)
+        Writer(GroupMeta& layerInfo) : Writer(&layerInfo)
         {
         }
     };

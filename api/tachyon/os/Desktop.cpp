@@ -27,8 +27,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    DesktopInfo::DesktopInfo(std::string_view name, ManagerInfo& base, const std::source_location& sl) : 
-        ManagerInfo(name, base, sl)
+    DesktopInfo::DesktopInfo(std::string_view name, ManagerMeta& base, const std::source_location& sl) : 
+        ManagerMeta(name, base, sl)
     {
         set(Type::Desktop);
         repo().all.push_back(this);

@@ -17,7 +17,7 @@
 
 struct ControllerTableUI::Row {
     ControllerID            controller;
-    const ControllerInfo*   info        = nullptr;
+    const ControllerMeta*   info        = nullptr;
     std::string        sid;        // ID for selectable
     std::string        stype;
 };

@@ -6,7 +6,7 @@
 
 #include <tachyon/interface/IScale1.hpp>
 
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 #include <tachyon/proxy/PScale1.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale¹)

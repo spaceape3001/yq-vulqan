@@ -8,7 +8,7 @@
 #include <tachyon/api/Post.hpp>
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
-#include <tachyon/api/RenderedInfoWriter.hpp>
+#include <tachyon/api/RenderedMetaWriter.hpp>
 #include <tachyon/command/rendered/SetWireframeCommand.hpp>
 #include <tachyon/vulkan/ViBuffer.hpp>
 #include <tachyon/vulkan/ViTexture.hpp>
@@ -23,24 +23,24 @@ namespace yq::tachyon {
     RenderedSnap::~RenderedSnap() = default;
 
 
-    struct RenderedInfo::Repo {
-        std::vector<const RenderedInfo*>    all;
+    struct RenderedMeta::Repo {
+        std::vector<const RenderedMeta*>    all;
     };
     
-    RenderedInfo::Repo& RenderedInfo::repo()
+    RenderedMeta::Repo& RenderedMeta::repo()
     {
         static Repo s_repo;
         return s_repo;
     }
 
-    const std::vector<const RenderedInfo*>& RenderedInfo::all()
+    const std::vector<const RenderedMeta*>& RenderedMeta::all()
     {
         return repo().all;
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    RenderedInfo::RenderedInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    RenderedMeta::RenderedMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Flag::RENDERED);
@@ -48,7 +48,7 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
-    const Pipeline*    RenderedInfo::pipeline(Pipeline::Role r) const
+    const Pipeline*    RenderedMeta::pipeline(Pipeline::Role r) const
     {
         auto i = m_pipelines.find(r);
         if(i != m_pipelines.end())
@@ -56,7 +56,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    Pipeline*       RenderedInfo::create_pipeline(Pipeline::Role r, std::function<Pipeline*(Pipeline::Role)> make)
+    Pipeline*       RenderedMeta::create_pipeline(Pipeline::Role r, std::function<Pipeline*(Pipeline::Role)> make)
     {
         assert(Meta::thread_safe_write());
         

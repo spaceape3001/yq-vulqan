@@ -6,7 +6,7 @@
 
 #include <tachyon/interface/ISize2.hpp>
 
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 #include <tachyon/proxy/PSize2.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::ISize²)

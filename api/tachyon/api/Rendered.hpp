@@ -22,19 +22,19 @@ namespace yq::tachyon {
     class SetWireframeCommand;
 
     //! Information to a rendered object
-    class RenderedInfo : public TachyonMeta {
+    class RenderedMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
         
         //! Standard constructor
-        RenderedInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        RenderedMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
         
         const Pipeline* pipeline(Pipeline::Role r=Pipeline::Role::Default) const;
         
         //! Default is the FIRST pipeline defined
         const Pipeline* default_pipeline() const { return m_default; }
         
-        static const std::vector<const RenderedInfo*>& all();
+        static const std::vector<const RenderedMeta*>& all();
         
     private:
         struct Repo;
@@ -58,7 +58,7 @@ namespace yq::tachyon {
         rendered (or puppet its spatial... that's an option too).
     */
     class Rendered : public Tachyon {
-        YQ_TACHYON_INFO(RenderedInfo)
+        YQ_TACHYON_INFO(RenderedMeta)
         YQ_TACHYON_DATA(RenderedData)
         YQ_TACHYON_SNAP(RenderedSnap)
         YQ_TACHYON_DECLARE(Rendered, Tachyon)

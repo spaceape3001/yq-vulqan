@@ -10,7 +10,7 @@
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/text/match.hpp>
 #include <tbb/spin_rw_mutex.h>
 
@@ -18,7 +18,7 @@ YQ_OBJECT_IMPLEMENT(InspectorUI)
 
 struct InspectorUI::Info {
     const TachyonMeta*                  tac = nullptr;
-    std::vector<const UIEditorInfo*>    panels;
+    std::vector<const UIEditorMeta*>    panels;
 };
 
 struct InspectorUI::Repo {
@@ -36,7 +36,7 @@ struct InspectorUI::Repo {
 
         struct HET {
             int                     hops    = 0;
-            const UIEditorInfo*     editor  = nullptr;
+            const UIEditorMeta*     editor  = nullptr;
         };
         
         auto&   ifaces      = ti.interfaces(ALL);
@@ -44,7 +44,7 @@ struct InspectorUI::Repo {
         static constexpr const int      kProxyHops   = -20;
         
         std::vector<HET>        edits;
-        for(const UIEditorInfo* ui : UIEditorInfo::all()){
+        for(const UIEditorMeta* ui : UIEditorMeta::all()){
             if(!ui)
                 continue;
             if(ui->is_abstract())
@@ -59,7 +59,7 @@ struct InspectorUI::Repo {
                 edits.push_back({ h, ui  });
             }
             
-            for(const InterfaceInfo* i2 : ui->edits(PROXY)){
+            for(const InterfaceMeta* i2 : ui->edits(PROXY)){
                 if(!i2)
                     continue;
                 if(!ifaces.contains(i2))
@@ -74,8 +74,8 @@ struct InspectorUI::Repo {
             return is_less_igCase(a.editor->stem(), b.editor->stem());
         });
 
-        std::vector<const UIEditorInfo*>    epack;
-        std::set<const UIEditorInfo*>       present;
+        std::vector<const UIEditorMeta*>    epack;
+        std::set<const UIEditorMeta*>       present;
         for(auto& het : edits){
             if(present.insert(het.editor).second)
                 epack.push_back(het.editor);
@@ -92,7 +92,7 @@ struct InspectorUI::Repo {
     }
     
     
-    const std::vector<const UIEditorInfo*>& panels(const TachyonMeta& ti)
+    const std::vector<const UIEditorMeta*>& panels(const TachyonMeta& ti)
     {
         return info(ti) -> panels;
     }
@@ -146,7 +146,7 @@ std::span<UIEditor*>    InspectorUI::_panels(TypedID tid)
         
     auto& ret   = m_panels[tid];
         
-    for(const UIEditorInfo* ei : repo().panels(*tac)){
+    for(const UIEditorMeta* ei : repo().panels(*tac)){
         if(!ei)
             continue;
         Object*     obj = ei -> create();

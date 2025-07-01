@@ -9,7 +9,7 @@
 #include <tachyon/api/FrameBuilder.hpp>
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/api/ThreadData.hpp>
-#include <tachyon/api/ThreadInfoWriter.hpp>
+#include <tachyon/api/ThreadMetaWriter.hpp>
 
 #include <tachyon/api/AsyncTask.hpp>
 #include <tachyon/io/Save.hpp>
@@ -82,7 +82,7 @@ namespace yq::tachyon {
 
 // ------------------------------------------------------------------------
 
-    ThreadInfo::ThreadInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
+    ThreadMeta::ThreadMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(zName, base, sl)
     {
         set(Type::Thread);

@@ -6,7 +6,7 @@
 
 #include <tachyon/api/Manager.hpp>
 #include <tachyon/api/ManagerData.hpp>
-#include <tachyon/api/ManagerInfoWriter.hpp>
+#include <tachyon/api/ManagerMetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
@@ -15,7 +15,7 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    ManagerInfo::ManagerInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
+    ManagerMeta::ManagerMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(zName, base, sl)
     {
         set(Flag::MANAGER);

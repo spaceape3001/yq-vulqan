@@ -6,7 +6,7 @@
 
 #include "INearPlane.hpp"
 #include <tachyon/proxy/PNearPlane.hpp>
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::INearPlane)
 

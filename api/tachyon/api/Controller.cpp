@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Controller.hpp>
-#include <tachyon/api/ControllerInfoWriter.hpp>
+#include <tachyon/api/ControllerMetaWriter.hpp>
 #include <tachyon/api/ControllerData.hpp>
 #include <tachyon/api/ID.hpp>
 #include <tachyon/command/controller/ControlCommand.hpp>
@@ -29,13 +29,13 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    ControllerInfo::ControllerInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
+    ControllerMeta::ControllerMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(zName, base, sl)
     {
         set(Type::Controller);
     }
     
-    ControllerInfo::~ControllerInfo()
+    ControllerMeta::~ControllerMeta()
     {
     }
 

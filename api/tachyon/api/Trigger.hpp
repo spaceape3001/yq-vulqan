@@ -22,14 +22,14 @@
 #include <variant>
 
 namespace yq::tachyon {
-    class TriggerInfo : public DelegateInfo {
+    class TriggerMeta : public DelegateMeta {
     public:
         template <typename C> class Writer;
 
-        TriggerInfo(std::string_view zName, DelegateInfo& base, const std::source_location& sl=std::source_location::current());
+        TriggerMeta(std::string_view zName, DelegateMeta& base, const std::source_location& sl=std::source_location::current());
     
     protected:
-        ~TriggerInfo();
+        ~TriggerMeta();
     };
     
     /*! \brief Detector of posts
@@ -39,7 +39,7 @@ namespace yq::tachyon {
     */
     class Trigger : public Delegate {
     private:
-        YQ_OBJECT_INFO(TriggerInfo)
+        YQ_OBJECT_INFO(TriggerMeta)
         YQ_OBJECT_DECLARE(Trigger, Delegate)
     public:
     

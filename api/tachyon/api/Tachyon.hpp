@@ -36,7 +36,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class InterfaceInfo;
+    class InterfaceMeta;
     class Proxy;
     class PBXDispatch;
     struct StartupContext;
@@ -68,7 +68,7 @@ namespace yq::tachyon {
     class TachyonMeta : public ObjectInfo {
     public:
     
-        using InterfaceLUC  = MetaLookup<InterfaceInfo>;
+        using InterfaceLUC  = MetaLookup<InterfaceMeta>;
         using DispatchMM    = std::unordered_multimap<const PostMeta*, const PBXDispatch*>;
         using DelegateLUC   = MetaLookup<DelegateProperty>;
         using AssetLUC      = MetaLookup<AssetProperty>;
@@ -79,11 +79,11 @@ namespace yq::tachyon {
         
         Types       types() const { return m_types; }
     
-        const MetaLookup<InterfaceInfo>&    interfaces(bool all=false) const;
+        const MetaLookup<InterfaceMeta>&    interfaces(bool all=false) const;
 
-        const MetaLookup<InterfaceInfo>&    interfaces(all_k) const { return m_interfaces.all; }
+        const MetaLookup<InterfaceMeta>&    interfaces(all_k) const { return m_interfaces.all; }
         
-        const MetaLookup<InterfaceInfo>&    interfaces(local_k) const { return m_interfaces.local; }
+        const MetaLookup<InterfaceMeta>&    interfaces(local_k) const { return m_interfaces.local; }
 
         const MetaLookup<AssetProperty>&    assets(bool all=false) const;
 
@@ -158,7 +158,7 @@ namespace yq::tachyon {
         
         //  delegates
         
-        void    add_interface(const InterfaceInfo*);
+        void    add_interface(const InterfaceMeta*);
         void    add_dispatch(const PBXDispatch*);
     };
     

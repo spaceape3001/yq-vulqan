@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PostAction.hpp"
-#include <tachyon/api/ActionInfoWriter.hpp>
+#include <tachyon/api/ActionMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::PostAction)
 

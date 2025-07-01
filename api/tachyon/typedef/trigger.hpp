@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Trigger;
-    class TriggerInfo;
+    class TriggerMeta;
     using TriggerPtr           = Ref<Trigger>;
     using TriggerCPtr          = Ref<const Trigger>;
 

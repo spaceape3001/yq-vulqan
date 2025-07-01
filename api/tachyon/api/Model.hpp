@@ -17,15 +17,15 @@ namespace yq::tachyon {
     
         Information for cameras.
     */
-    class ModelInfo : public TachyonMeta {
+    class ModelMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
         //! Gets all camera informations
-        static const std::vector<const ModelInfo*>&    all();
+        static const std::vector<const ModelMeta*>&    all();
         
         //! Standard constructor for the camera information
-        ModelInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        ModelMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -46,7 +46,7 @@ namespace yq::tachyon {
         \note We're limited to three dimensions here
     */
     class Model : public Tachyon {
-        YQ_TACHYON_INFO(ModelInfo);
+        YQ_TACHYON_INFO(ModelMeta);
         YQ_TACHYON_DATA(ModelData)
         YQ_TACHYON_SNAP(ModelSnap)
         YQ_TACHYON_DECLARE(Model, Tachyon)

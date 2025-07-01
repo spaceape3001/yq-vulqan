@@ -18,11 +18,11 @@ namespace yq::tachyon {
     class AppThread;
     class Application;
 
-    class ThreadInfo : public TachyonMeta {
+    class ThreadMeta : public TachyonMeta {
     public:
         template <typename C> class Writer;
 
-        ThreadInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
+        ThreadMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
     };
     
     struct ThreadFrame;
@@ -37,7 +37,7 @@ namespace yq::tachyon {
             is *NOT* supported.
     */
     class Thread : public Tachyon {
-        YQ_TACHYON_INFO(ThreadInfo)
+        YQ_TACHYON_INFO(ThreadMeta)
         YQ_TACHYON_DATA(ThreadData)
         YQ_TACHYON_SNAP(ThreadSnap)
         YQ_TACHYON_DECLARE(Thread, Tachyon)

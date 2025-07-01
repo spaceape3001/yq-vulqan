@@ -57,7 +57,7 @@ namespace yq { class Stream; }
 
 namespace yq::tachyon {
     class Proxy;
-    class InterfaceInfo;
+    class InterfaceMeta;
 
     /*
         Tachyons will *belong* to a thread... either directly or indirectly 
@@ -221,31 +221,31 @@ namespace yq::tachyon {
         const std::set<WidgetID>&           ids(widget_k) const;
         const std::set<WindowID>&           ids(window_k) const;
 
-        const CameraInfo*                   info(CameraID) const;
+        const CameraMeta*                   info(CameraID) const;
         const Camera³Info*                  info(Camera³ID) const;
-        const ControllerInfo*               info(ControllerID) const;
+        const ControllerMeta*               info(ControllerID) const;
         const CursorInfo*                   info(CursorID) const;
         const DesktopInfo*                  info(DesktopID) const;
         const GamepadInfo*                  info(GamepadID) const;
         const GraphicsCardInfo*             info(GraphicsCardID) const;
-        const GroupInfo*                    info(GroupID) const;
+        const GroupMeta*                    info(GroupID) const;
         const JoystickInfo*                 info(JoystickID) const;
         const KeyboardInfo*                 info(KeyboardID) const;
-        const LayerInfo*                    info(LayerID) const;
-        const LightInfo*                    info(LightID) const;
+        const LayerMeta*                    info(LayerID) const;
+        const LightMeta*                    info(LightID) const;
         const Light³Info*                   info(Light³ID) const;
-        const ManagerInfo*                  info(ManagerID) const;
-        const ModelInfo*                    info(ModelID) const;
+        const ManagerMeta*                  info(ManagerID) const;
+        const ModelMeta*                    info(ModelID) const;
         const MouseInfo*                    info(MouseID) const;
-        const RenderedInfo*                 info(RenderedID) const;
+        const RenderedMeta*                 info(RenderedID) const;
         const Rendered³Info*                info(Rendered³ID) const;
-        const SceneInfo*                    info(SceneID) const;
+        const SceneMeta*                    info(SceneID) const;
         const Scene³Info*                   info(Scene³ID) const;
-        const SpatialInfo*                  info(SpatialID) const;
+        const SpatialMeta*                  info(SpatialID) const;
         const Spatial²Info*                 info(Spatial²ID) const;
         const Spatial³Info*                 info(Spatial³ID) const;
         const TachyonMeta*                  info(TachyonID) const;
-        const ThreadInfo*                   info(ThreadID) const;
+        const ThreadMeta*                   info(ThreadID) const;
         const TachyonMeta*                  info(ViewerID) const;
         const WidgetMeta*                   info(WidgetID) const;
         const WindowInfo*                   info(WindowID) const;
@@ -362,7 +362,7 @@ namespace yq::tachyon {
         template <typename P>
         P*                                  proxy(TachyonID) const;
 
-        Proxy*                              proxy(TachyonID, const InterfaceInfo&) const;
+        Proxy*                              proxy(TachyonID, const InterfaceMeta&) const;
         
         //! Gets the root tachyon of this chain
         //! \note It'll return wherever the tree stops in this frame (ie, missing snapshot)

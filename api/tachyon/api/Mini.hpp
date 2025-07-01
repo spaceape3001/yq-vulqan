@@ -16,19 +16,19 @@ namespace yq::tachyon {
 
     /*! \brief Mini information
     */
-    class MiniInfo : public WidgetMeta {
+    class MiniMeta : public WidgetMeta {
     public:
         
         template <typename C>  struct Writer;
         
-        MiniInfo(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
+        MiniMeta(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
         
         using WidgetMeta::types;
         const std::vector<const TypeInfo*>& types(data_k) const { return m_dataTypes; }
     
-        //static std::span<const MiniInfo*>   all();
-        //static const MiniInfo*              view(const TypeInfo&);
-        //static const MiniInfo*              edit(const TypeInfo&);
+        //static std::span<const MiniMeta*>   all();
+        //static const MiniMeta*              view(const TypeInfo&);
+        //static const MiniMeta*              edit(const TypeInfo&);
     
     private:
         struct Repo;
@@ -42,7 +42,7 @@ namespace yq::tachyon {
         These are widgets focused to a small, singular task (ie, display/edit one value).
     */
     class Mini : public Widget {
-        YQ_TACHYON_INFO(MiniInfo)
+        YQ_TACHYON_INFO(MiniMeta)
         YQ_TACHYON_DECLARE(Mini, Widget)
     public:
     

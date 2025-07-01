@@ -12,7 +12,7 @@ namespace yq::tachyon {
     {
     }
     
-    SaveThread::SaveThread(Save&save, const ThreadInfo* info, uint64_t i) : SaveTachyon(save, info, i)
+    SaveThread::SaveThread(Save&save, const ThreadMeta* info, uint64_t i) : SaveTachyon(save, info, i)
     {
     }
     
@@ -20,9 +20,9 @@ namespace yq::tachyon {
     {
     }
 
-    const ThreadInfo* SaveThread::info() const
+    const ThreadMeta* SaveThread::info() const
     {
-        return dynamic_cast<const ThreadInfo*>(SaveObject::info());
+        return dynamic_cast<const ThreadMeta*>(SaveObject::info());
     }
 
     bool    SaveThread::valid() const 

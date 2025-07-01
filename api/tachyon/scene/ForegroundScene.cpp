@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ForegroundScene.hpp"
-#include <tachyon/api/SceneInfoWriter.hpp>
+#include <tachyon/api/SceneMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ForegroundScene)
 

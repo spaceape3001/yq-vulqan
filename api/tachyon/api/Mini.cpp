@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Mini.hpp>
-#include <tachyon/api/MiniInfoWriter.hpp>
+#include <tachyon/api/MiniMetaWriter.hpp>
 #include <tachyon/api/Accessor.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mini)
 
 namespace yq::tachyon {
-    MiniInfo::MiniInfo(std::string_view zName, WidgetMeta& base, const std::source_location& sl) :
+    MiniMeta::MiniMeta(std::string_view zName, WidgetMeta& base, const std::source_location& sl) :
         WidgetMeta(zName, base, sl)
     {
     }

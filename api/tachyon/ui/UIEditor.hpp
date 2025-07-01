@@ -15,22 +15,22 @@ namespace yq::tachyon {
     class UIEditorWriter;
     class TachyonMeta;
     class UIEditor;
-    class InterfaceInfo;
+    class InterfaceMeta;
     
     template <typename C>
     concept SomeUIEditor = std::derived_from<C,UIEditor>;
     
-    class UIEditorInfo : public UIFormInfo { 
+    class UIEditorMeta : public UIFormInfo { 
     public:
         template <typename> class Writer;
         
-        UIEditorInfo(std::string_view, UIFormInfo&, const std::source_location& sl = std::source_location::current());
+        UIEditorMeta(std::string_view, UIFormInfo&, const std::source_location& sl = std::source_location::current());
     
         //! List of classes this thing will edit
         const std::vector<const TachyonMeta*>& edits(tachyon_k) const { return m_editTachyons; }
-        const std::vector<const InterfaceInfo*>& edits(proxy_k) const { return m_editIProxies; }
+        const std::vector<const InterfaceMeta*>& edits(proxy_k) const { return m_editIProxies; }
         
-        static const std::vector<const UIEditorInfo*>& all();
+        static const std::vector<const UIEditorMeta*>& all();
         
         //  TODO... need a tree of recommendeds... (or similar)
         
@@ -40,7 +40,7 @@ namespace yq::tachyon {
         static Repo& repo();
         
         std::vector<const TachyonMeta*>     m_editTachyons;
-        std::vector<const InterfaceInfo*>   m_editIProxies;
+        std::vector<const InterfaceMeta*>   m_editIProxies;
     };
     
     /*! \brief ImGui Editor Panel for a tachyon object
@@ -49,7 +49,7 @@ namespace yq::tachyon {
         configuration upon bind.
     */
     class UIEditor : public UIForm {
-        YQ_OBJECT_INFO(UIEditorInfo)
+        YQ_OBJECT_INFO(UIEditorMeta)
         YQ_OBJECT_DECLARE(UIEditor, UIForm)
     public:
         using Writer = UIEditorWriter;

@@ -19,15 +19,15 @@ namespace yq::tachyon {
     
         Information for lights.
     */
-    class LightInfo : public TachyonMeta {
+    class LightMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
         //! Gets all light informations
-        static const std::vector<const LightInfo*>&    all();
+        static const std::vector<const LightMeta*>&    all();
         
         //! Standard constructor for the camera information
-        LightInfo(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        LightMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -42,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief A light
     */
     class Light : public Tachyon {
-        YQ_TACHYON_INFO(LightInfo);
+        YQ_TACHYON_INFO(LightMeta);
         YQ_TACHYON_DATA(LightData)
         YQ_TACHYON_SNAP(LightSnap)
         YQ_TACHYON_DECLARE(Light, Tachyon)

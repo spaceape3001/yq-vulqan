@@ -13,12 +13,12 @@
 namespace yq::tachyon {
     class Spatial³;
     
-    class Spatial³Info : public SpatialInfo {
+    class Spatial³Info : public SpatialMeta {
     public:
     
         template <typename C> class Writer;
 
-        Spatial³Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl=std::source_location::current());
+        Spatial³Info(std::string_view zName, SpatialMeta& base, const std::source_location& sl=std::source_location::current());
     
     protected:
         ~Spatial³Info();

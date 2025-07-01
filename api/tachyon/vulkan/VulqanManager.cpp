@@ -8,7 +8,7 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/app/AppCreateInfo.hpp>
 #include <tachyon/app/Application.hpp>
-#include <tachyon/api/ManagerInfoWriter.hpp>
+#include <tachyon/api/ManagerMetaWriter.hpp>
 #include <tachyon/vulkan/VulqanGPU.hpp>
 #include <tachyon/vulkan/VulqanManager.hpp>
 

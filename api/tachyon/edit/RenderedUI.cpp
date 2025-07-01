@@ -10,7 +10,7 @@
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
 #include <tachyon/command/rendered/SetWireframeCommand.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/logging.hpp>
 #include <format>
 

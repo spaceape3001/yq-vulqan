@@ -10,7 +10,7 @@
 
 #include <tachyon/logging.hpp>
 #include <tachyon/api/ID.hpp>
-#include <tachyon/api/ManagerInfoWriter.hpp>
+#include <tachyon/api/ManagerMetaWriter.hpp>
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/io/Save.hpp>
 #include <tachyon/io/save/SaveXML.hpp>

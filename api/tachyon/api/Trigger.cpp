@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Trigger.hpp>
-#include <tachyon/api/TriggerInfoWriter.hpp>
+#include <tachyon/api/TriggerMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Trigger)
 
 namespace yq::tachyon {
-    TriggerInfo::TriggerInfo(std::string_view zName, DelegateInfo& base, const std::source_location& sl) :
-        DelegateInfo(zName, base, sl)
+    TriggerMeta::TriggerMeta(std::string_view zName, DelegateMeta& base, const std::source_location& sl) :
+        DelegateMeta(zName, base, sl)
     {
         set(Flag::TRIGGER);
     }
     
-    TriggerInfo::~TriggerInfo(){}
+    TriggerMeta::~TriggerMeta(){}
 
     Trigger::Trigger(const Param& p) : m_mismatch(p.mismatch), m_errors(p.errors)
     {

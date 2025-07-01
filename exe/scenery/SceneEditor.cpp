@@ -175,13 +175,13 @@ void     SceneEditor::clear_thread(ThreadID owner)
 }
 
 
-SceneEditor::EFlags       SceneEditor::flags_for(const CameraInfo& sc)
+SceneEditor::EFlags       SceneEditor::flags_for(const CameraMeta& sc)
 {
     EFlags  ret = {};
     return ret;
 }
 
-SceneEditor::EFlags       SceneEditor::flags_for(const SceneInfo& sc)
+SceneEditor::EFlags       SceneEditor::flags_for(const SceneMeta& sc)
 {
     EFlags  ret = {};
     if(sc.is_this<HUDScene>())
@@ -404,7 +404,7 @@ void    SceneEditor::_activate(SceneID id)
         m_scene.properties -> bind(TypedID(id.id, Type::Scene));
 }
 
-CameraID        SceneEditor::_create(const CameraInfo& info)
+CameraID        SceneEditor::_create(const CameraMeta& info)
 {
     Camera* res = Tachyon::create_on<Camera>(EDIT, info);
     if(!res){
@@ -414,7 +414,7 @@ CameraID        SceneEditor::_create(const CameraInfo& info)
     return res->id();
 }
 
-SpatialID       SceneEditor::_create(camera_k, const SpatialInfo& info)
+SpatialID       SceneEditor::_create(camera_k, const SpatialMeta& info)
 {
     TypedID     pid = typed_for(m_camera.selected);
     if(pid(Type::Camera³))
@@ -422,7 +422,7 @@ SpatialID       SceneEditor::_create(camera_k, const SpatialInfo& info)
     return {};
 }
 
-SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialInfo& info)
+SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialMeta& info)
 {
     Camera³*    parent  = pointer(pid);
     if(!parent) {
@@ -447,7 +447,7 @@ SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialInfo& info)
     return res->id();
 }
 
-ControllerID    SceneEditor::_create(const ControllerInfo& info)
+ControllerID    SceneEditor::_create(const ControllerMeta& info)
 {
     Controller* res = Tachyon::create_on<Controller>(EDIT, info);
     if(!res){
@@ -457,7 +457,7 @@ ControllerID    SceneEditor::_create(const ControllerInfo& info)
     return res->id();
 }
 
-LightID         SceneEditor::_create(const LightInfo& info)
+LightID         SceneEditor::_create(const LightMeta& info)
 {
     Scene*  parent  = pointer(m_scene.selected);
     if(!parent){
@@ -473,7 +473,7 @@ LightID         SceneEditor::_create(const LightInfo& info)
     return res->id();
 }
 
-SpatialID       SceneEditor::_create(light_k, const SpatialInfo& info)
+SpatialID       SceneEditor::_create(light_k, const SpatialMeta& info)
 {
     TypedID     pid = typed_for(m_light.selected);
     if(pid(Type::Light³))
@@ -481,7 +481,7 @@ SpatialID       SceneEditor::_create(light_k, const SpatialInfo& info)
     return {};
 }
 
-SpatialID       SceneEditor::_create(Light³ID pid, const SpatialInfo& info)
+SpatialID       SceneEditor::_create(Light³ID pid, const SpatialMeta& info)
 {
     Light³*     parent  = pointer(pid);
     if(!parent) {
@@ -506,7 +506,7 @@ SpatialID       SceneEditor::_create(Light³ID pid, const SpatialInfo& info)
     return res->id();
 }
 
-ModelID         SceneEditor::_create(const ModelInfo& info)
+ModelID         SceneEditor::_create(const ModelMeta& info)
 {
     Model* res = Tachyon::create_on<Model>(EDIT, info);
     if(!res){
@@ -516,7 +516,7 @@ ModelID         SceneEditor::_create(const ModelInfo& info)
     return res->id();
 }
 
-RenderedID      SceneEditor::_create(const RenderedInfo& info)
+RenderedID      SceneEditor::_create(const RenderedMeta& info)
 {
     Scene*  parent  = pointer(m_scene.selected);
     if(!parent){
@@ -536,7 +536,7 @@ RenderedID      SceneEditor::_create(const RenderedInfo& info)
     return res->id();
 }
 
-SpatialID       SceneEditor::_create(rendered_k, const SpatialInfo& info)
+SpatialID       SceneEditor::_create(rendered_k, const SpatialMeta& info)
 {
     TypedID     pid = typed_for(m_rendered.selected);
     if(pid(Type::Rendered³))
@@ -544,7 +544,7 @@ SpatialID       SceneEditor::_create(rendered_k, const SpatialInfo& info)
     return {};
 }
 
-SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialInfo& info)
+SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialMeta& info)
 {
     Rendered³*     parent  = pointer(pid);
     if(!parent){
@@ -569,7 +569,7 @@ SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialInfo& info)
     return res->id();
 }
 
-SceneID         SceneEditor::_create(const SceneInfo& info)
+SceneID         SceneEditor::_create(const SceneMeta& info)
 {
     Scene* res = Tachyon::create_on<Scene>(EDIT, info);
     if(!res){
@@ -728,7 +728,7 @@ void    SceneEditor::_title()
 void    SceneEditor::action_create_camera(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const CameraInfo*   info    = dynamic_cast<const CameraInfo*>(itr.second);
+        const CameraMeta*   info    = dynamic_cast<const CameraMeta*>(itr.second);
         if(!info)
             continue;
         CameraID    res = _create(*info);
@@ -740,7 +740,7 @@ void    SceneEditor::action_create_camera(const Payload& pay)
 void    SceneEditor::action_create_camera_spatial(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SpatialInfo*   info    = dynamic_cast<const SpatialInfo*>(itr.second);
+        const SpatialMeta*   info    = dynamic_cast<const SpatialMeta*>(itr.second);
         if(!info)
             continue;
         _create(CAMERA, *info);
@@ -750,7 +750,7 @@ void    SceneEditor::action_create_camera_spatial(const Payload& pay)
 void    SceneEditor::action_create_controller(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const ControllerInfo*   info    = dynamic_cast<const ControllerInfo*>(itr.second);
+        const ControllerMeta*   info    = dynamic_cast<const ControllerMeta*>(itr.second);
         if(!info)
             continue;
         ControllerID  res = _create(*info);
@@ -762,7 +762,7 @@ void    SceneEditor::action_create_controller(const Payload& pay)
 void    SceneEditor::action_create_light(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const LightInfo*   info    = dynamic_cast<const LightInfo*>(itr.second);
+        const LightMeta*   info    = dynamic_cast<const LightMeta*>(itr.second);
         if(!info)
             continue;
         LightID res = _create(*info);
@@ -774,7 +774,7 @@ void    SceneEditor::action_create_light(const Payload& pay)
 void    SceneEditor::action_create_light_spatial(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SpatialInfo*   info    = dynamic_cast<const SpatialInfo*>(itr.second);
+        const SpatialMeta*   info    = dynamic_cast<const SpatialMeta*>(itr.second);
         if(!info)
             continue;
         _create(LIGHT, *info);
@@ -784,7 +784,7 @@ void    SceneEditor::action_create_light_spatial(const Payload& pay)
 void    SceneEditor::action_create_model(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const ModelInfo*   info    = dynamic_cast<const ModelInfo*>(itr.second);
+        const ModelMeta*   info    = dynamic_cast<const ModelMeta*>(itr.second);
         if(!info)
             continue;
         ModelID res = _create(*info);
@@ -810,7 +810,7 @@ void    SceneEditor::action_create_physics(const Payload& pay)
 void    SceneEditor::action_create_rendered(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const RenderedInfo*   info    = dynamic_cast<const RenderedInfo*>(itr.second);
+        const RenderedMeta*   info    = dynamic_cast<const RenderedMeta*>(itr.second);
         if(!info)
             continue;
         RenderedID res = _create(*info);
@@ -822,7 +822,7 @@ void    SceneEditor::action_create_rendered(const Payload& pay)
 void    SceneEditor::action_create_rendered_spatial(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SpatialInfo*   info    = dynamic_cast<const SpatialInfo*>(itr.second);
+        const SpatialMeta*   info    = dynamic_cast<const SpatialMeta*>(itr.second);
         if(!info)
             continue;
         _create(RENDERED, *info);
@@ -832,7 +832,7 @@ void    SceneEditor::action_create_rendered_spatial(const Payload& pay)
 void    SceneEditor::action_create_scene(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SceneInfo*   info    = dynamic_cast<const SceneInfo*>(itr.second);
+        const SceneMeta*   info    = dynamic_cast<const SceneMeta*>(itr.second);
         if(!info)
             continue;
         SceneID res = _create(*info);
@@ -923,11 +923,11 @@ void    SceneEditor::on_controller_select_event(const ControllerSelectEvent&evt)
 
 void    SceneEditor::on_info_selection_changed_event(const InfoSelectionChangedEvent&evt)
 {
-    if(const CameraInfo* p = dynamic_cast<const CameraInfo*>(evt.info()))
+    if(const CameraMeta* p = dynamic_cast<const CameraMeta*>(evt.info()))
         m_camera.info       = p;
-    if(const RenderedInfo* p = dynamic_cast<const RenderedInfo*>(evt.info()))
+    if(const RenderedMeta* p = dynamic_cast<const RenderedMeta*>(evt.info()))
         m_rendered.info     = p;
-    if(const SceneInfo* p = dynamic_cast<const SceneInfo*>(evt.info()))
+    if(const SceneMeta* p = dynamic_cast<const SceneMeta*>(evt.info()))
         m_scene.info        = p;
 }
 

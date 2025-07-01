@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/mini/TextLabel.hpp>
-#include <tachyon/api/MiniInfoWriter.hpp>
+#include <tachyon/api/MiniMetaWriter.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/accessor/StringFunction.hpp>
 

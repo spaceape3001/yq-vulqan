@@ -5,18 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Delegate.hpp>
-#include <tachyon/api/DelegateInfoWriter.hpp>
+#include <tachyon/api/DelegateMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Delegate)
 
 namespace yq::tachyon {
-    DelegateInfo::DelegateInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
+    DelegateMeta::DelegateMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::DELEGATE);
     }
     
-    DelegateInfo::~DelegateInfo()
+    DelegateMeta::~DelegateMeta()
     {
     }
 

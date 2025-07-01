@@ -9,7 +9,7 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/api/ThreadData.hpp>
-#include <tachyon/api/ThreadInfoWriter.hpp>
+#include <tachyon/api/ThreadMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ViewerThread)
 

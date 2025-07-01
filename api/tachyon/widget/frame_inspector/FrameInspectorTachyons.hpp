@@ -10,7 +10,7 @@
 #include <tachyon/widget/FrameInspector.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/Thread.hpp>
-#include <tachyon/api/InterfaceInfo.hpp>
+#include <tachyon/api/InterfaceMeta.hpp>
 #include <yq/unit/literals.hpp>
 #include <yq/text/join.hpp>
 
@@ -246,7 +246,7 @@ namespace yq::tachyon {
             if(treeOpen){
                 ImGui::Indent();
                 for(const Proxy* p : m_snap->proxies){
-                    const InterfaceInfo*    ii  = p->interface(INFO);
+                    const InterfaceMeta*    ii  = p->interface(INFO);
                     if(!ii)
                         continue;
                     const void* iff = ii->interface(p);

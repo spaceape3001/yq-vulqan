@@ -9,10 +9,10 @@
 #include <yq/core/Object.hpp>
 
 namespace yq::tachyon {
-    class ToolInfo : public ObjectInfo {
+    class ToolMeta : public ObjectInfo {
     public:
         template <class> class Writer;
-        ToolInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        ToolMeta(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
     
         //  const WidgetMeta*   widget() const;
     };
@@ -23,7 +23,7 @@ namespace yq::tachyon {
         A tool is supposed to be hooked to gesture recognition/commands.
     */
     class Tool : public Object {
-        YQ_OBJECT_INFO(ToolInfo)
+        YQ_OBJECT_INFO(ToolMeta)
         YQ_OBJECT_DECLARE(Tool, Object)
     public:
         

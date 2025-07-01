@@ -13,14 +13,14 @@ namespace yq::tachyon {
     /*! \brief Writer of control information
     */
     template <typename C>
-    class ControlInfo::Writer : public WidgetMeta::Writer<C> {
+    class ControlMeta::Writer : public WidgetMeta::Writer<C> {
     public:
     
-        Writer(ControlInfo* editorInfo) : WidgetMeta::Writer<C>(editorInfo), m_meta(editorInfo)
+        Writer(ControlMeta* editorInfo) : WidgetMeta::Writer<C>(editorInfo), m_meta(editorInfo)
         {
         }
         
-        Writer(ControlInfo& editorInfo) : Writer(&editorInfo)
+        Writer(ControlMeta& editorInfo) : Writer(&editorInfo)
         {
         }
         
@@ -32,7 +32,7 @@ namespace yq::tachyon {
         }
         
     private:
-        ControlInfo* m_meta;
+        ControlMeta* m_meta;
         
     };
 }

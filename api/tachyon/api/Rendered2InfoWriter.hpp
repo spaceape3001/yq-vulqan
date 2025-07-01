@@ -9,15 +9,15 @@
 #include <yq/shape/AxBox2.hpp>
 #include <tachyon/api/Rendered2.hpp>
 #include <tachyon/api/Rendered2Data.hpp>
-#include <tachyon/api/RenderedInfoWriter.hpp>
+#include <tachyon/api/RenderedMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class Rendered²Info::Writer : public RenderedInfo::Writer<C> {
+    class Rendered²Info::Writer : public RenderedMeta::Writer<C> {
     public:
-        Writer(Rendered²Info* renderInfo) : RenderedInfo::Writer<C>(renderInfo)
+        Writer(Rendered²Info* renderInfo) : RenderedMeta::Writer<C>(renderInfo)
         {
-            RenderedInfo::Writer<C>::_2d();
+            RenderedMeta::Writer<C>::_2d();
         }
         
         Writer(Rendered²Info& renderInfo) : Writer(&renderInfo)

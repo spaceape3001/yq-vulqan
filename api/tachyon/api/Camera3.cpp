@@ -18,8 +18,8 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Camera³ID)
 
 namespace yq::tachyon {
-    Camera³Info::Camera³Info(std::string_view name, CameraInfo& base, const std::source_location& sl) :
-        CameraInfo(name, base, sl)
+    Camera³Info::Camera³Info(std::string_view name, CameraMeta& base, const std::source_location& sl) :
+        CameraMeta(name, base, sl)
     {
         set(Type::Camera³);
     }

@@ -18,8 +18,8 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    Rendered³Info::Rendered³Info(std::string_view name, RenderedInfo& base, const std::source_location& sl) : 
-        RenderedInfo(name, base, sl)
+    Rendered³Info::Rendered³Info(std::string_view name, RenderedMeta& base, const std::source_location& sl) : 
+        RenderedMeta(name, base, sl)
     {
         set(Flag::RENDER3D);
         set(Type::Rendered³);

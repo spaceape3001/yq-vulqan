@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/trigger/PostTrigger.hpp>
-#include <tachyon/api/TriggerInfoWriter.hpp>
+#include <tachyon/api/TriggerMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::PostTrigger)
 

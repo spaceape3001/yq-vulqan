@@ -6,7 +6,7 @@
 
 #include "Space3Controller.hpp"
 #include <tachyon/api/Context.hpp>
-#include <tachyon/api/ControllerInfoWriter.hpp>
+#include <tachyon/api/ControllerMetaWriter.hpp>
 #include <tachyon/command/controller/SetTargetCommand.hpp>
 #include <tachyon/command/gamepad/GamepadZeroCommand.hpp>
 #include <tachyon/command/position/AddPositionXCommand.hpp>

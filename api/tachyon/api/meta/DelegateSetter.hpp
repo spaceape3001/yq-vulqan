@@ -33,7 +33,7 @@ namespace yq::tachyon {
         virtual std::error_code         set(Object*obj, const DelegateCPtr&) const = 0;
         
         //! Data type for the setter
-        virtual const DelegateInfo&     delegate() const = 0;
+        virtual const DelegateMeta&     delegate() const = 0;
         
         //! Object type for the setter
         virtual const ObjectInfo&       object() const = 0;

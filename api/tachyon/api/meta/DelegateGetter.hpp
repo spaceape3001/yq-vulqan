@@ -15,7 +15,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class DelegateInfo;
+    class DelegateMeta;
     class DelegateProperty;
 
     /*! \brief Abstract PropGetter
@@ -40,7 +40,7 @@ namespace yq::tachyon {
         
         /*! \brief Object/Type for the data
         */
-        virtual const DelegateInfo&     delegate() const = 0;
+        virtual const DelegateMeta&     delegate() const = 0;
         
         /*! \brief Property this is associated with.
         */

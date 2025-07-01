@@ -12,7 +12,7 @@ namespace yq::tachyon {
     {
     }
     
-    SaveDelegate::SaveDelegate(Save& save, const DelegateInfo*info, uint64_t i) : SaveObject(save, info, i)
+    SaveDelegate::SaveDelegate(Save& save, const DelegateMeta*info, uint64_t i) : SaveObject(save, info, i)
     {
     }
     
@@ -20,9 +20,9 @@ namespace yq::tachyon {
     {
     }
 
-    const DelegateInfo* SaveDelegate::info() const
+    const DelegateMeta* SaveDelegate::info() const
     {
-        return dynamic_cast<const DelegateInfo*>(SaveObject::info());
+        return dynamic_cast<const DelegateMeta*>(SaveObject::info());
     }
 
     bool    SaveDelegate::valid() const 

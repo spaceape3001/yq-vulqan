@@ -15,7 +15,7 @@ namespace yq::tachyon {
     public:
     
         virtual const ObjectInfo&       object() const override { return meta<O>(); }
-        virtual const DelegateInfo&     delegate() const override { return meta<A>(); }
+        virtual const DelegateMeta&     delegate() const override { return meta<A>(); }
     
     protected:
         DynamicDelegateGetter(DelegateProperty* propInfo, const std::source_location& sl) : DelegateGetter(propInfo, sl) 

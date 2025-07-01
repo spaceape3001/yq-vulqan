@@ -6,7 +6,7 @@
 
 #include "IDrawMode.hpp"
 #include <tachyon/proxy/PDrawMode.hpp>
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IDrawMode)
 

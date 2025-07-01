@@ -6,7 +6,7 @@
 
 #include <tachyon/api/Context.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/api/InterfaceInfo.hpp>
+#include <tachyon/api/InterfaceMeta.hpp>
 #include <tachyon/api/Proxy.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/TachyonData.hpp>
@@ -110,7 +110,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    TachyonMeta::add_interface(const InterfaceInfo* ii)
+    void    TachyonMeta::add_interface(const InterfaceMeta* ii)
     {
         if(thread_safe_write()){
             m_interfaces.local << ii;
@@ -173,7 +173,7 @@ namespace yq::tachyon {
         }
     }
 
-    const MetaLookup<InterfaceInfo>&    TachyonMeta::interfaces(bool all) const
+    const MetaLookup<InterfaceMeta>&    TachyonMeta::interfaces(bool all) const
     {
         return all ? m_interfaces.all : m_interfaces.local;
     }
@@ -263,7 +263,7 @@ namespace yq::tachyon {
         }
 
         out << "  INTERFACES\n";
-        for(const InterfaceInfo* i : m_interfaces.all.all){
+        for(const InterfaceMeta* i : m_interfaces.all.all){
             out << "    " << i->name() << "\n";
         }
 
@@ -1097,7 +1097,7 @@ namespace yq::tachyon {
         snap.userattrs  = m_userAttrs;
         snap.progattrs  = m_progAttrs;
         
-        for(const InterfaceInfo* ii : metaInfo().interfaces(ALL).all){
+        for(const InterfaceMeta* ii : metaInfo().interfaces(ALL).all){
             Proxy*  p   = ii->proxy(const_cast<Tachyon*>(this));
             if(!p)
                 continue;

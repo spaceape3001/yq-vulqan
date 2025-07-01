@@ -27,5 +27,5 @@ namespace yq::tachyon {
     
     using ManagerID = ID<Manager>;
     
-    class ManagerInfo;
+    class ManagerMeta;
 }

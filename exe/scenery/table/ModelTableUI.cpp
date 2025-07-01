@@ -17,7 +17,7 @@
 
 struct ModelTableUI::Row {
     ModelID            model;
-    const ModelInfo*   info        = nullptr;
+    const ModelMeta*   info        = nullptr;
     std::string        sid;        // ID for selectable
     std::string        stype;
 };

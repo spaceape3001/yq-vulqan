@@ -13,7 +13,7 @@ namespace yq::tachyon {
 
     class Tachyon;
 
-    class InterfaceInfo;
+    class InterfaceMeta;
     
     /*! \class Interface
     
@@ -58,7 +58,7 @@ namespace yq::tachyon {
 namespace yq {
     template <tachyon::Interface I>
     struct InfoBinder<I> {
-        using Info = tachyon::InterfaceInfo;
+        using Info = tachyon::InterfaceMeta;
         static constexpr const bool Defined         = true;
         static constexpr const bool IsObject        = false;
         static constexpr const bool IsCompound      = true;
@@ -77,18 +77,18 @@ namespace yq {
     public:                                                                                 \
         static constexpr const bool IsInterface = true;                                     \
         using MyProxy               = proxy;                                                \
-        static const ::yq::tachyon::InterfaceInfo&  staticMetaInfo();                       \
-        const ::yq::tachyon::InterfaceInfo&  metaInfo() const;
+        static const ::yq::tachyon::InterfaceMeta&  staticMetaInfo();                       \
+        const ::yq::tachyon::InterfaceMeta&  metaInfo() const;
         
 /*! \brief IMPLEMENTS a proxied interface
 */        
 #define YQ_INTERFACE_IMPLEMENT(name)                                                                                \
-    const ::yq::tachyon::InterfaceInfo&     name::staticMetaInfo()                                                  \
+    const ::yq::tachyon::InterfaceMeta&     name::staticMetaInfo()                                                  \
     {                                                                                                               \
         static yq::tachyon::InterfaceFixer<name>*  s_info = new yq::tachyon::InterfaceFixer<name>(#name);           \
         return *s_info;                                                                                             \
     }                                                                                                               \
-    const ::yq::tachyon::InterfaceInfo&     name::metaInfo() const                                                  \
+    const ::yq::tachyon::InterfaceMeta&     name::metaInfo() const                                                  \
     {                                                                                                               \
         return staticMetaInfo();                                                                                    \
     }                                                                                                               \

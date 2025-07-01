@@ -41,7 +41,7 @@ public:
     struct Snap {
         SceneID             scene;
         CameraID            camera;
-        const SceneInfo*    info = nullptr;
+        const SceneMeta*    info = nullptr;
         bool                visible = false;
     };
     

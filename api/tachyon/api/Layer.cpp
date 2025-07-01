@@ -6,7 +6,7 @@
 
 #include <tachyon/api/Layer.hpp>
 #include <tachyon/api/LayerData.hpp>
-#include <tachyon/api/LayerInfoWriter.hpp>
+#include <tachyon/api/LayerMetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Layer);
@@ -14,13 +14,13 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::LayerID)
 
 namespace yq::tachyon {
 
-    LayerInfo::LayerInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
+    LayerMeta::LayerMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(name, base, sl)
     {
         set(Type::Layer);
     }
     
-    LayerInfo::~LayerInfo()
+    LayerMeta::~LayerMeta()
     {
     }
     

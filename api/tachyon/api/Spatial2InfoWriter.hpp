@@ -8,17 +8,17 @@
 
 #include <tachyon/api/Spatial2.hpp>
 #include <tachyon/api/Spatial2Data.hpp>
-#include <tachyon/api/SpatialInfoWriter.hpp>
+#include <tachyon/api/SpatialMetaWriter.hpp>
 
 namespace yq::tachyon {
     
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class Spatial²Info::Writer : public SpatialInfo::Writer<C> {
+    class Spatial²Info::Writer : public SpatialMeta::Writer<C> {
     public:
     
-        Writer(Spatial²Info* pInfo) : SpatialInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(Spatial²Info* pInfo) : SpatialMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         

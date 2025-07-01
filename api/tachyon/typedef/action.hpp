@@ -14,7 +14,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class Action;
-    class ActionInfo;
+    class ActionMeta;
     
     using ActionPtr  = Ref<Action>;
     using ActionCPtr = Ref<const Action>;

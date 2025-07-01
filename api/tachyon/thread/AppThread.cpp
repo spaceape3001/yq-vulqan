@@ -12,7 +12,7 @@
 #include <tachyon/api/Context.hpp>
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/api/ThreadData.hpp>
-#include <tachyon/api/ThreadInfoWriter.hpp>
+#include <tachyon/api/ThreadMetaWriter.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/event/tachyon/DestroyEvent.hpp>
 

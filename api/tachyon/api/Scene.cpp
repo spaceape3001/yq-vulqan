@@ -7,7 +7,7 @@
 #include <tachyon/tags.hpp>
 #include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
-#include <tachyon/api/SceneInfoWriter.hpp>
+#include <tachyon/api/SceneMetaWriter.hpp>
 #include <tachyon/command/color/SetBgColorCommand.hpp>
 #include <yq/meta/Init.hpp>
 
@@ -16,29 +16,29 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::SceneID)
 
 namespace yq::tachyon {
 
-    struct SceneInfo::Repo {
-        std::vector<const SceneInfo*> all;
+    struct SceneMeta::Repo {
+        std::vector<const SceneMeta*> all;
     };
     
-    SceneInfo::Repo& SceneInfo::repo()
+    SceneMeta::Repo& SceneMeta::repo()
     {
         static Repo s_repo;
         return s_repo;
     }
 
-    const std::vector<const SceneInfo*>&    SceneInfo::all()
+    const std::vector<const SceneMeta*>&    SceneMeta::all()
     {
         return repo().all;
     }
 
-    SceneInfo::SceneInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
+    SceneMeta::SceneMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(name, base, sl)
     {
         set(Type::Scene);
         repo().all.push_back(this);
     }
     
-    SceneInfo::~SceneInfo()
+    SceneMeta::~SceneMeta()
     {
     }
     

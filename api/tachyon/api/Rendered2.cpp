@@ -17,8 +17,8 @@ namespace yq::tachyon {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    Rendered²Info::Rendered²Info(std::string_view name, RenderedInfo& base, const std::source_location& sl) : 
-        RenderedInfo(name, base, sl)
+    Rendered²Info::Rendered²Info(std::string_view name, RenderedMeta& base, const std::source_location& sl) : 
+        RenderedMeta(name, base, sl)
     {
         //set(Flag::RENDER2D);
         set(Type::Rendered²);

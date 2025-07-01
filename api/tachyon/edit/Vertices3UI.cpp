@@ -7,7 +7,7 @@
 #include "Vertices3UI.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/ui/UIStyle.hpp>
 #include <tachyon/proxy/PVertices3.hpp>
 #include <yq/math/UV.hpp>

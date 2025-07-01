@@ -18,7 +18,7 @@ namespace yq {
 namespace yq::tachyon {
     class DelegateGetter;
     class DelegateSetter;
-    class DelegateInfo;
+    class DelegateMeta;
     
     class DelegateProperty : public Meta {
         friend class DelegateGetter;
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         //! Writer for dynamics
         template <typename C, typename T> class PropW;
         
-        const DelegateInfo&     delegate() const { return m_delegate; }
+        const DelegateMeta&     delegate() const { return m_delegate; }
     
         //! Our getter
         const DelegateGetter*   getter() const { return m_getter; }
@@ -55,11 +55,11 @@ namespace yq::tachyon {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        DelegateProperty(std::string_view zName, const std::source_location& sl, const DelegateInfo& type, ObjectInfo* parent);
+        DelegateProperty(std::string_view zName, const std::source_location& sl, const DelegateMeta& type, ObjectInfo* parent);
 
     private:
         const DelegateSetter*   m_setter    = nullptr;
         const DelegateGetter*   m_getter    = nullptr;
-        const DelegateInfo&     m_delegate;
+        const DelegateMeta&     m_delegate;
     };
 }

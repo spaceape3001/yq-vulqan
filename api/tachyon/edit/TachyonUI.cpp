@@ -12,7 +12,7 @@
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/api/ThreadData.hpp>
 #include <tachyon/command/tachyon/SetNameCommand.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/logging.hpp>
 #include <format>
 

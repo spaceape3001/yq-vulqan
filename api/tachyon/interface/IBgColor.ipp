@@ -6,7 +6,7 @@
 
 #include "IBgColor.hpp"
 #include <tachyon/proxy/PBgColor.hpp>
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IBgColor)
 

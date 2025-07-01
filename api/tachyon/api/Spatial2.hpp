@@ -12,12 +12,12 @@
 namespace yq::tachyon {
     class Spatial²;
     
-    class Spatial²Info : public SpatialInfo {
+    class Spatial²Info : public SpatialMeta {
     public:
     
         template <typename C> class Writer;
 
-        Spatial²Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl=std::source_location::current());
+        Spatial²Info(std::string_view zName, SpatialMeta& base, const std::source_location& sl=std::source_location::current());
     
     protected:
         ~Spatial²Info();

@@ -11,28 +11,28 @@
 #include <yq/typedef/filesystem_path.hpp>
 
 namespace yq::tachyon {
-    class InterfaceInfo;
+    class InterfaceMeta;
 
     /*! \brief Control information
     */
-    class ControlInfo : public WidgetMeta {
+    class ControlMeta : public WidgetMeta {
     public:
         
         template <typename C>  struct Writer;
         
-        ControlInfo(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
+        ControlMeta(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
         
-        const std::vector<const InterfaceInfo*>& interfaces() const { return m_interfaces; }
+        const std::vector<const InterfaceMeta*>& interfaces() const { return m_interfaces; }
     
     private:
-        std::vector<const InterfaceInfo*>   m_interfaces;
+        std::vector<const InterfaceMeta*>   m_interfaces;
     };
     
     //! Root for an control widget
     //!
     //! Meant to be a general base for an interface/proxy control (or similar)
     class Control : public Widget {
-        YQ_TACHYON_INFO(ControlInfo)
+        YQ_TACHYON_INFO(ControlMeta)
         YQ_TACHYON_DECLARE(Control, Widget)
     public:
         

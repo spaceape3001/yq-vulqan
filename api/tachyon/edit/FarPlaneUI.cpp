@@ -8,7 +8,7 @@
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/logging.hpp>
 #include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/proxy/PFarPlane.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::FarPlaneUI)

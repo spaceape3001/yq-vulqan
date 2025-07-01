@@ -17,7 +17,7 @@
 
 struct RenderedTableUI::Row {
     RenderedID              rendered;
-    const RenderedInfo*     info        = nullptr;
+    const RenderedMeta*     info        = nullptr;
     std::string             sid;        // ID for selectable
     std::string             stype;
 };

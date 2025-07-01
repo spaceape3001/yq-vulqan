@@ -6,7 +6,7 @@
 
 #include "IFarPlane.hpp"
 #include <tachyon/proxy/PFarPlane.hpp>
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IFarPlane)
 

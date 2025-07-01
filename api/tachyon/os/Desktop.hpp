@@ -28,7 +28,7 @@ namespace yq::tachyon {
     
         Information for desktops
     */
-    class DesktopInfo : public ManagerInfo {
+    class DesktopInfo : public ManagerMeta {
     public:
         template <typename C> struct Writer;
 
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         static const std::vector<const DesktopInfo*>&    all();
         
         //! Standard constructor for the desktop information
-        DesktopInfo(std::string_view, ManagerInfo&, const std::source_location& sl = std::source_location::current());
+        DesktopInfo(std::string_view, ManagerMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"

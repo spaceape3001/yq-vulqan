@@ -7,7 +7,7 @@
 #include "VisibleUIAction.hpp"
 #include <yq/core/Any.hpp>
 #include <yq/core/Result.hpp>
-#include <tachyon/api/ActionInfoWriter.hpp>
+#include <tachyon/api/ActionMetaWriter.hpp>
 #include <tachyon/api/Payload.hpp>
 #include <tachyon/ui/UIElement.hpp>
 #include <tachyon/api/Widget.hpp>

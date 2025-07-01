@@ -13,17 +13,17 @@ namespace yq::tachyon {
 
     class Spatial;
     
-    class SpatialInfo : public TachyonMeta {
+    class SpatialMeta : public TachyonMeta {
     public:
         template <typename C> class Writer;
 
-        SpatialInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
+        SpatialMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl=std::source_location::current());
     
         //! Gets all spatial informations
-        static const std::vector<const SpatialInfo*>&    all();
+        static const std::vector<const SpatialMeta*>&    all();
 
     protected:
-        ~SpatialInfo();
+        ~SpatialMeta();
         struct Repo;
         static Repo& repo();
     };
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         
     */
     class Spatial : public Tachyon {
-        YQ_TACHYON_INFO(SpatialInfo)
+        YQ_TACHYON_INFO(SpatialMeta)
         YQ_TACHYON_DATA(SpatialData)
         YQ_TACHYON_SNAP(SpatialSnap)
         YQ_TACHYON_DECLARE(Spatial, Tachyon)

@@ -8,7 +8,7 @@
 #include <tachyon/api/Frame.hpp>
 #include <tachyon/proxy/POrientation3.hpp>
 #include <tachyon/MyImGui.hpp>
-#include <tachyon/api/ControlInfoWriter.hpp>
+#include <tachyon/api/ControlMetaWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/util/Safety.hpp>
 #include <tachyon/logging.hpp>

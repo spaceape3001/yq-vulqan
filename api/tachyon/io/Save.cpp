@@ -187,7 +187,7 @@ namespace yq::tachyon {
         return ret;
     }
     
-    SaveDelegate*           Save::create(const DelegateInfo*info)
+    SaveDelegate*           Save::create(const DelegateMeta*info)
     {
         uint64_t id = 1+m_objects.size();
         SaveDelegate* ret = new SaveDelegate(*this, info, id);
@@ -213,7 +213,7 @@ namespace yq::tachyon {
         return ret;
     }
     
-    SaveThread*             Save::create(const ThreadInfo* info)
+    SaveThread*             Save::create(const ThreadMeta* info)
     {
         uint64_t id = 1+m_objects.size();
         SaveThread* ret = new SaveThread(*this, info, id);

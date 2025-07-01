@@ -18,12 +18,12 @@
 #endif
 
 namespace yq::tachyon {
-    class Light³Info : public LightInfo {
+    class Light³Info : public LightMeta {
     public:
     
         template <typename> class Writer;
         
-        Light³Info(std::string_view, LightInfo&, const std::source_location& sl = std::source_location::current());
+        Light³Info(std::string_view, LightMeta&, const std::source_location& sl = std::source_location::current());
     protected:
         ~Light³Info();
     };

@@ -6,34 +6,32 @@
 
 #pragma once
 
-#include <tachyon/api/Mini.hpp>
+#include <tachyon/api/Editor.hpp>
 #include <tachyon/api/WidgetMetaWriter.hpp>
 
 namespace yq::tachyon {
-    /*! \brief Writer of control information
+    /*! \brief Writer of editor information
     */
     template <typename C>
-    class MiniInfo::Writer : public WidgetMeta::Writer<C> {
+    class EditorMeta::Writer : public WidgetMeta::Writer<C> {
     public:
     
-        Writer(MiniInfo* miniInfo) : WidgetMeta::Writer<C>(miniInfo), m_meta(miniInfo)
+        Writer(EditorMeta* editorInfo) : WidgetMeta::Writer<C>(editorInfo), m_meta(editorInfo)
         {
         }
         
-        Writer(MiniInfo& miniInfo) : Writer(&miniInfo)
+        Writer(EditorMeta& editorInfo) : Writer(&editorInfo)
         {
         }
         
-        template <typename T>
-        Writer& type()
+        Writer&     menu_bar()
         {
-            // TODO
+            Meta::Writer::options({ Flag::MENU_BAR });
             return *this;
         }
         
     private:
-        MiniInfo* m_meta;
+        EditorMeta* m_meta;
         
     };
 }
-

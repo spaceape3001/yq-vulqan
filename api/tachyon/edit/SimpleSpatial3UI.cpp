@@ -8,7 +8,7 @@
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/TachyonData.hpp>
 #include <tachyon/spatial/SimpleSpatial3.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/proxy/PPosition3.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SimpleSpatial³UI)

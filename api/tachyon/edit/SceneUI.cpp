@@ -10,7 +10,7 @@
 #include <tachyon/api/Scene.hpp>
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/command/color/SetBgColorCommand.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SceneUI)

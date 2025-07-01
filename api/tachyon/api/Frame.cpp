@@ -861,7 +861,7 @@ namespace yq::tachyon {
         return m_windows.ids;
     }
 
-    const CameraInfo*                   Frame::info(CameraID id) const
+    const CameraMeta*                   Frame::info(CameraID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -877,7 +877,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const ControllerInfo*               Frame::info(ControllerID id) const
+    const ControllerMeta*               Frame::info(ControllerID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -917,7 +917,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const GroupInfo*                    Frame::info(GroupID id) const
+    const GroupMeta*                    Frame::info(GroupID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -941,7 +941,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const LayerInfo*                    Frame::info(LayerID id) const
+    const LayerMeta*                    Frame::info(LayerID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -949,7 +949,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const LightInfo*                    Frame::info(LightID id) const
+    const LightMeta*                    Frame::info(LightID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -965,7 +965,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const ManagerInfo*                  Frame::info(ManagerID id) const
+    const ManagerMeta*                  Frame::info(ManagerID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -973,7 +973,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const ModelInfo*                    Frame::info(ModelID id) const
+    const ModelMeta*                    Frame::info(ModelID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -989,7 +989,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const RenderedInfo*                 Frame::info(RenderedID id) const
+    const RenderedMeta*                 Frame::info(RenderedID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1005,7 +1005,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const SceneInfo*                    Frame::info(SceneID id) const
+    const SceneMeta*                    Frame::info(SceneID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1021,7 +1021,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const SpatialInfo*                  Frame::info(SpatialID id) const
+    const SpatialMeta*                  Frame::info(SpatialID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1053,7 +1053,7 @@ namespace yq::tachyon {
         return nullptr;
     }
     
-    const ThreadInfo*                   Frame::info(ThreadID id) const
+    const ThreadMeta*                   Frame::info(ThreadID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1273,7 +1273,7 @@ namespace yq::tachyon {
         return ts->proxies;
     }
     
-    Proxy*                              Frame::proxy(TachyonID tac, const InterfaceInfo& ii) const
+    Proxy*                              Frame::proxy(TachyonID tac, const InterfaceMeta& ii) const
     {
         const TachyonSnap*  ts  = snap(tac);
         if(!ts)

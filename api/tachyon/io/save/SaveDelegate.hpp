@@ -10,14 +10,14 @@
 
 namespace yq::tachyon {
     class Delegate;
-    class DelegateInfo;
+    class DelegateMeta;
     
     class SaveDelegate : public SaveObject {
     public:
         SaveDelegate(Save&, const Delegate&);
-        SaveDelegate(Save&, const DelegateInfo*, uint64_t);
+        SaveDelegate(Save&, const DelegateMeta*, uint64_t);
         
-        const DelegateInfo* info() const;
+        const DelegateMeta* info() const;
         virtual bool    valid() const override;
 
         virtual bool        isDelegate() const { return true; }

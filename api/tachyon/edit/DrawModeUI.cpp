@@ -7,7 +7,7 @@
 #include "DrawModeUI.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/proxy/PDrawMode.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::DrawModeUI)

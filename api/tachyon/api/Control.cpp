@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Control.hpp>
-#include <tachyon/api/ControlInfoWriter.hpp>
+#include <tachyon/api/ControlMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Control)
 
 namespace yq::tachyon {
-    ControlInfo::ControlInfo(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
+    ControlMeta::ControlMeta(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
     {
     }
 

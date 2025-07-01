@@ -6,7 +6,7 @@
 
 #include <tachyon/interface/IPosition4.hpp>
 
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 #include <tachyon/proxy/PPosition4.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition⁴)

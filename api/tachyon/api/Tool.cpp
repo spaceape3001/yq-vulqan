@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Tool.hpp>
-#include <tachyon/api/ToolInfoWriter.hpp>
+#include <tachyon/api/ToolMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Tool)
 
 namespace yq::tachyon {
-    ToolInfo::ToolInfo(std::string_view name, ObjectInfo& base, const std::source_location& sl) :
+    ToolMeta::ToolMeta(std::string_view name, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(name, base, sl)
     {
         set(Flag::TOOL);

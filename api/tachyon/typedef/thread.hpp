@@ -30,5 +30,5 @@ namespace yq::tachyon {
     using ThreadDataPtr     = Ref<ThreadData>;
     using ThreadDataCPtr    = Ref<const ThreadData>;
     
-    class ThreadInfo;
+    class ThreadMeta;
 }

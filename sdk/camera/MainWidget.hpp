@@ -12,7 +12,7 @@
 
 namespace yq::tachyon {
     class SpaceCamera;
-    class CameraInfo;
+    class CameraMeta;
     class FrameInspector;
     class SpaceCameraRemote;
 }
@@ -39,7 +39,7 @@ public:
 private:
     
     struct Cam {
-        const CameraInfo*   info;
+        const CameraMeta*   info;
         std::string         stem;
         CameraID            id;
     };

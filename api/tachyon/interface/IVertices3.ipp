@@ -7,7 +7,7 @@
 #include "IVertices3.hpp"
 #include <tachyon/data/Vertex3.hpp>
 #include <tachyon/proxy/PVertices3.hpp>
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IVertices³)
 

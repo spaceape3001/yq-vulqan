@@ -13,13 +13,13 @@
 #include <tachyon/typedef/delegate.hpp>
 
 namespace yq::tachyon {
-    class DelegateInfo : public ObjectInfo {
+    class DelegateMeta : public ObjectInfo {
     public:
         template <typename C> class Writer;
 
-        DelegateInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        DelegateMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
     protected:
-        virtual ~DelegateInfo();
+        virtual ~DelegateMeta();
     };
     
     /*! \brief Modifier/Extendible point
@@ -35,7 +35,7 @@ namespace yq::tachyon {
         
     */
     class Delegate : public Object, public RefCount, public UniqueID {
-        YQ_OBJECT_INFO(DelegateInfo)
+        YQ_OBJECT_INFO(DelegateMeta)
         YQ_OBJECT_DECLARE(Delegate, Object)
     public:
     

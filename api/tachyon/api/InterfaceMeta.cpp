@@ -5,34 +5,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Interface.hpp>
-#include <tachyon/api/InterfaceInfo.hpp>
-#include <tachyon/api/InterfaceInfoWriter.hpp>
+#include <tachyon/api/InterfaceMeta.hpp>
+#include <tachyon/api/InterfaceMetaWriter.hpp>
 
 namespace yq::tachyon {
-    struct InterfaceInfo::Repo {
-        MetaLookup<InterfaceInfo>   interfaces;
+    struct InterfaceMeta::Repo {
+        MetaLookup<InterfaceMeta>   interfaces;
     };
     
-    InterfaceInfo::Repo&    InterfaceInfo::repo()
+    InterfaceMeta::Repo&    InterfaceMeta::repo()
     {
         static Repo    s_repo;
         return s_repo;
     }
     
-    const std::vector<const InterfaceInfo*>&   InterfaceInfo::all()
+    const std::vector<const InterfaceMeta*>&   InterfaceMeta::all()
     {
         return repo().interfaces.all;
     }
 
-    const InterfaceInfo*     InterfaceInfo::find(id_t i)
+    const InterfaceMeta*     InterfaceMeta::find(id_t i)
     {
         const Meta* m   = lookup(i);
         if(m && m->is_interface())
-            return static_cast<const InterfaceInfo*>(m);
+            return static_cast<const InterfaceMeta*>(m);
         return nullptr;
     }
     
-    const InterfaceInfo*     InterfaceInfo::find(std::string_view k)
+    const InterfaceMeta*     InterfaceMeta::find(std::string_view k)
     {
         return repo().interfaces.find(k);
     }
@@ -40,49 +40,49 @@ namespace yq::tachyon {
 
     //  ------------------------------------------------------------------------------------------------------------
 
-    InterfaceInfo::InterfaceInfo(std::string_view zName, const std::source_location& sl) : CompoundInfo(zName, sl)
+    InterfaceMeta::InterfaceMeta(std::string_view zName, const std::source_location& sl) : CompoundInfo(zName, sl)
     {
         set(Flag::INTERFACE);
         repo().interfaces << this;
     }
         
-    InterfaceInfo::~InterfaceInfo()
+    InterfaceMeta::~InterfaceMeta()
     {
     }
     
-    const std::vector<const MethodInfo*>&   InterfaceInfo::methods() const
+    const std::vector<const MethodInfo*>&   InterfaceMeta::methods() const
     {
         return m_methods.all;
     }
     
-    size_t      InterfaceInfo::methods(count_k) const
+    size_t      InterfaceMeta::methods(count_k) const
     {
         return m_methods.all.size();
     }
 
 
-    const PropertyInfo*                 InterfaceInfo::property(std::string_view k) const
+    const PropertyInfo*                 InterfaceMeta::property(std::string_view k) const
     {
         return m_properties.find(k);
     }
     
-    size_t      InterfaceInfo::properties(count_k) const
+    size_t      InterfaceMeta::properties(count_k) const
     {
         return m_properties.all.size();
     }
     
 
-    const std::vector<const PropertyInfo*>&  InterfaceInfo::properties() const
+    const std::vector<const PropertyInfo*>&  InterfaceMeta::properties() const
     {
         return m_properties.all;
     }
 
-    InterfaceInfo::PropertyLUC::equal_range_t              InterfaceInfo::properties(std::string_view k) const
+    InterfaceMeta::PropertyLUC::equal_range_t              InterfaceMeta::properties(std::string_view k) const
     {
         return m_properties.lut.equal_range(k);
     }
 
-    void    InterfaceInfo::sweep_impl() 
+    void    InterfaceMeta::sweep_impl() 
     {
         CompoundInfo::sweep_impl();
         gather(m_properties);

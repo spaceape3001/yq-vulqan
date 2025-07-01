@@ -5,18 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Action.hpp>
-#include <tachyon/api/ActionInfoWriter.hpp>
+#include <tachyon/api/ActionMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Action)
 
 namespace yq::tachyon {
-    ActionInfo::ActionInfo(std::string_view zName, DelegateInfo& base, const std::source_location& sl) :
-        DelegateInfo(zName, base, sl)
+    ActionMeta::ActionMeta(std::string_view zName, DelegateMeta& base, const std::source_location& sl) :
+        DelegateMeta(zName, base, sl)
     {
         //set(Flag::TRIGGER);
     }
     
-    ActionInfo::~ActionInfo(){}
+    ActionMeta::~ActionMeta(){}
 
     Action::Action()
     {

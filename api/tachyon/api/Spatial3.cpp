@@ -13,8 +13,8 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial³);
 YQ_TYPE_IMPLEMENT(yq::tachyon::Spatial³ID)
 
 namespace yq::tachyon {
-    Spatial³Info::Spatial³Info(std::string_view zName, SpatialInfo& base, const std::source_location& sl)
-        : SpatialInfo(zName, base, sl)
+    Spatial³Info::Spatial³Info(std::string_view zName, SpatialMeta& base, const std::source_location& sl)
+        : SpatialMeta(zName, base, sl)
     {
         set(Type::Spatial³);
     }

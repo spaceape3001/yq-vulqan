@@ -6,7 +6,7 @@
 
 #include <tachyon/trigger/NorTrigger.hpp>
 #include <yq/container/initlist_utils.hpp>
-#include <tachyon/api/TriggerInfoWriter.hpp>
+#include <tachyon/api/TriggerMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::NorTrigger)
 

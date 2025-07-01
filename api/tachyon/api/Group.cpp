@@ -6,7 +6,7 @@
 
 #include <tachyon/api/Group.hpp>
 #include <tachyon/api/GroupData.hpp>
-#include <tachyon/api/GroupInfoWriter.hpp>
+#include <tachyon/api/GroupMetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Group);
@@ -14,13 +14,13 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::GroupID)
 
 namespace yq::tachyon {
 
-    GroupInfo::GroupInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
+    GroupMeta::GroupMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(name, base, sl)
     {
         set(Type::Group);
     }
     
-    GroupInfo::~GroupInfo()
+    GroupMeta::~GroupMeta()
     {
     }
     

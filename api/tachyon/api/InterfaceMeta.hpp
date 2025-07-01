@@ -15,7 +15,7 @@ namespace yq::tachyon {
     class Proxy;
     class Tachyon;
     
-    class InterfaceInfo : public CompoundInfo {
+    class InterfaceMeta : public CompoundInfo {
         using MethodLUC     = MetaLookup<MethodInfo>;
         using PropertyLUC   = MetaLookup<PropertyInfo>;
     public:
@@ -28,13 +28,13 @@ namespace yq::tachyon {
             \note WARNING Unsafe in unlocked multithreaded mode (as this isn't a copy, 
                     its the actual list that could be changing.)
         */
-        static const std::vector<const InterfaceInfo*>&   all();
+        static const std::vector<const InterfaceMeta*>&   all();
 
         //! Finds the type info by ID
-        static const InterfaceInfo*     find(id_t);
+        static const InterfaceMeta*     find(id_t);
 
         //! Finds the type info by name
-        static const InterfaceInfo*     find(std::string_view);
+        static const InterfaceMeta*     find(std::string_view);
 
         //! The "generic" classification for this meta which is type.
         virtual const char*     generic() const override { return "Interface"; }
@@ -62,9 +62,9 @@ namespace yq::tachyon {
         virtual const void* interface(const Proxy*) const = 0;
         
     protected:
-        InterfaceInfo(std::string_view zName, const std::source_location& sl);
+        InterfaceMeta(std::string_view zName, const std::source_location& sl);
         
-        virtual ~InterfaceInfo();
+        virtual ~InterfaceMeta();
         
         //! Sweeps on the type (ie gathers properties/methdos)
         virtual void    sweep_impl() override;

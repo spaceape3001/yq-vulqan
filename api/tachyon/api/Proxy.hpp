@@ -16,7 +16,7 @@
 
 namespace yq::tachyon {
     class Tachyon;
-    class InterfaceInfo;
+    class InterfaceMeta;
     struct TachyonSnap;
     struct TypedID;
     
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         Types                   types() const;
         TypedID                 object() const;
         uint64_t                revision() const { return m_revision; }
-        const InterfaceInfo*    interface(info_k) const { return m_interface; }
+        const InterfaceMeta*    interface(info_k) const { return m_interface; }
         bool                    disabled() const;
     
     protected:
@@ -49,7 +49,7 @@ namespace yq::tachyon {
         
         Tachyon*                m_tachyon;
         uint64_t                m_revision  = 0;
-        const InterfaceInfo*    m_interface = nullptr;
+        const InterfaceMeta*    m_interface = nullptr;
         
     protected:
         enum class F {

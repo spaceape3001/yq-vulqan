@@ -37,7 +37,7 @@ void MainWidget::init_info()
 
 MainWidget::MainWidget()
 {
-    for(const CameraInfo* ci : CameraInfo::all()){
+    for(const CameraMeta* ci : CameraMeta::all()){
         if(!ci)
             continue;
         if(ci->is_abstract())
@@ -69,7 +69,7 @@ void    MainWidget::imgui(ViContext&ctx)
             #if 0
             //  FROM THE PREVIOUS INCARNATION -- TO BE REIMPLEMENTED (LATER)
                 if(ImGui::BeginMenu("Create Camera")){
-                    for(const CameraInfo* ci : cam_infos){
+                    for(const CameraMeta* ci : cam_infos){
                         std::string txt(ci->name_stem());
                         if(MenuItem(txt.c_str())){
                             Camera*c    = add_camera(*ci);

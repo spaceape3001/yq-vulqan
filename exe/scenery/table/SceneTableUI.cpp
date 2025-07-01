@@ -24,7 +24,7 @@ struct SceneTableUI::Row {
     SceneID             scene;
     CameraID            camera;
     std::string         cameraText  = "(default)";
-    const SceneInfo*    info        = nullptr;
+    const SceneMeta*    info        = nullptr;
     std::string         sid;        // ID for selectable
     std::string         stype;
     std::string         visBtn, visBtn2, invisBtn, invisBtn2;
@@ -41,7 +41,7 @@ namespace {
         if(!frame)
             return "(error)";
             
-        const CameraInfo*   info    = frame->info(cam);
+        const CameraMeta*   info    = frame->info(cam);
         const CameraSnap*   snap    = frame->snap(cam);
         
         if(!snap->name.empty()){

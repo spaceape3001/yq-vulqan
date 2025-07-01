@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Editor.hpp>
-#include <tachyon/api/EditorInfoWriter.hpp>
+#include <tachyon/api/EditorMetaWriter.hpp>
 #include <tachyon/MyImGui.hpp>
 #include <yq/meta/Init.hpp>
 
@@ -13,7 +13,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Editor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::EditorID)
 
 namespace yq::tachyon {
-    EditorInfo::EditorInfo(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
+    EditorMeta::EditorMeta(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
     {
         set(Flag::EDITOR);
     }

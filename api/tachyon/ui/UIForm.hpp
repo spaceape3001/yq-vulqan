@@ -15,7 +15,7 @@ namespace yq::tachyon {
     class UIFormWriter;
     class TachyonMeta;
     class UIForm;
-    class InterfaceInfo;
+    class InterfaceMeta;
     
     template <typename C>
     concept SomeUIForm = std::derived_from<C,UIForm>;

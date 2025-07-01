@@ -16,13 +16,13 @@ namespace yq::tachyon {
     /*! \brief Writer of information for rendered information
     */
     template <typename C>
-    class RenderedInfo::Writer : public TachyonMeta::Writer<C> {
+    class RenderedMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(RenderedInfo* renderInfo) : TachyonMeta::Writer<C>(renderInfo), m_meta(renderInfo)
+        Writer(RenderedMeta* renderInfo) : TachyonMeta::Writer<C>(renderInfo), m_meta(renderInfo)
         {
         }
         
-        Writer(RenderedInfo& renderInfo) : Writer(&renderInfo)
+        Writer(RenderedMeta& renderInfo) : Writer(&renderInfo)
         {
         }
         
@@ -39,7 +39,7 @@ namespace yq::tachyon {
         }
         
         //! Returns a reference to the given meta (warning, may seg fault if it's NULL)
-        const RenderedInfo& meta() const { return *m_meta; }
+        const RenderedMeta& meta() const { return *m_meta; }
 
     private:
         static Pipeline*       create_pipeline(Pipeline::Role r)
@@ -47,7 +47,7 @@ namespace yq::tachyon {
             return new Pipeline::Typed<C>(r);
         }
         
-        RenderedInfo*       m_meta  = nullptr;
+        RenderedMeta*       m_meta  = nullptr;
     };
 
 }

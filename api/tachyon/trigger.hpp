@@ -7,4 +7,4 @@
 #pragma once
 
 #include <tachyon/api/Trigger.hpp>
-#include <tachyon/api/TriggerInfoWriter.hpp>
+#include <tachyon/api/TriggerMetaWriter.hpp>

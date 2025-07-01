@@ -7,14 +7,14 @@
 #pragma once
 
 #include <yq/meta/CompoundInfoDynamic.hpp>
-#include <tachyon/api/InterfaceInfo.hpp>
+#include <tachyon/api/InterfaceMeta.hpp>
 #include <tachyon/api/Tachyon.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <type_traits>
 
 namespace yq::tachyon {
     template <typename C>
-    class InterfaceInfo::Writer : public CompoundInfo::Dynamic<C> {
+    class InterfaceMeta::Writer : public CompoundInfo::Dynamic<C> {
     public:
     
         Writer&     abstract()
@@ -24,7 +24,7 @@ namespace yq::tachyon {
             return *this;
         }
         
-        Writer(InterfaceInfo* obj) : CompoundInfo::Dynamic<C>(obj) 
+        Writer(InterfaceMeta* obj) : CompoundInfo::Dynamic<C>(obj) 
         {
             assert(obj);
             if constexpr ( std::is_abstract_v<C> ){
@@ -33,18 +33,18 @@ namespace yq::tachyon {
             
         }
         
-        Writer(InterfaceInfo& obj) : Writer(&obj)
+        Writer(InterfaceMeta& obj) : Writer(&obj)
         {
         }
     };
     
     template <class I>
-    struct InterfaceFixer : public InterfaceInfo, public DelayInit {
+    struct InterfaceFixer : public InterfaceMeta, public DelayInit {
         
         static_assert(I::IsInterface, "Must be interface declared!");
     
         InterfaceFixer(std::string_view szName, std::source_location sl=std::source_location::current()) :
-            InterfaceInfo(szName, sl)
+            InterfaceMeta(szName, sl)
         {
             if constexpr ( std::is_abstract_v<I> ){
                 Meta::set(Meta::Flag::ABSTRACT);

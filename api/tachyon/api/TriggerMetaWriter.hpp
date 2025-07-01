@@ -6,26 +6,26 @@
 
 #pragma once
 
-#include <tachyon/api/Delegate.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <tachyon/api/Trigger.hpp>
+#include <tachyon/api/DelegateMetaWriter.hpp>
 
 namespace yq::tachyon {
     
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class DelegateInfo::Writer : public ObjectInfo::Writer<C> {
+    class TriggerMeta::Writer : public DelegateMeta::Writer<C> {
     public:
     
-        Writer(DelegateInfo* pInfo) : ObjectInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(TriggerMeta* pInfo) : DelegateMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
-        Writer(DelegateInfo& pInfo) : Writer(&pInfo)
+        Writer(TriggerMeta& pInfo) : Writer(&pInfo)
         {
         }
 
     private:
-        DelegateInfo* m_meta;
+        TriggerMeta* m_meta;
     };
 }

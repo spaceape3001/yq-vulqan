@@ -46,7 +46,7 @@ add_library(${PROJECT_NAME} SHARED
     #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
-    api/InterfaceInfo.cpp
+    api/InterfaceMeta.cpp
     api/Layer.cpp
     api/Light.cpp    
     api/Light3.cpp

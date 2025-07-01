@@ -22,12 +22,12 @@ namespace yq::tachyon {
     class SetScreenCommand;
     class SpatialCommand;
 
-    class Camera³Info : public CameraInfo {
+    class Camera³Info : public CameraMeta {
     public:
     
         template <typename> class Writer;
         
-        Camera³Info(std::string_view, CameraInfo&, const std::source_location& sl = std::source_location::current());
+        Camera³Info(std::string_view, CameraMeta&, const std::source_location& sl = std::source_location::current());
     protected:
         ~Camera³Info();
     };

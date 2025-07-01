@@ -8,37 +8,37 @@
 
 #include <tachyon/tags.hpp>
 #include <tachyon/api/SpatialData.hpp>
-#include <tachyon/api/SpatialInfoWriter.hpp>
+#include <tachyon/api/SpatialMetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SpatialID)
 
 namespace yq::tachyon {
-    struct SpatialInfo::Repo {
-        std::vector<const SpatialInfo*> all;
+    struct SpatialMeta::Repo {
+        std::vector<const SpatialMeta*> all;
     };
     
-    SpatialInfo::Repo& SpatialInfo::repo()
+    SpatialMeta::Repo& SpatialMeta::repo()
     {
         static Repo s_repo;
         return s_repo;
     }
 
-    const std::vector<const SpatialInfo*>&    SpatialInfo::all()
+    const std::vector<const SpatialMeta*>&    SpatialMeta::all()
     {
         return repo().all;
     }
 
 
-    SpatialInfo::SpatialInfo(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
+    SpatialMeta::SpatialMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(zName, base, sl)
     {
         set(Type::Spatial);
         repo().all.push_back(this);
     }
 
-    SpatialInfo::~SpatialInfo()
+    SpatialMeta::~SpatialMeta()
     {
     }
 

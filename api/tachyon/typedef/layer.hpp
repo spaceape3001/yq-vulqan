@@ -26,5 +26,5 @@ namespace yq::tachyon {
     template <class> class ID;
     using LayerID = ID<Layer>;
     
-    class LayerInfo;
+    class LayerMeta;
 }

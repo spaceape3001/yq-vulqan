@@ -18,12 +18,12 @@
 #endif
 
 namespace yq::tachyon {
-    class Scene³Info : public SceneInfo {
+    class Scene³Info : public SceneMeta {
     public:
     
         template <typename> class Writer;
         
-        Scene³Info(std::string_view, SceneInfo&, const std::source_location& sl = std::source_location::current());
+        Scene³Info(std::string_view, SceneMeta&, const std::source_location& sl = std::source_location::current());
     protected:
         ~Scene³Info();
     };

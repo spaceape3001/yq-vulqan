@@ -6,27 +6,27 @@
 
 #include <tachyon/api/Light.hpp>
 #include <tachyon/api/LightData.hpp>
-#include <tachyon/api/LightInfoWriter.hpp>
+#include <tachyon/api/LightMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-    struct LightInfo::Repo {
-        std::vector<const LightInfo*> all;
+    struct LightMeta::Repo {
+        std::vector<const LightMeta*> all;
     };
     
-    LightInfo::Repo& LightInfo::repo()
+    LightMeta::Repo& LightMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const LightInfo*>&    LightInfo::all()
+    const std::vector<const LightMeta*>&    LightMeta::all()
     {
         return repo().all;
     }
 
-    LightInfo::LightInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    LightMeta::LightMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Light);

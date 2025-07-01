@@ -334,7 +334,7 @@ namespace yq::tachyon {
         if(!cinfo)
             return errors::invalid_class_attribute();
         
-        const DelegateInfo*  tinfo   = dynamic_cast<const DelegateInfo*>(cinfo);
+        const DelegateMeta*  tinfo   = dynamic_cast<const DelegateMeta*>(cinfo);
         if(!tinfo)
             return errors::not_tachyon_class();
         return read(*(save->create(tinfo)), DELEGATE, xml);
@@ -387,7 +387,7 @@ namespace yq::tachyon {
         if(!cinfo)
             return errors::invalid_class_attribute();
         
-        const ThreadInfo*  tinfo   = dynamic_cast<const ThreadInfo*>(cinfo);
+        const ThreadMeta*  tinfo   = dynamic_cast<const ThreadMeta*>(cinfo);
         if(!tinfo)
             return errors::not_tachyon_class();
             

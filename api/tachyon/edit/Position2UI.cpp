@@ -7,7 +7,7 @@
 #include "Position2UI.hpp"
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorInfoWriter.hpp>
+#include <tachyon/ui/UIEditorMetaWriter.hpp>
 #include <tachyon/proxy/PPosition2.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Position²UI)

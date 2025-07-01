@@ -6,27 +6,27 @@
 
 #include <tachyon/api/Model.hpp>
 #include <tachyon/api/ModelData.hpp>
-#include <tachyon/api/ModelInfoWriter.hpp>
+#include <tachyon/api/ModelMetaWriter.hpp>
 #include <tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
-    struct ModelInfo::Repo {
-        std::vector<const ModelInfo*> all;
+    struct ModelMeta::Repo {
+        std::vector<const ModelMeta*> all;
     };
     
-    ModelInfo::Repo& ModelInfo::repo()
+    ModelMeta::Repo& ModelMeta::repo()
     {
         static Repo* s_repo = new Repo;
         return *s_repo;
     }
 
-    const std::vector<const ModelInfo*>&    ModelInfo::all()
+    const std::vector<const ModelMeta*>&    ModelMeta::all()
     {
         return repo().all;
     }
 
-    ModelInfo::ModelInfo(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
+    ModelMeta::ModelMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
         set(Type::Model);

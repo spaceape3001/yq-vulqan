@@ -14,12 +14,12 @@ namespace yq::tachyon {
 
     /*! \brief Editor information
     */
-    class EditorInfo : public WidgetMeta {
+    class EditorMeta : public WidgetMeta {
     public:
         
         template <typename C>  struct Writer;
         
-        EditorInfo(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
+        EditorMeta(std::string_view, WidgetMeta&, const std::source_location& sl = std::source_location::current());
     
         //! TRUE if this has/needs a menu bar
         bool        menu_bar() const { return has(Flag::MENU_BAR); }
@@ -33,7 +33,7 @@ namespace yq::tachyon {
     //!
     //! Meant to be a general base for an editor widget
     class Editor : public Widget {
-        YQ_TACHYON_INFO(EditorInfo)
+        YQ_TACHYON_INFO(EditorMeta)
         YQ_TACHYON_DECLARE(Editor, Widget)
     public:
     

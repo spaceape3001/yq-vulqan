@@ -10,14 +10,14 @@
 
 namespace yq::tachyon {
     class Thread;
-    class ThreadInfo;
+    class ThreadMeta;
     
     class SaveThread : public SaveTachyon {
     public:
         SaveThread(Save&, const Thread&);
-        SaveThread(Save&, const ThreadInfo*, uint64_t);
+        SaveThread(Save&, const ThreadMeta*, uint64_t);
         
-        const ThreadInfo* info() const;
+        const ThreadMeta* info() const;
         virtual bool        isThread() const { return true; }
         virtual bool        valid() const override;
         virtual SaveType    saveType() const override { return SaveType::Thread; }

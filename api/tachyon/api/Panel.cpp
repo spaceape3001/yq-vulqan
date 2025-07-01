@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tachyon/api/Panel.hpp>
-#include <tachyon/api/PanelInfoWriter.hpp>
+#include <tachyon/api/PanelMetaWriter.hpp>
 #include <tachyon/MyImGui.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Panel)
 
 namespace yq::tachyon {
-    PanelInfo::PanelInfo(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
+    PanelMeta::PanelMeta(std::string_view n, WidgetMeta& base, const std::source_location& sl) : WidgetMeta(n, base, sl)
     {
     }
 

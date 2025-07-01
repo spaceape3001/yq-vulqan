@@ -12,13 +12,13 @@
 
 namespace yq::tachyon {
     template <typename C>
-    class LightInfo::Writer : public TachyonMeta::Writer<C> {
+    class LightMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(LightInfo* lightInfo) : TachyonMeta::Writer<C>(lightInfo)
+        Writer(LightMeta* lightInfo) : TachyonMeta::Writer<C>(lightInfo)
         {
         }
         
-        Writer(LightInfo& lightInfo) : Writer(&lightInfo)
+        Writer(LightMeta& lightInfo) : Writer(&lightInfo)
         {
         }
     };

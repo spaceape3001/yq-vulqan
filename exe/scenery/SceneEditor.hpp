@@ -21,7 +21,7 @@
 
 namespace yq::tachyon {
     class InfoSelectionChangedEvent;
-    class LightInfo;
+    class LightMeta;
     class LoadTSXReply;
     class OpenFileRequest;
     class SaveFileRequest;
@@ -89,8 +89,8 @@ public:
 
     using EFlags    = Flags<E>;
     
-    static EFlags       flags_for(const SceneInfo&);
-    static EFlags       flags_for(const CameraInfo&);
+    static EFlags       flags_for(const SceneMeta&);
+    static EFlags       flags_for(const CameraMeta&);
 
     void                action_create_camera(const Payload&);
     void                action_create_camera_spatial(const Payload&);
@@ -136,13 +136,13 @@ private:
         TypedID                 hud;
         CameraTableUI*          table       = nullptr;
         InspectorUI*            properties  = nullptr;
-        const CameraInfo*       info        = nullptr;
+        const CameraMeta*       info        = nullptr;
         CameraID                selected;
     } m_camera;
     
     struct {
         TypedID                 space;
-        const ControllerInfo*   info        = nullptr;
+        const ControllerMeta*   info        = nullptr;
         ControllerTableUI*      table       = nullptr;
         ControllerID            selected;
         InspectorUI*            properties  = nullptr;
@@ -154,28 +154,28 @@ private:
     } m_collision;
     
     struct {
-        const LightInfo*        info        = nullptr;
+        const LightMeta*        info        = nullptr;
         LightTableUI*           table       = nullptr;
         LightID                 selected;
         InspectorUI*            properties  = nullptr;
     } m_light;
 
     struct {
-        const ModelInfo*        info        = nullptr;
+        const ModelMeta*        info        = nullptr;
         ModelTableUI*           table       = nullptr;
         ModelID                 selected;
         InspectorUI*            properties  = nullptr;
     } m_model;
 
     struct {
-        const RenderedInfo*     info        = nullptr;
+        const RenderedMeta*     info        = nullptr;
         RenderedTableUI*        table       = nullptr;
         RenderedID              selected;
         InspectorUI*            properties  = nullptr;
     } m_rendered;
     
     struct {
-        const SceneInfo*        info        = nullptr;
+        const SceneMeta*        info        = nullptr;
         SceneID                 selected;
         TypedID                 simple;     //!< The default simple scene
         InspectorUI*            properties  = nullptr;
@@ -184,7 +184,7 @@ private:
     } m_scene;
 
     struct {
-        const SpatialInfo*      info        = nullptr;
+        const SpatialMeta*      info        = nullptr;
         TypedID                 context;
     } m_spatial;
 
@@ -207,18 +207,18 @@ private:
 
     void            _load(StdThread, const std::filesystem::path&);
 
-    CameraID        _create(const CameraInfo&);
-    SpatialID       _create(camera_k, const SpatialInfo&);
-    SpatialID       _create(Camera³ID, const SpatialInfo&);
-    ControllerID    _create(const ControllerInfo&);
-    LightID         _create(const LightInfo&);
-    SpatialID       _create(light_k, const SpatialInfo&);
-    SpatialID       _create(Light³ID, const SpatialInfo&);
-    ModelID         _create(const ModelInfo&);
-    RenderedID      _create(const RenderedInfo&);
-    SpatialID       _create(rendered_k, const SpatialInfo&);
-    SpatialID       _create(Rendered³ID, const SpatialInfo&);
-    SceneID         _create(const SceneInfo&);
+    CameraID        _create(const CameraMeta&);
+    SpatialID       _create(camera_k, const SpatialMeta&);
+    SpatialID       _create(Camera³ID, const SpatialMeta&);
+    ControllerID    _create(const ControllerMeta&);
+    LightID         _create(const LightMeta&);
+    SpatialID       _create(light_k, const SpatialMeta&);
+    SpatialID       _create(Light³ID, const SpatialMeta&);
+    ModelID         _create(const ModelMeta&);
+    RenderedID      _create(const RenderedMeta&);
+    SpatialID       _create(rendered_k, const SpatialMeta&);
+    SpatialID       _create(Rendered³ID, const SpatialMeta&);
+    SceneID         _create(const SceneMeta&);
     
     void            _schedule(StdThread, TachyonPtrVector&&);
     void            _schedule(ThreadID, TachyonPtrVector&&);

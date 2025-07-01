@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ForegroundLayer.hpp"
-#include <tachyon/api/LayerInfoWriter.hpp>
+#include <tachyon/api/LayerMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ForegroundLayer)
 

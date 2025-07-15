@@ -132,7 +132,7 @@ namespace yq::tachyon {
         if(tex)
             return tex;
         uiInfo << "Unable to load '" << path << "' as a texture, trying raster";
-        RasterCPtr   ras = Raster::load(path);
+        RasterCPtr   ras = Raster::IO::load(path);
         if(ras)
             return new Texture(ras);
         uiInfo << "Unable to load '" << path << "' as a raster image (sorry)";

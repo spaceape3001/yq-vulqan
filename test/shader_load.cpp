@@ -17,17 +17,17 @@ using namespace yq::tachyon;
 
 ut::suite tests = []{
     "resolving"_test = []{
-        const auto&     resolver    = Asset::resolver();
+        //const auto&     resolver    = Asset::resolver();
         
-        std::filesystem::path   pp  = resolver.partial("hello.frag");
-        expect(false == pp.empty());
+        //std::filesystem::path   pp  = resolver.partial("hello.frag");
+        //expect(false == pp.empty());
         
-        std::filesystem::path   rp  = resolver.resolve("sdk/hello/hello.frag");
-        expect(false == rp.empty());
+        Url   rp  = Asset::resolve("sdk/hello/hello.frag");
+        expect(false == rp.path.empty());
     };
     
     "loading"_test = []{
-        const Shader*   s   = Shader::load("sdk/hello/hello.frag");
+        const Shader*   s   = Shader::IO::load("sdk/hello/hello.frag");
         expect(nullptr != s);
         if(s){
             expect(s->type == ShaderType::FRAG);

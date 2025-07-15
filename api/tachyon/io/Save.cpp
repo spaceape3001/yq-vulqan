@@ -138,7 +138,7 @@ namespace yq::tachyon {
     {
         if(m_prepped)
             return;
-        m_assetPath = Asset::resolver().paths();
+        m_assetPath = Asset::all_paths();
         m_prepped   = true;
         m_threads   = Thread::standard_thread_reverse_map();
     }
@@ -552,7 +552,8 @@ namespace yq::tachyon {
         {
             if(!sv->info())
                 return errors::null_pointer();
-            AssetCPtr   ass = sv->info()->load(sv->filepath().string());
+            AssetCPtr   ass = Asset::asset_load(*(sv->info()), sv->filepath());
+//            AssetCPtr   ass = sv->info()->load(sv->filepath().string());
             if(!ass)
                 return errors::bad_asset();
                 

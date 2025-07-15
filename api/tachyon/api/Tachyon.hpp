@@ -189,7 +189,7 @@ namespace yq::tachyon {
         namespace yq {                                                      \
             template <>                                                     \
             struct MetaBinder<__VA_ARGS__>  : public std::true_type {       \
-                using Info = typename __VA_ARGS__::MyInfo;                  \
+                using Info = typename __VA_ARGS__::MyMeta;                  \
                 static constexpr const bool Defined         = true;         \
                 static constexpr const bool IsObject        = true;         \
                 static constexpr const bool IsType          = false;        \
@@ -411,7 +411,7 @@ namespace yq::tachyon {
             \note THIS CAN RETURN NULL!  (So chack)
         */
         template <SomeTachyon T>
-        static T*   create(const typename T::MyInfo&);
+        static T*   create(const typename T::MyMeta&);
 
 
         //! Creates a tachyon in the sim/game-thread
@@ -424,11 +424,11 @@ namespace yq::tachyon {
         
         //! Creates a tachyon on the Application thread (caution here)
         template <SomeTachyon T=Tachyon>
-        static T*   create_on(StdThread, const typename T::MyInfo&);
+        static T*   create_on(StdThread, const typename T::MyMeta&);
 
         //! Creates a tachyon on the Application thread (caution here)
         template <SomeTachyon T=Tachyon>
-        static T*   create_on(ThreadID, const typename T::MyInfo&);
+        static T*   create_on(ThreadID, const typename T::MyMeta&);
 
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
@@ -436,7 +436,7 @@ namespace yq::tachyon {
 
         //! Creates a "child" tachyon using the given meta information
         template <SomeTachyon T=Tachyon>
-        T*          create_child(const typename T::MyInfo&);
+        T*          create_child(const typename T::MyMeta&);
 
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
@@ -448,10 +448,10 @@ namespace yq::tachyon {
 
         //! Creates a "child" tachyon using the given meta information
         template <SomeTachyon T=Tachyon>
-        T*          create_child_on(StdThread, const typename T::MyInfo&);
+        T*          create_child_on(StdThread, const typename T::MyMeta&);
 
         template <SomeTachyon T=Tachyon>
-        T*          create_child_on(ThreadID, const typename T::MyInfo&);
+        T*          create_child_on(ThreadID, const typename T::MyMeta&);
 
 
         //template <SomeTachyon T>

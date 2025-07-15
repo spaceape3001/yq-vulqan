@@ -15,8 +15,8 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIForm)
 
 namespace yq::tachyon {
-    UIFormMeta::UIFormMeta(std::string_view name, UIElements::MyInfo&base, const std::source_location& sl) :
-        UIElements::MyInfo(name, base, sl)
+    UIFormMeta::UIFormMeta(std::string_view name, UIElements::MyMeta& base, const std::source_location& sl) :
+        UIElements::MyMeta(name, base, sl)
     {
     }
 

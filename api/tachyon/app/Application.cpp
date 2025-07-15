@@ -58,7 +58,7 @@ namespace yq::tachyon {
         if(s_done)
             return;
             
-        Asset::resolver_add_paths(default_data_directory());
+        Asset::add_paths(default_data_directory());
         s_done = true;
     }
 
@@ -414,9 +414,8 @@ namespace yq::tachyon {
 
     void                    Application::vulqan_libraries(load_k)
     {
-        for(std::string_view p : m_config.data_paths()){
-            Asset::resolver_add_paths(p);
-        }
+        for(std::string_view p : m_config.data_paths())
+            Asset::add_paths(p);
         for(std::string_view l : m_config.vulqan_libraries()){
             std::string     libName = os::expected_shared_library_name(l);
             // TODO ... make this use the proper lib/app directory

@@ -12,16 +12,10 @@
 
 namespace yq::tachyon {
     class Sampler : public Asset {
-        YQ_OBJECT_DECLARE(Sampler, Asset)
+        YQ_ASSET_DECLARE(Sampler, Asset)
     public:
 
-        //! Cache of images
-        static TypedAssetFactory<Sampler>&    cache();
-        
         static SamplerCPtr                    simple();
-        
-        //! Loads an image by key
-        static const Sampler*                 load(std::string_view);
         
         const SamplerInfo   info;
         
@@ -32,8 +26,6 @@ namespace yq::tachyon {
         static void init_meta();
     
     private:
-        AssetFactory&       factory() const override;
-
         ~Sampler();
     };
 }

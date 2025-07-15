@@ -136,13 +136,13 @@ private:
         TypedID                 hud;
         CameraTableUI*          table       = nullptr;
         InspectorUI*            properties  = nullptr;
-        const CameraMeta*       info        = nullptr;
+        const CameraMeta*       meta        = nullptr;
         CameraID                selected;
     } m_camera;
     
     struct {
         TypedID                 space;
-        const ControllerMeta*   info        = nullptr;
+        const ControllerMeta*   meta        = nullptr;
         ControllerTableUI*      table       = nullptr;
         ControllerID            selected;
         InspectorUI*            properties  = nullptr;
@@ -154,28 +154,28 @@ private:
     } m_collision;
     
     struct {
-        const LightMeta*        info        = nullptr;
+        const LightMeta*        meta        = nullptr;
         LightTableUI*           table       = nullptr;
         LightID                 selected;
         InspectorUI*            properties  = nullptr;
     } m_light;
 
     struct {
-        const ModelMeta*        info        = nullptr;
+        const ModelMeta*        meta        = nullptr;
         ModelTableUI*           table       = nullptr;
         ModelID                 selected;
         InspectorUI*            properties  = nullptr;
     } m_model;
 
     struct {
-        const RenderedMeta*     info        = nullptr;
+        const RenderedMeta*     meta        = nullptr;
         RenderedTableUI*        table       = nullptr;
         RenderedID              selected;
         InspectorUI*            properties  = nullptr;
     } m_rendered;
     
     struct {
-        const SceneMeta*        info        = nullptr;
+        const SceneMeta*        meta        = nullptr;
         SceneID                 selected;
         TypedID                 simple;     //!< The default simple scene
         InspectorUI*            properties  = nullptr;
@@ -184,7 +184,7 @@ private:
     } m_scene;
 
     struct {
-        const SpatialMeta*      info        = nullptr;
+        const SpatialMeta*      meta        = nullptr;
         TypedID                 context;
     } m_spatial;
 

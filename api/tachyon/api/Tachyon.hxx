@@ -23,9 +23,9 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T>
-    T*   Tachyon::create(const typename T::MyInfo& info)
+    T*   Tachyon::create(const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(info.create());
+        Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
             retain(tp);
         }
@@ -41,9 +41,9 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T>
-    T*   Tachyon::create_on(StdThread st, const typename T::MyInfo& info)
+    T*   Tachyon::create_on(StdThread st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(info.create());
+        Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
             retain(tp, st);
         }
@@ -59,9 +59,9 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T>
-    T*   Tachyon::create_on(ThreadID st, const typename T::MyInfo& info)
+    T*   Tachyon::create_on(ThreadID st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(info.create());
+        Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
             retain(tp, st);
         }
@@ -83,9 +83,9 @@ namespace yq::tachyon {
     }
     
     template <SomeTachyon T>
-    T*   Tachyon::create_child(const typename T::MyInfo& info)
+    T*   Tachyon::create_child(const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(info.create());
+        Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
             retain(tp);
             tp->_set_parent(*this);
@@ -116,9 +116,9 @@ namespace yq::tachyon {
 
 
     template <SomeTachyon T>
-    T*   Tachyon::create_child_on(ThreadID st, const typename T::MyInfo& info)
+    T*   Tachyon::create_child_on(ThreadID st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(info.create());
+        Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
             tp->_set_parent(*this);
             _add_child(*tp);
@@ -128,9 +128,9 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T>
-    T*   Tachyon::create_child_on(StdThread st, const typename T::MyInfo& info)
+    T*   Tachyon::create_child_on(StdThread st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(info.create());
+        Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
             tp->_set_parent(*this);
             _add_child(*tp);

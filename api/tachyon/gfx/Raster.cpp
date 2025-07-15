@@ -9,7 +9,6 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/typedef/float16.hpp>
 
-#include <yq/asset/AssetFactory.hpp>
 #include <yq/asset/AssetMetaWriter.hpp>
 #include <yq/asset/AssetIO.hpp>
 
@@ -18,12 +17,6 @@
 #include <yq/raster/Pixels.hxx>
 
 namespace yq::tachyon {
-    TypedAssetFactory<Raster>&  Raster::cache()
-    {
-        static TypedAssetFactory<Raster>   s_ret;
-        return s_ret;
-    }
-
     RasterInfo    Raster::info_for(const Pixmap& pix, DataFormat df)
     {
         RasterInfo   ii;
@@ -66,16 +59,6 @@ namespace yq::tachyon {
         return ii;
     }
 
-    const RasterCPtr     Raster::load(std::string_view pp)
-    {
-        return load(pp, AssetLoadOptions());
-    }
-
-    const RasterCPtr     Raster::load(std::string_view pp, const AssetLoadOptions& options)
-    {
-        return cache().load(pp, options);
-    }
-
     ////////////////////////////////////////////////////////////////////////////////
 
     Raster::Raster(const RasterInfo& ii, Memory&& mem) : Asset(), memory(std::move(mem)), info(ii)
@@ -97,11 +80,6 @@ namespace yq::tachyon {
 
     Raster::~Raster()
     {
-    }
-
-    AssetFactory&       Raster::factory() const 
-    {
-        return cache();
     }
 
     PixmapSPtr  Raster::to_pixmap() const

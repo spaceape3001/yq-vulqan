@@ -404,41 +404,41 @@ void    SceneEditor::_activate(SceneID id)
         m_scene.properties -> bind(TypedID(id.id, Type::Scene));
 }
 
-CameraID        SceneEditor::_create(const CameraMeta& info)
+CameraID        SceneEditor::_create(const CameraMeta& meta)
 {
-    Camera* res = Tachyon::create_on<Camera>(EDIT, info);
+    Camera* res = Tachyon::create_on<Camera>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create camera (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create camera (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     return res->id();
 }
 
-SpatialID       SceneEditor::_create(camera_k, const SpatialMeta& info)
+SpatialID       SceneEditor::_create(camera_k, const SpatialMeta& meta)
 {
     TypedID     pid = typed_for(m_camera.selected);
     if(pid(Type::Camera³))
-        return _create((Camera³ID) m_camera.selected, info);
+        return _create((Camera³ID) m_camera.selected, meta);
     return {};
 }
 
-SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialMeta& info)
+SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialMeta& meta)
 {
     Camera³*    parent  = pointer(pid);
     if(!parent) {
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to no corresponding camera (id " << pid.id << ")";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding camera (id " << pid.id << ")";
         return {};
     }
     
     const Camera³Snap*    psnap   = snapshot(pid);
     if(!psnap){
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to no corresponding camera (id " << pid.id << ") on the frame";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding camera (id " << pid.id << ") on the frame";
         return {};
     }
     
-    Spatial*   res  = parent->create_child_on<Spatial>(EDIT, info);
+    Spatial*   res  = parent->create_child_on<Spatial>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     
@@ -447,57 +447,57 @@ SpatialID       SceneEditor::_create(Camera³ID pid, const SpatialMeta& info)
     return res->id();
 }
 
-ControllerID    SceneEditor::_create(const ControllerMeta& info)
+ControllerID    SceneEditor::_create(const ControllerMeta& meta)
 {
-    Controller* res = Tachyon::create_on<Controller>(EDIT, info);
+    Controller* res = Tachyon::create_on<Controller>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create controller (" << info.stem() << ")";
+        yNotice() << "Unable to create controller (" << meta.stem() << ")";
         return {};
     }
     return res->id();
 }
 
-LightID         SceneEditor::_create(const LightMeta& info)
+LightID         SceneEditor::_create(const LightMeta& meta)
 {
     Scene*  parent  = pointer(m_scene.selected);
     if(!parent){
-        yNotice() << "Unable to create light (" << info.stem() << ") due to no parent scene";
+        yNotice() << "Unable to create light (" << meta.stem() << ") due to no parent scene";
         return {};
     }
     
-    Light*    res  = parent->create_child_on<Light>(EDIT, info);
+    Light*    res  = parent->create_child_on<Light>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create light (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create light (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     return res->id();
 }
 
-SpatialID       SceneEditor::_create(light_k, const SpatialMeta& info)
+SpatialID       SceneEditor::_create(light_k, const SpatialMeta& meta)
 {
     TypedID     pid = typed_for(m_light.selected);
     if(pid(Type::Light³))
-        return _create((Light³ID) m_light.selected, info);
+        return _create((Light³ID) m_light.selected, meta);
     return {};
 }
 
-SpatialID       SceneEditor::_create(Light³ID pid, const SpatialMeta& info)
+SpatialID       SceneEditor::_create(Light³ID pid, const SpatialMeta& meta)
 {
     Light³*     parent  = pointer(pid);
     if(!parent) {
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to no corresponding light (id " << pid.id << ")";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding light (id " << pid.id << ")";
         return {};
     }
     
     const Light³Snap*     psnap   = snapshot(pid);
     if(!psnap){
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to no corresponding light (id " << pid.id << ") on the frame";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding light (id " << pid.id << ") on the frame";
         return {};
     }
     
-    Spatial*    res  = parent->create_child_on<Spatial>(EDIT, info);
+    Spatial*    res  = parent->create_child_on<Spatial>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     
@@ -506,27 +506,27 @@ SpatialID       SceneEditor::_create(Light³ID pid, const SpatialMeta& info)
     return res->id();
 }
 
-ModelID         SceneEditor::_create(const ModelMeta& info)
+ModelID         SceneEditor::_create(const ModelMeta& meta)
 {
-    Model* res = Tachyon::create_on<Model>(EDIT, info);
+    Model* res = Tachyon::create_on<Model>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create model (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create model (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     return res->id();
 }
 
-RenderedID      SceneEditor::_create(const RenderedMeta& info)
+RenderedID      SceneEditor::_create(const RenderedMeta& meta)
 {
     Scene*  parent  = pointer(m_scene.selected);
     if(!parent){
-        yNotice() << "Unable to create rendered (" << info.stem() << ") due to no parent scene";
+        yNotice() << "Unable to create rendered (" << meta.stem() << ") due to no parent scene";
         return {};
     }
     
-    Rendered*    res  = Tachyon::create<Rendered>(info);
+    Rendered*    res  = Tachyon::create<Rendered>(meta);
     if(!res){
-        yNotice() << "Unable to create rendered (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create rendered (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
  
@@ -536,31 +536,31 @@ RenderedID      SceneEditor::_create(const RenderedMeta& info)
     return res->id();
 }
 
-SpatialID       SceneEditor::_create(rendered_k, const SpatialMeta& info)
+SpatialID       SceneEditor::_create(rendered_k, const SpatialMeta& meta)
 {
     TypedID     pid = typed_for(m_rendered.selected);
     if(pid(Type::Rendered³))
-        return _create((Rendered³ID) m_rendered.selected, info);
+        return _create((Rendered³ID) m_rendered.selected, meta);
     return {};
 }
 
-SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialMeta& info)
+SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialMeta& meta)
 {
     Rendered³*     parent  = pointer(pid);
     if(!parent){
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to no corresponding rendered (id " << pid.id << ")";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding rendered (id " << pid.id << ")";
         return {};
     }
     
     const Rendered³Snap*     psnap   = snapshot(pid);
     if(!psnap){
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to no corresponding rendered (id " << pid.id << ") on the frame";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding rendered (id " << pid.id << ") on the frame";
         return {};
     }
     
-    Spatial*    res  = parent->create_child_on<Spatial>(EDIT, info);
+    Spatial*    res  = parent->create_child_on<Spatial>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create spatial (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     
@@ -569,11 +569,11 @@ SpatialID       SceneEditor::_create(Rendered³ID pid, const SpatialMeta& info)
     return res->id();
 }
 
-SceneID         SceneEditor::_create(const SceneMeta& info)
+SceneID         SceneEditor::_create(const SceneMeta& meta)
 {
-    Scene* res = Tachyon::create_on<Scene>(EDIT, info);
+    Scene* res = Tachyon::create_on<Scene>(EDIT, meta);
     if(!res){
-        yNotice() << "Unable to create scene (" << info.stem() << ") due to instantiation problem";
+        yNotice() << "Unable to create scene (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     return res->id();
@@ -639,10 +639,10 @@ void    SceneEditor::_default()
 Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
 {
     std::error_code ec;
-    std::filesystem::path   deftsx  = Asset::resolve(pp);
-    if(deftsx.empty())
+    Url   deftsx  = Asset::resolve(pp);
+    if(deftsx.path.empty())
         return ::errors::missing_default_file();
-    return _load(deftsx);
+    return _load(deftsx.path);
 }
 
 
@@ -727,11 +727,11 @@ void    SceneEditor::_title()
 
 void    SceneEditor::action_create_camera(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const CameraMeta*   info    = dynamic_cast<const CameraMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const CameraMeta*   meta    = dynamic_cast<const CameraMeta*>(itr.second);
+        if(!meta)
             continue;
-        CameraID    res = _create(*info);
+        CameraID    res = _create(*meta);
         if(res && !m_camera.selected)
             _activate(res);
     }
@@ -739,21 +739,21 @@ void    SceneEditor::action_create_camera(const Payload& pay)
 
 void    SceneEditor::action_create_camera_spatial(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SpatialMeta*   info    = dynamic_cast<const SpatialMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const SpatialMeta*   meta    = dynamic_cast<const SpatialMeta*>(itr.second);
+        if(!meta)
             continue;
-        _create(CAMERA, *info);
+        _create(CAMERA, *meta);
     }
 }
 
 void    SceneEditor::action_create_controller(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const ControllerMeta*   info    = dynamic_cast<const ControllerMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const ControllerMeta*   meta    = dynamic_cast<const ControllerMeta*>(itr.second);
+        if(!meta)
             continue;
-        ControllerID  res = _create(*info);
+        ControllerID  res = _create(*meta);
         if(res && !m_controller.selected)
             _activate(res);
     }
@@ -761,11 +761,11 @@ void    SceneEditor::action_create_controller(const Payload& pay)
 
 void    SceneEditor::action_create_light(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const LightMeta*   info    = dynamic_cast<const LightMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const LightMeta*   meta    = dynamic_cast<const LightMeta*>(itr.second);
+        if(!meta)
             continue;
-        LightID res = _create(*info);
+        LightID res = _create(*meta);
         if(res && !m_light.selected)
             _activate(res);
     }
@@ -773,21 +773,21 @@ void    SceneEditor::action_create_light(const Payload& pay)
 
 void    SceneEditor::action_create_light_spatial(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SpatialMeta*   info    = dynamic_cast<const SpatialMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const SpatialMeta*   meta    = dynamic_cast<const SpatialMeta*>(itr.second);
+        if(!meta)
             continue;
-        _create(LIGHT, *info);
+        _create(LIGHT, *meta);
     }
 }
 
 void    SceneEditor::action_create_model(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const ModelMeta*   info    = dynamic_cast<const ModelMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const ModelMeta*   meta    = dynamic_cast<const ModelMeta*>(itr.second);
+        if(!meta)
             continue;
-        ModelID res = _create(*info);
+        ModelID res = _create(*meta);
         if(res && !m_model.selected)
             _activate(res);
     }
@@ -796,11 +796,11 @@ void    SceneEditor::action_create_model(const Payload& pay)
 #if 0
 void    SceneEditor::action_create_physics(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const PhysicsInfo*   info    = dynamic_cast<const PhysicsInfo*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const PhysicsInfo*   meta    = dynamic_cast<const PhysicsInfo*>(itr.second);
+        if(!meta)
             continue;
-        PhysicsID res = _create(*info);
+        PhysicsID res = _create(*meta);
         if(res && !m_physics.selected)
             _activate(res);
     }
@@ -809,11 +809,11 @@ void    SceneEditor::action_create_physics(const Payload& pay)
 
 void    SceneEditor::action_create_rendered(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const RenderedMeta*   info    = dynamic_cast<const RenderedMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const RenderedMeta*   meta    = dynamic_cast<const RenderedMeta*>(itr.second);
+        if(!meta)
             continue;
-        RenderedID res = _create(*info);
+        RenderedID res = _create(*meta);
         if(res && !m_rendered.selected)
             _activate(res);
     }
@@ -821,21 +821,21 @@ void    SceneEditor::action_create_rendered(const Payload& pay)
 
 void    SceneEditor::action_create_rendered_spatial(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SpatialMeta*   info    = dynamic_cast<const SpatialMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const SpatialMeta*   meta    = dynamic_cast<const SpatialMeta*>(itr.second);
+        if(!meta)
             continue;
-        _create(RENDERED, *info);
+        _create(RENDERED, *meta);
     }
 }
 
 void    SceneEditor::action_create_scene(const Payload& pay)
 {
-    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateInfo))){
-        const SceneMeta*   info    = dynamic_cast<const SceneMeta*>(itr.second);
-        if(!info)
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const SceneMeta*   meta    = dynamic_cast<const SceneMeta*>(itr.second);
+        if(!meta)
             continue;
-        SceneID res = _create(*info);
+        SceneID res = _create(*meta);
         if(res && !m_scene.selected)
             _activate(res);
         m_scene.rebuild = true;
@@ -924,11 +924,11 @@ void    SceneEditor::on_controller_select_event(const ControllerSelectEvent&evt)
 void    SceneEditor::on_info_selection_changed_event(const InfoSelectionChangedEvent&evt)
 {
     if(const CameraMeta* p = dynamic_cast<const CameraMeta*>(evt.info()))
-        m_camera.info       = p;
+        m_camera.meta       = p;
     if(const RenderedMeta* p = dynamic_cast<const RenderedMeta*>(evt.info()))
-        m_rendered.info     = p;
+        m_rendered.meta     = p;
     if(const SceneMeta* p = dynamic_cast<const SceneMeta*>(evt.info()))
-        m_scene.info        = p;
+        m_scene.meta        = p;
 }
 
 void    SceneEditor::on_light_select_event(const LightSelectEvent&evt)

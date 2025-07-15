@@ -47,10 +47,10 @@ namespace yq::tachyon {
     /*! \brief Writer of trigger information
     */
     template <typename C>
-    class UIFormMeta::Writer : public UIElements::MyInfo::Writer<C> {
+    class UIFormMeta::Writer : public UIElements::MyMeta::Writer<C> {
     public:
     
-        Writer(UIFormMeta* pInfo) : UIElements::MyInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(UIFormMeta* pInfo) : UIElements::MyMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         

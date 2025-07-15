@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/asset/AssetFactory.hpp>
+#include <yq/asset/Asset.hxx>
 #include <tachyon/gfx/Raster.hpp>
 
 #include <yq/core/DelayInit.hpp>
@@ -81,20 +81,20 @@ namespace yq::tachyon::stb {
 
     void    reg_stb_loader()
     {
-        Raster::cache().add_loader(
-            { "bmp", "gif", "jpg", "jpeg", "hdr", "png", "tga" },
+        Raster::IO::add_loader(
+            {.extensions={ "bmp", "gif", "jpg", "jpeg", "hdr", "png", "tga" }},
             stb_loader
         );
-        Raster::cache().add_saver(
-            { "bmp" },
+        Raster::IO::add_saver(
+            {.extensions={ "bmp" }},
             stb_save_bmp
         );
-        Raster::cache().add_saver(
-            { "jpg" },
+        Raster::IO::add_saver(
+            {.extensions = { "jpg" }},
             stb_save_jpg
         );
-        Raster::cache().add_saver(
-            { "png" },
+        Raster::IO::add_saver(
+            {.extensions ={ "png" }},
             stb_save_png
         );
     }

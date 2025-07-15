@@ -20,11 +20,11 @@ namespace yq::tachyon {
     template <typename C>
     concept SomeUIForm = std::derived_from<C,UIForm>;
     
-    class UIFormMeta : public UIElements::MyInfo {    // using this syntax in case UIElements gets a dedicated info object
+    class UIFormMeta : public UIElements::MyMeta {    // using this syntax in case UIElements gets a dedicated info object
     public:
         template <typename> class Writer;
         
-        UIFormMeta(std::string_view, UIElements::MyInfo&, const std::source_location& sl = std::source_location::current());
+        UIFormMeta(std::string_view, UIElements::MyMeta&, const std::source_location& sl = std::source_location::current());
     
         bool    has_fields() const;
         

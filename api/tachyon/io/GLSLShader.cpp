@@ -6,7 +6,7 @@
 
 #include <tachyon/io/GLSLShader.hpp>
 
-#include <yq/asset/AssetFactory.hpp>
+#include <yq/asset/Asset.hxx>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
@@ -160,20 +160,24 @@ namespace yq::tachyon::glsl {
     }
     
     namespace {
+    
+        Shader* compile_load_shader(const std::filesystem::path& pth)
+        {
+yInfo() << "Trying to load shader " << pth.string();                
+            ShaderType  st  = shader_type(pth);
+            if(st == ShaderType())
+                throw create_error<"Bad file extension for a GLSL shader">();
+            auto [b,ec] = compile(pth);
+            if(ec)
+                throw ec;
+            return new Shader(st, Memory(COPY, b.data(), b.size()));
+        }
+    
         void    reg_glsl()
         {
-            Shader::cache().add_loader(
-                { "vert", "tesc", "tese", "frag", "geom", "comp", "mesh", "task", "rgen", "rint", "rahit", "rchit", "rmiss", "rcall" },
-                [](const std::filesystem::path&pth) -> Shader* 
-                {
-                    ShaderType  st  = shader_type(pth);
-                    if(st == ShaderType())
-                        throw create_error<"Bad file extension for a GLSL shader">();
-                    auto [b,ec] = compile(pth);
-                    if(ec)
-                        throw ec;
-                    return new Shader(st, Memory(COPY, b.data(), b.size()));
-                }
+            Shader::IO::add_loader(
+                {.extensions = { "vert", "tesc", "tese", "frag", "geom", "comp", "mesh", "task", "rgen", "rint", "rahit", "rchit", "rmiss", "rcall" }},
+                compile_load_shader
             );
         }
 

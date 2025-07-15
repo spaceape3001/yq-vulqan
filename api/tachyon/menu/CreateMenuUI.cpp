@@ -17,7 +17,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::CreateMenuUI)
 namespace yq::tachyon {
     struct CreateMenuUI::Item {
         std::string             title;
-        const TachyonMeta*      info    = nullptr;
+        const TachyonMeta*      meta    = nullptr;
     };
 
     void CreateMenuUI::init_meta()
@@ -26,7 +26,7 @@ namespace yq::tachyon {
         w.description("UI Menu for creating things");
     }
 
-    CreateMenuUI::CreateMenuUI(std::string_view kMenuName, const TachyonMeta& base, UIFlags flags) : CreateMenuUI(kMenuName, kParam_CreateInfo, base, flags)
+    CreateMenuUI::CreateMenuUI(std::string_view kMenuName, const TachyonMeta& base, UIFlags flags) : CreateMenuUI(kMenuName, kParam_CreateMeta, base, flags)
     {
     }
     
@@ -59,7 +59,7 @@ namespace yq::tachyon {
         
         for(const Item& i : m_items){
             if(ImGui::MenuItem(i.title.c_str())){
-                triggered(Payload().append(m_param, i.info));
+                triggered(Payload().append(m_param, i.meta));
             }
         }
     }
@@ -75,7 +75,7 @@ namespace yq::tachyon {
             if(!(ti->is_this(m_base) || ti->is_base(m_base)))
                 continue;
             
-            m_items.push_back({ .title=std::string(ti->stem()), .info=ti });
+            m_items.push_back({ .title=std::string(ti->stem()), .meta=ti });
         }
         std::stable_sort(m_items.begin(), m_items.end(), [](const Item& a, const Item& b) -> bool {
             return is_less_igCase(a.title, b.title);

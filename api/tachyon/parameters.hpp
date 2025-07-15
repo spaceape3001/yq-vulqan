@@ -10,7 +10,7 @@
 
 namespace yq::tachyon {
     enum : uint32_t {
-        kParam_CreateInfo       = 1,
+        kParam_CreateMeta       = 1,
         kParam_CameraSelect,
         kParam_ParentID
     };

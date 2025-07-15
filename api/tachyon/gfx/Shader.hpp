@@ -15,18 +15,9 @@ namespace yq::tachyon {
 
         //! Shader is a Vulkan compatible shader (compiled)
     class Shader : public Asset {
-        YQ_OBJECT_DECLARE(Shader, Asset)
+        YQ_ASSET_DECLARE(Shader, Asset)
     public:
     
-        //! Shader cache
-        static TypedAssetFactory<Shader>&  cache();
-        
-        //! Loads the specified shader
-        static Ref<const Shader>    load(std::string_view);
-        
-        //! Loads the specified shader
-        static Ref<const Shader>    load(std::string_view, const AssetLoadOptions&);
-
         //! Decodes the specified shader
         static Ref<const Shader>    decode(const ShaderSpec&);
         
@@ -51,7 +42,6 @@ namespace yq::tachyon {
         static void init_meta();
     
     private:
-        AssetFactory&       factory() const override;
         
         //! Private destructor as these are considered load-once and keep until application exit
         virtual ~Shader();

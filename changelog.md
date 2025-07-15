@@ -8,6 +8,7 @@
 * Reorganization to the tachyon library file layout (sorry, getting cluttered again)
 * All pipelines are preconfigured with dynamic viewport & scissors (this was chaos otherwise)
 * Scene Editor is now a semi-functional application
+* Asset overhaul (see toolbox)
 
 ## 2025.04.11
 

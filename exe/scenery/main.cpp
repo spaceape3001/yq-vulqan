@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     app.vulqan_libraries(LOAD);
     Meta::init();
     
-    for(const std::filesystem::path& pth : Asset::resolver().paths())
+    for(const std::filesystem::path& pth : Asset::all_paths())
         yInfo() << "asset path> " << pth;
     
     app.start();

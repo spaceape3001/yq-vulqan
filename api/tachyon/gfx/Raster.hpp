@@ -23,23 +23,14 @@ namespace yq::tachyon {
     */
     //  [2024-10-13] CSA -- Renamed from "Image" to avoid conflicts in the Mithril library
     class Raster : public Asset {
-        YQ_OBJECT_DECLARE(Raster, Asset)
+        YQ_ASSET_DECLARE(Raster, Asset)
     public:
     
-        //! Cache of images
-        static TypedAssetFactory<Raster>&    cache();
-        
-        //! Loads an image by key
-        static const RasterCPtr              load(std::string_view);
-
-        //! Loads an image by key
-        static const RasterCPtr              load(std::string_view, const AssetLoadOptions&);
-    
         //! Data for the image
-        const Memory      memory;
+        const Memory        memory;
         
         //! Information for the image
-        const RasterInfo   info;
+        const RasterInfo    info;
         
         //! Constructor (takes info & data)
         Raster(const RasterInfo&, Memory&&);
@@ -61,8 +52,6 @@ namespace yq::tachyon {
         ~Raster();
 
         static RasterInfo    info_for(const Pixmap&, DataFormat df={});
-
-        AssetFactory&       factory() const override;
 
         template <typename C>
         PixmapSPtr  _pixmap1() const;

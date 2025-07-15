@@ -19,7 +19,7 @@ namespace yq::tachyon {
     {
         if(!_sampler)
             return {};
-        RasterCPtr   img = Raster::load(pp);
+        RasterCPtr   img = Raster::IO::load(pp);
         if(!img)
             return {};
         return new Texture(img, _sampler, _info);
@@ -58,7 +58,7 @@ namespace yq::tachyon {
             return {};
         std::vector<RasterCPtr> imgs;
         for(std::string_view pp : pps){
-            RasterCPtr  img = Raster::load(pp);
+            RasterCPtr  img = Raster::IO::load(pp);
             if(!img)
                 return {};
             imgs.push_back(img);
@@ -90,7 +90,7 @@ namespace yq::tachyon {
             return {};
         std::vector<RasterCPtr> imgs;
         for(std::string_view pp : pps){
-            RasterCPtr  img = Raster::load(pp);
+            RasterCPtr  img = Raster::IO::load(pp);
             if(!img)
                 return {};
             imgs.push_back(img);

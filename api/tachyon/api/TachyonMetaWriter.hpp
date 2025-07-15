@@ -419,7 +419,7 @@ namespace yq::tachyon {
         using data_t    = typename C::MyData;
         using snap_t    = typename snap_fn::arg_t;
 
-        Fixer(std::string_view zName, typename C::MyBase::MyInfo& base, const std::source_location& sl=std::source_location::current()) : 
+        Fixer(std::string_view zName, typename C::MyBase::MyMeta& base, const std::source_location& sl=std::source_location::current()) : 
             ObjectFixer<C>(zName, base, sl)
         {
         }

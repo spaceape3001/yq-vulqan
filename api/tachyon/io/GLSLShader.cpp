@@ -163,7 +163,6 @@ namespace yq::tachyon::glsl {
     
         Shader* compile_load_shader(const std::filesystem::path& pth)
         {
-yInfo() << "Trying to load shader " << pth.string();                
             ShaderType  st  = shader_type(pth);
             if(st == ShaderType())
                 throw create_error<"Bad file extension for a GLSL shader">();

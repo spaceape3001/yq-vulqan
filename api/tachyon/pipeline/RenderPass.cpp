@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/gfx/RenderPass.hpp>
-#include <tachyon/gfx/RenderPassInfo.hpp>
+#include <tachyon/pipeline/RenderPass.hpp>
+#include <tachyon/pipeline/RenderPassInfo.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <map>
 

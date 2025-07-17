@@ -8,10 +8,10 @@
 #include "event/LightSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/texture.hpp>
 #include <tachyon/api/Light.hpp>
 #include <tachyon/api/LightData.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
 

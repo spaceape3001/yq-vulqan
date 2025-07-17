@@ -7,36 +7,6 @@
 
 #include <tachyon/api/StdThread.hpp>
 
-#include <tachyon/gfx/BorderColor.hpp>
-#include <tachyon/gfx/BufferUsage.hpp>
-#include <tachyon/gfx/CompareOp.hpp>
-#include <tachyon/gfx/ComponentSwizzle.hpp>
-#include <tachyon/gfx/CullMode.hpp>
-#include <tachyon/gfx/DataActivity.hpp>
-#include <tachyon/gfx/DataFormat.hpp>
-#include <tachyon/gfx/DrawMode.hpp>
-#include <tachyon/gfx/DynamicState.hpp>
-#include <tachyon/gfx/FrontFace.hpp>
-#include <tachyon/gfx/ImageAspect.hpp>
-#include <tachyon/gfx/ImageLayout.hpp>
-#include <tachyon/gfx/ImageTiling.hpp>
-#include <tachyon/gfx/ImageViewCreateFlags.hpp>
-#include <tachyon/gfx/ImageViewType.hpp>
-#include <tachyon/gfx/IndexType.hpp>
-#include <tachyon/gfx/LogicOp.hpp>
-#include <tachyon/gfx/PipelineBinding.hpp>
-#include <tachyon/gfx/PolygonMode.hpp>
-#include <tachyon/gfx/PresentMode.hpp>
-#include <tachyon/gfx/RasterType.hpp>
-#include <tachyon/gfx/SamplerAddressMode.hpp>
-#include <tachyon/gfx/SamplerCreateFlags.hpp>
-#include <tachyon/gfx/SamplerFilter.hpp>
-#include <tachyon/gfx/SamplerMipmapMode.hpp>
-#include <tachyon/gfx/ShaderType.hpp>
-#include <tachyon/gfx/SystemAllocationScope.hpp>
-#include <tachyon/gfx/Topology.hpp>
-#include <tachyon/gfx/VertexInputRate.hpp>
-
 
 #include <tachyon/api/Response.hpp>
 
@@ -44,6 +14,36 @@
 #include <tachyon/os/MouseButton.hpp>
 #include <tachyon/os/MouseMode.hpp>
 #include <tachyon/os/Platform.hpp>
+
+#include <tachyon/pipeline/BorderColor.hpp>
+#include <tachyon/pipeline/BufferUsage.hpp>
+#include <tachyon/pipeline/CompareOp.hpp>
+#include <tachyon/pipeline/ComponentSwizzle.hpp>
+#include <tachyon/pipeline/CullMode.hpp>
+#include <tachyon/pipeline/DataActivity.hpp>
+#include <tachyon/pipeline/DataFormat.hpp>
+#include <tachyon/pipeline/DrawMode.hpp>
+#include <tachyon/pipeline/DynamicState.hpp>
+#include <tachyon/pipeline/FrontFace.hpp>
+#include <tachyon/pipeline/ImageAspect.hpp>
+#include <tachyon/pipeline/ImageLayout.hpp>
+#include <tachyon/pipeline/ImageTiling.hpp>
+#include <tachyon/pipeline/ImageViewCreateFlags.hpp>
+#include <tachyon/pipeline/ImageViewType.hpp>
+#include <tachyon/pipeline/IndexType.hpp>
+#include <tachyon/pipeline/LogicOp.hpp>
+#include <tachyon/pipeline/PipelineBinding.hpp>
+#include <tachyon/pipeline/PolygonMode.hpp>
+#include <tachyon/pipeline/PresentMode.hpp>
+#include <tachyon/pipeline/RasterType.hpp>
+#include <tachyon/pipeline/SamplerAddressMode.hpp>
+#include <tachyon/pipeline/SamplerCreateFlags.hpp>
+#include <tachyon/pipeline/SamplerFilter.hpp>
+#include <tachyon/pipeline/SamplerMipmapMode.hpp>
+#include <tachyon/pipeline/ShaderType.hpp>
+#include <tachyon/pipeline/SystemAllocationScope.hpp>
+#include <tachyon/pipeline/Topology.hpp>
+#include <tachyon/pipeline/VertexInputRate.hpp>
 
 #include <yq/meta/Init.hpp>
 

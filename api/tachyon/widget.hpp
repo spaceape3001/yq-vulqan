@@ -6,5 +6,9 @@
 
 #pragma once
 
+/*
+    Include this file to always get everything needed for creating a widget.
+*/
+
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/api/WidgetMetaWriter.hpp>

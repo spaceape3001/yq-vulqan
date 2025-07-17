@@ -14,8 +14,8 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Rendered3.hpp>
 #include <tachyon/api/Rendered3Data.hpp>
-#include <tachyon/gfx/PushData.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
+#include <tachyon/pipeline/PushData.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
 #include <tachyon/vulkan/VqEnums.hpp>

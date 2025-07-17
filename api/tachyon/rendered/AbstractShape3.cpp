@@ -10,7 +10,7 @@
 #include <tachyon/aspect/AColorWriter.hxx>
 #include <tachyon/aspect/ADrawModeWriter.hxx>
 #include <tachyon/data/Vertex3.hpp>
-#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/pipeline/Texture.hpp>
 #include <tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AbstractShape³)

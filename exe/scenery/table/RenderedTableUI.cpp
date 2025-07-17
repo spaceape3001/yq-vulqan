@@ -8,10 +8,10 @@
 #include "event/RenderedSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/texture.hpp>
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
 

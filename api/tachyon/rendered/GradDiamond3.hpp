@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/rendered/Diamond3.hpp>
-#include <tachyon/gfx/VBO.hpp>
+#include <tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     class GradDiamond³ : public Diamond³ {

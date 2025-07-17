@@ -13,13 +13,13 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/asset/Raster.hpp>
 #include <tachyon/app/ViewerCreateInfo.hpp>
-#include <tachyon/gfx/Buffer.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
-#include <tachyon/gfx/Sampler.hpp>
-#include <tachyon/gfx/Shader.hpp>
-#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/pipeline/Buffer.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
+#include <tachyon/asset/Sampler.hpp>
+#include <tachyon/asset/Shader.hpp>
+#include <tachyon/pipeline/Texture.hpp>
 //#include <yq/tachyon/v/VqEnumerations.hpp>
 #include <tachyon/vulkan/VqEnums.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>

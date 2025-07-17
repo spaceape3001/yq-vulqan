@@ -33,6 +33,7 @@
 
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/parameters.hpp>
+#include <tachyon/texture.hpp>
 
 #include <tachyon/api/Camera3.hpp>
 #include <tachyon/api/Camera3Data.hpp>
@@ -47,6 +48,8 @@
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/app/Viewer.hpp>
 
+#include <tachyon/asset/Raster.hpp>
+
 #include <tachyon/camera/NullCamera.hpp>
 #include <tachyon/camera/SpaceCamera.hpp>
 #include <tachyon/command/controller/ListenCommand.hpp>
@@ -56,9 +59,6 @@
 #include <tachyon/controller/Space3Controller.hpp>
 
 #include <tachyon/event/panel/InfoSelectionChangedEvent.hpp>
-
-#include <tachyon/gfx/Raster.hpp>
-#include <tachyon/gfx/Texture.hpp>
 
 #include <tachyon/io/Save.hpp>
 #include <tachyon/io/save/SaveXML.hpp>

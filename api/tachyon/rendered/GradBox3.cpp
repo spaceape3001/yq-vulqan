@@ -8,7 +8,7 @@
 
 #include <tachyon/tags.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GradBox³)
 

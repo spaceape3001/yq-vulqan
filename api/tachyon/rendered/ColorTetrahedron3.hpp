@@ -9,7 +9,7 @@
 #include <tachyon/data/ColorVertexData.hpp>
 #include <tachyon/aspect/AColor.hpp>
 #include <tachyon/rendered/Tetrahedron3.hpp>
-#include <tachyon/gfx/UBO.hpp>
+#include <tachyon/pipeline/UBO.hpp>
 
 #include <array>
 

@@ -12,7 +12,7 @@
 #include <yq/core/Tristate.hpp>
 //#include <yq/tachyon/preamble.hpp>
 
-#include <tachyon/gfx/Pipeline.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/api/Tachyon.hpp>
 
 // ⁴

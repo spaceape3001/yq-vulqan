@@ -8,7 +8,7 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/gfx/Sampler.hpp>
+#include <tachyon/asset/Sampler.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>
 

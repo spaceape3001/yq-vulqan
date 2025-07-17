@@ -16,7 +16,7 @@
 
 #include <tachyon/config/vulqan.hpp>
 #include <tachyon/keywords.hpp>
-#include <tachyon/gfx/PresentMode.hpp>
+#include <tachyon/pipeline/PresentMode.hpp>
 #include <tachyon/typedef/raster.hpp>
 #include <tachyon/typedef/vi_buffer.hpp>
 #include <tachyon/typedef/vi_device.hpp>

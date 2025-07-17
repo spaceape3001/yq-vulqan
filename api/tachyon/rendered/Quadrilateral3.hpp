@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/data/ColorVertexData.hpp>
-#include <tachyon/gfx/VBO.hpp>
+#include <tachyon/pipeline/VBO.hpp>
 #include <tachyon/api/Rendered3.hpp>
 #include <array>
 

@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <tachyon/gfx/DataFormat.hpp>
-#include <tachyon/gfx/ComponentSwizzle.hpp>
-#include <tachyon/gfx/ImageAspect.hpp>
-#include <tachyon/gfx/ImageViewCreateFlags.hpp>
-#include <tachyon/gfx/ImageViewType.hpp>
+#include <tachyon/pipeline/DataFormat.hpp>
+#include <tachyon/pipeline/ComponentSwizzle.hpp>
+#include <tachyon/pipeline/ImageAspect.hpp>
+#include <tachyon/pipeline/ImageViewCreateFlags.hpp>
+#include <tachyon/pipeline/ImageViewType.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {

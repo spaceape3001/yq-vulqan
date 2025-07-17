@@ -16,7 +16,7 @@
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/app/ViewerData.hpp>
 #include <tachyon/app/ViewerException.hpp>
-#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/asset/Raster.hpp>
 #include <tachyon/os/GraphicsCard.hpp>
 #include <tachyon/os/Window.hpp>
 #include <tachyon/os/WindowData.hpp>

@@ -8,9 +8,9 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/gfx/Raster.hpp>
-#include <tachyon/gfx/RasterInfo.hpp>
-#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/asset/Raster.hpp>
+#include <tachyon/asset/RasterInfo.hpp>
+#include <tachyon/pipeline/Texture.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViImage.hpp>
 #include <tachyon/vulkan/ViLogging.hpp>

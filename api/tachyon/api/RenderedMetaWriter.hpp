@@ -8,7 +8,7 @@
 
 #include <tachyon/api/Rendered.hpp>
 #include <tachyon/api/RenderedData.hpp>
-#include <tachyon/gfx/PipelineWriter.hpp>
+#include <tachyon/pipeline/PipelineWriter.hpp>
 #include <tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {

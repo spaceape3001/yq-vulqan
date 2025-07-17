@@ -8,8 +8,8 @@
 
 #include <tachyon/rendered/Box3.hpp>
 #include <tachyon/aspect/AColor.hpp>
-#include <tachyon/gfx/UBO.hpp>
-#include <tachyon/gfx/VBO.hpp>
+#include <tachyon/pipeline/UBO.hpp>
+#include <tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     class ColorBox³ : public Box³, public AColor {

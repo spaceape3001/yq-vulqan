@@ -8,10 +8,10 @@
 #include "event/CameraSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/texture.hpp>
 #include <tachyon/api/Camera.hpp>
 #include <tachyon/api/CameraData.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
 

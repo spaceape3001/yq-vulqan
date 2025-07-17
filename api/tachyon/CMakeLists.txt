@@ -119,6 +119,10 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize4.cpp
     aspect/AVertices3.cpp
         
+    asset/Raster.cpp
+    asset/Sampler.cpp
+    asset/Shader.cpp
+
     camera/NullCamera.cpp
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
@@ -355,15 +359,6 @@ add_library(${PROJECT_NAME} SHARED
     
     event/window/FramebufferResizeEvent.cpp
     
-    gfx/Buffer.cpp
-    gfx/Pipeline.cpp
-    gfx/PipelineUtils.cpp
-    gfx/Raster.cpp
-    gfx/RenderPass.cpp
-    gfx/Sampler.cpp
-    gfx/Shader.cpp
-    gfx/Texture.cpp
-
     interface/IFarPlane.cpp
     interface/IFieldOfView.cpp
     interface/INearPlane.cpp
@@ -413,6 +408,12 @@ add_library(${PROJECT_NAME} SHARED
     panel/FrameMetricsUI.cpp
     panel/UIConcreteInfoList.cpp
     panel/UIInfoList.cpp
+
+    pipeline/Buffer.cpp
+    pipeline/Pipeline.cpp
+    pipeline/PipelineUtils.cpp
+    pipeline/RenderPass.cpp
+    pipeline/Texture.cpp
 
     post/AnyPost.cpp
     post/EmptyPost.cpp

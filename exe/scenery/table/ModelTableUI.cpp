@@ -8,10 +8,10 @@
 #include "event/ModelSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/texture.hpp>
 #include <tachyon/api/Model.hpp>
 #include <tachyon/api/ModelData.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
 

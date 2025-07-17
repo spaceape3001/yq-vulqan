@@ -8,7 +8,7 @@
 
 #include <tachyon/typedef/sampler.hpp>
 #include <yq/asset/Asset.hpp>
-#include <tachyon/gfx/SamplerInfo.hpp>
+#include <tachyon/asset/SamplerInfo.hpp>
 
 namespace yq::tachyon {
     class Sampler : public Asset {

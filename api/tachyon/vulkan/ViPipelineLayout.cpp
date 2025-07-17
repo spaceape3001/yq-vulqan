@@ -9,9 +9,9 @@
 #include <yq/core/StreamOps.hpp>
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
-#include <tachyon/gfx/PushData.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
+#include <tachyon/pipeline/PushData.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <tachyon/vulkan/VqEnums.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>

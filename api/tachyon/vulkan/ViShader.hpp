@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/typedef/shader.hpp>
-#include <tachyon/gfx/ShaderType.hpp>
+#include <tachyon/pipeline/ShaderType.hpp>
 
 #include <vulkan/vulkan_core.h>
 #include <system_error>

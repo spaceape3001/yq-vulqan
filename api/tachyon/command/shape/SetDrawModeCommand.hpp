@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/command/ShapeCommand.hpp>
-#include <tachyon/gfx/DrawMode.hpp>
+#include <tachyon/pipeline/DrawMode.hpp>
 
 namespace yq::tachyon {
     class SetDrawModeCommand : public ShapeCommand {

@@ -7,4 +7,5 @@
 #pragma once
 
 #include <tachyon/api/Camera.hpp>
+#include <tachyon/api/CameraMetaWriter.hpp>
 

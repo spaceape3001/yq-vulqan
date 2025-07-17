@@ -10,7 +10,7 @@
 
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
-#include <tachyon/gfx/RenderPassInfo.hpp>
+#include <tachyon/pipeline/RenderPassInfo.hpp>
 
 namespace yq::tachyon {
     class RenderPass : public RefCount, public UniqueID {

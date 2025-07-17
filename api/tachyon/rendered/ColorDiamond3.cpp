@@ -8,7 +8,7 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/aspect/AColor.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <tachyon/aspect/AColorWriter.hxx>
 
 

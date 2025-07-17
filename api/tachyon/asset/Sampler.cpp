@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/asset/AssetMetaWriter.hpp>
-#include <tachyon/gfx/Sampler.hpp>
+#include <tachyon/asset/Sampler.hpp>
 
 namespace yq::tachyon {
     SamplerCPtr    Sampler::simple()

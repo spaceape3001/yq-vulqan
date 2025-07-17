@@ -11,12 +11,12 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/pipeline/Texture.hpp>
 #include <tachyon/tags.hpp>
 
 namespace yq::tachyon {

@@ -12,13 +12,13 @@
 #include <yq/trait/member_offset.hpp>
 
 #include <tachyon/keywords.hpp>
-#include <tachyon/gfx/SBO.hpp>
-#include <tachyon/gfx/UBO.hpp>
-#include <tachyon/gfx/VBO.hpp>
+#include <tachyon/pipeline/SBO.hpp>
+#include <tachyon/pipeline/UBO.hpp>
+#include <tachyon/pipeline/VBO.hpp>
 #include <tachyon/config/vulqan.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
-#include <tachyon/gfx/PipelineUtils.hpp>
-#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
+#include <tachyon/pipeline/PipelineUtils.hpp>
+#include <tachyon/pipeline/Texture.hpp>
 
 namespace yq::tachyon {
 

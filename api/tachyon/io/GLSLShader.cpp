@@ -11,7 +11,7 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/process/Execute.hpp>
-#include <tachyon/gfx/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <yq/text/chars.hpp>
 #include <tachyon/logging.hpp>
 

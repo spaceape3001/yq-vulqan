@@ -8,10 +8,10 @@
 #include "event/ControllerSelectEvent.hpp"
 
 #include <tachyon/MyImGui.hpp>
+#include <tachyon/texture.hpp>
 #include <tachyon/api/Controller.hpp>
 #include <tachyon/api/ControllerData.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/gfx/Texture.hpp>
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
 

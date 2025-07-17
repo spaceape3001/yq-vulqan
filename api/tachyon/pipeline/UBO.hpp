@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/gfx/BufferObject.hpp>
+#include <tachyon/pipeline/BufferObject.hpp>
 
 namespace yq::tachyon {
 

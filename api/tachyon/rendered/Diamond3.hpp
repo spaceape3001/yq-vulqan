@@ -9,8 +9,8 @@
 #include <tachyon/aspect/AVertices3.hpp>
 #include <tachyon/aspect/ASize3.hpp>
 #include <tachyon/rendered/AbstractShape3.hpp>
-#include <tachyon/gfx/VBO.hpp>
-#include <tachyon/gfx/UBO.hpp>
+#include <tachyon/pipeline/VBO.hpp>
+#include <tachyon/pipeline/UBO.hpp>
 
 namespace yq::tachyon {
     class Diamond³ : public AbstractShape³, public AVertices³<6>, public ASize³ {

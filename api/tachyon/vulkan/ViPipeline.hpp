@@ -10,9 +10,9 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/LogPriority.hpp>
 #include <yq/core/Tristate.hpp>
-#include <tachyon/gfx/CullMode.hpp>
-#include <tachyon/gfx/PolygonMode.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
+#include <tachyon/pipeline/CullMode.hpp>
+#include <tachyon/pipeline/PolygonMode.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/typedef/vi_pipeline.hpp>
 #include <tachyon/typedef/vi_pipeline_layout.hpp>
 #include <tachyon/typedef/vi_render_pass.hpp>

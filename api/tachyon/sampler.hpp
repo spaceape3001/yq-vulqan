@@ -6,4 +6,4 @@
 
 #pragma once
 
-#include <yq/tachyon/gfx/Sampler.hpp>
+#include <tachyon/asset/Sampler.hpp>

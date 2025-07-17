@@ -8,7 +8,7 @@
 
 #include <tachyon/keywords.hpp>
 #include <tachyon/api/Interface.hpp>
-#include <tachyon/gfx/DrawMode.hpp>
+#include <tachyon/pipeline/DrawMode.hpp>
 
 namespace yq::tachyon {
     class PDrawMode;

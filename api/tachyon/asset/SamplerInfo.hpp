@@ -11,12 +11,12 @@
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/optional.hpp>
 
-#include <tachyon/gfx/BorderColor.hpp>
-#include <tachyon/gfx/CompareOp.hpp>
-#include <tachyon/gfx/SamplerAddressMode.hpp>
-#include <tachyon/gfx/SamplerCreateFlags.hpp>
-#include <tachyon/gfx/SamplerFilter.hpp>
-#include <tachyon/gfx/SamplerMipmapMode.hpp>
+#include <tachyon/pipeline/BorderColor.hpp>
+#include <tachyon/pipeline/CompareOp.hpp>
+#include <tachyon/pipeline/SamplerAddressMode.hpp>
+#include <tachyon/pipeline/SamplerCreateFlags.hpp>
+#include <tachyon/pipeline/SamplerFilter.hpp>
+#include <tachyon/pipeline/SamplerMipmapMode.hpp>
 
 namespace yq::tachyon {
 

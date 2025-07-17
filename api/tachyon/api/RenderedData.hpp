@@ -9,7 +9,7 @@
 //#include <yq/config/glm.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/container/BasicBuffer.hpp>
-#include <tachyon/gfx/Buffer.hpp>
+#include <tachyon/pipeline/Buffer.hpp>
 #include <tachyon/api/TachyonData.hpp>
 #include <tachyon/typedef/buffer.hpp>
 #include <tachyon/typedef/push.hpp>

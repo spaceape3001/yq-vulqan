@@ -12,8 +12,8 @@
 #include <tachyon/api/Payload.hpp>
 #include <tachyon/ui/UIStyle.hpp>
 #include <tachyon/api/Widget.hpp>
-#include <tachyon/gfx/Texture.hpp>
-#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/pipeline/Texture.hpp>
+#include <tachyon/asset/Raster.hpp>
 #include <tachyon/vulkan/ViGui.hpp>
 #include <tachyon/vulkan/ViContext.hpp>
 #include <yq/shape/AxBox2.hpp>

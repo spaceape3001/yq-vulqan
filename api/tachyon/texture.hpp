@@ -6,4 +6,8 @@
 
 #pragma once
 
-#include <tachyon/gfx/Texture.hpp>
+/*
+    Include this file for texture access....
+*/
+
+#include <tachyon/pipeline/Texture.hpp>

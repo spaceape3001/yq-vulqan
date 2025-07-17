@@ -6,7 +6,7 @@
 
 #include <tachyon/reply/viewer/ViewerScreenshotReply.hpp>
 #include <tachyon/api/ReplyMetaWriter.hpp>
-#include <tachyon/gfx/Raster.hpp>
+#include <tachyon/asset/Raster.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerScreenshotReply)
 

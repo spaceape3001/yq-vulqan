@@ -8,8 +8,8 @@
 
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/gfx/Raster.hpp>
-#include <tachyon/gfx/ImageViewInfo.hpp>
+#include <tachyon/asset/Raster.hpp>
+#include <tachyon/pipeline/ImageViewInfo.hpp>
 #include <tachyon/vulkan/VqLogging.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/VqUtils.hpp>

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <tachyon/rendered/Triangle3.hpp>
-#include <tachyon/gfx/VBO.hpp>
+#include <tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     /*! \brief Triangle for three dimensions

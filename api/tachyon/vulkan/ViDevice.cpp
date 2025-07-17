@@ -21,12 +21,12 @@
 
 #include <tachyon/vulkan/VqUtils.hpp>
 
-#include <tachyon/gfx/Buffer.hpp>
-#include <tachyon/gfx/Pipeline.hpp>
-#include <tachyon/gfx/Raster.hpp>
-#include <tachyon/gfx/Sampler.hpp>
-#include <tachyon/gfx/Shader.hpp>
-#include <tachyon/gfx/Texture.hpp>
+#include <tachyon/pipeline/Buffer.hpp>
+#include <tachyon/pipeline/Pipeline.hpp>
+#include <tachyon/asset/Raster.hpp>
+#include <tachyon/asset/Sampler.hpp>
+#include <tachyon/asset/Shader.hpp>
+#include <tachyon/pipeline/Texture.hpp>
 
 
 namespace yq::tachyon {

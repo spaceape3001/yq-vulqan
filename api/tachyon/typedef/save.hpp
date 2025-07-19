@@ -34,7 +34,7 @@ namespace yq::tachyon {
     
     struct SaveProperty;
     
-    class SaveAsset;
+    class SaveResource;
     class SaveDelegate;
     class SaveObject;
     class SaveTachyon;

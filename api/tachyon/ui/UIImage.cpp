@@ -7,7 +7,7 @@
 #include "UIImage.hpp"
 #include "UIImageWriter.hpp"
 #include <tachyon/ui/UIElementMetaWriter.hpp>
-#include <tachyon/asset/Raster.hpp>
+#include <tachyon/resource/Raster.hpp>
 #include <tachyon/pipeline/Texture.hpp>
 #include <tachyon/logging.hpp>
 #include <tachyon/ui/UIStyle.hpp>

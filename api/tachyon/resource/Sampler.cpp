@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/asset/AssetMetaWriter.hpp>
-#include <tachyon/asset/Sampler.hpp>
+#include <yq/resource/ResourceMetaWriter.hpp>
+#include <tachyon/resource/Sampler.hpp>
 
 namespace yq::tachyon {
     SamplerCPtr    Sampler::simple()
@@ -25,7 +25,7 @@ namespace yq::tachyon {
     void    Sampler::init_meta()
     {
         auto w = writer<Sampler>();
-        w.description("Sampler Asset");
+        w.description("Sampler Resource");
         w.options({Meta::Flag::SAMPLER});
     }
 }

@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/api/meta/AssetProperty.hpp>
+#include <tachyon/api/meta/ResourceProperty.hpp>
 #include <yq/meta/MetaWriter.hpp>
-#include <tachyon/api/meta/DynamicAssetSetter.hpp>
+#include <tachyon/api/meta/DynamicResourceSetter.hpp>
 
 namespace yq::tachyon {
-    template <SomeAsset A>
-    class AssetProperty::Writer : public Meta::Writer {
+    template <SomeResource A>
+    class ResourceProperty::Writer : public Meta::Writer {
     public:
-        Writer(AssetProperty* pi) : Meta::Writer(pi) {}
+        Writer(ResourceProperty* pi) : Meta::Writer(pi) {}
     };
     
-    template <SomeObject O, SomeAsset A> 
-    class AssetProperty::PropW : public Writer<A> {
+    template <SomeObject O, SomeResource A> 
+    class ResourceProperty::PropW : public Writer<A> {
     public:
     
         template <typename C>
@@ -29,11 +29,11 @@ namespace yq::tachyon {
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFR_AssetSetter<O,C,A>(static_cast<AssetProperty*>(Meta::Writer::m_meta), sl, function);
+                new IFR_ResourceSetter<O,C,A>(static_cast<ResourceProperty*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
     
-        PropW(AssetProperty* pi) : Writer<A>(pi) {}
+        PropW(ResourceProperty* pi) : Writer<A>(pi) {}
     };
 }

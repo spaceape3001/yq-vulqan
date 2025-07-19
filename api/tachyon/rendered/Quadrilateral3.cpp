@@ -12,7 +12,7 @@
 #include <yq/vector/Vector3.hxx>
 
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 
 
 namespace yq::tachyon {
@@ -25,8 +25,8 @@ namespace yq::tachyon {
         {
             auto& p = w.pipeline();
             
-            p.shader("assets/colored.vert");
-            p.shader("assets/colored.frag");
+            p.shader("resources/colored.vert");
+            p.shader("resources/colored.frag");
 
             p.vertex(&Quadrilateral³::m_vertex, DataActivity::FIXED)
                 .attribute(&ColorVertexData::position)

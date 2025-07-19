@@ -48,7 +48,7 @@
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/app/Viewer.hpp>
 
-#include <tachyon/asset/Raster.hpp>
+#include <tachyon/resource/Raster.hpp>
 
 #include <tachyon/camera/NullCamera.hpp>
 #include <tachyon/camera/SpaceCamera.hpp>
@@ -639,7 +639,7 @@ void    SceneEditor::_default()
 Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
 {
     std::error_code ec;
-    Url   deftsx  = Asset::resolve(pp);
+    Url   deftsx  = Resource::resolve(pp);
     if(deftsx.path.empty())
         return ::errors::missing_default_file();
     return _load(deftsx.path);

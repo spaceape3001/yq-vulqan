@@ -16,7 +16,7 @@ namespace yq::tachyon {
     public:
     
         virtual const ObjectMeta&       object() const override { return meta<O>(); }
-        virtual const DelegateMeta&     asset() const override { return meta<A>(); }
+        virtual const DelegateMeta&     resource() const override { return meta<A>(); }
     
     protected:
         DynamicDelegateSetter(DelegateProperty* propInfo, const std::source_location& sl) : DelegateSetter(propInfo, sl) 

@@ -8,7 +8,7 @@
 
 #include <tachyon/tags.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GradDiamond³)
 
@@ -25,8 +25,8 @@ namespace yq::tachyon {
         w.property("bottom", &GradDiamond³::color_bottom).setter(&GradDiamond³::set_color_bottom).tag(kTag_Save);
         
         auto& p = w.pipeline();
-        p.shader("assets/shape3/gradient.vert");
-        p.shader("assets/shape3/gradient.frag");
+        p.shader("resources/shape3/gradient.vert");
+        p.shader("resources/shape3/gradient.frag");
 
         p.vertex(&GradDiamond³::m_vbo, DataActivity::DYNAMIC)
             .attribute(&VertexC::position)

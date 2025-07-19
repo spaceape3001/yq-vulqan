@@ -182,5 +182,5 @@ namespace yq::tachyon {
         void    _kill();
     };
 
-    void     configure_standand_asset_path();
+    void     configure_standand_resource_path();
 }

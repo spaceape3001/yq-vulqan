@@ -60,5 +60,5 @@ namespace yq::tachyon::errors {
     
     using not_object_looking_for            = error_db::entry<"This isn't the object we're looking for">;
     using not_delegate_looking_for          = error_db::entry<"This isn't the delegate we're looking for">;
-    using not_asset_looking_for             = error_db::entry<"This isn't the asset we're looking for">;
+    using not_resource_looking_for             = error_db::entry<"This isn't the resource we're looking for">;
 }

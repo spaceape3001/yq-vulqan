@@ -1,6 +1,6 @@
 # CHANGE LOG
 
-## Upcoming
+## 2025.07.19
 
 * When creating tachyons, include `<tachyon/api/Tachyon.hxx>` to get the templated create code (it's been moved)
 * Global font scaling set to 1.25; which makes it readable but with artifacts on my monitor.  Will need to make this a setting and do it properly (with a font load)
@@ -8,7 +8,7 @@
 * Reorganization to the tachyon library file layout (sorry, getting cluttered again)
 * All pipelines are preconfigured with dynamic viewport & scissors (this was chaos otherwise)
 * Scene Editor is now a semi-functional application
-* Asset overhaul (see toolbox)
+* Asset overhaul (see toolbox) including a **RENAME** to Resource (so we can use the Asset name here.)
 
 ## 2025.04.11
 

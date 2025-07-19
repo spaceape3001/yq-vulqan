@@ -7,22 +7,22 @@
 #pragma once
 
 #include <yq/core/Memory.hpp>
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 #include <tachyon/pipeline/ShaderType.hpp>
 #include <tachyon/typedef/shader.hpp>
 
 namespace yq::tachyon {
 
         //! Shader is a Vulkan compatible shader (compiled)
-    class Shader : public Asset {
-        YQ_ASSET_DECLARE(Shader, Asset)
+    class Shader : public Resource {
+        YQ_RESOURCE_DECLARE(Shader, Resource)
     public:
     
         //! Decodes the specified shader
         static Ref<const Shader>    decode(const ShaderSpec&);
         
         //! Decodes the specified shader
-        static Ref<const Shader>    decode(const ShaderSpec&, const AssetLoadOptions&);
+        static Ref<const Shader>    decode(const ShaderSpec&, const ResourceLoadOptions&);
         
         //! Gets the name to the specified shader
         static std::string          name(const ShaderSpec&);

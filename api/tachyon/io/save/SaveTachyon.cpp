@@ -7,8 +7,8 @@
 #include "SaveTachyon.hpp"
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/Delegate.hpp>
-#include <yq/asset/Asset.hpp>
-#include <tachyon/api/meta/AssetProperty.hpp>
+#include <yq/resource/Resource.hpp>
+#include <tachyon/api/meta/ResourceProperty.hpp>
 #include <tachyon/api/meta/DelegateProperty.hpp>
 #include <tachyon/io/Save.hpp>
 
@@ -25,11 +25,11 @@ namespace yq::tachyon {
                 m_owner = tac.owner();
         }
         
-        for(const AssetProperty* aprops : tac.metaInfo().assets(ALL).all){
-            AssetCPtr   asset   = aprops->get(&tac);
-            if(!asset)
+        for(const ResourceProperty* aprops : tac.metaInfo().resources(ALL).all){
+            ResourceCPtr   resource   = aprops->get(&tac);
+            if(!resource)
                 continue;
-            m_assets.push_back({aprops, save.insert(*asset)});
+            m_resources.push_back({aprops, save.insert(*resource)});
         }
         
         for(const DelegateProperty* dprops : tac.metaInfo().delegates(ALL).all){
@@ -54,10 +54,10 @@ namespace yq::tachyon {
     {
     }
 
-    void        SaveTachyon::append(asset_t v)
+    void        SaveTachyon::append(resource_t v)
     {
-        if(v.info && v.asset)
-            m_assets.push_back(v);
+        if(v.info && v.resource)
+            m_resources.push_back(v);
     }
     
     void        SaveTachyon::append(child_k, uint64_t v)

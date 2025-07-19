@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 #include <yq/core/Memory.hpp>
 #include <yq/raster/forward.hpp>
-#include <tachyon/asset/RasterInfo.hpp>
+#include <tachyon/resource/RasterInfo.hpp>
 #include <tachyon/typedef/raster.hpp>
 
 namespace yq::tachyon {
@@ -17,14 +17,16 @@ namespace yq::tachyon {
 
     /*! \brief Raster image (data)
     
-        A raster image is *not* drawable, it's data/asset for the GPU or other 
+        A raster image is *not* drawable, it's data/resource for the GPU or other 
         render/destination.  Its data may be copied into a pixmap for 
         manipulation.
     */
     //  [2024-10-13] CSA -- Renamed from "Image" to avoid conflicts in the Mithril library
-    class Raster : public Asset {
-        YQ_ASSET_DECLARE(Raster, Asset)
+    class Raster : public Resource {
+        YQ_RESOURCE_DECLARE(Raster, Resource)
     public:
+    
+        // Need to transition these toward getters... I think....
     
         //! Data for the image
         const Memory        memory;

@@ -6,17 +6,17 @@
 
 #pragma once
 
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 #include <tachyon/typedef/font.hpp>
 
 struct ImFont;
 
 namespace yq::tachyon {
-    class FontInfo : public AssetMeta {
+    class FontInfo : public ResourceMeta {
     public:
     };
 
-    class Font : public Asset {
+    class Font : public Resource {
     public:
     
     private:

@@ -8,7 +8,7 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/aspect/AColor.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/aspect/AColorWriter.hxx>
 
 
@@ -22,8 +22,8 @@ namespace yq::tachyon {
         AColor::init_meta(w);
         
         auto& p = w.pipeline();
-        p.shader("assets/shape3/color.vert");
-        p.shader("assets/shape3/color.frag");
+        p.shader("resources/shape3/color.vert");
+        p.shader("resources/shape3/color.frag");
 
         p.vertex(&ColorDiamond³::m_vbo, DataActivity::DYNAMIC)
             .attribute(&VertexS::position)

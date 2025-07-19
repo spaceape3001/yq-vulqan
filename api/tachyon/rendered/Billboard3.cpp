@@ -8,7 +8,7 @@
 
 #include <yq/shape/AxBox2.hpp>
 
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
@@ -20,7 +20,7 @@ namespace yq::tachyon {
         auto w = writer<Billboard³>();
         {
             auto& p = w.pipeline();
-            p.shaders({ "assets/Billboard3.vert", "assets/Billboard3.frag" });
+            p.shaders({ "resources/Billboard3.vert", "resources/Billboard3.frag" });
             p.vertex(&Billboard³::m_vertex, DataActivity::FIXED)
                 .attribute<glm::vec2>(&VData::position)
                 .attribute<glm::vec2>(&VData::uv)

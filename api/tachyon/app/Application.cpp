@@ -30,7 +30,7 @@
 
 #include <tachyon/vulkan/VulqanManager.hpp>
 
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/meta/Init.hpp>
@@ -52,13 +52,13 @@ namespace yq::tachyon {
         return ret;
     }
     
-    void     configure_standand_asset_path()
+    void     configure_standand_resource_path()
     {
         static bool s_done  = false;
         if(s_done)
             return;
             
-        Asset::add_paths(default_data_directory());
+        Resource::add_paths(default_data_directory());
         s_done = true;
     }
 
@@ -83,7 +83,7 @@ namespace yq::tachyon {
         }
         s_app   = this;
         
-        configure_standand_asset_path();
+        configure_standand_resource_path();
     }
     
 
@@ -415,7 +415,7 @@ namespace yq::tachyon {
     void                    Application::vulqan_libraries(load_k)
     {
         for(std::string_view p : m_config.data_paths())
-            Asset::add_paths(p);
+            Resource::add_paths(p);
         for(std::string_view l : m_config.vulqan_libraries()){
             std::string     libName = os::expected_shared_library_name(l);
             // TODO ... make this use the proper lib/app directory

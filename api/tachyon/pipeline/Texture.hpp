@@ -9,7 +9,7 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/color/RGBA.hpp>
-#include <tachyon/asset/SamplerInfo.hpp>
+#include <tachyon/resource/SamplerInfo.hpp>
 #include <tachyon/pipeline/DataFormat.hpp>
 #include <tachyon/pipeline/ComponentSwizzle.hpp>
 #include <tachyon/pipeline/ImageAspect.hpp>

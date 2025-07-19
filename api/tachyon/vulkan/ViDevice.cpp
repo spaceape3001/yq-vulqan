@@ -23,9 +23,9 @@
 
 #include <tachyon/pipeline/Buffer.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
-#include <tachyon/asset/Raster.hpp>
-#include <tachyon/asset/Sampler.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Raster.hpp>
+#include <tachyon/resource/Sampler.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/pipeline/Texture.hpp>
 
 

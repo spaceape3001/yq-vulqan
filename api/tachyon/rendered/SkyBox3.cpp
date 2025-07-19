@@ -6,7 +6,7 @@
 
 #include "SkyBox3.hpp"
 #include <tachyon/logging.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
 
 namespace yq::tachyon {
@@ -56,7 +56,7 @@ namespace yq::tachyon {
         
         {
             auto& p = w.pipeline();
-            p.shaders({ "assets/SkyBox3.vert", "assets/SkyBox3.frag" });
+            p.shaders({ "resources/SkyBox3.vert", "resources/SkyBox3.frag" });
             p.vertex(SkyBox³::s_vertex, DataActivity::COMMON);
             p.index(SkyBox³::s_index, DataActivity::COMMON);
             p.topology(Topology::TriangleList);

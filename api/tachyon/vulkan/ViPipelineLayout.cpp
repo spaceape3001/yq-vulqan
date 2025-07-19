@@ -11,7 +11,7 @@
 #include <tachyon/logging.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/pipeline/PushData.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/vulkan/VqEnums.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViDevice.hpp>

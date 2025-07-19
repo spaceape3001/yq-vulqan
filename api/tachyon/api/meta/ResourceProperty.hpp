@@ -8,7 +8,7 @@
 
 #include <yq/meta/Meta.hpp>
 #include <yq/meta/MetaBinder.hpp>
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 
 namespace yq {
     class Object;
@@ -17,37 +17,37 @@ namespace yq {
 
 
 namespace yq::tachyon {
-    class AssetGetter;
-    class AssetSetter;
+    class ResourceGetter;
+    class ResourceSetter;
     
-    /*! \brief Asset property (of tachyon, other assets)
+    /*! \brief Resource property (of tachyon, other resources)
     */
-    class AssetProperty : public Meta {
-        friend class AssetGetter;
-        friend class AssetSetter;
+    class ResourceProperty : public Meta {
+        friend class ResourceGetter;
+        friend class ResourceSetter;
     public:
     
         using Meta::set;
     
         //! Our writer
-        template <SomeAsset> class Writer;
+        template <SomeResource> class Writer;
         
         //! Writer for statics
-        //template <SomeAsset> class VarW;
+        //template <SomeResource> class VarW;
         
         //! Writer for dynamics
-        template <SomeObject, SomeAsset> class PropW;
+        template <SomeObject, SomeResource> class PropW;
 
-        const AssetMeta&    asset() const { return m_asset; }
+        const ResourceMeta&    resource() const { return m_resource; }
         
-        AssetCPtr           get(const Object*) const;
-        std::error_code     set(Object*, const AssetCPtr&) const;
+        ResourceCPtr           get(const Object*) const;
+        std::error_code     set(Object*, const ResourceCPtr&) const;
         
         //! Our getter
-        const AssetGetter*   getter() const { return m_getter; }
+        const ResourceGetter*   getter() const { return m_getter; }
 
         //! Our setter (may be NULL for read-only)
-        const AssetSetter*   setter() const { return m_setter; }
+        const ResourceSetter*   setter() const { return m_setter; }
 
         /*! \brief Master Constructor 
             \note   Only use directly this if you know what you're doing, otherwise, stay away
@@ -57,11 +57,11 @@ namespace yq::tachyon {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        AssetProperty(std::string_view zName, const std::source_location& sl, const AssetMeta& type, ObjectMeta* parent);
+        ResourceProperty(std::string_view zName, const std::source_location& sl, const ResourceMeta& type, ObjectMeta* parent);
 
     private:
-        const AssetSetter*      m_setter    = nullptr;
-        const AssetGetter*      m_getter    = nullptr;
-        const AssetMeta&        m_asset;
+        const ResourceSetter*      m_setter    = nullptr;
+        const ResourceGetter*      m_getter    = nullptr;
+        const ResourceMeta&        m_resource;
     };
 }

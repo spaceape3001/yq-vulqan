@@ -7,22 +7,22 @@
 #pragma once
 
 #include <yq/meta/Meta.hpp>
-#include <yq/typedef/asset.hpp>
+#include <yq/typedef/resource.hpp>
 
 namespace yq {
-    class AssetMeta;
+    class ResourceMeta;
     class Object;
     class ObjectMeta;
 }
 
 namespace yq::tachyon {
-    class AssetProperty;
+    class ResourceProperty;
 
     /*! \brief Abstract PropGetter
         
         This is an abstract "getter" that may or may not have an object associated with it.
     */
-    class AssetGetter : public Meta {
+    class ResourceGetter : public Meta {
     public:
     
         /*! \brief "Gets" the value for the meta
@@ -30,7 +30,7 @@ namespace yq::tachyon {
             \param[out] dst     Pointer to destination, assumed to be correct buffer.
             \param[in] obj      Pointer to the object, if used.  (Ignored on static properties.)
         */
-        virtual AssetCPtr           get(const Object* obj) const = 0;
+        virtual ResourceCPtr           get(const Object* obj) const = 0;
 
         /*! \brief Object/Type meta type expected for src
         
@@ -40,14 +40,14 @@ namespace yq::tachyon {
         
         /*! \brief Object/Type for the data
         */
-        virtual const AssetMeta&     asset() const = 0;
+        virtual const ResourceMeta&     resource() const = 0;
         
         /*! \brief Property this is associated with.
         */
-        const AssetProperty* property() const;
+        const ResourceProperty* property() const;
 
     protected:
-        AssetGetter(AssetProperty*, const std::source_location& sl);
+        ResourceGetter(ResourceProperty*, const std::source_location& sl);
     };
     
 }

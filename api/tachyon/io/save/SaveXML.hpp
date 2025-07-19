@@ -15,7 +15,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class SaveAsset;
+    class SaveResource;
     class SaveDelegate;
     class SaveObject;
     class SaveTachyon;
@@ -39,7 +39,7 @@ namespace yq::tachyon {
         virtual std::error_code    read(const XmlDocument&, std::string_view fname) override;
         virtual std::error_code    write(XmlDocument&) const override;
         
-        void        write(XmlNode&, asset_k,    const SaveAsset&) const;
+        void        write(XmlNode&, resource_k,    const SaveResource&) const;
         void        write(XmlNode&, delegate_k, const SaveDelegate&) const;
         void        write(XmlNode&, object_k,   const SaveObject&) const;
         void        write(XmlNode&, tachyon_k,  const SaveTachyon&) const;
@@ -47,7 +47,7 @@ namespace yq::tachyon {
         
         void        write(XmlNode&, const Any&) const;
         
-        std::error_code    read(const XmlNode&, asset_k);
+        std::error_code    read(const XmlNode&, resource_k);
         std::error_code    read(const XmlNode&, delegate_k);
         std::error_code    read(const XmlNode&, object_k);
         std::error_code    read(const XmlNode&, tachyon_k);
@@ -55,7 +55,7 @@ namespace yq::tachyon {
         std::error_code    read(const XmlNode&, variable_k);
         
         std::error_code    read(Any&, const XmlNode&, const TypeMeta&);
-        std::error_code    read(SaveAsset&,     asset_k, const XmlNode&);
+        std::error_code    read(SaveResource&,     resource_k, const XmlNode&);
         std::error_code    read(SaveDelegate&,  delegate_k, const XmlNode&);
         std::error_code    read(SaveObject&,    object_k, const XmlNode&);
         std::error_code    read(SaveTachyon&,   tachyon_k, const XmlNode&);

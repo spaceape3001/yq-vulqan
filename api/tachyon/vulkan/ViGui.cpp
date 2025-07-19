@@ -6,8 +6,8 @@
 
 #include <tachyon/vulkan/ViGui.hpp>
 
-#include <yq/asset/Asset.hpp>
-#include <yq/asset/AssetIO.hpp>
+#include <yq/resource/Resource.hpp>
+#include <yq/resource/ResourceIO.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/file/FileResolver.hpp>
 #include <yq/math/integer.hpp>
@@ -19,11 +19,11 @@
 
 #include <tachyon/logging.hpp>
 #include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/asset/Raster.hpp>
+#include <tachyon/resource/Raster.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/pipeline/PipelineWriter.hpp>
-#include <tachyon/asset/Sampler.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Sampler.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/pipeline/Texture.hpp>
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/app/ViewerState.hpp>

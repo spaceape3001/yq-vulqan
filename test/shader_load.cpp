@@ -17,12 +17,12 @@ using namespace yq::tachyon;
 
 ut::suite tests = []{
     "resolving"_test = []{
-        //const auto&     resolver    = Asset::resolver();
+        //const auto&     resolver    = Resource::resolver();
         
         //std::filesystem::path   pp  = resolver.partial("hello.frag");
         //expect(false == pp.empty());
         
-        Url   rp  = Asset::resolve("sdk/hello/hello.frag");
+        Url   rp  = Resource::resolve("sdk/hello/hello.frag");
         expect(false == rp.path.empty());
     };
     
@@ -39,10 +39,10 @@ int main()
 {
     log_to_std_output();
     Meta::init();
-    configure_standand_asset_path();
+    configure_standand_resource_path();
 
     #if 0
-    const auto& resolver    = tachyon::Asset::resolver();
+    const auto& resolver    = tachyon::Resource::resolver();
     const auto& paths   = resolver.paths();
     std::cout << "Resolver has " << paths.size() << " path(s)\n";
     size_t n=1;

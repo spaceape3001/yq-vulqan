@@ -12,7 +12,7 @@
 #include <yq/shape/shape_utils.hpp>
 
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
@@ -84,8 +84,8 @@ namespace yq::tachyon {
 
         {
             auto& p = w.pipeline(Pipeline::Role::SolidColor);
-            p.shader("assets/shape3/color.vert");
-            p.shader("assets/shape3/color.frag");
+            p.shader("resources/shape3/color.vert");
+            p.shader("resources/shape3/color.frag");
 
             p.vertex(&Triangle³::m_vertexS, DataActivity::DYNAMIC)
                 .attribute(&VertexS::position)
@@ -98,8 +98,8 @@ namespace yq::tachyon {
 
         {
             auto& p = w.pipeline(Pipeline::Role::ColorCorner);
-            p.shader("assets/shape3/gradient.vert");
-            p.shader("assets/shape3/gradient.frag");
+            p.shader("resources/shape3/gradient.vert");
+            p.shader("resources/shape3/gradient.frag");
 
             p.vertex(&Triangle³::m_vertexC, DataActivity::DYNAMIC)
                 .attribute(&VertexC::position)

@@ -9,18 +9,18 @@
 #include <tachyon/api/Tachyon.hpp>
 #include <tachyon/api/Thread.hpp>
 #include <tachyon/api/Frame.hpp>
-#include <tachyon/api/meta/AssetProperty.hpp>
+#include <tachyon/api/meta/ResourceProperty.hpp>
 #include <tachyon/api/meta/DelegateProperty.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/tags.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/PropertyMeta.hpp>
-#include <tachyon/io/save/SaveAsset.hpp>
+#include <tachyon/io/save/SaveResource.hpp>
 #include <tachyon/io/save/SaveDelegate.hpp>
 #include <tachyon/io/save/SaveObject.hpp>
 #include <tachyon/io/save/SaveTachyon.hpp>
 #include <tachyon/io/save/SaveThread.hpp>
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 #include <yq/file/FileResolver.hpp>
 #include <tachyon/command/tachyon/SetParentCommand.hpp>
 #include <tachyon/command/thread/ScheduleCommand.hpp>
@@ -54,8 +54,8 @@ namespace yq::tachyon {
         }
         
         if(!fn){
-            if(dynamic_cast<const Asset*>(&obj)){
-                fn  = &Save::save_asset;
+            if(dynamic_cast<const Resource*>(&obj)){
+                fn  = &Save::save_resource;
             } 
             
             if(dynamic_cast<const Delegate*>(&obj)){
@@ -85,9 +85,9 @@ namespace yq::tachyon {
         return (*fn)(save, obj);
     }
 
-    SaveObject* Save::save_asset(Save&save, const Object&obj)
+    SaveObject* Save::save_resource(Save&save, const Object&obj)
     {
-        return new SaveAsset(save, dynamic_cast<const Asset&>(obj));
+        return new SaveResource(save, dynamic_cast<const Resource&>(obj));
     }
     
     SaveObject* Save::save_delegate(Save&save, const Object&obj)
@@ -138,15 +138,15 @@ namespace yq::tachyon {
     {
         if(m_prepped)
             return;
-        m_assetPath = Asset::all_paths();
+        m_resourcePath = Resource::all_paths();
         m_prepped   = true;
         m_threads   = Thread::standard_thread_reverse_map();
     }
 
-    void    Save::add_asset_path(const std::filesystem::path&fp)
+    void    Save::add_resource_path(const std::filesystem::path&fp)
     {
         _prep();
-        m_assetPath.push_back(fp);
+        m_resourcePath.push_back(fp);
     }
 
     void    Save::add_variable(const std::string& k, Any&&v)
@@ -154,19 +154,19 @@ namespace yq::tachyon {
         m_variables[k] = std::move(v);
     }
 
-    SaveAsset*              Save::asset(uint64_t i)
+    SaveResource*              Save::resource(uint64_t i)
     {
         SaveObject* obj = object(i);
-        if(obj && obj -> isAsset())
-            return static_cast<SaveAsset*>(obj);
+        if(obj && obj -> isResource())
+            return static_cast<SaveResource*>(obj);
         return nullptr;
     }
     
-    const SaveAsset*        Save::asset(uint64_t i) const
+    const SaveResource*        Save::resource(uint64_t i) const
     {
         const SaveObject* obj = object(i);
-        if(obj && obj -> isAsset())
-            return static_cast<const SaveAsset*>(obj);
+        if(obj && obj -> isResource())
+            return static_cast<const SaveResource*>(obj);
         return nullptr;
     }
 
@@ -179,10 +179,10 @@ namespace yq::tachyon {
         return m_objects.size();
     }
 
-    SaveAsset*              Save::create(const AssetMeta*info, const std::filesystem::path& fp)
+    SaveResource*              Save::create(const ResourceMeta*info, const std::filesystem::path& fp)
     {
         uint64_t id = 1+m_objects.size();
-        SaveAsset* ret = new SaveAsset(*this, info, id, fp);
+        SaveResource* ret = new SaveResource(*this, info, id, fp);
         m_objects[id]   = ret;
         return ret;
     }
@@ -237,9 +237,9 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    SaveAsset*    Save::insert(const Asset& a)
+    SaveResource*    Save::insert(const Resource& a)
     {
-        return dynamic_cast<SaveAsset*>(saver(a));
+        return dynamic_cast<SaveResource*>(saver(a));
     }
     
     SaveDelegate*    Save::insert(const Delegate&d)
@@ -282,7 +282,7 @@ namespace yq::tachyon {
 
     std::filesystem::path    Save::relativize(const std::filesystem::path&fp) const
     {
-        for(const std::filesystem::path& dir : m_assetPath){
+        for(const std::filesystem::path& dir : m_resourcePath){
             std::filesystem::path rfile = fp.lexically_relative(dir);
             if(!has_dotdot(rfile))
                 return rfile;
@@ -350,7 +350,7 @@ namespace yq::tachyon {
     namespace errors {
         using namespace ::yq::errors;
         
-        using bad_asset             = error_db::entry<"Save unable to create asset">;
+        using bad_resource             = error_db::entry<"Save unable to create resource">;
         using bad_delegate          = error_db::entry<"Save unable to create delegate">;
         using bad_tachyon           = error_db::entry<"Save unable to create tachyon">;
         using bad_thread            = error_db::entry<"Save unable to create thread">;
@@ -364,9 +364,9 @@ namespace yq::tachyon {
     }
 
     struct Save::Reincarnator {
-        struct asset_t {
-            const SaveAsset*    save    = nullptr;
-            AssetCPtr           asset;
+        struct resource_t {
+            const SaveResource*    save    = nullptr;
+            ResourceCPtr           resource;
         };
     
         struct delegate_t {
@@ -388,7 +388,7 @@ namespace yq::tachyon {
     
         const Save&                             m_save;
         const ReincarnationConfig&              m_config;
-        std::map<uint64_t, asset_t>             m_assets;
+        std::map<uint64_t, resource_t>             m_resources;
         std::map<uint64_t, delegate_t>          m_delegates;
         std::map<uint64_t, tachyon_t>           m_tachyons;
         std::map<uint64_t, thread_t>            m_threads;
@@ -462,20 +462,20 @@ namespace yq::tachyon {
             return {};
         }
         
-        std::error_code load_assets(Tachyon* tac, const SaveTachyon& sv)
+        std::error_code load_resources(Tachyon* tac, const SaveTachyon& sv)
         {
             std::error_code ec;
-            for(auto& p : sv.assets()){
+            for(auto& p : sv.resources()){
                 if(!p.info)
                     continue;
-                if(!p.asset)
+                if(!p.resource)
                     continue;
                 
-                auto a  = m_assets.find(p.asset->id());
-                if(a == m_assets.end())
-                    return errors::bad_asset();
+                auto a  = m_resources.find(p.resource->id());
+                if(a == m_resources.end())
+                    return errors::bad_resource();
 
-                ec = p.info->set(tac, a->second.asset);
+                ec = p.info->set(tac, a->second.resource);
                 if(ec != std::error_code())
                     return ec;
             }
@@ -548,18 +548,18 @@ namespace yq::tachyon {
             return {};
         }
 
-        std::error_code create(asset_k, const SaveAsset* sv)
+        std::error_code create(resource_k, const SaveResource* sv)
         {
             if(!sv->info())
                 return errors::null_pointer();
-            AssetCPtr   ass = Asset::asset_load(*(sv->info()), sv->filepath());
-//            AssetCPtr   ass = sv->info()->load(sv->filepath().string());
+            ResourceCPtr   ass = Resource::resource_load(*(sv->info()), sv->filepath());
+//            ResourceCPtr   ass = sv->info()->load(sv->filepath().string());
             if(!ass)
-                return errors::bad_asset();
+                return errors::bad_resource();
                 
-            auto& ret       = m_assets[sv->id()];
+            auto& ret       = m_resources[sv->id()];
             ret.save        = sv;
-            ret.asset       = ass;
+            ret.resource       = ass;
             return {};
         }
         
@@ -642,8 +642,8 @@ namespace yq::tachyon {
                     continue;
 
                 switch(itr.second->saveType()){
-                case SaveType::Asset:
-                    ec  = create(ASSET, static_cast<const SaveAsset*>(itr.second));
+                case SaveType::Resource:
+                    ec  = create(RESOURCE, static_cast<const SaveResource*>(itr.second));
                     break;
                 case SaveType::Delegate:
                     ec  = create(DELEGATE, static_cast<const SaveDelegate*>(itr.second));
@@ -691,13 +691,13 @@ namespace yq::tachyon {
             }
             
             for(auto& itr : m_tachyons){
-                ec = load_assets(itr.second.tachyon.ptr(), *itr.second.save);
+                ec = load_resources(itr.second.tachyon.ptr(), *itr.second.save);
                 if(ec != std::error_code())
                     return ec;
             }
             
             for(auto& itr : m_threads){
-                ec = load_assets(itr.second.thread.ptr(), *itr.second.save);
+                ec = load_resources(itr.second.thread.ptr(), *itr.second.save);
                 if(ec != std::error_code())
                     return ec;
             }

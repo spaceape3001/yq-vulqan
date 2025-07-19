@@ -12,10 +12,10 @@
 #include <tachyon/api/TachyonData.hpp>
 #include <tachyon/api/Interface.hpp>
 #include <tachyon/api/Post.hpp>
-#include <tachyon/api/meta/AssetPropertyWriter.hpp>
+#include <tachyon/api/meta/ResourcePropertyWriter.hpp>
 #include <tachyon/api/meta/DelegatePropertyWriter.hpp>
-#include <tachyon/api/meta/DynamicAssetGetter.hpp>
-#include <tachyon/api/meta/DynamicAssetSetter.hpp>
+#include <tachyon/api/meta/DynamicResourceGetter.hpp>
+#include <tachyon/api/meta/DynamicResourceSetter.hpp>
 #include <tachyon/api/meta/DynamicDelegateGetter.hpp>
 #include <tachyon/api/meta/DynamicDelegateSetter.hpp>
 
@@ -230,50 +230,50 @@ namespace yq::tachyon {
         }
 
             //////////////////////////////////////////
-            ///     ASSETS
+            ///     RESOURCES
         
-        template <SomeAsset A, typename C2=C>
-        AssetProperty::PropW<C,A> asset(std::string_view szName, Ref<const A> (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
+        template <SomeResource A, typename C2=C>
+        ResourceProperty::PropW<C,A> resource(std::string_view szName, Ref<const A> (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
-            new IPM_AssetGetter<C,C2,A>(ret, sl, pointer);
+            ResourceProperty*ret   = new ResourceProperty(szName, sl, meta<A>(), m_meta);
+            new IPM_ResourceGetter<C,C2,A>(ret, sl, pointer);
             if(!isReadOnly)
-                new IPM_AssetSetter<C,C2,A>(ret, sl, pointer);
-            return AssetProperty::PropW<C,A>(ret);
+                new IPM_ResourceSetter<C,C2,A>(ret, sl, pointer);
+            return ResourceProperty::PropW<C,A>(ret);
         }
         
-        template <SomeAsset A, typename C2=C>
-        AssetProperty::Writer<A> asset(std::string_view szName, Ref<const A> (C2::*pointer), read_only_k, const std::source_location& sl=std::source_location::current())
+        template <SomeResource A, typename C2=C>
+        ResourceProperty::Writer<A> resource(std::string_view szName, Ref<const A> (C2::*pointer), read_only_k, const std::source_location& sl=std::source_location::current())
         {
-            return asset(szName, pointer, true, sl);
+            return resource(szName, pointer, true, sl);
         }
 
-        template <SomeAsset A, typename C2=C>
-        AssetProperty::PropW<C,A> asset(std::string_view szName, const Ref<const A> (C2::*pointer), const std::source_location& sl=std::source_location::current())
+        template <SomeResource A, typename C2=C>
+        ResourceProperty::PropW<C,A> resource(std::string_view szName, const Ref<const A> (C2::*pointer), const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
-            new IPM_AssetGetter<C,C2,A>(ret, sl, pointer);
-            return AssetProperty::PropW<C,A>(ret);
+            ResourceProperty*ret   = new ResourceProperty(szName, sl, meta<A>(), m_meta);
+            new IPM_ResourceGetter<C,C2,A>(ret, sl, pointer);
+            return ResourceProperty::PropW<C,A>(ret);
         }
 
-        template <SomeAsset A, typename C2=C>
-        AssetProperty::PropW<C,A> asset(std::string_view szName, Ref<const A> (C2::*function)() const, const std::source_location& sl=std::source_location::current())
+        template <SomeResource A, typename C2=C>
+        ResourceProperty::PropW<C,A> resource(std::string_view szName, Ref<const A> (C2::*function)() const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
-            new IFV_AssetGetter<C,C2,A>(ret, sl, function);
-            return AssetProperty::PropW<C,A>(ret);
+            ResourceProperty*ret   = new ResourceProperty(szName, sl, meta<A>(), m_meta);
+            new IFV_ResourceGetter<C,C2,A>(ret, sl, function);
+            return ResourceProperty::PropW<C,A>(ret);
         }
 
-        template <SomeAsset A, typename C2=C>
-        AssetProperty::PropW<C,A> asset(std::string_view szName, const Ref<const A>& (C2::*function)() const, const std::source_location& sl=std::source_location::current())
+        template <SomeResource A, typename C2=C>
+        ResourceProperty::PropW<C,A> resource(std::string_view szName, const Ref<const A>& (C2::*function)() const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            AssetProperty*ret   = new AssetProperty(szName, sl, meta<A>(), m_meta);
-            new IFR_AssetGetter<C,C2,A>(ret, sl, function);
-            return AssetProperty::PropW<C,A>(ret);
+            ResourceProperty*ret   = new ResourceProperty(szName, sl, meta<A>(), m_meta);
+            new IFR_ResourceGetter<C,C2,A>(ret, sl, function);
+            return ResourceProperty::PropW<C,A>(ret);
         }
 
             //////////////////////////////////////////

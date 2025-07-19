@@ -29,7 +29,7 @@ namespace yq::tachyon {
     
     enum class SaveType {
         Object,
-        Asset,
+        Resource,
         Delegate,
         Tachyon,
         Thread
@@ -47,7 +47,7 @@ namespace yq::tachyon {
         
         virtual bool        valid() const;
         
-        virtual bool        isAsset() const { return false; }
+        virtual bool        isResource() const { return false; }
         virtual bool        isDelegate() const { return false; }
         virtual bool        isTachyon() const { return false; }
         virtual bool        isThread() const { return false; }

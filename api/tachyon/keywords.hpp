@@ -91,6 +91,8 @@ namespace yq::tachyon {
         static constexpr EveryCount   operator()(unsigned);
     };
     
+    struct face_k {};
+    
     struct fixed_k {
         consteval operator DataActivity() const noexcept { return DataActivity::FIXED; }
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Fixed; }
@@ -268,6 +270,7 @@ namespace yq::tachyon {
     static constexpr const erase_k              ERASE;
     static constexpr const emit_k               EMIT;
     static constexpr const every_k              EVERY;
+    static constexpr const face_k               FACE;
     static constexpr const fixed_k              FIXED;
     static constexpr const game_k               GAME;
     static constexpr const gamepad_k            GAMEPAD;

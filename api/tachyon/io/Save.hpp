@@ -22,21 +22,20 @@ namespace yq {
     class Object;
     class ObjectMeta;
     class PropertyMeta;
-    class Asset;
-    class AssetMeta;
+    class Resource;
+    class ResourceMeta;
 }
 
 namespace yq::tachyon {
 
     class Delegate;
     class DelegateMeta;
-    class Resource;
     class Tachyon;
     class TachyonMeta;
     class Thread;
     class ThreadMeta;
         
-    class SaveAsset;
+    class SaveResource;
     class SaveDelegate;
     class SaveObject;
     class SaveTachyon;
@@ -51,12 +50,12 @@ namespace yq::tachyon {
     class Save {
     public:
         
-        SaveAsset*              asset(uint64_t);
-        const SaveAsset*        asset(uint64_t) const;
         SaveDelegate*           delegate(uint64_t);
         const SaveDelegate*     delegate(uint64_t) const;
         SaveObject*             object(uint64_t);
         const SaveObject*       object(uint64_t) const;
+        SaveResource*           resource(uint64_t);
+        const SaveResource*     resource(uint64_t) const;
         SaveTachyon*            tachyon(uint64_t);
         const SaveTachyon*      tachyon(uint64_t) const;
         SaveThread*             thread(uint64_t);
@@ -65,20 +64,20 @@ namespace yq::tachyon {
         Save(SaveOptions opts={});
         ~Save();
         
-        SaveAsset*              insert(const Asset&);
         SaveDelegate*           insert(const Delegate&);
         //SaveObject*             insert(const Object&); // disabled until we've got a supported path
+        SaveResource*              insert(const Resource&);
         SaveThread*             insert(const Thread&);
         SaveTachyon*            insert(const Tachyon&);
         
-        SaveAsset*              create(const AssetMeta*, const std::filesystem::path&);
         SaveDelegate*           create(const DelegateMeta*);
         //SaveObject*             create(const ObjectMeta*); // disabled until we've got a supported path
+        SaveResource*           create(const ResourceMeta*, const std::filesystem::path&);
         SaveTachyon*            create(const TachyonMeta*);
         SaveThread*             create(const ThreadMeta*);
         
-        //! Let us know what the asset paths are (used for saving)
-        void    add_asset_path(const std::filesystem::path&);
+        //! Let us know what the resource paths are (used for saving)
+        void    add_resource_path(const std::filesystem::path&);
         
         size_t                  count(object_k) const;
         
@@ -116,20 +115,20 @@ namespace yq::tachyon {
     private:
         ObjectMap                           m_objects;
         string_any_map_t                    m_variables;
-        std::vector<std::filesystem::path>  m_assetPath;
+        std::vector<std::filesystem::path>  m_resourcePath;
         StdThreadRevMap                     m_threads;
         SaveOptions                         m_options = {};
         bool                                m_prepped   = false;
         //mutable tbb::spin_rw_mutex          m_mutex;
 
-        //! Prepares the save for saving (call before insert/add-asset-path)
+        //! Prepares the save for saving (call before insert/add-resource-path)
         void    _prep();
         
         void    _bake();
         
         SaveObject*             saver(const Object&);
         
-        static SaveObject*      save_asset(Save&, const Object&);
+        static SaveObject*      save_resource(Save&, const Object&);
         static SaveObject*      save_delegate(Save&, const Object&);
         static SaveObject*      save_object(Save&, const Object&);
         static SaveObject*      save_nullptr(Save&, const Object&);

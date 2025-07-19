@@ -7,12 +7,12 @@
 #pragma once
 
 #include <tachyon/typedef/sampler.hpp>
-#include <yq/asset/Asset.hpp>
-#include <tachyon/asset/SamplerInfo.hpp>
+#include <yq/resource/Resource.hpp>
+#include <tachyon/resource/SamplerInfo.hpp>
 
 namespace yq::tachyon {
-    class Sampler : public Asset {
-        YQ_ASSET_DECLARE(Sampler, Asset)
+    class Sampler : public Resource {
+        YQ_RESOURCE_DECLARE(Sampler, Resource)
     public:
 
         static SamplerCPtr                    simple();

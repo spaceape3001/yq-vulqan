@@ -79,12 +79,12 @@ add_library(${PROJECT_NAME} SHARED
     api/Undo.cpp
     api/Widget.cpp
     
-    api/meta/AssetGetter.cpp
-    api/meta/AssetProperty.cpp
-    api/meta/AssetSetter.cpp
     api/meta/DelegateGetter.cpp
     api/meta/DelegateProperty.cpp
     api/meta/DelegateSetter.cpp
+    api/meta/ResourceGetter.cpp
+    api/meta/ResourceProperty.cpp
+    api/meta/ResourceSetter.cpp
 
     app/Application.cpp
     app/Viewer.cpp
@@ -119,10 +119,6 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize4.cpp
     aspect/AVertices3.cpp
         
-    asset/Raster.cpp
-    asset/Sampler.cpp
-    asset/Shader.cpp
-
     camera/NullCamera.cpp
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
@@ -370,11 +366,11 @@ add_library(${PROJECT_NAME} SHARED
     io/STBImage.cpp
     io/Save.cpp
     
-    io/Wavefront.cpp
+    #io/Wavefront.cpp
     
-    io/save/SaveAsset.cpp
     io/save/SaveDelegate.cpp
     io/save/SaveObject.cpp
+    io/save/SaveResource.cpp
     io/save/SaveTachyon.cpp
     io/save/SaveThread.cpp
     io/save/SaveXML.cpp
@@ -527,6 +523,11 @@ add_library(${PROJECT_NAME} SHARED
     
     request/viewer/ViewerScreenshotRequest.cpp
 
+    resource/Mesh.cpp
+    resource/Raster.cpp
+    resource/Sampler.cpp
+    resource/Shader.cpp
+
     scene/BackgroundScene.cpp
     scene/CompositeScene.cpp
     scene/ForegroundScene.cpp
@@ -665,7 +666,7 @@ PUBLIC
 
 target_link_libraries(${PROJECT_NAME} 
 PUBLIC 
-    yq_asset
+    yq_resource
     yq_color
     yq_keyv
     yq_math

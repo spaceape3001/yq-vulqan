@@ -4,6 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <tachyon/resource/Mesh.hpp>
 
-#include <tachyon/resource/Sampler.hpp>
+namespace yq::tachyon {
+    MeshPtr     Mesh::extract_from_obj(const std::filesystem::path&)
+    {
+        return {};
+    }
+}

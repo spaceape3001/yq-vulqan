@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     log_to_std_output();
     Meta::init();
-    configure_standand_asset_path();
+    configure_standand_resource_path();
     
     create_spatial();
 

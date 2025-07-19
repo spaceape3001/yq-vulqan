@@ -117,14 +117,14 @@ namespace yq::tachyon {
         }
     }
 
-    const AssetProperty*                TachyonMeta::asset(std::string_view sv) const
+    const ResourceProperty*                TachyonMeta::resource(std::string_view sv) const
     {
-        return m_assets.all.find(sv);
+        return m_resources.all.find(sv);
     }
 
-    const MetaLookup<AssetProperty>&    TachyonMeta::assets(bool all) const
+    const MetaLookup<ResourceProperty>&    TachyonMeta::resources(bool all) const
     {
-        return all ? m_assets.all : m_assets.local;
+        return all ? m_resources.all : m_resources.local;
     }
 
     const DelegateProperty*             TachyonMeta::delegate(std::string_view sv) const
@@ -186,7 +186,7 @@ namespace yq::tachyon {
         m_dispatches.ranked.clear();
         m_interfaces.all.clear();
         m_delegates.all.clear();
-        m_assets.all.clear();
+        m_resources.all.clear();
         
         std::vector<PBXEntry>   ranked;
         
@@ -195,13 +195,13 @@ namespace yq::tachyon {
         }
 
         m_interfaces.all += m_interfaces.local;
-        m_assets.all += m_assets.local;
+        m_resources.all += m_resources.local;
         m_delegates.all += m_delegates.local;
         
         const TachyonMeta*  tibase = dynamic_cast<const TachyonMeta*>(base());
         if(tibase){
             m_interfaces.all   += tibase->m_interfaces.all;
-            m_assets.all += tibase->m_assets.all;
+            m_resources.all += tibase->m_resources.all;
             m_delegates.all += tibase->m_delegates.all;
             
             unsigned int depth  = 1;

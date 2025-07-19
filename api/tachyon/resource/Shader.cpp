@@ -5,20 +5,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <yq/asset/AssetMetaWriter.hpp>
-#include <yq/asset/AssetIO.hpp>
+#include <yq/resource/ResourceMetaWriter.hpp>
+#include <yq/resource/ResourceIO.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/text/format.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 
 namespace yq::tachyon {
     Ref<const Shader>    Shader::decode(const ShaderSpec&ss)
     {
-        return decode(ss, AssetLoadOptions());
+        return decode(ss, ResourceLoadOptions());
     }
 
-    Ref<const Shader>    Shader::decode(const ShaderSpec&ss, const AssetLoadOptions& options)
+    Ref<const Shader>    Shader::decode(const ShaderSpec&ss, const ResourceLoadOptions& options)
     {
         if(Ref<const Shader> const * ptr = std::get_if<Ref<const Shader>>(&ss)){
             return *ptr;
@@ -45,7 +45,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Shader::Shader(ShaderType st, Memory&& mem) : Asset(), payload(std::move(mem)), type(st)
+    Shader::Shader(ShaderType st, Memory&& mem) : Resource(), payload(std::move(mem)), type(st)
     {
     }
 
@@ -63,7 +63,7 @@ namespace yq::tachyon {
     void    Shader::init_meta()
     {
         auto ti = writer<Shader>();
-        ti.description("Shader Asset");
+        ti.description("Shader Resource");
         ti.property("Type", &Shader::type);
     }
 }

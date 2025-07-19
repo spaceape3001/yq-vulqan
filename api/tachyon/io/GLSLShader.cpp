@@ -6,12 +6,12 @@
 
 #include <tachyon/io/GLSLShader.hpp>
 
-#include <yq/asset/Asset.hxx>
+#include <yq/resource/Resource.hxx>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/process/Execute.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <yq/text/chars.hpp>
 #include <tachyon/logging.hpp>
 

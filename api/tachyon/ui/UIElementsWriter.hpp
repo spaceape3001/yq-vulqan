@@ -21,7 +21,7 @@ namespace yq::tachyon {
     class UIElements;
     class Widget;
     class WidgetMeta;
-    class UIAssetImageWriter;
+    class UIResourceImageWriter;
     class UIButtonWriter;
     class UICenterAlignWriter;
     class UICheckBoxWriter;
@@ -114,10 +114,10 @@ namespace yq::tachyon {
         //! The contents within will all be placed same line
         UIHLineWriter           hline();
         
-        //! Will display the specified image/texture (using the asset-system)
+        //! Will display the specified image/texture (using the resource-system)
         UIImageWriter           image(std::string_view);
         
-        //! Will display the specified image/texture (using the asset-system) using this FIXED size
+        //! Will display the specified image/texture (using the resource-system) using this FIXED size
         UIImageWriter           image(std::string_view, const Size2F&);
         
         UITextLabelWriter       label(std::string_view);

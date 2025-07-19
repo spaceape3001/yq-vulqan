@@ -9,7 +9,7 @@
 #include <tachyon/tags.hpp>
 
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
@@ -42,8 +42,8 @@ namespace yq::tachyon {
         w.property("alpha3", &GradTriangle³::alpha3);
 
         auto& p = w.pipeline();
-        p.shader("assets/shape3/gradient.vert");
-        p.shader("assets/shape3/gradient.frag");
+        p.shader("resources/shape3/gradient.vert");
+        p.shader("resources/shape3/gradient.frag");
 
         p.vertex(&GradTriangle³::m_vbo, DataActivity::DYNAMIC)
             .attribute(&VertexC::position)

@@ -7,7 +7,7 @@
 #include <tachyon/rendered/ColorTetrahedron3.hpp>
 #include <tachyon/logging.hpp>
 
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <tachyon/aspect/AColorWriter.hxx>
@@ -23,8 +23,8 @@ namespace yq::tachyon {
 
         auto& p = w.pipeline();
         
-        p.shader("assets/shape3/color.vert");
-        p.shader("assets/shape3/color.frag");
+        p.shader("resources/shape3/color.vert");
+        p.shader("resources/shape3/color.frag");
 
         p.vertex(&ColorTetrahedron³::m_vbo, DataActivity::DYNAMIC)
             .attribute(&VertexS::position)

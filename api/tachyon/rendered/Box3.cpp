@@ -8,7 +8,7 @@
 
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 
 
 #include <tachyon/aspect/AVertices3.hxx>

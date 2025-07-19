@@ -28,14 +28,14 @@ namespace yq::tachyon {
         using mutex_t           = tbb::spin_rw_mutex;
         using data_k            = std::tuple<Args...>;
         
-        static uint64_t     get_id(const A& asset_ptr)
+        static uint64_t     get_id(const A& resource_ptr)
         {
             if constexpr (is_pointer_v<A>){
-                return asset_ptr -> id();
+                return resource_ptr -> id();
             }
             
             if constexpr (!is_pointer_v<A>){
-                return asset_ptr.id();
+                return resource_ptr.id();
             }
         }
         
@@ -55,14 +55,14 @@ namespace yq::tachyon {
         }
         
         template <unsigned... Is>
-        v_ref_t    _create(const A& asset, indices<Is...>)
+        v_ref_t    _create(const A& resource, indices<Is...>)
         {
-            return new V(m_viz, asset, std::get<Is, Args...>(m_data)...);
+            return new V(m_viz, resource, std::get<Is, Args...>(m_data)...);
         }
         
-        v_ref_t     create(const A& asset)
+        v_ref_t     create(const A& resource)
         {
-            uint64_t    idv = get_id(asset);
+            uint64_t    idv = get_id(resource);
             
             {
                 mutex_t::scoped_lock _lock(m_mutex, false);
@@ -73,11 +73,11 @@ namespace yq::tachyon {
 
             v_ref_t    ret, p;
             if constexpr (sizeof...(Args) != 0){
-                p       = _create(asset, indices_gen<ARG_COUNT>());
+                p       = _create(resource, indices_gen<ARG_COUNT>());
             }
             
             if constexpr (sizeof...(Args) == 0){
-                p       = new V(m_viz, asset);
+                p       = new V(m_viz, resource);
             }
             
             if(!p->valid())
@@ -95,16 +95,16 @@ namespace yq::tachyon {
             return ret;
         }
         
-        v_ref_t recreate(const A& asset)
+        v_ref_t recreate(const A& resource)
         {
-            uint64_t    idv = get_id(asset);
+            uint64_t    idv = get_id(resource);
             v_ref_t    ret, p;
             if constexpr (sizeof...(Args) != 0){
-                ret = p = _create(asset, indices_gen<ARG_COUNT>());
+                ret = p = _create(resource, indices_gen<ARG_COUNT>());
             }
             
             if constexpr (sizeof...(Args) == 0){
-                ret = p = new V(m_viz, asset);
+                ret = p = new V(m_viz, resource);
             }
 
             if(!p->valid())
@@ -129,9 +129,9 @@ namespace yq::tachyon {
             return m_hash.empty();
         }
         
-        void            erase(const A& asset)
+        void            erase(const A& resource)
         {
-            erase(get_id(asset));
+            erase(get_id(resource));
         }
         
         void            erase(uint64_t i)
@@ -203,14 +203,14 @@ namespace yq::tachyon {
         using mutex_t           = tbb::spin_rw_mutex;
         using data_k            = std::tuple<Args...>;
         
-        static uint64_t     get_id(const A& asset_ptr)
+        static uint64_t     get_id(const A& resource_ptr)
         {
             if constexpr (is_pointer_v<A>){
-                return asset_ptr -> id();
+                return resource_ptr -> id();
             }
             
             if constexpr (!is_pointer_v<A>){
-                return asset_ptr.id();
+                return resource_ptr.id();
             }
         }
         
@@ -230,14 +230,14 @@ namespace yq::tachyon {
         }
         
         template <unsigned... Is>
-        v_ref_t    _create(const A& asset, indices<Is...>)
+        v_ref_t    _create(const A& resource, indices<Is...>)
         {
-            return new V(m_viz, asset, std::get<Is, Args...>(m_data)...);
+            return new V(m_viz, resource, std::get<Is, Args...>(m_data)...);
         }
         
-        v_ref_t     create(const A& asset)
+        v_ref_t     create(const A& resource)
         {
-            uint64_t    idv = get_id(asset);
+            uint64_t    idv = get_id(resource);
             
             {
                 mutex_t::scoped_lock _lock(m_mutex, false);
@@ -248,11 +248,11 @@ namespace yq::tachyon {
 
             v_ref_t    ret, p;
             if constexpr (sizeof...(Args) != 0){
-                p       = _create(asset, indices_gen<ARG_COUNT>());
+                p       = _create(resource, indices_gen<ARG_COUNT>());
             }
             
             if constexpr (sizeof...(Args) == 0){
-                p       = new V(m_viz, asset);
+                p       = new V(m_viz, resource);
             }
             
             if(!p->valid())
@@ -276,9 +276,9 @@ namespace yq::tachyon {
             return m_hash.empty();
         }
         
-        void            erase(const A& asset)
+        void            erase(const A& resource)
         {
-            erase(get_id(asset));
+            erase(get_id(resource));
         }
         
         void            erase(uint64_t i)

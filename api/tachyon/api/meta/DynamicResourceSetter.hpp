@@ -6,39 +6,39 @@
 
 #pragma once
 
-#include <tachyon/api/meta/AssetSetter.hpp>
-#include <yq/asset/Asset.hpp>
+#include <tachyon/api/meta/ResourceSetter.hpp>
+#include <yq/resource/Resource.hpp>
 #include <tachyon/errors.hpp>
 
 namespace yq::tachyon {
-    template <SomeObject O, SomeAsset A>
-    class DynamicAssetSetter : public AssetSetter {
+    template <SomeObject O, SomeResource A>
+    class DynamicResourceSetter : public ResourceSetter {
     public:
     
         virtual const ObjectMeta&    object() const override { return meta<O>(); }
-        virtual const AssetMeta&     asset() const override { return meta<A>(); }
+        virtual const ResourceMeta&     resource() const override { return meta<A>(); }
     
     protected:
-        DynamicAssetSetter(AssetProperty* propInfo, const std::source_location& sl) : AssetSetter(propInfo, sl) 
+        DynamicResourceSetter(ResourceProperty* propInfo, const std::source_location& sl) : ResourceSetter(propInfo, sl) 
         {
         }
     };
 
-    template <SomeObject O, typename C, SomeAsset A>
-    class IPM_AssetSetter : public DynamicAssetSetter<O,A> {
+    template <SomeObject O, typename C, SomeResource A>
+    class IPM_ResourceSetter : public DynamicResourceSetter<O,A> {
     public:
     
         typedef Ref<const A> (C::*P);
         
-        IPM_AssetSetter(AssetProperty* propInfo, const std::source_location& sl, P pointer) : 
-            DynamicAssetSetter<O,A>(propInfo, sl), m_pointer(pointer)
+        IPM_ResourceSetter(ResourceProperty* propInfo, const std::source_location& sl, P pointer) : 
+            DynamicResourceSetter<O,A>(propInfo, sl), m_pointer(pointer)
         {
             assert(pointer);
         }
     
     private:
     
-        virtual std::error_code set(Object*obj, const AssetCPtr& acp) const override
+        virtual std::error_code set(Object*obj, const ResourceCPtr& acp) const override
         {
             C*    c   = dynamic_cast<C*>(obj);
             if(!c)
@@ -46,7 +46,7 @@ namespace yq::tachyon {
                 
             const A*    a   = dynamic_cast<const A*>(acp.ptr());
             if(!a)
-                return errors::not_asset_looking_for();
+                return errors::not_resource_looking_for();
                 
             c->*m_pointer = a;
             return {};
@@ -55,21 +55,21 @@ namespace yq::tachyon {
         P   m_pointer;
     };
 
-    template <SomeObject O, typename C, SomeAsset A>
-    class IFR_AssetSetter : public DynamicAssetSetter<O,A> {
+    template <SomeObject O, typename C, SomeResource A>
+    class IFR_ResourceSetter : public DynamicResourceSetter<O,A> {
     public:
     
         typedef void (C::*FN)(const Ref<const A>&);
         
-        IFR_AssetSetter(AssetProperty* propInfo, const std::source_location& sl, FN function) : 
-            DynamicAssetSetter<O,A>(propInfo, sl), m_function(function)
+        IFR_ResourceSetter(ResourceProperty* propInfo, const std::source_location& sl, FN function) : 
+            DynamicResourceSetter<O,A>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
     
     private:
     
-        virtual std::error_code set(Object*obj, const AssetCPtr& acp) const override
+        virtual std::error_code set(Object*obj, const ResourceCPtr& acp) const override
         {
             C*    c   = dynamic_cast<C*>(obj);
             if(!c)
@@ -77,7 +77,7 @@ namespace yq::tachyon {
                 
             const A*    a   = dynamic_cast<const A*>(acp.ptr());
             if(!a)
-                return errors::not_asset_looking_for();
+                return errors::not_resource_looking_for();
             (c->*m_function)(a);
             return {};
         }

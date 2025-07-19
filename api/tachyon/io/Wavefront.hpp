@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 #include <yq/math/UVW.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
@@ -30,7 +30,7 @@ namespace yq::tachyon {
         };
     }
     
-    class WavefrontObject : public Asset {
+    class WavefrontObject : public Resource {
     public:
     
     

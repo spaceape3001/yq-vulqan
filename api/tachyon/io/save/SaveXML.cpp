@@ -10,16 +10,16 @@
 #include <tachyon/tags.hpp>
 #include <tachyon/api/Delegate.hpp>
 #include <tachyon/api/Thread.hpp>
-#include <tachyon/api/meta/AssetProperty.hpp>
+#include <tachyon/api/meta/ResourceProperty.hpp>
 #include <tachyon/api/meta/DelegateProperty.hpp>
 #include <tachyon/app/Application.hpp>
 #include <tachyon/io/Save.hpp>
-#include <tachyon/io/save/SaveAsset.hpp>
+#include <tachyon/io/save/SaveResource.hpp>
 #include <tachyon/io/save/SaveDelegate.hpp>
 #include <tachyon/io/save/SaveTachyon.hpp>
 #include <tachyon/io/save/SaveThread.hpp>
 
-#include <yq/asset/Asset.hpp>
+#include <yq/resource/Resource.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/format.hpp>
 #include <yq/text/parse.hpp>
@@ -27,8 +27,8 @@
 
 namespace yq::tachyon {
     static constexpr const char*    szApplication   = "application";
-    static constexpr const char*    szAsset         = "asset";
-    static constexpr const char*    szAssets        = "assets";
+    static constexpr const char*    szResource         = "resource";
+    static constexpr const char*    szResources        = "resources";
     static constexpr const char*    szAttribute     = "attribute";
     static constexpr const char*    szDelegate      = "delegate";
     static constexpr const char*    szDelegates     = "delegates";
@@ -58,13 +58,13 @@ namespace yq::tachyon {
         using invalid_prop_name_attribute   = error_db::entry<"TSX has an invalid property name attribute">;
         using missing_prop_name_attribute   = error_db::entry<"TSX has an missing property name attribute">;
         using invalid_prop_type_attribute   = error_db::entry<"TSX has an invalid property type attribute">;
-        using invalid_asset_attribute       = error_db::entry<"TSX has an invalid tachyon asset attribute">;
+        using invalid_resource_attribute       = error_db::entry<"TSX has an invalid tachyon resource attribute">;
         using invalid_delegate_attribute    = error_db::entry<"TSX has an invalid tachyon delegate attribute">;
         using invalid_tachyon_attribute     = error_db::entry<"TSX has an invalid tachyon attribute">;
         using missing_class_attribute       = error_db::entry<"TSX is missing class attribute">;
         using invalid_class_attribute       = error_db::entry<"TSX has an invalid class attribute">;
         using invalid_owner_attribute       = error_db::entry<"TSX has an invalid owner attribute">;
-        using not_asset_class               = error_db::entry<"TSX class attribute is not an asset">;
+        using not_resource_class               = error_db::entry<"TSX class attribute is not an resource">;
         using not_delegate_class            = error_db::entry<"TSX class attribute is not a delegate">;
         using not_tachyon_class             = error_db::entry<"TSX class attribute is not a tachyon">;
         using not_thread_class              = error_db::entry<"TSX class attribute is not a thread">;
@@ -98,8 +98,8 @@ namespace yq::tachyon {
                 std::error_code ec = read(*data, VARIABLE);
                 if(ec != std::error_code())
                     return ec;
-            } else if(data->name() == szAsset){
-                std::error_code ec = read(*data, ASSET);
+            } else if(data->name() == szResource){
+                std::error_code ec = read(*data, RESOURCE);
                 if(ec != std::error_code())
                     return ec;
             } else if(data->name() == szDelegate){
@@ -124,7 +124,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    std::error_code    SaveXML::read(SaveAsset&sv,     asset_k, const XmlNode&xml)
+    std::error_code    SaveXML::read(SaveResource&sv,     resource_k, const XmlNode&xml)
     {
         return {};
     }
@@ -253,24 +253,24 @@ namespace yq::tachyon {
             
         }
             
-        for(const XmlNode* xc = xml.first_node(szAsset); xc; xc=xc->next_sibling(szAsset)){
+        for(const XmlNode* xc = xml.first_node(szResource); xc; xc=xc->next_sibling(szResource)){
             std::string     pn  = read_attribute(*xc, szName, x_string);
             if(pn.empty())
-                return errors::invalid_asset_attribute();
+                return errors::invalid_resource_attribute();
 
-            const AssetProperty* prop   = sv.info()->asset(pn);
+            const ResourceProperty* prop   = sv.info()->resource(pn);
             if(!prop)
-                return errors::invalid_asset_attribute();
+                return errors::invalid_resource_attribute();
             
             uint64_x      idv = x_uint64(*xc);
             if(!idv)
                 return idv.error();
             
-            SaveAsset*  ass = save->asset(*idv);
+            SaveResource*  ass = save->resource(*idv);
             if(!ass)
-                return errors::invalid_asset_attribute();
+                return errors::invalid_resource_attribute();
 
-            sv.append(SaveTachyon::asset_t{prop, ass});
+            sv.append(SaveTachyon::resource_t{prop, ass});
         }
             
         for(const XmlNode* xc = xml.first_node(szDelegate); xc; xc=xc->next_sibling(szDelegate)){
@@ -305,7 +305,7 @@ namespace yq::tachyon {
         return {};  // TODO
     }
 
-    std::error_code    SaveXML::read(const XmlNode&xml, asset_k)
+    std::error_code    SaveXML::read(const XmlNode&xml, resource_k)
     {
         std::filesystem::path   fp(x_string(xml));
     
@@ -318,10 +318,10 @@ namespace yq::tachyon {
         if(!cinfo)
             return errors::invalid_class_attribute();
         
-        const AssetMeta*  tinfo   = dynamic_cast<const AssetMeta*>(cinfo);
+        const ResourceMeta*  tinfo   = dynamic_cast<const ResourceMeta*>(cinfo);
         if(!tinfo)
-            return errors::not_asset_class();
-        return read(*(save->create(tinfo, fp)), ASSET, xml);
+            return errors::not_resource_class();
+        return read(*(save->create(tinfo, fp)), RESOURCE, xml);
     }
     
     std::error_code    SaveXML::read(const XmlNode&xml, delegate_k)
@@ -446,8 +446,8 @@ namespace yq::tachyon {
         
         for(auto& itr : save->objects()){
             switch(itr.second->saveType()){
-            case SaveType::Asset:
-                write(*(root.create_element(szAsset)), ASSET, static_cast<const SaveAsset&>(*itr.second));
+            case SaveType::Resource:
+                write(*(root.create_element(szResource)), RESOURCE, static_cast<const SaveResource&>(*itr.second));
                 break;
             case SaveType::Delegate:
                 write(*(root.create_element(szDelegate)), DELEGATE, static_cast<const SaveDelegate&>(*itr.second));
@@ -467,7 +467,7 @@ namespace yq::tachyon {
         return {};
     }
 
-    void    SaveXML::write(XmlNode& xml, asset_k,    const SaveAsset& obj) const
+    void    SaveXML::write(XmlNode& xml, resource_k,    const SaveResource& obj) const
     {
         write_x(xml, obj.filepath().string());
     }
@@ -557,10 +557,10 @@ namespace yq::tachyon {
             }
         }
         
-        for(auto& p : obj.assets()){
-            XmlNode&    prop    = *(xml.create_element(szAsset));
+        for(auto& p : obj.resources()){
+            XmlNode&    prop    = *(xml.create_element(szResource));
             prop.create_attribute(szName, p.info->name());
-            write_x(prop, p.asset->remap());
+            write_x(prop, p.resource->remap());
         }
 
         for(auto& p : obj.delegates()){

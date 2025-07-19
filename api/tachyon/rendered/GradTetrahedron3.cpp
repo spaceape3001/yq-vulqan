@@ -11,7 +11,7 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/vector/Vector3.hxx>
@@ -53,8 +53,8 @@ namespace yq::tachyon {
 
         auto& p = w.pipeline();
         
-        p.shader("assets/shape3/gradient.vert");
-        p.shader("assets/shape3/gradient.frag");
+        p.shader("resources/shape3/gradient.vert");
+        p.shader("resources/shape3/gradient.frag");
 
         p.vertex(&GradTetrahedron³::m_vbo, DataActivity::DYNAMIC)
             .attribute(&VertexC::position)

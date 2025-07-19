@@ -6,16 +6,10 @@
 
 #pragma once
 
-#include <yq/resource/Resource.hpp>
-#include <tachyon/typedef/font.hpp>
+namespace yq { template <typename> class Ref; }
 
 namespace yq::tachyon {
-    class TrueTypeFontInfo : public ResourceMeta {
-    public:
-    
-    };
-
-    class TrueTypeFont : public Resource {
-    public:
-    };
+    class Mesh;
+    using MeshPtr   = Ref<Mesh>;
+    using MeshCPtr  = Ref<const Mesh>;
 }

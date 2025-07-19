@@ -8,7 +8,7 @@
 
 #include <tachyon/tags.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <tachyon/resource/Shader.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GradBox³)
 
@@ -27,8 +27,8 @@ namespace yq::tachyon {
         w.property("tne", &GradBox³::color_tne).setter(&GradBox³::set_color_tne).tag(kTag_Save);
         
         auto& p = w.pipeline();
-        p.shader("assets/shape3/gradient.vert");
-        p.shader("assets/shape3/gradient.frag");
+        p.shader("resources/shape3/gradient.vert");
+        p.shader("resources/shape3/gradient.frag");
 
         p.vertex(&GradBox³::m_vbo, DataActivity::DYNAMIC)
             .attribute(&VertexC::position)

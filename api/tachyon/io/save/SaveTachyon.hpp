@@ -14,9 +14,9 @@ namespace yq::tachyon {
     class Tachyon;
     class TachyonMeta;
     class Save;
-    class AssetProperty;
+    class ResourceProperty;
     class DelegateProperty;
-    class SaveAsset;
+    class SaveResource;
     class SaveDelegate;
     
     class SaveTachyon : public SaveObject {
@@ -29,9 +29,9 @@ namespace yq::tachyon {
         virtual bool        isTachyon() const { return true; }
         virtual SaveType    saveType() const override { return SaveType::Tachyon; }
 
-        struct asset_t {
-            const AssetProperty*    info        = nullptr;
-            SaveAsset*              asset       = nullptr;
+        struct resource_t {
+            const ResourceProperty*    info        = nullptr;
+            SaveResource*              resource       = nullptr;
         };
         
         struct delegate_t {
@@ -39,7 +39,7 @@ namespace yq::tachyon {
             SaveDelegate*           delegate    = nullptr;
         };
 
-        const std::vector<asset_t>&     assets() const { return m_assets; }
+        const std::vector<resource_t>&     resources() const { return m_resources; }
         const std::vector<delegate_t>&  delegates() const { return m_delegates; }
 
         using owner_spec_t = std::variant<std::monostate, uint64_t, StdThread>;
@@ -50,7 +50,7 @@ namespace yq::tachyon {
         
         using SaveObject::append;
         
-        void        append(asset_t);
+        void        append(resource_t);
         void        append(delegate_t);
         
         void        append(child_k, uint64_t);
@@ -72,7 +72,7 @@ namespace yq::tachyon {
         
         uint64_t                    m_parent = 0;
         owner_spec_t                m_owner;
-        std::vector<asset_t>        m_assets;
+        std::vector<resource_t>        m_resources;
         std::vector<delegate_t>     m_delegates;
         std::vector<uint64_t>       m_children;
         AttrIDMap                   m_progAttrs;

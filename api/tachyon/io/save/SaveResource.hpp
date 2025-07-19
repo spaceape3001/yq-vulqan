@@ -10,28 +10,28 @@
 #include <filesystem>
 
 namespace yq {
-    class Asset;
-    class AssetMeta;
+    class Resource;
+    class ResourceMeta;
 }
 
 namespace yq::tachyon {
     class Save;
     
-    class SaveAsset : public SaveObject {
+    class SaveResource : public SaveObject {
     public:
-        SaveAsset(Save&, const Asset&);
-        SaveAsset(Save&, const AssetMeta*, uint64_t, const std::filesystem::path&);
+        SaveResource(Save&, const Resource&);
+        SaveResource(Save&, const ResourceMeta*, uint64_t, const std::filesystem::path&);
         
-        const AssetMeta*    info() const;
+        const ResourceMeta*    info() const;
         virtual bool        valid() const override;
         
         const std::filesystem::path&    filepath() const { return m_filepath; }
         
-        virtual bool        isAsset() const override { return true; }
-        virtual SaveType    saveType() const override { return SaveType::Asset; }
+        virtual bool        isResource() const override { return true; }
+        virtual SaveType    saveType() const override { return SaveType::Resource; }
 
     protected:
-        virtual ~SaveAsset();
+        virtual ~SaveResource();
     private:
         std::filesystem::path       m_filepath;
     };

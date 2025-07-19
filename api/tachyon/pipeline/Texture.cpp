@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <tachyon/asset/Raster.hpp>
-#include <tachyon/asset/Sampler.hpp>
+#include <tachyon/resource/Raster.hpp>
+#include <tachyon/resource/Sampler.hpp>
 #include <tachyon/pipeline/Texture.hpp>
 
 namespace yq::tachyon {

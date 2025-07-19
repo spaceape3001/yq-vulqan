@@ -9,11 +9,11 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/typedef/float16.hpp>
 
-#include <yq/asset/AssetMetaWriter.hpp>
-#include <yq/asset/AssetIO.hpp>
+#include <yq/resource/ResourceMetaWriter.hpp>
+#include <yq/resource/ResourceIO.hpp>
 
 #include <tachyon/pipeline/PipelineUtils.hpp>
-#include <tachyon/asset/Raster.hpp>
+#include <tachyon/resource/Raster.hpp>
 #include <yq/raster/Pixels.hxx>
 
 namespace yq::tachyon {
@@ -61,15 +61,15 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    Raster::Raster(const RasterInfo& ii, Memory&& mem) : Asset(), memory(std::move(mem)), info(ii)
+    Raster::Raster(const RasterInfo& ii, Memory&& mem) : Resource(), memory(std::move(mem)), info(ii)
     {
     }
 
-    Raster::Raster(ref_k,  const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(REF)), info(info_for(pix, df))
+    Raster::Raster(ref_k,  const Pixmap& pix, DataFormat df) : Resource(), memory(pix.memory(REF)), info(info_for(pix, df))
     {
     }
     
-    Raster::Raster(copy_k, const Pixmap& pix, DataFormat df) : Asset(), memory(pix.memory(COPY)), info(info_for(pix, df))
+    Raster::Raster(copy_k, const Pixmap& pix, DataFormat df) : Resource(), memory(pix.memory(COPY)), info(info_for(pix, df))
     {
     }
 
@@ -290,7 +290,7 @@ namespace yq::tachyon {
     void    Raster::init_meta()
     {
         auto w = writer<Raster>();
-        w.description("Raster Image Asset");
+        w.description("Raster Image Resource");
         w.options({Meta::Flag::IMAGE, Meta::Flag::RASTER});
     }
 }

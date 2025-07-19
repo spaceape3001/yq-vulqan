@@ -60,7 +60,7 @@ namespace yq::tachyon {
     
     /// TACHYON INFO
 
-    class AssetProperty;
+    class ResourceProperty;
     struct TachyonData;
     struct TachyonSnap;
     class DelegateProperty;
@@ -71,7 +71,7 @@ namespace yq::tachyon {
         using InterfaceLUC  = MetaLookup<InterfaceMeta>;
         using DispatchMM    = std::unordered_multimap<const PostMeta*, const PBXDispatch*>;
         using DelegateLUC   = MetaLookup<DelegateProperty>;
-        using AssetLUC      = MetaLookup<AssetProperty>;
+        using ResourceLUC      = MetaLookup<ResourceProperty>;
         
         template <typename C> class Writer;
 
@@ -85,14 +85,14 @@ namespace yq::tachyon {
         
         const MetaLookup<InterfaceMeta>&    interfaces(local_k) const { return m_interfaces.local; }
 
-        const MetaLookup<AssetProperty>&    assets(bool all=false) const;
+        const MetaLookup<ResourceProperty>&    resources(bool all=false) const;
 
-        const MetaLookup<AssetProperty>&    assets(all_k) const { return m_assets.all; }
+        const MetaLookup<ResourceProperty>&    resources(all_k) const { return m_resources.all; }
         
-        const MetaLookup<AssetProperty>&    assets(local_k) const { return m_assets.local; }
+        const MetaLookup<ResourceProperty>&    resources(local_k) const { return m_resources.local; }
         
-        //! Finds the asset property (ALL is assumed)
-        const AssetProperty*                asset(std::string_view) const;
+        //! Finds the resource property (ALL is assumed)
+        const ResourceProperty*                resource(std::string_view) const;
 
         const MetaLookup<DelegateProperty>&    delegates(bool all=false) const;
 
@@ -129,7 +129,7 @@ namespace yq::tachyon {
     private:
         friend class Tachyon;
         friend class Thread;
-        friend class AssetProperty;
+        friend class ResourceProperty;
         friend class DelegateProperty;
         
         struct Repo;
@@ -146,8 +146,8 @@ namespace yq::tachyon {
             DelegateLUC     all, local;
         }   m_delegates;
         struct {
-            AssetLUC        all, local;
-        }   m_assets;
+            ResourceLUC        all, local;
+        }   m_resources;
         struct {
             dispatch_vec_t  defined, ranked;
         }                       m_dispatches;

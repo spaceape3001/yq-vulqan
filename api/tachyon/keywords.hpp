@@ -134,6 +134,7 @@ namespace yq::tachyon {
     struct maximum_k : public ::yq::maximum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Maximum; }
     };
+    struct mesh_k {};
     struct minimum_k : public ::yq::minimum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Minimum; }
     };
@@ -210,7 +211,6 @@ namespace yq::tachyon {
     struct texture_k {};
     struct ui_k {};
     
-
     struct viewer_k {
         consteval operator StdThread() const noexcept  { return StdThread::Viewer; }
     };
@@ -293,6 +293,7 @@ namespace yq::tachyon {
     static constexpr const manager_k            MANAGER;
     static constexpr const maximum_k            MAX;
     static constexpr const maximum_k            MAXIMUM;
+    static constexpr const mesh_k               MESH;
     static constexpr const minimum_k            MIN;
     static constexpr const minimum_k            MINIMUM;
     static constexpr const model_k              MODEL;

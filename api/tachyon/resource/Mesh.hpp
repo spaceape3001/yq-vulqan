@@ -69,9 +69,11 @@ namespace yq::tachyon {
         
         static void init_meta();
     
-        static MeshPtr      extract_from_obj(const std::filesystem::path&);
-        static MeshPtr      load_from_tmesh(const XmlDocument&);
-        static void         save_to_tmesh(const Mesh&, XmlDocument&);
+        static Mesh*        extract_from_obj(const std::filesystem::path&);
+        static Mesh*        load_from_tmesh(const XmlDocument&);
+        static bool         save_to_tmesh(const Mesh&, XmlDocument&);
+        static Mesh*        read_from_tmesh(const XmlNode&);
+        static bool         write_to_tmesh(const Mesh&, XmlNode&);
         
         RGBA4F              color(mesh_k) const;
         RGBA4F              color(vertex_k, unsigned) const;

@@ -27,8 +27,6 @@
 
 namespace yq::tachyon {
     static constexpr const char*    szApplication   = "application";
-    static constexpr const char*    szResource         = "resource";
-    static constexpr const char*    szResources        = "resources";
     static constexpr const char*    szAttribute     = "attribute";
     static constexpr const char*    szDelegate      = "delegate";
     static constexpr const char*    szDelegates     = "delegates";
@@ -43,7 +41,9 @@ namespace yq::tachyon {
     static constexpr const char*    szOwner         = "owner";
     static constexpr const char*    szParent        = "parent";
     static constexpr const char*    szProperty      = "property";
-    static constexpr const char*    szRoot          = "tsx";
+    static constexpr const char*    szResource      = "resource";
+    static constexpr const char*    szResources     = "resources";
+    static constexpr const char*    szRoot          = "tachyon_save";
     static constexpr const char*    szTachyon       = "tachyon";
     static constexpr const char*    szThread        = "thread";
     static constexpr const char*    szType          = "type";
@@ -90,7 +90,6 @@ namespace yq::tachyon {
         if(!root){
             tachyonError << "TSX cannot find root element in " << fname;
             return errors::xml_no_root_element();
-            return errors::missing_root_element();
         }
         
         for(const XmlNode*  data = root->first_node(); data; data = data->next_sibling()){

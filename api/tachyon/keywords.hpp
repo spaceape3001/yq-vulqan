@@ -30,8 +30,6 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::App; }
     };
     
-    struct append_k {};
-    struct appendable_k {};
     
     struct audio_k {
         consteval operator StdThread() const noexcept  { return StdThread::Audio; }
@@ -81,11 +79,7 @@ namespace yq::tachyon {
     };
     
     struct emit_k {};
-
-    struct erasable_k {};
     
-    struct erase_k {};
-
     struct every_k : public ::yq::every_k {
         static constexpr EveryTime    operator()(unit::Second);
         static constexpr EveryCount   operator()(unsigned);
@@ -170,7 +164,6 @@ namespace yq::tachyon {
     struct resource_k {};
     struct scene_k {};
     struct scene³_k {};
-    struct settable_k {};
     
     struct schedule_k {};
 
@@ -241,8 +234,6 @@ namespace yq::tachyon {
 
     static constexpr const align_k              ALIGN;
     static constexpr const app_k                APP;
-    static constexpr const append_k             APPEND;
-    static constexpr const appendable_k         APPENDABLE;
     static constexpr const audio_k              AUDIO;
     static constexpr const auxillary_k          AUX, AUXILLARY;
     static constexpr const bar_k                BAR;
@@ -266,8 +257,6 @@ namespace yq::tachyon {
     static constexpr const dynamic_k            DYNAMIC;
     static constexpr const east_k               EAST;
     static constexpr const edit_k               EDIT;
-    static constexpr const erasable_k           ERASABLE;
-    static constexpr const erase_k              ERASE;
     static constexpr const emit_k               EMIT;
     static constexpr const every_k              EVERY;
     static constexpr const face_k               FACE;
@@ -314,7 +303,6 @@ namespace yq::tachyon {
     static constexpr const scene_k              SCENE;
     static constexpr const scene³_k             SCENE³;
     static constexpr const schedule_k           SCHEDULE;
-    static constexpr const settable_k           SETTABLE;
     static constexpr const shared_k             SHARED;
     static constexpr const shutdown_k           SHUTDOWN;
     static constexpr const sim_k                SIM;

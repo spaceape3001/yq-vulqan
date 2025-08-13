@@ -362,12 +362,13 @@ add_library(${PROJECT_NAME} SHARED
     
     io/FileIOManager.cpp
     io/GLSLShader.cpp
+    io/MeshXML.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
     io/Save.cpp
     
     #io/Wavefront.cpp
-    
+
     io/save/SaveDelegate.cpp
     io/save/SaveObject.cpp
     io/save/SaveResource.cpp

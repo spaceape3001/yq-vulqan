@@ -37,4 +37,8 @@ namespace yq::tachyon {
     class WindowCursorNormalCommand;
     class WindowDestroyCommand;
     class WindowTitleCommand;
+    
+    class ViewerCreateCommand;
+    
+    using ViewerCreateCommandCPtr   = Ref<const ViewerCreateCommand>;
 }

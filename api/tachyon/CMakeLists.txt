@@ -156,6 +156,8 @@ add_library(${PROJECT_NAME} SHARED
     command/aabb/SetAABB3.cpp
     command/aabb/SetAABB4.cpp
     
+    command/app/ViewerCreateCommand.cpp
+    
     command/camera/camera_commands.cpp
 
     command/color/SetBgColorCommand.cpp

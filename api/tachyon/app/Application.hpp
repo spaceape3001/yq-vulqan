@@ -43,6 +43,7 @@ namespace yq::tachyon {
     class ViewerThread;
     class VulqanManager;
     class Widget;
+    class ViewerCreateCommand;
 
     /*! \brief Engine/Vulkan application
     
@@ -84,11 +85,15 @@ namespace yq::tachyon {
         const Desktop*              desktop() const { return m_desktop; }
         
         //! Creates a viewer with widget (note, application owns it)
+        //! \return Viewer ID if not running, null otherwise
         ViewerID                    create(viewer_k, WidgetPtr);
         
         //! Creates a viewer with title/widget
+        //! \return Viewer ID if not running, null otherwise
         ViewerID                    create(viewer_k, std::string_view, WidgetPtr);
         
+        //! \note WARNING... viewer ID might not be in the frame immediately....
+        //! \return Viewer ID if not running, null otherwise
         ViewerID                    create(viewer_k, const ViewerCreateInfo&, WidgetPtr);
 
         /*! \brief Exec loop for a bunch of windows
@@ -100,6 +105,8 @@ namespace yq::tachyon {
         
         //! Simple create viewer & run the exec loop
         void                        run(WidgetPtr wid, const RunConfig& r = RunConfig());
+
+        void                        run(std::span<WidgetPtr> widgets, const RunConfig& r = RunConfig());
 
 
         /*! \brief "Starts" the application
@@ -132,6 +139,7 @@ namespace yq::tachyon {
         enum Stage {
             Uninit,
             Started,
+            Running,
             InError,
             Shutdown,
             Terminated

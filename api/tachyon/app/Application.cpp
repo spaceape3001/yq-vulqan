@@ -120,7 +120,7 @@ namespace yq::tachyon {
     {
         if(is_single(spec.enable)){
             if(spec.create){
-                ptr = (spec.create)(this);
+                ptr = (spec.create)(*this);
                 if(!ptr){
                     tachyonCritical << "Unable to create " << kName << " thread";
                     return false;
@@ -161,70 +161,25 @@ namespace yq::tachyon {
     
     ViewerID                    Application::create(viewer_k, const ViewerCreateInfo&vci, WidgetPtr w)
     {
-        if(!start())
+        switch(m_stage){
+        case Uninit:
+            if(!start())
+                return {};
+            [[fallthrough]];
+        case Started:
+            return m_thread.app->create_viewer(vci, w);
+        case Running:
+            m_thread.app->create(VIEWER, vci, w);
+            [[fallthrough]];
+        default:
             return {};
-
-        if(!m_desktop)
-            return {};
-
-        Window*             win     = m_desktop->create(WINDOW, vci);
-        if(!win)
-            return {};
-        
-        
-        Viewer*         v = nullptr;
-        // TODO ... catch/replace
-        v = Tachyon::create<Viewer>(win, w.ptr(), vci);
-        
-        ++(m_thread.app->m_viewers);
-        
-        v->subscribe(m_thread.app->id());
-        m_thread.app->subscribe(v->id());
-        
-        win->subscribe(v->id());
-        v->subscribe(win->id());
-        
-        // Ticks to force things into the frame
-        m_thread.app->tick();
-        m_thread.app->tick();
-        
-        ThreadID        vt;
-        if(m_thread.viewer){
-            vt  = m_thread.viewer->id();
-        } else if(std::get_if<per_k>(&m_cInfo.thread.viewer.enable)){
-            do {
-                Ref<ViewerThread>   tt;
-                if(m_cInfo.thread.viewer.create){
-                    tt  = (m_cInfo.thread.viewer.create)(this);
-                    if(!tt){
-                        tachyonCritical << "Unable to create viewer thread (it'll default to app-thread)!";
-                        break;
-                    }
-                } else 
-                    tt = new ViewerThread;
-                m_thread.viewers.push_back(tt);
-                tt -> start();
-                vt = tt->id();
-                m_threads.push_back(tt);
-            } while(false);
-        } else {
-            vt      = Thread::standard(VIEWER);
         }
-        
-        if(vt != m_thread.app->id()){
-            v->owner(PUSH, vt);
-            w->owner(PUSH, vt);
-        } 
-        
-        m_thread.app->tick();
-        return v->id();
     }
 
     void                        Application::run(const RunConfig& r)
     {
         if(!start())
             return ;
-
         m_thread.app->run();
     }
 
@@ -232,10 +187,29 @@ namespace yq::tachyon {
     {
         if(!start())
             return ;
-
+        if(!m_desktop)
+            return ;
         ViewerID    vid = create(VIEWER, wid);
         if(!vid)
             return ;
+        run(r);
+    }
+
+    void    Application::run(std::span<WidgetPtr> widgets, const RunConfig& r)
+    {
+        if(!start())
+            return ;
+        if(!m_desktop)
+            return ;
+
+        int success = 0;
+        for(WidgetPtr wp : widgets){
+            ViewerID vid = create(VIEWER, wp);
+            if(vid)
+                ++success;
+        }
+        if(!success)
+            return;
         run(r);
     }
 
@@ -287,13 +261,13 @@ namespace yq::tachyon {
         Meta::freeze();
         
         if(m_cInfo.thread.app){
-            m_thread.app       = m_cInfo.thread.app(this);
+            m_thread.app       = m_cInfo.thread.app(*this);
             if(!m_thread.app){
                 tachyonCritical << "Unable to create app thread.";
                 return false;
             }
         } else {
-            m_thread.app       = new AppThread(this);
+            m_thread.app       = new AppThread(*this);
         }
         m_thread.app -> tick();
         Thread::standard(StdThread::App, m_thread.app->id(), true);
@@ -309,6 +283,7 @@ namespace yq::tachyon {
             m_desktops.push_back(m_desktop);
 
             tick(); tick(); tick(); tick(); tick(); 
+
             //  connections...?
             
             break;

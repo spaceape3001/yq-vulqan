@@ -40,10 +40,10 @@ namespace yq::tachyon {
     class TaskThread;
     class ViewerThread;
     
-    using AppCreateThreadFN     = std::function<Ref<AppThread>(Application*)>;
+    using AppCreateThreadFN     = std::function<Ref<AppThread>(Application&)>;
 
     template <typename T>
-    using thread_create_function    = std::function<Ref<T>(Application*)>;
+    using thread_create_function    = std::function<Ref<T>(Application&)>;
 
     using thread_enabler_t          = std::variant<bool,disabled_k,enabled_k,per_k,StdThread>;
     

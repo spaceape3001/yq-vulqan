@@ -360,6 +360,7 @@ namespace yq::tachyon {
         TypedID                                     m_graphicsCard;
         bool                                        m_zeroSize  = false;
         std::vector<ViewerScreenshotRequestCPtr>    m_screenshotRequests;
+        uint64_t                                    m_setupCycles   = 0;
 
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close
         RequestCPtr                     m_closeRequest;

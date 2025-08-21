@@ -128,7 +128,7 @@ namespace yq::tachyon {
 
         WidgetID   id() const { return WidgetID(UniqueID::id()); }
 
-        bool    is_imgui() const;
+        virtual bool    is_imgui() const;
         
         using Tachyon::parent;
         

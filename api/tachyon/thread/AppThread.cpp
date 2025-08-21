@@ -28,14 +28,8 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
 
 namespace yq::tachyon {
     struct AppThread::WinStart {
-        enum State {
-            Init,
-            Init1,
-            Init2,
-            Push
-        };
-    
-        State                   state       = Init;
+        ThreadID                thread;
+        uint64_t                ticks       = 0;
         Viewer*                 viewer      = nullptr;
         ViewerID                viewerID;
         WidgetPtr               widget;
@@ -72,9 +66,32 @@ namespace yq::tachyon {
             tachyonError << "Window creation failed, so no viewer.";
             return {};
         }
-        
+
+        if(m_app.m_thread.viewer){
+            win.thread  = m_app.m_thread.viewer->id();
+        } else if(std::get_if<per_k>(&m_app.m_cInfo.thread.viewer.enable)){
+            do {
+                Ref<ViewerThread>   tt;
+                if(m_app.m_cInfo.thread.viewer.create){
+                    tt  = (m_app.m_cInfo.thread.viewer.create)(m_app);
+                    if(!tt){
+                        tachyonCritical << "Unable to create viewer thread (it'll default to app-thread)!";
+                        break;
+                    }
+                } else 
+                    tt = new ViewerThread;
+                m_app.m_thread.viewers.push_back(tt);
+                tt -> start();
+                win.thread = tt->id();
+                m_app.m_threads.push_back(tt);
+            } while(false);
+        } else {
+            win.thread      = Thread::standard(VIEWER);
+        }
+
+
         win.viewer  = Tachyon::create<Viewer>(win.window, wid.ptr(), vci);
-        ++m_viewers;
+        m_viewers.insert(win.viewer->id());
         
         // viewer <-> app thread
         win.viewer->subscribe(id());    
@@ -101,60 +118,36 @@ namespace yq::tachyon {
     Execution AppThread::subtick(const Context&ctx) 
     {
         for(auto itr = m_winStarts.begin(); itr != m_winStarts.end();){
-            switch(itr->state){
-            case WinStart::Init:
-                itr->state  = WinStart::Init1;
-                break;
-            case WinStart::Init1:
-                itr->state  = WinStart::Init2;
-                break;
-            case WinStart::Init2:
-                {
-                    ThreadID        vt;
-                    if(m_app.m_thread.viewer){
-                        vt  = m_app.m_thread.viewer->id();
-                    } else if(std::get_if<per_k>(&m_app.m_cInfo.thread.viewer.enable)){
-                        do {
-                            Ref<ViewerThread>   tt;
-                            if(m_app.m_cInfo.thread.viewer.create){
-                                tt  = (m_app.m_cInfo.thread.viewer.create)(m_app);
-                                if(!tt){
-                                    tachyonCritical << "Unable to create viewer thread (it'll default to app-thread)!";
-                                    break;
-                                }
-                            } else 
-                                tt = new ViewerThread;
-                            m_app.m_thread.viewers.push_back(tt);
-                            tt -> start();
-                            vt = tt->id();
-                            m_app.m_threads.push_back(tt);
-                        } while(false);
-                    } else {
-                        vt      = Thread::standard(VIEWER);
-                    }
-                    
-                    if(vt != m_app.m_thread.app->id()){
-                        itr->viewer->owner(PUSH, vt);
-                        itr->widget->owner(PUSH, vt);
-                    } 
-                }
-                itr->state  = WinStart::Push;
-                break;
-            case WinStart::Push:
-                //  done....
+            if(subtick_done(*itr)){
                 itr = m_winStarts.erase(itr);
-                continue;
+            } else {
+                ++itr;
             }
-            ++itr;
         }
         
         return {};
     }
 
+    bool    AppThread::subtick_done(WinStart& win)
+    {
+        if(++win.ticks <= 2)
+            return false;
+        if(win.viewer->starting())
+            return false;
+        if((win.thread != m_app.m_thread.app->id()) && (win.viewer->owner() != win.thread)){
+            win.widget->owner(PUSH, win.thread);
+            win.viewer->owner(PUSH, win.thread);
+        } 
+        return true;
+    }
+
     void    AppThread::on_destroy_event(const DestroyEvent& evt)
     {
-        if(evt.source()(Type::Viewer)){
-            if(!--m_viewers){
+        TypedID     source  = evt.source();
+        if(source(Type::Viewer)){
+            m_viewers.erase((ViewerID) source);
+            if(m_viewers.empty()){
+                tachyonNotice << "AppThread: Viewers dropped to zero, shutting down";
                 m_app.shutting_down();
                 cmd_teardown();
             }
@@ -163,11 +156,6 @@ namespace yq::tachyon {
 
     void    AppThread::on_viewer_create_command(const ViewerCreateCommand& cmd)
     {
-        //  BIG FAT TODO....
-        //  Issue is that the usual viewer startup sequence takes a few ticks...
-        //  But we can't call app's create direct w/in application to spawn
-        //  a new viewer
-        
         create_viewer(cmd.create_info(), cmd.widget());
     }
 

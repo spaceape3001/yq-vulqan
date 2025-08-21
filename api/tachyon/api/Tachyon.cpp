@@ -1145,7 +1145,7 @@ namespace yq::tachyon {
         m_cycle = 0;
         mark();
     }
-    
+
     void Tachyon::stage_teardown()
     {
         m_stage     = Stage::Teardown;

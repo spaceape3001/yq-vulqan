@@ -935,48 +935,70 @@ namespace yq::tachyon {
 
     Execution   Viewer::setup(const Context&ctx) 
     {
-        if(m_flags(X::Failure))
+        if(m_flags(X::Failure)){
+            viewerAlert << "Viewer{" << id() << "}: A failure has been detected, aborting";
             return ABORT;
-    
+        }
+            
+        static constexpr const uint64_t kMaxSetup   = 1000;
+        bool        exceeded        = m_setupCycles++ >= kMaxSetup;
+        Execution   waitResult      = exceeded ? Execution(ABORT) : Execution(WAIT);
+            
         const Frame*    frame   = Frame::current();
         if(!frame)
             return WAIT;
-        
+
         if(!m_graphicsCard){
             GraphicsCardID  gid = frame->first(GRAPHICS_CARD);
             if(!gid){
-                viewerDebug << "Viewer: Graphics Card not detected, waiting";
-                return WAIT;
+                if(exceeded)
+                    viewerAlert   << "Viewer{" << id() << "}: Graphics Card not detected, aborting";
+                return waitResult;
             }
             
             m_graphicsCard  = frame->typed(gid);
-            if(!m_graphicsCard) [[unlikely]]
-                return WAIT;
+            if(!m_graphicsCard){ [[unlikely]]
+                if(exceeded)
+                    viewerAlert << "Viewer{" << id() << "}: GPU{" << m_graphicsCard << "} not on frame, aborting";
+                return waitResult;
+            }
         }
 
-        if(!frame->snap((WindowID) m_window))
-            return WAIT;
+        if(!frame->snap((WindowID) m_window)){
+            if(exceeded)
+                viewerAlert << "Viewer{" << id() << "}: Window{" << m_window << "} not on frame, aborting";
+            return waitResult;
+        }
+            
 
         const WidgetSnap*  w    = frame->snap((WidgetID) m_widget);
-        if(!w)
-            return WAIT;
-
+        if(!w){
+            if(exceeded)
+                viewerAlert << "Viewer{" << id() << "}: Widget{" << m_widget << "} not on frame, aborting";
+            return waitResult;
+        }
+    
         if(!m_flags(X::SentDevRequest)){
             send(new GetDeviceRequest({.source=*this, .target=m_graphicsCard}), TARGET);
             m_flags |= X::SentDevRequest;
-            return WAIT;
+            return WAIT;    // we'll always give one more attempt for a reply/check
         }
         
-        if(!m_flags(X::DevReply))
-            return WAIT;
+        if(!m_flags(X::DevReply)){
+            if(exceeded)
+                viewerAlert << "Viewer{" << id() << "}: GPU refused to reply";
+            return waitResult;
+        }
         
-        if(!w->started)
-            return WAIT;
+        if(!w->started){
+            if(exceeded)
+                viewerAlert << "Viewer{" << id() << "}: widget refuses to start";
+            return waitResult;
+        }
     
-        if(!m_createInfo.hidden){
+        if(!m_createInfo.hidden)
             cmd_show();
-        }
-    
+
         return update(ctx);
     }
 

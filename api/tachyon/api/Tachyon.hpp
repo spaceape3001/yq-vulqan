@@ -387,6 +387,8 @@ namespace yq::tachyon {
         //! Sets parent on next tick (with implied add/remove child) 
         void                set_parent(TachyonSpec);
         
+        bool                starting() const;
+        
         
         //! \note NOT thread-safe (yet)
         //! Subscribes the given listener to OUR posts
@@ -464,8 +466,6 @@ namespace yq::tachyon {
         //! Checks the dirty flag
         //! \note Not 100% thread safe, meant for helpers within the same tick/thread
         bool            dirty() const { return m_dirty; }
-        
-        bool            starting() const;
         
         bool            paused() const;
 

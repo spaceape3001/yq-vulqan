@@ -98,10 +98,10 @@ namespace yq::tachyon {
 
     void    Application::_kill()
     {
-        if(m_stage == Stage::Started){
+        if(started()){
             {
                 lock_t  lock(m_mutex);
-                m_stage = Stage::Shutdown;
+                m_stage = Shutdown;
             }
             for(Thread*t : m_threads)
                 t->shutdown();
@@ -111,7 +111,7 @@ namespace yq::tachyon {
             m_threads.clear();
             m_thread    = {};
             m_vulkan    = {};
-            m_stage = Stage::Terminated;
+            m_stage = Terminated;
         }
     }
 
@@ -180,6 +180,7 @@ namespace yq::tachyon {
     {
         if(!start())
             return ;
+        m_stage = Running;
         m_thread.app->run();
     }
 
@@ -213,6 +214,11 @@ namespace yq::tachyon {
         run(r);
     }
 
+    bool    Application::running() const
+    {
+        return m_stage == Running;
+    }
+
     bool        is_single(const thread_enabler_t& ts)
     {
         if(std::get_if<enabled_k>(&ts))
@@ -230,7 +236,7 @@ namespace yq::tachyon {
 
     bool        Application::start()
     {
-        if(m_stage == Stage::Started)
+        if(started())
             return true;
     
         if(thread::id()){
@@ -374,12 +380,20 @@ namespace yq::tachyon {
     {
         // This *might* be reentrant unsafe depending on if the thread does anything funny in their start...
         lock_t  _lock(m_mutex);
-        if(m_stage != Stage::Started)
+        if(started())
             return;
         m_thread.others.push_back(th);
         m_threads.push_back(th.ptr());
         th->start();
     }
+    
+        
+    bool    Application::started() const
+    {
+        return (m_stage == Started) || (m_stage == Running);
+    }
+    
+
 
     void    Application::tick()
     {

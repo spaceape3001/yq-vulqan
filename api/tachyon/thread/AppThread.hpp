@@ -43,12 +43,14 @@ namespace yq::tachyon {
         
         Application&            m_app;
         bool                    m_quitOnZero    = false;
-        int                     m_viewers       = 0;
         std::vector<WinStart>   m_winStarts;
+        std::set<ViewerID>      m_viewers;
 
         ViewerID    create_viewer(const ViewerCreateInfo&, WidgetPtr);
         
         void        on_destroy_event(const DestroyEvent&);
+        
+        bool        subtick_done(WinStart&);
         
         void        shutdown();
     };

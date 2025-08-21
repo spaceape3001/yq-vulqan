@@ -115,6 +115,10 @@ namespace yq::tachyon {
             initializing the platform, loading plugins, etc. 
         */
         virtual bool    start();    // starts the threads
+        
+        bool                    started() const;
+        
+        bool                    running() const;
 
         //! When we first called "start()"
         const time_point_t&         start_time() const { return m_startTime; }

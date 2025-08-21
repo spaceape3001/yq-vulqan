@@ -20,6 +20,8 @@
 #include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector2.hxx>
 
+#include "imgui_internal.h"
+
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIWindow)
 
 namespace yq {
@@ -170,6 +172,8 @@ namespace yq::tachyon {
             
         bool    isChild = m_flags(UIFlag::IsChild);
             
+int ocnt = (int) ImGui::GetCurrentContext()->CurrentWindowStack.Size; 
+
         if(m_title.empty()){
             static std::atomic<uint64_t> counter{0};
             m_title = "##";
@@ -227,6 +231,9 @@ namespace yq::tachyon {
             m_flags |= UIFlag::Invisible;  
             closing();
         }
+
+int ncnt = (int) ImGui::GetCurrentContext()->CurrentWindowStack.Size;
+assert(ocnt == ncnt);
     }
     Size2F      UIWindow::size() const
     {

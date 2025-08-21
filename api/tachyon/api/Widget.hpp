@@ -199,6 +199,10 @@ namespace yq::tachyon {
         auto    for_elements(const std::string&, Pred&&) const;
         
     protected:
+        /*
+            Idea... dialogs/popups... as temporary dynamic UI Elements?
+        */
+    
         friend class Viewer;
         friend class Layout;
         friend class UIAppMainWriter;

@@ -16,14 +16,16 @@ add_library(ImGui SHARED
     imgui/imgui_draw.cpp
     imgui/imgui_tables.cpp
     imgui/imgui_widgets.cpp
-    imgui/backends/imgui_impl_glfw.cpp
+    #imgui/backends/imgui_impl_glfw.cpp
     imgui/misc/cpp/imgui_stdlib.cpp
     imgui/misc/freetype/imgui_freetype.cpp
+    local/ImGuiTLS.cpp
 )
 
 target_include_directories(ImGui
     PUBLIC 
         ${CMAKE_CURRENT_LIST_DIR}/imgui
+        ${CMAKE_CURRENT_LIST_DIR}/local
     PRIVATE
         ${FREETYPE_INCLUDE_DIRS}
 )
@@ -34,6 +36,7 @@ target_compile_definitions(ImGui
         IMGUI_USE_WCHAR32=1 
         IMGUI_ENABLE_FREETYPE=1
         ImTextureID=void*
+        IMGUI_USER_CONFIG="ImGuiTLS.hpp"
     PRIVATE 
         VK_ENABLE_BETA_EXTENSIONS=1
         DONT_DEFINE_AGAIN__STB_IMAGE_IMPLEMENTATION=1

@@ -1,0 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+//  This header to switch the imgui over to thread-local (in a way that's not
+//  altering the ImGui source)
+
+struct ImGuiContext;
+extern thread_local ImGuiContext* MyImGuiTLS;
+#define GImGui MyImGuiTLS

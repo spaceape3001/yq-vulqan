@@ -8,6 +8,8 @@
 #include <tachyon/MyImGui.hpp>
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
+#include "imgui_internal.h"
+
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIMenu)
 
 namespace yq::tachyon {
@@ -36,10 +38,13 @@ namespace yq::tachyon {
 
     void        UIMenu::render() 
     {
+int ocnt = (int) ImGui::GetCurrentContext()->CurrentWindowStack.Size;    
         if(ImGui::BeginMenu(m_name.c_str())){
             content();
             ImGui::EndMenu();
         }
+int ncnt = (int) ImGui::GetCurrentContext()->CurrentWindowStack.Size;
+assert(ocnt == ncnt);
     }
 
     const char*   UIMenu::title() const 

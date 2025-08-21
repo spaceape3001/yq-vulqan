@@ -134,10 +134,12 @@ namespace yq::tachyon {
             return false;
         if(win.viewer->starting())
             return false;
+
         if((win.thread != m_app.m_thread.app->id()) && (win.viewer->owner() != win.thread)){
             win.widget->owner(PUSH, win.thread);
             win.viewer->owner(PUSH, win.thread);
-        } 
+        }
+
         return true;
     }
 

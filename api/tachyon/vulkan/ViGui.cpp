@@ -16,6 +16,7 @@
 #include <yq/stream/Text.hpp>
 #include <yq/text/format.hpp>
 #include <yq/util/AutoReset.hpp>
+#include <yq/util/Safety.hpp>
 
 #include <tachyon/logging.hpp>
 #include <tachyon/api/TachyonMetaWriter.hpp>
@@ -62,6 +63,12 @@
 */
 
 namespace yq::tachyon {
+
+    #define CTX_PRESERVE                                            \
+        auto _reset = safety([old=ImGui::GetCurrentContext()](){    \
+            ImGui::SetCurrentContext(old);                          \
+        });
+
 
     static constexpr const size_t kInitCapacity     = 8192;
     static constexpr const size_t kBufferAlignment  = 256;
@@ -353,6 +360,7 @@ namespace yq::tachyon {
     {
         G&  g   = global();
 
+        CTX_PRESERVE
         m_context   = ImGui::CreateContext();
         ImGui::SetCurrentContext(m_context);
         
@@ -429,16 +437,18 @@ namespace yq::tachyon {
         m_viz                   = nullptr;
 
         if(m_context){
-            ImGui::SetCurrentContext(m_context);
-            //ImGui_ImplGlfw_Shutdown();
-            ImGuiIO& io = ImGui::GetIO();
-            io.BackendRendererName      = nullptr;
-            io.BackendRendererUserData  = nullptr;
-            io.BackendPlatformName      = nullptr;
-            io.BackendPlatformUserData  = nullptr;
+            {
+                CTX_PRESERVE
+                ImGui::SetCurrentContext(m_context);
+                //ImGui_ImplGlfw_Shutdown();
+                ImGuiIO& io = ImGui::GetIO();
+                io.BackendRendererName      = nullptr;
+                io.BackendRendererUserData  = nullptr;
+                io.BackendPlatformName      = nullptr;
+                io.BackendPlatformUserData  = nullptr;
 
-            io.BackendFlags            &= ~(ImGuiBackendFlags_RendererHasVtxOffset);
-
+                io.BackendFlags            &= ~(ImGuiBackendFlags_RendererHasVtxOffset);
+            }
             ImGui::DestroyContext(m_context);
             m_context           = nullptr;
         }
@@ -527,6 +537,8 @@ namespace yq::tachyon {
             return ;
             
         auto r = auto_reset(u.imgui, this);
+
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         
         //  Do updates here...
@@ -541,10 +553,13 @@ namespace yq::tachyon {
 
     void    ViGui::prerecord(ViContext&u)
     {
+
         update();
         
         #if IMGUI_VERSION_NUM >= 19200
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
+
         const ImDrawData*   drawData    = ImGui::GetDrawData();
         if(!drawData)
             return ;
@@ -561,6 +576,7 @@ namespace yq::tachyon {
 
     void    ViGui::record(ViContext&u)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
 
         const ImDrawData*   drawData    = ImGui::GetDrawData();
@@ -707,6 +723,7 @@ namespace yq::tachyon {
 
     void    ViGui::update(UpdateFlags flags)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
 
         m_update |= flags;
@@ -750,6 +767,7 @@ namespace yq::tachyon {
 
     void ViGui::on(const KeyCharacterEvent&evt)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
         io.AddInputCharacter((unsigned int) evt.code());
@@ -762,7 +780,9 @@ namespace yq::tachyon {
         if(ik < 0)
             return ;
     
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
+
         update_modifiers(evt.modifiers());
         ImGuiIO& io = ImGui::GetIO();
         io.AddKeyEvent(ik, true);
@@ -774,7 +794,9 @@ namespace yq::tachyon {
         if(ik < 0)
             return ;
 
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
+
         update_modifiers(evt.modifiers());
         ImGuiIO& io = ImGui::GetIO();
         io.AddKeyEvent(ik, false);
@@ -782,6 +804,7 @@ namespace yq::tachyon {
     
     void ViGui::on(const MouseMoveEvent&evt)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
         ImGuiIO& io = ImGui::GetIO();
@@ -791,6 +814,7 @@ namespace yq::tachyon {
     
     void ViGui::on(const MousePressEvent&evt)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
         ImGuiIO& io = ImGui::GetIO();
@@ -803,6 +827,7 @@ namespace yq::tachyon {
     
     void ViGui::on(const MouseReleaseEvent&evt)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
         ImGuiIO& io = ImGui::GetIO();
@@ -815,6 +840,7 @@ namespace yq::tachyon {
 
     void    ViGui::on(const DefocusEvent&)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
         io.AddFocusEvent(false);
@@ -822,6 +848,7 @@ namespace yq::tachyon {
     
     void    ViGui::on(const FocusEvent&)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
         io.AddFocusEvent(true);
@@ -829,6 +856,7 @@ namespace yq::tachyon {
 
     void    ViGui::tick(const ViewerState&state)
     {
+        CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
         ImGuiIO& io = ImGui::GetIO();
 

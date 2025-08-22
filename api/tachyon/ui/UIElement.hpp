@@ -187,7 +187,7 @@ namespace yq::tachyon {
         /*! \brief Clones the element
         
             For all elements that are specified during the widget info *MUST* implement 
-            this.
+            this.  (Ditto for popups)
         */
         virtual UIElement*     clone() const = 0;
         

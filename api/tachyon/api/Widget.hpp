@@ -313,6 +313,14 @@ namespace yq::tachyon {
         //template <typename Pred>
         //T           forall(ui_k, uint64_t, std::function<T(UIElement*)>);
 
+        //! Inserts into the popup vector, creates a clone of the element
+        uint64_t    popup(push_k, const UIElement&);
+        void        popup(pop_k);
+        void        popup(erase_k, uint64_t);
+        
+        //! Inserts into the popup vector, takes OWNERSHIP of the pointer
+        uint64_t    popup(push_k, UIElement*);
+
     private:
     
         using BIDMap = std::multimap<uint64_t,UIElement*>;
@@ -325,11 +333,12 @@ namespace yq::tachyon {
         Vector2D            m_position      = { 0., 0. };
         Size2D              m_size          = { -1, -1 };   // unknown sizing
         
-    protected:
         struct {
-            UIElement*      root    = nullptr;
-            UIDMap          uids;
-            BIDMap          bids;
+            UIElement*              root    = nullptr;
+            UIDMap                  uids;
+            BIDMap                  bids;
+            std::vector<UIElement*> popups;
+            std::vector<UIElement*> erasing;
         }   m_ui;
         
         void    _erase(UIElement*);
@@ -339,7 +348,6 @@ namespace yq::tachyon {
         void    _erase_bid(UIElement*);
         void    _erase_uid(UIElement*);
     
-    private:    
         void    _kill();
 
 

@@ -343,8 +343,18 @@ namespace yq::tachyon {
 
     void    Widget::_kill()
     {
+        for(UIElement* e : m_ui.erasing){
+            if(e) [[likely]]
+                delete e;
+        }
+        m_ui.erasing.clear();
         m_ui.uids.clear();
         m_ui.bids.clear();
+        for(UIElement* e : m_ui.popups){
+            if(e) [[likely]]
+                delete e;
+        }
+        m_ui.popups.clear();
         if(m_ui.root){
             delete m_ui.root;
             m_ui.root        = nullptr;
@@ -437,6 +447,15 @@ namespace yq::tachyon {
             auto wid        = auto_reset(UIElement::s_widget, this);
             auto ctx        = auto_reset(UIElement::s_viContext, &u);
             m_ui.root -> draw();
+            for(UIElement* ue : m_ui.popups){
+                if(!ue) [[unlikely]]
+                    continue;
+                ue -> draw();
+            }
+            
+            for(UIElement* ue : m_ui.erasing)
+                delete ue;
+            m_ui.erasing.clear();
         }
     }
 
@@ -533,6 +552,49 @@ namespace yq::tachyon {
             return ;
         if(m_viewer){
             send(cmd.clone(REBIND, {.target=m_viewer}));
+        }
+    }
+
+    uint64_t    Widget::popup(push_k, UIElement* pop)
+    {
+        if(!pop)
+            return 0;
+        m_ui.popups.push_back(pop);
+        uint64_t    bid = pop->binding(CREATE);
+        _insert(pop);
+        return bid;
+    }
+
+    uint64_t    Widget::popup(push_k, const UIElement& pop)
+    {
+        return popup(PUSH, pop.clone());
+    }
+    
+    void        Widget::popup(pop_k)
+    {
+        if(m_ui.popups.empty())
+            return;
+        UIElement*  ui  = m_ui.popups.back();
+        _erase(ui);
+        m_ui.erasing.push_back(ui);
+        m_ui.popups.pop_back();
+    }
+    
+    void        Widget::popup(erase_k, uint64_t id)
+    {
+        for(auto itr=m_ui.popups.begin(); itr != m_ui.popups.end(); ){
+            if(!*itr){  [[unlikely]]    // very unlikely 
+                itr = m_ui.popups.erase(itr);
+                continue;
+            }
+            
+            if((*itr)->binding() == id){
+                _erase(*itr);
+                m_ui.erasing.push_back(*itr);
+                itr = m_ui.popups.erase(itr);
+            } else {
+                ++itr;
+            }
         }
     }
 

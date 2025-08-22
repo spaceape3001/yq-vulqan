@@ -325,20 +325,22 @@ namespace yq::tachyon {
         Vector2D            m_position      = { 0., 0. };
         Size2D              m_size          = { -1, -1 };   // unknown sizing
         
+    protected:
         struct {
             UIElement*      root    = nullptr;
             UIDMap          uids;
             BIDMap          bids;
         }   m_ui;
         
-        
-        void    _kill();
         void    _erase(UIElement*);
         void    _insert(UIElement*);
         bool    _has_uid(const UIElement*) const;
         bool    _has_bid(const UIElement*) const;
         void    _erase_bid(UIElement*);
         void    _erase_uid(UIElement*);
+    
+    private:    
+        void    _kill();
 
 
         static void push_buffer_mvp(PushBuffer&, const PreContext&, const Rendered³Snap&);

@@ -638,7 +638,6 @@ add_library(${PROJECT_NAME} SHARED
         
     
     #widget/AbstractSceneWidgetHelper.cpp
-    widget/AppWidget.cpp
     widget/CompositeWidget.cpp
     widget/FormWidget.cpp
     widget/FrameInspector.cpp

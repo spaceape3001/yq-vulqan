@@ -94,7 +94,7 @@
 #include <tachyon/ui/UIWriters.hxx>
 #include <tachyon/ui/UIElementMetaWriter.hpp>
 
-#include <tachyon/widget/AppWidgetMetaWriter.hpp>
+#include <tachyon/api/WidgetMetaWriter.hpp>
 
 
 #include <ImGuiFileDialog.h>

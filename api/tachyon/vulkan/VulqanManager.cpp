@@ -258,7 +258,7 @@ namespace yq::tachyon {
         }
         if(want_debug){
             g.extensions.requested.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-            g.extensions.requested.push_back("VK_EXT_debug_report");
+            //g.extensions.requested.push_back("VK_EXT_debug_report");
         }
 
         for(auto& x : kStdLayers)

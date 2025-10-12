@@ -7,15 +7,13 @@
 #include "Mesh.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
 
-YQ_RESOURCE_IMPLEMENT(yq::tachyon::Mesh)
-
 #undef NAN
 
 namespace yq::tachyon {
     void Mesh::init_meta()
     {
         auto w = writer<Mesh>();
-        w.description("Polyhedral Mesh");
+        w.description("Mesh");
     }
     
     Mesh::Mesh()
@@ -654,3 +652,5 @@ namespace yq::tachyon {
 #endif
 
 }
+
+YQ_RESOURCE_IMPLEMENT(yq::tachyon::Mesh)

@@ -7,7 +7,7 @@
 #include "ColorTriangle3.hpp"
 #include <tachyon/logging.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/resource/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <tachyon/aspect/AColorWriter.hxx>
 

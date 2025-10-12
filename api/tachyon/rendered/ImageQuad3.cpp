@@ -8,7 +8,7 @@
 
 #include <yq/shape/AxBox2.hpp>
 
-#include <tachyon/resource/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>

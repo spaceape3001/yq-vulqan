@@ -48,7 +48,7 @@
 #include <tachyon/api/SceneData.hpp>
 #include <tachyon/app/Viewer.hpp>
 
-#include <tachyon/resource/Raster.hpp>
+#include <tachyon/asset/Raster.hpp>
 
 #include <tachyon/camera/NullCamera.hpp>
 #include <tachyon/camera/SpaceCamera.hpp>

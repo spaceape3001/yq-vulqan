@@ -6,4 +6,4 @@
 
 #pragma once
 
-#include <tachyon/resource/Sampler.hpp>
+#include <tachyon/asset/Sampler.hpp>

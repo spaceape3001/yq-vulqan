@@ -6,7 +6,7 @@
 
 #include <tachyon/pipeline/Pipeline.hpp>
 #include <yq/meta/CompoundMeta.hpp>
-#include <tachyon/resource/Shader.hpp>
+#include <tachyon/asset/Shader.hpp>
 #include <tachyon/pipeline/PushData.hpp>
 #include <atomic>
 

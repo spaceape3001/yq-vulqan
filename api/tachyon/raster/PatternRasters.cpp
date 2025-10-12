@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PatternRasters.hpp"
-#include <tachyon/resource/Raster.hpp>
+#include <tachyon/asset/Raster.hpp>
 #include <yq/raster/Pixels.hxx>
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>

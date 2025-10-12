@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq { template <typename> class Ref; }
+
+namespace yq::tachyon {
+    class CameraSpec;
+    using CameraSpecPtr   = Ref<CameraSpec>;
+    using CameraSpecCPtr  = Ref<const CameraSpec>;
+}

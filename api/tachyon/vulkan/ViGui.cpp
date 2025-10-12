@@ -20,12 +20,12 @@
 
 #include <tachyon/logging.hpp>
 #include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/resource/Raster.hpp>
+#include <tachyon/asset/Raster.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/pipeline/PipelineWriter.hpp>
-#include <tachyon/resource/Sampler.hpp>
-#include <tachyon/resource/Shader.hpp>
-#include <tachyon/pipeline/Texture.hpp>
+#include <tachyon/asset/Sampler.hpp>
+#include <tachyon/asset/Shader.hpp>
+#include <tachyon/asset/Texture.hpp>
 #include <tachyon/api/Widget.hpp>
 #include <tachyon/app/ViewerState.hpp>
 #include <tachyon/event/keyboard/KeyCharacterEvent.hpp>

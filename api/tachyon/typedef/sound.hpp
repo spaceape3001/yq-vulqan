@@ -4,3 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
+namespace yq { template <typename> class Ref; }
+
+namespace yq::tachyon {
+    class Sound;
+    using SoundPtr   = Ref<Sound>;
+    using SoundCPtr  = Ref<const Sound>;
+}

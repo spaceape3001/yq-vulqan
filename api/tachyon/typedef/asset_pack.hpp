@@ -4,11 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/resource/Mesh.hpp>
+#pragma once
+
+namespace yq {
+    template <typename> class Ref;
+}
 
 namespace yq::tachyon {
-    MeshPtr     Mesh::extract_from_obj(const std::filesystem::path&)
-    {
-        return {};
-    }
+    class AssetPack;
+    using AssetPackPtr            = Ref<AssetPack>;
+    using AssetPackCPtr           = Ref<const AssetPack>;
 }

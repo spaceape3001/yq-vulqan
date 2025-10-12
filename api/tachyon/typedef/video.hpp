@@ -6,10 +6,10 @@
 
 #pragma once
 
+namespace yq { template <typename> class Ref; }
+
 namespace yq::tachyon {
-    class Material : public Resource {
-        YQ_RESOURCE_DECLARE(Material, Resource)
-    public:
-    
-    };
+    class Video;
+    using VideoPtr   = Ref<Video>;
+    using VideoCPtr  = Ref<const Video>;
 }

@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq { template <typename> class Ref; }
+
+namespace yq::tachyon {
+    class SceneSpec;
+    using SceneSpecPtr   = Ref<SceneSpec>;
+    using SceneSpecCPtr  = Ref<const SceneSpec>;
+}

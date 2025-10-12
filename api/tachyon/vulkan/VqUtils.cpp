@@ -8,7 +8,7 @@
 #include <yq/core/ErrorDB.hpp>
 #include <yq/color/RGBA.hpp>
 #include <tachyon/logging.hpp>
-#include <tachyon/resource/SamplerInfo.hpp>
+#include <tachyon/asset/SamplerInfo.hpp>
 #include <tachyon/pipeline/ImageViewInfo.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/VqUtils.hpp>

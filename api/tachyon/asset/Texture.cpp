@@ -5,11 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <tachyon/resource/Raster.hpp>
-#include <tachyon/resource/Sampler.hpp>
-#include <tachyon/pipeline/Texture.hpp>
+#include <tachyon/asset/Raster.hpp>
+#include <tachyon/asset/Sampler.hpp>
+#include <tachyon/asset/Texture.hpp>
+#include <yq/resource/ResourceMetaWriter.hpp>
 
 namespace yq::tachyon {
+    void Texture::init_meta()
+    {
+        auto w = writer<Texture>();
+        w.description("Texture");
+    }
+
     TextureCPtr  Texture::load(std::string_view pp)
     {
         return load(pp, Sampler::simple(), TextureInfo());
@@ -141,3 +148,5 @@ namespace yq::tachyon {
     {
     }
 }
+
+YQ_RESOURCE_IMPLEMENT(yq::tachyon::Texture)

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/resource/Mesh.hpp>
+#include <tachyon/asset/Mesh.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/resource/Resource.hxx>
 #include <tachyon/logging.hpp>

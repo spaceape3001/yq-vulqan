@@ -18,7 +18,7 @@
 #include <tachyon/config/vulqan.hpp>
 #include <tachyon/pipeline/Pipeline.hpp>
 #include <tachyon/pipeline/PipelineUtils.hpp>
-#include <tachyon/pipeline/Texture.hpp>
+#include <tachyon/asset/Texture.hpp>
 
 namespace yq::tachyon {
 

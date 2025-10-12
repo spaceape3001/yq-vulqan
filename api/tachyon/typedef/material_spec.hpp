@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq { template <typename> class Ref; }
+
+namespace yq::tachyon {
+    class MaterialSpec;
+    using MaterialSpecPtr   = Ref<MaterialSpec>;
+    using MaterialSpecCPtr  = Ref<const MaterialSpec>;
+}

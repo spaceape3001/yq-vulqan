@@ -9,7 +9,7 @@
 #include <tachyon/errors.hpp>
 #include <tachyon/logging.hpp>
 #include <tachyon/pipeline/Buffer.hpp>
-#include <tachyon/pipeline/Texture.hpp>
+#include <tachyon/asset/Texture.hpp>
 #include <tachyon/api/RenderedData.hpp>
 #include <tachyon/vulkan/VqStructs.hpp>
 #include <tachyon/vulkan/ViBuffer.hpp>

@@ -9,7 +9,7 @@
 #include <yq/resource/Resource.hpp>
 #include <yq/core/Memory.hpp>
 #include <yq/raster/forward.hpp>
-#include <tachyon/resource/RasterInfo.hpp>
+#include <tachyon/asset/RasterInfo.hpp>
 #include <tachyon/typedef/raster.hpp>
 
 namespace yq::tachyon {

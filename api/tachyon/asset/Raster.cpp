@@ -13,7 +13,7 @@
 #include <yq/resource/ResourceIO.hpp>
 
 #include <tachyon/pipeline/PipelineUtils.hpp>
-#include <tachyon/resource/Raster.hpp>
+#include <tachyon/asset/Raster.hpp>
 #include <yq/raster/Pixels.hxx>
 
 namespace yq::tachyon {
@@ -295,5 +295,5 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Raster)
+YQ_RESOURCE_IMPLEMENT(yq::tachyon::Raster)
 

@@ -119,6 +119,18 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize4.cpp
     aspect/AVertices3.cpp
         
+    asset/AssetPack.cpp
+    asset/CameraSpec.cpp
+    asset/LightSpec.cpp
+    asset/Material.cpp
+    asset/Mesh.cpp
+    asset/Raster.cpp
+    asset/Sampler.cpp
+    asset/Shader.cpp
+    asset/Sound.cpp
+    asset/Texture.cpp
+    asset/Video.cpp
+
     camera/NullCamera.cpp
     camera/SpaceCamera.cpp
     camera/TargetCamera.cpp
@@ -364,6 +376,7 @@ add_library(${PROJECT_NAME} SHARED
     
     io/FileIOManager.cpp
     io/GLSLShader.cpp
+    io/GLTFLoader.cpp
     io/MeshXML.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
@@ -412,7 +425,6 @@ add_library(${PROJECT_NAME} SHARED
     pipeline/Pipeline.cpp
     pipeline/PipelineUtils.cpp
     pipeline/RenderPass.cpp
-    pipeline/Texture.cpp
 
     post/AnyPost.cpp
     post/EmptyPost.cpp
@@ -525,11 +537,6 @@ add_library(${PROJECT_NAME} SHARED
     request/ui/RefreshRequest.cpp
     
     request/viewer/ViewerScreenshotRequest.cpp
-
-    resource/Mesh.cpp
-    resource/Raster.cpp
-    resource/Sampler.cpp
-    resource/Shader.cpp
 
     scene/BackgroundScene.cpp
     scene/CompositeScene.cpp
@@ -679,6 +686,7 @@ PUBLIC
 
     ImGui
     STBImage 
+    TinyGLTF
     VulkanMemoryAllocator
 
     ${Vulkan_LIBRARIES} 

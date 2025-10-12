@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq { template <typename> class Ref; }
+
+namespace yq::tachyon {
+    class LightSpec;
+    using LightSpecPtr   = Ref<LightSpec>;
+    using LightSpecCPtr  = Ref<const LightSpec>;
+}

@@ -10,4 +10,4 @@
     Include this file for texture access....
 */
 
-#include <tachyon/pipeline/Texture.hpp>
+#include <tachyon/asset/Texture.hpp>

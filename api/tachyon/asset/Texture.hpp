@@ -9,7 +9,8 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/color/RGBA.hpp>
-#include <tachyon/resource/SamplerInfo.hpp>
+#include <yq/resource/Resource.hpp>
+#include <tachyon/asset/SamplerInfo.hpp>
 #include <tachyon/pipeline/DataFormat.hpp>
 #include <tachyon/pipeline/ComponentSwizzle.hpp>
 #include <tachyon/pipeline/ImageAspect.hpp>
@@ -56,7 +57,8 @@ namespace yq::tachyon {
 
 
     //! Texture (image & view/sampler info)
-    class Texture : public UniqueID, public RefCount {
+    class Texture : public Resource {
+        YQ_RESOURCE_DECLARE(Texture, Resource)
     public:
     
         /*! Image(s)
@@ -98,6 +100,9 @@ namespace yq::tachyon {
         Texture(std::vector<RasterCPtr>&&, const SamplerCPtr& _sampler, const TextureInfo& texInfo={});
         Texture(std::vector<RasterCPtr>&&, const TextureInfo& texInfo);
         Texture(std::vector<RasterCPtr>&&, const TextureInfo2& texInfo);
+        
+        static void init_meta();
+        virtual size_t      data_size() const override { return 0; }
         
     private:
         ~Texture();

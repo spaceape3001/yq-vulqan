@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <tachyon/asset/Sampler.hpp>
 #include <yq/resource/ResourceMetaWriter.hpp>
-#include <tachyon/resource/Sampler.hpp>
 
 namespace yq::tachyon {
     SamplerCPtr    Sampler::simple()
@@ -30,4 +30,4 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Sampler)
+YQ_RESOURCE_IMPLEMENT(yq::tachyon::Sampler)

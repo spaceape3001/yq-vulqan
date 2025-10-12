@@ -122,7 +122,7 @@ add_library(${PROJECT_NAME} SHARED
     asset/AssetPack.cpp
     asset/CameraSpec.cpp
     asset/LightSpec.cpp
-    asset/Material.cpp
+    asset/MaterialSpec.cpp
     asset/Mesh.cpp
     asset/Raster.cpp
     asset/Sampler.cpp

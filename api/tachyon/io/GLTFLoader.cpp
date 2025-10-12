@@ -11,7 +11,7 @@
 #include <tachyon/asset/CameraSpec.hpp>
 #include <tachyon/asset/LightSpec.hpp>
 #include <tachyon/asset/Mesh.hpp>
-#include <tachyon/asset/Material.hpp>
+#include <tachyon/asset/MaterialSpec.hpp>
 #include <tachyon/asset/Raster.hpp>
 //#include <tachyon/asset/SceneSpec.hpp>
 #include <tachyon/asset/Sampler.hpp>
@@ -141,7 +141,7 @@ namespace yq::tachyon {
         return true;
     }
 
-    RasterPtr              to_raster(const tinygltf::Image& img)
+    static RasterPtr              to_raster(const tinygltf::Image& img)
     {
         if(img.width<=0)
             return {};
@@ -212,7 +212,7 @@ namespace yq::tachyon {
         return ret;
     }
 
-    SamplerPtr              to_sampler(const tinygltf::Sampler& sam)
+    static SamplerPtr              to_sampler(const tinygltf::Sampler& sam)
     {
         SamplerInfo info;
         
@@ -270,16 +270,16 @@ namespace yq::tachyon {
 
     
     struct GLTFContext {
-        std::vector<CameraSpecPtr>  cameras;
-        std::vector<LightSpecPtr>   lights;
-        std::vector<MaterialPtr>    materials;
-        std::vector<MeshPtr>        meshes;
-        std::vector<RasterPtr>      images;
-        std::vector<SamplerPtr>     samplers;
-        std::vector<TexturePtr>     textures;
+        std::vector<CameraSpecPtr>      cameras;
+        std::vector<LightSpecPtr>       lights;
+        std::vector<MaterialSpecPtr>    materials;
+        std::vector<MeshPtr>            meshes;
+        std::vector<RasterPtr>          rasters;
+        std::vector<SamplerPtr>         samplers;
+        std::vector<TexturePtr>         textures;
         
-        AssetPack&                  lib;
-        std::string                 path;
+        AssetPack&                      lib;
+        std::string                     path;
         
         GLTFContext(AssetPack& ap) : lib(ap)
         {
@@ -289,9 +289,9 @@ namespace yq::tachyon {
         void    operator<<(const tinygltf::Image& img)
         {
             RasterPtr   p   = to_raster(img);
-            images.push_back(p);    // yes, even null pointers
+            rasters.push_back(p);    // yes, even null pointers
             if(!p){
-                tachyonNotice << "GLTF load (" << path << "): failed to import image (" << images.size() << ")";
+                tachyonNotice << "GLTF load (" << path << "): failed to import image (" << rasters.size() << ")";
                 return;
             }
             lib.add(p);
@@ -302,12 +302,57 @@ namespace yq::tachyon {
             SamplerPtr  p   = to_sampler(sam);
             samplers.push_back(p);
             if(!p){
-                tachyonNotice << "GLTF load (" << path << "): failed to import sampler (" << images.size() << ")";
+                tachyonNotice << "GLTF load (" << path << "): failed to import sampler (" << samplers.size() << ")";
                 return;
             }
             lib.add(p);
         }
         
+        void    operator<<(const tinygltf::Texture& tex)
+        {
+            TexturePtr  p   = to_texture(tex);
+            textures.push_back(p);
+            if(!p){
+                tachyonNotice << "GLTF load (" << path << "): failed to import texture (" << textures.size() << ")";
+                return;
+            }
+            lib.add(p);
+        }
+        
+
+        TexturePtr   to_texture(const tinygltf::Texture& tex)
+        {
+            SamplerCPtr  sam;
+            RasterCPtr   ras;
+            
+            if(tex.sampler >= (int) samplers.size()){
+                tachyonNotice << "GLTF load (" << path << "): texture has a bad sampler!";
+                return {};
+            }
+            
+            if(tex.sampler >= 0){
+                sam = samplers[tex.sampler].ptr();
+                if(!sam)
+                    tachyonNotice << "GLTF load (" << path << "): texture references a bad sampler!";
+            }
+            
+            if(!sam)
+                sam     = Sampler::simple();
+            
+            if((tex.source < 0) || (tex.source >= (int) rasters.size())){
+                tachyonNotice << "GLTF load (" << path << "): texture has a bad source!";
+                return {};
+            }
+            
+            ras     = rasters[tex.source].ptr();
+            if(!ras)
+                tachyonNotice << "GLTF load (" << path << "): texture references a bad image!";
+            
+            TexturePtr  ret = new Texture(ras, sam);
+            ret -> set_name(tex.name);
+            return ret;
+        }
+
     };
 
 
@@ -321,7 +366,9 @@ namespace yq::tachyon {
             ctx << img;
         for(const auto& sam : input.samplers)
             ctx << sam;
-        
+        for(const auto& tex : input.textures)
+            ctx << tex;
+            
         // TODO
         
     

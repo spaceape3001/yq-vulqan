@@ -8,6 +8,7 @@
 
 #include <tachyon/typedef/material_spec.hpp>
 #include <yq/resource/Resource.hpp>
+#include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {
 
@@ -19,6 +20,10 @@ namespace yq::tachyon {
         YQ_RESOURCE_DECLARE(MaterialSpec, Resource)
     public:
         // TODO (Contents)
+    
+        bool                double_sided = false;
+        RGB3D               emmisive_factor{0., 0., 0.};
+        std::vector<int>    lods;
     
         MaterialSpec();
         ~MaterialSpec();

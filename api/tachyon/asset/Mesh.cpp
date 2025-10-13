@@ -6,6 +6,7 @@
 
 #include "Mesh.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
+#include <tachyon/asset/MaterialSpec.hpp>
 
 #undef NAN
 
@@ -23,6 +24,7 @@ namespace yq::tachyon {
     Mesh::~Mesh()
     {
     }
+    #if 0
     
     RGBA4F       Mesh::color(size_t i) const
     {
@@ -643,6 +645,7 @@ namespace yq::tachyon {
     {
         weights.erase(index(C::Point, i));
     }
+    #endif
 
 #if 0
 
@@ -651,6 +654,15 @@ namespace yq::tachyon {
     void                Mesh::vertex(erase_k, unsigned i) const;
 #endif
 
+    /////////////////////////////
+    
+    Mesh::Primitive::Primitive()
+    {
+    }
+
+    Mesh::Primitive::~Primitive()
+    {
+    }
 }
 
 YQ_RESOURCE_IMPLEMENT(yq::tachyon::Mesh)

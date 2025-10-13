@@ -279,9 +279,10 @@ namespace yq::tachyon {
         std::vector<TexturePtr>         textures;
         
         AssetPack&                      lib;
+        const tinygltf::Model&          model;
         std::string                     path;
         
-        GLTFContext(AssetPack& ap) : lib(ap)
+        GLTFContext(AssetPack& ap, const tinygltf::Model& mdl) : lib(ap), model(mdl)
         {
             path    = ap.url().path;
         }
@@ -317,6 +318,22 @@ namespace yq::tachyon {
                 return;
             }
             lib.add(p);
+        }
+
+        void    operator<<(const tinygltf::Mesh& m)
+        {
+            MeshPtr  p   = to_mesh(m);
+            meshes.push_back(p);
+            if(!p){
+                tachyonNotice << "GLTF load (" << path << "): failed to import mesh (" << meshes.size() << ")";
+                return;
+            }
+            lib.add(p);
+        }
+        
+        MeshPtr     to_mesh(const tinygltf::Mesh& mesh)
+        {
+            return {};
         }
         
 
@@ -356,18 +373,20 @@ namespace yq::tachyon {
     };
 
 
-    AssetPackPtr     gltfLoad(const tinygltf::Model& input, const Url& url)
+    AssetPackPtr     gltfLoad(const tinygltf::Model& model, const Url& url)
     {
         AssetPackPtr        lib = new AssetPack;
         lib -> set_url(url);
-        GLTFContext         ctx(*lib);
+        GLTFContext         ctx(*lib, model);
     
-        for(const auto& img : input.images)
+        for(const auto& img : model.images)
             ctx << img;
-        for(const auto& sam : input.samplers)
+        for(const auto& sam : model.samplers)
             ctx << sam;
-        for(const auto& tex : input.textures)
+        for(const auto& tex : model.textures)
             ctx << tex;
+        for(const auto& m : model.meshes)
+            ctx << m;
             
         // TODO
         

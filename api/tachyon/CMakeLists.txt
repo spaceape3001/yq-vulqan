@@ -377,7 +377,7 @@ add_library(${PROJECT_NAME} SHARED
     io/FileIOManager.cpp
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
-    io/MeshXML.cpp
+    #io/MeshXML.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
     io/Save.cpp

@@ -8,6 +8,7 @@
 
 #include <tachyon/keywords.hpp>
 #include <tachyon/data/Vertex3.hpp>
+#include <tachyon/typedef/material_spec.hpp>
 #include <tachyon/typedef/mesh.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/color/RGBA.hpp>
@@ -18,13 +19,18 @@
 
 namespace yq::tachyon {
 
-    /*! \brief Polyhedral mesh with attributes
-    
-        \note We're limiting ourselves to 4-billion indicies... figure above that, another solution?
+    /*! \brief Mesh... and we'll limit ourselves to 4-billion indices....
     */
     class Mesh : public Resource {
         YQ_RESOURCE_DECLARE(Mesh, Resource)
     public:
+    
+        struct Primitive;
+        std::vector<Primitive>              primitives;
+        std::vector<double>                 weights;        // morph targets
+        
+        #if 0
+    
         static constexpr const RGBA4F    kBadColor   = { NAN, NAN, NAN, NAN };
 
         enum class C : uint8_t {
@@ -60,14 +66,17 @@ namespace yq::tachyon {
         double      weight(size_t) const;
         UV2F        uv(size_t) const;
 
-
+#endif
         
 //        const Url&                      material_url() const { return m_material; }
         
         Mesh();
         ~Mesh();
         
+    
         static void init_meta();
+        
+        #if 0
     
         static Mesh*        extract_from_obj(const std::filesystem::path&);
         static Mesh*        load_from_tmesh(const XmlDocument&);
@@ -208,6 +217,28 @@ namespace yq::tachyon {
         void                weight(erase_k, line_k, unsigned);
         void                weight(erase_k, face_k, unsigned);
         void                weight(erase_k, point_k, unsigned);
+        #endif
     };
+
+    struct Mesh::Primitive {
+        enum class Type : uint8_t {
+            Unknown = 0,
+            Points,
+            Lines,
+            LineLoop,
+            LineStrip,
+            Triangles,
+            TriangleStrip,
+            TriangleFan
+        };
+        
+        
+        Type                type = Type::Unknown;
+        MaterialSpecCPtr    material;
+        
+        Primitive();
+        ~Primitive();
+    };
+
 }
 

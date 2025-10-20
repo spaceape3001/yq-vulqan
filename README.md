@@ -20,7 +20,7 @@ Started as an exploration of cameras, became a mini move-camera, and some basics
 
 ![Alt text](images/CameraSDKExample.png)
 
-### Scenrey
+### Scenery
 
 A scene editor!  (Still WIP)  Meant to be a way to add in objects, place them, and navigate around.
 

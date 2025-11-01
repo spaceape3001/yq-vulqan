@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/size/AddMinSize1Command.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/size/AddMinSize1Command.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMinSize¹Command)
 

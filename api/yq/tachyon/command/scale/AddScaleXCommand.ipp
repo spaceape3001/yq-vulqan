@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/scale/AddScaleXCommand.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/scale/AddScaleXCommand.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddScaleˣCommand)
 

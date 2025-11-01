@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/IFarPlane.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/IFarPlane.hpp>
 
 namespace yq::tachyon {
     class PFarPlane : public Proxy, public IFarPlane {

@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/3DData.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/api/SceneData.hpp>
-#include <tachyon/typedef/scene3.hpp>
+#include <yq/tachyon/api/3DData.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/api/SceneData.hpp>
+#include <yq/tachyon/typedef/scene3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

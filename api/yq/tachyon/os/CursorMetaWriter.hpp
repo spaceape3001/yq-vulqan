@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/os/Cursor.hpp>
-#include <tachyon/os/CursorData.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/os/Cursor.hpp>
+#include <yq/tachyon/os/CursorData.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

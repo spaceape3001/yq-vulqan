@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/joystick/JoystickHatEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/joystick/JoystickHatEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickHatEvent::init_meta()

@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <tachyon/os/Window.hpp>
-#include <tachyon/os/WindowState.hpp>
-#include <tachyon/os/ModifierKey.hpp>
-#include <tachyon/os/MouseButton.hpp>
-#include <tachyon/os/MouseMode.hpp>
-#include <tachyon/os/WindowMode.hpp>
-#include <tachyon/aspect/AMaxSize2.hpp>
-#include <tachyon/aspect/AMinSize2.hpp>
-#include <tachyon/aspect/APosition2.hpp>
-#include <tachyon/aspect/ASize2.hpp>
-#include <tachyon/aspect/AScale2.hpp>
-#include <tachyon/typedef/commands.hpp>
+#include <yq/tachyon/os/Window.hpp>
+#include <yq/tachyon/os/WindowState.hpp>
+#include <yq/tachyon/os/ModifierKey.hpp>
+#include <yq/tachyon/os/MouseButton.hpp>
+#include <yq/tachyon/os/MouseMode.hpp>
+#include <yq/tachyon/os/WindowMode.hpp>
+#include <yq/tachyon/aspect/AMaxSize2.hpp>
+#include <yq/tachyon/aspect/AMinSize2.hpp>
+#include <yq/tachyon/aspect/APosition2.hpp>
+#include <yq/tachyon/aspect/ASize2.hpp>
+#include <yq/tachyon/aspect/AScale2.hpp>
+#include <yq/tachyon/typedef/commands.hpp>
 
 struct GLFWwindow;
 struct GLFWmonitor;

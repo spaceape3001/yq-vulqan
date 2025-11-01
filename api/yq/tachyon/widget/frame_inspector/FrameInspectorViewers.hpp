@@ -7,8 +7,8 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <tachyon/app/Viewer.hpp>
-#include <tachyon/app/ViewerData.hpp>
+#include <yq/tachyon/app/Viewer.hpp>
+#include <yq/tachyon/app/ViewerData.hpp>
 #include <yq/text/format.hpp>
 
 namespace yq::tachyon {

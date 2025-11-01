@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/meta/DelegateProperty.hpp>
+#include <yq/tachyon/api/meta/DelegateProperty.hpp>
 #include <yq/meta/MetaWriter.hpp>
-#include <tachyon/api/meta/DynamicDelegateSetter.hpp>
+#include <yq/tachyon/api/meta/DynamicDelegateSetter.hpp>
 
 namespace yq::tachyon {
     template <SomeDelegate D>

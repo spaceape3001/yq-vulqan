@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/rendered/Billboard3.hpp>
+#include <yq/tachyon/rendered/Billboard3.hpp>
 
 #include <yq/shape/AxBox2.hpp>
 
-#include <tachyon/asset/Shader.hpp>
-#include <tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 

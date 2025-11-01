@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/ColorEvent.hpp>
+#include <yq/tachyon/event/ColorEvent.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "CompositeScene.hpp"
-#include <tachyon/api/SceneMetaWriter.hpp>
+#include <yq/tachyon/api/SceneMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::CompositeScene)
 

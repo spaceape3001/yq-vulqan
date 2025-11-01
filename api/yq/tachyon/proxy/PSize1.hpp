@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/ISize1.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/ISize1.hpp>
 
 namespace yq::tachyon {
     class PSize¹ : public Proxy, public ISize¹ {

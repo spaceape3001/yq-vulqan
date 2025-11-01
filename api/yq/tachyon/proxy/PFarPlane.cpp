@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PFarPlane.hpp"
-#include <tachyon/command/camera/SetFarPlaneCommand.hpp>
+#include <yq/tachyon/command/camera/SetFarPlaneCommand.hpp>
 
 namespace yq::tachyon {
     PFarPlane::PFarPlane(const IFarPlane& i) : m_far_plane(i.far_plane())

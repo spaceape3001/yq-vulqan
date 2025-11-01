@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PBgColor.hpp"
-#include <tachyon/command/color/SetBgColorCommand.hpp>
+#include <yq/tachyon/command/color/SetBgColorCommand.hpp>
 
 namespace yq::tachyon {
     PBgColor::PBgColor(const IBgColor& i) : m_bgcolor(i.bgcolor())

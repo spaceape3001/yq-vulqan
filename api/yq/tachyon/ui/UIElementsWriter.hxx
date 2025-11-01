@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/ui/UIElementsWriter.hpp>
-#include <tachyon/ui/UICallback.hxx>
-#include <tachyon/ui/UIGenerator.hxx>
+#include <yq/tachyon/ui/UIElementsWriter.hpp>
+#include <yq/tachyon/ui/UICallback.hxx>
+#include <yq/tachyon/ui/UIGenerator.hxx>
 
 namespace yq::tachyon {
     template <SomeWidget W>

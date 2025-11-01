@@ -4,23 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PPosition4.hpp>
-#include <tachyon/command/position/AddPosition4Command.hpp>
-#include <tachyon/command/position/AddPositionWCommand.hpp>
-#include <tachyon/command/position/AddPositionXCommand.hpp>
-#include <tachyon/command/position/AddPositionYCommand.hpp>
-#include <tachyon/command/position/AddPositionZCommand.hpp>
-#include <tachyon/command/position/MultiplyPositionCommand.hpp>
-#include <tachyon/command/position/MultiplyPosition4Command.hpp>
-#include <tachyon/command/position/MultiplyPositionWCommand.hpp>
-#include <tachyon/command/position/MultiplyPositionXCommand.hpp>
-#include <tachyon/command/position/MultiplyPositionYCommand.hpp>
-#include <tachyon/command/position/MultiplyPositionZCommand.hpp>
-#include <tachyon/command/position/SetPosition4Command.hpp>
-#include <tachyon/command/position/SetPositionWCommand.hpp>
-#include <tachyon/command/position/SetPositionXCommand.hpp>
-#include <tachyon/command/position/SetPositionYCommand.hpp>
-#include <tachyon/command/position/SetPositionZCommand.hpp>
+#include <yq/tachyon/proxy/PPosition4.hpp>
+#include <yq/tachyon/command/position/AddPosition4Command.hpp>
+#include <yq/tachyon/command/position/AddPositionWCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionXCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionYCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionZCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPosition4Command.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionWCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionZCommand.hpp>
+#include <yq/tachyon/command/position/SetPosition4Command.hpp>
+#include <yq/tachyon/command/position/SetPositionWCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionXCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionYCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionZCommand.hpp>
 
 namespace yq::tachyon {
     PPosition⁴::PPosition⁴(const IPosition⁴& i) : m_position(i.position())

@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/orientation/RotateBy2Command.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/orientation/RotateBy2Command.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/vector/Spinor2.hxx>
 

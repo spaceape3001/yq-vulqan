@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yq/core/Flags.hpp>
-#include <tachyon/pipeline/DataFormat.hpp>
-#include <tachyon/pipeline/ImageLayout.hpp>
-#include <tachyon/pipeline/LoadOp.hpp>
-#include <tachyon/pipeline/PipelineBinding.hpp>
-#include <tachyon/pipeline/SampleCount.hpp>
-#include <tachyon/pipeline/StoreOp.hpp>
+#include <yq/tachyon/pipeline/DataFormat.hpp>
+#include <yq/tachyon/pipeline/ImageLayout.hpp>
+#include <yq/tachyon/pipeline/LoadOp.hpp>
+#include <yq/tachyon/pipeline/PipelineBinding.hpp>
+#include <yq/tachyon/pipeline/SampleCount.hpp>
+#include <yq/tachyon/pipeline/StoreOp.hpp>
 
 namespace yq::tachyon {
     struct AttachmentReference {

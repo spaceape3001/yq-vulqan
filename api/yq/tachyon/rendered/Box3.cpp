@@ -6,14 +6,14 @@
 
 #include "Box3.hpp"
 
-#include <tachyon/logging.hpp>
-#include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 
 
-#include <tachyon/aspect/AVertices3.hxx>
-#include <tachyon/aspect/AVertices3Writer.hxx>
-#include <tachyon/aspect/ASize3Writer.hxx>
+#include <yq/tachyon/aspect/AVertices3.hxx>
+#include <yq/tachyon/aspect/AVertices3Writer.hxx>
+#include <yq/tachyon/aspect/ASize3Writer.hxx>
 
 #include <yq/shape/AxBox3.hxx>
 #include <yq/shape/Size3.hxx>

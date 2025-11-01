@@ -9,14 +9,14 @@
 //#include <yq/config/glm.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/container/BasicBuffer.hpp>
-#include <tachyon/pipeline/Buffer.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/typedef/buffer.hpp>
-#include <tachyon/typedef/push.hpp>
-#include <tachyon/typedef/rendered.hpp>
-#include <tachyon/typedef/texture.hpp>
-#include <tachyon/typedef/vi_buffer.hpp>
-#include <tachyon/typedef/vi_texture.hpp>
+#include <yq/tachyon/pipeline/Buffer.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/typedef/buffer.hpp>
+#include <yq/tachyon/typedef/push.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/vi_buffer.hpp>
+#include <yq/tachyon/typedef/vi_texture.hpp>
 
 namespace yq::tachyon {
     class Pipeline;

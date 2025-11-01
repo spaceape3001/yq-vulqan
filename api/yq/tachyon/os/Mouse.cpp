@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/os/Mouse.hpp>
-#include <tachyon/os/MouseData.hpp>
-#include <tachyon/os/MouseMetaWriter.hpp>
-#include <tachyon/api/Post.hpp>
+#include <yq/tachyon/os/Mouse.hpp>
+#include <yq/tachyon/os/MouseData.hpp>
+#include <yq/tachyon/os/MouseMetaWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

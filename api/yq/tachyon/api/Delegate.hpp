@@ -10,7 +10,7 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/meta/ObjectMeta.hpp>
-#include <tachyon/typedef/delegate.hpp>
+#include <yq/tachyon/typedef/delegate.hpp>
 
 namespace yq::tachyon {
     class DelegateMeta : public ObjectMeta {

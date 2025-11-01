@@ -12,25 +12,25 @@
 #include <yq/units.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/core/Flags.hpp>
-#include <tachyon/keywords.hpp>
-#include <tachyon/api/Thread.hpp>
-#include <tachyon/app/ViewerState.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/app/ViewerState.hpp>
+#include <yq/tachyon/app/ViewerCreateInfo.hpp>
 
-#include <tachyon/typedef/commands.hpp>
-#include <tachyon/typedef/events.hpp>
-#include <tachyon/typedef/replies.hpp>
-#include <tachyon/typedef/requests.hpp>
+#include <yq/tachyon/typedef/commands.hpp>
+#include <yq/tachyon/typedef/events.hpp>
+#include <yq/tachyon/typedef/replies.hpp>
+#include <yq/tachyon/typedef/requests.hpp>
 
-#include <tachyon/typedef/request.hpp>
-#include <tachyon/typedef/viewer.hpp>
-#include <tachyon/typedef/widget.hpp>
-#include <tachyon/typedef/window.hpp>
+#include <yq/tachyon/typedef/request.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 
-#include <tachyon/typedef/vigui.hpp>
-#include <tachyon/typedef/visualizer.hpp>
+#include <yq/tachyon/typedef/vigui.hpp>
+#include <yq/tachyon/typedef/visualizer.hpp>
 
-//#include <tachyon/vulkan/Visualizer.hpp>
+//#include <yq/tachyon/vulkan/Visualizer.hpp>
 //#include <yq/tachyon/glfw/Window.hpp>
 
 #include <tbb/spin_rw_mutex.h>

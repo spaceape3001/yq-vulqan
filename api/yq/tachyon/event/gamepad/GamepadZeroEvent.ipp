@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/gamepad/GamepadZeroEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/gamepad/GamepadZeroEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
     void GamepadZeroEvent::init_meta()

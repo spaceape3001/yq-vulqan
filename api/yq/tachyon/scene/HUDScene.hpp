@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/scene/SimpleScene.hpp>
+#include <yq/tachyon/scene/SimpleScene.hpp>
 
 namespace yq::tachyon {
     class HUDScene : public SimpleScene {

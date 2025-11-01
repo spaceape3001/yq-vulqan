@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/command/AppCommand.hpp>
-#include <tachyon/typedef/widget.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
+#include <yq/tachyon/command/AppCommand.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/app/ViewerCreateInfo.hpp>
 #include <yq/core/Ref.hpp>
 
 namespace yq::tachyon {

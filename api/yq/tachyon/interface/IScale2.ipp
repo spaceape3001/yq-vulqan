@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/IScale2.hpp>
+#include <yq/tachyon/interface/IScale2.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/PScale2.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PScale2.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale²)
 

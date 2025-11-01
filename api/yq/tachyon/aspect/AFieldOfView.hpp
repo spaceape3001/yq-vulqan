@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <tachyon/interface/IFieldOfView.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/interface/IFieldOfView.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
     class SetFOVCommand;

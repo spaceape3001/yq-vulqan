@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/resource/Resource.hpp>
-#include <tachyon/typedef/font.hpp>
+#include <yq/tachyon/typedef/font.hpp>
 
 namespace yq::tachyon {
     class TrueTypeFontInfo : public ResourceMeta {

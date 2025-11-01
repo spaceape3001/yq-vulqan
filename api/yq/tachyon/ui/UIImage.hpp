@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/ui/UIElement.hpp>
-#include <tachyon/typedef/texture.hpp>
-#include <tachyon/typedef/raster.hpp>
+#include <yq/tachyon/ui/UIElement.hpp>
+#include <yq/tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/raster.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/core/Ref.hpp>
 

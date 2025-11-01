@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "IVertices3.hpp"
-#include <tachyon/data/Vertex3.hpp>
-#include <tachyon/proxy/PVertices3.hpp>
-#include <tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/data/Vertex3.hpp>
+#include <yq/tachyon/proxy/PVertices3.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IVertices³)
 

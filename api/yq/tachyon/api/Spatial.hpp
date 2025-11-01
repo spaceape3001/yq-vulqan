@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/typedef/spatial.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 

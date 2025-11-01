@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/os/glfw/CursorGLFW.hpp>
-#include <tachyon/os/CursorMetaWriter.hpp>
+#include <yq/tachyon/os/glfw/CursorGLFW.hpp>
+#include <yq/tachyon/os/CursorMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::CursorGLFW)
 

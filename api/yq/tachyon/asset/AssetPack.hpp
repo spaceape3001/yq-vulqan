@@ -7,16 +7,16 @@
 #pragma once
 
 #include <yq/resource/ResourceLibrary.hpp>
-#include <tachyon/typedef/asset_pack.hpp>
-#include <tachyon/typedef/camera_spec.hpp>
-#include <tachyon/typedef/light_spec.hpp>
-#include <tachyon/typedef/material_spec.hpp>
-#include <tachyon/typedef/mesh.hpp>
-#include <tachyon/typedef/raster.hpp>
-#include <tachyon/typedef/sampler.hpp>
-#include <tachyon/typedef/sound.hpp>
-#include <tachyon/typedef/texture.hpp>
-#include <tachyon/typedef/video.hpp>
+#include <yq/tachyon/typedef/asset_pack.hpp>
+#include <yq/tachyon/typedef/camera_spec.hpp>
+#include <yq/tachyon/typedef/light_spec.hpp>
+#include <yq/tachyon/typedef/material_spec.hpp>
+#include <yq/tachyon/typedef/mesh.hpp>
+#include <yq/tachyon/typedef/raster.hpp>
+#include <yq/tachyon/typedef/sampler.hpp>
+#include <yq/tachyon/typedef/sound.hpp>
+#include <yq/tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/video.hpp>
 
 namespace yq::tachyon {
 

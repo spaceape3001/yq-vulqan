@@ -6,7 +6,7 @@
 
 #include "ADrawMode.hpp"
 #include "ADrawModeWriter.hxx"
-#include <tachyon/command/shape/SetDrawModeCommand.hpp>
+#include <yq/tachyon/command/shape/SetDrawModeCommand.hpp>
 
 namespace yq::tachyon {
     ADrawMode::ADrawMode() = default;

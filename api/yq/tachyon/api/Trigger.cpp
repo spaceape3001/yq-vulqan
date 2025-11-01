@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Trigger.hpp>
-#include <tachyon/api/TriggerMetaWriter.hpp>
-#include <tachyon/api/Post.hpp>
+#include <yq/tachyon/api/Trigger.hpp>
+#include <yq/tachyon/api/TriggerMetaWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Trigger)
 

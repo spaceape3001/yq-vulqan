@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/keywords.hpp>
-#include <tachyon/data/Vertex3.hpp>
-#include <tachyon/typedef/material_spec.hpp>
-#include <tachyon/typedef/mesh.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/data/Vertex3.hpp>
+#include <yq/tachyon/typedef/material_spec.hpp>
+#include <yq/tachyon/typedef/mesh.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq/math/UV.hpp>

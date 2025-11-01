@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/os/glfw/JoystickGLFW.hpp>
-#include <tachyon/os/JoystickMetaWriter.hpp>
-#include <tachyon/command/joystick/JoystickZeroCommand.hpp>
-#include <tachyon/os/glfw/glfw.hpp>
-#include <tachyon/event/joystick/JoystickAxisEvent.hpp>
-#include <tachyon/event/joystick/JoystickHatEvent.hpp>
-#include <tachyon/event/joystick/JoystickPressEvent.hpp>
-#include <tachyon/event/joystick/JoystickReleaseEvent.hpp>
-#include <tachyon/event/joystick/JoystickZeroEvent.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/os/glfw/JoystickGLFW.hpp>
+#include <yq/tachyon/os/JoystickMetaWriter.hpp>
+#include <yq/tachyon/command/joystick/JoystickZeroCommand.hpp>
+#include <yq/tachyon/os/glfw/glfw.hpp>
+#include <yq/tachyon/event/joystick/JoystickAxisEvent.hpp>
+#include <yq/tachyon/event/joystick/JoystickHatEvent.hpp>
+#include <yq/tachyon/event/joystick/JoystickPressEvent.hpp>
+#include <yq/tachyon/event/joystick/JoystickReleaseEvent.hpp>
+#include <yq/tachyon/event/joystick/JoystickZeroEvent.hpp>
+#include <yq/tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::JoystickGLFW)
 

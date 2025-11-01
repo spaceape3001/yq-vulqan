@@ -5,9 +5,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/VulqanEvent.hpp>
+#include <yq/tachyon/event/VulqanEvent.hpp>
 
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VulqanEvent)
 

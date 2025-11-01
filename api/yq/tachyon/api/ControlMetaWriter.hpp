@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Control.hpp>
-#include <tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/api/Control.hpp>
+#include <yq/tachyon/api/WidgetMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of control information

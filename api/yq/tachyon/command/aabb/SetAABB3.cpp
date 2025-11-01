@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/aabb/SetAABB3.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/aabb/SetAABB3.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetAABB³)
 

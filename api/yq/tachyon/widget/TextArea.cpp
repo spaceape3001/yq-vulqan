@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/widget/TextArea.hpp>
+#include <yq/tachyon/widget/TextArea.hpp>
 #include <yq/core/Stream.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/text/IterUtf8.hpp>
@@ -16,8 +16,8 @@
 #include <yq/vector/Vector2.hxx>
 
 #include <yq/shape/shape_utils.hpp>
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/api/WidgetMetaWriter.hpp>
 
     //  for debugging
 #include <yq/color/colors.hpp>

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/typedef/material_spec.hpp>
+#include <yq/tachyon/typedef/material_spec.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/color/RGBA.hpp>
 

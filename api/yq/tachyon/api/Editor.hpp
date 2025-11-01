@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 #include <variant>
 #include <yq/typedef/filesystem_path.hpp>
 

@@ -11,11 +11,11 @@
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
-#include <tachyon/utility/LoggerBox.hpp>
-#include <tachyon/application.hpp>
+#include <yq/tachyon/utility/LoggerBox.hpp>
+#include <yq/tachyon/application.hpp>
 
 #include "MainWidget.hpp"
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 #include <chrono>
 

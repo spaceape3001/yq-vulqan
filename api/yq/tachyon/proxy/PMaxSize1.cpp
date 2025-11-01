@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PMaxSize1.hpp>
-#include <tachyon/command/size/AddMaxSize1Command.hpp>
-#include <tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSize1Command.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <tachyon/command/size/SetMaxSize1Command.hpp>
-#include <tachyon/command/size/SetMaxSizeXCommand.hpp>
+#include <yq/tachyon/proxy/PMaxSize1.hpp>
+#include <yq/tachyon/command/size/AddMaxSize1Command.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize1Command.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize1Command.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
 
 namespace yq::tachyon {
     PMaxSize¹::PMaxSize¹(const IMaxSize¹& i) : m_max_size(i.max_size())

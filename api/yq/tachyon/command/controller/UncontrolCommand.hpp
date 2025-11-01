@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/command/ControllerCommand.hpp>
-#include <tachyon/api/TypedID.hpp>
+#include <yq/tachyon/command/ControllerCommand.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
 
 namespace yq::tachyon {
     class UncontrolCommand : public ControllerCommand {

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/typedef/light.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/typedef/light.hpp>
 
 namespace yq::tachyon {
     struct LightSnap : public TachyonSnap {

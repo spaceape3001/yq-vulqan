@@ -8,21 +8,21 @@
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/api/Context.hpp>
-#include <tachyon/api/Frame.hpp>
-#include <tachyon/api/ThreadData.hpp>
-#include <tachyon/api/ThreadMetaWriter.hpp>
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/app/Application.hpp>
-#include <tachyon/app/Viewer.hpp>
-#include <tachyon/command/app/ViewerCreateCommand.hpp>
-#include <tachyon/event/tachyon/DestroyEvent.hpp>
-#include <tachyon/os/Desktop.hpp>
-#include <tachyon/os/Window.hpp>
-#include <tachyon/thread/ViewerThread.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/api/Context.hpp>
+#include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/ThreadData.hpp>
+#include <yq/tachyon/api/ThreadMetaWriter.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/app/Application.hpp>
+#include <yq/tachyon/app/Viewer.hpp>
+#include <yq/tachyon/command/app/ViewerCreateCommand.hpp>
+#include <yq/tachyon/event/tachyon/DestroyEvent.hpp>
+#include <yq/tachyon/os/Desktop.hpp>
+#include <yq/tachyon/os/Window.hpp>
+#include <yq/tachyon/thread/ViewerThread.hpp>
 
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AppThread)
 

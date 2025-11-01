@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/event/GamepadEvent.hpp>
-#include <tachyon/os/HatState.hpp>
+#include <yq/tachyon/event/GamepadEvent.hpp>
+#include <yq/tachyon/os/HatState.hpp>
 
 namespace yq::tachyon {
     class GamepadHatEvent : public GamepadEvent {

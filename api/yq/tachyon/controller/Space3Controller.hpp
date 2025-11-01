@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Controller.hpp>
+#include <yq/tachyon/api/Controller.hpp>
 #include <yq/tensor/Tensor33.hpp>
 
 namespace yq::tachyon {

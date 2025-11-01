@@ -6,6 +6,6 @@
 
 #pragma once
 
-#include <tachyon/api/Camera3.hpp>
-#include <tachyon/api/Camera3MetaWriter.hpp>
+#include <yq/tachyon/api/Camera3.hpp>
+#include <yq/tachyon/api/Camera3MetaWriter.hpp>
 

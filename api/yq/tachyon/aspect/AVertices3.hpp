@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/interface/IVertices3.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/data/Vertex3.hpp>
+#include <yq/tachyon/interface/IVertices3.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/data/Vertex3.hpp>
 #include <array>
 #include <vector>
 

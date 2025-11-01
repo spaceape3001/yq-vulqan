@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/IMinSize3.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/IMinSize3.hpp>
 
 namespace yq::tachyon {
     class PMinSize³ : public Proxy, public IMinSize³ {

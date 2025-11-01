@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/camera/TargetCamera.hpp>
+#include <yq/tachyon/camera/TargetCamera.hpp>
 
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -16,7 +16,7 @@
 #include <yq/shape/Rectangle2.hxx>
 #include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector3.hxx>
-#include <tachyon/api/Camera3MetaWriter.hpp>
+#include <yq/tachyon/api/Camera3MetaWriter.hpp>
 
 namespace yq::tachyon {
     TargetCamera::TargetCamera(const Param&p) : Camera(p),

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/GamepadCommand.hpp>
+#include <yq/tachyon/command/GamepadCommand.hpp>
 
 namespace yq::tachyon {
     class GamepadZeroCommand : public GamepadCommand {

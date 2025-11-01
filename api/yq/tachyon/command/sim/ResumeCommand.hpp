@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/SimCommand.hpp>
+#include <yq/tachyon/command/SimCommand.hpp>
 
 namespace yq::tachyon {
     class ResumeCommand : public SimCommand {

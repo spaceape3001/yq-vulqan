@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/meta/DelegateSetter.hpp>
-#include <tachyon/api/Delegate.hpp>
-#include <tachyon/errors.hpp>
+#include <yq/tachyon/api/meta/DelegateSetter.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
+#include <yq/tachyon/errors.hpp>
 
 namespace yq::tachyon {
     template <SomeObject O, SomeDelegate A>

@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/IMinSize3.hpp>
+#include <yq/tachyon/interface/IMinSize3.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/PMinSize3.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PMinSize3.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMinSize³)
 

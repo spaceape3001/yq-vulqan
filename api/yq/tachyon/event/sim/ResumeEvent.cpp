@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/sim/ResumeEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/sim/ResumeEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ResumeEvent)
 

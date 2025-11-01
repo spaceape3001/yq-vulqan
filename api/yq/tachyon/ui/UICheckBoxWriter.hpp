@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/ui/UIElementWriter.hpp>
-#include <tachyon/typedef/accessors.hpp>
+#include <yq/tachyon/ui/UIElementWriter.hpp>
+#include <yq/tachyon/typedef/accessors.hpp>
 
 namespace yq::tachyon {
     class UICheckBox;

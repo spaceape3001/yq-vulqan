@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/typedef/mouse.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/typedef/mouse.hpp>
 
 namespace yq::tachyon {
     struct MouseSnap : public TachyonSnap {

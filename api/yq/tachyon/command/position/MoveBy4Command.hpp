@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/spatial/PositionCommand.hpp>
+#include <yq/tachyon/command/spatial/PositionCommand.hpp>
 #include <yq/vector/Vector4.hpp>
 
 namespace yq::tachyon {

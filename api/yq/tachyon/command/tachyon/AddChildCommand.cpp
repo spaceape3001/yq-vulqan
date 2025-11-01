@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/tachyon/AddChildCommand.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/tachyon/AddChildCommand.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {
     AddChildCommand::AddChildCommand(const Header& h, TachyonSpec par) : TachyonCommand(h), m_child(par)

@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/xml/XmlFile.hpp>
-#include <tachyon/typedef/save.hpp>
-#include <tachyon/keywords.hpp>
+#include <yq/tachyon/typedef/save.hpp>
+#include <yq/tachyon/keywords.hpp>
 
 namespace yq {
     class TypeMeta;

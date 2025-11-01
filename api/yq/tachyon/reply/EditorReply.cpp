@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/reply/EditorReply.hpp>
+#include <yq/tachyon/reply/EditorReply.hpp>
 
-#include <tachyon/api/ReplyMetaWriter.hpp>
+#include <yq/tachyon/api/ReplyMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::EditorReply)
 

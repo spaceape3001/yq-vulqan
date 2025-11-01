@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/command/WidgetCommand.hpp>
-#include <tachyon/api/TypedID.hpp>
+#include <yq/tachyon/command/WidgetCommand.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
 
 namespace yq::tachyon {
     class SetViewer : public WidgetCommand {

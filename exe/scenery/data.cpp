@@ -6,20 +6,20 @@
 
 #include "SceneEditor.hpp"
 #include "data.hpp"
-#include <tachyon/api/Camera.hpp>
-#include <tachyon/api/Camera3.hpp>
-#include <tachyon/api/Controller.hpp>
-#include <tachyon/api/Frame.hpp>
-#include <tachyon/api/Light.hpp>
-#include <tachyon/api/Light3.hpp>
-#include <tachyon/api/Model.hpp>
-#include <tachyon/api/Rendered.hpp>
-#include <tachyon/api/Rendered3.hpp>
-#include <tachyon/api/Scene.hpp>
-#include <tachyon/api/Scene3.hpp>
-#include <tachyon/api/Spatial.hpp>
-#include <tachyon/api/Spatial3.hpp>
-#include <tachyon/ui/UIElement.hpp>
+#include <yq/tachyon/api/Camera.hpp>
+#include <yq/tachyon/api/Camera3.hpp>
+#include <yq/tachyon/api/Controller.hpp>
+#include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/Light.hpp>
+#include <yq/tachyon/api/Light3.hpp>
+#include <yq/tachyon/api/Model.hpp>
+#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/api/Rendered3.hpp>
+#include <yq/tachyon/api/Scene.hpp>
+#include <yq/tachyon/api/Scene3.hpp>
+#include <yq/tachyon/api/Spatial.hpp>
+#include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/ui/UIElement.hpp>
 #include <format>
 
 using namespace yq;

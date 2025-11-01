@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Camera3.hpp>
-#include <tachyon/api/Camera3Data.hpp>
-#include <tachyon/api/CameraMetaWriter.hpp>
+#include <yq/tachyon/api/Camera3.hpp>
+#include <yq/tachyon/api/Camera3Data.hpp>
+#include <yq/tachyon/api/CameraMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

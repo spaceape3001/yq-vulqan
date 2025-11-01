@@ -4,13 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/rendered/ColorTetrahedron3.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/rendered/ColorTetrahedron3.hpp>
+#include <yq/tachyon/logging.hpp>
 
-#include <tachyon/asset/Shader.hpp>
-#include <tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 
-#include <tachyon/aspect/AColorWriter.hxx>
+#include <yq/tachyon/aspect/AColorWriter.hxx>
 
 namespace yq::tachyon {
     void ColorTetrahedron³::init_meta()

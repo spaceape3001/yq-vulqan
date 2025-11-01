@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/POrientation2.hpp>
-#include <tachyon/command/orientation/RotateBy2Command.hpp>
-#include <tachyon/command/orientation/SetHeadingCommand.hpp>
-#include <tachyon/command/orientation/SetOrientation2Command.hpp>
-#include <tachyon/command/orientation/YawByCommand.hpp>
+#include <yq/tachyon/proxy/POrientation2.hpp>
+#include <yq/tachyon/command/orientation/RotateBy2Command.hpp>
+#include <yq/tachyon/command/orientation/SetHeadingCommand.hpp>
+#include <yq/tachyon/command/orientation/SetOrientation2Command.hpp>
+#include <yq/tachyon/command/orientation/YawByCommand.hpp>
 #include <yq/vector/Spinor2.hxx>
 
 namespace yq::tachyon {

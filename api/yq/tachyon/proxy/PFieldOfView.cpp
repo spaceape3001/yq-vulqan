@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PFieldOfView.hpp"
-#include <tachyon/command/camera/SetFOVCommand.hpp>
+#include <yq/tachyon/command/camera/SetFOVCommand.hpp>
 
 namespace yq::tachyon {
     PFieldOfView::PFieldOfView(const IFieldOfView& i) : m_field_of_view(i.field_of_view())

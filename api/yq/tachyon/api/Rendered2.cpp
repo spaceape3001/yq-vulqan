@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Rendered2.hpp>
-#include <tachyon/api/Rendered2MetaWriter.hpp>
-#include <tachyon/command/SpatialCommand.hpp>
+#include <yq/tachyon/api/Rendered2.hpp>
+#include <yq/tachyon/api/Rendered2MetaWriter.hpp>
+#include <yq/tachyon/command/SpatialCommand.hpp>
 #include <yq/tensor/Tensor44.hxx>
-#include <tachyon/api/2DWriter.hxx>
+#include <yq/tachyon/api/2DWriter.hxx>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

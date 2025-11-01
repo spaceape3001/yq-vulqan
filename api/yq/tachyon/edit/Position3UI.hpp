@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/UIEditor.hpp>
+#include <yq/tachyon/ui/UIEditor.hpp>
 
 namespace yq::tachyon {
     class Position³UI : public UIEditor {

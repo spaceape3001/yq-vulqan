@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/spatial/AABBCommand.hpp>
+#include <yq/tachyon/command/spatial/AABBCommand.hpp>
 #include <yq/shape/AxBox3.hpp>
 
 namespace yq::tachyon {

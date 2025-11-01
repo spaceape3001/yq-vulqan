@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/Response.hpp> 
-#include <tachyon/reply/GraphicsCardReply.hpp>
-#include <tachyon/typedef/vi_device.hpp>
-#include <tachyon/api/Response.hpp>
+#include <yq/tachyon/api/Response.hpp> 
+#include <yq/tachyon/reply/GraphicsCardReply.hpp>
+#include <yq/tachyon/typedef/vi_device.hpp>
+#include <yq/tachyon/api/Response.hpp>
 
 namespace yq::tachyon {
     class GetDeviceReply : public GraphicsCardReply {

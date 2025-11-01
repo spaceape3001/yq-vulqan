@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/io/GLSLShader.hpp>
+#include <yq/tachyon/io/GLSLShader.hpp>
 
 #include <yq/resource/Resource.hxx>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
 #include <yq/process/Execute.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 #include <yq/text/chars.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/logging.hpp>
 
 namespace yq::errors {
    using shader_compile_failure     = error_db::entry<"Shader failed to compile">;

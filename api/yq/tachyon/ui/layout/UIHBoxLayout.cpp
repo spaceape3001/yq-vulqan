@@ -6,15 +6,15 @@
 
 #include "UIHBoxLayout.hpp"
 #include "UIHBoxLayoutWriter.hpp"
-#include <tachyon/ui/UIGenerator.hpp>
-#include <tachyon/ui/UIWindow.hpp>
+#include <yq/tachyon/ui/UIGenerator.hpp>
+#include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Size2.hpp>
-#include <tachyon/ui/UIElementMetaWriter.hpp>
+#include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/trait/has_nan.hpp>
-#include <tachyon/ui/UIStyle.hpp>
+#include <yq/tachyon/ui/UIStyle.hpp>
 
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/vector/Vector2.hxx>
 #include <yq/shape/Size2.hxx>
 

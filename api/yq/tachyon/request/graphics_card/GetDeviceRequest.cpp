@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/request/graphics_card/GetDeviceRequest.hpp>
-#include <tachyon/api/RequestMetaWriter.hpp>
+#include <yq/tachyon/request/graphics_card/GetDeviceRequest.hpp>
+#include <yq/tachyon/api/RequestMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GetDeviceRequest)
 

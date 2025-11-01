@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/ManagerData.hpp>
-#include <tachyon/typedef/desktop.hpp>
+#include <yq/tachyon/api/ManagerData.hpp>
+#include <yq/tachyon/typedef/desktop.hpp>
 
 namespace yq::tachyon {
     struct DesktopSnap : public ManagerSnap {

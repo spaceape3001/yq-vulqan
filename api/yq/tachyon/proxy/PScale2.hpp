@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/IScale2.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/IScale2.hpp>
 
 namespace yq::tachyon {
     class PScale² : public Proxy, public IScale²  /* TODO: public public IScale */ {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {
     class Orientation³Control;

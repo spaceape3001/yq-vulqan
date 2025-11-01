@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Triangle3.hpp"
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/logging.hpp>
 
 #include <yq/color/colors.hpp>
 #include <yq/shape/TriangleData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/aspect/AVertices3.hxx>
-#include <tachyon/aspect/AVertices3Writer.hxx>
+#include <yq/tachyon/aspect/AVertices3.hxx>
+#include <yq/tachyon/aspect/AVertices3Writer.hxx>
 
 namespace yq::tachyon {
     void Triangle³::init_meta()

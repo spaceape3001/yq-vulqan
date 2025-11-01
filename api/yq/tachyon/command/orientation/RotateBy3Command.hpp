@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/spatial/OrientationCommand.hpp>
+#include <yq/tachyon/command/spatial/OrientationCommand.hpp>
 #include <yq/unit/declare.hpp>
 #include <yq/vector/Quaternion3.hpp>
 

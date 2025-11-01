@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/pipeline/Buffer.hpp>
-#include <tachyon/pipeline/SBO.hpp>
-#include <tachyon/pipeline/UBO.hpp>
-#include <tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/pipeline/Buffer.hpp>
+#include <yq/tachyon/pipeline/SBO.hpp>
+#include <yq/tachyon/pipeline/UBO.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>

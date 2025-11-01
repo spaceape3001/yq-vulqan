@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/3D.hpp>
-#include <tachyon/api/Light.hpp>
-#include <tachyon/typedef/light3.hpp>
-#include <tachyon/typedef/spatial3.hpp>
+#include <yq/tachyon/api/3D.hpp>
+#include <yq/tachyon/api/Light.hpp>
+#include <yq/tachyon/typedef/light3.hpp>
+#include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 

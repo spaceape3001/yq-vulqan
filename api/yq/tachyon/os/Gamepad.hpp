@@ -8,8 +8,8 @@
 
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/typedef/gamepad.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/gamepad.hpp>
 
 namespace yq::tachyon {
 

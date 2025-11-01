@@ -7,7 +7,7 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <tachyon/os/Cursor.hpp>
+#include <yq/tachyon/os/Cursor.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorCursors : public FrameInspectorTachyons {

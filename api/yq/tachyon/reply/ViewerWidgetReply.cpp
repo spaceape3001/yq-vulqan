@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/reply/ViewerWidgetReply.hpp>
-#include <tachyon/request/ViewerWidgetRequest.hpp>
-#include <tachyon/api/ReplyMetaWriter.hpp>
+#include <yq/tachyon/reply/ViewerWidgetReply.hpp>
+#include <yq/tachyon/request/ViewerWidgetRequest.hpp>
+#include <yq/tachyon/api/ReplyMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerWidgetReply)
 

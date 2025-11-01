@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/typedef/sound.hpp>
+#include <yq/tachyon/typedef/sound.hpp>
 #include <yq/resource/Resource.hpp>
 
 namespace yq::tachyon {

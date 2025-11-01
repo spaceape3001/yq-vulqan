@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/container/BitArray.hpp>
-#include <tachyon/os/ModifierKey.hpp>
+#include <yq/tachyon/os/ModifierKey.hpp>
 
 namespace yq::tachyon {
     struct KeyboardState {

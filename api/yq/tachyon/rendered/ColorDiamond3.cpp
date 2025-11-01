@@ -5,11 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ColorDiamond3.hpp"
-#include <tachyon/logging.hpp>
-#include <tachyon/aspect/AColor.hpp>
-#include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
-#include <tachyon/aspect/AColorWriter.hxx>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/aspect/AColorWriter.hxx>
 
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ColorDiamond³)

@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DelegateProperty.hpp"
-#include <tachyon/api/Delegate.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/meta/DelegateGetter.hpp>
-#include <tachyon/api/meta/DelegateSetter.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/errors.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/meta/DelegateGetter.hpp>
+#include <yq/tachyon/api/meta/DelegateSetter.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/errors.hpp>
 
 namespace yq::tachyon {
     DelegateProperty::DelegateProperty(std::string_view zName, const std::source_location& sl, const DelegateMeta& theDelegate, ObjectMeta* parent) :

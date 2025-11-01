@@ -6,7 +6,7 @@
 
 #include "ANearPlane.hpp"
 #include "ANearPlaneWriter.hxx"
-#include <tachyon/command/camera/SetNearPlaneCommand.hpp>
+#include <yq/tachyon/command/camera/SetNearPlaneCommand.hpp>
 
 namespace yq::tachyon {
     ANearPlane::ANearPlane() = default;

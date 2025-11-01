@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PColor.hpp"
-#include <tachyon/command/color/SetColorCommand.hpp>
+#include <yq/tachyon/command/color/SetColorCommand.hpp>
 
 namespace yq::tachyon {
     PColor::PColor(const IColor& i) : m_color(i.color())

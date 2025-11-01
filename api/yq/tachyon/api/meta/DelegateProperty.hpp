@@ -8,7 +8,7 @@
 
 #include <yq/meta/Meta.hpp>
 #include <yq/meta/MetaBinder.hpp>
-#include <tachyon/typedef/delegate.hpp>
+#include <yq/tachyon/typedef/delegate.hpp>
 
 namespace yq { 
     class Object; 

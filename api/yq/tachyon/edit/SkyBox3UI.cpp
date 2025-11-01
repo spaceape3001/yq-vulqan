@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SkyBox3UI.hpp"
-#include <tachyon/rendered/SkyBox3.hpp>
-#include <tachyon/ui/UIEditorMetaWriter.hpp>
+#include <yq/tachyon/rendered/SkyBox3.hpp>
+#include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SkyBox³UI)
 

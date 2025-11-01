@@ -4,20 +4,20 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/rendered/GradTetrahedron3.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/rendered/GradTetrahedron3.hpp>
+#include <yq/tachyon/logging.hpp>
 
 #include <yq/color/colors.hpp>
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/shape_utils.hpp>
 
-#include <tachyon/asset/Shader.hpp>
-#include <tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/asset/Texture.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/asset/Texture.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     void GradTetrahedron³::init_meta()

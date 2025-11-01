@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Thread.hpp>
+#include <yq/tachyon/api/Thread.hpp>
 
 namespace yq::tachyon {
     class Application;

@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/cursor/CursorHideEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/cursor/CursorHideEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorHideEvent)
 

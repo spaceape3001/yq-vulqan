@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PMinSize1.hpp>
-#include <tachyon/command/size/AddMinSize1Command.hpp>
-#include <tachyon/command/size/AddMinSizeXCommand.hpp>
-#include <tachyon/command/size/MultiplyMinSizeCommand.hpp>
-#include <tachyon/command/size/MultiplyMinSize1Command.hpp>
-#include <tachyon/command/size/MultiplyMinSizeXCommand.hpp>
-#include <tachyon/command/size/SetMinSize1Command.hpp>
-#include <tachyon/command/size/SetMinSizeXCommand.hpp>
+#include <yq/tachyon/proxy/PMinSize1.hpp>
+#include <yq/tachyon/command/size/AddMinSize1Command.hpp>
+#include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSize1Command.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSize1Command.hpp>
+#include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
 
 namespace yq::tachyon {
     PMinSize¹::PMinSize¹(const IMinSize¹& i) : m_min_size(i.min_size())

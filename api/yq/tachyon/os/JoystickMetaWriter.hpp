@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/os/Joystick.hpp>
-#include <tachyon/os/JoystickData.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/os/Joystick.hpp>
+#include <yq/tachyon/os/JoystickData.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

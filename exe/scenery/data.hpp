@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/keywords.hpp>
-#include <tachyon/typedef/camera.hpp>
-#include <tachyon/typedef/camera3.hpp>
-#include <tachyon/typedef/controller.hpp>
-#include <tachyon/typedef/light.hpp>
-#include <tachyon/typedef/light3.hpp>
-#include <tachyon/typedef/model.hpp>
-#include <tachyon/typedef/rendered.hpp>
-#include <tachyon/typedef/rendered3.hpp>
-#include <tachyon/typedef/scene.hpp>
-#include <tachyon/typedef/scene3.hpp>
-#include <tachyon/typedef/spatial.hpp>
-#include <tachyon/typedef/spatial3.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
+#include <yq/tachyon/typedef/camera3.hpp>
+#include <yq/tachyon/typedef/controller.hpp>
+#include <yq/tachyon/typedef/light.hpp>
+#include <yq/tachyon/typedef/light3.hpp>
+#include <yq/tachyon/typedef/model.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/rendered3.hpp>
+#include <yq/tachyon/typedef/scene.hpp>
+#include <yq/tachyon/typedef/scene3.hpp>
+#include <yq/tachyon/typedef/spatial.hpp>
+#include <yq/tachyon/typedef/spatial3.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;

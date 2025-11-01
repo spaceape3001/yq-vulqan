@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/keywords.hpp>
-#include <tachyon/os/StdCursor.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/os/StdCursor.hpp>
 #include <variant>
 
 namespace yq {

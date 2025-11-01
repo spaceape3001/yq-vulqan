@@ -8,9 +8,9 @@
 
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/Rendered.hpp>
-#include <tachyon/typedef/scene.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
     class SetBgColorCommand;

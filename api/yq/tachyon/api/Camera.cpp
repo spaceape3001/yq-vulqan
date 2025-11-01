@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Camera.hpp>
-#include <tachyon/api/CameraData.hpp>
-#include <tachyon/api/CameraMetaWriter.hpp>
-#include <tachyon/api/Post.hpp>
+#include <yq/tachyon/api/Camera.hpp>
+#include <yq/tachyon/api/CameraData.hpp>
+#include <yq/tachyon/api/CameraMetaWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

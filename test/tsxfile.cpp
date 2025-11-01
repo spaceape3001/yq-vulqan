@@ -6,12 +6,12 @@
 
 #include <boost/ut.hpp>
 #include <yq/core/Logging.hpp>
-#include <tachyon/application.hpp>
+#include <yq/tachyon/application.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
-#include <tachyon/spatial/SimpleSpatial3.hpp>
-#include <tachyon/io/Save.hpp>
-#include <tachyon/io/save/SaveXML.hpp>
-#include <tachyon/io/save/SaveTachyon.hpp>
+#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
+#include <yq/tachyon/io/Save.hpp>
+#include <yq/tachyon/io/save/SaveXML.hpp>
+#include <yq/tachyon/io/save/SaveTachyon.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
 

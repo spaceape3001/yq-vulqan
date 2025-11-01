@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/tachyon/RemoveChildCommand.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/tachyon/RemoveChildCommand.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {
     RemoveChildCommand::RemoveChildCommand(const Header& h, TachyonSpec par) : TachyonCommand(h), m_child(par)

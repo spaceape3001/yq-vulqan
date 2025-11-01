@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/command/ViewerCommand.hpp>
-#include <tachyon/typedef/widget.hpp>
+#include <yq/tachyon/command/ViewerCommand.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class ImGuiEnableMouseCommand : public ViewerCommand {

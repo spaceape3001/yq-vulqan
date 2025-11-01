@@ -9,8 +9,8 @@
 #include <yq/unit/declare.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/vector/Spinor2.hpp>
-#include <tachyon/keywords.hpp>
-#include <tachyon/api/Interface.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {
     class POrientation²;

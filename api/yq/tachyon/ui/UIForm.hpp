@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/TypedID.hpp>
-#include <tachyon/ui/UIElements.hpp>
-#include <tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/ui/UIElements.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {

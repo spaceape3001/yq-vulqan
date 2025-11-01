@@ -7,7 +7,7 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <tachyon/api/Model.hpp>
+#include <yq/tachyon/api/Model.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorModels : public FrameInspectorTachyons {

@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AbstractShape3.hpp"
-#include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/aspect/ABgColorWriter.hxx>
-#include <tachyon/aspect/AColorWriter.hxx>
-#include <tachyon/aspect/ADrawModeWriter.hxx>
-#include <tachyon/data/Vertex3.hpp>
-#include <tachyon/asset/Texture.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/aspect/ABgColorWriter.hxx>
+#include <yq/tachyon/aspect/AColorWriter.hxx>
+#include <yq/tachyon/aspect/ADrawModeWriter.hxx>
+#include <yq/tachyon/data/Vertex3.hpp>
+#include <yq/tachyon/asset/Texture.hpp>
+#include <yq/tachyon/logging.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AbstractShape³)
 

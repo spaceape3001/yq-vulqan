@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DelegateGetter.hpp"
-#include <tachyon/api/meta/DelegateProperty.hpp>
+#include <yq/tachyon/api/meta/DelegateProperty.hpp>
 #include <cassert>
 
 namespace yq::tachyon {

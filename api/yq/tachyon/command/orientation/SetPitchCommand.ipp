@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/orientation/SetPitchCommand.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/orientation/SetPitchCommand.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 #include <yq/unit/metatype.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPitchCommand)

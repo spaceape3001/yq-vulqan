@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/Spatial2.hpp>
-#include <tachyon/aspect/AOrientation2.hpp>
-#include <tachyon/aspect/APosition2.hpp>
-#include <tachyon/aspect/AScale2.hpp>
+#include <yq/tachyon/api/Spatial2.hpp>
+#include <yq/tachyon/aspect/AOrientation2.hpp>
+#include <yq/tachyon/aspect/APosition2.hpp>
+#include <yq/tachyon/aspect/AScale2.hpp>
 #include <yq/vector/Spinor2.hpp>
 #include <yq/vector/Vector2.hpp>
 

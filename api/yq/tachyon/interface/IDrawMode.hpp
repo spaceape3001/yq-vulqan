@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/keywords.hpp>
-#include <tachyon/api/Interface.hpp>
-#include <tachyon/pipeline/DrawMode.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/Interface.hpp>
+#include <yq/tachyon/pipeline/DrawMode.hpp>
 
 namespace yq::tachyon {
     class PDrawMode;

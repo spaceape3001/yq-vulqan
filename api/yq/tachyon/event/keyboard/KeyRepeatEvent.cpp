@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/keyboard/KeyRepeatEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/keyboard/KeyRepeatEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
     KeyRepeatEvent::KeyRepeatEvent(const Header&h, ModifierKeys mk, int scan, KeyCode key) : 

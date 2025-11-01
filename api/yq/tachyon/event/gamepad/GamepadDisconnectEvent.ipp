@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/gamepad/GamepadDisconnectEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/gamepad/GamepadDisconnectEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
     void GamepadDisconnectEvent::init_meta()

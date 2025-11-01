@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/pipeline/BufferObject.hpp>
+#include <yq/tachyon/pipeline/BufferObject.hpp>
 #include <yq/container/vector_utils.hpp>
 #include <yq/trait/is_trivial.hpp>
 

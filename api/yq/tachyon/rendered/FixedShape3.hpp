@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/rendered/AbstractShape3.hpp>
+#include <yq/tachyon/rendered/AbstractShape3.hpp>
 
 namespace yq::tachyon {
     template <size_t N>

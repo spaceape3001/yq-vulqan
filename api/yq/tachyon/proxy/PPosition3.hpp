@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/IPosition3.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/IPosition3.hpp>
 
 namespace yq::tachyon {
     class PPosition³ : public Proxy, public IPosition³  /* TODO: public IPosition³I, public IPosition³, public IPosition */ {

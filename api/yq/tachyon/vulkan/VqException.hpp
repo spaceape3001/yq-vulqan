@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Exception.hpp>
+#include <yq/tachyon/api/Exception.hpp>
 
 namespace yq::tachyon {
     class VqException : public Exception {

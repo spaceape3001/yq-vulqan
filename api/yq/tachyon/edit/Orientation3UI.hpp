@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/UIEditor.hpp>
+#include <yq/tachyon/ui/UIEditor.hpp>
 #include <yq/units.hpp>
 
 namespace yq::tachyon {

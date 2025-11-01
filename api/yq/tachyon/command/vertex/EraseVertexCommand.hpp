@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/VertexCommand.hpp>
+#include <yq/tachyon/command/VertexCommand.hpp>
 
 namespace yq::tachyon {
     class EraseVertexCommand : public VertexCommand {

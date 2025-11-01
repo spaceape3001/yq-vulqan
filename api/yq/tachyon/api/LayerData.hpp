@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/api/TypedID.hpp>
-#include <tachyon/typedef/scene.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/typedef/scene.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {

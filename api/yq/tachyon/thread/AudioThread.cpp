@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/thread/AudioThread.hpp>
+#include <yq/tachyon/thread/AudioThread.hpp>
 
-#include <tachyon/api/Thread.hpp>
-#include <tachyon/api/ThreadData.hpp>
-#include <tachyon/api/ThreadMetaWriter.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/api/ThreadData.hpp>
+#include <yq/tachyon/api/ThreadMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::AudioThread)
 

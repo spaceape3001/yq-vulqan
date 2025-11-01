@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/application.hpp>
-#include <tachyon/viewer.hpp>
-#include <tachyon/widget.hpp>
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/application.hpp>
+#include <yq/tachyon/viewer.hpp>
+#include <yq/tachyon/widget.hpp>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

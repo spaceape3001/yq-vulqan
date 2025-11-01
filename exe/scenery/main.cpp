@@ -6,12 +6,12 @@
 
 #include "SceneEditor.hpp"
 
-#include <tachyon/application.hpp>
-#include <tachyon/io/FileIOManager.hpp>
+#include <yq/tachyon/application.hpp>
+#include <yq/tachyon/io/FileIOManager.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/file/FileResolver.hpp>
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 TypedID     gFileIO;
 

@@ -7,8 +7,8 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <tachyon/os/Joystick.hpp>
-#include <tachyon/os/JoystickData.hpp>
+#include <yq/tachyon/os/Joystick.hpp>
+#include <yq/tachyon/os/JoystickData.hpp>
 #include <yq/stream/Text.hpp>
 
 namespace yq::tachyon {

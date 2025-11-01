@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/PanelEvent.hpp>
+#include <yq/tachyon/event/PanelEvent.hpp>
 
 namespace yq::tachyon {
     class TachyonMeta;

@@ -9,12 +9,12 @@
 #include <yq/core/LogPriority.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/container/BasicBuffer.hpp>
-#include <tachyon/vulkan/ViData.hpp>
-#include <tachyon/typedef/rendered.hpp>
-#include <tachyon/typedef/vi_pipeline.hpp>
-#include <tachyon/typedef/vi_pipeline_manager.hpp>
-#include <tachyon/typedef/vi_pipeline_layout.hpp>
-#include <tachyon/typedef/vi_rendered.hpp>
+#include <yq/tachyon/vulkan/ViData.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/vi_pipeline.hpp>
+#include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
+#include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
+#include <yq/tachyon/typedef/vi_rendered.hpp>
 
 namespace yq {
     class Stream;

@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/MG.hpp>
-#include <tachyon/command/TachyonCommand.hpp>
-#include <tachyon/api/TypedID.hpp>
-#include <tachyon/typedef/thread.hpp>
+#include <yq/tachyon/api/MG.hpp>
+#include <yq/tachyon/command/TachyonCommand.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/typedef/thread.hpp>
 
 namespace yq::tachyon {
     class SubscribeCommand : public TachyonCommand {

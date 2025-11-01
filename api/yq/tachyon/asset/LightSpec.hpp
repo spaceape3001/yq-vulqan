@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/typedef/light_spec.hpp>
+#include <yq/tachyon/typedef/light_spec.hpp>
 #include <yq/resource/Resource.hpp>
 
 namespace yq::tachyon {

@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/gamepad/GamepadHatEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/gamepad/GamepadHatEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 namespace yq::tachyon {
     void GamepadHatEvent::init_meta()

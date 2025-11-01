@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include <tachyon/aspect/ASize1.hpp>
-#include <tachyon/command/size/AddSize1Command.hpp>
-#include <tachyon/command/size/AddSizeXCommand.hpp>
-#include <tachyon/command/size/MultiplySizeCommand.hpp>
-#include <tachyon/command/size/MultiplySize1Command.hpp>
-#include <tachyon/command/size/MultiplySizeXCommand.hpp>
-#include <tachyon/command/size/SetSize1Command.hpp>
-#include <tachyon/command/size/SetSizeXCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/ASize1.hpp>
+#include <yq/tachyon/command/size/AddSize1Command.hpp>
+#include <yq/tachyon/command/size/AddSizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySize1Command.hpp>
+#include <yq/tachyon/command/size/MultiplySizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetSize1Command.hpp>
+#include <yq/tachyon/command/size/SetSizeXCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

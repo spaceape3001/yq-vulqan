@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Trigger.hpp>
-#include <tachyon/os/ModifierKey.hpp>
-#include <tachyon/os/KeyCode.hpp>
+#include <yq/tachyon/api/Trigger.hpp>
+#include <yq/tachyon/os/ModifierKey.hpp>
+#include <yq/tachyon/os/KeyCode.hpp>
 
 namespace yq::tachyon {
     class KeyPressTrigger : public Trigger {

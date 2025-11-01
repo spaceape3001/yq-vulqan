@@ -6,11 +6,11 @@
 
 #include "ResourceProperty.hpp"
 #include <yq/resource/Resource.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/meta/ResourceGetter.hpp>
-#include <tachyon/api/meta/ResourceSetter.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/errors.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/meta/ResourceGetter.hpp>
+#include <yq/tachyon/api/meta/ResourceSetter.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/errors.hpp>
 
 namespace yq::tachyon {
     ResourceProperty::ResourceProperty(std::string_view zName, const std::source_location& sl, const ResourceMeta& theResource, ObjectMeta* parent) :

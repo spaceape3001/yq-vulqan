@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include <tachyon/api/Trigger.hpp>
-#include <tachyon/api/TriggerMetaWriter.hpp>
+#include <yq/tachyon/api/Trigger.hpp>
+#include <yq/tachyon/api/TriggerMetaWriter.hpp>

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/ColorCommand.hpp>
+#include <yq/tachyon/command/ColorCommand.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {

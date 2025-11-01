@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/aspect/ADrawMode.hpp>
-#include <tachyon/command/shape/SetDrawModeCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/ADrawMode.hpp>
+#include <yq/tachyon/command/shape/SetDrawModeCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

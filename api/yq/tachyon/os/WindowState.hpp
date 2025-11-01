@@ -9,10 +9,10 @@
 #include <yq/core/Flags.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/shape/Size2.hpp>
-#include <tachyon/api/ID.hpp>
-#include <tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/typedef/monitor.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <tachyon/os/WindowMode.hpp>
+#include <yq/tachyon/os/WindowMode.hpp>
 
 namespace yq::tachyon {
     enum class WindowFlag : uint8_t {

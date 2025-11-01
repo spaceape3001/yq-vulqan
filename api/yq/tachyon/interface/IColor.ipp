@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "IColor.hpp"
-#include <tachyon/proxy/PColor.hpp>
-#include <tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PColor.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IColor)
 

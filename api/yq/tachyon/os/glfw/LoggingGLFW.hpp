@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Logging.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/logging.hpp>
 
 #define glfwAlert                   yAlert("glfw")
 #define glfwCritical                yCritical("glfw")

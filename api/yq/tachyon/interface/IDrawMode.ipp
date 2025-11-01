@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "IDrawMode.hpp"
-#include <tachyon/proxy/PDrawMode.hpp>
-#include <tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PDrawMode.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IDrawMode)
 

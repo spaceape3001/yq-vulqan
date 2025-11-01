@@ -6,11 +6,11 @@
 
 #include "InspectorUI.hpp"
 
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/api/Frame.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorMetaWriter.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/text/match.hpp>
 #include <tbb/spin_rw_mutex.h>
 

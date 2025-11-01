@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/texture.hpp>
 #include <variant>
 
 namespace yq {

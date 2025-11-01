@@ -9,8 +9,8 @@
 #include <yq/resource/ResourceIO.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/text/format.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 
 namespace yq::tachyon {
     Ref<const Shader>    Shader::decode(const ShaderSpec&ss)

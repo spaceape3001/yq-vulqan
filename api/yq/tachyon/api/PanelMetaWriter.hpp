@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Panel.hpp>
-#include <tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/api/Panel.hpp>
+#include <yq/tachyon/api/WidgetMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of panel information

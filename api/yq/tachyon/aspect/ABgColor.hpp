@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/interface/IBgColor.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/interface/IBgColor.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {

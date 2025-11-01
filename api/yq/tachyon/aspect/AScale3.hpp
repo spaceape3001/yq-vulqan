@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/interface/IScale3.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/interface/IScale3.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 

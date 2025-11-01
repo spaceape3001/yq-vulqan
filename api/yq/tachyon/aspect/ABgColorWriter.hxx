@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/aspect/ABgColor.hpp>
-#include <tachyon/command/color/SetBgColorCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/ABgColor.hpp>
+#include <yq/tachyon/command/color/SetBgColorCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

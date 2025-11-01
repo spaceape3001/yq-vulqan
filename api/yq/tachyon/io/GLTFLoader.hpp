@@ -9,9 +9,9 @@
 //#include <iosfwd>
 //#include <yq/typedef/resource.hpp>
 #include <yq/typedef/filesystem_path.hpp>
-#include <tachyon/typedef/asset_pack.hpp>
-//#include <tachyon/typedef/raster.hpp>
-//#include <tachyon/typedef/sampler.hpp>
+#include <yq/tachyon/typedef/asset_pack.hpp>
+//#include <yq/tachyon/typedef/raster.hpp>
+//#include <yq/tachyon/typedef/sampler.hpp>
 
 //namespace tinygltf {
     //struct Image;

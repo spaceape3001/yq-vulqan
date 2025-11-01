@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/os/Desktop.hpp>
-#include <tachyon/os/glfw/glfw.hpp>
+#include <yq/tachyon/os/Desktop.hpp>
+#include <yq/tachyon/os/glfw/glfw.hpp>
 #include <array>
 #include <vector>
 

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/IFieldOfView.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/IFieldOfView.hpp>
 #include <yq/units.hpp>
 
 namespace yq::tachyon {

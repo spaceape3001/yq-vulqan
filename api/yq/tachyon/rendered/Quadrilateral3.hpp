@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/data/ColorVertexData.hpp>
-#include <tachyon/pipeline/VBO.hpp>
-#include <tachyon/api/Rendered3.hpp>
+#include <yq/tachyon/data/ColorVertexData.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/api/Rendered3.hpp>
 #include <array>
 
 namespace yq {

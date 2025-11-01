@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Mini.hpp>
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/typedef/accessors.hpp>
+#include <yq/tachyon/api/Mini.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/typedef/accessors.hpp>
 #include <functional>
 
 namespace yq::tachyon {

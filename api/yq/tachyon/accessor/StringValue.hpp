@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/typedef/accessors.hpp>
+#include <yq/tachyon/typedef/accessors.hpp>
 #include <yq/text/format.hpp>
 
 namespace yq::tachyon {

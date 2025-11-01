@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/typedef/model.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/model.hpp>
 
 namespace yq::tachyon {
 

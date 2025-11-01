@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/event/InputEvent.hpp>
-#include <tachyon/os/MouseButton.hpp>
-#include <tachyon/os/ModifierKey.hpp>
+#include <yq/tachyon/event/InputEvent.hpp>
+#include <yq/tachyon/os/MouseButton.hpp>
+#include <yq/tachyon/os/ModifierKey.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {

@@ -4,15 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/spatial/SimpleSpatial3.hpp>
-#include <tachyon/api/Spatial3MetaWriter.hpp>
-#include <tachyon/aspect/AOrientation3Writer.hxx>
-#include <tachyon/aspect/APosition3Writer.hxx>
-#include <tachyon/aspect/AScale3Writer.hxx>
-#include <tachyon/command/position/MoveBy3Command.hpp>
-#include <tachyon/command/position/MoveByXCommand.hpp>
-#include <tachyon/command/position/MoveByYCommand.hpp>
-#include <tachyon/command/position/MoveByZCommand.hpp>
+#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
+#include <yq/tachyon/api/Spatial3MetaWriter.hpp>
+#include <yq/tachyon/aspect/AOrientation3Writer.hxx>
+#include <yq/tachyon/aspect/APosition3Writer.hxx>
+#include <yq/tachyon/aspect/AScale3Writer.hxx>
+#include <yq/tachyon/command/position/MoveBy3Command.hpp>
+#include <yq/tachyon/command/position/MoveByXCommand.hpp>
+#include <yq/tachyon/command/position/MoveByYCommand.hpp>
+#include <yq/tachyon/command/position/MoveByZCommand.hpp>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>

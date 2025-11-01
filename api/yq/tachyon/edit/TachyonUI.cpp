@@ -5,15 +5,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "TachyonUI.hpp"
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/api/Frame.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/api/Thread.hpp>
-#include <tachyon/api/ThreadData.hpp>
-#include <tachyon/command/tachyon/SetNameCommand.hpp>
-#include <tachyon/ui/UIEditorMetaWriter.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/api/ThreadData.hpp>
+#include <yq/tachyon/command/tachyon/SetNameCommand.hpp>
+#include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <format>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonUI)

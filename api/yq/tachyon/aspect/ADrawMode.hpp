@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <tachyon/interface/IDrawMode.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/interface/IDrawMode.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
     class SetDrawModeCommand;

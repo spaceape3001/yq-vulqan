@@ -4,23 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PSize4.hpp>
-#include <tachyon/command/size/AddSize4Command.hpp>
-#include <tachyon/command/size/AddSizeWCommand.hpp>
-#include <tachyon/command/size/AddSizeXCommand.hpp>
-#include <tachyon/command/size/AddSizeYCommand.hpp>
-#include <tachyon/command/size/AddSizeZCommand.hpp>
-#include <tachyon/command/size/MultiplySizeCommand.hpp>
-#include <tachyon/command/size/MultiplySize4Command.hpp>
-#include <tachyon/command/size/MultiplySizeWCommand.hpp>
-#include <tachyon/command/size/MultiplySizeXCommand.hpp>
-#include <tachyon/command/size/MultiplySizeYCommand.hpp>
-#include <tachyon/command/size/MultiplySizeZCommand.hpp>
-#include <tachyon/command/size/SetSize4Command.hpp>
-#include <tachyon/command/size/SetSizeWCommand.hpp>
-#include <tachyon/command/size/SetSizeXCommand.hpp>
-#include <tachyon/command/size/SetSizeYCommand.hpp>
-#include <tachyon/command/size/SetSizeZCommand.hpp>
+#include <yq/tachyon/proxy/PSize4.hpp>
+#include <yq/tachyon/command/size/AddSize4Command.hpp>
+#include <yq/tachyon/command/size/AddSizeWCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeYCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeZCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySize4Command.hpp>
+#include <yq/tachyon/command/size/MultiplySizeWCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeYCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeZCommand.hpp>
+#include <yq/tachyon/command/size/SetSize4Command.hpp>
+#include <yq/tachyon/command/size/SetSizeWCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeYCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeZCommand.hpp>
 
 namespace yq::tachyon {
     PSize⁴::PSize⁴(const ISize⁴& i) : m_size(i.size())

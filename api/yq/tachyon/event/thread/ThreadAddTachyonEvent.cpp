@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/thread/ThreadAddTachyonEvent.hpp>
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/event/thread/ThreadAddTachyonEvent.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadAddTachyonEvent)
 

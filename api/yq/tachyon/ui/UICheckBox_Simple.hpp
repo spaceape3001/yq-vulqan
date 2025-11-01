@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/UICheckBox.hpp>
+#include <yq/tachyon/ui/UICheckBox.hpp>
 
 namespace yq::tachyon {
     class UICheckBox_Simple : public UICheckBox {

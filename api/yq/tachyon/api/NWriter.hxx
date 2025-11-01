@@ -14,12 +14,12 @@
     mechanisms will work.
 */
 
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/api/N.hpp>
-#include <tachyon/event/SpatialEvent.hpp>
-#include <tachyon/command/SpatialCommand.hpp>
-#include <tachyon/command/generic/SetSpatialCommand.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/api/N.hpp>
+#include <yq/tachyon/event/SpatialEvent.hpp>
+#include <yq/tachyon/command/SpatialCommand.hpp>
+#include <yq/tachyon/command/generic/SetSpatialCommand.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

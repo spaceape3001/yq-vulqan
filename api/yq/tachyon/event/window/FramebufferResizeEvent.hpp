@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/WindowEvent.hpp>
+#include <yq/tachyon/event/WindowEvent.hpp>
 #include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {

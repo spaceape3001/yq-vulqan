@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ResourceGetter.hpp"
-#include <tachyon/api/meta/ResourceProperty.hpp>
+#include <yq/tachyon/api/meta/ResourceProperty.hpp>
 #include <cassert>
 
 namespace yq::tachyon {

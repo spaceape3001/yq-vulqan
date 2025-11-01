@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/aspect/ASize2.hpp>
-#include <tachyon/command/size/AddSize2Command.hpp>
-#include <tachyon/command/size/AddSizeXCommand.hpp>
-#include <tachyon/command/size/AddSizeYCommand.hpp>
-#include <tachyon/command/size/MultiplySizeCommand.hpp>
-#include <tachyon/command/size/MultiplySize2Command.hpp>
-#include <tachyon/command/size/MultiplySizeXCommand.hpp>
-#include <tachyon/command/size/MultiplySizeYCommand.hpp>
-#include <tachyon/command/size/SetSize2Command.hpp>
-#include <tachyon/command/size/SetSizeXCommand.hpp>
-#include <tachyon/command/size/SetSizeYCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/ASize2.hpp>
+#include <yq/tachyon/command/size/AddSize2Command.hpp>
+#include <yq/tachyon/command/size/AddSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeYCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySize2Command.hpp>
+#include <yq/tachyon/command/size/MultiplySizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeYCommand.hpp>
+#include <yq/tachyon/command/size/SetSize2Command.hpp>
+#include <yq/tachyon/command/size/SetSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeYCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

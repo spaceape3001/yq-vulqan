@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "DrawModeUI.hpp"
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorMetaWriter.hpp>
-#include <tachyon/proxy/PDrawMode.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
+#include <yq/tachyon/proxy/PDrawMode.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::DrawModeUI)
 

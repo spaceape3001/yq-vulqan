@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PSize2.hpp>
-#include <tachyon/command/size/AddSize2Command.hpp>
-#include <tachyon/command/size/AddSizeXCommand.hpp>
-#include <tachyon/command/size/AddSizeYCommand.hpp>
-#include <tachyon/command/size/MultiplySizeCommand.hpp>
-#include <tachyon/command/size/MultiplySize2Command.hpp>
-#include <tachyon/command/size/MultiplySizeXCommand.hpp>
-#include <tachyon/command/size/MultiplySizeYCommand.hpp>
-#include <tachyon/command/size/SetSize2Command.hpp>
-#include <tachyon/command/size/SetSizeXCommand.hpp>
-#include <tachyon/command/size/SetSizeYCommand.hpp>
+#include <yq/tachyon/proxy/PSize2.hpp>
+#include <yq/tachyon/command/size/AddSize2Command.hpp>
+#include <yq/tachyon/command/size/AddSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeYCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySize2Command.hpp>
+#include <yq/tachyon/command/size/MultiplySizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeYCommand.hpp>
+#include <yq/tachyon/command/size/SetSize2Command.hpp>
+#include <yq/tachyon/command/size/SetSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeYCommand.hpp>
 
 namespace yq::tachyon {
     PSize²::PSize²(const ISize²& i) : m_size(i.size())

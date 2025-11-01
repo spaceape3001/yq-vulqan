@@ -11,8 +11,8 @@
 #include <yq/core/Guarded.hpp>
 
 #include <yq/core/Tristate.hpp>
-#include <tachyon/typedef/rendered.hpp>
-#include <tachyon/vulkan/ViVisualizer.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/vulkan/ViVisualizer.hpp>
 
 #include <atomic>
 #include <functional>

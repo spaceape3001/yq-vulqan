@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/NData.hpp>
-#include <tachyon/typedef/spatial2.hpp>
+#include <yq/tachyon/api/NData.hpp>
+#include <yq/tachyon/typedef/spatial2.hpp>
 
 namespace yq::tachyon {
     struct ②Snap : public ИSnap {

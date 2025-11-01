@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/rendered/Triangle3.hpp>
-#include <tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/rendered/Triangle3.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     /*! \brief Triangle for three dimensions

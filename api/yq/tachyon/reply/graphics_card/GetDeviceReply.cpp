@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/reply/graphics_card/GetDeviceReply.hpp>
-#include <tachyon/api/ReplyMetaWriter.hpp>
-#include <tachyon/vulkan/ViDevice.hpp>
+#include <yq/tachyon/reply/graphics_card/GetDeviceReply.hpp>
+#include <yq/tachyon/api/ReplyMetaWriter.hpp>
+#include <yq/tachyon/vulkan/ViDevice.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GetDeviceReply)
 

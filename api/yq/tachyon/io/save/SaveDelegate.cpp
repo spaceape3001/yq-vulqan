@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SaveDelegate.hpp"
-#include <tachyon/api/Delegate.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
 
 namespace yq::tachyon {
     SaveDelegate::SaveDelegate(Save& save, const Delegate& del) : SaveObject(save, del, del.id())

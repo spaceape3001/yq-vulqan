@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/ControllerCommand.hpp>
+#include <yq/tachyon/command/ControllerCommand.hpp>
 
 namespace yq::tachyon {
     class DisableCommand : public ControllerCommand {

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PDrawMode.hpp"
-#include <tachyon/command/shape/SetDrawModeCommand.hpp>
+#include <yq/tachyon/command/shape/SetDrawModeCommand.hpp>
 
 namespace yq::tachyon {
     PDrawMode::PDrawMode(const IDrawMode& i) : m_drawMode(i.draw_mode()), m_drawModeUse(i.draw_mode(USE))

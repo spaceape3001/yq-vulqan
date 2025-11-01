@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/CameraCommand.hpp>
+#include <yq/tachyon/command/CameraCommand.hpp>
 #include <yq/shape/Rectangle2.hpp>
 
 namespace yq::tachyon {

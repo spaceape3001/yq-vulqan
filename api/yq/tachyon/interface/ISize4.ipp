@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/ISize4.hpp>
+#include <yq/tachyon/interface/ISize4.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/PSize4.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PSize4.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::ISize⁴)
 

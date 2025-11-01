@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Post.hpp>
-#include <tachyon/typedef/reply.hpp>
-#include <tachyon/typedef/request.hpp>
+#include <yq/tachyon/api/Post.hpp>
+#include <yq/tachyon/typedef/reply.hpp>
+#include <yq/tachyon/typedef/request.hpp>
 
 namespace yq::tachyon {
     class ReplyMeta : public PostMeta {

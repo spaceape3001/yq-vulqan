@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/interface/IMaxSize3.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/interface/IMaxSize3.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 #ifdef NAN
 #undef NAN

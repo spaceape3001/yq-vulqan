@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/Thread.hpp>
-#include <tachyon/typedef/clock.hpp>
-#include <tachyon/typedef/viewer.hpp>
-#include <tachyon/typedef/widget.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/typedef/clock.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 
 namespace yq::tachyon {
     class Application;

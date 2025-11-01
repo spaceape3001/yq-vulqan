@@ -6,9 +6,9 @@
 
 #include "UIElement.hpp"
 #include "UIElementWriter.hpp"
-#include <tachyon/api/Action.hpp>
-#include <tachyon/action/VisibleUIAction.hpp>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/api/Action.hpp>
+#include <yq/tachyon/action/VisibleUIAction.hpp>
+#include <yq/tachyon/logging.hpp>
 
 namespace yq::tachyon {
     UIElementWriter::UIElementWriter(UIElement* ui) : m_ui(ui) {}

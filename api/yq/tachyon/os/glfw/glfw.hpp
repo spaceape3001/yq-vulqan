@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/typedef/cursor.hpp>
-#include <tachyon/typedef/joystick.hpp>
-#include <tachyon/typedef/monitor.hpp>
-#include <tachyon/typedef/window.hpp>
+#include <yq/tachyon/typedef/cursor.hpp>
+#include <yq/tachyon/typedef/joystick.hpp>
+#include <yq/tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 
 #include <array>
 #include <map>

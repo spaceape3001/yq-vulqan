@@ -9,12 +9,12 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
-#include <tachyon/api/3DData.hpp>
-#include <tachyon/api/RenderedData.hpp>
-#include <tachyon/typedef/bounds3.hpp>
-#include <tachyon/typedef/camera3.hpp>
-#include <tachyon/typedef/rendered3.hpp>
-#include <tachyon/typedef/spatial3.hpp>
+#include <yq/tachyon/api/3DData.hpp>
+#include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/typedef/bounds3.hpp>
+#include <yq/tachyon/typedef/camera3.hpp>
+#include <yq/tachyon/typedef/rendered3.hpp>
+#include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

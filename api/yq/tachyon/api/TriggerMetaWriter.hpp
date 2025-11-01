@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Trigger.hpp>
-#include <tachyon/api/DelegateMetaWriter.hpp>
+#include <yq/tachyon/api/Trigger.hpp>
+#include <yq/tachyon/api/DelegateMetaWriter.hpp>
 
 namespace yq::tachyon {
     

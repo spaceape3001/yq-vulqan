@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/os/KeyboardState.hpp>
-#include <tachyon/os/MouseState.hpp>
-#include <tachyon/os/WindowState.hpp>
+#include <yq/tachyon/os/KeyboardState.hpp>
+#include <yq/tachyon/os/MouseState.hpp>
+#include <yq/tachyon/os/WindowState.hpp>
 
 namespace yq::tachyon {
     struct ViewerState {

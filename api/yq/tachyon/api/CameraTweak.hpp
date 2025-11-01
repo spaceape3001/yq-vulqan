@@ -8,7 +8,7 @@
 
 #include <yq/typedef/tensor44.hpp>
 #include <yq/core/Ref.hpp>
-#include <tachyon/typedef/camera.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
 
 namespace yq::tachyon {
     class CameraTweak : public RefCount {

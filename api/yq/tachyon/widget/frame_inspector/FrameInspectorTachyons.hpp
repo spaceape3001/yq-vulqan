@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/widget/FrameInspector.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/Thread.hpp>
-#include <tachyon/api/InterfaceMeta.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/widget/FrameInspector.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/api/InterfaceMeta.hpp>
 #include <yq/unit/literals.hpp>
 #include <yq/text/join.hpp>
 

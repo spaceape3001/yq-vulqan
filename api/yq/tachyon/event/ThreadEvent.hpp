@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Event.hpp>
+#include <yq/tachyon/api/Event.hpp>
 
 namespace yq::tachyon {
     class ThreadEvent : public Event {

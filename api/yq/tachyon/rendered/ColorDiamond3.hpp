@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/rendered/Diamond3.hpp>
-#include <tachyon/aspect/AColor.hpp>
-#include <tachyon/pipeline/UBO.hpp>
-#include <tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/rendered/Diamond3.hpp>
+#include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/pipeline/UBO.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     class ColorDiamond³ : public Diamond³, public AColor {

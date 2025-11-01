@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/camera/NullCamera.hpp>
-#include <tachyon/api/CameraMetaWriter.hpp>
+#include <yq/tachyon/camera/NullCamera.hpp>
+#include <yq/tachyon/api/CameraMetaWriter.hpp>
 
 namespace yq::tachyon {
 

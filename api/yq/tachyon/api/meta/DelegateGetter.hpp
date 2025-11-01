@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/Meta.hpp>
-#include <tachyon/typedef/delegate.hpp>
+#include <yq/tachyon/typedef/delegate.hpp>
 
 namespace yq {
     class Object;

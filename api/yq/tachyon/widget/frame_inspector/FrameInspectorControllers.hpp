@@ -7,10 +7,10 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <tachyon/api/Controller.hpp>
-#include <tachyon/api/ControllerData.hpp>
-#include <tachyon/command/controller/DisableCommand.hpp>
-#include <tachyon/command/controller/EnableCommand.hpp>
+#include <yq/tachyon/api/Controller.hpp>
+#include <yq/tachyon/api/ControllerData.hpp>
+#include <yq/tachyon/command/controller/DisableCommand.hpp>
+#include <yq/tachyon/command/controller/EnableCommand.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorControllers : public FrameInspectorTachyons {

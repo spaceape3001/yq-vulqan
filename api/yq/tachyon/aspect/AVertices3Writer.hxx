@@ -7,16 +7,16 @@
 #pragma once
 
 #include "AVertices3.hpp"
-#include <tachyon/command/vertex/AppendVertex3Command.hpp>
-#include <tachyon/command/vertex/EraseVertexCommand.hpp>
-#include <tachyon/command/vertex/InsertVertex3Command.hpp>
-#include <tachyon/command/vertex/SetVertex3Command.hpp>
-#include <tachyon/command/vertex/SetVertexColorCommand.hpp>
-#include <tachyon/command/vertex/SetVertexNormal3Command.hpp>
-#include <tachyon/command/vertex/SetVertexPoint3Command.hpp>
-#include <tachyon/command/vertex/SetVertexUVCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/command/vertex/AppendVertex3Command.hpp>
+#include <yq/tachyon/command/vertex/EraseVertexCommand.hpp>
+#include <yq/tachyon/command/vertex/InsertVertex3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertex3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertexColorCommand.hpp>
+#include <yq/tachyon/command/vertex/SetVertexNormal3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertexPoint3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertexUVCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <size_t N>

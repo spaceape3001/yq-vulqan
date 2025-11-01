@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Delegate.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
 #include <yq/meta/ObjectMetaWriter.hpp>
 
 namespace yq::tachyon {

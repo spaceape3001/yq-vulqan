@@ -10,5 +10,5 @@
     Include this file to always get everything needed for creating a widget.
 */
 
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/WidgetMetaWriter.hpp>

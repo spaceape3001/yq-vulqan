@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SkyBox3.hpp"
-#include <tachyon/logging.hpp>
-#include <tachyon/asset/Shader.hpp>
-#include <tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 
 namespace yq::tachyon {
 

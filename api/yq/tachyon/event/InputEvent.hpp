@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Event.hpp>
-#include <tachyon/os/ModifierKey.hpp>
+#include <yq/tachyon/api/Event.hpp>
+#include <yq/tachyon/os/ModifierKey.hpp>
 
 namespace yq::tachyon {
 

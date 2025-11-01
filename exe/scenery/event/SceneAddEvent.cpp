@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SceneAddEvent.hpp"
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(SceneAddEvent)
 

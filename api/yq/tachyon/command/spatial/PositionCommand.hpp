@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/SpatialCommand.hpp>
+#include <yq/tachyon/command/SpatialCommand.hpp>
 
 namespace yq::tachyon {
     class PositionCommand : public SpatialCommand {

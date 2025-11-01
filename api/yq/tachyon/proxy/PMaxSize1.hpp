@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/IMaxSize1.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/IMaxSize1.hpp>
 
 namespace yq::tachyon {
     class PMaxSize¹ : public Proxy, public IMaxSize¹ {

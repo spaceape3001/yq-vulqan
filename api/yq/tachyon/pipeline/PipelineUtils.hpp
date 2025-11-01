@@ -9,8 +9,8 @@
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/Meta.hpp>
 //#include <yq/tachyon/preamble.hpp>
-#include <tachyon/pipeline/DataFormat.hpp>
-#include <tachyon/pipeline/IndexType.hpp>
+#include <yq/tachyon/pipeline/DataFormat.hpp>
+#include <yq/tachyon/pipeline/IndexType.hpp>
 #include <span>
 
 namespace yq::tachyon {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/VertexCommand.hpp>
+#include <yq/tachyon/command/VertexCommand.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/meta/ResourceSetter.hpp>
+#include <yq/tachyon/api/meta/ResourceSetter.hpp>
 #include <yq/resource/Resource.hpp>
-#include <tachyon/errors.hpp>
+#include <yq/tachyon/errors.hpp>
 
 namespace yq::tachyon {
     template <SomeObject O, SomeResource A>

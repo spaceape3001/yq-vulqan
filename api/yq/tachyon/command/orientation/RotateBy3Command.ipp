@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/orientation/RotateBy3Command.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/orientation/RotateBy3Command.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>

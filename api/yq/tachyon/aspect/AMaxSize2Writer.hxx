@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <tachyon/aspect/AMaxSize2.hpp>
-#include <tachyon/command/size/AddMaxSize2Command.hpp>
-#include <tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <tachyon/command/size/AddMaxSizeYCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSize2Command.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
-#include <tachyon/command/size/SetMaxSize2Command.hpp>
-#include <tachyon/command/size/SetMaxSizeXCommand.hpp>
-#include <tachyon/command/size/SetMaxSizeYCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/AMaxSize2.hpp>
+#include <yq/tachyon/command/size/AddMaxSize2Command.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize2Command.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize2Command.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeYCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -7,12 +7,12 @@
 #include "VisibleUIAction.hpp"
 #include <yq/core/Any.hpp>
 #include <yq/core/Result.hpp>
-#include <tachyon/api/ActionMetaWriter.hpp>
-#include <tachyon/api/Payload.hpp>
-#include <tachyon/ui/UIElement.hpp>
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/api/Widget.hxx>
-#include <tachyon/logging.hpp>
+#include <yq/tachyon/api/ActionMetaWriter.hpp>
+#include <yq/tachyon/api/Payload.hpp>
+#include <yq/tachyon/ui/UIElement.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/Widget.hxx>
+#include <yq/tachyon/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::VisibleUIAction)
 

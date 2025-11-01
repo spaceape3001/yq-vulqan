@@ -8,8 +8,8 @@
 #include <yq/math/glm.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tags.hpp>
-#include <tachyon/data/ColorVertex2D.hpp>
-#include <tachyon/data/ColorVertex3D.hpp>
+#include <yq/tachyon/data/ColorVertex2D.hpp>
+#include <yq/tachyon/data/ColorVertex3D.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::tachyon::Vertex³)
 

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/os/HatState.hpp>
-#include <tachyon/typedef/gamepad.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/os/HatState.hpp>
+#include <yq/tachyon/typedef/gamepad.hpp>
 
 namespace yq::tachyon {
     struct GamepadSnap : public TachyonSnap {

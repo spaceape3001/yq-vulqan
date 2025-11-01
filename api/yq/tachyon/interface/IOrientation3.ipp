@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/IOrientation3.hpp>
+#include <yq/tachyon/interface/IOrientation3.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/POrientation3.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/POrientation3.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IOrientation³)
 

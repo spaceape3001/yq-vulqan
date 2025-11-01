@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PScale1.hpp>
-#include <tachyon/command/scale/AddScale1Command.hpp>
-#include <tachyon/command/scale/AddScaleXCommand.hpp>
-#include <tachyon/command/scale/MultiplyScaleCommand.hpp>
-#include <tachyon/command/scale/MultiplyScale1Command.hpp>
-#include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
-#include <tachyon/command/scale/SetScale1Command.hpp>
-#include <tachyon/command/scale/SetScaleXCommand.hpp>
+#include <yq/tachyon/proxy/PScale1.hpp>
+#include <yq/tachyon/command/scale/AddScale1Command.hpp>
+#include <yq/tachyon/command/scale/AddScaleXCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScale1Command.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleXCommand.hpp>
+#include <yq/tachyon/command/scale/SetScale1Command.hpp>
+#include <yq/tachyon/command/scale/SetScaleXCommand.hpp>
 
 namespace yq::tachyon {
     PScale¹::PScale¹(const IScale¹& i) : m_scale(i.scale())

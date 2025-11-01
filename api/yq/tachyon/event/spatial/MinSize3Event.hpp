@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/SpatialEvent.hpp>
+#include <yq/tachyon/event/SpatialEvent.hpp>
 #include <yq/shape/Size3.hpp>
 
 namespace yq::tachyon {

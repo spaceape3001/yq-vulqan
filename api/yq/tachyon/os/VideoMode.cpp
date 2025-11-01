@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/os/VideoMode.hpp>
+#include <yq/tachyon/os/VideoMode.hpp>
 #include <GLFW/glfw3.h>
 
 namespace yq::tachyon {

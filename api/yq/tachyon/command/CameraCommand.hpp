@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Command.hpp>
+#include <yq/tachyon/api/Command.hpp>
 
 namespace yq::tachyon {
     class Camera;

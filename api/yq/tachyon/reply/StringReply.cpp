@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/reply/StringReply.hpp>
-#include <tachyon/api/ReplyMetaWriter.hpp>
+#include <yq/tachyon/reply/StringReply.hpp>
+#include <yq/tachyon/api/ReplyMetaWriter.hpp>
 
 namespace yq::tachyon {
     StringReply::StringReply(const Header&h, const RequestCPtr&rq, std::string_view k) : Reply(h, rq), m_text(k)

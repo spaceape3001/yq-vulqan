@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Editor.hpp>
-#include <tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/api/Editor.hpp>
+#include <yq/tachyon/api/WidgetMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of editor information

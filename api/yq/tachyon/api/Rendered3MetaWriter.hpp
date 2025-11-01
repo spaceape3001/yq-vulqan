@@ -8,9 +8,9 @@
 
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
-#include <tachyon/api/Rendered3.hpp>
-#include <tachyon/api/Rendered3Data.hpp>
-#include <tachyon/api/RenderedMetaWriter.hpp>
+#include <yq/tachyon/api/Rendered3.hpp>
+#include <yq/tachyon/api/Rendered3Data.hpp>
+#include <yq/tachyon/api/RenderedMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

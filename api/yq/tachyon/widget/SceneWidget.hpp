@@ -9,11 +9,11 @@
 #include <yq/color/RGB.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/tensor/Tensor44.hpp>
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/typedef/camera.hpp>
-#include <tachyon/typedef/scene.hpp>
-#include <tachyon/typedef/push.hpp>
-#include <tachyon/typedef/vi_rendered.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
+#include <yq/tachyon/typedef/scene.hpp>
+#include <yq/tachyon/typedef/push.hpp>
+#include <yq/tachyon/typedef/vi_rendered.hpp>
 #include <yq/container/BasicBuffer.hpp>
 
 namespace yq::tachyon {

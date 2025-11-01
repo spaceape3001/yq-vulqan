@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UISection.hpp"
-#include <tachyon/ui/UIElementMetaWriter.hpp>
+#include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UISection)
 

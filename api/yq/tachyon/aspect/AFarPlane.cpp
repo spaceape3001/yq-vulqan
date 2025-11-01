@@ -6,7 +6,7 @@
 
 #include "AFarPlane.hpp"
 #include "AFarPlaneWriter.hxx"
-#include <tachyon/command/camera/SetFarPlaneCommand.hpp>
+#include <yq/tachyon/command/camera/SetFarPlaneCommand.hpp>
 
 namespace yq::tachyon {
     AFarPlane::AFarPlane() = default;

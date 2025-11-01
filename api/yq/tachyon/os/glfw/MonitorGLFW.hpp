@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/os/Monitor.hpp>
-#include <tachyon/interface/IPosition2.hpp>
-#include <tachyon/interface/IScale2.hpp>
-#include <tachyon/interface/ISize2.hpp>
+#include <yq/tachyon/os/Monitor.hpp>
+#include <yq/tachyon/interface/IPosition2.hpp>
+#include <yq/tachyon/interface/IScale2.hpp>
+#include <yq/tachyon/interface/ISize2.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/shape/Size2.hpp>
 

@@ -6,8 +6,8 @@
 
 #include "ABgColor.hpp"
 #include "ABgColorWriter.hxx"
-#include <tachyon/command/color/SetBgColorCommand.hpp>
-#include <tachyon/event/color/BgColorChangeEvent.hpp>
+#include <yq/tachyon/command/color/SetBgColorCommand.hpp>
+#include <yq/tachyon/event/color/BgColorChangeEvent.hpp>
 
 namespace yq::tachyon {
     ABgColor::ABgColor() = default;

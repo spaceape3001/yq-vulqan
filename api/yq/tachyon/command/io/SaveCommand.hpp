@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <tachyon/command/IOCommand.hpp>
-#include <tachyon/typedef/tachyon.hpp>
-#include <tachyon/api/StdThread.hpp>
-#include <tachyon/api/TypedID.hpp>
-#include <tachyon/typedef/save.hpp>
+#include <yq/tachyon/command/IOCommand.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/api/StdThread.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/typedef/save.hpp>
 #include <filesystem>
 
 namespace yq::tachyon {

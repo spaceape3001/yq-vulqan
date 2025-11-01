@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/ISize2.hpp>
+#include <yq/tachyon/interface/ISize2.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/PSize2.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PSize2.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::ISize²)
 

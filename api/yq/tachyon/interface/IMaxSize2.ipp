@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/IMaxSize2.hpp>
+#include <yq/tachyon/interface/IMaxSize2.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/PMaxSize2.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PMaxSize2.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMaxSize²)
 

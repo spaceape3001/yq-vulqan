@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Spatial.hpp>
-#include <tachyon/typedef/spatial2.hpp>
+#include <yq/tachyon/api/Spatial.hpp>
+#include <yq/tachyon/typedef/spatial2.hpp>
 
 namespace yq::tachyon {
     class Spatial²;

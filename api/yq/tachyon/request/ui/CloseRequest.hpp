@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/request/UIRequest.hpp>
+#include <yq/tachyon/request/UIRequest.hpp>
 
 namespace yq::tachyon {
     class CloseRequest : public UIRequest {

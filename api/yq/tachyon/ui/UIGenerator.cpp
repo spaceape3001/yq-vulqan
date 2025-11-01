@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIGenerator.hpp"
-#include <tachyon/ui/UIElementMetaWriter.hpp>
+#include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/container/vector_utils.hpp>
 #include <yq/core/Ref.hpp>
-#include <tachyon/api/Action.hpp>
+#include <yq/tachyon/api/Action.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIGenerator)
 

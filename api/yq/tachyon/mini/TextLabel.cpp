@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/mini/TextLabel.hpp>
-#include <tachyon/api/MiniMetaWriter.hpp>
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/accessor/StringFunction.hpp>
+#include <yq/tachyon/mini/TextLabel.hpp>
+#include <yq/tachyon/api/MiniMetaWriter.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/accessor/StringFunction.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::TextLabel)
 

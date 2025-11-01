@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/camera/SpaceCamera.hpp>
+#include <yq/tachyon/camera/SpaceCamera.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_projection.hpp>
@@ -19,11 +19,11 @@
 #include <yq/tensor/Tensor44.hxx>
 #include <yq/vector/Quaternion3.hxx>
 
-#include <tachyon/api/Camera3MetaWriter.hpp>
-#include <tachyon/aspect/AFarPlaneWriter.hxx>
-#include <tachyon/aspect/AFieldOfViewWriter.hxx>
-#include <tachyon/aspect/ANearPlaneWriter.hxx>
-//#include <tachyon/command/CameraPitchCommand.hpp>
+#include <yq/tachyon/api/Camera3MetaWriter.hpp>
+#include <yq/tachyon/aspect/AFarPlaneWriter.hxx>
+#include <yq/tachyon/aspect/AFieldOfViewWriter.hxx>
+#include <yq/tachyon/aspect/ANearPlaneWriter.hxx>
+//#include <yq/tachyon/command/CameraPitchCommand.hpp>
 
 namespace yq::tachyon {
     SpaceCamera::SpaceCamera(const Param&p) : Camera³(p)

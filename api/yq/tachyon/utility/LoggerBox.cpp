@@ -4,13 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/utility/LoggerBox.hpp>
+#include <yq/tachyon/utility/LoggerBox.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Logger.hpp>
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/command/tachyon/SnoopCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/command/tachyon/SnoopCommand.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::LoggerBox)
 

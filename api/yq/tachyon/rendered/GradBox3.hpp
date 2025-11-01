@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/rendered/Box3.hpp>
-#include <tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/rendered/Box3.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     class GradBox³ : public Box³ {

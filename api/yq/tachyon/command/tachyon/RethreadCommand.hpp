@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/command/TachyonCommand.hpp>
-#include <tachyon/typedef/thread.hpp>
+#include <yq/tachyon/command/TachyonCommand.hpp>
+#include <yq/tachyon/typedef/thread.hpp>
 
 namespace yq::tachyon {
     class RethreadCommand : public TachyonCommand {

@@ -8,16 +8,16 @@
 
 #include <yq/meta/ArgDeducer.hpp>
 #include <yq/meta/MetaObjectMetaWriter.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/api/Interface.hpp>
-#include <tachyon/api/Post.hpp>
-#include <tachyon/api/meta/ResourcePropertyWriter.hpp>
-#include <tachyon/api/meta/DelegatePropertyWriter.hpp>
-#include <tachyon/api/meta/DynamicResourceGetter.hpp>
-#include <tachyon/api/meta/DynamicResourceSetter.hpp>
-#include <tachyon/api/meta/DynamicDelegateGetter.hpp>
-#include <tachyon/api/meta/DynamicDelegateSetter.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/api/Interface.hpp>
+#include <yq/tachyon/api/Post.hpp>
+#include <yq/tachyon/api/meta/ResourcePropertyWriter.hpp>
+#include <yq/tachyon/api/meta/DelegatePropertyWriter.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceGetter.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceSetter.hpp>
+#include <yq/tachyon/api/meta/DynamicDelegateGetter.hpp>
+#include <yq/tachyon/api/meta/DynamicDelegateSetter.hpp>
 
 namespace yq::tachyon {
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/Trigger.hpp>
+#include <yq/tachyon/api/Trigger.hpp>
 
 namespace yq::tachyon {
 

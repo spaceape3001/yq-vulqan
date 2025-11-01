@@ -8,7 +8,7 @@
 
 #include <yq/core/Ref.hpp>
 #include <yq/core/Flags.hpp>
-#include <tachyon/config/vulqan.hpp>
+#include <yq/tachyon/config/vulqan.hpp>
 #include <vulkan/vulkan_core.h>
 
 namespace yq::tachyon {

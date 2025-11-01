@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/ui/UICallback.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/ui/UICallback.hpp>
 
 namespace yq::tachyon {
     template <SomeWidget W>

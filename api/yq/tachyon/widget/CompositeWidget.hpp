@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Widget.hpp>
-#include <tachyon/typedef/camera3.hpp>
-#include <tachyon/typedef/scene.hpp>
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/typedef/camera3.hpp>
+#include <yq/tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
     class CompositeWidget : public Widget {

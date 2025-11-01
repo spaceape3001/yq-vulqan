@@ -10,11 +10,11 @@
 
 #include <yq/process/PluginLoader.hpp>
 
-#include <tachyon/application.hpp>
-#include <tachyon/widget/ImGuiDemoWidget.hpp>
+#include <yq/tachyon/application.hpp>
+#include <yq/tachyon/widget/ImGuiDemoWidget.hpp>
 
 #include <iostream>
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

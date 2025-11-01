@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Command.hpp>
-#include <tachyon/api/PostMetaWriter.hpp>
+#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/api/PostMetaWriter.hpp>
 
 namespace yq::tachyon {
     /*! \brief Writer of event information

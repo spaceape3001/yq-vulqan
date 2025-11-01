@@ -7,8 +7,8 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <tachyon/api/Thread.hpp>
-#include <tachyon/api/ThreadData.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/api/ThreadData.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorThreads : public FrameInspectorTachyons {

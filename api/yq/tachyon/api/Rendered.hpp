@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/rendered.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/core/Tristate.hpp>
 //#include <yq/tachyon/preamble.hpp>
 
-#include <tachyon/pipeline/Pipeline.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 // ⁴
 

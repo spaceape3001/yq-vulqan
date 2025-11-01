@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/MouseEvent.hpp>
+#include <yq/tachyon/event/MouseEvent.hpp>
 
 namespace yq::tachyon {
     class MouseScrollEvent : public MouseEvent {

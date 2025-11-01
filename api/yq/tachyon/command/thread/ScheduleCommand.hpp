@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/command/ThreadCommand.hpp>
-#include <tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/command/ThreadCommand.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
 

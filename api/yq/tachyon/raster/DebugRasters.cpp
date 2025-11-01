@@ -7,8 +7,8 @@
 #include "DebugRasters.hpp"
 #include <yq/color/colors.hpp>
 #include <yq/color/RGBA.hpp>
-#include <tachyon/asset/Raster.hpp>
-#include <tachyon/raster/PatternRasters.hpp>
+#include <yq/tachyon/asset/Raster.hpp>
+#include <yq/tachyon/raster/PatternRasters.hpp>
 #include <yq/macro/debugrel.hpp>
 
 namespace yq::tachyon::debug {

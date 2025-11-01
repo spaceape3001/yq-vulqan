@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Logging.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
     /*! \brief Logs posts to the logger

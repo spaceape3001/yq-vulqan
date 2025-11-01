@@ -6,16 +6,16 @@
 
 #include "PVertices3.hpp"
 
-#include <tachyon/interface/IVertices3.hpp>
-#include <tachyon/data/Vertex3.hpp>
-#include <tachyon/command/vertex/AppendVertex3Command.hpp>
-#include <tachyon/command/vertex/EraseVertexCommand.hpp>
-#include <tachyon/command/vertex/InsertVertex3Command.hpp>
-#include <tachyon/command/vertex/SetVertex3Command.hpp>
-#include <tachyon/command/vertex/SetVertexColorCommand.hpp>
-#include <tachyon/command/vertex/SetVertexNormal3Command.hpp>
-#include <tachyon/command/vertex/SetVertexPoint3Command.hpp>
-#include <tachyon/command/vertex/SetVertexUVCommand.hpp>
+#include <yq/tachyon/interface/IVertices3.hpp>
+#include <yq/tachyon/data/Vertex3.hpp>
+#include <yq/tachyon/command/vertex/AppendVertex3Command.hpp>
+#include <yq/tachyon/command/vertex/EraseVertexCommand.hpp>
+#include <yq/tachyon/command/vertex/InsertVertex3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertex3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertexColorCommand.hpp>
+#include <yq/tachyon/command/vertex/SetVertexNormal3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertexPoint3Command.hpp>
+#include <yq/tachyon/command/vertex/SetVertexUVCommand.hpp>
 
 namespace yq::tachyon {
     PVertices³::PVertices³(const IVertices³&i) :

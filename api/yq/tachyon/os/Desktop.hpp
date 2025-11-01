@@ -8,14 +8,14 @@
 
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
-#include <tachyon/api/Manager.hpp>
-#include <tachyon/typedef/cursor.hpp>
-#include <tachyon/typedef/desktop.hpp>
-#include <tachyon/typedef/joystick.hpp>
-#include <tachyon/typedef/keyboard.hpp>
-#include <tachyon/typedef/monitor.hpp>
-#include <tachyon/typedef/mouse.hpp>
-#include <tachyon/typedef/window.hpp>
+#include <yq/tachyon/api/Manager.hpp>
+#include <yq/tachyon/typedef/cursor.hpp>
+#include <yq/tachyon/typedef/desktop.hpp>
+#include <yq/tachyon/typedef/joystick.hpp>
+#include <yq/tachyon/typedef/keyboard.hpp>
+#include <yq/tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/typedef/mouse.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
 

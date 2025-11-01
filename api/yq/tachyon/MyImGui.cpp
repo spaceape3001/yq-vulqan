@@ -8,7 +8,7 @@
 
 static_assert(sizeof(void*) == sizeof(uint64_t), "Breakage means ImGui textures will break (and we want text, right?)");
 
-#include <tachyon/MyImGui.hpp>
+#include <yq/tachyon/MyImGui.hpp>
 #include "imgui_internal.h"
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>

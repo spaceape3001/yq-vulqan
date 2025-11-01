@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <tachyon/ui/UIElement.hpp>
+#include <yq/tachyon/ui/UIElement.hpp>
 #include <string_view>
 #include <string>
 #include <yq/shape/Size2.hpp>
 #include <variant>
-#include <tachyon/typedef/accessors.hpp>
+#include <yq/tachyon/typedef/accessors.hpp>
 
 namespace yq::tachyon {
     class UICheckBoxWriter;

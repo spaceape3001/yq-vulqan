@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/typedef/video.hpp>
+#include <yq/tachyon/typedef/video.hpp>
 #include <yq/resource/Resource.hpp>
 
 namespace yq::tachyon {

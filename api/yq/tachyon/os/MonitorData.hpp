@@ -11,9 +11,9 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/os/VideoMode.hpp>
-#include <tachyon/typedef/monitor.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/os/VideoMode.hpp>
+#include <yq/tachyon/typedef/monitor.hpp>
 
 namespace yq::tachyon {
 

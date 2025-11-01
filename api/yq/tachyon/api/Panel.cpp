@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Panel.hpp>
-#include <tachyon/api/PanelMetaWriter.hpp>
-#include <tachyon/MyImGui.hpp>
+#include <yq/tachyon/api/Panel.hpp>
+#include <yq/tachyon/api/PanelMetaWriter.hpp>
+#include <yq/tachyon/MyImGui.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Panel)
 

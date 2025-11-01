@@ -9,11 +9,11 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Circle2.hpp>
-#include <tachyon/api/2DData.hpp>
-#include <tachyon/api/RenderedData.hpp>
-#include <tachyon/typedef/bounds2.hpp>
-#include <tachyon/typedef/rendered2.hpp>
-#include <tachyon/typedef/spatial2.hpp>
+#include <yq/tachyon/api/2DData.hpp>
+#include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/typedef/bounds2.hpp>
+#include <yq/tachyon/typedef/rendered2.hpp>
+#include <yq/tachyon/typedef/spatial2.hpp>
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {

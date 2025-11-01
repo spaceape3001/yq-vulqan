@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/typedef/uimisc.hpp>
-#include <tachyon/enum/Cardinal.hpp>
-#include <tachyon/enum/UIFlags.hpp>
+#include <yq/tachyon/typedef/uimisc.hpp>
+#include <yq/tachyon/enum/Cardinal.hpp>
+#include <yq/tachyon/enum/UIFlags.hpp>
 #include <yq/typedef/vector2.hpp>
 
 namespace yq::tachyon {

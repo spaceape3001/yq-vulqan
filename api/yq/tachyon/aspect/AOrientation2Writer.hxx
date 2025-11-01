@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <tachyon/aspect/AOrientation3.hpp>
-#include <tachyon/command/orientation/PitchByCommand.hpp>
-#include <tachyon/command/orientation/RollByCommand.hpp>
-#include <tachyon/command/orientation/RotateBy2Command.hpp>
-#include <tachyon/command/orientation/SetHeadingCommand.hpp>
-#include <tachyon/command/orientation/SetOrientation2Command.hpp>
-#include <tachyon/command/orientation/YawByCommand.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/AOrientation3.hpp>
+#include <yq/tachyon/command/orientation/PitchByCommand.hpp>
+#include <yq/tachyon/command/orientation/RollByCommand.hpp>
+#include <yq/tachyon/command/orientation/RotateBy2Command.hpp>
+#include <yq/tachyon/command/orientation/SetHeadingCommand.hpp>
+#include <yq/tachyon/command/orientation/SetOrientation2Command.hpp>
+#include <yq/tachyon/command/orientation/YawByCommand.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

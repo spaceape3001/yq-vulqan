@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/meta/CompoundMetaDynamic.hpp>
-#include <tachyon/api/InterfaceMeta.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/InterfaceMeta.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <type_traits>
 

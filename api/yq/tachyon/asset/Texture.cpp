@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <tachyon/asset/Raster.hpp>
-#include <tachyon/asset/Sampler.hpp>
-#include <tachyon/asset/Texture.hpp>
+#include <yq/tachyon/asset/Raster.hpp>
+#include <yq/tachyon/asset/Sampler.hpp>
+#include <yq/tachyon/asset/Texture.hpp>
 #include <yq/resource/ResourceMetaWriter.hpp>
 
 namespace yq::tachyon {

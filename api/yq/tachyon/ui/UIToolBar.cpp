@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIToolBar.hpp"
-#include <tachyon/ui/UIUtils.hpp>
-#include <tachyon/ui/UIStyle.hpp>
+#include <yq/tachyon/ui/UIUtils.hpp>
+#include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <tachyon/logging.hpp>
-#include <tachyon/ui/UIElementMetaWriter.hpp>
-#include <tachyon/ui/UIUtils.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/ui/UIElementMetaWriter.hpp>
+#include <yq/tachyon/ui/UIUtils.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 #include <yq/shape/Size2.hxx>

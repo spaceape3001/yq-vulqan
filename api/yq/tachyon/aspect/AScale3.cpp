@@ -4,21 +4,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/aspect/AScale3.hpp>
-#include <tachyon/command/scale/AddScale3Command.hpp>
-#include <tachyon/command/scale/AddScaleXCommand.hpp>
-#include <tachyon/command/scale/AddScaleYCommand.hpp>
-#include <tachyon/command/scale/AddScaleZCommand.hpp>
-#include <tachyon/command/scale/MultiplyScaleCommand.hpp>
-#include <tachyon/command/scale/MultiplyScale3Command.hpp>
-#include <tachyon/command/scale/MultiplyScaleXCommand.hpp>
-#include <tachyon/command/scale/MultiplyScaleYCommand.hpp>
-#include <tachyon/command/scale/MultiplyScaleZCommand.hpp>
-#include <tachyon/command/scale/SetScale3Command.hpp>
-#include <tachyon/command/scale/SetScaleXCommand.hpp>
-#include <tachyon/command/scale/SetScaleYCommand.hpp>
-#include <tachyon/command/scale/SetScaleZCommand.hpp>
-#include <tachyon/event/spatial/Scale3Event.hpp>
+#include <yq/tachyon/aspect/AScale3.hpp>
+#include <yq/tachyon/command/scale/AddScale3Command.hpp>
+#include <yq/tachyon/command/scale/AddScaleXCommand.hpp>
+#include <yq/tachyon/command/scale/AddScaleYCommand.hpp>
+#include <yq/tachyon/command/scale/AddScaleZCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScale3Command.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleXCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleYCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleZCommand.hpp>
+#include <yq/tachyon/command/scale/SetScale3Command.hpp>
+#include <yq/tachyon/command/scale/SetScaleXCommand.hpp>
+#include <yq/tachyon/command/scale/SetScaleYCommand.hpp>
+#include <yq/tachyon/command/scale/SetScaleZCommand.hpp>
+#include <yq/tachyon/event/spatial/Scale3Event.hpp>
 
 
 namespace yq::tachyon {

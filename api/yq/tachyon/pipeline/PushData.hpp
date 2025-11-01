@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/config/glm.hpp>
-#include <tachyon/config/vulqan.hpp>
+#include <yq/tachyon/config/vulqan.hpp>
 
 namespace yq::tachyon {
 

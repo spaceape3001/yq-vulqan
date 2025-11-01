@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <tachyon/api/Control.hpp>
+#include <yq/tachyon/api/Control.hpp>
 #include <yq/units.hpp>
 #include <yq/vector/Quaternion3.hpp>
 

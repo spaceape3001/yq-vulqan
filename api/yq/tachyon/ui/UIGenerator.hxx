@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/UIGenerator.hpp>
+#include <yq/tachyon/ui/UIGenerator.hpp>
 #include <functional>
 #include <cassert>
 #include <utility>

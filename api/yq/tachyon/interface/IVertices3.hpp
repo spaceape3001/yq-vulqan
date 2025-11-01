@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <tachyon/keywords.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/typedef/rgba.hpp>
 #include <yq/typedef/uv.hpp>
 #include <yq/typedef/vector3.hpp>
-#include <tachyon/api/Interface.hpp>
+#include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {
     class PVertices³;

@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/vector/Vector1.hpp>
-#include <tachyon/keywords.hpp>
-#include <tachyon/api/Interface.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {
     class PPosition¹;

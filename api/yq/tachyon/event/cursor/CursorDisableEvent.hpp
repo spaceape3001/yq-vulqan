@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/CursorEvent.hpp>
+#include <yq/tachyon/event/CursorEvent.hpp>
 
 namespace yq::tachyon {
 

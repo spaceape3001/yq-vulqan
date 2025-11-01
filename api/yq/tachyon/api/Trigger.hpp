@@ -11,12 +11,12 @@
 #include <yq/core/Ref.hpp>
 #include <yq/core/UniqueID.hpp>
 
-#include <tachyon/keywords.hpp>
-#include <tachyon/api/Delegate.hpp>
-#include <tachyon/api/YesNo.hpp>
-#include <tachyon/api/MismatchPolicy.hpp>
-#include <tachyon/typedef/post.hpp>
-#include <tachyon/typedef/trigger.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
+#include <yq/tachyon/api/YesNo.hpp>
+#include <yq/tachyon/api/MismatchPolicy.hpp>
+#include <yq/tachyon/typedef/post.hpp>
+#include <yq/tachyon/typedef/trigger.hpp>
 
 #include <concepts>
 #include <variant>

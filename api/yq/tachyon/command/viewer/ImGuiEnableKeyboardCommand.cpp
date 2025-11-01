@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/viewer/ImGuiEnableKeyboardCommand.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
-#include <tachyon/api/Widget.hpp>
+#include <yq/tachyon/command/viewer/ImGuiEnableKeyboardCommand.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/api/Widget.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ImGuiEnableKeyboardCommand)
 

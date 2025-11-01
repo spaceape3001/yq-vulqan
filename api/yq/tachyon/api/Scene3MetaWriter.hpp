@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Scene3.hpp>
-#include <tachyon/api/Scene3Data.hpp>
-#include <tachyon/api/SceneMetaWriter.hpp>
+#include <yq/tachyon/api/Scene3.hpp>
+#include <yq/tachyon/api/Scene3Data.hpp>
+#include <yq/tachyon/api/SceneMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

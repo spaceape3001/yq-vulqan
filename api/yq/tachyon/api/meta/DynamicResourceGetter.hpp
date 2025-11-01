@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/meta/ResourceGetter.hpp>
+#include <yq/tachyon/api/meta/ResourceGetter.hpp>
 #include <yq/resource/Resource.hpp>
 
 namespace yq::tachyon {

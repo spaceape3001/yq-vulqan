@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/ViewerCommand.hpp>
+#include <yq/tachyon/command/ViewerCommand.hpp>
 
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerCommand)
 

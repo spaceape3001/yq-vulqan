@@ -5,11 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ColorTriangle3.hpp"
-#include <tachyon/logging.hpp>
-#include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 #include <yq/vector/Vector3.hxx>
-#include <tachyon/aspect/AColorWriter.hxx>
+#include <yq/tachyon/aspect/AColorWriter.hxx>
 
 namespace yq::tachyon {
     void ColorTriangle³::init_meta()

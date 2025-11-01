@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/asset/Mesh.hpp>
+#include <yq/tachyon/asset/Mesh.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/resource/Resource.hxx>
-#include <tachyon/logging.hpp>
-#include <tachyon/errors.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/errors.hpp>
 #include <yq/xml/XmlUtils.hpp>
 
 namespace yq::tachyon {

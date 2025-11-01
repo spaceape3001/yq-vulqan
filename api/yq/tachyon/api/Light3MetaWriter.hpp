@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Light3.hpp>
-#include <tachyon/api/Light3Data.hpp>
-#include <tachyon/api/LightMetaWriter.hpp>
+#include <yq/tachyon/api/Light3.hpp>
+#include <yq/tachyon/api/Light3Data.hpp>
+#include <yq/tachyon/api/LightMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

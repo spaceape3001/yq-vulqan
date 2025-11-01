@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/api/CameraTweak.hpp>
+#include <yq/tachyon/api/CameraTweak.hpp>
 
 namespace yq::tachyon {
 

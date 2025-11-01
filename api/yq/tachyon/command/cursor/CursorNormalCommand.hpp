@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/CursorCommand.hpp>
+#include <yq/tachyon/command/CursorCommand.hpp>
 
 namespace yq::tachyon {
     class CursorNormalCommand : public CursorCommand {

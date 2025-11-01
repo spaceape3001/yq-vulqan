@@ -4,13 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/logging.hpp>
-#include <tachyon/aspect/AOrientation2.hpp>
-#include <tachyon/command/orientation/RotateBy2Command.hpp>
-#include <tachyon/command/orientation/SetHeadingCommand.hpp>
-#include <tachyon/command/orientation/SetOrientation2Command.hpp>
-#include <tachyon/command/orientation/YawByCommand.hpp>
-#include <tachyon/event/spatial/Orientation2Event.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/aspect/AOrientation2.hpp>
+#include <yq/tachyon/command/orientation/RotateBy2Command.hpp>
+#include <yq/tachyon/command/orientation/SetHeadingCommand.hpp>
+#include <yq/tachyon/command/orientation/SetOrientation2Command.hpp>
+#include <yq/tachyon/command/orientation/YawByCommand.hpp>
+#include <yq/tachyon/event/spatial/Orientation2Event.hpp>
 #include <yq/vector/Spinor2.hxx>
 #include "AOrientation2Writer.hxx"
 

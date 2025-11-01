@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/SimEvent.hpp>
+#include <yq/tachyon/event/SimEvent.hpp>
 
 namespace yq::tachyon {
     class PauseEvent : public SimEvent {

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/INearPlane.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/INearPlane.hpp>
 
 namespace yq::tachyon {
     class PNearPlane : public Proxy, public INearPlane {

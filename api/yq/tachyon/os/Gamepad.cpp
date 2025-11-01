@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/os/Gamepad.hpp>
-#include <tachyon/os/GamepadData.hpp>
-#include <tachyon/os/GamepadMetaWriter.hpp>
-#include <tachyon/api/Post.hpp>
+#include <yq/tachyon/os/Gamepad.hpp>
+#include <yq/tachyon/os/GamepadData.hpp>
+#include <yq/tachyon/os/GamepadMetaWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

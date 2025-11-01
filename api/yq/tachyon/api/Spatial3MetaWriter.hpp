@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Spatial3.hpp>
-#include <tachyon/api/Spatial3Data.hpp>
-#include <tachyon/api/SpatialMetaWriter.hpp>
+#include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/api/Spatial3Data.hpp>
+#include <yq/tachyon/api/SpatialMetaWriter.hpp>
 
 namespace yq::tachyon {
     

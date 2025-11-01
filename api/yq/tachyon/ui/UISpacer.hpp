@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/ui/UIElement.hpp>
+#include <yq/tachyon/ui/UIElement.hpp>
 #include <yq/shape/Size2.hpp>
-#include <tachyon/keywords.hpp>
+#include <yq/tachyon/keywords.hpp>
 
 namespace yq::tachyon {
 

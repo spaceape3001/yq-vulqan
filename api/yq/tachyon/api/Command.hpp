@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/TypedID.hpp>
-#include <tachyon/api/Post.hpp>
-#include <tachyon/typedef/command.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/api/Post.hpp>
+#include <yq/tachyon/typedef/command.hpp>
 
 namespace yq::tachyon {
 

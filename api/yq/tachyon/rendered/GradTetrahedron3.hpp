@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/rendered/Tetrahedron3.hpp>
+#include <yq/tachyon/rendered/Tetrahedron3.hpp>
 
 #include <array>
 

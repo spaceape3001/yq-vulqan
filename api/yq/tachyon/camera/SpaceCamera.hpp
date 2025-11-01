@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/api/Camera3.hpp>
-#include <tachyon/aspect/AFarPlane.hpp>
-#include <tachyon/aspect/AFieldOfView.hpp>
-#include <tachyon/aspect/ANearPlane.hpp>
+#include <yq/tachyon/api/Camera3.hpp>
+#include <yq/tachyon/aspect/AFarPlane.hpp>
+#include <yq/tachyon/aspect/AFieldOfView.hpp>
+#include <yq/tachyon/aspect/ANearPlane.hpp>
 #include <yq/math/SimpleSpace.hpp>
 #include <yq/units.hpp>
 

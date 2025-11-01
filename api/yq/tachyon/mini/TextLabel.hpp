@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/Mini.hpp>
-#include <tachyon/accessor/StringValue.hpp>
-#include <tachyon/accessor/TypedFunction.hpp>
+#include <yq/tachyon/api/Mini.hpp>
+#include <yq/tachyon/accessor/StringValue.hpp>
+#include <yq/tachyon/accessor/TypedFunction.hpp>
 #include <yq/text/format.hpp>
 
 namespace yq::tachyon {

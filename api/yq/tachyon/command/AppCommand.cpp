@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/AppCommand.hpp>
+#include <yq/tachyon/command/AppCommand.hpp>
 
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AppCommand)
 

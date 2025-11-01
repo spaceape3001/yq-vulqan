@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/IMinSize1.hpp>
+#include <yq/tachyon/interface/IMinSize1.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/PMinSize1.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PMinSize1.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IMinSize¹)
 

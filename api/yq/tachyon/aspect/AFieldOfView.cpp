@@ -6,7 +6,7 @@
 
 #include "AFieldOfView.hpp"
 #include "AFieldOfViewWriter.hxx"
-#include <tachyon/command/camera/SetFOVCommand.hpp>
+#include <yq/tachyon/command/camera/SetFOVCommand.hpp>
 
 namespace yq::tachyon {
     AFieldOfView::AFieldOfView() = default;

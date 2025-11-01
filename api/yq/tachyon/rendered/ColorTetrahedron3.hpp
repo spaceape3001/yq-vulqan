@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/data/ColorVertexData.hpp>
-#include <tachyon/aspect/AColor.hpp>
-#include <tachyon/rendered/Tetrahedron3.hpp>
-#include <tachyon/pipeline/UBO.hpp>
+#include <yq/tachyon/data/ColorVertexData.hpp>
+#include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/rendered/Tetrahedron3.hpp>
+#include <yq/tachyon/pipeline/UBO.hpp>
 
 #include <array>
 

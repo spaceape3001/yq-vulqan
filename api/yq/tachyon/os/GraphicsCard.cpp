@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/os/GraphicsCard.hpp>
-#include <tachyon/os/GraphicsCardData.hpp>
-#include <tachyon/os/GraphicsCardMetaWriter.hpp>
-#include <tachyon/api/Post.hpp>
+#include <yq/tachyon/os/GraphicsCard.hpp>
+#include <yq/tachyon/os/GraphicsCardData.hpp>
+#include <yq/tachyon/os/GraphicsCardMetaWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

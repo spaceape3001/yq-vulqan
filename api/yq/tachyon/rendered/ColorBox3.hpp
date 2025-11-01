@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/rendered/Box3.hpp>
-#include <tachyon/aspect/AColor.hpp>
-#include <tachyon/pipeline/UBO.hpp>
-#include <tachyon/pipeline/VBO.hpp>
+#include <yq/tachyon/rendered/Box3.hpp>
+#include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/pipeline/UBO.hpp>
+#include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     class ColorBox³ : public Box³, public AColor {

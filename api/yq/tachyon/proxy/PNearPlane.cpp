@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PNearPlane.hpp"
-#include <tachyon/command/camera/SetNearPlaneCommand.hpp>
+#include <yq/tachyon/command/camera/SetNearPlaneCommand.hpp>
 
 namespace yq::tachyon {
     PNearPlane::PNearPlane(const INearPlane& i) : m_near_plane(i.near_plane())

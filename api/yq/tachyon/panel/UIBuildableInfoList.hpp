@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/panel/UIConcreteInfoList.hpp>
-#include <tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/panel/UIConcreteInfoList.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 

@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Mini.hpp>
-#include <tachyon/api/MiniMetaWriter.hpp>
-#include <tachyon/api/Accessor.hpp>
+#include <yq/tachyon/api/Mini.hpp>
+#include <yq/tachyon/api/MiniMetaWriter.hpp>
+#include <yq/tachyon/api/Accessor.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mini)
 

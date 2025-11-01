@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Proxy.hpp>
-#include <tachyon/interface/IDrawMode.hpp>
+#include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/interface/IDrawMode.hpp>
 
 namespace yq::tachyon {
     class PDrawMode : public Proxy, public IDrawMode {

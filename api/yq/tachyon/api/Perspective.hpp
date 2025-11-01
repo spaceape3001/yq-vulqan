@@ -11,8 +11,8 @@
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq/core/Tristate.hpp>
-#include <tachyon/api/Camera.hpp>
-#include <tachyon/typedef/camera.hpp>
+#include <yq/tachyon/api/Camera.hpp>
+#include <yq/tachyon/typedef/camera.hpp>
 #include <optional>
 
 namespace yq::tachyon {

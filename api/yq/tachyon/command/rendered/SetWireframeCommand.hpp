@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/RenderedCommand.hpp>
+#include <yq/tachyon/command/RenderedCommand.hpp>
 #include <yq/core/Tristate.hpp>
 
 namespace yq::tachyon {

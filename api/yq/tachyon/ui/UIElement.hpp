@@ -8,15 +8,15 @@
 
 #include <concepts>
 #include <variant>
-#include <tachyon/enum/UIFlags.hpp>
-#include <tachyon/keywords.hpp>
+#include <yq/tachyon/enum/UIFlags.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
-#include <tachyon/typedef/action.hpp>
-#include <tachyon/typedef/post.hpp>
-#include <tachyon/typedef/texture.hpp>
-#include <tachyon/typedef/uielement.hpp>
+#include <yq/tachyon/typedef/action.hpp>
+#include <yq/tachyon/typedef/post.hpp>
+#include <yq/tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/uielement.hpp>
 
 namespace yq::tachyon {
     struct ViContext;

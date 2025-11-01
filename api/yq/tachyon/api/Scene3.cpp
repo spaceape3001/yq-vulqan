@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Scene3.hpp>
-#include <tachyon/api/Scene3Data.hpp>
-#include <tachyon/api/Scene3MetaWriter.hpp>
-#include <tachyon/spatial/SimpleSpatial3.hpp>
-#include <tachyon/api/3DWriter.hxx>
+#include <yq/tachyon/api/Scene3.hpp>
+#include <yq/tachyon/api/Scene3Data.hpp>
+#include <yq/tachyon/api/Scene3MetaWriter.hpp>
+#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
+#include <yq/tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³)

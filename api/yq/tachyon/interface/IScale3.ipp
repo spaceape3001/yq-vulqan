@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/interface/IScale3.hpp>
+#include <yq/tachyon/interface/IScale3.hpp>
 
-#include <tachyon/api/InterfaceMetaWriter.hpp>
-#include <tachyon/proxy/PScale3.hpp>
+#include <yq/tachyon/api/InterfaceMetaWriter.hpp>
+#include <yq/tachyon/proxy/PScale3.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale³)
 

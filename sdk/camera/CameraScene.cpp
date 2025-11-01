@@ -12,21 +12,21 @@
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/TriangleData.hpp>
 
-#include <tachyon/camera/SpaceCamera.hpp>
+#include <yq/tachyon/camera/SpaceCamera.hpp>
 
-#include <tachyon/rendered/Billboard3.hpp>
-#include <tachyon/rendered/GradTetrahedron3.hpp>
-#include <tachyon/rendered/ImageQuad3.hpp>
-#include <tachyon/rendered/Quadrilateral3.hpp>
-#include <tachyon/rendered/SkyBox3.hpp>
-#include <tachyon/rendered/GradTriangle3.hpp>
+#include <yq/tachyon/rendered/Billboard3.hpp>
+#include <yq/tachyon/rendered/GradTetrahedron3.hpp>
+#include <yq/tachyon/rendered/ImageQuad3.hpp>
+#include <yq/tachyon/rendered/Quadrilateral3.hpp>
+#include <yq/tachyon/rendered/SkyBox3.hpp>
+#include <yq/tachyon/rendered/GradTriangle3.hpp>
 
-#include <tachyon/api/Scene3MetaWriter.hpp>
+#include <yq/tachyon/api/Scene3MetaWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <yq/typedef/string_initlists.hpp>
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

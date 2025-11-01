@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/os/Mouse.hpp>
-#include <tachyon/os/MouseData.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/os/Mouse.hpp>
+#include <yq/tachyon/os/MouseData.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

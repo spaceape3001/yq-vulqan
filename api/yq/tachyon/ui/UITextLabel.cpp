@@ -6,8 +6,8 @@
 
 #include "UITextLabel.hpp"
 #include "UITextLabelWriter.hpp"
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/ui/UIElementMetaWriter.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UITextLabel)
 

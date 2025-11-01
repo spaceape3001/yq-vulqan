@@ -7,9 +7,9 @@
 #pragma once
 
 #include "FrameInspectorCameras.hpp"
-#include <tachyon/api/Camera3.hpp>
-#include <tachyon/api/Camera3Data.hpp>
-#include <tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/api/Camera3.hpp>
+#include <yq/tachyon/api/Camera3Data.hpp>
+#include <yq/tachyon/api/Spatial3.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorCamera³s : public FrameInspectorCameras  {

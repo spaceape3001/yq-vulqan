@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <tachyon/ui/UIElementWriter.hpp>
-#include <tachyon/enum/Cardinal.hpp>
-#include <tachyon/typedef/post.hpp>
-#include <tachyon/typedef/uielement.hpp>
-#include <tachyon/typedef/widget.hpp>
+#include <yq/tachyon/ui/UIElementWriter.hpp>
+#include <yq/tachyon/enum/Cardinal.hpp>
+#include <yq/tachyon/typedef/post.hpp>
+#include <yq/tachyon/typedef/uielement.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
-#include <tachyon/keywords.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <string_view>
 #include <functional>
 

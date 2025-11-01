@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PMaxSize2.hpp>
-#include <tachyon/command/size/AddMaxSize2Command.hpp>
-#include <tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <tachyon/command/size/AddMaxSizeYCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSize2Command.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
-#include <tachyon/command/size/SetMaxSize2Command.hpp>
-#include <tachyon/command/size/SetMaxSizeXCommand.hpp>
-#include <tachyon/command/size/SetMaxSizeYCommand.hpp>
+#include <yq/tachyon/proxy/PMaxSize2.hpp>
+#include <yq/tachyon/command/size/AddMaxSize2Command.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize2Command.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize2Command.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeYCommand.hpp>
 
 namespace yq::tachyon {
     PMaxSize²::PMaxSize²(const IMaxSize²& i) : m_max_size(i.max_size())

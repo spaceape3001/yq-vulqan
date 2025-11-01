@@ -6,4 +6,4 @@
 
 #pragma once
 
-#include <tachyon/os/Joystick.hpp>
+#include <yq/tachyon/os/Joystick.hpp>

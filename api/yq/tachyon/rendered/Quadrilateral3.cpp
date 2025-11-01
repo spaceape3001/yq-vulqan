@@ -4,15 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/rendered/Quadrilateral3.hpp>
+#include <yq/tachyon/rendered/Quadrilateral3.hpp>
 
 #include <yq/shape/QuadrilateralData.hpp>
 #include <yq/shape/QuadrilateralData.hpp>
 #include <yq/shape/shape_utils.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/api/Rendered3MetaWriter.hpp>
-#include <tachyon/asset/Shader.hpp>
+#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 
 
 namespace yq::tachyon {

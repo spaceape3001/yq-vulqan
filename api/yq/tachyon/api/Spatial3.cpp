@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Spatial3.hpp>
-#include <tachyon/api/Spatial3Data.hpp>
-#include <tachyon/api/Spatial3MetaWriter.hpp>
+#include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/api/Spatial3Data.hpp>
+#include <yq/tachyon/api/Spatial3MetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial³);

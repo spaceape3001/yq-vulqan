@@ -6,8 +6,8 @@
 
 #include "AColor.hpp"
 #include "AColorWriter.hxx"
-#include <tachyon/command/color/SetColorCommand.hpp>
-#include <tachyon/event/color/ColorChangeEvent.hpp>
+#include <yq/tachyon/command/color/SetColorCommand.hpp>
+#include <yq/tachyon/event/color/ColorChangeEvent.hpp>
 
 namespace yq::tachyon {
     AColor::AColor() = default;

@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PPosition1.hpp>
-#include <tachyon/command/position/AddPosition1Command.hpp>
-#include <tachyon/command/position/AddPositionXCommand.hpp>
-#include <tachyon/command/position/MultiplyPositionCommand.hpp>
-#include <tachyon/command/position/MultiplyPosition1Command.hpp>
-#include <tachyon/command/position/MultiplyPositionXCommand.hpp>
-#include <tachyon/command/position/SetPosition1Command.hpp>
-#include <tachyon/command/position/SetPositionXCommand.hpp>
+#include <yq/tachyon/proxy/PPosition1.hpp>
+#include <yq/tachyon/command/position/AddPosition1Command.hpp>
+#include <yq/tachyon/command/position/AddPositionXCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPosition1Command.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
+#include <yq/tachyon/command/position/SetPosition1Command.hpp>
+#include <yq/tachyon/command/position/SetPositionXCommand.hpp>
 
 namespace yq::tachyon {
     PPosition¹::PPosition¹(const IPosition¹& i)

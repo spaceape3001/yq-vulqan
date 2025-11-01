@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/gamepad/GamepadZeroCommand.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/gamepad/GamepadZeroCommand.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {
     void GamepadZeroCommand::init_meta()

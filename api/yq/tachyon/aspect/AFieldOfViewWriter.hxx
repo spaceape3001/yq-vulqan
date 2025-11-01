@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/aspect/AFieldOfView.hpp>
-#include <tachyon/command/camera/SetFOVCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/AFieldOfView.hpp>
+#include <yq/tachyon/command/camera/SetFOVCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UICheckBox_Simple.hpp"
-#include <tachyon/ui/UIElementMetaWriter.hpp>
+#include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UICheckBox_Simple)
 

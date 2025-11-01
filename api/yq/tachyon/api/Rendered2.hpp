@@ -9,12 +9,12 @@
 //#include <yq/math/SimpleSpace.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Circle2.hpp>
-#include <tachyon/api/Rendered.hpp>
+#include <yq/tachyon/api/Rendered.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <tachyon/api/2D.hpp>
-#include <tachyon/typedef/bounds2.hpp>
-#include <tachyon/typedef/rendered2.hpp>
-#include <tachyon/typedef/spatial2.hpp>
+#include <yq/tachyon/api/2D.hpp>
+#include <yq/tachyon/typedef/bounds2.hpp>
+#include <yq/tachyon/typedef/rendered2.hpp>
+#include <yq/tachyon/typedef/spatial2.hpp>
 
 namespace yq::tachyon {
         

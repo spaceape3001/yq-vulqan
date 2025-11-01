@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/vulkan/ViThread.hpp>
+#include <yq/tachyon/vulkan/ViThread.hpp>
 
 namespace yq::tachyon {
 }

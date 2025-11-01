@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/joystick/JoystickZeroCommand.hpp>
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/joystick/JoystickZeroCommand.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {
     void JoystickZeroCommand::init_meta()

@@ -4,20 +4,20 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PMinSize3.hpp>
-#include <tachyon/command/size/AddMinSize3Command.hpp>
-#include <tachyon/command/size/AddMinSizeXCommand.hpp>
-#include <tachyon/command/size/AddMinSizeYCommand.hpp>
-#include <tachyon/command/size/AddMinSizeZCommand.hpp>
-#include <tachyon/command/size/MultiplyMinSizeCommand.hpp>
-#include <tachyon/command/size/MultiplyMinSize3Command.hpp>
-#include <tachyon/command/size/MultiplyMinSizeXCommand.hpp>
-#include <tachyon/command/size/MultiplyMinSizeYCommand.hpp>
-#include <tachyon/command/size/MultiplyMinSizeZCommand.hpp>
-#include <tachyon/command/size/SetMinSize3Command.hpp>
-#include <tachyon/command/size/SetMinSizeXCommand.hpp>
-#include <tachyon/command/size/SetMinSizeYCommand.hpp>
-#include <tachyon/command/size/SetMinSizeZCommand.hpp>
+#include <yq/tachyon/proxy/PMinSize3.hpp>
+#include <yq/tachyon/command/size/AddMinSize3Command.hpp>
+#include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeYCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeZCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSize3Command.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeYCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeZCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSize3Command.hpp>
+#include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeYCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeZCommand.hpp>
 
 namespace yq::tachyon {
     PMinSize³::PMinSize³(const IMinSize³& i) : m_min_size(i.min_size())

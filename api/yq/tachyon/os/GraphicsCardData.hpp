@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/typedef/graphics_card.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/typedef/graphics_card.hpp>
 
 namespace yq::tachyon {
     struct GraphicsCardSnap : public TachyonSnap {

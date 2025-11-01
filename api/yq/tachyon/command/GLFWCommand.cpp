@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/command/GLFWCommand.hpp>
+#include <yq/tachyon/command/GLFWCommand.hpp>
 
-#include <tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GLFWCommand)
 

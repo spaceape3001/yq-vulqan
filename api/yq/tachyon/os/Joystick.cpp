@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/os/Joystick.hpp>
-#include <tachyon/os/JoystickData.hpp>
-#include <tachyon/os/JoystickMetaWriter.hpp>
-#include <tachyon/api/Post.hpp>
+#include <yq/tachyon/os/Joystick.hpp>
+#include <yq/tachyon/os/JoystickData.hpp>
+#include <yq/tachyon/os/JoystickMetaWriter.hpp>
+#include <yq/tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

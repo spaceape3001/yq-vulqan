@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/aspect/ANearPlane.hpp>
-#include <tachyon/command/camera/SetNearPlaneCommand.hpp>
-#include <tachyon/api/TachyonMetaWriter.hpp>
-#include <tachyon/tags.hpp>
+#include <yq/tachyon/aspect/ANearPlane.hpp>
+#include <yq/tachyon/command/camera/SetNearPlaneCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>

@@ -9,26 +9,26 @@
 #include <yq/core/Flags.hpp>
 #include <yq/core/Tristate.hpp>
 
-#include <tachyon/keywords.hpp>
+#include <yq/tachyon/keywords.hpp>
 
-#include <tachyon/pipeline/DataActivity.hpp>
-#include <tachyon/pipeline/ColorBlend.hpp>
-#include <tachyon/pipeline/CullMode.hpp>
-#include <tachyon/pipeline/DataFormat.hpp>
-#include <tachyon/pipeline/DynamicState.hpp>
-#include <tachyon/pipeline/FrontFace.hpp>
-#include <tachyon/pipeline/IndexType.hpp>
-#include <tachyon/pipeline/PipelineBinding.hpp>
-#include <tachyon/pipeline/PolygonMode.hpp>
-#include <tachyon/pipeline/PushConfigType.hpp>
-#include <tachyon/pipeline/Topology.hpp>
-#include <tachyon/pipeline/VertexInputRate.hpp>
+#include <yq/tachyon/pipeline/DataActivity.hpp>
+#include <yq/tachyon/pipeline/ColorBlend.hpp>
+#include <yq/tachyon/pipeline/CullMode.hpp>
+#include <yq/tachyon/pipeline/DataFormat.hpp>
+#include <yq/tachyon/pipeline/DynamicState.hpp>
+#include <yq/tachyon/pipeline/FrontFace.hpp>
+#include <yq/tachyon/pipeline/IndexType.hpp>
+#include <yq/tachyon/pipeline/PipelineBinding.hpp>
+#include <yq/tachyon/pipeline/PolygonMode.hpp>
+#include <yq/tachyon/pipeline/PushConfigType.hpp>
+#include <yq/tachyon/pipeline/Topology.hpp>
+#include <yq/tachyon/pipeline/VertexInputRate.hpp>
 
-#include <tachyon/typedef/buffer.hpp>
-#include <tachyon/typedef/pipeline.hpp>
-#include <tachyon/typedef/push.hpp>
-#include <tachyon/typedef/shader.hpp>
-#include <tachyon/typedef/texture.hpp>
+#include <yq/tachyon/typedef/buffer.hpp>
+#include <yq/tachyon/typedef/pipeline.hpp>
+#include <yq/tachyon/typedef/push.hpp>
+#include <yq/tachyon/typedef/shader.hpp>
+#include <yq/tachyon/typedef/texture.hpp>
 
 #include <set>
 #include <variant>

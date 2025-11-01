@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/typedef/accessor.hpp>
-#include <tachyon/api/Accessor.hpp>
+#include <yq/tachyon/typedef/accessor.hpp>
+#include <yq/tachyon/api/Accessor.hpp>
 #include <yq/core/Tristate.hpp>
 #include <string_view>
 #include <memory>

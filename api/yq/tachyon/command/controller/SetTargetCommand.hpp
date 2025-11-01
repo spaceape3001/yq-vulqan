@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/command/ControllerCommand.hpp>
-#include <tachyon/typedef/tachyon.hpp>
-#include <tachyon/api/TypedID.hpp>
+#include <yq/tachyon/command/ControllerCommand.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
 
 namespace yq::tachyon {
     class SetTargetCommand : public ControllerCommand {

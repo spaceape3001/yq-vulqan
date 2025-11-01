@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Scale3UI.hpp"
-#include <tachyon/MyImGui.hpp>
-#include <tachyon/api/TachyonData.hpp>
-#include <tachyon/ui/UIEditorMetaWriter.hpp>
-#include <tachyon/proxy/PScale3.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
+#include <yq/tachyon/proxy/PScale3.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale³UI)
 

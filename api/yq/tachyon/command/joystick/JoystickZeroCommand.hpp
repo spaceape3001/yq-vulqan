@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/JoystickCommand.hpp>
+#include <yq/tachyon/command/JoystickCommand.hpp>
 
 namespace yq::tachyon {
     class JoystickZeroCommand : public JoystickCommand {

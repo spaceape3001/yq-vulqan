@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/api/Delegate.hpp>
-#include <tachyon/api/DelegateMetaWriter.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
+#include <yq/tachyon/api/DelegateMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Delegate)
 

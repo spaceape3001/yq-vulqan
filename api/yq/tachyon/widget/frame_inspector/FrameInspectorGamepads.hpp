@@ -7,8 +7,8 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
-#include <tachyon/os/Gamepad.hpp>
-#include <tachyon/os/GamepadData.hpp>
+#include <yq/tachyon/os/Gamepad.hpp>
+#include <yq/tachyon/os/GamepadData.hpp>
 #include <yq/stream/Text.hpp>
 
 namespace yq::tachyon {

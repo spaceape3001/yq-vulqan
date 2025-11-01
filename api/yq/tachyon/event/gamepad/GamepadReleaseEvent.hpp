@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/GamepadEvent.hpp>
+#include <yq/tachyon/event/GamepadEvent.hpp>
 
 namespace yq::tachyon {
     class GamepadReleaseEvent : public GamepadEvent {

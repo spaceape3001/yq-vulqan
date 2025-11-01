@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/api/meta/ResourceProperty.hpp>
+#include <yq/tachyon/api/meta/ResourceProperty.hpp>
 #include <yq/meta/MetaWriter.hpp>
-#include <tachyon/api/meta/DynamicResourceSetter.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceSetter.hpp>
 
 namespace yq::tachyon {
     template <SomeResource A>

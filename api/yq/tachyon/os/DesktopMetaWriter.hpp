@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <tachyon/os/Desktop.hpp>
-#include <tachyon/os/DesktopData.hpp>
-#include <tachyon/api/ManagerMetaWriter.hpp>
+#include <yq/tachyon/os/Desktop.hpp>
+#include <yq/tachyon/os/DesktopData.hpp>
+#include <yq/tachyon/api/ManagerMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

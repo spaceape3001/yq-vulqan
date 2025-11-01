@@ -9,7 +9,7 @@
 
 #include <yq/container/ByteArray.hpp>
 #include <yq/typedef/filesystem_path.hpp>
-#include <tachyon/pipeline/ShaderType.hpp>
+#include <yq/tachyon/pipeline/ShaderType.hpp>
 #include <variant>
 
 namespace yq::tachyon::glsl {

@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/request/GraphicsCardRequest.hpp>
-#include <tachyon/api/RequestMetaWriter.hpp>
+#include <yq/tachyon/request/GraphicsCardRequest.hpp>
+#include <yq/tachyon/api/RequestMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::GraphicsCardRequest)
 

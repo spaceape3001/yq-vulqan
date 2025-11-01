@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/command/VertexCommand.hpp>
-#include <tachyon/data/Vertex3.hpp>
+#include <yq/tachyon/command/VertexCommand.hpp>
+#include <yq/tachyon/data/Vertex3.hpp>
 
 namespace yq::tachyon {
     class SetVertex³Command : public VertexCommand {

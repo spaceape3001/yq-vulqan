@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/AppCommand.hpp>
+#include <yq/tachyon/command/AppCommand.hpp>
 
 namespace yq::tachyon {
     class Viewer;

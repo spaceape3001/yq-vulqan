@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <tachyon/action/PostAction.hpp>
-#include <tachyon/api/Post.hpp>
-#include <tachyon/api/Tachyon.hpp>
-#include <tachyon/api/Payload.hpp>
+#include <yq/tachyon/action/PostAction.hpp>
+#include <yq/tachyon/api/Post.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Payload.hpp>
 
 namespace yq::tachyon {
     template <SomePost P>

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/meta/DelegateGetter.hpp>
-#include <tachyon/api/Delegate.hpp>
+#include <yq/tachyon/api/meta/DelegateGetter.hpp>
+#include <yq/tachyon/api/Delegate.hpp>
 
 namespace yq::tachyon {
     template <SomeObject O, SomeDelegate A>

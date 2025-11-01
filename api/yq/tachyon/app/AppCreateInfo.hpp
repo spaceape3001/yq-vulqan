@@ -9,10 +9,10 @@
 #include <yq/core/Required.hpp>
 #include <yq/macro/debugrel.hpp>
 #include <yq/typedef/filesystem_path.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
-#include <tachyon/os/Platform.hpp>
-#include <tachyon/keywords.hpp>
-#include <tachyon/vulkan/VulqanCreateInfo.hpp>
+#include <yq/tachyon/app/ViewerCreateInfo.hpp>
+#include <yq/tachyon/os/Platform.hpp>
+#include <yq/tachyon/keywords.hpp>
+#include <yq/tachyon/vulkan/VulqanCreateInfo.hpp>
 
 #include <optional>
 #include <set>

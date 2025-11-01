@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/event/MonitorEvent.hpp>
+#include <yq/tachyon/event/MonitorEvent.hpp>
 
 namespace yq::tachyon {
     class MonitorDisconnectEvent : public MonitorEvent {

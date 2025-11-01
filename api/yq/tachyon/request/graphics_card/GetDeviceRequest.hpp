@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/request/GraphicsCardRequest.hpp>
+#include <yq/tachyon/request/GraphicsCardRequest.hpp>
 
 namespace yq::tachyon {
     class GetDeviceRequest : public GraphicsCardRequest {

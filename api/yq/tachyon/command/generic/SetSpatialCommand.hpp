@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/api/Command.hpp>
-#include <tachyon/api/TypedID.hpp>
+#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/api/TypedID.hpp>
 
 namespace yq::tachyon {
     class SetSpatialCommand : public Command {

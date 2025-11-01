@@ -35,26 +35,26 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <tachyon/application.hpp>
-#include <tachyon/buffer.hpp>
-#include <tachyon/rendered.hpp>
-#include <tachyon/shader.hpp>
-#include <tachyon/texture.hpp>
-#include <tachyon/viewer.hpp>
-#include <tachyon/widget.hpp>
+#include <yq/tachyon/application.hpp>
+#include <yq/tachyon/buffer.hpp>
+#include <yq/tachyon/rendered.hpp>
+#include <yq/tachyon/shader.hpp>
+#include <yq/tachyon/texture.hpp>
+#include <yq/tachyon/viewer.hpp>
+#include <yq/tachyon/widget.hpp>
 
-#include <tachyon/command/orientation/SetOrientation3Command.hpp>
-#include <tachyon/rendered/GradTriangle3.hpp>
-#include <tachyon/api/Spatial3.hpp>
-#include <tachyon/scene/SimpleScene.hpp>
-#include <tachyon/api/Scene3MetaWriter.hpp>
-#include <tachyon/api/WidgetMetaWriter.hpp>
-#include <tachyon/widget/SceneWidget.hpp>
-#include <tachyon/utility/LoggerBox.hpp>
-#include <tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/command/orientation/SetOrientation3Command.hpp>
+#include <yq/tachyon/rendered/GradTriangle3.hpp>
+#include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/scene/SimpleScene.hpp>
+#include <yq/tachyon/api/Scene3MetaWriter.hpp>
+#include <yq/tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/widget/SceneWidget.hpp>
+#include <yq/tachyon/utility/LoggerBox.hpp>
+#include <yq/tachyon/api/Tachyon.hxx>
 
 #ifdef WANT_FRAME_INSPECTOR
-#include <tachyon/widget/FrameInspector.hpp>
+#include <yq/tachyon/widget/FrameInspector.hpp>
 #endif
 
 #include <iostream>

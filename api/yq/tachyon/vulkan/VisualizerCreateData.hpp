@@ -8,10 +8,10 @@
 
 #include "ViVisualizer.hpp"
 
-#include <tachyon/vulkan/ViDevice.hpp>
-#include <tachyon/vulkan/ViSurface.hpp>
-#include <tachyon/app/ViewerCreateInfo.hpp>
-#include <tachyon/typedef/vi_queue_id.hpp>
+#include <yq/tachyon/vulkan/ViDevice.hpp>
+#include <yq/tachyon/vulkan/ViSurface.hpp>
+#include <yq/tachyon/app/ViewerCreateInfo.hpp>
+#include <yq/tachyon/typedef/vi_queue_id.hpp>
 
 namespace yq::tachyon {
     struct ViVisualizer::CreateData {

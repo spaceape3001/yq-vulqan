@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/shape/AxBox2.hpp>
-#include <tachyon/api/Rendered2.hpp>
-#include <tachyon/api/Rendered2Data.hpp>
-#include <tachyon/api/RenderedMetaWriter.hpp>
+#include <yq/tachyon/api/Rendered2.hpp>
+#include <yq/tachyon/api/Rendered2Data.hpp>
+#include <yq/tachyon/api/RenderedMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

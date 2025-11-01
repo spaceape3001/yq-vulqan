@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <tachyon/command/TachyonCommand.hpp>
-#include <tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/command/TachyonCommand.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
 
 namespace yq::tachyon {
     class SetParentCommand : public TachyonCommand {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/request/ViewerRequest.hpp>
+#include <yq/tachyon/request/ViewerRequest.hpp>
 
 namespace yq::tachyon {
     class ViewerScreenshotRequest : public ViewerRequest {

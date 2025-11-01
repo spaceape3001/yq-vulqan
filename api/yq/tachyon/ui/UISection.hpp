@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/ui/UIElements.hpp>
+#include <yq/tachyon/ui/UIElements.hpp>
 
 namespace yq::tachyon {
     /*! Section of something with a specified title, useful for tree nodes, etc

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <tachyon/command/UICommand.hpp>
+#include <yq/tachyon/command/UICommand.hpp>
 
 namespace yq::tachyon {
     class MaximizeCommand : public UICommand {

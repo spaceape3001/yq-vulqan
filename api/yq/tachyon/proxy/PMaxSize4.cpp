@@ -4,23 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/proxy/PMaxSize4.hpp>
-#include <tachyon/command/size/AddMaxSize4Command.hpp>
-#include <tachyon/command/size/AddMaxSizeWCommand.hpp>
-#include <tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <tachyon/command/size/AddMaxSizeYCommand.hpp>
-#include <tachyon/command/size/AddMaxSizeZCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSize4Command.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeWCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
-#include <tachyon/command/size/MultiplyMaxSizeZCommand.hpp>
-#include <tachyon/command/size/SetMaxSize4Command.hpp>
-#include <tachyon/command/size/SetMaxSizeWCommand.hpp>
-#include <tachyon/command/size/SetMaxSizeXCommand.hpp>
-#include <tachyon/command/size/SetMaxSizeYCommand.hpp>
-#include <tachyon/command/size/SetMaxSizeZCommand.hpp>
+#include <yq/tachyon/proxy/PMaxSize4.hpp>
+#include <yq/tachyon/command/size/AddMaxSize4Command.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeWCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeZCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize4Command.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeWCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeZCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize4Command.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeWCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeZCommand.hpp>
 
 namespace yq::tachyon {
     PMaxSize⁴::PMaxSize⁴(const IMaxSize⁴& i) : m_max_size(i.max_size())

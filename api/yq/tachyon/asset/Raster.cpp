@@ -12,8 +12,8 @@
 #include <yq/resource/ResourceMetaWriter.hpp>
 #include <yq/resource/ResourceIO.hpp>
 
-#include <tachyon/pipeline/PipelineUtils.hpp>
-#include <tachyon/asset/Raster.hpp>
+#include <yq/tachyon/pipeline/PipelineUtils.hpp>
+#include <yq/tachyon/asset/Raster.hpp>
 #include <yq/raster/Pixels.hxx>
 
 namespace yq::tachyon {

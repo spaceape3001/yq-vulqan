@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <tachyon/event/ThreadEvent.hpp>
+#include <yq/tachyon/event/ThreadEvent.hpp>
 
-#include <tachyon/api/EventMetaWriter.hpp>
+#include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadEvent)
 

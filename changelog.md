@@ -1,8 +1,12 @@
 # CHANGE LOG
 
+## Upcoming
+
+* Updated pathing (this will affect INCLUDES) to be consistent with the rest of the Your Quill collection (include `<tachyon/...>` becomes `<yq/tachyon/...>`, so a find & replace will do the job.
+
 ## 2025.07.19
 
-* When creating tachyons, include `<tachyon/api/Tachyon.hxx>` to get the templated create code (it's been moved)
+* When creating tachyons, include `<yq/tachyon/api/Tachyon.hxx>` to get the templated create code (it's been moved)
 * Global font scaling set to 1.25; which makes it readable but with artifacts on my monitor.  Will need to make this a setting and do it properly (with a font load)
 * Toolbar renamed to button bar (might be further renamed, but wanted it separate to "tools")
 * Reorganization to the tachyon library file layout (sorry, getting cluttered again)

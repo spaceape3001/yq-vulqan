@@ -11,6 +11,16 @@ target_link_libraries(glfw_joysticks ${GLFW3_LIBRARY} )
 #add_executable(glfw_monitors glfw_monitors.cpp)
 #target_link_libraries(glfw_monitors yq_tachyon)
 
+if(Build_Lua)
+    add_executable(luaVk luavk.cpp)
+    target_link_libraries(luaVk 
+    PUBLIC
+        yq_tachyon yq_lua
+    PRIVATE
+        ImGuiFileDialog
+    )
+endif()
+
 add_executable(vk_devices vk_devices.cpp)
 target_link_libraries(vk_devices yq_tachyon)
 

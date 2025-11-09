@@ -28,11 +28,12 @@ namespace yq::tachyon {
     class UIHBoxLayoutWriter;
     class UIHLineWriter;
     class UIImageWriter;
-    class UITextLabelWriter;
+    class UILineInputWriter;
     class UIMenuWriter;
     class UIMenuBarWriter;
     class UIRightAlignWriter;
     class UISpacerWriter;
+    class UITextLabelWriter;
     class UIToolBarWriter;
     class UIVBoxLayoutWriter;
     
@@ -121,6 +122,17 @@ namespace yq::tachyon {
         UIImageWriter           image(std::string_view, const Size2F&);
         
         UITextLabelWriter       label(std::string_view);
+        
+        UILineInputWriter       line_input(std::string_view);
+
+        template <SomeWidget W>
+        UILineInputWriter       line_input(std::string_view, void (W::*)());
+
+        template <SomeWidget W>
+        UILineInputWriter       line_input(std::string_view, void (W::*)(std::string_view));
+
+        template <SomeWidget W>
+        UILineInputWriter       line_input(std::string_view, void (W::*)(const std::string&));
 
         UIMenuWriter            menu(std::string_view);
 

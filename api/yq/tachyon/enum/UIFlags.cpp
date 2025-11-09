@@ -57,6 +57,16 @@ namespace ImGui {
             ret |= ImGuiChildFlags_NavFlattened;
         return ret;
     }
+
+    ImGuiInputTextFlags_    TextFlag(UIFlag)
+    {
+        return {};   // TODO
+    }
+    
+    ImGuiInputTextFlags     TextFlags(UIFlags)
+    {
+        return {};   // TODO
+    }
     
     ImGuiWindowFlags_ WindowFlag(UIFlag flag)
     {

@@ -49,6 +49,7 @@ namespace yq::tachyon {
         m_y(cp.m_y),
         m_w(cp.m_w),
         m_h(cp.m_h),
+        m_bumper(cp.m_bumper),
         m_imFlags(cp.m_imFlags),
         m_chFlags(cp.m_chFlags)
     {
@@ -91,6 +92,10 @@ namespace yq::tachyon {
     float       UIWindow::height(use_k) const
     {
         float   h   = std::max(antinan({ m_h.next, m_h.calc, m_h.spec, m_h.actual }, 0.f), style().window.min_size());
+        if(!is_nan(m_bumper.ly))
+            h   -= m_bumper.ly;
+        if(!is_nan(m_bumper.hy))
+            h   -= m_bumper.hy;
         if(m_h.maximum > 0.)
             h   = std::min(h, m_h.maximum);
         if(m_h.minimum > 0.)
@@ -331,6 +336,10 @@ namespace yq::tachyon {
     float       UIWindow::width(use_k) const
     {
         float w = std::max(antinan({ m_w.next, m_w.calc, m_w.spec, m_w.actual }, 0.f), style().window.min_size());
+        if(!is_nan(m_bumper.lx))
+            w   -= m_bumper.lx;
+        if(!is_nan(m_bumper.hx))
+            w   -= m_bumper.hx;
         if((m_w.maximum > 0.) && (w>m_w.maximum))
             w   = m_w.maximum;
         if((m_w.minimum > 0.) && (w<m_w.minimum))
@@ -381,7 +390,10 @@ namespace yq::tachyon {
     
     float       UIWindow::x(use_k) const
     {
-        return antinan({ m_x.next, m_x.calc, m_x.spec, m_x.actual }, 0.f);
+        float v =  antinan({ m_x.next, m_x.calc, m_x.spec, m_x.actual }, 0.f);
+        if(!is_nan(m_bumper.lx))
+            v += m_bumper.lx;
+        return v;
     }
     
     void        UIWindow::x(set_k, calculate_k, float v)
@@ -427,7 +439,10 @@ namespace yq::tachyon {
     
     float       UIWindow::y(use_k) const
     {
-        return antinan({ m_y.next, m_y.calc, m_y.spec, m_y.actual }, 0.f);
+        float v = antinan({ m_y.next, m_y.calc, m_y.spec, m_y.actual }, 0.f);
+        if(!is_nan(m_bumper.ly))
+            v += m_bumper.ly;
+        return v;
     }
     
     void        UIWindow::y(set_k, calculate_k, float v)

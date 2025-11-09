@@ -166,6 +166,16 @@ namespace yq::tachyon {
             w->_erase(this);
     }
     
+    size_t         UIElement::actions(count_k) const
+    {
+        return m_actions.size();
+    }
+    
+    bool           UIElement::actions(has_k) const
+    {
+        return !m_actions.empty();
+    }
+
     uint64_t       UIElement::binding(create_k)
     {
         if(!m_bId){

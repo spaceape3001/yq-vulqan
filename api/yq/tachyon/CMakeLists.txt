@@ -570,6 +570,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UICheckBox.cpp
     ui/UICheckBox_Simple.cpp
     ui/UICheckBox_Visible.cpp
+    ui/UIConsole.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp
     ui/UIEditor.cpp
@@ -583,6 +584,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIImage.cpp
     ui/UILayout.cpp
     ui/UILayoutWriter.cpp
+    ui/UILineInput.cpp
     ui/UIMenu.cpp
     ui/UIMenuWriter.cpp
     ui/UIMenuBar.cpp

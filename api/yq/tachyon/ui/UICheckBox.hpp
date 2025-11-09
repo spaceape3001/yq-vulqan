@@ -28,7 +28,7 @@ namespace yq::tachyon {
         virtual ~UICheckBox();
         void                    render();
         const char*             title() const override;
-        std::string_view        text() const { return m_text; }
+        const std::string&      text() const { return m_text; }
         
         bool                    checked() const;
         

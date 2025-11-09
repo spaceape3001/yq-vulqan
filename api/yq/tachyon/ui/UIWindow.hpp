@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/ui/UIElements.hpp>
 #include <yq/tachyon/MyImGui.hpp>
+#include <yq/shape/AxSide2.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/trait/has_nan.hpp>
@@ -36,6 +37,19 @@ namespace yq::tachyon {
         const Vector2F&    pivot() const { return m_pivot; }
         
         static void init_meta();
+
+        //  "bumper" space outside the window (used during calculations)
+        const AxSide2F&     bumper() const { return m_bumper; }
+        
+        float       bumper(left_k) const { return m_bumper.lx; }
+        float       bumper(right_k) const { return m_bumper.hx; }
+        float       bumper(top_k) const { return m_bumper.ly; }
+        float       bumper(bottom_k) const { return m_bumper.hy; }
+        
+        void        bumper(set_k, left_k, float);
+        void        bumper(set_k, right_k, float);
+        void        bumper(set_k, top_k, float);
+        void        bumper(set_k, bottom_k, float);
         
         float       height() const;
         float       height(actual_k) const;
@@ -47,7 +61,7 @@ namespace yq::tachyon {
         void        height(set_k, calculate_k, float);
         void        height(set_k, next_k, float);
         void        height(set_k, specification_k, float);
-
+        
         Vector2F    position() const;
         Vector2F    position(actual_k) const;
         Vector2F    position(calculate_k) const;
@@ -113,13 +127,15 @@ namespace yq::tachyon {
         
         P<float>            m_x = nanF;
         P<float>            m_y = nanF;
-        P<float>            m_w = nanF;
+        P<float>            m_w = nanF;     
         P<float>            m_h = nanF;
+        AxSide2F            m_bumper       = { nanF, nanF, nanF, nanF };
+        
         
         ImGuiWindowFlags    m_imFlags       = ImGuiWindowFlags_None;
         ImGuiChildFlags     m_chFlags       = ImGuiChildFlags_None;
         
-        UIWindow*           clone() const;
+        UIWindow*           clone() const override;
 
         void                update(flags_k) override;
         

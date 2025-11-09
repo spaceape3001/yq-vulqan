@@ -39,9 +39,9 @@ namespace yq::tachyon {
     {
         if(m_width > 0)
             ImGui::Dummy({ m_width, 1 });
-        Vector2F    b   = ImGui::GetCursorPos();
+        Vector2F    b   = (Vector2F) ImGui::GetCursorPos();
         content();
-        Vector2F    c   = ImGui::GetCursorPos();
+        Vector2F    c   = (Vector2F) ImGui::GetCursorPos();
         float       x   = 0.5*(b.x+c.x);
         m_width        += ImGui::GetWindowWidth()*0.5 - x;
     }

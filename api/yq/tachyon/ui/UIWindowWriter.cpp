@@ -31,6 +31,71 @@ namespace yq::tachyon {
         // Element Data bits
         /////////////////////////////////////////////
 
+    UIWindowWriter&     UIWindowWriter::bumper(left_k, float v)
+    {
+        UIWindow*   win = element();
+        if(win){
+            win -> m_bumper.lx  = v;
+        }
+        return *this;
+    }
+    
+    UIWindowWriter&     UIWindowWriter::bumper(top_k, float v)
+    {
+        UIWindow*   win = element();
+        if(win){
+            win -> m_bumper.ly  = v;
+        }
+        return *this;
+    }
+    
+    UIWindowWriter&     UIWindowWriter::bumper(right_k, float v)
+    {
+        UIWindow*   win = element();
+        if(win){
+            win -> m_bumper.hx  = v;
+        }
+        return *this;
+    }
+    
+    UIWindowWriter&     UIWindowWriter::bumper(bottom_k, float v)
+    {
+        UIWindow*   win = element();
+        if(win){
+            win -> m_bumper.hy  = v;
+        }
+        return *this;
+    }
+    
+    UIWindowWriter&     UIWindowWriter::bumpers(const AxSide2F&v)
+    {
+        UIWindow*   win = element();
+        if(win){
+            win -> m_bumper  = v;
+        }
+        return *this;
+    }
+    
+
+    UIWindowWriter&     UIWindowWriter::height(float v)
+    {
+        UIWindow*   win = element();
+        if(win){
+            win -> m_h.spec = v;
+        }
+        return *this;
+    }
+
+    UIWindowWriter&     UIWindowWriter::position(Vector2F v)
+    {
+        UIWindow*   win = element();
+        if(win){
+            win -> m_x.spec = v.x;
+            win -> m_y.spec = v.y;
+        }
+        return *this;
+    }
+
     UIWindowWriter&     UIWindowWriter::size(Size2F v)
     {
         UIWindow*   win = element();
@@ -50,24 +115,6 @@ namespace yq::tachyon {
         return *this;
     }
     
-    UIWindowWriter&     UIWindowWriter::height(float v)
-    {
-        UIWindow*   win = element();
-        if(win){
-            win -> m_h.spec = v;
-        }
-        return *this;
-    }
-
-    UIWindowWriter&     UIWindowWriter::position(Vector2F v)
-    {
-        UIWindow*   win = element();
-        if(win){
-            win -> m_x.spec = v.x;
-            win -> m_y.spec = v.y;
-        }
-        return *this;
-    }
     
     UIWindowWriter&     UIWindowWriter::x(float v)
     {

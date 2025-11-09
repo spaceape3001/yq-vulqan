@@ -33,19 +33,23 @@
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \
-        constexpr operator yq::Vector2D() const { return { x, y }; }                        \
+        constexpr explicit operator yq::Vector2D() const { return { x, y }; }               \
         constexpr ImVec2(const yq::Vector2F& v) : x(v.x), y(v.y) {}                         \
-        constexpr operator yq::Vector2F() const { return { x, y }; }                        \
+        constexpr explicit operator yq::Vector2F() const { return { x, y }; }               \
         constexpr ImVec2(const yq::Size2D& v) : x((float) v.x), y((float) v.y) {}           \
-        constexpr operator yq::Size2D() const { return { x, y }; }                          \
+        constexpr explicit operator yq::Size2D() const { return { x, y }; }                 \
         constexpr ImVec2(const yq::Size2F& v) : x(v.x), y(v.y) {}                           \
-        constexpr operator yq::Size2F() const { return { x, y }; }
+        constexpr explicit operator yq::Size2F() const { return { x, y }; }
 
 #define IM_VEC4_CLASS_EXTRA                                                                                         \
         constexpr ImVec4(const yq::Vector4D& v) : x((float) v.x), y((float) v.y), z((float) v.z), w((float) v.w) {} \
         constexpr operator yq::Vector4D() const { return { x, y, z, w }; }                                          \
         constexpr ImVec4(const yq::Vector4F& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}                                 \
-        constexpr operator yq::Vector4F() const { return { x, y, z, w }; }
+        constexpr operator yq::Vector4F() const { return { x, y, z, w }; }                                          \
+        constexpr ImVec4(const yq::RGB3F& v) : x(v.red), y(v.green), z(v.blue), w(0.) {}                            \
+        constexpr explicit operator yq::RGB3F() const { return { x, y, z }; }                                       \
+        constexpr ImVec4(const yq::RGBA4F& v) : x(v.red), y(v.green), z(v.blue), w(v.alpha) {}                      \
+        constexpr explicit operator yq::RGBA4F() const { return { x, y, z, w }; }
 
 #include "imgui.h"
 
@@ -63,15 +67,18 @@ namespace ImGui {
     using yq::tachyon::UIFlags;
 
     
-    inline constexpr ImU32 Color(const yq::RGB3U8& clr)
-    {
-        return IM_COL32(clr.red, clr.green, clr.blue, 255);
-    }
-    
-    ImGuiChildFlags_  ChildFlag(UIFlag flag);
-    ImGuiChildFlags   ChildFlags(UIFlags flag);
-    ImGuiWindowFlags_ WindowFlag(UIFlag flag);
-    ImGuiWindowFlags  WindowFlags(UIFlags flag);
+    ImU32 Color(const yq::RGB3U8&);
+    ImU32 Color(const yq::RGBA4U8&);
+    ImU32 Color(const yq::RGBA4F&);
+    ImU32 Color(const yq::RGB3F&);
+    ImU32 Color(const ImVec4&);
+
+    ImGuiChildFlags_        ChildFlag(UIFlag);
+    ImGuiChildFlags         ChildFlags(UIFlags);
+    ImGuiInputTextFlags_    TextFlag(UIFlag);
+    ImGuiInputTextFlags     TextFlags(UIFlags);
+    ImGuiWindowFlags_       WindowFlag(UIFlag);
+    ImGuiWindowFlags        WindowFlags(UIFlags);
     
     
     //  For multiple defaulted parameters, we'll try to lean toward the structs

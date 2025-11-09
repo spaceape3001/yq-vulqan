@@ -62,6 +62,34 @@ namespace ImGui {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    ImU32 Color(const ImVec4& clr)
+    {
+        return GetColorU32(clr);
+    }
+
+    ImU32 Color(const yq::RGB3U8& clr)
+    {
+        return IM_COL32(clr.red, clr.green, clr.blue, 255);
+    }
+
+    ImU32 Color(const yq::RGBA4U8& clr)
+    {
+        return IM_COL32(clr.red, clr.green, clr.blue, clr.alpha);
+    }
+
+    ImU32 Color(const yq::RGBA4F& clr)
+    {
+        return GetColorU32(clr);
+    }
+    
+    ImU32 Color(const yq::RGB3F& clr)
+    {
+        return GetColorU32({ clr.red, clr.green, clr.blue, 1. });
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////
+
     bool    ColorEdit(const char* label, yq::RGB3F&v, ImGuiColorEditFlags flags)
     {
         return ColorEdit3(label, &v.red, flags);

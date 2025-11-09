@@ -40,7 +40,7 @@ namespace yq::tachyon {
         if(m_width > 0)
             ImGui::Dummy({ m_width, 1 });
         content();
-        Vector2F    c   = ImGui::GetCursorPos();
+        Vector2F    c   = (Vector2F) ImGui::GetCursorPos();
         m_width        += ImGui::GetWindowWidth() - c.x;
     }
 

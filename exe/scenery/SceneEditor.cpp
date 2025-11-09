@@ -893,7 +893,6 @@ void    SceneEditor::imgui(ViContext&u)
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, minSize)) {
             if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
                 std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
                 
                 switch(m_fileMode){
                 case FileMode::None:
@@ -905,6 +904,7 @@ void    SceneEditor::imgui(ViContext&u)
                     _save(filePathName);
                     break;
                 }
+                m_fileMode  = FileMode::None;
             }
             ImGuiFileDialog::Instance()->Close();
         }

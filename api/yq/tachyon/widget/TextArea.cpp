@@ -386,7 +386,7 @@ namespace yq::widget {
     {
         lay.font        = ImGui::GetFont();
         lay.fontSize    = m_scale * ImGui::GetFontSize();
-        lay.element     = lay.font->CalcTextSizeA(lay.fontSize, FLT_MAX, -1.0f, "#", nullptr, nullptr);
+        lay.element     = (Vector2F) lay.font->CalcTextSizeA(lay.fontSize, FLT_MAX, -1.0f, "#", nullptr, nullptr);
         lay.element.y  *= m_settings.lineSpacing;
 
         if(m_scrollToTop){
@@ -394,7 +394,7 @@ namespace yq::widget {
             ImGui::SetScrollY(0.f);
         }
 
-        Vector2F    cpos    = ImGui::GetCursorScreenPos();
+        Vector2F    cpos    = (Vector2F) ImGui::GetCursorScreenPos();
         Vector2F    ul  = cpos + (Vector2F) ImGui::GetWindowContentRegionMin();
         Vector2F    lr  = cpos + (Vector2F) ImGui::GetWindowContentRegionMax();
         

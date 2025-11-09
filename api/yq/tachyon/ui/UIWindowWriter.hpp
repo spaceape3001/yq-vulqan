@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/ui/UIElementsWriter.hpp>
+#include <yq/typedef/axside2.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
 
@@ -36,6 +37,12 @@ namespace yq::tachyon {
         UIWindowWriter&     position(Vector2F);
         UIWindowWriter&     x(float);
         UIWindowWriter&     y(float);
+        
+        UIWindowWriter&     bumper(left_k, float);
+        UIWindowWriter&     bumper(top_k, float);
+        UIWindowWriter&     bumper(right_k, float);
+        UIWindowWriter&     bumper(bottom_k, float);
+        UIWindowWriter&     bumpers(const AxSide2F&);
         
         /////////////////////////////////////////////
         // Element Creation Helpers

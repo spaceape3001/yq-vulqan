@@ -15,8 +15,9 @@
 #include <yq/tachyon/ui/UIElementsWriter.hpp>
 #include <yq/tachyon/ui/UIFormWriter.hpp>
 #include <yq/tachyon/ui/UIGroupWriter.hpp>
-#include <yq/tachyon/ui/UILayoutWriter.hpp>
 #include <yq/tachyon/ui/UIImageWriter.hpp>
+#include <yq/tachyon/ui/UILineInputWriter.hpp>
+#include <yq/tachyon/ui/UILayoutWriter.hpp>
 #include <yq/tachyon/ui/UIMenuWriter.hpp>
 #include <yq/tachyon/ui/UIMenuBarWriter.hpp>
 #include <yq/tachyon/ui/UIMenuItemWriter.hpp>

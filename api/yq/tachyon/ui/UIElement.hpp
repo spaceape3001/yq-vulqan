@@ -59,12 +59,25 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(UIElement, Object)
     public:
     
+        static void         init_meta();
+
         using Writer = UIElementWriter;
     
         UIElement(UIFlags flags={});
         UIElement(const UIElement&);
         virtual ~UIElement();
         
+        const auto&         actions() const { return m_actions; }
+        
+        size_t              actions(count_k) const;
+        bool                actions(has_k) const;
+        
+        //! Unique binding if not zero
+        uint64_t            binding() const { return m_bId; }
+        
+        uint64_t            binding(create_k);
+        
+
         /*! \brief Copies the element
         
             \note Do *NOT* override this lightly (it's virtual for the generator's benefit).  
@@ -79,39 +92,43 @@ namespace yq::tachyon {
             This "draw()" is here to allow for metrics to be taken of the render()
             process (or, measuring before/after positions).
         */
-        virtual void    draw();
+        virtual void        draw();
         
         ////! Spawn off any root ui elements (ie, dialogs, docks, windows, etc)
         //virtual std::vector<UIElement*> spawn();
-        
-        //! Our element's "title" (may be null)
-        virtual const char*   title() const { return nullptr; }
 
-        UIFlags     flags() const noexcept { return m_flags; }
-        void        flag(set_k, UIFlag);
-        void        flags(set_k, UIFlags);
-        void        flag(clear_k, UIFlag);
-        void        flags(clear_k, UIFlags);
-        void        flag(set_k, UIFlag, bool);
+        UIFlags             flags() const noexcept { return m_flags; }
+        void                flag(set_k, UIFlag);
+        void                flags(set_k, UIFlags);
+        void                flag(clear_k, UIFlag);
+        void                flags(clear_k, UIFlags);
+        void                flag(set_k, UIFlag, bool);
         
-        void        flag(toggle_k, UIFlag);
+        void                flag(toggle_k, UIFlag);
         
-        bool        flag(UIFlag v) const;
+        bool                flag(UIFlag v) const;
         
         //! Checks to see if the UI element is or is derived from specified type (or is a generator)
-        virtual Tristate is(const UIElementMeta& baseInfo) const;
+        virtual Tristate    is(const UIElementMeta& baseInfo) const;
         
         template <SomeUIElement U>
-        Tristate is() const
+        Tristate            is() const
         {
             return is(meta<U>());
         }
 
-        UIElement*  parent();
-        const UIElement*  parent() const;
+        UIElement*          parent();
+        const UIElement*    parent() const;
         
-        UIElement*  root();
-        const UIElement* root() const;
+        UIElement*          root();
+        const UIElement*    root() const;
+
+        
+        //! Our element's "title" (may be null)
+        virtual const char* title() const { return nullptr; }
+ 
+        //! User assigned ID (may or may not be unique)
+        const std::string&    uid() const { return m_uId; }
 
         //! Viewport in window/viewer coordinates
         virtual AxBox2F     viewport() const;
@@ -119,15 +136,6 @@ namespace yq::tachyon {
         //! Viewport for content in screen coordinates
         virtual AxBox2F     viewport(content_k) const;
         
-        static void init_meta();
-
-        //! Unique binding if not zero
-        uint64_t            binding() const { return m_bId; }
-        
-        uint64_t            binding(create_k);
-        
-        //! User assigned ID (may or may not be unique)
-        const std::string&    uid() const { return m_uId; }
 
         /*! \brief Current widget being processed (NULL if this isn't true)
         

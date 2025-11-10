@@ -32,6 +32,7 @@ YQ_TACHYON_IMPLEMENT(LuaWin)
 
 static constexpr RGBA4F kClrFile          = (RGBA4F) rgba(yq::color::Cyan, 255);
 //static constexpr auto kClrInput         = (RGBA4F) rgba(yq::color::Green, 255);
+static constexpr RGBA4F kClrInfo          = (RGBA4F) rgba(yq::color::Bone, 255);
 static constexpr RGBA4F kClrCommand       = (RGBA4F) rgba(yq::color::LimeGreen, 255);
 static constexpr RGBA4F kClrOutput        = (RGBA4F) rgba(yq::color::White, 255);
 static constexpr RGBA4F kClrWarning       = (RGBA4F) rgba(yq::color::Yellow, 255);
@@ -144,7 +145,7 @@ Execution   LuaWin::setup(const Context&u)
         if(!m_console)
             return WAIT;
             
-        m_console->submit("This is a test");
+        m_console->submit({.color=kClrInfo}, "Welcome to the Lua ImGui Interpreter (of the Your Quill project)");
     }
     
     if(!m_input)

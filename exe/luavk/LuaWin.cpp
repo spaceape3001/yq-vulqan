@@ -101,12 +101,12 @@ void LuaWin::cmd_user_input(const Payload& pay)
     send(new yq::lua::ExecuteStringCommand({}, l));
 }
 
-void    LuaWin::on_execute_string(const yq::lua::ExecuteStringEvent&evt)
+void    LuaWin::on_execute_file(const yq::lua::ExecuteFileEvent&evt)
 {
     if(!m_console) [[unlikely]]
         return;
     
-    m_console -> submit({.color=kClrCommand}, evt.command());
+    m_console -> submit({.color=kClrFile}, evt.file().string());
     if(!evt.output().empty())
         m_console -> submit({.color=kClrOutput}, evt.output());
     if(!evt.warning().empty())
@@ -117,13 +117,12 @@ void    LuaWin::on_execute_string(const yq::lua::ExecuteStringEvent&evt)
         m_console -> submit({.color=kClrErrorCode}, evt.error_code().message());
 }
 
-
-void    LuaWin::on_execute_file(const yq::lua::ExecuteFileEvent&evt)
+void    LuaWin::on_execute_string(const yq::lua::ExecuteStringEvent&evt)
 {
     if(!m_console) [[unlikely]]
         return;
     
-    m_console -> submit({.color=kClrFile}, evt.file().string());
+    m_console -> submit({.color=kClrCommand}, evt.command());
     if(!evt.output().empty())
         m_console -> submit({.color=kClrOutput}, evt.output());
     if(!evt.warning().empty())

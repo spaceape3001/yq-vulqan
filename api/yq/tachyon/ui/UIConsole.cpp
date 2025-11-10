@@ -50,6 +50,7 @@ namespace yq::tachyon {
         bool empty  = false;
         txt     = trimmed(txt);
         vsplit(txt, '\n', [&](std::string_view v){
+            v = trimmed_end(v);
             if(v.empty()){  // new line filtering...
                 if(empty)
                     return;

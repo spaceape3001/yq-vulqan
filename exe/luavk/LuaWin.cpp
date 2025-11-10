@@ -6,16 +6,16 @@
 
 #include "LuaWin.hpp"
 
-#include <yq/color/colors.hpp>
 #include <yq/lua/logging.hpp>
 #include <yq/luavk/command/ExecuteFileCommand.hpp>
 #include <yq/luavk/command/ExecuteStringCommand.hpp>
 #include <yq/luavk/event/ExecuteFileEvent.hpp>
 #include <yq/luavk/event/ExecuteStringEvent.hpp>
+#include <yq/luavk/ui/LuaConsoleUI.hpp>
+#include <yq/luavk/ui/LuaConsoleUIWriter.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
-#include <yq/tachyon/ui/UIConsole.hpp>
 #include <yq/tachyon/ui/UIInputBar.hpp>
 #include <yq/tachyon/ui/UILineInput.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
@@ -30,16 +30,6 @@ using namespace yq::tachyon;
 
 YQ_TACHYON_IMPLEMENT(LuaWin)
 
-static constexpr RGBA4F kClrFile          = (RGBA4F) rgba(yq::color::Cyan, 255);
-//static constexpr auto kClrInput         = (RGBA4F) rgba(yq::color::Green, 255);
-static constexpr RGBA4F kClrInfo          = (RGBA4F) rgba(yq::color::Bone, 255);
-static constexpr RGBA4F kClrCommand       = (RGBA4F) rgba(yq::color::LimeGreen, 255);
-static constexpr RGBA4F kClrOutput        = (RGBA4F) rgba(yq::color::White, 255);
-static constexpr RGBA4F kClrWarning       = (RGBA4F) rgba(yq::color::Yellow, 255);
-static constexpr RGBA4F kClrError         = (RGBA4F) rgba(yq::color::Red, 255);
-static constexpr RGBA4F kClrErrorCode     = (RGBA4F) rgba(yq::color::Magenta, 255);
-static constexpr RGBA4F kClrDebug         = (RGBA4F) rgba(yq::color::Orange, 255);
-
 LuaWin::LuaWin(TachyonID luavm) : m_lua(luavm)
 {
 }
@@ -51,7 +41,7 @@ LuaWin::~LuaWin()
 void    LuaWin::_debug(std::string_view v)
 {
     if(m_console && !v.empty())
-        m_console -> submit({.color = kClrDebug}, v);
+        m_console -> debug(v);
 }
 
 void    LuaWin::imgui(ViContext&u) 
@@ -105,32 +95,14 @@ void    LuaWin::on_execute_file(const yq::lua::ExecuteFileEvent&evt)
 {
     if(!m_console) [[unlikely]]
         return;
-    
-    m_console -> submit({.color=kClrFile}, evt.file().string());
-    if(!evt.output().empty())
-        m_console -> submit({.color=kClrOutput}, evt.output());
-    if(!evt.warning().empty())
-        m_console -> submit({.color=kClrWarning}, evt.warning());
-    if(!evt.error().empty())
-        m_console -> submit({.color=kClrError}, evt.error());
-    if(evt.error_code() != std::error_code())
-        m_console -> submit({.color=kClrErrorCode}, evt.error_code().message());
+    m_console->submit(evt);
 }
 
 void    LuaWin::on_execute_string(const yq::lua::ExecuteStringEvent&evt)
 {
     if(!m_console) [[unlikely]]
         return;
-    
-    m_console -> submit({.color=kClrCommand}, evt.command());
-    if(!evt.output().empty())
-        m_console -> submit({.color=kClrOutput}, evt.output());
-    if(!evt.warning().empty())
-        m_console -> submit({.color=kClrWarning}, evt.warning());
-    if(!evt.error().empty())
-        m_console -> submit({.color=kClrError}, evt.error());
-    if(evt.error_code() != std::error_code())
-        m_console -> submit({.color=kClrErrorCode}, evt.error_code().message());
+    m_console->submit(evt);
 }
 
 
@@ -140,11 +112,11 @@ Execution   LuaWin::setup(const Context&u)
     if(is_error(ex))
         return ex;
     if(!m_console){
-        m_console   = dynamic_cast<UIConsole*>(element(FIRST, "console"));
+        m_console   = dynamic_cast<lua::LuaConsoleUI*>(element(FIRST, "console"));
         if(!m_console)
             return WAIT;
             
-        m_console->submit({.color=kClrInfo}, "Welcome to the Lua ImGui Interpreter (of the Your Quill project)");
+        m_console->info("Welcome to the Lua ImGui Interpreter (of the Your Quill project)");
     }
     
     if(!m_input)
@@ -173,7 +145,7 @@ void LuaWin::init_meta()
     
     auto lay        = app.make<UIVBoxLayout>();
     
-    auto console    = lay.make<UIConsole>("Console");
+    auto console    = lay.make<lua::LuaConsoleUI>("Console");
     //console.bumper(BOTTOM, 30.);
     console.uid("console");
 

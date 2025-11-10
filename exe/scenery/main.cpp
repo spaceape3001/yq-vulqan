@@ -11,6 +11,7 @@
 #include <yq/resource/Resource.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/file/FileResolver.hpp>
+#include <yq/process/PluginLoader.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 
 TypedID     gFileIO;
@@ -31,6 +32,9 @@ int main(int argc, char* argv[])
     Meta::init();
     app.vulqan_libraries(LOAD);
     Meta::init();
+    
+    //load_plugin_dir("plugin/lua");
+    //load_plugin_dir("plugin/luavk");
     
     for(const std::filesystem::path& pth : Resource::all_paths())
         yInfo() << "resource path> " << pth;

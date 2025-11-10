@@ -20,7 +20,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(UIConsole, UIWindow)
     public:    
 
-        using Writer = UIWindowWriter;
+        using Writer = UIConsoleWriter;
 
         struct Options {
             RGBA4F          color   = { 0., 0., 0., 0. };

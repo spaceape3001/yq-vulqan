@@ -48,7 +48,6 @@ namespace yq::lua {
         m_lua   = luaL_newstate();
         lua_setwarnf(m_lua, tvmLuaWarning, &m_warning);
         luaL_openlibs(m_lua);
-        lua::set(m_lua, GLOBAL, "print", lua::lh_write_stream, UPVALUES, &m_output);
         lua::set(m_lua, GLOBAL, lua::keyOutput, RAW, &m_output);
         lua::set(m_lua, GLOBAL, lua::keyError, RAW, &m_error);
         lua::set(m_lua, GLOBAL, lua::keyWarning, RAW, &m_warning);

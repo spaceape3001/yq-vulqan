@@ -582,6 +582,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIGenerator.cpp
     ui/UIGroup.cpp
     ui/UIImage.cpp
+    ui/UIInputBar.cpp
     ui/UILayout.cpp
     ui/UILayoutWriter.cpp
     ui/UILineInput.cpp

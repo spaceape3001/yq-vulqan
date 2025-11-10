@@ -3,6 +3,7 @@
 ## Upcoming
 
 * Updated pathing (this will affect INCLUDES) to be consistent with the rest of the Your Quill collection (include `<tachyon/...>` becomes `<yq/tachyon/...>`, so a find & replace will do the job.
+* Lua support
 
 ## 2025.07.19
 

@@ -154,6 +154,7 @@ namespace yq::tachyon {
         friend class Widget;
         friend class UIGenerator;
         friend class UIElements;
+        friend class UIElementsWriter;
         friend class UIElementWriter;
 
         //! Parameter (specified, calculated, vs actual)
@@ -197,8 +198,10 @@ namespace yq::tachyon {
             For all elements that are specified during the widget info *MUST* implement 
             this.  (Ditto for popups)
         */
-        virtual UIElement*     clone() const = 0;
+        virtual UIElement*      clone() const = 0;
         
+        //! Opportunity to make child elements
+        virtual bool            submake() { return true; }
 
         /*! \brief RENDER/DRAW the element as a whole
         

@@ -67,6 +67,7 @@ namespace yq::tachyon {
         typename U::Writer make(Args... args)
         {
             U*  ret = new U(std::forward<Args>(args)...);
+            ret->submake();
             if(add(ret)){
                 return typename U::Writer(ret);
             } else {

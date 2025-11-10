@@ -7,6 +7,7 @@
 #include "LuaWin.hpp"
 
 #include <yq/color/colors.hpp>
+#include <yq/lua/logging.hpp>
 #include <yq/luavk/command/ExecuteFileCommand.hpp>
 #include <yq/luavk/command/ExecuteStringCommand.hpp>
 #include <yq/luavk/event/ExecuteFileEvent.hpp>
@@ -15,9 +16,11 @@
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/ui/UIConsole.hpp>
+#include <yq/tachyon/ui/UIInputBar.hpp>
 #include <yq/tachyon/ui/UILineInput.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
+#include <yq/text/format.hpp>
 #include <yq/text/transform.hpp>
 #include <ImGuiFileDialog.h>
 
@@ -34,6 +37,7 @@ static constexpr RGBA4F kClrOutput        = (RGBA4F) rgba(yq::color::White, 255)
 static constexpr RGBA4F kClrWarning       = (RGBA4F) rgba(yq::color::Yellow, 255);
 static constexpr RGBA4F kClrError         = (RGBA4F) rgba(yq::color::Red, 255);
 static constexpr RGBA4F kClrErrorCode     = (RGBA4F) rgba(yq::color::Magenta, 255);
+static constexpr RGBA4F kClrDebug         = (RGBA4F) rgba(yq::color::Orange, 255);
 
 LuaWin::LuaWin(TachyonID luavm) : m_lua(luavm)
 {
@@ -43,8 +47,10 @@ LuaWin::~LuaWin()
 {
 }
 
-void    LuaWin::_script(const std::filesystem::path& fp)
+void    LuaWin::_debug(std::string_view v)
 {
+    if(m_console && !v.empty())
+        m_console -> submit({.color = kClrDebug}, v);
 }
 
 void    LuaWin::imgui(ViContext&u) 
@@ -90,7 +96,7 @@ void LuaWin::cmd_user_input(const Payload& pay)
     auto l  = trimmed(*line);
     if(l.empty())
         return ;
-    
+
     send(new yq::lua::ExecuteStringCommand({}, l));
 }
 
@@ -140,6 +146,10 @@ Execution   LuaWin::setup(const Context&u)
             
         m_console->submit("This is a test");
     }
+    
+    if(!m_input)
+        m_input     = dynamic_cast<UIInputBar*>(element(FIRST, "input"));
+    
     return {};
 }
 
@@ -164,10 +174,12 @@ void LuaWin::init_meta()
     auto lay        = app.make<UIVBoxLayout>();
     
     auto console    = lay.make<UIConsole>("Console");
-    console.bumper(BOTTOM, 30.);
+    //console.bumper(BOTTOM, 30.);
     console.uid("console");
 
-    auto input      = lay.make<UILineInput>("Input");
+    auto input      = lay.make<UIInputBar>("##Input", UIFlag::NoDecoration);
+    input.height(40);
+    input.action(&LuaWin::cmd_user_input);
     input.uid("input");
 
 }

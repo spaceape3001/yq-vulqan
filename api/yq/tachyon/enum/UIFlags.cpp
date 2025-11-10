@@ -58,14 +58,94 @@ namespace ImGui {
         return ret;
     }
 
-    ImGuiInputTextFlags_    TextFlag(UIFlag)
+    ImGuiInputTextFlags_    TextFlag(UIFlag flag)
     {
-        return {};   // TODO
+        switch(flag){
+        case UIFlag::AllowTabInput:
+            return ImGuiInputTextFlags_AllowTabInput;
+        case UIFlag::CharsDecimal:
+            return ImGuiInputTextFlags_CharsDecimal;
+        case UIFlag::EnterReturnsTrue:
+            return ImGuiInputTextFlags_EnterReturnsTrue;
+        case UIFlag::EscapeClearsAll:
+            return ImGuiInputTextFlags_EscapeClearsAll;
+        case UIFlag::CharsHexadecimal:
+            return ImGuiInputTextFlags_CharsHexadecimal;
+        case UIFlag::CharsScientific:
+            return ImGuiInputTextFlags_CharsScientific;
+        case UIFlag::CharsUppercase:
+            return ImGuiInputTextFlags_CharsUppercase;
+        case UIFlag::CharsNoBlanks:
+            return ImGuiInputTextFlags_CharsNoBlank;
+        case UIFlag::CtrlEnterForNewLine:
+            return ImGuiInputTextFlags_CtrlEnterForNewLine;
+        case UIFlag::ReadOnly:
+            return ImGuiInputTextFlags_ReadOnly;
+        case UIFlag::Password:
+            return ImGuiInputTextFlags_Password;
+        case UIFlag::AlwaysOverwrite:
+            return ImGuiInputTextFlags_AlwaysOverwrite;
+        case UIFlag::AutoSelectAll:
+            return ImGuiInputTextFlags_AutoSelectAll;
+        case UIFlag::ParseEmptyRefVal:
+            return ImGuiInputTextFlags_ParseEmptyRefVal;
+        case UIFlag::DisplayEmptyRefVal:
+            return ImGuiInputTextFlags_DisplayEmptyRefVal;
+        case UIFlag::NoHorizontalScroll:
+            return ImGuiInputTextFlags_NoHorizontalScroll;
+        case UIFlag::NoUndoRedo:
+            return ImGuiInputTextFlags_NoUndoRedo;
+        case UIFlag::ElideLeft:
+            return ImGuiInputTextFlags_ElideLeft;
+        default:
+            
+            //  don't do the callbacks (not yet)
+        
+            return {};
+        }
+        
     }
     
-    ImGuiInputTextFlags     TextFlags(UIFlags)
+    ImGuiInputTextFlags     TextFlags(UIFlags flags)
     {
-        return {};   // TODO
+        ImGuiInputTextFlags ret = {};
+        if(flags(UIFlag::AllowTabInput))
+            ret |= ImGuiInputTextFlags_AllowTabInput;
+        if(flags(UIFlag::CharsDecimal))
+            ret |= ImGuiInputTextFlags_CharsDecimal;
+        if(flags(UIFlag::EnterReturnsTrue))
+            ret |= ImGuiInputTextFlags_EnterReturnsTrue;
+        if(flags(UIFlag::EscapeClearsAll))
+            ret |= ImGuiInputTextFlags_EscapeClearsAll;
+        if(flags(UIFlag::CharsHexadecimal))
+            ret |= ImGuiInputTextFlags_CharsHexadecimal;
+        if(flags(UIFlag::CharsScientific))
+            ret |= ImGuiInputTextFlags_CharsScientific;
+        if(flags(UIFlag::CharsUppercase))
+            ret |= ImGuiInputTextFlags_CharsUppercase;
+        if(flags(UIFlag::CharsNoBlanks))
+            ret |= ImGuiInputTextFlags_CharsNoBlank;
+        if(flags(UIFlag::CtrlEnterForNewLine))
+            ret |= ImGuiInputTextFlags_CtrlEnterForNewLine;
+        if(flags(UIFlag::ReadOnly))
+            ret |= ImGuiInputTextFlags_ReadOnly;
+        if(flags(UIFlag::Password))
+            ret |= ImGuiInputTextFlags_Password;
+        if(flags(UIFlag::AlwaysOverwrite))
+            ret |= ImGuiInputTextFlags_AlwaysOverwrite;
+        if(flags(UIFlag::AutoSelectAll))
+            ret |= ImGuiInputTextFlags_AutoSelectAll;
+        if(flags(UIFlag::ParseEmptyRefVal))
+            ret |= ImGuiInputTextFlags_ParseEmptyRefVal;
+        if(flags(UIFlag::DisplayEmptyRefVal))
+            ret |= ImGuiInputTextFlags_DisplayEmptyRefVal;
+        if(flags(UIFlag::NoHorizontalScroll))
+            ret |= ImGuiInputTextFlags_NoHorizontalScroll;
+        if(flags(UIFlag::NoUndoRedo))
+            ret |= ImGuiInputTextFlags_NoUndoRedo;
+        if(flags(UIFlag::ElideLeft))
+            ret |= ImGuiInputTextFlags_ElideLeft;
+        return ret;
     }
     
     ImGuiWindowFlags_ WindowFlag(UIFlag flag)

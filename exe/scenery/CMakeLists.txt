@@ -42,6 +42,13 @@ target_link_libraries(${PROJECT_NAME}
         ImGuiFileDialog
 )
 
+if(Build_Lua)
+    target_link_libraries(${PROJECT_NAME} 
+        PUBLIC
+            yq_luavk
+    )
+endif()
+
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}

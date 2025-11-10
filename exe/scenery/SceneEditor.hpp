@@ -19,6 +19,13 @@
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/core/Future.hpp>
 
+namespace yq::lua {
+    class LuaConsoleUI;
+    class LuaInputBar;
+    class ExecuteFileEvent;
+    class ExecuteStringEvent;
+}
+
 namespace yq::tachyon {
     class InfoSelectionChangedEvent;
     class LightMeta;
@@ -65,7 +72,8 @@ public:
     enum class FileMode {
         None,
         Open,
-        Save
+        Save,
+        Lua
     };
     
     enum class E {
@@ -103,10 +111,14 @@ public:
     void                action_create_rendered_spatial(const Payload&);
     void                action_create_scene(const Payload&);
 
+    void                action_lua_execute(const Payload&);
+
     void                cmd_file_open();
     void                cmd_file_save();
     void                cmd_file_save_as();
     void                cmd_file_new();
+    
+    void                cmd_lua_execute();
     
     void                cmd_screenshot();
 
@@ -192,6 +204,10 @@ private:
     TypedID                     m_fileIO;
     std::filesystem::path       m_filepath;
     bool                        m_defaultInit   = false;
+    
+    lua::LuaConsoleUI*          m_luaConsole    = nullptr;
+    lua::LuaInputBar*           m_luaInput      = nullptr;
+    TypedID                     m_luaTVM;
 
     //! Loads (but not schedule) the given TSX file
     static Expect<TachyonPtrVector>     _load(const std::filesystem::path&);
@@ -230,12 +246,15 @@ private:
 
     void    _open(const std::filesystem::path&);
     void    _save(const std::filesystem::path&);
+    void    _lua(const std::filesystem::path&);
     
     void    on_camera_select_event(const CameraSelectEvent&);
     void    on_controller_select_event(const ControllerSelectEvent&);
     void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);
     void    on_light_select_event(const LightSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);
+    void    on_lua_exec_file_event(const lua::ExecuteFileEvent&);
+    void    on_lua_exec_string_event(const lua::ExecuteStringEvent&);
     void    on_model_select_event(const ModelSelectEvent&);
     void    on_rendered_select_event(const RenderedSelectEvent&);
     void    on_save_tsx_reply(const SaveTSXReply&);

@@ -33,8 +33,10 @@ int main(int argc, char* argv[])
     app.vulqan_libraries(LOAD);
     Meta::init();
     
-    //load_plugin_dir("plugin/lua");
-    //load_plugin_dir("plugin/luavk");
+    #ifdef YQ_LUA_ENABLE
+    load_plugin_dir("plugin/lua");
+    load_plugin_dir("plugin/luavk");
+    #endif
     
     for(const std::filesystem::path& pth : Resource::all_paths())
         yInfo() << "resource path> " << pth;

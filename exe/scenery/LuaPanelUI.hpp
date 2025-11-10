@@ -11,18 +11,15 @@
 using yq::tachyon::UIWindow;
 using yq::tachyon::UIFlags;
 
-    //  TODO... abstract this out to a more general UI panel.... (needed for the Lua... 
-    //  and possibly other panels
-    
-class ControlPanelUI : public UIWindow {
-    YQ_OBJECT_DECLARE(ControlPanelUI, UIWindow)
+class LuaPanelUI : public UIWindow {
+    YQ_OBJECT_DECLARE(LuaPanelUI, UIWindow)
 
 public:
     static void init_meta();
-    ControlPanelUI(UIFlags flags={});
-    ControlPanelUI(const ControlPanelUI& cp);
+    LuaPanelUI(UIFlags flags={});
+    LuaPanelUI(const LuaPanelUI& cp);
     
-    virtual ControlPanelUI*   clone() const;
+    virtual LuaPanelUI*   clone() const;
     void    render() override;
     
 private:

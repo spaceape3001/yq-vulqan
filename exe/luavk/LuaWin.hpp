@@ -18,6 +18,7 @@ namespace yq::lua {
     class ExecuteFileEvent;
     class ExecuteStringEvent;
     class LuaConsoleUI;
+    class LuaInputBar;
 };
 
 using namespace yq;
@@ -57,5 +58,5 @@ private:
     FileMode                    m_fileMode = FileMode::None;
     yq::tachyon::TachyonID      m_lua;
     lua::LuaConsoleUI*          m_console   = nullptr;
-    UIInputBar*                 m_input     = nullptr;
+    lua::LuaInputBar*           m_input     = nullptr;
 };

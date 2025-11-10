@@ -16,6 +16,7 @@ add_library(yq_luavk SHARED
     event/ExecuteStringEvent.cpp
     event/LuaEvent.cpp
     ui/LuaConsoleUI.cpp
+    ui/LuaInputBar.cpp
 )
 
 target_include_directories(yq_luavk

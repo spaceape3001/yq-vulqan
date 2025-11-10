@@ -13,11 +13,11 @@
 #include <yq/luavk/event/ExecuteStringEvent.hpp>
 #include <yq/luavk/ui/LuaConsoleUI.hpp>
 #include <yq/luavk/ui/LuaConsoleUIWriter.hpp>
+#include <yq/luavk/ui/LuaInputBar.hpp>
+#include <yq/luavk/ui/LuaInputBarWriter.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
-#include <yq/tachyon/ui/UIInputBar.hpp>
-#include <yq/tachyon/ui/UILineInput.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
 #include <yq/text/format.hpp>
@@ -120,7 +120,7 @@ Execution   LuaWin::setup(const Context&u)
     }
     
     if(!m_input)
-        m_input     = dynamic_cast<UIInputBar*>(element(FIRST, "input"));
+        m_input     = dynamic_cast<lua::LuaInputBar*>(element(FIRST, "input"));
     
     return {};
 }
@@ -149,7 +149,7 @@ void LuaWin::init_meta()
     //console.bumper(BOTTOM, 30.);
     console.uid("console");
 
-    auto input      = lay.make<UIInputBar>("##Input", UIFlag::NoDecoration);
+    auto input      = lay.make<lua::LuaInputBar>("##Input", UIFlag::NoDecoration);
     input.height(40);
     input.action(&LuaWin::cmd_user_input);
     input.uid("input");

@@ -4,9 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Auto-generated file
-
-#include "SetFOVCommand.ipp"
-#include "SetFarPlaneCommand.ipp"
-#include "SetNearPlaneCommand.ipp"
-#include "SetScreenCommand.ipp"
+#include "event/SimEvent.ipp"
+#include "event/sim/PauseEvent.ipp"
+#include "event/sim/ResumeEvent.ipp"
+#include "event/sim/TickEvent.ipp"

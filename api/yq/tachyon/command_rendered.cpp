@@ -6,10 +6,5 @@
 
 // Auto-generated file
 
-#include "AndTrigger.ipp"
-#include "KeyPressTrigger.ipp"
-#include "NandTrigger.ipp"
-#include "NorTrigger.ipp"
-#include "NotTrigger.ipp"
-#include "OrTrigger.ipp"
-#include "PostTrigger.ipp"
+#include "command/RenderedCommand.ipp"
+#include "command/rendered/SetWireframeCommand.ipp"

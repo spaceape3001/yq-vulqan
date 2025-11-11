@@ -17,12 +17,57 @@ set(VULKAN_DIR $ENV{VULKAN_SDK})
 find_package(Vulkan REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
-    #   ALPHABETICAL
+    #   Keep these sections in ALPHABETICAL order!
+    ##  These are the "unity" build files
+    
+    api_meta.cpp
+
+    command_camera.cpp
+    command_color.cpp
+    command_controller.cpp
+    command_cursor.cpp
+    command_orientation.cpp
+    command_position.cpp
+    command_rendered.cpp
+    command_scale.cpp
+    command_sim.cpp
+    command_size.cpp
+    command_spatial.cpp
+    command_tachyon.cpp
+    command_ui.cpp
+    command_vertex.cpp
+    command_viewer.cpp
+
+    event_color.cpp
+    event_cursor.cpp
+    event_gamepad.cpp
+    event_joystick.cpp
+    event_keyboard.cpp
+    event_monitor.cpp
+    event_mouse.cpp
+    event_sim.cpp
+    event_spatial.cpp
+    event_tachyon.cpp
+    event_ui.cpp
+    event_window.cpp
+    
+    interface.cpp
+
+    os.cpp
+    os_glfw.cpp
+    
+    post.cpp
+
+    trigger.cpp
+    
+    ui_align.cpp
+
+    ## And individual files 
 
     MyImGui.cpp
     enums.cpp
     strings.cpp
-
+    
     accessor/StringFunction.cpp
     accessor/StringValue.cpp
 
@@ -30,7 +75,6 @@ add_library(${PROJECT_NAME} SHARED
     action/NullAction.cpp
     action/PostAction.cpp
     action/VisibleUIAction.cpp
-
 
     api/1D.cpp
     api/2D.cpp
@@ -79,13 +123,6 @@ add_library(${PROJECT_NAME} SHARED
     api/Undo.cpp
     api/Widget.cpp
     
-    api/meta/DelegateGetter.cpp
-    api/meta/DelegateProperty.cpp
-    api/meta/DelegateSetter.cpp
-    api/meta/ResourceGetter.cpp
-    api/meta/ResourceProperty.cpp
-    api/meta/ResourceSetter.cpp
-
     app/Application.cpp
     app/Viewer.cpp
     app/VulqanConfig.cpp
@@ -138,10 +175,6 @@ add_library(${PROJECT_NAME} SHARED
     command/AddChildCommand.cpp
     command/AppCommand.cpp
     command/AppDeleteViewerCommand.cpp
-    command/CameraCommand.cpp
-    command/ColorCommand.cpp
-    command/ControllerCommand.cpp
-    command/CursorCommand.cpp
     command/EditorCommand.cpp
     command/EmptyCommand.cpp
     command/GamepadCommand.cpp
@@ -150,16 +183,9 @@ add_library(${PROJECT_NAME} SHARED
     command/JoystickCommand.cpp
     command/LightCommand.cpp
     command/MouseCommand.cpp
-    command/RenderedCommand.cpp
     command/SceneCommand.cpp
     command/ShapeCommand.cpp
-    command/SimCommand.cpp
-    command/SpatialCommand.cpp
-    command/TachyonCommand.cpp
     command/ThreadCommand.cpp
-    command/UICommand.cpp
-    command/VertexCommand.cpp
-    command/ViewerCommand.cpp
     command/WidgetCommand.cpp
     command/WindowCommand.cpp
     
@@ -170,24 +196,6 @@ add_library(${PROJECT_NAME} SHARED
     
     command/app/ViewerCreateCommand.cpp
     
-    command/camera/camera_commands.cpp
-
-    command/color/SetBgColorCommand.cpp
-    command/color/SetColorCommand.cpp
-
-    command/controller/ControlCommand.cpp
-    command/controller/DisableCommand.cpp
-    command/controller/EnableCommand.cpp
-    command/controller/ListenCommand.cpp
-    command/controller/SetTargetCommand.cpp
-    command/controller/UncontrolCommand.cpp
-    command/controller/UnlistenCommand.cpp
-
-    command/cursor/CursorCaptureCommand.cpp
-    command/cursor/CursorDisableCommand.cpp
-    command/cursor/CursorHideCommand.cpp
-    command/cursor/CursorNormalCommand.cpp
-
     command/gamepad/GamepadZeroCommand.cpp
     
     command/generic/SetSpatialCommand.cpp
@@ -196,62 +204,14 @@ add_library(${PROJECT_NAME} SHARED
 
     command/joystick/JoystickZeroCommand.cpp
 
-    command/rendered/SetWireframeCommand.cpp
-
-    command/sim/ResumeCommand.cpp
-    command/sim/PauseCommand.cpp
-
-    command/orientation/orientation_commands.cpp
-
-    command/position/position_commands.cpp
-
-    command/scale/scale_commands.cpp
 
     command/shape/SetDrawModeCommand.cpp
 
-    command/size/size_commands.cpp
-    
-    command/spatial/AABBCommand.cpp
-    command/spatial/OrientationCommand.cpp
-    command/spatial/PositionCommand.cpp
-    command/spatial/ScaleCommand.cpp
-    command/spatial/SizeCommand.cpp
-    
-    command/tachyon/AddChildCommand.cpp
-    command/tachyon/DestroyCommand.cpp
-    command/tachyon/RemoveChildCommand.cpp
-    command/tachyon/RethreadCommand.cpp
-    command/tachyon/SetAttributeCommand.cpp
-    command/tachyon/SetNameCommand.cpp
-    command/tachyon/SetParentCommand.cpp
-    command/tachyon/SnoopCommand.cpp
-    command/tachyon/SubscribeCommand.cpp
-    command/tachyon/UnsnoopCommand.cpp
-    command/tachyon/UnsubscribeCommand.cpp
+
     
     command/thread/ScheduleCommand.cpp
     
-    command/ui/AspectCommand.cpp
-    command/ui/AttentionCommand.cpp
-    command/ui/CloseCommand.cpp
-    command/ui/FloatCommand.cpp
-    command/ui/FocusCommand.cpp
-    command/ui/HideCommand.cpp
-    command/ui/IconifyCommand.cpp
-    command/ui/MaximizeCommand.cpp
-    command/ui/RestoreCommand.cpp
-    command/ui/ShowCommand.cpp
-    command/ui/StartupCommand.cpp
-    command/ui/TitleCommand.cpp
-    command/ui/UnfloatCommand.cpp
 
-    command/vertex/vertex_commands.cpp
-
-    command/viewer/ImGuiDisableKeyboardCommand.cpp
-    command/viewer/ImGuiEnableKeyboardCommand.cpp
-    command/viewer/ImGuiDisableMouseCommand.cpp
-    command/viewer/ImGuiEnableMouseCommand.cpp
-    command/viewer/SetWidgetCommand.cpp
     
     command/widget/SetViewer.cpp
 
@@ -288,91 +248,24 @@ add_library(${PROJECT_NAME} SHARED
 
     event/AppEvent.cpp
     event/CameraEvent.cpp
-    event/ColorEvent.cpp
-    event/CursorEvent.cpp
     event/EditorEvent.cpp
     event/EmptyEvent.cpp
-    event/GamepadEvent.cpp
     event/InputEvent.cpp
     event/IOEvent.cpp
-    event/JoystickEvent.cpp
-    event/KeyboardEvent.cpp
-    event/MonitorEvent.cpp
-    event/MouseEvent.cpp
     event/OSEvent.cpp
     event/PanelEvent.cpp
-    event/SimEvent.cpp
-    event/SpatialEvent.cpp
-    event/TachyonEvent.cpp
     event/ThreadEvent.cpp
-    event/UIEvent.cpp
     event/ViewerEvent.cpp
     event/VulqanEvent.cpp
     event/WidgetEvent.cpp
-    event/WindowEvent.cpp
-    
-    event/color/BgColorChangeEvent.cpp
-    event/color/ColorChangeEvent.cpp
-    
-    event/cursor/CursorCaptureEvent.cpp
-    event/cursor/CursorDisableEvent.cpp
-    event/cursor/CursorHideEvent.cpp
-    event/cursor/CursorNormalEvent.cpp
-    
-    event/gamepad/gamepad_events.cpp
-
-    event/joystick/joystick_events.cpp
-
-    event/keyboard/KeyCharacterEvent.cpp
-    event/keyboard/KeyPressEvent.cpp
-    event/keyboard/KeyReleaseEvent.cpp
-    event/keyboard/KeyRepeatEvent.cpp
-    
-    event/monitor/MonitorConnectEvent.cpp
-    event/monitor/MonitorDisconnectEvent.cpp
-
-    event/mouse/MouseDropEvent.cpp
-    event/mouse/MouseEnterEvent.cpp
-    event/mouse/MouseLeaveEvent.cpp
-    event/mouse/MouseMoveEvent.cpp
-    event/mouse/MousePressEvent.cpp
-    event/mouse/MouseReleaseEvent.cpp
-    event/mouse/MouseScrollEvent.cpp
 
     event/panel/InfoSelectionChangedEvent.cpp
 
-    event/spatial/spatial_events.cpp
-    
-    event/sim/PauseEvent.cpp
-    event/sim/ResumeEvent.cpp
-    event/sim/TickEvent.cpp
-    
-    event/tachyon/ChildAddEvent.cpp
-    event/tachyon/ChildRemoveEvent.cpp
-    event/tachyon/DestroyEvent.cpp
-    event/tachyon/DirtyEvent.cpp
-    event/tachyon/NameChangeEvent.cpp
-    event/tachyon/ParentChangeEvent.cpp
-    
     event/thread/ThreadAddTachyonEvent.cpp
-
-    event/ui/AspectEvent.cpp
-    event/ui/DefocusEvent.cpp
-    event/ui/CloseEvent.cpp
-    event/ui/FocusEvent.cpp
-    event/ui/HideEvent.cpp
-    event/ui/IconifyEvent.cpp
-    event/ui/MaximizeEvent.cpp
-    event/ui/RestoreEvent.cpp
-    event/ui/ShowEvent.cpp
-    event/ui/TitleEvent.cpp
-    
-    event/window/FramebufferResizeEvent.cpp
     
     interface/IFarPlane.cpp
     interface/IFieldOfView.cpp
     interface/INearPlane.cpp
-    interface/interfaces.cpp
     
     io/FileIOManager.cpp
     io/GLSLShader.cpp
@@ -402,21 +295,6 @@ add_library(${PROJECT_NAME} SHARED
     mini/TextLabel.cpp
     
 
-    os/Cursor.cpp
-    os/Desktop.cpp
-    os/Gamepad.cpp
-    os/GraphicsCard.cpp
-    os/Joystick.cpp
-    os/Keyboard.cpp
-    os/KeyCode.cpp
-    os/ModifierKey.cpp
-    os/Monitor.cpp
-    os/Mouse.cpp
-    os/VideoMode.cpp
-    os/Window.cpp
-
-    os/glfw/glfw.cpp
-
     panel/FrameMetricsUI.cpp
     panel/UIConcreteInfoList.cpp
     panel/UIInfoList.cpp
@@ -426,9 +304,6 @@ add_library(${PROJECT_NAME} SHARED
     pipeline/PipelineUtils.cpp
     pipeline/RenderPass.cpp
 
-    post/AnyPost.cpp
-    post/EmptyPost.cpp
-    post/StringPost.cpp
 
     proxy/PBgColor.cpp
     proxy/PColor.cpp
@@ -559,7 +434,6 @@ add_library(${PROJECT_NAME} SHARED
     thread/TaskThread.cpp
     thread/ViewerThread.cpp
 
-    trigger/triggers.cpp
 
     tweak/OriginCameraTweak.cpp
     
@@ -591,6 +465,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIMenuBar.cpp
     ui/UIMenuBarWriter.cpp
     ui/UIMenuItem.cpp
+    #ui/UIPanel.cpp
     ui/UISection.cpp
     ui/UISimpleTree.cpp
     ui/UISpacer.cpp
@@ -600,10 +475,6 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIUtils.cpp
     ui/UIWindow.cpp
     ui/UIWindowWriter.cpp
-
-    ui/align/UICenterAlign.cpp
-    ui/align/UIHLine.cpp
-    ui/align/UIRightAlign.cpp
 
     ui/layout/UIHBoxLayout.cpp
     ui/layout/UIVBoxLayout.cpp

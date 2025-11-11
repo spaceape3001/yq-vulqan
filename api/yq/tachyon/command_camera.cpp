@@ -1,0 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "command/CameraCommand.ipp"
+#include "command/camera/SetFOVCommand.ipp"
+#include "command/camera/SetFarPlaneCommand.ipp"
+#include "command/camera/SetNearPlaneCommand.ipp"
+#include "command/camera/SetScreenCommand.ipp"

@@ -1,0 +1,36 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "interface/IAABB1.ipp"
+#include "interface/IAABB2.ipp"
+#include "interface/IAABB3.ipp"
+#include "interface/IAABB4.ipp"
+#include "interface/IBgColor.ipp"
+#include "interface/IColor.ipp"
+#include "interface/IDrawMode.ipp"
+#include "interface/IMaxSize1.ipp"
+#include "interface/IMaxSize2.ipp"
+#include "interface/IMaxSize3.ipp"
+#include "interface/IMaxSize4.ipp"
+#include "interface/IMinSize1.ipp"
+#include "interface/IMinSize2.ipp"
+#include "interface/IMinSize3.ipp"
+#include "interface/IMinSize4.ipp"
+#include "interface/IOrientation2.ipp"
+#include "interface/IOrientation3.ipp"
+#include "interface/IPosition1.ipp"
+#include "interface/IPosition2.ipp"
+#include "interface/IPosition3.ipp"
+#include "interface/IPosition4.ipp"
+#include "interface/IScale1.ipp"
+#include "interface/IScale2.ipp"
+#include "interface/IScale3.ipp"
+#include "interface/ISize1.ipp"
+#include "interface/ISize2.ipp"
+#include "interface/ISize3.ipp"
+#include "interface/ISize4.ipp"
+#include "interface/IVertices2.ipp"
+#include "interface/IVertices3.ipp"

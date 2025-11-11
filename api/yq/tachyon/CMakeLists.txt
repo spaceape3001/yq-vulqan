@@ -61,6 +61,8 @@ add_library(${PROJECT_NAME} SHARED
     trigger.cpp
     
     ui_align.cpp
+    
+    vulkan.cpp
 
     ## And individual files 
 
@@ -481,7 +483,6 @@ add_library(${PROJECT_NAME} SHARED
     
     utility/LoggerBox.cpp
 
-    vulkan/vulqan.cpp
     vulkan/VulqanGPU.cpp
     vulkan/VulqanManager.cpp
 
@@ -490,11 +491,9 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/VqLogging.cpp
     vulkan/VqUtils.cpp
 
-    vulkan/ViBuffer.cpp
     vulkan/ViCommandBuffer.cpp
     vulkan/ViCommandBufferVector.cpp
     vulkan/ViCommandPool.cpp
-    vulkan/ViContext.cpp
     vulkan/ViData.cpp
     vulkan/ViDevice.cpp
     vulkan/ViFence.cpp
@@ -508,8 +507,6 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViRendered.cpp
     vulkan/ViRenderPass.cpp
     vulkan/ViSampler.cpp
-    vulkan/ViShader.cpp
-    vulkan/ViSurface.cpp
     vulkan/ViSwapchain.cpp
     vulkan/ViTexture.cpp
     vulkan/ViTasker.cpp

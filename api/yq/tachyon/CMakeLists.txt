@@ -58,8 +58,10 @@ add_library(${PROJECT_NAME} SHARED
     
     post.cpp
 
+    thread.cpp
     trigger.cpp
     
+    ui.cpp
     ui_align.cpp
     
     vulkan.cpp
@@ -197,30 +199,17 @@ add_library(${PROJECT_NAME} SHARED
     command/aabb/SetAABB4.cpp
     
     command/app/ViewerCreateCommand.cpp
-    
     command/gamepad/GamepadZeroCommand.cpp
-    
     command/generic/SetSpatialCommand.cpp
-
     command/io/SaveCommand.cpp
-
     command/joystick/JoystickZeroCommand.cpp
-
-
     command/shape/SetDrawModeCommand.cpp
-
-
-    
     command/thread/ScheduleCommand.cpp
-    
-
-    
     command/widget/SetViewer.cpp
 
     config/build.cpp
 
     control/Orientation3Control.cpp
-
     controller/Space3Controller.cpp
     
     data/Vertex3.cpp
@@ -246,7 +235,6 @@ add_library(${PROJECT_NAME} SHARED
 
     enum/Cardinal.cpp
     enum/UIFlags.cpp
-
 
     event/AppEvent.cpp
     event/CameraEvent.cpp
@@ -295,7 +283,6 @@ add_library(${PROJECT_NAME} SHARED
     message/EmptyMessage.cpp
 
     mini/TextLabel.cpp
-    
 
     panel/FrameMetricsUI.cpp
     panel/UIConcreteInfoList.cpp
@@ -305,7 +292,6 @@ add_library(${PROJECT_NAME} SHARED
     pipeline/Pipeline.cpp
     pipeline/PipelineUtils.cpp
     pipeline/RenderPass.cpp
-
 
     proxy/PBgColor.cpp
     proxy/PColor.cpp
@@ -425,27 +411,10 @@ add_library(${PROJECT_NAME} SHARED
     spatial/SimpleSpatial2.cpp
     spatial/SimpleSpatial3.cpp
 
-    thread/AppThread.cpp
-    thread/AudioThread.cpp
-    thread/AuxillaryThread.cpp
-    thread/EditThread.cpp
-    thread/GameThread.cpp
-    thread/IOThread.cpp
-    thread/NetworkThread.cpp
-    thread/SimThread.cpp
-    thread/TaskThread.cpp
-    thread/ViewerThread.cpp
-
-
     tweak/OriginCameraTweak.cpp
     
     ui/UIAppMain.cpp
     ui/UIAppMainWriter.cpp
-    ui/UIButton.cpp
-    ui/UICallback.cpp
-    ui/UICheckBox.cpp
-    ui/UICheckBox_Simple.cpp
-    ui/UICheckBox_Visible.cpp
     ui/UIConsole.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp
@@ -456,22 +425,13 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIElementsWriter.cpp
     ui/UIForm.cpp
     ui/UIGenerator.cpp
-    ui/UIGroup.cpp
     ui/UIImage.cpp
     ui/UIInputBar.cpp
     ui/UILayout.cpp
     ui/UILayoutWriter.cpp
     ui/UILineInput.cpp
-    ui/UIMenu.cpp
-    ui/UIMenuWriter.cpp
-    ui/UIMenuBar.cpp
-    ui/UIMenuBarWriter.cpp
-    ui/UIMenuItem.cpp
     #ui/UIPanel.cpp
-    ui/UISection.cpp
     ui/UISimpleTree.cpp
-    ui/UISpacer.cpp
-    ui/UITextLabel.cpp
     ui/UIToolBar.cpp
     ui/UIToolBarWriter.cpp
     ui/UIUtils.cpp
@@ -488,7 +448,6 @@ add_library(${PROJECT_NAME} SHARED
 
     # vulkan/VqEnumerations.cpp
     vulkan/VqEnums.cpp
-    vulkan/VqLogging.cpp
     vulkan/VqUtils.cpp
 
     vulkan/ViCommandBuffer.cpp

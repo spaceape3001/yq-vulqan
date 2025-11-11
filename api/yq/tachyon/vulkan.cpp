@@ -8,4 +8,5 @@
 #include "vulkan/ViContext.ipp"
 #include "vulkan/ViShader.ipp"
 #include "vulkan/ViSurface.ipp"
+#include "vulkan/VqLogging.ipp"
 #include "vulkan/vulqan.ipp"

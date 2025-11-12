@@ -11,8 +11,8 @@
 #include <yq/core/Stream.hpp>
 
 namespace yq::lua {
-    class ExecuteStringCommand;
-    class ExecuteFileCommand;
+    class ExecuteStringRequest;
+    class ExecuteFileRequest;
     
     struct LuaChannel : public Stream {
         std::string*        buffer  = nullptr;
@@ -40,7 +40,7 @@ namespace yq::lua {
         LuaChannel      m_output, m_error, m_warning;
         bool            m_init       = false;
         
-        void    on_exec_file(const ExecuteFileCommand&);
-        void    on_exec_string(const ExecuteStringCommand&);
+        void    on_exec_file(const ExecuteFileRequest&);
+        void    on_exec_string(const ExecuteStringRequest&);
     };
 }

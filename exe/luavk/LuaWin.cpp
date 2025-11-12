@@ -8,10 +8,10 @@
 
 #include <yq/date/dateutils.hpp>
 #include <yq/lua/logging.hpp>
-#include <yq/luavk/command/ExecuteFileCommand.hpp>
-#include <yq/luavk/command/ExecuteStringCommand.hpp>
 #include <yq/luavk/event/ExecuteFileEvent.hpp>
 #include <yq/luavk/event/ExecuteStringEvent.hpp>
+#include <yq/luavk/request/ExecuteFileRequest.hpp>
+#include <yq/luavk/request/ExecuteStringRequest.hpp>
 #include <yq/luavk/ui/LuaConsoleUI.hpp>
 #include <yq/luavk/ui/LuaConsoleUIWriter.hpp>
 #include <yq/luavk/ui/LuaInputBar.hpp>
@@ -61,7 +61,7 @@ void    LuaWin::imgui(ViContext&u)
                 case FileMode::None:
                     break;
                 case FileMode::Script:
-                    send(new yq::lua::ExecuteFileCommand({}, filePathName));
+                    send(new yq::lua::ExecuteFileRequest({}, filePathName));
                     break;
                 }
             }
@@ -100,7 +100,7 @@ void LuaWin::cmd_user_input(const Payload& pay)
     if(l.empty())
         return ;
 
-    send(new yq::lua::ExecuteStringCommand({}, l));
+    send(new yq::lua::ExecuteStringRequest({}, l));
 }
 
 void    LuaWin::on_execute_file(const yq::lua::ExecuteFileEvent&evt)

@@ -9,10 +9,10 @@
 #include <yq/lua/logging.hpp>
 #include <yq/lua/lualua.hxx>
 #include <yq/lua/keys.hpp>
-#include <yq/luavk/command/ExecuteFileCommand.hpp>
-#include <yq/luavk/command/ExecuteStringCommand.hpp>
 #include <yq/luavk/event/ExecuteFileEvent.hpp>
 #include <yq/luavk/event/ExecuteStringEvent.hpp>
+#include <yq/luavk/request/ExecuteFileRequest.hpp>
+#include <yq/luavk/request/ExecuteStringRequest.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 #include <iostream>
@@ -62,7 +62,7 @@ namespace yq::lua {
         }
     }
 
-    void    LuaTVM::on_exec_file(const ExecuteFileCommand& cmd)
+    void    LuaTVM::on_exec_file(const ExecuteFileRequest& cmd)
     {
         if(!m_lua)
             return;
@@ -79,7 +79,7 @@ namespace yq::lua {
         send(new ExecuteFileEvent({.cause=&cmd}, cmd.file(), std::move(output), std::move(warning), std::move(error), ec));
     }
 
-    void    LuaTVM::on_exec_string(const ExecuteStringCommand& cmd)
+    void    LuaTVM::on_exec_string(const ExecuteStringRequest& cmd)
     {
         if(!m_lua)
             return;

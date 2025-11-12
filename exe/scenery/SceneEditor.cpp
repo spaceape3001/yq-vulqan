@@ -101,8 +101,8 @@
 
 #ifdef YQ_LUA_ENABLE
 #include <yq/luavk/LuaTVM.hpp>
-#include <yq/luavk/command/ExecuteFileCommand.hpp>
-#include <yq/luavk/command/ExecuteStringCommand.hpp>
+#include <yq/luavk/request/ExecuteFileRequest.hpp>
+#include <yq/luavk/request/ExecuteStringRequest.hpp>
 #include <yq/luavk/event/ExecuteFileEvent.hpp>
 #include <yq/luavk/event/ExecuteStringEvent.hpp>
 #include <yq/luavk/ui/LuaConsoleUI.hpp>
@@ -685,7 +685,7 @@ Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
 void    SceneEditor::_lua(const std::filesystem::path& fp)
 {
     #ifdef YQ_LUA_ENABLE
-    send(new lua::ExecuteFileCommand({}, fp));
+    send(new lua::ExecuteFileRequest({}, fp));
     #endif
 }
 
@@ -896,7 +896,7 @@ void    SceneEditor::action_lua_execute(const Payload&pay)
     if(l.empty())
         return ;
 
-    send(new yq::lua::ExecuteStringCommand({}, l));
+    send(new yq::lua::ExecuteStringRequest({}, l));
     #endif
 }
 

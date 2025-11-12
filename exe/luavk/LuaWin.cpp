@@ -6,6 +6,7 @@
 
 #include "LuaWin.hpp"
 
+#include <yq/date/dateutils.hpp>
 #include <yq/lua/logging.hpp>
 #include <yq/luavk/command/ExecuteFileCommand.hpp>
 #include <yq/luavk/command/ExecuteStringCommand.hpp>
@@ -18,6 +19,9 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/asset/Raster.hpp>
+#include <yq/tachyon/reply/viewer/ViewerScreenshotReply.hpp>
+#include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
 #include <yq/text/format.hpp>
@@ -75,6 +79,14 @@ void LuaWin::cmd_lua_file()
     m_fileMode  = FileMode::Script;
 }
 
+
+void    LuaWin::cmd_screenshot()
+{
+    ViewerID        viewID  = viewer();
+    TypedID         view(viewID.id, Type::Viewer);
+    send(new ViewerScreenshotRequest({.target=view}));
+}
+
 void LuaWin::cmd_user_input(const Payload& pay)
 {
     if(pay.arguments().empty())
@@ -106,6 +118,13 @@ void    LuaWin::on_execute_string(const yq::lua::ExecuteStringEvent&evt)
 }
 
 
+void    LuaWin::on_viewer_screenshot_reply(const ViewerScreenshotReply& rep)
+{
+    std::string     filename    = std::format("screenshot-{}.png", iso8601basic_now());
+    if(rep.raster())
+        rep.raster() -> save_to(filename);
+}
+
 Execution   LuaWin::setup(const Context&u)
 {
     Execution   ex  = Widget::setup(u);
@@ -134,6 +153,7 @@ void LuaWin::init_meta()
     w.description("Lua Window");
     w.slot(&LuaWin::on_execute_file);
     w.slot(&LuaWin::on_execute_string);
+    w.slot(&LuaWin::on_viewer_screenshot_reply);
     
     auto app        = w.imgui(UI, APP);
     
@@ -142,6 +162,7 @@ void LuaWin::init_meta()
     
     auto file       = mmb.menu("Lua");
     file.menuitem("Run...").action(&LuaWin::cmd_lua_file);
+    file.menuitem("Screenshot", "F12").action(&LuaWin::cmd_screenshot);
     
     auto lay        = app.make<UIVBoxLayout>();
     

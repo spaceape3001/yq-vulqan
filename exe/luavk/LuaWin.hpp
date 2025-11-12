@@ -12,6 +12,7 @@ namespace yq::tachyon {
     struct Payload;
     class UIConsole;
     class UIInputBar;
+    class ViewerScreenshotReply;
 }
 
 namespace yq::lua {
@@ -49,11 +50,14 @@ public:
     void    cmd_user_input(const Payload&);
     void    cmd_lua_file();
 
+    void                cmd_screenshot();
+
     virtual Execution   setup(const Context&) override;
     
 private:
     void    on_execute_file(const yq::lua::ExecuteFileEvent&);
     void    on_execute_string(const yq::lua::ExecuteStringEvent&);
+    void    on_viewer_screenshot_reply(const tachyon::ViewerScreenshotReply&);
 
     FileMode                    m_fileMode = FileMode::None;
     yq::tachyon::TachyonID      m_lua;

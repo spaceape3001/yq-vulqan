@@ -10,7 +10,7 @@ add_executable(luavk
 )
 target_link_libraries(luavk 
 PUBLIC
-    yq_tachyon yq_lua yq_luavk
+    yq_tachyon yq_lua yq_luavk yq_date
 PRIVATE
     ImGuiFileDialog
 )

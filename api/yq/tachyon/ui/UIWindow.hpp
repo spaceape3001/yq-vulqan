@@ -15,6 +15,7 @@
 
 namespace yq::tachyon {
     class UIWindowWriter;
+    class UIPositioner;
     
     /*! \brief Base class to "windows" within ImGui
     */
@@ -117,6 +118,8 @@ namespace yq::tachyon {
         void        y(set_k, next_k, float);
         void        y(set_k, specification_k, float);
 
+        virtual bool    append(UIElement*) override;
+
     protected:
         friend class UIWindowWriter;
     
@@ -124,6 +127,7 @@ namespace yq::tachyon {
     
         std::string         m_title;
         Vector2F            m_pivot         = { 0., 0. };
+        UIPositioner*       m_positioner    = nullptr;
         
         P<float>            m_x = nanF;
         P<float>            m_y = nanF;

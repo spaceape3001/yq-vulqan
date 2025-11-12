@@ -430,7 +430,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UILayout.cpp
     ui/UILayoutWriter.cpp
     ui/UILineInput.cpp
-    #ui/UIPanel.cpp
+    #ui/UIPositioner.cpp    # TBD
     ui/UISimpleTree.cpp
     ui/UIToolBar.cpp
     ui/UIToolBarWriter.cpp

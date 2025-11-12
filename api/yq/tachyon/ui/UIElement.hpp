@@ -23,9 +23,10 @@ namespace yq::tachyon {
     class Widget;
     class WidgetMeta;
     class Viewer;
-    struct UIStyle;
     class UIElement;
     class UIElementWriter;
+    struct UIStyle;
+    class UIWindow;
     class UIGenerator;
     struct Payload;
     
@@ -156,6 +157,7 @@ namespace yq::tachyon {
         friend class UIElements;
         friend class UIElementsWriter;
         friend class UIElementWriter;
+        friend class UIWindow;
 
         //! Parameter (specified, calculated, vs actual)
         template <typename T>

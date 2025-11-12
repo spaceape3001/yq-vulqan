@@ -30,7 +30,6 @@ add_executable(${PROJECT_NAME}
     table/SceneTableUI.cpp
 
     data.cpp
-    utils.cpp
     main.cpp
     
 )
@@ -38,6 +37,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC
         yq_tachyon 
+        yq_date
     PRIVATE
         ImGuiFileDialog
 )

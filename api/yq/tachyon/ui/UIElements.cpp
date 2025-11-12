@@ -49,15 +49,18 @@ namespace yq::tachyon {
         return *this;
     }
 
-    void    UIElements::append(UIElement*p)
+    bool    UIElements::append(UIElement*p)
     {
         if(!p)
-            return;
+            return false;
         if(is_accept(acceptable(p))){
+            p->m_parent = this;
             m_items.push_back(p);
             postadd(p);
+            return true;
         } else {
             delete p;
+            return false;
         }
     }
 

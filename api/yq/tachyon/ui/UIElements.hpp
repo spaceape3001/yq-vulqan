@@ -31,7 +31,8 @@ namespace yq::tachyon {
         virtual ~UIElements();
     
         //! Note, we surrender the pointer to the class
-        void    append(UIElement*);
+        //! \return TRUE if appended, FALSE if deleted
+        virtual bool    append(UIElement*);
         bool    empty() const;
         size_t  size() const;
         UIElements&    operator<<(UIElement*);

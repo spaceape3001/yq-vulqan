@@ -82,15 +82,9 @@ namespace yq::tachyon {
     bool        UIElementsWriter::add(UIElement*elem)
     {
         UIElements* ui  = element();
-        if(elem && ui && is_accept(ui->acceptable(elem))){
-            ui -> m_items.push_back(elem);
-            ui -> postadd(elem);
-            return true;
-        } else {
-            if(elem)
-                delete(elem);
-            return false;
-        }
+        if(ui && elem)
+            return ui->append(elem);
+        return false;
     }
 
     UIElements*     UIElementsWriter::element()

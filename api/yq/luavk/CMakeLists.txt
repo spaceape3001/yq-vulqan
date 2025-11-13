@@ -9,12 +9,11 @@
 add_library(yq_luavk SHARED
     LuaTVM.cpp
     command/LuaCommand.cpp
-    event/ExecuteEvent.cpp
-    event/ExecuteFileEvent.cpp
-    event/ExecuteStringEvent.cpp
     event/LuaEvent.cpp
-    request/ExecuteFileRequest.cpp
-    request/ExecuteStringRequest.cpp
+    reply/LuaExecuteReply.cpp
+    reply/LuaReply.cpp
+    request/LuaExecuteFileRequest.cpp
+    request/LuaExecuteStringRequest.cpp
     request/LuaRequest.cpp
     ui/LuaConsoleUI.cpp
     ui/LuaInputBar.cpp

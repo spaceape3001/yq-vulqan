@@ -101,10 +101,9 @@
 
 #ifdef YQ_LUA_ENABLE
 #include <yq/luavk/LuaTVM.hpp>
-#include <yq/luavk/request/ExecuteFileRequest.hpp>
-#include <yq/luavk/request/ExecuteStringRequest.hpp>
-#include <yq/luavk/event/ExecuteFileEvent.hpp>
-#include <yq/luavk/event/ExecuteStringEvent.hpp>
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/luavk/ui/LuaConsoleUI.hpp>
 #include <yq/luavk/ui/LuaConsoleUIWriter.hpp>
 #include <yq/luavk/ui/LuaInputBar.hpp>
@@ -225,8 +224,7 @@ void SceneEditor::init_meta()
     w.slot(&SceneEditor::on_viewer_screenshot_reply);
     
     #ifdef YQ_LUA_ENABLE
-    w.slot(&SceneEditor::on_lua_exec_file_event);
-    w.slot(&SceneEditor::on_lua_exec_string_event);
+    w.slot(&SceneEditor::on_lua_exec_reply);
     #endif
     
     
@@ -347,7 +345,7 @@ void SceneEditor::init_meta()
     file_menu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
     
     #ifdef YQ_LUA_ENABLE
-    file_menu.menuitem("Execute Lua...").action(&SceneEditor::cmd_lua_execute);
+    file_menu.menuitem("LuaExecute Lua...").action(&SceneEditor::cmd_lua_execute);
     #endif
 
     //(light_menu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::create_payload);
@@ -685,7 +683,7 @@ Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
 void    SceneEditor::_lua(const std::filesystem::path& fp)
 {
     #ifdef YQ_LUA_ENABLE
-    send(new lua::ExecuteFileRequest({}, fp));
+    send(new lua::LuaExecuteFileRequest({}, fp));
     #endif
 }
 
@@ -896,7 +894,7 @@ void    SceneEditor::action_lua_execute(const Payload&pay)
     if(l.empty())
         return ;
 
-    send(new yq::lua::ExecuteStringRequest({}, l));
+    send(new yq::lua::LuaExecuteStringRequest({}, l));
     #endif
 }
 
@@ -938,7 +936,7 @@ void    SceneEditor::cmd_lua_execute()
 {
     IGFD::FileDialogConfig config;
     config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose Lua File to Execute", ".lua", config);        
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose Lua File to LuaExecute", ".lua", config);        
     m_fileMode  = FileMode::Lua;
 }
 
@@ -1019,15 +1017,7 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
     _title();
 }
 
-void    SceneEditor::on_lua_exec_file_event(const lua::ExecuteFileEvent& evt)
-{
-    #if YQ_LUA_ENABLE
-    if(m_luaConsole)
-        m_luaConsole -> submit(evt);
-    #endif
-}
-
-void    SceneEditor::on_lua_exec_string_event(const lua::ExecuteStringEvent& evt)
+void    SceneEditor::on_lua_exec_reply(const lua::LuaExecuteReply& evt)
 {
     #if YQ_LUA_ENABLE
     if(m_luaConsole)

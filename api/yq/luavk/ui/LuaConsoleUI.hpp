@@ -13,8 +13,7 @@
 #include <yq/typedef/color.hpp>
 
 namespace yq::lua {
-    class ExecuteFileEvent;
-    class ExecuteStringEvent;
+    class LuaExecuteReply;
     
     class LuaConsoleUIWriter;
 
@@ -58,8 +57,7 @@ namespace yq::lua {
         void        output(set_k, const color_t&);
 
         using tachyon::UIConsole::submit;
-        void        submit(const ExecuteFileEvent&);
-        void        submit(const ExecuteStringEvent&);
+        void        submit(const LuaExecuteReply&);
         
         Streamer    warning();
         void        warning(std::string_view);

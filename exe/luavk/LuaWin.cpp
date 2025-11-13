@@ -8,10 +8,9 @@
 
 #include <yq/date/dateutils.hpp>
 #include <yq/lua/logging.hpp>
-#include <yq/luavk/event/ExecuteFileEvent.hpp>
-#include <yq/luavk/event/ExecuteStringEvent.hpp>
-#include <yq/luavk/request/ExecuteFileRequest.hpp>
-#include <yq/luavk/request/ExecuteStringRequest.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
 #include <yq/luavk/ui/LuaConsoleUI.hpp>
 #include <yq/luavk/ui/LuaConsoleUIWriter.hpp>
 #include <yq/luavk/ui/LuaInputBar.hpp>
@@ -61,7 +60,7 @@ void    LuaWin::imgui(ViContext&u)
                 case FileMode::None:
                     break;
                 case FileMode::Script:
-                    send(new yq::lua::ExecuteFileRequest({}, filePathName));
+                    send(new yq::lua::LuaExecuteFileRequest({}, filePathName));
                     break;
                 }
             }
@@ -100,21 +99,14 @@ void LuaWin::cmd_user_input(const Payload& pay)
     if(l.empty())
         return ;
 
-    send(new yq::lua::ExecuteStringRequest({}, l));
+    send(new yq::lua::LuaExecuteStringRequest({}, l));
 }
 
-void    LuaWin::on_execute_file(const yq::lua::ExecuteFileEvent&evt)
+void    LuaWin::on_lua_execute_reply(const yq::lua::LuaExecuteReply&rep)
 {
     if(!m_console) [[unlikely]]
         return;
-    m_console->submit(evt);
-}
-
-void    LuaWin::on_execute_string(const yq::lua::ExecuteStringEvent&evt)
-{
-    if(!m_console) [[unlikely]]
-        return;
-    m_console->submit(evt);
+    m_console->submit(rep);
 }
 
 
@@ -151,8 +143,7 @@ void LuaWin::init_meta()
 {
     auto w = writer<LuaWin>();
     w.description("Lua Window");
-    w.slot(&LuaWin::on_execute_file);
-    w.slot(&LuaWin::on_execute_string);
+    w.slot(&LuaWin::on_lua_execute_reply);
     w.slot(&LuaWin::on_viewer_screenshot_reply);
     
     auto app        = w.imgui(UI, APP);

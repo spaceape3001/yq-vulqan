@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yq/luavk/event/LuaEvent.hpp>
+#include <yq/luavk/reply/LuaReply.hpp>
 
 namespace yq::lua {
-    class ExecuteEvent : public LuaEvent {
-        YQ_OBJECT_DECLARE(ExecuteEvent, LuaEvent)
+    class LuaExecuteReply : public LuaReply {
+        YQ_OBJECT_DECLARE(LuaExecuteReply, LuaReply)
     public:
-        ExecuteEvent(const Header&, std::string&& out, std::string&& warn, std::string&& err, const std::error_code&);
+        LuaExecuteReply(const Header&, const tachyon::RequestCPtr&, std::string&& out, std::string&& warn, std::string&& err, const std::error_code&);
         virtual tachyon::PostCPtr    clone(rebind_k, const Header&) const override;
 
         static void init_meta();
@@ -23,8 +23,8 @@ namespace yq::lua {
         const std::error_code&          error_code() const { return m_errorCode; }
 
     protected:
-        ExecuteEvent(const ExecuteEvent&, const Header&);
-        virtual ~ExecuteEvent();
+        LuaExecuteReply(const LuaExecuteReply&, const Header&);
+        virtual ~LuaExecuteReply();
         
     private:
 
@@ -33,9 +33,9 @@ namespace yq::lua {
         std::string             m_error;
         std::error_code         m_errorCode;
 
-        ExecuteEvent(const ExecuteEvent&) = delete;
-        ExecuteEvent(ExecuteEvent&&) = delete;
-        ExecuteEvent& operator=(const ExecuteEvent&) = delete;
-        ExecuteEvent& operator=(ExecuteEvent&&) = delete;
+        LuaExecuteReply(const LuaExecuteReply&) = delete;
+        LuaExecuteReply(LuaExecuteReply&&) = delete;
+        LuaExecuteReply& operator=(const LuaExecuteReply&) = delete;
+        LuaExecuteReply& operator=(LuaExecuteReply&&) = delete;
     };
 }

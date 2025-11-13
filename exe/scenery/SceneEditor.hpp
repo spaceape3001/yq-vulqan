@@ -22,8 +22,7 @@
 namespace yq::lua {
     class LuaConsoleUI;
     class LuaInputBar;
-    class ExecuteFileEvent;
-    class ExecuteStringEvent;
+    class LuaExecuteReply;
 }
 
 namespace yq::tachyon {
@@ -253,8 +252,7 @@ private:
     void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);
     void    on_light_select_event(const LightSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);
-    void    on_lua_exec_file_event(const lua::ExecuteFileEvent&);
-    void    on_lua_exec_string_event(const lua::ExecuteStringEvent&);
+    void    on_lua_exec_reply(const lua::LuaExecuteReply&);
     void    on_model_select_event(const ModelSelectEvent&);
     void    on_rendered_select_event(const RenderedSelectEvent&);
     void    on_save_tsx_reply(const SaveTSXReply&);

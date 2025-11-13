@@ -8,8 +8,9 @@
 #include "LuaConsoleUIWriter.hpp"
 
 #include <yq/color/colors.hpp>
-#include <yq/luavk/event/ExecuteFileEvent.hpp>
-#include <yq/luavk/event/ExecuteStringEvent.hpp>
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::lua::LuaConsoleUI)
@@ -170,30 +171,23 @@ namespace yq::lua {
         m_channel.output.color = rgba4f(v);
     }
 
-    void        LuaConsoleUI::submit(const ExecuteFileEvent&evt)
+    void        LuaConsoleUI::submit(const LuaExecuteReply& rep)
     {
-        file(evt.file());
-        if(!evt.output().empty())
-            output(evt.output());
-        if(!evt.warning().empty())
-            warning(evt.warning());
-        if(!evt.error().empty())
-            error(evt.error());
-        if(evt.error_code() != std::error_code())
-            _submit(m_channel.errorCode, evt.error_code().message());
-    }
-    
-    void        LuaConsoleUI::submit(const ExecuteStringEvent&evt)
-    {
-        command(evt.command());
-        if(!evt.output().empty())
-            output(evt.output());
-        if(!evt.warning().empty())
-            warning(evt.warning());
-        if(!evt.error().empty())
-            error(evt.error());
-        if(evt.error_code() != std::error_code())
-            _submit(m_channel.errorCode, evt.error_code().message());
+        if(const LuaExecuteStringRequest* cmd = dynamic_cast<const LuaExecuteStringRequest*>(rep.request())){
+            command(cmd->text());
+        }
+        if(const LuaExecuteFileRequest* cmd = dynamic_cast<const LuaExecuteFileRequest*>(rep.request())){
+            file(cmd->file());
+        }
+
+        if(!rep.output().empty())
+            output(rep.output());
+        if(!rep.warning().empty())
+            warning(rep.warning());
+        if(!rep.error().empty())
+            error(rep.error());
+        if(rep.error_code() != std::error_code())
+            _submit(m_channel.errorCode, rep.error_code().message());
     }
     
     LuaConsoleUI::Streamer    LuaConsoleUI::warning()

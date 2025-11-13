@@ -16,8 +16,7 @@ namespace yq::tachyon {
 }
 
 namespace yq::lua {
-    class ExecuteFileEvent;
-    class ExecuteStringEvent;
+    class LuaExecuteReply;
     class LuaConsoleUI;
     class LuaInputBar;
 };
@@ -55,8 +54,7 @@ public:
     virtual Execution   setup(const Context&) override;
     
 private:
-    void    on_execute_file(const yq::lua::ExecuteFileEvent&);
-    void    on_execute_string(const yq::lua::ExecuteStringEvent&);
+    void    on_lua_execute_reply(const yq::lua::LuaExecuteReply&);
     void    on_viewer_screenshot_reply(const tachyon::ViewerScreenshotReply&);
 
     FileMode                    m_fileMode = FileMode::None;

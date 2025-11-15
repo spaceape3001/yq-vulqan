@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIWindow.hpp"
 #include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Size2.hpp>
+#include <yq/tachyon/ui/UICalc.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
-#include <yq/tachyon/logging.hpp>
-
-#include <yq/text/format.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
+#include <yq/tachyon/ui/UIWindow.hpp>
+#include <yq/text/format.hpp>
 #include <atomic>
 
 #include <yq/shape/AxBox2.hxx>
@@ -53,33 +53,12 @@ namespace yq::tachyon {
         m_imFlags(cp.m_imFlags),
         m_chFlags(cp.m_chFlags)
     {
-#if 0
-        if(cp.m_positioner)
-            m_positioner    = cp.m_positioner -> clone();
-#endif
     }
     
     UIWindow::~UIWindow()
     {
     }
     
-    bool    UIWindow::append(UIElement* elem) 
-    {
-#if 0    
-        if(UIPositioner* pos = dynamic_cast<UIPositioner*>(elem)){
-            if(m_positioner)
-                delete m_positioner;
-            elem -> m_parent    = this;
-            m_positioner        = pos;
-            return true;
-        } else {
-#endif
-            return UIElements::append(elem);
-#if 0
-        }
-#endif
-    }
-
     UIWindow*   UIWindow::clone() const
     {
         return new UIWindow(*this);
@@ -252,8 +231,15 @@ namespace yq::tachyon {
         if(!open){
             m_flags |= UIFlag::Invisible;  
             closing();
+        } else {
+            for(UIElement* i : m_items){
+                if(UICalc* c = dynamic_cast<UICalc*>(i)){
+                    c->calculate();
+                }
+            }
         }
     }
+    
     Size2F      UIWindow::size() const
     {
         return size(USE);

@@ -415,6 +415,7 @@ add_library(${PROJECT_NAME} SHARED
     
     ui/UIAppMain.cpp
     ui/UIAppMainWriter.cpp
+    ui/UICalc.cpp
     ui/UIConsole.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp

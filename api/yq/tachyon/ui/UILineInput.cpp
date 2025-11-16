@@ -15,7 +15,7 @@ namespace yq::tachyon {
     void UILineInput::init_meta()
     {
         auto w = writer<UILineInput>();
-        w.description("UI CheckBox");
+        w.description("UI Line Input");
         w.property("label", &UILineInput::m_label);
     }
     
@@ -28,8 +28,6 @@ namespace yq::tachyon {
     UILineInput::UILineInput(const UILineInput& cp) : UIElement(cp), m_label(cp.m_label)
     {
         m_text      = cp.m_text;
-        m_max       = cp.m_max;
-        m_size      = 0;
         update(FLAGS);
     }
     
@@ -37,13 +35,17 @@ namespace yq::tachyon {
     {
     }
     
-    void         UILineInput::capacity(set_k, uint16_t n)
+    size_t       UILineInput::capacity() const 
+    { 
+        if(m_text.empty())
+            return 0;
+        return m_text.size() - 1;
+    }
+
+    void         UILineInput::capacity(set_k, size_t n)
     {
-        m_max       = n;
         m_text.clear();
         m_text.resize(n+1, '\0');
-        m_size      = 0;
-       
     }
 
     UILineInput*     UILineInput::clone() const 
@@ -58,23 +60,22 @@ namespace yq::tachyon {
 
     void    UILineInput::render()
     {
-        if(ImGui::InputText(m_label.c_str(), m_text.data(), m_max+1, m_imFlags)){  // and more....
+        if(ImGui::InputText(m_label.c_str(), m_text.data(), m_text.size(), m_imFlags))
             triggered();
-        }
     }
 
     std::string_view UILineInput::text() const
     {
-        return std::string_view( m_text.data(), m_size );
+        return std::string_view( m_text.data() );
     }
 
     void             UILineInput::text(set_k, std::string_view v)
     {
-        if(v.empty()){
-            m_size  = 0;
+        if(v.empty())
             return ;
-        }
-        size_t  n   = std::min((size_t) m_max, v.size());
+        if(m_text.empty())
+            return ;
+        size_t  n   = std::min((size_t) m_text.size()-1, v.size());
         memcpy(m_text.data(), v.data(), n);
         m_text[n]   = '\0';
     }

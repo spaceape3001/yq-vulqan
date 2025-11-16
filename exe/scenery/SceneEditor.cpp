@@ -94,20 +94,19 @@
 #include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
+#include <yq/tachyon/ui/calc/SnapLeftToOtherRightUICalc.hpp>
+
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 
 #include <yq/text/format.hpp>
 #include <yq/text/transform.hpp>
 
 #ifdef YQ_LUA_ENABLE
+#include "LuaPanelUI.hpp"
 #include <yq/luavk/LuaTVM.hpp>
 #include <yq/luavk/reply/LuaExecuteReply.hpp>
 #include <yq/luavk/request/LuaExecuteFileRequest.hpp>
 #include <yq/luavk/request/LuaExecuteStringRequest.hpp>
-#include <yq/luavk/ui/LuaConsoleUI.hpp>
-#include <yq/luavk/ui/LuaConsoleUIWriter.hpp>
-#include <yq/luavk/ui/LuaInputBar.hpp>
-#include <yq/luavk/ui/LuaInputBarWriter.hpp>
 #endif
 
 #include <ImGuiFileDialog.h>
@@ -238,6 +237,7 @@ void SceneEditor::init_meta()
     //  CONTROL PANEL
     
     auto controlpanel       = app.make<ControlPanelUI>();
+    controlpanel.uid("ControlPanel");
     auto cp_tree            = controlpanel.make<UISimpleTree>();
     
     cp_tree.section("Metrics").make<MetricsUI>();
@@ -296,17 +296,15 @@ void SceneEditor::init_meta()
     //cp_spatials.section("Current").make<SpatialTableUI>().uid("SpatialTable");
     //cp_spatials.section("Properties").make<InspectorUI>().uid("SpatialInspector");
 
+    
+    // Simple window thing
+    
     #ifdef YQ_LUA_ENABLE
     /////////////////////////////////
     //  LUA
-    auto lualua     = app.window("Lua");
-    lualua.flags(SET, {UIFlag::Invisible, UIFlag::NoBackground});
-    auto luacon     = lualua.make<lua::LuaConsoleUI>("Console");
-    luacon.flags(SET,{UIFlag::NoDecoration, UIFlag::NoBackground});
-    luacon.uid("LuaConsole");
-    auto luainp     = lualua.make<lua::LuaInputBar>("Input");
-    luainp.uid("LuaInput");
-    
+    auto lualua = app.make<LuaPanelUI>();
+    lualua.flags(SET, {/* UIFlag::Invisible, */ UIFlag::NoBackground});
+    lualua.uid("LuaWindow");
     #endif
 
     /////////////////////////////////
@@ -345,7 +343,7 @@ void SceneEditor::init_meta()
     file_menu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
     
     #ifdef YQ_LUA_ENABLE
-    file_menu.menuitem("LuaExecute Lua...").action(&SceneEditor::cmd_lua_execute);
+    file_menu.menuitem("Execute Lua...").action(&SceneEditor::cmd_file_lua_execute);
     #endif
 
     //(light_menu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::create_payload);
@@ -683,7 +681,7 @@ Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
 void    SceneEditor::_lua(const std::filesystem::path& fp)
 {
     #ifdef YQ_LUA_ENABLE
-    send(new lua::LuaExecuteFileRequest({}, fp));
+    send(new lua::LuaExecuteFileRequest({.target=m_lua.tvm}, fp));
     #endif
 }
 
@@ -880,6 +878,7 @@ void    SceneEditor::action_create_scene(const Payload& pay)
     }
 }
 
+#if 0
 void    SceneEditor::action_lua_execute(const Payload&pay)
 {
     #ifdef YQ_LUA_ENABLE
@@ -897,6 +896,7 @@ void    SceneEditor::action_lua_execute(const Payload&pay)
     send(new yq::lua::LuaExecuteStringRequest({}, l));
     #endif
 }
+#endif
 
 
 void    SceneEditor::cmd_file_new()
@@ -932,12 +932,14 @@ void    SceneEditor::cmd_file_save_as()
     m_fileMode  = FileMode::Save;
 }
 
-void    SceneEditor::cmd_lua_execute()
+void    SceneEditor::cmd_file_lua_execute()
 {
+    #ifdef YQ_LUA_ENABLE
     IGFD::FileDialogConfig config;
     config.path = ".";
     ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose Lua File to LuaExecute", ".lua", config);        
     m_fileMode  = FileMode::Lua;
+    #endif
 }
 
 void    SceneEditor::cmd_screenshot()
@@ -951,7 +953,6 @@ void    SceneEditor::imgui(ViContext&u)
 {
     Widget::imgui(UI,u);
     
-
     if(m_fileMode != FileMode::None){
         ImVec2  minSize = { (float)(0.5 * width()), (float)(0.5 * height()) };
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, minSize)) {
@@ -1020,8 +1021,8 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
 void    SceneEditor::on_lua_exec_reply(const lua::LuaExecuteReply& evt)
 {
     #if YQ_LUA_ENABLE
-    if(m_luaConsole)
-        m_luaConsole -> submit(evt);
+    if(m_lua.panel)
+        m_lua.panel -> submit(evt);
     #endif
 }
 
@@ -1100,18 +1101,17 @@ Execution   SceneEditor::setup(const Context&ctx)
     }
     
     #ifdef YQ_LUA_ENABLE
-    if(!m_luaTVM){
-        Ref<lua::LuaTVM>  ch    = create_child<lua::LuaTVM>();
-        m_luaTVM        = *ch;
+    if(!m_lua.tvm){
+        lua::LuaTVM*  ch = create_on<lua::LuaTVM>(AUX);
+        m_lua.tvm        = *ch;
         
         subscribe(ch->id());
-        ch->subscribe(id());
-        
-        ch->owner(PUSH, AUXILLARY);
-        
+
         //  might do some standard configuration (later)
+
+        return WAIT;
     } else {
-        if(!curFrame->object(m_luaTVM))
+        if(!curFrame->object(m_lua.tvm))
             return WAIT;
     }
     #endif
@@ -1138,6 +1138,10 @@ Execution   SceneEditor::setup(const Context&ctx)
             return WAIT;
             
         send(new ListenCommand({.target=m_controller.space}, TypedID(vid, Type::Viewer)));
+        #ifdef YQ_LUA_ENABLE
+            send(new ListenCommand({.target=m_lua.tvm}, *this));
+        #endif
+
         m_controller.init = true;
     }
 
@@ -1171,10 +1175,10 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_scene.table           = static_cast<SceneTableUI*>(element(FIRST, "SceneTable"));
 
     #ifdef YQ_LUA_ENABLE
-    if(!m_luaConsole)
-        m_luaConsole            = static_cast<lua::LuaConsoleUI*>(element(FIRST, "LuaConsole"));
-    if(!m_luaInput)
-        m_luaInput              = static_cast<lua::LuaInputBar*>(element(FIRST, "LuaInput"));
+    if(!m_lua.panel){
+        m_lua.panel             = static_cast<LuaPanelUI*>(element(FIRST, "LuaWindow"));
+        m_lua.panel -> tvm(SET, m_lua.tvm);
+    }
     #endif
         
     _activate((CameraID) m_camera.space );

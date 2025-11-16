@@ -109,6 +109,9 @@ namespace yq::tachyon {
         
         bool                flag(UIFlag v) const;
         
+        //! TRUE if the invisible flag is set
+        bool                invisible() const;
+
         //! Checks to see if the UI element is or is derived from specified type (or is a generator)
         virtual Tristate    is(const UIElementMeta& baseInfo) const;
         
@@ -137,6 +140,7 @@ namespace yq::tachyon {
         //! Viewport for content in screen coordinates
         virtual AxBox2F     viewport(content_k) const;
         
+        
 
         /*! \brief Current widget being processed (NULL if this isn't true)
         
@@ -150,6 +154,16 @@ namespace yq::tachyon {
         static const UIStyle&   style();
         
         bool                    readonly() const;
+
+        /*! \brief RENDER/DRAW the element as a whole
+        
+            This is the first hook for rendering/drawing the ImGui content; this is what 
+            is normally overriden.
+        */
+        virtual void            render() {}
+
+        //! Called if there's an if-show/perform test inside render, or similar encapsulation
+        virtual void            content() {}
 
     protected:
         friend class Widget;
@@ -205,15 +219,6 @@ namespace yq::tachyon {
         //! Opportunity to make child elements
         virtual bool            submake() { return true; }
 
-        /*! \brief RENDER/DRAW the element as a whole
-        
-            This is the first hook for rendering/drawing the ImGui content; this is what 
-            is normally overriden.
-        */
-        virtual void            render() {}
-
-        //! Called if there's an if-show/perform test inside render, or similar encapsulation
-        virtual void            content() {}
         
         //! Called when we've been triggered by a user event (ie, mouse clicked)
         //! \note Your state (if it's not-singular) should be at least protected-accessible
@@ -263,6 +268,9 @@ namespace yq::tachyon {
         
         //! Actions to take when triggered (if this is such an element)
         std::vector<ActionCPtr> m_actions;
+
+        static UIElement*       element(first_k, uint64_t);
+        static UIElement*       element(first_k, const std::string&);
         
     private:
         static thread_local Widget*     s_widget;

@@ -10,17 +10,17 @@
 #include <yq/typedef/color.hpp>
 
 namespace yq::lua {
-    class LuaConsoleUI;
+    class LuaConsole;
 
-    class LuaConsoleUIWriter : public tachyon::UIConsoleWriter {
+    class LuaConsoleWriter : public tachyon::UIConsoleWriter {
     public:
     public:
-        LuaConsoleUIWriter();
-        LuaConsoleUIWriter(LuaConsoleUI*);
-        LuaConsoleUIWriter(const LuaConsoleUIWriter&);
-        ~LuaConsoleUIWriter();
+        LuaConsoleWriter();
+        LuaConsoleWriter(LuaConsole*);
+        LuaConsoleWriter(const LuaConsoleWriter&);
+        ~LuaConsoleWriter();
         
-        LuaConsoleUI*  element();
+        LuaConsole*  element();
 
         void        command(const color_t&);
         void        debug(const color_t&);

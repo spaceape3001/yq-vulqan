@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UIWindowWriter.hpp>
+#include <yq/tachyon/ui/UIElementWriter.hpp>
 
 namespace yq::tachyon {
     class UIConsole;
     
-    class UIConsoleWriter : public UIWindowWriter {
+    class UIConsoleWriter : public UIElementWriter {
     public:
         UIConsoleWriter();
         UIConsoleWriter(UIConsole*);

@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
         using Writer = UICalcWriter;
     
-        UICalc();
+        UICalc(UIFlags flags={});
         UICalc(const UICalc&);
         virtual ~UICalc();
         

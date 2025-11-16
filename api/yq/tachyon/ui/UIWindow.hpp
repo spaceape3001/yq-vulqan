@@ -51,6 +51,8 @@ namespace yq::tachyon {
         void        bumper(set_k, top_k, float);
         void        bumper(set_k, bottom_k, float);
         
+        void        corners(set_k, next_k, const Vector2F&, const Vector2F&);
+        
         float       height() const;
         float       height(actual_k) const;
         float       height(calculate_k) const;
@@ -72,6 +74,8 @@ namespace yq::tachyon {
         void        position(set_k, calculate_k, Vector2F);
         void        position(set_k, next_k, Vector2F);
         void        position(set_k, specification_k, Vector2F);
+        
+        float       right() const;
         
         Size2F      size() const;
         Size2F      size(actual_k) const;

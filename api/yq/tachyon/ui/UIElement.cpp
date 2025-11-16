@@ -88,6 +88,20 @@ namespace yq::tachyon {
         return path.filename().stem().string();
     }
 
+    UIElement*       UIElement::element(first_k, uint64_t bId)
+    {
+        if(!s_widget)
+            return nullptr;
+        return s_widget -> element(FIRST, bId);
+    }
+    
+    UIElement*       UIElement::element(first_k, const std::string& uId)
+    {
+        if(!s_widget)   
+            return nullptr;
+        return s_widget -> element(FIRST, uId);
+    }
+
     void UIElement::init_meta()
     {
         auto w = writer<UIElement>();
@@ -242,6 +256,11 @@ namespace yq::tachyon {
         update(FLAGS);
     }
 
+    bool    UIElement::invisible() const
+    {
+        return m_flags(UIFlag::Invisible);
+    }
+
     Tristate    UIElement::is(const UIElementMeta& baseInfo) const
     {
         return (metaInfo().is_base(baseInfo) || metaInfo().is_this(baseInfo)) ? Tristate::YES : Tristate::NO;
@@ -329,4 +348,5 @@ namespace yq::tachyon {
     {
         return viewport();
     }
+
 }

@@ -10,6 +10,7 @@
 
 #include <yq/tachyon/ui/UIAppMainWriter.hpp>
 #include <yq/tachyon/ui/UIButtonWriter.hpp>
+#include <yq/tachyon/ui/UICalcWriter.hpp>
 #include <yq/tachyon/ui/UICheckBoxWriter.hpp>
 #include <yq/tachyon/ui/UIEditorWriter.hpp>
 #include <yq/tachyon/ui/UIElementsWriter.hpp>

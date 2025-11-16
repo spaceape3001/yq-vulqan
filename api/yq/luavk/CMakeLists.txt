@@ -15,8 +15,9 @@ add_library(yq_luavk SHARED
     request/LuaExecuteFileRequest.cpp
     request/LuaExecuteStringRequest.cpp
     request/LuaRequest.cpp
-    ui/LuaConsoleUI.cpp
+    ui/LuaConsole.cpp
     ui/LuaInputBar.cpp
+    ui/LuaWindow.cpp
 )
 
 target_include_directories(yq_luavk

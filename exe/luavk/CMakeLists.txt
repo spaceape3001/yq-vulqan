@@ -5,6 +5,7 @@
 ################################################################################
 
 add_executable(luavk 
+    LuaPanel.cpp
     LuaWin.cpp
     main.cpp
 )

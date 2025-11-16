@@ -59,6 +59,17 @@ namespace yq::tachyon {
     {
     }
     
+    void        UIWindow::corners(set_k, next_k, const Vector2F& c1, const Vector2F& c2)
+    {
+        m_x.next    = std::min(c1.x, c2.x);
+        m_w.next    = std::max(c1.x, c2.x) - m_x.next;
+        m_y.next    = std::min(c1.y, c2.y);
+        m_h.next    = std::max(c1.y, c2.y) - m_y.next;
+        
+        m_flags |= UIFlag::SetSizeOnce;
+        m_flags        |= UIFlag::SetPositionOnce;
+    }
+    
     UIWindow*   UIWindow::clone() const
     {
         return new UIWindow(*this);
@@ -240,6 +251,11 @@ namespace yq::tachyon {
         }
     }
     
+    float       UIWindow::right() const
+    {
+        return x() + width();
+    }
+
     Size2F      UIWindow::size() const
     {
         return size(USE);
@@ -411,12 +427,12 @@ namespace yq::tachyon {
     void        UIWindow::x(set_k, next_k, float v)
     {
         m_x.next    = v;
+        m_flags |= UIFlag::SetPositionOnce;
     }
     
     void        UIWindow::x(set_k, specification_k, float v)
     {
         m_x.spec = v;
-        m_flags |= UIFlag::SetPositionOnce;
     }
 
     float       UIWindow::y() const

@@ -24,13 +24,13 @@ namespace yq::tachyon {
         const std::string&      label() const { return m_label; }
         std::string_view        text() const;
         const char*             title() const override;
-        uint16_t                capacity() const { return m_max; }
+        size_t                  capacity() const;
 
         static void init_meta();
         
         void                    label(set_k, std::string_view);
         void                    text(set_k, std::string_view);
-        void                    capacity(set_k, uint16_t);
+        void                    capacity(set_k, size_t);
         
     protected:
         virtual UILineInput*     clone() const override;
@@ -42,8 +42,6 @@ namespace yq::tachyon {
     private:
         std::string             m_label;
         std::vector<char>       m_text;
-        uint16_t                m_max = 0;
-        uint16_t                m_size;
         ImGuiInputTextFlags     m_imFlags;
     };
 }

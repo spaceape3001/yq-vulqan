@@ -6,23 +6,24 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UIWindow.hpp>
+#include <yq/luavk/ui/LuaWindow.hpp>
 
-using yq::tachyon::UIWindow;
+namespace yq::lua {
+    class LuaExecuteReply;
+}
+
 using yq::tachyon::UIFlags;
+using yq::lua::LuaWindow;
+using yq::lua::LuaExecuteReply;
 
-class LuaPanelUI : public UIWindow {
+class LuaPanelUI : public LuaWindow {
     YQ_OBJECT_DECLARE(LuaPanelUI, UIWindow)
-
 public:
     static void init_meta();
     LuaPanelUI(UIFlags flags={});
     LuaPanelUI(const LuaPanelUI& cp);
+    virtual ~LuaPanelUI();
     
     virtual LuaPanelUI*   clone() const;
-    void    render() override;
-    
-private:
-    float   m_min   = 0.10;
-    float   m_max   = 0.80;
+    void            render() override;
 };

@@ -10,7 +10,7 @@
 
 namespace yq::lua {
     class LuaInputBar;
-    class LuaInputBarWriter : public tachyon::UIInputBarWriter {
+    class LuaInputBarWriter : public tachyon::UIElementWriter {
     public:
         LuaInputBarWriter();
         LuaInputBarWriter(LuaInputBar*);
@@ -18,5 +18,8 @@ namespace yq::lua {
         ~LuaInputBarWriter();
         
         LuaInputBar* element();
+
+        LuaInputBarWriter   capacity(size_t);
+        LuaInputBarWriter   label(std::string_view);
     };
 }

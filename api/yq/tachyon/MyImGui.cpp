@@ -363,6 +363,29 @@ namespace ImGui {
         return InputScalarN(label, ImGuiDataType_Float, v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
     }
 
+    ///////////////////////////
+    //  Spacing
+    ///////////////////////////
+
+    IMGUI_API float HorzDummyTo(float x)
+    {
+        float   dx  = GetCursorPos().x;
+        if(dx <= 0.)
+            return dx;
+        Dummy({dx, 1.});
+        return dx;
+    }
+
+    IMGUI_API float VertDummyTo(float y)
+    {
+        float   dy  = GetCursorPos().y;
+        if(dy <= 0.)
+            return dy;
+        Dummy({1.,dy});
+        return dy;
+    }
+
+
     ////////////////////////////////////////////////////////////////////////////
 
 

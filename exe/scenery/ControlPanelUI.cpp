@@ -18,7 +18,7 @@ void ControlPanelUI::init_meta()
     w.description("Scene Editor's Control Panel");
 }
 
-ControlPanelUI::ControlPanelUI(UIFlags flags) : UIWindow("Control Panel", flags)
+ControlPanelUI::ControlPanelUI(UIFlags flags) : UIWindow("Control Panel", flags | UIFlag::NoCollapse )
 {
 }
 

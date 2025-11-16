@@ -5,13 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/container/reverse.hpp>
+#include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/ui/UIConsole.hpp>
 #include <yq/tachyon/ui/UIConsoleWriter.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/text/transform.hpp>
 #include <yq/text/vsplit.hpp>
 #include <yq/typedef/string_vectors.hpp>
+
+#include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector2.hxx>
+
+#include <yq/color/colors.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIConsole)
 
@@ -30,14 +36,16 @@ namespace yq::tachyon {
 
     void UIConsole::init_meta()
     {
+        auto w = writer<UIConsole>();
+        w.description("Terminal Like Console");
     }
     
-    UIConsole::UIConsole(std::string_view z, UIFlags flags) : 
-        UIWindow(z, flags | UIFlag::AlwaysHorizontalScrollBar | UIFlag::AlwaysVerticalScrollBar)
+    UIConsole::UIConsole(UIFlags flags) : 
+        UIElement(flags | UIFlag::AlwaysHorizontalScrollBar | UIFlag::AlwaysVerticalScrollBar)
     {
     }
     
-    UIConsole::UIConsole(const UIConsole& cp) : UIWindow(cp), m_lines(cp.m_lines)
+    UIConsole::UIConsole(const UIConsole& cp) : UIElement(cp), m_lines(cp.m_lines)
     {
     }
     
@@ -45,6 +53,14 @@ namespace yq::tachyon {
     {
     }
 
+
+    void    UIConsole::clear()
+    {
+        m_lines.clear();
+        if(m_cursor.y > 0)
+            m_cursor.y  = 0;
+    }
+    
     void    UIConsole::submit(const Options& options, std::string_view txt)
     {
         bool empty  = false;
@@ -75,22 +91,24 @@ namespace yq::tachyon {
         submit({}, txt);
     }
 
-    void    UIConsole::clear()
+    void    UIConsole::render() 
     {
-        m_lines.clear();
-        if(m_cursor.y > 0)
-            m_cursor.y  = 0;
+        if(ImGui::BeginChild("##Console", {m_size.x, m_size.y}, 
+            ImGuiChildFlags_Borders, 
+            ImGuiWindowFlags_AlwaysVerticalScrollbar|ImGuiWindowFlags_AlwaysHorizontalScrollbar
+        )){
+            content();
+        }
+        ImGui::EndChild();
     }
     
-
+    
     void    UIConsole::content() 
     {
         const ImGuiStyle&   style   = ImGui::GetStyle();
         ImDrawList*     drawList    = ImGui::GetWindowDrawList();
         Vector2F        nw          = (Vector2F) ImGui::GetWindowPos() + (Vector2F) style.FramePadding;
         Vector2F        se          = nw + (Vector2F) ImGui::GetWindowSize() - Vector2F(ALL, style.ScrollbarSize) - (Vector2F) style.FramePadding;
-        //Vector2F        ne          = { se.x, nw.y };
-        //Vector2F        sw          = { nw.x, se.y };
         float           th          = ImGui::GetTextLineHeightWithSpacing();
         
         for(;m_digest < m_lines.size();++m_digest){
@@ -106,17 +124,19 @@ namespace yq::tachyon {
             m_txtW      = std::max(m_txtW, l.x+l.w);
         }
         
-        
-        //ImU32   dc    = ImGui::Color(color::BrickRed);
-        
-        
         //  scroll bars....
         //  we'll do the drawing here...
 
-        // temporary hack
-        //drawList->AddLine(nw, se, dc);
-        //drawList->AddLine(sw, ne, dc);
-        //drawList->AddEllipse(0.5*(se+nw), 0.5*(se-nw), dc);
+        #if 0
+            //  This section is for when the extents are being questioned. 
+            //  Enable and check for a cross & ellipse between the corners & edges.
+            ImU32   dc    = ImGui::Color(color::BrickRed);
+            Vector2F        ne          = { se.x, nw.y };
+            Vector2F        sw          = { nw.x, se.y };
+            drawList->AddLine(nw, se, dc);
+            drawList->AddLine(sw, ne, dc);
+            drawList->AddEllipse(0.5*(se+nw), 0.5*(se-nw), dc);
+        #endif
         
         float       y   = se.y - th;
         for(const Line& l : reverse(m_lines)){
@@ -133,6 +153,11 @@ namespace yq::tachyon {
         return new UIConsole(*this);
     }
         
+    void            UIConsole::size(set_k, const Size2F&v)
+    {
+        m_size  = v;
+    }
+
     
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -145,7 +170,7 @@ namespace yq::tachyon {
         return static_cast<UIConsole*>(m_ui);
     }
     
-    UIConsoleWriter::UIConsoleWriter(UIConsole* ui) : UIWindowWriter(ui)
+    UIConsoleWriter::UIConsoleWriter(UIConsole* ui) : UIElementWriter(ui)
     {
     }
 }

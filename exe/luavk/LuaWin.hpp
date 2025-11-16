@@ -9,16 +9,14 @@
 #include <yq/tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {
-    struct Payload;
-    class UIConsole;
-    class UIInputBar;
     class ViewerScreenshotReply;
 }
 
 namespace yq::lua {
     class LuaExecuteReply;
-    class LuaConsoleUI;
-    class LuaInputBar;
+    //class LuaConsoleUI;
+    //class LuaInputBar;
+    class LuaWindow;
 };
 
 using namespace yq;
@@ -35,7 +33,7 @@ public:
     };
     
     
-    LuaWin(TachyonID luavm);
+    LuaWin(TypedID luavm);
     
     ~LuaWin();
 
@@ -46,10 +44,10 @@ public:
     static void init_meta();
     void    _debug(std::string_view);
     
-    void    cmd_user_input(const Payload&);
+    //void    cmd_user_input(const Payload&);
     void    cmd_lua_file();
 
-    void                cmd_screenshot();
+    void    cmd_screenshot();
 
     virtual Execution   setup(const Context&) override;
     
@@ -58,7 +56,8 @@ private:
     void    on_viewer_screenshot_reply(const tachyon::ViewerScreenshotReply&);
 
     FileMode                    m_fileMode = FileMode::None;
-    yq::tachyon::TachyonID      m_lua;
-    lua::LuaConsoleUI*          m_console   = nullptr;
-    lua::LuaInputBar*           m_input     = nullptr;
+    yq::tachyon::TypedID        m_tvm;
+    lua::LuaWindow*             m_window    = nullptr;
+    //lua::LuaConsoleUI*          m_console   = nullptr;
+    //lua::LuaInputBar*           m_input     = nullptr;
 };

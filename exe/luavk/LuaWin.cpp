@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "LuaPanel.hpp"
 #include "LuaWin.hpp"
 
 #include <yq/date/dateutils.hpp>
@@ -11,10 +12,6 @@
 #include <yq/luavk/request/LuaExecuteFileRequest.hpp>
 #include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/luavk/reply/LuaExecuteReply.hpp>
-#include <yq/luavk/ui/LuaConsoleUI.hpp>
-#include <yq/luavk/ui/LuaConsoleUIWriter.hpp>
-#include <yq/luavk/ui/LuaInputBar.hpp>
-#include <yq/luavk/ui/LuaInputBarWriter.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
@@ -33,7 +30,7 @@ using namespace yq::tachyon;
 
 YQ_TACHYON_IMPLEMENT(LuaWin)
 
-LuaWin::LuaWin(TachyonID luavm) : m_lua(luavm)
+LuaWin::LuaWin(TypedID luavm) : m_tvm(luavm)
 {
 }
 
@@ -43,8 +40,8 @@ LuaWin::~LuaWin()
 
 void    LuaWin::_debug(std::string_view v)
 {
-    if(m_console && !v.empty())
-        m_console -> debug(v);
+    if(m_window && !v.empty())
+        m_window -> debug(v);
 }
 
 void    LuaWin::imgui(ViContext&u) 
@@ -60,7 +57,7 @@ void    LuaWin::imgui(ViContext&u)
                 case FileMode::None:
                     break;
                 case FileMode::Script:
-                    send(new yq::lua::LuaExecuteFileRequest({}, filePathName));
+                    send(new yq::lua::LuaExecuteFileRequest({.target=m_tvm}, filePathName));
                     break;
                 }
             }
@@ -86,6 +83,7 @@ void    LuaWin::cmd_screenshot()
     send(new ViewerScreenshotRequest({.target=view}));
 }
 
+#if 0
 void LuaWin::cmd_user_input(const Payload& pay)
 {
     if(pay.arguments().empty())
@@ -101,12 +99,13 @@ void LuaWin::cmd_user_input(const Payload& pay)
 
     send(new yq::lua::LuaExecuteStringRequest({}, l));
 }
+#endif
 
 void    LuaWin::on_lua_execute_reply(const yq::lua::LuaExecuteReply&rep)
 {
-    if(!m_console) [[unlikely]]
+    if(!m_window) [[unlikely]]
         return;
-    m_console->submit(rep);
+    m_window->submit(rep);
 }
 
 
@@ -122,16 +121,13 @@ Execution   LuaWin::setup(const Context&u)
     Execution   ex  = Widget::setup(u);
     if(is_error(ex))
         return ex;
-    if(!m_console){
-        m_console   = dynamic_cast<lua::LuaConsoleUI*>(element(FIRST, "console"));
-        if(!m_console)
+    if(!m_window){
+        m_window   = dynamic_cast<lua::LuaWindow*>(element(FIRST, "lua"));
+        if(!m_window)
             return WAIT;
-            
-        m_console->info("Welcome to the Lua ImGui Interpreter (of the Your Quill project)");
+        m_window->tvm(SET, m_tvm);
+        m_window->info("Welcome to the Lua ImGui Interpreter (of the Your Quill project)");
     }
-    
-    if(!m_input)
-        m_input     = dynamic_cast<lua::LuaInputBar*>(element(FIRST, "input"));
     
     return {};
 }
@@ -155,15 +151,15 @@ void LuaWin::init_meta()
     file.menuitem("Run...").action(&LuaWin::cmd_lua_file);
     file.menuitem("Screenshot", "F12").action(&LuaWin::cmd_screenshot);
     
-    auto lay        = app.make<UIVBoxLayout>();
+    //auto lay        = app.make<UIVBoxLayout>();
     
-    auto console    = lay.make<lua::LuaConsoleUI>("Console");
+    auto lualua    = app.make<LuaPanel>("Lua");
     //console.bumper(BOTTOM, 30.);
-    console.uid("console");
+    lualua.uid("lua");
 
-    auto input      = lay.make<lua::LuaInputBar>("##Input", UIFlag::NoDecoration);
-    input.height(40);
-    input.action(&LuaWin::cmd_user_input);
-    input.uid("input");
+    //auto input      = lay.make<lua::LuaInputBar>("##Input", UIFlag::NoDecoration);
+    //input.height(40);
+    //input.action(&LuaWin::cmd_user_input);
+    //input.uid("input");
 
 }

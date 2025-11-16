@@ -11,24 +11,24 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/tachyon/ui/UIConsole.hpp>
 #include <yq/typedef/color.hpp>
+#include <filesystem>
 
 namespace yq::lua {
     class LuaExecuteReply;
     
-    class LuaConsoleUIWriter;
+    class LuaConsoleWriter;
 
-    class LuaConsoleUI : public tachyon::UIConsole {
-        YQ_OBJECT_DECLARE(LuaConsoleUI, tachyon::UIConsole)
+    class LuaConsole : public tachyon::UIConsole {
+        YQ_OBJECT_DECLARE(LuaConsole, tachyon::UIConsole)
     public:
     
-    
-        using Writer = LuaConsoleUIWriter;
+        using Writer = LuaConsoleWriter;
     
         struct Streamer;
         
-        LuaConsoleUI(std::string_view, tachyon::UIFlags flags={});
-        LuaConsoleUI(const LuaConsoleUI&);
-        ~LuaConsoleUI();
+        LuaConsole(tachyon::UIFlags flags={});
+        LuaConsole(const LuaConsole&);
+        ~LuaConsole();
 
         Streamer    command();
         void        command(std::string_view);
@@ -66,7 +66,7 @@ namespace yq::lua {
         static void init_meta();
 
     protected:
-        LuaConsoleUI*      clone() const override;
+        LuaConsole*      clone() const override;
 
     private:
         struct Channel {
@@ -87,7 +87,7 @@ namespace yq::lua {
         void    _submit(const Channel&, std::string_view);
     };
     
-    class LuaConsoleUI::Streamer : public Stream {
+    class LuaConsole::Streamer : public Stream {
     public:
         ~Streamer();
 
@@ -95,12 +95,12 @@ namespace yq::lua {
         bool    write(const char*, size_t) override;
         
     private:
-        friend class LuaConsoleUI;
-        Streamer(LuaConsoleUI&, const Channel&);
+        friend class LuaConsole;
+        Streamer(LuaConsole&, const Channel&);
     
         void _post();
     
-        LuaConsoleUI&   m_ui;
+        LuaConsole&   m_ui;
         const Channel&  m_channel;
         std::string     m_buffer;
     };

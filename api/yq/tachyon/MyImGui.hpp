@@ -483,6 +483,18 @@ namespace ImGui {
         });
     }
 
+    ///////////////////////////
+    //  Spacing
+    ///////////////////////////
+
+    //! Adds dummy space to get horizontal spacing to x value, returns the size necessary, negative means it's already
+    //! Too far
+    IMGUI_API float HorzDummyTo(float z);
+    
+    //! Adds dummy space to get vertical spacing to y value, returns the size necessary, negative means it's already
+    //! Too far
+    IMGUI_API float VertDummyTo(float y);
+
     #if 0
     ///////////////////////////
     //  SPINNERS (DISABLED)

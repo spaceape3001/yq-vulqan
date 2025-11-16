@@ -19,9 +19,11 @@
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/core/Future.hpp>
 
+#ifdef YQ_LUA_ENABLE
+    #undef YQ_LUA_ENABLE
+#endif
+
 namespace yq::lua {
-    class LuaConsoleUI;
-    class LuaInputBar;
     class LuaExecuteReply;
 }
 
@@ -48,6 +50,7 @@ class ControllerTableUI;
 class ControllerSelectEvent;
 class LightTableUI;
 class LightSelectEvent;
+class LuaPanelUI;
 class ModelTableUI;
 class ModelSelectEvent;
 class PhysicsTableUI;
@@ -110,14 +113,12 @@ public:
     void                action_create_rendered_spatial(const Payload&);
     void                action_create_scene(const Payload&);
 
-    void                action_lua_execute(const Payload&);
-
     void                cmd_file_open();
     void                cmd_file_save();
     void                cmd_file_save_as();
     void                cmd_file_new();
     
-    void                cmd_lua_execute();
+    void                cmd_file_lua_execute();
     
     void                cmd_screenshot();
 
@@ -204,9 +205,10 @@ private:
     std::filesystem::path       m_filepath;
     bool                        m_defaultInit   = false;
     
-    lua::LuaConsoleUI*          m_luaConsole    = nullptr;
-    lua::LuaInputBar*           m_luaInput      = nullptr;
-    TypedID                     m_luaTVM;
+    struct {
+        LuaPanelUI*             panel           = nullptr;
+        TypedID                 tvm;
+    } m_lua;
 
     //! Loads (but not schedule) the given TSX file
     static Expect<TachyonPtrVector>     _load(const std::filesystem::path&);

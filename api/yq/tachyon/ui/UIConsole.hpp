@@ -6,8 +6,10 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UIWindow.hpp>
-
+#include <yq/tachyon/ui/UIElement.hpp>
+#include <yq/color/RGBA.hpp>
+#include <yq/shape/Size2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {
 
@@ -16,8 +18,8 @@ namespace yq::tachyon {
     /*! \brief A terminal like auto-scrolling pane of text
     
     */
-    class UIConsole : public UIWindow {
-        YQ_OBJECT_DECLARE(UIConsole, UIWindow)
+    class UIConsole : public UIElement  {
+        YQ_OBJECT_DECLARE(UIConsole, UIElement)
     public:    
 
         using Writer = UIConsoleWriter;
@@ -28,7 +30,7 @@ namespace yq::tachyon {
             std::string     pre     = {};                   // pre-text/prompt to the front
         };
     
-        UIConsole(std::string_view, UIFlags flags={});
+        UIConsole(UIFlags flags={});
         UIConsole(const UIConsole&);
         ~UIConsole();
     
@@ -39,9 +41,14 @@ namespace yq::tachyon {
         void    clear();
 
         static void init_meta();
+        
+        const Size2F&   size() const { return m_size; }
+        void            size(set_k, const Size2F&);
     
-    protected:
+        void            render() override;
         void            content() override;
+        
+    protected:
         UIConsole*      clone() const override;
 
     private:
@@ -55,6 +62,7 @@ namespace yq::tachyon {
         double                  m_txtH      = 0.;
         float                   m_txtW      = 0.;
         size_t                  m_digest    = 0;
+        Size2F                  m_size      = {};
     };
 
 }

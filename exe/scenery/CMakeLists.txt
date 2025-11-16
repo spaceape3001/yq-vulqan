@@ -43,6 +43,10 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 if(Build_Lua)
+    target_sources(${PROJECT_NAME}
+        PRIVATE
+        LuaPanelUI.cpp
+    )
     target_link_libraries(${PROJECT_NAME} 
         PUBLIC
             yq_luavk

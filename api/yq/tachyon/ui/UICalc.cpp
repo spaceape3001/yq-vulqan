@@ -12,7 +12,7 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::UICalc)
 
 namespace yq::tachyon {
 
-    UICalc::UICalc()
+    UICalc::UICalc(UIFlags flags) : UIElement(flags | UIFlag::Invisible)
     {
     }
     

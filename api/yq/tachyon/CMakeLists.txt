@@ -438,6 +438,8 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIUtils.cpp
     ui/UIWindow.cpp
     ui/UIWindowWriter.cpp
+    
+    ui/calc/SnapLeftToOtherRightUICalc.cpp
 
     ui/layout/UIHBoxLayout.cpp
     ui/layout/UIVBoxLayout.cpp

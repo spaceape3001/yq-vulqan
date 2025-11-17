@@ -17,6 +17,8 @@
 #include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/api/Reply.hpp>
 #include <yq/tachyon/api/Request.hpp>
+#include <yq/tachyon/api/Interface.hpp>
+#include <yq/tachyon/api/InterfaceMeta.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/text/match.hpp>
@@ -24,7 +26,6 @@
 #include <yq/lua/stdhandlers.hxx>
 
 using namespace yq;
-using namespace yq::lua;
 using namespace yq::tachyon;
 
 namespace {
@@ -32,30 +33,32 @@ namespace {
     {
         int n   = 0;
         for(const TachyonMeta* tm : TachyonMeta::all()){
-            push(l, META, tm);
+            lua::push(l, META, tm);
             ++n;
         }
         return n;
     }
 
+    int lh_tm_interfaces(lua_State* l)
+    {
+        int nargs   = lua_gettop(l);
+        for(int n=1;n<nargs;++n){
+            auto mm  = lua::meta(l,n);
+            if(!mm)
+                continue;
+            const TachyonMeta* tm = dynamic_cast<const TachyonMeta*>(*mm);
+            if(!tm)
+                continue;
+            for(auto & i : tm->interfaces(true).all)
+                lua::push(l, META, i);
+        }
+        return lua_gettop(l) - nargs;
+    }
+
     void reg_tachyon()
     {
+        using namespace yq::lua;
         if(ModuleInfo* mi = reg(MODULE, "meta")){
-            if(FunctionInfo* fi = mi -> add("command", lh_object_meta_as<Command>)){
-                fi -> brief("Looks up command meta");
-            }
-            if(FunctionInfo* fi = mi -> add("event", lh_object_meta_as<Event>)){
-                fi -> brief("Looks up event meta");
-            }
-            if(FunctionInfo* fi = mi -> add("post", lh_object_meta_as<Post>)){
-                fi -> brief("Looks up post meta");
-            }
-            if(FunctionInfo* fi = mi -> add("reply", lh_object_meta_as<Reply>)){
-                fi -> brief("Looks up reply meta");
-            }
-            if(FunctionInfo* fi = mi -> add("request", lh_object_meta_as<Request>)){
-                fi -> brief("Looks up request meta");
-            }
             if(FunctionInfo* fi = mi -> add("tachyon", lh_object_meta_as<Tachyon>)){
                 fi -> brief("Looks up tachyon meta");
             }
@@ -63,6 +66,13 @@ namespace {
                 fi -> brief("Returns all tachyon metas");
             }
         }
+        
+        if(ModuleInfo* mi = reg(META, yq::meta<Tachyon>())){
+            if(FunctionInfo* fi = mi -> add("interfaces", lh_tm_interfaces)){
+                fi -> brief("Returns all interfaces on the meta");
+            }
+        }
+        
     }
     
     YQ_INVOKE(reg_tachyon();)

@@ -19,10 +19,6 @@
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/core/Future.hpp>
 
-#ifdef YQ_LUA_ENABLE
-    #undef YQ_LUA_ENABLE
-#endif
-
 namespace yq::lua {
     class LuaExecuteReply;
 }

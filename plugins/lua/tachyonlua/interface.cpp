@@ -13,7 +13,8 @@
 #include <yq/lua/info/ModuleInfo.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
-#include <yq/tachyon/api/interface.hpp>
+#include <yq/tachyon/api/Interface.hpp>
+#include <yq/tachyon/api/InterfaceMeta.hpp>
 #include <yq/text/match.hpp>
 #include <lua.hpp>
 #include <yq/lua/stdhandlers.hxx>

@@ -1178,6 +1178,7 @@ Execution   SceneEditor::setup(const Context&ctx)
     if(!m_lua.panel){
         m_lua.panel             = static_cast<LuaPanelUI*>(element(FIRST, "LuaWindow"));
         m_lua.panel -> tvm(SET, m_lua.tvm);
+        m_lua.panel -> info("Scenery Editor's Lua Panel, try help() to get started");
     }
     #endif
         

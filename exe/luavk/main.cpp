@@ -35,8 +35,6 @@ int main(int argc, char* argv[])
     Meta::init();
     load_plugin_dir("plugin/lua");
     Meta::init();
-    load_plugin_dir("plugin/luavk");
-    Meta::init();
     
     lua::initialize();
 

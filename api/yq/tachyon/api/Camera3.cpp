@@ -74,8 +74,10 @@ namespace yq::tachyon {
         w.description("Camera in 3D");
         w.slot(&Camera³::on_set_screen);
         w.abstract();
+        w.alias("Camera3");
         
         auto wt = writer<Camera³ID>();
+        wt.alias("Camera3ID");
         wt.description("3D Camera Identifier");
         wt.set(Meta::Flag::ID);
     }

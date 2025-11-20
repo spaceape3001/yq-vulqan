@@ -75,10 +75,12 @@ namespace yq::tachyon {
         ③::init_meta(w);
         w.description("Rendered in 3D");
         w.abstract();
+        w.alias("Rendered3");
 
         auto wt = writer<Rendered³ID>();
         wt.description("3D Rendered Identifier");
         wt.set(Meta::Flag::ID);
+        wt.alias("Rendered3ID");
     }
 }
 

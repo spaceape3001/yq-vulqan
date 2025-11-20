@@ -66,9 +66,11 @@ namespace yq::tachyon {
         auto w = writer<Scene³>();
         ③::init_meta(w);
         w.description("Scene in 3D");
+        w.alias("Scene3");
 
         auto wt = writer<Scene³ID>();
         wt.description("3D Scene Identifier");
         wt.set(Meta::Flag::ID);
+        wt.alias("Scene3ID");
     }
 }

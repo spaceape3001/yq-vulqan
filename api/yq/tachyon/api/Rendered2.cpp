@@ -75,10 +75,12 @@ namespace yq::tachyon {
         ②::init_meta(w);
         w.description("Rendered in 2D");
         w.abstract();
+        w.alias("Rendered2");
 
         auto wt = writer<Rendered²ID>();
         wt.description("2D Rendered Identifier");
         wt.set(Meta::Flag::ID);
+        wt.alias("Rendered2ID");
     }
 }
 

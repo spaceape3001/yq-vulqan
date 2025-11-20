@@ -192,7 +192,6 @@ namespace yq::tachyon {
     struct swapable_k {};
     
     struct sweep_k {};
-    struct table_k {};
     struct tachyon_k {};
 
     struct task_k {
@@ -313,7 +312,6 @@ namespace yq::tachyon {
     static constexpr const static_k             STATIC;
     static constexpr const swapable_k           SWAPABLE;
     static constexpr const sweep_k              SWEEP;
-    static constexpr const table_k              TABLE;
     static constexpr const tachyon_k            TACHYON;
     static constexpr const task_k               TASK;
     static constexpr const teardown_k           TEARDOWN;

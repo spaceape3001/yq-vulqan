@@ -46,9 +46,11 @@ namespace yq::tachyon {
         auto w = writer<Spatial³>();
         w.description("Spatial in 3 Dimensions");
         w.abstract();
+        w.alias("Spatial3");
 
         auto wt = writer<Spatial³ID>();
         wt.description("Spatial³ Identifier");
         wt.set(Meta::Flag::ID);
+        wt.alias("Spatial3ID");
     }
 }

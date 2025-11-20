@@ -38,6 +38,33 @@ int main(int argc, char* argv[])
     load_plugin_dir("plugin/luavk");
     Meta::init();
     
+    for(int n=1;n<argc;++n){
+        std::string_view    arg(argv[n]);
+        if(argv[n][0] != '-')
+            continue;
+        if(argv[n][1] == '-')
+            break;
+        switch(argv[n][1]){
+        case 'L':
+            {
+                std::filesystem::path   bit(2+argv[n]);
+                std::filesystem::path   path;
+                
+                if(std::filesystem::exists(bit)){
+                    path    = bit;
+                } else if(std::filesystem::exists("plugin"/bit)){
+                    path    = "plugin" / bit;
+                } else {
+                    path    = bit;
+                }
+                
+                load_plugin_dir(path);
+            }
+            break;
+        }
+    }
+    
+    
     lua::initialize();
 
     app.start();

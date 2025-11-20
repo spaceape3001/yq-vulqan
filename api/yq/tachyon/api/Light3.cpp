@@ -56,9 +56,11 @@ namespace yq::tachyon {
         auto w = writer<Light³>();
         ③::init_meta(w);
         w.description("Light in 3D");
+        w.alias("Light3");
 
         auto wt = writer<Light³ID>();
         wt.description("3D Light Identifier");
         wt.set(Meta::Flag::ID);
+        wt.alias("Light3ID");
     }
 }

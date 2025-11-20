@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/keywords.hpp>
 #include <yq/tachyon/api/Widget.hpp>
 
 namespace yq::tachyon {

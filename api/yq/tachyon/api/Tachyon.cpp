@@ -182,6 +182,9 @@ namespace yq::tachyon {
     {   
         ObjectMeta::sweep_impl();
 
+        if(this == &meta<Tachyon>())
+            PostMeta::sweep_all();
+
         m_dispatch.clear();
         m_dispatches.ranked.clear();
         m_interfaces.all.clear();

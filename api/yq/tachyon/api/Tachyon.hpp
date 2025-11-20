@@ -116,6 +116,8 @@ namespace yq::tachyon {
         std::string_view category() const { return m_category; }
 
         static const std::vector<const TachyonMeta*>&    all();
+        
+        const auto&     dispatch_map() const { return m_dispatch; }
 
     protected:
     

@@ -34,34 +34,50 @@ using namespace yq::tachyon;
 namespace {
     int lh_tachyon_metas(lua_State* l)
     {
-        int n   = 0;
+        lua_newtable(l);
+        int ti = lua_gettop(l);
+        int cnt = 0;
         for(const TachyonMeta* tm : TachyonMeta::all()){
+            lua_pushinteger(l, ++cnt);
             lua::push(l, META, tm);
-            ++n;
+            lua_settable(l, ti);
         }
-        return n;
+        return 1;
     }
 
     int lh_tm_interfaces(lua_State* l)
     {
         int nargs   = lua_gettop(l);
         for(int n=1;n<=nargs;++n){
+            std::set<const PostMeta*>   seen;
+            lua_newtable(l);
+            int ti  = lua_gettop(l);
+            int cnt = 0;
+
             auto mm  = lua::meta(l,n);
             if(!mm)
                 continue;
             const TachyonMeta* tm = dynamic_cast<const TachyonMeta*>(*mm);
             if(!tm)
                 continue;
-            for(auto & i : tm->interfaces(true).all)
+            for(auto & i : tm->interfaces(true).all){
+                lua_pushinteger(l, ++cnt);
                 lua::push(l, META, i);
+                lua_settable(l, ti);
+            }
         }
-        return lua_gettop(l) - nargs;
+        return nargs;
     }
     
     int lh_tm_slots(lua_State* l)
     {
         int nargs   = lua_gettop(l);
         for(int n=1;n<=nargs;++n){
+            std::set<const PostMeta*>   seen;
+            lua_newtable(l);
+            int ti  = lua_gettop(l);
+            int cnt = 0;
+
             auto mm  = lua::meta(l,n);
             if(!mm)
                 continue;
@@ -69,13 +85,14 @@ namespace {
             if(!tm)
                 continue;
             for(auto & i : tm->dispatch_map()){
+                if(!seen.insert(i.first).second)
+                    continue;
+                lua_pushinteger(l, ++cnt);
                 lua::push(l, META, i.first);
-                if(lua_type(l, -1) == LUA_TNIL){
-                    luaWarning << "(meta " << tm->name() << "):slots() pushed on a nil for post " << i.first->name();
-                }
+                lua_settable(l, ti);
             }
         }
-        return lua_gettop(l) - nargs;
+        return nargs;
     }
     
     void reg_tachyon()

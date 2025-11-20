@@ -39,5 +39,6 @@ namespace yq::tachyon {
         auto w = writer<MoveByʸCommand>();
         w.description("Position MoveBy Command in Y");
         w.property("Δy", &MoveByʸCommand::Δy).tag(kTag_Log).tag(kTag_Save);
+        w.alias("MoveByY");
     }
 }

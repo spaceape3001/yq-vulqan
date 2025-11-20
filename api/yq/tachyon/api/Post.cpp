@@ -4,18 +4,81 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Post.hpp>
 #include <yq/tachyon/api/PostMetaWriter.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/stream/Text.hpp>
 #include <sstream>
-#include <yq/tachyon/logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Post)
 
 namespace yq::tachyon {
+
+    struct PostMeta::Repo {
+        MetaLookup<PostMeta> posts;
+    };
+    
+    PostMeta::Repo& PostMeta::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+    
+    
+    void PostMeta::sweep_all()
+    {
+        if(!Meta::thread_safe_write())
+            return ;
+        
+        for(const PostMeta* p : repo().posts.all)
+            const_cast<PostMeta*>(p) -> sweep();
+    }
+
     PostMeta::PostMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {
         set(Flag::POST);
+        repo().posts << this;
+    }
+
+    void  PostMeta::report(Stream& out) const
+    {
+        out << "Report for PostMeta[" << name() << "]\n";
+        out << "    ID              : " << id() << "\n";
+        out << "    Description     : " << description() << "\n";
+        out << "    Base            : " << base()->name() << "\n";
+
+        out << "  BASES\n";
+        for(const ObjectMeta* obj : bases(ALL).all){
+            out << "    " << obj->name() << "\n";
+        }
+        
+        out << "  DERIVES\n";
+        for(const ObjectMeta* obj : deriveds(ALL).all){
+            out << "    " << obj->name() << "\n";
+        }
+
+        out << "  METHODS\n";
+        for(const MethodMeta* obj : methods(ALL).all){
+            out << "    " << obj->name() << "\n";
+        }
+
+        out << "  PROPERTIES\n";
+        for(const PropertyMeta* prop : properties(ALL).all){
+            out << "    " << prop->name() << "\n";
+        }
+    }
+    
+    void  PostMeta::report(const char* cat, LogPriority pri) const
+    {
+        std::string     text;
+        {
+        
+            stream::Text  out(text);
+            report(out);
+        }
+        log_category(cat).getStream(log4cpp_priority(pri)) << text;
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -54,6 +117,7 @@ namespace yq::tachyon {
         return m_claimed.test();
     }
 
+
     ////////////////////////////////////////////////////////////////////////////
 
     void Post::init_meta()
@@ -65,19 +129,19 @@ namespace yq::tachyon {
 
     Stream& operator<<(Stream&str, const Post::Trace& i)
     {
-        str << "{id=" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
+        str << "{" << i.meta.name() << ":" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
         return str;
     }
 
     std::ostringstream& operator<<(std::ostringstream&str, const Post::Trace& i)
     {
-        str << "{id=" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
+        str << "{" << i.meta.name() << ":" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
         return str;
     }
 
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, const Post::Trace& i)
     {
-        str << "{id=" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
+        str << "{" << i.meta.name() << ":" << i.id << " source=" << i.source.id << " target=" << i.target.id << "}";
         return str;
     }
 }

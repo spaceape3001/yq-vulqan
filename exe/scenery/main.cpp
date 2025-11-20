@@ -38,6 +38,8 @@ int main(int argc, char* argv[])
     load_plugin_dir("plugin/luavk");
     #endif
     
+    Meta::freeze();
+    
     for(const std::filesystem::path& pth : Resource::all_paths())
         yInfo() << "resource path> " << pth;
     

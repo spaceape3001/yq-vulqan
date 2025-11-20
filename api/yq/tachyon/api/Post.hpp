@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/keywords.hpp>
+#include <yq/core/LogPriority.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/typedef/post.hpp>
@@ -22,6 +23,15 @@ namespace yq::tachyon {
         template <typename C> class Writer;
 
         PostMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
+
+        void                report(Stream&) const;
+        void                report(const char* cat, LogPriority pri=LogPriority::Info) const;
+        
+        static void sweep_all();
+        
+    private:
+        struct Repo;
+        static Repo& repo();
     };
     
     /*! \brief Light weight message, which can be an event, an input, a command, a request, etc.
@@ -56,6 +66,7 @@ namespace yq::tachyon {
         };
         
         struct Trace {
+            const PostMeta& meta;
             TypedID         source;
             TypedID         target;
             uint64_t        id;
@@ -82,8 +93,8 @@ namespace yq::tachyon {
         bool    claim() const;
         bool    claimed() const;
         
-        Trace       trace() const { return { m_source, m_target, m_id }; }
-        
+        Trace   trace() const { return { metaInfo(), m_source, m_target, m_id }; }
+
     protected:
         //! Constructs a post
         Post(const Header&);

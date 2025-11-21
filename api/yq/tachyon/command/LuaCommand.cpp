@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/command/LuaCommand.hpp>
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
+#include <yq/tachyon/command/LuaCommand.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaCommand)
 
-namespace yq::lua {
-    LuaCommand::LuaCommand(const Header& h) : tachyon::Command(h)
+namespace yq::tachyon {
+    LuaCommand::LuaCommand(const Header& h) : Command(h)
     {
     }
     
-    LuaCommand::LuaCommand(const LuaCommand&cp, const Header&h) : tachyon::Command(cp, h)
+    LuaCommand::LuaCommand(const LuaCommand&cp, const Header&h) : Command(cp, h)
     {
     }
 

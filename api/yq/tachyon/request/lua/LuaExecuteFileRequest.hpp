@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/luavk/request/LuaRequest.hpp>
+#include <yq/tachyon/request/LuaRequest.hpp>
 #include <filesystem>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaExecuteFileRequest : public LuaRequest {
         YQ_OBJECT_DECLARE(LuaExecuteFileRequest, LuaRequest)
     public:

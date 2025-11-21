@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/reply/LuaExecuteReply.hpp>
 #include <yq/tachyon/api/ReplyMetaWriter.hpp>
+#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaExecuteReply)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaExecuteReply)
 
-namespace yq::lua {
+namespace yq::tachyon {
 
-    LuaExecuteReply::LuaExecuteReply(const Header&h, const tachyon::RequestCPtr& rq, std::string&& out, std::string&& warn, std::string&& err, const std::error_code&ec) :
+    LuaExecuteReply::LuaExecuteReply(const Header&h, const RequestCPtr& rq, std::string&& out, std::string&& warn, std::string&& err, const std::error_code&ec) :
         LuaReply(h, rq), m_output(std::move(out)), m_warning(std::move(warn)), m_error(std::move(err)), m_errorCode(ec)
     {
     }

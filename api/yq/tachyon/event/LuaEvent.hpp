@@ -9,11 +9,11 @@
 #include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/typedef/spatial.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class LuaEvent : public tachyon::Event {
-        YQ_OBJECT_DECLARE(LuaEvent, tachyon::Event)
+    class LuaEvent : public Event {
+        YQ_OBJECT_DECLARE(LuaEvent, Event)
     public:
     
         static void init_meta();

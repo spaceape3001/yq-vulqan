@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <yq/tachyon/thread/AuxillaryThread.hpp>
 
 #include <yq/tachyon/api/Thread.hpp>

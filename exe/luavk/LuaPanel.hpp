@@ -6,10 +6,9 @@
 
 #pragma once
 
-#include <yq/luavk/ui/LuaWindow.hpp>
+#include <yq/tachyon/ui/lua/LuaWindow.hpp>
 
 using namespace yq::tachyon;
-using namespace yq::lua;
 
 class LuaPanel : public LuaWindow {
     YQ_OBJECT_DECLARE(LuaPanel, LuaWindow)

@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yq/luavk/reply/LuaReply.hpp>
+#include <yq/tachyon/reply/LuaReply.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaExecuteReply : public LuaReply {
         YQ_OBJECT_DECLARE(LuaExecuteReply, LuaReply)
     public:
-        LuaExecuteReply(const Header&, const tachyon::RequestCPtr&, std::string&& out, std::string&& warn, std::string&& err, const std::error_code&);
+        LuaExecuteReply(const Header&, const RequestCPtr&, std::string&& out, std::string&& warn, std::string&& err, const std::error_code&);
         virtual tachyon::PostCPtr    clone(rebind_k, const Header&) const override;
 
         static void init_meta();

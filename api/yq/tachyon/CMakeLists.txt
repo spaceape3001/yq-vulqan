@@ -489,7 +489,6 @@ add_library(${PROJECT_NAME} SHARED
     widget/StackedWidget.cpp
     widget/TextArea.cpp
 )
-
 target_compile_definitions(${PROJECT_NAME} 
     PUBLIC
         GLFW_INCLUDE_VULKAN=1
@@ -526,6 +525,33 @@ PUBLIC
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
 )
+
+
+if(Build_Lua)
+    target_sources(${PROJECT_NAME}
+    PUBLIC
+        LuaTVM.cpp
+        command/LuaCommand.cpp
+        event/LuaEvent.cpp
+        reply/lua/LuaExecuteReply.cpp
+        reply/LuaReply.cpp
+        request/lua/LuaExecuteFileRequest.cpp
+        request/lua/LuaExecuteStringRequest.cpp
+        request/LuaRequest.cpp
+        ui/lua/LuaConsole.cpp
+        ui/lua/LuaInputBar.cpp
+        ui/lua/LuaWindow.cpp
+    )
+    target_include_directories(${PROJECT_NAME} 
+    PRIVATE 
+        ${LUA_INCLUDE_DIR}
+    )
+    target_link_libraries(${PROJECT_NAME} 
+        PUBLIC
+            yq_lua
+    )
+endif()
+
 
 LinkTest(${PROJECT_NAME})
 

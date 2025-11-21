@@ -8,19 +8,19 @@
 #include "LuaInputBarWriter.hpp"
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
-#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaInputBar)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaInputBar)
 
-namespace yq::lua {
+namespace yq::tachyon {
     void LuaInputBar::init_meta()
     {
         auto w = writer<LuaInputBar>();
         w.description("Lua Input Bar");
     }
 
-    LuaInputBar::LuaInputBar(tachyon::UIFlags flags) : 
-        tachyon::UIElement(flags|tachyon::UIFlag::EnterReturnsTrue), 
+    LuaInputBar::LuaInputBar(UIFlags flags) : 
+        UIElement(flags|UIFlag::EnterReturnsTrue), 
         m_label("##lua"), m_imFlags(ImGui::TextFlags(flags))
     {
         capacity(SET, 63);
@@ -28,7 +28,7 @@ namespace yq::lua {
     }
     
     LuaInputBar::LuaInputBar(const LuaInputBar&cp) : 
-        tachyon::UIElement(cp), m_label(cp.m_label), m_text(cp.m_text), m_imFlags(cp.m_imFlags)
+        UIElement(cp), m_label(cp.m_label), m_text(cp.m_text), m_imFlags(cp.m_imFlags)
     {
         // NOTE, we're not cloning the TVM ID as that could easily be different
     }

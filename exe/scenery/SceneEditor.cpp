@@ -103,10 +103,10 @@
 
 #ifdef YQ_LUA_ENABLE
 #include "LuaPanelUI.hpp"
-#include <yq/luavk/LuaTVM.hpp>
-#include <yq/luavk/reply/LuaExecuteReply.hpp>
-#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
+#include <yq/tachyon/LuaTVM.hpp>
+#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 #endif
 
 #include <ImGuiFileDialog.h>
@@ -681,7 +681,7 @@ Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
 void    SceneEditor::_lua(const std::filesystem::path& fp)
 {
     #ifdef YQ_LUA_ENABLE
-    send(new lua::LuaExecuteFileRequest({.target=m_lua.tvm}, fp));
+    send(new LuaExecuteFileRequest({.target=m_lua.tvm}, fp));
     #endif
 }
 
@@ -1018,7 +1018,7 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
     _title();
 }
 
-void    SceneEditor::on_lua_exec_reply(const lua::LuaExecuteReply& evt)
+void    SceneEditor::on_lua_exec_reply(const LuaExecuteReply& evt)
 {
     #if YQ_LUA_ENABLE
     if(m_lua.panel)
@@ -1102,8 +1102,8 @@ Execution   SceneEditor::setup(const Context&ctx)
     
     #ifdef YQ_LUA_ENABLE
     if(!m_lua.tvm){
-        lua::LuaTVM*  ch = create_on<lua::LuaTVM>(AUX);
-        m_lua.tvm        = *ch;
+        LuaTVM*     ch = create_on<LuaTVM>(AUX);
+        m_lua.tvm      = *ch;
         
         subscribe(ch->id());
 

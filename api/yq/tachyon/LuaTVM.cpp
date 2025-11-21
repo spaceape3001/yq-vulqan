@@ -9,16 +9,16 @@
 #include <yq/lua/logging.hpp>
 #include <yq/lua/lualua.hxx>
 #include <yq/lua/keys.hpp>
-#include <yq/luavk/reply/LuaExecuteReply.hpp>
-#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
+#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 #include <iostream>
 
-YQ_TACHYON_IMPLEMENT(yq::lua::LuaTVM)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::LuaTVM)
 
-namespace yq::lua {
+namespace yq::tachyon {
     LuaChannel::LuaChannel()
     {
     }
@@ -98,29 +98,29 @@ namespace yq::lua {
         send(new LuaExecuteReply({.target=cmd->source()}, cmd, std::move(output), std::move(warning), std::move(error), ec));
     }
 
-    tachyon::Execution   LuaTVM::setup(const tachyon::Context&ctx) 
+    Execution   LuaTVM::setup(const Context&ctx) 
     {
         if(m_init)
-            return tachyon::Tachyon::setup(ctx);
+            return Tachyon::setup(ctx);
         
         //  TODO
         
-        return tachyon::Tachyon::setup(ctx); 
+        return Tachyon::setup(ctx); 
     }
     
-    tachyon::Execution   LuaTVM::tick(const tachyon::Context&ctx) 
+    Execution   LuaTVM::tick(const Context&ctx) 
     {
-        return tachyon::Tachyon::tick(ctx);
+        return Tachyon::tick(ctx);
     }
     
-    tachyon::Execution   LuaTVM::teardown(const tachyon::Context&ctx) 
+    Execution   LuaTVM::teardown(const Context&ctx) 
     {
         if(!m_init)
-            return tachyon::Tachyon::teardown(ctx);
+            return Tachyon::teardown(ctx);
     
         // TODO
         
-        return tachyon::Tachyon::teardown(ctx);
+        return Tachyon::teardown(ctx);
     }
         
     void LuaTVM::init_meta()

@@ -9,14 +9,14 @@
 
 #include <yq/date/dateutils.hpp>
 #include <yq/lua/logging.hpp>
-#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
-#include <yq/luavk/reply/LuaExecuteReply.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/asset/Raster.hpp>
+#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
 #include <yq/tachyon/reply/viewer/ViewerScreenshotReply.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
@@ -57,7 +57,7 @@ void    LuaWin::imgui(ViContext&u)
                 case FileMode::None:
                     break;
                 case FileMode::Script:
-                    send(new yq::lua::LuaExecuteFileRequest({.target=m_tvm}, filePathName));
+                    send(new LuaExecuteFileRequest({.target=m_tvm}, filePathName));
                     break;
                 }
             }
@@ -101,7 +101,7 @@ void LuaWin::cmd_user_input(const Payload& pay)
 }
 #endif
 
-void    LuaWin::on_lua_execute_reply(const yq::lua::LuaExecuteReply&rep)
+void    LuaWin::on_lua_execute_reply(const LuaExecuteReply&rep)
 {
     if(!m_window) [[unlikely]]
         return;
@@ -122,7 +122,7 @@ Execution   LuaWin::setup(const Context&u)
     if(is_error(ex))
         return ex;
     if(!m_window){
-        m_window   = dynamic_cast<lua::LuaWindow*>(element(FIRST, "lua"));
+        m_window   = dynamic_cast<LuaWindow*>(element(FIRST, "lua"));
         if(!m_window)
             return WAIT;
         m_window->tvm(SET, m_tvm);

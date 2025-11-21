@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/request/LuaRequest.hpp>
+#include <yq/tachyon/request/LuaRequest.hpp>
 #include <yq/tachyon/api/RequestMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaRequest)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaRequest)
 
-namespace yq::lua {
-    LuaRequest::LuaRequest(const Header& h) : tachyon::Request(h)
+namespace yq::tachyon {
+    LuaRequest::LuaRequest(const Header& h) : Request(h)
     {
     }
     
-    LuaRequest::LuaRequest(const LuaRequest&cp, const Header&h) : tachyon::Request(cp, h)
+    LuaRequest::LuaRequest(const LuaRequest&cp, const Header&h) : Request(cp, h)
     {
     }
 

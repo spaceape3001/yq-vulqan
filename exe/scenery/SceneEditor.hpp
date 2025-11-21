@@ -19,11 +19,8 @@
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/core/Future.hpp>
 
-namespace yq::lua {
-    class LuaExecuteReply;
-}
-
 namespace yq::tachyon {
+    class LuaExecuteReply;
     class InfoSelectionChangedEvent;
     class LightMeta;
     class LoadTSXReply;
@@ -250,7 +247,7 @@ private:
     void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);
     void    on_light_select_event(const LightSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);
-    void    on_lua_exec_reply(const lua::LuaExecuteReply&);
+    void    on_lua_exec_reply(const LuaExecuteReply&);
     void    on_model_select_event(const ModelSelectEvent&);
     void    on_rendered_select_event(const RenderedSelectEvent&);
     void    on_save_tsx_reply(const SaveTSXReply&);

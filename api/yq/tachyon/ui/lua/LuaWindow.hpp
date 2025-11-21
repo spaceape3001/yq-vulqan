@@ -9,14 +9,14 @@
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaExecuteReply;
 
-    class LuaWindow : public tachyon::UIWindow {
-        YQ_OBJECT_DECLARE(LuaWindow, tachyon::UIWindow)
+    class LuaWindow : public UIWindow {
+        YQ_OBJECT_DECLARE(LuaWindow, UIWindow)
     public:
     
-        LuaWindow(std::string_view, tachyon::UIFlags flags={});
+        LuaWindow(std::string_view, UIFlags flags={});
         LuaWindow(const LuaWindow&);
         virtual ~LuaWindow();
         

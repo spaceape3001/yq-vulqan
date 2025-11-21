@@ -10,9 +10,6 @@
 
 namespace yq::tachyon {
     class ViewerScreenshotReply;
-}
-
-namespace yq::lua {
     class LuaExecuteReply;
     //class LuaConsoleUI;
     //class LuaInputBar;
@@ -52,12 +49,12 @@ public:
     virtual Execution   setup(const Context&) override;
     
 private:
-    void    on_lua_execute_reply(const yq::lua::LuaExecuteReply&);
-    void    on_viewer_screenshot_reply(const tachyon::ViewerScreenshotReply&);
+    void    on_lua_execute_reply(const LuaExecuteReply&);
+    void    on_viewer_screenshot_reply(const ViewerScreenshotReply&);
 
-    FileMode                    m_fileMode = FileMode::None;
-    yq::tachyon::TypedID        m_tvm;
-    lua::LuaWindow*             m_window    = nullptr;
+    FileMode        m_fileMode = FileMode::None;
+    TypedID         m_tvm;
+    LuaWindow*      m_window    = nullptr;
     //lua::LuaConsoleUI*          m_console   = nullptr;
     //lua::LuaInputBar*           m_input     = nullptr;
 };

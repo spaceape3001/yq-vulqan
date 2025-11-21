@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/api/RequestMetaWriter.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaExecuteStringRequest)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaExecuteStringRequest)
 
-namespace yq::lua {
+namespace yq::tachyon {
 
     LuaExecuteStringRequest::LuaExecuteStringRequest(const Header&h, std::string_view v) : LuaRequest(h), m_text(v)
     {

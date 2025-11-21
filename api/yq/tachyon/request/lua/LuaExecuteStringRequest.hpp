@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/luavk/request/LuaRequest.hpp>
+#include <yq/tachyon/request/LuaRequest.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaExecuteStringRequest : public LuaRequest {
         YQ_OBJECT_DECLARE(LuaExecuteStringRequest, LuaRequest)
     public:

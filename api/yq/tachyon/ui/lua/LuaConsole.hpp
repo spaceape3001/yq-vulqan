@@ -13,20 +13,20 @@
 #include <yq/typedef/color.hpp>
 #include <filesystem>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaExecuteReply;
     
     class LuaConsoleWriter;
 
-    class LuaConsole : public tachyon::UIConsole {
-        YQ_OBJECT_DECLARE(LuaConsole, tachyon::UIConsole)
+    class LuaConsole : public UIConsole {
+        YQ_OBJECT_DECLARE(LuaConsole, UIConsole)
     public:
     
         using Writer = LuaConsoleWriter;
     
         struct Streamer;
         
-        LuaConsole(tachyon::UIFlags flags={});
+        LuaConsole(UIFlags flags={});
         LuaConsole(const LuaConsole&);
         ~LuaConsole();
 

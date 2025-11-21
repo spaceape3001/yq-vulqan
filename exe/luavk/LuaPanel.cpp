@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(LuaPanel)
 
 using namespace yq;
-using namespace yq::lua;
+using namespace yq::tachyon;
 
 LuaPanel::LuaPanel(std::string_view k, UIFlags flags) : LuaWindow(k, flags | UIFlag::NoCollapse | UIFlag::NoDecoration )
 {

@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/event/LuaEvent.hpp>
+#include <yq/tachyon/event/LuaEvent.hpp>
 #include <yq/tachyon/api/EventMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaEvent)
 
-namespace yq::lua {
-    LuaEvent::LuaEvent(const Header& h) : tachyon::Event(h)
+namespace yq::tachyon {
+    LuaEvent::LuaEvent(const Header& h) : Event(h)
     {
     }
     
-    LuaEvent::LuaEvent(const LuaEvent&cp, const Header&h) : tachyon::Event(cp, h)
+    LuaEvent::LuaEvent(const LuaEvent&cp, const Header&h) : Event(cp, h)
     {
     }
 

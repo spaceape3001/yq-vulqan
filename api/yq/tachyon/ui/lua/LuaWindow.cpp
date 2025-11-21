@@ -12,9 +12,7 @@
 #include <yq/shape/AxBox2.hxx>
 
 
-using namespace yq::tachyon;
-
-namespace yq::lua {
+namespace yq::tachyon {
 
     class LuaWindow::Console : public LuaConsole {
         YQ_OBJECT_DECLARE(Console, LuaConsole);
@@ -41,7 +39,7 @@ namespace yq::lua {
     };
     
 
-    LuaWindow::LuaWindow(std::string_view kLabel, tachyon::UIFlags flags) : UIWindow(kLabel, flags | UIFlag::NoScrollBar )
+    LuaWindow::LuaWindow(std::string_view kLabel, UIFlags flags) : UIWindow(kLabel, flags | UIFlag::NoScrollBar )
     {
         append(m_console = new Console);
         append(m_input = new Input);
@@ -101,7 +99,7 @@ namespace yq::lua {
         m_console->info(v);
     }   
 
-    void LuaWindow::tvm(set_k, tachyon::TypedID tid)
+    void LuaWindow::tvm(set_k, TypedID tid)
     {
         m_input -> tvm(SET, tid);
     }
@@ -119,6 +117,6 @@ namespace yq::lua {
 }
 
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaWindow)
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaWindow::Console)
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaWindow::Input)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindow)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindow::Console)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindow::Input)

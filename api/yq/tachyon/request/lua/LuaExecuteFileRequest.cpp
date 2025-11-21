@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
 #include <yq/tachyon/api/RequestMetaWriter.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaExecuteFileRequest)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaExecuteFileRequest)
 
-namespace yq::lua {
+namespace yq::tachyon {
 
     LuaExecuteFileRequest::LuaExecuteFileRequest(const Header&h, const std::filesystem::path& v) : LuaRequest(h), m_file(v)
     {

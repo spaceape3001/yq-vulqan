@@ -13,5 +13,5 @@ add_library(tachyonlua SHARED
     request.cpp
     tachyon.cpp
 )
-target_link_libraries(tachyonlua PUBLIC yq_lua yq_luavk yq_tachyon)
+target_link_libraries(tachyonlua PUBLIC yq_lua yq_tachyon)
 LinkTest(tachyonlua)

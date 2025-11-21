@@ -9,10 +9,10 @@
 #include <yq/tachyon/ui/UIConsoleWriter.hpp>
 #include <yq/typedef/color.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaConsole;
 
-    class LuaConsoleWriter : public tachyon::UIConsoleWriter {
+    class LuaConsoleWriter : public UIConsoleWriter {
     public:
     public:
         LuaConsoleWriter();

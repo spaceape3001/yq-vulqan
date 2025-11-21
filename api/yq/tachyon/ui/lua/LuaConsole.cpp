@@ -8,21 +8,21 @@
 #include "LuaConsoleWriter.hpp"
 
 #include <yq/color/colors.hpp>
-#include <yq/luavk/reply/LuaExecuteReply.hpp>
-#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
+#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaConsole)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaConsole)
 
-namespace yq::lua {
+namespace yq::tachyon {
     void LuaConsole::init_meta()
     {
         auto w = writer<LuaConsole>();
         w.description("Console for Lua");
     }
 
-    LuaConsole::LuaConsole(tachyon::UIFlags flags) : tachyon::UIConsole(flags), 
+    LuaConsole::LuaConsole(UIFlags flags) : UIConsole(flags), 
         m_channel{
             .command={
                 .color  = rgba4f(yq::color::LimeGreen)
@@ -53,7 +53,7 @@ namespace yq::lua {
     {
     }
     
-    LuaConsole::LuaConsole(const LuaConsole& cp) : tachyon::UIConsole(cp), m_channel(cp.m_channel)
+    LuaConsole::LuaConsole(const LuaConsole& cp) : UIConsole(cp), m_channel(cp.m_channel)
     {
     }
     

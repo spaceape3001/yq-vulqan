@@ -9,17 +9,17 @@
 #include <yq/tachyon/api/Reply.hpp>
 #include <yq/tachyon/typedef/spatial.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class LuaReply : public tachyon::Reply {
-        YQ_OBJECT_DECLARE(LuaReply, tachyon::Reply)
+    class LuaReply : public Reply {
+        YQ_OBJECT_DECLARE(LuaReply, Reply)
     public:
     
         static void init_meta();
 
     protected:
-        LuaReply(const Header&, const tachyon::RequestCPtr&);
+        LuaReply(const Header&, const RequestCPtr&);
         LuaReply(const LuaReply&, const Header&);
         ~LuaReply();
         

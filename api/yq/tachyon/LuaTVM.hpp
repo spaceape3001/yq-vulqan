@@ -6,11 +6,12 @@
 
 #pragma once
 
-#include <yq/lua/LuaVM.hpp>
+struct lua_State;
+
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/core/Stream.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaExecuteStringRequest;
     class LuaExecuteFileRequest;
     
@@ -22,8 +23,8 @@ namespace yq::lua {
         ~LuaChannel();
     };
     
-    class LuaTVM : public tachyon::Tachyon {
-        YQ_TACHYON_DECLARE(LuaTVM, tachyon::Tachyon)
+    class LuaTVM : public Tachyon {
+        YQ_TACHYON_DECLARE(LuaTVM, Tachyon)
     public:
         LuaTVM();
         ~LuaTVM();
@@ -31,9 +32,9 @@ namespace yq::lua {
         static void init_meta();
         
     protected:
-        virtual tachyon::Execution   setup(const tachyon::Context&) override;
-        virtual tachyon::Execution   tick(const tachyon::Context&) override;
-        virtual tachyon::Execution   teardown(const tachyon::Context&) override;
+        virtual Execution   setup(const Context&) override;
+        virtual Execution   tick(const Context&) override;
+        virtual Execution   teardown(const Context&) override;
 
     private:
         lua_State*      m_lua       = nullptr;

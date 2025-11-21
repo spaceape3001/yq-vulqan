@@ -10,15 +10,15 @@
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yq/tachyon/ui/UIElement.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaInputBarWriter;
 
-    class LuaInputBar : public tachyon::UIElement {
-        YQ_OBJECT_DECLARE(LuaInputBar, tachyon::UIElement )
+    class LuaInputBar : public UIElement {
+        YQ_OBJECT_DECLARE(LuaInputBar, UIElement )
     public:
         using Writer = LuaInputBarWriter;
     
-        LuaInputBar(tachyon::UIFlags flags={});
+        LuaInputBar(UIFlags flags={});
         LuaInputBar(const LuaInputBar&);
         virtual ~LuaInputBar();
 

@@ -8,9 +8,9 @@
 
 #include <yq/tachyon/ui/UIInputBarWriter.hpp>
 
-namespace yq::lua {
+namespace yq::tachyon {
     class LuaInputBar;
-    class LuaInputBarWriter : public tachyon::UIElementWriter {
+    class LuaInputBarWriter : public UIElementWriter {
     public:
         LuaInputBarWriter();
         LuaInputBarWriter(LuaInputBar*);

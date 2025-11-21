@@ -47,6 +47,8 @@
 #include <yq/stream/Text.hpp>
 #include <yq/meta/Init.hpp>
 
+#include <cassert>
+
 #define TACHYON_HELPER_MAIL_REPORT_FAILURE  1
 
 namespace yq::tachyon {
@@ -90,12 +92,14 @@ namespace yq::tachyon {
     TachyonMeta::TachyonMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {
+yInfo() << "Registered " << zName;    
         set(Flag::TACHYON);
         repo().all.push_back(this);
     }
 
     TachyonMeta::~TachyonMeta()
     {
+        assert(false && "NOTHING IS SUPPOSED TO TRIGGER THIS!");
     }
 
     void    TachyonMeta::set(Type t)

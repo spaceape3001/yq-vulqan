@@ -47,10 +47,6 @@ if(Build_Lua)
         PRIVATE
         LuaPanelUI.cpp
     )
-    target_link_libraries(${PROJECT_NAME} 
-        PUBLIC
-            yq_luavk
-    )
 endif()
 
 target_include_directories(${PROJECT_NAME}

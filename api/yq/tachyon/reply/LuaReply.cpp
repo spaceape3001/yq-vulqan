@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/reply/LuaReply.hpp>
 #include <yq/tachyon/api/ReplyMetaWriter.hpp>
+#include <yq/tachyon/reply/LuaReply.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::lua::LuaReply)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaReply)
 
-namespace yq::lua {
-    LuaReply::LuaReply(const Header& h, const tachyon::RequestCPtr&rq) : tachyon::Reply(h, rq)
+namespace yq::tachyon {
+    LuaReply::LuaReply(const Header& h, const RequestCPtr&rq) : Reply(h, rq)
     {
     }
     
-    LuaReply::LuaReply(const LuaReply&cp, const Header&h) : tachyon::Reply(cp, h)
+    LuaReply::LuaReply(const LuaReply&cp, const Header&h) : Reply(cp, h)
     {
     }
 

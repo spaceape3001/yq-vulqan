@@ -4,10 +4,16 @@
 ##
 ################################################################################
 
-add_subdirectory(scenery)
+add_executable(xgvk 
+    PalettePanel.cpp
+    ViewPanel.cpp
+    XGWin.cpp
+    main.cpp
+)
 
-if(Build_Lua)
-    add_subdirectory(luavk)
-endif()
-
-add_subdirectory(xgvk)
+target_link_libraries(xgvk 
+PUBLIC
+    yq_tachyon yq_xg yq_xgvk
+PRIVATE
+    ImGuiFileDialog
+)

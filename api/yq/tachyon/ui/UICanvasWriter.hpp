@@ -10,18 +10,18 @@
 #include <yq/typedef/size2.hpp>
 
 namespace yq::tachyon {
-    class UIConsole;
+    class UICanvas;
     
-    class UIConsoleWriter : public UIElementWriter {
+    class UICanvasWriter : public UIElementWriter {
     public:
-        UIConsoleWriter();
-        UIConsoleWriter(UIConsole*);
-        UIConsoleWriter(const UIConsoleWriter&);
-        ~UIConsoleWriter();
+        UICanvasWriter();
+        UICanvasWriter(UICanvas*);
+        UICanvasWriter(const UICanvasWriter&);
+        ~UICanvasWriter();
         
-        UIConsole*  element();
+        UICanvas*  element();
 
-        UIConsoleWriter&    size(const Size2F&);
+        UICanvasWriter&    size(const Size2F&);
 
         /////////////////////////////////////////////
         // Element Creation Helpers

@@ -173,5 +173,13 @@ namespace yq::tachyon {
     UIConsoleWriter::UIConsoleWriter(UIConsole* ui) : UIElementWriter(ui)
     {
     }
+
+    UIConsoleWriter&    UIConsoleWriter::size(const Size2F&sz)
+    {
+        if(UIConsole* elem = element())
+            elem -> size(SET, sz);
+        return *this;
+    }
+    
 }
 

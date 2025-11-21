@@ -4,10 +4,6 @@
 ##
 ################################################################################
 
-add_subdirectory(scenery)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin/plugin/xgvk)
 
-if(Build_Lua)
-    add_subdirectory(luavk)
-endif()
-
-add_subdirectory(xgvk)
+add_subdirectory(tachyonxg)

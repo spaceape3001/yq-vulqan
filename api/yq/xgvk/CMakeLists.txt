@@ -4,10 +4,13 @@
 ##
 ################################################################################
 
-add_subdirectory(scenery)
+add_library(yq_xgvk SHARED
+    ui/XGView.cpp
+)
+target_link_libraries(yq_xgvk
+    PUBLIC
+        yq_xg
+        yq_tachyon
+)
 
-if(Build_Lua)
-    add_subdirectory(luavk)
-endif()
-
-add_subdirectory(xgvk)
+LinkTest(yq_xgvk)

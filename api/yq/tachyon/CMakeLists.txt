@@ -68,6 +68,7 @@ add_library(${PROJECT_NAME} SHARED
 
     ## And individual files 
 
+    LuaTVM.cpp
     MyImGui.cpp
     enums.cpp
     strings.cpp
@@ -186,6 +187,7 @@ add_library(${PROJECT_NAME} SHARED
     command/IOCommand.cpp
     command/JoystickCommand.cpp
     command/LightCommand.cpp
+    command/LuaCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
     command/ShapeCommand.cpp
@@ -242,6 +244,7 @@ add_library(${PROJECT_NAME} SHARED
     event/EmptyEvent.cpp
     event/InputEvent.cpp
     event/IOEvent.cpp
+    event/LuaEvent.cpp
     event/OSEvent.cpp
     event/PanelEvent.cpp
     event/ThreadEvent.cpp
@@ -352,6 +355,7 @@ add_library(${PROJECT_NAME} SHARED
     reply/EmptyReply.cpp
     reply/GraphicsCardReply.cpp
     reply/IOReply.cpp
+    reply/LuaReply.cpp
     reply/SimReply.cpp
     reply/StringReply.cpp
     reply/TachyonReply.cpp
@@ -369,6 +373,8 @@ add_library(${PROJECT_NAME} SHARED
     reply/io/SaveReply.cpp
     reply/io/SaveTSXReply.cpp
     
+    reply/lua/LuaExecuteReply.cpp
+
     reply/ui/CloseReply.cpp
     
     reply/viewer/ViewerScreenshotReply.cpp
@@ -379,6 +385,7 @@ add_library(${PROJECT_NAME} SHARED
     request/EmptyRequest.cpp
     request/GraphicsCardRequest.cpp
     request/IORequest.cpp
+    request/LuaRequest.cpp
     request/SimRequest.cpp
     request/TachyonRequest.cpp
     request/UIRequest.cpp
@@ -395,6 +402,9 @@ add_library(${PROJECT_NAME} SHARED
     request/io/LoadTSXRequest.cpp
     request/io/SaveRequest.cpp
     request/io/SaveTSXRequest.cpp
+
+    request/lua/LuaExecuteFileRequest.cpp
+    request/lua/LuaExecuteStringRequest.cpp
     
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp
@@ -444,6 +454,10 @@ add_library(${PROJECT_NAME} SHARED
 
     ui/layout/UIHBoxLayout.cpp
     ui/layout/UIVBoxLayout.cpp
+
+    ui/lua/LuaConsole.cpp
+    ui/lua/LuaInputBar.cpp
+    ui/lua/LuaWindow.cpp
     
     utility/LoggerBox.cpp
 
@@ -488,6 +502,7 @@ add_library(${PROJECT_NAME} SHARED
     widget/SpaceCameraRemote.cpp
     widget/StackedWidget.cpp
     widget/TextArea.cpp
+
 )
 target_compile_definitions(${PROJECT_NAME} 
     PUBLIC
@@ -503,6 +518,8 @@ target_compile_definitions(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
 PUBLIC
     ${VULQAN_API_DIR}
+PRIVATE
+    ${LUA_INCLUDE_DIR}
 )
 
 
@@ -511,6 +528,7 @@ PUBLIC
     yq_resource
     yq_color
     yq_keyv
+    yq_lua
     yq_math
     yq_process
     yq_raster
@@ -525,32 +543,6 @@ PUBLIC
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
 )
-
-
-if(Build_Lua)
-    target_sources(${PROJECT_NAME}
-    PUBLIC
-        LuaTVM.cpp
-        command/LuaCommand.cpp
-        event/LuaEvent.cpp
-        reply/lua/LuaExecuteReply.cpp
-        reply/LuaReply.cpp
-        request/lua/LuaExecuteFileRequest.cpp
-        request/lua/LuaExecuteStringRequest.cpp
-        request/LuaRequest.cpp
-        ui/lua/LuaConsole.cpp
-        ui/lua/LuaInputBar.cpp
-        ui/lua/LuaWindow.cpp
-    )
-    target_include_directories(${PROJECT_NAME} 
-    PRIVATE 
-        ${LUA_INCLUDE_DIR}
-    )
-    target_link_libraries(${PROJECT_NAME} 
-        PUBLIC
-            yq_lua
-    )
-endif()
 
 
 LinkTest(${PROJECT_NAME})

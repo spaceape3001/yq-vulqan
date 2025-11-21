@@ -6,9 +6,9 @@
 
 #include "SceneEditor.hpp"
 
-
 #include "ControlPanelUI.hpp"
 #include "InspectorUI.hpp"
+#include "LuaPanelUI.hpp"
 #include "MetricsUI.hpp"
 
 #include "event/CameraSelectEvent.hpp"
@@ -31,6 +31,8 @@
 #include "data.hpp"
 
 #include <yq/date/dateutils.hpp>
+
+#include <yq/tachyon/LuaTVM.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/parameters.hpp>
 #include <yq/tachyon/texture.hpp>
@@ -71,10 +73,14 @@
 
 #include <yq/tachyon/reply/io/LoadTSXReply.hpp>
 #include <yq/tachyon/reply/io/SaveTSXReply.hpp>
+#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
 #include <yq/tachyon/reply/viewer/ViewerScreenshotReply.hpp>
 
 #include <yq/tachyon/request/io/LoadTSXRequest.hpp>
 #include <yq/tachyon/request/io/SaveTSXRequest.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
+#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
+
 #include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 
 #include <yq/tachyon/scene/HUDScene.hpp>
@@ -100,14 +106,6 @@
 
 #include <yq/text/format.hpp>
 #include <yq/text/transform.hpp>
-
-#ifdef YQ_LUA_ENABLE
-#include "LuaPanelUI.hpp"
-#include <yq/tachyon/LuaTVM.hpp>
-#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
-#endif
 
 #include <ImGuiFileDialog.h>
 
@@ -299,13 +297,11 @@ void SceneEditor::init_meta()
     
     // Simple window thing
     
-    #ifdef YQ_LUA_ENABLE
     /////////////////////////////////
     //  LUA
     auto lualua = app.make<LuaPanelUI>();
     lualua.flags(SET, {/* UIFlag::Invisible, */ UIFlag::NoBackground});
     lualua.uid("LuaWindow");
-    #endif
 
     /////////////////////////////////
     //  MENUS
@@ -355,9 +351,7 @@ void SceneEditor::init_meta()
     (scene_menu << new CreateMenuUI("Add/Create##AddSceneUI", meta<Scene>())).action(&SceneEditor::action_create_scene);
     
     view_menu.checkbox(VISIBLE, controlpanel);
-    #ifdef YQ_LUA_ENABLE
     view_menu.checkbox(VISIBLE, lualua);
-    #endif
 }
 
 
@@ -680,9 +674,7 @@ Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
 
 void    SceneEditor::_lua(const std::filesystem::path& fp)
 {
-    #ifdef YQ_LUA_ENABLE
     send(new LuaExecuteFileRequest({.target=m_lua.tvm}, fp));
-    #endif
 }
 
 void    SceneEditor::_open(const std::filesystem::path& fp)
@@ -877,26 +869,6 @@ void    SceneEditor::action_create_scene(const Payload& pay)
         m_scene.rebuild = true;
     }
 }
-
-#if 0
-void    SceneEditor::action_lua_execute(const Payload&pay)
-{
-    #ifdef YQ_LUA_ENABLE
-    if(pay.arguments().empty())
-        return ;
-    
-    auto   line    = to_string(pay.arguments()[0]);
-    if(!line)
-        return ;
-        
-    auto l  = trimmed(*line);
-    if(l.empty())
-        return ;
-
-    send(new yq::lua::LuaExecuteStringRequest({}, l));
-    #endif
-}
-#endif
 
 
 void    SceneEditor::cmd_file_new()
@@ -1100,7 +1072,6 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_defaultInit   = true;
     }
     
-    #ifdef YQ_LUA_ENABLE
     if(!m_lua.tvm){
         LuaTVM*     ch = create_on<LuaTVM>(AUX);
         m_lua.tvm      = *ch;
@@ -1114,7 +1085,6 @@ Execution   SceneEditor::setup(const Context&ctx)
         if(!curFrame->object(m_lua.tvm))
             return WAIT;
     }
-    #endif
 
 
     Camera* cam   = curFrame->object((CameraID) m_camera.space);
@@ -1174,13 +1144,11 @@ Execution   SceneEditor::setup(const Context&ctx)
     if(!m_scene.table)
         m_scene.table           = static_cast<SceneTableUI*>(element(FIRST, "SceneTable"));
 
-    #ifdef YQ_LUA_ENABLE
     if(!m_lua.panel){
         m_lua.panel             = static_cast<LuaPanelUI*>(element(FIRST, "LuaWindow"));
         m_lua.panel -> tvm(SET, m_lua.tvm);
         m_lua.panel -> info("Scenery Editor's Lua Panel, try help() to get started");
     }
-    #endif
         
     _activate((CameraID) m_camera.space );
     

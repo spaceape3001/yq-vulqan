@@ -5,9 +5,5 @@
 ################################################################################
 
 add_subdirectory(scenery)
-
-if(Build_Lua)
-    add_subdirectory(luavk)
-endif()
-
+add_subdirectory(luavk)
 add_subdirectory(xgvk)

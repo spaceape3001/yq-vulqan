@@ -264,10 +264,6 @@ namespace yq::tachyon {
             Meta::init();
         }
         
-for(auto  tm : TachyonMeta::all()){
-    tachyonInfo << "Registered : " << tm->name();
-}        
-        
         Meta::freeze();
         
         if(m_cInfo.thread.app){

@@ -9,6 +9,7 @@ project(scenery)
 add_executable(${PROJECT_NAME}
     ControlPanelUI.cpp
     InspectorUI.cpp
+    LuaPanelUI.cpp
     MetricsUI.cpp
     SceneEditor.cpp
     
@@ -41,13 +42,6 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         ImGuiFileDialog
 )
-
-if(Build_Lua)
-    target_sources(${PROJECT_NAME}
-        PRIVATE
-        LuaPanelUI.cpp
-    )
-endif()
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC

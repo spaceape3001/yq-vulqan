@@ -92,7 +92,6 @@ namespace yq::tachyon {
     TachyonMeta::TachyonMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {
-yInfo() << "Registered " << zName;    
         set(Flag::TACHYON);
         repo().all.push_back(this);
     }

@@ -7,9 +7,26 @@
 add_library(yq_assetvk SHARED
     camera/SpaceCamera.cpp
     
+    control/Position3Control.cpp
+    control/Orientation3Control.cpp
+
     controller/Space3Controller.cpp
 
     edit/SkyBox3UI.cpp
+
+    layer/BackgroundLayer.cpp
+    layer/ForegroundLayer.cpp
+    layer/HUDLayer.cpp
+    
+
+    menu/CreateMenuUI.cpp
+
+    mini/TextLabel.cpp
+
+    panel/FrameMetricsUI.cpp
+    panel/UIConcreteInfoList.cpp
+    panel/UIInfoList.cpp
+
 
         #   TODO... unify the color/grad in a way that makes sense (and won't be terribly confusing)
 
@@ -35,6 +52,8 @@ add_library(yq_assetvk SHARED
     scene/ForegroundScene.cpp
     scene/HUDScene.cpp
     scene/SimpleScene.cpp
+    
+    tweak/OriginCameraTweak.cpp
     
     widget/CompositeWidget.cpp
     widget/FrameInspector.cpp

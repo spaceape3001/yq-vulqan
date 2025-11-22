@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/mini/TextLabel.hpp>
+#include "TextLabel.hpp"
 #include <yq/tachyon/api/MiniMetaWriter.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/accessor/StringFunction.hpp>

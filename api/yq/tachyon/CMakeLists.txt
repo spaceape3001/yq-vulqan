@@ -207,7 +207,6 @@ add_library(${PROJECT_NAME} SHARED
 
     config/build.cpp
 
-    control/Orientation3Control.cpp
     
     data/Vertex3.cpp
     
@@ -270,19 +269,7 @@ add_library(${PROJECT_NAME} SHARED
     io/save/SaveThread.cpp
     io/save/SaveXML.cpp
     
-    layer/BackgroundLayer.cpp
-    layer/ForegroundLayer.cpp
-    layer/HUDLayer.cpp
-    
-    menu/CreateMenuUI.cpp
-
     message/EmptyMessage.cpp
-
-    mini/TextLabel.cpp
-
-    panel/FrameMetricsUI.cpp
-    panel/UIConcreteInfoList.cpp
-    panel/UIInfoList.cpp
 
     pipeline/Buffer.cpp
     pipeline/Pipeline.cpp
@@ -385,8 +372,6 @@ add_library(${PROJECT_NAME} SHARED
     spatial/SimpleSpatial2.cpp
     spatial/SimpleSpatial3.cpp
 
-    tweak/OriginCameraTweak.cpp
-    
     ui/UIAppMain.cpp
     ui/UIAppMainWriter.cpp
     ui/UICalc.cpp

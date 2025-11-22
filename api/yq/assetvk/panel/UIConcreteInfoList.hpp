@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/panel/UIInfoList.hpp>
+#include <yq/assetvk/panel/UIInfoList.hpp>
 
 namespace yq::tachyon {
     class UIConcreteInfoList : public UIInfoList {

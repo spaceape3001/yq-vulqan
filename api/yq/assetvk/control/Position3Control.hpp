@@ -7,7 +7,7 @@
 #pragma once
 #include <yq/tachyon/api/Control.hpp>
 #include <yq/units.hpp>
-#include <yq/vector/Quaternion3.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
     class PPosition³;

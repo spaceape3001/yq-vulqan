@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/control/Orientation3Control.hpp>
+#include "Orientation3Control.hpp"
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/proxy/POrientation3.hpp>
 #include <yq/tachyon/MyImGui.hpp>

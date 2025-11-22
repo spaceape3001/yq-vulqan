@@ -5,9 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "FrameInspector.hpp"
+
 #include <yq/assetvk/widget/FormWidget.hpp>
-#include <yq/tachyon/mini/TextLabel.hpp>
+#include <yq/assetvk/mini/TextLabel.hpp>
+
 #include <yq/text/format.hpp>
+
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/api/Frame.hpp>

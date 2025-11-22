@@ -9,4 +9,4 @@ add_executable(camera
     MainWidget.cpp
     main.cpp
 )
-target_link_libraries(camera yq_tachyon)
+target_link_libraries(camera yq_tachyon yq_assetvk)

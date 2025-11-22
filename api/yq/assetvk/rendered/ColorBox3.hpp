@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/rendered/Box3.hpp>
+#include <yq/assetvk/rendered/Box3.hpp>
 #include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/rendered/Triangle3.hpp>
+#include <yq/assetvk/rendered/Triangle3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {

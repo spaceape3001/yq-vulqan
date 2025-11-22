@@ -8,9 +8,9 @@
 
 #include <yq/tachyon/data/ColorVertexData.hpp>
 #include <yq/tachyon/aspect/AVertices3.hpp>
-#include <yq/tachyon/rendered/AbstractShape3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
+#include <yq/tachyon/rendered/AbstractShape3.hpp>
 
 namespace yq {
     template <typename> struct TetrahedronData;

@@ -20,6 +20,7 @@
 
 #include "types.hpp"
 
+#include <yq/assetvk/rendered/GradTriangle3.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/color/colors.hpp>
@@ -44,7 +45,6 @@
 #include <yq/tachyon/widget.hpp>
 
 #include <yq/tachyon/command/orientation/SetOrientation3Command.hpp>
-#include <yq/tachyon/rendered/GradTriangle3.hpp>
 #include <yq/tachyon/api/Spatial3.hpp>
 #include <yq/tachyon/scene/SimpleScene.hpp>
 #include <yq/tachyon/api/Scene3MetaWriter.hpp>

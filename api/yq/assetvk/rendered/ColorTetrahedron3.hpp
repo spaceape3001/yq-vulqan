@@ -6,9 +6,9 @@
 
 #pragma once
 
+#include <yq/assetvk/rendered/Tetrahedron3.hpp>
 #include <yq/tachyon/data/ColorVertexData.hpp>
 #include <yq/tachyon/aspect/AColor.hpp>
-#include <yq/tachyon/rendered/Tetrahedron3.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 
 #include <array>

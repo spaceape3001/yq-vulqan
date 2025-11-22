@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/rendered/Billboard3.hpp>
+#include "Billboard3.hpp"
 
 #include <yq/shape/AxBox2.hpp>
 

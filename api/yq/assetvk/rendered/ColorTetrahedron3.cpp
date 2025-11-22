@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/rendered/ColorTetrahedron3.hpp>
+#include "ColorTetrahedron3.hpp"
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/tachyon/asset/Shader.hpp>

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/rendered/Quadrilateral3.hpp>
+#include "Quadrilateral3.hpp"
 
 #include <yq/shape/QuadrilateralData.hpp>
 #include <yq/shape/QuadrilateralData.hpp>

@@ -30,6 +30,9 @@
 
 #include "data.hpp"
 
+#include <yq/assetvk/camera/SpaceCamera.hpp>
+#include <yq/assetvk/controller/Space3Controller.hpp>
+
 #include <yq/date/dateutils.hpp>
 
 #include <yq/luavk/LuaExecuteReply.hpp>
@@ -57,12 +60,10 @@
 #include <yq/tachyon/asset/Raster.hpp>
 
 #include <yq/tachyon/camera/NullCamera.hpp>
-#include <yq/tachyon/camera/SpaceCamera.hpp>
 #include <yq/tachyon/command/controller/ListenCommand.hpp>
 #include <yq/tachyon/command/generic/SetSpatialCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
-#include <yq/tachyon/controller/Space3Controller.hpp>
 
 #include <yq/tachyon/event/panel/InfoSelectionChangedEvent.hpp>
 

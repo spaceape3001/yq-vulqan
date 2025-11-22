@@ -6,20 +6,20 @@
 
 #include "CameraScene.hpp"
 
+#include <yq/assetvk/camera/SpaceCamera.hpp>
+#include <yq/assetvk/rendered/Billboard3.hpp>
+#include <yq/assetvk/rendered/GradTetrahedron3.hpp>
+#include <yq/assetvk/rendered/ImageQuad3.hpp>
+#include <yq/assetvk/rendered/Quadrilateral3.hpp>
+#include <yq/assetvk/rendered/SkyBox3.hpp>
+#include <yq/assetvk/rendered/GradTriangle3.hpp>
+
 #include <yq/color/colors.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/QuadrilateralData.hpp>
 #include <yq/shape/TetrahedronData.hpp>
 #include <yq/shape/TriangleData.hpp>
 
-#include <yq/tachyon/camera/SpaceCamera.hpp>
-
-#include <yq/tachyon/rendered/Billboard3.hpp>
-#include <yq/tachyon/rendered/GradTetrahedron3.hpp>
-#include <yq/tachyon/rendered/ImageQuad3.hpp>
-#include <yq/tachyon/rendered/Quadrilateral3.hpp>
-#include <yq/tachyon/rendered/SkyBox3.hpp>
-#include <yq/tachyon/rendered/GradTriangle3.hpp>
 
 #include <yq/tachyon/api/Scene3MetaWriter.hpp>
 #include <yq/vector/Quaternion3.hxx>

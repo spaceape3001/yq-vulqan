@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Widget.hpp>
-#include <yq/tachyon/widget/FrameInspector.hpp>
+#include <yq/assetvk/widget/FrameInspector.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/InterfaceMeta.hpp>

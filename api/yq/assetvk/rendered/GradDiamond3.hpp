@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/rendered/Diamond3.hpp>
+#include <yq/assetvk/rendered/Diamond3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {

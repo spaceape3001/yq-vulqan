@@ -5,4 +5,4 @@
 ################################################################################
 
 add_executable(hello hello.cpp)
-target_link_libraries(hello yq_tachyon)
+target_link_libraries(hello yq_tachyon yq_assetvk)

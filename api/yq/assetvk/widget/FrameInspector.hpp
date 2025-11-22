@@ -13,6 +13,10 @@ namespace yq::tachyon {
     class Frame;
     class TextLabel;
     
+        /*
+            NOTE... want to spin this into a UI item
+        */
+    
     class FrameInspector : public Widget {
         YQ_TACHYON_DECLARE(FrameInspector, Widget)
     public:

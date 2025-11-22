@@ -7,13 +7,14 @@
 #include "MainWidget.hpp"
 #include "CameraScene.hpp"
 
-#include <yq/tachyon/camera/SpaceCamera.hpp>
+#include <yq/assetvk/camera/SpaceCamera.hpp>
+#include <yq/assetvk/controller/Space3Controller.hpp>
+#include <yq/assetvk/widget/SpaceCameraRemote.hpp>
+#include <yq/assetvk/widget/FrameInspector.hpp>
+
 #include <yq/tachyon/command/controller/ListenCommand.hpp>
 #include <yq/tachyon/command/io/SaveCommand.hpp>
 #include <yq/tachyon/command/ui/CloseCommand.hpp>
-#include <yq/tachyon/controller/Space3Controller.hpp>
-#include <yq/tachyon/widget/FrameInspector.hpp>
-#include <yq/tachyon/widget/SpaceCameraRemote.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/MyImGui.hpp>

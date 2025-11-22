@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/rendered/ImageQuad3.hpp>
+#include "ImageQuad3.hpp"
 
 #include <yq/shape/AxBox2.hpp>
 

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/rendered/GradTetrahedron3.hpp>
+#include "GradTetrahedron3.hpp"
 #include <yq/tachyon/logging.hpp>
 
 #include <yq/color/colors.hpp>

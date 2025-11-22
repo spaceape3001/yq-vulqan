@@ -173,8 +173,6 @@ add_library(${PROJECT_NAME} SHARED
     asset/Video.cpp
 
     camera/NullCamera.cpp
-    camera/SpaceCamera.cpp
-    camera/TargetCamera.cpp
 
     command/AddChildCommand.cpp
     command/AppCommand.cpp
@@ -210,7 +208,6 @@ add_library(${PROJECT_NAME} SHARED
     config/build.cpp
 
     control/Orientation3Control.cpp
-    controller/Space3Controller.cpp
     
     data/Vertex3.cpp
     
@@ -229,7 +226,6 @@ add_library(${PROJECT_NAME} SHARED
     edit/SceneUI.cpp
     edit/SimpleSpatial3UI.cpp
     edit/Size3UI.cpp
-    edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp
     edit/Vertices3UI.cpp
 
@@ -325,25 +321,7 @@ add_library(${PROJECT_NAME} SHARED
     raster/PatternRasters.cpp
     raster/DebugRasters.cpp 
     
-        #   TODO... unify the color/grad in a way that makes sense (and won't be terribly confusing)
-
     rendered/AbstractShape3.cpp
-    rendered/Billboard3.cpp
-    rendered/Box3.cpp
-    rendered/ColorBox3.cpp
-    rendered/ColorDiamond3.cpp
-    rendered/ColorTetrahedron3.cpp
-    rendered/ColorTriangle3.cpp
-    rendered/Diamond3.cpp
-    rendered/GradBox3.cpp
-    rendered/GradDiamond3.cpp
-    rendered/GradTetrahedron3.cpp
-    rendered/GradTriangle3.cpp
-    rendered/ImageQuad3.cpp
-    rendered/Quadrilateral3.cpp
-    rendered/SkyBox3.cpp
-    rendered/Tetrahedron3.cpp
-    rendered/Triangle3.cpp
 
     reply/AnyReply.cpp
     reply/AppReply.cpp
@@ -484,11 +462,9 @@ add_library(${PROJECT_NAME} SHARED
     #widget/AbstractSceneWidgetHelper.cpp
     widget/CompositeWidget.cpp
     widget/FormWidget.cpp
-    widget/FrameInspector.cpp
     widget/ImGuiDemoWidget.cpp
     #widget/LabelWidget.cpp
     widget/SceneWidget.cpp
-    widget/SpaceCameraRemote.cpp
     widget/StackedWidget.cpp
     widget/TextArea.cpp
 

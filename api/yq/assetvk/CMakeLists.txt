@@ -33,7 +33,7 @@ add_library(yq_assetvk SHARED
     edit/TachyonUI.cpp
     edit/Vertices3UI.cpp
 
-    event/panel/InfoSelectionChangedEvent.cpp
+    event/panel/MetaSelectionChangedEvent.cpp
 
     layer/BackgroundLayer.cpp
     layer/ForegroundLayer.cpp
@@ -43,10 +43,6 @@ add_library(yq_assetvk SHARED
     menu/CreateMenuUI.cpp
 
     mini/TextLabel.cpp
-
-    panel/FrameMetricsUI.cpp
-    panel/UIConcreteInfoList.cpp
-    panel/UIInfoList.cpp
 
 
         #   TODO... unify the color/grad in a way that makes sense (and won't be terribly confusing)
@@ -79,6 +75,9 @@ add_library(yq_assetvk SHARED
 
     tweak/OriginCameraTweak.cpp
     
+    ui/UIConcreteMetaList.cpp
+    ui/UIFrameMetrics.cpp
+    ui/UIMetaList.cpp
     ui/UISimpleTree.cpp
     ui/UITachyonEditor.cpp
 

@@ -12,31 +12,31 @@ namespace yq::tachyon {
     class TachyonMeta;
 
     // UIShapes
-    class UIInfoList : public UIElement {
-        YQ_OBJECT_DECLARE(UIInfoList, UIElement)
+    class UIMetaList : public UIElement {
+        YQ_OBJECT_DECLARE(UIMetaList, UIElement)
     public:
 
         static void init_meta();
 
-        UIInfoList(std::string_view szTitle={}, UIFlags flags={});
+        UIMetaList(std::string_view szTitle={}, UIFlags flags={});
         
-        UIInfoList(const UIInfoList& cp);
-        ~UIInfoList();
-        virtual UIInfoList* clone() const = 0;
+        UIMetaList(const UIMetaList& cp);
+        ~UIMetaList();
+        virtual UIMetaList* clone() const = 0;
         virtual const char* title() const override;
         virtual void render() override;
         
-        const TachyonMeta*  selected() const { return m_selected; }
+        const Meta*  selected() const { return m_selected; }
         
     protected:
         //! Gets the data (note, only called on first use OR whenever it's stale)
-        virtual std::vector<const TachyonMeta*> get_infos() const = 0;
+        virtual std::vector<const Meta*> get_metas() const = 0;
         
     private:
         struct Row;
         void                define_rows();
         std::vector<Row>    m_rows;
         std::string         m_title;
-        const TachyonMeta*  m_selected  = nullptr;
+        const Meta*         m_selected  = nullptr;
     };
 }

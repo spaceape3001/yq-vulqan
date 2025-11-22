@@ -21,7 +21,7 @@
 
 namespace yq::tachyon {
     class LuaExecuteReply;
-    class InfoSelectionChangedEvent;
+    class MetaSelectionChangedEvent;
     class LightMeta;
     class LoadTSXReply;
     class OpenFileRequest;
@@ -244,10 +244,10 @@ private:
     
     void    on_camera_select_event(const CameraSelectEvent&);
     void    on_controller_select_event(const ControllerSelectEvent&);
-    void    on_info_selection_changed_event(const InfoSelectionChangedEvent&);
     void    on_light_select_event(const LightSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);
     void    on_lua_exec_reply(const LuaExecuteReply&);
+    void    on_meta_selection_changed_event(const MetaSelectionChangedEvent&);
     void    on_model_select_event(const ModelSelectEvent&);
     void    on_rendered_select_event(const RenderedSelectEvent&);
     void    on_save_tsx_reply(const SaveTSXReply&);

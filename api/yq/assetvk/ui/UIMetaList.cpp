@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIInfoList.hpp"
-#include <yq/assetvk/event/panel/InfoSelectionChangedEvent.hpp>
+#include "UIMetaList.hpp"
+#include <yq/assetvk/event/panel/MetaSelectionChangedEvent.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/Widget.hpp>
@@ -15,40 +15,40 @@
 #include <yq/text/match.hpp>
 
 namespace yq::tachyon {
-    struct UIInfoList::Row {
+    struct UIMetaList::Row {
         std::string_view    iconfile;
         TextureCPtr         icon;
         ImTextureID         tex;
         std::string         label;
         std::string         description;
-        const TachyonMeta*  info        = nullptr;
+        const Meta*         info        = nullptr;
     };
 
-    void UIInfoList::init_meta()
+    void UIMetaList::init_meta()
     {
-        auto w = writer<UIInfoList>();
-        w.description("Table of tachyon infos");
-        w.property("title", &UIInfoList::m_title);
+        auto w = writer<UIMetaList>();
+        w.description("Table of metas");
+        w.property("title", &UIMetaList::m_title);
     }
 
-    UIInfoList::UIInfoList(std::string_view szTitle, UIFlags flags) : UIElement(flags), m_title(szTitle)
-    {
-    }
-
-    UIInfoList::UIInfoList(const UIInfoList& cp) : UIElement(cp), m_rows(cp.m_rows), m_title(cp.m_title)
+    UIMetaList::UIMetaList(std::string_view szTitle, UIFlags flags) : UIElement(flags), m_title(szTitle)
     {
     }
 
-    UIInfoList::~UIInfoList()
+    UIMetaList::UIMetaList(const UIMetaList& cp) : UIElement(cp), m_rows(cp.m_rows), m_title(cp.m_title)
     {
     }
 
-    const char* UIInfoList::title() const 
+    UIMetaList::~UIMetaList()
+    {
+    }
+
+    const char* UIMetaList::title() const 
     {
         return m_title.c_str();
     }
 
-    void UIInfoList::render() 
+    void UIMetaList::render() 
     {
         if(!(m_status(S::NotFirst) && m_status(S::NotStale))){
             define_rows();
@@ -56,7 +56,7 @@ namespace yq::tachyon {
             m_status |= S::NotStale;
         }
 
-        if(ImGui::BeginTable("TachyonMetaTypes", 3)){
+        if(ImGui::BeginTable("MetaTypes", 3)){
         
             //ImGui::TableNextRow();
             //ImGui::TableNextColumn();
@@ -105,7 +105,7 @@ namespace yq::tachyon {
                 if(doSelect && (m_selected != r.info)){
                     m_selected  = r.info;
                     if(m_flags(UIFlag::EmitSignal) && widget()){
-                        widget() -> mail(new InfoSelectionChangedEvent({.source=widget(), .target=widget()}, m_selected));
+                        widget() -> mail(new MetaSelectionChangedEvent({.source=widget(), .target=widget()}, m_selected));
                     }
                 }
             }
@@ -115,9 +115,9 @@ namespace yq::tachyon {
         }
     }
 
-    void        UIInfoList::define_rows()
+    void        UIMetaList::define_rows()
     {
-        for(const TachyonMeta* info : get_infos()){
+        for(const Meta* info : get_metas()){
             if(!info)
                 continue;
             Row     r;
@@ -130,7 +130,9 @@ namespace yq::tachyon {
             r.tex   = install(r.icon);
             r.info  = info;
             
-            r.label         = std::format("{}##{}", info->stem(), info->name());
+            auto x = info->label();
+            
+            r.label         = std::format("{}##{}", (x.empty() ? info->stem() : x), info->name());
             r.description   = std::format("{}##{}", info->description(), info->stem());
             m_rows.push_back(r);
         }
@@ -144,4 +146,4 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::UIInfoList);
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIMetaList);

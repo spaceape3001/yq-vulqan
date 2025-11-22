@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "FrameMetricsUI.hpp"
+#include "UIFrameMetrics.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Thread.hpp>
@@ -12,63 +12,63 @@
 #include <yq/tachyon/ui/UIFormMetaWriter.hpp>
 
 namespace yq::tachyon {
-    void FrameMetricsUI::init_meta()
+    void UIFrameMetrics::init_meta()
     {
-        auto w = writer<FrameMetricsUI>();
+        auto w = writer<UIFrameMetrics>();
         w.description("Metrics UI");
-        w.field("FPS", &FrameMetricsUI::fps);
-        w.field("Cycle Time", &FrameMetricsUI::cycle);
-        w.field("Cameras", &FrameMetricsUI::cameras);
-        w.field("Lights", &FrameMetricsUI::lights);
-        w.field("Models", &FrameMetricsUI::models);
-        w.field("Rendereds", &FrameMetricsUI::rendereds);
-        w.field("Scenes", &FrameMetricsUI::scenes);
-        w.field("Threads", &FrameMetricsUI::threads);
+        w.field("FPS", &UIFrameMetrics::fps);
+        w.field("Cycle Time", &UIFrameMetrics::cycle);
+        w.field("Cameras", &UIFrameMetrics::cameras);
+        w.field("Lights", &UIFrameMetrics::lights);
+        w.field("Models", &UIFrameMetrics::models);
+        w.field("Rendereds", &UIFrameMetrics::rendereds);
+        w.field("Scenes", &UIFrameMetrics::scenes);
+        w.field("Threads", &UIFrameMetrics::threads);
     }
 
-    FrameMetricsUI::FrameMetricsUI(UIFlags flags) : UIForm(flags)
+    UIFrameMetrics::UIFrameMetrics(UIFlags flags) : UIForm(flags)
     {
     }
 
-    FrameMetricsUI::FrameMetricsUI(const FrameMetricsUI& cp) : UIForm(cp)
+    UIFrameMetrics::UIFrameMetrics(const UIFrameMetrics& cp) : UIForm(cp)
     {
     }
 
-    FrameMetricsUI::~FrameMetricsUI()
+    UIFrameMetrics::~UIFrameMetrics()
     {
     }
         
-    void    FrameMetricsUI::cameras()
+    void    UIFrameMetrics::cameras()
     {
         ImGui::Text(m_frame->count(CAMERA));
     }
 
-    FrameMetricsUI* FrameMetricsUI::clone() const 
+    UIFrameMetrics* UIFrameMetrics::clone() const 
     {
-        return new FrameMetricsUI(*this);
+        return new UIFrameMetrics(*this);
     }
 
-    void    FrameMetricsUI::cycle()
+    void    UIFrameMetrics::cycle()
     {
         ImGui::Text(unit::Millisecond(m_data->cycleTime).value);  ImGui::SameLine(); ImGui::TextUnformatted(" ms");
     }
 
-    void    FrameMetricsUI::fps()
+    void    UIFrameMetrics::fps()
     {
         ImGui::Text(1.0 / unit::Second(m_data->cycleTime).value);
     }
 
-    void    FrameMetricsUI::lights()
+    void    UIFrameMetrics::lights()
     {
         ImGui::Text(m_frame->count(LIGHT));
     }
 
-    void    FrameMetricsUI::models()
+    void    UIFrameMetrics::models()
     {
         ImGui::Text(m_frame->count(MODEL));
     }
 
-    void    FrameMetricsUI::render()
+    void    UIFrameMetrics::render()
     {
         m_frame = Frame::current();
         if(!m_frame)
@@ -85,20 +85,20 @@ namespace yq::tachyon {
         UIForm::render();
     }
 
-    void    FrameMetricsUI::rendereds()
+    void    UIFrameMetrics::rendereds()
     {
         ImGui::Text(m_frame->count(RENDERED));
     }
 
-    void    FrameMetricsUI::scenes()
+    void    UIFrameMetrics::scenes()
     {
         ImGui::Text(m_frame->count(SCENE));
     }
 
-    void    FrameMetricsUI::threads()
+    void    UIFrameMetrics::threads()
     {
         ImGui::Text(m_frame->count(THREAD));
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::FrameMetricsUI)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIFrameMetrics)

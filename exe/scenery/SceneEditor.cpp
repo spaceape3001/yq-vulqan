@@ -32,13 +32,13 @@
 #include <yq/assetvk/camera/SpaceCamera.hpp>
 #include <yq/assetvk/controller/Space3Controller.hpp>
 #include <yq/assetvk/menu/CreateMenuUI.hpp>
-#include <yq/assetvk/panel/FrameMetricsUI.hpp>
-#include <yq/assetvk/panel/UIBuildableInfoList.hpp>
 #include <yq/assetvk/scene/HUDScene.hpp>
 #include <yq/assetvk/scene/BackgroundScene.hpp>
 #include <yq/assetvk/scene/ForegroundScene.hpp>
 #include <yq/assetvk/scene/SimpleScene.hpp>
 #include <yq/assetvk/tweak/OriginCameraTweak.hpp>
+#include <yq/assetvk/ui/UIFrameMetrics.hpp>
+#include <yq/assetvk/ui/UIBuildableMetaList.hpp>
 #include <yq/assetvk/ui/UISimpleTree.hpp>
 #include <yq/assetvk/ui/UITachyonEditor.hpp>
 
@@ -74,7 +74,7 @@
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 
-#include <yq/assetvk/event/panel/InfoSelectionChangedEvent.hpp>
+#include <yq/assetvk/event/panel/MetaSelectionChangedEvent.hpp>
 
 #include <yq/tachyon/io/Save.hpp>
 #include <yq/tachyon/io/save/SaveXML.hpp>
@@ -213,7 +213,7 @@ void SceneEditor::init_meta()
     w.slot(&SceneEditor::on_controller_select_event);
     w.slot(&SceneEditor::on_load_tsx_reply);
     w.slot(&SceneEditor::on_lua_exec_reply);
-    w.slot(&SceneEditor::on_info_selection_changed_event);
+    w.slot(&SceneEditor::on_meta_selection_changed_event);
     w.slot(&SceneEditor::on_model_select_event);
     w.slot(&SceneEditor::on_rendered_select_event);
     w.slot(&SceneEditor::on_save_tsx_reply);
@@ -237,7 +237,7 @@ void SceneEditor::init_meta()
     controlpanel.uid("ControlPanel");
     auto cp_tree            = controlpanel.make<UISimpleTree>();
     
-    cp_tree.section("Metrics").make<FrameMetricsUI>();
+    cp_tree.section("Metrics").make<UIFrameMetrics>();
     
     auto cp_cameras         = cp_tree.section("Cameras").make<UISimpleTree>();
     auto cp_controllers     = cp_tree.section("Controllers").make<UISimpleTree>();
@@ -249,7 +249,7 @@ void SceneEditor::init_meta()
     auto cp_scenes          = cp_tree.section("Scenes").make<UISimpleTree>();
     auto cp_spatials        = cp_tree.section("Spatials").make<UISimpleTree>();
 
-    cp_cameras.section("Available").make<UIBuildableInfoList<Camera>>().flag(SET, UIFlag::EmitSignal).uid("CameraAvailable");
+    cp_cameras.section("Available").make<UIBuildableMetaList<Camera>>().flag(SET, UIFlag::EmitSignal).uid("CameraAvailable");
     cp_cameras.section("Current").make<CameraTableUI>().uid("CameraTable");
     auto cpp_cameras      = cp_cameras.section("Properties");
     (cpp_cameras << new CreateMenuUI("Add/Create Spatial##AddCameraSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_camera_spatial);
@@ -257,7 +257,7 @@ void SceneEditor::init_meta()
     cx.uid("CameraInspector");
     cx.flag(SET, UIFlag::Children);
     
-    cp_controllers.section("Available").make<UIBuildableInfoList<Controller>>().flag(SET, UIFlag::EmitSignal).uid("ControllerAvailable");
+    cp_controllers.section("Available").make<UIBuildableMetaList<Controller>>().flag(SET, UIFlag::EmitSignal).uid("ControllerAvailable");
     
     cp_controllers.section("Current").make<ControllerTableUI>().uid("ControllerTable");
     {
@@ -267,7 +267,7 @@ void SceneEditor::init_meta()
     }
 
 #if 0
-    cp_lights.section("Available").make<UIBuildableInfoList<Light>>().flag(SET, UIFlag::EmitSignal).uid("LightAvailable");
+    cp_lights.section("Available").make<UIBuildableMetaList<Light>>().flag(SET, UIFlag::EmitSignal).uid("LightAvailable");
     cp_lights.section("Current").make<LightTableUI>().uid("LightTable");
     auto cpp_lights    = cp_lights.section("Properties");
     (cpp_lights << new CreateMenuUI("Add/Create Spatial##AddLightSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_light_spatial);
@@ -275,7 +275,7 @@ void SceneEditor::init_meta()
 #endif
 
 #if 0
-    cp_models.section("Available").make<UIBuildableInfoList<Model>>().flag(SET, UIFlag::EmitSignal).uid("ModelAvailable");
+    cp_models.section("Available").make<UIBuildableMetaList<Model>>().flag(SET, UIFlag::EmitSignal).uid("ModelAvailable");
     cp_models.section("Current").make<ModelTableUI>().uid("ModelTable");
     auto cpp_models = cp_models.section("Properties");
     (cpp_models << new CreateMenuUI("Add/Create Spatial##AddModelSpatialUI", meta<Spatial>()));
@@ -286,7 +286,7 @@ void SceneEditor::init_meta()
     //cp_physics.section("Current").make<PhysicsTableUI>().uid("PhysicsTable");
     //cp_physics.section("Properties").make<InspectorUI>().uid("PhysicsInspector");
 
-    cp_rendereds.section("Available").make<UIBuildableInfoList<Rendered>>().flag(SET, UIFlag::EmitSignal).uid("RenderedAvailable");
+    cp_rendereds.section("Available").make<UIBuildableMetaList<Rendered>>().flag(SET, UIFlag::EmitSignal).uid("RenderedAvailable");
     cp_rendereds.section("Current").make<RenderedTableUI>().uid("RenderedTable");
     auto rendered_props = cp_rendereds.section("Properties");
     (rendered_props << new CreateMenuUI("Add/Create Spatial##AddRenderedSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_rendered_spatial);
@@ -294,13 +294,13 @@ void SceneEditor::init_meta()
     rx.uid("RenderedInspector");
     rx.flag(SET, UIFlag::Children);
 
-    cp_scenes.section("Available").make<UIBuildableInfoList<Scene>>().flag(SET, UIFlag::EmitSignal).uid("SceneAvailable");
+    cp_scenes.section("Available").make<UIBuildableMetaList<Scene>>().flag(SET, UIFlag::EmitSignal).uid("SceneAvailable");
     cp_scenes.section("Current").make<SceneTableUI>().uid("SceneTable");
     auto sx = cp_scenes.section("Properties").make<UITachyonEditor>();
     sx.uid("SceneInspector");
     sx.flag(SET, UIFlag::Children);
 
-    cp_spatials.section("Available").make<UIBuildableInfoList<Spatial>>().flag(SET, UIFlag::EmitSignal).uid("SpatialAvailable");
+    cp_spatials.section("Available").make<UIBuildableMetaList<Spatial>>().flag(SET, UIFlag::EmitSignal).uid("SpatialAvailable");
     //cp_spatials.section("Current").make<SpatialTableUI>().uid("SpatialTable");
     //cp_spatials.section("Properties").make<InspectorUI>().uid("SpatialInspector");
 
@@ -310,9 +310,8 @@ void SceneEditor::init_meta()
     /////////////////////////////////
     //  LUA
     auto lualua = app.make<LuaPanelUI>();
-    lualua.flags(SET, {/* UIFlag::Invisible, */ UIFlag::NoBackground});
+    lualua.flags(SET, {UIFlag::Invisible, UIFlag::NoBackground});
     lualua.uid("LuaWindow");
-
 
     /////////////////////////////////
     //  MENUS
@@ -970,16 +969,6 @@ void    SceneEditor::on_controller_select_event(const ControllerSelectEvent&evt)
     _activate(evt.controller());
 }
 
-void    SceneEditor::on_info_selection_changed_event(const InfoSelectionChangedEvent&evt)
-{
-    if(const CameraMeta* p = dynamic_cast<const CameraMeta*>(evt.info()))
-        m_camera.meta       = p;
-    if(const RenderedMeta* p = dynamic_cast<const RenderedMeta*>(evt.info()))
-        m_rendered.meta     = p;
-    if(const SceneMeta* p = dynamic_cast<const SceneMeta*>(evt.info()))
-        m_scene.meta        = p;
-}
-
 void    SceneEditor::on_light_select_event(const LightSelectEvent&evt)
 {
     _activate(evt.light());
@@ -1005,6 +994,16 @@ void    SceneEditor::on_lua_exec_reply(const LuaExecuteReply& evt)
     if(m_lua.panel)
         m_lua.panel -> submit(evt);
     #endif
+}
+
+void    SceneEditor::on_meta_selection_changed_event(const MetaSelectionChangedEvent&evt)
+{
+    if(const CameraMeta* p = dynamic_cast<const CameraMeta*>(evt.meta()))
+        m_camera.meta       = p;
+    if(const RenderedMeta* p = dynamic_cast<const RenderedMeta*>(evt.meta()))
+        m_rendered.meta     = p;
+    if(const SceneMeta* p = dynamic_cast<const SceneMeta*>(evt.meta()))
+        m_scene.meta        = p;
 }
 
 void    SceneEditor::on_model_select_event(const ModelSelectEvent&evt)

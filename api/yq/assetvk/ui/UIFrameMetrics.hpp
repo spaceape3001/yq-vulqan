@@ -14,17 +14,17 @@ namespace yq::tachyon {
     struct ThreadData;
     struct ThreadSnap;
 
-    class FrameMetricsUI : public UIForm {
-        YQ_OBJECT_DECLARE(FrameMetricsUI, UIForm)
+    class UIFrameMetrics : public UIForm {
+        YQ_OBJECT_DECLARE(UIFrameMetrics, UIForm)
     public:
 
         static void init_meta();
 
-        FrameMetricsUI(UIFlags flags={});
-        FrameMetricsUI(const FrameMetricsUI&);
-        ~FrameMetricsUI();
+        UIFrameMetrics(UIFlags flags={});
+        UIFrameMetrics(const UIFrameMetrics&);
+        ~UIFrameMetrics();
         
-        virtual FrameMetricsUI* clone() const override;
+        virtual UIFrameMetrics* clone() const override;
         
         void    fps();
         void    cameras();

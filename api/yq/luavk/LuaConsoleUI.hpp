@@ -16,19 +16,19 @@
 namespace yq::tachyon {
     class LuaExecuteReply;
     
-    class LuaConsoleWriter;
+    class LuaConsoleUIWriter;
 
-    class LuaConsole : public UIConsole {
-        YQ_OBJECT_DECLARE(LuaConsole, UIConsole)
+    class LuaConsoleUI : public UIConsole {
+        YQ_OBJECT_DECLARE(LuaConsoleUI, UIConsole)
     public:
     
-        using Writer = LuaConsoleWriter;
+        using Writer = LuaConsoleUIWriter;
     
         struct Streamer;
         
-        LuaConsole(UIFlags flags={});
-        LuaConsole(const LuaConsole&);
-        ~LuaConsole();
+        LuaConsoleUI(UIFlags flags={});
+        LuaConsoleUI(const LuaConsoleUI&);
+        ~LuaConsoleUI();
 
         Streamer    command();
         void        command(std::string_view);
@@ -66,7 +66,7 @@ namespace yq::tachyon {
         static void init_meta();
 
     protected:
-        LuaConsole*      clone() const override;
+        LuaConsoleUI*      clone() const override;
 
     private:
         struct Channel {
@@ -87,7 +87,7 @@ namespace yq::tachyon {
         void    _submit(const Channel&, std::string_view);
     };
     
-    class LuaConsole::Streamer : public Stream {
+    class LuaConsoleUI::Streamer : public Stream {
     public:
         ~Streamer();
 
@@ -95,12 +95,12 @@ namespace yq::tachyon {
         bool    write(const char*, size_t) override;
         
     private:
-        friend class LuaConsole;
-        Streamer(LuaConsole&, const Channel&);
+        friend class LuaConsoleUI;
+        Streamer(LuaConsoleUI&, const Channel&);
     
         void _post();
     
-        LuaConsole&   m_ui;
+        LuaConsoleUI&   m_ui;
         const Channel&  m_channel;
         std::string     m_buffer;
     };

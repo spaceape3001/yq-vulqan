@@ -12,15 +12,15 @@
 namespace yq::tachyon {
     class LuaExecuteReply;
 
-    class LuaWindow : public UIWindow {
-        YQ_OBJECT_DECLARE(LuaWindow, UIWindow)
+    class LuaWindowUI : public UIWindow {
+        YQ_OBJECT_DECLARE(LuaWindowUI, UIWindow)
     public:
     
-        LuaWindow(std::string_view, UIFlags flags={});
-        LuaWindow(const LuaWindow&);
-        virtual ~LuaWindow();
+        LuaWindowUI(std::string_view, UIFlags flags={});
+        LuaWindowUI(const LuaWindowUI&);
+        virtual ~LuaWindowUI();
         
-        LuaWindow* clone() const override;
+        LuaWindowUI* clone() const override;
         static void init_meta();
         void content() override;
         

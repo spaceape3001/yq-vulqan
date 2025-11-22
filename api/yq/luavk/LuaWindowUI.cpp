@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "LuaWindow.hpp"
-#include "LuaConsole.hpp"
-#include "LuaInputBar.hpp"
+#include "LuaWindowUI.hpp"
+#include "LuaConsoleUI.hpp"
+#include "LuaInputBarUI.hpp"
 #include <yq/lua/logging.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/shape/AxBox2.hxx>
@@ -14,23 +14,23 @@
 
 namespace yq::tachyon {
 
-    class LuaWindow::Console : public LuaConsole {
-        YQ_OBJECT_DECLARE(Console, LuaConsole);
+    class LuaWindowUI::Console : public LuaConsoleUI {
+        YQ_OBJECT_DECLARE(Console, LuaConsoleUI);
     public:
-        Console(UIFlags flags={}) : LuaConsole(flags) {}
-        Console(const Console& cp) : LuaConsole(cp) {}
+        Console(UIFlags flags={}) : LuaConsoleUI(flags) {}
+        Console(const Console& cp) : LuaConsoleUI(cp) {}
         virtual ~Console(){}
         Console* clone() const override { return new Console(*this); }
         
         static void init_meta(){}
     };
 
-    class LuaWindow::Input : public LuaInputBar {
-        YQ_OBJECT_DECLARE(Input, LuaInputBar);
+    class LuaWindowUI::Input : public LuaInputBarUI {
+        YQ_OBJECT_DECLARE(Input, LuaInputBarUI);
     public:
     
-        Input(UIFlags flags={}) : LuaInputBar(flags|UIFlag::IsChild) {}
-        Input(const Input& cp) : LuaInputBar(cp) {}
+        Input(UIFlags flags={}) : LuaInputBarUI(flags|UIFlag::IsChild) {}
+        Input(const Input& cp) : LuaInputBarUI(cp) {}
         virtual ~Input(){}
         Input* clone() const override { return new Input(*this); }
         
@@ -39,13 +39,13 @@ namespace yq::tachyon {
     };
     
 
-    LuaWindow::LuaWindow(std::string_view kLabel, UIFlags flags) : UIWindow(kLabel, flags | UIFlag::NoScrollBar )
+    LuaWindowUI::LuaWindowUI(std::string_view kLabel, UIFlags flags) : UIWindow(kLabel, flags | UIFlag::NoScrollBar )
     {
         append(m_console = new Console);
         append(m_input = new Input);
     }
     
-    LuaWindow::LuaWindow(const LuaWindow&cp) : UIWindow(cp)
+    LuaWindowUI::LuaWindowUI(const LuaWindowUI&cp) : UIWindow(cp)
     {
         for(UIElement* u : m_items){
             if(Console*p = dynamic_cast<Console*>(u))
@@ -55,16 +55,16 @@ namespace yq::tachyon {
         }
     }
     
-    LuaWindow::~LuaWindow()
+    LuaWindowUI::~LuaWindowUI()
     {
     }
     
-    LuaWindow* LuaWindow::clone() const 
+    LuaWindowUI* LuaWindowUI::clone() const 
     {
-        return new LuaWindow(*this);
+        return new LuaWindowUI(*this);
     }
     
-    void LuaWindow::content()  
+    void LuaWindowUI::content()  
     {
         const ImGuiStyle&   style   = ImGui::GetStyle();
         AxBox2F box = viewport(CONTENT);       
@@ -81,7 +81,7 @@ namespace yq::tachyon {
         m_console->size(SET, sz);
     }
 
-    void LuaWindow::debug(std::string_view v)
+    void LuaWindowUI::debug(std::string_view v)
     {
         if(v.empty())
             return;
@@ -90,7 +90,7 @@ namespace yq::tachyon {
         m_console->debug(v);
     }
 
-    void    LuaWindow::info(std::string_view v)
+    void    LuaWindowUI::info(std::string_view v)
     {
         if(v.empty())
             return;
@@ -99,24 +99,24 @@ namespace yq::tachyon {
         m_console->info(v);
     }   
 
-    void LuaWindow::tvm(set_k, TypedID tid)
+    void LuaWindowUI::tvm(set_k, TypedID tid)
     {
         m_input -> tvm(SET, tid);
     }
 
-    void LuaWindow::submit(const LuaExecuteReply&rep)
+    void LuaWindowUI::submit(const LuaExecuteReply&rep)
     {
         m_console->submit(rep);
     }
     
-    void LuaWindow::init_meta()
+    void LuaWindowUI::init_meta()
     {
-        auto w = writer<LuaWindow>();
+        auto w = writer<LuaWindowUI>();
         w.description("Lua Window");
     }
 }
 
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindow)
-YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindow::Console)
-YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindow::Input)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindowUI)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindowUI::Console)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaWindowUI::Input)

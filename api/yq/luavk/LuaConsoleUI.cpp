@@ -4,25 +4,25 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "LuaConsole.hpp"
-#include "LuaConsoleWriter.hpp"
+#include "LuaConsoleUI.hpp"
+#include "LuaConsoleUIWriter.hpp"
+#include "LuaExecuteReply.hpp"
+#include "LuaExecuteFileRequest.hpp"
+#include "LuaExecuteStringRequest.hpp"
 
 #include <yq/color/colors.hpp>
-#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaConsole)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaConsoleUI)
 
 namespace yq::tachyon {
-    void LuaConsole::init_meta()
+    void LuaConsoleUI::init_meta()
     {
-        auto w = writer<LuaConsole>();
+        auto w = writer<LuaConsoleUI>();
         w.description("Console for Lua");
     }
 
-    LuaConsole::LuaConsole(UIFlags flags) : UIConsole(flags), 
+    LuaConsoleUI::LuaConsoleUI(UIFlags flags) : UIConsole(flags), 
         m_channel{
             .command={
                 .color  = rgba4f(yq::color::LimeGreen)
@@ -53,125 +53,125 @@ namespace yq::tachyon {
     {
     }
     
-    LuaConsole::LuaConsole(const LuaConsole& cp) : UIConsole(cp), m_channel(cp.m_channel)
+    LuaConsoleUI::LuaConsoleUI(const LuaConsoleUI& cp) : UIConsole(cp), m_channel(cp.m_channel)
     {
     }
     
-    LuaConsole::~LuaConsole()
+    LuaConsoleUI::~LuaConsoleUI()
     {
     }
 
-    void    LuaConsole::_submit(const Channel&ch, std::string_view txt)
+    void    LuaConsoleUI::_submit(const Channel&ch, std::string_view txt)
     {
         submit({.color=ch.color}, txt);
     }
 
-    LuaConsole* LuaConsole::clone() const 
+    LuaConsoleUI* LuaConsoleUI::clone() const 
     {
-        return new LuaConsole(*this);
+        return new LuaConsoleUI(*this);
     }
 
-    LuaConsole::Streamer    LuaConsole::command()
+    LuaConsoleUI::Streamer    LuaConsoleUI::command()
     {
         return Streamer(*this, m_channel.command);
     }
     
-    void        LuaConsole::command(std::string_view txt)
+    void        LuaConsoleUI::command(std::string_view txt)
     {
         _submit(m_channel.command, txt);
     }
     
-    void        LuaConsole::command(set_k, const color_t& v)
+    void        LuaConsoleUI::command(set_k, const color_t& v)
     {
         m_channel.command.color   = rgba4f(v);
     }
 
-    LuaConsole::Streamer    LuaConsole::debug()
+    LuaConsoleUI::Streamer    LuaConsoleUI::debug()
     {
         return Streamer(*this, m_channel.debug);
     }
     
-    void        LuaConsole::debug(std::string_view txt)
+    void        LuaConsoleUI::debug(std::string_view txt)
     {
         _submit(m_channel.debug, txt);
     }
     
-    void        LuaConsole::debug(set_k, const color_t& v)
+    void        LuaConsoleUI::debug(set_k, const color_t& v)
     {
         m_channel.debug.color   = rgba4f(v);
     }
 
-    LuaConsole::Streamer    LuaConsole::error()
+    LuaConsoleUI::Streamer    LuaConsoleUI::error()
     {
         return Streamer(*this, m_channel.error);
     }
     
-    void        LuaConsole::error(std::string_view txt)
+    void        LuaConsoleUI::error(std::string_view txt)
     {
         _submit(m_channel.error, txt);
     }
     
-    void        LuaConsole::error(set_k, const color_t& v)
+    void        LuaConsoleUI::error(set_k, const color_t& v)
     {
         m_channel.error.color   = rgba4f(v);
     }
 
-    void        LuaConsole::error_code(set_k, const color_t& v)
+    void        LuaConsoleUI::error_code(set_k, const color_t& v)
     {
         m_channel.errorCode.color   = rgba4f(v);
     }
 
-    LuaConsole::Streamer    LuaConsole::file()
+    LuaConsoleUI::Streamer    LuaConsoleUI::file()
     {
         return Streamer(*this, m_channel.file);
     }
     
-    void        LuaConsole::file(const std::filesystem::path&v)
+    void        LuaConsoleUI::file(const std::filesystem::path&v)
     {
         _submit(m_channel.file, v.string());
     }
     
-    void        LuaConsole::file(std::string_view txt)
+    void        LuaConsoleUI::file(std::string_view txt)
     {
         _submit(m_channel.file, txt);
     }
     
-    void        LuaConsole::file(set_k, const color_t& v)
+    void        LuaConsoleUI::file(set_k, const color_t& v)
     {
         m_channel.file.color    = rgba4f(v);
     }
 
-    LuaConsole::Streamer    LuaConsole::info()
+    LuaConsoleUI::Streamer    LuaConsoleUI::info()
     {
         return Streamer(*this, m_channel.info);
     }
     
-    void        LuaConsole::info(std::string_view txt)
+    void        LuaConsoleUI::info(std::string_view txt)
     {
         _submit(m_channel.info, txt);
     }
     
-    void        LuaConsole::info(set_k, const color_t& v)
+    void        LuaConsoleUI::info(set_k, const color_t& v)
     {
         m_channel.info.color = rgba4f(v);
     }
 
-    LuaConsole::Streamer    LuaConsole::output()
+    LuaConsoleUI::Streamer    LuaConsoleUI::output()
     {
         return Streamer(*this, m_channel.output);
     }
     
-    void        LuaConsole::output(std::string_view txt)
+    void        LuaConsoleUI::output(std::string_view txt)
     {
         _submit(m_channel.output, txt);
     }
     
-    void        LuaConsole::output(set_k, const color_t& v)
+    void        LuaConsoleUI::output(set_k, const color_t& v)
     {
         m_channel.output.color = rgba4f(v);
     }
 
-    void        LuaConsole::submit(const LuaExecuteReply& rep)
+    void        LuaConsoleUI::submit(const LuaExecuteReply& rep)
     {
         if(const LuaExecuteStringRequest* cmd = dynamic_cast<const LuaExecuteStringRequest*>(rep.request())){
             command(cmd->text());
@@ -190,17 +190,17 @@ namespace yq::tachyon {
             _submit(m_channel.errorCode, rep.error_code().message());
     }
     
-    LuaConsole::Streamer    LuaConsole::warning()
+    LuaConsoleUI::Streamer    LuaConsoleUI::warning()
     {
         return Streamer(*this, m_channel.warning);
     }
     
-    void        LuaConsole::warning(std::string_view txt)
+    void        LuaConsoleUI::warning(std::string_view txt)
     {
         _submit(m_channel.warning, txt);
     }
     
-    void        LuaConsole::warning(set_k, const color_t& v)
+    void        LuaConsoleUI::warning(set_k, const color_t& v)
     {
         m_channel.warning.color = rgba4f(v);
     }
@@ -208,16 +208,16 @@ namespace yq::tachyon {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    LuaConsole::Streamer::Streamer(LuaConsole& ui, const Channel& ch) : m_ui(ui), m_channel(ch)
+    LuaConsoleUI::Streamer::Streamer(LuaConsoleUI& ui, const Channel& ch) : m_ui(ui), m_channel(ch)
     {
     }
 
-    LuaConsole::Streamer::~Streamer()
+    LuaConsoleUI::Streamer::~Streamer()
     {
         _post();
     }
 
-    void LuaConsole::Streamer::_post()
+    void LuaConsoleUI::Streamer::_post()
     {
         if(m_buffer.empty())
             return;
@@ -225,7 +225,7 @@ namespace yq::tachyon {
         m_buffer.clear();
     }
 
-    bool    LuaConsole::Streamer::write(const char*buf, size_t cb) 
+    bool    LuaConsoleUI::Streamer::write(const char*buf, size_t cb) 
     {
         if(buf && cb){
             m_buffer += std::string_view(buf, cb);
@@ -235,64 +235,64 @@ namespace yq::tachyon {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    LuaConsoleWriter::LuaConsoleWriter() = default;
-    LuaConsoleWriter::LuaConsoleWriter(const LuaConsoleWriter&) = default;
-    LuaConsoleWriter::~LuaConsoleWriter() = default;
+    LuaConsoleUIWriter::LuaConsoleUIWriter() = default;
+    LuaConsoleUIWriter::LuaConsoleUIWriter(const LuaConsoleUIWriter&) = default;
+    LuaConsoleUIWriter::~LuaConsoleUIWriter() = default;
 
-    LuaConsole* LuaConsoleWriter::element()
+    LuaConsoleUI* LuaConsoleUIWriter::element()
     {
-        return static_cast<LuaConsole*>(m_ui);
+        return static_cast<LuaConsoleUI*>(m_ui);
     }
     
-    LuaConsoleWriter::LuaConsoleWriter(LuaConsole* ui) : tachyon::UIConsoleWriter(ui)
+    LuaConsoleUIWriter::LuaConsoleUIWriter(LuaConsoleUI* ui) : tachyon::UIConsoleWriter(ui)
     {
     }
 
-    void    LuaConsoleWriter::command(const color_t& v)
+    void    LuaConsoleUIWriter::command(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->command(SET, v);
     }
     
-    void    LuaConsoleWriter::debug(const color_t& v)
+    void    LuaConsoleUIWriter::debug(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->debug(SET, v);
     }
     
-    void    LuaConsoleWriter::error(const color_t& v)
+    void    LuaConsoleUIWriter::error(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->error(SET, v);
     }
     
-    void    LuaConsoleWriter::error_code(const color_t& v)
+    void    LuaConsoleUIWriter::error_code(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->error_code(SET, v);
     }
     
-    void    LuaConsoleWriter::file(const color_t& v)
+    void    LuaConsoleUIWriter::file(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->file(SET, v);
     }
     
-    void    LuaConsoleWriter::info(const color_t& v)
+    void    LuaConsoleUIWriter::info(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->info(SET, v);
     }
     
-    void    LuaConsoleWriter::output(const color_t& v)
+    void    LuaConsoleUIWriter::output(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->output(SET, v);
     }
     
-    void    LuaConsoleWriter::warning(const color_t& v)
+    void    LuaConsoleUIWriter::warning(const color_t& v)
     {
-        if(LuaConsole*p  = element())
+        if(LuaConsoleUI*p  = element())
             p->warning(SET, v);
     }
 

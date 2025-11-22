@@ -5,4 +5,5 @@
 ################################################################################
 
 add_subdirectory(tachyon)
+add_subdirectory(luavk)
 add_subdirectory(xgvk)

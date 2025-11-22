@@ -13,7 +13,7 @@ namespace yq::tachyon {
     class LuaExecuteReply;
     //class LuaConsoleUI;
     //class LuaInputBar;
-    class LuaWindow;
+    class LuaWindowUI;
 };
 
 using namespace yq;
@@ -54,7 +54,7 @@ private:
 
     FileMode        m_fileMode = FileMode::None;
     TypedID         m_tvm;
-    LuaWindow*      m_window    = nullptr;
+    LuaWindowUI*    m_window    = nullptr;
     //lua::LuaConsoleUI*          m_console   = nullptr;
     //lua::LuaInputBar*           m_input     = nullptr;
 };

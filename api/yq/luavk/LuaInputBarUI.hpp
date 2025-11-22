@@ -11,16 +11,16 @@
 #include <yq/tachyon/ui/UIElement.hpp>
 
 namespace yq::tachyon {
-    class LuaInputBarWriter;
+    class LuaInputBarUIWriter;
 
-    class LuaInputBar : public UIElement {
-        YQ_OBJECT_DECLARE(LuaInputBar, UIElement )
+    class LuaInputBarUI : public UIElement {
+        YQ_OBJECT_DECLARE(LuaInputBarUI, UIElement )
     public:
-        using Writer = LuaInputBarWriter;
+        using Writer = LuaInputBarUIWriter;
     
-        LuaInputBar(UIFlags flags={});
-        LuaInputBar(const LuaInputBar&);
-        virtual ~LuaInputBar();
+        LuaInputBarUI(UIFlags flags={});
+        LuaInputBarUI(const LuaInputBarUI&);
+        virtual ~LuaInputBarUI();
 
         void                    render();
         const std::string&      label() const { return m_label; }
@@ -40,7 +40,7 @@ namespace yq::tachyon {
         void                    clear();
         
     protected:
-        virtual LuaInputBar*     clone() const override;
+        virtual LuaInputBarUI*     clone() const override;
 
         virtual void            update(flags_k) override;
         virtual void            triggered() override;

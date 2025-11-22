@@ -7,9 +7,9 @@
 #include "LuaWin.hpp"
 
 #include <yq/lua/lualua.hpp>
+#include <yq/luavk/LuaTVM.hpp>
 #include <yq/process/PluginLoader.hpp>
 #include <yq/tachyon/application.hpp>
-#include <yq/tachyon/LuaTVM.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 
 using namespace yq;

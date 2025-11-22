@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/api/RequestMetaWriter.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/LuaExecuteFileRequest.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaExecuteFileRequest)
 

@@ -20,11 +20,11 @@ void LuaPanelUI::init_meta()
     w.description("Scene Editor's Lua Panel");
 }
 
-LuaPanelUI::LuaPanelUI(UIFlags flags) : LuaWindow("Lua Panel", flags | UIFlag::NoCollapse | UIFlag::NoResize )
+LuaPanelUI::LuaPanelUI(UIFlags flags) : LuaWindowUI("Lua Panel", flags | UIFlag::NoCollapse | UIFlag::NoResize )
 {
 }
 
-LuaPanelUI::LuaPanelUI(const LuaPanelUI& cp) : LuaWindow(cp)
+LuaPanelUI::LuaPanelUI(const LuaPanelUI& cp) : LuaWindowUI(cp)
 {
 }
 
@@ -47,7 +47,7 @@ void    LuaPanelUI::render()
     if(ctrlp && !ctrlp->invisible())
         cx   = ctrlp->right();
     corners(SET, NEXT, {cx, cy}, box.hh() );
-    LuaWindow::render();
+    LuaWindowUI::render();
 }
 
 YQ_OBJECT_IMPLEMENT(LuaPanelUI)

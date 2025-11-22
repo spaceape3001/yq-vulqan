@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "LuaReply.hpp"
 #include <yq/tachyon/api/ReplyMetaWriter.hpp>
-#include <yq/tachyon/reply/LuaReply.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaReply)
 

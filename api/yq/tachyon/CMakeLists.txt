@@ -68,7 +68,6 @@ add_library(${PROJECT_NAME} SHARED
 
     ## And individual files 
 
-    LuaTVM.cpp
     MyImGui.cpp
     enums.cpp
     strings.cpp
@@ -187,7 +186,6 @@ add_library(${PROJECT_NAME} SHARED
     command/IOCommand.cpp
     command/JoystickCommand.cpp
     command/LightCommand.cpp
-    command/LuaCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
     command/ShapeCommand.cpp
@@ -244,7 +242,6 @@ add_library(${PROJECT_NAME} SHARED
     event/EmptyEvent.cpp
     event/InputEvent.cpp
     event/IOEvent.cpp
-    event/LuaEvent.cpp
     event/OSEvent.cpp
     event/PanelEvent.cpp
     event/ThreadEvent.cpp
@@ -355,7 +352,6 @@ add_library(${PROJECT_NAME} SHARED
     reply/EmptyReply.cpp
     reply/GraphicsCardReply.cpp
     reply/IOReply.cpp
-    reply/LuaReply.cpp
     reply/SimReply.cpp
     reply/StringReply.cpp
     reply/TachyonReply.cpp
@@ -373,7 +369,6 @@ add_library(${PROJECT_NAME} SHARED
     reply/io/SaveReply.cpp
     reply/io/SaveTSXReply.cpp
     
-    reply/lua/LuaExecuteReply.cpp
 
     reply/ui/CloseReply.cpp
     
@@ -385,7 +380,6 @@ add_library(${PROJECT_NAME} SHARED
     request/EmptyRequest.cpp
     request/GraphicsCardRequest.cpp
     request/IORequest.cpp
-    request/LuaRequest.cpp
     request/SimRequest.cpp
     request/TachyonRequest.cpp
     request/UIRequest.cpp
@@ -403,8 +397,6 @@ add_library(${PROJECT_NAME} SHARED
     request/io/SaveRequest.cpp
     request/io/SaveTSXRequest.cpp
 
-    request/lua/LuaExecuteFileRequest.cpp
-    request/lua/LuaExecuteStringRequest.cpp
     
     request/ui/CloseRequest.cpp
     request/ui/RefreshRequest.cpp
@@ -455,9 +447,6 @@ add_library(${PROJECT_NAME} SHARED
     ui/layout/UIHBoxLayout.cpp
     ui/layout/UIVBoxLayout.cpp
 
-    ui/lua/LuaConsole.cpp
-    ui/lua/LuaInputBar.cpp
-    ui/lua/LuaWindow.cpp
     
     utility/LoggerBox.cpp
 

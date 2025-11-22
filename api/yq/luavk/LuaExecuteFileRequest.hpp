@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/request/LuaRequest.hpp>
+#include <yq/luavk/LuaRequest.hpp>
 #include <filesystem>
 
 namespace yq::tachyon {

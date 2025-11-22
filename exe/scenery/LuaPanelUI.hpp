@@ -6,17 +6,17 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/lua/LuaWindow.hpp>
+#include <yq/luavk/LuaWindowUI.hpp>
 
 namespace yq::tachyon {
     class LuaExecuteReply;
 }
 
 using yq::tachyon::UIFlags;
-using yq::tachyon::LuaWindow;
+using yq::tachyon::LuaWindowUI;
 using yq::tachyon::LuaExecuteReply;
 
-class LuaPanelUI : public LuaWindow {
+class LuaPanelUI : public LuaWindowUI {
     YQ_OBJECT_DECLARE(LuaPanelUI, UIWindow)
 public:
     static void init_meta();

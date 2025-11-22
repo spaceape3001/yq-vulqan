@@ -4,22 +4,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "LuaInputBar.hpp"
-#include "LuaInputBarWriter.hpp"
+#include "LuaInputBarUI.hpp"
+#include "LuaInputBarUIWriter.hpp"
+#include "LuaExecuteStringRequest.hpp"
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaInputBar)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaInputBarUI)
 
 namespace yq::tachyon {
-    void LuaInputBar::init_meta()
+    void LuaInputBarUI::init_meta()
     {
-        auto w = writer<LuaInputBar>();
+        auto w = writer<LuaInputBarUI>();
         w.description("Lua Input Bar");
     }
 
-    LuaInputBar::LuaInputBar(UIFlags flags) : 
+    LuaInputBarUI::LuaInputBarUI(UIFlags flags) : 
         UIElement(flags|UIFlag::EnterReturnsTrue), 
         m_label("##lua"), m_imFlags(ImGui::TextFlags(flags))
     {
@@ -27,47 +27,47 @@ namespace yq::tachyon {
         update(FLAGS);
     }
     
-    LuaInputBar::LuaInputBar(const LuaInputBar&cp) : 
+    LuaInputBarUI::LuaInputBarUI(const LuaInputBarUI&cp) : 
         UIElement(cp), m_label(cp.m_label), m_text(cp.m_text), m_imFlags(cp.m_imFlags)
     {
         // NOTE, we're not cloning the TVM ID as that could easily be different
     }
     
-    LuaInputBar::~LuaInputBar()
+    LuaInputBarUI::~LuaInputBarUI()
     {
     }
     
     
-    size_t       LuaInputBar::capacity() const 
+    size_t       LuaInputBarUI::capacity() const 
     { 
         if(m_text.empty())
             return 0;
         return m_text.size() - 1;
     }
 
-    void         LuaInputBar::capacity(set_k, size_t n)
+    void         LuaInputBarUI::capacity(set_k, size_t n)
     {
         m_text.clear();
         m_text.resize(n+1, '\0');
     }
 
-    void            LuaInputBar::clear()
+    void            LuaInputBarUI::clear()
     {
         if(!m_text.empty())
             m_text[0]   = '\0';
     }
 
-    LuaInputBar*    LuaInputBar::clone() const
+    LuaInputBarUI*    LuaInputBarUI::clone() const
     {
-        return new LuaInputBar(*this);
+        return new LuaInputBarUI(*this);
     }
 
-    void    LuaInputBar::label(set_k, std::string_view v)
+    void    LuaInputBarUI::label(set_k, std::string_view v)
     {
         m_label = std::string(v);
     }
 
-    void            LuaInputBar::render()
+    void            LuaInputBarUI::render()
     {
         if(ImGui::InputText(m_label.c_str(), m_text.data(), m_text.size(), m_imFlags))
             triggered();
@@ -79,12 +79,12 @@ namespace yq::tachyon {
             clear();
     }
 
-    std::string_view LuaInputBar::text() const
+    std::string_view LuaInputBarUI::text() const
     {
         return std::string_view( m_text.data() );
     }
 
-    void             LuaInputBar::text(set_k, std::string_view v)
+    void             LuaInputBarUI::text(set_k, std::string_view v)
     {
         if(v.empty())
             return ;
@@ -95,12 +95,12 @@ namespace yq::tachyon {
         m_text[n]   = '\0';
     }
 
-    const char*      LuaInputBar::title() const 
+    const char*      LuaInputBarUI::title() const 
     {
         return m_label.c_str();
     }
 
-    void            LuaInputBar::triggered() 
+    void            LuaInputBarUI::triggered() 
     {
         if(m_tvm){
             send(new LuaExecuteStringRequest({.target=m_tvm}, text()));
@@ -112,12 +112,12 @@ namespace yq::tachyon {
         clear();
     }
 
-    void            LuaInputBar::tvm(set_k, tachyon::TypedID tid)
+    void            LuaInputBarUI::tvm(set_k, tachyon::TypedID tid)
     {
         m_tvm       = tid;
     }
 
-    void            LuaInputBar::update(flags_k) 
+    void            LuaInputBarUI::update(flags_k) 
     {
         UIElement::update(FLAGS);
         m_imFlags   = ImGui::TextFlags(m_flags);
@@ -126,16 +126,16 @@ namespace yq::tachyon {
 
     ////////////////////////////
     
-    LuaInputBarWriter::LuaInputBarWriter() = default;
-    LuaInputBarWriter::LuaInputBarWriter(const LuaInputBarWriter&) = default;
-    LuaInputBarWriter::~LuaInputBarWriter() = default;
+    LuaInputBarUIWriter::LuaInputBarUIWriter() = default;
+    LuaInputBarUIWriter::LuaInputBarUIWriter(const LuaInputBarUIWriter&) = default;
+    LuaInputBarUIWriter::~LuaInputBarUIWriter() = default;
     
-    LuaInputBar* LuaInputBarWriter::element()
+    LuaInputBarUI* LuaInputBarUIWriter::element()
     {
-        return static_cast<LuaInputBar*>(m_ui);
+        return static_cast<LuaInputBarUI*>(m_ui);
     }
     
-    LuaInputBarWriter::LuaInputBarWriter(LuaInputBar* ui) : tachyon::UIElementWriter(ui)
+    LuaInputBarUIWriter::LuaInputBarUIWriter(LuaInputBarUI* ui) : tachyon::UIElementWriter(ui)
     {
     }
 

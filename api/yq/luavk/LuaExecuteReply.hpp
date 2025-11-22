@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/reply/LuaReply.hpp>
+#include <yq/luavk/LuaReply.hpp>
 
 namespace yq::tachyon {
     class LuaExecuteReply : public LuaReply {

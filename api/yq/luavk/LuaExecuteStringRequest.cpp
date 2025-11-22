@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "LuaExecuteStringRequest.hpp"
 #include <yq/tachyon/api/RequestMetaWriter.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaExecuteStringRequest)
 

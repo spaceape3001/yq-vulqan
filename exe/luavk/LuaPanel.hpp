@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/lua/LuaWindow.hpp>
+#include <yq/luavk/LuaWindowUI.hpp>
 
 using namespace yq::tachyon;
 
-class LuaPanel : public LuaWindow {
-    YQ_OBJECT_DECLARE(LuaPanel, LuaWindow)
+class LuaPanel : public LuaWindowUI {
+    YQ_OBJECT_DECLARE(LuaPanel, LuaWindowUI)
 public:
 
     LuaPanel(std::string_view, UIFlags flags={});

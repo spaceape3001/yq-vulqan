@@ -32,7 +32,11 @@
 
 #include <yq/date/dateutils.hpp>
 
-#include <yq/tachyon/LuaTVM.hpp>
+#include <yq/luavk/LuaExecuteReply.hpp>
+#include <yq/luavk/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/LuaExecuteStringRequest.hpp>
+#include <yq/luavk/LuaTVM.hpp>
+
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/parameters.hpp>
 #include <yq/tachyon/texture.hpp>
@@ -73,13 +77,10 @@
 
 #include <yq/tachyon/reply/io/LoadTSXReply.hpp>
 #include <yq/tachyon/reply/io/SaveTSXReply.hpp>
-#include <yq/tachyon/reply/lua/LuaExecuteReply.hpp>
 #include <yq/tachyon/reply/viewer/ViewerScreenshotReply.hpp>
 
 #include <yq/tachyon/request/io/LoadTSXRequest.hpp>
 #include <yq/tachyon/request/io/SaveTSXRequest.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteFileRequest.hpp>
-#include <yq/tachyon/request/lua/LuaExecuteStringRequest.hpp>
 
 #include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 

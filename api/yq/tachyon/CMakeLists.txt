@@ -381,12 +381,6 @@ add_library(${PROJECT_NAME} SHARED
     
     request/viewer/ViewerScreenshotRequest.cpp
 
-    scene/BackgroundScene.cpp
-    scene/CompositeScene.cpp
-    scene/ForegroundScene.cpp
-    scene/HUDScene.cpp
-    scene/SimpleScene.cpp
-    
     spatial/GeoSpatial3.cpp
     spatial/SimpleSpatial2.cpp
     spatial/SimpleSpatial3.cpp
@@ -459,15 +453,6 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/Visualizer.cpp
         
     
-    #widget/AbstractSceneWidgetHelper.cpp
-    widget/CompositeWidget.cpp
-    widget/FormWidget.cpp
-    widget/ImGuiDemoWidget.cpp
-    #widget/LabelWidget.cpp
-    widget/SceneWidget.cpp
-    widget/StackedWidget.cpp
-    widget/TextArea.cpp
-
 )
 target_compile_definitions(${PROJECT_NAME} 
     PUBLIC

@@ -32,6 +32,11 @@
 
 #include <yq/assetvk/camera/SpaceCamera.hpp>
 #include <yq/assetvk/controller/Space3Controller.hpp>
+#include <yq/assetvk/scene/HUDScene.hpp>
+#include <yq/assetvk/scene/BackgroundScene.hpp>
+#include <yq/assetvk/scene/ForegroundScene.hpp>
+#include <yq/assetvk/scene/SimpleScene.hpp>
+
 
 #include <yq/date/dateutils.hpp>
 
@@ -84,11 +89,6 @@
 #include <yq/tachyon/request/io/SaveTSXRequest.hpp>
 
 #include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
-
-#include <yq/tachyon/scene/HUDScene.hpp>
-#include <yq/tachyon/scene/BackgroundScene.hpp>
-#include <yq/tachyon/scene/ForegroundScene.hpp>
-#include <yq/tachyon/scene/SimpleScene.hpp>
 
 #include <yq/tachyon/spatial/SimpleSpatial3.hpp>
 

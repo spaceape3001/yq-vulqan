@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/scene/SimpleScene.hpp>
+#include <yq/assetvk/scene/SimpleScene.hpp>
 
 namespace yq::tachyon {
     class BackgroundScene : public SimpleScene {

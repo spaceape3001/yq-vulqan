@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/widget/TextArea.hpp>
+#include "TextArea.hpp"
 #include <yq/core/Stream.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/text/IterUtf8.hpp>

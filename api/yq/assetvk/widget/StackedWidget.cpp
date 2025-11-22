@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/widget/StackedWidget.hpp>
+#include "StackedWidget.hpp"
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 
 namespace yq::tachyon {

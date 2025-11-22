@@ -11,7 +11,7 @@
 #include <yq/process/PluginLoader.hpp>
 
 #include <yq/tachyon/application.hpp>
-#include <yq/tachyon/widget/ImGuiDemoWidget.hpp>
+#include <yq/assetvk/widget/ImGuiDemoWidget.hpp>
 
 #include <iostream>
 #include <yq/tachyon/api/Tachyon.hxx>

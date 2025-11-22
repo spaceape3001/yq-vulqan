@@ -30,8 +30,21 @@ add_library(yq_assetvk SHARED
     rendered/Tetrahedron3.cpp
     rendered/Triangle3.cpp
 
+    scene/BackgroundScene.cpp
+    scene/CompositeScene.cpp
+    scene/ForegroundScene.cpp
+    scene/HUDScene.cpp
+    scene/SimpleScene.cpp
+    
+    widget/CompositeWidget.cpp
     widget/FrameInspector.cpp
+    widget/FormWidget.cpp
+    widget/ImGuiDemoWidget.cpp
+    widget/SceneWidget.cpp
     widget/SpaceCameraRemote.cpp
+    widget/StackedWidget.cpp
+    widget/TextArea.cpp
+
 )
 
 target_link_libraries(yq_assetvk 

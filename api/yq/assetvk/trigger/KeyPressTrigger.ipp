@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/trigger/KeyPressTrigger.hpp>
+#include "KeyPressTrigger.hpp"
 #include <yq/tachyon/api/TriggerMetaWriter.hpp>
 #include <yq/tachyon/event/keyboard/KeyPressEvent.hpp>
 

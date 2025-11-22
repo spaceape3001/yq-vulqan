@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/trigger/NotTrigger.hpp>
+#include "NotTrigger.hpp"
 #include <yq/tachyon/api/Post.hpp>
 #include <yq/tachyon/api/TriggerMetaWriter.hpp>
 

@@ -4,41 +4,41 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/trigger/AndTrigger.hpp>
+#include "NandTrigger.hpp"
 #include <yq/container/initlist_utils.hpp>
 #include <yq/tachyon/api/TriggerMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AndTrigger)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::NandTrigger)
 
 namespace yq::tachyon {
-    AndTrigger::AndTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : 
+    NandTrigger::NandTrigger(std::span<const TriggerCPtr> triggers, const Param&p) : 
         Trigger(p), m_triggers(triggers.begin(), triggers.end())
     {
     }
     
-    AndTrigger::AndTrigger(std::initializer_list<TriggerCPtr> triggers, const Param&p) : 
+    NandTrigger::NandTrigger(std::initializer_list<TriggerCPtr> triggers, const Param&p) : 
         Trigger(p), m_triggers(triggers.begin(), triggers.end())
     {
     }
 
-    AndTrigger::~AndTrigger()
+    NandTrigger::~NandTrigger()
     {
     }
 
-    Trigger::Result    AndTrigger::match(const Post& pp) const 
+    Trigger::Result    NandTrigger::match(const Post& pp) const 
     {
         if(m_triggers.empty())
-            return false;
+            return true;
         for(const TriggerCPtr& f : m_triggers){
             if(f && !f->triggered(pp))
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
     
-    void AndTrigger::init_meta()
+    void NandTrigger::init_meta()
     {
-        auto w = writer<AndTrigger>();
+        auto w = writer<NandTrigger>();
         w.description("An OR post trigger based on other triggers");
     }
 }

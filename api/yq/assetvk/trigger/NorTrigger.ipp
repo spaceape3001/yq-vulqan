@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/trigger/NorTrigger.hpp>
+#include "NorTrigger.hpp"
 #include <yq/container/initlist_utils.hpp>
 #include <yq/tachyon/api/TriggerMetaWriter.hpp>
 

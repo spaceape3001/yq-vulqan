@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/spatial/SimpleSpatial2.hpp>
+#include "SimpleSpatial2.hpp"
 #include <yq/tachyon/api/Spatial2MetaWriter.hpp>
 #include <yq/tachyon/aspect/AOrientation2Writer.hxx>
 #include <yq/tachyon/aspect/APosition2Writer.hxx>

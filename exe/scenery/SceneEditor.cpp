@@ -39,6 +39,7 @@
 #include <yq/assetvk/scene/ForegroundScene.hpp>
 #include <yq/assetvk/scene/SimpleScene.hpp>
 #include <yq/assetvk/tweak/OriginCameraTweak.hpp>
+#include <yq/assetvk/ui/UISimpleTree.hpp>
 
 #include <yq/date/dateutils.hpp>
 
@@ -95,7 +96,6 @@
 
 #include <yq/tachyon/ui/UIMenuBar.hpp>
 #include <yq/tachyon/ui/UISection.hpp>
-#include <yq/tachyon/ui/UISimpleTree.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>

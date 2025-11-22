@@ -5,6 +5,8 @@
 ################################################################################
 
 add_library(yq_assetvk SHARED
+    trigger.cpp
+    
     camera/SpaceCamera.cpp
     
     control/Position3Control.cpp
@@ -12,7 +14,24 @@ add_library(yq_assetvk SHARED
 
     controller/Space3Controller.cpp
 
+    edit/BgColorUI.cpp
+    edit/ColorUI.cpp
+    edit/DrawModeUI.cpp
+    edit/FarPlaneUI.cpp
+    edit/FieldOfViewUI.cpp
+    edit/NearPlaneUI.cpp
+    edit/Orientation3UI.cpp
+    edit/Position2UI.cpp
+    edit/Position3UI.cpp
+    edit/Position4UI.cpp
+    edit/RenderedUI.cpp
+    edit/Scale3UI.cpp
+    edit/SceneUI.cpp
+    edit/SimpleSpatial3UI.cpp
+    edit/Size3UI.cpp
     edit/SkyBox3UI.cpp
+    edit/TachyonUI.cpp
+    edit/Vertices3UI.cpp
 
     layer/BackgroundLayer.cpp
     layer/ForegroundLayer.cpp
@@ -53,8 +72,13 @@ add_library(yq_assetvk SHARED
     scene/HUDScene.cpp
     scene/SimpleScene.cpp
     
+    spatial/GeoSpatial3.cpp
+    spatial/SimpleSpatial2.cpp
+
     tweak/OriginCameraTweak.cpp
     
+    ui/UISimpleTree.cpp
+
     widget/CompositeWidget.cpp
     widget/FrameInspector.cpp
     widget/FormWidget.cpp

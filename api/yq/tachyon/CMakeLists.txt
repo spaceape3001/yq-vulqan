@@ -59,7 +59,6 @@ add_library(${PROJECT_NAME} SHARED
     post.cpp
 
     thread.cpp
-    trigger.cpp
     
     ui.cpp
     ui_align.cpp
@@ -210,23 +209,6 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
-    edit/BgColorUI.cpp
-    edit/ColorUI.cpp
-    edit/DrawModeUI.cpp
-    edit/FarPlaneUI.cpp
-    edit/FieldOfViewUI.cpp
-    edit/NearPlaneUI.cpp
-    edit/Orientation3UI.cpp
-    edit/Position2UI.cpp
-    edit/Position3UI.cpp
-    edit/Position4UI.cpp
-    edit/RenderedUI.cpp
-    edit/Scale3UI.cpp
-    edit/SceneUI.cpp
-    edit/SimpleSpatial3UI.cpp
-    edit/Size3UI.cpp
-    edit/TachyonUI.cpp
-    edit/Vertices3UI.cpp
 
     enum/Cardinal.cpp
     enum/UIFlags.cpp
@@ -368,8 +350,8 @@ add_library(${PROJECT_NAME} SHARED
     
     request/viewer/ViewerScreenshotRequest.cpp
 
-    spatial/GeoSpatial3.cpp
-    spatial/SimpleSpatial2.cpp
+    
+    #   This one can't tag along with the move as it's used in the 3D (above)
     spatial/SimpleSpatial3.cpp
 
     ui/UIAppMain.cpp
@@ -392,7 +374,6 @@ add_library(${PROJECT_NAME} SHARED
     ui/UILayoutWriter.cpp
     ui/UILineInput.cpp
     #ui/UIPositioner.cpp    # TBD
-    ui/UISimpleTree.cpp
     ui/UIToolBar.cpp
     ui/UIToolBarWriter.cpp
     ui/UIUtils.cpp

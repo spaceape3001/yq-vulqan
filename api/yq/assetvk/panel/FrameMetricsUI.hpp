@@ -17,9 +17,9 @@ namespace yq::tachyon {
     class FrameMetricsUI : public UIForm {
         YQ_OBJECT_DECLARE(FrameMetricsUI, UIForm)
     public:
-    
+
         static void init_meta();
-    
+
         FrameMetricsUI(UIFlags flags={});
         FrameMetricsUI(const FrameMetricsUI&);
         ~FrameMetricsUI();
@@ -27,10 +27,16 @@ namespace yq::tachyon {
         virtual FrameMetricsUI* clone() const override;
         
         void    fps();
+        void    cameras();
+        void    scenes();
+        void    models();
+        void    rendereds();
+        void    lights();
+        void    threads();
         void    cycle();
         
         void    render() override;
-    
+
     private:
         const Frame*        m_frame     = nullptr;
         const Thread*       m_thread    = nullptr;

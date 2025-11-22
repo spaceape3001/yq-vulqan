@@ -9,7 +9,6 @@
 #include "ControlPanelUI.hpp"
 //#include "InspectorUI.hpp"
 #include "LuaPanelUI.hpp"
-#include "MetricsUI.hpp"
 
 #include "event/CameraSelectEvent.hpp"
 #include "event/ControllerSelectEvent.hpp"
@@ -33,6 +32,7 @@
 #include <yq/assetvk/camera/SpaceCamera.hpp>
 #include <yq/assetvk/controller/Space3Controller.hpp>
 #include <yq/assetvk/menu/CreateMenuUI.hpp>
+#include <yq/assetvk/panel/FrameMetricsUI.hpp>
 #include <yq/assetvk/panel/UIBuildableInfoList.hpp>
 #include <yq/assetvk/scene/HUDScene.hpp>
 #include <yq/assetvk/scene/BackgroundScene.hpp>
@@ -212,6 +212,7 @@ void SceneEditor::init_meta()
     w.slot(&SceneEditor::on_camera_select_event);
     w.slot(&SceneEditor::on_controller_select_event);
     w.slot(&SceneEditor::on_load_tsx_reply);
+    w.slot(&SceneEditor::on_lua_exec_reply);
     w.slot(&SceneEditor::on_info_selection_changed_event);
     w.slot(&SceneEditor::on_model_select_event);
     w.slot(&SceneEditor::on_rendered_select_event);
@@ -221,10 +222,6 @@ void SceneEditor::init_meta()
     w.slot(&SceneEditor::on_scene_select_event);
     w.slot(&SceneEditor::on_scene_visibility_event);
     w.slot(&SceneEditor::on_viewer_screenshot_reply);
-    
-    #ifdef YQ_LUA_ENABLE
-    w.slot(&SceneEditor::on_lua_exec_reply);
-    #endif
     
     
     w.description("The main widget");
@@ -240,7 +237,7 @@ void SceneEditor::init_meta()
     controlpanel.uid("ControlPanel");
     auto cp_tree            = controlpanel.make<UISimpleTree>();
     
-    cp_tree.section("Metrics").make<MetricsUI>();
+    cp_tree.section("Metrics").make<FrameMetricsUI>();
     
     auto cp_cameras         = cp_tree.section("Cameras").make<UISimpleTree>();
     auto cp_controllers     = cp_tree.section("Controllers").make<UISimpleTree>();
@@ -316,6 +313,7 @@ void SceneEditor::init_meta()
     lualua.flags(SET, {/* UIFlag::Invisible, */ UIFlag::NoBackground});
     lualua.uid("LuaWindow");
 
+
     /////////////////////////////////
     //  MENUS
     
@@ -351,9 +349,7 @@ void SceneEditor::init_meta()
     file_menu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
     file_menu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
     
-    #ifdef YQ_LUA_ENABLE
     file_menu.menuitem("Execute Lua...").action(&SceneEditor::cmd_file_lua_execute);
-    #endif
 
     //(light_menu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::create_payload);
 

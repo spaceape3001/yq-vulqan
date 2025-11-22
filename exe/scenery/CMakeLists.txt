@@ -9,7 +9,6 @@ project(scenery)
 add_executable(${PROJECT_NAME}
     ControlPanelUI.cpp
     LuaPanelUI.cpp
-    MetricsUI.cpp
     SceneEditor.cpp
     
     event/CameraSelectEvent.cpp

@@ -7,7 +7,7 @@
 #include "SceneEditor.hpp"
 
 #include "ControlPanelUI.hpp"
-#include "InspectorUI.hpp"
+//#include "InspectorUI.hpp"
 #include "LuaPanelUI.hpp"
 #include "MetricsUI.hpp"
 
@@ -40,6 +40,7 @@
 #include <yq/assetvk/scene/SimpleScene.hpp>
 #include <yq/assetvk/tweak/OriginCameraTweak.hpp>
 #include <yq/assetvk/ui/UISimpleTree.hpp>
+#include <yq/assetvk/ui/UITachyonEditor.hpp>
 
 #include <yq/date/dateutils.hpp>
 
@@ -255,18 +256,25 @@ void SceneEditor::init_meta()
     cp_cameras.section("Current").make<CameraTableUI>().uid("CameraTable");
     auto cpp_cameras      = cp_cameras.section("Properties");
     (cpp_cameras << new CreateMenuUI("Add/Create Spatial##AddCameraSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_camera_spatial);
-    cpp_cameras.make<InspectorUI>().uid("CameraInspector");
+    auto cx = cpp_cameras.make<UITachyonEditor>();
+    cx.uid("CameraInspector");
+    cx.flag(SET, UIFlag::Children);
     
     cp_controllers.section("Available").make<UIBuildableInfoList<Controller>>().flag(SET, UIFlag::EmitSignal).uid("ControllerAvailable");
+    
     cp_controllers.section("Current").make<ControllerTableUI>().uid("ControllerTable");
-    cp_controllers.section("Properties").make<InspectorUI>().uid("ControllerInspector");
+    {
+        auto x = cp_controllers.section("Properties").make<UITachyonEditor>();
+        x.uid("ControllerInspector");
+        x.flag(SET, UIFlag::Children);
+    }
 
 #if 0
     cp_lights.section("Available").make<UIBuildableInfoList<Light>>().flag(SET, UIFlag::EmitSignal).uid("LightAvailable");
     cp_lights.section("Current").make<LightTableUI>().uid("LightTable");
     auto cpp_lights    = cp_lights.section("Properties");
     (cpp_lights << new CreateMenuUI("Add/Create Spatial##AddLightSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_light_spatial);
-    cpp_lights.make<InspectorUI>().uid("LightInspector");
+    cpp_lights.make<UITachyonEditor>().uid("LightInspector");
 #endif
 
 #if 0
@@ -274,7 +282,7 @@ void SceneEditor::init_meta()
     cp_models.section("Current").make<ModelTableUI>().uid("ModelTable");
     auto cpp_models = cp_models.section("Properties");
     (cpp_models << new CreateMenuUI("Add/Create Spatial##AddModelSpatialUI", meta<Spatial>()));
-    cpp_models = make<InspectorUI>().uid("ModelInspector");
+    cpp_models = make<UITachyonEditor>().uid("ModelInspector");
 #endif
 
     //cp_physics.section("Available").make<UIBuildableInfoList<Physics>>().flag(SET, UIFlag::EmitSignal).uid("PhysicsAvailable");
@@ -285,11 +293,15 @@ void SceneEditor::init_meta()
     cp_rendereds.section("Current").make<RenderedTableUI>().uid("RenderedTable");
     auto rendered_props = cp_rendereds.section("Properties");
     (rendered_props << new CreateMenuUI("Add/Create Spatial##AddRenderedSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_rendered_spatial);
-    rendered_props.make<InspectorUI>().uid("RenderedInspector");
+    auto rx = rendered_props.make<UITachyonEditor>();
+    rx.uid("RenderedInspector");
+    rx.flag(SET, UIFlag::Children);
 
     cp_scenes.section("Available").make<UIBuildableInfoList<Scene>>().flag(SET, UIFlag::EmitSignal).uid("SceneAvailable");
     cp_scenes.section("Current").make<SceneTableUI>().uid("SceneTable");
-    cp_scenes.section("Properties").make<InspectorUI>().uid("SceneInspector");
+    auto sx = cp_scenes.section("Properties").make<UITachyonEditor>();
+    sx.uid("SceneInspector");
+    sx.flag(SET, UIFlag::Children);
 
     cp_spatials.section("Available").make<UIBuildableInfoList<Spatial>>().flag(SET, UIFlag::EmitSignal).uid("SpatialAvailable");
     //cp_spatials.section("Current").make<SpatialTableUI>().uid("SpatialTable");
@@ -1121,27 +1133,27 @@ Execution   SceneEditor::setup(const Context&ctx)
     Execution ret = Widget::setup(ctx);
     
     if(!m_camera.properties)
-        m_camera.properties     = static_cast<InspectorUI*>(element(FIRST, "CameraInspector"));
+        m_camera.properties     = static_cast<UITachyonEditor*>(element(FIRST, "CameraInspector"));
     if(!m_camera.table)
         m_camera.table          = static_cast<CameraTableUI*>(element(FIRST, "CameraTable"));
     if(!m_controller.properties)
-        m_controller.properties = static_cast<InspectorUI*>(element(FIRST, "ControllerInspector"));
+        m_controller.properties = static_cast<UITachyonEditor*>(element(FIRST, "ControllerInspector"));
     if(!m_controller.table)
         m_controller.table      = static_cast<ControllerTableUI*>(element(FIRST, "ControllerTable"));
     if(!m_light.properties)
-        m_light.properties      = static_cast<InspectorUI*>(element(FIRST, "LightInspector"));
+        m_light.properties      = static_cast<UITachyonEditor*>(element(FIRST, "LightInspector"));
     if(!m_light.table)
         m_light.table           = static_cast<LightTableUI*>(element(FIRST, "LightTable"));
     if(!m_model.properties)
-        m_model.properties      = static_cast<InspectorUI*>(element(FIRST, "ModelInspector"));
+        m_model.properties      = static_cast<UITachyonEditor*>(element(FIRST, "ModelInspector"));
     if(!m_model.table)
         m_model.table           = static_cast<ModelTableUI*>(element(FIRST, "ModelTable"));
     if(!m_rendered.properties)
-        m_rendered.properties   = static_cast<InspectorUI*>(element(FIRST, "RenderedInspector"));
+        m_rendered.properties   = static_cast<UITachyonEditor*>(element(FIRST, "RenderedInspector"));
     if(!m_rendered.table)
         m_rendered.table        = static_cast<RenderedTableUI*>(element(FIRST, "RenderedTable"));
     if(!m_scene.properties)
-        m_scene.properties      = static_cast<InspectorUI*>(element(FIRST, "SceneInspector"));
+        m_scene.properties      = static_cast<UITachyonEditor*>(element(FIRST, "SceneInspector"));
     if(!m_scene.table)
         m_scene.table           = static_cast<SceneTableUI*>(element(FIRST, "SceneTable"));
 

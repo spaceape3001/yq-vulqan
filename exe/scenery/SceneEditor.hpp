@@ -29,6 +29,7 @@ namespace yq::tachyon {
     class SaveTSXReply;
     class ViewerScreenshotReply;
     struct Payload;
+    class UITachyonEditor;
 }
 
 namespace IGFD { class FileDialog; }
@@ -36,7 +37,6 @@ namespace IGFD { class FileDialog; }
 using namespace yq;
 using namespace yq::tachyon;
 
-class InspectorUI;
 class CameraTableUI;
 class CameraSelectEvent;
 class ControllerTableUI;
@@ -140,7 +140,7 @@ private:
         TypedID                 space;
         TypedID                 hud;
         CameraTableUI*          table       = nullptr;
-        InspectorUI*            properties  = nullptr;
+        UITachyonEditor*        properties  = nullptr;
         const CameraMeta*       meta        = nullptr;
         CameraID                selected;
     } m_camera;
@@ -150,7 +150,7 @@ private:
         const ControllerMeta*   meta        = nullptr;
         ControllerTableUI*      table       = nullptr;
         ControllerID            selected;
-        InspectorUI*            properties  = nullptr;
+        UITachyonEditor*        properties  = nullptr;
         bool                    init        = false;
     } m_controller;
     
@@ -162,28 +162,28 @@ private:
         const LightMeta*        meta        = nullptr;
         LightTableUI*           table       = nullptr;
         LightID                 selected;
-        InspectorUI*            properties  = nullptr;
+        UITachyonEditor*        properties  = nullptr;
     } m_light;
 
     struct {
         const ModelMeta*        meta        = nullptr;
         ModelTableUI*           table       = nullptr;
         ModelID                 selected;
-        InspectorUI*            properties  = nullptr;
+        UITachyonEditor*        properties  = nullptr;
     } m_model;
 
     struct {
         const RenderedMeta*     meta        = nullptr;
         RenderedTableUI*        table       = nullptr;
         RenderedID              selected;
-        InspectorUI*            properties  = nullptr;
+        UITachyonEditor*        properties  = nullptr;
     } m_rendered;
     
     struct {
         const SceneMeta*        meta        = nullptr;
         SceneID                 selected;
         TypedID                 simple;     //!< The default simple scene
-        InspectorUI*            properties  = nullptr;
+        UITachyonEditor*        properties  = nullptr;
         SceneTableUI*           table       = nullptr;
         bool                    rebuild     = false;
     } m_scene;

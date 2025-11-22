@@ -9,6 +9,7 @@
 #include <yq/tachyon/ui/UIEditor.hpp>
 #include <yq/tachyon/ui/UIFormMetaWriter.hpp>   // this will change if elements derives....
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Post.hpp>
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <type_traits>
 
@@ -42,6 +43,13 @@ namespace yq::tachyon {
                 }
             }
             return *this;
+        }
+
+        void    readonly(bool v=true)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_readonly    = v;
+            }
         }
 
     private:

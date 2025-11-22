@@ -80,6 +80,7 @@ add_library(yq_assetvk SHARED
     tweak/OriginCameraTweak.cpp
     
     ui/UISimpleTree.cpp
+    ui/UITachyonEditor.cpp
 
     widget/CompositeWidget.cpp
     widget/FrameInspector.cpp

@@ -35,6 +35,7 @@ namespace yq::tachyon {
         CharsScientific,
         CharsUppercase,
         CharsNoBlanks,
+        Children,                   //!< Support children
         Closeable,
         CtrlEnterForNewLine,
         DisplayEmptyRefVal,

@@ -11,11 +11,15 @@
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/shape/Size2.hpp>
 
+namespace yq {
+};
+
 namespace yq::tachyon {
     class UIEditorWriter;
     class TachyonMeta;
     class UIEditor;
     class InterfaceMeta;
+    class PostMeta;
     
     template <typename C>
     concept SomeUIEditor = std::derived_from<C,UIEditor>;
@@ -27,18 +31,22 @@ namespace yq::tachyon {
         UIEditorMeta(std::string_view, UIFormMeta&, const std::source_location& sl = std::source_location::current());
     
         //! List of classes this thing will edit
-        const std::vector<const TachyonMeta*>& edits(tachyon_k) const { return m_editTachyons; }
-        const std::vector<const InterfaceMeta*>& edits(proxy_k) const { return m_editIProxies; }
+        const std::vector<const TachyonMeta*>&      edits(tachyon_k) const  { return m_editTachyons; }
+        const std::vector<const InterfaceMeta*>&    edits(proxy_k) const    { return m_editIProxies; }
         
         static const std::vector<const UIEditorMeta*>& all();
         
         //  TODO... need a tree of recommendeds... (or similar)
+        
+        //! TRUE if this editor can *NEVER* alter the object (ie, we're a viewer of whatever)
+        bool    is_readonly() const { return m_readonly; }
         
     private:
         friend class UIEditor;
         struct Repo;
         static Repo& repo();
         
+        bool                                m_readonly        = false;
         std::vector<const TachyonMeta*>     m_editTachyons;
         std::vector<const InterfaceMeta*>   m_editIProxies;
     };
@@ -62,9 +70,9 @@ namespace yq::tachyon {
         
         //! Binds to this tachyon ID (use the frame for details)
         //! 
-        virtual bool    bind(TypedID);
-        virtual void    render();
-        TypedID         bound() const { return m_bind; }
+        virtual bool            bind(TypedID);
+        virtual void            render();
+        TypedID                 bound() const { return m_bind; }
        
     protected:
         virtual UIEditor*       clone() const = 0;

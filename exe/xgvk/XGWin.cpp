@@ -17,6 +17,7 @@
 
 YQ_TACHYON_IMPLEMENT(XGWin)
 
+using namespace yq::tachyon;
 using namespace yq::xg;
 
 void XGWin::init_meta()

@@ -6,17 +6,17 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UICanvas.hpp>
+#include <yq/canvasvk/UICanvas.hpp>
 
-namespace yq::xg {
+namespace yq::tachyon {
     class XGViewWriter;
     
-    class XGView : public tachyon::UICanvas {
-        YQ_OBJECT_DECLARE(XGView, tachyon::UICanvas)
+    class XGView : public UICanvas {
+        YQ_OBJECT_DECLARE(XGView, UICanvas)
     public:
         using Writer = XGViewWriter;
     
-        XGView(std::string_view k="##XGView", tachyon::UIFlags flags={});
+        XGView(std::string_view k="##XGView", UIFlags flags={});
         XGView(const XGView&);
         virtual ~XGView();
         

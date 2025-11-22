@@ -226,7 +226,6 @@ add_library(${PROJECT_NAME} SHARED
     event/VulqanEvent.cpp
     event/WidgetEvent.cpp
 
-    event/panel/InfoSelectionChangedEvent.cpp
 
     event/thread/ThreadAddTachyonEvent.cpp
     
@@ -357,8 +356,6 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIAppMain.cpp
     ui/UIAppMainWriter.cpp
     ui/UICalc.cpp
-    ui/UICanvas.cpp
-    ui/UIConsole.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp
     ui/UIEditor.cpp

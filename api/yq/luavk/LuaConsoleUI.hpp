@@ -9,7 +9,7 @@
 #include <yq/core/Stream.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
-#include <yq/tachyon/ui/UIConsole.hpp>
+#include <yq/consolevk/UIConsole.hpp>
 #include <yq/typedef/color.hpp>
 #include <filesystem>
 

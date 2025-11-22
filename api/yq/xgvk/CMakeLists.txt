@@ -10,6 +10,7 @@ add_library(yq_xgvk SHARED
 target_link_libraries(yq_xgvk
     PUBLIC
         yq_xg
+        yq_canvasvk
         yq_tachyon
 )
 

@@ -33,6 +33,8 @@ add_library(yq_assetvk SHARED
     edit/TachyonUI.cpp
     edit/Vertices3UI.cpp
 
+    event/panel/InfoSelectionChangedEvent.cpp
+
     layer/BackgroundLayer.cpp
     layer/ForegroundLayer.cpp
     layer/HUDLayer.cpp

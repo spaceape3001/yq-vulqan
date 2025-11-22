@@ -4,9 +4,15 @@
 ##
 ################################################################################
 
-add_subdirectory(tachyon)
-add_subdirectory(consolevk)
-add_subdirectory(canvasvk)
-add_subdirectory(assetvk)
-add_subdirectory(luavk)
-add_subdirectory(xgvk)
+add_library(yq_canvasvk SHARED
+    UICanvas.cpp
+)
+
+target_link_libraries(yq_canvasvk 
+PUBLIC
+    yq_color
+    yq_tachyon
+)
+
+vulqan_library(yq_canvasvk)
+LinkTest(yq_canvasvk)

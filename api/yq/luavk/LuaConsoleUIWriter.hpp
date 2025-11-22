@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UIConsoleWriter.hpp>
+#include <yq/consolevk/UIConsoleWriter.hpp>
 #include <yq/typedef/color.hpp>
 
 namespace yq::tachyon {

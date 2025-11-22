@@ -8,10 +8,10 @@
 #include "XGViewWriter.hpp"
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::xg::XGView)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::XGView)
 
-namespace yq::xg {
-    XGView::XGView(std::string_view k, tachyon::UIFlags flags) : UICanvas(k, flags)
+namespace yq::tachyon {
+    XGView::XGView(std::string_view k, UIFlags flags) : UICanvas(k, flags)
     {
     }
     
@@ -46,7 +46,7 @@ namespace yq::xg {
         return static_cast<XGView*>(m_ui);
     }
     
-    XGViewWriter::XGViewWriter(XGView* ui) : tachyon::UICanvasWriter(ui)
+    XGViewWriter::XGViewWriter(XGView* ui) : UICanvasWriter(ui)
     {
     }
 }

@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "UIConsole.hpp"
+#include "UIConsoleWriter.hpp"
 #include <yq/container/reverse.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/ui/UIConsole.hpp>
-#include <yq/tachyon/ui/UIConsoleWriter.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/text/transform.hpp>
 #include <yq/text/vsplit.hpp>

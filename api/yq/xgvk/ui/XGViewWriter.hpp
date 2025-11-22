@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UICanvasWriter.hpp>
+#include <yq/canvasvk/UICanvasWriter.hpp>
 
-namespace yq::xg {
+namespace yq::tachyon {
     class XGView;
 
-    class XGViewWriter : public tachyon::UICanvasWriter {
+    class XGViewWriter : public UICanvasWriter {
     public:
     public:
         XGViewWriter();

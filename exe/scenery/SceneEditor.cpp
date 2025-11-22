@@ -73,7 +73,7 @@
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 
-#include <yq/tachyon/event/panel/InfoSelectionChangedEvent.hpp>
+#include <yq/assetvk/event/panel/InfoSelectionChangedEvent.hpp>
 
 #include <yq/tachyon/io/Save.hpp>
 #include <yq/tachyon/io/save/SaveXML.hpp>

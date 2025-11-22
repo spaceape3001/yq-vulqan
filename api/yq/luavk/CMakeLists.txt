@@ -23,6 +23,7 @@ target_link_libraries(yq_luavk
     PUBLIC
         yq_lua
         yq_tachyon
+        yq_consolevk
 )
 
 vulqan_library(yq_luavk)

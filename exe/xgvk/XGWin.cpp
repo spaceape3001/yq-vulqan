@@ -5,9 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "XGWin.hpp"
-#include "PalettePanel.hpp"
-#include "ViewPanel.hpp"
+//#include "PalettePanel.hpp"
+//#include "ViewPanel.hpp"
 
+#include <yq/xg/XGElement.hpp>
+#include <yq/assetvk/ui/UIBuildableMetaList.hpp>
+#include <yq/assetvk/ui/UIPanel.hpp>
+#include <yq/assetvk/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
@@ -17,6 +21,7 @@
 
 YQ_TACHYON_IMPLEMENT(XGWin)
 
+using namespace yq;
 using namespace yq::tachyon;
 using namespace yq::xg;
 
@@ -27,17 +32,38 @@ void XGWin::init_meta()
     auto app        = w.imgui(UI, APP);
     auto mmb        = app.menubar(MAIN);
     
-    auto ppw         = app.make<PalettePanel>();
-    ppw.uid("PalettePanel");
-    ppw.button("Hello, this is the palette panel");
+    auto ppw         = app.make<UIPanel>("##Pallette");
+    {
+        ppw.uid("PalettePanel");
+        ppw.flag(SET, UIFlag::NoDecoration);    // until min/max work
+        //ppw.width(MINIMUM, PIVOT, 0.20);
+        //ppw.width(MAXIMUM, PIVOT, 0.80);
+        ppw.right(PIVOT, 0.20); //temporary
+        auto x = ppw.make<UIBuildableMetaList<xg::XGElement>>();
+        x.flag(SET, UIFlag::EmitSignal);
+    }
+
+    auto ttb        = app.make<UIPanel>("##Tools");
+    {
+        ttb.flag(SET, UIFlag::NoDecoration);
+        ttb.uid("ToolBar");
+        ttb.left("PalettePanel", RIGHT);
+        ttb.height(TOOLBAR);
+        
+        auto h      = ttb.hline();
+        h.button("Tools");
+    }
     
-    auto vp          = app.make<ViewPanel>();
-    vp.flag(SET, UIFlag::NoDecoration);
-    auto xgv = vp.make<XGView>();
-    xgv.uid("XGView");
+    auto vp          = app.make<UIPanel>("##View");
+    {
+        vp.flag(SET, UIFlag::NoDecoration);
+        vp.left("PalettePanel", RIGHT);
+        vp.top("ToolBar", BOTTOM);
     
-    auto ttb        = app.toolbar(Cardinal::SSE, "##Tools");
-    ttb.button("Tools");
+        auto xgv = vp.make<XGView>();
+        xgv.uid("View");
+    }
+
 
     
     auto file       = mmb.menu("File");
@@ -60,14 +86,19 @@ XGWin::~XGWin()
 {
 }
 
-void XGWin::_open(const std::filesystem::path&)
+void XGWin::_open(const std::filesystem::path&fp)
 {
     // TODO
 }
 
-void XGWin::_save(const std::filesystem::path&)
+void XGWin::_save(const std::filesystem::path&fp)
 {
     // TODO
+    return;
+
+    if(fp != m_filepath){
+        m_filepath  = fp;
+    }
 }
 
 void    XGWin::cmd_file_open()
@@ -80,6 +111,10 @@ void    XGWin::cmd_file_open()
 
 void    XGWin::cmd_file_save()
 {
+    if(m_filepath.empty()){
+        cmd_file_saveas();
+    } else
+        _save(m_filepath);
 }
 
 void    XGWin::cmd_file_saveas()

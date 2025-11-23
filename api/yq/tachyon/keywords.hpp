@@ -92,7 +92,6 @@ namespace yq::tachyon {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Fixed; }
     };
     
-
     struct game_k {
         consteval operator StdThread() const noexcept  { return StdThread::Game; }
     };
@@ -132,6 +131,7 @@ namespace yq::tachyon {
     struct minimum_k : public ::yq::minimum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Minimum; }
     };
+    struct minmax_k {};
     struct model_k {};
     struct monitor_k {};
     struct mouse_k {};
@@ -148,7 +148,7 @@ namespace yq::tachyon {
         consteval operator Cardinal() const noexcept { return Cardinal::North; }
     };
     
-    //struct once_k : public ::yq::once_k {};
+    struct pivot_k {};
     
     struct point_k {};
     struct popup_k {};
@@ -201,6 +201,7 @@ namespace yq::tachyon {
     struct teardown_k {};
     struct tex_k {};
     struct texture_k {};
+    struct toolbar_k {};
     struct ui_k {};
     
     struct viewer_k {
@@ -284,13 +285,14 @@ namespace yq::tachyon {
     static constexpr const mesh_k               MESH;
     static constexpr const minimum_k            MIN;
     static constexpr const minimum_k            MINIMUM;
+    static constexpr const minmax_k             MINMAX;
     static constexpr const model_k              MODEL;
     static constexpr const monitor_k            MONITOR;
     static constexpr const mouse_k              MOUSE;
     static constexpr const network_k            NETWORK;
     static constexpr const none_k               NONE;
     static constexpr const north_k              NORTH;
-    //static constexpr const once_k               ONCE;
+    static constexpr const pivot_k              PIVOT;
     static constexpr const point_k              POINT;
     static constexpr const popup_k              POPUP;
     static constexpr const probe_k              PROBE;
@@ -317,6 +319,7 @@ namespace yq::tachyon {
     static constexpr const teardown_k           TEARDOWN;
     static constexpr const tex_k                TEX;
     static constexpr const texture_k            TEXTURE;
+    static constexpr const toolbar_k            TOOLBAR;
     static constexpr const ui_k                 UI;
     static constexpr const viewer_k             VIEWER;
     static constexpr const vulqan_k             VULQAN;

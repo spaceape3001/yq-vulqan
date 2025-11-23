@@ -7,6 +7,7 @@
 #include "LuaPanel.hpp"
 #include "LuaWin.hpp"
 
+//#include <yq/assetvk/ui/UIPanel.hpp>
 #include <yq/date/dateutils.hpp>
 #include <yq/lua/logging.hpp>
 #include <yq/luavk/LuaExecuteReply.hpp>

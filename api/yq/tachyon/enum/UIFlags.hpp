@@ -38,6 +38,7 @@ namespace yq::tachyon {
         Children,                   //!< Support children
         Closeable,
         CtrlEnterForNewLine,
+        Debug,                      //<! Used to diagnostic printing (or whatever)
         DisplayEmptyRefVal,
         EmitSignal,                 //!< Emit signal on changes/other (whether selection or what not)
         ElideLeft,                  //!< Allows text to auto slide left/right when things don't fit

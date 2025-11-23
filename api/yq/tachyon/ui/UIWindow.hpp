@@ -37,6 +37,9 @@ namespace yq::tachyon {
         const Vector2F&    pivot() const { return m_pivot; }
         
         static void init_meta();
+        
+        AxBox2F     box() const;
+        float       bottom() const;
 
         //  "bumper" space outside the window (used during calculations)
         const AxSide2F&     bumper() const { return m_bumper; }
@@ -64,6 +67,8 @@ namespace yq::tachyon {
         void        height(set_k, next_k, float);
         void        height(set_k, specification_k, float);
         
+        float       left() const;
+        
         Vector2F    position() const;
         Vector2F    position(actual_k) const;
         Vector2F    position(calculate_k) const;
@@ -87,6 +92,8 @@ namespace yq::tachyon {
         void        size(set_k, calculate_k, Size2F);
         void        size(set_k, next_k, Size2F);
         void        size(set_k, specification_k, Size2F);
+        
+        float       top() const;
 
         float       width() const;
         float       width(actual_k) const;

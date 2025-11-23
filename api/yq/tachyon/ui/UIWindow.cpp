@@ -59,6 +59,17 @@ namespace yq::tachyon {
     {
     }
     
+    AxBox2F     UIWindow::box() const
+    {
+        Vector2F    ll(x(), y());
+        return AxBox2F(ll, Vector2F(ll.x + width(), ll.y + height()));
+    }
+    
+    float       UIWindow::bottom() const
+    {
+        return y() + height();
+    }
+
     void        UIWindow::corners(set_k, next_k, const Vector2F& c1, const Vector2F& c2)
     {
         m_x.next    = std::min(c1.x, c2.x);
@@ -107,10 +118,10 @@ namespace yq::tachyon {
             h   -= m_bumper.ly;
         if(!is_nan(m_bumper.hy))
             h   -= m_bumper.hy;
-        if(m_h.maximum > 0.)
-            h   = std::min(h, m_h.maximum);
-        if(m_h.minimum > 0.)
-            h   = std::max(h, m_h.minimum);
+        if((m_h.maximum > 0.) && (h > m_h.maximum))
+            h   = m_h.maximum;
+        if((m_h.minimum > 0.) && (h < m_h.minimum))
+            h   = m_h.minimum;
         return h;
     }
     
@@ -128,6 +139,11 @@ namespace yq::tachyon {
     {
         m_h.next    = v;
         m_flags |= UIFlag::SetSizeOnce;
+    }
+
+    float       UIWindow::left() const
+    {
+        return x();
     }
 
     Vector2F    UIWindow::position() const
@@ -308,6 +324,11 @@ namespace yq::tachyon {
     const char*   UIWindow::title() const 
     {
         return m_title.c_str();
+    }
+
+    float       UIWindow::top() const
+    {
+        return y();
     }
 
     void    UIWindow::update(flags_k)

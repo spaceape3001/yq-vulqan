@@ -4,14 +4,16 @@
 ##
 ################################################################################
 
-add_executable(xgvk 
-    XGWin.cpp
+add_executable(gltfedit 
+    GLTFTree.cpp
+    GLTFWin.cpp
     main.cpp
 )
 
-target_link_libraries(xgvk 
+target_link_libraries(gltfedit
 PUBLIC
-    yq_tachyon yq_xg yq_xgvk yq_assetvk
+    yq_tachyon
+    yq_assetvk
 PRIVATE
     ImGuiFileDialog
 )

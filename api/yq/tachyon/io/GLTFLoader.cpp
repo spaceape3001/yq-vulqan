@@ -30,9 +30,7 @@
 #include <fstream>
 
 namespace yq::tachyon {
-
-
-    static DataFormat       data_format(const tinygltf::Image& img)
+    DataFormat       data_format(const tinygltf::Image& img)
     {
         switch(img.component){
         case 1:
@@ -141,7 +139,7 @@ namespace yq::tachyon {
         return true;
     }
 
-    static RasterPtr              to_raster(const tinygltf::Image& img)
+    RasterPtr              to_raster(const tinygltf::Image& img)
     {
         if(img.width<=0)
             return {};
@@ -212,7 +210,7 @@ namespace yq::tachyon {
         return ret;
     }
 
-    static SamplerPtr              to_sampler(const tinygltf::Sampler& sam)
+    SamplerPtr              to_sampler(const tinygltf::Sampler& sam)
     {
         SamplerInfo info;
         
@@ -453,5 +451,21 @@ namespace yq::tachyon {
             return {};
         }
         return gltfLoad(bytes, to_url(fp));
+    }
+
+    tinygltf::ModelSPtr     raw_load_gltf(const std::filesystem::path& fp)
+    {
+        tinygltf::ModelSPtr ret = std::make_shared<tinygltf::Model>();
+        tinygltf::TinyGLTF gltfContext;
+		std::string error, warning;
+        
+        bool loaded = gltfContext.LoadASCIIFromFile(ret.get(), &error, &warning, fp.c_str());
+        if(!error.empty())
+            tachyonWarning << "GLTF load (" << fp << "): " << error;
+        if(!warning.empty())
+            tachyonNotice << "GLTF load (" << fp << "): " << warning;
+        if(!loaded)
+            return {};
+        return ret;
     }
 }

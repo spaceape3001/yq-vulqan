@@ -7,9 +7,14 @@
 #include "GLTFWin.hpp"
 #include "GLTFTree.hpp"
 
+#include <yq/core/Logging.hpp>
+#include <yq/assetvk/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/io/GLTFLoader.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
+#include <yq/tachyon/command/ui/TitleCommand.hpp>
 #include <ImGuiFileDialog.h>
+#include <tiny_gltf.h>
 
 void GLTFWin::init_meta()
 {
@@ -23,6 +28,11 @@ void GLTFWin::init_meta()
     file.menuitem("Save").action(&GLTFWin::cmd_file_save);
     file.menuitem("Save As").action(&GLTFWin::cmd_file_saveas);
 
+    auto tp = app.make<UIPanel>("##TreePanel");
+    tp.uid("TreePanel");
+    auto gt = tp.make<GLTFTree>();
+    gt.uid("GLTFTree");
+
 }
 
 GLTFWin::GLTFWin()
@@ -33,10 +43,7 @@ GLTFWin::~GLTFWin()
 {
 }
     
-void GLTFWin::_open(const std::filesystem::path&)
-{
-    // TODO
-}
+
 
 void GLTFWin::_save(const std::filesystem::path& fp)
 {
@@ -45,8 +52,10 @@ void GLTFWin::_save(const std::filesystem::path& fp)
 
     if(fp != m_filepath){
         m_filepath  = fp;
+        update_title();
     }
 }
+
 
 void GLTFWin::cmd_file_open()
 {
@@ -88,7 +97,7 @@ void GLTFWin::imgui(ViContext&u)
                     _save(filePathName);
                     break;
                 case FileMode::Open:
-                    _open(filePathName);
+                    open(filePathName);
                     break;
                 }
             }
@@ -98,11 +107,49 @@ void GLTFWin::imgui(ViContext&u)
     }
 }
 
+void GLTFWin::open(const std::filesystem::path& fp)
+{
+    auto mdl    = raw_load_gltf(fp);
+    if(!mdl){
+        yWarning() << "Unable to load the GLTF file: " << fp;
+        return ;
+    }
+    
+    m_model     = mdl;
+    
+    if(m_tree){
+        m_tree -> model(SET, m_model);
+    }
+
+    yInfo() << "Loaded file: " << fp;
+
+    m_filepath  = fp;
+    update_title();
+}
+
 Execution   GLTFWin::setup(const Context&ctx) 
 {
     Execution ret =  Widget::setup(ctx);
+    if(!m_tree){
+        m_tree  = dynamic_cast<GLTFTree*>(element(FIRST, "GLTFTree"));
+        if(m_model && m_tree)
+            m_tree -> model(SET, m_model);
+    }
     
     return ret;
+}
+
+
+void GLTFWin::update_title()
+{
+    std::string t;
+    if(m_filepath.empty()){
+        t   = "GLTFEdit";
+    } else {
+        t   = std::format("{} - {} - GLTFEdit", m_filepath.stem().string(), m_filepath.parent_path().string());
+    }
+    yInfo() << "Sending command to alter title to :" << t;
+    send(new TitleCommand({.target={ Type::Viewer, viewer().id }}, t));
 }
 
 YQ_TACHYON_IMPLEMENT(GLTFWin)

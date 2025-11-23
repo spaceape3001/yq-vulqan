@@ -31,6 +31,8 @@ int main(int argc, char* argv[])
 
     app.start();
     GLTFWin*    w   = Tachyon::create<GLTFWin>();
+    if(argc>1)
+        w -> open(argv[1]);
     app.run(w);
     return 0;
 }

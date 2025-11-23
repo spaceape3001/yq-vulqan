@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/typedef/gltf.hpp>
 
 namespace yq::tachyon {
 }
@@ -33,15 +34,22 @@ public:
     void imgui(ViContext&) override;
     virtual Execution   setup(const Context&) override;
 
+    void    open(const std::filesystem::path&);
+
 private:
     FileMode                m_fileMode = FileMode::None;
-    GLTFTree*               m_window    = nullptr;
+    GLTFTree*               m_tree    = nullptr;
     std::filesystem::path   m_filepath;
+    tinygltf::ModelSPtr     m_model;
     
     void    cmd_file_open();
     void    cmd_file_save();
     void    cmd_file_saveas();
-    void _open(const std::filesystem::path&);
-    void _save(const std::filesystem::path&);
+    
+    //bool    okay_to_close();
+    
+    void    _save(const std::filesystem::path&);
+    
+    void    update_title();
 };
 

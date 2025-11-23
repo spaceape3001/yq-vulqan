@@ -526,6 +526,7 @@ namespace ImGui {
     ///////////////////////////
 
     void    Text(bool);
+    void    Text(int);
     void    Text(float);
     void    Text(double);
     void    Text(uint64_t);

@@ -39,6 +39,8 @@ namespace yq::tachyon {
         } else if(m_dummy != ZERO){
             ImGui::Dummy(m_dummy);
         }
+        
+        //  likely improve to get smarter, maybe adaptive with begin/end child?
     }
     
     

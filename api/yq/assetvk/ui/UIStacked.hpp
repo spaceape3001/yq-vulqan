@@ -24,7 +24,7 @@ namespace yq::tachyon {
         virtual ~UIStacked();
         
         UIStacked* clone() const override;
-        void    render() override;
+        void            render() override;
         
         // It's 1...count (ie, we subtract one to render, 0 for the dummy)
         void            select(size_t);

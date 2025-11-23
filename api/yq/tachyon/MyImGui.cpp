@@ -520,6 +520,11 @@ namespace ImGui {
     {
         Text("%f", v);
     }
+
+    void    Text(int v)
+    {
+        Text("%d", v);
+    }
     
     void    Text(double v)
     {

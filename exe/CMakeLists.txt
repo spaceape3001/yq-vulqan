@@ -7,4 +7,4 @@
 add_subdirectory(scenery)
 add_subdirectory(luavk)
 add_subdirectory(xgvk)
-add_subdirectory(gltfedit)
+add_subdirectory(gltf)

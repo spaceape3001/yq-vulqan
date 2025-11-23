@@ -80,6 +80,7 @@ add_library(yq_assetvk SHARED
     ui/UIMetaList.cpp
     ui/UIPanel.cpp
     ui/UISimpleTree.cpp
+    ui/UIStacked.cpp
     ui/UITachyonEditor.cpp
 
     widget/CompositeWidget.cpp

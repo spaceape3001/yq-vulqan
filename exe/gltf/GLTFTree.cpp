@@ -8,6 +8,7 @@
 #include <tiny_gltf.h>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
+#include <yq/text/match.hpp>
 #include <yq/text/join.hpp>
 #include <yq/unit/declare.hpp>
 
@@ -82,6 +83,52 @@ namespace {
             return "Matrix";
         default:
             return std::format("Unknown type {}", n);
+        }
+    }
+    
+    std::string gltf_texFilter(int n)
+    {
+        switch(n){
+        case TINYGLTF_TEXTURE_FILTER_NEAREST:
+            return "nearest";
+        case TINYGLTF_TEXTURE_FILTER_LINEAR:
+            return "linear";
+        case TINYGLTF_TEXTURE_FILTER_NEAREST_MIPMAP_NEAREST:
+            return "nearest mipmap nearest";
+        case TINYGLTF_TEXTURE_FILTER_LINEAR_MIPMAP_NEAREST:
+            return "linear mipmap nearest";
+        case TINYGLTF_TEXTURE_FILTER_NEAREST_MIPMAP_LINEAR:
+            return "nearest mipmap linear";
+        case TINYGLTF_TEXTURE_FILTER_LINEAR_MIPMAP_LINEAR:
+            return "linear mipmap linear";
+        default:
+            return std::format("Unknown filter {}", n);
+        }
+    }
+    
+    std::string gltf_texWrap(int n)
+    {
+        switch(n){
+        case TINYGLTF_TEXTURE_WRAP_REPEAT:
+            return "repeat";
+        case TINYGLTF_TEXTURE_WRAP_CLAMP_TO_EDGE:
+            return "clamp to edge";
+        case TINYGLTF_TEXTURE_WRAP_MIRRORED_REPEAT:
+            return "mirrored repeat";
+        default:
+            return std::format("Unknown wrap {}", n);
+        }
+    }
+    
+    std::string gltf_target(int n)
+    {
+        switch(n){
+        case TINYGLTF_TARGET_ARRAY_BUFFER:
+            return "array buffer";
+        case TINYGLTF_TARGET_ELEMENT_ARRAY_BUFFER:
+            return "element array buffer";
+        default:
+            return std::format("Unknown target {}", n);
         }
     }
 }
@@ -184,6 +231,53 @@ void GLTFTree::r_entry(tinygltf::Accessor&a)
     }
 }
 
+void GLTFTree::r_entry(tinygltf::AnimationChannel&a)
+{
+    using namespace ImGui;
+
+    if(BeginTable("AnimationChannel", 2)){
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Sampler");
+        if(TableNextColumn())
+            Text(a.sampler);
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Target Node");
+        if(TableNextColumn())
+            Text(a.target_node);
+
+        EndTable();
+    }
+}
+
+void GLTFTree::r_entry(tinygltf::AnimationSampler&a)
+{
+    using namespace ImGui;
+
+    if(BeginTable("AnimationSampler", 2)){
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Input");
+        if(TableNextColumn())
+            Text(a.input);
+        
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Interpolation");
+        if(TableNextColumn())
+            TextUnformatted(a.interpolation);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Output");
+        if(TableNextColumn())
+            Text(a.output);
+        
+        EndTable();
+    }
+}
+
 void GLTFTree::r_entry(tinygltf::Animation&a)
 {
     using namespace ImGui;
@@ -194,6 +288,114 @@ void GLTFTree::r_entry(tinygltf::Animation&a)
             TextUnformatted("Name");
         if(TableNextColumn())
             TextUnformatted(a.name);
+        EndTable();
+    }
+    std::string text;
+    text = std::format("Channels ({})", a.channels.size());
+    if(TreeNode(text.c_str())){
+        if(BeginTable("Channels", 3)){
+            
+            TableHeadersRow();
+            TableNextColumn();
+            TextUnformatted("N");
+            TableNextColumn();
+            TextUnformatted("Sampler");
+            TableNextColumn();
+            TextUnformatted("Target Node");
+            
+            size_t  cnt = 0;
+            for(auto& c : a.channels){
+                TableNextRow();
+                if(TableNextColumn())
+                    Text(cnt++);
+                if(TableNextColumn())
+                    Text(c.sampler);
+                if(TableNextColumn())
+                    Text(c.target_node);
+            }
+            EndTable();
+        }
+        TreePop();
+    }
+    
+    text = std::format("Samplers ({})", a.samplers.size());
+    if(TreeNode(text.c_str())){
+        if(BeginTable("Samplers", 4)){
+            TableHeadersRow();
+            TableNextColumn();
+            TextUnformatted("N");
+            TableNextColumn();
+            TextUnformatted("Input");
+            TableNextColumn();
+            TextUnformatted("Output");
+            TableNextColumn();
+            TextUnformatted("Interpolation");
+
+            size_t cnt = 0;
+            for(auto& s: a.samplers){
+                TableNextRow();
+                if(TableNextColumn())
+                    Text(cnt++);
+                if(TableNextColumn())
+                    Text(s.input);
+                if(TableNextColumn())
+                    Text(s.output);
+                if(TableNextColumn())
+                    TextUnformatted(s.interpolation);
+            }
+
+            EndTable();
+        }
+    }
+    
+}
+
+void GLTFTree::r_entry(tinygltf::AudioEmitter&a)
+{
+    using namespace ImGui;
+
+    if(BeginTable("AudioEmitter", 2)){
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Name");
+        if(TableNextColumn())
+            TextUnformatted(a.name);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Type");
+        if(TableNextColumn())
+            TextUnformatted(a.type);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Distance Model");
+        if(TableNextColumn())
+            TextUnformatted(a.distanceModel);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Gain");
+        if(TableNextColumn())
+            Text(a.gain);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Loop");
+        if(TableNextColumn())
+            Text(a.loop);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Playing");
+        if(TableNextColumn())
+            Text(a.playing);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Source");
+        if(TableNextColumn())
+            Text(a.source);
 
         EndTable();
     }
@@ -210,19 +412,24 @@ void GLTFTree::r_entry(tinygltf::AudioSource&a)
         if(TableNextColumn())
             TextUnformatted(a.name);
 
-        EndTable();
-    }
-}
-void GLTFTree::r_entry(tinygltf::AudioEmitter&a)
-{
-    using namespace ImGui;
-
-    if(BeginTable("AudioEmitter", 2)){
         TableNextRow();
         if(TableNextColumn())
-            TextUnformatted("Name");
+            TextUnformatted("Buffer View");
         if(TableNextColumn())
-            TextUnformatted(a.name);
+            Text(a.bufferView);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Mime Type");
+        if(TableNextColumn())
+            TextUnformatted(a.mimeType);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("URI");
+        if(TableNextColumn())
+            TextUnformatted(a.uri);
+
 
         EndTable();
     }
@@ -239,6 +446,18 @@ void GLTFTree::r_entry(tinygltf::Buffer&b)
         if(TableNextColumn())
             TextUnformatted(b.name);
 
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Data Size");
+        if(TableNextColumn())
+            Text(b.data.size());
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("URI");
+        if(TableNextColumn())
+            TextUnformatted(b.uri);
+
         EndTable();
     }
 }
@@ -254,6 +473,37 @@ void GLTFTree::r_entry(tinygltf::BufferView&b)
         if(TableNextColumn())
             TextUnformatted(b.name);
 
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Buffer");
+        if(TableNextColumn())
+            Text(b.buffer);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Byte Offset");
+        if(TableNextColumn())
+            Text(b.byteOffset);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Byte Length");
+        if(TableNextColumn())
+            Text(b.byteLength);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Byte Stride");
+        if(TableNextColumn())
+            Text(b.byteStride);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Target");
+        if(TableNextColumn())
+            TextUnformatted(gltf_target(b.target));
+
+
         EndTable();
     }
 }
@@ -262,12 +512,86 @@ void GLTFTree::r_entry(tinygltf::Camera&c)
 {
     using namespace ImGui;
 
+    bool    is_orthographic = is_similar(c.type, "orthographic");
+    bool    is_perspective = is_similar(c.type, "persective");
+
     if(BeginTable("Camera", 2)){
         TableNextRow();
         if(TableNextColumn())
             TextUnformatted("Name");
         if(TableNextColumn())
             TextUnformatted(c.name);
+    
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Type");
+        if(TableNextColumn())
+            TextUnformatted(c.type);
+
+        if(is_perspective){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("Aspect Ratio");
+            if(TableNextColumn())
+                Text(c.perspective.aspectRatio);
+        }
+
+        if(is_orthographic){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("X Magnification");
+            if(TableNextColumn())
+                Text(c.orthographic.xmag);
+        }
+
+        if(is_perspective){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("Y FOV");
+            if(TableNextColumn())
+                Text(c.perspective.yfov);
+        }
+
+        if(is_orthographic){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("Y Magnification");
+            if(TableNextColumn())
+                Text(c.orthographic.ymag);
+        }
+
+        if(is_perspective){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("Z Far");
+            if(TableNextColumn())
+                Text(c.perspective.zfar);
+        }
+
+        if(is_orthographic){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("Z Far");
+            if(TableNextColumn())
+                Text(c.orthographic.zfar);
+        }
+
+        if(is_perspective){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("Z Near");
+            if(TableNextColumn())
+                Text(c.perspective.znear);
+        }
+
+        if(is_orthographic){
+            TableNextRow();
+            if(TableNextColumn())
+                TextUnformatted("Z Near");
+            if(TableNextColumn())
+                Text(c.orthographic.znear);
+        }
+
 
         EndTable();
     }
@@ -284,6 +608,65 @@ void GLTFTree::r_entry(tinygltf::Image&i)
         if(TableNextColumn())
             TextUnformatted(i.name);
 
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Bits Per Channel");
+        if(TableNextColumn())
+            Text(i.bits);
+
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Buffer View");
+        if(TableNextColumn())
+            Text(i.bufferView);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Components");
+        if(TableNextColumn())
+            Text(i.component);
+
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Height");
+        if(TableNextColumn())
+            Text(i.height);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Image Byte Count");
+        if(TableNextColumn())
+            Text(i.image.size());
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Mime Type");
+        if(TableNextColumn())
+            TextUnformatted(i.mimeType);
+
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Pixel Type");
+        if(TableNextColumn())
+            TextUnformatted(gltf_componentType(i.pixel_type));
+
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("URI");
+        if(TableNextColumn())
+            TextUnformatted(i.uri);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Width");
+        if(TableNextColumn())
+            Text(i.width);
+
+
         EndTable();
     }
 }
@@ -299,6 +682,31 @@ void GLTFTree::r_entry(tinygltf::Light&l)
         if(TableNextColumn())
             TextUnformatted(l.name);
 
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Type");
+        if(TableNextColumn())
+            TextUnformatted(l.type);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Color");
+        if(TableNextColumn())
+            TextUnformatted(join(l.color, ","));
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Intensity");
+        if(TableNextColumn())
+            Text(l.intensity);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Range");
+        if(TableNextColumn())
+            Text(l.range);
+            
+        //  ignoring spotlight....
 
         EndTable();
     }
@@ -314,6 +722,39 @@ void GLTFTree::r_entry(tinygltf::Material&m)
             TextUnformatted("Name");
         if(TableNextColumn())
             TextUnformatted(m.name);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Alpha Cutoff");
+        if(TableNextColumn())
+            Text(m.alphaCutoff);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Alpha Mode");
+        if(TableNextColumn())
+            TextUnformatted(m.alphaMode);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Double Sided");
+        if(TableNextColumn())
+            Text(m.doubleSided);
+
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Emissive Factor");
+        if(TableNextColumn())
+            TextUnformatted(join(m.emissiveFactor, ","));
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("LODs");
+        if(TableNextColumn())
+            TextUnformatted(join(m.lods, ","));
+
+        // more TBD
 
         EndTable();
     }
@@ -334,7 +775,7 @@ void GLTFTree::r_entry(tinygltf::Mesh&m)
         if(TableNextColumn())
             TextUnformatted("Weights");
         if(TableNextColumn())
-            TextUnformatted(join(m.weights, ", "));
+            TextUnformatted(join(m.weights, ","));
 
         EndTable();
     }
@@ -408,7 +849,7 @@ void GLTFTree::r_entry(tinygltf::Node&n)
         if(TableNextColumn())
             TextUnformatted("Children");
         if(TableNextColumn())
-            TextUnformatted(join(n.children, ", "));
+            TextUnformatted(join(n.children, ","));
 
         TableNextRow();
         if(TableNextColumn())
@@ -426,13 +867,13 @@ void GLTFTree::r_entry(tinygltf::Node&n)
         if(TableNextColumn())
             TextUnformatted("LODs");
         if(TableNextColumn())
-            TextUnformatted(join(n.lods, ", "));
+            TextUnformatted(join(n.lods, ","));
 
         TableNextRow();
         if(TableNextColumn())
             TextUnformatted("Matrix");
         if(TableNextColumn())
-            TextUnformatted(join(n.matrix, ", "));
+            TextUnformatted(join(n.matrix, "," ));
 
         TableNextRow();
         if(TableNextColumn())
@@ -444,13 +885,13 @@ void GLTFTree::r_entry(tinygltf::Node&n)
         if(TableNextColumn())
             TextUnformatted("Rotation");
         if(TableNextColumn())
-            TextUnformatted(join(n.rotation, ", "));
+            TextUnformatted(join(n.rotation, ","));
 
         TableNextRow();
         if(TableNextColumn())
             TextUnformatted("Scale");
         if(TableNextColumn())
-            TextUnformatted(join(n.scale, ", "));
+            TextUnformatted(join(n.scale, ","));
 
         TableNextRow();
         if(TableNextColumn())
@@ -462,13 +903,13 @@ void GLTFTree::r_entry(tinygltf::Node&n)
         if(TableNextColumn())
             TextUnformatted("Translation");
         if(TableNextColumn())
-            TextUnformatted(join(n.translation, ", "));
+            TextUnformatted(join(n.translation, ","));
 
         TableNextRow();
         if(TableNextColumn())
             TextUnformatted("Weights");
         if(TableNextColumn())
-            TextUnformatted(join(n.weights, ", "));
+            TextUnformatted(join(n.weights, ","));
 
         EndTable();
     }
@@ -525,6 +966,30 @@ void GLTFTree::r_entry(tinygltf::Sampler&s)
         if(TableNextColumn())
             TextUnformatted(s.name);
 
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Mag Filter");
+        if(TableNextColumn())
+            TextUnformatted(gltf_texFilter(s.magFilter));
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Min Filter");
+        if(TableNextColumn())
+            TextUnformatted(gltf_texFilter(s.minFilter));
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Wrap S");
+        if(TableNextColumn())
+            TextUnformatted(gltf_texWrap(s.wrapS));
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Wrap T");
+        if(TableNextColumn())
+            TextUnformatted(gltf_texWrap(s.wrapT));
+
         EndTable();
     }
 }
@@ -539,6 +1004,19 @@ void GLTFTree::r_entry(tinygltf::Scene&s)
             TextUnformatted("Name");
         if(TableNextColumn())
             TextUnformatted(s.name);
+            
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Audio (Emitters)");
+        if(TableNextColumn())
+            TextUnformatted(join(s.audioEmitters, ","));
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Nodes");
+        if(TableNextColumn())
+            TextUnformatted(join(s.nodes, ","));
+        
 
         EndTable();
     }
@@ -555,6 +1033,25 @@ void GLTFTree::r_entry(tinygltf::Skin&s)
         if(TableNextColumn())
             TextUnformatted(s.name);
 
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Inverse Bind Matrices");
+        if(TableNextColumn())
+            Text(s.inverseBindMatrices);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Joints");
+        if(TableNextColumn())
+            TextUnformatted(join(s.joints, ","));
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Skeleton Node");
+        if(TableNextColumn())
+            Text(s.skeleton);
+        
+
         EndTable();
     }
 }
@@ -569,6 +1066,18 @@ void GLTFTree::r_entry(tinygltf::Texture&t)
             TextUnformatted("Name");
         if(TableNextColumn())
             TextUnformatted(t.name);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Sampler");
+        if(TableNextColumn())
+            Text(t.sampler);
+
+        TableNextRow();
+        if(TableNextColumn())
+            TextUnformatted("Source (Image)");
+        if(TableNextColumn())
+            Text(t.source);
 
         EndTable();
     }

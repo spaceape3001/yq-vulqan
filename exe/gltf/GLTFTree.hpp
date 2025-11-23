@@ -35,6 +35,8 @@ private:
     
     void r_entry(tinygltf::Accessor&);
     void r_entry(tinygltf::Animation&);
+    void r_entry(tinygltf::AnimationChannel&);
+    void r_entry(tinygltf::AnimationSampler&);
     void r_entry(tinygltf::AudioSource&);
     void r_entry(tinygltf::AudioEmitter&);
     void r_entry(tinygltf::Buffer&);

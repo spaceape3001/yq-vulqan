@@ -30,6 +30,8 @@ void GLTFWin::init_meta()
 
     auto tp = app.make<UIPanel>("##TreePanel");
     tp.uid("TreePanel");
+    tp.flag(SET, UIFlag::NoDecoration);
+    
     auto gt = tp.make<GLTFTree>();
     gt.uid("GLTFTree");
 
@@ -118,7 +120,7 @@ void GLTFWin::open(const std::filesystem::path& fp)
     m_model     = mdl;
     
     if(m_tree){
-        m_tree -> model(SET, m_model);
+        m_tree -> model(SET, m_model, fp);
     }
 
     yInfo() << "Loaded file: " << fp;
@@ -133,7 +135,7 @@ Execution   GLTFWin::setup(const Context&ctx)
     if(!m_tree){
         m_tree  = dynamic_cast<GLTFTree*>(element(FIRST, "GLTFTree"));
         if(m_model && m_tree)
-            m_tree -> model(SET, m_model);
+            m_tree -> model(SET, m_model, m_filepath);
     }
     
     return ret;

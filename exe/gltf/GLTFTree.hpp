@@ -28,10 +28,11 @@ public:
     
     tinygltf::ModelSPtr     model();
     tinygltf::ModelSCPtr    model() const;
-    void                    model(set_k, tinygltf::ModelSPtr);
+    void                    model(set_k, tinygltf::ModelSPtr, const std::filesystem::path& fp = {});
     
 private:
     tinygltf::ModelSPtr     m_model;
+    std::filesystem::path   m_filepath;
     
     void r_entry(tinygltf::Accessor&);
     void r_entry(tinygltf::Animation&);

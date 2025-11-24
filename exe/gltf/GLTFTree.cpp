@@ -7,6 +7,7 @@
 #include "GLTFTree.hpp"
 #include <tiny_gltf.h>
 #include <yq/tachyon/MyImGui.hpp>
+#include <yq/tachyon/im/KVTable.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/text/match.hpp>
 #include <yq/text/join.hpp>
@@ -157,9 +158,10 @@ GLTFTree* GLTFTree::clone() const
 }
 
 
-void                    GLTFTree::model(set_k, tinygltf::ModelSPtr v)
+void                    GLTFTree::model(set_k, tinygltf::ModelSPtr v, const std::filesystem::path& fp)
 {
     m_model = v;
+    m_filepath = fp;
 }
 
 tinygltf::ModelSPtr     GLTFTree::model()
@@ -174,122 +176,40 @@ tinygltf::ModelSCPtr    GLTFTree::model() const
 
 void GLTFTree::r_entry(tinygltf::Accessor&a)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Accessor", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(a.name);
-        
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Buffer View");
-        if(TableNextColumn())
-            Text(a.bufferView);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Byte Offset");
-        if(TableNextColumn())
-            Text(a.byteOffset);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Components");
-        if(TableNextColumn())
-            TextUnformatted(gltf_componentType(a.componentType));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Count");
-        if(TableNextColumn())
-            Text(a.count);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Normalized");
-        if(TableNextColumn())
-            Text(a.normalized);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Sparse");
-        if(TableNextColumn())
-            Text(a.sparse.isSparse);
-
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Type");
-        if(TableNextColumn())
-            TextUnformatted(gltf_type(a.type));
-
-
-        EndTable();
-    }
+    imgui::KVTable  kv("Accessor");
+    kv("Name") << a.name;
+    kv("Buffer View") << a.bufferView;
+    kv("Byte Offset") << a.byteOffset;
+    kv("Components") << gltf_componentType(a.componentType);
+    kv("Count") << a.count;
+    kv("Normalized") << a.normalized;
+    kv("Sparse") << a.sparse.isSparse;
+    kv("Type") << gltf_type(a.type);
 }
 
 void GLTFTree::r_entry(tinygltf::AnimationChannel&a)
 {
-    using namespace ImGui;
-
-    if(BeginTable("AnimationChannel", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Sampler");
-        if(TableNextColumn())
-            Text(a.sampler);
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Target Node");
-        if(TableNextColumn())
-            Text(a.target_node);
-
-        EndTable();
-    }
+    imgui::KVTable kv("Animation Channel");
+    kv("Sampler") << a.sampler;
+    kv("Target Node") << a.target_node;
 }
 
 void GLTFTree::r_entry(tinygltf::AnimationSampler&a)
 {
-    using namespace ImGui;
-
-    if(BeginTable("AnimationSampler", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Input");
-        if(TableNextColumn())
-            Text(a.input);
-        
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Interpolation");
-        if(TableNextColumn())
-            TextUnformatted(a.interpolation);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Output");
-        if(TableNextColumn())
-            Text(a.output);
-        
-        EndTable();
-    }
+    imgui::KVTable kv("Animation Sampler");
+    kv("Input") << a.input;
+    kv("Interpolation") << a.interpolation;
+    kv("Output") << a.output;
 }
 
 void GLTFTree::r_entry(tinygltf::Animation&a)
 {
     using namespace ImGui;
 
-    if(BeginTable("Animation", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(a.name);
-        EndTable();
-    }
+    imgui::KVTable kv("Animation");
+    kv("Name") << a.name;
+    kv.finish();
+    
     std::string text;
     text = std::format("Channels ({})", a.channels.size());
     if(TreeNode(text.c_str())){
@@ -352,433 +272,123 @@ void GLTFTree::r_entry(tinygltf::Animation&a)
 
 void GLTFTree::r_entry(tinygltf::AudioEmitter&a)
 {
-    using namespace ImGui;
-
-    if(BeginTable("AudioEmitter", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(a.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Type");
-        if(TableNextColumn())
-            TextUnformatted(a.type);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Distance Model");
-        if(TableNextColumn())
-            TextUnformatted(a.distanceModel);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Gain");
-        if(TableNextColumn())
-            Text(a.gain);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Loop");
-        if(TableNextColumn())
-            Text(a.loop);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Playing");
-        if(TableNextColumn())
-            Text(a.playing);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Source");
-        if(TableNextColumn())
-            Text(a.source);
-
-        EndTable();
-    }
+    imgui::KVTable kv("Audio Emitter");
+    kv("Name") << a.name;
+    kv("Type") << a.type;
+    kv("Distance Model") << a.distanceModel;
+    kv("Gain") << a.gain;
+    kv("Loop") << a.loop;
+    kv("Playing") << a.playing;
+    kv("Source") << a.source;
 }
 
 void GLTFTree::r_entry(tinygltf::AudioSource&a)
 {
-    using namespace ImGui;
-
-    if(BeginTable("AudioSource", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(a.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Buffer View");
-        if(TableNextColumn())
-            Text(a.bufferView);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Mime Type");
-        if(TableNextColumn())
-            TextUnformatted(a.mimeType);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("URI");
-        if(TableNextColumn())
-            TextUnformatted(a.uri);
-
-
-        EndTable();
-    }
+    imgui::KVTable kv("Audio Source");
+    kv("Name") << a.name;
+    kv("Buffer View") << a.bufferView;
+    kv("Mime Type") << a.mimeType;
+    kv("URI") << a.uri;
 }
 
 void GLTFTree::r_entry(tinygltf::Buffer&b)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Buffer", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(b.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Data Size");
-        if(TableNextColumn())
-            Text(b.data.size());
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("URI");
-        if(TableNextColumn())
-            TextUnformatted(b.uri);
-
-        EndTable();
-    }
+    imgui::KVTable kv("Buffer");
+    kv("Name") << b.name;
+    kv("Data Size") << b.data.size();
+    kv("URI") << b.uri;
 }
 
 void GLTFTree::r_entry(tinygltf::BufferView&b)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Buffer View", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(b.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Buffer");
-        if(TableNextColumn())
-            Text(b.buffer);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Byte Offset");
-        if(TableNextColumn())
-            Text(b.byteOffset);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Byte Length");
-        if(TableNextColumn())
-            Text(b.byteLength);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Byte Stride");
-        if(TableNextColumn())
-            Text(b.byteStride);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Target");
-        if(TableNextColumn())
-            TextUnformatted(gltf_target(b.target));
-
-
-        EndTable();
-    }
+    imgui::KVTable kv("Buffer View");
+    kv("Name") << b.name;
+    kv("Buffer") << b.buffer;
+    kv("Byte Offset") << b.byteOffset;
+    kv("Byte Length") << b.byteLength;
+    kv("Byte Stride") << b.byteStride;
+    kv("Target") << gltf_target(b.target);
 }
 
 void GLTFTree::r_entry(tinygltf::Camera&c)
 {
-    using namespace ImGui;
-
     bool    is_orthographic = is_similar(c.type, "orthographic");
     bool    is_perspective = is_similar(c.type, "persective");
 
-    if(BeginTable("Camera", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(c.name);
-    
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Type");
-        if(TableNextColumn())
-            TextUnformatted(c.type);
+    imgui::KVTable kv("Camera");
+    kv("Name") << c.name;
+    kv("Type") << c.type;
 
-        if(is_perspective){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("Aspect Ratio");
-            if(TableNextColumn())
-                Text(c.perspective.aspectRatio);
-        }
+    if(is_perspective)
+        kv("Aspect Ratio") << c.perspective.aspectRatio;
 
-        if(is_orthographic){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("X Magnification");
-            if(TableNextColumn())
-                Text(c.orthographic.xmag);
-        }
+    if(is_orthographic)
+        kv("X Magnification") << c.orthographic.xmag;
 
-        if(is_perspective){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("Y FOV");
-            if(TableNextColumn())
-                Text(c.perspective.yfov);
-        }
+    if(is_perspective)
+        kv("Y FOV") << c.perspective.yfov;
 
-        if(is_orthographic){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("Y Magnification");
-            if(TableNextColumn())
-                Text(c.orthographic.ymag);
-        }
+    if(is_orthographic)
+        kv("Y Magnification") << c.orthographic.ymag;
 
-        if(is_perspective){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("Z Far");
-            if(TableNextColumn())
-                Text(c.perspective.zfar);
-        }
+    if(is_perspective)
+        kv("Z Far") << c.perspective.zfar;
 
-        if(is_orthographic){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("Z Far");
-            if(TableNextColumn())
-                Text(c.orthographic.zfar);
-        }
+    if(is_orthographic)
+        kv("Z Far") << c.orthographic.zfar;
 
-        if(is_perspective){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("Z Near");
-            if(TableNextColumn())
-                Text(c.perspective.znear);
-        }
+    if(is_perspective)
+        kv("Z Near") << c.perspective.znear;
 
-        if(is_orthographic){
-            TableNextRow();
-            if(TableNextColumn())
-                TextUnformatted("Z Near");
-            if(TableNextColumn())
-                Text(c.orthographic.znear);
-        }
-
-
-        EndTable();
-    }
+    if(is_orthographic)
+        kv("Z Far") << c.perspective.zfar;
 }
 
 void GLTFTree::r_entry(tinygltf::Image&i)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Image", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(i.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Bits Per Channel");
-        if(TableNextColumn())
-            Text(i.bits);
-
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Buffer View");
-        if(TableNextColumn())
-            Text(i.bufferView);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Components");
-        if(TableNextColumn())
-            Text(i.component);
-
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Height");
-        if(TableNextColumn())
-            Text(i.height);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Image Byte Count");
-        if(TableNextColumn())
-            Text(i.image.size());
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Mime Type");
-        if(TableNextColumn())
-            TextUnformatted(i.mimeType);
-
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Pixel Type");
-        if(TableNextColumn())
-            TextUnformatted(gltf_componentType(i.pixel_type));
-
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("URI");
-        if(TableNextColumn())
-            TextUnformatted(i.uri);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Width");
-        if(TableNextColumn())
-            Text(i.width);
-
-
-        EndTable();
-    }
+    imgui::KVTable kv("Image");
+    kv("Name") << i.name;
+    kv("Bits Per Channel") << i.bits;
+    kv("Buffer View") << i.bufferView;
+    kv("Components") << i.component;
+    kv("Image Byte Count") << i.image.size();
+    kv("Mime Type") << i.mimeType;
+    kv("Pixel Type") << gltf_componentType(i.pixel_type);
+    kv("Size") << i.width << " x " << i.height;
+    kv("URI") << i.uri;
 }
 
 void GLTFTree::r_entry(tinygltf::Light&l)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Light", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(l.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Type");
-        if(TableNextColumn())
-            TextUnformatted(l.type);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Color");
-        if(TableNextColumn())
-            TextUnformatted(join(l.color, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Intensity");
-        if(TableNextColumn())
-            Text(l.intensity);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Range");
-        if(TableNextColumn())
-            Text(l.range);
-            
-        //  ignoring spotlight....
-
-        EndTable();
-    }
+    imgui::KVTable  kv("Light");
+    kv("Name") << l.name;
+    kv("Type") << l.type;
+    kv("Color") << join(l.color, ",");
+    kv("Intensity") << l.intensity;
+    kv("Range") << l.range;
+        
+    //  ignoring spotlight....
 }
 
 void GLTFTree::r_entry(tinygltf::Material&m)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Material", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(m.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Alpha Cutoff");
-        if(TableNextColumn())
-            Text(m.alphaCutoff);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Alpha Mode");
-        if(TableNextColumn())
-            TextUnformatted(m.alphaMode);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Double Sided");
-        if(TableNextColumn())
-            Text(m.doubleSided);
-
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Emissive Factor");
-        if(TableNextColumn())
-            TextUnformatted(join(m.emissiveFactor, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("LODs");
-        if(TableNextColumn())
-            TextUnformatted(join(m.lods, ","));
-
-        // more TBD
-
-        EndTable();
-    }
+    imgui::KVTable kv("Material");
+    kv("Name") << m.name;
+    kv("Alpha Cutoff") << m.alphaCutoff;
+    kv("Alpha Mode") << m.alphaMode;
+    kv("Double Sided") << m.doubleSided;
+    kv("Emissive Factor") << join(m.emissiveFactor, ",");
+    kv("LODs") << join(m.lods, ",");
 }
 
 void GLTFTree::r_entry(tinygltf::Mesh&m)
 {
     using namespace ImGui;
-
-    if(BeginTable("Mesh", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(m.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Weights");
-        if(TableNextColumn())
-            TextUnformatted(join(m.weights, ","));
-
-        EndTable();
-    }
+    
+    imgui::KVTable kv("Mesh");
+    kv("Name") << m.name;
+    kv("Weights") << join(m.weights, ",");
+    kv.finish();
 
     std::string text    = std::format("Primitives ({})", m.primitives.size());
     if(TreeNode(text.c_str())){
@@ -797,147 +407,41 @@ void GLTFTree::r_entry(tinygltf::Mesh&m)
 
 void GLTFTree::r_entry(tinygltf::Model&m)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Model", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Version");
-        if(TableNextColumn())
-            TextUnformatted(m.asset.version);
-        
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Generator");
-        if(TableNextColumn())
-            TextUnformatted(m.asset.generator);
-        
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Min Version");
-        if(TableNextColumn())
-            TextUnformatted(m.asset.minVersion);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Copyright");
-        if(TableNextColumn())
-            TextUnformatted(m.asset.copyright);
-        EndTable();
-    }
-    
+    imgui::KVTable kv("Model");
+    kv("File") << m_filepath;
+    kv("Copyright") << m.asset.copyright;
+    kv("Generator") << m.asset.generator;
+    kv("Min Version") << m.asset.minVersion;
+    kv("Version") << m.asset.version;
 }
 
 void GLTFTree::r_entry(tinygltf::Node&n)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Node", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(n.name);
-            
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Camera");
-        if(TableNextColumn())
-            Text(n.camera);
-            
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Children");
-        if(TableNextColumn())
-            TextUnformatted(join(n.children, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Emitter");
-        if(TableNextColumn())
-            Text(n.emitter);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Light");
-        if(TableNextColumn())
-            Text(n.light);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("LODs");
-        if(TableNextColumn())
-            TextUnformatted(join(n.lods, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Matrix");
-        if(TableNextColumn())
-            TextUnformatted(join(n.matrix, "," ));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Mesh");
-        if(TableNextColumn())
-            Text(n.mesh);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Rotation");
-        if(TableNextColumn())
-            TextUnformatted(join(n.rotation, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Scale");
-        if(TableNextColumn())
-            TextUnformatted(join(n.scale, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Skin");
-        if(TableNextColumn())
-            Text(n.skin);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Translation");
-        if(TableNextColumn())
-            TextUnformatted(join(n.translation, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Weights");
-        if(TableNextColumn())
-            TextUnformatted(join(n.weights, ","));
-
-        EndTable();
-    }
+    imgui::KVTable kv("Node");
+    kv("Name") << n.name;
+    kv("Camera") << n.camera;
+    kv("Children") << join(n.children, ",");
+    kv("Emitter") << n.emitter;
+    kv("Light") << n.light;
+    kv("LODs") << join(n.lods, ",");
+    kv("Matrix") << join(n.matrix, "," );
+    kv("Mesh") << n.mesh;
+    kv("Rotation") << join(n.rotation, ",");
+    kv("Scale") << join(n.scale, ",");
+    kv("Skin") << n.skin;
+    kv("Translation") << join(n.translation, ",");
+    kv("Weights") << join(n.weights, ",");
 }
 
 void GLTFTree::r_entry(tinygltf::Primitive& p)
 {
     using namespace ImGui;
-    if(BeginTable("Primitive",2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Material");
-        if(TableNextColumn())
-            Text(p.material);
-        
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Indices (Accessor)");
-        if(TableNextColumn())
-            Text(p.indices);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Mode");
-        if(TableNextColumn())
-            TextUnformatted(gltf_mode(p.mode));
-        EndTable();
-    }
+    
+    imgui::KVTable kv("Primitive");
+    kv("Indices (Accessor)") << p.indices;
+    kv("Material") << p.material;
+    kv("Mode") << gltf_mode(p.mode);
+    kv.finish();
     
     std::string text    = std::format("Accessors ({})", p.attributes.size());
     if(TreeNode(text.c_str())){
@@ -957,132 +461,38 @@ void GLTFTree::r_entry(tinygltf::Primitive& p)
 
 void GLTFTree::r_entry(tinygltf::Sampler&s)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Sampler", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(s.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Mag Filter");
-        if(TableNextColumn())
-            TextUnformatted(gltf_texFilter(s.magFilter));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Min Filter");
-        if(TableNextColumn())
-            TextUnformatted(gltf_texFilter(s.minFilter));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Wrap S");
-        if(TableNextColumn())
-            TextUnformatted(gltf_texWrap(s.wrapS));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Wrap T");
-        if(TableNextColumn())
-            TextUnformatted(gltf_texWrap(s.wrapT));
-
-        EndTable();
-    }
+    imgui::KVTable kv("Sampler");
+    kv("Name") << s.name;
+    kv("Mag Filter") << gltf_texFilter(s.magFilter);
+    kv("Min Filter") << gltf_texFilter(s.minFilter);
+    kv("Wrap S") << gltf_texWrap(s.wrapS);
+    kv("Wrap T") << gltf_texWrap(s.wrapT);
 }
 
 void GLTFTree::r_entry(tinygltf::Scene&s)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Scene", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(s.name);
-            
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Audio (Emitters)");
-        if(TableNextColumn())
-            TextUnformatted(join(s.audioEmitters, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Nodes");
-        if(TableNextColumn())
-            TextUnformatted(join(s.nodes, ","));
-        
-
-        EndTable();
-    }
+    imgui::KVTable kv("Scene");
+    kv("Name") << s.name;
+    kv("Audio (Emitters)") << join(s.audioEmitters, ",");
+    kv("Nodes") << join(s.nodes, ",");
 }
 
 void GLTFTree::r_entry(tinygltf::Skin&s)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Skin", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(s.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Inverse Bind Matrices");
-        if(TableNextColumn())
-            Text(s.inverseBindMatrices);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Joints");
-        if(TableNextColumn())
-            TextUnformatted(join(s.joints, ","));
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Skeleton Node");
-        if(TableNextColumn())
-            Text(s.skeleton);
-        
-
-        EndTable();
-    }
+    imgui::KVTable kv("Skin");
+    kv("Name") << s.name;
+    kv("Inverse Bind Matrices") << s.inverseBindMatrices;
+    kv("Joints") << join(s.joints, ",");
+    kv("Skeleton Node") << s.skeleton;
 }
 
 void GLTFTree::r_entry(tinygltf::Texture&t)
 {
-    using namespace ImGui;
-
-    if(BeginTable("Texture", 2)){
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Name");
-        if(TableNextColumn())
-            TextUnformatted(t.name);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Sampler");
-        if(TableNextColumn())
-            Text(t.sampler);
-
-        TableNextRow();
-        if(TableNextColumn())
-            TextUnformatted("Source (Image)");
-        if(TableNextColumn())
-            Text(t.source);
-
-        EndTable();
-    }
+    imgui::KVTable kv("Texture");
+    kv("Name") << t.name;
+    kv("Sampler") << t.sampler;
+    kv("Source (Image)") << t.source;
 }
-
 
 void    GLTFTree::render()  
 {
@@ -1092,10 +502,7 @@ void    GLTFTree::render()
         return ;
     }
     
-    if(TreeNode("Model")){
-        r_entry(*m_model);
-        TreePop();
-    }
+    r_entry(*m_model);
     
     Separator();
     

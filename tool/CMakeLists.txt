@@ -22,3 +22,6 @@ target_link_libraries(vk_layers yq_tachyon)
 
 add_executable(vk_queues vk_queues.cpp)
 target_link_libraries(vk_queues yq_tachyon)
+
+add_subdirectory(gltf)
+#add_subdirectory(obj)

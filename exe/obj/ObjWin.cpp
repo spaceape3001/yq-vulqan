@@ -111,12 +111,14 @@ void ObjWin::imgui(ViContext&u)
 
 void ObjWin::open(const std::filesystem::path& fp)
 {
-#if 0
-    auto mdl    = raw_load_Obj(fp);
-    if(!mdl){
-        yWarning() << "Unable to load the Obj file: " << fp;
+    tinyobj::ObjReaderConfig cfg;
+    cfg.triangulate = false;
+    ObjReaderSPtr   mdl = std::make_shared<tinyobj::ObjReader>();
+    if(!mdl->ParseFromFile(fp.string())){
+        yWarning() << "Unable to load the obj file: '" << fp << "' (" << mdl->Error() << ")";
         return ;
     }
+    
     
     m_model     = mdl;
     
@@ -128,7 +130,6 @@ void ObjWin::open(const std::filesystem::path& fp)
 
     m_filepath  = fp;
     update_title();
-#endif
 }
 
 Execution   ObjWin::setup(const Context&ctx) 
@@ -136,10 +137,8 @@ Execution   ObjWin::setup(const Context&ctx)
     Execution ret =  Widget::setup(ctx);
     if(!m_tree){
         m_tree  = dynamic_cast<ObjTree*>(element(FIRST, "ObjTree"));
-#if 0
         if(m_model && m_tree)
             m_tree -> model(SET, m_model, m_filepath);
-#endif
     }
     
     return ret;

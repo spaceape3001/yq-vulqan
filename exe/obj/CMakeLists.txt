@@ -16,4 +16,5 @@ PUBLIC
     yq_assetvk
 PRIVATE
     ImGuiFileDialog
+    TinyOBJ
 )

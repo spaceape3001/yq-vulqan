@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "Obj.hpp"
 #include <yq/tachyon/api/Widget.hpp>
 //#include <yq/tachyon/typedef/Obj.hpp>
 
@@ -40,7 +41,7 @@ private:
     FileMode                m_fileMode = FileMode::None;
     ObjTree*                m_tree    = nullptr;
     std::filesystem::path   m_filepath;
-    //tinyObj::ModelSPtr      m_model;
+    ObjReaderSPtr           m_model;
     
     void    cmd_file_open();
     void    cmd_file_save();

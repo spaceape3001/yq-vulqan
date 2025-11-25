@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "Obj.hpp"
 #include <yq/tachyon/ui/UIElement.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
 //#include <yq/tachyon/typedef/gltf.hpp>
@@ -23,12 +24,20 @@ public:
     void    render()  override;
     static void init_meta();
     
-    //tinygltf::ModelSPtr     model();
-    //tinygltf::ModelSCPtr    model() const;
-    //void                    model(set_k, tinygltf::ModelSPtr, const std::filesystem::path& fp = {});
+    ObjReaderSPtr    model();
+    ObjReaderSPtr    model() const;
+    void             model(set_k, ObjReaderSPtr, const std::filesystem::path& fp = {});
+    
+    void    r_entry(const tinyobj::attrib_t&);
+    void    r_entry(const tinyobj::lines_t&);
+    void    r_entry(const tinyobj::material_t&);
+    void    r_entry(const tinyobj::mesh_t&);
+    
+    void    r_entry(const tinyobj::shape_t&);
+    void    r_entry(const tinyobj::tag_t&);
     
 private:
-    //tinygltf::ModelSPtr     m_model;
+    ObjReaderSPtr           m_model;
     std::filesystem::path   m_filepath;
 };
 

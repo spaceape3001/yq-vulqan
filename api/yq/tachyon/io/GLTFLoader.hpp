@@ -9,6 +9,7 @@
 //#include <iosfwd>
 //#include <yq/typedef/resource.hpp>
 #include <yq/typedef/filesystem_path.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/pipeline/DataFormat.hpp>
 #include <yq/tachyon/typedef/asset_pack.hpp>
 #include <yq/tachyon/typedef/gltf.hpp>
@@ -27,4 +28,6 @@ namespace yq::tachyon {
     RasterPtr               to_raster(const tinygltf::Image&);
     SamplerPtr              to_sampler(const tinygltf::Sampler&);
     tinygltf::ModelSPtr     raw_load_gltf(const std::filesystem::path& fp);
+    tinygltf::ModelSPtr     raw_load_gltf(text_k, const std::filesystem::path& fp);
+    tinygltf::ModelSPtr     raw_load_gltf(binary_k, const std::filesystem::path& fp);
 }

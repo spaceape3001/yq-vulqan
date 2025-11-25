@@ -19,11 +19,13 @@
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/asset/Video.hpp>
 
-#include <yq/file/FileUtils.hpp>
-#include <yq/resource/ResourceDriverAPI.hpp>
-#include <yq/resource/Resource.hxx>
 #include <yq/core/DelayInit.hpp>
+#include <yq/file/FileUtils.hpp>
 #include <yq/container/ByteArray.hpp>
+#include <yq/resource/ResourceDriverAPI.hpp>
+#include <yq/text/match.hpp>
+
+#include <yq/resource/Resource.hxx>
 
 #include <tiny_gltf.h>
 
@@ -427,12 +429,12 @@ namespace yq::tachyon {
 
     AssetPackPtr    loadGLTF_binary(const ByteArray& iData, const ResourceLoadAPI& api)
     {
-        return gltfLoad(iData, api.url());
+        return gltfLoad(BINARY, iData, api.url());
     }
 
     AssetPackPtr    loadGLTF_string(const std::string& iData, const ResourceLoadAPI& api)
     {
-        return gltfLoad(iData, api.url());
+        return gltfLoad(TEXT, iData, api.url());
     }
 
     static void reg_gltf()
@@ -455,6 +457,16 @@ namespace yq::tachyon {
 
     tinygltf::ModelSPtr     raw_load_gltf(const std::filesystem::path& fp)
     {
+        std::string ext = fp.extension();
+        if(is_similar(ext, ".gltf"))
+            return raw_load_gltf(TEXT, fp);
+        if(is_similar(ext, ".glb"))
+            return raw_load_gltf(BINARY, fp);
+        return {};
+    }
+
+    tinygltf::ModelSPtr     raw_load_gltf(text_k, const std::filesystem::path& fp)
+    {
         tinygltf::ModelSPtr ret = std::make_shared<tinygltf::Model>();
         tinygltf::TinyGLTF gltfContext;
 		std::string error, warning;
@@ -468,4 +480,23 @@ namespace yq::tachyon {
             return {};
         return ret;
     }
+
+    tinygltf::ModelSPtr     raw_load_gltf(binary_k, const std::filesystem::path& fp)
+    {
+        tinygltf::ModelSPtr ret = std::make_shared<tinygltf::Model>();
+        tinygltf::TinyGLTF gltfContext;
+		std::string error, warning;
+        
+        bool loaded = gltfContext.LoadBinaryFromFile(ret.get(), &error, &warning, fp.c_str());
+        if(!error.empty())
+            tachyonWarning << "GLTF load (" << fp << "): " << error;
+        if(!warning.empty())
+            tachyonNotice << "GLTF load (" << fp << "): " << warning;
+        if(!loaded)
+            return {};
+        return ret;
+    }
+    
+    
+    
 }

@@ -6,6 +6,7 @@
 
 #include "Material.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
+#include <yq/tachyon/asset/Texture.hpp>
 
 namespace yq::tachyon {
     Material::Material()

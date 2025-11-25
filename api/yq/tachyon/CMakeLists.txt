@@ -171,6 +171,8 @@ add_library(${PROJECT_NAME} SHARED
     asset/Texture.cpp
     asset/Video.cpp
 
+    asset/material/BasicMaterial.cpp
+
     camera/NullCamera.cpp
 
     command/AddChildCommand.cpp

@@ -4,23 +4,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MaterialSpec.hpp"
+#include "Material.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
 
 namespace yq::tachyon {
-    MaterialSpec::MaterialSpec()
+    Material::Material()
     {
     }
     
-    MaterialSpec::~MaterialSpec()
+    Material::~Material()
     {
     }
     
-    void MaterialSpec::init_meta()
+    void Material::init_meta()
     {
-        auto w = writer<MaterialSpec>();
-        w.description("Material Specification");
+        auto w = writer<Material>();
+        w.description("Material");
     }
 }
 
-YQ_RESOURCE_IMPLEMENT(yq::tachyon::MaterialSpec)
+YQ_RESOURCE_IMPLEMENT(yq::tachyon::Material)

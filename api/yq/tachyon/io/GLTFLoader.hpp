@@ -19,6 +19,7 @@
 namespace tinygltf {
     struct Image;
     struct Sampler;
+    struct Material;
 }
 
 namespace yq::tachyon {

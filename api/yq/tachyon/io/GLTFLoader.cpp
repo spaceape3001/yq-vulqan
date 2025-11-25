@@ -11,7 +11,7 @@
 #include <yq/tachyon/asset/CameraSpec.hpp>
 #include <yq/tachyon/asset/LightSpec.hpp>
 #include <yq/tachyon/asset/Mesh.hpp>
-#include <yq/tachyon/asset/MaterialSpec.hpp>
+#include <yq/tachyon/asset/Material.hpp>
 #include <yq/tachyon/asset/Raster.hpp>
 //#include <yq/tachyon/asset/SceneSpec.hpp>
 #include <yq/tachyon/asset/Sampler.hpp>
@@ -272,7 +272,7 @@ namespace yq::tachyon {
     struct GLTFContext {
         std::vector<CameraSpecPtr>      cameras;
         std::vector<LightSpecPtr>       lights;
-        std::vector<MaterialSpecPtr>    materials;
+        std::vector<MaterialPtr>        materials;
         std::vector<MeshPtr>            meshes;
         std::vector<RasterPtr>          rasters;
         std::vector<SamplerPtr>         samplers;
@@ -429,12 +429,12 @@ namespace yq::tachyon {
 
     AssetPackPtr    loadGLTF_binary(const ByteArray& iData, const ResourceLoadAPI& api)
     {
-        return gltfLoad(BINARY, iData, api.url());
+        return gltfLoad(iData, api.url());
     }
 
     AssetPackPtr    loadGLTF_string(const std::string& iData, const ResourceLoadAPI& api)
     {
-        return gltfLoad(TEXT, iData, api.url());
+        return gltfLoad(iData, api.url());
     }
 
     static void reg_gltf()

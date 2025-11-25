@@ -8,7 +8,7 @@
 #include <yq/resource/ResourceLibraryMetaWriter.hpp>
 #include <yq/tachyon/asset/CameraSpec.hpp>
 #include <yq/tachyon/asset/LightSpec.hpp>
-#include <yq/tachyon/asset/MaterialSpec.hpp>
+#include <yq/tachyon/asset/Material.hpp>
 #include <yq/tachyon/asset/Mesh.hpp>
 #include <yq/tachyon/asset/Raster.hpp>
 #include <yq/tachyon/asset/Sampler.hpp>
@@ -37,7 +37,7 @@ namespace yq::tachyon {
             m_cameras.push_back(p);
         if(const LightSpec* p = dynamic_cast<const LightSpec*>(res.ptr()))
             m_lights.push_back(p);
-        if(const MaterialSpec* p = dynamic_cast<const MaterialSpec*>(res.ptr()))
+        if(const Material* p = dynamic_cast<const Material*>(res.ptr()))
             m_materials.push_back(p);
         if(const Mesh* p = dynamic_cast<const Mesh*>(res.ptr()))
             m_meshes.push_back(p);

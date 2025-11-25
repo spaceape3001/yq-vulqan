@@ -162,7 +162,7 @@ add_library(${PROJECT_NAME} SHARED
     asset/AssetPack.cpp
     asset/CameraSpec.cpp
     asset/LightSpec.cpp
-    asset/MaterialSpec.cpp
+    asset/Material.cpp
     asset/Mesh.cpp
     asset/Raster.cpp
     asset/Sampler.cpp
@@ -238,6 +238,7 @@ add_library(${PROJECT_NAME} SHARED
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
     #io/MeshXML.cpp
+    io/ObjLoader.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
     io/Save.cpp
@@ -452,6 +453,7 @@ PUBLIC
     ImGui
     STBImage 
     TinyGLTF
+    TinyOBJ
     VulkanMemoryAllocator
 
     ${Vulkan_LIBRARIES} 

@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/material_spec.hpp>
+#include <yq/tachyon/typedef/material.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {
 
-    /*! "MaterialSpec" specification (file)
+    /*! "Material" specification (file)
         
         This is a typical material specification, can be used to create a material (later/TBD)
     */
-    class MaterialSpec : public Resource {
-        YQ_RESOURCE_DECLARE(MaterialSpec, Resource)
+    class Material : public Resource {
+        YQ_RESOURCE_DECLARE(Material, Resource)
     public:
         // TODO (Contents)
     
@@ -25,8 +25,8 @@ namespace yq::tachyon {
         RGB3D               emmisive_factor{0., 0., 0.};
         std::vector<int>    lods;
     
-        MaterialSpec();
-        ~MaterialSpec();
+        Material();
+        ~Material();
         static void init_meta();
     };
 }

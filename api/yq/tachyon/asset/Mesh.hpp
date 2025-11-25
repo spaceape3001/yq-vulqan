@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/data/Vertex3.hpp>
-#include <yq/tachyon/typedef/material_spec.hpp>
+#include <yq/tachyon/typedef/material.hpp>
 #include <yq/tachyon/typedef/mesh.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/color/RGBA.hpp>
@@ -234,7 +234,7 @@ namespace yq::tachyon {
         
         
         Type                type = Type::Unknown;
-        MaterialSpecCPtr    material;
+        MaterialCPtr        material;
         
         Primitive();
         ~Primitive();

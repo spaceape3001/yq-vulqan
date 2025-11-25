@@ -6,7 +6,7 @@
 
 #include "Mesh.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
-#include <yq/tachyon/asset/MaterialSpec.hpp>
+#include <yq/tachyon/asset/Material.hpp>
 
 #undef NAN
 

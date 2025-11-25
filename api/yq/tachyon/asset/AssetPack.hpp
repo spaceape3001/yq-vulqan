@@ -10,7 +10,7 @@
 #include <yq/tachyon/typedef/asset_pack.hpp>
 #include <yq/tachyon/typedef/camera_spec.hpp>
 #include <yq/tachyon/typedef/light_spec.hpp>
-#include <yq/tachyon/typedef/material_spec.hpp>
+#include <yq/tachyon/typedef/material.hpp>
 #include <yq/tachyon/typedef/mesh.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
 #include <yq/tachyon/typedef/sampler.hpp>
@@ -46,7 +46,7 @@ namespace yq::tachyon {
     private:
         std::vector<CameraSpecCPtr>     m_cameras;
         std::vector<LightSpecCPtr>      m_lights;
-        std::vector<MaterialSpecCPtr>   m_materials;
+        std::vector<MaterialCPtr>       m_materials;
         std::vector<MeshCPtr>           m_meshes;
         std::vector<RasterCPtr>         m_rasters;
         std::vector<SamplerCPtr>        m_samplers;

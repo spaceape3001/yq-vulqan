@@ -13,6 +13,7 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
+#include <yq/tachyon/enum/DlgButton.hpp>
 #include <yq/tachyon/typedef/action.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/texture.hpp>
@@ -164,6 +165,23 @@ namespace yq::tachyon {
 
         //! Called if there's an if-show/perform test inside render, or similar encapsulation
         virtual void            content() {}
+
+        #if 0
+        
+        //  Dialog here
+        //  And filepath browsing helpers
+        //  Trouble, depending on location, we can't *rely* on always probing
+        using DlgCallback   = std::function<void()>;
+        using DlgButtonCallbackPair   = std::pair<DlgButton,DlgCallback>;
+        
+        using FPCallback    = std::function<void(const std::filesystem::path&)>;
+
+        //  need button options too....
+        static DlgButton        dialog(std::string_view, DlgButtons btns={ DlgButton::Okay }, const std::source_location& sl=std::source_location::current());
+        static void             dialog(std::string_view, std::initializer_list<DlgButtonCallbackPair>, const std::source_location& sl=std::source_location::current());
+        
+        //static DlgButton        openfile(
+        #endif
 
     protected:
         friend class Widget;

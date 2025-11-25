@@ -4,8 +4,16 @@
 ##
 ################################################################################
 
-add_subdirectory(scenery)
-add_subdirectory(luavk)
-add_subdirectory(xgvk)
-add_subdirectory(gltf)
-add_subdirectory(obj)
+add_executable(obj 
+    ObjTree.cpp
+    ObjWin.cpp
+    main.cpp
+)
+
+target_link_libraries(obj
+PUBLIC
+    yq_tachyon
+    yq_assetvk
+PRIVATE
+    ImGuiFileDialog
+)

@@ -13,9 +13,6 @@
 using namespace yq;
 using namespace yq::tachyon;
 
-//  Use this... 
-using gltfModelSPtr = std::shared_ptr<tinygltf::Model>;
-
 class GLTFTree : public UIElement {
     YQ_OBJECT_DECLARE(GLTFTree, UIElement)
 public:

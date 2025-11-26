@@ -5,15 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Material.hpp"
-#include <yq/tachyon/asset/MaterialMetaWriter.hpp>
+#include <yq/resource/ResourceMetaWriter.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
 
 namespace yq::tachyon {
-    MaterialMeta::MaterialMeta(std::string_view zName, ResourceMeta& base, const std::source_location& sl) : 
-        ResourceMeta(zName, base, sl)
-    {
-    }
-
     Material::Material()
     {
     }
@@ -28,6 +23,12 @@ namespace yq::tachyon {
         w.description("Material");
     }
 
+    MaterialSlate::MaterialSlate() = default;
+    MaterialSlate::MaterialSlate(const MaterialSlate&) = default;
+    MaterialSlate::MaterialSlate(MaterialSlate&&) = default;
+    MaterialSlate& MaterialSlate::operator=(const MaterialSlate&) = default;
+    MaterialSlate& MaterialSlate::operator=(MaterialSlate&&) = default;
+    MaterialSlate::~MaterialSlate() = default;
 }
 
 YQ_RESOURCE_IMPLEMENT(yq::tachyon::Material)

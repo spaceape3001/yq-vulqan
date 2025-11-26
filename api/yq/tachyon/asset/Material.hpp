@@ -12,6 +12,15 @@
 
 namespace yq::tachyon {
 
+    class MaterialMeta : public ResourceMeta {
+    public:
+        template <typename> class Writer;
+        MaterialMeta(std::string_view zName, ResourceMeta& base, const std::source_location& sl=std::source_location::current());
+        
+        //  TODO... Pipeline Role ... we're going to have to standardize these
+    };
+
+
     /*! "Material" specification (file)
         
         This is a material specification, can be used for 
@@ -19,6 +28,7 @@ namespace yq::tachyon {
         a singular spec.
     */
     class Material : public Resource {
+        YQ_RESOURCE_META(MaterialMeta)
         YQ_RESOURCE_DECLARE(Material, Resource)
     public:
     

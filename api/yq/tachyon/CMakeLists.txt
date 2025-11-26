@@ -135,6 +135,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ADrawMode.cpp
     aspect/AFarPlane.cpp
     aspect/AFieldOfView.cpp
+    aspect/AMaterial.cpp
     aspect/AMaxSize1.cpp
     aspect/AMaxSize2.cpp
     aspect/AMaxSize3.cpp
@@ -157,6 +158,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize2.cpp
     aspect/ASize3.cpp
     aspect/ASize4.cpp
+    aspect/ATexture.cpp
     aspect/AVertices3.cpp
         
     asset/AssetPack.cpp
@@ -203,6 +205,8 @@ add_library(${PROJECT_NAME} SHARED
     command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
     command/shape/SetDrawModeCommand.cpp
+    command/shape/SetMaterialCommand.cpp
+    command/shape/SetTextureCommand.cpp
     command/thread/ScheduleCommand.cpp
     command/widget/SetViewer.cpp
 
@@ -223,22 +227,28 @@ add_library(${PROJECT_NAME} SHARED
     event/IOEvent.cpp
     event/OSEvent.cpp
     event/PanelEvent.cpp
+    event/ShapeEvent.cpp
     event/ThreadEvent.cpp
     event/ViewerEvent.cpp
     event/VulqanEvent.cpp
     event/WidgetEvent.cpp
 
+    event/shape/SetMaterialEvent.cpp
+    event/shape/SetTextureEvent.cpp
     event/thread/ThreadAddTachyonEvent.cpp
     
     im/KVTable.cpp
     
     interface/IFarPlane.cpp
     interface/IFieldOfView.cpp
+    interface/IMaterial.cpp
     interface/INearPlane.cpp
+    interface/ITexture.cpp
     
     io/FileIOManager.cpp
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
+    io/MaterialKV.cpp
     #io/MeshXML.cpp
     io/ObjLoader.cpp
     io/SamplerInfoFile.cpp
@@ -266,6 +276,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PDrawMode.cpp
     proxy/PFarPlane.cpp
     proxy/PFieldOfView.cpp
+    proxy/PMaterial.cpp
     proxy/PMaxSize1.cpp
     proxy/PMaxSize2.cpp
     proxy/PMaxSize3.cpp
@@ -288,6 +299,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PSize2.cpp
     proxy/PSize3.cpp
     proxy/PSize4.cpp
+    proxy/PTexture.cpp
     proxy/PVertices3.cpp
     
     raster/PatternRasters.cpp

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/command/shape/SetDrawModeCommand.hpp>
+#include "SetDrawModeCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetDrawModeCommand)
@@ -39,7 +39,7 @@ namespace yq::tachyon {
     void SetDrawModeCommand::init_meta()
     {
         auto w = writer<SetDrawModeCommand>();
-        w.description("SetDrawMode Command");
+        w.description("Set DrawMode Command");
         w.property("draw_mode", &SetDrawModeCommand::m_drawMode).tag({kTag_Log, kTag_Save});
     }
 }

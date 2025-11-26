@@ -36,6 +36,8 @@ namespace yq::tachyon {
     
             // this will be a derived class situation
             
+        size_t                  data_size() const override { return 0; }
+            
         Material();
         ~Material();
         static void init_meta();

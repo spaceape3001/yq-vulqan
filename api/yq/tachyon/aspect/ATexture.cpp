@@ -7,6 +7,7 @@
 #include "ATexture.hpp"
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/command/shape/SetTextureCommand.hpp>
+#include <yq/tachyon/command/shape/SetTextureUrlCommand.hpp>
 #include <yq/tachyon/event/shape/SetTextureEvent.hpp>
 
 namespace yq::tachyon {
@@ -23,18 +24,35 @@ namespace yq::tachyon {
         return m_texture;
     }
 
+    Url         ATexture::texture(url_k) const 
+    {
+        return m_textureUrl;
+    }
+
     void        ATexture::texture(emit_k)
     {
-        send(new SetTextureEvent({.source=typed()}, m_texture));
+        send(new SetTextureEvent({.source=typed()}, m_texture, m_textureUrl));
     }
     
-    void        ATexture::texture(set_k, const TextureCPtr& mat) 
+    void        ATexture::texture(set_k, const TextureCPtr& tex) 
     {
-        m_texture  =    mat;
+        m_texture           = tex;
+        m_textureUrl        = tex ? tex->url() : Url();
         mark();
         texture(EMIT);
     }
     
+    void        ATexture::texture(set_k, const Url& u)
+    {
+        m_textureUrl    = u;
+        if(u.empty()){
+            m_texture   = {};
+        } else {
+            m_texture   = Texture::IO::load(u);
+        }
+        mark();
+        texture(EMIT);
+    }
     
     void        ATexture::on_set_texture(const SetTextureCommand&cmd)
     {
@@ -43,4 +61,10 @@ namespace yq::tachyon {
         texture(SET, cmd.texture());
     }
     
+    void        ATexture::on_set_texture_url(const SetTextureUrlCommand&cmd)
+    {
+        if(cmd.target() != typed())
+            return;
+        texture(SET, cmd.url());
+    }
 }

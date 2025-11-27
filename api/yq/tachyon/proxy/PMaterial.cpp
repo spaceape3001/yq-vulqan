@@ -7,9 +7,10 @@
 #include "PMaterial.hpp"
 #include <yq/tachyon/asset/Material.hpp>
 #include <yq/tachyon/command/shape/SetMaterialCommand.hpp>
+#include <yq/tachyon/command/shape/SetMaterialUrlCommand.hpp>
 
 namespace yq::tachyon {
-    PMaterial::PMaterial(const IMaterial& i) : m_material(i.material())
+    PMaterial::PMaterial(const IMaterial& i) : m_material(i.material()), m_url(i.material(URL))
     {
         if(i.material(DISABLED))
             m_flags |= F::Disabled;
@@ -25,11 +26,23 @@ namespace yq::tachyon {
     {
         return m_material;
     }
+
+    Url     PMaterial::material(url_k) const 
+    {
+        return m_url;
+    }
     
     void    PMaterial::material(set_k, const MaterialCPtr& mat) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
             mail(new SetMaterialCommand({.target=object()}, mat));
+        }
+    }
+    
+    void    PMaterial::material(set_k, const Url& u)
+    {
+        if(m_flags(F::Settable) && !m_flags(F::Disabled)){
+            mail(new SetMaterialUrlCommand({.target=object()}, u));
         }
     }
     

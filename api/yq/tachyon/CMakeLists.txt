@@ -206,7 +206,9 @@ add_library(${PROJECT_NAME} SHARED
     command/joystick/JoystickZeroCommand.cpp
     command/shape/SetDrawModeCommand.cpp
     command/shape/SetMaterialCommand.cpp
+    command/shape/SetMaterialUrlCommand.cpp
     command/shape/SetTextureCommand.cpp
+    command/shape/SetTextureUrlCommand.cpp
     command/thread/ScheduleCommand.cpp
     command/widget/SetViewer.cpp
 

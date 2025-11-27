@@ -19,6 +19,7 @@ add_library(yq_assetvk SHARED
     edit/DrawModeUI.cpp
     edit/FarPlaneUI.cpp
     edit/FieldOfViewUI.cpp
+    edit/MaterialUI.cpp
     edit/NearPlaneUI.cpp
     edit/Orientation3UI.cpp
     edit/Position2UI.cpp
@@ -31,6 +32,7 @@ add_library(yq_assetvk SHARED
     edit/Size3UI.cpp
     edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp
+    edit/TextureUI.cpp
     edit/Vertices3UI.cpp
 
     event/panel/MetaSelectionChangedEvent.cpp

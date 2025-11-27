@@ -380,7 +380,6 @@ namespace ImGui {
     bool    Input(const char* label, yq::Vector3F&, const InputFloatOptions& options={});
     bool    Input(const char* label, yq::Vector4F&, const InputFloatOptions& options={});
 
-
     template <typename DIM>
     bool    Input(const char* label, yq::MKS<float,DIM>& v, const InputFloatMKSOptions<DIM>&options={})
     {

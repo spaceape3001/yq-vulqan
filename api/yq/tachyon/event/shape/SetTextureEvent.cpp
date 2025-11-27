@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetTextureEvent)
 
 namespace yq::tachyon {
 
-    SetTextureEvent::SetTextureEvent(const Header&h, const TextureCPtr& dm) : ShapeEvent(h), m_texture(dm)
+    SetTextureEvent::SetTextureEvent(const Header&h, const TextureCPtr& dm, const Url& u) : ShapeEvent(h), m_texture(dm), m_url(u)
     {
     }
 
     SetTextureEvent::SetTextureEvent(const SetTextureEvent& cp, const Header& h) : 
-        ShapeEvent(cp, h), m_texture(cp.m_texture)
+        ShapeEvent(cp, h), m_texture(cp.m_texture), m_url(cp.m_url)
     {
     }
     
@@ -36,5 +36,6 @@ namespace yq::tachyon {
     {
         auto w = writer<SetTextureEvent>();
         w.description("Set Texture Event");
+        w.property("url", &SetTextureEvent::m_url);
     }
 }

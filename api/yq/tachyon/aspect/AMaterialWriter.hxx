@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/aspect/AMaterial.hpp>
 #include <yq/tachyon/command/shape/SetMaterialCommand.hpp>
+#include <yq/tachyon/command/shape/SetMaterialUrlCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 
@@ -19,5 +20,6 @@ namespace yq::tachyon {
         w.resource(UNSAFE, "material", &AMaterial::m_material).tag(kTag_Save);
 
         w.slot(UNSAFE, &AMaterial::on_set_material);
+        w.slot(UNSAFE, &AMaterial::on_set_material_url);
     }
 }

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/net/Url.hpp>
 #include <yq/tachyon/event/ShapeEvent.hpp>
 #include <yq/tachyon/typedef/texture.hpp>
 
@@ -13,11 +14,12 @@ namespace yq::tachyon {
     class SetTextureEvent : public ShapeEvent {
         YQ_OBJECT_DECLARE(SetTextureEvent, ShapeEvent)
     public:
-        SetTextureEvent(const Header&, const TextureCPtr&);
+        SetTextureEvent(const Header&, const TextureCPtr&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
         static void init_meta();
         
+        const Url&              url() const { return m_url; }
         const TextureCPtr&     texture() const { return m_texture; }
 
     protected:
@@ -26,7 +28,8 @@ namespace yq::tachyon {
         
     private:
     
-        TextureCPtr            m_texture;
+        TextureCPtr     m_texture;
+        Url             m_url;
 
         SetTextureEvent(const SetTextureEvent&) = delete;
         SetTextureEvent(SetTextureEvent&&) = delete;

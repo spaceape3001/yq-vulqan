@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
+#include <yq/net/Url.hpp>
 #include <yq/tachyon/api/Proxy.hpp>
 #include <yq/tachyon/interface/ITexture.hpp>
 
@@ -15,7 +16,9 @@ namespace yq::tachyon {
     public:
     
         virtual TextureCPtr texture() const override;
+        virtual Url         texture(url_k) const override;
         virtual void        texture(set_k, const TextureCPtr&) override;
+        virtual void        texture(set_k, const Url&) override;
         virtual bool        texture(disabled_k) const override;
         virtual bool        texture(settable_k) const override;
 
@@ -25,5 +28,6 @@ namespace yq::tachyon {
         
     private:
         TextureCPtr    m_texture;
+        Url             m_url;
     };
 }

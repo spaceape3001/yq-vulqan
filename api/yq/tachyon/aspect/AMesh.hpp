@@ -26,10 +26,10 @@ namespace yq::tachyon {
         bool                mesh(disabled_k) const { return false; }
         bool                mesh(settable_k) const { return true; }
 
-        const MeshCPtr& mesh(ref_k) const { return m_mesh; }
+        const MeshCPtr&     mesh(ref_k) const { return m_mesh; }
 
     protected:
-        MeshCPtr         m_mesh;
+        MeshCPtr            m_mesh;
         Url                 m_meshUrl;
         
         template <typename C>
@@ -38,7 +38,7 @@ namespace yq::tachyon {
         AMesh();
         virtual ~AMesh();
 
-        void        mesh(emit_k);
+        virtual void    mesh(emit_k);
         
     private:
         void        on_set_mesh(const SetMeshCommand&);

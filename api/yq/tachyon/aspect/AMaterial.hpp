@@ -38,7 +38,7 @@ namespace yq::tachyon {
         AMaterial();
         virtual ~AMaterial();
 
-        void        material(emit_k);
+        virtual void    material(emit_k);
         
     private:
         void        on_set_material(const SetMaterialCommand&);

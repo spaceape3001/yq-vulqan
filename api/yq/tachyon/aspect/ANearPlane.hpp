@@ -34,7 +34,7 @@ namespace yq::tachyon {
         ANearPlane();
         virtual ~ANearPlane();
         
-        void    near_plane(emit_k);
+        virtual void    near_plane(emit_k);
 
     private:
         void    on_set_near_plane(const SetNearPlaneCommand&);

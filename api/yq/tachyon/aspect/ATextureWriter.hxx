@@ -17,7 +17,7 @@ namespace yq::tachyon {
     void ATexture::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ITexture>();
-        w.resource(UNSAFE, "texture", &ATexture::m_texture).tag(kTag_Save);
+        w.resource("texture", &ATexture::m_texture).tag(kTag_Save);
 
         w.slot(UNSAFE, &ATexture::on_set_texture);
         w.slot(UNSAFE, &ATexture::on_set_texture_url);

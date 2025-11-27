@@ -10,6 +10,7 @@
 #include <yq/tachyon/command/shape/SetMaterialCommand.hpp>
 #include <yq/tachyon/command/shape/SetMaterialUrlCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/asset/Material.hpp>
 #include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
@@ -17,7 +18,7 @@ namespace yq::tachyon {
     void AMaterial::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IMaterial>();
-        w.resource(UNSAFE, "material", &AMaterial::m_material).tag(kTag_Save);
+        w.resource("material", &AMaterial::m_material).tag(kTag_Save);
 
         w.slot(UNSAFE, &AMaterial::on_set_material);
         w.slot(UNSAFE, &AMaterial::on_set_material_url);

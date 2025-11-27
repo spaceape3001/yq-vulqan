@@ -64,6 +64,7 @@ namespace yq::tachyon {
             if(vertices(APPENDABLE)){
                 m_vertices.push_back(v);
                 mark();
+                vertices(EMIT);
             }
         }
     }
@@ -74,6 +75,7 @@ namespace yq::tachyon {
         if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1] = v;
             mark();
+            vertices(EMIT);
         }
     }
 
@@ -83,6 +85,7 @@ namespace yq::tachyon {
         if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].point   = v;
             mark();
+            vertices(EMIT);
         }
     }
 
@@ -92,6 +95,7 @@ namespace yq::tachyon {
         if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].color = v;
             mark();
+            vertices(EMIT);
         }
     }
 
@@ -101,6 +105,7 @@ namespace yq::tachyon {
         if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].uv = v;
             mark();
+            vertices(EMIT);
         }
     }
 
@@ -110,6 +115,7 @@ namespace yq::tachyon {
         if(vertices(SETTABLE) && n && (n<=m_vertices.size())){
             m_vertices[n-1].normal = v;
             mark();
+            vertices(EMIT);
         }
     }
 
@@ -120,6 +126,7 @@ namespace yq::tachyon {
             if(vertices(INSERTABLE) && n && (n<=m_vertices.size())){
                 m_vertices.insert(m_vertices.begin()+n-1, v);
                 mark();
+                vertices(EMIT);
             }
         }
     }

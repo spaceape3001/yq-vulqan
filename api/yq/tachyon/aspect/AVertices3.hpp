@@ -31,6 +31,8 @@ namespace yq::tachyon {
  
         static constexpr bool   IsFixed    = (N!=0);
         using vertex_array_t  = std::conditional<IsFixed,std::array<Vertex³,N>,std::vector<Vertex³>>::type;
+        
+        using IVertices³::vertices;
     
         virtual size_t      vertices(count_k) const
         {
@@ -102,6 +104,8 @@ namespace yq::tachyon {
         AVertices³(){}
         ~AVertices³(){}
         vertex_array_t   m_vertices;
+        
+        virtual void vertices(emit_k) {}
 
         void    on_append_vertex_command(const AppendVertex³Command&);
         void    on_erase_vertex_command(const EraseVertexCommand&);

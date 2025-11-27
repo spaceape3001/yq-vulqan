@@ -17,7 +17,7 @@ namespace yq::tachyon {
     {
         w.template interface<ADrawMode>();
         w.property(UNSAFE, "draw_mode", &ADrawMode::m_drawMode).
-            def_value(DrawMode::Auto).tag(kTag_Save);
+            def_value(kDefDrawMode).tag(kTag_Save);
         w.slot(UNSAFE, &ADrawMode::on_set_draw_mode);
     }
 }

@@ -34,7 +34,7 @@ namespace yq::tachyon {
         AFarPlane();
         virtual ~AFarPlane();
         
-        void    far_plane(emit_k);
+        virtual void    far_plane(emit_k);
 
     private:
         void    on_set_far_plane(const SetFarPlaneCommand&);

@@ -34,6 +34,7 @@ add_library(yq_assetvk SHARED
     edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp
     edit/TextureUI.cpp
+    edit/TopologyUI.cpp
     edit/Vertices3UI.cpp
 
     event/panel/MetaSelectionChangedEvent.cpp
@@ -62,6 +63,7 @@ add_library(yq_assetvk SHARED
     rendered/GradTetrahedron3.cpp
     rendered/GradTriangle3.cpp
     rendered/ImageQuad3.cpp
+    rendered/Mesh3.cpp
     rendered/Quadrilateral3.cpp
     rendered/SkyBox3.cpp
     rendered/Tetrahedron3.cpp

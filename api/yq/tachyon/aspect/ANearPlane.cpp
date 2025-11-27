@@ -7,10 +7,16 @@
 #include "ANearPlane.hpp"
 #include "ANearPlaneWriter.hxx"
 #include <yq/tachyon/command/camera/SetNearPlaneCommand.hpp>
+#include <yq/tachyon/event/camera/NearPlaneEvent.hpp>
 
 namespace yq::tachyon {
     ANearPlane::ANearPlane() = default;
     ANearPlane::~ANearPlane() = default;
+
+    void    ANearPlane::near_plane(emit_k)
+    {
+        send(new NearPlaneEvent({.source=typed()}, m_near));
+    }
 
     void    ANearPlane::near_plane(set_k, double v)
     {

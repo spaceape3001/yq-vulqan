@@ -8,6 +8,7 @@
 #include <yq/resource/ResourceMetaWriter.hpp>
 #include <yq/tachyon/asset/Material.hpp>
 #include <yq/container/vector_utils.hpp>
+#include <yq/vector/Vector3.hxx>
 
 #undef NAN
 
@@ -42,6 +43,69 @@ namespace yq::tachyon {
             byte_count(xyz)
         ;
     }
+
+    RGBA4F      Mesh::color4(size_t n) const
+    {
+        if(rgba.empty()){
+            if(n >= rgb.size())
+                return {};
+            return yq::rgba(rgb[n], 1.);
+        } else {
+            if(n >= rgba.size())
+                return {};
+            return rgba[n];
+        }
+    }
+    
+    Vector3F    Mesh::normal3(size_t n) const
+    {
+        if(n >= normal.size())
+            return {};
+        return normal[n];
+    }
+
+    UV2F        Mesh::texc2(size_t n) const
+    {
+        if(uvw.empty()){
+            if(n >= uv.size())
+                return {};
+            return uv[n];
+        } else {
+            if(n >= uvw.size()) 
+                return {};
+            auto& ret   = uvw[n];
+            return UV2F(ret.u, ret.v);
+        }
+    }
+
+    UVW3F       Mesh::texc3(size_t n) const
+    {
+        if(uvw.empty()){
+            if(n >= uv.size())
+                return {};
+            auto& ret   = uv[n];
+            return UVW3F(ret.u, ret.v, 0.);
+        } else {
+            if(n >= uvw.size()) 
+                return {};
+            return uvw[n];
+        }
+    }
+
+
+    Vector3F    Mesh::vertex3(size_t n) const
+    {
+        if(xyz.empty()){
+            if(n >= xy.size())
+                return {};
+            return yq::xy(xy[n], 1.);
+        } else {
+            if(n >= xyz.size())
+                return {};
+            return xyz[n];
+        }
+    }
+    
 }
 
 YQ_RESOURCE_IMPLEMENT(yq::tachyon::Mesh)

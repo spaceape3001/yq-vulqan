@@ -160,6 +160,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize3.cpp
     aspect/ASize4.cpp
     aspect/ATexture.cpp
+    aspect/ATopology.cpp
     aspect/AVertices3.cpp
         
     asset/AssetPak.cpp
@@ -212,6 +213,7 @@ add_library(${PROJECT_NAME} SHARED
     command/shape/SetMeshUrlCommand.cpp
     command/shape/SetTextureCommand.cpp
     command/shape/SetTextureUrlCommand.cpp
+    command/shape/SetTopologyCommand.cpp
     command/thread/ScheduleCommand.cpp
     command/widget/SetViewer.cpp
 
@@ -238,6 +240,8 @@ add_library(${PROJECT_NAME} SHARED
     event/VulqanEvent.cpp
     event/WidgetEvent.cpp
 
+    event/camera/FarPlaneEvent.cpp
+    event/camera/NearPlaneEvent.cpp
     event/shape/SetMaterialEvent.cpp
     event/shape/SetMeshEvent.cpp
     event/shape/SetTextureEvent.cpp
@@ -251,6 +255,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/IMesh.cpp
     interface/INearPlane.cpp
     interface/ITexture.cpp
+    interface/ITopology.cpp
     
     io/FileIOManager.cpp
     io/GLSLShader.cpp
@@ -308,6 +313,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PSize3.cpp
     proxy/PSize4.cpp
     proxy/PTexture.cpp
+    proxy/PTopology.cpp
     proxy/PVertices3.cpp
     
     raster/PatternRasters.cpp

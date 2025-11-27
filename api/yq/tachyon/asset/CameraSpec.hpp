@@ -20,6 +20,11 @@ namespace yq::tachyon {
         YQ_RESOURCE_DECLARE(CameraSpec, Resource)
     public:
     
+        /*
+            Thought is to call these "builders" with specialties for cameras, lights, etc.
+        */
+    
+    
         // TODO (Contents)
 
         CameraSpec();

@@ -140,6 +140,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/AMaxSize2.cpp
     aspect/AMaxSize3.cpp
     aspect/AMaxSize4.cpp
+    aspect/AMesh.cpp
     aspect/AMinSize1.cpp
     aspect/AMinSize2.cpp
     aspect/AMinSize3.cpp
@@ -207,6 +208,8 @@ add_library(${PROJECT_NAME} SHARED
     command/shape/SetDrawModeCommand.cpp
     command/shape/SetMaterialCommand.cpp
     command/shape/SetMaterialUrlCommand.cpp
+    command/shape/SetMeshCommand.cpp
+    command/shape/SetMeshUrlCommand.cpp
     command/shape/SetTextureCommand.cpp
     command/shape/SetTextureUrlCommand.cpp
     command/thread/ScheduleCommand.cpp
@@ -236,6 +239,7 @@ add_library(${PROJECT_NAME} SHARED
     event/WidgetEvent.cpp
 
     event/shape/SetMaterialEvent.cpp
+    event/shape/SetMeshEvent.cpp
     event/shape/SetTextureEvent.cpp
     event/thread/ThreadAddTachyonEvent.cpp
     
@@ -244,6 +248,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/IFarPlane.cpp
     interface/IFieldOfView.cpp
     interface/IMaterial.cpp
+    interface/IMesh.cpp
     interface/INearPlane.cpp
     interface/ITexture.cpp
     
@@ -283,6 +288,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PMaxSize2.cpp
     proxy/PMaxSize3.cpp
     proxy/PMaxSize4.cpp
+    proxy/PMesh.cpp
     proxy/PMinSize1.cpp
     proxy/PMinSize2.cpp
     proxy/PMinSize3.cpp

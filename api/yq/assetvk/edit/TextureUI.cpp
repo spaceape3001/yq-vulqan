@@ -45,7 +45,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->texture(URL));
-        if(ImGui::InputText("##texture", &v)){
+        if(ImGui::InputText("##texture", &v, ImGuiInputTextFlags_EnterReturnsTrue)){
             auto x  = to_url_view(v);
             if(x.good)
                 p->texture(SET, ::yq::copy(x.value));

@@ -20,6 +20,7 @@ add_library(yq_assetvk SHARED
     edit/FarPlaneUI.cpp
     edit/FieldOfViewUI.cpp
     edit/MaterialUI.cpp
+    edit/MeshUI.cpp
     edit/NearPlaneUI.cpp
     edit/Orientation3UI.cpp
     edit/Position2UI.cpp

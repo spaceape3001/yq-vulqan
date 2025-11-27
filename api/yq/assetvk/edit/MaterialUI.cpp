@@ -45,7 +45,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->material(URL));
-        if(ImGui::InputText("##material", &v)){
+        if(ImGui::InputText("##material", &v, ImGuiInputTextFlags_EnterReturnsTrue)){
             auto x  = to_url_view(v);
             if(x.good)
                 p->material(SET, ::yq::copy(x.value));

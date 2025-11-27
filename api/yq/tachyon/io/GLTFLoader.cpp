@@ -787,6 +787,7 @@ namespace yq::tachyon {
                 if(!p)
                     continue;
                 meshes.insert({ meshcnt, p });
+                lib.add(p);
             }
             ++meshcnt;
         }

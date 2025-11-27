@@ -22,3 +22,6 @@ target_link_libraries(vk_layers yq_tachyon)
 
 add_executable(vk_queues vk_queues.cpp)
 target_link_libraries(vk_queues yq_tachyon)
+
+add_executable(resinfo resinfo.cpp)
+target_link_libraries(resinfo yq_core yq_resource yq_tachyon)

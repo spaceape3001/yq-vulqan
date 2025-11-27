@@ -55,6 +55,8 @@ namespace yq::tachyon {
         UV2F                    texc2(size_t) const;
         UVW3F                   texc3(size_t) const;
         Vector3F                vertex3(size_t) const;
+        
+        size_t                  vertex(count_k) const;
 
             //  GLTF allows for multiple "primitives" per mesh
             //  And as we're separating those out, the source name & primitive

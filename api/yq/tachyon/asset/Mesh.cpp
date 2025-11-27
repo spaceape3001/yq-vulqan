@@ -92,6 +92,13 @@ namespace yq::tachyon {
         }
     }
 
+    size_t  Mesh::vertex(count_k) const
+    {
+        if(!xyz.empty())
+            return xyz.size();
+        return xy.size();
+    }
+
 
     Vector3F    Mesh::vertex3(size_t n) const
     {

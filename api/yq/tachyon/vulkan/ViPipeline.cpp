@@ -274,12 +274,9 @@ namespace yq::tachyon {
         }
 
         VqPipelineDynamicStateCreateInfo pdynci;
-        std::set<VkDynamicState> dynamicStatesSet = make_set(m_layout->dynamic_states());
-        dynamicStatesSet.insert(VK_DYNAMIC_STATE_VIEWPORT);
-        std::vector<VkDynamicState> dynamicStates = make_vector(dynamicStatesSet);
-        
-        pdynci.dynamicStateCount    = (uint32_t) dynamicStates.size();
-        pdynci.pDynamicStates       = dynamicStates.data();
+        auto& ds    = m_layout->dynamic_states();
+        pdynci.dynamicStateCount    = (uint32_t) ds.size();
+        pdynci.pDynamicStates       = ds.data();
         pipelineInfo.pDynamicState  = &pdynci;
 
         pipelineInfo.pMultisampleState      = &multisampling;

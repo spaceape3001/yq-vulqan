@@ -77,6 +77,7 @@ namespace yq::tachyon {
     private:
         enum class S : uint8_t {
             Descriptors,
+            Topology,
             Push,
             Vertex,
             Index,
@@ -86,9 +87,11 @@ namespace yq::tachyon {
     
         uint64_t                m_id            = 0;
         ViPipelineLayoutCPtr    m_layout;
+        VkPrimitiveTopology     m_topology      = VK_PRIMITIVE_TOPOLOGY_POINT_LIST; // *IF* dynamic
         ViPipelineCPtr          m_pipeline;
         uint64_t                m_pipelineId    = 0;
         Flags<S>                m_status = {};
+        bool                    m_good          = false;
         ViVisualizer*           m_viz = nullptr;
 
         std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts);

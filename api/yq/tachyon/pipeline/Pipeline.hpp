@@ -64,7 +64,7 @@ namespace yq::tachyon {
         */
         //! 
         enum class Role : role_t {
-            //! Invalid role (shouldn't ever get back)
+            //! Invalid role (shouldn't ever get back unless no pipeline is available for current rendered)
             Invalid = (role_t) -1,
             
             //! Default pipeline

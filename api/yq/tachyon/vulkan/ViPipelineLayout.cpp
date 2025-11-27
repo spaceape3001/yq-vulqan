@@ -9,9 +9,9 @@
 #include <yq/core/StreamOps.hpp>
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/PushData.hpp>
-#include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/vulkan/VqEnums.hpp>
 #include <yq/tachyon/vulkan/VqStructs.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
@@ -167,7 +167,12 @@ namespace yq::tachyon {
                 m_vertexAttributes.push_back(a);
             }
         }
-        
+
+        for(DynamicState ds : m_config->dynamic_states())
+            m_dynamicStateSet.insert((VkDynamicState) ds.value());
+        m_dynamicStateSet.insert(VK_DYNAMIC_STATE_VIEWPORT);
+        m_dynamicStates = makeVector(m_dynamicStateSet);
+
         m_vertexCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
         m_vertexCreateInfo.vertexBindingDescriptionCount    = (uint32_t) m_vertexBindings.size();
         m_vertexCreateInfo.pVertexBindingDescriptions       = m_vertexBindings.data();
@@ -207,14 +212,6 @@ namespace yq::tachyon {
         if(res != VK_SUCCESS){
             vizWarning << "ViPipelineLayout(): Unable to create pipeline layout.  VkResult " << (int32_t) res;
             return errors::pipeline_layout_cant_create();
-        }
-
-        const auto & dynamicStates    = m_config -> dynamic_states();
-        if(!dynamicStates.empty()){
-            m_dynamicStates.reserve(dynamicStates.size());
-            for(DynamicState ds : dynamicStates){
-                m_dynamicStates.push_back((VkDynamicState) ds.value());
-            }
         }
 
         return {};
@@ -272,6 +269,11 @@ namespace yq::tachyon {
         return m_device ? (m_device->device() && m_config && m_pipelineLayout) : (!m_config && !m_pipelineLayout);
     }
     
+    bool  ViPipelineLayout::has_dynamic_state(VkDynamicState k) const
+    {
+        return m_dynamicStateSet.contains(k);
+    }
+
     bool  ViPipelineLayout::push_enabled() const
     {
         return m_status(S::Push);

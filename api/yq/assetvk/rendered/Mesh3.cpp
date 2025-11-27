@@ -11,6 +11,7 @@
 #include <yq/tachyon/aspect/AMeshWriter.hxx>
 #include <yq/tachyon/aspect/ATextureWriter.hxx>
 #include <yq/tachyon/asset/Mesh.hpp>
+#include <yq/tachyon/asset/Shader.hpp>
 #include <yq/color/colors.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mesh³)
@@ -28,6 +29,8 @@ namespace yq::tachyon {
         {
             auto& p  = w.pipeline(Pipeline::Role::SolidColor);
             
+            p.shader("resources/shape3/color.vert");
+            p.shader("resources/shape3/color.frag");
             p.vertex(&Mesh³::m_xyz, DataActivity::DYNAMIC);
             p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
             p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
@@ -50,6 +53,7 @@ namespace yq::tachyon {
     Mesh³::Mesh³(const Param&p) : Rendered³(p)
     {
         m_color = rgba4f(color::Gray);  // default default
+        m_good  = false;
     }
     
     Mesh³::Mesh³(const MeshCPtr& mcp, const Param&p) : Mesh³(p)
@@ -128,6 +132,20 @@ namespace yq::tachyon {
 
     void Mesh³::rebuild()
     {
+        if(!m_mesh){
+            m_good  = false;
+            return;
+        }
+        
+        
+        if(m_material){
+            set_pipeline(Pipeline::Role::Default);  // ignore this case
+        } else {
+            set_pipeline(Pipeline::Role::SolidColor);
+        }
+        
+        
+    
         //  So far... six variations
         //
         //  Color   w&wo indices

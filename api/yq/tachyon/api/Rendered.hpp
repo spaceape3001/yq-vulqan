@@ -101,6 +101,8 @@ namespace yq::tachyon {
 
         //! Generic "rebuild" the vertex, index, buffers (and the like)
         virtual void    rebuild(){}
+        
+        bool            good() const { return m_good; }
 
     protected:
 
@@ -120,6 +122,8 @@ namespace yq::tachyon {
         
         //! Culling flag (UNIVERSAL)
         Tristate        m_culled    = Tristate::INHERIT;
+        
+        bool            m_good      = true;
         
     private:
         void    on_set_wireframe_command(const SetWireframeCommand&);

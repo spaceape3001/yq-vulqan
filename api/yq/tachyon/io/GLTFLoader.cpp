@@ -1056,7 +1056,6 @@ namespace yq::tachyon {
             tachyonWarning << "Unable to parse GLB: " << to_string(api.url());
             return {};
         }
-        
         return to_assetpak(*mdl, api.url());
     }
 

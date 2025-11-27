@@ -152,6 +152,7 @@ namespace yq::tachyon {
         //sn.draw_vertex      = m_draw.vertex_count;
         //sn.draw_instance    = m_draw.instance_count;
         sn.culled           = m_culled;
+        sn.good             = m_good;
         
         if(!sn.pipeline)    // nothing more to do, the rest requires a pipeline
             return ;

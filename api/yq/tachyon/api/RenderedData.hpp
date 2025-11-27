@@ -33,6 +33,7 @@ namespace yq::tachyon {
         //uint32_t                draw_instance   = 0;
         Tristate                wireframe       = Tristate::INHERIT;
         Tristate                culled          = Tristate::INHERIT;
+        bool                    good            = false;
         
         RenderedSnap();
         ~RenderedSnap();

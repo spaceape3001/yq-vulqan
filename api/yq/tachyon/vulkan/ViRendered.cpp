@@ -14,10 +14,11 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/api/Rendered3Data.hpp>
-#include <yq/tachyon/pipeline/PushData.hpp>
-#include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/pipeline/PushData.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/tachyon/proxy/PTopology.hpp>
 #include <yq/tachyon/vulkan/VqEnums.hpp>
 #include <yq/tachyon/vulkan/ViContext.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
@@ -81,6 +82,9 @@ namespace yq::tachyon {
         if(!m_layout){
             return errors::rendered_bad_pipeline_layout();
         }
+        
+        if(m_layout->has_dynamic_state(VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY) && ren.proxy<PTopology>())
+            m_status |= S::Topology;
         
         if(options.pipelines){
             m_pipeline  = options.pipelines->create(m_config);
@@ -213,6 +217,10 @@ namespace yq::tachyon {
             vkCmdBindVertexBuffers(u.command_buffer, 0,  m_vertex.count, m_vertex.buffers, m_vertex.offsets);
         }
         
+        if(m_status(S::Topology)){
+            vkCmdSetPrimitiveTopology(u.command_buffer, m_topology);
+        }
+        
         if(m_status(S::Index)){
             for(uint32_t i=0;i<m_index.count;++i){
                 vkCmdBindIndexBuffer(u.command_buffer, m_index.buffers[i], 0, (VkIndexType)(m_config->m_indexBuffers[i].type.value()));
@@ -225,7 +233,8 @@ namespace yq::tachyon {
     
     void            ViRendered::_update(ViContext& u, const RenderedSnap& sn)
     {
-        _update_data(&sn);
+        if(sn.good)
+            _update_data(&sn);
         
         if(u.pipeline_rebuild){
             if(u.pipelines){
@@ -239,6 +248,12 @@ namespace yq::tachyon {
             m_status |= S::Wireframe;
         } else {
             m_status -= S::Wireframe;
+        }
+        
+        if(m_status(S::Topology)){
+            if(const PTopology* p = sn.proxy<PTopology>()){
+                m_topology  = (VkPrimitiveTopology) p->topology().value();
+            }
         }
     }
     
@@ -296,7 +311,7 @@ namespace yq::tachyon {
 
     void    ViRendered::record(ViContext& ctx, const PushBuffer&pb, Pipeline::Variation v) const
     {
-        if(valid() && m_pipeline)
+        if(valid() && m_good && m_pipeline)
             _record(ctx, pb, v);
     }
     
@@ -393,6 +408,7 @@ namespace yq::tachyon {
     void    ViRendered::update(ViContext& u, const RenderedSnap& sn)
     {
         if(valid()){
+            m_good  = sn.good;
             _update(u, sn);
         }
     }

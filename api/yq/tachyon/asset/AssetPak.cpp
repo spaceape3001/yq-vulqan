@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AssetPack.hpp"
+#include "AssetPak.hpp"
 #include <yq/resource/ResourceLibraryMetaWriter.hpp>
 #include <yq/tachyon/asset/CameraSpec.hpp>
 #include <yq/tachyon/asset/LightSpec.hpp>
@@ -17,21 +17,21 @@
 #include <yq/tachyon/asset/Video.hpp>
 
 namespace yq::tachyon {
-    void AssetPack::init_meta()
+    void AssetPak::init_meta()
     {   
-        auto w = writer<AssetPack>();
+        auto w = writer<AssetPak>();
         w.description("Asset Library");
     }
 
-    AssetPack::AssetPack()
+    AssetPak::AssetPak()
     {
     }
     
-    AssetPack::~AssetPack()
+    AssetPak::~AssetPak()
     {
     }
 
-    void    AssetPack::post_add(ResourcePtr res) 
+    void    AssetPak::post_add(ResourcePtr res) 
     {
         if(const CameraSpec* p = dynamic_cast<const CameraSpec*>(res.ptr()))
             m_cameras.push_back(p);
@@ -54,5 +54,5 @@ namespace yq::tachyon {
     }
 }
 
-YQ_RESOURCE_IMPLEMENT(yq::tachyon::AssetPack)
+YQ_RESOURCE_IMPLEMENT(yq::tachyon::AssetPak)
 

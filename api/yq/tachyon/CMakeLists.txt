@@ -161,7 +161,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ATexture.cpp
     aspect/AVertices3.cpp
         
-    asset/AssetPack.cpp
+    asset/AssetPak.cpp
     asset/CameraSpec.cpp
     asset/LightSpec.cpp
     asset/Material.cpp

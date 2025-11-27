@@ -11,7 +11,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class AssetPack;
-    using AssetPackPtr            = Ref<AssetPack>;
-    using AssetPackCPtr           = Ref<const AssetPack>;
+    class AssetPak;
+    using AssetPakPtr            = Ref<AssetPak>;
+    using AssetPakCPtr           = Ref<const AssetPak>;
 }

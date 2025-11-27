@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/resource/ResourceLibrary.hpp>
-#include <yq/tachyon/typedef/asset_pack.hpp>
+#include <yq/tachyon/typedef/assetpak.hpp>
 #include <yq/tachyon/typedef/camera_spec.hpp>
 #include <yq/tachyon/typedef/light_spec.hpp>
 #include <yq/tachyon/typedef/material.hpp>
@@ -20,13 +20,13 @@
 
 namespace yq::tachyon {
 
-    //! An asset pac
+    //! An asset pack
     //! \note This will NOT instantiate any tachyons (not directly)
-    class AssetPack : public ResourceLibrary {
-        YQ_RESOURCE_DECLARE(AssetPack, ResourceLibrary)
+    class AssetPak : public ResourceLibrary {
+        YQ_RESOURCE_DECLARE(AssetPak, ResourceLibrary)
     public:
-        AssetPack();
-        ~AssetPack();
+        AssetPak();
+        ~AssetPak();
         
         static void init_meta();
         

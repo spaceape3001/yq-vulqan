@@ -848,8 +848,10 @@ namespace yq::tachyon {
                 if((p.material>=0) && (p.material < (int) materials.size()))
                     m->material = (MaterialCPtr) materials[p.material];
                 
-                if((p.indices >= 0) && (p.indices < (int) model.accessors.size()))
+                if((p.indices >= 0) && (p.indices < (int) model.accessors.size())){
                     m->index    = _uint32(model.accessors[p.indices], loop);
+tachyonInfo << "   " << key << " imported " << m->index.size() << " indices from accessor " << p.indices;
+                }
                     
                 //  Add others in as discovered
                 

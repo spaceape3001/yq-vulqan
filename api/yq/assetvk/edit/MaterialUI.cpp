@@ -22,7 +22,7 @@ namespace yq::tachyon {
         auto w = writer<MaterialUI>();
         w.description("UIEditor for Material");
         w.edits<PMaterial>();
-        w.field("material", &MaterialUI::material);
+        w.field("Material", &MaterialUI::material);
     }
     
     MaterialUI::MaterialUI(UIFlags flags)

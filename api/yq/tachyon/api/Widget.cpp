@@ -603,7 +603,8 @@ namespace yq::tachyon {
         const RenderedSnap* sn  = ctx.frame.snap(renID);
         if(!sn)
             return;
-        
+        if(!sn->good)
+            return;
         if(!sn->pipeline)
             return;
         

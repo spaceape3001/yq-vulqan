@@ -30,7 +30,7 @@ void    print_material(const Material& )
 
 void    print_mesh(const Mesh& msh)
 {
-    std::cout << "verts " << msh.vertex(COUNT);
+    std::cout << "verts " << msh.vertex(COUNT) << ", " << msh.index.size();
 }
 
 void    print_raster(const Raster&ras)

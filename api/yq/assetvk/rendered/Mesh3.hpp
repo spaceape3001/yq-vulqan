@@ -42,6 +42,9 @@ namespace yq::tachyon {
         using IVertices³::vertices;
         using IVertices::vertices;
     
+        using AColor::color;
+        virtual bool    color(settable_k) const override { return true; }
+
         virtual uint8_t     vertices(dimension_k) const override { return 3; }
         virtual size_t      vertices(count_k) const override;
 

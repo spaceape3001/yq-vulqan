@@ -22,7 +22,7 @@ namespace yq::tachyon {
         auto w = writer<MeshUI>();
         w.description("UIEditor for Mesh");
         w.edits<PMesh>();
-        w.field("mesh", &MeshUI::mesh);
+        w.field("Mesh", &MeshUI::mesh);
     }
     
     MeshUI::MeshUI(UIFlags flags)

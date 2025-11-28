@@ -22,7 +22,7 @@ namespace yq::tachyon {
         auto w = writer<TextureUI>();
         w.description("UIEditor for Texture");
         w.edits<PTexture>();
-        w.field("texture", &TextureUI::texture);
+        w.field("Texture", &TextureUI::texture);
     }
     
     TextureUI::TextureUI(UIFlags flags)

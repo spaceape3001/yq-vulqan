@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Mesh3.hpp"
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
@@ -16,6 +17,8 @@
 #include <yq/color/colors.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mesh³)
+
+#define NOISY_LOG   1
 
 namespace yq::tachyon {
     void Mesh³::init_meta()
@@ -39,7 +42,8 @@ namespace yq::tachyon {
 
             p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
             p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
-            p.dynamic_state(DynamicState::PrimitiveTopology);
+            p.topology(Topology::TriangleList);
+            //p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
         }
 
@@ -55,14 +59,15 @@ namespace yq::tachyon {
             ;
             p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
             p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
-            p.dynamic_state(DynamicState::PrimitiveTopology);
+            p.topology(Topology::TriangleList);
+//            p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
         }
     }
 
     Mesh³::Mesh³(const Param&p) : Shape³(p)
     {
-        m_color = rgba4f(color::Gray);  // default default
+        m_color = rgba4f(color::Gray);          // default default
         m_good  = false;
     }
     
@@ -142,13 +147,36 @@ namespace yq::tachyon {
 
     void Mesh³::rebuild()
     {
-        if(!m_mesh || !m_mesh->is_3d() || m_mesh->xyz.empty()){
+        if(!m_mesh){
+            #ifdef NOISY_LOG
+            tachyonInfo << ident() << "::rebuild: No mesh";
+            #endif
+            
             m_good  = false;
             return;
         }
-        
+
+        if(!m_mesh->is_3d()){
+            #ifdef NOISY_LOG
+            tachyonInfo << ident() << "::rebuild(mesh=" << m_mesh->url() << "): Not a 3D mesh";
+            #endif
+            
+            m_good  = false;
+            return;
+        }
+    
+        if(m_mesh->index.empty()){
+            #ifdef NOISY_LOG
+            tachyonInfo << ident() << "::rebuild(mesh=" << m_mesh->url() << "): No indices";
+            #endif
+            
+            m_good  = false;
+            return;
+        }
+
         size_t  N   = m_mesh->vertex(COUNT);
-        
+        m_ibo       = m_mesh->index;
+ 
         // this detection will be moved to shape3 (after we see if it works...)
         bool    textured    = m_material && !dynamic_cast<const BasicMaterial*>(m_material.ptr());
         if(textured){
@@ -157,32 +185,35 @@ namespace yq::tachyon {
             for(size_t n=0;n<N;++n)
                 m_vboT.data.push_back(vtx(m_mesh->vertex3(n), m_mesh->texc2(n)));
             m_vboT.update();
+
+            #ifdef NOISY_LOG
+            tachyonInfo << ident() << "::rebuild: " << m_vboT.data.size() << " verts, " << m_ibo.data.size() << " indices";
+            #endif
+
         } else {
             set_pipeline(Pipeline::Role::SolidColor);
             m_vboS.data.clear();
             for(size_t n=0;n<N;++n)
                 m_vboS.data.push_back(vtx(m_mesh->vertex3(n)));
             m_vboS.update();
+
+            #ifdef NOISY_LOG
+            tachyonInfo << ident() << "::rebuild: " << m_vboS.data.size() << " verts, " << m_ibo.data.size() << " indices";
+            #endif
         }
         
-        
-        if(m_mesh->index.empty()){
-            m_ibo   = m_mesh->index;
-        } else {
-            m_ibo.data.clear();
-            for(size_t n=0;n<N;++n)
-                m_ibo.data.push_back((uint32_t) n);
-            m_ibo.update();
-        }
         
         m_ubo   = UBS{.color = gfx(color())};
+
+
     
         //  So far... six variations
         //
         //  Color   w&wo indices
         //  Texture w&wo indices
         //  Mesh    w&wo indices
-    
+        
+        m_good  = true;
     }
 
     Execution   Mesh³::setup(const Context&u) 

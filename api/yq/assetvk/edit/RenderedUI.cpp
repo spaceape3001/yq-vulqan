@@ -21,6 +21,7 @@ namespace yq::tachyon {
     void RenderedUI::init_meta()
     {
         auto w = writer<RenderedUI>();
+        w.field("Good", &RenderedUI::good);
         w.field("Wireframe", &RenderedUI::wireframe);
         w.edits<Rendered>();
     }
@@ -42,7 +43,14 @@ namespace yq::tachyon {
         return new RenderedUI(*this);
     }
 
-
+    void    RenderedUI::good()
+    {
+        const RenderedSnap*  sn    = dynamic_cast<const RenderedSnap*>(snap());
+        if(!sn)
+            return ;
+        ImGui::TextUnformatted(sn->good?"GOOD":"BAD");
+    }
+    
     void    RenderedUI::wireframe()
     {
         const RenderedSnap*  sn    = dynamic_cast<const RenderedSnap*>(snap());

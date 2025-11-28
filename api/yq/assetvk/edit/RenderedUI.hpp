@@ -20,6 +20,7 @@ namespace yq::tachyon {
         
         RenderedUI*  clone() const override;
         
+        void    good();
         void    wireframe();
     };
 }

@@ -409,7 +409,8 @@ namespace yq::tachyon {
     {
         if(valid()){
             m_good  = sn.good;
-            _update(u, sn);
+            if(m_good)
+                _update(u, sn);
         }
     }
 

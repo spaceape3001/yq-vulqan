@@ -42,8 +42,7 @@ namespace yq::tachyon {
 
             p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
             p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
-            p.topology(Topology::TriangleList);
-            //p.dynamic_state(DynamicState::PrimitiveTopology);
+            p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
         }
 
@@ -59,8 +58,7 @@ namespace yq::tachyon {
             ;
             p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
             p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
-            p.topology(Topology::TriangleList);
-//            p.dynamic_state(DynamicState::PrimitiveTopology);
+            p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
         }
     }

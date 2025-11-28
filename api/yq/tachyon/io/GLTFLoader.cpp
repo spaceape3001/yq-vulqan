@@ -275,7 +275,6 @@ namespace yq::tachyon {
         tinygltf::BufferView*   bv      = nullptr;
         tinygltf::Buffer*       buf     = nullptr;
     };
-
     
     struct GLTFContext {
         //  TODO >>> AUDIO
@@ -321,7 +320,7 @@ namespace yq::tachyon {
                     return false;
             }
             
-            if(base + stride * acc.count * N + sizeof(T) > buf.data.size())  // we're going to exceed the buffer...bye
+            if(base + stride * acc.count * (N-1) + sizeof(T) > buf.data.size())  // we're going to exceed the buffer...bye
                 return false;
            
             const unsigned char*    ptr = buf.data.data();
@@ -848,11 +847,9 @@ namespace yq::tachyon {
                 if((p.material>=0) && (p.material < (int) materials.size()))
                     m->material = (MaterialCPtr) materials[p.material];
                 
-                if((p.indices >= 0) && (p.indices < (int) model.accessors.size())){
+                if((p.indices >= 0) && (p.indices < (int) model.accessors.size()))
                     m->index    = _uint32(model.accessors[p.indices], loop);
-tachyonInfo << "   " << key << " imported " << m->index.size() << " indices from accessor " << p.indices;
-                }
-                    
+
                 //  Add others in as discovered
                 
                 if(auto i = p.attributes.find("POSITION"); (i != p.attributes.end()) && (i->second >= 0) && (i->second < (int) model.accessors.size())){

@@ -160,7 +160,7 @@ namespace yq::tachyon {
     }
 
     Tetrahedron³::Tetrahedron³(const Vertex³&a, const Vertex³&b, const Vertex³&c, const Vertex³&d, const Param&p) : 
-        AbstractShape³(p)
+        Shape³(p)
     {
         m_vertices[0] = a;
         m_vertices[1] = b;

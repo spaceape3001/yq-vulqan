@@ -15,10 +15,10 @@
 #include <yq/tachyon/interface/IVertices3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
-#include <yq/tachyon/rendered/AbstractShape3.hpp>
+#include <yq/tachyon/rendered/Shape3.hpp>
 
 namespace yq::tachyon {
-    class Mesh³ : public Rendered³, 
+    class Mesh³ : public Shape³, 
         public AColor, 
         public AMesh, 
         public AMaterial, 
@@ -27,7 +27,7 @@ namespace yq::tachyon {
         public IVertices³ 
     {
         
-        YQ_TACHYON_DECLARE(Mesh³, Rendered³)
+        YQ_TACHYON_DECLARE(Mesh³, Shape³)
     public:
     
         //   In a contest, the material is taken over the texture
@@ -77,15 +77,11 @@ namespace yq::tachyon {
 
     private:
     
-        void rebuild();
+        void    rebuild();  // called for all updates
 
-        struct Uniform {
-            glm::vec4   color;
-        };
-        
-        VB1<glm::vec3>  m_xyz;
-        VB1<glm::vec2>  m_uv;
+        VB1<VertexT>    m_vboT;
+        VB1<VertexS>    m_vboS;
         IB1<uint32_t>   m_ibo;
-        UB1<Uniform>    m_ubo;
+        UB1<UBS>        m_ubo;
     };
 }

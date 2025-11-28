@@ -10,11 +10,11 @@
 #include <yq/tachyon/aspect/ASize3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
-#include <yq/tachyon/rendered/AbstractShape3.hpp>
+#include <yq/tachyon/rendered/Shape3.hpp>
 
 namespace yq::tachyon {
-    class Box³ : public AbstractShape³, public AVertices³<8>, public ASize³ {
-        YQ_TACHYON_DECLARE(Box³, AbstractShape³)
+    class Box³ : public Shape³, public AVertices³<8>, public ASize³ {
+        YQ_TACHYON_DECLARE(Box³, Shape³)
     public:
     
         using MyVertices  = AVertices³<8>;

@@ -50,6 +50,9 @@ namespace yq::tachyon {
         std::vector<Vector2F>   xy;
         std::vector<Vector3F>   xyz;
 
+        bool                    is_2d() const;
+        bool                    is_3d() const;
+
         RGBA4F                  color4(size_t) const;
         Vector3F                normal3(size_t) const;
         UV2F                    texc2(size_t) const;

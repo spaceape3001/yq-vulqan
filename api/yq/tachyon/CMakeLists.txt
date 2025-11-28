@@ -319,7 +319,7 @@ add_library(${PROJECT_NAME} SHARED
     raster/PatternRasters.cpp
     raster/DebugRasters.cpp 
     
-    rendered/AbstractShape3.cpp
+    rendered/Shape3.cpp
 
     reply/AnyReply.cpp
     reply/AppReply.cpp

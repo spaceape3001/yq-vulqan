@@ -9,7 +9,7 @@
 #include <yq/tachyon/data/ColorVertexData.hpp>
 #include <yq/tachyon/data/Vertex3.hpp>
 #include <yq/tachyon/aspect/AVertices3.hpp>
-#include <yq/tachyon/rendered/AbstractShape3.hpp>
+#include <yq/tachyon/rendered/Shape3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 
@@ -21,8 +21,8 @@ namespace yq::tachyon {
 
     /*! \brief Triangle for three dimensions
     */
-    class Triangle³ : public AbstractShape³, public AVertices³<3> {
-        YQ_TACHYON_DECLARE(Triangle³, AbstractShape³)
+    class Triangle³ : public Shape³, public AVertices³<3> {
+        YQ_TACHYON_DECLARE(Triangle³, Shape³)
     public:
     
         using MyVertices  = AVertices³<3>;

@@ -11,12 +11,29 @@
 #include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/aspect/ABgColor.hpp>
 
+#include <yq/typedef/uv.hpp>
+#include <yq/typedef/uvw.hpp>
+#include <yq/typedef/vector2.hpp>
+#include <yq/typedef/vector3.hpp>
+#include <yq/typedef/vector4.hpp>
+
 namespace yq::tachyon {
     struct Vertex³;
 
-    class AbstractShape³ : public Rendered³ {
-        YQ_TACHYON_DECLARE(AbstractShape³, Rendered³)
+    /*! \brief Abstract shape
+    
+        This class will remain in the API library as it's intended to be abstract.
+        
+        \note Updated the name...
+    */
+    class Shape³ : public Rendered³ {
+        YQ_TACHYON_DECLARE(Shape³, Rendered³)
     public:
+    
+        //  TODOs
+        //  1) Color functions
+        //  2) Bilevel colors (primary/alternate for when that's an issue)
+        //  3) Material/Textures
 
         struct Param : public Rendered³::Param {
             //RGBA4F      bgcolor     = kDefBgColor;
@@ -40,8 +57,8 @@ namespace yq::tachyon {
 
     protected:
     
-        AbstractShape³(const Param&);
-        ~AbstractShape³();
+        Shape³(const Param&);
+        ~Shape³();
     
         struct VertexC {
             glm::vec4   color;
@@ -65,13 +82,34 @@ namespace yq::tachyon {
 
         struct UBS {
             glm::vec4   color;
+            //  glm::vec4   dope;   // coming, a tainting color
         };
 
-        static VertexC  vc(const Vertex³&);
-        static VertexCT vct(const Vertex³&);
-        static VertexT  vt(const Vertex³&);
-        static VertexS  vs(const Vertex³&);
+        static glm::vec3        gfx(const RGB3F&);
+        static glm::vec4        gfx(const RGBA4F&);
+        static glm::vec2        gfx(const UV2F&);
+        static glm::vec3        gfx(const UVW3F&);
+        static glm::dvec2       gfx(const Vector2D&);
+        static glm::vec2        gfx(const Vector2F&);
+        static glm::dvec3       gfx(const Vector3D&);
+        static glm::vec3        gfx(const Vector3F&);
+        static glm::vec4        gfx(const Vector4F&);
+        static glm::dvec4       gfx(const Vector4D&);
+
+        static VertexC          vc(const Vertex³&);
+        static VertexCT         vct(const Vertex³&);
+        static VertexT          vt(const Vertex³&);
+        static VertexS          vs(const Vertex³&v);
         
+        static VertexC          vtx(const Vector3D&, const RGBA4F&);
+        static VertexC          vtx(const Vector3F&, const RGBA4F&);
+        static VertexT          vtx(const Vector3D&, const UV2F&t);
+        static VertexT          vtx(const Vector3F&, const UV2F&t);
+        static VertexCT         vtx(const Vector3D&, const RGBA4F&, const UV2F&);
+        static VertexCT         vtx(const Vector3F&, const RGBA4F&, const UV2F&);
+        static VertexS          vtx(const Vector3D&);
+        static VertexS          vtx(const Vector3F&);
+
         #if 0
         //  We're going to add variations as necessary, but try to reuse them... 
         
@@ -84,8 +122,10 @@ namespace yq::tachyon {
         TextureCPtr     m_texture;
         #endif
         
+        
+        
         //template <typename C>
-        //requires std::is_base_of<C,AbstractShape³>
+        //requires std::is_base_of<C,Shape³>
         //static void     pipeline_color(
 
         // Called whenever we've been marked "dirty" and need to rebuild the render buffers
@@ -93,4 +133,4 @@ namespace yq::tachyon {
     };
 }
 
-YQ_TACHYON_FORCE(yq::tachyon::AbstractShape³)
+YQ_TACHYON_FORCE(yq::tachyon::Shape³)

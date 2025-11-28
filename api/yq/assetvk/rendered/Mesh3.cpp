@@ -12,6 +12,7 @@
 #include <yq/tachyon/aspect/ATextureWriter.hxx>
 #include <yq/tachyon/asset/Mesh.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/asset/material/BasicMaterial.hpp>
 #include <yq/color/colors.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mesh³)
@@ -29,9 +30,13 @@ namespace yq::tachyon {
         {
             auto& p  = w.pipeline(Pipeline::Role::SolidColor);
             
-            p.shader("resources/shape3/color.vert");
-            p.shader("resources/shape3/color.frag");
-            p.vertex(&Mesh³::m_xyz, DataActivity::DYNAMIC);
+            p.shader("yqvk/shape3/solid.vert");
+            p.shader("yqvk/shape3/solid.frag");
+
+            p.vertex(&Mesh³::m_vboS, DataActivity::DYNAMIC)
+                .attribute(&VertexS::position)
+            ;
+
             p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
             p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
             p.dynamic_state(DynamicState::PrimitiveTopology);
@@ -41,8 +46,13 @@ namespace yq::tachyon {
         {
             auto& p  = w.pipeline(Pipeline::Role::Textured);
 
-            p.vertex(&Mesh³::m_xyz, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_uv, DataActivity::DYNAMIC);
+            p.shader("yqvk/shape3/textured.vert");
+            p.shader("yqvk/shape3/textured.frag");
+
+            p.vertex(&Mesh³::m_vboT, DataActivity::DYNAMIC)
+                .attribute(&VertexT::position)
+                .attribute(&VertexT::uv)
+            ;
             p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
             p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
             p.dynamic_state(DynamicState::PrimitiveTopology);
@@ -50,7 +60,7 @@ namespace yq::tachyon {
         }
     }
 
-    Mesh³::Mesh³(const Param&p) : Rendered³(p)
+    Mesh³::Mesh³(const Param&p) : Shape³(p)
     {
         m_color = rgba4f(color::Gray);  // default default
         m_good  = false;
@@ -132,19 +142,40 @@ namespace yq::tachyon {
 
     void Mesh³::rebuild()
     {
-        if(!m_mesh){
+        if(!m_mesh || !m_mesh->is_3d() || m_mesh->xyz.empty()){
             m_good  = false;
             return;
         }
         
+        size_t  N   = m_mesh->vertex(COUNT);
         
-        if(m_material){
-            set_pipeline(Pipeline::Role::Default);  // ignore this case
+        // this detection will be moved to shape3 (after we see if it works...)
+        bool    textured    = m_material && !dynamic_cast<const BasicMaterial*>(m_material.ptr());
+        if(textured){
+            set_pipeline(Pipeline::Role::Textured);
+            m_vboT.data.clear();
+            for(size_t n=0;n<N;++n)
+                m_vboT.data.push_back(vtx(m_mesh->vertex3(n), m_mesh->texc2(n)));
+            m_vboT.update();
         } else {
             set_pipeline(Pipeline::Role::SolidColor);
+            m_vboS.data.clear();
+            for(size_t n=0;n<N;++n)
+                m_vboS.data.push_back(vtx(m_mesh->vertex3(n)));
+            m_vboS.update();
         }
         
         
+        if(m_mesh->index.empty()){
+            m_ibo   = m_mesh->index;
+        } else {
+            m_ibo.data.clear();
+            for(size_t n=0;n<N;++n)
+                m_ibo.data.push_back((uint32_t) n);
+            m_ibo.update();
+        }
+        
+        m_ubo   = UBS{.color = gfx(color())};
     
         //  So far... six variations
         //
@@ -154,18 +185,17 @@ namespace yq::tachyon {
     
     }
 
-    
     Execution   Mesh³::setup(const Context&u) 
     {
         rebuild();
-        return Rendered³::setup(u);
+        return Shape³::setup(u);
     }
     
     Execution   Mesh³::tick(const Context&u)
     {
         if(dirty())
             rebuild();
-        return Rendered³::tick(u);
+        return Shape³::tick(u);
     }
 
 }

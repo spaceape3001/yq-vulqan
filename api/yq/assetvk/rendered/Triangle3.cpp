@@ -129,7 +129,7 @@ namespace yq::tachyon {
         .color  = (RGBA4F) color::Blue
     };
 
-    Triangle³::Triangle³(const Param&p) : AbstractShape³(p)
+    Triangle³::Triangle³(const Param&p) : Shape³(p)
     {
         m_vertices[0] = kDefVertex1;
         m_vertices[1] = kDefVertex2;
@@ -137,7 +137,7 @@ namespace yq::tachyon {
     }
 
     Triangle³::Triangle³(const Vertex³&a, const Vertex³&b, const Vertex³&c, const Param&p) : 
-        AbstractShape³(p)
+        Shape³(p)
     {
         m_vertices[0] = a;
         m_vertices[1] = b;

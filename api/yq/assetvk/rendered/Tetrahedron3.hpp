@@ -10,7 +10,7 @@
 #include <yq/tachyon/aspect/AVertices3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
-#include <yq/tachyon/rendered/AbstractShape3.hpp>
+#include <yq/tachyon/rendered/Shape3.hpp>
 
 namespace yq {
     template <typename> struct TetrahedronData;
@@ -23,8 +23,8 @@ namespace yq::tachyon {
         This can render as a tetrahedron in the scene 
         with the specified color/vertex corners.
     */
-    class Tetrahedron³ : public AbstractShape³, public AVertices³<4> {
-        YQ_TACHYON_DECLARE(Tetrahedron³, AbstractShape³)
+    class Tetrahedron³ : public Shape³, public AVertices³<4> {
+        YQ_TACHYON_DECLARE(Tetrahedron³, Shape³)
     public:
 
         using MyVertices  = AVertices³<4>;
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         virtual bool        vertices(settable_k) const override { return true; }
         //virtual bool        vertices(color_k) const;
         
-        //using AbstractShape³::draw_mode;
+        //using Shape³::draw_mode;
         //virtual DrawMode    draw_mode(use_k) const override;
         
         //! Note not all deriveds use these, however, leaving them present 

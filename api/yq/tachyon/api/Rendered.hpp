@@ -103,6 +103,11 @@ namespace yq::tachyon {
         virtual void    rebuild(){}
         
         bool            good() const { return m_good; }
+        
+        //! If "template", means it's not actually rendered...??? (it's VBOs/UBOs update though)  TBD
+        //  Goal here... define a rock that's *NOT* rendered, and make 50k copies of it at various
+        //  locations.  Instancing will likely apply.
+        bool            is_template() const { return m_template; }
 
     protected:
 
@@ -124,6 +129,7 @@ namespace yq::tachyon {
         Tristate        m_culled    = Tristate::INHERIT;
         
         bool            m_good      = true;
+        bool            m_template  = false;
         
     private:
         void    on_set_wireframe_command(const SetWireframeCommand&);

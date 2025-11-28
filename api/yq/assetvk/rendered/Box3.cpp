@@ -85,7 +85,7 @@ namespace yq::tachyon {
         return ret;
     }
     
-    Box³::Box³(const Size3D& sz, const Param& p) : AbstractShape³(p)
+    Box³::Box³(const Size3D& sz, const Param& p) : Shape³(p)
     {
         m_size  = sz;
         
@@ -103,7 +103,7 @@ namespace yq::tachyon {
 
     void    Box³::rebuild() 
     {
-        AbstractShape³::rebuild();
+        Shape³::rebuild();
         
         double      hx  = 0.5*m_size.x;
         double      hy  = 0.5*m_size.y;

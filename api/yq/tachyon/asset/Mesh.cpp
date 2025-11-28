@@ -57,6 +57,17 @@ namespace yq::tachyon {
         }
     }
     
+    bool        Mesh::is_2d() const
+    {
+        return xyz.empty() && !xy.empty();
+    }
+    
+    bool        Mesh::is_3d() const
+    {
+        return xy.empty() && !xyz.empty();
+    }
+    
+
     Vector3F    Mesh::normal3(size_t n) const
     {
         if(n >= normal.size())

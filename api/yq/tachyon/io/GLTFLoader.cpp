@@ -734,7 +734,7 @@ namespace yq::tachyon {
             RasterPtr   p   = to_raster(img);
             rasters.push_back(p);    // yes, even null pointers
             if(!p){
-                tachyonNotice << "GLTF load (" << to_string(url) << "): failed to import image (" << rasters.size() << ")";
+                tachyonNotice << "GLTF load (" << url << "): failed to import image (" << rasters.size() << ")";
                 return;
             }
             lib.add(p);
@@ -764,7 +764,7 @@ namespace yq::tachyon {
             SamplerPtr  p   = to_sampler(sam);
             samplers.push_back(p);
             if(!p){
-                tachyonNotice << "GLTF load (" << to_string(url) << "): failed to import sampler (" << samplers.size() << ")";
+                tachyonNotice << "GLTF load (" << url << "): failed to import sampler (" << samplers.size() << ")";
                 return;
             }
             lib.add(p);
@@ -775,7 +775,7 @@ namespace yq::tachyon {
             TexturePtr  p   = to_texture(tex);
             textures.push_back(p);
             if(!p){
-                tachyonNotice << "GLTF load (" << to_string(url) << "): failed to import texture (" << textures.size() << ")";
+                tachyonNotice << "GLTF load (" << url << "): failed to import texture (" << textures.size() << ")";
                 return;
             }
             lib.add(p);
@@ -885,7 +885,7 @@ namespace yq::tachyon {
                         break;
                     }
                 }
-                
+
                 ret.push_back(m);
             }
 
@@ -898,27 +898,27 @@ namespace yq::tachyon {
             RasterCPtr   ras;
             
             if(tex.sampler >= (int) samplers.size()){
-                tachyonNotice << "GLTF load (" << to_string(url) << "): texture has a bad sampler!";
+                tachyonNotice << "GLTF load (" << url << "): texture has a bad sampler!";
                 return {};
             }
             
             if(tex.sampler >= 0){
                 sam = samplers[tex.sampler].ptr();
                 if(!sam)
-                    tachyonNotice << "GLTF load (" << to_string(url) << "): texture references a bad sampler!";
+                    tachyonNotice << "GLTF load (" << url << "): texture references a bad sampler!";
             }
             
             if(!sam)
                 sam     = Sampler::simple();
             
             if((tex.source < 0) || (tex.source >= (int) rasters.size())){
-                tachyonNotice << "GLTF load (" << to_string(url) << "): texture has a bad source!";
+                tachyonNotice << "GLTF load (" << url << "): texture has a bad source!";
                 return {};
             }
             
             ras     = rasters[tex.source].ptr();
             if(!ras)
-                tachyonNotice << "GLTF load (" << to_string(url) << "): texture references a bad image!";
+                tachyonNotice << "GLTF load (" << url << "): texture references a bad image!";
             
             TexturePtr  ret = new Texture(ras, sam);
             ret -> set_name(tex.name);
@@ -1054,7 +1054,7 @@ namespace yq::tachyon {
     {
         auto mdl    = raw_load_gltf(BINARY, iData);
         if(!mdl){
-            tachyonWarning << "Unable to parse GLB: " << to_string(api.url());
+            tachyonWarning << "Unable to parse GLB: " << api.url();
             return {};
         }
         return to_assetpak(*mdl, api.url());
@@ -1064,7 +1064,7 @@ namespace yq::tachyon {
     {
         auto mdl    = raw_load_gltf(TEXT, iData, api.url().path);
         if(!mdl){
-            tachyonWarning << "Unable to parse GLTF: " << to_string(api.url()) << " (cannot open/read the file)";
+            tachyonWarning << "Unable to parse GLTF: " << api.url() << " (cannot open/read the file)";
             return {};
         }
         return to_assetpak(*mdl, api.url());

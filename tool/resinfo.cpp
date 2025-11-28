@@ -21,7 +21,7 @@ using namespace yq::tachyon;
 
 void    print_resource(const Resource& r, std::string_view pad={})
 {
-    std::cout << pad << r.metaInfo().stem() << " [" << to_string(r.url()) << "][" << r.id() << "]: ";
+    std::cout << pad << r.metaInfo().stem() << " [" << r.url() << "][" << r.id() << "]: ";
 }
 
 void    print_material(const Material& )

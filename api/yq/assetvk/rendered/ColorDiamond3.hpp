@@ -7,12 +7,11 @@
 #pragma once
 
 #include <yq/assetvk/rendered/Diamond3.hpp>
-#include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
-    class ColorDiamond³ : public Diamond³, public AColor {
+    class ColorDiamond³ : public Diamond³ {
         YQ_TACHYON_DECLARE(ColorDiamond³, Diamond³)
     public:
         using AColor::color;

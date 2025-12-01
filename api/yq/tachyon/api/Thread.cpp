@@ -191,7 +191,7 @@ namespace yq::tachyon {
     void Thread::retain(TachyonPtr tp, StdThread st)
     {
         ThreadID    tid = standard(st);
-        if(tid){
+        if((st != StdThread::Auto) && tid){
             retain(tp, tid);
         } else {
             retain(tp);

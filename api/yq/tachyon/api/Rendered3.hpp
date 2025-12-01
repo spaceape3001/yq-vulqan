@@ -76,6 +76,9 @@ namespace yq::tachyon {
         //! Bounds of the item (in render coordinate)
         bounds³_t       m_bounds;
         Camera³ID       m_camera;
+        
+        //  Bias is a shift of this rendered's origin (to match CG or whatever)
+        Vector3D        m_bias{0.,0.,0.};
     };
 
 }

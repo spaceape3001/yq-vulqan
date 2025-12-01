@@ -7,12 +7,11 @@
 #pragma once
 
 #include <yq/assetvk/rendered/Box3.hpp>
-#include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
-    class ColorBox³ : public Box³, public AColor {
+    class ColorBox³ : public Box³ {
         YQ_TACHYON_DECLARE(ColorBox³, Box³)
     public:
         using AColor::color;

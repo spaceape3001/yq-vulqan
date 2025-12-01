@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/color/RGB.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
@@ -63,6 +64,9 @@ namespace yq::tachyon {
         //! Default destructor
         ~Light();
         
+        // universal 
+        RGB3F       m_color{1., 1., 1. };
+        float       m_intensity  = 1.f;
     };
 
 }

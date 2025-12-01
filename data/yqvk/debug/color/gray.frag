@@ -4,13 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-//  This fragment shader produces a simple solid yellow.
+//  This fragment shader produces a simple solid gray.
 
 #version 450
 
 layout(location = 0) out vec4 outColor;
 
 void main() {
-    outColor = vec4(1., 1., 0., 1.);
+    outColor = vec4(0.5, 0.5, 0.5, 1.0);
 }
 

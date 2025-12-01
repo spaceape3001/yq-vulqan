@@ -64,6 +64,7 @@ namespace yq::tachyon {
         Rendered::snap(sn);
         sn.bounds       = m_bounds;
         sn.camera       = m_camera;
+        sn.bias         = m_bias;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

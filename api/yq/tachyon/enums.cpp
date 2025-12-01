@@ -10,6 +10,9 @@
 
 #include <yq/tachyon/api/Response.hpp>
 
+#include <yq/tachyon/enum/AxisRemap.hpp>
+#include <yq/tachyon/enum/RenderMode.hpp>
+
 #include <yq/tachyon/os/HatState.hpp>
 #include <yq/tachyon/os/MouseButton.hpp>
 #include <yq/tachyon/os/MouseMode.hpp>
@@ -47,6 +50,7 @@
 
 #include <yq/meta/Init.hpp>
 
+YQ_TYPE_IMPLEMENT(yq::tachyon::AxisRemap)
 YQ_TYPE_IMPLEMENT(yq::tachyon::BorderColor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::BufferUsage)
 YQ_TYPE_IMPLEMENT(yq::tachyon::BufferUsageFlags)
@@ -77,6 +81,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::PolygonMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PresentMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::RasterType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Response)
+YQ_TYPE_IMPLEMENT(yq::tachyon::RenderMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerAddressMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlags)

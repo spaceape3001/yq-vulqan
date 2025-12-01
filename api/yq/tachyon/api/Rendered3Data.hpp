@@ -20,6 +20,7 @@
 namespace yq::tachyon {
     struct Rendered³Snap : public RenderedSnap, public ③Snap {
         Tensor44D       vm_tensor       = NAN;
+        Vector3D        bias{};
         
         // Our "bounds" in model coordinates
         bounds³_t       bounds;

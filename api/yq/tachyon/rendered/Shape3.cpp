@@ -11,6 +11,7 @@
 #include <yq/tachyon/aspect/ABgColorWriter.hxx>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
 #include <yq/tachyon/aspect/ADrawModeWriter.hxx>
+#include <yq/tachyon/aspect/AMaterialWriter.hxx>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/data/Vertex3.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -175,17 +176,18 @@ namespace yq::tachyon {
         auto w = writer<Shape³>();
         w.abstract();
         w.description("Abstract 3D shape");
-        //ADrawMode::init_meta(w);
-        //AColor::init_meta(w);
-        //ABgColor::init_meta(w);
+        ABgColor::init_meta(w);
+        AColor::init_meta(w);
+        ADrawMode::init_meta(w);
+        AMaterial::init_meta(w);
     }
 
     Shape³::Shape³(const Param& p) : Rendered³(p)
     {
-        //m_color     = p.color;
-        //m_bgcolor   = p.bgcolor;
-        //m_drawMode  = p.draw_mode;
-        //mark();
+        m_color     = p.color;
+        m_bgcolor   = p.bgcolor;
+        m_drawMode  = p.draw_mode;
+        mark();
     }
     
     Shape³::~Shape³()

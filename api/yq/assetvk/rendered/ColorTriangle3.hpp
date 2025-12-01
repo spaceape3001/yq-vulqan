@@ -7,14 +7,13 @@
 #pragma once
 
 #include <yq/assetvk/rendered/Triangle3.hpp>
-#include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
     /*! \brief Triangle for three dimensions
     */
-    class ColorTriangle³ : public Triangle³, public AColor {
+    class ColorTriangle³ : public Triangle³ {
         YQ_TACHYON_DECLARE(ColorTriangle³, Triangle³)
     public:
 

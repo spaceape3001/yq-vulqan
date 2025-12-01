@@ -24,7 +24,7 @@ namespace yq::tachyon {
         This can render as a tetrahedron in the scene 
         with the specified color/vertex corners.
     */
-    class ColorTetrahedron³ : public Tetrahedron³, public AColor {
+    class ColorTetrahedron³ : public Tetrahedron³ {
         YQ_TACHYON_DECLARE(ColorTetrahedron³, Tetrahedron³)
     public:
     

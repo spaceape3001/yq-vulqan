@@ -50,6 +50,11 @@ namespace yq::tachyon {
         const RGBA4F&   bgcolor() const { return m_bgcolor; }
         virtual void    set_bgcolor(const RGBA4F&); // override to check/reject color sets
 
+        enum class RenderMode {
+            Auto
+            
+        };
+
     protected:
         
         void    snap(SceneSnap&) const;

@@ -14,6 +14,7 @@
 
 namespace yq::tachyon {
     struct Light³Snap : public LightSnap, public ③Snap {
+        //  Need to capture the full "light function" here...
     };
     
     struct Light³Data : public LightData, public ③Data {

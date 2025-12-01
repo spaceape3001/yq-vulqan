@@ -70,15 +70,67 @@ namespace yq::tachyon {
             //! Default pipeline
             Default = 0,
             
+            //  Debug pipelines... solid?  
+
+            //! Debug Black
+            DbgBlack,
+
+            //! Debug Red
+            DbgRed,
+
+            //! Debug Orange
+            DbgOrange,
+
+            //! Debug Yellow
+            DbgYellow,
+
+            //! Debug Green
+            DbgGreen,
+
+            //! Debug Blue
+            DbgBlue,
+
+            //! Debug Cyan
+            DbgCyan,
+
+            //! Debug Magenta
+            DbgMagenta,
+
+            //! Debug Gray
+            DbgGray,
+
+            //! Debug White
+            DbgWhite,
+
+
+
             //! Single solid color 
             SolidColor,
             
+            //! Solid color with lights
+            SolidColorLit,
+            
+            //! Solid color with ray racing
+            SolidColorRay,
+
             //! Color corners
             ColorCorner,
+
+            //! Color corners with lights
+            ColorCornerLit,
+
+            //! Corner color with ray tracing
+            ColorCornerRay,
             
-            //! Textured
+            //! Regular textured
             Textured,
             
+            //! Regular textured with lights
+            TexturedLit,
+
+            //! Regular texture with ray tracing
+            TexturedRay,
+
             //! First user-based index (nice & large for future compatibility)
             User = 1001
         };

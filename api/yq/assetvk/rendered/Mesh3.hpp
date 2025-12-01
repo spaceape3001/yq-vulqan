@@ -10,18 +10,20 @@
 #include <yq/tachyon/aspect/AMaterial.hpp>
 #include <yq/tachyon/aspect/AMesh.hpp>
 #include <yq/tachyon/data/ColorVertexData.hpp>
+#include <yq/tachyon/enum/AxisRemap.hpp>
 #include <yq/tachyon/interface/ITopology.hpp>
 #include <yq/tachyon/interface/IVertices.hpp>
 #include <yq/tachyon/interface/IVertices3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/rendered/Shape3.hpp>
+#include <yq/typedef/tensor44.hpp>
+#include <yq/vector/Quaternion3.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
     class Mesh³ : public Shape³, 
-        public AColor, 
         public AMesh, 
-        public AMaterial, 
         public ITopology,
         public IVertices, 
         public IVertices³ 
@@ -41,6 +43,7 @@ namespace yq::tachyon {
         using IVertices³::vertex;
         using IVertices³::vertices;
         using IVertices::vertices;
+        using AMesh::mesh;
     
         using AColor::color;
         virtual bool    color(settable_k) const override { return true; }
@@ -78,13 +81,43 @@ namespace yq::tachyon {
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;
 
+    protected:
+        //virtual void    mesh(emit_k) override;
+
     private:
     
         void    rebuild();  // called for all updates
+        
+        enum class S {
+        };
 
-        VB1<VertexT>    m_vboT;
-        VB1<VertexS>    m_vboS;
-        IB1<uint32_t>   m_ibo;
-        UB1<UBS>        m_ubo;
+        VB1<glm::vec4>  m_vcolor;
+        VB1<glm::vec3>  m_vxyz;
+        VB1<glm::vec3>  m_vnormal;
+        VB1<glm::vec2>  m_vtex;
+
+        void                _import_normal();
+        void                _import_rgb();
+        void                _import_rgba();
+        void                _import_uv();
+        void                _import_uvw();
+        void                _import_xyz();
+        
+        //! Vertex colors (for meshes w/o it specified)
+        //std::vector<RGBA4F> m_colors;
+
+
+        VB1<VertexT>        m_vboT;
+        VB1<VertexS>        m_vboS;
+        IB1<uint32_t>       m_ibo;
+        UB1<UBS>            m_ubo;
+        
+        Flags<S>            m_flags;
+
+        AxisRemap           m_meshAxis          = AxisRemap::XYZ;
+        Vector3F            m_meshScale         = { 1., 1., 1. };
+        Vector3F            m_meshSign          = { 1., 1., 1. }; // each element needs to be +-1 (unless scale is zero)
+        Vector3F            m_meshOrigin        = { 0., 0., 0. };
+        //Quaternion3F        m_meshOrientation   = IDENTITY;
     };
 }

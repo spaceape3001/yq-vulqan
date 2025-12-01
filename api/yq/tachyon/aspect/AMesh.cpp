@@ -9,6 +9,7 @@
 #include <yq/tachyon/command/shape/SetMeshCommand.hpp>
 #include <yq/tachyon/command/shape/SetMeshUrlCommand.hpp>
 #include <yq/tachyon/event/shape/SetMeshEvent.hpp>
+#include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
     AMesh::AMesh()
@@ -53,7 +54,7 @@ namespace yq::tachyon {
         mark();
         mesh(EMIT);
     }
-    
+
     void        AMesh::on_set_mesh(const SetMeshCommand&cmd)
     {
         if(cmd.target() != typed())

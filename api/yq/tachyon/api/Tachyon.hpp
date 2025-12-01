@@ -218,6 +218,7 @@ namespace yq::tachyon {
     >;
 
     bool unspecified(const PostAdvice& pa);
+    
 
     /*! \brief Base (heavy) object in the tachyon library
     
@@ -275,6 +276,11 @@ namespace yq::tachyon {
     public:
 
         class Helper;
+        
+        struct LoadAPI;
+        struct SaveAPI;
+        struct LoadContext;
+        struct SaveContext;
         
         /*! \brief Quick identity
         
@@ -473,12 +479,16 @@ namespace yq::tachyon {
         //! Initiates the teardown/destruction process
         void            cmd_teardown() { teardown(); }
 
+        ////////////////////////////////////////////////////////////
+        //  Load here... dying
+
         //! called by the save/load API (assumed thread-safe)
         void    load_set_parent(TypedID);
 
         //! called by the save/load API (assumed thread-safe)
         void    load_add_child(TypedID);
-        
+
+        // This bit... deprecated
         const AttrIDMap&    prog_attributes() const { return m_progAttrs; }
         const AttrKeyMap&   user_attributes() const { return m_userAttrs; }
 
@@ -628,6 +638,25 @@ namespace yq::tachyon {
 
         void    info_log_post(const Post&) const;
 
+        /*! \brief *LOAD* a tachyon
+        
+            This is called after construction but prior to *ANY* ticks.
+            It's meant to reinitialize a tachyon.  There should be *LITTLE*
+            reason to stop a load, even if that means a poorly configured 
+            tachyon.
+            
+            \note All tachyons will have been created; all save-marked 
+            properties/resources/delegates already set, this allows for 
+            non-configurable properties, states, etc
+        */
+        virtual std::error_code load(const LoadAPI&) { return {}; }
+        
+        /*! \brief *SAVE* a tachyon 
+        
+            This *saves* a tachyon (don't worry about properties, delegates,
+            resources, those are already saved).
+        */
+        virtual void    save(SaveAPI&) const {}
 
         /*! \brief DIRECTLY HANDLES the specified post
         

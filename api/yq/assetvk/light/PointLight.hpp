@@ -4,13 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-//  This fragment shader produces a simple solid yellow.
+#pragma once
 
-#version 450
+#include <yq/tachyon/api/Light3.hpp>
 
-layout(location = 0) out vec4 outColor;
-
-void main() {
-    outColor = vec4(1., 1., 0., 1.);
+namespace yq::tachyon {
+    //! Standard "light" with falloff
+    class PointLight³ : public Light³ {
+    public:
+    
+    };
 }
-

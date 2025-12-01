@@ -7,9 +7,11 @@
 #pragma once
 
 #include <yq/tachyon/api/Rendered3.hpp>
-#include <yq/tachyon/aspect/ADrawMode.hpp>
-#include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/aspect/ABgColor.hpp>
+#include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/aspect/ADrawMode.hpp>
+#include <yq/tachyon/aspect/AMaterial.hpp>
+#include <yq/tachyon/aspect/ATexture.hpp>
 
 #include <yq/typedef/uv.hpp>
 #include <yq/typedef/uvw.hpp>
@@ -26,9 +28,34 @@ namespace yq::tachyon {
         
         \note Updated the name...
     */
-    class Shape³ : public Rendered³ {
+    class Shape³ : public Rendered³, 
+        public ABgColor,
+        public AColor,
+        public ADrawMode,
+        public AMaterial,
+        public ATexture
+    {
         YQ_TACHYON_DECLARE(Shape³, Rendered³)
     public:
+    
+        /*
+            Overhauling the shape object... draw mode coming back into play
+            
+            ALL draw modes are permitted; if a shape cannot support a particular
+            draw mode, it's recourse is to disable the good flag.
+            
+            Auto        -- select the best one given what's available AND what the
+            shape can support.
+            
+            Color       -- solid color (no UV needed)
+            
+            BiColor     -- If the material has a grayscale, use it
+            
+            Gradient    -- Vertices are assigned colors, blend
+            
+            Texture     -- use the given material for a texture
+        */
+    
     
         //  TODOs
         //  1) Color functions
@@ -36,9 +63,9 @@ namespace yq::tachyon {
         //  3) Material/Textures
 
         struct Param : public Rendered³::Param {
-            //RGBA4F      bgcolor     = kDefBgColor;
-            //RGBA4F      color       = kDefColor;
-            //DrawMode    draw_mode   = kDefDrawMode;
+            RGBA4F      bgcolor     = kDefBgColor;
+            RGBA4F      color       = kDefColor;
+            DrawMode    draw_mode   = kDefDrawMode;
         };
         
         static void init_meta();
@@ -80,10 +107,25 @@ namespace yq::tachyon {
             glm::vec3   position;
         };
 
-        struct UBS {
-            glm::vec4   color;
-            //  glm::vec4   dope;   // coming, a tainting color
+        struct Uniform {
+            //! Color of the object
+            glm::vec4       color   = {0.5,0.5,0.5,1.};
+            
+            //! Alt/Background color of the object
+            glm::vec4       bgcolor = {0.5,0.5,0.5,1.};
+            
+            //! Color multiplier (standard frag shader)
+            //! Allows for brightness more/less to color
+            //! Zero & a fixed value to ca overrides
+            glm::vec4       fx      = {1.,1.,1.,1.};
+            
+            //! Color base
+            glm::vec4       fa      = {0.,0.,0.,0.};
+            
+            //  might add more...same idea
         };
+        
+        using UBS  = Uniform;
 
         static glm::vec3        gfx(const RGB3F&);
         static glm::vec4        gfx(const RGBA4F&);

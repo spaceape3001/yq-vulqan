@@ -10,16 +10,12 @@
 #include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 
-#include <yq/tachyon/aspect/AColorWriter.hxx>
-
 namespace yq::tachyon {
     void ColorTetrahedron³::init_meta()
     {
         auto w = writer<ColorTetrahedron³>();
         w.description("Color Tetrahedron in 3D");
         w.category("Shape");
-        
-        AColor::init_meta(w);
 
         auto& p = w.pipeline();
         

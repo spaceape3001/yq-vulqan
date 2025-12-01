@@ -13,9 +13,10 @@ namespace yq::tachyon {
     YQ_ENUM(DrawMode, , 
         Auto,
         Color,
-        BiColor,    // bi color (with grayscale texture)
-        Gradient,   // nice between corners
-        Texture
+        // BiColor,        // bi color (with grayscale texture)
+        // Face,           // Solid color per face (TBD)
+        Gradient,       // nice between corners
+        Texture         // texture (only)
     )
 }
 YQ_TYPE_DECLARE(yq::tachyon::DrawMode)

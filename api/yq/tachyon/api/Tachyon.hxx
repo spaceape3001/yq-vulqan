@@ -11,6 +11,24 @@
 
 namespace yq::tachyon {
 
+    struct Tachyon::LoadAPI {
+        LoadContext&    context;
+        //  TBD
+    };
+    
+    struct Tachyon::SaveAPI {
+        SaveContext&    context;
+        //  TBD
+    };
+
+    struct Tachyon::LoadContext {
+        // map of tachyons
+    };
+    
+    struct Tachyon::SaveContext {
+        // map of tachyons
+    };
+
     ////////////////////////////////////////////
     //  Top-tachyon creates
 

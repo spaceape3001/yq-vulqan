@@ -148,6 +148,7 @@ namespace yq::tachyon {
         consteval operator Cardinal() const noexcept { return Cardinal::North; }
     };
     
+    struct origin_k {};
     struct pivot_k {};
     
     struct point_k {};
@@ -162,6 +163,8 @@ namespace yq::tachyon {
     struct rendered_k {};
     struct rendered³_k {};
     struct resource_k {};
+    struct rotation_k {};
+    struct scale_k {};
     struct scene_k {};
     struct scene³_k {};
     
@@ -202,6 +205,7 @@ namespace yq::tachyon {
     struct tex_k {};
     struct texture_k {};
     struct toolbar_k {};
+    struct transform_k {};
     struct ui_k {};
     
     struct viewer_k {
@@ -292,6 +296,7 @@ namespace yq::tachyon {
     static constexpr const network_k            NETWORK;
     static constexpr const none_k               NONE;
     static constexpr const north_k              NORTH;
+    static constexpr const origin_k             ORIGIN;
     static constexpr const pivot_k              PIVOT;
     static constexpr const point_k              POINT;
     static constexpr const popup_k              POPUP;
@@ -301,6 +306,8 @@ namespace yq::tachyon {
     static constexpr const rendered_k           RENDERED;
     static constexpr const rendered³_k          RENDERED³;
     static constexpr const resource_k           RESOURCE;
+    static constexpr const rotation_k           ROTATION;
+    static constexpr const scale_k              SCALE;
     static constexpr const scene_k              SCENE;
     static constexpr const scene³_k             SCENE³;
     static constexpr const schedule_k           SCHEDULE;
@@ -320,6 +327,7 @@ namespace yq::tachyon {
     static constexpr const tex_k                TEX;
     static constexpr const texture_k            TEXTURE;
     static constexpr const toolbar_k            TOOLBAR;
+    static constexpr const transform_k          TRANSFORM;
     static constexpr const ui_k                 UI;
     static constexpr const viewer_k             VIEWER;
     static constexpr const vulqan_k             VULQAN;

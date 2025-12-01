@@ -18,8 +18,6 @@ namespace yq::tachyon {
         w.description("Color Triangle in 3D");
         w.category("Shape");
 
-        AColor::init_meta(w);
-
         auto& p = w.pipeline();
         p.shader("resources/shape3/color.vert");
         p.shader("resources/shape3/color.frag");

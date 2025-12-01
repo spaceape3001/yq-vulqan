@@ -22,8 +22,11 @@ namespace yq::tachyon {
         common needed threads.
     */
     YQ_ENUM(StdThread, , 
+        //! Auto thread (whatever)
+        Auto    = 0,
+        
         // Application/OS/Input
-        App     = 0,
+        App,
         
         // Audio thread
         Audio,

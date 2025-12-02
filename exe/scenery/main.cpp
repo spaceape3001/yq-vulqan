@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     }
     
     
-    gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();
+    //gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();
     
     SceneEditor* w      = Widget::create<SceneEditor>(sep);
     app.run(w);

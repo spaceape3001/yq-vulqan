@@ -257,7 +257,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/ITexture.cpp
     interface/ITopology.cpp
     
-    io/FileIOManager.cpp
+    #io/FileIOManager.cpp
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
     io/MaterialKV.cpp
@@ -265,16 +265,16 @@ add_library(${PROJECT_NAME} SHARED
     io/ObjLoader.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
-    io/Save.cpp
+    #io/Save.cpp
     
     #io/Wavefront.cpp
 
-    io/save/SaveDelegate.cpp
-    io/save/SaveObject.cpp
-    io/save/SaveResource.cpp
-    io/save/SaveTachyon.cpp
-    io/save/SaveThread.cpp
-    io/save/SaveXML.cpp
+    #io/save/SaveDelegate.cpp
+    #io/save/SaveObject.cpp
+    #io/save/SaveResource.cpp
+    #io/save/SaveTachyon.cpp
+    #io/save/SaveThread.cpp
+    #io/save/SaveXML.cpp
     
     message/EmptyMessage.cpp
 
@@ -341,9 +341,9 @@ add_library(${PROJECT_NAME} SHARED
     
     reply/graphics_card/GetDeviceReply.cpp
     
-    reply/io/LoadTSXReply.cpp
-    reply/io/SaveReply.cpp
-    reply/io/SaveTSXReply.cpp
+    # reply/io/LoadTSXReply.cpp
+    # reply/io/SaveReply.cpp
+    # reply/io/SaveTSXReply.cpp
     
 
     reply/ui/CloseReply.cpp
@@ -364,14 +364,14 @@ add_library(${PROJECT_NAME} SHARED
     #request/WindowRefreshRequest.cpp
     request/WindowRequest.cpp
     
-    request/app/OpenFileRequest.cpp
-    request/app/SaveFileRequest.cpp
+    # request/app/OpenFileRequest.cpp
+    # request/app/SaveFileRequest.cpp
     
     request/graphics_card/GetDeviceRequest.cpp
     
-    request/io/LoadTSXRequest.cpp
-    request/io/SaveRequest.cpp
-    request/io/SaveTSXRequest.cpp
+    # request/io/LoadTSXRequest.cpp
+    # request/io/SaveRequest.cpp
+    # request/io/SaveTSXRequest.cpp
 
     
     request/ui/CloseRequest.cpp

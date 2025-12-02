@@ -254,7 +254,7 @@ private:
     void    on_meta_selection_changed_event(const MetaSelectionChangedEvent&);
     void    on_model_select_event(const ModelSelectEvent&);
     void    on_rendered_select_event(const RenderedSelectEvent&);
-    void    on_save_tsx_reply(const SaveTSXReply&);
+    //void    on_save_tsx_reply(const SaveTSXReply&);
     void    on_scene_add_event(const SceneAddEvent&);
     void    on_scene_remove_event(const SceneRemoveEvent&);
     void    on_scene_select_event(const SceneSelectEvent&);

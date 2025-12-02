@@ -12,16 +12,16 @@
 #include <yq/tachyon/api/ThreadMetaWriter.hpp>
 
 #include <yq/tachyon/api/AsyncTask.hpp>
-#include <yq/tachyon/io/Save.hpp>
-#include <yq/tachyon/io/save/SaveXML.hpp>
+//#include <yq/tachyon/io/Save.hpp>
+//#include <yq/tachyon/io/save/SaveXML.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/command/io/SaveCommand.hpp>
+//#include <yq/tachyon/command/io/SaveCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/event/thread/ThreadAddTachyonEvent.hpp>
-#include <yq/tachyon/reply/io/SaveReply.hpp>
-#include <yq/tachyon/request/io/SaveRequest.hpp>
+//#include <yq/tachyon/reply/io/SaveReply.hpp>
+//#include <yq/tachyon/request/io/SaveRequest.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
@@ -105,9 +105,9 @@ namespace yq::tachyon {
         auto w = writer<Thread>();
         w.description("Thread of execution");
         w.slot(&Thread::on_schedule_command);
-        w.slot(&Thread::on_save_command);
-        w.slot(&Thread::on_save_reply);
-        w.slot(&Thread::on_save_request);
+        //w.slot(&Thread::on_save_command);
+        //w.slot(&Thread::on_save_reply);
+        //w.slot(&Thread::on_save_request);
         
         auto wt = writer<ThreadID>();
         wt.description("Thread Identifier");
@@ -340,6 +340,7 @@ namespace yq::tachyon {
         m_thread.join();
     }
 
+#if 0
     void Thread::on_save_command(const Ref<const SaveCommand>& cmd)
     {
         if(!cmd)
@@ -421,6 +422,7 @@ namespace yq::tachyon {
             
         send(new SaveReply({.source=*this, .target=req->source()}, req, std::move(save)));
     }
+#endif
 
     void Thread::on_schedule_command(const ScheduleCommand&cmd)
     {

@@ -175,9 +175,9 @@ namespace yq::tachyon {
         time_point_t                    m_lastFrameReport{};
         
         void on_schedule_command(const ScheduleCommand&);
-        void on_save_command(const Ref<const SaveCommand>&);
-        void on_save_reply(const SaveReply&);
-        void on_save_request(const Ref<const SaveRequest>&);
+        //void on_save_command(const Ref<const SaveCommand>&);
+        //void on_save_reply(const SaveReply&);
+        //void on_save_request(const Ref<const SaveRequest>&);
         
         template <typename Pred>
         void    foreach_child(TachyonID, Pred&&) const;

@@ -36,7 +36,7 @@ namespace yq::tachyon {
         repetion of entry.  Things can be built and/or instantiated based on 
         these.
     */
-    class Builder : public Resource {
+    class Builder  /* Save??? */ : public Resource {
     
     public:
         std::vector<Url>                            source;         //! Template/origination builders

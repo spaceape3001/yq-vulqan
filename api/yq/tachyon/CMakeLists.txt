@@ -204,7 +204,7 @@ add_library(${PROJECT_NAME} SHARED
     command/app/ViewerCreateCommand.cpp
     command/gamepad/GamepadZeroCommand.cpp
     command/generic/SetSpatialCommand.cpp
-    command/io/SaveCommand.cpp
+    #command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
     command/shape/SetDrawModeCommand.cpp
     command/shape/SetMaterialCommand.cpp
@@ -257,6 +257,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/ITexture.cpp
     interface/ITopology.cpp
     
+    io/Builder.cpp
     #io/FileIOManager.cpp
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
@@ -265,7 +266,7 @@ add_library(${PROJECT_NAME} SHARED
     io/ObjLoader.cpp
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
-    #io/Save.cpp
+    io/Save.cpp
     
     #io/Wavefront.cpp
 

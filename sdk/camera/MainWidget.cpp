@@ -13,7 +13,7 @@
 #include <yq/assetvk/widget/FrameInspector.hpp>
 
 #include <yq/tachyon/command/controller/ListenCommand.hpp>
-#include <yq/tachyon/command/io/SaveCommand.hpp>
+//#include <yq/tachyon/command/io/SaveCommand.hpp>
 #include <yq/tachyon/command/ui/CloseCommand.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/app/Viewer.hpp>
@@ -130,7 +130,7 @@ void    MainWidget::imgui(ViContext&ctx)
                 
                 yInfo() << "Sending save command";
                 
-                send(new SaveCommand(hdr, std::filesystem::path("camera.tsx")), hdr.target);
+                //send(new SaveCommand(hdr, std::filesystem::path("camera.tsx")), hdr.target);
             }
 
             ImGui::Separator();

@@ -12,6 +12,7 @@
 
 #include <yq/tachyon/enum/AxisRemap.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
+#include <yq/tachyon/enum/SaveType.hpp>
 
 #include <yq/tachyon/os/HatState.hpp>
 #include <yq/tachyon/os/MouseButton.hpp>
@@ -87,6 +88,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlag)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerCreateFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerFilter)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SamplerMipmapMode)
+YQ_TYPE_IMPLEMENT(yq::tachyon::SaveType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ShaderType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ShaderTypeFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::StdThread)

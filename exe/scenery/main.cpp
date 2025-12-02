@@ -45,9 +45,19 @@ int main(int argc, char* argv[])
     
     app.start();
     
+    SceneEditor::Param  sep;
+    
+    //  TODO
+    //std::vector< ResourceTBD > open
+    
+    for(int n=1;n<argc;++n){
+        //  add to the vector
+    }
+    
+    
     gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();
     
-    SceneEditor* w      = Widget::create<SceneEditor>();
+    SceneEditor* w      = Widget::create<SceneEditor>(sep);
     app.run(w);
     return 0;
 }

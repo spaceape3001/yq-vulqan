@@ -260,10 +260,14 @@ namespace yq::tachyon {
 
     /////////////////////////
 
-    Widget::Widget() : Tachyon(), m_windowID(fmt_hex(UniqueID::id()))
+    Widget::Widget() : Widget(Param())
     {
     }
     
+    Widget::Widget(const Param&p) : Tachyon(p), m_windowID(fmt_hex(UniqueID::id()))
+    {
+    }
+
     Widget::~Widget()
     {
         _kill();

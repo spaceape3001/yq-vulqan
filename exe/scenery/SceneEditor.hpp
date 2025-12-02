@@ -80,7 +80,11 @@ public:
     
     static void             init_meta();
 
+    struct Param : public CompositeWidget::Param {
+    };
+
     SceneEditor();
+    SceneEditor(const Param&);
     ~SceneEditor();
     
     //bool    menubar(enabled_k) const override { return true; }

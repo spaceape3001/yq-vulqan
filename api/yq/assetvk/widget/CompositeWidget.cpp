@@ -21,10 +21,14 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::CompositeWidget)
 
 namespace yq::tachyon {
-    CompositeWidget::CompositeWidget()
+    CompositeWidget::CompositeWidget() : CompositeWidget(Param())
     {
     }
     
+    CompositeWidget::CompositeWidget(const Param&p ) : Widget(p)
+    {
+    }
+
     CompositeWidget::~CompositeWidget()
     {
     }

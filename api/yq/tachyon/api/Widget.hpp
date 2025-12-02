@@ -94,9 +94,15 @@ namespace yq::tachyon {
         */
 
         static void init_meta();
-    
+        
+        struct Param : public Tachyon::Param {
+        };
+        
         //! Default constructor
         Widget();
+
+        //! Construct with parameters
+        Widget(const Param&);
         
         //! Default destructor
         virtual ~Widget();

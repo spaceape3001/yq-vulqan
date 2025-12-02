@@ -365,7 +365,11 @@ void SceneEditor::init_meta()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SceneEditor::SceneEditor()
+SceneEditor::SceneEditor() : SceneEditor(Param())
+{
+}
+
+SceneEditor::SceneEditor(const Param& p)
 {
 }
 

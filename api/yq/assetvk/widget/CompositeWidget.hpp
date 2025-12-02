@@ -15,7 +15,10 @@ namespace yq::tachyon {
         YQ_WIDGET_DECLARE(CompositeWidget, Widget)
     public:
     
+        struct Param : public Widget::Param {};
+    
         CompositeWidget();
+        CompositeWidget(const Param&);
         ~CompositeWidget();
 
         virtual void    prerecord(ViContext&) override;

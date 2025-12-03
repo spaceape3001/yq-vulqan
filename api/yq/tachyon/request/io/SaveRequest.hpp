@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/request/IORequest.hpp>
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/save.hpp>
+#include <yq/tachyon/enum/SaveFlags.hpp>
 
 namespace yq::tachyon {
     class SaveCommand;
@@ -17,9 +17,9 @@ namespace yq::tachyon {
     public:
     
         //! Default is to include *EVERYTHING* on 
-        SaveRequest(const Header&, SaveOptions opts={});
-        SaveRequest(const Header&, const TachyonIDSet&, SaveOptions opts={});
-        SaveRequest(const Header&, TachyonIDSet&&, SaveOptions opts={});
+        SaveRequest(const Header&, SaveFlags opts={});
+        SaveRequest(const Header&, const TachyonIDSet&, SaveFlags opts={});
+        SaveRequest(const Header&, TachyonIDSet&&, SaveFlags opts={});
         SaveRequest(const Header&, const SaveCommand&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
@@ -27,8 +27,8 @@ namespace yq::tachyon {
         
         const TachyonIDSet&     tachyons() const { return m_tachyons; }
         
-        SaveOptions options() const { return m_options; }
-        bool        option(SaveOption so) const { return m_options(so); }
+        SaveFlags   flags() const { return m_flags; }
+        bool        flag(SaveFlag so) const { return m_flags(so); }
         
     protected:
         SaveRequest(const SaveRequest&, const Header&);
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         
     private:
         TachyonIDSet    m_tachyons;
-        SaveOptions     m_options = {};
+        SaveFlags       m_flags = {};
     
         SaveRequest(const SaveRequest&) = delete;
         SaveRequest(SaveRequest&&) = delete;

@@ -10,6 +10,7 @@
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/api/StdThread.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/enum/SaveFlags.hpp>
 #include <yq/tachyon/typedef/save.hpp>
 #include <filesystem>
 
@@ -18,7 +19,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(SaveCommand, IOCommand)
     public:
         struct Param {
-            SaveOptions             options;
+            SaveFlags               flags;
             TachyonIDSet            tachyons;   //< Tachyons to save (leave blank for all)
             TypedID                 thread;     //< Thread to save from
         };
@@ -29,11 +30,10 @@ namespace yq::tachyon {
 
         static void init_meta();
         
-        const std::filesystem::path& filepath() const { return m_filepath; }
-        
-        TypedID     thread() const { return m_thread; }
-        const TachyonIDSet& tachyons() const { return m_tachyons; }
-        SaveOptions         options() const { return m_options; }
+        const std::filesystem::path&    filepath() const { return m_filepath; }
+        SaveFlags                       flags() const { return m_flags; }
+        const TachyonIDSet&             tachyons() const { return m_tachyons; }
+        TypedID                         thread() const { return m_thread; }
 
     protected:
         SaveCommand(const SaveCommand&, const Header&);
@@ -41,9 +41,9 @@ namespace yq::tachyon {
         
     private:
         std::filesystem::path       m_filepath;
+        SaveFlags                   m_flags;
         TachyonIDSet                m_tachyons;
         TypedID                     m_thread;
-        SaveOptions                 m_options;
 
         SaveCommand(const SaveCommand&) = delete;
         SaveCommand(SaveCommand&&) = delete;

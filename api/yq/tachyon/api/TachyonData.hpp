@@ -25,10 +25,10 @@ namespace yq::tachyon {
         std::vector<Proxy*>     proxies;
                 
         //! Program attributes
-        AttrIDMap               progattrs;
+        //AttrIDMap               progattrs;
         
         //! User attributes
-        AttrKeyMap              userattrs;
+        //AttrKeyMap              userattrs;
 
         uint64_t                revision    = 0ULL;
         unit::Second            time        = 0.;

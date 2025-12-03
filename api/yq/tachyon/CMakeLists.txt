@@ -204,7 +204,7 @@ add_library(${PROJECT_NAME} SHARED
     command/app/ViewerCreateCommand.cpp
     command/gamepad/GamepadZeroCommand.cpp
     command/generic/SetSpatialCommand.cpp
-    #command/io/SaveCommand.cpp
+    command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
     command/shape/SetDrawModeCommand.cpp
     command/shape/SetMaterialCommand.cpp
@@ -257,7 +257,6 @@ add_library(${PROJECT_NAME} SHARED
     interface/ITexture.cpp
     interface/ITopology.cpp
     
-    io/Builder.cpp
     #io/FileIOManager.cpp
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
@@ -267,6 +266,10 @@ add_library(${PROJECT_NAME} SHARED
     io/SamplerInfoFile.cpp
     io/STBImage.cpp
     io/Save.cpp
+    io/SaveXML.cpp
+    
+    #io/builder/DelegateBuilder.cpp
+    #io/builder/ObjectBuilder.cpp
     
     #io/Wavefront.cpp
 
@@ -342,9 +345,9 @@ add_library(${PROJECT_NAME} SHARED
     
     reply/graphics_card/GetDeviceReply.cpp
     
-    # reply/io/LoadTSXReply.cpp
-    # reply/io/SaveReply.cpp
-    # reply/io/SaveTSXReply.cpp
+    reply/io/LoadTSXReply.cpp
+    reply/io/SaveReply.cpp
+    reply/io/SaveTSXReply.cpp
     
 
     reply/ui/CloseReply.cpp
@@ -370,9 +373,9 @@ add_library(${PROJECT_NAME} SHARED
     
     request/graphics_card/GetDeviceRequest.cpp
     
-    # request/io/LoadTSXRequest.cpp
-    # request/io/SaveRequest.cpp
-    # request/io/SaveTSXRequest.cpp
+    request/io/LoadTSXRequest.cpp
+    request/io/SaveRequest.cpp
+    request/io/SaveTSXRequest.cpp
 
     
     request/ui/CloseRequest.cpp

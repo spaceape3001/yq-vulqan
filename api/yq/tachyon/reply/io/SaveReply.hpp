@@ -14,20 +14,20 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(SaveReply, IOReply)
     public:
     
-        SaveReply(const Header&, const RequestCPtr&, SaveSPtr&&);
-        SaveReply(const Header&, const RequestCPtr&, const SaveSPtr&);
+        SaveReply(const Header&, const RequestCPtr&, SavePtr&&);
+        SaveReply(const Header&, const RequestCPtr&, const SavePtr&);
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         static void  init_meta();
         
-        const SaveSPtr& save() const { return m_save; }
+        const SavePtr & save() const { return m_save; }
         
     protected:
         SaveReply(const SaveReply&, const Header&);
         virtual ~SaveReply();
         
     private:
-        SaveSPtr     m_save;
+        SavePtr      m_save;
         
         SaveReply(const SaveReply&) = delete;
         SaveReply(SaveReply&&) = delete;

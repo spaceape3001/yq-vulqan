@@ -12,27 +12,27 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveRequest)
 
 namespace yq::tachyon {
 
-    SaveRequest::SaveRequest(const Header&h, SaveOptions opts) : IORequest(h), m_options(opts)
+    SaveRequest::SaveRequest(const Header&h, SaveFlags opts) : IORequest(h), m_flags(opts)
     {
     }
 
-    SaveRequest::SaveRequest(const Header&h, const TachyonIDSet&tacs, SaveOptions opts) : 
-        IORequest(h), m_options(opts)
+    SaveRequest::SaveRequest(const Header&h, const TachyonIDSet&tacs, SaveFlags opts) : 
+        IORequest(h), m_flags(opts)
     {
     }
     
-    SaveRequest::SaveRequest(const Header&h, TachyonIDSet&&tacs, SaveOptions opts) : 
-        IORequest(h), m_tachyons(std::move(tacs)), m_options(opts)
+    SaveRequest::SaveRequest(const Header&h, TachyonIDSet&&tacs, SaveFlags opts) : 
+        IORequest(h), m_tachyons(std::move(tacs)), m_flags(opts)
     {
     }
 
     SaveRequest::SaveRequest(const Header&h, const SaveCommand&cmd) : IORequest(h), 
-        m_tachyons(cmd.tachyons()), m_options(cmd.options())
+        m_tachyons(cmd.tachyons()), m_flags(cmd.flags())
     {
     }
 
     SaveRequest::SaveRequest(const SaveRequest& cp, const Header& h) : 
-        IORequest(cp, h), m_tachyons(cp.m_tachyons), m_options(cp.m_options)
+        IORequest(cp, h), m_tachyons(cp.m_tachyons), m_flags(cp.m_flags)
     {
     }
     

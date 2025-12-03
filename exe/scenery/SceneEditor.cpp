@@ -78,18 +78,18 @@
 
 #include <yq/assetvk/event/panel/MetaSelectionChangedEvent.hpp>
 
-//#include <yq/tachyon/io/Save.hpp>
+#include <yq/tachyon/io/Save.hpp>
 //#include <yq/tachyon/io/save/SaveXML.hpp>
 
 
 #include <yq/tachyon/request/app/OpenFileRequest.hpp>
 
-//#include <yq/tachyon/reply/io/LoadTSXReply.hpp>
-//#include <yq/tachyon/reply/io/SaveTSXReply.hpp>
+#include <yq/tachyon/reply/io/LoadTSXReply.hpp>
+#include <yq/tachyon/reply/io/SaveTSXReply.hpp>
 #include <yq/tachyon/reply/viewer/ViewerScreenshotReply.hpp>
 
-//#include <yq/tachyon/request/io/LoadTSXRequest.hpp>
-//#include <yq/tachyon/request/io/SaveTSXRequest.hpp>
+#include <yq/tachyon/request/io/LoadTSXRequest.hpp>
+#include <yq/tachyon/request/io/SaveTSXRequest.hpp>
 
 #include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 
@@ -216,12 +216,12 @@ void SceneEditor::init_meta()
     
     w.slot(&SceneEditor::on_camera_select_event);
     w.slot(&SceneEditor::on_controller_select_event);
-    //w.slot(&SceneEditor::on_load_tsx_reply);
+    w.slot(&SceneEditor::on_load_tsx_reply);
     w.slot(&SceneEditor::on_lua_exec_reply);
     w.slot(&SceneEditor::on_meta_selection_changed_event);
     w.slot(&SceneEditor::on_model_select_event);
     w.slot(&SceneEditor::on_rendered_select_event);
-    //w.slot(&SceneEditor::on_save_tsx_reply);
+    w.slot(&SceneEditor::on_save_tsx_reply);
     w.slot(&SceneEditor::on_scene_add_event);
     w.slot(&SceneEditor::on_scene_remove_event);
     w.slot(&SceneEditor::on_scene_select_event);
@@ -696,7 +696,7 @@ void    SceneEditor::_lua(const std::filesystem::path& fp)
 
 void    SceneEditor::_open(const std::filesystem::path& fp)
 {
-    //send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, EDIT, SceneEditor::clear_edit_thread));
+    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, EDIT, SceneEditor::clear_edit_thread));
 }
 
 void    SceneEditor::_rebuild()
@@ -734,7 +734,7 @@ void    SceneEditor::_save(const std::filesystem::path& fp)
     const Frame* frame  = Frame::current();
     if(!frame)
         return ;
- //   send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, EDIT, { SaveOption::SkipOwnership }));
+    send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, EDIT, { SaveFlag::SkipOwnership }));
 }
 
 void        SceneEditor::_schedule(StdThread st, TachyonPtrVector&& tachyons)
@@ -986,7 +986,6 @@ void    SceneEditor::on_light_select_event(const LightSelectEvent&evt)
 
 void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
 {
-#if 0
     if(rep.response() != Response::QaPla)
         return ;
     
@@ -996,7 +995,6 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
     
     m_filepath  = req->filepath();
     _title();
-#endif
 }
 
 void    SceneEditor::on_lua_exec_reply(const LuaExecuteReply& evt)
@@ -1027,7 +1025,6 @@ void    SceneEditor::on_rendered_select_event(const RenderedSelectEvent&evt)
     _activate(evt.rendered());
 }
 
-#if 0
 void    SceneEditor::on_save_tsx_reply(const SaveTSXReply&rep)
 {
     if(rep.response() != Response::QaPla)
@@ -1042,7 +1039,6 @@ void    SceneEditor::on_save_tsx_reply(const SaveTSXReply&rep)
         _title();
     }
 }
-#endif
 
 void    SceneEditor::on_scene_add_event(const SceneAddEvent&)
 {

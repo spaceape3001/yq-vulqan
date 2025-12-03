@@ -30,6 +30,7 @@ namespace yq::tachyon {
     class SaveRequest;
     class SaveCommand;
     class SaveReply;
+    struct ThreadSave;
 
     /*! \brief Thread of something in the application
     
@@ -96,8 +97,16 @@ namespace yq::tachyon {
         
         static void     schedule(ThreadID,  AsyncTaskUPtr&&);
         static void     schedule(StdThread, AsyncTaskUPtr&&);
+        
+        virtual void    save(ThreadSave&) const {};
+        virtual void    load(const ThreadSave&) const {};
 
     protected:
+        
+            // terminate these
+        void save(TachyonSave&) const override final {}
+        void load(const TachyonSave&) override final {}
+    
         virtual Execution   tick(const Context&) override final;
         virtual Execution   teardown(const Context&) override final;
         
@@ -175,9 +184,9 @@ namespace yq::tachyon {
         time_point_t                    m_lastFrameReport{};
         
         void on_schedule_command(const ScheduleCommand&);
-        //void on_save_command(const Ref<const SaveCommand>&);
-        //void on_save_reply(const SaveReply&);
-        //void on_save_request(const Ref<const SaveRequest>&);
+        void on_save_command(const Ref<const SaveCommand>&);
+        void on_save_reply(const SaveReply&);
+        void on_save_request(const Ref<const SaveRequest>&);
         
         template <typename Pred>
         void    foreach_child(TachyonID, Pred&&) const;

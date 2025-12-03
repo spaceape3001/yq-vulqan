@@ -13,6 +13,8 @@
 #include <yq/tachyon/typedef/delegate.hpp>
 
 namespace yq::tachyon {
+    class DelegateSave;
+
     class DelegateMeta : public ObjectMeta {
     public:
         template <typename C> class Writer;
@@ -39,9 +41,10 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Delegate, Object)
     public:
     
-        static void init_meta();
+        static void     init_meta();
         
-        virtual bool configure(/* TBD */) { return true; }
+        virtual void    save(DelegateSave&) const {}
+        virtual void    load(const DelegateSave&) {}
         
     protected:
         Delegate();

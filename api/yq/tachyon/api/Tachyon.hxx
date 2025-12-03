@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
 
+#if 0
     struct Tachyon::LoadAPI {
         LoadContext&    context;
         //  TBD
@@ -28,6 +29,7 @@ namespace yq::tachyon {
     struct Tachyon::SaveContext {
         // map of tachyons
     };
+#endif
 
     ////////////////////////////////////////////
     //  Top-tachyon creates

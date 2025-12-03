@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveReply)
 
 namespace yq::tachyon {
 
-    SaveReply::SaveReply(const Header& h, const RequestCPtr&req, const SaveSPtr&save) :
+    SaveReply::SaveReply(const Header& h, const RequestCPtr&req, const SavePtr&save) :
         IOReply(h, req), m_save(save)
     {
     }
 
-    SaveReply::SaveReply(const Header& h, const RequestCPtr&req, SaveSPtr&& save) :
+    SaveReply::SaveReply(const Header& h, const RequestCPtr&req, SavePtr&& save) :
         IOReply(h, req), m_save(std::move(save))
     {
     }

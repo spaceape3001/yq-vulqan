@@ -5,15 +5,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Builder.hpp"
+#include <yq/errors.hpp>
 
 namespace yq::tachyon {
-    Builder::Builder(Builder* parent) : m_parent(parent)
+    Builder::Builder(Save*s) : m_save(s)
     {
-        if(m_parent)
-            m_parent -> m_children.push_back(this);
     }
     
     Builder::~Builder()
     {
     }
+
+#if 0
+    std::error_code Builder::load1_create(LoadAPI&) const
+    {
+        return {};
+    }
+    
+    std::error_code Builder::load2_configure(LoadAPI&) const
+    {
+        return {};
+    }
+#endif
 }

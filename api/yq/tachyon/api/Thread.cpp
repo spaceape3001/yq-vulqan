@@ -12,16 +12,16 @@
 #include <yq/tachyon/api/ThreadMetaWriter.hpp>
 
 #include <yq/tachyon/api/AsyncTask.hpp>
-//#include <yq/tachyon/io/Save.hpp>
+#include <yq/tachyon/io/Save.hpp>
 //#include <yq/tachyon/io/save/SaveXML.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/stream/Logger.hpp>
 #include <yq/tachyon/logging.hpp>
-//#include <yq/tachyon/command/io/SaveCommand.hpp>
+#include <yq/tachyon/command/io/SaveCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/event/thread/ThreadAddTachyonEvent.hpp>
-//#include <yq/tachyon/reply/io/SaveReply.hpp>
-//#include <yq/tachyon/request/io/SaveRequest.hpp>
+#include <yq/tachyon/reply/io/SaveReply.hpp>
+#include <yq/tachyon/request/io/SaveRequest.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
@@ -105,9 +105,9 @@ namespace yq::tachyon {
         auto w = writer<Thread>();
         w.description("Thread of execution");
         w.slot(&Thread::on_schedule_command);
-        //w.slot(&Thread::on_save_command);
-        //w.slot(&Thread::on_save_reply);
-        //w.slot(&Thread::on_save_request);
+        w.slot(&Thread::on_save_command);
+        w.slot(&Thread::on_save_reply);
+        w.slot(&Thread::on_save_request);
         
         auto wt = writer<ThreadID>();
         wt.description("Thread Identifier");
@@ -340,7 +340,6 @@ namespace yq::tachyon {
         m_thread.join();
     }
 
-#if 0
     void Thread::on_save_command(const Ref<const SaveCommand>& cmd)
     {
         if(!cmd)
@@ -373,13 +372,10 @@ namespace yq::tachyon {
             tachyonInfo << "Save command has no filepath, aborting";
             return;
         }
-            
-        SaveXML sxml;
-        sxml.save   = rep.save();
-        std::error_code ec = sxml.save_to(cmd->filepath());
-        if(ec != std::error_code()){
+
+        std::error_code ec  = rep.save()->save_to(cmd->filepath());
+        if(ec != std::error_code())
             tachyonError << "Unable to save file: " << cmd->filepath() << " due to " << ec.message();
-        }
     }
 
     void Thread::on_save_request(const Ref<const SaveRequest>& req)
@@ -389,15 +385,15 @@ namespace yq::tachyon {
         if(req->target() != id())
             return ;
             
-        SaveSPtr        save    = std::make_shared<Save>(req->options());
-        
+        SavePtr         save    = new Save;
+        save -> flags   = req->flags();
+
         TachyonIDSet    tachyons;
-        bool            selective   = !tachyons.empty();
-        
-        if(tachyons.empty() || !req->option(SaveOption::OnlyChildren))
+        bool    selective   = !req->tachyons().empty();
+        if(!req->flag(SaveFlag::OnlyChildren))
             tachyons    = req->tachyons();
         
-        if(selective && !req->option(SaveOption::SkipChildren)){
+        if(selective && !req->flag(SaveFlag::SkipChildren)){
             const Frame*    frame   = Frame::current();
             if(frame){  // *SHOULD* be present
                 for(TachyonID t : req->tachyons()){
@@ -408,21 +404,19 @@ namespace yq::tachyon {
             }
         }
         
-        if(req->option(SaveOption::DoThreads) || tachyons.contains(id())){
-            save->insert(*this);
-        }
+        if(req->flag(SaveFlag::DoThreads) || tachyons.contains(id()))
+            *save << *this;
         
         for(auto& itr : m_objects){
             if(selective && !tachyons.contains(itr.first))
                 continue;
             if(!itr.second.object)
                 continue;
-            save->insert(*(itr.second.object));
+            *save << *itr.second.object;
         }
             
         send(new SaveReply({.source=*this, .target=req->source()}, req, std::move(save)));
     }
-#endif
 
     void Thread::on_schedule_command(const ScheduleCommand&cmd)
     {

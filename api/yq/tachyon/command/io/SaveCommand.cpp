@@ -11,17 +11,25 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveCommand)
 
 namespace yq::tachyon {
 
-    SaveCommand::SaveCommand(const Header&h, const std::filesystem::path& fp) : SaveCommand(h, fp, Param())
+    SaveCommand::SaveCommand(const Header&h, const std::filesystem::path& fp) : 
+        SaveCommand(h, fp, Param())
     {
     }
 
     SaveCommand::SaveCommand(const Header&h, const std::filesystem::path& fp, const Param& p) : 
-        IOCommand(h), m_filepath(fp), m_tachyons(p.tachyons), m_thread(p.thread), m_options(p.options)
+        IOCommand(h), 
+        m_filepath(fp), 
+        m_flags(p.flags),
+        m_tachyons(p.tachyons), 
+        m_thread(p.thread)
     {
     }
 
     SaveCommand::SaveCommand(const SaveCommand& cp, const Header& h) : IOCommand(cp, h), 
-        m_filepath(cp.m_filepath), m_tachyons(cp.m_tachyons), m_thread(cp.m_thread), m_options(cp.m_options)
+        m_filepath(cp.m_filepath), 
+        m_flags(cp.m_flags),
+        m_tachyons(cp.m_tachyons), 
+        m_thread(cp.m_thread)
     {
     }
     

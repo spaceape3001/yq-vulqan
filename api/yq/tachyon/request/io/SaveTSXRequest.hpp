@@ -9,7 +9,7 @@
 #include <yq/tachyon/request/IORequest.hpp>
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/api/StdThread.hpp>
-#include <yq/tachyon/typedef/save.hpp>
+#include <yq/tachyon/enum/SaveFlags.hpp>
 #include <filesystem>
 
 namespace yq::tachyon {
@@ -18,15 +18,15 @@ namespace yq::tachyon {
     public:
         static void init_meta();
         
-        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, SaveOptions opts={});
-        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, const TachyonIDSet&, SaveOptions opts={});
-        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, TachyonIDSet&&, SaveOptions opts={});
+        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, SaveFlags opts={});
+        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, const TachyonIDSet&, SaveFlags opts={});
+        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, TachyonIDSet&&, SaveFlags opts={});
         SaveTSXRequest(const SaveTSXRequest&, const Header&);
         
         const std::filesystem::path&    filepath() const { return m_filepath; }
         const ThreadSpec&               thread() const { return m_thread; }
         const TachyonIDSet&             tachyons() const { return m_tachyons; }
-        SaveOptions                     options() const { return m_options; }
+        SaveFlags                       flags() const { return m_flags; }
         
     protected:
         virtual PostCPtr clone(rebind_k, const Header&) const;
@@ -36,7 +36,7 @@ namespace yq::tachyon {
         std::filesystem::path   m_filepath;
         ThreadSpec              m_thread;
         TachyonIDSet            m_tachyons;
-        SaveOptions             m_options;
+        SaveFlags               m_flags;
 
         SaveTSXRequest(const SaveTSXRequest&) = delete;
         SaveTSXRequest(SaveTSXRequest&&) = delete;

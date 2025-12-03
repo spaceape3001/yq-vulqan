@@ -28,6 +28,7 @@
 //#include <yq/tachyon/typedef/controller.hpp>
 #include <concepts>
 #include <iosfwd>
+#include <system_error>
 #include <utility>
 
 
@@ -64,6 +65,9 @@ namespace yq::tachyon {
     struct TachyonData;
     struct TachyonSnap;
     class DelegateProperty;
+    
+    class TachyonSave;
+    struct LoadAPI;
     
     class TachyonMeta : public ObjectMeta {
     public:
@@ -114,7 +118,7 @@ namespace yq::tachyon {
 
         static const std::vector<const TachyonMeta*>&    all();
         
-        const auto&     dispatch_map() const { return m_dispatch; }
+        const auto&         dispatch_map() const { return m_dispatch; }
 
     protected:
     
@@ -277,11 +281,6 @@ namespace yq::tachyon {
 
         class Helper;
         
-        struct LoadAPI;
-        struct SaveAPI;
-        struct LoadContext;
-        struct SaveContext;
-        
         /*! \brief Quick identity
         
             Used for logging to the logger (class/id)
@@ -316,16 +315,16 @@ namespace yq::tachyon {
         
         static void         init_meta();
         
-        Any                 attribute(int) const;
-        Any                 attribute(const std::string&) const;
+        //Any                 attribute(int) const;
+        //Any                 attribute(const std::string&) const;
         
         
         const std::vector<TypedID>& children() const { return m_children; }
         
         bool                dying() const;
         
-        bool                has_attribute(int) const;
-        bool                has_attribute(const std::string&) const;
+        //bool                has_attribute(int) const;
+        //bool                has_attribute(const std::string&) const;
         
         // Mail this post to the given tachyon...
         //static void         mail(TachyonID, const PostCPtr&);
@@ -480,6 +479,20 @@ namespace yq::tachyon {
         void            cmd_teardown() { teardown(); }
 
         ////////////////////////////////////////////////////////////
+        //  Save/Load (v2.0)
+        
+        //! A chance to export your state
+        virtual void    save(TachyonSave&) const {}
+        
+        //! A chance to import state from the save
+        //!
+        //! Used during the load process; registered savable properties, delegates, & 
+        //! resources will have been set.  However, this will be called prior to scheduling,
+        //! therefore neither setup() nor tick() have been called, nor will this be on the
+        //! frame.
+        virtual void     load(const TachyonSave&) {}
+
+        ////////////////////////////////////////////////////////////
         //  Load here... dying
 
         //! called by the save/load API (assumed thread-safe)
@@ -487,6 +500,8 @@ namespace yq::tachyon {
 
         //! called by the save/load API (assumed thread-safe)
         void    load_add_child(TypedID);
+
+#if 0
 
         // This bit... deprecated
         const AttrIDMap&    prog_attributes() const { return m_progAttrs; }
@@ -510,6 +525,7 @@ namespace yq::tachyon {
         
         void    set_attribute(int, const Any&);
         void    set_attribute(std::string_view, const Any&);
+#endif
 
     protected:
 
@@ -649,14 +665,14 @@ namespace yq::tachyon {
             properties/resources/delegates already set, this allows for 
             non-configurable properties, states, etc
         */
-        virtual std::error_code load(const LoadAPI&) { return {}; }
+        //virtual std::error_code load(const LoadAPI&) { return {}; }
         
         /*! \brief *SAVE* a tachyon 
         
             This *saves* a tachyon (don't worry about properties, delegates,
             resources, those are already saved).
         */
-        virtual void    save(SaveAPI&) const {}
+        //virtual void    save(SaveAPI&) const {}
 
         /*! \brief DIRECTLY HANDLES the specified post
         
@@ -751,8 +767,8 @@ namespace yq::tachyon {
         TachyonData*                m_data          = nullptr;
         const Context*              m_context       = nullptr;
         std::atomic<unsigned int>   m_thread        = kInvalidThread;
-        AttrIDMap                   m_progAttrs;
-        AttrKeyMap                  m_userAttrs;
+        //AttrIDMap                   m_progAttrs;
+        //AttrKeyMap                  m_userAttrs;
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
     protected:

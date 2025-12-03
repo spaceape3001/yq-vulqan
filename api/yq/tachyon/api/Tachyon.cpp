@@ -520,6 +520,7 @@ namespace yq::tachyon {
         return {};
     }
 
+#if 0
     Any     Tachyon::attribute(int k) const
     {
         auto i = m_progAttrs.find(k);
@@ -535,7 +536,7 @@ namespace yq::tachyon {
             return i->second;
         return Any();
     }
-
+#endif
     
     bool    Tachyon::check_parent_thread()
     {
@@ -787,6 +788,7 @@ namespace yq::tachyon {
     {
     }
 
+#if 0
     bool                Tachyon::has_attribute(int k) const
     {
         return m_progAttrs.contains(k);
@@ -796,6 +798,7 @@ namespace yq::tachyon {
     {
         return m_userAttrs.contains(k);
     }
+#endif
 
     TypedID             Tachyon::id(typed_k) const
     {
@@ -828,6 +831,7 @@ namespace yq::tachyon {
         _subscribe(tid, MG::Children);
     }
 
+#if 0
     void  Tachyon::load_attributes(const AttrIDMap& attrs)
     {
         m_progAttrs = attrs;
@@ -847,6 +851,7 @@ namespace yq::tachyon {
     {
         m_userAttrs = std::move(attrs);
     }
+#endif
 
     void    Tachyon::load_set_parent(TypedID tid)
     {
@@ -939,11 +944,12 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return ;
-        
+#if 0        
         if(auto p = std::get_if<int>(&cmd.key()))
             m_progAttrs[*p] = cmd.value();
         if(auto p = std::get_if<std::string>(&cmd.key()))
             m_userAttrs[*p] = cmd.value();
+#endif
     }
 
     void    Tachyon::on_set_name_command(const SetNameCommand& cmd)
@@ -1064,6 +1070,7 @@ namespace yq::tachyon {
         }
     }
 
+#if 0
     void  Tachyon::set_attribute(int k, const Any& v)
     {
         mail(new SetAttributeCommand({.target=*this}, k, v));
@@ -1073,6 +1080,7 @@ namespace yq::tachyon {
     {
         mail(new SetAttributeCommand({.target=*this}, std::string(k), v));
     }
+#endif
 
     void Tachyon::set_name(std::string_view k)
     {
@@ -1100,8 +1108,8 @@ namespace yq::tachyon {
         snap.teardown   = m_stage >= Stage::Teardown;
         snap.name       = m_name;
         
-        snap.userattrs  = m_userAttrs;
-        snap.progattrs  = m_progAttrs;
+        //snap.userattrs  = m_userAttrs;
+        //snap.progattrs  = m_progAttrs;
         
         for(const InterfaceMeta* ii : metaInfo().interfaces(ALL).all){
             Proxy*  p   = ii->proxy(const_cast<Tachyon*>(this));

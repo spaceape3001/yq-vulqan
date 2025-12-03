@@ -4,6 +4,11 @@
 ##
 ################################################################################
 
+find_package(Freetype)
+
+add_executable(fontinfo fontinfo.cpp)
+target_include_directories(fontinfo PRIVATE ${FREETYPE_INCLUDE_DIRS})
+target_link_libraries(fontinfo PRIVATE ${FREETYPE_LIBRARIES} )
 
 add_executable(glfw_joysticks glfw_joysticks.cpp)
 target_link_libraries(glfw_joysticks ${GLFW3_LIBRARY} )

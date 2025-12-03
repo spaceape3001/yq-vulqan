@@ -350,7 +350,7 @@ namespace yq::tachyon {
     namespace errors {
         using namespace ::yq::errors;
         
-        using bad_resource             = error_db::entry<"Save unable to create resource">;
+        using bad_resource          = error_db::entry<"Save unable to create resource">;
         using bad_delegate          = error_db::entry<"Save unable to create delegate">;
         using bad_tachyon           = error_db::entry<"Save unable to create tachyon">;
         using bad_thread            = error_db::entry<"Save unable to create thread">;
@@ -388,7 +388,7 @@ namespace yq::tachyon {
     
         const Save&                             m_save;
         const ReincarnationConfig&              m_config;
-        std::map<uint64_t, resource_t>             m_resources;
+        std::map<uint64_t, resource_t>          m_resources;
         std::map<uint64_t, delegate_t>          m_delegates;
         std::map<uint64_t, tachyon_t>           m_tachyons;
         std::map<uint64_t, thread_t>            m_threads;

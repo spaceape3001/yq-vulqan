@@ -13,7 +13,7 @@
 #include <yq/tachyon/typedef/delegate.hpp>
 
 namespace yq::tachyon {
-    class DelegateSave;
+    class StateSave;
 
     class DelegateMeta : public ObjectMeta {
     public:
@@ -43,8 +43,8 @@ namespace yq::tachyon {
     
         static void     init_meta();
         
-        virtual void    save(DelegateSave&) const {}
-        virtual void    load(const DelegateSave&) {}
+        virtual void    save(StateSave&) const {}
+        virtual void    load(const StateSave&) {}
         
     protected:
         Delegate();

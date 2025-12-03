@@ -81,6 +81,7 @@ public:
     static void             init_meta();
 
     struct Param : public CompositeWidget::Param {
+        std::filesystem::path   load;
     };
 
     SceneEditor();

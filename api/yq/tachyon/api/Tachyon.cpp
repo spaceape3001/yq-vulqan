@@ -520,8 +520,7 @@ namespace yq::tachyon {
         return {};
     }
 
-#if 0
-    Any     Tachyon::attribute(int k) const
+    Any     Tachyon::attribute(uint32_t k) const
     {
         auto i = m_progAttrs.find(k);
         if(i != m_progAttrs.end())
@@ -536,7 +535,6 @@ namespace yq::tachyon {
             return i->second;
         return Any();
     }
-#endif
     
     bool    Tachyon::check_parent_thread()
     {
@@ -788,8 +786,7 @@ namespace yq::tachyon {
     {
     }
 
-#if 0
-    bool                Tachyon::has_attribute(int k) const
+    bool                Tachyon::has_attribute(uint32_t k) const
     {
         return m_progAttrs.contains(k);
     }
@@ -798,7 +795,6 @@ namespace yq::tachyon {
     {
         return m_userAttrs.contains(k);
     }
-#endif
 
     TypedID             Tachyon::id(typed_k) const
     {
@@ -831,27 +827,25 @@ namespace yq::tachyon {
         _subscribe(tid, MG::Children);
     }
 
-#if 0
-    void  Tachyon::load_attributes(const AttrIDMap& attrs)
+    void  Tachyon::load_attributes(const AttrIDMMap& attrs)
     {
         m_progAttrs = attrs;
     }
     
-    void  Tachyon::load_attributes(AttrIDMap&& attrs)
+    void  Tachyon::load_attributes(AttrIDMMap&& attrs)
     {
         m_progAttrs = std::move(attrs);
     }
 
-    void  Tachyon::load_attributes(const AttrKeyMap& attrs)
+    void  Tachyon::load_attributes(const AttrKeyMMap& attrs)
     {
         m_userAttrs = attrs;
     }
 
-    void  Tachyon::load_attributes(AttrKeyMap&& attrs)
+    void  Tachyon::load_attributes(AttrKeyMMap&& attrs)
     {
         m_userAttrs = std::move(attrs);
     }
-#endif
 
     void    Tachyon::load_set_parent(TypedID tid)
     {
@@ -944,12 +938,10 @@ namespace yq::tachyon {
     {
         if(cmd.target() != id())
             return ;
-#if 0        
-        if(auto p = std::get_if<int>(&cmd.key()))
+        if(auto p = std::get_if<uint32_t>(&cmd.key()))
             m_progAttrs[*p] = cmd.value();
         if(auto p = std::get_if<std::string>(&cmd.key()))
             m_userAttrs[*p] = cmd.value();
-#endif
     }
 
     void    Tachyon::on_set_name_command(const SetNameCommand& cmd)

@@ -15,7 +15,7 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(SetAttributeCommand, TachyonCommand)
     public:
     
-        using key_spec_t = std::variant<std::monostate, int, std::string>;
+        using key_spec_t = std::variant<std::monostate, uint32_t, std::string>;
     
         SetAttributeCommand(const Header&, key_spec_t, const Any&);        
         SetAttributeCommand(const Header&, key_spec_t, Any&&);        

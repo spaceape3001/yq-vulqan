@@ -16,6 +16,9 @@
 #include <variant>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/MG.hpp>
+#include <yq/typedef/any_maps.hpp>
+#include <yq/typedef/string_maps.hpp>
+
 
 namespace yq { 
     template <typename> class Ref;
@@ -57,8 +60,8 @@ namespace yq::tachyon {
     using TachyonSpec  = std::variant<std::monostate, TachyonID, TypedID>;
 
     //! Application defined custom attributes
-    using AttrIDMap         = std::map<int,Any>;
+    using AttrIDMMap   = uint32_any_map_t;
     
     //! User defined custom attributes
-    using AttrKeyMap        = std::map<std::string,Any,IgCase>;
+    using AttrKeyMMap  = string_any_map_t;
 }

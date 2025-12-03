@@ -98,15 +98,8 @@ namespace yq::tachyon {
         static void     schedule(ThreadID,  AsyncTaskUPtr&&);
         static void     schedule(StdThread, AsyncTaskUPtr&&);
         
-        virtual void    save(ThreadSave&) const {};
-        virtual void    load(const ThreadSave&) const {};
-
     protected:
         
-            // terminate these
-        void save(TachyonSave&) const override final {}
-        void load(const TachyonSave&) override final {}
-    
         virtual Execution   tick(const Context&) override final;
         virtual Execution   teardown(const Context&) override final;
         

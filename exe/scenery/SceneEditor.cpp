@@ -376,6 +376,7 @@ SceneEditor::SceneEditor() : SceneEditor(Param())
 
 SceneEditor::SceneEditor(const Param& p)
 {
+    m_filepath  = p.load;
 }
 
 SceneEditor::~SceneEditor()
@@ -1170,6 +1171,10 @@ Execution   SceneEditor::setup(const Context&ctx)
     
     if(m_scene.rebuild)
         _rebuild();
+        
+    if(!m_filepath.empty()){
+        _open(m_filepath);
+    }
     
     return ret;
 }

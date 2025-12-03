@@ -7,6 +7,7 @@
 #pragma once
 
 #include <memory>
+#include <yq/core/Expect.hpp>
 #include <yq/core/Flags.hpp>
 
 namespace yq {
@@ -41,6 +42,8 @@ namespace yq::tachyon {
 
     using SavePtr           = Ref<Save>;
     using SaveCPtr           = Ref<const Save>;
+    
+    using save_ptr_x        = Expect<SavePtr>;
 
     //class Reincarnation;
     //using ReincarnationSPtr = std::shared_ptr<Reincarnation>;

@@ -13,7 +13,7 @@
 #include <yq/tachyon/api/ManagerMetaWriter.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/io/Save.hpp>
-#include <yq/tachyon/io/save/SaveXML.hpp>
+//#include <yq/tachyon/io/SaveXML.hpp>
 #include <yq/tachyon/reply/io/LoadTSXReply.hpp>
 #include <yq/tachyon/reply/io/SaveReply.hpp>
 #include <yq/tachyon/reply/io/SaveTSXReply.hpp>
@@ -51,20 +51,19 @@ namespace yq::tachyon {
             return;
         }
         
-        SaveXML sxml;
-        std::error_code ec  = sxml.load(req->filepath());
-        if(ec != std::error_code()){
-            tachyonWarning << "FileIOManager: Unable to load tsx file (" << req->filepath() << ") due to: " << ec.message();
+        SaveCPtr    sxml    = Save::IO::load(req->filepath(), { .cache=Tristate::No, .load=Tristate::Yes });
+        if(!sxml){
+            tachyonWarning << "FileIOManager: Unable to load file: " << req->filepath();
             send(new LoadTSXReply({.source=*this, .target=req->source()}, req, Response::IOError));
             return ;
         }
         
-        if(!sxml.save){
-            tachyonWarning << "FileIOManager: Unable to load tsx file (" << req->filepath() << ")";
-            send(new LoadTSXReply({.source=*this, .target=req->source()}, req, Response::IOError));
-            return ;
-        }
+        tachyonAlert << "FileIOManager: LoadTSXRequest is currently non-operational";
+        send(new LoadTSXReply({.source=*this, .target=req->source()}, req, Response::Failure));
         
+        
+
+    #if 0
         ReincarnationConfig config;
         config.owner    = req->thread();
         
@@ -80,6 +79,7 @@ namespace yq::tachyon {
         }
         
         send(new LoadTSXReply({.source=*this, .target=req->source()}, req, std::move(tachs)));
+    #endif
     }
 
     void FileIOManager::on_save_reply(const Ref<const SaveReply>&rep)
@@ -104,9 +104,8 @@ namespace yq::tachyon {
             return ;
         }
         
-        SaveXML     sxml;
-        sxml.save   = rep->save();
-        std::error_code ec  = sxml.save_to(req->filepath());
+        SaveCPtr    sxml    = rep->save();
+        std::error_code ec  = sxml->save_to(req->filepath(), { .collision=FileCollisionStrategy::Backup });
         if(ec != std::error_code()){
             tachyonWarning << "FileIOManager: Unable to save tsx file (" << req->filepath() << ") due to: " << ec.message();
             send(new SaveTSXReply({ .source=*this, .target=req->source()}, req, Response::IOError));
@@ -129,10 +128,10 @@ namespace yq::tachyon {
 
         if(auto p = std::get_if<ThreadID>(&req->thread())){
             TypedID     tid(p->id, Type::Thread);
-            send(new SaveRequest({.cause=req, .source=*this, .target=tid}, req->tachyons(), req->options()));
+            send(new SaveRequest({.cause=req, .source=*this, .target=tid}, req->tachyons(), req->flags()));
         } else if(auto p = std::get_if<StdThread>(&req->thread())){
             TypedID    tid(Thread::standard(*p).id, Type::Thread);
-            send(new SaveRequest({.cause=req, .source=*this, .target=tid}, req->tachyons(), req->options()));
+            send(new SaveRequest({.cause=req, .source=*this, .target=tid}, req->tachyons(), req->flags()));
         } else {
             send(new SaveTSXReply({.source = *this, .target=req->source()}, req, Response::InvalidArg));
             return ;

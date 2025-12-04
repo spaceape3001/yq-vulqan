@@ -58,19 +58,18 @@ namespace yq::tachyon {
             return ;
         }
 
-        ReincarnationConfig config;
-        config.owner    = req->thread();
-        
         if(req->prep())
             req->prep()();
         
         TachyonIDSet        tachs;
-        std::error_code ec = sxml -> execute(SCHEDULE, config, &tachs);
+        std::error_code ec = sxml -> execute(SCHEDULE, req->config(), &tachs);
         if(ec != std::error_code()){
             tachyonWarning << "FileIOManager: Unable to load/schedule tsx file (" << req->filepath() << ") due to: " << ec.message();
             send(new LoadTSXReply({.source=*this, .target=req->source()}, req, Response::Failure));
             return ;
         }
+        
+        tachyonInfo << "FileIOManager: Loaded & executed " << tachs.size() << " tachyon(s) from: " << req->filepath();
         
         send(new LoadTSXReply({.source=*this, .target=req->source()}, req, std::move(tachs)));
     }

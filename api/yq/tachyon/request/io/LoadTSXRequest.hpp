@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/tachyon/io/ReincarnationConfig.hpp>
 #include <yq/tachyon/request/IORequest.hpp>
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/api/StdThread.hpp>
@@ -23,11 +24,11 @@ namespace yq::tachyon {
         
             \note Any Prep FN will be executed on the callee's thread!
         */
-        LoadTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, PrepFN&& fn={});
+        LoadTSXRequest(const Header&, const std::filesystem::path&, const ReincarnationConfig& cfg, PrepFN&& fn={});
         PostCPtr clone(rebind_k, const Header&) const override;
         
         const std::filesystem::path&    filepath() const { return m_filepath; }
-        const ThreadSpec&               thread() const { return m_thread; }
+        const ReincarnationConfig&      config() const { return m_config; }
         const PrepFN&                   prep() const { return m_prep; }
 
     protected:
@@ -36,7 +37,7 @@ namespace yq::tachyon {
 
     private:
         std::filesystem::path   m_filepath;
-        ThreadSpec              m_thread;
+        ReincarnationConfig     m_config;
         PrepFN                  m_prep;
 
         LoadTSXRequest(const LoadTSXRequest&) = delete;

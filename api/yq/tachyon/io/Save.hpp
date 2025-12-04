@@ -6,6 +6,9 @@
 
 #pragma once
 
+#include <yq/tachyon/io/ReincarnationConfig.hpp>
+#include <yq/tachyon/io/SaveData.hpp>
+
 #include <yq/net/Url.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/tachyon/keywords.hpp>
@@ -13,7 +16,6 @@
 #include <yq/tachyon/api/StdThread.hpp>
 #include <yq/tachyon/enum/SaveFlags.hpp>
 #include <yq/tachyon/enum/SaveType.hpp>
-#include <yq/tachyon/typedef/builder.hpp>
 #include <yq/tachyon/typedef/save.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
@@ -24,62 +26,6 @@
 namespace yq::tachyon {
     class Tachyon;
     class Delegate;
-
-    using save_origin_t          = std::variant<std::monostate, std::string, Url>;
-    using save_value_t           = std::variant<std::monostate, Any, uint64_t>;
-    using save_key_t             = std::variant<std::monostate, uint32_t, std::string>;
-    using save_u32_value_map_t   = std::map<uint32_t, save_value_t>;
-    using save_str_value_map_t   = std::map<std::string, save_value_t, IgCase>;
-    using save_str_value_xmap_t  = std::map<std::string, save_value_t>;
-
-    using save_u32_value_mmap_t  = std::multimap<uint32_t, save_value_t>;
-    using save_str_value_mmap_t  = std::multimap<std::string, save_value_t, IgCase>;
-    using save_str_value_xmmap_t = std::multimap<std::string, save_value_t>;
-
-    struct ObjectSave {
-        std::string             class_;
-        string_u64_xmap_t       idprops;
-        save_origin_t           origin; 
-        save_str_value_xmap_t   properties;
-    };
-    
-    using uint32_u64_mmap_t     = std::multimap<uint32_t, uint64_t>;
-    
-    struct StateSave {
-        save_str_value_xmap_t   ustate;
-        save_u32_value_mmap_t   pstate;
-        
-        save_value_t            state(uint32_t) const;
-        save_value_t            state(const std::string&) const;
-    };
-    
-    struct DelegateSave : public ObjectSave, public StateSave {
-        uint64_t                id      = 0;
-        
-        // expect delegates to fill in (& read)
-    };
-
-    using owner_spec_t = std::variant<std::monostate, uint64_t, StdThread>;
-
-    struct TachyonSave : public ObjectSave, public StateSave {
-        uint64_t                id      = 0;
-        uint64_t                parent  = 0;
-        owner_spec_t            owner;
-        string_u64_xmap_t       delegates;
-        string_url_xmap_t       resources;
-        std::vector<uint64_t>   children;
-        string_any_map_t        uattrs;     // user defined attributes
-        uint32_any_map_t        pattrs;     // programmatically defined attributes (note, integer must be FIXED, forever)
-    };
-    
-    struct ThreadSave : public TachyonSave {
-    };
-
-    struct ReincarnationConfig {
-        TachyonID               parent;     //!< Used to force a parent (owner check auto-disabled)
-        save_str_value_map_t    variables;  //!< Used to override anything in the save
-        ThreadSpec              owner;      //!< Set to override threads (if scheduling)
-    };
 
     /*! \brief Threads
     

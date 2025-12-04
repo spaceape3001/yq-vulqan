@@ -164,6 +164,8 @@ namespace yq::tachyon {
         TextureCPtr     m_texture;
         #endif
         
+
+        std::error_code     load(const StateSave&) override;
         
         
         //template <typename C>

@@ -253,7 +253,6 @@ namespace yq::tachyon {
         struct tachyon_t {
             const TachyonSave*      save    = nullptr;
             TachyonPtr              tachyon;
-            bool                    nullpar = false;
         };
         
         struct thread_t {
@@ -468,7 +467,7 @@ namespace yq::tachyon {
             if(!isThread){
                 if(sv.parent)
                     t.load_set_parent(_old(TACHYON, sv.parent));
-
+                    
                 for(uint64_t i : sv.children)
                     t.load_add_child(_old(TACHYON, i));
                 
@@ -540,78 +539,67 @@ namespace yq::tachyon {
     
     std::error_code Save::execute(schedule_k, const ReincarnationConfig&config, TachyonIDSet* pIDs) const
     {
+        //tachyonInfo << "Save::execute() ... parent is " << config.parent.id;
+    
         Reincarnator    exec(*this, config, true);
         std::error_code ec  = exec.build();
         if(ec != std::error_code())
             return ec;
-            
-        // Scheduling....
-        if(config.parent){
-            const Frame* frame  = Frame::current();
-            if(!frame)
-                return errors::null_frame();
-                
-            //  alright, all things a go....
-            ThreadID        owner   = frame->owner(config.parent);
-            if(!owner)
-                return errors::null_parent();
-            
-            TypedID         ownerT( owner.id, Type::Thread );
-            
-            TachyonPtrVector    tachyons;
-            exec.extract(tachyons);
-            if(pIDs){
-                for(TachyonPtr& tp : tachyons)
-                    pIDs->insert(tp->id());
-            }
-            
-            for(auto & itr : exec.m_tachyons){
-                if(itr.second.nullpar){
-                    itr.second.tachyon->set_parent(config.parent);
-                }
-            }
-            
-            Tachyon::mail(owner, new ScheduleCommand({.target=ownerT}, std::move(tachyons)));
-            return {};
-        } else if(auto p = std::get_if<StdThread>(&config.owner)){
-            ThreadID        owner   = Thread::standard(*p);
-            if(!owner)
-                return errors::null_owner();
-            TypedID         ownerT( owner.id, Type::Thread );
-                
-            TachyonPtrVector    tachyons;
-            exec.extract(tachyons);
-            if(pIDs){
-                for(TachyonPtr& tp : tachyons)
-                    pIDs->insert(tp->id());
-            }
 
-            Tachyon::mail(owner, new ScheduleCommand({.target=ownerT}, std::move(tachyons)));
-            return {};
+        const Frame* frame  = Frame::current();
+        if(!frame)
+            return errors::null_frame();
+
+
+        ThreadID        owner;
+        if(auto p = std::get_if<StdThread>(&config.owner)){
+            owner   =  Thread::standard(*p);
+            //tachyonInfo << "Save::execute() ... thread is " << p->key() << " (" << owner.id << ")";        
         } else if(auto p = std::get_if<ThreadID>(&config.owner)){
-            ThreadID        owner   = *p;
-            TachyonPtrVector    tachyons;
-            TypedID         ownerT( owner.id, Type::Thread );
-            exec.extract(tachyons);
-            if(pIDs){
-                for(TachyonPtr& tp : tachyons)
-                    pIDs->insert(tp->id());
-            }
-
-            Tachyon::mail(owner, new ScheduleCommand({.target=ownerT}, std::move(tachyons)));
-            return {};
+            owner   = *p;
+            //tachyonInfo << "Save::execute() ... thread is " << p->id;        
+        } else if(config.parent){
+            owner   = frame->owner(config.parent);
+            //tachyonInfo << "Save::execute() ... parent thread is " << owner.id;
         } else {
-            if(!exec.m_threads.empty()){
-                Application* app    = Application::app();
-                if(!app)
-                    return errors::null_application();
-                for(auto& th : exec.m_threads)
-                    app->start_thread(th.second.thread);
-            }
-            
-            // TODO
+            owner   = Thread::current()->id();
+            //tachyonInfo << "Save::execute() ... current thread is " << owner.id;
+        }
+        if(!owner)
+            return errors::null_owner();
+        TypedID     ownerT( owner.id, Type::Thread);
+
+        TachyonPtrVector    tachyons;
+        exec.extract(tachyons);
+        if(pIDs){
+            for(auto & itr : exec.m_tachyons)
+                pIDs->insert(itr.second.tachyon->id());
+        }
+
+        if(!exec.m_threads.empty()){
+            Application* app    = Application::app();
+            if(!app)
+                return errors::null_application();
+            for(auto& th : exec.m_threads)
+                app->start_thread(th.second.thread);
         }
         
-        return errors::todo();
+        for(auto& itr : exec.m_byThread){
+            if(config.parent){
+                for(TachyonPtr& tp : itr.second)
+                    tp->set_parent(config.parent);
+            }
+
+            //tachyonInfo << "Save::execute() ... scheduling " << itr.second.size() << " tachyon(s) on thread " << itr.first.id << " with default owner " << ownerT.id;
+            
+            if(!itr.first.id){ // this is to the owner
+                Tachyon::mail(ownerT, new ScheduleCommand({.target=ownerT}, std::move(itr.second)));
+            } else {
+                TypedID tgt( itr.first.id, Type::Thread);
+                Tachyon::mail(tgt, new ScheduleCommand({.target=tgt}, std::move(itr.second)));
+            }
+        }
+        
+        return {};
     }
 }

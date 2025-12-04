@@ -194,6 +194,14 @@ namespace yq::tachyon {
     {
     }
 
+
+    std::error_code     Shape³::load(const StateSave&ss) 
+    {
+        std::error_code ec  = Rendered³::load(ss);
+        rebuild();
+        return ec;
+    }
+
     Execution   Shape³::setup(const Context& ctx) 
     {
         rebuild();

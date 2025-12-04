@@ -26,6 +26,7 @@ namespace yq::tachyon {
         w.field("Name", &TachyonUI::name);
         w.field("Type", &TachyonUI::type);
         w.field("ID", &TachyonUI::id);
+        w.field("Parent", &TachyonUI::parent);
         w.field("Thread", &TachyonUI::thread);
         w.edits<Tachyon>();
     }
@@ -52,6 +53,11 @@ namespace yq::tachyon {
         ImGui::Text(bound().id);
     }
     
+    void    TachyonUI::parent()
+    {
+        ImGui::Text(snap()->parent.id);
+    }
+
     void    TachyonUI::type()
     {
         const Frame*    frame   = Frame::current();

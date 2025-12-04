@@ -251,7 +251,6 @@ namespace yq::tachyon {
         m_vxyz.update();
     }
 
-
     void Mesh³::rebuild()
     {
         if(!m_mesh){

@@ -80,10 +80,10 @@ namespace yq::tachyon {
 
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;
+        
 
     protected:
         //virtual void    mesh(emit_k) override;
-
     private:
     
         void    rebuild();  // called for all updates

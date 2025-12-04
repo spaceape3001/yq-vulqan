@@ -24,5 +24,6 @@ namespace yq::tachyon {
         void    type();
         void    name();
         void    thread();
+        void    parent();
     };
 }

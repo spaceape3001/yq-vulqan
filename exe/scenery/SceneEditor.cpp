@@ -646,8 +646,10 @@ void    SceneEditor::_default()
         for(TachyonPtr& tp : tachyons){
             if(dynamic_cast<SpaceCamera*>(tp.ptr()))
                 m_camera.space  = *tp;
-            if(dynamic_cast<SimpleScene*>(tp.ptr()))
-                m_scene.simple  = *tp;
+            if(auto p = dynamic_cast<SimpleScene*>(tp.ptr())){
+                m_scene.simple      = *p;
+                m_scene.selected    = p->id();
+            }
         }
     }
 
@@ -656,6 +658,7 @@ void    SceneEditor::_default()
         Scene*  scene   = create_on<SimpleScene>(AUX);
         scene->set_name("SceneEditor Default Scene");
         m_scene.simple  = *scene;
+        m_scene.selected    = scene -> id();
     }
     
     if(!m_camera.space){
@@ -697,7 +700,10 @@ void    SceneEditor::_lua(const std::filesystem::path& fp)
 
 void    SceneEditor::_open(const std::filesystem::path& fp)
 {
-    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, EDIT, SceneEditor::clear_edit_thread));
+    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, {
+        .owner  = EDIT,
+        .parent = TypedID(pointer(m_scene.selected))
+    }, SceneEditor::clear_edit_thread));
 }
 
 void    SceneEditor::_rebuild()
@@ -1172,9 +1178,8 @@ Execution   SceneEditor::setup(const Context&ctx)
     if(m_scene.rebuild)
         _rebuild();
         
-    if(!m_filepath.empty()){
+    if(!m_filepath.empty())
         _open(m_filepath);
-    }
     
     return ret;
 }

@@ -34,11 +34,13 @@ namespace yq::tachyon {
         using bad_thread            = error_db::entry<"Save unable to create thread">;
         using bad_parent            = error_db::entry<"Save unable to associate tachyon's parent">;
         using bad_owner             = error_db::entry<"Save unable to associate tachyon's owner">;
+        using bad_property          = error_db::entry<"Save unable to associate object's property">;
         using invalid_id_property   = error_db::entry<"Bad ID property">;
         using null_application      = error_db::entry<"Application not found">;
         using null_frame            = error_db::entry<"Requested frame not found">;
         using null_owner            = error_db::entry<"Requested owner not found">;
         using null_parent           = error_db::entry<"Requested parent not found">;
+        using duplicate_id          = error_db::entry<"Duplicate ID detected">;
     }
 
     namespace {
@@ -245,7 +247,7 @@ namespace yq::tachyon {
         // structures
         struct delegate_t {
             const DelegateSave*     save    = nullptr;
-            DelegateCPtr            delegate;
+            DelegatePtr             delegate;
         };
         
         struct tachyon_t {
@@ -257,7 +259,6 @@ namespace yq::tachyon {
         struct thread_t {
             const ThreadSave*       save    = nullptr;
             ThreadPtr               thread;
-            TachyonPtrVector        tachyons;
         };
         
         
@@ -274,7 +275,35 @@ namespace yq::tachyon {
         std::map<ThreadID, TachyonPtrVector>    m_byThread; // zero is for those w/o threads
         std::map<StdThread, TachyonPtrVector>   m_stdThread;
         std::vector<TachyonID>                  m_topChild; //!< Top level child to what was passed in
+        std::map<uint64_t,uint64_t>             m_remap;
+        std::map<uint64_t,Delegate*>            m_old2delegate;
+        std::map<uint64_t,Tachyon*>             m_old2tachyon;
+        std::map<uint64_t,Thread*>              m_old2thread;
 
+        Delegate*        _old(delegate_k, uint64_t i) const
+        {
+            auto x = m_old2delegate.find(i);
+            if(x == m_old2delegate.end())
+                return nullptr;
+            return x->second;
+        }
+
+        Tachyon*        _old(tachyon_k, uint64_t i) const
+        {
+            auto x = m_old2tachyon.find(i);
+            if(x == m_old2tachyon.end())
+                return nullptr;
+            return x->second;
+        }
+
+        Thread*        _old(thread_k, uint64_t i) const
+        {
+            auto x = m_old2thread.find(i);
+            if(x == m_old2thread.end())
+                return nullptr;
+            return x->second;
+        }
+        
         //  --------------------
         //  methods
 
@@ -289,7 +318,78 @@ namespace yq::tachyon {
 
         std::error_code build()
         {
-            return errors::todo();
+            std::error_code ec;
+            for(auto& d : m_save.delegates.data){
+                if(m_remap.contains(d.id))
+                    return errors::duplicate_id();
+
+                const DelegateMeta* dm  = dynamic_cast<const DelegateMeta*>(DelegateMeta::find(d.class_));
+                if(!dm)
+                    return errors::bad_delegate();
+
+                delegate_t& dd  = m_delegates[d.id];
+                dd.save     = &d;
+                dd.delegate = static_cast<Delegate*>(dm->create());
+                if(!dd.delegate)
+                    return errors::bad_delegate();
+                m_remap[d.id]    = dd.delegate->id();
+                m_old2delegate[d.id] = dd.delegate.ptr();
+            }
+            
+            for(auto& t : m_save.threads.data){
+                if(m_remap.contains(t.id))
+                    return errors::duplicate_id();
+
+                const ThreadMeta*   tm = dynamic_cast<const ThreadMeta*>(ThreadMeta::find(t.class_));
+                if(!tm) 
+                    return errors::bad_thread();
+                
+                thread_t&   tt = m_threads[t.id];
+                tt.save     = &t;
+                tt.thread   = static_cast<Thread*>(tm -> create());
+                if(!tt.thread)
+                    return errors::bad_thread();
+                m_remap[t.id]    = tt.thread->id();
+                m_old2tachyon[t.id] = tt.thread.ptr();
+                m_old2thread[t.id]  = tt.thread.ptr();
+            }
+
+            for(auto& t : m_save.tachyons.data){
+                if(m_remap.contains(t.id))
+                    return errors::duplicate_id();
+
+                const TachyonMeta* tm = dynamic_cast<const TachyonMeta*>(TachyonMeta::find(t.class_));
+                if(!tm)
+                    return errors::bad_tachyon();
+                tachyon_t&  tt  = m_tachyons[t.id];
+                tt.save     = &t;
+                tt.tachyon  = static_cast<Tachyon*>(tm -> create());
+                if(!tt.tachyon)
+                    return errors::bad_tachyon();
+                m_remap[t.id]    = tt.tachyon->id();
+                m_old2tachyon[t.id] = tt.tachyon.ptr();
+            }
+        
+            for(auto& d : m_delegates){
+                ec  = load(*d.second.delegate, *d.second.save);
+                if(ec != std::error_code())
+                    return ec;
+            }
+
+            for(auto& t : m_tachyons){
+                ec  = load(*t.second.tachyon, *t.second.save);
+                if(ec != std::error_code())
+                    return ec;
+
+            }
+
+            for(auto& t : m_threads){
+                ec  = load(*t.second.thread, *t.second.save);
+                if(ec != std::error_code())
+                    return ec;
+            }
+
+            return {};
         }
 
         void    extract(TachyonPtrVector& tachs)
@@ -297,6 +397,132 @@ namespace yq::tachyon {
             tachs.reserve(m_tachyons.size());
             for(auto& itr : m_tachyons)
                 tachs.push_back(itr.second.tachyon);
+        }
+        
+        uint64_t remap(uint64_t i, bool preserve=false) const
+        {
+            auto x = m_remap.find(i);
+            if(x == m_remap.end())
+                return preserve ? i : 0ULL;
+            return x->second;
+        }
+        
+        std::error_code load(Object& obj, const ObjectSave& sv)
+        {
+            std::error_code ec;
+            for(const PropertyMeta* p : obj.metaInfo().properties(ALL).all){
+                if(!p->tagged(kTag_Save))
+                    continue;
+                
+                auto x  = sv.properties.find(std::string(p->name()));
+                if(x == sv.properties.end())
+                    continue;
+                
+                if(p->tagged(kTag_TachyonID)){
+                    if(auto v = std::get_if<uint64_t>(&x->second)){
+                        if(p->type().id() == meta<TypedID>().id()){
+                            Tachyon*    t   = _old(TACHYON, *v);
+                            if(!t)
+                                continue;
+                            Any     val = Any::from(TypedID(*t));
+                            p->set(&obj, val);
+                            continue;
+                        } else if(p->type().size() == sizeof(uint64_t)){
+                            Any     val = Any(p->type(), (const void*) &*v);
+                            p->set(&obj, val);
+                            continue;
+                        }
+                        
+                        return errors::todo();
+                        
+                        
+                    } else
+                        return errors::bad_property();
+                } else {
+                    if(auto v = std::get_if<Any>(&x->second)){
+                        ec  = p->set(&obj, *v);
+                        if(ec != std::error_code())
+                            return ec;
+                    } else
+                        return errors::bad_property();
+                }
+            }
+        
+            return {};
+        }
+
+        std::error_code load(Delegate&d, const DelegateSave&sv)
+        {
+            // origin... 
+
+            std::error_code ec = load(static_cast<Object&>(d), static_cast<const ObjectSave&>(sv));
+            if(ec != std::error_code())
+                return ec;
+            return d.load(sv);
+        }
+
+        std::error_code load(Tachyon&t, const TachyonSave&sv, bool isThread=false)
+        {
+            // origin... 
+            
+            if(!isThread){
+                if(sv.parent)
+                    t.load_set_parent(_old(TACHYON, sv.parent));
+
+                for(uint64_t i : sv.children)
+                    t.load_add_child(_old(TACHYON, i));
+                
+                bool    pushed  = false;
+                
+                if(auto p = std::get_if<uint64_t>(&sv.owner)){
+                    uint64_t    thid    = remap(*p);
+                    if(thid){
+                        m_byThread[{thid}].push_back(&t);
+                        pushed  = true;
+                    }
+                } else if(auto p = std::get_if<StdThread>(&sv.owner)){
+                    m_stdThread[*p].push_back(&t);
+                    pushed   = true;
+                }
+                
+                if(!pushed)
+                    m_byThread[{0}].push_back(&t);
+            }
+            
+            std::error_code ec = load(static_cast<Object&>(t), static_cast<const ObjectSave&>(sv));
+            if(ec != std::error_code())
+                return ec;
+
+            t.load_attributes(sv.uattrs);
+            t.load_attributes(sv.pattrs);
+
+            for(const ResourceProperty * r : t.metaInfo().resources(ALL).all){
+                auto x = sv.resources.find(std::string(r->name()));
+                if(x == sv.resources.end())
+                    continue;
+            
+                ResourceCPtr        res = Resource::resource_load(x->second);
+                if(!res)
+                    return errors::bad_resource();
+                r->set(&t, res);
+            }
+
+            for(const DelegateProperty* d : t.metaInfo().delegates(ALL).all){
+                auto x = sv.delegates.find(std::string(d->name()));
+                if(x == sv.delegates.end())
+                    continue;
+                Delegate* dg    = _old(DELEGATE, x->second);
+                if(!dg)
+                    continue;
+                d -> set(&t, dg);
+            }
+
+            return t.load(sv);
+        }
+
+        std::error_code load(Thread&t, const ThreadSave&sv)
+        {
+            return load(static_cast<Tachyon&>(t), static_cast <const TachyonSave&>(sv));
         }
     };
 

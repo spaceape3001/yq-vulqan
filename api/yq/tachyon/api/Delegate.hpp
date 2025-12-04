@@ -41,10 +41,9 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(Delegate, Object)
     public:
     
-        static void     init_meta();
-        
-        virtual void    save(StateSave&) const {}
-        virtual void    load(const StateSave&) {}
+        static void                 init_meta();
+        virtual void                save(StateSave&) const {}
+        virtual std::error_code     load(const StateSave&) { return {}; }
         
     protected:
         Delegate();

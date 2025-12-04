@@ -91,6 +91,10 @@ void    recreate_simple_spatial()
     expect(true == is_close(tol, ss3->orientation(), ~k_quat));
     expect(true == is_close(tol, ss3->scale(), 1.0, -0.5, 3.0));
     expect(ss3->domain() == ss3->id());
+    
+    //SavePtr     save2   = new Save;
+    //save2->add(*ss3);
+    //save2->save_to("temp.tsx", { .collision=FileCollisionStrategy::Overwrite });
 }
 
 int main(int argc, char* argv[])

@@ -492,7 +492,7 @@ namespace yq::tachyon {
         //! resources will have been set.  However, this will be called prior to scheduling,
         //! therefore neither setup() nor tick() have been called, nor will this be on the
         //! frame.
-        virtual void     load(const StateSave&) {}
+        virtual std::error_code     load(const StateSave&) { return {}; }
 
         ////////////////////////////////////////////////////////////
         //  Load here... dying

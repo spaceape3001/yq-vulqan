@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/core/BasicAppConfig.hpp>
 #include <yq/core/Required.hpp>
 #include <yq/macro/debugrel.hpp>
 #include <yq/typedef/filesystem_path.hpp>
@@ -61,7 +62,7 @@ namespace yq::tachyon {
     };
 
     //! Info for initialization
-    struct AppCreateInfo {
+    struct AppCreateInfo : public BasicAppConfig {
         //! Application name
         std::string                 app_name;
         
@@ -69,7 +70,7 @@ namespace yq::tachyon {
         uint32_t                    app_version             = 0;
         
         bool                        headless                = false;
- 
+        
         /*! Primary Platform
             
             The primary platform is the one that we'll create viewer windows from.

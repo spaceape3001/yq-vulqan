@@ -23,7 +23,8 @@ Snippets meant for reuse.  Examples:
 
 ## Concepts
 
-"Save" is the unit that goes to the file... collection of builders.  Type of save... 
+"Save" is the unit that goes to the file... collection of smaller saves. 
+
 
 "Builder" is the thing that makes things. ... can be a delegate builder, tachyon builder, object builder, post builder, etc
 

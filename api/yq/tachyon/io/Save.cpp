@@ -42,9 +42,9 @@ namespace yq::tachyon {
     }
 
     namespace {
-        void    export_object(ObjectSave& sv, const Object& obj)
+        void    export_object(ObjectSave& sv, Save& ss, const Object& obj)
         {
-            sv.type     = std::string(obj.metaInfo().name());
+            sv.class_    = std::string(obj.metaInfo().name());
             for(const PropertyMeta* p : obj.metaInfo().properties(ALL).all){
                 if(!p->setter())   // it's read-only
                     continue;
@@ -58,25 +58,26 @@ namespace yq::tachyon {
 
                 if(p->tagged(kTag_TachyonID)){
                     TachyonID   tid = (*val).value<TachyonID>();
-                    sv.idprops[std::string(p->name())] = tid;
+                    sv.properties[std::string(p->name())] = (uint64_t) tid;
                 } else {
                     sv.properties[std::string(p->name())] = std::move(*val);
                 }
             }
         }
 
-        void    export_delegate(DelegateSave& sv, const Delegate& dlg)
+        void    export_delegate(DelegateSave& sv, Save& ss, const Delegate& dlg)
         {
-            export_object(sv, dlg);
+            export_object(sv, ss, dlg);
             sv.id      = dlg.id();
-            dlg.save(sv);
+            if(!ss.flags(SaveFlag::SkipState))
+                dlg.save(sv);
         }
 
         void    export_tachyon(TachyonSave& sv, Save& ss, const Tachyon& tac, bool isThread=false)
         {
             static const StdThreadRevMap threads  = Thread::standard_thread_reverse_map();
 
-            export_object(sv, tac);
+            export_object(sv, ss, tac);
             sv.id       = tac.id();
             sv.uattrs   = tac.user_attributes();
             sv.pattrs   = tac.prog_attributes();
@@ -112,13 +113,13 @@ namespace yq::tachyon {
                 sv.delegates[std::string(d->name())] = delegate->id();
             }
             
-            tac.save(sv);
+            if(!ss.flags(SaveFlag::SkipState))
+                tac.save(sv);
         }
 
         void    export_thread(ThreadSave& sv, Save& ss, const Thread& th)
         {
             export_tachyon(sv, ss, th, true);
-            th.save(sv);
         }
     }
 
@@ -143,7 +144,7 @@ namespace yq::tachyon {
         size_t  n   = delegates.data.size();
         delegates.data.push_back({});
         DelegateSave&   ret = delegates.data.back();
-        export_delegate(ret, dlg);
+        export_delegate(ret, *this, dlg);
         delegates.byId[ret.id]      = n;
         return ret;
     }
@@ -170,6 +171,13 @@ namespace yq::tachyon {
 
     Save&   Save::operator<<(const Object&  obj)
     {
+        add(obj);
+        return *this;
+    }
+
+
+    void    Save::add(const Object& obj)
+    {
         if(const Thread*p = dynamic_cast<const Thread*>(&obj)){
             _thread(*p);
         } else if(const Tachyon*p = dynamic_cast<const Tachyon*>(&obj)){
@@ -177,14 +185,59 @@ namespace yq::tachyon {
         } else if(const Delegate*p = dynamic_cast<const Delegate*>(&obj)){
             _delegate(*p);
         }
+    }
+
+    size_t  Save::count(delegate_k) const
+    {
+        return delegates.data.size();
+    }
     
-        return *this;
+    size_t  Save::count(tachyon_k) const
+    {
+        return tachyons.data.size();
+    }
+    
+    size_t  Save::count(thread_k) const
+    {
+        return threads.data.size();
     }
 
     size_t  Save::data_size() const 
     {
         return 0; // TODO
     }
+
+
+    const DelegateSave* Save::delegate(uint64_t i) const
+    {
+        auto x = delegates.byId.find(i);
+        if(x == delegates.byId.end())
+            return nullptr;
+        if(x->second >= delegates.data.size())
+            return nullptr;
+        return &delegates.data[x->second];
+    }
+    
+    const TachyonSave*  Save::tachyon(uint64_t i) const
+    {
+        auto x = tachyons.byId.find(i);
+        if(x == tachyons.byId.end())
+            return nullptr;
+        if(x->second >= tachyons.data.size())
+            return nullptr;
+        return &tachyons.data[x->second];
+    }
+    
+    const ThreadSave*   Save::thread(uint64_t i) const
+    {
+        auto x = threads.byId.find(i);
+        if(x == threads.byId.end())
+            return nullptr;
+        if(x->second >= threads.data.size())
+            return nullptr;
+        return &threads.data[x->second];
+    }
+
 
     //////////////////////////////////////
     struct Save::Reincarnator {

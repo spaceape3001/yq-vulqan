@@ -20,7 +20,10 @@ namespace yq::tachyon {
         SkipChildren,
         
         //! Want children, skip the listed
-        OnlyChildren
+        OnlyChildren,
+        
+        //! Skip state saving
+        SkipState
     };
     using SaveFlags = Flags<SaveFlag>;
 }

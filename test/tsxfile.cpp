@@ -10,8 +10,6 @@
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/tachyon/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/io/Save.hpp>
-#include <yq/tachyon/io/save/SaveXML.hpp>
-#include <yq/tachyon/io/save/SaveTachyon.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <yq/vector/Quaternion3.hxx>
 
@@ -35,41 +33,44 @@ void    create_spatial()
 
 void    write_simple_spatial()
 {
-    SaveXML     sxml;
+    SavePtr     save = new Save;
     
-    sxml.save       = std::make_shared<Save>();
-    sxml.save->insert(*g_spatial);
+    save->add(*g_spatial);
     
-    expect(sxml.save->count(OBJECT) == 1);
-    const SaveTachyon*   tac = sxml.save->tachyon(g_spatial->id());
+    expect(save->count(TACHYON) == 1);
+    
+    const TachyonSave*   tac = save->tachyon(g_spatial->id());
     
     expect(tac != nullptr);
-    if(tac){
-        expect(tac->count(PROPERTY) == 4);
-    }
+    if(tac)
+        expect(tac->properties.size() == 4);
     
-    std::error_code ec  = sxml.save_to("simple.tsx");
+    std::error_code ec  = save->save_to("simple.tsx", {.collision = FileCollisionStrategy::Overwrite });
     expect( ec == std::error_code() );
-    if(ec != std::error_code()){
+    if(ec != std::error_code())
         yInfo() << "Unable to save: " << ec.message();
-    }
 }
 
 void    recreate_simple_spatial()
 {
-    SaveXML sxml;
-    
-    std::error_code ec = sxml.load("simple.tsx");
-    expect( ec == std::error_code() );
-    if(ec != std::error_code()){
-        yInfo() << "Unable to load: " << ec.message();
-        return ;
+    SaveCPtr       save = Save::IO::load("simple.tsx");
+    expect( save.valid());
+    if(!save){
+        yInfo() << "Unable to load the test file";
+        return;
     }
-    if(!sxml.save)
-        return ;
+    
+    expect(save->count(TACHYON) == 1);
+    if(!save->tachyons.data.empty()){
+        const TachyonSave&  sv  = save->tachyons.data[0];
+        expect(sv.properties.contains("scale") == true);
+        expect(sv.properties.contains("domain") == true);
+        expect(sv.properties.contains("orientation") == true);
+        expect(sv.properties.contains("position") == true);
+    }
     
     TachyonPtrVector    result;
-    ec  = sxml.save->execute(result);
+    std::error_code ec  = save->execute(result);
     expect( ec == std::error_code() );
     if(ec != std::error_code()){
         yInfo() << "Unable to execute: " << ec.message();
@@ -95,8 +96,9 @@ void    recreate_simple_spatial()
 int main(int argc, char* argv[])
 {
     AppCreateInfo   aci;
+    aci.log_cerr    = {};
+    aci.log_cout    = LogPriority::Debug;
     Application app(argc, argv, aci);
-    log_to_std_output();
     Meta::init();
     configure_standand_resource_path();
     

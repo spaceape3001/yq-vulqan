@@ -405,14 +405,14 @@ namespace yq::tachyon {
         }
         
         if(req->flag(SaveFlag::DoThreads) || tachyons.contains(id()))
-            *save << *this;
+            save->add(*this);
         
         for(auto& itr : m_objects){
             if(selective && !tachyons.contains(itr.first))
                 continue;
             if(!itr.second.object)
                 continue;
-            *save << *itr.second.object;
+            save->add(*itr.second.object);
         }
             
         send(new SaveReply({.source=*this, .target=req->source()}, req, std::move(save)));

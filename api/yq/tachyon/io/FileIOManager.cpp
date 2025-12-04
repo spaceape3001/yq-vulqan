@@ -57,13 +57,7 @@ namespace yq::tachyon {
             send(new LoadTSXReply({.source=*this, .target=req->source()}, req, Response::IOError));
             return ;
         }
-        
-        tachyonAlert << "FileIOManager: LoadTSXRequest is currently non-operational";
-        send(new LoadTSXReply({.source=*this, .target=req->source()}, req, Response::Failure));
-        
-        
 
-    #if 0
         ReincarnationConfig config;
         config.owner    = req->thread();
         
@@ -71,15 +65,14 @@ namespace yq::tachyon {
             req->prep()();
         
         TachyonIDSet        tachs;
-        ec = sxml.save -> execute(SCHEDULE, config, &tachs);
+        std::error_code ec = sxml -> execute(SCHEDULE, config, &tachs);
         if(ec != std::error_code()){
-            tachyonWarning << "FileIOManager: Unable to schedule tsx file (" << req->filepath() << ") due to: " << ec.message();
+            tachyonWarning << "FileIOManager: Unable to load/schedule tsx file (" << req->filepath() << ") due to: " << ec.message();
             send(new LoadTSXReply({.source=*this, .target=req->source()}, req, Response::Failure));
             return ;
         }
         
         send(new LoadTSXReply({.source=*this, .target=req->source()}, req, std::move(tachs)));
-    #endif
     }
 
     void FileIOManager::on_save_reply(const Ref<const SaveReply>&rep)

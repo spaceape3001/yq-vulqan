@@ -499,7 +499,7 @@ namespace yq::tachyon {
                 auto x = sv.resources.find(std::string(r->name()));
                 if(x == sv.resources.end())
                     continue;
-            
+                    
                 ResourceCPtr        res = Resource::resource_load(x->second);
                 if(!res)
                     return errors::bad_resource();

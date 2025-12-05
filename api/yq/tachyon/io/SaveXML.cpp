@@ -42,6 +42,7 @@ namespace yq::errors {
     using not_tachyon_class             = error_db::entry<"TSX class attribute is not a tachyon">;
     using not_thread_class              = error_db::entry<"TSX class attribute is not a thread">;
     using invalid_id_property           = error_db::entry<"TSX property attribute has a bad ID">;
+    using bad_url                       = error_db::entry<"TSX contains misformatted URL">;
 }
 
 namespace yq::tachyon {
@@ -177,8 +178,12 @@ namespace yq::tachyon {
             sv.origin   = origin;
 
         std::string url     = read_attribute(xn, szUrl, x_string);
-        if(!url.empty())
-            sv.origin  = to_url(url);
+        if(!url.empty()){
+            auto x  = to_url_view(url);
+            if(!x.good)
+                return errors::bad_url();
+            sv.origin  = copy(x.value);
+        }
         
         for(const XmlNode* d = xn.first_node(); d; d = d->next_sibling()){
             if(d->name() == szProperty){
@@ -310,7 +315,10 @@ namespace yq::tachyon {
                 std::string u   = x_string(*d);
                 if(u.empty())
                     return errors::missing_resource_url();
-                sv.resources[k] = to_url(u);
+                auto ux = to_url_view(u);
+                if(!ux.good)
+                    return errors::bad_url();
+                sv.resources[k] = copy(ux.value);
             }
         }
         return _load((StateSave&) sv, xn);

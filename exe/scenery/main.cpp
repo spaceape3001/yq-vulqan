@@ -7,6 +7,7 @@
 #include "SceneEditor.hpp"
 
 #include <yq/tachyon/application.hpp>
+#include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/io/FileIOManager.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/core/Logging.hpp>
@@ -44,6 +45,9 @@ int main(int argc, char* argv[])
         yInfo() << "resource path> " << pth;
     
     app.start();
+    
+    for(StdThread st : StdThread::all_values())
+        yInfo() << "thread " << st.key() << "> " << Thread::standard(st).id;
     
     SceneEditor::Param  sep;
     

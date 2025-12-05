@@ -66,6 +66,7 @@ public:
 
     enum class FileMode {
         None,
+        Import,
         Open,
         Save,
         Lua
@@ -111,6 +112,7 @@ public:
     void                action_create_rendered_spatial(const Payload&);
     void                action_create_scene(const Payload&);
 
+    void                cmd_file_import();
     void                cmd_file_open();
     void                cmd_file_save();
     void                cmd_file_save_as();
@@ -244,6 +246,7 @@ private:
     void    _title();
 
     void    _open(const std::filesystem::path&);
+    void    _import(const std::filesystem::path&);
     void    _save(const std::filesystem::path&);
     void    _lua(const std::filesystem::path&);
     

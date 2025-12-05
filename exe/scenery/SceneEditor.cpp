@@ -352,6 +352,8 @@ void SceneEditor::init_meta()
     file_menu.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
     file_menu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
     file_menu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
+    //file_menu.separator();
+    file_menu.menuitem("Import").action(&SceneEditor::cmd_file_import);
     
     file_menu.menuitem("Execute Lua...").action(&SceneEditor::cmd_file_lua_execute);
 
@@ -693,6 +695,14 @@ Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
     return _load(deftsx.path);
 }
 
+void    SceneEditor::_import(const std::filesystem::path& fp)
+{
+    send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, {
+        .owner  = EDIT,
+        .parent = TypedID(pointer(m_scene.selected))
+    }));
+}
+
 void    SceneEditor::_lua(const std::filesystem::path& fp)
 {
     send(new LuaExecuteFileRequest({.target=m_lua.tvm}, fp));
@@ -762,7 +772,6 @@ void        SceneEditor::_schedule(ThreadID owner, TachyonPtrVector&& tachyons)
     TypedID         ownerT( owner.id, Type::Thread );
     mail(owner, new ScheduleCommand({.target=ownerT}, std::move(tachyons)));
 }
-
 
 
 void    SceneEditor::_title()
@@ -894,6 +903,13 @@ void    SceneEditor::action_create_scene(const Payload& pay)
     }
 }
 
+void    SceneEditor::cmd_file_import()
+{
+    IGFD::FileDialogConfig config;
+    config.path = ".";
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to IMport", ".tsx", config);        
+    m_fileMode  = FileMode::Import;
+}
 
 void    SceneEditor::cmd_file_new()
 {
@@ -957,6 +973,9 @@ void    SceneEditor::imgui(ViContext&u)
                 
                 switch(m_fileMode){
                 case FileMode::None:
+                    break;
+                case FileMode::Import:
+                    _import(filePathName);
                     break;
                 case FileMode::Open:
                     _open(filePathName);

@@ -367,6 +367,7 @@ namespace yq::tachyon {
         virtual void        owner(push_k, ThreadID);
         
         void                owner(push_k, StdThread);
+        
 
         //! Our parent
         TypedID             parent() const { return m_parent; }
@@ -494,8 +495,8 @@ namespace yq::tachyon {
         //! frame.
         virtual std::error_code     load(const StateSave&) { return {}; }
 
-        ////////////////////////////////////////////////////////////
-        //  Load here... dying
+        //! Allows the loader to set the different thread flag
+        void    load_owner_allow_different_thread();
 
         //! called by the save/load API (assumed thread-safe)
         void    load_set_parent(TypedID);
@@ -522,8 +523,8 @@ namespace yq::tachyon {
         //! \note Callers need to assure thread-safety (ie... loading from disk)
         void    load_attributes(AttrKeyMMap&&);
         
-        void    set_attribute(int, const Any&);
-        void    set_attribute(std::string_view, const Any&);
+        //void    set_attribute(uint32_t, const Any&);
+        //void    set_attribute(std::string_view, const Any&);
 
     protected:
 

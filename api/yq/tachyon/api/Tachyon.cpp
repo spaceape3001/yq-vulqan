@@ -847,6 +847,11 @@ namespace yq::tachyon {
         m_userAttrs = std::move(attrs);
     }
 
+    void    Tachyon::load_owner_allow_different_thread()
+    {
+        m_flags |= F::DifferentThread;
+    }
+
     void    Tachyon::load_set_parent(TypedID tid)
     {
         m_parent    = tid;
@@ -1063,7 +1068,7 @@ namespace yq::tachyon {
     }
 
 #if 0
-    void  Tachyon::set_attribute(int k, const Any& v)
+    void  Tachyon::set_attribute(uint32_t k, const Any& v)
     {
         mail(new SetAttributeCommand({.target=*this}, k, v));
     }

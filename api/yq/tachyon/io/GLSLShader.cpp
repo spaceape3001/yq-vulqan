@@ -77,7 +77,7 @@ namespace yq::tachyon::glsl {
             pd.args.push_back(d.string());
         }
         
-        pd.args.push_back("--target-env=vulkan1.3");
+        pd.args.push_back("--target-env=vulkan1.4");
         pd.args.push_back("-x");        // GLSL is the language of choice
         pd.args.push_back("glsl");
         
@@ -123,6 +123,8 @@ namespace yq::tachyon::glsl {
     
     std::pair<ByteArray,std::error_code>    validate(const Source& src, ShaderType type)
     {
+        return run_compiler(src, { "-c" });
+    #if 0
         int                                 ecode   = -1;
 
         static const    std::filesystem::path& s_validator  = validator();
@@ -136,11 +138,10 @@ namespace yq::tachyon::glsl {
         pd.args.push_back("--target-env");
         pd.args.push_back("vulkan1.3");
         
-            // #include is a google extension...apparently (TODO, implement it)
+            // #include is a google extension...apparently
         static const path_vector_t          dirs    = Resource::all_paths();
-        for(auto& d : dirs){
+        for(auto& d : dirs)
             pd.args.push_back("-I" + d.string());
-        }
         
         const ByteArray* input                  = std::get_if<ByteArray>(&src);
         const std::filesystem::path*    ifile   = std::get_if<std::filesystem::path>(&src);
@@ -164,6 +165,7 @@ namespace yq::tachyon::glsl {
         if(ecode != 0)
             return { capture, errors::shader_validate_failure() };
         return { capture, std::error_code() };
+    #endif
     }
 
     ShaderType  shader_type(const std::filesystem::path& pth)

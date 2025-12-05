@@ -539,8 +539,6 @@ namespace yq::tachyon {
     
     std::error_code Save::execute(schedule_k, const ReincarnationConfig&config, TachyonIDSet* pIDs) const
     {
-        tachyonInfo << "Save::execute() ... parent is " << config.parent.id;
-    
         Reincarnator    exec(*this, config, true);
         std::error_code ec  = exec.build();
         if(ec != std::error_code())
@@ -554,16 +552,12 @@ namespace yq::tachyon {
         ThreadID        owner;
         if(auto p = std::get_if<StdThread>(&config.owner)){
             owner   =  Thread::standard(*p);
-            tachyonInfo << "Save::execute() ... thread is " << p->key() << " (" << owner.id << ")";        
         } else if(auto p = std::get_if<ThreadID>(&config.owner)){
             owner   = *p;
-            tachyonInfo << "Save::execute() ... thread is " << p->id;        
         } else if(config.parent){
             owner   = frame->owner(config.parent);
-            tachyonInfo << "Save::execute() ... parent thread is " << owner.id;
         } else {
             owner   = Thread::current()->id();
-            tachyonInfo << "Save::execute() ... current thread is " << owner.id;
         }
         if(!owner)
             return errors::null_owner();
@@ -593,8 +587,6 @@ namespace yq::tachyon {
                     }
                 }
             }
-
-            tachyonInfo << "Save::execute() ... scheduling " << itr.second.size() << " tachyon(s) on thread " << itr.first.id << " with default owner " << ownerT.id;
             
             if(!itr.first.id){ // this is to the owner
                 Tachyon::mail(ownerT, new ScheduleCommand({.target=ownerT}, std::move(itr.second)));

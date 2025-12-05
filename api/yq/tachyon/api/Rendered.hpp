@@ -10,10 +10,10 @@
 
 #include <yq/keywords.hpp>
 #include <yq/core/Tristate.hpp>
-//#include <yq/tachyon/preamble.hpp>
-
-#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include <yq/container/EnumMap.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/enum/RenderMode.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
 
 // ⁴
 
@@ -64,6 +64,15 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Rendered, Tachyon)
     public:
     
+        /*
+            Render Mode... is for simple/lighted/ray-tracing (with full lighting)
+            
+            ALL pipelines should be otherwise identical in data layout!
+            
+            WARNING... the LIGHT pipeline will be used for data extraction; if it's not in light,
+            it's not going to get covered.
+        */
+    
         
         //! Helper for draw counts
         //struct Draw {
@@ -80,9 +89,9 @@ namespace yq::tachyon {
         //! TRUE if this object is culled (ie not rendered)
         Tristate        culled() const { return m_culled; }
         
-        //! Current pipeline
-        const Pipeline* pipeline() const;
-        
+        //! Current pipeline for given render mode
+        const Pipeline* pipeline(RenderMode rm=RenderMode::Simple) const;
+
         void            set_culled(Tristate);
 
         //! Sets the wireframe mode
@@ -91,9 +100,13 @@ namespace yq::tachyon {
         void            set_pipeline(clear_k);
         void            set_pipeline(nullptr_t);
         void            set_pipeline(Pipeline::Role);
+
+        void            set_pipeline(RenderMode, clear_k);
+        void            set_pipeline(RenderMode, nullptr_t);
+        void            set_pipeline(RenderMode, Pipeline::Role);
         
         //! Returns the role of the current pipeline
-        Pipeline::Role  role() const;
+        Pipeline::Role  role(RenderMode rm=RenderMode::Simple) const;
         
         static void init_meta();
         
@@ -117,7 +130,10 @@ namespace yq::tachyon {
         void snap(RenderedSnap&) const;
 
         //! Pipeline override
-        const Pipeline* m_pipeline = nullptr;
+        //const Pipeline* m_pipeline = nullptr;
+        
+        
+        EnumMap<RenderMode,const Pipeline*> m_pipelines;
         
         //! Draw command
         //Draw            m_draw; 

@@ -42,10 +42,10 @@ namespace yq::tachyon {
         ViRendered();
         //ViRendered(const ViRendered&, const ViRenderedOptions& opts={});
         //ViRendered(const ViRendered&, const PipelineCPtr pipe, const ViRenderedOptions& opts={});
-        ViRendered(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& options={});
+        ViRendered(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
         ~ViRendered();
         
-        std::error_code init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& options={});
+        std::error_code init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
     
         //! Dumps out to the viz debug stream full information to this rendered.
         void    debug_report() const;
@@ -94,7 +94,7 @@ namespace yq::tachyon {
         bool                    m_good          = false;
         ViVisualizer*           m_viz = nullptr;
 
-        std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts);
+        std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts, const Pipeline*p);
         void            _kill();
         void            _update(ViContext& u, const RenderedSnap&);
         void            _descriptors();

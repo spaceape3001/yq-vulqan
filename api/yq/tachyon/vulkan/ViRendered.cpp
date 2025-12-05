@@ -47,13 +47,13 @@ namespace yq::tachyon {
     {
     }
     
-    ViRendered::ViRendered(ViVisualizer&viz, const RenderedSnap* ren, const ViRenderedOptions& options)
+    ViRendered::ViRendered(ViVisualizer&viz, const RenderedSnap* ren, const ViRenderedOptions& options, const Pipeline*p)
     {
         if(!viz.device())
             return;
         if(!ren)
             return;
-        std::error_code ec  = _init(viz, *ren, options);
+        std::error_code ec  = _init(viz, *ren, options, p);
         if(ec != std::error_code()){
             vizWarning << "ViRendered -- unable to initialize: " << ec.message();
         }
@@ -69,13 +69,12 @@ namespace yq::tachyon {
         _publish_data();
     }
     
-    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedSnap& ren, const ViRenderedOptions& options)
+    std::error_code ViRendered::_init(ViVisualizer& viz, const RenderedSnap& ren, const ViRenderedOptions& options, const Pipeline*p)
     {
         m_viz           = &viz;
-        m_config        = ren.pipeline;
-        if(!m_config){
+        m_config        = p ? p : ren.pipeline_simple;
+        if(!m_config)
             return errors::rendered_null_pipeline();
-        }
         m_id            = ren.id();
         
         m_layout        = viz.pipeline_layout_create(m_config);
@@ -275,7 +274,7 @@ namespace yq::tachyon {
         }
     }
     
-    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedSnap& ren, const ViRenderedOptions& options)
+    std::error_code ViRendered::init(ViVisualizer&viz, const RenderedSnap& ren, const ViRenderedOptions& options, const Pipeline *p)
     {
         if(m_viz){
             if(!consistent()){
@@ -287,7 +286,7 @@ namespace yq::tachyon {
         if(!viz.device())
             return errors::visualizer_uninitialized();
             
-        std::error_code ec  = _init(viz, ren, options);
+        std::error_code ec  = _init(viz, ren, options, p);
         if(ec != std::error_code()){
             _kill();
         }

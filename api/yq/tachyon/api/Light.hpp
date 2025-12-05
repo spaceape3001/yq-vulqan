@@ -15,6 +15,8 @@
 namespace yq::tachyon {
 
     class Light;
+    class LightColorCommand;
+    class LightIntensityCommand;
     
     /*! \brief Light Information
     
@@ -69,6 +71,10 @@ namespace yq::tachyon {
         // universal 
         RGB3F       m_color{1., 1., 1. };
         float       m_intensity  = 1.f;
+        
+    private:
+        void    on_light_color_command(const LightColorCommand&);
+        void    on_light_intensity_command(const LightIntensityCommand&);
     };
 
 }

@@ -130,12 +130,11 @@ namespace yq::tachyon {
         wt.casts<TachyonID>();
     }
 
-    void Widget::push_buffer(PushBuffer&pb, const PreContext&ctx, const RenderedSnap&sn)
+    void Widget::push_buffer(PushBuffer&pb, const PreContext&ctx, const RenderedSnap&sn, RenderMode rm)
     {
-        if(!sn.pipeline)
-            return ;
+        const Pipeline* p   = sn.pipeline(rm);
             
-        switch(sn.pipeline->push().type){
+        switch(p->push().type){
         case PushConfigType::Full:
             if(sn.self(Type::Rendered³)){
                 push_buffer_full(pb, ctx, static_cast<const Rendered³Snap&>(sn));
@@ -602,17 +601,15 @@ namespace yq::tachyon {
         }
     }
 
-    void        Widget::prerecord(const PreContext& ctx, RenderedID renID)
+    void        Widget::prerecord(const PreContext& ctx, RenderedID renID, RenderMode rm)
     {
         const RenderedSnap* sn  = ctx.frame.snap(renID);
         if(!sn)
             return;
         if(!sn->good)
             return;
-        if(!sn->pipeline)
-            return;
         
-        ViRenderedPtr  rr  = ctx.vi.frame0 -> create(sn);
+        ViRenderedPtr  rr  = ctx.vi.frame0 -> create(sn, rm);
         if(!rr)
             return;
 

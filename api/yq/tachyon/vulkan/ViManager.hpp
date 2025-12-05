@@ -54,13 +54,14 @@ namespace yq::tachyon {
             m_hash.clear();
         }
         
-        template <unsigned... Is>
-        v_ref_t    _create(const A& resource, indices<Is...>)
+        template <unsigned... Is, typename ... B>
+        v_ref_t    _create(const A& resource, indices<Is...>, B... args)
         {
-            return new V(m_viz, resource, std::get<Is, Args...>(m_data)...);
+            return new V(m_viz, resource, std::get<Is, Args...>(m_data)..., args...);
         }
         
-        v_ref_t     create(const A& resource)
+        template <typename ... B>
+        v_ref_t     create(const A& resource, B... args)
         {
             uint64_t    idv = get_id(resource);
             
@@ -73,11 +74,11 @@ namespace yq::tachyon {
 
             v_ref_t    ret, p;
             if constexpr (sizeof...(Args) != 0){
-                p       = _create(resource, indices_gen<ARG_COUNT>());
+                p       = _create(resource, indices_gen<ARG_COUNT>(), args...);
             }
             
             if constexpr (sizeof...(Args) == 0){
-                p       = new V(m_viz, resource);
+                p       = new V(m_viz, resource, args...);
             }
             
             if(!p->valid())
@@ -95,16 +96,17 @@ namespace yq::tachyon {
             return ret;
         }
         
-        v_ref_t recreate(const A& resource)
+        template <typename ... B>
+        v_ref_t recreate(const A& resource, B... args)
         {
             uint64_t    idv = get_id(resource);
             v_ref_t    ret, p;
             if constexpr (sizeof...(Args) != 0){
-                ret = p = _create(resource, indices_gen<ARG_COUNT>());
+                ret = p = _create(resource, indices_gen<ARG_COUNT>(), args...);
             }
             
             if constexpr (sizeof...(Args) == 0){
-                ret = p = new V(m_viz, resource);
+                ret = p = new V(m_viz, resource, args...);
             }
 
             if(!p->valid())

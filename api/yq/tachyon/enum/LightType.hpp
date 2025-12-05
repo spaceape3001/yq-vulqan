@@ -14,12 +14,13 @@ namespace yq::tachyon {
     
     YQ_ENUM(LightType, , 
         Unknown,
-        Omni,
+        Ambient,
+        Unidirectional,
         Plane,
         Point,
         Spot
     )
-)
+}
 
 YQ_TYPE_DECLARE(yq::tachyon::LightType)
 

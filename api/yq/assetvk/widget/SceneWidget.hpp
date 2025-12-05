@@ -15,6 +15,7 @@
 #include <yq/tachyon/typedef/push.hpp>
 #include <yq/tachyon/typedef/vi_rendered.hpp>
 #include <yq/container/BasicBuffer.hpp>
+#include <yq/tachyon/enum/RenderMode.hpp>
 
 namespace yq::tachyon {
     class SceneWidget : public Widget {
@@ -45,6 +46,7 @@ namespace yq::tachyon {
         std::optional<RGB3F>    m_background;
         Tristate                m_wireframe     = Tristate::INHERIT;
         RGBA4F                  m_gamma     = { 1., 1., 1., 1. };
+        RenderMode              m_renderMode    = RenderMode::Simple;
     };
 }
 

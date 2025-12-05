@@ -596,8 +596,9 @@ void    SceneEditor::_activate(RenderedID id)
 
 void    SceneEditor::_activate(SceneID id)
 {
-    if(m_scene.selected == id)
-        return;
+yInfo() << "Activating scene " << id.id;
+    //if(m_scene.selected == id)
+        //return;
     m_scene.selected   = id;
     if(m_scene.table && (m_scene.table->selected() != id))
         m_scene.table -> set_selected(id);
@@ -666,11 +667,13 @@ LightID         SceneEditor::_create(const LightMeta& meta)
         return {};
     }
     
-    Light*    res  = parent->create_child_on<Light>(EDIT, meta);
+    Light*    res  = Tachyon::create<Light>(meta);
     if(!res){
         yNotice() << "Unable to create light (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
+    res -> set_parent(*parent);
+    res -> owner(PUSH, EDIT);
     return res->id();
 }
 

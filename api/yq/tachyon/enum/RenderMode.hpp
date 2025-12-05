@@ -11,14 +11,11 @@
 
 namespace yq::tachyon {
     YQ_ENUM(RenderMode, ,
-        //! Auto-deduce (availability, etc.  For scene, it'll be simple)
-        Auto, 
-        
         //! Simple rendering (ie... whatever the fragment says)  
         Simple,
         
         //! Use lighting ... objects that can't will default to simple
-        Lights,
+        Light,
         
         //! Use ray tracing ... objects that can't will default to lights or simple
         Ray

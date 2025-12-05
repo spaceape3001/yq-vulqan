@@ -9,6 +9,7 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Ref.hpp>
+#include <yq/tachyon/enum/RenderMode.hpp>
 //#include <yq/tachyon/image/Image.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
@@ -54,8 +55,7 @@ namespace yq::tachyon {
         void    _dtor();
         
 //        ViRenderedPtr         create(const RenderedCPtr&);
-        ViRenderedPtr         create(const RenderedSnap*);
-        //ViRenderedCPtr      create(const RenderedCPtr&, const PipelineCPtr&);
+        ViRenderedPtr      create(const RenderedSnap*, RenderMode rm=RenderMode::Simple);
     };
 
         // eventually multithread...

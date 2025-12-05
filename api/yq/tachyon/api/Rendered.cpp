@@ -22,6 +22,18 @@ namespace yq::tachyon {
     RenderedSnap::RenderedSnap()    = default;
     RenderedSnap::~RenderedSnap() = default;
 
+    const Pipeline* RenderedSnap::pipeline(RenderMode rm) const
+    {
+        switch(rm){
+        case RenderMode::Ray:
+            return pipeline_ray;
+        case RenderMode::Light:
+            return pipeline_light;
+        case RenderMode::Simple:
+        default:
+            return pipeline_simple;
+        }
+    }
 
     struct RenderedMeta::Repo {
         std::vector<const RenderedMeta*>    all;
@@ -74,7 +86,7 @@ namespace yq::tachyon {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    Rendered::Rendered(const Param&p) : Tachyon(p)
+    Rendered::Rendered(const Param&p) : Tachyon(p), m_pipelines(nullptr)
     {
     }
     
@@ -89,16 +101,19 @@ namespace yq::tachyon {
         set_wireframe(cmd.wireframe());
     }
 
-    const Pipeline* Rendered::pipeline() const
+    const Pipeline* Rendered::pipeline(RenderMode rm) const
     {
-        if(m_pipeline)
-            return m_pipeline;
+        int     r   = rm.value();
+        do {
+            if(m_pipelines[(RenderMode::enum_t) r])
+                return m_pipelines[(RenderMode::enum_t) r];
+        } while(r-- > (int) RenderMode::Simple);
         return metaInfo().default_pipeline();
     }
 
-    Pipeline::Role  Rendered::role() const
+    Pipeline::Role  Rendered::role(RenderMode rm) const
     {
-        const Pipeline* p   = pipeline();
+        const Pipeline* p   = m_pipelines[rm];
         if(!p)
             return Pipeline::Role::Invalid;
         return p->role();
@@ -112,24 +127,39 @@ namespace yq::tachyon {
 
     void            Rendered::set_pipeline(clear_k)
     {
-        m_pipeline  = nullptr;
+        set_pipeline(RenderMode::Simple, CLEAR);
+    }
+    
+    void            Rendered::set_pipeline(nullptr_t)
+    {
+        set_pipeline(RenderMode::Simple, nullptr);
+    }
+    
+    void            Rendered::set_pipeline(Pipeline::Role r)
+    {
+        set_pipeline(RenderMode::Simple, r);
+    }
+
+    void            Rendered::set_pipeline(RenderMode rm, clear_k)
+    {
+        m_pipelines[rm]  = nullptr;
         mark();
     }
 
-    void            Rendered::set_pipeline(nullptr_t)
+    void            Rendered::set_pipeline(RenderMode rm, nullptr_t)
     {
-        m_pipeline  = nullptr;
+        m_pipelines[rm]  = nullptr;
         mark();
     }
     
-    void            Rendered::set_pipeline(Pipeline::Role role)
+    void            Rendered::set_pipeline(RenderMode rm, Pipeline::Role role)
     {
         if(role == Pipeline::Role::Invalid){
-            m_pipeline  = nullptr;
+            m_pipelines[rm]  = nullptr;
         } else {
             const Pipeline*   p   = metaInfo().pipeline(role);
             if(p){
-                m_pipeline  = p;
+                m_pipelines[rm]  = p;
             } else {
                 tachyonWarning << ident() << "::set_pipeline( " << (uint16_t) role << ") cannot find selected pipeline";
             }
@@ -147,21 +177,33 @@ namespace yq::tachyon {
     {
         Tachyon::snap(sn);
         
-        sn.pipeline         = pipeline();
+        if(m_pipelines[RenderMode::Simple])
+            sn.pipeline_simple  = m_pipelines[RenderMode::Simple];
+        else
+            sn.pipeline_simple  = metaInfo().default_pipeline();
+        if(m_pipelines[RenderMode::Light])
+            sn.pipeline_light   = m_pipelines[RenderMode::Light];
+        else
+            sn.pipeline_light   = sn.pipeline_simple;
+        if(m_pipelines[RenderMode::Ray])
+            sn.pipeline_ray     = m_pipelines[RenderMode::Ray];
+        else
+            sn.pipeline_ray     = sn.pipeline_light;
+        
         sn.wireframe        = m_wireframe;
         //sn.draw_vertex      = m_draw.vertex_count;
         //sn.draw_instance    = m_draw.instance_count;
         sn.culled           = m_culled;
         sn.good             = m_good;
         
-        if(!sn.pipeline)    // nothing more to do, the rest requires a pipeline
+        if(!sn.pipeline_light)    // nothing more to do, the rest requires a pipeline
             return ;
         
-        const auto& push    = sn.pipeline->push();
+        const auto& push    = sn.pipeline_light->push();
         if(push.fetch)
             push.fetch(this, sn.push);
 
-        const auto& ibos    = sn.pipeline->index_buffers();
+        const auto& ibos    = sn.pipeline_light->index_buffers();
         if(!ibos.empty()){
             sn.ibos.reserve(ibos.size());
             for(const auto& ibo : ibos){
@@ -173,7 +215,7 @@ namespace yq::tachyon {
             }
         }
         
-        const auto& sbos    = sn.pipeline->storage_buffers();
+        const auto& sbos    = sn.pipeline_light->storage_buffers();
         if(!sbos.empty()){
             sn.sbos.reserve(sbos.size());
             for(const auto& sbo : sbos){
@@ -185,7 +227,7 @@ namespace yq::tachyon {
             }
         }
         
-        const auto& texs    = sn.pipeline->textures();
+        const auto& texs    = sn.pipeline_light->textures();
         if(!texs.empty()){
             sn.texs.reserve(texs.size());
             for(const auto& tex : texs){
@@ -197,7 +239,7 @@ namespace yq::tachyon {
             }
         }
         
-        const auto& ubos    = sn.pipeline->uniform_buffers();
+        const auto& ubos    = sn.pipeline_light->uniform_buffers();
         if(!ubos.empty()){
             sn.ubos.reserve(ubos.size());
             for(const auto& ubo : ubos){
@@ -209,7 +251,7 @@ namespace yq::tachyon {
             }
         }
         
-        const auto& vbos    = sn.pipeline->vertex_buffers();
+        const auto& vbos    = sn.pipeline_light->vertex_buffers();
         if(!vbos.empty()){
             sn.vbos.reserve(vbos.size());
             for(const auto& vbo : vbos){

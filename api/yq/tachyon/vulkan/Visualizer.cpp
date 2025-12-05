@@ -143,15 +143,17 @@ namespace yq::tachyon {
         }
     }
 
-    ViRenderedPtr      ViFrame0::create(const RenderedSnap* obj)
+    ViRenderedPtr      ViFrame0::create(const RenderedSnap* obj, RenderMode rm)
     {
         if(!m_rendereds)
             return {};
-        if(!obj->pipeline)
+        const Pipeline*p    = obj->pipeline(rm);
+        if(!p)
             return {};
-        ViRenderedPtr ret =  m_rendereds -> create(obj);
-        if(ret->pipeline_id() != obj->pipeline->id())
-            ret     = m_rendereds -> recreate(obj);
+
+        ViRenderedPtr ret =  m_rendereds -> create(obj, p);
+        if(ret->pipeline_id() != p->id())
+            ret     = m_rendereds -> recreate(obj, p);
         return ret;
     }
 

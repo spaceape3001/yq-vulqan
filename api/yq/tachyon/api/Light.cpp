@@ -8,6 +8,10 @@
 #include <yq/tachyon/api/LightData.hpp>
 #include <yq/tachyon/api/LightMetaWriter.hpp>
 #include <yq/tachyon/api/Post.hpp>
+#include <yq/tachyon/command/light/LightColorCommand.hpp>
+#include <yq/tachyon/command/light/LightIntensityCommand.hpp>
+#include <yq/tachyon/event/light/LightColorEvent.hpp>
+#include <yq/tachyon/event/light/LightIntensityEvent.hpp>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
@@ -49,10 +53,31 @@ namespace yq::tachyon {
         Tachyon::finalize(d);
     }
 
+    void Light::on_light_color_command(const LightColorCommand&cmd)
+    {
+        if(cmd.target().id != id())
+            return;
+        m_color     = cmd.color();
+        mark();
+        send(new LightColorEvent({}, m_color));
+    }
+    
+    void Light::on_light_intensity_command(const LightIntensityCommand&cmd)
+    {
+        if(cmd.target().id != id())
+            return;
+        m_intensity = cmd.intensity();
+        mark();
+        send(new LightIntensityEvent({}, m_intensity));
+    }
+
     void Light::snap(LightSnap& sn) const
     {
         Tachyon::snap(sn);
+        sn.color        = m_color;
+        sn.intensity    = m_intensity;
     }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,6 +87,8 @@ namespace yq::tachyon {
         auto w   = writer<Light>();
         w.abstract();
         w.description("Light, illumination");
+        w.slot(&Light::on_light_color_command);
+        w.slot(&Light::on_light_intensity_command);
 
         auto wt = writer<LightID>();
         wt.description("Light Identifier");

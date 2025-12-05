@@ -19,6 +19,7 @@ add_library(yq_assetvk SHARED
     edit/DrawModeUI.cpp
     edit/FarPlaneUI.cpp
     edit/FieldOfViewUI.cpp
+    edit/LightUI.cpp
     edit/MaterialUI.cpp
     edit/MeshUI.cpp
     edit/NearPlaneUI.cpp
@@ -45,6 +46,7 @@ add_library(yq_assetvk SHARED
     layer/ForegroundLayer.cpp
     layer/HUDLayer.cpp
     
+    light/AmbientLight.cpp
 
     menu/CreateMenuUI.cpp
 

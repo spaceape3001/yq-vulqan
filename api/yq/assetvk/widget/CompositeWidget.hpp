@@ -9,6 +9,7 @@
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
+#include <yq/tachyon/enum/RenderMode.hpp>
 
 namespace yq::tachyon {
     class CompositeWidget : public Widget {
@@ -32,11 +33,12 @@ namespace yq::tachyon {
             CameraID        camera;
             SceneID         scene;
             camera_tweaks_t tweaks;  //< Set for tweaking the camera
-            RGBA4F          gamma     = { 1., 1., 1., 1. };
+            RGBA4F          gamma       = { 1., 1., 1., 1. };
+            RenderMode      renderMode  = RenderMode::Simple;
         };
     
         std::vector<CLayer> m_layers;
-        RGBA4F              m_bgcolor   = { 0., 0., 0., 1. };
+        RGBA4F              m_bgcolor       = { 0., 0., 0., 1. };
 
         void    _prerecord(ViContext&, const CLayer&);
         using Widget::prerecord;

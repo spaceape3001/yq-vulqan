@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/enum/RenderMode.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 #include <yq/tachyon/typedef/events.hpp>
 #include <yq/tachyon/typedef/layout.hpp>
@@ -310,10 +311,10 @@ namespace yq::tachyon {
         static void camera_matrix(PreContext&, CameraID, std::span<const CameraTweakCPtr> tweaks={});
         
         static void camera_matrix(Tensor44D& view, Tensor44D& proj, const Frame&, CameraID, std::span<const CameraTweakCPtr> tweaks={});
-        static void push_buffer(PushBuffer&, const PreContext&, const RenderedSnap&);
+        static void push_buffer(PushBuffer&, const PreContext&, const RenderedSnap&, RenderMode rm=RenderMode::Simple);
         
         //! Used to push an item to the rendered vector *THIS PRERECORD* (it'll be cleared by the vulkan() call)
-        void        prerecord(const PreContext&, RenderedID);
+        void        prerecord(const PreContext&, RenderedID, RenderMode rm=RenderMode::Simple);
         
         //! Implementation in widget
         //template <typename Pred>

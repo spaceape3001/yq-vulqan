@@ -39,6 +39,8 @@ add_library(yq_assetvk SHARED
 
     event/panel/MetaSelectionChangedEvent.cpp
 
+    io/FileIOManager.cpp
+
     layer/BackgroundLayer.cpp
     layer/ForegroundLayer.cpp
     layer/HUDLayer.cpp

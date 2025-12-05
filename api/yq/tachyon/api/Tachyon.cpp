@@ -858,6 +858,11 @@ namespace yq::tachyon {
         _subscribe(tid, MG::Parent);
     }
 
+    void    Tachyon::load_set_template(const template_t& t)
+    {
+        m_template  = t;
+    }
+
     void        Tachyon::mail(const PostCPtr& pp)
     {
         if(!pp)

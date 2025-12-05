@@ -6,9 +6,9 @@
 
 #include "SceneEditor.hpp"
 
+#include <yq/assetvk/io/FileIOManager.hpp>
 #include <yq/tachyon/application.hpp>
 #include <yq/tachyon/api/Thread.hpp>
-#include <yq/tachyon/io/FileIOManager.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/file/FileResolver.hpp>

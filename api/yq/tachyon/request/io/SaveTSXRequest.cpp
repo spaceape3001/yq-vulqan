@@ -16,23 +16,14 @@ namespace yq::tachyon {
         w.description("Save tachyons to TSX file");
     }
     
-    SaveTSXRequest::SaveTSXRequest(const Header&h, const std::filesystem::path& fp, ThreadSpec th, SaveFlags opts) : 
-        IORequest(h), m_filepath(fp), m_thread(th), m_flags(opts)
+    SaveTSXRequest::SaveTSXRequest(const Header&h, const std::filesystem::path& fp, const Config& cfg) : 
+        IORequest(h), m_filepath(fp), m_config(cfg)
     {
     }
     
-    SaveTSXRequest::SaveTSXRequest(const Header&h, const std::filesystem::path& fp, ThreadSpec th, const TachyonIDSet&tacs, SaveFlags opts) :
-        IORequest(h), m_filepath(fp), m_thread(th), m_tachyons(tacs), m_flags(opts)
-    {
-    }
-    
-    SaveTSXRequest::SaveTSXRequest(const Header&h, const std::filesystem::path& fp, ThreadSpec th, TachyonIDSet&&tacs, SaveFlags opts) :
-        IORequest(h), m_filepath(fp), m_thread(th), m_tachyons(std::move(tacs)), m_flags(opts)
-    {
-    }
     
     SaveTSXRequest::SaveTSXRequest(const SaveTSXRequest&cp, const Header&h) : IORequest(cp, h), 
-        m_filepath(cp.m_filepath), m_thread(cp.m_thread), m_tachyons(cp.m_tachyons), m_flags(cp.m_flags)
+        m_filepath(cp.m_filepath), m_config(cp.m_config)
     {
     }
 

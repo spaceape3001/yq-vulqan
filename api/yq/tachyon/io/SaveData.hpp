@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include <yq/tachyon/io/SaveTypes.hpp>
 #include <yq/net/Url.hpp>
+#include <yq/tachyon/io/SaveTypes.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/typedef/any_maps.hpp>
 #include <yq/typedef/string_maps.hpp>
 
 namespace yq::tachyon {
     struct ObjectSave {
         std::string             class_;
-        string_u64_xmap_t       idprops;
-        save_origin_t           origin; 
+        template_t              origin; 
         save_str_value_xmap_t   properties;
     };
     

@@ -750,7 +750,11 @@ void    SceneEditor::_save(const std::filesystem::path& fp)
     const Frame* frame  = Frame::current();
     if(!frame)
         return ;
-    send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, EDIT, { SaveFlag::SkipOwnership }));
+        
+    SaveTSXRequest::Config cfg;
+    cfg.thread   = EDIT;
+    cfg.flags   |= SaveFlag::SkipOwnership;
+    send(new SaveTSXRequest({.source=*this, .target=gFileIO}, fp, cfg));
 }
 
 void        SceneEditor::_schedule(StdThread st, TachyonPtrVector&& tachyons)

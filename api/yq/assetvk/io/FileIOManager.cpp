@@ -96,7 +96,9 @@ namespace yq::tachyon {
             return ;
         }
         
-        SaveCPtr    sxml    = rep->save();
+        SavePtr    sxml    = rep->save();
+        sxml->renumerate();
+
         std::error_code ec  = sxml->save_to(req->filepath(), { .collision=FileCollisionStrategy::Backup });
         if(ec != std::error_code()){
             tachyonWarning << "FileIOManager: Unable to save tsx file (" << req->filepath() << ") due to: " << ec.message();

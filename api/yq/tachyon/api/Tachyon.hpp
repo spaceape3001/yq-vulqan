@@ -12,6 +12,7 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/meta/MetaLookup.hpp>
+#include <yq/net/Url.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/Execution.hpp>
 #include <yq/tachyon/api/ID.hpp>
@@ -400,6 +401,7 @@ namespace yq::tachyon {
         //! Subscribes the given listener to OUR posts
         void                subscribe(TachyonID listener, MGF grp=MG::General);
 
+        const template_t& template_origin() const { return m_template; }
         TypedID             typed_id() const;
 
         //! \note NOT thread-safe (yet)
@@ -525,6 +527,8 @@ namespace yq::tachyon {
         
         //void    set_attribute(uint32_t, const Any&);
         //void    set_attribute(std::string_view, const Any&);
+
+        void    load_set_template(const template_t&);
 
     protected:
 
@@ -770,6 +774,8 @@ namespace yq::tachyon {
         AttrKeyMMap                 m_userAttrs;
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
+        template_t                  m_template;     // what we're a template of
+        
     protected:
         std::string                 m_name;
     private:

@@ -18,25 +18,30 @@ namespace yq::tachyon {
     public:
         static void init_meta();
         
-        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, SaveFlags opts={});
-        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, const TachyonIDSet&, SaveFlags opts={});
-        SaveTSXRequest(const Header&, const std::filesystem::path&, ThreadSpec, TachyonIDSet&&, SaveFlags opts={});
+        struct Config {
+            ThreadSpec          thread;
+            TachyonIDSet        tachyons;
+            SaveFlags           flags;
+        };
+        
+        
+        SaveTSXRequest(const Header&, const std::filesystem::path&, const Config&);
         SaveTSXRequest(const SaveTSXRequest&, const Header&);
         
         const std::filesystem::path&    filepath() const { return m_filepath; }
-        const ThreadSpec&               thread() const { return m_thread; }
-        const TachyonIDSet&             tachyons() const { return m_tachyons; }
-        SaveFlags                       flags() const { return m_flags; }
+        const Config&                   config() const { return m_config; }
+        const ThreadSpec&               thread() const { return m_config.thread; }
+        const TachyonIDSet&             tachyons() const { return m_config.tachyons; }
+        SaveFlags                       flags() const { return m_config.flags; }
         
     protected:
         virtual PostCPtr clone(rebind_k, const Header&) const;
         virtual ~SaveTSXRequest();
         
     private:
+    
         std::filesystem::path   m_filepath;
-        ThreadSpec              m_thread;
-        TachyonIDSet            m_tachyons;
-        SaveFlags               m_flags;
+        Config                  m_config;
 
         SaveTSXRequest(const SaveTSXRequest&) = delete;
         SaveTSXRequest(SaveTSXRequest&&) = delete;

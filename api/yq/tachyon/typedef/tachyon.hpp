@@ -18,6 +18,7 @@
 #include <yq/tachyon/api/MG.hpp>
 #include <yq/typedef/any_maps.hpp>
 #include <yq/typedef/string_maps.hpp>
+#include <yq/typedef/url.hpp>
 
 
 namespace yq { 
@@ -54,14 +55,17 @@ namespace yq::tachyon {
     
     struct TachyonContext;
 
-    using name_spec     = std::variant<std::monostate, const char*, std::string_view, std::string>;
-    using PostTarget    = std::variant<std::monostate, MG, MGF, TachyonID, StdThread, target_k>;
+    using name_spec         = std::variant<std::monostate, const char*, std::string_view, std::string>;
+    using PostTarget        = std::variant<std::monostate, MG, MGF, TachyonID, StdThread, target_k>;
 
-    using TachyonSpec  = std::variant<std::monostate, TachyonID, TypedID>;
+    using TachyonSpec       = std::variant<std::monostate, TachyonID, TypedID>;
 
     //! Application defined custom attributes
-    using AttrIDMMap   = uint32_any_map_t;
+    using AttrIDMMap        = uint32_any_map_t;
     
     //! User defined custom attributes
-    using AttrKeyMMap  = string_any_map_t;
+    using AttrKeyMMap       = string_any_map_t;
+    
+    //! Defining a template
+    using template_t        = std::variant<std::monostate, std::string, Url>;
 }

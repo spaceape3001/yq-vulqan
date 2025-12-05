@@ -73,6 +73,8 @@ namespace yq::tachyon {
         const DelegateSave* delegate(uint64_t) const;
         const TachyonSave*  tachyon(uint64_t) const;
         const ThreadSave*   thread(uint64_t) const;
+        
+        void                    renumerate();
 
         /*! \brief Executes the save to create new tachyons
         

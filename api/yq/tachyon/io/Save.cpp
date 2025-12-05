@@ -7,6 +7,7 @@
 #include "Save.hpp"
 #include <yq/tags.hpp>
 #include <yq/core/Any.hpp>
+#include <yq/container/Map.hpp>
 #include <yq/resource/ResourceMetaWriter.hpp>
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/tags.hpp>
@@ -20,7 +21,6 @@
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/command/tachyon/SetParentCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
-#include <yq/tachyon/io/Builder.hpp>
 
 YQ_RESOURCE_IMPLEMENT(yq::tachyon::Save)
 
@@ -488,6 +488,8 @@ namespace yq::tachyon {
                     m_byThread[{0}].push_back(&t);
             }
             
+            t.load_set_template(sv.origin);
+            
             std::error_code ec = load(static_cast<Object&>(t), static_cast<const ObjectSave&>(sv));
             if(ec != std::error_code())
                 return ec;
@@ -597,5 +599,87 @@ namespace yq::tachyon {
         }
         
         return {};
+    }
+
+    using remapper_t    = Map<uint64_t, uint64_t>;
+    
+    static void remap(save_value_t&sv, const remapper_t& rmap)
+    {
+        if(auto p = std::get_if<uint64_t>(&sv))
+            sv  = rmap.get(*p, 0);
+    }
+    
+    static void remap(ObjectSave&sv, const remapper_t& rmap)
+    {
+        for(auto& itr : sv.properties)
+            remap(itr.second, rmap);
+    }
+
+    static void remap(StateSave&sv, const remapper_t& rmap)
+    {
+        for(auto& itr : sv.ustate)
+            remap(itr.second, rmap);
+        for(auto& itr : sv.pstate)
+            remap(itr.second, rmap);
+    }
+
+    static void remap(DelegateSave&sv, const remapper_t& rmap)
+    {
+        remap((ObjectSave&) sv, rmap);
+        remap((StateSave&) sv, rmap);
+    }
+
+    static void remap(TachyonSave&sv, const remapper_t& rmap)
+    {
+        remap((ObjectSave&) sv, rmap);
+        remap((StateSave&) sv, rmap);
+        sv.parent       = rmap.get(sv.parent, 0);
+        for(auto& c : sv.children)
+            c           = rmap.get(c, 0);
+        for(auto& d : sv.delegates)
+            d.second    = rmap.get(d.second);
+        if(auto p = std::get_if<uint64_t>(&sv.owner))
+            sv.owner    = rmap.get(*p, 0);
+    }
+
+    void    Save::renumerate()
+    {
+        Map<uint64_t, uint64_t>     remapper;
+        uint64_t                    next    = 1;
+        size_t                      index;
+        
+        index   = 0;
+        delegates.byId.clear();
+        for(auto& d : delegates.data){
+            uint64_t id             = d.id;
+            d.id                    = next++;
+            delegates.byId[d.id]    = index++;
+            remapper[id]            = d.id;
+        }
+        
+        index   = 0;
+        threads.byId.clear();
+        for(auto& t : threads.data){
+            uint64_t id             = t.id;
+            t.id                    = next++;
+            threads.byId[t.id]      = index++;
+            remapper[id]            = t.id;
+        }
+
+        index   = 0;
+        tachyons.byId.clear();
+        for(auto& t : tachyons.data){
+            uint64_t id             = t.id;
+            t.id                    = next++;
+            tachyons.byId[t.id]     = index++;
+            remapper[id]            = t.id;
+        }
+        
+        for(auto& d : delegates.data)
+            remap(d, remapper);
+        for(auto& t : tachyons.data)
+            remap(t, remapper);
+        for(auto& t : threads.data)
+            remap(t, remapper);
     }
 }

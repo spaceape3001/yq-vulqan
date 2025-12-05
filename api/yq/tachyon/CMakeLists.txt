@@ -257,7 +257,6 @@ add_library(${PROJECT_NAME} SHARED
     interface/ITexture.cpp
     interface/ITopology.cpp
     
-    io/FileIOManager.cpp
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
     io/MaterialKV.cpp

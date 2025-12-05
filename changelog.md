@@ -1,9 +1,12 @@
 # CHANGE LOG
 
-## Upcoming
+## 2025.12.05
 
 * Updated pathing (this will affect INCLUDES) to be consistent with the rest of the Your Quill collection (include `<tachyon/...>` becomes `<yq/tachyon/...>`, so a find & replace will do the job.
 * Lua support
+* Save/load capability (though not full template/component support)
+* GLTF loading; Mesh asset mostly there (will import and render, pipeline fixed to yellow)
+* Additional UI support
 
 ## 2025.07.19
 

@@ -48,6 +48,7 @@ namespace yq::tachyon {
         void    right(set_k, const CalcSCPtr&);
         void    top(set_k, const CalcSCPtr&);
         void    width(set_k, const CalcSCPtr&);
+        void    width(set_k, start_k, const CalcSCPtr&);
         void    width(set_k, maximum_k, const CalcSCPtr&);
         void    width(set_k, minimum_k, const CalcSCPtr&);
         
@@ -72,6 +73,7 @@ namespace yq::tachyon {
             CalcSCPtr    top;
             CalcSCPtr    bottom;
             CalcSCPtr    width;
+            CalcSCPtr    widthStart;
             CalcSCPtr    widthMax;
             CalcSCPtr    widthMin;
             CalcSCPtr    height;

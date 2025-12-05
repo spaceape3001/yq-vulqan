@@ -95,14 +95,22 @@ namespace yq::tachyon {
             t           = m_calc.top -> compute(ctx);
         if(m_calc.bottom)
             b           = m_calc.bottom -> compute(ctx);
-        if(m_calc.width)
+        if(m_calc.width){
             w           = m_calc.width -> compute(ctx);
+        } else if((m_w.actual > 0) && !is_nan(m_w.actual)){
+            w           = m_w.actual;
+        } else if(m_calc.widthStart){
+            w           = m_calc.widthStart -> compute(ctx);
+        }
         if(m_calc.widthMax)
             wx          = m_calc.widthMax -> compute(ctx);
         if(m_calc.widthMin)
             wn          = m_calc.widthMin -> compute(ctx);
-        if(m_calc.height)
+        if(m_calc.height){
             h           = m_calc.height -> compute(ctx);
+        } else if((m_h.actual > 0) && !is_nan(m_h.actual)){
+            h           = m_h.calc;
+        }
         if(m_calc.heightMax)
             hx          = m_calc.heightMax -> compute(ctx);
         if(m_calc.heightMin)
@@ -152,7 +160,6 @@ namespace yq::tachyon {
         if(!is_nan(hn))
             m_h.minimum = hn;
             
-            // not sure why these are giving funny responses
         if(!is_nan(wx))
             m_w.maximum = wx;
         if(!is_nan(wn))
@@ -215,6 +222,11 @@ namespace yq::tachyon {
     void    UIPanel::width(set_k, minimum_k, const CalcSCPtr& v)
     {
         m_calc.widthMin = v;
+    }
+
+    void    UIPanel::width(set_k, start_k, const CalcSCPtr& v)
+    {
+        m_calc.widthStart   = v;
     }
     
 
@@ -455,6 +467,23 @@ namespace yq::tachyon {
         return width(MINIMUM, std::make_shared<UIPanel::ScaledH>(v));
     }
 
+    
+    UIPanelWriter&  UIPanelWriter::width(start_k, const UIPanel::CalcSCPtr& v)
+    {
+        if(UIPanel*p = element())
+            p->width(SET, START, v);
+        return *this;
+    }
+    
+    UIPanelWriter&  UIPanelWriter::width(start_k, float v)
+    {
+        return width(START, std::make_shared<UIPanel::Fixed>(v));
+    }
+    
+    UIPanelWriter&  UIPanelWriter::width(start_k, pivot_k, float v)
+    {
+        return width(START, std::make_shared<UIPanel::ScaledH>(v));
+    }
 }
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::UIPanel)

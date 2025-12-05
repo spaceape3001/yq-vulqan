@@ -6,9 +6,7 @@
 
 #include "SceneEditor.hpp"
 
-#include "ControlPanelUI.hpp"
 //#include "InspectorUI.hpp"
-#include "LuaPanelUI.hpp"
 
 #include "event/CameraSelectEvent.hpp"
 #include "event/ControllerSelectEvent.hpp"
@@ -42,7 +40,6 @@
 #include <yq/assetvk/ui/UIFrameMetrics.hpp>
 #include <yq/assetvk/ui/UIBuildableMetaList.hpp>
 #include <yq/assetvk/ui/UISimpleTree.hpp>
-#include <yq/assetvk/ui/UIPanelWriter.hpp>
 #include <yq/assetvk/ui/UITachyonEditor.hpp>
 
 #include <yq/date/dateutils.hpp>
@@ -51,6 +48,7 @@
 #include <yq/luavk/LuaExecuteFileRequest.hpp>
 #include <yq/luavk/LuaExecuteStringRequest.hpp>
 #include <yq/luavk/LuaTVM.hpp>
+#include <yq/luavk/LuaWindowUI.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/parameters.hpp>
@@ -98,6 +96,7 @@
 
 
 #include <yq/tachyon/ui/UIMenuBar.hpp>
+#include <yq/tachyon/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/ui/UISection.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
@@ -244,12 +243,13 @@ void SceneEditor::init_ui()
     /////////////////////////////////
     //  CONTROL PANEL
 
-    //auto controlPanel       = app.make<UIPanel>("Control Panel", UIFlags{ UIFlag::NoCollapse, UIFlag::Debug });
-    auto controlPanel       = app.make<ControlPanelUI>();
+    auto controlPanel       = app.make<UIPanel>("Control Panel", UIFlags{ UIFlag::NoCollapse });
+    //auto controlPanel       = app.make<ControlPanelUI>();
     {
         controlPanel.uid("ControlPanel");
-        //controlPanel.width(MIN, PIVOT, 0.2);
-        //controlPanel.width(MAX, PIVOT, 0.8);
+        controlPanel.width(MIN, PIVOT, 0.1);
+        controlPanel.width(MAX, PIVOT, 0.8);
+        controlPanel.width(START, PIVOT, 0.2);
         auto controlTree        = controlPanel.make<UISimpleTree>();
 
         {
@@ -427,20 +427,19 @@ void SceneEditor::init_ui()
     /////////////////////////////////
     //  LUA
     
-    //auto luaPanel           = app.make<UIPanel>("Lua Panel", {UIFlag::NoCollapse, UIFlag::NoResize});
-    auto luaPanel           = app.make<LuaPanelUI>();
-    {
-        luaPanel.flags(SET, {UIFlag::Invisible, UIFlag::NoBackground});
-        luaPanel.uid("LuaWindow");
-    }
+    auto luaPanel  = app.make<LuaWindowUI>("Lua Panel", UIFlags({UIFlag::NoCollapse, UIFlag::NoResize, UIFlag::Invisible, UIFlag::NoBackground}));
+    luaPanel.uid("LuaWindow");
+    luaPanel.top(PIVOT, 0.75);
+    luaPanel.left("ControlPanel", RIGHT);
+    
 
     /////////////////////////////////
     //  FRAME
 
-    //auto framePanel         = app.make<UIPanel>("Frame", UIFlag::NoCollapse);
-    {
-    
-    }
+    auto framePanel         = app.make<UIPanel>("Frame Inspector", UIFlags({UIFlag::NoCollapse, UIFlag::Invisible}));
+    framePanel.uid("FramePanel");
+    framePanel.bottom("LuaWindow", TOP);
+    framePanel.left(PIVOT, 0.75);
     
     
 
@@ -470,7 +469,7 @@ void SceneEditor::init_ui()
     {
         viewMenu.checkbox(VISIBLE, controlPanel);
         viewMenu.checkbox(VISIBLE, luaPanel);
-        //viewMenu.checkbox(VISIBLE, framePanel);
+        viewMenu.checkbox(VISIBLE, framePanel);
     }
     
     auto cameraMenu        = menuBar.menu("Camera");
@@ -1346,7 +1345,7 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_scene.table           = static_cast<SceneTableUI*>(element(FIRST, "SceneTable"));
 
     if(!m_lua.panel){
-        m_lua.panel             = static_cast<LuaPanelUI*>(element(FIRST, "LuaWindow"));
+        m_lua.panel             = static_cast<LuaWindowUI*>(element(FIRST, "LuaWindow"));
         m_lua.panel -> tvm(SET, m_lua.tvm);
         m_lua.panel -> info("Scenery Editor's Lua Panel, try help() to get started");
     }

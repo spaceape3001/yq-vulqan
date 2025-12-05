@@ -39,13 +39,13 @@ namespace yq::tachyon {
     };
     
 
-    LuaWindowUI::LuaWindowUI(std::string_view kLabel, UIFlags flags) : UIWindow(kLabel, flags | UIFlag::NoScrollBar )
+    LuaWindowUI::LuaWindowUI(std::string_view kLabel, UIFlags flags) : UIPanel(kLabel, flags | UIFlag::NoScrollBar )
     {
         append(m_console = new Console);
         append(m_input = new Input);
     }
     
-    LuaWindowUI::LuaWindowUI(const LuaWindowUI&cp) : UIWindow(cp)
+    LuaWindowUI::LuaWindowUI(const LuaWindowUI&cp) : UIPanel(cp)
     {
         for(UIElement* u : m_items){
             if(Console*p = dynamic_cast<Console*>(u))

@@ -8,7 +8,7 @@
 #include "GLTFTree.hpp"
 
 #include <yq/core/Logging.hpp>
-#include <yq/assetvk/ui/UIPanelWriter.hpp>
+#include <yq/tachyon/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/io/GLTFLoader.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>

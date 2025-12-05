@@ -24,6 +24,7 @@ namespace yq::tachyon {
     class MetaSelectionChangedEvent;
     class LightMeta;
     class LoadTSXReply;
+    class LuaWindowUI;
     class OpenFileRequest;
     class SaveFileRequest;
     class SaveTSXReply;
@@ -43,7 +44,6 @@ class ControllerTableUI;
 class ControllerSelectEvent;
 class LightTableUI;
 class LightSelectEvent;
-class LuaPanelUI;
 class ModelTableUI;
 class ModelSelectEvent;
 class PhysicsTableUI;
@@ -215,7 +215,7 @@ private:
     bool                    m_defaultInit   = false;
     
     struct {
-        LuaPanelUI*             panel           = nullptr;
+        LuaWindowUI*            panel           = nullptr;
         TypedID                 tvm;
     } m_lua;
 

@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/api/TypedID.hpp>
-#include <yq/tachyon/ui/UIWindow.hpp>
+#include <yq/tachyon/ui/UIPanel.hpp>
 
 namespace yq::tachyon {
     class LuaExecuteReply;
 
-    class LuaWindowUI : public UIWindow {
-        YQ_OBJECT_DECLARE(LuaWindowUI, UIWindow)
+    class LuaWindowUI : public UIPanel {
+        YQ_OBJECT_DECLARE(LuaWindowUI, UIPanel)
     public:
     
         LuaWindowUI(std::string_view, UIFlags flags={});

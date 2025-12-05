@@ -19,6 +19,7 @@
 #include <yq/tachyon/asset/Raster.hpp>
 #include <yq/tachyon/reply/viewer/ViewerScreenshotReply.hpp>
 #include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
+#include <yq/tachyon/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
 #include <yq/text/format.hpp>

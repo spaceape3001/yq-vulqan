@@ -10,10 +10,10 @@
 
 #include <yq/xg/XGElement.hpp>
 #include <yq/assetvk/ui/UIBuildableMetaList.hpp>
-#include <yq/assetvk/ui/UIPanel.hpp>
-#include <yq/assetvk/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/ui/UIPanel.hpp>
+#include <yq/tachyon/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
 #include <yq/xgvk/ui/XGView.hpp>
 #include <yq/xgvk/ui/XGViewWriter.hpp>

@@ -14,7 +14,3 @@
 #include "thread/SimThread.ipp"
 #include "thread/TaskThread.ipp"
 #include "thread/ViewerThread.ipp"
-
-YQ_INVOKE(
-    tachyonInfo << "Logging!";
-)

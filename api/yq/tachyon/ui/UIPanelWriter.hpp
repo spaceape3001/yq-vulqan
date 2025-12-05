@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/assetvk/ui/UIPanel.hpp>
+#include <yq/tachyon/ui/UIPanel.hpp>
 #include <yq/tachyon/ui/UIWindowWriter.hpp>
 
 namespace yq::tachyon {
@@ -75,5 +75,9 @@ namespace yq::tachyon {
         UIPanelWriter&  width(minimum_k, const UIPanel::CalcSCPtr&);
         UIPanelWriter&  width(minimum_k, float);
         UIPanelWriter&  width(minimum_k, pivot_k, float);
+
+        UIPanelWriter&  width(start_k, const UIPanel::CalcSCPtr&);
+        UIPanelWriter&  width(start_k, float);
+        UIPanelWriter&  width(start_k, pivot_k, float);
     };
 }

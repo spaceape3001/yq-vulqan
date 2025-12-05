@@ -271,6 +271,9 @@ private:
     void    on_viewer_screenshot_reply(const ViewerScreenshotReply&);
     
     Future<void>        m_defaultLoad;
+    
+    static void init_slots();
+    static void init_ui();
 };
 
 extern TypedID     gFileIO;

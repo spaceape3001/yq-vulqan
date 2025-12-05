@@ -42,6 +42,7 @@
 #include <yq/assetvk/ui/UIFrameMetrics.hpp>
 #include <yq/assetvk/ui/UIBuildableMetaList.hpp>
 #include <yq/assetvk/ui/UISimpleTree.hpp>
+#include <yq/assetvk/ui/UIPanelWriter.hpp>
 #include <yq/assetvk/ui/UITachyonEditor.hpp>
 
 #include <yq/date/dateutils.hpp>
@@ -122,6 +123,7 @@ YQ_TACHYON_IMPLEMENT(SceneEditor)
 namespace errors {
     using namespace yq::errors;
     using missing_default_file  = error_db::entry<"No default scene file">;
+    using cant_load_save_file   = error_db::entry<"Unable to load save file">;
 }
 
 Expect<TachyonPtrVector>    SceneEditor:: _load(const std::filesystem::path& fp)
@@ -130,20 +132,15 @@ Expect<TachyonPtrVector>    SceneEditor:: _load(const std::filesystem::path& fp)
     if(!std::filesystem::exists(fp, ec))
         return unexpected(ec);
     
-    #if 0
-    SaveXML sxml;
-    ec  = sxml.load(fp);
-    if(ec != std::error_code())
-        return unexpected(ec);
+    SaveCPtr    save    = Save::IO::load(fp, { .cache=Tristate::NO, .load=Tristate::YES });
+    if(!save)
+        return ::errors::cant_load_save_file();
     
     TachyonPtrVector    tachyons;
-    ec   = sxml.save->execute(tachyons);
+    ec   = save->execute(tachyons);
     if(ec != std::error_code())
         return unexpected(ec);
     return tachyons;
-    #endif
-    
-    return yq::errors::todo();
 }
 
 
@@ -213,7 +210,15 @@ SceneEditor::EFlags       SceneEditor::flags_for(const SceneMeta& sc)
 void SceneEditor::init_meta()
 {
     auto w          = writer<SceneEditor>();
-    
+    w.description("The main widget");
+    init_slots();
+    init_ui();
+
+}
+
+void SceneEditor::init_slots()
+{
+    auto w          = writer<SceneEditor>();
     w.slot(&SceneEditor::on_camera_select_event);
     w.slot(&SceneEditor::on_controller_select_event);
     w.slot(&SceneEditor::on_load_tsx_reply);
@@ -227,146 +232,297 @@ void SceneEditor::init_meta()
     w.slot(&SceneEditor::on_scene_select_event);
     w.slot(&SceneEditor::on_scene_visibility_event);
     w.slot(&SceneEditor::on_viewer_screenshot_reply);
-    
-    
-    w.description("The main widget");
+}
+
+void SceneEditor::init_ui()
+{
+    auto w          = writer<SceneEditor>();
     auto app        = w.imgui(UI, APP);
-    
-    auto mmb        = app.menubar(MAIN);
-    mmb.uid("mmb");
+    auto menuBar    = app.menubar(MAIN);
+    menuBar.uid("mmb");
     
     /////////////////////////////////
     //  CONTROL PANEL
-    
-    auto controlpanel       = app.make<ControlPanelUI>();
-    controlpanel.uid("ControlPanel");
-    auto cp_tree            = controlpanel.make<UISimpleTree>();
-    
-    cp_tree.section("Metrics").make<UIFrameMetrics>();
-    
-    auto cp_cameras         = cp_tree.section("Cameras").make<UISimpleTree>();
-    auto cp_controllers     = cp_tree.section("Controllers").make<UISimpleTree>();
-    //auto cp_collisions      = cp_tree.section("Collisions").make<UISimpleTree>();
-    //auto cp_lights          = cp_tree.section("Lights").make<UISimpleTree>();
-    //auto cp_models          = cp_tree.section("Models").make<UISimpleTree>();
-    //auto cp_physics         = cp_tree.section("Physics").make<UISimpleTree>();
-    auto cp_rendereds       = cp_tree.section("Rendereds").make<UISimpleTree>();
-    auto cp_scenes          = cp_tree.section("Scenes").make<UISimpleTree>();
-    auto cp_spatials        = cp_tree.section("Spatials").make<UISimpleTree>();
 
-    cp_cameras.section("Available").make<UIBuildableMetaList<Camera>>().flag(SET, UIFlag::EmitSignal).uid("CameraAvailable");
-    cp_cameras.section("Current").make<CameraTableUI>().uid("CameraTable");
-    auto cpp_cameras      = cp_cameras.section("Properties");
-    (cpp_cameras << new CreateMenuUI("Add/Create Spatial##AddCameraSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_camera_spatial);
-    auto cx = cpp_cameras.make<UITachyonEditor>();
-    cx.uid("CameraInspector");
-    cx.flag(SET, UIFlag::Children);
-    
-    cp_controllers.section("Available").make<UIBuildableMetaList<Controller>>().flag(SET, UIFlag::EmitSignal).uid("ControllerAvailable");
-    
-    cp_controllers.section("Current").make<ControllerTableUI>().uid("ControllerTable");
+    //auto controlPanel       = app.make<UIPanel>("Control Panel", UIFlags{ UIFlag::NoCollapse, UIFlag::Debug });
+    auto controlPanel       = app.make<ControlPanelUI>();
     {
-        auto x = cp_controllers.section("Properties").make<UITachyonEditor>();
-        x.uid("ControllerInspector");
-        x.flag(SET, UIFlag::Children);
+        controlPanel.uid("ControlPanel");
+        //controlPanel.width(MIN, PIVOT, 0.2);
+        //controlPanel.width(MAX, PIVOT, 0.8);
+        auto controlTree        = controlPanel.make<UISimpleTree>();
+
+        {
+            auto csMetrics          = controlTree.section("Metrics");
+            csMetrics.make<UIFrameMetrics>();
+        }
+
+        {
+            auto csCameras          = controlTree.section("Cameras").make<UISimpleTree>();
+            auto blCameras          = csCameras.section("Available").make<UIBuildableMetaList<Camera>>();
+            auto curCameras         = csCameras.section("Current").make<CameraTableUI>();
+            auto propCameras        = csCameras.section("Properties");
+            auto addSpatial         = propCameras << new CreateMenuUI("Add/Create Spatial##AddCameraSpatialUI", meta<Spatial>());
+            auto inspCameras        = propCameras.make<UITachyonEditor>();
+
+            blCameras.uid("CameraAvailable");
+            blCameras.flag(SET, UIFlag::EmitSignal);
+
+            curCameras.uid("CameraTable");
+
+            addSpatial.action(&SceneEditor::action_create_camera_spatial);
+
+            inspCameras.uid("CameraInspector");
+            inspCameras.flag(SET, UIFlag::Children);
+        }
+        
+        {
+            auto csControllers      = controlTree.section("Controllers").make<UISimpleTree>();
+            auto blControllers      = csControllers.section("Available").make<UIBuildableMetaList<Controller>>();
+            auto curControllers     = csControllers.section("Current").make<ControllerTableUI>();
+            auto propControllers    = csControllers.section("Properties");
+            //auto addSpatial         = propControllers << new CreateMenuUI("Add/Create Spatial##AddControllerSpatialUI", meta<Spatial>());
+            auto inspControllers    = propControllers.make<UITachyonEditor>();
+
+            blControllers.uid("ControllerAvailable");
+            blControllers.flag(SET, UIFlag::EmitSignal);
+
+            curControllers.uid("ControllerTable");
+
+            //addSpatial.action(&SceneEditor::action_create_camera_spatial);
+
+            inspControllers.uid("ControllerInspector");
+            inspControllers.flag(SET, UIFlag::Children);
+        }
+        
+        {
+            //auto csCollisions       = controlTree.section("Collisions").make<UISimpleTree>();
+            //auto blCollisions       = csControllers.section("Available").make<UIBuildableList<Controller>>();
+            //auto curCollisions      = csControllers.section("Current").make<CollisionTableUI>();
+            //auto propCollisions       = csCollisions.section("Properties");
+            //auto addSpatial           = propCollisions << new CreateMenuUI("Add/Create Spatial##AddCollisionSpatialUI", meta<Spatial>());
+            //auto inspCollisions       = propCollisions.make<UITachyonEditor>();
+
+            //blCollisions.uid("CollisionAvailable");
+            //blCollisions.flag(SET, UIFlag::EmitSignal);
+
+            //curCollisions.uid("CollisionTable");
+
+            //addSpatial.action(&SceneEditor::action_create_controller_spatial);
+
+            //inspControllers.uid("ControllerInspector");
+            //inspControllers.flag(SET, UIFlag::Children);
+        }
+        
+        {
+            auto csLights           = controlTree.section("Lights").make<UISimpleTree>();
+            auto blLights           = csLights.section("Available").make<UIBuildableMetaList<Light>>();
+            auto curLights          = csLights.section("Current").make<LightTableUI>();
+            auto propLights         = csLights.section("Properties");
+            auto addSpatial         = propLights << new CreateMenuUI("Add/Create Spatial##AddLightSpatialUI", meta<Spatial>());
+            auto inspLights         = propLights.make<UITachyonEditor>();
+
+            blLights.uid("LightAvailable");
+            blLights.flag(SET, UIFlag::EmitSignal);
+
+            curLights.uid("LightTable");
+
+            addSpatial.action(&SceneEditor::action_create_light_spatial);
+
+            inspLights.uid("LightInspector");
+            inspLights.flag(SET, UIFlag::Children);
+        }
+        
+        {
+            //auto csModels           = controlTree.section("Models").make<UISimpleTree>();
+            //auto blModels           = csModels.section("Available").make<UIBuildableMetaList<Model>>();
+            //auto curModels          = csModels.section("Current").make<ModelTableUI>();
+            //auto propModels         = csModels.section("Properties");
+            //auto addSpatial         = propModels << new CreateMenuUI("Add/Create Spatial##AddModelSpatialUI", meta<Spatial>());
+            //auto inspModels         = propModels.make<UITachyonEditor>();
+
+            //blModels.uid("ModelAvailable");
+            //blModels.flag(SET, UIFlag::EmitSignal);
+
+            //curModels.uid("ModelTable");
+            
+            //addSpatial.action(&SceneEditor::action_create_model_spatial);
+
+            //inspModels.uid("ModelInspector");
+            //inspModels.flag(SET, UIFlag::Children);
+        }
+
+        {
+            //auto csPhysics          = controlTree.section("Physics").make<UISimpleTree>();
+            //auto blPhysics          = csPhysics.section("Available").make<UIBuildableMetaList<Physic>>();
+            //auto curPhysics         = csPhysics.section("Current").make<PhysicsTableUI>();
+            //auto propPhysics        = csPhysics.section("Properties");
+            //auto addSpatial         = propPhysics << new CreateMenuUI("Add/Create Spatial##AddPhysicsSpatialUI", meta<Spatial>());
+
+            //blPhysics.uid("PhysicsAvailable");
+            //blPhysics.flag(SET, UIFlag::EmitSignal);
+
+            //curPhysics.uid("PhysicsTable");
+
+            //addSpatial.action(&SceneEditor::action_create_physics_spatial);
+
+            //inspPhysics.uid("PhysicsInspector");
+            //inspPhysics.flag(SET, UIFlag::Children);
+        }
+
+        {
+            auto csRendereds        = controlTree.section("Rendereds").make<UISimpleTree>();
+            auto blRendereds        = csRendereds.section("Available").make<UIBuildableMetaList<Rendered>>();
+            auto curRendereds       = csRendereds.section("Current").make<RenderedTableUI>();
+            auto propRendereds      = csRendereds.section("Properties");
+            auto addSpatial         = propRendereds << new CreateMenuUI("Add/Create Spatial##AddRenderedSpatialUI", meta<Spatial>());
+            auto inspRendereds      = propRendereds.make<UITachyonEditor>();
+
+            blRendereds.uid("RenderedAvailable");
+            blRendereds.flag(SET, UIFlag::EmitSignal);
+            
+            curRendereds.uid("RenderedTable");
+
+            addSpatial.action(&SceneEditor::action_create_rendered_spatial);
+
+            inspRendereds.uid("RenderedInspector");
+            inspRendereds.flag(SET, UIFlag::Children);
+        }
+
+        {
+            auto csScenes           = controlTree.section("Scenes").make<UISimpleTree>();
+            auto blScenes           = csScenes.section("Available").make<UIBuildableMetaList<Scene>>();
+            auto curScenes          = csScenes.section("Current").make<SceneTableUI>();
+            auto propScenes         = csScenes.section("Properties");
+            auto inspScenes         = propScenes.make<UITachyonEditor>();
+
+            blScenes.uid("SceneAvailable");
+            blScenes.flag(SET, UIFlag::EmitSignal);
+
+            curScenes.uid("SceneTable");
+
+            inspScenes.uid("SceneInspector");
+            inspScenes.flag(SET, UIFlag::Children);
+        }
+
+        {
+            auto csSpatials         = controlTree.section("Spatials").make<UISimpleTree>();
+            auto blSpatials         = csSpatials.section("Available").make<UIBuildableMetaList<Spatial>>();
+            //auto curSpatials         = csSpatials.section("Current").make<SpatialTableUI>();
+            //auto propSpatials        = csSpatials.section("Properties");
+            //auto inspSpatials        = propSpatials.make<UITachyonEditor>();
+            
+            //blSpatials.uid("SpatialAvailable");
+            //blSpatials.flag(SET, UIFlag::EmitSignal);
+            
+            //curSpatials.uid("SpatialTable");
+
+            //addSpatial.action(&SceneEditor::action_create_camera_spatial);
+
+            //inspSpatials.uid("SpatialInspector");
+            //inspSpatials.flag(SET, UIFlag::Children);
+        }
     }
 
-#if 0
-    cp_lights.section("Available").make<UIBuildableMetaList<Light>>().flag(SET, UIFlag::EmitSignal).uid("LightAvailable");
-    cp_lights.section("Current").make<LightTableUI>().uid("LightTable");
-    auto cpp_lights    = cp_lights.section("Properties");
-    (cpp_lights << new CreateMenuUI("Add/Create Spatial##AddLightSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_light_spatial);
-    cpp_lights.make<UITachyonEditor>().uid("LightInspector");
-#endif
-
-#if 0
-    cp_models.section("Available").make<UIBuildableMetaList<Model>>().flag(SET, UIFlag::EmitSignal).uid("ModelAvailable");
-    cp_models.section("Current").make<ModelTableUI>().uid("ModelTable");
-    auto cpp_models = cp_models.section("Properties");
-    (cpp_models << new CreateMenuUI("Add/Create Spatial##AddModelSpatialUI", meta<Spatial>()));
-    cpp_models = make<UITachyonEditor>().uid("ModelInspector");
-#endif
-
-    //cp_physics.section("Available").make<UIBuildableInfoList<Physics>>().flag(SET, UIFlag::EmitSignal).uid("PhysicsAvailable");
-    //cp_physics.section("Current").make<PhysicsTableUI>().uid("PhysicsTable");
-    //cp_physics.section("Properties").make<InspectorUI>().uid("PhysicsInspector");
-
-    cp_rendereds.section("Available").make<UIBuildableMetaList<Rendered>>().flag(SET, UIFlag::EmitSignal).uid("RenderedAvailable");
-    cp_rendereds.section("Current").make<RenderedTableUI>().uid("RenderedTable");
-    auto rendered_props = cp_rendereds.section("Properties");
-    (rendered_props << new CreateMenuUI("Add/Create Spatial##AddRenderedSpatialUI", meta<Spatial>())).action(&SceneEditor::action_create_rendered_spatial);
-    auto rx = rendered_props.make<UITachyonEditor>();
-    rx.uid("RenderedInspector");
-    rx.flag(SET, UIFlag::Children);
-
-    cp_scenes.section("Available").make<UIBuildableMetaList<Scene>>().flag(SET, UIFlag::EmitSignal).uid("SceneAvailable");
-    cp_scenes.section("Current").make<SceneTableUI>().uid("SceneTable");
-    auto sx = cp_scenes.section("Properties").make<UITachyonEditor>();
-    sx.uid("SceneInspector");
-    sx.flag(SET, UIFlag::Children);
-
-    cp_spatials.section("Available").make<UIBuildableMetaList<Spatial>>().flag(SET, UIFlag::EmitSignal).uid("SpatialAvailable");
-    //cp_spatials.section("Current").make<SpatialTableUI>().uid("SpatialTable");
-    //cp_spatials.section("Properties").make<InspectorUI>().uid("SpatialInspector");
-
-    
-    // Simple window thing
-    
     /////////////////////////////////
     //  LUA
-    auto lualua = app.make<LuaPanelUI>();
-    lualua.flags(SET, {UIFlag::Invisible, UIFlag::NoBackground});
-    lualua.uid("LuaWindow");
+    
+    //auto luaPanel           = app.make<UIPanel>("Lua Panel", {UIFlag::NoCollapse, UIFlag::NoResize});
+    auto luaPanel           = app.make<LuaPanelUI>();
+    {
+        luaPanel.flags(SET, {UIFlag::Invisible, UIFlag::NoBackground});
+        luaPanel.uid("LuaWindow");
+    }
+
+    /////////////////////////////////
+    //  FRAME
+
+    //auto framePanel         = app.make<UIPanel>("Frame", UIFlag::NoCollapse);
+    {
+    
+    }
+    
+    
 
     /////////////////////////////////
     //  MENUS
     
-    auto file_menu          = mmb.menu("File");
-    auto edit_menu          = mmb.menu("Edit");
-    auto view_menu          = mmb.menu("View");
-    auto camera_menu        = mmb.menu("Camera");
-    auto scene_menu         = mmb.menu("Scene");
-    //auto light_menu         = mmb.menu("Light");
-    auto rendered_menu      = mmb.menu("Rendered");
-    //auto model_menu         = mmb.menu("Model");
-    auto controller_menu    = mmb.menu("Controller");
-    //auto collision_menu     = mmb.menu("Collision");
-    //auto physics_menu       = mmb.menu("Physics");
-    //auto window_menu        = mmb.menu("Window");
-    //auto help_menu          = mmb.menu("Help");
-    auto debug_menu         = mmb.menu("Debug");
-
-    /////////////////////////////////
-    //  MENU ITEMS
+    auto fileMenu           = menuBar.menu("File");
+    {
+        fileMenu.menuitem("New").action(&SceneEditor::cmd_file_new);
+        fileMenu.menuitem("Open", "Ctrl+O").action(&SceneEditor::cmd_file_open);
+        fileMenu.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
+        fileMenu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
+        fileMenu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
+        //fileMenu.separator();
+        fileMenu.menuitem("Import").action(&SceneEditor::cmd_file_import);
+        
+        fileMenu.menuitem("Execute Lua...").action(&SceneEditor::cmd_file_lua_execute);
+    }
     
-    (camera_menu << new CreateMenuUI("Add/Create##AddCameraUI", meta<Camera>())).action(&SceneEditor::action_create_camera);
+    auto editMenu          = menuBar.menu("Edit");
+    {
+        editMenu.menuitem("Copy", "Ctrl+C");
+        editMenu.menuitem("Paste", "Ctrl+V");
+    }
     
-    //(controller_menu << new CreateMenuUI("Add/Create##AddControllerUI", meta<Controller>())).action(&SceneEditor::create_payload);
-
-
-    edit_menu.menuitem("Copy", "Ctrl+C");
-    edit_menu.menuitem("Paste", "Ctrl+V");
-
-    file_menu.menuitem("New").action(&SceneEditor::cmd_file_new);
-    file_menu.menuitem("Open", "Ctrl+O").action(&SceneEditor::cmd_file_open);
-    file_menu.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
-    file_menu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
-    file_menu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
-    //file_menu.separator();
-    file_menu.menuitem("Import").action(&SceneEditor::cmd_file_import);
+    auto viewMenu           = menuBar.menu("View");
+    {
+        viewMenu.checkbox(VISIBLE, controlPanel);
+        viewMenu.checkbox(VISIBLE, luaPanel);
+        //viewMenu.checkbox(VISIBLE, framePanel);
+    }
     
-    file_menu.menuitem("Execute Lua...").action(&SceneEditor::cmd_file_lua_execute);
-
-    //(light_menu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::create_payload);
-
-    //(model_menu << new CreateMenuUI("Add/Create##AddModelUI", meta<Model>())).action(&SceneEditor::create_payload);
-
-    (rendered_menu << new CreateMenuUI("Add/Create##AddRenderedUI", meta<Rendered>())).action(&SceneEditor::action_create_rendered);
-
-    (scene_menu << new CreateMenuUI("Add/Create##AddSceneUI", meta<Scene>())).action(&SceneEditor::action_create_scene);
+    auto cameraMenu        = menuBar.menu("Camera");
+    {
+        (cameraMenu << new CreateMenuUI("Add/Create##AddCameraUI", meta<Camera>())).action(&SceneEditor::action_create_camera);
+    }
     
-    view_menu.checkbox(VISIBLE, controlpanel);
-    view_menu.checkbox(VISIBLE, lualua);
+    auto sceneMenu         = menuBar.menu("Scene");
+    {
+        (sceneMenu << new CreateMenuUI("Add/Create##AddSceneUI", meta<Scene>())).action(&SceneEditor::action_create_scene);
+    }
+    
+    auto lightMenu         = menuBar.menu("Light");
+    {
+        (lightMenu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::action_create_light);
+    }
+    
+    auto renderedMenu      = menuBar.menu("Rendered");
+    {
+        (renderedMenu << new CreateMenuUI("Add/Create##AddRenderedUI", meta<Rendered>())).action(&SceneEditor::action_create_rendered);
+    }
+    
+    
+    //auto modelMenu         = menuBar.menu("Model");
+    {
+        //(model_menu << new CreateMenuUI("Add/Create##AddModelUI", meta<Model>())).action(&SceneEditor::action_create_model);
+    }
+    
+    auto controllerMenu     = menuBar.menu("Controller");
+    {
+        //(controller_menu << new CreateMenuUI("Add/Create##AddControllerUI", meta<Controller>())).action(&SceneEditor::action_create_controller);
+    }
+    
+    //auto collisionMenu     = menuBar.menu("Collision");
+    {
+    }
+    
+    //auto physicsMenu       = menuBar.menu("Physics");
+    {
+    }
+    
+    //auto windowMenu        = menuBar.menu("Window");
+    {
+    }
+    
+    //auto helpMenu          = menuBar.menu("Help");
+    {
+    }
+    
+    //auto debugMenu         = menuBar.menu("Debug");
+    {
+    }
 }
 
 

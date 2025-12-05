@@ -453,7 +453,7 @@ void SceneEditor::init_ui()
         fileMenu.menuitem("Save", "Ctrl+S").action(&SceneEditor::cmd_file_save);
         fileMenu.menuitem("Save As").action(&SceneEditor::cmd_file_save_as);
         fileMenu.menuitem("Screenshot", "F12").action(&SceneEditor::cmd_screenshot);
-        //fileMenu.separator();
+        fileMenu.separator();
         fileMenu.menuitem("Import").action(&SceneEditor::cmd_file_import);
         
         fileMenu.menuitem("Execute Lua...").action(&SceneEditor::cmd_file_lua_execute);
@@ -493,7 +493,7 @@ void SceneEditor::init_ui()
     }
     
     
-    //auto modelMenu         = menuBar.menu("Model");
+    auto modelMenu         = menuBar.menu("Model");
     {
         //(model_menu << new CreateMenuUI("Add/Create##AddModelUI", meta<Model>())).action(&SceneEditor::action_create_model);
     }
@@ -503,23 +503,23 @@ void SceneEditor::init_ui()
         //(controller_menu << new CreateMenuUI("Add/Create##AddControllerUI", meta<Controller>())).action(&SceneEditor::action_create_controller);
     }
     
-    //auto collisionMenu     = menuBar.menu("Collision");
+    auto collisionMenu     = menuBar.menu("Collision");
     {
     }
     
-    //auto physicsMenu       = menuBar.menu("Physics");
+    auto physicsMenu       = menuBar.menu("Physics");
     {
     }
     
-    //auto windowMenu        = menuBar.menu("Window");
+    auto windowMenu        = menuBar.menu("Window");
     {
     }
     
-    //auto helpMenu          = menuBar.menu("Help");
+    auto helpMenu          = menuBar.menu("Help");
     {
     }
     
-    //auto debugMenu         = menuBar.menu("Debug");
+    auto debugMenu         = menuBar.menu("Debug");
     {
     }
 }

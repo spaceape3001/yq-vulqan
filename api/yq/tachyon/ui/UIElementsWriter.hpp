@@ -147,6 +147,8 @@ namespace yq::tachyon {
         
         UIElementsWriter        section(std::string_view);
         
+        UIElementWriter         separator();
+        
         UISpacerWriter          spacer(const Size2F&);
         
         UIVBoxLayoutWriter            vbox();

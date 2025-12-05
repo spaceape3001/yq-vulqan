@@ -20,6 +20,7 @@
 #include <yq/tachyon/ui/UIMenuBar.hpp>
 #include <yq/tachyon/ui/UIMenuBarWriter.hpp>
 #include <yq/tachyon/ui/UISection.hpp>
+#include <yq/tachyon/ui/UISeparator.hpp>
 #include <yq/tachyon/ui/UISpacer.hpp>
 #include <yq/tachyon/ui/UISpacerWriter.hpp>
 #include <yq/tachyon/ui/UITextLabel.hpp>
@@ -183,6 +184,11 @@ namespace yq::tachyon {
     UIElementsWriter        UIElementsWriter::section(std::string_view sz)
     {
         return make<UISection>(sz);
+    }
+
+    UIElementWriter         UIElementsWriter::separator()
+    {
+        return make<UISeparator>();
     }
 
     UISpacerWriter          UIElementsWriter::spacer(const Size2F& sz)

@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "ui/UISeparator.ipp"
+
 #include "ui/UIButton.ipp"
 #include "ui/UICallback.ipp"
 #include "ui/UICheckBox.ipp"

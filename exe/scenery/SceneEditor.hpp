@@ -143,9 +143,9 @@ public:
 
     class ScenesTableUI;
 
-    void    _open(const std::filesystem::path&);
-    void    _import(const std::filesystem::path&);
-    void    _save(const std::filesystem::path&);
+    void    _open(const std::filesystem::path&, StdThread st=EDIT);
+    void    _import(const std::filesystem::path&, StdThread st=EDIT);
+    void    _save(const std::filesystem::path&, ThreadSpec st=EDIT);
     void    _lua(const std::filesystem::path&);
     
 private:

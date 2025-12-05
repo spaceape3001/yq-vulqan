@@ -694,10 +694,10 @@ Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
     return _load(deftsx.path);
 }
 
-void    SceneEditor::_import(const std::filesystem::path& fp)
+void    SceneEditor::_import(const std::filesystem::path& fp, StdThread st)
 {
     send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, {
-        .owner  = EDIT,
+        .owner  = st,
         .parent = TypedID(pointer(m_scene.selected))
     }));
 }
@@ -707,10 +707,10 @@ void    SceneEditor::_lua(const std::filesystem::path& fp)
     send(new LuaExecuteFileRequest({.target=m_lua.tvm}, fp));
 }
 
-void    SceneEditor::_open(const std::filesystem::path& fp)
+void    SceneEditor::_open(const std::filesystem::path& fp, StdThread st)
 {
     send(new LoadTSXRequest({ .source = *this, .target= gFileIO }, fp, {
-        .owner  = EDIT,
+        .owner  = st,
         .parent = TypedID(pointer(m_scene.selected))
     }, SceneEditor::clear_edit_thread));
 }
@@ -745,7 +745,7 @@ void    SceneEditor::_rebuild()
     m_scene.rebuild = false;
 }
 
-void    SceneEditor::_save(const std::filesystem::path& fp)
+void    SceneEditor::_save(const std::filesystem::path& fp, ThreadSpec st)
 {
     const Frame* frame  = Frame::current();
     if(!frame)

@@ -49,19 +49,14 @@ int main(int argc, char* argv[])
     for(StdThread st : StdThread::all_values())
         yInfo() << "thread " << st.key() << "> " << Thread::standard(st).id;
     
-    SceneEditor::Param  sep;
-    
     //  TODO
     //std::vector< ResourceTBD > open
     
-    for(int n=1;n<argc;++n){
-        sep.load    = argv[n];  // right now, limited to one
-        break;
-    }
-    
-    
     gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();
-    SceneEditor* w      = Widget::create<SceneEditor>(sep);
+    SceneEditor* w      = Widget::create<SceneEditor>([&](SceneEditor& se){
+        for(int n=1;n<argc;++n)
+            se._import(argv[n]);
+    });
     app.run(w);
     return 0;
 }

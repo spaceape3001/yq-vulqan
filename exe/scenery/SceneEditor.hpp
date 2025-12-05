@@ -60,6 +60,8 @@ class SceneEditor : public CompositeWidget {
     YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
 public:
 
+    using PostStartupFN = std::function<void(SceneEditor&)>;
+
     static void     clear_edit_thread();
     static void     clear_aux_thread();
     static void     clear_thread(ThreadID);
@@ -82,11 +84,12 @@ public:
     static void             init_meta();
 
     struct Param : public CompositeWidget::Param {
-        std::filesystem::path   load;
+        // Called end of setup() right *before* going live
+        PostStartupFN           startup;
     };
 
     SceneEditor();
-    SceneEditor(const Param&);
+    SceneEditor(PostStartupFN&& fn);
     ~SceneEditor();
     
     //bool    menubar(enabled_k) const override { return true; }
@@ -139,6 +142,11 @@ public:
     //void    ui_scene_entries();
 
     class ScenesTableUI;
+
+    void    _open(const std::filesystem::path&);
+    void    _import(const std::filesystem::path&);
+    void    _save(const std::filesystem::path&);
+    void    _lua(const std::filesystem::path&);
     
 private:
     struct SceneEntry;
@@ -200,10 +208,11 @@ private:
         TypedID                 context;
     } m_spatial;
 
-    FileMode                    m_fileMode  = FileMode::None;
-    TypedID                     m_fileIO;
-    std::filesystem::path       m_filepath;
-    bool                        m_defaultInit   = false;
+    FileMode                m_fileMode  = FileMode::None;
+    TypedID                 m_fileIO;
+    std::filesystem::path   m_filepath;
+    PostStartupFN           m_startup;
+    bool                    m_defaultInit   = false;
     
     struct {
         LuaPanelUI*             panel           = nullptr;
@@ -245,10 +254,6 @@ private:
     void    _rebuild();
     void    _title();
 
-    void    _open(const std::filesystem::path&);
-    void    _import(const std::filesystem::path&);
-    void    _save(const std::filesystem::path&);
-    void    _lua(const std::filesystem::path&);
     
     void    on_camera_select_event(const CameraSelectEvent&);
     void    on_controller_select_event(const ControllerSelectEvent&);

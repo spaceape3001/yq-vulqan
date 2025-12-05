@@ -372,13 +372,12 @@ void SceneEditor::init_meta()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SceneEditor::SceneEditor() : SceneEditor(Param())
+SceneEditor::SceneEditor(PostStartupFN&& mv) : m_startup(std::move(mv))
 {
 }
 
-SceneEditor::SceneEditor(const Param& p)
+SceneEditor::SceneEditor()
 {
-    m_filepath  = p.load;
 }
 
 SceneEditor::~SceneEditor()
@@ -1197,8 +1196,10 @@ Execution   SceneEditor::setup(const Context&ctx)
     if(m_scene.rebuild)
         _rebuild();
         
-    if(!m_filepath.empty())
-        _open(m_filepath);
+    if(m_startup){
+        m_startup(*this);
+        m_startup   = {};
+    }
     
     return ret;
 }

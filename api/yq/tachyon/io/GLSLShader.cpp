@@ -175,7 +175,6 @@ namespace yq::tachyon::glsl {
     }
     
     namespace {
-    
         Shader* compile_load_shader(const std::filesystem::path& pth)
         {
             ShaderType  st  = shader_type(pth);

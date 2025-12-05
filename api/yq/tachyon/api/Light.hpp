@@ -51,7 +51,9 @@ namespace yq::tachyon {
     
         static void init_meta();
 
-        LightID            id() const { return LightID(UniqueID::id()); }
+        LightID id() const { return LightID(UniqueID::id()); }
+        const RGB3F&    color() const { return m_color; }
+        float           intensity() const { return m_intensity; }
 
     protected:
     

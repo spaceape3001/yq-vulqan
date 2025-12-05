@@ -26,6 +26,7 @@ add_library(${PROJECT_NAME} SHARED
     command_color.cpp
     command_controller.cpp
     command_cursor.cpp
+    command_light.cpp
     command_orientation.cpp
     command_position.cpp
     command_rendered.cpp
@@ -43,6 +44,7 @@ add_library(${PROJECT_NAME} SHARED
     event_gamepad.cpp
     event_joystick.cpp
     event_keyboard.cpp
+    event_light.cpp
     event_monitor.cpp
     event_mouse.cpp
     event_sim.cpp
@@ -188,7 +190,6 @@ add_library(${PROJECT_NAME} SHARED
     command/GLFWCommand.cpp
     command/IOCommand.cpp
     command/JoystickCommand.cpp
-    command/LightCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
     command/ShapeCommand.cpp

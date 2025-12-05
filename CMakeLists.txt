@@ -14,7 +14,7 @@ SET(YOUR_QUILL_VULQAN ${CMAKE_CURRENT_LIST_DIR})
 include(local.cmake OPTIONAL)
 include(configure.cmake)
 
-if(PROJECT_IS_TOP_LEVEL)
+if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/yq-toolbox)
         message(FATAL_ERROR "YQ toolbox must be present! (use a symbolic link or junction)")
     endif()

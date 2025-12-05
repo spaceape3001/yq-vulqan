@@ -33,3 +33,6 @@ target_link_libraries(resinfo yq_core yq_resource yq_tachyon)
 
 add_executable(res res.cpp)
 target_link_libraries(res yq_core yq_resource yq_tachyon)
+
+add_executable(shexpand shexpand.cpp)
+target_link_libraries(shexpand yq_tachyon)

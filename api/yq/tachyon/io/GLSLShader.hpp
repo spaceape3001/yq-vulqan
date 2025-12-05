@@ -27,6 +27,8 @@ namespace yq::tachyon::glsl {
     //! Compiles the given source using the GLSL compiler
     std::pair<ByteArray,std::error_code>    compile(const Source&);
 
+    std::pair<ByteArray,std::error_code>    expand(const Source&);
+
     //! Validates the given source using the GLSL validator
     std::pair<ByteArray,std::error_code>    validate(const Source&, ShaderType st=ShaderType());
     

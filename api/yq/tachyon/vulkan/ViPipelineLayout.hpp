@@ -41,7 +41,7 @@ namespace yq::tachyon {
     
         This encapsulates the pipeline layout.  It *ALSO* does the heavy lifting on pipeline creation (shaders, static-data).
     */
-    class ViPipelineLayout : public ViData, public RefCount{
+    class ViPipelineLayout : public ViData, public RefCount {
     public:
         
         ViPipelineLayout();

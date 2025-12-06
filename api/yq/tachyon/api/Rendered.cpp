@@ -204,7 +204,7 @@ namespace yq::tachyon {
             push.fetch(this, sn.push);
 
         const auto& ibo    = sn.pipeline_light->index_buffer();
-        if(!ibo && ibo->fetch)
+        if(ibo && ibo->fetch)
             sn.ibo  = ibo->fetch(this);
         
         const auto& sbos    = sn.pipeline_light->storage_buffers();

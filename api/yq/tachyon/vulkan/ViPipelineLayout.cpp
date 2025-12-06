@@ -144,23 +144,19 @@ namespace yq::tachyon {
             return ec;
         }
         
-        if(!_import_data()){
-            return errors::pipeline_layout_cant_import_data();
-        }
-        
         //  VERTEX BUFFERS
         for(uint32_t i=0;i<m_config->m_vertexBuffers.size();++i){
             auto& v = m_config->m_vertexBuffers[i];
             
             VkVertexInputBindingDescription b;
-            b.binding   = i;
+            b.binding   = v.binding;
             b.stride    = v.stride;
             b.inputRate = (VkVertexInputRate) v.inputRate.value();
             m_vertexBindings.push_back(b);
             
             for(auto& va : v.attributes){
                 VkVertexInputAttributeDescription   a;
-                a.binding       = i;
+                a.binding       = v.binding;
                 a.location      = va.location;
                 a.offset        = va.offset;
                 a.format        = (VkFormat) va.format.value();
@@ -190,12 +186,7 @@ namespace yq::tachyon {
             }
             
             if(push.size != 0){
-                if(m_config->m_push.shaders){
-                    push.stageFlags = (VkShaderStageFlags) m_config->m_push.shaders;
-                } else {
-                    push.stageFlags = m_shaderMask;
-                }
-                
+                push.stageFlags = (VkShaderStageFlags) (m_shaderMask & m_config->m_push.stages);
                 pipelineLayoutInfo.pushConstantRangeCount = 1;
                 pipelineLayoutInfo.pPushConstantRanges = &push;
             }
@@ -299,7 +290,7 @@ namespace yq::tachyon {
         }
         if(descriptors_defined()){
             out << "    VkDescriptorSetLayout:      [" << hex(descriptor_set_layout()) << "]\n";
-            for(const VkDescriptorSetLayoutBinding& desc : m_descriptorSetLayoutBindingVector){
+            for(const VkDescriptorSetLayoutBinding& desc : m_layoutBindings){
                 out << "        " << to_string_view(desc.descriptorType) << ", binding=" << desc.binding << ", count=" 
                     << desc.descriptorCount << ", shaders=" << hex(desc.stageFlags) << '\n';
             }

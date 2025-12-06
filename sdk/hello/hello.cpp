@@ -115,11 +115,11 @@ public:
             p.shaders({ "sdk/hello/hello3.vert", "sdk/hello/hello2.frag" });
             p.front(FrontFace::Clockwise);
             p.push<Warp>(&HelloTriangle::warp);
-            p.vertex(verts, DataActivity::COMMON)
+            p.vertex(verts)
                 .attribute<glm::vec2>(&Vertex::position)
                 .attribute<glm::vec3>(&Vertex::color)
             ;
-            p.uniform(&HelloTriangle::ubo, DataActivity::DYNAMIC);
+            p.uniform(&HelloTriangle::ubo);
             //p.texture("sdk/hello/flowers-512.png");
             //p.ubo();
         }
@@ -164,13 +164,13 @@ public:
         {
             auto& p = w.pipeline();
             p.shaders({ "sdk/hello/quad.vert", "sdk/hello/quad.frag" });
-            p.vertex(verts, DataActivity::COMMON)
+            p.vertex(verts)
                 .attribute<glm::vec2>(&Vertex2::position)
                 .attribute<glm::vec2>(&Vertex2::uv)
             ;
             p.topology(Topology::TriangleStrip);
             p.front(FrontFace::CounterClockwise);
-            p.texture(&HelloQuad::tex, DataActivity::FIXED);
+            p.texture(&HelloQuad::tex, {.activity=FIXED});
         }
     }
     

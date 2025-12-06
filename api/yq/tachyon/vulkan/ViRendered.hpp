@@ -55,7 +55,7 @@ namespace yq::tachyon {
         //! Updates us
         // NOTE, expect an extra helper once we get proper lighting support into the scene, maybe
         // some sort of "universal" buffer or simialr
-        void    update(ViContext& u, const RenderedSnap&);
+        void    update(ViContext& u, const RenderedSnap&, const ViDataMap& dm ={});
         
         //! Publishes descriptor changes
         void    descriptors();
@@ -96,7 +96,7 @@ namespace yq::tachyon {
 
         std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts, const Pipeline*p);
         void            _kill();
-        void            _update(ViContext& u, const RenderedSnap&);
+        void            _update(ViContext& u, const RenderedSnap&, const ViDataMap& dm);
         void            _descriptors();
         void            _record(ViContext&, const PushBuffer&, Pipeline::Variation) const;
     };

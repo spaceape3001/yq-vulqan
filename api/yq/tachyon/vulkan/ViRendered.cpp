@@ -125,23 +125,15 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
         
-        if(m_vertex.count){
+        if(m_vtxCount)
             m_status |= S::Vertex;
-        }
-        if(m_index.count){
+        if(m_ibo.count)
             m_status |= S::Index;
-        }
-        
-        if(m_config->push().type != PushConfigType::None){
+        if(m_config->push().type != PushConfigType::None)
             m_status |= S::Push;
-        }
 
-        _import_data(&ren);
+tachyonInfo << "ViRendered successfully initialized";
 
-        if(m_status(S::Descriptors)){
-            _publish_data(true);
-        }
-        
         return {};
     }
     
@@ -213,7 +205,7 @@ namespace yq::tachyon {
         }
         
         if(m_status(S::Vertex)){
-            vkCmdBindVertexBuffers(u.command_buffer, 0,  m_vertex.count, m_vertex.buffers, m_vertex.offsets);
+            vkCmdBindVertexBuffers(u.command_buffer, 0,  (uint32_t) m_vboBuffers.size(), m_vboBuffers.data(), m_vboOffsets.data());
         }
         
         if(m_status(S::Topology)){
@@ -221,19 +213,28 @@ namespace yq::tachyon {
         }
         
         if(m_status(S::Index)){
-            for(uint32_t i=0;i<m_index.count;++i){
-                vkCmdBindIndexBuffer(u.command_buffer, m_index.buffers[i], 0, (VkIndexType)(m_config->m_indexBuffers[i].type.value()));
-                vkCmdDrawIndexed(u.command_buffer, m_index.sizes[i], 1, 0, 0, 0);  // possible point of speedup in future
-            }
+            vkCmdBindIndexBuffer(u.command_buffer, m_ibo.buffer, 0, m_ibo.type);
+            vkCmdDrawIndexed(u.command_buffer, m_ibo.count, 1, 0, 0, 0);  // possible point of speedup in future
         } else {
-            vkCmdDraw(u.command_buffer, m_vertex.maxSize, 1, 0, 0);
+            vkCmdDraw(u.command_buffer, m_vtxCount, 1, 0, 0);
         }
     }
     
-    void            ViRendered::_update(ViContext& u, const RenderedSnap& sn)
+    void            ViRendered::_update(ViContext& u, const RenderedSnap& sn, const ViDataMap& dm)
     {
-        if(sn.good)
-            _update_data(&sn);
+        if(sn.good){
+            switch(_update_data(&sn, dm)){
+            case R::Success:
+                tachyonInfo << "ViRendered [" << id() << "]: no changes";
+                break;
+            case R::Failure:
+                tachyonInfo << "ViRendered [" << id() << "]: failed update";
+                break;
+            case R::Updated:
+                tachyonInfo << "ViRendered [" << id() << "]: updated";
+                break;
+            }
+        }
         
         if(u.pipeline_rebuild){
             if(u.pipelines){
@@ -344,22 +345,17 @@ namespace yq::tachyon {
             out << "    VkPipelineLayout:           [" << hex(m_layout->pipeline_layout()) << "]\n";
         }
         
-        for(uint32_t i=0;i<m_index.count;++i){
-            out << "    IBO(" << i << "): " << m_index.sizes[i] << " (indices)\n";
-        }
-        for(uint32_t i=0;i<m_storage.count;++i){
-            out << "    SBO(" << i << "): " << m_storage.bytes[i] << " (bytes)\n";
-        }
-        for(uint32_t i=0;i<m_uniform.count;++i){
-            out << "    UBO(" << i << "): " << m_uniform.bytes[i] << " (bytes)\n";
-        }
-        for(uint32_t i=0;i<m_texture.count;++i){
-            auto & ext = m_texture.extents[i];
-            out << "    Tex(" << i << "): " << ext.width << " x " << ext.height << " x " << ext.depth << " (pixels)\n";
-        }
-        for(uint32_t i=0;i<m_vertex.count;++i){
-            out << "    VBO(" << i << "): " << m_vertex.sizes[i] << " (vertices)\n";
-        }
+        out << "    IBO: " << m_ibo.count << " (indices)\n";
+        for(auto& i : m_sbo)
+            out << "    SBO(" << i.first << "): " << i.second.bytes << " (bytes)\n";
+        
+        for(auto& i : m_ubo)
+            out << "    UBO(" << i.first << "): " << i.second.bytes << " (bytes)\n";
+        for(auto& i : m_tex)
+            //out << "    Tex(" << i.first << "): " << i.second.extents << " (pixels)\n";
+            out << "    Tex(" << i.first << "): [" << i.second.extents.width << 'x' << i.second.extents.height << 'x' << i.second.extents.depth << "] (pixels)\n";
+        for(auto& i : m_vbo)
+            out << "    VBO(" << i.first << "): " << i.second.count << " (vertices)\n";
         
         if(!descriptors_defined()){
             out << "    >> No descriptors defined <<\n";
@@ -367,6 +363,7 @@ namespace yq::tachyon {
             out << "    VkDescriptorPool:           [" << hex(descriptor_pool()) << "]\n";
             out << "    VkDescriptorSetLayout:      [" << hex(descriptor_set_layout()) << "]\n";
             
+            #if 0
             for(const VkWriteDescriptorSet& w : m_writes){
                 out << "        " << to_string_view(w.descriptorType) << ", binding=" << w.dstBinding << ", descriptor_set=" << hex(w.dstSet) << ", count=" << w.descriptorCount;
                 if(w.pImageInfo){
@@ -377,6 +374,7 @@ namespace yq::tachyon {
                 }
                 out << '\n';
             }
+            #endif
         }
 
         if(m_layout && options.layout){
@@ -404,12 +402,12 @@ namespace yq::tachyon {
         log_category(cat).getStream(log4cpp_priority(pri)) << text;
     }
 
-    void    ViRendered::update(ViContext& u, const RenderedSnap& sn)
+    void    ViRendered::update(ViContext& u, const RenderedSnap& sn, const ViDataMap& dm)
     {
         if(valid()){
             m_good  = sn.good;
             if(m_good)
-                _update(u, sn);
+                _update(u, sn, dm);
         }
     }
 

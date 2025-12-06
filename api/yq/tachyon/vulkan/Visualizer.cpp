@@ -152,6 +152,8 @@ namespace yq::tachyon {
             return {};
 
         ViRenderedPtr ret =  m_rendereds -> create(obj, p);
+        if(!ret)
+            return {};
         if(ret->pipeline_id() != p->id())
             ret     = m_rendereds -> recreate(obj, p);
         return ret;

@@ -111,13 +111,13 @@ namespace yq::tachyon {
         p -> front(FrontFace::CounterClockwise);
         p -> wireframe_permitted(false);
         
-        p -> vertex<ImDrawVert>(REFRESH)
+        p -> vertex<ImDrawVert>({.activity=REFRESH})
                 .attribute(&ImDrawVert::pos, DataFormat::R32G32_SFLOAT)
                 .attribute(&ImDrawVert::uv, DataFormat::R32G32_SFLOAT)
                 .attribute(&ImDrawVert::col, DataFormat::R8G8B8A8_UNORM)  // SRGB crashes/freezes the code!
         ;
-        p -> index<ImDrawIdx>(REFRESH);
-        p -> texture(REFRESH);
+        p -> index<ImDrawIdx>({.activity=REFRESH});
+        p -> texture({.activity=REFRESH});
         p -> topology(Topology::TriangleList);
         
         p -> push<Push>();

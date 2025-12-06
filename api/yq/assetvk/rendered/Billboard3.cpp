@@ -21,13 +21,13 @@ namespace yq::tachyon {
         {
             auto& p = w.pipeline();
             p.shaders({ "resources/Billboard3.vert", "resources/Billboard3.frag" });
-            p.vertex(&Billboard³::m_vertex, DataActivity::FIXED)
+            p.vertex(&Billboard³::m_vertex, {.activity=FIXED})
                 .attribute<glm::vec2>(&VData::position)
                 .attribute<glm::vec2>(&VData::uv)
             ;
             p.topology(Topology::TriangleStrip);
             p.front(FrontFace::CounterClockwise);
-            p.texture(&Billboard³::m_texture, DataActivity::FIXED);
+            p.texture(&Billboard³::m_texture, {.activity=FIXED});
             p.push_mvp();
         }
     }

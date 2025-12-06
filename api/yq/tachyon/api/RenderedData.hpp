@@ -25,7 +25,7 @@ namespace yq::tachyon {
     
     struct RenderedSnap : public TachyonSnap {
         PushBuffer              push;
-        std::vector<Buffered>   ibos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
+        Buffered                ibo;  //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
         std::vector<Buffered>   ubos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
         std::vector<Buffered>   vbos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
         std::vector<Buffered>   sbos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)

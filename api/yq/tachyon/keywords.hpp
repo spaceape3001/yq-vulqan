@@ -85,6 +85,10 @@ namespace yq::tachyon {
         static constexpr EveryCount   operator()(unsigned);
     };
     
+    struct external_k {
+        consteval operator DataActivity() const noexcept { return DataActivity::EXTERNAL; }
+    };
+
     struct face_k {};
     
     struct fixed_k {
@@ -263,6 +267,7 @@ namespace yq::tachyon {
     static constexpr const edit_k               EDIT;
     static constexpr const emit_k               EMIT;
     static constexpr const every_k              EVERY;
+    static constexpr const external_k           EXTERNAL;
     static constexpr const face_k               FACE;
     static constexpr const fixed_k              FIXED;
     static constexpr const game_k               GAME;

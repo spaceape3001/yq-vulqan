@@ -57,11 +57,11 @@ namespace yq::tachyon {
         {
             auto& p = w.pipeline();
             p.shaders({ "resources/SkyBox3.vert", "resources/SkyBox3.frag" });
-            p.vertex(SkyBox³::s_vertex, DataActivity::COMMON);
-            p.index(SkyBox³::s_index, DataActivity::COMMON);
+            p.vertex(SkyBox³::s_vertex);
+            p.index(SkyBox³::s_index);
             p.topology(Topology::TriangleList);
             p.front(FrontFace::CounterClockwise);
-            p.texture(&SkyBox³::m_texture, DataActivity::FIXED);
+            p.texture(&SkyBox³::m_texture, { .activity = FIXED });
             p.push_mvp();
             
         }

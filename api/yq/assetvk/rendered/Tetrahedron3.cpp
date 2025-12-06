@@ -132,12 +132,12 @@ namespace yq::tachyon {
             p.shader("resources/shape3/color.vert");
             p.shader("resources/shape3/color.frag");
 
-            p.vertex(&Tetrahedron³::m_vertexS, DataActivity::DYNAMIC)
+            p.vertex(&Tetrahedron³::m_vertexS, {.activity=DYNAMIC})
                 .attribute(&VertexS::position)
             ;
 
-            p.uniform(&Tetrahedron³::m_uniformS, DataActivity::DYNAMIC);
-            p.index(Tetrahedron³::s_indices, DataActivity::COMMON);
+            p.uniform(&Tetrahedron³::m_uniformS, {.activity=DYNAMIC});
+            p.index(Tetrahedron³::s_indices);
             p.push_full();
         }
 
@@ -147,13 +147,13 @@ namespace yq::tachyon {
             p.shader("resources/shape3/gradient.vert");
             p.shader("resources/shape3/gradient.frag");
 
-            p.vertex(&Tetrahedron³::m_vertexC, DataActivity::DYNAMIC)
+            p.vertex(&Tetrahedron³::m_vertexC, {.activity=DYNAMIC})
                 .attribute(&VertexC::position)
                 .attribute(&VertexC::color)
             ;
 
             //p.uniform(_uniformS(), DataActivity::DYNAMIC);
-            p.index(Tetrahedron³::s_indices, DataActivity::COMMON);
+            p.index(Tetrahedron³::s_indices);
             p.push_full();
         }
 #endif

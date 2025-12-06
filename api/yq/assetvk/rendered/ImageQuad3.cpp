@@ -21,13 +21,13 @@ namespace yq::tachyon {
         {
             auto& p = w.pipeline();
             p.shaders({ "resources/ImageQuad3.vert", "resources/ImageQuad3.frag" });
-            p.vertex(&ImageQuad³::m_vertex, DataActivity::FIXED)
+            p.vertex(&ImageQuad³::m_vertex, {.activity=FIXED})
                 .attribute<glm::vec2>(&VData::position)
                 .attribute<glm::vec2>(&VData::uv)
             ;
             p.topology(Topology::TriangleStrip);
             p.front(FrontFace::CounterClockwise);
-            p.texture(&ImageQuad³::m_texture, DataActivity::FIXED);
+            p.texture(&ImageQuad³::m_texture, {.activity=FIXED});
             p.push_full();
         }
     }

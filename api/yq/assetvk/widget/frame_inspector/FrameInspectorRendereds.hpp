@@ -50,10 +50,11 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("IBOs");
+                ImGui::TextUnformatted("IBO");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->ibos.size());
+                bool    has = !std::get_if<std::monostate>(&snap->ibo);
+                ImGui::TextUnformatted( has ? "YES" : " NO");
             }
 
             ImGui::TableNextRow();

@@ -31,6 +31,7 @@
 #include <yq/tachyon/typedef/texture.hpp>
 
 #include <set>
+#include <optional>
 #include <variant>
 
 namespace yq {
@@ -173,18 +174,18 @@ namespace yq::tachyon {
             fn_buffer       fetch       = {};
             fn_revision     revision    = {};
             DataActivity    activity    = {};
+            uint32_t        binding     = UINT32_MAX;
+            uint32_t        stages      = UINT32_MAX;
         };
         
         struct array_buffer_t : public buffer_t {
             //! Size of each element in the buffer
-            uint32_t  stride      = 0;
+            uint32_t  stride  = 0;
         };
         
         
         struct vertex_buffer_t : public array_buffer_t {
             attribute_vector_t  attributes;
-            //! Shader mask that this is available for (0 implies ALL shaders)
-            uint32_t            shaders     = 0;
             VertexInputRate     inputRate;
         };
         
@@ -194,16 +195,62 @@ namespace yq::tachyon {
 
         struct uniform_buffer_t : public buffer_t {
             uint32_t  count   = 1;
-            uint32_t  shaders = 0;
             uint32_t  size    = 0;
         };
     
         struct storage_buffer_t : public buffer_t {
             uint32_t  count   = 1;
-            uint32_t  shaders = 0;
             uint32_t  size    = 0;
         };
         
+        struct b_config {
+            DataActivity    activity    = DataActivity::REFRESH;
+            uint32_t        binding     = UINT32_MAX;   //!< Binding within the shader (not to be confused with compute/graphics)
+            uint32_t        location    = UINT32_MAX;   //!< Location within the shader
+            uint32_t        stages      = UINT32_MAX;   //!< Shader mask
+        };
+        
+        using i_config = b_config;
+        using s_config = b_config;
+        using t_config = b_config;
+        using u_config = b_config;
+        using v_config = b_config;
+        
+        static constexpr const i_config i_common();
+        static constexpr const i_config i_dynamic();
+        static constexpr const i_config i_fixed();
+        static constexpr const i_config i_refresh();
+        static constexpr const i_config i_static();
+        static constexpr const i_config i_unsure();
+
+        static constexpr const s_config s_common();
+        static constexpr const s_config s_dynamic();
+        static constexpr const s_config s_fixed();
+        static constexpr const s_config s_refresh();
+        static constexpr const s_config s_static();
+        static constexpr const s_config s_unsure();
+
+        static constexpr const t_config t_common();
+        static constexpr const t_config t_dynamic();
+        static constexpr const t_config t_fixed();
+        static constexpr const t_config t_refresh();
+        static constexpr const t_config t_static();
+        static constexpr const t_config t_unsure();
+
+        static constexpr const u_config u_common();
+        static constexpr const u_config u_dynamic();
+        static constexpr const u_config u_fixed();
+        static constexpr const u_config u_refresh();
+        static constexpr const u_config u_static();
+        static constexpr const u_config u_unsure();
+
+        static constexpr const v_config v_common();
+        static constexpr const v_config v_dynamic();
+        static constexpr const v_config v_fixed();
+        static constexpr const v_config v_refresh();
+        static constexpr const v_config v_static();
+        static constexpr const v_config v_unsure();
+
         struct push_t {
             fn_push         fetch = {};
             fn_revision     revision = {};
@@ -213,15 +260,16 @@ namespace yq::tachyon {
             PushConfigType  type        = PushConfigType::None;
             
             //! Shader stage(s) to apply this to
-            uint32_t        shaders     = 0;            // shader mask (0 implies shaders)
+            uint32_t        stages      = UINT32_MAX;
         };
         
         struct texture_t {
-            fn_texture      fetch = {};
-            fn_revision     revision = {};
+            fn_texture      fetch       = {};
+            fn_revision     revision    = {};
             //! Expected update activity for this texture
             DataActivity    activity    = {};
-            uint32_t        shaders     = 0;            // shader mask (0 implies shaders)
+            uint32_t        binding     = UINT32_MAX;
+            uint32_t        stages      = UINT32_MAX;
         };
         
         template <typename> class Typed;
@@ -314,7 +362,7 @@ namespace yq::tachyon {
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
-        uint32_t    index(DataActivity da=DataActivity::REFRESH);
+        uint32_t    index(const i_config& cc=i_refresh());
         
         /*! \brief Declares a storage buffer
         
@@ -323,7 +371,10 @@ namespace yq::tachyon {
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
-        uint32_t    storage(uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        uint32_t    storage(uint32_t cnt, const s_config& cc=s_refresh());
+
+        template <typename V>
+        uint32_t    storage(dynamic_k, const s_config& cc=s_refresh());
 
         /*! \brief Declares a storage buffer
         
@@ -332,7 +383,7 @@ namespace yq::tachyon {
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
-        uint32_t    storage(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        uint32_t    storage(const s_config& cc=s_refresh());
 
         /*! \brief Declares a uniform buffer
         
@@ -341,7 +392,7 @@ namespace yq::tachyon {
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
-        uint32_t    uniform(uint32_t cnt, DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        uint32_t    uniform(uint32_t cnt, const u_config& cc=u_refresh());
 
         /*! \brief Declares a uniform buffer
         
@@ -350,7 +401,7 @@ namespace yq::tachyon {
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
-        uint32_t    uniform(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        uint32_t    uniform(const u_config& cc=u_refresh());
         
         /*! \brief Declares a vertex buffer
         
@@ -359,7 +410,7 @@ namespace yq::tachyon {
             \return Binding/Location (which is the index into the array)
         */
         template <typename V>
-        VBOMaker<V> vertex(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        VBOMaker<V> vertex(const v_config& cc=v_refresh());
         
         /*! \brief Declares a texture
         
@@ -367,7 +418,7 @@ namespace yq::tachyon {
             \note This can NOT be altered by a variation
             \return Binding/Location (which is the index into the array)
         */
-        uint32_t    texture(DataActivity da=DataActivity::REFRESH, uint32_t stages=0);
+        uint32_t    texture(const t_config& cc=t_refresh());
 
         /*! \brief Defines the push constant
             \note This can NOT be altered by a variation
@@ -407,7 +458,7 @@ namespace yq::tachyon {
 
 
         const auto& shaders() const { return m_shaders; }
-        const auto& index_buffers() const { return m_indexBuffers; }
+        const auto& index_buffer() const { return m_indexBuffer; }
         const auto& storage_buffers() const { return m_storageBuffers; }
         const auto& textures() const { return m_textures; }
         const auto& uniform_buffers() const { return m_uniformBuffers; }
@@ -458,20 +509,20 @@ namespace yq::tachyon {
         
 
         template <typename V>
-        VBOMaker<V>                 vbo_(DataActivity da=DataActivity::UNSURE, uint32_t stages=0);
+        VBOMaker<V>                 vbo_(const v_config&);
 
 
         virtual ~Pipeline();
         uint32_t                    location_filter(uint32_t loc, uint32_t req);
 
         template <typename V>
-        static index_buffer_t       ibo_(DataActivity da);
+        static index_buffer_t       ibo_(const t_config&);
         
         template <typename V>
-        static storage_buffer_t     sbo_(uint32_t cnt, DataActivity da, uint32_t stages=0);
+        storage_buffer_t            sbo_(uint32_t cnt, const s_config&);
         template <typename V>
-        static uniform_buffer_t     ubo_(uint32_t cnt, DataActivity da, uint32_t stages=0);
-        static texture_t            tex_(DataActivity da, uint32_t stages=0);
+        uniform_buffer_t            ubo_(uint32_t cnt, const u_config&);
+        texture_t                   tex_(const t_config&);
         
         static uint64_t             _make_id();
         
@@ -500,7 +551,7 @@ namespace yq::tachyon {
         ColorBlend                      m_colorBlend            = ColorBlend::Disabled;
 
         push_t                          m_push                  = {};
-        std::vector<index_buffer_t>     m_indexBuffers;
+        std::optional<index_buffer_t>   m_indexBuffer;
         std::vector<storage_buffer_t>   m_storageBuffers;
         std::vector<ShaderSpec>         m_shaders;
         std::vector<uniform_buffer_t>   m_uniformBuffers;
@@ -508,7 +559,164 @@ namespace yq::tachyon {
         std::vector<vertex_buffer_t>    m_vertexBuffers;
         std::set<DynamicState>          m_dynamicStates;
     };
+    
+    enum {
+        kbLight         = (uint32_t) 0,
+        kbMaterial      = (uint32_t) 1,
+        kbTexture       = (uint32_t) 2,
+        kbNormalMap     = (uint32_t) 3
+    };
+    
 
+    constexpr const Pipeline::i_config  Pipeline::i_common()
+    {
+        return { .activity=DataActivity::COMMON };
+    }
+    
+    constexpr const Pipeline::i_config  Pipeline::i_dynamic()
+    {
+        return { .activity=DataActivity::DYNAMIC };
+    }
+    
+    constexpr const Pipeline::i_config  Pipeline::i_fixed()
+    {
+        return { .activity=DataActivity::FIXED };
+    }
+    
+    constexpr const Pipeline::i_config  Pipeline::i_refresh()
+    {
+        return { .activity=DataActivity::REFRESH };
+    }
+
+    constexpr const Pipeline::i_config  Pipeline::i_static()
+    {
+        return { .activity=DataActivity::STATIC };
+    }
+    
+    constexpr const Pipeline::i_config  Pipeline::i_unsure()
+    {
+        return { .activity=DataActivity::UNSURE };
+    }
+
+    constexpr const Pipeline::s_config  Pipeline::s_common()
+    {
+        return { .activity=DataActivity::COMMON };
+    }
+    
+    constexpr const Pipeline::s_config  Pipeline::s_dynamic()
+    {
+        return { .activity=DataActivity::DYNAMIC };
+    }
+    
+    constexpr const Pipeline::s_config  Pipeline::s_fixed()
+    {
+        return { .activity=DataActivity::FIXED };
+    }
+
+    constexpr const Pipeline::s_config  Pipeline::s_refresh()
+    {
+        return { .activity=DataActivity::REFRESH };
+    }
+    
+    constexpr const Pipeline::s_config  Pipeline::s_static()
+    {
+        return { .activity=DataActivity::STATIC };
+    }
+    
+    constexpr const Pipeline::s_config  Pipeline::s_unsure()
+    {
+        return { .activity=DataActivity::UNSURE };
+    }
+
+    constexpr const Pipeline::t_config  Pipeline::t_common()
+    {
+        return { .activity=DataActivity::COMMON };
+    }
+    
+    constexpr const Pipeline::t_config  Pipeline::t_dynamic()
+    {
+        return { .activity=DataActivity::DYNAMIC };
+    }
+    
+    constexpr const Pipeline::t_config  Pipeline::t_fixed()
+    {
+        return { .activity=DataActivity::FIXED };
+    }
+    
+    constexpr const Pipeline::t_config  Pipeline::t_refresh()
+    {
+        return { .activity=DataActivity::REFRESH };
+    }
+
+    constexpr const Pipeline::t_config  Pipeline::t_static()
+    {
+        return { .activity=DataActivity::STATIC };
+    }
+    
+    constexpr const Pipeline::t_config  Pipeline::t_unsure()
+    {
+        return { .activity=DataActivity::UNSURE };
+    }
+
+    constexpr const Pipeline::u_config  Pipeline::u_common()
+    {
+        return { .activity=DataActivity::COMMON };
+    }
+
+    constexpr const Pipeline::u_config  Pipeline::u_dynamic()
+    {
+        return { .activity=DataActivity::DYNAMIC };
+    }
+
+    constexpr const Pipeline::u_config  Pipeline::u_fixed()
+    {
+        return { .activity=DataActivity::FIXED };
+    }
+    
+    constexpr const Pipeline::u_config  Pipeline::u_refresh()
+    {
+        return { .activity=DataActivity::REFRESH };
+    }
+
+    constexpr const Pipeline::u_config  Pipeline::u_static()
+    {
+        return { .activity=DataActivity::STATIC };
+    }
+
+    constexpr const Pipeline::u_config  Pipeline::u_unsure()
+    {
+        return { .activity=DataActivity::UNSURE };
+    }
+
+    constexpr const Pipeline::v_config  Pipeline::v_common()
+    {
+        return { .activity=DataActivity::COMMON };
+    }
+    
+    constexpr const Pipeline::v_config  Pipeline::v_dynamic()
+    {
+        return { .activity=DataActivity::DYNAMIC };
+    }
+    
+    constexpr const Pipeline::v_config  Pipeline::v_fixed()
+    {
+        return { .activity=DataActivity::FIXED };
+    }
+    
+    constexpr const Pipeline::v_config  Pipeline::v_refresh()
+    {
+        return { .activity=DataActivity::REFRESH };
+    }
+
+    constexpr const Pipeline::v_config  Pipeline::v_static()
+    {
+        return { .activity=DataActivity::STATIC };
+    }
+    
+    constexpr const Pipeline::v_config  Pipeline::v_unsure()
+    {
+        return { .activity=DataActivity::UNSURE };
+    }
     
 
 }

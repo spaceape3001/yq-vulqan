@@ -28,12 +28,12 @@ namespace yq::tachyon {
             p.shader("resources/colored.vert");
             p.shader("resources/colored.frag");
 
-            p.vertex(&Quadrilateral³::m_vertex, DataActivity::FIXED)
+            p.vertex(&Quadrilateral³::m_vertex, {.activity=FIXED})
                 .attribute(&ColorVertexData::position)
                 .attribute(&ColorVertexData::color)
             ;
             
-            p.index(kIndices, DataActivity::COMMON);
+            p.index(kIndices);
             p.push_full();
         }
     }

@@ -203,17 +203,9 @@ namespace yq::tachyon {
         if(push.fetch)
             push.fetch(this, sn.push);
 
-        const auto& ibos    = sn.pipeline_light->index_buffers();
-        if(!ibos.empty()){
-            sn.ibos.reserve(ibos.size());
-            for(const auto& ibo : ibos){
-                if(ibo.fetch){
-                    sn.ibos.push_back(ibo.fetch(this));
-                } else {
-                    sn.ibos.push_back({});
-                }
-            }
-        }
+        const auto& ibo    = sn.pipeline_light->index_buffer();
+        if(!ibo && ibo->fetch)
+            sn.ibo  = ibo->fetch(this);
         
         const auto& sbos    = sn.pipeline_light->storage_buffers();
         if(!sbos.empty()){

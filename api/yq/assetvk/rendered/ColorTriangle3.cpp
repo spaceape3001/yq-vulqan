@@ -22,10 +22,10 @@ namespace yq::tachyon {
         p.shader("resources/shape3/color.vert");
         p.shader("resources/shape3/color.frag");
 
-        p.vertex(&ColorTriangle³::m_vbo, DataActivity::DYNAMIC)
+        p.vertex(&ColorTriangle³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexS::position)
         ;
-        p.uniform(&ColorTriangle³::m_ubo, DataActivity::DYNAMIC);
+        p.uniform(&ColorTriangle³::m_ubo, {.activity=DYNAMIC});
         
         p.push_full();
     }

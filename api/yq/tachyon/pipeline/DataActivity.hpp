@@ -21,13 +21,17 @@ namespace yq::tachyon {
         //! Make zero expectations, ie, gets ignored
         UNSURE  = 0,
     
-        //! Data is shared between *ALL* things of same class
-        COMMON,         // <- expect data to be transferred to GPU memory
+        //! Externally supplied (it'll be provided...)
+        EXTERNAL,
+    
+        //! Data is shared between *ALL* things of same class (and/or scene) but may change frame to frame
+        COMMON,   // <- expect data to be transferred to GPU memory
+
+        //! Data is staticly common (won't change frame to frame)
+        STATIC,
         
         //! Data is fixed to this instance of the class, but wont change after creation
-        FIXED,         // <- expect data to be transferred to GPU memory
-        
-        STATIC = FIXED,
+        FIXED,    // <- expect data to be transferred to GPU memory
         
         //! Data may (occsaionally) change with time
         //! Revision management recommended

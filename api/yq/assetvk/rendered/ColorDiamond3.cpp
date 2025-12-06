@@ -23,12 +23,12 @@ namespace yq::tachyon {
         p.shader("resources/shape3/color.vert");
         p.shader("resources/shape3/color.frag");
 
-        p.vertex(&ColorDiamond³::m_vbo, DataActivity::DYNAMIC)
+        p.vertex(&ColorDiamond³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexS::position)
         ;
 
-        p.uniform(&ColorDiamond³::m_ubo, DataActivity::DYNAMIC);
-        p.index(s_indices, DataActivity::COMMON);
+        p.uniform(&ColorDiamond³::m_ubo, {.activity=DYNAMIC});
+        p.index(s_indices);
         p.push_full();
     }
 

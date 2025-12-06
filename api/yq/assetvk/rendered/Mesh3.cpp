@@ -33,8 +33,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgBlack);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/black.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -44,8 +44,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgRed);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/red.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -55,8 +55,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgOrange);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/orange.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -66,8 +66,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgYellow);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/yellow.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -77,8 +77,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgGreen);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/green.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -88,8 +88,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgBlue);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/blue.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -99,8 +99,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgMagenta);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/magenta.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -110,8 +110,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgGray);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/gray.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -121,8 +121,8 @@ namespace yq::tachyon {
             auto& p     = w.pipeline(Pipeline::Role::DbgWhite);
             p.shader("yqvk/debug/position.vert");
             p.shader("yqvk/debug/color/white.frag");
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.vertex(&Mesh³::m_vxyz, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
@@ -134,12 +134,12 @@ namespace yq::tachyon {
             p.shader("yqvk/shape3/solid.vert");
             p.shader("yqvk/shape3/solid.frag");
 
-            p.vertex(&Mesh³::m_vboS, DataActivity::DYNAMIC)
+            p.vertex(&Mesh³::m_vboS, {.activity=DYNAMIC})
                 .attribute(&VertexS::position)
             ;
 
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.uniform(&Mesh³::m_ubo, {.activity=DYNAMIC});
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
         }
@@ -150,12 +150,12 @@ namespace yq::tachyon {
             p.shader("yqvk/shape3/textured.vert");
             p.shader("yqvk/shape3/textured.frag");
 
-            p.vertex(&Mesh³::m_vboT, DataActivity::DYNAMIC)
+            p.vertex(&Mesh³::m_vboT, {.activity=DYNAMIC})
                 .attribute(&VertexT::position)
                 .attribute(&VertexT::uv)
             ;
-            p.index(&Mesh³::m_ibo, DataActivity::DYNAMIC);
-            p.uniform(&Mesh³::m_ubo, DataActivity::DYNAMIC);
+            p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
+            p.uniform(&Mesh³::m_ubo, {.activity=DYNAMIC});
             p.dynamic_state(DynamicState::PrimitiveTopology);
             p.push_full();
         }

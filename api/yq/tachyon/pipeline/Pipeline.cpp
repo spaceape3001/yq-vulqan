@@ -18,14 +18,6 @@ namespace yq::tachyon {
         return s_next++;
     }
 
-    Pipeline::texture_t  Pipeline::tex_(DataActivity da, uint32_t stages)
-    {   
-        texture_t       cfg;
-        cfg.activity    = da;
-        cfg.shaders     = stages;
-        return cfg;
-    }
-    
     ///////////////////////////////////////////////////
     
     Pipeline::Pipeline(Role r) : Pipeline(nullptr, r)
@@ -215,14 +207,30 @@ namespace yq::tachyon {
         }
     }
 
+    Pipeline::texture_t  Pipeline::tex_(const t_config& cc)
+    {   
+        texture_t       cfg;
+        cfg.activity    = cc.activity;
+        cfg.stages      = cc.stages;
+        if(cfg.binding == UINT32_MAX){
+            cfg.binding = 0;
+            for(auto& s : m_textures){
+                if(cfg.binding <= s.binding)
+                    cfg.binding = s.binding + 1;
+            }
+        }
+        return cfg;
+    }
     
-    uint32_t    Pipeline::texture(DataActivity da, uint32_t stages)
+
+    uint32_t    Pipeline::texture(const t_config& cc)
     {
-        texture_t   cfg = tex_(da, stages);
+        texture_t   cfg = tex_(cc);
         uint32_t ret = (uint32_t) m_textures.size();
         m_textures.push_back(cfg);
         return ret;
     }
+
 
     void  Pipeline::topology(Topology v)
     {

@@ -28,12 +28,12 @@ namespace yq::tachyon {
         p.shader("resources/shape3/gradient.vert");
         p.shader("resources/shape3/gradient.frag");
 
-        p.vertex(&GradDiamond³::m_vbo, DataActivity::DYNAMIC)
+        p.vertex(&GradDiamond³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexC::position)
             .attribute(&VertexC::color)
         ;
 
-        p.index(s_indices, DataActivity::COMMON);
+        p.index(s_indices);
         p.push_full();
     }
 

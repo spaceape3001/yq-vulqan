@@ -45,7 +45,7 @@ namespace yq::tachyon {
         p.shader("resources/shape3/gradient.vert");
         p.shader("resources/shape3/gradient.frag");
 
-        p.vertex(&GradTriangle³::m_vbo, DataActivity::DYNAMIC)
+        p.vertex(&GradTriangle³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexC::position)
             .attribute(&VertexC::color)
         ;

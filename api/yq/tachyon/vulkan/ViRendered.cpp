@@ -125,14 +125,14 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
         
-        if(m_vtxCount)
+        if(!m_vbo.empty())
             m_status |= S::Vertex;
-        if(m_ibo.count)
+        if(m_ibo.config)
             m_status |= S::Index;
+        if(!(m_ubo.empty() && m_sbo.empty() && m_tex.empty()))
+            m_status |= S::Descriptors;
         if(m_config->push().type != PushConfigType::None)
             m_status |= S::Push;
-
-tachyonInfo << "ViRendered successfully initialized";
 
         return {};
     }
@@ -201,10 +201,12 @@ tachyonInfo << "ViRendered successfully initialized";
         }
         
         if(m_status(S::Descriptors)){
+//tachyonInfo << "ViRendered [" << id() << "]: Sending " << m_descriptors.size() << " to the GPU";
             vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, m_descriptors.size(), m_descriptors.data(), 0, nullptr);
         }
         
         if(m_status(S::Vertex)){
+//tachyonInfo << "ViRendered [" << id() << "]: Sending " << m_vboBuffers.size() << " to the GPU along with " << m_vboOffsets.size() << " offsets";
             vkCmdBindVertexBuffers(u.command_buffer, 0,  (uint32_t) m_vboBuffers.size(), m_vboBuffers.data(), m_vboOffsets.data());
         }
         
@@ -215,26 +217,15 @@ tachyonInfo << "ViRendered successfully initialized";
         if(m_status(S::Index)){
             vkCmdBindIndexBuffer(u.command_buffer, m_ibo.buffer, 0, m_ibo.type);
             vkCmdDrawIndexed(u.command_buffer, m_ibo.count, 1, 0, 0, 0);  // possible point of speedup in future
-        } else {
+        } else if(m_status(S::Vertex)){
             vkCmdDraw(u.command_buffer, m_vtxCount, 1, 0, 0);
         }
     }
     
     void            ViRendered::_update(ViContext& u, const RenderedSnap& sn, const ViDataMap& dm)
     {
-        if(sn.good){
-            switch(_update_data(&sn, dm)){
-            case R::Success:
-                tachyonInfo << "ViRendered [" << id() << "]: no changes";
-                break;
-            case R::Failure:
-                tachyonInfo << "ViRendered [" << id() << "]: failed update";
-                break;
-            case R::Updated:
-                tachyonInfo << "ViRendered [" << id() << "]: updated";
-                break;
-            }
-        }
+        if(sn.good)
+            _update_data(&sn, dm);
         
         if(u.pipeline_rebuild){
             if(u.pipelines){

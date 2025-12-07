@@ -491,9 +491,11 @@ namespace yq::tachyon {
         m_vboBuffers        = vi.m_vboBuffers;
         m_vboOffsets        = vi.m_vboOffsets;
         m_vtxCount          = vi.m_vtxCount;
+        
 
         if(!_descriptors(opts))
             return errors::data_cant_initialize();
+
         return {};
     }
     

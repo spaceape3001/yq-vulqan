@@ -201,12 +201,10 @@ namespace yq::tachyon {
         }
         
         if(m_status(S::Descriptors)){
-//tachyonInfo << "ViRendered [" << id() << "]: Sending " << m_descriptors.size() << " to the GPU";
             vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, m_descriptors.size(), m_descriptors.data(), 0, nullptr);
         }
         
         if(m_status(S::Vertex)){
-//tachyonInfo << "ViRendered [" << id() << "]: Sending " << m_vboBuffers.size() << " to the GPU along with " << m_vboOffsets.size() << " offsets";
             vkCmdBindVertexBuffers(u.command_buffer, 0,  (uint32_t) m_vboBuffers.size(), m_vboBuffers.data(), m_vboOffsets.data());
         }
         

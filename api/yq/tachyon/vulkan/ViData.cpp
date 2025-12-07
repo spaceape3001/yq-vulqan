@@ -557,14 +557,11 @@ namespace yq::tachyon {
         if(!vb)
             return R::Failure;
             
-            //  TODO... set vertex/index counts for managed in external buffers
-            
         b.id        = buf.id();
         b.managed   = vb;
         b.bytes     = buf.memory.bytes();
         b.stride    = buf.memory.stride();
-        b.count     = buf. memory.count();
-        
+        b.count     = buf.memory.count();
         return R::Updated;
     }
     
@@ -666,8 +663,10 @@ namespace yq::tachyon {
             R   r   = _update(m_ibo, sn ? sn->ibo : Buffered());
             if(r == R::Failure)
                 return R::Failure;
-            if(r == R::Updated)
+            if((r == R::Updated) && m_ibo.managed){
+                m_ibo.buffer    = m_ibo.managed->buffer();
                 updated = true;
+            }
         }
         
         for(auto& itr : m_sbo){

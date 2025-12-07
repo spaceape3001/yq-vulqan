@@ -21,9 +21,6 @@ namespace yq::tachyon {
         //! Make zero expectations, ie, gets ignored
         UNSURE  = 0,
     
-        //! Externally supplied (it'll be provided...)
-        EXTERNAL,
-    
         //! Data is shared between *ALL* things of same class (and/or scene) but may change frame to frame
         COMMON,   // <- expect data to be transferred to GPU memory
 

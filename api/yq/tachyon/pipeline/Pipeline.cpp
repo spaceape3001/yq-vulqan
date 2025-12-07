@@ -212,6 +212,7 @@ namespace yq::tachyon {
         texture_t       cfg;
         cfg.activity    = cc.activity;
         cfg.stages      = cc.stages;
+        cfg.external    = cc.external;
         if(cfg.binding == UINT32_MAX){
             cfg.binding = 0;
             for(auto& s : m_textures){

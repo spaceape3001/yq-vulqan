@@ -34,7 +34,6 @@ namespace yq::tachyon {
             return true;
         case DataActivity::STATIC:
         case DataActivity::COMMON:
-        case DataActivity::EXTERNAL:
         default:
             return false;
         }
@@ -50,7 +49,6 @@ namespace yq::tachyon {
             return true;
         case DataActivity::FIXED:
         case DataActivity::STATIC:
-        case DataActivity::EXTERNAL:
         default:
             return false;
         }
@@ -319,7 +317,7 @@ namespace yq::tachyon {
         if(m_config->is_dynamic()){
             if(m_config->m_indexBuffer){
                 const auto& cfg = *m_config->m_indexBuffer;
-                if(cfg.activity != EXTERNAL){
+                if(!cfg.external){
                     if(!cfg.fetch){
                         vizWarning << "ViData() -- index buffer without a fetch method, bad configuration.";
                     }
@@ -329,7 +327,7 @@ namespace yq::tachyon {
                 }
             }
             for(auto& cfg : m_config->m_storageBuffers){
-                if(cfg.activity == EXTERNAL)
+                if(cfg.external)
                     continue;
                 if(!cfg.fetch){
                     vizWarning << "ViData() -- storage buffer without a fetch method, bad configuration.";
@@ -339,7 +337,7 @@ namespace yq::tachyon {
                 }
             }
             for(auto& cfg : m_config->m_textures){
-                if(cfg.activity == EXTERNAL)
+                if(cfg.external)
                     continue;
                 if(!cfg.fetch){
                     vizWarning << "ViData() -- texture without a fetch method, bad configuration.";
@@ -349,7 +347,7 @@ namespace yq::tachyon {
                 }
             }
             for(auto& cfg : m_config->m_uniformBuffers){
-                if(cfg.activity == EXTERNAL)
+                if(cfg.external)
                     continue;
                 if(!cfg.fetch){
                     vizWarning << "ViData() -- uniform buffer without a fetch method, bad configuration.";
@@ -359,7 +357,7 @@ namespace yq::tachyon {
                 }
             }
             for(auto& cfg : m_config->m_vertexBuffers){
-                if(cfg.activity == EXTERNAL)
+                if(cfg.external)
                     continue;
                 if(!cfg.fetch){
                     vizWarning << "ViData() -- vertex buffer without a fetch method, bad configuration.";
@@ -374,7 +372,7 @@ namespace yq::tachyon {
         uint32_t    vbcnt   = 0;
         if(m_config->m_indexBuffer){
             m_ibo.config    = &*m_config->m_indexBuffer;
-            m_ibo.external  = m_ibo.config->activity == EXTERNAL;
+            m_ibo.external  = m_ibo.config->external;
             m_ibo.index     = 0;
             m_ibo.type      = (VkIndexType) m_ibo.config->type.value();
             switch(m_ibo.type){
@@ -402,7 +400,7 @@ namespace yq::tachyon {
             
             s.index     = n;
             s.config    = &cfg;
-            s.external  = cfg.activity == EXTERNAL;
+            s.external  = cfg.external;
             s.dIndex    = dscnt++;
             s.stride    = cfg.size;
             s.count     = cfg.count;
@@ -418,7 +416,7 @@ namespace yq::tachyon {
             }
             u.index     = n;
             u.config    = &cfg;
-            u.external  = cfg.activity == EXTERNAL;
+            u.external  = cfg.external;
             u.dIndex    = dscnt++;
             u.stride    = cfg.size;
             u.count     = cfg.count;
@@ -434,7 +432,7 @@ namespace yq::tachyon {
             }
             t.index     = n;
             t.config    = &cfg;
-            t.external  = cfg.activity == EXTERNAL;
+            t.external  = cfg.external;
             t.dIndex    = dscnt++;
         }
         
@@ -447,7 +445,7 @@ namespace yq::tachyon {
                 continue;
             }
             v.config    = &cfg;
-            v.external  = cfg.activity == EXTERNAL;
+            v.external  = cfg.external;
             v.vIndex    = vbcnt++;
             v.stride    = cfg.stride;
             v.count     = 0;

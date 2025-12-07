@@ -176,6 +176,7 @@ namespace yq::tachyon {
             DataActivity    activity    = {};
             uint32_t        binding     = UINT32_MAX;
             uint32_t        stages      = UINT32_MAX;
+            bool            external    = false;
         };
         
         struct array_buffer_t : public buffer_t {
@@ -206,6 +207,7 @@ namespace yq::tachyon {
         struct b_config {
             DataActivity    activity    = DataActivity::REFRESH;
             uint32_t        binding     = UINT32_MAX;   //!< Binding within the shader (not to be confused with compute/graphics)
+            bool            external    = false;        //!< Externally managed (ie, lights from the widget)
             uint32_t        location    = UINT32_MAX;   //!< Location within the shader
             uint32_t        stages      = UINT32_MAX;   //!< Shader mask
         };
@@ -270,6 +272,7 @@ namespace yq::tachyon {
             DataActivity    activity    = {};
             uint32_t        binding     = UINT32_MAX;
             uint32_t        stages      = UINT32_MAX;
+            bool            external    = false;
         };
         
         template <typename> class Typed;

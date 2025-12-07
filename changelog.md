@@ -2,6 +2,34 @@
 
 ## Upcoming
 
+* Pipeline overhaul to accommodate meshes & lights & more
+  - Buffers, textures now take in a configuration structure; this cleaned
+    up the overload mess.  Means that all data activity must be moved into 
+    this structure.  (Slight annoyance, not terrible)
+```
+    struct Pipeline::s_config, t_config, u_config, v_config {
+        DataActivity    activity;
+        uint32_t        binding;  //< default of MAX makes this auto-gen as before
+        bool            external; //< default false
+        uint32_t        location; //< location... use bindings where you can
+        uint32_t        stages;   //< shader stage mask, default is all stages
+    };
+```
+  - Data Activity tweak, STATIC means invariant data, COMMON means varying 
+    data that may change, but isn't associated with a specific instance 
+    of the object.
+  - Data Activity... currently meaningless on rendered as every buffer/texture
+    is checked every tick.
+  - External buffers & textures, mark the SBO/Texture/UBO/VBO as being externally 
+    managed.  An example being a common light buffer.  The appropriate VkBuffer
+    or VkDescriptorSet must be passed in via the data map during rendering.
+  - Bindings can now be explicitly stated
+* Shaders now support the `#include` statement (this is a NICE google extension)
+  - use `#include <>`
+  - include path uses all data paths
+  - first shader needs the `#version` and the rest is an error
+
+
 ## 2025.12.05
 
 * Updated pathing (this will affect INCLUDES) to be consistent with the rest of the Your Quill collection (include `<tachyon/...>` becomes `<yq/tachyon/...>`, so a find & replace will do the job.

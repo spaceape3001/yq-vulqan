@@ -80,6 +80,7 @@ namespace yq::tachyon {
         {
             stride      = sizeof(V);
             activity    = cc.activity;
+            external    = cc.external;
             stages      = cc.stages;
             binding     = b->m_vertexBuffers.size();
         }
@@ -123,6 +124,7 @@ namespace yq::tachyon {
         cfg.activity    = cc.activity;
         cfg.stride      = sizeof(V);
         cfg.stages      = cc.stages;
+        cfg.external    = cc.external;
         return cfg;
     }
     
@@ -135,6 +137,7 @@ namespace yq::tachyon {
         cfg.count       = cnt;
         cfg.stages      = cc.stages;
         cfg.binding     = cc.binding;
+        cfg.external    = cc.external;
         
         if(cfg.binding == UINT32_MAX){
             cfg.binding = 0;
@@ -156,6 +159,7 @@ namespace yq::tachyon {
         cfg.count       = cnt;
         cfg.stages      = cc.stages;
         cfg.binding     = cc.binding;
+        cfg.external    = cc.external;
         if(cfg.binding == UINT32_MAX){
             cfg.binding = 0;
             for(auto& s : m_uniformBuffers){

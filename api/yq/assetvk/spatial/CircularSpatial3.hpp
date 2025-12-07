@@ -26,12 +26,12 @@ namespace yq::tachyon {
     public:
     
         struct Param : public Spatial³::Param {
-            Radian          angle       = 0._rad;   //!< Starting angle
+            Radian          angle0      = 0._rad;   //!< Starting angle
             bool            locked      = false;
             Vector3D        origin      = ZERO;
             Second          period      = 10._s;
             double          radius      = 5.;
-            unit::Degree3D  rotation    = ZERO;
+            Quaternion3D    rotor       = IDENTITY;
         };
     
         CircularSpatial³();
@@ -51,17 +51,15 @@ namespace yq::tachyon {
     
         void        snap(CircularSpatial³Snap&) const;
     
+        Radian              m_angle0;
         Radian              m_angle;
         bool                m_locked;
         Vector3D            m_origin;
         Second              m_period;
         Vector3D            m_position  = NAN;
         double              m_radius;
-        unit::Degree3D      m_rotation;
         Quaternion3D        m_rotor     = IDENTITY;
         Tensor33D           m_R         = IDENTITY;
-        
-        void _rotor();
     };
 }
 

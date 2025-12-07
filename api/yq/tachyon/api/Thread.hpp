@@ -31,6 +31,8 @@ namespace yq::tachyon {
     class SaveCommand;
     class SaveReply;
     struct ThreadSave;
+    class PauseCommand;
+    class ResumeCommand;
 
     /*! \brief Thread of something in the application
     
@@ -185,6 +187,8 @@ namespace yq::tachyon {
         void on_save_command(const Ref<const SaveCommand>&);
         void on_save_reply(const SaveReply&);
         void on_save_request(const Ref<const SaveRequest>&);
+        void on_pause_command(const PauseCommand&);
+        void on_resume_command(const ResumeCommand&);
         
         template <typename Pred>
         void    foreach_child(TachyonID, Pred&&) const;

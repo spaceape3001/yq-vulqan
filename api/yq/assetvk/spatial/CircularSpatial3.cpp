@@ -25,10 +25,10 @@ namespace yq::tachyon {
     {
         auto w = writer<CircularSpatial³>();
         w.property("origin", &CircularSpatial³::m_origin).tag(kTag_Save);
-        w.property("rotation", &CircularSpatial³::m_rotation).tag(kTag_Save);
+        w.property("rotor", &CircularSpatial³::m_rotor).tag(kTag_Save);
         w.property("radius", &CircularSpatial³::m_radius).tag(kTag_Save);
         w.property("period", &CircularSpatial³::m_period).tag(kTag_Save);
-        w.property("angle", &CircularSpatial³::m_angle).tag(kTag_Save);
+        w.property("angle0", &CircularSpatial³::m_angle0).tag(kTag_Save);
         w.interface<IPosition³>();
     }
 
@@ -38,30 +38,19 @@ namespace yq::tachyon {
     }
 
     CircularSpatial³::CircularSpatial³(const Param& p) : Spatial³(p), 
-        m_angle(p.angle),
+        m_angle0(p.angle0),
         m_locked(p.locked),
         m_origin(p.origin), 
         m_period(p.period),
         m_radius(p.radius),
-        m_rotation(p.rotation)
+        m_rotor(p.rotor)
     {
-        _rotor();
     }
     
     CircularSpatial³::~CircularSpatial³()
     {
     }
     
-
-    void CircularSpatial³::_rotor()
-    {
-        if(m_rotation.length() < 0.0000001_deg){
-            // tiny
-            m_rotor = IDENTITY;
-        } else {
-            m_rotor = Quaternion3D(CCW, (unit::Radian3D) m_rotation.cast<unit::Radian>());
-        }
-    }
 
     Vector3D CircularSpatial³::position() const
     {
@@ -73,11 +62,12 @@ namespace yq::tachyon {
         Spatial³::snap(sn);
         
         sn.origin   = m_origin;
-        sn.rotation = m_rotation;
         sn.period   = m_period;
         sn.radius   = m_radius;
         sn.angle    = m_angle;
+        sn.angle0   = m_angle0;
         sn.locked   = m_locked;
+        sn.rotor    = m_rotor;
         
         sn.local2domain = Tensor44D(
             m_R.xx, m_R.xy, m_R.xz, m_position.x,
@@ -98,7 +88,7 @@ namespace yq::tachyon {
 
     Execution CircularSpatial³::tick(const Context& u)
     {
-        m_angle += Radian(two_pi) * u.Δt / m_period;
+        m_angle = m_angle0 + Radian(two_pi) * u.time / m_period;
         if(m_locked){
             Quaternion3D    Q(CLOCKWISE, Z, m_angle);
             m_R = tensor(m_rotor * Q);
@@ -107,11 +97,7 @@ namespace yq::tachyon {
         }
         
         m_position  = m_origin + m_rotor*Vector3D(m_radius*cos(m_angle), m_radius*sin(m_angle), 0.);
-        
-        //tachyonInfo << "Circular ticking (" << unit::Degree(m_angle).value << " @ " << u.time.value << ") -> " << m_position << " dT=" << u.Δt.value;
-        
         mark();
-
         return Spatial³::tick(u);
     }
 }

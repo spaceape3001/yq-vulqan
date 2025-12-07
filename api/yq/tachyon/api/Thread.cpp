@@ -18,6 +18,8 @@
 #include <yq/stream/Logger.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/command/io/SaveCommand.hpp>
+#include <yq/tachyon/command/sim/PauseCommand.hpp>
+#include <yq/tachyon/command/sim/ResumeCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/event/thread/ThreadAddTachyonEvent.hpp>
 #include <yq/tachyon/reply/io/SaveReply.hpp>
@@ -108,6 +110,8 @@ namespace yq::tachyon {
         w.slot(&Thread::on_save_command);
         w.slot(&Thread::on_save_reply);
         w.slot(&Thread::on_save_request);
+        w.slot(&Thread::on_pause_command);
+        w.slot(&Thread::on_resume_command);
         
         auto wt = writer<ThreadID>();
         wt.description("Thread Identifier");
@@ -338,6 +342,22 @@ namespace yq::tachyon {
     {
         quit();
         m_thread.join();
+    }
+
+    void Thread::on_pause_command(const PauseCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_paused    = true;
+        tachyonInfo << ident() << " paused";
+    }
+    
+    void Thread::on_resume_command(const ResumeCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_paused    = false;
+        tachyonInfo << ident() << " resumed";
     }
 
     void Thread::on_save_command(const Ref<const SaveCommand>& cmd)

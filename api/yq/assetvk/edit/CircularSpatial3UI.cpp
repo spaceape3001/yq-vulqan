@@ -23,7 +23,7 @@ namespace yq::tachyon {
         w.field("Origin", &CircularSpatial³UI::origin);
         w.field("Period", &CircularSpatial³UI::period);
         w.field("Radius", &CircularSpatial³UI::radius);
-        w.field("Rotation", &CircularSpatial³UI::rotation);
+        w.field("Orientation", &CircularSpatial³UI::orientation);
     }
     
     CircularSpatial³UI::CircularSpatial³UI(UIFlags flags)
@@ -67,6 +67,7 @@ namespace yq::tachyon {
         if(!sn)
             return;
             
+        //Vector3D    v   = sn->origin;
     }
     
     void    CircularSpatial³UI::period()
@@ -91,7 +92,7 @@ namespace yq::tachyon {
         }
     }
     
-    void    CircularSpatial³UI::rotation()
+    void    CircularSpatial³UI::orientation()
     {
         const CircularSpatial³Snap*     sn  = snap();
         if(!sn)

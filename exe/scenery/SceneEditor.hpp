@@ -120,6 +120,9 @@ public:
     void                action_create_rendered_spatial(const Payload&);
     void                action_create_scene(const Payload&);
 
+    void                action_time_pause(const Payload&);
+    void                action_time_resume(const Payload&);
+
     void                cmd_file_import();
     void                cmd_file_open();
     void                cmd_file_save();
@@ -129,6 +132,8 @@ public:
     void                cmd_file_lua_execute();
     
     void                cmd_screenshot();
+    
+    
 
     CameraID            selected(camera_k) const { return m_camera.selected; }
     ControllerID        selected(controller_k) const { return m_controller.selected; }

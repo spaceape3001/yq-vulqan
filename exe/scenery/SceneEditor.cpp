@@ -73,6 +73,8 @@
 #include <yq/tachyon/camera/NullCamera.hpp>
 #include <yq/tachyon/command/controller/ListenCommand.hpp>
 #include <yq/tachyon/command/generic/SetSpatialCommand.hpp>
+#include <yq/tachyon/command/sim/PauseCommand.hpp>
+#include <yq/tachyon/command/sim/ResumeCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 
@@ -442,6 +444,14 @@ void SceneEditor::init_ui()
     framePanel.bottom("LuaWindow", TOP);
     framePanel.left(PIVOT, 0.75);
     
+    /////////////////////////////////
+    //  TIMEBAR
+
+    auto timeBar        = app.toolbar(Cardinal::NNE, "TimeBar");
+    {
+        timeBar.button("P").action(&SceneEditor::action_time_pause);
+        timeBar.button("R").action(&SceneEditor::action_time_resume);
+    }
     
 
     /////////////////////////////////
@@ -471,6 +481,7 @@ void SceneEditor::init_ui()
         viewMenu.checkbox(VISIBLE, controlPanel);
         viewMenu.checkbox(VISIBLE, luaPanel);
         viewMenu.checkbox(VISIBLE, framePanel);
+        viewMenu.checkbox(VISIBLE, timeBar);
     }
     
     auto cameraMenu        = menuBar.menu("Camera");
@@ -1065,6 +1076,28 @@ void    SceneEditor::action_create_scene(const Payload& pay)
     }
 }
 
+static TypedID  threadTypedID(StdThread th)
+{
+    ThreadID        tid = Thread::standard(th);
+    
+    const Frame*    f   = Frame::current();
+    if(!f)
+        return {};
+    return f->typed(tid);
+}
+
+void    SceneEditor::SceneEditor::action_time_pause(const Payload&)
+{
+    static TypedID  sEdit   = threadTypedID(EDIT);
+    send(new PauseCommand({.target=sEdit}));
+}
+
+void    SceneEditor::SceneEditor::action_time_resume(const Payload&)
+{
+    static TypedID  sEdit   = threadTypedID(EDIT);
+    send(new ResumeCommand({.target=sEdit}));
+}
+
 void    SceneEditor::cmd_file_import()
 {
     IGFD::FileDialogConfig config;
@@ -1209,6 +1242,8 @@ void    SceneEditor::on_model_select_event(const ModelSelectEvent&evt)
 {
     _activate(evt.model());
 }
+
+
 
 void    SceneEditor::on_rendered_select_event(const RenderedSelectEvent&evt)
 {

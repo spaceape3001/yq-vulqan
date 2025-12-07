@@ -131,6 +131,15 @@ namespace yq::tachyon {
 
             //! Regular texture with ray tracing
             TexturedRay,
+            
+            //! Using Material
+            Material,
+            
+            //! Lit material
+            MaterialLit,
+            
+            //! Lit ray tracing with material
+            MaterialRay,
 
             //! First user-based index (nice & large for future compatibility)
             User = 1001

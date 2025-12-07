@@ -46,6 +46,12 @@ namespace yq::tachyon {
             ImGui::TextUnformatted("Origin");
             ImGui::TableNextColumn();
             ImGui::Text("%ld", m_frame->origin().id);
+
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Time");
+            ImGui::TableNextColumn();
+            ImGui::Text("%lf", m_frame->time().value);
         }
         
     private:

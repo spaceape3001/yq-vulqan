@@ -414,6 +414,9 @@ namespace yq::tachyon {
         time_point_t    wallclock() const { return m_wallclock; }
         uint64_t        tick() const { return m_tick; }
         
+        //! Note this can be modified by commands!
+        unit::Second    time() const { return m_time; }
+        
         void            report(Stream&) const;
 
     private:
@@ -446,6 +449,7 @@ namespace yq::tachyon {
         const uint64_t          m_number;
         const time_point_t      m_wallclock;
         const uint64_t          m_tick;
+        const unit::Second      m_time;
         
         static thread_local const Frame*                            s_current;
                                                                     
@@ -488,7 +492,7 @@ namespace yq::tachyon {
         friend FramePtr;
         friend FrameCPtr;
 
-        Frame(ThreadID, uint64_t);
+        Frame(ThreadID, uint64_t, unit::Second);
         ~Frame();
         
         void add(ThreadID, const TachyonFrame&);

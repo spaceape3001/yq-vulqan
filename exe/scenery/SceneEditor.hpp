@@ -19,6 +19,8 @@
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/core/Future.hpp>
 
+#define FRAME_INSPECTOR  0
+
 namespace yq::tachyon {
     class LuaExecuteReply;
     class MetaSelectionChangedEvent;
@@ -31,6 +33,7 @@ namespace yq::tachyon {
     class ViewerScreenshotReply;
     struct Payload;
     class UITachyonEditor;
+    class FrameInspector;
 }
 
 namespace IGFD { class FileDialog; }
@@ -55,6 +58,8 @@ class SceneRemoveEvent;
 class SceneSelectEvent;
 class SceneVisibilityEvent;
 class SceneTableUI;
+
+
 
 class SceneEditor : public CompositeWidget {
     YQ_TACHYON_DECLARE(SceneEditor, CompositeWidget)
@@ -218,6 +223,11 @@ private:
         LuaWindowUI*            panel           = nullptr;
         TypedID                 tvm;
     } m_lua;
+
+#if FRAME_INSPECTOR
+    //! Used for debugging....
+    Ref<FrameInspector>     m_inspector;
+#endif
 
     //! Loads (but not schedule) the given TSX file
     static Expect<TachyonPtrVector>     _load(const std::filesystem::path&);

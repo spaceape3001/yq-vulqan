@@ -444,6 +444,13 @@ namespace yq::tachyon {
     {
         quit();
     }
+
+    void    Thread::snap(ThreadSnap&sn) const
+    {
+        Tachyon::snap(sn);
+        sn.paused       = m_paused;
+        sn.overclock    = m_overclock;
+    }
     
     void    Thread::start()
     {
@@ -486,7 +493,7 @@ namespace yq::tachyon {
             threads     = s_threads;
         }
   
-        FramePtr        frame   = new Frame(id(), m_tick);
+        FramePtr        frame   = new Frame(id(), m_tick, m_time);
         Frame::Builder  build(*frame);
         
         /*
@@ -517,16 +524,24 @@ namespace yq::tachyon {
             }
         }
         
-        Frame::s_current  = frame.ptr();
+        Frame::s_current    = frame.ptr();
 
         Context ctx;
         ctx.wall            = frame->wallclock();
         ctx.tick            = m_tick;
+        ctx.overclock       = m_overclock;
         
         if(m_lastTickTime != time_point_t{}){
-            ctx.Δwall       = unit::Nanosecond(duration_picoseconds_t(frame->wallclock() - m_lastTickTime).count());
+            ctx.Δwall       = unit::Picosecond(duration_picoseconds_t(frame->wallclock() - m_lastTickTime).count());
         }
-        m_lastTickTime   = frame->wallclock();
+        m_lastTickTime      = frame->wallclock();
+        ctx.paused          = m_paused;
+        if(!m_paused){
+            ctx.Δt          = ctx.Δwall * m_overclock;
+            ctx.time        = m_time + ctx.Δt;
+        } else {
+            ctx.time        = m_time;
+        }
         
         auto d = cycle(ctx);
         {
@@ -541,6 +556,7 @@ namespace yq::tachyon {
             }
         }
         
+        m_time      = ctx.time;
         Frame::s_current  = nullptr;
         
         ++m_tick;

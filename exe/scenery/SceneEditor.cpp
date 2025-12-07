@@ -41,6 +41,7 @@
 #include <yq/assetvk/ui/UIBuildableMetaList.hpp>
 #include <yq/assetvk/ui/UISimpleTree.hpp>
 #include <yq/assetvk/ui/UITachyonEditor.hpp>
+#include <yq/assetvk/widget/FrameInspector.hpp>
 
 #include <yq/date/dateutils.hpp>
 
@@ -1153,6 +1154,8 @@ void    SceneEditor::imgui(ViContext&u)
             ImGuiFileDialog::Instance()->Close();
         }
     }
+    
+    Widget::imgui(u);
 }
 
 void    SceneEditor::on_camera_select_event(const CameraSelectEvent&evt)
@@ -1362,7 +1365,13 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_startup(*this);
         m_startup   = {};
     }
-    
+
+#if FRAME_INSPECTOR    
+    if(!m_inspector){
+        m_inspector     = create_child<FrameInspector>();
+    }
+#endif
+
     return ret;
 }
 

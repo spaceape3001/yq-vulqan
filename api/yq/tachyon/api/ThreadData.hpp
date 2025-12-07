@@ -26,6 +26,8 @@ namespace yq::tachyon {
     };
 
     struct ThreadSnap : public TachyonSnap {
+        bool        paused      = false;
+        double      overclock   = 0.;
         virtual ~ThreadSnap();
     };
     

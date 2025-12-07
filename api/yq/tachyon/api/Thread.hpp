@@ -113,6 +113,8 @@ namespace yq::tachyon {
         
         bool missing() const { return m_missing; }
         
+        void    snap(ThreadSnap&) const;
+        
     private:
     
         //struct Repo;
@@ -175,6 +177,9 @@ namespace yq::tachyon {
         uint64_t                        m_tick      = 0ULL;
         time_point_t                    m_lastTickTime;
         time_point_t                    m_lastFrameReport{};
+        unit::Second                    m_time      = 0._s;
+        double                          m_overclock = 1.;
+        bool                            m_paused    = false;
         
         void on_schedule_command(const ScheduleCommand&);
         void on_save_command(const Ref<const SaveCommand>&);

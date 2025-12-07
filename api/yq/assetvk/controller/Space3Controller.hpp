@@ -76,8 +76,8 @@ namespace yq::tachyon {
             double      rangle      = 0.50; // fraction of steps to repeated angle keypresses
             double      rlinear     = 0.50; // fraction of steps to repeated linear keypresses
 
-            double      gangle      = 0.10; // angle gains on gamepad
-            double      glinear     = 0.01; // linear gains on gamepad
+            double      gangle      = 100.0; // angle gains on gamepad
+            double      glinear     =  10.0; // linear gains on gamepad
 
             Param(){}
         };

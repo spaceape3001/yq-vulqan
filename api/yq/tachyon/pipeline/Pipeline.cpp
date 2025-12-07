@@ -240,9 +240,8 @@ namespace yq::tachyon {
     
     void  Pipeline::wireframe_permitted(bool v)
     {
-        if(m_variation){
+        if(m_variation)
             m_variation -> wireframePermitted = v ? Tristate::YES : Tristate::NO;
-        }
         m_wireframePermitted    = v;
     }
 

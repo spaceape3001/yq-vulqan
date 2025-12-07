@@ -16,7 +16,19 @@ namespace yq::tachyon {
         // BiColor,        // bi color (with grayscale texture)
         // Face,           // Solid color per face (TBD)
         Gradient,       // nice between corners
-        Texture         // texture (only)
+        Material,
+        Texture,        // texture (only)
+        
+        DbgBlack,
+        DbgBlue,
+        DbgCyan,
+        DbgGray,
+        DbgGreen,
+        DbgMagenta,
+        DbgOrange,
+        DbgRed,
+        DbgWhite,
+        DbgYellow
     )
 }
 YQ_TYPE_DECLARE(yq::tachyon::DrawMode)

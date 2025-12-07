@@ -15,6 +15,7 @@ add_library(yq_assetvk SHARED
     controller/Space3Controller.cpp
 
     edit/BgColorUI.cpp
+    edit/CircularSpatial3UI.cpp
     edit/ColorUI.cpp
     edit/DrawModeUI.cpp
     edit/FarPlaneUI.cpp
@@ -79,7 +80,9 @@ add_library(yq_assetvk SHARED
     scene/HUDScene.cpp
     scene/SimpleScene.cpp
     
+    spatial/CircularSpatial3.cpp
     spatial/GeoSpatial3.cpp
+    #spatial/OrbitSpatial3.cpp
     spatial/SimpleSpatial2.cpp
 
     tweak/OriginCameraTweak.cpp

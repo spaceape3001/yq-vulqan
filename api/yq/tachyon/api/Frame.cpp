@@ -159,7 +159,8 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////
     
-    Frame::Frame(ThreadID th, uint64_t ti) : m_origin(th), m_number(++s_lastId), m_wallclock(clock_t::now()), m_tick(ti)
+    Frame::Frame(ThreadID th, uint64_t ti, unit::Second now) : 
+        m_origin(th), m_number(++s_lastId), m_wallclock(clock_t::now()), m_tick(ti), m_time(now)
     {
     }
 

@@ -11,6 +11,7 @@
 #include <yq/tachyon/api/Response.hpp>
 
 #include <yq/tachyon/enum/AxisRemap.hpp>
+#include <yq/tachyon/enum/GimbalMode.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
 #include <yq/tachyon/enum/SaveType.hpp>
 
@@ -63,6 +64,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::DataFormat)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DrawMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DynamicState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::FrontFace)
+YQ_TYPE_IMPLEMENT(yq::tachyon::GimbalMode)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageAspect)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageAspectFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageLayout)

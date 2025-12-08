@@ -5,6 +5,10 @@
 ################################################################################
 
 add_library(yq_assetvk SHARED
+    command_circular3.cpp
+    command_user3.cpp
+    event_circular3.cpp
+    event_user3.cpp
     trigger.cpp
     
     camera/SpaceCamera.cpp

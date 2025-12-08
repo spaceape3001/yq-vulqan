@@ -7,6 +7,10 @@
 #include "CircularSpatial3.hpp"
 #include "CircularSpatial3Data.hpp"
 #include <yq/math/trigonometry.hpp>
+#include <yq/math/utility.hpp>
+#include <yq/assetvk/command/circular3/Circular3LockCommand.hpp>
+#include <yq/assetvk/command/circular3/Circular3PeriodCommand.hpp>
+#include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/Context.hpp>
@@ -29,6 +33,9 @@ namespace yq::tachyon {
         w.property("radius", &CircularSpatial³::m_radius).tag(kTag_Save);
         w.property("period", &CircularSpatial³::m_period).tag(kTag_Save);
         w.property("angle0", &CircularSpatial³::m_angle0).tag(kTag_Save);
+        w.slot(&CircularSpatial³::on_lock_command);
+        w.slot(&CircularSpatial³::on_period_command);
+        w.slot(&CircularSpatial³::on_radius_command);
         w.interface<IPosition³>();
     }
 
@@ -51,6 +58,29 @@ namespace yq::tachyon {
     {
     }
     
+    void    CircularSpatial³::on_lock_command(const Circular³LockCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_locked    = cmd.lock();
+        mark();
+    }
+
+    void    CircularSpatial³::on_period_command(const Circular³PeriodCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_period    = cmd.period();
+        mark();
+    }
+    
+    void    CircularSpatial³::on_radius_command(const Circular³RadiusCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_radius    = cmd.radius();
+        mark();
+    }
 
     Vector3D CircularSpatial³::position() const
     {
@@ -88,9 +118,9 @@ namespace yq::tachyon {
 
     Execution CircularSpatial³::tick(const Context& u)
     {
-        m_angle = m_angle0 + Radian(two_pi) * u.time / m_period;
+        m_angle = wrap<Radian>(m_angle0 + Radian(two_pi) * u.time / m_period, 0., two_pi);
         if(m_locked){
-            Quaternion3D    Q(CLOCKWISE, Z, m_angle);
+            Quaternion3D    Q(CCW, Z, m_angle);
             m_R = tensor(m_rotor * Q);
         } else {
             m_R = tensor(m_rotor);

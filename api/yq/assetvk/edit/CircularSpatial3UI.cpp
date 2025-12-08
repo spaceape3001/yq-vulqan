@@ -6,6 +6,9 @@
 
 #include "CircularSpatial3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
+#include <yq/assetvk/command/circular3/Circular3LockCommand.hpp>
+#include <yq/assetvk/command/circular3/Circular3PeriodCommand.hpp>
+#include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
 #include <yq/assetvk/spatial/CircularSpatial3.hpp>
 #include <yq/assetvk/spatial/CircularSpatial3Data.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
@@ -23,7 +26,7 @@ namespace yq::tachyon {
         w.field("Origin", &CircularSpatial³UI::origin);
         w.field("Period", &CircularSpatial³UI::period);
         w.field("Radius", &CircularSpatial³UI::radius);
-        w.field("Orientation", &CircularSpatial³UI::orientation);
+        w.field("Plane", &CircularSpatial³UI::plane);
     }
     
     CircularSpatial³UI::CircularSpatial³UI(UIFlags flags)
@@ -57,7 +60,8 @@ namespace yq::tachyon {
             return;
             
         bool    v   = sn->locked;
-        if(ImGui::Checkbox("##Locked", &v)){
+        if(ImGui::Checkbox("##Locked", &v) && (v != sn->locked)){
+            send(new Circular³LockCommand({.target=sn->self}, v));
         }
     }
     
@@ -78,6 +82,7 @@ namespace yq::tachyon {
             
         double s    = sn->period.value;
         if(ImGui::InputDouble("##Period", &s)){
+            send(new Circular³PeriodCommand({.target=sn->self}, { s }));
         }
     }
     
@@ -89,10 +94,11 @@ namespace yq::tachyon {
         
         double r    = sn->radius;
         if(ImGui::InputDouble("##Radius", &r)){
+            send(new Circular³RadiusCommand({.target=sn->self}, r));
         }
     }
     
-    void    CircularSpatial³UI::orientation()
+    void    CircularSpatial³UI::plane()
     {
         const CircularSpatial³Snap*     sn  = snap();
         if(!sn)

@@ -15,6 +15,9 @@
 namespace yq::tachyon {
     //struct CircularSpatial³Data;
     struct CircularSpatial³Snap;
+    class Circular³LockCommand;
+    class Circular³PeriodCommand;
+    class Circular³RadiusCommand;
     
     #ifdef NAN
         #undef NAN
@@ -49,11 +52,15 @@ namespace yq::tachyon {
     
     private:
     
+        void    on_lock_command(const Circular³LockCommand&);
+        void    on_period_command(const Circular³PeriodCommand&);
+        void    on_radius_command(const Circular³RadiusCommand&);
+    
         void        snap(CircularSpatial³Snap&) const;
     
         Radian              m_angle0;
         Radian              m_angle;
-        bool                m_locked;
+        bool                m_locked;   // TODO: replace with gimbal mode (maybe delegate time???)
         Vector3D            m_origin;
         Second              m_period;
         Vector3D            m_position  = NAN;

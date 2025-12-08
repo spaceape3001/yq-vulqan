@@ -11,6 +11,8 @@ add_library(yq_assetvk SHARED
     
     control/Position3Control.cpp
     control/Orientation3Control.cpp
+    control/ThreadOverclockEditUI.cpp
+    control/ThreadTimeEditUI.cpp
 
     controller/Space3Controller.cpp
 

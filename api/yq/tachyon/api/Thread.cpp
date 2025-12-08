@@ -20,6 +20,8 @@
 #include <yq/tachyon/command/io/SaveCommand.hpp>
 #include <yq/tachyon/command/sim/PauseCommand.hpp>
 #include <yq/tachyon/command/sim/ResumeCommand.hpp>
+#include <yq/tachyon/command/sim/SetOverclockCommand.hpp>
+#include <yq/tachyon/command/sim/SetTimeCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/event/thread/ThreadAddTachyonEvent.hpp>
 #include <yq/tachyon/reply/io/SaveReply.hpp>
@@ -110,6 +112,8 @@ namespace yq::tachyon {
         w.slot(&Thread::on_save_command);
         w.slot(&Thread::on_save_reply);
         w.slot(&Thread::on_save_request);
+        w.slot(&Thread::on_set_overclock_command);
+        w.slot(&Thread::on_set_time_command);
         w.slot(&Thread::on_pause_command);
         w.slot(&Thread::on_resume_command);
         
@@ -338,6 +342,13 @@ namespace yq::tachyon {
         }
     }
 
+    void    Thread::finalize(ThreadData& td) const
+    {
+        Tachyon::finalize(td);
+        td.time     = m_time;
+    }
+
+
     void    Thread::join()
     {
         quit();
@@ -450,6 +461,20 @@ namespace yq::tachyon {
         m_creates.insert(m_creates.end(), tachyons.begin(), tachyons.end());
     }
 
+    void Thread::on_set_overclock_command(const SetOverclockCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        m_overclock      = cmd.overclock();
+    }
+
+    void Thread::on_set_time_command(const SetTimeCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return ;
+        m_timeNew    = cmd.time();
+    }
+
     void    Thread::owner(push_k, ThreadID) 
     {
         //  Threads cannot be pushed to another thread, they are their own entity
@@ -468,8 +493,8 @@ namespace yq::tachyon {
     void    Thread::snap(ThreadSnap&sn) const
     {
         Tachyon::snap(sn);
-        sn.paused       = m_paused;
-        sn.overclock    = m_overclock;
+        sn.paused   = m_paused;
+        sn.time     = m_time;
     }
     
     void    Thread::start()
@@ -487,6 +512,7 @@ namespace yq::tachyon {
     {
         return {};
     }
+
 
     //void    Thread::task(task_fn&&fn)
     //{
@@ -576,7 +602,12 @@ namespace yq::tachyon {
             }
         }
         
-        m_time      = ctx.time;
+        if(is_nan(m_timeNew)){
+            m_time      = ctx.time;
+        } else {
+            m_time      = m_timeNew;
+            m_timeNew   = NAN;
+        }
         Frame::s_current  = nullptr;
         
         ++m_tick;
@@ -687,9 +718,6 @@ namespace yq::tachyon {
         
         //  And tasking....
         
-        
-        
-        
         std::vector<PP> pushing;
         {
             lock_t _lock(m_mutex, true);
@@ -720,9 +748,6 @@ namespace yq::tachyon {
         s_current   = old;
         return ex;
     }
-
-
-    
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Thread)

@@ -7,3 +7,5 @@
 #include "command/SimCommand.ipp"
 #include "command/sim/PauseCommand.ipp"
 #include "command/sim/ResumeCommand.ipp"
+#include "command/sim/SetOverclockCommand.ipp"
+#include "command/sim/SetTimeCommand.ipp"

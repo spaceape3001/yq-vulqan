@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/units.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/ID.hpp>
@@ -408,6 +409,8 @@ namespace yq::tachyon {
 
         Types           types(TachyonID) const;
         TypedID         typed(TachyonID) const;
+        
+        TypedID         typed(StdThread) const;
 
         ThreadID        origin() const { return m_origin; }
         uint64_t        number() const { return m_number; }

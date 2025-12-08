@@ -30,6 +30,8 @@ namespace yq::tachyon {
     class SaveRequest;
     class SaveCommand;
     class SaveReply;
+    class SetOverclockCommand;
+    class SetTimeCommand;
     struct ThreadSave;
     class PauseCommand;
     class ResumeCommand;
@@ -116,6 +118,7 @@ namespace yq::tachyon {
         bool missing() const { return m_missing; }
         
         void    snap(ThreadSnap&) const;
+        void    finalize(ThreadData&) const;
         
     private:
     
@@ -180,6 +183,7 @@ namespace yq::tachyon {
         time_point_t                    m_lastTickTime;
         time_point_t                    m_lastFrameReport{};
         unit::Second                    m_time      = 0._s;
+        unit::Second                    m_timeNew   = NAN;
         double                          m_overclock = 1.;
         bool                            m_paused    = false;
         
@@ -187,6 +191,8 @@ namespace yq::tachyon {
         void on_save_command(const Ref<const SaveCommand>&);
         void on_save_reply(const SaveReply&);
         void on_save_request(const Ref<const SaveRequest>&);
+        void on_set_overclock_command(const SetOverclockCommand&);
+        void on_set_time_command(const SetTimeCommand&);
         void on_pause_command(const PauseCommand&);
         void on_resume_command(const ResumeCommand&);
         

@@ -30,6 +30,8 @@
 #include <yq/errors.hpp>
 
 #include <yq/assetvk/camera/SpaceCamera.hpp>
+#include <yq/assetvk/control/ThreadOverclockEditUIWriter.hpp>
+#include <yq/assetvk/control/ThreadTimeEditUIWriter.hpp>
 #include <yq/assetvk/controller/Space3Controller.hpp>
 #include <yq/assetvk/menu/CreateMenuUI.hpp>
 #include <yq/assetvk/scene/HUDScene.hpp>
@@ -75,6 +77,7 @@
 #include <yq/tachyon/command/generic/SetSpatialCommand.hpp>
 #include <yq/tachyon/command/sim/PauseCommand.hpp>
 #include <yq/tachyon/command/sim/ResumeCommand.hpp>
+#include <yq/tachyon/command/sim/SetTimeCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 
@@ -449,8 +452,9 @@ void SceneEditor::init_ui()
 
     auto timeBar        = app.toolbar(Cardinal::NNE, "TimeBar");
     {
-        timeBar.button("P").action(&SceneEditor::action_time_pause);
-        timeBar.button("R").action(&SceneEditor::action_time_resume);
+        timeBar.make<ThreadTimeEditUI>(EDIT);
+        timeBar.image("openicon/icons/png/32x32/actions/media-playback-pause-8.png", {24, 24}).action(&SceneEditor::cmd_time_pause);
+        timeBar.image("openicon/icons/png/32x32/actions/media-playback-start-8.png", {24, 24}).action(&SceneEditor::cmd_time_resume);
     }
     
 
@@ -1078,24 +1082,10 @@ void    SceneEditor::action_create_scene(const Payload& pay)
 
 static TypedID  threadTypedID(StdThread th)
 {
-    ThreadID        tid = Thread::standard(th);
-    
     const Frame*    f   = Frame::current();
     if(!f)
         return {};
-    return f->typed(tid);
-}
-
-void    SceneEditor::SceneEditor::action_time_pause(const Payload&)
-{
-    static TypedID  sEdit   = threadTypedID(EDIT);
-    send(new PauseCommand({.target=sEdit}));
-}
-
-void    SceneEditor::SceneEditor::action_time_resume(const Payload&)
-{
-    static TypedID  sEdit   = threadTypedID(EDIT);
-    send(new ResumeCommand({.target=sEdit}));
+    return f->typed(EDIT);
 }
 
 void    SceneEditor::cmd_file_import()
@@ -1155,6 +1145,19 @@ void    SceneEditor::cmd_screenshot()
     TypedID         view(viewID.id, Type::Viewer);
     send(new ViewerScreenshotRequest({.target=view}));
 }
+
+void    SceneEditor::SceneEditor::cmd_time_pause()
+{
+    static TypedID  sEdit   = threadTypedID(EDIT);
+    send(new PauseCommand({.target=sEdit}));
+}
+
+void    SceneEditor::SceneEditor::cmd_time_resume()
+{
+    static TypedID  sEdit   = threadTypedID(EDIT);
+    send(new ResumeCommand({.target=sEdit}));
+}
+
 
 void    SceneEditor::imgui(ViContext&u) 
 {
@@ -1406,6 +1409,12 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_inspector     = create_child<FrameInspector>();
     }
 #endif
+
+    if(m_number == 1){
+        TypedID   eThread   = curFrame->typed(EDIT);
+        send(new SetTimeCommand({.target=eThread}, 0.));
+        send(new PauseCommand({.target=eThread}));
+    }
 
     return ret;
 }

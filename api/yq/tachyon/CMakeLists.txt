@@ -35,6 +35,7 @@ add_library(${PROJECT_NAME} SHARED
     command_size.cpp
     command_spatial.cpp
     command_tachyon.cpp
+    command_thread.cpp
     command_ui.cpp
     command_vertex.cpp
     command_viewer.cpp
@@ -193,7 +194,6 @@ add_library(${PROJECT_NAME} SHARED
     command/MouseCommand.cpp
     command/SceneCommand.cpp
     command/ShapeCommand.cpp
-    command/ThreadCommand.cpp
     command/WidgetCommand.cpp
     command/WindowCommand.cpp
     
@@ -215,7 +215,6 @@ add_library(${PROJECT_NAME} SHARED
     command/shape/SetTextureCommand.cpp
     command/shape/SetTextureUrlCommand.cpp
     command/shape/SetTopologyCommand.cpp
-    command/thread/ScheduleCommand.cpp
     command/widget/SetViewer.cpp
 
     config/build.cpp

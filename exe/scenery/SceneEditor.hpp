@@ -120,8 +120,6 @@ public:
     void                action_create_rendered_spatial(const Payload&);
     void                action_create_scene(const Payload&);
 
-    void                action_time_pause(const Payload&);
-    void                action_time_resume(const Payload&);
 
     void                cmd_file_import();
     void                cmd_file_open();
@@ -130,9 +128,11 @@ public:
     void                cmd_file_new();
     
     void                cmd_file_lua_execute();
-    
+
     void                cmd_screenshot();
-    
+
+    void                cmd_time_pause();
+    void                cmd_time_resume();
     
 
     CameraID            selected(camera_k) const { return m_camera.selected; }
@@ -223,6 +223,7 @@ private:
     std::filesystem::path   m_filepath;
     PostStartupFN           m_startup;
     bool                    m_defaultInit   = false;
+    unsigned int            m_number        = 1;
     
     struct {
         LuaWindowUI*            panel           = nullptr;

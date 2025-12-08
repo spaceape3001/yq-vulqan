@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/command/thread/ScheduleCommand.hpp>
+#include "ScheduleCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 

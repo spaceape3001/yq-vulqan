@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/command/tachyon/AddChildCommand.hpp>
+#include "AddChildCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 namespace yq::tachyon {

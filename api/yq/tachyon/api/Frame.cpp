@@ -1497,6 +1497,11 @@ namespace yq::tachyon {
     {
         return TypedID(id, types(id));
     }
+
+    TypedID Frame::typed(StdThread st) const
+    {
+        return typed(Thread::standard(st));
+    }
     
     Types   Frame::types(TachyonID id) const
     {
